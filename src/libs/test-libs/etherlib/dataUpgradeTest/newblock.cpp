@@ -439,6 +439,8 @@ ostream& operator<<(ostream& os, const CNewBlock& it) {
 
 //---------------------------------------------------------------------------
 const CBaseNode* CNewBlock::getObjectAt(const string_q& fieldName, size_t index) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
     if (fieldName % "transactions") {
         if (index == NOPOS) {
             CTransaction empty;
@@ -448,6 +450,8 @@ const CBaseNode* CNewBlock::getObjectAt(const string_q& fieldName, size_t index)
         if (index < transactions.size())
             return &transactions[index];
     }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return NULL;
 }

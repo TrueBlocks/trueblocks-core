@@ -948,6 +948,8 @@ ostream& operator<<(ostream& os, const CTransaction& it) {
 
 //---------------------------------------------------------------------------
 const CBaseNode* CTransaction::getObjectAt(const string_q& fieldName, size_t index) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
     if (fieldName % "receipt")
         return &receipt;
 
@@ -960,7 +962,6 @@ const CBaseNode* CTransaction::getObjectAt(const string_q& fieldName, size_t ind
         if (index < traces.size())
             return &traces[index];
     }
-
     if (fieldName % "articulatedTx")
         return &articulatedTx;
 
@@ -973,6 +974,8 @@ const CBaseNode* CTransaction::getObjectAt(const string_q& fieldName, size_t ind
         if (index < statements.size())
             return &statements[index];
     }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return NULL;
 }

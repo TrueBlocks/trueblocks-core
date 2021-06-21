@@ -264,6 +264,8 @@ ostream& operator<<(ostream& os, const CIndexCache& it) {
 
 //---------------------------------------------------------------------------
 const CBaseNode* CIndexCache::getObjectAt(const string_q& fieldName, size_t index) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
     if (fieldName % "items") {
         if (index == NOPOS) {
             CIndexCacheItem empty;
@@ -273,6 +275,8 @@ const CBaseNode* CIndexCache::getObjectAt(const string_q& fieldName, size_t inde
         if (index < items.size())
             return &items[index];
     }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return NULL;
 }

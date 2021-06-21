@@ -258,6 +258,8 @@ ostream& operator<<(ostream& os, const CAbiCache& it) {
 
 //---------------------------------------------------------------------------
 const CBaseNode* CAbiCache::getObjectAt(const string_q& fieldName, size_t index) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
     if (fieldName % "items") {
         if (index == NOPOS) {
             CAbiCacheItem empty;
@@ -267,6 +269,8 @@ const CBaseNode* CAbiCache::getObjectAt(const string_q& fieldName, size_t index)
         if (index < items.size())
             return &items[index];
     }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return NULL;
 }

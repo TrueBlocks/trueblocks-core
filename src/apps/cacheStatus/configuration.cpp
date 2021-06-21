@@ -253,6 +253,8 @@ ostream& operator<<(ostream& os, const CConfiguration& it) {
 
 //---------------------------------------------------------------------------
 const CBaseNode* CConfiguration::getObjectAt(const string_q& fieldName, size_t index) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
     if (fieldName % "files") {
         if (index == NOPOS) {
             CConfigFile empty;
@@ -262,6 +264,8 @@ const CBaseNode* CConfiguration::getObjectAt(const string_q& fieldName, size_t i
         if (index < files.size())
             return &files[index];
     }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return NULL;
 }

@@ -260,8 +260,13 @@ ostream& operator<<(ostream& os, const CTreeRoot& it) {
 
 //---------------------------------------------------------------------------
 const CBaseNode* CTreeRoot::getObjectAt(const string_q& fieldName, size_t index) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
     if (fieldName % "root")
         return root;
+
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return NULL;
 }

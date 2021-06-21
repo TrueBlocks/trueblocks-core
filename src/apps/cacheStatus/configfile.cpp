@@ -267,6 +267,8 @@ ostream& operator<<(ostream& os, const CConfigFile& it) {
 
 //---------------------------------------------------------------------------
 const CBaseNode* CConfigFile::getObjectAt(const string_q& fieldName, size_t index) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
     if (fieldName % "sections") {
         if (index == NOPOS) {
             CConfigSection empty;
@@ -276,6 +278,8 @@ const CBaseNode* CConfigFile::getObjectAt(const string_q& fieldName, size_t inde
         if (index < sections.size())
             return &sections[index];
     }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return NULL;
 }

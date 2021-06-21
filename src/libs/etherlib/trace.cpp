@@ -480,6 +480,8 @@ ostream& operator<<(ostream& os, const CTrace& it) {
 
 //---------------------------------------------------------------------------
 const CBaseNode* CTrace::getObjectAt(const string_q& fieldName, size_t index) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
     if (fieldName % "action")
         return &action;
 
@@ -488,6 +490,9 @@ const CBaseNode* CTrace::getObjectAt(const string_q& fieldName, size_t index) co
 
     if (fieldName % "articulatedTrace")
         return &articulatedTrace;
+
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return NULL;
 }

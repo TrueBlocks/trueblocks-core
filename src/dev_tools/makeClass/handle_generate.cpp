@@ -810,7 +810,7 @@ const char* STR_GETOBJ_CODE_FIELD =
     "``}\n"
     "``if (index < [{FIELD}].size())\n"
     "```return [PTR][{FIELD}][index];\n"
-    "`}\n\n";
+    "`}\n";
 
 //------------------------------------------------------------------------------------------------------------
 const char* STR_GETOBJ_CODE_FIELD_OBJ =
@@ -821,7 +821,9 @@ const char* STR_GETOBJ_CODE_FIELD_OBJ =
 const char* STR_GETOBJ_CODE =
     "//---------------------------------------------------------------------------\n"
     "const CBaseNode* [{CLASS_NAME}]::getObjectAt(const string_q& fieldName, size_t index) const {\n"
-    "[{FIELDS}]`return NULL;\n"
+    "`// EXISTING_CODE\n"
+    "`// EXISTING_CODE\n"
+    "[{FIELDS}]`// EXISTING_CODE\n`// EXISTING_CODE\n\n`return NULL;\n"
     "}\n\n";
 
 //------------------------------------------------------------------------------------------------------------

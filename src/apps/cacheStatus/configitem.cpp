@@ -348,6 +348,8 @@ ostream& operator<<(ostream& os, const CConfigItem& it) {
 
 //---------------------------------------------------------------------------
 const CBaseNode* CConfigItem::getObjectAt(const string_q& fieldName, size_t index) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
     if (fieldName % "named") {
         if (index == NOPOS) {
             CAccountName empty;
@@ -357,6 +359,8 @@ const CBaseNode* CConfigItem::getObjectAt(const string_q& fieldName, size_t inde
         if (index < named.size())
             return &named[index];
     }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return NULL;
 }

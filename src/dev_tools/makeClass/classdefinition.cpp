@@ -472,6 +472,8 @@ ostream& operator<<(ostream& os, const CClassDefinition& it) {
 
 //---------------------------------------------------------------------------
 const CBaseNode* CClassDefinition::getObjectAt(const string_q& fieldName, size_t index) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
     if (fieldName % "fieldArray") {
         if (index == NOPOS) {
             CParameter empty;
@@ -481,6 +483,8 @@ const CBaseNode* CClassDefinition::getObjectAt(const string_q& fieldName, size_t
         if (index < fieldArray.size())
             return &fieldArray[index];
     }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return NULL;
 }

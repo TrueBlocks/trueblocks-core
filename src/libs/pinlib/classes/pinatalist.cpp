@@ -279,6 +279,8 @@ ostream& operator<<(ostream& os, const CPinataPinlist& it) {
 
 //---------------------------------------------------------------------------
 const CBaseNode* CPinataPinlist::getObjectAt(const string_q& fieldName, size_t index) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
     if (fieldName % "rows") {
         if (index == NOPOS) {
             CPinataPin empty;
@@ -288,6 +290,8 @@ const CBaseNode* CPinataPinlist::getObjectAt(const string_q& fieldName, size_t i
         if (index < rows.size())
             return &rows[index];
     }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return NULL;
 }

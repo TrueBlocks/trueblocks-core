@@ -331,6 +331,8 @@ ostream& operator<<(ostream& os, const CPinManifest& it) {
 
 //---------------------------------------------------------------------------
 const CBaseNode* CPinManifest::getObjectAt(const string_q& fieldName, size_t index) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
     if (fieldName % "pins") {
         if (index == NOPOS) {
             CPinnedChunk empty;
@@ -340,6 +342,8 @@ const CBaseNode* CPinManifest::getObjectAt(const string_q& fieldName, size_t ind
         if (index < pins.size())
             return &pins[index];
     }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return NULL;
 }

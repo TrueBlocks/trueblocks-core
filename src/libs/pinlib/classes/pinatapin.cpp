@@ -365,6 +365,8 @@ ostream& operator<<(ostream& os, const CPinataPin& it) {
 
 //---------------------------------------------------------------------------
 const CBaseNode* CPinataPin::getObjectAt(const string_q& fieldName, size_t index) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
     if (fieldName % "metadata")
         return &metadata;
 
@@ -377,6 +379,8 @@ const CBaseNode* CPinataPin::getObjectAt(const string_q& fieldName, size_t index
         if (index < regions.size())
             return &regions[index];
     }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return NULL;
 }

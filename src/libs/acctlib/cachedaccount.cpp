@@ -315,6 +315,8 @@ ostream& operator<<(ostream& os, const CCachedAccount& it) {
 
 //---------------------------------------------------------------------------
 const CBaseNode* CCachedAccount::getObjectAt(const string_q& fieldName, size_t index) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
     if (fieldName % "latestTx")
         return &latestTx;
 
@@ -327,6 +329,8 @@ const CBaseNode* CCachedAccount::getObjectAt(const string_q& fieldName, size_t i
         if (index < transactions.size())
             return &transactions[index];
     }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return NULL;
 }

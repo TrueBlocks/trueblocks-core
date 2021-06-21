@@ -315,11 +315,16 @@ ostream& operator<<(ostream& os, const CEthCall& it) {
 
 //---------------------------------------------------------------------------
 const CBaseNode* CEthCall::getObjectAt(const string_q& fieldName, size_t index) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
     if (fieldName % "abi_spec")
         return &abi_spec;
 
     if (fieldName % "result")
         return &result;
+
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return NULL;
 }

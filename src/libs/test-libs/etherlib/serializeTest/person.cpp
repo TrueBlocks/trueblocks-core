@@ -284,8 +284,13 @@ ostream& operator<<(ostream& os, const CPerson& it) {
 
 //---------------------------------------------------------------------------
 const CBaseNode* CPerson::getObjectAt(const string_q& fieldName, size_t index) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
     if (fieldName % "next")
         return next;
+
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return NULL;
 }

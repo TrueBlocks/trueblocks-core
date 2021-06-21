@@ -295,6 +295,8 @@ ostream& operator<<(ostream& os, const CAbi& it) {
 
 //---------------------------------------------------------------------------
 const CBaseNode* CAbi::getObjectAt(const string_q& fieldName, size_t index) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
     if (fieldName % "interfaces") {
         if (index == NOPOS) {
             CFunction empty;
@@ -304,6 +306,8 @@ const CBaseNode* CAbi::getObjectAt(const string_q& fieldName, size_t index) cons
         if (index < interfaces.size())
             return &interfaces[index];
     }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return NULL;
 }

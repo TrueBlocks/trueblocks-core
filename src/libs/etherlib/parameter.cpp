@@ -417,6 +417,8 @@ ostream& operator<<(ostream& os, const CParameter& it) {
 
 //---------------------------------------------------------------------------
 const CBaseNode* CParameter::getObjectAt(const string_q& fieldName, size_t index) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
     if (fieldName % "components") {
         if (index == NOPOS) {
             CParameter empty;
@@ -426,6 +428,8 @@ const CBaseNode* CParameter::getObjectAt(const string_q& fieldName, size_t index
         if (index < components.size())
             return &components[index];
     }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return NULL;
 }
