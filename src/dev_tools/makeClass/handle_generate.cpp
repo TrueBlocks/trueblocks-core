@@ -215,7 +215,7 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
     }
 
     //------------------------------------------------------------------------------------------------
-    bool hasObjGetter = !fieldGetObj.empty();
+    bool hasObjGetter = !fieldGetObj.empty() || toml.getConfigBool("settings", "force_objget", false);
     if (hasObjGetter)
         fieldGetObj = substitute(string_q(STR_GETOBJ_CODE), "[{FIELDS}]", fieldGetObj);
 

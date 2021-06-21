@@ -44,11 +44,14 @@ class CMonitor : public CAccountName {
 
     DECLARE_NODE(CMonitor);
 
+    const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
+
     // EXISTING_CODE
   public:
     bool isStaging;
     bloom_t bloom;
     CArchive* tx_cache;
+    CAppearanceArray_mon apps;
 
     bool openForWriting(bool staging);
     void writeMonitorArray(const CAppearanceArray_mon& array);
@@ -138,7 +141,7 @@ inline void CMonitor::initialize(void) {
     nAppearances = 0;
     lastExport = 0;
     firstAppearance = 0;
-    latestAppearance = 0;
+    latestAppearance = UINT_MAX;
     lastVisitedBlock = 0;
     sizeInBytes = 0;
 
@@ -146,7 +149,7 @@ inline void CMonitor::initialize(void) {
     isStaging = false;
     bloom = bloom_t();
     tx_cache = NULL;
-    latestAppearance = UINT_MAX;
+    apps.clear();
     // EXISTING_CODE
 }
 
@@ -166,7 +169,7 @@ inline void CMonitor::duplicate(const CMonitor& mo) {
     isStaging = mo.isStaging;
     bloom = mo.bloom;
     tx_cache = NULL;  // we do not copy the tx_cache
-    latestAppearance = mo.latestAppearance;
+    apps = mo.apps;
     // EXISTING_CODE
 }
 

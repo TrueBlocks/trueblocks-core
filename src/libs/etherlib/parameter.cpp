@@ -469,6 +469,7 @@ CParameter::CParameter(string_q& textIn) {
     if (contains(textIn, "=")) {
         str_default = textIn;
         textIn = nextTokenClear(str_default, '=');
+        str_default = trim(str_default);
     }
 
     type = nextTokenClear(textIn, ' ');
@@ -492,7 +493,7 @@ CParameter::CParameter(string_q& textIn) {
     }
 
     type = substitute(type, "*", "");
-    name = textIn;
+    name = trim(textIn);
 }
 
 //-----------------------------------------------------------------------

@@ -186,6 +186,7 @@ bool CMonitor::Serialize(CArchive& archive) {
     // archive >> lastVisitedBlock;
     // archive >> sizeInBytes;
     // EXISTING_CODE
+    // archive >> apps;
     // EXISTING_CODE
     finishParse();
     return true;
@@ -205,6 +206,7 @@ bool CMonitor::SerializeC(CArchive& archive) const {
     // archive << lastVisitedBlock;
     // archive << sizeInBytes;
     // EXISTING_CODE
+    // archive << apps;
     // EXISTING_CODE
     return true;
 }
@@ -265,6 +267,8 @@ void CMonitor::registerClass(void) {
     builtIns.push_back(_biCMonitor);
 
     // EXISTING_CODE
+    ADD_FIELD(CMonitor, "apps", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CMonitor, "apps");
     // EXISTING_CODE
 }
 
@@ -274,6 +278,21 @@ string_q nextMonitorChunk_custom(const string_q& fieldIn, const void* dataPtr) {
     if (mon) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
+            case 'a':
+                if (fieldIn % "apps" || fieldIn % "appsCnt") {
+                    size_t cnt = mon->apps.size();
+                    if (endsWith(toLower(fieldIn), "cnt"))
+                        return uint_2_Str(cnt);
+                    if (!cnt)
+                        return "";
+                    string_q retS;
+                    for (size_t i = 0; i < cnt; i++) {
+                        // retS += mon->apps[i].Format();
+                        retS += ((i < cnt - 1) ? ",\n" : "\n");
+                    }
+                    return retS;
+                }
+                break;
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
@@ -307,6 +326,25 @@ ostream& operator<<(ostream& os, const CMonitor& it) {
     it.Format(os, "", nullptr);
     os << "\n";
     return os;
+}
+
+//---------------------------------------------------------------------------
+const CBaseNode* CMonitor::getObjectAt(const string_q& fieldName, size_t index) const {
+    // EXISTING_CODE
+    if (fieldName % "apps") {
+        if (index == NOPOS) {
+            CAppearance_mon empty;
+            ((CMonitor*)this)->apps.push_back(empty);  // NOLINT
+            index = apps.size() - 1;
+        }
+        // if (index < apps.size())
+        //     return &apps[index];
+    }
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    return NULL;
 }
 
 //---------------------------------------------------------------------------
