@@ -51,21 +51,16 @@ bool COptions::queryFlatFile(const string_q& path, bool sorted) {
                 LOG_PROGRESS("Scanning", fileRange.first, listRange.second, " stage miss");
         } else {
             stats.nStageHits++;
-            // go backwards until we hit either the top of the file or the record before
-            // the first record in the file with the address, then skip ahead one
             char* ptr = found;
             while (ptr > rawData) {
+                // Go backwards until we hit either the top of the file or the record
+                // before the first record in the file with the address we're interested
+                // in, then skip ahead one to get to the first record.
                 ptr -= 59;
-                if (findAppearance(search, ptr)) {
+                if (findAppearance(search, ptr))
                     ptr = rawData;
-                } else {
+                else
                     found = ptr;
-                }
-                // char str[100];
-                // bzero(str, 100);
-                // strncpy(str, found, 59);
-                // cerr << str;
-                // getchar();
             }
 
             while (found < endOfData) {
@@ -73,7 +68,6 @@ bool COptions::queryFlatFile(const string_q& path, bool sorted) {
                 *pos = '\0';
                 string_q s = found;
                 address_t addr = nextTokenClear(s, '\t');
-                cerr << addr << ": " << s << endl;
                 if (startsWith(addr, monitor->address)) {
                     CAppearance_mon app;
                     app.blk = (uint32_t)str_2_Uint(nextTokenClear(s, '\t'));
@@ -84,6 +78,7 @@ bool COptions::queryFlatFile(const string_q& path, bool sorted) {
                     found = endOfData;
                 }
             }
+
             found = endOfData;
             if (!isTestMode())
                 LOG_PROGRESS("Scanning", fileRange.first, listRange.second, " stage hit");
@@ -106,13 +101,12 @@ int sortRecord(const void* v1, const void* v2) {
 
 //----------------------------------------------------------------
 int findAppearance(const void* v1, const void* v2) {
+    // char str[50];
+    // bzero(str, 50);
+    // cerr << strncpy(str, (char*)v1, 42) << " --> ";
+    //      << strncpy(str, (char*)v2, 42) << ": "
+    //      << strncmp(s1, s2, 42) << endl;
     const char* s1 = (const char*)v1;
     const char* s2 = (const char*)v2;
-
-    char str[50];
-    bzero(str, 50);
-    cerr << strncpy(str, (char*)v1, 42) << " --> " << strncpy(str, (char*)v2, 42) << ": " << strncmp(s1, s2, 42)
-         << endl;
-
     return strncmp(s1, s2, 42);
 }
