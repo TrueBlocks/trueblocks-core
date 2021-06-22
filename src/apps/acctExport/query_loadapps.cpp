@@ -24,9 +24,23 @@ bool COptions::loadAllAppearances(void) {
 
     if (unripe) {
         forEveryFileInFolder(indexFolder_unripe, visitUnripeIndexFiles, this);
+        monTmp.clear();
+        for (const CMonitor& mon : allMonitors) {
+            cerr << "count: " << mon.apps.size() << endl;
+            for (const CAppearance_mon& app : mon.apps) {
+                monTmp.push_back(app);
+            }
+        }
 
     } else if (staging) {
         forEveryFileInFolder(indexFolder_staging, visitStagingIndexFiles, this);
+        monTmp.clear();
+        for (const CMonitor& mon : allMonitors) {
+            cerr << "count: " << mon.apps.size() << endl;
+            for (const CAppearance_mon& app : mon.apps) {
+                monTmp.push_back(app);
+            }
+        }
 
     } else {
         for (auto monitor : allMonitors) {
@@ -45,12 +59,6 @@ bool COptions::loadAllAppearances(void) {
             //         blockRange.first = l astExport;
             // }
         }
-    }
-
-    if (monTmp.size() == 0) {
-        if (!freshenOnly)
-            LOG_INFO("Nothing to export" + (allMonitors.size() ? (" from " + accountedFor) : "") + ".");
-        return false;
     }
 
     // Sort the file as it may or may not be sorted already
@@ -82,6 +90,10 @@ bool COptions::loadAllAppearances(void) {
             LOG_ERR("Could not open timestamp file.");
             return false;
         }
+    } else {
+        if (!freshenOnly)
+            LOG_INFO("Nothing to export" + (allMonitors.size() ? (" from " + accountedFor) : "") + ".");
+        return false;
     }
 
     return true;
