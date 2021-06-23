@@ -38,8 +38,7 @@ int main(int argc, const char* argv[]) {
         } else if (options.listOffset != NOPOS) {
             blknum_t client = isTestMode() ? 2000100 : getBlockProgress(BP_CLIENT).client;
             blknum_t start = client - options.listOffset;
-            blknum_t n_blocks = 10;
-            options.handle_block_summaries(start, n_blocks);
+            options.handle_block_summaries(start, options.list_count);
         } else {
             options.blocks.forEveryBlockNumber(visitBlock, &options);
         }

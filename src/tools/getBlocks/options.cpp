@@ -54,7 +54,6 @@ bool COptions::parseArguments(string_q& command) {
     bool uniq = false;
     bool uniq_tx = false;
     blknum_t list = NOPOS;
-    blknum_t list_count = NOPOS;
     // END_CODE_LOCAL_INIT
 
     Init();
@@ -128,7 +127,7 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("count", count);
     LOG_TEST_BOOL("cache", cache);
     LOG_TEST("list", list, (list == NOPOS));
-    LOG_TEST("list_count", list_count, (list_count == NOPOS));
+    LOG_TEST("list_count", list_count, (list_count == 20));
     // END_DEBUG_DISPLAY
 
     if (Mocked("blocks"))
@@ -237,6 +236,7 @@ void COptions::Init(void) {
     trace = false;
     count = false;
     cache = false;
+    list_count = 20;
     // END_CODE_INIT
 
     filterType = "";
@@ -311,7 +311,8 @@ const char* STR_FORMAT_LIST_JSON =
     " \"hash\": \"[{HASH}]\",\n"
     " \"blockNumber\": [{BLOCKNUMBER}],\n"
     " \"timestamp\": [{TIMESTAMP}],\n"
-    " \"date\": \"[{DATE}]\",\n"
+    " \"difficulty\": \"[{DIFFICULTY}]\",\n"
+    " \"miner\": \"[{MINER}]\",\n"
     " \"transactionsCnt\": [{TRANSACTIONSCNT}],\n"
     " \"unclesCnt\": [{UNCLE_COUNT}],\n"
     " \"gasLimit\": [{GASLIMIT}],\n"
@@ -320,5 +321,12 @@ const char* STR_FORMAT_LIST_JSON =
 
 //--------------------------------------------------------------------------------
 const char* STR_FORMAT_LIST =
-    "[{HASH}]\t[{BLOCKNUMBER}]\t[{TIMESTAMP}]\t[{DATE}]\t[{TRANSACTIONSCNT}]\t[{UNCLE_COUNT}]\t[{GASLIMIT}]\t[{GASUSED}"
-    "]";
+    "[{HASH}]\t"
+    "[{BLOCKNUMBER}]\t"
+    "[{TIMESTAMP}]\t"
+    "[{DIFFICULTY}]\t"
+    "[{MINER}]\t"
+    "[{TRANSACTIONSCNT}]\t"
+    "[{UNCLE_COUNT}]\t"
+    "[{GASLIMIT}]\t"
+    "[{GASUSED}]";
