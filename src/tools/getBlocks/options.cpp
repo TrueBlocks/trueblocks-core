@@ -30,6 +30,7 @@ static const COption params[] = {
     COption("count", "c", "", OPT_SWITCH, "display counts of appearances (for --apps, --uniq, or --uniq_tx) or transactions"),  // NOLINT
     COption("cache", "o", "", OPT_SWITCH, "force a write of the block to the cache"),
     COption("list", "l", "<blknum>", OPT_HIDDEN | OPT_FLAG, "summary list of blocks running backwards from latest block minus num"),  // NOLINT
+    COption("list_count", "C", "<blknum>", OPT_HIDDEN | OPT_FLAG, "the number of blocks to report for --list option"),
     COption("", "", "", OPT_DESCRIPTION, "Retrieve one or more blocks from the chain or local cache."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -53,6 +54,7 @@ bool COptions::parseArguments(string_q& command) {
     bool uniq = false;
     bool uniq_tx = false;
     blknum_t list = NOPOS;
+    blknum_t list_count = NOPOS;
     // END_CODE_LOCAL_INIT
 
     Init();
@@ -95,6 +97,12 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-l" || arg == "--list") {
             return flag_required("list");
 
+        } else if (startsWith(arg, "-C:") || startsWith(arg, "--list_count:")) {
+            if (!confirmBlockNum("list_count", list_count, arg, latest))
+                return false;
+        } else if (arg == "-C" || arg == "--list_count") {
+            return flag_required("list_count");
+
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
@@ -120,6 +128,7 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("count", count);
     LOG_TEST_BOOL("cache", cache);
     LOG_TEST("list", list, (list == NOPOS));
+    LOG_TEST("list_count", list_count, (list_count == NOPOS));
     // END_DEBUG_DISPLAY
 
     if (Mocked("blocks"))

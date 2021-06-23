@@ -24,28 +24,14 @@ bool COptions::loadAllAppearances(void) {
 
     if (unripe) {
         forEveryFileInFolder(indexFolder_unripe, visitUnripeIndexFiles, this);
-        monTmp.clear();
-        for (const CMonitor& mon : allMonitors) {
-            cerr << "count: " << mon.apps.size() << endl;
-            for (const CAppearance_mon& app : mon.apps) {
-                monTmp.push_back(app);
-            }
-        }
 
     } else if (staging) {
         forEveryFileInFolder(indexFolder_staging, visitStagingIndexFiles, this);
-        monTmp.clear();
-        for (const CMonitor& mon : allMonitors) {
-            cerr << "count: " << mon.apps.size() << endl;
-            for (const CAppearance_mon& app : mon.apps) {
-                monTmp.push_back(app);
-            }
-        }
 
     } else {
-        for (auto monitor : allMonitors) {
+        for (CMonitor& monitor : allMonitors) {
             curMonitor = &monitor;
-            if (!monitor.loadAppsFromPath(monTmp, "", visitOnLoad, this)) {
+            if (!monitor.loadAppsFromPath(monitor.apps, "", visitOnLoad, this)) {
                 LOG_ERR("Could not load appearances for address " + monitor.address);
                 return false;
             }
@@ -58,6 +44,14 @@ bool COptions::loadAllAppearances(void) {
             //     if (l astExport < blockRange.first)  // ...but the eariest of the last exports is where we start
             //         blockRange.first = l astExport;
             // }
+        }
+    }
+
+    CAppearanceArray_mon monTmp;
+    for (const CMonitor& mon : allMonitors) {
+        cerr << "count: " << mon.apps.size() << endl;
+        for (const CAppearance_mon& app : mon.apps) {
+            monTmp.push_back(app);
         }
     }
 

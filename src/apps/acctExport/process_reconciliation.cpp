@@ -8,10 +8,7 @@
 //-----------------------------------------------------------------------
 bool process_reconciliation(COptions* options, CTransaction& trans, CReconciliationMap& prevStatements, blknum_t next,
                             bool tokens) {
-    CReconciliation nums;
-    nums.blockNumber = trans.blockNumber;
-    nums.transactionIndex = trans.transactionIndex;
-    nums.timestamp = trans.timestamp;
+    CReconciliation nums(trans.blockNumber, trans.transactionIndex, trans.timestamp);
     CStringArray corrections;
     nums.reconcileEth(corrections, prevStatements, next, &trans, options->accountedFor);
     trans.statements.clear();

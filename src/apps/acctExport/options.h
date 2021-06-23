@@ -48,7 +48,6 @@ class COptions : public CAbiOptions {
     // END_CODE_DECLARE
 
     CAppearanceArray_mon monApps;
-    CAppearanceArray_mon monTmp;
     CMonitorArray allMonitors;
     CMonitorArray possibles;
     const CMonitor* curMonitor;

@@ -658,6 +658,14 @@ paths:
         explode: true
         schema:
           type: string
+      - name: list_count
+        in: query
+        description: the number of blocks to report for --list option
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
       responses:
         "200":
           description: status of the scraper

@@ -61,6 +61,11 @@ class CReconciliation : public CBaseNode {
     DECLARE_NODE(CReconciliation);
 
     // EXISTING_CODE
+    CReconciliation(blknum_t bn, blknum_t txid, timestamp_t ts) {
+        blockNumber = bn;
+        transactionIndex = txid;
+        timestamp = ts;
+    }
     bool reconcileEth(const CStringArray& corrections, map<string, CReconciliation>& last, blknum_t nextBlock,
                       const CTransaction* trans, const address_t& acctFor);
     bool reconcileUsingTraces(blknum_t lastBn, bigint_t lastEndBal, bigint_t lastEndBalCalc, blknum_t nextBlock,
