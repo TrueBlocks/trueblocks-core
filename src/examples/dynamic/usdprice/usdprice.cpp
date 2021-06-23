@@ -57,7 +57,7 @@ bool display(CTraverser* trav, void* data) {
         cout << tt->app->txid << "\t";
         CStringArray results;
         if (tt->perTxCall.getResults(results) && results.size() > 1) {
-            wei_t balance = getBalanceAt(tt->accountedFor, tt->app->blk);
+            wei_t balance = getBalanceAt(tt->curMonitor->address, tt->app->blk);
             double reserve1 = str_2_Double(wei_2_Ether(str_2_Wei(results[0]), 18));
             double reserve2 = str_2_Double(wei_2_Ether(str_2_Wei(results[1]), 18));
             double ethbal = str_2_Double(wei_2_Ether(balance, 18));

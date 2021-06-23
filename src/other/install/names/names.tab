@@ -132,6 +132,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 81-Other	0x02ad1b2f88d37825a311045663a0bf97d0dcd845	YoutubeViews_id13		Ether Camp			false	false	false	true	false	false
 81-Other	0x02b2101903eb6a51518e63e84b785180859fda9d	Thewhalegame		EtherScan.io			false	false	false	true	false	false
 34-Twitter:Friends	0x02bbea9326048fb2bd96664adc3ef47bbe3e02b6	Adeniyi		Twitter		Sodunke	false	false	false	false	false	false
+30-Contracts	0x02bcb9675727ade60243c3d467a3bf152142698b	Credmark Community Treasury		EtherScan.io			false	false	false	true	false	false
 50-Tokens:ERC20	0x02c4c78c462e32cca4a90bc499bf411fb7bc6afb	InvestDigital Token	IDT	On chain	18		false	false	false	true	true	false
 31-Gitcoin Grants:Grant	0x02cb3c150bedca124d0ae8cccb72fefbe705c953	Grant 0782 Ethereum Cat Herders Community Fund		https://gitcoin.co/grants/782/ethereum-cat-herders-community-fund		https://twitter.com/EthCatHerders	false	false	false	true	false	false
 36-Chainlink	0x02d5c618dbc591544b19d0bf13543c0728a3c4ec	Chainlink CHF-USD Aggregator		EtherScan.io			false	false	false	true	false	false
@@ -1921,6 +1922,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 36-Balancer	0x41284a88d970d3552a26fae680692ed40b34010c	Balancer Pool Token 0x4128	BPT	On chain	18		false	false	false	true	true	false
 31-Gitcoin Grants:Grant	0x413db04a4d7207cae7a7686639ce68caac137bae	Grant 1692 Dappchaser		https://gitcoin.co/grants/1692/dappchaser			false	false	false	false	false	false
 31-Gitcoin Grants:Grant	0x413ed157a79f9197e2fcc6af89ef89e7da00e5f2	Grant 0674 Pixelart Crypto Portfolio		https://gitcoin.co/grants/674/pixelart-crypto-portfolio		https://twitter.com/Bighands_dev	false	false	false	false	false	false
+30-Contracts	0x414709bd112d006cbb85be21a9e19bf9bce8657e	CredMark DAO		EtherScan.io			false	false	false	true	false	false
 90-DevCon2:Individual	0x415655297a0f299d13acce68195890200c5d4a8b	ianjm		DevCon2 Token Contract			false	false	false	false	false	false
 50-Tokens:ERC20	0x4156d3342d5c385a87d264f90653733592000581	Salt	SALT	On chain	8	SALT lets you leverage your blockchain assets to secure cash loans. We make it easy to get money without having to sell your favorite investment.	false	false	false	true	true	false
 55-Defi	0x4161fa43eaa1ac3882aeed12c5fc05249e533e67	Uniswap V2	UNI-V2	On chain	18		false	false	false	true	true	false
@@ -3029,6 +3031,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 81-Other:DAO Whales	0x653a92d29da111e0912b4c01ed453c2e2de73170	DAO_WHALE_36		WhaleWatch.io			false	false	false	false	false	false
 31-Gitcoin Grants:Friends	0x653e84dc368da970e4d46608874e418954a7fdd2	friederikeernst		Gitcoin Website			false	false	false	false	false	false
 31-Gitcoin Grants:Friends	0x6543c99d0e073c140fd08a741c6cfdcd1449da94	sepu85		Gitcoin Website			false	false	false	false	false	false
+30-Contracts	0x654958393b7e54f1e2e51f736a14b9d26d00eb1e	Credmark Unallocated		EtherScan.io			false	false	false	false	false	false
 31-Gitcoin Grants:Grant	0x654a855e48f6943966788b81dc739117c5bff6a1	Grant 1013 Flowerpatch		https://gitcoin.co/grants/1013/flowerpatch			false	false	false	false	false	false
 32-Kickback:Friends	0x655113dc6d9471dd88fdf4e508b740c72a863a7d	amandineflachs		https://kickback.events/			false	false	false	false	false	false
 81-Other	0x655f01313bb55c04e8ed36a5098984f3f3de57bc	Rng		EtherScan.io			false	false	false	true	false	false
@@ -3140,6 +3143,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x68aa3f232da9bdc2343465545794ef3eea5209bd	Mothership Token	MSP	On chain	18	Decentralized AI for Collective Governance.	false	false	false	true	true	false
 31-Gitcoin Grants:Grant	0x68c10776c5c05cbf5b4c2318be02d61b9f06b875	Grant 1514 Dystopia Labs - We Run Free Technical Edu Summits		https://gitcoin.co/grants/1514/dystopia-labs-we-run-free-technical-edu-summits			false	false	false	false	false	false
 31-Gitcoin Grants:Friends	0x68c5130277db214dd740792a551a9f3059ae2eea	parkan		Gitcoin Website			false	false	false	false	false	false
+50-Tokens:ERC20	0x68cfb82eacb9f198d508b514d898a403c449533e	Credmark	CMK	On chain	18		false	false	false	true	true	false
 31-Gitcoin Grants:Friends	0x68d36dcbdd7bbf206e27134f28103abe7cf972df	scottrepreneur		Gitcoin Website			false	false	false	false	false	false
 50-Tokens:ERC20	0x68d57c9a1c35f63e2c83ee8e49a64e9d70528d25	SIRIN	SRN	On chain	18	SIRIN LABS‚Äö√Ñ√¥ aims to become the world‚Äö√Ñ√¥s leader in secure open source consumer electronics, bridging the gap between the mass market and the blockchain econom	false	false	false	true	true	false
 80-Malicious:Shanghai	0x68f5b2aa03c6ea72d329e6313cdb43905b486f17	Possibly Malicious 0x68f		TrueBlocks.io			false	false	false	true	false	false
@@ -5935,6 +5939,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Grant	0xca96f63b7e140caec1ed094a365b2adb67537086	Grant 1763 Hago Tech		https://gitcoin.co/grants/1763/hago-tech			false	false	false	false	false	false
 30-Contracts:Humanity DAO	0xca9ba54a2f05e2dd93ce79737243c27f8f0b279c	DCinvestor		https://www.humanitydao.org/humans			false	false	false	false	false	false
 34-Twitter:Friends	0xca9bad781b90002b7501d7feeec504a056d4fe74	Александр		Twitter		@gppZwLdzKqopD4A	false	false	false	false	false	false
+30-Contracts	0xca9bb8a10b2c0fb16a18edae105456bf7e91b041	CredMark Large Holder					false	false	false	true	false	false
 50-Tokens:ERC20	0xcaa05e82bdcba9e25cd1a3bf1afb790c1758943d	Partner	PRC	On chain	8		false	false	false	true	true	false
 32-Kickback:Friends	0xcaa9c1251dfdad81f4175edbd09ba9d9131aca77	pet3rpan		https://kickback.events/			false	false	false	false	false	false
 50-Tokens:ERC20	0xcaaa93712bdac37f736c323c93d4d5fdefcc31cc	CryptalDash	CRD	On chain	18		false	false	false	true	true	false
@@ -7221,6 +7226,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 90-DevCon2:Individual	0xf7749b41db006860cec0650d18b8013d69c44eeb	Nick Addison		DevCon2 Token Contract			false	false	false	false	false	false
 50-Tokens:ERC20	0xf7920b0768ecb20a123fac32311d07d193381d6f	Time New Bank	TNB	On chain	18		false	false	false	true	true	false
 36-Chainlink	0xf79d6afbb6da890132f9d7c355e3015f15f3406f	Chainlink ETH-USD Aggregator		EtherScan.io			false	false	false	true	false	false
+30-Contracts	0xf7a716e2df2bde4d0ba7656c131b06b1af68513c	Uniswap V3: CMK-USDC (CredMark)		EtherScan.io			false	false	false	true	false	false
 50-Tokens:ERC20	0xf7b098298f7c69fc14610bf71d5e02c60792894c	Guppy	GUP	On chain	3	Matchpool is a platform that creates human connections	false	false	false	true	true	false
 30-Contracts:Humanity DAO	0xf7b635cb0bf6012122fd2b26810346bbc9232bfd	LALALA27853800		https://www.humanitydao.org/humans			false	false	false	false	false	false
 31-Gitcoin Grants:Grant	0xf7bb9a58a4cff8db5d7c77c72995fa8da110b2c8	Grant 1412 Bondly Finance		https://gitcoin.co/grants/1412/bondly-finance			false	false	false	false	false	false
