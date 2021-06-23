@@ -17,6 +17,7 @@ getBlocks
 
 	#### Hidden options
 	-l  (--list <num>)    summary list of blocks running backwards from latest block minus num
+	-C  (--list_count <num>)the number of blocks to report for --list option
 	#### Hidden options
 
 	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
