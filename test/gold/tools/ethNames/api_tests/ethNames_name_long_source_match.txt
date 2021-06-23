@@ -12,6 +12,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 80-Malicious:DaoDrain	0x0101f3be8ebb4bbd39a2e3b9a3639d4259832fd9	DAO Drain 075		GethSource Ether Camp			false	false	false	true	false	false
 36-Chainlink	0x0133aa47b6197d0ba090bf2cd96626eb71ffd13c	Chainlink BTC-ETH Aggregator		EtherScan.io			false	false	false	true	false	false
 30-Contracts	0x015531a044bae03bf4dab1ceabfc232a969b7175	GU: Rare Pack		EtherScan.io			false	false	false	true	false	false
+30-Contracts	0x02bcb9675727ade60243c3d467a3bf152142698b	Credmark Community Treasury		EtherScan.io			false	false	false	true	false	false
 31-Gitcoin Grants:Grant	0x02cb3c150bedca124d0ae8cccb72fefbe705c953	Grant 0782 Ethereum Cat Herders Community Fund		https://gitcoin.co/grants/782/ethereum-cat-herders-community-fund		https://twitter.com/EthCatHerders	false	false	false	true	false	false
 36-Chainlink	0x02d5c618dbc591544b19d0bf13543c0728a3c4ec	Chainlink CHF-USD Aggregator		EtherScan.io			false	false	false	true	false	false
 36-Chainlink	0x037e8f2125bf532f3e228991e051c8a7253b642c	Chainlink DAI-ETH Aggregator		EtherScan.io			false	false	false	true	false	false
@@ -147,6 +148,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x408e41876cccdc0f92210600ef50372656052a38	Republic Token	REN	On chain	18	A decentralized dark pool for trustless cross-chain atomic trading of Ether, ERC20 tokens and Bitcoin pairs.	false	false	false	true	true	false
 55-Defi	0x40bd98e3cce4f34c087a73dd3d05558733549afb	Yearn: StrategyCreamYFI		EtherScan.io			false	false	false	true	false	false
 31-Gitcoin Grants:Grant	0x40e3780e5bec58629ac4c5dc3bca3df2d7fd0c35	Grant 0412 Ethereum Classic Development Team		https://gitcoin.co/grants/412/ethereum-classic-development-team		https://EthereumCore.org	false	false	false	false	false	false
+30-Contracts	0x414709bd112d006cbb85be21a9e19bf9bce8657e	CredMark DAO		EtherScan.io			false	false	false	true	false	false
 31-Gitcoin Grants:Grant	0x416deca06f9af666abe1666e80e8d30bba66d1c5	Grant 0496 Ethereum Contacts Registry (ecr)		https://gitcoin.co/grants/496/ethereum-contacts-registry-ecr			false	false	false	false	false	false
 31-Gitcoin Grants:Grant	0x41997060113af630a591e6cb23e1bc15fc90dc73	Grant 0551 the Ethereum 2.0 Annotated Specification		https://gitcoin.co/grants/551/the-ethereum-20-annotated-specification		https://benjaminion.xyz/eth2-annotated-spec/	false	false	false	false	false	false
 50-Tokens:ERC20	0x419d0d8bdd9af5e606ae2232ed285aff190e711b	FunFair	FUN	On chain	8	FunFair is a decentralised gaming platform powered by Ethereum smart contracts	false	false	false	true	true	false
@@ -198,5 +200,3 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 30-Contracts	0x5407381b6c251cfd498ccd4a1d877739cb7960b8	Nexus Mutual: Token Controller Proxy		EtherScan.io			false	false	false	true	false	false
 80-Malicious:DaoDrain	0x5524c55fb03cf21f549444ccbecb664d0acad706	DAO Drain 093		GethSource Ether Camp			false	false	false	true	false	false
 50-Tokens:ERC20	0x56b6431f45d08eed55f34371386326c739eacbcc	Ethereum Meta	ETHM	On chain	18	Ethereum Meta addresses the lack of privacy in Ethereum.	false	false	false	true	true	false
-60-Airdrops	0x5717d19616fab9079cf2bfce7d94126bca3ae536	BerryXToken Airdrop Sender	BRX	EtherScan.io			false	false	false	false	true	false
-30-Contracts	0x5789e2b5460cae9329d93a78511e2ac49f98a1f6	GU: Legendary Pack		EtherScan.io			false	false	false	true	false	false

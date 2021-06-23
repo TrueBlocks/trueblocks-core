@@ -94,6 +94,7 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x02725836ebf3ecdb1cdf1c7b02fcbbfaa2736af8	BitAir	BTCA		8
 30-Contracts	0x02a522d98ec2d2c3bbe91acc29ee7fd32ab880ab	Mintable: Deployer
 34-Twitter:Friends	0x02bbea9326048fb2bd96664adc3ef47bbe3e02b6	Name 0x02bbea93
+30-Contracts	0x02bcb9675727ade60243c3d467a3bf152142698b	Credmark Community Treasury
 50-Tokens:ERC20	0x02c4c78c462e32cca4a90bc499bf411fb7bc6afb	InvestDigital Token	IDT		18
 31-Gitcoin Grants:Grant	0x02cb3c150bedca124d0ae8cccb72fefbe705c953	Grant 0782 Ethereum Cat Herders Community Fund
 36-Chainlink	0x02d5c618dbc591544b19d0bf13543c0728a3c4ec	Chainlink CHF-USD Aggregator
@@ -201,4 +202,3 @@ tags	address	name	symbol	decimals
 80-Malicious:DaoDrain	0x0737a6b837f97f46ebade41b9bc3e1c509c85c53	DAO Drain 059
 31-Gitcoin Grants:Grant	0x073ab1c0cad3677cde9bdb0cdeedc2085c029579	Grant 0701 Virality: Your Social Accountability App
 31-Gitcoin Grants:Friends	0x073c841e832b7cc2e75d0fb1f8a98dca355bf485	Name 0x073c841e
-50-Tokens:ERC20	0x0743392132d1a03a902c477e5a176f256ba3220c	Coimatic 3.0	CTIC3		18

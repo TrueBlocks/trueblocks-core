@@ -98,6 +98,7 @@ ethNames --named --custom --fmt csv
 "50-Tokens:ERC20","0x02725836ebf3ecdb1cdf1c7b02fcbbfaa2736af8","BitAir","BTCA","","8"
 "30-Contracts","0x02a522d98ec2d2c3bbe91acc29ee7fd32ab880ab","Mintable: Deployer","","",""
 "34-Twitter:Friends","0x02bbea9326048fb2bd96664adc3ef47bbe3e02b6","Name 0x02bbea93","","",""
+"30-Contracts","0x02bcb9675727ade60243c3d467a3bf152142698b","Credmark Community Treasury","","",""
 "50-Tokens:ERC20","0x02c4c78c462e32cca4a90bc499bf411fb7bc6afb","InvestDigital Token","IDT","","18"
 "31-Gitcoin Grants:Grant","0x02cb3c150bedca124d0ae8cccb72fefbe705c953","Grant 0782 Ethereum Cat Herders Community Fund","","",""
 "36-Chainlink","0x02d5c618dbc591544b19d0bf13543c0728a3c4ec","Chainlink CHF-USD Aggregator","","",""
@@ -201,4 +202,3 @@ ethNames --named --custom --fmt csv
 "50-Tokens:ERC20","0x0707681f344deb24184037fc0228856f2137b02e","FNKOSToken","FNKOS","","18"
 "60-Airdrops","0x070f9d09370fd7ae3a583fc22a4e9f50ae1bdc78","RZM Airdrop Sender","","",""
 "31-Gitcoin Grants:Grant","0x07169d3d71dc9c1c7c1656b3436a984d50619860","Grant 1556 Apy.vision","","",""
-"31-Gitcoin Grants:Grant","0x0730fd7d15fa9a40a6c7b2bbb4b8ce9ee6e6d08b","Grant 0141 Metamoneymarket","","",""
