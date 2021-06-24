@@ -107,6 +107,9 @@ string_q CScrapeStatistics::getValueByName(const string_q& fieldName) const {
             if (fieldName % "nFileRecords") {
                 return uint_2_Str(nFileRecords);
             }
+            if (fieldName % "nCacheWrites") {
+                return uint_2_Str(nCacheWrites);
+            }
             break;
         default:
             break;
@@ -173,6 +176,10 @@ bool CScrapeStatistics::setValueByName(const string_q& fieldNameIn, const string
                 nFileRecords = str_2_Uint(fieldValue);
                 return true;
             }
+            if (fieldName % "nCacheWrites") {
+                nCacheWrites = str_2_Uint(fieldValue);
+                return true;
+            }
             break;
         default:
             break;
@@ -210,6 +217,7 @@ bool CScrapeStatistics::Serialize(CArchive& archive) {
     archive >> nStageHits;
     archive >> nTotalHits;
     archive >> nFileRecords;
+    archive >> nCacheWrites;
     // EXISTING_CODE
     // EXISTING_CODE
     finishParse();
@@ -234,6 +242,7 @@ bool CScrapeStatistics::SerializeC(CArchive& archive) const {
     archive << nStageHits;
     archive << nTotalHits;
     archive << nFileRecords;
+    archive << nCacheWrites;
     // EXISTING_CODE
     // EXISTING_CODE
     return true;
@@ -282,6 +291,7 @@ void CScrapeStatistics::registerClass(void) {
     ADD_FIELD(CScrapeStatistics, "nStageHits", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CScrapeStatistics, "nTotalHits", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CScrapeStatistics, "nFileRecords", T_UNUMBER, ++fieldNum);
+    ADD_FIELD(CScrapeStatistics, "nCacheWrites", T_UNUMBER, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CScrapeStatistics, "schema");
@@ -346,7 +356,8 @@ const char* STR_DISPLAY_SCRAPESTATISTICS =
     "[{NFALSEPOSITIVE}]\t"
     "[{NPOSITIVE}]\t"
     "[{NTOTALHITS}]\t"
-    "[{NFILERECORDS}]";
+    "[{NFILERECORDS}]\t"
+    "[{NCACHEWRITES}]";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

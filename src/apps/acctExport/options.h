@@ -124,7 +124,3 @@ extern bool fourByteFilter(const string_q& input, const COptions* opt);
 inline string_q plural(const string_q& in) {
     return substitute(toLower(in).substr(1, 1000) + "s", "logentrys", "logs");
 }
-
-//-----------------------------------------------------------------------
-extern bool process_reconciliation(COptions* options, CTransaction& trans, CReconciliationMap& prev, blknum_t next,
-                                   bool tokens);

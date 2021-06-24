@@ -223,8 +223,10 @@ bool loadTx_Func(CTraverser* trav, void* data) {
     dirty |= opt->articulateAll(trav->trans);
 
     // TODO(tjayrush): This could be in post_Func so that other functions can also make it dirty
-    if (opt->cache_txs && dirty)
+    if (opt->cache_txs && dirty) {
+        opt->stats.nCacheWrites++;
         writeTransToBinary(trav->trans, txFilename);
+    }
 
     opt->markNeighbors(trav->trans);
 
