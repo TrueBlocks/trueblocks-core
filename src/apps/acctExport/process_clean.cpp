@@ -25,7 +25,7 @@ bool cleanMonitorFile(const string_q& path, void* data) {
             if (!sizeThen)
                 EXIT_NOMSG(!shouldQuit());
 
-            if (!m.loadAppsFromPath(m.apps, path))
+            if (!m.loadAppsFromPath(path))
                 EXIT_FAIL("Could not open cache file.");
             sort(m.apps.begin(), m.apps.end());
 
