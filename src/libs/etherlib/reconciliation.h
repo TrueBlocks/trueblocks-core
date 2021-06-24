@@ -62,6 +62,7 @@ class CReconciliation : public CBaseNode {
 
     // EXISTING_CODE
     CReconciliation(blknum_t bn, blknum_t txid, timestamp_t ts) {
+        initialize();
         blockNumber = bn;
         transactionIndex = txid;
         timestamp = ts;

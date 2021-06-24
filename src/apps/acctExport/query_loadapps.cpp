@@ -49,7 +49,6 @@ bool COptions::loadAllAppearances(void) {
 
     CAppearanceArray_mon monTmp;
     for (const CMonitor& mon : allMonitors) {
-        cerr << "count: " << mon.apps.size() << endl;
         for (const CAppearance_mon& app : mon.apps) {
             monTmp.push_back(app);
         }
