@@ -6,6 +6,18 @@
 #include "options.h"
 
 //---------------------------------------------------------------
+address_t path_2_Addr(const string_q& path) {
+    if (!endsWith(path, ".acct.bin"))
+        return "";
+    CStringArray parts;
+    explode(parts, path, '/');
+    // for (auto part : parts)
+    //     cerr << "part: " << part << endl;
+    // cerr << "end: " << parts[parts.size() - 1] << endl;
+    return substitute(parts[parts.size() - 1], ".acct.bin", "");
+}
+
+//---------------------------------------------------------------
 bool cleanMonitorFile(const string_q& path, void* data) {
     ENTER("visitFile");
 
@@ -25,7 +37,8 @@ bool cleanMonitorFile(const string_q& path, void* data) {
             if (!sizeThen)
                 EXIT_NOMSG(!shouldQuit());
 
-            if (!m.loadAppsFromPath(path))
+            m.address = path_2_Addr(path);
+            if (!m.loadAppearances(nullptr, nullptr))
                 EXIT_FAIL("Could not open cache file.");
             sort(m.apps.begin(), m.apps.end());
 

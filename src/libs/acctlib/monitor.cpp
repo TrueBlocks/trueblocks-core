@@ -539,8 +539,8 @@ bloom_t CMonitor::getBloom(void) {
 }
 
 //----------------------------------------------------------------
-blknum_t CMonitor::loadAppsFromPath(const string_q& pathIn, MONAPPFUNC func, void* data) {
-    string_q path = (pathIn.empty() ? getMonitorPath(address, false) : pathIn);
+blknum_t CMonitor::loadAppearances(MONAPPFUNC func, void* data) {
+    string_q path = getMonitorPath(address, false);
     blknum_t nRecs = this->getRecordCnt(path);
     if (!nRecs)
         return false;

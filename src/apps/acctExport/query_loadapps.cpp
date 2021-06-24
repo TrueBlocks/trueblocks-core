@@ -31,7 +31,7 @@ bool COptions::loadAllAppearances(void) {
     } else {
         for (CMonitor& monitor : allMonitors) {
             curMonitor = &monitor;
-            if (!monitor.loadAppsFromPath("", visitOnLoad, this)) {
+            if (!monitor.loadAppearances(visitOnLoad, this)) {
                 LOG_ERR("Could not load appearances for address " + monitor.address);
                 return false;
             }
