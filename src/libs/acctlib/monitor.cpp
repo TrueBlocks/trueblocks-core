@@ -539,7 +539,7 @@ bloom_t CMonitor::getBloom(void) {
 }
 
 //----------------------------------------------------------------
-blknum_t CMonitor::loadAppsFromPath(CAppearanceArray_mon& apps, const string_q& pathIn, MONAPPFUNC func,
+blknum_t CMonitor::loadAppsFromPath(CAppearanceArray_mon& appys, const string_q& pathIn, MONAPPFUNC func,
                                     void* data) const {
     string_q path = (pathIn.empty() ? getMonitorPath(address, false) : pathIn);
     blknum_t nRecs = this->getRecordCnt(path);
@@ -560,9 +560,9 @@ blknum_t CMonitor::loadAppsFromPath(CAppearanceArray_mon& apps, const string_q& 
     archiveIn.Read(buffer, sizeof(CAppearance_mon), nRecs);
     archiveIn.Release();
 
-    apps.reserve(apps.size() + nRecs);
+    appys.reserve(appys.size() + nRecs);
     for (size_t i = 0; i < nRecs; i++) {
-        apps.push_back(buffer[i]);
+        appys.push_back(buffer[i]);
         if (func && !(*func)(buffer[i], data))
             return false;
     }

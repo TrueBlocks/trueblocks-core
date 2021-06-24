@@ -82,7 +82,7 @@ func NewNamedAddress() NamedAddress {
 func (name *NamedAddress) ToJson() string {
 	e, err := json.Marshal(name)
 	if err != nil {
-		fmt.Println(err)
+		fmt.Printf("%s", err)
 		return ""
 	}
 	return string(e)

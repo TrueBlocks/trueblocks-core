@@ -54,7 +54,6 @@ var nProcessed int
 func Logger(inner http.Handler, name string) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		var limiter = rate.NewLimiter(1, 3)
-		// fmt.Println("limiter.Limit: ", limiter.Limit())
 		if limiter.Allow() == false {
 			http.Error(w, http.StatusText(429), http.StatusTooManyRequests)
 			return

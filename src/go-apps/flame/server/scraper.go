@@ -43,7 +43,7 @@ func (scraper *Scraper) ShowStateChange(from, to string) {
 func (scraper *Scraper) ToJson() string {
 	e, err := json.Marshal(scraper)
 	if err != nil {
-		fmt.Println(err)
+		fmt.Printf("%s", err)
 		return ""
 	}
 	return string(e)

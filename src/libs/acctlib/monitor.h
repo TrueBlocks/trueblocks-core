@@ -61,7 +61,7 @@ class CMonitor : public CAccountName {
     string_q getMonitorPathLast(const address_t& addr, bool staging) const;
     string_q getMonitorPathDels(const address_t& addr) const;
 
-    blknum_t loadAppsFromPath(CAppearanceArray_mon& apps, const string_q& path = "", MONAPPFUNC func = nullptr,
+    blknum_t loadAppsFromPath(CAppearanceArray_mon& appys, const string_q& path = "", MONAPPFUNC func = nullptr,
                               void* data = nullptr) const;
     blknum_t getLastVisited(bool fresh = false) const;
     blknum_t getLastBlockInMonitor(void) const;

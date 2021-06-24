@@ -25,14 +25,13 @@ bool cleanMonitorFile(const string_q& path, void* data) {
             if (!sizeThen)
                 EXIT_NOMSG(!shouldQuit());
 
-            CAppearanceArray_mon apps;
-            if (!m.loadAppsFromPath(apps, path))
+            if (!m.loadAppsFromPath(m.apps, path))
                 EXIT_FAIL("Could not open cache file.");
-            sort(apps.begin(), apps.end());
+            sort(m.apps.begin(), m.apps.end());
 
             CAppearance_mon prev;
             CAppearanceArray_mon deduped;
-            for (auto a : apps) {
+            for (auto a : m.apps) {
                 if (a.blk != prev.blk || a.txid != prev.txid) {
                     deduped.push_back(a);
                 }

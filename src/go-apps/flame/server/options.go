@@ -147,7 +147,7 @@ func ParseOptions() error {
 		log.Print(utils.Green, "verbose:     ", utils.Off, Options.Verbose, "\n")
 	}
 
-	fmt.Println("")
+	log.Print("\n")
 	log.Print(utils.Green, "Starting API server on port "+Options.Port, utils.Off, "\n")
 	log.Print(utils.Green, "Client:       ", utils.Off, Options.Status.Client)
 	log.Print(utils.Green, "TrueBlocks:   ", utils.Off, Options.Status.TrueBlocks)
