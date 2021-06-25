@@ -5,8 +5,7 @@
  *------------------------------------------------------------------------*/
 #include "options.h"
 
-extern bool process_reconciliation(COptions* options, CReconciliation& nums, CTransaction& trans,
-                                   CReconciliationMap& prev, blknum_t next, bool tokens);
+extern bool process_reconciliation(COptions* options, CTransaction& trans, CReconciliationMap& prev, blknum_t next);
 
 //-----------------------------------------------------------------------
 bool acct_Display(CTraverser* trav, void* data) {
@@ -14,9 +13,8 @@ bool acct_Display(CTraverser* trav, void* data) {
 
     if (fourByteFilter(trav->trans.input, opt)) {
         if (opt->accounting) {
-            CReconciliation nums(trav->trans.blockNumber, trav->trans.transactionIndex, trav->trans.timestamp);
             blknum_t next = trav->index < opt->monApps.size() - 1 ? opt->monApps[trav->index + 1].blk : NOPOS;
-            process_reconciliation(opt, nums, trav->trans, opt->prevStatements, next, opt->tokens);
+            process_reconciliation(opt, trav->trans, opt->prevStatements, next);
         }
         cout << ((isJson() && !opt->firstOut) ? ", " : "");
         cout << trav->trans;
@@ -40,53 +38,88 @@ bool acct_Pre(CTraverser* trav, void* data) {
     return true;
 }
 
+class CReconCache {
+  public:
+    CTransaction* trans = nullptr;
+    CReconCache(void) {
+    }
+};
+
 //-----------------------------------------------------------------------
-bool process_reconciliation(COptions* options, CReconciliation& nums, CTransaction& trans,
-                            CReconciliationMap& prevStatements, blknum_t next, bool tokens) {
-    CStringArray corrections;
-    nums.reconcileEth(corrections, prevStatements, next, &trans, options->accountedFor);
-    trans.statements.clear();
-    trans.statements.push_back(nums);
-    prevStatements[options->accountedFor + "_eth"] = nums;
-    if (tokens) {
-        CAddressBoolMap done;
-        for (auto log : trans.receipt.logs) {
-            CAccountName tokenName;
-            bool isToken = options->findToken(tokenName, log.address);
-            bool isAirdrop = options->airdropMap[log.address];
-            bool isDone = done[log.address];
-            if ((isToken || trans.hasToken || isAirdrop) && !isDone) {
-                CMonitor m;
-                m.address = log.address;
-                nums.reset();
-                nums.asset = tokenName.symbol.empty() ? tokenName.name.substr(0, 4) : tokenName.symbol;
-                if (nums.asset.empty())
-                    nums.asset = getTokenSymbol(m, trans.blockNumber);
-                if (isAirdrop && nums.asset.empty()) {
-                    options->getNamedAccount(tokenName, log.address);
-                    nums.asset = tokenName.symbol.empty() ? tokenName.name.substr(0, 4) : tokenName.symbol;
-                }
-                if (nums.asset.empty()) {
-                    nums.asset = log.address.substr(0, 4) + "...";
-                }
-                nums.decimals = tokenName.decimals != 0 ? tokenName.decimals : 18;
-                string key = options->accountedFor + "_" + log.address;
-                nums.begBal = prevStatements[key].endBal;
-                nums.endBal = str_2_BigInt(getTokenBalanceOf(m, options->accountedFor, trans.blockNumber));
-                if (nums.begBal > nums.endBal) {
-                    nums.amountOut = (nums.begBal - nums.endBal);
-                } else {
-                    nums.amountIn = (nums.endBal - nums.begBal);
-                }
-                nums.amountNet = nums.amountIn - nums.amountOut;
-                nums.reconciled = true;
-                nums.reconciliationType = "";
-                done[log.address] = true;
-                if (nums.amountNet != 0)
-                    trans.statements.push_back(nums);
-                prevStatements[key] = nums;
-            }
+bool loadRecon(const string_q& path, void* data) {
+    CReconCache* thing = (CReconCache*)data;
+    CReconciliation nums(thing->trans->blockNumber, thing->trans->transactionIndex, thing->trans->timestamp);
+    readNodeFromBinary(nums, path);
+    thing->trans->statements.push_back(nums);
+    return true;
+}
+//-----------------------------------------------------------------------
+bool process_reconciliation(COptions* options, CTransaction& trans, CReconciliationMap& prevStatements, blknum_t next) {
+    string_q path = getBinaryCachePath(CT_RECONS, options->accountedFor, trans.blockNumber, trans.transactionIndex);
+    establishFolder(path);
+
+    if (fileExists(path)) {
+        CArchive archive(READING_ARCHIVE);
+        if (archive.Lock(path, modeReadOnly, LOCK_NOWAIT)) {
+            archive >> trans.statements;
+            for (auto statement : trans.statements)
+                prevStatements[options->accountedFor + "_" + toLower(statement.asset)] = statement;
+            archive.Release();
+            return true;
         }
     }
+
+    CAddressBoolMap done;
+    CStringArray corrections;
+    CReconciliation theStatement(trans.blockNumber, trans.transactionIndex, trans.timestamp);
+    theStatement.reconcileEth(corrections, prevStatements, next, &trans, options->accountedFor);
+    trans.statements.clear();
+    trans.statements.push_back(theStatement);
+    prevStatements[options->accountedFor + "_eth"] = theStatement;
+    for (auto log : trans.receipt.logs) {
+        CAccountName tokenName;
+        bool isToken = options->findToken(tokenName, log.address);
+        bool isAirdrop = options->airdropMap[log.address];
+        bool isDone = done[log.address];
+        if ((isToken || trans.hasToken || isAirdrop) && !isDone) {
+            CMonitor m;
+            m.address = log.address;
+            theStatement.reset();
+            theStatement.asset = tokenName.symbol.empty() ? tokenName.name.substr(0, 4) : tokenName.symbol;
+            if (theStatement.asset.empty())
+                theStatement.asset = getTokenSymbol(m, trans.blockNumber);
+            if (isAirdrop && theStatement.asset.empty()) {
+                options->getNamedAccount(tokenName, log.address);
+                theStatement.asset = tokenName.symbol.empty() ? tokenName.name.substr(0, 4) : tokenName.symbol;
+            }
+            if (theStatement.asset.empty()) {
+                theStatement.asset = log.address.substr(0, 4) + "...";
+            }
+            theStatement.decimals = tokenName.decimals != 0 ? tokenName.decimals : 18;
+            string key = options->accountedFor + "_" + log.address;
+            theStatement.begBal = prevStatements[key].endBal;
+            theStatement.endBal = str_2_BigInt(getTokenBalanceOf(m, options->accountedFor, trans.blockNumber));
+            if (theStatement.begBal > theStatement.endBal) {
+                theStatement.amountOut = (theStatement.begBal - theStatement.endBal);
+            } else {
+                theStatement.amountIn = (theStatement.endBal - theStatement.begBal);
+            }
+            theStatement.amountNet = theStatement.amountIn - theStatement.amountOut;
+            theStatement.reconciled = true;
+            theStatement.reconciliationType = "";
+            done[log.address] = true;
+            if (theStatement.amountNet != 0)
+                trans.statements.push_back(theStatement);
+            prevStatements[key] = theStatement;
+        }
+    }
+
+    CArchive archive(WRITING_ARCHIVE);
+    if (archive.Lock(path, modeWriteCreate, LOCK_WAIT)) {
+        archive << trans.statements;
+        archive.Release();
+        return true;
+    }
+
     return true;
 }

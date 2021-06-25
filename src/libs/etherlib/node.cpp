@@ -802,7 +802,7 @@ bool readFromJson(CBaseNode& node, const string_q& fileName) {
 }
 
 //-------------------------------------------------------------------------
-static string_q getFilename_local(cache_t type, const string_q& bn, const string_q& txid, const string_q& tcid,
+static string_q getFilename_local(cache_t type, const string_q& item1, const string_q& item2, const string_q& item3,
                                   bool asPath) {
     ostringstream os;
     switch (type) {
@@ -824,19 +824,31 @@ static string_q getFilename_local(cache_t type, const string_q& bn, const string
         case CT_MONITORS:
             os << "monitors/";
             break;
+        case CT_RECONS:
+            os << "monitors/recons/";
+            break;
         default:
             ASSERT(0);  // should not happen
     }
+
     if (type == CT_ACCTS || type == CT_MONITORS) {
-        string_q addr = toLower(substitute(bn, "0x", ""));
+        string_q addr = toLower(substitute(item1, "0x", ""));
         os << extract(addr, 0, 4) << "/" << extract(addr, 4, 4) << "/" << addr << ".bin";
 
+    } else if (type == CT_RECONS) {
+        string_q addr = toLower(substitute(item1, "0x", ""));
+        os << extract(addr, 0, 4) << "/";
+        os << extract(addr, 4, 4) << "/";
+        os << addr;
+        if (item2 != padNum9((uint64_t)NOPOS))
+            os << "." << item2 << "." << item3 << ".bin";
+
     } else {
-        os << extract(bn, 0, 2) << "/" << extract(bn, 2, 2) << "/" << extract(bn, 4, 2) << "/";
+        os << extract(item1, 0, 2) << "/" << extract(item1, 2, 2) << "/" << extract(item1, 4, 2) << "/";
         if (!asPath) {
-            os << bn;
-            os << ((type == CT_TRACES || type == CT_TXS) ? "-" + txid : "");
-            os << (type == CT_TRACES && !tcid.empty() ? "-" + tcid : "");
+            os << item1;
+            os << ((type == CT_TRACES || type == CT_TXS) ? "-" + item2 : "");
+            os << (type == CT_TRACES && !item3.empty() ? "-" + item3 : "");
             os << ".bin";
         }
     }
@@ -854,13 +866,13 @@ string_q getBinaryCacheFilename(cache_t type, blknum_t bn, txnum_t txid, const s
 }
 
 //-------------------------------------------------------------------------
-string_q getBinaryCachePath(cache_t type, const address_t& addr) {
-    return getFilename_local(type, addr, "", "", true);
+string_q getBinaryCachePath(cache_t type, const address_t& addr, blknum_t bn, txnum_t txid) {
+    return getFilename_local(type, addr, padNum9(bn), padNum5(txid), true);
 }
 
 //-------------------------------------------------------------------------
-string_q getBinaryCacheFilename(cache_t type, const address_t& addr) {
-    return getFilename_local(type, addr, "", "", false);
+string_q getBinaryCacheFilename(cache_t type, const address_t& addr, blknum_t bn, txnum_t txid) {
+    return getFilename_local(type, addr, padNum9(bn), padNum5(txid), false);
 }
 
 //-------------------------------------------------------------------------

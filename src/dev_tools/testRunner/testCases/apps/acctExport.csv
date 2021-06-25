@@ -44,9 +44,9 @@ on,both,fast,export,apps/acctExport,accounting_wei_1,y,addrs = 0x001d14804b399c6
 on,both,fast,export,apps/acctExport,accounting_wei_2,y,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & max_records = 15 & accounting & fmt = api
 on,both,fast,export,apps/acctExport,accounting_ether_1,y,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & first_block = 10277780 & last_block = 10296792 & accounting & ether & fmt = api & articulate
 
-on,both,fast,export,apps/acctExport,accounting_tokens_1,y,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & first_block = 10277780 & last_block = 10296792 & tokens & accounting & articulate & ether & fmt = api
-off,both,fast,export,apps/acctExport,accounting_tokens_2,y,addrs = 0x9531c059098e3d194ff87febb587ab07b30b1306 & first_record = 500 & max_records = 40 & tokens & accounting & fmt = json
-off,both,fast,export,apps/acctExport,accounting_tokens_3,y,addrs = 0xfd6c5ac853391486d25ddd5cefb1f7040ee31c2c & first_record = 5 & max_records = 10 & tokens & accounting & fmt = json
+on,both,fast,export,apps/acctExport,accounting_tokens_1,y,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & first_block = 10277780 & last_block = 10296792 & accounting & articulate & ether & fmt = api
+off,both,fast,export,apps/acctExport,accounting_tokens_2,y,addrs = 0x9531c059098e3d194ff87febb587ab07b30b1306 & first_record = 500 & max_records = 40 & accounting & fmt = json
+off,both,fast,export,apps/acctExport,accounting_tokens_3,y,addrs = 0xfd6c5ac853391486d25ddd5cefb1f7040ee31c2c & first_record = 5 & max_records = 10 & accounting & fmt = json
 
 on,both,fast,monitors,apps/acctExport,clean,y,clean
 on,both,fast,monitors,apps/acctExport,delete_1,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & delete

@@ -101,8 +101,8 @@ uint64_t addFilter(address_t addr, const CTopicArray& topics, blknum_t block);
 //-------------------------------------------------------------------------
 extern string_q getBinaryCacheFilename(cache_t ct, blknum_t bn, txnum_t txid = NOPOS, const string_q& trc_id = "");
 extern string_q getBinaryCachePath(cache_t ct, blknum_t bn, txnum_t txid = NOPOS, const string_q& trc_id = "");
-extern string_q getBinaryCacheFilename(cache_t ct, const address_t& addr);
-extern string_q getBinaryCachePath(cache_t ct, const address_t& addr);
+extern string_q getBinaryCacheFilename(cache_t ct, const address_t& addr, blknum_t bn = NOPOS, txnum_t txid = NOPOS);
+extern string_q getBinaryCachePath(cache_t ct, const address_t& addr, blknum_t bn = NOPOS, txnum_t txid = NOPOS);
 
 //-------------------------------------------------------------------------
 // function pointer types for forEvery functions

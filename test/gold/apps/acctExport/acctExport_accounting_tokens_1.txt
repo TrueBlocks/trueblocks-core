@@ -1,5 +1,5 @@
-acctExport argc: 12 [1:0xf503017d7baf7fbc0fff7492b751025c6a78179b] [2:--first_block] [3:10277780] [4:--last_block] [5:10296792] [6:--tokens] [7:--accounting] [8:--articulate] [9:--ether] [10:--fmt] [11:api] 
-acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --last_block 10296792 --tokens --accounting --articulate --ether --fmt api 
+acctExport argc: 11 [1:0xf503017d7baf7fbc0fff7492b751025c6a78179b] [2:--first_block] [3:10277780] [4:--last_block] [5:10296792] [6:--accounting] [7:--articulate] [8:--ether] [9:--fmt] [10:api] 
+acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --last_block 10296792 --accounting --articulate --ether --fmt api 
 {"data": [
 {
   "hash": "0xdfa263cb6a202c9f301944cbd8be76f8cdd97e1abb42f1ca1347bb3e31fafd00",
@@ -116,7 +116,7 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "asset": "ETH",
       "decimals": 18,
       "begBal": "5.137097246179548557",
-      "begBalDiff": "5.137097246179548557",
+      "begBalDiff": "",
       "amountIn": "",
       "amountOut": "",
       "internalIn": "",
@@ -132,7 +132,8 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBal": "5.137097246179548557",
       "endBalCalc": "5.137097246179548557",
       "endBalDiff": "",
-      "amountNet": ""
+      "amountNet": "",
+      "reconciled": true
     },
     {
       "blockNumber": 10277780,
@@ -140,9 +141,9 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "timestamp": 1592323744,
       "asset": "DAI",
       "decimals": 18,
-      "begBal": "",
+      "begBal": "1158.567776639199461740",
       "begBalDiff": "",
-      "amountIn": "1168.267776639199461740",
+      "amountIn": "9.700000000000000000",
       "amountOut": "",
       "internalIn": "",
       "internalOut": "",
@@ -157,7 +158,7 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBal": "1168.267776639199461740",
       "endBalCalc": "",
       "endBalDiff": "",
-      "amountNet": "1168.267776639199461740",
+      "amountNet": "9.700000000000000000",
       "reconciled": true
     }
   ],
@@ -643,65 +644,6 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
     ],
     "status": 1
   },
-  "traces": [
-    {
-      "type": "call",
-      "action": {
-        "selfDestructed": "0x0",
-        "balance": 0,
-        "callType": "call",
-        "from": "0x3a051cff039d0ea6964c0f9f01db6e61cc521748",
-        "gas": 76832,
-        "input": "0x9120491c00000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000002000000000000000000000000eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee000000000000000000000000000000000000000000000000008700cc75770000000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b000000000000000000000000eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee00000000000000000000000000000000000000000000000000071afd498d000000000000000000000000000000de4b13153673bcae2616b67bf822500d325fc3",
-        "refundAddress": "0x0",
-        "to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
-        "value": 40000000000000000
-      },
-      "result": {
-        "newContract": "0x0",
-        "gasUsed": 35466,
-        "output": "0x"
-      }
-    },
-    {
-      "type": "call",
-      "action": {
-        "selfDestructed": "0x0",
-        "balance": 0,
-        "callType": "call",
-        "from": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
-        "gas": 55324,
-        "input": "0x",
-        "refundAddress": "0x0",
-        "to": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-        "value": 38000000000000000
-      },
-      "result": {
-        "newContract": "0x0",
-        "gasUsed": 0,
-        "output": "0x"
-      }
-    },
-    {
-      "type": "call",
-      "action": {
-        "selfDestructed": "0x0",
-        "balance": 0,
-        "callType": "call",
-        "from": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
-        "gas": 42803,
-        "input": "0x",
-        "refundAddress": "0x0",
-        "to": "0x00de4b13153673bcae2616b67bf822500d325fc3",
-        "value": 2000000000000000
-      },
-      "result": {
-        "newContract": "0x0",
-        "gasUsed": 0,
-        "output": "0x"
-      }
-    }
-  ],
   "articulatedTx": {
     "name": "donate",
     "inputs": {
@@ -5788,65 +5730,6 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
     ],
     "status": 1
   },
-  "traces": [
-    {
-      "type": "call",
-      "action": {
-        "selfDestructed": "0x0",
-        "balance": 0,
-        "callType": "call",
-        "from": "0x0b16f058257f43db6ec84a7b3c77766cb808face",
-        "gas": 76796,
-        "input": "0x9120491c00000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000002000000000000000000000000eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee00000000000000000000000000000000000000000000000002a303fe4b530000000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b000000000000000000000000eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee000000000000000000000000000000000000000000000000002386f26fc1000200000000000000000000000000de4b13153673bcae2616b67bf822500d325fc3",
-        "refundAddress": "0x0",
-        "to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
-        "value": 200000000000000002
-      },
-      "result": {
-        "newContract": "0x0",
-        "gasUsed": 35466,
-        "output": "0x"
-      }
-    },
-    {
-      "type": "call",
-      "action": {
-        "selfDestructed": "0x0",
-        "balance": 0,
-        "callType": "call",
-        "from": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
-        "gas": 55288,
-        "input": "0x",
-        "refundAddress": "0x0",
-        "to": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-        "value": 190000000000000000
-      },
-      "result": {
-        "newContract": "0x0",
-        "gasUsed": 0,
-        "output": "0x"
-      }
-    },
-    {
-      "type": "call",
-      "action": {
-        "selfDestructed": "0x0",
-        "balance": 0,
-        "callType": "call",
-        "from": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
-        "gas": 42767,
-        "input": "0x",
-        "refundAddress": "0x0",
-        "to": "0x00de4b13153673bcae2616b67bf822500d325fc3",
-        "value": 10000000000000002
-      },
-      "result": {
-        "newContract": "0x0",
-        "gasUsed": 0,
-        "output": "0x"
-      }
-    }
-  ],
   "articulatedTx": {
     "name": "donate",
     "inputs": {

@@ -132,14 +132,6 @@ paths:
         explode: true
         schema:
           type: boolean
-      - name: tokens
-        in: query
-        description: export accounting for ERC 20 tokens (assumes ETH accounting as above)
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
       - name: articulate
         in: query
         description: articulate transactions, traces, logs, and outputs

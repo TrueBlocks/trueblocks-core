@@ -26,7 +26,6 @@ class COptions : public CAbiOptions {
     bool logs;
     bool traces;
     bool accounting;
-    bool tokens;
     bool articulate;
     bool cache_txs;
     bool cache_traces;

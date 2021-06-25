@@ -21,7 +21,6 @@ static const COption params[] = {
     COption("logs", "l", "", OPT_SWITCH, "export logs instead of transaction list"),
     COption("traces", "t", "", OPT_SWITCH, "export traces instead of transaction list"),
     COption("accounting", "C", "", OPT_SWITCH, "export accounting records instead of transaction list"),
-    COption("tokens", "O", "", OPT_SWITCH, "export accounting for ERC 20 tokens (assumes ETH accounting as above)"),
     COption("articulate", "a", "", OPT_SWITCH, "articulate transactions, traces, logs, and outputs"),
     COption("cache_txs", "i", "", OPT_SWITCH, "write transactions to the cache (see notes)"),
     COption("cache_traces", "R", "", OPT_SWITCH, "write traces to the cache (see notes)"),
@@ -84,9 +83,6 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-C" || arg == "--accounting") {
             accounting = true;
-
-        } else if (arg == "-O" || arg == "--tokens") {
-            tokens = true;
 
         } else if (arg == "-a" || arg == "--articulate") {
             articulate = true;
@@ -203,7 +199,6 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("logs", logs);
     LOG_TEST_BOOL("traces", traces);
     LOG_TEST_BOOL("accounting", accounting);
-    LOG_TEST_BOOL("tokens", tokens);
     LOG_TEST_BOOL("articulate", articulate);
     LOG_TEST_BOOL("cache_txs", cache_txs);
     LOG_TEST_BOOL("cache_traces", cache_traces);
@@ -416,7 +411,6 @@ void COptions::Init(void) {
     logs = false;
     traces = false;
     accounting = false;
-    tokens = false;
     articulate = false;
     // clang-format off
     cache_txs = getGlobalConfig("acctExport")->getConfigBool("settings", "cache_txs", false);
