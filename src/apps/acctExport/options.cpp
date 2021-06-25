@@ -700,6 +700,19 @@ bool COptions::isRelevant(const CLogEntry& log) const {
 }
 
 //-----------------------------------------------------------------------
+bool fourByteFilter(const string_q& input, const COptions* opt) {
+    ASSERT(!opt->freshenOnly);
+    if (opt->fourbytes.empty())
+        return true;
+
+    for (auto four : opt->fourbytes)
+        if (startsWith(input, four))
+            return true;
+
+    return false;
+}
+
+//-----------------------------------------------------------------------
 string_q CScrapeStatistics::Header(const string_q& fmt) const {
     return Format(substitute(fmt, "{", "{p:"));
 }
@@ -721,17 +734,4 @@ void COptions::writePerformanceData(void) {
     ostringstream data;
     data << stats.Format(fmt) << endl;
     appendToAsciiFile(statsFile, data.str());
-}
-
-//-----------------------------------------------------------------------
-bool fourByteFilter(const string_q& input, const COptions* opt) {
-    ASSERT(!opt->freshenOnly);
-    if (opt->fourbytes.empty())
-        return true;
-
-    for (auto four : opt->fourbytes)
-        if (startsWith(input, four))
-            return true;
-
-    return false;
 }
