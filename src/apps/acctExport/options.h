@@ -109,6 +109,7 @@ class COptions : public CAbiOptions {
     void writePerformanceData(void);
 
     bool queryFlatFile(const string_q& path, bool sorted);
+    bool process_reconciliation(CTraverser *trav, blknum_t next);
 };
 
 //--------------------------------------------------------------------------------

@@ -5,8 +5,6 @@
  *------------------------------------------------------------------------*/
 #include "options.h"
 
-extern bool process_reconciliation(COptions* options, CTransaction& trans, CReconciliationMap& prev, blknum_t next);
-
 //-----------------------------------------------------------------------
 bool acct_Display(CTraverser* trav, void* data) {
     COptions* opt = (COptions*)data;
@@ -14,7 +12,7 @@ bool acct_Display(CTraverser* trav, void* data) {
     if (fourByteFilter(trav->trans.input, opt)) {
         if (opt->accounting) {
             blknum_t next = trav->index < opt->monApps.size() - 1 ? opt->monApps[trav->index + 1].blk : NOPOS;
-            process_reconciliation(opt, trav->trans, opt->prevStatements, next);
+            process_reconciliation(trav, next);
         }
         cout << ((isJson() && !opt->firstOut) ? ", " : "");
         cout << trav->trans;
@@ -38,67 +36,53 @@ bool acct_Pre(CTraverser* trav, void* data) {
     return true;
 }
 
-class CReconCache {
-  public:
-    CTransaction* trans = nullptr;
-    CReconCache(void) {
-    }
-};
-
 //-----------------------------------------------------------------------
-bool loadRecon(const string_q& path, void* data) {
-    CReconCache* thing = (CReconCache*)data;
-    CReconciliation nums(thing->trans->blockNumber, thing->trans->transactionIndex, thing->trans->timestamp);
-    readNodeFromBinary(nums, path);
-    thing->trans->statements.push_back(nums);
-    return true;
-}
-//-----------------------------------------------------------------------
-bool process_reconciliation(COptions* options, CTransaction& trans, CReconciliationMap& prevStatements, blknum_t next) {
-    string_q path = getBinaryCachePath(CT_RECONS, options->accountedFor, trans.blockNumber, trans.transactionIndex);
+bool COptions::process_reconciliation(CTraverser *trav, blknum_t next) {
+    string_q path = getBinaryCachePath(CT_RECONS, accountedFor, trav->trans.blockNumber, trav->trans.transactionIndex);
     establishFolder(path);
 
     if (fileExists(path)) {
         CArchive archive(READING_ARCHIVE);
         if (archive.Lock(path, modeReadOnly, LOCK_NOWAIT)) {
-            archive >> trans.statements;
-            for (auto statement : trans.statements)
-                prevStatements[options->accountedFor + "_" + toLower(statement.asset)] = statement;
+            archive >> trav->trans.statements;
+            for (auto statement : trav->trans.statements)
+                prevStatements[accountedFor + "_" + toLower(statement.asset)] = statement;
             archive.Release();
             return true;
         }
     }
 
+    trav->readStatus = "Reconciling";
     CAddressBoolMap done;
     CStringArray corrections;
-    CReconciliation theStatement(trans.blockNumber, trans.transactionIndex, trans.timestamp);
-    theStatement.reconcileEth(corrections, prevStatements, next, &trans, options->accountedFor);
-    trans.statements.clear();
-    trans.statements.push_back(theStatement);
-    prevStatements[options->accountedFor + "_eth"] = theStatement;
-    for (auto log : trans.receipt.logs) {
+    CReconciliation theStatement(trav->trans.blockNumber, trav->trans.transactionIndex, trav->trans.timestamp);
+    theStatement.reconcileEth(corrections, prevStatements, next, &trav->trans, accountedFor);
+    trav->trans.statements.clear();
+    trav->trans.statements.push_back(theStatement);
+    prevStatements[accountedFor + "_eth"] = theStatement;
+    for (auto log : trav->trans.receipt.logs) {
         CAccountName tokenName;
-        bool isToken = options->findToken(tokenName, log.address);
-        bool isAirdrop = options->airdropMap[log.address];
+        bool isToken = findToken(tokenName, log.address);
+        bool isAirdrop = airdropMap[log.address];
         bool isDone = done[log.address];
-        if ((isToken || trans.hasToken || isAirdrop) && !isDone) {
+        if ((isToken || trav->trans.hasToken || isAirdrop) && !isDone) {
             CMonitor m;
             m.address = log.address;
             theStatement.reset();
             theStatement.asset = tokenName.symbol.empty() ? tokenName.name.substr(0, 4) : tokenName.symbol;
             if (theStatement.asset.empty())
-                theStatement.asset = getTokenSymbol(m, trans.blockNumber);
+                theStatement.asset = getTokenSymbol(m, trav->trans.blockNumber);
             if (isAirdrop && theStatement.asset.empty()) {
-                options->getNamedAccount(tokenName, log.address);
+                getNamedAccount(tokenName, log.address);
                 theStatement.asset = tokenName.symbol.empty() ? tokenName.name.substr(0, 4) : tokenName.symbol;
             }
             if (theStatement.asset.empty()) {
                 theStatement.asset = log.address.substr(0, 4) + "...";
             }
             theStatement.decimals = tokenName.decimals != 0 ? tokenName.decimals : 18;
-            string key = options->accountedFor + "_" + log.address;
+            string key = accountedFor + "_" + log.address;
             theStatement.begBal = prevStatements[key].endBal;
-            theStatement.endBal = str_2_BigInt(getTokenBalanceOf(m, options->accountedFor, trans.blockNumber));
+            theStatement.endBal = str_2_BigInt(getTokenBalanceOf(m, accountedFor, trav->trans.blockNumber));
             if (theStatement.begBal > theStatement.endBal) {
                 theStatement.amountOut = (theStatement.begBal - theStatement.endBal);
             } else {
@@ -109,14 +93,14 @@ bool process_reconciliation(COptions* options, CTransaction& trans, CReconciliat
             theStatement.reconciliationType = "";
             done[log.address] = true;
             if (theStatement.amountNet != 0)
-                trans.statements.push_back(theStatement);
+                trav->trans.statements.push_back(theStatement);
             prevStatements[key] = theStatement;
         }
     }
 
     CArchive archive(WRITING_ARCHIVE);
     if (archive.Lock(path, modeWriteCreate, LOCK_WAIT)) {
-        archive << trans.statements;
+        archive << trav->trans.statements;
         archive.Release();
         return true;
     }
