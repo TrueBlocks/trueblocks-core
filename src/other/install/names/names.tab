@@ -7201,6 +7201,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 32-Kickback:Friends	0xf6ca41876235fffacfaea18655e54263c779f6bd	krisnaer		https://kickback.events/			false	false	false	false	false	false
 50-Tokens:ERC20	0xf6cfe53d6febaeea051f400ff5fc14f0cbbdaca1	DigiPulse Token	DGPT	On chain	18	Aim to ensure that all digital assets holders and crypto wallet users have ultimate control over who inherits their digital and crypto assets.	false	false	false	true	true	false
 90-DevCon2:Individual	0xf6d8a62dec7703c97d4a1b2a8668653e3099c283	Peter Borah		DevCon2 Token Contract			false	false	false	false	false	false
+40-Friends	0xf6da21e95d74767009accb145b96897ac3630bad	TB Donor Sender					false	false	false	false	false	false
 31-Gitcoin Grants:Grant	0xf6dba00e8312fdd9ff5c660bdc0d5afe36cc3e08	Grant 1894 Idea Factory		https://gitcoin.co/grants/1894/idea-factory			false	false	false	false	false	false
 75-Early Actors	0xf6e1652a0397e078f434d6dda181b218cfd42e09	Miner_0094_56		OnChain			false	false	false	false	false	false
 31-Gitcoin Grants:Grant	0xf6ebfc89a12dc981e4da64857025cb1cee37424d	Grant 1056 Try		https://gitcoin.co/grants/1056/try			false	false	false	false	false	false
