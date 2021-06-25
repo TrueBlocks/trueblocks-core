@@ -12,7 +12,7 @@ bool acct_Display(CTraverser* trav, void* data) {
     if (fourByteFilter(trav->trans.input, opt)) {
         if (opt->accounting) {
             blknum_t next = trav->index < opt->monApps.size() - 1 ? opt->monApps[trav->index + 1].blk : NOPOS;
-            process_reconciliation(trav, next);
+            opt->process_reconciliation(trav, next);
         }
         cout << ((isJson() && !opt->firstOut) ? ", " : "");
         cout << trav->trans;
