@@ -36,7 +36,7 @@ class CTest {
     string_q cmd;
     string_q name;
     string_q params;
-    bool turbo{false};
+    bool erigon{false};
     explicit CTest(string_q& str) {
         static uint64_t cnt = 0;
         replaceAll(str, "\t", " ");
@@ -46,8 +46,8 @@ class CTest {
             params = trim(nextTokenClear(str, ' '));
         } else {
             num = trim(nextTokenClear(str, ' '));  // overwritten
-            turbo = contains(num, "_turbo");
-            replace(num, "_turbo", "");
+            erigon = contains(num, "_erigon");
+            replace(num, "_erigon", "");
             cmd = trim(nextTokenClear(str, ' '));
             name = trim(nextTokenClear(str, ' '));  // overwritten
             params = trim(str);
@@ -100,7 +100,7 @@ int main(int argc, const char* argv[]) {
                 os << " >" << testFile;
                 // cout << os.str() << endl;
                 string_q t = (test.num + "." + test.name).substr(0, 20);
-                if (node.name == "TurboGeth") {
+                if (node.name == "Erigon") {
                     cout << padRight(t, 20) << ": " << padRight(test.cmd, 20) << test.params << " ";
                     cout.flush();
                 } else {
@@ -111,20 +111,20 @@ int main(int argc, const char* argv[]) {
                     return 0;
                 }
 
-                if (node.name == "TurboGeth") {
-                    string_q turboFile = "./turbogeth/" + test.name + ".txt";
+                if (node.name == "Erigon") {
+                    string_q erigonFile = "./erigon/" + test.name + ".txt";
                     string_q parityFile = "./parity/" + test.name + ".txt";
-                    string_q turbo = asciiFileToString(turboFile);
+                    string_q erigon = asciiFileToString(erigonFile);
                     string_q parity;
-                    if (test.turbo) {
-                        parity = turbo;
+                    if (test.erigon) {
+                        parity = erigon;
                         stringToAsciiFile(parityFile, parity);
                     } else {
                         parity = asciiFileToString(parityFile);
                     }
-                    cout << ((!turbo.empty() && turbo == parity) ? greenCheck : redX);
-                    passed += (turbo == parity);
-                    failed += (turbo != parity);
+                    cout << ((!erigon.empty() && erigon == parity) ? greenCheck : redX);
+                    passed += (erigon == parity);
+                    failed += (erigon != parity);
                     cout << endl;
                 }
             }
