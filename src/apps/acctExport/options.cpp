@@ -377,19 +377,25 @@ bool COptions::parseArguments(string_q& command) {
         } else {
             string_q fileName = getCachePath("objs/" + load);
             LOG_INFO("Trying to load dynamic library ", fileName);
+
             if (!fileExists(fileName)) {
                 replace(fileName, "/objs/", "/objs/lib");
                 fileName = fileName + ".so";
                 LOG_INFO("Trying to load dynamic library ", fileName);
             }
+
             if (!fileExists(fileName)) {
                 fileName = substitute(fileName, ".so", ".dylib");
                 LOG_INFO("Trying to load dynamic library ", fileName);
             }
-            if (fileExists(fileName))
+
+            if (fileExists(fileName)) {
+                LOG_INFO(bYellow, "Found dynamic library ", fileName, cOff);
                 load = fileName;
-            else
+
+            } else {
                 return usage("Could not load dynamic traverser for " + fileName + ".");
+            }
         }
     }
 

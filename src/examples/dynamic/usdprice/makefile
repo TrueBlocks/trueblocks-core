@@ -7,6 +7,7 @@ none:
 	@echo "Run either 'make mac' or 'make linux'."
 
 mac:
+	cd ../../../../build ; make -j 12 ; cd -
 	g++ $(cflags) -fPIC -shared -o libusdprice.dylib $(libraries)/*.a $(curl) usdprice.cpp
 	mv ./libusdprice.dylib ~/Library/Application\ Support/TrueBlocks/cache/objs/
 

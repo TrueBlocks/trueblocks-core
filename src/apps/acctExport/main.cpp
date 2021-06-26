@@ -212,7 +212,8 @@ bool loadTx_Func(CTraverser* trav, void* data) {
     }
 
     trav->trans.pBlock = &trav->block;
-    trav->trans.timestamp = trav->block.timestamp = (timestamp_t)expContext().tsMemMap[(trav->app->blk * 2) + 1];
+    trav->trans.timestamp = (timestamp_t)expContext().tsMemMap[(trav->app->blk * 2) + 1];
+    trav->block.timestamp = (timestamp_t)expContext().tsMemMap[(trav->app->blk * 2) + 1];
 
     if (opt->traces && trav->trans.traces.size() == 0) {
         dirty = true;
