@@ -3,7 +3,8 @@ class = CReconciliation
 fields = blknum blockNumber|\
         blknum transactionIndex|\
         timestamp timestamp|\
-        string asset|\
+        address assetAddr|\
+        string assetSymbol|\
         uint64 decimals=18|\
         int256 begBal|\
         int256 begBalDiff|\
@@ -28,4 +29,4 @@ fields = blknum blockNumber|\
 includes = utillib.h|abi.h
 cpp_includes = etherlib.h
 serializable = true
-equals = ((blockNumber == it.blockNumber) && (asset == it.asset))
+equals = ((blockNumber == it.blockNumber) && (assetAddr == it.assetAddr))

@@ -37,7 +37,7 @@ bool acct_Pre(CTraverser* trav, void* data) {
 }
 
 //-----------------------------------------------------------------------
-bool COptions::process_reconciliation(CTraverser *trav, blknum_t next) {
+bool COptions::process_reconciliation(CTraverser* trav, blknum_t next) {
     string_q path = getBinaryCachePath(CT_RECONS, accountedFor, trav->trans.blockNumber, trav->trans.transactionIndex);
     establishFolder(path);
 
@@ -46,7 +46,7 @@ bool COptions::process_reconciliation(CTraverser *trav, blknum_t next) {
         if (archive.Lock(path, modeReadOnly, LOCK_NOWAIT)) {
             archive >> trav->trans.statements;
             for (auto statement : trav->trans.statements)
-                prevStatements[accountedFor + "_" + toLower(statement.asset)] = statement;
+                prevStatements[accountedFor + "_" + toLower(statement.assetAddr)] = statement;
             archive.Release();
             return true;
         }
@@ -69,19 +69,20 @@ bool COptions::process_reconciliation(CTraverser *trav, blknum_t next) {
             CMonitor m;
             m.address = log.address;
             theStatement.reset();
-            theStatement.asset = tokenName.symbol.empty() ? tokenName.name.substr(0, 4) : tokenName.symbol;
-            if (theStatement.asset.empty())
-                theStatement.asset = getTokenSymbol(m, trav->trans.blockNumber);
-            if (isAirdrop && theStatement.asset.empty()) {
+            theStatement.assetAddr = log.address;
+            theStatement.assetSymbol = tokenName.symbol.empty() ? tokenName.name.substr(0, 4) : tokenName.symbol;
+            if (theStatement.assetSymbol.empty())
+                theStatement.assetSymbol = getTokenSymbol(m, trav->trans.blockNumber);
+            if (isAirdrop && theStatement.assetSymbol.empty()) {
                 getNamedAccount(tokenName, log.address);
-                theStatement.asset = tokenName.symbol.empty() ? tokenName.name.substr(0, 4) : tokenName.symbol;
+                theStatement.assetSymbol = tokenName.symbol.empty() ? tokenName.name.substr(0, 4) : tokenName.symbol;
             }
-            if (theStatement.asset.empty()) {
-                theStatement.asset = log.address.substr(0, 4) + "...";
+            if (theStatement.assetSymbol.empty()) {
+                theStatement.assetSymbol = log.address.substr(0, 4) + "...";
             }
             theStatement.decimals = tokenName.decimals != 0 ? tokenName.decimals : 18;
-            string key = accountedFor + "_" + log.address;
-            theStatement.begBal = prevStatements[key].endBal;
+            string psKey = accountedFor + "_" + log.address;
+            theStatement.begBal = prevStatements[psKey].endBal;
             theStatement.endBal = str_2_BigInt(getTokenBalanceOf(m, accountedFor, trav->trans.blockNumber));
             if (theStatement.begBal > theStatement.endBal) {
                 theStatement.amountOut = (theStatement.begBal - theStatement.endBal);
@@ -94,7 +95,7 @@ bool COptions::process_reconciliation(CTraverser *trav, blknum_t next) {
             done[log.address] = true;
             if (theStatement.amountNet != 0)
                 trav->trans.statements.push_back(theStatement);
-            prevStatements[key] = theStatement;
+            prevStatements[psKey] = theStatement;
         }
     }
 

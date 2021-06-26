@@ -5,9 +5,8 @@
 
 string_q uniswapFactory = "0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f";
 string_q getPair = "0xe6a43905";
-string_q pairBytes =
-    padLeft("6b175474e89094c44da98b954eedeac495271d0f", 64, '0') +
-    padLeft("c02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", 64, '0');
+string_q pairBytes = padLeft("6b175474e89094c44da98b954eedeac495271d0f", 64, '0') +
+                     padLeft("c02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", 64, '0');
 string_q getReserves = "0x0902f1ac";
 string_q reserveBytes = "";
 //-----------------------------------------------------------------------
@@ -25,7 +24,8 @@ class CTestTraverser : public CTraverser {
         if (doEthCall(theCall)) {
             perTxCall.address = theCall.getResults();
             perTxCall.abi_spec.loadAbiFromEtherscan(perTxCall.address);
-            LOG_INFO(bGreen, "Found USD Pair: ", perTxCall.address, " with ", perTxCall.abi_spec.interfaces.size(), " endpoints", cOff);
+            LOG_INFO(bGreen, "Found USD Pair: ", perTxCall.address, " with ", perTxCall.abi_spec.interfaces.size(),
+                     " endpoints", cOff);
         } else {
             LOG_WARN(bRed, "Could not find USD Pair: ", perTxCall.address, cOff);
         }

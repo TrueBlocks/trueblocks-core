@@ -29,7 +29,8 @@ class CReconciliation : public CBaseNode {
     blknum_t blockNumber;
     blknum_t transactionIndex;
     timestamp_t timestamp;
-    string_q asset;
+    address_t assetAddr;
+    string_q assetSymbol;
     uint64_t decimals;
     bigint_t begBal;
     bigint_t begBalDiff;
@@ -134,7 +135,8 @@ inline void CReconciliation::initialize(void) {
     blockNumber = 0;
     transactionIndex = 0;
     timestamp = 0;
-    asset = "";
+    assetAddr = "";
+    assetSymbol = "";
     decimals = 18;
     begBal = 0;
     begBalDiff = 0;
@@ -169,7 +171,8 @@ inline void CReconciliation::duplicate(const CReconciliation& re) {
     blockNumber = re.blockNumber;
     transactionIndex = re.transactionIndex;
     timestamp = re.timestamp;
-    asset = re.asset;
+    assetAddr = re.assetAddr;
+    assetSymbol = re.assetSymbol;
     decimals = re.decimals;
     begBal = re.begBal;
     begBalDiff = re.begBalDiff;
@@ -209,7 +212,7 @@ inline bool CReconciliation::operator==(const CReconciliation& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // Equality operator as defined in class definition
-    return ((blockNumber == it.blockNumber) && (asset == it.asset));
+    return ((blockNumber == it.blockNumber) && (assetAddr == it.assetAddr));
 }
 
 //-------------------------------------------------------------------------

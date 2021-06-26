@@ -75,8 +75,11 @@ string_q CReconciliation::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
-            if (fieldName % "asset") {
-                return asset;
+            if (fieldName % "assetAddr") {
+                return addr_2_Str(assetAddr);
+            }
+            if (fieldName % "assetSymbol") {
+                return assetSymbol;
             }
             if (fieldName % "amountIn") {
                 return bni_2_Str(amountIn);
@@ -192,8 +195,12 @@ bool CReconciliation::setValueByName(const string_q& fieldNameIn, const string_q
 
     switch (tolower(fieldName[0])) {
         case 'a':
-            if (fieldName % "asset") {
-                asset = fieldValue;
+            if (fieldName % "assetAddr") {
+                assetAddr = str_2_Addr(fieldValue);
+                return true;
+            }
+            if (fieldName % "assetSymbol") {
+                assetSymbol = fieldValue;
                 return true;
             }
             if (fieldName % "amountIn") {
@@ -341,7 +348,8 @@ bool CReconciliation::Serialize(CArchive& archive) {
     archive >> blockNumber;
     archive >> transactionIndex;
     archive >> timestamp;
-    archive >> asset;
+    archive >> assetAddr;
+    archive >> assetSymbol;
     archive >> decimals;
     archive >> begBal;
     archive >> begBalDiff;
@@ -379,7 +387,8 @@ bool CReconciliation::SerializeC(CArchive& archive) const {
     archive << blockNumber;
     archive << transactionIndex;
     archive << timestamp;
-    archive << asset;
+    archive << assetAddr;
+    archive << assetSymbol;
     archive << decimals;
     archive << begBal;
     archive << begBalDiff;
@@ -441,7 +450,8 @@ void CReconciliation::registerClass(void) {
     ADD_FIELD(CReconciliation, "blockNumber", T_BLOCKNUM, ++fieldNum);
     ADD_FIELD(CReconciliation, "transactionIndex", T_BLOCKNUM, ++fieldNum);
     ADD_FIELD(CReconciliation, "timestamp", T_TIMESTAMP, ++fieldNum);
-    ADD_FIELD(CReconciliation, "asset", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CReconciliation, "assetAddr", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CReconciliation, "assetSymbol", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CReconciliation, "decimals", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CReconciliation, "begBal", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliation, "begBalDiff", T_INT256, ++fieldNum);
@@ -483,9 +493,9 @@ string_q nextReconciliationChunk_custom(const string_q& fieldIn, const void* dat
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             case 'a':
-                if (fieldIn % "asset") {
-                    if (rec->asset != "ETH")
-                        return rec->asset;
+                if (fieldIn % "assetSymbol") {
+                    if (rec->assetSymbol != "ETH")
+                        return rec->assetSymbol;
                     if (expContext().asEther) {
                         return "ETH";
                     } else if (expContext().asDollars) {
@@ -651,7 +661,8 @@ bool CReconciliation::reconcileEth(const CStringArray& corrections, CReconciliat
     // LOG4(Format());
 
     CReconciliation prev = last[acctFor + "_eth"];
-    asset = "ETH";
+    assetSymbol = "ETH";
+    assetAddr = acctFor;
 
     // Note: In the case of an error, we need to account for gas usage if the account is the transaction's sender
     //

@@ -7,10 +7,8 @@
 
 //---------------------------------------------------------------
 bool visitFinalIndexFiles(const string_q& path, void* data) {
-    ENTER("visitFinalIndexFiles");
-
     if (endsWith(path, "/")) {
-        EXIT_NOMSG(forEveryFileInFolder(path + "*", visitFinalIndexFiles, data));
+        return forEveryFileInFolder(path + "*", visitFinalIndexFiles, data);
 
     } else {
         // Pick up some useful data for either method...
@@ -21,7 +19,7 @@ bool visitFinalIndexFiles(const string_q& path, void* data) {
         // are inclusive. This silently skips unknown files in the folder (such as shell scripts).
         if (!contains(path, "-") || !endsWith(path, ".bloom")) {
             options->stats.nSkipped++;
-            EXIT_NOMSG(!shouldQuit());
+            return !shouldQuit();
         }
 
         timestamp_t unused;
@@ -31,7 +29,7 @@ bool visitFinalIndexFiles(const string_q& path, void* data) {
         // Note that `start` and `end` options are ignored when scanning
         if (!rangesIntersect(options->listRange, options->fileRange)) {
             options->stats.nSkipped++;
-            EXIT_NOMSG(!shouldQuit());
+            return !shouldQuit();
         }
 
         options->possibles.clear();
@@ -42,21 +40,21 @@ bool visitFinalIndexFiles(const string_q& path, void* data) {
 
         if (options->possibles.size() == 0) {
             options->stats.nSkipped++;
-            EXIT_NOMSG(!shouldQuit());
+            return !shouldQuit();
         }
 
         if (isTestMode() && options->fileRange.second > 5000000) {
             options->stats.nSkipped++;
-            EXIT_NOMSG(false);
+            return false;
         }
 
         // LOG4("Scanning ", path);
         bool ret = options->visitBinaryFile(path, data) && !shouldQuit();
-        EXIT_NOMSG(ret);
+        return ret;
     }
 
     ASSERT(0);  // should not happen
-    EXIT_NOMSG(!shouldQuit());
+    return !shouldQuit();
 }
 
 //---------------------------------------------------------------
