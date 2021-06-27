@@ -35,7 +35,7 @@ bool visitFinalIndexFiles(const string_q& path, void* data) {
         options->possibles.clear();
         for (auto m : options->allMonitors) {
             blknum_t lb = m.getLastBlockInMonitorPlusOne();
-            LOG_INFO("lb: ", lb, " fileRange: ", options->fileRange.first, "-", options->fileRange.second);
+            // LOG_INFO("lb: ", lb, " fileRange: ", options->fileRange.first, "-", options->fileRange.second);
             if (lb == 0 || lb <= options->fileRange.first)
                 options->possibles.push_back(m);
         }

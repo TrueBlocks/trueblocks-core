@@ -304,7 +304,7 @@ bool COptions::parseArguments(string_q& command) {
             LOG_TEST("Last block in monitor", monitor.getLastBlockInMonitorPlusOne(), false);
         } else {
             LOG_WARN("Monitor not found for ", addr + ". Continuing anyway.");
-            nextBlockToVisit = 0; // monitor.getNextBlockToVisit()
+            nextBlockToVisit = 0;  // monitor.getNextBlockToVisit()
         }
         if (accountedFor.empty()) {
             CAccountName acct;
