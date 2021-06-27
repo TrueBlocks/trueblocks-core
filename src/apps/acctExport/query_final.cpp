@@ -34,7 +34,9 @@ bool visitFinalIndexFiles(const string_q& path, void* data) {
 
         options->possibles.clear();
         for (auto m : options->allMonitors) {
-            if (m.getLastBlockInMonitor() == 0 || m.getLastBlockInMonitor() < options->fileRange.first)
+            blknum_t lb = m.getLastBlockInMonitorPlusOne();
+            LOG_INFO("lb: ", lb, " fileRange: ", options->fileRange.first, "-", options->fileRange.second);
+            if (lb == 0 || lb <= options->fileRange.first)
                 options->possibles.push_back(m);
         }
 
@@ -83,9 +85,8 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
 
         if (!hit) {
             // none of them hit, so write last block for each of them
-            for (auto monitor : possibles) {
-                monitor.writeMonitorLastBlock(fileRange.second + 1, monitor.isStaging);
-            }
+            for (auto monitor : possibles)
+                monitor.writeLastBlockInMonitor(fileRange.second + 1, monitor.isStaging);
             options->stats.nBloomMisses++;
             LOG_PROGRESS("Skipping", options->fileRange.first, options->listRange.second, " bloom miss\r");
             EXIT_NOMSG(true);
@@ -171,7 +172,7 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
     }
 
     for (auto monitor : possibles)
-        monitor.writeMonitorLastBlock(fileRange.second + 1, monitor.isStaging);
+        monitor.writeLastBlockInMonitor(fileRange.second + 1, monitor.isStaging);
 
     if (chunk) {
         chunk->Release();

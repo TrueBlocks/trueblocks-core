@@ -381,12 +381,6 @@ void CMonitor::writeMonitorArray(const CAppearanceArray_mon& items) {
     tx_cache->flush();
 }
 
-//-------------------------------------------------------------------------
-void CMonitor::writeMonitorLastBlock(blknum_t bn, bool staging) {
-    lastVisitedBlock = bn;
-    stringToAsciiFile(getMonitorPathLast(address, staging), uint_2_Str(bn) + "\n");
-}
-
 //---------------------------------------------------------------------------
 string_q CMonitor::getMonitorPath(const address_t& addr, bool staging) const {
     string_q fn = isAddress(addr) ? addr + ".acct.bin" : addr;
@@ -397,17 +391,28 @@ string_q CMonitor::getMonitorPath(const address_t& addr, bool staging) const {
 }
 
 //---------------------------------------------------------------------------
-string_q CMonitor::getMonitorPathLast(const address_t& addr, bool staging) const {
-    return substitute(getMonitorPath(addr, staging), ".acct.bin", ".last.txt");
-}
-
-//---------------------------------------------------------------------------
 string_q CMonitor::getMonitorPathDels(const address_t& addr) const {
     return getMonitorPath(addr, false) + ".deleted";
 }
 
+//---------------------------------------------------------------------------
+string_q CMonitor::getMonitorPathLast(const address_t& addr, bool staging) const {
+    return substitute(getMonitorPath(addr, staging), ".acct.bin", ".last.txt");
+}
+
+//-------------------------------------------------------------------------
+void CMonitor::writeLastBlockInMonitor(blknum_t bn, bool staging) {
+    lastVisitedBlock = bn;
+    stringToAsciiFile(getMonitorPathLast(address, staging), uint_2_Str(bn) + "\n");
+}
+
+//-----------------------------------------------------------------------
+blknum_t CMonitor::getLastBlockInMonitorPlusOne(void) const {
+    return str_2_Uint(asciiFileToString(getMonitorPathLast(address, false)));
+}
+
 //--------------------------------------------------------------------------------
-blknum_t CMonitor::getLastVisited(bool fresh) const {
+blknum_t CMonitor::getNextBlockToVisit(bool fresh) const {
     if (lastVisitedBlock == NOPOS || fresh) {
         // If the monitor exists, the next block is stored in the database...
         if (fileExists(getMonitorPathLast(address, false))) {
@@ -427,10 +432,12 @@ blknum_t CMonitor::getLastVisited(bool fresh) const {
     return lastVisitedBlock;
 }
 
-//-----------------------------------------------------------------------
-blknum_t CMonitor::getLastBlockInMonitor(void) const {
-    return str_2_Uint(asciiFileToString(getMonitorPathLast(address, false)));
-}
+//--------------------------------------------------------------------------------
+#define checkLock(fn, b)                                                                                               \
+    if (fileExists((fn) + ".lck")) {                                                                                   \
+        msg = ("The " + string_q(b) + " file for monitor " + address + " is locked. Quitting...");                     \
+        return true;                                                                                                   \
+    }
 
 //-----------------------------------------------------------------------
 bool CMonitor::monitorExists(void) const {
@@ -442,13 +449,6 @@ bool CMonitor::monitorExists(void) const {
         return true;
     return false;
 }
-
-//--------------------------------------------------------------------------------
-#define checkLock(fn, b)                                                                                               \
-    if (fileExists((fn) + ".lck")) {                                                                                   \
-        msg = ("The " + string_q(b) + " file for monitor " + address + " is locked. Quitting...");                     \
-        return true;                                                                                                   \
-    }
 
 //--------------------------------------------------------------------------------
 bool CMonitor::isMonitorLocked(string_q& msg) const {
@@ -527,6 +527,7 @@ void CMonitor::removeMonitor(void) {
     removeFile(getMonitorPath(address, false));
     removeFile(getMonitorPathLast(address, false));
     removeFile(getMonitorPathDels(address));
+    // TODO(tjayrush): remove reconciliations
 }
 
 //-----------------------------------------------------------------------

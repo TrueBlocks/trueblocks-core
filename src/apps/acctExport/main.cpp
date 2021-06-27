@@ -39,31 +39,31 @@ int main(int argc, const char* argv[]) {
 
             if (options.appearances) {
                 CAppearanceTraverser at;
-                at.travRange = options.blockRange;
+                at.travRange = options.exportRange;
                 traversers.push_back(at);
             }
 
             if (options.receipts) {
                 CReceiptTraverser rt;
-                rt.travRange = options.blockRange;
+                rt.travRange = options.exportRange;
                 traversers.push_back(rt);
             }
 
             if (options.logs) {
                 CLogTraverser lt;
-                lt.travRange = options.blockRange;
+                lt.travRange = options.exportRange;
                 traversers.push_back(lt);
             }
 
             if (options.traces) {
                 CTraceTraverser tt;
-                tt.travRange = options.blockRange;
+                tt.travRange = options.exportRange;
                 traversers.push_back(tt);
             }
 
             if (traversers.empty()) {
                 CTransactionTraverser tt;
-                tt.travRange = options.blockRange;
+                tt.travRange = options.exportRange;
                 traversers.push_back(tt);
             }
 
@@ -80,8 +80,8 @@ int main(int argc, const char* argv[]) {
     }
 
     ostringstream os;
-    os << ", \"first_block\": " << (isTestMode() ? "\"0xdeadbeef\"" : uint_2_Str(options.blockRange.first)) << endl;
-    os << ", \"last_block\": " << (isTestMode() ? "\"0xdeadbeef\"" : uint_2_Str(options.blockRange.second)) << endl;
+    os << ", \"first_block\": " << (isTestMode() ? "\"0xdeadbeef\"" : uint_2_Str(options.exportRange.first)) << endl;
+    os << ", \"last_block\": " << (isTestMode() ? "\"0xdeadbeef\"" : uint_2_Str(options.exportRange.second)) << endl;
     if (!options.count && options.allMonitors.size() == 1) {
         options.getNamedAccount(options.allMonitors[0], options.accountedFor);
         if (options.abi_spec.nInterfaces() == 0) {

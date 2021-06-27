@@ -19,7 +19,7 @@ bool COptions::handle_traversers(void) {
     CTraverser* trav = libFactory();
     if (trav->dataFunc == noopFunc)
         trav->dataFunc = loadTx_Func;
-    trav->travRange = blockRange;
+    trav->travRange = exportRange;
     for (auto monitor : allMonitors) {
         getNamedAccount(monitor, monitor.address);
         trav->monitorMap[monitor.address] = monitor;

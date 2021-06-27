@@ -39,10 +39,10 @@ bool COptions::loadAllAppearances(void) {
             // TODO(tjayrush): This used to set last encountered block (search for writeLastEncountered)
             // if (freshenOnly) {
             //     blknum_t l astExport = monitor.getLastEncounter ed();
-            //     if (blockRange.first == 0)  // we can start where the last export happened on any address...
-            //         blockRange.first = l astExport;
-            //     if (l astExport < blockRange.first)  // ...but the eariest of the last exports is where we start
-            //         blockRange.first = l astExport;
+            //     if (exportRange.first == 0)  // we can start where the last export happened on any address...
+            //         exportRange.first = l astExport;
+            //     if (l astExport < exportRange.first)  // ...but the eariest of the last exports is where we start
+            //         exportRange.first = l astExport;
             // }
         }
     }

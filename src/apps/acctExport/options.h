@@ -52,7 +52,6 @@ class COptions : public CAbiOptions {
     const CMonitor* curMonitor;
     address_t accountedFor;
     string_q accountedForName;
-    blkrange_t blockRange;
 
     CReconciliation lastStatement;
     CReconciliationMap prevStatements;
@@ -76,6 +75,7 @@ class COptions : public CAbiOptions {
 
     blkrange_t fileRange;
     blkrange_t listRange;
+    blkrange_t exportRange;
 
     string_q className;
     CBlockProgress bp;

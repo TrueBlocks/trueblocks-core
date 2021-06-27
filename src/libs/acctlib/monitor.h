@@ -55,15 +55,15 @@ class CMonitor : public CAccountName {
 
     bool openForWriting(bool staging);
     void writeMonitorArray(const CAppearanceArray_mon& array);
-    void writeMonitorLastBlock(blknum_t bn, bool staging);
 
     string_q getMonitorPath(const address_t& addr, bool staging) const;
     string_q getMonitorPathLast(const address_t& addr, bool staging) const;
     string_q getMonitorPathDels(const address_t& addr) const;
 
     blknum_t loadAppearances(MONAPPFUNC func, void* data);
-    blknum_t getLastVisited(bool fresh = false) const;
-    blknum_t getLastBlockInMonitor(void) const;
+    blknum_t getNextBlockToVisit(bool fresh = false) const;
+    blknum_t getLastBlockInMonitorPlusOne(void) const;
+    void writeLastBlockInMonitor(blknum_t bn, bool staging);
 
     size_t getFileSize(const string_q& path) const;
     size_t getRecordCnt(const string_q& path) const;

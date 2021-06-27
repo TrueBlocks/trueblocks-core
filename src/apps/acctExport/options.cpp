@@ -278,7 +278,7 @@ bool COptions::parseArguments(string_q& command) {
         return usage("Do not use the --freshen option with other options.");
 
     // Where will we start?
-    blknum_t firstBlockToVisit = NOPOS;
+    blknum_t nextBlockToVisit = NOPOS;
 
     for (auto addr : addrs) {
         CMonitor monitor;
@@ -299,12 +299,12 @@ bool COptions::parseArguments(string_q& command) {
             string_q msg;
             if (monitor.isMonitorLocked(msg))  // If locked, we fail
                 return usage(msg);
-            firstBlockToVisit = min(firstBlockToVisit, monitor.getLastVisited());
+            nextBlockToVisit = min(nextBlockToVisit, monitor.getNextBlockToVisit());
             LOG_TEST("Monitor found for", addr, false);
-            LOG_TEST("Last block in monitor", monitor.getLastBlockInMonitor(), false);
+            LOG_TEST("Last block in monitor", monitor.getLastBlockInMonitorPlusOne(), false);
         } else {
             LOG_WARN("Monitor not found for ", addr + ". Continuing anyway.");
-            firstBlockToVisit = 0;
+            nextBlockToVisit = 0; // monitor.getNextBlockToVisit()
         }
         if (accountedFor.empty()) {
             CAccountName acct;
@@ -335,7 +335,7 @@ bool COptions::parseArguments(string_q& command) {
 
     // Last block depends on scrape type or user input `end` option (with appropriate check)
     blknum_t lastBlockToVisit = max((blknum_t)1, unripe ? bp.unripe : staging ? bp.staging : bp.finalized);
-    listRange = make_pair((firstBlockToVisit == NOPOS ? 0 : firstBlockToVisit), lastBlockToVisit);
+    listRange = make_pair((nextBlockToVisit == NOPOS ? 0 : nextBlockToVisit), lastBlockToVisit);
 
     if (isTestMode() && (staging || unripe))
         return usage("--staging and --unripe are disabled for testing.");
@@ -351,7 +351,7 @@ bool COptions::parseArguments(string_q& command) {
 
     if (first_block > last_block)
         return usage("--first_block must be less than or equal to --last_block.");
-    blockRange = make_pair(first_block, last_block);
+    exportRange = make_pair(first_block, last_block);
 
     if (count) {
         cout << exportPreamble(expContext().fmtMap["header"], GETRUNTIME_CLASS(CMonitorCount)->m_ClassName);
@@ -632,7 +632,7 @@ bool COptions::setDisplayFormatting(void) {
 // TODO(tjayrush): What does blkRewardMap do? Needs testing
 // TODO(tjayrush): Reconciliation loads traces -- plus it reduplicates the isSuicide, isGeneration, isUncle shit
 // TODO(tjayrush): writeLastEncountered is weird (in fact removed -- used to keep freshen from revisiting blocks twice
-// TODO(tjayrush): writeMonitorLastBlock is really weird
+// TODO(tjayrush): writeLastBlockInMonitor is really weird
 // TODO(tjayrush): We used to write traces sometimes
 // TODO(tjayrush): We used to cache the monitored txs - I think it was pretty fast (we used the monitor staging folder)
 // TODO(tjayrush): We used to do a ten address thing that would scan the index for ten addrs at a time and then
