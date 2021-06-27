@@ -30,6 +30,7 @@ tags
 36-Compound
 39-Yearn
 40-Exchanges
+40-Friends
 50-Tokens
 50-Tokens:ERC20
 51-Tokens:ERC721
