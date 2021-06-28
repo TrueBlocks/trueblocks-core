@@ -133,7 +133,7 @@ static string_q pinOneChunk(const string_q& fileName, const string_q& type) {
     // LOG4("source: ", source, " ", fileExists(source));
     zip = source + ".gz";
     // clang-format off
-    string_q cmd1 = "yes | gzip -n --keep " + source; // + " 2>/dev/null";
+    string_q cmd1 = "yes | gzip -n -k " + source; // + " 2>/dev/null";
     if (system(cmd1.c_str())) {}  // Don't remove cruft. Silences compiler warnings
     // clang-format on
     // LOG4("zip: ", zip, " ", fileExists(zip));
