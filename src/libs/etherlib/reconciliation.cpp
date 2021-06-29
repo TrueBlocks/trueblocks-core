@@ -655,12 +655,12 @@ const char* STR_DISPLAY_RECONCILIATION = "";
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //---------------------------------------------------------------------------
-bool CReconciliation::reconcileEth(const CStringArray& corrections, CReconciliationMap& last, blknum_t nextBlock,
-                                   const CTransaction* trans, const address_t& acctFor) {
+bool CReconciliation::reconcileEth(const CStringArray& corrections, CReconciliationMap& prevStatements,
+                                   blknum_t nextBlock, const CTransaction* trans, const address_t& acctFor) {
     // LOG4(lastStatement.Format());
     // LOG4(Format());
 
-    CReconciliation prev = last[acctFor + "_eth"];
+    CReconciliation prev = prevStatements[acctFor + "_eth"];
     assetSymbol = "ETH";
     assetAddr = acctFor;
 
@@ -725,7 +725,7 @@ bool CReconciliation::reconcileEth(const CStringArray& corrections, CReconciliat
     // ...otherwise, we try to recover
     // Case 4: We need to dig into the traces (Note: this is the first place where we dig into the traces...
     // doing so without having been forced to causes a huge performance penalty.)
-    if (reconcileUsingTraces(prev.blockNumber, prev.endBal, prev.endBalCalc, nextBlock, trans, acctFor))
+    if (reconcileUsingTraces(prev.endBal, nextBlock, trans, acctFor))
         return true;
 
     // Case 2: The blockchain only returns balances PER block. This means that if two value changing transactions
@@ -820,8 +820,8 @@ bool CReconciliation::reconcileEth(const CStringArray& corrections, CReconciliat
 
 extern bool loadTraces(CTransaction& trans, blknum_t bn, blknum_t txid, bool useCache, bool skipDdos);
 //---------------------------------------------------------------------------
-bool CReconciliation::reconcileUsingTraces(blknum_t lastBn, bigint_t lastEndBal, bigint_t lastEndBalCalc,
-                                           blknum_t nextBlock, const CTransaction* trans, const address_t& acctFor) {
+bool CReconciliation::reconcileUsingTraces(bigint_t lastEndBal, blknum_t nextBlock, const CTransaction* trans,
+                                           const address_t& acctFor) {
     amountOut = amountIn = 0;  // we will store it in the internal values
     prefundIn = minerBaseRewardIn = minerNephewRewardIn = minerTxFeeIn + minerUncleRewardIn = 0;
 

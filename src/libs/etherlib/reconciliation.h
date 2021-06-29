@@ -70,8 +70,8 @@ class CReconciliation : public CBaseNode {
     }
     bool reconcileEth(const CStringArray& corrections, map<string, CReconciliation>& last, blknum_t nextBlock,
                       const CTransaction* trans, const address_t& acctFor);
-    bool reconcileUsingTraces(blknum_t lastBn, bigint_t lastEndBal, bigint_t lastEndBalCalc, blknum_t nextBlock,
-                              const CTransaction* trans, const address_t& acctFor);
+    bool reconcileUsingTraces(bigint_t lastEndBal, blknum_t nextBlock, const CTransaction* trans,
+                              const address_t& acctFor);
     void reset(void) {
         blknum_t b = blockNumber, tr = transactionIndex;
         timestamp_t ts = timestamp;

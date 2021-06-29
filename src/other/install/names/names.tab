@@ -2842,6 +2842,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x5eb87caa0105a63aa87a36c7bd2573bd13e84fae	BQT	BQT	On chain	18		false	false	false	true	true	false
 31-Gitcoin Grants:Grant	0x5eb9373f40edd37beea5271c4b3e81a022858d6e	Grant 1569 Helloipm		https://gitcoin.co/grants/1569/helloipm			false	false	false	false	false	false
 30-Contracts:Set Protocol Core	0x5ecd8e3b059bc5a69e2d7a73c60bd4e9788972ff	Vault		https://github.com/SetProtocol/set-protocol-contracts			false	false	false	true	false	false
+40-Friends	0x5ed8cee6b63b1c6afce3ad7c92f4fd7e1b8fad9f	Vatalik Sender to 2					false	false	false	false	false	false
 32-Kickback:Friends	0x5eff9a94170cf1d38bd6413304eb4d847a2bebf0	danajr		https://kickback.events/			false	false	false	false	false	false
 30-Contracts	0x5f0281910af44bfb5fc7e86a404d0304b0e042f1	TokenReg		TrueBlocks.io			false	false	false	true	false	false
 90-DevCon2:Individual	0x5f038b42997562b90f5701cbc92b03367a5369c2	Paul Hauner		DevCon2 Token Contract			false	false	false	false	false	false

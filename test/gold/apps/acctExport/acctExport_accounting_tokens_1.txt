@@ -117,7 +117,7 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "assetSymbol": "ETH",
       "decimals": 18,
       "begBal": "5.137097246179548557",
-      "begBalDiff": "5.137097246179548557",
+      "begBalDiff": "",
       "amountIn": "",
       "amountOut": "",
       "internalIn": "",
@@ -133,7 +133,8 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBal": "5.137097246179548557",
       "endBalCalc": "5.137097246179548557",
       "endBalDiff": "",
-      "amountNet": ""
+      "amountNet": "",
+      "reconciled": true
     },
     {
       "blockNumber": 10277780,
@@ -142,9 +143,9 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "assetAddr": "0x6b175474e89094c44da98b954eedeac495271d0f",
       "assetSymbol": "DAI",
       "decimals": 18,
-      "begBal": "",
+      "begBal": "1158.567776639199461740",
       "begBalDiff": "",
-      "amountIn": "1168.267776639199461740",
+      "amountIn": "9.700000000000000000",
       "amountOut": "",
       "internalIn": "",
       "internalOut": "",
@@ -159,7 +160,7 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBal": "1168.267776639199461740",
       "endBalCalc": "",
       "endBalDiff": "",
-      "amountNet": "1168.267776639199461740",
+      "amountNet": "9.700000000000000000",
       "reconciled": true
     }
   ],
@@ -210,11 +211,11 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
   "articulatedTx": {
     "name": "approve",
     "inputs": {
-      "_amount": "5000000000000000000",
-      "_spender": "0x7d655c57f71464b6f83811c55d84009cd9f5221c"
+      "_spender": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
+      "_value": "5000000000000000000"
     },
     "outputs": {
-      "success": ""
+      "_success": ""
     }
   },
   "compressedTx": "approve(0x7d655c57f71464b6f83811c55d84009cd9f5221c, 5000000000000000000); ",
@@ -4981,11 +4982,11 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
   "articulatedTx": {
     "name": "approve",
     "inputs": {
-      "_amount": "5000000000000000000",
-      "_spender": "0x7d655c57f71464b6f83811c55d84009cd9f5221c"
+      "_spender": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
+      "_value": "5000000000000000000"
     },
     "outputs": {
-      "success": ""
+      "_success": ""
     }
   },
   "compressedTx": "approve(0x7d655c57f71464b6f83811c55d84009cd9f5221c, 5000000000000000000); ",
@@ -5483,11 +5484,11 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
   "articulatedTx": {
     "name": "approve",
     "inputs": {
-      "_amount": "5000000000000000000",
-      "_spender": "0x7d655c57f71464b6f83811c55d84009cd9f5221c"
+      "_spender": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
+      "_value": "5000000000000000000"
     },
     "outputs": {
-      "success": ""
+      "_success": ""
     }
   },
   "compressedTx": "approve(0x7d655c57f71464b6f83811c55d84009cd9f5221c, 5000000000000000000); ",
@@ -6008,11 +6009,11 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
   "articulatedTx": {
     "name": "approve",
     "inputs": {
-      "_amount": "5000000000000000000",
-      "_spender": "0x7d655c57f71464b6f83811c55d84009cd9f5221c"
+      "_spender": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
+      "_value": "5000000000000000000"
     },
     "outputs": {
-      "success": ""
+      "_success": ""
     }
   },
   "compressedTx": "approve(0x7d655c57f71464b6f83811c55d84009cd9f5221c, 5000000000000000000); ",
