@@ -60,7 +60,8 @@ bool CUniPrice::setPair(const address_t& r1, const address_t& r2) {
 class CTestTraverser : public CTraverser {
   public:
     CUniPrice uni;
-    CTestTraverser(void) : CTraverser(cout, "testing") {
+    blknum_t prevBlock;
+    CTestTraverser(void) : CTraverser(cout, "testing"), prevBlock(NOPOS) {
     }
     wei_t etherPriceFromUniswap(blknum_t bn) const;
 };
@@ -126,9 +127,15 @@ bool display(CTraverser* trav, void* data) {
                         cout << double_2_Str(totIn * price, 2) << "\t";
                         cout << double_2_Str(totOut * price, 2) << "\t";
                         cout << double_2_Str(endBal * price, 2) << "\t";
-                        cout << (statement.reconciled ? "true" : "false") << endl;
-                        LOG_INFO(trav->trans.blockNumber, ".", trav->trans.transactionIndex, "\t",
-                                 double_2_Str(endBal * price, 2), "\t", (statement.reconciled ? "true" : "false"));
+                        if (tt->prevBlock == trav->app->blk && !statement.reconciled) {
+                            cout << "same block" << endl;
+                            LOG_INFO(trav->trans.blockNumber, ".", trav->trans.transactionIndex, "\t",
+                                     double_2_Str(endBal * price, 2), "\tsame block");
+                        } else {
+                            cout << (statement.reconciled ? "true" : "false") << endl;
+                            LOG_INFO(trav->trans.blockNumber, ".", trav->trans.transactionIndex, "\t",
+                                     double_2_Str(endBal * price, 2), "\t", (statement.reconciled ? "true" : "false"));
+                        }
                         usleep(30000);
                     }
                 }
@@ -145,6 +152,7 @@ bool display(CTraverser* trav, void* data) {
         cerr.flush();
     }
 
+    tt->prevBlock = tt->app->blk;
     return true;
 }
 
