@@ -80,6 +80,14 @@ class CReconciliation : public CBaseNode {
         transactionIndex = tr;
         timestamp = ts;
     }
+    bigint_t totalIn(void) const {
+        return amountIn + internalIn + selfDestructIn + minerBaseRewardIn + minerNephewRewardIn + minerTxFeeIn +
+               minerUncleRewardIn + prefundIn;
+    }
+    bigint_t totalOut(void) const {
+        return amountOut + internalOut + selfDestructOut;
+    }
+
     // EXISTING_CODE
     bool operator==(const CReconciliation& it) const;
     bool operator!=(const CReconciliation& it) const {

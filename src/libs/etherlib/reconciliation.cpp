@@ -483,6 +483,8 @@ void CReconciliation::registerClass(void) {
     builtIns.push_back(_biCReconciliation);
 
     // EXISTING_CODE
+    ADD_FIELD(CReconciliation, "totalIn", T_INT256, ++fieldNum);
+    ADD_FIELD(CReconciliation, "totalOut", T_INT256, ++fieldNum);
     // EXISTING_CODE
 }
 
@@ -587,6 +589,14 @@ string_q nextReconciliationChunk_custom(const string_q& fieldIn, const void* dat
                 }
                 if (fieldIn % "selfDestructOut") {
                     return bni_2_Export(rec->timestamp, rec->selfDestructOut, rec->decimals);
+                }
+                break;
+            case 't':
+                if (fieldIn % "totalIn") {
+                    return bni_2_Export(rec->timestamp, rec->totalIn(), rec->decimals);
+                }
+                if (fieldIn % "totalOut") {
+                    return bni_2_Export(rec->timestamp, rec->totalOut(), rec->decimals);
                 }
                 break;
             case 'w':
