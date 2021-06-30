@@ -136,7 +136,9 @@
           "endBalDiff": "",
           "amountNet": "",
           "reconciliationType": "",
-          "reconciled": true
+          "reconciled": true,
+          "totalIn": "",
+          "totalOut": ""
         },
         {
           "blockNumber": 10277780,
@@ -164,7 +166,9 @@
           "endBalDiff": "",
           "amountNet": "9.700000000000000000",
           "reconciliationType": "",
-          "reconciled": true
+          "reconciled": true,
+          "totalIn": "9.700000000000000000",
+          "totalOut": ""
         }
       ],
       "gasCost": 2743600000000000,
@@ -254,7 +258,9 @@
           "endBalDiff": "",
           "amountNet": "-0.001188918000000000",
           "reconciliationType": "",
-          "reconciled": true
+          "reconciled": true,
+          "totalIn": "",
+          "totalOut": ""
         }
       ],
       "gasCost": 1188918000000000,
@@ -401,7 +407,9 @@
           "endBalDiff": "",
           "amountNet": "-0.001922570000000000",
           "reconciliationType": "",
-          "reconciled": true
+          "reconciled": true,
+          "totalIn": "",
+          "totalOut": ""
         },
         {
           "blockNumber": 10279310,
@@ -429,7 +437,9 @@
           "endBalDiff": "",
           "amountNet": "-5.0000000",
           "reconciliationType": "",
-          "reconciled": true
+          "reconciled": true,
+          "totalIn": "",
+          "totalOut": "5.0000000"
         }
       ],
       "gasCost": 1922570000000000,
@@ -576,7 +586,9 @@
           "endBalDiff": "",
           "amountNet": "",
           "reconciliationType": "",
-          "reconciled": true
+          "reconciled": true,
+          "totalIn": "",
+          "totalOut": ""
         },
         {
           "blockNumber": 10279650,
@@ -604,7 +616,9 @@
           "endBalDiff": "",
           "amountNet": "4.750000000000000000",
           "reconciliationType": "",
-          "reconciled": true
+          "reconciled": true,
+          "totalIn": "4.750000000000000000",
+          "totalOut": ""
         }
       ],
       "gasCost": 1416580000000000,
@@ -713,7 +727,9 @@
           "endBalDiff": "",
           "amountNet": "0.038000000000000000",
           "reconciliationType": "",
-          "reconciled": true
+          "reconciled": true,
+          "totalIn": "0.038000000000000000",
+          "totalOut": ""
         }
       ],
       "gasCost": 1175774400000000,
@@ -1660,7 +1676,9 @@
           "endBalDiff": "",
           "amountNet": "",
           "reconciliationType": "",
-          "reconciled": true
+          "reconciled": true,
+          "totalIn": "",
+          "totalOut": ""
         },
         {
           "blockNumber": 10280558,
@@ -1688,7 +1706,9 @@
           "endBalDiff": "",
           "amountNet": "0.950000000000000000",
           "reconciliationType": "",
-          "reconciled": true
+          "reconciled": true,
+          "totalIn": "0.950000000000000000",
+          "totalOut": ""
         }
       ],
       "gasCost": 13489203800000000,
@@ -2395,7 +2415,9 @@
           "endBalDiff": "",
           "amountNet": "",
           "reconciliationType": "",
-          "reconciled": true
+          "reconciled": true,
+          "totalIn": "",
+          "totalOut": ""
         },
         {
           "blockNumber": 10280872,
@@ -2423,7 +2445,9 @@
           "endBalDiff": "",
           "amountNet": "28.500000000000000000",
           "reconciliationType": "",
-          "reconciled": true
+          "reconciled": true,
+          "totalIn": "28.500000000000000000",
+          "totalOut": ""
         }
       ],
       "gasCost": 13501005000000000,
@@ -2570,7 +2594,9 @@
           "endBalDiff": "",
           "amountNet": "",
           "reconciliationType": "",
-          "reconciled": true
+          "reconciled": true,
+          "totalIn": "",
+          "totalOut": ""
         },
         {
           "blockNumber": 10283648,
@@ -2598,7 +2624,9 @@
           "endBalDiff": "",
           "amountNet": "4.750000000000000000",
           "reconciliationType": "",
-          "reconciled": true
+          "reconciled": true,
+          "totalIn": "4.750000000000000000",
+          "totalOut": ""
         }
       ],
       "gasCost": 3223730000000000,
@@ -3305,7 +3333,9 @@
           "endBalDiff": "",
           "amountNet": "",
           "reconciliationType": "",
-          "reconciled": true
+          "reconciled": true,
+          "totalIn": "",
+          "totalOut": ""
         },
         {
           "blockNumber": 10283749,
@@ -3333,7 +3363,9 @@
           "endBalDiff": "",
           "amountNet": "5.0000000",
           "reconciliationType": "",
-          "reconciled": true
+          "reconciled": true,
+          "totalIn": "5.0000000",
+          "totalOut": ""
         }
       ],
       "gasCost": 16919093400000000,
@@ -4320,7 +4352,9 @@
           "endBalDiff": "",
           "amountNet": "",
           "reconciliationType": "",
-          "reconciled": true
+          "reconciled": true,
+          "totalIn": "",
+          "totalOut": ""
         },
         {
           "blockNumber": 10289986,
@@ -4348,7 +4382,9 @@
           "endBalDiff": "",
           "amountNet": "1.900000000000000000",
           "reconciliationType": "",
-          "reconciled": true
+          "reconciled": true,
+          "totalIn": "1.900000000000000000",
+          "totalOut": ""
         }
       ],
       "gasCost": 22634573500000000,
@@ -4975,7 +5011,9 @@
           "endBalDiff": "",
           "amountNet": "",
           "reconciliationType": "",
-          "reconciled": true
+          "reconciled": true,
+          "totalIn": "",
+          "totalOut": ""
         },
         {
           "blockNumber": 10290103,
@@ -5003,7 +5041,9 @@
           "endBalDiff": "",
           "amountNet": "1.980000000000000000",
           "reconciliationType": "",
-          "reconciled": true
+          "reconciled": true,
+          "totalIn": "1.980000000000000000",
+          "totalOut": ""
         }
       ],
       "gasCost": 14869160000000000,
@@ -5093,7 +5133,9 @@
           "endBalDiff": "",
           "amountNet": "-0.001739343000000000",
           "reconciliationType": "prevdiff-partial",
-          "reconciled": true
+          "reconciled": true,
+          "totalIn": "",
+          "totalOut": ""
         },
         {
           "blockNumber": 10290317,
@@ -5121,7 +5163,9 @@
           "endBalDiff": "",
           "amountNet": "-5.0000000",
           "reconciliationType": "",
-          "reconciled": true
+          "reconciled": true,
+          "totalIn": "",
+          "totalOut": "5.0000000"
         }
       ],
       "gasCost": 1739343000000000,
@@ -5228,7 +5272,9 @@
           "endBalDiff": "",
           "amountNet": "-0.001761265500000000",
           "reconciliationType": "nextdiff-partial",
-          "reconciled": true
+          "reconciled": true,
+          "totalIn": "",
+          "totalOut": ""
         }
       ],
       "gasCost": 1761265500000000,
@@ -5495,7 +5541,9 @@
           "endBalDiff": "",
           "amountNet": "",
           "reconciliationType": "",
-          "reconciled": true
+          "reconciled": true,
+          "totalIn": "",
+          "totalOut": ""
         },
         {
           "blockNumber": 10291739,
@@ -5523,7 +5571,9 @@
           "endBalDiff": "",
           "amountNet": "0.950000000000000000",
           "reconciliationType": "",
-          "reconciled": true
+          "reconciled": true,
+          "totalIn": "0.950000000000000000",
+          "totalOut": ""
         }
       ],
       "gasCost": 4980192000000000,
@@ -5613,7 +5663,9 @@
           "endBalDiff": "",
           "amountNet": "-0.001232952000000000",
           "reconciliationType": "prevdiff-partial",
-          "reconciled": true
+          "reconciled": true,
+          "totalIn": "",
+          "totalOut": ""
         },
         {
           "blockNumber": 10292014,
@@ -5641,7 +5693,9 @@
           "endBalDiff": "",
           "amountNet": "-5.0000000",
           "reconciliationType": "",
-          "reconciled": true
+          "reconciled": true,
+          "totalIn": "",
+          "totalOut": "5.0000000"
         }
       ],
       "gasCost": 1232952000000000,
@@ -5788,7 +5842,9 @@
           "endBalDiff": "",
           "amountNet": "-0.001920520000000000",
           "reconciliationType": "nextdiff-partial",
-          "reconciled": true
+          "reconciled": true,
+          "totalIn": "",
+          "totalOut": ""
         }
       ],
       "gasCost": 1920520000000000,
@@ -5897,7 +5953,9 @@
           "endBalDiff": "",
           "amountNet": "0.190000000000000000",
           "reconciliationType": "",
-          "reconciled": true
+          "reconciled": true,
+          "totalIn": "0.190000000000000000",
+          "totalOut": ""
         }
       ],
       "gasCost": 1416220067270450,
@@ -6044,7 +6102,9 @@
           "endBalDiff": "",
           "amountNet": "",
           "reconciliationType": "",
-          "reconciled": true
+          "reconciled": true,
+          "totalIn": "",
+          "totalOut": ""
         },
         {
           "blockNumber": 10292120,
@@ -6072,7 +6132,9 @@
           "endBalDiff": "",
           "amountNet": "47.500000000000000000",
           "reconciliationType": "",
-          "reconciled": true
+          "reconciled": true,
+          "totalIn": "47.500000000000000000",
+          "totalOut": ""
         }
       ],
       "gasCost": 1852254000000000,
@@ -6162,7 +6224,9 @@
           "endBalDiff": "",
           "amountNet": "-0.001321460340000000",
           "reconciliationType": "prevdiff-partial",
-          "reconciled": true
+          "reconciled": true,
+          "totalIn": "",
+          "totalOut": ""
         },
         {
           "blockNumber": 10293554,
@@ -6190,7 +6254,9 @@
           "endBalDiff": "",
           "amountNet": "-5.0000000",
           "reconciliationType": "",
-          "reconciled": true
+          "reconciled": true,
+          "totalIn": "",
+          "totalOut": "5.0000000"
         }
       ],
       "gasCost": 1321460340000000,
@@ -6337,7 +6403,9 @@
           "endBalDiff": "",
           "amountNet": "-0.002058385900000000",
           "reconciliationType": "nextdiff-partial",
-          "reconciled": true
+          "reconciled": true,
+          "totalIn": "",
+          "totalOut": ""
         }
       ],
       "gasCost": 2058385900000000,
@@ -7766,7 +7834,9 @@
           "endBalDiff": "",
           "amountNet": "",
           "reconciliationType": "",
-          "reconciled": true
+          "reconciled": true,
+          "totalIn": "",
+          "totalOut": ""
         },
         {
           "blockNumber": 10296720,
@@ -7794,7 +7864,9 @@
           "endBalDiff": "",
           "amountNet": "9.500000000000000000",
           "reconciliationType": "",
-          "reconciled": true
+          "reconciled": true,
+          "totalIn": "9.500000000000000000",
+          "totalOut": ""
         }
       ],
       "gasCost": 26281152000000000,

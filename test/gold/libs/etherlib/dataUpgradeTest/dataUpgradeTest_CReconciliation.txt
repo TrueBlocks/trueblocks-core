@@ -33,6 +33,8 @@ endBalDiff          	1027	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
 amountNet           	1028	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
 reconciliationType  	1029	0	20971570	T_TEXT TS_STRING TS_OMITEMPTY
 reconciled          	1030	0	12582932	T_BOOL TS_NUMERAL TS_OMITEMPTY
+totalIn             	1031	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
+totalOut            	1032	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
 {
   "blockNumber": 0,
   "transactionIndex": 0,
@@ -56,7 +58,9 @@ reconciled          	1030	0	12582932	T_BOOL TS_NUMERAL TS_OMITEMPTY
   "endBal": "",
   "endBalCalc": "",
   "endBalDiff": "",
-  "amountNet": ""
+  "amountNet": "",
+  "totalIn": "",
+  "totalOut": ""
 }
 
 --------------------------------------------------------------------------------
@@ -92,6 +96,8 @@ endBalDiff          	1027	1	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
 amountNet           	1028	1	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
 reconciliationType  	1029	1	20971570	T_TEXT TS_STRING TS_OMITEMPTY
 reconciled          	1030	1	12582932	T_BOOL TS_NUMERAL TS_OMITEMPTY
+totalIn             	1031	1	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
+totalOut            	1032	1	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
 {
 }
 
@@ -128,6 +134,8 @@ endBalDiff          	1027	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
 amountNet           	1028	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
 reconciliationType  	1029	0	20971570	T_TEXT TS_STRING TS_OMITEMPTY
 reconciled          	1030	0	12582932	T_BOOL TS_NUMERAL TS_OMITEMPTY
+totalIn             	1031	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
+totalOut            	1032	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
 {
   "schema": 9004,
   "deleted": false,
@@ -155,6 +163,8 @@ reconciled          	1030	0	12582932	T_BOOL TS_NUMERAL TS_OMITEMPTY
   "endBal": "",
   "endBalCalc": "",
   "endBalDiff": "",
-  "amountNet": ""
+  "amountNet": "",
+  "totalIn": "",
+  "totalOut": ""
 }
 

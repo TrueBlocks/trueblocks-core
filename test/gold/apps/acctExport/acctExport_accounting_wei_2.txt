@@ -40,7 +40,9 @@ acctExport 0x05a56e2d52c817161883f50c441c3228cfe54d9f --max_records 15 --account
       "endBalCalc": "5000000000000000000",
       "endBalDiff": "",
       "amountNet": "5000000000000000000",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "5000000000000000000",
+      "totalOut": ""
     }
   ],
   "gasCost": 0,
@@ -87,7 +89,9 @@ acctExport 0x05a56e2d52c817161883f50c441c3228cfe54d9f --max_records 15 --account
       "endBalCalc": "10000000000000000000",
       "endBalDiff": "",
       "amountNet": "5000000000000000000",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "5000000000000000000",
+      "totalOut": ""
     }
   ],
   "gasCost": 0,
@@ -134,7 +138,9 @@ acctExport 0x05a56e2d52c817161883f50c441c3228cfe54d9f --max_records 15 --account
       "endBalCalc": "13750000000000000000",
       "endBalDiff": "",
       "amountNet": "3750000000000000000",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "3750000000000000000",
+      "totalOut": ""
     }
   ],
   "gasCost": 0,
@@ -181,7 +187,9 @@ acctExport 0x05a56e2d52c817161883f50c441c3228cfe54d9f --max_records 15 --account
       "endBalCalc": "18750000000000000000",
       "endBalDiff": "",
       "amountNet": "5000000000000000000",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "5000000000000000000",
+      "totalOut": ""
     }
   ],
   "gasCost": 0,
@@ -228,7 +236,9 @@ acctExport 0x05a56e2d52c817161883f50c441c3228cfe54d9f --max_records 15 --account
       "endBalCalc": "21875000000000000000",
       "endBalDiff": "",
       "amountNet": "3125000000000000000",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "3125000000000000000",
+      "totalOut": ""
     }
   ],
   "gasCost": 0,
@@ -275,7 +285,9 @@ TIME ~ CLOCK - <PROG>  : Extracting      5 of    260 txs (max 260) for address 0
       "endBalCalc": "26875000000000000000",
       "endBalDiff": "",
       "amountNet": "5000000000000000000",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "5000000000000000000",
+      "totalOut": ""
     }
   ],
   "gasCost": 0,
@@ -322,7 +334,9 @@ TIME ~ CLOCK - <PROG>  : Extracting      5 of    260 txs (max 260) for address 0
       "endBalCalc": "30625000000000000000",
       "endBalDiff": "",
       "amountNet": "3750000000000000000",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "3750000000000000000",
+      "totalOut": ""
     }
   ],
   "gasCost": 0,
@@ -369,7 +383,9 @@ TIME ~ CLOCK - <PROG>  : Extracting      5 of    260 txs (max 260) for address 0
       "endBalCalc": "34375000000000000000",
       "endBalDiff": "",
       "amountNet": "3750000000000000000",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "3750000000000000000",
+      "totalOut": ""
     }
   ],
   "gasCost": 0,
@@ -416,7 +432,9 @@ TIME ~ CLOCK - <PROG>  : Extracting      5 of    260 txs (max 260) for address 0
       "endBalCalc": "36875000000000000000",
       "endBalDiff": "",
       "amountNet": "2500000000000000000",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "2500000000000000000",
+      "totalOut": ""
     }
   ],
   "gasCost": 0,
@@ -463,7 +481,9 @@ TIME ~ CLOCK - <PROG>  : Extracting      5 of    260 txs (max 260) for address 0
       "endBalCalc": "42031250000000000000",
       "endBalDiff": "",
       "amountNet": "5156250000000000000",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "5156250000000000000",
+      "totalOut": ""
     }
   ],
   "gasCost": 0,
@@ -510,7 +530,9 @@ TIME ~ CLOCK - <PROG>  : Extracting     10 of    260 txs (max 260) for address 0
       "endBalCalc": "45781250000000000000",
       "endBalDiff": "",
       "amountNet": "3750000000000000000",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "3750000000000000000",
+      "totalOut": ""
     }
   ],
   "gasCost": 0,
@@ -557,7 +579,9 @@ TIME ~ CLOCK - <PROG>  : Extracting     10 of    260 txs (max 260) for address 0
       "endBalCalc": "49531250000000000000",
       "endBalDiff": "",
       "amountNet": "3750000000000000000",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "3750000000000000000",
+      "totalOut": ""
     }
   ],
   "gasCost": 0,
@@ -604,7 +628,9 @@ TIME ~ CLOCK - <PROG>  : Extracting     10 of    260 txs (max 260) for address 0
       "endBalCalc": "54531250000000000000",
       "endBalDiff": "",
       "amountNet": "5000000000000000000",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "5000000000000000000",
+      "totalOut": ""
     }
   ],
   "gasCost": 0,
@@ -651,7 +677,9 @@ TIME ~ CLOCK - <PROG>  : Extracting     10 of    260 txs (max 260) for address 0
       "endBalCalc": "58281250000000000000",
       "endBalDiff": "",
       "amountNet": "3750000000000000000",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "3750000000000000000",
+      "totalOut": ""
     }
   ],
   "gasCost": 0,
@@ -698,7 +726,9 @@ TIME ~ CLOCK - <PROG>  : Extracting     10 of    260 txs (max 260) for address 0
       "endBalCalc": "63281250000000000000",
       "endBalDiff": "",
       "amountNet": "5000000000000000000",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "5000000000000000000",
+      "totalOut": ""
     }
   ],
   "gasCost": 0,

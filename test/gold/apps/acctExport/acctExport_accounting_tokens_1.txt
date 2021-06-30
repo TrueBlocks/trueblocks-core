@@ -134,7 +134,9 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBalCalc": "5.137097246179548557",
       "endBalDiff": "",
       "amountNet": "",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "",
+      "totalOut": ""
     },
     {
       "blockNumber": 10277780,
@@ -161,7 +163,9 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBalCalc": "",
       "endBalDiff": "",
       "amountNet": "9.700000000000000000",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "9.700000000000000000",
+      "totalOut": ""
     }
   ],
   "gasCost": 2743600000000000,
@@ -245,7 +249,9 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBalCalc": "5.135908328179548557",
       "endBalDiff": "",
       "amountNet": "-0.001188918000000000",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "",
+      "totalOut": ""
     }
   ],
   "gasCost": 1188918000000000,
@@ -386,7 +392,9 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBalCalc": "5.133985758179548557",
       "endBalDiff": "",
       "amountNet": "-0.001922570000000000",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "",
+      "totalOut": ""
     },
     {
       "blockNumber": 10279310,
@@ -413,7 +421,9 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBalCalc": "",
       "endBalDiff": "",
       "amountNet": "-5.0000000",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "",
+      "totalOut": "5.0000000"
     }
   ],
   "gasCost": 1922570000000000,
@@ -554,7 +564,9 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBalCalc": "5.133985758179548557",
       "endBalDiff": "",
       "amountNet": "",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "",
+      "totalOut": ""
     },
     {
       "blockNumber": 10279650,
@@ -581,7 +593,9 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBalCalc": "",
       "endBalDiff": "",
       "amountNet": "4.750000000000000000",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "4.750000000000000000",
+      "totalOut": ""
     }
   ],
   "gasCost": 1416580000000000,
@@ -684,7 +698,9 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBalCalc": "5.171985758179548557",
       "endBalDiff": "",
       "amountNet": "0.038000000000000000",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "0.038000000000000000",
+      "totalOut": ""
     }
   ],
   "gasCost": 1175774400000000,
@@ -1625,7 +1641,9 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBalCalc": "5.171985758179548557",
       "endBalDiff": "",
       "amountNet": "",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "",
+      "totalOut": ""
     },
     {
       "blockNumber": 10280558,
@@ -1652,7 +1670,9 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBalCalc": "",
       "endBalDiff": "",
       "amountNet": "0.950000000000000000",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "0.950000000000000000",
+      "totalOut": ""
     }
   ],
   "gasCost": 13489203800000000,
@@ -2353,7 +2373,9 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBalCalc": "5.171985758179548557",
       "endBalDiff": "",
       "amountNet": "",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "",
+      "totalOut": ""
     },
     {
       "blockNumber": 10280872,
@@ -2380,7 +2402,9 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBalCalc": "",
       "endBalDiff": "",
       "amountNet": "28.500000000000000000",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "28.500000000000000000",
+      "totalOut": ""
     }
   ],
   "gasCost": 13501005000000000,
@@ -2521,7 +2545,9 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBalCalc": "5.171985758179548557",
       "endBalDiff": "",
       "amountNet": "",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "",
+      "totalOut": ""
     },
     {
       "blockNumber": 10283648,
@@ -2548,7 +2574,9 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBalCalc": "",
       "endBalDiff": "",
       "amountNet": "4.750000000000000000",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "4.750000000000000000",
+      "totalOut": ""
     }
   ],
   "gasCost": 3223730000000000,
@@ -3249,7 +3277,9 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBalCalc": "5.171985758179548557",
       "endBalDiff": "",
       "amountNet": "",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "",
+      "totalOut": ""
     },
     {
       "blockNumber": 10283749,
@@ -3276,7 +3306,9 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBalCalc": "",
       "endBalDiff": "",
       "amountNet": "5.0000000",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "5.0000000",
+      "totalOut": ""
     }
   ],
   "gasCost": 16919093400000000,
@@ -4257,7 +4289,9 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBalCalc": "5.171985758179548557",
       "endBalDiff": "",
       "amountNet": "",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "",
+      "totalOut": ""
     },
     {
       "blockNumber": 10289986,
@@ -4284,7 +4318,9 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBalCalc": "",
       "endBalDiff": "",
       "amountNet": "1.900000000000000000",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "1.900000000000000000",
+      "totalOut": ""
     }
   ],
   "gasCost": 22634573500000000,
@@ -4905,7 +4941,9 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBalCalc": "5.171985758179548557",
       "endBalDiff": "",
       "amountNet": "",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "",
+      "totalOut": ""
     },
     {
       "blockNumber": 10290103,
@@ -4932,7 +4970,9 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBalCalc": "",
       "endBalDiff": "",
       "amountNet": "1.980000000000000000",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "1.980000000000000000",
+      "totalOut": ""
     }
   ],
   "gasCost": 14869160000000000,
@@ -5017,7 +5057,9 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBalDiff": "",
       "amountNet": "-0.001739343000000000",
       "reconciliationType": "prevdiff-partial",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "",
+      "totalOut": ""
     },
     {
       "blockNumber": 10290317,
@@ -5044,7 +5086,9 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBalCalc": "",
       "endBalDiff": "",
       "amountNet": "-5.0000000",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "",
+      "totalOut": "5.0000000"
     }
   ],
   "gasCost": 1739343000000000,
@@ -5146,7 +5190,9 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBalDiff": "",
       "amountNet": "-0.001761265500000000",
       "reconciliationType": "nextdiff-partial",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "",
+      "totalOut": ""
     }
   ],
   "gasCost": 1761265500000000,
@@ -5407,7 +5453,9 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBalCalc": "5.168485149679548557",
       "endBalDiff": "",
       "amountNet": "",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "",
+      "totalOut": ""
     },
     {
       "blockNumber": 10291739,
@@ -5434,7 +5482,9 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBalCalc": "",
       "endBalDiff": "",
       "amountNet": "0.950000000000000000",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "0.950000000000000000",
+      "totalOut": ""
     }
   ],
   "gasCost": 4980192000000000,
@@ -5519,7 +5569,9 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBalDiff": "",
       "amountNet": "-0.001232952000000000",
       "reconciliationType": "prevdiff-partial",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "",
+      "totalOut": ""
     },
     {
       "blockNumber": 10292014,
@@ -5546,7 +5598,9 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBalCalc": "",
       "endBalDiff": "",
       "amountNet": "-5.0000000",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "",
+      "totalOut": "5.0000000"
     }
   ],
   "gasCost": 1232952000000000,
@@ -5688,7 +5742,9 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBalDiff": "",
       "amountNet": "-0.001920520000000000",
       "reconciliationType": "nextdiff-partial",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "",
+      "totalOut": ""
     }
   ],
   "gasCost": 1920520000000000,
@@ -5791,7 +5847,9 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBalCalc": "5.355331677679548557",
       "endBalDiff": "",
       "amountNet": "0.190000000000000000",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "0.190000000000000000",
+      "totalOut": ""
     }
   ],
   "gasCost": 1416220067270450,
@@ -5932,7 +5990,9 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBalCalc": "5.355331677679548557",
       "endBalDiff": "",
       "amountNet": "",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "",
+      "totalOut": ""
     },
     {
       "blockNumber": 10292120,
@@ -5959,7 +6019,9 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBalCalc": "",
       "endBalDiff": "",
       "amountNet": "47.500000000000000000",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "47.500000000000000000",
+      "totalOut": ""
     }
   ],
   "gasCost": 1852254000000000,
@@ -6044,7 +6106,9 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBalDiff": "",
       "amountNet": "-0.001321460340000000",
       "reconciliationType": "prevdiff-partial",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "",
+      "totalOut": ""
     },
     {
       "blockNumber": 10293554,
@@ -6071,7 +6135,9 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBalCalc": "",
       "endBalDiff": "",
       "amountNet": "-5.0000000",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "",
+      "totalOut": "5.0000000"
     }
   ],
   "gasCost": 1321460340000000,
@@ -6213,7 +6279,9 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBalDiff": "",
       "amountNet": "-0.002058385900000000",
       "reconciliationType": "nextdiff-partial",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "",
+      "totalOut": ""
     }
   ],
   "gasCost": 2058385900000000,
@@ -7636,7 +7704,9 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBalCalc": "5.351951831439548557",
       "endBalDiff": "",
       "amountNet": "",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "",
+      "totalOut": ""
     },
     {
       "blockNumber": 10296720,
@@ -7663,7 +7733,9 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBalCalc": "",
       "endBalDiff": "",
       "amountNet": "9.500000000000000000",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "9.500000000000000000",
+      "totalOut": ""
     }
   ],
   "gasCost": 26281152000000000,
