@@ -332,7 +332,7 @@ bool pinlib_getChunkFromRemote(CPinnedChunk& pin, ipfsdown_t which, double sleep
 
         if (fileExists(getIndexPath(zipFile))) {
             ostringstream cmd;
-            cmd << "cd \"" << getIndexPath("") << "\" && gunzip --keep " << zipFile;
+            cmd << "cd \"" << getIndexPath("") << "\" && gunzip -k " << zipFile;
             int ret = system(cmd.str().c_str());
             // cerr << "result: " << ret << endl;
             if (ret != 0) {
