@@ -20,7 +20,7 @@ In future versions of the software, we will pin these shared chunks and blooms o
 
 ### prerequisites
 
-`[{NAME}]` does not work without an RPC endpoint to an Ethereum node. The software works without an `--archive` node, but it works significantly better with one. An additional requirement for the software to work properly is an RPC that provides OpenEthereum's `trace_` routines. We've tested with OpenEthereum and Erigon.
+`[{NAME}]` does not work without an RPC endpoint to an Ethereum node. The software works without an `--archive` node, but it works significantly better with one. An additional requirement for the software to work properly is an RPC that provides OpenEthereum's `trace_` routines. We've tested with OpenEthereum and TurboGeth.
 
 Please see [this article](.) for more information about running the scraper and building and sharing the index of appearances.
 

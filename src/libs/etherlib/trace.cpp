@@ -418,7 +418,7 @@ string_q nextTraceChunk_custom(const string_q& fieldIn, const void* dataPtr) {
                 break;
             case 'r':
                 if (fieldIn % "result") {
-                    if (isErigon() && !tra->error.empty()) {
+                    if (isTurboGeth() && !tra->error.empty()) {
                         return "{}";
                     }
                 }

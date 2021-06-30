@@ -2,7 +2,7 @@
 
 ### Postman
 
-The easiest way to use these tests is to import the `./Trace_Testing.json` into Postman and run the tests against your local node. Instructions for doing this are here: https://github.com/ledgerwatch/erigon/wiki/Using-Postman-to-test-RPC (replace the `RPC_Testing.json` file the `./Trace_Testing.json`).
+The easiest way to use these tests is to import the `./Trace_Testing.json` into Postman and run the tests against your local node. Instructions for doing this are here: https://github.com/ledgerwatch/turbo-geth/wiki/Using-Postman-to-Test-TurboGeth-RPC (replace the `RPC_Testing.json` file the `./Trace_Testing.json`).
 
 ---
 
