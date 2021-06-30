@@ -233,6 +233,8 @@ bool CEthState::Serialize(CArchive& archive) {
     // archive >> deployed;
     // archive >> accttype;
     // archive >> result;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -253,7 +255,8 @@ bool CEthState::SerializeC(CArchive& archive) const {
     // archive << deployed;
     // archive << accttype;
     // archive << result;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 
@@ -371,8 +374,12 @@ ostream& operator<<(ostream& os, const CEthState& it) {
 
 //---------------------------------------------------------------------------
 const CBaseNode* CEthState::getObjectAt(const string_q& fieldName, size_t index) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
     if (fieldName % "result")
         return &result;
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return NULL;
 }

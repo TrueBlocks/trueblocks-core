@@ -294,6 +294,8 @@ bool CTestCase::Serialize(CArchive& archive) {
     archive >> workPath;
     archive >> fileName;
     // archive >> test_id;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -321,7 +323,8 @@ bool CTestCase::SerializeC(CArchive& archive) const {
     archive << workPath;
     archive << fileName;
     // archive << test_id;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 
@@ -453,7 +456,7 @@ void establishTestMonitors(void) {
         "cd \"[{PATH}]\" && "
         "rm -fR mocks && "
         "rm -fR monitors && "
-        "gunzip --keep *.gz && "
+        "gunzip -k *.gz && "
         "tar -xvf monitors.tar 2>/dev/null && rm -f monitors.tar && "
         "tar -xvf mocks.tar 2>/dev/null && rm -f mocks.tar";
 

@@ -75,8 +75,11 @@ string_q CReconciliation::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
-            if (fieldName % "asset") {
-                return asset;
+            if (fieldName % "assetAddr") {
+                return addr_2_Str(assetAddr);
+            }
+            if (fieldName % "assetSymbol") {
+                return assetSymbol;
             }
             if (fieldName % "amountIn") {
                 return bni_2_Str(amountIn);
@@ -192,8 +195,12 @@ bool CReconciliation::setValueByName(const string_q& fieldNameIn, const string_q
 
     switch (tolower(fieldName[0])) {
         case 'a':
-            if (fieldName % "asset") {
-                asset = fieldValue;
+            if (fieldName % "assetAddr") {
+                assetAddr = str_2_Addr(fieldValue);
+                return true;
+            }
+            if (fieldName % "assetSymbol") {
+                assetSymbol = fieldValue;
                 return true;
             }
             if (fieldName % "amountIn") {
@@ -341,7 +348,8 @@ bool CReconciliation::Serialize(CArchive& archive) {
     archive >> blockNumber;
     archive >> transactionIndex;
     archive >> timestamp;
-    archive >> asset;
+    archive >> assetAddr;
+    archive >> assetSymbol;
     archive >> decimals;
     archive >> begBal;
     archive >> begBalDiff;
@@ -363,6 +371,8 @@ bool CReconciliation::Serialize(CArchive& archive) {
     archive >> amountNet;
     archive >> reconciliationType;
     archive >> reconciled;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -377,7 +387,8 @@ bool CReconciliation::SerializeC(CArchive& archive) const {
     archive << blockNumber;
     archive << transactionIndex;
     archive << timestamp;
-    archive << asset;
+    archive << assetAddr;
+    archive << assetSymbol;
     archive << decimals;
     archive << begBal;
     archive << begBalDiff;
@@ -399,7 +410,8 @@ bool CReconciliation::SerializeC(CArchive& archive) const {
     archive << amountNet;
     archive << reconciliationType;
     archive << reconciled;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 
@@ -438,7 +450,8 @@ void CReconciliation::registerClass(void) {
     ADD_FIELD(CReconciliation, "blockNumber", T_BLOCKNUM, ++fieldNum);
     ADD_FIELD(CReconciliation, "transactionIndex", T_BLOCKNUM, ++fieldNum);
     ADD_FIELD(CReconciliation, "timestamp", T_TIMESTAMP, ++fieldNum);
-    ADD_FIELD(CReconciliation, "asset", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CReconciliation, "assetAddr", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CReconciliation, "assetSymbol", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CReconciliation, "decimals", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CReconciliation, "begBal", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliation, "begBalDiff", T_INT256, ++fieldNum);
@@ -470,6 +483,8 @@ void CReconciliation::registerClass(void) {
     builtIns.push_back(_biCReconciliation);
 
     // EXISTING_CODE
+    ADD_FIELD(CReconciliation, "totalIn", T_INT256, ++fieldNum);
+    ADD_FIELD(CReconciliation, "totalOut", T_INT256, ++fieldNum);
     // EXISTING_CODE
 }
 
@@ -480,9 +495,9 @@ string_q nextReconciliationChunk_custom(const string_q& fieldIn, const void* dat
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             case 'a':
-                if (fieldIn % "asset") {
-                    if (rec->asset != "ETH")
-                        return rec->asset;
+                if (fieldIn % "assetSymbol") {
+                    if (rec->assetSymbol != "ETH")
+                        return rec->assetSymbol;
                     if (expContext().asEther) {
                         return "ETH";
                     } else if (expContext().asDollars) {
@@ -576,6 +591,14 @@ string_q nextReconciliationChunk_custom(const string_q& fieldIn, const void* dat
                     return bni_2_Export(rec->timestamp, rec->selfDestructOut, rec->decimals);
                 }
                 break;
+            case 't':
+                if (fieldIn % "totalIn") {
+                    return bni_2_Export(rec->timestamp, rec->totalIn(), rec->decimals);
+                }
+                if (fieldIn % "totalOut") {
+                    return bni_2_Export(rec->timestamp, rec->totalOut(), rec->decimals);
+                }
+                break;
             case 'w':
                 if (fieldIn % "week") {
                     return BOW(ts_2_Date(rec->timestamp)).Format(FMT_EXPORT).substr(0, 10);
@@ -642,13 +665,14 @@ const char* STR_DISPLAY_RECONCILIATION = "";
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //---------------------------------------------------------------------------
-bool CReconciliation::reconcileEth(const CStringArray& corrections, CReconciliationMap& last, blknum_t nextBlock,
-                                   const CTransaction* trans, const address_t& acctFor) {
+bool CReconciliation::reconcileEth(const CStringArray& corrections, CReconciliationMap& prevStatements,
+                                   blknum_t nextBlock, const CTransaction* trans, const address_t& acctFor) {
     // LOG4(lastStatement.Format());
     // LOG4(Format());
 
-    CReconciliation prev = last[acctFor + "_eth"];
-    asset = "ETH";
+    CReconciliation prev = prevStatements[acctFor + "_eth"];
+    assetSymbol = "ETH";
+    assetAddr = acctFor;
 
     // Note: In the case of an error, we need to account for gas usage if the account is the transaction's sender
     //
@@ -711,7 +735,7 @@ bool CReconciliation::reconcileEth(const CStringArray& corrections, CReconciliat
     // ...otherwise, we try to recover
     // Case 4: We need to dig into the traces (Note: this is the first place where we dig into the traces...
     // doing so without having been forced to causes a huge performance penalty.)
-    if (reconcileUsingTraces(prev.blockNumber, prev.endBal, prev.endBalCalc, nextBlock, trans, acctFor))
+    if (reconcileUsingTraces(prev.endBal, nextBlock, trans, acctFor))
         return true;
 
     // Case 2: The blockchain only returns balances PER block. This means that if two value changing transactions
@@ -806,8 +830,8 @@ bool CReconciliation::reconcileEth(const CStringArray& corrections, CReconciliat
 
 extern bool loadTraces(CTransaction& trans, blknum_t bn, blknum_t txid, bool useCache, bool skipDdos);
 //---------------------------------------------------------------------------
-bool CReconciliation::reconcileUsingTraces(blknum_t lastBn, bigint_t lastEndBal, bigint_t lastEndBalCalc,
-                                           blknum_t nextBlock, const CTransaction* trans, const address_t& acctFor) {
+bool CReconciliation::reconcileUsingTraces(bigint_t lastEndBal, blknum_t nextBlock, const CTransaction* trans,
+                                           const address_t& acctFor) {
     amountOut = amountIn = 0;  // we will store it in the internal values
     prefundIn = minerBaseRewardIn = minerNephewRewardIn = minerTxFeeIn + minerUncleRewardIn = 0;
 

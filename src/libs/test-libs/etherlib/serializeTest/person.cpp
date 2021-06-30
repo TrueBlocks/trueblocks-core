@@ -168,6 +168,8 @@ bool CPerson::Serialize(CArchive& archive) {
             return false;
         next->Serialize(archive);
     }
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -186,7 +188,8 @@ bool CPerson::SerializeC(CArchive& archive) const {
         archive << next->getRuntimeClass()->getClassNamePtr();
         next->SerializeC(archive);
     }
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 
@@ -281,8 +284,12 @@ ostream& operator<<(ostream& os, const CPerson& it) {
 
 //---------------------------------------------------------------------------
 const CBaseNode* CPerson::getObjectAt(const string_q& fieldName, size_t index) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
     if (fieldName % "next")
         return next;
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return NULL;
 }

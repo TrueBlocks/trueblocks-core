@@ -36,6 +36,7 @@ class CScrapeStatistics : public CBaseNode {
     uint64_t nStageHits;
     uint64_t nTotalHits;
     uint64_t nFileRecords;
+    uint64_t nCacheWrites;
 
   public:
     CScrapeStatistics(void);
@@ -110,6 +111,7 @@ inline void CScrapeStatistics::initialize(void) {
     nStageHits = 0;
     nTotalHits = 0;
     nFileRecords = 0;
+    nCacheWrites = 0;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -131,6 +133,7 @@ inline void CScrapeStatistics::duplicate(const CScrapeStatistics& sc) {
     nStageHits = sc.nStageHits;
     nTotalHits = sc.nTotalHits;
     nFileRecords = sc.nFileRecords;
+    nCacheWrites = sc.nCacheWrites;
 
     // EXISTING_CODE
     // EXISTING_CODE

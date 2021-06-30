@@ -154,6 +154,8 @@ bool CMonitorCount::Serialize(CArchive& archive) {
     archive >> address;
     archive >> nRecords;
     archive >> fileSize;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -168,7 +170,8 @@ bool CMonitorCount::SerializeC(CArchive& archive) const {
     archive << address;
     archive << nRecords;
     archive << fileSize;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 

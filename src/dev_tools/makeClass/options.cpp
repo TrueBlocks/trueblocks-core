@@ -255,7 +255,6 @@ COptions::COptions(void) : classFile("") {
     // BEG_CODE_NOTES
     // clang-format off
     notes.push_back("The `--options` flag generates `COption` code for each of the various tools.");
-    notes.push_back("The `--class` flag generates c++ code for each definition found in the local folder.");
     notes.push_back("More information on class definition files is found in the documentation.");
     // clang-format on
     // END_CODE_NOTES

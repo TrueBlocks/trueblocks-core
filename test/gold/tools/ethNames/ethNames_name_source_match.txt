@@ -104,6 +104,14 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
+    "tags": "30-Contracts",
+    "address": "0x02bcb9675727ade60243c3d467a3bf152142698b",
+    "name": "Credmark Community Treasury",
+    "source": "EtherScan.io",
+    "is_contract": true
+  },
+  {
+    "deleted": false,
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x02cb3c150bedca124d0ae8cccb72fefbe705c953",
     "name": "Grant 0782 Ethereum Cat Herders Community Fund",
@@ -1300,6 +1308,14 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
+    "tags": "30-Contracts",
+    "address": "0x414709bd112d006cbb85be21a9e19bf9bce8657e",
+    "name": "CredMark DAO",
+    "source": "EtherScan.io",
+    "is_contract": true
+  },
+  {
+    "deleted": false,
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x416deca06f9af666abe1666e80e8d30bba66d1c5",
     "name": "Grant 0496 Ethereum Contacts Registry (ecr)",
@@ -1762,21 +1778,4 @@ ethNames Ether --expand --verbose --fmt json
     "description": "Ethereum Meta addresses the lack of privacy in Ethereum.",
     "is_contract": true,
     "is_erc20": true
-  },
-  {
-    "deleted": false,
-    "tags": "60-Airdrops",
-    "address": "0x5717d19616fab9079cf2bfce7d94126bca3ae536",
-    "name": "BerryXToken Airdrop Sender",
-    "symbol": "BRX",
-    "source": "EtherScan.io",
-    "is_erc20": true
-  },
-  {
-    "deleted": false,
-    "tags": "30-Contracts",
-    "address": "0x5789e2b5460cae9329d93a78511e2ac49f98a1f6",
-    "name": "GU: Legendary Pack",
-    "source": "EtherScan.io",
-    "is_contract": true
   }] }

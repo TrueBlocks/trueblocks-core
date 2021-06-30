@@ -145,6 +145,8 @@ bool CAppearanceDisplay::Serialize(CArchive& archive) {
     // EXISTING_CODE
     archive >> blockNumber;
     archive >> transactionIndex;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -158,7 +160,8 @@ bool CAppearanceDisplay::SerializeC(CArchive& archive) const {
     // EXISTING_CODE
     archive << blockNumber;
     archive << transactionIndex;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 

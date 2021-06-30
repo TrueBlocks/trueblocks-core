@@ -2,7 +2,7 @@ acctExport argc: 2 [1:-th]
 acctExport -th 
 ### Usage
 
-`Usage:`    chifra export [-p|-r|-l|-t|-C|-O|-a|-i|-R|-y|-U|-c|-e|-v|-h] &lt;address&gt; [address...] [topics] [fourbytes]  
+`Usage:`    chifra export [-p|-r|-l|-t|-C|-a|-i|-R|-y|-U|-c|-e|-v|-h] &lt;address&gt; [address...] [topics] [fourbytes]  
 `Purpose:`  Export full detail of transactions for one or more addresses.
 
 `Where:`  
@@ -17,7 +17,6 @@ acctExport -th
 | -l | --logs | export logs instead of transaction list |
 | -t | --traces | export traces instead of transaction list |
 | -C | --accounting | export accounting records instead of transaction list |
-| -O | --tokens | export accounting for ERC 20 tokens (assumes ETH accounting as above) |
 | -a | --articulate | articulate transactions, traces, logs, and outputs |
 | -i | --cache_txs | write transactions to the cache (see notes) |
 | -R | --cache_traces | write traces to the cache (see notes) |
@@ -39,6 +38,7 @@ acctExport -th
 | -u | --unripe | enable search of unripe (neither staged nor finalized) folder (assumes --staging) |
 |  | --load &lt;str&gt; | a comma separated list of dynamic traversers to load |
 |  | --reversed | produce results in reverse chronological order |
+| -y | --by_date | produce results sorted by date (default is to report by address) |
 |####|Hidden options||
 | -x | --fmt &lt;val&gt; | export format, one of *[ none \| json\* \| txt \| csv \| api ]* |
 | -v | --verbose | set verbose level (optional level defaults to 1) |

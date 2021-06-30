@@ -5,12 +5,12 @@
  *------------------------------------------------------------------------*/
 #include "options.h"
 
-extern int findAppearance2(const void* v1, const void* v2);
-extern int sortByAddress(const void* v1, const void* v2);
-extern bool isHit(char* s, const CMonitorArray& monitors);
+extern int findAppearance(const void* v1, const void* v2);
+extern int sortRecord(const void* v1, const void* v2);
 //---------------------------------------------------------------
 bool COptions::queryFlatFile(const string_q& path, bool sorted) {
-    char* rawData = NULL;
+    char* rawData = nullptr;
+    char* endOfData = nullptr;
 
     CArchive stage(READING_ARCHIVE);
     if (!stage.Lock(path, modeReadOnly, LOCK_NOWAIT)) {
@@ -18,61 +18,72 @@ bool COptions::queryFlatFile(const string_q& path, bool sorted) {
         return !shouldQuit();
     }
 
-    size_t sz = fileSize(path);
-    rawData = reinterpret_cast<char*>(malloc(sz + (2 * 59)));  // extra room
+    size_t sizeInBytes = fileSize(path);
+    rawData = reinterpret_cast<char*>(malloc(sizeInBytes + (2 * 59)));  // extra room
     if (!rawData) {
         stage.Release();
         LOG_WARN("Could not allocate memory for data.");
         return !shouldQuit();
     }
-    bzero(rawData, sz + (2 * 59));
+    bzero(rawData, sizeInBytes + (2 * 59));
 
-    size_t nRead = stage.Read(rawData, sz, sizeof(char));
-    if (nRead != sz) {
+    size_t nRead = stage.Read(rawData, sizeInBytes, sizeof(char));
+    if (nRead != sizeInBytes) {
         LOG_WARN("Could not read entire file.");
         return !shouldQuit();
     }
 
     size_t nRecords = fileSize(path) / 59;
     // stats.nRecords += nRecords;
-    qsort(rawData, nRecords, 59, sortByAddress);
+    // cerr << "Unsorted: " << endl << rawData << endl;
+    qsort(rawData, nRecords, 59, sortRecord);
+    // cout << "Sorted: " << endl << rawData << endl;
+    endOfData = rawData + sizeInBytes;
 
     for (size_t mo = 0; mo < allMonitors.size() && !shouldQuit(); mo++) {
         CMonitor* monitor = &allMonitors[mo];
-        if (!monitor->openForWriting(monitor->isStaging)) {
-            delete rawData;
-            rawData = NULL;
-            LOG_WARN("Could not open monitor file for " + monitor->address + ".");
-            return !shouldQuit();
-        }
         char search[70];
         strncpy(search, monitor->address.c_str(), monitor->address.size());
-        search[66] = '\0';
-        char* found = (char*)bsearch(search, rawData, nRecords, 59, findAppearance2);
-        if (found) {
-            char* pos = &found[58];
-            *pos = '\0';
-            stats.nStageHits++;
-            string_q s = found;
-            nextTokenClear(s, '\t');
-            CMonitoredAppearance app;
-            app.blk = (uint32_t)str_2_Uint(nextTokenClear(s, '\t'));
-            app.txid = (uint32_t)str_2_Uint(found);
-            tmp.push_back(app);
+        search[monitor->address.size()] = '\0';
+        char* found = (char*)bsearch(search, rawData, nRecords, 59, findAppearance);
+        if (!found) {
+            if (!isTestMode())
+                LOG_PROGRESS("Scanning", fileRange.first, listRange.second, " stage miss");
         } else {
-            cerr << monitor->address << " not found on stage" << endl;
-        }
-        // if (tmp.size()) {
-        //     lockSection();
-        //     monitor->writeMonitorArray(tmp);
-        //     monitor->writeMonitorLastBlock(fileRange.first + 1, monitor.isStaging);
-        //     unlockSection();
-        // }
-    }
+            stats.nStageHits++;
+            char* ptr = found;
+            while (ptr > rawData) {
+                // Go backwards until we hit either the top of the file or the record
+                // before the first record in the file with the address we're interested
+                // in, then skip ahead one to get to the first record.
+                ptr -= 59;
+                if (findAppearance(search, ptr))
+                    ptr = rawData;
+                else
+                    found = ptr;
+            }
 
-    if (!isTestMode())
-        LOG_PROGRESS("Scanning", fileRange.first, listRange.second,
-                     " stage " + string_q(tmp.size() ? " hit" : " miss"));
+            while (found < endOfData) {
+                char* pos = &found[58];
+                *pos = '\0';
+                string_q s = found;
+                address_t addr = nextTokenClear(s, '\t');
+                if (startsWith(addr, monitor->address)) {
+                    CAppearance_mon app;
+                    app.blk = (uint32_t)str_2_Uint(nextTokenClear(s, '\t'));
+                    app.txid = (uint32_t)str_2_Uint(s);
+                    monitor->apps.push_back(app);
+                    found += 59;
+                } else {
+                    found = endOfData;
+                }
+            }
+
+            found = endOfData;
+            if (!isTestMode())
+                LOG_PROGRESS("Scanning", fileRange.first, listRange.second, " stage hit");
+        }
+    }
 
     stage.Release();
     delete rawData;
@@ -82,21 +93,20 @@ bool COptions::queryFlatFile(const string_q& path, bool sorted) {
 }
 
 //---------------------------------------------------------------
-int sortByAddress(const void* v1, const void* v2) {
-    char* s1 = (char*)v1;
-    char* s2 = (char*)v2;
+int sortRecord(const void* v1, const void* v2) {
+    const char* s1 = (const char*)v1;
+    const char* s2 = (const char*)v2;
     return strncmp(s1, s2, 59);
 }
 
-//---------------------------------------------------------------
-bool isHit(char* s, const CMonitorArray& monitors) {
-    for (auto m : monitors)
-        if (startsWith(s, m.address))
-            return true;
-    return false;
-}
-
 //----------------------------------------------------------------
-int findAppearance2(const void* v1, const void* v2) {
-    return sortByAddress(v1, v2) == 0;
+int findAppearance(const void* v1, const void* v2) {
+    // char str[50];
+    // bzero(str, 50);
+    // cerr << strncpy(str, (char*)v1, 42) << " --> ";
+    //      << strncpy(str, (char*)v2, 42) << ": "
+    //      << strncmp(s1, s2, 42) << endl;
+    const char* s1 = (const char*)v1;
+    const char* s2 = (const char*)v2;
+    return strncmp(s1, s2, 42);
 }

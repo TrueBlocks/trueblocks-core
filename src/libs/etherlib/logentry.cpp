@@ -265,6 +265,8 @@ bool CLogEntry::Serialize(CArchive& archive) {
     // archive >> transactionLogIndex;
     // archive >> type;
     // archive >> removed;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -285,7 +287,8 @@ bool CLogEntry::SerializeC(CArchive& archive) const {
     // archive << transactionLogIndex;
     // archive << type;
     // archive << removed;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 
@@ -453,8 +456,12 @@ ostream& operator<<(ostream& os, const CLogEntry& it) {
 
 //---------------------------------------------------------------------------
 const CBaseNode* CLogEntry::getObjectAt(const string_q& fieldName, size_t index) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
     if (fieldName % "articulatedLog")
         return &articulatedLog;
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return NULL;
 }

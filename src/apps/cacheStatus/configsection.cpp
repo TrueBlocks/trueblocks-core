@@ -169,6 +169,8 @@ bool CConfigSection::Serialize(CArchive& archive) {
     archive >> section;
     archive >> name;
     archive >> keys;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -183,7 +185,8 @@ bool CConfigSection::SerializeC(CArchive& archive) const {
     archive << section;
     archive << name;
     archive << keys;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 
@@ -291,6 +294,8 @@ ostream& operator<<(ostream& os, const CConfigSection& it) {
 
 //---------------------------------------------------------------------------
 const CBaseNode* CConfigSection::getObjectAt(const string_q& fieldName, size_t index) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
     if (fieldName % "keys") {
         if (index == NOPOS) {
             CConfigItem empty;
@@ -300,6 +305,8 @@ const CBaseNode* CConfigSection::getObjectAt(const string_q& fieldName, size_t i
         if (index < keys.size())
             return &keys[index];
     }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return NULL;
 }

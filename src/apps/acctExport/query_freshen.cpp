@@ -29,7 +29,7 @@ bool COptions::process_freshen(void) {
         forEveryFileInFolder(indexFolder_blooms, visitFinalIndexFiles, this);
         for (auto monitor : allMonitors) {
             monitor.moveToProduction(monitor.isStaging);
-            LOG4(monitor.address, " freshened to ", monitor.getLastVisited(true /* fresh */));
+            LOG4(monitor.address, " freshened to ", monitor.getNextBlockToVisit(true /* fresh */));
         }
     }
 

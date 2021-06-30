@@ -154,6 +154,8 @@ bool CPinataRegion::Serialize(CArchive& archive) {
     archive >> regionId;
     archive >> currentReplicationCount;
     archive >> desiredReplicationCount;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -168,7 +170,8 @@ bool CPinataRegion::SerializeC(CArchive& archive) const {
     archive << regionId;
     archive << currentReplicationCount;
     archive << desiredReplicationCount;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 

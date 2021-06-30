@@ -21,7 +21,6 @@ static const COption params[] = {
     COption("logs", "l", "", OPT_SWITCH, "export logs instead of transaction list"),
     COption("traces", "t", "", OPT_SWITCH, "export traces instead of transaction list"),
     COption("accounting", "C", "", OPT_SWITCH, "export accounting records instead of transaction list"),
-    COption("tokens", "O", "", OPT_SWITCH, "export accounting for ERC 20 tokens (assumes ETH accounting as above)"),
     COption("articulate", "a", "", OPT_SWITCH, "articulate transactions, traces, logs, and outputs"),
     COption("cache_txs", "i", "", OPT_SWITCH, "write transactions to the cache (see notes)"),
     COption("cache_traces", "R", "", OPT_SWITCH, "write traces to the cache (see notes)"),
@@ -42,6 +41,7 @@ static const COption params[] = {
     COption("unripe", "u", "", OPT_HIDDEN | OPT_SWITCH, "enable search of unripe (neither staged nor finalized) folder (assumes --staging)"),  // NOLINT
     COption("load", "", "<string>", OPT_HIDDEN | OPT_FLAG, "a comma separated list of dynamic traversers to load"),
     COption("reversed", "", "", OPT_HIDDEN | OPT_SWITCH, "produce results in reverse chronological order"),
+    COption("by_date", "y", "", OPT_HIDDEN | OPT_SWITCH, "produce results sorted by date (default is to report by address)"),  // NOLINT
     COption("", "", "", OPT_DESCRIPTION, "Export full detail of transactions for one or more addresses."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -83,9 +83,6 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-C" || arg == "--accounting") {
             accounting = true;
-
-        } else if (arg == "-O" || arg == "--tokens") {
-            tokens = true;
 
         } else if (arg == "-a" || arg == "--articulate") {
             articulate = true;
@@ -168,6 +165,9 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "--reversed") {
             reversed = true;
 
+        } else if (arg == "-y" || arg == "--by_date") {
+            by_date = true;
+
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
@@ -199,7 +199,6 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("logs", logs);
     LOG_TEST_BOOL("traces", traces);
     LOG_TEST_BOOL("accounting", accounting);
-    LOG_TEST_BOOL("tokens", tokens);
     LOG_TEST_BOOL("articulate", articulate);
     LOG_TEST_BOOL("cache_txs", cache_txs);
     LOG_TEST_BOOL("cache_traces", cache_traces);
@@ -220,6 +219,7 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("unripe", unripe);
     LOG_TEST("load", load, (load == ""));
     LOG_TEST_BOOL("reversed", reversed);
+    LOG_TEST_BOOL("by_date", by_date);
     // END_DEBUG_DISPLAY
 
     if (Mocked(""))
@@ -278,7 +278,7 @@ bool COptions::parseArguments(string_q& command) {
         return usage("Do not use the --freshen option with other options.");
 
     // Where will we start?
-    blknum_t firstBlockToVisit = NOPOS;
+    blknum_t nextBlockToVisit = NOPOS;
 
     for (auto addr : addrs) {
         CMonitor monitor;
@@ -299,12 +299,12 @@ bool COptions::parseArguments(string_q& command) {
             string_q msg;
             if (monitor.isMonitorLocked(msg))  // If locked, we fail
                 return usage(msg);
-            firstBlockToVisit = min(firstBlockToVisit, monitor.getLastVisited());
+            nextBlockToVisit = min(nextBlockToVisit, monitor.getNextBlockToVisit());
             LOG_TEST("Monitor found for", addr, false);
-            LOG_TEST("Last block in monitor", monitor.getLastBlockInMonitor(), false);
+            LOG_TEST("Last block in monitor", monitor.getLastBlockInMonitorPlusOne(), false);
         } else {
             LOG_WARN("Monitor not found for ", addr + ". Continuing anyway.");
-            firstBlockToVisit = 0;
+            nextBlockToVisit = 0;  // monitor.getNextBlockToVisit()
         }
         if (accountedFor.empty()) {
             CAccountName acct;
@@ -335,7 +335,7 @@ bool COptions::parseArguments(string_q& command) {
 
     // Last block depends on scrape type or user input `end` option (with appropriate check)
     blknum_t lastBlockToVisit = max((blknum_t)1, unripe ? bp.unripe : staging ? bp.staging : bp.finalized);
-    listRange = make_pair((firstBlockToVisit == NOPOS ? 0 : firstBlockToVisit), lastBlockToVisit);
+    listRange = make_pair((nextBlockToVisit == NOPOS ? 0 : nextBlockToVisit), lastBlockToVisit);
 
     if (isTestMode() && (staging || unripe))
         return usage("--staging and --unripe are disabled for testing.");
@@ -351,7 +351,7 @@ bool COptions::parseArguments(string_q& command) {
 
     if (first_block > last_block)
         return usage("--first_block must be less than or equal to --last_block.");
-    blockRange = make_pair(first_block, last_block);
+    exportRange = make_pair(first_block, last_block);
 
     if (count) {
         cout << exportPreamble(expContext().fmtMap["header"], GETRUNTIME_CLASS(CMonitorCount)->m_ClassName);
@@ -370,8 +370,33 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     } else {
-        if (load.empty() && !loadAllAppearances())
-            return false;
+        if (load.empty()) {
+            if (!loadAllAppearances())
+                return false;
+
+        } else {
+            string_q fileName = getCachePath("objs/" + load);
+            LOG_INFO("Trying to load dynamic library ", fileName);
+
+            if (!fileExists(fileName)) {
+                replace(fileName, "/objs/", "/objs/lib");
+                fileName = fileName + ".so";
+                LOG_INFO("Trying to load dynamic library ", fileName);
+            }
+
+            if (!fileExists(fileName)) {
+                fileName = substitute(fileName, ".so", ".dylib");
+                LOG_INFO("Trying to load dynamic library ", fileName);
+            }
+
+            if (fileExists(fileName)) {
+                LOG_INFO(bYellow, "Found dynamic library ", fileName, cOff);
+                load = fileName;
+
+            } else {
+                return usage("Could not load dynamic traverser for " + fileName + ".");
+            }
+        }
     }
 
     return true;
@@ -392,7 +417,6 @@ void COptions::Init(void) {
     logs = false;
     traces = false;
     accounting = false;
-    tokens = false;
     articulate = false;
     // clang-format off
     cache_txs = getGlobalConfig("acctExport")->getConfigBool("settings", "cache_txs", false);
@@ -412,13 +436,14 @@ void COptions::Init(void) {
     unripe = false;
     load = "";
     reversed = false;
+    by_date = false;
     // END_CODE_INIT
 
     bp = getBlockProgress(BP_ALL);
     listRange = make_pair(0, NOPOS);
 
     allMonitors.clear();
-    apps.clear();
+    monApps.clear();
 
     accountedFor = "";
 
@@ -509,7 +534,7 @@ bool COptions::setDisplayFormatting(void) {
             expContext().fmtMap["trace_fmt"] = cleanFmt(format);
             manageFields("CTrace:" + format);
 
-            // This doesn't really work because CMonitoredAppearance is not a subclass of CBaseNode. We phony it here
+            // This doesn't really work because CAppearance_mon is not a subclass of CBaseNode. We phony it here
             // for future reference.
             format =
                 getGlobalConfig("acctExport")->getConfigStr("display", "appearances", STR_DISPLAY_APPEARANCEDISPLAY);
@@ -607,7 +632,7 @@ bool COptions::setDisplayFormatting(void) {
 // TODO(tjayrush): What does blkRewardMap do? Needs testing
 // TODO(tjayrush): Reconciliation loads traces -- plus it reduplicates the isSuicide, isGeneration, isUncle shit
 // TODO(tjayrush): writeLastEncountered is weird (in fact removed -- used to keep freshen from revisiting blocks twice
-// TODO(tjayrush): writeMonitorLastBlock is really weird
+// TODO(tjayrush): writeLastBlockInMonitor is really weird
 // TODO(tjayrush): We used to write traces sometimes
 // TODO(tjayrush): We used to cache the monitored txs - I think it was pretty fast (we used the monitor staging folder)
 // TODO(tjayrush): We used to do a ten address thing that would scan the index for ten addrs at a time and then
@@ -681,6 +706,19 @@ bool COptions::isRelevant(const CLogEntry& log) const {
 }
 
 //-----------------------------------------------------------------------
+bool fourByteFilter(const string_q& input, const COptions* opt) {
+    ASSERT(!opt->freshenOnly);
+    if (opt->fourbytes.empty())
+        return true;
+
+    for (auto four : opt->fourbytes)
+        if (startsWith(input, four))
+            return true;
+
+    return false;
+}
+
+//-----------------------------------------------------------------------
 string_q CScrapeStatistics::Header(const string_q& fmt) const {
     return Format(substitute(fmt, "{", "{p:"));
 }
@@ -702,17 +740,4 @@ void COptions::writePerformanceData(void) {
     ostringstream data;
     data << stats.Format(fmt) << endl;
     appendToAsciiFile(statsFile, data.str());
-}
-
-//-----------------------------------------------------------------------
-bool fourByteFilter(const string_q& input, const COptions* opt) {
-    ASSERT(!opt->freshenOnly);
-    if (opt->fourbytes.empty())
-        return true;
-
-    for (auto four : opt->fourbytes)
-        if (startsWith(input, four))
-            return true;
-
-    return false;
 }

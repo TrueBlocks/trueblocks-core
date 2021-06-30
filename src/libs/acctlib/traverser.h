@@ -21,6 +21,7 @@ inline bool noopFunc(CTraverser* trav, void* data) {
 //-----------------------------------------------------------------------
 extern bool filterFunc(CTraverser* trav, void* data);
 
+typedef map<address_t, CMonitor> monitor_map_t;
 //-----------------------------------------------------------------------
 class CTraverser {
   public:
@@ -30,12 +31,13 @@ class CTraverser {
     size_t nProcessed;
     string_q operation;
     string_q readStatus;
-    address_t accountedFor;
+    CMonitor* curMonitor;
+    monitor_map_t monitorMap;
     blkrange_t travRange;
     CTraverser(ostream& osIn, const string_q& o) : os(osIn), index(0), nProcessed(0), operation(o) {
         logging = !isTestMode() || getEnvStr("FORCE_LOGGING") == "true";
         readStatus = "Extracting";
-        accountedFor = "";
+        curMonitor = nullptr;
         travRange = make_pair(0, NOPOS);
         filterFunc = ::filterFunc;
     }
@@ -47,11 +49,11 @@ class CTraverser {
     TRAVERSERFUNC postFunc = nullptr;
     TRAVERSERFUNC displayFunc = nullptr;
     TRAVERSERFUNC dataFunc = nullptr;
-    const CMonitoredAppearance* app = nullptr;
+    const CAppearance_mon* app = nullptr;
     CBlock block;
     CTransaction trans;
 
-    bool traverse(const CMonitoredAppearanceArray& apps, void* data);
+    bool traverse(const CAppearanceArray_mon& apps, void* data);
 
   private:
     CTraverser(void) = delete;
@@ -59,7 +61,7 @@ class CTraverser {
 typedef vector<CTraverser> CTraverserArray;
 
 //-----------------------------------------------------------------------
-extern bool forEveryAppearance(const CTraverserArray& traversers, const CMonitoredAppearanceArray& apps, void* data);
+extern bool forEveryAppearance(const CTraverserArray& traversers, const CAppearanceArray_mon& apps, void* data);
 
 class CDynamicTraverser {
   private:

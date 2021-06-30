@@ -143,6 +143,8 @@ bool CTreeNode::Serialize(CArchive& archive) {
     // EXISTING_CODE
     archive >> index;
     archive >> prefixS;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -156,7 +158,8 @@ bool CTreeNode::SerializeC(CArchive& archive) const {
     // EXISTING_CODE
     archive << index;
     archive << prefixS;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 

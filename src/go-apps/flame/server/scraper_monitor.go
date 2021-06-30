@@ -94,7 +94,7 @@ func RunMonitorScraper() {
     os << (opt->unripe ? "--unripe " : "");
     os << (verbose ? ("--verbose " + uint_2_Str(verbose)) : "") << " ";
     os << "--freshen ";
-    os << "--first_block " << monitor.getLastBlockInMonitor() << " ";
+    os << "--first_block " << monitor.getLastBlockInMonitorPlusOne() << " ";
     os << monitor.address;
     if (opt->load.empty())
         LOG_INFO("Calling: " + substitute(os.str(), "acctExport", "chifra export") + string_q(40, ' '));

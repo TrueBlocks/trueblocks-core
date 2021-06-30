@@ -5,9 +5,8 @@
 
 string_q uniswapFactory = "0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f";
 string_q getPair = "0xe6a43905";
-string_q pairBytes =
-    "0000000000000000000000006b175474e89094c44da98b954eedeac495271d0f000000000000000000000000c02aaa39b223fe8d0a0e5c4f27"
-    "ead9083c756cc2";
+string_q pairBytes = padLeft("6b175474e89094c44da98b954eedeac495271d0f", 64, '0') +
+                     padLeft("c02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", 64, '0');
 string_q getReserves = "0x0902f1ac";
 string_q reserveBytes = "";
 //-----------------------------------------------------------------------
@@ -21,11 +20,14 @@ class CTestTraverser : public CTraverser {
         theCall.bytes = pairBytes;
         theCall.abi_spec.loadAbiFromEtherscan(uniswapFactory);
         theCall.blockNumber = getBlockProgress(BP_CLIENT).client;
+        LOG4("Calling ", substitute(theCall.Format(), "\n", " "));
         if (doEthCall(theCall)) {
             perTxCall.address = theCall.getResults();
             perTxCall.abi_spec.loadAbiFromEtherscan(perTxCall.address);
-            cerr << "Found USD Pair: " << perTxCall.address << " with ";
-            cerr << perTxCall.abi_spec.interfaces.size() << " endpoints" << endl;
+            LOG_INFO(bGreen, "Found USD Pair: ", perTxCall.address, " with ", perTxCall.abi_spec.interfaces.size(),
+                     " endpoints", cOff);
+        } else {
+            LOG_WARN(bRed, "Could not find USD Pair: ", perTxCall.address, cOff);
         }
         perTxCall.encoding = getReserves;
         perTxCall.bytes = reserveBytes;
@@ -34,15 +36,13 @@ class CTestTraverser : public CTraverser {
 
 //-----------------------------------------------------------------------
 bool header(CTraverser* trav, void* data) {
+    cout << "hash\t";
     cout << "date\t";
-    cout << "blockNumber\t";
-    cout << "transactionId\t";
-    cout << "reserve1\t";
-    cout << "reserve2\t";
-    cout << "priceUSD"
-         << "\t";
-    cout << "balEth"
-         << "\t";
+    cout << "bn.txid\t";
+    cout << "reserveDAI\t";
+    cout << "reserveETH\t";
+    cout << "priceUSD\t";
+    cout << "balEth\t";
     cout << "balUSD" << endl;
     return true;
 }
@@ -51,24 +51,30 @@ bool header(CTraverser* trav, void* data) {
 bool display(CTraverser* trav, void* data) {
     CTestTraverser* tt = (CTestTraverser*)trav;
     tt->perTxCall.blockNumber = tt->app->blk;
+    tt->trans.timestamp = (timestamp_t)expContext().tsMemMap[(tt->app->blk * 2) + 1];
+    tt->block.timestamp = (timestamp_t)expContext().tsMemMap[(tt->app->blk * 2) + 1];
+
+    cerr << tt->readStatus << " ";
     if (doEthCall(tt->perTxCall) && !tt->perTxCall.result.outputs.empty()) {
-        cout << tt->trans.Format("[{DATE}]") << "\t";
-        cout << tt->app->blk << "\t";
-        cout << tt->app->txid << "\t";
         CStringArray results;
         if (tt->perTxCall.getResults(results) && results.size() > 1) {
-            wei_t balance = getBalanceAt(tt->accountedFor, tt->app->blk);
+            wei_t balance = getBalanceAt(tt->curMonitor->address, tt->app->blk);
             double reserve1 = str_2_Double(wei_2_Ether(str_2_Wei(results[0]), 18));
             double reserve2 = str_2_Double(wei_2_Ether(str_2_Wei(results[1]), 18));
             double ethbal = str_2_Double(wei_2_Ether(balance, 18));
             double price = reserve1 / reserve2;
             double usdbal = ethbal * price;
-            cout << double_2_Str(reserve1, 3) << "\t";
-            cout << double_2_Str(reserve2, 3) << "\t";
+
+            cout << tt->trans.hash << "\t";
+            cout << tt->trans.Format("[{DATE}]") << "\t";
+            cout << tt->app->blk << "." << tt->app->txid << "\t";
+            cout << double_2_Str(reserve1, 2) << "\t";
+            cout << double_2_Str(reserve2, 2) << "\t";
             cout << double_2_Str(price, 2) << "\t";
             cout << double_2_Str(ethbal, 3) << "\t";
             cout << double_2_Str(usdbal, 2) << endl;
         }
+
     } else {
         cerr << "No result at block " << tt->app->blk << "\r";
         cerr.flush();
@@ -86,6 +92,7 @@ extern "C" CTraverser* makeTraverser(void) {
 
     CTestTraverser* trav = new CTestTraverser;
     trav->preFunc = header;
+    trav->dataFunc = noopFunc;
     trav->displayFunc = display;
 
     return trav;

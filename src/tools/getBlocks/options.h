@@ -29,6 +29,7 @@ class COptions : public CBlockOptions {
     bool trace;
     bool count;
     bool cache;
+    blknum_t list_count;
     // END_CODE_DECLARE
 
     uint64_t nProcessed{0};

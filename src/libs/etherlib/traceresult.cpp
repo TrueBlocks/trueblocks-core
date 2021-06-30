@@ -169,6 +169,8 @@ bool CTraceResult::Serialize(CArchive& archive) {
     archive >> code;
     archive >> gasUsed;
     archive >> output;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -184,7 +186,8 @@ bool CTraceResult::SerializeC(CArchive& archive) const {
     archive << code;
     archive << gasUsed;
     archive << output;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 

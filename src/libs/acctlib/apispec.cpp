@@ -154,6 +154,8 @@ bool CApiSpec::Serialize(CArchive& archive) {
     archive >> method;
     archive >> uri;
     archive >> headers;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -168,7 +170,8 @@ bool CApiSpec::SerializeC(CArchive& archive) const {
     archive << method;
     archive << uri;
     archive << headers;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 

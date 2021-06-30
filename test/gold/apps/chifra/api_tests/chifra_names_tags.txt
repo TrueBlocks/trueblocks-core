@@ -88,7 +88,13 @@
       "tags": "36-Compound"
     },
     {
+      "tags": "39-Yearn"
+    },
+    {
       "tags": "40-Exchanges"
+    },
+    {
+      "tags": "40-Friends"
     },
     {
       "tags": "50-Tokens"

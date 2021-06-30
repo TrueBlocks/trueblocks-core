@@ -291,6 +291,8 @@ bool CTrace::Serialize(CArchive& archive) {
     archive >> result;
     archive >> articulatedTrace;
     // archive >> compressedTrace;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -314,7 +316,8 @@ bool CTrace::SerializeC(CArchive& archive) const {
     archive << result;
     archive << articulatedTrace;
     // archive << compressedTrace;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 
@@ -418,7 +421,7 @@ string_q nextTraceChunk_custom(const string_q& fieldIn, const void* dataPtr) {
                 break;
             case 'r':
                 if (fieldIn % "result") {
-                    if (isTurboGeth() && !tra->error.empty()) {
+                    if (isErigon() && !tra->error.empty()) {
                         return "{}";
                     }
                 }
@@ -477,14 +480,16 @@ ostream& operator<<(ostream& os, const CTrace& it) {
 
 //---------------------------------------------------------------------------
 const CBaseNode* CTrace::getObjectAt(const string_q& fieldName, size_t index) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
     if (fieldName % "action")
         return &action;
-
     if (fieldName % "result")
         return &result;
-
     if (fieldName % "articulatedTrace")
         return &articulatedTrace;
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return NULL;
 }

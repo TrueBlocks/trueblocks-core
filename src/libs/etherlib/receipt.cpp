@@ -236,6 +236,8 @@ bool CReceipt::Serialize(CArchive& archive) {
     archive >> logs;
     // archive >> root;
     archive >> status;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -253,7 +255,8 @@ bool CReceipt::SerializeC(CArchive& archive) const {
     archive << logs;
     // archive << root;
     archive << status;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 
@@ -415,6 +418,8 @@ ostream& operator<<(ostream& os, const CReceipt& it) {
 
 //---------------------------------------------------------------------------
 const CBaseNode* CReceipt::getObjectAt(const string_q& fieldName, size_t index) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
     if (fieldName % "logs") {
         if (index == NOPOS) {
             CLogEntry empty;
@@ -424,6 +429,8 @@ const CBaseNode* CReceipt::getObjectAt(const string_q& fieldName, size_t index) 
         if (index < logs.size())
             return &logs[index];
     }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return NULL;
 }

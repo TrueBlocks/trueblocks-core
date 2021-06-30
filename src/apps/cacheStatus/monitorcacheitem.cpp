@@ -145,6 +145,8 @@ bool CMonitorCacheItem::Serialize(CArchive& archive) {
     // EXISTING_CODE
     archive >> type;
     archive >> deleted;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -158,7 +160,8 @@ bool CMonitorCacheItem::SerializeC(CArchive& archive) const {
     // EXISTING_CODE
     archive << type;
     archive << deleted;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 

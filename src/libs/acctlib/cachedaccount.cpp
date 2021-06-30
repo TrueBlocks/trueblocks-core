@@ -193,6 +193,8 @@ bool CCachedAccount::Serialize(CArchive& archive) {
     archive >> latestPage;
     archive >> latestTx;
     archive >> transactions;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -208,7 +210,8 @@ bool CCachedAccount::SerializeC(CArchive& archive) const {
     archive << latestPage;
     archive << latestTx;
     archive << transactions;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 
@@ -312,9 +315,10 @@ ostream& operator<<(ostream& os, const CCachedAccount& it) {
 
 //---------------------------------------------------------------------------
 const CBaseNode* CCachedAccount::getObjectAt(const string_q& fieldName, size_t index) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
     if (fieldName % "latestTx")
         return &latestTx;
-
     if (fieldName % "transactions") {
         if (index == NOPOS) {
             CTransaction empty;
@@ -324,6 +328,8 @@ const CBaseNode* CCachedAccount::getObjectAt(const string_q& fieldName, size_t i
         if (index < transactions.size())
             return &transactions[index];
     }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return NULL;
 }

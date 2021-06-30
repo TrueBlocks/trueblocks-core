@@ -141,6 +141,8 @@ bool CStatusTerse::Serialize(CArchive& archive) {
     // EXISTING_CODE
     archive >> modes1;
     archive >> modes2;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -154,7 +156,8 @@ bool CStatusTerse::SerializeC(CArchive& archive) const {
     // EXISTING_CODE
     archive << modes1;
     archive << modes2;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 

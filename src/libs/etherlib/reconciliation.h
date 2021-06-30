@@ -29,7 +29,8 @@ class CReconciliation : public CBaseNode {
     blknum_t blockNumber;
     blknum_t transactionIndex;
     timestamp_t timestamp;
-    string_q asset;
+    address_t assetAddr;
+    string_q assetSymbol;
     uint64_t decimals;
     bigint_t begBal;
     bigint_t begBalDiff;
@@ -61,10 +62,16 @@ class CReconciliation : public CBaseNode {
     DECLARE_NODE(CReconciliation);
 
     // EXISTING_CODE
+    CReconciliation(blknum_t bn, blknum_t txid, timestamp_t ts) {
+        initialize();
+        blockNumber = bn;
+        transactionIndex = txid;
+        timestamp = ts;
+    }
     bool reconcileEth(const CStringArray& corrections, map<string, CReconciliation>& last, blknum_t nextBlock,
                       const CTransaction* trans, const address_t& acctFor);
-    bool reconcileUsingTraces(blknum_t lastBn, bigint_t lastEndBal, bigint_t lastEndBalCalc, blknum_t nextBlock,
-                              const CTransaction* trans, const address_t& acctFor);
+    bool reconcileUsingTraces(bigint_t lastEndBal, blknum_t nextBlock, const CTransaction* trans,
+                              const address_t& acctFor);
     void reset(void) {
         blknum_t b = blockNumber, tr = transactionIndex;
         timestamp_t ts = timestamp;
@@ -73,6 +80,14 @@ class CReconciliation : public CBaseNode {
         transactionIndex = tr;
         timestamp = ts;
     }
+    bigint_t totalIn(void) const {
+        return amountIn + internalIn + selfDestructIn + minerBaseRewardIn + minerNephewRewardIn + minerTxFeeIn +
+               minerUncleRewardIn + prefundIn;
+    }
+    bigint_t totalOut(void) const {
+        return amountOut + internalOut + selfDestructOut;
+    }
+
     // EXISTING_CODE
     bool operator==(const CReconciliation& it) const;
     bool operator!=(const CReconciliation& it) const {
@@ -128,7 +143,8 @@ inline void CReconciliation::initialize(void) {
     blockNumber = 0;
     transactionIndex = 0;
     timestamp = 0;
-    asset = "";
+    assetAddr = "";
+    assetSymbol = "";
     decimals = 18;
     begBal = 0;
     begBalDiff = 0;
@@ -163,7 +179,8 @@ inline void CReconciliation::duplicate(const CReconciliation& re) {
     blockNumber = re.blockNumber;
     transactionIndex = re.transactionIndex;
     timestamp = re.timestamp;
-    asset = re.asset;
+    assetAddr = re.assetAddr;
+    assetSymbol = re.assetSymbol;
     decimals = re.decimals;
     begBal = re.begBal;
     begBalDiff = re.begBalDiff;
@@ -203,7 +220,7 @@ inline bool CReconciliation::operator==(const CReconciliation& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // Equality operator as defined in class definition
-    return ((blockNumber == it.blockNumber) && (asset == it.asset));
+    return ((blockNumber == it.blockNumber) && (assetAddr == it.assetAddr));
 }
 
 //-------------------------------------------------------------------------

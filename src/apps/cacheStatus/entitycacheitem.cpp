@@ -133,6 +133,8 @@ bool CEntityCacheItem::Serialize(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     archive >> type;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -145,7 +147,8 @@ bool CEntityCacheItem::SerializeC(CArchive& archive) const {
     // EXISTING_CODE
     // EXISTING_CODE
     archive << type;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 

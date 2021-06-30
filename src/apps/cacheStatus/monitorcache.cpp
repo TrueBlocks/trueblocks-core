@@ -173,6 +173,8 @@ bool CMonitorCache::Serialize(CArchive& archive) {
     // EXISTING_CODE
     archive >> addrs;
     archive >> items;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -186,7 +188,8 @@ bool CMonitorCache::SerializeC(CArchive& archive) const {
     // EXISTING_CODE
     archive << addrs;
     archive << items;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 
@@ -282,6 +285,8 @@ ostream& operator<<(ostream& os, const CMonitorCache& it) {
 
 //---------------------------------------------------------------------------
 const CBaseNode* CMonitorCache::getObjectAt(const string_q& fieldName, size_t index) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
     if (fieldName % "items") {
         if (index == NOPOS) {
             CMonitorCacheItem empty;
@@ -291,6 +296,8 @@ const CBaseNode* CMonitorCache::getObjectAt(const string_q& fieldName, size_t in
         if (index < items.size())
             return &items[index];
     }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return NULL;
 }

@@ -20,6 +20,7 @@ getBlocks -th
 | -o | --cache | force a write of the block to the cache |
 |####|Hidden options||
 | -l | --list &lt;num&gt; | summary list of blocks running backwards from latest block minus num |
+| -C | --list_count &lt;num&gt; | the number of blocks to report for --list option |
 |####|Hidden options||
 | -x | --fmt &lt;val&gt; | export format, one of *[ none \| json\* \| txt \| csv \| api ]* |
 | -v | --verbose | set verbose level (optional level defaults to 1) |

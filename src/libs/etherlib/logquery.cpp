@@ -200,6 +200,8 @@ bool CLogQuery::Serialize(CArchive& archive) {
     archive >> blockHash;
     archive >> addresses;
     archive >> topics;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -216,7 +218,8 @@ bool CLogQuery::SerializeC(CArchive& archive) const {
     archive << blockHash;
     archive << addresses;
     archive << topics;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 

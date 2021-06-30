@@ -313,6 +313,8 @@ bool CPage::Serialize(CArchive& archive) {
     archive >> cmdUrl;
     archive >> schema;
     archive >> subpages;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -342,7 +344,8 @@ bool CPage::SerializeC(CArchive& archive) const {
     archive << cmdUrl;
     archive << schema;
     archive << subpages;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 
@@ -452,6 +455,8 @@ ostream& operator<<(ostream& os, const CPage& it) {
 
 //---------------------------------------------------------------------------
 const CBaseNode* CPage::getObjectAt(const string_q& fieldName, size_t index) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
     if (fieldName % "subpages") {
         if (index == NOPOS) {
             CSubpage empty;
@@ -461,6 +466,8 @@ const CBaseNode* CPage::getObjectAt(const string_q& fieldName, size_t index) con
         if (index < subpages.size())
             return &subpages[index];
     }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return NULL;
 }

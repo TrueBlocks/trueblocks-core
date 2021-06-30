@@ -8,7 +8,7 @@
 namespace qblocks {
 
 //-----------------------------------------------------------------------
-bool forEveryAppearance(const CTraverserArray& traversers, const CMonitoredAppearanceArray& apps, void* data) {
+bool forEveryAppearance(const CTraverserArray& traversers, const CAppearanceArray_mon& apps, void* data) {
     // If we have nothing to do, return success
     if (!apps.size() || !traversers.size())
         return true;
@@ -25,7 +25,7 @@ bool forEveryAppearance(const CTraverserArray& traversers, const CMonitoredAppea
 };
 
 //-----------------------------------------------------------------------
-bool CTraverser::traverse(const CMonitoredAppearanceArray& apps, void* data) {
+bool CTraverser::traverse(const CAppearanceArray_mon& apps, void* data) {
     const COptionsBase* opt = (const COptionsBase*)data;
 
     // Prepare the export...

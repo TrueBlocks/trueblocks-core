@@ -7,10 +7,8 @@
 
 //---------------------------------------------------------------
 bool visitFinalIndexFiles(const string_q& path, void* data) {
-    ENTER("visitFinalIndexFiles");
-
     if (endsWith(path, "/")) {
-        EXIT_NOMSG(forEveryFileInFolder(path + "*", visitFinalIndexFiles, data));
+        return forEveryFileInFolder(path + "*", visitFinalIndexFiles, data);
 
     } else {
         // Pick up some useful data for either method...
@@ -21,7 +19,7 @@ bool visitFinalIndexFiles(const string_q& path, void* data) {
         // are inclusive. This silently skips unknown files in the folder (such as shell scripts).
         if (!contains(path, "-") || !endsWith(path, ".bloom")) {
             options->stats.nSkipped++;
-            EXIT_NOMSG(!shouldQuit());
+            return !shouldQuit();
         }
 
         timestamp_t unused;
@@ -31,32 +29,34 @@ bool visitFinalIndexFiles(const string_q& path, void* data) {
         // Note that `start` and `end` options are ignored when scanning
         if (!rangesIntersect(options->listRange, options->fileRange)) {
             options->stats.nSkipped++;
-            EXIT_NOMSG(!shouldQuit());
+            return !shouldQuit();
         }
 
         options->possibles.clear();
         for (auto m : options->allMonitors) {
-            if (m.getLastBlockInMonitor() == 0 || m.getLastBlockInMonitor() < options->fileRange.first)
+            blknum_t lb = m.getLastBlockInMonitorPlusOne();
+            // LOG_INFO("lb: ", lb, " fileRange: ", options->fileRange.first, "-", options->fileRange.second);
+            if (lb == 0 || lb <= options->fileRange.first)
                 options->possibles.push_back(m);
         }
 
         if (options->possibles.size() == 0) {
             options->stats.nSkipped++;
-            EXIT_NOMSG(!shouldQuit());
+            return !shouldQuit();
         }
 
         if (isTestMode() && options->fileRange.second > 5000000) {
             options->stats.nSkipped++;
-            EXIT_NOMSG(false);
+            return false;
         }
 
         // LOG4("Scanning ", path);
         bool ret = options->visitBinaryFile(path, data) && !shouldQuit();
-        EXIT_NOMSG(ret);
+        return ret;
     }
 
     ASSERT(0);  // should not happen
-    EXIT_NOMSG(!shouldQuit());
+    return !shouldQuit();
 }
 
 //---------------------------------------------------------------
@@ -85,9 +85,8 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
 
         if (!hit) {
             // none of them hit, so write last block for each of them
-            for (auto monitor : possibles) {
-                monitor.writeMonitorLastBlock(fileRange.second + 1, monitor.isStaging);
-            }
+            for (auto monitor : possibles)
+                monitor.writeLastBlockInMonitor(fileRange.second + 1, monitor.isStaging);
             options->stats.nBloomMisses++;
             LOG_PROGRESS("Skipping", options->fileRange.first, options->listRange.second, " bloom miss\r");
             EXIT_NOMSG(true);
@@ -112,7 +111,7 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
             if (!monitor->openForWriting(monitor->isStaging))
                 EXIT_FAIL("Could not open monitor file for " + monitor->address + ".");
 
-            CMonitoredAppearanceArray items;
+            CAppearanceArray_mon items;
             items.reserve(300000);
 
             addrbytes_t array = addr_2_Bytes(monitor->address);
@@ -157,7 +156,7 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
                 CIndexedAppearance* blocksOnFile = reinterpret_cast<CIndexedAppearance*>(&addrsOnFile[nAddrs]);
                 options->stats.nTotalHits += found->cnt;
                 for (size_t i = found->offset; i < found->offset + found->cnt; i++) {
-                    CMonitoredAppearance item(blocksOnFile[i].blk, blocksOnFile[i].txid);
+                    CAppearance_mon item(blocksOnFile[i].blk, blocksOnFile[i].txid);
                     items.push_back(item);
                 }
 
@@ -173,7 +172,7 @@ bool COptions::visitBinaryFile(const string_q& path, void* data) {
     }
 
     for (auto monitor : possibles)
-        monitor.writeMonitorLastBlock(fileRange.second + 1, monitor.isStaging);
+        monitor.writeLastBlockInMonitor(fileRange.second + 1, monitor.isStaging);
 
     if (chunk) {
         chunk->Release();

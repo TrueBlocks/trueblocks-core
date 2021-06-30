@@ -201,6 +201,8 @@ bool CPinManifest::Serialize(CArchive& archive) {
     archive >> firstPin;
     archive >> lastPin;
     archive >> pins;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -218,7 +220,8 @@ bool CPinManifest::SerializeC(CArchive& archive) const {
     archive << firstPin;
     archive << lastPin;
     archive << pins;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 
@@ -328,6 +331,8 @@ ostream& operator<<(ostream& os, const CPinManifest& it) {
 
 //---------------------------------------------------------------------------
 const CBaseNode* CPinManifest::getObjectAt(const string_q& fieldName, size_t index) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
     if (fieldName % "pins") {
         if (index == NOPOS) {
             CPinnedChunk empty;
@@ -337,6 +342,8 @@ const CBaseNode* CPinManifest::getObjectAt(const string_q& fieldName, size_t ind
         if (index < pins.size())
             return &pins[index];
     }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return NULL;
 }

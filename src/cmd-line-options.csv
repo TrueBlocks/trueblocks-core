@@ -11,7 +11,6 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 10230,apps,Accounts,export,acctExport,logs,l,,false,false,true,true,header,switch,<boolean>,export logs instead of transaction list
 10240,apps,Accounts,export,acctExport,traces,t,,false,false,true,true,header,switch,<boolean>,export traces instead of transaction list
 10280,apps,Accounts,export,acctExport,accounting,C,,false,false,true,true,header,switch,<boolean>,export accounting records instead of transaction list
-10290,apps,Accounts,export,acctExport,tokens,O,,false,false,true,true,header,switch,<boolean>,export accounting for ERC 20 tokens (assumes ETH accounting as above)
 10310,apps,Accounts,export,acctExport,articulate,a,,false,false,true,true,header,switch,<boolean>,articulate transactions&#44; traces&#44; logs&#44; and outputs
 10320,apps,Accounts,export,acctExport,cache_txs,i,false,false,true,true,true,header,switch,<boolean>,write transactions to the cache (see notes)
 10330,apps,Accounts,export,acctExport,cache_traces,R,false,false,true,true,true,header,switch,<boolean>,write traces to the cache (see notes)
@@ -32,6 +31,7 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 10080,apps,Accounts,export,acctExport,unripe,u,,false,false,false,false,header,switch,<boolean>,enable search of unripe (neither staged nor finalized) folder|(assumes --staging)
 10092,apps,Accounts,export,acctExport,load,,,false,false,false,false,header,flag,<string>,a comma separated list of dynamic traversers to load
 10093,apps,Accounts,export,acctExport,reversed,,,false,false,false,false,header,switch,<boolean>,produce results in reverse chronological order
+10094,apps,Accounts,export,acctExport,by_date,y,,false,false,false,false,header,switch,<boolean>,produce results sorted by date (default is to report by address)
 10460,apps,Accounts,export,acctExport,,,,false,false,true,true,--,description,,Export full detail of transactions for one or more addresses.
 10470,apps,Accounts,export,acctExport,,,,false,false,false,false,--,note,,An `address` must start with '0x' and be forty-two characters long.
 
@@ -65,6 +65,9 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 13867,tools,Accounts,abis,grabABI,classes,c,,false,false,false,false,local,switch,<boolean>,generate classDefinitions folder and class definitions
 13880,tools,Accounts,abis,grabABI,,,,false,false,true,true,--,description,,Fetches the ABI for a smart contract.
 13885,tools,Accounts,abis,grabABI,,,,false,false,false,false,--,note,,Solidity files found in the local folder with the name '<address>.sol' are converted to an ABI prior to processing (and then removed).
+13885,tools,Accounts,abis,grabABI,ERR_CANNOTFINDSOL,,,false,false,false,false,--,error,,Cannot find .sol file at '[{SOL}]'.
+13885,tools,Accounts,abis,grabABI,ERR_SUPPLYONEADDR,,,false,false,false,false,--,error,,Please supply at least one Ethereum address.
+13885,tools,Accounts,abis,grabABI,ERR_OPTIONNOTIMPL,,,false,false,false,false,--,error,,--classes option is not implemented.
 
 12500,tools,ChainData,blocks,getBlocks,blocks,,,true,false,true,true,local,positional,list<blknum>,a space-separated list of one or more blocks to retrieve
 12510,tools,ChainData,blocks,getBlocks,hashes,e,,false,false,true,true,header,switch,<boolean>,display only transaction hashes&#44; default is to display full transaction|detail
@@ -76,6 +79,7 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 12570,tools,ChainData,blocks,getBlocks,count,c,,false,false,true,true,header,switch,<boolean>,display counts of appearances (for --apps&#44; --uniq&#44; or --uniq_tx)|or transactions
 12580,tools,ChainData,blocks,getBlocks,cache,o,,false,false,true,true,header,switch,<boolean>,force a write of the block to the cache
 12582,tools,ChainData,blocks,getBlocks,list,l,,false,false,false,false,local,flag,<blknum>,summary list of blocks running backwards from latest block minus num
+12582,tools,ChainData,blocks,getBlocks,list_count,C,20,false,false,false,false,header,flag,<blknum>,the number of blocks to report for --list option
 12590,tools,ChainData,blocks,getBlocks,,,,false,false,true,true,--,description,,Retrieve one or more blocks from the chain or local cache.
 12600,tools,ChainData,blocks,getBlocks,,,,false,false,false,false,--,note,,`blocks` is a space-separated list of values&#44; a start-end range&#44; a `special`&#44; or any combination.
 12610,tools,ChainData,blocks,getBlocks,,,,false,false,false,false,--,note,,`blocks` may be specified as either numbers or hashes.
@@ -90,6 +94,7 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 13622,tools,ChainData,transactions,getTrans,,,,false,false,false,false,--,note,,The `transactions` list may be one or more space-separated identifiers which are either a transaction hash&#44;|a blockNumber.transactionID pair&#44; or a blockHash.transactionID pair&#44; or any combination.
 13624,tools,ChainData,transactions,getTrans,,,,false,false,false,false,--,note,,This tool checks for valid input syntax&#44; but does not check that the transaction requested actually exists.
 13629,tools,ChainData,transactions,getTrans,,,,false,false,false,false,--,note,,If the queried node does not store historical state&#44; the results for most older transactions are undefined.
+13630,tools,ChainData,transactions,getTrans,ERR_PROVIDEONETXID,,,false,false,false,false,--,error,,Please specify at least one transaction identifier.
 
 13000,tools,ChainData,receipts,getReceipts,transactions,,,true,false,true,true,local,positional,list<tx_id>,a space-separated list of one or more transaction identifiers
 13020,tools,ChainData,receipts,getReceipts,articulate,a,,false,false,true,true,header,switch,<boolean>,articulate the retrieved data if ABIs can be found
@@ -97,6 +102,7 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 13062,tools,ChainData,receipts,getReceipts,,,,false,false,false,false,--,note,,The `transactions` list may be one or more space-separated identifiers which are either a transaction hash&#44;|a blockNumber.transactionID pair&#44; or a blockHash.transactionID pair&#44; or any combination.
 13066,tools,ChainData,receipts,getReceipts,,,,false,false,false,false,--,note,,This tool checks for valid input syntax&#44; but does not check that the transaction requested actually exists.
 13070,tools,ChainData,receipts,getReceipts,,,,false,false,false,false,--,note,,If the queried node does not store historical state&#44; the results for most older transactions are undefined.
+13071,tools,ChainData,receipts,getReceipts,ERR_PROVIDEONETXID,,,false,false,false,false,--,error,,Please specify at least one transaction identifier.
 
 12920,tools,ChainData,logs,getLogs,transactions,,,true,false,true,true,local,positional,list<tx_id>,a space-separated list of one or more transaction identifiers
 12930,tools,ChainData,logs,getLogs,topic,t,,false,false,true,true,header,flag,list<topic>,filter by one or more log topics (not implemented)
@@ -107,6 +113,7 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 12964,tools,ChainData,logs,getLogs,,,,false,false,false,false,--,note,,This tool checks for valid input syntax&#44; but does not check that the transaction requested actually exists.
 12966,tools,ChainData,logs,getLogs,,,,false,false,false,false,--,note,,If the queried node does not store historical state&#44; the results for most older transactions are undefined.
 12968,tools,ChainData,logs,getLogs,,,,false,false,false,false,--,note,,If you specify a 32-byte hash&#44; it will be assumed to be a transaction hash&#44; if the transaction is|not found&#44; it will be used as a topic.
+12968,tools,ChainData,logs,getLogs,ERR_PROVIDEONETXID,,,false,false,false,false,--,error,,Please specify at least one transaction identifier.
 
 13400,tools,ChainData,traces,getTraces,transactions,,,true,false,true,true,local,positional,list<tx_id>,a space-separated list of one or more transaction identifiers
 13420,tools,ChainData,traces,getTraces,articulate,a,,false,false,true,true,header,switch,<boolean>,articulate the retrieved data if ABIs can be found
@@ -121,6 +128,7 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 13626,tools,ChainData,traces,getTraces,,,,false,false,false,false,--,note,,If the queried node does not store historical state&#44; the results for most older transactions are undefined.
 13627,tools,ChainData,traces,getTraces,,,,false,false,false,false,--,note,,A bang seperated filter has the following fields (at least one of which is required) and is separated|with a bang (!): fromBlk&#44; toBlk&#44; fromAddr&#44; toAddr&#44; after&#44; count.
 13628,tools,ChainData,traces,getTraces,,,,false,false,false,false,--,note,,A state diff trace describes&#44; for each modified address&#44; what changed during that trace.
+13629,tools,ChainData,traces,getTraces,ERR_PROVIDEONETXID,,,false,false,false,false,--,error,,Please specify at least one transaction identifier.
 
 13940,tools,ChainData,when,whenBlock,block_list,,,false,false,true,false,local,positional,list<string>,one or more dates&#44; block numbers&#44; hashes&#44; or special named blocks|(see notes)
 13960,tools,ChainData,when,whenBlock,list,l,,false,false,true,false,header,switch,<boolean>,export a list of the 'special' blocks
@@ -130,6 +138,11 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 13982,tools,ChainData,when,whenBlock,,,,false,false,false,false,--,note,,The block list may contain any combination of `number`&#44; `hash`&#44; `date`&#44; special `named` blocks.
 13984,tools,ChainData,when,whenBlock,,,,false,false,false,false,--,note,,Dates must be formatted in JSON format: YYYY-MM-DD[THH[:MM[:SS]]].
 13986,tools,ChainData,when,whenBlock,ERR_INVALIDSKIPVAL,,,false,false,false,false,--,error,,--skip value must be larger than zero.
+13987,tools,ChainData,when,whenBlock,ERR_OPENINGTIMESTAMPS,,,false,false,false,false,--,error,,Could not open timestamp file.
+13987,tools,ChainData,when,whenBlock,ERR_INVALIDDATE1,,,false,false,false,false,--,error,,Please supply either a JSON formatted date or a blockNumber.
+13987,tools,ChainData,when,whenBlock,ERR_INVALIDDATE2,,,false,false,false,false,--,error,,Invalid date '[{ARG}]'.
+13987,tools,ChainData,when,whenBlock,ERR_INVALIDDATE3,,,false,false,false,false,--,error,,The date you specified ([{ARG}]) is in the future. No such block.
+13987,tools,ChainData,when,whenBlock,ERR_INVALIDDATE4,,,false,false,false,false,--,error,,The date you specified ([{ARG}]) is before the first block.
 
 13100,tools,ChainState,state,getState,addrs,,,true,false,true,true,header,positional,list<addr>,one or more addresses (0x...) from which to retrieve balances
 13120,tools,ChainState,state,getState,blocks,,,false,false,true,true,header,positional,list<blknum>,an optional list of one or more blocks at which to report balances&#44;|defaults to 'latest'
@@ -223,7 +236,6 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 11781,dev_tools,,,makeClass,openapi,A,,false,false,false,false,header,switch,<boolean>,export openapi.yaml file for API documentation
 11824,dev_tools,,,makeClass,,,,false,false,true,false,--,description,,Automatically writes C++ for various purposes.
 11826,dev_tools,,,makeClass,,,,false,false,false,false,--,note,,The `--options` flag generates `COption` code for each of the various tools.
-11828,dev_tools,,,makeClass,,,,false,false,false,false,--,note,,The `--class` flag generates c++ code for each definition found in the local folder.
 11830,dev_tools,,,makeClass,,,,false,false,false,false,--,note,,More information on class definition files is found in the documentation.
 11832,dev_tools,,,makeClass,ERR_CLASSDEFNOTEXIST,,,false,false,false,false,--,error,,./classDefinitions folder does not exist.
 11834,dev_tools,,,makeClass,ERR_CONFIGMISSING,,,false,false,false,false,--,error,,[{CONFIG_FOLDER}]makeClass/ folder does not exist.

@@ -154,6 +154,8 @@ bool CESResult::Serialize(CArchive& archive) {
     archive >> status;
     archive >> message;
     archive >> result;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -168,7 +170,8 @@ bool CESResult::SerializeC(CArchive& archive) const {
     archive << status;
     archive << message;
     archive << result;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 

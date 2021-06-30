@@ -252,6 +252,8 @@ bool CParameter::Serialize(CArchive& archive) {
     archive >> no_write;
     archive >> is_flags;
     // archive >> precision;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -273,7 +275,8 @@ bool CParameter::SerializeC(CArchive& archive) const {
     archive << no_write;
     archive << is_flags;
     // archive << precision;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 
@@ -414,6 +417,8 @@ ostream& operator<<(ostream& os, const CParameter& it) {
 
 //---------------------------------------------------------------------------
 const CBaseNode* CParameter::getObjectAt(const string_q& fieldName, size_t index) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
     if (fieldName % "components") {
         if (index == NOPOS) {
             CParameter empty;
@@ -423,6 +428,8 @@ const CBaseNode* CParameter::getObjectAt(const string_q& fieldName, size_t index
         if (index < components.size())
             return &components[index];
     }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return NULL;
 }
@@ -462,6 +469,7 @@ CParameter::CParameter(string_q& textIn) {
     if (contains(textIn, "=")) {
         str_default = textIn;
         textIn = nextTokenClear(str_default, '=');
+        str_default = trim(str_default);
     }
 
     type = nextTokenClear(textIn, ' ');
@@ -485,7 +493,7 @@ CParameter::CParameter(string_q& textIn) {
     }
 
     type = substitute(type, "*", "");
-    name = textIn;
+    name = trim(textIn);
 }
 
 //-----------------------------------------------------------------------

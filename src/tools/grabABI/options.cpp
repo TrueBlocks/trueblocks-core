@@ -114,14 +114,14 @@ bool COptions::parseArguments(string_q& command) {
 
     if (!sol.empty()) {
         if (!fileExists(sol + ".sol") && !fileExists(sol))
-            return usage("Cannot find .sol file at '" + sol + "'.");
+            return usage(substitute(usageErrs[ERR_CANNOTFINDSOL], "[{SOL}]", sol));
         convertFromSol(substitute(sol, ".sol", ""));
         cerr << sol << " coverted in current folder." << endl;
         return false;
     }
 
     if (!addrs.size() && !known)
-        return usage("Please supply at least one Ethereum address.\n");
+        return usage(usageErrs[ERR_SUPPLYONEADDR]);
 
     if (parts == 0)
         parts = SIG_DEFAULT;
@@ -144,7 +144,7 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     if (classes) {
-        return usage("--classes option is not implemented.");
+        return usage(usageErrs[ERR_OPTIONNOTIMPL]);
 #if 0
         for (auto func : abi_spec.interfaces) {
             establishFolder("./classes/classDefinitions/");
@@ -217,6 +217,9 @@ COptions::COptions(void) {
     // END_CODE_NOTES
 
     // BEG_ERROR_STRINGS
+    usageErrs[ERR_CANNOTFINDSOL] = "Cannot find .sol file at '[{SOL}]'.";
+    usageErrs[ERR_SUPPLYONEADDR] = "Please supply at least one Ethereum address.";
+    usageErrs[ERR_OPTIONNOTIMPL] = "--classes option is not implemented.";
     // END_ERROR_STRINGS
 }
 

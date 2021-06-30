@@ -148,6 +148,8 @@ bool CTreeRoot::Serialize(CArchive& archive) {
             return false;
         root->Serialize(archive);
     }
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -164,7 +166,8 @@ bool CTreeRoot::SerializeC(CArchive& archive) const {
         archive << root->getRuntimeClass()->getClassNamePtr();
         root->SerializeC(archive);
     }
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 
@@ -257,8 +260,12 @@ ostream& operator<<(ostream& os, const CTreeRoot& it) {
 
 //---------------------------------------------------------------------------
 const CBaseNode* CTreeRoot::getObjectAt(const string_q& fieldName, size_t index) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
     if (fieldName % "root")
         return root;
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return NULL;
 }

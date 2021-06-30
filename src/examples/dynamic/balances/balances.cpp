@@ -26,7 +26,7 @@ bool header(CTraverser* trav, void* data) {
 bool display(CTraverser* trav, void* data) {
     CTestTraverser* tt = (CTestTraverser*)trav;
 
-    wei_t balance = getBalanceAt(tt->accountedFor, tt->app->blk);
+    wei_t balance = getBalanceAt(tt->curMonitor->address, tt->app->blk);
 
     cout << trav->trans.Format("[{DATE}]") << ",";
     cout << wei_2_Ether(balance, 18) << ",";

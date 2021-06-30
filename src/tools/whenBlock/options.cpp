@@ -97,7 +97,7 @@ bool COptions::parseArguments(string_q& commandIn) {
         return false;
 
     if (skip != NOPOS && !skip)
-        return usage("");  // ERR_INVALIDSKIPVAL);
+        return usage(usageErrs[ERR_INVALIDSKIPVAL]);
 
     blknum_t latest = getBlockProgress(BP_CLIENT).client;
     for (auto item : block_list) {
@@ -146,11 +146,11 @@ bool COptions::parseArguments(string_q& commandIn) {
             expContext().fmtMap["header"] = expContext().fmtMap["format"] = "";
         stop = (nTimestamps() * 2);
         if (stop == 0)
-            return usage("Could not open timestamp file.");
+            return usage(usageErrs[ERR_OPENINGTIMESTAMPS]);
     } else {
         // Data verifictions
         if (requests.size() == 0)
-            return usage("Please supply either a JSON formatted date or a blockNumber.");
+            return usage(usageErrs[ERR_INVALIDDATE1]);
         string_q format = getGlobalConfig("whenBlock")->getConfigStr("display", "format", STR_DISPLAY_WHEN);
         configureDisplay("whenBlock", "CBlock", format);
         if (expContext().exportFmt == API1 || expContext().exportFmt == JSON1)
@@ -193,6 +193,11 @@ COptions::COptions(void) {
 
     // BEG_ERROR_STRINGS
     usageErrs[ERR_INVALIDSKIPVAL] = "--skip value must be larger than zero.";
+    usageErrs[ERR_OPENINGTIMESTAMPS] = "Could not open timestamp file.";
+    usageErrs[ERR_INVALIDDATE1] = "Please supply either a JSON formatted date or a blockNumber.";
+    usageErrs[ERR_INVALIDDATE2] = "Invalid date '[{ARG}]'.";
+    usageErrs[ERR_INVALIDDATE3] = "The date you specified ([{ARG}]) is in the future. No such block.";
+    usageErrs[ERR_INVALIDDATE4] = "The date you specified ([{ARG}]) is before the first block.";
     // END_ERROR_STRINGS
 
     // Differnt default for this software, but only change it if user hasn't already therefor not in Init
@@ -224,20 +229,15 @@ bool parseRequestTs(COptionsBase* opt, CNameValueArray& requests, timestamp_t ts
 bool parseRequestDates(COptionsBase* opt, CNameValueArray& requests, const string_q& arg) {
     time_q date = str_2_Date(arg);
     if (date == earliestDate) {
-        return opt->usage("Invalid date: '" + arg + "'.");
+        return opt->usage(substitute(opt->usageErrs[ERR_INVALIDDATE2], "[{ARG}]", arg));
 
     } else if (date > Now()) {
-        ostringstream os;
-        os << "The date you specified (" << arg << ") "
-           << "is in the future. No such block.";
-        return opt->usage(os.str());
+        return opt->usage(substitute(opt->usageErrs[ERR_INVALIDDATE3], "[{ARG}]", arg));
 
     } else if (date < time_q(2015, 7, 30, 15, 25, 00)) {
-        ostringstream os;
-        os << "The date you specified (" << arg << ") "
-           << "is before the first block.";
-        return opt->usage(os.str());
+        return opt->usage(substitute(opt->usageErrs[ERR_INVALIDDATE4], "[{ARG}]", arg));
     }
+
     requests.push_back(CNameValue("date", int_2_Str(date_2_Ts(date))));
     return true;
 }

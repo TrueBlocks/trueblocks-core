@@ -245,6 +245,8 @@ bool CAccountName::Serialize(CArchive& archive) {
     archive >> is_contract;
     archive >> is_erc20;
     archive >> is_erc721;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -268,7 +270,8 @@ bool CAccountName::SerializeC(CArchive& archive) const {
     archive << is_contract;
     archive << is_erc20;
     archive << is_erc721;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 

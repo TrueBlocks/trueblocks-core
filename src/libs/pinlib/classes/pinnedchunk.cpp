@@ -166,6 +166,8 @@ bool CPinnedChunk::Serialize(CArchive& archive) {
     archive >> bloomHash;
     archive >> indexHash;
     // archive >> onDisc;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -181,7 +183,8 @@ bool CPinnedChunk::SerializeC(CArchive& archive) const {
     archive << bloomHash;
     archive << indexHash;
     // archive << onDisc;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 

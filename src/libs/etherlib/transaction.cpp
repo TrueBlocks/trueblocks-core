@@ -469,6 +469,8 @@ bool CTransaction::Serialize(CArchive& archive) {
     // archive >> compressedTx;
     // archive >> statements;
     // archive >> finalized;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -504,7 +506,8 @@ bool CTransaction::SerializeC(CArchive& archive) const {
     // archive << compressedTx;
     // archive << statements;
     // archive << finalized;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 
@@ -945,9 +948,10 @@ ostream& operator<<(ostream& os, const CTransaction& it) {
 
 //---------------------------------------------------------------------------
 const CBaseNode* CTransaction::getObjectAt(const string_q& fieldName, size_t index) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
     if (fieldName % "receipt")
         return &receipt;
-
     if (fieldName % "traces") {
         if (index == NOPOS) {
             CTrace empty;
@@ -957,10 +961,8 @@ const CBaseNode* CTransaction::getObjectAt(const string_q& fieldName, size_t ind
         if (index < traces.size())
             return &traces[index];
     }
-
     if (fieldName % "articulatedTx")
         return &articulatedTx;
-
     if (fieldName % "statements") {
         if (index == NOPOS) {
             CReconciliation empty;
@@ -970,6 +972,8 @@ const CBaseNode* CTransaction::getObjectAt(const string_q& fieldName, size_t ind
         if (index < statements.size())
             return &statements[index];
     }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return NULL;
 }

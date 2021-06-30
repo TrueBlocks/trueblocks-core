@@ -197,6 +197,21 @@
     },
     {
       "deleted": false,
+      "tags": "30-Contracts",
+      "address": "0x02bcb9675727ade60243c3d467a3bf152142698b",
+      "name": "Credmark Community Treasury",
+      "symbol": "",
+      "source": "EtherScan.io",
+      "decimals": 0,
+      "description": "",
+      "is_custom": false,
+      "is_prefund": false,
+      "is_contract": true,
+      "is_erc20": false,
+      "is_erc721": false
+    },
+    {
+      "deleted": false,
       "tags": "31-Gitcoin Grants:Grant",
       "address": "0x02cb3c150bedca124d0ae8cccb72fefbe705c953",
       "name": "Grant 0782 Ethereum Cat Herders Community Fund",
@@ -2222,6 +2237,21 @@
     },
     {
       "deleted": false,
+      "tags": "30-Contracts",
+      "address": "0x414709bd112d006cbb85be21a9e19bf9bce8657e",
+      "name": "CredMark DAO",
+      "symbol": "",
+      "source": "EtherScan.io",
+      "decimals": 0,
+      "description": "",
+      "is_custom": false,
+      "is_prefund": false,
+      "is_contract": true,
+      "is_erc20": false,
+      "is_erc721": false
+    },
+    {
+      "deleted": false,
       "tags": "31-Gitcoin Grants:Grant",
       "address": "0x416deca06f9af666abe1666e80e8d30bba66d1c5",
       "name": "Grant 0496 Ethereum Contacts Registry (ecr)",
@@ -2983,36 +3013,6 @@
       "is_prefund": false,
       "is_contract": true,
       "is_erc20": true,
-      "is_erc721": false
-    },
-    {
-      "deleted": false,
-      "tags": "60-Airdrops",
-      "address": "0x5717d19616fab9079cf2bfce7d94126bca3ae536",
-      "name": "BerryXToken Airdrop Sender",
-      "symbol": "BRX",
-      "source": "EtherScan.io",
-      "decimals": 0,
-      "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": false,
-      "is_erc20": true,
-      "is_erc721": false
-    },
-    {
-      "deleted": false,
-      "tags": "30-Contracts",
-      "address": "0x5789e2b5460cae9329d93a78511e2ac49f98a1f6",
-      "name": "GU: Legendary Pack",
-      "symbol": "",
-      "source": "EtherScan.io",
-      "decimals": 0,
-      "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": false,
       "is_erc721": false
     }
   ]

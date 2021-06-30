@@ -86,7 +86,7 @@ bool COptions::parseArguments(string_q& command) {
 
     // Data wrangling
     if (transList.empty())
-        return usage("Please specify at least one transaction identifier.");
+        return usage(usageErrs[ERR_PROVIDEONETXID]);
 
     if (isRaw)
         expContext().exportFmt = JSON1;
@@ -150,6 +150,7 @@ COptions::COptions(void) {
     // END_CODE_NOTES
 
     // BEG_ERROR_STRINGS
+    usageErrs[ERR_PROVIDEONETXID] = "Please specify at least one transaction identifier.";
     // END_ERROR_STRINGS
 }
 

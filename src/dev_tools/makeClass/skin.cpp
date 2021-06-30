@@ -218,6 +218,8 @@ bool CSkin::Serialize(CArchive& archive) {
     archive >> tableBgSecondary;
     archive >> tableTextPrimary;
     archive >> tableBorderPrimary;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -240,7 +242,8 @@ bool CSkin::SerializeC(CArchive& archive) const {
     archive << tableBgSecondary;
     archive << tableTextPrimary;
     archive << tableBorderPrimary;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 

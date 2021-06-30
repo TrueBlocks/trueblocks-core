@@ -247,6 +247,8 @@ bool CIndexCacheItem::Serialize(CArchive& archive) {
     archive >> index_hash;
     archive >> bloomSizeBytes;
     archive >> bloom_hash;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -271,7 +273,8 @@ bool CIndexCacheItem::SerializeC(CArchive& archive) const {
     archive << index_hash;
     archive << bloomSizeBytes;
     archive << bloom_hash;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 

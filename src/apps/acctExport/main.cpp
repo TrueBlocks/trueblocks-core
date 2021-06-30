@@ -39,69 +39,38 @@ int main(int argc, const char* argv[]) {
 
             if (options.appearances) {
                 CAppearanceTraverser at;
-                at.travRange = options.blockRange;
+                at.travRange = options.exportRange;
                 traversers.push_back(at);
             }
 
             if (options.receipts) {
                 CReceiptTraverser rt;
-                rt.travRange = options.blockRange;
+                rt.travRange = options.exportRange;
                 traversers.push_back(rt);
             }
 
             if (options.logs) {
                 CLogTraverser lt;
-                lt.travRange = options.blockRange;
+                lt.travRange = options.exportRange;
                 traversers.push_back(lt);
             }
 
             if (options.traces) {
                 CTraceTraverser tt;
-                tt.travRange = options.blockRange;
+                tt.travRange = options.exportRange;
                 traversers.push_back(tt);
             }
 
             if (traversers.empty()) {
                 CTransactionTraverser tt;
-                tt.travRange = options.blockRange;
+                tt.travRange = options.exportRange;
                 traversers.push_back(tt);
             }
 
-            forEveryAppearance(traversers, options.apps, &options);
+            forEveryAppearance(traversers, options.monApps, &options);
 
         } else {
-            string_q fileName = getCachePath("objs/" + options.load);
-            cerr << fileName << endl;
-            if (!fileExists(fileName)) {
-                replace(fileName, "/objs/", "/objs/lib");
-                fileName = fileName + ".so";
-                cerr << fileName << endl;
-            }
-            if (!fileExists(fileName)) {
-                fileName = substitute(fileName, ".so", ".dylib");
-                cerr << fileName << endl;
-            }
-            if (!fileExists(fileName)) {
-                LOG_ERR("Could not load dynamic traverser for ", fileName, ".");
-            } else {
-                CDynamicTraverser lib(fileName);
-                if (lib.is_valid()) {
-                    freshenTimestamps(getBlockProgress().client);
-                    loadTimestamps(&expContext().tsMemMap, expContext().tsCnt);
-                    auto factory = lib.get_function<CTraverser*(void)>("makeTraverser");
-                    CTraverser* trav = factory();
-                    if (trav->dataFunc == noopFunc)
-                        trav->dataFunc = loadTx_Func;
-                    trav->travRange = options.blockRange;
-                    for (auto monitor : options.allMonitors) {
-                        trav->accountedFor = monitor.address;
-                        options.apps.clear();
-                        options.curMonitor = &monitor;
-                        monitor.loadAppsFromPath(options.apps, "", visitOnLoad, &options);
-                        trav->traverse(options.apps, &options);
-                    }
-                }
-            }
+            options.handle_traversers();
         }
 
         if (shouldQuit())
@@ -111,8 +80,8 @@ int main(int argc, const char* argv[]) {
     }
 
     ostringstream os;
-    os << ", \"first_block\": " << (isTestMode() ? "\"0xdeadbeef\"" : uint_2_Str(options.blockRange.first)) << endl;
-    os << ", \"last_block\": " << (isTestMode() ? "\"0xdeadbeef\"" : uint_2_Str(options.blockRange.second)) << endl;
+    os << ", \"first_block\": " << (isTestMode() ? "\"0xdeadbeef\"" : uint_2_Str(options.exportRange.first)) << endl;
+    os << ", \"last_block\": " << (isTestMode() ? "\"0xdeadbeef\"" : uint_2_Str(options.exportRange.second)) << endl;
     if (!options.count && options.allMonitors.size() == 1) {
         options.getNamedAccount(options.allMonitors[0], options.accountedFor);
         if (options.abi_spec.nInterfaces() == 0) {
@@ -243,7 +212,8 @@ bool loadTx_Func(CTraverser* trav, void* data) {
     }
 
     trav->trans.pBlock = &trav->block;
-    trav->trans.timestamp = trav->block.timestamp = (timestamp_t)expContext().tsMemMap[(trav->app->blk * 2) + 1];
+    trav->trans.timestamp = (timestamp_t)expContext().tsMemMap[(trav->app->blk * 2) + 1];
+    trav->block.timestamp = (timestamp_t)expContext().tsMemMap[(trav->app->blk * 2) + 1];
 
     if (opt->traces && trav->trans.traces.size() == 0) {
         dirty = true;
@@ -254,8 +224,10 @@ bool loadTx_Func(CTraverser* trav, void* data) {
     dirty |= opt->articulateAll(trav->trans);
 
     // TODO(tjayrush): This could be in post_Func so that other functions can also make it dirty
-    if (opt->cache_txs && dirty)
+    if (opt->cache_txs && dirty) {
+        opt->stats.nCacheWrites++;
         writeTransToBinary(trav->trans, txFilename);
+    }
 
     opt->markNeighbors(trav->trans);
 

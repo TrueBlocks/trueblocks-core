@@ -85,6 +85,9 @@ string_q CMonitor::getValueByName(const string_q& fieldName) const {
             if (fieldName % "latestAppearance") {
                 return uint_2_Str(latestAppearance);
             }
+            if (fieldName % "lastVisitedBlock") {
+                return uint_2_Str(lastVisitedBlock);
+            }
             break;
         case 'n':
             if (fieldName % "nAppearances") {
@@ -134,6 +137,10 @@ bool CMonitor::setValueByName(const string_q& fieldNameIn, const string_q& field
                 latestAppearance = str_2_Uint(fieldValue);
                 return true;
             }
+            if (fieldName % "lastVisitedBlock") {
+                lastVisitedBlock = str_2_Uint(fieldValue);
+                return true;
+            }
             break;
         case 'n':
             if (fieldName % "nAppearances") {
@@ -176,7 +183,11 @@ bool CMonitor::Serialize(CArchive& archive) {
     // archive >> lastExport;
     // archive >> firstAppearance;
     // archive >> latestAppearance;
+    // archive >> lastVisitedBlock;
     // archive >> sizeInBytes;
+    // EXISTING_CODE
+    // archive >> apps;
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -192,8 +203,11 @@ bool CMonitor::SerializeC(CArchive& archive) const {
     // archive << lastExport;
     // archive << firstAppearance;
     // archive << latestAppearance;
+    // archive << lastVisitedBlock;
     // archive << sizeInBytes;
-
+    // EXISTING_CODE
+    // archive << apps;
+    // EXISTING_CODE
     return true;
 }
 
@@ -239,6 +253,8 @@ void CMonitor::registerClass(void) {
     HIDE_FIELD(CMonitor, "firstAppearance");
     ADD_FIELD(CMonitor, "latestAppearance", T_BLOCKNUM, ++fieldNum);
     HIDE_FIELD(CMonitor, "latestAppearance");
+    ADD_FIELD(CMonitor, "lastVisitedBlock", T_BLOCKNUM, ++fieldNum);
+    HIDE_FIELD(CMonitor, "lastVisitedBlock");
     ADD_FIELD(CMonitor, "sizeInBytes", T_UNUMBER | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CMonitor, "sizeInBytes");
 
@@ -251,6 +267,8 @@ void CMonitor::registerClass(void) {
     builtIns.push_back(_biCMonitor);
 
     // EXISTING_CODE
+    ADD_FIELD(CMonitor, "apps", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CMonitor, "apps");
     // EXISTING_CODE
 }
 
@@ -260,6 +278,21 @@ string_q nextMonitorChunk_custom(const string_q& fieldIn, const void* dataPtr) {
     if (mon) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
+            case 'a':
+                if (fieldIn % "apps" || fieldIn % "appsCnt") {
+                    size_t cnt = mon->apps.size();
+                    if (endsWith(toLower(fieldIn), "cnt"))
+                        return uint_2_Str(cnt);
+                    if (!cnt)
+                        return "";
+                    string_q retS;
+                    for (size_t i = 0; i < cnt; i++) {
+                        // retS += mon->apps[i].Format();
+                        retS += ((i < cnt - 1) ? ",\n" : "\n");
+                    }
+                    return retS;
+                }
+                break;
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
@@ -296,6 +329,25 @@ ostream& operator<<(ostream& os, const CMonitor& it) {
 }
 
 //---------------------------------------------------------------------------
+const CBaseNode* CMonitor::getObjectAt(const string_q& fieldName, size_t index) const {
+    // EXISTING_CODE
+    if (fieldName % "apps") {
+        if (index == NOPOS) {
+            CAppearance_mon empty;
+            ((CMonitor*)this)->apps.push_back(empty);  // NOLINT
+            index = apps.size() - 1;
+        }
+        // if (index < apps.size())
+        //     return &apps[index];
+    }
+    // EXISTING_CODE
+    // EXISTING_CODE
+    // EXISTING_CODE
+
+    return NULL;
+}
+
+//---------------------------------------------------------------------------
 const char* STR_DISPLAY_MONITOR = "";
 
 //---------------------------------------------------------------------------
@@ -307,7 +359,7 @@ size_t CMonitor::getFileSize(const string_q& path) const {
 
 //-------------------------------------------------------------------------
 size_t CMonitor::getRecordCnt(const string_q& path) const {
-    return ::fileSize(path) / sizeof(CMonitoredAppearance);
+    return ::fileSize(path) / sizeof(CAppearance_mon);
 }
 
 //-------------------------------------------------------------------------
@@ -321,18 +373,12 @@ bool CMonitor::openForWriting(bool staging) {
 }
 
 //-------------------------------------------------------------------------
-void CMonitor::writeMonitorArray(const CMonitoredAppearanceArray& items) {
+void CMonitor::writeMonitorArray(const CAppearanceArray_mon& items) {
     if (tx_cache == NULL)
         return;
     for (auto item : items)
         *tx_cache << item.blk << item.txid;
     tx_cache->flush();
-}
-
-//-------------------------------------------------------------------------
-void CMonitor::writeMonitorLastBlock(blknum_t bn, bool staging) {
-    lastVisitedBlock = bn;
-    stringToAsciiFile(getMonitorPathLast(address, staging), uint_2_Str(bn) + "\n");
 }
 
 //---------------------------------------------------------------------------
@@ -345,17 +391,28 @@ string_q CMonitor::getMonitorPath(const address_t& addr, bool staging) const {
 }
 
 //---------------------------------------------------------------------------
-string_q CMonitor::getMonitorPathLast(const address_t& addr, bool staging) const {
-    return substitute(getMonitorPath(addr, staging), ".acct.bin", ".last.txt");
-}
-
-//---------------------------------------------------------------------------
 string_q CMonitor::getMonitorPathDels(const address_t& addr) const {
     return getMonitorPath(addr, false) + ".deleted";
 }
 
+//---------------------------------------------------------------------------
+string_q CMonitor::getMonitorPathLast(const address_t& addr, bool staging) const {
+    return substitute(getMonitorPath(addr, staging), ".acct.bin", ".last.txt");
+}
+
+//-------------------------------------------------------------------------
+void CMonitor::writeLastBlockInMonitor(blknum_t bn, bool staging) {
+    lastVisitedBlock = bn;
+    stringToAsciiFile(getMonitorPathLast(address, staging), uint_2_Str(bn) + "\n");
+}
+
+//-----------------------------------------------------------------------
+blknum_t CMonitor::getLastBlockInMonitorPlusOne(void) const {
+    return str_2_Uint(asciiFileToString(getMonitorPathLast(address, false)));
+}
+
 //--------------------------------------------------------------------------------
-blknum_t CMonitor::getLastVisited(bool fresh) const {
+blknum_t CMonitor::getNextBlockToVisit(bool fresh) const {
     if (lastVisitedBlock == NOPOS || fresh) {
         // If the monitor exists, the next block is stored in the database...
         if (fileExists(getMonitorPathLast(address, false))) {
@@ -375,10 +432,12 @@ blknum_t CMonitor::getLastVisited(bool fresh) const {
     return lastVisitedBlock;
 }
 
-//-----------------------------------------------------------------------
-blknum_t CMonitor::getLastBlockInMonitor(void) const {
-    return str_2_Uint(asciiFileToString(getMonitorPathLast(address, false)));
-}
+//--------------------------------------------------------------------------------
+#define checkLock(fn, b)                                                                                               \
+    if (fileExists((fn) + ".lck")) {                                                                                   \
+        msg = ("The " + string_q(b) + " file for monitor " + address + " is locked. Quitting...");                     \
+        return true;                                                                                                   \
+    }
 
 //-----------------------------------------------------------------------
 bool CMonitor::monitorExists(void) const {
@@ -390,13 +449,6 @@ bool CMonitor::monitorExists(void) const {
         return true;
     return false;
 }
-
-//--------------------------------------------------------------------------------
-#define checkLock(fn, b)                                                                                               \
-    if (fileExists((fn) + ".lck")) {                                                                                   \
-        msg = ("The " + string_q(b) + " file for monitor " + address + " is locked. Quitting...");                     \
-        return true;                                                                                                   \
-    }
 
 //--------------------------------------------------------------------------------
 bool CMonitor::isMonitorLocked(string_q& msg) const {
@@ -475,6 +527,7 @@ void CMonitor::removeMonitor(void) {
     removeFile(getMonitorPath(address, false));
     removeFile(getMonitorPathLast(address, false));
     removeFile(getMonitorPathDels(address));
+    // TODO(tjayrush): remove reconciliations
 }
 
 //-----------------------------------------------------------------------
@@ -487,25 +540,24 @@ bloom_t CMonitor::getBloom(void) {
 }
 
 //----------------------------------------------------------------
-blknum_t CMonitor::loadAppsFromPath(CMonitoredAppearanceArray& apps, const string_q& pathIn, MAPPFUNC func,
-                                    void* data) const {
-    string_q path = (pathIn.empty() ? getMonitorPath(address, false) : pathIn);
+blknum_t CMonitor::loadAppearances(MONAPPFUNC func, void* data) {
+    string_q path = getMonitorPath(address, false);
     blknum_t nRecs = this->getRecordCnt(path);
     if (!nRecs)
         return false;
 
-    CMonitoredAppearance* buffer = new CMonitoredAppearance[nRecs];
+    CAppearance_mon* buffer = new CAppearance_mon[nRecs];
     if (!buffer)
         return false;
 
-    bzero((void*)buffer, nRecs * sizeof(CMonitoredAppearance));  // NOLINT
+    bzero((void*)buffer, nRecs * sizeof(CAppearance_mon));  // NOLINT
     CArchive archiveIn(READING_ARCHIVE);
     if (!archiveIn.Lock(path, modeReadOnly, LOCK_NOWAIT)) {
         archiveIn.Release();
         delete[] buffer;
         return false;
     }
-    archiveIn.Read(buffer, sizeof(CMonitoredAppearance), nRecs);
+    archiveIn.Read(buffer, sizeof(CAppearance_mon), nRecs);
     archiveIn.Release();
 
     apps.reserve(apps.size() + nRecs);

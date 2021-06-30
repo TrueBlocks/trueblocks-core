@@ -31,6 +31,5 @@ makeClass -th
 `Notes:`
 
 - The `--options` flag generates `COption` code for each of the various tools.
-- The `--class` flag generates c++ code for each definition found in the local folder.
 - More information on class definition files is found in the documentation.
 

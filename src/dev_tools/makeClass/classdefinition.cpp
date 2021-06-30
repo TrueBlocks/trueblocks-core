@@ -325,6 +325,8 @@ bool CClassDefinition::Serialize(CArchive& archive) {
     archive >> scope_str;
     archive >> serializable;
     // archive >> fieldArray;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -356,7 +358,8 @@ bool CClassDefinition::SerializeC(CArchive& archive) const {
     archive << scope_str;
     archive << serializable;
     // archive << fieldArray;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 
@@ -469,6 +472,8 @@ ostream& operator<<(ostream& os, const CClassDefinition& it) {
 
 //---------------------------------------------------------------------------
 const CBaseNode* CClassDefinition::getObjectAt(const string_q& fieldName, size_t index) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
     if (fieldName % "fieldArray") {
         if (index == NOPOS) {
             CParameter empty;
@@ -478,6 +483,8 @@ const CBaseNode* CClassDefinition::getObjectAt(const string_q& fieldName, size_t
         if (index < fieldArray.size())
             return &fieldArray[index];
     }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return NULL;
 }

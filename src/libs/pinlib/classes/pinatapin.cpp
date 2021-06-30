@@ -231,6 +231,8 @@ bool CPinataPin::Serialize(CArchive& archive) {
     archive >> date_unpinned;
     archive >> metadata;
     archive >> regions;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -250,7 +252,8 @@ bool CPinataPin::SerializeC(CArchive& archive) const {
     archive << date_unpinned;
     archive << metadata;
     archive << regions;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 
@@ -362,9 +365,10 @@ ostream& operator<<(ostream& os, const CPinataPin& it) {
 
 //---------------------------------------------------------------------------
 const CBaseNode* CPinataPin::getObjectAt(const string_q& fieldName, size_t index) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
     if (fieldName % "metadata")
         return &metadata;
-
     if (fieldName % "regions") {
         if (index == NOPOS) {
             CPinataRegion empty;
@@ -374,6 +378,8 @@ const CBaseNode* CPinataPin::getObjectAt(const string_q& fieldName, size_t index
         if (index < regions.size())
             return &regions[index];
     }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return NULL;
 }

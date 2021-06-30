@@ -181,6 +181,8 @@ bool CAppearance::Serialize(CArchive& archive) {
     archive >> tc;
     archive >> addr;
     archive >> reason;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -197,7 +199,8 @@ bool CAppearance::SerializeC(CArchive& archive) const {
     archive << tc;
     archive << addr;
     archive << reason;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 

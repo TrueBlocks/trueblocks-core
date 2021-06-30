@@ -186,6 +186,8 @@ bool CCache::Serialize(CArchive& archive) {
     archive >> nFolders;
     archive >> sizeInBytes;
     archive >> is_valid;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -203,7 +205,8 @@ bool CCache::SerializeC(CArchive& archive) const {
     archive << nFolders;
     archive << sizeInBytes;
     archive << is_valid;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 

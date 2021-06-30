@@ -232,6 +232,8 @@ bool CEntity::Serialize(CArchive& archive) {
     archive >> sizeInBytes;
     archive >> addresses;
     // archive >> addressList;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -252,7 +254,8 @@ bool CEntity::SerializeC(CArchive& archive) const {
     archive << sizeInBytes;
     archive << addresses;
     // archive << addressList;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 

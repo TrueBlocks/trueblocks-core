@@ -6,10 +6,12 @@ binaryPathTest
 ./traces/00/10/01/001001001-00020-10.bin
 ./accts/c011/a724/c011a72400e58ecd99ee497cf89e3775d4bd732f.bin
 ./monitors/c011/a724/c011a72400e58ecd99ee497cf89e3775d4bd732f.bin
+./monitors/recons/c011/a724/c011a72400e58ecd99ee497cf89e3775d4bd732f.000000012.00013.bin
 ./blocks/00/10/01/
 ./blooms/00/10/01/
 ./txs/00/10/01/
 ./traces/00/10/01/
 ./accts/c011/a724/c011a72400e58ecd99ee497cf89e3775d4bd732f.bin
 ./monitors/c011/a724/c011a72400e58ecd99ee497cf89e3775d4bd732f.bin
+./monitors/recons/c011/a724/c011a72400e58ecd99ee497cf89e3775d4bd732f.000000012.00013.bin
 

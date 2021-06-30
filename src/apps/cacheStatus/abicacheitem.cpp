@@ -161,6 +161,8 @@ bool CAbiCacheItem::Serialize(CArchive& archive) {
     archive >> nFunctions;
     archive >> nEvents;
     archive >> nOther;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -176,7 +178,8 @@ bool CAbiCacheItem::SerializeC(CArchive& archive) const {
     archive << nFunctions;
     archive << nEvents;
     archive << nOther;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 

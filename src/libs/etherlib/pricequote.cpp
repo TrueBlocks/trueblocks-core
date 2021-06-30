@@ -150,6 +150,8 @@ bool CPriceQuote::Serialize(CArchive& archive) {
     // EXISTING_CODE
     archive >> timestamp;
     archive >> close;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -164,7 +166,8 @@ bool CPriceQuote::SerializeC(CArchive& archive) const {
     // EXISTING_CODE
     archive << timestamp;
     archive << close;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 

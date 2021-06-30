@@ -31,12 +31,12 @@ else if (startsWith(arg, "--belongs:")) {
     string_q orig = arg;
     arg = substitute(arg, "--belongs:", "");
     if (!isAddress(arg))
-        return usage(arg + " does not appear to be a valid Ethereum address.\n");
+        return usa ge(arg + " does not appear to be a valid Ethereum address.\n");
     filters.push_back(str_2_Addr(toLower(arg)));
 
     ////////////////////////////////////////////////////////////
     if (chkAsStr && filters.size() == 0)
-        return usage("chkAsStr only works with a --belongs filter.");
+        return usa ge("chkAsStr only works with a --belongs filter.");
 
     ////////////////////////////////////////////////////////////
     if (options.filters.size() > 0) {

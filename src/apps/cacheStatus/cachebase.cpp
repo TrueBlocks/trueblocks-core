@@ -181,6 +181,8 @@ bool CCacheBase::Serialize(CArchive& archive) {
     // archive >> latestApp;
     // archive >> path;
     // archive >> sizeInBytes;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -197,7 +199,8 @@ bool CCacheBase::SerializeC(CArchive& archive) const {
     // archive << latestApp;
     // archive << path;
     // archive << sizeInBytes;
-
+    // EXISTING_CODE
+    // EXISTING_CODE
     return true;
 }
 

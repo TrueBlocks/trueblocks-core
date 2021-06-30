@@ -26,7 +26,6 @@ class COptions : public CAbiOptions {
     bool logs;
     bool traces;
     bool accounting;
-    bool tokens;
     bool articulate;
     bool cache_txs;
     bool cache_traces;
@@ -44,16 +43,15 @@ class COptions : public CAbiOptions {
     bool unripe;
     string_q load;
     bool reversed;
+    bool by_date;
     // END_CODE_DECLARE
 
-    CMonitoredAppearanceArray apps;
-    CMonitoredAppearanceArray tmp;
+    CAppearanceArray_mon monApps;
     CMonitorArray allMonitors;
     CMonitorArray possibles;
     const CMonitor* curMonitor;
     address_t accountedFor;
     string_q accountedForName;
-    blkrange_t blockRange;
 
     CReconciliation lastStatement;
     CReconciliationMap prevStatements;
@@ -77,6 +75,7 @@ class COptions : public CAbiOptions {
 
     blkrange_t fileRange;
     blkrange_t listRange;
+    blkrange_t exportRange;
 
     string_q className;
     CBlockProgress bp;
@@ -89,6 +88,8 @@ class COptions : public CAbiOptions {
 
     bool setDisplayFormatting(void);
     bool loadAllAppearances(void);
+
+    bool handle_traversers(void);
 
     bool process_clean(void);
     bool process_rm(const CAddressArray& addrs);
@@ -108,10 +109,11 @@ class COptions : public CAbiOptions {
     void writePerformanceData(void);
 
     bool queryFlatFile(const string_q& path, bool sorted);
+    bool process_reconciliation(CTraverser* trav, blknum_t next);
 };
 
 //--------------------------------------------------------------------------------
-extern bool visitOnLoad(CMonitoredAppearance& app, void* data);
+extern bool visitOnLoad(CAppearance_mon& app, void* data);
 extern bool visitFinalIndexFiles(const string_q& path, void* data);
 extern bool visitStagingIndexFiles(const string_q& path, void* data);
 extern bool visitUnripeIndexFiles(const string_q& path, void* data);
@@ -122,7 +124,3 @@ extern bool fourByteFilter(const string_q& input, const COptions* opt);
 inline string_q plural(const string_q& in) {
     return substitute(toLower(in).substr(1, 1000) + "s", "logentrys", "logs");
 }
-
-//-----------------------------------------------------------------------
-extern bool process_reconciliation(COptions* options, CTransaction& trans, CReconciliationMap& prev, blknum_t next,
-                                   bool tokens);
