@@ -27,10 +27,14 @@ bool acct_Display(CTraverser* trav, void* data) {
 bool acct_Pre(CTraverser* trav, void* data) {
     COptions* opt = (COptions*)data;
 
-    if (opt->monApps.size() > 0 && opt->first_record != 0) {
+    if (opt->monApps.size() > 0) {
         CReconciliation eth;
-        eth.blockNumber = opt->monApps[0].blk - 1;
-        eth.endBal = getBalanceAt(opt->accountedFor, opt->monApps[0].blk - 1);
+        if (opt->first_record != 0) {
+            eth.blockNumber = opt->monApps[0].blk - 1;
+        } else if (opt->exportRange.first != 0) {
+            eth.blockNumber = opt->exportRange.first - 1;
+        }
+        eth.endBal = getBalanceAt(opt->accountedFor, eth.blockNumber);
         opt->prevStatements[opt->accountedFor + "_eth"] = eth;
     }
     return true;
@@ -41,7 +45,7 @@ bool COptions::process_reconciliation(CTraverser* trav, blknum_t next) {
     string_q path = getBinaryCachePath(CT_RECONS, accountedFor, trav->trans.blockNumber, trav->trans.transactionIndex);
     establishFolder(path);
 
-    if (fileExists(path)) {
+    if (!isTestMode() && fileExists(path)) {
         CArchive archive(READING_ARCHIVE);
         if (archive.Lock(path, modeReadOnly, LOCK_NOWAIT)) {
             archive >> trav->trans.statements;
@@ -100,7 +104,7 @@ bool COptions::process_reconciliation(CTraverser* trav, blknum_t next) {
     }
 
     CArchive archive(WRITING_ARCHIVE);
-    if (archive.Lock(path, modeWriteCreate, LOCK_WAIT)) {
+    if (!isTestMode() && archive.Lock(path, modeWriteCreate, LOCK_WAIT)) {
         archive << trav->trans.statements;
         archive.Release();
         return true;
