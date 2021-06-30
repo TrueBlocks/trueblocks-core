@@ -90,7 +90,7 @@ extern bool readNodeFromBinary(CBaseNode& item, const string_q& fileName);
 
 //-------------------------------------------------------------------------
 extern string_q getVersionFromClient(void);
-extern bool isTurboGeth(void);
+extern bool isErigon(void);
 extern bool isGeth(void);
 extern bool isParity(void);
 extern bool getNodeIds(uint64_t& clientId, uint64_t& networkId);

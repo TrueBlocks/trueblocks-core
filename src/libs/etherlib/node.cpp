@@ -354,7 +354,7 @@ bool loadTraces(CTransaction& trans, blknum_t bn, blknum_t txid, bool useCache, 
 //-------------------------------------------------------------------------
 bool getFullReceipt(CTransaction* trans, bool needsTrace) {
     getReceipt(trans->receipt, trans->hash);
-    if (trans->blockNumber >= byzantiumBlock || isTurboGeth()) {
+    if (trans->blockNumber >= byzantiumBlock || isErigon()) {
         trans->isError = (trans->receipt.status == 0);
 
     } else if (needsTrace && trans->gas == trans->receipt.gasUsed) {
@@ -574,13 +574,13 @@ string_q getVersionFromClient(void) {
 }
 
 //-------------------------------------------------------------------------
-bool isTurboGeth(void) {
-    return contains(toLower(getVersionFromClient()), "turbogeth");
+bool isErigon(void) {
+    return contains(toLower(getVersionFromClient()), "erigon");
 }
 
 //-------------------------------------------------------------------------
 bool isGeth(void) {
-    return contains(toLower(getVersionFromClient()), "geth") && !isTurboGeth();
+    return contains(toLower(getVersionFromClient()), "geth") && !isErigon();
 }
 
 //-------------------------------------------------------------------------
