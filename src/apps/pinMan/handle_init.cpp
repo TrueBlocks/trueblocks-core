@@ -7,6 +7,13 @@
 
 //----------------------------------------------------------------
 bool COptions::handle_init() {
+    CToml config(configPath("pinMan.toml"));
+    bool enabled = config.getConfigBool("enabled", "downloadManifest", true);
+    if (!enabled) {
+        LOG_INFO("Manifest not downloaded. Not initializing.");
+        return true;
+    }
+
     if (!pinlib_downloadManifest())
         return usage("Could not freshen manifest from smart contract");
 
