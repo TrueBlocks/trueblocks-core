@@ -66,3 +66,6 @@ on,both,fast,export,apps/acctExport,transfer_fourbytes_trace,y,addrs = 0xf503017
 on,both,fast,monitors,apps/acctExport,freshen_apps_0-30,y,addrs = 0xbb7b8287f3f0a933474a79eae42cbca977791171 & first_block = 1 & last_block = 30 & appearances
 on,both,fast,monitors,apps/acctExport,freshen_apps_31-60,y,addrs = 0xbb7b8287f3f0a933474a79eae42cbca977791171 & first_block = 31 & last_block = 60 & appearances
 on,both,fast,monitors,apps/acctExport,freshen_apps_61-100,y,addrs = 0xbb7b8287f3f0a933474a79eae42cbca977791171 & first_block = 61 & last_block = 100 & appearances
+
+on,both,fast,export,apps/acctExport,reversed_reversed,n,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & fmt = json & accounting & ether & reversed & first_block = 8854723 & last_block = 8856511 & max_records = 10000
+on,both,fast,export,apps/acctExport,reversed_not_reversed,n,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & fmt = json & accounting & ether & first_block = 8854723 & last_block = 8856511
