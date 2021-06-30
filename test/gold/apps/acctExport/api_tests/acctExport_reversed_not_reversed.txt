@@ -1,6 +1,5 @@
+{ "data": [
 {
-  "data": [
-    {
       "hash": "0x1a898c5448b37f693343917ea40b7ad1c43b28a4ddd37af1bd6d0bb4a0c99891",
       "blockHash": "0x1d7f60b34bad8ce0ba5e49e3845c7a62ba8db440b81f8df98ec6349c4d28ca8e",
       "blockNumber": 8854723,
@@ -8,7 +7,7 @@
       "timestamp": 1572639538,
       "from": "0xbb984f85bd52d78eb2fbf2c5598bae7abb98c5bc",
       "to": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "value": 5e+18,
+  "value": 5000000000000000000,
       "gas": 21000,
       "gasPrice": 10000000000,
       "input": "0x",
@@ -55,14 +54,14 @@
         }
       ],
       "gasCost": 210000000000000,
-      "etherGasCost": 0.00021,
+  "etherGasCost": 0.000210000000000000,
       "function": "",
       "gasUsed": 21000,
       "date": "2019-11-01 20:18:58 UTC",
-      "ether": 5,
+  "ether": 5.000000000000000000,
       "encoding": "0x"
-    },
-    {
+}
+, {
       "hash": "0xecfbe561392a3b0ca8cd7557c7856a9202919d6bc8543538670736db159f1929",
       "blockHash": "0xeea275e000cb2119986bb0c4aa30a5e22bbafd92f140aff8c2a191aa84797e22",
       "blockNumber": 8855603,
@@ -160,14 +159,14 @@
         }
       ],
       "gasCost": 55144000000000,
-      "etherGasCost": 5.5144e-05,
+  "etherGasCost": 0.000055144000000000,
       "function": "setAddr",
       "gasUsed": 55144,
       "date": "2019-11-01 23:31:45 UTC",
-      "ether": 0,
+  "ether": 0.000000000000000000,
       "encoding": "0xd5fa2b00"
-    },
-    {
+}
+, {
       "hash": "0xb7d80298ad62d68f47a9e3faeaa78ca7888e33dc714707a83eb4dfbbcdc01b09",
       "blockHash": "0x61dfb0ff34d48012414f63f57273395259d5a1112132bc37f46b551d6d06dfbc",
       "blockNumber": 8856290,
@@ -175,7 +174,7 @@
       "timestamp": 1572660966,
       "from": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "to": "0xb97073b754660bb356dfe12f78ae366d77dbc80f",
-      "value": 1e+16,
+  "value": 10000000000000000,
       "gas": 21000,
       "gasPrice": 10000000000,
       "input": "0x",
@@ -222,14 +221,14 @@
         }
       ],
       "gasCost": 210000000000000,
-      "etherGasCost": 0.00021,
+  "etherGasCost": 0.000210000000000000,
       "function": "",
       "gasUsed": 21000,
       "date": "2019-11-02 02:16:06 UTC",
-      "ether": 0.01,
+  "ether": 0.010000000000000000,
       "encoding": "0x"
-    },
-    {
+}
+, {
       "hash": "0x6d62aaef0653a83fd9c876f58f04aaf1ce6a750699d34ed870dd171e3de2d80a",
       "blockHash": "0x43e22796bc84f41d76c289867c883438070d9fc90c90ae54305e9f46d7848a69",
       "blockNumber": 8856316,
@@ -237,7 +236,7 @@
       "timestamp": 1572661175,
       "from": "0xb97073b754660bb356dfe12f78ae366d77dbc80f",
       "to": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-      "value": 1e+16,
+  "value": 10000000000000000,
       "gas": 21000,
       "gasPrice": 10000000000,
       "input": "0x",
@@ -284,14 +283,14 @@
         }
       ],
       "gasCost": 210000000000000,
-      "etherGasCost": 0.00021,
+  "etherGasCost": 0.000210000000000000,
       "function": "",
       "gasUsed": 21000,
       "date": "2019-11-02 02:19:35 UTC",
-      "ether": 0.01,
+  "ether": 0.010000000000000000,
       "encoding": "0x"
-    },
-    {
+}
+, {
       "hash": "0x118f8d42e6b858427f6b54c1636a6ec1f72e0cf8941da03deffa55a3c2357204",
       "blockHash": "0x7b6c8640eb6e951e4f27370b8ddce33416df0c88a36133ed530d89bf70851f7a",
       "blockNumber": 8856476,
@@ -406,14 +405,14 @@
         }
       ],
       "gasCost": 149192000000000,
-      "etherGasCost": 0.000149192,
+  "etherGasCost": 0.000149192000000000,
       "function": "transfer",
       "gasUsed": 37298,
       "date": "2019-11-02 02:56:10 UTC",
-      "ether": 0,
+  "ether": 0.000000000000000000,
       "encoding": "0xa9059cbb"
-    },
-    {
+}
+, {
       "hash": "0x973699ddd12186570c957369788e0128b1acc66c994685c5d3f52ef6b3b84fed",
       "blockHash": "0xb9c1d175649dd505870fa571d691ad41c9c8b4b24fe69f99cf312823c5964fdb",
       "blockNumber": 8856511,
@@ -528,12 +527,11 @@
         }
       ],
       "gasCost": 112130000000000,
-      "etherGasCost": 0.00011213,
+  "etherGasCost": 0.000112130000000000,
       "function": "transfer",
       "gasUsed": 22426,
       "date": "2019-11-02 03:04:19 UTC",
-      "ether": 0,
+  "ether": 0.000000000000000000,
       "encoding": "0xa9059cbb"
-    }
-  ]
 }
+] }

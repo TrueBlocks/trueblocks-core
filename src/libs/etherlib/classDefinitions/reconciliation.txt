@@ -6,6 +6,7 @@ fields = blknum blockNumber|\
         address assetAddr|\
         string assetSymbol|\
         uint64 decimals=18|\
+        int256 prevBal (nowrite)|\
         int256 begBal|\
         int256 begBalDiff|\
         int256 amountIn|\

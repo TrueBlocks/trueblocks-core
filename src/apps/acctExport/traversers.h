@@ -65,13 +65,11 @@ class CTraceTraverser : public CTraverser {
     }
 };
 
-extern bool acct_Pre(CTraverser* trav, void* data);
 extern bool acct_Display(CTraverser* trav, void* data);
 class CTransactionTraverser : public CTraverser {
   public:
     CTransactionTraverser(void) : CTraverser(cout, "txs") {
         filterFunc = tsRangeFunc;
-        preFunc = acct_Pre;
         postFunc = post_Func;
         dataFunc = loadTx_Func;
         displayFunc = acct_Display;

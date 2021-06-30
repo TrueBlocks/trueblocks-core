@@ -32,6 +32,7 @@ class CReconciliation : public CBaseNode {
     address_t assetAddr;
     string_q assetSymbol;
     uint64_t decimals;
+    bigint_t prevBal;
     bigint_t begBal;
     bigint_t begBalDiff;
     bigint_t amountIn;
@@ -72,14 +73,6 @@ class CReconciliation : public CBaseNode {
                       const CTransaction* trans, const address_t& acctFor);
     bool reconcileUsingTraces(bigint_t lastEndBal, blknum_t nextBlock, const CTransaction* trans,
                               const address_t& acctFor);
-    void reset(void) {
-        blknum_t b = blockNumber, tr = transactionIndex;
-        timestamp_t ts = timestamp;
-        initialize();
-        blockNumber = b;
-        transactionIndex = tr;
-        timestamp = ts;
-    }
     bigint_t totalIn(void) const {
         return amountIn + internalIn + selfDestructIn + minerBaseRewardIn + minerNephewRewardIn + minerTxFeeIn +
                minerUncleRewardIn + prefundIn;
@@ -145,6 +138,7 @@ inline void CReconciliation::initialize(void) {
     assetAddr = "";
     assetSymbol = "";
     decimals = 18;
+    prevBal = 0;
     begBal = 0;
     begBalDiff = 0;
     amountIn = 0;
@@ -181,6 +175,7 @@ inline void CReconciliation::duplicate(const CReconciliation& re) {
     assetAddr = re.assetAddr;
     assetSymbol = re.assetSymbol;
     decimals = re.decimals;
+    prevBal = re.prevBal;
     begBal = re.begBal;
     begBalDiff = re.begBalDiff;
     amountIn = re.amountIn;

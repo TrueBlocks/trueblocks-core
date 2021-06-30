@@ -1,5 +1,5 @@
-acctExport argc: 11 [1:0xf503017d7baf7fbc0fff7492b751025c6a78179b] [2:--fmt] [3:json] [4:--accounting] [5:--ether] [6:--reversed] [7:--first_block] [8:8854723] [9:--last_block] [10:8856511] 
-acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --fmt json --accounting --ether --reversed --first_block 8854723 --last_block 8856511 
+acctExport argc: 13 [1:0xf503017d7baf7fbc0fff7492b751025c6a78179b] [2:--fmt] [3:json] [4:--accounting] [5:--ether] [6:--reversed] [7:--first_block] [8:8854723] [9:--last_block] [10:8856511] [11:--max_records] [12:10000] 
+acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --fmt json --accounting --ether --reversed --first_block 8854723 --last_block 8856511 --max_records 10000 
 { "data": [
 {
   "hash": "0x973699ddd12186570c957369788e0128b1acc66c994685c5d3f52ef6b3b84fed",

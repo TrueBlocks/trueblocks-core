@@ -24,27 +24,11 @@ bool acct_Display(CTraverser* trav, void* data) {
 }
 
 //-----------------------------------------------------------------------
-bool acct_Pre(CTraverser* trav, void* data) {
-    COptions* opt = (COptions*)data;
-
-    if (opt->monApps.size() > 0) {
-        CReconciliation eth;
-        if (opt->first_record != 0) {
-            eth.blockNumber = opt->monApps[0].blk - 1;
-        } else if (opt->exportRange.first != 0) {
-            eth.blockNumber = opt->exportRange.first - 1;
-        }
-        eth.endBal = getBalanceAt(opt->accountedFor, eth.blockNumber);
-        opt->prevStatements[opt->accountedFor + "_eth"] = eth;
-    }
-    return true;
-}
-
-//-----------------------------------------------------------------------
 bool COptions::process_reconciliation(CTraverser* trav, blknum_t next) {
     string_q path = getBinaryCachePath(CT_RECONS, accountedFor, trav->trans.blockNumber, trav->trans.transactionIndex);
     establishFolder(path);
 
+    trav->trans.statements.clear();
     if (!isTestMode() && fileExists(path)) {
         CArchive archive(READING_ARCHIVE);
         if (archive.Lock(path, modeReadOnly, LOCK_NOWAIT)) {
@@ -52,54 +36,86 @@ bool COptions::process_reconciliation(CTraverser* trav, blknum_t next) {
             for (auto statement : trav->trans.statements)
                 prevStatements[accountedFor + "_" + toLower(statement.assetAddr)] = statement;
             archive.Release();
-            return true;
+            return !shouldQuit();
         }
     }
 
     trav->readStatus = "Reconciling";
-    CAddressBoolMap done;
-    CStringArray corrections;
-    CReconciliation theStatement(trav->trans.blockNumber, trav->trans.transactionIndex, trav->trans.timestamp);
-    theStatement.reconcileEth(corrections, prevStatements, next, &trav->trans, accountedFor);
-    trav->trans.statements.clear();
-    trav->trans.statements.push_back(theStatement);
-    prevStatements[accountedFor + "_eth"] = theStatement;
-    for (auto log : trav->trans.receipt.logs) {
-        CAccountName tokenName;
-        bool isToken = findToken(tokenName, log.address);
-        bool isAirdrop = airdropMap[log.address];
-        bool isDone = done[log.address];
-        if ((isToken || trav->trans.hasToken || isAirdrop) && !isDone) {
-            CMonitor m;
-            m.address = log.address;
-            theStatement.reset();
-            theStatement.assetAddr = log.address;
-            theStatement.assetSymbol = tokenName.symbol.empty() ? tokenName.name.substr(0, 4) : tokenName.symbol;
-            if (theStatement.assetSymbol.empty())
-                theStatement.assetSymbol = getTokenSymbol(m, trav->trans.blockNumber);
-            if (isAirdrop && theStatement.assetSymbol.empty()) {
-                getNamedAccount(tokenName, log.address);
-                theStatement.assetSymbol = tokenName.symbol.empty() ? tokenName.name.substr(0, 4) : tokenName.symbol;
+
+    // We need to check to see if the export is starting after the
+    // the first record so we can pick up the previous balance
+    // We must do this for both ETH and any tokens
+    if (prevStatements[accountedFor + "_eth"].assetAddr.empty()) {
+        CReconciliation pEth;
+        if (reversed) {
+            if (first_record != 0) {
+                pEth.blockNumber = monApps[monApps.size() - 1].blk - 1;
+            } else if (exportRange.first != 0) {
+                pEth.blockNumber = exportRange.second - 1;
             }
-            if (theStatement.assetSymbol.empty()) {
-                theStatement.assetSymbol = log.address.substr(0, 4) + "...";
+        } else {
+            if (first_record != 0) {
+                pEth.blockNumber = monApps[0].blk - 1;
+            } else if (exportRange.first != 0) {
+                pEth.blockNumber = exportRange.first - 1;
             }
-            theStatement.decimals = tokenName.decimals != 0 ? tokenName.decimals : 18;
-            string psKey = accountedFor + "_" + log.address;
-            theStatement.begBal = prevStatements[psKey].endBal;
-            theStatement.endBal = str_2_BigInt(getTokenBalanceOf(m, accountedFor, trav->trans.blockNumber));
-            if (theStatement.begBal > theStatement.endBal) {
-                theStatement.amountOut = (theStatement.begBal - theStatement.endBal);
+        }
+        pEth.endBal = getBalanceAt(accountedFor, pEth.blockNumber);
+        prevStatements[accountedFor + "_eth"] = pEth;
+    }
+
+    CStringArray unused;  // future reference -- used for corrections
+    CReconciliation eth(trav->trans.blockNumber, trav->trans.transactionIndex, trav->trans.timestamp);
+    eth.reconcileEth(unused, prevStatements, next, &trav->trans, accountedFor);
+    trav->trans.statements.push_back(eth);
+    prevStatements[accountedFor + "_eth"] = eth;
+
+    CAccountNameMap tokenList;
+    if (token_list_from_logs(tokenList, trav)) {
+        for (auto item : tokenList) {
+            CAccountName tokenName = item.second;
+            CReconciliation tokStatement(trav->trans.blockNumber, trav->trans.transactionIndex, trav->trans.timestamp);
+            tokStatement.assetAddr = tokenName.address;
+            tokStatement.assetSymbol = tokenName.symbol.empty() ? tokenName.name.substr(0, 4) : tokenName.symbol;
+            if (tokStatement.assetSymbol.empty())
+                tokStatement.assetSymbol = getTokenSymbol(tokenName.address, trav->trans.blockNumber);
+            if (airdropMap[tokenName.address] && tokStatement.assetSymbol.empty()) {
+                getNamedAccount(tokenName, tokenName.address);
+                tokStatement.assetSymbol = tokenName.symbol.empty() ? tokenName.name.substr(0, 4) : tokenName.symbol;
+            }
+            if (tokStatement.assetSymbol.empty()) {
+                tokStatement.assetSymbol = tokenName.address.substr(0, 4) + "...";
+            }
+            tokStatement.decimals = tokenName.decimals != 0 ? tokenName.decimals : 18;
+
+            string psKey = accountedFor + "_" + tokenName.address;
+
+            if (prevStatements[psKey].assetAddr.empty()) {
+                // first time we've seen this asset, so we need previous balance
+                // which is frequently zero but may be non-zero if the command
+                // started after the addresses's first transaction
+                CReconciliation pBal = tokStatement;
+                blknum_t bn = 0;
+                if (trav->trans.blockNumber > 0)
+                    bn = trav->trans.blockNumber - 1;
+                pBal.endBal = getTokenBalanceOf2(tokenName.address, accountedFor, bn);
+                prevStatements[psKey] = pBal;
+            }
+
+            tokStatement.begBal = prevStatements[psKey].endBal;
+            tokStatement.endBal = getTokenBalanceOf2(tokenName.address, accountedFor, trav->trans.blockNumber);
+            if (tokStatement.begBal > tokStatement.endBal) {
+                tokStatement.amountOut = (tokStatement.begBal - tokStatement.endBal);
             } else {
-                theStatement.amountIn = (theStatement.endBal - theStatement.begBal);
+                tokStatement.amountIn = (tokStatement.endBal - tokStatement.begBal);
             }
-            theStatement.amountNet = theStatement.amountIn - theStatement.amountOut;
-            theStatement.reconciled = true;
-            theStatement.reconciliationType = "";
-            done[log.address] = true;
-            if (theStatement.amountNet != 0)
-                trav->trans.statements.push_back(theStatement);
-            prevStatements[psKey] = theStatement;
+            tokStatement.amountNet = tokStatement.amountIn - tokStatement.amountOut;
+            tokStatement.reconciled = true;
+            tokStatement.reconciliationType = "";
+            if (tokStatement.amountNet != 0)
+                trav->trans.statements.push_back(tokStatement);
+
+            prevStatements[psKey] = tokStatement;
         }
     }
 
@@ -107,8 +123,22 @@ bool COptions::process_reconciliation(CTraverser* trav, blknum_t next) {
     if (!isTestMode() && archive.Lock(path, modeWriteCreate, LOCK_WAIT)) {
         archive << trav->trans.statements;
         archive.Release();
-        return true;
+        return !shouldQuit();
     }
 
-    return true;
+    return !shouldQuit();
+}
+
+//-----------------------------------------------------------------------
+bool COptions::token_list_from_logs(CAccountNameMap& tokenList, const CTraverser* trav) {
+    for (auto log : trav->trans.receipt.logs) {
+        CAccountName tokenName;
+        bool isToken = findToken(tokenName, log.address);
+        bool isAirdrop = airdropMap[log.address];
+        if (tokenName.address.empty())
+            tokenName.address = log.address;
+        if ((isToken || isAirdrop || trav->trans.hasToken))
+            tokenList[log.address] = tokenName;
+    }
+    return tokenList.size() > 0;
 }

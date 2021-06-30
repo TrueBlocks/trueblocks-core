@@ -146,6 +146,9 @@ string_q CReconciliation::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 'p':
+            if (fieldName % "prevBal") {
+                return bni_2_Str(prevBal);
+            }
             if (fieldName % "prefundIn") {
                 return bni_2_Str(prefundIn);
             }
@@ -285,6 +288,10 @@ bool CReconciliation::setValueByName(const string_q& fieldNameIn, const string_q
             }
             break;
         case 'p':
+            if (fieldName % "prevBal") {
+                prevBal = str_2_Wei(fieldValue);
+                return true;
+            }
             if (fieldName % "prefundIn") {
                 prefundIn = str_2_Wei(fieldValue);
                 return true;
@@ -351,6 +358,7 @@ bool CReconciliation::Serialize(CArchive& archive) {
     archive >> assetAddr;
     archive >> assetSymbol;
     archive >> decimals;
+    // archive >> prevBal;
     archive >> begBal;
     archive >> begBalDiff;
     archive >> amountIn;
@@ -390,6 +398,7 @@ bool CReconciliation::SerializeC(CArchive& archive) const {
     archive << assetAddr;
     archive << assetSymbol;
     archive << decimals;
+    // archive << prevBal;
     archive << begBal;
     archive << begBalDiff;
     archive << amountIn;
@@ -453,6 +462,8 @@ void CReconciliation::registerClass(void) {
     ADD_FIELD(CReconciliation, "assetAddr", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CReconciliation, "assetSymbol", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CReconciliation, "decimals", T_UNUMBER, ++fieldNum);
+    ADD_FIELD(CReconciliation, "prevBal", T_INT256, ++fieldNum);
+    HIDE_FIELD(CReconciliation, "prevBal");
     ADD_FIELD(CReconciliation, "begBal", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliation, "begBalDiff", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliation, "amountIn", T_INT256, ++fieldNum);
@@ -671,6 +682,7 @@ bool CReconciliation::reconcileEth(const CStringArray& corrections, CReconciliat
     // LOG4(Format());
 
     CReconciliation prev = prevStatements[acctFor + "_eth"];
+    prevBal = prev.endBal;
     assetSymbol = "ETH";
     assetAddr = acctFor;
 

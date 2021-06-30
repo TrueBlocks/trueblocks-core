@@ -585,10 +585,10 @@ void cleanMonitorStage(void) {
 }
 
 //-------------------------------------------------------------------------
-string_q getTokenBalanceOf(const CMonitor& token, const address_t& holder, blknum_t blockNum) {
+string_q getTokenBalanceOf(const address_t& token, const address_t& holder, blknum_t blockNum) {
     ostringstream cmd;
     cmd << "[{";
-    cmd << "\"to\": \"" << token.address << "\", ";
+    cmd << "\"to\": \"" << token << "\", ";
     cmd << "\"data\": \"0x70a08231" << padLeft(substitute(holder, "0x", ""), 64, '0') << "\"";
     cmd << "}, \"" << uint_2_Hex(blockNum) << "\"]";
     string_q ret = callRPC("eth_call", cmd.str(), false).substr(0, 66);  // take only the first 32 bytes
@@ -598,10 +598,10 @@ string_q getTokenBalanceOf(const CMonitor& token, const address_t& holder, blknu
 }
 
 //-------------------------------------------------------------------------
-string_q getTokenSymbol(const CMonitor& token, blknum_t blockNum) {
+string_q getTokenSymbol(const address_t& token, blknum_t blockNum) {
     ostringstream cmd;
     cmd << "[{";
-    cmd << "\"to\": \"" << token.address << "\", ";
+    cmd << "\"to\": \"" << token << "\", ";
     cmd << "\"data\": \"0x95d89b41\"";
     cmd << "}, \"" << uint_2_Hex(blockNum) << "\"]";
     string_q ret = callRPC("eth_call", cmd.str(), false);
@@ -611,7 +611,7 @@ string_q getTokenSymbol(const CMonitor& token, blknum_t blockNum) {
 }
 
 //-------------------------------------------------------------------------
-string_q getTokenState(const CMonitor& token, const string_q& what, const CAbi& abi_spec, blknum_t blockNum) {
+string_q getTokenState(const address_t& token, const string_q& what, const CAbi& abi_spec, blknum_t blockNum) {
     static map<string_q, string_q> sigMap;
     if (sigMap.size() == 0) {
         sigMap["totalSupply"] = "0x18160ddd";
@@ -624,7 +624,7 @@ string_q getTokenState(const CMonitor& token, const string_q& what, const CAbi& 
         return "";
 
     CEthCall theCall;
-    theCall.address = token.address;
+    theCall.address = token;
     theCall.encoding = sigMap[what];
     theCall.bytes = "";
     theCall.blockNumber = blockNum;
