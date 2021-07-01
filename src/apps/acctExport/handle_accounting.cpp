@@ -61,6 +61,8 @@ bool COptions::process_reconciliation(CTraverser* trav, blknum_t next) {
             }
         }
         pEth.endBal = getBalanceAt(accountedFor, pEth.blockNumber);
+        if (pEth.blockNumber == 0)
+            pEth.endBal = 0;
         prevStatements[accountedFor + "_eth"] = pEth;
     }
 

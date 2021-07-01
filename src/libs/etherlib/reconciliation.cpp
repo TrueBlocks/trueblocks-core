@@ -496,6 +496,8 @@ void CReconciliation::registerClass(void) {
     // EXISTING_CODE
     ADD_FIELD(CReconciliation, "totalIn", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliation, "totalOut", T_INT256, ++fieldNum);
+    if (isTestMode())
+        SHOW_FIELD(CReconciliation, "prevBal");
     // EXISTING_CODE
 }
 
@@ -628,6 +630,9 @@ string_q nextReconciliationChunk_custom(const string_q& fieldIn, const void* dat
                 // EXISTING_CODE
                 if (fieldIn % "prefundIn") {
                     return bni_2_Export(rec->timestamp, rec->prefundIn, rec->decimals);
+                }
+                if (fieldIn % "prevBal") {
+                    return bni_2_Export(rec->timestamp, rec->prevBal, rec->decimals);
                 }
                 // EXISTING_CODE
                 break;
