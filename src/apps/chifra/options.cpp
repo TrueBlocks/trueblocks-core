@@ -30,7 +30,7 @@ bool COptions::call_command(int argc, const char* argv[]) {
     setProgName("chifra");
 
     string_q mode, scrape_mode;
-    bool has_help = false, has_verbose = false;
+    bool has_help = false;
     for (int i = 1; i < argc; i++) {
         string_q arg = argv[i];
         if (arg == "-h" || arg == "--help") {
@@ -41,9 +41,6 @@ bool COptions::call_command(int argc, const char* argv[]) {
             isReadme = true;
             hiUp1 = hiUp2 = hiDown = '`';
             return usage("");
-
-        } else if (arg == "-v" || arg == "--verbose") {
-            has_verbose = true;
 
         } else if (!chifraCmdMap[arg].empty()) {
             if (mode == "status") {
