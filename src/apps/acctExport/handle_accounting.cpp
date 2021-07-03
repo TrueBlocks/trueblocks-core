@@ -66,9 +66,9 @@ bool COptions::process_reconciliation(CTraverser* trav, blknum_t next) {
         prevStatements[accountedFor + "_eth"] = pEth;
     }
 
-    CStringArray unused;  // future reference -- used for corrections
     CReconciliation eth(trav->trans.blockNumber, trav->trans.transactionIndex, trav->trans.timestamp);
-    eth.reconcileEth(unused, prevStatements, next, &trav->trans, accountedFor);
+    eth.reconcileEth(prevStatements[accountedFor + "_eth"].endBal, prevStatements[accountedFor + "_eth"].blockNumber,
+                     next, &trav->trans, accountedFor);
     trav->trans.statements.push_back(eth);
     prevStatements[accountedFor + "_eth"] = eth;
 
@@ -76,34 +76,25 @@ bool COptions::process_reconciliation(CTraverser* trav, blknum_t next) {
     if (token_list_from_logs(tokenList, trav)) {
         for (auto item : tokenList) {
             CAccountName tokenName = item.second;
+
             CReconciliation tokStatement(trav->trans.blockNumber, trav->trans.transactionIndex, trav->trans.timestamp);
-            tokStatement.assetAddr = tokenName.address;
-            tokStatement.assetSymbol = tokenName.symbol.empty() ? tokenName.name.substr(0, 4) : tokenName.symbol;
-            if (tokStatement.assetSymbol.empty())
-                tokStatement.assetSymbol = getTokenSymbol(tokenName.address, trav->trans.blockNumber);
-            if (airdropMap[tokenName.address] && tokStatement.assetSymbol.empty()) {
-                getNamedAccount(tokenName, tokenName.address);
-                tokStatement.assetSymbol = tokenName.symbol.empty() ? tokenName.name.substr(0, 4) : tokenName.symbol;
-            }
-            if (tokStatement.assetSymbol.empty()) {
-                tokStatement.assetSymbol = tokenName.address.substr(0, 4) + "...";
-            }
-            tokStatement.decimals = tokenName.decimals != 0 ? tokenName.decimals : 18;
+            tokStatement.initForToken(tokenName);
 
             string psKey = accountedFor + "_" + tokenName.address;
-
             if (prevStatements[psKey].assetAddr.empty()) {
                 // first time we've seen this asset, so we need previous balance
                 // which is frequently zero but may be non-zero if the command
                 // started after the addresses's first transaction
                 CReconciliation pBal = tokStatement;
-                blknum_t bn = 0;
+                pBal.blockNumber = 0;
                 if (trav->trans.blockNumber > 0)
-                    bn = trav->trans.blockNumber - 1;
-                pBal.endBal = getTokenBalanceOf2(tokenName.address, accountedFor, bn);
+                    pBal.blockNumber = trav->trans.blockNumber - 1;
+                pBal.endBal = getTokenBalanceOf2(tokenName.address, accountedFor, pBal.blockNumber);
                 prevStatements[psKey] = pBal;
             }
 
+            tokStatement.prevBlk = prevStatements[psKey].blockNumber;
+            tokStatement.prevBlkBal = prevStatements[psKey].endBal;
             tokStatement.begBal = prevStatements[psKey].endBal;
             tokStatement.endBal = getTokenBalanceOf2(tokenName.address, accountedFor, trav->trans.blockNumber);
             if (tokStatement.begBal > tokStatement.endBal) {
@@ -136,10 +127,9 @@ bool COptions::token_list_from_logs(CAccountNameMap& tokenList, const CTraverser
     for (auto log : trav->trans.receipt.logs) {
         CAccountName tokenName;
         bool isToken = findToken(tokenName, log.address);
-        bool isAirdrop = airdropMap[log.address];
         if (tokenName.address.empty())
             tokenName.address = log.address;
-        if ((isToken || isAirdrop || trav->trans.hasToken))
+        if ((isToken || trav->trans.hasToken))
             tokenList[log.address] = tokenName;
     }
     return tokenList.size() > 0;

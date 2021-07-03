@@ -32,7 +32,8 @@ class CReconciliation : public CBaseNode {
     address_t assetAddr;
     string_q assetSymbol;
     uint64_t decimals;
-    bigint_t prevBal;
+    blknum_t prevBlk;
+    bigint_t prevBlkBal;
     bigint_t begBal;
     bigint_t begBalDiff;
     bigint_t amountIn;
@@ -69,10 +70,10 @@ class CReconciliation : public CBaseNode {
         transactionIndex = txid;
         timestamp = ts;
     }
-    bool reconcileEth(const CStringArray& corrections, map<string, CReconciliation>& last, blknum_t nextBlock,
-                      const CTransaction* trans, const address_t& acctFor);
-    bool reconcileUsingTraces(bigint_t lastEndBal, blknum_t nextBlock, const CTransaction* trans,
-                              const address_t& acctFor);
+    void initForToken(CAccountName& tokenName);
+    bool reconcileEth(bigint_t prevEndBal, blknum_t prevBlock, blknum_t nextBlock, const CTransaction* trans,
+                      const address_t& acctFor);
+    bool reconcileUsingTraces(bigint_t prevEndBal, const CTransaction* trans, const address_t& acctFor);
     bigint_t totalIn(void) const {
         return amountIn + internalIn + selfDestructIn + minerBaseRewardIn + minerNephewRewardIn + minerTxFeeIn +
                minerUncleRewardIn + prefundIn;
@@ -138,7 +139,8 @@ inline void CReconciliation::initialize(void) {
     assetAddr = "";
     assetSymbol = "";
     decimals = 18;
-    prevBal = 0;
+    prevBlk = 0;
+    prevBlkBal = 0;
     begBal = 0;
     begBalDiff = 0;
     amountIn = 0;
@@ -175,7 +177,8 @@ inline void CReconciliation::duplicate(const CReconciliation& re) {
     assetAddr = re.assetAddr;
     assetSymbol = re.assetSymbol;
     decimals = re.decimals;
-    prevBal = re.prevBal;
+    prevBlk = re.prevBlk;
+    prevBlkBal = re.prevBlkBal;
     begBal = re.begBal;
     begBalDiff = re.begBalDiff;
     amountIn = re.amountIn;

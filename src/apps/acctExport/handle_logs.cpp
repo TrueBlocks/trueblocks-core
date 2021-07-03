@@ -28,16 +28,6 @@ size_t logs_Count(CTraverser* trav, void* data) {
 }
 
 //-----------------------------------------------------------------------
-bool logs_Pre(CTraverser* trav, void* data) {
-    COptions* opt = (COptions*)data;
-    if (opt->monApps.size() > 0 && opt->first_record != 0)
-        opt->lastStatement.endBal = getBalanceAt(opt->accountedFor, opt->monApps[0].blk - 1);
-
-    start_Log(trav, data);
-    return true;
-}
-
-//-----------------------------------------------------------------------
 bool logFilter(const CLogEntry& log, const COptions* opt) {
     if (!opt->source.empty()) {
         if (!opt->wasEmittedBy(log.address))

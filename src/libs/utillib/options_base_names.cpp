@@ -297,7 +297,11 @@ bool COptionsBase::loadNames(void) {
 //-----------------------------------------------------------------------
 bool COptionsBase::findToken(CAccountName& acct, const address_t& addr) {
     acct = tokenMap[addr];
-    return acct.address == addr;
+    if (acct.address == addr)
+        return true;
+    if (airdropMap[addr])
+        return getNamedAccount(acct, addr);
+    return false;
 }
 
 //-----------------------------------------------------------------------

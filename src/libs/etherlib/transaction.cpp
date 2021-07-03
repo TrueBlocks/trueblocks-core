@@ -586,7 +586,6 @@ void CTransaction::registerClass(void) {
     // works, but hide them since they are never used.
     ADD_FIELD(CTransaction, "confirmations", T_NUMBER, ++fieldNum);
     HIDE_FIELD(CTransaction, "confirmations");
-    SHOW_FIELD(CTransaction, "reconciliations");
 
     // Add custom fields
     ADD_FIELD(CTransaction, "gasCost", T_WEI, ++fieldNum);
@@ -625,7 +624,6 @@ void CTransaction::registerClass(void) {
     HIDE_FIELD(CTransaction, "statements");
     HIDE_FIELD(CTransaction, "traces");
     HIDE_FIELD(CTransaction, "articulatedTx");
-    HIDE_FIELD(CTransaction, "reconciliations");
     HIDE_FIELD(CTransaction, "extraValue1");
     HIDE_FIELD(CTransaction, "extraValue2");
     HIDE_FIELD(CTransaction, "year");

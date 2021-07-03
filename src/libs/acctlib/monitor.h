@@ -207,13 +207,6 @@ extern const char* STR_DISPLAY_MONITOR;
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 typedef map<address_t, CMonitor> CMonitorMap;  // NOLINT
-extern string_q getTokenBalanceOf(const address_t& token, const address_t& holder, blknum_t blockNum);
-inline bigint_t getTokenBalanceOf2(const address_t& token, const address_t& holder, blknum_t blockNum) {
-    return str_2_BigInt(getTokenBalanceOf(token, holder, blockNum));
-};
-extern string_q getTokenSymbol(const address_t& token, blknum_t blockNum);
-extern string_q getTokenState(const address_t& token, const string_q& whichState, const CAbi& abi_spec,
-                              blknum_t blockNum);
 extern void establishMonitorFolders(void);
 extern void cleanMonitorStage(void);
 // EXISTING_CODE

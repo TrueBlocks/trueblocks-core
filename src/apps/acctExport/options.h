@@ -53,7 +53,6 @@ class COptions : public CAbiOptions {
     address_t accountedFor;
     string_q accountedForName;
 
-    CReconciliation lastStatement;
     CReconciliationMap prevStatements;
     CPinnedChunkArray pinList;
 
