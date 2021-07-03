@@ -220,11 +220,11 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
   "articulatedTx": {
     "name": "approve",
     "inputs": {
-      "_spender": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
-      "_value": "5000000000000000000"
+      "_amount": "5000000000000000000",
+      "_spender": "0x7d655c57f71464b6f83811c55d84009cd9f5221c"
     },
     "outputs": {
-      "_success": ""
+      "success": ""
     }
   },
   "compressedTx": "approve(0x7d655c57f71464b6f83811c55d84009cd9f5221c, 5000000000000000000); ",
@@ -5132,11 +5132,11 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
   "articulatedTx": {
     "name": "approve",
     "inputs": {
-      "_spender": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
-      "_value": "5000000000000000000"
+      "_amount": "5000000000000000000",
+      "_spender": "0x7d655c57f71464b6f83811c55d84009cd9f5221c"
     },
     "outputs": {
-      "_success": ""
+      "success": ""
     }
   },
   "compressedTx": "approve(0x7d655c57f71464b6f83811c55d84009cd9f5221c, 5000000000000000000); ",
@@ -5655,11 +5655,11 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
   "articulatedTx": {
     "name": "approve",
     "inputs": {
-      "_spender": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
-      "_value": "5000000000000000000"
+      "_amount": "5000000000000000000",
+      "_spender": "0x7d655c57f71464b6f83811c55d84009cd9f5221c"
     },
     "outputs": {
-      "_success": ""
+      "success": ""
     }
   },
   "compressedTx": "approve(0x7d655c57f71464b6f83811c55d84009cd9f5221c, 5000000000000000000); ",
@@ -6265,11 +6265,11 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
   "articulatedTx": {
     "name": "approve",
     "inputs": {
-      "_spender": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
-      "_value": "5000000000000000000"
+      "_amount": "5000000000000000000",
+      "_spender": "0x7d655c57f71464b6f83811c55d84009cd9f5221c"
     },
     "outputs": {
-      "_success": ""
+      "success": ""
     }
   },
   "compressedTx": "approve(0x7d655c57f71464b6f83811c55d84009cd9f5221c, 5000000000000000000); ",

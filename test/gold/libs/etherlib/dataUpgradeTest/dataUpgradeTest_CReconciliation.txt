@@ -14,7 +14,7 @@ assetAddr           	1008	0	20971575	T_ADDRESS TS_STRING TS_OMITEMPTY
 assetSymbol         	1009	0	20971570	T_TEXT TS_STRING TS_OMITEMPTY
 decimals            	1010	0	8388635	T_UNUMBER TS_NUMERAL
 prevBlk             	1011	0	1082130460	T_BLOCKNUM TS_NUMERAL TS_INTEGER
-prevBlkBal          	1012	1	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
+prevBlkBal          	1012	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
 begBal              	1013	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
 begBalDiff          	1014	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
 amountIn            	1015	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
@@ -44,6 +44,7 @@ totalOut            	1034	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
   "assetAddr": "0x0",
   "decimals": 18,
   "prevBlk": 0,
+  "prevBlkBal": "",
   "begBal": "",
   "begBalDiff": "",
   "amountIn": "",
@@ -154,7 +155,7 @@ totalOut            	1034	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
   "assetAddr": "0x0",
   "decimals": 18,
   "prevBlk": 0,
-  "prevBlkBal": 0,
+  "prevBlkBal": "",
   "begBal": "",
   "begBalDiff": "",
   "amountIn": "",

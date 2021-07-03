@@ -20,11 +20,6 @@
     "sizeNow": 1031
   },
   {
-    "path": "$CACHE/0x5df9b87991262f6ba471f09758cde1c0fc1de734.acct.bin",
-    "sizeThen": 2,
-    "sizeNow": 2
-  },
-  {
     "path": "$CACHE/0x807640a13483f8ac783c557fcdf27be11ea4ac7a.acct.bin",
     "sizeThen": 58781,
     "sizeNow": 58781
