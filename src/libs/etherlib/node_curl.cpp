@@ -212,7 +212,7 @@ bool isNodeRunning(void) {
 
 //-------------------------------------------------------------------------
 static const char* STR_ERROR_CURLERR =
-    "The Ethereum RPC server [{PROVIDER}] was not found. To correct the problem, edit|"
+    "The Ethereum RPC server ([{PROVIDER}]) was not found. To correct the problem, edit|"
     "`rpcProvider` in the file `$CONFIG`.";
 
 //-------------------------------------------------------------------------
