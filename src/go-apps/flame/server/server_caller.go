@@ -14,6 +14,8 @@ import (
 	"os/exec"
 	"strconv"
 	"strings"
+
+	utils "github.com/TrueBlocks/trueblocks-core/src/go-apps/blaze/utils"
 )
 
 // isTestMode return true if we are running from the testing harness
@@ -84,6 +86,9 @@ func CallOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd s
 
 	// Do the actual call
 	cmd := exec.Command(tbCmd, allDogs...)
+	if (Options.Verbose > 0) {
+		log.Print(utils.Yellow, "Calling: ", cmd, utils.Off)
+	}
 
 	// Listen if the call gets canceled
 	notify := w.(http.CloseNotifier).CloseNotify()

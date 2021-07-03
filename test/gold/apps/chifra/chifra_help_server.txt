@@ -1,8 +1,8 @@
 chifra argc: 3 [1:serve] [2:--help] 
 chifra serve --help 
 Usage of flame:
-      --monitor           enable monitor scraper mode
-      --port string       specify the server's port (default ":8080")
-      --scrape            enable block scraper mode
-      --verbose int[=0]   verbose level (between 0 and 10 inclusive)
+      --monitor       enable monitor scraper mode
+      --port string   specify the server's port (default ":8080")
+      --scrape        enable block scraper mode
+      --verbose int   verbose level (between 0 and 10 inclusive)
 pflag: help requested

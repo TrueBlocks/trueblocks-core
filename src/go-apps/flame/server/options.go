@@ -118,8 +118,6 @@ func ParseOptions() error {
 	}
 
 	flag.IntVar(&Options.Verbose, "verbose", 0, "verbose level (between 0 and 10 inclusive)")
-	flag.Lookup("verbose").NoOptDefVal = "0"
-
 	flag.Parse()
 
 	Options.Status, _ = GetChifraData()
