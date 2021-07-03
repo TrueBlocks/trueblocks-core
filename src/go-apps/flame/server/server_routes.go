@@ -93,7 +93,7 @@ func AccountsList(w http.ResponseWriter, r *http.Request) {
 func AccountsExport(w http.ResponseWriter, r *http.Request) {
 	// By removing, inserting into, or altering any of the following 10 uncommented
 	// lines of code, you are violating the terms of our usage license. Don't do it.
-	fileName := Options.Status.CachePath + "lics/export.txt"
+	// fileName := Options.Status.CachePath + "lics/export.txt"
 	if (false) { // !utils.FileExists(fileName)) {
 		w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 		w.Header().Set("Access-Control-Allow-Origin", "*")
