@@ -65,6 +65,15 @@ extern bool queryRawStateDiff(string_q& results, const hash_t& hashIn);
 extern bool queryRawLogs(string_q& results, const CLogQuery& query);
 
 //-----------------------------------------------------------------------
+extern string_q getTokenBalanceOf(const address_t& token, const address_t& holder, blknum_t blockNum);
+inline bigint_t getTokenBalanceOf2(const address_t& token, const address_t& holder, blknum_t blockNum) {
+    return str_2_BigInt(getTokenBalanceOf(token, holder, blockNum));
+};
+extern string_q getTokenSymbol(const address_t& token, blknum_t blockNum);
+extern string_q getTokenState(const address_t& token, const string_q& whichState, const CAbi& abi_spec,
+                              blknum_t blockNum);
+
+//-----------------------------------------------------------------------
 extern string_q getRawBlock(blknum_t bn);
 extern string_q getRawUncle(blknum_t bn, uint64_t index);
 extern hash_t getRawBlockHash(blknum_t bn);
@@ -90,7 +99,7 @@ extern bool readNodeFromBinary(CBaseNode& item, const string_q& fileName);
 
 //-------------------------------------------------------------------------
 extern string_q getVersionFromClient(void);
-extern bool isTurboGeth(void);
+extern bool isErigon(void);
 extern bool isGeth(void);
 extern bool isParity(void);
 extern bool getNodeIds(uint64_t& clientId, uint64_t& networkId);

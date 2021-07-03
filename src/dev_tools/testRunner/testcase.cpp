@@ -456,7 +456,7 @@ void establishTestMonitors(void) {
         "cd \"[{PATH}]\" && "
         "rm -fR mocks && "
         "rm -fR monitors && "
-        "gunzip --keep *.gz && "
+        "gunzip -k *.gz && "
         "tar -xvf monitors.tar 2>/dev/null && rm -f monitors.tar && "
         "tar -xvf mocks.tar 2>/dev/null && rm -f mocks.tar";
 

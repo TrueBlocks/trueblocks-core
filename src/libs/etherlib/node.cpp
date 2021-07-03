@@ -354,7 +354,7 @@ bool loadTraces(CTransaction& trans, blknum_t bn, blknum_t txid, bool useCache, 
 //-------------------------------------------------------------------------
 bool getFullReceipt(CTransaction* trans, bool needsTrace) {
     getReceipt(trans->receipt, trans->hash);
-    if (trans->blockNumber >= byzantiumBlock || isTurboGeth()) {
+    if (trans->blockNumber >= byzantiumBlock || isErigon()) {
         trans->isError = (trans->receipt.status == 0);
 
     } else if (needsTrace && trans->gas == trans->receipt.gasUsed) {
@@ -505,6 +505,56 @@ bool queryRawLogs(string_q& results, const CLogQuery& query) {
     return true;
 }
 
+//-------------------------------------------------------------------------
+string_q getTokenBalanceOf(const address_t& token, const address_t& holder, blknum_t blockNum) {
+    ostringstream cmd;
+    cmd << "[{";
+    cmd << "\"to\": \"" << token << "\", ";
+    cmd << "\"data\": \"0x70a08231" << padLeft(substitute(holder, "0x", ""), 64, '0') << "\"";
+    cmd << "}, \"" << uint_2_Hex(blockNum) << "\"]";
+    string_q ret = callRPC("eth_call", cmd.str(), false).substr(0, 66);  // take only the first 32 bytes
+    if (startsWith(ret, "0x"))
+        return bnu_2_Str(str_2_BigUint(ret, 256));
+    return "0";
+}
+
+//-------------------------------------------------------------------------
+string_q getTokenSymbol(const address_t& token, blknum_t blockNum) {
+    ostringstream cmd;
+    cmd << "[{";
+    cmd << "\"to\": \"" << token << "\", ";
+    cmd << "\"data\": \"0x95d89b41\"";
+    cmd << "}, \"" << uint_2_Hex(blockNum) << "\"]";
+    string_q ret = callRPC("eth_call", cmd.str(), false);
+    if (!contains(ret, "error") && !startsWith(ret, "0x"))
+        return ret;
+    return "";
+}
+
+//-------------------------------------------------------------------------
+string_q getTokenState(const address_t& token, const string_q& what, const CAbi& abi_spec, blknum_t blockNum) {
+    static map<string_q, string_q> sigMap;
+    if (sigMap.size() == 0) {
+        sigMap["totalSupply"] = "0x18160ddd";
+        sigMap["decimals"] = "0x313ce567";
+        sigMap["symbol"] = "0x95d89b41";
+        sigMap["name"] = "0x06fdde03";
+    }
+
+    if (sigMap[what].empty())
+        return "";
+
+    CEthCall theCall;
+    theCall.address = token;
+    theCall.encoding = sigMap[what];
+    theCall.bytes = "";
+    theCall.blockNumber = blockNum;
+    theCall.abi_spec = abi_spec;
+    if (doEthCall(theCall))
+        return theCall.getResults();
+    return "";
+}
+
 //-----------------------------------------------------------------------
 void getTracesByFilter(CTraceArray& traces, const CTraceFilter& filter) {
     if (filter.Format() == CTraceFilter().Format())
@@ -574,13 +624,13 @@ string_q getVersionFromClient(void) {
 }
 
 //-------------------------------------------------------------------------
-bool isTurboGeth(void) {
-    return contains(toLower(getVersionFromClient()), "turbogeth");
+bool isErigon(void) {
+    return contains(toLower(getVersionFromClient()), "erigon");
 }
 
 //-------------------------------------------------------------------------
 bool isGeth(void) {
-    return contains(toLower(getVersionFromClient()), "geth") && !isTurboGeth();
+    return contains(toLower(getVersionFromClient()), "geth") && !isErigon();
 }
 
 //-------------------------------------------------------------------------

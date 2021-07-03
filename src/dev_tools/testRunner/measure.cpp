@@ -401,7 +401,7 @@ CMeasure::CMeasure(const string_q& g, const string_q& c, const string_q& t) {
     git_hash = "git_" + string_q(GIT_COMMIT_HASH).substr(0, 10);
     date = Now().Format(FMT_EXPORT);
     machine = toLower(getHostName());
-    node = isTurboGeth() ? "TG" : isParity() ? "OE" : "OT";
+    node = isErigon() ? "TG" : isParity() ? "OE" : "OT";
     epoch = getGlobalConfig("testRunner")->getConfigStr("settings", "test_epoch", "E-12");
     group = g;
     cmd = c;

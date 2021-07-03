@@ -100,7 +100,7 @@ int main(int argc, const char* argv[]) {
                 os << " >" << testFile;
                 // cout << os.str() << endl;
                 string_q t = (test.num + "." + test.name).substr(0, 20);
-                if (node.name == "TurboGeth") {
+                if (node.name == "Erigon") {
                     cout << padRight(t, 20) << ": " << padRight(test.cmd, 20) << test.params << " ";
                     cout.flush();
                 } else {
@@ -111,8 +111,8 @@ int main(int argc, const char* argv[]) {
                     return 0;
                 }
 
-                if (node.name == "TurboGeth") {
-                    string_q turboFile = "./turbogeth/" + test.name + ".txt";
+                if (node.name == "Erigon") {
+                    string_q turboFile = "./erigon/" + test.name + ".txt";
                     string_q parityFile = "./parity/" + test.name + ".txt";
                     string_q turbo = asciiFileToString(turboFile);
                     string_q parity;

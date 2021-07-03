@@ -30,6 +30,8 @@
           "assetAddr": "0x001d14804b399c6ef80e64576f657660804fec0b",
           "assetSymbol": "WEI",
           "decimals": 18,
+          "prevBlk": 0,
+          "prevBlkBal": "",
           "begBal": "",
           "begBalDiff": "",
           "amountIn": "",
@@ -48,8 +50,10 @@
           "endBalCalc": "4200000000000000000000",
           "endBalDiff": "",
           "amountNet": "4200000000000000000000",
-          "reconciliationType": "",
-          "reconciled": true
+          "reconciliationType": "by-trace",
+          "reconciled": true,
+          "totalIn": "4200000000000000000000",
+          "totalOut": ""
         }
       ],
       "gasCost": 0,
@@ -93,6 +97,8 @@
           "assetAddr": "0x001d14804b399c6ef80e64576f657660804fec0b",
           "assetSymbol": "WEI",
           "decimals": 18,
+          "prevBlk": 0,
+          "prevBlkBal": "4200000000000000000000",
           "begBal": "4200000000000000000000",
           "begBalDiff": "",
           "amountIn": "",
@@ -111,8 +117,10 @@
           "endBalCalc": "74679320489077336",
           "endBalDiff": "",
           "amountNet": "-4199925320679510922664",
-          "reconciliationType": "",
-          "reconciled": true
+          "reconciliationType": "regular",
+          "reconciled": true,
+          "totalIn": "",
+          "totalOut": "4199900000000000000000"
         }
       ],
       "gasCost": 25320679510922664,
@@ -153,6 +161,8 @@
           "assetAddr": "0x001d14804b399c6ef80e64576f657660804fec0b",
           "assetSymbol": "WEI",
           "decimals": 18,
+          "prevBlk": 202249,
+          "prevBlkBal": "74679320489077336",
           "begBal": "74679320489077336",
           "begBalDiff": "",
           "amountIn": "",
@@ -171,8 +181,10 @@
           "endBalCalc": "",
           "endBalDiff": "",
           "amountNet": "-74679320489077336",
-          "reconciliationType": "",
-          "reconciled": true
+          "reconciliationType": "regular",
+          "reconciled": true,
+          "totalIn": "",
+          "totalOut": "74259320489077336"
         }
       ],
       "gasCost": 420000000000000,

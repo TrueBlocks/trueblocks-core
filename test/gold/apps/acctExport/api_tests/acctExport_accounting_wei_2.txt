@@ -30,6 +30,8 @@
           "assetAddr": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
           "assetSymbol": "WEI",
           "decimals": 18,
+          "prevBlk": 0,
+          "prevBlkBal": "",
           "begBal": "",
           "begBalDiff": "",
           "amountIn": "",
@@ -48,8 +50,10 @@
           "endBalCalc": "5000000000000000000",
           "endBalDiff": "",
           "amountNet": "5000000000000000000",
-          "reconciliationType": "",
-          "reconciled": true
+          "reconciliationType": "regular",
+          "reconciled": true,
+          "totalIn": "5000000000000000000",
+          "totalOut": ""
         }
       ],
       "gasCost": 0,
@@ -90,6 +94,8 @@
           "assetAddr": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
           "assetSymbol": "WEI",
           "decimals": 18,
+          "prevBlk": 1,
+          "prevBlkBal": "5000000000000000000",
           "begBal": "5000000000000000000",
           "begBalDiff": "",
           "amountIn": "",
@@ -108,8 +114,10 @@
           "endBalCalc": "10000000000000000000",
           "endBalDiff": "",
           "amountNet": "5000000000000000000",
-          "reconciliationType": "",
-          "reconciled": true
+          "reconciliationType": "regular",
+          "reconciled": true,
+          "totalIn": "5000000000000000000",
+          "totalOut": ""
         }
       ],
       "gasCost": 0,
@@ -150,6 +158,8 @@
           "assetAddr": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
           "assetSymbol": "WEI",
           "decimals": 18,
+          "prevBlk": 5,
+          "prevBlkBal": "10000000000000000000",
           "begBal": "10000000000000000000",
           "begBalDiff": "",
           "amountIn": "",
@@ -168,8 +178,10 @@
           "endBalCalc": "13750000000000000000",
           "endBalDiff": "",
           "amountNet": "3750000000000000000",
-          "reconciliationType": "",
-          "reconciled": true
+          "reconciliationType": "regular",
+          "reconciled": true,
+          "totalIn": "3750000000000000000",
+          "totalOut": ""
         }
       ],
       "gasCost": 0,
@@ -210,6 +222,8 @@
           "assetAddr": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
           "assetSymbol": "WEI",
           "decimals": 18,
+          "prevBlk": 56,
+          "prevBlkBal": "13750000000000000000",
           "begBal": "13750000000000000000",
           "begBalDiff": "",
           "amountIn": "",
@@ -228,8 +242,10 @@
           "endBalCalc": "18750000000000000000",
           "endBalDiff": "",
           "amountNet": "5000000000000000000",
-          "reconciliationType": "",
-          "reconciled": true
+          "reconciliationType": "regular",
+          "reconciled": true,
+          "totalIn": "5000000000000000000",
+          "totalOut": ""
         }
       ],
       "gasCost": 0,
@@ -270,6 +286,8 @@
           "assetAddr": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
           "assetSymbol": "WEI",
           "decimals": 18,
+          "prevBlk": 235,
+          "prevBlkBal": "18750000000000000000",
           "begBal": "18750000000000000000",
           "begBalDiff": "",
           "amountIn": "",
@@ -288,8 +306,10 @@
           "endBalCalc": "21875000000000000000",
           "endBalDiff": "",
           "amountNet": "3125000000000000000",
-          "reconciliationType": "",
-          "reconciled": true
+          "reconciliationType": "regular",
+          "reconciled": true,
+          "totalIn": "3125000000000000000",
+          "totalOut": ""
         }
       ],
       "gasCost": 0,
@@ -330,6 +350,8 @@
           "assetAddr": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
           "assetSymbol": "WEI",
           "decimals": 18,
+          "prevBlk": 247,
+          "prevBlkBal": "21875000000000000000",
           "begBal": "21875000000000000000",
           "begBalDiff": "",
           "amountIn": "",
@@ -348,8 +370,10 @@
           "endBalCalc": "26875000000000000000",
           "endBalDiff": "",
           "amountNet": "5000000000000000000",
-          "reconciliationType": "",
-          "reconciled": true
+          "reconciliationType": "regular",
+          "reconciled": true,
+          "totalIn": "5000000000000000000",
+          "totalOut": ""
         }
       ],
       "gasCost": 0,
@@ -390,6 +414,8 @@
           "assetAddr": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
           "assetSymbol": "WEI",
           "decimals": 18,
+          "prevBlk": 348,
+          "prevBlkBal": "26875000000000000000",
           "begBal": "26875000000000000000",
           "begBalDiff": "",
           "amountIn": "",
@@ -408,8 +434,10 @@
           "endBalCalc": "30625000000000000000",
           "endBalDiff": "",
           "amountNet": "3750000000000000000",
-          "reconciliationType": "",
-          "reconciled": true
+          "reconciliationType": "regular",
+          "reconciled": true,
+          "totalIn": "3750000000000000000",
+          "totalOut": ""
         }
       ],
       "gasCost": 0,
@@ -450,6 +478,8 @@
           "assetAddr": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
           "assetSymbol": "WEI",
           "decimals": 18,
+          "prevBlk": 500,
+          "prevBlkBal": "30625000000000000000",
           "begBal": "30625000000000000000",
           "begBalDiff": "",
           "amountIn": "",
@@ -468,8 +498,10 @@
           "endBalCalc": "34375000000000000000",
           "endBalDiff": "",
           "amountNet": "3750000000000000000",
-          "reconciliationType": "",
-          "reconciled": true
+          "reconciliationType": "regular",
+          "reconciled": true,
+          "totalIn": "3750000000000000000",
+          "totalOut": ""
         }
       ],
       "gasCost": 0,
@@ -510,6 +542,8 @@
           "assetAddr": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
           "assetSymbol": "WEI",
           "decimals": 18,
+          "prevBlk": 563,
+          "prevBlkBal": "34375000000000000000",
           "begBal": "34375000000000000000",
           "begBalDiff": "",
           "amountIn": "",
@@ -528,8 +562,10 @@
           "endBalCalc": "36875000000000000000",
           "endBalDiff": "",
           "amountNet": "2500000000000000000",
-          "reconciliationType": "",
-          "reconciled": true
+          "reconciliationType": "regular",
+          "reconciled": true,
+          "totalIn": "2500000000000000000",
+          "totalOut": ""
         }
       ],
       "gasCost": 0,
@@ -570,6 +606,8 @@
           "assetAddr": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
           "assetSymbol": "WEI",
           "decimals": 18,
+          "prevBlk": 987,
+          "prevBlkBal": "36875000000000000000",
           "begBal": "36875000000000000000",
           "begBalDiff": "",
           "amountIn": "",
@@ -588,8 +626,10 @@
           "endBalCalc": "42031250000000000000",
           "endBalDiff": "",
           "amountNet": "5156250000000000000",
-          "reconciliationType": "",
-          "reconciled": true
+          "reconciliationType": "regular",
+          "reconciled": true,
+          "totalIn": "5156250000000000000",
+          "totalOut": ""
         }
       ],
       "gasCost": 0,
@@ -630,6 +670,8 @@
           "assetAddr": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
           "assetSymbol": "WEI",
           "decimals": 18,
+          "prevBlk": 1450,
+          "prevBlkBal": "42031250000000000000",
           "begBal": "42031250000000000000",
           "begBalDiff": "",
           "amountIn": "",
@@ -648,8 +690,10 @@
           "endBalCalc": "45781250000000000000",
           "endBalDiff": "",
           "amountNet": "3750000000000000000",
-          "reconciliationType": "",
-          "reconciled": true
+          "reconciliationType": "regular",
+          "reconciled": true,
+          "totalIn": "3750000000000000000",
+          "totalOut": ""
         }
       ],
       "gasCost": 0,
@@ -690,6 +734,8 @@
           "assetAddr": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
           "assetSymbol": "WEI",
           "decimals": 18,
+          "prevBlk": 1580,
+          "prevBlkBal": "45781250000000000000",
           "begBal": "45781250000000000000",
           "begBalDiff": "",
           "amountIn": "",
@@ -708,8 +754,10 @@
           "endBalCalc": "49531250000000000000",
           "endBalDiff": "",
           "amountNet": "3750000000000000000",
-          "reconciliationType": "",
-          "reconciled": true
+          "reconciliationType": "regular",
+          "reconciled": true,
+          "totalIn": "3750000000000000000",
+          "totalOut": ""
         }
       ],
       "gasCost": 0,
@@ -750,6 +798,8 @@
           "assetAddr": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
           "assetSymbol": "WEI",
           "decimals": 18,
+          "prevBlk": 1586,
+          "prevBlkBal": "49531250000000000000",
           "begBal": "49531250000000000000",
           "begBalDiff": "",
           "amountIn": "",
@@ -768,8 +818,10 @@
           "endBalCalc": "54531250000000000000",
           "endBalDiff": "",
           "amountNet": "5000000000000000000",
-          "reconciliationType": "",
-          "reconciled": true
+          "reconciliationType": "regular",
+          "reconciled": true,
+          "totalIn": "5000000000000000000",
+          "totalOut": ""
         }
       ],
       "gasCost": 0,
@@ -810,6 +862,8 @@
           "assetAddr": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
           "assetSymbol": "WEI",
           "decimals": 18,
+          "prevBlk": 1861,
+          "prevBlkBal": "54531250000000000000",
           "begBal": "54531250000000000000",
           "begBalDiff": "",
           "amountIn": "",
@@ -828,8 +882,10 @@
           "endBalCalc": "58281250000000000000",
           "endBalDiff": "",
           "amountNet": "3750000000000000000",
-          "reconciliationType": "",
-          "reconciled": true
+          "reconciliationType": "regular",
+          "reconciled": true,
+          "totalIn": "3750000000000000000",
+          "totalOut": ""
         }
       ],
       "gasCost": 0,
@@ -870,6 +926,8 @@
           "assetAddr": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
           "assetSymbol": "WEI",
           "decimals": 18,
+          "prevBlk": 1912,
+          "prevBlkBal": "58281250000000000000",
           "begBal": "58281250000000000000",
           "begBalDiff": "",
           "amountIn": "",
@@ -888,8 +946,10 @@
           "endBalCalc": "63281250000000000000",
           "endBalDiff": "",
           "amountNet": "5000000000000000000",
-          "reconciliationType": "",
-          "reconciled": true
+          "reconciliationType": "regular",
+          "reconciled": true,
+          "totalIn": "5000000000000000000",
+          "totalOut": ""
         }
       ],
       "gasCost": 0,

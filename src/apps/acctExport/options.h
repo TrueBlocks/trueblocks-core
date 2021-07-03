@@ -53,7 +53,6 @@ class COptions : public CAbiOptions {
     address_t accountedFor;
     string_q accountedForName;
 
-    CReconciliation lastStatement;
     CReconciliationMap prevStatements;
     CPinnedChunkArray pinList;
 
@@ -110,6 +109,7 @@ class COptions : public CAbiOptions {
 
     bool queryFlatFile(const string_q& path, bool sorted);
     bool process_reconciliation(CTraverser* trav, blknum_t next);
+    bool token_list_from_logs(CAccountNameMap& tokenList, const CTraverser* trav);
 };
 
 //--------------------------------------------------------------------------------

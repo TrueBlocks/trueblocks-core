@@ -39,31 +39,31 @@ int main(int argc, const char* argv[]) {
 
             if (options.appearances) {
                 CAppearanceTraverser at;
-                at.travRange = options.exportRange;
+                at.exportRange = options.exportRange;
                 traversers.push_back(at);
             }
 
             if (options.receipts) {
                 CReceiptTraverser rt;
-                rt.travRange = options.exportRange;
+                rt.exportRange = options.exportRange;
                 traversers.push_back(rt);
             }
 
             if (options.logs) {
                 CLogTraverser lt;
-                lt.travRange = options.exportRange;
+                lt.exportRange = options.exportRange;
                 traversers.push_back(lt);
             }
 
             if (options.traces) {
                 CTraceTraverser tt;
-                tt.travRange = options.exportRange;
+                tt.exportRange = options.exportRange;
                 traversers.push_back(tt);
             }
 
             if (traversers.empty()) {
                 CTransactionTraverser tt;
-                tt.travRange = options.exportRange;
+                tt.exportRange = options.exportRange;
                 traversers.push_back(tt);
             }
 
@@ -103,7 +103,7 @@ int main(int argc, const char* argv[]) {
 bool tsRangeFunc(CTraverser* trav, void* data) {
     if (trav->app->blk >= expContext().tsCnt || shouldQuit())
         return false;
-    return inRange(blknum_t(trav->app->blk), trav->travRange.first, trav->travRange.second);
+    return inRange(blknum_t(trav->app->blk), trav->exportRange.first, trav->exportRange.second);
 }
 
 //-----------------------------------------------------------------------

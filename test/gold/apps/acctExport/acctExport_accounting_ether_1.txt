@@ -116,8 +116,10 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "assetAddr": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "assetSymbol": "ETH",
       "decimals": 18,
+      "prevBlk": 10277779,
+      "prevBlkBal": "5.137097246179548557",
       "begBal": "5.137097246179548557",
-      "begBalDiff": "5.137097246179548557",
+      "begBalDiff": "",
       "amountIn": "",
       "amountOut": "",
       "internalIn": "",
@@ -133,7 +135,11 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBal": "5.137097246179548557",
       "endBalCalc": "5.137097246179548557",
       "endBalDiff": "",
-      "amountNet": ""
+      "amountNet": "",
+      "reconciliationType": "regular",
+      "reconciled": true,
+      "totalIn": "",
+      "totalOut": ""
     },
     {
       "blockNumber": 10277780,
@@ -142,9 +148,11 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "assetAddr": "0x6b175474e89094c44da98b954eedeac495271d0f",
       "assetSymbol": "DAI",
       "decimals": 18,
-      "begBal": "",
+      "prevBlk": 10277779,
+      "prevBlkBal": "1158.567776639199461740",
+      "begBal": "1158.567776639199461740",
       "begBalDiff": "",
-      "amountIn": "1168.267776639199461740",
+      "amountIn": "9.700000000000000000",
       "amountOut": "",
       "internalIn": "",
       "internalOut": "",
@@ -159,8 +167,10 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBal": "1168.267776639199461740",
       "endBalCalc": "",
       "endBalDiff": "",
-      "amountNet": "1168.267776639199461740",
-      "reconciled": true
+      "amountNet": "9.700000000000000000",
+      "reconciled": true,
+      "totalIn": "9.700000000000000000",
+      "totalOut": ""
     }
   ],
   "gasCost": 2743600000000000,
@@ -210,11 +220,11 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
   "articulatedTx": {
     "name": "approve",
     "inputs": {
-      "_amount": "5000000000000000000",
-      "_spender": "0x7d655c57f71464b6f83811c55d84009cd9f5221c"
+      "_spender": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
+      "_value": "5000000000000000000"
     },
     "outputs": {
-      "success": ""
+      "_success": ""
     }
   },
   "compressedTx": "approve(0x7d655c57f71464b6f83811c55d84009cd9f5221c, 5000000000000000000); ",
@@ -226,6 +236,8 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "assetAddr": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "assetSymbol": "ETH",
       "decimals": 18,
+      "prevBlk": 10277780,
+      "prevBlkBal": "5.137097246179548557",
       "begBal": "5.137097246179548557",
       "begBalDiff": "",
       "amountIn": "",
@@ -244,7 +256,10 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBalCalc": "5.135908328179548557",
       "endBalDiff": "",
       "amountNet": "-0.001188918000000000",
-      "reconciled": true
+      "reconciliationType": "regular",
+      "reconciled": true,
+      "totalIn": "",
+      "totalOut": ""
     }
   ],
   "gasCost": 1188918000000000,
@@ -367,6 +382,8 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "assetAddr": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "assetSymbol": "ETH",
       "decimals": 18,
+      "prevBlk": 10279295,
+      "prevBlkBal": "5.135908328179548557",
       "begBal": "5.135908328179548557",
       "begBalDiff": "",
       "amountIn": "",
@@ -385,7 +402,10 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBalCalc": "5.133985758179548557",
       "endBalDiff": "",
       "amountNet": "-0.001922570000000000",
-      "reconciled": true
+      "reconciliationType": "regular",
+      "reconciled": true,
+      "totalIn": "",
+      "totalOut": ""
     },
     {
       "blockNumber": 10279310,
@@ -394,6 +414,8 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "assetAddr": "0x6b175474e89094c44da98b954eedeac495271d0f",
       "assetSymbol": "DAI",
       "decimals": 18,
+      "prevBlk": 10279295,
+      "prevBlkBal": "1168.267776639199461740",
       "begBal": "1168.267776639199461740",
       "begBalDiff": "",
       "amountIn": "",
@@ -412,7 +434,9 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBalCalc": "",
       "endBalDiff": "",
       "amountNet": "-5.0000000",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "",
+      "totalOut": "5.0000000"
     }
   ],
   "gasCost": 1922570000000000,
@@ -535,6 +559,8 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "assetAddr": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "assetSymbol": "ETH",
       "decimals": 18,
+      "prevBlk": 10279310,
+      "prevBlkBal": "5.133985758179548557",
       "begBal": "5.133985758179548557",
       "begBalDiff": "",
       "amountIn": "",
@@ -553,7 +579,10 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBalCalc": "5.133985758179548557",
       "endBalDiff": "",
       "amountNet": "",
-      "reconciled": true
+      "reconciliationType": "regular",
+      "reconciled": true,
+      "totalIn": "",
+      "totalOut": ""
     },
     {
       "blockNumber": 10279650,
@@ -562,6 +591,8 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "assetAddr": "0x6b175474e89094c44da98b954eedeac495271d0f",
       "assetSymbol": "DAI",
       "decimals": 18,
+      "prevBlk": 10279310,
+      "prevBlkBal": "1163.267776639199461740",
       "begBal": "1163.267776639199461740",
       "begBalDiff": "",
       "amountIn": "4.750000000000000000",
@@ -580,7 +611,9 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBalCalc": "",
       "endBalDiff": "",
       "amountNet": "4.750000000000000000",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "4.750000000000000000",
+      "totalOut": ""
     }
   ],
   "gasCost": 1416580000000000,
@@ -650,6 +683,65 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
     ],
     "status": 1
   },
+  "traces": [
+    {
+      "type": "call",
+      "action": {
+        "selfDestructed": "0x0",
+        "balance": 0,
+        "callType": "call",
+        "from": "0x3a051cff039d0ea6964c0f9f01db6e61cc521748",
+        "gas": 76832,
+        "input": "0x9120491c00000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000002000000000000000000000000eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee000000000000000000000000000000000000000000000000008700cc75770000000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b000000000000000000000000eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee00000000000000000000000000000000000000000000000000071afd498d000000000000000000000000000000de4b13153673bcae2616b67bf822500d325fc3",
+        "refundAddress": "0x0",
+        "to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
+        "value": 40000000000000000
+      },
+      "result": {
+        "newContract": "0x0",
+        "gasUsed": 35466,
+        "output": "0x"
+      }
+    },
+    {
+      "type": "call",
+      "action": {
+        "selfDestructed": "0x0",
+        "balance": 0,
+        "callType": "call",
+        "from": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
+        "gas": 55324,
+        "input": "0x",
+        "refundAddress": "0x0",
+        "to": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+        "value": 38000000000000000
+      },
+      "result": {
+        "newContract": "0x0",
+        "gasUsed": 0,
+        "output": "0x"
+      }
+    },
+    {
+      "type": "call",
+      "action": {
+        "selfDestructed": "0x0",
+        "balance": 0,
+        "callType": "call",
+        "from": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
+        "gas": 42803,
+        "input": "0x",
+        "refundAddress": "0x0",
+        "to": "0x00de4b13153673bcae2616b67bf822500d325fc3",
+        "value": 2000000000000000
+      },
+      "result": {
+        "newContract": "0x0",
+        "gasUsed": 0,
+        "output": "0x"
+      }
+    }
+  ],
   "articulatedTx": {
     "name": "donate",
     "inputs": {
@@ -665,6 +757,8 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "assetAddr": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "assetSymbol": "ETH",
       "decimals": 18,
+      "prevBlk": 10279650,
+      "prevBlkBal": "5.133985758179548557",
       "begBal": "5.133985758179548557",
       "begBalDiff": "",
       "amountIn": "",
@@ -683,7 +777,10 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBalCalc": "5.171985758179548557",
       "endBalDiff": "",
       "amountNet": "0.038000000000000000",
-      "reconciled": true
+      "reconciliationType": "by-trace",
+      "reconciled": true,
+      "totalIn": "0.038000000000000000",
+      "totalOut": ""
     }
   ],
   "gasCost": 1175774400000000,
@@ -1606,6 +1703,8 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "assetAddr": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "assetSymbol": "ETH",
       "decimals": 18,
+      "prevBlk": 10279931,
+      "prevBlkBal": "5.171985758179548557",
       "begBal": "5.171985758179548557",
       "begBalDiff": "",
       "amountIn": "",
@@ -1624,7 +1723,10 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBalCalc": "5.171985758179548557",
       "endBalDiff": "",
       "amountNet": "",
-      "reconciled": true
+      "reconciliationType": "regular",
+      "reconciled": true,
+      "totalIn": "",
+      "totalOut": ""
     },
     {
       "blockNumber": 10280558,
@@ -1633,6 +1735,8 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "assetAddr": "0x6b175474e89094c44da98b954eedeac495271d0f",
       "assetSymbol": "DAI",
       "decimals": 18,
+      "prevBlk": 10279650,
+      "prevBlkBal": "1168.017776639199461740",
       "begBal": "1168.017776639199461740",
       "begBalDiff": "",
       "amountIn": "0.950000000000000000",
@@ -1651,7 +1755,9 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBalCalc": "",
       "endBalDiff": "",
       "amountNet": "0.950000000000000000",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "0.950000000000000000",
+      "totalOut": ""
     }
   ],
   "gasCost": 13489203800000000,
@@ -2334,6 +2440,8 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "assetAddr": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "assetSymbol": "ETH",
       "decimals": 18,
+      "prevBlk": 10280558,
+      "prevBlkBal": "5.171985758179548557",
       "begBal": "5.171985758179548557",
       "begBalDiff": "",
       "amountIn": "",
@@ -2352,7 +2460,10 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBalCalc": "5.171985758179548557",
       "endBalDiff": "",
       "amountNet": "",
-      "reconciled": true
+      "reconciliationType": "regular",
+      "reconciled": true,
+      "totalIn": "",
+      "totalOut": ""
     },
     {
       "blockNumber": 10280872,
@@ -2361,6 +2472,8 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "assetAddr": "0x6b175474e89094c44da98b954eedeac495271d0f",
       "assetSymbol": "DAI",
       "decimals": 18,
+      "prevBlk": 10280558,
+      "prevBlkBal": "1168.967776639199461740",
       "begBal": "1168.967776639199461740",
       "begBalDiff": "",
       "amountIn": "28.500000000000000000",
@@ -2379,7 +2492,9 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBalCalc": "",
       "endBalDiff": "",
       "amountNet": "28.500000000000000000",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "28.500000000000000000",
+      "totalOut": ""
     }
   ],
   "gasCost": 13501005000000000,
@@ -2502,6 +2617,8 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "assetAddr": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "assetSymbol": "ETH",
       "decimals": 18,
+      "prevBlk": 10280872,
+      "prevBlkBal": "5.171985758179548557",
       "begBal": "5.171985758179548557",
       "begBalDiff": "",
       "amountIn": "",
@@ -2520,7 +2637,10 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBalCalc": "5.171985758179548557",
       "endBalDiff": "",
       "amountNet": "",
-      "reconciled": true
+      "reconciliationType": "regular",
+      "reconciled": true,
+      "totalIn": "",
+      "totalOut": ""
     },
     {
       "blockNumber": 10283648,
@@ -2529,6 +2649,8 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "assetAddr": "0x6b175474e89094c44da98b954eedeac495271d0f",
       "assetSymbol": "DAI",
       "decimals": 18,
+      "prevBlk": 10280872,
+      "prevBlkBal": "1197.467776639199461740",
       "begBal": "1197.467776639199461740",
       "begBalDiff": "",
       "amountIn": "4.750000000000000000",
@@ -2547,7 +2669,9 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBalCalc": "",
       "endBalDiff": "",
       "amountNet": "4.750000000000000000",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "4.750000000000000000",
+      "totalOut": ""
     }
   ],
   "gasCost": 3223730000000000,
@@ -3230,6 +3354,8 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "assetAddr": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "assetSymbol": "ETH",
       "decimals": 18,
+      "prevBlk": 10283648,
+      "prevBlkBal": "5.171985758179548557",
       "begBal": "5.171985758179548557",
       "begBalDiff": "",
       "amountIn": "",
@@ -3248,7 +3374,10 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBalCalc": "5.171985758179548557",
       "endBalDiff": "",
       "amountNet": "",
-      "reconciled": true
+      "reconciliationType": "regular",
+      "reconciled": true,
+      "totalIn": "",
+      "totalOut": ""
     },
     {
       "blockNumber": 10283749,
@@ -3257,6 +3386,8 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "assetAddr": "0x6b175474e89094c44da98b954eedeac495271d0f",
       "assetSymbol": "DAI",
       "decimals": 18,
+      "prevBlk": 10283648,
+      "prevBlkBal": "1202.217776639199461740",
       "begBal": "1202.217776639199461740",
       "begBalDiff": "",
       "amountIn": "5.0000000",
@@ -3275,7 +3406,9 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBalCalc": "",
       "endBalDiff": "",
       "amountNet": "5.0000000",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "5.0000000",
+      "totalOut": ""
     }
   ],
   "gasCost": 16919093400000000,
@@ -4238,6 +4371,8 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "assetAddr": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "assetSymbol": "ETH",
       "decimals": 18,
+      "prevBlk": 10283749,
+      "prevBlkBal": "5.171985758179548557",
       "begBal": "5.171985758179548557",
       "begBalDiff": "",
       "amountIn": "",
@@ -4256,7 +4391,10 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBalCalc": "5.171985758179548557",
       "endBalDiff": "",
       "amountNet": "",
-      "reconciled": true
+      "reconciliationType": "regular",
+      "reconciled": true,
+      "totalIn": "",
+      "totalOut": ""
     },
     {
       "blockNumber": 10289986,
@@ -4265,6 +4403,8 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "assetAddr": "0x6b175474e89094c44da98b954eedeac495271d0f",
       "assetSymbol": "DAI",
       "decimals": 18,
+      "prevBlk": 10283749,
+      "prevBlkBal": "1207.217776639199461740",
       "begBal": "1207.217776639199461740",
       "begBalDiff": "",
       "amountIn": "1.900000000000000000",
@@ -4283,7 +4423,9 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBalCalc": "",
       "endBalDiff": "",
       "amountNet": "1.900000000000000000",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "1.900000000000000000",
+      "totalOut": ""
     }
   ],
   "gasCost": 22634573500000000,
@@ -4886,6 +5028,8 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "assetAddr": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "assetSymbol": "ETH",
       "decimals": 18,
+      "prevBlk": 10289986,
+      "prevBlkBal": "5.171985758179548557",
       "begBal": "5.171985758179548557",
       "begBalDiff": "",
       "amountIn": "",
@@ -4904,7 +5048,10 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBalCalc": "5.171985758179548557",
       "endBalDiff": "",
       "amountNet": "",
-      "reconciled": true
+      "reconciliationType": "regular",
+      "reconciled": true,
+      "totalIn": "",
+      "totalOut": ""
     },
     {
       "blockNumber": 10290103,
@@ -4913,6 +5060,8 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "assetAddr": "0x6b175474e89094c44da98b954eedeac495271d0f",
       "assetSymbol": "DAI",
       "decimals": 18,
+      "prevBlk": 10289986,
+      "prevBlkBal": "1209.117776639199461740",
       "begBal": "1209.117776639199461740",
       "begBalDiff": "",
       "amountIn": "1.980000000000000000",
@@ -4931,7 +5080,9 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBalCalc": "",
       "endBalDiff": "",
       "amountNet": "1.980000000000000000",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "1.980000000000000000",
+      "totalOut": ""
     }
   ],
   "gasCost": 14869160000000000,
@@ -4981,11 +5132,11 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
   "articulatedTx": {
     "name": "approve",
     "inputs": {
-      "_amount": "5000000000000000000",
-      "_spender": "0x7d655c57f71464b6f83811c55d84009cd9f5221c"
+      "_spender": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
+      "_value": "5000000000000000000"
     },
     "outputs": {
-      "success": ""
+      "_success": ""
     }
   },
   "compressedTx": "approve(0x7d655c57f71464b6f83811c55d84009cd9f5221c, 5000000000000000000); ",
@@ -4997,6 +5148,8 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "assetAddr": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "assetSymbol": "ETH",
       "decimals": 18,
+      "prevBlk": 10290103,
+      "prevBlkBal": "5.171985758179548557",
       "begBal": "5.171985758179548557",
       "begBalDiff": "",
       "amountIn": "",
@@ -5016,7 +5169,9 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBalDiff": "",
       "amountNet": "-0.001739343000000000",
       "reconciliationType": "prevdiff-partial",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "",
+      "totalOut": ""
     },
     {
       "blockNumber": 10290317,
@@ -5025,6 +5180,8 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "assetAddr": "0x6b175474e89094c44da98b954eedeac495271d0f",
       "assetSymbol": "DAI",
       "decimals": 18,
+      "prevBlk": 10290103,
+      "prevBlkBal": "1211.097776639199461740",
       "begBal": "1211.097776639199461740",
       "begBalDiff": "",
       "amountIn": "",
@@ -5043,7 +5200,9 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBalCalc": "",
       "endBalDiff": "",
       "amountNet": "-5.0000000",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "",
+      "totalOut": "5.0000000"
     }
   ],
   "gasCost": 1739343000000000,
@@ -5126,6 +5285,8 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "assetAddr": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "assetSymbol": "ETH",
       "decimals": 18,
+      "prevBlk": 10290317,
+      "prevBlkBal": "5.170246415179548557",
       "begBal": "5.170246415179548557",
       "begBalDiff": "",
       "amountIn": "",
@@ -5145,7 +5306,9 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBalDiff": "",
       "amountNet": "-0.001761265500000000",
       "reconciliationType": "nextdiff-partial",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "",
+      "totalOut": ""
     }
   ],
   "gasCost": 1761265500000000,
@@ -5388,6 +5551,8 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "assetAddr": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "assetSymbol": "ETH",
       "decimals": 18,
+      "prevBlk": 10290317,
+      "prevBlkBal": "5.168485149679548557",
       "begBal": "5.168485149679548557",
       "begBalDiff": "",
       "amountIn": "",
@@ -5406,7 +5571,10 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBalCalc": "5.168485149679548557",
       "endBalDiff": "",
       "amountNet": "",
-      "reconciled": true
+      "reconciliationType": "regular",
+      "reconciled": true,
+      "totalIn": "",
+      "totalOut": ""
     },
     {
       "blockNumber": 10291739,
@@ -5415,6 +5583,8 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "assetAddr": "0x6b175474e89094c44da98b954eedeac495271d0f",
       "assetSymbol": "DAI",
       "decimals": 18,
+      "prevBlk": 10290317,
+      "prevBlkBal": "1206.097776639199461740",
       "begBal": "1206.097776639199461740",
       "begBalDiff": "",
       "amountIn": "0.950000000000000000",
@@ -5433,7 +5603,9 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBalCalc": "",
       "endBalDiff": "",
       "amountNet": "0.950000000000000000",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "0.950000000000000000",
+      "totalOut": ""
     }
   ],
   "gasCost": 4980192000000000,
@@ -5483,11 +5655,11 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
   "articulatedTx": {
     "name": "approve",
     "inputs": {
-      "_amount": "5000000000000000000",
-      "_spender": "0x7d655c57f71464b6f83811c55d84009cd9f5221c"
+      "_spender": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
+      "_value": "5000000000000000000"
     },
     "outputs": {
-      "success": ""
+      "_success": ""
     }
   },
   "compressedTx": "approve(0x7d655c57f71464b6f83811c55d84009cd9f5221c, 5000000000000000000); ",
@@ -5499,6 +5671,8 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "assetAddr": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "assetSymbol": "ETH",
       "decimals": 18,
+      "prevBlk": 10291739,
+      "prevBlkBal": "5.168485149679548557",
       "begBal": "5.168485149679548557",
       "begBalDiff": "",
       "amountIn": "",
@@ -5518,7 +5692,9 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBalDiff": "",
       "amountNet": "-0.001232952000000000",
       "reconciliationType": "prevdiff-partial",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "",
+      "totalOut": ""
     },
     {
       "blockNumber": 10292014,
@@ -5527,6 +5703,8 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "assetAddr": "0x6b175474e89094c44da98b954eedeac495271d0f",
       "assetSymbol": "DAI",
       "decimals": 18,
+      "prevBlk": 10291739,
+      "prevBlkBal": "1207.047776639199461740",
       "begBal": "1207.047776639199461740",
       "begBalDiff": "",
       "amountIn": "",
@@ -5545,7 +5723,9 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBalCalc": "",
       "endBalDiff": "",
       "amountNet": "-5.0000000",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "",
+      "totalOut": "5.0000000"
     }
   ],
   "gasCost": 1232952000000000,
@@ -5668,6 +5848,8 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "assetAddr": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "assetSymbol": "ETH",
       "decimals": 18,
+      "prevBlk": 10292014,
+      "prevBlkBal": "5.167252197679548557",
       "begBal": "5.167252197679548557",
       "begBalDiff": "",
       "amountIn": "",
@@ -5687,7 +5869,9 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBalDiff": "",
       "amountNet": "-0.001920520000000000",
       "reconciliationType": "nextdiff-partial",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "",
+      "totalOut": ""
     }
   ],
   "gasCost": 1920520000000000,
@@ -5757,6 +5941,65 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
     ],
     "status": 1
   },
+  "traces": [
+    {
+      "type": "call",
+      "action": {
+        "selfDestructed": "0x0",
+        "balance": 0,
+        "callType": "call",
+        "from": "0x0b16f058257f43db6ec84a7b3c77766cb808face",
+        "gas": 76796,
+        "input": "0x9120491c00000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000002000000000000000000000000eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee00000000000000000000000000000000000000000000000002a303fe4b530000000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b000000000000000000000000eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee000000000000000000000000000000000000000000000000002386f26fc1000200000000000000000000000000de4b13153673bcae2616b67bf822500d325fc3",
+        "refundAddress": "0x0",
+        "to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
+        "value": 200000000000000002
+      },
+      "result": {
+        "newContract": "0x0",
+        "gasUsed": 35466,
+        "output": "0x"
+      }
+    },
+    {
+      "type": "call",
+      "action": {
+        "selfDestructed": "0x0",
+        "balance": 0,
+        "callType": "call",
+        "from": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
+        "gas": 55288,
+        "input": "0x",
+        "refundAddress": "0x0",
+        "to": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+        "value": 190000000000000000
+      },
+      "result": {
+        "newContract": "0x0",
+        "gasUsed": 0,
+        "output": "0x"
+      }
+    },
+    {
+      "type": "call",
+      "action": {
+        "selfDestructed": "0x0",
+        "balance": 0,
+        "callType": "call",
+        "from": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
+        "gas": 42767,
+        "input": "0x",
+        "refundAddress": "0x0",
+        "to": "0x00de4b13153673bcae2616b67bf822500d325fc3",
+        "value": 10000000000000002
+      },
+      "result": {
+        "newContract": "0x0",
+        "gasUsed": 0,
+        "output": "0x"
+      }
+    }
+  ],
   "articulatedTx": {
     "name": "donate",
     "inputs": {
@@ -5772,6 +6015,8 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "assetAddr": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "assetSymbol": "ETH",
       "decimals": 18,
+      "prevBlk": 10292014,
+      "prevBlkBal": "5.165331677679548557",
       "begBal": "5.165331677679548557",
       "begBalDiff": "",
       "amountIn": "",
@@ -5790,7 +6035,10 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBalCalc": "5.355331677679548557",
       "endBalDiff": "",
       "amountNet": "0.190000000000000000",
-      "reconciled": true
+      "reconciliationType": "by-trace",
+      "reconciled": true,
+      "totalIn": "0.190000000000000000",
+      "totalOut": ""
     }
   ],
   "gasCost": 1416220067270450,
@@ -5913,6 +6161,8 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "assetAddr": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "assetSymbol": "ETH",
       "decimals": 18,
+      "prevBlk": 10292070,
+      "prevBlkBal": "5.355331677679548557",
       "begBal": "5.355331677679548557",
       "begBalDiff": "",
       "amountIn": "",
@@ -5931,7 +6181,10 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBalCalc": "5.355331677679548557",
       "endBalDiff": "",
       "amountNet": "",
-      "reconciled": true
+      "reconciliationType": "regular",
+      "reconciled": true,
+      "totalIn": "",
+      "totalOut": ""
     },
     {
       "blockNumber": 10292120,
@@ -5940,6 +6193,8 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "assetAddr": "0x6b175474e89094c44da98b954eedeac495271d0f",
       "assetSymbol": "DAI",
       "decimals": 18,
+      "prevBlk": 10292014,
+      "prevBlkBal": "1202.047776639199461740",
       "begBal": "1202.047776639199461740",
       "begBalDiff": "",
       "amountIn": "47.500000000000000000",
@@ -5958,7 +6213,9 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBalCalc": "",
       "endBalDiff": "",
       "amountNet": "47.500000000000000000",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "47.500000000000000000",
+      "totalOut": ""
     }
   ],
   "gasCost": 1852254000000000,
@@ -6008,11 +6265,11 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
   "articulatedTx": {
     "name": "approve",
     "inputs": {
-      "_amount": "5000000000000000000",
-      "_spender": "0x7d655c57f71464b6f83811c55d84009cd9f5221c"
+      "_spender": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
+      "_value": "5000000000000000000"
     },
     "outputs": {
-      "success": ""
+      "_success": ""
     }
   },
   "compressedTx": "approve(0x7d655c57f71464b6f83811c55d84009cd9f5221c, 5000000000000000000); ",
@@ -6024,6 +6281,8 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "assetAddr": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "assetSymbol": "ETH",
       "decimals": 18,
+      "prevBlk": 10292120,
+      "prevBlkBal": "5.355331677679548557",
       "begBal": "5.355331677679548557",
       "begBalDiff": "",
       "amountIn": "",
@@ -6043,7 +6302,9 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBalDiff": "",
       "amountNet": "-0.001321460340000000",
       "reconciliationType": "prevdiff-partial",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "",
+      "totalOut": ""
     },
     {
       "blockNumber": 10293554,
@@ -6052,6 +6313,8 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "assetAddr": "0x6b175474e89094c44da98b954eedeac495271d0f",
       "assetSymbol": "DAI",
       "decimals": 18,
+      "prevBlk": 10292120,
+      "prevBlkBal": "1249.547776639199461740",
       "begBal": "1249.547776639199461740",
       "begBalDiff": "",
       "amountIn": "",
@@ -6070,7 +6333,9 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBalCalc": "",
       "endBalDiff": "",
       "amountNet": "-5.0000000",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "",
+      "totalOut": "5.0000000"
     }
   ],
   "gasCost": 1321460340000000,
@@ -6193,6 +6458,8 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "assetAddr": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "assetSymbol": "ETH",
       "decimals": 18,
+      "prevBlk": 10293554,
+      "prevBlkBal": "5.354010217339548557",
       "begBal": "5.354010217339548557",
       "begBalDiff": "",
       "amountIn": "",
@@ -6212,7 +6479,9 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBalDiff": "",
       "amountNet": "-0.002058385900000000",
       "reconciliationType": "nextdiff-partial",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "",
+      "totalOut": ""
     }
   ],
   "gasCost": 2058385900000000,
@@ -7617,6 +7886,8 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "assetAddr": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
       "assetSymbol": "ETH",
       "decimals": 18,
+      "prevBlk": 10293554,
+      "prevBlkBal": "5.351951831439548557",
       "begBal": "5.351951831439548557",
       "begBalDiff": "",
       "amountIn": "",
@@ -7635,7 +7906,10 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBalCalc": "5.351951831439548557",
       "endBalDiff": "",
       "amountNet": "",
-      "reconciled": true
+      "reconciliationType": "regular",
+      "reconciled": true,
+      "totalIn": "",
+      "totalOut": ""
     },
     {
       "blockNumber": 10296720,
@@ -7644,6 +7918,8 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "assetAddr": "0x6b175474e89094c44da98b954eedeac495271d0f",
       "assetSymbol": "DAI",
       "decimals": 18,
+      "prevBlk": 10293554,
+      "prevBlkBal": "1244.547776639199461740",
       "begBal": "1244.547776639199461740",
       "begBalDiff": "",
       "amountIn": "9.500000000000000000",
@@ -7662,7 +7938,9 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
       "endBalCalc": "",
       "endBalDiff": "",
       "amountNet": "9.500000000000000000",
-      "reconciled": true
+      "reconciled": true,
+      "totalIn": "9.500000000000000000",
+      "totalOut": ""
     }
   ],
   "gasCost": 26281152000000000,

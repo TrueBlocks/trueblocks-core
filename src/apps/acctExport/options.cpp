@@ -585,7 +585,6 @@ bool COptions::setDisplayFormatting(void) {
         if (accounting) {
             articulate = true;
             manageFields("CTransaction:statements", true);
-            manageFields("CTransaction:reconciliations", false);
             bool nodeHasBals = nodeHasBalances(false);
             string_q rpcProvider = getGlobalConfig()->getConfigStr("settings", "rpcProvider", "http://localhost:8545");
             if (!nodeHasBals) {

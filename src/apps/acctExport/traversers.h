@@ -36,14 +36,12 @@ class CReceiptTraverser : public CTraverser {
     }
 };
 
-extern bool logs_Pre(CTraverser* trav, void* data);
 extern bool logs_Display(CTraverser* trav, void* data);
 extern size_t logs_Count(CTraverser* trav, void* data);
 class CLogTraverser : public CTraverser {
   public:
     CLogTraverser(void) : CTraverser(cout, "logs") {
         filterFunc = tsRangeFunc;
-        preFunc = logs_Pre;
         postFunc = post_Func;
         dataFunc = loadTx_Func;
         displayFunc = logs_Display;
@@ -65,13 +63,11 @@ class CTraceTraverser : public CTraverser {
     }
 };
 
-extern bool acct_Pre(CTraverser* trav, void* data);
 extern bool acct_Display(CTraverser* trav, void* data);
 class CTransactionTraverser : public CTraverser {
   public:
     CTransactionTraverser(void) : CTraverser(cout, "txs") {
         filterFunc = tsRangeFunc;
-        preFunc = acct_Pre;
         postFunc = post_Func;
         dataFunc = loadTx_Func;
         displayFunc = acct_Display;
