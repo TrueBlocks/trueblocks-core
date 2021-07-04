@@ -887,11 +887,14 @@ static string_q getFilename_local(cache_t type, const string_q& item1, const str
 
     } else if (type == CT_RECONS) {
         string_q addr = toLower(substitute(item1, "0x", ""));
-        os << extract(addr, 0, 4) << "/";
-        os << extract(addr, 4, 4) << "/";
-        os << addr;
+        string_q part1 = extract(addr, 0, 4);
+        string_q part2 = extract(addr, 4, 4);
+        string_q part3 = addr;
+        replace(part3, part1, ""); // do not collapse
+        replace(part3, part2, ""); // do not collapse
+        os << part1 << "/" << part2 << "/" << part3 << "/";
         if (item2 != padNum9((uint64_t)NOPOS))
-            os << "." << item2 << "." << item3 << ".bin";
+            os << item2 << "." << item3 << ".bin";
 
     } else {
         os << extract(item1, 0, 2) << "/" << extract(item1, 2, 2) << "/" << extract(item1, 4, 2) << "/";
