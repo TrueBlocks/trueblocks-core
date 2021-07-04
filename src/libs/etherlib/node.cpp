@@ -890,8 +890,8 @@ static string_q getFilename_local(cache_t type, const string_q& item1, const str
         string_q part1 = extract(addr, 0, 4);
         string_q part2 = extract(addr, 4, 4);
         string_q part3 = addr;
-        replace(part3, part1, ""); // do not collapse
-        replace(part3, part2, ""); // do not collapse
+        replace(part3, part1, "");  // do not collapse
+        replace(part3, part2, "");  // do not collapse
         os << part1 << "/" << part2 << "/" << part3 << "/";
         if (item2 != padNum9((uint64_t)NOPOS))
             os << item2 << "." << item3 << ".bin";
