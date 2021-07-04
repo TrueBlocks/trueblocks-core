@@ -724,41 +724,56 @@ bool CReconciliation::reconcileEth(bigint_t prevEndBal, blknum_t prevBlock, blkn
     // We need to account for both the case where the account is the sender...
     if (trans->from == acctFor) {
         amountOut = trans->isError ? 0 : trans->value;
+        LOG4(Format("from --> amountOut: [{amountOut}]"));
         gasCostOut = str_2_BigInt(trans->getValueByName("gasCost"));
+        LOG4(Format("from --> gasCostOut: [{gasCostOut}]"));
     }
 
     // ... and/or the receiver...
     if (trans->to == acctFor) {
         if (trans->from == "0xPrefund") {
             prefundIn = trans->value;
+            LOG4(Format("to --> prefundIn: [{prefundIn}]"));
         } else if (trans->from == "0xBlockReward") {
             minerBaseRewardIn = trans->value;
+            LOG4(Format("to --> minerBaseRewardIn: [{minerBaseRewardIn}]"));
             minerNephewRewardIn = trans->extraValue1;
+            LOG4(Format("to --> minerNephewRewardIn: [{minerNephewRewardIn}]"));
             minerTxFeeIn = trans->extraValue2;
+            LOG4(Format("to --> minerTxFeeIn: [{minerTxFeeIn}]"));
         } else if (trans->from == "0xUncleReward") {
             minerUncleRewardIn = trans->value;
+            LOG4(Format("to --> minerUncleRewardIn: [{minerTxFeeIn}]"));
         } else {
             amountIn = trans->isError ? 0 : trans->value;
+            LOG4(Format("to --> amountIn: [{amountIn}]"));
         }
     }
 
     // Ask the node what it thinks the balances are...
     begBal = getBalanceAt(acctFor, blockNumber == 0 ? 0 : blockNumber - 1);
+    LOG4(Format("begBal: [{begBal}]"));
     endBal = getBalanceAt(acctFor, blockNumber);
+    LOG4(Format("endBal: [{endBal}]"));
 
     // Calculate what we think the balances should be...
     endBalCalc = begBal + amountIn + internalIn + selfDestructIn + prefundIn + minerBaseRewardIn + minerNephewRewardIn +
                  minerTxFeeIn + minerUncleRewardIn - amountOut - internalOut - selfDestructOut - gasCostOut;
+    LOG4(Format("endBalCalc: [{endBalCalc}]"));
 
     // Check to see if there are any mismatches...
     begBalDiff = trans - blockNumber == 0 ? 0 : begBal - prevEndBal;
+    LOG4(Format("begBalDiff: [{begBalDiff}]"));
     endBalDiff = endBal - endBalCalc;
+    LOG4(Format("endBalDiff: [{endBalDiff}]"));
 
     // ...if not, we're reconciled, so we can return...
     reconciled = (endBalDiff == 0 && begBalDiff == 0);
+    LOG4(Format("reconciled: [{reconciled}]"));
     if (reconciled) {
         amountNet = endBal - begBal;
         reconciliationType = "regular";
+        LOG4(Format("amountNet [{TYPE}]: [{amountNet}]"));
         return true;
     }
 
