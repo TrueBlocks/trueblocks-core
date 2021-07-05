@@ -31,7 +31,7 @@
           "assetSymbol": "WEI",
           "decimals": 18,
           "prevBlk": 0,
-          "prevBlkBal": "",
+          "prevBlkBal": "4200000000000000000000",
           "begBal": "",
           "begBalDiff": "",
           "amountIn": "",

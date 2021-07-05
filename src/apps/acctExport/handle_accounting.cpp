@@ -23,6 +23,8 @@ bool acct_Display(CTraverser* trav, void* data) {
     return !shouldQuit();
 }
 
+const char* STR_DEBUG =
+    "[{BLOCKNUMBER}] [{TRANSACTIONINDEX}] [{BEGBAL}] [{AMOUNTIN}] [{AMOUNTOUT}] [{ENDBAL}] [{RECONCILED}]";
 //-----------------------------------------------------------------------
 bool COptions::process_reconciliation(CTraverser* trav, blknum_t next) {
     string_q path = getBinaryCachePath(CT_RECONS, accountedFor, trav->trans.blockNumber, trav->trans.transactionIndex);
@@ -33,8 +35,11 @@ bool COptions::process_reconciliation(CTraverser* trav, blknum_t next) {
         CArchive archive(READING_ARCHIVE);
         if (archive.Lock(path, modeReadOnly, LOCK_NOWAIT)) {
             archive >> trav->trans.statements;
-            for (auto statement : trav->trans.statements)
+            LOG4("Reading from cache for ", path);
+            for (auto statement : trav->trans.statements) {
+                LOG4(statement.Format(STR_DEBUG));
                 prevStatements[accountedFor + "_" + toLower(statement.assetAddr)] = statement;
+            }
             archive.Release();
             return !shouldQuit();
         }
@@ -46,7 +51,7 @@ bool COptions::process_reconciliation(CTraverser* trav, blknum_t next) {
     // the first record so we can pick up the previous balance
     // We must do this for both ETH and any tokens
     if (prevStatements[accountedFor + "_eth"].assetAddr.empty()) {
-        CReconciliation pEth;
+        CReconciliation pEth(trav->trans.blockNumber == 0 ? 0 : trav->trans.blockNumber - 1, 0, trav->trans.timestamp);
         if (reversed) {
             if (first_record != 0) {
                 pEth.blockNumber = monApps[monApps.size() - 1].blk - 1;
@@ -60,9 +65,8 @@ bool COptions::process_reconciliation(CTraverser* trav, blknum_t next) {
                 pEth.blockNumber = exportRange.first - 1;
             }
         }
-        pEth.endBal = getBalanceAt(accountedFor, pEth.blockNumber);
-        if (pEth.blockNumber == 0)
-            pEth.endBal = 0;
+        pEth.endBal = getBalanceAt(accountedFor, pEth.blockNumber == 0 ? 0 : pEth.blockNumber - 1);
+        LOG4("Adding previous statement: ", pEth.Format(STR_DEBUG));
         prevStatements[accountedFor + "_eth"] = pEth;
     }
 
@@ -71,6 +75,7 @@ bool COptions::process_reconciliation(CTraverser* trav, blknum_t next) {
                      next, &trav->trans, accountedFor);
     trav->trans.statements.push_back(eth);
     prevStatements[accountedFor + "_eth"] = eth;
+    LOG4("pushed: ", eth.Format(STR_DEBUG));
 
     CAccountNameMap tokenList;
     if (token_list_from_logs(tokenList, trav)) {
@@ -115,6 +120,7 @@ bool COptions::process_reconciliation(CTraverser* trav, blknum_t next) {
     lockSection();
     CArchive archive(WRITING_ARCHIVE);
     if (!isTestMode() && archive.Lock(path, modeWriteCreate, LOCK_WAIT)) {
+        LOG4("Writing to cache for ", path);
         archive << trav->trans.statements;
         archive.Release();
         unlockSection();

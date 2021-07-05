@@ -1,3 +1,391 @@
-acctExport argc: 12 [1:0xf503017d7baf7fbc0fff7492b751025c6a78179b] [2:--first_block] [3:10277780] [4:--last_block] [5:10296792] [6:--accounting] [7:--ether] [8:--fmt] [9:api] [10:--to_file] [11:--articulate] 
-acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --last_block 10296792 --accounting --ether --fmt api --to_file --articulate 
+acctExport argc: 14 [1:0xf503017d7baf7fbc0fff7492b751025c6a78179b] [2:--first_block] [3:10277780] [4:--last_block] [5:10296792] [6:--accounting] [7:--ether] [8:--fmt] [9:api] [10:--to_file] [11:--articulate] [12:--verbose] [13:5] 
+acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --last_block 10296792 --accounting --ether --fmt api --to_file --articulate --verbose 5 
+TIME ~ CLOCK - : 4-----0xf503017d7baf7fbc0fff7492b751025c6a78179b freshened to 11854827
+TIME ~ CLOCK - : 4-----Adding previous statement: 10277779 0 "" "" "" "5.137097246179548557" false
+TIME ~ CLOCK - : 4-----assetSymbol: ETH
+TIME ~ CLOCK - : 4-----assetAddr:   0xf503017d7baf7fbc0fff7492b751025c6a78179b
+TIME ~ CLOCK - : 4-----prevBlkBal:  "5.137097246179548557"
+TIME ~ CLOCK - : 4-----prevBlock:   
+TIME ~ CLOCK - : 4-----begBal:     "5.137097246179548557"
+TIME ~ CLOCK - : 4-----endBal:     "5.137097246179548557"
+TIME ~ CLOCK - : 4-----endBalCalc: "5.137097246179548557"
+TIME ~ CLOCK - : 4-----begBalDiff: ""
+TIME ~ CLOCK - : 4-----endBalDiff: ""
+TIME ~ CLOCK - : 4-----reconciled: true
+TIME ~ CLOCK - : 4-----amountNet regular: ""
+TIME ~ CLOCK - : 4-----pushed: 10277780 102 "5.137097246179548557" "" "" "5.137097246179548557" true
+TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM execution error.","data":"Reverted 0x"},"id":"1"}
+ {"jsonrpc":"2.0","method":"eth_call","params":[{"to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c", "data": "0x95d89b41"}, "0x9cd394"],"id":"1"}
+TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM execution error.","data":"Reverted 0x"},"id":"1"}
+ {"jsonrpc":"2.0","method":"eth_call","params":[{"to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c", "data": "0x70a08231000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"}, "0x9cd393"],"id":"1"}
+TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM execution error.","data":"Reverted 0x"},"id":"1"}
+ {"jsonrpc":"2.0","method":"eth_call","params":[{"to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c", "data": "0x70a08231000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"}, "0x9cd394"],"id":"1"}
+TIME ~ CLOCK - : 4-----assetSymbol: ETH
+TIME ~ CLOCK - : 4-----assetAddr:   0xf503017d7baf7fbc0fff7492b751025c6a78179b
+TIME ~ CLOCK - : 4-----prevBlkBal:  "5.137097246179548557"
+TIME ~ CLOCK - : 4-----prevBlock:   
+TIME ~ CLOCK - : 4-----from --> amountOut: ""
+TIME ~ CLOCK - : 4-----from --> gasCostOut: "0.001188918000000000"
+TIME ~ CLOCK - : 4-----begBal:     "5.137097246179548557"
+TIME ~ CLOCK - : 4-----endBal:     "5.135908328179548557"
+TIME ~ CLOCK - : 4-----endBalCalc: "5.135908328179548557"
+TIME ~ CLOCK - : 4-----begBalDiff: ""
+TIME ~ CLOCK - : 4-----endBalDiff: ""
+TIME ~ CLOCK - : 4-----reconciled: true
+TIME ~ CLOCK - : 4-----amountNet regular: "-0.001188918000000000"
+TIME ~ CLOCK - : 4-----pushed: 10279295 33 "5.137097246179548557" "" "" "5.135908328179548557" true
+TIME ~ CLOCK - : 4-----assetSymbol: ETH
+TIME ~ CLOCK - : 4-----assetAddr:   0xf503017d7baf7fbc0fff7492b751025c6a78179b
+TIME ~ CLOCK - : 4-----prevBlkBal:  "5.135908328179548557"
+TIME ~ CLOCK - : 4-----prevBlock:   
+TIME ~ CLOCK - : 4-----from --> amountOut: ""
+TIME ~ CLOCK - : 4-----from --> gasCostOut: "0.001922570000000000"
+TIME ~ CLOCK - : 4-----begBal:     "5.135908328179548557"
+TIME ~ CLOCK - : 4-----endBal:     "5.133985758179548557"
+TIME ~ CLOCK - : 4-----endBalCalc: "5.133985758179548557"
+TIME ~ CLOCK - : 4-----begBalDiff: ""
+TIME ~ CLOCK - : 4-----endBalDiff: ""
+TIME ~ CLOCK - : 4-----reconciled: true
+TIME ~ CLOCK - : 4-----amountNet regular: "-0.001922570000000000"
+TIME ~ CLOCK - : 4-----pushed: 10279310 59 "5.135908328179548557" "" "" "5.133985758179548557" true
+TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM execution error.","data":"Reverted 0x"},"id":"1"}
+ {"jsonrpc":"2.0","method":"eth_call","params":[{"to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c", "data": "0x95d89b41"}, "0x9cd98e"],"id":"1"}
+TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM execution error.","data":"Reverted 0x"},"id":"1"}
+ {"jsonrpc":"2.0","method":"eth_call","params":[{"to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c", "data": "0x70a08231000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"}, "0x9cd98e"],"id":"1"}
+TIME ~ CLOCK - : 4-----assetSymbol: ETH
+TIME ~ CLOCK - : 4-----assetAddr:   0xf503017d7baf7fbc0fff7492b751025c6a78179b
+TIME ~ CLOCK - : 4-----prevBlkBal:  "5.133985758179548557"
+TIME ~ CLOCK - : 4-----prevBlock:   
+TIME ~ CLOCK - : 4-----begBal:     "5.133985758179548557"
+TIME ~ CLOCK - : 4-----endBal:     "5.133985758179548557"
+TIME ~ CLOCK - : 4-----endBalCalc: "5.133985758179548557"
+TIME ~ CLOCK - : 4-----begBalDiff: ""
+TIME ~ CLOCK - : 4-----endBalDiff: ""
+TIME ~ CLOCK - : 4-----reconciled: true
+TIME ~ CLOCK - : 4-----amountNet regular: ""
+TIME ~ CLOCK - : 4-----pushed: 10279650 35 "5.133985758179548557" "" "" "5.133985758179548557" true
+TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM execution error.","data":"Reverted 0x"},"id":"1"}
+ {"jsonrpc":"2.0","method":"eth_call","params":[{"to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c", "data": "0x95d89b41"}, "0x9cdae2"],"id":"1"}
+TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM execution error.","data":"Reverted 0x"},"id":"1"}
+ {"jsonrpc":"2.0","method":"eth_call","params":[{"to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c", "data": "0x70a08231000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"}, "0x9cdae2"],"id":"1"}
+TIME ~ CLOCK - : 4-----assetSymbol: ETH
+TIME ~ CLOCK - : 4-----assetAddr:   0xf503017d7baf7fbc0fff7492b751025c6a78179b
+TIME ~ CLOCK - : 4-----prevBlkBal:  "5.133985758179548557"
+TIME ~ CLOCK - : 4-----prevBlock:   
+TIME ~ CLOCK - : 4-----begBal:     "5.133985758179548557"
+TIME ~ CLOCK - : 4-----endBal:     "5.171985758179548557"
+TIME ~ CLOCK - : 4-----endBalCalc: "5.133985758179548557"
+TIME ~ CLOCK - : 4-----begBalDiff: ""
+TIME ~ CLOCK - : 4-----endBalDiff: "0.038000000000000000"
+TIME ~ CLOCK - : 4-----reconciled: false
+TIME ~ CLOCK - : 4-----usingTraces:
+TIME ~ CLOCK - : 4-----  begBal:     "5.133985758179548557"
+TIME ~ CLOCK - : 4-----  begBalDiff: ""
+TIME ~ CLOCK - : 4-----  endBal:     "5.171985758179548557"
+TIME ~ CLOCK - : 4-----  endBalCalc: "5.171985758179548557"
+TIME ~ CLOCK - : 4-----  endBalDiff: ""
+TIME ~ CLOCK - : 4-----  reconciled: true
+TIME ~ CLOCK - : 4-----  amountNet   by-trace: "0.038000000000000000"
+TIME ~ CLOCK - : 4-----pushed: 10279931 93 "5.133985758179548557" "" "" "5.171985758179548557" true
+TIME ~ CLOCK - : 4-----assetSymbol: ETH
+TIME ~ CLOCK - : 4-----assetAddr:   0xf503017d7baf7fbc0fff7492b751025c6a78179b
+TIME ~ CLOCK - : 4-----prevBlkBal:  "5.171985758179548557"
+TIME ~ CLOCK - : 4-----prevBlock:   
+TIME ~ CLOCK - : 4-----begBal:     "5.171985758179548557"
+TIME ~ CLOCK - : 4-----endBal:     "5.171985758179548557"
+TIME ~ CLOCK - : 4-----endBalCalc: "5.171985758179548557"
+TIME ~ CLOCK - : 4-----begBalDiff: ""
+TIME ~ CLOCK - : 4-----endBalDiff: ""
+TIME ~ CLOCK - : 4-----reconciled: true
+TIME ~ CLOCK - : 4-----amountNet regular: ""
+TIME ~ CLOCK - : 4-----pushed: 10280558 67 "5.171985758179548557" "" "" "5.171985758179548557" true
+TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM execution error.","data":"Reverted 0x"},"id":"1"}
+ {"jsonrpc":"2.0","method":"eth_call","params":[{"to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c", "data": "0x95d89b41"}, "0x9cde6e"],"id":"1"}
+TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM execution error.","data":"Reverted 0x"},"id":"1"}
+ {"jsonrpc":"2.0","method":"eth_call","params":[{"to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c", "data": "0x70a08231000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"}, "0x9cde6e"],"id":"1"}
+TIME ~ CLOCK - : 4-----assetSymbol: ETH
+TIME ~ CLOCK - : 4-----assetAddr:   0xf503017d7baf7fbc0fff7492b751025c6a78179b
+TIME ~ CLOCK - : 4-----prevBlkBal:  "5.171985758179548557"
+TIME ~ CLOCK - : 4-----prevBlock:   
+TIME ~ CLOCK - : 4-----begBal:     "5.171985758179548557"
+TIME ~ CLOCK - : 4-----endBal:     "5.171985758179548557"
+TIME ~ CLOCK - : 4-----endBalCalc: "5.171985758179548557"
+TIME ~ CLOCK - : 4-----begBalDiff: ""
+TIME ~ CLOCK - : 4-----endBalDiff: ""
+TIME ~ CLOCK - : 4-----reconciled: true
+TIME ~ CLOCK - : 4-----amountNet regular: ""
+TIME ~ CLOCK - : 4-----pushed: 10280872 92 "5.171985758179548557" "" "" "5.171985758179548557" true
+TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM execution error.","data":"Reverted 0x"},"id":"1"}
+ {"jsonrpc":"2.0","method":"eth_call","params":[{"to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c", "data": "0x95d89b41"}, "0x9cdfa8"],"id":"1"}
+TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM execution error.","data":"Reverted 0x"},"id":"1"}
+ {"jsonrpc":"2.0","method":"eth_call","params":[{"to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c", "data": "0x70a08231000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"}, "0x9cdfa8"],"id":"1"}
+TIME ~ CLOCK - : 4-----assetSymbol: ETH
+TIME ~ CLOCK - : 4-----assetAddr:   0xf503017d7baf7fbc0fff7492b751025c6a78179b
+TIME ~ CLOCK - : 4-----prevBlkBal:  "5.171985758179548557"
+TIME ~ CLOCK - : 4-----prevBlock:   
+TIME ~ CLOCK - : 4-----begBal:     "5.171985758179548557"
+TIME ~ CLOCK - : 4-----endBal:     "5.171985758179548557"
+TIME ~ CLOCK - : 4-----endBalCalc: "5.171985758179548557"
+TIME ~ CLOCK - : 4-----begBalDiff: ""
+TIME ~ CLOCK - : 4-----endBalDiff: ""
+TIME ~ CLOCK - : 4-----reconciled: true
+TIME ~ CLOCK - : 4-----amountNet regular: ""
+TIME ~ CLOCK - : 4-----pushed: 10283648 182 "5.171985758179548557" "" "" "5.171985758179548557" true
+TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM execution error.","data":"Reverted 0x"},"id":"1"}
+ {"jsonrpc":"2.0","method":"eth_call","params":[{"to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c", "data": "0x95d89b41"}, "0x9cea80"],"id":"1"}
+TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM execution error.","data":"Reverted 0x"},"id":"1"}
+ {"jsonrpc":"2.0","method":"eth_call","params":[{"to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c", "data": "0x70a08231000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"}, "0x9cea80"],"id":"1"}
+TIME ~ CLOCK - : 4-----assetSymbol: ETH
+TIME ~ CLOCK - : 4-----assetAddr:   0xf503017d7baf7fbc0fff7492b751025c6a78179b
+TIME ~ CLOCK - : 4-----prevBlkBal:  "5.171985758179548557"
+TIME ~ CLOCK - : 4-----prevBlock:   
+TIME ~ CLOCK - : 4-----begBal:     "5.171985758179548557"
+TIME ~ CLOCK - : 4-----endBal:     "5.171985758179548557"
+TIME ~ CLOCK - : 4-----endBalCalc: "5.171985758179548557"
+TIME ~ CLOCK - : 4-----begBalDiff: ""
+TIME ~ CLOCK - : 4-----endBalDiff: ""
+TIME ~ CLOCK - : 4-----reconciled: true
+TIME ~ CLOCK - : 4-----amountNet regular: ""
+TIME ~ CLOCK - : 4-----pushed: 10283749 30 "5.171985758179548557" "" "" "5.171985758179548557" true
+TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM execution error.","data":"Reverted 0x"},"id":"1"}
+ {"jsonrpc":"2.0","method":"eth_call","params":[{"to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c", "data": "0x95d89b41"}, "0x9ceae5"],"id":"1"}
+TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM execution error.","data":"Reverted 0x"},"id":"1"}
+ {"jsonrpc":"2.0","method":"eth_call","params":[{"to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c", "data": "0x70a08231000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"}, "0x9ceae5"],"id":"1"}
+TIME ~ CLOCK - : 4-----assetSymbol: ETH
+TIME ~ CLOCK - : 4-----assetAddr:   0xf503017d7baf7fbc0fff7492b751025c6a78179b
+TIME ~ CLOCK - : 4-----prevBlkBal:  "5.171985758179548557"
+TIME ~ CLOCK - : 4-----prevBlock:   
+TIME ~ CLOCK - : 4-----begBal:     "5.171985758179548557"
+TIME ~ CLOCK - : 4-----endBal:     "5.171985758179548557"
+TIME ~ CLOCK - : 4-----endBalCalc: "5.171985758179548557"
+TIME ~ CLOCK - : 4-----begBalDiff: ""
+TIME ~ CLOCK - : 4-----endBalDiff: ""
+TIME ~ CLOCK - : 4-----reconciled: true
+TIME ~ CLOCK - : 4-----amountNet regular: ""
+TIME ~ CLOCK - : 4-----pushed: 10289986 111 "5.171985758179548557" "" "" "5.171985758179548557" true
+TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM execution error.","data":"Reverted 0x"},"id":"1"}
+ {"jsonrpc":"2.0","method":"eth_call","params":[{"to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c", "data": "0x95d89b41"}, "0x9d0342"],"id":"1"}
+TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM execution error.","data":"Reverted 0x"},"id":"1"}
+ {"jsonrpc":"2.0","method":"eth_call","params":[{"to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c", "data": "0x70a08231000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"}, "0x9d0342"],"id":"1"}
+TIME ~ CLOCK - : 4-----assetSymbol: ETH
+TIME ~ CLOCK - : 4-----assetAddr:   0xf503017d7baf7fbc0fff7492b751025c6a78179b
+TIME ~ CLOCK - : 4-----prevBlkBal:  "5.171985758179548557"
+TIME ~ CLOCK - : 4-----prevBlock:   
+TIME ~ CLOCK - : 4-----begBal:     "5.171985758179548557"
+TIME ~ CLOCK - : 4-----endBal:     "5.171985758179548557"
+TIME ~ CLOCK - : 4-----endBalCalc: "5.171985758179548557"
+TIME ~ CLOCK - : 4-----begBalDiff: ""
+TIME ~ CLOCK - : 4-----endBalDiff: ""
+TIME ~ CLOCK - : 4-----reconciled: true
+TIME ~ CLOCK - : 4-----amountNet regular: ""
+TIME ~ CLOCK - : 4-----pushed: 10290103 40 "5.171985758179548557" "" "" "5.171985758179548557" true
+TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM execution error.","data":"Reverted 0x"},"id":"1"}
+ {"jsonrpc":"2.0","method":"eth_call","params":[{"to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c", "data": "0x95d89b41"}, "0x9d03b7"],"id":"1"}
+TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM execution error.","data":"Reverted 0x"},"id":"1"}
+ {"jsonrpc":"2.0","method":"eth_call","params":[{"to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c", "data": "0x70a08231000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"}, "0x9d03b7"],"id":"1"}
+TIME ~ CLOCK - : 4-----assetSymbol: ETH
+TIME ~ CLOCK - : 4-----assetAddr:   0xf503017d7baf7fbc0fff7492b751025c6a78179b
+TIME ~ CLOCK - : 4-----prevBlkBal:  "5.171985758179548557"
+TIME ~ CLOCK - : 4-----prevBlock:   
+TIME ~ CLOCK - : 4-----from --> amountOut: ""
+TIME ~ CLOCK - : 4-----from --> gasCostOut: "0.001739343000000000"
+TIME ~ CLOCK - : 4-----begBal:     "5.171985758179548557"
+TIME ~ CLOCK - : 4-----endBal:     "5.168485149679548557"
+TIME ~ CLOCK - : 4-----endBalCalc: "5.170246415179548557"
+TIME ~ CLOCK - : 4-----begBalDiff: ""
+TIME ~ CLOCK - : 4-----endBalDiff: "-0.001761265500000000"
+TIME ~ CLOCK - : 4-----reconciled: false
+TIME ~ CLOCK - : 4-----partial:
+TIME ~ CLOCK - : 4-----  begBal:     "5.171985758179548557"
+TIME ~ CLOCK - : 4-----  begBalDiff: ""
+TIME ~ CLOCK - : 4-----  endBal:     "5.170246415179548557"
+TIME ~ CLOCK - : 4-----  endBalCalc: "5.170246415179548557"
+TIME ~ CLOCK - : 4-----  endBalDiff: ""
+TIME ~ CLOCK - : 4-----  reconciled: true
+TIME ~ CLOCK - : 4-----  amountNet   prevdiff-partial: ""
+TIME ~ CLOCK - : 4-----pushed: 10290317 46 "5.171985758179548557" "" "" "5.170246415179548557" true
+TIME ~ CLOCK - : 4-----assetSymbol: ETH
+TIME ~ CLOCK - : 4-----assetAddr:   0xf503017d7baf7fbc0fff7492b751025c6a78179b
+TIME ~ CLOCK - : 4-----prevBlkBal:  "5.170246415179548557"
+TIME ~ CLOCK - : 4-----prevBlock:   
+TIME ~ CLOCK - : 4-----from --> amountOut: ""
+TIME ~ CLOCK - : 4-----from --> gasCostOut: "0.001761265500000000"
+TIME ~ CLOCK - : 4-----begBal:     "5.171985758179548557"
+TIME ~ CLOCK - : 4-----endBal:     "5.168485149679548557"
+TIME ~ CLOCK - : 4-----endBalCalc: "5.170224492679548557"
+TIME ~ CLOCK - : 4-----begBalDiff: "0.001739343000000000"
+TIME ~ CLOCK - : 4-----endBalDiff: "-0.001739343000000000"
+TIME ~ CLOCK - : 4-----reconciled: false
+TIME ~ CLOCK - : 4-----partial:
+TIME ~ CLOCK - : 4-----  begBal:     "5.170246415179548557"
+TIME ~ CLOCK - : 4-----  begBalDiff: ""
+TIME ~ CLOCK - : 4-----  endBal:     "5.168485149679548557"
+TIME ~ CLOCK - : 4-----  endBalCalc: "5.168485149679548557"
+TIME ~ CLOCK - : 4-----  endBalDiff: ""
+TIME ~ CLOCK - : 4-----  reconciled: true
+TIME ~ CLOCK - : 4-----  amountNet   nextdiff-partial: ""
+TIME ~ CLOCK - : 4-----pushed: 10290317 47 "5.170246415179548557" "" "" "5.168485149679548557" true
+TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM execution error.","data":"Reverted 0x"},"id":"1"}
+ {"jsonrpc":"2.0","method":"eth_call","params":[{"to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c", "data": "0x95d89b41"}, "0x9d048d"],"id":"1"}
+TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM execution error.","data":"Reverted 0x"},"id":"1"}
+ {"jsonrpc":"2.0","method":"eth_call","params":[{"to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c", "data": "0x70a08231000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"}, "0x9d048d"],"id":"1"}
+TIME ~ CLOCK - : 4-----assetSymbol: ETH
+TIME ~ CLOCK - : 4-----assetAddr:   0xf503017d7baf7fbc0fff7492b751025c6a78179b
+TIME ~ CLOCK - : 4-----prevBlkBal:  "5.168485149679548557"
+TIME ~ CLOCK - : 4-----prevBlock:   
+TIME ~ CLOCK - : 4-----begBal:     "5.168485149679548557"
+TIME ~ CLOCK - : 4-----endBal:     "5.168485149679548557"
+TIME ~ CLOCK - : 4-----endBalCalc: "5.168485149679548557"
+TIME ~ CLOCK - : 4-----begBalDiff: ""
+TIME ~ CLOCK - : 4-----endBalDiff: ""
+TIME ~ CLOCK - : 4-----reconciled: true
+TIME ~ CLOCK - : 4-----amountNet regular: ""
+TIME ~ CLOCK - : 4-----pushed: 10291739 145 "5.168485149679548557" "" "" "5.168485149679548557" true
+TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM execution error.","data":"Reverted 0x"},"id":"1"}
+ {"jsonrpc":"2.0","method":"eth_call","params":[{"to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c", "data": "0x95d89b41"}, "0x9d0a1b"],"id":"1"}
+TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM execution error.","data":"Reverted 0x"},"id":"1"}
+ {"jsonrpc":"2.0","method":"eth_call","params":[{"to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c", "data": "0x70a08231000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"}, "0x9d0a1b"],"id":"1"}
+TIME ~ CLOCK - : 4-----assetSymbol: ETH
+TIME ~ CLOCK - : 4-----assetAddr:   0xf503017d7baf7fbc0fff7492b751025c6a78179b
+TIME ~ CLOCK - : 4-----prevBlkBal:  "5.168485149679548557"
+TIME ~ CLOCK - : 4-----prevBlock:   
+TIME ~ CLOCK - : 4-----from --> amountOut: ""
+TIME ~ CLOCK - : 4-----from --> gasCostOut: "0.001232952000000000"
+TIME ~ CLOCK - : 4-----begBal:     "5.168485149679548557"
+TIME ~ CLOCK - : 4-----endBal:     "5.165331677679548557"
+TIME ~ CLOCK - : 4-----endBalCalc: "5.167252197679548557"
+TIME ~ CLOCK - : 4-----begBalDiff: ""
+TIME ~ CLOCK - : 4-----endBalDiff: "-0.001920520000000000"
+TIME ~ CLOCK - : 4-----reconciled: false
+TIME ~ CLOCK - : 4-----partial:
+TIME ~ CLOCK - : 4-----  begBal:     "5.168485149679548557"
+TIME ~ CLOCK - : 4-----  begBalDiff: ""
+TIME ~ CLOCK - : 4-----  endBal:     "5.167252197679548557"
+TIME ~ CLOCK - : 4-----  endBalCalc: "5.167252197679548557"
+TIME ~ CLOCK - : 4-----  endBalDiff: ""
+TIME ~ CLOCK - : 4-----  reconciled: true
+TIME ~ CLOCK - : 4-----  amountNet   prevdiff-partial: ""
+TIME ~ CLOCK - : 4-----pushed: 10292014 92 "5.168485149679548557" "" "" "5.167252197679548557" true
+TIME ~ CLOCK - : 4-----assetSymbol: ETH
+TIME ~ CLOCK - : 4-----assetAddr:   0xf503017d7baf7fbc0fff7492b751025c6a78179b
+TIME ~ CLOCK - : 4-----prevBlkBal:  "5.167252197679548557"
+TIME ~ CLOCK - : 4-----prevBlock:   
+TIME ~ CLOCK - : 4-----from --> amountOut: ""
+TIME ~ CLOCK - : 4-----from --> gasCostOut: "0.001920520000000000"
+TIME ~ CLOCK - : 4-----begBal:     "5.168485149679548557"
+TIME ~ CLOCK - : 4-----endBal:     "5.165331677679548557"
+TIME ~ CLOCK - : 4-----endBalCalc: "5.166564629679548557"
+TIME ~ CLOCK - : 4-----begBalDiff: "0.001232952000000000"
+TIME ~ CLOCK - : 4-----endBalDiff: "-0.001232952000000000"
+TIME ~ CLOCK - : 4-----reconciled: false
+TIME ~ CLOCK - : 4-----partial:
+TIME ~ CLOCK - : 4-----  begBal:     "5.167252197679548557"
+TIME ~ CLOCK - : 4-----  begBalDiff: ""
+TIME ~ CLOCK - : 4-----  endBal:     "5.165331677679548557"
+TIME ~ CLOCK - : 4-----  endBalCalc: "5.165331677679548557"
+TIME ~ CLOCK - : 4-----  endBalDiff: ""
+TIME ~ CLOCK - : 4-----  reconciled: true
+TIME ~ CLOCK - : 4-----  amountNet   nextdiff-partial: ""
+TIME ~ CLOCK - : 4-----pushed: 10292014 93 "5.167252197679548557" "" "" "5.165331677679548557" true
+TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM execution error.","data":"Reverted 0x"},"id":"1"}
+ {"jsonrpc":"2.0","method":"eth_call","params":[{"to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c", "data": "0x95d89b41"}, "0x9d0b2e"],"id":"1"}
+TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM execution error.","data":"Reverted 0x"},"id":"1"}
+ {"jsonrpc":"2.0","method":"eth_call","params":[{"to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c", "data": "0x70a08231000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"}, "0x9d0b2e"],"id":"1"}
+TIME ~ CLOCK - : 4-----assetSymbol: ETH
+TIME ~ CLOCK - : 4-----assetAddr:   0xf503017d7baf7fbc0fff7492b751025c6a78179b
+TIME ~ CLOCK - : 4-----prevBlkBal:  "5.165331677679548557"
+TIME ~ CLOCK - : 4-----prevBlock:   
+TIME ~ CLOCK - : 4-----begBal:     "5.165331677679548557"
+TIME ~ CLOCK - : 4-----endBal:     "5.355331677679548557"
+TIME ~ CLOCK - : 4-----endBalCalc: "5.165331677679548557"
+TIME ~ CLOCK - : 4-----begBalDiff: ""
+TIME ~ CLOCK - : 4-----endBalDiff: "0.190000000000000000"
+TIME ~ CLOCK - : 4-----reconciled: false
+TIME ~ CLOCK - : 4-----usingTraces:
+TIME ~ CLOCK - : 4-----  begBal:     "5.165331677679548557"
+TIME ~ CLOCK - : 4-----  begBalDiff: ""
+TIME ~ CLOCK - : 4-----  endBal:     "5.355331677679548557"
+TIME ~ CLOCK - : 4-----  endBalCalc: "5.355331677679548557"
+TIME ~ CLOCK - : 4-----  endBalDiff: ""
+TIME ~ CLOCK - : 4-----  reconciled: true
+TIME ~ CLOCK - : 4-----  amountNet   by-trace: "0.190000000000000000"
+TIME ~ CLOCK - : 4-----pushed: 10292070 130 "5.165331677679548557" "" "" "5.355331677679548557" true
+TIME ~ CLOCK - : 4-----assetSymbol: ETH
+TIME ~ CLOCK - : 4-----assetAddr:   0xf503017d7baf7fbc0fff7492b751025c6a78179b
+TIME ~ CLOCK - : 4-----prevBlkBal:  "5.355331677679548557"
+TIME ~ CLOCK - : 4-----prevBlock:   
+TIME ~ CLOCK - : 4-----begBal:     "5.355331677679548557"
+TIME ~ CLOCK - : 4-----endBal:     "5.355331677679548557"
+TIME ~ CLOCK - : 4-----endBalCalc: "5.355331677679548557"
+TIME ~ CLOCK - : 4-----begBalDiff: ""
+TIME ~ CLOCK - : 4-----endBalDiff: ""
+TIME ~ CLOCK - : 4-----reconciled: true
+TIME ~ CLOCK - : 4-----amountNet regular: ""
+TIME ~ CLOCK - : 4-----pushed: 10292120 38 "5.355331677679548557" "" "" "5.355331677679548557" true
+TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM execution error.","data":"Reverted 0x"},"id":"1"}
+ {"jsonrpc":"2.0","method":"eth_call","params":[{"to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c", "data": "0x95d89b41"}, "0x9d0b98"],"id":"1"}
+TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM execution error.","data":"Reverted 0x"},"id":"1"}
+ {"jsonrpc":"2.0","method":"eth_call","params":[{"to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c", "data": "0x70a08231000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"}, "0x9d0b98"],"id":"1"}
+TIME ~ CLOCK - : 4-----assetSymbol: ETH
+TIME ~ CLOCK - : 4-----assetAddr:   0xf503017d7baf7fbc0fff7492b751025c6a78179b
+TIME ~ CLOCK - : 4-----prevBlkBal:  "5.355331677679548557"
+TIME ~ CLOCK - : 4-----prevBlock:   
+TIME ~ CLOCK - : 4-----from --> amountOut: ""
+TIME ~ CLOCK - : 4-----from --> gasCostOut: "0.001321460340000000"
+TIME ~ CLOCK - : 4-----begBal:     "5.355331677679548557"
+TIME ~ CLOCK - : 4-----endBal:     "5.351951831439548557"
+TIME ~ CLOCK - : 4-----endBalCalc: "5.354010217339548557"
+TIME ~ CLOCK - : 4-----begBalDiff: ""
+TIME ~ CLOCK - : 4-----endBalDiff: "-0.002058385900000000"
+TIME ~ CLOCK - : 4-----reconciled: false
+TIME ~ CLOCK - : 4-----partial:
+TIME ~ CLOCK - : 4-----  begBal:     "5.355331677679548557"
+TIME ~ CLOCK - : 4-----  begBalDiff: ""
+TIME ~ CLOCK - : 4-----  endBal:     "5.354010217339548557"
+TIME ~ CLOCK - : 4-----  endBalCalc: "5.354010217339548557"
+TIME ~ CLOCK - : 4-----  endBalDiff: ""
+TIME ~ CLOCK - : 4-----  reconciled: true
+TIME ~ CLOCK - : 4-----  amountNet   prevdiff-partial: ""
+TIME ~ CLOCK - : 4-----pushed: 10293554 109 "5.355331677679548557" "" "" "5.354010217339548557" true
+TIME ~ CLOCK - : 4-----assetSymbol: ETH
+TIME ~ CLOCK - : 4-----assetAddr:   0xf503017d7baf7fbc0fff7492b751025c6a78179b
+TIME ~ CLOCK - : 4-----prevBlkBal:  "5.354010217339548557"
+TIME ~ CLOCK - : 4-----prevBlock:   
+TIME ~ CLOCK - : 4-----from --> amountOut: ""
+TIME ~ CLOCK - : 4-----from --> gasCostOut: "0.002058385900000000"
+TIME ~ CLOCK - : 4-----begBal:     "5.355331677679548557"
+TIME ~ CLOCK - : 4-----endBal:     "5.351951831439548557"
+TIME ~ CLOCK - : 4-----endBalCalc: "5.353273291779548557"
+TIME ~ CLOCK - : 4-----begBalDiff: "0.001321460340000000"
+TIME ~ CLOCK - : 4-----endBalDiff: "-0.001321460340000000"
+TIME ~ CLOCK - : 4-----reconciled: false
+TIME ~ CLOCK - : 4-----partial:
+TIME ~ CLOCK - : 4-----  begBal:     "5.354010217339548557"
+TIME ~ CLOCK - : 4-----  begBalDiff: ""
+TIME ~ CLOCK - : 4-----  endBal:     "5.351951831439548557"
+TIME ~ CLOCK - : 4-----  endBalCalc: "5.351951831439548557"
+TIME ~ CLOCK - : 4-----  endBalDiff: ""
+TIME ~ CLOCK - : 4-----  reconciled: true
+TIME ~ CLOCK - : 4-----  amountNet   nextdiff-partial: ""
+TIME ~ CLOCK - : 4-----pushed: 10293554 110 "5.354010217339548557" "" "" "5.351951831439548557" true
+TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM execution error.","data":"Reverted 0x"},"id":"1"}
+ {"jsonrpc":"2.0","method":"eth_call","params":[{"to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c", "data": "0x95d89b41"}, "0x9d1132"],"id":"1"}
+TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM execution error.","data":"Reverted 0x"},"id":"1"}
+ {"jsonrpc":"2.0","method":"eth_call","params":[{"to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c", "data": "0x70a08231000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"}, "0x9d1132"],"id":"1"}
+TIME ~ CLOCK - : 4-----assetSymbol: ETH
+TIME ~ CLOCK - : 4-----assetAddr:   0xf503017d7baf7fbc0fff7492b751025c6a78179b
+TIME ~ CLOCK - : 4-----prevBlkBal:  "5.351951831439548557"
+TIME ~ CLOCK - : 4-----prevBlock:   
+TIME ~ CLOCK - : 4-----begBal:     "5.351951831439548557"
+TIME ~ CLOCK - : 4-----endBal:     "5.351951831439548557"
+TIME ~ CLOCK - : 4-----endBalCalc: "5.351951831439548557"
+TIME ~ CLOCK - : 4-----begBalDiff: ""
+TIME ~ CLOCK - : 4-----endBalDiff: ""
+TIME ~ CLOCK - : 4-----reconciled: true
+TIME ~ CLOCK - : 4-----amountNet regular: ""
+TIME ~ CLOCK - : 4-----pushed: 10296720 101 "5.351951831439548557" "" "" "5.351951831439548557" true
+TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM execution error.","data":"Reverted 0x"},"id":"1"}
+ {"jsonrpc":"2.0","method":"eth_call","params":[{"to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c", "data": "0x95d89b41"}, "0x9d1d90"],"id":"1"}
+TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM execution error.","data":"Reverted 0x"},"id":"1"}
+ {"jsonrpc":"2.0","method":"eth_call","params":[{"to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c", "data": "0x70a08231000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"}, "0x9d1d90"],"id":"1"}
 { "outputFilename": "--output_filename--" }

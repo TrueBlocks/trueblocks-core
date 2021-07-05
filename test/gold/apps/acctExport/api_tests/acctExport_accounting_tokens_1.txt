@@ -227,14 +227,14 @@
       "articulatedTx": {
         "name": "approve",
         "inputs": {
-          "_amount": "5000000000000000000",
-          "_spender": "0x7d655c57f71464b6f83811c55d84009cd9f5221c"
+          "_spender": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
+          "_value": "5000000000000000000"
         },
         "outputs": {
-          "success": ""
+          "_success": ""
         }
       },
-      "compressedTx": "approve ( _spender: 0x7d655c57f71464b6f83811c55d84009cd9f5221c, _amount: 5000000000000000000 )",
+      "compressedTx": "approve ( _spender: 0x7d655c57f71464b6f83811c55d84009cd9f5221c, _value: 5000000000000000000 )",
       "statements": [
         {
           "blockNumber": 10279295,
@@ -5205,14 +5205,14 @@
       "articulatedTx": {
         "name": "approve",
         "inputs": {
-          "_amount": "5000000000000000000",
-          "_spender": "0x7d655c57f71464b6f83811c55d84009cd9f5221c"
+          "_spender": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
+          "_value": "5000000000000000000"
         },
         "outputs": {
-          "success": ""
+          "_success": ""
         }
       },
-      "compressedTx": "approve ( _spender: 0x7d655c57f71464b6f83811c55d84009cd9f5221c, _amount: 5000000000000000000 )",
+      "compressedTx": "approve ( _spender: 0x7d655c57f71464b6f83811c55d84009cd9f5221c, _value: 5000000000000000000 )",
       "statements": [
         {
           "blockNumber": 10290317,
@@ -5745,14 +5745,14 @@
       "articulatedTx": {
         "name": "approve",
         "inputs": {
-          "_amount": "5000000000000000000",
-          "_spender": "0x7d655c57f71464b6f83811c55d84009cd9f5221c"
+          "_spender": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
+          "_value": "5000000000000000000"
         },
         "outputs": {
-          "success": ""
+          "_success": ""
         }
       },
-      "compressedTx": "approve ( _spender: 0x7d655c57f71464b6f83811c55d84009cd9f5221c, _amount: 5000000000000000000 )",
+      "compressedTx": "approve ( _spender: 0x7d655c57f71464b6f83811c55d84009cd9f5221c, _value: 5000000000000000000 )",
       "statements": [
         {
           "blockNumber": 10292014,
@@ -6385,14 +6385,14 @@
       "articulatedTx": {
         "name": "approve",
         "inputs": {
-          "_amount": "5000000000000000000",
-          "_spender": "0x7d655c57f71464b6f83811c55d84009cd9f5221c"
+          "_spender": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
+          "_value": "5000000000000000000"
         },
         "outputs": {
-          "success": ""
+          "_success": ""
         }
       },
-      "compressedTx": "approve ( _spender: 0x7d655c57f71464b6f83811c55d84009cd9f5221c, _amount: 5000000000000000000 )",
+      "compressedTx": "approve ( _spender: 0x7d655c57f71464b6f83811c55d84009cd9f5221c, _value: 5000000000000000000 )",
       "statements": [
         {
           "blockNumber": 10293554,
