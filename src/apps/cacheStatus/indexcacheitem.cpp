@@ -77,8 +77,8 @@ string_q CIndexCacheItem::getValueByName(const string_q& fieldName) const {
             if (fieldName % "bloomSizeBytes") {
                 return uint_2_Str(bloomSizeBytes);
             }
-            if (fieldName % "bloom_hash") {
-                return bloom_hash;
+            if (fieldName % "bloomHash") {
+                return bloomHash;
             }
             break;
         case 'f':
@@ -99,8 +99,8 @@ string_q CIndexCacheItem::getValueByName(const string_q& fieldName) const {
             if (fieldName % "indexSizeBytes") {
                 return uint_2_Str(indexSizeBytes);
             }
-            if (fieldName % "index_hash") {
-                return index_hash;
+            if (fieldName % "indexHash") {
+                return indexHash;
             }
             break;
         case 'l':
@@ -149,8 +149,8 @@ bool CIndexCacheItem::setValueByName(const string_q& fieldNameIn, const string_q
                 bloomSizeBytes = (uint32_t)str_2_Uint(fieldValue);
                 return true;
             }
-            if (fieldName % "bloom_hash") {
-                bloom_hash = fieldValue;
+            if (fieldName % "bloomHash") {
+                bloomHash = fieldValue;
                 return true;
             }
             break;
@@ -177,8 +177,8 @@ bool CIndexCacheItem::setValueByName(const string_q& fieldNameIn, const string_q
                 indexSizeBytes = (uint32_t)str_2_Uint(fieldValue);
                 return true;
             }
-            if (fieldName % "index_hash") {
-                index_hash = fieldValue;
+            if (fieldName % "indexHash") {
+                indexHash = fieldValue;
                 return true;
             }
             break;
@@ -244,9 +244,9 @@ bool CIndexCacheItem::Serialize(CArchive& archive) {
     archive >> filename;
     archive >> fileDate;
     archive >> indexSizeBytes;
-    archive >> index_hash;
+    archive >> indexHash;
     archive >> bloomSizeBytes;
-    archive >> bloom_hash;
+    archive >> bloomHash;
     // EXISTING_CODE
     // EXISTING_CODE
     finishParse();
@@ -270,9 +270,9 @@ bool CIndexCacheItem::SerializeC(CArchive& archive) const {
     archive << filename;
     archive << fileDate;
     archive << indexSizeBytes;
-    archive << index_hash;
+    archive << indexHash;
     archive << bloomSizeBytes;
-    archive << bloom_hash;
+    archive << bloomHash;
     // EXISTING_CODE
     // EXISTING_CODE
     return true;
@@ -320,9 +320,9 @@ void CIndexCacheItem::registerClass(void) {
     ADD_FIELD(CIndexCacheItem, "filename", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CIndexCacheItem, "fileDate", T_DATE, ++fieldNum);
     ADD_FIELD(CIndexCacheItem, "indexSizeBytes", T_UNUMBER, ++fieldNum);
-    ADD_FIELD(CIndexCacheItem, "index_hash", T_IPFSHASH | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CIndexCacheItem, "indexHash", T_IPFSHASH | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CIndexCacheItem, "bloomSizeBytes", T_UNUMBER, ++fieldNum);
-    ADD_FIELD(CIndexCacheItem, "bloom_hash", T_IPFSHASH | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CIndexCacheItem, "bloomHash", T_IPFSHASH | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CIndexCacheItem, "schema");
@@ -374,9 +374,9 @@ bool CIndexCacheItem::readBackLevel(CArchive& archive) {
         archive >> filename;
         fileDate = fileLastModifyDate(getIndexPath("finalized/" + filename));
         archive >> indexSizeBytes;
-        archive >> index_hash;
+        archive >> indexHash;
         archive >> bloomSizeBytes;
-        archive >> bloom_hash;
+        archive >> bloomHash;
         finishParse();
         done = true;
     }

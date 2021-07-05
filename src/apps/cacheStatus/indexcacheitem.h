@@ -36,9 +36,9 @@ class CIndexCacheItem : public CBaseNode {
     string_q filename;
     time_q fileDate;
     uint32_t indexSizeBytes;
-    ipfshash_t index_hash;
+    ipfshash_t indexHash;
     uint32_t bloomSizeBytes;
-    ipfshash_t bloom_hash;
+    ipfshash_t bloomHash;
 
   public:
     CIndexCacheItem(void);
@@ -111,9 +111,9 @@ inline void CIndexCacheItem::initialize(void) {
     filename = "";
     fileDate = earliestDate;
     indexSizeBytes = 0;
-    index_hash = "";
+    indexHash = "";
     bloomSizeBytes = 0;
-    bloom_hash = "";
+    bloomHash = "";
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -134,9 +134,9 @@ inline void CIndexCacheItem::duplicate(const CIndexCacheItem& in) {
     filename = in.filename;
     fileDate = in.fileDate;
     indexSizeBytes = in.indexSizeBytes;
-    index_hash = in.index_hash;
+    indexHash = in.indexHash;
     bloomSizeBytes = in.bloomSizeBytes;
-    bloom_hash = in.bloom_hash;
+    bloomHash = in.bloomHash;
 
     // EXISTING_CODE
     // EXISTING_CODE

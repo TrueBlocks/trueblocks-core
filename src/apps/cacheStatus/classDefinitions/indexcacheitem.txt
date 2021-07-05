@@ -10,8 +10,8 @@ fields = string type|\
         string filename|\
         datetime fileDate|\
         uint32 indexSizeBytes|\
-        ipfshash index_hash|\
+        ipfshash indexHash|\
         uint32 bloomSizeBytes|\
-        ipfshash bloom_hash
+        ipfshash bloomHash
 includes = etherlib.h
 serialize = true

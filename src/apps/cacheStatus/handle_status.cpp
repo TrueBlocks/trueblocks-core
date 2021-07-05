@@ -449,18 +449,18 @@ bool noteIndex(const string_q& path, void* data) {
         explode(parts, path, '/');
         blknum_t num = str_2_Uint(nextTokenClear(parts[parts.size() - 1], '-'));
         {
-            aci.bloom_hash = counter->options->bloomHashes[num];
-            size_t len = aci.bloom_hash.length();
+            aci.bloomHash = counter->options->bloomHashes[num];
+            size_t len = aci.bloomHash.length();
             if (len && !verbose)
-                aci.bloom_hash = aci.bloom_hash.substr(0, 4) + "..." + aci.bloom_hash.substr(len - 4, len);
+                aci.bloomHash = aci.bloomHash.substr(0, 4) + "..." + aci.bloomHash.substr(len - 4, len);
             aci.bloomSizeBytes =
                 (uint32_t)fileSize(substitute(substitute(path, "finalized", "blooms"), ".bin", ".bloom"));
         }
         {
-            aci.index_hash = counter->options->indexHashes[num];
-            size_t len = aci.index_hash.length();
+            aci.indexHash = counter->options->indexHashes[num];
+            size_t len = aci.indexHash.length();
             if (len && !verbose)
-                aci.index_hash = aci.index_hash.substr(0, 4) + "..." + aci.index_hash.substr(len - 4, len);
+                aci.indexHash = aci.indexHash.substr(0, 4) + "..." + aci.indexHash.substr(len - 4, len);
             aci.indexSizeBytes = (uint32_t)fileSize(path);
         }
 
