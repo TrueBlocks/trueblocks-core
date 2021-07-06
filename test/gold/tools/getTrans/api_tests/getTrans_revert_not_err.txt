@@ -52,7 +52,7 @@
               ],
               "outputs": []
             },
-            "compressedLog": "Transfer ( _from: 0xe81a6c6b733d52df5d6aa863d75aab78147a0f28, _to: 0x8ca1fec705f7060aaa3d8c6757e34d1e7cc61021, _amount: 100000000 )"
+            "compressedLog": "Transfer(0xe81a6c6b733d52df5d6aa863d75aab78147a0f28 /*_from*/, 0x8ca1fec705f7060aaa3d8c6757e34d1e7cc61021 /*_to*/, 100000000 /*_amount*/); "
           },
           {
             "address": "0x2428e9af9bc3d66e4ee9604da681c6e5493f8454",
@@ -232,7 +232,7 @@
               }
             ]
           },
-          "compressedTrace": "balanceOf ( _owner: 0xc14830e53aa344e8c14603a91229a0b925b0b262 )"
+          "compressedTrace": "balanceOf(0xc14830e53aa344e8c14603a91229a0b925b0b262 /*_owner*/); "
         },
         {
           "type": "call",
@@ -273,7 +273,7 @@
               }
             ]
           },
-          "compressedTrace": "balanceOf ( _owner: 0xe81a6c6b733d52df5d6aa863d75aab78147a0f28 )"
+          "compressedTrace": "balanceOf(0xe81a6c6b733d52df5d6aa863d75aab78147a0f28 /*_owner*/); "
         },
         {
           "type": "call",
@@ -314,7 +314,7 @@
               }
             ]
           },
-          "compressedTrace": "balanceOf ( _owner: 0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a )"
+          "compressedTrace": "balanceOf(0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a /*_owner*/); "
         },
         {
           "type": "call",
@@ -355,7 +355,7 @@
               }
             ]
           },
-          "compressedTrace": "balanceOf ( _owner: 0xe81a6c6b733d52df5d6aa863d75aab78147a0f28 )"
+          "compressedTrace": "balanceOf(0xe81a6c6b733d52df5d6aa863d75aab78147a0f28 /*_owner*/); "
         },
         {
           "type": "call",
@@ -396,7 +396,7 @@
               }
             ]
           },
-          "compressedTrace": "balanceOf ( _owner: 0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a )"
+          "compressedTrace": "balanceOf(0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a /*_owner*/); "
         },
         {
           "type": "call",
@@ -437,7 +437,7 @@
               }
             ]
           },
-          "compressedTrace": "balanceOf ( _owner: 0xe81a6c6b733d52df5d6aa863d75aab78147a0f28 )"
+          "compressedTrace": "balanceOf(0xe81a6c6b733d52df5d6aa863d75aab78147a0f28 /*_owner*/); "
         },
         {
           "type": "call",
@@ -483,7 +483,7 @@
             ],
             "outputs": []
           },
-          "compressedTrace": "transfer ( _token: 0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a, _to: 0x8ca1fec705f7060aaa3d8c6757e34d1e7cc61021, _value: 100000000 )"
+          "compressedTrace": "transfer(0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a /*_token*/, 0x8ca1fec705f7060aaa3d8c6757e34d1e7cc61021 /*_to*/, 100000000 /*_value*/); "
         },
         {
           "type": "call",
@@ -572,7 +572,7 @@
               }
             ]
           },
-          "compressedTrace": "transfer ( _to: 0x8ca1fec705f7060aaa3d8c6757e34d1e7cc61021, _value: 100000000 )"
+          "compressedTrace": "transfer(0x8ca1fec705f7060aaa3d8c6757e34d1e7cc61021 /*_to*/, 100000000 /*_value*/); "
         },
         {
           "type": "call",

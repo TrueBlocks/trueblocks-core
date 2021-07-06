@@ -683,7 +683,6 @@ string_q compressInput(const string_q& inputIn) {
 
 //-----------------------------------------------------------------------
 const char* STR_COMPRESSED_FMT = "[{NAME}](++INPUTS++);";
-const char* STR_COMPRESSED_INPUT_QUOTED = "\"[{VALUE}]\" /*[{NAME}]*/, ";
 const char* STR_COMPRESSED_INPUT = "[{VALUE}] /*[{NAME}]*/, ";
 
 //-----------------------------------------------------------------------
@@ -694,26 +693,16 @@ string_q CFunction::compressed(const string_q& def) const {
     if (name.empty())
         return compressInput(def);
 
-    string_q ret;
-    if (isApiMode()) {
-        ret = name + " ( ";
-        for (auto input : inputs)
-            ret += (input.name + ": " + input.value + ", ");
-        ret = trim(trim(ret, ' '), ',');
-        ret += " )";
-        replaceAll(ret, "--tuple--", "");
-        return stripWhitespace(ret);
-    }
-
     ostringstream func, inp;
     func << Format(STR_COMPRESSED_FMT) << endl;
     for (auto input : inputs)
-        inp << input.Format(substitute(STR_COMPRESSED_INPUT, " /*[{NAME}]*/", (verbose ? " /*[{NAME}]*/" : "")));
-    ret = func.str();
+        inp << input.Format(STR_COMPRESSED_INPUT);
+    string_q ret = func.str();
     replace(ret, "++INPUTS++", trim(trim(inp.str(), ' '), ','));
     if (ret.empty())
         return compressInput(def);
     replaceAll(ret, "--tuple--", "");
+
     return stripWhitespace(ret);
 }
 

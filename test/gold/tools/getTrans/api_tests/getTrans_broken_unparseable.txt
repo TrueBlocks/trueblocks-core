@@ -36,7 +36,7 @@
                 "_to": "0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71"
               }
             },
-            "compressedLog": "Transfer ( _from: 0x00de4b13153673bcae2616b67bf822500d325fc3, _to: 0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71, _amount: 114395560000000000000000 )"
+            "compressedLog": "Transfer(0x00de4b13153673bcae2616b67bf822500d325fc3 /*_from*/, 0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71 /*_to*/, 114395560000000000000000 /*_amount*/); "
           },
           {
             "address": "0x5732046a883704404f284ce41ffadd5b007fd668",
@@ -56,7 +56,7 @@
                 "_spender": "0x9aab3f75489902f3a48495025729a0af77d4b11e"
               }
             },
-            "compressedLog": "Approval ( _owner: 0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71, _spender: 0x9aab3f75489902f3a48495025729a0af77d4b11e, _amount: 114395560000000000000000 )"
+            "compressedLog": "Approval(0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71 /*_owner*/, 0x9aab3f75489902f3a48495025729a0af77d4b11e /*_spender*/, 114395560000000000000000 /*_amount*/); "
           },
           {
             "address": "0x5732046a883704404f284ce41ffadd5b007fd668",
@@ -76,7 +76,7 @@
                 "_to": "0x7c66550c9c730b6fdd4c03bc2e73c5462c5f7acc"
               }
             },
-            "compressedLog": "Transfer ( _from: 0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71, _to: 0x7c66550c9c730b6fdd4c03bc2e73c5462c5f7acc, _amount: 114395560000000000000000 )"
+            "compressedLog": "Transfer(0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71 /*_from*/, 0x7c66550c9c730b6fdd4c03bc2e73c5462c5f7acc /*_to*/, 114395560000000000000000 /*_amount*/); "
           },
           {
             "address": "0x5732046a883704404f284ce41ffadd5b007fd668",
@@ -96,7 +96,7 @@
                 "_to": "0xaa448eff88b1e752d50b87220b543d79eac15a0e"
               }
             },
-            "compressedLog": "Transfer ( _from: 0x7c66550c9c730b6fdd4c03bc2e73c5462c5f7acc, _to: 0xaa448eff88b1e752d50b87220b543d79eac15a0e, _amount: 114395560000000000000000 )"
+            "compressedLog": "Transfer(0x7c66550c9c730b6fdd4c03bc2e73c5462c5f7acc /*_from*/, 0xaa448eff88b1e752d50b87220b543d79eac15a0e /*_to*/, 114395560000000000000000 /*_amount*/); "
           },
           {
             "address": "0x7c66550c9c730b6fdd4c03bc2e73c5462c5f7acc",
@@ -114,7 +114,7 @@
                 "sender": "0xaa448eff88b1e752d50b87220b543d79eac15a0e"
               }
             },
-            "compressedLog": "EtherReceival ( sender: 0xaa448eff88b1e752d50b87220b543d79eac15a0e, amount: 7666038077839988828 )"
+            "compressedLog": "EtherReceival(0xaa448eff88b1e752d50b87220b543d79eac15a0e /*sender*/, 7666038077839988828 /*amount*/); "
           },
           {
             "address": "0xaa448eff88b1e752d50b87220b543d79eac15a0e",
@@ -138,7 +138,7 @@
                 "srcAmount": "114395560000000000000000"
               }
             },
-            "compressedLog": "TradeExecute ( origin: 0x7c66550c9c730b6fdd4c03bc2e73c5462c5f7acc, src: 0x5732046a883704404f284ce41ffadd5b007fd668, srcAmount: 114395560000000000000000, destToken: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee, destAmount: 7666038077839988828, destAddress: 0x7c66550c9c730b6fdd4c03bc2e73c5462c5f7acc )"
+            "compressedLog": "TradeExecute(0x7c66550c9c730b6fdd4c03bc2e73c5462c5f7acc /*origin*/, 0x5732046a883704404f284ce41ffadd5b007fd668 /*src*/, 114395560000000000000000 /*srcAmount*/, 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee /*destToken*/, 7666038077839988828 /*destAmount*/, 0x7c66550c9c730b6fdd4c03bc2e73c5462c5f7acc /*destAddress*/); "
           },
           {
             "address": "0xd3d2b5643e506c6d9b7099e9116d7aaa941114fe",
@@ -163,7 +163,7 @@
                 "token": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
               }
             },
-            "compressedLog": "FeeDistributed ( token: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee, platformWallet: 0x910bf2d50fa5e014fd06666f456182d4ab7c8bd2, platformFeeWei: 0, rewardWei: 5160776834001879, rebateWei: 2029966883012028, rebateWallets: [0xbc33a1f908612640f2849b56b67a4de4d179c151], rebatePercentBpsPerWallet: [10000], burnAmtWei: 475294360826081 )"
+            "compressedLog": "FeeDistributed(0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee /*token*/, 0x910bf2d50fa5e014fd06666f456182d4ab7c8bd2 /*platformWallet*/, 0 /*platformFeeWei*/, 5160776834001879 /*rewardWei*/, 2029966883012028 /*rebateWei*/, [0xbc33a1f908612640f2849b56b67a4de4d179c151] /*rebateWallets*/, [10000] /*rebatePercentBpsPerWallet*/, 475294360826081 /*burnAmtWei*/); "
           },
           {
             "address": "0x7c66550c9c730b6fdd4c03bc2e73c5462c5f7acc",
@@ -191,7 +191,7 @@
                 "t2eSrcAmounts": "[114395560000000000000000]"
               }
             },
-            "compressedLog": "KyberTrade ( src: 0x5732046a883704404f284ce41ffadd5b007fd668, dest: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee, ethWeiValue: 7666038077839988828, networkFeeWei: 7666038077839988, customPlatformFeeWei: 0, t2eIds: [0xff4b796265722046707256320000000000000000000000000000000000000000], e2tIds: , t2eSrcAmounts: [114395560000000000000000], e2tSrcAmounts: , t2eRates: [67013423229363], e2tRates:  )"
+            "compressedLog": "KyberTrade(0x5732046a883704404f284ce41ffadd5b007fd668 /*src*/, 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee /*dest*/, 7666038077839988828 /*ethWeiValue*/, 7666038077839988 /*networkFeeWei*/, 0 /*customPlatformFeeWei*/, [0xff4b796265722046707256320000000000000000000000000000000000000000] /*t2eIds*/,  /*e2tIds*/, [114395560000000000000000] /*t2eSrcAmounts*/,  /*e2tSrcAmounts*/, [67013423229363] /*t2eRates*/,  /*e2tRates*/); "
           },
           {
             "address": "0x9aab3f75489902f3a48495025729a0af77d4b11e",
@@ -215,7 +215,7 @@
                 "trader": "0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71"
               }
             },
-            "compressedLog": "ExecuteTrade ( trader: 0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71, src: 0x5732046a883704404f284ce41ffadd5b007fd668, dest: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee, destAddress: 0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71, actualSrcAmount: 114395560000000000000000, actualDestAmount: 7658372039762148840, platformWallet: 0x910bf2d50fa5e014fd06666f456182d4ab7c8bd2, platformFeeBps: 0 )"
+            "compressedLog": "ExecuteTrade(0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71 /*trader*/, 0x5732046a883704404f284ce41ffadd5b007fd668 /*src*/, 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee /*dest*/, 0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71 /*destAddress*/, 114395560000000000000000 /*actualSrcAmount*/, 7658372039762148840 /*actualDestAmount*/, 0x910bf2d50fa5e014fd06666f456182d4ab7c8bd2 /*platformWallet*/, 0 /*platformFeeBps*/); "
           },
           {
             "address": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
@@ -233,7 +233,7 @@
                 "value": "0"
               }
             },
-            "compressedLog": "Deposit ( from: 0x0000000000000000000000006a4800cb5bce7de8, value: 0 )"
+            "compressedLog": "Deposit(0x0000000000000000000000006a4800cb5bce7de8 /*from*/, 0 /*value*/); "
           },
           {
             "address": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
@@ -253,7 +253,7 @@
                 "_to": "0xa478c2975ab1ea89e8196811f51a7b7ade33eb11"
               }
             },
-            "compressedLog": "Transfer ( _from: 0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71, _to: 0xa478c2975ab1ea89e8196811f51a7b7ade33eb11, _amount: 7658372039762148840 )"
+            "compressedLog": "Transfer(0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71 /*_from*/, 0xa478c2975ab1ea89e8196811f51a7b7ade33eb11 /*_to*/, 7658372039762148840 /*_amount*/); "
           },
           {
             "address": "0x6b175474e89094c44da98b954eedeac495271d0f",
@@ -273,7 +273,7 @@
                 "_to": "0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71"
               }
             },
-            "compressedLog": "Transfer ( _from: 0xa478c2975ab1ea89e8196811f51a7b7ade33eb11, _to: 0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71, _amount: 7877000051530980936667 )"
+            "compressedLog": "Transfer(0xa478c2975ab1ea89e8196811f51a7b7ade33eb11 /*_from*/, 0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71 /*_to*/, 7877000051530980936667 /*_amount*/); "
           },
           {
             "address": "0xa478c2975ab1ea89e8196811f51a7b7ade33eb11",
@@ -290,7 +290,7 @@
                 "reserve1": "85813824770929671650113"
               }
             },
-            "compressedLog": "Sync ( reserve0: 88521288926425696234629898, reserve1: 85813824770929671650113 )"
+            "compressedLog": "Sync(88521288926425696234629898 /*reserve0*/, 85813824770929671650113 /*reserve1*/); "
           },
           {
             "address": "0xa478c2975ab1ea89e8196811f51a7b7ade33eb11",
@@ -313,7 +313,7 @@
                 "to": "0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71"
               }
             },
-            "compressedLog": "Swap ( sender: 0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71, amount0In: 0, amount1In: 7658372039762148840, amount0Out: 7877000051530980936667, amount1Out: 0, to: 0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71 )"
+            "compressedLog": "Swap(0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71 /*sender*/, 0 /*amount0In*/, 7658372039762148840 /*amount1In*/, 7877000051530980936667 /*amount0Out*/, 0 /*amount1Out*/, 0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71 /*to*/); "
           },
           {
             "address": "0x6b175474e89094c44da98b954eedeac495271d0f",
@@ -333,7 +333,7 @@
                 "_to": "0x910bf2d50fa5e014fd06666f456182d4ab7c8bd2"
               }
             },
-            "compressedLog": "Transfer ( _from: 0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71, _to: 0x910bf2d50fa5e014fd06666f456182d4ab7c8bd2, _amount: 9194342981710012099 )"
+            "compressedLog": "Transfer(0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71 /*_from*/, 0x910bf2d50fa5e014fd06666f456182d4ab7c8bd2 /*_to*/, 9194342981710012099 /*_amount*/); "
           },
           {
             "address": "0x6b175474e89094c44da98b954eedeac495271d0f",
@@ -353,7 +353,7 @@
                 "_to": "0x00de4b13153673bcae2616b67bf822500d325fc3"
               }
             },
-            "compressedLog": "Transfer ( _from: 0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71, _to: 0x00de4b13153673bcae2616b67bf822500d325fc3, _amount: 7867805708549270924568 )"
+            "compressedLog": "Transfer(0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71 /*_from*/, 0x00de4b13153673bcae2616b67bf822500d325fc3 /*_to*/, 7867805708549270924568 /*_amount*/); "
           },
           {
             "address": "0x111111125434b319222cdbf8c261674adb56f3ae",
@@ -381,7 +381,7 @@
                 "srcToken": "0x5732046a883704404f284ce41ffadd5b007fd668"
               }
             },
-            "compressedLog": "Swapped ( sender: 0x00de4b13153673bcae2616b67bf822500d325fc3, srcToken: 0x5732046a883704404f284ce41ffadd5b007fd668, dstToken: 0x6b175474e89094c44da98b954eedeac495271d0f, dstReceiver: 0x00de4b13153673bcae2616b67bf822500d325fc3, amount: 114395560000000000000000, spentAmount: 114395560000000000000000, returnAmount: 7867805708549270924568, minReturnAmount: 7631771537292792796830, guaranteedAmount: 7867805708549270924568, referrer: 0x0000000000000000000000000000000000000000 )"
+            "compressedLog": "Swapped(0x00de4b13153673bcae2616b67bf822500d325fc3 /*sender*/, 0x5732046a883704404f284ce41ffadd5b007fd668 /*srcToken*/, 0x6b175474e89094c44da98b954eedeac495271d0f /*dstToken*/, 0x00de4b13153673bcae2616b67bf822500d325fc3 /*dstReceiver*/, 114395560000000000000000 /*amount*/, 114395560000000000000000 /*spentAmount*/, 7867805708549270924568 /*returnAmount*/, 7631771537292792796830 /*minReturnAmount*/, 7867805708549270924568 /*guaranteedAmount*/, 0x0000000000000000000000000000000000000000 /*referrer*/); "
           }
         ],
         "status": 1
@@ -398,7 +398,7 @@
           "returnAmount": ""
         }
       },
-      "compressedTx": "swap ( caller: 0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71, desc: {\"srcToken\":\"0x0000000000000000000000000000000000000060\", \"dstToken\":\"0x00000000000000000000000000000000000001c0\", \"srcReceiver\":\"0x5732046a883704404f284ce41ffadd5b007fd668\", \"dstReceiver\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"1281173195321750650756914221150884052843809082481\", \"minReturnAmount\":\"4957305349080171221489756848185353997596647363\", \"guaranteedAmount\":\"114395560000000000000000\", \"flags\":\"7631771537292792796830\", \"referrer\":\"0x0000000000000000000001aa83bcf6811dd5ed18\", \"permit\":\"\"}, calls:  )",
+      "compressedTx": "swap(0xe069cb01d06ba617bcdf789bf2ff0d5e5ca20c71 /*caller*/, {\"srcToken\":\"0x0000000000000000000000000000000000000060\", \"dstToken\":\"0x00000000000000000000000000000000000001c0\", \"srcReceiver\":\"0x5732046a883704404f284ce41ffadd5b007fd668\", \"dstReceiver\":\"0x6b175474e89094c44da98b954eedeac495271d0f\", \"amount\":\"1281173195321750650756914221150884052843809082481\", \"minReturnAmount\":\"4957305349080171221489756848185353997596647363\", \"guaranteedAmount\":\"114395560000000000000000\", \"flags\":\"7631771537292792796830\", \"referrer\":\"0x0000000000000000000001aa83bcf6811dd5ed18\", \"permit\":\"\"} /*desc*/,  /*calls*/); ",
       "gasCost": 47543461000000000,
       "gasUsed": 461587,
       "date": "2021-01-04 21:22:10 UTC",

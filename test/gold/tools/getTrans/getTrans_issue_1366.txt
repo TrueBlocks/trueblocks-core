@@ -41,7 +41,7 @@ params.size: 0
               "value": "0"
             }
           },
-          "compressedLog": "Deposit(0x0000000000000000000000000de0b6b3a7640000, 0); "
+          "compressedLog": "Deposit(0x0000000000000000000000000de0b6b3a7640000 /*from*/, 0 /*value*/); "
         }
       ],
       "status": null

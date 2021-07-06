@@ -875,7 +875,7 @@ static string_q getFilename_local(cache_t type, const string_q& item1, const str
             os << "monitors/";
             break;
         case CT_RECONS:
-            os << "monitors/recons/";
+            os << "recons/";
             break;
         default:
             ASSERT(0);  // should not happen
