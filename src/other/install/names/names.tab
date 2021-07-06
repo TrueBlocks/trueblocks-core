@@ -6708,6 +6708,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 81-Other:DAO Curators	0xe578fb92640393b95b53197914bd560b7bc2aac8	Gustav Simonsson		DAO_Curator			false	false	false	false	false	false
 31-Gitcoin Grants:Grant	0xe57c9da5c04ad70f1aa33331d6e3628433ec63ef	Grant 1134 Organicblock - Redefining Urban Farming!		https://gitcoin.co/grants/1134/organicblock-redefining-urban-farming			false	false	false	false	false	false
 91-Known	0xe583f95bf95d0883f94efe844442c8bfc9dd7a7f	Poap Token Minter		EtherScan.io			false	false	false	false	false	false
+30-Contracts	0xe592427a0aece92de3edee1f18e0157c05861564	Uniswap V3: Router					false	false	false	true	false	false
 31-Gitcoin Grants:Grant	0xe599295c723c3691d91d602f393dfc96125940c5	Grant 1553 End Volatile Gas Prices		https://gitcoin.co/grants/1553/end-volatile-gas-prices			false	false	false	false	false	false
 50-Tokens:ERC20	0xe5a7c12972f3bbfe70ed29521c8949b8af6a0970	Blockchain Index	BLX	On chain	18		false	false	false	true	true	false
 31-Gitcoin Grants:Friends	0xe5a87245db4f5895c456a94ef2e65a81153d44bd	tristanmazet		Gitcoin Website			false	false	false	false	false	false
