@@ -123,6 +123,7 @@ class COptions : public COptionsBase {
     bool parseArguments(string_q& command);
     void Init(void);
 
+    bool handle_js(void);
     bool handle_readmes(void);
     bool handle_options(void);
     bool handle_apifiles(void);
