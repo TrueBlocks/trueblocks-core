@@ -841,6 +841,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 30-Contracts:Humanity DAO	0x19b3fbd1de319925214348a0a1405c8e3e4cae98	andylinee		https://www.humanitydao.org/humans			false	false	false	false	false	false
 50-Tokens:ERC20	0x19b67f79f8c5d49e950a8754f95aaea93309dcae	HackerGold	HKG	On chain	3		false	false	false	true	true	false
 31-Gitcoin Grants:Grant	0x19c04ca80c4168ea8ab469a0766a858d7172b320	Grant 1541 Keep3r.live		https://gitcoin.co/grants/1541/keep3rlive			false	false	false	false	false	false
+40-Friends	0x19c49117a8167296caf5d23ab48e355ec1c8be8b	My MolochDAO Proposer		Moloch DAO		The address of the person who proposed TrueBlocks for a grant	false	false	false	false	false	false
 39-Yearn	0x19d3364a399d251e894ac732651be8b0e4e85001	DAI yVault	yvDAI	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x19d97d8fa813ee2f51ad4b4e04ea08baf4dffc28	Badger Sett Badger	bBADGER	On chain	18		false	false	false	true	true	false
 75-Early Actors	0x19dafe19f11e960e4ccfc6a5aa8890ebd748ca1e	Miner_0064_93		OnChain			false	false	false	false	false	false
