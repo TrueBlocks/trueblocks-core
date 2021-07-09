@@ -4434,6 +4434,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 32-Kickback:Contracts	0x9644a679866a6ebf740538002c2aa13f0235d728	Open Hearts Open Minds		https://kickback.events/event/[{ADDRESS}]			false	false	false	true	false	false
 50-Tokens:ERC20	0x9653cfd0865ad8313bea2f0c2ec0584bfd05115b	FuturXE	FXE	On chain	8		false	false	false	true	true	false
 31-Gitcoin Grants:Grant	0x965e1ab07596bfc899ded753b8d85bc60eb16c4b	Grant 0705 White Box Fapkc		https://gitcoin.co/grants/705/white-box-fapkc		https://github.com/haael/white-box-fapkc	false	false	false	false	false	false
+40-Friends	0x965fdb32e3fcdc6dc323464a42a9615e6a5464d1	MDG Yes Voter 1					false	false	false	false	false	false
 90-DevCon2:Individual	0x9672ba8202f839018edf24826b112adfbe81474a	Luca Zeug		DevCon2 Token Contract			false	false	false	false	false	false
 81-Other	0x9674e9123caf1f74d7f2b8c6823734891c0573d7	ReversibleDemo_id331_cnt5_20da		Ether Camp			false	false	false	true	false	false
 32-Kickback:Friends	0x9678ce0bc4838022538658ef6f39e9abf1df010c	user2		https://kickback.events/			false	false	false	false	false	false
@@ -4871,6 +4872,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0xa5fd1a791c4dfcaacc963d4f73c6ae5824149ea7	Jibrel Network Token	JNT	On chain	18	The Jibrel Network provides currencies, equities, commodities and other financial assets and instruments as standard ERC-20 tokens on the Ethereum blockchain.	false	false	false	true	true	false
 31-Gitcoin Grants:Grant	0xa603499e8a0ec43590a8870e0e201cda2c5de017	Grant 0778 Blockchain Research: Open-source Research for Everyone		https://gitcoin.co/grants/778/blockchain-research-open-source-research-for-ever		https://blockchainresearch.in	false	false	false	false	false	false
 32-Kickback:Friends	0xa6068255971b95e5baf17dd68eee045ee22199da	roargh		https://kickback.events/			false	false	false	false	false	false
+40-Friends	0xa619a7c8f89a6338756a428b710bbcd7a094d140	MDG Yes Voter 2					false	false	false	false	false	false
 50-Tokens:ERC20	0xa6218644a294e611213dc5629bc4cc48053f739f	Queen Jin Token	QJT	On chain	2		false	false	false	true	true	false
 81-Other	0xa623bca1460bb9207aa8b4ad00faea3f30f0c549	CSGOBets		EtherScan.io			false	false	false	true	false	false
 50-Tokens:ERC20	0xa62bdee2f277c2e2c0f46cba96879b263796ee1c	HackerGold	HKG	On chain	3		false	false	false	true	true	false
