@@ -1384,6 +1384,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 32-Kickback:Friends	0x2beb71048f1d728ab8defde14f2f7c0cd1374b50	6e5d2b7a-cd45-44		https://kickback.events/			false	false	false	false	false	false
 50-Tokens:ERC20	0x2bf91c18cd4ae9c2f2858ef9fe518180f7b5096d	KIWI Token	KIWI	On chain	8		false	false	false	true	true	false
 90-DevCon2:Individual	0x2bfac4c767a0784d1cd03178c13dc5672e5f4ba7	Logan Brutsche		DevCon2 Token Contract			false	false	false	false	false	false
+50-Tokens:ERC20	0x2c06e48f6e655bcfc7e46586784fb6da82c4ca3d	CryptoTulip	TULIP	On chain	18		false	false	false	true	true	false
 60-Airdrops	0x2c0f77f2ec1c05c154344811e5fa18f8679841dd	HEALP Airdrop Sender		TrueBlocks.io			false	false	false	false	false	false
 80-Malicious:DaoDrain	0x2c19c7f9ae8b751e37aeb2d93a699722395ae18f	DAO Drain 003		GethSource Ether Camp			false	false	false	true	false	false
 32-Kickback:Friends	0x2c1de060a03b92c95b6022e76fd5ef4c2d9d7379	booklocal		https://kickback.events/			false	false	false	false	false	false
@@ -2624,6 +2625,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x57ab1e02fee23774580c119740129eac7081e9d3	Synth sUSD	sUSD	On chain	18	sUSD is part of the Synethix network.	false	false	false	true	true	false
 50-Tokens:ERC20	0x57ab1ec28d129707052df4df418d58a2d46d5f51	Synth sUSD	sUSD	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x57ad67acf9bf015e4820fbd66ea1a21bed8852ec	Lympo tokens	LYM	On chain	18		false	false	false	true	true	false
+30-Contract	0x57b116da40f21f91aec57329ecb763d29c1b2355	IdleEth	Goo	On chain	18		false	false	false	true	true	false
 31-Gitcoin Grants:Grant	0x57b328e48b1eecfb81c21e3a7cc72655cb4722c4	Grant 1049 Berserkers		https://gitcoin.co/grants/1049/berserkers			false	false	false	false	false	false
 31-Gitcoin Grants:Grant	0x57b353818da50c82ffd59664068a5212eaf090b0	Grant 0076 Inflation Funding Working Group		https://gitcoin.co/grants/76/inflation-funding-working-group			false	false	false	false	false	false
 31-Gitcoin Grants:Grant	0x57bc8af36a7e900c438b0652ff2eeb24954a3e6d	Grant 1778 Smart Contract Vulnerabilities Database		https://gitcoin.co/grants/1778/smart-contract-vulnerabilities-database			false	false	false	false	false	false
