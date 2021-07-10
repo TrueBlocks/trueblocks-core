@@ -113,6 +113,8 @@ bool Slurp(CCachedAccount& theAccount, COptions& options) {
                         findInternalTxIndex(trans);
                     if (type == "token" || type == "nfts")
                         trans.hasToken = true;
+                    if (type == "miner")
+                        trans.transactionIndex = 99999;
                     theAccount.transactions.push_back(trans);
                     theAccount.markLatest(trans);
                     trans = CTransaction();  // reset
