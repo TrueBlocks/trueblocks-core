@@ -52,6 +52,8 @@ inline string_q toEtherscan(const string_q& type) {
         return "tokennfttx";
     else if (type == "miner")
         return "getminedblocks&blocktype=blocks";
+    else if (type == "uncles")
+        return "getminedblocks&blocktype=uncles";
     else if (type == "int")
         return "txlistinternal";
     return "txlist";

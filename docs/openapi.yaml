@@ -1496,6 +1496,7 @@ paths:
             - token
             - nfts
             - miner
+            - uncles
             - all
       - name: appearances
         in: query

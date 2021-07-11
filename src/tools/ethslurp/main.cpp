@@ -92,6 +92,10 @@ bool Slurp(CCachedAccount& theAccount, COptions& options) {
                                      "/api.etherscan.io/apis");
 
             string_q responseStr = urlToString(url);
+            if (getGlobalConfig()->getConfigBool("dev", "debug_curl", false)) {
+                cerr << "[calling EtherScan: " << url << endl;
+                cerr << "[result: " << url << responseStr << endl;
+            }
             if (!contains(responseStr, "\"message\":\"OK\"")) {
                 options.errors.push_back("Error: " + responseStr + ".");
                 done = true;
@@ -115,6 +119,8 @@ bool Slurp(CCachedAccount& theAccount, COptions& options) {
                         trans.hasToken = true;
                     if (type == "miner")
                         trans.transactionIndex = 99999;
+                    if (type == "uncles")
+                        trans.transactionIndex = 99998;
                     theAccount.transactions.push_back(trans);
                     theAccount.markLatest(trans);
                     trans = CTransaction();  // reset
