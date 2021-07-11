@@ -258,6 +258,11 @@ bool CTransaction::setValueByName(const string_q& fieldNameIn, const string_q& f
         receipt.gasUsed = str_2_Uint(fieldValue);
         return true;
 
+    } else if (fieldName % "blockReward") {
+        // Etherscan returns this unknown field name from their mining endpoint
+        value = str_2_Wei(fieldValue);
+        return true;
+
     } else if (fieldName % "receipt") {
         string_q str = fieldValue;
         return receipt.parseJson3(str);
