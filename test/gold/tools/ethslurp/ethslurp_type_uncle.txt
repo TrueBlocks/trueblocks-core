@@ -1,0 +1,5 @@
+ethslurp argc: 5 [1:0xc8ebccc5f5689fa8659d83713341e5ad19349448] [2:--types] [3:uncles] [4:1-10] 
+ethslurp 0xc8ebccc5f5689fa8659d83713341e5ad19349448 --types uncles 1-10 
+Processing: 0xc8ebccc5f5689fa8659d83713341e5ad19349448 --types:uncles 1-10
+	Slurping 0xc8ebccc5f5689fa8659d83713341e5ad19349448
+                                                                                                                        0x0	0x0	1	99998	0	1438270018	0x0	0x0	0	0	0		0	0	0	2015-07-30 15:26:58 UTC	0.000000000000000000
