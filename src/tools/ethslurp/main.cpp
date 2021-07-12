@@ -113,14 +113,17 @@ bool Slurp(CCachedAccount& theAccount, COptions& options) {
                 uint64_t nAdded = 0;
                 CTransaction trans;
                 while (trans.parseJson3(response.result)) {
-                    if (type == "int")
+                    if (type == "int") {
                         findInternalTxIndex(trans);
-                    if (type == "token" || type == "nfts")
+                    } else if (type == "token" || type == "nfts") {
                         trans.hasToken = true;
-                    if (type == "miner")
+                    } else if (type == "miner") {
+                        trans.from = "0xBlockReward";
                         trans.transactionIndex = 99999;
-                    if (type == "uncles")
+                    } else if (type == "uncles") {
+                        trans.from = "0xUncleReward";
                         trans.transactionIndex = 99998;
+                    }
                     theAccount.transactions.push_back(trans);
                     theAccount.markLatest(trans);
                     trans = CTransaction();  // reset
