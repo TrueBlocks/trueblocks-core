@@ -6,7 +6,7 @@
     "transactionIndex": "99998",
     "nonce": "0",
     "timestamp": "1438270018",
-    "from": "0x0",
+    "from": "0xUncleReward",
     "to": "0x0",
     "value": "3750000000000000000",
     "gas": "0",
