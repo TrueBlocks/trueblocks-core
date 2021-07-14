@@ -8,10 +8,10 @@ Note that `chifra list` only queries the index, it does not extract the full tra
 
 ### usage
 
-`Usage:`    chifra list &lt;address&gt; [address...]  
+`Usage:`    chifra list &lt;address&gt; [address...]
 `Purpose:`  List appearances for the given address(es).
 
-`Where:`  
+`Where:`
 
 | Short Cut | Option | Description |
 | -------: | :------- | :------- |

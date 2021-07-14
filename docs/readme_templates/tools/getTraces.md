@@ -1,6 +1,6 @@
 ## [{NAME}]
 
-The `[{NAME}]` tool retrieves a transaction's traces. You may specify multiple transaction identifiers per invocation. 
+The `[{NAME}]` tool retrieves a transaction's traces. You may specify multiple transaction identifiers per invocation.
 
 The `--articulate` option fetches the ABI from each encountered smart contract to better describe the reported data.
 
