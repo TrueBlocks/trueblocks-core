@@ -158,6 +158,6 @@ If you want to make a PR, here's our preferred workflow:
 
 == What if I just have a question?
 
-Chat with us on our discord! link:https://discord.gg/kS6WNk4d[Invite link].
+Chat with us on our discord! link:https://discord.gg/rMdunZHCuu[Invite link].
 
 Or send an email to info@quickblocks.io.
