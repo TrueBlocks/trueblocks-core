@@ -1653,6 +1653,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 81-Other:DAO Whales	0x3673954399f6dfbe671818259bb278e2e92ee315	DAO_WHALE_19 (Prefund_1850)		WhaleWatch.io			false	false	false	false	false	false
 81-Other	0x3675811b6565be50a48bbac14ff781949f5838fd	@wcordova		Steem			false	false	false	false	false	false
 90-DevCon2:Individual	0x3682ae583f8c542ede42a9ca41105e5740b80d55	joey		DevCon2 Token Contract			false	false	false	false	false	false
+50-Tokens:ERC20	0x368b3a58b5f49392e5c9e4c998cb0bb966752e51	MIC	MIC	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x36905fc93280f52362a1cbab151f25dc46742fb5	BTOCoin	BTO	On chain	18	Bottos is more than an AI public chain with both data and model marketplaces, Bottos is a platform for the value exchange of AI and affiliated industries based on data feeding, with the ultimate goal of building a distributed AI new ecosystem.	false	false	false	true	true	false
 30-Contracts:Humanity DAO	0x369799e8308bfd8d32fe4709db82af51e6f1cc60	adalquardz		https://www.humanitydao.org/humans			false	false	false	false	false	false
 31-Gitcoin Grants:Grant	0x36a0356d43ee4168ed24efa1cae3198708667ac0	Grant 0512 Virtual Scientific Conference Online		https://gitcoin.co/grants/512/virtual-scientific-conference-online		https://gitcoin.co/grants/177/social-charity-tokens-and-dao-carbon-accounting,https://gitcoin.co/grants/177/crypto-reward-courts	false	false	false	false	false	false
@@ -5729,6 +5730,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0xc25a3a3b969415c80451098fa907ec722572917f	Curve.fi DAI/USDC/USDT/sUSD	crvPlain3andSUSD	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0xc27a2f05fa577a83ba0fdb4c38443c0718356501	Lamden Tau	TAU	On chain	18	Lamden is a suite of developer tools that speed up the process of creating new and custom blockchains and apps.	false	false	false	true	true	false
 50-Tokens:ERC20	0xc27c95350ecd634c80df89db0f10cd5c24b7b11f	PixieCoin	PXC	On chain	2		false	false	false	true	true	false
+50-Tokens:ERC20	0xc28e27870558cf22add83540d2126da2e4b464c2	SashimiToken	SASHIMI	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0xc28e931814725bbeb9e670676fabbcb694fe7df2	QuadrantProtocol	eQUAD	On chain	18		false	false	false	true	true	false
 81-Other:DAO Whales	0xc2975b244195b1a5b2b7ae982e12b9bc32daa0b3	DAO_WHALE_16		WhaleWatch.io			false	false	false	false	false	false
 31-Gitcoin Grants:Grant	0xc29fb1d0c0ad2078e909b0bd629b512eb6bcb008	Grant 1642 Gitcoin Champions Program		https://gitcoin.co/grants/1642/gitcoin-champions-program			false	false	false	false	false	false
@@ -5852,6 +5854,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 75-Early Actors	0xc759dc67e0c3816fdc56a2f5bb29920fc07e767d	Miner_0062_94		OnChain			false	false	false	false	false	false
 81-Other	0xc7696b27830dd8aa4823a1cba8440c27c36adec4	TinyHuman_id29_cnt8310_6mo		Ether Camp			false	false	false	true	false	false
 90-DevCon2:Individual	0xc769800f685299af0c107df62c629cbafdd2f011	R. Tyler Smith		DevCon2 Token Contract			false	false	false	false	false	false
+50-Tokens:ERC20	0xc76fb75950536d98fa62ea968e1d6b45ffea2a55	COL	COL	On chain	18		false	false	false	true	true	false
 31-Gitcoin Grants:Grant	0xc772248ed23b92437b277078644994f336b8cee0	Grant 1704 Kcoin		https://gitcoin.co/grants/1704/kcoin			false	false	false	false	false	false
 81-Other:Consensys	0xc78310231aa53bd3d0fea2f8c705c67730929d8f	SingularDTVFunds		Consensys			false	false	false	false	false	false
 30-Contracts:Humanity DAO	0xc78a748dccbd806ae782eb3b8590ae7d162e5a90	QH_SHEN		https://www.humanitydao.org/humans			false	false	false	false	false	false
