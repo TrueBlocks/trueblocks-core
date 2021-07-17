@@ -117,16 +117,18 @@ bool COptions::process_reconciliation(CTraverser* trav, blknum_t next) {
         }
     }
 
-    lockSection();
-    CArchive archive(WRITING_ARCHIVE);
-    if (!isTestMode() && archive.Lock(path, modeWriteCreate, LOCK_WAIT)) {
-        LOG4("Writing to cache for ", path);
-        archive << trav->trans.statements;
-        archive.Release();
+    if (!reversed) {
+        lockSection();
+        CArchive archive(WRITING_ARCHIVE);
+        if (!isTestMode() && archive.Lock(path, modeWriteCreate, LOCK_WAIT)) {
+            LOG4("Writing to cache for ", path);
+            archive << trav->trans.statements;
+            archive.Release();
+            unlockSection();
+            return !shouldQuit();
+        }
         unlockSection();
-        return !shouldQuit();
     }
-    unlockSection();
 
     return !shouldQuit();
 }
