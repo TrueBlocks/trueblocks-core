@@ -681,9 +681,16 @@ blknum_t getLatestBlock_cache_unripe(void) {
 
 //-------------------------------------------------------------------------
 blknum_t getLatestBlock_client(void) {
+    static blknum_t lastBlock = NOPOS;
+    static timestamp_t lastTime = timestamp_t(NOPOS);
+    timestamp_t thisTime = date_2_Ts(Now());
+    if (lastTime != NOPOS && thisTime < timestamp_t(lastTime + 13)) {
+        return lastBlock;
+    }
+
     string_q ret = callRPC("eth_blockNumber", "[]", false);
-    uint64_t retN = str_2_Uint(ret);
-    if (retN == 0) {
+    lastBlock = str_2_Uint(ret);
+    if (lastBlock == 0) {
         // Try a different way just in case. Geth, for example, doesn't
         // return blockNumber until the chain is synced (Parity may--don't know
         // We fall back to this method just in case
@@ -691,9 +698,9 @@ blknum_t getLatestBlock_client(void) {
         replace(str, "currentBlock:", "|");
         nextTokenClear(str, '|');
         str = nextTokenClear(str, ',');
-        retN = str_2_Uint(str);
+        lastBlock = str_2_Uint(str);
     }
-    return retN;
+    return lastBlock;
 }
 
 //--------------------------------------------------------------------------

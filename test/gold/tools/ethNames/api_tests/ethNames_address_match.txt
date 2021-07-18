@@ -136,6 +136,15 @@
       "description": ""
     },
     {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x10b47177e92ef9d5c6059055d92ddf6290848991",
+      "name": "SushiSwap LP Token",
+      "symbol": "SLP",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x10d1e0c359411f1f7af55a17add2891eacfbcd16",
       "name": "Name 0x10d1e0c3",
@@ -429,6 +438,15 @@
       "name": "Grant 0655 Alternative Income for Poor Families in Brazil!",
       "symbol": "",
       "source": "https://gitcoin.co/grants/655/alternative-income-for-poor-families-in-brazil",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x1229e2a0711660be162521f5626c68e85ec99c7f",
+      "name": "Bancor: Converter 103",
+      "symbol": "",
+      "source": "EtherScan.io",
       "decimals": 0,
       "description": ""
     },
@@ -1790,24 +1808,6 @@
       "source": "https://gitcoin.co/grants/1871/treetoken1",
       "decimals": 0,
       "description": ""
-    },
-    {
-      "tags": "31-Gitcoin Grants:Friends",
-      "address": "0x1955c2b76b1cf245795950e75eb176080879da50",
-      "name": "Name 0x1955c2b7",
-      "symbol": "",
-      "source": "Gitcoin Website",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x1961b3331969ed52770751fc718ef530838b6dee",
-      "name": "BitDegree Token",
-      "symbol": "BDG",
-      "source": "On chain",
-      "decimals": 18,
-      "description": "The BitDegree platform will offer students the best online courses with a clear and transparent blockchain based reward system and achievement tracking."
     }
   ],
   "types": [
