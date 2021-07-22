@@ -5,15 +5,15 @@ This tool is not yet ready for production use. Please return to this page later.
 ### usage
 
 `Usage:`    chifra pins [-l|-i|-k|-p|-v|-h]  
-`Purpose:`  Manage pinned index of appearances and associated bloom filters.
+`Purpose:`  Manage pinned index of appearances and associated Bloom filters.
 
 `Where:`  
 
 | | Option | Description |
 | :----- | :----- | :---------- |
-| -l | --list | list the index and bloom filter hashes from local manifest or pinning service |
-| -i | --init | initialize local index by downloading bloom filters from pinning service |
-| -k | --init_all | initialize local index by downloading both bloom filters and index chunks |
+| -l | --list | list the index and Bloom filter hashes from local manifest or pinning service |
+| -i | --init | initialize local index by downloading Bloom filters from pinning service |
+| -k | --init_all | initialize local index by downloading both Bloom filters and index chunks |
 | -p | --pin_locally | pin all local files in the index to an IPFS store (requires IPFS) |
 | -v | --verbose | set verbose level (optional level defaults to 1) |
 | -h | --help | display this help screen |
