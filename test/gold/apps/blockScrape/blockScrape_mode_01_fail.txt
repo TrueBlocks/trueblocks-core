@@ -1,24 +1,9 @@
 blockScrape argc: 2 [1:badmode] 
 blockScrape badmode 
-
-  Invalid option 'badmode' for 'mode'. One of [run|quit|pause|restart] required. Quitting...
-
-  Usage:    blockScrape [-n|-p|-s|-v|-h] mode  
-  Purpose:  Scan the chain and update the TrueBlocks index of appearances.
-
-  Where:  
-	mode                  control the block scraper, one of [run|quit|pause|restart] (required)
-	-n  (--n_blocks <num>)maximum number of blocks to process (defaults to 5000)
-	-p  (--pin)           pin new chunks (and blooms) to IPFS (requires Pinata key and running IPFS node)
-	-s  (--sleep <double>)the number of seconds to sleep between passes (default 14)
-
-	#### Hidden options
-	-b  (--n_block_procs <num>)number of block channels for blaze
-	-a  (--n_addr_procs <num>)number of address channels for blaze
-	-o  (--once)          run the a single block scrape, do not behave as long running process
-	#### Hidden options
-
-	-v  (--verbose)       set verbose level (optional level defaults to 1)
-	-h  (--help)          display this help screen
-
-  Powered by TrueBlocks
+{
+  "message": "Testing only",
+  "n_blocks": 2000,
+  "n_block_procs": 10,
+  "n_addr_procs": 20,
+  "pin": 0,
+}
