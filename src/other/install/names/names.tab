@@ -5115,6 +5115,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0xac3211a5025414af2866ff09c23fc18bc97e79b1	DOVU	DOV	On chain	18	A token you earn and spend by sharing and changing the way you travel.	false	false	false	true	true	false
 50-Tokens:ERC20	0xac3da587eac229c9896d919abc235ca4fd7f72c1	Target Coin	TGT	On chain	1	Bonus Crypto Fund.	false	false	false	true	true	false
 35-TheCyber:Friends	0xac4361f56c82ed59d533d45129f407015d84702a	theCyber Member 05		Solidity Code			false	false	false	false	false	false
+34-Twitter:Friends	0xac4df82fe37ea2187bc8c011a23d743b4f39019a	In TG 1					false	false	false	true	false	false
 81-Other	0xac504e2a9c870a48de521ed513b251b1f7116dd9	Rps		EtherScan.io			false	false	false	true	false	false
 81-Other	0xac5713b66789e58351201e1dae1d4fbb5c7d8931	BasicIncome_CoFund_id200_cnt3_3mo		Ether Camp			false	false	false	true	false	false
 50-Tokens:ERC20	0xac709fcb44a43c35f0da4e3163b117a17f3770f5	Arcade Token	ARC	On chain	18	RIDESHARING - Arcade City is peer-to-peer everything ‚Äö√Ñ√Æ with networks built by local communities, not corporations.	false	false	false	true	true	false
@@ -6714,6 +6715,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 80-Malicious:Shanghai	0xe25e422e3f9e9374a3d8a75451c790d48fb33218	Possibly Malicious DDOS 0xe25		TrueBlocks.io			false	false	false	true	false	false
 31-Gitcoin Grants:Friends	0xe27580aba0f234fe3f8bfb08d4b5d61cf14c865b	xudaiyanzi		Gitcoin Website			false	false	false	false	false	false
 81-Other	0xe27ae4010fdbb1aade0117db9143fce5a7edb383	@getssidetracked		Steem			false	false	false	false	false	false
+34-Twitter:Friends	0xe28e72fcf78647adce1f1252f240bbfaebd63bcc	Out TG 1					false	false	false	true	false	false
 40-Exchanges	0xe28ffac44b0c430aa3e62a9bc211f7d825d6c1f9	Uniswap: TRB	TRB	EtherScan.io			false	false	false	true	true	false
 30-Contracts	0xe295ad71242373c37c5fda7b57f26f9ea1088afe	MerkleDistributor					false	false	false	true	false	false
 30-Contracts:Humanity DAO	0xe2b52fc1ad49b93f85c45315ecbad740f17b0e8e	PeterTheOne		https://www.humanitydao.org/humans			false	false	false	false	false	false
