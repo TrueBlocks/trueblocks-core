@@ -33,7 +33,7 @@ func RunIndexScraper() {
 			IndexScraper.Counter++
 			IndexScraper.ShowStateChange("sleep", "wake")
 			/*-----------*/
-			options := " run --once"
+			options := ""
 			if IndexScraper.Verbose > 0 {
 				options += " --verbose " + strconv.Itoa(int(IndexScraper.Verbose))
 			}

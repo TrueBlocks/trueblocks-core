@@ -132,7 +132,7 @@ bool copyRipeToStage(const string_q& path, void* data) {
             blknum_t chunkSize = min(nRecords, MAX_ROWS);
 
             // Now we try to write the chunk. We will write at least one chunk no matter how many records there are
-            con->write_chunks(chunkSize, true /* once */);
+            con->write_chunks(chunkSize, true /* atLeastOnce */);
 
             // We return false here to pretend this scrape did not complete. We do this because we've actually already
             // written at least one chunk and we know we are at a snap-to boundary. We want the processor to clean up

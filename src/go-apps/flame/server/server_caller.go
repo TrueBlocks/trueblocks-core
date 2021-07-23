@@ -86,11 +86,11 @@ func CallOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd s
 
 	// Do the actual call
 	cmd := exec.Command(tbCmd, allDogs...)
-	if (Options.Verbose > 0) {
+	if Options.Verbose > 0 {
 		log.Print(utils.Yellow, "Calling: ", cmd, utils.Off)
 	}
 
-	if (cmd.Process != nil) {
+	if cmd.Process != nil {
 		// Listen if the call gets canceled
 		notify := w.(http.CloseNotifier).CloseNotify()
 		go func() {
@@ -101,7 +101,7 @@ func CallOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd s
 			}
 			log.Println("apiCmd: ", apiCmd)
 			if apiCmd == "scrape" {
-				out, err := exec.Command("blockScrape", "quit --verbose").Output()
+				out, err := exec.Command("blockScrape", "--quit --verbose").Output()
 				if err != nil {
 					fmt.Printf("%s", err)
 				} else {

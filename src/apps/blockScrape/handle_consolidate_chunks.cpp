@@ -33,7 +33,7 @@ bool CConsolidator::consolidate_chunks(void) {
         EXIT_NOMSG(true);
     }
 
-    EXIT_NOMSG(write_chunks(chunkSize, false));
+    EXIT_NOMSG(write_chunks(chunkSize, false /* atLeastOnce */));
 }
 
 //---------------------------------------------------------------------------------------------------

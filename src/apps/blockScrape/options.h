@@ -14,25 +14,18 @@
 // BEG_ERROR_DEFINES
 // END_ERROR_DEFINES
 
-typedef enum { STATE_STOPPED, STATE_RUNNING, STATE_PAUSED } ScrapeState;
-
 class CConsolidator;
 //-----------------------------------------------------------------------------
 class COptions : public COptionsBase {
   public:
     // BEG_CODE_DECLARE
-    string_q mode;
     uint64_t n_blocks;
     uint64_t n_block_procs;
     uint64_t n_addr_procs;
     bool pin;
     double sleep;
-    bool once;
     // END_CODE_DECLARE
 
-    ScrapeState state;
-    string_q controlFile;
-    string_q stateStr;
     timestamp_t latestBlockTs;
     blknum_t latestBlockNum;
     CPinnedChunkArray pinList;
@@ -46,13 +39,6 @@ class COptions : public COptionsBase {
 
     bool start_scraper(void);
     bool scrape_blocks(void);
-
-    bool changeState(void);
-    ScrapeState getCurrentState(string_q& current);
-    void cleanupAndQuit(void) {
-        mode = "quit";
-        changeState();
-    }
 };
 
 //-----------------------------------------------------------------------------

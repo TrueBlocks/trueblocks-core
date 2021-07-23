@@ -170,13 +170,12 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 13370,tools,ChainState,tokens,getTokens,,,,false,false,false,false,--,note,,If the queried node does not store historical state&#44; the results are undefined.
 13372,tools,ChainState,tokens,getTokens,,,,false,false,false,false,--,note,,`special` blocks are detailed under `chifra when --list`.
 
-10600,apps,Admin,scrape,blockScrape,mode,,,true,false,true,true,header,positional,enum[run|quit|pause|restart],control the block scraper
 10615,apps,Admin,scrape,blockScrape,n_blocks,n,(isDockerMode() ? 100 : 2000),false,true,true,true,header,flag,<uint64>,maximum number of blocks to process (defaults to 5000)
 10620,apps,Admin,scrape,blockScrape,n_block_procs,b,(isDockerMode() ? 5 : 10),false,true,false,false,header,flag,<uint64>,number of block channels for blaze
 10640,apps,Admin,scrape,blockScrape,n_addr_procs,a,(isDockerMode() ? 10 : 20),false,true,false,false,header,flag,<uint64>,number of address channels for blaze
 10645,apps,Admin,scrape,blockScrape,pin,p,,false,false,true,true,header,switch,<boolean>,pin new chunks (and blooms) to IPFS (requires Pinata key and running IPFS node)
 10650,apps,Admin,scrape,blockScrape,sleep,s,14,false,false,true,false,header,flag,<double>,the number of seconds to sleep between passes (default [{DEF}])
-10655,apps,Admin,scrape,blockScrape,once,o,,false,false,false,false,header,switch,<boolean>,run the a single block scrape&#44; do not behave as long running process
+10650,apps,Admin,scrape,blockScrape,quit,q,,false,false,false,false,local,switch,<boolean>,quit the program if it's running
 10660,apps,Admin,scrape,blockScrape,,,,false,false,true,true,--,description,,Scan the chain and update the TrueBlocks index of appearances.
 
 10700,apps,Admin,status,cacheStatus,modes,,,false,false,true,true,local,positional,list<enum[index|monitors|entities|names|abis|caches|some*|all]>,the type of status info to retrieve
@@ -191,13 +190,13 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 10840,apps,Admin,status,cacheStatus,test_end,E,NOPOS,false,false,false,false,local,flag,<blknum>,last block to process (inclusive -- testing only)
 10860,apps,Admin,status,cacheStatus,,,,false,false,true,true,--,description,,Report on the status of the TrueBlocks system.
 
-10950,apps,Admin,pins,pinMan,list,l,,false,false,true,true,local,switch,<boolean>,list the index and bloom filter hashes from local manifest or pinning service
-10950,apps,Admin,pins,pinMan,init,i,,false,false,true,true,header,switch,<boolean>,initialize local index by downloading bloom filters from pinning service
-10951,apps,Admin,pins,pinMan,init_all,k,,false,false,true,true,header,switch,<boolean>,initialize local index by downloading both bloom filters and index chunks
+10950,apps,Admin,pins,pinMan,list,l,,false,false,true,true,local,switch,<boolean>,list the index and Bloom filter hashes from local manifest or pinning service
+10950,apps,Admin,pins,pinMan,init,i,,false,false,true,true,header,switch,<boolean>,initialize local index by downloading Bloom filters from pinning service
+10951,apps,Admin,pins,pinMan,init_all,k,,false,false,true,true,header,switch,<boolean>,initialize local index by downloading both Bloom filters and index chunks
 10980,apps,Admin,pins,pinMan,sleep,s,.25,false,false,false,false,header,flag,<double>,the number of seconds to sleep between requests during init (default [{DEF}])
 10950,apps,Admin,pins,pinMan,remote,r,,false,false,false,false,header,switch,<boolean>,applicable only to --list mode&#44; recover the manifest from pinning service
 10952,apps,Admin,pins,pinMan,pin_locally,p,,false,false,true,true,header,switch,<boolean>,pin all local files in the index to an IPFS store (requires IPFS)
-10980,apps,Admin,pins,pinMan,,,,false,false,true,true,--,description,,Manage pinned index of appearances and associated bloom filters.
+10980,apps,Admin,pins,pinMan,,,,false,false,true,true,--,description,,Manage pinned index of appearances and associated Bloom filters.
 10990,apps,Admin,pins,pinMan,,,,false,false,false,false,--,note,,One of `--list`&#44; `--init`&#44; or `--init_all` is required.
 10991,apps,Admin,pins,pinMan,,,,false,false,false,false,--,note,,the `--pin_locally` option only works if the IPFS executable is in your path.
 
