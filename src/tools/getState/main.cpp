@@ -52,7 +52,7 @@ bool visitBlock(uint64_t blockNum, void* data) {
     COptions* opt = reinterpret_cast<COptions*>(data);
     bool isText = expContext().exportFmt & (TXT1 | CSV1);
 
-    if (!isTestMode()) {
+    if (!isTestMode() && opt->blocks.nItems() > 10) {
         cerr << blockNum << "\r";
         cerr.flush();
     }

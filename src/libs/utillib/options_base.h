@@ -238,6 +238,9 @@ class COptionsBlockList {
     bool empty(void) const {
         return !(hashList.size() || numList.size() || (start != stop));
     }
+    size_t nItems(void) const {
+        return hashList.size() + numList.size() + (start - stop);
+    }
     size_t size(void) const {
         CUintArray nums;
         forEveryBlockNumber(listBlocks, &nums);
