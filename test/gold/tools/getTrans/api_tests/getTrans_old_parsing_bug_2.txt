@@ -17,6 +17,7 @@
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 1635850,
+        "effectiveGasPrice": 18800000000,
         "logs": [
           {
             "address": "0x1e0447b19bb6ecfdae1e4ae1694b0c3659614e4e",

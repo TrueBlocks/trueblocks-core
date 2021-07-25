@@ -17,6 +17,7 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --last_block 9000000 --fmt
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 21000,
+    "effectiveGasPrice": 10000000000,
     "status": 1
   },
   "compressedTx": "0x ( )",
@@ -41,6 +42,7 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --last_block 9000000 --fmt
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 55144,
+    "effectiveGasPrice": 1000000000,
     "logs": [
       {
         "address": "0x226159d592e2b063810a10ebf6dcbada94ed68b8",
@@ -85,6 +87,7 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --last_block 9000000 --fmt
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 21000,
+    "effectiveGasPrice": 10000000000,
     "status": 1
   },
   "compressedTx": "0x ( )",
@@ -109,6 +112,7 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --last_block 9000000 --fmt
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 21000,
+    "effectiveGasPrice": 10000000000,
     "status": 1
   },
   "compressedTx": "0x ( )",
@@ -133,6 +137,7 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --last_block 9000000 --fmt
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 37298,
+    "effectiveGasPrice": 4000000000,
     "logs": [
       {
         "address": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
@@ -169,6 +174,7 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --last_block 9000000 --fmt
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 22426,
+    "effectiveGasPrice": 5000000000,
     "logs": [
       {
         "address": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
@@ -205,6 +211,7 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --last_block 9000000 --fmt
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 22362,
+    "effectiveGasPrice": 10000000000,
     "logs": [
       {
         "address": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
@@ -241,6 +248,7 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --last_block 9000000 --fmt
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 45985,
+    "effectiveGasPrice": 1000000000,
     "logs": [
       {
         "address": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
@@ -277,6 +285,7 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --last_block 9000000 --fmt
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 34017,
+    "effectiveGasPrice": 1000000000,
     "logs": [
       {
         "address": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
@@ -321,6 +330,7 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --last_block 9000000 --fmt
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 46049,
+    "effectiveGasPrice": 1000000000,
     "logs": [
       {
         "address": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
@@ -357,6 +367,7 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --last_block 9000000 --fmt
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 24541,
+    "effectiveGasPrice": 1000000000,
     "logs": [
       {
         "address": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
@@ -401,6 +412,7 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --last_block 9000000 --fmt
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 105208,
+    "effectiveGasPrice": 1000000000,
     "logs": [
       {
         "address": "0x314159265dd8dbb310642f98f50c066173c1259b",
@@ -446,6 +458,7 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --last_block 9000000 --fmt
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 256551,
+    "effectiveGasPrice": 3000000000,
     "logs": [
       {
         "address": "0x6bc08156f405519fd5254b450c83995fc7bc620b",
@@ -502,6 +515,7 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --last_block 9000000 --fmt
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 186953,
+    "effectiveGasPrice": 3000000000,
     "logs": [
       {
         "address": "0xac104c988ff9c90dafc7754b2fb9072e25f93507",

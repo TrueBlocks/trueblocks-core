@@ -4,13 +4,16 @@ getReceipts --file:cmd_file --verbose --parity --fmt json
   {
     "contractAddress": "0x0",
     "gasUsed": "0x5208",
+    "effectiveGasPrice": "0x4a817c800",
     "status": null
   },  {
     "contractAddress": "0x0",
     "gasUsed": "0x5208",
+    "effectiveGasPrice": "0x4a817c800",
     "status": null
   },  {
     "contractAddress": "0x0",
     "gasUsed": "0x5208",
+    "effectiveGasPrice": "0x4a817c800",
     "status": null
   }] }

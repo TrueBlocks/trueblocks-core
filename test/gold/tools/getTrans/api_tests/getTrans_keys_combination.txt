@@ -18,6 +18,7 @@
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 39512,
+        "effectiveGasPrice": 4000000000,
         "logs": [
           {
             "address": "0x209c4784ab1e8183cf58ca33cb740efbf3fc18ef",
@@ -63,6 +64,7 @@
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 52616,
+        "effectiveGasPrice": 25000000000,
         "logs": [
           {
             "address": "0x1a95b271b0535d15fa49932daba31ba612b52946",
@@ -102,6 +104,7 @@
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 30416,
+        "effectiveGasPrice": 49775761060,
         "logs": [
           {
             "address": "0x209c4784ab1e8183cf58ca33cb740efbf3fc18ef",

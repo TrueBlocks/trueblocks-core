@@ -30,6 +30,7 @@ getBlocks 2222222 2332332 --fmt api
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 1000000,
+        "effectiveGasPrice": 20000000000,
         "status": null
       },
       "gasUsed": 1000000
@@ -52,6 +53,7 @@ getBlocks 2222222 2332332 --fmt api
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 20000000000,
         "status": null
       },
       "gasUsed": 21000
@@ -74,6 +76,7 @@ getBlocks 2222222 2332332 --fmt api
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 20000000000,
         "status": null
       },
       "gasUsed": 21000
@@ -96,6 +99,7 @@ getBlocks 2222222 2332332 --fmt api
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 20000000000,
         "status": null
       },
       "gasUsed": 21000
@@ -118,6 +122,7 @@ getBlocks 2222222 2332332 --fmt api
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 20000000000,
         "status": null
       },
       "gasUsed": 21000
@@ -140,6 +145,7 @@ getBlocks 2222222 2332332 --fmt api
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 20000000000,
         "status": null
       },
       "gasUsed": 21000
@@ -162,6 +168,7 @@ getBlocks 2222222 2332332 --fmt api
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 20000000000,
         "status": null
       },
       "gasUsed": 21000
@@ -184,6 +191,7 @@ getBlocks 2222222 2332332 --fmt api
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 20000000000,
         "status": null
       },
       "gasUsed": 21000
@@ -206,6 +214,7 @@ getBlocks 2222222 2332332 --fmt api
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 20000000000,
         "status": null
       },
       "gasUsed": 21000
@@ -228,6 +237,7 @@ getBlocks 2222222 2332332 --fmt api
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 20000000000,
         "status": null
       },
       "gasUsed": 21000
@@ -250,6 +260,7 @@ getBlocks 2222222 2332332 --fmt api
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 24055,
+        "effectiveGasPrice": 20000000000,
         "status": null
       },
       "gasUsed": 24055
@@ -272,6 +283,7 @@ getBlocks 2222222 2332332 --fmt api
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 20000000000,
         "status": null
       },
       "gasUsed": 21000
@@ -294,6 +306,7 @@ getBlocks 2222222 2332332 --fmt api
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 24119,
+        "effectiveGasPrice": 20000000000,
         "status": null
       },
       "gasUsed": 24119
@@ -316,6 +329,7 @@ getBlocks 2222222 2332332 --fmt api
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 24119,
+        "effectiveGasPrice": 20000000000,
         "status": null
       },
       "gasUsed": 24119
@@ -338,6 +352,7 @@ getBlocks 2222222 2332332 --fmt api
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 24119,
+        "effectiveGasPrice": 20000000000,
         "status": null
       },
       "gasUsed": 24119
@@ -373,6 +388,7 @@ getBlocks 2222222 2332332 --fmt api
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21298,
+        "effectiveGasPrice": 53316245930,
         "logs": [
           {
             "address": "0x37a9679c41e99db270bda88de8ff50c0cd23f326",
@@ -407,6 +423,7 @@ getBlocks 2222222 2332332 --fmt api
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 45325035454,
         "status": null
       },
       "gasUsed": 21000
@@ -429,6 +446,7 @@ getBlocks 2222222 2332332 --fmt api
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 56561,
+        "effectiveGasPrice": 42734205443,
         "status": null
       },
       "gasUsed": 56561
@@ -451,6 +469,7 @@ getBlocks 2222222 2332332 --fmt api
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 42734205443,
         "status": null
       },
       "gasUsed": 21000
@@ -473,6 +492,7 @@ getBlocks 2222222 2332332 --fmt api
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 31561,
+        "effectiveGasPrice": 42734205443,
         "status": null
       },
       "gasUsed": 31561
@@ -495,6 +515,7 @@ getBlocks 2222222 2332332 --fmt api
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 29130,
+        "effectiveGasPrice": 30000000000,
         "logs": [
           {
             "address": "0xbfc39b6f805a9e40e77291aff27aee3c96915bdd",
@@ -527,6 +548,7 @@ getBlocks 2222222 2332332 --fmt api
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 29130,
+        "effectiveGasPrice": 30000000000,
         "logs": [
           {
             "address": "0xbfc39b6f805a9e40e77291aff27aee3c96915bdd",
@@ -559,6 +581,7 @@ getBlocks 2222222 2332332 --fmt api
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 29130,
+        "effectiveGasPrice": 30000000000,
         "logs": [
           {
             "address": "0xbfc39b6f805a9e40e77291aff27aee3c96915bdd",
@@ -591,6 +614,7 @@ getBlocks 2222222 2332332 --fmt api
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 29130,
+        "effectiveGasPrice": 30000000000,
         "logs": [
           {
             "address": "0xbfc39b6f805a9e40e77291aff27aee3c96915bdd",
@@ -623,6 +647,7 @@ getBlocks 2222222 2332332 --fmt api
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 29130,
+        "effectiveGasPrice": 30000000000,
         "logs": [
           {
             "address": "0xbfc39b6f805a9e40e77291aff27aee3c96915bdd",
@@ -655,6 +680,7 @@ getBlocks 2222222 2332332 --fmt api
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 29130,
+        "effectiveGasPrice": 30000000000,
         "logs": [
           {
             "address": "0xbfc39b6f805a9e40e77291aff27aee3c96915bdd",
@@ -687,6 +713,7 @@ getBlocks 2222222 2332332 --fmt api
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 20000000000,
         "status": null
       },
       "gasUsed": 21000
@@ -709,6 +736,7 @@ getBlocks 2222222 2332332 --fmt api
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 20000000000,
         "status": null
       },
       "gasUsed": 21000

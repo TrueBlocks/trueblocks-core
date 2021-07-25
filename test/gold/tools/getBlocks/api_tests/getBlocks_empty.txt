@@ -29,6 +29,7 @@
           "receipt": {
             "contractAddress": "0x0",
             "gasUsed": 21000,
+            "effectiveGasPrice": 0,
             "logs": [],
             "status": null
           },
@@ -57,6 +58,7 @@
           "receipt": {
             "contractAddress": "0x0",
             "gasUsed": 21000,
+            "effectiveGasPrice": 0,
             "logs": [],
             "status": null
           },
@@ -85,6 +87,7 @@
           "receipt": {
             "contractAddress": "0x0",
             "gasUsed": 21000,
+            "effectiveGasPrice": 0,
             "logs": [],
             "status": null
           },
@@ -113,6 +116,7 @@
           "receipt": {
             "contractAddress": "0x0",
             "gasUsed": 21000,
+            "effectiveGasPrice": 0,
             "logs": [],
             "status": null
           },

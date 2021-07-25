@@ -29,6 +29,7 @@
           "receipt": {
             "contractAddress": "0x0",
             "gasUsed": 43260,
+            "effectiveGasPrice": 0,
             "logs": [
               {
                 "address": "0xfdc77b9cb732eb8c896b152e28294521f5f62e67",
@@ -66,6 +67,7 @@
           "receipt": {
             "contractAddress": "0x0",
             "gasUsed": 21000,
+            "effectiveGasPrice": 0,
             "logs": [],
             "status": null
           },
@@ -107,6 +109,7 @@
           "receipt": {
             "contractAddress": "0x0",
             "gasUsed": 21000,
+            "effectiveGasPrice": 0,
             "logs": [],
             "status": null
           },
@@ -135,6 +138,7 @@
           "receipt": {
             "contractAddress": "0x0",
             "gasUsed": 21000,
+            "effectiveGasPrice": 0,
             "logs": [],
             "status": null
           },
@@ -163,6 +167,7 @@
           "receipt": {
             "contractAddress": "0x0",
             "gasUsed": 21000,
+            "effectiveGasPrice": 0,
             "logs": [],
             "status": null
           },
@@ -191,6 +196,7 @@
           "receipt": {
             "contractAddress": "0x0",
             "gasUsed": 21000,
+            "effectiveGasPrice": 0,
             "logs": [],
             "status": null
           },
@@ -219,6 +225,7 @@
           "receipt": {
             "contractAddress": "0x0",
             "gasUsed": 21000,
+            "effectiveGasPrice": 0,
             "logs": [],
             "status": null
           },
@@ -247,6 +254,7 @@
           "receipt": {
             "contractAddress": "0x0",
             "gasUsed": 21000,
+            "effectiveGasPrice": 0,
             "logs": [],
             "status": null
           },
@@ -275,6 +283,7 @@
           "receipt": {
             "contractAddress": "0x0",
             "gasUsed": 21000,
+            "effectiveGasPrice": 0,
             "logs": [],
             "status": null
           },
@@ -303,6 +312,7 @@
           "receipt": {
             "contractAddress": "0x0",
             "gasUsed": 21000,
+            "effectiveGasPrice": 0,
             "logs": [],
             "status": null
           },
@@ -331,6 +341,7 @@
           "receipt": {
             "contractAddress": "0x0",
             "gasUsed": 21000,
+            "effectiveGasPrice": 0,
             "logs": [],
             "status": null
           },
@@ -359,6 +370,7 @@
           "receipt": {
             "contractAddress": "0x0",
             "gasUsed": 21000,
+            "effectiveGasPrice": 0,
             "logs": [],
             "status": null
           },
@@ -387,6 +399,7 @@
           "receipt": {
             "contractAddress": "0x0",
             "gasUsed": 22966,
+            "effectiveGasPrice": 0,
             "logs": [
               {
                 "address": "0x68c4dc84382822d4ebaf4d2fbbafdc5fde80279b",
@@ -426,6 +439,7 @@
           "receipt": {
             "contractAddress": "0x0",
             "gasUsed": 21000,
+            "effectiveGasPrice": 0,
             "logs": [],
             "status": null
           },
@@ -454,6 +468,7 @@
           "receipt": {
             "contractAddress": "0x0",
             "gasUsed": 21000,
+            "effectiveGasPrice": 0,
             "logs": [],
             "status": null
           },
@@ -482,6 +497,7 @@
           "receipt": {
             "contractAddress": "0x0",
             "gasUsed": 21000,
+            "effectiveGasPrice": 0,
             "logs": [],
             "status": null
           },
@@ -510,6 +526,7 @@
           "receipt": {
             "contractAddress": "0x0",
             "gasUsed": 21000,
+            "effectiveGasPrice": 0,
             "logs": [],
             "status": null
           },
@@ -538,6 +555,7 @@
           "receipt": {
             "contractAddress": "0x0",
             "gasUsed": 21000,
+            "effectiveGasPrice": 0,
             "logs": [],
             "status": null
           },
@@ -579,6 +597,7 @@
           "receipt": {
             "contractAddress": "0x0",
             "gasUsed": 52129,
+            "effectiveGasPrice": 0,
             "logs": [
               {
                 "address": "0xb97048628db6b661d4c2aa833e95dbe1a905b280",
@@ -618,6 +637,7 @@
           "receipt": {
             "contractAddress": "0x9f87e7a713d8575b1d3b9c2320aae64c8222c001",
             "gasUsed": 140027,
+            "effectiveGasPrice": 0,
             "logs": [],
             "status": null
           },
@@ -646,6 +666,7 @@
           "receipt": {
             "contractAddress": "0x0",
             "gasUsed": 21000,
+            "effectiveGasPrice": 0,
             "logs": [],
             "status": null
           },
@@ -674,6 +695,7 @@
           "receipt": {
             "contractAddress": "0x0",
             "gasUsed": 21000,
+            "effectiveGasPrice": 0,
             "logs": [],
             "status": null
           },
@@ -702,6 +724,7 @@
           "receipt": {
             "contractAddress": "0x0",
             "gasUsed": 21000,
+            "effectiveGasPrice": 0,
             "logs": [],
             "status": null
           },
@@ -730,6 +753,7 @@
           "receipt": {
             "contractAddress": "0x0",
             "gasUsed": 21000,
+            "effectiveGasPrice": 0,
             "logs": [],
             "status": null
           },
@@ -758,6 +782,7 @@
           "receipt": {
             "contractAddress": "0x0",
             "gasUsed": 21000,
+            "effectiveGasPrice": 0,
             "logs": [],
             "status": null
           },
@@ -786,6 +811,7 @@
           "receipt": {
             "contractAddress": "0x0",
             "gasUsed": 21000,
+            "effectiveGasPrice": 0,
             "logs": [],
             "status": null
           },
@@ -814,6 +840,7 @@
           "receipt": {
             "contractAddress": "0x0",
             "gasUsed": 21000,
+            "effectiveGasPrice": 0,
             "logs": [],
             "status": null
           },

@@ -41,6 +41,7 @@ params.size: 2
     "receipt": {
       "contractAddress": "0x0",
       "gasUsed": 60000,
+      "effectiveGasPrice": 8100000000,
       "status": 0
     },
     "articulatedTx": {

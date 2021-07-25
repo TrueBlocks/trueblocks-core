@@ -4,6 +4,7 @@ getReceipts 0xb8a3f7f5cfc1748f91a684f20fe89031202cbadcd15078c49b85ec2a57f43853.4
   {
     "contractAddress": "0x0",
     "gasUsed": "0x76d0",
+    "effectiveGasPrice": "0xb96ddd6a4",
     "logs": [
       {
         "address": "0x209c4784ab1e8183cf58ca33cb740efbf3fc18ef",

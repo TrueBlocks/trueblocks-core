@@ -4,10 +4,12 @@ getReceipts 2222222.0 2332332.0 --fmt api
   {
     "contractAddress": "0x0",
     "gasUsed": 1000000,
+    "effectiveGasPrice": 20000000000,
     "status": null
   },  {
     "contractAddress": "0x0",
     "gasUsed": 21298,
+    "effectiveGasPrice": 53316245930,
     "logs": [
       {
         "address": "0x37a9679c41e99db270bda88de8ff50c0cd23f326",
