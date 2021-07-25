@@ -855,7 +855,7 @@ encoding	type	name	signature	input_names	output_names
 0x8160f0b5	function	minimumQuorum	minimumQuorum()		val_0,,
 0x81b1c820	function	minimumRebalanceInterval	minimumRebalanceInterval()		ret_0,,
 0x2b135733	function	minimumTimeToPivot	minimumTimeToPivot()		ret_0,,
-0x40c10f19	function	mint	mint(address,uint256)	to,tokenId,	,
+0x40c10f19	function	mint	mint(address,uint256)	recipient,amount,	,
 0x4cd4edcb	function	_mint	_mint(address,uint256,bytes,bytes)	account,amount,userData,operatorData,	,
 0x4e6ec247	function	_mint	_mint(address,uint256)	account,amount,	,
 0x6a627842	function	mint	mint(address)	to,	,

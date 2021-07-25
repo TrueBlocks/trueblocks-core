@@ -7611,7 +7611,7 @@
       "stateMutability": "nonpayable",
       "signature": "mint(address,uint256)",
       "encoding": "0x40c10f19",
-      "input_names": "to,tokenId,",
+      "input_names": "recipient,amount,",
       "output_names": ""
     },
     {

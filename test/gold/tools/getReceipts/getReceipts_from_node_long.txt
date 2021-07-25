@@ -5,6 +5,7 @@
 "cumulativeGasUsed":"0x361cc"
 "data":
 "data":"0x000000000000000000000000000000000000000000000000000000000a21fe80"
+"effectiveGasPrice":"0x5d21dba00"
 "from":"0x40584168524a928ae43b4e83893f963e467e9d73"
 "gasUsed":"0xcd88"
 "id":"1"
