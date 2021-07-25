@@ -30,7 +30,7 @@ static const COption params[] = {
     COption("factory", "y", "", OPT_SWITCH, "scan for contract creations from the given address(es) and report address of those contracts"),  // NOLINT
     COption("emitter", "", "", OPT_SWITCH, "for log export only, export only if one of the given export addresses emitted the event"),  // NOLINT
     COption("source", "", "list<addr>", OPT_FLAG, "for log export only, export only one of these addresses emitted the event"),  // NOLINT
-    COption("relevant", "", "", OPT_SWITCH, "for log export only, if true export only logs relevant to one of the given export addresses"),  // NOLINT
+    COption("relevant", "", "", OPT_SWITCH, "for log and accounting export only, if true export only logs relevant to one of the given export addresses"),  // NOLINT
     COption("count", "U", "", OPT_SWITCH, "only available for --appearances mode, if present return only the number of records"),  // NOLINT
     COption("first_block", "F", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive)"),
     COption("last_block", "L", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive)"),

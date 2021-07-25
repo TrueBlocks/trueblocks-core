@@ -13,6 +13,11 @@ bool acct_Display(CTraverser* trav, void* data) {
         if (opt->accounting) {
             blknum_t next = trav->index < opt->monApps.size() - 1 ? opt->monApps[trav->index + 1].blk : NOPOS;
             opt->process_reconciliation(trav, next);
+            if (opt->relevant) {
+                for (auto& log : trav->trans.receipt.logs) {
+                    log.m_showing = opt->isRelevant(log);
+                }
+            }
         }
         cout << ((isJson() && !opt->firstOut) ? ", " : "");
         cout << trav->trans;

@@ -210,7 +210,7 @@ paths:
             type: string
       - name: relevant
         in: query
-        description: for log export only, if true export only logs relevant to one of the given export addresses
+        description: for log and accounting export only, if true export only logs relevant to one of the given export addresses
         required: false
         style: form
         explode: true
