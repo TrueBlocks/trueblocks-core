@@ -6,6 +6,7 @@ fields = hash blockHash (nowrite-min)|\
         wei cumulativeGasUsed (nowrite)|\
         address from (nowrite-min)|\
         gas gasUsed|\
+        sgas effectiveGasPrice|\
         CLogEntryArray logs|\
         bytes32 root (nowrite)|\
         uint32 status=NO_STATUS|\

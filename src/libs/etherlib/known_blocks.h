@@ -25,6 +25,7 @@ namespace qblocks {
 #define byzantiumBlock 4370000
 #define constantinopleBlock 7280000
 #define instanbulBlock 9069000
+#define londonBlock 12965000
 
 //-----------------------------------------------------------------------
 inline bool ddosRange(blknum_t bn) {

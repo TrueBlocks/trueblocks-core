@@ -82,6 +82,11 @@ string_q CReceipt::getValueByName(const string_q& fieldName) const {
                 return wei_2_Str(cumulativeGasUsed);
             }
             break;
+        case 'e':
+            if (fieldName % "effectiveGasPrice") {
+                return effectiveGasPrice == 0 ? "" : gas_2_Str(effectiveGasPrice);
+            }
+            break;
         case 'g':
             if (fieldName % "gasUsed") {
                 return gas_2_Str(gasUsed);
@@ -173,6 +178,12 @@ bool CReceipt::setValueByName(const string_q& fieldNameIn, const string_q& field
                 return true;
             }
             break;
+        case 'e':
+            if (fieldName % "effectiveGasPrice") {
+                effectiveGasPrice = str_2_Gas(fieldValue);
+                return true;
+            }
+            break;
         case 'g':
             if (fieldName % "gasUsed") {
                 gasUsed = str_2_Gas(fieldValue);
@@ -233,6 +244,7 @@ bool CReceipt::Serialize(CArchive& archive) {
     archive >> contractAddress;
     // archive >> cumulativeGasUsed;
     archive >> gasUsed;
+    archive >> effectiveGasPrice;
     archive >> logs;
     // archive >> root;
     archive >> status;
@@ -252,6 +264,7 @@ bool CReceipt::SerializeC(CArchive& archive) const {
     archive << contractAddress;
     // archive << cumulativeGasUsed;
     archive << gasUsed;
+    archive << effectiveGasPrice;
     archive << logs;
     // archive << root;
     archive << status;
@@ -302,6 +315,7 @@ void CReceipt::registerClass(void) {
     ADD_FIELD(CReceipt, "from", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CReceipt, "from");
     ADD_FIELD(CReceipt, "gasUsed", T_GAS, ++fieldNum);
+    ADD_FIELD(CReceipt, "effectiveGasPrice", T_GAS | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CReceipt, "logs", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CReceipt, "root", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CReceipt, "root");
@@ -331,20 +345,29 @@ string_q nextReceiptChunk_custom(const string_q& fieldIn, const void* dataPtr) {
     if (rec) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
-            case 's':
-                if (fieldIn % "status") {
-                    if (rec->status == NO_STATUS) {
-                        return "null";
-                    } else if (rec->pTrans && rec->pTrans->pBlock &&
-                               rec->pTrans->pBlock->blockNumber < byzantiumBlock) {
-                        return "null";
-                    }
-                }
-                break;
             case 'c':
                 if (fieldIn % "contractAddress") {
                     if (isZeroAddr(rec->contractAddress))
                         return "";
+                }
+                break;
+            case 'e':
+                if (fieldIn % "effectiveGasPrice") {
+                    bool preLondon =
+                        rec->pTrans && rec->pTrans->pBlock && rec->pTrans->pBlock->blockNumber < londonBlock;
+                    if (preLondon)
+                        return "";
+                }
+                break;
+            case 's':
+                if (fieldIn % "status") {
+                    bool preByzantium =
+                        rec->pTrans && rec->pTrans->pBlock && rec->pTrans->pBlock->blockNumber < byzantiumBlock;
+                    if (rec->status == NO_STATUS) {
+                        return "null";
+                    } else if (preByzantium) {
+                        return "null";
+                    }
                 }
                 break;
             // EXISTING_CODE
@@ -386,6 +409,13 @@ bool CReceipt::readBackLevel(CArchive& archive) {
         archive >> gasUsed;
         archive >> logs;
         archive >> removed;  // was logsB loom
+        archive >> status;
+        finishParse();
+        done = true;
+    } else if (m_schema < getVersionNum(0, 9, 5)) {
+        archive >> contractAddress;
+        archive >> gasUsed;
+        archive >> logs;
         archive >> status;
         finishParse();
         done = true;
