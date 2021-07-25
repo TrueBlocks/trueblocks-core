@@ -21,6 +21,7 @@
 #include "page.h"
 #include "skin.h"
 #include "schema.h"
+#include "route.h"
 
 // BEG_ERROR_DEFINES
 #define ERR_CLASSDEFNOTEXIST 1
@@ -53,6 +54,7 @@ class COptions : public COptionsBase {
   public:
     // BEG_CODE_DECLARE
     bool all;
+    bool js;
     string_q nspace;
     string_q filter;
     bool force;
@@ -74,6 +76,7 @@ class COptions : public COptionsBase {
     ostringstream notesStream, errorStrStream, errorDefStream, debugStream, goCallStream;
     ostringstream goRouteStream, chifraCmdStream, chifraHelpStream, pairMapStream;
     ostringstream apiTagStream, htmlTagStream, apiPathStream, htmlPathStream;
+    ostringstream jsLocationStream, jsTemplateStream, jsHotkeyStream, jsRouteStream;
 
     void clearStreams(void) {
         optionStream.str("");
@@ -94,6 +97,10 @@ class COptions : public COptionsBase {
         htmlTagStream.str("");
         apiPathStream.str("");
         htmlPathStream.str("");
+        jsLocationStream.str("");
+        jsTemplateStream.str("");
+        jsHotkeyStream.str("");
+        jsRouteStream.str("");
 
         optionStream.clear();
         initStream.clear();
@@ -113,6 +120,10 @@ class COptions : public COptionsBase {
         htmlTagStream.clear();
         apiPathStream.clear();
         htmlPathStream.clear();
+        jsLocationStream.clear();
+        jsTemplateStream.clear();
+        jsHotkeyStream.clear();
+        jsRouteStream.clear();
 
         positionals.clear();
     }
@@ -123,13 +134,15 @@ class COptions : public COptionsBase {
     bool parseArguments(string_q& command);
     void Init(void);
 
-    bool handle_js(void);
     bool handle_readmes(void);
     bool handle_options(void);
     bool handle_apifiles(void);
     bool handle_lint(void);
     bool handle_format(void);
     bool handle_generate(CToml& toml, const CClassDefinition& classDef, const string_q& namespc, bool asJs);
+    bool handle_js(void);
+    bool handle_js_type(const CClassDefinition& classDef);
+
     void generate_switch(const CCommandOption& option);
     void generate_toggle(const CCommandOption& option);
     void generate_flag(const CCommandOption& option);
@@ -144,7 +157,6 @@ class COptions : public COptionsBase {
 extern bool listClasses(const string_q& path, void* data);
 extern bool lintFiles(const string_q& path, void* data);
 extern bool formatFiles(const string_q& path, void* data);
-extern void updateTemplates(void);
 extern string_q getCaseGetCode(const CParameterArray& fields);
 extern string_q getCaseSetCode(const CParameterArray& fields);
 extern string_q convertTypes(const string_q& inStr);

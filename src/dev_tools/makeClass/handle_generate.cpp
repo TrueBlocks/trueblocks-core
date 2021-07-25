@@ -312,6 +312,9 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
     replaceAll(srcSource, "`", string_q(1, '\t'));
     counter.nProcessed += writeTheCode(codewrite_t(srcFile, srcSource, namespc, 4, true, force));
 
+    if (js && classDef.js)
+        handle_js_type(classDef);
+
     return true;
 }
 

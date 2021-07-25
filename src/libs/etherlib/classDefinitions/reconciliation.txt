@@ -32,3 +32,4 @@ includes = utillib.h|abi.h
 cpp_includes = etherlib.h
 serializable = true
 equals = ((blockNumber == it.blockNumber) && (assetAddr == it.assetAddr))
+js = true

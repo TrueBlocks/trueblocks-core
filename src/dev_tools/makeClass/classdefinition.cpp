@@ -142,6 +142,11 @@ string_q CClassDefinition::getValueByName(const string_q& fieldName) const {
                 return input_path;
             }
             break;
+        case 'j':
+            if (fieldName % "js") {
+                return bool_2_Str_t(js);
+            }
+            break;
         case 's':
             if (fieldName % "short_fn") {
                 return short_fn;
@@ -258,6 +263,12 @@ bool CClassDefinition::setValueByName(const string_q& fieldNameIn, const string_
                 return true;
             }
             break;
+        case 'j':
+            if (fieldName % "js") {
+                js = str_2_Bool(fieldValue);
+                return true;
+            }
+            break;
         case 's':
             if (fieldName % "short_fn") {
                 short_fn = fieldValue;
@@ -324,6 +335,7 @@ bool CClassDefinition::Serialize(CArchive& archive) {
     archive >> eq_str;
     archive >> scope_str;
     archive >> serializable;
+    archive >> js;
     // archive >> fieldArray;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -357,6 +369,7 @@ bool CClassDefinition::SerializeC(CArchive& archive) const {
     archive << eq_str;
     archive << scope_str;
     archive << serializable;
+    archive << js;
     // archive << fieldArray;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -414,6 +427,7 @@ void CClassDefinition::registerClass(void) {
     ADD_FIELD(CClassDefinition, "eq_str", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "scope_str", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "serializable", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CClassDefinition, "js", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "fieldArray", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CClassDefinition, "fieldArray");
 
@@ -506,6 +520,7 @@ CClassDefinition::CClassDefinition(const CToml& toml) {
     eq_str = toml.getConfigStr("settings", "equals", "");
     scope_str = toml.getConfigStr("settings", "scope", "static");  // TODO(tjayrush): global data
     serializable = toml.getConfigBool("settings", "serializable", false);
+    js = toml.getConfigBool("settings", "js", false);
 
     //------------------------------------------------------------------------------------------------
     class_base = toProper(extract(class_name, 1));

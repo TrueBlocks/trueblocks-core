@@ -55,7 +55,6 @@ bool COptions::parseArguments(string_q& command) {
     bool readmes = false;
     bool format = false;
     bool lint = false;
-    bool js = false;
     bool dump = false;
     // END_CODE_LOCAL_INIT
 
@@ -144,7 +143,7 @@ bool COptions::parseArguments(string_q& command) {
     // END_DEBUG_DISPLAY
 
     if (js)
-        return handle_js();
+        handle_js();
 
     // If the user has explicitly specified a classDef, use that
     LOG8("pwd: ", getCWD());
@@ -240,6 +239,7 @@ void COptions::Init(void) {
 
     // BEG_CODE_INIT
     all = false;
+    js = false;
     nspace = "qblocks";
     filter = "";
     force = false;
@@ -277,8 +277,6 @@ COptions::COptions(void) : classFile("") {
     usageErrs[ERR_NEEDONECLASS] = "Please specify at least one className.";
     // ERROR_STRINGS
 
-    updateTemplates();
-
     CCommandOption::registerClass();
     CClassDefinition::registerClass();
     CPage::registerClass();
@@ -286,6 +284,7 @@ COptions::COptions(void) : classFile("") {
     CSkin::registerClass();
     CSchema::registerClass();
     CCommandOption::registerClass();
+    CRoute::registerClass();
 }
 
 //--------------------------------------------------------------------------------
@@ -330,26 +329,4 @@ bool listClasses(const string_q& path, void* data) {
         }
     }
     return true;
-}
-
-//--------------------------------------------------------------------------------
-void copyIfNewer(const string_q& src, const string_q& dest) {
-    time_q src_time = fileLastModifyDate(src);
-    time_q dest_time = fileLastModifyDate(dest);
-    if (dest_time > src_time)
-        copyFile(dest, src);
-}
-
-//--------------------------------------------------------------------------------
-string_q sourcePath(const string_q& part) {
-    // TODO(tjayrush) hard coded path
-    return "/Users/jrush/src.GitHub/trueblocks-core/src/dev_tools/makeClass/" + part;
-}
-
-//--------------------------------------------------------------------------------
-void updateTemplates(void) {
-    // TODO(tjayrush): hard coded path
-    copyIfNewer(sourcePath("templates/blank.cpp"), configPath("makeClass/blank.cpp"));
-    copyIfNewer(sourcePath("templates/blank.h"), configPath("makeClass/blank.h"));
-    copyIfNewer(sourcePath("templates/blank_openapi.yaml"), configPath("makeClass/blank_openapi.yaml"));
 }

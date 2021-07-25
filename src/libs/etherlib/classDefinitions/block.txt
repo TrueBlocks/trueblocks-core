@@ -19,3 +19,4 @@ cpp_includes = appearance.h
 scope = extern
 serializable = true
 display_str = blockNumber, timestamp, difficulty, gasUsed, gasLimit, miner, hash, parentHash, transactionsCnt, finalized
+js = true

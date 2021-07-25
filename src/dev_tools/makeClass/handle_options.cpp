@@ -488,6 +488,13 @@ bool COptions::writeCode(const string_q& fn) {
                 LOG_WARN(fn, " does not contain token ", tok);
         converted = replaceCode(converted, "CODE_DECLARE", headerStream.str());
         converted = replaceCode(converted, "ERROR_DEFINES", errorDefStream.str());
+
+    } else if (endsWith(fn, "Routes.tsx")) {
+        converted = replaceCode(converted, "CODE_LOCATIONS", jsLocationStream.str());
+        // converted = replaceCode(converted, "CODE_TEMPLATES", jsTemplateStream.str());
+        converted = replaceCode(converted, "CODE_ROUTES", jsRouteStream.str());
+        converted = replaceCode(converted, "CODE_KEYS", jsHotkeyStream.str());
+
     } else {
         cerr << "Unkown file type for " << fn << endl;
     }
