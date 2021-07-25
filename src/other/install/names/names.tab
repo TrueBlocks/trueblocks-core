@@ -1,4 +1,5 @@
 tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefund	is_contract	is_erc20	is_erc721
+0x0	0x0					false	false	false	false	false	false	false
 55-Defi	0x000000000000000000000000000000000000dead	ENS: Burn Address		EtherScan.io			false	false	false	false	false	false
 50-Tokens:ERC20	0x0000000000001b84b1cb32787b0d64758d019317	HomeWork 🏠🛠️	HWK	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x0000000000004946c0e9f43f4dee607b0ef1fa1c	1inch.exchange v2	CHI	On chain	18		false	false	false	true	true	false
@@ -824,6 +825,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 30-Contracts:Humanity DAO	0x18c8f1222083997405f2e482338a4650ac02e1d6	jmflatow		https://www.humanitydao.org/humans			false	false	false	false	false	false
 30-Contracts:Humanity DAO	0x18cabad488293433cb1fd94a76a8590ab31579a2	Nadeshot77		https://www.humanitydao.org/humans			false	false	false	false	false	false
 30-Contracts	0x18cedf1071ec25331130c82d7af71d393ccd4446	Tru Implementation		Truebit			false	false	false	true	false	false
+50-Tokens:ERC20	0x18d3284d9eff64fc97b64ab2b871738e684aa151	Visor ETH-GTC Uni v3	vETH-GTCV3-1	On chain	18		false	false	false	true	true	false
 32-Kickback:Friends	0x18d32ea483eae1e25788c97cab31e7db7aad50d3	tomteman		https://kickback.events/			false	false	false	false	false	false
 31-Gitcoin Grants:Friends	0x18d7e5bb768c41b6f2f012082767ba0643c4cd6f	mjcronin		Gitcoin Website			false	false	false	false	false	false
 32-Kickback:Friends	0x18d80ffdbd08f70b314f06ae9d1b309135af9405	hans		https://kickback.events/			false	false	false	false	false	false
@@ -1536,6 +1538,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 55-Defi	0x31317f9a5e4cc1d231bdf07755c994015a96a37c	Yearn: Controller		EtherScan.io			false	false	false	true	false	false
 50-Tokens:ERC20	0x3136ef851592acf49ca4c825131e364170fa32b3	CoinFi	COFI	On chain	18	CoinFi offers crowdsourced and professionally curated research, analysis, trading signals, trading algorithms, and market-moving news to give cryptocurrency traders the real-time market intelligence needed to gain an edge.	false	false	false	true	true	false
 50-Tokens:ERC20	0x3137619705b5fc22a3048989f983905e456b59ab	Everus	EVR	On chain	8		false	false	false	true	true	false
+51-Tokens:ERC721	0x31385d3520bced94f77aae104b406994d8f2168c	BASTARD GAN PUNKS V2	BGANPUNKV2	On chain	18		false	false	false	true	true	true
 34-ENS	0x314159265dd8dbb310642f98f50c066173c1259b	ENS: Eth Name Service		EtherScan.io			false	false	false	true	false	false
 30-Contracts	0x314495517f380ceb7c498a35739e40864240adcf	GU: Shiny Legendary Pack Three		EtherScan.io			false	false	false	true	false	false
 50-Tokens:ERC20	0x31503dcb60119a812fee820bb7042752019f2355	SushiSwap LP Token	SLP	On chain	18		false	false	false	true	true	false
