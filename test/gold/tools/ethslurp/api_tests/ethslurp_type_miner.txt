@@ -3,12 +3,12 @@
     "hash": "0x0",
     "blockHash": "0x0",
     "blockNumber": "1",
-    "transactionIndex": "0",
+    "transactionIndex": "99999",
     "nonce": "0",
     "timestamp": "1438269988",
-    "from": "0x0",
+    "from": "0xBlockReward",
     "to": "0x0",
-    "value": "0",
+    "value": "5000000000000000000",
     "gas": "0",
     "gasPrice": "0",
     "input": "",
@@ -19,18 +19,18 @@
     "datesh": "2015-07-30",
     "time": "5:26:28 UTC",
     "age": "100",
-    "ether": "0.000000000000000000"
+    "ether": "5.000000000000000000"
   },
   {
     "hash": "0x0",
     "blockHash": "0x0",
     "blockNumber": "5",
-    "transactionIndex": "0",
+    "transactionIndex": "99999",
     "nonce": "0",
     "timestamp": "1438270083",
-    "from": "0x0",
+    "from": "0xBlockReward",
     "to": "0x0",
-    "value": "0",
+    "value": "5000000000000000000",
     "gas": "0",
     "gasPrice": "0",
     "input": "",
@@ -41,18 +41,18 @@
     "datesh": "2015-07-30",
     "time": "5:28:03 UTC",
     "age": "100",
-    "ether": "0.000000000000000000"
+    "ether": "5.000000000000000000"
   },
   {
     "hash": "0x0",
     "blockHash": "0x0",
     "blockNumber": "235",
-    "transactionIndex": "0",
+    "transactionIndex": "99999",
     "nonce": "0",
     "timestamp": "1438270713",
-    "from": "0x0",
+    "from": "0xBlockReward",
     "to": "0x0",
-    "value": "0",
+    "value": "5000000000000000000",
     "gas": "0",
     "gasPrice": "0",
     "input": "",
@@ -63,18 +63,18 @@
     "datesh": "2015-07-30",
     "time": "5:38:33 UTC",
     "age": "100",
-    "ether": "0.000000000000000000"
+    "ether": "5.000000000000000000"
   },
   {
     "hash": "0x0",
     "blockHash": "0x0",
     "blockNumber": "348",
-    "transactionIndex": "0",
+    "transactionIndex": "99999",
     "nonce": "0",
     "timestamp": "1438270943",
-    "from": "0x0",
+    "from": "0xBlockReward",
     "to": "0x0",
-    "value": "0",
+    "value": "5000000000000000000",
     "gas": "0",
     "gasPrice": "0",
     "input": "",
@@ -85,6 +85,6 @@
     "datesh": "2015-07-30",
     "time": "5:42:23 UTC",
     "age": "100",
-    "ether": "0.000000000000000000"
+    "ether": "5.000000000000000000"
   }
 ]

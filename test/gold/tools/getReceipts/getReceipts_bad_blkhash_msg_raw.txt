@@ -4,6 +4,7 @@
 "contractAddress":null
 "cumulativeGasUsed":"0xa410"
 "data":
+"effectiveGasPrice":"0xba43b7400"
 "errors":
 "from":"0x2a65aca4d5fc5b5c859090a6c34d164135398226"
 "gasUsed":"0x5208"

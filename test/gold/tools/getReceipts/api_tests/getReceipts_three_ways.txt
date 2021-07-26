@@ -3,18 +3,21 @@
     {
       "contractAddress": "0x0",
       "gasUsed": 21000,
+      "effectiveGasPrice": 20000000000,
       "logs": [],
       "status": null
     },
     {
       "contractAddress": "0x0",
       "gasUsed": 21000,
+      "effectiveGasPrice": 20000000000,
       "logs": [],
       "status": null
     },
     {
       "contractAddress": "0x0",
       "gasUsed": 21000,
+      "effectiveGasPrice": 20000000000,
       "logs": [],
       "status": null
     }

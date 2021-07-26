@@ -19,8 +19,8 @@ num,group,is_visible,api_route,tool,description
 04,Admin,true,status,cacheStatus,Report on the status of the TrueBlocks system.
 04,Admin,false,serve,flame,Serve the TrueBlocks API using the flame server.
 04,Admin,true,scrape,blockScrape,Scan the chain and update the TrueBlocks index of appearances.
-04,Admin,false,init,pinMan local --init,Initialize the index of appearances by downloading bloom filters.
-04,Admin,true,pins,pinMan,Manage pinned index of appearances and associated bloom filters.
+04,Admin,false,init,pinMan local --init,Initialize the index of appearances by downloading Bloom filters.
+04,Admin,true,pins,pinMan,Manage pinned index of appearances and associated Bloom filters.
 05,Other,false,,,Access to other and external data
 05,Other,true,quotes,getQuotes,Freshen and/or display Ethereum price data.
 05,Other,false,explore,fireStorm,Open an explorer for a given address&#44; block&#44; or transaction.

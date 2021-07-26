@@ -159,6 +159,13 @@ ethNames --named --custom --fmt api
     "decimals": 18
   },
   {
+    "tags": "50-Tokens:ERC20",
+    "address": "0x000100bb517e0c003200502a822083000a3b005d",
+    "name": "Archer DAO: Voting Power Prism Proxy",
+    "source": "On chain",
+    "decimals": 18
+  },
+  {
     "tags": "55-Defi",
     "address": "0x0001fb050fe7312791bf6475b96569d83f695c9f",
     "name": "Ygov.finance: yearn",
@@ -378,6 +385,12 @@ ethNames --named --custom --fmt api
     "address": "0x00cfbbaf7ddb3a1476767101c12a0162e241fbad",
     "name": "Amber Airdrop Token",
     "source": "TrueBlocks.io"
+  },
+  {
+    "tags": "50-Tokens:ERC20",
+    "address": "0x00d0f137b51692d0ac708bde7b367a373865cffe",
+    "name": "Zapper.Fi : Balancer Remove",
+    "source": "EtherScan.io"
   },
   {
     "tags": "34-Twitter:Friends",
@@ -881,6 +894,12 @@ ethNames --named --custom --fmt api
     "description": "okoro"
   },
   {
+    "tags": "50-Tokens:ERC20",
+    "address": "0x045e507925d2e05d114534d0810a1abd94aca8d6",
+    "name": "Synthetix: L2 Bridge",
+    "source": "EtherScan.io"
+  },
+  {
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x04607ca1048f490578f233a8b1354778defdd178",
     "name": "Grant 0608 Signatory Client",
@@ -967,6 +986,12 @@ ethNames --named --custom --fmt api
   },
   {
     "tags": "50-Tokens:ERC20",
+    "address": "0x04c62019ab478bff5874e7b7d9bc84fcf7e30025",
+    "name": "POA Network: MultiSig",
+    "source": "EtherScan.io"
+  },
+  {
+    "tags": "50-Tokens:ERC20",
     "address": "0x04d702ebd0a77503b154865fe3e8da97255b931b",
     "name": "Commons Stack Org Membership",
     "symbol": "CSOM",
@@ -980,6 +1005,14 @@ ethNames --named --custom --fmt api
     "source": "On chain",
     "decimals": 2,
     "description": "Cappasity brings an in-store browsing experience to online retail through interactive 3D images."
+  },
+  {
+    "tags": "50-Tokens:ERC20",
+    "address": "0x04fa0d235c4abf4bcf4787af4cf447de572ef828",
+    "name": "UMA Voting Token v1",
+    "symbol": "UMA",
+    "source": "On chain",
+    "decimals": 18
   },
   {
     "tags": "31-Gitcoin Grants:Friends",
@@ -1041,6 +1074,14 @@ ethNames --named --custom --fmt api
     "address": "0x0571325cd46718cd9445f082332a4fd9a21b8498",
     "name": "FIFAMini Airdrop Sender",
     "source": "TrueBlocks.io"
+  },
+  {
+    "tags": "50-Tokens:ERC20",
+    "address": "0x05767d9ef41dc40689678ffca0608878fb3de906",
+    "name": "SushiSwap LP Token",
+    "symbol": "SLP",
+    "source": "On chain",
+    "decimals": 18
   },
   {
     "tags": "31-Gitcoin Grants:Grant",
@@ -1214,6 +1255,14 @@ ethNames --named --custom --fmt api
     "source": "Gitcoin Website"
   },
   {
+    "tags": "50-Tokens:ERC20",
+    "address": "0x066798d9ef0833ccc719076dab77199ecbd178b0",
+    "name": "SakeToken",
+    "symbol": "SAKE",
+    "source": "On chain",
+    "decimals": 18
+  },
+  {
     "tags": "34-Twitter:Friends",
     "address": "0x0667ad4cf9d2fd571a6a94412dbb98c0f9cf704e",
     "name": "Name 0x0667ad4c",
@@ -1275,6 +1324,14 @@ ethNames --named --custom --fmt api
     "source": "Gitcoin Website"
   },
   {
+    "tags": "50-Tokens:ERC20",
+    "address": "0x06af07097c9eeb7fd685c692751d5c66db49c215",
+    "name": "Chai",
+    "symbol": "CHAI",
+    "source": "On chain",
+    "decimals": 18
+  },
+  {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x06b1bf28c962363f212878bdf87417ebd0316220",
     "name": "Name 0x06b1bf28",
@@ -1292,57 +1349,6 @@ ethNames --named --custom --fmt api
     "address": "0x06c04508075c125cd65daf686177fee2a945e2d8",
     "name": "Name 0x06c04508",
     "source": "Gitcoin Website"
-  },
-  {
-    "tags": "31-Gitcoin Grants:Grant",
-    "address": "0x06c401236b6d0ec77e3c8cf806773d77e424931e",
-    "name": "Grant 1658 Littleloong",
-    "source": "https://gitcoin.co/grants/1658/littleloong"
-  },
-  {
-    "tags": "75-Early Actors",
-    "address": "0x06d138312754bdeb5c1175f47ce00620c480e9c9",
-    "name": "Miner_0067_90",
-    "source": "OnChain"
-  },
-  {
-    "tags": "31-Gitcoin Grants:Friends",
-    "address": "0x06dbfdbfda84eabaea177760092dc22ab1d8f372",
-    "name": "Name 0x06dbfdbf",
-    "source": "Gitcoin Website"
-  },
-  {
-    "tags": "31-Gitcoin Grants:Grant",
-    "address": "0x06fa77a7747aa2d13c942d8507b03541306e2697",
-    "name": "Grant 1300 Fractal",
-    "source": "https://gitcoin.co/grants/1300/fractal"
-  },
-  {
-    "tags": "30-Contracts",
-    "address": "0x06fe76b2f432fdfecaef1a7d4f6c3d41b5861672",
-    "name": "Zerion: Adapter Registry",
-    "source": "EtherScan.io"
-  },
-  {
-    "tags": "50-Tokens:ERC20",
-    "address": "0x0707681f344deb24184037fc0228856f2137b02e",
-    "name": "FNKOSToken",
-    "symbol": "FNKOS",
-    "source": "On chain",
-    "decimals": 18,
-    "description": "FNKOS is a fog computing-based blockchain operating system designed to make the best use of the edge computing resources such as idle hardware network and storage resources."
-  },
-  {
-    "tags": "60-Airdrops",
-    "address": "0x070f9d09370fd7ae3a583fc22a4e9f50ae1bdc78",
-    "name": "RZM Airdrop Sender",
-    "source": "TrueBlocks.io"
-  },
-  {
-    "tags": "31-Gitcoin Grants:Grant",
-    "address": "0x07169d3d71dc9c1c7c1656b3436a984d50619860",
-    "name": "Grant 1556 Apy.vision",
-    "source": "https://gitcoin.co/grants/1556/apyvision"
   }], "types": [
 { "type": "CAccountName", "fields": [{ "name": "tags", "type": "text" }, { "name": "address", "type": "address" }, { "name": "name", "type": "text" }, { "name": "symbol", "type": "text" }, { "name": "source", "type": "text" }, { "name": "decimals", "type": "unumber" }, { "name": "description", "type": "text" }] }
 ], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef", "namePath": "--" } }

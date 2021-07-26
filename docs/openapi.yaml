@@ -210,7 +210,7 @@ paths:
             type: string
       - name: relevant
         in: query
-        description: for log export only, if true export only logs relevant to one of the given export addresses
+        description: for log and accounting export only, if true export only logs relevant to one of the given export addresses
         required: false
         style: form
         explode: true
@@ -1246,19 +1246,6 @@ paths:
       description: Scan the chain and update the TrueBlocks index of appearances.
       operationId: admin-scrape
       parameters:
-      - name: mode
-        in: query
-        description: control the block scraper
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: string
-          enum:
-          - run
-          - quit
-          - pause
-          - restart
       - name: n_blocks
         in: query
         description: maximum number of blocks to process (defaults to 5000)
@@ -1299,9 +1286,9 @@ paths:
         explode: true
         schema:
           type: number
-      - name: once
+      - name: quit
         in: query
-        description: run the a single block scrape, do not behave as long running process
+        description: quit the program if it's running
         required: false
         style: form
         explode: true
@@ -1322,13 +1309,13 @@ paths:
     get:
       tags:
       - Admin
-      summary: Manage pinned index of appearances and associated bloom filters.
-      description: Manage pinned index of appearances and associated bloom filters.
+      summary: Manage pinned index of appearances and associated Bloom filters.
+      description: Manage pinned index of appearances and associated Bloom filters.
       operationId: admin-pins
       parameters:
       - name: list
         in: query
-        description: list the index and bloom filter hashes from local manifest or pinning service
+        description: list the index and Bloom filter hashes from local manifest or pinning service
         required: false
         style: form
         explode: true
@@ -1336,7 +1323,7 @@ paths:
           type: boolean
       - name: init
         in: query
-        description: initialize local index by downloading bloom filters from pinning service
+        description: initialize local index by downloading Bloom filters from pinning service
         required: false
         style: form
         explode: true
@@ -1344,7 +1331,7 @@ paths:
           type: boolean
       - name: init_all
         in: query
-        description: initialize local index by downloading both bloom filters and index chunks
+        description: initialize local index by downloading both Bloom filters and index chunks
         required: false
         style: form
         explode: true
@@ -1496,6 +1483,7 @@ paths:
             - token
             - nfts
             - miner
+            - uncles
             - all
       - name: appearances
         in: query

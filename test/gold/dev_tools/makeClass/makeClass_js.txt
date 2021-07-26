@@ -1,9 +1,10 @@
 makeClass argc: 3 [1:--js] [2:CBlock] 
 makeClass --js CBlock 
+TIME ~ CLOCK - <INFO>  : handling javascript route generation...
+Processing /Users/jrush/Development/trueblocks-explorer/src/ui/Routes.tsx no changes...
+  Please chose exactly one of --run, --list, or --edit. Quitting...
 
-  Invalid option: --js
-
-  Usage:    makeClass [-r|-a|-o|-m|-f|-l|-n|-i|-c|-v|-h] <file> [file...]  
+  Usage:    makeClass [-r|-a|-o|-m|-f|-l|-j|-n|-i|-c|-v|-h] <file> [file...]  
   Purpose:  Automatically writes C++ for various purposes.
 
   Where:  
@@ -14,6 +15,7 @@ makeClass --js CBlock
 	-m  (--readmes)       create readme files for each tool and app
 	-f  (--format)        format source code files (.cpp and .h) found in local folder and below
 	-l  (--lint)          lint source code files (.cpp and .h) found in local folder and below
+	-j  (--js)            create javascript routes and help routes for the front end
 	-n  (--nspace <str>)  surround generated c++ code with a namespace
 	-i  (--filter <str>)  process only files whose filename or contents contain 'filter'
 	-c  (--force)         for both code generation and options generation, force writing of changes

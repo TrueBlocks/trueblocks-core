@@ -14,8 +14,12 @@ fields = gas gasLimit|\
         CStringArray tx_hashes (nowrite)|\
         string name (nowrite)|\
         sbool light (nowrite)
+extra_fields = date date|\
+        uint64 unclesCnt|\
+        string extraData
 includes = etherlib.h|transaction.h
 cpp_includes = appearance.h
 scope = extern
 serializable = true
 display_str = blockNumber, timestamp, difficulty, gasUsed, gasLimit, miner, hash, parentHash, transactionsCnt, finalized
+js = true

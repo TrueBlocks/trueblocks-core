@@ -92,6 +92,10 @@ bool Slurp(CCachedAccount& theAccount, COptions& options) {
                                      "/api.etherscan.io/apis");
 
             string_q responseStr = urlToString(url);
+            if (getGlobalConfig()->getConfigBool("dev", "debug_curl", false)) {
+                cerr << "[calling EtherScan: " << url << endl;
+                cerr << "[result: " << url << responseStr << endl;
+            }
             if (!contains(responseStr, "\"message\":\"OK\"")) {
                 options.errors.push_back("Error: " + responseStr + ".");
                 done = true;
@@ -109,10 +113,17 @@ bool Slurp(CCachedAccount& theAccount, COptions& options) {
                 uint64_t nAdded = 0;
                 CTransaction trans;
                 while (trans.parseJson3(response.result)) {
-                    if (type == "int")
+                    if (type == "int") {
                         findInternalTxIndex(trans);
-                    if (type == "token" || type == "nfts")
+                    } else if (type == "token" || type == "nfts") {
                         trans.hasToken = true;
+                    } else if (type == "miner") {
+                        trans.from = "0xBlockReward";
+                        trans.transactionIndex = 99999;
+                    } else if (type == "uncles") {
+                        trans.from = "0xUncleReward";
+                        trans.transactionIndex = 99998;
+                    }
                     theAccount.transactions.push_back(trans);
                     theAccount.markLatest(trans);
                     trans = CTransaction();  // reset

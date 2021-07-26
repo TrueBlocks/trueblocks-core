@@ -123,13 +123,13 @@ func ParseOptions() error {
 	Options.Status, _ = GetChifraData()
 	Options.Meta, _ = GetChifraMeta()
 
-	IndexScraper = NewScraper(utils.Yellow, "IndexScraper", 14)
+	IndexScraper = NewScraper(utils.Yellow, "IndexScraper", 14, Options.Verbose)
 	if Options.Scrape {
 		log.Print(utils.Green, "scraping:    ", utils.Off, Options.Scrape, "\n")
 		IndexScraper.ChangeState(true)
 	}
 
-	MonitorScraper = NewScraper(utils.Purple, "MonitorScraper", 14)
+	MonitorScraper = NewScraper(utils.Purple, "MonitorScraper", 14, Options.Verbose)
 	if Options.Monitor {
 		log.Print(utils.Green, "monitoring:  ", utils.Off, Options.Monitor, "\n")
 		MonitorScraper.ChangeState(true)

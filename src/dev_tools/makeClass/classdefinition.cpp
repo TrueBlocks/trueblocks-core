@@ -110,6 +110,9 @@ string_q CClassDefinition::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 'e':
+            if (fieldName % "extra_fields") {
+                return extra_fields;
+            }
             if (fieldName % "eq_str") {
                 return eq_str;
             }
@@ -140,6 +143,11 @@ string_q CClassDefinition::getValueByName(const string_q& fieldName) const {
         case 'i':
             if (fieldName % "input_path") {
                 return input_path;
+            }
+            break;
+        case 'j':
+            if (fieldName % "js") {
+                return bool_2_Str_t(js);
             }
             break;
         case 's':
@@ -226,6 +234,10 @@ bool CClassDefinition::setValueByName(const string_q& fieldNameIn, const string_
             }
             break;
         case 'e':
+            if (fieldName % "extra_fields") {
+                extra_fields = fieldValue;
+                return true;
+            }
             if (fieldName % "eq_str") {
                 eq_str = fieldValue;
                 return true;
@@ -255,6 +267,12 @@ bool CClassDefinition::setValueByName(const string_q& fieldNameIn, const string_
         case 'i':
             if (fieldName % "input_path") {
                 input_path = fieldValue;
+                return true;
+            }
+            break;
+        case 'j':
+            if (fieldName % "js") {
+                js = str_2_Bool(fieldValue);
                 return true;
             }
             break;
@@ -319,11 +337,13 @@ bool CClassDefinition::Serialize(CArchive& archive) {
     archive >> head_includes;
     archive >> src_includes;
     archive >> field_str;
+    archive >> extra_fields;
     archive >> display_str;
     archive >> sort_str;
     archive >> eq_str;
     archive >> scope_str;
     archive >> serializable;
+    archive >> js;
     // archive >> fieldArray;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -352,11 +372,13 @@ bool CClassDefinition::SerializeC(CArchive& archive) const {
     archive << head_includes;
     archive << src_includes;
     archive << field_str;
+    archive << extra_fields;
     archive << display_str;
     archive << sort_str;
     archive << eq_str;
     archive << scope_str;
     archive << serializable;
+    archive << js;
     // archive << fieldArray;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -409,11 +431,13 @@ void CClassDefinition::registerClass(void) {
     ADD_FIELD(CClassDefinition, "head_includes", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "src_includes", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "field_str", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CClassDefinition, "extra_fields", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "display_str", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "sort_str", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "eq_str", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "scope_str", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "serializable", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CClassDefinition, "js", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "fieldArray", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CClassDefinition, "fieldArray");
 
@@ -501,11 +525,13 @@ CClassDefinition::CClassDefinition(const CToml& toml) {
     field_str = toml.getConfigStr("settings", "fields", "");
     head_includes = toml.getConfigStr("settings", "includes", "");
     src_includes = toml.getConfigStr("settings", "cpp_includes", "");
+    extra_fields = toml.getConfigStr("settings", "extra_fields", "");
     display_str = toml.getConfigStr("settings", "display_str", "");
     sort_str = toml.getConfigStr("settings", "sort", "");
     eq_str = toml.getConfigStr("settings", "equals", "");
     scope_str = toml.getConfigStr("settings", "scope", "static");  // TODO(tjayrush): global data
     serializable = toml.getConfigBool("settings", "serializable", false);
+    js = toml.getConfigBool("settings", "js", false);
 
     //------------------------------------------------------------------------------------------------
     class_base = toProper(extract(class_name, 1));

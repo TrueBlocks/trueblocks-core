@@ -8,14 +8,13 @@ The scraper can scrape either the index only, previously created monitors only, 
 
 ### Usage
 
-`Usage:`    chifra scrape [-n|-p|-s|-v|-h] mode  
+`Usage:`    chifra scrape [-n|-p|-s|-v|-h]  
 `Purpose:`  Scan the chain and update the TrueBlocks index of appearances.
 
 `Where:`  
 
 | | Option | Description |
 | :----- | :----- | :---------- |
-|  | mode | control the block scraper, one of *[ run \| quit \| pause \| restart ]* (required) |
 | -n | --n_blocks &lt;num&gt; | maximum number of blocks to process (defaults to 5000) |
 | -p | --pin | pin new chunks (and blooms) to IPFS (requires Pinata key and running IPFS node) |
 | -s | --sleep &lt;double&gt; | the number of seconds to sleep between passes (default 14) |
@@ -26,9 +25,9 @@ The scraper can scrape either the index only, previously created monitors only, 
 
 Each time `chifra scrape` runs, it begins at the last block it completed (plus one) and decends as deeply as it can into the block's data. (This is why we need a `--tracing` node.) As address appearances are encountered, the system adds the appearance to a binary index. Periodically (at the end of the block containing the 2,000,000th appearance), the system consolidates a **chunk**.
 
-A **chunk** is a portion of the index containing approximately 2,000,000 records. As part of the consolidation, the scraper creates a bloom filter representing the chunk. The bloom filters are an order of magnitude or more smaller than the chunks. The system then pushes both the chunk and the bloom filter to IPFS. In this way, TrueBlocks creates an immutable, uncapturable index of appearances that can be used not only by TrueBlocks, but any member of the community who needs it. (Hint: we all need it.)
+A **chunk** is a portion of the index containing approximately 2,000,000 records. As part of the consolidation, the scraper creates a Bloom filter representing the chunk. The Bloom filters are an order of magnitude or more smaller than the chunks. The system then pushes both the chunk and the Bloom filter to IPFS. In this way, TrueBlocks creates an immutable, uncapturable index of appearances that can be used not only by TrueBlocks, but any member of the community who needs it. (Hint: we all need it.)
 
-Users of the [TrueBlocks Explorer](https://github.com/TrueBlocks/trueblocks-explorer) (or any other software, for that matter) subsequently downloads the bloom filters, queries them to determine which **chunks** need to be downloaded to the user's machine and thereby build a historical list of transacitons for a given address. This is accomplished while imposing a minimum amount of data on the end user's machine.
+Users of the [TrueBlocks Explorer](https://github.com/TrueBlocks/trueblocks-explorer) (or any other software, for that matter) subsequently downloads the Bloom filters, queries them to determine which **chunks** need to be downloaded to the user's machine and thereby build a historical list of transacitons for a given address. This is accomplished while imposing a minimum amount of data on the end user's machine.
 
 In future versions of the software, we will pin these shared chunks and blooms on end user's machines. They need the data for the software to operate and sharing it makes all user's better off. A naturally-born network effect.
 

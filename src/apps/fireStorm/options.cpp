@@ -16,6 +16,7 @@ static const COption params[] = {
     // clang-format off
     COption("terms", "", "list<string>", OPT_POSITIONAL, "one or more addresses, names, block, or transaction identifiers"),  // NOLINT
     COption("local", "l", "", OPT_SWITCH, "open the local TrueBlocks explorer"),
+    COption("google", "g", "", OPT_SWITCH, "search google excluding popular blockchain explorers"),
     COption("", "", "", OPT_DESCRIPTION, "Open an explorer for a given address, block, or transaction."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -39,6 +40,9 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-l" || arg == "--local") {
             local = true;
 
+        } else if (arg == "-g" || arg == "--google") {
+            google = true;
+
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
@@ -56,12 +60,30 @@ bool COptions::parseArguments(string_q& command) {
     // BEG_DEBUG_DISPLAY
     LOG_TEST_LIST("terms", terms, terms.empty());
     LOG_TEST_BOOL("local", local);
+    LOG_TEST_BOOL("google", google);
     // END_DEBUG_DISPLAY
 
     if (Mocked(""))
         return false;
 
     //    configureDisplay("fireStorm", "CPinnedChunk", STR_DISPLAY_PINNEDCHUNK);
+
+    if (google) {
+        const char* STR_GOOGLE = "https://www.google.com/search?q=";
+        CStringArray exclusions = {
+            "etherscan", "etherchain", "bloxy",     "bitquery", "ethplorer",
+            "tokenview", "blockshain", "anyblocks", "explorer",
+        };
+        for (auto term : terms) {
+            ostringstream query;
+            query << "open " << STR_GOOGLE << term;
+            for (auto ex : exclusions)
+                query << "+-" << ex;
+            if (!system(query.str().c_str()))
+                return false;
+        }
+        return false;
+    }
 
     return true;
 }
@@ -72,6 +94,7 @@ void COptions::Init(void) {
 
     // BEG_CODE_INIT
     local = false;
+    google = false;
     // END_CODE_INIT
 }
 

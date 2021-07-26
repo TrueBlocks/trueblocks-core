@@ -4,7 +4,7 @@ makeClass --dump function
 ./classDefinitions/function.txt
 ------------------------------------------------------------------------------------------------------------------------
 [version]
-current = "0.9.4-alpha"
+current = "0.9.5-alpha"
 
 [settings]
 class = "CFunction"

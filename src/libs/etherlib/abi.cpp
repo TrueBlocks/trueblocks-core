@@ -358,14 +358,14 @@ bool CAbi::loadAbisFromKnown(bool tokensOnly) {
         return (ret1 && ret2);
     }
 
-    string_q sourcePath = configPath("abis/");
-    if (abiSourcesMap[sourcePath])
+    string_q srcPath = configPath("abis/");
+    if (abiSourcesMap[srcPath])
         return true;
 
     string_q binPath = getCachePath("abis/known.bin");
     if (fileExists(binPath)) {
         // If any file is newer, don't use binary cache
-        fileInfo info = getNewestFileInFolder(sourcePath);
+        fileInfo info = getNewestFileInFolder(srcPath);
         if (info.fileName == binPath || fileLastModifyDate(binPath) > info.fileTime) {
             abiInterfacesMap.clear();
             CArchive archive(READING_ARCHIVE);
@@ -378,18 +378,18 @@ bool CAbi::loadAbisFromKnown(bool tokensOnly) {
                     abiInterfacesMap[func.encoding] = true;
                     LOG_TEST("Inserting", func.type + "-" + func.signature);
                 }
-                abiSourcesMap[sourcePath] = true;
+                abiSourcesMap[srcPath] = true;
                 return true;
             }
         }
     }
 
-    LOG4("Freshening abi cache for path: ", sourcePath);
-    if (!forEveryFileInFolder(sourcePath + "*", loadAbiFile, this))
+    LOG4("Freshening abi cache for path: ", srcPath);
+    if (!forEveryFileInFolder(srcPath + "*", loadAbiFile, this))
         return false;
 
     sort(interfaces.begin(), interfaces.end(), sortByFuncName);
-    abiSourcesMap[sourcePath] = true;
+    abiSourcesMap[srcPath] = true;
 
     CArchive archive(WRITING_ARCHIVE);
     if (archive.Lock(binPath, modeWriteCreate, LOCK_NOWAIT)) {

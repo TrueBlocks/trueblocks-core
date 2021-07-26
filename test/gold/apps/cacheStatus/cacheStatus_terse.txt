@@ -1,7 +1,7 @@
 cacheStatus argc: 2 [1:--terse] 
 cacheStatus --terse 
 client: Client version (testing, archive, tracing)
---TIME-- trueblocks: GHC-TrueBlocks//0.9.4-alpha--git-hash---git-ts- (eskey, no pinkey)
+--TIME-- trueblocks: GHC-TrueBlocks//0.9.5-alpha--git-hash---git-ts- (eskey, no pinkey)
 --TIME-- configPath: --paths--
 --TIME-- cachePath: --paths--
 --TIME-- indexPath: --paths--

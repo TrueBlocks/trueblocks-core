@@ -76,6 +76,7 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
         // clang-format off
                if (fld.type == "Value")           { setFmt = "`[{NAME}] = [{DEF}]\n";     regType = "T_JSONVAL | TS_OMITEMPTY";
         } else if (fld.type == "wei")             { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_WEI";
+        } else if (fld.type == "sgas")            { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_GAS | TS_OMITEMPTY";
         } else if (fld.type == "gas")             { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_GAS";
         } else if (fld.type == "timestamp")       { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_TIMESTAMP";
         } else if (fld.type == "datetime")        { setFmt = "`[{NAME}] = [{DEFT}];\n";   regType = "T_DATE";
@@ -311,6 +312,9 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
     replaceAll(srcSource, "`", string_q(1, '\t'));
     counter.nProcessed += writeTheCode(codewrite_t(srcFile, srcSource, namespc, 4, true, force));
 
+    if (js && classDef.js)
+        handle_js_type(classDef);
+
     return true;
 }
 
@@ -360,6 +364,9 @@ string_q getCaseGetCode(const CParameterArray& fieldsIn) {
 
                 } else if (p.type == "wei") {
                     outStream << ("return wei_2_Str([{PTR}]" + p.name + ");");
+
+                } else if (p.type == "sgas") {
+                    outStream << ("return " + p.name + " == 0 ? \"\" : gas_2_Str([{PTR}]" + p.name + ");");
 
                 } else if (p.type == "gas") {
                     outStream << ("return gas_2_Str([{PTR}]" + p.name + ");");
@@ -508,7 +515,7 @@ string_q getCaseSetCode(const CParameterArray& fieldsIn) {
                 } else if (p.type == "wei") {
                     outStream << (p.name + " = str_2_Wei(fieldValue);\n````return true;");
 
-                } else if (p.type == "gas") {
+                } else if (p.type == "gas" || p.type == "sgas") {
                     outStream << (p.name + " = str_2_Gas(fieldValue);\n````return true;");
 
                 } else if (p.type == "timestamp") {
@@ -659,6 +666,7 @@ string_q convertTypes(const string_q& inStr) {
     replaceAll(outStr, "sbool ", "bool ");
 
     replaceAll(outStr, "hash ", "hash_t ");
+    replaceAll(outStr, "sgas ", "gas_t ");
     replaceAll(outStr, "gas ", "gas_t ");
     replaceAll(outStr, "wei ", "wei_t ");
 

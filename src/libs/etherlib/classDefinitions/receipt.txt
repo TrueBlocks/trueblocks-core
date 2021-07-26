@@ -6,6 +6,7 @@ fields = hash blockHash (nowrite-min)|\
         wei cumulativeGasUsed (nowrite)|\
         address from (nowrite-min)|\
         gas gasUsed|\
+        sgas effectiveGasPrice|\
         CLogEntryArray logs|\
         bytes32 root (nowrite)|\
         uint32 status=NO_STATUS|\
@@ -18,3 +19,4 @@ scope = extern
 serializable = true
 display_str = blockNumber, transactionIndex, hash, gasUsed, status, isError
 equals = (getValueByName("transactionHash") == it.getValueByName("transactionHash"))
+js = true

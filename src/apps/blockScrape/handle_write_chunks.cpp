@@ -7,7 +7,7 @@
 #include "consolidator.h"
 
 //---------------------------------------------------------------------------------------------------
-bool CConsolidator::write_chunks(blknum_t chunkSize, bool once) {
+bool CConsolidator::write_chunks(blknum_t chunkSize, bool atLeastOnce) {
     ENTER("write_chunks");
 
     blknum_t nRecords = fileSize(newStage) / 59;
@@ -15,7 +15,7 @@ bool CConsolidator::write_chunks(blknum_t chunkSize, bool once) {
     // We have enough records to consolidate. Process chunks (of size 'chunkSize') until done.
     // This may take more than one pass. Check for user input control+C at each pass.
     size_t pass = 0;
-    while ((once || nRecords > chunkSize) && !shouldQuit()) {
+    while ((atLeastOnce || nRecords > chunkSize) && !shouldQuit()) {
         lockSection();
 
         LOG_INFO("");
@@ -130,8 +130,8 @@ bool CConsolidator::write_chunks(blknum_t chunkSize, bool once) {
 
         nRecords = fileSize(newStage) / 59;
         unlockSection();
-        if (once)
-            once = nRecords > 0;
+        if (atLeastOnce)
+            atLeastOnce = nRecords > 0;
         chunkSize = min(MAX_ROWS, nRecords);
     }
 

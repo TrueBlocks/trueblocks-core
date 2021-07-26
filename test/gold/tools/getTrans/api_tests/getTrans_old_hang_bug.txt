@@ -17,6 +17,7 @@
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 60000,
+        "effectiveGasPrice": 8100000000,
         "logs": [],
         "status": 0
       },
@@ -31,7 +32,7 @@
           "success": ""
         }
       },
-      "compressedTx": "multiTransfer ( destinations: , tokens:  )",
+      "compressedTx": "multiTransfer(/*destinations*/,  /*tokens*/); ",
       "gasCost": 486000000000000,
       "gasUsed": 60000,
       "date": "2018-09-27 13:21:58 UTC",

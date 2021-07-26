@@ -19,6 +19,7 @@ getTrans 0xeec4ccd13fe05907f9d732a8ad245bcb7f918217157b89baaa23895c12eb329a --fm
     "receipt": {
       "contractAddress": "0x0",
       "gasUsed": 50000,
+      "effectiveGasPrice": 24000000000,
       "status": 0
     },
     "gasUsed": 50000

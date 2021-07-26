@@ -3,6 +3,7 @@
     {
       "contractAddress": "0x0",
       "gasUsed": 48267,
+      "effectiveGasPrice": 4000000000,
       "logs": [
         {
           "address": "0xe3818504c1b32bf1557b16c238b2e01fd3149c17",

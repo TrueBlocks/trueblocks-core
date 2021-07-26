@@ -4,11 +4,10 @@ chifra scrape argc: 3 [1:--help] [2:--scrape]
 chifra scrape --help --scrape 
 PROG_NAME = [chifra scrape]
 
-  Usage:    chifra scrape [-n|-p|-s|-v|-h] mode  
+  Usage:    chifra scrape [-n|-p|-s|-v|-h]  
   Purpose:  Scan the chain and update the TrueBlocks index of appearances.
 
   Where:  
-	mode                  control the block scraper, one of [run|quit|pause|restart] (required)
 	-n  (--n_blocks <num>)maximum number of blocks to process (defaults to 5000)
 	-p  (--pin)           pin new chunks (and blooms) to IPFS (requires Pinata key and running IPFS node)
 	-s  (--sleep <double>)the number of seconds to sleep between passes (default 14)
@@ -16,7 +15,7 @@ PROG_NAME = [chifra scrape]
 	#### Hidden options
 	-b  (--n_block_procs <num>)number of block channels for blaze
 	-a  (--n_addr_procs <num>)number of address channels for blaze
-	-o  (--once)          run the a single block scrape, do not behave as long running process
+	-q  (--quit)          quit the program if it's running
 	#### Hidden options
 
 	-v  (--verbose)       set verbose level (optional level defaults to 1)

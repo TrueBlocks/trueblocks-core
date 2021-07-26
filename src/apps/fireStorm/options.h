@@ -19,6 +19,7 @@ class COptions : public CAbiOptions {
     // BEG_CODE_DECLARE
     CStringArray terms;
     bool local;
+    bool google;
     // END_CODE_DECLARE
 
     COptions(void);

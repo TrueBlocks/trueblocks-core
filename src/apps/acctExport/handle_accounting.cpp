@@ -13,6 +13,11 @@ bool acct_Display(CTraverser* trav, void* data) {
         if (opt->accounting) {
             blknum_t next = trav->index < opt->monApps.size() - 1 ? opt->monApps[trav->index + 1].blk : NOPOS;
             opt->process_reconciliation(trav, next);
+            if (opt->relevant) {
+                for (auto& log : trav->trans.receipt.logs) {
+                    log.m_showing = opt->isRelevant(log);
+                }
+            }
         }
         cout << ((isJson() && !opt->firstOut) ? ", " : "");
         cout << trav->trans;
@@ -117,16 +122,18 @@ bool COptions::process_reconciliation(CTraverser* trav, blknum_t next) {
         }
     }
 
-    lockSection();
-    CArchive archive(WRITING_ARCHIVE);
-    if (!isTestMode() && archive.Lock(path, modeWriteCreate, LOCK_WAIT)) {
-        LOG4("Writing to cache for ", path);
-        archive << trav->trans.statements;
-        archive.Release();
+    if (!reversed) {
+        lockSection();
+        CArchive archive(WRITING_ARCHIVE);
+        if (!isTestMode() && archive.Lock(path, modeWriteCreate, LOCK_WAIT)) {
+            LOG4("Writing to cache for ", path);
+            archive << trav->trans.statements;
+            archive.Release();
+            unlockSection();
+            return !shouldQuit();
+        }
         unlockSection();
-        return !shouldQuit();
     }
-    unlockSection();
 
     return !shouldQuit();
 }

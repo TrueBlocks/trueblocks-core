@@ -4,7 +4,7 @@
 
 ### Usage
 
-`Usage:`    chifra explore [-l|-v|-h] &lt;term&gt; [term...]  
+`Usage:`    chifra explore [-l|-g|-v|-h] &lt;term&gt; [term...]  
 `Purpose:`  Open an explorer for a given address, block, or transaction.
 
 `Where:`  
@@ -13,6 +13,7 @@
 | :----- | :----- | :---------- |
 |  | terms | one or more addresses, names, block, or transaction identifiers |
 | -l | --local | open the local TrueBlocks explorer |
+| -g | --google | search google excluding popular blockchain explorers |
 | -v | --verbose | set verbose level (optional level defaults to 1) |
 | -h | --help | display this help screen |
 

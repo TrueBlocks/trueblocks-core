@@ -86,29 +86,31 @@ func CallOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd s
 
 	// Do the actual call
 	cmd := exec.Command(tbCmd, allDogs...)
-	if (Options.Verbose > 0) {
+	if Options.Verbose > 0 {
 		log.Print(utils.Yellow, "Calling: ", cmd, utils.Off)
 	}
 
-	// Listen if the call gets canceled
-	notify := w.(http.CloseNotifier).CloseNotify()
-	go func() {
-		<-notify
-		pid := cmd.Process.Pid
-		if err := cmd.Process.Kill(); err != nil {
-			log.Println("failed to kill process: ", err)
-		}
-		log.Println("apiCmd: ", apiCmd)
-		if apiCmd == "scrape" {
-			out, err := exec.Command("blockScrape", "quit --verbose").Output()
-			if err != nil {
-				fmt.Printf("%s", err)
-			} else {
-				log.Printf(string(out[:]))
+	if cmd.Process != nil {
+		// Listen if the call gets canceled
+		notify := w.(http.CloseNotifier).CloseNotify()
+		go func() {
+			<-notify
+			pid := cmd.Process.Pid
+			if err := cmd.Process.Kill(); err != nil {
+				log.Println("failed to kill process: ", err)
 			}
-		}
-		log.Println("The client closed the connection to process id ", pid, ". Cleaning up.")
-	}()
+			log.Println("apiCmd: ", apiCmd)
+			if apiCmd == "scrape" {
+				out, err := exec.Command("blockScrape", "--quit --verbose").Output()
+				if err != nil {
+					fmt.Printf("%s", err)
+				} else {
+					log.Printf(string(out[:]))
+				}
+			}
+			log.Println("The client closed the connection to process id ", pid, ". Cleaning up.")
+		}()
+	}
 
 	// In regular operation, we set an environment variable API_MODE=true. When
 	// testing (the test harness sends a special header) we also set the

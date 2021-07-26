@@ -43,8 +43,8 @@ Here is a screen shot of an interaction with Chifra building a smart contract mo
    status        report on the status of the TrueBlocks system
    serve         serve the TrueBlocks API using the flame server
    scrape        scan the chain and update the TrueBlocks index of appearances
-   init          initialize the index of appearances by downloading bloom filters
-   pins          manage pinned index of appearances and associated bloom filters
+   init          initialize the index of appearances by downloading Bloom filters
+   pins          manage pinned index of appearances and associated Bloom filters
  OTHER
    quotes        freshen and/or display Ethereum price data
    explore       open an explorer for a given address, block, or transaction

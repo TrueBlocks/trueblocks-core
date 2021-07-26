@@ -19,6 +19,7 @@ getTrans --file:cmd_file_1 --fmt json
     "receipt": {
       "contractAddress": "0x0",
       "gasUsed": 21000,
+      "effectiveGasPrice": 50000000000,
       "status": null
     },
     "gasUsed": 21000
@@ -40,6 +41,7 @@ getTrans --file:cmd_file_1 --fmt json
     "receipt": {
       "contractAddress": "0x0",
       "gasUsed": 21000,
+      "effectiveGasPrice": 50000000000,
       "status": null
     },
     "gasUsed": 21000
@@ -61,6 +63,7 @@ getTrans --file:cmd_file_1 --fmt json
     "receipt": {
       "contractAddress": "0x0",
       "gasUsed": 21000,
+      "effectiveGasPrice": 50000000000,
       "status": null
     },
     "gasUsed": 21000

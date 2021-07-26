@@ -630,6 +630,7 @@ params.size: 0
     "receipt": {
       "contractAddress": "0x0",
       "gasUsed": 209407,
+      "effectiveGasPrice": 50000000000,
       "logs": [
         {
           "address": "0x159cf1e9ae58211b588f5e3bf1d7e423952d959b",
@@ -650,7 +651,7 @@ params.size: 0
               "_tokenAmount": "25000000000000000000"
             }
           },
-          "compressedLog": "AcceptRequest(6, 236159796400000000, 25000000000000000000, 2000000000000000000, 0xd503d263de9092232d28492d60c5a956ad754a83); "
+          "compressedLog": "AcceptRequest(6 /*_key*/, 236159796400000000 /*_etherAmount*/, 25000000000000000000 /*_tokenAmount*/, 2000000000000000000 /*_dollarPrice*/, 0xd503d263de9092232d28492d60c5a956ad754a83 /*_acceptor*/); "
         },
         {
           "address": "0x159cf1e9ae58211b588f5e3bf1d7e423952d959b",
@@ -671,7 +672,7 @@ params.size: 0
               "_tokenAmount": "25000000000000000000"
             }
           },
-          "compressedLog": "AcceptRequest(5, 236159796400000000, 25000000000000000000, 2000000000000000000, 0xd503d263de9092232d28492d60c5a956ad754a83); "
+          "compressedLog": "AcceptRequest(5 /*_key*/, 236159796400000000 /*_etherAmount*/, 25000000000000000000 /*_tokenAmount*/, 2000000000000000000 /*_dollarPrice*/, 0xd503d263de9092232d28492d60c5a956ad754a83 /*_acceptor*/); "
         }
       ],
       "status": 1
@@ -704,7 +705,7 @@ params.size: 0
             "_tokenAmounts": "[25000000000000000000, 25000000000000000000]"
           }
         },
-        "compressedTrace": "acceptTheseAskRequestsAndBUY([6, 5], [25000000000000000000, 25000000000000000000], [2000000000000000000, 2000000000000000000]); "
+        "compressedTrace": "acceptTheseAskRequestsAndBUY([6, 5] /*_keys*/, [25000000000000000000, 25000000000000000000] /*_tokenAmounts*/, [2000000000000000000, 2000000000000000000] /*_dollarPrices*/); "
       },
       {
         "type": "call",
@@ -734,7 +735,7 @@ params.size: 0
             "ret_0": "47231959280000"
           }
         },
-        "compressedTrace": "USD(0); "
+        "compressedTrace": "USD(0 /*_id*/); "
       },
       {
         "type": "call",
@@ -764,7 +765,7 @@ params.size: 0
             "ret_0": "47231959280000"
           }
         },
-        "compressedTrace": "USD(0); "
+        "compressedTrace": "USD(0 /*_id*/); "
       }
     ],
     "articulatedTx": {
@@ -776,7 +777,7 @@ params.size: 0
         "_tokenAmounts": "[25000000000000000000, 25000000000000000000]"
       }
     },
-    "compressedTx": "acceptTheseAskRequestsAndBUY([6, 5], [25000000000000000000, 25000000000000000000], [2000000000000000000, 2000000000000000000]); ",
+    "compressedTx": "acceptTheseAskRequestsAndBUY([6, 5] /*_keys*/, [25000000000000000000, 25000000000000000000] /*_tokenAmounts*/, [2000000000000000000, 2000000000000000000] /*_dollarPrices*/); ",
     "gasCost": 10470350000000000,
     "gasUsed": 209407,
     "date": "2018-11-16 00:10:08 UTC",

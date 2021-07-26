@@ -163,7 +163,7 @@ void end_Log(CTraverser* trav, void* data) {
     blknum_t goal = opt->stats.nFileRecords;
     if (prog == goal) {
         string_q endMsg = " " + trav->operation + " for address " + opt->accountedFor;
-        LOG_PROGRESS("Completed exporting", prog, goal, endMsg);
+        LOG_PROGRESS("Completed", prog, goal, endMsg);
     }
     return;
 }

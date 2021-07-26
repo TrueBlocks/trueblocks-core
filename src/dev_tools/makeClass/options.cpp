@@ -29,6 +29,7 @@ static const COption params[] = {
     COption("readmes", "m", "", OPT_SWITCH, "create readme files for each tool and app"),
     COption("format", "f", "", OPT_SWITCH, "format source code files (.cpp and .h) found in local folder and below"),
     COption("lint", "l", "", OPT_SWITCH, "lint source code files (.cpp and .h) found in local folder and below"),
+    COption("js", "j", "", OPT_SWITCH, "create javascript routes and help routes for the front end"),
     COption("dump", "d", "", OPT_HIDDEN | OPT_SWITCH, "dump any classDefinition config tomls to screen and quit"),
     COption("nspace", "n", "<string>", OPT_FLAG, "surround generated c++ code with a namespace"),
     COption("filter", "i", "<string>", OPT_FLAG, "process only files whose filename or contents contain 'filter'"),
@@ -84,6 +85,9 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-l" || arg == "--lint") {
             lint = true;
 
+        } else if (arg == "-j" || arg == "--js") {
+            js = true;
+
         } else if (arg == "-d" || arg == "--dump") {
             dump = true;
 
@@ -129,6 +133,7 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("readmes", readmes);
     LOG_TEST_BOOL("format", format);
     LOG_TEST_BOOL("lint", lint);
+    LOG_TEST_BOOL("js", js);
     LOG_TEST_BOOL("dump", dump);
     LOG_TEST("nspace", nspace, (nspace == "qblocks"));
     LOG_TEST("filter", filter, (filter == ""));
@@ -136,6 +141,9 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("api", api);
     LOG_TEST_BOOL("openapi", openapi);
     // END_DEBUG_DISPLAY
+
+    if (js)
+        handle_js();
 
     // If the user has explicitly specified a classDef, use that
     LOG8("pwd: ", getCWD());
@@ -231,6 +239,7 @@ void COptions::Init(void) {
 
     // BEG_CODE_INIT
     all = false;
+    js = false;
     nspace = "qblocks";
     filter = "";
     force = false;
@@ -268,8 +277,6 @@ COptions::COptions(void) : classFile("") {
     usageErrs[ERR_NEEDONECLASS] = "Please specify at least one className.";
     // ERROR_STRINGS
 
-    updateTemplates();
-
     CCommandOption::registerClass();
     CClassDefinition::registerClass();
     CPage::registerClass();
@@ -277,6 +284,7 @@ COptions::COptions(void) : classFile("") {
     CSkin::registerClass();
     CSchema::registerClass();
     CCommandOption::registerClass();
+    CRoute::registerClass();
 }
 
 //--------------------------------------------------------------------------------
@@ -321,26 +329,4 @@ bool listClasses(const string_q& path, void* data) {
         }
     }
     return true;
-}
-
-//--------------------------------------------------------------------------------
-void copyIfNewer(const string_q& src, const string_q& dest) {
-    time_q src_time = fileLastModifyDate(src);
-    time_q dest_time = fileLastModifyDate(dest);
-    if (dest_time > src_time)
-        copyFile(dest, src);
-}
-
-//--------------------------------------------------------------------------------
-string_q sourcePath(const string_q& part) {
-    // TODO(tjayrush) hard coded path
-    return "/Users/jrush/src.GitHub/trueblocks-core/src/dev_tools/makeClass/" + part;
-}
-
-//--------------------------------------------------------------------------------
-void updateTemplates(void) {
-    // TODO(tjayrush): hard coded path
-    copyIfNewer(sourcePath("templates/blank.cpp"), configPath("makeClass/blank.cpp"));
-    copyIfNewer(sourcePath("templates/blank.h"), configPath("makeClass/blank.h"));
-    copyIfNewer(sourcePath("templates/blank_openapi.yaml"), configPath("makeClass/blank_openapi.yaml"));
 }

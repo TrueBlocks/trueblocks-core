@@ -4,10 +4,12 @@ getReceipts 1428993.* --fmt api
   {
     "contractAddress": "0x0",
     "gasUsed": 21000,
+    "effectiveGasPrice": 20000000000,
     "status": null
   },  {
     "contractAddress": "0x0",
     "gasUsed": 29244,
+    "effectiveGasPrice": 20000000000,
     "logs": [
       {
         "address": "0x2bad3aa54d79b43cea3e859609d2de84e544ee74",
@@ -22,10 +24,12 @@ getReceipts 1428993.* --fmt api
   },  {
     "contractAddress": "0x0",
     "gasUsed": 76035,
+    "effectiveGasPrice": 20000000000,
     "status": null
   },  {
     "contractAddress": "0x0",
     "gasUsed": 22900,
+    "effectiveGasPrice": 20000000000,
     "logs": [
       {
         "address": "0xf80ae7bfe8a3ab43e8b2c7aece33f5fbed4927df",

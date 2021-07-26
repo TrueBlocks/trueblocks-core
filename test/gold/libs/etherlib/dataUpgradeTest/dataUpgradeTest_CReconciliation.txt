@@ -145,7 +145,7 @@ reconciled          	1032	0	12582932	T_BOOL TS_NUMERAL TS_OMITEMPTY
 totalIn             	1033	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
 totalOut            	1034	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
 {
-  "schema": 9004,
+  "schema": 9005,
   "deleted": false,
   "showing": true,
   "cname": "Reconciliation",

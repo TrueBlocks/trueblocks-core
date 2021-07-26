@@ -171,7 +171,7 @@ hour                	1045	0	12582937	T_NUMBER TS_NUMERAL TS_OMITEMPTY
 minute              	1046	0	12582937	T_NUMBER TS_NUMERAL TS_OMITEMPTY
 second              	1047	0	12582937	T_NUMBER TS_NUMERAL TS_OMITEMPTY
 {
-  "schema": 9004,
+  "schema": 9005,
   "deleted": false,
   "showing": true,
   "cname": "Transaction",

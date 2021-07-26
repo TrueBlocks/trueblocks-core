@@ -1,0 +1,6 @@
+[settings]
+class = CRoute
+fields = string path|\
+        string helpText|\
+        string hotKey
+includes = utillib.h

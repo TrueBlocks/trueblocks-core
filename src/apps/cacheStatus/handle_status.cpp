@@ -253,7 +253,7 @@ bool countFilesInCache(const string_q& path, void* data) {
         if (contains(path, "/0")) {
             uint64_t d = countOf(path, '/') - 1;
             uint64_t m = counter->max_depth;
-            if (d == m) {  // TODO(tjayrush) fails after 100,000,000 blocks!
+            if (d == m) {  // TODO(tjayrush) fails after 999,999,999 blocks!
                 if (isTestMode()) {
                     counter->items.push_back("CachePath/00/00/00");
                     counter->items.push_back("CachePath/00/01/00");

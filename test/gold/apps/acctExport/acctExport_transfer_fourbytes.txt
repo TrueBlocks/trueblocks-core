@@ -17,6 +17,7 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --max_records 10 0xa9059cb
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 37298,
+    "effectiveGasPrice": 4000000000,
     "logs": [
       {
         "address": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
@@ -53,6 +54,7 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --max_records 10 0xa9059cb
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 22426,
+    "effectiveGasPrice": 5000000000,
     "logs": [
       {
         "address": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",
@@ -89,6 +91,7 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --max_records 10 0xa9059cb
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 22362,
+    "effectiveGasPrice": 10000000000,
     "logs": [
       {
         "address": "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359",

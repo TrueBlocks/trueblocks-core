@@ -287,15 +287,6 @@ string_q listProcesses(const string_q& progName) {
     return result;
 }
 
-//--------------------------------------------------------------------------------
-bool amIRunning(const string_q& progName) {
-    string_q pList = listProcesses(progName);
-    replaceAll(pList, "`", "");        // We count how many occurences of the progName using a single character...
-    replaceAll(pList, progName, "`");  // remove any if they exist before replacing
-    replace(pList, "`", "");
-    return countOf(pList, '`') > 0;  // We ourselves are running, so there needs to be at least one more...
-}
-
 //----------------------------------------------------------------------------
 bool isRunning(const string_q& progName) {
     return contains(listProcesses(progName), progName);

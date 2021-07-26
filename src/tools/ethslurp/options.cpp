@@ -22,7 +22,7 @@ static const COption params[] = {
     // clang-format off
     COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "one or more addresses to slurp from Etherscan"),
     COption("blocks", "", "list<blknum>", OPT_POSITIONAL, "an optional range of blocks to slurp"),
-    COption("types", "t", "list<enum[ext*|int|token|nfts|miner|all]>", OPT_FLAG, "one or more types of transactions to request"),  // NOLINT
+    COption("types", "t", "list<enum[ext*|int|token|nfts|miner|uncles|all]>", OPT_FLAG, "one or more types of transactions to request"),  // NOLINT
     COption("appearances", "p", "", OPT_SWITCH, "show only the blocknumer.tx_id appearances of the exported transactions"),  // NOLINT
     COption("", "", "", OPT_DESCRIPTION, "Fetch data from EtherScan for any address."),
     // clang-format on
@@ -96,7 +96,8 @@ bool COptions::parseArguments(string_q& command) {
             typesList.push_back("int");
             typesList.push_back("token");
             typesList.push_back("nfts");
-            // typesList.push_back("miner");
+            typesList.push_back("miner");
+            typesList.push_back("uncles");
         } else {
             typesList.push_back(type);
         }

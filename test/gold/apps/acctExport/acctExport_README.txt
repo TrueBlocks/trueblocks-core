@@ -23,7 +23,7 @@ acctExport -th
 | -y | --factory | scan for contract creations from the given address(es) and report address of those contracts |
 |  | --emitter | for log export only, export only if one of the given export addresses emitted the event |
 |  | --source &lt;addr&gt; | for log export only, export only one of these addresses emitted the event |
-|  | --relevant | for log export only, if true export only logs relevant to one of the given export addresses |
+|  | --relevant | for log and accounting export only, if true export only logs relevant to one of the given export addresses |
 | -U | --count | only available for --appearances mode, if present return only the number of records |
 | -c | --first_record &lt;num&gt; | the first record to process |
 | -e | --max_records &lt;num&gt; | the maximum number of records to process before reporting |

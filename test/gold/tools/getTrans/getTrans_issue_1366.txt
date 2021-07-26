@@ -24,6 +24,7 @@ params.size: 0
     "receipt": {
       "contractAddress": "0x0",
       "gasUsed": 43210,
+      "effectiveGasPrice": 20000000000,
       "logs": [
         {
           "address": "0xd654bdd32fc99471455e86c2e7f7d7b6437e9179",
@@ -41,7 +42,7 @@ params.size: 0
               "value": "0"
             }
           },
-          "compressedLog": "Deposit(0x0000000000000000000000000de0b6b3a7640000, 0); "
+          "compressedLog": "Deposit(0x0000000000000000000000000de0b6b3a7640000 /*from*/, 0 /*value*/); "
         }
       ],
       "status": null

@@ -26,7 +26,7 @@ class CConsolidator : public CBlockProgress {
     explicit CConsolidator(void);
     bool stage_chunks(void);
     bool consolidate_chunks(void);
-    bool write_chunks(blknum_t chunkSize, bool once);
+    bool write_chunks(blknum_t chunkSize, bool atLeastOnce);
     void Format(ostream& os) const;
     string_q Format(void) const {
         ostringstream os;

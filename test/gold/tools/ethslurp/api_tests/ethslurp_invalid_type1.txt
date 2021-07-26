@@ -1,5 +1,5 @@
 {
   "errors": [
-    "chifra slurp - Invalid option 'junk' for 'types'. One or more of [ext|int|token|nfts|miner|all] required."
+    "chifra slurp - Invalid option 'junk' for 'types'. One or more of [ext|int|token|nfts|miner|uncles|all] required."
   ]
 }

@@ -1,11 +1,7 @@
-{ "status": "running" }
 {
   "message": "Testing only",
-  "mode": "run",
   "n_blocks": 2000,
   "n_block_procs": 12,
   "n_addr_procs": 20,
   "pin": 0,
-  "current": running,
 }
-{ "status": "stopped" }

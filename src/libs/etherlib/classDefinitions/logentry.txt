@@ -18,3 +18,4 @@ cpp_includes = etherlib.h
 scope = extern
 serializable = true
 display_str = blockNumber, transactionIndex, logIndex, address, topic0, topic1, topic2, topic3, data, type, compressedLog
+js = true
