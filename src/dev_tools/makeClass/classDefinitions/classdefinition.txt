@@ -14,6 +14,7 @@ fields = string short_fn|\
         string head_includes|\
         string src_includes|\
         string field_str|\
+        string extra_fields|\
         string display_str|\
         string sort_str|\
         string eq_str|\

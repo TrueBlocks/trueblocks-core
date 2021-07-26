@@ -14,6 +14,9 @@ fields = gas gasLimit|\
         CStringArray tx_hashes (nowrite)|\
         string name (nowrite)|\
         sbool light (nowrite)
+extra_fields = date date|\
+        uint64 unclesCnt|\
+        string extraData
 includes = etherlib.h|transaction.h
 cpp_includes = appearance.h
 scope = extern

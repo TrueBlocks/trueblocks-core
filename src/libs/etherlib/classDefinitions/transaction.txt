@@ -24,6 +24,10 @@ fields = hash hash|\
         string compressedTx (nowrite)|\
         CReconciliationArray statements (nowrite)|\
         sbool finalized (nowrite)
+extra_fields = date date|\
+        string fromName|\
+        string toName|\
+        string extraData
 includes = utillib.h|abi.h|receipt.h|trace.h|reconciliation.h|ethstate.h
 cpp_includes = etherlib.h
 scope = extern

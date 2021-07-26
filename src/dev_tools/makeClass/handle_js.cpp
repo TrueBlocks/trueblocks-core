@@ -87,52 +87,72 @@ bool COptions::handle_js(void) {
 
 //------------------------------------------------------------------------------------------------
 const char* STR_TYPE_FILE =
-    "import {\n++TYPES++} from '@modules/types';\n"
+    "import {++TYPES++} from '@modules/types';\n"
     "\n"
     "export declare type [{BASE_PROPER}] = {\n++FIELDS++};\n"
-    "export declare type [{BASE_PROPER}]Array = [{BASE_PROPER}]BRACKETS;\n";
+    "export declare type [{BASE_PROPER}]Array = [{BASE_PROPER}]++BRACKETS++;\n";
 
 //------------------------------------------------------------------------------------------------
 bool COptions::handle_js_type(const CClassDefinition& classDef) {
     ostringstream fields, types;
     CNameValueMap typeMap;
-    for (size_t i = 0; i < classDef.fieldArray.size(); i++) {
-        CParameter* field = (CParameter*)&classDef.fieldArray[i];
-        if (startsWith(field->name, "C"))
-            replace(field->name, "C", "");
-        if (startsWith(field->type, "C"))
-            replace(field->type, "C", "");
-        replace(field->type, "sbool", "bbb");
-        replace(field->type, "bool", "bbb");
-        replace(field->type, "uint8", "bbb");
-        replaceAll(field->type, "bbb", "boolean");
-        replace(field->type, "bytes32", "string");
-        replace(field->type, "sgas", "gas");
-        replace(field->type, "suint64", "uint64");
-        replace(field->type, "Value", "string");
-        replace(field->type, "TraceAction", "string");
-        replace(field->type, "TraceResult", "string");
-        replace(field->type, "TopicArray", "string[]");
-        replace(field->type, "LogEntryArray", "LogentryArray");
-        if (field->type == "StringArray")
-            field->type = "stringBRACKETS";
-        if (field->name == "status" && classDef.class_name == "CReceipt")
-            field->type = "string";
-        if (field->name == "components" && classDef.class_name == "CParameter")
-            field->type = "string";
-        fields << field->Format("  [{NAME}]: [{TYPE}];") << endl;
-        if (!startsWith(field->type, "string") && field->type != "boolean") {
-            typeMap[toLower(field->type)] = field->type;
-        }
+
+    CParameterArray allFields;
+    for (auto field : classDef.fieldArray) {
+        allFields.push_back(field);
     }
-    for (auto t : typeMap) {
-        types << "  " << t.second << "," << endl;
+
+    CStringArray extras;
+    explode(extras, classDef.extra_fields, '|');
+    for (auto name : extras) {
+        replaceAll(name, "  ", " ");
+        string_q type = nextTokenClear(name, ' ');
+        CParameter param(name, type);
+        allFields.push_back(param);
+    }
+
+    for (auto field : allFields) {
+        if (startsWith(field.name, "C"))
+            replace(field.name, "C", "");
+        if (startsWith(field.type, "C"))
+            replace(field.type, "C", "");
+        replace(field.type, "sbool", "bbb");
+        replace(field.type, "bool", "bbb");
+        replace(field.type, "uint8", "bbb");
+        replaceAll(field.type, "bbb", "boolean");
+        replace(field.type, "sgas", "gas");
+        replace(field.type, "suint64", "uint64");
+        replace(field.type, "Value", "string");
+        replace(field.type, "TraceAction", "Traceaction");
+        replace(field.type, "TraceResult", "Traceresult");
+        replace(field.type, "LogEntryArray", "LogentryArray");
+        if (field.type == "StringArray")
+            field.type = "string++BRACKETS++";
+        if (field.name == "status" && classDef.class_name == "CReceipt")
+            field.type = "string";
+        if (field.name == "components" && classDef.class_name == "CParameter")
+            field.type = "string";
+        fields << field.Format("  [{NAME}]: [{TYPE}];") << endl;
+        if (!startsWith(field.type, "string") && field.type != "boolean")
+            typeMap[toLower(field.type)] = field.type;
+    }
+
+    for (auto t : typeMap)
+        types << t.second << ", ";
+    string_q typesStr = trim(trim(types.str(), ' '), ',');
+    if (typesStr.size() > 80) {
+        replaceAll(typesStr, ", ", ",\n  ");
+        typesStr = trim(typesStr, ' ');
+        typesStr += ",";
+        typesStr = "\n  " + trim(typesStr, ' ') + "\n";
+    } else {
+        typesStr = " " + typesStr + " ";
     }
 
     string_q out = classDef.Format(STR_TYPE_FILE);
-    replaceAll(out, "++TYPES++", types.str());
+    replaceAll(out, "++TYPES++", typesStr);
     replaceAll(out, "++FIELDS++", fields.str());
-    replaceAll(out, "BRACKETS", "[]");
+    replaceAll(out, "++BRACKETS++", "[]");
 
     string_q path = classDef.Format(explorerPath + "src/ui/modules/types/[{BASE_PROPER}].tsx");
     stringToAsciiFile(path, out);

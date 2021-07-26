@@ -28,6 +28,8 @@ fields = blknum blockNumber|\
         int256 amountNet|\
         string reconciliationType|\
         bool reconciled
+extra_fields = int256 totalIn|\
+        int256 totalOut
 includes = utillib.h|abi.h
 cpp_includes = etherlib.h
 serializable = true
