@@ -1032,6 +1032,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x1f75047233517dcf67970d9e3c3bb385cb647f30	Unicorns	🦄	On chain		Ethereum tip jar unicorn tokens	false	false	false	true	true	false
 31-Gitcoin Grants:Grant	0x1f964614b5c28771bad5055c37aa0784ed718509	Grant 1329 Kitbashery		https://gitcoin.co/grants/1329/kitbashery			false	false	false	false	false	false
 50-Tokens:ERC20	0x1f9840a85d5af5bf1d1762f925bdaddc4201f984	Uniswap	UNI	On chain	18		false	false	false	true	true	false
+30-Contracts	0x1f98431c8ad98523631ae4a59f267346ea31f984	Uniswap V3: Factory					false	false	false	true	false	false
 31-Gitcoin Grants:Friends	0x1f9fbd2f6a8754cd56d4f56ed35338a63c5bfd1f	hjorthjort		Gitcoin Website			false	false	false	false	false	false
 80-Malicious:Shanghai	0x1fa0e1dfa88b371fcedf6225b3d8ad4e3bacef0e	Possibly Malicious 0x1fa		TrueBlocks.io			false	false	false	false	false	false
 31-Gitcoin Grants:Grant	0x1fa313ba8c968d00bc109404bd08e963eae3f1dd	Grant 0433 Edcon (community Ethereum Development Conference)		https://gitcoin.co/grants/433/edcon-community-ethereum-development-conference			false	false	false	false	false	false
