@@ -122,7 +122,14 @@ bool COptions::process_reconciliation(CTraverser* trav, blknum_t next) {
         }
     }
 
-    if (!reversed) {
+    bool allReconciled = !reversed;
+    for (auto recon : trav->trans.statements) {
+        if (!allReconciled)
+            break;
+        allReconciled = recon.reconciled;
+    }
+
+    if (allReconciled) {
         lockSection();
         CArchive archive(WRITING_ARCHIVE);
         if (!isTestMode() && archive.Lock(path, modeWriteCreate, LOCK_WAIT)) {

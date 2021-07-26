@@ -5796,6 +5796,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 32-Kickback:Friends	0xc21abe09935ae3d0b5e3128b193afa8034985a95	enormousrage		https://kickback.events/			false	false	false	false	false	false
 31-Gitcoin Grants:Grant	0xc21b25479ce9fed4a5bb9c66833e33c50b0e044a	Grant 1331 Boost Blocks by Broke		https://gitcoin.co/grants/1331/boost-blocks-by-broke			false	false	false	false	false	false
 31-Gitcoin Grants:Friends	0xc2287a3184e1920cd3417ecc37b3a2d7739b00ac	xyony		Gitcoin Website			false	false	false	false	false	false
+50-Tokens:ERC20	0xc22b30e4cce6b78aaaadae91e44e73593929a3e9	RAC	RAC	On chain	18		false	false	false	true	true	false
 31-Gitcoin Grants:Grant	0xc23f65b2c9869482204b2af68f1c6002983c7fc3	Grant 1232 Bullionschain		https://gitcoin.co/grants/1232/bullionschain			false	false	false	false	false	false
 30-Contracts:Humanity DAO	0xc2569af22883c23ed4bc423051dfb8afa8808ba1	myxboxbroke		https://www.humanitydao.org/humans			false	false	false	false	false	false
 50-Tokens:ERC20	0xc25a3a3b969415c80451098fa907ec722572917f	Curve.fi DAI/USDC/USDT/sUSD	crvPlain3andSUSD	On chain	18		false	false	false	true	true	false
@@ -6280,6 +6281,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 81-Other	0xd39fe1cffd8f070429169b416b7e07f486d553cf	Store		EtherScan.io			false	false	false	true	false	false
 30-Contracts	0xd3a2a7329e8530ba691ab5d2c213c9fad2244aa6	Arbitrage Bot		0xTracker			false	false	false	true	false	false
 31-Gitcoin Grants:Friends	0xd3a3eb0de0ffbb27fa32f2cebf38f8814b7af62f	jezsan		OnChain			false	false	false	false	false	false
+50-Tokens:ERC20	0xd3ace836e47f7cf4948dffd8ca2937494c52580c	Free BOB Tokens - BobsRepair.com	BOBx	On chain	18		false	false	false	true	true	false
 30-Contracts:Humanity DAO	0xd3bd21d0b0ff09e07957e37e75625edc3316bb24	bwwjason		https://www.humanitydao.org/humans			false	false	false	false	false	false
 50-Tokens:ERC20	0xd3c00772b24d997a812249ca637a921e81357701	WILD Token	WILD	On chain	18	Wild Crypto is a website where you can play games of chance.	false	false	false	true	true	false
 32-Kickback:Friends	0xd3c2ebe309672ed8a24f2a8d13c4a34f7516eeb5	cob_alt		https://kickback.events/			false	false	false	false	false	false
