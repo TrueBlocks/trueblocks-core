@@ -528,6 +528,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 30-Contracts	0x0f780de58182bfbfe1cdc4c80e94d178ef2a3d2b	Arbitrage Bot		0xTracker			false	false	false	true	false	false
 30-Contracts:Humanity DAO	0x0f7e9f461e84cc1c089bf9953af5893015d483c1	LochnessCrypto ronnieBoise		https://www.humanitydao.org/humans			false	false	false	false	false	false
 32-Kickback:Core	0x0f84461931866cfb2796e09b20520847d49f80f2	KickbackDeployerv1.0.x		https://github.com/wearekickback/contracts			false	false	false	true	false	false
+50-Tokens:ERC20	0x0f8b6440a1f7be3354fe072638a5c0f500b044be	Katerium.com	KTH	On chain	18		false	false	false	true	true	false
 32-Kickback:Friends	0x0f8c0019414099aaf0db6a89d9109f41d03d5769	dieter		https://kickback.events/			false	false	false	false	false	false
 50-Tokens:ERC20	0x0f8c45b896784a1e408526b9300519ef8660209c	XMAX	XMX	On chain	8		false	false	false	true	true	false
 32-Kickback:Friends	0x0f9054e13c2a29701ee9fc6702b6106fd245fd34	eunicelisc		https://kickback.events/			false	false	false	false	false	false
@@ -923,6 +924,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Friends	0x1bc4230d996286ffd1dd4dc649aad47fa08cadc4	evgenyboxer		Gitcoin Website			false	false	false	false	false	false
 50-Tokens:ERC20	0x1bcbc54166f6ba149934870b60506199b6c9db6d	ROC	ROC	On chain	10		false	false	false	true	true	false
 30-Contracts:Humanity DAO	0x1bf3e7ede31dbb93826c2af8686f80ac53f9ed93	hilmarxo		https://www.humanitydao.org/humans			false	false	false	false	false	false
+50-Tokens:ERC20	0x1bfa67b2338f8d936b7171f59cbedcbae0f09500	Give Directly	pDAI-GD	On chain	18		false	false	false	true	true	false
 81-Other	0x1c027ff8998698c8722d725de2303f8ed75bc753	OtherContract1		WhaleWatch.io			false	false	false	true	false	false
 31-Gitcoin Grants:Friends	0x1c0aa8ccd568d90d61659f060d1bfb1e6f855a20	ro5s		Gitcoin Website			false	false	false	false	false	false
 60-Airdrops	0x1c19839c88c0cdb4d0b10208833101d75454d7c1	EMO Airdrop Sender		TrueBlocks.io			false	false	false	false	false	false
@@ -1893,6 +1895,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 81-Other	0x3ee7192f069f3ab16077f843f2f469bd327e206c	PreVNK	V	On chain			false	false	false	true	true	false
 31-Gitcoin Grants:Grant	0x3ef3e95e5025d89966695da57c3ed031eebc1bd0	Grant 0983 Bonsai		https://gitcoin.co/grants/983/bonsai			false	false	false	false	false	false
 31-Gitcoin Grants:Grant	0x3ef439c4d81e8b73779575450e990f45412acef6	Grant 0316 DeFi Nyc		https://gitcoin.co/grants/316/defi-nyc			false	false	false	false	false	false
+50-Tokens:ERC20	0x3efa30704d2b8bbac821307230376556cf8cc39e	TornadoCash voucher for early adopters	vTORN	On chain	18		false	false	false	true	true	false
 90-DevCon2:Individual	0x3efa609cf1261aee51d888d68bcea8bb9c333eb1	cryptojo3		DevCon2 Token Contract			false	false	false	false	false	false
 30-Contracts:Humanity DAO	0x3eff05a88a1d2aab2c0bad2c8e2fb3da0e5f1ee9	m0zrat		https://www.humanitydao.org/humans			false	false	false	false	false	false
 32-Kickback:Contracts	0x3eff4434708128babca34714f5ec97da5a98c621	EthBoston		https://kickback.events/event/[{ADDRESS}]			false	false	false	true	false	false
@@ -2843,6 +2846,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x5d51fcced3114a8bb5e90cdd0f9d682bcbcc5393	B2BX	B2BX	On chain	18	Aims to provide cryptocurrency liquidity for brokers, stock exchanges, hedge funds and other institutional clients.	false	false	false	true	true	false
 32-Kickback:Contracts	0x5d5b1c9d6de32f6c9cdaf3dd9677cf1f2dcd0cf8	Sablier Osaka Meetup		https://kickback.events/event/[{ADDRESS}]			false	false	false	true	false	false
 50-Tokens:ERC20	0x5d60d8d7ef6d37e16ebabc324de3be57f135e0bc	MyBit	MYB	On chain	18		false	false	false	true	true	false
+50-Tokens:ERC20	0x5d64d850c8368008afb39224e92ad0dceff3cf38	MINDOL	MIN	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x5d65d971895edc438f465c17db6992698a52318d	Nebulas Token	NAS	On chain	18	Decentralized Search Framework	false	false	false	true	true	false
 30-Contracts	0x5d7bb71c1539fcaf7b0c1237ba251c7f34181ce1	InstaAccount					false	false	false	true	false	false
 31-Gitcoin Grants:Grant	0x5d7d257d97d8a81f51187a77c6dd226fb8424d90	Grant 0519 rDAI		https://gitcoin.co/grants/519/rdai		https://rdai.money	false	false	false	true	false	false
@@ -5670,6 +5674,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0xbdc5bac39dbe132b1e030e898ae3830017d7d969	Snovio	SNOV	On chain	18	Decentralized lead generation platform.	false	false	false	true	true	false
 50-Tokens:ERC20	0xbdcd4dcc79ba2c4088323ca94f443a05a23ca372	Zapper.FI: Uniswap V2 Pool Pipe		EtherScan.io			false	false	false	true	false	false
 50-Tokens:ERC20	0xbdcfbf5c4d91abc0bc9709c7286d00063c0e6f22	GUESS	GUESS	On chain	2		false	false	false	true	true	false
+50-Tokens:ERC20	0xbddab785b306bcd9fb056da189615cc8ece1d823	Ebakus	EBK	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0xbdeb4b83251fb146687fa19d1c660f99411eefe3	savedroid	SVD	EtherScan.io		Savedroid creates a unique ai-fueled ecosystem of crypto saving and investing for the masses.	false	false	false	true	true	false
 81-Other:Consensys	0xbdf5c4f1c1a9d7335a6a68d9aa011d5f40cf5520	SingularDTCCrowdFunc		Consensys			false	false	false	true	false	false
 30-Contracts:Humanity DAO	0xbdf6e91249c335ddf3f656c465326a69c13e1eb0	RajarsheeDutta		https://www.humanitydao.org/humans			false	false	false	false	false	false
