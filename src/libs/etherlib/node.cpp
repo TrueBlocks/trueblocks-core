@@ -684,7 +684,7 @@ blknum_t getLatestBlock_client(void) {
     static blknum_t lastBlock = NOPOS;
     static timestamp_t lastTime = timestamp_t(NOPOS);
     timestamp_t thisTime = date_2_Ts(Now());
-    if (lastTime != NOPOS && thisTime < timestamp_t(lastTime + 13)) {
+    if (thisTime != timestamp_t(NOPOS) && thisTime < timestamp_t(lastTime + 13)) {
         return lastBlock;
     }
 
