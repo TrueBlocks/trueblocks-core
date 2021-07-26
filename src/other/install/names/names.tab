@@ -2148,6 +2148,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Friends	0x4744cda32be7b3e75b9334001da9ed21789d4c0d	stamfordh		Gitcoin Website			false	false	false	false	false	false
 31-Gitcoin Grants:Grant	0x474764be5ad5518b95cea6ee98ef2bab93bf6cd2	Grant 1823 Unishare		https://gitcoin.co/grants/1823/unishare			false	false	false	false	false	false
 31-Gitcoin Grants:Grant	0x474cccf5774e7e306c06cf7fbfa7238d5cccedcf	Grant 1766 Virtual Canadian Crypto Conference		https://gitcoin.co/grants/1766/virtual-canadian-crypto-conference			false	false	false	false	false	false
+51-Tokens:ERC721	0x474eefa1213730875094b2dae28c4cc16239d349	DXdao DeFi Community Awards	DFCA	On chain	18		false	false	false	true	true	true
 90-DevCon2:Individual	0x47525d8132422b7d0ff6481bf96d8ffa63155ca8	Rich Bodo		DevCon2 Token Contract			false	false	false	false	false	false
 81-Other	0x475526af19ba007bc39ba43c0946892035aa1b08	Early_Partners_010		Ether Camp			false	false	false	false	false	false
 30-Contracts:Humanity DAO	0x4757264225070a734aa8698068981bec935c3bb6	chdwlch		https://www.humanitydao.org/humans			false	false	false	false	false	false
@@ -5174,6 +5175,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 30-Contracts:Set Protocol Libraries	0xadd948fd8ce465a0920bd3678e8b9ec86d00c79c	Standard Fail Auction Library		https://github.com/SetProtocol/set-protocol-contracts			false	false	false	true	false	false
 30-Contracts:Humanity DAO	0xadd9c3ffb27d5d79a408c46d5dc81ebc6097d38d	blacksmithplog		https://www.humanitydao.org/humans			false	false	false	false	false	false
 30-Contracts:Humanity DAO	0xade00bed371f52469077198a162a7af17835c843	Daryllautk		https://www.humanitydao.org/humans			false	false	false	false	false	false
+51-Tokens:ERC721	0xade00c28244d5ce17d72e40330b1c318cd12b7c3	AdEx Network	ADX	On chain	18		false	false	false	true	true	true
 30-Contracts:Humanity DAO	0xadf79ddd0ed5b9e7bea154c9e18ad7198ce26954	cryptorg13		https://www.humanitydao.org/humans			false	false	false	false	false	false
 80-Malicious:DaoDrain	0xadf80daec7ba8dcf15392f1ac611fff65d94f880	DAO Drain 092		GethSource			false	false	false	true	false	false
 50-Tokens:ERC20	0xadf8b8050639b6236915f7516d69de714672f0bf	Scanetchain	SWC	On chain	18	SCANETCHAIN is the commercial dApp built on the NEM platform Developed for Blockchain Commercialization. Using augmented reality hybrid blockchain to ensure interoperability of on-offline advertising, shopping, SNS services.	false	false	false	true	true	false
@@ -6787,6 +6789,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 32-Kickback:Friends	0xe471ee02c16ed4f9b24dd583c40e0f594dfcbf0d	hj		https://kickback.events/			false	false	false	false	false	false
 50-Tokens:ERC20	0xe477292f1b3268687a29376116b0ed27a9c76170	Herocoin	PLAY	On chain	18	Decentralized Solution for online betting.	false	false	false	true	true	false
 31-Gitcoin Grants:Friends	0xe47c12e7757d77e48f0979f931574a6f2d93ac6e	zoe-archer		Gitcoin Website			false	false	false	false	false	false
+51-Tokens:ERC721	0xe4815ae53b124e7263f08dcdbbb757d41ed658c6	Zks	ZKS	On chain	18		false	false	false	true	true	true
 30-Contracts:Humanity DAO	0xe48773e78e45372b1995a518c306d3a2a20d889b	alkaline0815		https://www.humanitydao.org/humans			false	false	false	false	false	false
 80-Malicious:Shanghai	0xe489aa8c0f68d67a5e49f1887f2334c8265909cf	Shanghai Cleaner		TrueBlocks.io			false	false	false	false	false	false
 31-Gitcoin Grants:Grant	0xe4986799f09adbb31ac5131d60d566512c2f7d55	Grant 1910 Cryptoonestop		https://gitcoin.co/grants/1910/cryptoonestop			false	false	false	false	false	false
@@ -7440,7 +7443,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 30-Contracts	0xfaa9ea5b01fe68d4fdb66c8a94e31139bdb022b8	Poethry		Poetry Website http://www.poethry.com			false	false	false	true	false	false
 60-Airdrops	0xfab3da023ea45d663991093b6b574ec766ff2eef	YOO Airdrop	YOO	TrueBlocks.io			false	false	false	true	true	false
 31-Gitcoin Grants:Friends	0xfab9a3d37999e12252b47468d2ffd4be15936012	ezincrypto		Gitcoin Website			false	false	false	false	false	false
-34-ENS	0xfac7bea255a6990f749363002136af6556b31e04	ENS: 721 Token Contract Base Registrar Implementation		EtherScan.io			false	false	false	true	false	false
+51-Tokens:ERC721	0xfac7bea255a6990f749363002136af6556b31e04	ENS: Old ENS Token	ENS	EtherScan.io			false	false	false	true	true	true
 81-Other	0xfacf38157f43af121d38ab7b82552df3cec69ab9	profitsFromBitnationDebitCard_id205_cnt1_3mo		Ether Camp			false	false	false	true	false	false
 30-Contracts:Humanity DAO	0xfad23a0af578ca6f62fc4705fef3f5a8cd0555ee	js_horne		https://www.humanitydao.org/humans			false	false	false	false	false	false
 50-Tokens:ERC20	0xfae4ee59cdd86e3be9e8b90b53aa866327d7c090	CPChain	CPC	On chain	18	CPChain is a new distributed infrastructure for next generation Internet of Things IoT.	false	false	false	true	true	false
