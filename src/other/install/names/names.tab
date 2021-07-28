@@ -19,6 +19,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Friends	0x00000b46508882a135b4933b82a07df8f24a0068	drknudy		Gitcoin Website			false	false	false	false	false	false
 50-Tokens:ERC20	0x00006100f7090010005f1bd7ae6122c3c2cf0090	TrueAUD	TAUD	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x0000852600ceb001e08e00bc008be620d60031f2	TrueHKD	THKD	On chain	18		false	false	false	true	true	false
+50-Tokens:ERC20	0x0000a1c00009a619684135b824ba02f7fbf3a572	Alchemy	ALCH	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x000100bb517e0c003200502a822083000a3b005d	Archer DAO: Voting Power Prism Proxy		On chain	18		false	false	false	true	true	false
 55-Defi	0x0001fb050fe7312791bf6475b96569d83f695c9f	Ygov.finance: yearn		EtherScan.io			false	false	false	true	false	false
 30-Contracts	0x000983ba1a675327f0940b56c2d49cd9c042dfbf	GU: Shiny Legendary Pack		EtherScan.io			false	false	false	true	false	false
@@ -85,6 +86,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 60-Airdrops	0x00f78d023dd008c6e8bd3e16327466d58fb6b576	XNN Airdrop Sender		TrueBlocks.io			false	false	false	false	false	false
 31-Gitcoin Grants:Grant	0x00fe460a15b49d09f39b057d0f1a7b9444f4f2be	Grant 0624 Nescience Software Portfolio Rebalancing Direct Indexing		https://gitcoin.co/grants/624/nescience-software-portfolio-rebalancing-direct-in		https://nescience.io	false	false	false	false	false	false
 80-Malicious:DaoDrain	0x0101f3be8ebb4bbd39a2e3b9a3639d4259832fd9	DAO Drain 075		GethSource Ether Camp			false	false	false	true	false	false
+50-Tokens:ERC20	0x010589b7c33034b802f7dba2c88cc9cec0f46673	SoundMoneyCoin	SOV	On chain	8		false	false	false	true	true	false
 31-Gitcoin Grants:Friends	0x010afb8548a5d1a3a3d62f58ca0a5a1329974206	marczeller		Gitcoin Website			false	false	false	false	false	false
 31-Gitcoin Grants:Grant	0x0115f5ce3f986a35b1edb6f2c3815cebb2461e70	Grant 0790 Loft Radio		https://gitcoin.co/grants/790/loft-radio		https://loft.radio/	false	false	false	false	false	false
 34-ENS	0x012233b3c8177f0778d910ed88170b82de3bfe57	Old ENS Registrar		Trueblocks.io			false	false	false	true	false	false
@@ -388,6 +390,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 32-Kickback:Contracts	0x0ab305931a717b8227d76de52e19a23066150360	Creating a Decentralized World Together		https://kickback.events/event/[{ADDRESS}]			false	false	false	true	false	false
 30-Contracts:Humanity DAO	0x0abd6688715d521182848f903f8ce270b36865cd	shakedog		https://www.humanitydao.org/humans			false	false	false	false	false	false
 50-Tokens:ERC20	0x0abdace70d3790235af448c88547603b945604ea	district0x Network Token	DNT	On chain	18	A network of decentralized markets and communities. Create, operate, and govern. Powered by Ethereum, Aragon, and IPFS.	false	false	false	true	true	false
+50-Tokens:ERC20	0x0aca1a719e8e93b084e496ef4d9fc33e3fe3ee62	FIAT	FIAT	On chain	18		false	false	false	true	true	false
 32-Kickback:Friends	0x0acb691ff5530040c5cbf275623e7641058b5ccb	madhur4444		https://kickback.events/			false	false	false	false	false	false
 34-Twitter:Friends	0x0acb99cc53a200a563083f86abc3f2016b4c043f	Athenas		Twitter		@SempreAtraente	false	false	false	false	false	false
 32-Kickback:Friends	0x0ad6022631c9bd23c3dc324b18ca4347d2c0b258	powersimple		https://kickback.events/			false	false	false	false	false	false
@@ -490,6 +493,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 30-Contracts:Humanity DAO	0x0dc0e81ee49ef53eb2ebfac82c9a7d7a0a811b57	tstaza		https://www.humanitydao.org/humans			false	false	false	false	false	false
 32-Kickback:Contracts	0x0dc4925258c19ccb47c025f4ef97dbaed546ef32	EthVR0		https://kickback.events/event/[{ADDRESS}]			false	false	false	true	false	false
 31-Gitcoin Grants:Friends	0x0dc51a04b41d5743c741d027e3cf5baedccc0f95	arnaucube		Gitcoin Website			false	false	false	false	false	false
+50-Tokens:ERC20	0x0dca1c98b942418b947aebc70101e9d26068908b	PONZI.FINANCE YIELD TOKEN	PONZI	On chain	18		false	false	false	true	true	false
 30-Contracts:Humanity DAO	0x0dd0ed02a7836bdab8c815fac202b2748574ce8a	lelecao330		https://www.humanitydao.org/humans			false	false	false	false	false	false
 34-Twitter:Friends	0x0dd24ffd85325c96e7e6526170b4d215a020f468	Md.Riyaj		Twitter		Hossain	false	false	false	false	false	false
 31-Gitcoin Grants:Grant	0x0dee9a06897e6d2e1e3d49acb0f21a6b439181e5	Grant 0276 Winiwallet		https://gitcoin.co/grants/276/winiwallet			false	false	false	false	false	false
@@ -585,6 +589,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 81-Other:DAO Related	0x10abb5efecdc09581f8b7cb95791fe2936790b4e	DAO_id315_cnt602_1mo		Ether Camp			false	false	false	true	false	false
 30-Contracts:Humanity DAO	0x10b220581837e022db0a9d7da88c16ee9c65ae39	acyuta1008		https://www.humanitydao.org/humans			false	false	false	false	false	false
 50-Tokens:ERC20	0x10b47177e92ef9d5c6059055d92ddf6290848991	SushiSwap LP Token	SLP	On chain	18		false	false	false	true	true	false
+50-Tokens:ERC20	0x10b66bd1e3b5a936b7f8dbc5976004311037cdf0	tBTC Deposit Token	TDT	On chain	18		false	false	false	true	true	false
 31-Gitcoin Grants:Friends	0x10d1e0c359411f1f7af55a17add2891eacfbcd16	ethereumkev		Gitcoin Website			false	false	false	false	false	false
 31-Gitcoin Grants:Grant	0x10d6d2e343281d388291a3e02f3293aaeda67178	Grant 1707 Llama - a Hub for Crypto Community Treasuries		https://gitcoin.co/grants/1707/llama-a-hub-for-crypto-community-treasuries			false	false	false	false	false	false
 31-Gitcoin Grants:Grant	0x10d93cdc5a7c5cc3114cf4356efda3219a120656	Grant 1498 Crypto Music Fund | Changing the World Through Music		https://gitcoin.co/grants/1498/crypto-music-fund-changing-the-world-through-musi			false	false	false	false	false	false
@@ -856,6 +861,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 32-Kickback:Friends	0x18e4477567f572c63413822215640f6251e57902	nickallen		https://kickback.events/			false	false	false	false	false	false
 30-Contracts:Humanity DAO	0x18e4da68262106d5753e36a99424513bd76d590a	pipixiao1		https://www.humanitydao.org/humans			false	false	false	false	false	false
 32-Kickback:Friends	0x18edaec676341d63d7087d0d999cf1f1a56d565a	layne		https://kickback.events/			false	false	false	false	false	false
+50-Tokens:ERC20	0x18f36d3222324ddac1efd0a524aabfb9d77d8041	Glarbs	GLARB	On chain	18		false	false	false	true	true	false
 31-Gitcoin Grants:Friends	0x190473b3071946df65306989972706a4c006a561	chainlinkgod		Gitcoin Website			false	false	false	false	false	false
 30-Contracts	0x19076bd01e86fa3d76334e27d4b8e6789688a42d	Gnosis Auction		TrueBlocks.io			false	false	false	true	false	false
 31-Gitcoin Grants:Friends	0x190a2409fc6434483d4c2cab804e75e3bc5ebfa6	0xyobo		Gitcoin Website			false	false	false	false	false	false
@@ -1380,6 +1386,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Grant	0x2a14cac750aaf659d3617487e0629d57242e4c71	Grant 1413 Meme of the Day		https://gitcoin.co/grants/1413/meme-of-the-day			false	false	false	false	false	false
 32-Kickback:Friends	0x2a151f4f99d0cd3800a945d859944070ccb2c87f	sdhruv93		https://kickback.events/			false	false	false	false	false	false
 40-Exchanges	0x2a1530c4c41db0b0b2bb646cb5eb1a67b7158667	Uniswap: DAI		EtherScan.io			false	false	false	true	false	false
+50-Tokens:ERC20	0x2a187453064356c898cae034eaed119e1663acb8	DCL Registrar	DCLENS	On chain	18		false	false	false	true	true	false
 31-Gitcoin Grants:Friends	0x2a1b86d7cab4815431827276525f570f37eca21d	razgraf		Gitcoin Website			false	false	false	false	false	false
 31-Gitcoin Grants:Grant	0x2a1ba6c3bb615406069d7697e59ea3167513c790	Grant 1173 Blockchain-comparison.com - #1 Blockchain Support		https://gitcoin.co/grants/1173/blockchain-comparisoncom-1-blockchain-support			false	false	false	false	false	false
 50-Tokens:ERC20	0x2a2127753653f6210d26f5b470738bf13b73423d	Amulets	AMULET	Nick Johnson Tweet			false	false	false	true	true	false
@@ -1424,6 +1431,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 34-Twitter:Friends	0x2b37b36c765126c606cfc181418bd83acf3ae792	Stolle		Twitter		@Stolle544	false	false	false	false	false	false
 60-Airdrops	0x2b3e697c2b90e3ecde2416e106d61bd0b1deab0f	BasicCoin Airdrop		EtherScan.io			false	false	false	true	false	false
 31-Gitcoin Grants:Grant	0x2b47c57a4c9fc1649b43500f4c0cda6cf29be278	Grant 0269 Limit to Win It		https://gitcoin.co/grants/269/limit-to-win-it			false	false	false	false	false	false
+50-Tokens:ERC20	0x2b591e99afe9f32eaa6214f7b7629768c40eeb39	HEX	HEX	On chain	8		false	false	false	true	true	false
 32-Kickback:Friends	0x2b5edf3469f80654a4ace14bb594dfc0bc0d8585	mirr		https://kickback.events/			false	false	false	false	false	false
 81-Other	0x2b5f4b3f1e11707a227aa5e69fa49dded33fb321	Early_Partners_004 (Prefund_1479)		Ether Camp			false	false	false	false	false	false
 30-Contracts:Humanity DAO	0x2b666c08d0c0664653dfd07f3254fdcd59c25d16	Yukai_Rex		https://www.humanitydao.org/humans			false	false	false	false	false	false
@@ -1598,6 +1606,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 30-Contracts:Humanity DAO	0x31a1528cbcdf16a419670276fa47201b0244c569	jmohamedzahoor		https://www.humanitydao.org/humans			false	false	false	false	false	false
 60-Airdrops	0x31a240648e2baf4f9f17225987f6f53fceb1699a	New ICO 2018 (https://safe.ad) - 1 Year Gift Airdrop	https://safe.ad	On chain			false	false	false	true	true	false
 30-Contracts:Pasta	0x31a5f7a7a12af1a317491b1285c59e63e16654a1	Pasta/Comp Uniswap		Spaghetti Website			false	false	false	true	false	false
+50-Tokens:ERC20	0x31c8eacbffdd875c74b94b077895bd78cf1e64a3	Radicle	RAD	On chain	18		false	false	false	true	true	false
 31-Gitcoin Grants:Grant	0x31ca6ca7f7a3298bc6c5103aa45847f34e382a1c	Grant 0324 Yazanator Twitter Account Activity		https://gitcoin.co/grants/324/yazanator-twitter-account-activity			false	false	false	false	false	false
 31-Gitcoin Grants:Grant	0x31d7413d75265deaff0a820b4609760dd862630e	Grant 1893 Bitlyflip		https://gitcoin.co/grants/1893/bitlyflip			false	false	false	false	false	false
 31-Gitcoin Grants:Friends	0x31da4252c17014c3d2ec7d179942ae35800a9b5e	ykothari		Gitcoin Website			false	false	false	false	false	false
@@ -1770,6 +1779,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 30-Contracts	0x3839416bd0095d97be9b354cbfb0f6807d4d609e	Bancor: Converter #1					false	false	false	true	false	false
 31-Gitcoin Grants:Friends	0x3839acf1ee7699d1f46b1be840d8ad8317fdf757	0xlucas		Gitcoin Website			false	false	false	false	false	false
 50-Tokens:ERC20	0x3839d8ba312751aa0248fed6a8bacb84308e20ed	Bezop	Bez	On chain	18	Bezop is a complete solution for running a successful ecommerce business online for new and experienced users.	false	false	false	true	true	false
+50-Tokens:ERC20	0x3845badade8e6dff049820680d1f14bd3903a5d0	SAND	SAND	On chain	18		false	false	false	true	true	false
 30-Contracts:Humanity DAO	0x3848623ae239e9d372cdaede1c3a17d3c58fd934	excitabelsilva		https://www.humanitydao.org/humans			false	false	false	false	false	false
 31-Gitcoin Grants:Grant	0x3849ba8a4d7193bf550a6e04632b176f9ce1b7e8	Grant 0161 Poketto Group		https://gitcoin.co/grants/161/poketto-group			false	false	false	false	false	false
 34-Twitter:Friends	0x385ec7785a81712df25862aa58de5bc2712851a0	yener		Twitter		@Jibacoaa	false	false	false	false	false	false
@@ -2166,6 +2176,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x4618519de4c304f3444ffa7f812dddc2971cc688	Kind Ads Token	KIND	On chain	8	Kind Ads is an advertising platform that serves user-friendly ads through more effective channels like email and push notifications.	false	false	false	true	true	false
 31-Gitcoin Grants:Grant	0x46266f255e49756847587eabddfc4d336ef268d2	Grant 0698 Venezvit		https://gitcoin.co/grants/698/venezvit		http://venezvit.com	false	false	false	false	false	false
 31-Gitcoin Grants:Grant	0x4629c3acc568be227d19dc767f48bd05882d56ed	Grant 1020 Cashuwallet		https://gitcoin.co/grants/1020/cashuwallet			false	false	false	false	false	false
+50-Tokens:ERC20	0x4634c3d6bbb077fb1f434828e29203b445f2ee08	DeskToken	DESK	On chain	18		false	false	false	true	true	false
 30-Contracts:Humanity DAO	0x4645f1f398c6b50c51d4fac3581f3b3bdabffc4b	spiveyou		https://www.humanitydao.org/humans			false	false	false	false	false	false
 31-Gitcoin Grants:Grant	0x4647116a410ca5e80ee2be0077335bbf0db35166	Grant 0636 Thanos Vs Gitcoin | the Movie		https://gitcoin.co/grants/636/thanos-vs-gitcoin-the-movie			false	false	false	false	false	false
 50-Tokens:ERC20	0x46492473755e8df960f8034877f61732d718ce96	StarCredits	STRC	On chain	8	Pariticipants can use a blockchain token to interact with the story on a deeper level.	false	false	false	true	true	false
@@ -2481,6 +2492,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x4f9254c83eb525f9fcf346490bbb3ed28a81c667	CelerToken	CELR	On chain	18		false	false	false	true	true	false
 31-Gitcoin Grants:Grant	0x4f93110dd9ba91213c56b8cb9fdbe7f10caa0cdc	Grant 1844 Bitcoin Usa		https://gitcoin.co/grants/1844/bitcoin-usa			false	false	false	false	false	false
 32-Kickback:Friends	0x4f9c980f16b0b1dc0501efa52126e428c41d18d8	myungin		https://kickback.events/			false	false	false	false	false	false
+50-Tokens:ERC20	0x4f9f4ef3d4bde69e6dbb332f4779b612adb63d21	RaidGuild	RAID	On chain	18		false	false	false	true	true	false
 31-Gitcoin Grants:Friends	0x4fa7811bbc4d7446ad0dd3f39538049df2af2ad5	loanbrew		Gitcoin Website			false	false	false	false	false	false
 80-Malicious:DaoDrain	0x4fa802324e929786dbda3b8820dc7834e9134a2a	DAO Drain 072		GethSource			false	false	false	true	false	false
 32-Kickback:Friends	0x4faf226ea0437a14ae882fc05df2439029312e3e	pavelkrolevets		https://kickback.events/			false	false	false	false	false	false
@@ -2520,6 +2532,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 81-Other	0x50cb0011a52a8415deae370301d78369e6089fa2	Lookatallthesetastyfees		EtherScan.io			false	false	false	true	false	false
 32-Kickback:Friends	0x50e4c8f5e46537520ae7e3b55a0b6e2ab5816998	decentralised		https://kickback.events/			false	false	false	false	false	false
 50-Tokens:ERC20	0x50ee674689d75c0f88e8f83cfe8c4b69e8fd590d	EmphyCoin	EPY	On chain	8	Decentralized blockchain lodging ecosystem	false	false	false	true	true	false
+50-Tokens:ERC20	0x50f5474724e0ee42d9a4e711ccfb275809fd6d4a	Sandbox's LANDs	LAND	On chain	18		false	false	false	true	true	false
 81-Other	0x50f54ed2cafd4b7245e60557a6b56d9ac9193025	Wallet		EtherScan.io			false	false	false	true	false	false
 50-Tokens:ERC20	0x5102791ca02fc3595398400bfe0e33d7b6c82267	LEADCOIN	LDC	On chain	18		false	false	false	true	true	false
 81-Other	0x51053a30e0243653a6c7daf8e87f5764e97685ee	Bitcoinbridge		EtherScan.io			false	false	false	true	false	false
@@ -2528,6 +2541,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 81-Other	0x51170b18bca7896b49c52dcc18e66e5c921e100f	Crystaldoubler		EtherScan.io			false	false	false	true	false	false
 50-Tokens:ERC20	0x5121e348e897daef1eef23959ab290e5557cf274	PolyAi	AI	On chain	18	POLY AI was made with the purpose of attracting investments, in order to serve the AI developing project.	false	false	false	true	true	false
 81-Other:DAO Whales	0x512b91bbfaa9e581ef683fc90d9db22a8f49f48b	DAO_WHALE_07 (Prefund_2757)		WhaleWatch.io			false	false	false	false	false	false
+50-Tokens:ERC20	0x512fbd15bde6570ff09e4438af27ede604024515	Gods Unchained	GODS	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x5136c98a80811c3f46bdda8b5c4555cfd9f812f0	indaHash Coin	IDH	On chain	6	Influencer marketing tool to connect brands and influencers.	false	false	false	true	true	false
 60-Airdrops	0x513b3c60b18d8347ac86db97f9d7d857b986273b	TRX Airdrop		TrueBlocks.io			false	false	false	true	false	false
 90-DevCon2:Individual	0x513f22abc27e1f539dff98396acc78638dcd9c1a	bertani		DevCon2 Token Contract			false	false	false	false	false	false
@@ -2675,6 +2689,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x55d34b686aa8c04921397c5807db9ecedba00a4c	Status: Token Sale		EtherScan.io			false	false	false	true	false	false
 32-Kickback:Friends	0x55d4d3c12f582650762c3854b5718947b6eda61d	akshay		https://kickback.events/			false	false	false	false	false	false
 30-Contracts:Humanity DAO	0x55d8fdecb6f61250179ad6615069e2ca5ca1274c	Jarvisrao		https://www.humanitydao.org/humans			false	false	false	false	false	false
+50-Tokens:ERC20	0x55de98f2141a44f804df399468cf7133b7e3e8e5	Gods Unchained Cards	CARD	On chain	18		false	false	false	true	true	false
 90-DevCon2:Individual	0x55e2780588aa5000f464f700d2676fd0a22ee160	Dan Finlay		DevCon2 Token Contract			false	false	false	false	false	false
 32-Kickback:Friends	0x55e401f6b552dba8b955907b2e9ed99b157253ba	adoadoado		https://kickback.events/			false	false	false	false	false	false
 30-Contracts	0x55f0298be70587a50d07f6dd8763cc96a8b4f9b1	Prycto Staking Pool		0xTracker			false	false	false	false	false	false
@@ -2691,6 +2706,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 81-Other	0x56467e038871dc7f2a6180cdebe1702cef77285f	Niceguytax		EtherScan.io			false	false	false	true	false	false
 30-Contracts:Humanity DAO	0x564b51542a4d4f185318918fd0c6049086e4a605	pantarheipl		https://www.humanitydao.org/humans			false	false	false	false	false	false
 30-Contracts:Humanity DAO	0x564b71c3a1384ab41ab7a670ff74f40877fc770b	clone_or_die		https://www.humanitydao.org/humans			false	false	false	false	false	false
+50-Tokens:ERC20	0x564cb55c655f727b61d9baf258b547ca04e9e548	Gods Unchained Cards	CARD	On chain	18		false	false	false	true	true	false
 81-Other	0x5657b8d985be88af0f3d2dc064e2db784071ae1c	prenup_id197_cnt3_3mo		Ether Camp			false	false	false	true	false	false
 30-Contracts:Humanity DAO	0x565b3b224f9f83573ca560b51cd772171380f826	alekscp		https://www.humanitydao.org/humans			false	false	false	false	false	false
 31-Gitcoin Grants:Grant	0x565b93a15d38acd79c120b15432d21e21ed274d6	Grant 0820 Rabbithole		https://gitcoin.co/grants/820/rabbithole		https://gitcoin.co/grants/820/rabbithole,https://rabbithole.gg/	false	false	false	false	false	false
@@ -2730,6 +2746,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 30-Contracts	0x57b116da40f21f91aec57329ecb763d29c1b2355	IdleEth	Goo	On chain	18		false	false	false	true	true	false
 31-Gitcoin Grants:Grant	0x57b328e48b1eecfb81c21e3a7cc72655cb4722c4	Grant 1049 Berserkers		https://gitcoin.co/grants/1049/berserkers			false	false	false	false	false	false
 31-Gitcoin Grants:Grant	0x57b353818da50c82ffd59664068a5212eaf090b0	Grant 0076 Inflation Funding Working Group		https://gitcoin.co/grants/76/inflation-funding-working-group			false	false	false	false	false	false
+50-Tokens:ERC20	0x57b946008913b82e4df85f501cbaed910e58d26c	Marlin POND	POND	On chain	18		false	false	false	true	true	false
 31-Gitcoin Grants:Grant	0x57bc8af36a7e900c438b0652ff2eeb24954a3e6d	Grant 1778 Smart Contract Vulnerabilities Database		https://gitcoin.co/grants/1778/smart-contract-vulnerabilities-database			false	false	false	false	false	false
 30-Contracts:Humanity DAO	0x57c18a6d2c41bcbdc0cceaa2e97576c169bd6d8e	ethersummary		https://www.humanitydao.org/humans			false	false	false	false	false	false
 31-Gitcoin Grants:Friends	0x57c74d8b980af4736299daf8ccea4f5c16639d6a	sofiad-collab		Gitcoin Website			false	false	false	false	false	false
@@ -2974,6 +2991,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 81-Other:Giveth	0x5f742383b6d1298980030d6af943b76cdd902143	Etherplay		Giveth Website			false	false	false	true	false	false
 30-Contracts:Humanity DAO	0x5f855b107afaadf722cf9611b82167a272b4acb0	smilingsky123		https://www.humanitydao.org/humans			false	false	false	false	false	false
 75-Early Actors	0x5f8f73e26cdf436f19cb24c82f90a15afe55b592	Miner_0052_128		OnChain			false	false	false	false	false	false
+50-Tokens:ERC20	0x5f98805a4e8be255a32880fdec7f6728c6568ba0	LUSD Stablecoin	LUSD	On chain	18		false	false	false	true	true	false
 80-Malicious:DaoDrain	0x5f9f3392e9f62f63b8eac0beb55541fc8627f42c	DAO Drain 064		GethSource			false	false	false	true	false	false
 31-Gitcoin Grants:Friends	0x5fa079673749104641b0e59388a87c84c2843fe6	eccheung4		Gitcoin Website			false	false	false	false	false	false
 31-Gitcoin Grants:Grant	0x5fb8b9512684d451d4e585a1a0aabfb48a253c67	Grant 1854 Hardwood Cockfund		https://gitcoin.co/grants/1854/hardwood-cockfund			false	false	false	false	false	false
@@ -3027,6 +3045,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 30-Contracts	0x610aebd620437b4b4e88801abd0c8ba0d009df5c	ValidatorShareProxy3					false	false	false	true	false	false
 60-Airdrops	0x611eee5ef33c90a1cb2da72eb3f6cda5c6bf5dd2	CAN Airdrop		TrueBlocks.io			false	false	false	true	false	false
 90-DevCon2:Individual	0x6123b01abd38bdb7ddd6da9be60f2f9d4bb51270	jbenet		DevCon2 Token Contract			false	false	false	false	false	false
+50-Tokens:ERC20	0x61266424b904d65ceb2945a1413ac322185187d5	YFIDapp	YFID	On chain	18		false	false	false	true	true	false
 32-Kickback:Contracts	0x6128175f88c6bad937afaa037f58a36d8c65f888	Trends Driven by AI and Universal Sensitivity of People		https://kickback.events/event/[{ADDRESS}]			false	false	false	true	false	false
 31-Gitcoin Grants:Friends	0x6130a038b17f7ee8d28abd54415f2066c0e81b0b	shingenchan		Gitcoin Website			false	false	false	false	false	false
 80-Malicious:DaoDrain	0x6131c42fa982e56929107413a9d526fd99405560	DAO Drain 049		GethSource Ether Camp			false	false	false	true	false	false
@@ -3062,6 +3081,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Grant	0x6239b06fe8aa9694ac99fc621fc787a1b60e436a	Grant 1959 Alphacolo		https://gitcoin.co/grants/1959/alphacolo			false	false	false	false	false	false
 31-Gitcoin Grants:Core	0x6239ff1040e412491557a7a02b2cbcc5ae85dc8f	Kudos Sender		EtherScan.io			false	false	false	false	false	false
 30-Contracts	0x62428f78fe0118447b9668ae867b4bf6a40c2d9c	AugurWebWallet		TrueBlocks.io			false	false	false	false	false	false
+50-Tokens:ERC20	0x6243d8cea23066d098a15582d81a598b4e8391f4	Flex Ungovernance Token	FLX	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x624d520bab2e4ad83935fa503fb130614374e850	smartshare token	SSP	On chain	4		false	false	false	true	true	false
 50-Tokens:ERC20	0x6251583e7d997df3604bc73b9779196e94a090ce	Hercules	HERC	On chain	18		false	false	false	true	true	false
 31-Gitcoin Grants:Friends	0x625236038836cecc532664915bd0399647e7826b	lkngtn		Gitcoin Website			false	false	false	false	false	false
@@ -3073,6 +3093,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Grant	0x627ca7601e943cbffd21aeeb7bb06b9a3137b0ec	Grant 1306 Eth Gas Bot ⛽		https://gitcoin.co/grants/1306/eth-gas-bot			false	false	false	false	false	false
 30-Contracts:Humanity DAO	0x628229797186d87afe655808dc7fc4a1af222f9a	yanivyanivs		https://www.humanitydao.org/humans			false	false	false	false	false	false
 50-Tokens:ERC20	0x6295ab2be04a617747481b292c390bfca592cf28	TokenDesk	TDS	On chain	18		false	false	false	true	true	false
+50-Tokens:ERC20	0x629cdec6acc980ebeebea9e5003bcd44db9fc5ce	Gods Unchained Cards	CARD	On chain	18		false	false	false	true	true	false
 32-Kickback:Friends	0x62acc475f68254941e923958fcad78e10a4cff06	amcassetti		https://kickback.events/			false	false	false	false	false	false
 31-Gitcoin Grants:Friends	0x62b4a2a1c90390cf172d3625b7fd3fb659078595	rickyshijs		Gitcoin Website			false	false	false	false	false	false
 70-Vendors	0x62dab6e2acb0a9fd2bd3632ebe6a85f81e828f1f	Avado wallet		TrueBlocks.io			false	false	false	false	false	false
@@ -3212,6 +3233,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x6758b7d441a9739b98552b373703d8d3d14f9e62	POA ERC20 on Foundation	POA20	On chain	18	POA Network is an Ethereum-based platform that offers an open-source framework for smart contracts.	false	false	false	true	true	false
 34-Twitter:Friends	0x6773aecff3d74acb67f1b23c434b8295e82e8382	officialsuigeneric		Twitter		@ofcl_suigeneric	false	false	false	false	false	false
 81-Other	0x6777c314b412f0196aca852632969f63e7971340	kissBTC	kissBTC	On chain	8		false	false	false	true	true	false
+50-Tokens:ERC20	0x677d8fe828fd7143ff3cee5883b7fc81e7c2de60	BlockchainArtExchange	BAE	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x6781a0f84c7e9e846dcb84a9a5bd49333067b104	ZAP TOKEN	ZAP	On chain	18	Zap project is a suite of tools for creating smart contract oracles and a marketplace to find and subscribe to existing data feeds that have been oraclized	false	false	false	true	true	false
 50-Tokens:ERC20	0x679131f591b4f369acb8cd8c51e68596806c3916	Trustlines Network Token	TLN	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x679badc551626e01b23ceecefbc9b877ea18fc46	Ccore Token	CCO	On chain	18	Crypto Payment Platform	false	false	false	true	true	false
@@ -3307,6 +3329,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 30-Contracts:Humanity DAO	0x6a57b2b8ded5edd9ba4fe2853351c75c0e85a368	dmitry_kurilo		https://www.humanitydao.org/humans			false	false	false	false	false	false
 30-Contracts:Humanity DAO	0x6a5ad002b696df5cee6b091f03497a9f1348e63d	Keegan_lee_fran		https://www.humanitydao.org/humans			false	false	false	false	false	false
 32-Kickback:Friends	0x6a5bd7aa9f48f2b460f2e974436bc8cb0acbe818	wolever		https://kickback.events/			false	false	false	false	false	false
+50-Tokens:ERC20	0x6a5ff3ceecae9ceb96e6ac6c76b82af8b39f0eb3	Rarible	RARE	On chain	18		false	false	false	true	true	false
 31-Gitcoin Grants:Friends	0x6a67430cbccdbe2d60f74d57ce0fdf8ca4933670	rhyswd		Gitcoin Website			false	false	false	false	false	false
 50-Tokens:ERC20	0x6a750d255416483bec1a31ca7050c6dac4263b57	Maximine Coin	MXM	On chain	18	A Transparent Distributed Pool Revenue System	false	false	false	true	true	false
 30-Contracts:Humanity DAO	0x6a7bf88116bf64c222a7324d7035b5815cd820a9	balckpaopao_		https://www.humanitydao.org/humans			false	false	false	false	false	false
@@ -3420,6 +3443,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x6ea6531b603f270d23d9edd2d8279135dc5d6773	InsurChain Coin	INSUR	On chain	18		false	false	false	true	true	false
 31-Gitcoin Grants:Grant	0x6eaa370adb52be8f86fef2a4ee86c4eca0f2f320	Grant 0540 Ethereum Swarm		https://gitcoin.co/grants/540/ethereum-swarm		https://github.com/ethersphere	false	false	false	false	false	false
 31-Gitcoin Grants:Friends	0x6eb74a08735ae62e55a66173188d685471b363ff	temp-sourav-bhar		Gitcoin Website			false	false	false	false	false	false
+50-Tokens:ERC20	0x6ebeaf8e8e946f0716e6533a6f2cefc83f60e8ab	Gods Unchained	GODS	On chain	18		false	false	false	true	true	false
 90-DevCon2:Individual	0x6ec64dd4226fe99c3ffd5d4a1f9aa064478a1bbd	Sandraro		DevCon2 Token Contract			false	false	false	true	false	false
 50-Tokens:ERC20	0x6ec8a24cabdc339a06a172f8223ea557055adaa5	Genaro X	GNX	On chain	9	The Genaro Network is the first Turing-complete public blockchain combining peer-to-peer storage with a sustainable consensus mechanism. Genaro's mixed consensus uses SPoR and PoS, ensuring stronger performance and security.	false	false	false	true	true	false
 30-Contracts	0x6edbb4ed53551d5b6b2d853077c653a8a581c5f3	Arbitrage Bot		0xTracker			false	false	false	true	false	false
@@ -3528,6 +3552,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Grant	0x726830dbb3e6a7f5009635e61cf4056d11c2dbf7	Grant 0107 Secure Scuttlebutt :: Ethereum Fusion		https://gitcoin.co/grants/107/secure-scuttlebutt-ethereum-fusion			false	false	false	false	false	false
 31-Gitcoin Grants:Friends	0x7277f7849966426d345d8f6b9afd1d3d89183083	kelsos		Gitcoin Website			false	false	false	false	false	false
 75-Early Actors	0x727cee80072f59d075a9fac8e1d81ec186d52337	Miner_0091_57		OnChain			false	false	false	false	false	false
+50-Tokens:ERC20	0x728072c8769f09421415119a929e6a63eec5da56	Trader	TRADER	On chain	18		false	false	false	true	true	false
 81-Other	0x7280cad72a01480e38ed679cb7c6f64e0c7140c7	Digx_Presale_Whale_06		SlackNation			false	false	false	false	false	false
 31-Gitcoin Grants:Grant	0x728c0c3d19e81a2a87264c014733aa462d81e1fb	Grant 1771 Core分叉		https://gitcoin.co/grants/1771/core			false	false	false	false	false	false
 32-Kickback:Friends	0x7291fcb5ef2bf9770fa031fcb512f126e5809976	mrbrianhobo		https://kickback.events/			false	false	false	false	false	false
@@ -3624,6 +3649,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 90-DevCon2:Individual	0x7585f440306ce6f2d20d87bce74b5d20950623e6	Kush Goyal StarApps√î√∏Œ©		DevCon2 Token Contract			false	false	false	false	false	false
 30-Contracts:Humanity DAO	0x758867a39a5ebf488cd081f784bd7d02a76081f2	iamtexture		https://www.humanitydao.org/humans			false	false	false	false	false	false
 31-Gitcoin Grants:Grant	0x758ba0f64f9498996368fcd7696cd962bc19fe87	Grant 0824 a Platform to Catalyze Achievement of Legislation Objectives		https://gitcoin.co/grants/824/a-platform-to-catalyze-achievement-of-legislation		https://crowdfundedpolitics.com	false	false	false	false	false	false
+50-Tokens:ERC20	0x75a28287b4889873a717b150caacd7b7e535f159	TraderToken	TRADER	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x75b90f32dcb0fefa6b72930bbdbe4d289c678d93	1885 Ventures	VENT	On chain	18		false	false	false	true	true	false
 31-Gitcoin Grants:Friends	0x75b98710d5995ab9992f02492b7568b43133161d	pythonpete32		Gitcoin Website			false	false	false	false	false	false
 32-Kickback:Friends	0x75bbc7d37d3bf975b527cf2e99b947d61a22ef95	kingjacob		https://kickback.events/			false	false	false	false	false	false
@@ -3634,6 +3660,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Grant	0x7601471df9abd0962d0201228aa30a1c569e8d51	Grant 0410 Dappertite™ User Research Lab		https://gitcoin.co/grants/410/dappertitetm-user-research-lab		https://gitcoin.co/selfmadeheroes	false	false	false	false	false	false
 80-Malicious:DaoDrain	0x7602b46df5390e432ef1c307d4f2c9ff6d65cc97	DAO Drain 114		GethSource			false	false	false	true	false	false
 60-Airdrops	0x7612e2d6c9f95c0344044cd6e92b156c596e9e9c	EtherCash Airdrop Sender		TrueBlocks.io			false	false	false	false	false	false
+50-Tokens:ERC20	0x76200bff5bd2c2a007380aa596742aa863863557	FONTIS-THETA-GANG	FTSTG	On chain	18		false	false	false	true	true	false
 31-Gitcoin Grants:Grant	0x7624cf3a128e5801d69a2ea0a13a74a6b3ebad4a	Grant 0196 Ethereum DAO Game		https://gitcoin.co/grants/196/ethereum-dao-game			false	false	false	false	false	false
 32-Kickback:Friends	0x76273dcc41356e5f0c49bb68e525175dc7e83417	pepesza		https://kickback.events/			false	false	false	false	false	false
 50-Tokens:ERC20	0x7627de4b93263a6a7570b8dafa64bae812e5c394	Nexxus	NXX	On chain	8	NexxusCoin is the internal token that powers the Nexxus Ecosystem and creates a better world by empowering individuals and communities worldwide	false	false	false	true	true	false
@@ -3737,6 +3764,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x78c292d1445e6b9558bf42e8bc369271ded062ea	CyberMusic	CYMT	On chain	8	Cyber Music will be the new point of reference for the music market and will be fully developed using the technologies that the blockchain has available.	false	false	false	true	true	false
 81-Other	0x78d4f849aab2b0a5a66f76b9b1ff47da5a9ae492	Dividendprofit		EtherScan.io			false	false	false	true	false	false
 31-Gitcoin Grants:Grant	0x78f3c73f5500335aac51e4c2a79555d176b279da	Grant 0668 Fightpandemics⚛️		https://gitcoin.co/grants/668/fightpandemics		https://fightpandemics.com/	false	false	false	false	false	false
+50-Tokens:ERC20	0x78f5c48e97354a7c881fb5456da86b486d5bbfdb	Maker Coin	MAKER	On chain	4		false	false	false	true	true	false
 32-Kickback:Friends	0x78f5e3f979530781b5967b55cde1366f65398c82	hmalik88		https://kickback.events/			false	false	false	false	false	false
 81-Other	0x78f6a1d4b94d2e6c4ce3c5cc858b9dfb6e98b50f	Dice		EtherScan.io			false	false	false	true	false	false
 31-Gitcoin Grants:Grant	0x78f6af57f6885fb2c38b0aeb8aaa2a4636127fd9	Grant 0586 Decentralised Finance Working Group		https://gitcoin.co/grants/586/decentralised-finance-working-group		https://www.terrella.io/post/decentralised-finance-group	false	false	false	false	false	false
@@ -3861,6 +3889,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x7c84e62859d0715eb77d1b1c4154ecd6abb21bec	Shping Coin	SHPING	On chain	18		false	false	false	true	true	false
 31-Gitcoin Grants:Grant	0x7c88e445fa773275eadc619d5a6fbe12a4f40a24	Grant 1542 Tetrion		https://gitcoin.co/grants/1542/tetrion			false	false	false	false	false	false
 30-Contracts:Humanity DAO	0x7c9ae5bb6203f388364905583544a55f88e4682c	TdkShang		https://www.humanitydao.org/humans			false	false	false	false	false	false
+50-Tokens:ERC20	0x7ca121b093e2fbd4bb9a894bd5ff487d16f1f83b	LORDLESS TOKEN	LESS	On chain	18		false	false	false	true	true	false
 90-DevCon2:Individual	0x7cb00fc2df24ba0f0c620635750ccf7678095f91	Michael Ilg		DevCon2 Token Contract			false	false	false	false	false	false
 31-Gitcoin Grants:Friends	0x7cb1a6efda5da65f174cc2d77f0d6121c8e94624	morelazers		Gitcoin Website			false	false	false	false	false	false
 90-DevCon2:Individual	0x7cb57b5a97eabe94205c07890be4c1ad31e486a8	My Ethereum Wallet Tip Jar Taylor Van Orden		Slack DevCon2 Token Contract			false	false	false	false	false	false
@@ -4225,6 +4254,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Grant	0x89653935315a135640f425fd133f8209584e3240	Grant 1446 Fusionledger		https://gitcoin.co/grants/1446/fusionledger			false	false	false	false	false	false
 75-Early Actors	0x896f51055242afb540c777eaf24affa8ea14956b	Miner_0098_55		OnChain			false	false	false	false	false	false
 50-Tokens:ERC20	0x8971f9fd7196e5cee2c1032b50f656855af7dd26	Lambda	LAMB	On chain	18		false	false	false	true	true	false
+50-Tokens:ERC20	0x8978fb37a227f36e17c3b1142c91f0dccc590668	Ethcc rooms	ETHCC2020	On chain	18		false	false	false	true	true	false
 30-Contracts:Humanity DAO	0x89820f7a8784e26d1a9f8fe517c16bfde9a6b27b	v6tLEubZxtH57gj		https://www.humanitydao.org/humans			false	false	false	false	false	false
 31-Gitcoin Grants:Grant	0x8990e11b69403ea53ef2b32434bbd7dbf84b5234	Grant 0305 Festdao		https://gitcoin.co/grants/305/festdao			false	false	false	true	false	false
 50-Tokens:ERC20	0x899338b84d25ac505a332adce7402d697d947494	WCOIN	WIN	On chain	8	WAWLLET is a multi-asset wallet and personal financial passport.	false	false	false	true	true	false
@@ -4266,6 +4296,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 90-DevCon2:Individual	0x8abbdea9514c9ea884d38f50ed1db351564c8630	Austin Steed		DevCon2 Token Contract			false	false	false	false	false	false
 30-Contracts:Humanity DAO	0x8ada904a7df2088024eabd0de41a880ad9ece4d3	nichanank		https://www.humanitydao.org/humans			false	false	false	false	false	false
 50-Tokens:ERC20	0x8ae4bf2c33a8e667de34b54938b0ccd03eb8cc06	Patientory	PTOY	On chain	8	Patientory is an easy way to securely store and manage health information in real time.	false	false	false	true	true	false
+50-Tokens:ERC20	0x8ae720a71622e824f576b4a8c03031066548a3b1	Uniswap V2	UNI-V2	On chain	18		false	false	false	true	true	false
 31-Gitcoin Grants:Friends	0x8b104344f397afc33ee55c743a0fbd7d956201cd	tweetious		Gitcoin Website			false	false	false	false	false	false
 31-Gitcoin Grants:Grant	0x8b1416de782f23c55f6b5cc26098249f469c2591	Grant 1701 DeFi Italy - the Backbone of the DeFi World in Italy		https://gitcoin.co/grants/1701/defi-italy-the-backbone-of-the-defi-world-in-ital			false	false	false	false	false	false
 50-Tokens:ERC20	0x8b1f49491477e0fb46a29fef53f1ea320d13c349	MicroMoney	AMM	On chain	6		false	false	false	true	true	false
@@ -4298,6 +4329,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 81-Other	0x8c0bafd88dfb4c8159ce925b3222d18fdf3c8a90	Auction_id120_cnt14_5mo		Ether Camp			false	false	false	true	false	false
 31-Gitcoin Grants:Friends	0x8c0e1c1b7ca56cbf74b88de1c07e0a7216ee90b6	psswrd12345		Gitcoin Website			false	false	false	false	false	false
 50-Tokens:ERC20	0x8c15ef5b4b21951d50e53e4fbda8298ffad25057	Function X	FX	On chain	18		false	false	false	true	true	false
+50-Tokens:ERC20	0x8c1922916fb730aa6c09d69565a28be0292c2dc0	NarcoBucks	NARCO	On chain	8		false	false	false	true	true	false
 31-Gitcoin Grants:Grant	0x8c1a0b65f5218649db12fcbb2fb6ad246f399bd6	Grant 0691 the Gitcoin Covid19 Relief Fund		https://gitcoin.co/grants/691/the-gitcoin-covid19-relief-fund			false	false	false	false	false	false
 50-Tokens:ERC20	0x8c211128f8d232935afd80543e442f894a4355b7	scientificcoin	SNcoin	On chain	18		false	false	false	true	true	false
 31-Gitcoin Grants:Friends	0x8c23388d6f57f9b1024527403c38fcb499bfc6d9	jakevartanian		Gitcoin Website			false	false	false	false	false	false
@@ -4318,6 +4350,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 30-Contracts:Humanity DAO	0x8ce8b7e9dec84236935d0df3cf1e094913123f03	lionellevine		https://www.humanitydao.org/humans			false	false	false	false	false	false
 30-Contracts:Humanity DAO	0x8cf10082180844c0e0724f27c55b5067bc1c1495	marc0olo		https://www.humanitydao.org/humans			false	false	false	false	false	false
 30-Contracts:Humanity DAO	0x8cf63bffaf3a55eb59a5e613826afa14cf3f64a1	xiaoerzi2		https://www.humanitydao.org/humans			false	false	false	false	false	false
+50-Tokens:ERC20	0x8cfb3742973cd70c3d0a9b5d9d53d8f7249e790a	FIAT	FIAT	On chain	18		false	false	false	true	true	false
 60-Airdrops	0x8d00a55312f9b4621297b1d342a69a677b1c635b	BVT Airdrop		TrueBlocks.io			false	false	false	true	false	false
 50-Tokens:ERC20	0x8d04a8c79ceb0889bdd12acdf3fa9d207ed3ff63	Blitmap	BLIT	On chain	18		false	false	false	true	true	false
 31-Gitcoin Grants:Friends	0x8d0c55a49269a1a08a32079413098a26194d03db	developerkevin		Gitcoin Website			false	false	false	false	false	false
@@ -4456,6 +4489,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Friends	0x9187dd36dbe2ba11b4302f03a99fa91b09b778ad	Sam Moelius		Gitcoin Website			false	false	false	false	false	false
 31-Gitcoin Grants:Grant	0x9188df10a49c1bfd4a098efeefd231be137dcec2	Grant 0115 Codefund Development (ron)		https://gitcoin.co/grants/115/codefund-development-ron			false	false	false	false	false	false
 50-Tokens:ERC20	0x9195e00402abe385f2d00a32af40b271f2e87925	ETHEERA	ETA	On chain	18	Real estate for the blockchain	false	false	false	true	true	false
+50-Tokens:ERC20	0x919d0131fa5f77d99fbbbbace50bcb6e62332bf2	BorisCoin	BORIS	On chain	18		false	false	false	true	true	false
 30-Contracts	0x91a502c678605fbce581eae053319747482276b9	Kyber DEX Contract		0xTracker			false	false	false	true	false	false
 30-Contracts:Humanity DAO	0x91a824cef939467ee919f93440690bcf99e17c9f	imsatoshi3		https://www.humanitydao.org/humans			false	false	false	false	false	false
 81-Other	0x91a8baaed012ea2e63803b593d0d0c2aab4c5b0a	Early_Partners_020 (Prefund_4984)		Ether Camp			false	false	false	false	false	false
@@ -4745,6 +4779,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Friends	0x9b328488a8f0fa20628bb959769f0ba78de06466	hazelstar		Gitcoin Website			false	false	false	false	false	false
 81-Other	0x9b37508b5f859682382d8cb6467a5c7fc5d02e9c	CrowdFund DAO	PDG	On chain			false	false	false	true	true	false
 50-Tokens:ERC20	0x9b3e946e1a8ea0112b147af4e6e020752f2446bc	Puregold Token	PGT	On chain	18		false	false	false	true	true	false
+50-Tokens:ERC20	0x9b44ed798a10df31dee52c5256dcb4754bcf097e	Element Principal Token yvCurveLUSD-28SEP21	ePyvCurveLUSD-28SEP21	On chain	18		false	false	false	true	true	false
 36-Chainlink	0x9b4e2579895efa2b4765063310dc4109a7641129	Chainlink BAT-ETH Aggregator		EtherScan.io			false	false	false	true	false	false
 50-Tokens:ERC20	0x9b4e2b4b13d125238aa0480dd42b4f6fc71b37cc	MT Token	MT	On chain	18		false	false	false	true	true	false
 30-Contracts:Humanity DAO	0x9b520fa2e47e024aadb2bad83cf9a50ded982583	janlukas_rinker		https://www.humanitydao.org/humans			false	false	false	false	false	false
@@ -4756,6 +4791,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 30-Contracts:Humanity DAO	0x9b7b2b4f7a391b6f14a81221ae0920a9735b67fb	pedrouid		https://www.humanitydao.org/humans			false	false	false	false	false	false
 31-Gitcoin Grants:Friends	0x9b814f2c064bcc5b4c9c72c9ccd84349a54b4854	ljohnnes		Gitcoin Website			false	false	false	false	false	false
 31-Gitcoin Grants:Grant	0x9b984d5a03980d8dc0a24506c968465424c81dbe	Grant 0024 Prysm by Prysmatic Labs		https://gitcoin.co/grants/24/prysm-by-prysmatic-labs			false	false	false	true	false	false
+50-Tokens:ERC20	0x9b9eac3edd2a9d08506eb7b0e8935742ef88c673	https://tokenplay.io	TPP	On chain	18		false	false	false	true	true	false
 30-Contracts	0x9ba6c9d09db964771cb4d526188f6af81e9bcf9e	Arbitrage Bot		0xTracker			false	false	false	true	false	false
 55-Defi	0x9baf8a5236d44ac410c0186fe39178d5aad0bb87	Cream yCRV	crYCRV	On chain	8		false	false	false	true	true	false
 91-Known	0x9bd20e68b22f63c651a30f2cdbf6d539e465f83c	Suicide Sender		TrueBlocks.io			false	false	false	false	false	false
@@ -5179,6 +5215,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 30-Contracts:Humanity DAO	0xaa96f8b1d9c62c557375ee5719a91e4ebe6b5cec	Mable_Jiang		https://www.humanitydao.org/humans			false	false	false	false	false	false
 80-Malicious:Shanghai	0xaaaa9c8834d448fe0e1f95b109ed8be1ef802936	Possibly Malicious 0xaaa		TrueBlocks.io			false	false	false	true	false	false
 60-Airdrops	0xaaaaa798ebb90066788951e0fc03bc71e6bc2b51	AZ Airdrop	AZLPT	TrueBlocks.io			false	false	false	true	true	false
+50-Tokens:ERC20	0xaaac83f7a153b1ae998df8dd5c1da1b89e2587a1	SushiSwap LP Token	SLP	On chain	18		false	false	false	true	true	false
 31-Gitcoin Grants:Friends	0xaaae86c9ea7c6adce9637a472735053637a2105b	madanadit		Gitcoin Website			false	false	false	false	false	false
 50-Tokens:ERC20	0xaaaebe6fe48e54f431b0c390cfaf0b017d09d42d	Celsius	CEL	On chain	4		false	false	false	true	true	false
 50-Tokens:ERC20	0xaaaf91d9b90df800df4f55c205fd6989c977e73a	Monolith TKN	TKN	On chain	8		false	false	false	true	true	false
@@ -5234,6 +5271,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0xac3da587eac229c9896d919abc235ca4fd7f72c1	Target Coin	TGT	On chain	1	Bonus Crypto Fund.	false	false	false	true	true	false
 35-TheCyber:Friends	0xac4361f56c82ed59d533d45129f407015d84702a	theCyber Member 05		Solidity Code			false	false	false	false	false	false
 50-Tokens:ERC20	0xac44b0c61c20c5063e22d3a0ff67f13afdfed103	Incent Coffee Token	INCOF	On chain	18		false	false	false	true	true	false
+50-Tokens:ERC20	0xac4c9f6352f58472ede3fc47bf8f17b8173e2cb1	PitchToken Klassic	PTK	On chain	6		false	false	false	true	true	false
 34-Twitter:Friends	0xac4df82fe37ea2187bc8c011a23d743b4f39019a	In TG 1					false	false	false	true	false	false
 81-Other	0xac504e2a9c870a48de521ed513b251b1f7116dd9	Rps		EtherScan.io			false	false	false	true	false	false
 81-Other	0xac5713b66789e58351201e1dae1d4fbb5c7d8931	BasicIncome_CoFund_id200_cnt3_3mo		Ether Camp			false	false	false	true	false	false
@@ -5339,6 +5377,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 81-Other	0xaf32279149101fa3f6e3d1768f051593049dcd9f	Lastisme		EtherScan.io			false	false	false	true	false	false
 81-Other	0xaf396dce15cb9e834ff9187f34f589db22c849a8	Lastisme		EtherScan.io			false	false	false	true	false	false
 81-Other	0xaf3aa7b4cecb92995cd240a849c9dae70e09186d	Early_Partners_033		Ether Camp			false	false	false	false	false	false
+50-Tokens:ERC20	0xaf3fff06b75f99352d8c2a3c4bef1339a2f94789	tBTC Fee Rebate Token	FRT	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0xaf47ebbd460f21c2b3262726572ca8812d7143b0	Promodl Airdrop	PMOD	On chain			false	false	false	true	true	false
 50-Tokens:ERC20	0xaf4dce16da2877f8c9e00544c93b62ac40631f16	Monetha	MTH	On chain	5	Trusted ecommerce.	false	false	false	true	true	false
 31-Gitcoin Grants:Grant	0xaf52ec16bd3ae498e51cf25bf06686d5812041b3	Grant 1535 Hurricane Eta and IOTa Relief Fund		https://gitcoin.co/grants/1535/hurricane-eta-and-iota-relief-fund			false	false	false	false	false	false
@@ -5356,6 +5395,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Grant	0xafdd1eb2511cd891acf2bff82dabf47e0c914d24	Grant 0546 1up World		https://gitcoin.co/grants/546/1up-world		https://1up.world/	false	false	false	true	false	false
 31-Gitcoin Grants:Grant	0xafecebe1c14325c2212624ac710af3a1b5da595d	Grant 1897 Albert		https://gitcoin.co/grants/1897/albert			false	false	false	false	false	false
 32-Kickback:Contracts	0xb00cfc5964c3fb9abde77c514a5533f9c4bd457d	CryptoWiener PartyParty 2.0 CryptoVoxels		https://kickback.events/event/[{ADDRESS}]			false	false	false	true	false	false
+50-Tokens:ERC20	0xb0114bbdce17e0af91b2be32916a1e236cf6034f	Unlock Blog Members	UDT	On chain	18		false	false	false	true	true	false
 55-Defi	0xb01419e74d8a2abb1bbad82925b19c36c191a701	Ygov.finance: Fee Rewards		EtherScan.io			false	false	false	true	false	false
 50-Tokens:ERC20	0xb0280743b44bf7db4b6be482b2ba7b75e5da096c	Transcodium	TNS	On chain	18	A Decentralized Peer-to-Peer Media Editing, Transcoding Distribution Platform	false	false	false	true	true	false
 55-Defi	0xb0325dbe7fa891436e83a094f9f12848c78e449b	Yearn: Calvin Liu		EtherScan.io			false	false	false	false	false	false
@@ -5694,6 +5734,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 81-Other	0xbaabe94c786fe90514dc6fa68499fd93ee583a5c	Tickingbomb		EtherScan.io			false	false	false	true	false	false
 50-Tokens:ERC20	0xbab165df9455aa0f2aed1f2565520b91ddadb4c8	EDUCare	EKT	On chain	8		false	false	false	true	true	false
 90-DevCon2:Individual	0xbab9399e0bee4d51133dcec9a3c02cf41066f0d2	cobordism		DevCon2 Token Contract			false	false	false	false	false	false
+50-Tokens:ERC20	0xbabd64a87881d8df7680907fcde176ff11fa0292	Element Yield Token yvCurveLUSD-28SEP21	eYyvCurveLUSD-28SEP21	On chain	18		false	false	false	true	true	false
 30-Contracts:Humanity DAO	0xbac675c310721717cd4a37f6cbea1f081b1c2a07	ukstv		https://www.humanitydao.org/humans			false	false	false	false	false	false
 50-Tokens:ERC20	0xbac7a1798350cdf2dbfe0c210c2c9861223f4b31	Moneynet Coin	MNC	On chain	18	Incentive Social Network Service	false	false	false	true	true	false
 80-Malicious	0xbac8a476b95ec741e56561a66231f92bc88bb3a8	Pickle Thief (Deployer)		Twitter			false	false	false	false	false	false
@@ -5950,6 +5991,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0xc2ee3304e1029bb79a6da41113aa0452481ec59a	Noodle.Finance: Staking Pool		EtherScan.io			false	false	false	true	false	false
 31-Gitcoin Grants:Grant	0xc2f050158910fae078a7e10b7b09e021fb217769	Grant 0761 Downtown Stimulus Quadratic Funding for COVID economic distress		https://gitcoin.co/grants/761/downtown-stimulus-quadratic-funding-for-covid-eco		https://youtu.be/N4K3Pj0t9Iw	false	false	false	false	false	false
 31-Gitcoin Grants:Friends	0xc2f82a1f287b5b5aebff7c19e83e0a16cf3bd041	centmatthew		Gitcoin Website			false	false	false	false	false	false
+50-Tokens:ERC20	0xc30951ff31c04a47b26ce496b0510a3b2d709e92	启动公链	betbeb.com	On chain	18		false	false	false	true	true	false
 31-Gitcoin Grants:Grant	0xc30a7cf3b1a09813f8b843c68b829fffba729c95	Grant 0851 Studydefi		https://gitcoin.co/grants/851/studydefi		https://studydefi.com/	false	false	false	true	false	false
 81-Other	0xc3113bcda42b1824c07f8317b40152d6730a6f37	Opendollar		EtherScan.io			false	false	false	true	false	false
 31-Gitcoin Grants:Grant	0xc316319950bf01e18748ed807c05cbe64d48da6b	Grant 0427 Deep Work Staking Hackathon		https://gitcoin.co/grants/427/deep-work-staking-hackathon		https://www.notion.so/deepworkstudio/Deep-Work-Hackathon-250d294082f34bfeaa44edb31e5ae6f5	false	false	false	false	false	false
@@ -6258,6 +6300,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0xcdcab3c098870fd305bb415259240a3a3e480d91	Daleone	DLE	On chain	18		false	false	false	true	true	false
 31-Gitcoin Grants:Grant	0xcdcbc6b4e1a7a1d671fc6a5f2e2a89122d79108e	Grant 0097 Knockturn Allee - Grin Payment Processor		https://gitcoin.co/grants/97/knockturn-allee-grin-payment-processor			false	false	false	false	false	false
 50-Tokens:ERC20	0xcdcfc0f66c522fd086a1b725ea3c0eeb9f9e8814	Aurora DAO	AURA	On chain	18	Aurora is a collection of Ethereum applications and protocols that together form a decentralized banking and finance platform.	false	false	false	true	true	false
+50-Tokens:ERC20	0xcdd58c87e0e21e28ee78902b02fff533bc3c7738	Caro Mintbase	CMB	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0xce0058827e6c89e625e524d2fe6e3ef3d9bb6a0c	MITH Cash: DAI/MIC Pool		EtherScan.io			false	false	false	true	false	false
 32-Kickback:Friends	0xce061caee7b2dca70a1688e3fb5e927dfc3623cd	henrynguyen5		https://kickback.events/			false	false	false	false	false	false
 81-Other	0xce1555c4fc4ddc2d87183d1a36e0a410e565624d	Storadge		EtherScan.io			false	false	false	true	false	false
@@ -6445,6 +6488,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 30-Contracts:Humanity DAO	0xd3e8850866fce73085bb076ebb1eea30bdf28115	w_kuan1026		https://www.humanitydao.org/humans			false	false	false	false	false	false
 31-Gitcoin Grants:Grant	0xd3e9d60e4e4de615124d5239219f32946d10151d	Grant 0297 Rocket Nft		https://gitcoin.co/grants/297/rocket-nft			false	false	false	false	false	false
 32-Kickback:Contracts	0xd40ce83530fc3ee91203eb72661711a913f80f6b	EthLondon Boson Protocol		https://kickback.events/event/[{ADDRESS}]			false	false	false	true	false	false
+50-Tokens:ERC20	0xd416e413decf0a1c08c77a43b156c5d16922c6d0	ethcclivestream	ethcc2020	On chain	18		false	false	false	true	true	false
 35-TheCyber:Friends	0xd41f77997357a42c4262d975326bfcd2e29145a3	theCyber Member 31		Solidity Code			false	false	false	false	false	false
 30-Contracts	0xd4240987d6f92b06c8b5068b1e4006a97c47392b	Set: Rebalancing Set Exchange Issuance v2		EtherScan.io			false	false	false	true	false	false
 50-Tokens:ERC20	0xd42debe4edc92bd5a3fbb4243e1eccf6d63a4a5d	Carboneum	C8	On chain	18	Carboneum is creating a democratized infrastructure of social trading platform with a proprietary application.	false	false	false	true	true	false
@@ -6618,6 +6662,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 90-DevCon2:Individual	0xda273eff599dfafe0800bb3b3c717ad24a4b0372	Maxime		DevCon2 Token Contract			false	false	false	false	false	false
 31-Gitcoin Grants:Friends	0xda29321865fe63f27363fb286be6f98eb1cf3f26	kravietz		Gitcoin Website			false	false	false	false	false	false
 80-Malicious:DaoDrain	0xda2fef9e4a3230988ff17df2165440f37e8b1708	DAO Drain 112		GethSource			false	false	false	true	false	false
+50-Tokens:ERC20	0xda396a2fc5f0e3a87a874757f1317102f49da5b0	Merry XXSmas	RELAX	On chain	18		false	false	false	true	true	false
 36-Chainlink	0xda3d675d50ff6c555973c4f0424964e1f6a4e7d3	Chainlink MKR-ETH Aggregator		EtherScan.io			false	false	false	true	false	false
 34-Twitter:Friends	0xda4070ccaa2226cb32f3e45107292ddb682c0070	Victor		Twitter		Hinojosa	false	false	false	false	false	false
 30-Contracts	0xda481b277dce305b97f4091bd66595d57cf31634	Gauge					false	false	false	true	false	false
@@ -6684,6 +6729,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Friends	0xdc2adfa800a1ffa16078ef8c1f251d50dcda1065	sembrestels		Gitcoin Website			false	false	false	false	false	false
 30-Contracts:Humanity DAO	0xdc2cf5cbfa31958ed32c3ace696ee6bf1a6a19f4	vamsiraju		https://www.humanitydao.org/humans			false	false	false	false	false	false
 31-Gitcoin Grants:Grant	0xdc2eb16e22eb5df0abbdc22c1136fd49fd8761cb	Grant 0953 Cryptocrow.net		https://gitcoin.co/grants/953/cryptocrownet			false	false	false	false	false	false
+50-Tokens:ERC20	0xdc31e48b66a1364bfea922bfc2972ab5c286f9fe	EntropySeeds	HSED	On chain	18		false	false	false	true	true	false
 30-Contracts:Humanity DAO	0xdc3521bc90858e807efa02e2186812eaa54e5ef3	kisaguncan		https://www.humanitydao.org/humans			false	false	false	false	false	false
 30-Contracts:Humanity DAO	0xdc45fc8ee0bbd96de4f8c561e81099e8be08ed63	disruptbanksy		https://www.humanitydao.org/humans			false	false	false	false	false	false
 30-Contracts	0xdc6c91b569c98f9f6f74d90f9beff99fdaf4248b	Tokenlon		0xTracker			false	false	false	true	false	false
@@ -7017,6 +7063,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0xe701cd3329057aea9d54300ddd05e41b8d74727a	10M Token	10MT	On chain	10		false	false	false	true	true	false
 30-Contracts:Humanity DAO	0xe703f231ab056ecb99c92a1232cc1020acfc72f8	finitesq		https://www.humanitydao.org/humans			false	false	false	false	false	false
 81-Other	0xe709c6c933bda30963274d5bdd1e556c655c59fe	Crowdsale_Etheroll		EtherScan.io			false	false	false	true	false	false
+50-Tokens:ERC20	0xe71cd39b62667519f35274c393271daa5048b8ce	EntropySeeds	HSEED	On chain	18		false	false	false	true	true	false
 31-Gitcoin Grants:Grant	0xe71fbb197bc8fd11090fa657c100d52dbb407662	Grant 1805 Pepemon: Degen Battleground		https://gitcoin.co/grants/1805/pepemon-degen-battleground			false	false	false	false	false	false
 30-Contracts:Humanity DAO	0xe7305033fe4d5994cd88d69740e9db59f27c7046	maximehg		https://www.humanitydao.org/humans			false	false	false	false	false	false
 31-Gitcoin Grants:Friends	0xe738a4fa9152a7ea1da52f264285346424d457a1	lundbladk		Gitcoin Website			false	false	false	false	false	false
@@ -7213,6 +7260,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 81-Other	0xed181449a0a9df43a873df85c1d947e48d37027e	I Want Smokes		Weifund Website			false	false	false	false	false	false
 50-Tokens:ERC20	0xed196d746493bc855f95ce5346c0161f68db874b	SHIKOKU INU	SHIK	On chain	18		false	false	false	true	true	false
 32-Kickback:Friends	0xed19abdc33e91c809376b742d48ed1d935d4faef	thealexpatin		https://kickback.events/			false	false	false	false	false	false
+50-Tokens:ERC20	0xed279fdd11ca84beef15af5d39bb4d4bee23f0ca	Curve.fi Factory USD Metapool: Liquity	LUSD3CRV-f	On chain	18		false	false	false	true	true	false
 31-Gitcoin Grants:Friends	0xed2c8015d25d14240261cc48bcac7cfdc758a615	poiraudvictor		Gitcoin Website			false	false	false	false	false	false
 31-Gitcoin Grants:Grant	0xed2cc1105ebf222eda3c1a32f9b1ca20523a947b	Grant 0130 Black Girls Code X Blockchain Ecosystem		https://gitcoin.co/grants/130/black-girls-code-x-blockchain-ecosystem			false	false	false	false	false	false
 50-Tokens:ERC20	0xed35197cadf01fcbfe6cfc11081f299cffb095bf	Eminence YFI	eYFI	On chain	18		false	false	false	true	true	false
@@ -7282,6 +7330,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 81-Other	0xef71862273817c9e082ca2c92486c8dcdcd9356f	Token_id243_cnt2_2mo		Ether Camp			false	false	false	true	false	false
 60-Airdrops	0xef71c2600a23fb11a07690de695c4b65ad59b616	KCN Airdrop		TrueBlocks.io			false	false	false	true	false	false
 31-Gitcoin Grants:Friends	0xef764bac8a438e7e498c2e5fccf0f174c3e3f8db	b1urr		Gitcoin Website			false	false	false	false	false	false
+50-Tokens:ERC20	0xef81c2c98cb9718003a89908e6bd1a5fa8a098a3	SpaceShibas	SHIBAS	On chain	18		false	false	false	true	true	false
 31-Gitcoin Grants:Grant	0xef8305e140ac520225daf050e2f71d5fbcc543e7	Grant 0852 Potion		https://gitcoin.co/grants/852/potion		https://potion.finance	false	false	false	false	false	false
 50-Tokens:ERC20	0xef88808d0fbb5c0c2c89f6d9b45eda53c0150993	iBuildApp Network Token	IBA	On chain	4		false	false	false	true	true	false
 34-Twitter:Friends	0xef8b56892e9e615b4741ed6550be649dc4a9007f	Chardztreb		Twitter		@chardztreb	false	false	false	false	false	false
@@ -7376,6 +7425,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 34-Twitter:Friends	0xf2de1dc60c7bba48c8eb19c7e0e4ca97dbe0fac6	Hristo		Twitter		Parkov	false	false	false	false	false	false
 50-Tokens:ERC20	0xf2eab3a2034d3f6b63734d2e08262040e3ff7b48	CANDY	CANDY	On chain	18		false	false	false	true	true	false
 31-Gitcoin Grants:Grant	0xf2f8456bcfd8b3d5f89386773a80bdfcc322a770	Grant 0345 Coinjournal - Cryptocurrency News		https://gitcoin.co/grants/345/coinjournal-cryptocurrency-news			false	false	false	false	false	false
+50-Tokens:ERC20	0xf2f98cbd5d84640a2c5cfda5c996cd830067bc95	Uniswap V2	UNI-V2	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0xf2fbb2939981594e25d93e6226231fcc1b01718e	Leverj: Token Sale		EtherScan.io			false	false	false	true	false	false
 31-Gitcoin Grants:Grant	0xf3047b2b495e31c1e39f198448ae5f382739264a	Grant 0106 Holochain Core Development and Gaja Development		https://gitcoin.co/grants/106/holochain-core-development-and-gaja-development			false	false	false	false	false	false
 30-Contracts:Humanity DAO	0xf3092cc73b0b4d6a40d021f0fcedcf109dc347e5	DLchenhaonan		https://www.humanitydao.org/humans			false	false	false	false	false	false
@@ -7602,6 +7652,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0xfa456cf55250a839088b27ee32a424d7dacb54ff	blocktrade.com	BTT	On chain	18	Blocktrade.com is a trading facility for Crypto Assets, Crypto Traded Indices, and other blockchain related Financial Instruments.	false	false	false	true	true	false
 30-Contracts:Humanity DAO	0xfa482a7da38d32a9e6cfdb262166af3e9b174f84	edouerd		https://www.humanitydao.org/humans			false	false	false	false	false	false
 40-Exchanges	0xfa52274dd61e1643d2205169732f29114bc240b3	Kraken 5		EtherScan.io			false	false	false	true	false	false
+50-Tokens:ERC20	0xfa541559b68c1ff94c6f22a8675de0e061140ea1	@fubuloubu	FUB	On chain	18		false	false	false	true	true	false
 31-Gitcoin Grants:Grant	0xfa5b1e2b143bfa4b04c581a7d8dea769ead996be	Grant 1309 Hedgie Game		https://gitcoin.co/grants/1309/hedgie-game			false	false	false	false	false	false
 34-Twitter:Friends	0xfa5de67ebb384e4303e5c941726326dd74006326	Love		Twitter		B.	false	false	false	false	false	false
 30-Contracts:dAppNode	0xfa6f0ee1ae473c13f0d8c84fa8712fe785e44aa4	dAddNode Package 021		TrueBlocks.io			false	false	false	true	false	false

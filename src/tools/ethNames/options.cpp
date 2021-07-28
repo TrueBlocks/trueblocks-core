@@ -33,6 +33,7 @@ static const COption params[] = {
     COption("tags", "g", "", OPT_SWITCH, "export the list of tags and subtags only"),
     COption("to_custom", "u", "", OPT_HIDDEN | OPT_SWITCH, "for editCmd only, is the edited name a custom name or not"),
     COption("clean", "C", "", OPT_HIDDEN | OPT_SWITCH, "clean the data (addrs to lower case, sort by addr)"),
+    COption("autoname", "A", "<string>", OPT_HIDDEN | OPT_FLAG, "an address assumed to be a token, added automatically to names database if true"),  // NOLINT
     COption("", "", "", OPT_DESCRIPTION, "Query addresses or names of well known accounts."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -57,6 +58,7 @@ bool COptions::parseArguments(string_q& command) {
     bool addr = false;
     bool to_custom = false;
     bool clean = false;
+    string_q autoname = "";
     // END_CODE_LOCAL_INIT
 
     string_q format;
@@ -107,6 +109,11 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-C" || arg == "--clean") {
             clean = true;
 
+        } else if (startsWith(arg, "-A:") || startsWith(arg, "--autoname:")) {
+            autoname = substitute(substitute(arg, "-A:", ""), "--autoname:", "");
+        } else if (arg == "-A" || arg == "--autoname") {
+            return flag_required("autoname");
+
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
@@ -135,6 +142,7 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("tags", tags);
     LOG_TEST_BOOL("to_custom", to_custom);
     LOG_TEST_BOOL("clean", clean);
+    LOG_TEST("autoname", autoname, (autoname == ""));
     // END_DEBUG_DISPLAY
 
     if (Mocked((tags ? "tags" : entities ? "entities" : "names")))
@@ -144,11 +152,26 @@ bool COptions::parseArguments(string_q& command) {
     //     if (endsWith(term, ".eth"))
     //         term = addressFromENSName(term);
 
-    if (clean || isCrudCommand()) {
+    if (clean || isCrudCommand() || !autoname.empty()) {
         abi_spec.loadAbisFromKnown(true);
-        if (clean)
+        if (clean) {
             return handle_clean();
-        if (isCrudCommand()) {
+        } else if (!autoname.empty()) {
+            if (!isAddress(autoname) || isZeroAddr(autoname))
+                return usage("You must provide an address to the --autoname option.");
+            crudCommands.push_back("create");
+            terms.push_back(autoname);
+            ::setenv("TB_NAME_NAME", autoname.c_str(), true);
+            ::setenv("TB_NAME_TAG", "50-Tokens:ERC20", true);
+            ::setenv("TB_NAME_SOURCE", "TrueBlocks.io", true);
+            ::setenv("TB_NAME_SYMBOL", "", true);
+            ::setenv("TB_NAME_DECIMALS", "18", true);
+            ::setenv("TB_NAME_DESCR", "", true);
+            ::setenv("TB_NAME_CUSTOM", "false", true);
+            if (!processEditCommand(terms, false /* to_custom */))  // returns true on success
+                return false;
+                
+        } else if (isCrudCommand()) {
             address_t address = toLower(trim(getEnvStr("TB_NAME_ADDRESS"), '\"'));
             if (address.empty() && !terms.empty())
                 address = terms[0];
@@ -156,6 +179,10 @@ bool COptions::parseArguments(string_q& command) {
                 return usage("You must provide an address to crud commands.");
             if (!processEditCommand(terms, to_custom))  // returns true on success
                 return false;
+
+        } else {
+            return usage("Invalid crud command.");
+
         }
     }
 

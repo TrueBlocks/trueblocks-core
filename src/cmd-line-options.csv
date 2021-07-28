@@ -53,6 +53,7 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 12445,tools,Accounts,names,ethNames,tags,g,,false,false,true,true,header,switch,<boolean>,export the list of tags and subtags only
 12450,tools,Accounts,names,ethNames,to_custom,u,,false,false,false,false,local,switch,<boolean>,for editCmd only&#44; is the edited name a custom name or not
 12455,tools,Accounts,names,ethNames,clean,C,,false,false,false,false,local,switch,<boolean>,clean the data (addrs to lower case&#44; sort by addr)
+12456,tools,Accounts,names,ethNames,autoname,A,,false,false,false,false,local,flag,<string>,an address assumed to be a token&#44; added automatically to names database if true
 12460,tools,Accounts,names,ethNames,,,,false,false,true,true,--,description,,Query addresses or names of well known accounts.
 12462,tools,Accounts,names,ethNames,,,,false,false,false,false,--,note,,The tool will accept up to three terms&#44; each of which must match against any field in the database.
 12468,tools,Accounts,names,ethNames,,,,false,false,false,false,--,note,,The `--match_case` option enables case sensitive matching.
