@@ -40,6 +40,7 @@ bool COptions::process_reconciliation(CTraverser* trav, blknum_t next) {
         CArchive archive(READING_ARCHIVE);
         if (archive.Lock(path, modeReadOnly, LOCK_NOWAIT)) {
             archive >> trav->trans.statements;
+            archive.Release();
             LOG4("Reading from cache for ", path);
             for (auto& statement : trav->trans.statements) {
                 CAccountName tokenName;
@@ -51,7 +52,6 @@ bool COptions::process_reconciliation(CTraverser* trav, blknum_t next) {
                 LOG4(statement.Format(STR_DEBUG));
                 prevStatements[accountedFor + "_" + toLower(statement.assetAddr)] = statement;
             }
-            archive.Release();
             return !shouldQuit();
         }
     }
