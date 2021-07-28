@@ -226,7 +226,10 @@ bool loadTx_Func(CTraverser* trav, void* data) {
     // TODO(tjayrush): This could be in post_Func so that other functions can also make it dirty
     if (opt->cache_txs && dirty) {
         opt->stats.nCacheWrites++;
-        writeTransToBinary(trav->trans, txFilename);
+        // if the node is behind the index, this will sometimes happen - don't write in that case
+        if (!trav->trans.hash.empty()) {
+            writeTransToBinary(trav->trans, txFilename);
+        }
     }
 
     opt->markNeighbors(trav->trans);
