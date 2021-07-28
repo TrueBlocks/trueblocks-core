@@ -86,7 +86,7 @@ bool COptions::queryFlatFile(const string_q& path, bool sorted) {
     }
 
     stage.Release();
-    delete rawData;
+    free(rawData);
     rawData = NULL;
 
     return !shouldQuit();

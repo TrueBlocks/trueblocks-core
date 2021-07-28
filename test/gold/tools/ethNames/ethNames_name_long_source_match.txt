@@ -129,6 +129,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 30-Contracts	0x2e3b10abf091cdc53cc892a50dabdb432e220398	GeneralizedTCR		EtherScan.io			false	false	false	true	false	false
 55-Defi	0x2ee856843bb65c244f527ad302d6d2853921727e	Yearn: StrategyCurveYBUSDVoterProxy		EtherScan.io			false	false	false	true	false	false
 55-Defi	0x2f08119c6f07c006695e079aafc638b8789faf18	yearn Tether USD	yUSDT	On chain	6		false	false	false	true	true	false
+50-Tokens:ERC20	0x300a902513815028e97fc79e92082ce6a98d3b74	Ethersocks	SOX	On chain	18		false	false	false	true	true	false
 80-Malicious:DaoDrain	0x304a554a310c7e546dfe434669c62820b7d83490	DAO Drain 067 (DarkDAO)		GethSource SlackNation OnChain Ether Camp			false	false	false	true	false	false
 55-Defi	0x31317f9a5e4cc1d231bdf07755c994015a96a37c	Yearn: Controller		EtherScan.io			false	false	false	true	false	false
 34-ENS	0x314159265dd8dbb310642f98f50c066173c1259b	ENS: Eth Name Service		EtherScan.io			false	false	false	true	false	false
@@ -201,4 +202,3 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin Grants:Grant	0x4ef6ea0720862903bbb039e1ab30563e9ec33aba	Grant 1937 Ethereum Integration: Blockchain Data in Trading Bots		https://gitcoin.co/grants/1937/ethereum-integration-blockchain-data-in-trading-b			false	false	false	false	false	false
 30-Contracts:Set Prototcol	0x4f57e1f2020c35cd2fb45cf53cfeb6ff2e796180	Set: Rebalancing Set Exchange Issuance Module V2		EtherScan.io			false	false	false	true	false	false
 35-Pool Together	0x4fc604536134dc64718800361ecbca0df6cbfe08	Pool Together Pool 2		EtherScan.io			false	false	false	true	false	false
-55-Defi	0x4feeaeced575239b46d70b50e13532ecb62e4ea8	Yearn: StrategyCurveSBTC		EtherScan.io			false	false	false	true	false	false

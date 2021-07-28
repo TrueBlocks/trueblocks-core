@@ -28,6 +28,7 @@ tags	address	name	symbol	decimals
 40-Exchanges	0x64a9edd3f5fce0252cd708e26c8dd11205742826	Uniswap: ANJ Aragon Network Juror	ANJ
 55-Defi	0x6626593c237f530d15ae9980a95ef938ac15c35c	Gauntlet Network
 31-Gitcoin Grants:Grant	0x66aa8bee5366b6b48811ae0dac9fe5e1eefe1621	Grant 0049 Blockchain Education Network (ben)
+50-Tokens:ERC20	0x679131f591b4f369acb8cd8c51e68596806c3916	Trustlines Network Token	TLN		18
 50-Tokens:ERC20	0x69af81e73a73b40adf4f3d4223cd9b1ece623074	Mask Network: MASK Token	MASK		18
 50-Tokens:ERC20	0x6fb3e0a217407efff7ca062d46c26e5d60a14d69	IoTeX Network	IOTX		18
 50-Tokens:ERC20	0x6fff3806bbac52a20e0d79bc538d527f6a22c96b	Network			18
@@ -51,6 +52,7 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0xa4ea687a2a7f29cf2dc66b39c68e4411c0d00c49	IvyKoin Public Network Tokens	IVY		18
 50-Tokens:ERC20	0xa5fd1a791c4dfcaacc963d4f73c6ae5824149ea7	Jibrel Network Token	JNT		18
 50-Tokens:ERC20	0xa74476443119a942de498590fe1f2454d7d4ac0d	Golem Network Token	GNT		18
+51-Tokens:ERC721	0xade00c28244d5ce17d72e40330b1c318cd12b7c3	AdEx Network	ADX		18
 30-Contracts:Kyber Network	0xb0d27b025d5f79f955fa37cd3170b998661abff3	Kyber Orderbook Reserve
 31-Gitcoin Grants:Grant	0xb101f7893738e34e5333ba1e385ebe6cd65bf1ef	Grant 1096 Pareto Network - Financial Content Marketplace
 31-Gitcoin Grants:Grant	0xb1f6ddaafce638c21a56b0b2216e796ec9ca428e	Grant 0073 Poa Network Community Management Grant for Aly
@@ -84,6 +86,7 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0xe95990825aab1a7f0af4cc648f76a3bcc99f25b2	Zenswap Network Token	ZNT		18
 50-Tokens:ERC20	0xea5f88e54d982cbb0c441cde4e79bc305e5b43bc	Pareto Network Token	PARETO		18
 31-Gitcoin Grants:Grant	0xea6cdbe70e5c18c605427d93dc6374b648843fac	Grant 1487 Memorial.network
+50-Tokens:ERC20	0xef88808d0fbb5c0c2c89f6d9b45eda53c0150993	iBuildApp Network Token	IBA		4
 31-Gitcoin Grants:Grant	0xf64bbc221f89cc882fba507908bbe4ae3ad2f470	Grant 1595 Bloom Network - Panvala League
 50-Tokens:ERC20	0xf970b8e36e23f7fc3fd752eea86f8be8d83375a6	Ripio Credit Network Token	RCN		18
 30-Contracts:Kyber Network	0xfa71b63935cf9878e009ba6595da08f6d75c4aa1	Kyber Pay Wrapper

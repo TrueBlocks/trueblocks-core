@@ -1,5 +1,5 @@
 contract A {
-  function splitTransfer(address,address,uint256,uint256,address) { }
+  function storeBlockWithFeeAndRecipient(bytes,int256,int256) { }
   function donate((address,uint256,address)[] dontations) { }
   function mint(address recipient, uint256 amount) { }
   function changeMembership(address member,uint256 amt,bool,string name) { }

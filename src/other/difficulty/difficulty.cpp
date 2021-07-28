@@ -1,7 +1,79 @@
+/*-------------------------------------------------------------------------------------------
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2018, 2019 TrueBlocks, LLC (http://trueblocks.io)
+ *
+ * This program is free software: you may redistribute it and/or modify it under the terms
+ * of the GNU General Public License as published by the Free Software Foundation, either
+ * version 3 of the License, or (at your option) any later version. This program is
+ * distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+ * the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details. You should have received a copy of the GNU General
+ * Public License along with this program. If not, see http://www.gnu.org/licenses/.
+ *-------------------------------------------------------------------------------------------*/
 #include "etherlib.h"
 
-#define START 12565071
-#define END 12681280
+//----------------------------------------------------------------
+int main(int argc, char* argv[]) {
+
+    //check number of arguments
+    if(argc < 4){
+        cout << "\nNot enough arguments. The arguments are <starting block> <finishing block> <step size>\n\n";
+    return 1;
+    }
+    if(argc > 4){
+    cout << "\nToo much arguments. Only three arguments allowed. <starting block> <finishing block> <step size>\n\n";
+    return 1;
+    }
+
+    uint64_t start = strtoull(argv[1], NULL, 0); 
+    uint64_t count = strtoull(argv[2], NULL, 0);
+    uint64_t skip = strtoull(argv[3], NULL, 0);
+
+    // Initialize the library
+    etherlib_init(quickQuitHandler);
+
+    // Visit every block between the first and the most recent
+    forEveryBlock(visitBlock, nullptr, start, count, skip);
+
+    // Clean up
+    etherlib_cleanup();
+    return 0;
+}
+
+//----------------------------------------------------------------
+// for each block
+bool visitBlock(CBlock& block, void* data) {
+    // Visit each tranaction and show it seperately
+
+    //showing the blocknumber
+    cerr << block.blockNumber << "\r";
+    cerr.flush();
+    for (auto trans : block.transactions){
+        trans.timestamp = block.timestamp;
+        if (!isZeroAddr(trans.receipt.contractAddress)) {
+            cout << block.blockNumber << " ";
+            cout << block.transactions.size() << " ";
+            if (!visitTransaction(trans, data))
+                return false;
+        }
+    }
+    return true;
+}
+
+//----------------------------------------------------------------
+// for each transaction in the block
+bool visitTransaction(CTransaction& trans, void* data) {
+   cout << trans.timestamp << " ";
+   cout << trans.receipt.contractAddress << " ";
+   cout << getCodeAt(trans.receipt.contractAddress, trans.blockNumber) << endl;
+   return true;
+}
+
+#if 0
+#include "etherlib.h"
+
+#define START 12681280
+#define END 12903266
 
 #if 1
 int main(int argc, const char* argv[]) {
@@ -70,4 +142,5 @@ int main(int argc, const char* argv[]) {
     }
     return 0;
 }
+#endif
 #endif

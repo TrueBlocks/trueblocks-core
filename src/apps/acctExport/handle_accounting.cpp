@@ -41,7 +41,13 @@ bool COptions::process_reconciliation(CTraverser* trav, blknum_t next) {
         if (archive.Lock(path, modeReadOnly, LOCK_NOWAIT)) {
             archive >> trav->trans.statements;
             LOG4("Reading from cache for ", path);
-            for (auto statement : trav->trans.statements) {
+            for (auto& statement : trav->trans.statements) {
+                CAccountName tokenName;
+                if (findToken(tokenName, statement.assetAddr)) {
+                    // We always freshen these in case user has changed names database
+                    statement.assetSymbol = tokenName.symbol;
+                    statement.decimals = tokenName.decimals;
+                }
                 LOG4(statement.Format(STR_DEBUG));
                 prevStatements[accountedFor + "_" + toLower(statement.assetAddr)] = statement;
             }
@@ -122,7 +128,14 @@ bool COptions::process_reconciliation(CTraverser* trav, blknum_t next) {
         }
     }
 
-    if (!reversed) {
+    bool allReconciled = !reversed;
+    for (auto recon : trav->trans.statements) {
+        if (!allReconciled)
+            break;
+        allReconciled = recon.reconciled;
+    }
+
+    if (allReconciled) {
         lockSection();
         CArchive archive(WRITING_ARCHIVE);
         if (!isTestMode() && archive.Lock(path, modeWriteCreate, LOCK_WAIT)) {
