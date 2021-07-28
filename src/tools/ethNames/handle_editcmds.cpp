@@ -22,7 +22,7 @@ void pushToOutput(CAccountNameArray& out, const CAccountName& name, bool to_cust
 }
 
 //-----------------------------------------------------------------------
-bool COptions::processEditCommand(CStringArray& terms, bool to_custom) {
+bool COptions::processEditCommand(CStringArray& terms, bool to_custom, bool autoname) {
     ENTER("processEditCommand");
 
     string_q crud = crudCommands[0];
@@ -109,18 +109,21 @@ bool COptions::processEditCommand(CStringArray& terms, bool to_custom) {
     }
     setenv("TEST_MODE", testMode.c_str(), true);
 
-    string_q dest = to_custom ? configPath("names/names_custom.tab") : configPath("names/names.tab");
-    stringToAsciiFile(dest, dataStream2.str());
-    namesMap.clear();
-    ::remove(getCachePath("names/names.bin").c_str());
-    LOG4("Finished writing...");
+    if (autoname && target.name != target.address) {
+        // We don't want to write this 'not found on chain' fact to the database
+        string_q dest = to_custom ? configPath("names/names_custom.tab") : configPath("names/names.tab");
+        stringToAsciiFile(dest, dataStream2.str());
+        namesMap.clear();
+        ::remove(getCachePath("names/names.bin").c_str());
+        LOG4("Finished writing...");
 
-    CToml toml(configPath("ethNames.toml"));
-    string_q copyBack = toml.getConfigStr("settings", "copyBack", "<NOTSET>");
-    if (!isTestMode() && !to_custom && fileExists(copyBack)) {
-        copyFile(dest, copyBack);
+        CToml toml(configPath("ethNames.toml"));
+        string_q copyBack = toml.getConfigStr("settings", "copyBack", "<NOTSET>");
+        if (!isTestMode() && !to_custom && fileExists(copyBack)) {
+            copyFile(dest, copyBack);
+        }
+        toml.Release();
     }
-    toml.Release();
 
     EXIT_NOMSG(true);
 }

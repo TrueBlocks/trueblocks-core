@@ -56,7 +56,7 @@ class COptions : public CAbiOptions {
     bool addIfUnique(const CAccountName& item);
 
     void exportEntities(const CStringArray& terms);
-    bool processEditCommand(CStringArray& terms, bool to_custom);
+    bool processEditCommand(CStringArray& terms, bool to_custom, bool autoname);
     bool handle_clean(void);
 
     bool isTokenContract(const CAccountName& account);

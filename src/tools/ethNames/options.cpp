@@ -168,7 +168,7 @@ bool COptions::parseArguments(string_q& command) {
             ::setenv("TB_NAME_DECIMALS", "18", true);
             ::setenv("TB_NAME_DESCR", "", true);
             ::setenv("TB_NAME_CUSTOM", "false", true);
-            if (!processEditCommand(terms, false /* to_custom */))  // returns true on success
+            if (!processEditCommand(terms, false /* to_custom */, true /* autoname */))  // returns true on success
                 return false;
                 
         } else if (isCrudCommand()) {
@@ -177,7 +177,7 @@ bool COptions::parseArguments(string_q& command) {
                 address = terms[0];
             if (!isAddress(address) || isZeroAddr(address))
                 return usage("You must provide an address to crud commands.");
-            if (!processEditCommand(terms, to_custom))  // returns true on success
+            if (!processEditCommand(terms, to_custom /* to_custom */, false /* autoname */))  // returns true on success
                 return false;
 
         } else {
