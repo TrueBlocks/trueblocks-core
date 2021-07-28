@@ -558,10 +558,21 @@ ethNames --named --custom --fmt api
     "decimals": 18
   },
   {
+    "tags": "40-Friends",
+    "address": "0x01a23fd30aabf5ad53bab3093dcd4948e15cec80",
+    "name": "Name 0x01a23fd3"
+  },
+  {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x01a24c6a87ee7a19d54c98ffae76755f24fdf637",
     "name": "Name 0x01a24c6a",
     "source": "Gitcoin Website"
+  },
+  {
+    "tags": "50-Tokens:ERC20",
+    "address": "0x01afc37f4f85babc47c0e2d0eababc7fb49793c8",
+    "name": "W-GNT",
+    "symbol": "W-GNT"
   },
   {
     "tags": "30-Contracts",
@@ -736,6 +747,14 @@ ethNames --named --custom --fmt api
     "source": "On chain",
     "decimals": 18,
     "description": "LikeCoin aims to reinvent the Like by realigning creativity and reward. We enable attribution and cross-application collaboration on creative contents"
+  },
+  {
+    "tags": "50-Tokens:ERC20",
+    "address": "0x032dd2a3c6d234aa9620d65eb618fcdc72be3dbb",
+    "name": "HashDemons",
+    "symbol": "HASHDEMONS",
+    "source": "On chain",
+    "decimals": 18
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -992,6 +1011,14 @@ ethNames --named --custom --fmt api
   },
   {
     "tags": "50-Tokens:ERC20",
+    "address": "0x04d01b6145bc9db925ec1e80bc85f936a961210e",
+    "name": "Vizsafe SPOT",
+    "symbol": "SPOT",
+    "source": "On chain",
+    "decimals": 18
+  },
+  {
+    "tags": "50-Tokens:ERC20",
     "address": "0x04d702ebd0a77503b154865fe3e8da97255b931b",
     "name": "Commons Stack Org Membership",
     "symbol": "CSOM",
@@ -1074,6 +1101,14 @@ ethNames --named --custom --fmt api
     "address": "0x0571325cd46718cd9445f082332a4fd9a21b8498",
     "name": "FIFAMini Airdrop Sender",
     "source": "TrueBlocks.io"
+  },
+  {
+    "tags": "50-Tokens:ERC20",
+    "address": "0x05759c209466eeb5f1a2b3ea8d8650e4053d1047",
+    "name": "RarePunks",
+    "symbol": "RAREPUNK",
+    "source": "On chain",
+    "decimals": 18
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -1256,6 +1291,14 @@ ethNames --named --custom --fmt api
   },
   {
     "tags": "50-Tokens:ERC20",
+    "address": "0x0663210a18dfdc62688b14c4ec10a1df8912e28c",
+    "name": "E-talon",
+    "symbol": "ETALON",
+    "source": "On chain",
+    "decimals": 8
+  },
+  {
+    "tags": "50-Tokens:ERC20",
     "address": "0x066798d9ef0833ccc719076dab77199ecbd178b0",
     "name": "SakeToken",
     "symbol": "SAKE",
@@ -1274,6 +1317,14 @@ ethNames --named --custom --fmt api
     "address": "0x066d4d13c5bc10e14e30e862471772aa7d23b4f1",
     "name": "Grant 1388 Crypto Valuations Youtube Channel",
     "source": "https://gitcoin.co/grants/1388/crypto-valuations-youtube-channel"
+  },
+  {
+    "tags": "50-Tokens:ERC20",
+    "address": "0x066f2d5ead7951f0d0038c19affd500b9f02c0e5",
+    "name": "CryptoJanky",
+    "symbol": "JNK",
+    "source": "On chain",
+    "decimals": 18
   },
   {
     "tags": "80-Malicious:DaoDrain",
@@ -1304,51 +1355,6 @@ ethNames --named --custom --fmt api
     "address": "0x068792edecad424d42f0f45de7f693ca33526cf1",
     "name": "Grant 0075 Ethereum Dev Fund Working Group",
     "source": "https://gitcoin.co/grants/75/ethereum-dev-fund-working-group"
-  },
-  {
-    "tags": "31-Gitcoin Grants:Grant",
-    "address": "0x068d9f17fbf0ccbf39bd8da421731fe86986bd3a",
-    "name": "Grant 1648 Nifty Cannon",
-    "source": "https://gitcoin.co/grants/1648/nifty-cannon"
-  },
-  {
-    "tags": "50-Tokens:ERC20",
-    "address": "0x06a2cf3f024d8871baedd0f7bd9340001aada574",
-    "name": "SingularDTV Sender 2",
-    "source": "EtherScan.io"
-  },
-  {
-    "tags": "31-Gitcoin Grants:Friends",
-    "address": "0x06aeae3d12ced2ff04d0694ed50f940637a64196",
-    "name": "Name 0x06aeae3d",
-    "source": "Gitcoin Website"
-  },
-  {
-    "tags": "50-Tokens:ERC20",
-    "address": "0x06af07097c9eeb7fd685c692751d5c66db49c215",
-    "name": "Chai",
-    "symbol": "CHAI",
-    "source": "On chain",
-    "decimals": 18
-  },
-  {
-    "tags": "31-Gitcoin Grants:Friends",
-    "address": "0x06b1bf28c962363f212878bdf87417ebd0316220",
-    "name": "Name 0x06b1bf28",
-    "source": "Gitcoin Website"
-  },
-  {
-    "tags": "60-Airdrops",
-    "address": "0x06b2387c7f56ecb61009bb31375b84e4be7f80b3",
-    "name": "HEALP Airdrop",
-    "symbol": "HEALP",
-    "source": "TrueBlocks.io"
-  },
-  {
-    "tags": "31-Gitcoin Grants:Friends",
-    "address": "0x06c04508075c125cd65daf686177fee2a945e2d8",
-    "name": "Name 0x06c04508",
-    "source": "Gitcoin Website"
   }], "types": [
 { "type": "CAccountName", "fields": [{ "name": "tags", "type": "text" }, { "name": "address", "type": "address" }, { "name": "name", "type": "text" }, { "name": "symbol", "type": "text" }, { "name": "source", "type": "text" }, { "name": "decimals", "type": "unumber" }, { "name": "description", "type": "text" }] }
 ], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef", "namePath": "--" } }

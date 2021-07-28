@@ -104,6 +104,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 81-Other	0x01914e9c0594a087f508aceabfca45f57e471388	Wallet_id66_cnt1_5mo		Ether Camp			false	false	false	true	false	false
 75-Early Actors	0x0193d941b50d91be6567c7ee1c0fe7af498b4137	Miner_0015_427		OnChain			false	false	false	false	false	false
 50-Tokens:ERC20	0x0198f46f520f33cd4329bd4be380a25a90536cd5	PlayChip	PLA	On chain	18		false	false	false	true	true	false
+40-Friends	0x01a23fd30aabf5ad53bab3093dcd4948e15cec80	Joseph Lubin Out 1					false	false	false	true	false	false
 31-Gitcoin Grants:Friends	0x01a24c6a87ee7a19d54c98ffae76755f24fdf637	ethergration		Gitcoin Website			false	false	false	false	false	false
 50-Tokens:ERC20	0x01afc37f4f85babc47c0e2d0eababc7fb49793c8	W-GNT	W-GNT				false	false	false	true	true	false
 81-Other	0x01bfbb9b1a2abe32ceb0a9f2291e5d7e36e38b20	kissBTC	kissBTC	On chain	8		false	false	false	true	true	false
@@ -874,7 +875,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 81-Other	0x198ef1ec325a96cc354c7266a038be8b5c558f67	BigTipper_2_1015-00 Digx_Presale_Whale DAO_WHALE (Prefund_0876)		Genesis SlackNation Ethereum Tip Jar WhaleWatch.io			false	false	false	false	false	false
 80-Malicious:Shanghai	0x1992764a6fd30ad0ad6ec665b3483838acb02fba	Possibly Malicious 0x199		TrueBlocks.io			false	false	false	false	false	false
 32-Kickback:Friends	0x19985dd60a5534bf6201f188ceae8256d6ee7a6e	wolverine		https://kickback.events/			false	false	false	false	false	false
-30-Contracts	0x19992b52338b7b49de9679ae018a7027803db1aa	DAppNode: SushiSwap NODEstaking	NODESTAK	EtherScan.io			false	false	false	true	true	false
+50-Tokens:ERC20	0x19992b52338b7b49de9679ae018a7027803db1aa	DAppNode: SushiSwap NODEstaking	NODESTACK	TrueBlocks.io	18		false	false	false	true	true	false
 60-Airdrops	0x19a2f57f30206f7343ee5928c32bae3f2bfacbcd	CGCX Airdrop Sender		TrueBlocks.io			false	false	false	false	false	false
 81-Other	0x19a6067538c90973ef5dc31ded5fa567f3d09059	Fastrealisticpyramid		EtherScan.io			false	false	false	true	false	false
 30-Contracts:Humanity DAO	0x19b3fbd1de319925214348a0a1405c8e3e4cae98	andylinee		https://www.humanitydao.org/humans			false	false	false	false	false	false

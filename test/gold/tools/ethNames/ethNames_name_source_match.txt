@@ -1121,6 +1121,17 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
+    "tags": "50-Tokens:ERC20",
+    "address": "0x300a902513815028e97fc79e92082ce6a98d3b74",
+    "name": "Ethersocks",
+    "symbol": "SOX",
+    "source": "On chain",
+    "decimals": 18,
+    "is_contract": true,
+    "is_erc20": true
+  },
+  {
+    "deleted": false,
     "tags": "80-Malicious:DaoDrain",
     "address": "0x304a554a310c7e546dfe434669c62820b7d83490",
     "name": "DAO Drain 067 (DarkDAO)",
@@ -1757,14 +1768,6 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "35-Pool Together",
     "address": "0x4fc604536134dc64718800361ecbca0df6cbfe08",
     "name": "Pool Together Pool 2",
-    "source": "EtherScan.io",
-    "is_contract": true
-  },
-  {
-    "deleted": false,
-    "tags": "55-Defi",
-    "address": "0x4feeaeced575239b46d70b50e13532ecb62e4ea8",
-    "name": "Yearn: StrategyCurveSBTC",
     "source": "EtherScan.io",
     "is_contract": true
   }] }

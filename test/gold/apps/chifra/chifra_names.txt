@@ -23,6 +23,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x016396044709eb3edc69c44f4d5fa6996917e4e8	KingXChain	KXC	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x0168703872fa06741ecaa9dff7803168e83f7ae0	MIRO Token	MIRO	On chain	8		false	false	false	true	true	false
 50-Tokens:ERC20	0x0198f46f520f33cd4329bd4be380a25a90536cd5	PlayChip	PLA	On chain	18		false	false	false	true	true	false
+50-Tokens:ERC20	0x01afc37f4f85babc47c0e2d0eababc7fb49793c8	W-GNT	W-GNT				false	false	false	true	true	false
 50-Tokens:ERC20	0x01ff50f8b7f74e4f00580d9596cd3d0d6d6e326f	BF Token	BFT	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x0223fc70574214f65813fe336d870ac47e147fae	CZR	CZR	On chain	18	CanonChain will be triggered from the protocol layer and the chip layer of the communication to provide a robust foundation for the entire blockchain industry.	false	false	false	true	true	false
 50-Tokens:ERC20	0x02585e4a14da274d02df09b222d4606b10a4e940	Hero Origen Token	HERO	On chain	18		false	false	false	true	true	false
@@ -31,6 +32,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x02e3083a51e8632e571fbd6a62ac396c10c653ba	EplusCoin	EPLUS	On chain	8		false	false	false	true	true	false
 50-Tokens:ERC20	0x02f2d4a04e6e01ace88bd2cd632875543b2ef577	PKG Token	PKG	On chain	18	Decentralized game platform operating on Blockchain, using the VR/AR technologies and machine learning tool to enhance the experience of playing games and purchasing digital goods in games.	false	false	false	true	true	false
 50-Tokens:ERC20	0x02f61fd266da6e8b102d4121f5ce7b992640cf98	LikeCoin	LIKE	On chain	18	LikeCoin aims to reinvent the Like by realigning creativity and reward. We enable attribution and cross-application collaboration on creative contents	false	false	false	true	true	false
+50-Tokens:ERC20	0x032dd2a3c6d234aa9620d65eb618fcdc72be3dbb	HashDemons	HASHDEMONS	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x033030feebd93e3178487c35a9c8ca80874353c9	BDT Token	BDT	On chain	18	The ICO market is becoming more regulated, but this isn‚Äö√Ñ√¥t stopping scams from penetrating the cryptocurrency community. That is why we created the Founding Community Bitdepositary with integrated payment systems.	false	false	false	true	true	false
 50-Tokens:ERC20	0x036407f23d5e1c1486f7488332cf54bf06e5f09f	Alphabit	ABC	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x0371a82e4a9d0a4312f3ee2ac9c6958512891372	Student Coin	STU	On chain	18	Student jobs marketplace.	false	false	false	true	true	false
@@ -41,11 +43,13 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x049399a6b048d52971f7d122ae21a1532722285f	Fire Lotto	FLOT	On chain	18	Decentralized lottery platform based on the Ethereum blockchain and managed by smart contracts without any human intervention.	false	false	false	true	true	false
 50-Tokens:ERC20	0x04a020325024f130988782bd5276e53595e8d16e	Herbalist Token	HERB	On chain	8		false	false	false	true	true	false
 50-Tokens:ERC20	0x04c62019ab478bff5874e7b7d9bc84fcf7e30025	POA Network: MultiSig		EtherScan.io			false	false	false	true	false	false
+50-Tokens:ERC20	0x04d01b6145bc9db925ec1e80bc85f936a961210e	Vizsafe SPOT	SPOT	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x04d702ebd0a77503b154865fe3e8da97255b931b	Commons Stack Org Membership	CSOM	On chain			false	false	false	true	true	false
 50-Tokens:ERC20	0x04f2e7221fdb1b52a68169b25793e51478ff0329	Cappasity	CAPP	On chain	2	Cappasity brings an in-store browsing experience to online retail through interactive 3D images.	false	false	false	true	true	false
 50-Tokens:ERC20	0x04fa0d235c4abf4bcf4787af4cf447de572ef828	UMA Voting Token v1	UMA	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x054c64741dbafdc19784505494029823d89c3b13	ETERNAL TOKEN	XET	On chain	8	The Eternal Project is an undertaking for the rapid spread of Eternal Wallet and Eternal Coin around the world, by utilizing the skills and infrastructures of global corporations and individuals.	false	false	false	true	true	false
 50-Tokens:ERC20	0x056fd409e1d7a124bd7017459dfea2f387b6d5cd	Gemini dollar	GUSD	On chain	2	Gemini dollar combines the creditworthiness and price stability of the U.S. dollar with blockchain technology and the oversight of U.S. regulators.	false	false	false	true	true	false
+50-Tokens:ERC20	0x05759c209466eeb5f1a2b3ea8d8650e4053d1047	RarePunks	RAREPUNK	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x05767d9ef41dc40689678ffca0608878fb3de906	SushiSwap LP Token	SLP	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x05860d453c7974cbf46508c06cba14e211c629ce	Eden Coin	EDN	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x05984006707585f66465e8a6505341f46b64fa7a	Nam Coin	NAM	On chain	18		false	false	false	true	true	false
@@ -55,11 +59,15 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x05f4a42e251f2d52b8ed15e9fedaacfcef1fad27	Zilliqa	ZIL	On chain	12	Zilliqa is a high-throughput public blockchain platform - designed to scale to thousands of transactions per second.	false	false	false	true	true	false
 50-Tokens:ERC20	0x06012c8cf97bead5deae237070f9587f8e7a266d	CryptoKitties	CK	On chain			false	false	false	true	true	false
 50-Tokens:ERC20	0x06147110022b768ba8f99a8f385df11a151a9cc8	ACE Token	ACE	On chain		ACE is a utility token, that serves as a form of access to the TokenStars platform and its internal currency. TokenStars is the first talent management platform on the blockchain, that will connect talents celebrities with fans and advertisers.	false	false	false	true	true	false
+50-Tokens:ERC20	0x0663210a18dfdc62688b14c4ec10a1df8912e28c	E-talon	ETALON	On chain	8		false	false	false	true	true	false
 50-Tokens:ERC20	0x066798d9ef0833ccc719076dab77199ecbd178b0	SakeToken	SAKE	On chain	18		false	false	false	true	true	false
+50-Tokens:ERC20	0x066f2d5ead7951f0d0038c19affd500b9f02c0e5	CryptoJanky	JNK	On chain	18		false	false	false	true	true	false
+50-Tokens:ERC20	0x0693c3a780a0a757e803a4bd76bcf43d438f8806	Zeenus 💪	ZEENUS	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x06a2cf3f024d8871baedd0f7bd9340001aada574	SingularDTV Sender 2		EtherScan.io			false	false	false	false	false	false
 50-Tokens:ERC20	0x06af07097c9eeb7fd685c692751d5c66db49c215	Chai	CHAI	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x0707681f344deb24184037fc0228856f2137b02e	FNKOSToken	FNKOS	On chain	18	FNKOS is a fog computing-based blockchain operating system designed to make the best use of the edge computing resources such as idle hardware network and storage resources.	false	false	false	true	true	false
 50-Tokens:ERC20	0x0743392132d1a03a902c477e5a176f256ba3220c	Coimatic 3.0	CTIC3	On chain	18	A global decentralized blockchain deal and discount marketplace.	false	false	false	true	true	false
+50-Tokens:ERC20	0x075b1bb99792c9e1041ba13afef80c91a1e70fb3	Curve.fi renBTC/wBTC/sBTC	crvRenWSBTC	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x076641af1b8f06b7f8c92587156143c109002cbe	SoPay	SOP	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x0766e79a6fd74469733e8330b3b461c0320ff059	EXN	EXN	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x076a93a40bf9e0d21d3f75dd1e0584ddbe0f9d1a	Qurito	QURO	On chain	18	The online community where you earn for sharing knowledge ideas.	false	false	false	true	true	false
@@ -73,13 +81,16 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x084b1c3c81545d370f3634392de611caabff8148	ENS: Reverse Registrar		EtherScan.io			false	false	false	true	false	false
 50-Tokens:ERC20	0x08711d3b02c8758f2fb3ab4e80228418a7f8e39c	Edgeless	EDG	On chain		The Ethereum smart contract-based that offers a 0% house edge and solves the transparency question once and for all.	false	false	false	true	true	false
 50-Tokens:ERC20	0x0879e0c9822b75f31f0b0ed2a30be9f484a57c2f	LiteCoinGold	LTG	On chain			false	false	false	true	true	false
+50-Tokens:ERC20	0x088c6ad962812b5aa905ba6f3c5c145f9d4c079f	CRYPTOCATS	CCAT	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x089a6d83282fb8988a656189f1e7a73fa6c1cac2	Prospectors Gold	PGL	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x08d32b0da63e2c3bcf8019c9c5d849d7a9d791e6	Dentacoin	٨	On chain		Aims to be the blockchain solution for the global dental industry.	false	false	false	true	true	false
 50-Tokens:ERC20	0x08f5a9235b08173b7569f83645d2c7fb55e8ccd8	Tierion Network Token	TNT	On chain	8	Tierion creates software to reduce the cost and complexity of trust. Anchoring data to the blockchain and generating a timestamp proof.	false	false	false	true	true	false
 50-Tokens:ERC20	0x0947b0e6d821378805c9598291385ce7c791a6b2	Lendingblock	LND	On chain	18	Lendingblock is an open exchange for cryptocurrency loans, where borrowers and lenders are instantly matched in simple, safe and transparent way.	false	false	false	true	true	false
 50-Tokens:ERC20	0x09617f6fd6cf8a71278ec86e23bbab29c04353a7	Unblocked Ledger Token	ULT	On chain	18		false	false	false	true	true	false
+50-Tokens:ERC20	0x09caa2563c1cb6e8f18e643ad78f659604265406	LaserCats	LaserCats	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x09fe5f0236f0ea5d930197dce254d77b04128075	Wrapped CryptoKitties	WCK	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x0a76aad21948ea1ef447d26dee91a54370e151e0	Ethereum Lite	ELITE	On chain	18		false	false	false	true	true	false
+50-Tokens:ERC20	0x0a9f693fce6f00a51a8e0db4351b5a8078b4242e	Resfinex	RES	On chain	5		false	false	false	true	true	false
 50-Tokens:ERC20	0x0abdace70d3790235af448c88547603b945604ea	district0x Network Token	DNT	On chain	18	A network of decentralized markets and communities. Create, operate, and govern. Powered by Ethereum, Aragon, and IPFS.	false	false	false	true	true	false
 50-Tokens:ERC20	0x0aef06dcccc531e581f0440059e6ffcc206039ee	Intelligent Trading Technologies	ITT	On chain	8	Applying artificial intelligence and technical analysis, our fleet of data bots follow real-time data sources and send you actionable alerts for success in cryptocurrency markets.	false	false	false	true	true	false
 50-Tokens:ERC20	0x0af44e2784637218dd1d32a322d44e603a8f0c6a	MatryxToken	MTX	On chain	18	Matryx is the Collaborative Research Development Engine of Nanome‚Äö√Ñ√¥s VR toolset.	false	false	false	true	true	false
@@ -87,14 +98,19 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x0b1724cc9fda0186911ef6a75949e9c0d3f0f2f3	Etheriya	RIYA	On chain	8	AN Ethereum Token Backed Micro Macro Freelance Marketplace.	false	false	false	true	true	false
 50-Tokens:ERC20	0x0b4bdc478791897274652dc15ef5c135cae61e60	DAEX Token	DAX	On chain	18	DAEX is an open and decentralized clearing and settlement ecosystem for all cryptocurrency exchanges.	false	false	false	true	true	false
 50-Tokens:ERC20	0x0b76544f6c413a555f309bf76260d1e02377c02a	Internet Node Token	INT	On chain	6	IOT applications	false	false	false	true	true	false
+50-Tokens:ERC20	0x0b8d56c26d8cf16fe1bddf4967753503d974de06	GavCoin					false	false	false	true	false	false
 50-Tokens:ERC20	0x0ba45a8b5d5575935b8158a88c631e9f9c95a2e5	Tellor Tributes	TRB	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x0baba1ad5be3a5c0a66e7ac838a129bf948f1ea4	Loopring: Exchange v2		EtherScan.io			false	false	false	true	false	false
 50-Tokens:ERC20	0x0bb217e40f8a5cb79adf04e1aab60e5abd0dfc1e	SwftCoin	SWFTC	On chain	8	SWFT is a cross-blockchain platform.	false	false	false	true	true	false
 50-Tokens:ERC20	0x0bc61dded5f6710c637cf8288eb6058766ce1921	CEN	CEN	On chain	18	Connecting the Financial World Coinsuper Ecosystem Network	false	false	false	true	true	false
 50-Tokens:ERC20	0x0bef619cf38cf0c22967289b8419720fbd1db9f7	AEN.	AEN	On chain	8	HealthTech, Smart Capital, and Prime Brokerage Solutions	false	false	false	true	true	false
+50-Tokens:ERC20	0x0c17398ebbcb15078f2ad2c67a26d10623957b21	SONTOKEN	SON	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x0c334506e0bcb7c17b583cb7c0ec2f5857bf9e6f	Public Goods	PUBG	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x0c6e8a8358cbde54f8e4cd7f07d5ac38aec8c5a4	PlatonCoin	PLTC	On chain	18	Platon Finance with its PlatonCoin token is an ecosystem that connects the digital crypto-world with the real one. Through the Platon Club, the project aims to drive adoption of cryptocurrencies.	false	false	false	true	true	false
 50-Tokens:ERC20	0x0c7cf86188632e16af00415214155950684466a8	Axie Egg Coin	AEC	On chain			false	false	false	true	true	false
+50-Tokens:ERC20	0x0c8ded4efa8c0139999548cc3b96ec79648d5f75	Uniswap V2	UNI-V2	On chain	18		false	false	false	true	true	false
+50-Tokens:ERC20	0x0c91b015aba6f7b4738dcd36e7410138b29adc29	CoinOil	COIL	On chain	8		false	false	false	true	true	false
+50-Tokens:ERC20	0x0cd93baa52272e11b63aca243e671990daa76234	Kisses	KISS	On chain	1		false	false	false	true	true	false
 50-Tokens:ERC20	0x0cf0ee63788a0849fe5297f3407f701e122cc023	Streamr DATAcoin	DATA	On chain	18	Streamr is building the world‚Äö√Ñ√¥s leading Marketplace and decentralised Network for real-time data.	false	false	false	true	true	false
 50-Tokens:ERC20	0x0d262e5dc4a06a0f1c90ce79c7a60c09dfc884e4	J8T Token	J8T	On chain	8	Democratizing influence.	false	false	false	true	true	false
 50-Tokens:ERC20	0x0d4a11d5eeaac28ec3f61d100daf4d40471f1852	Uniswap V2	UNI-V2	On chain	18		false	false	false	true	true	false
@@ -113,8 +129,11 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x0f02e27745e3b6e9e1310d19469e2b5d7b5ec99a	Peculium	PCL	On chain	8	Saving management on blockchain technology	false	false	false	true	true	false
 50-Tokens:ERC20	0x0f1ed66c251bcb52ecf7e67ac64bb72482048adb	SEER-ERC20-Token	SEER	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x0f4ca92660efad97a9a70cb0fe969c755439772c	Leverj	LEV	On chain	9	Decentralized leveraged exchange.	false	false	false	true	true	false
+50-Tokens:ERC20	0x0f513ffb4926ff82d7f60a05069047aca295c413	CrowdstartCoin	XSC	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x0f5d2fb29fb7d3cfee444a200298f468908cc942	Decentraland MANA	MANA	On chain	18	Decentraland is a virtual reality platform powered by the Ethereum blockchain. Users can create, experience, and monetize content and applications	false	false	false	true	true	false
 50-Tokens:ERC20	0x0f612a09ead55bb81b6534e80ed5a21bf0a27b16	EUNOMIA	ENTS	On chain	8		false	false	false	true	true	false
+50-Tokens:ERC20	0x0f71b8de197a1c84d31de0f1fa7926c365f052b3	Arcona Distribution Contract	ARCONA	On chain	18		false	false	false	true	true	false
+50-Tokens:ERC20	0x0f8b6440a1f7be3354fe072638a5c0f500b044be	Katerium.com	KTH	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x0f8c45b896784a1e408526b9300519ef8660209c	XMAX	XMX	On chain	8		false	false	false	true	true	false
 50-Tokens:ERC20	0x10086399dd8c1e3de736724af52587a2044c9fa2	The Midas Touch Gold	TMTG	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x1014613e2b3cbc4d575054d4982e580d9b99d7b1	BitCapitalVendorToken	BCV	On chain	8		false	false	false	true	true	false
@@ -129,12 +148,14 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x1122b6a0e00dce0563082b6e2953f3a943855c1f	Centrality Token	CENNZ	On chain	18	Centrality is a graph theory term ‚Äö√Ñ√¨ a point in a decentralised system that unites to other points.	false	false	false	true	true	false
 50-Tokens:ERC20	0x11613b1f840bb5a40f8866d857e24da126b79d73	CAPP Token	CAPP	On chain	2		false	false	false	true	true	false
 50-Tokens:ERC20	0x1183f92a5624d68e85ffb9170f16bf0443b4c242	QVT	QVT	On chain	18	Sell and buy crypto assets around the world for local payment methods.	false	false	false	true	true	false
+50-Tokens:ERC20	0x11fb84541865ebdc717f4002f261acad3e9e5be1	Akropolis Token	AKR	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x1229e2a0711660be162521f5626c68e85ec99c7f	Bancor: Converter 103		EtherScan.io			false	false	false	true	false	false
 50-Tokens:ERC20	0x122a86b5dff2d085afb49600b4cd7375d0d94a5f	ITL (Italian Lira)	ITL	On chain	8		false	false	false	true	true	false
 50-Tokens:ERC20	0x123ab195dd38b1b40510d467a6a359b201af056f	LGO Token	LGO	On chain	8	Exchange with decentralized ledgers	false	false	false	true	true	false
 50-Tokens:ERC20	0x1245ef80f4d9e02ed9425375e8f649b9221b31d8	ArbitrageCT	ARCT	On chain	8	Trading crypto-currency terminal for two exchanges simultaneously.	false	false	false	true	true	false
 50-Tokens:ERC20	0x12480e24eb5bec1a9d4369cab6a80cad3c0a377a	Substratum	SUB	On chain	2		false	false	false	true	true	false
 50-Tokens:ERC20	0x12759512d326303b45f1cec8f7b6fd96f387778e	TrakInvest Token	TRAK	On chain	18	Virtual social trading platform for equities and cryptocurrencies powered by proprietary AI engine	false	false	false	true	true	false
+50-Tokens:ERC20	0x127cae460d6e8d039f1371f54548190efe73e756	ShiftCashExtraBonus	SCB	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x12b19d3e2ccc14da04fae33e63652ce469b3f2fd	GRID Token	GRID	On chain	12	Grid+ creates products that enable mainstream use of digital assets and cryptocurrencies. Grid+ strives to be the hardware, software, and cryptocurrency experts building the foundation for a more efficient and inclusive financial future.	false	false	false	true	true	false
 50-Tokens:ERC20	0x12b306fa98f4cbb8d4457fdff3a0a0a56f07ccdf	Spectre.ai D-Token	SXDT	On chain	18	Broker-less financial trading platform.	false	false	false	true	true	false
 50-Tokens:ERC20	0x12d66f87a04a9e220743712ce6d9bb1b5616b8fc	Tornado.Cash: 0.1 ETH		EtherScan.io			false	false	false	true	false	false
@@ -149,6 +170,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x13f25cd52b21650caa8225c9942337d914c9b030	realchain token	RCT	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x14094949152eddbfcd073717200da82fed8dc960	Fulcrum SAI iToken	iSAI	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x1410434b0346f5be678d0fb554e5c7ab620f8f4a	KAN	KAN	On chain	18	A decentralized cryptocurrency-concentrated content payment community.	false	false	false	true	true	false
+50-Tokens:ERC20	0x1456688345527be1f37e9e627da0837d6f08c925	USDP Stablecoin	USDP	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x1460a58096d80a50a2f1f956dda497611fa4f165	Chainium	CHX	On chain	18	Own formerly Chainium is a security token blockchain project focused on revolutionising equity markets.	false	false	false	true	true	false
 50-Tokens:ERC20	0x146d8d942048ad517479c9bab1788712af180fde	Mobile Integrated Blockchain	MIB	On chain	18	MIB coin is a Mobile Mining based Blockchain that has constructed an ecosystem that minimizes the maintenance of Blockchain Network.	false	false	false	true	true	false
 50-Tokens:ERC20	0x14c926f2290044b647e1bf2072e67b495eff1905	Bethereum	BETHER	On chain	18	Bethereum is a decentralised, social-betting platform based on Ethereum technology and Smart Contracts. Bether is the digital ERC-223 token powering the Bethereum solution.	false	false	false	true	true	false
@@ -175,33 +197,11 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x1829aa045e21e0d59580024a951db48096e01782	FuzeX Token	FXT	On chain	18	Cryptocurrency, credit, debit and reward payments at your fingertips	false	false	false	true	true	false
 50-Tokens:ERC20	0x1844b21593262668b7248d0f57a220caaba46ab9	Oyster Pearl	PRL	On chain	18	Platform for website monetization and distributed storage, built on IOTA Tangle and Ethereum	false	false	false	true	true	false
 50-Tokens:ERC20	0x187c4b0e3819017a5cf07af81a4e2b16166aabc6	ICOCalendar.Today	ICT	On chain	18		false	false	false	true	true	false
+50-Tokens:ERC20	0x187e63f9eba692a0ac98d3ede6feb870af0079e1	Yeenus 💪	YEENUS	On chain	8		false	false	false	true	true	false
 50-Tokens:ERC20	0x18d3284d9eff64fc97b64ab2b871738e684aa151	Visor ETH-GTC Uni v3	vETH-GTCV3-1	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x1961b3331969ed52770751fc718ef530838b6dee	BitDegree Token	BDG	On chain	18	The BitDegree platform will offer students the best online courses with a clear and transparent blockchain based reward system and achievement tracking.	false	false	false	true	true	false
 50-Tokens:ERC20	0x1966d718a565566e8e202792658d7b5ff4ece469	nDEX	NDX	On chain	18	nDEX Network is a next generation decentralized ethereum token exchange. Our primary goal is to provide a clean, fast and secure trading environment with lowest service charge.	false	false	false	true	true	false
 50-Tokens:ERC20	0x196c3a943748504d695413167fc3eb77c0832ade	DSProxy #850		EtherScan.io			false	false	false	true	false	false
 50-Tokens:ERC20	0x1985365e9f78359a9b6ad760e32412f4a445e862	Reputation	REP	On chain	18	Augur combines the magic of prediction markets with the power of a decentralized network to create a stunningly accurate forecasting tool	false	false	false	true	true	false
+50-Tokens:ERC20	0x19992b52338b7b49de9679ae018a7027803db1aa	DAppNode: SushiSwap NODEstaking	NODESTACK	TrueBlocks.io	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x19b67f79f8c5d49e950a8754f95aaea93309dcae	HackerGold	HKG	On chain	3		false	false	false	true	true	false
-50-Tokens:ERC20	0x19d97d8fa813ee2f51ad4b4e04ea08baf4dffc28	Badger Sett Badger	bBADGER	On chain	18		false	false	false	true	true	false
-50-Tokens:ERC20	0x19ea630bcbc1a511a16e65b6ecd447c92e1c087c	Carats Token	CARAT	On chain	18		false	false	false	true	true	false
-50-Tokens:ERC20	0x1a0f2ab46ec630f9fd638029027b552afa64b94c	Aston X	ATX	On chain	18	Document Distribution Platform	false	false	false	true	true	false
-50-Tokens:ERC20	0x1a2277c83930b7a64c3e3d5544eaa8c4f946b1b7	ECHAT TOKEN	ECHT	On chain	18		false	false	false	true	true	false
-50-Tokens:ERC20	0x1a66e09f7dccc10eae46e27cfa6b8d44a50df1e7	PRASM	PSM	On chain	18	AI-Based Decentralized Bioinformatic Network	false	false	false	true	true	false
-50-Tokens:ERC20	0x1a7a8bd9106f2b8d977e08582dc7d24c723ab0db	AppCoins	APPC	On chain	18	AppCoins is meant for use in the AppCoins blockchain platform to perform transactions in the app store ecosystem.	false	false	false	true	true	false
-50-Tokens:ERC20	0x1a95b271b0535d15fa49932daba31ba612b52946	minereum	MNE	On chain	8	Self-mining smart contract.	false	false	false	true	true	false
-50-Tokens:ERC20	0x1aa61c196e76805fcbe394ea00e4ffced24fc469	yieldfarming.insure	SAFE	On chain	18		false	false	false	true	true	false
-50-Tokens:ERC20	0x1b22c32cd936cb97c28c5690a0695a82abf688e6	MyWish Token		On chain	18	Aims to provide a service for funds management in case of different life events, in safe and convenient way.	false	false	false	true	true	false
-50-Tokens:ERC20	0x1b6c5864375b34af3ff5bd2e5f40bc425b4a8d79	TopChainCoin	TOPC	On chain	6		false	false	false	true	true	false
-50-Tokens:ERC20	0x1b793e49237758dbd8b752afc9eb4b329d5da016	ViteToken	VITE	On chain	18	High-performance Decentralized Application Platform	false	false	false	true	true	false
-50-Tokens:ERC20	0x1b957dc4aefeed3b4a2351a6a6d5cbfbba0cecfa	HOQU Token	HQX	On chain	18		false	false	false	true	true	false
-50-Tokens:ERC20	0x1b9743f556d65e757c4c650b4555baf354cb8bd3	EthBits ETBS Token	ETBS	On chain	12	ETHBITS iTrade aims to provide new users with all the information needed to decide whom to follow, including a full profile outlining profit and loss in different time frames and historical graphs of performance.	false	false	false	true	true	false
-50-Tokens:ERC20	0x1bcbc54166f6ba149934870b60506199b6c9db6d	ROC	ROC	On chain	10		false	false	false	true	true	false
-50-Tokens:ERC20	0x1c4481750daa5ff521a2a7490d9981ed46465dbd	BLOCKMASON CREDIT PROTOCOL TOKEN	BCPT	On chain	18	Democratizing the creation of credit through permanently recorded debts and obligations.	false	false	false	true	true	false
-50-Tokens:ERC20	0x1c4b7d0e1885bd7667af3378e0c538f74e712006	IOGToken	IOG	On chain	18		false	false	false	true	true	false
-50-Tokens:ERC20	0x1c62aca2b7605db3606eacda7bc67a1857ddb8ff	Soniq Token	SONIQ	On chain	18	The Soniq project mission is using the innovative blockchain technology to support and connect people who want to be a part of the music world and monetize their favorite hobby.	false	false	false	true	true	false
-50-Tokens:ERC20	0x1c79ab32c66acaa1e9e81952b8aaa581b43e54e7	TEAM	TEAM	On chain	4	TEAM is a utility token for TokenStars - the talent management platform, that connects sports entertainment stars with fans and advertisers, bringing interaction between them to a new level.	false	false	false	true	true	false
-50-Tokens:ERC20	0x1c83501478f1320977047008496dacbd60bb15ef	DigitexFutures	DGTX	On chain	18	The DGTX Token is a protocol token that has real world utility and value. Its value derives directly from its utility as a vehicle for the commission-free trading of liquid futures contracts on the price of Bitcoin, Ethereum and Litecoin against the US Dollar.	false	false	false	true	true	false
-50-Tokens:ERC20	0x1cb3209d45b2a60b7fbca1ccdbf87f674237a4aa	ThoreCoin	THR	On chain	4	THR represents a basket of top-traded high-demand coins Simply put, it‚Äö√Ñ√¥s a Basket of Multiple cryptocurrencies in which you can invest by buying tokens	false	false	false	true	true	false
-50-Tokens:ERC20	0x1ccaa0f2a7210d76e1fdec740d5f323e2e1b1672	Faceter Token	FACE	On chain	18	A computer vision surveillance technology powered by fog network of miners.	false	false	false	true	true	false
-50-Tokens:ERC20	0x1cf4592ebffd730c7dc92c1bdffdfc3b9efcf29a	Waves: WAVES Token	WAVES	On chain	18		false	false	false	true	true	false
-50-Tokens:ERC20	0x1d287cc25dad7ccaf76a26bc660c5f7c8e2a05bd	Fetch	FET	On chain	18		false	false	false	true	true	false
-50-Tokens:ERC20	0x1d462414fe14cf489c7a21cac78509f4bf8cd7c0	CanYaCoin	CAN	On chain	6	Blockchain-Powered Marketplace of Services	false	false	false	true	true	false

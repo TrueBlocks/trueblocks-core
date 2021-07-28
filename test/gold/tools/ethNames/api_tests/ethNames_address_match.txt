@@ -379,6 +379,15 @@
       "description": "https://ethstats.info"
     },
     {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x11fb84541865ebdc717f4002f261acad3e9e5be1",
+      "name": "Akropolis Token",
+      "symbol": "AKR",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
       "tags": "30-Contracts",
       "address": "0x1200563cfaeb481e1f0542a246f0cefcde4c4753",
       "name": "Arbitrage Bot",
@@ -595,6 +604,15 @@
       "description": "https://github.com/alialiwa2005/Maple"
     },
     {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x127cae460d6e8d039f1371f54548190efe73e756",
+      "name": "ShiftCashExtraBonus",
+      "symbol": "SCB",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
       "tags": "30-Contracts:Set Protocol Wrapers",
       "address": "0x12951b9eaa200237f9080c95ad93cc74c9d9bd45",
       "name": "Zero Ex Exchange Wrapper",
@@ -771,6 +789,15 @@
       "name": "Grant 1598 Eth123.org",
       "symbol": "",
       "source": "https://gitcoin.co/grants/1598/eth123org",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "30-Contracts",
+      "address": "0x136be5d2ecd8afdc0b860c3734eb5bb0d561aaf9",
+      "name": "",
+      "symbol": "",
+      "source": "",
       "decimals": 0,
       "description": ""
     },
@@ -961,6 +988,15 @@
       "symbol": "",
       "source": "Gitcoin Website",
       "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x1456688345527be1f37e9e627da0837d6f08c925",
+      "name": "USDP Stablecoin",
+      "symbol": "USDP",
+      "source": "On chain",
+      "decimals": 18,
       "description": ""
     },
     {
@@ -1711,6 +1747,15 @@
       "description": ""
     },
     {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x187e63f9eba692a0ac98d3ede6feb870af0079e1",
+      "name": "Yeenus 💪",
+      "symbol": "YEENUS",
+      "source": "On chain",
+      "decimals": 8,
+      "description": ""
+    },
+    {
       "tags": "60-Airdrops",
       "address": "0x18a54a69986f8a6e408243d1ea0cf5c3c596c327",
       "name": "SNGX Airdrop Sender",
@@ -1761,51 +1806,6 @@
       "name": "Name 0x18d7e5bb",
       "symbol": "",
       "source": "Gitcoin Website",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "31-Gitcoin Grants:Friends",
-      "address": "0x190473b3071946df65306989972706a4c006a561",
-      "name": "Name 0x190473b3",
-      "symbol": "",
-      "source": "Gitcoin Website",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "30-Contracts",
-      "address": "0x19076bd01e86fa3d76334e27d4b8e6789688a42d",
-      "name": "Gnosis Auction",
-      "symbol": "",
-      "source": "TrueBlocks.io",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "31-Gitcoin Grants:Friends",
-      "address": "0x190a2409fc6434483d4c2cab804e75e3bc5ebfa6",
-      "name": "Name 0x190a2409",
-      "symbol": "",
-      "source": "Gitcoin Website",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "91-Known",
-      "address": "0x191167380d430036ca2cb067ab86b527e3d584ee",
-      "name": "POAP Token Sender",
-      "symbol": "",
-      "source": "EtherScan.io",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "31-Gitcoin Grants:Grant",
-      "address": "0x193dce65022b3d154854fa0b87fd7011f35ec3bc",
-      "name": "Grant 1389 Zybuz Gaming Protocol",
-      "symbol": "",
-      "source": "https://gitcoin.co/grants/1389/zybuz-gaming-protocol",
       "decimals": 0,
       "description": ""
     }
