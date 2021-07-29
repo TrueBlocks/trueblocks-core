@@ -752,6 +752,17 @@ ethNames Ether --expand --verbose --fmt json
   {
     "deleted": false,
     "tags": "50-Tokens:ERC20",
+    "address": "0x1f73e1ef90a0c54ab81b0dc14035a83137507822",
+    "name": "ethEra for Defi",
+    "symbol": "E4DF",
+    "source": "On chain",
+    "decimals": 18,
+    "is_contract": true,
+    "is_erc20": true
+  },
+  {
+    "deleted": false,
+    "tags": "50-Tokens:ERC20",
     "address": "0x1f75047233517dcf67970d9e3c3bb385cb647f30",
     "name": "Unicorns",
     "symbol": "🦄",
@@ -1760,14 +1771,6 @@ ethNames Ether --expand --verbose --fmt json
     "tags": "30-Contracts:Set Prototcol",
     "address": "0x4f57e1f2020c35cd2fb45cf53cfeb6ff2e796180",
     "name": "Set: Rebalancing Set Exchange Issuance Module V2",
-    "source": "EtherScan.io",
-    "is_contract": true
-  },
-  {
-    "deleted": false,
-    "tags": "35-Pool Together",
-    "address": "0x4fc604536134dc64718800361ecbca0df6cbfe08",
-    "name": "Pool Together Pool 2",
     "source": "EtherScan.io",
     "is_contract": true
   }] }

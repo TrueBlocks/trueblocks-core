@@ -86,6 +86,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 34-ENS	0x1da022710df5002339274aadee8d58218e9d6ab5	ENS: Old Public Resolver 1		EtherScan.io			false	false	false	true	false	false
 50-Tokens:ERC20	0x1daed74ed1dd7c9dabbe51361ac90a69d851234d	Sashimi Swap: Staking Pool		EtherScan.io			false	false	false	true	false	false
 36-Chainlink	0x1eeaf25f2ecbcaf204ecadc8db7b0db9da845327	Chainlink LEND-ETH Aggregator		EtherScan.io			false	false	false	true	false	false
+50-Tokens:ERC20	0x1f73e1ef90a0c54ab81b0dc14035a83137507822	ethEra for Defi	E4DF	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x1f75047233517dcf67970d9e3c3bb385cb647f30	Unicorns	🦄	On chain		Ethereum tip jar unicorn tokens	false	false	false	true	true	false
 31-Gitcoin Grants:Grant	0x1fa313ba8c968d00bc109404bd08e963eae3f1dd	Grant 0433 Edcon (community Ethereum Development Conference)		https://gitcoin.co/grants/433/edcon-community-ethereum-development-conference			false	false	false	false	false	false
 30-Contracts	0x1fd169a4f5c59acf79d0fd5d91d1201ef1bce9f1	Moloch DAO		EtherScan.io			false	false	false	true	false	false
@@ -199,4 +200,3 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x4e005a760e00e17c4912a8070eec047cfecbabbb	NEXT.exchange	NEXT	On chain	18	A hybrid exchange registered as an N. V. Public company in the Netherlands and provides fiat pairs to all altcoins on its platform	false	false	false	true	true	false
 31-Gitcoin Grants:Grant	0x4ef6ea0720862903bbb039e1ab30563e9ec33aba	Grant 1937 Ethereum Integration: Blockchain Data in Trading Bots		https://gitcoin.co/grants/1937/ethereum-integration-blockchain-data-in-trading-b			false	false	false	false	false	false
 30-Contracts:Set Prototcol	0x4f57e1f2020c35cd2fb45cf53cfeb6ff2e796180	Set: Rebalancing Set Exchange Issuance Module V2		EtherScan.io			false	false	false	true	false	false
-35-Pool Together	0x4fc604536134dc64718800361ecbca0df6cbfe08	Pool Together Pool 2		EtherScan.io			false	false	false	true	false	false

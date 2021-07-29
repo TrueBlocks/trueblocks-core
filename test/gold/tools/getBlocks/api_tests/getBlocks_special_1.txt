@@ -29,7 +29,7 @@
           "receipt": {
             "contractAddress": "0x0",
             "gasUsed": 21000,
-            "effectiveGasPrice": 0,
+            "effectiveGasPrice": 27000000000,
             "logs": [],
             "status": null
           },
@@ -58,7 +58,7 @@
           "receipt": {
             "contractAddress": "0x0",
             "gasUsed": 21000,
-            "effectiveGasPrice": 0,
+            "effectiveGasPrice": 26000000000,
             "logs": [],
             "status": null
           },
@@ -87,7 +87,7 @@
           "receipt": {
             "contractAddress": "0x0",
             "gasUsed": 21000,
-            "effectiveGasPrice": 0,
+            "effectiveGasPrice": 26000000000,
             "logs": [],
             "status": null
           },
@@ -116,7 +116,7 @@
           "receipt": {
             "contractAddress": "0x0",
             "gasUsed": 1079267,
-            "effectiveGasPrice": 0,
+            "effectiveGasPrice": 26000000000,
             "logs": [],
             "status": null
           },
@@ -145,7 +145,7 @@
           "receipt": {
             "contractAddress": "0x0",
             "gasUsed": 21000,
-            "effectiveGasPrice": 0,
+            "effectiveGasPrice": 25322210837,
             "logs": [],
             "status": null
           },
@@ -174,7 +174,7 @@
           "receipt": {
             "contractAddress": "0x0",
             "gasUsed": 21000,
-            "effectiveGasPrice": 0,
+            "effectiveGasPrice": 20000000000,
             "logs": [],
             "status": null
           },
@@ -203,7 +203,7 @@
           "receipt": {
             "contractAddress": "0x0",
             "gasUsed": 21000,
-            "effectiveGasPrice": 0,
+            "effectiveGasPrice": 26000000000,
             "logs": [],
             "status": null
           },
@@ -232,7 +232,7 @@
           "receipt": {
             "contractAddress": "0x0",
             "gasUsed": 21000,
-            "effectiveGasPrice": 0,
+            "effectiveGasPrice": 26000000000,
             "logs": [],
             "status": null
           },

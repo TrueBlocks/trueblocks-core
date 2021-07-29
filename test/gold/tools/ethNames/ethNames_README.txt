@@ -23,6 +23,7 @@ ethNames -th
 | -t | --other | export other addresses if found |
 | -u | --to_custom | for editCmd only, is the edited name a custom name or not |
 | -C | --clean | clean the data (addrs to lower case, sort by addr) |
+| -A | --autoname &lt;str&gt; | an address assumed to be a token, added automatically to names database if true |
 |####|Hidden options||
 | -x | --fmt &lt;val&gt; | export format, one of *[ none \| json\* \| txt \| csv \| api ]* |
 | -v | --verbose | set verbose level (optional level defaults to 1) |

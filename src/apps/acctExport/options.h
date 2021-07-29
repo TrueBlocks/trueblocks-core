@@ -78,6 +78,7 @@ class COptions : public CAbiOptions {
 
     string_q className;
     CBlockProgress bp;
+    bool slowQuery;
 
     COptions(void);
     ~COptions(void);

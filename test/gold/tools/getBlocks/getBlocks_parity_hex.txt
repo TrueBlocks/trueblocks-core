@@ -29,6 +29,7 @@ getBlocks 0x2e7721 --cache --parity
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
+        "effectiveGasPrice": "0x4a817c800",
         "status": null
       }
     },
@@ -49,6 +50,7 @@ getBlocks 0x2e7721 --cache --parity
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
+        "effectiveGasPrice": "0x4a817c800",
         "status": null
       }
     },
@@ -69,6 +71,7 @@ getBlocks 0x2e7721 --cache --parity
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": "0x6ec8",
+        "effectiveGasPrice": "0x4a817c800",
         "logs": [
           {
             "address": "0xecf8f87f810ecf450940c9f60066b4a7a501d6a7",
@@ -100,6 +103,7 @@ getBlocks 0x2e7721 --cache --parity
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
+        "effectiveGasPrice": "0x4a817c800",
         "status": null
       }
     },
@@ -120,6 +124,7 @@ getBlocks 0x2e7721 --cache --parity
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
+        "effectiveGasPrice": "0x4a817c800",
         "status": null
       }
     },
@@ -140,6 +145,7 @@ getBlocks 0x2e7721 --cache --parity
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
+        "effectiveGasPrice": "0x4a817c800",
         "status": null
       }
     },
@@ -160,6 +166,7 @@ getBlocks 0x2e7721 --cache --parity
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
+        "effectiveGasPrice": "0x4a817c800",
         "status": null
       }
     },
@@ -180,6 +187,7 @@ getBlocks 0x2e7721 --cache --parity
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
+        "effectiveGasPrice": "0x4a817c800",
         "status": null
       }
     },
@@ -200,6 +208,7 @@ getBlocks 0x2e7721 --cache --parity
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
+        "effectiveGasPrice": "0x4a817c800",
         "status": null
       }
     },
@@ -220,6 +229,7 @@ getBlocks 0x2e7721 --cache --parity
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
+        "effectiveGasPrice": "0x4a817c800",
         "status": null
       }
     },
@@ -240,6 +250,7 @@ getBlocks 0x2e7721 --cache --parity
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
+        "effectiveGasPrice": "0x4a817c800",
         "status": null
       }
     },
@@ -260,6 +271,7 @@ getBlocks 0x2e7721 --cache --parity
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
+        "effectiveGasPrice": "0x4a817c800",
         "status": null
       }
     },
@@ -280,6 +292,7 @@ getBlocks 0x2e7721 --cache --parity
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
+        "effectiveGasPrice": "0x4a817c800",
         "status": null
       }
     },
@@ -300,6 +313,7 @@ getBlocks 0x2e7721 --cache --parity
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
+        "effectiveGasPrice": "0x4a817c800",
         "status": null
       }
     },
@@ -320,6 +334,7 @@ getBlocks 0x2e7721 --cache --parity
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": "0x5208",
+        "effectiveGasPrice": "0x4a817c800",
         "status": null
       }
     }

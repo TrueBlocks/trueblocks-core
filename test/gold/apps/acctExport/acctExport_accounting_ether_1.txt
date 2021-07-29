@@ -37,6 +37,7 @@ TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM exe
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 68590,
+    "effectiveGasPrice": 40000000000,
     "logs": [
       {
         "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -228,6 +229,7 @@ TIME ~ CLOCK - : 4-----pushed: 10279295 33 "5.137097246179548557" "" "" "5.13590
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 44034,
+    "effectiveGasPrice": 27000000000,
     "logs": [
       {
         "address": "0x6b175474e89094c44da98b954eedeac495271d0f",
@@ -335,6 +337,7 @@ TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM exe
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 83590,
+    "effectiveGasPrice": 23000000000,
     "logs": [
       {
         "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -528,6 +531,7 @@ TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM exe
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 64390,
+    "effectiveGasPrice": 22000000000,
     "logs": [
       {
         "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -724,6 +728,7 @@ TIME ~ CLOCK - : 4-----pushed: 10279931 93 "5.133985758179548557" "" "" "5.17198
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 54434,
+    "effectiveGasPrice": 21600000000,
     "logs": [
       {
         "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -907,6 +912,7 @@ TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM exe
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 559718,
+    "effectiveGasPrice": 24100000000,
     "logs": [
       {
         "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -1900,6 +1906,7 @@ TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM exe
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 385743,
+    "effectiveGasPrice": 35000000000,
     "logs": [
       {
         "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -2653,6 +2660,7 @@ TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM exe
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 68590,
+    "effectiveGasPrice": 47000000000,
     "logs": [
       {
         "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -2846,6 +2854,7 @@ TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM exe
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 404763,
+    "effectiveGasPrice": 41800000000,
     "logs": [
       {
         "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -3599,6 +3608,7 @@ TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM exe
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 587911,
+    "effectiveGasPrice": 38500000000,
     "logs": [
       {
         "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -4632,6 +4642,7 @@ TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM exe
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 371729,
+    "effectiveGasPrice": 40000000000,
     "logs": [
       {
         "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -5310,6 +5321,7 @@ TIME ~ CLOCK - : 4-----pushed: 10290317 46 "5.171985758179548557" "" "" "5.17024
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 44034,
+    "effectiveGasPrice": 39500000000,
     "logs": [
       {
         "address": "0x6b175474e89094c44da98b954eedeac495271d0f",
@@ -5455,6 +5467,7 @@ TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM exe
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 44589,
+    "effectiveGasPrice": 39500000000,
     "logs": [
       {
         "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -5577,6 +5590,7 @@ TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM exe
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 155631,
+    "effectiveGasPrice": 32000000000,
     "logs": [
       {
         "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -5895,6 +5909,7 @@ TIME ~ CLOCK - : 4-----pushed: 10292014 92 "5.168485149679548557" "" "" "5.16725
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 44034,
+    "effectiveGasPrice": 28000000000,
     "logs": [
       {
         "address": "0x6b175474e89094c44da98b954eedeac495271d0f",
@@ -6040,6 +6055,7 @@ TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM exe
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 68590,
+    "effectiveGasPrice": 28000000000,
     "logs": [
       {
         "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -6205,6 +6221,7 @@ TIME ~ CLOCK - : 4-----pushed: 10292070 130 "5.165331677679548557" "" "" "5.3553
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 54470,
+    "effectiveGasPrice": 26000001235,
     "logs": [
       {
         "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -6388,6 +6405,7 @@ TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM exe
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 68602,
+    "effectiveGasPrice": 27000000000,
     "logs": [
       {
         "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -6586,6 +6604,7 @@ TIME ~ CLOCK - : 4-----pushed: 10293554 109 "5.355331677679548557" "" "" "5.3540
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 44034,
+    "effectiveGasPrice": 30010000000,
     "logs": [
       {
         "address": "0x6b175474e89094c44da98b954eedeac495271d0f",
@@ -6731,6 +6750,7 @@ TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM exe
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 68590,
+    "effectiveGasPrice": 30010000000,
     "logs": [
       {
         "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",
@@ -6893,6 +6913,7 @@ TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM exe
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 821286,
+    "effectiveGasPrice": 32000000000,
     "logs": [
       {
         "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",

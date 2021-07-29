@@ -170,7 +170,7 @@ bool COptions::parseArguments(string_q& command) {
             ::setenv("TB_NAME_CUSTOM", "false", true);
             if (!processEditCommand(terms, false /* to_custom */, true /* autoname */))  // returns true on success
                 return false;
-                
+
         } else if (isCrudCommand()) {
             address_t address = toLower(trim(getEnvStr("TB_NAME_ADDRESS"), '\"'));
             if (address.empty() && !terms.empty())
@@ -182,7 +182,6 @@ bool COptions::parseArguments(string_q& command) {
 
         } else {
             return usage("Invalid crud command.");
-
         }
     }
 

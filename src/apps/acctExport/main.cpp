@@ -89,6 +89,9 @@ int main(int argc, const char* argv[]) {
         }
         os << ", \"accountedFor\": " << options.allMonitors[0] << endl;
     }
+    if (!isTestMode() && options.slowQuery) {
+        os << ", \"slowQuery\": true" << endl;
+    }
     expContext().fmtMap["meta"] += os.str();
 
     cout << exportPostamble(options.errors, expContext().fmtMap["meta"]);
@@ -187,6 +190,7 @@ bool loadTx_Func(CTraverser* trav, void* data) {
 
     } else {
         trav->readStatus = "Extracting";
+        opt->slowQuery = true;
         dirty = true;
         if (trav->app->blk == 0) {
             address_t addr = opt->prefundAddrMap[trav->app->txid];

@@ -30,6 +30,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 53673,
+        "effectiveGasPrice": 50000000000,
         "logs": [
           {
             "address": "0xf3db5fa2c66b7af3eb0c0b782510816cbe4813b8",
@@ -72,6 +73,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 40000000000,
         "status": null
       },
       "gasUsed": 21000
@@ -94,6 +96,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 36701,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x540e5fff293f523acd26291b5bc7ac5713991feb",
@@ -128,6 +131,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 51829,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x540e5fff293f523acd26291b5bc7ac5713991feb",
@@ -162,6 +166,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 21000000000,
         "status": null
       },
       "gasUsed": 21000
@@ -184,6 +189,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 21000000000,
         "status": null
       },
       "gasUsed": 21000
@@ -206,6 +212,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 124557,
+        "effectiveGasPrice": 20609467870,
         "logs": [
           {
             "address": "0x60bf91ac87fee5a78c28f7b67701fbcfa79c18ec",
@@ -251,6 +258,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 50920,
+        "effectiveGasPrice": 20000000000,
         "logs": [
           {
             "address": "0x6cfd62a0c13b3091f150f1e145d621cf4c9ffef5",
@@ -293,6 +301,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 20000000000,
         "status": null
       },
       "gasUsed": 21000
@@ -315,6 +324,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 149971,
+        "effectiveGasPrice": 20000000000,
         "logs": [
           {
             "address": "0xece701c76bd00d1c3f96410a0c69ea8dfcf5f34e",
@@ -350,6 +360,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 26077,
+        "effectiveGasPrice": 12000000000,
         "logs": [
           {
             "address": "0xd3c00772b24d997a812249ca637a921e81357701",
@@ -392,6 +403,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 4463315,
+        "effectiveGasPrice": 11000000000,
         "logs": [
           {
             "address": "0xe701cd3329057aea9d54300ddd05e41b8d74727a",
@@ -1916,6 +1928,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 250000,
+        "effectiveGasPrice": 10000000000,
         "status": null
       },
       "gasUsed": 250000
@@ -1938,6 +1951,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 107538,
+        "effectiveGasPrice": 10000000000,
         "logs": [
           {
             "address": "0x8d12a197cb00d4747a1fe03395095ce2a5cc6819",
@@ -1970,6 +1984,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 44226,
+        "effectiveGasPrice": 10000000000,
         "logs": [
           {
             "address": "0x8d12a197cb00d4747a1fe03395095ce2a5cc6819",
@@ -2002,6 +2017,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 231089,
+        "effectiveGasPrice": 9100001337,
         "logs": [
           {
             "address": "0x71d271f8b14adef568f8f28f1587ce7271ac4ca5",
@@ -2034,6 +2050,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 518449,
+        "effectiveGasPrice": 9000000000,
         "logs": [
           {
             "address": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef",
@@ -2095,6 +2112,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 22151,
+        "effectiveGasPrice": 8000000000,
         "logs": [
           {
             "address": "0x0e0989b1f9b8a38983c2ba8053269ca62ec9b195",
@@ -2129,6 +2147,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 108114,
+        "effectiveGasPrice": 8000000000,
         "logs": [
           {
             "address": "0x8d12a197cb00d4747a1fe03395095ce2a5cc6819",
@@ -2161,6 +2180,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 250000,
+        "effectiveGasPrice": 8000000000,
         "status": null
       },
       "gasUsed": 250000
@@ -2183,6 +2203,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 36701,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x540e5fff293f523acd26291b5bc7ac5713991feb",
@@ -2217,6 +2238,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 21000000000,
         "status": null
       },
       "gasUsed": 21000
@@ -2252,6 +2274,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 70000000000,
         "status": 1
       },
       "gasUsed": 21000
@@ -2274,6 +2297,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 60000000000,
         "status": 1
       },
       "gasUsed": 21000
@@ -2296,6 +2320,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 23092,
+        "effectiveGasPrice": 60000000000,
         "logs": [
           {
             "address": "0x8d12a197cb00d4747a1fe03395095ce2a5cc6819",
@@ -2328,6 +2353,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 42005,
+        "effectiveGasPrice": 50000000000,
         "logs": [
           {
             "address": "0x03df4c372a29376d2c8df33a1b5f001cd8d68b0e",
@@ -2362,6 +2388,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 42000000000,
         "status": 1
       },
       "gasUsed": 21000
@@ -2384,6 +2411,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 40000000000,
         "status": 1
       },
       "gasUsed": 21000
@@ -2406,6 +2434,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 24896,
+        "effectiveGasPrice": 40000000000,
         "status": 1
       },
       "gasUsed": 24896
@@ -2428,6 +2457,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 25907,
+        "effectiveGasPrice": 31500000000,
         "logs": [
           {
             "address": "0x0d88ed6e74bbfd96b831231638b66c05571e824f",
@@ -2473,6 +2503,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 22088,
+        "effectiveGasPrice": 31500000000,
         "status": 1
       },
       "gasUsed": 22088
@@ -2495,6 +2526,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 51651,
+        "effectiveGasPrice": 31000000000,
         "logs": [
           {
             "address": "0x41e5560054824ea6b0732e656e3ad64e20e94e45",
@@ -2529,6 +2561,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 50000,
+        "effectiveGasPrice": 24000000000,
         "status": 0
       },
       "gasUsed": 50000
@@ -2551,6 +2584,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 36458,
+        "effectiveGasPrice": 22000000000,
         "logs": [
           {
             "address": "0x4156d3342d5c385a87d264f90653733592000581",
@@ -2585,6 +2619,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 37065,
+        "effectiveGasPrice": 22000000000,
         "logs": [
           {
             "address": "0xb97048628db6b661d4c2aa833e95dbe1a905b280",
@@ -2619,6 +2654,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 51765,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x540e5fff293f523acd26291b5bc7ac5713991feb",
@@ -2653,6 +2689,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 40843,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x0d88ed6e74bbfd96b831231638b66c05571e824f",
@@ -2698,6 +2735,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 22980,
+        "effectiveGasPrice": 21000000000,
         "status": 0
       },
       "gasUsed": 22980
@@ -2720,6 +2758,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 21000000000,
         "status": 1
       },
       "gasUsed": 21000
@@ -2742,6 +2781,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 21000000000,
         "status": 1
       },
       "gasUsed": 21000
@@ -2764,6 +2804,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 209347,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x3dbdc81a6edc94c720b0b88fb65dbd7e395fdcf6",
@@ -2807,6 +2848,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 21000000000,
         "status": 1
       },
       "gasUsed": 21000
@@ -2829,6 +2871,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 21000000000,
         "status": 1
       },
       "gasUsed": 21000
@@ -2851,6 +2894,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 21000000000,
         "status": 1
       },
       "gasUsed": 21000
@@ -2873,6 +2917,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 21000000000,
         "status": 1
       },
       "gasUsed": 21000
@@ -2895,6 +2940,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 52222,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
@@ -2929,6 +2975,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 21000000000,
         "status": 1
       },
       "gasUsed": 21000
@@ -2951,6 +2998,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 21000000000,
         "status": 1
       },
       "gasUsed": 21000
@@ -2973,6 +3021,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 54280,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x219218f117dc9348b358b8471c55a073e5e0da0b",
@@ -3007,6 +3056,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 21000000000,
         "status": 1
       },
       "gasUsed": 21000
@@ -3029,6 +3079,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 37143,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x983f6d60db79ea8ca4eb9968c6aff8cfa04b3c63",
@@ -3063,6 +3114,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 21000000000,
         "status": 1
       },
       "gasUsed": 21000
@@ -3085,6 +3137,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 209347,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x3dbdc81a6edc94c720b0b88fb65dbd7e395fdcf6",
@@ -3128,6 +3181,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 21000000000,
         "status": 1
       },
       "gasUsed": 21000
@@ -3150,6 +3204,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 36829,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x540e5fff293f523acd26291b5bc7ac5713991feb",
@@ -3184,6 +3239,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 21000000000,
         "status": 1
       },
       "gasUsed": 21000
@@ -3206,6 +3262,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 21000000000,
         "status": 1
       },
       "gasUsed": 21000
@@ -3228,6 +3285,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 21000000000,
         "status": 1
       },
       "gasUsed": 21000
@@ -3250,6 +3308,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 44597,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0xf1d9139c6512452db91f25635457b844d7e22b8b",
@@ -3292,6 +3351,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 209347,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x3dbdc81a6edc94c720b0b88fb65dbd7e395fdcf6",
@@ -3335,6 +3395,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 36946,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x0f7ba0f783b2210fc7c0de8d0020a9d8743bd842",
@@ -3369,6 +3430,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 124557,
+        "effectiveGasPrice": 20609467870,
         "logs": [
           {
             "address": "0x60bf91ac87fee5a78c28f7b67701fbcfa79c18ec",
@@ -3414,6 +3476,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 50984,
+        "effectiveGasPrice": 20000000000,
         "logs": [
           {
             "address": "0x6cfd62a0c13b3091f150f1e145d621cf4c9ffef5",
@@ -3456,6 +3519,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 148904,
+        "effectiveGasPrice": 20000000000,
         "logs": [
           {
             "address": "0xece701c76bd00d1c3f96410a0c69ea8dfcf5f34e",
@@ -3491,6 +3555,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 45459,
+        "effectiveGasPrice": 20000000000,
         "logs": [
           {
             "address": "0x08d32b0da63e2c3bcf8019c9c5d849d7a9d791e6",
@@ -3525,6 +3590,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 20000000000,
         "status": 1
       },
       "gasUsed": 21000
@@ -3547,6 +3613,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 20000000000,
         "status": 1
       },
       "gasUsed": 21000
@@ -3569,6 +3636,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 23720,
+        "effectiveGasPrice": 20000000000,
         "status": 1
       },
       "gasUsed": 23720
@@ -3591,6 +3659,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 52687,
+        "effectiveGasPrice": 18000000000,
         "logs": [
           {
             "address": "0x94d6b4fb35fb08cb34aa716ab40049ec88002079",
@@ -3625,6 +3694,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21051,
+        "effectiveGasPrice": 16000000000,
         "status": 1
       },
       "gasUsed": 21051
@@ -3647,6 +3717,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 78242,
+        "effectiveGasPrice": 12000000000,
         "logs": [
           {
             "address": "0x8d12a197cb00d4747a1fe03395095ce2a5cc6819",
@@ -3679,6 +3750,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 70000000000,
         "status": 1
       },
       "gasUsed": 21000
@@ -3701,6 +3773,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 42005,
+        "effectiveGasPrice": 50000000000,
         "logs": [
           {
             "address": "0x03df4c372a29376d2c8df33a1b5f001cd8d68b0e",
@@ -3735,6 +3808,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 31000000000,
         "status": 1
       },
       "gasUsed": 21000
@@ -3757,6 +3831,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 36765,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x540e5fff293f523acd26291b5bc7ac5713991feb",
@@ -3791,6 +3866,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 124557,
+        "effectiveGasPrice": 20609467870,
         "logs": [
           {
             "address": "0x60bf91ac87fee5a78c28f7b67701fbcfa79c18ec",
@@ -3836,6 +3912,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 65856,
+        "effectiveGasPrice": 20000000000,
         "logs": [
           {
             "address": "0xb16ea516412fbc1551c8f0c475b7aba4f039afc1",
@@ -3878,6 +3955,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 31000000000,
         "status": 1
       },
       "gasUsed": 21000
@@ -3900,6 +3978,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 36765,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x540e5fff293f523acd26291b5bc7ac5713991feb",
@@ -3934,6 +4013,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 124557,
+        "effectiveGasPrice": 20609467870,
         "logs": [
           {
             "address": "0x60bf91ac87fee5a78c28f7b67701fbcfa79c18ec",
@@ -3979,6 +4059,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 60884,
+        "effectiveGasPrice": 20000000000,
         "logs": [
           {
             "address": "0x24e69f4e50c9fb5c96d0f61f29374f10e6fa0c3f",
@@ -4021,6 +4102,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 31000000000,
         "status": 1
       },
       "gasUsed": 21000
@@ -4043,6 +4125,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 36765,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x540e5fff293f523acd26291b5bc7ac5713991feb",
@@ -4077,6 +4160,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 78813,
+        "effectiveGasPrice": 20609467870,
         "logs": [
           {
             "address": "0x60bf91ac87fee5a78c28f7b67701fbcfa79c18ec",
@@ -4122,6 +4206,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 31000000000,
         "status": 1
       },
       "gasUsed": 21000
@@ -4144,6 +4229,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 124557,
+        "effectiveGasPrice": 20609467870,
         "logs": [
           {
             "address": "0x60bf91ac87fee5a78c28f7b67701fbcfa79c18ec",
@@ -4189,6 +4275,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 31000000000,
         "status": 1
       },
       "gasUsed": 21000
@@ -4211,6 +4298,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 124557,
+        "effectiveGasPrice": 20609467870,
         "logs": [
           {
             "address": "0x60bf91ac87fee5a78c28f7b67701fbcfa79c18ec",
@@ -4256,6 +4344,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 31000000000,
         "status": 1
       },
       "gasUsed": 21000
@@ -4278,6 +4367,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 124557,
+        "effectiveGasPrice": 20609467870,
         "logs": [
           {
             "address": "0x60bf91ac87fee5a78c28f7b67701fbcfa79c18ec",
@@ -4323,6 +4413,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 31000000000,
         "status": 1
       },
       "gasUsed": 21000
@@ -4345,6 +4436,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 124557,
+        "effectiveGasPrice": 20609467870,
         "logs": [
           {
             "address": "0x60bf91ac87fee5a78c28f7b67701fbcfa79c18ec",
@@ -4390,6 +4482,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 31000000000,
         "status": 1
       },
       "gasUsed": 21000
@@ -4412,6 +4505,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 124557,
+        "effectiveGasPrice": 20609467870,
         "logs": [
           {
             "address": "0x60bf91ac87fee5a78c28f7b67701fbcfa79c18ec",
@@ -4457,6 +4551,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 31000000000,
         "status": 1
       },
       "gasUsed": 21000
@@ -4479,6 +4574,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 124557,
+        "effectiveGasPrice": 20609467870,
         "logs": [
           {
             "address": "0x60bf91ac87fee5a78c28f7b67701fbcfa79c18ec",
@@ -4524,6 +4620,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 31000000000,
         "status": 1
       },
       "gasUsed": 21000
@@ -4546,6 +4643,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 124557,
+        "effectiveGasPrice": 20609467870,
         "logs": [
           {
             "address": "0x60bf91ac87fee5a78c28f7b67701fbcfa79c18ec",
@@ -4591,6 +4689,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 124557,
+        "effectiveGasPrice": 20609467870,
         "logs": [
           {
             "address": "0x60bf91ac87fee5a78c28f7b67701fbcfa79c18ec",
@@ -4636,6 +4735,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 124557,
+        "effectiveGasPrice": 20609467870,
         "logs": [
           {
             "address": "0x60bf91ac87fee5a78c28f7b67701fbcfa79c18ec",
@@ -4681,6 +4781,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 124493,
+        "effectiveGasPrice": 20609467870,
         "logs": [
           {
             "address": "0x60bf91ac87fee5a78c28f7b67701fbcfa79c18ec",
@@ -4726,6 +4827,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 124557,
+        "effectiveGasPrice": 20609467870,
         "logs": [
           {
             "address": "0x60bf91ac87fee5a78c28f7b67701fbcfa79c18ec",
@@ -4771,6 +4873,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 124493,
+        "effectiveGasPrice": 20609467870,
         "logs": [
           {
             "address": "0x60bf91ac87fee5a78c28f7b67701fbcfa79c18ec",
@@ -4816,6 +4919,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 124557,
+        "effectiveGasPrice": 20609467870,
         "logs": [
           {
             "address": "0x60bf91ac87fee5a78c28f7b67701fbcfa79c18ec",
@@ -4861,6 +4965,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 124557,
+        "effectiveGasPrice": 20609467870,
         "logs": [
           {
             "address": "0x60bf91ac87fee5a78c28f7b67701fbcfa79c18ec",
@@ -4906,6 +5011,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 124557,
+        "effectiveGasPrice": 20609467870,
         "logs": [
           {
             "address": "0x60bf91ac87fee5a78c28f7b67701fbcfa79c18ec",
@@ -4951,6 +5057,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 124557,
+        "effectiveGasPrice": 20609467870,
         "logs": [
           {
             "address": "0x60bf91ac87fee5a78c28f7b67701fbcfa79c18ec",
@@ -4996,6 +5103,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 124557,
+        "effectiveGasPrice": 20609467870,
         "logs": [
           {
             "address": "0x60bf91ac87fee5a78c28f7b67701fbcfa79c18ec",
@@ -5041,6 +5149,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 124557,
+        "effectiveGasPrice": 20609467870,
         "logs": [
           {
             "address": "0x60bf91ac87fee5a78c28f7b67701fbcfa79c18ec",
@@ -5086,6 +5195,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 124557,
+        "effectiveGasPrice": 20609467870,
         "logs": [
           {
             "address": "0x60bf91ac87fee5a78c28f7b67701fbcfa79c18ec",
@@ -5131,6 +5241,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 124557,
+        "effectiveGasPrice": 20609467870,
         "logs": [
           {
             "address": "0x60bf91ac87fee5a78c28f7b67701fbcfa79c18ec",
@@ -5176,6 +5287,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 124493,
+        "effectiveGasPrice": 20609467870,
         "logs": [
           {
             "address": "0x60bf91ac87fee5a78c28f7b67701fbcfa79c18ec",
@@ -5221,6 +5333,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 124557,
+        "effectiveGasPrice": 20609467870,
         "logs": [
           {
             "address": "0x60bf91ac87fee5a78c28f7b67701fbcfa79c18ec",
@@ -5266,6 +5379,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 124557,
+        "effectiveGasPrice": 20609467870,
         "logs": [
           {
             "address": "0x60bf91ac87fee5a78c28f7b67701fbcfa79c18ec",
@@ -5311,6 +5425,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 124493,
+        "effectiveGasPrice": 20609467870,
         "logs": [
           {
             "address": "0x60bf91ac87fee5a78c28f7b67701fbcfa79c18ec",
@@ -5356,6 +5471,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 124557,
+        "effectiveGasPrice": 20609467870,
         "logs": [
           {
             "address": "0x60bf91ac87fee5a78c28f7b67701fbcfa79c18ec",
@@ -5401,6 +5517,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 124557,
+        "effectiveGasPrice": 20609467870,
         "logs": [
           {
             "address": "0x60bf91ac87fee5a78c28f7b67701fbcfa79c18ec",
@@ -5446,6 +5563,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 124557,
+        "effectiveGasPrice": 20609467870,
         "logs": [
           {
             "address": "0x60bf91ac87fee5a78c28f7b67701fbcfa79c18ec",
@@ -5491,6 +5609,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 124557,
+        "effectiveGasPrice": 20609467870,
         "logs": [
           {
             "address": "0x60bf91ac87fee5a78c28f7b67701fbcfa79c18ec",
@@ -5549,6 +5668,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 35000000000,
         "status": 1
       },
       "gasUsed": 21000
@@ -5571,6 +5691,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 37158,
+        "effectiveGasPrice": 31000000000,
         "logs": [
           {
             "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
@@ -5605,6 +5726,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 37047,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0xe0b7927c4af23765cb51314a0e0521a9645f0e2a",
@@ -5639,6 +5761,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 139171,
+        "effectiveGasPrice": 20000000000,
         "logs": [
           {
             "address": "0xece701c76bd00d1c3f96410a0c69ea8dfcf5f34e",
@@ -5674,6 +5797,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 39280,
+        "effectiveGasPrice": 20000000000,
         "logs": [
           {
             "address": "0x219218f117dc9348b358b8471c55a073e5e0da0b",
@@ -5708,6 +5832,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 20000000000,
         "status": 1
       },
       "gasUsed": 21000
@@ -5730,6 +5855,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 93178,
+        "effectiveGasPrice": 8000000000,
         "logs": [
           {
             "address": "0x8d12a197cb00d4747a1fe03395095ce2a5cc6819",
@@ -5762,6 +5888,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 4000000000,
         "status": 1
       },
       "gasUsed": 21000
@@ -5784,6 +5911,7 @@ getBlocks 4369999 4370000 4380101 --cache
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 39216,
+        "effectiveGasPrice": 20000000000,
         "logs": [
           {
             "address": "0x219218f117dc9348b358b8471c55a073e5e0da0b",

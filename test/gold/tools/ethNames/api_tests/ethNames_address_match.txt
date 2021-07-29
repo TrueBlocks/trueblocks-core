@@ -118,6 +118,15 @@
       "description": ""
     },
     {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x109041526873c4f9695a534045ffe80839f3de27",
+      "name": "Yura Miron",
+      "symbol": "YUMI",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
       "tags": "30-Contracts",
       "address": "0x10a0847c2d170008ddca7c3a688124f493630032",
       "name": "RelayerManager",
@@ -140,6 +149,15 @@
       "address": "0x10b47177e92ef9d5c6059055d92ddf6290848991",
       "name": "SushiSwap LP Token",
       "symbol": "SLP",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x10b66bd1e3b5a936b7f8dbc5976004311037cdf0",
+      "name": "tBTC Deposit Token",
+      "symbol": "TDT",
       "source": "On chain",
       "decimals": 18,
       "description": ""
@@ -1540,6 +1558,15 @@
       "description": ""
     },
     {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x17491ae8b359e73ca06f0abb52223daa878140a9",
+      "name": "Charge",
+      "symbol": "CHARGE",
+      "source": "On chain",
+      "decimals": 4,
+      "description": ""
+    },
+    {
       "tags": "31-Gitcoin Grants:Grant",
       "address": "0x174a0a04a1eda46fccf32f89340258f03d55f1f9",
       "name": "Grant 1011 Led Token",
@@ -1730,6 +1757,15 @@
     },
     {
       "tags": "50-Tokens:ERC20",
+      "address": "0x1866c6907e70eb176109363492b95e3617b4a195",
+      "name": "KEEP CALM",
+      "symbol": "KECA",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
       "address": "0x187c4b0e3819017a5cf07af81a4e2b16166aabc6",
       "name": "ICOCalendar.Today",
       "symbol": "ICT",
@@ -1772,42 +1808,6 @@
       "source": "https://gitcoin.co/grants/544/culturestake",
       "decimals": 0,
       "description": "https://www.furtherfield.org/culturestake-2/"
-    },
-    {
-      "tags": "30-Contracts:Set Protocol Other",
-      "address": "0x18b739aabc019d9ef160d44ba8a9dd6a717372af",
-      "name": "Payable Exchange Issue",
-      "symbol": "",
-      "source": "https://github.com/SetProtocol/set-protocol-contracts",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "30-Contracts",
-      "address": "0x18cedf1071ec25331130c82d7af71d393ccd4446",
-      "name": "Tru Implementation",
-      "symbol": "",
-      "source": "Truebit",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x18d3284d9eff64fc97b64ab2b871738e684aa151",
-      "name": "Visor ETH-GTC Uni v3",
-      "symbol": "vETH-GTCV3-1",
-      "source": "On chain",
-      "decimals": 18,
-      "description": ""
-    },
-    {
-      "tags": "31-Gitcoin Grants:Friends",
-      "address": "0x18d7e5bb768c41b6f2f012082767ba0643c4cd6f",
-      "name": "Name 0x18d7e5bb",
-      "symbol": "",
-      "source": "Gitcoin Website",
-      "decimals": 0,
-      "description": ""
     }
   ],
   "types": [

@@ -4,7 +4,7 @@
  * All Rights Reserved
  *------------------------------------------------------------------------*/
 
- package server
+package server
 
 import (
 	"fmt"
@@ -12,8 +12,9 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
-	"strings"
 	"strconv"
+	"strings"
+
 	utils "github.com/TrueBlocks/trueblocks-core/src/go-apps/blaze/utils"
 )
 
@@ -47,7 +48,8 @@ func RunMonitorScraper() {
 			if err != nil {
 				panic(err)
 			}
-			for _, addr := range addresses {
+
+			for index, addr := range addresses {
 				if !MonitorScraper.Running {
 					break
 				}
@@ -56,7 +58,7 @@ func RunMonitorScraper() {
 					options += " --verbose " + strconv.Itoa(int(MonitorScraper.Verbose))
 				}
 				options += " " + addr
-				log.Print(MonitorScraper.Color, MonitorScraper.Name, ": acctExport", options, utils.Off, "\n")
+				log.Print("<PROG> : ", MonitorScraper.Color, "Freshening ", index, " of ", len(addresses), " acctExport", options, utils.Off, "\n")
 				cmd := exec.Command("acctExport", options)
 				stderrPipe, err := cmd.StderrPipe()
 				if err != nil {
@@ -77,6 +79,7 @@ func RunMonitorScraper() {
 					fmt.Printf("%s", err)
 				}
 			}
+
 			MonitorScraper.ShowStateChange("wake", "sleep")
 			if MonitorScraper.Running {
 				MonitorScraper.Pause()

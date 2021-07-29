@@ -13,7 +13,7 @@
       "blockNumber": 202249,
       "contractAddress": "0x0",
       "gasUsed": 21612,
-      "effectiveGasPrice": 0,
+      "effectiveGasPrice": 1171602790622,
       "logs": [],
       "status": null,
       "transactionIndex": 0
@@ -22,7 +22,7 @@
       "blockNumber": 1501459,
       "contractAddress": "0x0",
       "gasUsed": 21000,
-      "effectiveGasPrice": 0,
+      "effectiveGasPrice": 20000000000,
       "logs": [],
       "status": null,
       "transactionIndex": 2

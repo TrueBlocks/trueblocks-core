@@ -107,6 +107,7 @@ TIME ~ CLOCK - : 4-----pushed: 202249 0 "4200000000000000000000" "" "41999000000
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 21612,
+    "effectiveGasPrice": 1171602790622,
     "status": null
   },
   "compressedTx": "message:EN4V1GTB8",
@@ -179,6 +180,7 @@ TIME ~ CLOCK - : 4-----pushed: 1501459 2 "74679320489077336" "" "742593204890773
   "receipt": {
     "contractAddress": "0x0",
     "gasUsed": 21000,
+    "effectiveGasPrice": 20000000000,
     "status": null
   },
   "compressedTx": "0x ( )",

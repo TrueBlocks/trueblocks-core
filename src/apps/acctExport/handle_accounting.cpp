@@ -57,6 +57,7 @@ bool COptions::process_reconciliation(CTraverser* trav, blknum_t next) {
     }
 
     trav->readStatus = "Reconciling";
+    slowQuery = true;
 
     // We need to check to see if the export is starting after the
     // the first record so we can pick up the previous balance
