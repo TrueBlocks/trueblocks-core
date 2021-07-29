@@ -350,6 +350,14 @@ ethNames --named --custom --fmt json
   },
   {
     "tags": "50-Tokens:ERC20",
+    "address": "0x009c216b7e86e5c38af14fcd8c07aab3a2e7888e",
+    "name": "Writing Hedge Contracts DAI",
+    "symbol": "writeDAI",
+    "source": "On chain",
+    "decimals": 18
+  },
+  {
+    "tags": "50-Tokens:ERC20",
     "address": "0x009e864923b49263c7f10d19b7f8ab7a9a5aad33",
     "name": "Knoxstertoken",
     "symbol": "FKX",
@@ -630,6 +638,14 @@ ethNames --named --custom --fmt json
     "address": "0x01f7700c13707eee8349f9800e70a940168812e3",
     "name": "Name 0x01f7700c",
     "source": "Gitcoin Website"
+  },
+  {
+    "tags": "50-Tokens:ERC20",
+    "address": "0x01f7919634ba8146755b617d7bf24076cecfedef",
+    "name": "FCC TRUMPBOND",
+    "symbol": "TRUMP",
+    "source": "On chain",
+    "decimals": 18
   },
   {
     "tags": "31-Gitcoin Grants:Friends",
@@ -988,6 +1004,14 @@ ethNames --named --custom --fmt json
     "source": "Solidity Code"
   },
   {
+    "tags": "50-Tokens:ERC20",
+    "address": "0x0488401c3f535193fa8df029d9ffe615a06e74e6",
+    "name": "SparkPoint",
+    "symbol": "SRK",
+    "source": "On chain",
+    "decimals": 18
+  },
+  {
     "tags": "90-DevCon2:Individual",
     "address": "0x0492104bbf24a97deeb64c03377fb8d6d75a711c",
     "name": "Kung Chen-Yalie",
@@ -1343,24 +1367,4 @@ ethNames --named --custom --fmt json
     "name": "Name 0x0667ad4c",
     "source": "Twitter",
     "description": "@okbabyqn88"
-  },
-  {
-    "tags": "31-Gitcoin Grants:Grant",
-    "address": "0x066d4d13c5bc10e14e30e862471772aa7d23b4f1",
-    "name": "Grant 1388 Crypto Valuations Youtube Channel",
-    "source": "https://gitcoin.co/grants/1388/crypto-valuations-youtube-channel"
-  },
-  {
-    "tags": "50-Tokens:ERC20",
-    "address": "0x066f2d5ead7951f0d0038c19affd500b9f02c0e5",
-    "name": "CryptoJanky",
-    "symbol": "JNK",
-    "source": "On chain",
-    "decimals": 18
-  },
-  {
-    "tags": "80-Malicious:DaoDrain",
-    "address": "0x06706dd3f2c9abf0a21ddcc6941d9b86f0596936",
-    "name": "DAO Drain 008",
-    "source": "GethSource"
   }] }

@@ -190,6 +190,15 @@
       "description": ""
     },
     {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x10ec0d497824e342bcb0edce00959142aaa766dd",
+      "name": "IdleDAI",
+      "symbol": "IDLEDAI",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x10f5d45854e038071485ac9e402308cf80d2d2fe",
       "name": "Name 0x10f5d458",
@@ -1468,6 +1477,15 @@
       "description": ""
     },
     {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x16de59092dae5ccf4a1e6439d611fd0653f0bd01",
+      "name": "iearn DAI",
+      "symbol": "yDAI",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
       "tags": "55-Defi",
       "address": "0x16e58463eb9792bc236d8860f5bc69a81e26e32b",
       "name": "SushiSwap: Liquidity Migrator",
@@ -1555,6 +1573,15 @@
       "symbol": "",
       "source": "https://gitcoin.co/grants/505/ethhealth",
       "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x174897edd3ce414084a009d22db31c7b7826400d",
+      "name": "JOON",
+      "symbol": "JOON",
+      "source": "On chain",
+      "decimals": 4,
       "description": ""
     },
     {
@@ -1781,33 +1808,6 @@
       "source": "https://gitcoin.co/grants/1559/storj-exporter",
       "decimals": 0,
       "description": ""
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x187e63f9eba692a0ac98d3ede6feb870af0079e1",
-      "name": "Yeenus 💪",
-      "symbol": "YEENUS",
-      "source": "On chain",
-      "decimals": 8,
-      "description": ""
-    },
-    {
-      "tags": "60-Airdrops",
-      "address": "0x18a54a69986f8a6e408243d1ea0cf5c3c596c327",
-      "name": "SNGX Airdrop Sender",
-      "symbol": "",
-      "source": "TrueBlocks.io",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "31-Gitcoin Grants:Grant",
-      "address": "0x18ac920241e0f5699448379e63069724d9d8a603",
-      "name": "Grant 0544 Culturestake",
-      "symbol": "",
-      "source": "https://gitcoin.co/grants/544/culturestake",
-      "decimals": 0,
-      "description": "https://www.furtherfield.org/culturestake-2/"
     }
   ],
   "types": [

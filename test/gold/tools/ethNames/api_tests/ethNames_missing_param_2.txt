@@ -193,6 +193,10 @@
       "decimals": 0
     },
     {
+      "address": "0x009c216b7e86e5c38af14fcd8c07aab3a2e7888e",
+      "decimals": 18
+    },
+    {
       "address": "0x009e864923b49263c7f10d19b7f8ab7a9a5aad33",
       "decimals": 18
     },
@@ -363,6 +367,10 @@
     {
       "address": "0x01f7700c13707eee8349f9800e70a940168812e3",
       "decimals": 0
+    },
+    {
+      "address": "0x01f7919634ba8146755b617d7bf24076cecfedef",
+      "decimals": 18
     },
     {
       "address": "0x01feb5003fbbd3cae8da33de679cf2e2d07102b3",
@@ -571,6 +579,10 @@
     {
       "address": "0x047f57b4fe5f5f8f536f48d7ee464893b4411e92",
       "decimals": 0
+    },
+    {
+      "address": "0x0488401c3f535193fa8df029d9ffe615a06e74e6",
+      "decimals": 18
     },
     {
       "address": "0x0492104bbf24a97deeb64c03377fb8d6d75a711c",
@@ -790,18 +802,6 @@
     },
     {
       "address": "0x067f2bef6a1f929544253b9fb95f99bae77b2518",
-      "decimals": 0
-    },
-    {
-      "address": "0x0681d8db095565fe8a346fa0277bffde9c0edbbf",
-      "decimals": 0
-    },
-    {
-      "address": "0x0681e844593a051e2882ec897ecd5444efe19ff2",
-      "decimals": 0
-    },
-    {
-      "address": "0x068792edecad424d42f0f45de7f693ca33526cf1",
       "decimals": 0
     }
   ],

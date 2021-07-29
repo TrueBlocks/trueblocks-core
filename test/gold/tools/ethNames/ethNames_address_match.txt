@@ -149,6 +149,14 @@ ethNames 0x1 --fmt api
     "source": "https://gitcoin.co/grants/1498/crypto-music-fund-changing-the-world-through-musi"
   },
   {
+    "tags": "50-Tokens:ERC20",
+    "address": "0x10ec0d497824e342bcb0edce00959142aaa766dd",
+    "name": "IdleDAI",
+    "symbol": "IDLEDAI",
+    "source": "On chain",
+    "decimals": 18
+  },
+  {
     "tags": "31-Gitcoin Grants:Friends",
     "address": "0x10f5d45854e038071485ac9e402308cf80d2d2fe",
     "name": "Name 0x10f5d458",
@@ -1113,6 +1121,14 @@ ethNames 0x1 --fmt api
     "decimals": 18
   },
   {
+    "tags": "50-Tokens:ERC20",
+    "address": "0x16de59092dae5ccf4a1e6439d611fd0653f0bd01",
+    "name": "iearn DAI",
+    "symbol": "yDAI",
+    "source": "On chain",
+    "decimals": 18
+  },
+  {
     "tags": "55-Defi",
     "address": "0x16e58463eb9792bc236d8860f5bc69a81e26e32b",
     "name": "SushiSwap: Liquidity Migrator",
@@ -1183,6 +1199,14 @@ ethNames 0x1 --fmt api
     "address": "0x1741b88fbfb93fa3fe096f3af27c21ea36123410",
     "name": "Grant 0505 Ethhealth",
     "source": "https://gitcoin.co/grants/505/ethhealth"
+  },
+  {
+    "tags": "50-Tokens:ERC20",
+    "address": "0x174897edd3ce414084a009d22db31c7b7826400d",
+    "name": "JOON",
+    "symbol": "JOON",
+    "source": "On chain",
+    "decimals": 4
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -1364,27 +1388,6 @@ ethNames 0x1 --fmt api
     "address": "0x187c8c43890fe4c91afabbc62128d383a90548dd",
     "name": "Grant 1559 Storj Exporter",
     "source": "https://gitcoin.co/grants/1559/storj-exporter"
-  },
-  {
-    "tags": "50-Tokens:ERC20",
-    "address": "0x187e63f9eba692a0ac98d3ede6feb870af0079e1",
-    "name": "Yeenus 💪",
-    "symbol": "YEENUS",
-    "source": "On chain",
-    "decimals": 8
-  },
-  {
-    "tags": "60-Airdrops",
-    "address": "0x18a54a69986f8a6e408243d1ea0cf5c3c596c327",
-    "name": "SNGX Airdrop Sender",
-    "source": "TrueBlocks.io"
-  },
-  {
-    "tags": "31-Gitcoin Grants:Grant",
-    "address": "0x18ac920241e0f5699448379e63069724d9d8a603",
-    "name": "Grant 0544 Culturestake",
-    "source": "https://gitcoin.co/grants/544/culturestake",
-    "description": "https://www.furtherfield.org/culturestake-2/"
   }], "types": [
 { "type": "CAccountName", "fields": [{ "name": "tags", "type": "text" }, { "name": "address", "type": "address" }, { "name": "name", "type": "text" }, { "name": "symbol", "type": "text" }, { "name": "source", "type": "text" }, { "name": "decimals", "type": "unumber" }, { "name": "description", "type": "text" }] }
 ], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef", "namePath": "--" } }
