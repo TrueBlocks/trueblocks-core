@@ -28,7 +28,7 @@ static CRouteArray routes;
 bool COptions::handle_js(void) {
     CToml config(configPath("makeClass.toml"));
     bool enabled = config.getConfigBool("enabled", "js", false);
-    if (!enabled) {
+    if (isTestMode() || !enabled) {
         LOG_WARN("Skipping javascript generation...");
         return true;
     }
