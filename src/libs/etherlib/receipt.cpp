@@ -84,7 +84,7 @@ string_q CReceipt::getValueByName(const string_q& fieldName) const {
             break;
         case 'e':
             if (fieldName % "effectiveGasPrice") {
-                return effectiveGasPrice == 0 ? "" : gas_2_Str(effectiveGasPrice);
+                return gas_2_Str(effectiveGasPrice);
             }
             break;
         case 'g':
@@ -315,7 +315,7 @@ void CReceipt::registerClass(void) {
     ADD_FIELD(CReceipt, "from", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CReceipt, "from");
     ADD_FIELD(CReceipt, "gasUsed", T_GAS, ++fieldNum);
-    ADD_FIELD(CReceipt, "effectiveGasPrice", T_GAS | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CReceipt, "effectiveGasPrice", T_GAS, ++fieldNum);
     ADD_FIELD(CReceipt, "logs", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CReceipt, "root", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CReceipt, "root");
@@ -353,10 +353,10 @@ string_q nextReceiptChunk_custom(const string_q& fieldIn, const void* dataPtr) {
                 break;
             case 'e':
                 if (fieldIn % "effectiveGasPrice") {
-                    bool preLondon =
-                        rec->pTrans && rec->pTrans->pBlock && rec->pTrans->pBlock->blockNumber < londonBlock;
-                    if (preLondon)
+                    if (!rec->pTrans || !rec->pTrans->pBlock)
                         return "";
+                    bool preLondon = rec->pTrans->pBlock->blockNumber < londonBlock;
+                    return preLondon ? gas_2_Str(rec->pTrans->gasPrice) : "";
                 }
                 break;
             case 's':

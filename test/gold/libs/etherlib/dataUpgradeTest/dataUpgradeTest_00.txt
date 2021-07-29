@@ -52,6 +52,7 @@ age                 	1020	1	33554437	T_DATE TS_DATE
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 50000000000,
         "status": null
       },
       "gasUsed": 21000

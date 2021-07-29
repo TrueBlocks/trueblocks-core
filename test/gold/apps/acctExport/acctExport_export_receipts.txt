@@ -5,6 +5,7 @@ acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --max_records 5 --receipts
   "blockNumber": 0,
   "contractAddress": "0x0",
   "gasUsed": 0,
+  "effectiveGasPrice": 0,
   "status": null,
   "transactionIndex": 2
 }

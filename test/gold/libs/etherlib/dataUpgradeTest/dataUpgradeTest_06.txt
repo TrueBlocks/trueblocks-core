@@ -52,6 +52,7 @@ age                 	1020	1	33554437	T_DATE TS_DATE
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 50000000000,
         "status": null
       },
       "gasUsed": 21000
@@ -111,6 +112,7 @@ age                 	1020	1	33554437	T_DATE TS_DATE
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 50000000000,
         "status": null
       },
       "gasUsed": 21000
@@ -146,6 +148,7 @@ age                 	1020	1	33554437	T_DATE TS_DATE
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 50000000000,
         "status": null
       },
       "gasUsed": 21000
@@ -205,6 +208,7 @@ age                 	1020	1	33554437	T_DATE TS_DATE
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 50000000000,
         "status": null
       },
       "gasUsed": 21000
@@ -260,6 +264,7 @@ transactions        	1015	0	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OM
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 50000000000,
         "status": null
       },
       "gasUsed": 21000
@@ -316,6 +321,7 @@ transactions        	1015	0	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OM
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 50000000000,
         "status": null
       },
       "gasUsed": 21000
@@ -353,6 +359,7 @@ transactions        	1015	0	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OM
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 50000000000,
         "status": null
       },
       "gasUsed": 21000
@@ -409,6 +416,7 @@ transactions        	1015	0	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OM
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 50000000000,
         "status": null
       },
       "gasUsed": 21000
@@ -464,6 +472,7 @@ transactions        	1015	0	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OM
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 50000000000,
         "status": null
       },
       "gasUsed": 21000

@@ -10,6 +10,7 @@ abiTest2
   "isError": 0,
   "hasToken": 0,
   "receipt": {
+    "effectiveGasPrice": 0,
     "logs": [
       {
         "address": "0x6b175474e89094c44da98b954eedeac495271d0f",
@@ -336,6 +337,7 @@ params.size: 1
   "isError": 0,
   "hasToken": 0,
   "receipt": {
+    "effectiveGasPrice": 0,
     "logs": [
       {
         "address": "0x7d655c57f71464b6f83811c55d84009cd9f5221c",

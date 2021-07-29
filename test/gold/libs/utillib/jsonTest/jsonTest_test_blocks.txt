@@ -29,6 +29,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 113122,
+        "effectiveGasPrice": 71000000000,
         "logs": [
           {
             "address": "0x1776e1f26f98b1a5df9cd347953a26dd3cb46671",
@@ -63,6 +64,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 40843,
+        "effectiveGasPrice": 60000000000,
         "logs": [
           {
             "address": "0x86fa049857e0209aa7d9e616f7eb3b3b78ecfdb0",
@@ -108,6 +110,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 52170,
+        "effectiveGasPrice": 60000000000,
         "logs": [
           {
             "address": "0xe41d2489571d322189246dafa5ebde1f4699f498",
@@ -142,6 +145,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 85015,
+        "effectiveGasPrice": 60000000000,
         "logs": [
           {
             "address": "0x882448f83d90b2bf477af2ea79327fdea1335d93",
@@ -175,6 +179,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 55843,
+        "effectiveGasPrice": 60000000000,
         "logs": [
           {
             "address": "0x0d88ed6e74bbfd96b831231638b66c05571e824f",
@@ -220,6 +225,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21051,
+        "effectiveGasPrice": 55000000000,
         "status": null
       },
       "gasUsed": 21051
@@ -242,6 +248,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 37336,
+        "effectiveGasPrice": 53250000000,
         "logs": [
           {
             "address": "0xb63b606ac810a52cca15e44bb630fd42d8d1d83d",
@@ -276,6 +283,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 50000000000,
         "status": null
       },
       "gasUsed": 21000
@@ -298,6 +306,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 50000000000,
         "status": null
       },
       "gasUsed": 21000
@@ -320,6 +329,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 45108525448,
         "status": null
       },
       "gasUsed": 21000
@@ -342,6 +352,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 37472,
+        "effectiveGasPrice": 42022057445,
         "logs": [
           {
             "address": "0xf0f8b0b8dbb1124261fc8d778e2287e3fd2cf4f5",
@@ -376,6 +387,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 37472,
+        "effectiveGasPrice": 42022057445,
         "logs": [
           {
             "address": "0xf0f8b0b8dbb1124261fc8d778e2287e3fd2cf4f5",
@@ -410,6 +422,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 22117,
+        "effectiveGasPrice": 41179380667,
         "logs": [
           {
             "address": "0xcbcc0f036ed4788f63fc0fee32873d6a7487b908",
@@ -444,6 +457,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 40907,
+        "effectiveGasPrice": 40825000000,
         "logs": [
           {
             "address": "0x86fa049857e0209aa7d9e616f7eb3b3b78ecfdb0",
@@ -489,6 +503,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 39512,
+        "effectiveGasPrice": 40000000000,
         "logs": [
           {
             "address": "0x209c4784ab1e8183cf58ca33cb740efbf3fc18ef",
@@ -529,6 +544,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 39050000000,
         "status": null
       },
       "gasUsed": 21000
@@ -551,6 +567,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 37275000000,
         "status": null
       },
       "gasUsed": 21000
@@ -573,6 +590,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 51916,
+        "effectiveGasPrice": 36000000000,
         "logs": [
           {
             "address": "0x0d8775f648430679a709e98d2b0cb6250d2887ef",
@@ -607,6 +625,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 52249,
+        "effectiveGasPrice": 36000000000,
         "logs": [
           {
             "address": "0xe94327d07fc17907b4db788e5adf2ed424addff6",
@@ -641,6 +660,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 36000000000,
         "status": null
       },
       "gasUsed": 21000
@@ -663,6 +683,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 36539,
+        "effectiveGasPrice": 36000000000,
         "logs": [
           {
             "address": "0x9a642d6b3368ddc662ca244badf32cda716005bc",
@@ -697,6 +718,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 55779,
+        "effectiveGasPrice": 35500000000,
         "logs": [
           {
             "address": "0x86fa049857e0209aa7d9e616f7eb3b3b78ecfdb0",
@@ -742,6 +764,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 35500000000,
         "status": null
       },
       "gasUsed": 21000
@@ -764,6 +787,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 35500000000,
         "status": null
       },
       "gasUsed": 21000
@@ -786,6 +810,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 35500000000,
         "status": null
       },
       "gasUsed": 21000
@@ -808,6 +833,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 22088,
+        "effectiveGasPrice": 35500000000,
         "status": null
       },
       "gasUsed": 22088
@@ -830,6 +856,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 22966,
+        "effectiveGasPrice": 35500000000,
         "logs": [
           {
             "address": "0x6092305a188802afb0b56c4012b947c5915f9eb1",
@@ -864,6 +891,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 35500000000,
         "status": null
       },
       "gasUsed": 21000
@@ -886,6 +914,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 37507,
+        "effectiveGasPrice": 35500000000,
         "logs": [
           {
             "address": "0x7c5a0ce9267ed19b22f8cae653f198e3e8daf098",
@@ -920,6 +949,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 35500000000,
         "status": null
       },
       "gasUsed": 21000
@@ -942,6 +972,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 35500000000,
         "status": null
       },
       "gasUsed": 21000
@@ -964,6 +995,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 35500000000,
         "status": null
       },
       "gasUsed": 21000
@@ -986,6 +1018,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 35500000000,
         "status": null
       },
       "gasUsed": 21000
@@ -1008,6 +1041,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 35500000000,
         "status": null
       },
       "gasUsed": 21000
@@ -1030,6 +1064,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 22158,
+        "effectiveGasPrice": 35500000000,
         "logs": [
           {
             "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
@@ -1064,6 +1099,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 36748,
+        "effectiveGasPrice": 35500000000,
         "logs": [
           {
             "address": "0x4238c2e2e9e387b6feb23acbb81b3b6dea648b8d",
@@ -1098,6 +1134,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 35500000000,
         "status": null
       },
       "gasUsed": 21000
@@ -1120,6 +1157,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 35500000000,
         "status": null
       },
       "gasUsed": 21000
@@ -1142,6 +1180,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 30981,
+        "effectiveGasPrice": 35500000000,
         "logs": [
           {
             "address": "0xfa52274dd61e1643d2205169732f29114bc240b3",
@@ -1176,6 +1215,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 35500000000,
         "status": null
       },
       "gasUsed": 21000
@@ -1198,6 +1238,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 35500000000,
         "status": null
       },
       "gasUsed": 21000
@@ -1220,6 +1261,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 209608,
+        "effectiveGasPrice": 35500000000,
         "logs": [
           {
             "address": "0x6f28b146804dba2d6f944c03528a8fdbc673df2c",
@@ -1263,6 +1305,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 35500000000,
         "status": null
       },
       "gasUsed": 21000
@@ -1285,6 +1328,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 35500000000,
         "status": null
       },
       "gasUsed": 21000
@@ -1307,6 +1351,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21051,
+        "effectiveGasPrice": 35500000000,
         "status": null
       },
       "gasUsed": 21051
@@ -1329,6 +1374,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 35500000000,
         "status": null
       },
       "gasUsed": 21000
@@ -1351,6 +1397,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 104961,
+        "effectiveGasPrice": 35500000000,
         "logs": [
           {
             "address": "0xd7631787b4dcc87b1254cfd1e5ce48e96823dee8",
@@ -1415,6 +1462,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 35500000000,
         "status": null
       },
       "gasUsed": 21000
@@ -1437,6 +1485,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 35500000000,
         "status": null
       },
       "gasUsed": 21000
@@ -1459,6 +1508,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 35500000000,
         "status": null
       },
       "gasUsed": 21000
@@ -1481,6 +1531,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 35500000000,
         "status": null
       },
       "gasUsed": 21000
@@ -1503,6 +1554,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 35500000000,
         "status": null
       },
       "gasUsed": 21000
@@ -1525,6 +1577,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 35500000000,
         "status": null
       },
       "gasUsed": 21000
@@ -1547,6 +1600,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 35500000000,
         "status": null
       },
       "gasUsed": 21000
@@ -1569,6 +1623,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 35500000000,
         "status": null
       },
       "gasUsed": 21000
@@ -1591,6 +1646,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 35500000000,
         "status": null
       },
       "gasUsed": 21000
@@ -1613,6 +1669,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 36010,
+        "effectiveGasPrice": 35500000000,
         "logs": [
           {
             "address": "0x2b08f3ab8986075f8691ea9abc393642964e64c5",
@@ -1645,6 +1702,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 35500000000,
         "status": null
       },
       "gasUsed": 21000
@@ -1667,6 +1725,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 35500000000,
         "status": null
       },
       "gasUsed": 21000
@@ -1689,6 +1748,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 49263,
+        "effectiveGasPrice": 35500000000,
         "logs": [
           {
             "address": "0x59adcf176ed2f6788a41b8ea4c4904518e62b6a4",
@@ -1753,6 +1813,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 35500000000,
         "status": null
       },
       "gasUsed": 21000
@@ -1775,6 +1836,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21051,
+        "effectiveGasPrice": 35500000000,
         "status": null
       },
       "gasUsed": 21051
@@ -1797,6 +1859,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 51984,
+        "effectiveGasPrice": 35500000000,
         "logs": [
           {
             "address": "0x08f5a9235b08173b7569f83645d2c7fb55e8ccd8",
@@ -1831,6 +1894,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 35500000000,
         "status": null
       },
       "gasUsed": 21000
@@ -1853,6 +1917,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 35500000000,
         "status": null
       },
       "gasUsed": 21000
@@ -1875,6 +1940,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 35500000000,
         "status": null
       },
       "gasUsed": 21000
@@ -1897,6 +1963,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 35500000000,
         "status": null
       },
       "gasUsed": 21000
@@ -1919,6 +1986,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 35500000000,
         "status": null
       },
       "gasUsed": 21000
@@ -1941,6 +2009,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 35500000000,
         "status": null
       },
       "gasUsed": 21000
@@ -1963,6 +2032,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 35500000000,
         "status": null
       },
       "gasUsed": 21000
@@ -1985,6 +2055,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 35500000000,
         "status": null
       },
       "gasUsed": 21000
@@ -2007,6 +2078,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 35500000000,
         "status": null
       },
       "gasUsed": 21000
@@ -2029,6 +2101,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 35500000000,
         "status": null
       },
       "gasUsed": 21000
@@ -2051,6 +2124,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 35500000000,
         "status": null
       },
       "gasUsed": 21000
@@ -2073,6 +2147,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 35500000000,
         "status": null
       },
       "gasUsed": 21000
@@ -2095,6 +2170,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 35500000000,
         "status": null
       },
       "gasUsed": 21000
@@ -2117,6 +2193,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 35500000000,
         "status": null
       },
       "gasUsed": 21000
@@ -2139,6 +2216,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 35500000000,
         "status": null
       },
       "gasUsed": 21000
@@ -2161,6 +2239,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 35500000000,
         "status": null
       },
       "gasUsed": 21000
@@ -2183,6 +2262,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 35500000000,
         "status": null
       },
       "gasUsed": 21000
@@ -2205,6 +2285,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 35500000000,
         "status": null
       },
       "gasUsed": 21000
@@ -2227,6 +2308,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 35500000000,
         "status": null
       },
       "gasUsed": 21000
@@ -2249,6 +2331,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 35500000000,
         "status": null
       },
       "gasUsed": 21000
@@ -2271,6 +2354,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 52158,
+        "effectiveGasPrice": 35500000000,
         "logs": [
           {
             "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
@@ -2305,6 +2389,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 35500000000,
         "status": null
       },
       "gasUsed": 21000
@@ -2327,6 +2412,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 35500000000,
         "status": null
       },
       "gasUsed": 21000
@@ -2349,6 +2435,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 35500000000,
         "status": null
       },
       "gasUsed": 21000
@@ -2371,6 +2458,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 35500000000,
         "status": null
       },
       "gasUsed": 21000
@@ -2393,6 +2481,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 35500000000,
         "status": null
       },
       "gasUsed": 21000
@@ -2415,6 +2504,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 35500000000,
         "status": null
       },
       "gasUsed": 21000
@@ -2437,6 +2527,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 35000000000,
         "status": null
       },
       "gasUsed": 21000
@@ -2459,6 +2550,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 33571,
+        "effectiveGasPrice": 35000000000,
         "status": null
       },
       "gasUsed": 33571
@@ -2481,6 +2573,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 33571,
+        "effectiveGasPrice": 35000000000,
         "status": null
       },
       "gasUsed": 33571
@@ -2503,6 +2596,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 33571,
+        "effectiveGasPrice": 35000000000,
         "status": null
       },
       "gasUsed": 33571
@@ -2525,6 +2619,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 33571,
+        "effectiveGasPrice": 35000000000,
         "status": null
       },
       "gasUsed": 33571
@@ -2547,6 +2642,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 33571,
+        "effectiveGasPrice": 35000000000,
         "status": null
       },
       "gasUsed": 33571
@@ -2569,6 +2665,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 33571,
+        "effectiveGasPrice": 35000000000,
         "status": null
       },
       "gasUsed": 33571
@@ -2591,6 +2688,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 33571,
+        "effectiveGasPrice": 35000000000,
         "status": null
       },
       "gasUsed": 33571
@@ -2613,6 +2711,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 33571,
+        "effectiveGasPrice": 35000000000,
         "status": null
       },
       "gasUsed": 33571
@@ -2635,6 +2734,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 33571,
+        "effectiveGasPrice": 35000000000,
         "status": null
       },
       "gasUsed": 33571
@@ -2657,6 +2757,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 33571,
+        "effectiveGasPrice": 35000000000,
         "status": null
       },
       "gasUsed": 33571
@@ -2679,6 +2780,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 33571,
+        "effectiveGasPrice": 35000000000,
         "status": null
       },
       "gasUsed": 33571
@@ -2701,6 +2803,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 33571,
+        "effectiveGasPrice": 35000000000,
         "status": null
       },
       "gasUsed": 33571
@@ -2723,6 +2826,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 36812,
+        "effectiveGasPrice": 34694115112,
         "logs": [
           {
             "address": "0x4238c2e2e9e387b6feb23acbb81b3b6dea648b8d",
@@ -2757,6 +2861,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 34000000000,
         "status": null
       },
       "gasUsed": 21000
@@ -2779,6 +2884,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 457319,
+        "effectiveGasPrice": 32000000000,
         "logs": [
           {
             "address": "0x6090a6e47849629b7245dfa1ca21d94cd15878ef",
@@ -2822,6 +2928,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 29493,
+        "effectiveGasPrice": 31000000000,
         "logs": [
           {
             "address": "0x8d12a197cb00d4747a1fe03395095ce2a5cc6819",
@@ -2854,6 +2961,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 51870,
+        "effectiveGasPrice": 31000000000,
         "logs": [
           {
             "address": "0xb2f6ebe8e606e7b18c78b19a3c5969618fa599da",
@@ -2897,6 +3005,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 74180,
+        "effectiveGasPrice": 30000000000,
         "logs": [
           {
             "address": "0xa36ae0f959046a18d109dc5b1fb8df655cf0aa81",
@@ -2929,6 +3038,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 30000000000,
         "status": null
       },
       "gasUsed": 21000
@@ -2951,6 +3061,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 52579,
+        "effectiveGasPrice": 30000000000,
         "logs": [
           {
             "address": "0x96a65609a7b84e8842732deb08f56c3e21ac6f8a",
@@ -2985,6 +3096,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 48104,
+        "effectiveGasPrice": 30000000000,
         "logs": [
           {
             "address": "0x0e0989b1f9b8a38983c2ba8053269ca62ec9b195",
@@ -3027,6 +3139,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 30000000000,
         "status": null
       },
       "gasUsed": 21000
@@ -3049,6 +3162,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 30000000000,
         "status": null
       },
       "gasUsed": 21000
@@ -3071,6 +3185,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 30000000000,
         "status": null
       },
       "gasUsed": 21000
@@ -3093,6 +3208,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 67656,
+        "effectiveGasPrice": 28000000000,
         "logs": [
           {
             "address": "0x1522900b6dafac587d499a862861c0869be6e428",
@@ -3125,6 +3241,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 37158,
+        "effectiveGasPrice": 25000000000,
         "logs": [
           {
             "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
@@ -3159,6 +3276,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 25000000000,
         "status": null
       },
       "gasUsed": 21000
@@ -3181,6 +3299,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 93306,
+        "effectiveGasPrice": 25000000000,
         "logs": [
           {
             "address": "0x8d12a197cb00d4747a1fe03395095ce2a5cc6819",
@@ -3213,6 +3332,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 215396,
+        "effectiveGasPrice": 24000000000,
         "logs": [
           {
             "address": "0x3aa5fa4fbf18d19548680a5f2bba061b18fed26b",
@@ -3309,6 +3429,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21051,
+        "effectiveGasPrice": 24000000000,
         "status": null
       },
       "gasUsed": 21051
@@ -3331,6 +3452,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 71601,
+        "effectiveGasPrice": 22000001337,
         "logs": [
           {
             "address": "0xf09335e20895a8f3247fade84339f189477a8ad0",
@@ -3380,6 +3502,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 25663,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0xaf4dce16da2877f8c9e00544c93b62ac40631f16",
@@ -3414,6 +3537,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21728,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x93e682107d1e9defb0b5ee701c71707a4b2e46bc",
@@ -3448,6 +3572,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21792,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x93e682107d1e9defb0b5ee701c71707a4b2e46bc",
@@ -3482,6 +3607,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21856,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x93e682107d1e9defb0b5ee701c71707a4b2e46bc",
@@ -3516,6 +3642,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21792,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x93e682107d1e9defb0b5ee701c71707a4b2e46bc",
@@ -3550,6 +3677,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21856,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x93e682107d1e9defb0b5ee701c71707a4b2e46bc",
@@ -3584,6 +3712,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21856,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x93e682107d1e9defb0b5ee701c71707a4b2e46bc",
@@ -3618,6 +3747,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21792,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x93e682107d1e9defb0b5ee701c71707a4b2e46bc",
@@ -3652,6 +3782,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21856,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x93e682107d1e9defb0b5ee701c71707a4b2e46bc",
@@ -3686,6 +3817,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21856,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x93e682107d1e9defb0b5ee701c71707a4b2e46bc",
@@ -3720,6 +3852,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21856,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x93e682107d1e9defb0b5ee701c71707a4b2e46bc",
@@ -3754,6 +3887,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21856,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x93e682107d1e9defb0b5ee701c71707a4b2e46bc",
@@ -3788,6 +3922,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21856,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x93e682107d1e9defb0b5ee701c71707a4b2e46bc",
@@ -3822,6 +3957,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21856,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x93e682107d1e9defb0b5ee701c71707a4b2e46bc",
@@ -3856,6 +3992,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21856,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x93e682107d1e9defb0b5ee701c71707a4b2e46bc",
@@ -3890,6 +4027,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21792,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x93e682107d1e9defb0b5ee701c71707a4b2e46bc",
@@ -3924,6 +4062,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21856,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x93e682107d1e9defb0b5ee701c71707a4b2e46bc",
@@ -3958,6 +4097,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21792,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x93e682107d1e9defb0b5ee701c71707a4b2e46bc",
@@ -3992,6 +4132,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21856,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x93e682107d1e9defb0b5ee701c71707a4b2e46bc",
@@ -4026,6 +4167,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21792,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x93e682107d1e9defb0b5ee701c71707a4b2e46bc",
@@ -4060,6 +4202,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21856,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x93e682107d1e9defb0b5ee701c71707a4b2e46bc",
@@ -4094,6 +4237,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21856,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x93e682107d1e9defb0b5ee701c71707a4b2e46bc",
@@ -4128,6 +4272,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 51728,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x93e682107d1e9defb0b5ee701c71707a4b2e46bc",
@@ -4162,6 +4307,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21856,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x93e682107d1e9defb0b5ee701c71707a4b2e46bc",
@@ -4196,6 +4342,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21856,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x93e682107d1e9defb0b5ee701c71707a4b2e46bc",
@@ -4230,6 +4377,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21856,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x93e682107d1e9defb0b5ee701c71707a4b2e46bc",
@@ -4264,6 +4412,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21856,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x93e682107d1e9defb0b5ee701c71707a4b2e46bc",
@@ -4298,6 +4447,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21792,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x93e682107d1e9defb0b5ee701c71707a4b2e46bc",
@@ -4332,6 +4482,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21856,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x93e682107d1e9defb0b5ee701c71707a4b2e46bc",
@@ -4366,6 +4517,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21792,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x93e682107d1e9defb0b5ee701c71707a4b2e46bc",
@@ -4400,6 +4552,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21856,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x93e682107d1e9defb0b5ee701c71707a4b2e46bc",
@@ -4434,6 +4587,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 73457,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x459f7854776ed005b6ec63a88f834fdab0b6993e",
@@ -4468,6 +4622,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21792,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x93e682107d1e9defb0b5ee701c71707a4b2e46bc",
@@ -4502,6 +4657,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 95748,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0xea610b1153477720748dc13ed378003941d84fab",
@@ -4545,6 +4701,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21856,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x93e682107d1e9defb0b5ee701c71707a4b2e46bc",
@@ -4579,6 +4736,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21856,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x93e682107d1e9defb0b5ee701c71707a4b2e46bc",
@@ -4613,6 +4771,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 52292,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x5ca9a71b1d01849c0a95490cc00559717fcf0d1d",
@@ -4647,6 +4806,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21856,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x93e682107d1e9defb0b5ee701c71707a4b2e46bc",
@@ -4681,6 +4841,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21856,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x93e682107d1e9defb0b5ee701c71707a4b2e46bc",
@@ -4715,6 +4876,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 137126,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0xf13f1023cfd796ff7909e770a8ddb12d33cadc08",
@@ -4767,6 +4929,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21856,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x93e682107d1e9defb0b5ee701c71707a4b2e46bc",
@@ -4801,6 +4964,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21792,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x93e682107d1e9defb0b5ee701c71707a4b2e46bc",
@@ -4835,6 +4999,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21856,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x93e682107d1e9defb0b5ee701c71707a4b2e46bc",
@@ -4869,6 +5034,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 21000000000,
         "status": null
       },
       "gasUsed": 21000
@@ -4891,6 +5057,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21856,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x93e682107d1e9defb0b5ee701c71707a4b2e46bc",
@@ -4925,6 +5092,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 21000000000,
         "status": null
       },
       "gasUsed": 21000
@@ -4947,6 +5115,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21856,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x93e682107d1e9defb0b5ee701c71707a4b2e46bc",
@@ -4981,6 +5150,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 21000000000,
         "status": null
       },
       "gasUsed": 21000
@@ -5003,6 +5173,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21792,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x93e682107d1e9defb0b5ee701c71707a4b2e46bc",
@@ -5037,6 +5208,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 21000000000,
         "status": null
       },
       "gasUsed": 21000
@@ -5059,6 +5231,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 21000000000,
         "status": null
       },
       "gasUsed": 21000
@@ -5081,6 +5254,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21856,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x93e682107d1e9defb0b5ee701c71707a4b2e46bc",
@@ -5115,6 +5289,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21792,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x93e682107d1e9defb0b5ee701c71707a4b2e46bc",
@@ -5149,6 +5324,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21792,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x93e682107d1e9defb0b5ee701c71707a4b2e46bc",
@@ -5183,6 +5359,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 21000000000,
         "status": null
       },
       "gasUsed": 21000
@@ -5205,6 +5382,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 21000000000,
         "status": null
       },
       "gasUsed": 21000
@@ -5227,6 +5405,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 36737,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x8f3470a7388c05ee4e7af3d01d8c722b0ff52374",
@@ -5261,6 +5440,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21856,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x93e682107d1e9defb0b5ee701c71707a4b2e46bc",
@@ -5295,6 +5475,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21856,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x93e682107d1e9defb0b5ee701c71707a4b2e46bc",
@@ -5329,6 +5510,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 21000000000,
         "status": null
       },
       "gasUsed": 21000
@@ -5351,6 +5533,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 21000000000,
         "status": null
       },
       "gasUsed": 21000
@@ -5373,6 +5556,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21792,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x93e682107d1e9defb0b5ee701c71707a4b2e46bc",
@@ -5407,6 +5591,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21792,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x93e682107d1e9defb0b5ee701c71707a4b2e46bc",
@@ -5441,6 +5626,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21792,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x93e682107d1e9defb0b5ee701c71707a4b2e46bc",
@@ -5475,6 +5661,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21856,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x93e682107d1e9defb0b5ee701c71707a4b2e46bc",
@@ -5509,6 +5696,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21792,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x93e682107d1e9defb0b5ee701c71707a4b2e46bc",
@@ -5543,6 +5731,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21856,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x93e682107d1e9defb0b5ee701c71707a4b2e46bc",
@@ -5577,6 +5766,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 21000000000,
         "status": null
       },
       "gasUsed": 21000
@@ -5599,6 +5789,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21856,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x93e682107d1e9defb0b5ee701c71707a4b2e46bc",
@@ -5633,6 +5824,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 21000000000,
         "status": null
       },
       "gasUsed": 21000
@@ -5655,6 +5847,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 21000000000,
         "status": null
       },
       "gasUsed": 21000
@@ -5677,6 +5870,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 21000000000,
         "status": null
       },
       "gasUsed": 21000
@@ -5699,6 +5893,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 21000000000,
         "status": null
       },
       "gasUsed": 21000
@@ -5721,6 +5916,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 21000000000,
         "status": null
       },
       "gasUsed": 21000
@@ -5743,6 +5939,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 21000,
+        "effectiveGasPrice": 21000000000,
         "status": null
       },
       "gasUsed": 21000
@@ -5765,6 +5962,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 162202,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x9214ec02cb71cba0ada6896b8da260736a67ab10",
@@ -5817,6 +6015,7 @@ tests/blocks.json
       "receipt": {
         "contractAddress": "0x0",
         "gasUsed": 39512,
+        "effectiveGasPrice": 21000000000,
         "logs": [
           {
             "address": "0x209c4784ab1e8183cf58ca33cb740efbf3fc18ef",
