@@ -109,7 +109,7 @@ bool COptions::processEditCommand(CStringArray& terms, bool to_custom, bool auto
     }
     setenv("TEST_MODE", testMode.c_str(), true);
 
-    if (autoname && target.name != target.address) {
+    if (!autoname || target.name != target.address) {
         // We don't want to write this 'not found on chain' fact to the database
         string_q dest = to_custom ? configPath("names/names_custom.tab") : configPath("names/names.tab");
         stringToAsciiFile(dest, dataStream2.str());
