@@ -690,7 +690,7 @@
     "first_block": "0xdeadbeef",
     "last_block": "0xdeadbeef",
     "accountedFor": {
-      "tags": "32-Kickback:Friends",
+      "tags": "90-Individuals:Kickback",
       "address": "0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3",
       "name": "Name 0xff9387a9",
       "symbol": "",

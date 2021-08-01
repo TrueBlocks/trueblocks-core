@@ -3,6 +3,7 @@ ethNames etwork --fmt txt
 tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x04c62019ab478bff5874e7b7d9bc84fcf7e30025	POA Network: MultiSig
 31-Gitcoin Grants:Grant	0x067f2bef6a1f929544253b9fb95f99bae77b2518	Grant 1753 Resetdao ― Web 3.0 Programmable Social Network
+50-Tokens:ERC20	0x069d653038db2f9d84e9620be140b3d404a40258	Jarvis network Smart Relay Token	JRTBNT		18
 50-Tokens:ERC20	0x07147220fa6c06295464d695e4ec012f6aebc275	Super Module Network One	SMN1		18
 50-Tokens:ERC20	0x08f5a9235b08173b7569f83645d2c7fb55e8ccd8	Tierion Network Token	TNT		8
 50-Tokens:ERC20	0x0a913bead80f321e7ac35285ee10d9d922659cb7	DOS Network Token	DOS		18
@@ -65,7 +66,7 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0xa4ea687a2a7f29cf2dc66b39c68e4411c0d00c49	IvyKoin Public Network Tokens	IVY		18
 50-Tokens:ERC20	0xa5fd1a791c4dfcaacc963d4f73c6ae5824149ea7	Jibrel Network Token	JNT		18
 50-Tokens:ERC20	0xa74476443119a942de498590fe1f2454d7d4ac0d	Golem Network Token	GNT		18
-51-Tokens:ERC721	0xade00c28244d5ce17d72e40330b1c318cd12b7c3	AdEx Network	ADX		18
+50-Tokens:ERC721	0xade00c28244d5ce17d72e40330b1c318cd12b7c3	AdEx Network	ADX		18
 30-Contracts:Kyber Network	0xb0d27b025d5f79f955fa37cd3170b998661abff3	Kyber Orderbook Reserve
 31-Gitcoin Grants:Grant	0xb101f7893738e34e5333ba1e385ebe6cd65bf1ef	Grant 1096 Pareto Network - Financial Content Marketplace
 31-Gitcoin Grants:Grant	0xb1f6ddaafce638c21a56b0b2216e796ec9ca428e	Grant 0073 Poa Network Community Management Grant for Aly

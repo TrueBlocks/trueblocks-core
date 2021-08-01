@@ -4,16 +4,20 @@
     "decimals": 0
   },
   {
-    "address": "0x68821f2943a218f7dfa9c4b1c788f007940fc2f3",
+    "address": "0x1a88c052fc7a8401e00b2f76f96ac62a19427731",
     "decimals": 0
   },
   {
-    "address": "0x7cb57b5a97eabe94205c07890be4c1ad31e486a8",
+    "address": "0x68821f2943a218f7dfa9c4b1c788f007940fc2f3",
     "decimals": 0
   },
   {
     "address": "0x94ca37d108e89775dc8ae65f51ae28c2d9599f9a",
     "decimals": 9
+  },
+  {
+    "address": "0xe7f06e64e0d04c6cfedf7e9079d56d0fb7200a2e",
+    "decimals": 0
   },
   {
     "address": "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359",

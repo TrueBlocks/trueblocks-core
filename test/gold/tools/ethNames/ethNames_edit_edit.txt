@@ -7,8 +7,8 @@ TB_NAME_NAME = [NAME_CHANGED]
 TB_NAME_SOURCE = [SOURCE_CHANGED]
 TB_NAME_SYMBOL = [SYMBOL_CHANGED]
 TB_NAME_TAG = [TAGS_CHANGED]
-TIME ~ CLOCK - <INFO>  : Cleaning 0x0000000000000000000000000000000010101010                                  ---------------------------------------------
-{
+TIME ~ CLOCK - <INFO>  : Cleaning 0x0000000000000000000000000000000010101010                                  TIME ~ CLOCK - <INFO>  : ---------------------------------------------
+TIME ~ CLOCK - <INFO>  : {
   "tags": "TAGS_CHANGED",
   "address": "0x0000000000000000000000000000000010101010",
   "name": "NAME_CHANGED",
@@ -18,8 +18,7 @@ TIME ~ CLOCK - <INFO>  : Cleaning 0x0000000000000000000000000000000010101010    
   "description": "DESCRIPTION_CHANGED",
   "is_erc20": true
 }
-
----------------------------------------------
+TIME ~ CLOCK - <INFO>  : ---------------------------------------------
 TIME ~ CLOCK - : 4-----Editing 0x0000000000000000000000000000000010101010
 TIME ~ CLOCK - : 4-----Finished sorting...
 TIME ~ CLOCK - : 4-----Finished writing...

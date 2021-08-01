@@ -4,49 +4,49 @@
       "blockNumber": 36,
       "transactionIndex": 99999,
       "address": "0xbb7b8287f3f0a933474a79eae42cbca977791171",
-      "name": "MinerBlk25"
+      "name": "Miner_025_000"
     },
     {
       "blockNumber": 40,
       "transactionIndex": 99999,
       "address": "0xbb7b8287f3f0a933474a79eae42cbca977791171",
-      "name": "MinerBlk25"
+      "name": "Miner_025_000"
     },
     {
       "blockNumber": 44,
       "transactionIndex": 99999,
       "address": "0xbb7b8287f3f0a933474a79eae42cbca977791171",
-      "name": "MinerBlk25"
+      "name": "Miner_025_000"
     },
     {
       "blockNumber": 50,
       "transactionIndex": 99999,
       "address": "0xbb7b8287f3f0a933474a79eae42cbca977791171",
-      "name": "MinerBlk25"
+      "name": "Miner_025_000"
     },
     {
       "blockNumber": 55,
       "transactionIndex": 99999,
       "address": "0xbb7b8287f3f0a933474a79eae42cbca977791171",
-      "name": "MinerBlk25"
+      "name": "Miner_025_000"
     },
     {
       "blockNumber": 58,
       "transactionIndex": 99999,
       "address": "0xbb7b8287f3f0a933474a79eae42cbca977791171",
-      "name": "MinerBlk25"
+      "name": "Miner_025_000"
     },
     {
       "blockNumber": 59,
       "transactionIndex": 99999,
       "address": "0xbb7b8287f3f0a933474a79eae42cbca977791171",
-      "name": "MinerBlk25"
+      "name": "Miner_025_000"
     },
     {
       "blockNumber": 60,
       "transactionIndex": 99999,
       "address": "0xbb7b8287f3f0a933474a79eae42cbca977791171",
-      "name": "MinerBlk25"
+      "name": "Miner_025_000"
     }
   ],
   "types": [
@@ -85,11 +85,11 @@
     "first_block": "0xdeadbeef",
     "last_block": "0xdeadbeef",
     "accountedFor": {
-      "tags": "75-Early Actors",
+      "tags": "91-Early:Miners",
       "address": "0xbb7b8287f3f0a933474a79eae42cbca977791171",
-      "name": "MinerBlk25",
+      "name": "Miner_025_000",
       "symbol": "",
-      "source": "EtherScan.io",
+      "source": "",
       "decimals": 0,
       "description": "",
       "is_custom": false,

@@ -7,8 +7,8 @@ TB_NAME_NAME = [NAME]
 TB_NAME_SOURCE = [SOURCE]
 TB_NAME_SYMBOL = [SYMBOL]
 TB_NAME_TAG = [TAGS]
-TIME ~ CLOCK - <INFO>  : Cleaning 0x0000000000000000000000000000000010101010                                  ---------------------------------------------
-{
+TIME ~ CLOCK - <INFO>  : Cleaning 0x0000000000000000000000000000000010101010                                  TIME ~ CLOCK - <INFO>  : ---------------------------------------------
+TIME ~ CLOCK - <INFO>  : {
   "tags": "TAGS",
   "address": "0x0000000000000000000000000000000010101010",
   "name": "NAME",
@@ -18,8 +18,7 @@ TIME ~ CLOCK - <INFO>  : Cleaning 0x0000000000000000000000000000000010101010    
   "description": "DESCRIPTION",
   "is_erc20": true
 }
-
----------------------------------------------
+TIME ~ CLOCK - <INFO>  : ---------------------------------------------
 TIME ~ CLOCK - : 4-----Creating 0x0000000000000000000000000000000010101010
 TIME ~ CLOCK - : 4-----Finished sorting...
 TIME ~ CLOCK - : 4-----Finished writing...

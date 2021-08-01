@@ -60,6 +60,7 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x02f2d4a04e6e01ace88bd2cd632875543b2ef577	PKG Token	PKG		18
 50-Tokens:ERC20	0x02f61fd266da6e8b102d4121f5ce7b992640cf98	LikeCoin	LIKE		18
 50-Tokens:ERC20	0x0306e522cefd3cdc3ce63a60686eb1a0c0e6f467	Akita Doge	ADOGE		18
+50-Tokens:ERC20	0x030ba81f1c18d280636f32af80b9aad02cf0854e	Aave interest bearing WETH	aWETH		18
 50-Tokens:ERC20	0x032dd2a3c6d234aa9620d65eb618fcdc72be3dbb	HashDemons	HASHDEMONS		18
 50-Tokens:ERC20	0x033030feebd93e3178487c35a9c8ca80874353c9	BDT Token	BDT		18
 50-Tokens:ERC20	0x03552d005d0f4262bf2d85fa2a3263541d4059c1	Miller Real Estate Holdings	RENT		6
@@ -80,6 +81,7 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x045e507925d2e05d114534d0810a1abd94aca8d6	Synthetix: L2 Bridge
 50-Tokens:ERC20	0x0488401c3f535193fa8df029d9ffe615a06e74e6	SparkPoint	SRK		18
 50-Tokens:ERC20	0x049399a6b048d52971f7d122ae21a1532722285f	Fire Lotto	FLOT		18
+50-Tokens:ERC20	0x04969cd041c0cafb6ac462bd65b536a5bdb3a670	Wrapped OMI Token	wOMI		18
 50-Tokens:ERC20	0x04a020325024f130988782bd5276e53595e8d16e	Herbalist Token	HERB		8
 50-Tokens:ERC20	0x04ad70466a79dd1251f22ad426248088724ff32b	Time-Honored Brand Chain	THBC		4
 50-Tokens:ERC20	0x04c62019ab478bff5874e7b7d9bc84fcf7e30025	POA Network: MultiSig
@@ -112,6 +114,7 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x066f2d5ead7951f0d0038c19affd500b9f02c0e5	CryptoJanky	JNK		18
 50-Tokens:ERC20	0x0685807d7e1c4b77902aaefcb9d021c4e7fb7018	fbsex.co	fbsex.co		18
 50-Tokens:ERC20	0x0693c3a780a0a757e803a4bd76bcf43d438f8806	Zeenus 💪	ZEENUS		18
+50-Tokens:ERC20	0x069d653038db2f9d84e9620be140b3d404a40258	Jarvis network Smart Relay Token	JRTBNT		18
 50-Tokens:ERC20	0x06a2cf3f024d8871baedd0f7bd9340001aada574	SingularDTV Sender 2
 50-Tokens:ERC20	0x06a9e669167cd679a3af6724e1871f7d7caa8b2e	Moonday Shiba	MOSHIBA		18
 50-Tokens:ERC20	0x06af07097c9eeb7fd685c692751d5c66db49c215	Chai	CHAI		18
@@ -202,6 +205,3 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x0c17398ebbcb15078f2ad2c67a26d10623957b21	SONTOKEN	SON		18
 50-Tokens:ERC20	0x0c30f5715b00feff6fa8953f7d74b781f5c0f7da	Ethereum Hyper	ETHH		18
 50-Tokens:ERC20	0x0c334506e0bcb7c17b583cb7c0ec2f5857bf9e6f	Public Goods	PUBG		18
-50-Tokens:ERC20	0x0c4a8b983ec9662ef334323237e72a0978d9cddb	Ethereum Apple	ETHA 🍏		18
-50-Tokens:ERC20	0x0c6e8a8358cbde54f8e4cd7f07d5ac38aec8c5a4	PlatonCoin	PLTC		18
-50-Tokens:ERC20	0x0c749474ecd356cb399d87eb60fd078368d24d4c	SHIBA INU GOLD	SHIBG		18

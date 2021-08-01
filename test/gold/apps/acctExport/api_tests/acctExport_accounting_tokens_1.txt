@@ -8230,37 +8230,37 @@
         "count": 1
       },
       "0x0b16f058257f43db6ec84a7b3c77766cb808face": {
-        "tags": "31-Gitcoin Grants:Friends",
+        "tags": "90-Individuals:Gitcoin Grants",
         "name": "Name 0x0b16f058",
         "count": 1
       },
       "0x3564e17d5f6b7c9a3c6bd6248bf7b3eeb4927e50": {
-        "tags": "31-Gitcoin Grants:Friends",
+        "tags": "90-Individuals:Gitcoin Grants",
         "name": "Name 0x3564e17d",
         "count": 1
       },
       "0x3a051cff039d0ea6964c0f9f01db6e61cc521748": {
-        "tags": "31-Gitcoin Grants:Friends",
+        "tags": "90-Individuals:Gitcoin Grants",
         "name": "Name 0x3a051cff",
         "count": 1
       },
       "0x4535c6045343de2a1f307b00cae54ba1b42d904c": {
-        "tags": "31-Gitcoin Grants:Friends",
+        "tags": "90-Individuals:Gitcoin Grants",
         "name": "Name 0x4535c604",
         "count": 1
       },
       "0x4f1b01b761fc9347d5844c49abed5a235d34569e": {
-        "tags": "31-Gitcoin Grants:Friends",
+        "tags": "90-Individuals:Gitcoin Grants",
         "name": "Name 0x4f1b01b7",
         "count": 1
       },
       "0x5b93ff82faaf241c15997ea3975419dddd8362c5": {
-        "tags": "31-Gitcoin Grants:Friends",
+        "tags": "90-Individuals:Gitcoin Grants",
         "name": "Name 0x5b93ff82",
         "count": 1
       },
       "0x5ca323d77930c84524e9b06b20c5027ec4e54480": {
-        "tags": "31-Gitcoin Grants:Friends",
+        "tags": "90-Individuals:Gitcoin Grants",
         "name": "Name 0x5ca323d7",
         "count": 1
       },
@@ -8275,12 +8275,12 @@
         "count": 1
       },
       "0x89c65d0759a25ca4b4ae0fd1b4827d00018dc931": {
-        "tags": "31-Gitcoin Grants:Friends",
+        "tags": "90-Individuals:Gitcoin Grants",
         "name": "Name 0x89c65d07",
         "count": 1
       },
       "0xc8d61e23839794b162da78a5c927fd7b2cd92055": {
-        "tags": "31-Gitcoin Grants:Friends",
+        "tags": "90-Individuals:Gitcoin Grants",
         "name": "Name 0xc8d61e23",
         "count": 1
       }

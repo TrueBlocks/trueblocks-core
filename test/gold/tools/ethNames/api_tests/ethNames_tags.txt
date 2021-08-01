@@ -4,6 +4,21 @@
       "tags": "30-Contracts"
     },
     {
+      "tags": "30-Contracts:Balancer"
+    },
+    {
+      "tags": "30-Contracts:Chainlink"
+    },
+    {
+      "tags": "30-Contracts:Compound"
+    },
+    {
+      "tags": "30-Contracts:Consensys"
+    },
+    {
+      "tags": "30-Contracts:DAO Related"
+    },
+    {
       "tags": "30-Contracts:Giveth"
     },
     {
@@ -14,6 +29,9 @@
     },
     {
       "tags": "30-Contracts:Pasta"
+    },
+    {
+      "tags": "30-Contracts:Pool Together"
     },
     {
       "tags": "30-Contracts:Set Protocol"
@@ -34,31 +52,10 @@
       "tags": "31-Gitcoin Grants:Core"
     },
     {
-      "tags": "31-Gitcoin Grants:Friends"
-    },
-    {
       "tags": "31-Gitcoin Grants:Grant"
     },
     {
       "tags": "34-ENS"
-    },
-    {
-      "tags": "34-Twitter:Friends"
-    },
-    {
-      "tags": "35-Pool Together"
-    },
-    {
-      "tags": "35-TheCyber:Friends"
-    },
-    {
-      "tags": "36-Balancer"
-    },
-    {
-      "tags": "36-Chainlink"
-    },
-    {
-      "tags": "36-Compound"
     },
     {
       "tags": "39-Yearn"
@@ -67,13 +64,10 @@
       "tags": "40-Exchanges"
     },
     {
-      "tags": "40-Friends"
-    },
-    {
       "tags": "50-Tokens:ERC20"
     },
     {
-      "tags": "51-Tokens:ERC721"
+      "tags": "50-Tokens:ERC721"
     },
     {
       "tags": "55-Defi"
@@ -83,9 +77,6 @@
     },
     {
       "tags": "70-Vendors"
-    },
-    {
-      "tags": "75-Early Actors"
     },
     {
       "tags": "80-Malicious"
@@ -103,7 +94,34 @@
       "tags": "81-Custom"
     },
     {
-      "tags": "90-DevCon2:Individual"
+      "tags": "90-Individuals"
+    },
+    {
+      "tags": "90-Individuals:DAO Curators"
+    },
+    {
+      "tags": "90-Individuals:DAO Whales"
+    },
+    {
+      "tags": "90-Individuals:DevCon2"
+    },
+    {
+      "tags": "90-Individuals:Gitcoin Grants"
+    },
+    {
+      "tags": "90-Individuals:Other"
+    },
+    {
+      "tags": "90-Individuals:TheCyber"
+    },
+    {
+      "tags": "90-Individuals:Twitter"
+    },
+    {
+      "tags": "91-Early:Addresses"
+    },
+    {
+      "tags": "91-Early:Miners"
     },
     {
       "tags": "91-Known"

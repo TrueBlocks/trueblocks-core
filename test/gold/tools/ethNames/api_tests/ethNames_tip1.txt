@@ -10,20 +10,20 @@
       "description": ""
     },
     {
+      "tags": "30-Contracts:Giveth",
+      "address": "0x1a88c052fc7a8401e00b2f76f96ac62a19427731",
+      "name": "EtherIDTipJar",
+      "symbol": "",
+      "source": "Giveth Website",
+      "decimals": 0,
+      "description": ""
+    },
+    {
       "tags": "91-Known",
       "address": "0x68821f2943a218f7dfa9c4b1c788f007940fc2f3",
       "name": "psdev tip jar",
       "symbol": "",
       "source": "TrueBlocks.io",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "90-DevCon2:Individual",
-      "address": "0x7cb57b5a97eabe94205c07890be4c1ad31e486a8",
-      "name": "My Ethereum Wallet Tip Jar Taylor Van Orden",
-      "symbol": "",
-      "source": "Slack DevCon2 Token Contract",
       "decimals": 0,
       "description": ""
     },
@@ -34,6 +34,15 @@
       "symbol": "CRTS",
       "source": "On chain",
       "decimals": 9,
+      "description": ""
+    },
+    {
+      "tags": "91-Early:Addresses",
+      "address": "0xe7f06e64e0d04c6cfedf7e9079d56d0fb7200a2e",
+      "name": "Multiplyx10",
+      "symbol": "",
+      "source": "EtherScan.io",
+      "decimals": 0,
       "description": ""
     },
     {

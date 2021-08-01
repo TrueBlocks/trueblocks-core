@@ -2,7 +2,7 @@ ethNames argc: 4 [1:0x1] [2:--fmt] [3:api]
 ethNames 0x1 --fmt api 
 {"data": [
   {
-    "tags": "31-Gitcoin Grants:Friends",
+    "tags": "90-Individuals:Gitcoin Grants",
     "address": "0x10017ca37b1257ac0771e24652aa28c758e378eb",
     "name": "Name 0x10017ca3",
     "source": "Gitcoin Website"
@@ -16,13 +16,13 @@ ethNames 0x1 --fmt api
     "decimals": 18
   },
   {
-    "tags": "31-Gitcoin Grants:Friends",
+    "tags": "90-Individuals:Gitcoin Grants",
     "address": "0x100d88d9ca05b8159b2ecc6aeaad93c3742fa193",
     "name": "Name 0x100d88d9",
     "source": "Gitcoin Website"
   },
   {
-    "tags": "31-Gitcoin Grants:Friends",
+    "tags": "90-Individuals:Gitcoin Grants",
     "address": "0x1013b52a256dd531554fdd13178ea489ce0d691d",
     "name": "Name 0x1013b52a",
     "source": "Gitcoin Website"
@@ -36,7 +36,7 @@ ethNames 0x1 --fmt api
     "decimals": 8
   },
   {
-    "tags": "31-Gitcoin Grants:Friends",
+    "tags": "90-Individuals:Gitcoin Grants",
     "address": "0x1015f376319b48c16078339534fb9d83f75bf15c",
     "name": "Name 0x1015f376",
     "source": "Gitcoin Website"
@@ -137,7 +137,13 @@ ethNames 0x1 --fmt api
     "decimals": 18
   },
   {
-    "tags": "75-Early Actors",
+    "tags": "91-Early:Addresses",
+    "address": "0x1088f2cb8324a270c8d7e71083449a0722820d99",
+    "name": "@spaninv",
+    "source": "Steem"
+  },
+  {
+    "tags": "91-Early:Miners",
     "address": "0x108b54b7e3c09f8127cb8b28ffa3ad4001b32998",
     "name": "Miner_0086_64",
     "source": "OnChain"
@@ -163,6 +169,12 @@ ethNames 0x1 --fmt api
     "source": "https://gitcoin.co/grants/1830/the-augmented-reality-game-cryptolandy"
   },
   {
+    "tags": "30-Contracts:DAO Related",
+    "address": "0x10abb5efecdc09581f8b7cb95791fe2936790b4e",
+    "name": "DAO_id315_cnt602_1mo",
+    "source": "Ether Camp"
+  },
+  {
     "tags": "50-Tokens:ERC20",
     "address": "0x10b47177e92ef9d5c6059055d92ddf6290848991",
     "name": "SushiSwap LP Token",
@@ -179,7 +191,7 @@ ethNames 0x1 --fmt api
     "decimals": 18
   },
   {
-    "tags": "31-Gitcoin Grants:Friends",
+    "tags": "90-Individuals:Gitcoin Grants",
     "address": "0x10d1e0c359411f1f7af55a17add2891eacfbcd16",
     "name": "Name 0x10d1e0c3",
     "source": "Gitcoin Website"
@@ -213,7 +225,7 @@ ethNames 0x1 --fmt api
     "decimals": 18
   },
   {
-    "tags": "31-Gitcoin Grants:Friends",
+    "tags": "90-Individuals:Gitcoin Grants",
     "address": "0x10f5d45854e038071485ac9e402308cf80d2d2fe",
     "name": "Name 0x10f5d458",
     "source": "Gitcoin Website"
@@ -225,10 +237,22 @@ ethNames 0x1 --fmt api
     "source": "TrueBlocks.io"
   },
   {
-    "tags": "31-Gitcoin Grants:Friends",
+    "tags": "90-Individuals:Gitcoin Grants",
     "address": "0x110211c254e5c8098ffad524312b1dd4bc6aa616",
     "name": "Name 0x110211c2",
     "source": "Gitcoin Website"
+  },
+  {
+    "tags": "91-Early:Addresses",
+    "address": "0x1107bd232640434008b8ce1fd058837e141f754b",
+    "name": "EtherWheel_id45_cnt23_5mo",
+    "source": "Ether Camp"
+  },
+  {
+    "tags": "91-Early:Addresses",
+    "address": "0x110c11de11cce962604c28bb05bbc399cbaa7bda",
+    "name": "Dice",
+    "source": "EtherScan.io"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -278,9 +302,9 @@ ethNames 0x1 --fmt api
     "source": "EtherScan.io"
   },
   {
-    "tags": "90-DevCon2:Individual",
+    "tags": "90-Individuals:DevCon2",
     "address": "0x11378851299a15a849ad0057a834c23ef1b3d381",
-    "name": "tandava",
+    "name": "Name 0x11378851",
     "source": "DevCon2 Token Contract"
   },
   {
@@ -298,6 +322,12 @@ ethNames 0x1 --fmt api
     "decimals": 2
   },
   {
+    "tags": "90-Individuals:DAO Whales",
+    "address": "0x1179f203046b9d57e211da9e125973dd8d9f0d5e",
+    "name": "Name 0x1179f203",
+    "source": "WhaleWatch.io"
+  },
+  {
     "tags": "50-Tokens:ERC20",
     "address": "0x1183f92a5624d68e85ffb9170f16bf0443b4c242",
     "name": "QVT",
@@ -313,20 +343,26 @@ ethNames 0x1 --fmt api
     "source": "https://gitcoin.co/grants/675/legrandjeu-vr-bring-token-economics-gaming-to-the"
   },
   {
-    "tags": "34-Twitter:Friends",
+    "tags": "90-Individuals:Twitter",
     "address": "0x1187d6bff168fe8f17252396701147343adb8ddc",
     "name": "Name 0x1187d6bf",
     "source": "Twitter",
     "description": "Rao"
   },
   {
-    "tags": "90-DevCon2:Individual",
+    "tags": "90-Individuals:DevCon2",
     "address": "0x1191be4dbfac983c9ce87e3411542d69d382f7d6",
-    "name": "durandal",
+    "name": "Name 0x1191be4d",
     "source": "DevCon2 Token Contract"
   },
   {
-    "tags": "31-Gitcoin Grants:Friends",
+    "tags": "91-Early:Addresses",
+    "address": "0x1194e966965418c7d73a42cceeb254d875860356",
+    "name": "PriceFeed_id16_cnt11750_7mo",
+    "source": "Ether Camp"
+  },
+  {
+    "tags": "90-Individuals:Gitcoin Grants",
     "address": "0x11a11bcf63c332ab909608c7db245b553a194e9c",
     "name": "Name 0x11a11bcf",
     "source": "Gitcoin Website"
@@ -338,16 +374,22 @@ ethNames 0x1 --fmt api
     "source": "https://gitcoin.co/grants/1201/heroes-of-dystopia-mmorpg"
   },
   {
-    "tags": "31-Gitcoin Grants:Friends",
+    "tags": "90-Individuals:Gitcoin Grants",
     "address": "0x11b6a5fe2906f3354145613db0d99ceb51f604c9",
     "name": "Name 0x11b6a5fe",
     "source": "Gitcoin Website"
   },
   {
-    "tags": "31-Gitcoin Grants:Friends",
+    "tags": "90-Individuals:Gitcoin Grants",
     "address": "0x11d0395f8e04a02b113d5598e27c14731dbab48e",
     "name": "Name 0x11d0395f",
     "source": "Gitcoin Website"
+  },
+  {
+    "tags": "91-Early:Addresses",
+    "address": "0x11dba7d844cdaa106a9747a8512b6359eb612320",
+    "name": "@chang7",
+    "source": "Steem"
   },
   {
     "tags": "31-Gitcoin Grants:Grant",
@@ -393,7 +435,7 @@ ethNames 0x1 --fmt api
     "source": "0xTracker"
   },
   {
-    "tags": "31-Gitcoin Grants:Friends",
+    "tags": "90-Individuals:Gitcoin Grants",
     "address": "0x1206ec7abf2c3d22051f6ebb249f065fc6436149",
     "name": "Name 0x1206ec7a",
     "source": "Gitcoin Website"
@@ -405,19 +447,31 @@ ethNames 0x1 --fmt api
     "source": "https://gitcoin.co/grants/704/tumafare-social-payments-platform"
   },
   {
-    "tags": "31-Gitcoin Grants:Friends",
+    "tags": "91-Early:Addresses",
+    "address": "0x120a270bbc009644e35f0bb6ab13f95b8199c4ad",
+    "name": "Shapeshift 1",
+    "source": "CarbonVote"
+  },
+  {
+    "tags": "91-Early:Addresses",
+    "address": "0x1213c29b5e1a6f33e0d044f850a57b665e3cde21",
+    "name": "Littlecactus",
+    "source": "EtherScan.io"
+  },
+  {
+    "tags": "90-Individuals:Gitcoin Grants",
     "address": "0x1216bc366cfd938d24f89e2a079539f4d66062fb",
     "name": "Name 0x1216bc36",
     "source": "Gitcoin Website"
   },
   {
-    "tags": "75-Early Actors",
+    "tags": "91-Early:Miners",
     "address": "0x1217627fe41a00f0b828317f43e6d58f47dbfc43",
     "name": "Miner_0028_253",
     "source": "OnChain"
   },
   {
-    "tags": "31-Gitcoin Grants:Friends",
+    "tags": "90-Individuals:Gitcoin Grants",
     "address": "0x121851911b1d17b133c77801ab26fccd7e7c5053",
     "name": "Name 0x12185191",
     "source": "Gitcoin Website"
@@ -451,13 +505,13 @@ ethNames 0x1 --fmt api
     "decimals": 18
   },
   {
-    "tags": "31-Gitcoin Grants:Friends",
+    "tags": "90-Individuals:Gitcoin Grants",
     "address": "0x1236203510b93409ae6a0f26d0f97798c9398e1b",
     "name": "Name 0x12362035",
     "source": "Gitcoin Website"
   },
   {
-    "tags": "75-Early Actors",
+    "tags": "91-Early:Miners",
     "address": "0x123843545fb525c8e134c9a5f15ada6865cc3848",
     "name": "Miner_0033_208",
     "source": "OnChain"
@@ -528,7 +582,7 @@ ethNames 0x1 --fmt api
     "decimals": 18
   },
   {
-    "tags": "31-Gitcoin Grants:Friends",
+    "tags": "90-Individuals:Gitcoin Grants",
     "address": "0x1256e7992564ab22e332532472c916bd8d1e1ca7",
     "name": "Name 0x1256e799",
     "source": "Gitcoin Website"
@@ -549,9 +603,9 @@ ethNames 0x1 --fmt api
     "description": "https://etherdna.github.io/app/"
   },
   {
-    "tags": "90-DevCon2:Individual",
+    "tags": "90-Individuals:DevCon2",
     "address": "0x1267895780369b48a02781eb08d353e426e5f256",
-    "name": "nagydani",
+    "name": "Name 0x12678957",
     "source": "DevCon2 Token Contract"
   },
   {
@@ -570,6 +624,12 @@ ethNames 0x1 --fmt api
     "source": "On chain",
     "decimals": 18,
     "description": "Virtual social trading platform for equities and cryptocurrencies powered by proprietary AI engine"
+  },
+  {
+    "tags": "90-Individuals:DAO Curators",
+    "address": "0x127ac03acfad15f7a49dd037e52d5507260e1425",
+    "name": "Name 0x127ac03a",
+    "source": "DAO_Curator"
   },
   {
     "tags": "31-Gitcoin Grants:Grant",
@@ -609,6 +669,12 @@ ethNames 0x1 --fmt api
     "decimals": 18
   },
   {
+    "tags": "91-Early:Addresses",
+    "address": "0x1296d3bb6dc0efbae431a12939fc15b2823db79b",
+    "name": "KittenRegistry",
+    "source": "Ether Camp"
+  },
+  {
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x12a0e25e62c1dbd32e505446062b26aecb65f028",
     "name": "Grant 0473 Bbft Podcast Show",
@@ -623,15 +689,15 @@ ethNames 0x1 --fmt api
     "decimals": 18
   },
   {
-    "tags": "90-DevCon2:Individual",
+    "tags": "90-Individuals:DevCon2",
     "address": "0x12add8f3b37fe5fbecdb1208233c0e56dfecf200",
-    "name": "Stefan George",
+    "name": "Name 0x12add8f3",
     "source": "DevCon2 Token Contract"
   },
   {
-    "tags": "90-DevCon2:Individual",
+    "tags": "90-Individuals:DevCon2",
     "address": "0x12aef9585197d02106045de55f01c9c30301d70a",
-    "name": "Jirat",
+    "name": "Name 0x12aef958",
     "source": "DevCon2 Token Contract"
   },
   {
@@ -661,7 +727,7 @@ ethNames 0x1 --fmt api
     "decimals": 18
   },
   {
-    "tags": "31-Gitcoin Grants:Friends",
+    "tags": "90-Individuals:Gitcoin Grants",
     "address": "0x12d062b19a2df1920eb9fc28bd6e9a7e936de4c2",
     "name": "Name 0x12d062b1",
     "source": "Gitcoin Website"
@@ -695,7 +761,7 @@ ethNames 0x1 --fmt api
     "source": "0xTracker"
   },
   {
-    "tags": "31-Gitcoin Grants:Friends",
+    "tags": "90-Individuals:Gitcoin Grants",
     "address": "0x12e41855befd2fafe1b3fb15381fdf2c89f726a2",
     "name": "Name 0x12e41855",
     "source": "Gitcoin Website"
@@ -751,10 +817,28 @@ ethNames 0x1 --fmt api
     "source": "https://gitcoin.co/grants/711/furucombo-build-your-own-defi-legos-into-one-tran"
   },
   {
+    "tags": "91-Early:Addresses",
+    "address": "0x132efc245d5880ea0fa33439fb31d2c7970885e1",
+    "name": "Test Campaign 2",
+    "source": "Weifund Website"
+  },
+  {
+    "tags": "90-Individuals:DAO Whales",
+    "address": "0x13370bcff475ca6fcac2fc00ed3fbe02974217df",
+    "name": "Name 0x13370bcf",
+    "source": "WhaleWatch.io"
+  },
+  {
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x133d705a9696882228f6bb7fe008745aef7cdc93",
     "name": "Grant 0160 @antiprosynth | Antiprosynthesis.eth ⟠ Twitter Account Activity",
     "source": "https://gitcoin.co/grants/160/antiprosynth-antiprosynthesiseth-twitter-account-"
+  },
+  {
+    "tags": "91-Early:Addresses",
+    "address": "0x1342a001544b8b7ae4a5d374e33114c66d78bd5f",
+    "name": "GateCoin_Hack_1",
+    "source": "Ether Camp"
   },
   {
     "tags": "31-Gitcoin Grants:Grant",
@@ -791,8 +875,20 @@ ethNames 0x1 --fmt api
     "decimals": 18
   },
   {
+    "tags": "91-Early:Addresses",
+    "address": "0x1368e088682b3ea455c4856297365542ca6828d8",
+    "name": "Resetponzi",
+    "source": "EtherScan.io"
+  },
+  {
     "tags": "30-Contracts",
     "address": "0x136be5d2ecd8afdc0b860c3734eb5bb0d561aaf9"
+  },
+  {
+    "tags": "91-Early:Addresses",
+    "address": "0x136c84340fb340167f3c54d9c6ba24a82da7cd59",
+    "name": "MeterSlock_id76_cnt1_5mo",
+    "source": "Ether Camp"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -852,7 +948,7 @@ ethNames 0x1 --fmt api
     "description": "https://github.com/GetLoginEth/"
   },
   {
-    "tags": "31-Gitcoin Grants:Friends",
+    "tags": "90-Individuals:Gitcoin Grants",
     "address": "0x13a634d9a418d6db35f7ede7a59f909cd17f1c4d",
     "name": "Name 0x13a634d9",
     "source": "Gitcoin Website"
@@ -866,7 +962,7 @@ ethNames 0x1 --fmt api
     "decimals": 9
   },
   {
-    "tags": "31-Gitcoin Grants:Friends",
+    "tags": "90-Individuals:Gitcoin Grants",
     "address": "0x13ae506eadf0a43488ad3463270b4cf804e97bfd",
     "name": "Name 0x13ae506e",
     "source": "Gitcoin Website"
@@ -903,7 +999,7 @@ ethNames 0x1 --fmt api
     "decimals": 18
   },
   {
-    "tags": "31-Gitcoin Grants:Friends",
+    "tags": "90-Individuals:Gitcoin Grants",
     "address": "0x13ebd3443fa5575f0eb173e323d8419f7452cfb1",
     "name": "Name 0x13ebd344",
     "source": "Gitcoin Website"
@@ -982,7 +1078,7 @@ ethNames 0x1 --fmt api
     "decimals": 9
   },
   {
-    "tags": "35-Pool Together",
+    "tags": "30-Contracts:Pool Together",
     "address": "0x14300cd613d6a719ac19de68c2f1042b3217cbff",
     "name": "Pool Together Sender",
     "source": "EtherScan.io"
@@ -1012,7 +1108,13 @@ ethNames 0x1 --fmt api
     "decimals": 18
   },
   {
-    "tags": "31-Gitcoin Grants:Friends",
+    "tags": "91-Early:Addresses",
+    "address": "0x144bf2bbc61a5ae867d7e1fd603015df7f6d4fb6",
+    "name": "Coinfliplotto",
+    "source": "EtherScan.io"
+  },
+  {
+    "tags": "90-Individuals:Gitcoin Grants",
     "address": "0x144c4e5027b69f7798b2b162d924bcae5c149f15",
     "name": "Name 0x144c4e50",
     "source": "Gitcoin Website"
@@ -1026,6 +1128,12 @@ ethNames 0x1 --fmt api
     "decimals": 18
   },
   {
+    "tags": "91-Early:Addresses",
+    "address": "0x145c423bf6155b085aaa881cbbffd72397e38e34",
+    "name": "Test Refund Campaign",
+    "source": "Weifund Website"
+  },
+  {
     "tags": "50-Tokens:ERC20",
     "address": "0x1460a58096d80a50a2f1f956dda497611fa4f165",
     "name": "Chainium",
@@ -1035,7 +1143,7 @@ ethNames 0x1 --fmt api
     "description": "Own formerly Chainium is a security token blockchain project focused on revolutionising equity markets."
   },
   {
-    "tags": "31-Gitcoin Grants:Friends",
+    "tags": "90-Individuals:Gitcoin Grants",
     "address": "0x1464d4e3c815de3028572b850c6c34dfc57e9320",
     "name": "Name 0x1464d4e3",
     "source": "Gitcoin Website"
@@ -1050,9 +1158,9 @@ ethNames 0x1 --fmt api
     "description": "MIB coin is a Mobile Mining based Blockchain that has constructed an ecosystem that minimizes the maintenance of Blockchain Network."
   },
   {
-    "tags": "90-DevCon2:Individual",
+    "tags": "90-Individuals:DevCon2",
     "address": "0x147454510acc3856bc5d1727715c2efff526de5d",
-    "name": "scofield",
+    "name": "Name 0x14745451",
     "source": "DevCon2 Token Contract"
   },
   {
@@ -1071,7 +1179,13 @@ ethNames 0x1 --fmt api
     "decimals": 18
   },
   {
-    "tags": "31-Gitcoin Grants:Friends",
+    "tags": "91-Early:Addresses",
+    "address": "0x1482662691085c305f329c111e5b79ecb226ceb8",
+    "name": "Wallet_id177_cnt8_3mo",
+    "source": "Ether Camp"
+  },
+  {
+    "tags": "90-Individuals:Gitcoin Grants",
     "address": "0x14869c6bf40bbc73e45821f7c28fd792151b3f9a",
     "name": "Name 0x14869c6b",
     "source": "Gitcoin Website"
@@ -1081,6 +1195,12 @@ ethNames 0x1 --fmt api
     "address": "0x1492004547ff0efd778cc2c14e794b26b4701105",
     "name": "Jin's Wallet",
     "source": "TrueBlocks.io"
+  },
+  {
+    "tags": "91-Early:Addresses",
+    "address": "0x1492cdd605d91658f228eab14d8444b60e6da8df",
+    "name": "Thewhalegame",
+    "source": "EtherScan.io"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -1116,7 +1236,7 @@ ethNames 0x1 --fmt api
     "decimals": 9
   },
   {
-    "tags": "31-Gitcoin Grants:Friends",
+    "tags": "90-Individuals:Gitcoin Grants",
     "address": "0x14d5c73c8b0044e0fa29f5a755eb75aa2471d414",
     "name": "Name 0x14d5c73c",
     "source": "Gitcoin Website"
@@ -1164,9 +1284,9 @@ ethNames 0x1 --fmt api
     "source": "https://gitcoin.co/grants/1691/b4h-awards-2020"
   },
   {
-    "tags": "90-DevCon2:Individual",
+    "tags": "90-Individuals:DevCon2",
     "address": "0x150eeb84541af87fc80f15f740e4ee4e7a8da573",
-    "name": "Stephen King",
+    "name": "Name 0x150eeb84",
     "source": "DevCon2 Token Contract"
   },
   {
@@ -1186,7 +1306,7 @@ ethNames 0x1 --fmt api
     "decimals": 9
   },
   {
-    "tags": "36-Chainlink",
+    "tags": "30-Contracts:Chainlink",
     "address": "0x151445852b0cfdf6a4cc81440f2af99176e8ad08",
     "name": "Chainlink GBP-USD Aggregator",
     "source": "EtherScan.io"
@@ -1208,9 +1328,9 @@ ethNames 0x1 --fmt api
     "decimals": 18
   },
   {
-    "tags": "90-DevCon2:Individual",
+    "tags": "90-Individuals:DevCon2",
     "address": "0x153195e211e1f751f8adef169d281b3ccf6b968a",
-    "name": "d2friend",
+    "name": "Name 0x153195e2",
     "source": "DevCon2 Token Contract"
   },
   {
@@ -1229,6 +1349,12 @@ ethNames 0x1 --fmt api
     "symbol": "YYF",
     "source": "On chain",
     "decimals": 18
+  },
+  {
+    "tags": "91-Early:Addresses",
+    "address": "0x155999f23ba40f22b24863d9c21cd8b9ab192cc9",
+    "name": "Crypted_Rps",
+    "source": "EtherScan.io"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -1269,7 +1395,7 @@ ethNames 0x1 --fmt api
     "decimals": 18
   },
   {
-    "tags": "36-Compound",
+    "tags": "30-Contracts:Compound",
     "address": "0x158079ee67fce2f58472a96584a73c7ab9ac95c1",
     "name": "Compound Augur",
     "symbol": "cREP",
@@ -1277,161 +1403,10 @@ ethNames 0x1 --fmt api
     "decimals": 8
   },
   {
-    "tags": "31-Gitcoin Grants:Friends",
+    "tags": "90-Individuals:Gitcoin Grants",
     "address": "0x1584225583e707e2b1d61270a6aa249d57db9f9a",
     "name": "Name 0x15842255",
     "source": "Gitcoin Website"
-  },
-  {
-    "tags": "30-Contracts",
-    "address": "0x15847a5a44aa0551f655d28d716d247df84d002b",
-    "name": "Arbitrage Bot",
-    "source": "0xTracker"
-  },
-  {
-    "tags": "31-Gitcoin Grants:Grant",
-    "address": "0x158d6727b17aaba726d7318ac7dca5edf8faf6f8",
-    "name": "Grant 0475 Cryptogift",
-    "source": "https://gitcoin.co/grants/475/cryptogift",
-    "description": "https://vittominacori.github.io/cryptogift/"
-  },
-  {
-    "tags": "31-Gitcoin Grants:Grant",
-    "address": "0x1591b9056822c273252fcea32963223650db18e1",
-    "name": "Grant 0220 Cryptorado: Community Outreach & Expansion",
-    "source": "https://gitcoin.co/grants/220/cryptorado-community-outreach-expansion"
-  },
-  {
-    "tags": "80-Malicious:DaoDrain",
-    "address": "0x1591fc0f688c81fbeb17f5426a162a7024d430c2",
-    "name": "DAO Drain 050",
-    "source": "GethSource"
-  },
-  {
-    "tags": "50-Tokens:ERC20",
-    "address": "0x159bbc3a28b8d5ef69ef68ede48262134d73c967",
-    "name": "Toilet Paper Token",
-    "symbol": "TPT",
-    "source": "On chain",
-    "decimals": 18
-  },
-  {
-    "tags": "50-Tokens:ERC20",
-    "address": "0x159bce2f33186e1252bf1ce216b4c8dfb16e14e5",
-    "name": "Uniswap V2",
-    "symbol": "UNI-V2",
-    "source": "On chain",
-    "decimals": 18
-  },
-  {
-    "tags": "31-Gitcoin Grants:Friends",
-    "address": "0x15ad5da7af3ed5f3c356d4681365deb9e34d81f0",
-    "name": "Name 0x15ad5da7",
-    "source": "Gitcoin Website"
-  },
-  {
-    "tags": "50-Tokens:ERC20",
-    "address": "0x15bda08c3afbf5955d6e9b235fd55a1fd0dbc829",
-    "name": "Alpha Coin",
-    "symbol": "APC",
-    "source": "On chain",
-    "decimals": 6,
-    "description": "Alpha coin is based for the basis of first-class mining, experts were appointed to develop the mining farm"
-  },
-  {
-    "tags": "50-Tokens:ERC20",
-    "address": "0x15bf4eeabdab549dd7471b24bc8b8c91e09f52e5",
-    "name": "Kishu Inu Hungry",
-    "symbol": "KISHUHUN",
-    "source": "On chain",
-    "decimals": 1
-  },
-  {
-    "tags": "31-Gitcoin Grants:Friends",
-    "address": "0x15c9fcba332848781fe82ef1f8d3768672a32a72",
-    "name": "Name 0x15c9fcba",
-    "source": "Gitcoin Website"
-  },
-  {
-    "tags": "50-Tokens:ERC20",
-    "address": "0x15dfc197e7ac7d81a07250b5bdebaa96fc1c5dfa",
-    "name": "Asure",
-    "symbol": "ASR",
-    "source": "On chain",
-    "decimals": 18
-  },
-  {
-    "tags": "50-Tokens:ERC20",
-    "address": "0x15e142cc6fdbdf5fbe234b2622e0548493ac2838",
-    "name": "SnoopDoge",
-    "symbol": "WEED",
-    "source": "On chain",
-    "decimals": 18
-  },
-  {
-    "tags": "60-Airdrops",
-    "address": "0x15e4cf1950ffa338ce5bc59456b3e579ed1bead3",
-    "name": "ALFA NTOK Airdrop",
-    "symbol": "аNTOK",
-    "source": "On chain",
-    "decimals": 18
-  },
-  {
-    "tags": "50-Tokens:ERC20",
-    "address": "0x15ecc85e8db706bc6b843d693e6111a0ce5e68b7",
-    "name": "YVVF.Finance",
-    "symbol": "YVVF",
-    "source": "On chain",
-    "decimals": 18
-  },
-  {
-    "tags": "31-Gitcoin Grants:Grant",
-    "address": "0x15ef9189a8282e4e1e985eb8ed767e7426b4bfd5",
-    "name": "Grant 0211 Trust Graphic Novel & Motion Comic",
-    "source": "https://gitcoin.co/grants/211/trust-graphic-novel-motion-comic"
-  },
-  {
-    "tags": "50-Tokens:ERC20",
-    "address": "0x15f173b7aca7cd4a01d6f8360e65fb4491d270c1",
-    "name": "eREAL",
-    "symbol": "eREAL",
-    "source": "On chain",
-    "decimals": 18
-  },
-  {
-    "tags": "50-Tokens:ERC20",
-    "address": "0x16024a7b14f7389fc060ebf23ada67df8875fbb5",
-    "name": "Samurai Inu",
-    "symbol": "SAMI",
-    "source": "On chain",
-    "decimals": 18
-  },
-  {
-    "tags": "50-Tokens:ERC20",
-    "address": "0x1602af2c782cc03f9241992e243290fccf73bb13",
-    "name": "Qubitica",
-    "symbol": "QBIT",
-    "source": "On chain",
-    "decimals": 18,
-    "description": "A distributed blockchain enterprise."
-  },
-  {
-    "tags": "80-Malicious:Shanghai",
-    "address": "0x16035d97f70e8bd620f32ce831ea8bc7d0338ef3",
-    "name": "Possibly Malicious 0x160",
-    "source": "TrueBlocks.io"
-  },
-  {
-    "tags": "60-Airdrops",
-    "address": "0x160e529055d084add9634fe1c2059109c8ce044e",
-    "name": "Jury.Online Airdrop Sender",
-    "source": "TrueBlocks.io"
-  },
-  {
-    "tags": "30-Contracts",
-    "address": "0x16274044dab9635df2b5aeaf7cecb5f381c71680",
-    "name": "Primitive",
-    "source": "EtherScan.io"
   }], "types": [
 { "type": "CAccountName", "fields": [{ "name": "tags", "type": "text" }, { "name": "address", "type": "address" }, { "name": "name", "type": "text" }, { "name": "symbol", "type": "text" }, { "name": "source", "type": "text" }, { "name": "decimals", "type": "unumber" }, { "name": "description", "type": "text" }] }
 ], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef", "namePath": "--" } }
