@@ -139,5 +139,5 @@ on      ,both ,fast  ,names ,tools/ethNames ,edit_undelete                     ,
 on      ,both ,fast  ,names ,tools/ethNames ,show_undelete                     ,y    ,terms = 0x0000000000000000000000000000000010101010 & expand & verbose = 10 & fmt = api
 on      ,both ,fast  ,names ,tools/ethNames ,edit_remove                       ,y    ,remove & terms = 0x0000000000000000000000000000000010101010 & expand & verbose = 10 & fmt = api
 on      ,both ,fast  ,names ,tools/ethNames ,show_remove                       ,y    ,terms = 0x0000000000000000000000000000000010101010 & expand & verbose = 10 & fmt = api
-on      ,both ,fast  ,names ,tools/ethNames ,edit_custom_delete                ,y    ,delete & terms = 0xbc62985faabed27a8f174cbd5ea1ee7b1ed8fc12 & expand & verbose = 10 & to_custom & all
-on      ,both ,fast  ,names ,tools/ethNames ,edit_custom_undelete              ,y    ,undelete & terms = 0xbc62985faabed27a8f174cbd5ea1ee7b1ed8fc12 & expand & verbose = 10 & to_custom & all
+on      ,both ,fast  ,names ,tools/ethNames ,edit_custom_delete                ,y    ,delete & terms = 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 & expand & verbose = 10 & to_custom & all
+on      ,both ,fast  ,names ,tools/ethNames ,edit_custom_undelete              ,y    ,undelete & terms = 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 & expand & verbose = 10 & to_custom & all

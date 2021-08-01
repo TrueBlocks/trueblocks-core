@@ -308,20 +308,6 @@ bool COptionsBase::findToken(CAccountName& acct, const address_t& addr) {
 using ResultPair = std::pair<CAccountNameArray::iterator, CAccountNameArray::iterator>;
 
 //-----------------------------------------------------------------------
-bool COptionsBase::forEveryNamedAccount(NAMEFUNC func, void* data) {
-    if (!func)
-        return false;
-
-    for (auto mapItem : namesMap) {
-        CAccountName item = mapItem.second;
-        if (!(*func)(item, data))
-            return false;
-    }
-
-    return true;
-}
-
-//-----------------------------------------------------------------------
 bool COptionsBase::getNamedAccount(CAccountName& acct, const string_q& addr) {
     if (!loadNames())
         return false;
@@ -331,13 +317,6 @@ bool COptionsBase::getNamedAccount(CAccountName& acct, const string_q& addr) {
         return true;
     }
     return false;
-}
-
-//-----------------------------------------------------------------------
-string_q COptionsBase::findNameByAddress(const string_q& addr) {
-    CAccountName search;
-    search.address = addr;
-    return (getNamedAccount(search, addr) ? search.name : addr);
 }
 
 // tags(30)    address (42)    name (80)    symbol (10)    source (80)    decimals (4)    description (300)

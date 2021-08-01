@@ -28,7 +28,6 @@ This example show how to use a few of TrueBlocks' `forEvery` functions.
   - bool `forEveryBlockNumber`(UINT64VISITFUNC func, void* data) const
 - COptionsBase
   - bool `forEverySpecialBlock`(NAMEVALFUNC func, void* data)
-  - bool `forEveryNamedAccount`(NAMEFUNC func, void* data)
 - CBlock
   - bool `forEveryTransaction`(TRANSVISITFUNC func, void* data)
   - bool `forEveryLog`(LOGVISITFUNC func, void* data)

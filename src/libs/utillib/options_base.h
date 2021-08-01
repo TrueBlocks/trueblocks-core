@@ -58,15 +58,7 @@ typedef map<address_t, CAccountName> CAddressNameMap;
 
 //-----------------------------------------------------------------------------
 class COptionsBase {
-    CAddressNameMap tokenMap;
-
   public:
-    // TODO(tjayrush): All of these can (and should) be moved to expContext as it would be available to things other
-    // TODO(tjayrush): than options. See fmtMap and tsMemMap for examples
-    CAddressBoolMap maliciousMap;
-    CAddressBoolMap airdropMap;
-    CAddressNameMap namesMap;
-
     CStringArray commandLines;
     CStringArray arguments;
     CStringArray notes;
@@ -84,10 +76,6 @@ class COptionsBase {
     bool firstOut;
     bool freshenOnly;
     string_q overrideStr;
-    CStringArray crudCommands;
-    bool isCrudCommand(void) const {
-        return crudCommands.size() > 0;
-    }
 
   public:
     COptionsBase(void);
@@ -116,10 +104,21 @@ class COptionsBase {
     static bool forEverySpecialBlock(NAMEVALFUNC func, void* data);
 
     // supporting named accounts
-    bool getNamedAccount(CAccountName& acct, const string_q& addr);
+  protected:
+    CStringArray crudCommands;
+    // TODO(tjayrush): All of these can (and should) be moved to expContext as it would be available to things other
+    // TODO(tjayrush): than options. See fmtMap and tsMemMap for examples
+    CAddressNameMap namesMap;
+    CAddressNameMap tokenMap;
+    CAddressBoolMap maliciousMap;
+    CAddressBoolMap airdropMap;
     bool loadNames(void);
-    string_q findNameByAddress(const string_q& addr);
-    bool forEveryNamedAccount(NAMEFUNC func, void* data);
+
+  public:
+    bool getNamedAccount(CAccountName& acct, const string_q& addr);
+    bool isCrudCommand(void) const {
+        return crudCommands.size() > 0;
+    }
 
     // enabling options
     bool isEnabled(uint32_t q) const;
