@@ -17,7 +17,7 @@ ethNames -th
 | -p | --prefund | include prefund accounts |
 | -n | --named | include well know token and airdrop addresses in the search |
 | -a | --addr | display only addresses in the results (useful for scripting) |
-| -s | --entities | display entity data |
+| -s | --collections | display collections data |
 | -g | --tags | export the list of tags and subtags only |
 |####|Hidden options||
 | -u | --to_custom | for editCmd only, is the edited name a custom name or not |

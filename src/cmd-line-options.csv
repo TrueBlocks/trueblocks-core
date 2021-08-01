@@ -48,7 +48,7 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 12360,tools,Accounts,names,ethNames,prefund,p,,false,false,true,true,local,switch,<boolean>,include prefund accounts
 12380,tools,Accounts,names,ethNames,named,n,,false,false,true,true,local,switch,<boolean>,include well know token and airdrop addresses in the search
 12420,tools,Accounts,names,ethNames,addr,a,,false,false,true,true,local,switch,<boolean>,display only addresses in the results (useful for scripting)
-12430,tools,Accounts,names,ethNames,entities,s,,false,false,true,true,header,switch,<boolean>,display entity data
+12430,tools,Accounts,names,ethNames,collections,s,,false,false,true,true,header,switch,<boolean>,display collections data
 12445,tools,Accounts,names,ethNames,tags,g,,false,false,true,true,header,switch,<boolean>,export the list of tags and subtags only
 12450,tools,Accounts,names,ethNames,to_custom,u,,false,false,false,false,local,switch,<boolean>,for editCmd only&#44; is the edited name a custom name or not
 12455,tools,Accounts,names,ethNames,clean,C,,false,false,false,false,local,switch,<boolean>,clean the data (addrs to lower case&#44; sort by addr)
@@ -178,7 +178,7 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 10650,apps,Admin,scrape,blockScrape,quit,q,,false,false,false,false,local,switch,<boolean>,quit the program if it's running
 10660,apps,Admin,scrape,blockScrape,,,,false,false,true,true,--,description,,Scan the chain and update the TrueBlocks index of appearances.
 
-10700,apps,Admin,status,cacheStatus,modes,,,false,false,true,true,local,positional,list<enum[index|monitors|entities|names|abis|caches|some*|all]>,the type of status info to retrieve
+10700,apps,Admin,status,cacheStatus,modes,,,false,false,true,true,local,positional,list<enum[index|monitors|collections|names|abis|caches|some*|all]>,the type of status info to retrieve
 10720,apps,Admin,status,cacheStatus,details,d,,false,false,true,true,header,switch,<boolean>,include details about items found in monitors&#44; slurps&#44; abis&#44;|or price caches
 10730,apps,Admin,status,cacheStatus,types,t,,false,false,true,false,local,flag,list<enum[blocks|transactions|traces|slurps|prices|all*]>,for caches mode only&#44; which type(s) of cache to report
 10735,apps,Admin,status,cacheStatus,depth,p,,false,false,false,false,header,flag,<uint64>,for cache mode only&#44; number of levels deep to report

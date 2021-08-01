@@ -1,5 +1,5 @@
 {
   "errors": [
-    "chifra status - Invalid option 'blocks' for 'modes'. One or more of [index|monitors|entities|names|abis|caches|some|all] required."
+    "chifra status - Invalid option 'blocks' for 'modes'. One or more of [index|monitors|collections|names|abis|caches|some|all] required."
   ]
 }

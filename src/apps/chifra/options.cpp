@@ -44,7 +44,7 @@ bool COptions::call_command(int argc, const char* argv[]) {
 
         } else if (!chifraCmdMap[arg].empty()) {
             if (mode == "status") {
-                string_q validModes = "|index|monitors|entities|names|abis|caches|some|all|";
+                string_q validModes = "|index|monitors|collections|names|abis|caches|some|all|";
                 if (!contains(validModes, arg)) {
                     ostringstream os;
                     os << "Invalid submode '" << arg << "' provided to status mode.";

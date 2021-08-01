@@ -98,7 +98,7 @@
   ],
   "types": [
     {
-      "type": "CEntity",
+      "type": "CCollection",
       "fields": [
         {
           "name": "deleted",

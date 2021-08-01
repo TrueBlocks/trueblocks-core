@@ -28,7 +28,7 @@ class COptions : public CAbiOptions {
   public:
     // BEG_CODE_DECLARE
     bool match_case;
-    bool entities;
+    bool collections;
     bool tags;
     // END_CODE_DECLARE
 
@@ -49,7 +49,7 @@ class COptions : public CAbiOptions {
     void applyFilter(void);
     bool addIfUnique(const CAccountName& item);
 
-    void exportEntities(const CStringArray& terms);
+    void handle_collections(const CStringArray& terms);
     bool handle_editcmds(CStringArray& terms, bool to_custom, bool autoname);
     bool handle_clean(void);
 

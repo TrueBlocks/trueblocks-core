@@ -437,9 +437,9 @@ paths:
         explode: true
         schema:
           type: boolean
-      - name: entities
+      - name: collections
         in: query
-        description: display entity data
+        description: display collections data
         required: false
         style: form
         explode: true
@@ -1138,7 +1138,7 @@ paths:
             enum:
             - index
             - monitors
-            - entities
+            - collections
             - names
             - abis
             - caches

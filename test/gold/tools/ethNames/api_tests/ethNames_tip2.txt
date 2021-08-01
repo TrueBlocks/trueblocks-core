@@ -8,10 +8,6 @@
     "decimals": 0
   },
   {
-    "address": "0x68821f2943a218f7dfa9c4b1c788f007940fc2f3",
-    "decimals": 0
-  },
-  {
     "address": "0x94ca37d108e89775dc8ae65f51ae28c2d9599f9a",
     "decimals": 9
   },

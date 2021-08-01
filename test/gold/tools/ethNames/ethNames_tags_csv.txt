@@ -42,4 +42,3 @@ ethNames --tags --fmt csv
 "90-Individuals:Twitter"
 "91-Early:Addresses"
 "91-Early:Miners"
-"91-Known"

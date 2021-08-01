@@ -19,15 +19,6 @@
       "description": ""
     },
     {
-      "tags": "91-Known",
-      "address": "0x68821f2943a218f7dfa9c4b1c788f007940fc2f3",
-      "name": "psdev tip jar",
-      "symbol": "",
-      "source": "TrueBlocks.io",
-      "decimals": 0,
-      "description": ""
-    },
-    {
       "tags": "50-Tokens:ERC20",
       "address": "0x94ca37d108e89775dc8ae65f51ae28c2d9599f9a",
       "name": "Cryptotipsfr Token V2",

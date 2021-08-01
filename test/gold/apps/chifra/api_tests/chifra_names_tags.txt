@@ -122,9 +122,6 @@
     },
     {
       "tags": "91-Early:Miners"
-    },
-    {
-      "tags": "91-Known"
     }
   ],
   "types": [

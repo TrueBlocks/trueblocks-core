@@ -12,7 +12,7 @@ tags	address	name	symbol	decimals
 90-Individuals:Gitcoin Grants	0xcb5c0d33d92e4910daa24825db8af9b64e17c33c	Name 0xcb5c0d33
 50-Tokens:ERC20	0xcb5ea3c190d8f82deadf7ce5af855ddbf33e3962	Qubitica	QBIT		6
 90-Individuals:Gitcoin Grants	0xcb5fba4419abc4d7c11af0c24ba0f2e555407f5b	Name 0xcb5fba44
-91-Known	0xcb75f1f9cc69e3b1a27b8d9c08bb73a58ede24be	Simon Sender
+90-Individuals	0xcb75f1f9cc69e3b1a27b8d9c08bb73a58ede24be	Name 0xcb75f1f9
 50-Tokens:ERC20	0xcb7603074b7c83f8ea4a14270a1068752bea40c7	K.K. Slider	KKSLID		9
 90-Individuals:DevCon2	0xcb860eb2eda14f37e5c046b154786048e2062138	Name 0xcb860eb2
 31-Gitcoin Grants:Grant	0xcb8f9c706f9f5683d1bd6261f52f5f2b2182d780	Grant 1796 Crypton Network

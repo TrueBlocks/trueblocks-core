@@ -325,15 +325,15 @@ bool noteMonitor_light(const string_q& path, void* data) {
 }
 
 //---------------------------------------------------------------------------
-bool noteEntity(const string_q& path, void* data) {
+bool noteCollection(const string_q& path, void* data) {
     if (endsWith(path, '/')) {
-        return forEveryFileInFolder(path + "*", noteEntity, data);
+        return forEveryFileInFolder(path + "*", noteCollection, data);
 
     } else if (endsWith(path, ".bin")) {
         CItemCounter* counter = reinterpret_cast<CItemCounter*>(data);
         ASSERT(counter->options);
 
-        CEntityCacheItem coi;
+        CCollectionCacheItem coi;
         coi.type = coi.getRuntimeClass()->m_ClassName;
         expContext().types[coi.type] = coi.getRuntimeClass();
         if (isTestMode()) {
@@ -345,7 +345,7 @@ bool noteEntity(const string_q& path, void* data) {
             coi.sizeInBytes = fileSize(path);
             coi.nApps = fileSize(path) / sizeof(CPriceQuote);
         }
-        counter->entityArray->push_back(coi);
+        counter->collectionArray->push_back(coi);
     }
     return !shouldQuit();
 }

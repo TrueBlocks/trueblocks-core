@@ -13,7 +13,7 @@
 #include "statusterse.h"
 #include "cachebase.h"
 #include "chaincache.h"
-#include "entitycache.h"
+#include "collectioncache.h"
 #include "pricecache.h"
 #include "monitorcache.h"
 #include "indexcache.h"
@@ -72,7 +72,7 @@ class CItemCounter : public CCache {
     CMonitorCacheItemArray* monitorArray;
     CAbiCacheItemArray* abiArray;
     CPriceCacheItemArray* priceArray;
-    CEntityCacheItemArray* entityArray;
+    CCollectionCacheItemArray* collectionArray;
     uint32_t* tsMemMap;
     size_t tsCnt;
     blkrange_t fileRange;

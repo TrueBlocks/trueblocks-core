@@ -670,9 +670,9 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
-    "tags": "91-Known",
+    "tags": "90-Individuals",
     "address": "0x0c3239e2e841242db989a61518c22247e8c55208",
-    "name": "BitCoinAcctnt3 (Prefund_0419)",
+    "name": "Name 0x0c3239e2",
     "source": "EtherScan.io"
   },
   {
@@ -1170,9 +1170,9 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
-    "tags": "91-Known",
+    "tags": "90-Individuals",
     "address": "0x191167380d430036ca2cb067ab86b527e3d584ee",
-    "name": "POAP Token Sender",
+    "name": "Name 0x19116738",
     "source": "EtherScan.io"
   },
   {

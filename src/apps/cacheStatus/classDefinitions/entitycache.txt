@@ -1,6 +1,0 @@
-[settings]
-class = CEntityCache
-base_class = CCache
-fields = CEntityCacheItemArray items
-includes = cache.h|entitycacheitem.h
-serialize = true

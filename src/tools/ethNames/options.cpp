@@ -28,7 +28,7 @@ static const COption params[] = {
     COption("prefund", "p", "", OPT_SWITCH, "include prefund accounts"),
     COption("named", "n", "", OPT_SWITCH, "include well know token and airdrop addresses in the search"),
     COption("addr", "a", "", OPT_SWITCH, "display only addresses in the results (useful for scripting)"),
-    COption("entities", "s", "", OPT_SWITCH, "display entity data"),
+    COption("collections", "s", "", OPT_SWITCH, "display collections data"),
     COption("tags", "g", "", OPT_SWITCH, "export the list of tags and subtags only"),
     COption("to_custom", "u", "", OPT_HIDDEN | OPT_SWITCH, "for editCmd only, is the edited name a custom name or not"),
     COption("clean", "C", "", OPT_HIDDEN | OPT_SWITCH, "clean the data (addrs to lower case, sort by addr)"),
@@ -92,8 +92,8 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-a" || arg == "--addr") {
             addr = true;
 
-        } else if (arg == "-s" || arg == "--entities") {
-            entities = true;
+        } else if (arg == "-s" || arg == "--collections") {
+            collections = true;
 
         } else if (arg == "-g" || arg == "--tags") {
             tags = true;
@@ -132,14 +132,14 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("prefund", prefund);
     LOG_TEST_BOOL("named", named);
     LOG_TEST_BOOL("addr", addr);
-    LOG_TEST_BOOL("entities", entities);
+    LOG_TEST_BOOL("collections", collections);
     LOG_TEST_BOOL("tags", tags);
     LOG_TEST_BOOL("to_custom", to_custom);
     LOG_TEST_BOOL("clean", clean);
     LOG_TEST("autoname", autoname, (autoname == ""));
     // END_DEBUG_DISPLAY
 
-    if (Mocked((tags ? "tags" : entities ? "entities" : "names")))
+    if (Mocked((tags ? "tags" : collections ? "collections" : "names")))
         return false;
 
     // for (auto& term : terms)
@@ -182,8 +182,8 @@ bool COptions::parseArguments(string_q& command) {
     for (auto term : terms)
         searches.push_back(term);
 
-    if (entities) {
-        exportEntities(terms);
+    if (collections) {
+        handle_collections(terms);
         return false;
     }
 
@@ -287,7 +287,7 @@ void COptions::Init(void) {
 
     // BEG_CODE_INIT
     match_case = false;
-    entities = false;
+    collections = false;
     tags = false;
     // END_CODE_INIT
 

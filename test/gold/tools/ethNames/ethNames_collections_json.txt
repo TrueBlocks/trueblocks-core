@@ -1,5 +1,5 @@
-ethNames argc: 4 [1:--entities] [2:--fmt] [3:json] 
-ethNames --entities --fmt json 
+ethNames argc: 4 [1:--collections] [2:--fmt] [3:json] 
+ethNames --collections --fmt json 
 { "data": [
   {
     "deleted": true,

@@ -123,11 +123,11 @@ on      ,cmd  ,fast  ,names ,tools/ethNames ,prefund_output                    ,
 on      ,both ,fast  ,names ,tools/ethNames ,tags                              ,y    ,tags
 on      ,both ,fast  ,names ,tools/ethNames ,tags_txt                          ,n    ,tags & fmt = txt
 on      ,both ,fast  ,names ,tools/ethNames ,tags_csv                          ,n    ,tags & fmt = csv
-on      ,both ,fast  ,names ,tools/ethNames ,entities                          ,y    ,entities
-on      ,both ,fast  ,names ,tools/ethNames ,entities_txt                      ,n    ,entities & fmt = txt
-on      ,both ,fast  ,names ,tools/ethNames ,entities_csv                      ,n    ,entities & fmt = csv
-on      ,both ,fast  ,names ,tools/ethNames ,entities_json                     ,y    ,entities & fmt = json
-on      ,both ,fast  ,names ,tools/ethNames ,entities_terms                    ,y    ,entities & terms = May
+on      ,both ,fast  ,names ,tools/ethNames ,collections                       ,y    ,collections
+on      ,both ,fast  ,names ,tools/ethNames ,collections_txt                   ,n    ,collections & fmt = txt
+on      ,both ,fast  ,names ,tools/ethNames ,collections_csv                   ,n    ,collections & fmt = csv
+on      ,both ,fast  ,names ,tools/ethNames ,collections_json                  ,y    ,collections & fmt = json
+on      ,both ,fast  ,names ,tools/ethNames ,collections_terms                 ,y    ,collections & terms = May
 on      ,both ,fast  ,names ,tools/ethNames ,edit_invalid                      ,y    ,invalid & expand & verbose = 10 & fmt = api
 on      ,both ,fast  ,names ,tools/ethNames ,edit_add                          ,y    ,create & expand & verbose = 10 & fmt = api
 on      ,both ,fast  ,names ,tools/ethNames ,show_add                          ,y    ,terms = 0x0000000000000000000000000000000010101010 & expand & verbose = 10 & fmt = api

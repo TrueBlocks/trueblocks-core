@@ -14,27 +14,27 @@
  * Parts of this file were generated with makeClass --run. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
-#include "entity.h"
+#include "collection.h"
 #include "options_base.h"
 
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CEntity, CBaseNode);
+IMPLEMENT_NODE(CCollection, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextEntityChunk(const string_q& fieldIn, const void* dataPtr);
-static string_q nextEntityChunk_custom(const string_q& fieldIn, const void* dataPtr);
+static string_q nextCollectionChunk(const string_q& fieldIn, const void* dataPtr);
+static string_q nextCollectionChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
-void CEntity::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
+void CCollection::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     if (!m_showing)
         return;
 
     // EXISTING_CODE
     // EXISTING_CODE
 
-    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["entity_fmt"] : fmtIn);
+    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["collection_fmt"] : fmtIn);
     if (fmt.empty()) {
         if (expContext().exportFmt == YAML1) {
             toYaml(ctx);
@@ -48,13 +48,13 @@ void CEntity::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     // EXISTING_CODE
 
     while (!fmt.empty())
-        ctx << getNextChunk(fmt, nextEntityChunk, this);
+        ctx << getNextChunk(fmt, nextCollectionChunk, this);
 }
 
 //---------------------------------------------------------------------------
-string_q nextEntityChunk(const string_q& fieldIn, const void* dataPtr) {
+string_q nextCollectionChunk(const string_q& fieldIn, const void* dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const CEntity*>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CCollection*>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -63,9 +63,9 @@ string_q nextEntityChunk(const string_q& fieldIn, const void* dataPtr) {
 }
 
 //---------------------------------------------------------------------------
-string_q CEntity::getValueByName(const string_q& fieldName) const {
+string_q CCollection::getValueByName(const string_q& fieldName) const {
     // Give customized code a chance to override first
-    string_q ret = nextEntityChunk_custom(fieldName, this);
+    string_q ret = nextCollectionChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
@@ -137,7 +137,7 @@ string_q CEntity::getValueByName(const string_q& fieldName) const {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CEntity::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
+bool CCollection::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
     string_q fieldName = fieldNameIn;
     string_q fieldValue = fieldValueIn;
 
@@ -205,13 +205,13 @@ bool CEntity::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
 }
 
 //---------------------------------------------------------------------------------------------------
-void CEntity::finishParse() {
+void CCollection::finishParse() {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CEntity::Serialize(CArchive& archive) {
+bool CCollection::Serialize(CArchive& archive) {
     if (archive.isWriting())
         return SerializeC(archive);
 
@@ -239,7 +239,7 @@ bool CEntity::Serialize(CArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CEntity::SerializeC(CArchive& archive) const {
+bool CCollection::SerializeC(CArchive& archive) const {
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
 
@@ -260,7 +260,7 @@ bool CEntity::SerializeC(CArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CEntityArray& array) {
+CArchive& operator>>(CArchive& archive, CCollectionArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -272,7 +272,7 @@ CArchive& operator>>(CArchive& archive, CEntityArray& array) {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CEntityArray& array) {
+CArchive& operator<<(CArchive& archive, const CCollectionArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0; i < array.size(); i++)
@@ -281,49 +281,49 @@ CArchive& operator<<(CArchive& archive, const CEntityArray& array) {
 }
 
 //---------------------------------------------------------------------------
-void CEntity::registerClass(void) {
+void CCollection::registerClass(void) {
     // only do this once
-    if (HAS_FIELD(CEntity, "schema"))
+    if (HAS_FIELD(CCollection, "schema"))
         return;
 
     size_t fieldNum = 1000;
-    ADD_FIELD(CEntity, "schema", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CEntity, "deleted", T_BOOL, ++fieldNum);
-    ADD_FIELD(CEntity, "showing", T_BOOL, ++fieldNum);
-    ADD_FIELD(CEntity, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CEntity, "cid", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CEntity, "tags", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CEntity, "name", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CEntity, "client", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CEntity, "monitored", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CEntity, "deleted", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CEntity, "sizeInBytes", T_UNUMBER, ++fieldNum);
-    ADD_FIELD(CEntity, "addresses", T_ADDRESS | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CEntity, "addressList", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    HIDE_FIELD(CEntity, "addressList");
+    ADD_FIELD(CCollection, "schema", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CCollection, "deleted", T_BOOL, ++fieldNum);
+    ADD_FIELD(CCollection, "showing", T_BOOL, ++fieldNum);
+    ADD_FIELD(CCollection, "cname", T_TEXT, ++fieldNum);
+    ADD_FIELD(CCollection, "cid", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CCollection, "tags", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CCollection, "name", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CCollection, "client", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CCollection, "monitored", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CCollection, "deleted", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CCollection, "sizeInBytes", T_UNUMBER, ++fieldNum);
+    ADD_FIELD(CCollection, "addresses", T_ADDRESS | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CCollection, "addressList", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CCollection, "addressList");
 
     // Hide our internal fields, user can turn them on if they like
-    HIDE_FIELD(CEntity, "schema");
-    HIDE_FIELD(CEntity, "deleted");
-    HIDE_FIELD(CEntity, "showing");
-    HIDE_FIELD(CEntity, "cname");
+    HIDE_FIELD(CCollection, "schema");
+    HIDE_FIELD(CCollection, "deleted");
+    HIDE_FIELD(CCollection, "showing");
+    HIDE_FIELD(CCollection, "cname");
 
-    builtIns.push_back(_biCEntity);
+    builtIns.push_back(_biCCollection);
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
-string_q nextEntityChunk_custom(const string_q& fieldIn, const void* dataPtr) {
-    const CEntity* ent = reinterpret_cast<const CEntity*>(dataPtr);
-    if (ent) {
+string_q nextCollectionChunk_custom(const string_q& fieldIn, const void* dataPtr) {
+    const CCollection* col = reinterpret_cast<const CCollection*>(dataPtr);
+    if (col) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             case 'i':
-                if (fieldIn % "id" && ent->cid.empty()) {
-                    string_q seed = ent->name;
-                    for (auto addr : ent->addresses)
+                if (fieldIn % "id" && col->cid.empty()) {
+                    string_q seed = col->name;
+                    for (auto addr : col->addresses)
                         seed += addr;
                     return keccak256(seed).substr(0, 12);
                 }
@@ -332,7 +332,7 @@ string_q nextEntityChunk_custom(const string_q& fieldIn, const void* dataPtr) {
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if (fieldIn % "parsed")
-                    return nextBasenodeChunk(fieldIn, ent);
+                    return nextBasenodeChunk(fieldIn, col);
                 // EXISTING_CODE
                 // EXISTING_CODE
                 break;
@@ -346,7 +346,7 @@ string_q nextEntityChunk_custom(const string_q& fieldIn, const void* dataPtr) {
 }
 
 //---------------------------------------------------------------------------
-bool CEntity::readBackLevel(CArchive& archive) {
+bool CCollection::readBackLevel(CArchive& archive) {
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -354,7 +354,7 @@ bool CEntity::readBackLevel(CArchive& archive) {
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CEntity& it) {
+ostream& operator<<(ostream& os, const CCollection& it) {
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -364,14 +364,14 @@ ostream& operator<<(ostream& os, const CEntity& it) {
 }
 
 //---------------------------------------------------------------------------
-const string_q CEntity::getStringAt(const string_q& fieldName, size_t i) const {
+const string_q CCollection::getStringAt(const string_q& fieldName, size_t i) const {
     if (fieldName % "addresses" && i < addresses.size())
         return (addresses[i]);
     return "";
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_ENTITY =
+const char* STR_DISPLAY_COLLECTION =
     "[{CID}]\t"
     "[{TAGS}]\t"
     "[{NAME}]\t"

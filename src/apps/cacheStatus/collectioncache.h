@@ -15,9 +15,8 @@
  * Parts of this file were generated with makeClass --run. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
-#include "basetypes.h"
-#include "basenode.h"
-#include "conversions.h"
+#include "cache.h"
+#include "collectioncacheitem.h"
 
 namespace qblocks {
 
@@ -25,41 +24,33 @@ namespace qblocks {
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CEntity : public CBaseNode {
+class CCollectionCache : public CCache {
   public:
-    string_q cid;
-    string_q tags;
-    string_q name;
-    string_q client;
-    bool monitored;
-    bool deleted;
-    uint64_t sizeInBytes;
-    CAddressArray addresses;
-    string_q addressList;
+    CCollectionCacheItemArray items;
 
   public:
-    CEntity(void);
-    CEntity(const CEntity& en);
-    virtual ~CEntity(void);
-    CEntity& operator=(const CEntity& en);
+    CCollectionCache(void);
+    CCollectionCache(const CCollectionCache& co);
+    virtual ~CCollectionCache(void);
+    CCollectionCache& operator=(const CCollectionCache& co);
 
-    DECLARE_NODE(CEntity);
+    DECLARE_NODE(CCollectionCache);
 
-    const string_q getStringAt(const string_q& fieldName, size_t i) const override;
+    const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
     // EXISTING_CODE
-    bool operator==(const CEntity& it) const;
-    bool operator!=(const CEntity& it) const {
+    bool operator==(const CCollectionCache& it) const;
+    bool operator!=(const CCollectionCache& it) const {
         return !operator==(it);
     }
-    friend bool operator<(const CEntity& v1, const CEntity& v2);
-    friend ostream& operator<<(ostream& os, const CEntity& it);
+    friend bool operator<(const CCollectionCache& v1, const CCollectionCache& v2);
+    friend ostream& operator<<(ostream& os, const CCollectionCache& it);
 
   protected:
     void clear(void);
     void initialize(void);
-    void duplicate(const CEntity& en);
+    void duplicate(const CCollectionCache& co);
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
@@ -67,103 +58,87 @@ class CEntity : public CBaseNode {
 };
 
 //--------------------------------------------------------------------------
-inline CEntity::CEntity(void) {
+inline CCollectionCache::CCollectionCache(void) {
     initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CEntity::CEntity(const CEntity& en) {
+inline CCollectionCache::CCollectionCache(const CCollectionCache& co) {
     // EXISTING_CODE
     // EXISTING_CODE
-    duplicate(en);
+    duplicate(co);
 }
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CEntity::~CEntity(void) {
+inline CCollectionCache::~CCollectionCache(void) {
     clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CEntity::clear(void) {
+inline void CCollectionCache::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CEntity::initialize(void) {
-    CBaseNode::initialize();
+inline void CCollectionCache::initialize(void) {
+    CCache::initialize();
 
-    cid = "";
-    tags = "";
-    name = "";
-    client = "";
-    monitored = false;
-    deleted = false;
-    sizeInBytes = 0;
-    addresses.clear();
-    addressList = "";
+    items.clear();
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CEntity::duplicate(const CEntity& en) {
+inline void CCollectionCache::duplicate(const CCollectionCache& co) {
     clear();
-    CBaseNode::duplicate(en);
+    CCache::duplicate(co);
 
-    cid = en.cid;
-    tags = en.tags;
-    name = en.name;
-    client = en.client;
-    monitored = en.monitored;
-    deleted = en.deleted;
-    sizeInBytes = en.sizeInBytes;
-    addresses = en.addresses;
-    addressList = en.addressList;
+    items = co.items;
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CEntity& CEntity::operator=(const CEntity& en) {
-    duplicate(en);
+inline CCollectionCache& CCollectionCache::operator=(const CCollectionCache& co) {
+    duplicate(co);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
 //-------------------------------------------------------------------------
-inline bool CEntity::operator==(const CEntity& it) const {
+inline bool CCollectionCache::operator==(const CCollectionCache& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
-    // Equality operator as defined in class definition
-    return addressList % it.addressList;
+    // No default equal operator in class definition, assume none are equal (so find fails)
+    return false;
 }
 
 //-------------------------------------------------------------------------
-inline bool operator<(const CEntity& v1, const CEntity& v2) {
+inline bool operator<(const CCollectionCache& v1, const CCollectionCache& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
-    // Default sort as defined in class definition
-    return v1.name < v2.name;
+    // No default sort defined in class definition, assume already sorted, preserve ordering
+    return true;
 }
 
 //---------------------------------------------------------------------------
-typedef vector<CEntity> CEntityArray;
-extern CArchive& operator>>(CArchive& archive, CEntityArray& array);
-extern CArchive& operator<<(CArchive& archive, const CEntityArray& array);
+typedef vector<CCollectionCache> CCollectionCacheArray;
+extern CArchive& operator>>(CArchive& archive, CCollectionCacheArray& array);
+extern CArchive& operator<<(CArchive& archive, const CCollectionCacheArray& array);
 
 //---------------------------------------------------------------------------
-extern const char* STR_DISPLAY_ENTITY;
+extern const char* STR_DISPLAY_COLLECTIONCACHE;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

@@ -1,7 +1,7 @@
-chifra argc: 3 [1:entities] [2:--help] 
-chifra entities --help 
+chifra argc: 3 [1:collections] [2:--help] 
+chifra collections --help 
 
-  Unknown subcommand 'entities'. Quitting...
+  Unknown subcommand 'collections'. Quitting...
 
   Usage:    chifra command  
   Purpose:  Access to all TrueBlocks tools (chifra <cmd> --help for more).

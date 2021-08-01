@@ -1540,9 +1540,9 @@
       "description": ""
     },
     {
-      "tags": "91-Known",
+      "tags": "90-Individuals",
       "address": "0x1492004547ff0efd778cc2c14e794b26b4701105",
-      "name": "Jin's Wallet",
+      "name": "Name 0x14920045",
       "symbol": "",
       "source": "TrueBlocks.io",
       "decimals": 0,
@@ -1562,6 +1562,15 @@
       "address": "0x1492e7db29f5a79f47ea73ed6081f57bc553dec5",
       "name": "AlphaDOGE",
       "symbol": "ADOGE",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x14a52cf6b4f68431bd5d9524e4fcd6f41ce4ade9",
+      "name": "www.swap.online community token",
+      "symbol": "SWAP",
       "source": "On chain",
       "decimals": 18,
       "description": ""
@@ -1798,15 +1807,6 @@
       "symbol": "cREP",
       "source": "On chain",
       "decimals": 8,
-      "description": ""
-    },
-    {
-      "tags": "90-Individuals:Gitcoin Grants",
-      "address": "0x1584225583e707e2b1d61270a6aa249d57db9f9a",
-      "name": "Name 0x15842255",
-      "symbol": "",
-      "source": "Gitcoin Website",
-      "decimals": 0,
       "description": ""
     }
   ],

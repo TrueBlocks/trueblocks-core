@@ -4,7 +4,7 @@
 
 Like `chifra abis`, this tool is useful from the command line but is primarily used in support of other tools, especially `chifra export` where naming addresses becomes the single best way to turn unintellagable blockchain data into understandable information.
 
-The various options allow you to search and filter the results. The `entities` and `tags` options are used primarily by the TrueBlocks explorer.
+The various options allow you to search and filter the results. The `collections` and `tags` options are used primarily by the TrueBlocks explorer.
 
 You may use the TrueBlocks explorer to manage (add, edit, delete) address-name associations.
 
@@ -25,7 +25,7 @@ You may use the TrueBlocks explorer to manage (add, edit, delete) address-name a
 | -p | --prefund | include prefund accounts |
 | -n | --named | include well know token and airdrop addresses in the search |
 | -a | --addr | display only addresses in the results (useful for scripting) |
-| -s | --entities | display entity data |
+| -s | --collections | display collections data |
 | -g | --tags | export the list of tags and subtags only |
 | -v | --verbose | set verbose level (optional level defaults to 1) |
 | -h | --help | display this help screen |

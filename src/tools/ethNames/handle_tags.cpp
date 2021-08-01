@@ -14,29 +14,29 @@
 
 #if 0
 void COptions::exportTags(void) const {
-    string_q contents = asciiFileToString(configPath("names/entities.csv"));
+    string_q contents = asciiFileToString(configPath("names/collections.csv"));
     CStringArray lines;
     explode(lines, contents, '\n');
 
-    CEntityArray entities;
+    CCollectionArray collections;
     CStringArray fields;
     for (auto line : lines) {
         if (fields.empty()) {
             explode(fields, line, ',');
         } else {
-            CEntity entity;
-            entity.parseCSV(fields, line);
-            explode(entity.addresses, entity.addressList, '|');
-            entity.push_back(entity);
+            CCollection collection;
+            collection.parseCSV(fields, line);
+            explode(collection.addresses, collection.addressList, '|');
+            collection.push_back(collection);
         }
     }
 
     bool first = true;
     cout << "{\n  \"data\": [" << endl;
-    for (auto entity : entities) {
+    for (auto collection : collections) {
         if (!first)
             cout << ",";
-        cout << entity << endl;
+        cout << collection << endl;
         first = false;
     }
     cout << "] }" << endl;

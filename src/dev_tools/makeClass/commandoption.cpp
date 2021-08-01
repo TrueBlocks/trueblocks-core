@@ -756,7 +756,7 @@ string_q CCommandOption::toGoCall(void) const {
     out << "func " << goFunc << "(w http.ResponseWriter, r *http.Request) {" << endl;
     if (!tool.empty() && !contains(tool, " ")) {
         out << "\tCallOne(w, r, \"" << tool << "\", \"" << api_route << "\")" << endl;
-    } else if (goFunc == "AccountsTags" || goFunc == "AccountsEntities") {
+    } else if (goFunc == "AccountsTags" || goFunc == "AccountsCollections") {
         out << "\tCallOne(w, r, \"ethNames\", \"" << api_route << "\")" << endl;
     } else {
         out << "\tCallOneExtra(w, r, \"chifra\", \"" << api_route << "\", \"" << api_route << "\")" << endl;

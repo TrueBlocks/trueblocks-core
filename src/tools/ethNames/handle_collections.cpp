@@ -12,57 +12,57 @@
  *-------------------------------------------------------------------------------------------*/
 #include "options.h"
 
-void COptions::exportEntities(const CStringArray& terms) {
-    string_q contents = asciiFileToString(configPath("names/entities.csv"));
+void COptions::handle_collections(const CStringArray& terms) {
+    string_q contents = asciiFileToString(configPath("names/collections.csv"));
     CStringArray lines;
     explode(lines, contents, '\n');
 
-    CEntityArray entityArray;
+    CCollectionArray collectionArray;
     CStringArray fields;
     for (auto line : lines) {
         if (fields.empty()) {
             explode(fields, line, ',');
         } else {
-            CEntity entity;
-            entity.parseCSV(fields, line);
-            explode(entity.addresses, entity.addressList, '|');
-            entityArray.push_back(entity);
+            CCollection collection;
+            collection.parseCSV(fields, line);
+            explode(collection.addresses, collection.addressList, '|');
+            collectionArray.push_back(collection);
         }
     }
 
-    string_q str = STR_DISPLAY_ENTITY;
-    configureDisplay("ethNames", "CEntity", str, "");
+    string_q str = STR_DISPLAY_COLLECTION;
+    configureDisplay("ethNames", "CCollection", str, "");
     if (expContext().exportFmt == API1 || expContext().exportFmt == JSON1)
-        manageFields("CEntity:" + cleanFmt(STR_DISPLAY_ENTITY));
+        manageFields("CCollection:" + cleanFmt(STR_DISPLAY_COLLECTION));
 
     bool first = true;
     bool isText = (expContext().exportFmt & (TXT1 | CSV1 | NONE1));
-    for (auto entity : entityArray) {
+    for (auto collection : collectionArray) {
         bool include = terms.size() == 0;
 
         if (terms.size() > 0) {
             for (auto term : terms) {
                 ostringstream os;
-                os << entity;
+                os << collection;
                 include = include || contains(os.str(), term);
             }
         }
 
         if (include) {
             if (first)
-                cout << exportPreamble(expContext().fmtMap["header"], entity.getRuntimeClass());
+                cout << exportPreamble(expContext().fmtMap["header"], collection.getRuntimeClass());
             if (isText) {
-                cout << substitute(
-                            substitute(substitute(trim(entity.Format(expContext().fmtMap["format"]), '\t'), "\n", "|"),
-                                       "\"", ""),
-                            ",|", "|")
+                cout << substitute(substitute(substitute(trim(collection.Format(expContext().fmtMap["format"]), '\t'),
+                                                         "\n", "|"),
+                                              "\"", ""),
+                                   ",|", "|")
                      << endl;
             } else {
                 if (!first)
                     cout << "," << endl;
                 cout << "  ";
                 indent();
-                entity.toJson(cout);
+                collection.toJson(cout);
                 unindent();
             }
             first = false;
