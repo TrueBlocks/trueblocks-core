@@ -110,7 +110,6 @@ class COptionsBase {
     // TODO(tjayrush): than options. See fmtMap and tsMemMap for examples
     CAddressNameMap namesMap;
     CAddressNameMap tokenMap;
-    CAddressBoolMap maliciousMap;
     CAddressBoolMap airdropMap;
     bool loadNames(void);
 

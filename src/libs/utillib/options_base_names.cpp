@@ -201,8 +201,6 @@ bool COptionsBase::loadNames(void) {
         if (nameCache.Lock(binFile, modeReadOnly, LOCK_NOWAIT)) {
             nameCache >> namesMap;
             for (const auto& item : namesMap) {
-                if (contains(item.second.tags, "Malicious"))
-                    maliciousMap[item.second.address] = true;
                 if (contains(item.second.tags, "Airdrop"))
                     airdropMap[item.second.address] = true;
                 bool isToken = !item.second.symbol.empty() || contains(item.second.tags, "Tokens") ||
@@ -231,8 +229,6 @@ bool COptionsBase::loadNames(void) {
     // theMap is already sorted by address, so simply copy it into the array
     for (auto item : theMap) {
         namesMap[item.first] = item.second;
-        if (contains(item.second.tags, "Malicious"))
-            maliciousMap[item.second.address] = true;
         if (contains(item.second.tags, "Airdrop"))
             airdropMap[item.second.address] = true;
         bool isToken = !item.second.symbol.empty() || contains(item.second.tags, "Tokens") ||

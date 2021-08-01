@@ -1346,7 +1346,6 @@ COptionsBase::COptionsBase(void) {
     namesMap.clear();
     tokenMap.clear();
     expContext().prefundMap.clear();
-    maliciousMap.clear();
     airdropMap.clear();
     pParams = NULL;
     cntParams = 0;

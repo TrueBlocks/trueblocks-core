@@ -51,7 +51,7 @@ void COptions::finishClean(CAccountName& account) {
 
 //--------------------------------------------------------------------
 bool COptions::isTokenContract(const CAccountName& account) {
-    if (!account.is_contract)  // maliciousMap[account.address] || !account.is_contract)
+    if (!account.is_contract)
         return false;
     standards = CMonitor();  // reset
     standards.address = account.address;
