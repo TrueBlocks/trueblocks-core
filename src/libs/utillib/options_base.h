@@ -103,9 +103,14 @@ class COptionsBase {
     static bool findSpecial(CNameValue& pair, const string_q& arg);
     static bool forEverySpecialBlock(NAMEVALFUNC func, void* data);
 
-    // supporting named accounts
-  protected:
+    // One of --create, --update, --delete, --undelete, --remove for use anywhere
     CStringArray crudCommands;
+    bool isCrudCommand(void) const {
+        return crudCommands.size() > 0;
+    }
+
+  protected:
+    // supporting named accounts
     // TODO(tjayrush): All of these can (and should) be moved to expContext as it would be available to things other
     // TODO(tjayrush): than options. See fmtMap and tsMemMap for examples
     CAddressNameMap namesMap;
@@ -115,9 +120,6 @@ class COptionsBase {
 
   public:
     bool getNamedAccount(CAccountName& acct, const string_q& addr);
-    bool isCrudCommand(void) const {
-        return crudCommands.size() > 0;
-    }
 
     // enabling options
     bool isEnabled(uint32_t q) const;

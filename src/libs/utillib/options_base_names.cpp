@@ -21,7 +21,40 @@
 
 namespace qblocks {
 
-extern void addToMap(CAddressNameMap& theMap, CAccountName& account, const string_q& tabFilename, uint64_t cnt);
+//-----------------------------------------------------------------------
+static void addToMap(CAddressNameMap& theMap, CAccountName& account, const string_q& tabFilename, uint64_t cnt) {
+    if (theMap[account.address].address == account.address) {
+        // first in wins;
+        return;
+    }
+
+    if (contains(tabFilename, "_custom")) {
+        // From the custom file - store the values found in the file
+        account.is_custom = true;
+        theMap[account.address] = account;
+
+    } else if (contains(tabFilename, "_prefunds")) {
+        // From the prefund file - force prefund marker, apply default values only if existing fields are empty
+        address_t addr = account.address;
+        account = theMap[addr];  // may be empty, but if not, let's pick up the existing values
+        account.address = addr;
+        account.tags = account.tags.empty() ? "80-Prefund" : account.tags;
+        string_q prefundName = "Prefund_" + padNum4(cnt);
+        account.is_prefund = account.name.empty();  // only mark as pre-fund if it didn't exist before
+                                                    // clang-format off
+        account.name = account.name.empty()                  ? prefundName
+                       : contains(account.name, "(Prefund_") ? account.name
+                                                             : account.name + " (" + prefundName + ")";
+        // clang-format on
+        account.source = account.source.empty() ? "Genesis" : account.source;
+        theMap[account.address] = account;
+
+    } else {
+        // From the regular file - store the values found in the file
+        theMap[account.address] = account;
+    }
+}
+
 //-----------------------------------------------------------------------
 bool loadPrefunds(const string_q& prefundFile) {
     // start with a clean slate
@@ -129,40 +162,6 @@ bool importTabFile(CAddressNameMap& theMap, const string_q& tabFilename) {
     }
 
     return true;
-}
-
-//-----------------------------------------------------------------------
-void addToMap(CAddressNameMap& theMap, CAccountName& account, const string_q& tabFilename, uint64_t cnt) {
-    if (theMap[account.address].address == account.address) {
-        // first in wins;
-        return;
-    }
-
-    if (contains(tabFilename, "_custom")) {
-        // From the custom file - store the values found in the file
-        account.is_custom = true;
-        theMap[account.address] = account;
-
-    } else if (contains(tabFilename, "_prefunds")) {
-        // From the prefund file - force prefund marker, apply default values only if existing fields are empty
-        address_t addr = account.address;
-        account = theMap[addr];  // may be empty, but if not, let's pick up the existing values
-        account.address = addr;
-        account.tags = account.tags.empty() ? "80-Prefund" : account.tags;
-        string_q prefundName = "Prefund_" + padNum4(cnt);
-        account.is_prefund = account.name.empty();  // only mark as pre-fund if it didn't exist before
-                                                    // clang-format off
-        account.name = account.name.empty()                  ? prefundName
-                       : contains(account.name, "(Prefund_") ? account.name
-                                                             : account.name + " (" + prefundName + ")";
-        // clang-format on
-        account.source = account.source.empty() ? "Genesis" : account.source;
-        theMap[account.address] = account;
-
-    } else {
-        // From the regular file - store the values found in the file
-        theMap[account.address] = account;
-    }
 }
 
 //-----------------------------------------------------------------------
