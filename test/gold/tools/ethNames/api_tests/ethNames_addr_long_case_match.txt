@@ -1,6 +1,7 @@
 tags	address	name	symbol	decimals
 31-Gitcoin Grants:Friends	0xcb18b23d3fd1a69b520a6f9fb7f0de37525fb291	Name 0xcb18b23d
 31-Gitcoin Grants:Friends	0xcb23fbe30de52338156849c89fdea31a50c23a77	Name 0xcb23fbe3
+50-Tokens:ERC20	0xcb2da401837f9a0d60c3cbe27b8e422fca8938b3	Myamm Blanc Inu	MYAMM		18
 31-Gitcoin Grants:Friends	0xcb42ac441fcade3935243ea118701f39aa004486	Name 0xcb42ac44
 31-Gitcoin Grants:Friends	0xcb44c69d1380b03404e7ca29db033fa987f2d0c5	Name 0xcb44c69d
 31-Gitcoin Grants:Friends	0xcb46219ba114245c3a18761e4f7891f9c4bef8c0	Name 0xcb46219b
@@ -11,6 +12,7 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0xcb5ea3c190d8f82deadf7ce5af855ddbf33e3962	Qubitica	QBIT		6
 31-Gitcoin Grants:Friends	0xcb5fba4419abc4d7c11af0c24ba0f2e555407f5b	Name 0xcb5fba44
 91-Known	0xcb75f1f9cc69e3b1a27b8d9c08bb73a58ede24be	Simon Sender
+50-Tokens:ERC20	0xcb7603074b7c83f8ea4a14270a1068752bea40c7	K.K. Slider	KKSLID		9
 90-DevCon2:Individual	0xcb860eb2eda14f37e5c046b154786048e2062138	mperklin
 31-Gitcoin Grants:Grant	0xcb8f9c706f9f5683d1bd6261f52f5f2b2182d780	Grant 1796 Crypton Network
 31-Gitcoin Grants:Grant	0xcb9327bd57680a9cb9eed1246f8f439a630b3696	Grant 0803 Alef

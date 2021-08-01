@@ -29,12 +29,30 @@
     },
     {
       "tags": "50-Tokens:ERC20",
+      "address": "0x94ca37d108e89775dc8ae65f51ae28c2d9599f9a",
+      "name": "Cryptotipsfr Token V2",
+      "symbol": "CRTS",
+      "source": "On chain",
+      "decimals": 9,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
       "address": "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359",
       "name": "Ethereum Tip Jar",
       "symbol": "TIP",
       "source": "TrueBlocks.io",
       "decimals": 0,
       "description": "The ethereum tip jar"
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0xfeb8b9496df7d8c9677dda076813dc6885fb0646",
+      "name": "Tip",
+      "symbol": "TIP",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
     }
   ],
   "types": [

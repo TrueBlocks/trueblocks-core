@@ -406,6 +406,24 @@
       "description": "https://gitcoin.co/grants/845/remote-developer-bootcamp, https://github.com/blockvigil/bootcamp"
     },
     {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x007d63afd542886570046da400c403f0dc63bd08",
+      "name": "Zō Baby 象の赤ちゃん",
+      "symbol": "ZOBABY",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x007dfb0c30f55ccac0191387fe5ffc9cfde519c0",
+      "name": "AINU TOKEN",
+      "symbol": "AINU",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
       "tags": "31-Gitcoin Grants:Grant",
       "address": "0x0087a081a9b430fd8f688c6ac5dd24421bfb060d",
       "name": "Grant 0779 DeFi Latam",
@@ -466,6 +484,15 @@
       "symbol": "",
       "source": "https://gitcoin.co/grants/976/magical-machine-money",
       "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x00c396383400a1ef2eb401052dbf5d989b2da481",
+      "name": "Cypher City",
+      "symbol": "CYPHER",
+      "source": "On chain",
+      "decimals": 18,
       "description": ""
     },
     {
@@ -583,6 +610,15 @@
       "symbol": "",
       "source": "GethSource Ether Camp",
       "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x010496d8f3269ee9b05060bdf40c2d66e83e61dd",
+      "name": "Digg",
+      "symbol": "DIGG",
+      "source": "On chain",
+      "decimals": 18,
       "description": ""
     },
     {
@@ -739,6 +775,15 @@
       "description": ""
     },
     {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x0180cb7971b47d2faf3d2b52e3b5174e0cb835cc",
+      "name": "AIRSHIB",
+      "symbol": "AIRSHIB",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
       "tags": "75-Early Actors",
       "address": "0x0193d941b50d91be6567c7ee1c0fe7af498b4137",
       "name": "Miner_0015_427",
@@ -754,6 +799,15 @@
       "symbol": "PLA",
       "source": "On chain",
       "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x0199fd07389c5277c922af2736542e95e24ee689",
+      "name": "Saturday Elon",
+      "symbol": "SatElon",
+      "source": "On chain",
+      "decimals": 9,
       "description": ""
     },
     {
@@ -784,6 +838,33 @@
       "description": ""
     },
     {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x01b12471f701eca76b583796cf3fd84e2ce6f8ff",
+      "name": "Shiba Inu Bone",
+      "symbol": "BONE",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x01b8bcc8b75dd86025b455373f3c0814a060e6a8",
+      "name": "DogeRocket",
+      "symbol": "DGRO",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x01d1a934129f208dfbe60ef31ca63f4ad2757d84",
+      "name": "Ethereum Cherry",
+      "symbol": "ECHERRY 🍒",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
       "tags": "30-Contracts",
       "address": "0x01da73c4ec1355f953ad0aaca3ef20e342aea92a",
       "name": "Arbitrage Bot",
@@ -797,6 +878,15 @@
       "address": "0x01da76dea59703578040012357b81ffe62015c2d",
       "name": "Cream yETH",
       "symbol": "crYETH",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x01ddc27a46027cb45e39e47cf9204e2e6b0c92cd",
+      "name": "🎇Floki Fireworks🎆",
+      "symbol": "FLOKIFIRE",
       "source": "On chain",
       "decimals": 18,
       "description": ""
@@ -866,6 +956,15 @@
     },
     {
       "tags": "50-Tokens:ERC20",
+      "address": "0x0208fb0af6652bdbc3ea010d5026ed92ff252a53",
+      "name": "Ethereum Hot",
+      "symbol": "EHOT",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
       "address": "0x0223fc70574214f65813fe336d870ac47e147fae",
       "name": "CZR",
       "symbol": "CZR",
@@ -874,12 +973,39 @@
       "description": "CanonChain will be triggered from the protocol layer and the chip layer of the communication to provide a robust foundation for the entire blockchain industry."
     },
     {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x022cc93b66a7d28ad6887d1d5a60642d5b02837b",
+      "name": "Narutocoin",
+      "symbol": "NARUTO",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x022fc445fd3ec66cc48e0975265ec825245cd7a9",
+      "name": "Uniswap V2",
+      "symbol": "UNI-V2",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x0230c6dd5db1d3f871386a3ce1a5a836b2590044",
       "name": "Name 0x0230c6dd",
       "symbol": "",
       "source": "Gitcoin Website",
       "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x0246890c9278d0a786812dda4dd20361ed13cda0",
+      "name": "Nashu Inu",
+      "symbol": "NASHU",
+      "source": "On chain",
+      "decimals": 18,
       "description": ""
     },
     {
@@ -901,12 +1027,48 @@
       "description": "Payments solutions for the travel industry."
     },
     {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x028171bca77440897b824ca71d1c56cac55b68a3",
+      "name": "Aave interest bearing DAI",
+      "symbol": "aDAI",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x0297083eef9c04ee22c89187b13363af2249042b",
+      "name": "Andre KP9R",
+      "symbol": "aKP9R",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
       "tags": "30-Contracts",
       "address": "0x02a522d98ec2d2c3bbe91acc29ee7fd32ab880ab",
       "name": "Mintable: Deployer",
       "symbol": "",
       "source": "",
       "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x02a7c828437aa9aea6da510758b2a9d6fb37f0bc",
+      "name": "Salt Shaker",
+      "symbol": "SALT 🧂",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x02b173e5c6553b5429086edd94a37e34adbda2aa",
+      "name": "MuskMarsDog",
+      "symbol": "MDOGE",
+      "source": "On chain",
+      "decimals": 4,
       "description": ""
     },
     {
@@ -983,11 +1145,38 @@
     },
     {
       "tags": "50-Tokens:ERC20",
+      "address": "0x02ddbc11e2447108dd983e60fa0a7d5a7d7b563a",
+      "name": "Seppuku.me",
+      "symbol": "SEPPUKU",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x02e23ec63b0de71e3dae08895e771531e77f34c5",
+      "name": "YFISwap",
+      "symbol": "YFIS",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
       "address": "0x02e3083a51e8632e571fbd6a62ac396c10c653ba",
       "name": "EplusCoin",
       "symbol": "EPLUS",
       "source": "On chain",
       "decimals": 8,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x02e70911d29e05cb85a420c6fbf713d021639fa9",
+      "name": "Kawaii Iun Moon Moon",
+      "symbol": "KAWAINU",
+      "source": "On chain",
+      "decimals": 18,
       "description": ""
     },
     {
@@ -1028,6 +1217,15 @@
     },
     {
       "tags": "50-Tokens:ERC20",
+      "address": "0x0306e522cefd3cdc3ce63a60686eb1a0c0e6f467",
+      "name": "Akita Doge",
+      "symbol": "ADOGE",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
       "address": "0x032dd2a3c6d234aa9620d65eb618fcdc72be3dbb",
       "name": "HashDemons",
       "symbol": "HASHDEMONS",
@@ -1045,6 +1243,15 @@
       "description": "The ICO market is becoming more regulated, but this isn‚Äö√Ñ√¥t stopping scams from penetrating the cryptocurrency community. That is why we created the Founding Community Bitdepositary with integrated payment systems."
     },
     {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x03552d005d0f4262bf2d85fa2a3263541d4059c1",
+      "name": "Miller Real Estate Holdings",
+      "symbol": "RENT",
+      "source": "On chain",
+      "decimals": 6,
+      "description": ""
+    },
+    {
       "tags": "30-Contracts",
       "address": "0x0358629bd27fa559b88d0f41ea3da28d057c3414",
       "name": "Arbitrage Bot",
@@ -1058,6 +1265,15 @@
       "address": "0x036407f23d5e1c1486f7488332cf54bf06e5f09f",
       "name": "Alphabit",
       "symbol": "ABC",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x036ea7048a4c1f28b299b9dd9e3c9fe9022e2a2a",
+      "name": "ShibAkita Inu",
+      "symbol": "SHIBAKITA",
       "source": "On chain",
       "decimals": 18,
       "description": ""
@@ -1144,6 +1360,15 @@
       "description": ""
     },
     {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x03b0ffc15a9a03d32a3a7c5839b3faf5174059cf",
+      "name": "NZXT Protocol Governance Token (Shareholder only)",
+      "symbol": "NZXT",
+      "source": "On chain",
+      "decimals": 6,
+      "description": ""
+    },
+    {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x03b45f0f660adcaa24fbacffd45e171464ec63a8",
       "name": "Name 0x03b45f0f",
@@ -1189,12 +1414,30 @@
       "description": "Biotron is a fully transparent personal data analytics platform on blockchain."
     },
     {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x03c9436d54db599018842387d9d6075d81580726",
+      "name": "AirEthereumMax INU",
+      "symbol": "aiReMax",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
       "tags": "35-TheCyber:Friends",
       "address": "0x03d47eca8d1d4c29a73318c3b1373614b3fe14bc",
       "name": "Name 0x03d47eca",
       "symbol": "",
       "source": "Solidity Code",
       "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x03dd1a67ef52107dd86b590ec62aaf5048973647",
+      "name": "MAMASHIBA",
+      "symbol": "MAMASHIBA",
+      "source": "On chain",
+      "decimals": 18,
       "description": ""
     },
     {
@@ -1216,6 +1459,24 @@
       "description": ""
     },
     {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x041b10db04de10c1005029ce498d09446e935316",
+      "name": "Green INU",
+      "symbol": "GINUX",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x041d37f02b4219e5a038b22c1f69e7e55f3a82d8",
+      "name": "Marshmallow Governance",
+      "symbol": "MGT",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
       "tags": "31-Gitcoin Grants:Grant",
       "address": "0x04335c092bc8c06f48f9def5e3285140138fbbfc",
       "name": "Grant 1496 Optimistic Casino",
@@ -1234,6 +1495,15 @@
       "description": ""
     },
     {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x0448da445a2ed1262890b42fb6d578c59ec470d5",
+      "name": "ShibaRise",
+      "symbol": "ShibaRise",
+      "source": "On chain",
+      "decimals": 9,
+      "description": ""
+    },
+    {
       "tags": "34-Twitter:Friends",
       "address": "0x04498150b495a1f126b88952a756b5b9a4385e30",
       "name": "Name 0x04498150",
@@ -1241,6 +1511,24 @@
       "source": "Twitter",
       "decimals": 0,
       "description": "okoro"
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x044f613cdfffbac8bba42283dd8d97b81c8b3f3c",
+      "name": "DogeDao",
+      "symbol": "DogeDao",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x045703d22bb49392ec6e63b1ede4efd862bf1a34",
+      "name": "NexSwap",
+      "symbol": "NEX",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -1360,6 +1648,15 @@
       "description": ""
     },
     {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x04ad70466a79dd1251f22ad426248088724ff32b",
+      "name": "Time-Honored Brand Chain",
+      "symbol": "THBC",
+      "source": "On chain",
+      "decimals": 4,
+      "description": ""
+    },
+    {
       "tags": "31-Gitcoin Grants:Grant",
       "address": "0x04b7f60169fe048b7806a7e5fe731a37be23111e",
       "name": "Grant 0650 Kodadot: Polkadot and Substrate Wallet",
@@ -1406,6 +1703,15 @@
     },
     {
       "tags": "50-Tokens:ERC20",
+      "address": "0x04f135587e379253d19f77c5e6c90d2c280aa947",
+      "name": "FINDEX",
+      "symbol": "FIND",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
       "address": "0x04f2e7221fdb1b52a68169b25793e51478ff0329",
       "name": "Cappasity",
       "symbol": "CAPP",
@@ -1418,6 +1724,15 @@
       "address": "0x04fa0d235c4abf4bcf4787af4cf447de572ef828",
       "name": "UMA Voting Token v1",
       "symbol": "UMA",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x050cbff7bff0432b6096dd15cd9499913ddf8e23",
+      "name": "FUTUREGOLDCOIN",
+      "symbol": "FCI",
       "source": "On chain",
       "decimals": 18,
       "description": ""
@@ -1477,335 +1792,20 @@
       "description": ""
     },
     {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x056f203d89360e78d9f0796e46ae070bd90def9c",
+      "name": "Uniswap V2",
+      "symbol": "UNI-V2",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
       "tags": "31-Gitcoin Grants:Friends",
       "address": "0x056fa2506578a8cd1b15aaf153d327c981140492",
       "name": "Name 0x056fa250",
       "symbol": "",
       "source": "Gitcoin Website",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x056fd409e1d7a124bd7017459dfea2f387b6d5cd",
-      "name": "Gemini dollar",
-      "symbol": "GUSD",
-      "source": "On chain",
-      "decimals": 2,
-      "description": "Gemini dollar combines the creditworthiness and price stability of the U.S. dollar with blockchain technology and the oversight of U.S. regulators."
-    },
-    {
-      "tags": "60-Airdrops",
-      "address": "0x0571325cd46718cd9445f082332a4fd9a21b8498",
-      "name": "FIFAMini Airdrop Sender",
-      "symbol": "",
-      "source": "TrueBlocks.io",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x05759c209466eeb5f1a2b3ea8d8650e4053d1047",
-      "name": "RarePunks",
-      "symbol": "RAREPUNK",
-      "source": "On chain",
-      "decimals": 18,
-      "description": ""
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x05767d9ef41dc40689678ffca0608878fb3de906",
-      "name": "SushiSwap LP Token",
-      "symbol": "SLP",
-      "source": "On chain",
-      "decimals": 18,
-      "description": ""
-    },
-    {
-      "tags": "31-Gitcoin Grants:Grant",
-      "address": "0x057a3d5383fd9277f3ab4f98e319d7d9a9a9e198",
-      "name": "Grant 0292 Will Brealey - Ethereum Writer",
-      "symbol": "",
-      "source": "https://gitcoin.co/grants/292/will-brealey-ethereum-writer",
-      "decimals": 0,
-      "description": "https://medium.com/@w_brealey"
-    },
-    {
-      "tags": "80-Malicious:DaoDrain",
-      "address": "0x057b56736d32b86616a10f619859c6cd6f59092a",
-      "name": "DAO Drain 065",
-      "symbol": "",
-      "source": "GethSource",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "90-DevCon2:Individual",
-      "address": "0x058601725fcf134e2cdeef2d9e53cb91dc7e6c15",
-      "name": "kelvin",
-      "symbol": "",
-      "source": "DevCon2 Token Contract",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x05860d453c7974cbf46508c06cba14e211c629ce",
-      "name": "Eden Coin",
-      "symbol": "EDN",
-      "source": "On chain",
-      "decimals": 18,
-      "description": ""
-    },
-    {
-      "tags": "31-Gitcoin Grants:Friends",
-      "address": "0x058bdde93176f754be2c4361a99ed20869e106bc",
-      "name": "Name 0x058bdde9",
-      "symbol": "",
-      "source": "Gitcoin Website",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "90-DevCon2:Individual",
-      "address": "0x058dd5cb38725c5cd521de7fc5412bd64c81ab98",
-      "name": "Sascha Jafari",
-      "symbol": "",
-      "source": "DevCon2 Token Contract",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x05984006707585f66465e8a6505341f46b64fa7a",
-      "name": "Nam Coin",
-      "symbol": "NAM",
-      "source": "On chain",
-      "decimals": 18,
-      "description": ""
-    },
-    {
-      "tags": "31-Gitcoin Grants:Friends",
-      "address": "0x05a1ff0a32bc24265bcb39499d0c5d9a6cb2011c",
-      "name": "Name 0x05a1ff0a",
-      "symbol": "",
-      "source": "Gitcoin Website",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x05aaaa829afa407d83315cded1d45eb16025910c",
-      "name": "SP8DE Token",
-      "symbol": "SPX",
-      "source": "On chain",
-      "decimals": 18,
-      "description": "The Game of Chance.Changed"
-    },
-    {
-      "tags": "31-Gitcoin Grants:Grant",
-      "address": "0x05b22a6e05ae7c54fa5a87d15b5e0c73c4b87249",
-      "name": "Grant 1662 La Hora Cripto",
-      "symbol": "",
-      "source": "https://gitcoin.co/grants/1662/la-hora-cripto",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "31-Gitcoin Grants:Grant",
-      "address": "0x05c351382db8d770207f319d96ac1184c3717ede",
-      "name": "Grant 1511 Soappunk - Pirateshower Universe",
-      "symbol": "",
-      "source": "https://gitcoin.co/grants/1511/soappunk-pirateshower-universe",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x05c7065d644096a4e4c3fe24af86e36de021074b",
-      "name": "LendConnect Token",
-      "symbol": "LCT",
-      "source": "On chain",
-      "decimals": 18,
-      "description": "Aims to be a passive-income-generating Platform."
-    },
-    {
-      "tags": "90-DevCon2:Individual",
-      "address": "0x05cca80c318762feacb111e95ed29ebb8fc7aac8",
-      "name": "pete",
-      "symbol": "",
-      "source": "DevCon2 Token Contract",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "36-Chainlink",
-      "address": "0x05cf62c4ba0ccea3da680f9a8744ac51116d6231",
-      "name": "Chainlink AUD-USD Aggregator",
-      "symbol": "",
-      "source": "EtherScan.io",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "60-Airdrops",
-      "address": "0x05d03474df1b73c17891b41858633a5958c07713",
-      "name": "LPT Airdrop Sender",
-      "symbol": "",
-      "source": "TrueBlocks.io",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x05d412ce18f24040bb3fa45cf2c69e506586d8e8",
-      "name": "MFTU",
-      "symbol": "MFTU",
-      "source": "On chain",
-      "decimals": 18,
-      "description": "Coin for custom CyberFM 'Mainstream for the Underground' royalty payments."
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x05f4a42e251f2d52b8ed15e9fedaacfcef1fad27",
-      "name": "Zilliqa",
-      "symbol": "ZIL",
-      "source": "On chain",
-      "decimals": 12,
-      "description": "Zilliqa is a high-throughput public blockchain platform - designed to scale to thousands of transactions per second."
-    },
-    {
-      "tags": "31-Gitcoin Grants:Grant",
-      "address": "0x05f9f39e372bbe8cd2f73736ae0441ab8052dbb6",
-      "name": "Grant 1979 Vusd Stablecoin",
-      "symbol": "",
-      "source": "https://gitcoin.co/grants/1979/vusd-stablecoin",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x06012c8cf97bead5deae237070f9587f8e7a266d",
-      "name": "CryptoKitties",
-      "symbol": "CK",
-      "source": "On chain",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "31-Gitcoin Grants:Grant",
-      "address": "0x06044b5359d8df7886366c22c61c7ecd29becac7",
-      "name": "Grant 0336 Dhack - a Decentralized Hackathon Model",
-      "symbol": "",
-      "source": "https://gitcoin.co/grants/336/dhack-a-decentralized-hackathon-model",
-      "decimals": 0,
-      "description": "https://dhack.io"
-    },
-    {
-      "tags": "31-Gitcoin Grants:Friends",
-      "address": "0x060a24a6c7a493d2bc58db7b03bece9e67d2bd53",
-      "name": "Name 0x060a24a6",
-      "symbol": "",
-      "source": "Gitcoin Website",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "90-DevCon2:Individual",
-      "address": "0x06105042f9e891ad291a39f49be2eaa94f796945",
-      "name": "bernard lin",
-      "symbol": "",
-      "source": "DevCon2 Token Contract",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x06147110022b768ba8f99a8f385df11a151a9cc8",
-      "name": "ACE Token",
-      "symbol": "ACE",
-      "source": "On chain",
-      "decimals": 0,
-      "description": "ACE is a utility token, that serves as a form of access to the TokenStars platform and its internal currency. TokenStars is the first talent management platform on the blockchain, that will connect talents celebrities with fans and advertisers."
-    },
-    {
-      "tags": "31-Gitcoin Grants:Grant",
-      "address": "0x0639092a9c3d9467dd6f89a13213541c8a1e58b2",
-      "name": "Grant 0194 Reach Platform",
-      "symbol": "",
-      "source": "https://gitcoin.co/grants/194/reach-platform",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "31-Gitcoin Grants:Friends",
-      "address": "0x064d3230f753d8c14e06cf491fe2f1a3d2ccd5dd",
-      "name": "Name 0x064d3230",
-      "symbol": "",
-      "source": "Gitcoin Website",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x0663210a18dfdc62688b14c4ec10a1df8912e28c",
-      "name": "E-talon",
-      "symbol": "ETALON",
-      "source": "On chain",
-      "decimals": 8,
-      "description": ""
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x066798d9ef0833ccc719076dab77199ecbd178b0",
-      "name": "SakeToken",
-      "symbol": "SAKE",
-      "source": "On chain",
-      "decimals": 18,
-      "description": ""
-    },
-    {
-      "tags": "34-Twitter:Friends",
-      "address": "0x0667ad4cf9d2fd571a6a94412dbb98c0f9cf704e",
-      "name": "Name 0x0667ad4c",
-      "symbol": "",
-      "source": "Twitter",
-      "decimals": 0,
-      "description": "@okbabyqn88"
-    },
-    {
-      "tags": "31-Gitcoin Grants:Grant",
-      "address": "0x066d4d13c5bc10e14e30e862471772aa7d23b4f1",
-      "name": "Grant 1388 Crypto Valuations Youtube Channel",
-      "symbol": "",
-      "source": "https://gitcoin.co/grants/1388/crypto-valuations-youtube-channel",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x066f2d5ead7951f0d0038c19affd500b9f02c0e5",
-      "name": "CryptoJanky",
-      "symbol": "JNK",
-      "source": "On chain",
-      "decimals": 18,
-      "description": ""
-    },
-    {
-      "tags": "80-Malicious:DaoDrain",
-      "address": "0x06706dd3f2c9abf0a21ddcc6941d9b86f0596936",
-      "name": "DAO Drain 008",
-      "symbol": "",
-      "source": "GethSource",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "31-Gitcoin Grants:Grant",
-      "address": "0x067f2bef6a1f929544253b9fb95f99bae77b2518",
-      "name": "Grant 1753 Resetdao ― Web 3.0 Programmable Social Network",
-      "symbol": "",
-      "source": "https://gitcoin.co/grants/1753/resetdao-web-30-programmable-social-network",
       "decimals": 0,
       "description": ""
     }

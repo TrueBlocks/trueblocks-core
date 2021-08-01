@@ -112,6 +112,28 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
+    "tags": "50-Tokens:ERC20",
+    "address": "0x01d1a934129f208dfbe60ef31ca63f4ad2757d84",
+    "name": "Ethereum Cherry",
+    "symbol": "ECHERRY 🍒",
+    "source": "On chain",
+    "decimals": 18,
+    "is_contract": true,
+    "is_erc20": true
+  },
+  {
+    "deleted": false,
+    "tags": "50-Tokens:ERC20",
+    "address": "0x0208fb0af6652bdbc3ea010d5026ed92ff252a53",
+    "name": "Ethereum Hot",
+    "symbol": "EHOT",
+    "source": "On chain",
+    "decimals": 18,
+    "is_contract": true,
+    "is_erc20": true
+  },
+  {
+    "deleted": false,
     "tags": "30-Contracts",
     "address": "0x02bcb9675727ade60243c3d467a3bf152142698b",
     "name": "Credmark Community Treasury",
@@ -157,6 +179,17 @@ ethNames Ether --expand --verbose --fmt json
     "name": "Maker: Oasis",
     "source": "EtherScan.io",
     "is_contract": true
+  },
+  {
+    "deleted": false,
+    "tags": "50-Tokens:ERC20",
+    "address": "0x03c9436d54db599018842387d9d6075d81580726",
+    "name": "AirEthereumMax INU",
+    "symbol": "aiReMax",
+    "source": "On chain",
+    "decimals": 18,
+    "is_contract": true,
+    "is_erc20": true
   },
   {
     "deleted": false,
@@ -220,6 +253,17 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
+    "tags": "50-Tokens:ERC20",
+    "address": "0x0637ff2583c829eb286905aefa5f4bd93dfdd490",
+    "name": "Ethereum KISHU",
+    "symbol": "eKISHU",
+    "source": "On chain",
+    "decimals": 18,
+    "is_contract": true,
+    "is_erc20": true
+  },
+  {
+    "deleted": false,
     "tags": "40-Exchanges",
     "address": "0x0681d8db095565fe8a346fa0277bffde9c0edbbf",
     "name": "Binance 4",
@@ -238,6 +282,17 @@ ethNames Ether --expand --verbose --fmt json
     "address": "0x06a2cf3f024d8871baedd0f7bd9340001aada574",
     "name": "SingularDTV Sender 2",
     "source": "EtherScan.io"
+  },
+  {
+    "deleted": false,
+    "tags": "50-Tokens:ERC20",
+    "address": "0x06d5fbdc5b54fe3aed6ad1b5e2e5a5a6d9ff54ea",
+    "name": "Ethereum Extreme",
+    "symbol": "ETHE",
+    "source": "On chain",
+    "decimals": 18,
+    "is_contract": true,
+    "is_erc20": true
   },
   {
     "deleted": false,
@@ -296,6 +351,17 @@ ethNames Ether --expand --verbose --fmt json
     "name": "Yearn: StrategyCurveYVoterProxy",
     "source": "EtherScan.io",
     "is_contract": true
+  },
+  {
+    "deleted": false,
+    "tags": "50-Tokens:ERC20",
+    "address": "0x07f2ef35240c380c76eb1e43e4524ac6d756cf0c",
+    "name": "Ethereum Doughnut",
+    "symbol": "ENUT 🍩",
+    "source": "On chain",
+    "decimals": 18,
+    "is_contract": true,
+    "is_erc20": true
   },
   {
     "deleted": false,
@@ -407,6 +473,17 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
+    "tags": "50-Tokens:ERC20",
+    "address": "0x0c30f5715b00feff6fa8953f7d74b781f5c0f7da",
+    "name": "Ethereum Hyper",
+    "symbol": "ETHH",
+    "source": "On chain",
+    "decimals": 18,
+    "is_contract": true,
+    "is_erc20": true
+  },
+  {
+    "deleted": false,
     "tags": "91-Known",
     "address": "0x0c3239e2e841242db989a61518c22247e8c55208",
     "name": "BitCoinAcctnt3 (Prefund_0419)",
@@ -422,10 +499,32 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
+    "tags": "50-Tokens:ERC20",
+    "address": "0x0c4a8b983ec9662ef334323237e72a0978d9cddb",
+    "name": "Ethereum Apple",
+    "symbol": "ETHA 🍏",
+    "source": "On chain",
+    "decimals": 18,
+    "is_contract": true,
+    "is_erc20": true
+  },
+  {
+    "deleted": false,
     "tags": "55-Defi",
     "address": "0x0cec743b8ce4ef8802cac0e5df18a180ed8402a7",
     "name": "Yearn: Signer Milkyklim",
     "source": "EtherScan.io"
+  },
+  {
+    "deleted": false,
+    "tags": "50-Tokens:ERC20",
+    "address": "0x0d6d947e7efc2a42b1527752e4ca1608792cea5c",
+    "name": "Ethereum Volcano",
+    "symbol": "ETHV 🌋",
+    "source": "On chain",
+    "decimals": 18,
+    "is_contract": true,
+    "is_erc20": true
   },
   {
     "deleted": false,
@@ -440,12 +539,34 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
+    "tags": "50-Tokens:ERC20",
+    "address": "0x0deecb13f4e801bdbf2721875756d44b207ca580",
+    "name": "ETHERCToken",
+    "symbol": "EET",
+    "source": "On chain",
+    "decimals": 18,
+    "is_contract": true,
+    "is_erc20": true
+  },
+  {
+    "deleted": false,
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x0df05adac0159e215111696339ad4998e5871b3d",
     "name": "Grant 0576 BlockScout.com for Ethereum Mainnet hosting",
     "source": "https://gitcoin.co/grants/576/blockscoutcom-for-ethereum-mainnet-hosting",
     "description": "https://blockscout.com/eth/mainnet",
     "is_contract": true
+  },
+  {
+    "deleted": false,
+    "tags": "50-Tokens:ERC20",
+    "address": "0x0e00085666cad372139514c97c872d36cc71f0a5",
+    "name": "Ether Shiba",
+    "symbol": "ESHIBA",
+    "source": "On chain",
+    "decimals": 18,
+    "is_contract": true,
+    "is_erc20": true
   },
   {
     "deleted": false,
@@ -620,6 +741,17 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
+    "tags": "50-Tokens:ERC20",
+    "address": "0x173cb65018ba788c21a269c11537be113ece1908",
+    "name": "Ethereum Bomb",
+    "symbol": "EBOMB 💣",
+    "source": "On chain",
+    "decimals": 18,
+    "is_contract": true,
+    "is_erc20": true
+  },
+  {
+    "deleted": false,
     "tags": "60-Airdrops",
     "address": "0x17405148473e521b62cbcf8ebd929e8a30c4d3aa",
     "name": "DAO Issued Cert Airdrop",
@@ -708,12 +840,34 @@ ethNames Ether --expand --verbose --fmt json
   {
     "deleted": false,
     "tags": "50-Tokens:ERC20",
+    "address": "0x1c90362872b22a185764da72570330d1590b9e1e",
+    "name": "Ethereum V2",
+    "symbol": "ETH2",
+    "source": "On chain",
+    "decimals": 18,
+    "is_contract": true,
+    "is_erc20": true
+  },
+  {
+    "deleted": false,
+    "tags": "50-Tokens:ERC20",
     "address": "0x1d4ccc31dab6ea20f461d329a0562c1c58412515",
     "name": "Talao",
     "symbol": "TALAO",
     "source": "On chain",
     "decimals": 18,
     "description": "Reputation Protocol and Decentralized Marketplace based on Ethereum blockchain",
+    "is_contract": true,
+    "is_erc20": true
+  },
+  {
+    "deleted": false,
+    "tags": "50-Tokens:ERC20",
+    "address": "0x1d5a90fd4f5d258f6ba52363d9e86e06737dcb25",
+    "name": "Ethereum X Uniswap",
+    "symbol": "$ETHXUNI",
+    "source": "On chain",
+    "decimals": 9,
     "is_contract": true,
     "is_erc20": true
   },
@@ -832,6 +986,17 @@ ethNames Ether --expand --verbose --fmt json
   {
     "deleted": false,
     "tags": "50-Tokens:ERC20",
+    "address": "0x227b024e62cdbf3f7895ba84c1777441bad02442",
+    "name": "Ethereum Spiral",
+    "symbol": "ESPIRAL 🐚",
+    "source": "On chain",
+    "decimals": 18,
+    "is_contract": true,
+    "is_erc20": true
+  },
+  {
+    "deleted": false,
+    "tags": "50-Tokens:ERC20",
     "address": "0x2344871f523cbb28a4f60045531184cf1f03ad24",
     "name": "RoBET - Truly Decentralized Sportsbetting",
     "symbol": "ROBET",
@@ -856,6 +1021,17 @@ ethNames Ether --expand --verbose --fmt json
     "name": "Polymath: Security Token Registry Proxy",
     "source": "EtherScan.io",
     "is_contract": true
+  },
+  {
+    "deleted": false,
+    "tags": "50-Tokens:ERC20",
+    "address": "0x24104317ccb743bde9dc05a3a89de553f4a98075",
+    "name": "EthereumMax",
+    "symbol": "eMax",
+    "source": "On chain",
+    "decimals": 18,
+    "is_contract": true,
+    "is_erc20": true
   },
   {
     "deleted": false,
@@ -887,6 +1063,17 @@ ethNames Ether --expand --verbose --fmt json
   {
     "deleted": false,
     "tags": "50-Tokens:ERC20",
+    "address": "0x253d91dd6ea22d0d50220fd84ccba14047e5e644",
+    "name": "EtherDog",
+    "symbol": "EtherDog",
+    "source": "On chain",
+    "decimals": 9,
+    "is_contract": true,
+    "is_erc20": true
+  },
+  {
+    "deleted": false,
+    "tags": "50-Tokens:ERC20",
     "address": "0x255aa6df07540cb5d3d297f0d0d4d84cb52bc8e6",
     "name": "Raiden Token",
     "symbol": "RDN",
@@ -911,6 +1098,28 @@ ethNames Ether --expand --verbose --fmt json
     "name": "Yearn: StrategyVaultUSDC",
     "source": "EtherScan.io",
     "is_contract": true
+  },
+  {
+    "deleted": false,
+    "tags": "50-Tokens:ERC20",
+    "address": "0x263f500368d52bf3ddb3d48b119725177b9bcbd7",
+    "name": "EthereumMaX",
+    "symbol": "$eMax",
+    "source": "On chain",
+    "decimals": 18,
+    "is_contract": true,
+    "is_erc20": true
+  },
+  {
+    "deleted": false,
+    "tags": "50-Tokens:ERC20",
+    "address": "0x26761d50872df89097531622511360f54a55ea83",
+    "name": "Ethereum X Elon Musk",
+    "symbol": "ETHXELM",
+    "source": "On chain",
+    "decimals": 18,
+    "is_contract": true,
+    "is_erc20": true
   },
   {
     "deleted": false,
@@ -1054,6 +1263,28 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
+    "tags": "50-Tokens:ERC20",
+    "address": "0x2b094db2efd1055225a675e74330f668fd888976",
+    "name": "Ethereum 2.0",
+    "symbol": "ETH 2.0",
+    "source": "On chain",
+    "decimals": 18,
+    "is_contract": true,
+    "is_erc20": true
+  },
+  {
+    "deleted": false,
+    "tags": "50-Tokens:ERC20",
+    "address": "0x2b32524d700305a63d94ac4011a92958b6356f68",
+    "name": "Ethereum1000x",
+    "symbol": "ETH 1000X",
+    "source": "On chain",
+    "decimals": 18,
+    "is_contract": true,
+    "is_erc20": true
+  },
+  {
+    "deleted": false,
     "tags": "60-Airdrops",
     "address": "0x2b3e697c2b90e3ecde2416e106d61bd0b1deab0f",
     "name": "BasicCoin Airdrop",
@@ -1075,6 +1306,17 @@ ethNames Ether --expand --verbose --fmt json
     "name": "DAO Drain 003",
     "source": "GethSource Ether Camp",
     "is_contract": true
+  },
+  {
+    "deleted": false,
+    "tags": "50-Tokens:ERC20",
+    "address": "0x2d1e23144b89fc7364ed3efcd5af04093f7d9a3d",
+    "name": "Ethereum Asset Split Token",
+    "symbol": "EAST",
+    "source": "On chain",
+    "decimals": 18,
+    "is_contract": true,
+    "is_erc20": true
   },
   {
     "deleted": false,
@@ -1148,6 +1390,17 @@ ethNames Ether --expand --verbose --fmt json
     "name": "DAO Drain 067 (DarkDAO)",
     "source": "GethSource SlackNation OnChain Ether Camp",
     "is_contract": true
+  },
+  {
+    "deleted": false,
+    "tags": "50-Tokens:ERC20",
+    "address": "0x30da8ed0c4cd0fcbdda4f988b03d2e09f109a31f",
+    "name": "Ethereum Firecracker",
+    "symbol": "ETHF 🧨",
+    "source": "On chain",
+    "decimals": 18,
+    "is_contract": true,
+    "is_erc20": true
   },
   {
     "deleted": false,
@@ -1252,6 +1505,17 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
+    "tags": "50-Tokens:ERC20",
+    "address": "0x344db6fb128e3fbf7733df9368bf6b0f94b593a7",
+    "name": "EthereumMaxi",
+    "symbol": "✅iMax",
+    "source": "On chain",
+    "decimals": 9,
+    "is_contract": true,
+    "is_erc20": true
+  },
+  {
+    "deleted": false,
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x35ca7ae854338dcbc154066f0ea00b636d38e431",
     "name": "Grant 0126 #humansofethereum",
@@ -1264,6 +1528,17 @@ ethNames Ether --expand --verbose --fmt json
     "name": "Genesis Protocol",
     "source": "EtherScan.io",
     "is_contract": true
+  },
+  {
+    "deleted": false,
+    "tags": "50-Tokens:ERC20",
+    "address": "0x38143c751cc177d599b4740a76c1b2ae36d607bb",
+    "name": "Ethereum Koti Inu",
+    "symbol": "eKoti",
+    "source": "On chain",
+    "decimals": 18,
+    "is_contract": true,
+    "is_erc20": true
   },
   {
     "deleted": false,
@@ -1289,6 +1564,17 @@ ethNames Ether --expand --verbose --fmt json
     "symbol": "HPB",
     "source": "EtherScan.io",
     "description": "HPB High-Performance Blockchain is a new kind of block chain hardware and software architecture, which includes a chip acceleration engine and the blockchain platform, aiming to realize the performance extension of distributed applications",
+    "is_contract": true,
+    "is_erc20": true
+  },
+  {
+    "deleted": false,
+    "tags": "50-Tokens:ERC20",
+    "address": "0x38f08ad16b123d66aaefd5fb857e97f1e2213997",
+    "name": "Ethereum Mango",
+    "symbol": "ETHM 🥭",
+    "source": "On chain",
+    "decimals": 18,
     "is_contract": true,
     "is_erc20": true
   },
@@ -1350,6 +1636,39 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
+    "tags": "50-Tokens:ERC20",
+    "address": "0x3a8fb7a83b85e2204c059852a7a1f9e17961f33f",
+    "name": "Ethereum Pill",
+    "symbol": "ETHP 💊",
+    "source": "On chain",
+    "decimals": 18,
+    "is_contract": true,
+    "is_erc20": true
+  },
+  {
+    "deleted": false,
+    "tags": "50-Tokens:ERC20",
+    "address": "0x3b45a702763c02c65ace21e84adc4c224a794323",
+    "name": "Ethereum Professional",
+    "symbol": "EPRO",
+    "source": "On chain",
+    "decimals": 18,
+    "is_contract": true,
+    "is_erc20": true
+  },
+  {
+    "deleted": false,
+    "tags": "50-Tokens:ERC20",
+    "address": "0x3bd3284b2dd68d7f0502568d2c8c2df649d42a31",
+    "name": "EthereumMex",
+    "symbol": "eMex",
+    "source": "On chain",
+    "decimals": 18,
+    "is_contract": true,
+    "is_erc20": true
+  },
+  {
+    "deleted": false,
     "tags": "30-Contracts",
     "address": "0x3c2c10e5ecd073d9ee238493d338ec6e3d7281c6",
     "name": "Bithereum",
@@ -1374,11 +1693,44 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
+    "tags": "50-Tokens:ERC20",
+    "address": "0x3f32d96789150483311c82bf2b1940520c9fcc9d",
+    "name": "EthereumMaxx",
+    "symbol": "eMaxx",
+    "source": "On chain",
+    "decimals": 18,
+    "is_contract": true,
+    "is_erc20": true
+  },
+  {
+    "deleted": false,
     "tags": "36-Chainlink",
     "address": "0x3f6e09a4ec3811765f5b2ad15c0279910dbb2c04",
     "name": "Chainlink N225-JPY Aggregator",
     "source": "EtherScan.io",
     "is_contract": true
+  },
+  {
+    "deleted": false,
+    "tags": "50-Tokens:ERC20",
+    "address": "0x3f8ed9e2fb9cce3b375b5cb594aa1046f630277a",
+    "name": "Buterin 'The Ethereal Mystic'",
+    "symbol": "TRIBUTE002",
+    "source": "On chain",
+    "decimals": 18,
+    "is_contract": true,
+    "is_erc20": true
+  },
+  {
+    "deleted": false,
+    "tags": "50-Tokens:ERC20",
+    "address": "0x3fcc364f5b246c3632c22d77cdb59f1c2795ed27",
+    "name": "Ethereum Tesla",
+    "symbol": "eTesla",
+    "source": "On chain",
+    "decimals": 18,
+    "is_contract": true,
+    "is_erc20": true
   },
   {
     "deleted": false,
@@ -1473,304 +1825,11 @@ ethNames Ether --expand --verbose --fmt json
   {
     "deleted": false,
     "tags": "50-Tokens:ERC20",
-    "address": "0x42d6622dece394b54999fbd73d108123806f6a18",
-    "name": "SPANK",
-    "symbol": "SPANK",
-    "source": "On chain",
-    "decimals": 18,
-    "description": "A cryptoeconomic powered adult entertainment ecosystem built on the Ethereum network.",
-    "is_contract": true,
-    "is_erc20": true
-  },
-  {
-    "deleted": false,
-    "tags": "31-Gitcoin Grants:Grant",
-    "address": "0x433ee2f00ad7ff824b2fe74bace417afd2d86d31",
-    "name": "Grant 1464 Kontext.app - Social Bookmarking on Filecoin & Ethereum",
-    "source": "https://gitcoin.co/grants/1464/kontextapp-social-bookmarking-on-filecoin-ethereu"
-  },
-  {
-    "deleted": false,
-    "tags": "50-Tokens:ERC20",
-    "address": "0x4355fc160f74328f9b383df2ec589bb3dfd82ba0",
-    "name": "Opus Token",
-    "symbol": "OPT",
-    "source": "On chain",
-    "decimals": 18,
-    "description": "Decentralised music platform built on Ethereum and IPFS.",
-    "is_contract": true,
-    "is_erc20": true
-  },
-  {
-    "deleted": false,
-    "tags": "50-Tokens:ERC20",
-    "address": "0x436f0f3a982074c4a05084485d421466a994fe53",
-    "name": "Rate3",
-    "symbol": "RTE",
-    "source": "On chain",
-    "decimals": 18,
-    "description": "Payment Without Borders - A decentralised protocol for cross border payments and credit scoring. Empowered by Stellar and Ethereum.",
-    "is_contract": true,
-    "is_erc20": true
-  },
-  {
-    "deleted": false,
-    "tags": "55-Defi",
-    "address": "0x43a8ece49718e22d21077000768aff91849bceff",
-    "name": "Cream.Finance: CREAM/WETH Pool",
-    "source": "EtherScan.io",
-    "is_contract": true
-  },
-  {
-    "deleted": false,
-    "tags": "80-Malicious:DaoDrain",
-    "address": "0x440c59b325d2997a134c2c7c60a8c61611212bad",
-    "name": "DAO Drain 041",
-    "source": "GethSource Ether Camp",
-    "is_contract": true
-  },
-  {
-    "deleted": false,
-    "tags": "50-Tokens:ERC20",
-    "address": "0x44197a4c44d6a059297caf6be4f7e172bd56caaf",
-    "name": "ELTCOIN",
-    "symbol": "ELTCOIN",
-    "source": "On chain",
-    "decimals": 8,
-    "description": "Ethereum Limited Total Coin",
-    "is_contract": true,
-    "is_erc20": true
-  },
-  {
-    "deleted": false,
-    "tags": "30-Contracts",
-    "address": "0x445b774c012c5418d6d885f6cbfeb049a7fe6558",
-    "name": "Everest",
-    "source": "EtherScan.io",
-    "is_contract": true
-  },
-  {
-    "deleted": false,
-    "tags": "50-Tokens:ERC20",
-    "address": "0x45e42d659d9f9466cd5df622506033145a9b89bc",
-    "name": "Nexium",
-    "symbol": "NxC",
-    "source": "On chain",
-    "decimals": 3,
-    "description": "The Economy of Beyond the Void is based on the Ethereum Blockchain, which can be used with tokens called Nexium.",
-    "is_contract": true,
-    "is_erc20": true
-  },
-  {
-    "deleted": false,
-    "tags": "50-Tokens:ERC20",
-    "address": "0x45f783cce6b7ff23b2ab2d70e416cdb7d6055f51",
-    "name": "Curve.fi: y Swap",
-    "source": "EtherScan.io",
-    "is_contract": true
-  },
-  {
-    "deleted": false,
-    "tags": "80-Malicious:DaoDrain",
-    "address": "0x4613f3bca5c44ea06337a9e439fbc6d42e501d0a",
-    "name": "DAO Drain 109 DAO_Hell_007",
-    "source": "GethSource Ether Camp",
-    "is_contract": true
-  },
-  {
-    "deleted": false,
-    "tags": "50-Tokens:ERC20",
-    "address": "0x461733c17b0755ca5649b6db08b3e213fcf22546",
-    "name": "ATN",
-    "symbol": "ATN",
-    "source": "On Chain",
-    "decimals": 18,
-    "description": "ATN is a global artificial intelligence API marketplace where developers, technology suppliers and buyers come together to access and develop new and innovative forms of A.I. technology.",
-    "is_contract": true,
-    "is_erc20": true
-  },
-  {
-    "deleted": false,
-    "tags": "50-Tokens:ERC20",
-    "address": "0x4678f0a6958e4d2bc4f1baf7bc52e8f3564f3fe4",
-    "name": "Maker: Proxy Registry",
-    "source": "EtherScan.io",
-    "is_contract": true
-  },
-  {
-    "deleted": false,
-    "tags": "55-Defi",
-    "address": "0x4720515963a9d40ca10b1ade806c1291e6c9a86d",
-    "name": "StrategyUSDC3pool",
-    "source": "EtherScan.io",
-    "is_contract": true
-  },
-  {
-    "deleted": false,
-    "tags": "50-Tokens:ERC20",
-    "address": "0x47ce0c6ed5b0ce3d3a51fdb1c52dc66a7c3c2936",
-    "name": "Tornado.Cash: 1 ETH",
-    "source": "EtherScan.io",
-    "is_contract": true
-  },
-  {
-    "deleted": false,
-    "tags": "55-Defi",
-    "address": "0x48f2bd7513da5bb9f7bfd54ea37c41650fd5f3a3",
-    "name": "Yearn: Signer Devops199fan",
-    "source": "EtherScan.io"
-  },
-  {
-    "deleted": false,
-    "tags": "50-Tokens:ERC20",
-    "address": "0x48ff53777f747cfb694101222a944de070c15d36",
-    "name": "Ether Kingdoms Token",
-    "symbol": "IMP",
-    "source": "On chain",
-    "decimals": 7,
-    "description": "Ether Kingdoms is a new crypto-game with own ERC20 token, IMP. Key features: up to 365% annual POS reward, no ICO, fair Airdrop distribution only, already tradable on several exchanges.",
-    "is_contract": true,
-    "is_erc20": true
-  },
-  {
-    "deleted": false,
-    "tags": "60-Airdrops",
-    "address": "0x4936790a58f5ae1c06210cba4eb1024fd7d535ac",
-    "name": "Katerium Airdrop",
-    "source": "EtherScan.io",
-    "is_contract": true
-  },
-  {
-    "deleted": false,
-    "tags": "34-ENS",
-    "address": "0x4976fb03c32e5b8cfe2b6ccb31c09ba78ebaba41",
-    "name": "ENS: Public Resolver 2",
-    "source": "EtherScan.io",
-    "is_contract": true
-  },
-  {
-    "deleted": false,
-    "tags": "50-Tokens:ERC20",
-    "address": "0x498b3bfabe9f73db90d252bcd4fa9548cd0fd981",
-    "name": "InstaDApp: Registry",
-    "source": "EtherScan.io",
-    "is_contract": true
-  },
-  {
-    "deleted": false,
-    "tags": "50-Tokens:ERC20",
-    "address": "0x499a6b77bc25c26bcf8265e2102b1b3dd1617024",
-    "name": "Bitether",
-    "symbol": "BTR",
-    "source": "On chain",
-    "decimals": 18,
-    "description": "Project based on online and offline shopping market all across the globe.",
-    "is_contract": true,
-    "is_erc20": true
-  },
-  {
-    "deleted": false,
-    "tags": "40-Exchanges",
-    "address": "0x49c4f9bc14884f6210f28342ced592a633801a8b",
-    "name": "Uniswap: KNC",
-    "symbol": "KNC",
-    "source": "EtherScan.io",
-    "is_contract": true,
-    "is_erc20": true
-  },
-  {
-    "deleted": false,
-    "tags": "35-Pool Together",
-    "address": "0x49d716dfe60b37379010a75329ae09428f17118d",
-    "name": "Pool Dai",
-    "symbol": "plDai",
+    "address": "0x423787fc60fd15c67ceeabab8f01e9c2dfdc496a",
+    "name": "Ethereum Satellite",
+    "symbol": "ETHS 🛰️",
     "source": "On chain",
     "decimals": 18,
     "is_contract": true,
     "is_erc20": true
-  },
-  {
-    "deleted": false,
-    "tags": "30-Contracts",
-    "address": "0x4a5c681ddc32acc6cca51ac17e9d461e6be87900",
-    "name": "Nexus Mutual: Governance Proxy",
-    "source": "EtherScan.io",
-    "is_contract": true
-  },
-  {
-    "deleted": false,
-    "tags": "30-Contracts",
-    "address": "0x4aa42145aa6ebf72e164c9bbc74fbd3788045016",
-    "name": "POA Network: DAI-XDAI Bridge",
-    "source": "EtherScan.io",
-    "is_contract": true
-  },
-  {
-    "deleted": false,
-    "tags": "30-Contracts",
-    "address": "0x4ae0ede482f825fb9cccce8f0fe089f0379eaa2a",
-    "name": "MCH: Gum Gateway 1",
-    "source": "EtherScan.io",
-    "is_contract": true
-  },
-  {
-    "deleted": false,
-    "tags": "50-Tokens:ERC20",
-    "address": "0x4b60b53a6edcd75f0730ecc22579df2079f210b0",
-    "name": "DMarket: Wallet",
-    "source": "EtherScan.io"
-  },
-  {
-    "deleted": false,
-    "tags": "31-Gitcoin Grants:Grant",
-    "address": "0x4d07af703c163540c59763ff404710204334af81",
-    "name": "Grant 0590 Gwei.cz - Cz/sk DeFi/ethereum Community",
-    "source": "https://gitcoin.co/grants/590/gweicz-czsk-defiethereum-community",
-    "description": "https://gwei.cz",
-    "is_contract": true
-  },
-  {
-    "deleted": false,
-    "tags": "30-Contracts",
-    "address": "0x4d953115678b15ce0b0396bcf95db68003f86fb5",
-    "name": "Gnosis Safe: Relay service - Transactions",
-    "source": "EtherScan.io"
-  },
-  {
-    "deleted": false,
-    "tags": "36-Compound",
-    "address": "0x4ddc2d193948926d02f9b1fe9e1daa0718270ed5",
-    "name": "Compound Ether",
-    "symbol": "cETH",
-    "source": "On chain",
-    "decimals": 8,
-    "is_contract": true,
-    "is_erc20": true
-  },
-  {
-    "deleted": false,
-    "tags": "50-Tokens:ERC20",
-    "address": "0x4e005a760e00e17c4912a8070eec047cfecbabbb",
-    "name": "NEXT.exchange",
-    "symbol": "NEXT",
-    "source": "On chain",
-    "decimals": 18,
-    "description": "A hybrid exchange registered as an N. V. Public company in the Netherlands and provides fiat pairs to all altcoins on its platform",
-    "is_contract": true,
-    "is_erc20": true
-  },
-  {
-    "deleted": false,
-    "tags": "31-Gitcoin Grants:Grant",
-    "address": "0x4ef6ea0720862903bbb039e1ab30563e9ec33aba",
-    "name": "Grant 1937 Ethereum Integration: Blockchain Data in Trading Bots",
-    "source": "https://gitcoin.co/grants/1937/ethereum-integration-blockchain-data-in-trading-b"
-  },
-  {
-    "deleted": false,
-    "tags": "30-Contracts:Set Prototcol",
-    "address": "0x4f57e1f2020c35cd2fb45cf53cfeb6ff2e796180",
-    "name": "Set: Rebalancing Set Exchange Issuance Module V2",
-    "source": "EtherScan.io",
-    "is_contract": true
   }] }
