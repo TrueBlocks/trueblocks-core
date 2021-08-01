@@ -21,49 +21,7 @@
 
 namespace qblocks {
 
-//-------------------------------------------------------------------------
-string_q getCachePath(const string_q& _part) {
-    // TODO(tjayrush): global data
-    static string_q g_cachePath;
-    if (!g_cachePath.empty())  // leave early if we can
-        return substitute((g_cachePath + _part), "//", "/");
-
-    {  // give ourselves a frame - always enters - forces creation in the frame
-       // Wait until any other thread is finished filling the value.
-        mutex aMutex;
-        lock_guard<mutex> lock(aMutex);
-
-        // Another thread may have filled the data while we were waiting
-        if (!g_cachePath.empty())
-            return substitute((g_cachePath + _part), "//", "/");
-
-        // Otherwise, fill the value
-        CToml toml(configPath("trueBlocks.toml"));
-        string_q path = toml.getConfigStr("settings", "cachePath", "<NOT_SET>");
-        if (path == "<NOT_SET>") {
-            path = configPath("cache/");
-            toml.setConfigStr("settings", "cachePath", path);
-            toml.writeFile();
-        }
-
-        CFilename folder(path);
-        if (!folderExists(folder.getFullPath()))
-            establishFolder(folder.getFullPath());
-
-        g_cachePath = folder.getFullPath();
-        if (!folder.isValid()) {
-            errorMessage("Invalid cachePath (" + folder.getFullPath() + ") in config file.");
-            path = configPath("cache/");
-            CFilename fallback(path);
-            g_cachePath = fallback.getFullPath();
-        }
-        if (!endsWith(g_cachePath, "/"))
-            g_cachePath += "/";
-    }
-
-    return substitute((g_cachePath + _part), "//", "/");
-}
-
+extern void addToMap(CAddressNameMap& theMap, CAccountName& account, const string_q& tabFilename, uint64_t cnt);
 //-----------------------------------------------------------------------
 bool loadPrefunds(const string_q& prefundFile) {
     // start with a clean slate
@@ -112,40 +70,6 @@ bool loadPrefunds(const string_q& prefundFile) {
     }
     archive.Release();
     return true;
-}
-
-//-----------------------------------------------------------------------
-void addToMap(CAddressNameMap& theMap, CAccountName& account, const string_q& tabFilename, uint64_t cnt) {
-    if (theMap[account.address].address == account.address) {
-        // first in wins;
-        return;
-    }
-
-    if (contains(tabFilename, "_custom")) {
-        // From the custom file - store the values found in the file
-        account.is_custom = true;
-        theMap[account.address] = account;
-
-    } else if (contains(tabFilename, "_prefunds")) {
-        // From the prefund file - force prefund marker, apply default values only if existing fields are empty
-        address_t addr = account.address;
-        account = theMap[addr];  // may be empty, but if not, let's pick up the existing values
-        account.address = addr;
-        account.tags = account.tags.empty() ? "80-Prefund" : account.tags;
-        string_q prefundName = "Prefund_" + padNum4(cnt);
-        account.is_prefund = account.name.empty();  // only mark as pre-fund if it didn't exist before
-                                                    // clang-format off
-        account.name = account.name.empty()                  ? prefundName
-                       : contains(account.name, "(Prefund_") ? account.name
-                                                             : account.name + " (" + prefundName + ")";
-        // clang-format on
-        account.source = account.source.empty() ? "Genesis" : account.source;
-        theMap[account.address] = account;
-
-    } else {
-        // From the regular file - store the values found in the file
-        theMap[account.address] = account;
-    }
 }
 
 //-----------------------------------------------------------------------
@@ -205,6 +129,40 @@ bool importTabFile(CAddressNameMap& theMap, const string_q& tabFilename) {
     }
 
     return true;
+}
+
+//-----------------------------------------------------------------------
+void addToMap(CAddressNameMap& theMap, CAccountName& account, const string_q& tabFilename, uint64_t cnt) {
+    if (theMap[account.address].address == account.address) {
+        // first in wins;
+        return;
+    }
+
+    if (contains(tabFilename, "_custom")) {
+        // From the custom file - store the values found in the file
+        account.is_custom = true;
+        theMap[account.address] = account;
+
+    } else if (contains(tabFilename, "_prefunds")) {
+        // From the prefund file - force prefund marker, apply default values only if existing fields are empty
+        address_t addr = account.address;
+        account = theMap[addr];  // may be empty, but if not, let's pick up the existing values
+        account.address = addr;
+        account.tags = account.tags.empty() ? "80-Prefund" : account.tags;
+        string_q prefundName = "Prefund_" + padNum4(cnt);
+        account.is_prefund = account.name.empty();  // only mark as pre-fund if it didn't exist before
+                                                    // clang-format off
+        account.name = account.name.empty()                  ? prefundName
+                       : contains(account.name, "(Prefund_") ? account.name
+                                                             : account.name + " (" + prefundName + ")";
+        // clang-format on
+        account.source = account.source.empty() ? "Genesis" : account.source;
+        theMap[account.address] = account;
+
+    } else {
+        // From the regular file - store the values found in the file
+        theMap[account.address] = account;
+    }
 }
 
 //-----------------------------------------------------------------------
@@ -295,19 +253,6 @@ bool COptionsBase::loadNames(void) {
 }
 
 //-----------------------------------------------------------------------
-bool COptionsBase::findToken(CAccountName& acct, const address_t& addr) {
-    acct = tokenMap[addr];
-    if (acct.address == addr)
-        return true;
-    if (airdropMap[addr])
-        return getNamedAccount(acct, addr);
-    return false;
-}
-
-//-----------------------------------------------------------------------
-using ResultPair = std::pair<CAccountNameArray::iterator, CAccountNameArray::iterator>;
-
-//-----------------------------------------------------------------------
 bool COptionsBase::getNamedAccount(CAccountName& acct, const string_q& addr) {
     if (!loadNames())
         return false;
@@ -316,6 +261,20 @@ bool COptionsBase::getNamedAccount(CAccountName& acct, const string_q& addr) {
         acct = namesMap[addr];
         return true;
     }
+
+    return false;
+}
+
+//-----------------------------------------------------------------------
+bool COptionsBase::findToken(CAccountName& acct, const address_t& addr) {
+    if (tokenMap[addr].address == addr) {
+        acct = tokenMap[addr];
+        return true;
+    }
+
+    if (airdropMap[addr])
+        return getNamedAccount(acct, addr);
+
     return false;
 }
 

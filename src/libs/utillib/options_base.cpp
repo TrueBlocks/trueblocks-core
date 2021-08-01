@@ -1281,6 +1281,49 @@ bool COptionsBase::findSpecial(CNameValue& pair, const string_q& arg) {
     return false;
 }
 
+//-------------------------------------------------------------------------
+string_q getCachePath(const string_q& _part) {
+    // TODO(tjayrush): global data
+    static string_q g_cachePath;
+    if (!g_cachePath.empty())  // leave early if we can
+        return substitute((g_cachePath + _part), "//", "/");
+
+    {  // give ourselves a frame - always enters - forces creation in the frame
+       // Wait until any other thread is finished filling the value.
+        mutex aMutex;
+        lock_guard<mutex> lock(aMutex);
+
+        // Another thread may have filled the data while we were waiting
+        if (!g_cachePath.empty())
+            return substitute((g_cachePath + _part), "//", "/");
+
+        // Otherwise, fill the value
+        CToml toml(configPath("trueBlocks.toml"));
+        string_q path = toml.getConfigStr("settings", "cachePath", "<NOT_SET>");
+        if (path == "<NOT_SET>") {
+            path = configPath("cache/");
+            toml.setConfigStr("settings", "cachePath", path);
+            toml.writeFile();
+        }
+
+        CFilename folder(path);
+        if (!folderExists(folder.getFullPath()))
+            establishFolder(folder.getFullPath());
+
+        g_cachePath = folder.getFullPath();
+        if (!folder.isValid()) {
+            errorMessage("Invalid cachePath (" + folder.getFullPath() + ") in config file.");
+            path = configPath("cache/");
+            CFilename fallback(path);
+            g_cachePath = fallback.getFullPath();
+        }
+        if (!endsWith(g_cachePath, "/"))
+            g_cachePath += "/";
+    }
+
+    return substitute((g_cachePath + _part), "//", "/");
+}
+
 //---------------------------------------------------------------------------------------------------
 COptionsBase::COptionsBase(void) {
     minArgs = 1;
