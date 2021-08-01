@@ -8,10 +8,10 @@ The `--trace` option attachs an array transaction traces to the output (if the n
 
 ### usage
 
-`Usage:`    chifra transactions [-a|-t|-u|-o|-v|-h] &lt;tx_id&gt; [tx_id...]  
+`Usage:`    chifra transactions [-a|-t|-u|-o|-v|-h] &lt;tx_id&gt; [tx_id...]
 `Purpose:`  Retrieve one or more transactions from the chain or local cache.
 
-`Where:`  
+`Where:`
 
 | | Option | Description |
 | :----- | :----- | :---------- |
@@ -25,7 +25,7 @@ The `--trace` option attachs an array transaction traces to the output (if the n
 
 `Notes:`
 
-- The `transactions` list may be one or more space-separated identifiers which are either a transaction hash, 
+- The `transactions` list may be one or more space-separated identifiers which are either a transaction hash,
   a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.
 - This tool checks for valid input syntax, but does not check that the transaction requested actually exists.
 - If the queried node does not store historical state, the results for most older transactions are undefined.

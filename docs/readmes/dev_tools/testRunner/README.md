@@ -20,10 +20,10 @@ You may run all tests from the `./build` folder by entering `make test-all` (or 
 
 ### usage
 
-`Usage:`    testRunner [-m|-f|-c|-n|-o|-r|-v|-h]  
+`Usage:`    testRunner [-m|-f|-c|-n|-o|-r|-v|-h]
 `Purpose:`  Run TrueBlocks' test cases with options.
 
-`Where:`  
+`Where:`
 
 | | Option | Description |
 | :----- | :----- | :---------- |

@@ -20,9 +20,9 @@ The `chifra quotes` tool provides USD ($) price data to other tools and to the c
 
 `Notes:`
 
-- Valid pairs include any pair from the public Poloniex's API here: 
+- Valid pairs include any pair from the public Poloniex's API here:
   https://poloniex.com/public?command=returnCurrencies.
-- Due to restrictions from Poloniex, this tool retrieves only 30 days of data 
+- Due to restrictions from Poloniex, this tool retrieves only 30 days of data
   at a time. You must repeatedly run this command until the data is up-to-date.
 
 #### Other Options

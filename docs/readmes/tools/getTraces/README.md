@@ -8,10 +8,10 @@ The `--filter` option calls your node's `trace_filter` routine (if available) us
 
 ### usage
 
-`Usage:`    chifra traces [-a|-f|-d|-c|-v|-h] &lt;tx_id&gt; [tx_id...]  
+`Usage:`    chifra traces [-a|-f|-d|-c|-v|-h] &lt;tx_id&gt; [tx_id...]
 `Purpose:`  Retrieve traces for the given transaction(s).
 
-`Where:`  
+`Where:`
 
 | | Option | Description |
 | :----- | :----- | :---------- |
@@ -25,11 +25,11 @@ The `--filter` option calls your node's `trace_filter` routine (if available) us
 
 `Notes:`
 
-- The `transactions` list may be one or more space-separated identifiers which are either a transaction hash, 
+- The `transactions` list may be one or more space-separated identifiers which are either a transaction hash,
   a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.
 - This tool checks for valid input syntax, but does not check that the transaction requested actually exists.
 - If the queried node does not store historical state, the results for most older transactions are undefined.
-- A bang seperated filter has the following fields (at least one of which is required) and is separated 
+- A bang seperated filter has the following fields (at least one of which is required) and is separated
   with a bang (!): fromBlk, toBlk, fromAddr, toAddr, after, count.
 - A state diff trace describes, for each modified address, what changed during that trace.
 

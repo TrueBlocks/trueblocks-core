@@ -40,6 +40,9 @@ bool visitReadme(const string_q& templatePath, void* data) {
         replace(source, "[{USAGE_TABLE}]", usage);
 
         string_q docCode = substitute(source, "## Usage", "## usage");
+        replaceAll(docCode, "]  \n", "]\n");
+        replaceAll(docCode, ":`  \n", ":`\n");
+        replaceAll(docCode, ": \n", ":\n");
         string_q srcCode = source;
         for (auto rep : opts->counter.replacements) {
             CStringArray parts2;

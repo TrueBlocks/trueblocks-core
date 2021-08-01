@@ -8,10 +8,10 @@ Generally speaking, this tool is less useful than others as you may report the s
 
 ### usage
 
-`Usage:`    chifra receipts [-a|-v|-h] &lt;tx_id&gt; [tx_id...]  
+`Usage:`    chifra receipts [-a|-v|-h] &lt;tx_id&gt; [tx_id...]
 `Purpose:`  Retrieve receipts for the given transaction(s).
 
-`Where:`  
+`Where:`
 
 | | Option | Description |
 | :----- | :----- | :---------- |
@@ -22,7 +22,7 @@ Generally speaking, this tool is less useful than others as you may report the s
 
 `Notes:`
 
-- The `transactions` list may be one or more space-separated identifiers which are either a transaction hash, 
+- The `transactions` list may be one or more space-separated identifiers which are either a transaction hash,
   a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.
 - This tool checks for valid input syntax, but does not check that the transaction requested actually exists.
 - If the queried node does not store historical state, the results for most older transactions are undefined.

@@ -926,7 +926,7 @@ string_q COptionsBase::format_notes(const CStringArray& strs) const {
     string_q lead = (isReadme ? "" : "\t");
     ostringstream os;
     while (!nn.empty()) {
-        string_q line = substitute(nextTokenClear(nn, '\n'), "|", "\n" + lead + " ");
+        string_q line = substitute(substitute(nextTokenClear(nn, '\n'), " |", "|"), "|", "\n" + lead + " ");
         os << lead << "- " << line << "\n";
     }
     return os.str();

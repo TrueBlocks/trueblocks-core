@@ -4,10 +4,10 @@
 
 ### usage
 
-`Usage:`    makeClass [-r|-a|-o|-m|-f|-l|-j|-n|-i|-c|-v|-h] &lt;file&gt; [file...]  
+`Usage:`    makeClass [-r|-a|-o|-m|-f|-l|-j|-n|-i|-c|-v|-h] &lt;file&gt; [file...]
 `Purpose:`  Automatically writes C++ for various purposes.
 
-`Where:`  
+`Where:`
 
 | | Option | Description |
 | :----- | :----- | :---------- |

@@ -4,10 +4,10 @@
 
 ### usage
 
-`Usage:`    chifra explore [-l|-g|-v|-h] &lt;term&gt; [term...]  
+`Usage:`    chifra explore [-l|-g|-v|-h] &lt;term&gt; [term...]
 `Purpose:`  Open an explorer for a given address, block, or transaction.
 
-`Where:`  
+`Where:`
 
 | | Option | Description |
 | :----- | :----- | :---------- |
