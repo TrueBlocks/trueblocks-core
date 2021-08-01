@@ -10,6 +10,7 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+#define LOGGING_LEVEL_TEST
 #include "options.h"
 
 //-----------------------------------------------------------------------
@@ -22,8 +23,8 @@ void pushToOutput(CAccountNameArray& out, const CAccountName& name, bool to_cust
 }
 
 //-----------------------------------------------------------------------
-bool COptions::processEditCommand(CStringArray& terms, bool to_custom, bool autoname) {
-    ENTER("processEditCommand");
+bool COptions::handle_editcmds(CStringArray& terms, bool to_custom, bool autoname) {
+    ENTER("handle_editcmds");
 
     string_q crud = crudCommands[0];
     if (!contains("create|update|delete|undelete|remove", crud))
@@ -43,11 +44,9 @@ bool COptions::processEditCommand(CStringArray& terms, bool to_custom, bool auto
     target.is_custom = str_2_Bool(trim(getEnvStr("TB_NAME_CUSTOM"), '\"')) || to_custom;
     finishClean(target);
 
-    if (!isApiMode() && isTestMode()) {
-        cout << string_q(45, '-') << endl;
-        cout << target << endl;
-        cout << string_q(45, '-') << endl;
-    }
+    LOG_TEST_STR(string_q(45, '-'));
+    LOG_TEST_OBJ(target);
+    LOG_TEST_STR(string_q(45, '-'));
 
     bool isEdit = crud == "create" || crud == "update";
     string_q fmt = isEdit ? "tags\taddress\tname\tsymbol\tsource\tdescription\tdecimals\tdeleted\tis_custom"
@@ -117,12 +116,10 @@ bool COptions::processEditCommand(CStringArray& terms, bool to_custom, bool auto
         ::remove(getCachePath("names/names.bin").c_str());
         LOG4("Finished writing...");
 
-        CToml toml(configPath("ethNames.toml"));
-        string_q copyBack = toml.getConfigStr("settings", "copyBack", "<NOTSET>");
+        string_q copyBack = getGlobalConfig("ethNames")->getConfigStr("settings", "source", "<NOTSET>");
         if (!isTestMode() && !to_custom && fileExists(copyBack)) {
             copyFile(dest, copyBack);
         }
-        toml.Release();
     }
 
     EXIT_NOMSG(true);

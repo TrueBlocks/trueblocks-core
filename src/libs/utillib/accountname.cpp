@@ -341,7 +341,7 @@ string_q nextAccountnameChunk_custom(const string_q& fieldIn, const void* dataPt
             case 'n':
                 if (fieldIn % "name") {
                     string_q ret = substitute(acc->name, "\"", "");
-                    if (isTestMode() && (acc->is_custom || contains(acc->tags, "Friends"))) {
+                    if (isTestMode() && (acc->is_custom || contains(acc->tags, "Individuals"))) {
                         ret = "Name " + acc->address.substr(0, 10);
                     }
                     return ret;

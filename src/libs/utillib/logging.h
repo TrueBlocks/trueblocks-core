@@ -253,6 +253,12 @@ extern logger<log_policy_i>* eLogger;
             LOG_INFO(str);                                                                                             \
         }                                                                                                              \
     }
+#define LOG_TEST_OBJ(obj)                                                                                              \
+    {                                                                                                                  \
+        if (isTestMode()) {                                                                                            \
+            LOG_INFO(obj.Format());                                                                                    \
+        }                                                                                                              \
+    }
 #define LOG_TEST_BOOL(a, b)                                                                                            \
     {                                                                                                                  \
         if ((b))                                                                                                       \
@@ -280,6 +286,7 @@ extern logger<log_policy_i>* eLogger;
 #define LOG_TEST_BOOL(a, b)
 #define LOG_TEST_LIST(a, b, is_default)
 #define LOG_TEST_CALL(a)
+#define LOG_TEST_OBJ(a)
 #endif
 
 // The LOG parts of these routines disappear if turned off, but they still do their work because of the returns

@@ -27,7 +27,6 @@ static const COption params[] = {
     COption("custom", "c", "", OPT_SWITCH, "include your custom named accounts"),
     COption("prefund", "p", "", OPT_SWITCH, "include prefund accounts"),
     COption("named", "n", "", OPT_SWITCH, "include well know token and airdrop addresses in the search"),
-    COption("other", "t", "", OPT_HIDDEN | OPT_SWITCH, "export other addresses if found"),
     COption("addr", "a", "", OPT_SWITCH, "display only addresses in the results (useful for scripting)"),
     COption("entities", "s", "", OPT_SWITCH, "display entity data"),
     COption("tags", "g", "", OPT_SWITCH, "export the list of tags and subtags only"),
@@ -54,7 +53,6 @@ bool COptions::parseArguments(string_q& command) {
     bool custom = false;
     bool prefund = false;
     bool named = false;
-    bool other = false;
     bool addr = false;
     bool to_custom = false;
     bool clean = false;
@@ -90,9 +88,6 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-n" || arg == "--named") {
             named = true;
-
-        } else if (arg == "-t" || arg == "--other") {
-            other = true;
 
         } else if (arg == "-a" || arg == "--addr") {
             addr = true;
@@ -136,7 +131,6 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("custom", custom);
     LOG_TEST_BOOL("prefund", prefund);
     LOG_TEST_BOOL("named", named);
-    LOG_TEST_BOOL("other", other);
     LOG_TEST_BOOL("addr", addr);
     LOG_TEST_BOOL("entities", entities);
     LOG_TEST_BOOL("tags", tags);
@@ -168,7 +162,7 @@ bool COptions::parseArguments(string_q& command) {
             ::setenv("TB_NAME_DECIMALS", "18", true);
             ::setenv("TB_NAME_DESCR", "", true);
             ::setenv("TB_NAME_CUSTOM", "false", true);
-            if (!processEditCommand(terms, false /* to_custom */, true /* autoname */))  // returns true on success
+            if (!handle_editcmds(terms, false /* to_custom */, true /* autoname */))  // returns true on success
                 return false;
 
         } else if (isCrudCommand()) {
@@ -177,7 +171,7 @@ bool COptions::parseArguments(string_q& command) {
                 address = terms[0];
             if (!isAddress(address) || isZeroAddr(address))
                 return usage("You must provide an address to crud commands.");
-            if (!processEditCommand(terms, to_custom /* to_custom */, false /* autoname */))  // returns true on success
+            if (!handle_editcmds(terms, to_custom /* to_custom */, false /* autoname */))  // returns true on success
                 return false;
 
         } else {
@@ -224,13 +218,6 @@ bool COptions::parseArguments(string_q& command) {
         }
         types |= CUSTOM;
     }
-    if (other) {
-        if (deflt) {
-            types = 0;
-            deflt = false;
-        }
-        types |= OTHER;
-    }
 
     if (addr) {
         addr_only = true;
@@ -250,7 +237,6 @@ bool COptions::parseArguments(string_q& command) {
         types |= NAMED;
         types |= PREFUND;
         types |= CUSTOM;
-        types |= OTHER;
     }
 
     // Prepare formatting
@@ -435,7 +421,7 @@ void COptions::applyFilter() {
     if (types & NAMED) {
         for (auto mapItem : namesMap) {
             CAccountName item = mapItem.second;
-            if (!item.is_custom && !item.is_prefund && !startsWith(item.tags, "81-Other"))
+            if (!item.is_custom && !item.is_prefund)
                 addIfUnique(item);
         }
     }
@@ -445,15 +431,6 @@ void COptions::applyFilter() {
         for (auto mapItem : namesMap) {
             CAccountName item = mapItem.second;
             if (item.is_prefund)
-                addIfUnique(item);
-        }
-    }
-
-    //------------------------
-    if (!isTestMode() && (types & OTHER)) {
-        for (auto mapItem : namesMap) {
-            CAccountName item = mapItem.second;
-            if (startsWith(item.tags, "81-Other"))
                 addIfUnique(item);
         }
     }

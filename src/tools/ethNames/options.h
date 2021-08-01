@@ -21,13 +21,7 @@
 // END_ERROR_DEFINES
 
 //-----------------------------------------------------------------------------
-enum account_t {
-    CUSTOM = (1 << 2),
-    NAMED = (1 << 3),
-    PREFUND = (1 << 4),
-    OTHER = (1 << 5),
-    ALL = (CUSTOM | NAMED | OTHER)
-};
+enum account_t { CUSTOM = (1 << 2), NAMED = (1 << 3), PREFUND = (1 << 4), ALL = (CUSTOM | NAMED) };
 
 //-----------------------------------------------------------------------------
 class COptions : public CAbiOptions {
@@ -56,7 +50,7 @@ class COptions : public CAbiOptions {
     bool addIfUnique(const CAccountName& item);
 
     void exportEntities(const CStringArray& terms);
-    bool processEditCommand(CStringArray& terms, bool to_custom, bool autoname);
+    bool handle_editcmds(CStringArray& terms, bool to_custom, bool autoname);
     bool handle_clean(void);
 
     bool isTokenContract(const CAccountName& account);

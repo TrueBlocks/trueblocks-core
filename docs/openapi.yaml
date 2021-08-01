@@ -429,14 +429,6 @@ paths:
         explode: true
         schema:
           type: boolean
-      - name: other
-        in: query
-        description: export other addresses if found
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
       - name: addr
         in: query
         description: display only addresses in the results (useful for scripting)

@@ -51,7 +51,6 @@ void COptions::exportTags(void) const {
      types |= NAMED;
      types |= PREFUND;
      types |= CUSTOM;
-     types |= OTHER;
  }
 
  // Prepare formatting
