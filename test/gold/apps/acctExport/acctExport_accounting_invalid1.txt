@@ -1,5 +1,7 @@
-acctExport argc: 2 [1:-h] 
-acctExport -h 
+acctExport argc: 8 [1:0x00a3819199113fc6a6e6ba1298afde7377e2009b] [2:--max_records] [3:50] [4:--fmt] [5:json] [6:--summarize_by] [7:tx] 
+acctExport 0x00a3819199113fc6a6e6ba1298afde7377e2009b --max_records 50 --fmt json --summarize_by tx 
+
+  You may use --summarized_by only with the --accounting option. Quitting...
 
   Usage:    acctExport [-p|-r|-l|-t|-C|-a|-i|-R|-y|-U|-c|-e|-v|-h] <address> [address...] [topics] [fourbytes]  
   Purpose:  Export full detail of transactions for one or more addresses.

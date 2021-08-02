@@ -42,6 +42,7 @@ static const COption params[] = {
     COption("load", "", "<string>", OPT_HIDDEN | OPT_FLAG, "a comma separated list of dynamic traversers to load"),
     COption("reversed", "", "", OPT_HIDDEN | OPT_SWITCH, "produce results in reverse chronological order"),
     COption("by_date", "y", "", OPT_HIDDEN | OPT_SWITCH, "produce results sorted by date (default is to report by address)"),  // NOLINT
+    COption("summarize_by", "b", "list<enum[annually|quarterly|monthly|weekly|daily|hourly|blockly|tx]>", OPT_HIDDEN | OPT_FLAG, "for --accounting only, summarize reconciliations by this time period"),  // NOLINT
     COption("", "", "", OPT_DESCRIPTION, "Export full detail of transactions for one or more addresses."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -168,6 +169,14 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-y" || arg == "--by_date") {
             by_date = true;
 
+        } else if (startsWith(arg, "-b:") || startsWith(arg, "--summarize_by:")) {
+            string_q summarize_by_tmp;
+            if (!confirmEnum("summarize_by", summarize_by_tmp, arg))
+                return false;
+            summarize_by.push_back(summarize_by_tmp);
+        } else if (arg == "-b" || arg == "--summarize_by") {
+            return flag_required("summarize_by");
+
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
@@ -220,12 +229,16 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST("load", load, (load == ""));
     LOG_TEST_BOOL("reversed", reversed);
     LOG_TEST_BOOL("by_date", by_date);
+    LOG_TEST_LIST("summarize_by", summarize_by, summarize_by.empty());
     // END_DEBUG_DISPLAY
 
     if (Mocked(""))
         return false;
 
     freshenOnly = freshen;
+
+    if (!accounting && !summarize_by.empty())
+        return usage("You may use --summarized_by only with the --accounting option.");
 
     if (!bloomsAreInitalized())
         return usage("Bloom filters not found. You must run 'chifra init' before running this command.");
@@ -437,6 +450,7 @@ void COptions::Init(void) {
     load = "";
     reversed = false;
     by_date = false;
+    summarize_by.clear();
     // END_CODE_INIT
 
     bp = getBlockProgress(BP_ALL);

@@ -345,6 +345,15 @@
                     explode: true,
                     schema: {type: 'boolean'},
                   },
+                  {
+                    name: 'summarize_by',
+                    in: 'query',
+                    description: 'for --accounting only, summarize reconciliations by this time period',
+                    required: false,
+                    style: 'form',
+                    explode: true,
+                    schema: { type: 'array', items: { type: 'string', enum: ['yearly', 'quarterly', 'monthly', 'weekly', 'daily', 'hourly', 'blockly', 'tx'] } },
+                  },
                 ],
                 responses: {
                   '200': {

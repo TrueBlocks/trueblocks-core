@@ -1,5 +1,7 @@
-acctExport argc: 2 [1:-h] 
-acctExport -h 
+acctExport argc: 9 [1:0x00a3819199113fc6a6e6ba1298afde7377e2009b] [2:--max_records] [3:50] [4:--accounting] [5:--fmt] [6:json] [7:--summarize_by] [8:jimp] 
+acctExport 0x00a3819199113fc6a6e6ba1298afde7377e2009b --max_records 50 --accounting --fmt json --summarize_by jimp 
+
+  Invalid option 'jimp' for 'summarize_by'. One or more of [yearly|monthly|weekly|daily|hourly|blockly|tx] required. Quitting...
 
   Usage:    acctExport [-p|-r|-l|-t|-C|-a|-i|-R|-y|-U|-c|-e|-v|-h] <address> [address...] [topics] [fourbytes]  
   Purpose:  Export full detail of transactions for one or more addresses.

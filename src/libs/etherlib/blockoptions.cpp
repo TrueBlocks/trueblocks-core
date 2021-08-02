@@ -215,27 +215,27 @@ bool parseBlockList2(COptionsBase* opt, COptionsBlockList& blocks, const string_
         return (opt ? opt->usage(ret) : false);
     }
 
-    if (blocks.skip_type != UNTIMED) {
+    if (blocks.skip_type != S_UNTIMED) {
         time_q startDate = getBlockDate(blocks.start);
         time_q stopDate = getBlockDate(blocks.stop);
         CTimeArray times;
         switch (blocks.skip_type) {
-            case HOURLY:
+            case S_HOURLY:
                 expandHourly(times, startDate, stopDate);
                 break;
-            case DAILY:
+            case S_DAILY:
                 expandDaily(times, startDate, stopDate);
                 break;
-            case WEEKLY:
+            case S_WEEKLY:
                 expandWeekly(times, startDate, stopDate);
                 break;
-            case MONTHLY:
+            case S_MONTHLY:
                 expandMonthly(times, startDate, stopDate);
                 break;
-            case QUARTERLY:
+            case S_QUARTERLY:
                 expandQuarterly(times, startDate, stopDate);
                 break;
-            case ANNUALLY:
+            case S_ANNUALLY:
             default:
                 expandAnnually(times, startDate, stopDate);
                 break;
