@@ -31,6 +31,23 @@ struct CDateStruct {
     uint32_t m_Second;
 };
 
+typedef enum {
+    BY_NOTHING = 0,
+    BY_YEAR = 20,  // opaque value anyway, to avoid conflict with below
+    BY_QUARTER,
+    BY_MONTH,
+    BY_WEEK,
+    BY_DAY,
+    BY_HOUR,
+    BY_1 = 1,  // non-opaque values
+    BY_10 = 10,
+    BY_100 = 100,
+    BY_1000 = 1000,
+    BY_10000 = 10000,
+    BY_100000 = 100000,
+    BY_1000000 = 1000000
+} period_t;
+
 //-------------------------------------------------------------------------
 // A Date class with a granularity of 1 second
 //-------------------------------------------------------------------------
@@ -161,6 +178,9 @@ extern const time_q earliestDate;
 #define FMT_SHORT string_q("%Y%m%d")
 
 //---------------------------------------------------------------------------------------------
+extern uint32_t DaysInMonth(uint32_t year, uint32_t month);
+
+//---------------------------------------------------------------------------------------------
 inline time_q BOH(const time_q& date) {
     // H:00:00
     return time_q(date.GetYear(), date.GetMonth(), date.GetDay(), date.GetHour(), 0, 0);
@@ -192,19 +212,35 @@ extern time_q EOW(const time_q& tm);
 inline time_q BOM(const time_q& date) {
     return time_q(date.GetYear(), date.GetMonth(), 1, 0, 0, 0);
 }
-extern time_q EOM(const time_q& tm);
+inline time_q EOM(const time_q& date) {
+    return time_q(date.GetYear(), date.GetMonth(), DaysInMonth(date.GetYear(), date.GetMonth()), 23, 59, 59);
+}
 
 //---------------------------------------------------------------------------------------------
 inline time_q BOQ(const time_q& date) {
-    return time_q(date.GetYear(), uint32_t((date.GetMonth() - 1) / 3) * 3 + 1, 1, 0, 0, 0);
+    uint32_t m = uint32_t((date.GetMonth() - 1) / 3) * 3 + 1;
+    return time_q(date.GetYear(), m, 1, 0, 0, 0);
 }
-extern time_q EOQ(const time_q& tm);
+
+//---------------------------------------------------------------------------------------------
+inline time_q EOQ(const time_q& date) {
+    uint32_t m = uint32_t((date.GetMonth() - 1) / 3) * 3 + 1;
+    return time_q(date.GetYear(), m, DaysInMonth(date.GetYear(), m), 23, 59, 59);
+}
 
 //---------------------------------------------------------------------------------------------
 inline time_q BOY(const time_q& date) {
     return time_q(date.GetYear(), 1, 1, 0, 0, 0);
 }
-extern time_q EOM(const time_q& tm);
+
+//---------------------------------------------------------------------------------------------
+inline time_q EOY(const time_q& date) {
+    return time_q(date.GetYear(), 12, 31, 23, 59, 59);
+}
+
+//---------------------------------------------------------------------------------------------
+extern time_q BOP(period_t per, const time_q& date);
+extern time_q EOP(period_t per, const time_q& date);
 
 //---------------------------------------------------------------------------------------------
 inline time_q MIDDAY(const time_q& date) {
@@ -241,10 +277,10 @@ inline uint32_t get2Digit(uint32_t year) {
 }
 
 //---------------------------------------------------------------------------------------------
-extern uint32_t DaysInMonth(uint32_t year, uint32_t month);
 extern time_q AddOneDay(const time_q& date);
 extern time_q SubtractOneDay(const time_q& date);
 extern time_q AddOneHour(const time_q& date);
+extern time_q SubtractOneHour(const time_q& date);
 extern time_q AddOneWeek(const time_q& date);
 extern time_q AddOneMonth(const time_q& date);
 extern time_q AddOneQuarter(const time_q& date);
@@ -301,22 +337,8 @@ extern fileInfo getNewestFileInFolder(const string_q& path);
 
 using blknum_t = uint64_t;
 
-typedef enum {
-    BY_NOTHING = 0,
-    BY_YEAR = 20,  // opaque value anyway, to avoid conflict with below
-    BY_MONTH,
-    BY_WEEK,
-    BY_DAY,
-    BY_HOUR,
-    BY_1 = 1,  // non-opaque values
-    BY_10 = 10,
-    BY_100 = 100,
-    BY_1000 = 1000,
-    BY_10000 = 10000,
-    BY_100000 = 100000,
-    BY_1000000 = 1000000
-} period_t;
 extern bool isSameYear(const time_q& t1, const time_q& t2);
+extern bool isSameQuarter(const time_q& t1, const time_q& t2);
 extern bool isSameMonth(const time_q& t1, const time_q& t2);
 extern bool isSameWeek(const time_q& t1, const time_q& t2);
 extern bool isSameDay(const time_q& t1, const time_q& t2);

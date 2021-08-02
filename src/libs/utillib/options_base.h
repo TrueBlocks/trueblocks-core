@@ -212,9 +212,6 @@ extern void editFile(const string_q& fileName);
 extern string_q configPath(const string_q& part);
 extern string_q configPathRelative(const string_q& part);
 
-typedef enum { S_UNTIMED = 0, S_HOURLY, S_DAILY, S_WEEKLY, S_MONTHLY, S_QUARTERLY, S_ANNUALLY } summary_t;
-#define S_TX S_UNTIMED
-
 //--------------------------------------------------------------------------------
 class CToml;
 extern const CToml* getGlobalConfig(const string_q& name = "");
@@ -233,7 +230,7 @@ class COptionsBlockList {
     blknum_t stop;
     blknum_t skip;
     blknum_t latest;
-    summary_t skip_type;
+    period_t skip_type;
     bool hasZeroBlock{false};
 
     void Init(void);

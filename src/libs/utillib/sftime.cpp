@@ -889,6 +889,15 @@ time_q AddOneHour(const time_q& date) {
 }
 
 //---------------------------------------------------------------------------------------------
+time_q SubtractOneHour(const time_q& date) {
+    if (BOH(date).GetHour() == 0) {
+        time_q x = SubtractOneDay(date);  // same time yesterday
+        return time_q(x.GetYear(), x.GetMonth(), x.GetDay(), 23, x.GetMinute(), x.GetSecond());
+    }
+    return time_q(date.GetYear(), date.GetMonth(), date.GetDay(), date.GetHour() - 1, 0, 0);
+}
+
+//---------------------------------------------------------------------------------------------
 time_q AddOneWeek(const time_q& date) {
     time_q ret = date;
     for (size_t i = 0; i < 7; i++)
@@ -929,6 +938,48 @@ time_q EOW(const time_q& tm) {
     while (getDayOfWeek(tm.getDatePart()) < 7)  // if it equals '7', it's Saturday 12:59:59
         ret = AddOneDay(ret);
     return ret;
+}
+
+//------------------------------------------------------------------------
+time_q BOP(period_t per, const time_q& date) {
+    switch (per) {
+        case BY_YEAR:
+            return BOY(date);
+        case BY_QUARTER:
+            return BOQ(date);
+        case BY_MONTH:
+            return BOM(date);
+        case BY_WEEK:
+            return BOW(date);
+        case BY_DAY:
+            return BOD(date);
+        case BY_HOUR:
+            return BOH(date);
+        default: {
+        }  // fall through
+    }
+    return date;
+}
+
+//------------------------------------------------------------------------
+time_q EOP(period_t per, const time_q& date) {
+    switch (per) {
+        case BY_YEAR:
+            return EOY(date);
+        case BY_QUARTER:
+            return EOQ(date);
+        case BY_MONTH:
+            return EOM(date);
+        case BY_WEEK:
+            return EOW(date);
+        case BY_DAY:
+            return EOD(date);
+        case BY_HOUR:
+            return EOH(date);
+        default: {
+        }  // fall through
+    }
+    return date;
 }
 
 //------------------------------------------------------------------------
@@ -1024,6 +1075,11 @@ bool isSameYear(const time_q& t1, const time_q& t2) {
 }
 
 //----------------------------------------------------------------------------------
+bool isSameQuarter(const time_q& t1, const time_q& t2) {
+    return BOQ(t1) == BOQ(t2);
+}
+
+//----------------------------------------------------------------------------------
 bool isSameMonth(const time_q& t1, const time_q& t2) {
     return BOM(t1) == BOM(t2);
 }
@@ -1057,6 +1113,7 @@ bool isSamePeriod(period_t period, blknum_t b1, blknum_t b2) {
                 return false;
             return ((b1 - 1) / period) == ((b2 - 1) / period);
         case BY_YEAR:
+        case BY_QUARTER:
         case BY_MONTH:
         case BY_WEEK:
         case BY_DAY:
@@ -1073,6 +1130,8 @@ bool isSamePeriod(period_t period, const time_q& t1, const time_q& t2) {
     switch (period) {
         case BY_YEAR:
             return isSameYear(t1, t2);
+        case BY_QUARTER:
+            return isSameQuarter(t1, t2);
         case BY_MONTH:
             return isSameMonth(t1, t2);
         case BY_WEEK:
@@ -1100,6 +1159,8 @@ string_q per_2_Str(period_t period) {
     switch (period) {
         case BY_YEAR:
             return "[{YEAR}]";
+        case BY_QUARTER:
+            return "[{QUARTER}]";
         case BY_MONTH:
             return "[{MONTH}]";
         case BY_WEEK:

@@ -74,7 +74,7 @@ string_q COptionsBlockList::parseBlockList_inner(const string_q& argIn, blknum_t
     direction_t offset = (contains(arg, ".next") ? NEXT : contains(arg, ".prev") ? PREV : NODIR);
     arg = substitute(substitute(arg, ".next", ""), ".prev", "");
 
-    skip_type = S_UNTIMED;
+    skip_type = BY_NOTHING;
 
     // scrape off the skip marker if any
     if (contains(arg, ":")) {
@@ -86,17 +86,17 @@ string_q COptionsBlockList::parseBlockList_inner(const string_q& argIn, blknum_t
             if (!contains(skip_markers, skip_marker))
                 return "Input argument appears to be invalid. No such skip marker: " + argIn;
             if (contains(skip_marker, "annually")) {
-                skip_type = S_ANNUALLY;
+                skip_type = BY_YEAR;
             } else if (contains(skip_marker, "quarterly")) {
-                skip_type = S_QUARTERLY;
+                skip_type = BY_QUARTER;
             } else if (contains(skip_marker, "monthly")) {
-                skip_type = S_MONTHLY;
+                skip_type = BY_MONTH;
             } else if (contains(skip_marker, "weekly")) {
-                skip_type = S_WEEKLY;
+                skip_type = BY_WEEK;
             } else if (contains(skip_marker, "daily")) {
-                skip_type = S_DAILY;
+                skip_type = BY_DAY;
             } else if (contains(skip_marker, "hourly")) {
-                skip_type = S_HOURLY;
+                skip_type = BY_HOUR;
             } else {
                 ASSERT(0);  // should never happen
                 skip = 1;
