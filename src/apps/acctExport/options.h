@@ -44,7 +44,7 @@ class COptions : public CAbiOptions {
     string_q load;
     bool reversed;
     bool by_date;
-    CStringArray summarize_by;
+    string_q summarize_by;
     // END_CODE_DECLARE
 
     CAppearanceArray_mon monApps;
