@@ -30,8 +30,8 @@ static int readCallbackSQL(void* data, int nColumns, char** theRow, char** azCol
         CAccountName name;
         for (int i = 0; i < nColumns; i++)
             name.setValueByName(azColName[i], theRow[i] ? theRow[i] : "");
-        CAccountNameArray* array = (CAccountNameArray*)data;
-        array->push_back(name);
+        CAddressNameMap* array = (CAddressNameMap*)data;
+        array->operator[](name.address) = name;
     }
     return 0;
 }
@@ -66,21 +66,22 @@ bool insertNameRecords(sqlite3* db, const string_q& path) {
     return true;
 }
 
-bool COptionsBase::loadNamesDatabaseFromSQL(CAccountNameArray& names) {
+bool COptionsBase::loadNamesDatabaseFromSQL(void) {
     CAccountName::registerClass();
 
+    int rc = SQLITE_OK;
     string_q dbPath = getCachePath("names/names.db");
 
     sqlite3* db = NULL;
     char* zErrMsg = 0;
-    int rc = sqlite3_open(dbPath.c_str(), &db);
-    if (rc != SQLITE_OK) {
-        fprintf(stderr, "Could not open %s: %s\n", dbPath.c_str(), zErrMsg);
-        sqlite3_free(zErrMsg);
-        return false;
-    }
-
     if (!fileExists(dbPath)) {
+        rc = sqlite3_open(dbPath.c_str(), &db);
+        if (rc != SQLITE_OK) {
+            fprintf(stderr, "Could not open %s: %s\n", dbPath.c_str(), zErrMsg);
+            sqlite3_free(zErrMsg);
+            return false;
+        }
+
         rc = sqlite3_exec(db, STR_NAMES_DB_CREATE, noopCallbackSQL, 0, &zErrMsg);
         if (rc != SQLITE_OK) {
             fprintf(stderr, "Could not create table: %s\n", zErrMsg);
@@ -97,20 +98,18 @@ bool COptionsBase::loadNamesDatabaseFromSQL(CAccountNameArray& names) {
             sqlite3_close(db);
             return false;
         }
-
     } else {
-        int rc = sqlite3_open(dbPath.c_str(), &db);
+        rc = sqlite3_open(dbPath.c_str(), &db);
         if (rc != SQLITE_OK) {
             fprintf(stderr, "Could not open %s: %s\n", dbPath.c_str(), zErrMsg);
             sqlite3_free(zErrMsg);
-            sqlite3_close(db);
             return false;
         }
     }
 
     SHOW_FIELD(CAccountName, "deleted");
     const char* selectCmd = "SELECT * from NAMES ORDER BY address";
-    rc = sqlite3_exec(db, selectCmd, readCallbackSQL, &names, &zErrMsg);
+    rc = sqlite3_exec(db, selectCmd, readCallbackSQL, &namesMap, &zErrMsg);
     if (rc != SQLITE_OK) {
         fprintf(stderr, "SQL error: %s\n", zErrMsg);
         sqlite3_free(zErrMsg);

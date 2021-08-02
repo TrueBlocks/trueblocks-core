@@ -191,7 +191,6 @@ bool COptionsBase::loadNames(void) {
         return true;
 
     LOG8("Entering loadNames...");
-
     string_q prefundFile = configPath("names/names_prefunds.tab");
     if (isEnabled(OPT_PREFUND)) {
         if (!loadPrefunds(prefundFile)) {
@@ -199,30 +198,20 @@ bool COptionsBase::loadNames(void) {
         }
     }
 
-    string_q txtFile = configPath("names/names.tab");
-    string_q customFile = configPath("names/names_custom.tab");
-    time_q txtDate =
-        laterOf(laterOf(fileLastModifyDate(txtFile), fileLastModifyDate(customFile)), fileLastModifyDate(prefundFile));
-
     bool type1 = false;
     if (type1) {
-        CAccountNameArray names;
-        loadNamesDatabaseFromSQL(names);
-
-        string_q binFile = getCachePath("names/names.db");
-        time_q binDate = fileLastModifyDate(binFile);
-        if (binDate > txtDate) {
-            LOG8("Reading names from binary cache");
-            CArchive nameCache(READING_ARCHIVE);
-            if (nameCache.Lock(binFile, modeReadOnly, LOCK_NOWAIT)) {
-                nameCache >> namesMap;
-                nameCache.Release();
-                finishMaps();
-                return true;
-            }
-        }
+        loadNamesDatabaseFromSQL();
+        if (!importTabFile(namesMap, prefundFile))
+            return usage("Could not open prefunds database...");
+        // LOG8("Finished adding names from prefunds database...");
+        finishMaps();
 
     } else {
+        string_q txtFile = configPath("names/names.tab");
+        string_q customFile = configPath("names/names_custom.tab");
+        time_q txtDate = laterOf(laterOf(fileLastModifyDate(txtFile), fileLastModifyDate(customFile)),
+                                 fileLastModifyDate(prefundFile));
+
         string_q binFile = getCachePath("names/names.bin");
         time_q binDate = fileLastModifyDate(binFile);
 

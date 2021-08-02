@@ -114,6 +114,7 @@ bool COptions::handle_editcmds(CStringArray& terms, bool to_custom, bool autonam
         stringToAsciiFile(dest, dataStream2.str());
         namesMap.clear();
         ::remove(getCachePath("names/names.bin").c_str());
+        ::remove(getCachePath("names/names.db").c_str());
         LOG4("Finished writing...");
 
         string_q copyBack = getGlobalConfig("ethNames")->getConfigStr("settings", "source", "<NOTSET>");

@@ -55,7 +55,7 @@ endif()
 
 # ----------------------------------------------------------------------------------------
 # Linkable libraries
-set (BASE_LIBS pin acct ether util ${CURL_LIBRARIES})
+set (BASE_LIBS pin acct ether util sqlite3 ${CURL_LIBRARIES})
 
 # ----------------------------------------------------------------------------------------
 # Base included paths
