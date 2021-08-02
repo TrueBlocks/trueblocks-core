@@ -1467,7 +1467,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 91-Early:Addresses	0x22f83d39a2148dd389ed4c7a9280f57d5c8679da	Emailer		EtherScan.io			false	false	false	false	false	false
 90-Individuals:DevCon2	0x2306df931a940d58c01665fa4d0800802c02edfe	wuehler (Prefund_1171)		DevCon2 Token Contract			false	false	false	false	false	false
 30-Contracts	0x230dc92857948821f88a4e81b67a593fad2ae8cd	Arbitrage Bot		0xTracker			false	false	false	true	false	false
-30-Contracts	0x230fc981f7cae90cfc4ed4c18f7c178b239e5f9f	Moonshot Collective Workstream					false	false	false	true	false	false
+30-Contracts	0x230fc981f7cae90cfc4ed4c18f7c178b239e5f9f	Moonshot Collective Multisig		Zoom Call			false	false	false	true	false	false
 91-Early:Addresses	0x23141df767233776f7cbbec497800ddedaa4c684	BranchSender_id305		Ether Camp			false	false	false	true	false	false
 91-Early:Addresses	0x231c7510f24d1c8b9578558bcb7fa6c659b4ca98	Crypted_Rps		EtherScan.io			false	false	false	true	false	false
 50-Tokens:ERC20	0x231e68028d9db9ffd0ab491f9e4d261c37ef5fdf	Moon Doge	MOGE	On chain	18		false	false	false	true	true	false
