@@ -27,9 +27,11 @@ bool cleanMonitorFile(const string_q& path, void* data) {
     } else {
         if (endsWith(path, "acct.bin")) {
             if (isTestMode()) {
-                CMonitor m;
-                if (path > m.getMonitorPath("0x9", false))
-                    return false;
+                string_q testes =
+                    "|0x001d14804b399c6ef80e64576f657660804fec0b|"
+                    "|0x0029218e1dab069656bfb8a75947825e7989b987|";
+                if (!contains(testes, path_2_Addr(path)))
+                    return true;
             }
 
             CMonitor m;
