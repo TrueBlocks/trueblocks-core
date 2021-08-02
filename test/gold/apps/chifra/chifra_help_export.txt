@@ -39,6 +39,7 @@ PROG_NAME = [chifra export]
 	    (--load <str>)    a comma separated list of dynamic traversers to load
 	    (--reversed)      produce results in reverse chronological order
 	-y  (--by_date)       produce results sorted by date (default is to report by address)
+	-b  (--summarize_by <val>)for --accounting only, summarize reconciliations by this time period, one of [year|quarter|month|week|day|hour|block|tx]
 	#### Hidden options
 
 	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]

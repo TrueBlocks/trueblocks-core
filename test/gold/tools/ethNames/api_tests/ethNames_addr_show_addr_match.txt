@@ -33,6 +33,10 @@
       "decimals": 0
     },
     {
+      "address": "0xb62b6b192524f6b220a08f0d5d0eb748a8cbaa1b",
+      "decimals": 18
+    },
+    {
       "address": "0xb62d18dea74045e822352ce4b3ee77319dc5ff2f",
       "decimals": 18
     },

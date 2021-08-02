@@ -7,6 +7,7 @@ tags	address	name	symbol	decimals	source
 50-Tokens:ERC20	0xb624f8ae7f8b76a158928affff07510a07ec4461	Air moon inu shiba	AMIS🌙		18	On chain
 50-Tokens:ERC20	0xb6259685685235c1ef4b8529e7105f00bd42b9f8	RRChain	RRC		2	On chain
 90-Individuals:Gitcoin Grants	0xb6277cb5a2abd2b296c1d7f61a8f24c2d4942f9f	Name 0xb6277cb5				Gitcoin Website
+50-Tokens:ERC20	0xb62b6b192524f6b220a08f0d5d0eb748a8cbaa1b	Delphi Aave BUSD	daBUSD		18	On chain
 50-Tokens:ERC20	0xb62d18dea74045e822352ce4b3ee77319dc5ff2f	EventChain	EVC		18	On chain
 31-Gitcoin Grants:Grant	0xb631e8650fb4befdae74ab9f86a9cb65bc134706	Grant 0228 Buidlhub				https://gitcoin.co/grants/228/buidlhub
 31-Gitcoin Grants:Grant	0xb632c8e5f87a47a0caeb613cbdf0f748217d2840	Grant 0618 Arboreum				https://gitcoin.co/grants/618/arboreum

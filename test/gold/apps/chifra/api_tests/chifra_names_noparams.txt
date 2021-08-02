@@ -167,6 +167,7 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x09fe5f0236f0ea5d930197dce254d77b04128075	Wrapped CryptoKitties	WCK		18
 50-Tokens:ERC20	0x0a52d6aeac2e06cf12e168784eaa2afbda62a17a	Balancer Pool Token	BPT		18
 50-Tokens:ERC20	0x0a76aad21948ea1ef447d26dee91a54370e151e0	Ethereum Lite	ELITE		18
+50-Tokens:ERC20	0x0a7eed8bd71079121ee45649f9d88d193686d9ac	Leveraged ETH 4/15	LETH 4/15		18
 50-Tokens:ERC20	0x0a913bead80f321e7ac35285ee10d9d922659cb7	DOS Network Token	DOS		18
 50-Tokens:ERC20	0x0a9f693fce6f00a51a8e0db4351b5a8078b4242e	Resfinex	RES		5
 50-Tokens:ERC20	0x0aa7b6b12aabf497f603c57167eabee05da92a17	SUDO INU	SUDO		18
@@ -199,4 +200,3 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x0c08cc64468dd4888dfeceb7aab866ffc4ba60f4	EFALCON	🚀EFAL🚀		18
 50-Tokens:ERC20	0x0c17398ebbcb15078f2ad2c67a26d10623957b21	SONTOKEN	SON		18
 50-Tokens:ERC20	0x0c30f5715b00feff6fa8953f7d74b781f5c0f7da	Ethereum Hyper	ETHH		18
-50-Tokens:ERC20	0x0c334506e0bcb7c17b583cb7c0ec2f5857bf9e6f	Public Goods	PUBG		18
