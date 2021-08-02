@@ -165,69 +165,13 @@ bool importTabFile(CAddressNameMap& theMap, const string_q& tabFilename) {
 }
 
 //-----------------------------------------------------------------------
-bool COptionsBase::loadNames(void) {
-    if (getEnvStr("NO_NAMES") == "true")
-        return true;
+bool loadNamesDatabase(CAccountNameArray& names) {
+    return true;
+}
 
-    if (namesMap.size() > 0)
-        return true;
-
-    LOG8("Entering loadNames...");
-    establishFolder(getCachePath("names/"));
-
-    string_q txtFile = configPath("names/names.tab");
-    string_q customFile = configPath("names/names_custom.tab");
-    string_q prefundFile = configPath("names/names_prefunds.tab");
-
-    // A final set of options that do not have command line options
-    if (isEnabled(OPT_PREFUND)) {
-        if (!loadPrefunds(prefundFile)) {
-            return usage("Could not open prefunds data.");
-        }
-    }
-
-    string_q binFile = getCachePath("names/names.bin");
-    time_q binDate = fileLastModifyDate(binFile);
-
-    time_q txtDate = fileLastModifyDate(txtFile);
-    txtDate = laterOf(txtDate, fileLastModifyDate(customFile));
-    txtDate = laterOf(txtDate, fileLastModifyDate(prefundFile));
-
-    // If none of the source files is out of date, load the entire names database as quickly as possible
-    if (binDate > txtDate) {
-        LOG8("Reading names from binary cache");
-        CArchive nameCache(READING_ARCHIVE);
-        if (nameCache.Lock(binFile, modeReadOnly, LOCK_NOWAIT)) {
-            nameCache >> namesMap;
-            for (const auto& item : namesMap) {
-                if (contains(item.second.tags, "Airdrop"))
-                    airdropMap[item.second.address] = true;
-                bool isToken = !item.second.symbol.empty() || contains(item.second.tags, "Tokens") ||
-                               contains(item.second.tags, "Airdrop");
-                if (isToken)
-                    tokenMap[item.second.address] = item.second;
-            }
-            nameCache.Release();
-            return true;
-        }
-    }
-
-    CAddressNameMap theMap;
-    if (!importTabFile(theMap, txtFile))
-        return usage("Could not open names database...");
-    LOG8("Finished adding names from regular database...");
-
-    if (!importTabFile(theMap, customFile))
-        return usage("Could not open custom names database...");
-    LOG8("Finished adding names from custom database...");
-
-    if (!importTabFile(theMap, prefundFile))
-        return usage("Could not open prefunds database...");
-    LOG8("Finished adding names from prefunds database...");
-
-    // theMap is already sorted by address, so simply copy it into the array
-    for (auto item : theMap) {
-        namesMap[item.first] = item.second;
+//-----------------------------------------------------------------------
+bool COptionsBase::finishMaps(void) {
+    for (const auto& item : namesMap) {
         if (contains(item.second.tags, "Airdrop"))
             airdropMap[item.second.address] = true;
         bool isToken = !item.second.symbol.empty() || contains(item.second.tags, "Tokens") ||
@@ -235,14 +179,87 @@ bool COptionsBase::loadNames(void) {
         if (isToken)
             tokenMap[item.second.address] = item.second;
     }
+    return true;
+}
 
-    LOG8("Writing binary cache");
-    CArchive nameCache(WRITING_ARCHIVE);
-    if (nameCache.Lock(binFile, modeWriteCreate, LOCK_CREATE)) {
-        nameCache << namesMap;
-        nameCache.Release();
+//-----------------------------------------------------------------------
+bool COptionsBase::loadNames(void) {
+    establishFolder(getCachePath("names/"));
+    if (getEnvStr("NO_NAMES") == "true")
+        return true;
+    if (namesMap.size() > 0)  // already loaded
+        return true;
+
+    LOG8("Entering loadNames...");
+
+    string_q prefundFile = configPath("names/names_prefunds.tab");
+    if (isEnabled(OPT_PREFUND)) {
+        if (!loadPrefunds(prefundFile)) {
+            return usage("Could not open prefunds data.");
+        }
     }
-    LOG8("Finished writing binary cache...");
+
+    string_q txtFile = configPath("names/names.tab");
+    string_q customFile = configPath("names/names_custom.tab");
+    time_q txtDate =
+        laterOf(laterOf(fileLastModifyDate(txtFile), fileLastModifyDate(customFile)), fileLastModifyDate(prefundFile));
+
+    bool type1 = false;
+    if (type1) {
+        CAccountNameArray names;
+        loadNamesDatabaseFromSQL(names);
+
+        string_q binFile = getCachePath("names/names.db");
+        time_q binDate = fileLastModifyDate(binFile);
+        if (binDate > txtDate) {
+            LOG8("Reading names from binary cache");
+            CArchive nameCache(READING_ARCHIVE);
+            if (nameCache.Lock(binFile, modeReadOnly, LOCK_NOWAIT)) {
+                nameCache >> namesMap;
+                nameCache.Release();
+                finishMaps();
+                return true;
+            }
+        }
+
+    } else {
+        string_q binFile = getCachePath("names/names.bin");
+        time_q binDate = fileLastModifyDate(binFile);
+
+        if (binDate > txtDate) {
+            LOG8("Reading names from binary cache");
+            CArchive nameCache(READING_ARCHIVE);
+            if (nameCache.Lock(binFile, modeReadOnly, LOCK_NOWAIT)) {
+                nameCache >> namesMap;
+                nameCache.Release();
+                finishMaps();
+                return true;
+            }
+        }
+
+        if (!importTabFile(namesMap, txtFile))
+            return usage("Could not open names database...");
+        LOG8("Finished adding names from regular database...");
+
+        if (!importTabFile(namesMap, customFile))
+            return usage("Could not open custom names database...");
+        LOG8("Finished adding names from custom database...");
+
+        if (!importTabFile(namesMap, prefundFile))
+            return usage("Could not open prefunds database...");
+        LOG8("Finished adding names from prefunds database...");
+
+        finishMaps();
+
+        LOG8("Writing binary cache");
+        CArchive nameCache(WRITING_ARCHIVE);
+        if (nameCache.Lock(binFile, modeWriteCreate, LOCK_CREATE)) {
+            nameCache << namesMap;
+            nameCache.Release();
+        }
+
+        LOG8("Finished writing binary cache...");
+    }
 
     return true;
 }

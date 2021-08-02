@@ -117,8 +117,11 @@ class COptionsBase {
     CAddressNameMap tokenMap;
     CAddressBoolMap airdropMap;
     bool loadNames(void);
+    bool loadNamesDatabase(CAccountNameArray& names);
+    bool finishMaps(void);
 
   public:
+    bool loadNamesDatabaseFromSQL(CAccountNameArray& names);
     bool getNamedAccount(CAccountName& acct, const string_q& addr);
 
     // enabling options
