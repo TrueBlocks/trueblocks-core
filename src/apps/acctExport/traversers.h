@@ -1,6 +1,7 @@
 #pragma once
 
 #include "acctlib.h"
+#include "profitandloss.h"
 
 //-----------------------------------------------------------------------
 extern bool tsRangeFunc(CTraverser* trav, void* data);

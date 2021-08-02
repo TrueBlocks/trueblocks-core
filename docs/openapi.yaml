@@ -317,7 +317,7 @@ paths:
           items:
             type: string
             enum:
-            - yearly
+            - annually
             - quarterly
             - monthly
             - weekly
