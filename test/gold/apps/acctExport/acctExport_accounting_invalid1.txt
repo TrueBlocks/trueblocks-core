@@ -1,5 +1,5 @@
-acctExport argc: 8 [1:0x00a3819199113fc6a6e6ba1298afde7377e2009b] [2:--max_records] [3:50] [4:--fmt] [5:json] [6:--summarize_by] [7:tx] 
-acctExport 0x00a3819199113fc6a6e6ba1298afde7377e2009b --max_records 50 --fmt json --summarize_by tx 
+acctExport argc: 8 [1:0x00a3819199113fc6a6e6ba1298afde7377e2009b] [2:--max_records] [3:30] [4:--fmt] [5:json] [6:--summarize_by] [7:tx] 
+acctExport 0x00a3819199113fc6a6e6ba1298afde7377e2009b --max_records 30 --fmt json --summarize_by tx 
 
   You may use --summarized_by only with the --accounting option. Quitting...
 
@@ -38,7 +38,7 @@ acctExport 0x00a3819199113fc6a6e6ba1298afde7377e2009b --max_records 50 --fmt jso
 	    (--load <str>)    a comma separated list of dynamic traversers to load
 	    (--reversed)      produce results in reverse chronological order
 	-y  (--by_date)       produce results sorted by date (default is to report by address)
-	-b  (--summarize_by <val>)for --accounting only, summarize reconciliations by this time period, one or more of [yearly|monthly|weekly|daily|hourly|blockly|tx]
+	-b  (--summarize_by <val>)for --accounting only, summarize reconciliations by this time period, one or more of [annually|quarterly|monthly|weekly|daily|hourly|blockly|tx]
 	#### Hidden options
 
 	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]

@@ -228,8 +228,8 @@ string_q nextProfitandlossChunk_custom(const string_q& fieldIn, const void* data
                     string_q retS;
                     bool first = true;
                     for (auto statement : pro->currentStatements) {
-                        retS += (first ? "\n" : ",\n") ;
-                        retS += statement.second.Format() ;
+                        retS += (first ? "\n" : ",\n");
+                        retS += statement.second.Format();
                     }
                     return retS;
                 }
