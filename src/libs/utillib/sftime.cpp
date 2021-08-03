@@ -883,9 +883,13 @@ time_q SubtractOneDay(const time_q& date) {
 
 //---------------------------------------------------------------------------------------------
 time_q AddOneHour(const time_q& date) {
-    if (BOH(date).GetHour() == 23)
-        return BOD(AddOneDay(date));
-    return time_q(date.GetYear(), date.GetMonth(), date.GetDay(), date.GetHour() + 1, 0, 0);
+    if (date.GetHour() == 23) {
+        time_q next = BOD(AddOneDay(date));
+        return time_q(next.GetYear(), next.GetMonth(), next.GetDay(), next.GetHour(), date.GetMinute(),
+                      date.GetSecond());
+    }
+    return time_q(date.GetYear(), date.GetMonth(), date.GetDay(), date.GetHour() + 1, date.GetMinute(),
+                  date.GetSecond());
 }
 
 //---------------------------------------------------------------------------------------------
@@ -894,7 +898,8 @@ time_q SubtractOneHour(const time_q& date) {
         time_q x = SubtractOneDay(date);  // same time yesterday
         return time_q(x.GetYear(), x.GetMonth(), x.GetDay(), 23, x.GetMinute(), x.GetSecond());
     }
-    return time_q(date.GetYear(), date.GetMonth(), date.GetDay(), date.GetHour() - 1, 0, 0);
+    return time_q(date.GetYear(), date.GetMonth(), date.GetDay(), date.GetHour() - 1, date.GetMinute(),
+                  date.GetSecond());
 }
 
 //---------------------------------------------------------------------------------------------
@@ -908,20 +913,30 @@ time_q AddOneWeek(const time_q& date) {
 //---------------------------------------------------------------------------------------------
 time_q AddOneMonth(const time_q& date) {
     if (date.GetMonth() == 12)
-        return time_q(date.GetYear() + 1, 1, 1, 0, 0, 0);
-    return time_q(date.GetYear(), date.GetMonth() + 1, 1, 0, 0, 0);
+        return time_q(date.GetYear() + 1, 1, date.GetDay(), date.GetHour(), date.GetMinute(), date.GetSecond());
+    return time_q(date.GetYear(), date.GetMonth() + 1, date.GetDay(), date.GetHour(), date.GetMinute(),
+                  date.GetSecond());
 }
 
 //---------------------------------------------------------------------------------------------
 time_q AddOneQuarter(const time_q& date) {
-    if (date.GetMonth() > 9)
-        return time_q(date.GetYear() + 1, ((date.GetMonth() + 3) % 12) + 1, 1, 0, 0, 0);
-    return time_q(date.GetYear(), date.GetMonth() + 3, 1, 0, 0, 0);
+    if (date.GetMonth() > 9) {
+        return time_q(date.GetYear() + 1, (date.GetMonth() + 3) % 12, date.GetDay(), date.GetHour(), date.GetMinute(), date.GetSecond());
+    }
+    return time_q(date.GetYear(), date.GetMonth() + 3, date.GetDay(), date.GetHour(), date.GetMinute(),
+                  date.GetSecond());
 }
 
 //---------------------------------------------------------------------------------------------
 time_q AddOneYear(const time_q& date) {
-    return time_q(date.GetYear() + 1, 1, 1, 0, 0, 0);
+    return time_q(date.GetYear() + 1, date.GetMonth(), date.GetDay(), date.GetHour(), date.GetMinute(),
+                  date.GetSecond());
+}
+
+//---------------------------------------------------------------------------------------------
+time_q SubtractOneYear(const time_q& date) {
+    return time_q(date.GetYear() - 1, date.GetMonth(), date.GetDay(), date.GetHour(), date.GetMinute(),
+                  date.GetSecond());
 }
 
 //----------------------------------------------------------------------------------------------------
@@ -935,7 +950,7 @@ time_q BOW(const time_q& tm) {
 //----------------------------------------------------------------------------------------------------
 time_q EOW(const time_q& tm) {
     time_q ret = EOD(tm);
-    while (getDayOfWeek(tm.getDatePart()) < 7)  // if it equals '7', it's Saturday 12:59:59
+    while (getDayOfWeek(ret.getDatePart()) < 7)  // if it equals '7', it's Saturday 12:59:59
         ret = AddOneDay(ret);
     return ret;
 }
@@ -983,15 +998,20 @@ time_q EOP(period_t per, const time_q& date) {
 }
 
 //------------------------------------------------------------------------
+time_q BONQ(const time_q& date) {
+    return BOQ(earlierOf(latestDate, AddOneQuarter(date)));
+}
+
+//------------------------------------------------------------------------
 typedef time_q (*PTF)(const time_q& date);
 
 //------------------------------------------------------------------------
-bool expandTimeArray(CTimeArray& ta, const time_q& startIn, const time_q& stop, bool fallback, PTF BOP, PTF BONP) {
+bool expandTimeArray(CTimeArray& ta, const time_q& startIn, const time_q& stop, bool fallback, PTF pBOP, PTF pBONP) {
     if (fallback)
-        ta.push_back(BOP(startIn));
-    for (time_q t = BONP(startIn); t <= BONP(stop);) {
+        ta.push_back(pBOP(startIn));
+    for (time_q t = pBONP(startIn); t <= pBONP(stop);) {
         ta.push_back(t);
-        t = BONP(t);
+        t = pBONP(t);
     }
     return true;
 }

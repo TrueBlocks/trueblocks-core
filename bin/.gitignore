@@ -49,6 +49,7 @@ colorTest
 convertTest
 curlTest
 dataUpgradeTest
+dateTest
 decodeAbiTest
 displayStrsTest
 editName

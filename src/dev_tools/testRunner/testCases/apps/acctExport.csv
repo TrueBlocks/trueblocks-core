@@ -76,7 +76,7 @@ on,both,fast,export,apps/acctExport,accounting_by_tx,y,addrs = 0x00a3819199113fc
 on,both,fast,export,apps/acctExport,accounting_by_blockly,y,addrs = 0x00a3819199113fc6a6e6ba1298afde7377e2009b & max_records = 30 & accounting & fmt = json & summarize_by = blockly
 on,both,fast,export,apps/acctExport,accounting_by_hourly,y,addrs = 0x00a3819199113fc6a6e6ba1298afde7377e2009b & max_records = 30 & accounting & fmt = json & summarize_by = hourly
 on,both,fast,export,apps/acctExport,accounting_by_daily,y,addrs = 0x00a3819199113fc6a6e6ba1298afde7377e2009b & max_records = 30 & accounting & fmt = json & summarize_by = daily
-off,both,fast,export,apps/acctExport,accounting_by_weekly,y,addrs = 0x00a3819199113fc6a6e6ba1298afde7377e2009b & max_records = 30 & accounting & fmt = json & summarize_by = weekly
+on,both,fast,export,apps/acctExport,accounting_by_weekly,y,addrs = 0x00a3819199113fc6a6e6ba1298afde7377e2009b & max_records = 30 & accounting & fmt = json & summarize_by = weekly
 on,both,fast,export,apps/acctExport,accounting_by_monthly,y,addrs = 0x00a3819199113fc6a6e6ba1298afde7377e2009b & max_records = 30 & accounting & fmt = json & summarize_by = monthly
 on,both,fast,export,apps/acctExport,accounting_by_quarterly,y,addrs = 0x00a3819199113fc6a6e6ba1298afde7377e2009b & max_records = 30 & accounting & fmt = json & summarize_by = quarterly
 on,both,fast,export,apps/acctExport,accounting_by_annually,y,addrs = 0x00a3819199113fc6a6e6ba1298afde7377e2009b & max_records = 30 & accounting & fmt = json & summarize_by = yearly

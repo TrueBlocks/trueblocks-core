@@ -1,0 +1,144 @@
+0. Running TestTest_1
+	000.000 date                             ==> passed 'theDate' is equal to 'theDate'
+	000.001 BOH                              ==> passed 'BOH(theDate)' is equal to 'time_q(2019, 8, 7, 11, 0, 0)'
+	000.002 BOD                              ==> passed 'BOD(theDate)' is equal to 'time_q(2019, 8, 7, 0, 0, 0)'
+	000.003 BOW                              ==> passed 'BOW(theDate)' is equal to 'time_q(2019, 8, 4, 0, 0, 0)'
+	000.004 BOM                              ==> passed 'BOM(theDate)' is equal to 'time_q(2019, 8, 1, 0, 0, 0)'
+	000.005 BOQ                              ==> passed 'BOQ(theDate)' is equal to 'time_q(2019, 7, 1, 0, 0, 0)'
+	000.006 BOY                              ==> passed 'BOY(theDate)' is equal to 'time_q(2019, 1, 1, 0, 0, 0)'
+	000.007 EOH                              ==> passed 'EOH(theDate)' is equal to 'time_q(2019, 8, 7, 11, 59, 59)'
+	000.008 EOD                              ==> passed 'EOD(theDate)' is equal to 'time_q(2019, 8, 7, 23, 59, 59)'
+	000.009 EOW                              ==> passed 'EOW(theDate)' is equal to 'time_q(2019, 8, 10, 23, 59, 59)'
+	000.010 EOM                              ==> passed 'EOM(theDate)' is equal to 'time_q(2019, 8, 31, 23, 59, 59)'
+	000.011 EOQ                              ==> passed 'EOQ(theDate)' is equal to 'time_q(2019, 9, 30, 23, 59, 59)'
+	000.012 EOY                              ==> passed 'EOY(theDate)' is equal to 'time_q(2019, 12, 31, 23, 59, 59)'
+1. Running TestTest_2
+	001.000 earliestDate                     ==> passed 'earliestDate' is equal to 'time_q(1700, 1, 1, 0, 0, 1)'
+	001.001 latestDate                       ==> passed 'latestDate' is equal to 'time_q(2200, 12, 31, 23, 59, 59)'
+	001.002 AddOneDay                        ==> passed 'AddOneDay(theDate)' is equal to 'time_q(2019, 8, 8, 11, 10, 9)'
+	001.003 AddOneHour1                      ==> passed 'AddOneHour(theDate)' is equal to 'time_q(2019, 8, 7, 12, 10, 9)'
+	001.004 AddOneHour2                      ==> passed 'AddOneHour(EOD(theDate))' is equal to 'time_q(2019, 8, 8, 0, 59, 59)'
+	001.005 AddOneWeek1                      ==> passed 'AddOneWeek(theDate)' is equal to 'time_q(2019, 8, 14, 11, 10, 9)'
+	001.006 AddOneWeek2                      ==> passed 'AddOneWeek(EOM(theDate))' is equal to 'time_q(2019, 9, 7, 23, 59, 59)'
+	001.007 AddOneMonth1                     ==> passed 'AddOneMonth(theDate)' is equal to 'time_q(2019, 9, 7, 11, 10, 9)'
+	001.008 AddOneMonth2                     ==> passed 'AddOneMonth(EOY(theDate))' is equal to 'time_q(2020, 1, 31, 23, 59, 59)'
+	001.009 AddOneQuarter                    ==> passed 'AddOneQuarter(theDate)' is equal to 'time_q(2019, 11, 7, 11, 10, 9)'
+	001.010 AddOneYear                       ==> passed 'AddOneYear(theDate)' is equal to 'time_q(2020, 8, 7, 11, 10, 9)'
+	001.011 SubtractOneDay1                  ==> passed 'SubtractOneDay(theDate)' is equal to 'time_q(2019, 8, 6, 11, 10, 9)'
+	001.012 SubtractOneDay2                  ==> passed 'SubtractOneDay(BOM(theDate))' is equal to 'time_q(2019, 7, 31, 0, 0, 0)'
+	001.013 SubtractOneHour1                 ==> passed 'SubtractOneHour(theDate)' is equal to 'time_q(2019, 8, 7, 10, 10, 9)'
+	001.014 SubtractOneHour2                 ==> passed 'SubtractOneHour(BOY(theDate))' is equal to 'time_q(2018, 12, 31, 23, 0, 0)'
+	001.015 SubtractOneYear                  ==> passed 'SubtractOneYear(theDate)' is equal to 'time_q(2018, 8, 7, 11, 10, 9)'
+	001.016 DaysInMonth                      ==> passed 'DaysInMonth(theDate.GetYear(), theDate.GetMonth())' is equal to '31'
+	001.017 Format(FMT_JSON)                 ==> passed 'theDate.Format(FMT_JSON)' is equal to '"2019-08-07 11:10:09 UTC"'
+	001.018 Format(FMT_EXPORT)               ==> passed 'theDate.Format(FMT_EXPORT)' is equal to '"2019-08-07T11:10:09"'
+	001.019 Format(FMT_PARTS)                ==> passed 'theDate.Format(FMT_PARTS)' is equal to '"2019|08|07|11|10|09"'
+	001.020 Format(FMT_SHORT)                ==> passed 'theDate.Format(FMT_SHORT)' is equal to '"20190807"'
+2. Running TestTest_3
+	002.000 earlierOf                        ==> passed 'earlierOf(theDate, EOY(theDate))' is equal to 'theDate'
+	002.001 laterOf                          ==> passed 'laterOf(theDate, EOY(theDate))' is equal to 'EOY(theDate)'
+	002.002 getCentury                       ==> passed 'getCentury(2021)' is equal to '2000'
+	002.003 get2Digit                        ==> passed 'get2Digit(2021)' is equal to '21'
+	002.004 isSameYear                       ==> passed 'isSameYear(theDate, theDate)' is true
+	002.005 isSameQuarter                    ==> passed 'isSameQuarter(theDate, theDate)' is true
+	002.006 isSameMonth                      ==> passed 'isSameMonth(theDate, theDate)' is true
+	002.007 isSameWeek                       ==> passed 'isSameWeek(theDate, theDate)' is true
+	002.008 isSameDay                        ==> passed 'isSameDay(theDate, theDate)' is true
+	002.009 isSameHour                       ==> passed 'isSameHour(theDate, theDate)' is true
+	002.010 isSameYear                       ==> passed 'isSameYear(theDate, theDate2)' is false
+	002.011 isSameQuarter                    ==> passed 'isSameQuarter(theDate, theDate2)' is false
+	002.012 isSameMonth                      ==> passed 'isSameMonth(theDate, theDate2)' is false
+	002.013 isSameWeek                       ==> passed 'isSameWeek(theDate, theDate2)' is false
+	002.014 isSameDay                        ==> passed 'isSameDay(theDate, theDate2)' is false
+	002.015 isSameHour                       ==> passed 'isSameHour(theDate, theDate2)' is false
+	002.016 MIDDAY                           ==> passed 'MIDDAY(theDate)' is equal to 'time_q(2019, 8, 7, 12, 0, 0)'
+3. Running TestTest_4
+	003.000 BONH                             ==> passed 'BONH(theDate)' is equal to 'time_q(2019, 8, 7, 12, 0, 0)'
+	003.001 BOND                             ==> passed 'BOND(theDate)' is equal to 'time_q(2019, 8, 8, 0, 0, 0)'
+	003.002 BONW                             ==> passed 'BONW(theDate)' is equal to 'time_q(2019, 8, 11, 0, 0, 0)'
+	003.003 BONM                             ==> passed 'BONM(theDate)' is equal to 'time_q(2019, 9, 1, 0, 0, 0)'
+	003.004 BONQ                             ==> passed 'BONQ(theDate)' is equal to 'time_q(2019, 10, 1, 0, 0, 0)'
+	003.005 BONY                             ==> passed 'BONY(theDate)' is equal to 'time_q(2020, 1, 1, 0, 0, 0)'
+	expandHourly
+		0: 2019-08-07 11:00:00 UTC
+		1: 2019-08-07 12:00:00 UTC
+		2: 2019-08-07 13:00:00 UTC
+		3: 2019-08-07 14:00:00 UTC
+		4: 2019-08-07 15:00:00 UTC
+		5: 2019-08-07 16:00:00 UTC
+		6: 2019-08-07 17:00:00 UTC
+		7: 2019-08-07 18:00:00 UTC
+		8: 2019-08-07 19:00:00 UTC
+		9: 2019-08-07 20:00:00 UTC
+		10: 2019-08-07 21:00:00 UTC
+		11: 2019-08-07 22:00:00 UTC
+		12: 2019-08-07 23:00:00 UTC
+		13: 2019-08-08 00:00:00 UTC
+	expandDaily
+		0: 2019-08-07 00:00:00 UTC
+		1: 2019-08-08 00:00:00 UTC
+		2: 2019-08-09 00:00:00 UTC
+		3: 2019-08-10 00:00:00 UTC
+		4: 2019-08-11 00:00:00 UTC
+		5: 2019-08-12 00:00:00 UTC
+		6: 2019-08-13 00:00:00 UTC
+		7: 2019-08-14 00:00:00 UTC
+		8: 2019-08-15 00:00:00 UTC
+		9: 2019-08-16 00:00:00 UTC
+		10: 2019-08-17 00:00:00 UTC
+		11: 2019-08-18 00:00:00 UTC
+		12: 2019-08-19 00:00:00 UTC
+		13: 2019-08-20 00:00:00 UTC
+		14: 2019-08-21 00:00:00 UTC
+		15: 2019-08-22 00:00:00 UTC
+		16: 2019-08-23 00:00:00 UTC
+		17: 2019-08-24 00:00:00 UTC
+		18: 2019-08-25 00:00:00 UTC
+		19: 2019-08-26 00:00:00 UTC
+		20: 2019-08-27 00:00:00 UTC
+		21: 2019-08-28 00:00:00 UTC
+		22: 2019-08-29 00:00:00 UTC
+		23: 2019-08-30 00:00:00 UTC
+		24: 2019-08-31 00:00:00 UTC
+		25: 2019-09-01 00:00:00 UTC
+	expandWeekly
+		0: 2018-12-30 00:00:00 UTC
+		1: 2019-01-06 00:00:00 UTC
+		2: 2019-01-13 00:00:00 UTC
+		3: 2019-01-20 00:00:00 UTC
+		4: 2019-01-27 00:00:00 UTC
+		5: 2019-02-03 00:00:00 UTC
+		6: 2019-02-10 00:00:00 UTC
+		7: 2019-02-17 00:00:00 UTC
+		8: 2019-02-24 00:00:00 UTC
+		9: 2019-03-03 00:00:00 UTC
+		10: 2019-03-10 00:00:00 UTC
+		11: 2019-03-17 00:00:00 UTC
+		12: 2019-03-24 00:00:00 UTC
+		13: 2019-03-31 00:00:00 UTC
+		14: 2019-04-07 00:00:00 UTC
+	expandMonthly
+		0: 2019-01-01 00:00:00 UTC
+		1: 2019-02-01 00:00:00 UTC
+		2: 2019-03-01 00:00:00 UTC
+		3: 2019-04-01 00:00:00 UTC
+		4: 2019-05-01 00:00:00 UTC
+		5: 2019-06-01 00:00:00 UTC
+		6: 2019-07-01 00:00:00 UTC
+		7: 2019-08-01 00:00:00 UTC
+		8: 2019-09-01 00:00:00 UTC
+		9: 2019-10-01 00:00:00 UTC
+		10: 2019-11-01 00:00:00 UTC
+		11: 2019-12-01 00:00:00 UTC
+		12: 2020-01-01 00:00:00 UTC
+	expandQuarterly
+		0: 2019-01-01 00:00:00 UTC
+		1: 2019-04-01 00:00:00 UTC
+		2: 2019-07-01 00:00:00 UTC
+		3: 2019-10-01 00:00:00 UTC
+		4: 2020-01-01 00:00:00 UTC
+	expandAnnually
+		0: 2019-01-01 00:00:00 UTC
+		1: 2020-01-01 00:00:00 UTC
+		2: 2021-01-01 00:00:00 UTC
+		3: 2022-01-01 00:00:00 UTC

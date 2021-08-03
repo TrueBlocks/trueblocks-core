@@ -178,6 +178,20 @@ extern const time_q earliestDate;
 #define FMT_SHORT string_q("%Y%m%d")
 
 //---------------------------------------------------------------------------------------------
+extern time_q AddOneDay(const time_q& date);
+extern time_q AddOneHour(const time_q& date);
+extern time_q AddOneWeek(const time_q& date);
+extern time_q AddOneMonth(const time_q& date);
+extern time_q AddOneQuarter(const time_q& date);
+extern time_q AddOneYear(const time_q& date);
+
+extern time_q SubtractOneDay(const time_q& date);
+extern time_q SubtractOneHour(const time_q& date);
+extern time_q SubtractOneWeek(const time_q& date);
+extern time_q SubtractOneMonth(const time_q& date);
+extern time_q SubtractOneQuarter(const time_q& date);
+extern time_q SubtractOneYear(const time_q& date);
+
 extern uint32_t DaysInMonth(uint32_t year, uint32_t month);
 
 //---------------------------------------------------------------------------------------------
@@ -224,8 +238,7 @@ inline time_q BOQ(const time_q& date) {
 
 //---------------------------------------------------------------------------------------------
 inline time_q EOQ(const time_q& date) {
-    uint32_t m = uint32_t((date.GetMonth() - 1) / 3) * 3 + 1;
-    return time_q(date.GetYear(), m, DaysInMonth(date.GetYear(), m), 23, 59, 59);
+    return EOD(SubtractOneDay(BOQ(AddOneMonth(AddOneMonth(AddOneMonth(date))))));
 }
 
 //---------------------------------------------------------------------------------------------
@@ -277,16 +290,6 @@ inline uint32_t get2Digit(uint32_t year) {
 }
 
 //---------------------------------------------------------------------------------------------
-extern time_q AddOneDay(const time_q& date);
-extern time_q SubtractOneDay(const time_q& date);
-extern time_q AddOneHour(const time_q& date);
-extern time_q SubtractOneHour(const time_q& date);
-extern time_q AddOneWeek(const time_q& date);
-extern time_q AddOneMonth(const time_q& date);
-extern time_q AddOneQuarter(const time_q& date);
-extern time_q AddOneYear(const time_q& date);
-
-//---------------------------------------------------------------------------------------------
 inline time_q BONH(const time_q& date) {
     return BOH(earlierOf(latestDate, AddOneHour(date)));
 }
@@ -307,11 +310,7 @@ inline time_q BONM(const time_q& date) {
 }
 
 //---------------------------------------------------------------------------------------------
-inline time_q BONQ(const time_q& date) {
-    return BOQ(earlierOf(latestDate, AddOneQuarter(date)));
-}
-
-//---------------------------------------------------------------------------------------------
+extern time_q BONQ(const time_q& date);
 inline time_q BONY(const time_q& date) {
     return BOY(earlierOf(latestDate, AddOneYear(date)));
 }
