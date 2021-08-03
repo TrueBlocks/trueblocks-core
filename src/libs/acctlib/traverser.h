@@ -40,6 +40,8 @@ class CTraverser {
         exportRange = make_pair(0, NOPOS);
         filterFunc = ::filterFunc;
     }
+    virtual ~CTraverser(void) {
+    }
 
   public:
     TRAVERSERFUNC filterFunc = nullptr;

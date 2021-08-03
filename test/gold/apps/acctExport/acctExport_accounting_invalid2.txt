@@ -1,7 +1,7 @@
 acctExport argc: 9 [1:0x00a3819199113fc6a6e6ba1298afde7377e2009b] [2:--max_records] [3:30] [4:--accounting] [5:--fmt] [6:json] [7:--summarize_by] [8:jimp] 
 acctExport 0x00a3819199113fc6a6e6ba1298afde7377e2009b --max_records 30 --accounting --fmt json --summarize_by jimp 
 
-  Invalid option 'jimp' for 'summarize_by'. One or more of [annually|quarterly|monthly|weekly|daily|hourly|blockly|tx] required. Quitting...
+  Invalid option 'jimp' for 'summarize_by'. One of [yearly|quarterly|monthly|weekly|daily|hourly|blockly|tx] required. Quitting...
 
   Usage:    acctExport [-p|-r|-l|-t|-C|-a|-i|-R|-y|-U|-c|-e|-v|-h] <address> [address...] [topics] [fourbytes]  
   Purpose:  Export full detail of transactions for one or more addresses.
@@ -38,7 +38,7 @@ acctExport 0x00a3819199113fc6a6e6ba1298afde7377e2009b --max_records 30 --account
 	    (--load <str>)    a comma separated list of dynamic traversers to load
 	    (--reversed)      produce results in reverse chronological order
 	-y  (--by_date)       produce results sorted by date (default is to report by address)
-	-b  (--summarize_by <val>)for --accounting only, summarize reconciliations by this time period, one or more of [annually|quarterly|monthly|weekly|daily|hourly|blockly|tx]
+	-b  (--summarize_by <val>)for --accounting only, summarize reconciliations by this time period, one of [yearly|quarterly|monthly|weekly|daily|hourly|blockly|tx]
 	#### Hidden options
 
 	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]

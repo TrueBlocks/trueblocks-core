@@ -78,11 +78,6 @@ string_q CAccumulator::getValueByName(const string_q& fieldName) const {
                 return endOfPeriod.Format(FMT_JSON);
             }
             break;
-        case 't':
-            if (fieldName % "type") {
-                return type;
-            }
-            break;
         default:
             break;
     }
@@ -106,12 +101,6 @@ bool CAccumulator::setValueByName(const string_q& fieldNameIn, const string_q& f
         case 'e':
             if (fieldName % "endOfPeriod") {
                 endOfPeriod = str_2_Date(fieldValue);
-                return true;
-            }
-            break;
-        case 't':
-            if (fieldName % "type") {
-                type = fieldValue;
                 return true;
             }
             break;
@@ -140,14 +129,9 @@ bool CAccumulator::Serialize(CArchive& archive) {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive >> type;
     archive >> endOfPeriod;
     // EXISTING_CODE
-#ifdef NEW_CODE
     // archive >> sum_type;
-#else
-    // archive >> currentStatements;
-#endif
     // EXISTING_CODE
     finishParse();
     return true;
@@ -160,14 +144,9 @@ bool CAccumulator::SerializeC(CArchive& archive) const {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive << type;
     archive << endOfPeriod;
     // EXISTING_CODE
-#ifdef NEW_CODE
     // archive << sum_type;
-#else
-    // archive << currentStatements;
-#endif
     // EXISTING_CODE
     return true;
 }
@@ -204,7 +183,6 @@ void CAccumulator::registerClass(void) {
     ADD_FIELD(CAccumulator, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CAccumulator, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CAccumulator, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CAccumulator, "type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CAccumulator, "endOfPeriod", T_DATE, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
@@ -216,11 +194,7 @@ void CAccumulator::registerClass(void) {
     builtIns.push_back(_biCAccumulator);
 
     // EXISTING_CODE
-#ifdef NEW_CODE
     ADD_FIELD(CAccumulator, "sum_type", T_NUMBER, ++fieldNum);
-#else
-    ADD_FIELD(CAccumulator, "currentStatements", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
-#endif
     // EXISTING_CODE
 }
 
@@ -230,30 +204,11 @@ string_q nextAccumulatorChunk_custom(const string_q& fieldIn, const void* dataPt
     if (acc) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
-#ifdef NEW_CODE
             case 's':
                 if (fieldIn % "sum_type") {
                     return uint_2_Str(acc->sum_type);
                 }
                 break;
-#else
-            case 'c':
-                if (fieldIn % "currentStatements" || fieldIn % "currentStatementsCnt") {
-                    size_t cnt = acc->currentStatements.size();
-                    if (endsWith(toLower(fieldIn), "cnt"))
-                        return uint_2_Str(cnt);
-                    if (!cnt)
-                        return "";
-                    string_q retS;
-                    bool first = true;
-                    for (auto statement : acc->currentStatements) {
-                        retS += (first ? "\n" : ",\n");
-                        retS += statement.second.Format();
-                    }
-                    return retS;
-                }
-                break;
-#endif
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
@@ -294,8 +249,6 @@ const char* STR_DISPLAY_ACCUMULATOR = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-#ifdef NEW_CODE
-//---------------------------------------------------------------------------
 //---------------------------------------------------------------------------
 period_t getSummaryType(const string_q& type) {
     if (type == "hourly")
@@ -312,6 +265,5 @@ period_t getSummaryType(const string_q& type) {
         return BY_YEAR;
     return BY_NOTHING;
 }
-#endif
 // EXISTING_CODE
 }  // namespace qblocks

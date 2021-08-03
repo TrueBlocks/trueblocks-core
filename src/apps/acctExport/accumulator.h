@@ -25,7 +25,6 @@ namespace qblocks {
 //--------------------------------------------------------------------------
 class CAccumulator : public CBaseNode {
   public:
-    string_q type;
     time_q endOfPeriod;
 
   public:
@@ -37,12 +36,8 @@ class CAccumulator : public CBaseNode {
     DECLARE_NODE(CAccumulator);
 
     // EXISTING_CODE
-#ifdef NEW_CODE
     period_t sum_type = BY_NOTHING;
     bool accumulate(const CTransaction* trans, CTransaction& summary);
-#else
-    CReconciliationMap currentStatements;
-#endif
     // EXISTING_CODE
     bool operator==(const CAccumulator& it) const;
     bool operator!=(const CAccumulator& it) const {
@@ -95,15 +90,10 @@ inline void CAccumulator::clear(void) {
 inline void CAccumulator::initialize(void) {
     CBaseNode::initialize();
 
-    type = "";
     endOfPeriod = earliestDate;
 
     // EXISTING_CODE
-#ifdef NEW_CODE
     sum_type = BY_NOTHING;
-#else
-    currentStatements.clear();
-#endif
     // EXISTING_CODE
 }
 
@@ -112,15 +102,10 @@ inline void CAccumulator::duplicate(const CAccumulator& ac) {
     clear();
     CBaseNode::duplicate(ac);
 
-    type = ac.type;
     endOfPeriod = ac.endOfPeriod;
 
     // EXISTING_CODE
-#ifdef NEW_CODE
     sum_type = ac.sum_type;
-#else
-    currentStatements = ac.currentStatements;
-#endif
     // EXISTING_CODE
 }
 
@@ -158,8 +143,6 @@ extern const char* STR_DISPLAY_ACCUMULATOR;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-#ifdef NEW_CODE
 extern period_t getSummaryType(const string_q& type);
-#endif
 // EXISTING_CODE
 }  // namespace qblocks

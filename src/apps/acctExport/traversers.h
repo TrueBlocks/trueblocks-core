@@ -65,21 +65,17 @@ class CTraceTraverser : public CTraverser {
 };
 
 extern bool acct_Display(CTraverser* trav, void* data);
-#ifdef NEW_CODE
 extern bool acct_PreFunc(CTraverser* trav, void* data);
-#endif
 class CTransactionTraverser : public CTraverser {
   public:
-#ifdef NEW_CODE
     CAccumulator pl;
-#endif
     CTransactionTraverser(void) : CTraverser("txs") {
         filterFunc = tsRangeFunc;
-#ifdef NEW_CODE
         preFunc = acct_PreFunc;
-#endif
         postFunc = post_Func;
         dataFunc = loadTx_Func;
         displayFunc = acct_Display;
+    }
+    ~CTransactionTraverser(void) {
     }
 };

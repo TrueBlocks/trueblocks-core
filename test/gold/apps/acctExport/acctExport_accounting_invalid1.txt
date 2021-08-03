@@ -38,7 +38,7 @@ acctExport 0x00a3819199113fc6a6e6ba1298afde7377e2009b --max_records 30 --fmt jso
 	    (--load <str>)    a comma separated list of dynamic traversers to load
 	    (--reversed)      produce results in reverse chronological order
 	-y  (--by_date)       produce results sorted by date (default is to report by address)
-	-b  (--summarize_by <val>)for --accounting only, summarize reconciliations by this time period, one or more of [annually|quarterly|monthly|weekly|daily|hourly|blockly|tx]
+	-b  (--summarize_by <val>)for --accounting only, summarize reconciliations by this time period, one of [yearly|quarterly|monthly|weekly|daily|hourly|blockly|tx]
 	#### Hidden options
 
 	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
