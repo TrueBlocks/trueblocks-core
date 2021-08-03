@@ -921,7 +921,8 @@ time_q AddOneMonth(const time_q& date) {
 //---------------------------------------------------------------------------------------------
 time_q AddOneQuarter(const time_q& date) {
     if (date.GetMonth() > 9) {
-        return time_q(date.GetYear() + 1, (date.GetMonth() + 3) % 12, date.GetDay(), date.GetHour(), date.GetMinute(), date.GetSecond());
+        return time_q(date.GetYear() + 1, (date.GetMonth() + 3) % 12, date.GetDay(), date.GetHour(), date.GetMinute(),
+                      date.GetSecond());
     }
     return time_q(date.GetYear(), date.GetMonth() + 3, date.GetDay(), date.GetHour(), date.GetMinute(),
                   date.GetSecond());
