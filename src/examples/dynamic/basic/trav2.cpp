@@ -8,7 +8,7 @@ class CTestTraverser : public CTraverser {
   public:
     wei_t totalSpent;
     wei_t totalError;
-    CTestTraverser(void) : CTraverser(cout, "testing") {
+    CTestTraverser(void) : CTraverser("testing") {
         totalSpent = 0;
         totalError = 0;
     }
@@ -32,7 +32,7 @@ bool display(CTraverser* trav, void* data) {
     string_q tot = wei_2_Ether(tt->totalSpent, 18);
     string_q err = wei_2_Ether(tt->totalError, 18);
 
-    trav->os << trav->app->blk << "," << trav->app->txid << "," << val << "," << tot << "," << err << endl;
+    cout << trav->app->blk << "," << trav->app->txid << "," << val << "," << tot << "," << err << endl;
     return true;
 }
 

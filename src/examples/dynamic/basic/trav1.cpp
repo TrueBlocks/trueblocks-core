@@ -11,16 +11,16 @@ bool header(CTraverser* trav, void* data) {
 
 //-----------------------------------------------------------------------
 bool display(CTraverser* trav, void* data) {
-    trav->os << trav->app->blk << ",";
-    trav->os << trav->app->txid << ",";
-    trav->os << trav->trans.hash << endl;
+    cout << trav->app->blk << ",";
+    cout << trav->app->txid << ",";
+    cout << trav->trans.hash << endl;
     return true;
 }
 
 //-----------------------------------------------------------------------
 // This function creates a new traverser and returns it to the caller.
 extern "C" CTraverser* makeTraverser(void) {
-    CTraverser* trav = new CTraverser(cout, "testing");
+    CTraverser* trav = new CTraverser("testing");
 
     // Attach custom functions to the traverser.
 

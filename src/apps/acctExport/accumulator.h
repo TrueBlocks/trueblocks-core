@@ -23,33 +23,38 @@ namespace qblocks {
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CProfitAndLoss : public CBaseNode {
+class CAccumulator : public CBaseNode {
   public:
     string_q type;
-    time_q lastDate;
+    time_q endOfPeriod;
 
   public:
-    CProfitAndLoss(void);
-    CProfitAndLoss(const CProfitAndLoss& pr);
-    virtual ~CProfitAndLoss(void);
-    CProfitAndLoss& operator=(const CProfitAndLoss& pr);
+    CAccumulator(void);
+    CAccumulator(const CAccumulator& ac);
+    virtual ~CAccumulator(void);
+    CAccumulator& operator=(const CAccumulator& ac);
 
-    DECLARE_NODE(CProfitAndLoss);
+    DECLARE_NODE(CAccumulator);
 
     // EXISTING_CODE
+#ifdef NEW_CODE
+    period_t sum_type = BY_NOTHING;
+    bool accumulate(const CTransaction* trans, CTransaction& summary);
+#else
     CReconciliationMap currentStatements;
+#endif
     // EXISTING_CODE
-    bool operator==(const CProfitAndLoss& it) const;
-    bool operator!=(const CProfitAndLoss& it) const {
+    bool operator==(const CAccumulator& it) const;
+    bool operator!=(const CAccumulator& it) const {
         return !operator==(it);
     }
-    friend bool operator<(const CProfitAndLoss& v1, const CProfitAndLoss& v2);
-    friend ostream& operator<<(ostream& os, const CProfitAndLoss& it);
+    friend bool operator<(const CAccumulator& v1, const CAccumulator& v2);
+    friend ostream& operator<<(ostream& os, const CAccumulator& it);
 
   protected:
     void clear(void);
     void initialize(void);
-    void duplicate(const CProfitAndLoss& pr);
+    void duplicate(const CAccumulator& ac);
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
@@ -57,70 +62,78 @@ class CProfitAndLoss : public CBaseNode {
 };
 
 //--------------------------------------------------------------------------
-inline CProfitAndLoss::CProfitAndLoss(void) {
+inline CAccumulator::CAccumulator(void) {
     initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CProfitAndLoss::CProfitAndLoss(const CProfitAndLoss& pr) {
+inline CAccumulator::CAccumulator(const CAccumulator& ac) {
     // EXISTING_CODE
     // EXISTING_CODE
-    duplicate(pr);
+    duplicate(ac);
 }
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CProfitAndLoss::~CProfitAndLoss(void) {
+inline CAccumulator::~CAccumulator(void) {
     clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CProfitAndLoss::clear(void) {
+inline void CAccumulator::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CProfitAndLoss::initialize(void) {
+inline void CAccumulator::initialize(void) {
     CBaseNode::initialize();
 
     type = "";
-    lastDate = earliestDate;
+    endOfPeriod = earliestDate;
 
     // EXISTING_CODE
+#ifdef NEW_CODE
+    sum_type = BY_NOTHING;
+#else
     currentStatements.clear();
+#endif
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CProfitAndLoss::duplicate(const CProfitAndLoss& pr) {
+inline void CAccumulator::duplicate(const CAccumulator& ac) {
     clear();
-    CBaseNode::duplicate(pr);
+    CBaseNode::duplicate(ac);
 
-    type = pr.type;
-    lastDate = pr.lastDate;
+    type = ac.type;
+    endOfPeriod = ac.endOfPeriod;
 
     // EXISTING_CODE
-    currentStatements = pr.currentStatements;
+#ifdef NEW_CODE
+    sum_type = ac.sum_type;
+#else
+    currentStatements = ac.currentStatements;
+#endif
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CProfitAndLoss& CProfitAndLoss::operator=(const CProfitAndLoss& pr) {
-    duplicate(pr);
+inline CAccumulator& CAccumulator::operator=(const CAccumulator& ac) {
+    duplicate(ac);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
 //-------------------------------------------------------------------------
-inline bool CProfitAndLoss::operator==(const CProfitAndLoss& it) const {
+inline bool CAccumulator::operator==(const CAccumulator& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)
@@ -128,7 +141,7 @@ inline bool CProfitAndLoss::operator==(const CProfitAndLoss& it) const {
 }
 
 //-------------------------------------------------------------------------
-inline bool operator<(const CProfitAndLoss& v1, const CProfitAndLoss& v2) {
+inline bool operator<(const CAccumulator& v1, const CAccumulator& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default sort defined in class definition, assume already sorted, preserve ordering
@@ -136,14 +149,17 @@ inline bool operator<(const CProfitAndLoss& v1, const CProfitAndLoss& v2) {
 }
 
 //---------------------------------------------------------------------------
-typedef vector<CProfitAndLoss> CProfitAndLossArray;
-extern CArchive& operator>>(CArchive& archive, CProfitAndLossArray& array);
-extern CArchive& operator<<(CArchive& archive, const CProfitAndLossArray& array);
+typedef vector<CAccumulator> CAccumulatorArray;
+extern CArchive& operator>>(CArchive& archive, CAccumulatorArray& array);
+extern CArchive& operator<<(CArchive& archive, const CAccumulatorArray& array);
 
 //---------------------------------------------------------------------------
-extern const char* STR_DISPLAY_PROFITANDLOSS;
+extern const char* STR_DISPLAY_ACCUMULATOR;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
+#ifdef NEW_CODE
+extern period_t getSummaryType(const string_q& type);
+#endif
 // EXISTING_CODE
 }  // namespace qblocks

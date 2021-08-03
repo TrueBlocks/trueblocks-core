@@ -1,7 +1,7 @@
 #pragma once
 
 #include "acctlib.h"
-#include "profitandloss.h"
+#include "accumulator.h"
 
 //-----------------------------------------------------------------------
 extern bool tsRangeFunc(CTraverser* trav, void* data);
@@ -16,7 +16,7 @@ extern bool app_Post(CTraverser* trav, void* data);
 extern bool app_Display(CTraverser* trav, void* data);
 class CAppearanceTraverser : public CTraverser {
   public:
-    CAppearanceTraverser(void) : CTraverser(cout, "appearances") {
+    CAppearanceTraverser(void) : CTraverser("appearances") {
         filterFunc = tsRangeFunc;
         preFunc = pre_Func;
         postFunc = app_Post;
@@ -28,7 +28,7 @@ class CAppearanceTraverser : public CTraverser {
 extern bool receipts_Display(CTraverser* trav, void* data);
 class CReceiptTraverser : public CTraverser {
   public:
-    CReceiptTraverser(void) : CTraverser(cout, "receipts") {
+    CReceiptTraverser(void) : CTraverser("receipts") {
         filterFunc = tsRangeFunc;
         preFunc = pre_Func;
         postFunc = post_Func;
@@ -41,7 +41,7 @@ extern bool logs_Display(CTraverser* trav, void* data);
 extern size_t logs_Count(CTraverser* trav, void* data);
 class CLogTraverser : public CTraverser {
   public:
-    CLogTraverser(void) : CTraverser(cout, "logs") {
+    CLogTraverser(void) : CTraverser("logs") {
         filterFunc = tsRangeFunc;
         postFunc = post_Func;
         dataFunc = loadTx_Func;
@@ -54,7 +54,7 @@ extern bool traces_Display(CTraverser* trav, void* data);
 extern size_t traces_Count(CTraverser* trav, void* data);
 class CTraceTraverser : public CTraverser {
   public:
-    CTraceTraverser(void) : CTraverser(cout, "traces") {
+    CTraceTraverser(void) : CTraverser("traces") {
         filterFunc = tsRangeFunc;
         preFunc = pre_Func;
         postFunc = post_Func;
@@ -65,10 +65,19 @@ class CTraceTraverser : public CTraverser {
 };
 
 extern bool acct_Display(CTraverser* trav, void* data);
+#ifdef NEW_CODE
+extern bool acct_PreFunc(CTraverser* trav, void* data);
+#endif
 class CTransactionTraverser : public CTraverser {
   public:
-    CTransactionTraverser(void) : CTraverser(cout, "txs") {
+#ifdef NEW_CODE
+    CAccumulator pl;
+#endif
+    CTransactionTraverser(void) : CTraverser("txs") {
         filterFunc = tsRangeFunc;
+#ifdef NEW_CODE
+        preFunc = acct_PreFunc;
+#endif
         postFunc = post_Func;
         dataFunc = loadTx_Func;
         displayFunc = acct_Display;

@@ -61,7 +61,7 @@ class CTestTraverser : public CTraverser {
   public:
     CUniPrice uni;
     blknum_t prevBlock;
-    CTestTraverser(void) : CTraverser(cout, "testing"), prevBlock(NOPOS) {
+    CTestTraverser(void) : CTraverser("testing"), prevBlock(NOPOS) {
     }
     wei_t etherPriceFromUniswap(blknum_t bn) const;
 };

@@ -1,5 +1,0 @@
-[settings]
-class = CProfitAndLoss
-fields = string type|\
-        datetime lastDate = earliestDate
-includes = acctlib.h

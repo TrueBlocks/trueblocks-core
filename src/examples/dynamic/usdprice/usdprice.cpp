@@ -13,7 +13,7 @@ string_q reserveBytes = "";
 class CTestTraverser : public CTraverser {
   public:
     CEthCall perTxCall;
-    CTestTraverser(void) : CTraverser(cout, "testing") {
+    CTestTraverser(void) : CTraverser("testing") {
         CEthCall theCall;
         theCall.address = uniswapFactory;
         theCall.encoding = getPair;

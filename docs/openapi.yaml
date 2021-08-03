@@ -315,13 +315,13 @@ paths:
         schema:
           type: string
           enum:
-          - year
-          - quarter
-          - month
-          - week
-          - day
-          - hour
-          - block
+          - yearly
+          - quarterly
+          - monthly
+          - weekly
+          - daily
+          - hourly
+          - blockly
           - tx
       responses:
         "200":

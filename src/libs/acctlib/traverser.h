@@ -25,7 +25,6 @@ typedef map<address_t, CMonitor> monitor_map_t;
 //-----------------------------------------------------------------------
 class CTraverser {
   public:
-    ostream& os;
     bool logging;
     size_t index;
     size_t nProcessed;
@@ -34,7 +33,7 @@ class CTraverser {
     CMonitor* curMonitor;
     monitor_map_t monitorMap;
     blkrange_t exportRange;
-    CTraverser(ostream& osIn, const string_q& o) : os(osIn), index(0), nProcessed(0), operation(o) {
+    CTraverser(const string_q& o) : index(0), nProcessed(0), operation(o) {
         logging = !isTestMode() || getEnvStr("FORCE_LOGGING") == "true";
         readStatus = "Extracting";
         curMonitor = nullptr;

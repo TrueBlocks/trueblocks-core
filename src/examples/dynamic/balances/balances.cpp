@@ -8,7 +8,7 @@ class CTestTraverser : public CTraverser {
   public:
     wei_t totalSpent;
     wei_t totalError;
-    CTestTraverser(void) : CTraverser(cout, "testing") {
+    CTestTraverser(void) : CTraverser("testing") {
         totalSpent = 0;
         totalError = 0;
     }

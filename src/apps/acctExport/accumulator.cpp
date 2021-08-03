@@ -14,26 +14,26 @@
  * Parts of this file were generated with makeClass --run. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
-#include "profitandloss.h"
+#include "accumulator.h"
 
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CProfitAndLoss, CBaseNode);
+IMPLEMENT_NODE(CAccumulator, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextProfitandlossChunk(const string_q& fieldIn, const void* dataPtr);
-static string_q nextProfitandlossChunk_custom(const string_q& fieldIn, const void* dataPtr);
+static string_q nextAccumulatorChunk(const string_q& fieldIn, const void* dataPtr);
+static string_q nextAccumulatorChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
-void CProfitAndLoss::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
+void CAccumulator::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     if (!m_showing)
         return;
 
     // EXISTING_CODE
     // EXISTING_CODE
 
-    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["profitandloss_fmt"] : fmtIn);
+    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["accumulator_fmt"] : fmtIn);
     if (fmt.empty()) {
         if (expContext().exportFmt == YAML1) {
             toYaml(ctx);
@@ -47,13 +47,13 @@ void CProfitAndLoss::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) 
     // EXISTING_CODE
 
     while (!fmt.empty())
-        ctx << getNextChunk(fmt, nextProfitandlossChunk, this);
+        ctx << getNextChunk(fmt, nextAccumulatorChunk, this);
 }
 
 //---------------------------------------------------------------------------
-string_q nextProfitandlossChunk(const string_q& fieldIn, const void* dataPtr) {
+string_q nextAccumulatorChunk(const string_q& fieldIn, const void* dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const CProfitAndLoss*>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CAccumulator*>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -62,9 +62,9 @@ string_q nextProfitandlossChunk(const string_q& fieldIn, const void* dataPtr) {
 }
 
 //---------------------------------------------------------------------------
-string_q CProfitAndLoss::getValueByName(const string_q& fieldName) const {
+string_q CAccumulator::getValueByName(const string_q& fieldName) const {
     // Give customized code a chance to override first
-    string_q ret = nextProfitandlossChunk_custom(fieldName, this);
+    string_q ret = nextAccumulatorChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
@@ -73,9 +73,9 @@ string_q CProfitAndLoss::getValueByName(const string_q& fieldName) const {
 
     // Return field values
     switch (tolower(fieldName[0])) {
-        case 'l':
-            if (fieldName % "lastDate") {
-                return lastDate.Format(FMT_JSON);
+        case 'e':
+            if (fieldName % "endOfPeriod") {
+                return endOfPeriod.Format(FMT_JSON);
             }
             break;
         case 't':
@@ -95,7 +95,7 @@ string_q CProfitAndLoss::getValueByName(const string_q& fieldName) const {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CProfitAndLoss::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
+bool CAccumulator::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
     string_q fieldName = fieldNameIn;
     string_q fieldValue = fieldValueIn;
 
@@ -103,9 +103,9 @@ bool CProfitAndLoss::setValueByName(const string_q& fieldNameIn, const string_q&
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {
-        case 'l':
-            if (fieldName % "lastDate") {
-                lastDate = str_2_Date(fieldValue);
+        case 'e':
+            if (fieldName % "endOfPeriod") {
+                endOfPeriod = str_2_Date(fieldValue);
                 return true;
             }
             break;
@@ -122,13 +122,13 @@ bool CProfitAndLoss::setValueByName(const string_q& fieldNameIn, const string_q&
 }
 
 //---------------------------------------------------------------------------------------------------
-void CProfitAndLoss::finishParse() {
+void CAccumulator::finishParse() {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CProfitAndLoss::Serialize(CArchive& archive) {
+bool CAccumulator::Serialize(CArchive& archive) {
     if (archive.isWriting())
         return SerializeC(archive);
 
@@ -141,31 +141,39 @@ bool CProfitAndLoss::Serialize(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     archive >> type;
-    archive >> lastDate;
+    archive >> endOfPeriod;
     // EXISTING_CODE
+#ifdef NEW_CODE
+    // archive >> sum_type;
+#else
     // archive >> currentStatements;
+#endif
     // EXISTING_CODE
     finishParse();
     return true;
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CProfitAndLoss::SerializeC(CArchive& archive) const {
+bool CAccumulator::SerializeC(CArchive& archive) const {
     // Writing always write the latest version of the data
     CBaseNode::SerializeC(archive);
 
     // EXISTING_CODE
     // EXISTING_CODE
     archive << type;
-    archive << lastDate;
+    archive << endOfPeriod;
     // EXISTING_CODE
+#ifdef NEW_CODE
+    // archive << sum_type;
+#else
     // archive << currentStatements;
+#endif
     // EXISTING_CODE
     return true;
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CProfitAndLossArray& array) {
+CArchive& operator>>(CArchive& archive, CAccumulatorArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -177,7 +185,7 @@ CArchive& operator>>(CArchive& archive, CProfitAndLossArray& array) {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CProfitAndLossArray& array) {
+CArchive& operator<<(CArchive& archive, const CAccumulatorArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0; i < array.size(); i++)
@@ -186,59 +194,71 @@ CArchive& operator<<(CArchive& archive, const CProfitAndLossArray& array) {
 }
 
 //---------------------------------------------------------------------------
-void CProfitAndLoss::registerClass(void) {
+void CAccumulator::registerClass(void) {
     // only do this once
-    if (HAS_FIELD(CProfitAndLoss, "schema"))
+    if (HAS_FIELD(CAccumulator, "schema"))
         return;
 
     size_t fieldNum = 1000;
-    ADD_FIELD(CProfitAndLoss, "schema", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CProfitAndLoss, "deleted", T_BOOL, ++fieldNum);
-    ADD_FIELD(CProfitAndLoss, "showing", T_BOOL, ++fieldNum);
-    ADD_FIELD(CProfitAndLoss, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CProfitAndLoss, "type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CProfitAndLoss, "lastDate", T_DATE, ++fieldNum);
+    ADD_FIELD(CAccumulator, "schema", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CAccumulator, "deleted", T_BOOL, ++fieldNum);
+    ADD_FIELD(CAccumulator, "showing", T_BOOL, ++fieldNum);
+    ADD_FIELD(CAccumulator, "cname", T_TEXT, ++fieldNum);
+    ADD_FIELD(CAccumulator, "type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CAccumulator, "endOfPeriod", T_DATE, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
-    HIDE_FIELD(CProfitAndLoss, "schema");
-    HIDE_FIELD(CProfitAndLoss, "deleted");
-    HIDE_FIELD(CProfitAndLoss, "showing");
-    HIDE_FIELD(CProfitAndLoss, "cname");
+    HIDE_FIELD(CAccumulator, "schema");
+    HIDE_FIELD(CAccumulator, "deleted");
+    HIDE_FIELD(CAccumulator, "showing");
+    HIDE_FIELD(CAccumulator, "cname");
 
-    builtIns.push_back(_biCProfitAndLoss);
+    builtIns.push_back(_biCAccumulator);
 
     // EXISTING_CODE
-    ADD_FIELD(CProfitAndLoss, "currentStatements", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
+#ifdef NEW_CODE
+    ADD_FIELD(CAccumulator, "sum_type", T_NUMBER, ++fieldNum);
+#else
+    ADD_FIELD(CAccumulator, "currentStatements", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
+#endif
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
-string_q nextProfitandlossChunk_custom(const string_q& fieldIn, const void* dataPtr) {
-    const CProfitAndLoss* pro = reinterpret_cast<const CProfitAndLoss*>(dataPtr);
-    if (pro) {
+string_q nextAccumulatorChunk_custom(const string_q& fieldIn, const void* dataPtr) {
+    const CAccumulator* acc = reinterpret_cast<const CAccumulator*>(dataPtr);
+    if (acc) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
+#ifdef NEW_CODE
+            case 's':
+                if (fieldIn % "sum_type") {
+                    return uint_2_Str(acc->sum_type);
+                }
+                break;
+#else
             case 'c':
                 if (fieldIn % "currentStatements" || fieldIn % "currentStatementsCnt") {
-                    size_t cnt = pro->currentStatements.size();
+                    size_t cnt = acc->currentStatements.size();
                     if (endsWith(toLower(fieldIn), "cnt"))
                         return uint_2_Str(cnt);
                     if (!cnt)
                         return "";
                     string_q retS;
                     bool first = true;
-                    for (auto statement : pro->currentStatements) {
+                    for (auto statement : acc->currentStatements) {
                         retS += (first ? "\n" : ",\n");
                         retS += statement.second.Format();
                     }
                     return retS;
                 }
                 break;
+#endif
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if (fieldIn % "parsed")
-                    return nextBasenodeChunk(fieldIn, pro);
+                    return nextBasenodeChunk(fieldIn, acc);
                 // EXISTING_CODE
                 // EXISTING_CODE
                 break;
@@ -252,7 +272,7 @@ string_q nextProfitandlossChunk_custom(const string_q& fieldIn, const void* data
 }
 
 //---------------------------------------------------------------------------
-bool CProfitAndLoss::readBackLevel(CArchive& archive) {
+bool CAccumulator::readBackLevel(CArchive& archive) {
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -260,7 +280,7 @@ bool CProfitAndLoss::readBackLevel(CArchive& archive) {
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CProfitAndLoss& it) {
+ostream& operator<<(ostream& os, const CAccumulator& it) {
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -270,9 +290,28 @@ ostream& operator<<(ostream& os, const CProfitAndLoss& it) {
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_PROFITANDLOSS = "";
+const char* STR_DISPLAY_ACCUMULATOR = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
+#ifdef NEW_CODE
+//---------------------------------------------------------------------------
+//---------------------------------------------------------------------------
+period_t getSummaryType(const string_q& type) {
+    if (type == "hourly")
+        return BY_HOUR;
+    if (type == "daily")
+        return BY_DAY;
+    if (type == "weekly")
+        return BY_WEEK;
+    if (type == "monthly")
+        return BY_MONTH;
+    if (type == "quarterly")
+        return BY_QUARTER;
+    if (type == "annually")
+        return BY_YEAR;
+    return BY_NOTHING;
+}
+#endif
 // EXISTING_CODE
 }  // namespace qblocks
