@@ -66,7 +66,7 @@ git clone -b develop git@github.com:TrueBlocks/trueblocks-core.git
 cd trueblocks-core
 mkdir build && cd build
 cmake ../src
-make
+make -j2
 ```
 
 (You may use `make -j <ncores>` to parallelize the build. Replace `<ncores>` with the number of cores on your machine.)
