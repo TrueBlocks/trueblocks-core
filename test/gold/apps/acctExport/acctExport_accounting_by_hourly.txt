@@ -15,6 +15,7 @@ acctExport 0x00a3819199113fc6a6e6ba1298afde7377e2009b --max_records 30 --account
       "transactionIndex": 7,
       "timestamp": 1487191424,
       "assetAddr": "0x0",
+      "assetSymbol": "WEI",
       "decimals": 18,
       "prevBlk": 0,
       "prevBlkBal": "",
@@ -36,6 +37,7 @@ acctExport 0x00a3819199113fc6a6e6ba1298afde7377e2009b --max_records 30 --account
       "endBalCalc": "5044500000000000000",
       "endBalDiff": "",
       "amountNet": "5100000000000000000",
+      "spotPrice": -1,
       "reconciliationType": "summary",
       "totalIn": "5100000000000000000",
       "totalOut": ""
@@ -57,6 +59,7 @@ acctExport 0x00a3819199113fc6a6e6ba1298afde7377e2009b --max_records 30 --account
       "transactionIndex": 0,
       "timestamp": 0,
       "assetAddr": "0x0",
+      "assetSymbol": "WEI",
       "decimals": 18,
       "prevBlk": 0,
       "prevBlkBal": "",
@@ -78,6 +81,7 @@ acctExport 0x00a3819199113fc6a6e6ba1298afde7377e2009b --max_records 30 --account
       "endBalCalc": "",
       "endBalDiff": "",
       "amountNet": "",
+      "spotPrice": -1,
       "totalIn": "",
       "totalOut": ""
     }
@@ -98,6 +102,7 @@ acctExport 0x00a3819199113fc6a6e6ba1298afde7377e2009b --max_records 30 --account
       "transactionIndex": 11,
       "timestamp": 1487210210,
       "assetAddr": "0x0",
+      "assetSymbol": "WEI",
       "decimals": 18,
       "prevBlk": 0,
       "prevBlkBal": "",
@@ -119,6 +124,7 @@ acctExport 0x00a3819199113fc6a6e6ba1298afde7377e2009b --max_records 30 --account
       "endBalCalc": "199706100000000000",
       "endBalDiff": "",
       "amountNet": "200000000000000000",
+      "spotPrice": -1,
       "reconciliationType": "summary",
       "totalIn": "200000000000000000",
       "totalOut": ""
@@ -140,6 +146,7 @@ acctExport 0x00a3819199113fc6a6e6ba1298afde7377e2009b --max_records 30 --account
       "transactionIndex": 0,
       "timestamp": 0,
       "assetAddr": "0x0",
+      "assetSymbol": "WEI",
       "decimals": 18,
       "prevBlk": 0,
       "prevBlkBal": "",
@@ -161,6 +168,7 @@ acctExport 0x00a3819199113fc6a6e6ba1298afde7377e2009b --max_records 30 --account
       "endBalCalc": "",
       "endBalDiff": "",
       "amountNet": "",
+      "spotPrice": -1,
       "totalIn": "",
       "totalOut": ""
     }
@@ -181,6 +189,7 @@ acctExport 0x00a3819199113fc6a6e6ba1298afde7377e2009b --max_records 30 --account
       "transactionIndex": 13,
       "timestamp": 1489463644,
       "assetAddr": "0x0",
+      "assetSymbol": "WEI",
       "decimals": 18,
       "prevBlk": 0,
       "prevBlkBal": "",
@@ -202,6 +211,7 @@ acctExport 0x00a3819199113fc6a6e6ba1298afde7377e2009b --max_records 30 --account
       "endBalCalc": "-82516460000000000",
       "endBalDiff": "",
       "amountNet": "",
+      "spotPrice": -1,
       "reconciliationType": "summary",
       "totalIn": "",
       "totalOut": ""
@@ -223,6 +233,7 @@ acctExport 0x00a3819199113fc6a6e6ba1298afde7377e2009b --max_records 30 --account
       "transactionIndex": 23,
       "timestamp": 1489615795,
       "assetAddr": "0x0",
+      "assetSymbol": "WEI",
       "decimals": 18,
       "prevBlk": 0,
       "prevBlkBal": "",
@@ -244,6 +255,7 @@ acctExport 0x00a3819199113fc6a6e6ba1298afde7377e2009b --max_records 30 --account
       "endBalCalc": "-2070000000000000",
       "endBalDiff": "",
       "amountNet": "",
+      "spotPrice": -1,
       "reconciliationType": "summary",
       "totalIn": "",
       "totalOut": ""
@@ -265,6 +277,7 @@ acctExport 0x00a3819199113fc6a6e6ba1298afde7377e2009b --max_records 30 --account
       "transactionIndex": 0,
       "timestamp": 0,
       "assetAddr": "0x0",
+      "assetSymbol": "WEI",
       "decimals": 18,
       "prevBlk": 0,
       "prevBlkBal": "",
@@ -286,6 +299,7 @@ acctExport 0x00a3819199113fc6a6e6ba1298afde7377e2009b --max_records 30 --account
       "endBalCalc": "",
       "endBalDiff": "",
       "amountNet": "",
+      "spotPrice": -1,
       "totalIn": "",
       "totalOut": ""
     }
@@ -306,6 +320,7 @@ acctExport 0x00a3819199113fc6a6e6ba1298afde7377e2009b --max_records 30 --account
       "transactionIndex": 0,
       "timestamp": 0,
       "assetAddr": "0x0",
+      "assetSymbol": "WEI",
       "decimals": 18,
       "prevBlk": 0,
       "prevBlkBal": "",
@@ -327,6 +342,7 @@ acctExport 0x00a3819199113fc6a6e6ba1298afde7377e2009b --max_records 30 --account
       "endBalCalc": "",
       "endBalDiff": "",
       "amountNet": "",
+      "spotPrice": -1,
       "totalIn": "",
       "totalOut": ""
     }
@@ -347,6 +363,7 @@ acctExport 0x00a3819199113fc6a6e6ba1298afde7377e2009b --max_records 30 --account
       "transactionIndex": 0,
       "timestamp": 0,
       "assetAddr": "0x0",
+      "assetSymbol": "WEI",
       "decimals": 18,
       "prevBlk": 0,
       "prevBlkBal": "",
@@ -368,6 +385,7 @@ acctExport 0x00a3819199113fc6a6e6ba1298afde7377e2009b --max_records 30 --account
       "endBalCalc": "",
       "endBalDiff": "",
       "amountNet": "",
+      "spotPrice": -1,
       "totalIn": "",
       "totalOut": ""
     }
@@ -388,6 +406,7 @@ acctExport 0x00a3819199113fc6a6e6ba1298afde7377e2009b --max_records 30 --account
       "transactionIndex": 0,
       "timestamp": 0,
       "assetAddr": "0x0",
+      "assetSymbol": "WEI",
       "decimals": 18,
       "prevBlk": 0,
       "prevBlkBal": "",
@@ -409,6 +428,7 @@ acctExport 0x00a3819199113fc6a6e6ba1298afde7377e2009b --max_records 30 --account
       "endBalCalc": "",
       "endBalDiff": "",
       "amountNet": "",
+      "spotPrice": -1,
       "totalIn": "",
       "totalOut": ""
     }
@@ -429,6 +449,7 @@ acctExport 0x00a3819199113fc6a6e6ba1298afde7377e2009b --max_records 30 --account
       "transactionIndex": 41,
       "timestamp": 1494551853,
       "assetAddr": "0x0",
+      "assetSymbol": "WEI",
       "decimals": 18,
       "prevBlk": 0,
       "prevBlkBal": "",
@@ -450,6 +471,7 @@ acctExport 0x00a3819199113fc6a6e6ba1298afde7377e2009b --max_records 30 --account
       "endBalCalc": "-73459170000000",
       "endBalDiff": "",
       "amountNet": "",
+      "spotPrice": -1,
       "reconciliationType": "summary",
       "totalIn": "",
       "totalOut": ""

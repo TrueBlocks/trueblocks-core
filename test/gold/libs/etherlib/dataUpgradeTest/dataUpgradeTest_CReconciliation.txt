@@ -33,15 +33,17 @@ endBal              	1027	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
 endBalCalc          	1028	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
 endBalDiff          	1029	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
 amountNet           	1030	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
-reconciliationType  	1031	0	20971570	T_TEXT TS_STRING TS_OMITEMPTY
-reconciled          	1032	0	12582932	T_BOOL TS_NUMERAL TS_OMITEMPTY
-totalIn             	1033	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
-totalOut            	1034	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
+spotPrice           	1031	0	549453872	T_INT256 TS_NUMERAL TS_BIGNUM TS_OMITEMPTY
+reconciliationType  	1032	0	20971570	T_TEXT TS_STRING TS_OMITEMPTY
+reconciled          	1033	0	12582932	T_BOOL TS_NUMERAL TS_OMITEMPTY
+totalIn             	1034	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
+totalOut            	1035	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
 {
   "blockNumber": 0,
   "transactionIndex": 0,
   "timestamp": 0,
   "assetAddr": "0x0",
+  "assetSymbol": "WEI",
   "decimals": 18,
   "prevBlk": 0,
   "prevBlkBal": "",
@@ -63,6 +65,7 @@ totalOut            	1034	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
   "endBalCalc": "",
   "endBalDiff": "",
   "amountNet": "",
+  "spotPrice": -1,
   "totalIn": "",
   "totalOut": ""
 }
@@ -100,10 +103,11 @@ endBal              	1027	1	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
 endBalCalc          	1028	1	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
 endBalDiff          	1029	1	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
 amountNet           	1030	1	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
-reconciliationType  	1031	1	20971570	T_TEXT TS_STRING TS_OMITEMPTY
-reconciled          	1032	1	12582932	T_BOOL TS_NUMERAL TS_OMITEMPTY
-totalIn             	1033	1	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
-totalOut            	1034	1	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
+spotPrice           	1031	1	549453872	T_INT256 TS_NUMERAL TS_BIGNUM TS_OMITEMPTY
+reconciliationType  	1032	1	20971570	T_TEXT TS_STRING TS_OMITEMPTY
+reconciled          	1033	1	12582932	T_BOOL TS_NUMERAL TS_OMITEMPTY
+totalIn             	1034	1	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
+totalOut            	1035	1	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
 {
 }
 
@@ -140,12 +144,13 @@ endBal              	1027	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
 endBalCalc          	1028	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
 endBalDiff          	1029	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
 amountNet           	1030	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
-reconciliationType  	1031	0	20971570	T_TEXT TS_STRING TS_OMITEMPTY
-reconciled          	1032	0	12582932	T_BOOL TS_NUMERAL TS_OMITEMPTY
-totalIn             	1033	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
-totalOut            	1034	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
+spotPrice           	1031	0	549453872	T_INT256 TS_NUMERAL TS_BIGNUM TS_OMITEMPTY
+reconciliationType  	1032	0	20971570	T_TEXT TS_STRING TS_OMITEMPTY
+reconciled          	1033	0	12582932	T_BOOL TS_NUMERAL TS_OMITEMPTY
+totalIn             	1034	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
+totalOut            	1035	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
 {
-  "schema": 9005,
+  "schema": 10001,
   "deleted": false,
   "showing": true,
   "cname": "Reconciliation",
@@ -153,6 +158,7 @@ totalOut            	1034	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
   "transactionIndex": 0,
   "timestamp": 0,
   "assetAddr": "0x0",
+  "assetSymbol": "WEI",
   "decimals": 18,
   "prevBlk": 0,
   "prevBlkBal": "",
@@ -174,6 +180,7 @@ totalOut            	1034	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
   "endBalCalc": "",
   "endBalDiff": "",
   "amountNet": "",
+  "spotPrice": -1,
   "totalIn": "",
   "totalOut": ""
 }

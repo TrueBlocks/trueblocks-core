@@ -2,7 +2,7 @@ tomlTest argc: 2 [1:test14.toml]
 tomlTest test14.toml 
 test14.toml
 [version]
-current = "0.9.5-alpha"
+current = "0.10.1-alpha"
 
 [display]
 format = "[{TIMESTAMP}]\t[{DATE}]\t[{FROM}]\t[{TO}]\t[{VALUE}]\t[{ETHER}]\t[{FUNCTION}]\t[{INPUT}]\t[{ISERROR}]\t[{ISINTERNALTX}]\t[{GAS}]\t[{GASUSED}]\t[{BLOCKNUMBER}]\t[{HASH}]\n"
@@ -46,7 +46,7 @@ color_0      = "bBlue"
 
 File contents after write
 [version]
-current = "0.9.5-alpha"
+current = "0.10.1-alpha"
 
 [display]
 format = "[{TIMESTAMP}]\t[{DATE}]\t[{FROM}]\t[{TO}]\t[{VALUE}]\t[{ETHER}]\t[{FUNCTION}]\t[{INPUT}]\t[{ISERROR}]\t[{ISINTERNALTX}]\t[{GAS}]\t[{GASUSED}]\t[{BLOCKNUMBER}]\t[{HASH}]\n"

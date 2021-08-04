@@ -2,7 +2,7 @@ tomlTest argc: 2 [1:test12.toml]
 tomlTest test12.toml 
 test12.toml
 [version]
-current = "0.9.5-alpha"
+current = "0.10.1-alpha"
 
 [settings]
 name = "accts"
@@ -57,7 +57,7 @@ export_fmt = " \"[{DATE}]\",\"[{BLOCKNUMBER}]\",\"[{TRANSACTIONINDEX}]\",\"[{FRO
 
 File contents after write
 [version]
-current = "0.9.5-alpha"
+current = "0.10.1-alpha"
 
 [settings]
 name = "accts"
