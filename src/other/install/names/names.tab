@@ -345,6 +345,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x07147220fa6c06295464d695e4ec012f6aebc275	Super Module Network One	SMN1	On chain	18		false	false	false	true	true	false
 31-Gitcoin Grants:Grant	0x07169d3d71dc9c1c7c1656b3436a984d50619860	Grant 1556 Apy.vision		https://gitcoin.co/grants/1556/apyvision			false	false	false	false	false	false
 91-Early:Addresses	0x0718197b9ac69127381ed0c4b5d0f724f857c4d1	EtherPlay Sender		EtherScan.io			false	false	false	false	false	false
+30-Contracts	0x072115dbd5c8b47e971890357d2951d4569f6b27	DAppNode: Uniswap NODEstaking					false	false	false	true	false	false
 50-Tokens:ERC20	0x072c46f392e729c1f0d92a307c2c6dba06b5d078	Snoop Doge	SNOGE	On chain	9		false	false	false	true	true	false
 31-Gitcoin Grants:Grant	0x0730fd7d15fa9a40a6c7b2bbb4b8ce9ee6e6d08b	Grant 0141 Metamoneymarket		https://gitcoin.co/grants/141/metamoneymarket			false	false	false	false	false	false
 80-Malicious:DaoDrain	0x0737a6b837f97f46ebade41b9bc3e1c509c85c53	DAO Drain 059		GethSource Ether Camp			false	false	false	true	false	false
@@ -3780,6 +3781,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 90-Individuals:Gitcoin Grants	0x5ca323d77930c84524e9b06b20c5027ec4e54480	mattyice		OnChain			false	false	false	false	false	false
 50-Tokens:ERC20	0x5ca381bbfb58f0092df149bd3d243b08b9a8386e	MXCToken	MXC	On chain	18	Inspiring fast, efficient, decentralized data exchanges using LPWAN-Blockchain Technology.	false	false	false	true	true	false
 50-Tokens:ERC20	0x5ca9a71b1d01849c0a95490cc00559717fcf0d1d	Aeternity	AE	On chain	18	Scalable smart contracts interfacing with real world data.	false	false	false	true	true	false
+50-Tokens:ERC20	0x5caf454ba92e6f2c929df14667ee360ed9fd5b26	Dev	DEV	On chain	18		false	false	false	true	true	false
 30-Contracts:Humanity DAO	0x5cb479db92ce3572383837c9775639dc373e4194	AaronfosterReal		https://www.humanitydao.org/humans			false	false	false	false	false	false
 31-Gitcoin Grants:Grant	0x5cd08940869f68a891756e51269aa27e54e8c4df	Grant 0846 Crate -- Earn the Most Interest on Your DAI		https://gitcoin.co/grants/846/crate-earn-the-most-interest-on-your-dai		https://cr8-is-money.github.io/cr8/#/	false	false	false	false	false	false
 30-Contracts:Kickback	0x5cd26e6dc8200630508672ff5c726478e08da52b	KickbackDeployerv1.2.0aborted		https://github.com/wearekickback/contracts			false	false	false	true	false	false
