@@ -52,6 +52,7 @@ class CReconciliation : public CBaseNode {
     bigint_t endBalCalc;
     bigint_t endBalDiff;
     bigint_t amountNet;
+    bigint_t spotPrice;
     string_q reconciliationType;
     bool reconciled;
 
@@ -160,6 +161,7 @@ inline void CReconciliation::initialize(void) {
     endBalCalc = 0;
     endBalDiff = 0;
     amountNet = 0;
+    spotPrice = int64_t(-1);
     reconciliationType = "";
     reconciled = false;
 
@@ -198,6 +200,7 @@ inline void CReconciliation::duplicate(const CReconciliation& re) {
     endBalCalc = re.endBalCalc;
     endBalDiff = re.endBalDiff;
     amountNet = re.amountNet;
+    spotPrice = re.spotPrice;
     reconciliationType = re.reconciliationType;
     reconciled = re.reconciled;
 

@@ -26,6 +26,7 @@ fields = blknum blockNumber|\
         int256 endBalCalc|\
         int256 endBalDiff|\
         int256 amountNet|\
+        int256 spotPrice=int64_t(-1)|\
         string reconciliationType|\
         bool reconciled
 extra_fields = int256 totalIn|\

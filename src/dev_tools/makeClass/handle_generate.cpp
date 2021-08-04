@@ -543,7 +543,7 @@ string_q getCaseSetCode(const CParameterArray& fieldsIn) {
                     outStream << (p.name + " = str_2_Int(fieldValue);\n````return true;");
 
                 } else if (p.type == "int256") {
-                    outStream << (p.name + " = str_2_Wei(fieldValue);\n````return true;");
+                    outStream << (p.name + " = str_2_BigInt(fieldValue);\n````return true;");
 
                 } else if (p.type == "uint64" || p.type == "suint64") {
                     outStream << (p.name + " = str_2_Uint(fieldValue);\n````return true;");

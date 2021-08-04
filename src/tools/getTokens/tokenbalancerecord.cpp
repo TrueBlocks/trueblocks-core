@@ -150,7 +150,7 @@ bool CTokenBalanceRecord::setValueByName(const string_q& fieldNameIn, const stri
                 return true;
             }
             if (fieldName % "diff") {
-                diff = str_2_Wei(fieldValue);
+                diff = str_2_BigInt(fieldValue);
                 return true;
             }
             break;
