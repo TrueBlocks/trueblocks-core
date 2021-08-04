@@ -144,6 +144,66 @@ TEST_F(CThisTest, TestTest_4) {
 }
 }
 
+TEST_F(CThisTest, TestTest_5) {
+    cout << "Running " << testName << "\n";
+
+    time_q theDate = time_q(2019, 8, 7, 11, 10, 9);
+
+    ASSERT_EQ("BOP(BY_NOTHING)", BOP(BY_NOTHING, theDate), time_q(2019, 8, 7, 11, 10, 9));
+    ASSERT_EQ("BOP(BY_YEAR)", BOP(BY_YEAR, theDate), time_q(2019, 1, 1, 0, 0, 0));
+    ASSERT_EQ("BOP(BY_QUARTER)", BOP(BY_QUARTER, theDate), time_q(2019, 7, 1, 0, 0, 0));
+    ASSERT_EQ("BOP(BY_MONTH)", BOP(BY_MONTH, theDate), time_q(2019, 8, 1, 0, 0, 0));
+    ASSERT_EQ("BOP(BY_WEEK)", BOP(BY_WEEK, theDate), time_q(2019, 8, 4, 0, 0, 0));
+    ASSERT_EQ("BOP(BY_DAY)", BOP(BY_DAY, theDate), time_q(2019, 8, 7, 0, 0, 0));
+    ASSERT_EQ("BOP(BY_HOUR)", BOP(BY_HOUR, theDate), time_q(2019, 8, 7, 11, 0, 0));
+    // The following number based routines don't really work, but it's okay since we don't use them
+    ASSERT_EQ("BOP(BY_1)", BOP(BY_1, theDate), time_q(2019, 8, 7, 11, 10, 9));
+    ASSERT_EQ("BOP(BY_10)", BOP(BY_10, theDate), time_q(2019, 8, 7, 11, 10, 9));
+    ASSERT_EQ("BOP(BY_100)", BOP(BY_100, theDate), time_q(2019, 8, 7, 11, 10, 9));
+    ASSERT_EQ("BOP(BY_1000)", BOP(BY_1000, theDate), time_q(2019, 8, 7, 11, 10, 9));
+    ASSERT_EQ("BOP(BY_10000)", BOP(BY_10000, theDate), time_q(2019, 8, 7, 11, 10, 9));
+    ASSERT_EQ("BOP(BY_100000)", BOP(BY_100000, theDate), time_q(2019, 8, 7, 11, 10, 9));
+    ASSERT_EQ("BOP(BY_1000000)", BOP(BY_1000000, theDate), time_q(2019, 8, 7, 11, 10, 9));
+
+    ASSERT_EQ("EOP(BY_NOTHING)", EOP(BY_NOTHING, theDate), time_q(2019, 8, 7, 11, 10, 9));
+    ASSERT_EQ("EOP(BY_YEAR)", EOP(BY_YEAR, theDate), time_q(2019, 12, 31, 23, 59, 59));
+    ASSERT_EQ("EOP(BY_QUARTER)", EOP(BY_QUARTER, theDate), time_q(2019, 9, 30, 23, 59, 59));
+    ASSERT_EQ("EOP(BY_MONTH)", EOP(BY_MONTH, theDate), time_q(2019, 8, 31, 23, 59, 59));
+    ASSERT_EQ("EOP(BY_WEEK)", EOP(BY_WEEK, theDate), time_q(2019, 8, 10, 23, 59, 59));
+    ASSERT_EQ("EOP(BY_DAY)", EOP(BY_DAY, theDate), time_q(2019, 8, 7, 23, 59, 59));
+    ASSERT_EQ("EOP(BY_HOUR)", EOP(BY_HOUR, theDate), time_q(2019, 8, 7, 11, 59, 59));
+    // The following number based routines don't really work, but it's okay since we don't use them
+    ASSERT_EQ("EOP(BY_1)", EOP(BY_1, theDate), time_q(2019, 8, 7, 11, 10, 9));
+    ASSERT_EQ("EOP(BY_10)", EOP(BY_10, theDate), time_q(2019, 8, 7, 11, 10, 9));
+    ASSERT_EQ("EOP(BY_100)", EOP(BY_100, theDate), time_q(2019, 8, 7, 11, 10, 9));
+    ASSERT_EQ("EOP(BY_1000)", EOP(BY_1000, theDate), time_q(2019, 8, 7, 11, 10, 9));
+    ASSERT_EQ("EOP(BY_10000)", EOP(BY_10000, theDate), time_q(2019, 8, 7, 11, 10, 9));
+    ASSERT_EQ("EOP(BY_100000)", EOP(BY_100000, theDate), time_q(2019, 8, 7, 11, 10, 9));
+    ASSERT_EQ("EOP(BY_1000000)", EOP(BY_1000000, theDate), time_q(2019, 8, 7, 11, 10, 9));
+
+    ASSERT_EQ("per_2_Str(BY_NOTHING)", per_2_Str(BY_NOTHING), "[{MONTH}],[{DAY}]");
+    ASSERT_EQ("per_2_Str(BY_YEAR)", per_2_Str(BY_YEAR), "[{YEAR}]");
+    ASSERT_EQ("per_2_Str(BY_QUARTER)", per_2_Str(BY_QUARTER), "[{QUARTER}]");
+    ASSERT_EQ("per_2_Str(BY_MONTH)", per_2_Str(BY_MONTH), "[{MONTH}]");
+    ASSERT_EQ("per_2_Str(BY_WEEK)", per_2_Str(BY_WEEK), "[{WEEK}]");
+    ASSERT_EQ("per_2_Str(BY_DAY)", per_2_Str(BY_DAY), "[{DAY}]");
+    ASSERT_EQ("per_2_Str(BY_HOUR)", per_2_Str(BY_HOUR), "[{HOUR}]");
+    // The following number based routines don't really work, but it's okay since we don't use them
+    ASSERT_EQ("per_2_Str(BY_1)", per_2_Str(BY_1), "");
+    ASSERT_EQ("per_2_Str(BY_10)", per_2_Str(BY_10), "");
+    ASSERT_EQ("per_2_Str(BY_100)", per_2_Str(BY_100), "");
+    ASSERT_EQ("per_2_Str(BY_1000)", per_2_Str(BY_1000), "");
+    ASSERT_EQ("per_2_Str(BY_10000)", per_2_Str(BY_10000), "");
+    ASSERT_EQ("per_2_Str(BY_100000)", per_2_Str(BY_100000), "");
+    ASSERT_EQ("per_2_Str(BY_1000000)", per_2_Str(BY_1000000), "");
+
+    // extern bool isSamePeriod(period_t period, const time_q& t1, const time_q& t2);
+    // extern bool isSamePeriod(period_t period, blknum_t t1, blknum_t t2);
+
+    return true;
+}
+}
+
 //------------------------------------------------------------------------
 int main(int argc, const char* argv[]) {
     etherlib_init(quickQuitHandler);
@@ -151,31 +211,6 @@ int main(int argc, const char* argv[]) {
     LOAD_TEST(TestTest_2);
     LOAD_TEST(TestTest_3);
     LOAD_TEST(TestTest_4);
+    LOAD_TEST(TestTest_5);
     return testing::RUN_ALL_TESTS();
 }
-
-/*
-extern time_q BOP(period_t per, const time_q& date);
-extern time_q EOP(period_t per, const time_q& date);
-extern bool isSamePeriod(period_t period, const time_q& t1, const time_q& t2);
-extern bool isSamePeriod(period_t period, blknum_t t1, blknum_t t2);
-extern string_q per_2_Str(period_t period);
-typedef enum {
-    BY_NOTHING = 0,
-    BY_YEAR = 20,  // opaque value anyway, to avoid conflict with below
-    BY_QUARTER,
-    BY_MONTH,
-    BY_WEEK,
-    BY_DAY,
-    BY_HOUR,
-    BY_1 = 1,  // non-opaque values
-    BY_10 = 10,
-    BY_100 = 100,
-    BY_1000 = 1000,
-    BY_10000 = 10000,
-    BY_100000 = 100000,
-    BY_1000000 = 1000000
-} period_t;
-
-}  // namespace qblocks
-*/
