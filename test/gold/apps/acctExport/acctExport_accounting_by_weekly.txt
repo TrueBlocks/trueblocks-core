@@ -37,7 +37,7 @@ acctExport 0x00a3819199113fc6a6e6ba1298afde7377e2009b --max_records 30 --account
       "endBalCalc": "5232651640000000000",
       "endBalDiff": "",
       "amountNet": "5300000000000000000",
-      "spotPrice": -1,
+      "spotPrice": "-1",
       "reconciliationType": "summary",
       "totalIn": "5300000000000000000",
       "totalOut": ""
@@ -81,7 +81,7 @@ acctExport 0x00a3819199113fc6a6e6ba1298afde7377e2009b --max_records 30 --account
       "endBalCalc": "",
       "endBalDiff": "",
       "amountNet": "",
-      "spotPrice": -1,
+      "spotPrice": "-1",
       "totalIn": "",
       "totalOut": ""
     }
@@ -124,7 +124,7 @@ acctExport 0x00a3819199113fc6a6e6ba1298afde7377e2009b --max_records 30 --account
       "endBalCalc": "-92742605734063620",
       "endBalDiff": "",
       "amountNet": "-7093585734063620",
-      "spotPrice": -1,
+      "spotPrice": "-1",
       "reconciliationType": "summary",
       "totalIn": "6239747599269714",
       "totalOut": "13333333333333334"

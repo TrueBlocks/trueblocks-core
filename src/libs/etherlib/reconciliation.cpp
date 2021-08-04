@@ -628,8 +628,8 @@ string_q nextReconciliationChunk_custom(const string_q& fieldIn, const void* dat
                     return bni_2_Export(rec->timestamp, rec->selfDestructOut, rec->decimals);
                 }
                 if (fieldIn % "spotPrice") {
-                    if (rec->spotPrice == uint64_t(NOPOS))
-                        return "-1";
+                    if (rec->spotPrice == int64_t(-1))
+                        return "\"-1\"";
                     return bni_2_Export(rec->timestamp, rec->spotPrice, rec->decimals);
                 }
                 break;

@@ -37,7 +37,7 @@ acctExport 0x00a3819199113fc6a6e6ba1298afde7377e2009b --max_records 30 --account
       "endBalCalc": "19907356461081618797",
       "endBalDiff": "",
       "amountNet": "20060849153534443525",
-      "spotPrice": -1,
+      "spotPrice": "-1",
       "reconciliationType": "summary",
       "totalIn": "25306239747599269714",
       "totalOut": "5245390594064826189"

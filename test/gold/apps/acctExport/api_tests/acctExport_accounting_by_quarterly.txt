@@ -36,7 +36,7 @@
           "endBalCalc": "19907356461081618797",
           "endBalDiff": "",
           "amountNet": "20060849153534443525",
-          "spotPrice": -1,
+          "spotPrice": "-1",
           "reconciliationType": "summary",
           "reconciled": false,
           "totalIn": "25306239747599269714",

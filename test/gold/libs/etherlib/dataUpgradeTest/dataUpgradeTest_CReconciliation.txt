@@ -65,7 +65,7 @@ totalOut            	1035	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
   "endBalCalc": "",
   "endBalDiff": "",
   "amountNet": "",
-  "spotPrice": -1,
+  "spotPrice": "-1",
   "totalIn": "",
   "totalOut": ""
 }
@@ -180,7 +180,7 @@ totalOut            	1035	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
   "endBalCalc": "",
   "endBalDiff": "",
   "amountNet": "",
-  "spotPrice": -1,
+  "spotPrice": "-1",
   "totalIn": "",
   "totalOut": ""
 }
