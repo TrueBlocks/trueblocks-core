@@ -1081,5 +1081,27 @@ string_q bni_2_Export(const timestamp_t& ts, const bigint_t& numIn, uint64_t dec
         return "\"" + bni_2_Str(numIn) + "\"";
     }
 }
+
+//---------------------------------------------------------------------------
+CReconciliation& CReconciliation::operator+=(const CReconciliation& r) {
+    // last in provides the block number, hash, etc.
+    *this = *this + r;
+    reconciliationType = "summary";
+
+    // begBal
+    // begBalCalc
+    endBal = r.endBal;
+    endBalCalc = begBal + totalIn() - totalOut() - gasCostOut;
+    // prevBlk = r.prevBlk;
+    // prevBlkBal = r.prevBlkBal;
+    // bigint_t begBal;
+    // endBal = r.timestamp;
+    // endBalCalc = r.timestamp;
+    amountNet = totalIn() - totalOut();
+    // begBalDiff = begBalCal
+    // bigint_t endBalDiff;
+    // bool reconciled;
+    return *this;
+}
 // EXISTING_CODE
 }  // namespace qblocks

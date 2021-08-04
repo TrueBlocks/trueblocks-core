@@ -1127,6 +1127,15 @@
     },
     {
       "tags": "50-Tokens:ERC20",
+      "address": "0x025d34acfd5c65cfd5a73209f99608c9e13338f3",
+      "name": "Uniswap V2",
+      "symbol": "UNI-V2",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
       "address": "0x02725836ebf3ecdb1cdf1c7b02fcbbfaa2736af8",
       "name": "BitAir",
       "symbol": "BTCA",
@@ -1798,15 +1807,6 @@
       "symbol": "SRK",
       "source": "On chain",
       "decimals": 18,
-      "description": ""
-    },
-    {
-      "tags": "90-Individuals:DevCon2",
-      "address": "0x0492104bbf24a97deeb64c03377fb8d6d75a711c",
-      "name": "Name 0x0492104b",
-      "symbol": "",
-      "source": "DevCon2 Token Contract",
-      "decimals": 0,
       "description": ""
     }
   ]

@@ -8,10 +8,13 @@
 //-----------------------------------------------------------------------
 // TODO(tjayrush): NO!
 CReconciliationArray statements;
+CReconciliation current;
 bool CAccumulator::accumulate(const CTransaction* trans, CTransaction& summary) {
     if (isSamePeriod(sum_type, endOfPeriod, ts_2_Date(trans->timestamp))) {
-        for (auto statement : trans->statements)
+        for (auto statement : trans->statements) {
             statements.push_back(statement);
+            current += statement;
+        }
         return false;
     }
 
@@ -20,10 +23,8 @@ bool CAccumulator::accumulate(const CTransaction* trans, CTransaction& summary) 
     summary.from = "0xSummary";
     summary.setValueByName("timestamp", ts_2_Str(date_2_Ts(endOfPeriod)));
     summary.timestamp = date_2_Ts(endOfPeriod);
-    if (statements.size() > 0) {
-        CReconciliation st = statements[statements.size() - 1];
-        summary.statements.push_back(st);
-    }
+    summary.statements.push_back(current);
+    current = CReconciliation();
     endOfPeriod = EOP(sum_type, ts_2_Date(trans->timestamp));
     return true;
 }

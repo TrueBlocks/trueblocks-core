@@ -124,6 +124,7 @@ tags	address	name	symbol	decimals	source
 90-Individuals:Gitcoin Grants	0x0230c6dd5db1d3f871386a3ce1a5a836b2590044	Name 0x0230c6dd				Gitcoin Website
 50-Tokens:ERC20	0x0246890c9278d0a786812dda4dd20361ed13cda0	Nashu Inu	NASHU		18	On chain
 50-Tokens:ERC20	0x02585e4a14da274d02df09b222d4606b10a4e940	Hero Origen Token	HERO		18	On chain
+50-Tokens:ERC20	0x025d34acfd5c65cfd5a73209f99608c9e13338f3	Uniswap V2	UNI-V2		18	On chain
 50-Tokens:ERC20	0x02725836ebf3ecdb1cdf1c7b02fcbbfaa2736af8	BitAir	BTCA		8	On chain
 50-Tokens:ERC20	0x028171bca77440897b824ca71d1c56cac55b68a3	Aave interest bearing DAI	aDAI		18	On chain
 50-Tokens:ERC20	0x0297083eef9c04ee22c89187b13363af2249042b	Andre KP9R	aKP9R		18	On chain
@@ -199,4 +200,3 @@ tags	address	name	symbol	decimals	source
 30-Contracts	0x047ed17511d9287b2bf82a456aa87ba9cd45bb0d	Totle Bancor Wrapper				0xTracker
 90-Individuals:TheCyber	0x047f57b4fe5f5f8f536f48d7ee464893b4411e92	Name 0x047f57b4				Solidity Code
 50-Tokens:ERC20	0x0488401c3f535193fa8df029d9ffe615a06e74e6	SparkPoint	SRK		18	On chain
-90-Individuals:DevCon2	0x0492104bbf24a97deeb64c03377fb8d6d75a711c	Name 0x0492104b				DevCon2 Token Contract

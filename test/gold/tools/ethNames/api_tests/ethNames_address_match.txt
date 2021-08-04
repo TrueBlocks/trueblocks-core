@@ -883,6 +883,15 @@
       "description": ""
     },
     {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x12976ac92061ddc252060bc84c09b48dc785263c",
+      "name": "Event Pass",
+      "symbol": "EPA",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
       "tags": "31-Gitcoin Grants:Grant",
       "address": "0x12a0e25e62c1dbd32e505446062b26aecb65f028",
       "name": "Grant 0473 Bbft Podcast Show",
@@ -1168,6 +1177,15 @@
       "symbol": "",
       "source": "Ether Camp",
       "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x136fae4333ea36a24bb751e2d505d6ca4fd9f00b",
+      "name": "ETH RSI 60/40 Yield",
+      "symbol": "ETHRSIAPY",
+      "source": "On chain",
+      "decimals": 18,
       "description": ""
     },
     {
@@ -1789,24 +1807,6 @@
       "symbol": "",
       "source": "TrueBlocks.io",
       "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x157f771be097a781b1b57fcc112ddf5a78d16b0b",
-      "name": "GoofyDoge Coin",
-      "symbol": "GOOFYDOGE",
-      "source": "On chain",
-      "decimals": 18,
-      "description": ""
-    },
-    {
-      "tags": "30-Contracts:Compound",
-      "address": "0x158079ee67fce2f58472a96584a73c7ab9ac95c1",
-      "name": "Compound Augur",
-      "symbol": "cREP",
-      "source": "On chain",
-      "decimals": 8,
       "description": ""
     }
   ],

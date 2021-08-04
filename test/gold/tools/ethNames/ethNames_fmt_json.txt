@@ -880,6 +880,14 @@ ethNames --named --custom --fmt json
   },
   {
     "tags": "50-Tokens:ERC20",
+    "address": "0x025d34acfd5c65cfd5a73209f99608c9e13338f3",
+    "name": "Uniswap V2",
+    "symbol": "UNI-V2",
+    "source": "On chain",
+    "decimals": 18
+  },
+  {
+    "tags": "50-Tokens:ERC20",
     "address": "0x02725836ebf3ecdb1cdf1c7b02fcbbfaa2736af8",
     "name": "BitAir",
     "symbol": "BTCA",
@@ -1378,10 +1386,4 @@ ethNames --named --custom --fmt json
     "address": "0x0475929d867e95b3828ab4ef2d08a7f80766bf90",
     "name": "OCN Airdrop Sender",
     "source": "TrueBlocks.io"
-  },
-  {
-    "tags": "91-Early:Addresses",
-    "address": "0x04786aada9deea2150deab7b3b8911c309f5ed90",
-    "name": "GateCoin_Hack_1",
-    "source": "Ether Camp"
   }] }

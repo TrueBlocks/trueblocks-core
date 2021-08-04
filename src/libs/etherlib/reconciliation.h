@@ -81,6 +81,7 @@ class CReconciliation : public CBaseNode {
     bigint_t totalOut(void) const {
         return amountOut + internalOut + selfDestructOut;
     }
+    CReconciliation& operator+=(const CReconciliation& r);
     // EXISTING_CODE
     bool operator==(const CReconciliation& it) const;
     bool operator!=(const CReconciliation& it) const {

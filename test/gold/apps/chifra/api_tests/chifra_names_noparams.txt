@@ -41,6 +41,7 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x022fc445fd3ec66cc48e0975265ec825245cd7a9	Uniswap V2	UNI-V2		18
 50-Tokens:ERC20	0x0246890c9278d0a786812dda4dd20361ed13cda0	Nashu Inu	NASHU		18
 50-Tokens:ERC20	0x02585e4a14da274d02df09b222d4606b10a4e940	Hero Origen Token	HERO		18
+50-Tokens:ERC20	0x025d34acfd5c65cfd5a73209f99608c9e13338f3	Uniswap V2	UNI-V2		18
 50-Tokens:ERC20	0x02725836ebf3ecdb1cdf1c7b02fcbbfaa2736af8	BitAir	BTCA		8
 50-Tokens:ERC20	0x028171bca77440897b824ca71d1c56cac55b68a3	Aave interest bearing DAI	aDAI		18
 50-Tokens:ERC20	0x0297083eef9c04ee22c89187b13363af2249042b	Andre KP9R	aKP9R		18
@@ -116,6 +117,7 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x06d0c38101563c17cabeab96e24d72b27e5cf617	Ｌｅｆｔｏｖｅｒｓｔｅａｋ	LOST		18
 50-Tokens:ERC20	0x06d5fbdc5b54fe3aed6ad1b5e2e5a5a6d9ff54ea	Ethereum Extreme	ETHE		18
 50-Tokens:ERC20	0x06e0feb0d74106c7ada8497754074d222ec6bcdf	BitBall	BTB		18
+50-Tokens:ERC20	0x06f65b8cfcb13a9fe37d836fe9708da38ecb29b2	SAINT FAME: Genesis Shirt	FAME		18
 50-Tokens:ERC20	0x0707681f344deb24184037fc0228856f2137b02e	FNKOSToken	FNKOS		18
 50-Tokens:ERC20	0x07147220fa6c06295464d695e4ec012f6aebc275	Super Module Network One	SMN1		18
 50-Tokens:ERC20	0x072c46f392e729c1f0d92a307c2c6dba06b5d078	Snoop Doge	SNOGE		9
@@ -198,5 +200,3 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x0be9eee7aa2b2b21021e25c6b3377e6af8d2db16	TrueShiba Inu	TRUSHIB		9
 50-Tokens:ERC20	0x0bef619cf38cf0c22967289b8419720fbd1db9f7	AEN.	AEN		8
 50-Tokens:ERC20	0x0c08cc64468dd4888dfeceb7aab866ffc4ba60f4	EFALCON	🚀EFAL🚀		18
-50-Tokens:ERC20	0x0c17398ebbcb15078f2ad2c67a26d10623957b21	SONTOKEN	SON		18
-50-Tokens:ERC20	0x0c30f5715b00feff6fa8953f7d74b781f5c0f7da	Ethereum Hyper	ETHH		18

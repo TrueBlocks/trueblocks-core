@@ -128,6 +128,7 @@ tags	address	name	symbol	decimals
 90-Individuals:Gitcoin Grants	0x0230c6dd5db1d3f871386a3ce1a5a836b2590044	Name 0x0230c6dd
 50-Tokens:ERC20	0x0246890c9278d0a786812dda4dd20361ed13cda0	Nashu Inu	NASHU		18
 50-Tokens:ERC20	0x02585e4a14da274d02df09b222d4606b10a4e940	Hero Origen Token	HERO		18
+50-Tokens:ERC20	0x025d34acfd5c65cfd5a73209f99608c9e13338f3	Uniswap V2	UNI-V2		18
 50-Tokens:ERC20	0x02725836ebf3ecdb1cdf1c7b02fcbbfaa2736af8	BitAir	BTCA		8
 50-Tokens:ERC20	0x028171bca77440897b824ca71d1c56cac55b68a3	Aave interest bearing DAI	aDAI		18
 50-Tokens:ERC20	0x0297083eef9c04ee22c89187b13363af2249042b	Andre KP9R	aKP9R		18
@@ -199,4 +200,3 @@ tags	address	name	symbol	decimals
 31-Gitcoin Grants:Grant	0x0467f3b464ff75ac91f6ed8a4139fc6e38256efb	Grant 1781 Cursed Mining
 31-Gitcoin Grants:Grant	0x046b8b30767592487badb59e43418e3f58f46b26	Grant 1828 Australian Digital Security
 60-Airdrops	0x0475929d867e95b3828ab4ef2d08a7f80766bf90	OCN Airdrop Sender
-91-Early:Addresses	0x04786aada9deea2150deab7b3b8911c309f5ed90	GateCoin_Hack_1

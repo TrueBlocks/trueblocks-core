@@ -675,6 +675,14 @@ ethNames 0x1 --fmt api
     "source": "Ether Camp"
   },
   {
+    "tags": "50-Tokens:ERC20",
+    "address": "0x12976ac92061ddc252060bc84c09b48dc785263c",
+    "name": "Event Pass",
+    "symbol": "EPA",
+    "source": "On chain",
+    "decimals": 18
+  },
+  {
     "tags": "31-Gitcoin Grants:Grant",
     "address": "0x12a0e25e62c1dbd32e505446062b26aecb65f028",
     "name": "Grant 0473 Bbft Podcast Show",
@@ -889,6 +897,14 @@ ethNames 0x1 --fmt api
     "address": "0x136c84340fb340167f3c54d9c6ba24a82da7cd59",
     "name": "MeterSlock_id76_cnt1_5mo",
     "source": "Ether Camp"
+  },
+  {
+    "tags": "50-Tokens:ERC20",
+    "address": "0x136fae4333ea36a24bb751e2d505d6ca4fd9f00b",
+    "name": "ETH RSI 60/40 Yield",
+    "symbol": "ETHRSIAPY",
+    "source": "On chain",
+    "decimals": 18
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -1393,22 +1409,6 @@ ethNames 0x1 --fmt api
     "address": "0x157ddd802ab7831a2e1966baf2cc804bc7f95bd8",
     "name": "Possibly Malicious 0x157",
     "source": "TrueBlocks.io"
-  },
-  {
-    "tags": "50-Tokens:ERC20",
-    "address": "0x157f771be097a781b1b57fcc112ddf5a78d16b0b",
-    "name": "GoofyDoge Coin",
-    "symbol": "GOOFYDOGE",
-    "source": "On chain",
-    "decimals": 18
-  },
-  {
-    "tags": "30-Contracts:Compound",
-    "address": "0x158079ee67fce2f58472a96584a73c7ab9ac95c1",
-    "name": "Compound Augur",
-    "symbol": "cREP",
-    "source": "On chain",
-    "decimals": 8
   }], "types": [
 { "type": "CAccountName", "fields": [{ "name": "tags", "type": "text" }, { "name": "address", "type": "address" }, { "name": "name", "type": "text" }, { "name": "symbol", "type": "text" }, { "name": "source", "type": "text" }, { "name": "decimals", "type": "unumber" }, { "name": "description", "type": "text" }] }
 ], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef", "namePath": "--" } }

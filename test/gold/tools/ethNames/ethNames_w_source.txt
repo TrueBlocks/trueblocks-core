@@ -82,6 +82,7 @@ tags	address	name	symbol	decimals	source
 50-Tokens:ERC20	0xc72fe8e3dd5bef0f9f31f259399f301272ef2a2d	Insights Network	INSTAR		18	On chain
 31-Gitcoin Grants:Grant	0xcb8f9c706f9f5683d1bd6261f52f5f2b2182d780	Grant 1796 Crypton Network				https://gitcoin.co/grants/1796/crypton-network
 50-Tokens:ERC20	0xcc1230436557f1250812fabbee5b8524b43250f3	NarutoNetwork	NARUTO		18	On chain
+50-Tokens:ERC20	0xcd62b1c403fa761baadfc74c525ce2b51780b184	Aragon Network Juror	ANJ		18	On chain
 31-Gitcoin Grants:Grant	0xcfb3c2dc81718ff0087d46e4d7b1c4692ded1586	Grant 1323 Resource Network				https://gitcoin.co/grants/1323/resource-network
 50-Tokens:ERC20	0xcfb98637bcae43c13323eaa1731ced2b716962fd	Nimiq Network Interim Token	NET		18	On chain
 50-Tokens:ERC20	0xd29f0b5b3f50b07fe9a9511f7d86f4f4bac3f8c4	Liquidity.Network Token	LQD		18	On chain
