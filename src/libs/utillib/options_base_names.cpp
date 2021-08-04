@@ -64,8 +64,10 @@ bool loadPrefunds(const string_q& prefundFile) {
     // since it will never change. In that sense, the binary file is always right once it's created.
     string_q binFile = getCachePath("names/names_prefunds_bals.bin");
     if (!fileExists(binFile)) {
-        if (!fileExists(prefundFile))
+        if (!fileExists(prefundFile)) {
+            LOG_WARN("Cannot find prefund file at: ", prefundFile);
             return false;
+        }
         CStringArray lines;
         asciiFileToLines(prefundFile, lines);
         bool first = true;
@@ -78,8 +80,10 @@ bool loadPrefunds(const string_q& prefundFile) {
             first = false;
         }
         CArchive archive(WRITING_ARCHIVE);
-        if (!archive.Lock(binFile, modeWriteCreate, LOCK_NOWAIT))
+        if (!archive.Lock(binFile, modeWriteCreate, LOCK_NOWAIT)) {
+            LOG_WARN("Could not lock prefund cache at: ", binFile);
             return false;
+        }
         CAddressWeiMap::iterator it = expContext().prefundMap.begin();
         archive << uint64_t(expContext().prefundMap.size());
         while (it != expContext().prefundMap.end()) {
@@ -91,8 +95,10 @@ bool loadPrefunds(const string_q& prefundFile) {
     }
 
     CArchive archive(READING_ARCHIVE);
-    if (!archive.Lock(binFile, modeReadOnly, LOCK_NOWAIT))
+    if (!archive.Lock(binFile, modeReadOnly, LOCK_NOWAIT)) {
+        LOG_WARN("Could not unlock prefund cache at: ", binFile);
         return false;
+    }
     uint64_t count;
     archive >> count;
     for (size_t i = 0; i < count; i++) {
