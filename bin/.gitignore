@@ -72,6 +72,7 @@ pinTest
 printFloatTest
 pylint.py
 runningTest
+reconTest
 serializeTest
 sha3Test
 sizeofTest

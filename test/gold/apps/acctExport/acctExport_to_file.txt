@@ -202,7 +202,7 @@ TIME ~ CLOCK - : 4-----  endBal:     "5.170246415179548557"
 TIME ~ CLOCK - : 4-----  endBalCalc: "5.170246415179548557"
 TIME ~ CLOCK - : 4-----  endBalDiff: ""
 TIME ~ CLOCK - : 4-----  reconciled: true
-TIME ~ CLOCK - : 4-----  amountNet   prevdiff-partial: ""
+TIME ~ CLOCK - : 4-----  amountNet   prevdiff-partial: "-0.001739343000000000"
 TIME ~ CLOCK - : 4-----pushed: 10290317 46 "5.171985758179548557" "" "" "5.170246415179548557" true
 TIME ~ CLOCK - : 4-----assetSymbol: ETH
 TIME ~ CLOCK - : 4-----assetAddr:   0xf503017d7baf7fbc0fff7492b751025c6a78179b
@@ -223,7 +223,7 @@ TIME ~ CLOCK - : 4-----  endBal:     "5.168485149679548557"
 TIME ~ CLOCK - : 4-----  endBalCalc: "5.168485149679548557"
 TIME ~ CLOCK - : 4-----  endBalDiff: ""
 TIME ~ CLOCK - : 4-----  reconciled: true
-TIME ~ CLOCK - : 4-----  amountNet   nextdiff-partial: ""
+TIME ~ CLOCK - : 4-----  amountNet   nextdiff-partial: "-0.001761265500000000"
 TIME ~ CLOCK - : 4-----pushed: 10290317 47 "5.170246415179548557" "" "" "5.168485149679548557" true
 TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM execution error.","data":"Reverted 0x"},"id":"1"}
  {"jsonrpc":"2.0","method":"eth_call","params":[{"to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c", "data": "0x95d89b41"}, "0x9d048d"],"id":"1"}
@@ -264,7 +264,7 @@ TIME ~ CLOCK - : 4-----  endBal:     "5.167252197679548557"
 TIME ~ CLOCK - : 4-----  endBalCalc: "5.167252197679548557"
 TIME ~ CLOCK - : 4-----  endBalDiff: ""
 TIME ~ CLOCK - : 4-----  reconciled: true
-TIME ~ CLOCK - : 4-----  amountNet   prevdiff-partial: ""
+TIME ~ CLOCK - : 4-----  amountNet   prevdiff-partial: "-0.001232952000000000"
 TIME ~ CLOCK - : 4-----pushed: 10292014 92 "5.168485149679548557" "" "" "5.167252197679548557" true
 TIME ~ CLOCK - : 4-----assetSymbol: ETH
 TIME ~ CLOCK - : 4-----assetAddr:   0xf503017d7baf7fbc0fff7492b751025c6a78179b
@@ -285,7 +285,7 @@ TIME ~ CLOCK - : 4-----  endBal:     "5.165331677679548557"
 TIME ~ CLOCK - : 4-----  endBalCalc: "5.165331677679548557"
 TIME ~ CLOCK - : 4-----  endBalDiff: ""
 TIME ~ CLOCK - : 4-----  reconciled: true
-TIME ~ CLOCK - : 4-----  amountNet   nextdiff-partial: ""
+TIME ~ CLOCK - : 4-----  amountNet   nextdiff-partial: "-0.001920520000000000"
 TIME ~ CLOCK - : 4-----pushed: 10292014 93 "5.167252197679548557" "" "" "5.165331677679548557" true
 TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM execution error.","data":"Reverted 0x"},"id":"1"}
  {"jsonrpc":"2.0","method":"eth_call","params":[{"to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c", "data": "0x95d89b41"}, "0x9d0b2e"],"id":"1"}
@@ -345,7 +345,7 @@ TIME ~ CLOCK - : 4-----  endBal:     "5.354010217339548557"
 TIME ~ CLOCK - : 4-----  endBalCalc: "5.354010217339548557"
 TIME ~ CLOCK - : 4-----  endBalDiff: ""
 TIME ~ CLOCK - : 4-----  reconciled: true
-TIME ~ CLOCK - : 4-----  amountNet   prevdiff-partial: ""
+TIME ~ CLOCK - : 4-----  amountNet   prevdiff-partial: "-0.001321460340000000"
 TIME ~ CLOCK - : 4-----pushed: 10293554 109 "5.355331677679548557" "" "" "5.354010217339548557" true
 TIME ~ CLOCK - : 4-----assetSymbol: ETH
 TIME ~ CLOCK - : 4-----assetAddr:   0xf503017d7baf7fbc0fff7492b751025c6a78179b
@@ -366,7 +366,7 @@ TIME ~ CLOCK - : 4-----  endBal:     "5.351951831439548557"
 TIME ~ CLOCK - : 4-----  endBalCalc: "5.351951831439548557"
 TIME ~ CLOCK - : 4-----  endBalDiff: ""
 TIME ~ CLOCK - : 4-----  reconciled: true
-TIME ~ CLOCK - : 4-----  amountNet   nextdiff-partial: ""
+TIME ~ CLOCK - : 4-----  amountNet   nextdiff-partial: "-0.002058385900000000"
 TIME ~ CLOCK - : 4-----pushed: 10293554 110 "5.354010217339548557" "" "" "5.351951831439548557" true
 TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM execution error.","data":"Reverted 0x"},"id":"1"}
  {"jsonrpc":"2.0","method":"eth_call","params":[{"to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c", "data": "0x95d89b41"}, "0x9d1132"],"id":"1"}

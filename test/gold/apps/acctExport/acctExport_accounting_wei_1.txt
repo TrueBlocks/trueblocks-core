@@ -68,6 +68,7 @@ TIME ~ CLOCK - : 4-----pushed: 0 2 "" "" "" "4200000000000000000000" true
       "amountNet": "4200000000000000000000",
       "spotPrice": "-1",
       "reconciliationType": "by-trace",
+      "reconTrail": "|endBalDiff",
       "reconciled": true,
       "totalIn": "4200000000000000000000",
       "totalOut": ""
@@ -144,7 +145,7 @@ TIME ~ CLOCK - : 4-----pushed: 202249 0 "4200000000000000000000" "" "41999000000
       "reconciliationType": "regular",
       "reconciled": true,
       "totalIn": "",
-      "totalOut": "4199900000000000000000"
+      "totalOut": "4199925320679510922664"
     }
   ],
   "gasCost": 25320679510922664,
@@ -218,7 +219,7 @@ TIME ~ CLOCK - : 4-----pushed: 1501459 2 "74679320489077336" "" "742593204890773
       "reconciliationType": "regular",
       "reconciled": true,
       "totalIn": "",
-      "totalOut": "74259320489077336"
+      "totalOut": "74679320489077336"
     }
   ],
   "gasCost": 420000000000000,

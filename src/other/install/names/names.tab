@@ -9570,6 +9570,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0xef26c2766972cbac10575aa85c0ab0691b967d20	GoldenThaler Token	GTA	On chain	18		false	false	false	true	true	false
 30-Contracts:Kickback	0xef29a4d8a11d503f575cee67979b5294b399994a	Klab Workshop		https://kickback.events/event/[{ADDRESS}]			false	false	false	true	false	false
 50-Tokens:ERC20	0xef3a930e1ffffacd2fc13434ac81bd278b0ecc8d	StaFi	FIS	On chain	18		false	false	false	true	true	false
+50-Tokens:ERC20	0xef3c951e22c65f6256746f4e227e19a5bcbf393c	Crowdfunded Mirror Editions	CROWDFUND_EDITIONS	On chain	18		false	false	false	true	true	false
 31-Gitcoin:Grants	0xef42cf85be6adf3081ada73af87e27996046fe63	Grant 0188 Ethdevtools		https://gitcoin.co/grants/188/ethdevtools			false	false	false	false	false	false
 50-Tokens:ERC20	0xef433392d650b039dad8af58c6f674503a17c666	DogelaX	DGLX	On chain	9		false	false	false	true	true	false
 90-Individuals:Kickback	0xef4550439896ff1efb760027d1c81afe88f7138f	wiezzel		https://kickback.events/			false	false	false	false	false	false
@@ -10197,6 +10198,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin:Grants	0xff1a55180f24800fdc6392cdd4fe20d50f32d10e	Grant 1609 Eth Colombia Community Growth 🇨🇴		https://gitcoin.co/grants/1609/eth-colombia-community-growth			false	false	false	true	false	false
 34-ENS	0xff252725f6122a92551a5fa9a6b6bf10eb0be035	ENS Renewal Contract		EtherScan.io			false	false	false	true	false	false
 50-Tokens:ERC20	0xff2b3353c3015e9f1fbf95b9bda23f58aa7ce007	BitScreenerToken	BITX	On chain	18	BitScreener is a trusted real-time crypto-tracking platform, available on Android, iOS and Web. It is now integrating crowdsourcing financial data ecosystem on blockchain.	false	false	false	true	true	false
+50-Tokens:ERC20	0xff2f509668048d4fde4f40fedab3334ce104a39b	Ethereum: The Infinite Garden	INFINITE	On chain	18		false	false	false	true	true	false
 90-Individuals:Gitcoin Grants	0xff32622d83bbe587d6498f10cc9890ec2cad28a3	ptrwtts		Gitcoin Website			false	false	false	false	false	false
 50-Tokens:ERC20	0xff3519eeeea3e76f1f699ccce5e23ee0bdda41ac	BCAP Old Token	BCAP	EtherScan.io		Blockchain Capital is a pioneer and the premier venture capital firm investing in Blockchain enabled technology	false	false	false	true	true	false
 90-Individuals:Gitcoin Grants	0xff3db9641a1aeec4960dc0a4efb84510ddf4e4f0	thomms13		Gitcoin Website			false	false	false	false	false	false

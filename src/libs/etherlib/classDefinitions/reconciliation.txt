@@ -28,6 +28,7 @@ fields = blknum blockNumber|\
         int256 amountNet|\
         int256 spotPrice=int64_t(-1)|\
         string reconciliationType|\
+        string reconTrail (nowrite)|\
         bool reconciled
 extra_fields = int256 totalIn|\
         int256 totalOut

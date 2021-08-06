@@ -53,6 +53,7 @@
           "amountNet": "5000000000000000000",
           "spotPrice": "-1",
           "reconciliationType": "regular",
+          "reconTrail": "",
           "reconciled": true,
           "totalIn": "5000000000000000000",
           "totalOut": ""
@@ -119,6 +120,7 @@
           "amountNet": "5000000000000000000",
           "spotPrice": "-1",
           "reconciliationType": "regular",
+          "reconTrail": "",
           "reconciled": true,
           "totalIn": "5000000000000000000",
           "totalOut": ""
@@ -185,6 +187,7 @@
           "amountNet": "3750000000000000000",
           "spotPrice": "-1",
           "reconciliationType": "regular",
+          "reconTrail": "",
           "reconciled": true,
           "totalIn": "3750000000000000000",
           "totalOut": ""
@@ -251,6 +254,7 @@
           "amountNet": "5000000000000000000",
           "spotPrice": "-1",
           "reconciliationType": "regular",
+          "reconTrail": "",
           "reconciled": true,
           "totalIn": "5000000000000000000",
           "totalOut": ""
@@ -317,6 +321,7 @@
           "amountNet": "3125000000000000000",
           "spotPrice": "-1",
           "reconciliationType": "regular",
+          "reconTrail": "",
           "reconciled": true,
           "totalIn": "3125000000000000000",
           "totalOut": ""
@@ -383,6 +388,7 @@
           "amountNet": "5000000000000000000",
           "spotPrice": "-1",
           "reconciliationType": "regular",
+          "reconTrail": "",
           "reconciled": true,
           "totalIn": "5000000000000000000",
           "totalOut": ""
@@ -449,6 +455,7 @@
           "amountNet": "3750000000000000000",
           "spotPrice": "-1",
           "reconciliationType": "regular",
+          "reconTrail": "",
           "reconciled": true,
           "totalIn": "3750000000000000000",
           "totalOut": ""
@@ -515,6 +522,7 @@
           "amountNet": "3750000000000000000",
           "spotPrice": "-1",
           "reconciliationType": "regular",
+          "reconTrail": "",
           "reconciled": true,
           "totalIn": "3750000000000000000",
           "totalOut": ""
@@ -581,6 +589,7 @@
           "amountNet": "2500000000000000000",
           "spotPrice": "-1",
           "reconciliationType": "regular",
+          "reconTrail": "",
           "reconciled": true,
           "totalIn": "2500000000000000000",
           "totalOut": ""
@@ -647,6 +656,7 @@
           "amountNet": "5156250000000000000",
           "spotPrice": "-1",
           "reconciliationType": "regular",
+          "reconTrail": "",
           "reconciled": true,
           "totalIn": "5156250000000000000",
           "totalOut": ""
@@ -713,6 +723,7 @@
           "amountNet": "3750000000000000000",
           "spotPrice": "-1",
           "reconciliationType": "regular",
+          "reconTrail": "",
           "reconciled": true,
           "totalIn": "3750000000000000000",
           "totalOut": ""
@@ -779,6 +790,7 @@
           "amountNet": "3750000000000000000",
           "spotPrice": "-1",
           "reconciliationType": "regular",
+          "reconTrail": "",
           "reconciled": true,
           "totalIn": "3750000000000000000",
           "totalOut": ""
@@ -845,6 +857,7 @@
           "amountNet": "5000000000000000000",
           "spotPrice": "-1",
           "reconciliationType": "regular",
+          "reconTrail": "",
           "reconciled": true,
           "totalIn": "5000000000000000000",
           "totalOut": ""
@@ -911,6 +924,7 @@
           "amountNet": "3750000000000000000",
           "spotPrice": "-1",
           "reconciliationType": "regular",
+          "reconTrail": "",
           "reconciled": true,
           "totalIn": "3750000000000000000",
           "totalOut": ""
@@ -977,6 +991,7 @@
           "amountNet": "5000000000000000000",
           "spotPrice": "-1",
           "reconciliationType": "regular",
+          "reconTrail": "",
           "reconciled": true,
           "totalIn": "5000000000000000000",
           "totalOut": ""

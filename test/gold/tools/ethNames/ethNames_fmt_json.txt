@@ -234,7 +234,7 @@ ethNames --named --custom --fmt json
     "decimals": 18
   },
   {
-    "tags": "31-Gitcoin Grants:Grant",
+    "tags": "31-Gitcoin:Grants",
     "address": "0x00216505799d9e3117b40b94a24dc0fa286a57a4",
     "name": "Grant 1168 Flowerpatch Emojis & Artwork Fund",
     "source": "https://gitcoin.co/grants/1168/flowerpatch-emojis-artwork-fund"
@@ -320,7 +320,7 @@ ethNames --named --custom --fmt json
     "source": "GethSource"
   },
   {
-    "tags": "31-Gitcoin Grants:Grant",
+    "tags": "31-Gitcoin:Grants",
     "address": "0x006087d6ac20840c23ba298512db454a05c19b10",
     "name": "Grant 0743 #fittogetherdao (like Pooltogether for Fitness and Wellbeing)",
     "source": "https://gitcoin.co/grants/743/fittogetherdao-like-pooltogether-for-fitness-and-"
@@ -341,7 +341,7 @@ ethNames --named --custom --fmt json
     "source": "TrueBlocks.io"
   },
   {
-    "tags": "31-Gitcoin Grants:Grant",
+    "tags": "31-Gitcoin:Grants",
     "address": "0x007b003c4d0145b512286494d5ae123aeef29d9e",
     "name": "Grant 0845 Remote Developer Bootcamp",
     "source": "https://gitcoin.co/grants/845/remote-developer-bootcamp",
@@ -370,7 +370,7 @@ ethNames --named --custom --fmt json
     "decimals": 18
   },
   {
-    "tags": "31-Gitcoin Grants:Grant",
+    "tags": "31-Gitcoin:Grants",
     "address": "0x0087a081a9b430fd8f688c6ac5dd24421bfb060d",
     "name": "Grant 0779 DeFi Latam",
     "source": "https://gitcoin.co/grants/779/defi-latam",
@@ -430,7 +430,7 @@ ethNames --named --custom --fmt json
     "source": "Solidity Code"
   },
   {
-    "tags": "31-Gitcoin Grants:Grant",
+    "tags": "31-Gitcoin:Grants",
     "address": "0x00b491d250b9bcce482b6e70321b0a5339d183a6",
     "name": "Grant 0976 Magical Machine Money",
     "source": "https://gitcoin.co/grants/976/magical-machine-money"
@@ -465,7 +465,7 @@ ethNames --named --custom --fmt json
     "source": "Gitcoin Website"
   },
   {
-    "tags": "31-Gitcoin Grants:Grant",
+    "tags": "31-Gitcoin:Grants",
     "address": "0x00cf36853aa4024fb5bf5cc377dfd85844b411a0",
     "name": "Grant 0143 Dappnode - Panvala League",
     "source": "https://gitcoin.co/grants/143/dappnode-panvala-league"
@@ -490,14 +490,12 @@ ethNames --named --custom --fmt json
     "description": "@Aezakmi_Steemit"
   },
   {
-    "tags": "31-Gitcoin Grants:Grant",
+    "tags": "31-Gitcoin:Admin",
     "address": "0x00de4b13153673bcae2616b67bf822500d325fc3",
-    "name": "Grant 0472 Example Public Health Project",
-    "source": "https://gitcoin.co/grants/472/example-public-health-project",
-    "description": "https://gitcoin.co/grants/110/gitcoin-grant-20190522,https://gitcoin.co/grants/86/gitcoin-grants-round-8-dev-fund,https://gitcoin.co/grants/12/gitcoin-open-source-support-fund"
+    "name": "Gitcoin Maintainer"
   },
   {
-    "tags": "31-Gitcoin Grants:Grant",
+    "tags": "31-Gitcoin:Grants",
     "address": "0x00e4f5f746242e4d115bd65aac7c08fe5d38fb21",
     "name": "Grant 1839 the Etherchest Ecosystem",
     "source": "https://gitcoin.co/grants/1839/the-etherchest-ecosystem"
@@ -521,7 +519,7 @@ ethNames --named --custom --fmt json
     "source": "TrueBlocks.io"
   },
   {
-    "tags": "31-Gitcoin Grants:Grant",
+    "tags": "31-Gitcoin:Grants",
     "address": "0x00fe460a15b49d09f39b057d0f1a7b9444f4f2be",
     "name": "Grant 0624 Nescience Software Portfolio Rebalancing Direct Indexing",
     "source": "https://gitcoin.co/grants/624/nescience-software-portfolio-rebalancing-direct-in",
@@ -556,7 +554,7 @@ ethNames --named --custom --fmt json
     "source": "Gitcoin Website"
   },
   {
-    "tags": "31-Gitcoin Grants:Grant",
+    "tags": "31-Gitcoin:Grants",
     "address": "0x0115f5ce3f986a35b1edb6f2c3815cebb2461e70",
     "name": "Grant 0790 Loft Radio",
     "source": "https://gitcoin.co/grants/790/loft-radio",
@@ -597,7 +595,7 @@ ethNames --named --custom --fmt json
     "decimals": 6
   },
   {
-    "tags": "31-Gitcoin Grants:Grant",
+    "tags": "31-Gitcoin:Grants",
     "address": "0x014ffcf34d8515535b99d6aef654258c237168b6",
     "name": "Grant 1850 Fireth",
     "source": "https://gitcoin.co/grants/1850/fireth"
@@ -609,7 +607,7 @@ ethNames --named --custom --fmt json
     "source": "EtherScan.io"
   },
   {
-    "tags": "31-Gitcoin Grants:Grant",
+    "tags": "31-Gitcoin:Grants",
     "address": "0x015bf68ef11bd55e43a119b5752c4b3becae7f24",
     "name": "Grant 0627 Veridex",
     "source": "https://gitcoin.co/grants/627/veridex",
@@ -644,13 +642,13 @@ ethNames --named --custom --fmt json
     "decimals": 8
   },
   {
-    "tags": "31-Gitcoin Grants:Grant",
+    "tags": "31-Gitcoin:Grants",
     "address": "0x017946fc126d57e7823e68c647c24f28e5dc9988",
     "name": "Grant 0190 Groundhog",
     "source": "https://gitcoin.co/grants/190/groundhog"
   },
   {
-    "tags": "31-Gitcoin Grants:Grant",
+    "tags": "31-Gitcoin:Grants",
     "address": "0x018047343e8105fed2c5000912d03815d99f3e48",
     "name": "Grant 1920 Kevin",
     "source": "https://gitcoin.co/grants/1920/kevin"
@@ -777,7 +775,7 @@ ethNames --named --custom --fmt json
     "source": "Gitcoin Website"
   },
   {
-    "tags": "31-Gitcoin Grants:Grant",
+    "tags": "31-Gitcoin:Grants",
     "address": "0x01f1e9319982ab828203c0276727cf48065434d3",
     "name": "Grant 0602 Realitylearn: Teaching the World About Blockchain",
     "source": "https://gitcoin.co/grants/602/realitylearn",
@@ -966,7 +964,7 @@ ethNames --named --custom --fmt json
     "decimals": 18
   },
   {
-    "tags": "31-Gitcoin Grants:Grant",
+    "tags": "31-Gitcoin:Grants",
     "address": "0x02cb3c150bedca124d0ae8cccb72fefbe705c953",
     "name": "Grant 0782 Ethereum Cat Herders Community Fund",
     "source": "https://gitcoin.co/grants/782/ethereum-cat-herders-community-fund",
@@ -1037,13 +1035,13 @@ ethNames --named --custom --fmt json
     "decimals": 18
   },
   {
-    "tags": "31-Gitcoin Grants:Grant",
+    "tags": "31-Gitcoin:Grants",
     "address": "0x02eb002d88051c03ef312f63bbf3e38aada0b902",
     "name": "Grant 0031 Grantops",
     "source": "https://gitcoin.co/grants/31/grantops"
   },
   {
-    "tags": "31-Gitcoin Grants:Grant",
+    "tags": "31-Gitcoin:Grants",
     "address": "0x02ee97a13e434717e3ffa12758a235d1a1680775",
     "name": "Grant 1551 Niftycrates",
     "source": "https://gitcoin.co/grants/1551/niftycrates"
@@ -1169,7 +1167,7 @@ ethNames --named --custom --fmt json
     "source": "EtherScan.io"
   },
   {
-    "tags": "31-Gitcoin Grants:Grant",
+    "tags": "31-Gitcoin:Grants",
     "address": "0x0389836416d1d46724f0913eeee42622950b20c1",
     "name": "Grant 1488 Ercgraph",
     "source": "https://gitcoin.co/grants/1488/ercgraph"
@@ -1181,7 +1179,7 @@ ethNames --named --custom --fmt json
     "source": "EtherScan.io"
   },
   {
-    "tags": "31-Gitcoin Grants:Grant",
+    "tags": "31-Gitcoin:Grants",
     "address": "0x039ae2898d257f4c9d7e381d478ee1ed042fe2f4",
     "name": "Grant 0284 My DAO Dashboard",
     "source": "https://gitcoin.co/grants/284/my-dao-dashboard",
@@ -1242,7 +1240,7 @@ ethNames --named --custom --fmt json
     "source": "TrueBlocks.io"
   },
   {
-    "tags": "31-Gitcoin Grants:Grant",
+    "tags": "31-Gitcoin:Grants",
     "address": "0x03c2bc72a3e007179e54ffb4563cc235bec8151a",
     "name": "Grant 0600 Synthereum: Synthetic Assets with Liquidity Pools to Bridge Traditional and Digital Finance",
     "source": "https://gitcoin.co/grants/600/synthereum-synthetic-assets-with-liquidity-pools-t",
@@ -1286,7 +1284,7 @@ ethNames --named --custom --fmt json
     "source": "Gitcoin Website"
   },
   {
-    "tags": "31-Gitcoin Grants:Grant",
+    "tags": "31-Gitcoin:Grants",
     "address": "0x03ed2992a1d07ab57ec01f0c8914e22b53e48d87",
     "name": "Grant 0774 Nuts Platform | Designed for DeFi Builders and Service Providers",
     "source": "https://gitcoin.co/grants/774/nuts-platform-designed-for-defi-builders-and-serv"
@@ -1308,7 +1306,7 @@ ethNames --named --custom --fmt json
     "decimals": 18
   },
   {
-    "tags": "31-Gitcoin Grants:Grant",
+    "tags": "31-Gitcoin:Grants",
     "address": "0x04335c092bc8c06f48f9def5e3285140138fbbfc",
     "name": "Grant 1496 Optimistic Casino",
     "source": "https://gitcoin.co/grants/1496/optimistic-casino"
@@ -1363,20 +1361,20 @@ ethNames --named --custom --fmt json
     "source": "EtherScan.io"
   },
   {
-    "tags": "31-Gitcoin Grants:Grant",
+    "tags": "31-Gitcoin:Grants",
     "address": "0x04607ca1048f490578f233a8b1354778defdd178",
     "name": "Grant 0608 Signatory Client",
     "source": "https://gitcoin.co/grants/608/signatory-client",
     "description": "https://vbstreetz.github.io/signatory-client/"
   },
   {
-    "tags": "31-Gitcoin Grants:Grant",
+    "tags": "31-Gitcoin:Grants",
     "address": "0x0467f3b464ff75ac91f6ed8a4139fc6e38256efb",
     "name": "Grant 1781 Cursed Mining",
     "source": "https://gitcoin.co/grants/1781/cursed-mining"
   },
   {
-    "tags": "31-Gitcoin Grants:Grant",
+    "tags": "31-Gitcoin:Grants",
     "address": "0x046b8b30767592487badb59e43418e3f58f46b26",
     "name": "Grant 1828 Australian Digital Security",
     "source": "https://gitcoin.co/grants/1828/australian-digital-security"

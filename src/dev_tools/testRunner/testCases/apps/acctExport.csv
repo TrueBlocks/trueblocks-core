@@ -70,13 +70,13 @@ on,both,fast,monitors,apps/acctExport,freshen_apps_61-100,y,addrs = 0xbb7b8287f3
 off,both,fast,export,apps/acctExport,reversed_reversed,y,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & fmt = json & accounting & ether & reversed & first_block = 8854723 & last_block = 8856511 & max_records = 10000 & verbose = 5
 off,both,fast,export,apps/acctExport,reversed_not_reversed,y,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & fmt = json & accounting & ether & first_block = 8854723 & last_block = 8856511 & verbose = 5
 
-on,both,fast,export,apps/acctExport,accounting_invalid1,y,addrs = 0x00a3819199113fc6a6e6ba1298afde7377e2009b & max_records = 30 & fmt = json & summarize_by = tx
-on,both,fast,export,apps/acctExport,accounting_invalid2,y,addrs = 0x00a3819199113fc6a6e6ba1298afde7377e2009b & max_records = 30 & accounting & fmt = json & summarize_by = jimp
-on,both,fast,export,apps/acctExport,accounting_by_tx,y,addrs = 0x00a3819199113fc6a6e6ba1298afde7377e2009b & max_records = 30 & accounting & fmt = json & summarize_by = tx
-on,both,fast,export,apps/acctExport,accounting_by_blockly,y,addrs = 0x00a3819199113fc6a6e6ba1298afde7377e2009b & max_records = 30 & accounting & fmt = json & summarize_by = blockly
-on,both,fast,export,apps/acctExport,accounting_by_hourly,y,addrs = 0x00a3819199113fc6a6e6ba1298afde7377e2009b & max_records = 30 & accounting & fmt = json & summarize_by = hourly
-on,both,fast,export,apps/acctExport,accounting_by_daily,y,addrs = 0x00a3819199113fc6a6e6ba1298afde7377e2009b & max_records = 30 & accounting & fmt = json & summarize_by = daily
-on,both,fast,export,apps/acctExport,accounting_by_weekly,y,addrs = 0x00a3819199113fc6a6e6ba1298afde7377e2009b & max_records = 30 & accounting & fmt = json & summarize_by = weekly
-on,both,fast,export,apps/acctExport,accounting_by_monthly,y,addrs = 0x00a3819199113fc6a6e6ba1298afde7377e2009b & max_records = 30 & accounting & fmt = json & summarize_by = monthly
-on,both,fast,export,apps/acctExport,accounting_by_quarterly,y,addrs = 0x00a3819199113fc6a6e6ba1298afde7377e2009b & max_records = 30 & accounting & fmt = json & summarize_by = quarterly
-on,both,fast,export,apps/acctExport,accounting_by_annually,y,addrs = 0x00a3819199113fc6a6e6ba1298afde7377e2009b & max_records = 30 & accounting & fmt = json & summarize_by = yearly
+off,both,fast,export,apps/acctExport,accounting_invalid1,y,addrs = 0x00a3819199113fc6a6e6ba1298afde7377e2009b & max_records = 30 & fmt = json & summarize_by = tx
+off,both,fast,export,apps/acctExport,accounting_invalid2,y,addrs = 0x00a3819199113fc6a6e6ba1298afde7377e2009b & max_records = 30 & accounting & fmt = json & summarize_by = jimp
+off,both,fast,export,apps/acctExport,accounting_by_tx,y,addrs = 0x00a3819199113fc6a6e6ba1298afde7377e2009b & max_records = 30 & accounting & fmt = json & summarize_by = tx
+off,both,fast,export,apps/acctExport,accounting_by_blockly,y,addrs = 0x00a3819199113fc6a6e6ba1298afde7377e2009b & max_records = 30 & accounting & fmt = json & summarize_by = blockly
+off,both,fast,export,apps/acctExport,accounting_by_hourly,y,addrs = 0x00a3819199113fc6a6e6ba1298afde7377e2009b & max_records = 30 & accounting & fmt = json & summarize_by = hourly
+off,both,fast,export,apps/acctExport,accounting_by_daily,y,addrs = 0x00a3819199113fc6a6e6ba1298afde7377e2009b & max_records = 30 & accounting & fmt = json & summarize_by = daily
+off,both,fast,export,apps/acctExport,accounting_by_weekly,y,addrs = 0x00a3819199113fc6a6e6ba1298afde7377e2009b & max_records = 30 & accounting & fmt = json & summarize_by = weekly
+off,both,fast,export,apps/acctExport,accounting_by_monthly,y,addrs = 0x00a3819199113fc6a6e6ba1298afde7377e2009b & max_records = 30 & accounting & fmt = json & summarize_by = monthly
+off,both,fast,export,apps/acctExport,accounting_by_quarterly,y,addrs = 0x00a3819199113fc6a6e6ba1298afde7377e2009b & max_records = 30 & accounting & fmt = json & summarize_by = quarterly
+off,both,fast,export,apps/acctExport,accounting_by_annually,y,addrs = 0x00a3819199113fc6a6e6ba1298afde7377e2009b & max_records = 30 & accounting & fmt = json & summarize_by = yearly

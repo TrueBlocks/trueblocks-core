@@ -54,6 +54,7 @@ class CReconciliation : public CBaseNode {
     bigint_t amountNet;
     bigint_t spotPrice;
     string_q reconciliationType;
+    string_q reconTrail;
     bool reconciled;
 
   public:
@@ -72,16 +73,11 @@ class CReconciliation : public CBaseNode {
         timestamp = ts;
     }
     void initForToken(CAccountName& tokenName);
-    bool reconcileEth(bigint_t prevEndBal, blknum_t prevBlock, blknum_t nextBlock, const CTransaction* trans,
+    bool reconcileEth(const CReconciliation& prevRecon, blknum_t nextBlock, const CTransaction* trans,
                       const address_t& acctFor);
     bool reconcileUsingTraces(bigint_t prevEndBal, const CTransaction* trans, const address_t& acctFor);
-    bigint_t totalIn(void) const {
-        return amountIn + internalIn + selfDestructIn + minerBaseRewardIn + minerNephewRewardIn + minerTxFeeIn +
-               minerUncleRewardIn + prefundIn;
-    }
-    bigint_t totalOut(void) const {
-        return amountOut + internalOut + selfDestructOut;
-    }
+    bigint_t totalIn(void) const;
+    bigint_t totalOut(void) const;
     CReconciliation& operator+=(const CReconciliation& r);
     // EXISTING_CODE
     bool operator==(const CReconciliation& it) const;
@@ -163,6 +159,7 @@ inline void CReconciliation::initialize(void) {
     amountNet = 0;
     spotPrice = int64_t(-1);
     reconciliationType = "";
+    reconTrail = "";
     reconciled = false;
 
     // EXISTING_CODE
@@ -202,6 +199,7 @@ inline void CReconciliation::duplicate(const CReconciliation& re) {
     amountNet = re.amountNet;
     spotPrice = re.spotPrice;
     reconciliationType = re.reconciliationType;
+    reconTrail = re.reconTrail;
     reconciled = re.reconciled;
 
     // EXISTING_CODE

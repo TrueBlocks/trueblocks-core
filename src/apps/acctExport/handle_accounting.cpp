@@ -149,8 +149,7 @@ bool COptions::process_reconciliation(CTraverser* trav, blknum_t next) {
     }
 
     CReconciliation eth(trav->trans.blockNumber, trav->trans.transactionIndex, trav->trans.timestamp);
-    eth.reconcileEth(prevStatements[accountedFor + "_eth"].endBal, prevStatements[accountedFor + "_eth"].blockNumber,
-                     next, &trav->trans, accountedFor);
+    eth.reconcileEth(prevStatements[accountedFor + "_eth"], next, &trav->trans, accountedFor);
     trav->trans.statements.push_back(eth);
     prevStatements[accountedFor + "_eth"] = eth;
     LOG4("pushed: ", eth.Format(STR_DEBUG));

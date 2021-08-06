@@ -140,6 +140,7 @@
           "amountNet": "",
           "spotPrice": "-1",
           "reconciliationType": "regular",
+          "reconTrail": "",
           "reconciled": true,
           "totalIn": "",
           "totalOut": ""
@@ -173,6 +174,7 @@
           "amountNet": "9.700000000000000000",
           "spotPrice": "-1",
           "reconciliationType": "",
+          "reconTrail": "",
           "reconciled": true,
           "totalIn": "9.700000000000000000",
           "totalOut": ""
@@ -269,9 +271,10 @@
           "amountNet": "-0.001188918000000000",
           "spotPrice": "-1",
           "reconciliationType": "regular",
+          "reconTrail": "",
           "reconciled": true,
           "totalIn": "",
-          "totalOut": ""
+          "totalOut": "0.001188918000000000"
         }
       ],
       "gasCost": 1188918000000000,
@@ -422,9 +425,10 @@
           "amountNet": "-0.001922570000000000",
           "spotPrice": "-1",
           "reconciliationType": "regular",
+          "reconTrail": "",
           "reconciled": true,
           "totalIn": "",
-          "totalOut": ""
+          "totalOut": "0.001922570000000000"
         },
         {
           "blockNumber": 10279310,
@@ -455,6 +459,7 @@
           "amountNet": "-5.0000000",
           "spotPrice": "-1",
           "reconciliationType": "",
+          "reconTrail": "",
           "reconciled": true,
           "totalIn": "",
           "totalOut": "5.0000000"
@@ -608,6 +613,7 @@
           "amountNet": "",
           "spotPrice": "-1",
           "reconciliationType": "regular",
+          "reconTrail": "",
           "reconciled": true,
           "totalIn": "",
           "totalOut": ""
@@ -641,6 +647,7 @@
           "amountNet": "4.750000000000000000",
           "spotPrice": "-1",
           "reconciliationType": "",
+          "reconTrail": "",
           "reconciled": true,
           "totalIn": "4.750000000000000000",
           "totalOut": ""
@@ -823,6 +830,7 @@
           "amountNet": "0.038000000000000000",
           "spotPrice": "-1",
           "reconciliationType": "by-trace",
+          "reconTrail": "|endBalDiff",
           "reconciled": true,
           "totalIn": "0.038000000000000000",
           "totalOut": ""
@@ -1776,6 +1784,7 @@
           "amountNet": "",
           "spotPrice": "-1",
           "reconciliationType": "regular",
+          "reconTrail": "",
           "reconciled": true,
           "totalIn": "",
           "totalOut": ""
@@ -1809,6 +1818,7 @@
           "amountNet": "0.950000000000000000",
           "spotPrice": "-1",
           "reconciliationType": "",
+          "reconTrail": "",
           "reconciled": true,
           "totalIn": "0.950000000000000000",
           "totalOut": ""
@@ -2522,6 +2532,7 @@
           "amountNet": "",
           "spotPrice": "-1",
           "reconciliationType": "regular",
+          "reconTrail": "",
           "reconciled": true,
           "totalIn": "",
           "totalOut": ""
@@ -2555,6 +2566,7 @@
           "amountNet": "28.500000000000000000",
           "spotPrice": "-1",
           "reconciliationType": "",
+          "reconTrail": "",
           "reconciled": true,
           "totalIn": "28.500000000000000000",
           "totalOut": ""
@@ -2708,6 +2720,7 @@
           "amountNet": "",
           "spotPrice": "-1",
           "reconciliationType": "regular",
+          "reconTrail": "",
           "reconciled": true,
           "totalIn": "",
           "totalOut": ""
@@ -2741,6 +2754,7 @@
           "amountNet": "4.750000000000000000",
           "spotPrice": "-1",
           "reconciliationType": "",
+          "reconTrail": "",
           "reconciled": true,
           "totalIn": "4.750000000000000000",
           "totalOut": ""
@@ -3454,6 +3468,7 @@
           "amountNet": "",
           "spotPrice": "-1",
           "reconciliationType": "regular",
+          "reconTrail": "",
           "reconciled": true,
           "totalIn": "",
           "totalOut": ""
@@ -3487,6 +3502,7 @@
           "amountNet": "5.0000000",
           "spotPrice": "-1",
           "reconciliationType": "",
+          "reconTrail": "",
           "reconciled": true,
           "totalIn": "5.0000000",
           "totalOut": ""
@@ -4480,6 +4496,7 @@
           "amountNet": "",
           "spotPrice": "-1",
           "reconciliationType": "regular",
+          "reconTrail": "",
           "reconciled": true,
           "totalIn": "",
           "totalOut": ""
@@ -4513,6 +4530,7 @@
           "amountNet": "1.900000000000000000",
           "spotPrice": "-1",
           "reconciliationType": "",
+          "reconTrail": "",
           "reconciled": true,
           "totalIn": "1.900000000000000000",
           "totalOut": ""
@@ -5146,6 +5164,7 @@
           "amountNet": "",
           "spotPrice": "-1",
           "reconciliationType": "regular",
+          "reconTrail": "",
           "reconciled": true,
           "totalIn": "",
           "totalOut": ""
@@ -5179,6 +5198,7 @@
           "amountNet": "1.980000000000000000",
           "spotPrice": "-1",
           "reconciliationType": "",
+          "reconTrail": "",
           "reconciled": true,
           "totalIn": "1.980000000000000000",
           "totalOut": ""
@@ -5275,9 +5295,10 @@
           "amountNet": "-0.001739343000000000",
           "spotPrice": "-1",
           "reconciliationType": "prevdiff-partial",
+          "reconTrail": "|endBalDiff|traces:endBalDiff",
           "reconciled": true,
           "totalIn": "",
-          "totalOut": ""
+          "totalOut": "0.001739343000000000"
         },
         {
           "blockNumber": 10290317,
@@ -5308,6 +5329,7 @@
           "amountNet": "-5.0000000",
           "spotPrice": "-1",
           "reconciliationType": "",
+          "reconTrail": "",
           "reconciled": true,
           "totalIn": "",
           "totalOut": "5.0000000"
@@ -5421,9 +5443,10 @@
           "amountNet": "-0.001761265500000000",
           "spotPrice": "-1",
           "reconciliationType": "nextdiff-partial",
+          "reconTrail": "|endBalDiff|traces:endBalDiff",
           "reconciled": true,
           "totalIn": "",
-          "totalOut": ""
+          "totalOut": "0.001761265500000000"
         }
       ],
       "gasCost": 1761265500000000,
@@ -5694,6 +5717,7 @@
           "amountNet": "",
           "spotPrice": "-1",
           "reconciliationType": "regular",
+          "reconTrail": "",
           "reconciled": true,
           "totalIn": "",
           "totalOut": ""
@@ -5727,6 +5751,7 @@
           "amountNet": "0.950000000000000000",
           "spotPrice": "-1",
           "reconciliationType": "",
+          "reconTrail": "",
           "reconciled": true,
           "totalIn": "0.950000000000000000",
           "totalOut": ""
@@ -5823,9 +5848,10 @@
           "amountNet": "-0.001232952000000000",
           "spotPrice": "-1",
           "reconciliationType": "prevdiff-partial",
+          "reconTrail": "|endBalDiff|traces:endBalDiff",
           "reconciled": true,
           "totalIn": "",
-          "totalOut": ""
+          "totalOut": "0.001232952000000000"
         },
         {
           "blockNumber": 10292014,
@@ -5856,6 +5882,7 @@
           "amountNet": "-5.0000000",
           "spotPrice": "-1",
           "reconciliationType": "",
+          "reconTrail": "",
           "reconciled": true,
           "totalIn": "",
           "totalOut": "5.0000000"
@@ -6009,9 +6036,10 @@
           "amountNet": "-0.001920520000000000",
           "spotPrice": "-1",
           "reconciliationType": "nextdiff-partial",
+          "reconTrail": "|endBalDiff|traces:endBalDiff",
           "reconciled": true,
           "totalIn": "",
-          "totalOut": ""
+          "totalOut": "0.001920520000000000"
         }
       ],
       "gasCost": 1920520000000000,
@@ -6191,6 +6219,7 @@
           "amountNet": "0.190000000000000000",
           "spotPrice": "-1",
           "reconciliationType": "by-trace",
+          "reconTrail": "|endBalDiff",
           "reconciled": true,
           "totalIn": "0.190000000000000000",
           "totalOut": ""
@@ -6344,6 +6373,7 @@
           "amountNet": "",
           "spotPrice": "-1",
           "reconciliationType": "regular",
+          "reconTrail": "",
           "reconciled": true,
           "totalIn": "",
           "totalOut": ""
@@ -6377,6 +6407,7 @@
           "amountNet": "47.500000000000000000",
           "spotPrice": "-1",
           "reconciliationType": "",
+          "reconTrail": "",
           "reconciled": true,
           "totalIn": "47.500000000000000000",
           "totalOut": ""
@@ -6473,9 +6504,10 @@
           "amountNet": "-0.001321460340000000",
           "spotPrice": "-1",
           "reconciliationType": "prevdiff-partial",
+          "reconTrail": "|endBalDiff|traces:endBalDiff",
           "reconciled": true,
           "totalIn": "",
-          "totalOut": ""
+          "totalOut": "0.001321460340000000"
         },
         {
           "blockNumber": 10293554,
@@ -6506,6 +6538,7 @@
           "amountNet": "-5.0000000",
           "spotPrice": "-1",
           "reconciliationType": "",
+          "reconTrail": "",
           "reconciled": true,
           "totalIn": "",
           "totalOut": "5.0000000"
@@ -6659,9 +6692,10 @@
           "amountNet": "-0.002058385900000000",
           "spotPrice": "-1",
           "reconciliationType": "nextdiff-partial",
+          "reconTrail": "|endBalDiff|traces:endBalDiff",
           "reconciled": true,
           "totalIn": "",
-          "totalOut": ""
+          "totalOut": "0.002058385900000000"
         }
       ],
       "gasCost": 2058385900000000,
@@ -8094,6 +8128,7 @@
           "amountNet": "",
           "spotPrice": "-1",
           "reconciliationType": "regular",
+          "reconTrail": "",
           "reconciled": true,
           "totalIn": "",
           "totalOut": ""
@@ -8127,6 +8162,7 @@
           "amountNet": "9.500000000000000000",
           "spotPrice": "-1",
           "reconciliationType": "",
+          "reconTrail": "",
           "reconciled": true,
           "totalIn": "9.500000000000000000",
           "totalOut": ""
@@ -8256,8 +8292,8 @@
     "client": "0xdeadbeef",
     "namedFrom": {
       "0x00de4b13153673bcae2616b67bf822500d325fc3": {
-        "tags": "31-Gitcoin Grants:Grant",
-        "name": "Grant 0472 Example Public Health Project",
+        "tags": "31-Gitcoin:Admin",
+        "name": "Gitcoin Maintainer",
         "count": 1
       },
       "0x054993ab0f2b1acc0fdc65405ee203b4271bebe6": {
@@ -8301,12 +8337,12 @@
         "count": 1
       },
       "0x62051bfd3a4f7039a849142e6e5ea172cbda5949": {
-        "tags": "31-Gitcoin Grants:Grant",
+        "tags": "31-Gitcoin:Grants",
         "name": "Grant 0467 Gitcoin Developer Grant - Walid Mujahid وليد مجاهد",
         "count": 1
       },
       "0x6f620ba7907a3d9a6dda9821eeb4e59b3f69c367": {
-        "tags": "31-Gitcoin Grants:Grant",
+        "tags": "31-Gitcoin:Grants",
         "name": "Grant 0864 Dutch Swap: Digital Dutch Auctions for Everyone!",
         "count": 1
       },
@@ -8324,7 +8360,7 @@
     "unNamedFrom": {},
     "namedTo": {
       "0x7d655c57f71464b6f83811c55d84009cd9f5221c": {
-        "tags": "31-Gitcoin Grants:Core",
+        "tags": "31-Gitcoin:Core",
         "name": "GitCoin Grant 6,7,8",
         "is_contract": true,
         "count": 17

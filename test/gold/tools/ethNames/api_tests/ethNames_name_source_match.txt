@@ -137,7 +137,7 @@
     },
     {
       "deleted": false,
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x006087d6ac20840c23ba298512db454a05c19b10",
       "name": "Grant 0743 #fittogetherdao (like Pooltogether for Fitness and Wellbeing)",
       "symbol": "",
@@ -197,7 +197,7 @@
     },
     {
       "deleted": false,
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x00e4f5f746242e4d115bd65aac7c08fe5d38fb21",
       "name": "Grant 1839 the Etherchest Ecosystem",
       "symbol": "",
@@ -362,7 +362,7 @@
     },
     {
       "deleted": false,
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x02cb3c150bedca124d0ae8cccb72fefbe705c953",
       "name": "Grant 0782 Ethereum Cat Herders Community Fund",
       "symbol": "",
@@ -617,7 +617,7 @@
     },
     {
       "deleted": false,
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x0559a413a3ab19508a144aeebc474eb14c5e76ce",
       "name": "Grant 0386 Wolfofethereum.eth",
       "symbol": "",
@@ -647,7 +647,7 @@
     },
     {
       "deleted": false,
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x057a3d5383fd9277f3ab4f98e319d7d9a9a9e198",
       "name": "Grant 0292 Will Brealey - Ethereum Writer",
       "symbol": "",
@@ -722,7 +722,7 @@
     },
     {
       "deleted": false,
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x068792edecad424d42f0f45de7f693ca33526cf1",
       "name": "Grant 0075 Ethereum Dev Fund Working Group",
       "symbol": "",
@@ -902,7 +902,7 @@
     },
     {
       "deleted": false,
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x08497b07916280da27b43d28a0d3dfa7d6676b58",
       "name": "Grant 0122 Austin Griffith Ethereum Research and Development",
       "symbol": "",
@@ -1337,7 +1337,7 @@
     },
     {
       "deleted": false,
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x0df05adac0159e215111696339ad4998e5871b3d",
       "name": "Grant 0576 BlockScout.com for Ethereum Mainnet hosting",
       "symbol": "",
@@ -1607,7 +1607,7 @@
     },
     {
       "deleted": false,
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x1266f928b7964173434d3feb6da2554b141920b8",
       "name": "Grant 0723 EtherDNA",
       "symbol": "",
@@ -1877,7 +1877,7 @@
     },
     {
       "deleted": false,
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x165107ce980edff38065261326354c3d6cd809e6",
       "name": "Grant 0709 Adoption and Dissemination of Ethereum Technology",
       "symbol": "",
@@ -2207,7 +2207,7 @@
     },
     {
       "deleted": false,
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x1aa587c2288750173cc6af7c92bad7209904e496",
       "name": "Grant 0150 Mccardi - Ethereum Egift Cards",
       "symbol": "",
@@ -2552,7 +2552,7 @@
     },
     {
       "deleted": false,
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x1fa313ba8c968d00bc109404bd08e963eae3f1dd",
       "name": "Grant 0433 Edcon (community Ethereum Development Conference)",
       "symbol": "",
@@ -2612,7 +2612,7 @@
     },
     {
       "deleted": false,
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x2001909016b05f7eff9af6e25d806f364074628a",
       "name": "Grant 1719 the Ethereum Open Desktop Environment",
       "symbol": "",
@@ -2957,7 +2957,7 @@
     },
     {
       "deleted": false,
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x2489404ede77ec853c3345424bb919c9031856e2",
       "name": "Grant 0079 Lodestar -ethereum 2.0 Client",
       "symbol": "",

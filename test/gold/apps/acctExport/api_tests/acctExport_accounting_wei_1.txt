@@ -53,6 +53,7 @@
           "amountNet": "4200000000000000000000",
           "spotPrice": "-1",
           "reconciliationType": "by-trace",
+          "reconTrail": "|endBalDiff",
           "reconciled": true,
           "totalIn": "4200000000000000000000",
           "totalOut": ""
@@ -122,9 +123,10 @@
           "amountNet": "-4199925320679510922664",
           "spotPrice": "-1",
           "reconciliationType": "regular",
+          "reconTrail": "",
           "reconciled": true,
           "totalIn": "",
-          "totalOut": "4199900000000000000000"
+          "totalOut": "4199925320679510922664"
         }
       ],
       "gasCost": 25320679510922664,
@@ -188,9 +190,10 @@
           "amountNet": "-74679320489077336",
           "spotPrice": "-1",
           "reconciliationType": "regular",
+          "reconTrail": "",
           "reconciled": true,
           "totalIn": "",
-          "totalOut": "74259320489077336"
+          "totalOut": "74679320489077336"
         }
       ],
       "gasCost": 420000000000000,

@@ -2,7 +2,7 @@
   "data": [
     {
       "deleted": false,
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x133d705a9696882228f6bb7fe008745aef7cdc93",
       "name": "Grant 0160 @antiprosynth | Antiprosynthesis.eth ⟠ Twitter Account Activity",
       "symbol": "",
@@ -92,7 +92,7 @@
     },
     {
       "deleted": false,
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x224cf0b963c59b95623b3dd6ce07b4ce40f7b134",
       "name": "Grant 0522 Support the 🌟 Community Currency Alliance 🌟 Enabling An Inclusive Currency Ecosystem",
       "symbol": "",
