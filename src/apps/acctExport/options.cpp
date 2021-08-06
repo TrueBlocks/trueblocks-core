@@ -21,6 +21,7 @@ static const COption params[] = {
     COption("logs", "l", "", OPT_SWITCH, "export logs instead of transaction list"),
     COption("traces", "t", "", OPT_SWITCH, "export traces instead of transaction list"),
     COption("accounting", "C", "", OPT_SWITCH, "export accounting records instead of transaction list"),
+    COption("statements", "A", "", OPT_SWITCH, "for use with --accounting option only, export only reconciliation statements"),  // NOLINT
     COption("articulate", "a", "", OPT_SWITCH, "articulate transactions, traces, logs, and outputs"),
     COption("cache_txs", "i", "", OPT_SWITCH, "write transactions to the cache (see notes)"),
     COption("cache_traces", "R", "", OPT_SWITCH, "write traces to the cache (see notes)"),
@@ -84,6 +85,9 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-C" || arg == "--accounting") {
             accounting = true;
+
+        } else if (arg == "-A" || arg == "--statements") {
+            statements = true;
 
         } else if (arg == "-a" || arg == "--articulate") {
             articulate = true;
@@ -206,6 +210,7 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("logs", logs);
     LOG_TEST_BOOL("traces", traces);
     LOG_TEST_BOOL("accounting", accounting);
+    LOG_TEST_BOOL("statements", statements);
     LOG_TEST_BOOL("articulate", articulate);
     LOG_TEST_BOOL("cache_txs", cache_txs);
     LOG_TEST_BOOL("cache_traces", cache_traces);
@@ -428,6 +433,7 @@ void COptions::Init(void) {
     logs = false;
     traces = false;
     accounting = false;
+    statements = false;
     articulate = false;
     // clang-format off
     cache_txs = getGlobalConfig("acctExport")->getConfigBool("settings", "cache_txs", false);
@@ -542,6 +548,8 @@ bool COptions::setDisplayFormatting(void) {
             format = getGlobalConfig("acctExport")->getConfigStr("display", "statement", STR_DISPLAY_RECONCILIATION);
             expContext().fmtMap["reconciliation_fmt"] = cleanFmt(format);
             manageFields("CReconciliation:" + format);
+            if (statements)
+                expContext().fmtMap["header"] = noHeader ? "" : cleanFmt(format);
 
             format = getGlobalConfig("acctExport")->getConfigStr("display", "trace", STR_DISPLAY_TRACE);
             expContext().fmtMap["trace_fmt"] = cleanFmt(format);
@@ -607,6 +615,13 @@ bool COptions::setDisplayFormatting(void) {
                 setRpcProvider(balanceProvider);
                 if (!nodeHasBalances(false))
                     return usage("balanceServer is set, but it does not have historical state.");
+            }
+            if (statements) {
+                string_q format =
+                    getGlobalConfig("acctExport")->getConfigStr("display", "statement", STR_DISPLAY_RECONCILIATION);
+                expContext().fmtMap["header"] = noHeader ? "" : cleanFmt(format);
+                expContext().fmtMap["reconciliation_fmt"] = cleanFmt(format);
+                manageFields("CReconciliation:" + format);
             }
         }
 

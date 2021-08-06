@@ -751,7 +751,39 @@ ostream& operator<<(ostream& os, const CReconciliation& it) {
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_RECONCILIATION = "";
+const char* STR_DISPLAY_RECONCILIATION =
+    "[{ASSETADDR}]\t"
+    "[{ASSETSYMBOL}]\t"
+    "[{DECIMALS}]\t"
+    "[{BLOCKNUMBER}]\t"
+    "[{TRANSACTIONINDEX}]\t"
+    "[{TIMESTAMP}]\t"
+    "[{PREVBLK}]\t"
+    "[{PREVBLKBAL}]\t"
+    "[{BEGBAL}]\t"
+    "[{AMOUNTIN}]\t"
+    "[{INTERNALIN}]\t"
+    "[{SELFDESTRUCTIN}]\t"
+    "[{MINERBASEREWARDIN}]\t"
+    "[{MINERNEPHEWREWARDIN}]\t"
+    "[{MINERTXFEEIN}]\t"
+    "[{MINERUNCLEREWARDIN}]\t"
+    "[{PREFUNDIN}]\t"
+    "[{TOTALIN}]\t"
+    "[{AMOUNTOUT}]\t"
+    "[{INTERNALOUT}]\t"
+    "[{SELFDESTRUCTOUT}]\t"
+    "[{GASCOSTOUT}]\t"
+    "[{TOTALOUT}]\t"
+    "[{AMOUNTNET}]\t"
+    "[{ENDBAL}]\t"
+    "[{BEGBALDIFF}]\t"
+    "[{ENDBALCALC}]\t"
+    "[{ENDBALDIFF}]\t"
+    "[{RECONCILED}]\t"
+    "[{SPOTPRICE}]\t"
+    "[{RECONCILIATIONTYPE}]\t"
+    "[{RECONTRAIL}]";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

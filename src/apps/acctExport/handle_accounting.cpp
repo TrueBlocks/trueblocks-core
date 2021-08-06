@@ -45,9 +45,17 @@ bool acct_Display(CTraverser* trav, void* data) {
         }
 
         if (opt->summarize_by.empty()) {
-            cout << ((isJson() && !opt->firstOut) ? ", " : "");
-            cout << trav->trans;
-            opt->firstOut = false;
+            if (opt->statements) {
+                for (auto recon : trav->trans.statements) {
+                    cout << ((isJson() && !opt->firstOut) ? ", " : "");
+                    cout << recon.Format() << endl;
+                    opt->firstOut = false;
+                }
+            } else {
+                cout << ((isJson() && !opt->firstOut) ? ", " : "");
+                cout << trav->trans;
+                opt->firstOut = false;
+            }
 
         } else {
             trav->trans.from = "0xSummary";
