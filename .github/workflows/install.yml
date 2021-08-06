@@ -1,5 +1,5 @@
 name: GitHub Actions Demo
-on: [pull_request, push]
+on: [pull_request, push, workflow_dispatch]
 jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
@@ -22,8 +22,11 @@ jobs:
           make -j 4
       - name: Run SSH tunnel and tests
         run: |
-          ssh -i ~/.ssh/github_action -o StrictHostKeyChecking=no -N -v ${{secrets.SSH_COMMAND}} -p 36963 -L 36963:localhost:8545 >/dev/null 2>err.log </dev/null &
+          ssh -i ~/.ssh/github_action -o StrictHostKeyChecking=no -N -v ${{secrets.SSH_COMMAND}} -L 36963:localhost:36963 >/dev/null 2>err.log </dev/null &
           sleep 3
+          echo "Checking tunnel... (if the exit code is other than 0, then the tunnel is down)"
+          curl -s -H 'Content-Type: application/json' -X POST --data '{"jsonrpc":"2.0","method":"eth_getBlockByNumber","params":["latest", false],"id":1}' http://localhost:36963 > /dev/null
+          echo "Tunnel OK"
           mkdir -p /home/runner/.local/share/trueblocks
           touch /home/runner/.local/share/trueblocks/trueBlocks.toml
           sed -i 's/8545/36963/' /home/runner/.local/share/trueblocks/trueBlocks.toml
