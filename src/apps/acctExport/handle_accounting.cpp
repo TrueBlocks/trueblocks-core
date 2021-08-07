@@ -192,12 +192,9 @@ bool COptions::process_reconciliation(CTraverser* trav, blknum_t next) {
             } else {
                 tokStatement.amountIn = (tokStatement.endBal - tokStatement.begBal);
             }
-            tokStatement.amountNet = tokStatement.amountIn - tokStatement.amountOut;
-            tokStatement.reconciled = true;
             tokStatement.reconciliationType = "";
-            if (tokStatement.amountNet != 0)
+            if (tokStatement.amountNet() != 0)
                 trav->trans.statements.push_back(tokStatement);
-
             prevStatements[psKey] = tokStatement;
         }
     }
@@ -206,7 +203,7 @@ bool COptions::process_reconciliation(CTraverser* trav, blknum_t next) {
     for (auto recon : trav->trans.statements) {
         if (!allReconciled)
             break;
-        allReconciled = recon.reconciled;
+        allReconciled = recon.reconciled();
     }
 
     if (allReconciled) {

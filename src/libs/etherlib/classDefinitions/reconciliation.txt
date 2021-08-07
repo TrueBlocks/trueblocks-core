@@ -9,32 +9,29 @@ fields = blknum blockNumber|\
         blknum prevBlk (nowrite)|\
         int256 prevBlkBal (nowrite)|\
         int256 begBal|\
-        int256 begBalDiff|\
+        int256 endBal|\
         int256 amountIn|\
-        int256 amountOut|\
         int256 internalIn|\
-        int256 internalOut|\
         int256 selfDestructIn|\
-        int256 selfDestructOut|\
         int256 minerBaseRewardIn|\
         int256 minerNephewRewardIn|\
         int256 minerTxFeeIn|\
         int256 minerUncleRewardIn|\
         int256 prefundIn|\
+        int256 amountOut|\
+        int256 internalOut|\
+        int256 selfDestructOut|\
         int256 gasCostOut|\
-        int256 endBal|\
-        int256 endBalCalc|\
-        int256 endBalDiff|\
-        int256 amountNet|\
-        int256 spotPrice=int64_t(-1)|\
         string reconciliationType|\
-        string reconTrail (nowrite)|\
-        bool reconciled
-extra_fields = int256 totalIn|\
-        int256 totalOut
+        int256 spotPrice=int64_t(-1)
 includes = utillib.h|abi.h
 cpp_includes = etherlib.h
 serializable = true
 equals = ((blockNumber == it.blockNumber) && (assetAddr == it.assetAddr))
-display_str = assetAddr,assetSymbol,decimals,blockNumber,transactionIndex,timestamp,prevBlk,prevBlkBal,begBal,amountIn,internalIn,selfDestructIn,minerBaseRewardIn,minerNephewRewardIn,minerTxFeeIn,minerUncleRewardIn,prefundIn,totalIn,amountOut,internalOut,selfDestructOut,gasCostOut,totalOut,amountNet,endBal,begBalDiff,endBalCalc,endBalDiff,reconciled,spotPrice,reconciliationType,reconTrail
+display_str = assetAddr,assetSymbol,decimals,blockNumber,transactionIndex,timestamp,prevBlk,prevBlkBal,begBal,amountIn,internalIn,selfDestructIn,minerBaseRewardIn,minerNephewRewardIn,minerTxFeeIn,minerUncleRewardIn,prefundIn,totalIn,amountOut,internalOut,selfDestructOut,gasCostOut,totalOut,totalOutLessGas,amountNet,endBal,begBalDiff,endBalCalc,endBalDiff,reconciled,spotPrice,reconciliationType,reconTrail
 js = true
+
+#        CLineItem
+#                int type; [AMOUNT|INTERNAL|SELFDESTRUCT|MINERBASE|
+# MINERNEPHEW|MINERTX|MINERUNCLE|PREFUND|GASCOST]
+#                int256 amount;

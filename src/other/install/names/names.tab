@@ -2670,6 +2670,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 30-Contracts	0x41f8d14c9475444f30a80431c68cf24dc9a8369a	Tokenlon		0xTracker			false	false	false	true	false	false
 90-Individuals:Gitcoin Grants	0x41ff527665a0d3d2721d0e42764cef3ec93a0149	dvreed		Gitcoin Website			false	false	false	false	false	false
 50-Tokens:ERC20	0x420017d3753dd4c05fdbf6ce76f4ed59983bbea0	HokkaiduX Inu	HOKKX	On chain	18		false	false	false	true	true	false
+50-Tokens:ERC20	0x42069abfe407c60cf4ae4112bedead391dba1cdb	CryptoDickbutts S3	CDB	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x420ab548b18911717ed7c4ccbf46371ea758458c	NOODLE.Finance	NOODLE	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x4212fea9fec90236ecc51e41e2096b16ceb84555	Six Domain Asset	SDA	On chain	18	SixDomainChain SDChain is a decentralized public blockchain ecosystem that integrates international standards of IoT Six-Domain Model and reference architecture standards for distributed blockchain.	false	false	false	true	true	false
 30-Contracts:Humanity DAO	0x421507debcc6e26cdb8d30f46dfe6405157e0368	comex_vip		https://www.humanitydao.org/humans			false	false	false	false	false	false
