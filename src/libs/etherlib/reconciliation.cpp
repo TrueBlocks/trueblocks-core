@@ -1177,7 +1177,7 @@ bigint_t CReconciliation::totalOutLessGas(void) const {
 
 //---------------------------------------------------------------------------
 bigint_t CReconciliation::begBalDiff(void) const {
-    return blockNumber == 0 ? 0 : begBal - prevBlkBal;
+    return 0;  // blockNumber == 0 ? 0 : begBal - prevBlkBal;
 }
 
 //---------------------------------------------------------------------------
