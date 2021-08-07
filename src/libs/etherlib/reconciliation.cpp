@@ -787,16 +787,144 @@ const char* STR_DISPLAY_RECONCILIATION =
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
+//-----------------------------------------------------------------------
+static string_q wei_2_Ether_local(const wei_t& weiIn, uint64_t decimals) {
+    string_q ret = str_2_Ether(bnu_2_Str(weiIn), decimals);
+    if (contains(ret, "."))
+        ret = trimTrailing(ret, '0');
+    return trimTrailing(ret, '.');
+}
+
+//--------------------------------------------------------------------------------
+string_q wei_2_Str(const wei_t& weiIn) {
+    return bnu_2_Str(weiIn);
+}
+
+//-----------------------------------------------------------------------
+string_q wei_2_Ether(const wei_t& weiIn, uint64_t decimals) {
+    return str_2_Ether(bnu_2_Str(weiIn), decimals);
+}
+
+//--------------------------------------------------------------------------------
+string_q bni_2_Str(const bigint_t& num) {
+    return (num.isNegative() ? string_q("-") : "") + bnu_2_Str(num.getMagnitude());
+}
+
 //---------------------------------------------------------------------------
-void CReconciliation::initForToken(CAccountName& tokenName) {
-    assetAddr = tokenName.address;
-    ASSERT(!assetAddr.empty());
-    assetSymbol = tokenName.symbol;
-    if (assetSymbol.empty())
-        assetSymbol = getTokenSymbol(tokenName.address, blockNumber);
-    if (assetSymbol.empty())
-        assetSymbol = tokenName.address.substr(0, 4);
-    decimals = tokenName.decimals != 0 ? tokenName.decimals : 18;
+string_q bni_2_Ether(const bigint_t& num, uint64_t decimals) {
+    if (num == 0)
+        return "";
+
+    bigint_t n = num;
+    bool negative = false;
+    if (n < 0) {
+        negative = true;
+        n = n * -1;
+    }
+
+    static uint64_t round = NOPOS;
+    if (round == NOPOS) {
+        round = getGlobalConfig("acctExport")->getConfigInt("settings", "ether_rounding", 18);
+    }
+    string_q ret = wei_2_Ether_local(str_2_Wei(bni_2_Str(n)), decimals);
+    CStringArray parts;
+    explode(parts, ret, '.');
+    ret = parts[0] + ".";
+    if (parts.size() == 1)
+        return (negative ? "-" : "") + ret + "0000000";
+    if (parts[1].length() >= round)
+        return (negative ? "-" : "") + ret + parts[1].substr(0, round);
+    return (negative ? "-" : "") + ret + parts[1] + string_q(round - parts[1].length(), '0');
+}
+
+//---------------------------------------------------------------------------
+string_q bni_2_Dollars(const timestamp_t& ts, const bigint_t& numIn, uint64_t decimals) {
+    if (numIn == 0)
+        return "";
+    bigint_t n = numIn;
+    bool negative = false;
+    if (n < 0) {
+        negative = true;
+        n = n * -1;
+    }
+    return (negative ? "-" : "") + wei_2_Dollars(ts, str_2_Wei(bni_2_Str(n)), decimals);
+}
+
+//--------------------------------------------------------------------------------
+string_q wei_2_Export(const blknum_t& bn, const wei_t& weiIn, uint64_t decimals) {
+    string_q ret;
+    if (weiIn != 0) {
+        if (expContext().asEther) {
+            ret = wei_2_Ether_local(weiIn, decimals);
+        } else if (expContext().asDollars) {
+            static map<blknum_t, timestamp_t> timestampMap;
+            if (timestampMap[bn] == (timestamp_t)0) {
+                CBlock blk;
+                getBlock_light(blk, bn);
+                timestampMap[bn] = blk.timestamp;
+            }
+            ret = wei_2_Dollars(timestampMap[bn], weiIn, decimals);
+        } else {
+            ret = wei_2_Str(weiIn);
+        }
+    }
+    return "\"" + ret + "\"";
+}
+
+//---------------------------------------------------------------------------
+string_q bni_2_Export(const timestamp_t& ts, const bigint_t& numIn, uint64_t decimals) {
+    if (numIn == 0)
+        return "\"\"";
+    if (expContext().asEther) {
+        return "\"" + bni_2_Ether(numIn, decimals) + "\"";
+    } else if (expContext().asDollars) {
+        return "\"" + bni_2_Dollars(ts, numIn, decimals) + "\"";
+    } else {
+        return "\"" + bni_2_Str(numIn) + "\"";
+    }
+}
+
+//--------------------------------------------------------------
+CReconciliation operator+(const CReconciliation& a, const CReconciliation& b) {
+    CReconciliation rec = a;
+    rec.blockNumber = b.blockNumber;            // assign
+    rec.transactionIndex = b.transactionIndex;  // assign
+    rec.timestamp = b.timestamp;                // assign
+    rec.amountIn += b.amountIn;
+    rec.internalIn += b.internalIn;
+    rec.selfDestructIn += b.selfDestructIn;
+    rec.minerBaseRewardIn += b.minerBaseRewardIn;
+    rec.minerNephewRewardIn += b.minerNephewRewardIn;
+    rec.minerTxFeeIn += b.minerTxFeeIn;
+    rec.minerUncleRewardIn += b.minerUncleRewardIn;
+    rec.prefundIn += b.prefundIn;
+    rec.amountOut += b.amountOut;
+    rec.internalOut += b.internalOut;
+    rec.selfDestructOut += b.selfDestructOut;
+    rec.gasCostOut += b.gasCostOut;
+    return rec;
+}
+
+//---------------------------------------------------------------------------
+CReconciliation& CReconciliation::operator+=(const CReconciliation& r) {
+    // We preserve a few things from the destination
+    CReconciliation prev = *this;
+    // We make the addition
+    *this = *this + r;
+    // We reset a few fields in the dest
+    reconciliationType = "summary";
+    prevBlk = prev.prevBlk;
+    prevBlkBal = prev.prevBlkBal;
+    begBal = prev.begBal;
+    begBalDiff = prev.begBalDiff;
+    // endBal = endBal;
+
+    amountNet = totalIn() - totalOut();
+    endBalCalc = begBal + amountNet;
+    endBalDiff = endBal - endBalCalc;
+    reconciled = (endBalDiff == 0 && begBalDiff == 0);
+
+    return *this;
 }
 
 //-----------------------------------------------------------------------
@@ -808,6 +936,18 @@ bigint_t CReconciliation::totalIn(void) const {
 //-----------------------------------------------------------------------
 bigint_t CReconciliation::totalOut(void) const {
     return amountOut + internalOut + selfDestructOut + gasCostOut;
+}
+
+//---------------------------------------------------------------------------
+void CReconciliation::initForToken(CAccountName& tokenName) {
+    assetAddr = tokenName.address;
+    ASSERT(!assetAddr.empty());
+    assetSymbol = tokenName.symbol;
+    if (assetSymbol.empty())
+        assetSymbol = getTokenSymbol(tokenName.address, blockNumber);
+    if (assetSymbol.empty())
+        assetSymbol = tokenName.address.substr(0, 4);
+    decimals = tokenName.decimals != 0 ? tokenName.decimals : 18;
 }
 
 //-----------------------------------------------------------------------
@@ -999,7 +1139,6 @@ bool CReconciliation::reconcileEth(const CReconciliation& prevRecon, blknum_t ne
     return reconciled;
 }
 
-extern bool loadTraces(CTransaction& trans, blknum_t bn, blknum_t txid, bool useCache, bool skipDdos);
 //---------------------------------------------------------------------------
 bool CReconciliation::reconcileUsingTraces(bigint_t prevEndBal, const CTransaction* trans, const address_t& acctFor) {
     amountOut = amountIn = 0;  // we will store it in the internal values
@@ -1069,144 +1208,6 @@ bool CReconciliation::reconcileUsingTraces(bigint_t prevEndBal, const CTransacti
     }
 
     return reconciled;
-}
-
-//--------------------------------------------------------------
-CReconciliation operator+(const CReconciliation& a, const CReconciliation& b) {
-    CReconciliation rec = a;
-    rec.blockNumber = b.blockNumber;            // assign
-    rec.transactionIndex = b.transactionIndex;  // assign
-    rec.timestamp = b.timestamp;                // assign
-    rec.amountIn += b.amountIn;
-    rec.internalIn += b.internalIn;
-    rec.selfDestructIn += b.selfDestructIn;
-    rec.minerBaseRewardIn += b.minerBaseRewardIn;
-    rec.minerNephewRewardIn += b.minerNephewRewardIn;
-    rec.minerTxFeeIn += b.minerTxFeeIn;
-    rec.minerUncleRewardIn += b.minerUncleRewardIn;
-    rec.prefundIn += b.prefundIn;
-    rec.amountOut += b.amountOut;
-    rec.internalOut += b.internalOut;
-    rec.selfDestructOut += b.selfDestructOut;
-    rec.gasCostOut += b.gasCostOut;
-    return rec;
-}
-
-//---------------------------------------------------------------------------
-CReconciliation& CReconciliation::operator+=(const CReconciliation& r) {
-    // We preserve a few things from the destination
-    CReconciliation prev = *this;
-    // We make the addition
-    *this = *this + r;
-    // We reset a few fields in the dest
-    reconciliationType = "summary";
-    prevBlk = prev.prevBlk;
-    prevBlkBal = prev.prevBlkBal;
-    begBal = prev.begBal;
-    begBalDiff = prev.begBalDiff;
-    // endBal = endBal;
-
-    amountNet = totalIn() - totalOut();
-    endBalCalc = begBal + amountNet;
-    endBalDiff = endBal - endBalCalc;
-    reconciled = (endBalDiff == 0 && begBalDiff == 0);
-
-    return *this;
-}
-
-//-----------------------------------------------------------------------
-static string_q wei_2_Ether_local(const wei_t& weiIn, uint64_t decimals) {
-    string_q ret = str_2_Ether(bnu_2_Str(weiIn), decimals);
-    if (contains(ret, "."))
-        ret = trimTrailing(ret, '0');
-    return trimTrailing(ret, '.');
-}
-
-//--------------------------------------------------------------------------------
-string_q wei_2_Str(const wei_t& weiIn) {
-    return bnu_2_Str(weiIn);
-}
-
-//-----------------------------------------------------------------------
-string_q wei_2_Ether(const wei_t& weiIn, uint64_t decimals) {
-    return str_2_Ether(bnu_2_Str(weiIn), decimals);
-}
-
-//--------------------------------------------------------------------------------
-string_q wei_2_Export(const blknum_t& bn, const wei_t& weiIn, uint64_t decimals) {
-    // Makes finding the dollar value quicker (if we call into this more than once)
-    static map<blknum_t, timestamp_t> timestampMap;
-    if (expContext().asDollars && (timestampMap[bn] == (timestamp_t)0)) {
-        CBlock blk;
-        getBlock_light(blk, bn);
-        timestampMap[bn] = blk.timestamp;
-    }
-    if (weiIn == 0)
-        return "\"\"";
-    if (expContext().asEther) {
-        return "\"" + wei_2_Ether_local(weiIn, decimals) + "\"";
-    } else if (expContext().asDollars) {
-        return "\"" + wei_2_Dollars(timestampMap[bn], weiIn, decimals) + "\"";
-    }
-    return "\"" + wei_2_Str(weiIn) + "\"";
-}
-
-//--------------------------------------------------------------------------------
-string_q bni_2_Str(const bigint_t& num) {
-    return (num.isNegative() ? string("-") : "") + bnu_2_Str(num.getMagnitude());
-}
-
-//---------------------------------------------------------------------------
-string_q bni_2_Ether(const bigint_t& num, uint64_t decimals) {
-    if (num == 0)
-        return "";
-
-    bigint_t n = num;
-    bool negative = false;
-    if (n < 0) {
-        negative = true;
-        n = n * -1;
-    }
-
-    static uint64_t round = NOPOS;
-    if (round == NOPOS) {
-        round = getGlobalConfig("acctExport")->getConfigInt("settings", "ether_rounding", 18);
-    }
-    string_q ret = wei_2_Ether_local(str_2_Wei(bni_2_Str(n)), decimals);
-    CStringArray parts;
-    explode(parts, ret, '.');
-    ret = parts[0] + ".";
-    if (parts.size() == 1)
-        return (negative ? "-" : "") + ret + "0000000";
-    if (parts[1].length() >= round)
-        return (negative ? "-" : "") + ret + parts[1].substr(0, round);
-    return (negative ? "-" : "") + ret + parts[1] + string_q(round - parts[1].length(), '0');
-}
-
-//---------------------------------------------------------------------------
-string_q bni_2_Dollars(const timestamp_t& ts, const bigint_t& numIn, uint64_t decimals) {
-    if (numIn == 0)
-        return "";
-    bigint_t n = numIn;
-    bool negative = false;
-    if (n < 0) {
-        negative = true;
-        n = n * -1;
-    }
-    return (negative ? "-" : "") + wei_2_Dollars(ts, str_2_Wei(bni_2_Str(n)), decimals);
-}
-
-//---------------------------------------------------------------------------
-string_q bni_2_Export(const timestamp_t& ts, const bigint_t& numIn, uint64_t decimals) {
-    if (numIn == 0)
-        return "\"\"";
-    if (expContext().asEther) {
-        return "\"" + bni_2_Ether(numIn, decimals) + "\"";
-    } else if (expContext().asDollars) {
-        return "\"" + bni_2_Dollars(ts, numIn, decimals) + "\"";
-    } else {
-        return "\"" + bni_2_Str(numIn) + "\"";
-    }
 }
 // EXISTING_CODE
 }  // namespace qblocks
