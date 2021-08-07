@@ -213,7 +213,7 @@ TIME ~ CLOCK - : 4-----from --> gasCostOut: "0.001761265500000000"
 TIME ~ CLOCK - : 4-----begBal:     "5.171985758179548557"
 TIME ~ CLOCK - : 4-----endBal:     "5.168485149679548557"
 TIME ~ CLOCK - : 4-----endBalCalc: "5.170224492679548557"
-TIME ~ CLOCK - : 4-----begBalDiff: "0.001739343000000000"
+TIME ~ CLOCK - : 4-----begBalDiff: ""
 TIME ~ CLOCK - : 4-----endBalDiff: "-0.001739343000000000"
 TIME ~ CLOCK - : 4-----reconciled: false
 TIME ~ CLOCK - : 4-----partial:
@@ -275,7 +275,7 @@ TIME ~ CLOCK - : 4-----from --> gasCostOut: "0.001920520000000000"
 TIME ~ CLOCK - : 4-----begBal:     "5.168485149679548557"
 TIME ~ CLOCK - : 4-----endBal:     "5.165331677679548557"
 TIME ~ CLOCK - : 4-----endBalCalc: "5.166564629679548557"
-TIME ~ CLOCK - : 4-----begBalDiff: "0.001232952000000000"
+TIME ~ CLOCK - : 4-----begBalDiff: ""
 TIME ~ CLOCK - : 4-----endBalDiff: "-0.001232952000000000"
 TIME ~ CLOCK - : 4-----reconciled: false
 TIME ~ CLOCK - : 4-----partial:
@@ -356,7 +356,7 @@ TIME ~ CLOCK - : 4-----from --> gasCostOut: "0.002058385900000000"
 TIME ~ CLOCK - : 4-----begBal:     "5.355331677679548557"
 TIME ~ CLOCK - : 4-----endBal:     "5.351951831439548557"
 TIME ~ CLOCK - : 4-----endBalCalc: "5.353273291779548557"
-TIME ~ CLOCK - : 4-----begBalDiff: "0.001321460340000000"
+TIME ~ CLOCK - : 4-----begBalDiff: ""
 TIME ~ CLOCK - : 4-----endBalDiff: "-0.001321460340000000"
 TIME ~ CLOCK - : 4-----reconciled: false
 TIME ~ CLOCK - : 4-----partial:
