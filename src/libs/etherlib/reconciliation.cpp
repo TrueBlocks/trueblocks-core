@@ -339,20 +339,20 @@ bool CReconciliation::Serialize(CArchive& archive) {
     archive >> decimals;
     // archive >> prevBlk;
     // archive >> prevBlkBal;
-    // archive >> begBal;
-    // archive >> endBal;
-    // archive >> amountIn;
-    // archive >> internalIn;
-    // archive >> selfDestructIn;
-    // archive >> minerBaseRewardIn;
-    // archive >> minerNephewRewardIn;
-    // archive >> minerTxFeeIn;
-    // archive >> minerUncleRewardIn;
-    // archive >> prefundIn;
-    // archive >> amountOut;
-    // archive >> internalOut;
-    // archive >> selfDestructOut;
-    // archive >> gasCostOut;
+    archive >> begBal;
+    archive >> endBal;
+    archive >> amountIn;
+    archive >> internalIn;
+    archive >> selfDestructIn;
+    archive >> minerBaseRewardIn;
+    archive >> minerNephewRewardIn;
+    archive >> minerTxFeeIn;
+    archive >> minerUncleRewardIn;
+    archive >> prefundIn;
+    archive >> amountOut;
+    archive >> internalOut;
+    archive >> selfDestructOut;
+    archive >> gasCostOut;
     archive >> reconciliationType;
     archive >> spotPrice;
     // EXISTING_CODE
@@ -376,20 +376,20 @@ bool CReconciliation::SerializeC(CArchive& archive) const {
     archive << decimals;
     // archive << prevBlk;
     // archive << prevBlkBal;
-    // archive << begBal;
-    // archive << endBal;
-    // archive << amountIn;
-    // archive << internalIn;
-    // archive << selfDestructIn;
-    // archive << minerBaseRewardIn;
-    // archive << minerNephewRewardIn;
-    // archive << minerTxFeeIn;
-    // archive << minerUncleRewardIn;
-    // archive << prefundIn;
-    // archive << amountOut;
-    // archive << internalOut;
-    // archive << selfDestructOut;
-    // archive << gasCostOut;
+    archive << begBal;
+    archive << endBal;
+    archive << amountIn;
+    archive << internalIn;
+    archive << selfDestructIn;
+    archive << minerBaseRewardIn;
+    archive << minerNephewRewardIn;
+    archive << minerTxFeeIn;
+    archive << minerUncleRewardIn;
+    archive << prefundIn;
+    archive << amountOut;
+    archive << internalOut;
+    archive << selfDestructOut;
+    archive << gasCostOut;
     archive << reconciliationType;
     archive << spotPrice;
     // EXISTING_CODE
@@ -758,6 +758,7 @@ const char* STR_DISPLAY_RECONCILIATION =
     "[{SELFDESTRUCTOUT}]\t"
     "[{GASCOSTOUT}]\t"
     "[{TOTALOUT}]\t"
+    "[{TOTALOUTLESSGAS}]\t"
     "[{AMOUNTNET}]\t"
     "[{ENDBAL}]\t"
     "[{BEGBALDIFF}]\t"
