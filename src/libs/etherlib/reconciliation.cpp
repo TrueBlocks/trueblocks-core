@@ -912,6 +912,35 @@ void CReconciliation::initForToken(CAccountName& tokenName) {
     decimals = tokenName.decimals != 0 ? tokenName.decimals : 18;
 }
 
+#define LOG_TRIAL_BALANCE(msg)                                                                                         \
+    LOG4("Trial balance: ", msg);                                                                                      \
+    LOG4("  hash: ", trans->hash);                                                                                     \
+    LOG4("  ------------------------------");                                                                          \
+    LOG4("  prevBal:       ", prevBlkBal);                                                                             \
+    LOG4("  begBal:        ", begBal);                                                                                 \
+    LOG4("  begBalDiff:    ", begBalDiff());                                                                           \
+    LOG4("  ------------------------------");                                                                          \
+    LOG4("  amountIn:      ", amountIn);                                                                               \
+    LOG4("  internalIn:    ", internalIn);                                                                             \
+    LOG4("  slfDstrctIn:   ", selfDestructIn);                                                                         \
+    LOG4("  minBRwdIn:     ", minerBaseRewardIn);                                                                      \
+    LOG4("  minNRwdIn:     ", minerNephewRewardIn);                                                                    \
+    LOG4("  minTxFeeIn:    ", minerTxFeeIn);                                                                           \
+    LOG4("  minURwdIn:     ", minerUncleRewardIn);                                                                     \
+    LOG4("  prefundIn:     ", prefundIn);                                                                              \
+    LOG4("    totalIn:     ", totalIn());                                                                              \
+    LOG4("  amountOut:     ", amountOut);                                                                              \
+    LOG4("  internalOut:   ", internalOut);                                                                            \
+    LOG4("  slfDstrctOt:   ", selfDestructOut);                                                                        \
+    LOG4("  gasCostOut:    ", gasCostOut);                                                                             \
+    LOG4("    totalOut:    ", totalOut());                                                                             \
+    LOG4("  amountNet:     ", amountNet());                                                                            \
+    LOG4("  endBal:        ", endBal);                                                                                 \
+    LOG4("  ------------------------------");                                                                          \
+    LOG4("  endBalCalc:    ", endBalCalc());                                                                           \
+    LOG4("  endBalDiff:    ", endBalDiff());                                                                           \
+    LOG4("  regular-recon: ", reconciled() ? "true" : "false");
+
 //-----------------------------------------------------------------------
 bool CReconciliation::reconcileEth(const CReconciliation& prevRecon, blknum_t nextBlock, const CTransaction* trans,
                                    const address_t& acctFor) {
@@ -919,243 +948,121 @@ bool CReconciliation::reconcileEth(const CReconciliation& prevRecon, blknum_t ne
     prevBlk = prevRecon.blockNumber;
     assetSymbol = "ETH";
     assetAddr = acctFor;
-    LOG4(Format("assetSymbol: [{assetSymbol}]"));
-    LOG4(Format("assetAddr:   [{assetAddr}]"));
-    LOG4(Format("prevBlkBal:  [{prevBlkBal}]"));
-    LOG4(Format("prevBlock:   [{prevBlock}]"));
-
-    // Note: In the case of an error, we need to account for gas usage if the account is the transaction's sender
-    //
-    // Note: There are many complications with reconciliation. To start, we do a top level reconciliations
-    // and if it works, we return...
-
-    // Case 1: We try to reconcile from top line (i.e. transaction level) data...
     reconciliationType = "";
 
-    // We need to account for both the case where the account is the sender...
+    begBal = getBalanceAt(acctFor, blockNumber == 0 ? 0 : blockNumber - 1);
+    endBal = getBalanceAt(acctFor, blockNumber);
+
     if (trans->from == acctFor) {
         amountOut = trans->isError ? 0 : trans->value;
         gasCostOut = str_2_BigInt(trans->getValueByName("gasCost"));
-        LOG4(Format("from --> amountOut: [{amountOut}]"));
-        LOG4(Format("from --> gasCostOut: [{gasCostOut}]"));
     }
 
-    // ... and/or the receiver...
     if (trans->to == acctFor) {
         if (trans->from == "0xPrefund") {
             prefundIn = trans->value;
-            LOG4(Format("to --> prefundIn:           [{prefundIn}]"));
         } else if (trans->from == "0xBlockReward") {
             minerBaseRewardIn = trans->value;
             minerNephewRewardIn = trans->extraValue1;
             minerTxFeeIn = trans->extraValue2;
-            LOG4(Format("to --> minerBaseRewardIn:   [{minerBaseRewardIn}]"));
-            LOG4(Format("to --> minerNephewRewardIn: [{minerNephewRewardIn}]"));
-            LOG4(Format("to --> minerTxFeeIn:        [{minerTxFeeIn}]"));
         } else if (trans->from == "0xUncleReward") {
             minerUncleRewardIn = trans->value;
-            LOG4(Format("to --> minerUncleRewardIn:  [{minerTxFeeIn}]"));
         } else {
             amountIn = trans->isError ? 0 : trans->value;
-            LOG4(Format("to --> amountIn:            [{amountIn}]"));
         }
     }
 
-    // Ask the node what it thinks the balances are...
-    begBal = getBalanceAt(acctFor, blockNumber == 0 ? 0 : blockNumber - 1);
-    endBal = getBalanceAt(acctFor, blockNumber);
-    LOG4(Format("begBal:     [{begBal}]"));
-    LOG4(Format("endBal:     [{endBal}]"));
-
-    LOG4(Format("endBalCalc: [{endBalCalc}]"));
-    LOG4(Format("begBalDiff: [{begBalDiff}]"));
-    LOG4(Format("endBalDiff: [{endBalDiff}]"));
-    LOG4(Format("reconciled: [{reconciled}]"));
+    LOG_TRIAL_BALANCE("regular");
     if (reconciled()) {
         reconciliationType = "regular";
-        LOG4(Format("amountNet [{RECONCILIATIONTYPE}]: [{amountNet}]"));
         return true;
     }
 
-    // ...otherwise, we try to recover
-    // Case 4: We need to dig into the traces (Note: this is the first place where we dig into the traces...
-    // doing so without having been forced to causes a huge performance penalty.)
     if (reconcileUsingTraces(prevRecon.endBal, trans, acctFor)) {
         reconciliationType = "by-trace";
-        LOG4(Format("usingTraces:"));
-        LOG4(Format("  begBal:     [{begBal}]"));
-        LOG4(Format("  begBalDiff: [{begBalDiff}]"));
-        LOG4(Format("  endBal:     [{endBal}]"));
-        LOG4(Format("  endBalCalc: [{endBalCalc}]"));
-        LOG4(Format("  endBalDiff: [{endBalDiff}]"));
-        LOG4(Format("  reconciled: [{reconciled}]"));
-        LOG4(Format("  amountNet   [{RECONCILIATIONTYPE}]: [{amountNet}]"));
         return true;
     }
-
-    // Case 2: The blockchain only returns balances PER block. This means that if two value changing transactions
-    // occur in the same block the first will have an incorrect ending balance and the second will have an
-    // incorrect beginning balance. It's a bit more complicated than that, because there could be transactions
-    // in the same block both before and after the current transaction...we handle all cases here.
-
-    /*
-        Possibilities:
-
-        prev blk    cur blk     next blk
-           9          10           12        both different (handled above)
-          10          12           12        previous is different, next is same block
-          12          12           12        both prev and next are same block
-          12          12           13        previous is the same block, next is different
-          12          13           15        both next and previous are different (handled above)
-     */
 
     bool prevDifferent = prevRecon.blockNumber != blockNumber;
     bool nextDifferent = blockNumber != nextBlock;
-
     if (prevDifferent && nextDifferent) {
-        // handled above...
         reconciliationType = "regular";
 
     } else if (prevDifferent) {
-        // The next transaction on this address is from the same block, but the previous transaction is from a
-        // different block. We can't assume that the next transaction doesn't transfer value, so we have to handle
-        // that case.
-
-        // Ending balance at the previous block should be the same as beginning balance at this block...
         begBal = getBalanceAt(acctFor, blockNumber == 0 ? 0 : blockNumber - 1);
         // begBalDiff = trans->blockNumber == 0 ? 0 : begBal - prevRecon.endBal;
-
-        // We use the same "in-transaction" data to arrive at...
         // endBalCalc = begBal + totalIn() - totalOut();
-
-        // ...a calculated ending balance. Important note; the "true" ending balance for this transaction is not
-        // available until the end of the block. The best we can do is temporarily assume the calculated balance
-        // is correct and make a note of the fact that we've done that.
         endBal = endBalCalc();
         // endBalDiff = endBal - endBalCalc;  // always zero
         reconciliationType = trans->blockNumber == 0 ? "" : "prevdiff-partial";
 
     } else if (nextDifferent) {
-        // In this case, the previous transaction on this account is in the same block. We cannot use the
-        // beginning of block balance because that previous transaction may have altered the account's balance
-        // after the start of the block. We have to use the previously calculated ending balance as the
-        // beginning balance for this transaction. Note: diff will be zero in every case.
         begBal = prevRecon.endBal;
-        // begBalDiff = begBal - prevRecon.endBal;  // always zero
-
-        // Again, we use the same "in-transaction" data to arrive at...
         // endBalCalc = begBal + totalIn() - totalOut();
-
-        // the true ending balance (since we know that the next transaction on this account is in a different
-        // block, we can use the balance from the node, and it should reconcile.
         endBal = getBalanceAt(acctFor, blockNumber);
         // endBalDiff = endBal - endBalCalc;
         reconciliationType = trans->blockNumber == 0 ? "" : "nextdiff-partial";
 
     } else {
-        // In this case, both the previous transaction and the next transactions are in the same block. Neither
-        // the beginning balance at the block nor the ending balance can be used (becuase either the previous
-        // transaction or the next transaction or both could have changed the balance). Our only recourse is to
-        // make use of the calculated balances and make a note of the fact that we've done this...We have to use
-        // calculated values
         begBal = prevRecon.endBal;
         // begBalDiff = begBal - prevRecon.endBal;  // always zero
-
         // endBalCalc = begBal + totalIn() - totalOut();
-
-        // ... the next transaction is from the same block, we have to use the calculated balance
         endBal = endBalCalc();
         // endBalDiff = endBal - endBalCalc;  // always zero
         reconciliationType = trans->blockNumber == 0 ? "" : "bothsame-partial";
     }
-
-    // If we're reconciled, we're done...
     // reconciled = (endBalDiff() == 0 && begBalDiff() == 0);
-    LOG4(Format("partial:"));
-    LOG4(Format("  begBal:     [{begBal}]"));
-    LOG4(Format("  begBalDiff: [{begBalDiff}]"));
-    LOG4(Format("  endBal:     [{endBal}]"));
-    LOG4(Format("  endBalCalc: [{endBalCalc}]"));
-    LOG4(Format("  endBalDiff: [{endBalDiff}]"));
-    LOG4(Format("  reconciled: [{reconciled}]"));
-    LOG4(Format("  amountNet   [{RECONCILIATIONTYPE}]: [{amountNet}]"));
-
     // if (reconciled()) {
-    //     // amountNet = endBal - begBal;
+    //     amountNet = endBal - begBal;
     // } else {
-    //     // reconTrail += (endBalDiff != 0 ? "|multiPart:endBalDiff" : "|multiPart:begBalDiff");
+    //     reconTrail += (endBalDiff != 0 ? "|multiPart:endBalDiff" : "|multiPart:begBalDiff");
     // }
-
+    LOG_TRIAL_BALANCE("intra-block");
     return reconciled();
 }
 
 //---------------------------------------------------------------------------
 bool CReconciliation::reconcileUsingTraces(bigint_t prevEndBal, const CTransaction* trans, const address_t& acctFor) {
-    amountOut = amountIn = 0;  // we will store it in the internal values
+    amountOut = amountIn = 0;
     prefundIn = minerBaseRewardIn = minerNephewRewardIn = minerTxFeeIn + minerUncleRewardIn = 0;
 
-    // If this transaction was read from cache, it will have the traces already. Moreover, they will be
-    // articulated, so we only want to load traces if we don't already have them
-    if (trans->traces.size() == 0) {
-        loadTraces(*((CTransaction*)trans), trans->blockNumber, trans->transactionIndex, false, false);  // NOLINT
-    }
-
-    for (auto trace : trans->traces) {
-        bool isSelfDestruct = trace.action.selfDestructed != "";
-        if (isSelfDestruct) {
-            if (trace.action.refundAddress == acctFor) {
-                // receives self destructed ether
-                selfDestructIn += trace.action.balance;
-            }
-
-            // do not collapse. It may be both
-            if (trace.action.selfDestructed == acctFor) {
-                // the smart contract that is being killed and thereby loses the eth
-                selfDestructOut += trace.action.balance;
-            }
-
-        } else {
-            if (trace.action.from == acctFor && trans->from == acctFor) {
-                internalOut += trans->isError ? 0 : trace.action.value;
-                // gasCostOutflow = str_2_BigInt(trans->getValueByName("gasCost"));
-            }
-
-            // do not collapse. It may be both
-            if (trace.action.to == acctFor) {
-                if (trans->from == "0xPrefund") {
-                    prefundIn = trans->value;
-                } else if (trans->from == "0xBlockReward") {
-                    minerBaseRewardIn = trans->value;
-                    minerNephewRewardIn = trans->extraValue1;
-                    minerTxFeeIn = trans->extraValue2;
-                } else if (trans->from == "0xUncleReward") {
-                    minerUncleRewardIn = trans->value;
-                } else {
-                    internalIn += trans->isError ? 0 : trace.action.value;
+    if (trans->blockNumber == 0) {
+        begBal = 0;
+        prefundIn = trans->value;
+    } else {
+        if (trans->traces.size() == 0)
+            loadTraces(*((CTransaction*)trans), trans->blockNumber, trans->transactionIndex, false, false);  // NOLINT
+        for (auto trace : trans->traces) {
+            if (!trace.action.selfDestructed.empty()) {
+                // do not collapse
+                if (trace.action.refundAddress == acctFor)
+                    selfDestructIn += trace.action.balance;
+                // do not collapse
+                if (trace.action.selfDestructed == acctFor)
+                    selfDestructOut += trace.action.balance;
+            } else {
+                if (trace.action.from == acctFor && trans->from == acctFor)
+                    internalOut += trans->isError ? 0 : trace.action.value;
+                if (trace.action.to == acctFor) {
+                    if (trans->from == "0xPrefund") {
+                        prefundIn = trans->value;
+                    } else if (trans->from == "0xBlockReward") {
+                        minerBaseRewardIn = trans->value;
+                        minerNephewRewardIn = trans->extraValue1;
+                        minerTxFeeIn = trans->extraValue2;
+                    } else if (trans->from == "0xUncleReward") {
+                        minerUncleRewardIn = trans->value;
+                    } else {
+                        internalIn += trans->isError ? 0 : trace.action.value;
+                    }
                 }
             }
         }
     }
 
-    if (trans->blockNumber == 0) {
-        begBal = 0;
-        prefundIn = trans->value;
-    }
-
-    // begBalDiff = trans->blockNumber == 0 ? 0 : begBal - prevEndBal;
-
-    // amountNet = totalIn() - totalOut();
-    // endBalCalc = begBal + amountNet;
-    // endBalDiff = endBal - endBalCalc;
-    // reconciled = (endBalDiff == 0 && begBalDiff == 0);
-
-    if (!reconciled()) {
-        // TODO(tjayrush): add an option to the function to allow preservation of the traces.
-        // As crazy as this seems, we clear out the traces here.
-        // remove the traces if we don't need them to balance
+    LOG_TRIAL_BALANCE("tracing");
+    if (!reconciled())
         ((CTransaction*)trans)->traces.clear();  // NOLINT
-    }
-
     return reconciled();
 }
 

@@ -2,74 +2,33 @@ acctExport argc: 9 [1:0x05a56e2d52c817161883f50c441c3228cfe54d9f] [2:--max_recor
 acctExport 0x05a56e2d52c817161883f50c441c3228cfe54d9f --max_records 15 --accounting --fmt api --verbose 5 
 TIME ~ CLOCK - : 4-----0x05a56e2d52c817161883f50c441c3228cfe54d9f freshened to 11854827
 {"data": [
-TIME ~ CLOCK - : 4-----Adding previous statement: 
-TIME ~ CLOCK - <INFO>  : {
-  "blockNumber": 0,
-  "transactionIndex": 0,
-  "timestamp": 1438269988,
-  "assetAddr": "0x0",
-  "assetSymbol": "WEI",
-  "decimals": 18,
-  "prevBlk": 0,
-  "prevBlkBal": "",
-  "begBal": "",
-  "endBal": "",
-  "amountIn": "",
-  "internalIn": "",
-  "selfDestructIn": "",
-  "minerBaseRewardIn": "",
-  "minerNephewRewardIn": "",
-  "minerTxFeeIn": "",
-  "minerUncleRewardIn": "",
-  "prefundIn": "",
-  "amountOut": "",
-  "internalOut": "",
-  "selfDestructOut": "",
-  "gasCostOut": "",
-  "spotPrice": "-1",
-  "begBalDiff": "",
-  "endBalCalc": "",
-  "endBalDiff": "",
-  "totalIn": "",
-  "totalOut": "",
-  "totalOutLessGas": "",
-  "amountNet": "",
-  "reconciled": true
-}
-TIME ~ CLOCK - <INFO>  : {
-  "blockNumber": 1,
-  "transactionIndex": 99999,
-  "timestamp": 1438269988,
-  "assetAddr": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
-  "assetSymbol": "WEI",
-  "decimals": 18,
-  "prevBlk": 0,
-  "prevBlkBal": "",
-  "begBal": "",
-  "endBal": "5000000000000000000",
-  "amountIn": "",
-  "internalIn": "",
-  "selfDestructIn": "",
-  "minerBaseRewardIn": "5000000000000000000",
-  "minerNephewRewardIn": "",
-  "minerTxFeeIn": "",
-  "minerUncleRewardIn": "",
-  "prefundIn": "",
-  "amountOut": "",
-  "internalOut": "",
-  "selfDestructOut": "",
-  "gasCostOut": "",
-  "reconciliationType": "regular",
-  "spotPrice": "-1",
-  "begBalDiff": "",
-  "endBalCalc": "5000000000000000000",
-  "endBalDiff": "",
-  "totalIn": "5000000000000000000",
-  "totalOut": "",
-  "totalOutLessGas": "",
-  "amountNet": "5000000000000000000",
-  "reconciled": true
-}
+TIME ~ CLOCK - : 4-----Trial balance: regular
+TIME ~ CLOCK - : 4-----  hash: 
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  prevBal:       0
+TIME ~ CLOCK - : 4-----  begBal:        0
+TIME ~ CLOCK - : 4-----  begBalDiff:    0
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  amountIn:      0
+TIME ~ CLOCK - : 4-----  internalIn:    0
+TIME ~ CLOCK - : 4-----  slfDstrctIn:   0
+TIME ~ CLOCK - : 4-----  minBRwdIn:     5000000000000000000
+TIME ~ CLOCK - : 4-----  minNRwdIn:     0
+TIME ~ CLOCK - : 4-----  minTxFeeIn:    0
+TIME ~ CLOCK - : 4-----  minURwdIn:     0
+TIME ~ CLOCK - : 4-----  prefundIn:     0
+TIME ~ CLOCK - : 4-----    totalIn:     5000000000000000000
+TIME ~ CLOCK - : 4-----  amountOut:     0
+TIME ~ CLOCK - : 4-----  internalOut:   0
+TIME ~ CLOCK - : 4-----  slfDstrctOt:   0
+TIME ~ CLOCK - : 4-----  gasCostOut:    0
+TIME ~ CLOCK - : 4-----    totalOut:    0
+TIME ~ CLOCK - : 4-----  amountNet:     5000000000000000000
+TIME ~ CLOCK - : 4-----  endBal:        5000000000000000000
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  endBalCalc:    5000000000000000000
+TIME ~ CLOCK - : 4-----  endBalDiff:    0
+TIME ~ CLOCK - : 4-----  regular-recon: true
 {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -124,40 +83,33 @@ TIME ~ CLOCK - <INFO>  : {
   "date": "2015-07-30 15:26:28 UTC",
   "ether": 5.000000000000000000
 }
-TIME ~ CLOCK - <INFO>  : {
-  "blockNumber": 5,
-  "transactionIndex": 99999,
-  "timestamp": 1438270083,
-  "assetAddr": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
-  "assetSymbol": "WEI",
-  "decimals": 18,
-  "prevBlk": 1,
-  "prevBlkBal": "5000000000000000000",
-  "begBal": "5000000000000000000",
-  "endBal": "10000000000000000000",
-  "amountIn": "",
-  "internalIn": "",
-  "selfDestructIn": "",
-  "minerBaseRewardIn": "5000000000000000000",
-  "minerNephewRewardIn": "",
-  "minerTxFeeIn": "",
-  "minerUncleRewardIn": "",
-  "prefundIn": "",
-  "amountOut": "",
-  "internalOut": "",
-  "selfDestructOut": "",
-  "gasCostOut": "",
-  "reconciliationType": "regular",
-  "spotPrice": "-1",
-  "begBalDiff": "",
-  "endBalCalc": "10000000000000000000",
-  "endBalDiff": "",
-  "totalIn": "5000000000000000000",
-  "totalOut": "",
-  "totalOutLessGas": "",
-  "amountNet": "5000000000000000000",
-  "reconciled": true
-}
+TIME ~ CLOCK - : 4-----Trial balance: regular
+TIME ~ CLOCK - : 4-----  hash: 
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  prevBal:       5000000000000000000
+TIME ~ CLOCK - : 4-----  begBal:        5000000000000000000
+TIME ~ CLOCK - : 4-----  begBalDiff:    0
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  amountIn:      0
+TIME ~ CLOCK - : 4-----  internalIn:    0
+TIME ~ CLOCK - : 4-----  slfDstrctIn:   0
+TIME ~ CLOCK - : 4-----  minBRwdIn:     5000000000000000000
+TIME ~ CLOCK - : 4-----  minNRwdIn:     0
+TIME ~ CLOCK - : 4-----  minTxFeeIn:    0
+TIME ~ CLOCK - : 4-----  minURwdIn:     0
+TIME ~ CLOCK - : 4-----  prefundIn:     0
+TIME ~ CLOCK - : 4-----    totalIn:     5000000000000000000
+TIME ~ CLOCK - : 4-----  amountOut:     0
+TIME ~ CLOCK - : 4-----  internalOut:   0
+TIME ~ CLOCK - : 4-----  slfDstrctOt:   0
+TIME ~ CLOCK - : 4-----  gasCostOut:    0
+TIME ~ CLOCK - : 4-----    totalOut:    0
+TIME ~ CLOCK - : 4-----  amountNet:     5000000000000000000
+TIME ~ CLOCK - : 4-----  endBal:        10000000000000000000
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  endBalCalc:    10000000000000000000
+TIME ~ CLOCK - : 4-----  endBalDiff:    0
+TIME ~ CLOCK - : 4-----  regular-recon: true
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -212,40 +164,33 @@ TIME ~ CLOCK - <INFO>  : {
   "date": "2015-07-30 15:28:03 UTC",
   "ether": 5.000000000000000000
 }
-TIME ~ CLOCK - <INFO>  : {
-  "blockNumber": 56,
-  "transactionIndex": 99998,
-  "timestamp": 1438270322,
-  "assetAddr": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
-  "assetSymbol": "WEI",
-  "decimals": 18,
-  "prevBlk": 5,
-  "prevBlkBal": "10000000000000000000",
-  "begBal": "10000000000000000000",
-  "endBal": "13750000000000000000",
-  "amountIn": "",
-  "internalIn": "",
-  "selfDestructIn": "",
-  "minerBaseRewardIn": "",
-  "minerNephewRewardIn": "",
-  "minerTxFeeIn": "",
-  "minerUncleRewardIn": "3750000000000000000",
-  "prefundIn": "",
-  "amountOut": "",
-  "internalOut": "",
-  "selfDestructOut": "",
-  "gasCostOut": "",
-  "reconciliationType": "regular",
-  "spotPrice": "-1",
-  "begBalDiff": "",
-  "endBalCalc": "13750000000000000000",
-  "endBalDiff": "",
-  "totalIn": "3750000000000000000",
-  "totalOut": "",
-  "totalOutLessGas": "",
-  "amountNet": "3750000000000000000",
-  "reconciled": true
-}
+TIME ~ CLOCK - : 4-----Trial balance: regular
+TIME ~ CLOCK - : 4-----  hash: 
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  prevBal:       10000000000000000000
+TIME ~ CLOCK - : 4-----  begBal:        10000000000000000000
+TIME ~ CLOCK - : 4-----  begBalDiff:    0
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  amountIn:      0
+TIME ~ CLOCK - : 4-----  internalIn:    0
+TIME ~ CLOCK - : 4-----  slfDstrctIn:   0
+TIME ~ CLOCK - : 4-----  minBRwdIn:     0
+TIME ~ CLOCK - : 4-----  minNRwdIn:     0
+TIME ~ CLOCK - : 4-----  minTxFeeIn:    0
+TIME ~ CLOCK - : 4-----  minURwdIn:     3750000000000000000
+TIME ~ CLOCK - : 4-----  prefundIn:     0
+TIME ~ CLOCK - : 4-----    totalIn:     3750000000000000000
+TIME ~ CLOCK - : 4-----  amountOut:     0
+TIME ~ CLOCK - : 4-----  internalOut:   0
+TIME ~ CLOCK - : 4-----  slfDstrctOt:   0
+TIME ~ CLOCK - : 4-----  gasCostOut:    0
+TIME ~ CLOCK - : 4-----    totalOut:    0
+TIME ~ CLOCK - : 4-----  amountNet:     3750000000000000000
+TIME ~ CLOCK - : 4-----  endBal:        13750000000000000000
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  endBalCalc:    13750000000000000000
+TIME ~ CLOCK - : 4-----  endBalDiff:    0
+TIME ~ CLOCK - : 4-----  regular-recon: true
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -300,40 +245,33 @@ TIME ~ CLOCK - <INFO>  : {
   "date": "2015-07-30 15:32:02 UTC",
   "ether": 3.750000000000000000
 }
-TIME ~ CLOCK - <INFO>  : {
-  "blockNumber": 235,
-  "transactionIndex": 99999,
-  "timestamp": 1438270713,
-  "assetAddr": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
-  "assetSymbol": "WEI",
-  "decimals": 18,
-  "prevBlk": 56,
-  "prevBlkBal": "13750000000000000000",
-  "begBal": "13750000000000000000",
-  "endBal": "18750000000000000000",
-  "amountIn": "",
-  "internalIn": "",
-  "selfDestructIn": "",
-  "minerBaseRewardIn": "5000000000000000000",
-  "minerNephewRewardIn": "",
-  "minerTxFeeIn": "",
-  "minerUncleRewardIn": "",
-  "prefundIn": "",
-  "amountOut": "",
-  "internalOut": "",
-  "selfDestructOut": "",
-  "gasCostOut": "",
-  "reconciliationType": "regular",
-  "spotPrice": "-1",
-  "begBalDiff": "",
-  "endBalCalc": "18750000000000000000",
-  "endBalDiff": "",
-  "totalIn": "5000000000000000000",
-  "totalOut": "",
-  "totalOutLessGas": "",
-  "amountNet": "5000000000000000000",
-  "reconciled": true
-}
+TIME ~ CLOCK - : 4-----Trial balance: regular
+TIME ~ CLOCK - : 4-----  hash: 
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  prevBal:       13750000000000000000
+TIME ~ CLOCK - : 4-----  begBal:        13750000000000000000
+TIME ~ CLOCK - : 4-----  begBalDiff:    0
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  amountIn:      0
+TIME ~ CLOCK - : 4-----  internalIn:    0
+TIME ~ CLOCK - : 4-----  slfDstrctIn:   0
+TIME ~ CLOCK - : 4-----  minBRwdIn:     5000000000000000000
+TIME ~ CLOCK - : 4-----  minNRwdIn:     0
+TIME ~ CLOCK - : 4-----  minTxFeeIn:    0
+TIME ~ CLOCK - : 4-----  minURwdIn:     0
+TIME ~ CLOCK - : 4-----  prefundIn:     0
+TIME ~ CLOCK - : 4-----    totalIn:     5000000000000000000
+TIME ~ CLOCK - : 4-----  amountOut:     0
+TIME ~ CLOCK - : 4-----  internalOut:   0
+TIME ~ CLOCK - : 4-----  slfDstrctOt:   0
+TIME ~ CLOCK - : 4-----  gasCostOut:    0
+TIME ~ CLOCK - : 4-----    totalOut:    0
+TIME ~ CLOCK - : 4-----  amountNet:     5000000000000000000
+TIME ~ CLOCK - : 4-----  endBal:        18750000000000000000
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  endBalCalc:    18750000000000000000
+TIME ~ CLOCK - : 4-----  endBalDiff:    0
+TIME ~ CLOCK - : 4-----  regular-recon: true
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -388,40 +326,33 @@ TIME ~ CLOCK - <INFO>  : {
   "date": "2015-07-30 15:38:33 UTC",
   "ether": 5.000000000000000000
 }
-TIME ~ CLOCK - <INFO>  : {
-  "blockNumber": 247,
-  "transactionIndex": 99998,
-  "timestamp": 1438270739,
-  "assetAddr": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
-  "assetSymbol": "WEI",
-  "decimals": 18,
-  "prevBlk": 235,
-  "prevBlkBal": "18750000000000000000",
-  "begBal": "18750000000000000000",
-  "endBal": "21875000000000000000",
-  "amountIn": "",
-  "internalIn": "",
-  "selfDestructIn": "",
-  "minerBaseRewardIn": "",
-  "minerNephewRewardIn": "",
-  "minerTxFeeIn": "",
-  "minerUncleRewardIn": "3125000000000000000",
-  "prefundIn": "",
-  "amountOut": "",
-  "internalOut": "",
-  "selfDestructOut": "",
-  "gasCostOut": "",
-  "reconciliationType": "regular",
-  "spotPrice": "-1",
-  "begBalDiff": "",
-  "endBalCalc": "21875000000000000000",
-  "endBalDiff": "",
-  "totalIn": "3125000000000000000",
-  "totalOut": "",
-  "totalOutLessGas": "",
-  "amountNet": "3125000000000000000",
-  "reconciled": true
-}
+TIME ~ CLOCK - : 4-----Trial balance: regular
+TIME ~ CLOCK - : 4-----  hash: 
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  prevBal:       18750000000000000000
+TIME ~ CLOCK - : 4-----  begBal:        18750000000000000000
+TIME ~ CLOCK - : 4-----  begBalDiff:    0
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  amountIn:      0
+TIME ~ CLOCK - : 4-----  internalIn:    0
+TIME ~ CLOCK - : 4-----  slfDstrctIn:   0
+TIME ~ CLOCK - : 4-----  minBRwdIn:     0
+TIME ~ CLOCK - : 4-----  minNRwdIn:     0
+TIME ~ CLOCK - : 4-----  minTxFeeIn:    0
+TIME ~ CLOCK - : 4-----  minURwdIn:     3125000000000000000
+TIME ~ CLOCK - : 4-----  prefundIn:     0
+TIME ~ CLOCK - : 4-----    totalIn:     3125000000000000000
+TIME ~ CLOCK - : 4-----  amountOut:     0
+TIME ~ CLOCK - : 4-----  internalOut:   0
+TIME ~ CLOCK - : 4-----  slfDstrctOt:   0
+TIME ~ CLOCK - : 4-----  gasCostOut:    0
+TIME ~ CLOCK - : 4-----    totalOut:    0
+TIME ~ CLOCK - : 4-----  amountNet:     3125000000000000000
+TIME ~ CLOCK - : 4-----  endBal:        21875000000000000000
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  endBalCalc:    21875000000000000000
+TIME ~ CLOCK - : 4-----  endBalDiff:    0
+TIME ~ CLOCK - : 4-----  regular-recon: true
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -476,40 +407,33 @@ TIME ~ CLOCK - <INFO>  : {
   "date": "2015-07-30 15:38:59 UTC",
   "ether": 3.125000000000000000
 }
-TIME ~ CLOCK - <PROG>  : Reconciling      5 of    260 txs (max 260) for address 0x05a56e2d52c817161883f50c441c3228cfe54d9fTIME ~ CLOCK - <INFO>  : {
-  "blockNumber": 348,
-  "transactionIndex": 99999,
-  "timestamp": 1438270943,
-  "assetAddr": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
-  "assetSymbol": "WEI",
-  "decimals": 18,
-  "prevBlk": 247,
-  "prevBlkBal": "21875000000000000000",
-  "begBal": "21875000000000000000",
-  "endBal": "26875000000000000000",
-  "amountIn": "",
-  "internalIn": "",
-  "selfDestructIn": "",
-  "minerBaseRewardIn": "5000000000000000000",
-  "minerNephewRewardIn": "",
-  "minerTxFeeIn": "",
-  "minerUncleRewardIn": "",
-  "prefundIn": "",
-  "amountOut": "",
-  "internalOut": "",
-  "selfDestructOut": "",
-  "gasCostOut": "",
-  "reconciliationType": "regular",
-  "spotPrice": "-1",
-  "begBalDiff": "",
-  "endBalCalc": "26875000000000000000",
-  "endBalDiff": "",
-  "totalIn": "5000000000000000000",
-  "totalOut": "",
-  "totalOutLessGas": "",
-  "amountNet": "5000000000000000000",
-  "reconciled": true
-}
+TIME ~ CLOCK - <PROG>  : Reconciling      5 of    260 txs (max 260) for address 0x05a56e2d52c817161883f50c441c3228cfe54d9fTIME ~ CLOCK - : 4-----Trial balance: regular
+TIME ~ CLOCK - : 4-----  hash: 
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  prevBal:       21875000000000000000
+TIME ~ CLOCK - : 4-----  begBal:        21875000000000000000
+TIME ~ CLOCK - : 4-----  begBalDiff:    0
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  amountIn:      0
+TIME ~ CLOCK - : 4-----  internalIn:    0
+TIME ~ CLOCK - : 4-----  slfDstrctIn:   0
+TIME ~ CLOCK - : 4-----  minBRwdIn:     5000000000000000000
+TIME ~ CLOCK - : 4-----  minNRwdIn:     0
+TIME ~ CLOCK - : 4-----  minTxFeeIn:    0
+TIME ~ CLOCK - : 4-----  minURwdIn:     0
+TIME ~ CLOCK - : 4-----  prefundIn:     0
+TIME ~ CLOCK - : 4-----    totalIn:     5000000000000000000
+TIME ~ CLOCK - : 4-----  amountOut:     0
+TIME ~ CLOCK - : 4-----  internalOut:   0
+TIME ~ CLOCK - : 4-----  slfDstrctOt:   0
+TIME ~ CLOCK - : 4-----  gasCostOut:    0
+TIME ~ CLOCK - : 4-----    totalOut:    0
+TIME ~ CLOCK - : 4-----  amountNet:     5000000000000000000
+TIME ~ CLOCK - : 4-----  endBal:        26875000000000000000
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  endBalCalc:    26875000000000000000
+TIME ~ CLOCK - : 4-----  endBalDiff:    0
+TIME ~ CLOCK - : 4-----  regular-recon: true
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -564,40 +488,33 @@ TIME ~ CLOCK - <PROG>  : Reconciling      5 of    260 txs (max 260) for address 
   "date": "2015-07-30 15:42:23 UTC",
   "ether": 5.000000000000000000
 }
-TIME ~ CLOCK - <INFO>  : {
-  "blockNumber": 500,
-  "transactionIndex": 99998,
-  "timestamp": 1438271212,
-  "assetAddr": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
-  "assetSymbol": "WEI",
-  "decimals": 18,
-  "prevBlk": 348,
-  "prevBlkBal": "26875000000000000000",
-  "begBal": "26875000000000000000",
-  "endBal": "30625000000000000000",
-  "amountIn": "",
-  "internalIn": "",
-  "selfDestructIn": "",
-  "minerBaseRewardIn": "",
-  "minerNephewRewardIn": "",
-  "minerTxFeeIn": "",
-  "minerUncleRewardIn": "3750000000000000000",
-  "prefundIn": "",
-  "amountOut": "",
-  "internalOut": "",
-  "selfDestructOut": "",
-  "gasCostOut": "",
-  "reconciliationType": "regular",
-  "spotPrice": "-1",
-  "begBalDiff": "",
-  "endBalCalc": "30625000000000000000",
-  "endBalDiff": "",
-  "totalIn": "3750000000000000000",
-  "totalOut": "",
-  "totalOutLessGas": "",
-  "amountNet": "3750000000000000000",
-  "reconciled": true
-}
+TIME ~ CLOCK - : 4-----Trial balance: regular
+TIME ~ CLOCK - : 4-----  hash: 
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  prevBal:       26875000000000000000
+TIME ~ CLOCK - : 4-----  begBal:        26875000000000000000
+TIME ~ CLOCK - : 4-----  begBalDiff:    0
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  amountIn:      0
+TIME ~ CLOCK - : 4-----  internalIn:    0
+TIME ~ CLOCK - : 4-----  slfDstrctIn:   0
+TIME ~ CLOCK - : 4-----  minBRwdIn:     0
+TIME ~ CLOCK - : 4-----  minNRwdIn:     0
+TIME ~ CLOCK - : 4-----  minTxFeeIn:    0
+TIME ~ CLOCK - : 4-----  minURwdIn:     3750000000000000000
+TIME ~ CLOCK - : 4-----  prefundIn:     0
+TIME ~ CLOCK - : 4-----    totalIn:     3750000000000000000
+TIME ~ CLOCK - : 4-----  amountOut:     0
+TIME ~ CLOCK - : 4-----  internalOut:   0
+TIME ~ CLOCK - : 4-----  slfDstrctOt:   0
+TIME ~ CLOCK - : 4-----  gasCostOut:    0
+TIME ~ CLOCK - : 4-----    totalOut:    0
+TIME ~ CLOCK - : 4-----  amountNet:     3750000000000000000
+TIME ~ CLOCK - : 4-----  endBal:        30625000000000000000
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  endBalCalc:    30625000000000000000
+TIME ~ CLOCK - : 4-----  endBalDiff:    0
+TIME ~ CLOCK - : 4-----  regular-recon: true
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -652,40 +569,33 @@ TIME ~ CLOCK - <INFO>  : {
   "date": "2015-07-30 15:46:52 UTC",
   "ether": 3.750000000000000000
 }
-TIME ~ CLOCK - <INFO>  : {
-  "blockNumber": 563,
-  "transactionIndex": 99998,
-  "timestamp": 1438271337,
-  "assetAddr": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
-  "assetSymbol": "WEI",
-  "decimals": 18,
-  "prevBlk": 500,
-  "prevBlkBal": "30625000000000000000",
-  "begBal": "30625000000000000000",
-  "endBal": "34375000000000000000",
-  "amountIn": "",
-  "internalIn": "",
-  "selfDestructIn": "",
-  "minerBaseRewardIn": "",
-  "minerNephewRewardIn": "",
-  "minerTxFeeIn": "",
-  "minerUncleRewardIn": "3750000000000000000",
-  "prefundIn": "",
-  "amountOut": "",
-  "internalOut": "",
-  "selfDestructOut": "",
-  "gasCostOut": "",
-  "reconciliationType": "regular",
-  "spotPrice": "-1",
-  "begBalDiff": "",
-  "endBalCalc": "34375000000000000000",
-  "endBalDiff": "",
-  "totalIn": "3750000000000000000",
-  "totalOut": "",
-  "totalOutLessGas": "",
-  "amountNet": "3750000000000000000",
-  "reconciled": true
-}
+TIME ~ CLOCK - : 4-----Trial balance: regular
+TIME ~ CLOCK - : 4-----  hash: 
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  prevBal:       30625000000000000000
+TIME ~ CLOCK - : 4-----  begBal:        30625000000000000000
+TIME ~ CLOCK - : 4-----  begBalDiff:    0
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  amountIn:      0
+TIME ~ CLOCK - : 4-----  internalIn:    0
+TIME ~ CLOCK - : 4-----  slfDstrctIn:   0
+TIME ~ CLOCK - : 4-----  minBRwdIn:     0
+TIME ~ CLOCK - : 4-----  minNRwdIn:     0
+TIME ~ CLOCK - : 4-----  minTxFeeIn:    0
+TIME ~ CLOCK - : 4-----  minURwdIn:     3750000000000000000
+TIME ~ CLOCK - : 4-----  prefundIn:     0
+TIME ~ CLOCK - : 4-----    totalIn:     3750000000000000000
+TIME ~ CLOCK - : 4-----  amountOut:     0
+TIME ~ CLOCK - : 4-----  internalOut:   0
+TIME ~ CLOCK - : 4-----  slfDstrctOt:   0
+TIME ~ CLOCK - : 4-----  gasCostOut:    0
+TIME ~ CLOCK - : 4-----    totalOut:    0
+TIME ~ CLOCK - : 4-----  amountNet:     3750000000000000000
+TIME ~ CLOCK - : 4-----  endBal:        34375000000000000000
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  endBalCalc:    34375000000000000000
+TIME ~ CLOCK - : 4-----  endBalDiff:    0
+TIME ~ CLOCK - : 4-----  regular-recon: true
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -740,40 +650,33 @@ TIME ~ CLOCK - <INFO>  : {
   "date": "2015-07-30 15:48:57 UTC",
   "ether": 3.750000000000000000
 }
-TIME ~ CLOCK - <INFO>  : {
-  "blockNumber": 987,
-  "transactionIndex": 99998,
-  "timestamp": 1438272114,
-  "assetAddr": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
-  "assetSymbol": "WEI",
-  "decimals": 18,
-  "prevBlk": 563,
-  "prevBlkBal": "34375000000000000000",
-  "begBal": "34375000000000000000",
-  "endBal": "36875000000000000000",
-  "amountIn": "",
-  "internalIn": "",
-  "selfDestructIn": "",
-  "minerBaseRewardIn": "",
-  "minerNephewRewardIn": "",
-  "minerTxFeeIn": "",
-  "minerUncleRewardIn": "2500000000000000000",
-  "prefundIn": "",
-  "amountOut": "",
-  "internalOut": "",
-  "selfDestructOut": "",
-  "gasCostOut": "",
-  "reconciliationType": "regular",
-  "spotPrice": "-1",
-  "begBalDiff": "",
-  "endBalCalc": "36875000000000000000",
-  "endBalDiff": "",
-  "totalIn": "2500000000000000000",
-  "totalOut": "",
-  "totalOutLessGas": "",
-  "amountNet": "2500000000000000000",
-  "reconciled": true
-}
+TIME ~ CLOCK - : 4-----Trial balance: regular
+TIME ~ CLOCK - : 4-----  hash: 
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  prevBal:       34375000000000000000
+TIME ~ CLOCK - : 4-----  begBal:        34375000000000000000
+TIME ~ CLOCK - : 4-----  begBalDiff:    0
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  amountIn:      0
+TIME ~ CLOCK - : 4-----  internalIn:    0
+TIME ~ CLOCK - : 4-----  slfDstrctIn:   0
+TIME ~ CLOCK - : 4-----  minBRwdIn:     0
+TIME ~ CLOCK - : 4-----  minNRwdIn:     0
+TIME ~ CLOCK - : 4-----  minTxFeeIn:    0
+TIME ~ CLOCK - : 4-----  minURwdIn:     2500000000000000000
+TIME ~ CLOCK - : 4-----  prefundIn:     0
+TIME ~ CLOCK - : 4-----    totalIn:     2500000000000000000
+TIME ~ CLOCK - : 4-----  amountOut:     0
+TIME ~ CLOCK - : 4-----  internalOut:   0
+TIME ~ CLOCK - : 4-----  slfDstrctOt:   0
+TIME ~ CLOCK - : 4-----  gasCostOut:    0
+TIME ~ CLOCK - : 4-----    totalOut:    0
+TIME ~ CLOCK - : 4-----  amountNet:     2500000000000000000
+TIME ~ CLOCK - : 4-----  endBal:        36875000000000000000
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  endBalCalc:    36875000000000000000
+TIME ~ CLOCK - : 4-----  endBalDiff:    0
+TIME ~ CLOCK - : 4-----  regular-recon: true
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -828,40 +731,33 @@ TIME ~ CLOCK - <INFO>  : {
   "date": "2015-07-30 16:01:54 UTC",
   "ether": 2.500000000000000000
 }
-TIME ~ CLOCK - <INFO>  : {
-  "blockNumber": 1450,
-  "transactionIndex": 99999,
-  "timestamp": 1438273130,
-  "assetAddr": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
-  "assetSymbol": "WEI",
-  "decimals": 18,
-  "prevBlk": 987,
-  "prevBlkBal": "36875000000000000000",
-  "begBal": "36875000000000000000",
-  "endBal": "42031250000000000000",
-  "amountIn": "",
-  "internalIn": "",
-  "selfDestructIn": "",
-  "minerBaseRewardIn": "5000000000000000000",
-  "minerNephewRewardIn": "156250000000000000",
-  "minerTxFeeIn": "",
-  "minerUncleRewardIn": "",
-  "prefundIn": "",
-  "amountOut": "",
-  "internalOut": "",
-  "selfDestructOut": "",
-  "gasCostOut": "",
-  "reconciliationType": "regular",
-  "spotPrice": "-1",
-  "begBalDiff": "",
-  "endBalCalc": "42031250000000000000",
-  "endBalDiff": "",
-  "totalIn": "5156250000000000000",
-  "totalOut": "",
-  "totalOutLessGas": "",
-  "amountNet": "5156250000000000000",
-  "reconciled": true
-}
+TIME ~ CLOCK - : 4-----Trial balance: regular
+TIME ~ CLOCK - : 4-----  hash: 
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  prevBal:       36875000000000000000
+TIME ~ CLOCK - : 4-----  begBal:        36875000000000000000
+TIME ~ CLOCK - : 4-----  begBalDiff:    0
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  amountIn:      0
+TIME ~ CLOCK - : 4-----  internalIn:    0
+TIME ~ CLOCK - : 4-----  slfDstrctIn:   0
+TIME ~ CLOCK - : 4-----  minBRwdIn:     5000000000000000000
+TIME ~ CLOCK - : 4-----  minNRwdIn:     156250000000000000
+TIME ~ CLOCK - : 4-----  minTxFeeIn:    0
+TIME ~ CLOCK - : 4-----  minURwdIn:     0
+TIME ~ CLOCK - : 4-----  prefundIn:     0
+TIME ~ CLOCK - : 4-----    totalIn:     5156250000000000000
+TIME ~ CLOCK - : 4-----  amountOut:     0
+TIME ~ CLOCK - : 4-----  internalOut:   0
+TIME ~ CLOCK - : 4-----  slfDstrctOt:   0
+TIME ~ CLOCK - : 4-----  gasCostOut:    0
+TIME ~ CLOCK - : 4-----    totalOut:    0
+TIME ~ CLOCK - : 4-----  amountNet:     5156250000000000000
+TIME ~ CLOCK - : 4-----  endBal:        42031250000000000000
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  endBalCalc:    42031250000000000000
+TIME ~ CLOCK - : 4-----  endBalDiff:    0
+TIME ~ CLOCK - : 4-----  regular-recon: true
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -916,40 +812,33 @@ TIME ~ CLOCK - <INFO>  : {
   "date": "2015-07-30 16:18:50 UTC",
   "ether": 5.000000000000000000
 }
-TIME ~ CLOCK - <PROG>  : Reconciling     10 of    260 txs (max 260) for address 0x05a56e2d52c817161883f50c441c3228cfe54d9fTIME ~ CLOCK - <INFO>  : {
-  "blockNumber": 1580,
-  "transactionIndex": 99998,
-  "timestamp": 1438273478,
-  "assetAddr": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
-  "assetSymbol": "WEI",
-  "decimals": 18,
-  "prevBlk": 1450,
-  "prevBlkBal": "42031250000000000000",
-  "begBal": "42031250000000000000",
-  "endBal": "45781250000000000000",
-  "amountIn": "",
-  "internalIn": "",
-  "selfDestructIn": "",
-  "minerBaseRewardIn": "",
-  "minerNephewRewardIn": "",
-  "minerTxFeeIn": "",
-  "minerUncleRewardIn": "3750000000000000000",
-  "prefundIn": "",
-  "amountOut": "",
-  "internalOut": "",
-  "selfDestructOut": "",
-  "gasCostOut": "",
-  "reconciliationType": "regular",
-  "spotPrice": "-1",
-  "begBalDiff": "",
-  "endBalCalc": "45781250000000000000",
-  "endBalDiff": "",
-  "totalIn": "3750000000000000000",
-  "totalOut": "",
-  "totalOutLessGas": "",
-  "amountNet": "3750000000000000000",
-  "reconciled": true
-}
+TIME ~ CLOCK - <PROG>  : Reconciling     10 of    260 txs (max 260) for address 0x05a56e2d52c817161883f50c441c3228cfe54d9fTIME ~ CLOCK - : 4-----Trial balance: regular
+TIME ~ CLOCK - : 4-----  hash: 
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  prevBal:       42031250000000000000
+TIME ~ CLOCK - : 4-----  begBal:        42031250000000000000
+TIME ~ CLOCK - : 4-----  begBalDiff:    0
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  amountIn:      0
+TIME ~ CLOCK - : 4-----  internalIn:    0
+TIME ~ CLOCK - : 4-----  slfDstrctIn:   0
+TIME ~ CLOCK - : 4-----  minBRwdIn:     0
+TIME ~ CLOCK - : 4-----  minNRwdIn:     0
+TIME ~ CLOCK - : 4-----  minTxFeeIn:    0
+TIME ~ CLOCK - : 4-----  minURwdIn:     3750000000000000000
+TIME ~ CLOCK - : 4-----  prefundIn:     0
+TIME ~ CLOCK - : 4-----    totalIn:     3750000000000000000
+TIME ~ CLOCK - : 4-----  amountOut:     0
+TIME ~ CLOCK - : 4-----  internalOut:   0
+TIME ~ CLOCK - : 4-----  slfDstrctOt:   0
+TIME ~ CLOCK - : 4-----  gasCostOut:    0
+TIME ~ CLOCK - : 4-----    totalOut:    0
+TIME ~ CLOCK - : 4-----  amountNet:     3750000000000000000
+TIME ~ CLOCK - : 4-----  endBal:        45781250000000000000
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  endBalCalc:    45781250000000000000
+TIME ~ CLOCK - : 4-----  endBalDiff:    0
+TIME ~ CLOCK - : 4-----  regular-recon: true
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -1004,40 +893,33 @@ TIME ~ CLOCK - <PROG>  : Reconciling     10 of    260 txs (max 260) for address 
   "date": "2015-07-30 16:24:38 UTC",
   "ether": 3.750000000000000000
 }
-TIME ~ CLOCK - <INFO>  : {
-  "blockNumber": 1586,
-  "transactionIndex": 99998,
-  "timestamp": 1438273492,
-  "assetAddr": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
-  "assetSymbol": "WEI",
-  "decimals": 18,
-  "prevBlk": 1580,
-  "prevBlkBal": "45781250000000000000",
-  "begBal": "45781250000000000000",
-  "endBal": "49531250000000000000",
-  "amountIn": "",
-  "internalIn": "",
-  "selfDestructIn": "",
-  "minerBaseRewardIn": "",
-  "minerNephewRewardIn": "",
-  "minerTxFeeIn": "",
-  "minerUncleRewardIn": "3750000000000000000",
-  "prefundIn": "",
-  "amountOut": "",
-  "internalOut": "",
-  "selfDestructOut": "",
-  "gasCostOut": "",
-  "reconciliationType": "regular",
-  "spotPrice": "-1",
-  "begBalDiff": "",
-  "endBalCalc": "49531250000000000000",
-  "endBalDiff": "",
-  "totalIn": "3750000000000000000",
-  "totalOut": "",
-  "totalOutLessGas": "",
-  "amountNet": "3750000000000000000",
-  "reconciled": true
-}
+TIME ~ CLOCK - : 4-----Trial balance: regular
+TIME ~ CLOCK - : 4-----  hash: 
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  prevBal:       45781250000000000000
+TIME ~ CLOCK - : 4-----  begBal:        45781250000000000000
+TIME ~ CLOCK - : 4-----  begBalDiff:    0
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  amountIn:      0
+TIME ~ CLOCK - : 4-----  internalIn:    0
+TIME ~ CLOCK - : 4-----  slfDstrctIn:   0
+TIME ~ CLOCK - : 4-----  minBRwdIn:     0
+TIME ~ CLOCK - : 4-----  minNRwdIn:     0
+TIME ~ CLOCK - : 4-----  minTxFeeIn:    0
+TIME ~ CLOCK - : 4-----  minURwdIn:     3750000000000000000
+TIME ~ CLOCK - : 4-----  prefundIn:     0
+TIME ~ CLOCK - : 4-----    totalIn:     3750000000000000000
+TIME ~ CLOCK - : 4-----  amountOut:     0
+TIME ~ CLOCK - : 4-----  internalOut:   0
+TIME ~ CLOCK - : 4-----  slfDstrctOt:   0
+TIME ~ CLOCK - : 4-----  gasCostOut:    0
+TIME ~ CLOCK - : 4-----    totalOut:    0
+TIME ~ CLOCK - : 4-----  amountNet:     3750000000000000000
+TIME ~ CLOCK - : 4-----  endBal:        49531250000000000000
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  endBalCalc:    49531250000000000000
+TIME ~ CLOCK - : 4-----  endBalDiff:    0
+TIME ~ CLOCK - : 4-----  regular-recon: true
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -1092,40 +974,33 @@ TIME ~ CLOCK - <INFO>  : {
   "date": "2015-07-30 16:24:52 UTC",
   "ether": 3.750000000000000000
 }
-TIME ~ CLOCK - <INFO>  : {
-  "blockNumber": 1861,
-  "transactionIndex": 99999,
-  "timestamp": 1438274241,
-  "assetAddr": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
-  "assetSymbol": "WEI",
-  "decimals": 18,
-  "prevBlk": 1586,
-  "prevBlkBal": "49531250000000000000",
-  "begBal": "49531250000000000000",
-  "endBal": "54531250000000000000",
-  "amountIn": "",
-  "internalIn": "",
-  "selfDestructIn": "",
-  "minerBaseRewardIn": "5000000000000000000",
-  "minerNephewRewardIn": "",
-  "minerTxFeeIn": "",
-  "minerUncleRewardIn": "",
-  "prefundIn": "",
-  "amountOut": "",
-  "internalOut": "",
-  "selfDestructOut": "",
-  "gasCostOut": "",
-  "reconciliationType": "regular",
-  "spotPrice": "-1",
-  "begBalDiff": "",
-  "endBalCalc": "54531250000000000000",
-  "endBalDiff": "",
-  "totalIn": "5000000000000000000",
-  "totalOut": "",
-  "totalOutLessGas": "",
-  "amountNet": "5000000000000000000",
-  "reconciled": true
-}
+TIME ~ CLOCK - : 4-----Trial balance: regular
+TIME ~ CLOCK - : 4-----  hash: 
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  prevBal:       49531250000000000000
+TIME ~ CLOCK - : 4-----  begBal:        49531250000000000000
+TIME ~ CLOCK - : 4-----  begBalDiff:    0
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  amountIn:      0
+TIME ~ CLOCK - : 4-----  internalIn:    0
+TIME ~ CLOCK - : 4-----  slfDstrctIn:   0
+TIME ~ CLOCK - : 4-----  minBRwdIn:     5000000000000000000
+TIME ~ CLOCK - : 4-----  minNRwdIn:     0
+TIME ~ CLOCK - : 4-----  minTxFeeIn:    0
+TIME ~ CLOCK - : 4-----  minURwdIn:     0
+TIME ~ CLOCK - : 4-----  prefundIn:     0
+TIME ~ CLOCK - : 4-----    totalIn:     5000000000000000000
+TIME ~ CLOCK - : 4-----  amountOut:     0
+TIME ~ CLOCK - : 4-----  internalOut:   0
+TIME ~ CLOCK - : 4-----  slfDstrctOt:   0
+TIME ~ CLOCK - : 4-----  gasCostOut:    0
+TIME ~ CLOCK - : 4-----    totalOut:    0
+TIME ~ CLOCK - : 4-----  amountNet:     5000000000000000000
+TIME ~ CLOCK - : 4-----  endBal:        54531250000000000000
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  endBalCalc:    54531250000000000000
+TIME ~ CLOCK - : 4-----  endBalDiff:    0
+TIME ~ CLOCK - : 4-----  regular-recon: true
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -1180,40 +1055,33 @@ TIME ~ CLOCK - <INFO>  : {
   "date": "2015-07-30 16:37:21 UTC",
   "ether": 5.000000000000000000
 }
-TIME ~ CLOCK - <INFO>  : {
-  "blockNumber": 1912,
-  "transactionIndex": 99998,
-  "timestamp": 1438274378,
-  "assetAddr": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
-  "assetSymbol": "WEI",
-  "decimals": 18,
-  "prevBlk": 1861,
-  "prevBlkBal": "54531250000000000000",
-  "begBal": "54531250000000000000",
-  "endBal": "58281250000000000000",
-  "amountIn": "",
-  "internalIn": "",
-  "selfDestructIn": "",
-  "minerBaseRewardIn": "",
-  "minerNephewRewardIn": "",
-  "minerTxFeeIn": "",
-  "minerUncleRewardIn": "3750000000000000000",
-  "prefundIn": "",
-  "amountOut": "",
-  "internalOut": "",
-  "selfDestructOut": "",
-  "gasCostOut": "",
-  "reconciliationType": "regular",
-  "spotPrice": "-1",
-  "begBalDiff": "",
-  "endBalCalc": "58281250000000000000",
-  "endBalDiff": "",
-  "totalIn": "3750000000000000000",
-  "totalOut": "",
-  "totalOutLessGas": "",
-  "amountNet": "3750000000000000000",
-  "reconciled": true
-}
+TIME ~ CLOCK - : 4-----Trial balance: regular
+TIME ~ CLOCK - : 4-----  hash: 
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  prevBal:       54531250000000000000
+TIME ~ CLOCK - : 4-----  begBal:        54531250000000000000
+TIME ~ CLOCK - : 4-----  begBalDiff:    0
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  amountIn:      0
+TIME ~ CLOCK - : 4-----  internalIn:    0
+TIME ~ CLOCK - : 4-----  slfDstrctIn:   0
+TIME ~ CLOCK - : 4-----  minBRwdIn:     0
+TIME ~ CLOCK - : 4-----  minNRwdIn:     0
+TIME ~ CLOCK - : 4-----  minTxFeeIn:    0
+TIME ~ CLOCK - : 4-----  minURwdIn:     3750000000000000000
+TIME ~ CLOCK - : 4-----  prefundIn:     0
+TIME ~ CLOCK - : 4-----    totalIn:     3750000000000000000
+TIME ~ CLOCK - : 4-----  amountOut:     0
+TIME ~ CLOCK - : 4-----  internalOut:   0
+TIME ~ CLOCK - : 4-----  slfDstrctOt:   0
+TIME ~ CLOCK - : 4-----  gasCostOut:    0
+TIME ~ CLOCK - : 4-----    totalOut:    0
+TIME ~ CLOCK - : 4-----  amountNet:     3750000000000000000
+TIME ~ CLOCK - : 4-----  endBal:        58281250000000000000
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  endBalCalc:    58281250000000000000
+TIME ~ CLOCK - : 4-----  endBalDiff:    0
+TIME ~ CLOCK - : 4-----  regular-recon: true
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -1268,40 +1136,33 @@ TIME ~ CLOCK - <INFO>  : {
   "date": "2015-07-30 16:39:38 UTC",
   "ether": 3.750000000000000000
 }
-TIME ~ CLOCK - <INFO>  : {
-  "blockNumber": 2057,
-  "transactionIndex": 99999,
-  "timestamp": 1438274782,
-  "assetAddr": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
-  "assetSymbol": "WEI",
-  "decimals": 18,
-  "prevBlk": 1912,
-  "prevBlkBal": "58281250000000000000",
-  "begBal": "58281250000000000000",
-  "endBal": "63281250000000000000",
-  "amountIn": "",
-  "internalIn": "",
-  "selfDestructIn": "",
-  "minerBaseRewardIn": "5000000000000000000",
-  "minerNephewRewardIn": "",
-  "minerTxFeeIn": "",
-  "minerUncleRewardIn": "",
-  "prefundIn": "",
-  "amountOut": "",
-  "internalOut": "",
-  "selfDestructOut": "",
-  "gasCostOut": "",
-  "reconciliationType": "regular",
-  "spotPrice": "-1",
-  "begBalDiff": "",
-  "endBalCalc": "63281250000000000000",
-  "endBalDiff": "",
-  "totalIn": "5000000000000000000",
-  "totalOut": "",
-  "totalOutLessGas": "",
-  "amountNet": "5000000000000000000",
-  "reconciled": true
-}
+TIME ~ CLOCK - : 4-----Trial balance: regular
+TIME ~ CLOCK - : 4-----  hash: 
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  prevBal:       58281250000000000000
+TIME ~ CLOCK - : 4-----  begBal:        58281250000000000000
+TIME ~ CLOCK - : 4-----  begBalDiff:    0
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  amountIn:      0
+TIME ~ CLOCK - : 4-----  internalIn:    0
+TIME ~ CLOCK - : 4-----  slfDstrctIn:   0
+TIME ~ CLOCK - : 4-----  minBRwdIn:     5000000000000000000
+TIME ~ CLOCK - : 4-----  minNRwdIn:     0
+TIME ~ CLOCK - : 4-----  minTxFeeIn:    0
+TIME ~ CLOCK - : 4-----  minURwdIn:     0
+TIME ~ CLOCK - : 4-----  prefundIn:     0
+TIME ~ CLOCK - : 4-----    totalIn:     5000000000000000000
+TIME ~ CLOCK - : 4-----  amountOut:     0
+TIME ~ CLOCK - : 4-----  internalOut:   0
+TIME ~ CLOCK - : 4-----  slfDstrctOt:   0
+TIME ~ CLOCK - : 4-----  gasCostOut:    0
+TIME ~ CLOCK - : 4-----    totalOut:    0
+TIME ~ CLOCK - : 4-----  amountNet:     5000000000000000000
+TIME ~ CLOCK - : 4-----  endBal:        63281250000000000000
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  endBalCalc:    63281250000000000000
+TIME ~ CLOCK - : 4-----  endBalDiff:    0
+TIME ~ CLOCK - : 4-----  regular-recon: true
 , {
   "hash": "0x0",
   "blockHash": "0x0",

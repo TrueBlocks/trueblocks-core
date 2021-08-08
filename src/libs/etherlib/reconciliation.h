@@ -16,11 +16,11 @@
  * the code inside of 'EXISTING_CODE' tags.
  */
 #include "utillib.h"
-#include "abi.h"
 
 namespace qblocks {
 
 // EXISTING_CODE
+class CTransaction;
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------

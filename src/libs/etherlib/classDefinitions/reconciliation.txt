@@ -24,7 +24,7 @@ fields = blknum blockNumber|\
         int256 gasCostOut|\
         string reconciliationType|\
         int256 spotPrice=int64_t(-1)
-includes = utillib.h|abi.h
+includes = utillib.h
 cpp_includes = etherlib.h
 serializable = true
 equals = ((blockNumber == it.blockNumber) && (assetAddr == it.assetAddr))
