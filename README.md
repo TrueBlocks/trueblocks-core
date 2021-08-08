@@ -57,7 +57,7 @@ We recommend that you run MacOS Big Sur or later for best results.
 
 TrueBlocks does not currently support Windows builds.
 Some users have had success with WSL.
-For now, you're own your own!
+For now, you're on your own!
 
 ## Compiling TrueBlocks
 
