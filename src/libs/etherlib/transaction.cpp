@@ -597,7 +597,6 @@ void CTransaction::registerClass(void) {
     ADD_FIELD(CTransaction, "etherGasCost", T_WEI, ++fieldNum);
     ADD_FIELD(CTransaction, "function", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CTransaction, "events", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CTransaction, "price", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CTransaction, "gasUsed", T_GAS, ++fieldNum);
     ADD_FIELD(CTransaction, "date", T_DATE | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CTransaction, "datesh", T_DATE | TS_OMITEMPTY, ++fieldNum);
@@ -615,7 +614,6 @@ void CTransaction::registerClass(void) {
     // Hide fields we don't want to show by default
     HIDE_FIELD(CTransaction, "function");
     HIDE_FIELD(CTransaction, "events");
-    HIDE_FIELD(CTransaction, "price");
     HIDE_FIELD(CTransaction, "encoding");
     HIDE_FIELD(CTransaction, "gasCost");
     HIDE_FIELD(CTransaction, "etherGasCost");
@@ -821,13 +819,6 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void* dataPt
                 if (fieldIn % "parsed")
                     return nextBasenodeChunk(fieldIn, tra);
                 // EXISTING_CODE
-                if (fieldIn % "price") {
-                    if (!IS_HIDDEN(CTransaction, "price")) {
-                        // this has huge performance implications because it loads a big file
-                        timestamp_t ts = str_2_Ts(tra->Format("[{TIMESTAMP}]"));  // it may only be on the block
-                        return wei_2_Dollars(ts, weiPerEther(), 18);
-                    }
-                }
                 // EXISTING_CODE
                 break;
 
