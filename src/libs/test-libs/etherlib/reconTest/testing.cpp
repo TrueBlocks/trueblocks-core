@@ -57,7 +57,6 @@ TEST_F(CThisTest, TestTest_1) {
     rec.prevBlk = 1;
     rec.prevBlkBal = 1;
     rec.begBal = 1;
-    rec.begBalDiff = 1;
     rec.amountIn = 1;
     rec.amountOut = 1;
     rec.internalIn = 1;
@@ -71,12 +70,8 @@ TEST_F(CThisTest, TestTest_1) {
     rec.prefundIn = 1;
     rec.gasCostOut = 1;
     rec.endBal = 5;
-    rec.endBalCalc = 5;
-    rec.endBalDiff = 0;
-    rec.amountNet = 5;
     rec.spotPrice = 1;
     rec.reconciliationType = "regular";
-    rec.reconciled = 1;
     cout << rec << endl;
 
     rec.blockNumber = 100;

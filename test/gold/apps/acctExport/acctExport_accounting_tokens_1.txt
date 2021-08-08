@@ -1,26 +1,34 @@
-acctExport argc: 13 [1:0xf503017d7baf7fbc0fff7492b751025c6a78179b] [2:--first_block] [3:10277780] [4:--last_block] [5:10296792] [6:--accounting] [7:--articulate] [8:--ether] [9:--fmt] [10:api] [11:--verbose] [12:5] 
-acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --last_block 10296792 --accounting --articulate --ether --fmt api --verbose 5 
+acctExport argc: 13 [1:0xf503017d7baf7fbc0fff7492b751025c6a78179b] [2:--first_block] [3:10277780] [4:--last_block] [5:10296792] [6:--accounting] [7:--articulate] [8:--ether] [9:--fmt] [10:api] [11:--verbose] [12:10] 
+acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --last_block 10296792 --accounting --articulate --ether --fmt api --verbose 10 
 TIME ~ CLOCK - : 4-----0xf503017d7baf7fbc0fff7492b751025c6a78179b freshened to 11854827
 {"data": [
-TIME ~ CLOCK - : 4-----Adding previous statement: 10277779 0 "" "" "" "5.137097246179548557" false
-TIME ~ CLOCK - : 4-----assetSymbol: ETH
-TIME ~ CLOCK - : 4-----assetAddr:   0xf503017d7baf7fbc0fff7492b751025c6a78179b
-TIME ~ CLOCK - : 4-----prevBlkBal:  "5.137097246179548557"
-TIME ~ CLOCK - : 4-----prevBlock:   
-TIME ~ CLOCK - : 4-----begBal:     "5.137097246179548557"
-TIME ~ CLOCK - : 4-----endBal:     "5.137097246179548557"
-TIME ~ CLOCK - : 4-----endBalCalc: "5.137097246179548557"
-TIME ~ CLOCK - : 4-----begBalDiff: ""
-TIME ~ CLOCK - : 4-----endBalDiff: ""
-TIME ~ CLOCK - : 4-----reconciled: true
-TIME ~ CLOCK - : 4-----amountNet regular: ""
-TIME ~ CLOCK - : 4-----pushed: 10277780 102 "5.137097246179548557" "" "" "5.137097246179548557" true
-TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM execution error.","data":"Reverted 0x"},"id":"1"}
- {"jsonrpc":"2.0","method":"eth_call","params":[{"to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c", "data": "0x95d89b41"}, "0x9cd394"],"id":"1"}
-TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM execution error.","data":"Reverted 0x"},"id":"1"}
- {"jsonrpc":"2.0","method":"eth_call","params":[{"to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c", "data": "0x70a08231000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"}, "0x9cd393"],"id":"1"}
-TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM execution error.","data":"Reverted 0x"},"id":"1"}
- {"jsonrpc":"2.0","method":"eth_call","params":[{"to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c", "data": "0x70a08231000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"}, "0x9cd394"],"id":"1"}
+TIME ~ CLOCK - : 4-----Trial balance: regular
+TIME ~ CLOCK - : 4-----  hash: 0xdfa263cb6a202c9f301944cbd8be76f8cdd97e1abb42f1ca1347bb3e31fafd00
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  prevBal:       5137097246179548557
+TIME ~ CLOCK - : 4-----  begBal:        5137097246179548557
+TIME ~ CLOCK - : 4-----  begBalDiff:    0
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 8------  amountIn:      0
+TIME ~ CLOCK - : 8------  internalIn:    0
+TIME ~ CLOCK - : 8------  slfDstrctIn:   0
+TIME ~ CLOCK - : 8------  minBRwdIn:     0
+TIME ~ CLOCK - : 8------  minNRwdIn:     0
+TIME ~ CLOCK - : 8------  minTxFeeIn:    0
+TIME ~ CLOCK - : 8------  minURwdIn:     0
+TIME ~ CLOCK - : 8------  prefundIn:     0
+TIME ~ CLOCK - : 4-----  totalIn:       0
+TIME ~ CLOCK - : 8------  amountOut:     0
+TIME ~ CLOCK - : 8------  internalOut:   0
+TIME ~ CLOCK - : 8------  slfDstrctOt:   0
+TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 4-----  totalOut:      0
+TIME ~ CLOCK - : 4-----  amountNet:     0
+TIME ~ CLOCK - : 4-----  endBal:        5137097246179548557
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  endBalCalc:    5137097246179548557
+TIME ~ CLOCK - : 4-----  endBalDiff:    0
+TIME ~ CLOCK - : 4-----  regular-recon: true
 {
   "hash": "0xdfa263cb6a202c9f301944cbd8be76f8cdd97e1abb42f1ca1347bb3e31fafd00",
   "blockHash": "0xb0eeae84197ce9710061d248b0d94b26e9e539ae0d5498be83d43bcfc8f81bfc",
@@ -140,28 +148,29 @@ TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM exe
       "prevBlk": 10277779,
       "prevBlkBal": "5.137097246179548557",
       "begBal": "5.137097246179548557",
-      "begBalDiff": "",
+      "endBal": "5.137097246179548557",
       "amountIn": "",
-      "amountOut": "",
       "internalIn": "",
-      "internalOut": "",
       "selfDestructIn": "",
-      "selfDestructOut": "",
       "minerBaseRewardIn": "",
       "minerNephewRewardIn": "",
       "minerTxFeeIn": "",
       "minerUncleRewardIn": "",
       "prefundIn": "",
+      "amountOut": "",
+      "internalOut": "",
+      "selfDestructOut": "",
       "gasCostOut": "",
-      "endBal": "5.137097246179548557",
+      "reconciliationType": "regular",
+      "spotPrice": "-1",
+      "begBalDiff": "",
       "endBalCalc": "5.137097246179548557",
       "endBalDiff": "",
-      "amountNet": "",
-      "spotPrice": "-1",
-      "reconciliationType": "regular",
-      "reconciled": true,
       "totalIn": "",
-      "totalOut": ""
+      "totalOut": "",
+      "totalOutLessGas": "",
+      "amountNet": "",
+      "reconciled": true
     },
     {
       "blockNumber": 10277780,
@@ -173,27 +182,28 @@ TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM exe
       "prevBlk": 10277779,
       "prevBlkBal": "1158.567776639199461740",
       "begBal": "1158.567776639199461740",
-      "begBalDiff": "",
+      "endBal": "1168.267776639199461740",
       "amountIn": "9.700000000000000000",
-      "amountOut": "",
       "internalIn": "",
-      "internalOut": "",
       "selfDestructIn": "",
-      "selfDestructOut": "",
       "minerBaseRewardIn": "",
       "minerNephewRewardIn": "",
       "minerTxFeeIn": "",
       "minerUncleRewardIn": "",
       "prefundIn": "",
+      "amountOut": "",
+      "internalOut": "",
+      "selfDestructOut": "",
       "gasCostOut": "",
-      "endBal": "1168.267776639199461740",
-      "endBalCalc": "",
-      "endBalDiff": "",
-      "amountNet": "9.700000000000000000",
       "spotPrice": "-1",
-      "reconciled": true,
+      "begBalDiff": "",
+      "endBalCalc": "1168.267776639199461740",
+      "endBalDiff": "",
       "totalIn": "9.700000000000000000",
-      "totalOut": ""
+      "totalOut": "",
+      "totalOutLessGas": "",
+      "amountNet": "9.700000000000000000",
+      "reconciled": true
     }
   ],
   "gasCost": 2743600000000000,
@@ -201,20 +211,33 @@ TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM exe
   "date": "2020-06-16 16:09:04 UTC",
   "ether": 0.000000000000000000
 }
-TIME ~ CLOCK - : 4-----assetSymbol: ETH
-TIME ~ CLOCK - : 4-----assetAddr:   0xf503017d7baf7fbc0fff7492b751025c6a78179b
-TIME ~ CLOCK - : 4-----prevBlkBal:  "5.137097246179548557"
-TIME ~ CLOCK - : 4-----prevBlock:   
-TIME ~ CLOCK - : 4-----from --> amountOut: ""
-TIME ~ CLOCK - : 4-----from --> gasCostOut: "0.001188918000000000"
-TIME ~ CLOCK - : 4-----begBal:     "5.137097246179548557"
-TIME ~ CLOCK - : 4-----endBal:     "5.135908328179548557"
-TIME ~ CLOCK - : 4-----endBalCalc: "5.135908328179548557"
-TIME ~ CLOCK - : 4-----begBalDiff: ""
-TIME ~ CLOCK - : 4-----endBalDiff: ""
-TIME ~ CLOCK - : 4-----reconciled: true
-TIME ~ CLOCK - : 4-----amountNet regular: "-0.001188918000000000"
-TIME ~ CLOCK - : 4-----pushed: 10279295 33 "5.137097246179548557" "" "" "5.135908328179548557" true
+TIME ~ CLOCK - : 4-----Trial balance: regular
+TIME ~ CLOCK - : 4-----  hash: 0x4bbabbb0cf842635caea3dcc46107ca3dbf88fcb096ae7feaabcd6c039cafa65
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  prevBal:       5137097246179548557
+TIME ~ CLOCK - : 4-----  begBal:        5137097246179548557
+TIME ~ CLOCK - : 4-----  begBalDiff:    0
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 8------  amountIn:      0
+TIME ~ CLOCK - : 8------  internalIn:    0
+TIME ~ CLOCK - : 8------  slfDstrctIn:   0
+TIME ~ CLOCK - : 8------  minBRwdIn:     0
+TIME ~ CLOCK - : 8------  minNRwdIn:     0
+TIME ~ CLOCK - : 8------  minTxFeeIn:    0
+TIME ~ CLOCK - : 8------  minURwdIn:     0
+TIME ~ CLOCK - : 8------  prefundIn:     0
+TIME ~ CLOCK - : 4-----  totalIn:       0
+TIME ~ CLOCK - : 8------  amountOut:     0
+TIME ~ CLOCK - : 8------  internalOut:   0
+TIME ~ CLOCK - : 8------  slfDstrctOt:   0
+TIME ~ CLOCK - : 8------  gasCostOut:    1188918000000000
+TIME ~ CLOCK - : 4-----  totalOut:      1188918000000000
+TIME ~ CLOCK - : 4-----  amountNet:     -1188918000000000
+TIME ~ CLOCK - : 4-----  endBal:        5135908328179548557
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  endBalCalc:    5135908328179548557
+TIME ~ CLOCK - : 4-----  endBalDiff:    0
+TIME ~ CLOCK - : 4-----  regular-recon: true
 , {
   "hash": "0x4bbabbb0cf842635caea3dcc46107ca3dbf88fcb096ae7feaabcd6c039cafa65",
   "blockHash": "0xba60d83b8de8f8af15c6de40c36a39a75b3b94a8cca228134e33cac402969cf2",
@@ -277,28 +300,29 @@ TIME ~ CLOCK - : 4-----pushed: 10279295 33 "5.137097246179548557" "" "" "5.13590
       "prevBlk": 10277780,
       "prevBlkBal": "5.137097246179548557",
       "begBal": "5.137097246179548557",
-      "begBalDiff": "",
+      "endBal": "5.135908328179548557",
       "amountIn": "",
-      "amountOut": "",
       "internalIn": "",
-      "internalOut": "",
       "selfDestructIn": "",
-      "selfDestructOut": "",
       "minerBaseRewardIn": "",
       "minerNephewRewardIn": "",
       "minerTxFeeIn": "",
       "minerUncleRewardIn": "",
       "prefundIn": "",
+      "amountOut": "",
+      "internalOut": "",
+      "selfDestructOut": "",
       "gasCostOut": "0.001188918000000000",
-      "endBal": "5.135908328179548557",
+      "reconciliationType": "regular",
+      "spotPrice": "-1",
+      "begBalDiff": "",
       "endBalCalc": "5.135908328179548557",
       "endBalDiff": "",
-      "amountNet": "-0.001188918000000000",
-      "spotPrice": "-1",
-      "reconciliationType": "regular",
-      "reconciled": true,
       "totalIn": "",
-      "totalOut": "0.001188918000000000"
+      "totalOut": "0.001188918000000000",
+      "totalOutLessGas": "",
+      "amountNet": "-0.001188918000000000",
+      "reconciled": true
     }
   ],
   "gasCost": 1188918000000000,
@@ -306,24 +330,33 @@ TIME ~ CLOCK - : 4-----pushed: 10279295 33 "5.137097246179548557" "" "" "5.13590
   "date": "2020-06-16 21:46:15 UTC",
   "ether": 0.000000000000000000
 }
-TIME ~ CLOCK - : 4-----assetSymbol: ETH
-TIME ~ CLOCK - : 4-----assetAddr:   0xf503017d7baf7fbc0fff7492b751025c6a78179b
-TIME ~ CLOCK - : 4-----prevBlkBal:  "5.135908328179548557"
-TIME ~ CLOCK - : 4-----prevBlock:   
-TIME ~ CLOCK - : 4-----from --> amountOut: ""
-TIME ~ CLOCK - : 4-----from --> gasCostOut: "0.001922570000000000"
-TIME ~ CLOCK - : 4-----begBal:     "5.135908328179548557"
-TIME ~ CLOCK - : 4-----endBal:     "5.133985758179548557"
-TIME ~ CLOCK - : 4-----endBalCalc: "5.133985758179548557"
-TIME ~ CLOCK - : 4-----begBalDiff: ""
-TIME ~ CLOCK - : 4-----endBalDiff: ""
-TIME ~ CLOCK - : 4-----reconciled: true
-TIME ~ CLOCK - : 4-----amountNet regular: "-0.001922570000000000"
-TIME ~ CLOCK - : 4-----pushed: 10279310 59 "5.135908328179548557" "" "" "5.133985758179548557" true
-TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM execution error.","data":"Reverted 0x"},"id":"1"}
- {"jsonrpc":"2.0","method":"eth_call","params":[{"to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c", "data": "0x95d89b41"}, "0x9cd98e"],"id":"1"}
-TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM execution error.","data":"Reverted 0x"},"id":"1"}
- {"jsonrpc":"2.0","method":"eth_call","params":[{"to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c", "data": "0x70a08231000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"}, "0x9cd98e"],"id":"1"}
+TIME ~ CLOCK - : 4-----Trial balance: regular
+TIME ~ CLOCK - : 4-----  hash: 0x2f83088fa87f6054779a5511ec4f6b64f1e773e9bd7ec97956d6e04910d59303
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  prevBal:       5135908328179548557
+TIME ~ CLOCK - : 4-----  begBal:        5135908328179548557
+TIME ~ CLOCK - : 4-----  begBalDiff:    0
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 8------  amountIn:      0
+TIME ~ CLOCK - : 8------  internalIn:    0
+TIME ~ CLOCK - : 8------  slfDstrctIn:   0
+TIME ~ CLOCK - : 8------  minBRwdIn:     0
+TIME ~ CLOCK - : 8------  minNRwdIn:     0
+TIME ~ CLOCK - : 8------  minTxFeeIn:    0
+TIME ~ CLOCK - : 8------  minURwdIn:     0
+TIME ~ CLOCK - : 8------  prefundIn:     0
+TIME ~ CLOCK - : 4-----  totalIn:       0
+TIME ~ CLOCK - : 8------  amountOut:     0
+TIME ~ CLOCK - : 8------  internalOut:   0
+TIME ~ CLOCK - : 8------  slfDstrctOt:   0
+TIME ~ CLOCK - : 8------  gasCostOut:    1922570000000000
+TIME ~ CLOCK - : 4-----  totalOut:      1922570000000000
+TIME ~ CLOCK - : 4-----  amountNet:     -1922570000000000
+TIME ~ CLOCK - : 4-----  endBal:        5133985758179548557
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  endBalCalc:    5133985758179548557
+TIME ~ CLOCK - : 4-----  endBalDiff:    0
+TIME ~ CLOCK - : 4-----  regular-recon: true
 , {
   "hash": "0x2f83088fa87f6054779a5511ec4f6b64f1e773e9bd7ec97956d6e04910d59303",
   "blockHash": "0x9e3bfcd31fe2aba667980cee5f9a9a834ab7309c04c1387fac457a30b777a0b3",
@@ -443,28 +476,29 @@ TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM exe
       "prevBlk": 10279295,
       "prevBlkBal": "5.135908328179548557",
       "begBal": "5.135908328179548557",
-      "begBalDiff": "",
+      "endBal": "5.133985758179548557",
       "amountIn": "",
-      "amountOut": "",
       "internalIn": "",
-      "internalOut": "",
       "selfDestructIn": "",
-      "selfDestructOut": "",
       "minerBaseRewardIn": "",
       "minerNephewRewardIn": "",
       "minerTxFeeIn": "",
       "minerUncleRewardIn": "",
       "prefundIn": "",
+      "amountOut": "",
+      "internalOut": "",
+      "selfDestructOut": "",
       "gasCostOut": "0.001922570000000000",
-      "endBal": "5.133985758179548557",
+      "reconciliationType": "regular",
+      "spotPrice": "-1",
+      "begBalDiff": "",
       "endBalCalc": "5.133985758179548557",
       "endBalDiff": "",
-      "amountNet": "-0.001922570000000000",
-      "spotPrice": "-1",
-      "reconciliationType": "regular",
-      "reconciled": true,
       "totalIn": "",
-      "totalOut": "0.001922570000000000"
+      "totalOut": "0.001922570000000000",
+      "totalOutLessGas": "",
+      "amountNet": "-0.001922570000000000",
+      "reconciled": true
     },
     {
       "blockNumber": 10279310,
@@ -476,27 +510,28 @@ TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM exe
       "prevBlk": 10279295,
       "prevBlkBal": "1168.267776639199461740",
       "begBal": "1168.267776639199461740",
-      "begBalDiff": "",
+      "endBal": "1163.267776639199461740",
       "amountIn": "",
-      "amountOut": "5.0000000",
       "internalIn": "",
-      "internalOut": "",
       "selfDestructIn": "",
-      "selfDestructOut": "",
       "minerBaseRewardIn": "",
       "minerNephewRewardIn": "",
       "minerTxFeeIn": "",
       "minerUncleRewardIn": "",
       "prefundIn": "",
+      "amountOut": "5.0000000",
+      "internalOut": "",
+      "selfDestructOut": "",
       "gasCostOut": "",
-      "endBal": "1163.267776639199461740",
-      "endBalCalc": "",
-      "endBalDiff": "",
-      "amountNet": "-5.0000000",
       "spotPrice": "-1",
-      "reconciled": true,
+      "begBalDiff": "",
+      "endBalCalc": "1163.267776639199461740",
+      "endBalDiff": "",
       "totalIn": "",
-      "totalOut": "5.0000000"
+      "totalOut": "5.0000000",
+      "totalOutLessGas": "5.0000000",
+      "amountNet": "-5.0000000",
+      "reconciled": true
     }
   ],
   "gasCost": 1922570000000000,
@@ -504,22 +539,33 @@ TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM exe
   "date": "2020-06-16 21:50:17 UTC",
   "ether": 0.000000000000000000
 }
-TIME ~ CLOCK - : 4-----assetSymbol: ETH
-TIME ~ CLOCK - : 4-----assetAddr:   0xf503017d7baf7fbc0fff7492b751025c6a78179b
-TIME ~ CLOCK - : 4-----prevBlkBal:  "5.133985758179548557"
-TIME ~ CLOCK - : 4-----prevBlock:   
-TIME ~ CLOCK - : 4-----begBal:     "5.133985758179548557"
-TIME ~ CLOCK - : 4-----endBal:     "5.133985758179548557"
-TIME ~ CLOCK - : 4-----endBalCalc: "5.133985758179548557"
-TIME ~ CLOCK - : 4-----begBalDiff: ""
-TIME ~ CLOCK - : 4-----endBalDiff: ""
-TIME ~ CLOCK - : 4-----reconciled: true
-TIME ~ CLOCK - : 4-----amountNet regular: ""
-TIME ~ CLOCK - : 4-----pushed: 10279650 35 "5.133985758179548557" "" "" "5.133985758179548557" true
-TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM execution error.","data":"Reverted 0x"},"id":"1"}
- {"jsonrpc":"2.0","method":"eth_call","params":[{"to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c", "data": "0x95d89b41"}, "0x9cdae2"],"id":"1"}
-TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM execution error.","data":"Reverted 0x"},"id":"1"}
- {"jsonrpc":"2.0","method":"eth_call","params":[{"to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c", "data": "0x70a08231000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"}, "0x9cdae2"],"id":"1"}
+TIME ~ CLOCK - : 4-----Trial balance: regular
+TIME ~ CLOCK - : 4-----  hash: 0xc670a40b06e179b459f8bb7ae8e3d9cf985abb325b355ea2ea8b4822e66c1f55
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  prevBal:       5133985758179548557
+TIME ~ CLOCK - : 4-----  begBal:        5133985758179548557
+TIME ~ CLOCK - : 4-----  begBalDiff:    0
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 8------  amountIn:      0
+TIME ~ CLOCK - : 8------  internalIn:    0
+TIME ~ CLOCK - : 8------  slfDstrctIn:   0
+TIME ~ CLOCK - : 8------  minBRwdIn:     0
+TIME ~ CLOCK - : 8------  minNRwdIn:     0
+TIME ~ CLOCK - : 8------  minTxFeeIn:    0
+TIME ~ CLOCK - : 8------  minURwdIn:     0
+TIME ~ CLOCK - : 8------  prefundIn:     0
+TIME ~ CLOCK - : 4-----  totalIn:       0
+TIME ~ CLOCK - : 8------  amountOut:     0
+TIME ~ CLOCK - : 8------  internalOut:   0
+TIME ~ CLOCK - : 8------  slfDstrctOt:   0
+TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 4-----  totalOut:      0
+TIME ~ CLOCK - : 4-----  amountNet:     0
+TIME ~ CLOCK - : 4-----  endBal:        5133985758179548557
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  endBalCalc:    5133985758179548557
+TIME ~ CLOCK - : 4-----  endBalDiff:    0
+TIME ~ CLOCK - : 4-----  regular-recon: true
 , {
   "hash": "0xc670a40b06e179b459f8bb7ae8e3d9cf985abb325b355ea2ea8b4822e66c1f55",
   "blockHash": "0x7759339f1de39285cc6ef521e19a8cf85981fac36bceb14c3b480ffc87c9fb3c",
@@ -639,28 +685,29 @@ TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM exe
       "prevBlk": 10279310,
       "prevBlkBal": "5.133985758179548557",
       "begBal": "5.133985758179548557",
-      "begBalDiff": "",
+      "endBal": "5.133985758179548557",
       "amountIn": "",
-      "amountOut": "",
       "internalIn": "",
-      "internalOut": "",
       "selfDestructIn": "",
-      "selfDestructOut": "",
       "minerBaseRewardIn": "",
       "minerNephewRewardIn": "",
       "minerTxFeeIn": "",
       "minerUncleRewardIn": "",
       "prefundIn": "",
+      "amountOut": "",
+      "internalOut": "",
+      "selfDestructOut": "",
       "gasCostOut": "",
-      "endBal": "5.133985758179548557",
+      "reconciliationType": "regular",
+      "spotPrice": "-1",
+      "begBalDiff": "",
       "endBalCalc": "5.133985758179548557",
       "endBalDiff": "",
-      "amountNet": "",
-      "spotPrice": "-1",
-      "reconciliationType": "regular",
-      "reconciled": true,
       "totalIn": "",
-      "totalOut": ""
+      "totalOut": "",
+      "totalOutLessGas": "",
+      "amountNet": "",
+      "reconciled": true
     },
     {
       "blockNumber": 10279650,
@@ -672,27 +719,28 @@ TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM exe
       "prevBlk": 10279310,
       "prevBlkBal": "1163.267776639199461740",
       "begBal": "1163.267776639199461740",
-      "begBalDiff": "",
+      "endBal": "1168.017776639199461740",
       "amountIn": "4.750000000000000000",
-      "amountOut": "",
       "internalIn": "",
-      "internalOut": "",
       "selfDestructIn": "",
-      "selfDestructOut": "",
       "minerBaseRewardIn": "",
       "minerNephewRewardIn": "",
       "minerTxFeeIn": "",
       "minerUncleRewardIn": "",
       "prefundIn": "",
+      "amountOut": "",
+      "internalOut": "",
+      "selfDestructOut": "",
       "gasCostOut": "",
-      "endBal": "1168.017776639199461740",
-      "endBalCalc": "",
-      "endBalDiff": "",
-      "amountNet": "4.750000000000000000",
       "spotPrice": "-1",
-      "reconciled": true,
+      "begBalDiff": "",
+      "endBalCalc": "1168.017776639199461740",
+      "endBalDiff": "",
       "totalIn": "4.750000000000000000",
-      "totalOut": ""
+      "totalOut": "",
+      "totalOutLessGas": "",
+      "amountNet": "4.750000000000000000",
+      "reconciled": true
     }
   ],
   "gasCost": 1416580000000000,
@@ -700,25 +748,60 @@ TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM exe
   "date": "2020-06-16 23:04:31 UTC",
   "ether": 0.000000000000000000
 }
-TIME ~ CLOCK - : 4-----assetSymbol: ETH
-TIME ~ CLOCK - : 4-----assetAddr:   0xf503017d7baf7fbc0fff7492b751025c6a78179b
-TIME ~ CLOCK - : 4-----prevBlkBal:  "5.133985758179548557"
-TIME ~ CLOCK - : 4-----prevBlock:   
-TIME ~ CLOCK - : 4-----begBal:     "5.133985758179548557"
-TIME ~ CLOCK - : 4-----endBal:     "5.171985758179548557"
-TIME ~ CLOCK - : 4-----endBalCalc: "5.133985758179548557"
-TIME ~ CLOCK - : 4-----begBalDiff: ""
-TIME ~ CLOCK - : 4-----endBalDiff: "0.038000000000000000"
-TIME ~ CLOCK - : 4-----reconciled: false
-TIME ~ CLOCK - : 4-----usingTraces:
-TIME ~ CLOCK - : 4-----  begBal:     "5.133985758179548557"
-TIME ~ CLOCK - : 4-----  begBalDiff: ""
-TIME ~ CLOCK - : 4-----  endBal:     "5.171985758179548557"
-TIME ~ CLOCK - : 4-----  endBalCalc: "5.171985758179548557"
-TIME ~ CLOCK - : 4-----  endBalDiff: ""
-TIME ~ CLOCK - : 4-----  reconciled: true
-TIME ~ CLOCK - : 4-----  amountNet   by-trace: "0.038000000000000000"
-TIME ~ CLOCK - : 4-----pushed: 10279931 93 "5.133985758179548557" "" "" "5.171985758179548557" true
+TIME ~ CLOCK - : 4-----Trial balance: regular
+TIME ~ CLOCK - : 4-----  hash: 0x39654adb110500924d5693d1cff285e6a7196cfc1a7b833eeb7583df4efab098
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  prevBal:       5133985758179548557
+TIME ~ CLOCK - : 4-----  begBal:        5133985758179548557
+TIME ~ CLOCK - : 4-----  begBalDiff:    0
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 8------  amountIn:      0
+TIME ~ CLOCK - : 8------  internalIn:    0
+TIME ~ CLOCK - : 8------  slfDstrctIn:   0
+TIME ~ CLOCK - : 8------  minBRwdIn:     0
+TIME ~ CLOCK - : 8------  minNRwdIn:     0
+TIME ~ CLOCK - : 8------  minTxFeeIn:    0
+TIME ~ CLOCK - : 8------  minURwdIn:     0
+TIME ~ CLOCK - : 8------  prefundIn:     0
+TIME ~ CLOCK - : 4-----  totalIn:       0
+TIME ~ CLOCK - : 8------  amountOut:     0
+TIME ~ CLOCK - : 8------  internalOut:   0
+TIME ~ CLOCK - : 8------  slfDstrctOt:   0
+TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 4-----  totalOut:      0
+TIME ~ CLOCK - : 4-----  amountNet:     0
+TIME ~ CLOCK - : 4-----  endBal:        5171985758179548557
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  endBalCalc:    5133985758179548557
+TIME ~ CLOCK - : 4-----  endBalDiff:    -38000000000000000
+TIME ~ CLOCK - : 4-----  regular-recon: false
+TIME ~ CLOCK - : 4-----Trial balance: by-trace
+TIME ~ CLOCK - : 4-----  hash: 0x39654adb110500924d5693d1cff285e6a7196cfc1a7b833eeb7583df4efab098
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  prevBal:       5133985758179548557
+TIME ~ CLOCK - : 4-----  begBal:        5133985758179548557
+TIME ~ CLOCK - : 4-----  begBalDiff:    0
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 8------  amountIn:      0
+TIME ~ CLOCK - : 8------  internalIn:    38000000000000000
+TIME ~ CLOCK - : 8------  slfDstrctIn:   0
+TIME ~ CLOCK - : 8------  minBRwdIn:     0
+TIME ~ CLOCK - : 8------  minNRwdIn:     0
+TIME ~ CLOCK - : 8------  minTxFeeIn:    0
+TIME ~ CLOCK - : 8------  minURwdIn:     0
+TIME ~ CLOCK - : 8------  prefundIn:     0
+TIME ~ CLOCK - : 4-----  totalIn:       38000000000000000
+TIME ~ CLOCK - : 8------  amountOut:     0
+TIME ~ CLOCK - : 8------  internalOut:   0
+TIME ~ CLOCK - : 8------  slfDstrctOt:   0
+TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 4-----  totalOut:      0
+TIME ~ CLOCK - : 4-----  amountNet:     38000000000000000
+TIME ~ CLOCK - : 4-----  endBal:        5171985758179548557
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  endBalCalc:    5171985758179548557
+TIME ~ CLOCK - : 4-----  endBalDiff:    0
+TIME ~ CLOCK - : 4-----  regular-recon: true
 , {
   "hash": "0x39654adb110500924d5693d1cff285e6a7196cfc1a7b833eeb7583df4efab098",
   "blockHash": "0xec24224c949309583fdfab1d0bc890e5206133d4d8b46fbbeb97e13606ce1d94",
@@ -859,29 +942,29 @@ TIME ~ CLOCK - : 4-----pushed: 10279931 93 "5.133985758179548557" "" "" "5.17198
       "prevBlk": 10279650,
       "prevBlkBal": "5.133985758179548557",
       "begBal": "5.133985758179548557",
-      "begBalDiff": "",
+      "endBal": "5.171985758179548557",
       "amountIn": "",
-      "amountOut": "",
       "internalIn": "0.038000000000000000",
-      "internalOut": "",
       "selfDestructIn": "",
-      "selfDestructOut": "",
       "minerBaseRewardIn": "",
       "minerNephewRewardIn": "",
       "minerTxFeeIn": "",
       "minerUncleRewardIn": "",
       "prefundIn": "",
+      "amountOut": "",
+      "internalOut": "",
+      "selfDestructOut": "",
       "gasCostOut": "",
-      "endBal": "5.171985758179548557",
+      "reconciliationType": "by-trace",
+      "spotPrice": "-1",
+      "begBalDiff": "",
       "endBalCalc": "5.171985758179548557",
       "endBalDiff": "",
-      "amountNet": "0.038000000000000000",
-      "spotPrice": "-1",
-      "reconciliationType": "by-trace",
-      "reconTrail": "|endBalDiff",
-      "reconciled": true,
       "totalIn": "0.038000000000000000",
-      "totalOut": ""
+      "totalOut": "",
+      "totalOutLessGas": "",
+      "amountNet": "0.038000000000000000",
+      "reconciled": true
     }
   ],
   "gasCost": 1175774400000000,
@@ -889,22 +972,33 @@ TIME ~ CLOCK - : 4-----pushed: 10279931 93 "5.133985758179548557" "" "" "5.17198
   "date": "2020-06-17 00:05:54 UTC",
   "ether": 0.040000000000000000
 }
-TIME ~ CLOCK - : 4-----assetSymbol: ETH
-TIME ~ CLOCK - : 4-----assetAddr:   0xf503017d7baf7fbc0fff7492b751025c6a78179b
-TIME ~ CLOCK - : 4-----prevBlkBal:  "5.171985758179548557"
-TIME ~ CLOCK - : 4-----prevBlock:   
-TIME ~ CLOCK - : 4-----begBal:     "5.171985758179548557"
-TIME ~ CLOCK - : 4-----endBal:     "5.171985758179548557"
-TIME ~ CLOCK - : 4-----endBalCalc: "5.171985758179548557"
-TIME ~ CLOCK - : 4-----begBalDiff: ""
-TIME ~ CLOCK - : 4-----endBalDiff: ""
-TIME ~ CLOCK - : 4-----reconciled: true
-TIME ~ CLOCK - : 4-----amountNet regular: ""
-TIME ~ CLOCK - : 4-----pushed: 10280558 67 "5.171985758179548557" "" "" "5.171985758179548557" true
-TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM execution error.","data":"Reverted 0x"},"id":"1"}
- {"jsonrpc":"2.0","method":"eth_call","params":[{"to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c", "data": "0x95d89b41"}, "0x9cde6e"],"id":"1"}
-TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM execution error.","data":"Reverted 0x"},"id":"1"}
- {"jsonrpc":"2.0","method":"eth_call","params":[{"to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c", "data": "0x70a08231000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"}, "0x9cde6e"],"id":"1"}
+TIME ~ CLOCK - : 4-----Trial balance: regular
+TIME ~ CLOCK - : 4-----  hash: 0xe60db84c0133325d44a41a0de0b5b41b56693437f098e4394a9608ea7d4398f7
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  prevBal:       5171985758179548557
+TIME ~ CLOCK - : 4-----  begBal:        5171985758179548557
+TIME ~ CLOCK - : 4-----  begBalDiff:    0
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 8------  amountIn:      0
+TIME ~ CLOCK - : 8------  internalIn:    0
+TIME ~ CLOCK - : 8------  slfDstrctIn:   0
+TIME ~ CLOCK - : 8------  minBRwdIn:     0
+TIME ~ CLOCK - : 8------  minNRwdIn:     0
+TIME ~ CLOCK - : 8------  minTxFeeIn:    0
+TIME ~ CLOCK - : 8------  minURwdIn:     0
+TIME ~ CLOCK - : 8------  prefundIn:     0
+TIME ~ CLOCK - : 4-----  totalIn:       0
+TIME ~ CLOCK - : 8------  amountOut:     0
+TIME ~ CLOCK - : 8------  internalOut:   0
+TIME ~ CLOCK - : 8------  slfDstrctOt:   0
+TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 4-----  totalOut:      0
+TIME ~ CLOCK - : 4-----  amountNet:     0
+TIME ~ CLOCK - : 4-----  endBal:        5171985758179548557
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  endBalCalc:    5171985758179548557
+TIME ~ CLOCK - : 4-----  endBalDiff:    0
+TIME ~ CLOCK - : 4-----  regular-recon: true
 , {
   "hash": "0xe60db84c0133325d44a41a0de0b5b41b56693437f098e4394a9608ea7d4398f7",
   "blockHash": "0x33ad97fa69125df95dcf62d41af8beaac3b5b1e35841204b58779521dc332f31",
@@ -1824,28 +1918,29 @@ TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM exe
       "prevBlk": 10279931,
       "prevBlkBal": "5.171985758179548557",
       "begBal": "5.171985758179548557",
-      "begBalDiff": "",
+      "endBal": "5.171985758179548557",
       "amountIn": "",
-      "amountOut": "",
       "internalIn": "",
-      "internalOut": "",
       "selfDestructIn": "",
-      "selfDestructOut": "",
       "minerBaseRewardIn": "",
       "minerNephewRewardIn": "",
       "minerTxFeeIn": "",
       "minerUncleRewardIn": "",
       "prefundIn": "",
+      "amountOut": "",
+      "internalOut": "",
+      "selfDestructOut": "",
       "gasCostOut": "",
-      "endBal": "5.171985758179548557",
+      "reconciliationType": "regular",
+      "spotPrice": "-1",
+      "begBalDiff": "",
       "endBalCalc": "5.171985758179548557",
       "endBalDiff": "",
-      "amountNet": "",
-      "spotPrice": "-1",
-      "reconciliationType": "regular",
-      "reconciled": true,
       "totalIn": "",
-      "totalOut": ""
+      "totalOut": "",
+      "totalOutLessGas": "",
+      "amountNet": "",
+      "reconciled": true
     },
     {
       "blockNumber": 10280558,
@@ -1857,27 +1952,28 @@ TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM exe
       "prevBlk": 10279650,
       "prevBlkBal": "1168.017776639199461740",
       "begBal": "1168.017776639199461740",
-      "begBalDiff": "",
+      "endBal": "1168.967776639199461740",
       "amountIn": "0.950000000000000000",
-      "amountOut": "",
       "internalIn": "",
-      "internalOut": "",
       "selfDestructIn": "",
-      "selfDestructOut": "",
       "minerBaseRewardIn": "",
       "minerNephewRewardIn": "",
       "minerTxFeeIn": "",
       "minerUncleRewardIn": "",
       "prefundIn": "",
+      "amountOut": "",
+      "internalOut": "",
+      "selfDestructOut": "",
       "gasCostOut": "",
-      "endBal": "1168.967776639199461740",
-      "endBalCalc": "",
-      "endBalDiff": "",
-      "amountNet": "0.950000000000000000",
       "spotPrice": "-1",
-      "reconciled": true,
+      "begBalDiff": "",
+      "endBalCalc": "1168.967776639199461740",
+      "endBalDiff": "",
       "totalIn": "0.950000000000000000",
-      "totalOut": ""
+      "totalOut": "",
+      "totalOutLessGas": "",
+      "amountNet": "0.950000000000000000",
+      "reconciled": true
     }
   ],
   "gasCost": 13489203800000000,
@@ -1885,22 +1981,33 @@ TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM exe
   "date": "2020-06-17 02:23:26 UTC",
   "ether": 0.000000000000000000
 }
-TIME ~ CLOCK - : 4-----assetSymbol: ETH
-TIME ~ CLOCK - : 4-----assetAddr:   0xf503017d7baf7fbc0fff7492b751025c6a78179b
-TIME ~ CLOCK - : 4-----prevBlkBal:  "5.171985758179548557"
-TIME ~ CLOCK - : 4-----prevBlock:   
-TIME ~ CLOCK - : 4-----begBal:     "5.171985758179548557"
-TIME ~ CLOCK - : 4-----endBal:     "5.171985758179548557"
-TIME ~ CLOCK - : 4-----endBalCalc: "5.171985758179548557"
-TIME ~ CLOCK - : 4-----begBalDiff: ""
-TIME ~ CLOCK - : 4-----endBalDiff: ""
-TIME ~ CLOCK - : 4-----reconciled: true
-TIME ~ CLOCK - : 4-----amountNet regular: ""
-TIME ~ CLOCK - : 4-----pushed: 10280872 92 "5.171985758179548557" "" "" "5.171985758179548557" true
-TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM execution error.","data":"Reverted 0x"},"id":"1"}
- {"jsonrpc":"2.0","method":"eth_call","params":[{"to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c", "data": "0x95d89b41"}, "0x9cdfa8"],"id":"1"}
-TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM execution error.","data":"Reverted 0x"},"id":"1"}
- {"jsonrpc":"2.0","method":"eth_call","params":[{"to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c", "data": "0x70a08231000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"}, "0x9cdfa8"],"id":"1"}
+TIME ~ CLOCK - : 4-----Trial balance: regular
+TIME ~ CLOCK - : 4-----  hash: 0x6e6bbba83b32bf9e0c42cb82433dfee65d47f287a5b7756cdc8f057ab879fbb3
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  prevBal:       5171985758179548557
+TIME ~ CLOCK - : 4-----  begBal:        5171985758179548557
+TIME ~ CLOCK - : 4-----  begBalDiff:    0
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 8------  amountIn:      0
+TIME ~ CLOCK - : 8------  internalIn:    0
+TIME ~ CLOCK - : 8------  slfDstrctIn:   0
+TIME ~ CLOCK - : 8------  minBRwdIn:     0
+TIME ~ CLOCK - : 8------  minNRwdIn:     0
+TIME ~ CLOCK - : 8------  minTxFeeIn:    0
+TIME ~ CLOCK - : 8------  minURwdIn:     0
+TIME ~ CLOCK - : 8------  prefundIn:     0
+TIME ~ CLOCK - : 4-----  totalIn:       0
+TIME ~ CLOCK - : 8------  amountOut:     0
+TIME ~ CLOCK - : 8------  internalOut:   0
+TIME ~ CLOCK - : 8------  slfDstrctOt:   0
+TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 4-----  totalOut:      0
+TIME ~ CLOCK - : 4-----  amountNet:     0
+TIME ~ CLOCK - : 4-----  endBal:        5171985758179548557
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  endBalCalc:    5171985758179548557
+TIME ~ CLOCK - : 4-----  endBalDiff:    0
+TIME ~ CLOCK - : 4-----  regular-recon: true
 , {
   "hash": "0x6e6bbba83b32bf9e0c42cb82433dfee65d47f287a5b7756cdc8f057ab879fbb3",
   "blockHash": "0xdb5cef64bea4738eec03a40114a63f5332d2a81faf51ebe247b6d684ca9347b9",
@@ -2580,28 +2687,29 @@ TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM exe
       "prevBlk": 10280558,
       "prevBlkBal": "5.171985758179548557",
       "begBal": "5.171985758179548557",
-      "begBalDiff": "",
+      "endBal": "5.171985758179548557",
       "amountIn": "",
-      "amountOut": "",
       "internalIn": "",
-      "internalOut": "",
       "selfDestructIn": "",
-      "selfDestructOut": "",
       "minerBaseRewardIn": "",
       "minerNephewRewardIn": "",
       "minerTxFeeIn": "",
       "minerUncleRewardIn": "",
       "prefundIn": "",
+      "amountOut": "",
+      "internalOut": "",
+      "selfDestructOut": "",
       "gasCostOut": "",
-      "endBal": "5.171985758179548557",
+      "reconciliationType": "regular",
+      "spotPrice": "-1",
+      "begBalDiff": "",
       "endBalCalc": "5.171985758179548557",
       "endBalDiff": "",
-      "amountNet": "",
-      "spotPrice": "-1",
-      "reconciliationType": "regular",
-      "reconciled": true,
       "totalIn": "",
-      "totalOut": ""
+      "totalOut": "",
+      "totalOutLessGas": "",
+      "amountNet": "",
+      "reconciled": true
     },
     {
       "blockNumber": 10280872,
@@ -2613,27 +2721,28 @@ TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM exe
       "prevBlk": 10280558,
       "prevBlkBal": "1168.967776639199461740",
       "begBal": "1168.967776639199461740",
-      "begBalDiff": "",
+      "endBal": "1197.467776639199461740",
       "amountIn": "28.500000000000000000",
-      "amountOut": "",
       "internalIn": "",
-      "internalOut": "",
       "selfDestructIn": "",
-      "selfDestructOut": "",
       "minerBaseRewardIn": "",
       "minerNephewRewardIn": "",
       "minerTxFeeIn": "",
       "minerUncleRewardIn": "",
       "prefundIn": "",
+      "amountOut": "",
+      "internalOut": "",
+      "selfDestructOut": "",
       "gasCostOut": "",
-      "endBal": "1197.467776639199461740",
-      "endBalCalc": "",
-      "endBalDiff": "",
-      "amountNet": "28.500000000000000000",
       "spotPrice": "-1",
-      "reconciled": true,
+      "begBalDiff": "",
+      "endBalCalc": "1197.467776639199461740",
+      "endBalDiff": "",
       "totalIn": "28.500000000000000000",
-      "totalOut": ""
+      "totalOut": "",
+      "totalOutLessGas": "",
+      "amountNet": "28.500000000000000000",
+      "reconciled": true
     }
   ],
   "gasCost": 13501005000000000,
@@ -2641,22 +2750,33 @@ TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM exe
   "date": "2020-06-17 03:33:24 UTC",
   "ether": 0.000000000000000000
 }
-TIME ~ CLOCK - : 4-----assetSymbol: ETH
-TIME ~ CLOCK - : 4-----assetAddr:   0xf503017d7baf7fbc0fff7492b751025c6a78179b
-TIME ~ CLOCK - : 4-----prevBlkBal:  "5.171985758179548557"
-TIME ~ CLOCK - : 4-----prevBlock:   
-TIME ~ CLOCK - : 4-----begBal:     "5.171985758179548557"
-TIME ~ CLOCK - : 4-----endBal:     "5.171985758179548557"
-TIME ~ CLOCK - : 4-----endBalCalc: "5.171985758179548557"
-TIME ~ CLOCK - : 4-----begBalDiff: ""
-TIME ~ CLOCK - : 4-----endBalDiff: ""
-TIME ~ CLOCK - : 4-----reconciled: true
-TIME ~ CLOCK - : 4-----amountNet regular: ""
-TIME ~ CLOCK - : 4-----pushed: 10283648 182 "5.171985758179548557" "" "" "5.171985758179548557" true
-TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM execution error.","data":"Reverted 0x"},"id":"1"}
- {"jsonrpc":"2.0","method":"eth_call","params":[{"to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c", "data": "0x95d89b41"}, "0x9cea80"],"id":"1"}
-TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM execution error.","data":"Reverted 0x"},"id":"1"}
- {"jsonrpc":"2.0","method":"eth_call","params":[{"to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c", "data": "0x70a08231000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"}, "0x9cea80"],"id":"1"}
+TIME ~ CLOCK - : 4-----Trial balance: regular
+TIME ~ CLOCK - : 4-----  hash: 0xd7ded45b123006b183f73adbab5d58478e41dae2715ea6986a96fa954a6f15c5
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  prevBal:       5171985758179548557
+TIME ~ CLOCK - : 4-----  begBal:        5171985758179548557
+TIME ~ CLOCK - : 4-----  begBalDiff:    0
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 8------  amountIn:      0
+TIME ~ CLOCK - : 8------  internalIn:    0
+TIME ~ CLOCK - : 8------  slfDstrctIn:   0
+TIME ~ CLOCK - : 8------  minBRwdIn:     0
+TIME ~ CLOCK - : 8------  minNRwdIn:     0
+TIME ~ CLOCK - : 8------  minTxFeeIn:    0
+TIME ~ CLOCK - : 8------  minURwdIn:     0
+TIME ~ CLOCK - : 8------  prefundIn:     0
+TIME ~ CLOCK - : 4-----  totalIn:       0
+TIME ~ CLOCK - : 8------  amountOut:     0
+TIME ~ CLOCK - : 8------  internalOut:   0
+TIME ~ CLOCK - : 8------  slfDstrctOt:   0
+TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 4-----  totalOut:      0
+TIME ~ CLOCK - : 4-----  amountNet:     0
+TIME ~ CLOCK - : 4-----  endBal:        5171985758179548557
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  endBalCalc:    5171985758179548557
+TIME ~ CLOCK - : 4-----  endBalDiff:    0
+TIME ~ CLOCK - : 4-----  regular-recon: true
 , {
   "hash": "0xd7ded45b123006b183f73adbab5d58478e41dae2715ea6986a96fa954a6f15c5",
   "blockHash": "0xefa539acc15da9b0fbc17b48b2fd62c09caa53e31ac1c6181574c8ecb74634f5",
@@ -2776,28 +2896,29 @@ TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM exe
       "prevBlk": 10280872,
       "prevBlkBal": "5.171985758179548557",
       "begBal": "5.171985758179548557",
-      "begBalDiff": "",
+      "endBal": "5.171985758179548557",
       "amountIn": "",
-      "amountOut": "",
       "internalIn": "",
-      "internalOut": "",
       "selfDestructIn": "",
-      "selfDestructOut": "",
       "minerBaseRewardIn": "",
       "minerNephewRewardIn": "",
       "minerTxFeeIn": "",
       "minerUncleRewardIn": "",
       "prefundIn": "",
+      "amountOut": "",
+      "internalOut": "",
+      "selfDestructOut": "",
       "gasCostOut": "",
-      "endBal": "5.171985758179548557",
+      "reconciliationType": "regular",
+      "spotPrice": "-1",
+      "begBalDiff": "",
       "endBalCalc": "5.171985758179548557",
       "endBalDiff": "",
-      "amountNet": "",
-      "spotPrice": "-1",
-      "reconciliationType": "regular",
-      "reconciled": true,
       "totalIn": "",
-      "totalOut": ""
+      "totalOut": "",
+      "totalOutLessGas": "",
+      "amountNet": "",
+      "reconciled": true
     },
     {
       "blockNumber": 10283648,
@@ -2809,27 +2930,28 @@ TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM exe
       "prevBlk": 10280872,
       "prevBlkBal": "1197.467776639199461740",
       "begBal": "1197.467776639199461740",
-      "begBalDiff": "",
+      "endBal": "1202.217776639199461740",
       "amountIn": "4.750000000000000000",
-      "amountOut": "",
       "internalIn": "",
-      "internalOut": "",
       "selfDestructIn": "",
-      "selfDestructOut": "",
       "minerBaseRewardIn": "",
       "minerNephewRewardIn": "",
       "minerTxFeeIn": "",
       "minerUncleRewardIn": "",
       "prefundIn": "",
+      "amountOut": "",
+      "internalOut": "",
+      "selfDestructOut": "",
       "gasCostOut": "",
-      "endBal": "1202.217776639199461740",
-      "endBalCalc": "",
-      "endBalDiff": "",
-      "amountNet": "4.750000000000000000",
       "spotPrice": "-1",
-      "reconciled": true,
+      "begBalDiff": "",
+      "endBalCalc": "1202.217776639199461740",
+      "endBalDiff": "",
       "totalIn": "4.750000000000000000",
-      "totalOut": ""
+      "totalOut": "",
+      "totalOutLessGas": "",
+      "amountNet": "4.750000000000000000",
+      "reconciled": true
     }
   ],
   "gasCost": 3223730000000000,
@@ -2837,22 +2959,33 @@ TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM exe
   "date": "2020-06-17 13:50:29 UTC",
   "ether": 0.000000000000000000
 }
-TIME ~ CLOCK - : 4-----assetSymbol: ETH
-TIME ~ CLOCK - : 4-----assetAddr:   0xf503017d7baf7fbc0fff7492b751025c6a78179b
-TIME ~ CLOCK - : 4-----prevBlkBal:  "5.171985758179548557"
-TIME ~ CLOCK - : 4-----prevBlock:   
-TIME ~ CLOCK - : 4-----begBal:     "5.171985758179548557"
-TIME ~ CLOCK - : 4-----endBal:     "5.171985758179548557"
-TIME ~ CLOCK - : 4-----endBalCalc: "5.171985758179548557"
-TIME ~ CLOCK - : 4-----begBalDiff: ""
-TIME ~ CLOCK - : 4-----endBalDiff: ""
-TIME ~ CLOCK - : 4-----reconciled: true
-TIME ~ CLOCK - : 4-----amountNet regular: ""
-TIME ~ CLOCK - : 4-----pushed: 10283749 30 "5.171985758179548557" "" "" "5.171985758179548557" true
-TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM execution error.","data":"Reverted 0x"},"id":"1"}
- {"jsonrpc":"2.0","method":"eth_call","params":[{"to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c", "data": "0x95d89b41"}, "0x9ceae5"],"id":"1"}
-TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM execution error.","data":"Reverted 0x"},"id":"1"}
- {"jsonrpc":"2.0","method":"eth_call","params":[{"to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c", "data": "0x70a08231000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"}, "0x9ceae5"],"id":"1"}
+TIME ~ CLOCK - : 4-----Trial balance: regular
+TIME ~ CLOCK - : 4-----  hash: 0x83e221d1132253c902bbc35126752031256640e01206573c4961f879055b97c5
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  prevBal:       5171985758179548557
+TIME ~ CLOCK - : 4-----  begBal:        5171985758179548557
+TIME ~ CLOCK - : 4-----  begBalDiff:    0
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 8------  amountIn:      0
+TIME ~ CLOCK - : 8------  internalIn:    0
+TIME ~ CLOCK - : 8------  slfDstrctIn:   0
+TIME ~ CLOCK - : 8------  minBRwdIn:     0
+TIME ~ CLOCK - : 8------  minNRwdIn:     0
+TIME ~ CLOCK - : 8------  minTxFeeIn:    0
+TIME ~ CLOCK - : 8------  minURwdIn:     0
+TIME ~ CLOCK - : 8------  prefundIn:     0
+TIME ~ CLOCK - : 4-----  totalIn:       0
+TIME ~ CLOCK - : 8------  amountOut:     0
+TIME ~ CLOCK - : 8------  internalOut:   0
+TIME ~ CLOCK - : 8------  slfDstrctOt:   0
+TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 4-----  totalOut:      0
+TIME ~ CLOCK - : 4-----  amountNet:     0
+TIME ~ CLOCK - : 4-----  endBal:        5171985758179548557
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  endBalCalc:    5171985758179548557
+TIME ~ CLOCK - : 4-----  endBalDiff:    0
+TIME ~ CLOCK - : 4-----  regular-recon: true
 , {
   "hash": "0x83e221d1132253c902bbc35126752031256640e01206573c4961f879055b97c5",
   "blockHash": "0xe4d19faf34d3eea341cadbd0e3064ad7d8be072f314e5bca803cc38f52f6a95d",
@@ -3532,28 +3665,29 @@ TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM exe
       "prevBlk": 10283648,
       "prevBlkBal": "5.171985758179548557",
       "begBal": "5.171985758179548557",
-      "begBalDiff": "",
+      "endBal": "5.171985758179548557",
       "amountIn": "",
-      "amountOut": "",
       "internalIn": "",
-      "internalOut": "",
       "selfDestructIn": "",
-      "selfDestructOut": "",
       "minerBaseRewardIn": "",
       "minerNephewRewardIn": "",
       "minerTxFeeIn": "",
       "minerUncleRewardIn": "",
       "prefundIn": "",
+      "amountOut": "",
+      "internalOut": "",
+      "selfDestructOut": "",
       "gasCostOut": "",
-      "endBal": "5.171985758179548557",
+      "reconciliationType": "regular",
+      "spotPrice": "-1",
+      "begBalDiff": "",
       "endBalCalc": "5.171985758179548557",
       "endBalDiff": "",
-      "amountNet": "",
-      "spotPrice": "-1",
-      "reconciliationType": "regular",
-      "reconciled": true,
       "totalIn": "",
-      "totalOut": ""
+      "totalOut": "",
+      "totalOutLessGas": "",
+      "amountNet": "",
+      "reconciled": true
     },
     {
       "blockNumber": 10283749,
@@ -3565,27 +3699,28 @@ TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM exe
       "prevBlk": 10283648,
       "prevBlkBal": "1202.217776639199461740",
       "begBal": "1202.217776639199461740",
-      "begBalDiff": "",
+      "endBal": "1207.217776639199461740",
       "amountIn": "5.0000000",
-      "amountOut": "",
       "internalIn": "",
-      "internalOut": "",
       "selfDestructIn": "",
-      "selfDestructOut": "",
       "minerBaseRewardIn": "",
       "minerNephewRewardIn": "",
       "minerTxFeeIn": "",
       "minerUncleRewardIn": "",
       "prefundIn": "",
+      "amountOut": "",
+      "internalOut": "",
+      "selfDestructOut": "",
       "gasCostOut": "",
-      "endBal": "1207.217776639199461740",
-      "endBalCalc": "",
-      "endBalDiff": "",
-      "amountNet": "5.0000000",
       "spotPrice": "-1",
-      "reconciled": true,
+      "begBalDiff": "",
+      "endBalCalc": "1207.217776639199461740",
+      "endBalDiff": "",
       "totalIn": "5.0000000",
-      "totalOut": ""
+      "totalOut": "",
+      "totalOutLessGas": "",
+      "amountNet": "5.0000000",
+      "reconciled": true
     }
   ],
   "gasCost": 16919093400000000,
@@ -3593,22 +3728,33 @@ TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM exe
   "date": "2020-06-17 14:13:58 UTC",
   "ether": 0.000000000000000000
 }
-TIME ~ CLOCK - : 4-----assetSymbol: ETH
-TIME ~ CLOCK - : 4-----assetAddr:   0xf503017d7baf7fbc0fff7492b751025c6a78179b
-TIME ~ CLOCK - : 4-----prevBlkBal:  "5.171985758179548557"
-TIME ~ CLOCK - : 4-----prevBlock:   
-TIME ~ CLOCK - : 4-----begBal:     "5.171985758179548557"
-TIME ~ CLOCK - : 4-----endBal:     "5.171985758179548557"
-TIME ~ CLOCK - : 4-----endBalCalc: "5.171985758179548557"
-TIME ~ CLOCK - : 4-----begBalDiff: ""
-TIME ~ CLOCK - : 4-----endBalDiff: ""
-TIME ~ CLOCK - : 4-----reconciled: true
-TIME ~ CLOCK - : 4-----amountNet regular: ""
-TIME ~ CLOCK - : 4-----pushed: 10289986 111 "5.171985758179548557" "" "" "5.171985758179548557" true
-TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM execution error.","data":"Reverted 0x"},"id":"1"}
- {"jsonrpc":"2.0","method":"eth_call","params":[{"to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c", "data": "0x95d89b41"}, "0x9d0342"],"id":"1"}
-TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM execution error.","data":"Reverted 0x"},"id":"1"}
- {"jsonrpc":"2.0","method":"eth_call","params":[{"to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c", "data": "0x70a08231000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"}, "0x9d0342"],"id":"1"}
+TIME ~ CLOCK - : 4-----Trial balance: regular
+TIME ~ CLOCK - : 4-----  hash: 0xad8410eead2eb335e7ce3462d71023a1f73ad62521385154d583b8fd794fc92f
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  prevBal:       5171985758179548557
+TIME ~ CLOCK - : 4-----  begBal:        5171985758179548557
+TIME ~ CLOCK - : 4-----  begBalDiff:    0
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 8------  amountIn:      0
+TIME ~ CLOCK - : 8------  internalIn:    0
+TIME ~ CLOCK - : 8------  slfDstrctIn:   0
+TIME ~ CLOCK - : 8------  minBRwdIn:     0
+TIME ~ CLOCK - : 8------  minNRwdIn:     0
+TIME ~ CLOCK - : 8------  minTxFeeIn:    0
+TIME ~ CLOCK - : 8------  minURwdIn:     0
+TIME ~ CLOCK - : 8------  prefundIn:     0
+TIME ~ CLOCK - : 4-----  totalIn:       0
+TIME ~ CLOCK - : 8------  amountOut:     0
+TIME ~ CLOCK - : 8------  internalOut:   0
+TIME ~ CLOCK - : 8------  slfDstrctOt:   0
+TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 4-----  totalOut:      0
+TIME ~ CLOCK - : 4-----  amountNet:     0
+TIME ~ CLOCK - : 4-----  endBal:        5171985758179548557
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  endBalCalc:    5171985758179548557
+TIME ~ CLOCK - : 4-----  endBalDiff:    0
+TIME ~ CLOCK - : 4-----  regular-recon: true
 , {
   "hash": "0xad8410eead2eb335e7ce3462d71023a1f73ad62521385154d583b8fd794fc92f",
   "blockHash": "0xfe43fcc353b9ac3101c00dceba3b77f9bd942e92750044e8372953e68ea11ced",
@@ -4568,28 +4714,29 @@ TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM exe
       "prevBlk": 10283749,
       "prevBlkBal": "5.171985758179548557",
       "begBal": "5.171985758179548557",
-      "begBalDiff": "",
+      "endBal": "5.171985758179548557",
       "amountIn": "",
-      "amountOut": "",
       "internalIn": "",
-      "internalOut": "",
       "selfDestructIn": "",
-      "selfDestructOut": "",
       "minerBaseRewardIn": "",
       "minerNephewRewardIn": "",
       "minerTxFeeIn": "",
       "minerUncleRewardIn": "",
       "prefundIn": "",
+      "amountOut": "",
+      "internalOut": "",
+      "selfDestructOut": "",
       "gasCostOut": "",
-      "endBal": "5.171985758179548557",
+      "reconciliationType": "regular",
+      "spotPrice": "-1",
+      "begBalDiff": "",
       "endBalCalc": "5.171985758179548557",
       "endBalDiff": "",
-      "amountNet": "",
-      "spotPrice": "-1",
-      "reconciliationType": "regular",
-      "reconciled": true,
       "totalIn": "",
-      "totalOut": ""
+      "totalOut": "",
+      "totalOutLessGas": "",
+      "amountNet": "",
+      "reconciled": true
     },
     {
       "blockNumber": 10289986,
@@ -4601,27 +4748,28 @@ TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM exe
       "prevBlk": 10283749,
       "prevBlkBal": "1207.217776639199461740",
       "begBal": "1207.217776639199461740",
-      "begBalDiff": "",
+      "endBal": "1209.117776639199461740",
       "amountIn": "1.900000000000000000",
-      "amountOut": "",
       "internalIn": "",
-      "internalOut": "",
       "selfDestructIn": "",
-      "selfDestructOut": "",
       "minerBaseRewardIn": "",
       "minerNephewRewardIn": "",
       "minerTxFeeIn": "",
       "minerUncleRewardIn": "",
       "prefundIn": "",
+      "amountOut": "",
+      "internalOut": "",
+      "selfDestructOut": "",
       "gasCostOut": "",
-      "endBal": "1209.117776639199461740",
-      "endBalCalc": "",
-      "endBalDiff": "",
-      "amountNet": "1.900000000000000000",
       "spotPrice": "-1",
-      "reconciled": true,
+      "begBalDiff": "",
+      "endBalCalc": "1209.117776639199461740",
+      "endBalDiff": "",
       "totalIn": "1.900000000000000000",
-      "totalOut": ""
+      "totalOut": "",
+      "totalOutLessGas": "",
+      "amountNet": "1.900000000000000000",
+      "reconciled": true
     }
   ],
   "gasCost": 22634573500000000,
@@ -4629,22 +4777,33 @@ TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM exe
   "date": "2020-06-18 13:33:25 UTC",
   "ether": 0.000000000000000000
 }
-TIME ~ CLOCK - : 4-----assetSymbol: ETH
-TIME ~ CLOCK - : 4-----assetAddr:   0xf503017d7baf7fbc0fff7492b751025c6a78179b
-TIME ~ CLOCK - : 4-----prevBlkBal:  "5.171985758179548557"
-TIME ~ CLOCK - : 4-----prevBlock:   
-TIME ~ CLOCK - : 4-----begBal:     "5.171985758179548557"
-TIME ~ CLOCK - : 4-----endBal:     "5.171985758179548557"
-TIME ~ CLOCK - : 4-----endBalCalc: "5.171985758179548557"
-TIME ~ CLOCK - : 4-----begBalDiff: ""
-TIME ~ CLOCK - : 4-----endBalDiff: ""
-TIME ~ CLOCK - : 4-----reconciled: true
-TIME ~ CLOCK - : 4-----amountNet regular: ""
-TIME ~ CLOCK - : 4-----pushed: 10290103 40 "5.171985758179548557" "" "" "5.171985758179548557" true
-TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM execution error.","data":"Reverted 0x"},"id":"1"}
- {"jsonrpc":"2.0","method":"eth_call","params":[{"to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c", "data": "0x95d89b41"}, "0x9d03b7"],"id":"1"}
-TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM execution error.","data":"Reverted 0x"},"id":"1"}
- {"jsonrpc":"2.0","method":"eth_call","params":[{"to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c", "data": "0x70a08231000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"}, "0x9d03b7"],"id":"1"}
+TIME ~ CLOCK - : 4-----Trial balance: regular
+TIME ~ CLOCK - : 4-----  hash: 0xf2efaad8c0842881ef6c04ee17ba6b4c308c1daa1cdc55d5afa6eefd2c9d43e2
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  prevBal:       5171985758179548557
+TIME ~ CLOCK - : 4-----  begBal:        5171985758179548557
+TIME ~ CLOCK - : 4-----  begBalDiff:    0
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 8------  amountIn:      0
+TIME ~ CLOCK - : 8------  internalIn:    0
+TIME ~ CLOCK - : 8------  slfDstrctIn:   0
+TIME ~ CLOCK - : 8------  minBRwdIn:     0
+TIME ~ CLOCK - : 8------  minNRwdIn:     0
+TIME ~ CLOCK - : 8------  minTxFeeIn:    0
+TIME ~ CLOCK - : 8------  minURwdIn:     0
+TIME ~ CLOCK - : 8------  prefundIn:     0
+TIME ~ CLOCK - : 4-----  totalIn:       0
+TIME ~ CLOCK - : 8------  amountOut:     0
+TIME ~ CLOCK - : 8------  internalOut:   0
+TIME ~ CLOCK - : 8------  slfDstrctOt:   0
+TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 4-----  totalOut:      0
+TIME ~ CLOCK - : 4-----  amountNet:     0
+TIME ~ CLOCK - : 4-----  endBal:        5171985758179548557
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  endBalCalc:    5171985758179548557
+TIME ~ CLOCK - : 4-----  endBalDiff:    0
+TIME ~ CLOCK - : 4-----  regular-recon: true
 , {
   "hash": "0xf2efaad8c0842881ef6c04ee17ba6b4c308c1daa1cdc55d5afa6eefd2c9d43e2",
   "blockHash": "0x6438e075d91cfc466938778d76e99555b9c75e1427f20b484db76a2274f59164",
@@ -5244,28 +5403,29 @@ TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM exe
       "prevBlk": 10289986,
       "prevBlkBal": "5.171985758179548557",
       "begBal": "5.171985758179548557",
-      "begBalDiff": "",
+      "endBal": "5.171985758179548557",
       "amountIn": "",
-      "amountOut": "",
       "internalIn": "",
-      "internalOut": "",
       "selfDestructIn": "",
-      "selfDestructOut": "",
       "minerBaseRewardIn": "",
       "minerNephewRewardIn": "",
       "minerTxFeeIn": "",
       "minerUncleRewardIn": "",
       "prefundIn": "",
+      "amountOut": "",
+      "internalOut": "",
+      "selfDestructOut": "",
       "gasCostOut": "",
-      "endBal": "5.171985758179548557",
+      "reconciliationType": "regular",
+      "spotPrice": "-1",
+      "begBalDiff": "",
       "endBalCalc": "5.171985758179548557",
       "endBalDiff": "",
-      "amountNet": "",
-      "spotPrice": "-1",
-      "reconciliationType": "regular",
-      "reconciled": true,
       "totalIn": "",
-      "totalOut": ""
+      "totalOut": "",
+      "totalOutLessGas": "",
+      "amountNet": "",
+      "reconciled": true
     },
     {
       "blockNumber": 10290103,
@@ -5277,27 +5437,28 @@ TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM exe
       "prevBlk": 10289986,
       "prevBlkBal": "1209.117776639199461740",
       "begBal": "1209.117776639199461740",
-      "begBalDiff": "",
+      "endBal": "1211.097776639199461740",
       "amountIn": "1.980000000000000000",
-      "amountOut": "",
       "internalIn": "",
-      "internalOut": "",
       "selfDestructIn": "",
-      "selfDestructOut": "",
       "minerBaseRewardIn": "",
       "minerNephewRewardIn": "",
       "minerTxFeeIn": "",
       "minerUncleRewardIn": "",
       "prefundIn": "",
+      "amountOut": "",
+      "internalOut": "",
+      "selfDestructOut": "",
       "gasCostOut": "",
-      "endBal": "1211.097776639199461740",
-      "endBalCalc": "",
-      "endBalDiff": "",
-      "amountNet": "1.980000000000000000",
       "spotPrice": "-1",
-      "reconciled": true,
+      "begBalDiff": "",
+      "endBalCalc": "1211.097776639199461740",
+      "endBalDiff": "",
       "totalIn": "1.980000000000000000",
-      "totalOut": ""
+      "totalOut": "",
+      "totalOutLessGas": "",
+      "amountNet": "1.980000000000000000",
+      "reconciled": true
     }
   ],
   "gasCost": 14869160000000000,
@@ -5305,27 +5466,87 @@ TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM exe
   "date": "2020-06-18 14:01:48 UTC",
   "ether": 0.000000000000000000
 }
-TIME ~ CLOCK - : 4-----assetSymbol: ETH
-TIME ~ CLOCK - : 4-----assetAddr:   0xf503017d7baf7fbc0fff7492b751025c6a78179b
-TIME ~ CLOCK - : 4-----prevBlkBal:  "5.171985758179548557"
-TIME ~ CLOCK - : 4-----prevBlock:   
-TIME ~ CLOCK - : 4-----from --> amountOut: ""
-TIME ~ CLOCK - : 4-----from --> gasCostOut: "0.001739343000000000"
-TIME ~ CLOCK - : 4-----begBal:     "5.171985758179548557"
-TIME ~ CLOCK - : 4-----endBal:     "5.168485149679548557"
-TIME ~ CLOCK - : 4-----endBalCalc: "5.170246415179548557"
-TIME ~ CLOCK - : 4-----begBalDiff: ""
-TIME ~ CLOCK - : 4-----endBalDiff: "-0.001761265500000000"
-TIME ~ CLOCK - : 4-----reconciled: false
-TIME ~ CLOCK - : 4-----partial:
-TIME ~ CLOCK - : 4-----  begBal:     "5.171985758179548557"
-TIME ~ CLOCK - : 4-----  begBalDiff: ""
-TIME ~ CLOCK - : 4-----  endBal:     "5.170246415179548557"
-TIME ~ CLOCK - : 4-----  endBalCalc: "5.170246415179548557"
-TIME ~ CLOCK - : 4-----  endBalDiff: ""
-TIME ~ CLOCK - : 4-----  reconciled: true
-TIME ~ CLOCK - : 4-----  amountNet   prevdiff-partial: "-0.001739343000000000"
-TIME ~ CLOCK - : 4-----pushed: 10290317 46 "5.171985758179548557" "" "" "5.170246415179548557" true
+TIME ~ CLOCK - : 4-----Trial balance: regular
+TIME ~ CLOCK - : 4-----  hash: 0x717d21a307469b781a8231f177fcb2b2a683d537ddeea2da6eec69f4b12b1c42
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  prevBal:       5171985758179548557
+TIME ~ CLOCK - : 4-----  begBal:        5171985758179548557
+TIME ~ CLOCK - : 4-----  begBalDiff:    0
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 8------  amountIn:      0
+TIME ~ CLOCK - : 8------  internalIn:    0
+TIME ~ CLOCK - : 8------  slfDstrctIn:   0
+TIME ~ CLOCK - : 8------  minBRwdIn:     0
+TIME ~ CLOCK - : 8------  minNRwdIn:     0
+TIME ~ CLOCK - : 8------  minTxFeeIn:    0
+TIME ~ CLOCK - : 8------  minURwdIn:     0
+TIME ~ CLOCK - : 8------  prefundIn:     0
+TIME ~ CLOCK - : 4-----  totalIn:       0
+TIME ~ CLOCK - : 8------  amountOut:     0
+TIME ~ CLOCK - : 8------  internalOut:   0
+TIME ~ CLOCK - : 8------  slfDstrctOt:   0
+TIME ~ CLOCK - : 8------  gasCostOut:    1739343000000000
+TIME ~ CLOCK - : 4-----  totalOut:      1739343000000000
+TIME ~ CLOCK - : 4-----  amountNet:     -1739343000000000
+TIME ~ CLOCK - : 4-----  endBal:        5168485149679548557
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  endBalCalc:    5170246415179548557
+TIME ~ CLOCK - : 4-----  endBalDiff:    1761265500000000
+TIME ~ CLOCK - : 4-----  regular-recon: false
+TIME ~ CLOCK - : 4-----Trial balance: by-trace
+TIME ~ CLOCK - : 4-----  hash: 0x717d21a307469b781a8231f177fcb2b2a683d537ddeea2da6eec69f4b12b1c42
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  prevBal:       5171985758179548557
+TIME ~ CLOCK - : 4-----  begBal:        5171985758179548557
+TIME ~ CLOCK - : 4-----  begBalDiff:    0
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 8------  amountIn:      0
+TIME ~ CLOCK - : 8------  internalIn:    0
+TIME ~ CLOCK - : 8------  slfDstrctIn:   0
+TIME ~ CLOCK - : 8------  minBRwdIn:     0
+TIME ~ CLOCK - : 8------  minNRwdIn:     0
+TIME ~ CLOCK - : 8------  minTxFeeIn:    0
+TIME ~ CLOCK - : 8------  minURwdIn:     0
+TIME ~ CLOCK - : 8------  prefundIn:     0
+TIME ~ CLOCK - : 4-----  totalIn:       0
+TIME ~ CLOCK - : 8------  amountOut:     0
+TIME ~ CLOCK - : 8------  internalOut:   0
+TIME ~ CLOCK - : 8------  slfDstrctOt:   0
+TIME ~ CLOCK - : 8------  gasCostOut:    1739343000000000
+TIME ~ CLOCK - : 4-----  totalOut:      1739343000000000
+TIME ~ CLOCK - : 4-----  amountNet:     -1739343000000000
+TIME ~ CLOCK - : 4-----  endBal:        5168485149679548557
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  endBalCalc:    5170246415179548557
+TIME ~ CLOCK - : 4-----  endBalDiff:    1761265500000000
+TIME ~ CLOCK - : 4-----  regular-recon: false
+TIME ~ CLOCK - : 4-----Trial balance: prevdiff-partial
+TIME ~ CLOCK - : 4-----  hash: 0x717d21a307469b781a8231f177fcb2b2a683d537ddeea2da6eec69f4b12b1c42
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  prevBal:       5171985758179548557
+TIME ~ CLOCK - : 4-----  begBal:        5171985758179548557
+TIME ~ CLOCK - : 4-----  begBalDiff:    0
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 8------  amountIn:      0
+TIME ~ CLOCK - : 8------  internalIn:    0
+TIME ~ CLOCK - : 8------  slfDstrctIn:   0
+TIME ~ CLOCK - : 8------  minBRwdIn:     0
+TIME ~ CLOCK - : 8------  minNRwdIn:     0
+TIME ~ CLOCK - : 8------  minTxFeeIn:    0
+TIME ~ CLOCK - : 8------  minURwdIn:     0
+TIME ~ CLOCK - : 8------  prefundIn:     0
+TIME ~ CLOCK - : 4-----  totalIn:       0
+TIME ~ CLOCK - : 8------  amountOut:     0
+TIME ~ CLOCK - : 8------  internalOut:   0
+TIME ~ CLOCK - : 8------  slfDstrctOt:   0
+TIME ~ CLOCK - : 8------  gasCostOut:    1739343000000000
+TIME ~ CLOCK - : 4-----  totalOut:      1739343000000000
+TIME ~ CLOCK - : 4-----  amountNet:     -1739343000000000
+TIME ~ CLOCK - : 4-----  endBal:        5170246415179548557
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  endBalCalc:    5170246415179548557
+TIME ~ CLOCK - : 4-----  endBalDiff:    0
+TIME ~ CLOCK - : 4-----  regular-recon: true
 , {
   "hash": "0x717d21a307469b781a8231f177fcb2b2a683d537ddeea2da6eec69f4b12b1c42",
   "blockHash": "0x733f333febe506bb353d8ad78d0a743330cd5b2eaa0f103968877d1e9265be28",
@@ -5388,29 +5609,29 @@ TIME ~ CLOCK - : 4-----pushed: 10290317 46 "5.171985758179548557" "" "" "5.17024
       "prevBlk": 10290103,
       "prevBlkBal": "5.171985758179548557",
       "begBal": "5.171985758179548557",
-      "begBalDiff": "",
+      "endBal": "5.170246415179548557",
       "amountIn": "",
-      "amountOut": "",
       "internalIn": "",
-      "internalOut": "",
       "selfDestructIn": "",
-      "selfDestructOut": "",
       "minerBaseRewardIn": "",
       "minerNephewRewardIn": "",
       "minerTxFeeIn": "",
       "minerUncleRewardIn": "",
       "prefundIn": "",
+      "amountOut": "",
+      "internalOut": "",
+      "selfDestructOut": "",
       "gasCostOut": "0.001739343000000000",
-      "endBal": "5.170246415179548557",
+      "reconciliationType": "prevdiff-partial",
+      "spotPrice": "-1",
+      "begBalDiff": "",
       "endBalCalc": "5.170246415179548557",
       "endBalDiff": "",
-      "amountNet": "-0.001739343000000000",
-      "spotPrice": "-1",
-      "reconciliationType": "prevdiff-partial",
-      "reconTrail": "|endBalDiff|traces:endBalDiff",
-      "reconciled": true,
       "totalIn": "",
-      "totalOut": "0.001739343000000000"
+      "totalOut": "0.001739343000000000",
+      "totalOutLessGas": "",
+      "amountNet": "-0.001739343000000000",
+      "reconciled": true
     },
     {
       "blockNumber": 10290317,
@@ -5422,27 +5643,28 @@ TIME ~ CLOCK - : 4-----pushed: 10290317 46 "5.171985758179548557" "" "" "5.17024
       "prevBlk": 10290103,
       "prevBlkBal": "1211.097776639199461740",
       "begBal": "1211.097776639199461740",
-      "begBalDiff": "",
+      "endBal": "1206.097776639199461740",
       "amountIn": "",
-      "amountOut": "5.0000000",
       "internalIn": "",
-      "internalOut": "",
       "selfDestructIn": "",
-      "selfDestructOut": "",
       "minerBaseRewardIn": "",
       "minerNephewRewardIn": "",
       "minerTxFeeIn": "",
       "minerUncleRewardIn": "",
       "prefundIn": "",
+      "amountOut": "5.0000000",
+      "internalOut": "",
+      "selfDestructOut": "",
       "gasCostOut": "",
-      "endBal": "1206.097776639199461740",
-      "endBalCalc": "",
-      "endBalDiff": "",
-      "amountNet": "-5.0000000",
       "spotPrice": "-1",
-      "reconciled": true,
+      "begBalDiff": "",
+      "endBalCalc": "1206.097776639199461740",
+      "endBalDiff": "",
       "totalIn": "",
-      "totalOut": "5.0000000"
+      "totalOut": "5.0000000",
+      "totalOutLessGas": "5.0000000",
+      "amountNet": "-5.0000000",
+      "reconciled": true
     }
   ],
   "gasCost": 1739343000000000,
@@ -5450,31 +5672,87 @@ TIME ~ CLOCK - : 4-----pushed: 10290317 46 "5.171985758179548557" "" "" "5.17024
   "date": "2020-06-18 14:47:23 UTC",
   "ether": 0.000000000000000000
 }
-TIME ~ CLOCK - : 4-----assetSymbol: ETH
-TIME ~ CLOCK - : 4-----assetAddr:   0xf503017d7baf7fbc0fff7492b751025c6a78179b
-TIME ~ CLOCK - : 4-----prevBlkBal:  "5.170246415179548557"
-TIME ~ CLOCK - : 4-----prevBlock:   
-TIME ~ CLOCK - : 4-----from --> amountOut: ""
-TIME ~ CLOCK - : 4-----from --> gasCostOut: "0.001761265500000000"
-TIME ~ CLOCK - : 4-----begBal:     "5.171985758179548557"
-TIME ~ CLOCK - : 4-----endBal:     "5.168485149679548557"
-TIME ~ CLOCK - : 4-----endBalCalc: "5.170224492679548557"
-TIME ~ CLOCK - : 4-----begBalDiff: "0.001739343000000000"
-TIME ~ CLOCK - : 4-----endBalDiff: "-0.001739343000000000"
-TIME ~ CLOCK - : 4-----reconciled: false
-TIME ~ CLOCK - : 4-----partial:
-TIME ~ CLOCK - : 4-----  begBal:     "5.170246415179548557"
-TIME ~ CLOCK - : 4-----  begBalDiff: ""
-TIME ~ CLOCK - : 4-----  endBal:     "5.168485149679548557"
-TIME ~ CLOCK - : 4-----  endBalCalc: "5.168485149679548557"
-TIME ~ CLOCK - : 4-----  endBalDiff: ""
-TIME ~ CLOCK - : 4-----  reconciled: true
-TIME ~ CLOCK - : 4-----  amountNet   nextdiff-partial: "-0.001761265500000000"
-TIME ~ CLOCK - : 4-----pushed: 10290317 47 "5.170246415179548557" "" "" "5.168485149679548557" true
-TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM execution error.","data":"Reverted 0x"},"id":"1"}
- {"jsonrpc":"2.0","method":"eth_call","params":[{"to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c", "data": "0x95d89b41"}, "0x9d048d"],"id":"1"}
-TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM execution error.","data":"Reverted 0x"},"id":"1"}
- {"jsonrpc":"2.0","method":"eth_call","params":[{"to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c", "data": "0x70a08231000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"}, "0x9d048d"],"id":"1"}
+TIME ~ CLOCK - : 4-----Trial balance: regular
+TIME ~ CLOCK - : 4-----  hash: 0x1ff4ec58cb6aaa757257bc26b957501de46b0f3aa9708813a40626585cd52b41
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  prevBal:       5170246415179548557
+TIME ~ CLOCK - : 4-----  begBal:        5171985758179548557
+TIME ~ CLOCK - : 4-----  begBalDiff:    1739343000000000
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 8------  amountIn:      0
+TIME ~ CLOCK - : 8------  internalIn:    0
+TIME ~ CLOCK - : 8------  slfDstrctIn:   0
+TIME ~ CLOCK - : 8------  minBRwdIn:     0
+TIME ~ CLOCK - : 8------  minNRwdIn:     0
+TIME ~ CLOCK - : 8------  minTxFeeIn:    0
+TIME ~ CLOCK - : 8------  minURwdIn:     0
+TIME ~ CLOCK - : 8------  prefundIn:     0
+TIME ~ CLOCK - : 4-----  totalIn:       0
+TIME ~ CLOCK - : 8------  amountOut:     0
+TIME ~ CLOCK - : 8------  internalOut:   0
+TIME ~ CLOCK - : 8------  slfDstrctOt:   0
+TIME ~ CLOCK - : 8------  gasCostOut:    1761265500000000
+TIME ~ CLOCK - : 4-----  totalOut:      1761265500000000
+TIME ~ CLOCK - : 4-----  amountNet:     -1761265500000000
+TIME ~ CLOCK - : 4-----  endBal:        5168485149679548557
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  endBalCalc:    5170224492679548557
+TIME ~ CLOCK - : 4-----  endBalDiff:    1739343000000000
+TIME ~ CLOCK - : 4-----  regular-recon: false
+TIME ~ CLOCK - : 4-----Trial balance: by-trace
+TIME ~ CLOCK - : 4-----  hash: 0x1ff4ec58cb6aaa757257bc26b957501de46b0f3aa9708813a40626585cd52b41
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  prevBal:       5170246415179548557
+TIME ~ CLOCK - : 4-----  begBal:        5171985758179548557
+TIME ~ CLOCK - : 4-----  begBalDiff:    1739343000000000
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 8------  amountIn:      0
+TIME ~ CLOCK - : 8------  internalIn:    0
+TIME ~ CLOCK - : 8------  slfDstrctIn:   0
+TIME ~ CLOCK - : 8------  minBRwdIn:     0
+TIME ~ CLOCK - : 8------  minNRwdIn:     0
+TIME ~ CLOCK - : 8------  minTxFeeIn:    0
+TIME ~ CLOCK - : 8------  minURwdIn:     0
+TIME ~ CLOCK - : 8------  prefundIn:     0
+TIME ~ CLOCK - : 4-----  totalIn:       0
+TIME ~ CLOCK - : 8------  amountOut:     0
+TIME ~ CLOCK - : 8------  internalOut:   0
+TIME ~ CLOCK - : 8------  slfDstrctOt:   0
+TIME ~ CLOCK - : 8------  gasCostOut:    1761265500000000
+TIME ~ CLOCK - : 4-----  totalOut:      1761265500000000
+TIME ~ CLOCK - : 4-----  amountNet:     -1761265500000000
+TIME ~ CLOCK - : 4-----  endBal:        5168485149679548557
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  endBalCalc:    5170224492679548557
+TIME ~ CLOCK - : 4-----  endBalDiff:    1739343000000000
+TIME ~ CLOCK - : 4-----  regular-recon: false
+TIME ~ CLOCK - : 4-----Trial balance: partial-nextdiff
+TIME ~ CLOCK - : 4-----  hash: 0x1ff4ec58cb6aaa757257bc26b957501de46b0f3aa9708813a40626585cd52b41
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  prevBal:       5170246415179548557
+TIME ~ CLOCK - : 4-----  begBal:        5170246415179548557
+TIME ~ CLOCK - : 4-----  begBalDiff:    0
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 8------  amountIn:      0
+TIME ~ CLOCK - : 8------  internalIn:    0
+TIME ~ CLOCK - : 8------  slfDstrctIn:   0
+TIME ~ CLOCK - : 8------  minBRwdIn:     0
+TIME ~ CLOCK - : 8------  minNRwdIn:     0
+TIME ~ CLOCK - : 8------  minTxFeeIn:    0
+TIME ~ CLOCK - : 8------  minURwdIn:     0
+TIME ~ CLOCK - : 8------  prefundIn:     0
+TIME ~ CLOCK - : 4-----  totalIn:       0
+TIME ~ CLOCK - : 8------  amountOut:     0
+TIME ~ CLOCK - : 8------  internalOut:   0
+TIME ~ CLOCK - : 8------  slfDstrctOt:   0
+TIME ~ CLOCK - : 8------  gasCostOut:    1761265500000000
+TIME ~ CLOCK - : 4-----  totalOut:      1761265500000000
+TIME ~ CLOCK - : 4-----  amountNet:     -1761265500000000
+TIME ~ CLOCK - : 4-----  endBal:        5168485149679548557
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  endBalCalc:    5168485149679548557
+TIME ~ CLOCK - : 4-----  endBalDiff:    0
+TIME ~ CLOCK - : 4-----  regular-recon: true
 , {
   "hash": "0x1ff4ec58cb6aaa757257bc26b957501de46b0f3aa9708813a40626585cd52b41",
   "blockHash": "0x733f333febe506bb353d8ad78d0a743330cd5b2eaa0f103968877d1e9265be28",
@@ -5554,29 +5832,29 @@ TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM exe
       "prevBlk": 10290317,
       "prevBlkBal": "5.170246415179548557",
       "begBal": "5.170246415179548557",
-      "begBalDiff": "",
+      "endBal": "5.168485149679548557",
       "amountIn": "",
-      "amountOut": "",
       "internalIn": "",
-      "internalOut": "",
       "selfDestructIn": "",
-      "selfDestructOut": "",
       "minerBaseRewardIn": "",
       "minerNephewRewardIn": "",
       "minerTxFeeIn": "",
       "minerUncleRewardIn": "",
       "prefundIn": "",
+      "amountOut": "",
+      "internalOut": "",
+      "selfDestructOut": "",
       "gasCostOut": "0.001761265500000000",
-      "endBal": "5.168485149679548557",
+      "reconciliationType": "partial-nextdiff",
+      "spotPrice": "-1",
+      "begBalDiff": "",
       "endBalCalc": "5.168485149679548557",
       "endBalDiff": "",
-      "amountNet": "-0.001761265500000000",
-      "spotPrice": "-1",
-      "reconciliationType": "nextdiff-partial",
-      "reconTrail": "|endBalDiff|traces:endBalDiff",
-      "reconciled": true,
       "totalIn": "",
-      "totalOut": "0.001761265500000000"
+      "totalOut": "0.001761265500000000",
+      "totalOutLessGas": "",
+      "amountNet": "-0.001761265500000000",
+      "reconciled": true
     }
   ],
   "gasCost": 1761265500000000,
@@ -5584,22 +5862,33 @@ TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM exe
   "date": "2020-06-18 14:47:23 UTC",
   "ether": 0.000000000000000000
 }
-TIME ~ CLOCK - : 4-----assetSymbol: ETH
-TIME ~ CLOCK - : 4-----assetAddr:   0xf503017d7baf7fbc0fff7492b751025c6a78179b
-TIME ~ CLOCK - : 4-----prevBlkBal:  "5.168485149679548557"
-TIME ~ CLOCK - : 4-----prevBlock:   
-TIME ~ CLOCK - : 4-----begBal:     "5.168485149679548557"
-TIME ~ CLOCK - : 4-----endBal:     "5.168485149679548557"
-TIME ~ CLOCK - : 4-----endBalCalc: "5.168485149679548557"
-TIME ~ CLOCK - : 4-----begBalDiff: ""
-TIME ~ CLOCK - : 4-----endBalDiff: ""
-TIME ~ CLOCK - : 4-----reconciled: true
-TIME ~ CLOCK - : 4-----amountNet regular: ""
-TIME ~ CLOCK - : 4-----pushed: 10291739 145 "5.168485149679548557" "" "" "5.168485149679548557" true
-TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM execution error.","data":"Reverted 0x"},"id":"1"}
- {"jsonrpc":"2.0","method":"eth_call","params":[{"to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c", "data": "0x95d89b41"}, "0x9d0a1b"],"id":"1"}
-TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM execution error.","data":"Reverted 0x"},"id":"1"}
- {"jsonrpc":"2.0","method":"eth_call","params":[{"to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c", "data": "0x70a08231000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"}, "0x9d0a1b"],"id":"1"}
+TIME ~ CLOCK - : 4-----Trial balance: regular
+TIME ~ CLOCK - : 4-----  hash: 0x4c34ffa20e28f1e53254c6165e5a211665c9936c88cb6ee478015ddc0d5f89f7
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  prevBal:       5168485149679548557
+TIME ~ CLOCK - : 4-----  begBal:        5168485149679548557
+TIME ~ CLOCK - : 4-----  begBalDiff:    0
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 8------  amountIn:      0
+TIME ~ CLOCK - : 8------  internalIn:    0
+TIME ~ CLOCK - : 8------  slfDstrctIn:   0
+TIME ~ CLOCK - : 8------  minBRwdIn:     0
+TIME ~ CLOCK - : 8------  minNRwdIn:     0
+TIME ~ CLOCK - : 8------  minTxFeeIn:    0
+TIME ~ CLOCK - : 8------  minURwdIn:     0
+TIME ~ CLOCK - : 8------  prefundIn:     0
+TIME ~ CLOCK - : 4-----  totalIn:       0
+TIME ~ CLOCK - : 8------  amountOut:     0
+TIME ~ CLOCK - : 8------  internalOut:   0
+TIME ~ CLOCK - : 8------  slfDstrctOt:   0
+TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 4-----  totalOut:      0
+TIME ~ CLOCK - : 4-----  amountNet:     0
+TIME ~ CLOCK - : 4-----  endBal:        5168485149679548557
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  endBalCalc:    5168485149679548557
+TIME ~ CLOCK - : 4-----  endBalDiff:    0
+TIME ~ CLOCK - : 4-----  regular-recon: true
 , {
   "hash": "0x4c34ffa20e28f1e53254c6165e5a211665c9936c88cb6ee478015ddc0d5f89f7",
   "blockHash": "0x7e0925d35b292cbcc553ffe78e890ab04bc4fb813612e6e7a55baf51cbfdfba9",
@@ -5839,28 +6128,29 @@ TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM exe
       "prevBlk": 10290317,
       "prevBlkBal": "5.168485149679548557",
       "begBal": "5.168485149679548557",
-      "begBalDiff": "",
+      "endBal": "5.168485149679548557",
       "amountIn": "",
-      "amountOut": "",
       "internalIn": "",
-      "internalOut": "",
       "selfDestructIn": "",
-      "selfDestructOut": "",
       "minerBaseRewardIn": "",
       "minerNephewRewardIn": "",
       "minerTxFeeIn": "",
       "minerUncleRewardIn": "",
       "prefundIn": "",
+      "amountOut": "",
+      "internalOut": "",
+      "selfDestructOut": "",
       "gasCostOut": "",
-      "endBal": "5.168485149679548557",
+      "reconciliationType": "regular",
+      "spotPrice": "-1",
+      "begBalDiff": "",
       "endBalCalc": "5.168485149679548557",
       "endBalDiff": "",
-      "amountNet": "",
-      "spotPrice": "-1",
-      "reconciliationType": "regular",
-      "reconciled": true,
       "totalIn": "",
-      "totalOut": ""
+      "totalOut": "",
+      "totalOutLessGas": "",
+      "amountNet": "",
+      "reconciled": true
     },
     {
       "blockNumber": 10291739,
@@ -5872,27 +6162,28 @@ TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM exe
       "prevBlk": 10290317,
       "prevBlkBal": "1206.097776639199461740",
       "begBal": "1206.097776639199461740",
-      "begBalDiff": "",
+      "endBal": "1207.047776639199461740",
       "amountIn": "0.950000000000000000",
-      "amountOut": "",
       "internalIn": "",
-      "internalOut": "",
       "selfDestructIn": "",
-      "selfDestructOut": "",
       "minerBaseRewardIn": "",
       "minerNephewRewardIn": "",
       "minerTxFeeIn": "",
       "minerUncleRewardIn": "",
       "prefundIn": "",
+      "amountOut": "",
+      "internalOut": "",
+      "selfDestructOut": "",
       "gasCostOut": "",
-      "endBal": "1207.047776639199461740",
-      "endBalCalc": "",
-      "endBalDiff": "",
-      "amountNet": "0.950000000000000000",
       "spotPrice": "-1",
-      "reconciled": true,
+      "begBalDiff": "",
+      "endBalCalc": "1207.047776639199461740",
+      "endBalDiff": "",
       "totalIn": "0.950000000000000000",
-      "totalOut": ""
+      "totalOut": "",
+      "totalOutLessGas": "",
+      "amountNet": "0.950000000000000000",
+      "reconciled": true
     }
   ],
   "gasCost": 4980192000000000,
@@ -5900,27 +6191,87 @@ TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM exe
   "date": "2020-06-18 20:04:05 UTC",
   "ether": 0.000000000000000000
 }
-TIME ~ CLOCK - : 4-----assetSymbol: ETH
-TIME ~ CLOCK - : 4-----assetAddr:   0xf503017d7baf7fbc0fff7492b751025c6a78179b
-TIME ~ CLOCK - : 4-----prevBlkBal:  "5.168485149679548557"
-TIME ~ CLOCK - : 4-----prevBlock:   
-TIME ~ CLOCK - : 4-----from --> amountOut: ""
-TIME ~ CLOCK - : 4-----from --> gasCostOut: "0.001232952000000000"
-TIME ~ CLOCK - : 4-----begBal:     "5.168485149679548557"
-TIME ~ CLOCK - : 4-----endBal:     "5.165331677679548557"
-TIME ~ CLOCK - : 4-----endBalCalc: "5.167252197679548557"
-TIME ~ CLOCK - : 4-----begBalDiff: ""
-TIME ~ CLOCK - : 4-----endBalDiff: "-0.001920520000000000"
-TIME ~ CLOCK - : 4-----reconciled: false
-TIME ~ CLOCK - : 4-----partial:
-TIME ~ CLOCK - : 4-----  begBal:     "5.168485149679548557"
-TIME ~ CLOCK - : 4-----  begBalDiff: ""
-TIME ~ CLOCK - : 4-----  endBal:     "5.167252197679548557"
-TIME ~ CLOCK - : 4-----  endBalCalc: "5.167252197679548557"
-TIME ~ CLOCK - : 4-----  endBalDiff: ""
-TIME ~ CLOCK - : 4-----  reconciled: true
-TIME ~ CLOCK - : 4-----  amountNet   prevdiff-partial: "-0.001232952000000000"
-TIME ~ CLOCK - : 4-----pushed: 10292014 92 "5.168485149679548557" "" "" "5.167252197679548557" true
+TIME ~ CLOCK - : 4-----Trial balance: regular
+TIME ~ CLOCK - : 4-----  hash: 0x54df753f5a53c2ee4ef08e6b03e5e44cf1ceab98459b9bacd6f3c7aeee5d54d8
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  prevBal:       5168485149679548557
+TIME ~ CLOCK - : 4-----  begBal:        5168485149679548557
+TIME ~ CLOCK - : 4-----  begBalDiff:    0
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 8------  amountIn:      0
+TIME ~ CLOCK - : 8------  internalIn:    0
+TIME ~ CLOCK - : 8------  slfDstrctIn:   0
+TIME ~ CLOCK - : 8------  minBRwdIn:     0
+TIME ~ CLOCK - : 8------  minNRwdIn:     0
+TIME ~ CLOCK - : 8------  minTxFeeIn:    0
+TIME ~ CLOCK - : 8------  minURwdIn:     0
+TIME ~ CLOCK - : 8------  prefundIn:     0
+TIME ~ CLOCK - : 4-----  totalIn:       0
+TIME ~ CLOCK - : 8------  amountOut:     0
+TIME ~ CLOCK - : 8------  internalOut:   0
+TIME ~ CLOCK - : 8------  slfDstrctOt:   0
+TIME ~ CLOCK - : 8------  gasCostOut:    1232952000000000
+TIME ~ CLOCK - : 4-----  totalOut:      1232952000000000
+TIME ~ CLOCK - : 4-----  amountNet:     -1232952000000000
+TIME ~ CLOCK - : 4-----  endBal:        5165331677679548557
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  endBalCalc:    5167252197679548557
+TIME ~ CLOCK - : 4-----  endBalDiff:    1920520000000000
+TIME ~ CLOCK - : 4-----  regular-recon: false
+TIME ~ CLOCK - : 4-----Trial balance: by-trace
+TIME ~ CLOCK - : 4-----  hash: 0x54df753f5a53c2ee4ef08e6b03e5e44cf1ceab98459b9bacd6f3c7aeee5d54d8
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  prevBal:       5168485149679548557
+TIME ~ CLOCK - : 4-----  begBal:        5168485149679548557
+TIME ~ CLOCK - : 4-----  begBalDiff:    0
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 8------  amountIn:      0
+TIME ~ CLOCK - : 8------  internalIn:    0
+TIME ~ CLOCK - : 8------  slfDstrctIn:   0
+TIME ~ CLOCK - : 8------  minBRwdIn:     0
+TIME ~ CLOCK - : 8------  minNRwdIn:     0
+TIME ~ CLOCK - : 8------  minTxFeeIn:    0
+TIME ~ CLOCK - : 8------  minURwdIn:     0
+TIME ~ CLOCK - : 8------  prefundIn:     0
+TIME ~ CLOCK - : 4-----  totalIn:       0
+TIME ~ CLOCK - : 8------  amountOut:     0
+TIME ~ CLOCK - : 8------  internalOut:   0
+TIME ~ CLOCK - : 8------  slfDstrctOt:   0
+TIME ~ CLOCK - : 8------  gasCostOut:    1232952000000000
+TIME ~ CLOCK - : 4-----  totalOut:      1232952000000000
+TIME ~ CLOCK - : 4-----  amountNet:     -1232952000000000
+TIME ~ CLOCK - : 4-----  endBal:        5165331677679548557
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  endBalCalc:    5167252197679548557
+TIME ~ CLOCK - : 4-----  endBalDiff:    1920520000000000
+TIME ~ CLOCK - : 4-----  regular-recon: false
+TIME ~ CLOCK - : 4-----Trial balance: prevdiff-partial
+TIME ~ CLOCK - : 4-----  hash: 0x54df753f5a53c2ee4ef08e6b03e5e44cf1ceab98459b9bacd6f3c7aeee5d54d8
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  prevBal:       5168485149679548557
+TIME ~ CLOCK - : 4-----  begBal:        5168485149679548557
+TIME ~ CLOCK - : 4-----  begBalDiff:    0
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 8------  amountIn:      0
+TIME ~ CLOCK - : 8------  internalIn:    0
+TIME ~ CLOCK - : 8------  slfDstrctIn:   0
+TIME ~ CLOCK - : 8------  minBRwdIn:     0
+TIME ~ CLOCK - : 8------  minNRwdIn:     0
+TIME ~ CLOCK - : 8------  minTxFeeIn:    0
+TIME ~ CLOCK - : 8------  minURwdIn:     0
+TIME ~ CLOCK - : 8------  prefundIn:     0
+TIME ~ CLOCK - : 4-----  totalIn:       0
+TIME ~ CLOCK - : 8------  amountOut:     0
+TIME ~ CLOCK - : 8------  internalOut:   0
+TIME ~ CLOCK - : 8------  slfDstrctOt:   0
+TIME ~ CLOCK - : 8------  gasCostOut:    1232952000000000
+TIME ~ CLOCK - : 4-----  totalOut:      1232952000000000
+TIME ~ CLOCK - : 4-----  amountNet:     -1232952000000000
+TIME ~ CLOCK - : 4-----  endBal:        5167252197679548557
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  endBalCalc:    5167252197679548557
+TIME ~ CLOCK - : 4-----  endBalDiff:    0
+TIME ~ CLOCK - : 4-----  regular-recon: true
 , {
   "hash": "0x54df753f5a53c2ee4ef08e6b03e5e44cf1ceab98459b9bacd6f3c7aeee5d54d8",
   "blockHash": "0x8b5178b7a72f9f2169a6c0860ac1fe75c913404216282b6544abb45b1ffff757",
@@ -5983,29 +6334,29 @@ TIME ~ CLOCK - : 4-----pushed: 10292014 92 "5.168485149679548557" "" "" "5.16725
       "prevBlk": 10291739,
       "prevBlkBal": "5.168485149679548557",
       "begBal": "5.168485149679548557",
-      "begBalDiff": "",
+      "endBal": "5.167252197679548557",
       "amountIn": "",
-      "amountOut": "",
       "internalIn": "",
-      "internalOut": "",
       "selfDestructIn": "",
-      "selfDestructOut": "",
       "minerBaseRewardIn": "",
       "minerNephewRewardIn": "",
       "minerTxFeeIn": "",
       "minerUncleRewardIn": "",
       "prefundIn": "",
+      "amountOut": "",
+      "internalOut": "",
+      "selfDestructOut": "",
       "gasCostOut": "0.001232952000000000",
-      "endBal": "5.167252197679548557",
+      "reconciliationType": "prevdiff-partial",
+      "spotPrice": "-1",
+      "begBalDiff": "",
       "endBalCalc": "5.167252197679548557",
       "endBalDiff": "",
-      "amountNet": "-0.001232952000000000",
-      "spotPrice": "-1",
-      "reconciliationType": "prevdiff-partial",
-      "reconTrail": "|endBalDiff|traces:endBalDiff",
-      "reconciled": true,
       "totalIn": "",
-      "totalOut": "0.001232952000000000"
+      "totalOut": "0.001232952000000000",
+      "totalOutLessGas": "",
+      "amountNet": "-0.001232952000000000",
+      "reconciled": true
     },
     {
       "blockNumber": 10292014,
@@ -6017,27 +6368,28 @@ TIME ~ CLOCK - : 4-----pushed: 10292014 92 "5.168485149679548557" "" "" "5.16725
       "prevBlk": 10291739,
       "prevBlkBal": "1207.047776639199461740",
       "begBal": "1207.047776639199461740",
-      "begBalDiff": "",
+      "endBal": "1202.047776639199461740",
       "amountIn": "",
-      "amountOut": "5.0000000",
       "internalIn": "",
-      "internalOut": "",
       "selfDestructIn": "",
-      "selfDestructOut": "",
       "minerBaseRewardIn": "",
       "minerNephewRewardIn": "",
       "minerTxFeeIn": "",
       "minerUncleRewardIn": "",
       "prefundIn": "",
+      "amountOut": "5.0000000",
+      "internalOut": "",
+      "selfDestructOut": "",
       "gasCostOut": "",
-      "endBal": "1202.047776639199461740",
-      "endBalCalc": "",
-      "endBalDiff": "",
-      "amountNet": "-5.0000000",
       "spotPrice": "-1",
-      "reconciled": true,
+      "begBalDiff": "",
+      "endBalCalc": "1202.047776639199461740",
+      "endBalDiff": "",
       "totalIn": "",
-      "totalOut": "5.0000000"
+      "totalOut": "5.0000000",
+      "totalOutLessGas": "5.0000000",
+      "amountNet": "-5.0000000",
+      "reconciled": true
     }
   ],
   "gasCost": 1232952000000000,
@@ -6045,31 +6397,87 @@ TIME ~ CLOCK - : 4-----pushed: 10292014 92 "5.168485149679548557" "" "" "5.16725
   "date": "2020-06-18 21:07:17 UTC",
   "ether": 0.000000000000000000
 }
-TIME ~ CLOCK - : 4-----assetSymbol: ETH
-TIME ~ CLOCK - : 4-----assetAddr:   0xf503017d7baf7fbc0fff7492b751025c6a78179b
-TIME ~ CLOCK - : 4-----prevBlkBal:  "5.167252197679548557"
-TIME ~ CLOCK - : 4-----prevBlock:   
-TIME ~ CLOCK - : 4-----from --> amountOut: ""
-TIME ~ CLOCK - : 4-----from --> gasCostOut: "0.001920520000000000"
-TIME ~ CLOCK - : 4-----begBal:     "5.168485149679548557"
-TIME ~ CLOCK - : 4-----endBal:     "5.165331677679548557"
-TIME ~ CLOCK - : 4-----endBalCalc: "5.166564629679548557"
-TIME ~ CLOCK - : 4-----begBalDiff: "0.001232952000000000"
-TIME ~ CLOCK - : 4-----endBalDiff: "-0.001232952000000000"
-TIME ~ CLOCK - : 4-----reconciled: false
-TIME ~ CLOCK - : 4-----partial:
-TIME ~ CLOCK - : 4-----  begBal:     "5.167252197679548557"
-TIME ~ CLOCK - : 4-----  begBalDiff: ""
-TIME ~ CLOCK - : 4-----  endBal:     "5.165331677679548557"
-TIME ~ CLOCK - : 4-----  endBalCalc: "5.165331677679548557"
-TIME ~ CLOCK - : 4-----  endBalDiff: ""
-TIME ~ CLOCK - : 4-----  reconciled: true
-TIME ~ CLOCK - : 4-----  amountNet   nextdiff-partial: "-0.001920520000000000"
-TIME ~ CLOCK - : 4-----pushed: 10292014 93 "5.167252197679548557" "" "" "5.165331677679548557" true
-TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM execution error.","data":"Reverted 0x"},"id":"1"}
- {"jsonrpc":"2.0","method":"eth_call","params":[{"to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c", "data": "0x95d89b41"}, "0x9d0b2e"],"id":"1"}
-TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM execution error.","data":"Reverted 0x"},"id":"1"}
- {"jsonrpc":"2.0","method":"eth_call","params":[{"to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c", "data": "0x70a08231000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"}, "0x9d0b2e"],"id":"1"}
+TIME ~ CLOCK - : 4-----Trial balance: regular
+TIME ~ CLOCK - : 4-----  hash: 0x845ee9238e7b0c4507cb5998ea859666498c8bea1ccd5fc6633631ce962f3959
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  prevBal:       5167252197679548557
+TIME ~ CLOCK - : 4-----  begBal:        5168485149679548557
+TIME ~ CLOCK - : 4-----  begBalDiff:    1232952000000000
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 8------  amountIn:      0
+TIME ~ CLOCK - : 8------  internalIn:    0
+TIME ~ CLOCK - : 8------  slfDstrctIn:   0
+TIME ~ CLOCK - : 8------  minBRwdIn:     0
+TIME ~ CLOCK - : 8------  minNRwdIn:     0
+TIME ~ CLOCK - : 8------  minTxFeeIn:    0
+TIME ~ CLOCK - : 8------  minURwdIn:     0
+TIME ~ CLOCK - : 8------  prefundIn:     0
+TIME ~ CLOCK - : 4-----  totalIn:       0
+TIME ~ CLOCK - : 8------  amountOut:     0
+TIME ~ CLOCK - : 8------  internalOut:   0
+TIME ~ CLOCK - : 8------  slfDstrctOt:   0
+TIME ~ CLOCK - : 8------  gasCostOut:    1920520000000000
+TIME ~ CLOCK - : 4-----  totalOut:      1920520000000000
+TIME ~ CLOCK - : 4-----  amountNet:     -1920520000000000
+TIME ~ CLOCK - : 4-----  endBal:        5165331677679548557
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  endBalCalc:    5166564629679548557
+TIME ~ CLOCK - : 4-----  endBalDiff:    1232952000000000
+TIME ~ CLOCK - : 4-----  regular-recon: false
+TIME ~ CLOCK - : 4-----Trial balance: by-trace
+TIME ~ CLOCK - : 4-----  hash: 0x845ee9238e7b0c4507cb5998ea859666498c8bea1ccd5fc6633631ce962f3959
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  prevBal:       5167252197679548557
+TIME ~ CLOCK - : 4-----  begBal:        5168485149679548557
+TIME ~ CLOCK - : 4-----  begBalDiff:    1232952000000000
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 8------  amountIn:      0
+TIME ~ CLOCK - : 8------  internalIn:    0
+TIME ~ CLOCK - : 8------  slfDstrctIn:   0
+TIME ~ CLOCK - : 8------  minBRwdIn:     0
+TIME ~ CLOCK - : 8------  minNRwdIn:     0
+TIME ~ CLOCK - : 8------  minTxFeeIn:    0
+TIME ~ CLOCK - : 8------  minURwdIn:     0
+TIME ~ CLOCK - : 8------  prefundIn:     0
+TIME ~ CLOCK - : 4-----  totalIn:       0
+TIME ~ CLOCK - : 8------  amountOut:     0
+TIME ~ CLOCK - : 8------  internalOut:   0
+TIME ~ CLOCK - : 8------  slfDstrctOt:   0
+TIME ~ CLOCK - : 8------  gasCostOut:    1920520000000000
+TIME ~ CLOCK - : 4-----  totalOut:      1920520000000000
+TIME ~ CLOCK - : 4-----  amountNet:     -1920520000000000
+TIME ~ CLOCK - : 4-----  endBal:        5165331677679548557
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  endBalCalc:    5166564629679548557
+TIME ~ CLOCK - : 4-----  endBalDiff:    1232952000000000
+TIME ~ CLOCK - : 4-----  regular-recon: false
+TIME ~ CLOCK - : 4-----Trial balance: partial-nextdiff
+TIME ~ CLOCK - : 4-----  hash: 0x845ee9238e7b0c4507cb5998ea859666498c8bea1ccd5fc6633631ce962f3959
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  prevBal:       5167252197679548557
+TIME ~ CLOCK - : 4-----  begBal:        5167252197679548557
+TIME ~ CLOCK - : 4-----  begBalDiff:    0
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 8------  amountIn:      0
+TIME ~ CLOCK - : 8------  internalIn:    0
+TIME ~ CLOCK - : 8------  slfDstrctIn:   0
+TIME ~ CLOCK - : 8------  minBRwdIn:     0
+TIME ~ CLOCK - : 8------  minNRwdIn:     0
+TIME ~ CLOCK - : 8------  minTxFeeIn:    0
+TIME ~ CLOCK - : 8------  minURwdIn:     0
+TIME ~ CLOCK - : 8------  prefundIn:     0
+TIME ~ CLOCK - : 4-----  totalIn:       0
+TIME ~ CLOCK - : 8------  amountOut:     0
+TIME ~ CLOCK - : 8------  internalOut:   0
+TIME ~ CLOCK - : 8------  slfDstrctOt:   0
+TIME ~ CLOCK - : 8------  gasCostOut:    1920520000000000
+TIME ~ CLOCK - : 4-----  totalOut:      1920520000000000
+TIME ~ CLOCK - : 4-----  amountNet:     -1920520000000000
+TIME ~ CLOCK - : 4-----  endBal:        5165331677679548557
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  endBalCalc:    5165331677679548557
+TIME ~ CLOCK - : 4-----  endBalDiff:    0
+TIME ~ CLOCK - : 4-----  regular-recon: true
 , {
   "hash": "0x845ee9238e7b0c4507cb5998ea859666498c8bea1ccd5fc6633631ce962f3959",
   "blockHash": "0x8b5178b7a72f9f2169a6c0860ac1fe75c913404216282b6544abb45b1ffff757",
@@ -6189,29 +6597,29 @@ TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM exe
       "prevBlk": 10292014,
       "prevBlkBal": "5.167252197679548557",
       "begBal": "5.167252197679548557",
-      "begBalDiff": "",
+      "endBal": "5.165331677679548557",
       "amountIn": "",
-      "amountOut": "",
       "internalIn": "",
-      "internalOut": "",
       "selfDestructIn": "",
-      "selfDestructOut": "",
       "minerBaseRewardIn": "",
       "minerNephewRewardIn": "",
       "minerTxFeeIn": "",
       "minerUncleRewardIn": "",
       "prefundIn": "",
+      "amountOut": "",
+      "internalOut": "",
+      "selfDestructOut": "",
       "gasCostOut": "0.001920520000000000",
-      "endBal": "5.165331677679548557",
+      "reconciliationType": "partial-nextdiff",
+      "spotPrice": "-1",
+      "begBalDiff": "",
       "endBalCalc": "5.165331677679548557",
       "endBalDiff": "",
-      "amountNet": "-0.001920520000000000",
-      "spotPrice": "-1",
-      "reconciliationType": "nextdiff-partial",
-      "reconTrail": "|endBalDiff|traces:endBalDiff",
-      "reconciled": true,
       "totalIn": "",
-      "totalOut": "0.001920520000000000"
+      "totalOut": "0.001920520000000000",
+      "totalOutLessGas": "",
+      "amountNet": "-0.001920520000000000",
+      "reconciled": true
     }
   ],
   "gasCost": 1920520000000000,
@@ -6219,25 +6627,60 @@ TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM exe
   "date": "2020-06-18 21:07:17 UTC",
   "ether": 0.000000000000000000
 }
-TIME ~ CLOCK - : 4-----assetSymbol: ETH
-TIME ~ CLOCK - : 4-----assetAddr:   0xf503017d7baf7fbc0fff7492b751025c6a78179b
-TIME ~ CLOCK - : 4-----prevBlkBal:  "5.165331677679548557"
-TIME ~ CLOCK - : 4-----prevBlock:   
-TIME ~ CLOCK - : 4-----begBal:     "5.165331677679548557"
-TIME ~ CLOCK - : 4-----endBal:     "5.355331677679548557"
-TIME ~ CLOCK - : 4-----endBalCalc: "5.165331677679548557"
-TIME ~ CLOCK - : 4-----begBalDiff: ""
-TIME ~ CLOCK - : 4-----endBalDiff: "0.190000000000000000"
-TIME ~ CLOCK - : 4-----reconciled: false
-TIME ~ CLOCK - : 4-----usingTraces:
-TIME ~ CLOCK - : 4-----  begBal:     "5.165331677679548557"
-TIME ~ CLOCK - : 4-----  begBalDiff: ""
-TIME ~ CLOCK - : 4-----  endBal:     "5.355331677679548557"
-TIME ~ CLOCK - : 4-----  endBalCalc: "5.355331677679548557"
-TIME ~ CLOCK - : 4-----  endBalDiff: ""
-TIME ~ CLOCK - : 4-----  reconciled: true
-TIME ~ CLOCK - : 4-----  amountNet   by-trace: "0.190000000000000000"
-TIME ~ CLOCK - : 4-----pushed: 10292070 130 "5.165331677679548557" "" "" "5.355331677679548557" true
+TIME ~ CLOCK - : 4-----Trial balance: regular
+TIME ~ CLOCK - : 4-----  hash: 0x6ad90f7ebfa375681129804ab2c525e3702312dfd1691ef26352bd8f0485b6ff
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  prevBal:       5165331677679548557
+TIME ~ CLOCK - : 4-----  begBal:        5165331677679548557
+TIME ~ CLOCK - : 4-----  begBalDiff:    0
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 8------  amountIn:      0
+TIME ~ CLOCK - : 8------  internalIn:    0
+TIME ~ CLOCK - : 8------  slfDstrctIn:   0
+TIME ~ CLOCK - : 8------  minBRwdIn:     0
+TIME ~ CLOCK - : 8------  minNRwdIn:     0
+TIME ~ CLOCK - : 8------  minTxFeeIn:    0
+TIME ~ CLOCK - : 8------  minURwdIn:     0
+TIME ~ CLOCK - : 8------  prefundIn:     0
+TIME ~ CLOCK - : 4-----  totalIn:       0
+TIME ~ CLOCK - : 8------  amountOut:     0
+TIME ~ CLOCK - : 8------  internalOut:   0
+TIME ~ CLOCK - : 8------  slfDstrctOt:   0
+TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 4-----  totalOut:      0
+TIME ~ CLOCK - : 4-----  amountNet:     0
+TIME ~ CLOCK - : 4-----  endBal:        5355331677679548557
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  endBalCalc:    5165331677679548557
+TIME ~ CLOCK - : 4-----  endBalDiff:    -190000000000000000
+TIME ~ CLOCK - : 4-----  regular-recon: false
+TIME ~ CLOCK - : 4-----Trial balance: by-trace
+TIME ~ CLOCK - : 4-----  hash: 0x6ad90f7ebfa375681129804ab2c525e3702312dfd1691ef26352bd8f0485b6ff
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  prevBal:       5165331677679548557
+TIME ~ CLOCK - : 4-----  begBal:        5165331677679548557
+TIME ~ CLOCK - : 4-----  begBalDiff:    0
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 8------  amountIn:      0
+TIME ~ CLOCK - : 8------  internalIn:    190000000000000000
+TIME ~ CLOCK - : 8------  slfDstrctIn:   0
+TIME ~ CLOCK - : 8------  minBRwdIn:     0
+TIME ~ CLOCK - : 8------  minNRwdIn:     0
+TIME ~ CLOCK - : 8------  minTxFeeIn:    0
+TIME ~ CLOCK - : 8------  minURwdIn:     0
+TIME ~ CLOCK - : 8------  prefundIn:     0
+TIME ~ CLOCK - : 4-----  totalIn:       190000000000000000
+TIME ~ CLOCK - : 8------  amountOut:     0
+TIME ~ CLOCK - : 8------  internalOut:   0
+TIME ~ CLOCK - : 8------  slfDstrctOt:   0
+TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 4-----  totalOut:      0
+TIME ~ CLOCK - : 4-----  amountNet:     190000000000000000
+TIME ~ CLOCK - : 4-----  endBal:        5355331677679548557
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  endBalCalc:    5355331677679548557
+TIME ~ CLOCK - : 4-----  endBalDiff:    0
+TIME ~ CLOCK - : 4-----  regular-recon: true
 , {
   "hash": "0x6ad90f7ebfa375681129804ab2c525e3702312dfd1691ef26352bd8f0485b6ff",
   "blockHash": "0xa15f935d6dc94f1a0a47ca83e3f85e1d3720f8080fd640d60263c0d23220b602",
@@ -6378,29 +6821,29 @@ TIME ~ CLOCK - : 4-----pushed: 10292070 130 "5.165331677679548557" "" "" "5.3553
       "prevBlk": 10292014,
       "prevBlkBal": "5.165331677679548557",
       "begBal": "5.165331677679548557",
-      "begBalDiff": "",
+      "endBal": "5.355331677679548557",
       "amountIn": "",
-      "amountOut": "",
       "internalIn": "0.190000000000000000",
-      "internalOut": "",
       "selfDestructIn": "",
-      "selfDestructOut": "",
       "minerBaseRewardIn": "",
       "minerNephewRewardIn": "",
       "minerTxFeeIn": "",
       "minerUncleRewardIn": "",
       "prefundIn": "",
+      "amountOut": "",
+      "internalOut": "",
+      "selfDestructOut": "",
       "gasCostOut": "",
-      "endBal": "5.355331677679548557",
+      "reconciliationType": "by-trace",
+      "spotPrice": "-1",
+      "begBalDiff": "",
       "endBalCalc": "5.355331677679548557",
       "endBalDiff": "",
-      "amountNet": "0.190000000000000000",
-      "spotPrice": "-1",
-      "reconciliationType": "by-trace",
-      "reconTrail": "|endBalDiff",
-      "reconciled": true,
       "totalIn": "0.190000000000000000",
-      "totalOut": ""
+      "totalOut": "",
+      "totalOutLessGas": "",
+      "amountNet": "0.190000000000000000",
+      "reconciled": true
     }
   ],
   "gasCost": 1416220067270450,
@@ -6408,22 +6851,33 @@ TIME ~ CLOCK - : 4-----pushed: 10292070 130 "5.165331677679548557" "" "" "5.3553
   "date": "2020-06-18 21:20:11 UTC",
   "ether": 0.200000000000000002
 }
-TIME ~ CLOCK - : 4-----assetSymbol: ETH
-TIME ~ CLOCK - : 4-----assetAddr:   0xf503017d7baf7fbc0fff7492b751025c6a78179b
-TIME ~ CLOCK - : 4-----prevBlkBal:  "5.355331677679548557"
-TIME ~ CLOCK - : 4-----prevBlock:   
-TIME ~ CLOCK - : 4-----begBal:     "5.355331677679548557"
-TIME ~ CLOCK - : 4-----endBal:     "5.355331677679548557"
-TIME ~ CLOCK - : 4-----endBalCalc: "5.355331677679548557"
-TIME ~ CLOCK - : 4-----begBalDiff: ""
-TIME ~ CLOCK - : 4-----endBalDiff: ""
-TIME ~ CLOCK - : 4-----reconciled: true
-TIME ~ CLOCK - : 4-----amountNet regular: ""
-TIME ~ CLOCK - : 4-----pushed: 10292120 38 "5.355331677679548557" "" "" "5.355331677679548557" true
-TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM execution error.","data":"Reverted 0x"},"id":"1"}
- {"jsonrpc":"2.0","method":"eth_call","params":[{"to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c", "data": "0x95d89b41"}, "0x9d0b98"],"id":"1"}
-TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM execution error.","data":"Reverted 0x"},"id":"1"}
- {"jsonrpc":"2.0","method":"eth_call","params":[{"to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c", "data": "0x70a08231000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"}, "0x9d0b98"],"id":"1"}
+TIME ~ CLOCK - : 4-----Trial balance: regular
+TIME ~ CLOCK - : 4-----  hash: 0x9c888fac75ae127e51584ed32ac5b65283e61ad4eb5ef2947196f4469b785a8a
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  prevBal:       5355331677679548557
+TIME ~ CLOCK - : 4-----  begBal:        5355331677679548557
+TIME ~ CLOCK - : 4-----  begBalDiff:    0
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 8------  amountIn:      0
+TIME ~ CLOCK - : 8------  internalIn:    0
+TIME ~ CLOCK - : 8------  slfDstrctIn:   0
+TIME ~ CLOCK - : 8------  minBRwdIn:     0
+TIME ~ CLOCK - : 8------  minNRwdIn:     0
+TIME ~ CLOCK - : 8------  minTxFeeIn:    0
+TIME ~ CLOCK - : 8------  minURwdIn:     0
+TIME ~ CLOCK - : 8------  prefundIn:     0
+TIME ~ CLOCK - : 4-----  totalIn:       0
+TIME ~ CLOCK - : 8------  amountOut:     0
+TIME ~ CLOCK - : 8------  internalOut:   0
+TIME ~ CLOCK - : 8------  slfDstrctOt:   0
+TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 4-----  totalOut:      0
+TIME ~ CLOCK - : 4-----  amountNet:     0
+TIME ~ CLOCK - : 4-----  endBal:        5355331677679548557
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  endBalCalc:    5355331677679548557
+TIME ~ CLOCK - : 4-----  endBalDiff:    0
+TIME ~ CLOCK - : 4-----  regular-recon: true
 , {
   "hash": "0x9c888fac75ae127e51584ed32ac5b65283e61ad4eb5ef2947196f4469b785a8a",
   "blockHash": "0x874e52295b00d519f0744158329e9199601c11218573361c153f341ed06635a7",
@@ -6543,28 +6997,29 @@ TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM exe
       "prevBlk": 10292070,
       "prevBlkBal": "5.355331677679548557",
       "begBal": "5.355331677679548557",
-      "begBalDiff": "",
+      "endBal": "5.355331677679548557",
       "amountIn": "",
-      "amountOut": "",
       "internalIn": "",
-      "internalOut": "",
       "selfDestructIn": "",
-      "selfDestructOut": "",
       "minerBaseRewardIn": "",
       "minerNephewRewardIn": "",
       "minerTxFeeIn": "",
       "minerUncleRewardIn": "",
       "prefundIn": "",
+      "amountOut": "",
+      "internalOut": "",
+      "selfDestructOut": "",
       "gasCostOut": "",
-      "endBal": "5.355331677679548557",
+      "reconciliationType": "regular",
+      "spotPrice": "-1",
+      "begBalDiff": "",
       "endBalCalc": "5.355331677679548557",
       "endBalDiff": "",
-      "amountNet": "",
-      "spotPrice": "-1",
-      "reconciliationType": "regular",
-      "reconciled": true,
       "totalIn": "",
-      "totalOut": ""
+      "totalOut": "",
+      "totalOutLessGas": "",
+      "amountNet": "",
+      "reconciled": true
     },
     {
       "blockNumber": 10292120,
@@ -6576,27 +7031,28 @@ TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM exe
       "prevBlk": 10292014,
       "prevBlkBal": "1202.047776639199461740",
       "begBal": "1202.047776639199461740",
-      "begBalDiff": "",
+      "endBal": "1249.547776639199461740",
       "amountIn": "47.500000000000000000",
-      "amountOut": "",
       "internalIn": "",
-      "internalOut": "",
       "selfDestructIn": "",
-      "selfDestructOut": "",
       "minerBaseRewardIn": "",
       "minerNephewRewardIn": "",
       "minerTxFeeIn": "",
       "minerUncleRewardIn": "",
       "prefundIn": "",
+      "amountOut": "",
+      "internalOut": "",
+      "selfDestructOut": "",
       "gasCostOut": "",
-      "endBal": "1249.547776639199461740",
-      "endBalCalc": "",
-      "endBalDiff": "",
-      "amountNet": "47.500000000000000000",
       "spotPrice": "-1",
-      "reconciled": true,
+      "begBalDiff": "",
+      "endBalCalc": "1249.547776639199461740",
+      "endBalDiff": "",
       "totalIn": "47.500000000000000000",
-      "totalOut": ""
+      "totalOut": "",
+      "totalOutLessGas": "",
+      "amountNet": "47.500000000000000000",
+      "reconciled": true
     }
   ],
   "gasCost": 1852254000000000,
@@ -6604,27 +7060,87 @@ TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM exe
   "date": "2020-06-18 21:33:11 UTC",
   "ether": 0.000000000000000000
 }
-TIME ~ CLOCK - : 4-----assetSymbol: ETH
-TIME ~ CLOCK - : 4-----assetAddr:   0xf503017d7baf7fbc0fff7492b751025c6a78179b
-TIME ~ CLOCK - : 4-----prevBlkBal:  "5.355331677679548557"
-TIME ~ CLOCK - : 4-----prevBlock:   
-TIME ~ CLOCK - : 4-----from --> amountOut: ""
-TIME ~ CLOCK - : 4-----from --> gasCostOut: "0.001321460340000000"
-TIME ~ CLOCK - : 4-----begBal:     "5.355331677679548557"
-TIME ~ CLOCK - : 4-----endBal:     "5.351951831439548557"
-TIME ~ CLOCK - : 4-----endBalCalc: "5.354010217339548557"
-TIME ~ CLOCK - : 4-----begBalDiff: ""
-TIME ~ CLOCK - : 4-----endBalDiff: "-0.002058385900000000"
-TIME ~ CLOCK - : 4-----reconciled: false
-TIME ~ CLOCK - : 4-----partial:
-TIME ~ CLOCK - : 4-----  begBal:     "5.355331677679548557"
-TIME ~ CLOCK - : 4-----  begBalDiff: ""
-TIME ~ CLOCK - : 4-----  endBal:     "5.354010217339548557"
-TIME ~ CLOCK - : 4-----  endBalCalc: "5.354010217339548557"
-TIME ~ CLOCK - : 4-----  endBalDiff: ""
-TIME ~ CLOCK - : 4-----  reconciled: true
-TIME ~ CLOCK - : 4-----  amountNet   prevdiff-partial: "-0.001321460340000000"
-TIME ~ CLOCK - : 4-----pushed: 10293554 109 "5.355331677679548557" "" "" "5.354010217339548557" true
+TIME ~ CLOCK - : 4-----Trial balance: regular
+TIME ~ CLOCK - : 4-----  hash: 0x510acf20070895b13a5e7fe050e4756a22c0f274ae7d6416a175a863c7cdcb23
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  prevBal:       5355331677679548557
+TIME ~ CLOCK - : 4-----  begBal:        5355331677679548557
+TIME ~ CLOCK - : 4-----  begBalDiff:    0
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 8------  amountIn:      0
+TIME ~ CLOCK - : 8------  internalIn:    0
+TIME ~ CLOCK - : 8------  slfDstrctIn:   0
+TIME ~ CLOCK - : 8------  minBRwdIn:     0
+TIME ~ CLOCK - : 8------  minNRwdIn:     0
+TIME ~ CLOCK - : 8------  minTxFeeIn:    0
+TIME ~ CLOCK - : 8------  minURwdIn:     0
+TIME ~ CLOCK - : 8------  prefundIn:     0
+TIME ~ CLOCK - : 4-----  totalIn:       0
+TIME ~ CLOCK - : 8------  amountOut:     0
+TIME ~ CLOCK - : 8------  internalOut:   0
+TIME ~ CLOCK - : 8------  slfDstrctOt:   0
+TIME ~ CLOCK - : 8------  gasCostOut:    1321460340000000
+TIME ~ CLOCK - : 4-----  totalOut:      1321460340000000
+TIME ~ CLOCK - : 4-----  amountNet:     -1321460340000000
+TIME ~ CLOCK - : 4-----  endBal:        5351951831439548557
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  endBalCalc:    5354010217339548557
+TIME ~ CLOCK - : 4-----  endBalDiff:    2058385900000000
+TIME ~ CLOCK - : 4-----  regular-recon: false
+TIME ~ CLOCK - : 4-----Trial balance: by-trace
+TIME ~ CLOCK - : 4-----  hash: 0x510acf20070895b13a5e7fe050e4756a22c0f274ae7d6416a175a863c7cdcb23
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  prevBal:       5355331677679548557
+TIME ~ CLOCK - : 4-----  begBal:        5355331677679548557
+TIME ~ CLOCK - : 4-----  begBalDiff:    0
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 8------  amountIn:      0
+TIME ~ CLOCK - : 8------  internalIn:    0
+TIME ~ CLOCK - : 8------  slfDstrctIn:   0
+TIME ~ CLOCK - : 8------  minBRwdIn:     0
+TIME ~ CLOCK - : 8------  minNRwdIn:     0
+TIME ~ CLOCK - : 8------  minTxFeeIn:    0
+TIME ~ CLOCK - : 8------  minURwdIn:     0
+TIME ~ CLOCK - : 8------  prefundIn:     0
+TIME ~ CLOCK - : 4-----  totalIn:       0
+TIME ~ CLOCK - : 8------  amountOut:     0
+TIME ~ CLOCK - : 8------  internalOut:   0
+TIME ~ CLOCK - : 8------  slfDstrctOt:   0
+TIME ~ CLOCK - : 8------  gasCostOut:    1321460340000000
+TIME ~ CLOCK - : 4-----  totalOut:      1321460340000000
+TIME ~ CLOCK - : 4-----  amountNet:     -1321460340000000
+TIME ~ CLOCK - : 4-----  endBal:        5351951831439548557
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  endBalCalc:    5354010217339548557
+TIME ~ CLOCK - : 4-----  endBalDiff:    2058385900000000
+TIME ~ CLOCK - : 4-----  regular-recon: false
+TIME ~ CLOCK - : 4-----Trial balance: prevdiff-partial
+TIME ~ CLOCK - : 4-----  hash: 0x510acf20070895b13a5e7fe050e4756a22c0f274ae7d6416a175a863c7cdcb23
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  prevBal:       5355331677679548557
+TIME ~ CLOCK - : 4-----  begBal:        5355331677679548557
+TIME ~ CLOCK - : 4-----  begBalDiff:    0
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 8------  amountIn:      0
+TIME ~ CLOCK - : 8------  internalIn:    0
+TIME ~ CLOCK - : 8------  slfDstrctIn:   0
+TIME ~ CLOCK - : 8------  minBRwdIn:     0
+TIME ~ CLOCK - : 8------  minNRwdIn:     0
+TIME ~ CLOCK - : 8------  minTxFeeIn:    0
+TIME ~ CLOCK - : 8------  minURwdIn:     0
+TIME ~ CLOCK - : 8------  prefundIn:     0
+TIME ~ CLOCK - : 4-----  totalIn:       0
+TIME ~ CLOCK - : 8------  amountOut:     0
+TIME ~ CLOCK - : 8------  internalOut:   0
+TIME ~ CLOCK - : 8------  slfDstrctOt:   0
+TIME ~ CLOCK - : 8------  gasCostOut:    1321460340000000
+TIME ~ CLOCK - : 4-----  totalOut:      1321460340000000
+TIME ~ CLOCK - : 4-----  amountNet:     -1321460340000000
+TIME ~ CLOCK - : 4-----  endBal:        5354010217339548557
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  endBalCalc:    5354010217339548557
+TIME ~ CLOCK - : 4-----  endBalDiff:    0
+TIME ~ CLOCK - : 4-----  regular-recon: true
 , {
   "hash": "0x510acf20070895b13a5e7fe050e4756a22c0f274ae7d6416a175a863c7cdcb23",
   "blockHash": "0x5f464a4fec4ef7df373e331c1804662b2a64030f22735d611b7d939e14224f15",
@@ -6687,29 +7203,29 @@ TIME ~ CLOCK - : 4-----pushed: 10293554 109 "5.355331677679548557" "" "" "5.3540
       "prevBlk": 10292120,
       "prevBlkBal": "5.355331677679548557",
       "begBal": "5.355331677679548557",
-      "begBalDiff": "",
+      "endBal": "5.354010217339548557",
       "amountIn": "",
-      "amountOut": "",
       "internalIn": "",
-      "internalOut": "",
       "selfDestructIn": "",
-      "selfDestructOut": "",
       "minerBaseRewardIn": "",
       "minerNephewRewardIn": "",
       "minerTxFeeIn": "",
       "minerUncleRewardIn": "",
       "prefundIn": "",
+      "amountOut": "",
+      "internalOut": "",
+      "selfDestructOut": "",
       "gasCostOut": "0.001321460340000000",
-      "endBal": "5.354010217339548557",
+      "reconciliationType": "prevdiff-partial",
+      "spotPrice": "-1",
+      "begBalDiff": "",
       "endBalCalc": "5.354010217339548557",
       "endBalDiff": "",
-      "amountNet": "-0.001321460340000000",
-      "spotPrice": "-1",
-      "reconciliationType": "prevdiff-partial",
-      "reconTrail": "|endBalDiff|traces:endBalDiff",
-      "reconciled": true,
       "totalIn": "",
-      "totalOut": "0.001321460340000000"
+      "totalOut": "0.001321460340000000",
+      "totalOutLessGas": "",
+      "amountNet": "-0.001321460340000000",
+      "reconciled": true
     },
     {
       "blockNumber": 10293554,
@@ -6721,27 +7237,28 @@ TIME ~ CLOCK - : 4-----pushed: 10293554 109 "5.355331677679548557" "" "" "5.3540
       "prevBlk": 10292120,
       "prevBlkBal": "1249.547776639199461740",
       "begBal": "1249.547776639199461740",
-      "begBalDiff": "",
+      "endBal": "1244.547776639199461740",
       "amountIn": "",
-      "amountOut": "5.0000000",
       "internalIn": "",
-      "internalOut": "",
       "selfDestructIn": "",
-      "selfDestructOut": "",
       "minerBaseRewardIn": "",
       "minerNephewRewardIn": "",
       "minerTxFeeIn": "",
       "minerUncleRewardIn": "",
       "prefundIn": "",
+      "amountOut": "5.0000000",
+      "internalOut": "",
+      "selfDestructOut": "",
       "gasCostOut": "",
-      "endBal": "1244.547776639199461740",
-      "endBalCalc": "",
-      "endBalDiff": "",
-      "amountNet": "-5.0000000",
       "spotPrice": "-1",
-      "reconciled": true,
+      "begBalDiff": "",
+      "endBalCalc": "1244.547776639199461740",
+      "endBalDiff": "",
       "totalIn": "",
-      "totalOut": "5.0000000"
+      "totalOut": "5.0000000",
+      "totalOutLessGas": "5.0000000",
+      "amountNet": "-5.0000000",
+      "reconciled": true
     }
   ],
   "gasCost": 1321460340000000,
@@ -6749,31 +7266,87 @@ TIME ~ CLOCK - : 4-----pushed: 10293554 109 "5.355331677679548557" "" "" "5.3540
   "date": "2020-06-19 02:52:22 UTC",
   "ether": 0.000000000000000000
 }
-TIME ~ CLOCK - : 4-----assetSymbol: ETH
-TIME ~ CLOCK - : 4-----assetAddr:   0xf503017d7baf7fbc0fff7492b751025c6a78179b
-TIME ~ CLOCK - : 4-----prevBlkBal:  "5.354010217339548557"
-TIME ~ CLOCK - : 4-----prevBlock:   
-TIME ~ CLOCK - : 4-----from --> amountOut: ""
-TIME ~ CLOCK - : 4-----from --> gasCostOut: "0.002058385900000000"
-TIME ~ CLOCK - : 4-----begBal:     "5.355331677679548557"
-TIME ~ CLOCK - : 4-----endBal:     "5.351951831439548557"
-TIME ~ CLOCK - : 4-----endBalCalc: "5.353273291779548557"
-TIME ~ CLOCK - : 4-----begBalDiff: "0.001321460340000000"
-TIME ~ CLOCK - : 4-----endBalDiff: "-0.001321460340000000"
-TIME ~ CLOCK - : 4-----reconciled: false
-TIME ~ CLOCK - : 4-----partial:
-TIME ~ CLOCK - : 4-----  begBal:     "5.354010217339548557"
-TIME ~ CLOCK - : 4-----  begBalDiff: ""
-TIME ~ CLOCK - : 4-----  endBal:     "5.351951831439548557"
-TIME ~ CLOCK - : 4-----  endBalCalc: "5.351951831439548557"
-TIME ~ CLOCK - : 4-----  endBalDiff: ""
-TIME ~ CLOCK - : 4-----  reconciled: true
-TIME ~ CLOCK - : 4-----  amountNet   nextdiff-partial: "-0.002058385900000000"
-TIME ~ CLOCK - : 4-----pushed: 10293554 110 "5.354010217339548557" "" "" "5.351951831439548557" true
-TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM execution error.","data":"Reverted 0x"},"id":"1"}
- {"jsonrpc":"2.0","method":"eth_call","params":[{"to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c", "data": "0x95d89b41"}, "0x9d1132"],"id":"1"}
-TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM execution error.","data":"Reverted 0x"},"id":"1"}
- {"jsonrpc":"2.0","method":"eth_call","params":[{"to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c", "data": "0x70a08231000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"}, "0x9d1132"],"id":"1"}
+TIME ~ CLOCK - : 4-----Trial balance: regular
+TIME ~ CLOCK - : 4-----  hash: 0x13cb17bca242f05bbff17e240a3e554c97888f850059ce3f40b845fe736043e6
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  prevBal:       5354010217339548557
+TIME ~ CLOCK - : 4-----  begBal:        5355331677679548557
+TIME ~ CLOCK - : 4-----  begBalDiff:    1321460340000000
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 8------  amountIn:      0
+TIME ~ CLOCK - : 8------  internalIn:    0
+TIME ~ CLOCK - : 8------  slfDstrctIn:   0
+TIME ~ CLOCK - : 8------  minBRwdIn:     0
+TIME ~ CLOCK - : 8------  minNRwdIn:     0
+TIME ~ CLOCK - : 8------  minTxFeeIn:    0
+TIME ~ CLOCK - : 8------  minURwdIn:     0
+TIME ~ CLOCK - : 8------  prefundIn:     0
+TIME ~ CLOCK - : 4-----  totalIn:       0
+TIME ~ CLOCK - : 8------  amountOut:     0
+TIME ~ CLOCK - : 8------  internalOut:   0
+TIME ~ CLOCK - : 8------  slfDstrctOt:   0
+TIME ~ CLOCK - : 8------  gasCostOut:    2058385900000000
+TIME ~ CLOCK - : 4-----  totalOut:      2058385900000000
+TIME ~ CLOCK - : 4-----  amountNet:     -2058385900000000
+TIME ~ CLOCK - : 4-----  endBal:        5351951831439548557
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  endBalCalc:    5353273291779548557
+TIME ~ CLOCK - : 4-----  endBalDiff:    1321460340000000
+TIME ~ CLOCK - : 4-----  regular-recon: false
+TIME ~ CLOCK - : 4-----Trial balance: by-trace
+TIME ~ CLOCK - : 4-----  hash: 0x13cb17bca242f05bbff17e240a3e554c97888f850059ce3f40b845fe736043e6
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  prevBal:       5354010217339548557
+TIME ~ CLOCK - : 4-----  begBal:        5355331677679548557
+TIME ~ CLOCK - : 4-----  begBalDiff:    1321460340000000
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 8------  amountIn:      0
+TIME ~ CLOCK - : 8------  internalIn:    0
+TIME ~ CLOCK - : 8------  slfDstrctIn:   0
+TIME ~ CLOCK - : 8------  minBRwdIn:     0
+TIME ~ CLOCK - : 8------  minNRwdIn:     0
+TIME ~ CLOCK - : 8------  minTxFeeIn:    0
+TIME ~ CLOCK - : 8------  minURwdIn:     0
+TIME ~ CLOCK - : 8------  prefundIn:     0
+TIME ~ CLOCK - : 4-----  totalIn:       0
+TIME ~ CLOCK - : 8------  amountOut:     0
+TIME ~ CLOCK - : 8------  internalOut:   0
+TIME ~ CLOCK - : 8------  slfDstrctOt:   0
+TIME ~ CLOCK - : 8------  gasCostOut:    2058385900000000
+TIME ~ CLOCK - : 4-----  totalOut:      2058385900000000
+TIME ~ CLOCK - : 4-----  amountNet:     -2058385900000000
+TIME ~ CLOCK - : 4-----  endBal:        5351951831439548557
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  endBalCalc:    5353273291779548557
+TIME ~ CLOCK - : 4-----  endBalDiff:    1321460340000000
+TIME ~ CLOCK - : 4-----  regular-recon: false
+TIME ~ CLOCK - : 4-----Trial balance: partial-nextdiff
+TIME ~ CLOCK - : 4-----  hash: 0x13cb17bca242f05bbff17e240a3e554c97888f850059ce3f40b845fe736043e6
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  prevBal:       5354010217339548557
+TIME ~ CLOCK - : 4-----  begBal:        5354010217339548557
+TIME ~ CLOCK - : 4-----  begBalDiff:    0
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 8------  amountIn:      0
+TIME ~ CLOCK - : 8------  internalIn:    0
+TIME ~ CLOCK - : 8------  slfDstrctIn:   0
+TIME ~ CLOCK - : 8------  minBRwdIn:     0
+TIME ~ CLOCK - : 8------  minNRwdIn:     0
+TIME ~ CLOCK - : 8------  minTxFeeIn:    0
+TIME ~ CLOCK - : 8------  minURwdIn:     0
+TIME ~ CLOCK - : 8------  prefundIn:     0
+TIME ~ CLOCK - : 4-----  totalIn:       0
+TIME ~ CLOCK - : 8------  amountOut:     0
+TIME ~ CLOCK - : 8------  internalOut:   0
+TIME ~ CLOCK - : 8------  slfDstrctOt:   0
+TIME ~ CLOCK - : 8------  gasCostOut:    2058385900000000
+TIME ~ CLOCK - : 4-----  totalOut:      2058385900000000
+TIME ~ CLOCK - : 4-----  amountNet:     -2058385900000000
+TIME ~ CLOCK - : 4-----  endBal:        5351951831439548557
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  endBalCalc:    5351951831439548557
+TIME ~ CLOCK - : 4-----  endBalDiff:    0
+TIME ~ CLOCK - : 4-----  regular-recon: true
 , {
   "hash": "0x13cb17bca242f05bbff17e240a3e554c97888f850059ce3f40b845fe736043e6",
   "blockHash": "0x5f464a4fec4ef7df373e331c1804662b2a64030f22735d611b7d939e14224f15",
@@ -6893,29 +7466,29 @@ TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM exe
       "prevBlk": 10293554,
       "prevBlkBal": "5.354010217339548557",
       "begBal": "5.354010217339548557",
-      "begBalDiff": "",
+      "endBal": "5.351951831439548557",
       "amountIn": "",
-      "amountOut": "",
       "internalIn": "",
-      "internalOut": "",
       "selfDestructIn": "",
-      "selfDestructOut": "",
       "minerBaseRewardIn": "",
       "minerNephewRewardIn": "",
       "minerTxFeeIn": "",
       "minerUncleRewardIn": "",
       "prefundIn": "",
+      "amountOut": "",
+      "internalOut": "",
+      "selfDestructOut": "",
       "gasCostOut": "0.002058385900000000",
-      "endBal": "5.351951831439548557",
+      "reconciliationType": "partial-nextdiff",
+      "spotPrice": "-1",
+      "begBalDiff": "",
       "endBalCalc": "5.351951831439548557",
       "endBalDiff": "",
-      "amountNet": "-0.002058385900000000",
-      "spotPrice": "-1",
-      "reconciliationType": "nextdiff-partial",
-      "reconTrail": "|endBalDiff|traces:endBalDiff",
-      "reconciled": true,
       "totalIn": "",
-      "totalOut": "0.002058385900000000"
+      "totalOut": "0.002058385900000000",
+      "totalOutLessGas": "",
+      "amountNet": "-0.002058385900000000",
+      "reconciled": true
     }
   ],
   "gasCost": 2058385900000000,
@@ -6923,22 +7496,33 @@ TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM exe
   "date": "2020-06-19 02:52:22 UTC",
   "ether": 0.000000000000000000
 }
-TIME ~ CLOCK - : 4-----assetSymbol: ETH
-TIME ~ CLOCK - : 4-----assetAddr:   0xf503017d7baf7fbc0fff7492b751025c6a78179b
-TIME ~ CLOCK - : 4-----prevBlkBal:  "5.351951831439548557"
-TIME ~ CLOCK - : 4-----prevBlock:   
-TIME ~ CLOCK - : 4-----begBal:     "5.351951831439548557"
-TIME ~ CLOCK - : 4-----endBal:     "5.351951831439548557"
-TIME ~ CLOCK - : 4-----endBalCalc: "5.351951831439548557"
-TIME ~ CLOCK - : 4-----begBalDiff: ""
-TIME ~ CLOCK - : 4-----endBalDiff: ""
-TIME ~ CLOCK - : 4-----reconciled: true
-TIME ~ CLOCK - : 4-----amountNet regular: ""
-TIME ~ CLOCK - : 4-----pushed: 10296720 101 "5.351951831439548557" "" "" "5.351951831439548557" true
-TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM execution error.","data":"Reverted 0x"},"id":"1"}
- {"jsonrpc":"2.0","method":"eth_call","params":[{"to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c", "data": "0x95d89b41"}, "0x9d1d90"],"id":"1"}
-TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM execution error.","data":"Reverted 0x"},"id":"1"}
- {"jsonrpc":"2.0","method":"eth_call","params":[{"to": "0x7d655c57f71464b6f83811c55d84009cd9f5221c", "data": "0x70a08231000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"}, "0x9d1d90"],"id":"1"}
+TIME ~ CLOCK - : 4-----Trial balance: regular
+TIME ~ CLOCK - : 4-----  hash: 0x0e3bd37010ef2c371f26a6059e1cd22f7fbc9e009dc01896ce97ad636d914202
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  prevBal:       5351951831439548557
+TIME ~ CLOCK - : 4-----  begBal:        5351951831439548557
+TIME ~ CLOCK - : 4-----  begBalDiff:    0
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 8------  amountIn:      0
+TIME ~ CLOCK - : 8------  internalIn:    0
+TIME ~ CLOCK - : 8------  slfDstrctIn:   0
+TIME ~ CLOCK - : 8------  minBRwdIn:     0
+TIME ~ CLOCK - : 8------  minNRwdIn:     0
+TIME ~ CLOCK - : 8------  minTxFeeIn:    0
+TIME ~ CLOCK - : 8------  minURwdIn:     0
+TIME ~ CLOCK - : 8------  prefundIn:     0
+TIME ~ CLOCK - : 4-----  totalIn:       0
+TIME ~ CLOCK - : 8------  amountOut:     0
+TIME ~ CLOCK - : 8------  internalOut:   0
+TIME ~ CLOCK - : 8------  slfDstrctOt:   0
+TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 4-----  totalOut:      0
+TIME ~ CLOCK - : 4-----  amountNet:     0
+TIME ~ CLOCK - : 4-----  endBal:        5351951831439548557
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  endBalCalc:    5351951831439548557
+TIME ~ CLOCK - : 4-----  endBalDiff:    0
+TIME ~ CLOCK - : 4-----  regular-recon: true
 , {
   "hash": "0x0e3bd37010ef2c371f26a6059e1cd22f7fbc9e009dc01896ce97ad636d914202",
   "blockHash": "0xd11210e343cb8e03f44421ad1d38526393ba138e2d5cc0c20df8e695ff4fb014",
@@ -8340,28 +8924,29 @@ TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM exe
       "prevBlk": 10293554,
       "prevBlkBal": "5.351951831439548557",
       "begBal": "5.351951831439548557",
-      "begBalDiff": "",
+      "endBal": "5.351951831439548557",
       "amountIn": "",
-      "amountOut": "",
       "internalIn": "",
-      "internalOut": "",
       "selfDestructIn": "",
-      "selfDestructOut": "",
       "minerBaseRewardIn": "",
       "minerNephewRewardIn": "",
       "minerTxFeeIn": "",
       "minerUncleRewardIn": "",
       "prefundIn": "",
+      "amountOut": "",
+      "internalOut": "",
+      "selfDestructOut": "",
       "gasCostOut": "",
-      "endBal": "5.351951831439548557",
+      "reconciliationType": "regular",
+      "spotPrice": "-1",
+      "begBalDiff": "",
       "endBalCalc": "5.351951831439548557",
       "endBalDiff": "",
-      "amountNet": "",
-      "spotPrice": "-1",
-      "reconciliationType": "regular",
-      "reconciled": true,
       "totalIn": "",
-      "totalOut": ""
+      "totalOut": "",
+      "totalOutLessGas": "",
+      "amountNet": "",
+      "reconciled": true
     },
     {
       "blockNumber": 10296720,
@@ -8373,27 +8958,28 @@ TIME ~ CLOCK - : 4-----{"jsonrpc":"2.0","error":{"code":-32015,"message":"VM exe
       "prevBlk": 10293554,
       "prevBlkBal": "1244.547776639199461740",
       "begBal": "1244.547776639199461740",
-      "begBalDiff": "",
+      "endBal": "1254.047776639199461740",
       "amountIn": "9.500000000000000000",
-      "amountOut": "",
       "internalIn": "",
-      "internalOut": "",
       "selfDestructIn": "",
-      "selfDestructOut": "",
       "minerBaseRewardIn": "",
       "minerNephewRewardIn": "",
       "minerTxFeeIn": "",
       "minerUncleRewardIn": "",
       "prefundIn": "",
+      "amountOut": "",
+      "internalOut": "",
+      "selfDestructOut": "",
       "gasCostOut": "",
-      "endBal": "1254.047776639199461740",
-      "endBalCalc": "",
-      "endBalDiff": "",
-      "amountNet": "9.500000000000000000",
       "spotPrice": "-1",
-      "reconciled": true,
+      "begBalDiff": "",
+      "endBalCalc": "1254.047776639199461740",
+      "endBalDiff": "",
       "totalIn": "9.500000000000000000",
-      "totalOut": ""
+      "totalOut": "",
+      "totalOutLessGas": "",
+      "amountNet": "9.500000000000000000",
+      "reconciled": true
     }
   ],
   "gasCost": 26281152000000000,
