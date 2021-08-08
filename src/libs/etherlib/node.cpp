@@ -1415,7 +1415,7 @@ bool loadTimestamps(uint32_t** theArray, size_t& cnt) {
 const string_q defHide =
     "CTransaction: price, nonce, input"
     "|CLogEntry: data, topics"
-    "|CTrace: blockHash, blockNumber, transactionHash, transactionIndex, traceAddress, subtraces"
+    "|CTrace: "
     "|CTraceAction: init"
     "|CTraceResult: code"
     "|CFunction: constant, payable, signature, encoding, type, articulate_str"
@@ -1424,7 +1424,8 @@ const string_q defHide =
     "is_flags";
 
 const string_q defShow =
-    "CTransaction: gasCost, articulatedTx, compressedTx, traces, isError, hasToken, date, ether"
+    "CTransaction: gasCost, articulatedTx, compressedTx, "
+    "traces, isError, hasToken, date, ether"
     "|CLogEntry: articulatedLog, compressedLog"
     "|CTrace: articulatedTrace, compressedTrace"
     "|CTraceAction: "

@@ -5,6 +5,12 @@ params.size: 0
 ==================================================
 
   {
+    "blockHash": "0x10a610f712557f961e854be9b19561eea3c9c19ab7b302027877181935789da8",
+    "blockNumber": 6513870,
+    "subtraces": 0,
+    "traceAddress": null,
+    "transactionHash": "0x2d92337aa72c51eaf61ab52692af28cc2f7efb62e32bbc1d8a420099a22510e9",
+    "transactionIndex": 62,
     "type": "call",
     "error": "Bad jump destination",
     "action": {
@@ -32,6 +38,12 @@ params.size: 0
 ==================================================
 
 ,  {
+    "blockHash": "0x9a06b1e8e7249a36a5e532997882429805c7a6510e91b05fd9b5ad6e367acb13",
+    "blockNumber": 6687987,
+    "subtraces": 0,
+    "traceAddress": null,
+    "transactionHash": "0x8c0b6d6bf0390ba6618b10aa629f8208c8b871b0c052408505a7d9b5bf015f91",
+    "transactionIndex": 11,
     "type": "call",
     "action": {
       "selfDestructed": "0x0",
@@ -58,6 +70,12 @@ params.size: 0
     },
     "compressedTrace": "cancelExistingRequest(1 /*_key*/); "
   },  {
+    "blockHash": "0xcd4dbd459893241b0c21c91d64b445b1eb0579f7341afd17e7b797795a7f1d7e",
+    "blockNumber": 2001002,
+    "subtraces": 2,
+    "traceAddress": null,
+    "transactionHash": "0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f81f2fad45149f26e12",
+    "transactionIndex": 0,
     "type": "call",
     "action": {
       "selfDestructed": "0x0",
@@ -91,6 +109,12 @@ params.size: 0
 ==================================================
 
 ,  {
+    "blockHash": "0xcd4dbd459893241b0c21c91d64b445b1eb0579f7341afd17e7b797795a7f1d7e",
+    "blockNumber": 2001002,
+    "subtraces": 0,
+    "traceAddress": "0",
+    "transactionHash": "0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f81f2fad45149f26e12",
+    "transactionIndex": 0,
     "type": "call",
     "action": {
       "selfDestructed": "0x0",
@@ -117,6 +141,12 @@ params.size: 0
     },
     "compressedTrace": "forked(); "
   },  {
+    "blockHash": "0xcd4dbd459893241b0c21c91d64b445b1eb0579f7341afd17e7b797795a7f1d7e",
+    "blockNumber": 2001002,
+    "subtraces": 0,
+    "traceAddress": "1",
+    "transactionHash": "0x5f965cb0a6c3ea59454bc12cce0ed41017ec7effd2196f81f2fad45149f26e12",
+    "transactionIndex": 0,
     "type": "call",
     "action": {
       "selfDestructed": "0x0",

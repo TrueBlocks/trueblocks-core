@@ -1,0 +1,854 @@
+getTraces argc: 5 [1:0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33] [2:--fmt] [3:json] [4:--articulate] 
+getTraces 0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33 --fmt json --articulate 
+{ "data": [
+params.size: 0
+==================================================
+
+params.size: 0
+==================================================
+
+  {
+    "blockHash": "0x6869adf7dd49827d43a6b8563cc6a00ef202aec121c96dee1c2e1b06ce101cec",
+    "blockNumber": 12655579,
+    "subtraces": 5,
+    "traceAddress": null,
+    "transactionHash": "0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33",
+    "transactionIndex": 76,
+    "type": "call",
+    "action": {
+      "selfDestructed": "0x0",
+      "balance": 0,
+      "callType": "call",
+      "from": "0x37da92c11a2d5c05077ce41ac2243aa38032d4af",
+      "gas": 2871724,
+      "input": "0xc9567bf9",
+      "refundAddress": "0x0",
+      "to": "0xfa247066958637af6b4cc04bccecad2b6b107200",
+      "value": 0
+    },
+    "result": {
+      "newContract": "0x0",
+      "gasUsed": 2871679,
+      "output": "0x"
+    },
+    "articulatedTrace": {
+      "name": "openTrading",
+      "stateMutability": "nonpayable"
+    },
+    "compressedTrace": "openTrading(); "
+  }params.size: 0
+==================================================
+
+,  {
+    "blockHash": "0x6869adf7dd49827d43a6b8563cc6a00ef202aec121c96dee1c2e1b06ce101cec",
+    "blockNumber": 12655579,
+    "subtraces": 0,
+    "traceAddress": "0",
+    "transactionHash": "0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33",
+    "transactionIndex": 76,
+    "type": "call",
+    "action": {
+      "selfDestructed": "0x0",
+      "balance": 0,
+      "callType": "staticcall",
+      "from": "0xfa247066958637af6b4cc04bccecad2b6b107200",
+      "gas": 2773610,
+      "input": "0xc45a0155",
+      "refundAddress": "0x0",
+      "to": "0x7a250d5630b4cf539739df2c5dacb4c659f2488d",
+      "value": 0
+    },
+    "result": {
+      "newContract": "0x0",
+      "gasUsed": 252,
+      "output": "0x0000000000000000000000005c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f"
+    },
+    "articulatedTrace": {
+      "name": "factory",
+      "stateMutability": "view",
+      "outputs": {
+        "val_0": "0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f"
+      }
+    },
+    "compressedTrace": "factory(); "
+  }params.size: 0
+==================================================
+
+,  {
+    "blockHash": "0x6869adf7dd49827d43a6b8563cc6a00ef202aec121c96dee1c2e1b06ce101cec",
+    "blockNumber": 12655579,
+    "subtraces": 0,
+    "traceAddress": "1",
+    "transactionHash": "0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33",
+    "transactionIndex": 76,
+    "type": "call",
+    "action": {
+      "selfDestructed": "0x0",
+      "balance": 0,
+      "callType": "staticcall",
+      "from": "0xfa247066958637af6b4cc04bccecad2b6b107200",
+      "gas": 2772688,
+      "input": "0xad5c4648",
+      "refundAddress": "0x0",
+      "to": "0x7a250d5630b4cf539739df2c5dacb4c659f2488d",
+      "value": 0
+    },
+    "result": {
+      "newContract": "0x0",
+      "gasUsed": 275,
+      "output": "0x000000000000000000000000c02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
+    },
+    "articulatedTrace": {
+      "name": "WETH",
+      "stateMutability": "view",
+      "outputs": {
+        "val_0": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
+      }
+    },
+    "compressedTrace": "WETH(); "
+  },  {
+    "blockHash": "0x6869adf7dd49827d43a6b8563cc6a00ef202aec121c96dee1c2e1b06ce101cec",
+    "blockNumber": 12655579,
+    "subtraces": 2,
+    "traceAddress": "2",
+    "transactionHash": "0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33",
+    "transactionIndex": 76,
+    "type": "call",
+    "action": {
+      "selfDestructed": "0x0",
+      "balance": 0,
+      "callType": "call",
+      "from": "0xfa247066958637af6b4cc04bccecad2b6b107200",
+      "gas": 2768957,
+      "input": "0xc9c65396000000000000000000000000fa247066958637af6b4cc04bccecad2b6b107200000000000000000000000000c02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+      "refundAddress": "0x0",
+      "to": "0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f",
+      "value": 0
+    },
+    "result": {
+      "newContract": "0x0",
+      "gasUsed": 2484486,
+      "output": "0x000000000000000000000000ea0be20914783d6b538539795069ca333f820bc5"
+    },
+    "articulatedTrace": {
+      "name": "createPair",
+      "stateMutability": "nonpayable",
+      "inputs": {
+        "tokenA": "0xfa247066958637af6b4cc04bccecad2b6b107200",
+        "tokenB": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
+      },
+      "outputs": {
+        "pair": "0xea0be20914783d6b538539795069ca333f820bc5"
+      }
+    },
+    "compressedTrace": "createPair(0xfa247066958637af6b4cc04bccecad2b6b107200 /*tokenA*/, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2 /*tokenB*/); "
+  },  {
+    "blockHash": "0x6869adf7dd49827d43a6b8563cc6a00ef202aec121c96dee1c2e1b06ce101cec",
+    "blockNumber": 12655579,
+    "subtraces": 0,
+    "traceAddress": "2-0",
+    "transactionHash": "0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33",
+    "transactionIndex": 76,
+    "type": "create",
+    "action": {
+      "selfDestructed": "0x0",
+      "balance": 0,
+      "from": "0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f",
+      "gas": 2686683,
+      "refundAddress": "0x0",
+      "to": "0x0",
+      "value": 0
+    },
+    "result": {
+      "newContract": "0xea0be20914783d6b538539795069ca333f820bc5",
+      "gasUsed": 2327803
+    }
+  },  {
+    "blockHash": "0x6869adf7dd49827d43a6b8563cc6a00ef202aec121c96dee1c2e1b06ce101cec",
+    "blockNumber": 12655579,
+    "subtraces": 0,
+    "traceAddress": "2-0-s",
+    "transactionHash": "0x126a9210b2c",
+    "transactionIndex": 76,
+    "type": "create",
+    "action": {
+      "selfDestructed": "0x0",
+      "balance": 0,
+      "callType": "creation",
+      "from": "0x0",
+      "gas": 2686683,
+      "refundAddress": "0x0",
+      "to": "0xea0be20914783d6b538539795069ca333f820bc5",
+      "value": 0
+    },
+    "result": {
+      "newContract": "0xea0be20914783d6b538539795069ca333f820bc5",
+      "gasUsed": 2327803
+    }
+  }params.size: 0
+==================================================
+
+,  {
+    "blockHash": "0x6869adf7dd49827d43a6b8563cc6a00ef202aec121c96dee1c2e1b06ce101cec",
+    "blockNumber": 12655579,
+    "subtraces": 0,
+    "traceAddress": "2-1",
+    "transactionHash": "0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33",
+    "transactionIndex": 76,
+    "type": "call",
+    "action": {
+      "selfDestructed": "0x0",
+      "balance": 0,
+      "callType": "call",
+      "from": "0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f",
+      "gas": 394873,
+      "input": "0x485cc955000000000000000000000000c02aaa39b223fe8d0a0e5c4f27ead9083c756cc2000000000000000000000000fa247066958637af6b4cc04bccecad2b6b107200",
+      "refundAddress": "0x0",
+      "to": "0xea0be20914783d6b538539795069ca333f820bc5",
+      "value": 0
+    },
+    "result": {
+      "newContract": "0x0",
+      "gasUsed": 44677,
+      "output": "0x"
+    },
+    "articulatedTrace": {
+      "name": "initialize",
+      "stateMutability": "nonpayable",
+      "inputs": {
+        "_admin": "0xfa247066958637af6b4cc04bccecad2b6b107200",
+        "_tru": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
+      }
+    },
+    "compressedTrace": "initialize(0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2 /*_tru*/, 0xfa247066958637af6b4cc04bccecad2b6b107200 /*_admin*/); "
+  }
+level: 1
+readOffset: 0
+objectStart: 0
+params.size: 6
+  0: address token = <>
+  1: uint256 amountTokenDesired = <>
+  2: uint256 amountTokenMin = <>
+  3: uint256 amountETHMin = <>
+  4: address to = <>
+  5: uint256 deadline = <>
+dataArray.size: 6
+  0 (0x000) 0000000000000000...958637af6b4cc04bccecad2b6b107200 <=o <-r
+  1 (0x020) 0000000000000000...00000000000001b1ae4d6e2ef5000000
+  2 (0x040) 0000000000000000...00000000000000000000000000000000
+  3 (0x060) 0000000000000000...00000000000000000000000000000000
+  4 (0x080) 0000000000000000...1a2d5c05077ce41ac2243aa38032d4af
+  5 (0x0a0) 0000000000000000...00000000000000000000000060cbfc9a
+
+==================================================
+params.size: 6
+  0: address token = 0xfa247066958637af6b4cc04bccecad2b6b107200
+  1: uint256 amountTokenDesired = <>
+  2: uint256 amountTokenMin = <>
+  3: uint256 amountETHMin = <>
+  4: address to = <>
+  5: uint256 deadline = <>
+
+level: 1
+readOffset: 1
+objectStart: 0
+params.size: 6
+  0: address token = 0xfa247066958637af6b4cc04bccecad2b6b107200
+  1: uint256 amountTokenDesired = <>
+  2: uint256 amountTokenMin = <>
+  3: uint256 amountETHMin = <>
+  4: address to = <>
+  5: uint256 deadline = <>
+dataArray.size: 6
+  0 (0x000) 0000000000000000...958637af6b4cc04bccecad2b6b107200 <=o
+  1 (0x020) 0000000000000000...00000000000001b1ae4d6e2ef5000000 <-r
+  2 (0x040) 0000000000000000...00000000000000000000000000000000
+  3 (0x060) 0000000000000000...00000000000000000000000000000000
+  4 (0x080) 0000000000000000...1a2d5c05077ce41ac2243aa38032d4af
+  5 (0x0a0) 0000000000000000...00000000000000000000000060cbfc9a
+
+==================================================
+params.size: 6
+  0: address token = 0xfa247066958637af6b4cc04bccecad2b6b107200
+  1: uint256 amountTokenDesired = 8000000000000000000000
+  2: uint256 amountTokenMin = <>
+  3: uint256 amountETHMin = <>
+  4: address to = <>
+  5: uint256 deadline = <>
+
+level: 1
+readOffset: 2
+objectStart: 0
+params.size: 6
+  0: address token = 0xfa247066958637af6b4cc04bccecad2b6b107200
+  1: uint256 amountTokenDesired = 8000000000000000000000
+  2: uint256 amountTokenMin = <>
+  3: uint256 amountETHMin = <>
+  4: address to = <>
+  5: uint256 deadline = <>
+dataArray.size: 6
+  0 (0x000) 0000000000000000...958637af6b4cc04bccecad2b6b107200 <=o
+  1 (0x020) 0000000000000000...00000000000001b1ae4d6e2ef5000000
+  2 (0x040) 0000000000000000...00000000000000000000000000000000 <-r
+  3 (0x060) 0000000000000000...00000000000000000000000000000000
+  4 (0x080) 0000000000000000...1a2d5c05077ce41ac2243aa38032d4af
+  5 (0x0a0) 0000000000000000...00000000000000000000000060cbfc9a
+
+==================================================
+params.size: 6
+  0: address token = 0xfa247066958637af6b4cc04bccecad2b6b107200
+  1: uint256 amountTokenDesired = 8000000000000000000000
+  2: uint256 amountTokenMin = 0
+  3: uint256 amountETHMin = <>
+  4: address to = <>
+  5: uint256 deadline = <>
+
+level: 1
+readOffset: 3
+objectStart: 0
+params.size: 6
+  0: address token = 0xfa247066958637af6b4cc04bccecad2b6b107200
+  1: uint256 amountTokenDesired = 8000000000000000000000
+  2: uint256 amountTokenMin = 0
+  3: uint256 amountETHMin = <>
+  4: address to = <>
+  5: uint256 deadline = <>
+dataArray.size: 6
+  0 (0x000) 0000000000000000...958637af6b4cc04bccecad2b6b107200 <=o
+  1 (0x020) 0000000000000000...00000000000001b1ae4d6e2ef5000000
+  2 (0x040) 0000000000000000...00000000000000000000000000000000
+  3 (0x060) 0000000000000000...00000000000000000000000000000000 <-r
+  4 (0x080) 0000000000000000...1a2d5c05077ce41ac2243aa38032d4af
+  5 (0x0a0) 0000000000000000...00000000000000000000000060cbfc9a
+
+==================================================
+params.size: 6
+  0: address token = 0xfa247066958637af6b4cc04bccecad2b6b107200
+  1: uint256 amountTokenDesired = 8000000000000000000000
+  2: uint256 amountTokenMin = 0
+  3: uint256 amountETHMin = 0
+  4: address to = <>
+  5: uint256 deadline = <>
+
+level: 1
+readOffset: 4
+objectStart: 0
+params.size: 6
+  0: address token = 0xfa247066958637af6b4cc04bccecad2b6b107200
+  1: uint256 amountTokenDesired = 8000000000000000000000
+  2: uint256 amountTokenMin = 0
+  3: uint256 amountETHMin = 0
+  4: address to = <>
+  5: uint256 deadline = <>
+dataArray.size: 6
+  0 (0x000) 0000000000000000...958637af6b4cc04bccecad2b6b107200 <=o
+  1 (0x020) 0000000000000000...00000000000001b1ae4d6e2ef5000000
+  2 (0x040) 0000000000000000...00000000000000000000000000000000
+  3 (0x060) 0000000000000000...00000000000000000000000000000000
+  4 (0x080) 0000000000000000...1a2d5c05077ce41ac2243aa38032d4af <-r
+  5 (0x0a0) 0000000000000000...00000000000000000000000060cbfc9a
+
+==================================================
+params.size: 6
+  0: address token = 0xfa247066958637af6b4cc04bccecad2b6b107200
+  1: uint256 amountTokenDesired = 8000000000000000000000
+  2: uint256 amountTokenMin = 0
+  3: uint256 amountETHMin = 0
+  4: address to = 0x37da92c11a2d5c05077ce41ac2243aa38032d4af
+  5: uint256 deadline = <>
+
+level: 1
+readOffset: 5
+objectStart: 0
+params.size: 6
+  0: address token = 0xfa247066958637af6b4cc04bccecad2b6b107200
+  1: uint256 amountTokenDesired = 8000000000000000000000
+  2: uint256 amountTokenMin = 0
+  3: uint256 amountETHMin = 0
+  4: address to = 0x37da92c11a2d5c05077ce41ac2243aa38032d4af
+  5: uint256 deadline = <>
+dataArray.size: 6
+  0 (0x000) 0000000000000000...958637af6b4cc04bccecad2b6b107200 <=o
+  1 (0x020) 0000000000000000...00000000000001b1ae4d6e2ef5000000
+  2 (0x040) 0000000000000000...00000000000000000000000000000000
+  3 (0x060) 0000000000000000...00000000000000000000000000000000
+  4 (0x080) 0000000000000000...1a2d5c05077ce41ac2243aa38032d4af
+  5 (0x0a0) 0000000000000000...00000000000000000000000060cbfc9a <-r
+
+==================================================
+params.size: 6
+  0: address token = 0xfa247066958637af6b4cc04bccecad2b6b107200
+  1: uint256 amountTokenDesired = 8000000000000000000000
+  2: uint256 amountTokenMin = 0
+  3: uint256 amountETHMin = 0
+  4: address to = 0x37da92c11a2d5c05077ce41ac2243aa38032d4af
+  5: uint256 deadline = 1623981210
+params.size: 6
+  0: address token = 0xfa247066958637af6b4cc04bccecad2b6b107200
+  1: uint256 amountTokenDesired = 8000000000000000000000
+  2: uint256 amountTokenMin = 0
+  3: uint256 amountETHMin = 0
+  4: address to = 0x37da92c11a2d5c05077ce41ac2243aa38032d4af
+  5: uint256 deadline = 1623981210
+==================================================
+
+,  {
+    "blockHash": "0x6869adf7dd49827d43a6b8563cc6a00ef202aec121c96dee1c2e1b06ce101cec",
+    "blockNumber": 12655579,
+    "subtraces": 6,
+    "traceAddress": "3",
+    "transactionHash": "0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33",
+    "transactionIndex": 76,
+    "type": "call",
+    "action": {
+      "selfDestructed": "0x0",
+      "balance": 0,
+      "callType": "call",
+      "from": "0xfa247066958637af6b4cc04bccecad2b6b107200",
+      "gas": 289213,
+      "input": "0xf305d719000000000000000000000000fa247066958637af6b4cc04bccecad2b6b1072000000000000000000000000000000000000000000000001b1ae4d6e2ef50000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000037da92c11a2d5c05077ce41ac2243aa38032d4af0000000000000000000000000000000000000000000000000000000060cbfc9a",
+      "refundAddress": "0x0",
+      "to": "0x7a250d5630b4cf539739df2c5dacb4c659f2488d",
+      "value": 2750000000000000000
+    },
+    "result": {
+      "newContract": "0x0",
+      "gasUsed": 266442,
+      "output": "0x0000000000000000000000000000000000000000000001b1ae4d6e2ef50000000000000000000000000000000000000000000000000000002629f66e0c5300000000000000000000000000000000000000000000000000080a6898a04e86f7f6"
+    },
+    "articulatedTrace": {
+      "name": "addLiquidityETH",
+      "stateMutability": "payable",
+      "inputs": {
+        "amountETHMin": "0",
+        "amountTokenDesired": "8000000000000000000000",
+        "amountTokenMin": "0",
+        "deadline": "1623981210",
+        "to": "0x37da92c11a2d5c05077ce41ac2243aa38032d4af",
+        "token": "0xfa247066958637af6b4cc04bccecad2b6b107200"
+      },
+      "outputs": {
+        "amountETH": "2750000000000000000",
+        "amountToken": "8000000000000000000000",
+        "liquidity": "148323969741913257974"
+      }
+    },
+    "compressedTrace": "addLiquidityETH(0xfa247066958637af6b4cc04bccecad2b6b107200 /*token*/, 8000000000000000000000 /*amountTokenDesired*/, 0 /*amountTokenMin*/, 0 /*amountETHMin*/, 0x37da92c11a2d5c05077ce41ac2243aa38032d4af /*to*/, 1623981210 /*deadline*/); "
+  },  {
+    "blockHash": "0x6869adf7dd49827d43a6b8563cc6a00ef202aec121c96dee1c2e1b06ce101cec",
+    "blockNumber": 12655579,
+    "subtraces": 0,
+    "traceAddress": "3-0",
+    "transactionHash": "0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33",
+    "transactionIndex": 76,
+    "type": "call",
+    "action": {
+      "selfDestructed": "0x0",
+      "balance": 0,
+      "callType": "staticcall",
+      "from": "0x7a250d5630b4cf539739df2c5dacb4c659f2488d",
+      "gas": 283934,
+      "input": "0xe6a43905000000000000000000000000fa247066958637af6b4cc04bccecad2b6b107200000000000000000000000000c02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+      "refundAddress": "0x0",
+      "to": "0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f",
+      "value": 0
+    },
+    "result": {
+      "newContract": "0x0",
+      "gasUsed": 564,
+      "output": "0x000000000000000000000000ea0be20914783d6b538539795069ca333f820bc5"
+    },
+    "articulatedTrace": {
+      "name": "getPair",
+      "stateMutability": "view",
+      "inputs": {
+        "tokenA": "0xfa247066958637af6b4cc04bccecad2b6b107200",
+        "tokenB": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
+      },
+      "outputs": {
+        "pair": "0xea0be20914783d6b538539795069ca333f820bc5"
+      }
+    },
+    "compressedTrace": "getPair(0xfa247066958637af6b4cc04bccecad2b6b107200 /*tokenA*/, 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2 /*tokenB*/); "
+  }params.size: 0
+==================================================
+
+
+level: 1
+readOffset: 0
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = <>
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...00000000000000000000000000000000 <=o <-r
+  1 (0x020) 0000000000000000...00000000000000000000000000000000
+  2 (0x040) 0000000000000000...00000000000000000000000000000000
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 0
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+
+level: 1
+readOffset: 1
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = 0
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...00000000000000000000000000000000 <=o
+  1 (0x020) 0000000000000000...00000000000000000000000000000000 <-r
+  2 (0x040) 0000000000000000...00000000000000000000000000000000
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 0
+  1: uint112 _reserve1 = 0
+  2: uint32 _blockTimestampLast = <>
+
+level: 1
+readOffset: 2
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = 0
+  1: uint112 _reserve1 = 0
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...00000000000000000000000000000000 <=o
+  1 (0x020) 0000000000000000...00000000000000000000000000000000
+  2 (0x040) 0000000000000000...00000000000000000000000000000000 <-r
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 0
+  1: uint112 _reserve1 = 0
+  2: uint32 _blockTimestampLast = 0
+params.size: 3
+  0: uint112 _reserve0 = 0
+  1: uint112 _reserve1 = 0
+  2: uint32 _blockTimestampLast = 0
+==================================================
+
+,  {
+    "blockHash": "0x6869adf7dd49827d43a6b8563cc6a00ef202aec121c96dee1c2e1b06ce101cec",
+    "blockNumber": 12655579,
+    "subtraces": 0,
+    "traceAddress": "3-1",
+    "transactionHash": "0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33",
+    "transactionIndex": 76,
+    "type": "call",
+    "action": {
+      "selfDestructed": "0x0",
+      "balance": 0,
+      "callType": "staticcall",
+      "from": "0x7a250d5630b4cf539739df2c5dacb4c659f2488d",
+      "gas": 282132,
+      "input": "0x0902f1ac",
+      "refundAddress": "0x0",
+      "to": "0xea0be20914783d6b538539795069ca333f820bc5",
+      "value": 0
+    },
+    "result": {
+      "newContract": "0x0",
+      "gasUsed": 2504,
+      "output": "0x000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "articulatedTrace": {
+      "name": "getReserves",
+      "stateMutability": "view",
+      "outputs": {
+        "_blockTimestampLast": "0",
+        "_reserve0": "0",
+        "_reserve1": "0"
+      }
+    },
+    "compressedTrace": "getReserves(); "
+  },  {
+    "blockHash": "0x6869adf7dd49827d43a6b8563cc6a00ef202aec121c96dee1c2e1b06ce101cec",
+    "blockNumber": 12655579,
+    "subtraces": 0,
+    "traceAddress": "3-2",
+    "transactionHash": "0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33",
+    "transactionIndex": 76,
+    "type": "call",
+    "action": {
+      "selfDestructed": "0x0",
+      "balance": 0,
+      "callType": "call",
+      "from": "0x7a250d5630b4cf539739df2c5dacb4c659f2488d",
+      "gas": 277899,
+      "input": "0x23b872dd000000000000000000000000fa247066958637af6b4cc04bccecad2b6b107200000000000000000000000000ea0be20914783d6b538539795069ca333f820bc50000000000000000000000000000000000000000000001b1ae4d6e2ef5000000",
+      "refundAddress": "0x0",
+      "to": "0xfa247066958637af6b4cc04bccecad2b6b107200",
+      "value": 0
+    },
+    "result": {
+      "newContract": "0x0",
+      "gasUsed": 66483,
+      "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
+    },
+    "articulatedTrace": {
+      "name": "transferFrom",
+      "stateMutability": "nonpayable",
+      "inputs": {
+        "_from": "0xfa247066958637af6b4cc04bccecad2b6b107200",
+        "_to": "0xea0be20914783d6b538539795069ca333f820bc5",
+        "_value": "8000000000000000000000"
+      },
+      "outputs": {
+        "_success": "true"
+      }
+    },
+    "compressedTrace": "transferFrom(0xfa247066958637af6b4cc04bccecad2b6b107200 /*_from*/, 0xea0be20914783d6b538539795069ca333f820bc5 /*_to*/, 8000000000000000000000 /*_value*/); "
+  }params.size: 0
+==================================================
+
+params.size: 0
+==================================================
+
+,  {
+    "blockHash": "0x6869adf7dd49827d43a6b8563cc6a00ef202aec121c96dee1c2e1b06ce101cec",
+    "blockNumber": 12655579,
+    "subtraces": 0,
+    "traceAddress": "3-3",
+    "transactionHash": "0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33",
+    "transactionIndex": 76,
+    "type": "call",
+    "action": {
+      "selfDestructed": "0x0",
+      "balance": 0,
+      "callType": "call",
+      "from": "0x7a250d5630b4cf539739df2c5dacb4c659f2488d",
+      "gas": 202877,
+      "input": "0xd0e30db0",
+      "refundAddress": "0x0",
+      "to": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+      "value": 2750000000000000000
+    },
+    "result": {
+      "newContract": "0x0",
+      "gasUsed": 23974,
+      "output": "0x"
+    },
+    "articulatedTrace": {
+      "name": "deposit",
+      "stateMutability": "nonpayable"
+    },
+    "compressedTrace": "deposit(); "
+  },  {
+    "blockHash": "0x6869adf7dd49827d43a6b8563cc6a00ef202aec121c96dee1c2e1b06ce101cec",
+    "blockNumber": 12655579,
+    "subtraces": 0,
+    "traceAddress": "3-4",
+    "transactionHash": "0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33",
+    "transactionIndex": 76,
+    "type": "call",
+    "action": {
+      "selfDestructed": "0x0",
+      "balance": 0,
+      "callType": "call",
+      "from": "0x7a250d5630b4cf539739df2c5dacb4c659f2488d",
+      "gas": 178850,
+      "input": "0xa9059cbb000000000000000000000000ea0be20914783d6b538539795069ca333f820bc50000000000000000000000000000000000000000000000002629f66e0c530000",
+      "refundAddress": "0x0",
+      "to": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+      "value": 0
+    },
+    "result": {
+      "newContract": "0x0",
+      "gasUsed": 25162,
+      "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
+    },
+    "articulatedTrace": {
+      "name": "transfer",
+      "stateMutability": "nonpayable",
+      "inputs": {
+        "_to": "0xea0be20914783d6b538539795069ca333f820bc5",
+        "_value": "2750000000000000000"
+      },
+      "outputs": {
+        "_success": "true"
+      }
+    },
+    "compressedTrace": "transfer(0xea0be20914783d6b538539795069ca333f820bc5 /*_to*/, 2750000000000000000 /*_value*/); "
+  }params.size: 0
+==================================================
+
+,  {
+    "blockHash": "0x6869adf7dd49827d43a6b8563cc6a00ef202aec121c96dee1c2e1b06ce101cec",
+    "blockNumber": 12655579,
+    "subtraces": 3,
+    "traceAddress": "3-5",
+    "transactionHash": "0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33",
+    "transactionIndex": 76,
+    "type": "call",
+    "action": {
+      "selfDestructed": "0x0",
+      "balance": 0,
+      "callType": "call",
+      "from": "0x7a250d5630b4cf539739df2c5dacb4c659f2488d",
+      "gas": 153661,
+      "input": "0x6a62784200000000000000000000000037da92c11a2d5c05077ce41ac2243aa38032d4af",
+      "refundAddress": "0x0",
+      "to": "0xea0be20914783d6b538539795069ca333f820bc5",
+      "value": 0
+    },
+    "result": {
+      "newContract": "0x0",
+      "gasUsed": 133117,
+      "output": "0x0000000000000000000000000000000000000000000000080a6898a04e86f7f6"
+    },
+    "articulatedTrace": {
+      "name": "mint",
+      "stateMutability": "nonpayable",
+      "inputs": {
+        "to": "0x37da92c11a2d5c05077ce41ac2243aa38032d4af"
+      }
+    },
+    "compressedTrace": "mint(0x37da92c11a2d5c05077ce41ac2243aa38032d4af /*to*/); "
+  },  {
+    "blockHash": "0x6869adf7dd49827d43a6b8563cc6a00ef202aec121c96dee1c2e1b06ce101cec",
+    "blockNumber": 12655579,
+    "subtraces": 0,
+    "traceAddress": "3-5-0",
+    "transactionHash": "0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33",
+    "transactionIndex": 76,
+    "type": "call",
+    "action": {
+      "selfDestructed": "0x0",
+      "balance": 0,
+      "callType": "staticcall",
+      "from": "0xea0be20914783d6b538539795069ca333f820bc5",
+      "gas": 150153,
+      "input": "0x70a08231000000000000000000000000ea0be20914783d6b538539795069ca333f820bc5",
+      "refundAddress": "0x0",
+      "to": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+      "value": 0
+    },
+    "result": {
+      "newContract": "0x0",
+      "gasUsed": 534,
+      "output": "0x0000000000000000000000000000000000000000000000002629f66e0c530000"
+    },
+    "articulatedTrace": {
+      "name": "balanceOf",
+      "stateMutability": "view",
+      "inputs": {
+        "_owner": "0xea0be20914783d6b538539795069ca333f820bc5"
+      },
+      "outputs": {
+        "_balance": "2750000000000000000"
+      }
+    },
+    "compressedTrace": "balanceOf(0xea0be20914783d6b538539795069ca333f820bc5 /*_owner*/); "
+  },  {
+    "blockHash": "0x6869adf7dd49827d43a6b8563cc6a00ef202aec121c96dee1c2e1b06ce101cec",
+    "blockNumber": 12655579,
+    "subtraces": 0,
+    "traceAddress": "3-5-1",
+    "transactionHash": "0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33",
+    "transactionIndex": 76,
+    "type": "call",
+    "action": {
+      "selfDestructed": "0x0",
+      "balance": 0,
+      "callType": "staticcall",
+      "from": "0xea0be20914783d6b538539795069ca333f820bc5",
+      "gas": 149112,
+      "input": "0x70a08231000000000000000000000000ea0be20914783d6b538539795069ca333f820bc5",
+      "refundAddress": "0x0",
+      "to": "0xfa247066958637af6b4cc04bccecad2b6b107200",
+      "value": 0
+    },
+    "result": {
+      "newContract": "0x0",
+      "gasUsed": 2676,
+      "output": "0x0000000000000000000000000000000000000000000001b1ae4d6e2ef5000000"
+    },
+    "articulatedTrace": {
+      "name": "balanceOf",
+      "stateMutability": "view",
+      "inputs": {
+        "_owner": "0xea0be20914783d6b538539795069ca333f820bc5"
+      },
+      "outputs": {
+        "_balance": "8000000000000000000000"
+      }
+    },
+    "compressedTrace": "balanceOf(0xea0be20914783d6b538539795069ca333f820bc5 /*_owner*/); "
+  }params.size: 0
+==================================================
+
+,  {
+    "blockHash": "0x6869adf7dd49827d43a6b8563cc6a00ef202aec121c96dee1c2e1b06ce101cec",
+    "blockNumber": 12655579,
+    "subtraces": 0,
+    "traceAddress": "3-5-2",
+    "transactionHash": "0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33",
+    "transactionIndex": 76,
+    "type": "call",
+    "action": {
+      "selfDestructed": "0x0",
+      "balance": 0,
+      "callType": "staticcall",
+      "from": "0xea0be20914783d6b538539795069ca333f820bc5",
+      "gas": 145759,
+      "input": "0x017e7e58",
+      "refundAddress": "0x0",
+      "to": "0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f",
+      "value": 0
+    },
+    "result": {
+      "newContract": "0x0",
+      "gasUsed": 2314,
+      "output": "0x0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "articulatedTrace": {
+      "name": "feeTo",
+      "stateMutability": "view",
+      "outputs": {
+        "fee": "0x0000000000000000000000000000000000000000"
+      }
+    },
+    "compressedTrace": "feeTo(); "
+  },  {
+    "blockHash": "0x6869adf7dd49827d43a6b8563cc6a00ef202aec121c96dee1c2e1b06ce101cec",
+    "blockNumber": 12655579,
+    "subtraces": 0,
+    "traceAddress": "4",
+    "transactionHash": "0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33",
+    "transactionIndex": 76,
+    "type": "call",
+    "action": {
+      "selfDestructed": "0x0",
+      "balance": 0,
+      "callType": "call",
+      "from": "0xfa247066958637af6b4cc04bccecad2b6b107200",
+      "gas": 24442,
+      "input": "0x095ea7b30000000000000000000000007a250d5630b4cf539739df2c5dacb4c659f2488dffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+      "refundAddress": "0x0",
+      "to": "0xea0be20914783d6b538539795069ca333f820bc5",
+      "value": 0
+    },
+    "result": {
+      "newContract": "0x0",
+      "gasUsed": 24442,
+      "output": "0x0000000000000000000000000000000000000000000000000000000000000001"
+    },
+    "articulatedTrace": {
+      "name": "approve",
+      "stateMutability": "nonpayable",
+      "inputs": {
+        "_spender": "0x7a250d5630b4cf539739df2c5dacb4c659f2488d",
+        "_value": "115792089237316195423570985008687907853269984665640564039457584007913129639935"
+      },
+      "outputs": {
+        "_success": "true"
+      }
+    },
+    "compressedTrace": "approve(0x7a250d5630b4cf539739df2c5dacb4c659f2488d /*_spender*/, 115792089237316195423570985008687907853269984665640564039457584007913129639935 /*_value*/); "
+  }] }

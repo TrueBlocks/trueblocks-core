@@ -308,6 +308,12 @@ params.size: 0
 ==================================================
 
   {
+    "blockHash": "0xc9d375441b8deb0ca5544234ccbe3f6a9f67361ec30128030401b0d16713b55a",
+    "blockNumber": 6711969,
+    "subtraces": 2,
+    "traceAddress": null,
+    "transactionHash": "0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f",
+    "transactionIndex": 2,
     "type": "call",
     "action": {
       "selfDestructed": "0x0",
@@ -348,6 +354,12 @@ params.size: 0
     },
     "compressedTrace": "acceptTheseAskRequestsAndBUY([6, 5] /*_keys*/, [25000000000000000000, 25000000000000000000] /*_tokenAmounts*/, [2000000000000000000, 2000000000000000000] /*_dollarPrices*/); "
   },  {
+    "blockHash": "0xc9d375441b8deb0ca5544234ccbe3f6a9f67361ec30128030401b0d16713b55a",
+    "blockNumber": 6711969,
+    "subtraces": 0,
+    "traceAddress": "0",
+    "transactionHash": "0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f",
+    "transactionIndex": 2,
     "type": "call",
     "action": {
       "selfDestructed": "0x0",
@@ -385,6 +397,12 @@ params.size: 0
     },
     "compressedTrace": "USD(0 /*_id*/); "
   },  {
+    "blockHash": "0xc9d375441b8deb0ca5544234ccbe3f6a9f67361ec30128030401b0d16713b55a",
+    "blockNumber": 6711969,
+    "subtraces": 0,
+    "traceAddress": "1",
+    "transactionHash": "0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f",
+    "transactionIndex": 2,
     "type": "call",
     "action": {
       "selfDestructed": "0x0",
@@ -422,5 +440,5 @@ params.size: 0
     },
     "compressedTrace": "USD(0 /*_id*/); "
   }], "types": [
-{ "type": "CTrace", "fields": [{ "name": "type", "type": "text" }, { "name": "error", "type": "text" }, { "name": "action", "type": "object" }, { "name": "result", "type": "object" }, { "name": "articulatedTrace", "type": "object" }, { "name": "compressedTrace", "type": "text" }] }
+{ "type": "CTrace", "fields": [{ "name": "blockHash", "type": "hash" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "subtraces", "type": "unumber" }, { "name": "traceAddress", "type": "text" }, { "name": "transactionHash", "type": "hash" }, { "name": "transactionIndex", "type": "blocknum" }, { "name": "type", "type": "text" }, { "name": "error", "type": "text" }, { "name": "action", "type": "object" }, { "name": "result", "type": "object" }, { "name": "articulatedTrace", "type": "object" }, { "name": "compressedTrace", "type": "text" }] }
 ], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }
