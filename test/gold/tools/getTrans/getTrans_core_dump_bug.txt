@@ -195,6 +195,8 @@ params.size: 0
     },
     "traces": [
       {
+        "subtraces": 0,
+        "traceAddress": null,
         "type": "call",
         "action": {
           "selfDestructed": "0x0",

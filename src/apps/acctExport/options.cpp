@@ -522,9 +522,10 @@ bool COptions::setDisplayFormatting(void) {
     } else {
         string_q hide = substitute(defHide, "|CLogEntry: data, topics", "");
         manageFields(hide, false);
-        string_q show =
-            defShow + (isApiMode() ? "|CTransaction:encoding,function,input,etherGasCost|CTrace:traceAddress" : "");
+        string_q show = defShow;
+        show += (isApiMode() ? "|CTransaction:encoding,function,input,etherGasCost|CTrace:traceAddress" : "");
         manageFields(show, true);
+        manageFields("CTrace: blockHash, blockNumber, transactionHash, transactionIndex", false);  // hide
         if (expContext().exportFmt != JSON1 && expContext().exportFmt != API1) {
             string_q format;
 

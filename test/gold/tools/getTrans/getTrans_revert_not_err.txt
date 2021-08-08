@@ -64,6 +64,8 @@ params.size: 0
     },
     "traces": [
       {
+        "subtraces": 12,
+        "traceAddress": null,
         "type": "call",
         "action": {
           "selfDestructed": "0x0",
@@ -83,6 +85,8 @@ params.size: 0
         }
       },
       {
+        "subtraces": 0,
+        "traceAddress": "0",
         "type": "call",
         "action": {
           "selfDestructed": "0x0",
@@ -102,6 +106,8 @@ params.size: 0
         }
       },
       {
+        "subtraces": 0,
+        "traceAddress": "1",
         "type": "call",
         "action": {
           "selfDestructed": "0x0",
@@ -121,6 +127,8 @@ params.size: 0
         }
       },
       {
+        "subtraces": 0,
+        "traceAddress": "2",
         "type": "call",
         "action": {
           "selfDestructed": "0x0",
@@ -140,6 +148,8 @@ params.size: 0
         }
       },
       {
+        "subtraces": 0,
+        "traceAddress": "3",
         "type": "create",
         "action": {
           "selfDestructed": "0x0",
@@ -156,6 +166,8 @@ params.size: 0
         }
       },
       {
+        "subtraces": 0,
+        "traceAddress": "4",
         "type": "call",
         "error": "Reverted",
         "action": {
@@ -171,6 +183,8 @@ params.size: 0
         }
       },
       {
+        "subtraces": 1,
+        "traceAddress": "5",
         "type": "call",
         "action": {
           "selfDestructed": "0x0",
@@ -209,6 +223,8 @@ params.size: 0
         "compressedTrace": "balanceOf(0xc14830e53aa344e8c14603a91229a0b925b0b262 /*_owner*/); "
       },
       {
+        "subtraces": 0,
+        "traceAddress": "5-0",
         "type": "call",
         "action": {
           "selfDestructed": "0x0",
@@ -247,6 +263,8 @@ params.size: 0
         "compressedTrace": "balanceOf(0xe81a6c6b733d52df5d6aa863d75aab78147a0f28 /*_owner*/); "
       },
       {
+        "subtraces": 1,
+        "traceAddress": "6",
         "type": "call",
         "action": {
           "selfDestructed": "0x0",
@@ -285,6 +303,8 @@ params.size: 0
         "compressedTrace": "balanceOf(0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a /*_owner*/); "
       },
       {
+        "subtraces": 0,
+        "traceAddress": "6-0",
         "type": "call",
         "action": {
           "selfDestructed": "0x0",
@@ -323,6 +343,8 @@ params.size: 0
         "compressedTrace": "balanceOf(0xe81a6c6b733d52df5d6aa863d75aab78147a0f28 /*_owner*/); "
       },
       {
+        "subtraces": 1,
+        "traceAddress": "7",
         "type": "call",
         "action": {
           "selfDestructed": "0x0",
@@ -361,6 +383,8 @@ params.size: 0
         "compressedTrace": "balanceOf(0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a /*_owner*/); "
       },
       {
+        "subtraces": 0,
+        "traceAddress": "7-0",
         "type": "call",
         "action": {
           "selfDestructed": "0x0",
@@ -399,6 +423,8 @@ params.size: 0
         "compressedTrace": "balanceOf(0xe81a6c6b733d52df5d6aa863d75aab78147a0f28 /*_owner*/); "
       },
       {
+        "subtraces": 3,
+        "traceAddress": "8",
         "type": "call",
         "action": {
           "selfDestructed": "0x0",
@@ -440,6 +466,8 @@ params.size: 0
         "compressedTrace": "transfer(0xd4fa1460f537bb9085d22c7bccb5dd450ef28e3a /*_token*/, 0x8ca1fec705f7060aaa3d8c6757e34d1e7cc61021 /*_to*/, 100000000 /*_value*/); "
       },
       {
+        "subtraces": 0,
+        "traceAddress": "8-0",
         "type": "call",
         "action": {
           "selfDestructed": "0x0",
@@ -459,6 +487,8 @@ params.size: 0
         }
       },
       {
+        "subtraces": 0,
+        "traceAddress": "8-1",
         "type": "call",
         "action": {
           "selfDestructed": "0x0",
@@ -478,6 +508,8 @@ params.size: 0
         }
       },
       {
+        "subtraces": 0,
+        "traceAddress": "8-2",
         "type": "call",
         "action": {
           "selfDestructed": "0x0",
@@ -521,6 +553,8 @@ params.size: 0
         "compressedTrace": "transfer(0x8ca1fec705f7060aaa3d8c6757e34d1e7cc61021 /*_to*/, 100000000 /*_value*/); "
       },
       {
+        "subtraces": 4,
+        "traceAddress": "9",
         "type": "call",
         "action": {
           "selfDestructed": "0x0",
@@ -540,6 +574,8 @@ params.size: 0
         }
       },
       {
+        "subtraces": 0,
+        "traceAddress": "9-0",
         "type": "call",
         "action": {
           "selfDestructed": "0x0",
@@ -559,6 +595,8 @@ params.size: 0
         }
       },
       {
+        "subtraces": 0,
+        "traceAddress": "9-1",
         "type": "call",
         "action": {
           "selfDestructed": "0x0",
@@ -578,6 +616,8 @@ params.size: 0
         }
       },
       {
+        "subtraces": 0,
+        "traceAddress": "9-2",
         "type": "call",
         "action": {
           "selfDestructed": "0x0",
@@ -597,6 +637,8 @@ params.size: 0
         }
       },
       {
+        "subtraces": 0,
+        "traceAddress": "9-3",
         "type": "call",
         "action": {
           "selfDestructed": "0x0",
@@ -616,6 +658,8 @@ params.size: 0
         }
       },
       {
+        "subtraces": 0,
+        "traceAddress": "10",
         "type": "call",
         "action": {
           "selfDestructed": "0x0",
@@ -635,6 +679,8 @@ params.size: 0
         }
       },
       {
+        "subtraces": 0,
+        "traceAddress": "11",
         "type": "call",
         "action": {
           "selfDestructed": "0x0",

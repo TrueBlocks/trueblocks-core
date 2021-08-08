@@ -29,6 +29,8 @@ params.size: 0
     },
     "traces": [
       {
+        "subtraces": 0,
+        "traceAddress": null,
         "type": "call",
         "error": "Bad jump destination",
         "action": {
@@ -118,6 +120,8 @@ params.size: 0
     },
     "traces": [
       {
+        "subtraces": 0,
+        "traceAddress": null,
         "type": "call",
         "action": {
           "selfDestructed": "0x0",
@@ -182,6 +186,8 @@ params.size: 0
     },
     "traces": [
       {
+        "subtraces": 2,
+        "traceAddress": null,
         "type": "call",
         "action": {
           "selfDestructed": "0x0",
@@ -213,6 +219,8 @@ params.size: 0
         "compressedTrace": "split(0x167a9333bf582556f35bd4d16a7e80e191aa6476 /*targetFork*/, 0x571b7b69829ce2568b9bc3d32eaf7405dab76b21 /*targetNoFork*/); "
       },
       {
+        "subtraces": 0,
+        "traceAddress": "0",
         "type": "call",
         "action": {
           "selfDestructed": "0x0",
@@ -240,6 +248,8 @@ params.size: 0
         "compressedTrace": "forked(); "
       },
       {
+        "subtraces": 0,
+        "traceAddress": "1",
         "type": "call",
         "action": {
           "selfDestructed": "0x0",

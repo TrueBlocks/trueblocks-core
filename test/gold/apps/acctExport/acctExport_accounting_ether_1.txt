@@ -867,6 +867,8 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
   },
   "traces": [
     {
+      "subtraces": 2,
+      "traceAddress": null,
       "type": "call",
       "action": {
         "selfDestructed": "0x0",
@@ -886,6 +888,8 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       }
     },
     {
+      "subtraces": 0,
+      "traceAddress": "0",
       "type": "call",
       "action": {
         "selfDestructed": "0x0",
@@ -905,6 +909,8 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       }
     },
     {
+      "subtraces": 0,
+      "traceAddress": "1",
       "type": "call",
       "action": {
         "selfDestructed": "0x0",
@@ -6746,6 +6752,8 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
   },
   "traces": [
     {
+      "subtraces": 2,
+      "traceAddress": null,
       "type": "call",
       "action": {
         "selfDestructed": "0x0",
@@ -6765,6 +6773,8 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       }
     },
     {
+      "subtraces": 0,
+      "traceAddress": "0",
       "type": "call",
       "action": {
         "selfDestructed": "0x0",
@@ -6784,6 +6794,8 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       }
     },
     {
+      "subtraces": 0,
+      "traceAddress": "1",
       "type": "call",
       "action": {
         "selfDestructed": "0x0",

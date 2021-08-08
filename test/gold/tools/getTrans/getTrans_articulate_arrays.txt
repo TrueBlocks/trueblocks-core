@@ -679,6 +679,8 @@ params.size: 0
     },
     "traces": [
       {
+        "subtraces": 2,
+        "traceAddress": null,
         "type": "call",
         "action": {
           "selfDestructed": "0x0",
@@ -708,6 +710,8 @@ params.size: 0
         "compressedTrace": "acceptTheseAskRequestsAndBUY([6, 5] /*_keys*/, [25000000000000000000, 25000000000000000000] /*_tokenAmounts*/, [2000000000000000000, 2000000000000000000] /*_dollarPrices*/); "
       },
       {
+        "subtraces": 0,
+        "traceAddress": "0",
         "type": "call",
         "action": {
           "selfDestructed": "0x0",
@@ -738,6 +742,8 @@ params.size: 0
         "compressedTrace": "USD(0 /*_id*/); "
       },
       {
+        "subtraces": 0,
+        "traceAddress": "1",
         "type": "call",
         "action": {
           "selfDestructed": "0x0",

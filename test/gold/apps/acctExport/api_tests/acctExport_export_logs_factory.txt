@@ -1,6 +1,7 @@
 {
   "data": [
     {
+      "subtraces": 0,
       "traceAddress": "null-s",
       "type": "create",
       "error": "",
@@ -23,6 +24,7 @@
       "compressedTrace": ""
     },
     {
+      "subtraces": 0,
       "traceAddress": "0-s",
       "type": "create",
       "error": "",
@@ -45,6 +47,7 @@
       "compressedTrace": ""
     },
     {
+      "subtraces": 0,
       "traceAddress": "0-s",
       "type": "create",
       "error": "",
@@ -67,6 +70,7 @@
       "compressedTrace": ""
     },
     {
+      "subtraces": 0,
       "traceAddress": "0-s",
       "type": "create",
       "error": "",
@@ -89,6 +93,7 @@
       "compressedTrace": ""
     },
     {
+      "subtraces": 0,
       "traceAddress": "0-s",
       "type": "create",
       "error": "",
@@ -111,6 +116,7 @@
       "compressedTrace": ""
     },
     {
+      "subtraces": 0,
       "traceAddress": "0-s",
       "type": "create",
       "error": "",
@@ -133,6 +139,7 @@
       "compressedTrace": ""
     },
     {
+      "subtraces": 0,
       "traceAddress": "0-s",
       "type": "create",
       "error": "",
@@ -155,6 +162,7 @@
       "compressedTrace": ""
     },
     {
+      "subtraces": 0,
       "traceAddress": "0-s",
       "type": "create",
       "error": "",
@@ -177,6 +185,7 @@
       "compressedTrace": ""
     },
     {
+      "subtraces": 0,
       "traceAddress": "0-s",
       "type": "create",
       "error": "",
@@ -199,6 +208,7 @@
       "compressedTrace": ""
     },
     {
+      "subtraces": 0,
       "traceAddress": "0-s",
       "type": "create",
       "error": "",
@@ -221,6 +231,7 @@
       "compressedTrace": ""
     },
     {
+      "subtraces": 0,
       "traceAddress": "0-s",
       "type": "create",
       "error": "",
@@ -243,6 +254,7 @@
       "compressedTrace": ""
     },
     {
+      "subtraces": 0,
       "traceAddress": "0-s",
       "type": "create",
       "error": "",
@@ -265,6 +277,7 @@
       "compressedTrace": ""
     },
     {
+      "subtraces": 0,
       "traceAddress": "0-s",
       "type": "create",
       "error": "",
@@ -287,6 +300,7 @@
       "compressedTrace": ""
     },
     {
+      "subtraces": 0,
       "traceAddress": "0-s",
       "type": "create",
       "error": "",
@@ -309,6 +323,7 @@
       "compressedTrace": ""
     },
     {
+      "subtraces": 0,
       "traceAddress": "0-s",
       "type": "create",
       "error": "",
@@ -331,6 +346,7 @@
       "compressedTrace": ""
     },
     {
+      "subtraces": 0,
       "traceAddress": "0-s",
       "type": "create",
       "error": "",
@@ -353,6 +369,7 @@
       "compressedTrace": ""
     },
     {
+      "subtraces": 0,
       "traceAddress": "0-s",
       "type": "create",
       "error": "",
@@ -379,6 +396,10 @@
     {
       "type": "CTrace",
       "fields": [
+        {
+          "name": "subtraces",
+          "type": "unumber"
+        },
         {
           "name": "traceAddress",
           "type": "text"

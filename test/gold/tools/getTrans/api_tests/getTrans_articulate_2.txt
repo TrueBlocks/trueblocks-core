@@ -98,6 +98,8 @@
       },
       "traces": [
         {
+          "subtraces": 4,
+          "traceAddress": null,
           "type": "call",
           "error": "",
           "action": {
@@ -127,6 +129,8 @@
           "compressedTrace": "startAuctionsAndBid([0x000bf9f2adc93a1da7b9e61f44ee6504f99c467a2812b354d70a07f0b3cdc58c, 0x0007cc5734453f8d7bbacd4b3a8e753250dc4a432aaa5be5b048c59e0b5ac5fc, 0x00120aa407bdbff1d93ea98dafc5f1da56b589b427167ec414bccbe0cfdfd573] /*hashes*/, 0xcb93e7ddea88eb37f5419784b399cf13f7df44079d05905006044dd14bb89811 /*sealedBid*/); "
         },
         {
+          "subtraces": 0,
+          "traceAddress": "0",
           "type": "call",
           "error": "",
           "action": {
@@ -158,6 +162,8 @@
           "compressedTrace": "owner(0x93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae /*_node*/); "
         },
         {
+          "subtraces": 0,
+          "traceAddress": "1",
           "type": "call",
           "error": "",
           "action": {
@@ -189,6 +195,8 @@
           "compressedTrace": "owner(0x93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae /*_node*/); "
         },
         {
+          "subtraces": 0,
+          "traceAddress": "2",
           "type": "call",
           "error": "",
           "action": {
@@ -220,6 +228,8 @@
           "compressedTrace": "owner(0x93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae /*_node*/); "
         },
         {
+          "subtraces": 0,
+          "traceAddress": "3",
           "type": "create",
           "error": "",
           "action": {

@@ -42,6 +42,8 @@
       },
       "traces": [
         {
+          "subtraces": 0,
+          "traceAddress": null,
           "type": "call",
           "error": "",
           "action": {

@@ -727,6 +727,7 @@
       },
       "traces": [
         {
+          "subtraces": 2,
           "traceAddress": null,
           "type": "call",
           "error": "",
@@ -749,6 +750,7 @@
           "compressedTrace": ""
         },
         {
+          "subtraces": 0,
           "traceAddress": "0",
           "type": "call",
           "error": "",
@@ -771,6 +773,7 @@
           "compressedTrace": ""
         },
         {
+          "subtraces": 0,
           "traceAddress": "1",
           "type": "call",
           "error": "",
@@ -6116,6 +6119,7 @@
       },
       "traces": [
         {
+          "subtraces": 2,
           "traceAddress": null,
           "type": "call",
           "error": "",
@@ -6138,6 +6142,7 @@
           "compressedTrace": ""
         },
         {
+          "subtraces": 0,
           "traceAddress": "0",
           "type": "call",
           "error": "",
@@ -6160,6 +6165,7 @@
           "compressedTrace": ""
         },
         {
+          "subtraces": 0,
           "traceAddress": "1",
           "type": "call",
           "error": "",

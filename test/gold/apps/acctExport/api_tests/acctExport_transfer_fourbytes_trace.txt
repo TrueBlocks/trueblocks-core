@@ -1,6 +1,7 @@
 {
   "data": [
     {
+      "subtraces": 0,
       "traceAddress": null,
       "type": "call",
       "error": "",
@@ -23,6 +24,7 @@
       "compressedTrace": ""
     },
     {
+      "subtraces": 0,
       "traceAddress": null,
       "type": "call",
       "error": "",
@@ -45,6 +47,7 @@
       "compressedTrace": ""
     },
     {
+      "subtraces": 0,
       "traceAddress": null,
       "type": "call",
       "error": "",
