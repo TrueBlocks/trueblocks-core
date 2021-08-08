@@ -183,6 +183,10 @@ bool COptions::process_reconciliation(CTraverser* trav) {
             return !shouldQuit();
         }
         unlockSection();
+        // } else {
+        //     if (isApiMode()) colorsOn();
+        //     LOG_WARN(bRed, "Transaction ", trav->trans.hash, " did not reconciled.", cOff);
+        //     if (isApiMode()) colorsOff();
     }
 
     return !shouldQuit();
