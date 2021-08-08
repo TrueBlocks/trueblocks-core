@@ -2,7 +2,7 @@ ethNames argc: 4 [1:tip] [2:--fmt] [3:api]
 ethNames tip --fmt api 
 {"data": [
   {
-    "tags": "31-Gitcoin Grants:Grant",
+    "tags": "31-Gitcoin:Grants",
     "address": "0x133d705a9696882228f6bb7fe008745aef7cdc93",
     "name": "Grant 0160 @antiprosynth | Antiprosynthesis.eth ⟠ Twitter Account Activity",
     "source": "https://gitcoin.co/grants/160/antiprosynth-antiprosynthesiseth-twitter-account-"

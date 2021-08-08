@@ -2,7 +2,7 @@ tomlTest argc: 2 [1:test13.toml]
 tomlTest test13.toml 
 test13.toml
 [version]
-current = "0.10.1-alpha"
+current = "0.10.2-alpha"
 
 [display]
 to_screen = true
@@ -114,7 +114,7 @@ startBlock = 1718250
 
 File contents after write
 [version]
-current = "0.10.1-alpha"
+current = "0.10.2-alpha"
 
 [display]
 to_screen = true

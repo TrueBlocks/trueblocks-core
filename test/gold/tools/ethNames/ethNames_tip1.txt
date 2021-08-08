@@ -1,7 +1,7 @@
 ethNames argc: 2 [1:tip] 
 ethNames tip 
 tags	address	name	symbol	decimals
-31-Gitcoin Grants:Grant	0x133d705a9696882228f6bb7fe008745aef7cdc93	Grant 0160 @antiprosynth | Antiprosynthesis.eth ⟠ Twitter Account Activity
+31-Gitcoin:Grants	0x133d705a9696882228f6bb7fe008745aef7cdc93	Grant 0160 @antiprosynth | Antiprosynthesis.eth ⟠ Twitter Account Activity
 30-Contracts:Giveth	0x1a88c052fc7a8401e00b2f76f96ac62a19427731	EtherIDTipJar
 50-Tokens:ERC20	0x94ca37d108e89775dc8ae65f51ae28c2d9599f9a	Cryptotipsfr Token V2	CRTS		9
 91-Early:Addresses	0xe7f06e64e0d04c6cfedf7e9079d56d0fb7200a2e	Multiplyx10

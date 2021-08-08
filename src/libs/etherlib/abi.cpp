@@ -508,6 +508,9 @@ bool CAbi::loadAbiFromEtherscan(const address_t& addr) {
     replaceAll(fromES, "\\r", "\r");
     replaceAll(fromES, "\\n", "\n");
 
+    string_q fileName = getCachePath("abis/" + addr + ".json");
+    establishFolder(fileName);
+
     string_q results = substitute(fromES, "\\", "");
     if (!contains(results, "NOTOK")) {
         LOG_TEST("loadAbiFromEtherscan", "for address " + addr);
@@ -516,13 +519,13 @@ bool CAbi::loadAbiFromEtherscan(const address_t& addr) {
         replaceReverse(results, "\"}", "</extract>");
         results = snagFieldClear(results, "extract", "");
 
-        string_q fileName = getCachePath("abis/" + addr + ".json");
-        establishFolder(fileName);
         stringToAsciiFile(fileName, results);
         return loadAbiFromAddress(addr, true);
     }
 
-    // Even though we failed to find an ABI, we record that we've checked, so we don't try again.
+    // We write an empty file to the abi cache even though at some point in the future
+    // this ABI may be published to EtherScan.
+    stringToAsciiFile(fileName, "");
     abiSourcesMap[addr] = true;
     return false;
 }

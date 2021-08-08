@@ -50,8 +50,13 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
     //------------------------------------------------------------------------------------------------
     CStringArray c_inc;
     explode(c_inc, classDef.src_includes, '|');
-    for (auto inc : c_inc)
-        src_incStream << ("#include \"" + inc + "\"\n");
+    for (auto inc : c_inc) {
+        bool allCaps = inc == toUpper(inc);
+        if (allCaps)
+            src_incStream << ("#define " + inc + "\n");
+        else
+            src_incStream << ("#include \"" + inc + "\"\n");
+    }
 
     //------------------------------------------------------------------------------------------------
     bool isBase = (classDef.base_class == "CBaseNode");

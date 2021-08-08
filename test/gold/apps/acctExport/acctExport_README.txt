@@ -2,7 +2,7 @@ acctExport argc: 2 [1:-th]
 acctExport -th 
 ### Usage
 
-`Usage:`    chifra export [-p|-r|-l|-t|-C|-a|-i|-R|-y|-U|-c|-e|-v|-h] &lt;address&gt; [address...] [topics] [fourbytes]  
+`Usage:`    chifra export [-p|-r|-l|-t|-C|-A|-a|-i|-R|-y|-U|-c|-e|-v|-h] &lt;address&gt; [address...] [topics] [fourbytes]  
 `Purpose:`  Export full detail of transactions for one or more addresses.
 
 `Where:`  
@@ -17,6 +17,7 @@ acctExport -th
 | -l | --logs | export logs instead of transaction list |
 | -t | --traces | export traces instead of transaction list |
 | -C | --accounting | export accounting records instead of transaction list |
+| -A | --statements | for use with --accounting option only, export only reconciliation statements |
 | -a | --articulate | articulate transactions, traces, logs, and outputs |
 | -i | --cache_txs | write transactions to the cache (see notes) |
 | -R | --cache_traces | write traces to the cache (see notes) |

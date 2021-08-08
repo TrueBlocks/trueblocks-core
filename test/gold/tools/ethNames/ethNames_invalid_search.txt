@@ -1,4 +1,4 @@
 ethNames argc: 5 [1:0x1] [2:torj] [3:--fmt] [4:txt] 
 ethNames 0x1 torj --fmt txt 
 tags	address	name	symbol	decimals
-31-Gitcoin Grants:Grant	0x187c8c43890fe4c91afabbc62128d383a90548dd	Grant 1559 Storj Exporter
+31-Gitcoin:Grants	0x187c8c43890fe4c91afabbc62128d383a90548dd	Grant 1559 Storj Exporter

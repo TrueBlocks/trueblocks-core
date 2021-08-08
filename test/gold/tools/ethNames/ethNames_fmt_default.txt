@@ -1,13 +1,13 @@
 ethNames argc: 3 [1:tip] [2:--expand] 
 ethNames tip --expand 
 tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefund	is_contract	is_erc20	is_erc721
-31-Gitcoin Grants:Grant	0x133d705a9696882228f6bb7fe008745aef7cdc93	Grant 0160 @antiprosynth | Antiprosynthesis.eth ⟠ Twitter Account Activity		https://gitcoin.co/grants/160/antiprosynth-antiprosynthesiseth-twitter-account-			false	false	false	false	false	false
+31-Gitcoin:Grants	0x133d705a9696882228f6bb7fe008745aef7cdc93	Grant 0160 @antiprosynth | Antiprosynthesis.eth ⟠ Twitter Account Activity		https://gitcoin.co/grants/160/antiprosynth-antiprosynthesiseth-twitter-account-			false	false	false	false	false	false
 50-Tokens:ERC20	0x1829aa045e21e0d59580024a951db48096e01782	FuzeX Token	FXT	On chain	18	Cryptocurrency, credit, debit and reward payments at your fingertips	false	false	false	true	true	false
 91-Early:Addresses	0x198ef1ec325a96cc354c7266a038be8b5c558f67	Dao Whale 100 (Prefund_0876)		Genesis SlackNation Ethereum Tip Jar WhaleWatch.io			false	false	false	false	false	false
 30-Contracts:Giveth	0x1a88c052fc7a8401e00b2f76f96ac62a19427731	EtherIDTipJar		Giveth Website			false	false	false	false	false	false
 50-Tokens:ERC20	0x1cb3209d45b2a60b7fbca1ccdbf87f674237a4aa	ThoreCoin	THR	On chain	4	THR represents a basket of top-traded high-demand coins Simply put, it‚Äö√Ñ√¥s a Basket of Multiple cryptocurrencies in which you can invest by buying tokens	false	false	false	true	true	false
 50-Tokens:ERC20	0x1f75047233517dcf67970d9e3c3bb385cb647f30	Unicorns	🦄	On chain		Ethereum tip jar unicorn tokens	false	false	false	true	true	false
-31-Gitcoin Grants:Grant	0x224cf0b963c59b95623b3dd6ce07b4ce40f7b134	Grant 0522 Support the 🌟 Community Currency Alliance 🌟 Enabling An Inclusive Currency Ecosystem		https://gitcoin.co/grants/522/support-the-community-currency-alliance-enabling-		https://multiply.charity	false	false	false	false	false	false
+31-Gitcoin:Grants	0x224cf0b963c59b95623b3dd6ce07b4ce40f7b134	Grant 0522 Support the 🌟 Community Currency Alliance 🌟 Enabling An Inclusive Currency Ecosystem		https://gitcoin.co/grants/522/support-the-community-currency-alliance-enabling-		https://multiply.charity	false	false	false	false	false	false
 90-Individuals:Twitter	0x24029403d13c2e0cfee4a4ee1ba998e5b0367f03	Name 0x24029403		Twitter		@antiprosynth	false	false	false	false	false	false
 50-Tokens:ERC20	0x2859021ee7f2cb10162e67f33af2d22764b31aff	Silent Notary Token	SNTR	On chain	4	SilentNotary is a multiplatform decentralized service for confirmation of event existence. SilentNotary converts an event into legally significant evidence, excluding the possibility of falsification.	false	false	false	true	true	false
 50-Tokens:ERC20	0x2bdc0d42996017fce214b21607a515da41a9e0c5	SkinCoin	SKIN	On chain	6	SkinCoin is a multipurpose cryptocurrency for gaming industry.	false	false	false	true	true	false

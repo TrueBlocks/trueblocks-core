@@ -34,21 +34,27 @@ bool acct_Display(CTraverser* trav, void* data) {
     COptions* opt = (COptions*)data;
 
     if (fourByteFilter(trav->trans.input, opt)) {
-        if (opt->accounting) {
-            blknum_t next = trav->index < opt->monApps.size() - 1 ? opt->monApps[trav->index + 1].blk : NOPOS;
-            opt->process_reconciliation(trav, next);
-            if (opt->relevant) {
-                for (auto& log : trav->trans.receipt.logs) {
-                    log.m_showing = opt->isRelevant(log);
-                }
+        if (opt->accounting)
+            opt->process_reconciliation(trav);
+
+        if (opt->relevant) {
+            for (auto& log : trav->trans.receipt.logs) {
+                log.m_showing = opt->isRelevant(log);
             }
         }
 
         if (opt->summarize_by.empty()) {
-            cout << ((isJson() && !opt->firstOut) ? ", " : "");
-            cout << trav->trans;
-            opt->firstOut = false;
-
+            if (opt->statements) {
+                for (auto recon : trav->trans.statements) {
+                    cout << ((isJson() && !opt->firstOut) ? ", " : "");
+                    cout << recon.Format() << endl;
+                    opt->firstOut = false;
+                }
+            } else {
+                cout << ((isJson() && !opt->firstOut) ? ", " : "");
+                cout << trav->trans;
+                opt->firstOut = false;
+            }
         } else {
             trav->trans.from = "0xSummary";
             CTransactionTraverser* tt = (CTransactionTraverser*)trav;
@@ -68,36 +74,7 @@ bool acct_Display(CTraverser* trav, void* data) {
 }
 
 //-----------------------------------------------------------------------
-bool acct_PreFunc(CTraverser* trav, void* data) {
-    COptions* opt = (COptions*)data;
-    if (opt->summarize_by.empty())
-        return true;
-    HIDE_FIELD(CTransaction, "to");
-    HIDE_FIELD(CTransaction, "value");
-    HIDE_FIELD(CTransaction, "gas");
-    HIDE_FIELD(CTransaction, "gasPrice");
-    HIDE_FIELD(CTransaction, "input");
-    HIDE_FIELD(CTransaction, "receipt");
-    HIDE_FIELD(CTransaction, "traces");
-    HIDE_FIELD(CTransaction, "compressedTx");
-    HIDE_FIELD(CTransaction, "gasCost");
-    HIDE_FIELD(CTransaction, "etherGasCost");
-    HIDE_FIELD(CTransaction, "function");
-    HIDE_FIELD(CTransaction, "gasUsed");
-    HIDE_FIELD(CTransaction, "ether");
-    HIDE_FIELD(CTransaction, "encoding");
-    HIDE_FIELD(CTransaction, "articulatedTx");
-    HIDE_FIELD(CTransaction, "isError");
-    CTransactionTraverser* tt = (CTransactionTraverser*)trav;
-    tt->pl.sum_type = getSummaryType(opt->summarize_by);
-    tt->pl.endOfPeriod = earliestDate;
-    return true;
-}
-
-const char* STR_DEBUG =
-    "[{BLOCKNUMBER}] [{TRANSACTIONINDEX}] [{BEGBAL}] [{AMOUNTIN}] [{AMOUNTOUT}] [{ENDBAL}] [{RECONCILED}]";
-//-----------------------------------------------------------------------
-bool COptions::process_reconciliation(CTraverser* trav, blknum_t next) {
+bool COptions::process_reconciliation(CTraverser* trav) {
     string_q path = getBinaryCachePath(CT_RECONS, accountedFor, trav->trans.blockNumber, trav->trans.transactionIndex);
     establishFolder(path);
 
@@ -107,7 +84,6 @@ bool COptions::process_reconciliation(CTraverser* trav, blknum_t next) {
         if (archive.Lock(path, modeReadOnly, LOCK_NOWAIT)) {
             archive >> trav->trans.statements;
             archive.Release();
-            LOG4("Reading from cache for ", path);
             for (auto& statement : trav->trans.statements) {
                 CAccountName tokenName;
                 if (findToken(tokenName, statement.assetAddr)) {
@@ -115,7 +91,6 @@ bool COptions::process_reconciliation(CTraverser* trav, blknum_t next) {
                     statement.assetSymbol = tokenName.symbol;
                     statement.decimals = tokenName.decimals;
                 }
-                LOG4(statement.Format(STR_DEBUG));
                 prevStatements[accountedFor + "_" + toLower(statement.assetAddr)] = statement;
             }
             return !shouldQuit();
@@ -144,16 +119,14 @@ bool COptions::process_reconciliation(CTraverser* trav, blknum_t next) {
             }
         }
         pEth.endBal = getBalanceAt(accountedFor, pEth.blockNumber == 0 ? 0 : pEth.blockNumber - 1);
-        LOG4("Adding previous statement: ", pEth.Format(STR_DEBUG));
         prevStatements[accountedFor + "_eth"] = pEth;
     }
 
+    blknum_t next = trav->index < monApps.size() - 1 ? monApps[trav->index + 1].blk : NOPOS;
     CReconciliation eth(trav->trans.blockNumber, trav->trans.transactionIndex, trav->trans.timestamp);
-    eth.reconcileEth(prevStatements[accountedFor + "_eth"].endBal, prevStatements[accountedFor + "_eth"].blockNumber,
-                     next, &trav->trans, accountedFor);
+    eth.reconcileEth(prevStatements[accountedFor + "_eth"], next, &trav->trans, accountedFor);
     trav->trans.statements.push_back(eth);
     prevStatements[accountedFor + "_eth"] = eth;
-    LOG4("pushed: ", eth.Format(STR_DEBUG));
 
     CAccountNameMap tokenList;
     if (token_list_from_logs(tokenList, trav)) {
@@ -185,12 +158,9 @@ bool COptions::process_reconciliation(CTraverser* trav, blknum_t next) {
             } else {
                 tokStatement.amountIn = (tokStatement.endBal - tokStatement.begBal);
             }
-            tokStatement.amountNet = tokStatement.amountIn - tokStatement.amountOut;
-            tokStatement.reconciled = true;
             tokStatement.reconciliationType = "";
-            if (tokStatement.amountNet != 0)
+            if (tokStatement.amountNet() != 0)
                 trav->trans.statements.push_back(tokStatement);
-
             prevStatements[psKey] = tokStatement;
         }
     }
@@ -199,7 +169,7 @@ bool COptions::process_reconciliation(CTraverser* trav, blknum_t next) {
     for (auto recon : trav->trans.statements) {
         if (!allReconciled)
             break;
-        allReconciled = recon.reconciled;
+        allReconciled = recon.reconciled();
     }
 
     if (allReconciled) {
@@ -216,6 +186,33 @@ bool COptions::process_reconciliation(CTraverser* trav, blknum_t next) {
     }
 
     return !shouldQuit();
+}
+
+//-----------------------------------------------------------------------
+bool acct_PreFunc(CTraverser* trav, void* data) {
+    COptions* opt = (COptions*)data;
+    if (opt->summarize_by.empty())
+        return true;
+    HIDE_FIELD(CTransaction, "to");
+    HIDE_FIELD(CTransaction, "value");
+    HIDE_FIELD(CTransaction, "gas");
+    HIDE_FIELD(CTransaction, "gasPrice");
+    HIDE_FIELD(CTransaction, "input");
+    HIDE_FIELD(CTransaction, "receipt");
+    HIDE_FIELD(CTransaction, "traces");
+    HIDE_FIELD(CTransaction, "compressedTx");
+    HIDE_FIELD(CTransaction, "gasCost");
+    HIDE_FIELD(CTransaction, "etherGasCost");
+    HIDE_FIELD(CTransaction, "function");
+    HIDE_FIELD(CTransaction, "gasUsed");
+    HIDE_FIELD(CTransaction, "ether");
+    HIDE_FIELD(CTransaction, "encoding");
+    HIDE_FIELD(CTransaction, "articulatedTx");
+    HIDE_FIELD(CTransaction, "isError");
+    CTransactionTraverser* tt = (CTransactionTraverser*)trav;
+    tt->pl.sum_type = getSummaryType(opt->summarize_by);
+    tt->pl.endOfPeriod = earliestDate;
+    return true;
 }
 
 //-----------------------------------------------------------------------

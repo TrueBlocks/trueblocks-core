@@ -43,16 +43,19 @@
       "tags": "30-Contracts:theGraph"
     },
     {
-      "tags": "31-Gitcoin Grants:Admin"
+      "tags": "31-Gitcoin:Admin"
     },
     {
-      "tags": "31-Gitcoin Grants:Contracts"
+      "tags": "31-Gitcoin:Contracts"
     },
     {
-      "tags": "31-Gitcoin Grants:Core"
+      "tags": "31-Gitcoin:Core"
     },
     {
-      "tags": "31-Gitcoin Grants:Grant"
+      "tags": "31-Gitcoin:Grants"
+    },
+    {
+      "tags": "31-Gitcoin:Workstreams"
     },
     {
       "tags": "34-ENS"

@@ -1,7 +1,7 @@
 {
   "data": [
     {
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x187c8c43890fe4c91afabbc62128d383a90548dd",
       "name": "Grant 1559 Storj Exporter",
       "symbol": "",

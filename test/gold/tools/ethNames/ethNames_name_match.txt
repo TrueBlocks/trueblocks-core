@@ -1,5 +1,5 @@
 ethNames argc: 5 [1:torj] [2:--noop] [3:--fmt] [4:txt] 
 ethNames torj --noop --fmt txt 
 tags	address	name	symbol	decimals
-31-Gitcoin Grants:Grant	0x187c8c43890fe4c91afabbc62128d383a90548dd	Grant 1559 Storj Exporter
+31-Gitcoin:Grants	0x187c8c43890fe4c91afabbc62128d383a90548dd	Grant 1559 Storj Exporter
 50-Tokens:ERC20	0xb64ef51c888972c908cfacf59b47c1afbc0ab8ac	StorjToken	STORJ		8

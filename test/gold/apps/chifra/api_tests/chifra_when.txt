@@ -176,9 +176,9 @@
     },
     {
       "blockNumber": 12965000,
-      "timestamp": 1630308709,
-      "name": "london (est)",
-      "date": "2021-08-30 07:31:49 UTC"
+      "timestamp": 1628166822,
+      "name": "london",
+      "date": "2021-08-05 12:33:42 UTC"
     }
   ],
   "types": [

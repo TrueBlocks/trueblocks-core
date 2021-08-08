@@ -1,7 +1,7 @@
 tags	address	name	symbol	decimals	source
 50-Tokens:ERC20	0xb60ae39769664fe60444d5e4513d42c30b6100b9	USDD Stablecoin Governance Token	USDK		6	On chain
 30-Contracts:Balancer	0xb618f903ad1d00d6f7b92f5b0954dcdc056fc533	Balancer DAO
-31-Gitcoin Grants:Grant	0xb61a98a0e542dcea1da7c44c2e8017373b95d350	Grant 1250 Borderless Basic Income -- Decentralized Ubi and Distributions				https://gitcoin.co/grants/1250/borderless-basic-income-decentralized-ubi-and-dis
+31-Gitcoin:Grants	0xb61a98a0e542dcea1da7c44c2e8017373b95d350	Grant 1250 Borderless Basic Income -- Decentralized Ubi and Distributions				https://gitcoin.co/grants/1250/borderless-basic-income-decentralized-ubi-and-dis
 91-Early:Addresses	0xb61fb596b0cc9fa829d678eb0b8a0e058c3f1b91	Jackpot				EtherScan.io
 50-Tokens:ERC20	0xb62132e35a6c13ee1ee0f84dc5d40bad8d815206	Nexo	NEXO		18	On chain
 50-Tokens:ERC20	0xb624f8ae7f8b76a158928affff07510a07ec4461	Air moon inu shiba	AMIS🌙		18	On chain
@@ -9,27 +9,27 @@ tags	address	name	symbol	decimals	source
 90-Individuals:Gitcoin Grants	0xb6277cb5a2abd2b296c1d7f61a8f24c2d4942f9f	Name 0xb6277cb5				Gitcoin Website
 50-Tokens:ERC20	0xb62b6b192524f6b220a08f0d5d0eb748a8cbaa1b	Delphi Aave BUSD	daBUSD		18	On chain
 50-Tokens:ERC20	0xb62d18dea74045e822352ce4b3ee77319dc5ff2f	EventChain	EVC		18	On chain
-31-Gitcoin Grants:Grant	0xb631e8650fb4befdae74ab9f86a9cb65bc134706	Grant 0228 Buidlhub				https://gitcoin.co/grants/228/buidlhub
-31-Gitcoin Grants:Grant	0xb632c8e5f87a47a0caeb613cbdf0f748217d2840	Grant 0618 Arboreum				https://gitcoin.co/grants/618/arboreum
+31-Gitcoin:Grants	0xb631e8650fb4befdae74ab9f86a9cb65bc134706	Grant 0228 Buidlhub				https://gitcoin.co/grants/228/buidlhub
+31-Gitcoin:Grants	0xb632c8e5f87a47a0caeb613cbdf0f748217d2840	Grant 0618 Arboreum				https://gitcoin.co/grants/618/arboreum
 50-Tokens:ERC20	0xb63b606ac810a52cca15e44bb630fd42d8d1d83d	Monaco	MCO		8	On chain
 90-Individuals:Gitcoin Grants	0xb63bb45b2ef614ce087dc01c98013d87fd757896	Name 0xb63bb45b				Gitcoin Website
-31-Gitcoin Grants:Grant	0xb64850fe701fb64667b6cc762aa2c12f2e02193c	Grant 0742 Crypto Community Ventures Network				https://gitcoin.co/grants/742/crypto-community-ventures-network
+31-Gitcoin:Grants	0xb64850fe701fb64667b6cc762aa2c12f2e02193c	Grant 0742 Crypto Community Ventures Network				https://gitcoin.co/grants/742/crypto-community-ventures-network
 50-Tokens:ERC20	0xb64ef51c888972c908cfacf59b47c1afbc0ab8ac	StorjToken	STORJ		8	On chain
 50-Tokens:ERC20	0xb6540a6144d3eda92b0b57934ab77c7eed288f78	ePlatinumSwap	ePLATSWAP		18	On chain
-31-Gitcoin Grants:Grant	0xb6568dc090302196ec8edf56d99c3484cee94e6a	Grant 0207 Stablepay🙏🙏🏻				https://gitcoin.co/grants/207/stablepay
+31-Gitcoin:Grants	0xb6568dc090302196ec8edf56d99c3484cee94e6a	Grant 0207 Stablepay🙏🙏🏻				https://gitcoin.co/grants/207/stablepay
 30-Contracts:DAO Related	0xb656b2a9c3b2416437a811e07466ca712f5a5b5a	Creator of proposal 59 ContractThatCreatesNewDAO				The DAO
-31-Gitcoin Grants:Grant	0xb656cd9e370f0be5a02a85bb70bca7bc25f03c07	Grant 1374 Empanadao				https://gitcoin.co/grants/1374/empanadao
+31-Gitcoin:Grants	0xb656cd9e370f0be5a02a85bb70bca7bc25f03c07	Grant 1374 Empanadao				https://gitcoin.co/grants/1374/empanadao
 50-Tokens:ERC20	0xb658a5be31da0af25da9347a717de17920886901	Arigato Inu	ARINU		18	On chain
-31-Gitcoin Grants:Grant	0xb65b6cb75c7d558ca39dbb098f5b9a7b690164fc	Grant 1088 Creol Environments/creol Offsets				https://gitcoin.co/grants/1088/creol-environmentscreol-offsets
+31-Gitcoin:Grants	0xb65b6cb75c7d558ca39dbb098f5b9a7b690164fc	Grant 1088 Creol Environments/creol Offsets				https://gitcoin.co/grants/1088/creol-environmentscreol-offsets
 50-Tokens:ERC20	0xb66d6eb682dcebb57b0fc56d7143ab52e43d32a5	dpool.xyz	DPOOL		18	On chain
 90-Individuals:Gitcoin Grants	0xb66db713a90e5afdd22c5830f2141eaa05134661	Name 0xb66db713				Gitcoin Website
 91-Early:Addresses	0xb671c3883307cf05bb3dff77a9754e87b4347195	HardForkConditional				Reddit
-31-Gitcoin Grants:Grant	0xb676efa42a0a85f0a9b0c539f47687a824569a2c	Grant 0605 Stakewise: Eth 2.0 Staking Platform				https://gitcoin.co/grants/605/stakewise-eth-20-staking-platform
+31-Gitcoin:Grants	0xb676efa42a0a85f0a9b0c539f47687a824569a2c	Grant 0605 Stakewise: Eth 2.0 Staking Platform				https://gitcoin.co/grants/605/stakewise-eth-20-staking-platform
 50-Tokens:ERC20	0xb67718b98d52318240c52e71a898335da4a28c42	InnovativeBioresearchCoin	INNBC		6	On chain
 60-Airdrops	0xb679afd97bcbc7448c1b327795c3ef226b39f0e9	Win Last Mile Airdrop	WLM		6	On chain
-31-Gitcoin Grants:Grant	0xb67b1f2363e2f9c30be7c614b29e4ba9064b10bc	Grant 1832 人力基金				https://gitcoin.co/grants/1832/-10
-31-Gitcoin Grants:Grant	0xb67e55884096f203a423c80fe6f6b1c1bd791782	Grant 1267 DeFi Download Podcast				https://gitcoin.co/grants/1267/defi-download-podcast
-31-Gitcoin Grants:Grant	0xb67fecf7af733b16cd08a7959eae2d8554d246af	Grant 1564 💌				https://gitcoin.co/grants/1564/-8
+31-Gitcoin:Grants	0xb67b1f2363e2f9c30be7c614b29e4ba9064b10bc	Grant 1832 人力基金				https://gitcoin.co/grants/1832/-10
+31-Gitcoin:Grants	0xb67e55884096f203a423c80fe6f6b1c1bd791782	Grant 1267 DeFi Download Podcast				https://gitcoin.co/grants/1267/defi-download-podcast
+31-Gitcoin:Grants	0xb67fecf7af733b16cd08a7959eae2d8554d246af	Grant 1564 💌				https://gitcoin.co/grants/1564/-8
 90-Individuals:Gitcoin Grants	0xb682fd6a16c409594bc49c7874e4ca383033d7a5	Name 0xb682fd6a				Gitcoin Website
 50-Tokens:ERC20	0xb683d83a532e2cb7dfa5275eed3698436371cc9f	BTU Protocol	BTU		18	On chain
 30-Contracts:dAppNode	0xb68e4ddcf00f93a89430ab2e4f878724ac7c23d4	dAddNode Package 016				TrueBlocks.io
@@ -38,17 +38,17 @@ tags	address	name	symbol	decimals	source
 90-Individuals:Gitcoin Grants	0xb69fa0ba7f4cf765c94a9ced37310327191ac949	Name 0xb69fa0ba				Gitcoin Website
 90-Individuals:Gitcoin Grants	0xb6a312b525de98cbd6c73a63e46a1e9acb835c64	Name 0xb6a312b5				Gitcoin Website
 60-Airdrops	0xb6a398d36381a2370d9522de023b5bce5000ae9d	EtherCash Airdrop				TrueBlocks.io
-31-Gitcoin Grants:Grant	0xb6ad42d615759e50c8087849a2f6f0e2032f7085	Grant 1131 Caio Investe				https://gitcoin.co/grants/1131/caio-investe
+31-Gitcoin:Grants	0xb6ad42d615759e50c8087849a2f6f0e2032f7085	Grant 1131 Caio Investe				https://gitcoin.co/grants/1131/caio-investe
 50-Tokens:ERC20	0xb6b46d939d187b0fe5df9cc1e91d47bb201f592e	Shiba Inu Treats	TREATS 🦴		18	On chain
-31-Gitcoin Grants:Grant	0xb6bccce9cfe99d4b593aba72f3a36028d1ade4c5	Grant 1150 Educational DeFi Content | Amadeo Brands - on DeFi				https://gitcoin.co/grants/1150/educational-defi-content-amadeo-brands-on-defi
+31-Gitcoin:Grants	0xb6bccce9cfe99d4b593aba72f3a36028d1ade4c5	Grant 1150 Educational DeFi Content | Amadeo Brands - on DeFi				https://gitcoin.co/grants/1150/educational-defi-content-amadeo-brands-on-defi
 50-Tokens:ERC20	0xb6d00b8c999bb828d57b6de28a4de8d5ef605bae	ZOOTSWAP	ZOOTSWAP		18	On chain
 34-ENS	0xb6e040c9ecaae172a89bd561c5f73e1c48d28cd9	ENS: Wallet 2				EtherScan.io
 90-Individuals:Gitcoin Grants	0xb6e32c75a2083a38f6cce6e65756c0bf86d84200	Name 0xb6e32c75				Gitcoin Website
 50-Tokens:ERC20	0xb6ed7644c69416d67b522e20bc294a9a9b405b31	0xBitcoin Token	0xBTC		8	On chain
 50-Tokens:ERC20	0xb6ee9668771a79be7967ee29a63d4184f8097143	CargoX Token	CXO		18	On chain
 50-Tokens:ERC20	0xb6f43025b29196af2dddd69b0a58afba079cd600	智投链	IIC		18	On chain
-31-Gitcoin Grants:Grant	0xb6f7c2a6eefb0d627d149d7263152ad4548120f2	Grant 1266 the Giving Block - Making Crypto Donations Easy				https://gitcoin.co/grants/1266/the-giving-block-making-crypto-donations-easy
-31-Gitcoin Grants:Grant	0xb6f947eed973bc0072bd0fbe2c44594f8d62b332	Grant 0977 Teaching South Africans to Better Themselves				https://gitcoin.co/grants/977/teaching-south-africans-to-better-themselves
+31-Gitcoin:Grants	0xb6f7c2a6eefb0d627d149d7263152ad4548120f2	Grant 1266 the Giving Block - Making Crypto Donations Easy				https://gitcoin.co/grants/1266/the-giving-block-making-crypto-donations-easy
+31-Gitcoin:Grants	0xb6f947eed973bc0072bd0fbe2c44594f8d62b332	Grant 0977 Teaching South Africans to Better Themselves				https://gitcoin.co/grants/977/teaching-south-africans-to-better-themselves
 60-Airdrops	0xb6fab2c9e391ad3af57567e22bf3eb792079f55c	HEALP Airdrop Sender				TrueBlocks.io
 50-Tokens:ERC20	0xb6fb5bd626feaae090e5f5b46a6438ad7fe452f5	Infinity Akita	ITIKA		9	On chain
 90-Individuals:Twitter	0xb6fee4df663addc0081b51385a6195d52d1c2001	Name 0xb6fee4df				Twitter

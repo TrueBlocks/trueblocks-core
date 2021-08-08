@@ -34,19 +34,19 @@ on,both,fast,export,apps/acctExport,export_notrelevant,n,addrs = 0xf503017d7baf7
 on,both,fast,export,apps/acctExport,export_relevant,n,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & first_block = 10245999 & last_block = 10288980 & logs & fmt = csv & articulate & source = 0x7d655c57f71464b6f83811c55d84009cd9f5221c & relevant
 on,both,fast,export,apps/acctExport,export_logs_factory,y,addrs = 0x8b3b3b624c3c0397d3da8fd861512393d51dcbac & factory & traces & last_block = 1603174
 on,both,fast,export,apps/acctExport,export_traces,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & last_block = 001506480 & max_records = 5 & traces & fmt = api
-on,both,fast,export,apps/acctExport,to_file,y,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & first_block = 10277780 & last_block = 10296792 & accounting & ether & fmt = api & to_file & articulate & verbose = 5
+on,both,fast,export,apps/acctExport,to_file,y,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & first_block = 10277780 & last_block = 10296792 & accounting & ether & fmt = api & to_file & articulate & verbose = 10
 on,cmd,fast,export,apps/acctExport,export_backcompat,n,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & first_record = 0 & max_records = 1 & staging & unripe
 on,both,fast,export,apps/acctExport,export_stage,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & first_block = 100000 & last_block = 2000000 & staging
 on,both,fast,export,apps/acctExport,export_unripe,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & first_block = 100000 & last_block = 2000000 & staging & unripe
 on,both,fast,export,apps/acctExport,export_unripe_fail,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & first_block = 100000 & last_block = 2000000 & unripe
 
-on,both,fast,export,apps/acctExport,accounting_wei_1,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & max_records = 5 & accounting & fmt = api & verbose = 5
-on,both,fast,export,apps/acctExport,accounting_wei_2,y,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & max_records = 15 & accounting & fmt = api & verbose = 5
-on,both,fast,export,apps/acctExport,accounting_ether_1,y,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & first_block = 10277780 & last_block = 10296792 & accounting & ether & fmt = api & articulate & verbose = 5
+on,both,fast,export,apps/acctExport,accounting_wei_1,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & max_records = 5 & accounting & fmt = api & verbose = 10
+on,both,fast,export,apps/acctExport,accounting_wei_2,y,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & max_records = 15 & accounting & fmt = api & verbose = 10
+on,both,fast,export,apps/acctExport,accounting_ether_1,y,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & first_block = 10277780 & last_block = 10296792 & accounting & ether & fmt = api & articulate & verbose = 10
 
-on,both,fast,export,apps/acctExport,accounting_tokens_1,y,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & first_block = 10277780 & last_block = 10296792 & accounting & articulate & ether & fmt = api & verbose = 5
-off,both,fast,export,apps/acctExport,accounting_tokens_2,y,addrs = 0x9531c059098e3d194ff87febb587ab07b30b1306 & first_record = 500 & max_records = 40 & accounting & fmt = json & verbose = 5
-off,both,fast,export,apps/acctExport,accounting_tokens_3,y,addrs = 0xfd6c5ac853391486d25ddd5cefb1f7040ee31c2c & first_record = 5 & max_records = 10 & accounting & fmt = json & verbose = 5
+on,both,fast,export,apps/acctExport,accounting_tokens_1,y,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & first_block = 10277780 & last_block = 10296792 & accounting & articulate & ether & fmt = api & verbose = 10
+off,both,fast,export,apps/acctExport,accounting_tokens_2,y,addrs = 0x9531c059098e3d194ff87febb587ab07b30b1306 & first_record = 500 & max_records = 40 & accounting & fmt = json & verbose = 10
+off,both,fast,export,apps/acctExport,accounting_tokens_3,y,addrs = 0xfd6c5ac853391486d25ddd5cefb1f7040ee31c2c & first_record = 5 & max_records = 10 & accounting & fmt = json & verbose = 10
 
 on,both,fast,monitors,apps/acctExport,clean,y,clean
 on,both,fast,monitors,apps/acctExport,delete_1,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & delete
@@ -67,16 +67,16 @@ on,both,fast,monitors,apps/acctExport,freshen_apps_0-30,y,addrs = 0xbb7b8287f3f0
 on,both,fast,monitors,apps/acctExport,freshen_apps_31-60,y,addrs = 0xbb7b8287f3f0a933474a79eae42cbca977791171 & first_block = 31 & last_block = 60 & appearances
 on,both,fast,monitors,apps/acctExport,freshen_apps_61-100,y,addrs = 0xbb7b8287f3f0a933474a79eae42cbca977791171 & first_block = 61 & last_block = 100 & appearances
 
-off,both,fast,export,apps/acctExport,reversed_reversed,y,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & fmt = json & accounting & ether & reversed & first_block = 8854723 & last_block = 8856511 & max_records = 10000 & verbose = 5
-off,both,fast,export,apps/acctExport,reversed_not_reversed,y,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & fmt = json & accounting & ether & first_block = 8854723 & last_block = 8856511 & verbose = 5
+off,both,fast,export,apps/acctExport,reversed_reversed,y,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & fmt = json & accounting & ether & reversed & first_block = 8854723 & last_block = 8856511 & max_records = 10000 & verbose = 10
+off,both,fast,export,apps/acctExport,reversed_not_reversed,y,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & fmt = json & accounting & ether & first_block = 8854723 & last_block = 8856511 & verbose = 10
 
-on,both,fast,export,apps/acctExport,accounting_invalid1,y,addrs = 0x00a3819199113fc6a6e6ba1298afde7377e2009b & max_records = 30 & fmt = json & summarize_by = tx
-on,both,fast,export,apps/acctExport,accounting_invalid2,y,addrs = 0x00a3819199113fc6a6e6ba1298afde7377e2009b & max_records = 30 & accounting & fmt = json & summarize_by = jimp
-on,both,fast,export,apps/acctExport,accounting_by_tx,y,addrs = 0x00a3819199113fc6a6e6ba1298afde7377e2009b & max_records = 30 & accounting & fmt = json & summarize_by = tx
-on,both,fast,export,apps/acctExport,accounting_by_blockly,y,addrs = 0x00a3819199113fc6a6e6ba1298afde7377e2009b & max_records = 30 & accounting & fmt = json & summarize_by = blockly
-on,both,fast,export,apps/acctExport,accounting_by_hourly,y,addrs = 0x00a3819199113fc6a6e6ba1298afde7377e2009b & max_records = 30 & accounting & fmt = json & summarize_by = hourly
-on,both,fast,export,apps/acctExport,accounting_by_daily,y,addrs = 0x00a3819199113fc6a6e6ba1298afde7377e2009b & max_records = 30 & accounting & fmt = json & summarize_by = daily
-on,both,fast,export,apps/acctExport,accounting_by_weekly,y,addrs = 0x00a3819199113fc6a6e6ba1298afde7377e2009b & max_records = 30 & accounting & fmt = json & summarize_by = weekly
-on,both,fast,export,apps/acctExport,accounting_by_monthly,y,addrs = 0x00a3819199113fc6a6e6ba1298afde7377e2009b & max_records = 30 & accounting & fmt = json & summarize_by = monthly
-on,both,fast,export,apps/acctExport,accounting_by_quarterly,y,addrs = 0x00a3819199113fc6a6e6ba1298afde7377e2009b & max_records = 30 & accounting & fmt = json & summarize_by = quarterly
-on,both,fast,export,apps/acctExport,accounting_by_annually,y,addrs = 0x00a3819199113fc6a6e6ba1298afde7377e2009b & max_records = 30 & accounting & fmt = json & summarize_by = yearly
+off,both,fast,export,apps/acctExport,accounting_invalid1,y,addrs = 0x00a3819199113fc6a6e6ba1298afde7377e2009b & max_records = 30 & fmt = json & summarize_by = tx
+off,both,fast,export,apps/acctExport,accounting_invalid2,y,addrs = 0x00a3819199113fc6a6e6ba1298afde7377e2009b & max_records = 30 & accounting & fmt = json & summarize_by = jimp
+off,both,fast,export,apps/acctExport,accounting_by_tx,y,addrs = 0x00a3819199113fc6a6e6ba1298afde7377e2009b & max_records = 30 & accounting & fmt = json & summarize_by = tx
+off,both,fast,export,apps/acctExport,accounting_by_blockly,y,addrs = 0x00a3819199113fc6a6e6ba1298afde7377e2009b & max_records = 30 & accounting & fmt = json & summarize_by = blockly
+off,both,fast,export,apps/acctExport,accounting_by_hourly,y,addrs = 0x00a3819199113fc6a6e6ba1298afde7377e2009b & max_records = 30 & accounting & fmt = json & summarize_by = hourly
+off,both,fast,export,apps/acctExport,accounting_by_daily,y,addrs = 0x00a3819199113fc6a6e6ba1298afde7377e2009b & max_records = 30 & accounting & fmt = json & summarize_by = daily
+off,both,fast,export,apps/acctExport,accounting_by_weekly,y,addrs = 0x00a3819199113fc6a6e6ba1298afde7377e2009b & max_records = 30 & accounting & fmt = json & summarize_by = weekly
+off,both,fast,export,apps/acctExport,accounting_by_monthly,y,addrs = 0x00a3819199113fc6a6e6ba1298afde7377e2009b & max_records = 30 & accounting & fmt = json & summarize_by = monthly
+off,both,fast,export,apps/acctExport,accounting_by_quarterly,y,addrs = 0x00a3819199113fc6a6e6ba1298afde7377e2009b & max_records = 30 & accounting & fmt = json & summarize_by = quarterly
+off,both,fast,export,apps/acctExport,accounting_by_annually,y,addrs = 0x00a3819199113fc6a6e6ba1298afde7377e2009b & max_records = 30 & accounting & fmt = json & summarize_by = yearly

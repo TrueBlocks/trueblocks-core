@@ -10,11 +10,11 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 30-Contracts:Pool Together	0x0034ea9808e620a0ef79261c51af20614b742b24	Pool Usdc MCDAwarePool v0.2.12		EtherScan.io			false	false	false	true	false	false
 60-Airdrops	0x00476aecb24edfed50aaf2e2361badbd8d3efdc2	HEALP Airdrop Sender		EtherScan.io			false	false	false	false	false	false
 30-Contracts	0x005ca4f1493f451c1588186c570a434ec38e718d	BrightID Agent		EtherScan.io			false	false	false	true	false	false
-31-Gitcoin Grants:Grant	0x006087d6ac20840c23ba298512db454a05c19b10	Grant 0743 #fittogetherdao (like Pooltogether for Fitness and Wellbeing)		https://gitcoin.co/grants/743/fittogetherdao-like-pooltogether-for-fitness-and-			false	false	false	true	false	false
+31-Gitcoin:Grants	0x006087d6ac20840c23ba298512db454a05c19b10	Grant 0743 #fittogetherdao (like Pooltogether for Fitness and Wellbeing)		https://gitcoin.co/grants/743/fittogetherdao-like-pooltogether-for-fitness-and-			false	false	false	true	false	false
 91-Early:Addresses	0x007d42b9192b8c087b0d3e6ef73aae48e74b41c1	Ethventures4		EtherScan.io			false	false	false	true	false	false
 91-Early:Addresses	0x0096800019bf4eca0bed5a714a553ecf844884c5	Etheropt_id107_cnt215_5mo		Ether Camp			false	false	false	true	false	false
 50-Tokens:ERC20	0x00d0f137b51692d0ac708bde7b367a373865cffe	Zapper.Fi : Balancer Remove		EtherScan.io			false	false	false	true	false	false
-31-Gitcoin Grants:Grant	0x00e4f5f746242e4d115bd65aac7c08fe5d38fb21	Grant 1839 the Etherchest Ecosystem		https://gitcoin.co/grants/1839/the-etherchest-ecosystem			false	false	false	false	false	false
+31-Gitcoin:Grants	0x00e4f5f746242e4d115bd65aac7c08fe5d38fb21	Grant 1839 the Etherchest Ecosystem		https://gitcoin.co/grants/1839/the-etherchest-ecosystem			false	false	false	false	false	false
 80-Malicious:DaoDrain	0x0101f3be8ebb4bbd39a2e3b9a3639d4259832fd9	DAO Drain 075		GethSource Ether Camp			false	false	false	true	false	false
 30-Contracts:Chainlink	0x0133aa47b6197d0ba090bf2cd96626eb71ffd13c	Chainlink BTC-ETH Aggregator		EtherScan.io			false	false	false	true	false	false
 30-Contracts	0x015531a044bae03bf4dab1ceabfc232a969b7175	GU: Rare Pack		EtherScan.io			false	false	false	true	false	false
@@ -25,7 +25,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 91-Early:Addresses	0x02ad1b2f88d37825a311045663a0bf97d0dcd845	YoutubeViews_id13		Ether Camp			false	false	false	true	false	false
 91-Early:Addresses	0x02b2101903eb6a51518e63e84b785180859fda9d	Thewhalegame		EtherScan.io			false	false	false	true	false	false
 30-Contracts	0x02bcb9675727ade60243c3d467a3bf152142698b	Credmark Community Treasury		EtherScan.io			false	false	false	true	false	false
-31-Gitcoin Grants:Grant	0x02cb3c150bedca124d0ae8cccb72fefbe705c953	Grant 0782 Ethereum Cat Herders Community Fund		https://gitcoin.co/grants/782/ethereum-cat-herders-community-fund		https://twitter.com/EthCatHerders	false	false	false	true	false	false
+31-Gitcoin:Grants	0x02cb3c150bedca124d0ae8cccb72fefbe705c953	Grant 0782 Ethereum Cat Herders Community Fund		https://gitcoin.co/grants/782/ethereum-cat-herders-community-fund		https://twitter.com/EthCatHerders	false	false	false	true	false	false
 30-Contracts:Chainlink	0x02d5c618dbc591544b19d0bf13543c0728a3c4ec	Chainlink CHF-USD Aggregator		EtherScan.io			false	false	false	true	false	false
 91-Early:Addresses	0x02e01e9a73ed2cb24b32628c935256e455b0a078	Raceftw		EtherScan.io			false	false	false	true	false	false
 91-Early:Addresses	0x0312855bb6e548578a36fa8de63b8f0d3d7d7dc2	Betonhashv84		EtherScan.io			false	false	false	false	false	false
@@ -42,14 +42,14 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x049399a6b048d52971f7d122ae21a1532722285f	Fire Lotto	FLOT	On chain	18	Decentralized lottery platform based on the Ethereum blockchain and managed by smart contracts without any human intervention.	false	false	false	true	true	false
 50-Tokens:ERC20	0x04c62019ab478bff5874e7b7d9bc84fcf7e30025	POA Network: MultiSig		EtherScan.io			false	false	false	true	false	false
 91-Early:Addresses	0x05240da139d30034eaae15737610bfbe68b97910	Rouleth_Therouleth		EtherScan.io			false	false	false	true	false	false
-31-Gitcoin Grants:Grant	0x0559a413a3ab19508a144aeebc474eb14c5e76ce	Grant 0386 Wolfofethereum.eth		https://gitcoin.co/grants/386/wolfofethereumeth		@lukacacic	false	false	false	false	false	false
+31-Gitcoin:Grants	0x0559a413a3ab19508a144aeebc474eb14c5e76ce	Grant 0386 Wolfofethereum.eth		https://gitcoin.co/grants/386/wolfofethereumeth		@lukacacic	false	false	false	false	false	false
 30-Contracts	0x055cc48f7968fd8640ef140610dd4038e1b03926	Owned Upgradeability Proxy		EtherScan.io			false	false	false	true	false	false
-31-Gitcoin Grants:Grant	0x057a3d5383fd9277f3ab4f98e319d7d9a9a9e198	Grant 0292 Will Brealey - Ethereum Writer		https://gitcoin.co/grants/292/will-brealey-ethereum-writer		https://medium.com/@w_brealey	false	false	false	false	false	false
+31-Gitcoin:Grants	0x057a3d5383fd9277f3ab4f98e319d7d9a9a9e198	Grant 0292 Will Brealey - Ethereum Writer		https://gitcoin.co/grants/292/will-brealey-ethereum-writer		https://medium.com/@w_brealey	false	false	false	false	false	false
 30-Contracts:Chainlink	0x05cf62c4ba0ccea3da680f9a8744ac51116d6231	Chainlink AUD-USD Aggregator		EtherScan.io			false	false	false	true	false	false
 91-Early:Addresses	0x062524205ca7ecf27f4a851edec93c7ad72f427b	Fireponzi		EtherScan.io			false	false	false	true	false	false
 50-Tokens:ERC20	0x0637ff2583c829eb286905aefa5f4bd93dfdd490	Ethereum KISHU	eKISHU	On chain	18		false	false	false	true	true	false
 40-Exchanges	0x0681d8db095565fe8a346fa0277bffde9c0edbbf	Binance 4		EtherScan.io			false	false	false	false	false	false
-31-Gitcoin Grants:Grant	0x068792edecad424d42f0f45de7f693ca33526cf1	Grant 0075 Ethereum Dev Fund Working Group		https://gitcoin.co/grants/75/ethereum-dev-fund-working-group			false	false	false	false	false	false
+31-Gitcoin:Grants	0x068792edecad424d42f0f45de7f693ca33526cf1	Grant 0075 Ethereum Dev Fund Working Group		https://gitcoin.co/grants/75/ethereum-dev-fund-working-group			false	false	false	false	false	false
 50-Tokens:ERC20	0x06a2cf3f024d8871baedd0f7bd9340001aada574	SingularDTV Sender 2		EtherScan.io			false	false	false	false	false	false
 50-Tokens:ERC20	0x06d5fbdc5b54fe3aed6ad1b5e2e5a5a6d9ff54ea	Ethereum Extreme	ETHE	On chain	18		false	false	false	true	true	false
 30-Contracts	0x06fe76b2f432fdfecaef1a7d4f6c3d41b5861672	Zerion: Adapter Registry		EtherScan.io			false	false	false	true	false	false
@@ -61,7 +61,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 55-Defi	0x07db4b9b3951094b9e278d336adf46a036295de7	Yearn: StrategyCurveYVoterProxy		EtherScan.io			false	false	false	true	false	false
 50-Tokens:ERC20	0x07f2ef35240c380c76eb1e43e4524ac6d756cf0c	Ethereum Doughnut	ENUT 🍩	On chain	18		false	false	false	true	true	false
 30-Contracts	0x07f455f30e862e13e3e3d960762cb11c4f744d52	Gnosis Safe: Replay Service Deployment		EtherScan.io			false	false	false	false	false	false
-31-Gitcoin Grants:Grant	0x08497b07916280da27b43d28a0d3dfa7d6676b58	Grant 0122 Austin Griffith Ethereum Research and Development		https://gitcoin.co/grants/122/austin-griffith-ethereum-research-and-development			false	false	false	false	false	false
+31-Gitcoin:Grants	0x08497b07916280da27b43d28a0d3dfa7d6676b58	Grant 0122 Austin Griffith Ethereum Research and Development		https://gitcoin.co/grants/122/austin-griffith-ethereum-research-and-development			false	false	false	false	false	false
 50-Tokens:ERC20	0x084b1c3c81545d370f3634392de611caabff8148	ENS: Reverse Registrar		EtherScan.io			false	false	false	true	false	false
 50-Tokens:ERC20	0x08711d3b02c8758f2fb3ab4e80228418a7f8e39c	Edgeless	EDG	On chain		The Ethereum smart contract-based that offers a 0% house edge and solves the transparency question once and for all.	false	false	false	true	true	false
 30-Contracts:Pasta	0x08a2e41fb99a7599725190b9c970ad3893fa33cf	Pasta V1 Token		EtherScan.io			false	false	false	true	false	false
@@ -90,7 +90,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x0d88ed6e74bbfd96b831231638b66c05571e824f	AVT	AVT	EtherScan.io		An open-source protocol that delivers the global standard for ticketing.	false	false	false	true	true	false
 91-Early:Addresses	0x0d8fe53f653e2ad61a9d82d9e24484f2e9b5646c	Etheropt_id102_cnt2_5mo		Ether Camp			false	false	false	true	false	false
 50-Tokens:ERC20	0x0deecb13f4e801bdbf2721875756d44b207ca580	ETHERCToken	EET	On chain	18		false	false	false	true	true	false
-31-Gitcoin Grants:Grant	0x0df05adac0159e215111696339ad4998e5871b3d	Grant 0576 BlockScout.com for Ethereum Mainnet hosting		https://gitcoin.co/grants/576/blockscoutcom-for-ethereum-mainnet-hosting		https://blockscout.com/eth/mainnet	false	false	false	true	false	false
+31-Gitcoin:Grants	0x0df05adac0159e215111696339ad4998e5871b3d	Grant 0576 BlockScout.com for Ethereum Mainnet hosting		https://gitcoin.co/grants/576/blockscoutcom-for-ethereum-mainnet-hosting		https://blockscout.com/eth/mainnet	false	false	false	true	false	false
 50-Tokens:ERC20	0x0e00085666cad372139514c97c872d36cc71f0a5	Ether Shiba	ESHIBA	On chain	18		false	false	false	true	true	false
 91-Early:Addresses	0x0e08f0daee46e772eee7999c5b6d7d0401d8d72b	Lookatallthesetastyfees		EtherScan.io			false	false	false	true	false	false
 80-Malicious:DaoDrain	0x0e0da70933f4c7849fc0d203f5d1d43b9ae4532d	DAO Drain 087		GethSource Ether Camp			false	false	false	true	false	false
@@ -108,7 +108,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 91-Early:Addresses	0x1194e966965418c7d73a42cceeb254d875860356	PriceFeed_id16_cnt11750_7mo		Ether Camp			false	false	false	true	false	false
 91-Early:Addresses	0x1213c29b5e1a6f33e0d044f850a57b665e3cde21	Littlecactus		EtherScan.io			false	false	false	true	false	false
 50-Tokens:ERC20	0x1229e2a0711660be162521f5626c68e85ec99c7f	Bancor: Converter 103		EtherScan.io			false	false	false	true	false	false
-31-Gitcoin Grants:Grant	0x1266f928b7964173434d3feb6da2554b141920b8	Grant 0723 EtherDNA		https://gitcoin.co/grants/723/etherdna		https://etherdna.github.io/app/	false	false	false	false	false	false
+31-Gitcoin:Grants	0x1266f928b7964173434d3feb6da2554b141920b8	Grant 0723 EtherDNA		https://gitcoin.co/grants/723/etherdna		https://etherdna.github.io/app/	false	false	false	false	false	false
 91-Early:Addresses	0x1296d3bb6dc0efbae431a12939fc15b2823db79b	KittenRegistry		Ether Camp			false	false	false	true	false	false
 50-Tokens:ERC20	0x12d66f87a04a9e220743712ce6d9bb1b5616b8fc	Tornado.Cash: 0.1 ETH		EtherScan.io			false	false	false	true	false	false
 91-Early:Addresses	0x1342a001544b8b7ae4a5d374e33114c66d78bd5f	GateCoin_Hack_1		Ether Camp			false	false	false	false	false	false
@@ -126,7 +126,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 91-Early:Addresses	0x15e745a2e3b677ec6421291b212d3917b3738dee	Multisend		EtherScan.io			false	false	false	true	false	false
 91-Early:Addresses	0x160fc84c8c5d46561b01d38eb7d44671f3eed4ca	SCJConsulting1		EtherScan.io			false	false	false	true	false	false
 30-Contracts	0x16274044dab9635df2b5aeaf7cecb5f381c71680	Primitive		EtherScan.io			false	false	false	true	false	false
-31-Gitcoin Grants:Grant	0x165107ce980edff38065261326354c3d6cd809e6	Grant 0709 Adoption and Dissemination of Ethereum Technology		https://gitcoin.co/grants/709/adoption-and-dissemination-of-ethereum-technology		https://blockchaincounselor.blogspot.com/	false	false	false	false	false	false
+31-Gitcoin:Grants	0x165107ce980edff38065261326354c3d6cd809e6	Grant 0709 Adoption and Dissemination of Ethereum Technology		https://gitcoin.co/grants/709/adoption-and-dissemination-of-ethereum-technology		https://blockchaincounselor.blogspot.com/	false	false	false	false	false	false
 55-Defi	0x1676fc274b65966ed0c6438a26d34c6c92a5981c	Cream.Finance: CREAM/USDC Pool		EtherScan.io			false	false	false	true	false	false
 30-Contracts:Chainlink	0x16924ae9c2ac6cdbc9d6bb16fafcd38bed560936	Chainlink FTSE-GBP Aggregator		EtherScan.io			false	false	false	true	false	false
 91-Early:Addresses	0x16a4ff536001405f2b0d7ddafc79f6a10d024640	Plusoneponzi		EtherScan.io			false	false	false	true	false	false
@@ -148,7 +148,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 91-Early:Addresses	0x1a060b0604883a99809eb3f798df71bef6c358f1	KNOWN_MINERS_001		Ether Camp			false	false	false	false	false	false
 91-Early:Addresses	0x1a135adbf33cb363c4b6c609409522ecd5d0aa29	aEthereumlotteryNet		Ether Camp			false	false	false	true	false	false
 30-Contracts:Giveth	0x1a88c052fc7a8401e00b2f76f96ac62a19427731	EtherIDTipJar		Giveth Website			false	false	false	false	false	false
-31-Gitcoin Grants:Grant	0x1aa587c2288750173cc6af7c92bad7209904e496	Grant 0150 Mccardi - Ethereum Egift Cards		https://gitcoin.co/grants/150/mccardi-ethereum-egift-cards			false	false	false	false	false	false
+31-Gitcoin:Grants	0x1aa587c2288750173cc6af7c92bad7209904e496	Grant 0150 Mccardi - Ethereum Egift Cards		https://gitcoin.co/grants/150/mccardi-ethereum-egift-cards			false	false	false	false	false	false
 91-Early:Addresses	0x1afd952269873fe009c7bdff5f07fd91605a7227	Smallponzi		EtherScan.io			false	false	false	true	false	false
 91-Early:Addresses	0x1b725d9bcbd26765fe4836d850631037dfb37e0a	ManagedAccount		Ether Camp			false	false	false	true	false	false
 91-Early:Addresses	0x1bb6123913d0b48948de38c3b75fd3eb3b4fe7e3	Etherads		EtherScan.io			false	false	false	true	false	false
@@ -171,11 +171,11 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 91-Early:Addresses	0x1f36f2249ec89266ad4ee4351538148aaebc72e8	Euroteambet		EtherScan.io			false	false	false	true	false	false
 50-Tokens:ERC20	0x1f73e1ef90a0c54ab81b0dc14035a83137507822	ethEra for Defi	E4DF	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x1f75047233517dcf67970d9e3c3bb385cb647f30	Unicorns	🦄	On chain		Ethereum tip jar unicorn tokens	false	false	false	true	true	false
-31-Gitcoin Grants:Grant	0x1fa313ba8c968d00bc109404bd08e963eae3f1dd	Grant 0433 Edcon (community Ethereum Development Conference)		https://gitcoin.co/grants/433/edcon-community-ethereum-development-conference			false	false	false	false	false	false
+31-Gitcoin:Grants	0x1fa313ba8c968d00bc109404bd08e963eae3f1dd	Grant 0433 Edcon (community Ethereum Development Conference)		https://gitcoin.co/grants/433/edcon-community-ethereum-development-conference			false	false	false	false	false	false
 30-Contracts	0x1fd169a4f5c59acf79d0fd5d91d1201ef1bce9f1	Moloch DAO		EtherScan.io			false	false	false	true	false	false
 91-Early:Addresses	0x1ff3f56609d0771abb49566600febade0e708beb	Ethventures		EtherScan.io			false	false	false	true	false	false
 91-Early:Addresses	0x1ff7a3d015f826310b3315f785c1c0c41bb5af9e	DynamicToken_id318		Ether Camp			false	false	false	true	false	false
-31-Gitcoin Grants:Grant	0x2001909016b05f7eff9af6e25d806f364074628a	Grant 1719 the Ethereum Open Desktop Environment		https://gitcoin.co/grants/1719/the-ethereum-open-desktop-environment			false	false	false	false	false	false
+31-Gitcoin:Grants	0x2001909016b05f7eff9af6e25d806f364074628a	Grant 1719 the Ethereum Open Desktop Environment		https://gitcoin.co/grants/1719/the-ethereum-open-desktop-environment			false	false	false	false	false	false
 80-Malicious:DaoDrain	0x200450f06520bdd6c527622a273333384d870efb	DAO Drain 015		GethSource Ether Camp			false	false	false	true	false	false
 91-Early:Addresses	0x207d0c591119bc4f01a25b6849ad375f6ea6af43	Exchange_id288_cnt13_2mo		Ether Camp			false	false	false	true	false	false
 91-Early:Addresses	0x20cd367919f91f8154b4dff73c9d9668dc697e32	Contract_id124_cnt2_4mo		Ether Camp			false	false	false	true	false	false
@@ -198,7 +198,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 30-Contracts	0x240f9f86b1465bf1b8eb29bc88cbf65573dfdd97	Polymath: Security Token Registry Proxy		EtherScan.io			false	false	false	true	false	false
 50-Tokens:ERC20	0x24104317ccb743bde9dc05a3a89de553f4a98075	EthereumMax	eMax	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x24692791bc444c5cd0b81e3cbcaba4b04acd1f3b	UnikoinGold	UKG	On chain	18	UnikoinGold is an ethereum-based, decentralized crypto token designed for high-volume, high security, inexpensive gaming and esports related transactions on the Unikrn platform.	false	false	false	true	true	false
-31-Gitcoin Grants:Grant	0x2489404ede77ec853c3345424bb919c9031856e2	Grant 0079 Lodestar -ethereum 2.0 Client		https://gitcoin.co/grants/79/lodestar-ethereum-20-client			false	false	false	false	false	false
+31-Gitcoin:Grants	0x2489404ede77ec853c3345424bb919c9031856e2	Grant 0079 Lodestar -ethereum 2.0 Client		https://gitcoin.co/grants/79/lodestar-ethereum-20-client			false	false	false	false	false	false
 91-Early:Addresses	0x24ec083b6a022099003e3d035fed48b9a58296e5	Tomeka		EtherScan.io			false	false	false	true	false	false
 91-Early:Addresses	0x253137971b86074021334fb5b7e03ebf2545ead3	Wallet		EtherScan.io			false	false	false	true	false	false
 80-Malicious:DaoDrain	0x253488078a4edf4d6f42f113d1e62836a942cf1a	DAO Drain 097		GethSource Ether Camp			false	false	false	true	false	false

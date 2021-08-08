@@ -271,7 +271,7 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x00216505799d9e3117b40b94a24dc0fa286a57a4",
       "name": "Grant 1168 Flowerpatch Emojis & Artwork Fund",
       "symbol": "",
@@ -397,7 +397,7 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x006087d6ac20840c23ba298512db454a05c19b10",
       "name": "Grant 0743 #fittogetherdao (like Pooltogether for Fitness and Wellbeing)",
       "symbol": "",
@@ -424,7 +424,7 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x007b003c4d0145b512286494d5ae123aeef29d9e",
       "name": "Grant 0845 Remote Developer Bootcamp",
       "symbol": "",
@@ -460,7 +460,7 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x0087a081a9b430fd8f688c6ac5dd24421bfb060d",
       "name": "Grant 0779 DeFi Latam",
       "symbol": "",
@@ -541,7 +541,7 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x00b491d250b9bcce482b6e70321b0a5339d183a6",
       "name": "Grant 0976 Magical Machine Money",
       "symbol": "",
@@ -586,7 +586,7 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x00cf36853aa4024fb5bf5cc377dfd85844b411a0",
       "name": "Grant 0143 Dappnode - Panvala League",
       "symbol": "",
@@ -622,16 +622,16 @@
       "description": "@Aezakmi_Steemit"
     },
     {
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Admin",
       "address": "0x00de4b13153673bcae2616b67bf822500d325fc3",
-      "name": "Grant 0472 Example Public Health Project",
+      "name": "Gitcoin Maintainer",
       "symbol": "",
-      "source": "https://gitcoin.co/grants/472/example-public-health-project",
+      "source": "",
       "decimals": 0,
-      "description": "https://gitcoin.co/grants/110/gitcoin-grant-20190522,https://gitcoin.co/grants/86/gitcoin-grants-round-8-dev-fund,https://gitcoin.co/grants/12/gitcoin-open-source-support-fund"
+      "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x00e4f5f746242e4d115bd65aac7c08fe5d38fb21",
       "name": "Grant 1839 the Etherchest Ecosystem",
       "symbol": "",
@@ -667,7 +667,7 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x00fe460a15b49d09f39b057d0f1a7b9444f4f2be",
       "name": "Grant 0624 Nescience Software Portfolio Rebalancing Direct Indexing",
       "symbol": "",
@@ -712,7 +712,7 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x0115f5ce3f986a35b1edb6f2c3815cebb2461e70",
       "name": "Grant 0790 Loft Radio",
       "symbol": "",
@@ -766,7 +766,7 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x014ffcf34d8515535b99d6aef654258c237168b6",
       "name": "Grant 1850 Fireth",
       "symbol": "",
@@ -784,7 +784,7 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x015bf68ef11bd55e43a119b5752c4b3becae7f24",
       "name": "Grant 0627 Veridex",
       "symbol": "",
@@ -829,7 +829,7 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x017946fc126d57e7823e68c647c24f28e5dc9988",
       "name": "Grant 0190 Groundhog",
       "symbol": "",
@@ -838,7 +838,7 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x018047343e8105fed2c5000912d03815d99f3e48",
       "name": "Grant 1920 Kevin",
       "symbol": "",
@@ -1000,7 +1000,7 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x01f1e9319982ab828203c0276727cf48065434d3",
       "name": "Grant 0602 Realitylearn: Teaching the World About Blockchain",
       "symbol": "",
@@ -1234,7 +1234,7 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x02cb3c150bedca124d0ae8cccb72fefbe705c953",
       "name": "Grant 0782 Ethereum Cat Herders Community Fund",
       "symbol": "",
@@ -1324,7 +1324,7 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x02eb002d88051c03ef312f63bbf3e38aada0b902",
       "name": "Grant 0031 Grantops",
       "symbol": "",
@@ -1333,7 +1333,7 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x02ee97a13e434717e3ffa12758a235d1a1680775",
       "name": "Grant 1551 Niftycrates",
       "symbol": "",
@@ -1486,7 +1486,7 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x0389836416d1d46724f0913eeee42622950b20c1",
       "name": "Grant 1488 Ercgraph",
       "symbol": "",
@@ -1504,7 +1504,7 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x039ae2898d257f4c9d7e381d478ee1ed042fe2f4",
       "name": "Grant 0284 My DAO Dashboard",
       "symbol": "",
@@ -1585,7 +1585,7 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x03c2bc72a3e007179e54ffb4563cc235bec8151a",
       "name": "Grant 0600 Synthereum: Synthetic Assets with Liquidity Pools to Bridge Traditional and Digital Finance",
       "symbol": "",
@@ -1639,7 +1639,7 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x03ed2992a1d07ab57ec01f0c8914e22b53e48d87",
       "name": "Grant 0774 Nuts Platform | Designed for DeFi Builders and Service Providers",
       "symbol": "",
@@ -1666,7 +1666,7 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x04335c092bc8c06f48f9def5e3285140138fbbfc",
       "name": "Grant 1496 Optimistic Casino",
       "symbol": "",
@@ -1738,7 +1738,7 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x04607ca1048f490578f233a8b1354778defdd178",
       "name": "Grant 0608 Signatory Client",
       "symbol": "",
@@ -1747,7 +1747,7 @@
       "description": "https://vbstreetz.github.io/signatory-client/"
     },
     {
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x0467f3b464ff75ac91f6ed8a4139fc6e38256efb",
       "name": "Grant 1781 Cursed Mining",
       "symbol": "",
@@ -1756,7 +1756,7 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x046b8b30767592487badb59e43418e3f58f46b26",
       "name": "Grant 1828 Australian Digital Security",
       "symbol": "",

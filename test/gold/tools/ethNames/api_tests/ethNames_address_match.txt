@@ -73,7 +73,7 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x1035fee7621a4a902d75094abd2e378e64b4b6ce",
       "name": "Grant 1768 No-code Workflow Automation for Cryptocurrency Investors.",
       "symbol": "",
@@ -136,7 +136,7 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x1074f62d7019c3184a2f7ea8c6a8acd6780beb48",
       "name": "Grant 0083 Poa Network Community Management Grant for Adj",
       "symbol": "",
@@ -199,7 +199,7 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x10a35cbce6d0b2b01d6dd944c6889f98b036205d",
       "name": "Grant 1830 the Augmented Reality Game Cryptolandy.",
       "symbol": "",
@@ -244,7 +244,7 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x10d6d2e343281d388291a3e02f3293aaeda67178",
       "name": "Grant 1707 Llama - a Hub for Crypto Community Treasuries",
       "symbol": "",
@@ -262,7 +262,7 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x10d93cdc5a7c5cc3114cf4356efda3219a120656",
       "name": "Grant 1498 Crypto Music Fund | Changing the World Through Music",
       "symbol": "",
@@ -397,7 +397,7 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x1143e097e134f3407ef6b088672ccece9a4f8cdd",
       "name": "Grant 1058 Adamant Messenger",
       "symbol": "",
@@ -433,7 +433,7 @@
       "description": "Sell and buy crypto assets around the world for local payment methods."
     },
     {
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x11860d47411cc5f132b5791201e01d25a3b4d1c7",
       "name": "Grant 0675 Legrandjeu Vr - Bring Token Economics Gaming to the Whole World!🤷🏻",
       "symbol": "",
@@ -478,7 +478,7 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x11b17aff7682caa0b4e25b1c7bd1fdd0c569cd70",
       "name": "Grant 1201 Heroes of Dystopia - Mmorpg",
       "symbol": "",
@@ -514,7 +514,7 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x11e4857bb9993a50c685a79afad4e6f65d518dda",
       "name": "Grant 0048 Uniswap",
       "symbol": "",
@@ -523,7 +523,7 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x11e52c75998fe2e7928b191bfc5b25937ca16741",
       "name": "Grant 0686 Transaction Pending - a Crypto Podcast",
       "symbol": "",
@@ -577,7 +577,7 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x1208a26faa0f4ac65b42098419eb4daa5e580ac6",
       "name": "Grant 0704 Tumafare - Social Payments Platform",
       "symbol": "",
@@ -631,7 +631,7 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x1222d0ded67a533b3163397fd917bc8ac6f96b7a",
       "name": "Grant 0655 Alternative Income for Poor Families in Brazil!",
       "symbol": "",
@@ -748,7 +748,7 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x1251a94b6d800979d2d933b8bd5914b892772ac6",
       "name": "Grant 1127 Commons Stack Community Fund - Panvala League",
       "symbol": "",
@@ -784,7 +784,7 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x1266f928b7964173434d3feb6da2554b141920b8",
       "name": "Grant 0723 EtherDNA",
       "symbol": "",
@@ -829,7 +829,7 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x127c6839dee7c737767c9f62d13996e27854505d",
       "name": "Grant 0419 Project Maple. | Cryptographic Currency Redefined.",
       "symbol": "",
@@ -892,7 +892,7 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x12a0e25e62c1dbd32e505446062b26aecb65f028",
       "name": "Grant 0473 Bbft Podcast Show",
       "symbol": "",
@@ -1054,7 +1054,7 @@
       "description": "MoneyToken provides crypto-backed loans, stablecoin MTC and decentralized exchange service"
     },
     {
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x131aaecbff040379070024ea0ae9ab72a059e6c4",
       "name": "Grant 0959 0confirmation",
       "symbol": "",
@@ -1063,7 +1063,7 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x132cd02e566c36976efb327a4301a605747f4b78",
       "name": "Grant 0711 Furucombo - Build Your Own DeFi Legos Into One Transaction Without Knowing How to Code.",
       "symbol": "",
@@ -1090,7 +1090,7 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x133d705a9696882228f6bb7fe008745aef7cdc93",
       "name": "Grant 0160 @antiprosynth | Antiprosynthesis.eth ⟠ Twitter Account Activity",
       "symbol": "",
@@ -1108,7 +1108,7 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x1352400bf96d73d41e033f5a14416357a5e0b6bf",
       "name": "Grant 0120 Nori",
       "symbol": "",
@@ -1117,7 +1117,7 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x13541d356bcc7156e234ff15091ba9b8f1d9b2dd",
       "name": "Grant 1261 Guer - Empowering Data Custody for Web3 Through Security and Access",
       "symbol": "",
@@ -1126,7 +1126,7 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x13586f8425544865372ebb5db71bd52bc8ce06f2",
       "name": "Grant 1598 Eth123.org",
       "symbol": "",
@@ -1198,7 +1198,7 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x137daf4bef37b38a0aea1182b8bd40979ae9993e",
       "name": "Grant 1975 Gin Admin Theme",
       "symbol": "",
@@ -1207,7 +1207,7 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x137f0cd1cac26b2abde48676e3ffac96f1bb4cb7",
       "name": "Grant 1526 Zcash Narrative Enhancement",
       "symbol": "",
@@ -1216,7 +1216,7 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x1388961fbc1df252749b91a2a73c4b0d7377841f",
       "name": "Grant 0530 0xearth",
       "symbol": "",
@@ -1252,7 +1252,7 @@
       "description": "Professional Karate Sports Organization"
     },
     {
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x139e7746745fbf42ca485845881697f9621b4b27",
       "name": "Grant 0575 Getlogin.eth",
       "symbol": "",
@@ -1378,7 +1378,7 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x140e7364ee4e29a677a9d6ccf26ac945e7e80b65",
       "name": "Grant 0212 Thx - Gamified Payments in Any App",
       "symbol": "",
@@ -1522,7 +1522,7 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x147c06f559f742cc9ef2ea5e628f381bccdce2ba",
       "name": "Grant 0364 React Native support for IPFS",
       "symbol": "",
@@ -1675,7 +1675,7 @@
       "description": ""
     },
     {
-      "tags": "31-Gitcoin Grants:Grant",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x1506c4717416e811aeb34ffd9b914ee97f429708",
       "name": "Grant 1691 B4h Awards 2020",
       "symbol": "",

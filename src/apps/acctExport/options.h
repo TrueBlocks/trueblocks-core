@@ -26,6 +26,7 @@ class COptions : public CAbiOptions {
     bool logs;
     bool traces;
     bool accounting;
+    bool statements;
     bool articulate;
     bool cache_txs;
     bool cache_traces;
@@ -110,7 +111,7 @@ class COptions : public CAbiOptions {
     void writePerformanceData(void);
 
     bool queryFlatFile(const string_q& path, bool sorted);
-    bool process_reconciliation(CTraverser* trav, blknum_t next);
+    bool process_reconciliation(CTraverser* trav);
     bool token_list_from_logs(CAccountNameMap& tokenList, const CTraverser* trav);
 };
 
