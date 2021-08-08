@@ -251,10 +251,11 @@ string_q CCurlContext::perform(const string_q& method, const string_q& params, b
     }
 
     PRINT("CURL returned CURLE_OK")
+    string_q check = substitute(substitute(result, "VM execution error", ""), "\"error\":", "");
     if (result.empty()) {
         curlErrorAndExit(STR_ERROR_CURLEMPTY, "", method, params);
 
-    } else if (contains(result, "error")) {
+    } else if (contains(check, "error")) {  // don't consider an error in the VM
         if (reportErrors) {
             string_q waste = result;
             curlErrors.push_back(extractRPCError(waste));

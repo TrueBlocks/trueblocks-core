@@ -1,5 +1,5 @@
-acctExport argc: 9 [1:0x001d14804b399c6ef80e64576f657660804fec0b] [2:--max_records] [3:5] [4:--accounting] [5:--fmt] [6:api] [7:--verbose] [8:5] 
-acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --max_records 5 --accounting --fmt api --verbose 5 
+acctExport argc: 9 [1:0x001d14804b399c6ef80e64576f657660804fec0b] [2:--max_records] [3:5] [4:--accounting] [5:--fmt] [6:api] [7:--verbose] [8:10] 
+acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --max_records 5 --accounting --fmt api --verbose 10 
 TIME ~ CLOCK - : 4-----0x001d14804b399c6ef80e64576f657660804fec0b freshened to 11854827
 {"data": [
 TIME ~ CLOCK - : 4-----Trial balance: regular
@@ -9,47 +9,47 @@ TIME ~ CLOCK - : 4-----  prevBal:       4200000000000000000000
 TIME ~ CLOCK - : 4-----  begBal:        4200000000000000000000
 TIME ~ CLOCK - : 4-----  begBalDiff:    0
 TIME ~ CLOCK - : 4-----  ------------------------------
-TIME ~ CLOCK - : 4-----  amountIn:      0
-TIME ~ CLOCK - : 4-----  internalIn:    0
-TIME ~ CLOCK - : 4-----  slfDstrctIn:   0
-TIME ~ CLOCK - : 4-----  minBRwdIn:     0
-TIME ~ CLOCK - : 4-----  minNRwdIn:     0
-TIME ~ CLOCK - : 4-----  minTxFeeIn:    0
-TIME ~ CLOCK - : 4-----  minURwdIn:     0
-TIME ~ CLOCK - : 4-----  prefundIn:     4200000000000000000000
-TIME ~ CLOCK - : 4-----    totalIn:     4200000000000000000000
-TIME ~ CLOCK - : 4-----  amountOut:     0
-TIME ~ CLOCK - : 4-----  internalOut:   0
-TIME ~ CLOCK - : 4-----  slfDstrctOt:   0
-TIME ~ CLOCK - : 4-----  gasCostOut:    0
-TIME ~ CLOCK - : 4-----    totalOut:    0
+TIME ~ CLOCK - : 8------  amountIn:      0
+TIME ~ CLOCK - : 8------  internalIn:    0
+TIME ~ CLOCK - : 8------  slfDstrctIn:   0
+TIME ~ CLOCK - : 8------  minBRwdIn:     0
+TIME ~ CLOCK - : 8------  minNRwdIn:     0
+TIME ~ CLOCK - : 8------  minTxFeeIn:    0
+TIME ~ CLOCK - : 8------  minURwdIn:     0
+TIME ~ CLOCK - : 8------  prefundIn:     4200000000000000000000
+TIME ~ CLOCK - : 4-----  totalIn:       4200000000000000000000
+TIME ~ CLOCK - : 8------  amountOut:     0
+TIME ~ CLOCK - : 8------  internalOut:   0
+TIME ~ CLOCK - : 8------  slfDstrctOt:   0
+TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     4200000000000000000000
 TIME ~ CLOCK - : 4-----  endBal:        4200000000000000000000
 TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    8400000000000000000000
-TIME ~ CLOCK - : 4-----  endBalDiff:    -4200000000000000000000
+TIME ~ CLOCK - : 4-----  endBalDiff:    4200000000000000000000
 TIME ~ CLOCK - : 4-----  regular-recon: false
-TIME ~ CLOCK - : 4-----Trial balance: tracing
+TIME ~ CLOCK - : 4-----Trial balance: by-trace
 TIME ~ CLOCK - : 4-----  hash: 
 TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  prevBal:       4200000000000000000000
 TIME ~ CLOCK - : 4-----  begBal:        0
 TIME ~ CLOCK - : 4-----  begBalDiff:    0
 TIME ~ CLOCK - : 4-----  ------------------------------
-TIME ~ CLOCK - : 4-----  amountIn:      0
-TIME ~ CLOCK - : 4-----  internalIn:    0
-TIME ~ CLOCK - : 4-----  slfDstrctIn:   0
-TIME ~ CLOCK - : 4-----  minBRwdIn:     0
-TIME ~ CLOCK - : 4-----  minNRwdIn:     0
-TIME ~ CLOCK - : 4-----  minTxFeeIn:    0
-TIME ~ CLOCK - : 4-----  minURwdIn:     0
-TIME ~ CLOCK - : 4-----  prefundIn:     4200000000000000000000
-TIME ~ CLOCK - : 4-----    totalIn:     4200000000000000000000
-TIME ~ CLOCK - : 4-----  amountOut:     0
-TIME ~ CLOCK - : 4-----  internalOut:   0
-TIME ~ CLOCK - : 4-----  slfDstrctOt:   0
-TIME ~ CLOCK - : 4-----  gasCostOut:    0
-TIME ~ CLOCK - : 4-----    totalOut:    0
+TIME ~ CLOCK - : 8------  amountIn:      0
+TIME ~ CLOCK - : 8------  internalIn:    0
+TIME ~ CLOCK - : 8------  slfDstrctIn:   0
+TIME ~ CLOCK - : 8------  minBRwdIn:     0
+TIME ~ CLOCK - : 8------  minNRwdIn:     0
+TIME ~ CLOCK - : 8------  minTxFeeIn:    0
+TIME ~ CLOCK - : 8------  minURwdIn:     0
+TIME ~ CLOCK - : 8------  prefundIn:     4200000000000000000000
+TIME ~ CLOCK - : 4-----  totalIn:       4200000000000000000000
+TIME ~ CLOCK - : 8------  amountOut:     0
+TIME ~ CLOCK - : 8------  internalOut:   0
+TIME ~ CLOCK - : 8------  slfDstrctOt:   0
+TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 4-----  totalOut:      0
 TIME ~ CLOCK - : 4-----  amountNet:     4200000000000000000000
 TIME ~ CLOCK - : 4-----  endBal:        4200000000000000000000
 TIME ~ CLOCK - : 4-----  ------------------------------
@@ -117,20 +117,20 @@ TIME ~ CLOCK - : 4-----  prevBal:       4200000000000000000000
 TIME ~ CLOCK - : 4-----  begBal:        4200000000000000000000
 TIME ~ CLOCK - : 4-----  begBalDiff:    0
 TIME ~ CLOCK - : 4-----  ------------------------------
-TIME ~ CLOCK - : 4-----  amountIn:      0
-TIME ~ CLOCK - : 4-----  internalIn:    0
-TIME ~ CLOCK - : 4-----  slfDstrctIn:   0
-TIME ~ CLOCK - : 4-----  minBRwdIn:     0
-TIME ~ CLOCK - : 4-----  minNRwdIn:     0
-TIME ~ CLOCK - : 4-----  minTxFeeIn:    0
-TIME ~ CLOCK - : 4-----  minURwdIn:     0
-TIME ~ CLOCK - : 4-----  prefundIn:     0
-TIME ~ CLOCK - : 4-----    totalIn:     0
-TIME ~ CLOCK - : 4-----  amountOut:     4199900000000000000000
-TIME ~ CLOCK - : 4-----  internalOut:   0
-TIME ~ CLOCK - : 4-----  slfDstrctOt:   0
-TIME ~ CLOCK - : 4-----  gasCostOut:    25320679510922664
-TIME ~ CLOCK - : 4-----    totalOut:    4199925320679510922664
+TIME ~ CLOCK - : 8------  amountIn:      0
+TIME ~ CLOCK - : 8------  internalIn:    0
+TIME ~ CLOCK - : 8------  slfDstrctIn:   0
+TIME ~ CLOCK - : 8------  minBRwdIn:     0
+TIME ~ CLOCK - : 8------  minNRwdIn:     0
+TIME ~ CLOCK - : 8------  minTxFeeIn:    0
+TIME ~ CLOCK - : 8------  minURwdIn:     0
+TIME ~ CLOCK - : 8------  prefundIn:     0
+TIME ~ CLOCK - : 4-----  totalIn:       0
+TIME ~ CLOCK - : 8------  amountOut:     4199900000000000000000
+TIME ~ CLOCK - : 8------  internalOut:   0
+TIME ~ CLOCK - : 8------  slfDstrctOt:   0
+TIME ~ CLOCK - : 8------  gasCostOut:    25320679510922664
+TIME ~ CLOCK - : 4-----  totalOut:      4199925320679510922664
 TIME ~ CLOCK - : 4-----  amountNet:     -4199925320679510922664
 TIME ~ CLOCK - : 4-----  endBal:        74679320489077336
 TIME ~ CLOCK - : 4-----  ------------------------------
@@ -205,20 +205,20 @@ TIME ~ CLOCK - : 4-----  prevBal:       74679320489077336
 TIME ~ CLOCK - : 4-----  begBal:        74679320489077336
 TIME ~ CLOCK - : 4-----  begBalDiff:    0
 TIME ~ CLOCK - : 4-----  ------------------------------
-TIME ~ CLOCK - : 4-----  amountIn:      0
-TIME ~ CLOCK - : 4-----  internalIn:    0
-TIME ~ CLOCK - : 4-----  slfDstrctIn:   0
-TIME ~ CLOCK - : 4-----  minBRwdIn:     0
-TIME ~ CLOCK - : 4-----  minNRwdIn:     0
-TIME ~ CLOCK - : 4-----  minTxFeeIn:    0
-TIME ~ CLOCK - : 4-----  minURwdIn:     0
-TIME ~ CLOCK - : 4-----  prefundIn:     0
-TIME ~ CLOCK - : 4-----    totalIn:     0
-TIME ~ CLOCK - : 4-----  amountOut:     74259320489077336
-TIME ~ CLOCK - : 4-----  internalOut:   0
-TIME ~ CLOCK - : 4-----  slfDstrctOt:   0
-TIME ~ CLOCK - : 4-----  gasCostOut:    420000000000000
-TIME ~ CLOCK - : 4-----    totalOut:    74679320489077336
+TIME ~ CLOCK - : 8------  amountIn:      0
+TIME ~ CLOCK - : 8------  internalIn:    0
+TIME ~ CLOCK - : 8------  slfDstrctIn:   0
+TIME ~ CLOCK - : 8------  minBRwdIn:     0
+TIME ~ CLOCK - : 8------  minNRwdIn:     0
+TIME ~ CLOCK - : 8------  minTxFeeIn:    0
+TIME ~ CLOCK - : 8------  minURwdIn:     0
+TIME ~ CLOCK - : 8------  prefundIn:     0
+TIME ~ CLOCK - : 4-----  totalIn:       0
+TIME ~ CLOCK - : 8------  amountOut:     74259320489077336
+TIME ~ CLOCK - : 8------  internalOut:   0
+TIME ~ CLOCK - : 8------  slfDstrctOt:   0
+TIME ~ CLOCK - : 8------  gasCostOut:    420000000000000
+TIME ~ CLOCK - : 4-----  totalOut:      74679320489077336
 TIME ~ CLOCK - : 4-----  amountNet:     -74679320489077336
 TIME ~ CLOCK - : 4-----  endBal:        0
 TIME ~ CLOCK - : 4-----  ------------------------------

@@ -337,8 +337,8 @@ bool CReconciliation::Serialize(CArchive& archive) {
     archive >> assetAddr;
     archive >> assetSymbol;
     archive >> decimals;
-    // archive >> prevBlk;
-    // archive >> prevBlkBal;
+    archive >> prevBlk;
+    archive >> prevBlkBal;
     archive >> begBal;
     archive >> endBal;
     archive >> amountIn;
@@ -374,8 +374,8 @@ bool CReconciliation::SerializeC(CArchive& archive) const {
     archive << assetAddr;
     archive << assetSymbol;
     archive << decimals;
-    // archive << prevBlk;
-    // archive << prevBlkBal;
+    archive << prevBlk;
+    archive << prevBlkBal;
     archive << begBal;
     archive << endBal;
     archive << amountIn;
@@ -436,9 +436,7 @@ void CReconciliation::registerClass(void) {
     ADD_FIELD(CReconciliation, "assetSymbol", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CReconciliation, "decimals", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CReconciliation, "prevBlk", T_BLOCKNUM, ++fieldNum);
-    HIDE_FIELD(CReconciliation, "prevBlk");
     ADD_FIELD(CReconciliation, "prevBlkBal", T_INT256, ++fieldNum);
-    HIDE_FIELD(CReconciliation, "prevBlkBal");
     ADD_FIELD(CReconciliation, "begBal", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliation, "endBal", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliation, "amountIn", T_INT256, ++fieldNum);
@@ -466,8 +464,6 @@ void CReconciliation::registerClass(void) {
 
     // EXISTING_CODE
     SET_TYPE(CReconciliation, "spotPrice", T_INT256 | TS_OMITEMPTY);
-    SHOW_FIELD(CReconciliation, "prevBlk");
-    SHOW_FIELD(CReconciliation, "prevBlkBal");
     ADD_FIELD(CReconciliation, "begBalDiff", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliation, "endBalCalc", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliation, "endBalDiff", T_INT256, ++fieldNum);
@@ -912,28 +908,28 @@ void CReconciliation::initForToken(CAccountName& tokenName) {
     decimals = tokenName.decimals != 0 ? tokenName.decimals : 18;
 }
 
-#define LOG_TRIAL_BALANCE(msg)                                                                                         \
-    LOG4("Trial balance: ", msg);                                                                                      \
+#define LOG_TRIAL_BALANCE()                                                                                            \
+    LOG4("Trial balance: ", reconciliationType);                                                                       \
     LOG4("  hash: ", trans->hash);                                                                                     \
     LOG4("  ------------------------------");                                                                          \
     LOG4("  prevBal:       ", prevBlkBal);                                                                             \
     LOG4("  begBal:        ", begBal);                                                                                 \
     LOG4("  begBalDiff:    ", begBalDiff());                                                                           \
     LOG4("  ------------------------------");                                                                          \
-    LOG4("  amountIn:      ", amountIn);                                                                               \
-    LOG4("  internalIn:    ", internalIn);                                                                             \
-    LOG4("  slfDstrctIn:   ", selfDestructIn);                                                                         \
-    LOG4("  minBRwdIn:     ", minerBaseRewardIn);                                                                      \
-    LOG4("  minNRwdIn:     ", minerNephewRewardIn);                                                                    \
-    LOG4("  minTxFeeIn:    ", minerTxFeeIn);                                                                           \
-    LOG4("  minURwdIn:     ", minerUncleRewardIn);                                                                     \
-    LOG4("  prefundIn:     ", prefundIn);                                                                              \
-    LOG4("    totalIn:     ", totalIn());                                                                              \
-    LOG4("  amountOut:     ", amountOut);                                                                              \
-    LOG4("  internalOut:   ", internalOut);                                                                            \
-    LOG4("  slfDstrctOt:   ", selfDestructOut);                                                                        \
-    LOG4("  gasCostOut:    ", gasCostOut);                                                                             \
-    LOG4("    totalOut:    ", totalOut());                                                                             \
+    LOG8("  amountIn:      ", amountIn);                                                                               \
+    LOG8("  internalIn:    ", internalIn);                                                                             \
+    LOG8("  slfDstrctIn:   ", selfDestructIn);                                                                         \
+    LOG8("  minBRwdIn:     ", minerBaseRewardIn);                                                                      \
+    LOG8("  minNRwdIn:     ", minerNephewRewardIn);                                                                    \
+    LOG8("  minTxFeeIn:    ", minerTxFeeIn);                                                                           \
+    LOG8("  minURwdIn:     ", minerUncleRewardIn);                                                                     \
+    LOG8("  prefundIn:     ", prefundIn);                                                                              \
+    LOG4("  totalIn:       ", totalIn());                                                                              \
+    LOG8("  amountOut:     ", amountOut);                                                                              \
+    LOG8("  internalOut:   ", internalOut);                                                                            \
+    LOG8("  slfDstrctOt:   ", selfDestructOut);                                                                        \
+    LOG8("  gasCostOut:    ", gasCostOut);                                                                             \
+    LOG4("  totalOut:      ", totalOut());                                                                             \
     LOG4("  amountNet:     ", amountNet());                                                                            \
     LOG4("  endBal:        ", endBal);                                                                                 \
     LOG4("  ------------------------------");                                                                          \
@@ -944,11 +940,13 @@ void CReconciliation::initForToken(CAccountName& tokenName) {
 //-----------------------------------------------------------------------
 bool CReconciliation::reconcileEth(const CReconciliation& prevRecon, blknum_t nextBlock, const CTransaction* trans,
                                    const address_t& acctFor) {
+    if (trans->hash == "0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33")
+        printf("");
+
     prevBlkBal = prevRecon.endBal;
     prevBlk = prevRecon.blockNumber;
     assetSymbol = "ETH";
     assetAddr = acctFor;
-    reconciliationType = "";
 
     begBal = getBalanceAt(acctFor, blockNumber == 0 ? 0 : blockNumber - 1);
     endBal = getBalanceAt(acctFor, blockNumber);
@@ -972,21 +970,18 @@ bool CReconciliation::reconcileEth(const CReconciliation& prevRecon, blknum_t ne
         }
     }
 
-    LOG_TRIAL_BALANCE("regular");
-    if (reconciled()) {
-        reconciliationType = "regular";
+    reconciliationType = "regular";
+    LOG_TRIAL_BALANCE();
+    if (reconciled())
         return true;
-    }
 
-    if (reconcileUsingTraces(prevRecon.endBal, trans, acctFor)) {
-        reconciliationType = "by-trace";
+    if (reconcileUsingTraces(prevRecon.endBal, trans, acctFor))
         return true;
-    }
 
     bool prevDifferent = prevRecon.blockNumber != blockNumber;
     bool nextDifferent = blockNumber != nextBlock;
     if (prevDifferent && nextDifferent) {
-        reconciliationType = "regular";
+        reconciliationType = "nextdiff-prevdiff-regular";
 
     } else if (prevDifferent) {
         begBal = getBalanceAt(acctFor, blockNumber == 0 ? 0 : blockNumber - 1);
@@ -1001,7 +996,7 @@ bool CReconciliation::reconcileEth(const CReconciliation& prevRecon, blknum_t ne
         // endBalCalc = begBal + totalIn() - totalOut();
         endBal = getBalanceAt(acctFor, blockNumber);
         // endBalDiff = endBal - endBalCalc;
-        reconciliationType = trans->blockNumber == 0 ? "" : "nextdiff-partial";
+        reconciliationType = trans->blockNumber == 0 ? "" : "partial-nextdiff";
 
     } else {
         begBal = prevRecon.endBal;
@@ -1009,7 +1004,7 @@ bool CReconciliation::reconcileEth(const CReconciliation& prevRecon, blknum_t ne
         // endBalCalc = begBal + totalIn() - totalOut();
         endBal = endBalCalc();
         // endBalDiff = endBal - endBalCalc;  // always zero
-        reconciliationType = trans->blockNumber == 0 ? "" : "bothsame-partial";
+        reconciliationType = trans->blockNumber == 0 ? "" : "partial-partial";
     }
     // reconciled = (endBalDiff() == 0 && begBalDiff() == 0);
     // if (reconciled()) {
@@ -1017,7 +1012,7 @@ bool CReconciliation::reconcileEth(const CReconciliation& prevRecon, blknum_t ne
     // } else {
     //     reconTrail += (endBalDiff != 0 ? "|multiPart:endBalDiff" : "|multiPart:begBalDiff");
     // }
-    LOG_TRIAL_BALANCE("intra-block");
+    LOG_TRIAL_BALANCE();
     return reconciled();
 }
 
@@ -1060,7 +1055,8 @@ bool CReconciliation::reconcileUsingTraces(bigint_t prevEndBal, const CTransacti
         }
     }
 
-    LOG_TRIAL_BALANCE("tracing");
+    reconciliationType = "by-trace";
+    LOG_TRIAL_BALANCE();
     if (!reconciled())
         ((CTransaction*)trans)->traces.clear();  // NOLINT
     return reconciled();
@@ -1084,7 +1080,7 @@ bigint_t CReconciliation::totalOutLessGas(void) const {
 
 //---------------------------------------------------------------------------
 bigint_t CReconciliation::begBalDiff(void) const {
-    return 0;  // blockNumber == 0 ? 0 : begBal - prevBlkBal;
+    return blockNumber == 0 ? 0 : begBal - prevBlkBal;
 }
 
 //---------------------------------------------------------------------------
@@ -1094,7 +1090,7 @@ bigint_t CReconciliation::endBalCalc(void) const {
 
 //---------------------------------------------------------------------------
 bigint_t CReconciliation::endBalDiff(void) const {
-    return endBal - endBalCalc();
+    return endBalCalc() - endBal;
 }
 
 //---------------------------------------------------------------------------
