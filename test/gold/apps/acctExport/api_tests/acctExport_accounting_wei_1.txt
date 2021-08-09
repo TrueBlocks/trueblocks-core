@@ -32,7 +32,7 @@
           "assetSymbol": "WEI",
           "decimals": 18,
           "prevBlk": 0,
-          "prevBlkBal": "4200000000000000000000",
+          "prevBlkBal": "",
           "begBal": "",
           "endBal": "4200000000000000000000",
           "amountIn": "",

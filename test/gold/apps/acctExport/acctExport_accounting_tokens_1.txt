@@ -5526,7 +5526,7 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    5170246415179548557
 TIME ~ CLOCK - : 4-----  endBalDiff:    1761265500000000
 TIME ~ CLOCK - : 4-----  regular-recon: false
-TIME ~ CLOCK - : 4-----Trial balance: by-trace
+TIME ~ CLOCK - : 4-----Trial balance: prevdiff-partial
 TIME ~ CLOCK - : 4-----  hash: 0x717d21a307469b781a8231f177fcb2b2a683d537ddeea2da6eec69f4b12b1c42
 TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  prevBal:       5171985758179548557
@@ -5628,7 +5628,7 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "internalOut": "",
       "selfDestructOut": "",
       "gasCostOut": "0.001739343000000000",
-      "reconciliationType": "by-trace",
+      "reconciliationType": "prevdiff-partial",
       "spotPrice": "-1",
       "begBalDiff": "",
       "endBalCalc": "5.170246415179548557",
@@ -5732,7 +5732,7 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    5170224492679548557
 TIME ~ CLOCK - : 4-----  endBalDiff:    1739343000000000
 TIME ~ CLOCK - : 4-----  regular-recon: false
-TIME ~ CLOCK - : 4-----Trial balance: by-trace
+TIME ~ CLOCK - : 4-----Trial balance: partial-nextdiff
 TIME ~ CLOCK - : 4-----  hash: 0x1ff4ec58cb6aaa757257bc26b957501de46b0f3aa9708813a40626585cd52b41
 TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  prevBal:       5170246415179548557
@@ -5851,7 +5851,7 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "internalOut": "",
       "selfDestructOut": "",
       "gasCostOut": "0.001761265500000000",
-      "reconciliationType": "by-trace",
+      "reconciliationType": "partial-nextdiff",
       "spotPrice": "-1",
       "begBalDiff": "",
       "endBalCalc": "5.168485149679548557",
@@ -6251,7 +6251,7 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    5167252197679548557
 TIME ~ CLOCK - : 4-----  endBalDiff:    1920520000000000
 TIME ~ CLOCK - : 4-----  regular-recon: false
-TIME ~ CLOCK - : 4-----Trial balance: by-trace
+TIME ~ CLOCK - : 4-----Trial balance: prevdiff-partial
 TIME ~ CLOCK - : 4-----  hash: 0x54df753f5a53c2ee4ef08e6b03e5e44cf1ceab98459b9bacd6f3c7aeee5d54d8
 TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  prevBal:       5168485149679548557
@@ -6353,7 +6353,7 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "internalOut": "",
       "selfDestructOut": "",
       "gasCostOut": "0.001232952000000000",
-      "reconciliationType": "by-trace",
+      "reconciliationType": "prevdiff-partial",
       "spotPrice": "-1",
       "begBalDiff": "",
       "endBalCalc": "5.167252197679548557",
@@ -6457,7 +6457,7 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    5166564629679548557
 TIME ~ CLOCK - : 4-----  endBalDiff:    1232952000000000
 TIME ~ CLOCK - : 4-----  regular-recon: false
-TIME ~ CLOCK - : 4-----Trial balance: by-trace
+TIME ~ CLOCK - : 4-----Trial balance: partial-nextdiff
 TIME ~ CLOCK - : 4-----  hash: 0x845ee9238e7b0c4507cb5998ea859666498c8bea1ccd5fc6633631ce962f3959
 TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  prevBal:       5167252197679548557
@@ -6616,7 +6616,7 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "internalOut": "",
       "selfDestructOut": "",
       "gasCostOut": "0.001920520000000000",
-      "reconciliationType": "by-trace",
+      "reconciliationType": "partial-nextdiff",
       "spotPrice": "-1",
       "begBalDiff": "",
       "endBalCalc": "5.165331677679548557",
@@ -7126,7 +7126,7 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    5354010217339548557
 TIME ~ CLOCK - : 4-----  endBalDiff:    2058385900000000
 TIME ~ CLOCK - : 4-----  regular-recon: false
-TIME ~ CLOCK - : 4-----Trial balance: by-trace
+TIME ~ CLOCK - : 4-----Trial balance: prevdiff-partial
 TIME ~ CLOCK - : 4-----  hash: 0x510acf20070895b13a5e7fe050e4756a22c0f274ae7d6416a175a863c7cdcb23
 TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  prevBal:       5355331677679548557
@@ -7228,7 +7228,7 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "internalOut": "",
       "selfDestructOut": "",
       "gasCostOut": "0.001321460340000000",
-      "reconciliationType": "by-trace",
+      "reconciliationType": "prevdiff-partial",
       "spotPrice": "-1",
       "begBalDiff": "",
       "endBalCalc": "5.354010217339548557",
@@ -7332,7 +7332,7 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    5353273291779548557
 TIME ~ CLOCK - : 4-----  endBalDiff:    1321460340000000
 TIME ~ CLOCK - : 4-----  regular-recon: false
-TIME ~ CLOCK - : 4-----Trial balance: by-trace
+TIME ~ CLOCK - : 4-----Trial balance: partial-nextdiff
 TIME ~ CLOCK - : 4-----  hash: 0x13cb17bca242f05bbff17e240a3e554c97888f850059ce3f40b845fe736043e6
 TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  prevBal:       5354010217339548557
@@ -7491,7 +7491,7 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "internalOut": "",
       "selfDestructOut": "",
       "gasCostOut": "0.002058385900000000",
-      "reconciliationType": "by-trace",
+      "reconciliationType": "partial-nextdiff",
       "spotPrice": "-1",
       "begBalDiff": "",
       "endBalCalc": "5.351951831439548557",
