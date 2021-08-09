@@ -940,9 +940,6 @@ void CReconciliation::initForToken(CAccountName& tokenName) {
 //-----------------------------------------------------------------------
 bool CReconciliation::reconcileEth(const CReconciliation& prevRecon, blknum_t nextBlock, const CTransaction* trans,
                                    const address_t& acctFor) {
-    if (trans->hash == "0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33")
-        printf("");
-
     prevBlkBal = prevRecon.endBal;
     prevBlk = prevRecon.blockNumber;
     assetSymbol = "ETH";
@@ -970,7 +967,21 @@ bool CReconciliation::reconcileEth(const CReconciliation& prevRecon, blknum_t ne
         }
     }
 
-    reconciliationType = "regular";
+    bool prevDifferent = prevRecon.blockNumber != blockNumber;
+    bool nextDifferent = blockNumber != nextBlock;
+    if (prevDifferent && nextDifferent) {
+        reconciliationType = "regular";
+
+    } else if (prevDifferent) {
+        reconciliationType = trans->blockNumber == 0 ? "genesis" : "prevdiff-partial";
+
+    } else if (nextDifferent) {
+        reconciliationType = trans->blockNumber == 0 ? "genesis" : "partial-nextdiff";
+
+    } else {
+        reconciliationType = trans->blockNumber == 0 ? "genesis" : "partial-partial";
+    }
+
     LOG_TRIAL_BALANCE();
     if (reconciled())
         return true;
@@ -978,40 +989,22 @@ bool CReconciliation::reconcileEth(const CReconciliation& prevRecon, blknum_t ne
     if (reconcileUsingTraces(prevRecon.endBal, trans, acctFor))
         return true;
 
-    bool prevDifferent = prevRecon.blockNumber != blockNumber;
-    bool nextDifferent = blockNumber != nextBlock;
     if (prevDifferent && nextDifferent) {
-        reconciliationType = "nextdiff-prevdiff-regular";
+        // do nothing
 
     } else if (prevDifferent) {
         begBal = getBalanceAt(acctFor, blockNumber == 0 ? 0 : blockNumber - 1);
-        // begBalDiff = trans->blockNumber == 0 ? 0 : begBal - prevRecon.endBal;
-        // endBalCalc = begBal + totalIn() - totalOut();
         endBal = endBalCalc();
-        // endBalDiff = endBal - endBalCalc;  // always zero
-        reconciliationType = trans->blockNumber == 0 ? "" : "prevdiff-partial";
 
     } else if (nextDifferent) {
         begBal = prevRecon.endBal;
-        // endBalCalc = begBal + totalIn() - totalOut();
         endBal = getBalanceAt(acctFor, blockNumber);
-        // endBalDiff = endBal - endBalCalc;
-        reconciliationType = trans->blockNumber == 0 ? "" : "partial-nextdiff";
 
     } else {
         begBal = prevRecon.endBal;
-        // begBalDiff = begBal - prevRecon.endBal;  // always zero
-        // endBalCalc = begBal + totalIn() - totalOut();
         endBal = endBalCalc();
-        // endBalDiff = endBal - endBalCalc;  // always zero
-        reconciliationType = trans->blockNumber == 0 ? "" : "partial-partial";
     }
-    // reconciled = (endBalDiff() == 0 && begBalDiff() == 0);
-    // if (reconciled()) {
-    //     amountNet = endBal - begBal;
-    // } else {
-    //     reconTrail += (endBalDiff != 0 ? "|multiPart:endBalDiff" : "|multiPart:begBalDiff");
-    // }
+
     LOG_TRIAL_BALANCE();
     return reconciled();
 }

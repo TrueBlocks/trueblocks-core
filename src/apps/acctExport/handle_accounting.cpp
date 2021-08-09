@@ -84,16 +84,20 @@ bool COptions::process_reconciliation(CTraverser* trav) {
         if (archive.Lock(path, modeReadOnly, LOCK_NOWAIT)) {
             archive >> trav->trans.statements;
             archive.Release();
-            for (auto& statement : trav->trans.statements) {
-                CAccountName tokenName;
-                if (findToken(tokenName, statement.assetAddr)) {
-                    // We always freshen these in case user has changed names database
-                    statement.assetSymbol = tokenName.symbol;
-                    statement.decimals = tokenName.decimals;
+            if (isReconciled(trav)) {
+                for (auto& statement : trav->trans.statements) {
+                    CAccountName tokenName;
+                    if (findToken(tokenName, statement.assetAddr)) {
+                        // We always freshen these in case user has changed names database
+                        statement.assetSymbol = tokenName.symbol;
+                        statement.decimals = tokenName.decimals;
+                    }
+                    prevStatements[accountedFor + "_" + toLower(statement.assetAddr)] = statement;
                 }
-                prevStatements[accountedFor + "_" + toLower(statement.assetAddr)] = statement;
+                return !shouldQuit();
+            } else {
+                trav->trans.statements.clear();
             }
-            return !shouldQuit();
         }
     }
 
@@ -165,31 +169,37 @@ bool COptions::process_reconciliation(CTraverser* trav) {
         }
     }
 
-    bool allReconciled = !reversed;
-    for (auto recon : trav->trans.statements) {
-        if (!allReconciled)
-            break;
-        allReconciled = recon.reconciled();
-    }
-
-    if (allReconciled) {
-        lockSection();
-        CArchive archive(WRITING_ARCHIVE);
-        if (!isTestMode() && archive.Lock(path, modeWriteCreate, LOCK_WAIT)) {
-            LOG4("Writing to cache for ", path);
-            archive << trav->trans.statements;
-            archive.Release();
-            unlockSection();
-            return !shouldQuit();
-        }
-        unlockSection();
-        // } else {
-        //     if (isApiMode()) colorsOn();
-        //     LOG_WARN(bRed, "Transaction ", trav->trans.hash, " did not reconciled.", cOff);
-        //     if (isApiMode()) colorsOff();
-    }
-
+    cacheIfReconciled(trav, true /* isNew */);
     return !shouldQuit();
+}
+
+//-----------------------------------------------------------------------
+bool COptions::isReconciled(CTraverser* trav) const {
+    for (auto recon : trav->trans.statements) {
+        if (!recon.reconciled())
+            return false;
+    }
+    return true;
+}
+
+//-----------------------------------------------------------------------
+void COptions::cacheIfReconciled(CTraverser* trav, bool isNew) const {
+    if (isTestMode())
+        return;
+    if (!isReconciled(trav)) {
+        LOG_WARN("Transaction ", trav->trans.hash, " did not reconciled.");
+        return;
+    }
+
+    lockSection();
+    CArchive archive(WRITING_ARCHIVE);
+    string_q path = getBinaryCachePath(CT_RECONS, accountedFor, trav->trans.blockNumber, trav->trans.transactionIndex);
+    if (archive.Lock(path, modeWriteCreate, LOCK_WAIT)) {
+        LOG4("Writing to cache for ", path);
+        archive << trav->trans.statements;
+        archive.Release();
+    }
+    unlockSection();
 }
 
 //-----------------------------------------------------------------------

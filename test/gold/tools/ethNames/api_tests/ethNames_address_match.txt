@@ -496,6 +496,15 @@
       "description": ""
     },
     {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x11cbb069aa7f8fbf00c62206d1239e11dc62624e",
+      "name": "Contract and Artificial Intelligence coin",
+      "symbol": "CTTA",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
       "tags": "90-Individuals:Gitcoin Grants",
       "address": "0x11d0395f8e04a02b113d5598e27c14731dbab48e",
       "name": "Name 0x11d0395f",
@@ -1798,15 +1807,6 @@
       "symbol": "MNT",
       "source": "On chain",
       "decimals": 18,
-      "description": ""
-    },
-    {
-      "tags": "80-Malicious:Shanghai",
-      "address": "0x157ddd802ab7831a2e1966baf2cc804bc7f95bd8",
-      "name": "Possibly Malicious 0x157",
-      "symbol": "",
-      "source": "TrueBlocks.io",
-      "decimals": 0,
       "description": ""
     }
   ],

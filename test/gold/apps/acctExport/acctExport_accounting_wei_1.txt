@@ -2,7 +2,7 @@ acctExport argc: 9 [1:0x001d14804b399c6ef80e64576f657660804fec0b] [2:--max_recor
 acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --max_records 5 --accounting --fmt api --verbose 10 
 TIME ~ CLOCK - : 4-----0x001d14804b399c6ef80e64576f657660804fec0b freshened to 11854827
 {"data": [
-TIME ~ CLOCK - : 4-----Trial balance: regular
+TIME ~ CLOCK - : 4-----Trial balance: genesis
 TIME ~ CLOCK - : 4-----  hash: 
 TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  prevBal:       4200000000000000000000

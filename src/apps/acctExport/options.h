@@ -112,6 +112,8 @@ class COptions : public CAbiOptions {
 
     bool queryFlatFile(const string_q& path, bool sorted);
     bool process_reconciliation(CTraverser* trav);
+    bool isReconciled(CTraverser* trav) const;
+    void cacheIfReconciled(CTraverser* trav, bool isNew) const;
     bool token_list_from_logs(CAccountNameMap& tokenList, const CTraverser* trav);
 };
 
