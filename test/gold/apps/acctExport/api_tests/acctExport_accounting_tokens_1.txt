@@ -118,7 +118,7 @@
           "assetAddr": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
           "assetSymbol": "ETH",
           "decimals": 18,
-          "prevBlk": 10277779,
+          "prevBlk": 10277295,
           "prevBlkBal": "5.137097246179548557",
           "begBal": "5.137097246179548557",
           "endBal": "5.137097246179548557",

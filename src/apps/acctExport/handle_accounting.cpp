@@ -104,31 +104,22 @@ bool COptions::process_reconciliation(CTraverser* trav) {
     trav->readStatus = "Reconciling";
     slowQuery = true;
 
+    blknum_t nextAppBlk = trav->index < monApps.size() - 1 ? monApps[trav->index + 1].blk : NOPOS;
+    blknum_t prevAppBlk = trav->index > 0 ? monApps[trav->index - 1].blk : 0;
+    blknum_t prevAppTxid = trav->index > 0 ? monApps[trav->index - 1].txid : 0;
+
     // We need to check to see if the export is starting after the
     // the first record so we can pick up the previous balance
     // We must do this for both ETH and any tokens
     if (prevStatements[accountedFor + "_eth"].assetAddr.empty()) {
-        CReconciliation pEth(trav->trans.blockNumber == 0 ? 0 : trav->trans.blockNumber - 1, 0, trav->trans.timestamp);
-        if (reversed) {
-            if (first_record != 0) {
-                pEth.blockNumber = monApps[monApps.size() - 1].blk - 1;
-            } else if (exportRange.first != 0) {
-                pEth.blockNumber = exportRange.second - 1;
-            }
-        } else {
-            if (first_record != 0) {
-                pEth.blockNumber = monApps[0].blk - 1;
-            } else if (exportRange.first != 0) {
-                pEth.blockNumber = exportRange.first - 1;
-            }
-        }
-        pEth.endBal = getBalanceAt(accountedFor, pEth.blockNumber == 0 ? 0 : pEth.blockNumber - 1);
+        CReconciliation pEth(prevAppBlk, prevAppTxid, trav->trans.timestamp);
+        // TODO(tjayrush): This used to do something different for reversed mode
+        pEth.endBal = getBalanceAt(accountedFor, prevAppBlk);
         prevStatements[accountedFor + "_eth"] = pEth;
     }
 
-    blknum_t next = trav->index < monApps.size() - 1 ? monApps[trav->index + 1].blk : NOPOS;
     CReconciliation eth(trav->trans.blockNumber, trav->trans.transactionIndex, trav->trans.timestamp);
-    eth.reconcileEth(prevStatements[accountedFor + "_eth"], next, &trav->trans, accountedFor);
+    eth.reconcileEth(prevStatements[accountedFor + "_eth"], nextAppBlk, &trav->trans, accountedFor);
     trav->trans.statements.push_back(eth);
     prevStatements[accountedFor + "_eth"] = eth;
 
