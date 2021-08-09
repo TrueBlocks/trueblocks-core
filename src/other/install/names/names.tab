@@ -137,6 +137,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x01ff50f8b7f74e4f00580d9596cd3d0d6d6e326f	BF Token	BFT	On chain	18		false	false	false	true	true	false
 91-Early:Miners	0x02020d22dcf88f5edd66b382d7da019f161fb7e3	Miner_0022_294		OnChain			false	false	false	false	false	false
 50-Tokens:ERC20	0x0208fb0af6652bdbc3ea010d5026ed92ff252a53	Ethereum Hot	EHOT	On chain	18		false	false	false	true	true	false
+30-Contracts	0x020ca66c30bec2c4fe3861a94e4db4a498a35872	BAYT Seller to BTeg					false	false	false	false	false	false
 50-Tokens:ERC20	0x0223fc70574214f65813fe336d870ac47e147fae	CZR	CZR	On chain	18	CanonChain will be triggered from the protocol layer and the chip layer of the communication to provide a robust foundation for the entire blockchain industry.	false	false	false	true	true	false
 91-Early:Addresses	0x02268047f5c77a6a533619773474d1a6e510443f	Creator		EtherScan.io			false	false	false	true	false	false
 50-Tokens:ERC20	0x022cc93b66a7d28ad6887d1d5a60642d5b02837b	Narutocoin	NARUTO	On chain	18		false	false	false	true	true	false
@@ -1651,6 +1652,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x27702a26126e0b3702af63ee09ac4d1a084ef628	aleph.im v2	ALEPH	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x2775f6a7bfd79ae40df054fee3e7d4036a28458d	Super Nova	SNA	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x277697fa7c134a7fcc2aaaf812bdf1fd8b68b818	meToken	JAKE	On chain	18		false	false	false	true	true	false
+50-Tokens:ERC20	0x27824111dd062ca9062067b493fbf512328928ba	UNI Token	UXT	On chain	8		false	false	false	true	true	false
 50-Tokens:ERC20	0x27853c4990fad2283264c4973c1c37f8baa1df80	Mephisto	MEP	On chain	18		false	false	false	true	true	false
 91-Early:Addresses	0x2785dc55279632de2691e21d0a92d6019d88b953	VIU Airdrop Sender		EtherScan.io			false	false	false	false	false	false
 90-Individuals:Kickback	0x27903282ff2d6c3033fa57d4f39d641ade882825	jules00		https://kickback.events/			false	false	false	false	false	false
@@ -3147,6 +3149,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin:Grants	0x4cf8487f3c20ef126b346ad97fba3d13847d1e88	Grant 1605 Bitavax		https://gitcoin.co/grants/1605/bitavax			false	false	false	false	false	false
 50-Tokens:ERC20	0x4cf89ca06ad997bc732dc876ed2a7f26a9e7f361	Mysterium	MYST	On chain	18		false	false	false	true	true	false
 90-Individuals:Gitcoin Grants	0x4d01c8256a9ecbdf9ce765914af3fbeef6d626b0	blakehendo		Gitcoin Website			false	false	false	false	false	false
+50-Tokens:ERC20	0x4d0518c9136025903751209ddddf6c67067357b1	Vested IBFF	veIBFF	On chain	18		false	false	false	true	true	false
 31-Gitcoin:Grants	0x4d07af703c163540c59763ff404710204334af81	Grant 0590 Gwei.cz - Cz/sk DeFi/ethereum Community		https://gitcoin.co/grants/590/gweicz-czsk-defiethereum-community		https://gwei.cz	false	false	false	true	false	false
 50-Tokens:ERC20	0x4d10dc9dfef1512e446cc950daa714bc0a430af2	Ethereum 2.0	ETHV2	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x4d113e6a8bb1ff70d098ac50787ee8db8db3194c	TESLON	TESLON	On chain	9		false	false	false	true	true	false
@@ -6527,6 +6530,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 30-Contracts:Giveth	0xa27243046e16ee596d19ff3091719160527e469a	Giveth Bridge Spender 1					false	false	false	false	false	false
 31-Gitcoin:Grants	0xa28910bcbe9a1b9119940343c02cae65c1b22cc5	Grant 1119 Eth-ter-i-die		https://gitcoin.co/grants/1119/eth-ter-i-die			false	false	false	false	false	false
 31-Gitcoin:Grants	0xa290899f4464d0d3601787ccc1601e5326ad9290	Grant 0501 Covid-19 Tracker with Latest Updates & News Articles - Coronastats		https://gitcoin.co/grants/501/covid-19-tracker-with-latest-updates-news-article			false	false	false	false	false	false
+50-Tokens:ERC20	0xa29939f74c3e527c83011fab972b09ac68e71a47	RadiCards	RADI	On chain	18		false	false	false	true	true	false
 90-Individuals:DevCon2	0xa2a272cdf5de683833e7560541a3454dcc3b7e8f	Harry Pottash		DevCon2 Token Contract			false	false	false	false	false	false
 50-Tokens:ERC20	0xa2a54f1ec1f09316ef12c1770d32ed8f21b1fb6a	DFT	DFT	On chain	8		false	false	false	true	true	false
 30-Contracts:Humanity DAO	0xa2b0f6a1578fbe2934a1d1024c706400e81a3352	markobeslac		https://www.humanitydao.org/humans			false	false	false	false	false	false
@@ -9648,6 +9652,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 80-Malicious:DaoDrain	0xf14c14075d6c4ed84b86798af0956deef67365b5	DAO Drain 101 DAO Hell 004		EtherScan.io			false	false	false	true	false	false
 90-Individuals:Gitcoin Grants	0xf152d83d69abfd485e63589caeaed1226b10843e	cardioth		Gitcoin Website			false	false	false	false	false	false
 30-Contracts:Humanity DAO	0xf16294a979a027f297dace2f618cb57bc4bf5d16	leviadam1		https://www.humanitydao.org/humans			false	false	false	false	false	false
+50-Tokens:ERC20	0xf18432ef894ef4b2a5726f933718f5a8cf9ff831	BioCrypt	BIO	On chain	8		false	false	false	true	true	false
 90-Individuals:Kickback	0xf189bda172ddc4b6250b8c2cfbc174af18d3ad29	deejay		https://kickback.events/			false	false	false	false	false	false
 50-Tokens:ERC20	0xf197d9bf1e522cdcdd815f8a43e79ac963322dc2	European Shiba	ESHIBA	On chain	18		false	false	false	true	true	false
 31-Gitcoin:Grants	0xf19ab8f5c20d77119dba61bc195214fdc045e680	Grant 0758 Bpluslab		https://gitcoin.co/grants/758/bpluslab		http://bitoken.world	false	false	false	false	false	false
