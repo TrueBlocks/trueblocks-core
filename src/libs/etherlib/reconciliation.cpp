@@ -945,8 +945,11 @@ bool CReconciliation::reconcileEth(const CReconciliation& prevRecon, blknum_t ne
     assetSymbol = "ETH";
     assetAddr = acctFor;
 
-    begBal = getBalanceAt(acctFor, blockNumber == 0 ? 0 : blockNumber - 1);
-    endBal = getBalanceAt(acctFor, blockNumber);
+    bigint_t balEOLB = getBalanceAt(acctFor, blockNumber == 0 ? 0 : blockNumber - 1);
+    bigint_t balEOB = getBalanceAt(acctFor, blockNumber);
+
+    begBal = balEOLB;
+    endBal = balEOB;
 
     if (trans->from == acctFor) {
         amountOut = trans->isError ? 0 : trans->value;
@@ -969,40 +972,57 @@ bool CReconciliation::reconcileEth(const CReconciliation& prevRecon, blknum_t ne
 
     bool prevDifferent = prevRecon.blockNumber != blockNumber;
     bool nextDifferent = blockNumber != nextBlock;
-    if (prevDifferent && nextDifferent) {
-        reconciliationType = "regular";
-
-    } else if (prevDifferent) {
-        reconciliationType = trans->blockNumber == 0 ? "genesis" : "prevdiff-partial";
-
-    } else if (nextDifferent) {
-        reconciliationType = trans->blockNumber == 0 ? "genesis" : "partial-nextdiff";
+    if (trans->blockNumber == 0) {
+        reconciliationType = "genesis";
 
     } else {
-        reconciliationType = trans->blockNumber == 0 ? "genesis" : "partial-partial";
+        if (prevDifferent && nextDifferent) {
+            reconciliationType = "regular";
+
+        } else if (prevDifferent) {
+            reconciliationType = "prevdiff-partial";
+
+        } else if (nextDifferent) {
+            reconciliationType = "partial-nextdiff";
+
+        } else {
+            reconciliationType = "partial-partial";
+        }
     }
 
     LOG_TRIAL_BALANCE();
     if (reconciled())
         return true;
 
+    // Reconciliation failed, let's try to reconcile by traces
     if (reconcileUsingTraces(prevRecon.endBal, trans, acctFor))
         return true;
 
+    // Reconciliation by traces failed, we want to correct for that and try
+    // one more method - intra block.
     if (prevDifferent && nextDifferent) {
-        // do nothing
+        // The trace reconcile may have changed values
+        begBal = balEOLB;
+        endBal = balEOB;
+        reconciliationType = "regular";
 
     } else if (prevDifferent) {
-        begBal = getBalanceAt(acctFor, blockNumber == 0 ? 0 : blockNumber - 1);
+        // This tx has a tx after it in the same block but none before it
+        begBal = balEOLB;
         endBal = endBalCalc();
+        reconciliationType = "prevdiff-partial";
 
     } else if (nextDifferent) {
+        // This tx has a tx before it in the block but none after it
         begBal = prevRecon.endBal;
-        endBal = getBalanceAt(acctFor, blockNumber);
+        endBal = balEOB;
+        reconciliationType = "partial-nextdiff";
 
     } else {
+        // this tx has both a tx before it and one after it in the same block
         begBal = prevRecon.endBal;
         endBal = endBalCalc();
+        reconciliationType = "partial-partial";
     }
 
     LOG_TRIAL_BALANCE();
@@ -1018,8 +1038,11 @@ bool CReconciliation::reconcileUsingTraces(bigint_t prevEndBal, const CTransacti
         begBal = 0;
         prefundIn = trans->value;
     } else {
-        if (trans->traces.size() == 0)
-            loadTraces(*((CTransaction*)trans), trans->blockNumber, trans->transactionIndex, false, false);  // NOLINT
+        if (trans->traces.size() == 0) {
+            blknum_t bn = trans->blockNumber;
+            blknum_t txid = trans->transactionIndex;
+            loadTraces(*((CTransaction*)trans), bn, txid, false, false);  // NOLINT
+        }
         for (auto trace : trans->traces) {
             if (!trace.action.selfDestructed.empty()) {
                 // do not collapse

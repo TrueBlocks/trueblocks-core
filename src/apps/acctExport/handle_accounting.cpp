@@ -113,8 +113,13 @@ bool COptions::process_reconciliation(CTraverser* trav) {
     // We must do this for both ETH and any tokens
     if (prevStatements[accountedFor + "_eth"].assetAddr.empty()) {
         CReconciliation pEth(prevAppBlk, prevAppTxid, trav->trans.timestamp);
-        // TODO(tjayrush): This used to do something different for reversed mode
-        pEth.endBal = getBalanceAt(accountedFor, prevAppBlk);
+        // TODO(tjayrush): This code is wrong. We ask for the balance at the current
+        // TODO(tjayrush): block minus one, but we should ask at the previous block in this address's
+        // TODO(tjayrush): appearance list. When we're called with first_record or start_block not zero
+        // TODO(tjayrush): we don't have this (since we only load those appearances we're asked for)
+        // TODO(tjayrush): To fix this, we need to be able to get the previous appearance's block.
+        // TODO(tjayrush): Also, we used to do something different for reversed mode
+        pEth.endBal = trav->trans.blockNumber == 0 ? 0 : getBalanceAt(accountedFor, trav->trans.blockNumber - 1);
         prevStatements[accountedFor + "_eth"] = pEth;
     }
 
