@@ -12,7 +12,7 @@ This should list a large number of files, one for each of the automatically gene
 
 Here's the class definition file for the CBlock class:
 
-```toml
+```
 [settings]
 class = CBlock
 fields = gas gasLimit|\
@@ -53,7 +53,7 @@ _Read the notes at the end of this documente about backwards compatibility befor
 
 To add a field to a class edit the classDefinition file. For the above `blocks.txt` file, you would add a field thus:
 
-```toml
+```
 fields = gas gasLimit|\
         gas gasUsed|\
         hash hash|\
