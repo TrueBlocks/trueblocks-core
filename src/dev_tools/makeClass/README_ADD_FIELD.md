@@ -2,7 +2,7 @@
 
 We use a home grown tool called `makeClass` to generate a large amount of boilerplate code for many of the C++ classes in this repo.
 
-You can find these classes by do this command from the `./src` folder:
+Each class is described with a class definition file. You can find these classes by running this command from the `./src` folder:
 
 ```shell
 find . | grep classDefinitions
@@ -79,13 +79,11 @@ The `fieldName` may be any valid `c++` variable name.
 
 The continuation mark (|\\) is needed on all lines but the last.
 
-To add a field, add a new line, save the file, run `make generate finish` (`finish` formats the generated code as per the repo's settings.), but before you do, see below.
-
 ## Backwards Compatibility
 
 You may notice above that some of the fields have `(nowrite)` next to them. This tell `makeClass` to skip that field when writing to the binary cache.
 
-In most cases you want to write the field to the cache but if you do this, you will create a backwards incomaptible file.
+In most cases, however, you do want to write the field to the cache. The trouble is, if you do this, you will create a backwards incomaptible file.
 
 In order to ensure backwards compatibility you must edit the generated `.ccp` file before running the above command.
 
@@ -97,7 +95,7 @@ Next find the a function called `Serialize`. Make sure to find the version of th
 
 Before running the above commands do this:
 
-1. Bump the version up one in it's third field (see the file `./src/libs/utillib/version.cpp`),
+1. Bump the version (see the file `./src/libs/utillib/version.cpp`),
 
 2. Copy the code from the existing `Serialize` function into the `readBackLevel` function inside of a section protected by an `isVersionNum` test corresponding to the new version number.
 
@@ -107,14 +105,14 @@ Now return above and run `make generate finish`.
 
 ---
 
-The next time you run the code, the version stored in any existing files will be less than the new version and the `readBackLevel` code will process the read.
+The next time TrueBlocks runs, the version stored in any existing files will be less than the new version and the `readBackLevel` code will process the read.
 
 Notice that we do not the write the upgraded data to disc. We let the calling code decide if it wants to re-write.
 
-Also notice that the function `SerializeC` (which writes the data) always writes the latest version of the class, so we get automatic updating in that way.
+Also notice that the function `SerializeC` (which writes the data) always writes the latest version of the class, so we get automatic updating simply by re-writing.
 
 ## One Final Note
 
-99.9% chance this won't work...don't worry. `git checkout ..` is a saviour of all past ills.
+There's a huge chance this won't work...don't worry. `git checkout ..` erases all problems and any corrupted data in the cache can be removed and re-created.
 
-Cheerio.
+Have fun.
