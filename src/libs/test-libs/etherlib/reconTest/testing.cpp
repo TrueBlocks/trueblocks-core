@@ -45,7 +45,9 @@ TEST_F(CThisTest, TestTest_1) {
     CReconciliation rec;
     cout << rec << endl;
     rec = CReconciliation(trans.blockNumber, trans.transactionIndex, trans.timestamp);
-    rec.reconcileEth(prev, 8856295, &trans, "0xf503017d7baf7fbc0fff7492b751025c6a78179b");
+    CAccountName acct;
+    acct.address = "0xf503017d7baf7fbc0fff7492b751025c6a78179b";
+    rec.reconcileEth(prev, 8856295, &trans, acct);
     cout << rec << endl;
 
     rec.blockNumber = 1;

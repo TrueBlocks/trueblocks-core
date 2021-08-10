@@ -939,7 +939,8 @@ void CReconciliation::initForToken(CAccountName& tokenName) {
 
 //-----------------------------------------------------------------------
 bool CReconciliation::reconcileEth(const CReconciliation& prevRecon, blknum_t nextBlock, const CTransaction* trans,
-                                   const address_t& acctFor) {
+                                   const CAccountName& accountedFor) {
+    address_t acctFor = accountedFor.address;
     prevBlkBal = prevRecon.endBal;
     prevBlk = prevRecon.blockNumber;
     assetSymbol = "ETH";
@@ -995,7 +996,7 @@ bool CReconciliation::reconcileEth(const CReconciliation& prevRecon, blknum_t ne
         return true;
 
     // Reconciliation failed, let's try to reconcile by traces
-    if (reconcileUsingTraces(prevRecon.endBal, trans, acctFor))
+    if (reconcileUsingTraces(prevRecon.endBal, trans, accountedFor))
         return true;
 
     // Reconciliation by traces failed, we want to correct for that and try
@@ -1030,7 +1031,9 @@ bool CReconciliation::reconcileEth(const CReconciliation& prevRecon, blknum_t ne
 }
 
 //---------------------------------------------------------------------------
-bool CReconciliation::reconcileUsingTraces(bigint_t prevEndBal, const CTransaction* trans, const address_t& acctFor) {
+bool CReconciliation::reconcileUsingTraces(bigint_t prevEndBal, const CTransaction* trans,
+                                           const CAccountName& accountedFor) {
+    address_t acctFor = accountedFor.address;
     amountOut = amountIn = 0;
     prefundIn = minerBaseRewardIn = minerNephewRewardIn = minerTxFeeIn + minerUncleRewardIn = 0;
 
@@ -1052,8 +1055,17 @@ bool CReconciliation::reconcileUsingTraces(bigint_t prevEndBal, const CTransacti
                 if (trace.action.selfDestructed == acctFor)
                     selfDestructOut += trace.action.balance;
             } else {
-                if (trace.action.from == acctFor && trans->from == acctFor)
-                    internalOut += trans->isError ? 0 : trace.action.value;
+                if (trace.action.from == acctFor) {
+                    // Sometimes, EOAs appear here, but there is no way
+                    // that a trace can initiate an expenditure on an EOA
+                    // TODO(tjayrush): unless it's the first trace?
+                    // unless the EOA initiated the top level tx. I think
+                    // this might be a bug in a smart contract or something.
+                    if (accountedFor.is_contract || trans->from == acctFor) {
+                        internalOut += trans->isError ? 0 : trace.action.value;
+                    }
+                }
+
                 if (trace.action.to == acctFor) {
                     if (trans->from == "0xPrefund") {
                         prefundIn = trans->value;
