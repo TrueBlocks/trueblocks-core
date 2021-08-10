@@ -322,12 +322,10 @@ bool COptions::parseArguments(string_q& command) {
             LOG_WARN("Monitor not found for ", addr + ". Continuing anyway.");
             nextBlockToVisit = 0;  // monitor.getNextBlockToVisit()
         }
-        if (accountedFor.empty()) {
-            CAccountName acct;
-            acct.address = monitor.address;
-            getNamedAccount(acct, monitor.address);
-            accountedForName = acct.name;
-            accountedFor = acct.address;
+        if (accountedFor.address.empty()) {
+            accountedFor.address = monitor.address;
+            getNamedAccount(accountedFor, monitor.address);
+            accountedFor.is_contract = !getCodeAt(monitor.address, latest).empty();
         }
         allMonitors.push_back(monitor);
     }
@@ -463,7 +461,7 @@ void COptions::Init(void) {
     allMonitors.clear();
     monApps.clear();
 
-    accountedFor = "";
+    accountedFor.address = "";
 
     // We don't clear these because they are part of meta data
     // prefundAddrMap.clear();

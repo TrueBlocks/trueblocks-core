@@ -85,7 +85,7 @@ bool COptions::loadAllAppearances(void) {
         }
     } else {
         if (!freshenOnly)
-            LOG_INFO("Nothing to export" + (allMonitors.size() ? (" from " + accountedFor) : "") + ".");
+            LOG_INFO("Nothing to export" + (allMonitors.size() ? (" from " + accountedFor.address) : "") + ".");
         return false;
     }
 

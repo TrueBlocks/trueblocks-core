@@ -121,6 +121,7 @@
 "50-Tokens:ERC20","0x01ff50f8b7f74e4f00580d9596cd3d0d6d6e326f","BF Token","BFT","","18"
 "91-Early:Miners","0x02020d22dcf88f5edd66b382d7da019f161fb7e3","Miner_0022_294","","",""
 "50-Tokens:ERC20","0x0208fb0af6652bdbc3ea010d5026ed92ff252a53","Ethereum Hot","EHOT","","18"
+"30-Contracts","0x020ca66c30bec2c4fe3861a94e4db4a498a35872","BAYT Seller to BTeg","","",""
 "50-Tokens:ERC20","0x0223fc70574214f65813fe336d870ac47e147fae","CZR","CZR","","18"
 "91-Early:Addresses","0x02268047f5c77a6a533619773474d1a6e510443f","Creator","","",""
 "50-Tokens:ERC20","0x022cc93b66a7d28ad6887d1d5a60642d5b02837b","Narutocoin","NARUTO","","18"
@@ -199,4 +200,3 @@
 "31-Gitcoin:Grants","0x04607ca1048f490578f233a8b1354778defdd178","Grant 0608 Signatory Client","","",""
 "31-Gitcoin:Grants","0x0467f3b464ff75ac91f6ed8a4139fc6e38256efb","Grant 1781 Cursed Mining","","",""
 "31-Gitcoin:Grants","0x046b8b30767592487badb59e43418e3f58f46b26","Grant 1828 Australian Digital Security","","",""
-"60-Airdrops","0x0475929d867e95b3828ab4ef2d08a7f80766bf90","OCN Airdrop Sender","","",""

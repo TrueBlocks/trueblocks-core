@@ -83,7 +83,7 @@ int main(int argc, const char* argv[]) {
     os << ", \"first_block\": " << (isTestMode() ? "\"0xdeadbeef\"" : uint_2_Str(options.exportRange.first)) << endl;
     os << ", \"last_block\": " << (isTestMode() ? "\"0xdeadbeef\"" : uint_2_Str(options.exportRange.second)) << endl;
     if (!options.count && options.allMonitors.size() == 1) {
-        options.getNamedAccount(options.allMonitors[0], options.accountedFor);
+        options.getNamedAccount(options.allMonitors[0], options.accountedFor.address);
         if (options.abi_spec.nInterfaces() == 0) {
             HIDE_FIELD(CMonitor, "abi_spec");
         }
@@ -150,7 +150,7 @@ void prog_Log(CTraverser* trav, void* data) {
     blknum_t goal = opt->stats.nFileRecords;
 
     ostringstream post;
-    post << " " << trav->operation << " (max " << goal << ") for address " << opt->accountedFor;
+    post << " " << trav->operation << " (max " << goal << ") for address " << opt->accountedFor.address;
     LOG_PROGRESS(trav->readStatus, prog, goal, post.str() + "\r");
 
     return;
@@ -165,7 +165,7 @@ void end_Log(CTraverser* trav, void* data) {
     blknum_t prog = opt->first_record + trav->nProcessed;
     blknum_t goal = opt->stats.nFileRecords;
     if (prog == goal) {
-        string_q endMsg = " " + trav->operation + " for address " + opt->accountedFor;
+        string_q endMsg = " " + trav->operation + " for address " + opt->accountedFor.address;
         LOG_PROGRESS("Completed", prog, goal, endMsg);
     }
     return;

@@ -52,8 +52,7 @@ class COptions : public CAbiOptions {
     CMonitorArray allMonitors;
     CMonitorArray possibles;
     const CMonitor* curMonitor;
-    address_t accountedFor;
-    string_q accountedForName;
+    CAccountName accountedFor;
 
     CReconciliationMap prevStatements;
     CPinnedChunkArray pinList;

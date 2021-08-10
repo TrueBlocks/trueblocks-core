@@ -7,7 +7,7 @@
 
 //-----------------------------------------------------------------------
 void COptions::addNeighbor(CAddressUintMap& map, const address_t& addr) {
-    if ((addr == accountedFor || isZeroAddr(addr)))
+    if ((addr == accountedFor.address || isZeroAddr(addr)))
         return;
     map[addr]++;
 }

@@ -116,6 +116,7 @@
 50-Tokens:ERC20	0x01ff50f8b7f74e4f00580d9596cd3d0d6d6e326f	BF Token	BFT		18
 91-Early:Miners	0x02020d22dcf88f5edd66b382d7da019f161fb7e3	Miner_0022_294
 50-Tokens:ERC20	0x0208fb0af6652bdbc3ea010d5026ed92ff252a53	Ethereum Hot	EHOT		18
+30-Contracts	0x020ca66c30bec2c4fe3861a94e4db4a498a35872	BAYT Seller to BTeg
 50-Tokens:ERC20	0x0223fc70574214f65813fe336d870ac47e147fae	CZR	CZR		18
 91-Early:Addresses	0x02268047f5c77a6a533619773474d1a6e510443f	Creator
 50-Tokens:ERC20	0x022cc93b66a7d28ad6887d1d5a60642d5b02837b	Narutocoin	NARUTO		18
@@ -198,4 +199,3 @@
 91-Early:Addresses	0x04786aada9deea2150deab7b3b8911c309f5ed90	GateCoin_Hack_1
 30-Contracts	0x047ed17511d9287b2bf82a456aa87ba9cd45bb0d	Totle Bancor Wrapper
 90-Individuals:TheCyber	0x047f57b4fe5f5f8f536f48d7ee464893b4411e92	Name 0x047f57b4
-50-Tokens:ERC20	0x0488401c3f535193fa8df029d9ffe615a06e74e6	SparkPoint	SRK		18

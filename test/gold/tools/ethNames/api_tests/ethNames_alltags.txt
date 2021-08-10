@@ -1099,6 +1099,15 @@
       "description": ""
     },
     {
+      "tags": "30-Contracts",
+      "address": "0x020ca66c30bec2c4fe3861a94e4db4a498a35872",
+      "name": "BAYT Seller to BTeg",
+      "symbol": "",
+      "source": "",
+      "decimals": 0,
+      "description": ""
+    },
+    {
       "tags": "50-Tokens:ERC20",
       "address": "0x0223fc70574214f65813fe336d870ac47e147fae",
       "name": "CZR",
@@ -1797,15 +1806,6 @@
       "name": "Grant 1828 Australian Digital Security",
       "symbol": "",
       "source": "https://gitcoin.co/grants/1828/australian-digital-security",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "60-Airdrops",
-      "address": "0x0475929d867e95b3828ab4ef2d08a7f80766bf90",
-      "name": "OCN Airdrop Sender",
-      "symbol": "",
-      "source": "TrueBlocks.io",
       "decimals": 0,
       "description": ""
     }

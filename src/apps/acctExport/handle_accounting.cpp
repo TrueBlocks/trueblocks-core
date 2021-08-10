@@ -75,7 +75,8 @@ bool acct_Display(CTraverser* trav, void* data) {
 
 //-----------------------------------------------------------------------
 bool COptions::process_reconciliation(CTraverser* trav) {
-    string_q path = getBinaryCachePath(CT_RECONS, accountedFor, trav->trans.blockNumber, trav->trans.transactionIndex);
+    string_q path =
+        getBinaryCachePath(CT_RECONS, accountedFor.address, trav->trans.blockNumber, trav->trans.transactionIndex);
     establishFolder(path);
 
     trav->trans.statements.clear();
@@ -93,7 +94,7 @@ bool COptions::process_reconciliation(CTraverser* trav) {
                         statement.assetSymbol = tokenName.symbol;
                         statement.decimals = tokenName.decimals;
                     }
-                    prevStatements[accountedFor + "_" + toLower(statement.assetAddr)] = statement;
+                    prevStatements[accountedFor.address + "_" + toLower(statement.assetAddr)] = statement;
                 }
                 return !shouldQuit();
             } else {
@@ -112,7 +113,7 @@ bool COptions::process_reconciliation(CTraverser* trav) {
     // We need to check to see if the export is starting after the
     // the first record so we can pick up the previous balance
     // We must do this for both ETH and any tokens
-    if (prevStatements[accountedFor + "_eth"].assetAddr.empty()) {
+    if (prevStatements[accountedFor.address + "_eth"].assetAddr.empty()) {
         CReconciliation pEth(prevAppBlk, prevAppTxid, trav->trans.timestamp);
         // TODO(tjayrush): This code is wrong. We ask for the balance at the current
         // TODO(tjayrush): block minus one, but we should ask at the previous block in this address's
@@ -120,14 +121,15 @@ bool COptions::process_reconciliation(CTraverser* trav) {
         // TODO(tjayrush): we don't have this (since we only load those appearances we're asked for)
         // TODO(tjayrush): To fix this, we need to be able to get the previous appearance's block.
         // TODO(tjayrush): Also, we used to do something different for reversed mode
-        pEth.endBal = trav->trans.blockNumber == 0 ? 0 : getBalanceAt(accountedFor, trav->trans.blockNumber - 1);
-        prevStatements[accountedFor + "_eth"] = pEth;
+        pEth.endBal =
+            trav->trans.blockNumber == 0 ? 0 : getBalanceAt(accountedFor.address, trav->trans.blockNumber - 1);
+        prevStatements[accountedFor.address + "_eth"] = pEth;
     }
 
     CReconciliation eth(trav->trans.blockNumber, trav->trans.transactionIndex, trav->trans.timestamp);
-    eth.reconcileEth(prevStatements[accountedFor + "_eth"], nextAppBlk, &trav->trans, accountedFor);
+    eth.reconcileEth(prevStatements[accountedFor.address + "_eth"], nextAppBlk, &trav->trans, accountedFor.address);
     trav->trans.statements.push_back(eth);
-    prevStatements[accountedFor + "_eth"] = eth;
+    prevStatements[accountedFor.address + "_eth"] = eth;
 
     CAccountNameMap tokenList;
     if (token_list_from_logs(tokenList, trav)) {
@@ -137,7 +139,7 @@ bool COptions::process_reconciliation(CTraverser* trav) {
             CReconciliation tokStatement(trav->trans.blockNumber, trav->trans.transactionIndex, trav->trans.timestamp);
             tokStatement.initForToken(tokenName);
 
-            string psKey = accountedFor + "_" + tokenName.address;
+            string psKey = accountedFor.address + "_" + tokenName.address;
             if (prevStatements[psKey].assetAddr.empty()) {
                 // first time we've seen this asset, so we need previous balance
                 // which is frequently zero but may be non-zero if the command
@@ -146,14 +148,14 @@ bool COptions::process_reconciliation(CTraverser* trav) {
                 pBal.blockNumber = 0;
                 if (trav->trans.blockNumber > 0)
                     pBal.blockNumber = trav->trans.blockNumber - 1;
-                pBal.endBal = getTokenBalanceOf2(tokenName.address, accountedFor, pBal.blockNumber);
+                pBal.endBal = getTokenBalanceOf2(tokenName.address, accountedFor.address, pBal.blockNumber);
                 prevStatements[psKey] = pBal;
             }
 
             tokStatement.prevBlk = prevStatements[psKey].blockNumber;
             tokStatement.prevBlkBal = prevStatements[psKey].endBal;
             tokStatement.begBal = prevStatements[psKey].endBal;
-            tokStatement.endBal = getTokenBalanceOf2(tokenName.address, accountedFor, trav->trans.blockNumber);
+            tokStatement.endBal = getTokenBalanceOf2(tokenName.address, accountedFor.address, trav->trans.blockNumber);
             if (tokStatement.begBal > tokStatement.endBal) {
                 tokStatement.amountOut = (tokStatement.begBal - tokStatement.endBal);
             } else {
@@ -190,7 +192,8 @@ void COptions::cacheIfReconciled(CTraverser* trav, bool isNew) const {
 
     lockSection();
     CArchive archive(WRITING_ARCHIVE);
-    string_q path = getBinaryCachePath(CT_RECONS, accountedFor, trav->trans.blockNumber, trav->trans.transactionIndex);
+    string_q path =
+        getBinaryCachePath(CT_RECONS, accountedFor.address, trav->trans.blockNumber, trav->trans.transactionIndex);
     if (archive.Lock(path, modeWriteCreate, LOCK_WAIT)) {
         LOG4("Writing to cache for ", path);
         archive << trav->trans.statements;
