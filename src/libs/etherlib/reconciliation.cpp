@@ -471,7 +471,7 @@ void CReconciliation::registerClass(void) {
     ADD_FIELD(CReconciliation, "totalOut", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliation, "totalOutLessGas", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliation, "amountNet", T_INT256, ++fieldNum);
-    ADD_FIELD(CReconciliation, "reconciled", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CReconciliation, "reconciled", T_BOOL, ++fieldNum);
     // EXISTING_CODE
 }
 
