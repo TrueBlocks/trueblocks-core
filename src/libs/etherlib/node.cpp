@@ -532,13 +532,15 @@ string_q getTokenSymbol(const address_t& token, blknum_t blockNum) {
 }
 
 //-------------------------------------------------------------------------
-string_q getTokenState(const address_t& token, const string_q& what, const CAbi& abi_spec, blknum_t blockNum) {
+string_q getTokenState(const address_t& token, const string_q& what, const CAbi& abi_spec, blknum_t blockNum,
+                       const string_q& bytes) {
     static map<string_q, string_q> sigMap;
     if (sigMap.size() == 0) {
         sigMap["totalSupply"] = "0x18160ddd";
         sigMap["decimals"] = "0x313ce567";
         sigMap["symbol"] = "0x95d89b41";
         sigMap["name"] = "0x06fdde03";
+        sigMap["supportsInterface"] = "0x01ffc9a7";
     }
 
     if (sigMap[what].empty())
@@ -547,7 +549,7 @@ string_q getTokenState(const address_t& token, const string_q& what, const CAbi&
     CEthCall theCall;
     theCall.address = token;
     theCall.encoding = sigMap[what];
-    theCall.bytes = "";
+    theCall.bytes = bytes;
     theCall.blockNumber = blockNum;
     theCall.abi_spec = abi_spec;
     if (doEthCall(theCall))

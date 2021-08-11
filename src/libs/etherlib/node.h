@@ -71,7 +71,13 @@ inline bigint_t getTokenBalanceOf2(const address_t& token, const address_t& hold
 };
 extern string_q getTokenSymbol(const address_t& token, blknum_t blockNum);
 extern string_q getTokenState(const address_t& token, const string_q& whichState, const CAbi& abi_spec,
-                              blknum_t blockNum);
+                              blknum_t blockNum, const string_q& bytes = "");
+
+//-----------------------------------------------------------------------
+// https://ethereum.stackexchange.com/questions/82822/obtaining-erc721-interface-ids
+#define _INTERFACE_ID_ERC721 "0x80ac58cd"
+#define _INTERFACE_ID_ERC721_METADATA "0x5b5e139f"
+#define _INTERFACE_ID_ERC721_ENUMERABLE "0x780e9d63"
 
 //-----------------------------------------------------------------------
 extern string_q getRawBlock(blknum_t bn);

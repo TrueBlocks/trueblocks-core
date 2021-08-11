@@ -67,6 +67,14 @@ ethNames --named --custom --fmt json
     "source": "EtherScan.io"
   },
   {
+    "tags": "50-Tokens:ERC20",
+    "address": "0x0000000000b3f879cb30fe243b4dfee438691c04",
+    "name": "Gastoken.io",
+    "symbol": "GST2",
+    "source": "On chain",
+    "decimals": 2
+  },
+  {
     "tags": "30-Contracts",
     "address": "0x0000000000c90bc353314b6911180ed7e06019a9",
     "name": "Arbitrage Bot",
@@ -227,7 +235,7 @@ ethNames --named --custom --fmt json
     "description": "Blockchain based system fully automated, with full clearing of utility tokens associating the price and distribution based on offer and demand for IPs"
   },
   {
-    "tags": "55-Defi",
+    "tags": "50-Tokens:ERC20",
     "address": "0x001f751cdfee02e2f0714831be2f8384db0f71a2",
     "name": "GenericLevCompFarm",
     "source": "On chain",
@@ -306,6 +314,14 @@ ethNames --named --custom --fmt json
     "address": "0x004efb233c8d26ccc063061bee54f0be9302e6ed",
     "name": "Name 0x004efb23",
     "source": "Gitcoin Website"
+  },
+  {
+    "tags": "50-Tokens:ERC721",
+    "address": "0x004f5683e183908d0f6b688239e3e2d5bbb066ca",
+    "name": "Hall Of Fame Goat Lodge",
+    "symbol": "HOFG",
+    "source": "On chain",
+    "decimals": 18
   },
   {
     "tags": "30-Contracts",
@@ -387,6 +403,11 @@ ethNames --named --custom --fmt json
     "address": "0x008f82676a606a6783716037c256a7df23746145",
     "name": "Name 0x008f8267",
     "source": "Solidity Code"
+  },
+  {
+    "tags": "80-Malicious",
+    "address": "0x0093e5f2a850268c0ca3093c7ea53731296487eb",
+    "name": "Polygon Exploiter First Sender"
   },
   {
     "tags": "91-Early:Addresses",
@@ -529,7 +550,8 @@ ethNames --named --custom --fmt json
     "tags": "80-Malicious:DaoDrain",
     "address": "0x0101f3be8ebb4bbd39a2e3b9a3639d4259832fd9",
     "name": "DAO Drain 075",
-    "source": "GethSource Ether Camp"
+    "source": "GethSource Ether Camp",
+    "decimals": 1
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -552,6 +574,14 @@ ethNames --named --custom --fmt json
     "address": "0x010afb8548a5d1a3a3d62f58ca0a5a1329974206",
     "name": "Name 0x010afb85",
     "source": "Gitcoin Website"
+  },
+  {
+    "tags": "50-Tokens:ERC20",
+    "address": "0x01112a60f427205dca6e229425306923c3cc2073",
+    "name": "FARM_UNI-V2",
+    "symbol": "fUNI-V2",
+    "source": "On chain",
+    "decimals": 18
   },
   {
     "tags": "31-Gitcoin:Grants",
@@ -640,6 +670,14 @@ ethNames --named --custom --fmt json
     "symbol": "MIRO",
     "source": "On chain",
     "decimals": 8
+  },
+  {
+    "tags": "50-Tokens:ERC20",
+    "address": "0x016bf078abcacb987f0589a6d3beadd4316922b0",
+    "name": "Rari Stable Pool Token",
+    "symbol": "RSPT",
+    "source": "On chain",
+    "decimals": 18
   },
   {
     "tags": "31-Gitcoin:Grants",
@@ -731,6 +769,13 @@ ethNames --named --custom --fmt json
     "decimals": 8
   },
   {
+    "tags": "50-Tokens:ERC20",
+    "address": "0x01cc47d73e69d00b7d8f54f2ae6ddbfa3c2e82e3",
+    "name": "Ethereum Developers' Night",
+    "source": "https://kickback.events/event/[{ADDRESS}]",
+    "decimals": 18
+  },
+  {
     "tags": "91-Early:Addresses",
     "address": "0x01d04122aeccab138a47103b500f7b3d3b356a27",
     "name": "XYZ",
@@ -753,12 +798,12 @@ ethNames --named --custom --fmt json
     "source": "0xTracker"
   },
   {
-    "tags": "55-Defi",
+    "tags": "50-Tokens:ERC20",
     "address": "0x01da76dea59703578040012357b81ffe62015c2d",
     "name": "Cream yETH",
     "symbol": "crYETH",
     "source": "On chain",
-    "decimals": 18
+    "decimals": 8
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -806,6 +851,14 @@ ethNames --named --custom --fmt json
     "address": "0x01ff50f8b7f74e4f00580d9596cd3d0d6d6e326f",
     "name": "BF Token",
     "symbol": "BFT",
+    "source": "On chain",
+    "decimals": 18
+  },
+  {
+    "tags": "50-Tokens:ERC20",
+    "address": "0x020171085bcd43b6fd36ad8c95ad61848b1211a2",
+    "name": "yearn Gift NFT",
+    "symbol": "yGIFT",
     "source": "On chain",
     "decimals": 18
   },
@@ -864,6 +917,13 @@ ethNames --named --custom --fmt json
     "address": "0x0230c6dd5db1d3f871386a3ce1a5a836b2590044",
     "name": "Name 0x0230c6dd",
     "source": "Gitcoin Website"
+  },
+  {
+    "tags": "50-Tokens:ERC20",
+    "address": "0x02330084a717e4c4a0f08feb1e0bf1ed865b5940",
+    "name": "Kickback DeFi Meetup 1",
+    "source": "https://kickback.events/event/[{ADDRESS}]",
+    "decimals": 18
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -1098,6 +1158,14 @@ ethNames --named --custom --fmt json
     "source": "EtherScan.io"
   },
   {
+    "tags": "50-Tokens:ERC20",
+    "address": "0x0327112423f3a68efdf1fcf402f6c5cb9f7c33fd",
+    "name": "PieDAO BTC++",
+    "symbol": "BTC++",
+    "source": "On chain",
+    "decimals": 18
+  },
+  {
     "tags": "91-Early:Addresses",
     "address": "0x032747313c4e914b5fce356ab8dc4df551972dcd",
     "name": "Trusteth",
@@ -1283,6 +1351,14 @@ ethNames --named --custom --fmt json
     "decimals": 18
   },
   {
+    "tags": "50-Tokens:ERC20",
+    "address": "0x03df4c372a29376d2c8df33a1b5f001cd8d68b0e",
+    "name": "Bitcoinereum",
+    "symbol": "BTCM",
+    "source": "On chain",
+    "decimals": 8
+  },
+  {
     "tags": "90-Individuals:Gitcoin Grants",
     "address": "0x03ea9f51913a2a40a2c37e70700102486acf6c40",
     "name": "Name 0x03ea9f51",
@@ -1315,72 +1391,4 @@ ethNames --named --custom --fmt json
     "address": "0x04335c092bc8c06f48f9def5e3285140138fbbfc",
     "name": "Grant 1496 Optimistic Casino",
     "source": "https://gitcoin.co/grants/1496/optimistic-casino"
-  },
-  {
-    "tags": "90-Individuals:Gitcoin Grants",
-    "address": "0x04373aac4df8be1696be816b97f4ad8bcd93beb7",
-    "name": "Name 0x04373aac",
-    "source": "Gitcoin Website"
-  },
-  {
-    "tags": "91-Early:Addresses",
-    "address": "0x0444f06a52320af2df7e60d1923080002838ce93",
-    "name": "Resetponzi",
-    "source": "EtherScan.io"
-  },
-  {
-    "tags": "50-Tokens:ERC20",
-    "address": "0x0448da445a2ed1262890b42fb6d578c59ec470d5",
-    "name": "ShibaRise",
-    "symbol": "ShibaRise",
-    "source": "On chain",
-    "decimals": 9
-  },
-  {
-    "tags": "90-Individuals:Twitter",
-    "address": "0x04498150b495a1f126b88952a756b5b9a4385e30",
-    "name": "Name 0x04498150",
-    "source": "Twitter",
-    "description": "okoro"
-  },
-  {
-    "tags": "50-Tokens:ERC20",
-    "address": "0x044f613cdfffbac8bba42283dd8d97b81c8b3f3c",
-    "name": "DogeDao",
-    "symbol": "DogeDao",
-    "source": "On chain",
-    "decimals": 18
-  },
-  {
-    "tags": "50-Tokens:ERC20",
-    "address": "0x045703d22bb49392ec6e63b1ede4efd862bf1a34",
-    "name": "NexSwap",
-    "symbol": "NEX",
-    "source": "On chain",
-    "decimals": 18
-  },
-  {
-    "tags": "50-Tokens:ERC20",
-    "address": "0x045e507925d2e05d114534d0810a1abd94aca8d6",
-    "name": "Synthetix: L2 Bridge",
-    "source": "EtherScan.io"
-  },
-  {
-    "tags": "31-Gitcoin:Grants",
-    "address": "0x04607ca1048f490578f233a8b1354778defdd178",
-    "name": "Grant 0608 Signatory Client",
-    "source": "https://gitcoin.co/grants/608/signatory-client",
-    "description": "https://vbstreetz.github.io/signatory-client/"
-  },
-  {
-    "tags": "31-Gitcoin:Grants",
-    "address": "0x0467f3b464ff75ac91f6ed8a4139fc6e38256efb",
-    "name": "Grant 1781 Cursed Mining",
-    "source": "https://gitcoin.co/grants/1781/cursed-mining"
-  },
-  {
-    "tags": "31-Gitcoin:Grants",
-    "address": "0x046b8b30767592487badb59e43418e3f58f46b26",
-    "name": "Grant 1828 Australian Digital Security",
-    "source": "https://gitcoin.co/grants/1828/australian-digital-security"
   }] }

@@ -208,12 +208,12 @@
       "description": ""
     },
     {
-      "tags": "30-Contracts:DAO Related",
+      "tags": "50-Tokens:ERC20",
       "address": "0x10abb5efecdc09581f8b7cb95791fe2936790b4e",
       "name": "DAO_id315_cnt602_1mo",
       "symbol": "",
       "source": "Ether Camp",
-      "decimals": 0,
+      "decimals": 1,
       "description": ""
     },
     {
@@ -493,6 +493,15 @@
       "symbol": "",
       "source": "Gitcoin Website",
       "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x11cecf7284682eb936151533284761e40ca31720",
+      "name": "Evening with Aztec Maker and Melon",
+      "symbol": "",
+      "source": "https://kickback.events/event/[{ADDRESS}]",
+      "decimals": 18,
       "description": ""
     },
     {
@@ -1798,15 +1807,6 @@
       "symbol": "MNT",
       "source": "On chain",
       "decimals": 18,
-      "description": ""
-    },
-    {
-      "tags": "80-Malicious:Shanghai",
-      "address": "0x157ddd802ab7831a2e1966baf2cc804bc7f95bd8",
-      "name": "Possibly Malicious 0x157",
-      "symbol": "",
-      "source": "TrueBlocks.io",
-      "decimals": 0,
       "description": ""
     }
   ],

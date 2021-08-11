@@ -38,7 +38,6 @@ class COptions : public CHistoryOptions {
     CAddressArray holders;
 
     CTokenBalanceRecord curToken;
-    CMonitor standards;
 
     tokstate_t modeBits;
     blknum_t latestBlock;
