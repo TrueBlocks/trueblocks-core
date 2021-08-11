@@ -1,5 +1,6 @@
 getState argc: 4 [1:--call] [2:0xbb2b8038a1640196fbe3e38816f3e67cba72d940!0x06fdde03] [3:10092000] 
 getState --call 0xbb2b8038a1640196fbe3e38816f3e67cba72d940!0x06fdde03 10092000 
+{ "data": [
 
 level: 1
 readOffset: 0
@@ -18,20 +19,17 @@ params.size: 1
   0: string _name = Uniswap V2
 ==================================================
 
-{ "data": [
-{
-  "blockNumber": 10092000,
-  "encoding": "0x06fdde03",
-  "result": {
-    "name": "name",
-    "signature": "name()",
+  {
+    "blockNumber": 10092000,
     "encoding": "0x06fdde03",
-    "outputs": {
-      "_name": "Uniswap V2"
-    }
-  },
-  "balance": 0,
-  "address": "0xbb2b8038a1640196fbe3e38816f3e67cba72d940"
-}
-
-] }
+    "result": {
+      "name": "name",
+      "signature": "name()",
+      "encoding": "0x06fdde03",
+      "outputs": {
+        "_name": "Uniswap V2"
+      }
+    },
+    "balance": 0,
+    "address": "0xbb2b8038a1640196fbe3e38816f3e67cba72d940"
+  }] }

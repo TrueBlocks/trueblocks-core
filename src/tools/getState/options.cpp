@@ -106,8 +106,44 @@ bool COptions::parseArguments(string_q& command) {
     if (!call.empty() && !parts.empty())
         return usage("The --parts option is not available with the --call option.");
 
-    if (!call.empty())
-        return handle_call();
+    if (!call.empty()) {
+        CStringArray callVariables;
+        explode(callVariables, call, '!');
+
+        if (callVariables.size() == 0 || !isContractAt(callVariables[0], latestBlock))
+            return usage("You must supply the address of a smart contract for the --call option.");
+        if (callVariables.size() == 1) {
+            if (!isTestMode() && !isApiMode()) {
+                cout << doCommand("chifra abis " + callVariables[0]);
+                return false;
+            }
+            return usage("You must provide a four-byte code for the smart contract you're calling.");
+        }
+        if (!isAddress(callVariables[0])) {
+            return usage("The first item in the call data to --call must be an address.");
+        }
+        if (!isHexStr(callVariables[1])) {
+            return usage("The four byte signature must be a hex string.");
+        }
+
+        theCall.address = callVariables[0];
+        theCall.encoding = callVariables[1];
+        theCall.bytes = callVariables.size() > 2 ? callVariables[2] : "";
+        theCall.abi_spec.loadAbisFromKnown();
+        theCall.abi_spec.loadAbiFromEtherscan(theCall.address);
+
+        expContext().exportFmt = JSON1;
+        configureDisplay("getState", "CEthState", STR_DISPLAY_FUNCTION);
+        manageFields(
+            "CParameter:str_default,indexed,internalType,components,no_write,is_pointer,is_array,is_object,is_builtin,"
+            "is_minimal,type",
+            FLD_HIDE);
+        manageFields("CFunction:stateMutability,type,constant", FLD_HIDE);
+        manageFields("CEthCall:abi_spec", FLD_HIDE);
+        manageFields("CFunction:address|CEthState:result,address", FLD_SHOW);
+
+        return true;
+    }
 
     if (!addrs.size())
         return usage("You must provide at least one Ethereum address.");

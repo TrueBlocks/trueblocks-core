@@ -1,5 +1,5 @@
 {
   "errors": [
-    "chifra state - The first part of the call data to --call must be an address."
+    "chifra state - You must supply the address of a smart contract for the --call option."
   ]
 }

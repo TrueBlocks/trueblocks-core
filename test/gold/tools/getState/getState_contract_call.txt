@@ -1,19 +1,129 @@
 getState argc: 4 [1:--call] [2:0xa4f29fc548856180f6b1e319ee4d86715875cce4!0x12065fe0] [3:6523977-6540000:2000] 
 getState --call 0xa4f29fc548856180f6b1e319ee4d86715875cce4!0x12065fe0 6523977-6540000:2000 
 { "data": [
-{
-  "blockNumber": 10092000,
-  "encoding": "0x12065fe0",
-  "result": {
-    "name": "getBalance",
-    "signature": "getBalance()",
+  {
+    "blockNumber": 6523977,
     "encoding": "0x12065fe0",
-    "outputs": {
-      "balance": "0"
-    }
+    "result": {
+      "name": "getBalance",
+      "signature": "getBalance()",
+      "encoding": "0x12065fe0",
+      "outputs": {
+        "balance": "0"
+      }
+    },
+    "balance": 0,
+    "address": "0xa4f29fc548856180f6b1e319ee4d86715875cce4"
   },
-  "balance": 0,
-  "address": "0xa4f29fc548856180f6b1e319ee4d86715875cce4"
-}
-
-] }
+  {
+    "blockNumber": 6525977,
+    "encoding": "0x12065fe0",
+    "result": {
+      "name": "getBalance",
+      "signature": "getBalance()",
+      "encoding": "0x12065fe0",
+      "outputs": {
+        "balance": "0"
+      }
+    },
+    "balance": 0,
+    "address": "0xa4f29fc548856180f6b1e319ee4d86715875cce4"
+  },
+  {
+    "blockNumber": 6527977,
+    "encoding": "0x12065fe0",
+    "result": {
+      "name": "getBalance",
+      "signature": "getBalance()",
+      "encoding": "0x12065fe0",
+      "outputs": {
+        "balance": "0"
+      }
+    },
+    "balance": 0,
+    "address": "0xa4f29fc548856180f6b1e319ee4d86715875cce4"
+  },
+  {
+    "blockNumber": 6529977,
+    "encoding": "0x12065fe0",
+    "result": {
+      "name": "getBalance",
+      "signature": "getBalance()",
+      "encoding": "0x12065fe0",
+      "outputs": {
+        "balance": "0"
+      }
+    },
+    "balance": 0,
+    "address": "0xa4f29fc548856180f6b1e319ee4d86715875cce4"
+  },
+  {
+    "blockNumber": 6531977,
+    "encoding": "0x12065fe0",
+    "result": {
+      "name": "getBalance",
+      "signature": "getBalance()",
+      "encoding": "0x12065fe0",
+      "outputs": {
+        "balance": "0"
+      }
+    },
+    "balance": 0,
+    "address": "0xa4f29fc548856180f6b1e319ee4d86715875cce4"
+  },
+  {
+    "blockNumber": 6533977,
+    "encoding": "0x12065fe0",
+    "result": {
+      "name": "getBalance",
+      "signature": "getBalance()",
+      "encoding": "0x12065fe0",
+      "outputs": {
+        "balance": "0"
+      }
+    },
+    "balance": 0,
+    "address": "0xa4f29fc548856180f6b1e319ee4d86715875cce4"
+  },
+  {
+    "blockNumber": 6535977,
+    "encoding": "0x12065fe0",
+    "result": {
+      "name": "getBalance",
+      "signature": "getBalance()",
+      "encoding": "0x12065fe0",
+      "outputs": {
+        "balance": "0"
+      }
+    },
+    "balance": 0,
+    "address": "0xa4f29fc548856180f6b1e319ee4d86715875cce4"
+  },
+  {
+    "blockNumber": 6537977,
+    "encoding": "0x12065fe0",
+    "result": {
+      "name": "getBalance",
+      "signature": "getBalance()",
+      "encoding": "0x12065fe0",
+      "outputs": {
+        "balance": "0"
+      }
+    },
+    "balance": 0,
+    "address": "0xa4f29fc548856180f6b1e319ee4d86715875cce4"
+  },
+  {
+    "blockNumber": 6539977,
+    "encoding": "0x12065fe0",
+    "result": {
+      "name": "getBalance",
+      "signature": "getBalance()",
+      "encoding": "0x12065fe0",
+      "outputs": {
+        "balance": "0"
+      }
+    },
+    "balance": 0,
+    "address": "0xa4f29fc548856180f6b1e319ee4d86715875cce4"
+  }] }

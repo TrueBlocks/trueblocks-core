@@ -153,6 +153,9 @@ class COptionsBase {
 
     bool findToken(CAccountName& acct, const address_t& addr);
 
+    void configureDisplay(const string_q& tool, const string_q& dataType, const string_q& defFormat,
+                          const string_q& meta = "");
+
   protected:
     const COption* pParams;
     size_t cntParams;
@@ -162,8 +165,6 @@ class COptionsBase {
 
     virtual void Init(void) = 0;
     virtual bool Mocked(const string_q& which);
-    void configureDisplay(const string_q& tool, const string_q& dataType, const string_q& defFormat,
-                          const string_q& meta = "");
     void registerOptions(size_t nP, COption const* pP);
 
   private:
