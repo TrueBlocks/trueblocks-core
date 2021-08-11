@@ -38,6 +38,7 @@ class CBlock : public CBaseNode {
     double price;
     bool finalized;
     timestamp_t timestamp;
+    wei_t baseFeePerGas;
     CTransactionArray transactions;
     CStringArray tx_hashes;
     string_q name;
@@ -123,6 +124,7 @@ inline void CBlock::initialize(void) {
     price = 0.0;
     finalized = false;
     timestamp = 0;
+    baseFeePerGas = 0;
     transactions.clear();
     tx_hashes.clear();
     name = "";
@@ -147,6 +149,7 @@ inline void CBlock::duplicate(const CBlock& bl) {
     price = bl.price;
     finalized = bl.finalized;
     timestamp = bl.timestamp;
+    baseFeePerGas = bl.baseFeePerGas;
     transactions = bl.transactions;
     tx_hashes = bl.tx_hashes;
     name = bl.name;
