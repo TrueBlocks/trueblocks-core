@@ -184,8 +184,6 @@ string_q exportPostamble(const CStringArray& errors, const string_q& extra);
 
 //-------------------------------------------------------------------------
 extern bool findTimestamp_binarySearch(CBlock& block, size_t first, size_t last, bool progress = false);
-extern bool freshenTimestamps(blknum_t minBlock);
-extern bool loadTimestamps(uint32_t** theArray, size_t& cnt);
 
 //-------------------------------------------------------------------------
 extern bool excludeTrace(const CTransaction* trans, size_t maxTraces);

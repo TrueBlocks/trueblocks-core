@@ -36,6 +36,9 @@ extern bool pinlib_findChunk(CPinnedChunkArray& pList, const string_q& fn, CPinn
 typedef bool (*PINFUNC)(CPinnedChunk& pin, void* data);
 extern bool pinlib_forEveryPin(CPinnedChunkArray& pList, PINFUNC func, void* data);
 
+extern bool freshenTimestamps(blknum_t minBlock);
+extern bool loadTimestamps(uint32_t** theArray, size_t& cnt);
+
 }  // namespace qblocks
 
 //-------------------------------------------------------------------------

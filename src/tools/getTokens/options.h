@@ -15,7 +15,7 @@
  * Parts of this file were generated with makeClass --options. Edit only those parts of
  * the code outside of the BEG_CODE/END_CODE sections
  */
-#include "acctlib.h"
+#include "pinlib.h"
 #include "tokenbalancerecord.h"
 
 // BEG_ERROR_DEFINES
