@@ -29,27 +29,31 @@ bool COptions::handle_init() {
     for (auto pin : pins) {
         if (!pinlib_getChunkFromRemote(pin, BLOOM_TYPE, sleep) || shouldQuit())
             break;
+        string_q bloomFn = pin.Format(getIndexPath("blooms/[{FILENAME}].bloom.gz"));
         if (pin_locally) {
             ostringstream os;
-            string_q bloomFn = pin.Format(getIndexPath("blooms/[{FILENAME}].bloom.gz"));
             os << "ipfs add -Q --pin \"" << bloomFn + "\"";
             string_q newHash = doCommand(os.str());
             LOG_INFO(cGreen, "Re-pinning ", pin.fileName, cOff, " ==> ", newHash, " ",
                      (pin.bloomHash == newHash ? greenCheck : redX));
         }
+        ::remove(bloomFn.c_str());
+        LOG4(cGreen, "Removed zip file ", bloomFn, cOff);
 
         if (init_all) {
             if (!pinlib_getChunkFromRemote(pin, CHUNK_TYPE, sleep) || shouldQuit())
                 break;
+            string_q binFn = pin.Format(getIndexPath("finalized/[{FILENAME}].bin.gz"));
             if (pin_locally) {
                 ostringstream os;
-                string_q binFn = pin.Format(getIndexPath("finalized/[{FILENAME}].bin.gz"));
                 os << "ipfs add -Q --pin \"" << binFn + "\"";
                 string_q newHash = doCommand(os.str());
                 LOG_INFO(cGreen, "Re-pinning ", pin.fileName, cOff, " ==> ", newHash, " ",
                          (pin.indexHash == newHash ? greenCheck : redX));
                 usleep(500000);
             }
+            ::remove(binFn.c_str());
+            LOG4(cGreen, "Removed zip file ", binFn, cOff);
         }
         // pinlib_pinLocally(pin, pin_locally /* pinBloom */, (pin_locally && init_all) /* pinChunk */);
     }
