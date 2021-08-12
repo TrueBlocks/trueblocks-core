@@ -13,7 +13,7 @@
 #include "etherlib.h"
 #include "options.h"
 
-extern void doTests(void);
+extern void doTheTests(void);
 extern void doBiggerTests(void);
 //--------------------------------------------------------------
 int main(int argc, const char* argv[]) {
@@ -25,7 +25,7 @@ int main(int argc, const char* argv[]) {
         return 0;
 
     if (isTestMode()) {
-        doTests();
+        doTheTests();
         doBiggerTests();
     } else {
         for (auto command : options.commandLines) {
@@ -70,7 +70,7 @@ bool debug = true;
     cout << "diff: " << substitute(AA, BB, "") << endl;
 
 //--------------------------------------------------------------
-void doTests(void) {
+void doTheTests(void) {
     for (size_t i = 0; i < 1; i++) {
         for (auto& t : xxx) {
             string_q test = string_q(t.test);

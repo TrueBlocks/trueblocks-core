@@ -32,15 +32,14 @@ int main(int argc, const char* argv[]) {
     // Parse command line, allowing for command files
     COptions options;
     if (!options.prepareArguments(argc, argv))
-        return 0;
+        return EXIT_FAILURE;
 
     total.git_hash = "git_" + string_q(GIT_COMMIT_HASH).substr(0, 10);
     string_q testFolder = getCWD() + "../../../../src/dev_tools/testRunner/testCases/";
     uint32_t testID = 0;
-    bool allSuccessful = false;
     for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
-            return 0;
+            return EXIT_FAILURE;
 
         for (auto testName : options.tests) {
             string_q path = nextTokenClear(testName, '/');
@@ -54,7 +53,7 @@ int main(int argc, const char* argv[]) {
 
             string_q testFile = testFolder + path + "/" + testName + ".csv";
             if (!fileExists(testFile))
-                return options.usage("Cannot find test file " + testFile + ".");
+                return !options.usage("Cannot find test file " + testFile + ".");
 
             string_q contents = asciiFileToString(testFile) + "\n";
             replaceAll(contents, "\n\n", "\n");
@@ -108,30 +107,21 @@ int main(int argc, const char* argv[]) {
                     string_q key = test.Format("[{KEY}]");
                     if (testMap[key] != CTestCase()) {
                         cerr << "Duplicate test names: " << key << ". Quitting..." << endl;
-                        return 1;
+                        return EXIT_FAILURE;
                     }
                     testMap[key] = test;
                 }
             }
 
             CTestCaseArray testArray;
-            for (auto t : testMap) {
+            for (auto t : testMap)
                 testArray.push_back(t.second);
-            }
             sort(testArray.begin(), testArray.end());
 
             expContext().exportFmt = CSV1;
             perf_fmt = substitute(cleanFmt(STR_DISPLAY_MEASURE), "\"", "");
-
-            allSuccessful = options.doTests(testArray, path, testName, API);
-            if (!allSuccessful && !options.no_quit)
-                return 1;
-
-            bool cmdTestsResult = options.doTests(testArray, path, testName, CMD);
-            allSuccessful = allSuccessful && cmdTestsResult;
-            if (!cmdTestsResult && !options.no_quit)
-                return 1;
-
+            options.doTests(testArray, path, testName, API);
+            options.doTests(testArray, path, testName, CMD);
             if (shouldQuit())
                 break;
 
@@ -142,8 +132,11 @@ int main(int argc, const char* argv[]) {
         }
     }
 
+    // We've run through all the tests. We know how many we've run and we know how
+    // many have passed, so we know if all of them passed.
+    total.allPassed = total.nTests == total.nPassed;
     if (options.report && options.skip == 1) {
-        total.allPassed = total.nTests == total.nPassed;
+        // Write performance data to a file and results to the screen
         perf << total.Format(perf_fmt) << endl;
         cerr << "    " << substitute(perf.str(), "\n", "\n    ") << endl;
         if (options.full_test && options.report) {
@@ -155,6 +148,7 @@ int main(int argc, const char* argv[]) {
         }
     }
 
+    // If configured, copy the data out to the folder our performance measurement tool knows about
     string_q copyPath = getGlobalConfig("testRunner")->getConfigStr("settings", "copyPath", "<NOT_SET>");
     if (folderExists(copyPath)) {
         CStringArray files = {"performance.csv", "performance_failed.csv", "performance_slow.csv",
@@ -178,21 +172,16 @@ int main(int argc, const char* argv[]) {
         cerr << fail;
     cerr << endl;
 
-    if (allSuccessful) {
-        return 0;
-    } else {
-        return 1;
-    }
+    return total.allPassed ? EXIT_SUCCESS : EXIT_FAILURE;
 }
 
 //-----------------------------------------------------------------------
-bool COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, const string_q& testName, int whichTest) {
+void COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, const string_q& testName, int whichTest) {
     if (!(modes & whichTest))
-        return true;
+        return;
 
     resetClock();
     bool cmdTests = whichTest & CMD;
-    bool success = false;
 
     CMeasure measure(testPath, testName, (cmdTests ? "cmd" : "api"));
     cerr << measure.Format("Testing [{COMMAND}] ([{TYPE}] mode):") << endl;
@@ -207,10 +196,12 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
             // do nothing - wrong mode
 
         } else if (!folderExists(test.goldPath)) {
-            return usage("Folder " + test.goldPath + " not found.");
+            LOG_WARN("Folder ", test.goldPath, " not found.");
+            return;
 
         } else if (!folderExists(test.workPath)) {
-            return usage("Folder " + test.workPath + " not found.");
+            LOG_WARN("Folder " + test.workPath + " not found.");
+            return;
 
         } else {
             ostringstream cmd;
@@ -233,7 +224,7 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
 
             } else {
                 bool has_options = (!test.builtin && !test.options.empty());
-                bool has_post = (!no_post && !test.post.empty());
+                bool has_post = !test.post.empty();
                 bool has_env = (envLines.size() > 0);
                 cmd << "curl -s ";
                 cmd << "-H \"User-Agent: testRunner\" ";
@@ -296,7 +287,8 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
             if (contains(oldText, "\"id\":") && contains(oldFn, "/tools/") && !contains(oldFn, "classes")) {
                 // This crazy shit is because we want to pass tests when running against different nodes (Parity,
                 // Erigon, etc.) so we have to remove some stuff and then sort the data (after deliniating it)
-                // so it matches more easily
+                // so it matches more easily.
+                // TODO(tjayrush): Once we shift from Parity to Erigon, this can go away.
                 while (contains(oldText, "sealFields")) {
                     replaceAll(oldText, "\"sealFields\":", "|");
                     string_q pre = nextTokenClear(oldText, '|');
@@ -337,6 +329,7 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
                 }
                 stringToAsciiFile(oldFn, os.str());
                 oldText = os.str();
+                // TODO(tjayrush): Once we shift from Parity to Erigon, this can go away.
             }
 
             string_q result = greenCheck;
@@ -368,6 +361,7 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
             }
 
             if (!contains(test.origLine, " all,")) {
+                // Prepare for presentation to the screen...
                 reverse(test.name);
                 test.name = substitute(padLeft(test.name, 30).substr(0, 30), " ", ".");
                 reverse(test.name);
@@ -380,14 +374,7 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
                     slow << trim(test.name) << " " << trim(test.options).substr(0, 90) << endl;
                 }
             }
-
-            success = result == greenCheck;
-
-            if (!no_quit && !success)
-                return false;
-
             usleep(1000);
-
             if (shouldQuit()) {
                 LOG4("Quitting because of shouldQuit");
                 break;
@@ -403,7 +390,7 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
         perf << measure.Format(perf_fmt) << endl;
     }
 
-    return success;
+    return;
 }
 
 //-----------------------------------------------------------------------

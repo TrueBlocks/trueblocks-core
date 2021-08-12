@@ -77,7 +77,7 @@ add_custom_target(generate COMMAND "${CMAKE_SOURCE_DIR}/../bin/makeClass" "-Aaop
 add_custom_target(readmes COMMAND "${CMAKE_SOURCE_DIR}/../bin/makeClass" "--readmes" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
 add_custom_target(finish COMMAND "${CMAKE_SOURCE_DIR}/../bin/makeClass" "-lf" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
 add_custom_target(tests COMMAND "${CMAKE_SOURCE_DIR}/../bin/test/test.sh" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/../build")
-add_custom_target(test-all COMMAND "${CMAKE_SOURCE_DIR}/../bin/test/test-all.sh" "--no_quit" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/../build")
+add_custom_target(test-all COMMAND "${CMAKE_SOURCE_DIR}/../bin/test/test-all.sh" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/../build")
 
 # ----------------------------------------------------------------------------------------
 # Compilation order for the subfolders

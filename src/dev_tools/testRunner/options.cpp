@@ -25,8 +25,6 @@ static const COption params[] = {
     COption("filter", "f", "enum[fast*|medi|slow|all]", OPT_FLAG, "determine how long it takes to run tests"),
     COption("clean", "c", "", OPT_SWITCH, "clean working folder before running tests"),
     COption("skip", "s", "<uint64>", OPT_HIDDEN | OPT_FLAG, "run only every 'skip' test (faster)"),
-    COption("no_quit", "n", "", OPT_SWITCH, "do not quit testing on first error"),
-    COption("no_post", "o", "", OPT_SWITCH, "do not complete the post processing step"),
     COption("report", "r", "", OPT_SWITCH, "display performance report to screen"),
     COption("", "", "", OPT_DESCRIPTION, "Run TrueBlocks' test cases with options."),
     // clang-format on
@@ -71,12 +69,6 @@ bool COptions::parseArguments(string_q& command) {
                 return false;
         } else if (arg == "-s" || arg == "--skip") {
             return flag_required("skip");
-
-        } else if (arg == "-n" || arg == "--no_quit") {
-            no_quit = true;
-
-        } else if (arg == "-o" || arg == "--no_post") {
-            no_post = true;
 
         } else if (arg == "-r" || arg == "--report") {
             report = true;
@@ -151,8 +143,6 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST("filter", filter, (filter == ""));
     LOG_TEST_BOOL("clean", clean);
     LOG_TEST("skip", skip, (skip == 1));
-    LOG_TEST_BOOL("no_quit", no_quit);
-    LOG_TEST_BOOL("no_post", no_post);
     LOG_TEST_BOOL("report", report);
     // END_DEBUG_DISPLAY
 
@@ -165,13 +155,6 @@ bool COptions::parseArguments(string_q& command) {
     else if (filter == "all")
         filter = "";
 
-#if 0
-    mode = "cmd";
-    filter = "all";
-    tests.clear();
-    tests.push_back("tools/ethNames");
-    no_quit = true;
-#endif
     if (tests.empty()) {
         full_test = true;
         tests.push_back("libs/utillib");
@@ -219,8 +202,6 @@ void COptions::Init(void) {
     filter = "";
     clean = false;
     skip = 1;
-    no_quit = false;
-    no_post = false;
     report = false;
     // END_CODE_INIT
 
