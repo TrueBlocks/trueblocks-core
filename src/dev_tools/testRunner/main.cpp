@@ -37,6 +37,7 @@ int main(int argc, const char* argv[]) {
     total.git_hash = "git_" + string_q(GIT_COMMIT_HASH).substr(0, 10);
     string_q testFolder = getCWD() + "../../../../src/dev_tools/testRunner/testCases/";
     uint32_t testID = 0;
+    bool allSuccessful = false;
     for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
             return 0;
@@ -121,9 +122,14 @@ int main(int argc, const char* argv[]) {
 
             expContext().exportFmt = CSV1;
             perf_fmt = substitute(cleanFmt(STR_DISPLAY_MEASURE), "\"", "");
-            if (!options.doTests(testArray, path, testName, API))
+
+            allSuccessful = options.doTests(testArray, path, testName, API);
+            if (!allSuccessful && !options.no_quit)
                 return 1;
-            if (!options.doTests(testArray, path, testName, CMD))
+
+            bool cmdTestsResult = options.doTests(testArray, path, testName, CMD);
+            allSuccessful = allSuccessful && cmdTestsResult;
+            if (!cmdTestsResult && !options.no_quit)
                 return 1;
 
             if (shouldQuit())
@@ -172,7 +178,11 @@ int main(int argc, const char* argv[]) {
         cerr << fail;
     cerr << endl;
 
-    return 0;
+    if (allSuccessful) {
+        return 0;
+    } else {
+        return 1;
+    }
 }
 
 //-----------------------------------------------------------------------
@@ -182,6 +192,7 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
 
     resetClock();
     bool cmdTests = whichTest & CMD;
+    bool success = false;
 
     CMeasure measure(testPath, testName, (cmdTests ? "cmd" : "api"));
     cerr << measure.Format("Testing [{COMMAND}] ([{TYPE}] mode):") << endl;
@@ -370,7 +381,9 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
                 }
             }
 
-            if (!no_quit && (result == redX))
+            success = result == greenCheck;
+
+            if (!no_quit && !success)
                 return false;
 
             usleep(1000);
@@ -390,7 +403,7 @@ bool COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
         perf << measure.Format(perf_fmt) << endl;
     }
 
-    return true;
+    return success;
 }
 
 //-----------------------------------------------------------------------
