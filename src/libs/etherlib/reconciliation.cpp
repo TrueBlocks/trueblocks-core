@@ -901,8 +901,11 @@ void CReconciliation::initForToken(CAccountName& tokenName) {
     assetAddr = tokenName.address;
     ASSERT(!assetAddr.empty());
     assetSymbol = tokenName.symbol;
-    if (assetSymbol.empty())
+    if (assetSymbol.empty()) {
         assetSymbol = getTokenSymbol(tokenName.address, blockNumber);
+        if (contains(assetSymbol, "reverted"))
+            assetSymbol = "";
+    }
     if (assetSymbol.empty())
         assetSymbol = tokenName.address.substr(0, 4);
     decimals = tokenName.decimals != 0 ? tokenName.decimals : 18;

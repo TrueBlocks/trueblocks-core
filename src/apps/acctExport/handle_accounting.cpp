@@ -88,6 +88,8 @@ bool COptions::process_reconciliation(CTraverser* trav) {
             if (isReconciled(trav)) {
                 for (auto& statement : trav->trans.statements) {
                     CAccountName tokenName;
+                    if (contains(statement.assetSymbol, "reverted"))
+                        statement.assetSymbol = "";
                     if (statement.assetSymbol != "ETH" && statement.assetSymbol != "WEI" &&
                         findToken(tokenName, statement.assetAddr)) {
                         // We always freshen these in case user has changed names database
