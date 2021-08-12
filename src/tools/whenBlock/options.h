@@ -15,7 +15,7 @@
  * Parts of this file were generated with makeClass --options. Edit only those parts of
  * the code outside of the BEG_CODE/END_CODE sections
  */
-#include "etherlib.h"
+#include "pinlib.h"
 
 // BEG_ERROR_DEFINES
 #define ERR_INVALIDSKIPVAL 1

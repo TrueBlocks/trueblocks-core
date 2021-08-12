@@ -33,8 +33,7 @@ int main(int argc, const char* argv[]) {
             if (options.firstOut)
                 cout << exportPreamble(expContext().fmtMap["header"], GETRUNTIME_CLASS(CBlock));
             if (options.requests.size() > 0) {
-                options.applyFilter();  // for (auto item : options.items)
-                                        // visitBlock(item.second, &options);
+                options.applyFilter();
 
             } else if (options.timestamps) {
                 forEveryTimestamp(visitBlock, &options, 0, options.stop,
@@ -51,6 +50,7 @@ int main(int argc, const char* argv[]) {
 //-----------------------------------------------------------------------
 bool visitBlock(CBlock& block, void* data) {
     COptions* opt = reinterpret_cast<COptions*>(data);
+
     if (opt->isText) {
         cout << block.Format(expContext().fmtMap["format"]) << endl;
 
@@ -65,6 +65,7 @@ bool visitBlock(CBlock& block, void* data) {
     opt->firstOut = false;
     if (isTestMode() && (++opt->cnt > 100))
         return false;
+
     return true;
 }
 
