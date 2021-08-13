@@ -315,6 +315,7 @@ void COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
                                                 "transactionLogIndex",
                                                 "root",
                                                 "mined",
+                                                "\"result\":null",
                                                 "\"type\":\"\"",
                                                 "\"type\":\"0x0\"",
                                                 "\"type\": \"0x0\"",
