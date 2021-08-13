@@ -64,7 +64,7 @@ int main(int argc, const char* argv[]) {
             map<string_q, CTestCase> testMap;
             for (auto line : lines) {
                 bool ignore1 = startsWith(line, "#");
-                bool ignore2 = startsWith(line, "off") && !options.ignoreOff;
+                bool ignore2 = !startsWith(line, "on") && !options.ignoreOff;
                 bool ignore3 = startsWith(line, "enabled");
                 bool ignore4 = false;
                 if (!ignore3 && !options.filter.empty()) {
