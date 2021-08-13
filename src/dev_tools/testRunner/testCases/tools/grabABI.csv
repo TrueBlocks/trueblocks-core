@@ -9,8 +9,8 @@ on      ,both ,fast  ,abis  ,tools/grabABI ,no_abi1            ,y    ,addrs = 0x
 on      ,both ,fast  ,abis  ,tools/grabABI ,no_abi2            ,y    ,addrs = 0x1728039ce0d18a799c081c5c7fa2090dd365a8d0
 on      ,both ,fast  ,abis  ,tools/grabABI ,const              ,y    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
 on      ,both ,fast  ,abis  ,tools/grabABI ,verbose1           ,y    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & verbose
-on      ,both ,fast  ,abis  ,tools/grabABI ,known_alone        ,y    ,known
-on      ,both ,fast  ,abis  ,tools/grabABI ,known_with         ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & known
+local   ,both ,fast  ,abis  ,tools/grabABI ,known_alone        ,y    ,known
+local   ,both ,fast  ,abis  ,tools/grabABI ,known_with         ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & known
 on      ,both ,fast  ,abis  ,tools/grabABI ,underbar_functions ,y    ,addrs = 0xdac17f958d2ee523a2206206994597c13d831ec7
 on      ,both ,fast  ,abis  ,tools/grabABI ,output_test        ,n    ,addrs = 0xdac17f958d2ee523a2206206994597c13d831ec7 & output = testing_file
 on      ,both ,fast  ,abis  ,tools/grabABI ,known_bug1         ,y    ,addrs = 0xe94327d07fc17907b4db788e5adf2ed424addff6 & fmt = json
