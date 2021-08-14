@@ -1399,6 +1399,9 @@ void COptionsBase::closeRedirect(void) {
         }
 
         rd_zipOnClose = false;
+        if (isTestMode()) {
+            ::remove(rd_outputFilename.c_str());
+        }
         rd_outputFilename = "";
     }
 }
