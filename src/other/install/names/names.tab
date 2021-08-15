@@ -1,4 +1,5 @@
 tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefund	is_contract	is_erc20	is_erc721
+	0x0						false	false	false	false	false	false
 55-Defi	0x000000000000000000000000000000000000dead	ENS: Burn Address		EtherScan.io			false	false	false	false	false	false
 50-Tokens:ERC20	0x0000000000001b84b1cb32787b0d64758d019317	HomeWork 🏠🛠️	HWK	On chain	18		false	false	false	true	true	true
 50-Tokens:ERC20	0x0000000000004946c0e9f43f4dee607b0ef1fa1c	1inch.exchange v2	CHI	On chain	18		false	false	false	true	true	false
@@ -3632,7 +3633,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x57e299ee8f1c5a92a9ed54f934acc7ff5f159699	RECORD	RCD	On chain	18		false	false	false	true	true	false
 31-Gitcoin:Grants	0x57ea12a3a8e441f5fe7b1f3af1121097b7d3b6a8	Grant 0821 Umbra: Privacy Preserving Stealth Payments		https://gitcoin.co/grants/821/umbra-privacy-preserving-stealth-payments			false	false	false	false	false	false
 50-Tokens:ERC20	0x57efc6f4f0cb42fd1a74686fb710256868e9217c	Token Engineering Token	TET	On chain	18		false	false	false	true	true	false
-50-Tokens:ERC721	0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85	ENS: Base Registrar Implementation					false	false	false	true	false	false
+30-Contracts	0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85	ENS: Base Registrar					false	false	false	true	false	false
 30-Contracts:Kyber Network	0x57f8160e1c59d16c01bbe181fd94db4e56b60495	Kyber Weth Reserve		TrueBlocks.io			false	false	false	true	false	false
 90-Individuals:Kickback	0x57f9ef887d17985357db615f3736d697391ae68e	greg		https://kickback.events/			false	false	false	false	false	false
 91-Early:Addresses	0x580114cbeb41c62f55ff55ca9e6f028ceb92ae91	dEthereumlotteryNet_id218_cnt9_2mo		Ether Camp			false	false	false	true	false	false
