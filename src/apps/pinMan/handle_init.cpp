@@ -37,8 +37,10 @@ bool COptions::handle_init() {
             LOG_INFO(cGreen, "Re-pinning ", pin.fileName, cOff, " ==> ", newHash, " ",
                      (pin.bloomHash == newHash ? greenCheck : redX));
         }
-        ::remove(bloomFn.c_str());
-        LOG4(cGreen, "Removed zip file ", bloomFn, cOff);
+        if (fileExists(bloomFn)) {
+            ::remove(bloomFn.c_str());
+            LOG4(cGreen, "Removed zip file ", bloomFn, cOff);
+        }
 
         if (init_all) {
             if (!pinlib_getChunkFromRemote(pin, CHUNK_TYPE, sleep) || shouldQuit())
@@ -52,8 +54,10 @@ bool COptions::handle_init() {
                          (pin.indexHash == newHash ? greenCheck : redX));
                 usleep(500000);
             }
-            ::remove(binFn.c_str());
-            LOG4(cGreen, "Removed zip file ", binFn, cOff);
+            if (fileExists(binFn)) {
+                ::remove(binFn.c_str());
+                LOG4(cGreen, "Removed zip file ", binFn, cOff);
+            }
         }
         // pinlib_pinLocally(pin, pin_locally /* pinBloom */, (pin_locally && init_all) /* pinChunk */);
     }
