@@ -112,8 +112,10 @@ bool visitBlock(uint64_t blockNum, void* data) {
         }
         if (opt->modeBits & ST_STORAGE)
             state.storage = getStorageAt(state.address, 0, opt->latestBlock);
-        if (opt->modeBits & ST_DEPLOYED)
-            state.deployed = getDeployBlock(state.address);
+        if (opt->modeBits & ST_DEPLOYED) {
+            blknum_t dep = getDeployBlock(state.address);
+            state.deployed = dep == NOPOS ? 0 : dep;
+        }
         if (opt->modeBits & ST_ACCTTYPE)
             state.accttype = (isContractAt(state.address, opt->latestBlock) ? "Contract" : "EOA");
 
