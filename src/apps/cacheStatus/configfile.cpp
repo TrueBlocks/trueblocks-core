@@ -177,6 +177,18 @@ bool CConfigFile::SerializeC(CArchive& archive) const {
     return true;
 }
 
+//---------------------------------------------------------------------------------------------------
+bool CConfigFile::Migrate(CArchive& archiveIn, CArchive& archiveOut) const {
+    ASSERT(archiveIn.isReading());
+    ASSERT(archiveOut.isWriting());
+    CConfigFile copy;
+    // FUTURE_WORK
+    // FUTURE_WORK
+    copy.Serialize(archiveIn);
+    copy.SerializeC(archiveOut);
+    return true;
+}
+
 //---------------------------------------------------------------------------
 CArchive& operator>>(CArchive& archive, CConfigFileArray& array) {
     uint64_t count;

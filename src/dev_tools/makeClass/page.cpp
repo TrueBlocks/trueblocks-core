@@ -349,6 +349,18 @@ bool CPage::SerializeC(CArchive& archive) const {
     return true;
 }
 
+//---------------------------------------------------------------------------------------------------
+bool CPage::Migrate(CArchive& archiveIn, CArchive& archiveOut) const {
+    ASSERT(archiveIn.isReading());
+    ASSERT(archiveOut.isWriting());
+    CPage copy;
+    // FUTURE_WORK
+    // FUTURE_WORK
+    copy.Serialize(archiveIn);
+    copy.SerializeC(archiveOut);
+    return true;
+}
+
 //---------------------------------------------------------------------------
 CArchive& operator>>(CArchive& archive, CPageArray& array) {
     uint64_t count;

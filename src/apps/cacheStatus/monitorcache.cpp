@@ -193,6 +193,18 @@ bool CMonitorCache::SerializeC(CArchive& archive) const {
     return true;
 }
 
+//---------------------------------------------------------------------------------------------------
+bool CMonitorCache::Migrate(CArchive& archiveIn, CArchive& archiveOut) const {
+    ASSERT(archiveIn.isReading());
+    ASSERT(archiveOut.isWriting());
+    CMonitorCache copy;
+    // FUTURE_WORK
+    // FUTURE_WORK
+    copy.Serialize(archiveIn);
+    copy.SerializeC(archiveOut);
+    return true;
+}
+
 //---------------------------------------------------------------------------
 CArchive& operator>>(CArchive& archive, CMonitorCacheArray& array) {
     uint64_t count;

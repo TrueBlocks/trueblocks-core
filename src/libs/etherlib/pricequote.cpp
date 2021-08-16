@@ -171,6 +171,18 @@ bool CPriceQuote::SerializeC(CArchive& archive) const {
     return true;
 }
 
+//---------------------------------------------------------------------------------------------------
+bool CPriceQuote::Migrate(CArchive& archiveIn, CArchive& archiveOut) const {
+    ASSERT(archiveIn.isReading());
+    ASSERT(archiveOut.isWriting());
+    CPriceQuote copy;
+    // FUTURE_WORK
+    // FUTURE_WORK
+    copy.Serialize(archiveIn);
+    copy.SerializeC(archiveOut);
+    return true;
+}
+
 //---------------------------------------------------------------------------
 CArchive& operator>>(CArchive& archive, CPriceQuoteArray& array) {
     uint64_t count;

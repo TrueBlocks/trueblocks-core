@@ -175,6 +175,18 @@ bool CApiSpec::SerializeC(CArchive& archive) const {
     return true;
 }
 
+//---------------------------------------------------------------------------------------------------
+bool CApiSpec::Migrate(CArchive& archiveIn, CArchive& archiveOut) const {
+    ASSERT(archiveIn.isReading());
+    ASSERT(archiveOut.isWriting());
+    CApiSpec copy;
+    // FUTURE_WORK
+    // FUTURE_WORK
+    copy.Serialize(archiveIn);
+    copy.SerializeC(archiveOut);
+    return true;
+}
+
 //---------------------------------------------------------------------------
 CArchive& operator>>(CArchive& archive, CApiSpecArray& array) {
     uint64_t count;

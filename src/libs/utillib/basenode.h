@@ -59,6 +59,7 @@ class CBaseNode {
     virtual bool setValueByName(const string_q& fieldName, const string_q& fieldValue);
     virtual bool Serialize(CArchive& archive);
     virtual bool SerializeC(CArchive& archive) const;
+    virtual bool Migrate(CArchive& archiveIn, CArchive& archiveOut) const = 0;
     virtual bool readBackLevel(CArchive& archive);
     virtual void finishParse(void) {
     }

@@ -1,5 +1,4 @@
 tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefund	is_contract	is_erc20	is_erc721
-	0x0						false	false	false	false	false	false
 55-Defi	0x000000000000000000000000000000000000dead	ENS: Burn Address		EtherScan.io			false	false	false	false	false	false
 50-Tokens:ERC20	0x0000000000001b84b1cb32787b0d64758d019317	HomeWork 🏠🛠️	HWK	On chain	18		false	false	false	true	true	true
 50-Tokens:ERC20	0x0000000000004946c0e9f43f4dee607b0ef1fa1c	1inch.exchange v2	CHI	On chain	18		false	false	false	true	true	false

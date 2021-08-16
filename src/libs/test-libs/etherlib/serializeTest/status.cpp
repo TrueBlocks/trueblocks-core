@@ -12,7 +12,7 @@
  *-------------------------------------------------------------------------------------------*/
 /*
  * Parts of this file were generated with makeClass --run. Edit only those parts of
- *  the code inside of 'EXISTING_CODE' tags.
+ * the code inside of 'EXISTING_CODE' tags.
  */
 #include "status.h"
 
@@ -233,6 +233,18 @@ bool CStatus::SerializeC(CArchive& archive) const {
     archive << is_scraping;
     // archive << caches;
 
+    return true;
+}
+
+//---------------------------------------------------------------------------------------------------
+bool CStatus::Migrate(CArchive& archiveIn, CArchive& archiveOut) const {
+    ASSERT(archiveIn.isReading());
+    ASSERT(archiveOut.isWriting());
+    CStatus copy;
+    // FUTURE_WORK
+    // FUTURE_WORK
+    copy.Serialize(archiveIn);
+    copy.SerializeC(archiveOut);
     return true;
 }
 
