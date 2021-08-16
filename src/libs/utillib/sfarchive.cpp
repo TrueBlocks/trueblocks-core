@@ -410,7 +410,8 @@ bool CArchive::needsUpgrade(bool arrayFile) {
     long t = Tell();  // so we can put it back
     uint64_t schema = 0;
     if (arrayFile) {
-        Seek(sizeof(uint64_t) * 2, SEEK_SET);  // skip to the third 64 bit int which is schema (first is count, second is first items deleted flag
+        Seek(sizeof(uint64_t) * 2, SEEK_SET);  // skip to the third 64 bit int which is schema (first is count, second
+                                               // is first items deleted flag
     } else {
         Seek(sizeof(uint64_t), SEEK_SET);  // skip to the second 64 bit int which is schema
     }
