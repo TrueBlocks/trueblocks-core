@@ -70,6 +70,8 @@ class CArchive : public CSharedResource {
         operator>>(unused);
     }
 
+    bool needsUpgrade(void);
+
     CArchive& operator<<(bool b);
     CArchive& operator<<(char c);
     CArchive& operator<<(int d);

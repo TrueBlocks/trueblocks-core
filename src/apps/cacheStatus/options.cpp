@@ -19,6 +19,7 @@ static const COption params[] = {
     COption("depth", "p", "<uint64>", OPT_HIDDEN | OPT_FLAG, "for cache mode only, number of levels deep to report"),
     COption("report", "r", "", OPT_HIDDEN | OPT_SWITCH, "show a summary of the current status of TrueBlocks (deprecated)"),  // NOLINT
     COption("terse", "e", "", OPT_HIDDEN | OPT_SWITCH, "show a terse summary report"),
+    COption("migrate", "m", "list<enum[test|abis|blocks|txs|traces|recons|all]>", OPT_HIDDEN | OPT_FLAG, "either effectuate or test to see if a migration is necessary"),  // NOLINT
     COption("get_config", "g", "", OPT_HIDDEN | OPT_SWITCH, "returns JSON data of the editable configuration file items"),  // NOLINT
     COption("set_config", "s", "", OPT_HIDDEN | OPT_SWITCH, "accepts JSON in an env variable and writes it to configuration files"),  // NOLINT
     COption("test_start", "S", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive -- testing only)"),
@@ -41,6 +42,7 @@ bool COptions::parseArguments(string_q& command) {
     CStringArray modes;
     CStringArray types;
     bool report = false;
+    CStringArray migrate;
     bool get_config = false;
     bool set_config = false;
     blknum_t test_start = 0;
@@ -77,6 +79,14 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-e" || arg == "--terse") {
             terse = true;
+
+        } else if (startsWith(arg, "-m:") || startsWith(arg, "--migrate:")) {
+            string_q migrate_tmp;
+            if (!confirmEnum("migrate", migrate_tmp, arg))
+                return false;
+            migrate.push_back(migrate_tmp);
+        } else if (arg == "-m" || arg == "--migrate") {
+            return flag_required("migrate");
 
         } else if (arg == "-g" || arg == "--get_config") {
             get_config = true;
@@ -119,11 +129,40 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST("depth", depth, (depth == NOPOS));
     LOG_TEST_BOOL("report", report);
     LOG_TEST_BOOL("terse", terse);
+    LOG_TEST_LIST("migrate", migrate, migrate.empty());
     LOG_TEST_BOOL("get_config", get_config);
     LOG_TEST_BOOL("set_config", set_config);
     LOG_TEST("test_start", test_start, (test_start == 0));
     LOG_TEST("test_end", test_end, (test_end == NOPOS));
     // END_DEBUG_DISPLAY
+
+    if (!migrate.empty()) {
+        bool hasAll = false;
+        bool hasTest = false;
+        for (auto m : migrate) {
+            if (m == "test") {
+                if (migrate.size() > 1)
+                    return usage("The `test` option tests all caches, do not add specific cache names.");
+                hasTest = true;
+            } else if (m == "all") {
+                if (migrate.size() > 1)
+                    return usage("The `all` option migrates all caches, do not add specific cache names.");
+                hasAll = true;
+            } else {
+                cachePaths.push_back(m);
+            }
+        }
+
+        if (hasTest || hasAll) {
+            CStringArray caches = {"abis", "blocks", "traces", "txs", "recons"};
+            cachePaths.clear();
+            cachePaths = caches;
+        }
+
+        if (hasTest)
+            return handle_migrate_test();
+        return handle_migrate();
+    }
 
     bool cs = false;
     for (auto m : modes)

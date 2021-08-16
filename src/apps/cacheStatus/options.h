@@ -40,6 +40,7 @@ class COptions : public CAbiOptions {
     CIndexHashMap bloomHashes;
     CIndexHashMap indexHashes;
     blkrange_t scanRange;
+    CStringArray cachePaths;
 
     COptions(void);
     ~COptions(void);
@@ -50,6 +51,8 @@ class COptions : public CAbiOptions {
     bool handle_status(ostream& os);
     bool handle_config(ostream& os);
     bool handle_config_get(ostream& os);
+    bool handle_migrate(void);
+    bool handle_migrate_test(void);
 };
 
 //-------------------------------------------------------------------------

@@ -402,4 +402,19 @@ void CArchive::writeHeader(void) {
     operator<<(unused);
 }
 
+//-----------------------------------------------------------------------
+bool CArchive::needsUpgrade(void) {
+    if (!isOpen())
+        return false;
+
+    long t = Tell();  // so we can put it back
+
+    Seek(sizeof(uint64_t), SEEK_SET);  // skip to the second 64 bit int which is schema
+    uint64_t schema;
+    this->Read(schema);
+    Seek(t, SEEK_SET);  // go back where we started
+
+    return schema < getVersionNum();
+}
+
 }  // namespace qblocks

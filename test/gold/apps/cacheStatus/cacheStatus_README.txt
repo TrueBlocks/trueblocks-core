@@ -16,6 +16,7 @@ cacheStatus -th
 | -p | --depth &lt;num&gt; | for cache mode only, number of levels deep to report |
 | -r | --report | show a summary of the current status of TrueBlocks (deprecated) |
 | -e | --terse | show a terse summary report |
+| -m | --migrate &lt;val&gt; | either effectuate or test to see if a migration is necessary, one or more of *[ test \| abis \| blocks \| txs \| traces \| recons \| all ]* |
 | -g | --get_config | returns JSON data of the editable configuration file items |
 | -s | --set_config | accepts JSON in an env variable and writes it to configuration files |
 | -S | --test_start &lt;num&gt; | first block to process (inclusive -- testing only) |
