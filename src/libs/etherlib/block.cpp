@@ -557,7 +557,7 @@ bool CBlock::readBackLevel(CArchive& archive) {
         finalized = false;
         finishParse();
         done = true;
-    } else if (m_schema < getVersionNum(0, 11, 2)) {
+    } else if (m_schema < getVersionNum(0, 10, 3)) {
         archive >> gasLimit;
         archive >> gasUsed;
         archive >> hash;
@@ -569,6 +569,11 @@ bool CBlock::readBackLevel(CArchive& archive) {
         archive >> finalized;
         archive >> timestamp;
         archive >> transactions;
+        if (blockNumber < londonBlock) {
+            baseFeePerGas = 0;
+        } else {
+            baseFeePerGas = 0;
+        }
         finalized = false;
         finishParse();
         done = true;
@@ -632,6 +637,7 @@ const char* STR_DISPLAY_BLOCK =
     "[{DIFFICULTY}]\t"
     "[{GASUSED}]\t"
     "[{GASLIMIT}]\t"
+    "[{BASEFEEPERGAS}]\t"
     "[{MINER}]\t"
     "[{HASH}]\t"
     "[{PARENTHASH}]\t"

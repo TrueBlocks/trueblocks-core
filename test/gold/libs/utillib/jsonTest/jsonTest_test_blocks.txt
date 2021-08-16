@@ -10,6 +10,7 @@ tests/blocks.json
   "miner": "0x0",
   "difficulty": 0,
   "timestamp": 1504726529,
+  "baseFeePerGas": 0,
   "transactions": [
     {
       "hash": "0x1db32326cd2cb2797616641240fe03ae56f7a6ac529cc8f8d53b82df023303ef",

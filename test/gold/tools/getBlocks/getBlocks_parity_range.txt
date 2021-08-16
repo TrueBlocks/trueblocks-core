@@ -2,6 +2,7 @@ getBlocks argc: 4 [1:358450-0x5785a] [2:--cache] [3:--parity]
 getBlocks 358450-0x5785a --cache --parity 
 { "data": [
 {
+  "baseFeePerGas": "0x0",
   "difficulty": "0x5a5753781c6",
   "finalized": true,
   "gasLimit": "0x2fefd8",
@@ -120,6 +121,7 @@ getBlocks 358450-0x5785a --cache --parity
   ]
 },
 {
+  "baseFeePerGas": "0x0",
   "difficulty": "0x5a4c088dad8",
   "finalized": true,
   "gasLimit": "0x2fefd8",
@@ -154,6 +156,7 @@ getBlocks 358450-0x5785a --cache --parity
   ]
 },
 {
+  "baseFeePerGas": "0x0",
   "difficulty": "0x5a40bf0c9bf",
   "finalized": true,
   "gasLimit": "0x2fefd8",
@@ -165,6 +168,7 @@ getBlocks 358450-0x5785a --cache --parity
   "timestamp": "0x5617f9fe"
 },
 {
+  "baseFeePerGas": "0x0",
   "difficulty": "0x5a3576f4ba8",
   "finalized": true,
   "gasLimit": "0x2fefd8",
@@ -199,6 +203,7 @@ getBlocks 358450-0x5785a --cache --parity
   ]
 },
 {
+  "baseFeePerGas": "0x0",
   "difficulty": "0x5a40bda3993",
   "finalized": true,
   "gasLimit": "0x2fefd8",
@@ -210,6 +215,7 @@ getBlocks 358450-0x5785a --cache --parity
   "timestamp": "0x5617fa10"
 },
 {
+  "baseFeePerGas": "0x0",
   "difficulty": "0x5a4c05bb4dc",
   "finalized": true,
   "gasLimit": "0x2fefd8",
@@ -244,6 +250,7 @@ getBlocks 358450-0x5785a --cache --parity
   ]
 },
 {
+  "baseFeePerGas": "0x0",
   "difficulty": "0x5a40bc3a968",
   "finalized": true,
   "gasLimit": "0x2fefd8",
@@ -278,6 +285,7 @@ getBlocks 358450-0x5785a --cache --parity
   ]
 },
 {
+  "baseFeePerGas": "0x0",
   "difficulty": "0x5a3574230f5",
   "finalized": true,
   "gasLimit": "0x2fefd8",
@@ -480,6 +488,7 @@ getBlocks 358450-0x5785a --cache --parity
   ]
 },
 {
+  "baseFeePerGas": "0x0",
   "difficulty": "0x5a2a2d748b1",
   "finalized": true,
   "gasLimit": "0x2fefd8",
@@ -535,6 +544,7 @@ getBlocks 358450-0x5785a --cache --parity
   ]
 },
 {
+  "baseFeePerGas": "0x0",
   "difficulty": "0x5a3572ba39c",
   "finalized": true,
   "gasLimit": "0x2fefd8",
@@ -546,6 +556,7 @@ getBlocks 358450-0x5785a --cache --parity
   "timestamp": "0x5617fa77"
 },
 {
+  "baseFeePerGas": "0x0",
   "difficulty": "0x5a40b968912",
   "finalized": true,
   "gasLimit": "0x2fefd8",
@@ -557,6 +568,7 @@ getBlocks 358450-0x5785a --cache --parity
   "timestamp": "0x5617fa81"
 },
 {
+  "baseFeePerGas": "0x0",
   "difficulty": "0x5a357151643",
   "finalized": true,
   "gasLimit": "0x2fefd8",
@@ -633,6 +645,7 @@ getBlocks 358450-0x5785a --cache --parity
   ]
 },
 {
+  "baseFeePerGas": "0x0",
   "difficulty": "0x5a2a2aa33a3",
   "finalized": true,
   "gasLimit": "0x2fefd8",
@@ -667,6 +680,7 @@ getBlocks 358450-0x5785a --cache --parity
   ]
 },
 {
+  "baseFeePerGas": "0x0",
   "difficulty": "0x5a1ee55de5f",
   "finalized": true,
   "gasLimit": "0x2fefd8",
@@ -743,6 +757,7 @@ getBlocks 358450-0x5785a --cache --parity
   ]
 },
 {
+  "baseFeePerGas": "0x0",
   "difficulty": "0x5a13a1813a6",
   "finalized": true,
   "gasLimit": "0x2fefd8",
@@ -777,6 +792,7 @@ getBlocks 358450-0x5785a --cache --parity
   ]
 },
 {
+  "baseFeePerGas": "0x0",
   "difficulty": "0x5a1ee3f56aa",
   "finalized": true,
   "gasLimit": "0x2fefd8",
@@ -788,6 +804,7 @@ getBlocks 358450-0x5785a --cache --parity
   "timestamp": "0x5617faec"
 },
 {
+  "baseFeePerGas": "0x0",
   "difficulty": "0x5a2a27d1e96",
   "finalized": true,
   "gasLimit": "0x2fefd8",
@@ -799,6 +816,7 @@ getBlocks 358450-0x5785a --cache --parity
   "timestamp": "0x5617faf8"
 },
 {
+  "baseFeePerGas": "0x0",
   "difficulty": "0x5a356d16e3b",
   "finalized": true,
   "gasLimit": "0x2fefd8",
@@ -833,6 +851,7 @@ getBlocks 358450-0x5785a --cache --parity
   ]
 },
 {
+  "baseFeePerGas": "0x0",
   "difficulty": "0x5a2a2669410",
   "finalized": true,
   "gasLimit": "0x2fefd8",
@@ -867,6 +886,7 @@ getBlocks 358450-0x5785a --cache --parity
   ]
 },
 {
+  "baseFeePerGas": "0x0",
   "difficulty": "0x5a1ee124740",
   "finalized": true,
   "gasLimit": "0x2fefd8",
@@ -922,6 +942,7 @@ getBlocks 358450-0x5785a --cache --parity
   ]
 },
 {
+  "baseFeePerGas": "0x0",
   "difficulty": "0x5a2a250098a",
   "finalized": true,
   "gasLimit": "0x2fefd8",
@@ -933,6 +954,7 @@ getBlocks 358450-0x5785a --cache --parity
   "timestamp": "0x5617fb44"
 },
 {
+  "baseFeePerGas": "0x0",
   "difficulty": "0x5a356a4538d",
   "finalized": true,
   "gasLimit": "0x2fefd8",
@@ -988,6 +1010,7 @@ getBlocks 358450-0x5785a --cache --parity
   ]
 },
 {
+  "baseFeePerGas": "0x0",
   "difficulty": "0x5a2a2397f05",
   "finalized": true,
   "gasLimit": "0x2fefd8",
@@ -1022,6 +1045,7 @@ getBlocks 358450-0x5785a --cache --parity
   ]
 },
 {
+  "baseFeePerGas": "0x0",
   "difficulty": "0x5a3568dc636",
   "finalized": true,
   "gasLimit": "0x2fefd8",
@@ -1033,6 +1057,7 @@ getBlocks 358450-0x5785a --cache --parity
   "timestamp": "0x5617fb9c"
 },
 {
+  "baseFeePerGas": "0x0",
   "difficulty": "0x5a2a222f480",
   "finalized": true,
   "gasLimit": "0x2fefd8",
@@ -1044,6 +1069,7 @@ getBlocks 358450-0x5785a --cache --parity
   "timestamp": "0x5617fbc0"
 },
 {
+  "baseFeePerGas": "0x0",
   "difficulty": "0x5a1edceb024",
   "finalized": true,
   "gasLimit": "0x2fefd8",
@@ -1120,6 +1146,7 @@ getBlocks 358450-0x5785a --cache --parity
   ]
 },
 {
+  "baseFeePerGas": "0x0",
   "difficulty": "0x5a2a20c69fc",
   "finalized": true,
   "gasLimit": "0x2fefd8",
@@ -1427,6 +1454,7 @@ getBlocks 358450-0x5785a --cache --parity
   ]
 },
 {
+  "baseFeePerGas": "0x0",
   "difficulty": "0x5a35660ab8b",
   "finalized": true,
   "gasLimit": "0x2fefd8",
@@ -1438,6 +1466,7 @@ getBlocks 358450-0x5785a --cache --parity
   "timestamp": "0x5617fbe1"
 },
 {
+  "baseFeePerGas": "0x0",
   "difficulty": "0x5a2a1f5df78",
   "finalized": true,
   "gasLimit": "0x2fefd8",
@@ -1449,6 +1478,7 @@ getBlocks 358450-0x5785a --cache --parity
   "timestamp": "0x5617fbee"
 },
 {
+  "baseFeePerGas": "0x0",
   "difficulty": "0x5a3564a1e35",
   "finalized": true,
   "gasLimit": "0x2fefd8",
@@ -1504,6 +1534,7 @@ getBlocks 358450-0x5785a --cache --parity
   ]
 },
 {
+  "baseFeePerGas": "0x0",
   "difficulty": "0x5a40ab4e77a",
   "finalized": true,
   "gasLimit": "0x2fefd8",
@@ -1601,6 +1632,7 @@ getBlocks 358450-0x5785a --cache --parity
   ]
 },
 {
+  "baseFeePerGas": "0x0",
   "difficulty": "0x5a3563390e0",
   "finalized": true,
   "gasLimit": "0x2fefd8",
@@ -1612,6 +1644,7 @@ getBlocks 358450-0x5785a --cache --parity
   "timestamp": "0x5617fc0b"
 },
 {
+  "baseFeePerGas": "0x0",
   "difficulty": "0x5a40a9e5754",
   "finalized": true,
   "gasLimit": "0x2fefd8",
@@ -1646,6 +1679,7 @@ getBlocks 358450-0x5785a --cache --parity
   ]
 },
 {
+  "baseFeePerGas": "0x0",
   "difficulty": "0x5a3561d038c",
   "finalized": true,
   "gasLimit": "0x2fefd8",
@@ -1657,6 +1691,7 @@ getBlocks 358450-0x5785a --cache --parity
   "timestamp": "0x5617fc1c"
 },
 {
+  "baseFeePerGas": "0x0",
   "difficulty": "0x5a2a1b23fee",
   "finalized": true,
   "gasLimit": "0x2fefd8",
@@ -1668,6 +1703,7 @@ getBlocks 358450-0x5785a --cache --parity
   "timestamp": "0x5617fc2e"
 },
 {
+  "baseFeePerGas": "0x0",
   "difficulty": "0x5a1ed5e09a9",
   "finalized": true,
   "gasLimit": "0x2fefd8",
@@ -1765,6 +1801,7 @@ getBlocks 358450-0x5785a --cache --parity
   ]
 },
 {
+  "baseFeePerGas": "0x0",
   "difficulty": "0x5a139205dea",
   "finalized": true,
   "gasLimit": "0x2fefd8",
@@ -1925,6 +1962,7 @@ getBlocks 358450-0x5785a --cache --parity
   ]
 },
 {
+  "baseFeePerGas": "0x0",
   "difficulty": "0x5a084f939e1",
   "finalized": true,
   "gasLimit": "0x2fefd8",
@@ -2022,6 +2060,7 @@ getBlocks 358450-0x5785a --cache --parity
   ]
 },
 {
+  "baseFeePerGas": "0x0",
   "difficulty": "0x5a13909d90a",
   "finalized": true,
   "gasLimit": "0x2fefd8",
@@ -2033,6 +2072,7 @@ getBlocks 358450-0x5785a --cache --parity
   "timestamp": "0x5617fc67"
 },
 {
+  "baseFeePerGas": "0x0",
   "difficulty": "0x5a1ed30fa47",
   "finalized": true,
   "gasLimit": "0x2fefd8",

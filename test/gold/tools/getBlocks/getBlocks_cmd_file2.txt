@@ -10,7 +10,8 @@ getBlocks --file:cmd_file2 --cache
   "miner": "0x7e6930b63d03e88f5928c5cd6ee3fcee4d714f7f",
   "difficulty": 3535435273529,
   "finalized": true,
-  "timestamp": 1439674369
+  "timestamp": 1439674369,
+  "baseFeePerGas": 0
 },
 {
   "gasLimit": 3141592,
@@ -21,7 +22,8 @@ getBlocks --file:cmd_file2 --cache
   "miner": "0x580992b51e3925e23280efb93d3047c82f17e038",
   "difficulty": 5027618839306,
   "finalized": true,
-  "timestamp": 1440511996
+  "timestamp": 1440511996,
+  "baseFeePerGas": 0
 },
 {
   "gasLimit": 3141592,
@@ -32,7 +34,8 @@ getBlocks --file:cmd_file2 --cache
   "miner": "0x3061512be32988b7cae01fabe2daabe55b0a9482",
   "difficulty": 6585165874233,
   "finalized": true,
-  "timestamp": 1440826383
+  "timestamp": 1440826383,
+  "baseFeePerGas": 0
 },
 {
   "gasLimit": 3141592,
@@ -43,7 +46,8 @@ getBlocks --file:cmd_file2 --cache
   "miner": "0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5",
   "difficulty": 7089068477500,
   "finalized": true,
-  "timestamp": 1443211927
+  "timestamp": 1443211927,
+  "baseFeePerGas": 0
 },
 {
   "gasLimit": 3141592,
@@ -54,7 +58,8 @@ getBlocks --file:cmd_file2 --cache
   "miner": "0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5",
   "difficulty": 6494932654393,
   "finalized": true,
-  "timestamp": 1444799304
+  "timestamp": 1444799304,
+  "baseFeePerGas": 0
 },
 {
   "gasLimit": 3141592,
@@ -65,7 +70,8 @@ getBlocks --file:cmd_file2 --cache
   "miner": "0xf927a40c8b7f6e07c5af7fa2155b4864a4112b13",
   "difficulty": 5792849968684,
   "finalized": true,
-  "timestamp": 1445036868
+  "timestamp": 1445036868,
+  "baseFeePerGas": 0
 },
 {
   "gasLimit": 3141592,
@@ -76,7 +82,8 @@ getBlocks --file:cmd_file2 --cache
   "miner": "0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5",
   "difficulty": 6510650687506,
   "finalized": true,
-  "timestamp": 1445864379
+  "timestamp": 1445864379,
+  "baseFeePerGas": 0
 },
 {
   "gasLimit": 3141592,
@@ -87,7 +94,8 @@ getBlocks --file:cmd_file2 --cache
   "miner": "0x63a9975ba31b0b9626b34300f7f627147df1f526",
   "difficulty": 7828374427132,
   "finalized": true,
-  "timestamp": 1446452690
+  "timestamp": 1446452690,
+  "baseFeePerGas": 0
 },
 {
   "gasLimit": 3141592,
@@ -99,6 +107,7 @@ getBlocks --file:cmd_file2 --cache
   "difficulty": 7588129354316,
   "finalized": true,
   "timestamp": 1448545183,
+  "baseFeePerGas": 0,
   "transactions": [
     {
       "hash": "0x4adcf842547ea26cdeec8f2cb3aefdedb9969426af315d8b26a3b55b3a9cd8d3",
@@ -135,6 +144,7 @@ getBlocks --file:cmd_file2 --cache
   "difficulty": 7406139158036,
   "finalized": true,
   "timestamp": 1449158435,
+  "baseFeePerGas": 0,
   "transactions": [
     {
       "hash": "0xcd14c0a696acdfc8f6a4045ed8fb5bd07bb878b0ec30ac581ce8eb0de459e886",
@@ -170,7 +180,8 @@ getBlocks --file:cmd_file2 --cache
   "miner": "0x24f03a0786f459be40c38ba1c47714e08f9947e5",
   "difficulty": 7760507970649,
   "finalized": true,
-  "timestamp": 1449247432
+  "timestamp": 1449247432,
+  "baseFeePerGas": 0
 },
 {
   "gasLimit": 3141592,
@@ -181,7 +192,8 @@ getBlocks --file:cmd_file2 --cache
   "miner": "0x738db714c08b8a32a29e0e68af00215079aa9c5c",
   "difficulty": 8640284807276,
   "finalized": true,
-  "timestamp": 1450655797
+  "timestamp": 1450655797,
+  "baseFeePerGas": 0
 },
 {
   "gasLimit": 3141592,
@@ -193,6 +205,7 @@ getBlocks --file:cmd_file2 --cache
   "difficulty": 8190827447647,
   "finalized": true,
   "timestamp": 1451947020,
+  "baseFeePerGas": 0,
   "transactions": [
     {
       "hash": "0x8a4558d90cfbf65541e9ee93c41a51e26513da734db5ac477eb20ca1af0f5aea",
@@ -229,6 +242,7 @@ getBlocks --file:cmd_file2 --cache
   "difficulty": 8886631266194,
   "finalized": true,
   "timestamp": 1452855767,
+  "baseFeePerGas": 0,
   "transactions": [
     {
       "hash": "0x966468a87707c04effe35e2c5708220ecf340044df905cbabbc75d27ed4e6e42",
@@ -265,6 +279,7 @@ getBlocks --file:cmd_file2 --cache
   "difficulty": 12517095426659,
   "finalized": true,
   "timestamp": 1455850443,
+  "baseFeePerGas": 0,
   "transactions": [
     {
       "hash": "0x22ec23cddeed4782eec30fa911257b8b43a96cf48e67dd0bf5f61354ba4288ed",
@@ -324,6 +339,7 @@ getBlocks --file:cmd_file2 --cache
   "difficulty": 12607178900885,
   "finalized": true,
   "timestamp": 1455872128,
+  "baseFeePerGas": 0,
   "transactions": [
     {
       "hash": "0xa2c956f318a16d0ff5e7e3061873054d1d4835137b517f745669229d6e0be4cf",
@@ -587,6 +603,7 @@ getBlocks --file:cmd_file2 --cache
   "difficulty": 15032592181868,
   "finalized": true,
   "timestamp": 1456761851,
+  "baseFeePerGas": 0,
   "transactions": [
     {
       "hash": "0xdd1acdd9d0d868b2ddb9952f1319279939a72df06633521a4a39b90d12636fe4",
@@ -725,6 +742,7 @@ getBlocks --file:cmd_file2 --cache
   "difficulty": 17542881926868,
   "finalized": true,
   "timestamp": 1458022602,
+  "baseFeePerGas": 0,
   "transactions": [
     {
       "hash": "0xd0751323314ec7d19437c1bd538146972f026186c40288208605ab35f22529bc",
@@ -784,6 +802,7 @@ getBlocks --file:cmd_file2 --cache
   "difficulty": 12549332509227,
   "finalized": true,
   "timestamp": 1455404053,
+  "baseFeePerGas": 0,
   "transactions": [
     {
       "hash": "0xea1093d492a1dcb1bef708f771a99a96ff05dcab81ca76c31940300177fcf49f",
@@ -852,7 +871,8 @@ getBlocks --file:cmd_file2 --cache
   "miner": "0x2a65aca4d5fc5b5c859090a6c34d164135398226",
   "difficulty": 12573717012075,
   "finalized": true,
-  "timestamp": 1455405670
+  "timestamp": 1455405670,
+  "baseFeePerGas": 0
 },
 {
   "gasLimit": 3141592,
@@ -864,6 +884,7 @@ getBlocks --file:cmd_file2 --cache
   "difficulty": 12573567148160,
   "finalized": true,
   "timestamp": 1455407489,
+  "baseFeePerGas": 0,
   "transactions": [
     {
       "hash": "0xda6a3b4b3d7dd27a699a8d396806067a115794f1433b174e29baf7819201a621",
@@ -923,6 +944,7 @@ getBlocks --file:cmd_file2 --cache
   "difficulty": 12622628253728,
   "finalized": true,
   "timestamp": 1455409384,
+  "baseFeePerGas": 0,
   "transactions": [
     {
       "hash": "0xa81ca811c4dfc5aa611ca6dbcf3e6cfcecf40d49f4077dc3b2a358845fdff63e",
@@ -1028,6 +1050,7 @@ getBlocks --file:cmd_file2 --cache
   "difficulty": 12610157184222,
   "finalized": true,
   "timestamp": 1455410960,
+  "baseFeePerGas": 0,
   "transactions": [
     {
       "hash": "0xa536ae5dbebae6ec3ce7637e812511fe28f16b801e021be9b4389e12c8117b5d",
@@ -1086,7 +1109,8 @@ getBlocks --file:cmd_file2 --cache
   "miner": "0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5",
   "difficulty": 12573117566903,
   "finalized": true,
-  "timestamp": 1455412740
+  "timestamp": 1455412740,
+  "baseFeePerGas": 0
 },
 {
   "gasLimit": 3141592,
@@ -1098,6 +1122,7 @@ getBlocks --file:cmd_file2 --cache
   "difficulty": 12597548286229,
   "finalized": true,
   "timestamp": 1455414307,
+  "baseFeePerGas": 0,
   "transactions": [
     {
       "hash": "0xe9a19384f67f2a074718562450bcb373497f3428b3836c7819d157f251ad67e2",
@@ -1226,6 +1251,7 @@ getBlocks --file:cmd_file2 --cache
   "difficulty": 12634358695961,
   "finalized": true,
   "timestamp": 1455416270,
+  "baseFeePerGas": 0,
   "transactions": [
     {
       "hash": "0x55113a1a1665227c679a6d5d237c1001127ac277f8ccd92e2dae2672ee5436ca",
@@ -1261,7 +1287,8 @@ getBlocks --file:cmd_file2 --cache
   "miner": "0x2a65aca4d5fc5b5c859090a6c34d164135398226",
   "difficulty": 12597247991954,
   "finalized": true,
-  "timestamp": 1455418125
+  "timestamp": 1455418125,
+  "baseFeePerGas": 0
 },
 {
   "gasLimit": 3141592,
@@ -1273,6 +1300,7 @@ getBlocks --file:cmd_file2 --cache
   "difficulty": 12572518150222,
   "finalized": true,
   "timestamp": 1455419841,
+  "baseFeePerGas": 0,
   "transactions": [
     {
       "hash": "0x5e4273be15b0f642e91ef4b62f5a1e725305fd870cef9f3a42eb599da67ecd50",

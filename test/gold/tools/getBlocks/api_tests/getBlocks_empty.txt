@@ -10,6 +10,7 @@
       "difficulty": 12468438268070,
       "finalized": true,
       "timestamp": 1455421883,
+      "baseFeePerGas": 0,
       "transactions": [
         {
           "hash": "0x730724cb08a6eb17bf6b3296359d261570d343ea7944a17a9d7287d77900db08",
@@ -169,6 +170,10 @@
         {
           "name": "timestamp",
           "type": "timestamp"
+        },
+        {
+          "name": "baseFeePerGas",
+          "type": "wei"
         },
         {
           "name": "transactions",

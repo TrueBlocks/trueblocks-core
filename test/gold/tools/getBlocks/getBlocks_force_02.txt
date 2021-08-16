@@ -11,6 +11,7 @@ getBlocks 2769609 2799895 2872831 3076260 --cache
   "difficulty": 75086032611208,
   "finalized": true,
   "timestamp": 1481190424,
+  "baseFeePerGas": 0,
   "transactions": [
     {
       "hash": "0x37b782add315701ae7c1bb5ea2759bf75851940aec1459e6284d8c6e61f15519",
@@ -208,7 +209,8 @@ getBlocks 2769609 2799895 2872831 3076260 --cache
   "miner": "0x61c808d82a3ac53231750dadc13c777b59310bd9",
   "difficulty": 81881924985250,
   "finalized": true,
-  "timestamp": 1481621074
+  "timestamp": 1481621074,
+  "baseFeePerGas": 0
 },
 {
   "gasLimit": 4011803,
@@ -219,7 +221,8 @@ getBlocks 2769609 2799895 2872831 3076260 --cache
   "miner": "0x4bb96091ee9d802ed039c4d1a5f6216f90f81b01",
   "difficulty": 77217903307043,
   "finalized": true,
-  "timestamp": 1482663926
+  "timestamp": 1482663926,
+  "baseFeePerGas": 0
 },
 {
   "gasLimit": 3996806,
@@ -230,5 +233,6 @@ getBlocks 2769609 2799895 2872831 3076260 --cache
   "miner": "0x61c808d82a3ac53231750dadc13c777b59310bd9",
   "difficulty": 112182607379608,
   "finalized": true,
-  "timestamp": 1485564456
+  "timestamp": 1485564456,
+  "baseFeePerGas": 0
 }] }

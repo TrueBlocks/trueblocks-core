@@ -11,6 +11,7 @@ getBlocks 4369999 --cache
   "difficulty": 2997274096101735,
   "finalized": true,
   "timestamp": 1508131303,
+  "baseFeePerGas": 0,
   "transactions": [
     {
       "hash": "0x5a9d77909e77eee0a768d4160155c60fa77ae5b621e3c6f4fe6c54f509ea8c33",

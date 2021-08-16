@@ -11,6 +11,7 @@ getBlocks 0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b
   "difficulty": 12462338280735,
   "finalized": true,
   "timestamp": 1455422019,
+  "baseFeePerGas": 0,
   "transactions": [
     {
       "hash": "0xc8f18f5041f2d070c9688181edee313da2fe506dd3e85cb6c22409cd0bcbe476",

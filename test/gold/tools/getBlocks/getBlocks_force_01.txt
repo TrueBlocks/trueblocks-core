@@ -11,6 +11,7 @@ getBlocks 2768801 1995314 1958017 --cache
   "difficulty": 75921193547954,
   "finalized": true,
   "timestamp": 1481178735,
+  "baseFeePerGas": 0,
   "transactions": [
     {
       "hash": "0x4dab09c3c4b1bf67e67f794e91ebe945103e7aafd5e4772b7d69f466f42a3403",
@@ -82,6 +83,7 @@ getBlocks 2768801 1995314 1958017 --cache
   "difficulty": 52911097258872,
   "finalized": true,
   "timestamp": 1470104771,
+  "baseFeePerGas": 0,
   "transactions": [
     {
       "hash": "0xd6bfccab86d4638287499eb3e1779c3e771d362ea1a292015db681733f275586",
@@ -164,6 +166,7 @@ getBlocks 2768801 1995314 1958017 --cache
   "difficulty": 52469017057579,
   "finalized": true,
   "timestamp": 1469569832,
+  "baseFeePerGas": 0,
   "transactions": [
     {
       "hash": "0x5b0b4c79fbb61d6a439b2d6a9bed03e7e2c7de87e9a4f6d860312ffb4f98618e",

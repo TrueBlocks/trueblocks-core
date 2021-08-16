@@ -10,7 +10,8 @@ getBlocks 3 12 469 --uncles
   "miner": "0xc8ebccc5f5689fa8659d83713341e5ad19349448",
   "difficulty": 17171480576,
   "finalized": true,
-  "timestamp": 1438270018
+  "timestamp": 1438270018,
+  "baseFeePerGas": 0
 },
 {
   "gasLimit": 5000,
@@ -21,7 +22,8 @@ getBlocks 3 12 469 --uncles
   "miner": "0xbb7b8287f3f0a933474a79eae42cbca977791171",
   "difficulty": 21421302720,
   "finalized": true,
-  "timestamp": 1438271149
+  "timestamp": 1438271149,
+  "baseFeePerGas": 0
 },
 {
   "gasLimit": 5000,
@@ -32,5 +34,6 @@ getBlocks 3 12 469 --uncles
   "miner": "0xbb7b8287f3f0a933474a79eae42cbca977791171",
   "difficulty": 21421302720,
   "finalized": true,
-  "timestamp": 1438271149
+  "timestamp": 1438271149,
+  "baseFeePerGas": 0
 }] }

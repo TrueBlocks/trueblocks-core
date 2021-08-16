@@ -10,6 +10,7 @@
       "difficulty": 75086032611208,
       "finalized": true,
       "timestamp": 1481190424,
+      "baseFeePerGas": 0,
       "transactions": [
         {
           "hash": "0x37b782add315701ae7c1bb5ea2759bf75851940aec1459e6284d8c6e61f15519",
@@ -248,6 +249,7 @@
       "difficulty": 81881924985250,
       "finalized": true,
       "timestamp": 1481621074,
+      "baseFeePerGas": 0,
       "transactions": []
     },
     {
@@ -260,6 +262,7 @@
       "difficulty": 77217903307043,
       "finalized": true,
       "timestamp": 1482663926,
+      "baseFeePerGas": 0,
       "transactions": []
     },
     {
@@ -272,6 +275,7 @@
       "difficulty": 112182607379608,
       "finalized": true,
       "timestamp": 1485564456,
+      "baseFeePerGas": 0,
       "transactions": []
     }
   ],
@@ -314,6 +318,10 @@
         {
           "name": "timestamp",
           "type": "timestamp"
+        },
+        {
+          "name": "baseFeePerGas",
+          "type": "wei"
         },
         {
           "name": "transactions",

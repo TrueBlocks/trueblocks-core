@@ -11,6 +11,7 @@ getBlocks 2222222 2332332
   "difficulty": 67778199271167,
   "finalized": true,
   "timestamp": 1473348165,
+  "baseFeePerGas": 0,
   "transactions": [
     {
       "hash": "0x9c34ba45c523f75009d279553fe2a7e9a99a991a297439226321bea26ab62bbb",
@@ -369,6 +370,7 @@ getBlocks 2222222 2332332
   "difficulty": 74071927411516,
   "finalized": true,
   "timestamp": 1474924022,
+  "baseFeePerGas": 0,
   "transactions": [
     {
       "hash": "0xa023f79cc26b321111cf051cab92b3a325e00ecfa9d377845a41654f6b2f0ebe",

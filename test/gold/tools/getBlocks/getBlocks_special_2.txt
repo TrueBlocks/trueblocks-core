@@ -11,6 +11,7 @@ getBlocks daofork --cache
   "difficulty": 62413376722602,
   "finalized": true,
   "timestamp": 1469020840,
+  "baseFeePerGas": 0,
   "transactions": [
     {
       "hash": "0x4677a93807b73a0875d3a292eacb450d0af0d6f0eec6f283f8ad927ec539a17b",

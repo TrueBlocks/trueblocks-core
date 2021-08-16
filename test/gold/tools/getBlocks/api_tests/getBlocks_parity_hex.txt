@@ -1,6 +1,7 @@
 {
   "data": [
     {
+      "baseFeePerGas": "0x0",
       "difficulty": "0x62f79fffb26f",
       "finalized": true,
       "gasLimit": "0x3d4629",
@@ -433,6 +434,10 @@
     {
       "type": "CBlock",
       "fields": [
+        {
+          "name": "baseFeePerGas",
+          "type": "wei"
+        },
         {
           "name": "difficulty",
           "type": "unumber"

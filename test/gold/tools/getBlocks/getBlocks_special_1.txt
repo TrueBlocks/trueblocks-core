@@ -11,6 +11,7 @@ getBlocks stateclear --cache
   "difficulty": 71421066479733,
   "finalized": true,
   "timestamp": 1480448309,
+  "baseFeePerGas": 0,
   "transactions": [
     {
       "hash": "0xadf0d1b38eea47b8feca7966764797db6c573e269943d5b389a9230ce92746b3",
