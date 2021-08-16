@@ -78,6 +78,9 @@ string_q CBlock::getValueByName(const string_q& fieldName) const {
             if (fieldName % "blockNumber") {
                 return uint_2_Str(blockNumber);
             }
+            if (fieldName % "baseFeePerGas") {
+                return wei_2_Str(baseFeePerGas);
+            }
             break;
         case 'd':
             if (fieldName % "difficulty") {
@@ -206,6 +209,10 @@ bool CBlock::setValueByName(const string_q& fieldNameIn, const string_q& fieldVa
                 blockNumber = str_2_Uint(fieldValue);
                 return true;
             }
+            if (fieldName % "baseFeePerGas") {
+                baseFeePerGas = str_2_Wei(fieldValue);
+                return true;
+            }
             break;
         case 'd':
             if (fieldName % "difficulty") {
@@ -332,6 +339,7 @@ bool CBlock::Serialize(CArchive& archive) {
     archive >> price;
     archive >> finalized;
     archive >> timestamp;
+    archive >> baseFeePerGas;
     archive >> transactions;
     // archive >> tx_hashes;
     // archive >> name;
@@ -359,6 +367,7 @@ bool CBlock::SerializeC(CArchive& archive) const {
     archive << price;
     archive << finalized;
     archive << timestamp;
+    archive << baseFeePerGas;
     archive << transactions;
     // archive << tx_hashes;
     // archive << name;
@@ -422,6 +431,7 @@ void CBlock::registerClass(void) {
     ADD_FIELD(CBlock, "price", T_DOUBLE, ++fieldNum);
     ADD_FIELD(CBlock, "finalized", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CBlock, "timestamp", T_TIMESTAMP, ++fieldNum);
+    ADD_FIELD(CBlock, "baseFeePerGas", T_WEI, ++fieldNum);
     ADD_FIELD(CBlock, "transactions", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CBlock, "tx_hashes", T_TEXT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CBlock, "tx_hashes");
@@ -542,6 +552,21 @@ bool CBlock::readBackLevel(CArchive& archive) {
         archive >> miner;
         archive >> difficulty;
         archive >> price;
+        archive >> timestamp;
+        archive >> transactions;
+        finalized = false;
+        finishParse();
+        done = true;
+    } else if (m_schema < getVersionNum(0, 11, 2)) {
+        archive >> gasLimit;
+        archive >> gasUsed;
+        archive >> hash;
+        archive >> blockNumber;
+        archive >> parentHash;
+        archive >> miner;
+        archive >> difficulty;
+        archive >> price;
+        archive >> finalized;
         archive >> timestamp;
         archive >> transactions;
         finalized = false;

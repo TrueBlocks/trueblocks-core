@@ -10,6 +10,7 @@ fields = gas gasLimit|\
         double price|\
         bool finalized|\
         timestamp timestamp|\
+        wei baseFeePerGas|\
         CTransactionArray transactions|\
         CStringArray tx_hashes (nowrite)|\
         string name (nowrite)|\
