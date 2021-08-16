@@ -70,7 +70,7 @@ class CArchive : public CSharedResource {
         operator>>(unused);
     }
 
-    bool needsUpgrade(void);
+    bool needsUpgrade(bool arrayFile);
 
     CArchive& operator<<(bool b);
     CArchive& operator<<(char c);

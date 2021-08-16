@@ -19,107 +19,63 @@ bool migrateOne(const string_q& path, void* data) {
 
         if (endsWith(path, ".bin") && !contains(path, "/ts.bin")) {
             checker->nSeen++;
+            if (fileSize(path) == 0) {
+                ::remove(path.c_str());
+                return true;
+            }
 
-            if (checker->type == "traces") {
-                CArchive readArchive(READING_ARCHIVE);
-                readArchive.Lock(path, modeReadOnly, LOCK_NOWAIT);
-                if (!readArchive.isOpen()) {
-                    LOG_ERR("Could not open '", pRelative, "'");
+            CArchive readArchive(READING_ARCHIVE);
+            readArchive.Lock(path, modeReadOnly, LOCK_NOWAIT);
+            if (!readArchive.isOpen()) {
+                LOG_ERR("Could not open '", pRelative, "'");
+                return false;
+            }
+
+            if (readArchive.needsUpgrade(contains(path, "/traces/") || contains(path, "/recons/"))) {
+                CArchive writeArchive(WRITING_ARCHIVE);
+                writeArchive.Lock(tempFn, modeWriteCreate, LOCK_NOWAIT);
+                if (!writeArchive.isOpen()) {
+                    readArchive.Release();
+                    LOG_ERR("Could not open '", tRelative, "'");
                     return false;
                 }
-                CTraceArray traces;
-                readArchive >> traces;
-                // The traces cache does not store a version number at the head of the file, so we
-                // have to look at the first actual trace in the array for version information
-                if (traces.size() > 0 && traces[0].m_schema < getVersionNum()) {
-                    CArchive writeArchive(WRITING_ARCHIVE);
-                    writeArchive.Lock(tempFn, modeWriteCreate, LOCK_NOWAIT);
-                    if (!writeArchive.isOpen()) {
-                        readArchive.Release();
-                        LOG_ERR("Could not open '", tRelative, "'");
-                        return false;
-                    }
-                    writeArchive << traces;
-                    writeArchive.Release();
-                    readArchive.Release();
-                    moveFile(path, path + ".bak");
-                    moveFile(tempFn, path);
-                    checker->nMigrated++;
-                    LOG_INFO("  Migrated '", pRelative, "'");
-                }
-                readArchive.Release();
 
-            } else {
                 if (checker->type == "abis") {
-                    CArchive readArchive(READING_ARCHIVE);
-                    readArchive.Lock(path, modeReadOnly, LOCK_NOWAIT);
-                    if (!readArchive.isOpen()) {
-                        LOG_ERR("Could not open '", pRelative, "'");
-                        return false;
-                    }
-                    CArchive writeArchive(WRITING_ARCHIVE);
-                    writeArchive.Lock(tempFn, modeWriteCreate, LOCK_NOWAIT);
-                    if (!writeArchive.isOpen()) {
-                        readArchive.Release();
-                        LOG_ERR("Could not open '", tRelative, "'");
-                        return false;
-                    }
                     CAbi item;
                     item.Migrate(readArchive, writeArchive);
-                    readArchive.Release();
                     writeArchive.Release();
 
-                    moveFile(path, path + ".bak");
-                    moveFile(tempFn, path);
-                    checker->nMigrated++;
-                    LOG_INFO("  Migrated '", pRelative, "'");
                 } else if (checker->type == "slurps") {
-                    CArchive readArchive(READING_ARCHIVE);
-                    readArchive.Lock(path, modeReadOnly, LOCK_NOWAIT);
-                    if (!readArchive.isOpen()) {
-                        LOG_ERR("Could not open '", pRelative, "'");
-                        return false;
-                    }
-                    CArchive writeArchive(WRITING_ARCHIVE);
-                    writeArchive.Lock(tempFn, modeWriteCreate, LOCK_NOWAIT);
-                    if (!writeArchive.isOpen()) {
-                        readArchive.Release();
-                        LOG_ERR("Could not open '", tRelative, "'");
-                        return false;
-                    }
                     CCachedAccount item;
                     item.Migrate(readArchive, writeArchive);
-                    readArchive.Release();
                     writeArchive.Release();
 
-                    moveFile(path, path + ".bak");
-                    moveFile(tempFn, path);
-                    checker->nMigrated++;
-                    LOG_INFO("  Migrated '", pRelative, "'");
                 } else if (checker->type == "txs") {
-                    CArchive readArchive(READING_ARCHIVE);
-                    readArchive.Lock(path, modeReadOnly, LOCK_NOWAIT);
-                    if (!readArchive.isOpen()) {
-                        LOG_ERR("Could not open '", pRelative, "'");
-                        return false;
-                    }
-                    CArchive writeArchive(WRITING_ARCHIVE);
-                    writeArchive.Lock(tempFn, modeWriteCreate, LOCK_NOWAIT);
-                    if (!writeArchive.isOpen()) {
-                        readArchive.Release();
-                        LOG_ERR("Could not open '", tRelative, "'");
-                        return false;
-                    }
+                    CTransaction item;
+                    item.Migrate(readArchive, writeArchive);
+                    writeArchive.Release();
+
+                } else if (checker->type == "blocks") {
                     CBlock item;
                     item.Migrate(readArchive, writeArchive);
-                    readArchive.Release();
                     writeArchive.Release();
 
-                    moveFile(path, path + ".bak");
-                    moveFile(tempFn, path);
-                    checker->nMigrated++;
-                    LOG_INFO("  Migrated '", pRelative, "'");
+                } else if (checker->type == "recons") {
+                    CReconciliationArray items;
+                    readArchive >> items;
+                    writeArchive << items;
+
+                } else if (checker->type == "traces") {
+                    CTraceArray items;
+                    readArchive >> items;
+                    writeArchive << items;
                 }
+
+                readArchive.Release();
+                // moveFile(path, path + ".bak");
+                moveFile(tempFn, path);
+                checker->nMigrated++;
+                LOG_INFO("  Migrated '", pRelative, "'");
             }
 
         } else {

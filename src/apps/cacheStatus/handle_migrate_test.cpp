@@ -16,7 +16,7 @@ bool needsMigrate(const string_q& path, void* data) {
         if (endsWith(path, ".bin") && !contains(path, "/ts.bin")) {
             CArchive archive(READING_ARCHIVE);
             if (archive.Lock(path, modeReadOnly, LOCK_NOWAIT)) {
-                checker->needs = archive.needsUpgrade();
+                checker->needs = archive.needsUpgrade(contains(path, "/traces/") || contains(path, "/recons/"));
                 LOG_INFO("  Checking '", relative, "' isCurrent: ", cBlue, (checker->needs ? "false" : "true"), cOff,
                          (checker->needs ? "" : "\r"));
                 if (checker->needs || !shouldQuit())
@@ -40,7 +40,7 @@ bool COptions::handle_migrate_test(void) {
         if (checker.needs) {
             LOG_WARN("  Cache '$CACHES/", cache, "' needs a migration.");
         } else {
-            LOG_WARN("  Cache '$CACHES/", cache, "' does not need a migration.", string_q(20, ' '));
+            LOG_WARN("  Cache '$CACHES/", cache, "' is up to date.", string_q(50, ' '));
         }
     }
 
