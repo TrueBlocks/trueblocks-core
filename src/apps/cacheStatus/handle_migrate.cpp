@@ -76,12 +76,15 @@ bool migrateOne(const string_q& path, void* data) {
                 moveFile(tempFn, path);
                 checker->nMigrated++;
                 LOG_INFO("  Migrated '", pRelative, "'");
+            } else {
+                LOG_INFO("  '", pRelative, "' does not need an upgrade", "\r");
+                cerr.flush();
             }
 
         } else {
             if (!endsWith(path, ".bak")) {
                 checker->nSkipped++;
-                LOG_INFO("  Skipping ", cYellow, pRelative, cOff);
+                // LOG_INFO("  Skipping ", cYellow, pRelative, cOff);
             }
         }
     }
@@ -101,6 +104,8 @@ bool COptions::handle_migrate(void) {
         totals += checker;
     }
 
-    LOG_INFO(totals.Report());
+    LOG_INFO(cGreen, "Finished...", cOff);
+    LOG_INFO("  total", totals.Report());
+
     return false;
 }

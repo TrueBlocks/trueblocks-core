@@ -22,9 +22,9 @@ bool needsMigrate(const string_q& path, void* data) {
                 if (checker->needs || !shouldQuit())
                     return false;  // quit after we find the first one that needs migrate
             }
-        } else {
-            LOG_INFO("  Skipping ", cYellow, relative, cOff, "\r");
-            cerr.flush();
+            // } else {
+            //     LOG_INFO("  Skipping ", cYellow, relative, cOff, "\r");
+            //     cerr.flush();
         }
     }
     return !shouldQuit();
@@ -40,7 +40,7 @@ bool COptions::handle_migrate_test(void) {
         if (checker.needs) {
             LOG_WARN("  Cache '$CACHES/", cache, "' needs a migration.");
         } else {
-            LOG_WARN("  Cache '$CACHES/", cache, "' is up to date.", string_q(50, ' '));
+            LOG_WARN("  Cache '$CACHES/", cache, "' is up to date.", string_q(70, ' '));
         }
     }
 
