@@ -5,33 +5,20 @@
  *------------------------------------------------------------------------*/
 #include "options.h"
 
-class CChecker {
-  public:
-    bool needs;
-    string_q path;
-    CChecker(const string_q& p) : needs(false), path(p) {
-    }
-
-  private:
-    CChecker(void) = delete;
-    CChecker(const CChecker&) = delete;
-    CChecker& operator=(const CChecker&) = delete;
-};
-
 //--------------------------------------------------------------------------------
 bool needsMigrate(const string_q& path, void* data) {
-    CChecker* checker = (CChecker*)data;
+    CMigrationChecker* checker = (CMigrationChecker*)data;
     if (endsWith(path, "/")) {
         return forEveryFileInFolder(path + "*", needsMigrate, data);
 
     } else {
         string_q relative = substitute(path, getCachePath(""), "$CACHE/");
-        if (endsWith(path, ".bin")) {
+        if (endsWith(path, ".bin") && !contains(path, "/ts.bin")) {
             CArchive archive(READING_ARCHIVE);
             if (archive.Lock(path, modeReadOnly, LOCK_NOWAIT)) {
                 checker->needs = archive.needsUpgrade();
-                LOG_INFO("  Checking ", cBlue, relative, cOff, " isCurrent: ", cBlue,
-                         (checker->needs ? "false" : "true"), cOff, (checker->needs ? "" : "\r"));
+                LOG_INFO("  Checking '", relative, "' isCurrent: ", cBlue, (checker->needs ? "false" : "true"), cOff,
+                         (checker->needs ? "" : "\r"));
                 if (checker->needs || !shouldQuit())
                     return false;  // quit after we find the first one that needs migrate
             }
@@ -45,17 +32,17 @@ bool needsMigrate(const string_q& path, void* data) {
 
 //--------------------------------------------------------------------------------
 bool COptions::handle_migrate_test(void) {
-    bool needs = false;
     for (auto cache : cachePaths) {
         string_q path = getCachePath(cache);
         LOG_INFO(cGreen, "Checking '$CACHES/", cache, "'", string_q(50, ' '), cOff);
-        CChecker checker(path);
+        CMigrationChecker checker(path, cache);
         forEveryFileInFolder(path, needsMigrate, &checker);  // will quit early if it finds a migrate
         if (checker.needs) {
             LOG_WARN("  Cache '$CACHES/", cache, "' needs a migration.");
-            needs = true;
+        } else {
+            LOG_WARN("  Cache '$CACHES/", cache, "' does not need a migration.", string_q(20, ' '));
         }
     }
 
-    return usage(string_q("Migrations are ") + (needs ? "" : "not ") + "needed.");
+    return false;
 }

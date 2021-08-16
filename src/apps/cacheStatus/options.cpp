@@ -19,7 +19,7 @@ static const COption params[] = {
     COption("depth", "p", "<uint64>", OPT_HIDDEN | OPT_FLAG, "for cache mode only, number of levels deep to report"),
     COption("report", "r", "", OPT_HIDDEN | OPT_SWITCH, "show a summary of the current status of TrueBlocks (deprecated)"),  // NOLINT
     COption("terse", "e", "", OPT_HIDDEN | OPT_SWITCH, "show a terse summary report"),
-    COption("migrate", "m", "list<enum[test|abis|blocks|txs|traces|recons|all]>", OPT_HIDDEN | OPT_FLAG, "either effectuate or test to see if a migration is necessary"),  // NOLINT
+    COption("migrate", "m", "list<enum[test|abi_cache|block_cache|tx_cache|trace_cache|recon_cache|name_cache|slurp_cache|all]>", OPT_HIDDEN | OPT_FLAG, "either effectuate or test to see if a migration is necessary"),  // NOLINT
     COption("get_config", "g", "", OPT_HIDDEN | OPT_SWITCH, "returns JSON data of the editable configuration file items"),  // NOLINT
     COption("set_config", "s", "", OPT_HIDDEN | OPT_SWITCH, "accepts JSON in an env variable and writes it to configuration files"),  // NOLINT
     COption("test_start", "S", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive -- testing only)"),
@@ -149,12 +149,13 @@ bool COptions::parseArguments(string_q& command) {
                     return usage("The `all` option migrates all caches, do not add specific cache names.");
                 hasAll = true;
             } else {
-                cachePaths.push_back(m);
+                cachePaths.push_back(substitute(m, "_cache", "s"));
             }
         }
 
         if (hasTest || hasAll) {
-            CStringArray caches = {"abis", "blocks", "traces", "txs", "recons"};
+            CStringArray caches = {"abis",   "blocks", "traces", "txs",
+                                   "recons", "names",  "slurps"};  //"monitors", "prices",
             cachePaths.clear();
             cachePaths = caches;
         }

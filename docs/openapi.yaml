@@ -1247,11 +1247,13 @@ paths:
             type: string
             enum:
             - test
-            - abis
-            - blocks
-            - txs
-            - traces
-            - recons
+            - abi_cache
+            - block_cache
+            - tx_cache
+            - trace_cache
+            - recon_cache
+            - name_cache
+            - slurp_cache
             - all
       - name: get_config
         in: query

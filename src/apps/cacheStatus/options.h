@@ -93,3 +93,47 @@ class CItemCounter : public CCache {
     CItemCounter(void) : CCache() {
     }
 };
+
+//-------------------------------------------------------------------------
+class CMigrationChecker {
+  public:
+    bool needs;
+    string_q path;
+    string_q type;
+    size_t nSeen;
+    size_t nMigrated;
+    size_t nSkipped;
+
+    CMigrationChecker(const string_q& p, const string_q& t)
+        : needs(false), path(p), type(t), nSeen(0), nMigrated(0), nSkipped(0) {
+    }
+
+    CMigrationChecker(const CMigrationChecker& mig) {
+        nSeen = mig.nSeen;
+        nMigrated = mig.nMigrated;
+        nSkipped = mig.nSkipped;
+        type = mig.type;
+        path = mig.path;
+    }
+
+    CMigrationChecker& operator+=(const CMigrationChecker& mig) {
+        nSeen += mig.nSeen;
+        nMigrated += mig.nMigrated;
+        nSkipped += mig.nSkipped;
+        return *this;
+    }
+
+    string_q Report(void) const {
+        ostringstream os;
+        os << type << ": ";
+        os << nSeen << " files seen. ";
+        os << nMigrated << " files migrated. ";
+        os << (nSeen - nMigrated) << " files up to date. ";
+        os << nSkipped << " files skipped.";
+        return os.str();
+    }
+
+  private:
+    CMigrationChecker(void) = delete;
+    CMigrationChecker& operator=(const CMigrationChecker&) = delete;
+};

@@ -407,12 +407,12 @@ bool CArchive::needsUpgrade(void) {
     if (!isOpen())
         return false;
 
-    long t = Tell();  // so we can put it back
-
-    Seek(sizeof(uint64_t), SEEK_SET);  // skip to the second 64 bit int which is schema
+    Seek(0, SEEK_SET);  // go the beginning
+    uint64_t unused;
     uint64_t schema;
-    this->Read(schema);
-    Seek(t, SEEK_SET);  // go back where we started
+    *this >> unused;
+    *this >> schema;
+    Seek(0, SEEK_SET);  // go back to the beginning
 
     return schema < getVersionNum();
 }
