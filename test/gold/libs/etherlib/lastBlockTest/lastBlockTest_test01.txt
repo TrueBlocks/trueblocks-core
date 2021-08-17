@@ -1,7 +1,7 @@
 lastBlockTest argc: 2 [1:recurse] 
 lastBlockTest recurse 
 Recursive from ../
-Found 120 (120) files
+Found 122 (122) files
 ../abiTest/abiTest_01.txt
 ../abiTest/abiTest_02.txt
 ../abiTest/abiTest_03.txt
@@ -69,6 +69,8 @@ Found 120 (120) files
 ../dataUpgradeTest/dataUpgradeTest_CTraceResult.txt
 ../dataUpgradeTest/dataUpgradeTest_CTransaction.txt
 ../dataUpgradeTest/dataUpgradeTest_README.txt
+../dataUpgradeTest/newFmt.cache
+../dataUpgradeTest/newFmt.json
 ../dataUpgradeTest/oldFmt.cache
 ../decodeAbiTest/decode.txt
 ../decodeAbiTest/decodeAbiTest_01.txt

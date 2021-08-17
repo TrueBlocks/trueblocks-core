@@ -15,16 +15,15 @@ blockNumber         	1008	0	1082130460	T_BLOCKNUM TS_NUMERAL TS_INTEGER
 parentHash          	1009	0	20971580	T_HASH TS_STRING TS_OMITEMPTY
 miner               	1010	0	20971575	T_ADDRESS TS_STRING TS_OMITEMPTY
 difficulty          	1011	0	8388635	T_UNUMBER TS_NUMERAL
-price               	1012	1	8388638	T_DOUBLE TS_NUMERAL
-finalized           	1013	0	12582932	T_BOOL TS_NUMERAL TS_OMITEMPTY
-timestamp           	1014	0	1082130447	T_TIMESTAMP TS_NUMERAL TS_INTEGER
-baseFeePerGas       	1015	0	545259555	T_WEI TS_NUMERAL TS_BIGNUM
-transactions        	1016	0	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
-tx_hashes           	1017	1	88080434	T_TEXT|TS_ARRAY TS_STRING TS_ARRAY TS_OMITEMPTY
-name                	1018	1	20971570	T_TEXT TS_STRING TS_OMITEMPTY
-light               	1019	1	12582932	T_BOOL TS_NUMERAL TS_OMITEMPTY
-date                	1020	1	33554437	T_DATE TS_DATE
-age                 	1021	1	33554437	T_DATE TS_DATE
+finalized           	1012	0	12582932	T_BOOL TS_NUMERAL TS_OMITEMPTY
+timestamp           	1013	0	1082130447	T_TIMESTAMP TS_NUMERAL TS_INTEGER
+baseFeePerGas       	1014	0	545259555	T_WEI TS_NUMERAL TS_BIGNUM
+transactions        	1015	0	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
+tx_hashes           	1016	1	88080434	T_TEXT|TS_ARRAY TS_STRING TS_ARRAY TS_OMITEMPTY
+name                	1017	1	20971570	T_TEXT TS_STRING TS_OMITEMPTY
+light               	1018	1	12582932	T_BOOL TS_NUMERAL TS_OMITEMPTY
+date                	1019	1	33554437	T_DATE TS_DATE
+age                 	1020	1	33554437	T_DATE TS_DATE
 {
   "gasLimit": 3141592,
   "gasUsed": 21000,
@@ -48,6 +47,8 @@ age                 	1021	1	33554437	T_DATE TS_DATE
       "value": 100418060000000000,
       "gas": 90000,
       "gasPrice": 50000000000,
+      "maxFeePerGas": 0,
+      "maxPriorityFeePerGas": 0,
       "input": "0x",
       "isError": 0,
       "hasToken": 0,
@@ -85,6 +86,8 @@ age                 	1021	1	33554437	T_DATE TS_DATE
       "value": 100418060000000000,
       "gas": 90000,
       "gasPrice": 50000000000,
+      "maxFeePerGas": 0,
+      "maxPriorityFeePerGas": 0,
       "input": "0x",
       "isError": 0,
       "hasToken": 0,

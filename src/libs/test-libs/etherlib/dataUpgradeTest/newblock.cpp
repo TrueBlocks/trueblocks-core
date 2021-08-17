@@ -243,8 +243,10 @@ bool CNewBlock::setValueByName(const string_q& fieldNameIn, const string_q& fiel
 //---------------------------------------------------------------------------------------------------
 void CNewBlock::finishParse() {
     // EXISTING_CODE
-    for (size_t i = 0; i < transactions.size(); i++)
+    for (size_t i = 0; i < transactions.size(); i++) {
         transactions.at(i).pBlock = reinterpret_cast<CBlock*>(this);  // .at cannot access past the end of vector
+        transactions.at(i).timestamp = timestamp;
+    }
     // EXISTING_CODE
 }
 
@@ -434,6 +436,25 @@ bool CNewBlock::readBackLevel(CArchive& archive) {
         price = 0.0;
         finishParse();
         done = true;
+    } else if (m_schema < getVersionNum(0, 11, 3)) {
+        double removed1;
+        wei_t unused1;
+        archive >> gasLimit;
+        archive >> gasUsed;
+        archive >> hash;
+        archive >> blockNumber;
+        archive >> parentHash;
+        archive >> miner;
+        archive >> difficulty;
+        archive >> removed1;  // price;
+        archive >> finalized;
+        archive >> timestamp;
+        archive >> transactions;
+        if (m_schema >= getVersionNum(0, 10, 3))
+            archive >> unused1;  // we need to read it, but we reset it anyway
+        finalized = false;
+        finishParse();
+        done = true;
     }
     // EXISTING_CODE
     return done;
@@ -481,7 +502,7 @@ CNewBlock::CNewBlock(const CBlock& block) {
     parentHash = block.parentHash;
     miner = block.miner;
     difficulty = block.difficulty;
-    price = block.price;
+    price = 0.0;
     finalized = block.finalized;
     timestamp = block.timestamp;
     transactions = block.transactions;

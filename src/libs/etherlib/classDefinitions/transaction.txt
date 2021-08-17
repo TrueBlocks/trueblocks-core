@@ -13,6 +13,8 @@ fields = hash hash|\
         wei extraValue2|\
         gas gas|\
         gas gasPrice|\
+        gas maxFeePerGas|\
+        gas maxPriorityFeePerGas|\
         string input|\
         uint8 isError|\
         uint8 hasToken|\

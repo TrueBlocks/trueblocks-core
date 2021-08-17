@@ -124,9 +124,6 @@ string_q CBlock::getValueByName(const string_q& fieldName) const {
             if (fieldName % "parentHash") {
                 return hash_2_Str(parentHash);
             }
-            if (fieldName % "price") {
-                return double_2_Str(price, 5);
-            }
             break;
         case 't':
             if (fieldName % "timestamp") {
@@ -265,10 +262,6 @@ bool CBlock::setValueByName(const string_q& fieldNameIn, const string_q& fieldVa
                 parentHash = str_2_Hash(fieldValue);
                 return true;
             }
-            if (fieldName % "price") {
-                price = str_2_Double(fieldValue);
-                return true;
-            }
             break;
         case 't':
             if (fieldName % "timestamp") {
@@ -336,7 +329,6 @@ bool CBlock::Serialize(CArchive& archive) {
     archive >> parentHash;
     archive >> miner;
     archive >> difficulty;
-    archive >> price;
     archive >> finalized;
     archive >> timestamp;
     archive >> baseFeePerGas;
@@ -364,7 +356,6 @@ bool CBlock::SerializeC(CArchive& archive) const {
     archive << parentHash;
     archive << miner;
     archive << difficulty;
-    archive << price;
     archive << finalized;
     archive << timestamp;
     archive << baseFeePerGas;
@@ -428,7 +419,6 @@ void CBlock::registerClass(void) {
     ADD_FIELD(CBlock, "parentHash", T_HASH | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CBlock, "miner", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CBlock, "difficulty", T_UNUMBER, ++fieldNum);
-    ADD_FIELD(CBlock, "price", T_DOUBLE, ++fieldNum);
     ADD_FIELD(CBlock, "finalized", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CBlock, "timestamp", T_TIMESTAMP, ++fieldNum);
     ADD_FIELD(CBlock, "baseFeePerGas", T_WEI, ++fieldNum);
@@ -522,12 +512,13 @@ string_q nextBlockChunk_custom(const string_q& fieldIn, const void* dataPtr) {
 bool CBlock::readBackLevel(CArchive& archive) {
     bool done = false;
     // EXISTING_CODE
-    biguint_t removed;
+    double removed1;
+    biguint_t removed2;
     if (m_schema < getVersionNum(0, 3, 1)) {
         archive >> gasLimit;
         archive >> gasUsed;
         archive >> hash;
-        archive >> removed;  // used to be logsB loom
+        archive >> removed2;  // used to be logsB loom
         archive >> blockNumber;
         archive >> parentHash;
         archive >> timestamp;
@@ -539,7 +530,6 @@ bool CBlock::readBackLevel(CArchive& archive) {
         setDataSource(prev);
         miner = upgrade.miner;
         difficulty = upgrade.difficulty;
-        price = 0.0;
         finalized = false;
         finishParse();
         done = true;
@@ -551,13 +541,13 @@ bool CBlock::readBackLevel(CArchive& archive) {
         archive >> parentHash;
         archive >> miner;
         archive >> difficulty;
-        archive >> price;
+        archive >> removed1;  // price;
         archive >> timestamp;
         archive >> transactions;
         finalized = false;
         finishParse();
         done = true;
-    } else if (m_schema < getVersionNum(0, 10, 3)) {
+    } else if (m_schema < getVersionNum(0, 10, 4)) {
         archive >> gasLimit;
         archive >> gasUsed;
         archive >> hash;
@@ -565,14 +555,19 @@ bool CBlock::readBackLevel(CArchive& archive) {
         archive >> parentHash;
         archive >> miner;
         archive >> difficulty;
-        archive >> price;
+        archive >> removed1;  // price;
         archive >> finalized;
         archive >> timestamp;
         archive >> transactions;
+        if (m_schema == getVersionNum(0, 10, 3))
+            archive >> baseFeePerGas;  // we need to read it, but we reset it anyway
         if (blockNumber < londonBlock) {
             baseFeePerGas = 0;
         } else {
-            baseFeePerGas = 0;
+            CBlock upgrade;
+            upgrade.light = true;
+            getObjectViaRPC(upgrade, "eth_getBlockByNumber", "[" + quote(uint_2_Hex(blockNumber)) + ",false]");
+            baseFeePerGas = upgrade.baseFeePerGas;
         }
         finalized = false;
         finishParse();

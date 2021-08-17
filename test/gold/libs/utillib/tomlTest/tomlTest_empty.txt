@@ -2,7 +2,7 @@ tomlTest argc: 2 [1:empty.toml]
 tomlTest empty.toml 
 empty.toml
 [version]
-current = "0.10.3-alpha"
+current = "0.11.3-alpha"
 
 name: 		NONAME
 max_width: 	10000
@@ -13,7 +13,7 @@ File contents as read
 
 File contents after write
 [version]
-current = "0.10.3-alpha"
+current = "0.11.3-alpha"
 
 {
 	{ "thing1": "Value 1 with spaces" }

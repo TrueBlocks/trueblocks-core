@@ -75,6 +75,8 @@ Using Format(fmt) on a derived class QTransferFrom.
   "value": 0,
   "gas": 0,
   "gasPrice": 0,
+  "maxFeePerGas": 0,
+  "maxPriorityFeePerGas": 0,
   "isError": 0,
   "hasToken": 0,
   "gasUsed": 0
@@ -106,6 +108,8 @@ Using Format(fmt) on a derived class derived from QTransferFrom.
   "value": 0,
   "gas": 0,
   "gasPrice": 0,
+  "maxFeePerGas": 0,
+  "maxPriorityFeePerGas": 0,
   "isError": 0,
   "hasToken": 0,
   "gasUsed": 0

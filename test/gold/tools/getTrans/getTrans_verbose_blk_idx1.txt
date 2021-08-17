@@ -13,6 +13,8 @@ getTrans 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3 --
     "value": 306329900000000000,
     "gas": 21000,
     "gasPrice": 21000000000,
+    "maxFeePerGas": 0,
+    "maxPriorityFeePerGas": 0,
     "input": "0x",
     "isError": 0,
     "hasToken": 0,

@@ -12,6 +12,8 @@
       "value": 2148415350000000000,
       "gas": 90000,
       "gasPrice": 50000000000,
+      "maxFeePerGas": 0,
+      "maxPriorityFeePerGas": 0,
       "input": "0x",
       "isError": 0,
       "hasToken": 0,
@@ -41,6 +43,8 @@
       "value": 3.812e+19,
       "gas": 21000,
       "gasPrice": 50000000000,
+      "maxFeePerGas": 0,
+      "maxPriorityFeePerGas": 0,
       "input": "0x",
       "isError": 0,
       "hasToken": 0,
@@ -108,6 +112,14 @@
         },
         {
           "name": "gasPrice",
+          "type": "gas"
+        },
+        {
+          "name": "maxFeePerGas",
+          "type": "gas"
+        },
+        {
+          "name": "maxPriorityFeePerGas",
           "type": "gas"
         },
         {

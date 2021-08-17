@@ -13,6 +13,8 @@ getTrans 0xeec4ccd13fe05907f9d732a8ad245bcb7f918217157b89baaa23895c12eb329a --fm
     "value": 0,
     "gas": 50000,
     "gasPrice": 24000000000,
+    "maxFeePerGas": 0,
+    "maxPriorityFeePerGas": 0,
     "input": "0xa9059cbb0000000000000000000000004625f6b9416ca879cecb78855807f867cc15f8dc00000000000000000000000000000000000000000000010f0f32ad53d5936cb3",
     "isError": 1,
     "hasToken": 0,
@@ -24,5 +26,5 @@ getTrans 0xeec4ccd13fe05907f9d732a8ad245bcb7f918217157b89baaa23895c12eb329a --fm
     },
     "gasUsed": 50000
   }], "types": [
-{ "type": "CTransaction", "fields": [{ "name": "hash", "type": "hash" }, { "name": "blockHash", "type": "hash" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "transactionIndex", "type": "blocknum" }, { "name": "nonce", "type": "unumber" }, { "name": "timestamp", "type": "timestamp" }, { "name": "from", "type": "address" }, { "name": "to", "type": "address" }, { "name": "value", "type": "wei" }, { "name": "gas", "type": "gas" }, { "name": "gasPrice", "type": "gas" }, { "name": "input", "type": "text" }, { "name": "isError", "type": "unumber" }, { "name": "hasToken", "type": "unumber" }, { "name": "receipt", "type": "object" }, { "name": "gasUsed", "type": "gas" }] }
+{ "type": "CTransaction", "fields": [{ "name": "hash", "type": "hash" }, { "name": "blockHash", "type": "hash" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "transactionIndex", "type": "blocknum" }, { "name": "nonce", "type": "unumber" }, { "name": "timestamp", "type": "timestamp" }, { "name": "from", "type": "address" }, { "name": "to", "type": "address" }, { "name": "value", "type": "wei" }, { "name": "gas", "type": "gas" }, { "name": "gasPrice", "type": "gas" }, { "name": "maxFeePerGas", "type": "gas" }, { "name": "maxPriorityFeePerGas", "type": "gas" }, { "name": "input", "type": "text" }, { "name": "isError", "type": "unumber" }, { "name": "hasToken", "type": "unumber" }, { "name": "receipt", "type": "object" }, { "name": "gasUsed", "type": "gas" }] }
 ], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }

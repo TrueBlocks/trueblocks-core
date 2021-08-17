@@ -11,6 +11,8 @@
     "value": "100000000000000",
     "gas": "25201",
     "gasPrice": "25000000000",
+    "maxFeePerGas": "0",
+    "maxPriorityFeePerGas": "0",
     "input": "0x",
     "isError": "0",
     "hasToken": "0",

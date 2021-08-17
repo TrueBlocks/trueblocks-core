@@ -27,10 +27,10 @@ on,cmd,fast,null,etherlib/dataUpgradeTest,README,n,
 on,cmd,fast,null,etherlib/dataUpgradeTest,00,n,val = 0
 on,cmd,fast,null,etherlib/dataUpgradeTest,01,n,val = 1
 on,cmd,fast,null,etherlib/dataUpgradeTest,02,n,val = 2
-on,cmd,fast,null,etherlib/dataUpgradeTest,03,n,val = 3
-on,cmd,fast,null,etherlib/dataUpgradeTest,04,n,val = 4
-on,cmd,fast,null,etherlib/dataUpgradeTest,05,n,val = 5
-on,cmd,fast,null,etherlib/dataUpgradeTest,06,n,file:cmd_file1
+off,cmd,fast,null,etherlib/dataUpgradeTest,03,n,val = 3
+off,cmd,fast,null,etherlib/dataUpgradeTest,04,n,val = 4
+off,cmd,fast,null,etherlib/dataUpgradeTest,05,n,val = 5
+off,cmd,fast,null,etherlib/dataUpgradeTest,06,n,file:cmd_file1
 on,cmd,fast,null,etherlib/dataUpgradeTest,CAbi,n,val = CAbi
 on,cmd,fast,null,etherlib/dataUpgradeTest,CCachedAccount,n,val = CCachedAccount
 on,cmd,fast,null,etherlib/dataUpgradeTest,CMonitor,n,val = CMonitor

@@ -137,6 +137,14 @@ string_q CTransaction::getValueByName(const string_q& fieldName) const {
                 return uint_2_Str(isError);
             }
             break;
+        case 'm':
+            if (fieldName % "maxFeePerGas") {
+                return gas_2_Str(maxFeePerGas);
+            }
+            if (fieldName % "maxPriorityFeePerGas") {
+                return gas_2_Str(maxPriorityFeePerGas);
+            }
+            break;
         case 'n':
             if (fieldName % "nonce") {
                 return uint_2_Str(nonce);
@@ -369,6 +377,16 @@ bool CTransaction::setValueByName(const string_q& fieldNameIn, const string_q& f
                 return true;
             }
             break;
+        case 'm':
+            if (fieldName % "maxFeePerGas") {
+                maxFeePerGas = str_2_Gas(fieldValue);
+                return true;
+            }
+            if (fieldName % "maxPriorityFeePerGas") {
+                maxPriorityFeePerGas = str_2_Gas(fieldValue);
+                return true;
+            }
+            break;
         case 'n':
             if (fieldName % "nonce") {
                 nonce = str_2_Uint(fieldValue);
@@ -463,6 +481,8 @@ bool CTransaction::Serialize(CArchive& archive) {
     archive >> extraValue2;
     archive >> gas;
     archive >> gasPrice;
+    archive >> maxFeePerGas;
+    archive >> maxPriorityFeePerGas;
     archive >> input;
     archive >> isError;
     archive >> hasToken;
@@ -500,6 +520,8 @@ bool CTransaction::SerializeC(CArchive& archive) const {
     archive << extraValue2;
     archive << gas;
     archive << gasPrice;
+    archive << maxFeePerGas;
+    archive << maxPriorityFeePerGas;
     archive << input;
     archive << isError;
     archive << hasToken;
@@ -573,6 +595,8 @@ void CTransaction::registerClass(void) {
     ADD_FIELD(CTransaction, "extraValue2", T_WEI, ++fieldNum);
     ADD_FIELD(CTransaction, "gas", T_GAS, ++fieldNum);
     ADD_FIELD(CTransaction, "gasPrice", T_GAS, ++fieldNum);
+    ADD_FIELD(CTransaction, "maxFeePerGas", T_GAS, ++fieldNum);
+    ADD_FIELD(CTransaction, "maxPriorityFeePerGas", T_GAS, ++fieldNum);
     ADD_FIELD(CTransaction, "input", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CTransaction, "isError", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CTransaction, "hasToken", T_UNUMBER, ++fieldNum);
@@ -923,6 +947,39 @@ bool CTransaction::readBackLevel(CArchive& archive) {
         // archive >> finalized;
         hasToken = (uint8_t)oldToken;
         isError = (uint8_t)oldError;
+        finishParse();
+        done = true;
+    } else if (m_schema < getVersionNum(0, 11, 3)) {
+        archive >> hash;
+        archive >> blockHash;
+        archive >> blockNumber;
+        archive >> transactionIndex;
+        archive >> nonce;
+        archive >> timestamp;
+        archive >> from;
+        archive >> to;
+        archive >> value;
+        archive >> extraValue1;
+        archive >> extraValue2;
+        archive >> gas;
+        archive >> gasPrice;
+        archive >> input;
+        archive >> isError;
+        archive >> hasToken;
+        archive >> cachebits;
+        archive >> reserved2;
+        archive >> receipt;
+        archive >> traces;
+        archive >> articulatedTx;
+        if (blockNumber < londonBlock) {
+            maxFeePerGas = 0;
+            maxPriorityFeePerGas = 0;
+        } else {
+            CTransaction upgrade;
+            getObjectViaRPC(upgrade, "eth_getTransactionByHash", "[" + quote(hash) + ",false]");
+            maxFeePerGas = upgrade.maxFeePerGas;
+            maxPriorityFeePerGas = upgrade.maxPriorityFeePerGas;
+        }
         finishParse();
         done = true;
     }

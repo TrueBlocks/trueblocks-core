@@ -7,7 +7,6 @@ fields = gas gasLimit|\
         hash parentHash|\
         address miner|\
         uint64 difficulty|\
-        double price|\
         bool finalized|\
         timestamp timestamp|\
         wei baseFeePerGas|\
