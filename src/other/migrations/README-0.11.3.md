@@ -10,17 +10,19 @@
 
 ## Why the Change?
 
-We changed code relative to the London Hard Fork. While it is technically possible to run without doing a migration, it may be easier or sometime necessary to complete the following tasks to ensure a valid cache.
+In version 0.11.3, we first supported the changes needed for the London Hard Fork.
 
-These instructions should work, but if they don't you may always simply remove the TrueBlocks cache. As is true of all caches, you can delete it and it will be re-created.
+While it is technically possible to run the code without doing the following migration, it may be easier or sometime necessary to complete the following tasks to ensure a valid cache.
+
+In most cases, these instructions will work, but if they don't, you may simply remove the entire cache. As is true of all caches, if the cache is removed, it will be re-created.
 
 ## Where is the cache
 
-If you're on a Mac, your cache is at `~/Library/Application Support/TrueBlocks/cache`. If you're on Linux, your cache is at `~/.local/share/trueblocks/cache`. If you're on Windows, you have no cache because TrueBlocks does not work on Windows.
+On a Mac, your cache is at `~/Library/Application Support/TrueBlocks/cache`. On Linux, your cache is at `~/.local/share/trueblocks/cache`. On Windows, there is no cache, because TrueBlocks does not work on Windows.
 
 ## Migrating to v0.11.3
 
-Complete the following steps from the `~/build` folder in the TrueBlocks repo:
+As a pre-requisite, complete the following steps from the `~/build` folder in the TrueBlocks repo:
 
 ```[bash]
 git pull
@@ -29,24 +31,26 @@ make clean
 make -j2
 ```
 
-Once that's done, you may complete the migration with:
+Once that's done, complete the migration by first doing this:
 
 ```
 chifra status --migrate test
 ```
 
-which will just check to see if the cache needs to be upgraded. If it reports everythign is up to date, you are finished.
+which checks to see if the cache needs to be migrated. If the above command reports that everything is up to date, you are finished.
 
-If the above command reports that some parts of the cache need to be updated, then do:
+If the above command reports that some parts of the cache need to be migrated, complete the following command:
 
 ```
 chifra status --migrate all
 ```
 
-## What Should I Do If that Doesn't Work?
+## What To Do if the Above Doesn't Work
 
-You may always remove the cache entirely. There are no files in the cache that cannot be re-created. Be careful, however, that you do not remove the wrong files. Do not say we didn't warn you.
+It is alway possible to remove the cache. Note, however, that the previously cached files will have to be re-created. This will have a negative effect on the performance of TrueBlocks until the cache is re-created. (Speeding up reponse times is the whole purpose of the cache, after all.)
 
-## You're Done
+Be careful. Make sure you know what you're doing. Do not remove the wrong files. Do not say we didn't warn you.
+
+## You're Finished
 
 TrueBlocks version 0.11.3 should now work. Please report any problems by creating an issue.
