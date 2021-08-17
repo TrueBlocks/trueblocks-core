@@ -1,4 +1,5 @@
 tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefund	is_contract	is_erc20	is_erc721
+	0x0						false	false	false	false	false	false
 55-Defi	0x000000000000000000000000000000000000dead	ENS: Burn Address		EtherScan.io			false	false	false	false	false	false
 50-Tokens:ERC20	0x0000000000001b84b1cb32787b0d64758d019317	HomeWork 🏠🛠️	HWK	On chain	18		false	false	false	true	true	true
 50-Tokens:ERC20	0x0000000000004946c0e9f43f4dee607b0ef1fa1c	1inch.exchange v2	CHI	On chain	18		false	false	false	true	true	false
@@ -1674,6 +1675,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 90-Individuals:Kickback	0x27903282ff2d6c3033fa57d4f39d641ade882825	jules00		https://kickback.events/			false	false	false	false	false	false
 80-Malicious:DaoDrain	0x27b137a85656544b1ccb5a0f2e561a5703c6a68f	DAO Drain 044		GethSource			false	false	false	true	false	false
 30-Contracts:Humanity DAO	0x27b796ece472dd3fc033d691b4d2a125664de3d1	maxschorer		https://www.humanitydao.org/humans			false	false	false	false	false	false
+30-Contracts	0x27b9e289251bf21ecb0e2b6359afa173452a6d85	Type 2 Txs Acct					false	false	false	false	false	false
 91-Early:Addresses	0x27c0afc960fbeab1c6bba6be3837d40e948b2250	EtherWheel_id44_cnt17_5mo		Ether Camp			false	false	false	true	false	false
 90-Individuals:Gitcoin Grants	0x27c72e4bd23c910218d8f06c4a1742e06657c874	kisgus		Gitcoin Website			false	false	false	false	false	false
 31-Gitcoin:Grants	0x27cc10039ccc07b97d4e7e54143c53a01c4eb495	Grant 1262 Gaia Giveth Funding Portal		https://gitcoin.co/grants/1262/gaia-giveth-funding-portal			false	false	false	false	false	false
@@ -7259,6 +7261,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 91-Early:Addresses	0xb35abc849d143014f354486879bae428d696ab3b	Etheropt_id108_cnt83_5mo		Ether Camp			false	false	false	true	false	false
 31-Gitcoin:Grants	0xb35cd25e91b376eafba79abe71d78814dec3401a	Grant 0223 Ethereum Magicians		https://gitcoin.co/grants/223/ethereum-magicians			false	false	false	true	false	false
 31-Gitcoin:Grants	0xb363013df146fdcd5df27ae5cdd50c02f9099f56	Grant 1810 DeFi Frog | Analysis & Community Support		https://gitcoin.co/grants/1810/defi-frog-analysis-community-support			false	false	false	false	false	false
+50-Tokens:ERC20	0xb3655a1539e0582ea4464f76b711a323489bcbb7	0xBitcoin Test	0xBTCT	On chain	8		false	false	false	true	true	false
 91-Early:Addresses	0xb36ce92cad11e7a9b903531f30590ebc2e991ea6	Big		EtherScan.io			false	false	false	true	false	false
 90-Individuals:Gitcoin Grants	0xb36d37110417c0ca0b79b5d262868cc9444f7550	impatronic		Gitcoin Website			false	false	false	false	false	false
 91-Early:Addresses	0xb377dc0593ebce801cdfff2e0c8f786983f7d2e7	Ballot		EtherScan.io			false	false	false	true	false	false

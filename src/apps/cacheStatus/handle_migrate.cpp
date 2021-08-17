@@ -31,7 +31,9 @@ bool migrateOne(const string_q& path, void* data) {
                 return false;
             }
 
-            if (readArchive.needsUpgrade(contains(path, "/traces/") || contains(path, "/recons/"))) {
+            bool isTrace = contains(path, "/traces/");
+            bool isRecon = contains(path, "/recons/");
+            if (readArchive.needsUpgrade(isTrace || isRecon)) {
                 CArchive writeArchive(WRITING_ARCHIVE);
                 writeArchive.Lock(tempFn, modeWriteCreate, LOCK_NOWAIT);
                 if (!writeArchive.isOpen()) {
@@ -43,22 +45,18 @@ bool migrateOne(const string_q& path, void* data) {
                 if (checker->type == "abis") {
                     CAbi item;
                     item.Migrate(readArchive, writeArchive);
-                    writeArchive.Release();
 
                 } else if (checker->type == "slurps") {
                     CCachedAccount item;
                     item.Migrate(readArchive, writeArchive);
-                    writeArchive.Release();
 
                 } else if (checker->type == "txs") {
                     CTransaction item;
                     item.Migrate(readArchive, writeArchive);
-                    writeArchive.Release();
 
                 } else if (checker->type == "blocks") {
                     CBlock item;
                     item.Migrate(readArchive, writeArchive);
-                    writeArchive.Release();
 
                 } else if (checker->type == "recons") {
                     CReconciliationArray items;
@@ -71,6 +69,7 @@ bool migrateOne(const string_q& path, void* data) {
                     writeArchive << items;
                 }
 
+                writeArchive.Release();
                 readArchive.Release();
                 // moveFile(path, path + ".bak");
                 moveFile(tempFn, path);
