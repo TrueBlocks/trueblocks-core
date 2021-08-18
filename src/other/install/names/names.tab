@@ -5167,7 +5167,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x7e1c137d41b8848a68479d74bf4b1db2ed6bb597	JollyRoger	LOOT	On chain	18		false	false	false	true	true	false
 30-Contracts:Humanity DAO	0x7e22094301c6a2b2cfcafc282c3ad8d6474585e1	gusjon1e		https://www.humanitydao.org/humans			false	false	false	false	false	false
 50-Tokens:ERC20	0x7e23038e34931cdeb006cf5964d256894e4a17ae	American Inu Shiba	AMRSHA	On chain	18		false	false	false	true	true	false
-31-Gitcoin:Friends	0x7e28447103f17dbd3823423582953b2a1949473a	naps62		Gitcoin website			false	false	false	false	false	false
+90-Individuals:Gitcoin Grants	0x7e28447103f17dbd3823423582953b2a1949473a	naps62		Gitcoin website			false	false	false	false	false	false
 31-Gitcoin:Grants	0x7e30fb962f951ef78d901865f87dd036fc5aa946	Grant 0445 Shivarthu Democracy: the Blockchain-based Decentralized Governance System		https://gitcoin.co/grants/445/shivarthu-democracy-the-blockchain-based-decentra		https://avrit.reaudito.com/,https://shivarthu.reaudito.com/	false	false	false	false	false	false
 31-Gitcoin:Grants	0x7e3bf3148ce0e09229f6806d8c72d1e805df380a	Grant 1804 H		https://gitcoin.co/grants/1804/h			false	false	false	false	false	false
 50-Tokens:ERC20	0x7e3fe5001d46a3b75ade4cc33fbef61e30718dfb	Token Engineering Tokyo 3		https://kickback.events/event/[{ADDRESS}]	18		false	false	false	true	true	false
