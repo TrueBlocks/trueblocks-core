@@ -180,8 +180,8 @@ bool CESResult::Migrate(CArchive& archiveIn, CArchive& archiveOut) const {
     ASSERT(archiveIn.isReading());
     ASSERT(archiveOut.isWriting());
     CESResult copy;
-    // FUTURE_WORK
-    // FUTURE_WORK
+    // EXISTING_CODE
+    // EXISTING_CODE
     copy.Serialize(archiveIn);
     copy.SerializeC(archiveOut);
     return true;
@@ -257,6 +257,9 @@ string_q nextEsresultChunk_custom(const string_q& fieldIn, const void* dataPtr) 
 
     return "";
 }
+
+// EXISTING_CODE
+// EXISTING_CODE
 
 //---------------------------------------------------------------------------
 bool CESResult::readBackLevel(CArchive& archive) {

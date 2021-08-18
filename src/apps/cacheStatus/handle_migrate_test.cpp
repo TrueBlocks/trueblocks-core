@@ -17,8 +17,7 @@ bool needsMigrate(const string_q& path, void* data) {
             CArchive archive(READING_ARCHIVE);
             if (archive.Lock(path, modeReadOnly, LOCK_NOWAIT)) {
                 checker->needs = archive.needsUpgrade(contains(path, "/traces/") || contains(path, "/recons/"));
-                LOG_INFO("  Checking '", relative, "' isCurrent: ", cBlue, (checker->needs ? "false" : "true"), cOff,
-                         (checker->needs ? "" : "\r"));
+                LOG_INFO("  Checking '", relative, "'", (checker->needs ? "" : "\r"));
                 if (checker->needs || !shouldQuit())
                     return false;  // quit after we find the first one that needs migrate
             }

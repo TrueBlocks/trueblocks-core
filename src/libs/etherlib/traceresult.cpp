@@ -196,8 +196,8 @@ bool CTraceResult::Migrate(CArchive& archiveIn, CArchive& archiveOut) const {
     ASSERT(archiveIn.isReading());
     ASSERT(archiveOut.isWriting());
     CTraceResult copy;
-    // FUTURE_WORK
-    // FUTURE_WORK
+    // EXISTING_CODE
+    // EXISTING_CODE
     copy.Serialize(archiveIn);
     copy.SerializeC(archiveOut);
     return true;
@@ -274,6 +274,9 @@ string_q nextTraceresultChunk_custom(const string_q& fieldIn, const void* dataPt
 
     return "";
 }
+
+// EXISTING_CODE
+// EXISTING_CODE
 
 //---------------------------------------------------------------------------
 bool CTraceResult::readBackLevel(CArchive& archive) {

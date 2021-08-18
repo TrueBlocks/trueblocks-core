@@ -172,8 +172,8 @@ bool CCollectionCache::Migrate(CArchive& archiveIn, CArchive& archiveOut) const 
     ASSERT(archiveIn.isReading());
     ASSERT(archiveOut.isWriting());
     CCollectionCache copy;
-    // FUTURE_WORK
-    // FUTURE_WORK
+    // EXISTING_CODE
+    // EXISTING_CODE
     copy.Serialize(archiveIn);
     copy.SerializeC(archiveOut);
     return true;
@@ -249,6 +249,9 @@ string_q nextCollectioncacheChunk_custom(const string_q& fieldIn, const void* da
 
     return "";
 }
+
+// EXISTING_CODE
+// EXISTING_CODE
 
 //---------------------------------------------------------------------------
 bool CCollectionCache::readBackLevel(CArchive& archive) {

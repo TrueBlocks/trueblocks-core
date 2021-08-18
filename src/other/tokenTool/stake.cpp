@@ -168,6 +168,8 @@ bool CStake::SerializeC(CArchive& archive) const {
     archive << address;
     archive << lastPos;
     archive << stake;
+    return true;
+}
 
 //---------------------------------------------------------------------------------------------------
 bool CStake::Migrate(CArchive& archiveIn, CArchive& archiveOut) const {

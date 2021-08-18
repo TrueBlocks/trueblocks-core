@@ -24,10 +24,18 @@ bool migrateOne(const string_q& path, void* data) {
                 return true;
             }
 
+            if (checker->type == "names") {
+                if (endsWith(path, ".bin"))
+                    ::remove(path.c_str());
+                return true;
+            }
+
+            lockSection();
             CArchive readArchive(READING_ARCHIVE);
             readArchive.Lock(path, modeReadOnly, LOCK_NOWAIT);
             if (!readArchive.isOpen()) {
                 LOG_ERR("Could not open '", pRelative, "'");
+                unlockSection();
                 return false;
             }
 
@@ -39,6 +47,7 @@ bool migrateOne(const string_q& path, void* data) {
                 if (!writeArchive.isOpen()) {
                     readArchive.Release();
                     LOG_ERR("Could not open '", tRelative, "'");
+                    unlockSection();
                     return false;
                 }
 
@@ -71,20 +80,17 @@ bool migrateOne(const string_q& path, void* data) {
 
                 writeArchive.Release();
                 readArchive.Release();
-                // moveFile(path, path + ".bak");
                 moveFile(tempFn, path);
                 checker->nMigrated++;
                 LOG_INFO("  Migrated '", pRelative, "'");
+                unlockSection();
             } else {
                 LOG_INFO("  '", pRelative, "' does not need an upgrade", "\r");
                 cerr.flush();
             }
 
         } else {
-            if (!endsWith(path, ".bak")) {
-                checker->nSkipped++;
-                // LOG_INFO("  Skipping ", cYellow, pRelative, cOff);
-            }
+            checker->nSkipped++;
         }
     }
 

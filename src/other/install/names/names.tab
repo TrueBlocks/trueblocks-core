@@ -1,5 +1,4 @@
 tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefund	is_contract	is_erc20	is_erc721
-	0x0						false	false	false	false	false	false
 55-Defi	0x000000000000000000000000000000000000dead	ENS: Burn Address		EtherScan.io			false	false	false	false	false	false
 50-Tokens:ERC20	0x0000000000001b84b1cb32787b0d64758d019317	HomeWork 🏠🛠️	HWK	On chain	18		false	false	false	true	true	true
 50-Tokens:ERC20	0x0000000000004946c0e9f43f4dee607b0ef1fa1c	1inch.exchange v2	CHI	On chain	18		false	false	false	true	true	false
@@ -4687,6 +4686,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 90-Individuals:Kickback	0x7291fcb5ef2bf9770fa031fcb512f126e5809976	mrbrianhobo		https://kickback.events/			false	false	false	false	false	false
 31-Gitcoin:Grants	0x7293edfbe890854cb698119cc31441b063f44878	Grant 0822 Lukso: the Blockchain for New Digital Lifestyle		https://gitcoin.co/grants/822/lukso-the-blockchain-for-new-digital-lifestyle		https://www.lukso.network/	false	false	false	false	false	false
 30-Contracts:Humanity DAO	0x7294f8591f927a98b178b6d5762fafcace4cccb4	elidourado		https://www.humanitydao.org/humans			false	false	false	false	false	false
+30-Contracts	0x729d19f657bd0614b4985cf1d82531c67569197b	Maker: Medianizer 2					false	false	false	true	false	false
 50-Tokens:ERC20	0x72a47eb1c24285bdbd2d5057798defd687a33a11	Gracie Simpson Token	GRACEFUL	On chain	4		false	false	false	true	true	false
 90-Individuals:Gitcoin Grants	0x72aa5ad78fb4f2e567a5df833dad12f60b52db63	destiner		Gitcoin Website			false	false	false	false	false	false
 50-Tokens:ERC20	0x72adadb447784dd7ab1f472467750fc485e4cb2d	Worldcore	WRC	On chain	6		false	false	false	true	true	false
@@ -5167,6 +5167,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x7e1c137d41b8848a68479d74bf4b1db2ed6bb597	JollyRoger	LOOT	On chain	18		false	false	false	true	true	false
 30-Contracts:Humanity DAO	0x7e22094301c6a2b2cfcafc282c3ad8d6474585e1	gusjon1e		https://www.humanitydao.org/humans			false	false	false	false	false	false
 50-Tokens:ERC20	0x7e23038e34931cdeb006cf5964d256894e4a17ae	American Inu Shiba	AMRSHA	On chain	18		false	false	false	true	true	false
+31-Gitcoin:Friends	0x7e28447103f17dbd3823423582953b2a1949473a	naps62		Gitcoin website			false	false	false	false	false	false
 31-Gitcoin:Grants	0x7e30fb962f951ef78d901865f87dd036fc5aa946	Grant 0445 Shivarthu Democracy: the Blockchain-based Decentralized Governance System		https://gitcoin.co/grants/445/shivarthu-democracy-the-blockchain-based-decentra		https://avrit.reaudito.com/,https://shivarthu.reaudito.com/	false	false	false	false	false	false
 31-Gitcoin:Grants	0x7e3bf3148ce0e09229f6806d8c72d1e805df380a	Grant 1804 H		https://gitcoin.co/grants/1804/h			false	false	false	false	false	false
 50-Tokens:ERC20	0x7e3fe5001d46a3b75ade4cc33fbef61e30718dfb	Token Engineering Tokyo 3		https://kickback.events/event/[{ADDRESS}]	18		false	false	false	true	true	false

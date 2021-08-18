@@ -28,6 +28,7 @@
 #include "appearancedisplay.h"
 #include "bloom.h"
 #include "cacheentry.h"
+#include "prices.h"
 #include "reconciliation.h"
 
 using namespace qblocks;  // NOLINT
