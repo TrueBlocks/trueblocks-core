@@ -49,7 +49,7 @@ class CReconciliation : public CBaseNode {
     bigint_t selfDestructOut;
     bigint_t gasCostOut;
     string_q reconciliationType;
-    bigint_t spotPrice;
+    double spotPrice;
 
   public:
     CReconciliation(void);
@@ -154,7 +154,7 @@ inline void CReconciliation::initialize(void) {
     selfDestructOut = 0;
     gasCostOut = 0;
     reconciliationType = "";
-    spotPrice = int64_t(-1);
+    spotPrice = 1.0;
 
     // EXISTING_CODE
     // EXISTING_CODE

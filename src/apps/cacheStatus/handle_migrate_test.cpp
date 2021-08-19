@@ -14,16 +14,17 @@ bool needsMigrate(const string_q& path, void* data) {
     } else {
         string_q relative = substitute(path, getCachePath(""), "$CACHE/");
         if (endsWith(path, ".bin") && !contains(path, "/ts.bin")) {
-            CArchive archive(READING_ARCHIVE);
-            if (archive.Lock(path, modeReadOnly, LOCK_NOWAIT)) {
-                checker->needs = archive.needsUpgrade(contains(path, "/traces/") || contains(path, "/recons/"));
+            CArchive readArchive(READING_ARCHIVE);
+            if (readArchive.Lock(path, modeReadOnly, LOCK_NOWAIT)) {
+                bool isTrace = contains(path, "/traces/");
+                bool isRecon = contains(path, "/recons/");
+                bool isNames = contains(path, "/names/");
+                checker->needs = readArchive.needsUpgrade(isTrace || isRecon || isNames);
                 LOG_INFO("  Checking '", relative, "'", (checker->needs ? "" : "\r"));
-                if (checker->needs || !shouldQuit())
+                readArchive.Release();
+                if (checker->needs)
                     return false;  // quit after we find the first one that needs migrate
             }
-            // } else {
-            //     LOG_INFO("  Skipping ", cYellow, relative, cOff, "\r");
-            //     cerr.flush();
         }
     }
     return !shouldQuit();
@@ -37,7 +38,7 @@ bool COptions::handle_migrate_test(void) {
         CMigrationChecker checker(path, cache);
         forEveryFileInFolder(path, needsMigrate, &checker);  // will quit early if it finds a migrate
         if (checker.needs) {
-            LOG_WARN("  Cache '$CACHES/", cache, "' needs a migration.");
+            LOG_WARN(cYellow, "  Cache '$CACHES/", cache, "' needs a migration.", cOff);
         } else {
             LOG_WARN("  Cache '$CACHES/", cache, "' is up to date.", string_q(70, ' '));
         }

@@ -23,7 +23,7 @@ fields = blknum blockNumber|\
         int256 selfDestructOut|\
         int256 gasCostOut|\
         string reconciliationType|\
-        int256 spotPrice=int64_t(-1)
+        double spotPrice=1.0
 includes = utillib.h
 cpp_includes = etherlib.h
 serializable = true

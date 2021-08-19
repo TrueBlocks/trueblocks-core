@@ -30,7 +30,7 @@ internalOut         	1024	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
 selfDestructOut     	1025	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
 gasCostOut          	1026	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
 reconciliationType  	1027	0	20971570	T_TEXT TS_STRING TS_OMITEMPTY
-spotPrice           	1028	0	549453872	T_INT256 TS_NUMERAL TS_BIGNUM TS_OMITEMPTY
+spotPrice           	1028	0	8388638	T_DOUBLE TS_NUMERAL
 begBalDiff          	1029	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
 endBalCalc          	1030	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
 endBalDiff          	1031	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
@@ -62,7 +62,7 @@ reconciled          	1036	0	8388628	T_BOOL TS_NUMERAL
   "internalOut": "",
   "selfDestructOut": "",
   "gasCostOut": "",
-  "spotPrice": "-1",
+  "spotPrice": 1.00000,
   "begBalDiff": "",
   "endBalCalc": "",
   "endBalDiff": "",
@@ -103,7 +103,7 @@ internalOut         	1024	1	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
 selfDestructOut     	1025	1	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
 gasCostOut          	1026	1	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
 reconciliationType  	1027	1	20971570	T_TEXT TS_STRING TS_OMITEMPTY
-spotPrice           	1028	1	549453872	T_INT256 TS_NUMERAL TS_BIGNUM TS_OMITEMPTY
+spotPrice           	1028	1	8388638	T_DOUBLE TS_NUMERAL
 begBalDiff          	1029	1	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
 endBalCalc          	1030	1	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
 endBalDiff          	1031	1	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
@@ -145,7 +145,7 @@ internalOut         	1024	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
 selfDestructOut     	1025	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
 gasCostOut          	1026	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
 reconciliationType  	1027	0	20971570	T_TEXT TS_STRING TS_OMITEMPTY
-spotPrice           	1028	0	549453872	T_INT256 TS_NUMERAL TS_BIGNUM TS_OMITEMPTY
+spotPrice           	1028	0	8388638	T_DOUBLE TS_NUMERAL
 begBalDiff          	1029	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
 endBalCalc          	1030	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
 endBalDiff          	1031	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
@@ -155,7 +155,7 @@ totalOutLessGas     	1034	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
 amountNet           	1035	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
 reconciled          	1036	0	8388628	T_BOOL TS_NUMERAL
 {
-  "schema": 11003,
+  "schema": 11004,
   "deleted": false,
   "showing": true,
   "cname": "Reconciliation",
@@ -181,7 +181,7 @@ reconciled          	1036	0	8388628	T_BOOL TS_NUMERAL
   "internalOut": "",
   "selfDestructOut": "",
   "gasCostOut": "",
-  "spotPrice": "-1",
+  "spotPrice": 1.00000,
   "begBalDiff": "",
   "endBalCalc": "",
   "endBalDiff": "",

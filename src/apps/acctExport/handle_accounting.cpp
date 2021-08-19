@@ -122,14 +122,17 @@ bool COptions::process_reconciliation(CTraverser* trav) {
         // TODO(tjayrush): appearance list. When we're called with first_record or start_block not zero
         // TODO(tjayrush): we don't have this (since we only load those appearances we're asked for)
         // TODO(tjayrush): To fix this, we need to be able to get the previous appearance's block.
-        // TODO(tjayrush): Also, we used to do something different for reversed mode
+        // TODO(tjayrush):
+        // TODO(tjayrush): Also, we used to handle reversed mode here, that code was removed
         pEth.endBal =
             trav->trans.blockNumber == 0 ? 0 : getBalanceAt(accountedFor.address, trav->trans.blockNumber - 1);
+        // pEth.spotPrice = getPriceInUsd(trav->trans.blockNumber - 1);
         prevStatements[accountedFor.address + "_eth"] = pEth;
     }
 
     CReconciliation eth(trav->trans.blockNumber, trav->trans.transactionIndex, trav->trans.timestamp);
     eth.reconcileEth(prevStatements[accountedFor.address + "_eth"], nextAppBlk, &trav->trans, accountedFor);
+    // eth.spotPrice = getPriceInUsd(trav->trans.blockNumber);
     trav->trans.statements.push_back(eth);
     prevStatements[accountedFor.address + "_eth"] = eth;
 
@@ -151,6 +154,7 @@ bool COptions::process_reconciliation(CTraverser* trav) {
                 if (trav->trans.blockNumber > 0)
                     pBal.blockNumber = trav->trans.blockNumber - 1;
                 pBal.endBal = getTokenBalanceOf2(tokenName.address, accountedFor.address, pBal.blockNumber);
+                // pBal.spotPrice = getPriceInUsd(pBal.blockNumber, tokenName.address);
                 prevStatements[psKey] = pBal;
             }
 
@@ -164,9 +168,11 @@ bool COptions::process_reconciliation(CTraverser* trav) {
                 tokStatement.amountIn = (tokStatement.endBal - tokStatement.begBal);
             }
             tokStatement.reconciliationType = "";
-            if (tokStatement.amountNet() != 0)
+            if (tokStatement.amountNet() != 0) {
+                // tokStatement.spotPrice = getPriceInUsd(trav->trans.blockNumber, tokenName.address);
                 trav->trans.statements.push_back(tokStatement);
-            prevStatements[psKey] = tokStatement;
+                prevStatements[psKey] = tokStatement;
+            }
         }
     }
 

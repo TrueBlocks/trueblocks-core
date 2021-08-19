@@ -157,7 +157,7 @@ string_q CReconciliation::getValueByName(const string_q& fieldName) const {
                 return bni_2_Str(selfDestructOut);
             }
             if (fieldName % "spotPrice") {
-                return bni_2_Str(spotPrice);
+                return double_2_Str(spotPrice, 5);
             }
             break;
         case 't':
@@ -292,7 +292,7 @@ bool CReconciliation::setValueByName(const string_q& fieldNameIn, const string_q
                 return true;
             }
             if (fieldName % "spotPrice") {
-                spotPrice = str_2_BigInt(fieldValue);
+                spotPrice = str_2_Double(fieldValue);
                 return true;
             }
             break;
@@ -464,7 +464,7 @@ void CReconciliation::registerClass(void) {
     ADD_FIELD(CReconciliation, "selfDestructOut", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliation, "gasCostOut", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliation, "reconciliationType", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CReconciliation, "spotPrice", T_INT256, ++fieldNum);
+    ADD_FIELD(CReconciliation, "spotPrice", T_DOUBLE, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CReconciliation, "schema");
@@ -475,7 +475,6 @@ void CReconciliation::registerClass(void) {
     builtIns.push_back(_biCReconciliation);
 
     // EXISTING_CODE
-    SET_TYPE(CReconciliation, "spotPrice", T_INT256 | TS_OMITEMPTY);
     ADD_FIELD(CReconciliation, "begBalDiff", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliation, "endBalCalc", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliation, "endBalDiff", T_INT256, ++fieldNum);
@@ -594,11 +593,6 @@ string_q nextReconciliationChunk_custom(const string_q& fieldIn, const void* dat
                 if (fieldIn % "selfDestructOut") {
                     return bni_2_Export(rec->timestamp, rec->selfDestructOut, rec->decimals);
                 }
-                if (fieldIn % "spotPrice") {
-                    if (rec->spotPrice == int64_t(-1))
-                        return "\"-1\"";
-                    return bni_2_Export(rec->timestamp, rec->spotPrice, rec->decimals);
-                }
                 break;
             case 't':
                 if (fieldIn % "totalIn") {
@@ -651,7 +645,7 @@ string_q nextReconciliationChunk_custom(const string_q& fieldIn, const void* dat
 bool CReconciliation::readBackLevel(CArchive& archive) {
     bool done = false;
     // EXISTING_CODE
-    bigint_t unused;
+    bigint_t unusedBi;
     bool unusedBool;
     if (m_schema < getVersionNum(0, 10, 1)) {
         archive >> blockNumber;
@@ -663,7 +657,7 @@ bool CReconciliation::readBackLevel(CArchive& archive) {
         // archive >> prevBlk;
         // archive >> prevBlkBal;
         archive >> begBal;
-        archive >> unused;  // begBalDiff
+        archive >> unusedBi;  // begBalDiff
         archive >> amountIn;
         archive >> amountOut;
         archive >> internalIn;
@@ -677,14 +671,12 @@ bool CReconciliation::readBackLevel(CArchive& archive) {
         archive >> prefundIn;
         archive >> gasCostOut;
         archive >> endBal;
-        archive >> unused;  // endBalCalc;
-        archive >> unused;  // endBalDiff;
-        archive >> unused;  // amountNet;
+        archive >> unusedBi;  // endBalCalc
+        archive >> unusedBi;  // endBalDiff
+        archive >> unusedBi;  // amountNet
         // archive >> spotPrice;  // not present before
         archive >> reconciliationType;
         archive >> unusedBool;  // reconciled;
-        spotPrice = -1;
-        finishParse();
         done = true;
     } else if (m_schema < getVersionNum(0, 10, 2)) {
         archive >> blockNumber;
@@ -696,7 +688,7 @@ bool CReconciliation::readBackLevel(CArchive& archive) {
         // archive >> prevBlk;
         // archive >> prevBlkBal;
         archive >> begBal;
-        archive >> unused;  // begBalDiff;
+        archive >> unusedBi;  // begBalDiff
         archive >> amountIn;
         archive >> amountOut;
         archive >> internalIn;
@@ -710,13 +702,48 @@ bool CReconciliation::readBackLevel(CArchive& archive) {
         archive >> prefundIn;
         archive >> gasCostOut;
         archive >> endBal;
-        archive >> unused;  // endBalCalc;
-        archive >> unused;  // endBalDiff;
-        archive >> unused;  // amountNet;
+        archive >> unusedBi;  // endBalCalc
+        archive >> unusedBi;  // endBalDiff
+        archive >> unusedBi;  // amountNet
         archive >> spotPrice;
         archive >> reconciliationType;
         // archive >> reconTrail;
         archive >> unusedBool;  // reconciled;
+        done = true;
+    } else if (m_schema < getVersionNum(0, 11, 4)) {
+        archive >> blockNumber;
+        archive >> transactionIndex;
+        archive >> timestamp;
+        archive >> assetAddr;
+        archive >> assetSymbol;
+        archive >> decimals;
+        archive >> prevBlk;
+        archive >> prevBlkBal;
+        archive >> begBal;
+        archive >> endBal;
+        archive >> amountIn;
+        archive >> internalIn;
+        archive >> selfDestructIn;
+        archive >> minerBaseRewardIn;
+        archive >> minerNephewRewardIn;
+        archive >> minerTxFeeIn;
+        archive >> minerUncleRewardIn;
+        archive >> prefundIn;
+        archive >> amountOut;
+        archive >> internalOut;
+        archive >> selfDestructOut;
+        archive >> gasCostOut;
+        archive >> reconciliationType;
+        archive >> unusedBi;  // unused, unset spotPrice as biguint
+        done = true;
+    }
+
+    if (done) {
+        // bool isEth = assetSymbol == "ETH" || assetSymbol == "WEI" || assetSymbol.empty();
+        // address_t addr = isEth ? "" : assetAddr;
+        spotPrice = 1.0;  // getPriceInUsd(blockNumber, addr);
+        finishParse();
+        return true;
     }
     // EXISTING_CODE
     return done;

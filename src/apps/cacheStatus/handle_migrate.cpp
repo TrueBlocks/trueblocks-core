@@ -25,8 +25,16 @@ bool migrateOne(const string_q& path, void* data) {
             }
 
             if (checker->type == "names") {
-                if (endsWith(path, ".bin"))
+                if (endsWith(path, ".bin")) {
+                    checker->nMigrated++;
                     ::remove(path.c_str());
+                }
+                return true;
+            }
+
+            if (checker->type == "recons") {
+                LOG_INFO("  Skipping '", pRelative, "'", "\r");
+                checker->nMigrated++;
                 return true;
             }
 
@@ -41,7 +49,8 @@ bool migrateOne(const string_q& path, void* data) {
 
             bool isTrace = contains(path, "/traces/");
             bool isRecon = contains(path, "/recons/");
-            if (readArchive.needsUpgrade(isTrace || isRecon)) {
+            bool isNames = contains(path, "/names/");
+            if (readArchive.needsUpgrade(isTrace || isRecon || isNames)) {
                 CArchive writeArchive(WRITING_ARCHIVE);
                 writeArchive.Lock(tempFn, modeWriteCreate, LOCK_NOWAIT);
                 if (!writeArchive.isOpen()) {

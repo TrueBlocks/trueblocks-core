@@ -15,19 +15,14 @@
 
 namespace qblocks {
 
-extern double ethPriceFromMaker(blknum_t bn);
-extern double ethPriceFromUni(blknum_t bn);
-extern string_q addr_2_Pad64(const address_t& addr);
+//---------------------------------------------------------------------------
 double getPriceInUsd(blknum_t bn, const address_t& addr) {
-    // if (!addr.empty())
-    return 1.;
-    // double pricePerEth = 1.;
-    // if (!addr.empty() && addr != "0x6b175474e89094c44da98b954eedeac495271d0f") {
-    //     pricePerEth = .004;
-    // }
-    // return ethPriceFromUni(bn);  // ethPriceFromMaker(bn);
+    if (bn == 0 || !addr.empty())
+        return 1.;
+    return getPriceFromUni_EthUsd(bn);
 }
 
+//---------------------------------------------------------------------------
 static const address_t wEth = "0x6b175474e89094c44da98b954eedeac495271d0f";
 static const address_t dai = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2";
 static const string_q uniswapFactory = "0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f";
@@ -36,7 +31,8 @@ static const string_q pairBytes = addr_2_Pad64(wEth) + addr_2_Pad64(dai);
 static const string_q getReserves = "0x0902f1ac";  // getReserves()
 static const string_q reserveBytes = "";
 
-double ethPriceFromUni(blknum_t bn) {
+//---------------------------------------------------------------------------
+double getPriceFromUni_EthUsd(blknum_t bn) {
     static CEthCall theCall2;
     if (theCall2.address.empty()) {
         // Find the pair we need only once to avoid repeatedly querying this
@@ -67,11 +63,11 @@ double ethPriceFromUni(blknum_t bn) {
             return reserve1 / reserve2;
         }
     }
-
-    return ethPriceFromMaker(bn);
+    return getPriceFromMaker_EthUsd(bn);
 }
 
-double ethPriceFromMaker(blknum_t bn) {
+//---------------------------------------------------------------------------
+double getPriceFromMaker_EthUsd(blknum_t bn) {
     static const char* makerMedianizer = "0x729d19f657bd0614b4985cf1d82531c67569197b";
     static const char* peek = "0x59e02dd7";
     static CAbi spec;
@@ -92,10 +88,10 @@ double ethPriceFromMaker(blknum_t bn) {
             return str_2_Uint(wei_2_Str(ether)) / 100.;
         }
     }
-
     return 1.;
 }
 
+//---------------------------------------------------------------------------
 string_q addr_2_Pad64(const address_t& addr) {
     return padLeft(substitute(addr, "0x", ""), 64, '0');
 }
