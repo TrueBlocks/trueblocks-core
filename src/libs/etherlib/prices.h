@@ -11,6 +11,7 @@ namespace qblocks {
 extern double getPriceInUsd(blknum_t bn, const address_t& address = "");
 extern double getPriceFromMaker_EthUsd(blknum_t bn);
 extern double getPriceFromUni_EthUsd(blknum_t bn);
+extern double getPriceFromUni_TokEth(blknum_t bn, const address_t& address);
 extern string_q addr_2_Pad64(const address_t& addr);
 
 }  // namespace qblocks

@@ -17,53 +17,99 @@ namespace qblocks {
 
 //---------------------------------------------------------------------------
 double getPriceInUsd(blknum_t bn, const address_t& addr) {
-    if (bn == 0 || !addr.empty())
+    if (bn == 0)
         return 1.;
-    return getPriceFromUni_EthUsd(bn);
+    return addr.empty() ? getPriceFromUni_EthUsd(bn) : getPriceFromUni_TokEth(bn, addr);
 }
 
 //---------------------------------------------------------------------------
-static const address_t wEth = "0x6b175474e89094c44da98b954eedeac495271d0f";
-static const address_t dai = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2";
+static const address_t dai = "0x6b175474e89094c44da98b954eedeac495271d0f";
+static const address_t wEth = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2";
 static const string_q uniswapFactory = "0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f";
-static const string_q getPair = "0xe6a43905";  // getPair(address,address)
-static const string_q pairBytes = addr_2_Pad64(wEth) + addr_2_Pad64(dai);
+static const string_q getPair = "0xe6a43905";      // getPair(address,address)
 static const string_q getReserves = "0x0902f1ac";  // getReserves()
 static const string_q reserveBytes = "";
 
 //---------------------------------------------------------------------------
-double getPriceFromUni_EthUsd(blknum_t bn) {
-    static CEthCall theCall2;
-    if (theCall2.address.empty()) {
-        // Find the pair we need only once to avoid repeatedly querying this
-        CEthCall pairCall;
-        pairCall.address = uniswapFactory;
-        pairCall.encoding = getPair;
-        pairCall.bytes = pairBytes;
-        pairCall.abi_spec.loadAbisFromKnown();
-        pairCall.blockNumber = getBlockProgress(BP_CLIENT).client;
-        LOG4("Calling ", substitute(pairCall.Format(), "\n", " "));
-        if (doEthCall(pairCall)) {
-            theCall2.address = pairCall.getResults();
-            theCall2.abi_spec = pairCall.abi_spec;
-            LOG_INFO(bGreen, "Found USD Pair: ", theCall2.address, " with ", theCall2.abi_spec.nInterfaces(),
-                     " endpoints", cOff);
-        } else {
-            LOG_WARN(bRed, "Could not find USD Pair: ", theCall2.address, cOff);
-        }
-        theCall2.encoding = getReserves;
-        theCall2.bytes = reserveBytes;
+bool findUniPair(CEthCall& pair, const address_t& r1, const address_t& r2) {
+    static map<string_q, CEthCall> pairs;
+    string_q key = r1 + r2;
+    CEthCall existing = pairs[key];
+    if (!existing.address.empty()) {
+        pair = existing;
+        return true;
     }
-    theCall2.blockNumber = bn;
-    if (doEthCall(theCall2) && !theCall2.result.outputs.empty()) {
-        CStringArray results;
-        if (theCall2.getResults(results) && results.size() > 1) {
-            double reserve1 = str_2_Double(wei_2_Ether(str_2_Wei(results[0]), 18));
-            double reserve2 = str_2_Double(wei_2_Ether(str_2_Wei(results[1]), 18));
-            return reserve1 / reserve2;
-        }
+
+    static CEthCall uniFactory;
+    if (uniFactory.address.empty()) {
+        uniFactory.address = uniswapFactory;
+        uniFactory.encoding = getPair;
+        uniFactory.abi_spec.loadAbisFromKnown("uniswap");
+        uniFactory.blockNumber = getBlockProgress(BP_CLIENT).client;  // doesn't really matter
+    }
+    uniFactory.bytes = addr_2_Pad64(r1) + addr_2_Pad64(r2);
+    if (!doEthCall(uniFactory)) {
+        return false;
+    }
+
+    pair.address = uniFactory.getResults();
+    if (pair.address.empty() || isZeroAddr(pair.address)) {
+        LOG4("Could not fund uniswap pair for [", r1, "]-->[", r2, "]");
+        return false;
+    }
+    LOG4("Found uniswap pair for [", r1, "]-->[", r2, "] at ", pair.address);
+    pair.abi_spec.loadAbisFromKnown("uniswap");
+    pair.encoding = getReserves;
+    pair.bytes = reserveBytes;
+    pairs[key] = pair;
+    return true;
+}
+
+//---------------------------------------------------------------------------
+bool getPriceFromPair(CEthCall& pair, double& priceOut) {
+    priceOut = 1.;
+
+    if (!doEthCall(pair))
+        return false;
+
+    if (pair.result.outputs.empty())
+        return false;
+
+    CStringArray results;
+    if (!pair.getResults(results) || results.size() < 2)
+        return false;
+
+    double reserve1 = str_2_Double(wei_2_Ether(str_2_Wei(results[0]), 18));
+    double reserve2 = str_2_Double(wei_2_Ether(str_2_Wei(results[1]), 18));
+    priceOut = reserve1 / reserve2;
+    return true;
+}
+
+//---------------------------------------------------------------------------
+double getPriceFromUni_EthUsd(blknum_t bn) {
+    CEthCall thePair;
+    if (findUniPair(thePair, wEth, dai)) {
+        thePair.blockNumber = bn;
+        double price;
+        if (getPriceFromPair(thePair, price))
+            return price;
     }
     return getPriceFromMaker_EthUsd(bn);
+}
+
+//---------------------------------------------------------------------------
+double getPriceFromUni_TokEth(blknum_t bn, const address_t& tok) {
+    if (tok == wEth)
+        return 1.;
+
+    CEthCall thePair;
+    if (findUniPair(thePair, tok, wEth)) {
+        thePair.blockNumber = bn;
+        double price;
+        if (getPriceFromPair(thePair, price))
+            return price;
+    }
+    return 1.;
 }
 
 //---------------------------------------------------------------------------
@@ -95,4 +141,5 @@ double getPriceFromMaker_EthUsd(blknum_t bn) {
 string_q addr_2_Pad64(const address_t& addr) {
     return padLeft(substitute(addr, "0x", ""), 64, '0');
 }
+
 }  // namespace qblocks
