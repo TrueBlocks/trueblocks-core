@@ -5,400 +5,6 @@ Old bug test...
 ABI of test1.json
 ------------------------------------------------------------------------------------------------------------------------
 {
-  "name": "actualBalance",
-  "type": "function",
-  "constant": true,
-  "stateMutability": "nonpayable",
-  "signature": "actualBalance()",
-  "encoding": "0x39d1f908",
-  "outputs": {
-    "_actualBalance": ""
-  }
-}
-{
-  "name": "allowance",
-  "type": "function",
-  "constant": true,
-  "stateMutability": "nonpayable",
-  "signature": "allowance(address,address)",
-  "encoding": "0xdd62ed3e",
-  "inputs": {
-    "_owner": "",
-    "_spender": ""
-  },
-  "outputs": {
-    "remaining": ""
-  }
-}
-{
-  "name": "allowedRecipients",
-  "type": "function",
-  "constant": true,
-  "stateMutability": "nonpayable",
-  "signature": "allowedRecipients(address)",
-  "encoding": "0x4df6d6cc",
-  "inputs": {
-    "val_0": ""
-  },
-  "outputs": {
-    "val_0": ""
-  }
-}
-{
-  "name": "approve",
-  "type": "function",
-  "stateMutability": "nonpayable",
-  "signature": "approve(address,uint256)",
-  "encoding": "0x095ea7b3",
-  "inputs": {
-    "_amount": "",
-    "_spender": ""
-  },
-  "outputs": {
-    "success": ""
-  }
-}
-{
-  "name": "balanceOf",
-  "type": "function",
-  "constant": true,
-  "stateMutability": "nonpayable",
-  "signature": "balanceOf(address)",
-  "encoding": "0x70a08231",
-  "inputs": {
-    "_owner": ""
-  },
-  "outputs": {
-    "balance": ""
-  }
-}
-{
-  "name": "blocked",
-  "type": "function",
-  "constant": true,
-  "stateMutability": "nonpayable",
-  "signature": "blocked(address)",
-  "encoding": "0xe5962195",
-  "inputs": {
-    "val_0": ""
-  },
-  "outputs": {
-    "val_0": ""
-  }
-}
-{
-  "name": "changeAllowedRecipients",
-  "type": "function",
-  "stateMutability": "nonpayable",
-  "signature": "changeAllowedRecipients(address,bool)",
-  "encoding": "0x749f9889",
-  "inputs": {
-    "_allowed": "",
-    "_recipient": ""
-  },
-  "outputs": {
-    "_success": ""
-  }
-}
-{
-  "name": "changeProposalDeposit",
-  "type": "function",
-  "stateMutability": "nonpayable",
-  "signature": "changeProposalDeposit(uint256)",
-  "encoding": "0xe33734fd",
-  "inputs": {
-    "_proposalDeposit": ""
-  }
-}
-{
-  "name": "checkProposalCode",
-  "type": "function",
-  "constant": true,
-  "stateMutability": "nonpayable",
-  "signature": "checkProposalCode(uint256,address,uint256,bytes)",
-  "encoding": "0xeceb2945",
-  "inputs": {
-    "_amount": "",
-    "_proposalID": "",
-    "_recipient": "",
-    "_transactionData": ""
-  },
-  "outputs": {
-    "_codeChecksOut": ""
-  }
-}
-{
-  "name": "closingTime",
-  "type": "function",
-  "constant": true,
-  "stateMutability": "nonpayable",
-  "signature": "closingTime()",
-  "encoding": "0x4b6753bc",
-  "outputs": {
-    "val_0": ""
-  }
-}
-{
-  "name": "createTokenProxy",
-  "type": "function",
-  "stateMutability": "nonpayable",
-  "signature": "createTokenProxy(address)",
-  "encoding": "0xbaac5300",
-  "inputs": {
-    "_tokenHolder": ""
-  },
-  "outputs": {
-    "success": ""
-  }
-}
-{
-  "name": "curator",
-  "type": "function",
-  "constant": true,
-  "stateMutability": "nonpayable",
-  "signature": "curator()",
-  "encoding": "0xe66f53b7",
-  "outputs": {
-    "val_0": ""
-  }
-}
-{
-  "name": "daoCreator",
-  "type": "function",
-  "constant": true,
-  "stateMutability": "nonpayable",
-  "signature": "daoCreator()",
-  "encoding": "0x149acf9a",
-  "outputs": {
-    "val_0": ""
-  }
-}
-{
-  "name": "DAOpaidOut",
-  "type": "function",
-  "constant": true,
-  "stateMutability": "nonpayable",
-  "signature": "DAOpaidOut(address)",
-  "encoding": "0x643f7cdd",
-  "inputs": {
-    "val_0": ""
-  },
-  "outputs": {
-    "val_0": ""
-  }
-}
-{
-  "name": "DAOrewardAccount",
-  "type": "function",
-  "constant": true,
-  "stateMutability": "nonpayable",
-  "signature": "DAOrewardAccount()",
-  "encoding": "0x82bf6464",
-  "outputs": {
-    "val_0": ""
-  }
-}
-{
-  "name": "divisor",
-  "type": "function",
-  "constant": true,
-  "stateMutability": "nonpayable",
-  "signature": "divisor()",
-  "encoding": "0x1f2dc5ef",
-  "outputs": {
-    "divisor": ""
-  }
-}
-{
-  "name": "executeProposal",
-  "type": "function",
-  "stateMutability": "nonpayable",
-  "signature": "executeProposal(uint256,bytes)",
-  "encoding": "0x237e9492",
-  "inputs": {
-    "_proposalID": "",
-    "_transactionData": ""
-  },
-  "outputs": {
-    "_success": ""
-  }
-}
-{
-  "name": "extraBalance",
-  "type": "function",
-  "constant": true,
-  "stateMutability": "nonpayable",
-  "signature": "extraBalance()",
-  "encoding": "0x21b5b8dd",
-  "outputs": {
-    "val_0": ""
-  }
-}
-{
-  "name": "getMyReward",
-  "type": "function",
-  "stateMutability": "nonpayable",
-  "signature": "getMyReward()",
-  "encoding": "0xcc9ae3f6",
-  "outputs": {
-    "_success": ""
-  }
-}
-{
-  "name": "getNewDAOAddress",
-  "type": "function",
-  "constant": true,
-  "stateMutability": "nonpayable",
-  "signature": "getNewDAOAddress(uint256)",
-  "encoding": "0xbe7c29c1",
-  "inputs": {
-    "_proposalID": ""
-  },
-  "outputs": {
-    "_newDAO": ""
-  }
-}
-{
-  "name": "halveMinQuorum",
-  "type": "function",
-  "stateMutability": "nonpayable",
-  "signature": "halveMinQuorum()",
-  "encoding": "0x78524b2e",
-  "outputs": {
-    "_success": ""
-  }
-}
-{
-  "name": "isFueled",
-  "type": "function",
-  "constant": true,
-  "stateMutability": "nonpayable",
-  "signature": "isFueled()",
-  "encoding": "0xb7bc2c84",
-  "outputs": {
-    "val_0": ""
-  }
-}
-{
-  "name": "lastTimeMinQuorumMet",
-  "type": "function",
-  "constant": true,
-  "stateMutability": "nonpayable",
-  "signature": "lastTimeMinQuorumMet()",
-  "encoding": "0x96d7f3f5",
-  "outputs": {
-    "val_0": ""
-  }
-}
-{
-  "name": "mainDAO",
-  "type": "function",
-  "constant": true,
-  "stateMutability": "nonpayable",
-  "signature": "mainDAO()",
-  "encoding": "0xeedcf50a",
-  "outputs": {
-    "val_0": ""
-  }
-}
-{
-  "name": "minQuorumDivisor",
-  "type": "function",
-  "constant": true,
-  "stateMutability": "nonpayable",
-  "signature": "minQuorumDivisor()",
-  "encoding": "0x674ed066",
-  "outputs": {
-    "val_0": ""
-  }
-}
-{
-  "name": "minTokensToCreate",
-  "type": "function",
-  "constant": true,
-  "stateMutability": "nonpayable",
-  "signature": "minTokensToCreate()",
-  "encoding": "0x0c3b7b96",
-  "outputs": {
-    "val_0": ""
-  }
-}
-{
-  "name": "newContract",
-  "type": "function",
-  "stateMutability": "nonpayable",
-  "signature": "newContract(address)",
-  "encoding": "0x6837ff1e",
-  "inputs": {
-    "_newContract": ""
-  }
-}
-{
-  "name": "newProposal",
-  "type": "function",
-  "stateMutability": "nonpayable",
-  "signature": "newProposal(address,uint256,string,bytes,uint256,bool)",
-  "encoding": "0x612e45a3",
-  "inputs": {
-    "_amount": "",
-    "_debatingPeriod": "",
-    "_description": "",
-    "_newCurator": "",
-    "_recipient": "",
-    "_transactionData": ""
-  },
-  "outputs": {
-    "_proposalID": ""
-  }
-}
-{
-  "name": "numberOfProposals",
-  "type": "function",
-  "constant": true,
-  "stateMutability": "nonpayable",
-  "signature": "numberOfProposals()",
-  "encoding": "0x8d7af473",
-  "outputs": {
-    "_numberOfProposals": ""
-  }
-}
-{
-  "name": "paidOut",
-  "type": "function",
-  "constant": true,
-  "stateMutability": "nonpayable",
-  "signature": "paidOut(address)",
-  "encoding": "0x81f03fcb",
-  "inputs": {
-    "val_0": ""
-  },
-  "outputs": {
-    "val_0": ""
-  }
-}
-{
-  "name": "privateCreation",
-  "type": "function",
-  "constant": true,
-  "stateMutability": "nonpayable",
-  "signature": "privateCreation()",
-  "encoding": "0xf8c80d26",
-  "outputs": {
-    "val_0": ""
-  }
-}
-{
-  "name": "proposalDeposit",
-  "type": "function",
-  "constant": true,
-  "stateMutability": "nonpayable",
-  "signature": "proposalDeposit()",
-  "encoding": "0x8b15a605",
-  "outputs": {
-    "val_0": ""
-  }
-}
-{
   "name": "proposals",
   "type": "function",
   "constant": true,
@@ -424,33 +30,28 @@ ABI of test1.json
   }
 }
 {
-  "name": "receiveEther",
+  "name": "approve",
   "type": "function",
   "stateMutability": "nonpayable",
-  "signature": "receiveEther()",
-  "encoding": "0xa3912ec8",
+  "signature": "approve(address,uint256)",
+  "encoding": "0x095ea7b3",
+  "inputs": {
+    "_amount": "",
+    "_spender": ""
+  },
   "outputs": {
-    "val_0": ""
+    "success": ""
   }
 }
 {
-  "name": "refund",
+  "name": "minTokensToCreate",
   "type": "function",
+  "constant": true,
   "stateMutability": "nonpayable",
-  "signature": "refund()",
-  "encoding": "0x590e1ae3"
-}
-{
-  "name": "retrieveDAOReward",
-  "type": "function",
-  "stateMutability": "nonpayable",
-  "signature": "retrieveDAOReward(bool)",
-  "encoding": "0xa1da2fb9",
-  "inputs": {
-    "_toMembers": ""
-  },
+  "signature": "minTokensToCreate()",
+  "encoding": "0x0c3b7b96",
   "outputs": {
-    "_success": ""
+    "val_0": ""
   }
 }
 {
@@ -465,12 +66,293 @@ ABI of test1.json
   }
 }
 {
-  "name": "rewardToken",
+  "name": "daoCreator",
   "type": "function",
   "constant": true,
   "stateMutability": "nonpayable",
-  "signature": "rewardToken(address)",
-  "encoding": "0xcdef91d0",
+  "signature": "daoCreator()",
+  "encoding": "0x149acf9a",
+  "outputs": {
+    "val_0": ""
+  }
+}
+{
+  "name": "totalSupply",
+  "type": "function",
+  "constant": true,
+  "stateMutability": "nonpayable",
+  "signature": "totalSupply()",
+  "encoding": "0x18160ddd",
+  "outputs": {
+    "val_0": ""
+  }
+}
+{
+  "name": "divisor",
+  "type": "function",
+  "constant": true,
+  "stateMutability": "nonpayable",
+  "signature": "divisor()",
+  "encoding": "0x1f2dc5ef",
+  "outputs": {
+    "divisor": ""
+  }
+}
+{
+  "name": "extraBalance",
+  "type": "function",
+  "constant": true,
+  "stateMutability": "nonpayable",
+  "signature": "extraBalance()",
+  "encoding": "0x21b5b8dd",
+  "outputs": {
+    "val_0": ""
+  }
+}
+{
+  "name": "executeProposal",
+  "type": "function",
+  "stateMutability": "nonpayable",
+  "signature": "executeProposal(uint256,bytes)",
+  "encoding": "0x237e9492",
+  "inputs": {
+    "_proposalID": "",
+    "_transactionData": ""
+  },
+  "outputs": {
+    "_success": ""
+  }
+}
+{
+  "name": "transferFrom",
+  "type": "function",
+  "stateMutability": "nonpayable",
+  "signature": "transferFrom(address,address,uint256)",
+  "encoding": "0x23b872dd",
+  "inputs": {
+    "_from": "",
+    "_to": "",
+    "_value": ""
+  },
+  "outputs": {
+    "success": ""
+  }
+}
+{
+  "name": "unblockMe",
+  "type": "function",
+  "stateMutability": "nonpayable",
+  "signature": "unblockMe()",
+  "encoding": "0x2632bf20",
+  "outputs": {
+    "val_0": ""
+  }
+}
+{
+  "name": "trusteeWithdraw",
+  "type": "function",
+  "stateMutability": "nonpayable",
+  "signature": "trusteeWithdraw()",
+  "encoding": "0x2e6e504a"
+}
+{
+  "name": "totalRewardToken",
+  "type": "function",
+  "constant": true,
+  "stateMutability": "nonpayable",
+  "signature": "totalRewardToken()",
+  "encoding": "0x34145808",
+  "outputs": {
+    "val_0": ""
+  }
+}
+{
+  "name": "actualBalance",
+  "type": "function",
+  "constant": true,
+  "stateMutability": "nonpayable",
+  "signature": "actualBalance()",
+  "encoding": "0x39d1f908",
+  "outputs": {
+    "_actualBalance": ""
+  }
+}
+{
+  "name": "withdraw",
+  "type": "function",
+  "stateMutability": "nonpayable",
+  "signature": "withdraw()",
+  "encoding": "0x3ccfd60b"
+}
+{
+  "name": "closingTime",
+  "type": "function",
+  "constant": true,
+  "stateMutability": "nonpayable",
+  "signature": "closingTime()",
+  "encoding": "0x4b6753bc",
+  "outputs": {
+    "val_0": ""
+  }
+}
+{
+  "name": "allowedRecipients",
+  "type": "function",
+  "constant": true,
+  "stateMutability": "nonpayable",
+  "signature": "allowedRecipients(address)",
+  "encoding": "0x4df6d6cc",
+  "inputs": {
+    "val_0": ""
+  },
+  "outputs": {
+    "val_0": ""
+  }
+}
+{
+  "name": "transferWithoutReward",
+  "type": "function",
+  "stateMutability": "nonpayable",
+  "signature": "transferWithoutReward(address,uint256)",
+  "encoding": "0x4e10c3ee",
+  "inputs": {
+    "_to": "",
+    "_value": ""
+  },
+  "outputs": {
+    "success": ""
+  }
+}
+{
+  "name": "ProposalAdded",
+  "type": "event",
+  "stateMutability": "nonpayable",
+  "signature": "ProposalAdded(uint256,address,uint256,bool,string)",
+  "encoding": "0x5790de2c279e58269b93b12828f56fd5f2bc8ad15e61ce08572585c81a38756f",
+  "inputs": {
+    "amount": "",
+    "description": "",
+    "newCurator": "",
+    "proposalID": "",
+    "recipient": ""
+  }
+}
+{
+  "name": "refund",
+  "type": "function",
+  "stateMutability": "nonpayable",
+  "signature": "refund()",
+  "encoding": "0x590e1ae3"
+}
+{
+  "name": "newProposal",
+  "type": "function",
+  "stateMutability": "nonpayable",
+  "signature": "newProposal(address,uint256,string,bytes,uint256,bool)",
+  "encoding": "0x612e45a3",
+  "inputs": {
+    "_amount": "",
+    "_debatingPeriod": "",
+    "_description": "",
+    "_newCurator": "",
+    "_recipient": "",
+    "_transactionData": ""
+  },
+  "outputs": {
+    "_proposalID": ""
+  }
+}
+{
+  "name": "DAOpaidOut",
+  "type": "function",
+  "constant": true,
+  "stateMutability": "nonpayable",
+  "signature": "DAOpaidOut(address)",
+  "encoding": "0x643f7cdd",
+  "inputs": {
+    "val_0": ""
+  },
+  "outputs": {
+    "val_0": ""
+  }
+}
+{
+  "name": "minQuorumDivisor",
+  "type": "function",
+  "constant": true,
+  "stateMutability": "nonpayable",
+  "signature": "minQuorumDivisor()",
+  "encoding": "0x674ed066",
+  "outputs": {
+    "val_0": ""
+  }
+}
+{
+  "name": "newContract",
+  "type": "function",
+  "stateMutability": "nonpayable",
+  "signature": "newContract(address)",
+  "encoding": "0x6837ff1e",
+  "inputs": {
+    "_newContract": ""
+  }
+}
+{
+  "name": "balanceOf",
+  "type": "function",
+  "constant": true,
+  "stateMutability": "nonpayable",
+  "signature": "balanceOf(address)",
+  "encoding": "0x70a08231",
+  "inputs": {
+    "_owner": ""
+  },
+  "outputs": {
+    "balance": ""
+  }
+}
+{
+  "name": "AllowedRecipientChanged",
+  "type": "event",
+  "stateMutability": "nonpayable",
+  "signature": "AllowedRecipientChanged(address,bool)",
+  "encoding": "0x73ad2a153c8b67991df9459024950b318a609782cee8c7eeda47b905f9baa91f",
+  "inputs": {
+    "_allowed": "",
+    "_recipient": ""
+  }
+}
+{
+  "name": "changeAllowedRecipients",
+  "type": "function",
+  "stateMutability": "nonpayable",
+  "signature": "changeAllowedRecipients(address,bool)",
+  "encoding": "0x749f9889",
+  "inputs": {
+    "_allowed": "",
+    "_recipient": ""
+  },
+  "outputs": {
+    "_success": ""
+  }
+}
+{
+  "name": "halveMinQuorum",
+  "type": "function",
+  "stateMutability": "nonpayable",
+  "signature": "halveMinQuorum()",
+  "encoding": "0x78524b2e",
+  "outputs": {
+    "_success": ""
+  }
+}
+{
+  "name": "paidOut",
+  "type": "function",
+  "constant": true,
+  "stateMutability": "nonpayable",
+  "signature": "paidOut(address)",
+  "encoding": "0x81f03fcb",
   "inputs": {
     "val_0": ""
   },
@@ -493,23 +375,102 @@ ABI of test1.json
   }
 }
 {
-  "name": "totalRewardToken",
+  "name": "DAOrewardAccount",
   "type": "function",
   "constant": true,
   "stateMutability": "nonpayable",
-  "signature": "totalRewardToken()",
-  "encoding": "0x34145808",
+  "signature": "DAOrewardAccount()",
+  "encoding": "0x82bf6464",
   "outputs": {
     "val_0": ""
   }
 }
 {
-  "name": "totalSupply",
+  "name": "Voted",
+  "type": "event",
+  "stateMutability": "nonpayable",
+  "signature": "Voted(uint256,bool,address)",
+  "encoding": "0x86abfce99b7dd908bec0169288797f85049ec73cbe046ed9de818fab3a497ae0",
+  "inputs": {
+    "position": "",
+    "proposalID": "",
+    "voter": ""
+  }
+}
+{
+  "name": "proposalDeposit",
   "type": "function",
   "constant": true,
   "stateMutability": "nonpayable",
-  "signature": "totalSupply()",
-  "encoding": "0x18160ddd",
+  "signature": "proposalDeposit()",
+  "encoding": "0x8b15a605",
+  "outputs": {
+    "val_0": ""
+  }
+}
+{
+  "name": "Approval",
+  "type": "event",
+  "stateMutability": "nonpayable",
+  "signature": "Approval(address,address,uint256)",
+  "encoding": "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925",
+  "inputs": {
+    "_amount": "",
+    "_owner": "",
+    "_spender": ""
+  }
+}
+{
+  "name": "numberOfProposals",
+  "type": "function",
+  "constant": true,
+  "stateMutability": "nonpayable",
+  "signature": "numberOfProposals()",
+  "encoding": "0x8d7af473",
+  "outputs": {
+    "_numberOfProposals": ""
+  }
+}
+{
+  "name": "NewCurator",
+  "type": "event",
+  "stateMutability": "nonpayable",
+  "signature": "NewCurator(address)",
+  "encoding": "0x9046fefd66f538ab35263248a44217dcb70e2eb2cd136629e141b8b8f9f03b60",
+  "inputs": {
+    "_newCurator": ""
+  }
+}
+{
+  "name": "lastTimeMinQuorumMet",
+  "type": "function",
+  "constant": true,
+  "stateMutability": "nonpayable",
+  "signature": "lastTimeMinQuorumMet()",
+  "encoding": "0x96d7f3f5",
+  "outputs": {
+    "val_0": ""
+  }
+}
+{
+  "name": "retrieveDAOReward",
+  "type": "function",
+  "stateMutability": "nonpayable",
+  "signature": "retrieveDAOReward(bool)",
+  "encoding": "0xa1da2fb9",
+  "inputs": {
+    "_toMembers": ""
+  },
+  "outputs": {
+    "_success": ""
+  }
+}
+{
+  "name": "receiveEther",
+  "type": "function",
+  "stateMutability": "nonpayable",
+  "signature": "receiveEther()",
+  "encoding": "0xa3912ec8",
   "outputs": {
     "val_0": ""
   }
@@ -529,18 +490,101 @@ ABI of test1.json
   }
 }
 {
-  "name": "transferFrom",
+  "name": "isFueled",
+  "type": "function",
+  "constant": true,
+  "stateMutability": "nonpayable",
+  "signature": "isFueled()",
+  "encoding": "0xb7bc2c84",
+  "outputs": {
+    "val_0": ""
+  }
+}
+{
+  "name": "createTokenProxy",
   "type": "function",
   "stateMutability": "nonpayable",
-  "signature": "transferFrom(address,address,uint256)",
-  "encoding": "0x23b872dd",
+  "signature": "createTokenProxy(address)",
+  "encoding": "0xbaac5300",
   "inputs": {
-    "_from": "",
-    "_to": "",
-    "_value": ""
+    "_tokenHolder": ""
   },
   "outputs": {
     "success": ""
+  }
+}
+{
+  "name": "Refund",
+  "type": "event",
+  "stateMutability": "nonpayable",
+  "signature": "Refund(address,uint256)",
+  "encoding": "0xbb28353e4598c3b9199101a66e0989549b659a59a54d2c27fbb183f1932c8e6d",
+  "inputs": {
+    "to": "",
+    "value": ""
+  }
+}
+{
+  "name": "getNewDAOAddress",
+  "type": "function",
+  "constant": true,
+  "stateMutability": "nonpayable",
+  "signature": "getNewDAOAddress(uint256)",
+  "encoding": "0xbe7c29c1",
+  "inputs": {
+    "_proposalID": ""
+  },
+  "outputs": {
+    "_newDAO": ""
+  }
+}
+{
+  "name": "vote",
+  "type": "function",
+  "stateMutability": "nonpayable",
+  "signature": "vote(uint256,bool)",
+  "encoding": "0xc9d27afe",
+  "inputs": {
+    "_proposalID": "",
+    "_supportsProposal": ""
+  },
+  "outputs": {
+    "_voteID": ""
+  }
+}
+{
+  "name": "getMyReward",
+  "type": "function",
+  "stateMutability": "nonpayable",
+  "signature": "getMyReward()",
+  "encoding": "0xcc9ae3f6",
+  "outputs": {
+    "_success": ""
+  }
+}
+{
+  "name": "rewardToken",
+  "type": "function",
+  "constant": true,
+  "stateMutability": "nonpayable",
+  "signature": "rewardToken(address)",
+  "encoding": "0xcdef91d0",
+  "inputs": {
+    "val_0": ""
+  },
+  "outputs": {
+    "val_0": ""
+  }
+}
+{
+  "name": "CreatedToken",
+  "type": "event",
+  "stateMutability": "nonpayable",
+  "signature": "CreatedToken(address,uint256)",
+  "encoding": "0xdbccb92686efceafb9bb7e0394df7f58f71b954061b81afb57109bf247d3d75a",
+  "inputs": {
+    "amount": "",
+    "to": ""
   }
 }
 {
@@ -559,157 +603,18 @@ ABI of test1.json
   }
 }
 {
-  "name": "transferWithoutReward",
-  "type": "function",
-  "stateMutability": "nonpayable",
-  "signature": "transferWithoutReward(address,uint256)",
-  "encoding": "0x4e10c3ee",
-  "inputs": {
-    "_to": "",
-    "_value": ""
-  },
-  "outputs": {
-    "success": ""
-  }
-}
-{
-  "name": "trustee",
+  "name": "allowance",
   "type": "function",
   "constant": true,
   "stateMutability": "nonpayable",
-  "signature": "trustee()",
-  "encoding": "0xfdf97cb2",
-  "outputs": {
-    "val_0": ""
-  }
-}
-{
-  "name": "trusteeWithdraw",
-  "type": "function",
-  "stateMutability": "nonpayable",
-  "signature": "trusteeWithdraw()",
-  "encoding": "0x2e6e504a"
-}
-{
-  "name": "unblockMe",
-  "type": "function",
-  "stateMutability": "nonpayable",
-  "signature": "unblockMe()",
-  "encoding": "0x2632bf20",
-  "outputs": {
-    "val_0": ""
-  }
-}
-{
-  "name": "vote",
-  "type": "function",
-  "stateMutability": "nonpayable",
-  "signature": "vote(uint256,bool)",
-  "encoding": "0xc9d27afe",
+  "signature": "allowance(address,address)",
+  "encoding": "0xdd62ed3e",
   "inputs": {
-    "_proposalID": "",
-    "_supportsProposal": ""
-  },
-  "outputs": {
-    "_voteID": ""
-  }
-}
-{
-  "name": "withdraw",
-  "type": "function",
-  "stateMutability": "nonpayable",
-  "signature": "withdraw()",
-  "encoding": "0x3ccfd60b"
-}
-{
-  "name": "AllowedRecipientChanged",
-  "type": "event",
-  "stateMutability": "nonpayable",
-  "signature": "AllowedRecipientChanged(address,bool)",
-  "encoding": "0x73ad2a153c8b67991df9459024950b318a609782cee8c7eeda47b905f9baa91f",
-  "inputs": {
-    "_allowed": "",
-    "_recipient": ""
-  }
-}
-{
-  "name": "Approval",
-  "type": "event",
-  "stateMutability": "nonpayable",
-  "signature": "Approval(address,address,uint256)",
-  "encoding": "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925",
-  "inputs": {
-    "_amount": "",
     "_owner": "",
     "_spender": ""
-  }
-}
-{
-  "name": "CreatedToken",
-  "type": "event",
-  "stateMutability": "nonpayable",
-  "signature": "CreatedToken(address,uint256)",
-  "encoding": "0xdbccb92686efceafb9bb7e0394df7f58f71b954061b81afb57109bf247d3d75a",
-  "inputs": {
-    "amount": "",
-    "to": ""
-  }
-}
-{
-  "name": "FuelingToDate",
-  "type": "event",
-  "stateMutability": "nonpayable",
-  "signature": "FuelingToDate(uint256)",
-  "encoding": "0xf381a3e2428fdda36615919e8d9c35878d9eb0cf85ac6edf575088e80e4c147e",
-  "inputs": {
-    "value": ""
-  }
-}
-{
-  "name": "NewCurator",
-  "type": "event",
-  "stateMutability": "nonpayable",
-  "signature": "NewCurator(address)",
-  "encoding": "0x9046fefd66f538ab35263248a44217dcb70e2eb2cd136629e141b8b8f9f03b60",
-  "inputs": {
-    "_newCurator": ""
-  }
-}
-{
-  "name": "ProposalAdded",
-  "type": "event",
-  "stateMutability": "nonpayable",
-  "signature": "ProposalAdded(uint256,address,uint256,bool,string)",
-  "encoding": "0x5790de2c279e58269b93b12828f56fd5f2bc8ad15e61ce08572585c81a38756f",
-  "inputs": {
-    "amount": "",
-    "description": "",
-    "newCurator": "",
-    "proposalID": "",
-    "recipient": ""
-  }
-}
-{
-  "name": "ProposalTallied",
-  "type": "event",
-  "stateMutability": "nonpayable",
-  "signature": "ProposalTallied(uint256,bool,uint256)",
-  "encoding": "0xdfc78bdca8e3e0b18c16c5c99323c6cb9eb5e00afde190b4e7273f5158702b07",
-  "inputs": {
-    "proposalID": "",
-    "quorum": "",
-    "result": ""
-  }
-}
-{
-  "name": "Refund",
-  "type": "event",
-  "stateMutability": "nonpayable",
-  "signature": "Refund(address,uint256)",
-  "encoding": "0xbb28353e4598c3b9199101a66e0989549b659a59a54d2c27fbb183f1932c8e6d",
-  "inputs": {
-    "to": "",
-    "value": ""
+  },
+  "outputs": {
+    "remaining": ""
   }
 }
 {
@@ -725,21 +630,266 @@ ABI of test1.json
   }
 }
 {
-  "name": "Voted",
+  "name": "ProposalTallied",
   "type": "event",
   "stateMutability": "nonpayable",
-  "signature": "Voted(uint256,bool,address)",
-  "encoding": "0x86abfce99b7dd908bec0169288797f85049ec73cbe046ed9de818fab3a497ae0",
+  "signature": "ProposalTallied(uint256,bool,uint256)",
+  "encoding": "0xdfc78bdca8e3e0b18c16c5c99323c6cb9eb5e00afde190b4e7273f5158702b07",
   "inputs": {
-    "position": "",
     "proposalID": "",
-    "voter": ""
+    "quorum": "",
+    "result": ""
+  }
+}
+{
+  "name": "changeProposalDeposit",
+  "type": "function",
+  "stateMutability": "nonpayable",
+  "signature": "changeProposalDeposit(uint256)",
+  "encoding": "0xe33734fd",
+  "inputs": {
+    "_proposalDeposit": ""
+  }
+}
+{
+  "name": "blocked",
+  "type": "function",
+  "constant": true,
+  "stateMutability": "nonpayable",
+  "signature": "blocked(address)",
+  "encoding": "0xe5962195",
+  "inputs": {
+    "val_0": ""
+  },
+  "outputs": {
+    "val_0": ""
+  }
+}
+{
+  "name": "curator",
+  "type": "function",
+  "constant": true,
+  "stateMutability": "nonpayable",
+  "signature": "curator()",
+  "encoding": "0xe66f53b7",
+  "outputs": {
+    "val_0": ""
+  }
+}
+{
+  "name": "checkProposalCode",
+  "type": "function",
+  "constant": true,
+  "stateMutability": "nonpayable",
+  "signature": "checkProposalCode(uint256,address,uint256,bytes)",
+  "encoding": "0xeceb2945",
+  "inputs": {
+    "_amount": "",
+    "_proposalID": "",
+    "_recipient": "",
+    "_transactionData": ""
+  },
+  "outputs": {
+    "_codeChecksOut": ""
+  }
+}
+{
+  "name": "mainDAO",
+  "type": "function",
+  "constant": true,
+  "stateMutability": "nonpayable",
+  "signature": "mainDAO()",
+  "encoding": "0xeedcf50a",
+  "outputs": {
+    "val_0": ""
+  }
+}
+{
+  "name": "FuelingToDate",
+  "type": "event",
+  "stateMutability": "nonpayable",
+  "signature": "FuelingToDate(uint256)",
+  "encoding": "0xf381a3e2428fdda36615919e8d9c35878d9eb0cf85ac6edf575088e80e4c147e",
+  "inputs": {
+    "value": ""
+  }
+}
+{
+  "name": "privateCreation",
+  "type": "function",
+  "constant": true,
+  "stateMutability": "nonpayable",
+  "signature": "privateCreation()",
+  "encoding": "0xf8c80d26",
+  "outputs": {
+    "val_0": ""
+  }
+}
+{
+  "name": "trustee",
+  "type": "function",
+  "constant": true,
+  "stateMutability": "nonpayable",
+  "signature": "trustee()",
+  "encoding": "0xfdf97cb2",
+  "outputs": {
+    "val_0": ""
   }
 }
 
 ------------------------------------------------------------------------------------------------------------------------
 ABI of test2.json
 ------------------------------------------------------------------------------------------------------------------------
+{
+  "name": "resolver",
+  "type": "function",
+  "constant": true,
+  "stateMutability": "nonpayable",
+  "signature": "resolver(bytes32)",
+  "encoding": "0x0178b8bf",
+  "inputs": {
+    "val_0": ""
+  },
+  "outputs": {
+    "val_0": ""
+  }
+}
+{
+  "name": "releaseDeed",
+  "type": "function",
+  "stateMutability": "nonpayable",
+  "signature": "releaseDeed(bytes32)",
+  "encoding": "0x0230a07c",
+  "inputs": {
+    "val_0": ""
+  }
+}
+{
+  "name": "owner",
+  "type": "function",
+  "constant": true,
+  "stateMutability": "nonpayable",
+  "signature": "owner(bytes32)",
+  "encoding": "0x02571be3",
+  "inputs": {
+    "val_0": ""
+  },
+  "outputs": {
+    "val_0": ""
+  }
+}
+{
+  "name": "setSubnodeOwner",
+  "type": "function",
+  "stateMutability": "nonpayable",
+  "signature": "setSubnodeOwner(bytes32,bytes32,address)",
+  "encoding": "0x06ab5923",
+  "inputs": {
+    "val_0": "",
+    "val_1": "",
+    "val_2": ""
+  }
+}
+{
+  "name": "HashRegistered",
+  "type": "event",
+  "stateMutability": "nonpayable",
+  "signature": "HashRegistered(bytes32,address,uint256,uint256)",
+  "encoding": "0x0f0c27adfd84b60b6f456b0e87cdccb1e5fb9603991588d87fa99f5b6b61e670",
+  "inputs": {
+    "val_0": "",
+    "val_1": "",
+    "val_2": "",
+    "val_3": ""
+  }
+}
+{
+  "name": "setTTL",
+  "type": "function",
+  "stateMutability": "nonpayable",
+  "signature": "setTTL(bytes32,uint64)",
+  "encoding": "0x14ab9038",
+  "inputs": {
+    "val_0": "",
+    "val_1": ""
+  }
+}
+{
+  "name": "invalidateName",
+  "type": "function",
+  "stateMutability": "nonpayable",
+  "signature": "invalidateName(string)",
+  "encoding": "0x15f73331",
+  "inputs": {
+    "val_0": ""
+  }
+}
+{
+  "name": "ttl",
+  "type": "function",
+  "constant": true,
+  "stateMutability": "nonpayable",
+  "signature": "ttl(bytes32)",
+  "encoding": "0x16a25cbd",
+  "inputs": {
+    "val_0": ""
+  },
+  "outputs": {
+    "val_0": ""
+  }
+}
+{
+  "name": "setResolver",
+  "type": "function",
+  "stateMutability": "nonpayable",
+  "signature": "setResolver(bytes32,address)",
+  "encoding": "0x1896f70a",
+  "inputs": {
+    "val_0": "",
+    "val_1": ""
+  }
+}
+{
+  "name": "NewTTL",
+  "type": "event",
+  "stateMutability": "nonpayable",
+  "signature": "NewTTL(bytes32,uint64)",
+  "encoding": "0x1d4f9bbfc9cab89d66e1a1562f2233ccbf1308cb4f63de2ead5787adddb8fa68",
+  "inputs": {
+    "val_0": "",
+    "val_1": ""
+  }
+}
+{
+  "name": "HashInvalidated",
+  "type": "event",
+  "stateMutability": "nonpayable",
+  "signature": "HashInvalidated(bytes32,string,uint256,uint256)",
+  "encoding": "0x1f9c649fe47e58bb60f4e52f0d90e4c47a526c9f90c5113df842c025970b66ad",
+  "inputs": {
+    "val_0": "",
+    "val_1": "",
+    "val_2": "",
+    "val_3": ""
+  }
+}
+{
+  "name": "shaBid",
+  "type": "function",
+  "constant": true,
+  "stateMutability": "nonpayable",
+  "signature": "shaBid(bytes32,address,uint256,bytes32)",
+  "encoding": "0x22ec1244",
+  "inputs": {
+    "val_0": "",
+    "val_1": "",
+    "val_2": "",
+    "val_3": ""
+  },
+  "outputs": {
+    "val_0": ""
+  }
+}
 {
   "name": "cancelBid",
   "type": "function",
@@ -749,17 +899,6 @@ ABI of test2.json
   "inputs": {
     "val_0": "",
     "val_1": ""
-  }
-}
-{
-  "name": "ens",
-  "type": "function",
-  "constant": true,
-  "stateMutability": "nonpayable",
-  "signature": "ens()",
-  "encoding": "0x3f15457f",
-  "outputs": {
-    "val_0": ""
   }
 }
 {
@@ -781,106 +920,34 @@ ABI of test2.json
   }
 }
 {
-  "name": "finalizeAuction",
-  "type": "function",
+  "name": "HashReleased",
+  "type": "event",
   "stateMutability": "nonpayable",
-  "signature": "finalizeAuction(bytes32)",
-  "encoding": "0x983b94fb",
-  "inputs": {
-    "val_0": ""
-  }
-}
-{
-  "name": "invalidateName",
-  "type": "function",
-  "stateMutability": "nonpayable",
-  "signature": "invalidateName(string)",
-  "encoding": "0x15f73331",
-  "inputs": {
-    "val_0": ""
-  }
-}
-{
-  "name": "newBid",
-  "type": "function",
-  "stateMutability": "payable",
-  "signature": "newBid(bytes32)",
-  "encoding": "0xce92dced",
-  "inputs": {
-    "val_0": ""
-  }
-}
-{
-  "name": "owner",
-  "type": "function",
-  "constant": true,
-  "stateMutability": "nonpayable",
-  "signature": "owner(bytes32)",
-  "encoding": "0x02571be3",
-  "inputs": {
-    "val_0": ""
-  },
-  "outputs": {
-    "val_0": ""
-  }
-}
-{
-  "name": "registryStarted",
-  "type": "function",
-  "constant": true,
-  "stateMutability": "nonpayable",
-  "signature": "registryStarted()",
-  "encoding": "0x9c67f06f",
-  "outputs": {
-    "val_0": ""
-  }
-}
-{
-  "name": "releaseDeed",
-  "type": "function",
-  "stateMutability": "nonpayable",
-  "signature": "releaseDeed(bytes32)",
-  "encoding": "0x0230a07c",
-  "inputs": {
-    "val_0": ""
-  }
-}
-{
-  "name": "resolver",
-  "type": "function",
-  "constant": true,
-  "stateMutability": "nonpayable",
-  "signature": "resolver(bytes32)",
-  "encoding": "0x0178b8bf",
-  "inputs": {
-    "val_0": ""
-  },
-  "outputs": {
-    "val_0": ""
-  }
-}
-{
-  "name": "rootNode",
-  "type": "function",
-  "constant": true,
-  "stateMutability": "nonpayable",
-  "signature": "rootNode()",
-  "encoding": "0xfaff50a8",
-  "outputs": {
-    "val_0": ""
-  }
-}
-{
-  "name": "sealedBids",
-  "type": "function",
-  "constant": true,
-  "stateMutability": "nonpayable",
-  "signature": "sealedBids(address,bytes32)",
-  "encoding": "0x5e431709",
+  "signature": "HashReleased(bytes32,uint256)",
+  "encoding": "0x292b79b9246fa2c8e77d3fe195b251f9cb839d7d038e667c069ee7708c631e16",
   "inputs": {
     "val_0": "",
     "val_1": ""
-  },
+  }
+}
+{
+  "name": "NewResolver",
+  "type": "event",
+  "stateMutability": "nonpayable",
+  "signature": "NewResolver(bytes32,address)",
+  "encoding": "0x335721b01866dc23fbee8b6b2c7b1e14d6f05c28cd35a2c934239f94095602a0",
+  "inputs": {
+    "val_0": "",
+    "val_1": ""
+  }
+}
+{
+  "name": "ens",
+  "type": "function",
+  "constant": true,
+  "stateMutability": "nonpayable",
+  "signature": "ens()",
+  "encoding": "0x3f15457f",
   "outputs": {
     "val_0": ""
   }
@@ -897,73 +964,27 @@ ABI of test2.json
   }
 }
 {
-  "name": "setResolver",
+  "name": "transferRegistrars",
   "type": "function",
   "stateMutability": "nonpayable",
-  "signature": "setResolver(bytes32,address)",
-  "encoding": "0x1896f70a",
+  "signature": "transferRegistrars(bytes32)",
+  "encoding": "0x5ddae283",
   "inputs": {
-    "val_0": "",
-    "val_1": ""
+    "val_0": ""
   }
 }
 {
-  "name": "setSubnodeOwner",
-  "type": "function",
-  "stateMutability": "nonpayable",
-  "signature": "setSubnodeOwner(bytes32,bytes32,address)",
-  "encoding": "0x06ab5923",
-  "inputs": {
-    "val_0": "",
-    "val_1": "",
-    "val_2": ""
-  }
-}
-{
-  "name": "setTTL",
-  "type": "function",
-  "stateMutability": "nonpayable",
-  "signature": "setTTL(bytes32,uint64)",
-  "encoding": "0x14ab9038",
-  "inputs": {
-    "val_0": "",
-    "val_1": ""
-  }
-}
-{
-  "name": "shaBid",
+  "name": "sealedBids",
   "type": "function",
   "constant": true,
   "stateMutability": "nonpayable",
-  "signature": "shaBid(bytes32,address,uint256,bytes32)",
-  "encoding": "0x22ec1244",
+  "signature": "sealedBids(address,bytes32)",
+  "encoding": "0x5e431709",
   "inputs": {
     "val_0": "",
-    "val_1": "",
-    "val_2": "",
-    "val_3": ""
+    "val_1": ""
   },
   "outputs": {
-    "val_0": ""
-  }
-}
-{
-  "name": "startAuction",
-  "type": "function",
-  "stateMutability": "nonpayable",
-  "signature": "startAuction(bytes32)",
-  "encoding": "0xede8acdb",
-  "inputs": {
-    "val_0": ""
-  }
-}
-{
-  "name": "startAuctions",
-  "type": "function",
-  "stateMutability": "nonpayable",
-  "signature": "startAuctions(bytes32[])",
-  "encoding": "0xe27fe50f",
-  "inputs": {
     "val_0": ""
   }
 }
@@ -993,35 +1014,11 @@ ABI of test2.json
   }
 }
 {
-  "name": "transferRegistrars",
-  "type": "function",
+  "name": "BidRevealed",
+  "type": "event",
   "stateMutability": "nonpayable",
-  "signature": "transferRegistrars(bytes32)",
-  "encoding": "0x5ddae283",
-  "inputs": {
-    "val_0": ""
-  }
-}
-{
-  "name": "ttl",
-  "type": "function",
-  "constant": true,
-  "stateMutability": "nonpayable",
-  "signature": "ttl(bytes32)",
-  "encoding": "0x16a25cbd",
-  "inputs": {
-    "val_0": ""
-  },
-  "outputs": {
-    "val_0": ""
-  }
-}
-{
-  "name": "unsealBid",
-  "type": "function",
-  "stateMutability": "nonpayable",
-  "signature": "unsealBid(bytes32,address,uint256,bytes32)",
-  "encoding": "0xaefc8c72",
+  "signature": "BidRevealed(bytes32,address,uint256,uint8)",
+  "encoding": "0x7b6c4b278d165a6b33958f8ea5dfb00c8c9d4d0acf1985bef5d10786898bc3e7",
   "inputs": {
     "val_0": "",
     "val_1": "",
@@ -1041,53 +1038,37 @@ ABI of test2.json
   }
 }
 {
-  "name": "BidRevealed",
-  "type": "event",
+  "name": "finalizeAuction",
+  "type": "function",
   "stateMutability": "nonpayable",
-  "signature": "BidRevealed(bytes32,address,uint256,uint8)",
-  "encoding": "0x7b6c4b278d165a6b33958f8ea5dfb00c8c9d4d0acf1985bef5d10786898bc3e7",
+  "signature": "finalizeAuction(bytes32)",
+  "encoding": "0x983b94fb",
+  "inputs": {
+    "val_0": ""
+  }
+}
+{
+  "name": "registryStarted",
+  "type": "function",
+  "constant": true,
+  "stateMutability": "nonpayable",
+  "signature": "registryStarted()",
+  "encoding": "0x9c67f06f",
+  "outputs": {
+    "val_0": ""
+  }
+}
+{
+  "name": "unsealBid",
+  "type": "function",
+  "stateMutability": "nonpayable",
+  "signature": "unsealBid(bytes32,address,uint256,bytes32)",
+  "encoding": "0xaefc8c72",
   "inputs": {
     "val_0": "",
     "val_1": "",
     "val_2": "",
     "val_3": ""
-  }
-}
-{
-  "name": "HashInvalidated",
-  "type": "event",
-  "stateMutability": "nonpayable",
-  "signature": "HashInvalidated(bytes32,string,uint256,uint256)",
-  "encoding": "0x1f9c649fe47e58bb60f4e52f0d90e4c47a526c9f90c5113df842c025970b66ad",
-  "inputs": {
-    "val_0": "",
-    "val_1": "",
-    "val_2": "",
-    "val_3": ""
-  }
-}
-{
-  "name": "HashRegistered",
-  "type": "event",
-  "stateMutability": "nonpayable",
-  "signature": "HashRegistered(bytes32,address,uint256,uint256)",
-  "encoding": "0x0f0c27adfd84b60b6f456b0e87cdccb1e5fb9603991588d87fa99f5b6b61e670",
-  "inputs": {
-    "val_0": "",
-    "val_1": "",
-    "val_2": "",
-    "val_3": ""
-  }
-}
-{
-  "name": "HashReleased",
-  "type": "event",
-  "stateMutability": "nonpayable",
-  "signature": "HashReleased(bytes32,uint256)",
-  "encoding": "0x292b79b9246fa2c8e77d3fe195b251f9cb839d7d038e667c069ee7708c631e16",
-  "inputs": {
-    "val_0": "",
-    "val_1": ""
   }
 }
 {
@@ -1115,25 +1096,13 @@ ABI of test2.json
   }
 }
 {
-  "name": "NewResolver",
-  "type": "event",
-  "stateMutability": "nonpayable",
-  "signature": "NewResolver(bytes32,address)",
-  "encoding": "0x335721b01866dc23fbee8b6b2c7b1e14d6f05c28cd35a2c934239f94095602a0",
+  "name": "newBid",
+  "type": "function",
+  "stateMutability": "payable",
+  "signature": "newBid(bytes32)",
+  "encoding": "0xce92dced",
   "inputs": {
-    "val_0": "",
-    "val_1": ""
-  }
-}
-{
-  "name": "NewTTL",
-  "type": "event",
-  "stateMutability": "nonpayable",
-  "signature": "NewTTL(bytes32,uint64)",
-  "encoding": "0x1d4f9bbfc9cab89d66e1a1562f2233ccbf1308cb4f63de2ead5787adddb8fa68",
-  "inputs": {
-    "val_0": "",
-    "val_1": ""
+    "val_0": ""
   }
 }
 {
@@ -1145,6 +1114,37 @@ ABI of test2.json
   "inputs": {
     "val_0": "",
     "val_1": ""
+  }
+}
+{
+  "name": "startAuctions",
+  "type": "function",
+  "stateMutability": "nonpayable",
+  "signature": "startAuctions(bytes32[])",
+  "encoding": "0xe27fe50f",
+  "inputs": {
+    "val_0": ""
+  }
+}
+{
+  "name": "startAuction",
+  "type": "function",
+  "stateMutability": "nonpayable",
+  "signature": "startAuction(bytes32)",
+  "encoding": "0xede8acdb",
+  "inputs": {
+    "val_0": ""
+  }
+}
+{
+  "name": "rootNode",
+  "type": "function",
+  "constant": true,
+  "stateMutability": "nonpayable",
+  "signature": "rootNode()",
+  "encoding": "0xfaff50a8",
+  "outputs": {
+    "val_0": ""
   }
 }
 

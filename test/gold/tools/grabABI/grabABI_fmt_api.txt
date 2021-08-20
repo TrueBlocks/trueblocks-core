@@ -198,5 +198,5 @@ grabABI 0xe94327d07fc17907b4db788e5adf2ed424addff6 --fmt api
   "encoding": "0xf2fde38b",
   "input_names": "newOwner,"
 }], "types": [
-{ "type": "CAbi", "fields": [{ "name": "address", "type": "address" }, { "name": "interfaces", "type": "object|ts_array" }] }
+{ "type": "CAbi", "fields": [{ "name": "address", "type": "address" }, { "name": "abiInterfacesMap", "type": "object|ts_array" }] }
 ], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }
