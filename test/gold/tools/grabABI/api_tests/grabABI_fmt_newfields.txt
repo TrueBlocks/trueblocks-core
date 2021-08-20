@@ -1,21 +1,30 @@
 {
   "data": [
     {
-      "name": "addMinter",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "addMinter(address)",
-      "encoding": "0x983b2d56",
-      "input_names": "_addr,",
-      "output_names": ""
-    },
-    {
-      "name": "allowance",
+      "name": "mintingFinished",
       "type": "function",
       "stateMutability": "view",
-      "signature": "allowance(address,address)",
-      "encoding": "0xdd62ed3e",
-      "input_names": "_owner,_spender,",
+      "signature": "mintingFinished()",
+      "encoding": "0x05d2035b",
+      "input_names": "",
+      "output_names": "val_0,"
+    },
+    {
+      "name": "transfersEnabledFlag",
+      "type": "function",
+      "stateMutability": "view",
+      "signature": "transfersEnabledFlag()",
+      "encoding": "0x05f9bb6b",
+      "input_names": "",
+      "output_names": "val_0,"
+    },
+    {
+      "name": "name",
+      "type": "function",
+      "stateMutability": "view",
+      "signature": "name()",
+      "encoding": "0x06fdde03",
+      "input_names": "",
       "output_names": "val_0,"
     },
     {
@@ -28,21 +37,39 @@
       "output_names": "val_0,"
     },
     {
-      "name": "balanceOf",
-      "type": "function",
-      "stateMutability": "view",
-      "signature": "balanceOf(address)",
-      "encoding": "0x70a08231",
-      "input_names": "_owner,",
-      "output_names": "balance,"
+      "name": "Mint",
+      "type": "event",
+      "stateMutability": "nonpayable",
+      "signature": "Mint(address,uint256)",
+      "encoding": "0x0f6798a560793a54c3bcfe86a93cde1e73087d944c0ea20544137d4121396885",
+      "input_names": "to,amount,",
+      "output_names": ""
     },
     {
-      "name": "batchTransfer",
+      "name": "totalSupply",
+      "type": "function",
+      "stateMutability": "view",
+      "signature": "totalSupply()",
+      "encoding": "0x18160ddd",
+      "input_names": "",
+      "output_names": "val_0,"
+    },
+    {
+      "name": "transferFrom",
       "type": "function",
       "stateMutability": "nonpayable",
-      "signature": "batchTransfer(address[],uint256[])",
-      "encoding": "0x88d695b2",
-      "input_names": "_addresses,_value,",
+      "signature": "transferFrom(address,address,uint256)",
+      "encoding": "0x23b872dd",
+      "input_names": "_from,_to,_value,",
+      "output_names": "val_0,"
+    },
+    {
+      "name": "decimals",
+      "type": "function",
+      "stateMutability": "view",
+      "signature": "decimals()",
+      "encoding": "0x313ce567",
+      "input_names": "",
       "output_names": "val_0,"
     },
     {
@@ -55,11 +82,20 @@
       "output_names": "val_0,"
     },
     {
-      "name": "decimals",
+      "name": "mint",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "mint(address,uint256)",
+      "encoding": "0x40c10f19",
+      "input_names": "_to,_amount,",
+      "output_names": "val_0,"
+    },
+    {
+      "name": "version",
       "type": "function",
       "stateMutability": "view",
-      "signature": "decimals()",
-      "encoding": "0x313ce567",
+      "signature": "version()",
+      "encoding": "0x54fd4d50",
       "input_names": "",
       "output_names": "val_0,"
     },
@@ -73,22 +109,13 @@
       "output_names": "val_0,"
     },
     {
-      "name": "deleteMinter",
+      "name": "balanceOf",
       "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "deleteMinter(address)",
-      "encoding": "0xd82f94a3",
-      "input_names": "_addr,",
-      "output_names": ""
-    },
-    {
-      "name": "enableTransfers",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "enableTransfers()",
-      "encoding": "0xaf35c6c7",
-      "input_names": "",
-      "output_names": ""
+      "stateMutability": "view",
+      "signature": "balanceOf(address)",
+      "encoding": "0x70a08231",
+      "input_names": "_owner,",
+      "output_names": "balance,"
     },
     {
       "name": "finishMinting",
@@ -100,49 +127,31 @@
       "output_names": "val_0,"
     },
     {
-      "name": "increaseApproval",
+      "name": "batchTransfer",
       "type": "function",
       "stateMutability": "nonpayable",
-      "signature": "increaseApproval(address,uint256)",
-      "encoding": "0xd73dd623",
-      "input_names": "_spender,_addedValue,",
+      "signature": "batchTransfer(address[],uint256[])",
+      "encoding": "0x88d695b2",
+      "input_names": "_addresses,_value,",
       "output_names": "val_0,"
     },
     {
-      "name": "mint",
-      "type": "function",
+      "name": "OwnershipTransferred",
+      "type": "event",
       "stateMutability": "nonpayable",
-      "signature": "mint(address,uint256)",
-      "encoding": "0x40c10f19",
-      "input_names": "_to,_amount,",
-      "output_names": "val_0,"
+      "signature": "OwnershipTransferred(address,address)",
+      "encoding": "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0",
+      "input_names": "previousOwner,newOwner,",
+      "output_names": ""
     },
     {
-      "name": "minters",
-      "type": "function",
-      "stateMutability": "view",
-      "signature": "minters(address)",
-      "encoding": "0xf46eccc4",
-      "input_names": "val_0,",
-      "output_names": "val_0,"
-    },
-    {
-      "name": "mintingFinished",
-      "type": "function",
-      "stateMutability": "view",
-      "signature": "mintingFinished()",
-      "encoding": "0x05d2035b",
-      "input_names": "",
-      "output_names": "val_0,"
-    },
-    {
-      "name": "name",
-      "type": "function",
-      "stateMutability": "view",
-      "signature": "name()",
-      "encoding": "0x06fdde03",
-      "input_names": "",
-      "output_names": "val_0,"
+      "name": "Approval",
+      "type": "event",
+      "stateMutability": "nonpayable",
+      "signature": "Approval(address,address,uint256)",
+      "encoding": "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925",
+      "input_names": "owner,spender,value,",
+      "output_names": ""
     },
     {
       "name": "owner",
@@ -163,13 +172,13 @@
       "output_names": "val_0,"
     },
     {
-      "name": "totalSupply",
+      "name": "addMinter",
       "type": "function",
-      "stateMutability": "view",
-      "signature": "totalSupply()",
-      "encoding": "0x18160ddd",
-      "input_names": "",
-      "output_names": "val_0,"
+      "stateMutability": "nonpayable",
+      "signature": "addMinter(address)",
+      "encoding": "0x983b2d56",
+      "input_names": "_addr,",
+      "output_names": ""
     },
     {
       "name": "transfer",
@@ -181,13 +190,58 @@
       "output_names": "val_0,"
     },
     {
-      "name": "transferFrom",
+      "name": "MintFinished",
+      "type": "event",
+      "stateMutability": "nonpayable",
+      "signature": "MintFinished()",
+      "encoding": "0xae5184fba832cb2b1f702aca6117b8d265eaf03ad33eb133f19dde0f5920fa08",
+      "input_names": "",
+      "output_names": ""
+    },
+    {
+      "name": "enableTransfers",
       "type": "function",
       "stateMutability": "nonpayable",
-      "signature": "transferFrom(address,address,uint256)",
-      "encoding": "0x23b872dd",
-      "input_names": "_from,_to,_value,",
+      "signature": "enableTransfers()",
+      "encoding": "0xaf35c6c7",
+      "input_names": "",
+      "output_names": ""
+    },
+    {
+      "name": "increaseApproval",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "increaseApproval(address,uint256)",
+      "encoding": "0xd73dd623",
+      "input_names": "_spender,_addedValue,",
       "output_names": "val_0,"
+    },
+    {
+      "name": "deleteMinter",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "deleteMinter(address)",
+      "encoding": "0xd82f94a3",
+      "input_names": "_addr,",
+      "output_names": ""
+    },
+    {
+      "name": "allowance",
+      "type": "function",
+      "stateMutability": "view",
+      "signature": "allowance(address,address)",
+      "encoding": "0xdd62ed3e",
+      "input_names": "_owner,_spender,",
+      "output_names": "val_0,"
+    },
+    {
+      "name": "Transfer",
+      "type": "event",
+      "stateMutability": "nonpayable",
+      "signature": "Transfer(address,address,uint256)",
+      "encoding": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+      "input_names": "from,to,value,",
+      "output_names": ""
     },
     {
       "name": "transferOwnership",
@@ -199,67 +253,13 @@
       "output_names": ""
     },
     {
-      "name": "transfersEnabledFlag",
+      "name": "minters",
       "type": "function",
       "stateMutability": "view",
-      "signature": "transfersEnabledFlag()",
-      "encoding": "0x05f9bb6b",
-      "input_names": "",
+      "signature": "minters(address)",
+      "encoding": "0xf46eccc4",
+      "input_names": "val_0,",
       "output_names": "val_0,"
-    },
-    {
-      "name": "version",
-      "type": "function",
-      "stateMutability": "view",
-      "signature": "version()",
-      "encoding": "0x54fd4d50",
-      "input_names": "",
-      "output_names": "val_0,"
-    },
-    {
-      "name": "Approval",
-      "type": "event",
-      "stateMutability": "nonpayable",
-      "signature": "Approval(address,address,uint256)",
-      "encoding": "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925",
-      "input_names": "owner,spender,value,",
-      "output_names": ""
-    },
-    {
-      "name": "Mint",
-      "type": "event",
-      "stateMutability": "nonpayable",
-      "signature": "Mint(address,uint256)",
-      "encoding": "0x0f6798a560793a54c3bcfe86a93cde1e73087d944c0ea20544137d4121396885",
-      "input_names": "to,amount,",
-      "output_names": ""
-    },
-    {
-      "name": "MintFinished",
-      "type": "event",
-      "stateMutability": "nonpayable",
-      "signature": "MintFinished()",
-      "encoding": "0xae5184fba832cb2b1f702aca6117b8d265eaf03ad33eb133f19dde0f5920fa08",
-      "input_names": "",
-      "output_names": ""
-    },
-    {
-      "name": "OwnershipTransferred",
-      "type": "event",
-      "stateMutability": "nonpayable",
-      "signature": "OwnershipTransferred(address,address)",
-      "encoding": "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0",
-      "input_names": "previousOwner,newOwner,",
-      "output_names": ""
-    },
-    {
-      "name": "Transfer",
-      "type": "event",
-      "stateMutability": "nonpayable",
-      "signature": "Transfer(address,address,uint256)",
-      "encoding": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
-      "input_names": "from,to,value,",
-      "output_names": ""
     }
   ],
   "types": [
