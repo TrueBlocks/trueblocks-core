@@ -56,7 +56,8 @@ class CAbi : public CBaseNode {
     bool loadAbisOneKnown(const string_q& addr);
 
     CStringFunctionMap abiInterfacesMap;
-    bool hasInterface(const string_q& enc);
+    bool findInterface(const string_q& enc, CFunction& func) const;
+    bool hasInterface(const string_q& enc) const;
     void addInterfaceToMap(const CFunction& func);
     void clearInterfaceMap(void);
     void sortInterfaces(void);

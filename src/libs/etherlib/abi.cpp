@@ -376,14 +376,22 @@ size_t CAbi::nInterfaces(void) const {
 }
 
 //-----------------------------------------------------------------------
-bool CAbi::hasInterface(const string_q& enc) {
-    return abiInterfacesMap[enc].encoding == enc;
+bool CAbi::findInterface(const string_q& enc, CFunction& func) const {
+    if (!hasInterface(enc))
+        return false;
+    func = abiInterfacesMap.at(toLower(enc));
+    return true;
+}
+
+//-----------------------------------------------------------------------
+bool CAbi::hasInterface(const string_q& enc) const {
+    return abiInterfacesMap.find(toLower(enc)) != abiInterfacesMap.end();
 }
 
 //---------------------------------------------------------------------------
 void CAbi::addInterfaceToMap(const CFunction& func) {
     LOG_TEST("Inserting", func.type + "-" + func.signature);
-    abiInterfacesMap[func.encoding] = func;
+    abiInterfacesMap[toLower(func.encoding)] = func;
 }
 
 //---------------------------------------------------------------------------
@@ -413,11 +421,10 @@ bool CAbi::loadAbisFromKnown(bool tokensOnly) {
             if (archive.Lock(binPath, modeReadOnly, LOCK_NOWAIT)) {
                 archive >> *this;
                 archive.Release();
-                LOG_TEST("Loaded " + uint_2_Str(interfaces.size()) + " interfaces from",
-                         substitute(substitute(binPath, getCachePath(""), "$CACHE/"), configPath(""), "$CONFIG/"));
-                for (auto func : interfaces) {
+                for (auto func : interfaces)
                     addInterfaceToMap(func);
-                }
+                LOG_TEST("Loaded " + uint_2_Str(abiInterfacesMap.size()) + " interfaces from",
+                         substitute(substitute(binPath, getCachePath(""), "$CACHE/"), configPath(""), "$CONFIG/"));
                 abiSourcesMap[srcPath] = true;
                 return true;
             }
@@ -428,14 +435,14 @@ bool CAbi::loadAbisFromKnown(bool tokensOnly) {
     if (!forEveryFileInFolder(srcPath + "*", loadAbiFile, this))
         return false;
 
-    sort(interfaces.begin(), interfaces.end(), sortByFuncName);
+    sortInterfaces();
     abiSourcesMap[srcPath] = true;
 
     CArchive archive(WRITING_ARCHIVE);
     if (archive.Lock(binPath, modeWriteCreate, LOCK_NOWAIT)) {
         archive << *this;
         archive.Release();
-        LOG_TEST("Saved " + uint_2_Str(interfaces.size()) + " interfaces in",
+        LOG_TEST("Saved " + uint_2_Str(abiInterfacesMap.size()) + " interfaces in",
                  substitute(substitute(binPath, getCachePath(""), "$CACHE/"), configPath(""), "$CONFIG/"));
         return true;
     }
@@ -494,7 +501,7 @@ bool CAbi::loadAbiFromFile(const string_q& fileName) {
                     interface.abi_source = str;
                 }
         }
-        sort(interfaces.begin(), interfaces.end(), sortByFuncName);
+        sortInterfaces();
         abiSourcesMap[fileName] = true;
         return true;
     }
