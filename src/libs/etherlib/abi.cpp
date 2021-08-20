@@ -377,13 +377,13 @@ size_t CAbi::nInterfaces(void) const {
 
 //-----------------------------------------------------------------------
 bool CAbi::hasInterface(const string_q& enc) {
-    return abiInterfacesMap[enc];
+    return abiInterfacesMap[enc].encoding == enc;
 }
 
 //---------------------------------------------------------------------------
 void CAbi::addInterfaceToMap(const CFunction& func) {
     LOG_TEST("Inserting", func.type + "-" + func.signature);
-    abiInterfacesMap[func.encoding] = true;
+    abiInterfacesMap[func.encoding] = func;
 }
 
 //---------------------------------------------------------------------------

@@ -23,7 +23,7 @@ namespace qblocks {
 class CTransaction;
 class CLogEntry;
 class CTrace;
-typedef map<string, CFunction> CFunctionPtrMap;
+typedef map<string, CFunction> CStringFunctionMap;
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
@@ -55,7 +55,7 @@ class CAbi : public CBaseNode {
     bool loadAbisFromKnown(bool tokensOnly = false);
     bool loadAbisOneKnown(const string_q& addr);
 
-    CStringBoolMap abiInterfacesMap;
+    CStringFunctionMap abiInterfacesMap;
     bool hasInterface(const string_q& enc);
     void addInterfaceToMap(const CFunction& func);
     void clearInterfaceMap(void);
