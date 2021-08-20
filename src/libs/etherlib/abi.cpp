@@ -365,6 +365,22 @@ bool loadAbiString(const string_q& jsonStr, CAbi& abi) {
     return ret;
 }
 
+//-----------------------------------------------------------------------
+bool CAbi::hasInterface(const string_q& enc) {
+    return abiInterfacesMap[enc];
+}
+
+//---------------------------------------------------------------------------
+void CAbi::addInterfaceToMap(const CFunction& func) {
+    LOG_TEST("Inserting", func.type + "-" + func.signature);
+    abiInterfacesMap[func.encoding] = true;
+}
+
+//---------------------------------------------------------------------------
+void CAbi::clearInterfaceMap(void) {
+    abiInterfacesMap.clear();
+}
+
 //---------------------------------------------------------------------------
 bool CAbi::loadAbisFromKnown(bool tokensOnly) {
     if (tokensOnly) {
@@ -382,7 +398,7 @@ bool CAbi::loadAbisFromKnown(bool tokensOnly) {
         // If any file is newer, don't use binary cache
         fileInfo info = getNewestFileInFolder(srcPath);
         if (info.fileName == binPath || fileLastModifyDate(binPath) > info.fileTime) {
-            abiInterfacesMap.clear();
+            clearInterfaceMap();
             CArchive archive(READING_ARCHIVE);
             if (archive.Lock(binPath, modeReadOnly, LOCK_NOWAIT)) {
                 archive >> *this;
@@ -390,8 +406,7 @@ bool CAbi::loadAbisFromKnown(bool tokensOnly) {
                 LOG_TEST("Loaded " + uint_2_Str(interfaces.size()) + " interfaces from",
                          substitute(substitute(binPath, getCachePath(""), "$CACHE/"), configPath(""), "$CONFIG/"));
                 for (auto func : interfaces) {
-                    abiInterfacesMap[func.encoding] = true;
-                    LOG_TEST("Inserting", func.type + "-" + func.signature);
+                    addInterfaceToMap(func);
                 }
                 abiSourcesMap[srcPath] = true;
                 return true;
@@ -433,7 +448,7 @@ bool CAbi::loadAbiFromAddress(const address_t& addr, bool recurse) {
         return false;
     abiSourcesMap[addr] = true;
 
-    // if (abiInterfacesMap["0x59679b0f"]) {
+    // if (hasInterface("0x59679b0f")) {
     //     cerr << addr << endl;
     //     // This is a proxy. Load the ABI from the proxied-to address as well
     //     CEthCall theCall;
@@ -551,7 +566,7 @@ void CAbi::loadAbiAddInterface(const CFunction& func) {
         return;
 
     // first in wins
-    if (abiInterfacesMap[func.encoding]) {
+    if (hasInterface(func.encoding)) {
         LOG_TEST("Skipping", func.type + "-" + func.signature);
         return;
     }
@@ -559,7 +574,7 @@ void CAbi::loadAbiAddInterface(const CFunction& func) {
     LOG_TEST("Inserting", func.type + "-" + func.signature);
     if (func.type != "constructor") {
         interfaces.push_back(func);
-        abiInterfacesMap[func.encoding] = true;
+        addInterfaceToMap(func);
     }
 }
 

@@ -44,7 +44,6 @@ class CAbi : public CBaseNode {
 
     // EXISTING_CODE
     CStringBoolMap abiSourcesMap;
-    CStringBoolMap abiInterfacesMap;
 
     bool articulateTransaction(CTransaction* p) const;
     bool articulateLog(CLogEntry* l) const;
@@ -55,6 +54,11 @@ class CAbi : public CBaseNode {
     bool loadAbiFromSolidity(const address_t& addr);
     bool loadAbisFromKnown(bool tokensOnly = false);
     bool loadAbisOneKnown(const string_q& addr);
+
+    CStringBoolMap abiInterfacesMap;
+    bool hasInterface(const string_q& enc);
+    void addInterfaceToMap(const CFunction& func);
+    void clearInterfaceMap(void);
 
     size_t nInterfaces(void) const;
     size_t nFunctions(void) const;
