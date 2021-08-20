@@ -79,7 +79,7 @@ class CReconciliation : public CBaseNode {
     bigint_t amountNet(void) const;
     bool reconciled(void) const;
     CReconciliation& operator+=(const CReconciliation& r);
-    bool oldReadBackLevel(CArchive& archive);
+    bool readBackLevel_old(CArchive& archive);
     // EXISTING_CODE
     bool operator==(const CReconciliation& it) const;
     bool operator!=(const CReconciliation& it) const {

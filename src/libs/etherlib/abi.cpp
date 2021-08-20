@@ -623,7 +623,7 @@ bool isKnownAbi(const string_q& addr, string_q& path) {
 }
 
 //-----------------------------------------------------------------------
-bool CAbi::loadAbisOneKnown(const string_q& addr) {
+bool CAbi::loadAbisKnown(const string_q& addr) {
     string_q path;
     if (!isKnownAbi(addr, path))
         return false;

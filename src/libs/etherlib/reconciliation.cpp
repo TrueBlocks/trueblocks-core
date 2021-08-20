@@ -645,12 +645,9 @@ string_q nextReconciliationChunk_custom(const string_q& fieldIn, const void* dat
 bool CReconciliation::readBackLevel(CArchive& archive) {
     bool done = false;
     // EXISTING_CODE
-    if (m_schema < getVersionNum(0, 11, 4)) {
-        return oldReadBackLevel(archive);
-    } else if (false) {
-        // bool isEth = assetSymbol == "ETH" || assetSymbol == "WEI" || assetSymbol.empty();
-        // address_t addr = isEth ? "" : assetAddr;
-        // spotPrice = getPriceInUsd(blockNumber, addr);
+    if (m_schema < getVersionNum(0, 11, 5)) {
+        // This class has a complicated history, so we hide back level gunk in a single function below
+        return readBackLevel_old(archive);
     }
     // EXISTING_CODE
     return done;
@@ -1084,7 +1081,7 @@ bigint_t CReconciliation::amountNet(void) const {
 }
 
 //---------------------------------------------------------------------------
-bool CReconciliation::oldReadBackLevel(CArchive& archive) {
+bool CReconciliation::readBackLevel_old(CArchive& archive) {
     bigint_t unusedBi;
     bool unusedBool;
     if (m_schema < getVersionNum(0, 10, 1)) {
@@ -1148,7 +1145,7 @@ bool CReconciliation::oldReadBackLevel(CArchive& archive) {
         archive >> reconciliationType;
         // archive >> reconTrail;
         archive >> unusedBool;  // reconciled;
-    } else if (m_schema < getVersionNum(0, 11, 4)) {
+    } else if (m_schema < getVersionNum(0, 11, 6)) {
         archive >> blockNumber;
         archive >> transactionIndex;
         archive >> timestamp;
@@ -1172,11 +1169,16 @@ bool CReconciliation::oldReadBackLevel(CArchive& archive) {
         archive >> selfDestructOut;
         archive >> gasCostOut;
         archive >> reconciliationType;
-        archive >> unusedBi;  // unused, unset spotPrice as biguint
+        if (m_schema == getVersionNum(0, 11, 4)) {
+            archive >> spotPrice;  // spotPrice was double, but always set to 1.0. We reset it below
+        } else {
+            archive >> unusedBi;  // spotPrice was an unset (i.e. undefined value) bigInt
+        }
     }
 
-    // for version 0.11.4 we wrote 1.0 for the double spotPrice for all records
-    spotPrice = 1.0;
+    bool isEth = assetSymbol == "ETH" || assetSymbol == "WEI" || assetSymbol.empty();
+    address_t addr = isEth ? "" : assetAddr;
+    spotPrice = getPriceInUsd(blockNumber, addr);
     finishParse();
     return true;
 }

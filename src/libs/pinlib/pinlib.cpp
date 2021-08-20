@@ -42,7 +42,7 @@ bool pinlib_downloadManifest(void) {
     theCall.address = unchainedIndexAddr;
     theCall.encoding = manifestHashEncoding;
     theCall.blockNumber = getBlockProgress(BP_CLIENT).client;
-    theCall.abi_spec.loadAbisOneKnown("unchained");  // unchained index is a known contract
+    theCall.abi_spec.loadAbisKnown("unchained");  // unchained index is a known contract
     LOG_INFO("Calling unchained index smart contract...");
     if (doEthCall(theCall)) {
         ipfshash_t ipfshash = theCall.result.outputs[0].value;

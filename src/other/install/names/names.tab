@@ -4376,6 +4376,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x6a49ab0ee1c9de554d1bad6c99312153d95c22ce	Anti-Isolation	FREEDOM	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x6a55566f88e0f1de915118ced13c9deeebcc5c14	NOIR League Exclusive Token	NOIR	On chain	6		false	false	false	true	true	false
 30-Contracts:Humanity DAO	0x6a57b2b8ded5edd9ba4fe2853351c75c0e85a368	dmitry_kurilo		https://www.humanitydao.org/humans			false	false	false	false	false	false
+50-Tokens:ERC721	0x6a580bc4bf1a8fba8ddf82396c2f67881f84ebee	ButterflyClaims	BTFLYC	On chain	18		false	false	false	true	true	true
 30-Contracts:Humanity DAO	0x6a5ad002b696df5cee6b091f03497a9f1348e63d	Keegan_lee_fran		https://www.humanitydao.org/humans			false	false	false	false	false	false
 90-Individuals:Kickback	0x6a5bd7aa9f48f2b460f2e974436bc8cb0acbe818	wolever		https://kickback.events/			false	false	false	false	false	false
 50-Tokens:ERC20	0x6a5ce34290f6b1efa6987dbed1a139f170456e9a	Genji Inu	GNJI	On chain	9		false	false	false	true	true	false

@@ -23,10 +23,10 @@ class COptions : public CAbiOptions {
     CFourbyteArray fourbytes;
     bool appearances;
     bool receipts;
+    bool statements;
     bool logs;
     bool traces;
     bool accounting;
-    bool statements;
     bool articulate;
     bool cache_txs;
     bool cache_traces;
