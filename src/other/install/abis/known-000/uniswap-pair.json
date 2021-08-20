@@ -1,0 +1,689 @@
+{
+  "data": [
+    {
+      "name": "allowance",
+      "type": "function",
+      "stateMutability": "view",
+      "signature": "allowance(address,address)",
+      "encoding": "0xdd62ed3e",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "val_0",
+          "internalType": "address"
+        },
+        {
+          "type": "address",
+          "name": "val_1",
+          "internalType": "address"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "uint256",
+          "name": "val_0",
+          "internalType": "uint256"
+        }
+      ]
+    },
+    {
+      "name": "approve",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "approve(address,uint256)",
+      "encoding": "0x095ea7b3",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "spender",
+          "internalType": "address"
+        },
+        {
+          "type": "uint256",
+          "name": "value",
+          "internalType": "uint256"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "bool",
+          "name": "val_0",
+          "internalType": "bool"
+        }
+      ]
+    },
+    {
+      "name": "balanceOf",
+      "type": "function",
+      "stateMutability": "view",
+      "signature": "balanceOf(address)",
+      "encoding": "0x70a08231",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "val_0",
+          "internalType": "address"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "uint256",
+          "name": "val_0",
+          "internalType": "uint256"
+        }
+      ]
+    },
+    {
+      "name": "burn",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "burn(address)",
+      "encoding": "0x89afcb44",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "to",
+          "internalType": "address"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "uint256",
+          "name": "amount0",
+          "internalType": "uint256"
+        },
+        {
+          "type": "uint256",
+          "name": "amount1",
+          "internalType": "uint256"
+        }
+      ]
+    },
+    {
+      "name": "decimals",
+      "type": "function",
+      "stateMutability": "view",
+      "signature": "decimals()",
+      "encoding": "0x313ce567",
+      "outputs": [
+        {
+          "type": "uint8",
+          "name": "val_0",
+          "internalType": "uint8"
+        }
+      ]
+    },
+    {
+      "name": "DOMAIN_SEPARATOR",
+      "type": "function",
+      "stateMutability": "view",
+      "signature": "DOMAIN_SEPARATOR()",
+      "encoding": "0x3644e515",
+      "outputs": [
+        {
+          "type": "bytes32",
+          "name": "val_0",
+          "internalType": "bytes32"
+        }
+      ]
+    },
+    {
+      "name": "factory",
+      "type": "function",
+      "stateMutability": "view",
+      "signature": "factory()",
+      "encoding": "0xc45a0155",
+      "outputs": [
+        {
+          "type": "address",
+          "name": "val_0",
+          "internalType": "address"
+        }
+      ]
+    },
+    {
+      "name": "getReserves",
+      "type": "function",
+      "stateMutability": "view",
+      "signature": "getReserves()",
+      "encoding": "0x0902f1ac",
+      "outputs": [
+        {
+          "type": "uint112",
+          "name": "_reserve0",
+          "internalType": "uint112"
+        },
+        {
+          "type": "uint112",
+          "name": "_reserve1",
+          "internalType": "uint112"
+        },
+        {
+          "type": "uint32",
+          "name": "_blockTimestampLast",
+          "internalType": "uint32"
+        }
+      ]
+    },
+    {
+      "name": "initialize",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "initialize(address,address)",
+      "encoding": "0x485cc955",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "_token0",
+          "internalType": "address"
+        },
+        {
+          "type": "address",
+          "name": "_token1",
+          "internalType": "address"
+        }
+      ]
+    },
+    {
+      "name": "kLast",
+      "type": "function",
+      "stateMutability": "view",
+      "signature": "kLast()",
+      "encoding": "0x7464fc3d",
+      "outputs": [
+        {
+          "type": "uint256",
+          "name": "val_0",
+          "internalType": "uint256"
+        }
+      ]
+    },
+    {
+      "name": "MINIMUM_LIQUIDITY",
+      "type": "function",
+      "stateMutability": "view",
+      "signature": "MINIMUM_LIQUIDITY()",
+      "encoding": "0xba9a7a56",
+      "outputs": [
+        {
+          "type": "uint256",
+          "name": "val_0",
+          "internalType": "uint256"
+        }
+      ]
+    },
+    {
+      "name": "mint",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "mint(address)",
+      "encoding": "0x6a627842",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "to",
+          "internalType": "address"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "uint256",
+          "name": "liquidity",
+          "internalType": "uint256"
+        }
+      ]
+    },
+    {
+      "name": "name",
+      "type": "function",
+      "stateMutability": "view",
+      "signature": "name()",
+      "encoding": "0x06fdde03",
+      "outputs": [
+        {
+          "type": "string",
+          "name": "val_0",
+          "internalType": "string"
+        }
+      ]
+    },
+    {
+      "name": "nonces",
+      "type": "function",
+      "stateMutability": "view",
+      "signature": "nonces(address)",
+      "encoding": "0x7ecebe00",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "val_0",
+          "internalType": "address"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "uint256",
+          "name": "val_0",
+          "internalType": "uint256"
+        }
+      ]
+    },
+    {
+      "name": "permit",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "permit(address,address,uint256,uint256,uint8,bytes32,bytes32)",
+      "encoding": "0xd505accf",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "owner",
+          "internalType": "address"
+        },
+        {
+          "type": "address",
+          "name": "spender",
+          "internalType": "address"
+        },
+        {
+          "type": "uint256",
+          "name": "value",
+          "internalType": "uint256"
+        },
+        {
+          "type": "uint256",
+          "name": "deadline",
+          "internalType": "uint256"
+        },
+        {
+          "type": "uint8",
+          "name": "v",
+          "internalType": "uint8"
+        },
+        {
+          "type": "bytes32",
+          "name": "r",
+          "internalType": "bytes32"
+        },
+        {
+          "type": "bytes32",
+          "name": "s",
+          "internalType": "bytes32"
+        }
+      ]
+    },
+    {
+      "name": "PERMIT_TYPEHASH",
+      "type": "function",
+      "stateMutability": "view",
+      "signature": "PERMIT_TYPEHASH()",
+      "encoding": "0x30adf81f",
+      "outputs": [
+        {
+          "type": "bytes32",
+          "name": "val_0",
+          "internalType": "bytes32"
+        }
+      ]
+    },
+    {
+      "name": "price0CumulativeLast",
+      "type": "function",
+      "stateMutability": "view",
+      "signature": "price0CumulativeLast()",
+      "encoding": "0x5909c0d5",
+      "outputs": [
+        {
+          "type": "uint256",
+          "name": "val_0",
+          "internalType": "uint256"
+        }
+      ]
+    },
+    {
+      "name": "price1CumulativeLast",
+      "type": "function",
+      "stateMutability": "view",
+      "signature": "price1CumulativeLast()",
+      "encoding": "0x5a3d5493",
+      "outputs": [
+        {
+          "type": "uint256",
+          "name": "val_0",
+          "internalType": "uint256"
+        }
+      ]
+    },
+    {
+      "name": "skim",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "skim(address)",
+      "encoding": "0xbc25cf77",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "to",
+          "internalType": "address"
+        }
+      ]
+    },
+    {
+      "name": "swap",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "swap(uint256,uint256,address,bytes)",
+      "encoding": "0x022c0d9f",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "amount0Out",
+          "internalType": "uint256"
+        },
+        {
+          "type": "uint256",
+          "name": "amount1Out",
+          "internalType": "uint256"
+        },
+        {
+          "type": "address",
+          "name": "to",
+          "internalType": "address"
+        },
+        {
+          "type": "bytes",
+          "name": "data",
+          "internalType": "bytes"
+        }
+      ]
+    },
+    {
+      "name": "symbol",
+      "type": "function",
+      "stateMutability": "view",
+      "signature": "symbol()",
+      "encoding": "0x95d89b41",
+      "outputs": [
+        {
+          "type": "string",
+          "name": "val_0",
+          "internalType": "string"
+        }
+      ]
+    },
+    {
+      "name": "sync",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "sync()",
+      "encoding": "0xfff6cae9"
+    },
+    {
+      "name": "token0",
+      "type": "function",
+      "stateMutability": "view",
+      "signature": "token0()",
+      "encoding": "0x0dfe1681",
+      "outputs": [
+        {
+          "type": "address",
+          "name": "val_0",
+          "internalType": "address"
+        }
+      ]
+    },
+    {
+      "name": "token1",
+      "type": "function",
+      "stateMutability": "view",
+      "signature": "token1()",
+      "encoding": "0xd21220a7",
+      "outputs": [
+        {
+          "type": "address",
+          "name": "val_0",
+          "internalType": "address"
+        }
+      ]
+    },
+    {
+      "name": "totalSupply",
+      "type": "function",
+      "stateMutability": "view",
+      "signature": "totalSupply()",
+      "encoding": "0x18160ddd",
+      "outputs": [
+        {
+          "type": "uint256",
+          "name": "val_0",
+          "internalType": "uint256"
+        }
+      ]
+    },
+    {
+      "name": "transfer",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "transfer(address,uint256)",
+      "encoding": "0xa9059cbb",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "to",
+          "internalType": "address"
+        },
+        {
+          "type": "uint256",
+          "name": "value",
+          "internalType": "uint256"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "bool",
+          "name": "val_0",
+          "internalType": "bool"
+        }
+      ]
+    },
+    {
+      "name": "transferFrom",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "transferFrom(address,address,uint256)",
+      "encoding": "0x23b872dd",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "from",
+          "internalType": "address"
+        },
+        {
+          "type": "address",
+          "name": "to",
+          "internalType": "address"
+        },
+        {
+          "type": "uint256",
+          "name": "value",
+          "internalType": "uint256"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "bool",
+          "name": "val_0",
+          "internalType": "bool"
+        }
+      ]
+    },
+    {
+      "name": "Approval",
+      "type": "event",
+      "stateMutability": "nonpayable",
+      "signature": "Approval(address,address,uint256)",
+      "encoding": "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "owner",
+          "indexed": true,
+          "internalType": "address"
+        },
+        {
+          "type": "address",
+          "name": "spender",
+          "indexed": true,
+          "internalType": "address"
+        },
+        {
+          "type": "uint256",
+          "name": "value",
+          "internalType": "uint256"
+        }
+      ]
+    },
+    {
+      "name": "Burn",
+      "type": "event",
+      "stateMutability": "nonpayable",
+      "signature": "Burn(address,uint256,uint256,address)",
+      "encoding": "0xdccd412f0b1252819cb1fd330b93224ca42612892bb3f4f789976e6d81936496",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "sender",
+          "indexed": true,
+          "internalType": "address"
+        },
+        {
+          "type": "uint256",
+          "name": "amount0",
+          "internalType": "uint256"
+        },
+        {
+          "type": "uint256",
+          "name": "amount1",
+          "internalType": "uint256"
+        },
+        {
+          "type": "address",
+          "name": "to",
+          "indexed": true,
+          "internalType": "address"
+        }
+      ]
+    },
+    {
+      "name": "Mint",
+      "type": "event",
+      "stateMutability": "nonpayable",
+      "signature": "Mint(address,uint256,uint256)",
+      "encoding": "0x4c209b5fc8ad50758f13e2e1088ba56a560dff690a1c6fef26394f4c03821c4f",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "sender",
+          "indexed": true,
+          "internalType": "address"
+        },
+        {
+          "type": "uint256",
+          "name": "amount0",
+          "internalType": "uint256"
+        },
+        {
+          "type": "uint256",
+          "name": "amount1",
+          "internalType": "uint256"
+        }
+      ]
+    },
+    {
+      "name": "Swap",
+      "type": "event",
+      "stateMutability": "nonpayable",
+      "signature": "Swap(address,uint256,uint256,uint256,uint256,address)",
+      "encoding": "0xd78ad95fa46c994b6551d0da85fc275fe613ce37657fb8d5e3d130840159d822",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "sender",
+          "indexed": true,
+          "internalType": "address"
+        },
+        {
+          "type": "uint256",
+          "name": "amount0In",
+          "internalType": "uint256"
+        },
+        {
+          "type": "uint256",
+          "name": "amount1In",
+          "internalType": "uint256"
+        },
+        {
+          "type": "uint256",
+          "name": "amount0Out",
+          "internalType": "uint256"
+        },
+        {
+          "type": "uint256",
+          "name": "amount1Out",
+          "internalType": "uint256"
+        },
+        {
+          "type": "address",
+          "name": "to",
+          "indexed": true,
+          "internalType": "address"
+        }
+      ]
+    },
+    {
+      "name": "Sync",
+      "type": "event",
+      "stateMutability": "nonpayable",
+      "signature": "Sync(uint112,uint112)",
+      "encoding": "0x1c411e9a96e071241c2f21f7726b17ae89e3cab4c78be50e062b03a9fffbbad1",
+      "inputs": [
+        {
+          "type": "uint112",
+          "name": "reserve0",
+          "internalType": "uint112"
+        },
+        {
+          "type": "uint112",
+          "name": "reserve1",
+          "internalType": "uint112"
+        }
+      ]
+    },
+    {
+      "name": "Transfer",
+      "type": "event",
+      "stateMutability": "nonpayable",
+      "signature": "Transfer(address,address,uint256)",
+      "encoding": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "from",
+          "indexed": true,
+          "internalType": "address"
+        },
+        {
+          "type": "address",
+          "name": "to",
+          "indexed": true,
+          "internalType": "address"
+        },
+        {
+          "type": "uint256",
+          "name": "value",
+          "internalType": "uint256"
+        }
+      ]
+    }
+  ]
+}

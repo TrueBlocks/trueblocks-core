@@ -23,6 +23,7 @@ double getPriceInUsd(blknum_t bn, const address_t& addr) {
 }
 
 //---------------------------------------------------------------------------
+static const address_t sai = "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359";
 static const address_t dai = "0x6b175474e89094c44da98b954eedeac495271d0f";
 static const address_t wEth = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2";
 static const string_q uniswapFactory = "0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f";
@@ -58,7 +59,7 @@ bool findUniPair(CEthCall& pair, const address_t& r1, const address_t& r2) {
         return false;
     }
     LOG4("Found uniswap pair for [", r1, "]-->[", r2, "] at ", pair.address);
-    pair.abi_spec.loadAbisKnown("uniswap");
+    pair.abi_spec.loadAbisKnown("uniswap-pair");
     pair.encoding = getReserves;
     pair.bytes = reserveBytes;
     pairs[key] = pair;
@@ -99,8 +100,15 @@ double getPriceFromUni_EthUsd(blknum_t bn) {
 
 //---------------------------------------------------------------------------
 double getPriceFromUni_TokEth(blknum_t bn, const address_t& tok) {
-    if (tok == wEth)
-        return 1.;
+    static const CStringArray stableCoins = {
+        dai,
+        "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",  // USDC
+        "0xdAC17F958D2ee523a2206206994597C13D831ec7",  // Tether
+        sai,
+    };
+    for (auto coin : stableCoins)
+        if (coin == tok)
+            return 1.;  // Short curcuit...not accuate, but fast
 
     CEthCall thePair;
     if (findUniPair(thePair, tok, wEth)) {

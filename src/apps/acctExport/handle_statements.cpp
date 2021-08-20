@@ -10,7 +10,6 @@ bool statements_Display(CTraverser* trav, void* data) {
     COptions* opt = (COptions*)data;
     opt->process_reconciliation(trav);
 
-    LOG_INFO("I am here: ", trav->trans.statements.size());
     for (auto statement : trav->trans.statements) {
         cout << ((isJson() && !opt->firstOut) ? ", " : "");
         cout << statement;
