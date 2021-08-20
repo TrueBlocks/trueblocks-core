@@ -138,7 +138,7 @@ bool CAbi::articulateLog(CLogEntry* p) const {
     // from the Solidity documentation.
 
     CAbi* ncABI = (CAbi*)this;  // NOLINT
-    for (size_t i = 0; i < ncABI->interfaces.size(); i++) {
+    for (size_t i = 0; i < ncABI->nInterfaces(); i++) {
         CFunction* funcPtr = &ncABI->interfaces[i];
         string_q encoding = funcPtr->encoding;
         if (topic_2_Str(p->topics[0]) % encoding) {

@@ -59,6 +59,7 @@ class CAbi : public CBaseNode {
     bool hasInterface(const string_q& enc);
     void addInterfaceToMap(const CFunction& func);
     void clearInterfaceMap(void);
+    void sortInterfaces(void);
 
     size_t nInterfaces(void) const;
     size_t nFunctions(void) const;
@@ -190,9 +191,6 @@ extern bool fromDefinition(CFunction& func, const string_q& lineIn);
 extern bool fromDefinition(CParameter& parm, const string_q& input);
 extern bool decodeRLP(CParameterArray& interfaces, const string_q& desc, const string_q& input);
 extern bool sortByFuncName(const CFunction& f1, const CFunction& f2);
-inline size_t CAbi::nInterfaces(void) const {
-    return interfaces.size();
-}
 bool isKnownAbi(const string_q& addr, string_q& path);
 // EXISTING_CODE
 }  // namespace qblocks

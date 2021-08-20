@@ -46,7 +46,7 @@ double getPriceFromUni_EthUsd(blknum_t bn) {
         if (doEthCall(pairCall)) {
             theCall2.address = pairCall.getResults();
             theCall2.abi_spec = pairCall.abi_spec;
-            LOG_INFO(bGreen, "Found USD Pair: ", theCall2.address, " with ", theCall2.abi_spec.interfaces.size(),
+            LOG_INFO(bGreen, "Found USD Pair: ", theCall2.address, " with ", theCall2.abi_spec.nInterfaces(),
                      " endpoints", cOff);
         } else {
             LOG_WARN(bRed, "Could not find USD Pair: ", theCall2.address, cOff);
@@ -71,7 +71,7 @@ double getPriceFromMaker_EthUsd(blknum_t bn) {
     static const char* makerMedianizer = "0x729d19f657bd0614b4985cf1d82531c67569197b";
     static const char* peek = "0x59e02dd7";
     static CAbi spec;
-    if (!spec.interfaces.size())
+    if (!spec.nInterfaces())
         spec.loadAbiFromEtherscan(makerMedianizer);
     CEthCall theCall;
     theCall.blockNumber = bn;

@@ -24,7 +24,7 @@ class CTestTraverser : public CTraverser {
         if (doEthCall(theCall)) {
             perTxCall.address = theCall.getResults();
             perTxCall.abi_spec.loadAbiFromEtherscan(perTxCall.address);
-            LOG_INFO(bGreen, "Found USD Pair: ", perTxCall.address, " with ", perTxCall.abi_spec.interfaces.size(),
+            LOG_INFO(bGreen, "Found USD Pair: ", perTxCall.address, " with ", perTxCall.abi_spec.nInterfaces(),
                      " endpoints", cOff);
         } else {
             LOG_WARN(bRed, "Could not find USD Pair: ", perTxCall.address, cOff);

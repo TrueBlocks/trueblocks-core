@@ -361,8 +361,18 @@ bool loadAbiFile(const string_q& path, void* data) {
 bool loadAbiString(const string_q& jsonStr, CAbi& abi) {
     bool ret = abi.loadAbiFromString(jsonStr);
     if (ret)
-        sort(abi.interfaces.begin(), abi.interfaces.end(), sortByFuncName);
+        abi.sortInterfaces();
     return ret;
+}
+
+//-----------------------------------------------------------------------
+void CAbi::sortInterfaces(void) {
+    sort(interfaces.begin(), interfaces.end(), sortByFuncName);
+}
+
+//-----------------------------------------------------------------------
+size_t CAbi::nInterfaces(void) const {
+    return interfaces.size();
 }
 
 //-----------------------------------------------------------------------
