@@ -26,11 +26,9 @@ namespace qblocks {
 //--------------------------------------------------------------------------
 class CEthCall : public CEthState {
   public:
-    blknum_t blockNumber;
     string_q encoding;
     string_q bytes;
     CAbi abi_spec;
-    CFunction result;
 
   public:
     CEthCall(void);
@@ -99,11 +97,9 @@ inline void CEthCall::clear(void) {
 inline void CEthCall::initialize(void) {
     CEthState::initialize();
 
-    blockNumber = 0;
     encoding = "";
     bytes = "";
     abi_spec = CAbi();
-    result = CFunction();
 
     // EXISTING_CODE
     checkProxy = true;
@@ -115,11 +111,9 @@ inline void CEthCall::duplicate(const CEthCall& et) {
     clear();
     CEthState::duplicate(et);
 
-    blockNumber = et.blockNumber;
     encoding = et.encoding;
     bytes = et.bytes;
     abi_spec = et.abi_spec;
-    result = et.result;
 
     // EXISTING_CODE
     checkProxy = et.checkProxy;

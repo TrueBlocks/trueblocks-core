@@ -143,6 +143,9 @@ string_q CReconciliation::getValueByName(const string_q& fieldName) const {
             if (fieldName % "prefundIn") {
                 return bni_2_Str(prefundIn);
             }
+            if (fieldName % "priceSource") {
+                return priceSource;
+            }
             break;
         case 'r':
             if (fieldName % "reconciliationType") {
@@ -275,6 +278,10 @@ bool CReconciliation::setValueByName(const string_q& fieldNameIn, const string_q
                 prefundIn = str_2_BigInt(fieldValue);
                 return true;
             }
+            if (fieldName % "priceSource") {
+                priceSource = fieldValue;
+                return true;
+            }
             break;
         case 'r':
             if (fieldName % "reconciliationType") {
@@ -355,6 +362,7 @@ bool CReconciliation::Serialize(CArchive& archive) {
     archive >> gasCostOut;
     archive >> reconciliationType;
     archive >> spotPrice;
+    archive >> priceSource;
     // EXISTING_CODE
     // EXISTING_CODE
     finishParse();
@@ -392,6 +400,7 @@ bool CReconciliation::SerializeC(CArchive& archive) const {
     archive << gasCostOut;
     archive << reconciliationType;
     archive << spotPrice;
+    archive << priceSource;
     // EXISTING_CODE
     // EXISTING_CODE
     return true;
@@ -465,6 +474,7 @@ void CReconciliation::registerClass(void) {
     ADD_FIELD(CReconciliation, "gasCostOut", T_INT256, ++fieldNum);
     ADD_FIELD(CReconciliation, "reconciliationType", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CReconciliation, "spotPrice", T_DOUBLE, ++fieldNum);
+    ADD_FIELD(CReconciliation, "priceSource", T_TEXT | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CReconciliation, "schema");
@@ -645,7 +655,7 @@ string_q nextReconciliationChunk_custom(const string_q& fieldIn, const void* dat
 bool CReconciliation::readBackLevel(CArchive& archive) {
     bool done = false;
     // EXISTING_CODE
-    if (m_schema < getVersionNum(0, 11, 4)) {
+    if (m_schema < getVersionNum(0, 11, 7)) {
         // This class has a complicated history, so we hide back level gunk in a single function below
         return readBackLevel_old(archive);
     }
@@ -708,8 +718,8 @@ const char* STR_DISPLAY_RECONCILIATION =
     "[{ENDBALDIFF}]\t"
     "[{RECONCILED}]\t"
     "[{SPOTPRICE}]\t"
-    "[{RECONCILIATIONTYPE}]\t"
-    "[{RECONTRAIL}]";
+    "[{PRICESOURCE}]\t"
+    "[{RECONCILIATIONTYPE}]";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
@@ -1145,7 +1155,7 @@ bool CReconciliation::readBackLevel_old(CArchive& archive) {
         archive >> reconciliationType;
         // archive >> reconTrail;
         archive >> unusedBool;  // reconciled;
-    } else if (m_schema < getVersionNum(0, 11, 4)) {
+    } else if (m_schema < getVersionNum(0, 11, 7)) {
         archive >> blockNumber;
         archive >> transactionIndex;
         archive >> timestamp;
@@ -1169,11 +1179,16 @@ bool CReconciliation::readBackLevel_old(CArchive& archive) {
         archive >> selfDestructOut;
         archive >> gasCostOut;
         archive >> reconciliationType;
-        archive >> unusedBi;  // unused, unset spotPrice as biguint
+        if (m_schema >= getVersionNum(0, 11, 4)) {
+            archive >> spotPrice;  // spotPrice was double, but always set to 1.0. We will reset it below
+        } else {
+            archive >> unusedBi;  // spotPrice was an unset (i.e. undefined value) bigInt
+        }
     }
 
-    // for version 0.11.4 we wrote 1.0 for the double spotPrice for all records
-    spotPrice = 1.0;
+    bool isEth = assetSymbol == "ETH" || assetSymbol == "WEI" || assetSymbol.empty();
+    address_t addr = isEth ? "" : assetAddr;
+    spotPrice = getPriceInUsd(blockNumber, priceSource, addr);
     finishParse();
     return true;
 }

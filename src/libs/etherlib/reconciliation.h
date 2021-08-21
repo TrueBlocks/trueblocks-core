@@ -50,6 +50,7 @@ class CReconciliation : public CBaseNode {
     bigint_t gasCostOut;
     string_q reconciliationType;
     double spotPrice;
+    string_q priceSource;
 
   public:
     CReconciliation(void);
@@ -156,6 +157,7 @@ inline void CReconciliation::initialize(void) {
     gasCostOut = 0;
     reconciliationType = "";
     spotPrice = 1.0;
+    priceSource = "";
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -190,6 +192,7 @@ inline void CReconciliation::duplicate(const CReconciliation& re) {
     gasCostOut = re.gasCostOut;
     reconciliationType = re.reconciliationType;
     spotPrice = re.spotPrice;
+    priceSource = re.priceSource;
 
     // EXISTING_CODE
     // EXISTING_CODE
