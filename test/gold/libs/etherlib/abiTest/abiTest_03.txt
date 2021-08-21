@@ -3,114 +3,12 @@ abiTest generation encoding
 Generation test...
 Testing of already sorted JSON
 {
-  "address": "0x0",
-  "interfaces": [
-    {
-      "name": "a",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "a()",
-      "encoding": "0x0dbe671f"
-    },
-    {
-      "name": "c",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "c()",
-      "encoding": "0xc3da42b8"
-    },
-    {
-      "name": "e",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "e()",
-      "encoding": "0xffae15ba"
-    },
-    {
-      "name": "m",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "m()",
-      "encoding": "0x5a2ee019"
-    },
-    {
-      "name": "d",
-      "type": "event",
-      "stateMutability": "nonpayable",
-      "signature": "d()",
-      "encoding": "0x8a054ac2e444b80bc3fb604e855f19d395adb9d8fc51ab7f53cbd727f64b91f2"
-    }
-  ]
+  "address": "0x0"
 }
 
 Testing of not sorted JSON
 {
-  "address": "0x0",
-  "interfaces": [
-    {
-      "name": "a",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "a()",
-      "encoding": "0x0dbe671f"
-    },
-    {
-      "name": "aa1",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "aa1()",
-      "encoding": "0x74d0d855"
-    },
-    {
-      "name": "az",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "az()",
-      "encoding": "0x73fc24ec"
-    },
-    {
-      "name": "ba1",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "ba1()",
-      "encoding": "0x53241b65"
-    },
-    {
-      "name": "z",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "z()",
-      "encoding": "0xc5d7802e"
-    },
-    {
-      "name": "za1",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "za1()",
-      "encoding": "0xb7938cb5"
-    },
-    {
-      "name": "zz",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "zz()",
-      "encoding": "0xfa14c2df"
-    },
-    {
-      "name": "b",
-      "type": "event",
-      "stateMutability": "nonpayable",
-      "signature": "b()",
-      "encoding": "0x4df7e3d0fdffd35719c59893b4839a04b686be9ac7bec9cdd04a272e9ad7c628"
-    },
-    {
-      "name": "bz",
-      "type": "event",
-      "stateMutability": "nonpayable",
-      "signature": "bz()",
-      "encoding": "0x3c7df70c450c6c7f893b4418119a685152cc821c054129201df48ec660f69273"
-    }
-  ]
+  "address": "0x0"
 }
 
 ...passed

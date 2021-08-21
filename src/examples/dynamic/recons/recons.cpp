@@ -52,7 +52,7 @@ bool CUniPrice::setPair(const address_t& r1, const address_t& r2) {
     this->abi_spec.loadAbiFromEtherscan(this->address);
     this->encoding = getReservesSelector;
     this->bytes = getReservesBytes;
-    LOG_INFO(bGreen, "Found USD Pair: ", this->address, " with ", this->abi_spec.interfaces.size(), " endpoints", cOff);
+    LOG_INFO(bGreen, "Found USD Pair: ", this->address, " with ", this->abi_spec.nInterfaces(), " endpoints", cOff);
     return true;
 }
 

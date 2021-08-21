@@ -80,18 +80,21 @@ string_q CAbi::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 'i':
-            if (fieldName % "interfaces" || fieldName % "interfacesCnt") {
-                size_t cnt = interfaces.size();
+            if (fieldName % "interfaceMap" || fieldName % "interfaceMapCnt") {
+                size_t cnt = nInterfaces();
                 if (endsWith(toLower(fieldName), "cnt"))
                     return uint_2_Str(cnt);
                 if (!cnt)
                     return "";
-                string_q retS;
-                for (size_t i = 0; i < cnt; i++) {
-                    retS += interfaces[i].Format();
-                    retS += ((i < cnt - 1) ? ",\n" : "\n");
+                bool first = true;
+                ostringstream os;
+                for (auto item : interfaceMap) {
+                    if (first)
+                        os << "," << endl;
+                    os << item.second;
                 }
-                return retS;
+                os << endl;
+                return os.str();
             }
             break;
         default:
@@ -111,7 +114,7 @@ bool CAbi::setValueByName(const string_q& fieldNameIn, const string_q& fieldValu
     string_q fieldValue = fieldValueIn;
 
     // EXISTING_CODE
-    if (fieldName % "interfaces") {
+    if (fieldName % "interfaceMap") {
         CFunction func;
         string_q str = fieldValue;
         while (func.parseJson3(str)) {
@@ -128,13 +131,11 @@ bool CAbi::setValueByName(const string_q& fieldNameIn, const string_q& fieldValu
                 address = str_2_Addr(fieldValue);
                 return true;
             }
-            break;
-        case 'i':
-            if (fieldName % "interfaces") {
+            if (fieldName % "interfaceMap") {
                 CFunction obj;
                 string_q str = fieldValue;
                 while (obj.parseJson3(str)) {
-                    interfaces.push_back(obj);
+                    interfaceMap[obj.encoding] = obj;
                     obj = CFunction();  // reset
                 }
                 return true;
@@ -166,7 +167,13 @@ bool CAbi::Serialize(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     archive >> address;
-    archive >> interfaces;
+    uint64_t size;
+    archive >> size;
+    for (uint64_t i = 0; i < size; i++) {
+        CFunction func;
+        archive >> func;
+        interfaceMap[func.encoding] = func;
+    }
     // EXISTING_CODE
     // EXISTING_CODE
     finishParse();
@@ -181,7 +188,10 @@ bool CAbi::SerializeC(CArchive& archive) const {
     // EXISTING_CODE
     // EXISTING_CODE
     archive << address;
-    archive << interfaces;
+    archive << (uint64_t)interfaceMap.size();
+    for (auto item : interfaceMap) {
+        archive << item.second;
+    }
     // EXISTING_CODE
     // EXISTING_CODE
     return true;
@@ -232,7 +242,7 @@ void CAbi::registerClass(void) {
     ADD_FIELD(CAbi, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CAbi, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CAbi, "address", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CAbi, "interfaces", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CAbi, "interfaceMap", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CAbi, "schema");
@@ -296,8 +306,8 @@ CArchive& operator>>(CArchive& archive, CAbi& abi) {
 ostream& operator<<(ostream& os, const CAbi& it) {
     // EXISTING_CODE
     if (sizeof(it) != 0) {  // always true, but we do this to avoid a warning
-        for (auto interface : it.interfaces) {
-            os << interface.Format() << "\n";
+        for (auto item : it.interfaceMap) {
+            os << item.second.Format() << "\n";
         }
         return os;
     }
@@ -312,15 +322,6 @@ ostream& operator<<(ostream& os, const CAbi& it) {
 const CBaseNode* CAbi::getObjectAt(const string_q& fieldName, size_t index) const {
     // EXISTING_CODE
     // EXISTING_CODE
-    if (fieldName % "interfaces") {
-        if (index == NOPOS) {
-            CFunction empty;
-            ((CAbi*)this)->interfaces.push_back(empty);  // NOLINT
-            index = interfaces.size() - 1;
-        }
-        if (index < interfaces.size())
-            return &interfaces[index];
-    }
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -359,10 +360,36 @@ bool loadAbiFile(const string_q& path, void* data) {
 
 //---------------------------------------------------------------------------
 bool loadAbiString(const string_q& jsonStr, CAbi& abi) {
-    bool ret = abi.loadAbiFromString(jsonStr);
-    if (ret)
-        sort(abi.interfaces.begin(), abi.interfaces.end(), sortByFuncName);
-    return ret;
+    return abi.loadAbiFromString(jsonStr);
+}
+
+//-----------------------------------------------------------------------
+size_t CAbi::nInterfaces(void) const {
+    return interfaceMap.size();
+}
+
+//-----------------------------------------------------------------------
+bool CAbi::findInterface(const string_q& enc, CFunction& func) const {
+    if (!hasInterface(enc))
+        return false;
+    func = interfaceMap.at(toLower(enc));
+    return true;
+}
+
+//-----------------------------------------------------------------------
+bool CAbi::hasInterface(const string_q& enc) const {
+    return interfaceMap.find(toLower(enc)) != interfaceMap.end();
+}
+
+//---------------------------------------------------------------------------
+void CAbi::addInterfaceToMap(const CFunction& func) {
+    LOG_TEST("Inserting", func.type + "-" + func.signature);
+    interfaceMap[toLower(func.encoding)] = func;
+}
+
+//---------------------------------------------------------------------------
+void CAbi::clearInterfaceMap(void) {
+    interfaceMap.clear();
 }
 
 //---------------------------------------------------------------------------
@@ -382,17 +409,13 @@ bool CAbi::loadAbisFromKnown(bool tokensOnly) {
         // If any file is newer, don't use binary cache
         fileInfo info = getNewestFileInFolder(srcPath);
         if (info.fileName == binPath || fileLastModifyDate(binPath) > info.fileTime) {
-            abiInterfacesMap.clear();
+            clearInterfaceMap();
             CArchive archive(READING_ARCHIVE);
             if (archive.Lock(binPath, modeReadOnly, LOCK_NOWAIT)) {
                 archive >> *this;
                 archive.Release();
-                LOG_TEST("Loaded " + uint_2_Str(interfaces.size()) + " interfaces from",
+                LOG_TEST("Loaded " + uint_2_Str(nInterfaces()) + " interfaces from",
                          substitute(substitute(binPath, getCachePath(""), "$CACHE/"), configPath(""), "$CONFIG/"));
-                for (auto func : interfaces) {
-                    abiInterfacesMap[func.encoding] = true;
-                    LOG_TEST("Inserting", func.type + "-" + func.signature);
-                }
                 abiSourcesMap[srcPath] = true;
                 return true;
             }
@@ -403,14 +426,13 @@ bool CAbi::loadAbisFromKnown(bool tokensOnly) {
     if (!forEveryFileInFolder(srcPath + "*", loadAbiFile, this))
         return false;
 
-    sort(interfaces.begin(), interfaces.end(), sortByFuncName);
     abiSourcesMap[srcPath] = true;
 
     CArchive archive(WRITING_ARCHIVE);
     if (archive.Lock(binPath, modeWriteCreate, LOCK_NOWAIT)) {
         archive << *this;
         archive.Release();
-        LOG_TEST("Saved " + uint_2_Str(interfaces.size()) + " interfaces in",
+        LOG_TEST("Saved " + uint_2_Str(nInterfaces()) + " interfaces in",
                  substitute(substitute(binPath, getCachePath(""), "$CACHE/"), configPath(""), "$CONFIG/"));
         return true;
     }
@@ -433,7 +455,7 @@ bool CAbi::loadAbiFromAddress(const address_t& addr, bool recurse) {
         return false;
     abiSourcesMap[addr] = true;
 
-    // if (abiInterfacesMap["0x59679b0f"]) {
+    // if (hasInterface("0x59679b0f")) {
     //     cerr << addr << endl;
     //     // This is a proxy. Load the ABI from the proxied-to address as well
     //     CEthCall theCall;
@@ -461,15 +483,12 @@ bool CAbi::loadAbiFromFile(const string_q& fileName) {
     LOG_TEST("loadAbiFromFile", dispName(fileName));
 
     if (loadAbiFromString(asciiFileToString(fileName))) {
-        if (interfaces.size() && interfaces[0].abi_source.empty()) {
-            for (auto& interface : interfaces)
-                if (interface.abi_source.empty()) {
-                    string_q str = substitute(substitute(fileName, getCachePath("abis/"), ""), configPath("abis/"), "");
-                    nextTokenClear(str, '/');
-                    interface.abi_source = str;
-                }
-        }
-        sort(interfaces.begin(), interfaces.end(), sortByFuncName);
+        for (auto& item : interfaceMap)
+            if (item.second.abi_source.empty()) {
+                string_q str = substitute(substitute(fileName, getCachePath("abis/"), ""), configPath("abis/"), "");
+                nextTokenClear(str, '/');
+                item.second.abi_source = str;
+            }
         abiSourcesMap[fileName] = true;
         return true;
     }
@@ -484,7 +503,7 @@ bool CAbi::loadAbiFromString(const string_q& in) {
         loadAbiAddInterface(func);
         func = CFunction();  // reset
     }
-    return interfaces.size();
+    return nInterfaces();
 }
 
 //-----------------------------------------------------------------------
@@ -551,23 +570,21 @@ void CAbi::loadAbiAddInterface(const CFunction& func) {
         return;
 
     // first in wins
-    if (abiInterfacesMap[func.encoding]) {
+    if (hasInterface(func.encoding)) {
         LOG_TEST("Skipping", func.type + "-" + func.signature);
         return;
     }
 
     LOG_TEST("Inserting", func.type + "-" + func.signature);
-    if (func.type != "constructor") {
-        interfaces.push_back(func);
-        abiInterfacesMap[func.encoding] = true;
-    }
+    if (func.type != "constructor")
+        addInterfaceToMap(func);
 }
 
 //---------------------------------------------------------------------------
 size_t CAbi::nFunctions(void) const {
     size_t cnt = 0;
-    for (auto i : interfaces)
-        if (i.type == "function")
+    for (auto item : interfaceMap)
+        if (item.second.type == "function")
             cnt++;
     return cnt;
 }
@@ -575,15 +592,15 @@ size_t CAbi::nFunctions(void) const {
 //---------------------------------------------------------------------------
 size_t CAbi::nEvents(void) const {
     size_t cnt = 0;
-    for (auto i : interfaces)
-        if (i.type == "event")
+    for (auto item : interfaceMap)
+        if (item.second.type == "event")
             cnt++;
     return cnt;
 }
 
 //---------------------------------------------------------------------------
 size_t CAbi::nOther(void) const {
-    return interfaces.size() - nFunctions() - nEvents();
+    return nInterfaces() - nFunctions() - nEvents();
 }
 
 //-----------------------------------------------------------------------

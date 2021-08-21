@@ -1,13 +1,13 @@
 {
   "data": [
     {
-      "name": "allowance",
+      "name": "name",
       "type": "function",
       "stateMutability": "nonpayable",
-      "signature": "allowance(address,address)",
-      "encoding": "0xdd62ed3e",
-      "input_names": "_owner,_spender,",
-      "output_names": "remaining,"
+      "signature": "name()",
+      "encoding": "0x06fdde03",
+      "input_names": "",
+      "output_names": "val_0,"
     },
     {
       "name": "approve",
@@ -19,110 +19,11 @@
       "output_names": "val_0,"
     },
     {
-      "name": "balanceOf",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "balanceOf(address)",
-      "encoding": "0x70a08231",
-      "input_names": "_owner,",
-      "output_names": "balance,"
-    },
-    {
-      "name": "decimals",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "decimals()",
-      "encoding": "0x313ce567",
-      "input_names": "",
-      "output_names": "val_0,"
-    },
-    {
       "name": "initialized",
       "type": "function",
       "stateMutability": "nonpayable",
       "signature": "initialized()",
       "encoding": "0x158ef93e",
-      "input_names": "",
-      "output_names": "val_0,"
-    },
-    {
-      "name": "legacyRepContract",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "legacyRepContract()",
-      "encoding": "0xb85e0aca",
-      "input_names": "",
-      "output_names": "val_0,"
-    },
-    {
-      "name": "migrateBalance",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "migrateBalance(address)",
-      "encoding": "0x2988e36b",
-      "input_names": "_holder,",
-      "output_names": "val_0,"
-    },
-    {
-      "name": "migrateBalances",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "migrateBalances(address[])",
-      "encoding": "0x4b92738e",
-      "input_names": "_holders,",
-      "output_names": "val_0,"
-    },
-    {
-      "name": "name",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "name()",
-      "encoding": "0x06fdde03",
-      "input_names": "",
-      "output_names": "val_0,"
-    },
-    {
-      "name": "owner",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "owner()",
-      "encoding": "0x8da5cb5b",
-      "input_names": "",
-      "output_names": "val_0,"
-    },
-    {
-      "name": "pause",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "pause()",
-      "encoding": "0x8456cb59",
-      "input_names": "",
-      "output_names": "val_0,"
-    },
-    {
-      "name": "paused",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "paused()",
-      "encoding": "0x5c975abb",
-      "input_names": "",
-      "output_names": "val_0,"
-    },
-    {
-      "name": "symbol",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "symbol()",
-      "encoding": "0x95d89b41",
-      "input_names": "",
-      "output_names": "val_0,"
-    },
-    {
-      "name": "targetSupply",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "targetSupply()",
-      "encoding": "0x2a1eafd9",
       "input_names": "",
       "output_names": "val_0,"
     },
@@ -136,15 +37,6 @@
       "output_names": "val_0,"
     },
     {
-      "name": "transfer",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "transfer(address,uint256)",
-      "encoding": "0xa9059cbb",
-      "input_names": "_to,_value,",
-      "output_names": "val_0,"
-    },
-    {
       "name": "transferFrom",
       "type": "function",
       "stateMutability": "nonpayable",
@@ -154,13 +46,31 @@
       "output_names": "val_0,"
     },
     {
-      "name": "transferOwnership",
+      "name": "migrateBalance",
       "type": "function",
       "stateMutability": "nonpayable",
-      "signature": "transferOwnership(address)",
-      "encoding": "0xf2fde38b",
-      "input_names": "newOwner,",
-      "output_names": ""
+      "signature": "migrateBalance(address)",
+      "encoding": "0x2988e36b",
+      "input_names": "_holder,",
+      "output_names": "val_0,"
+    },
+    {
+      "name": "targetSupply",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "targetSupply()",
+      "encoding": "0x2a1eafd9",
+      "input_names": "",
+      "output_names": "val_0,"
+    },
+    {
+      "name": "decimals",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "decimals()",
+      "encoding": "0x313ce567",
+      "input_names": "",
+      "output_names": "val_0,"
     },
     {
       "name": "unpause",
@@ -172,22 +82,22 @@
       "output_names": "val_0,"
     },
     {
-      "name": "Approval",
-      "type": "event",
+      "name": "migrateBalances",
+      "type": "function",
       "stateMutability": "nonpayable",
-      "signature": "Approval(address,address,uint256)",
-      "encoding": "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925",
-      "input_names": "owner,spender,value,",
-      "output_names": ""
+      "signature": "migrateBalances(address[])",
+      "encoding": "0x4b92738e",
+      "input_names": "_holders,",
+      "output_names": "val_0,"
     },
     {
-      "name": "Migrated",
-      "type": "event",
+      "name": "paused",
+      "type": "function",
       "stateMutability": "nonpayable",
-      "signature": "Migrated(address,uint256)",
-      "encoding": "0x8b80bd19aea7b735bc6d75db8d6adbe18b28c30d62b3555245eb67b2340caedc",
-      "input_names": "holder,amount,",
-      "output_names": ""
+      "signature": "paused()",
+      "encoding": "0x5c975abb",
+      "input_names": "",
+      "output_names": "val_0,"
     },
     {
       "name": "Pause",
@@ -199,6 +109,96 @@
       "output_names": ""
     },
     {
+      "name": "balanceOf",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "balanceOf(address)",
+      "encoding": "0x70a08231",
+      "input_names": "_owner,",
+      "output_names": "balance,"
+    },
+    {
+      "name": "Unpause",
+      "type": "event",
+      "stateMutability": "nonpayable",
+      "signature": "Unpause()",
+      "encoding": "0x7805862f689e2f13df9f062ff482ad3ad112aca9e0847911ed832e158c525b33",
+      "input_names": "",
+      "output_names": ""
+    },
+    {
+      "name": "pause",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "pause()",
+      "encoding": "0x8456cb59",
+      "input_names": "",
+      "output_names": "val_0,"
+    },
+    {
+      "name": "Migrated",
+      "type": "event",
+      "stateMutability": "nonpayable",
+      "signature": "Migrated(address,uint256)",
+      "encoding": "0x8b80bd19aea7b735bc6d75db8d6adbe18b28c30d62b3555245eb67b2340caedc",
+      "input_names": "holder,amount,",
+      "output_names": ""
+    },
+    {
+      "name": "Approval",
+      "type": "event",
+      "stateMutability": "nonpayable",
+      "signature": "Approval(address,address,uint256)",
+      "encoding": "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925",
+      "input_names": "owner,spender,value,",
+      "output_names": ""
+    },
+    {
+      "name": "owner",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "owner()",
+      "encoding": "0x8da5cb5b",
+      "input_names": "",
+      "output_names": "val_0,"
+    },
+    {
+      "name": "symbol",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "symbol()",
+      "encoding": "0x95d89b41",
+      "input_names": "",
+      "output_names": "val_0,"
+    },
+    {
+      "name": "transfer",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "transfer(address,uint256)",
+      "encoding": "0xa9059cbb",
+      "input_names": "_to,_value,",
+      "output_names": "val_0,"
+    },
+    {
+      "name": "legacyRepContract",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "legacyRepContract()",
+      "encoding": "0xb85e0aca",
+      "input_names": "",
+      "output_names": "val_0,"
+    },
+    {
+      "name": "allowance",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "allowance(address,address)",
+      "encoding": "0xdd62ed3e",
+      "input_names": "_owner,_spender,",
+      "output_names": "remaining,"
+    },
+    {
       "name": "Transfer",
       "type": "event",
       "stateMutability": "nonpayable",
@@ -208,12 +208,12 @@
       "output_names": ""
     },
     {
-      "name": "Unpause",
-      "type": "event",
+      "name": "transferOwnership",
+      "type": "function",
       "stateMutability": "nonpayable",
-      "signature": "Unpause()",
-      "encoding": "0x7805862f689e2f13df9f062ff482ad3ad112aca9e0847911ed832e158c525b33",
-      "input_names": "",
+      "signature": "transferOwnership(address)",
+      "encoding": "0xf2fde38b",
+      "input_names": "newOwner,",
       "output_names": ""
     }
   ],

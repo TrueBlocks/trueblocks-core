@@ -203,26 +203,26 @@ string_q getTestData(void) {
 //--------------------------------------------------------------
 string_q getAlreadySortedJson(void) {
     return "["
-           "{\"name\":\"a\",\"type\":\"function\"},"
-           "{\"name\":\"c\",\"type\":\"function\"},"
-           "{\"name\":\"d\",\"type\":\"event\"},"
-           "{\"name\":\"e\",\"type\":\"function\"},"
-           "{\"name\":\"m\",\"type\":\"function\"},"
+           "{\"encoding\":\"a\",\"type\":\"function\"},"
+           "{\"encoding\":\"c\",\"type\":\"function\"},"
+           "{\"encoding\":\"d\",\"type\":\"event\"},"
+           "{\"encoding\":\"e\",\"type\":\"function\"},"
+           "{\"encoding\":\"m\",\"type\":\"function\"},"
            "]";
 }
 
 //--------------------------------------------------------------
 string_q getNotSortedJson(void) {
     return "["
-           "{\"name\":\"z\",\"type\":\"function\"},"
-           "{\"name\":\"a\",\"type\":\"function\"},"
-           "{\"name\":\"b\",\"type\":\"event\"},"
-           "{\"name\":\"zz\",\"type\":\"function\"},"
-           "{\"name\":\"az\",\"type\":\"function\"},"
-           "{\"name\":\"bz\",\"type\":\"event\"},"
-           "{\"name\":\"za1\",\"type\":\"function\"},"
-           "{\"name\":\"aa1\",\"type\":\"function\"},"
-           "{\"name\":\"ba1\",\"type\":\"function\"},"
+           "{\"encoding\":\"z\",\"type\":\"function\"},"
+           "{\"encoding\":\"a\",\"type\":\"function\"},"
+           "{\"encoding\":\"b\",\"type\":\"event\"},"
+           "{\"encoding\":\"zz\",\"type\":\"function\"},"
+           "{\"encoding\":\"az\",\"type\":\"function\"},"
+           "{\"encoding\":\"bz\",\"type\":\"event\"},"
+           "{\"encoding\":\"za1\",\"type\":\"function\"},"
+           "{\"encoding\":\"aa1\",\"type\":\"function\"},"
+           "{\"encoding\":\"ba1\",\"type\":\"function\"},"
            "]";
 }
 
