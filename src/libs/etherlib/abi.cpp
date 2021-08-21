@@ -523,7 +523,7 @@ bool CAbi::loadAbiFromEtherscan(const address_t& addr) {
         return true;
     }
 
-    if (loadAbisOneKnown(addr)) {
+    if (loadAbisKnown(addr)) {
         abiSourcesMap[addr] = true;
         return true;
     }
