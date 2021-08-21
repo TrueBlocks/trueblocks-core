@@ -154,8 +154,8 @@ bool COptions::parseArguments(string_q& command) {
         }
 
         if (hasTest || hasAll) {
-            CStringArray caches = {"abis", "blocks", "traces", "names",
-                                   "txs",  "recons", "slurps"};  // "monitors", "prices"
+            CStringArray caches = {"abis",  "blocks", "traces",
+                                   "names", "txs",    "slurps"};  // "recons", "monitors", "prices"
             cachePaths.clear();
             cachePaths = caches;
         }
