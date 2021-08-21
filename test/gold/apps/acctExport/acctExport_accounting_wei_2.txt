@@ -29,10 +29,6 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    5000000000000000000
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
-TIME ~ CLOCK - : 4-----Found uniswap pair for [0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2]-->[0x6b175474e89094c44da98b954eedeac495271d0f] at 0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
-params.size: 0
-==================================================
-
 {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -116,9 +112,6 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    10000000000000000000
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
-params.size: 0
-==================================================
-
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -202,9 +195,6 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    13750000000000000000
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
-params.size: 0
-==================================================
-
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -288,9 +278,6 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    18750000000000000000
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
-params.size: 0
-==================================================
-
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -374,9 +361,6 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    21875000000000000000
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
-params.size: 0
-==================================================
-
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -460,9 +444,6 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    26875000000000000000
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
-params.size: 0
-==================================================
-
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -546,9 +527,6 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    30625000000000000000
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
-params.size: 0
-==================================================
-
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -632,9 +610,6 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    34375000000000000000
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
-params.size: 0
-==================================================
-
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -718,9 +693,6 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    36875000000000000000
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
-params.size: 0
-==================================================
-
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -804,9 +776,6 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    42031250000000000000
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
-params.size: 0
-==================================================
-
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -890,9 +859,6 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    45781250000000000000
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
-params.size: 0
-==================================================
-
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -976,9 +942,6 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    49531250000000000000
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
-params.size: 0
-==================================================
-
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -1062,9 +1025,6 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    54531250000000000000
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
-params.size: 0
-==================================================
-
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -1148,9 +1108,6 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    58281250000000000000
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
-params.size: 0
-==================================================
-
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -1234,9 +1191,6 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    63281250000000000000
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
-params.size: 0
-==================================================
-
 , {
   "hash": "0x0",
   "blockHash": "0x0",

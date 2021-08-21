@@ -1,42 +1,6 @@
 acctExport argc: 14 [1:0xf503017d7baf7fbc0fff7492b751025c6a78179b] [2:--first_block] [3:10277780] [4:--last_block] [5:10296792] [6:--accounting] [7:--ether] [8:--fmt] [9:api] [10:--to_file] [11:--articulate] [12:--verbose] [13:10] 
 acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --last_block 10296792 --accounting --ether --fmt api --to_file --articulate --verbose 10 
 TIME ~ CLOCK - : 4-----0xf503017d7baf7fbc0fff7492b751025c6a78179b freshened to 11854827
-TIME ~ CLOCK - : 4-----Found uniswap pair for [0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2]-->[0x6b175474e89094c44da98b954eedeac495271d0f] at 0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
-
-level: 1
-readOffset: 0
-objectStart: 0
-params.size: 2
-  0: bytes32 val_0 = <>
-  1: bool val_1 = <>
-dataArray.size: 2
-  0 (0x000) 0000000000000000...000000000000000c9e1fdf4fa80b8000 <=o <-r
-  1 (0x020) 0000000000000000...00000000000000000000000000000001
-
-==================================================
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c9e1fdf4fa80b8000
-  1: bool val_1 = <>
-
-level: 1
-readOffset: 1
-objectStart: 0
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c9e1fdf4fa80b8000
-  1: bool val_1 = <>
-dataArray.size: 2
-  0 (0x000) 0000000000000000...000000000000000c9e1fdf4fa80b8000 <=o
-  1 (0x020) 0000000000000000...00000000000000000000000000000001 <-r
-
-==================================================
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c9e1fdf4fa80b8000
-  1: bool val_1 = true
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c9e1fdf4fa80b8000
-  1: bool val_1 = true
-==================================================
-
 TIME ~ CLOCK - : 4-----Trial balance: regular
 TIME ~ CLOCK - : 4-----  hash: 0xdfa263cb6a202c9f301944cbd8be76f8cdd97e1abb42f1ca1347bb3e31fafd00
 TIME ~ CLOCK - : 4-----  ------------------------------
@@ -64,43 +28,6 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    5137097246179548557
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
-
-level: 1
-readOffset: 0
-objectStart: 0
-params.size: 2
-  0: bytes32 val_0 = <>
-  1: bool val_1 = <>
-dataArray.size: 2
-  0 (0x000) 0000000000000000...000000000000000c9dea94e4006a0000 <=o <-r
-  1 (0x020) 0000000000000000...00000000000000000000000000000001
-
-==================================================
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c9dea94e4006a0000
-  1: bool val_1 = <>
-
-level: 1
-readOffset: 1
-objectStart: 0
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c9dea94e4006a0000
-  1: bool val_1 = <>
-dataArray.size: 2
-  0 (0x000) 0000000000000000...000000000000000c9dea94e4006a0000 <=o
-  1 (0x020) 0000000000000000...00000000000000000000000000000001 <-r
-
-==================================================
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c9dea94e4006a0000
-  1: bool val_1 = true
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c9dea94e4006a0000
-  1: bool val_1 = true
-==================================================
-
-TIME ~ CLOCK - : 4-----Found uniswap pair for [0x6b175474e89094c44da98b954eedeac495271d0f]-->[0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2] at 0xa478c2975ab1ea89e8196811f51a7b7ade33eb11
-TIME ~ CLOCK - : 4-----Could not fund uniswap pair for [0x7d655c57f71464b6f83811c55d84009cd9f5221c]-->[0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2]
 TIME ~ CLOCK - : 4-----Trial balance: regular
 TIME ~ CLOCK - : 4-----  hash: 0x4bbabbb0cf842635caea3dcc46107ca3dbf88fcb096ae7feaabcd6c039cafa65
 TIME ~ CLOCK - : 4-----  ------------------------------
@@ -128,41 +55,6 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    5135908328179548557
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
-
-level: 1
-readOffset: 0
-objectStart: 0
-params.size: 2
-  0: bytes32 val_0 = <>
-  1: bool val_1 = <>
-dataArray.size: 2
-  0 (0x000) 0000000000000000...000000000000000c9ee345850eb10000 <=o <-r
-  1 (0x020) 0000000000000000...00000000000000000000000000000001
-
-==================================================
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c9ee345850eb10000
-  1: bool val_1 = <>
-
-level: 1
-readOffset: 1
-objectStart: 0
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c9ee345850eb10000
-  1: bool val_1 = <>
-dataArray.size: 2
-  0 (0x000) 0000000000000000...000000000000000c9ee345850eb10000 <=o
-  1 (0x020) 0000000000000000...00000000000000000000000000000001 <-r
-
-==================================================
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c9ee345850eb10000
-  1: bool val_1 = true
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c9ee345850eb10000
-  1: bool val_1 = true
-==================================================
-
 TIME ~ CLOCK - : 4-----Trial balance: regular
 TIME ~ CLOCK - : 4-----  hash: 0x2f83088fa87f6054779a5511ec4f6b64f1e773e9bd7ec97956d6e04910d59303
 TIME ~ CLOCK - : 4-----  ------------------------------
@@ -190,41 +82,6 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    5133985758179548557
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
-
-level: 1
-readOffset: 0
-objectStart: 0
-params.size: 2
-  0: bytes32 val_0 = <>
-  1: bool val_1 = <>
-dataArray.size: 2
-  0 (0x000) 0000000000000000...000000000000000c9ee345850eb10000 <=o <-r
-  1 (0x020) 0000000000000000...00000000000000000000000000000001
-
-==================================================
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c9ee345850eb10000
-  1: bool val_1 = <>
-
-level: 1
-readOffset: 1
-objectStart: 0
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c9ee345850eb10000
-  1: bool val_1 = <>
-dataArray.size: 2
-  0 (0x000) 0000000000000000...000000000000000c9ee345850eb10000 <=o
-  1 (0x020) 0000000000000000...00000000000000000000000000000001 <-r
-
-==================================================
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c9ee345850eb10000
-  1: bool val_1 = true
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c9ee345850eb10000
-  1: bool val_1 = true
-==================================================
-
 TIME ~ CLOCK - : 4-----Trial balance: regular
 TIME ~ CLOCK - : 4-----  hash: 0xc670a40b06e179b459f8bb7ae8e3d9cf985abb325b355ea2ea8b4822e66c1f55
 TIME ~ CLOCK - : 4-----  ------------------------------
@@ -252,41 +109,6 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    5133985758179548557
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
-
-level: 1
-readOffset: 0
-objectStart: 0
-params.size: 2
-  0: bytes32 val_0 = <>
-  1: bool val_1 = <>
-dataArray.size: 2
-  0 (0x000) 0000000000000000...000000000000000c9ee345850eb10000 <=o <-r
-  1 (0x020) 0000000000000000...00000000000000000000000000000001
-
-==================================================
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c9ee345850eb10000
-  1: bool val_1 = <>
-
-level: 1
-readOffset: 1
-objectStart: 0
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c9ee345850eb10000
-  1: bool val_1 = <>
-dataArray.size: 2
-  0 (0x000) 0000000000000000...000000000000000c9ee345850eb10000 <=o
-  1 (0x020) 0000000000000000...00000000000000000000000000000001 <-r
-
-==================================================
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c9ee345850eb10000
-  1: bool val_1 = true
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c9ee345850eb10000
-  1: bool val_1 = true
-==================================================
-
 TIME ~ CLOCK - : 4-----Trial balance: regular
 TIME ~ CLOCK - : 4-----  hash: 0x39654adb110500924d5693d1cff285e6a7196cfc1a7b833eeb7583df4efab098
 TIME ~ CLOCK - : 4-----  ------------------------------
@@ -341,41 +163,6 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    5171985758179548557
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
-
-level: 1
-readOffset: 0
-objectStart: 0
-params.size: 2
-  0: bytes32 val_0 = <>
-  1: bool val_1 = <>
-dataArray.size: 2
-  0 (0x000) 0000000000000000...000000000000000c9ee345850eb10000 <=o <-r
-  1 (0x020) 0000000000000000...00000000000000000000000000000001
-
-==================================================
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c9ee345850eb10000
-  1: bool val_1 = <>
-
-level: 1
-readOffset: 1
-objectStart: 0
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c9ee345850eb10000
-  1: bool val_1 = <>
-dataArray.size: 2
-  0 (0x000) 0000000000000000...000000000000000c9ee345850eb10000 <=o
-  1 (0x020) 0000000000000000...00000000000000000000000000000001 <-r
-
-==================================================
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c9ee345850eb10000
-  1: bool val_1 = true
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c9ee345850eb10000
-  1: bool val_1 = true
-==================================================
-
 TIME ~ CLOCK - : 4-----Trial balance: regular
 TIME ~ CLOCK - : 4-----  hash: 0xe60db84c0133325d44a41a0de0b5b41b56693437f098e4394a9608ea7d4398f7
 TIME ~ CLOCK - : 4-----  ------------------------------
@@ -403,41 +190,6 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    5171985758179548557
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
-
-level: 1
-readOffset: 0
-objectStart: 0
-params.size: 2
-  0: bytes32 val_0 = <>
-  1: bool val_1 = <>
-dataArray.size: 2
-  0 (0x000) 0000000000000000...000000000000000c9d91c385e9078000 <=o <-r
-  1 (0x020) 0000000000000000...00000000000000000000000000000001
-
-==================================================
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c9d91c385e9078000
-  1: bool val_1 = <>
-
-level: 1
-readOffset: 1
-objectStart: 0
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c9d91c385e9078000
-  1: bool val_1 = <>
-dataArray.size: 2
-  0 (0x000) 0000000000000000...000000000000000c9d91c385e9078000 <=o
-  1 (0x020) 0000000000000000...00000000000000000000000000000001 <-r
-
-==================================================
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c9d91c385e9078000
-  1: bool val_1 = true
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c9d91c385e9078000
-  1: bool val_1 = true
-==================================================
-
 TIME ~ CLOCK - : 4-----Trial balance: regular
 TIME ~ CLOCK - : 4-----  hash: 0x6e6bbba83b32bf9e0c42cb82433dfee65d47f287a5b7756cdc8f057ab879fbb3
 TIME ~ CLOCK - : 4-----  ------------------------------
@@ -465,41 +217,6 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    5171985758179548557
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
-
-level: 1
-readOffset: 0
-objectStart: 0
-params.size: 2
-  0: bytes32 val_0 = <>
-  1: bool val_1 = <>
-dataArray.size: 2
-  0 (0x000) 0000000000000000...000000000000000c9c758bf26aff8000 <=o <-r
-  1 (0x020) 0000000000000000...00000000000000000000000000000001
-
-==================================================
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c9c758bf26aff8000
-  1: bool val_1 = <>
-
-level: 1
-readOffset: 1
-objectStart: 0
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c9c758bf26aff8000
-  1: bool val_1 = <>
-dataArray.size: 2
-  0 (0x000) 0000000000000000...000000000000000c9c758bf26aff8000 <=o
-  1 (0x020) 0000000000000000...00000000000000000000000000000001 <-r
-
-==================================================
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c9c758bf26aff8000
-  1: bool val_1 = true
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c9c758bf26aff8000
-  1: bool val_1 = true
-==================================================
-
 TIME ~ CLOCK - : 4-----Trial balance: regular
 TIME ~ CLOCK - : 4-----  hash: 0xd7ded45b123006b183f73adbab5d58478e41dae2715ea6986a96fa954a6f15c5
 TIME ~ CLOCK - : 4-----  ------------------------------
@@ -527,41 +244,6 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    5171985758179548557
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
-
-level: 1
-readOffset: 0
-objectStart: 0
-params.size: 2
-  0: bytes32 val_0 = <>
-  1: bool val_1 = <>
-dataArray.size: 2
-  0 (0x000) 0000000000000000...000000000000000caf553cbdc9878000 <=o <-r
-  1 (0x020) 0000000000000000...00000000000000000000000000000001
-
-==================================================
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000caf553cbdc9878000
-  1: bool val_1 = <>
-
-level: 1
-readOffset: 1
-objectStart: 0
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000caf553cbdc9878000
-  1: bool val_1 = <>
-dataArray.size: 2
-  0 (0x000) 0000000000000000...000000000000000caf553cbdc9878000 <=o
-  1 (0x020) 0000000000000000...00000000000000000000000000000001 <-r
-
-==================================================
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000caf553cbdc9878000
-  1: bool val_1 = true
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000caf553cbdc9878000
-  1: bool val_1 = true
-==================================================
-
 TIME ~ CLOCK - : 4-----Trial balance: regular
 TIME ~ CLOCK - : 4-----  hash: 0x83e221d1132253c902bbc35126752031256640e01206573c4961f879055b97c5
 TIME ~ CLOCK - : 4-----  ------------------------------
@@ -589,41 +271,6 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    5171985758179548557
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
-
-level: 1
-readOffset: 0
-objectStart: 0
-params.size: 2
-  0: bytes32 val_0 = <>
-  1: bool val_1 = <>
-dataArray.size: 2
-  0 (0x000) 0000000000000000...000000000000000caf553cbdc9878000 <=o <-r
-  1 (0x020) 0000000000000000...00000000000000000000000000000001
-
-==================================================
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000caf553cbdc9878000
-  1: bool val_1 = <>
-
-level: 1
-readOffset: 1
-objectStart: 0
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000caf553cbdc9878000
-  1: bool val_1 = <>
-dataArray.size: 2
-  0 (0x000) 0000000000000000...000000000000000caf553cbdc9878000 <=o
-  1 (0x020) 0000000000000000...00000000000000000000000000000001 <-r
-
-==================================================
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000caf553cbdc9878000
-  1: bool val_1 = true
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000caf553cbdc9878000
-  1: bool val_1 = true
-==================================================
-
 TIME ~ CLOCK - : 4-----Trial balance: regular
 TIME ~ CLOCK - : 4-----  hash: 0xad8410eead2eb335e7ce3462d71023a1f73ad62521385154d583b8fd794fc92f
 TIME ~ CLOCK - : 4-----  ------------------------------
@@ -651,41 +298,6 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    5171985758179548557
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
-
-level: 1
-readOffset: 0
-objectStart: 0
-params.size: 2
-  0: bytes32 val_0 = <>
-  1: bool val_1 = <>
-dataArray.size: 2
-  0 (0x000) 0000000000000000...000000000000000c9ff69b5bf0c8c000 <=o <-r
-  1 (0x020) 0000000000000000...00000000000000000000000000000001
-
-==================================================
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c9ff69b5bf0c8c000
-  1: bool val_1 = <>
-
-level: 1
-readOffset: 1
-objectStart: 0
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c9ff69b5bf0c8c000
-  1: bool val_1 = <>
-dataArray.size: 2
-  0 (0x000) 0000000000000000...000000000000000c9ff69b5bf0c8c000 <=o
-  1 (0x020) 0000000000000000...00000000000000000000000000000001 <-r
-
-==================================================
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c9ff69b5bf0c8c000
-  1: bool val_1 = true
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c9ff69b5bf0c8c000
-  1: bool val_1 = true
-==================================================
-
 TIME ~ CLOCK - : 4-----Trial balance: regular
 TIME ~ CLOCK - : 4-----  hash: 0xf2efaad8c0842881ef6c04ee17ba6b4c308c1daa1cdc55d5afa6eefd2c9d43e2
 TIME ~ CLOCK - : 4-----  ------------------------------
@@ -713,41 +325,6 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    5171985758179548557
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
-
-level: 1
-readOffset: 0
-objectStart: 0
-params.size: 2
-  0: bytes32 val_0 = <>
-  1: bool val_1 = <>
-dataArray.size: 2
-  0 (0x000) 0000000000000000...000000000000000c9ff69b5bf0c8c000 <=o <-r
-  1 (0x020) 0000000000000000...00000000000000000000000000000001
-
-==================================================
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c9ff69b5bf0c8c000
-  1: bool val_1 = <>
-
-level: 1
-readOffset: 1
-objectStart: 0
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c9ff69b5bf0c8c000
-  1: bool val_1 = <>
-dataArray.size: 2
-  0 (0x000) 0000000000000000...000000000000000c9ff69b5bf0c8c000 <=o
-  1 (0x020) 0000000000000000...00000000000000000000000000000001 <-r
-
-==================================================
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c9ff69b5bf0c8c000
-  1: bool val_1 = true
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c9ff69b5bf0c8c000
-  1: bool val_1 = true
-==================================================
-
 TIME ~ CLOCK - : 4-----Trial balance: prevdiff-partial
 TIME ~ CLOCK - : 4-----  hash: 0x717d21a307469b781a8231f177fcb2b2a683d537ddeea2da6eec69f4b12b1c42
 TIME ~ CLOCK - : 4-----  ------------------------------
@@ -829,41 +406,6 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    5170246415179548557
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
-
-level: 1
-readOffset: 0
-objectStart: 0
-params.size: 2
-  0: bytes32 val_0 = <>
-  1: bool val_1 = <>
-dataArray.size: 2
-  0 (0x000) 0000000000000000...000000000000000c9ff69b5bf0c8c000 <=o <-r
-  1 (0x020) 0000000000000000...00000000000000000000000000000001
-
-==================================================
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c9ff69b5bf0c8c000
-  1: bool val_1 = <>
-
-level: 1
-readOffset: 1
-objectStart: 0
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c9ff69b5bf0c8c000
-  1: bool val_1 = <>
-dataArray.size: 2
-  0 (0x000) 0000000000000000...000000000000000c9ff69b5bf0c8c000 <=o
-  1 (0x020) 0000000000000000...00000000000000000000000000000001 <-r
-
-==================================================
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c9ff69b5bf0c8c000
-  1: bool val_1 = true
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c9ff69b5bf0c8c000
-  1: bool val_1 = true
-==================================================
-
 TIME ~ CLOCK - : 4-----Trial balance: partial-nextdiff
 TIME ~ CLOCK - : 4-----  hash: 0x1ff4ec58cb6aaa757257bc26b957501de46b0f3aa9708813a40626585cd52b41
 TIME ~ CLOCK - : 4-----  ------------------------------
@@ -945,41 +487,6 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    5168485149679548557
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
-
-level: 1
-readOffset: 0
-objectStart: 0
-params.size: 2
-  0: bytes32 val_0 = <>
-  1: bool val_1 = <>
-dataArray.size: 2
-  0 (0x000) 0000000000000000...000000000000000c9ff69b5bf0c8c000 <=o <-r
-  1 (0x020) 0000000000000000...00000000000000000000000000000001
-
-==================================================
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c9ff69b5bf0c8c000
-  1: bool val_1 = <>
-
-level: 1
-readOffset: 1
-objectStart: 0
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c9ff69b5bf0c8c000
-  1: bool val_1 = <>
-dataArray.size: 2
-  0 (0x000) 0000000000000000...000000000000000c9ff69b5bf0c8c000 <=o
-  1 (0x020) 0000000000000000...00000000000000000000000000000001 <-r
-
-==================================================
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c9ff69b5bf0c8c000
-  1: bool val_1 = true
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c9ff69b5bf0c8c000
-  1: bool val_1 = true
-==================================================
-
 TIME ~ CLOCK - : 4-----Trial balance: regular
 TIME ~ CLOCK - : 4-----  hash: 0x4c34ffa20e28f1e53254c6165e5a211665c9936c88cb6ee478015ddc0d5f89f7
 TIME ~ CLOCK - : 4-----  ------------------------------
@@ -1007,41 +514,6 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    5168485149679548557
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
-
-level: 1
-readOffset: 0
-objectStart: 0
-params.size: 2
-  0: bytes32 val_0 = <>
-  1: bool val_1 = <>
-dataArray.size: 2
-  0 (0x000) 0000000000000000...000000000000000c9fdbf6261cf80000 <=o <-r
-  1 (0x020) 0000000000000000...00000000000000000000000000000001
-
-==================================================
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c9fdbf6261cf80000
-  1: bool val_1 = <>
-
-level: 1
-readOffset: 1
-objectStart: 0
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c9fdbf6261cf80000
-  1: bool val_1 = <>
-dataArray.size: 2
-  0 (0x000) 0000000000000000...000000000000000c9fdbf6261cf80000 <=o
-  1 (0x020) 0000000000000000...00000000000000000000000000000001 <-r
-
-==================================================
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c9fdbf6261cf80000
-  1: bool val_1 = true
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c9fdbf6261cf80000
-  1: bool val_1 = true
-==================================================
-
 TIME ~ CLOCK - : 4-----Trial balance: prevdiff-partial
 TIME ~ CLOCK - : 4-----  hash: 0x54df753f5a53c2ee4ef08e6b03e5e44cf1ceab98459b9bacd6f3c7aeee5d54d8
 TIME ~ CLOCK - : 4-----  ------------------------------
@@ -1123,41 +595,6 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    5167252197679548557
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
-
-level: 1
-readOffset: 0
-objectStart: 0
-params.size: 2
-  0: bytes32 val_0 = <>
-  1: bool val_1 = <>
-dataArray.size: 2
-  0 (0x000) 0000000000000000...000000000000000c9f8c0684a185c000 <=o <-r
-  1 (0x020) 0000000000000000...00000000000000000000000000000001
-
-==================================================
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c9f8c0684a185c000
-  1: bool val_1 = <>
-
-level: 1
-readOffset: 1
-objectStart: 0
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c9f8c0684a185c000
-  1: bool val_1 = <>
-dataArray.size: 2
-  0 (0x000) 0000000000000000...000000000000000c9f8c0684a185c000 <=o
-  1 (0x020) 0000000000000000...00000000000000000000000000000001 <-r
-
-==================================================
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c9f8c0684a185c000
-  1: bool val_1 = true
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c9f8c0684a185c000
-  1: bool val_1 = true
-==================================================
-
 TIME ~ CLOCK - : 4-----Trial balance: partial-nextdiff
 TIME ~ CLOCK - : 4-----  hash: 0x845ee9238e7b0c4507cb5998ea859666498c8bea1ccd5fc6633631ce962f3959
 TIME ~ CLOCK - : 4-----  ------------------------------
@@ -1239,41 +676,6 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    5165331677679548557
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
-
-level: 1
-readOffset: 0
-objectStart: 0
-params.size: 2
-  0: bytes32 val_0 = <>
-  1: bool val_1 = <>
-dataArray.size: 2
-  0 (0x000) 0000000000000000...000000000000000c9f8c0684a185c000 <=o <-r
-  1 (0x020) 0000000000000000...00000000000000000000000000000001
-
-==================================================
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c9f8c0684a185c000
-  1: bool val_1 = <>
-
-level: 1
-readOffset: 1
-objectStart: 0
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c9f8c0684a185c000
-  1: bool val_1 = <>
-dataArray.size: 2
-  0 (0x000) 0000000000000000...000000000000000c9f8c0684a185c000 <=o
-  1 (0x020) 0000000000000000...00000000000000000000000000000001 <-r
-
-==================================================
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c9f8c0684a185c000
-  1: bool val_1 = true
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c9f8c0684a185c000
-  1: bool val_1 = true
-==================================================
-
 TIME ~ CLOCK - : 4-----Trial balance: regular
 TIME ~ CLOCK - : 4-----  hash: 0x6ad90f7ebfa375681129804ab2c525e3702312dfd1691ef26352bd8f0485b6ff
 TIME ~ CLOCK - : 4-----  ------------------------------
@@ -1328,41 +730,6 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    5355331677679548557
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
-
-level: 1
-readOffset: 0
-objectStart: 0
-params.size: 2
-  0: bytes32 val_0 = <>
-  1: bool val_1 = <>
-dataArray.size: 2
-  0 (0x000) 0000000000000000...000000000000000c622c2633125b8000 <=o <-r
-  1 (0x020) 0000000000000000...00000000000000000000000000000001
-
-==================================================
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c622c2633125b8000
-  1: bool val_1 = <>
-
-level: 1
-readOffset: 1
-objectStart: 0
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c622c2633125b8000
-  1: bool val_1 = <>
-dataArray.size: 2
-  0 (0x000) 0000000000000000...000000000000000c622c2633125b8000 <=o
-  1 (0x020) 0000000000000000...00000000000000000000000000000001 <-r
-
-==================================================
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c622c2633125b8000
-  1: bool val_1 = true
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c622c2633125b8000
-  1: bool val_1 = true
-==================================================
-
 TIME ~ CLOCK - : 4-----Trial balance: regular
 TIME ~ CLOCK - : 4-----  hash: 0x9c888fac75ae127e51584ed32ac5b65283e61ad4eb5ef2947196f4469b785a8a
 TIME ~ CLOCK - : 4-----  ------------------------------
@@ -1390,41 +757,6 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    5355331677679548557
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
-
-level: 1
-readOffset: 0
-objectStart: 0
-params.size: 2
-  0: bytes32 val_0 = <>
-  1: bool val_1 = <>
-dataArray.size: 2
-  0 (0x000) 0000000000000000...000000000000000c622c2633125b8000 <=o <-r
-  1 (0x020) 0000000000000000...00000000000000000000000000000001
-
-==================================================
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c622c2633125b8000
-  1: bool val_1 = <>
-
-level: 1
-readOffset: 1
-objectStart: 0
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c622c2633125b8000
-  1: bool val_1 = <>
-dataArray.size: 2
-  0 (0x000) 0000000000000000...000000000000000c622c2633125b8000 <=o
-  1 (0x020) 0000000000000000...00000000000000000000000000000001 <-r
-
-==================================================
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c622c2633125b8000
-  1: bool val_1 = true
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c622c2633125b8000
-  1: bool val_1 = true
-==================================================
-
 TIME ~ CLOCK - : 4-----Trial balance: prevdiff-partial
 TIME ~ CLOCK - : 4-----  hash: 0x510acf20070895b13a5e7fe050e4756a22c0f274ae7d6416a175a863c7cdcb23
 TIME ~ CLOCK - : 4-----  ------------------------------
@@ -1506,41 +838,6 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    5354010217339548557
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
-
-level: 1
-readOffset: 0
-objectStart: 0
-params.size: 2
-  0: bytes32 val_0 = <>
-  1: bool val_1 = <>
-dataArray.size: 2
-  0 (0x000) 0000000000000000...000000000000000c622c2633125b8000 <=o <-r
-  1 (0x020) 0000000000000000...00000000000000000000000000000001
-
-==================================================
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c622c2633125b8000
-  1: bool val_1 = <>
-
-level: 1
-readOffset: 1
-objectStart: 0
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c622c2633125b8000
-  1: bool val_1 = <>
-dataArray.size: 2
-  0 (0x000) 0000000000000000...000000000000000c622c2633125b8000 <=o
-  1 (0x020) 0000000000000000...00000000000000000000000000000001 <-r
-
-==================================================
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c622c2633125b8000
-  1: bool val_1 = true
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c622c2633125b8000
-  1: bool val_1 = true
-==================================================
-
 TIME ~ CLOCK - : 4-----Trial balance: partial-nextdiff
 TIME ~ CLOCK - : 4-----  hash: 0x13cb17bca242f05bbff17e240a3e554c97888f850059ce3f40b845fe736043e6
 TIME ~ CLOCK - : 4-----  ------------------------------
@@ -1622,41 +919,6 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    5351951831439548557
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
-
-level: 1
-readOffset: 0
-objectStart: 0
-params.size: 2
-  0: bytes32 val_0 = <>
-  1: bool val_1 = <>
-dataArray.size: 2
-  0 (0x000) 0000000000000000...000000000000000c622c2633125b8000 <=o <-r
-  1 (0x020) 0000000000000000...00000000000000000000000000000001
-
-==================================================
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c622c2633125b8000
-  1: bool val_1 = <>
-
-level: 1
-readOffset: 1
-objectStart: 0
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c622c2633125b8000
-  1: bool val_1 = <>
-dataArray.size: 2
-  0 (0x000) 0000000000000000...000000000000000c622c2633125b8000 <=o
-  1 (0x020) 0000000000000000...00000000000000000000000000000001 <-r
-
-==================================================
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c622c2633125b8000
-  1: bool val_1 = true
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c622c2633125b8000
-  1: bool val_1 = true
-==================================================
-
 TIME ~ CLOCK - : 4-----Trial balance: regular
 TIME ~ CLOCK - : 4-----  hash: 0x0e3bd37010ef2c371f26a6059e1cd22f7fbc9e009dc01896ce97ad636d914202
 TIME ~ CLOCK - : 4-----  ------------------------------
@@ -1684,39 +946,4 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    5351951831439548557
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
-
-level: 1
-readOffset: 0
-objectStart: 0
-params.size: 2
-  0: bytes32 val_0 = <>
-  1: bool val_1 = <>
-dataArray.size: 2
-  0 (0x000) 0000000000000000...000000000000000c64881c4c7e2c8000 <=o <-r
-  1 (0x020) 0000000000000000...00000000000000000000000000000001
-
-==================================================
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c64881c4c7e2c8000
-  1: bool val_1 = <>
-
-level: 1
-readOffset: 1
-objectStart: 0
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c64881c4c7e2c8000
-  1: bool val_1 = <>
-dataArray.size: 2
-  0 (0x000) 0000000000000000...000000000000000c64881c4c7e2c8000 <=o
-  1 (0x020) 0000000000000000...00000000000000000000000000000001 <-r
-
-==================================================
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c64881c4c7e2c8000
-  1: bool val_1 = true
-params.size: 2
-  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000000c64881c4c7e2c8000
-  1: bool val_1 = true
-==================================================
-
 { "outputFilename": "--output_filename--" }

@@ -645,7 +645,7 @@ string_q nextReconciliationChunk_custom(const string_q& fieldIn, const void* dat
 bool CReconciliation::readBackLevel(CArchive& archive) {
     bool done = false;
     // EXISTING_CODE
-    if (m_schema < getVersionNum(0, 11, 5)) {
+    if (m_schema < getVersionNum(0, 11, 4)) {
         // This class has a complicated history, so we hide back level gunk in a single function below
         return readBackLevel_old(archive);
     }
@@ -1145,7 +1145,7 @@ bool CReconciliation::readBackLevel_old(CArchive& archive) {
         archive >> reconciliationType;
         // archive >> reconTrail;
         archive >> unusedBool;  // reconciled;
-    } else if (m_schema < getVersionNum(0, 11, 6)) {
+    } else if (m_schema < getVersionNum(0, 11, 4)) {
         archive >> blockNumber;
         archive >> transactionIndex;
         archive >> timestamp;
@@ -1169,16 +1169,11 @@ bool CReconciliation::readBackLevel_old(CArchive& archive) {
         archive >> selfDestructOut;
         archive >> gasCostOut;
         archive >> reconciliationType;
-        if (m_schema == getVersionNum(0, 11, 4)) {
-            archive >> spotPrice;  // spotPrice was double, but always set to 1.0. We reset it below
-        } else {
-            archive >> unusedBi;  // spotPrice was an unset (i.e. undefined value) bigInt
-        }
+        archive >> unusedBi;  // unused, unset spotPrice as biguint
     }
 
-    bool isEth = assetSymbol == "ETH" || assetSymbol == "WEI" || assetSymbol.empty();
-    address_t addr = isEth ? "" : assetAddr;
-    spotPrice = getPriceInUsd(blockNumber, addr);
+    // for version 0.11.4 we wrote 1.0 for the double spotPrice for all records
+    spotPrice = 1.0;
     finishParse();
     return true;
 }
