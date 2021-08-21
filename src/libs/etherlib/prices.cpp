@@ -45,7 +45,7 @@ bool findUniPair(CEthCall& pair, const address_t& r1, const address_t& r2) {
     if (uniFactory.address.empty()) {
         uniFactory.address = uniswapFactory;
         uniFactory.encoding = getPair;
-        uniFactory.abi_spec.loadAbisFromKnown("uniswap");
+        uniFactory.abi_spec.loadAbisKnown("uniswap");
         uniFactory.blockNumber = getBlockProgress(BP_CLIENT).client;  // doesn't really matter
     }
     uniFactory.bytes = addr_2_Pad64(r1) + addr_2_Pad64(r2);
@@ -59,7 +59,7 @@ bool findUniPair(CEthCall& pair, const address_t& r1, const address_t& r2) {
         return false;
     }
     LOG4("Found uniswap pair for [", r1, "]-->[", r2, "] at ", pair.address);
-    pair.abi_spec.loadAbisOneKnown("uniswap-pair");
+    pair.abi_spec.loadAbisKnown("uniswap-pair");
     pair.encoding = getReserves;
     pair.bytes = reserveBytes;
     pairs[key] = pair;
