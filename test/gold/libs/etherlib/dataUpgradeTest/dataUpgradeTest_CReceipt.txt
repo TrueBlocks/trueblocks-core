@@ -71,7 +71,7 @@ to                  	1015	0	20971575	T_ADDRESS TS_STRING TS_OMITEMPTY
 transactionHash     	1016	0	20971580	T_HASH TS_STRING TS_OMITEMPTY
 transactionIndex    	1017	0	1082130460	T_BLOCKNUM TS_NUMERAL TS_INTEGER
 {
-  "schema": 11006,
+  "schema": 11007,
   "deleted": false,
   "showing": true,
   "cname": "Receipt",

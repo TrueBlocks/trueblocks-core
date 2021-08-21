@@ -2,6 +2,66 @@ acctExport argc: 13 [1:0xf503017d7baf7fbc0fff7492b751025c6a78179b] [2:--first_bl
 acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --last_block 10296792 --accounting --ether --fmt api --articulate --verbose 10 
 TIME ~ CLOCK - : 4-----0xf503017d7baf7fbc0fff7492b751025c6a78179b freshened to 11854827
 {"data": [
+
+level: 1
+readOffset: 0
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = <>
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...000000000003311785c155bce3a2d635 <=o <-r
+  1 (0x020) 0000000000000000...0000000000000388b234635c8b025611
+  2 (0x040) 0000000000000000...0000000000000000000000005ee8ecdf
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 3858607329697142770161205
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+
+level: 1
+readOffset: 1
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = 3858607329697142770161205
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...000000000003311785c155bce3a2d635 <=o
+  1 (0x020) 0000000000000000...0000000000000388b234635c8b025611 <-r
+  2 (0x040) 0000000000000000...0000000000000000000000005ee8ecdf
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 3858607329697142770161205
+  1: uint112 _reserve1 = 16688697640320095114769
+  2: uint32 _blockTimestampLast = <>
+
+level: 1
+readOffset: 2
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = 3858607329697142770161205
+  1: uint112 _reserve1 = 16688697640320095114769
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...000000000003311785c155bce3a2d635 <=o
+  1 (0x020) 0000000000000000...0000000000000388b234635c8b025611
+  2 (0x040) 0000000000000000...0000000000000000000000005ee8ecdf <-r
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 3858607329697142770161205
+  1: uint112 _reserve1 = 16688697640320095114769
+  2: uint32 _blockTimestampLast = 1592323295
+params.size: 3
+  0: uint112 _reserve0 = 3858607329697142770161205
+  1: uint112 _reserve1 = 16688697640320095114769
+  2: uint32 _blockTimestampLast = 1592323295
+==================================================
+
 TIME ~ CLOCK - : 4-----Trial balance: regular
 TIME ~ CLOCK - : 4-----  hash: 0xdfa263cb6a202c9f301944cbd8be76f8cdd97e1abb42f1ca1347bb3e31fafd00
 TIME ~ CLOCK - : 4-----  ------------------------------
@@ -29,6 +89,66 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    5137097246179548557
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
+
+level: 1
+readOffset: 0
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = <>
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...000000000003311785c155bce3a2d635 <=o <-r
+  1 (0x020) 0000000000000000...0000000000000388b234635c8b025611
+  2 (0x040) 0000000000000000...0000000000000000000000005ee8ecdf
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 3858607329697142770161205
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+
+level: 1
+readOffset: 1
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = 3858607329697142770161205
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...000000000003311785c155bce3a2d635 <=o
+  1 (0x020) 0000000000000000...0000000000000388b234635c8b025611 <-r
+  2 (0x040) 0000000000000000...0000000000000000000000005ee8ecdf
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 3858607329697142770161205
+  1: uint112 _reserve1 = 16688697640320095114769
+  2: uint32 _blockTimestampLast = <>
+
+level: 1
+readOffset: 2
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = 3858607329697142770161205
+  1: uint112 _reserve1 = 16688697640320095114769
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...000000000003311785c155bce3a2d635 <=o
+  1 (0x020) 0000000000000000...0000000000000388b234635c8b025611
+  2 (0x040) 0000000000000000...0000000000000000000000005ee8ecdf <-r
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 3858607329697142770161205
+  1: uint112 _reserve1 = 16688697640320095114769
+  2: uint32 _blockTimestampLast = 1592323295
+params.size: 3
+  0: uint112 _reserve0 = 3858607329697142770161205
+  1: uint112 _reserve1 = 16688697640320095114769
+  2: uint32 _blockTimestampLast = 1592323295
+==================================================
+
 {
   "hash": "0xdfa263cb6a202c9f301944cbd8be76f8cdd97e1abb42f1ca1347bb3e31fafd00",
   "blockHash": "0xb0eeae84197ce9710061d248b0d94b26e9e539ae0d5498be83d43bcfc8f81bfc",
@@ -164,7 +284,8 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "selfDestructOut": "",
       "gasCostOut": "",
       "reconciliationType": "regular",
-      "spotPrice": 232.74000,
+      "spotPrice": 231.21081,
+      "priceSource": "uniswap",
       "begBalDiff": "",
       "endBalCalc": "5.137097246179548557",
       "endBalDiff": "",
@@ -198,6 +319,7 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "selfDestructOut": "",
       "gasCostOut": "",
       "spotPrice": 1.00000,
+      "priceSource": "stable-coin",
       "begBalDiff": "",
       "endBalCalc": "1168.267776639199461740",
       "endBalDiff": "",
@@ -240,6 +362,66 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    5135908328179548557
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
+
+level: 1
+readOffset: 0
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = <>
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...0000000000033472365ecd1320db7a71 <=o <-r
+  1 (0x020) 0000000000000000...0000000000000382dd166d52105f2c47
+  2 (0x040) 0000000000000000...0000000000000000000000005ee93c79
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 3874447362571719862352497
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+
+level: 1
+readOffset: 1
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = 3874447362571719862352497
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...0000000000033472365ecd1320db7a71 <=o
+  1 (0x020) 0000000000000000...0000000000000382dd166d52105f2c47 <-r
+  2 (0x040) 0000000000000000...0000000000000000000000005ee93c79
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 3874447362571719862352497
+  1: uint112 _reserve1 = 16581107219122276478023
+  2: uint32 _blockTimestampLast = <>
+
+level: 1
+readOffset: 2
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = 3874447362571719862352497
+  1: uint112 _reserve1 = 16581107219122276478023
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...0000000000033472365ecd1320db7a71 <=o
+  1 (0x020) 0000000000000000...0000000000000382dd166d52105f2c47
+  2 (0x040) 0000000000000000...0000000000000000000000005ee93c79 <-r
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 3874447362571719862352497
+  1: uint112 _reserve1 = 16581107219122276478023
+  2: uint32 _blockTimestampLast = 1592343673
+params.size: 3
+  0: uint112 _reserve0 = 3874447362571719862352497
+  1: uint112 _reserve1 = 16581107219122276478023
+  2: uint32 _blockTimestampLast = 1592343673
+==================================================
+
 , {
   "hash": "0x4bbabbb0cf842635caea3dcc46107ca3dbf88fcb096ae7feaabcd6c039cafa65",
   "blockHash": "0xba60d83b8de8f8af15c6de40c36a39a75b3b94a8cca228134e33cac402969cf2",
@@ -318,7 +500,8 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "selfDestructOut": "",
       "gasCostOut": "0.001188918000000000",
       "reconciliationType": "regular",
-      "spotPrice": 232.81000,
+      "spotPrice": 233.66638,
+      "priceSource": "uniswap",
       "begBalDiff": "",
       "endBalCalc": "5.135908328179548557",
       "endBalDiff": "",
@@ -361,6 +544,66 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    5133985758179548557
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
+
+level: 1
+readOffset: 0
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = <>
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...00000000000334008d50aa137a0814d2 <=o <-r
+  1 (0x020) 0000000000000000...000000000000038249ad437d6303773c
+  2 (0x040) 0000000000000000...0000000000000000000000005ee93e83
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 3872350698778867188372690
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+
+level: 1
+readOffset: 1
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = 3872350698778867188372690
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...00000000000334008d50aa137a0814d2 <=o
+  1 (0x020) 0000000000000000...000000000000038249ad437d6303773c <-r
+  2 (0x040) 0000000000000000...0000000000000000000000005ee93e83
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 3872350698778867188372690
+  1: uint112 _reserve1 = 16570485151932728178492
+  2: uint32 _blockTimestampLast = <>
+
+level: 1
+readOffset: 2
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = 3872350698778867188372690
+  1: uint112 _reserve1 = 16570485151932728178492
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...00000000000334008d50aa137a0814d2 <=o
+  1 (0x020) 0000000000000000...000000000000038249ad437d6303773c
+  2 (0x040) 0000000000000000...0000000000000000000000005ee93e83 <-r
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 3872350698778867188372690
+  1: uint112 _reserve1 = 16570485151932728178492
+  2: uint32 _blockTimestampLast = 1592344195
+params.size: 3
+  0: uint112 _reserve0 = 3872350698778867188372690
+  1: uint112 _reserve1 = 16570485151932728178492
+  2: uint32 _blockTimestampLast = 1592344195
+==================================================
+
 , {
   "hash": "0x2f83088fa87f6054779a5511ec4f6b64f1e773e9bd7ec97956d6e04910d59303",
   "blockHash": "0x9e3bfcd31fe2aba667980cee5f9a9a834ab7309c04c1387fac457a30b777a0b3",
@@ -496,7 +739,8 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "selfDestructOut": "",
       "gasCostOut": "0.001922570000000000",
       "reconciliationType": "regular",
-      "spotPrice": 232.81000,
+      "spotPrice": 233.68964,
+      "priceSource": "uniswap",
       "begBalDiff": "",
       "endBalCalc": "5.133985758179548557",
       "endBalDiff": "",
@@ -530,6 +774,7 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "selfDestructOut": "",
       "gasCostOut": "",
       "spotPrice": 1.00000,
+      "priceSource": "stable-coin",
       "begBalDiff": "",
       "endBalCalc": "1163.267776639199461740",
       "endBalDiff": "",
@@ -572,6 +817,66 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    5133985758179548557
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
+
+level: 1
+readOffset: 0
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = <>
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...0000000000033332ee739b4a7fe62699 <=o <-r
+  1 (0x020) 0000000000000000...00000000000003833df3e7f30fe5bc61
+  2 (0x040) 0000000000000000...0000000000000000000000005ee94fd2
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 3868557668921672531846809
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+
+level: 1
+readOffset: 1
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = 3868557668921672531846809
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...0000000000033332ee739b4a7fe62699 <=o
+  1 (0x020) 0000000000000000...00000000000003833df3e7f30fe5bc61 <-r
+  2 (0x040) 0000000000000000...0000000000000000000000005ee94fd2
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 3868557668921672531846809
+  1: uint112 _reserve1 = 16588087088951670979681
+  2: uint32 _blockTimestampLast = <>
+
+level: 1
+readOffset: 2
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = 3868557668921672531846809
+  1: uint112 _reserve1 = 16588087088951670979681
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...0000000000033332ee739b4a7fe62699 <=o
+  1 (0x020) 0000000000000000...00000000000003833df3e7f30fe5bc61
+  2 (0x040) 0000000000000000...0000000000000000000000005ee94fd2 <-r
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 3868557668921672531846809
+  1: uint112 _reserve1 = 16588087088951670979681
+  2: uint32 _blockTimestampLast = 1592348626
+params.size: 3
+  0: uint112 _reserve0 = 3868557668921672531846809
+  1: uint112 _reserve1 = 16588087088951670979681
+  2: uint32 _blockTimestampLast = 1592348626
+==================================================
+
 , {
   "hash": "0xc670a40b06e179b459f8bb7ae8e3d9cf985abb325b355ea2ea8b4822e66c1f55",
   "blockHash": "0x7759339f1de39285cc6ef521e19a8cf85981fac36bceb14c3b480ffc87c9fb3c",
@@ -707,7 +1012,8 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "selfDestructOut": "",
       "gasCostOut": "",
       "reconciliationType": "regular",
-      "spotPrice": 232.81000,
+      "spotPrice": 233.21301,
+      "priceSource": "uniswap",
       "begBalDiff": "",
       "endBalCalc": "5.133985758179548557",
       "endBalDiff": "",
@@ -741,6 +1047,7 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "selfDestructOut": "",
       "gasCostOut": "",
       "spotPrice": 1.00000,
+      "priceSource": "stable-coin",
       "begBalDiff": "",
       "endBalCalc": "1168.017776639199461740",
       "endBalDiff": "",
@@ -810,6 +1117,66 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    5171985758179548557
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
+
+level: 1
+readOffset: 0
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = <>
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...00000000000333e488c8250a5dbadc17 <=o <-r
+  1 (0x020) 0000000000000000...00000000000003825f8c42c5af391955
+  2 (0x040) 0000000000000000...0000000000000000000000005ee95e62
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 3871833863287556160543767
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+
+level: 1
+readOffset: 1
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = 3871833863287556160543767
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...00000000000333e488c8250a5dbadc17 <=o
+  1 (0x020) 0000000000000000...00000000000003825f8c42c5af391955 <-r
+  2 (0x040) 0000000000000000...0000000000000000000000005ee95e62
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 3871833863287556160543767
+  1: uint112 _reserve1 = 16572061129538335742293
+  2: uint32 _blockTimestampLast = <>
+
+level: 1
+readOffset: 2
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = 3871833863287556160543767
+  1: uint112 _reserve1 = 16572061129538335742293
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...00000000000333e488c8250a5dbadc17 <=o
+  1 (0x020) 0000000000000000...00000000000003825f8c42c5af391955
+  2 (0x040) 0000000000000000...0000000000000000000000005ee95e62 <-r
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 3871833863287556160543767
+  1: uint112 _reserve1 = 16572061129538335742293
+  2: uint32 _blockTimestampLast = 1592352354
+params.size: 3
+  0: uint112 _reserve0 = 3871833863287556160543767
+  1: uint112 _reserve1 = 16572061129538335742293
+  2: uint32 _blockTimestampLast = 1592352354
+==================================================
+
 , {
   "hash": "0x39654adb110500924d5693d1cff285e6a7196cfc1a7b833eeb7583df4efab098",
   "blockHash": "0xec24224c949309583fdfab1d0bc890e5206133d4d8b46fbbeb97e13606ce1d94",
@@ -972,7 +1339,8 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "selfDestructOut": "",
       "gasCostOut": "",
       "reconciliationType": "by-trace",
-      "spotPrice": 232.81000,
+      "spotPrice": 233.63623,
+      "priceSource": "uniswap",
       "begBalDiff": "",
       "endBalCalc": "5.171985758179548557",
       "endBalDiff": "",
@@ -1015,6 +1383,66 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    5171985758179548557
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
+
+level: 1
+readOffset: 0
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = <>
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...00000000000330a3a798f6f68724ca08 <=o <-r
+  1 (0x020) 0000000000000000...0000000000000385fb1ca0b1e69277b9
+  2 (0x040) 0000000000000000...0000000000000000000000005ee97e96
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 3856469945979584634997256
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+
+level: 1
+readOffset: 1
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = 3856469945979584634997256
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...00000000000330a3a798f6f68724ca08 <=o
+  1 (0x020) 0000000000000000...0000000000000385fb1ca0b1e69277b9 <-r
+  2 (0x040) 0000000000000000...0000000000000000000000005ee97e96
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 3856469945979584634997256
+  1: uint112 _reserve1 = 16638610924501111830457
+  2: uint32 _blockTimestampLast = <>
+
+level: 1
+readOffset: 2
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = 3856469945979584634997256
+  1: uint112 _reserve1 = 16638610924501111830457
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...00000000000330a3a798f6f68724ca08 <=o
+  1 (0x020) 0000000000000000...0000000000000385fb1ca0b1e69277b9
+  2 (0x040) 0000000000000000...0000000000000000000000005ee97e96 <-r
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 3856469945979584634997256
+  1: uint112 _reserve1 = 16638610924501111830457
+  2: uint32 _blockTimestampLast = 1592360598
+params.size: 3
+  0: uint112 _reserve0 = 3856469945979584634997256
+  1: uint112 _reserve1 = 16638610924501111830457
+  2: uint32 _blockTimestampLast = 1592360598
+==================================================
+
 , {
   "hash": "0xe60db84c0133325d44a41a0de0b5b41b56693437f098e4394a9608ea7d4398f7",
   "blockHash": "0x33ad97fa69125df95dcf62d41af8beaac3b5b1e35841204b58779521dc332f31",
@@ -1950,7 +2378,8 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "selfDestructOut": "",
       "gasCostOut": "",
       "reconciliationType": "regular",
-      "spotPrice": 232.71000,
+      "spotPrice": 231.77836,
+      "priceSource": "uniswap",
       "begBalDiff": "",
       "endBalCalc": "5.171985758179548557",
       "endBalDiff": "",
@@ -1984,6 +2413,7 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "selfDestructOut": "",
       "gasCostOut": "",
       "spotPrice": 1.00000,
+      "priceSource": "stable-coin",
       "begBalDiff": "",
       "endBalCalc": "1168.967776639199461740",
       "endBalDiff": "",
@@ -2026,6 +2456,66 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    5171985758179548557
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
+
+level: 1
+readOffset: 0
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = <>
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...0000000000032f863beb2f21d6f1da2d <=o <-r
+  1 (0x020) 0000000000000000...000000000000038730b8609a951a38b0
+  2 (0x040) 0000000000000000...0000000000000000000000005ee98f04
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 3851204864841128080431661
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+
+level: 1
+readOffset: 1
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = 3851204864841128080431661
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...0000000000032f863beb2f21d6f1da2d <=o
+  1 (0x020) 0000000000000000...000000000000038730b8609a951a38b0 <-r
+  2 (0x040) 0000000000000000...0000000000000000000000005ee98f04
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 3851204864841128080431661
+  1: uint112 _reserve1 = 16660920560686303164592
+  2: uint32 _blockTimestampLast = <>
+
+level: 1
+readOffset: 2
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = 3851204864841128080431661
+  1: uint112 _reserve1 = 16660920560686303164592
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...0000000000032f863beb2f21d6f1da2d <=o
+  1 (0x020) 0000000000000000...000000000000038730b8609a951a38b0
+  2 (0x040) 0000000000000000...0000000000000000000000005ee98f04 <-r
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 3851204864841128080431661
+  1: uint112 _reserve1 = 16660920560686303164592
+  2: uint32 _blockTimestampLast = 1592364804
+params.size: 3
+  0: uint112 _reserve0 = 3851204864841128080431661
+  1: uint112 _reserve1 = 16660920560686303164592
+  2: uint32 _blockTimestampLast = 1592364804
+==================================================
+
 , {
   "hash": "0x6e6bbba83b32bf9e0c42cb82433dfee65d47f287a5b7756cdc8f057ab879fbb3",
   "blockHash": "0xdb5cef64bea4738eec03a40114a63f5332d2a81faf51ebe247b6d684ca9347b9",
@@ -2721,7 +3211,8 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "selfDestructOut": "",
       "gasCostOut": "",
       "reconciliationType": "regular",
-      "spotPrice": 232.63000,
+      "spotPrice": 231.15199,
+      "priceSource": "uniswap",
       "begBalDiff": "",
       "endBalCalc": "5.171985758179548557",
       "endBalDiff": "",
@@ -2755,6 +3246,7 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "selfDestructOut": "",
       "gasCostOut": "",
       "spotPrice": 1.00000,
+      "priceSource": "stable-coin",
       "begBalDiff": "",
       "endBalCalc": "1197.467776639199461740",
       "endBalDiff": "",
@@ -2797,6 +3289,66 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    5171985758179548557
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
+
+level: 1
+readOffset: 0
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = <>
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...00000000000334551772a163a4a484a0 <=o <-r
+  1 (0x020) 0000000000000000...0000000000000387911a7b3f3f543a39
+  2 (0x040) 0000000000000000...0000000000000000000000005eea1f8e
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 3873910178789633940554912
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+
+level: 1
+readOffset: 1
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = 3873910178789633940554912
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...00000000000334551772a163a4a484a0 <=o
+  1 (0x020) 0000000000000000...0000000000000387911a7b3f3f543a39 <-r
+  2 (0x040) 0000000000000000...0000000000000000000000005eea1f8e
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 3873910178789633940554912
+  1: uint112 _reserve1 = 16667865703556194777657
+  2: uint32 _blockTimestampLast = <>
+
+level: 1
+readOffset: 2
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = 3873910178789633940554912
+  1: uint112 _reserve1 = 16667865703556194777657
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...00000000000334551772a163a4a484a0 <=o
+  1 (0x020) 0000000000000000...0000000000000387911a7b3f3f543a39
+  2 (0x040) 0000000000000000...0000000000000000000000005eea1f8e <-r
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 3873910178789633940554912
+  1: uint112 _reserve1 = 16667865703556194777657
+  2: uint32 _blockTimestampLast = 1592401806
+params.size: 3
+  0: uint112 _reserve0 = 3873910178789633940554912
+  1: uint112 _reserve1 = 16667865703556194777657
+  2: uint32 _blockTimestampLast = 1592401806
+==================================================
+
 , {
   "hash": "0xd7ded45b123006b183f73adbab5d58478e41dae2715ea6986a96fa954a6f15c5",
   "blockHash": "0xefa539acc15da9b0fbc17b48b2fd62c09caa53e31ac1c6181574c8ecb74634f5",
@@ -2932,7 +3484,8 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "selfDestructOut": "",
       "gasCostOut": "",
       "reconciliationType": "regular",
-      "spotPrice": 233.99000,
+      "spotPrice": 232.41789,
+      "priceSource": "uniswap",
       "begBalDiff": "",
       "endBalCalc": "5.171985758179548557",
       "endBalDiff": "",
@@ -2966,6 +3519,7 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "selfDestructOut": "",
       "gasCostOut": "",
       "spotPrice": 1.00000,
+      "priceSource": "stable-coin",
       "begBalDiff": "",
       "endBalCalc": "1202.217776639199461740",
       "endBalDiff": "",
@@ -3008,6 +3562,66 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    5171985758179548557
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
+
+level: 1
+readOffset: 0
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = <>
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...00000000000331762d6f3017cb83c56f <=o <-r
+  1 (0x020) 0000000000000000...000000000000038ac0d8ee37aabbc409
+  2 (0x040) 0000000000000000...0000000000000000000000005eea2526
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 3860353406193530745111919
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+
+level: 1
+readOffset: 1
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = 3860353406193530745111919
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...00000000000331762d6f3017cb83c56f <=o
+  1 (0x020) 0000000000000000...000000000000038ac0d8ee37aabbc409 <-r
+  2 (0x040) 0000000000000000...0000000000000000000000005eea2526
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 3860353406193530745111919
+  1: uint112 _reserve1 = 16726646249353960473609
+  2: uint32 _blockTimestampLast = <>
+
+level: 1
+readOffset: 2
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = 3860353406193530745111919
+  1: uint112 _reserve1 = 16726646249353960473609
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...00000000000331762d6f3017cb83c56f <=o
+  1 (0x020) 0000000000000000...000000000000038ac0d8ee37aabbc409
+  2 (0x040) 0000000000000000...0000000000000000000000005eea2526 <-r
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 3860353406193530745111919
+  1: uint112 _reserve1 = 16726646249353960473609
+  2: uint32 _blockTimestampLast = 1592403238
+params.size: 3
+  0: uint112 _reserve0 = 3860353406193530745111919
+  1: uint112 _reserve1 = 16726646249353960473609
+  2: uint32 _blockTimestampLast = 1592403238
+==================================================
+
 , {
   "hash": "0x83e221d1132253c902bbc35126752031256640e01206573c4961f879055b97c5",
   "blockHash": "0xe4d19faf34d3eea341cadbd0e3064ad7d8be072f314e5bca803cc38f52f6a95d",
@@ -3703,7 +4317,8 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "selfDestructOut": "",
       "gasCostOut": "",
       "reconciliationType": "regular",
-      "spotPrice": 233.99000,
+      "spotPrice": 230.79064,
+      "priceSource": "uniswap",
       "begBalDiff": "",
       "endBalCalc": "5.171985758179548557",
       "endBalDiff": "",
@@ -3737,6 +4352,7 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "selfDestructOut": "",
       "gasCostOut": "",
       "spotPrice": 1.00000,
+      "priceSource": "stable-coin",
       "begBalDiff": "",
       "endBalCalc": "1207.217776639199461740",
       "endBalDiff": "",
@@ -3779,6 +4395,66 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    5171985758179548557
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
+
+level: 1
+readOffset: 0
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = <>
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...00000000000330a1bc9ded644856cc92 <=o <-r
+  1 (0x020) 0000000000000000...000000000000038cf70ad8e1468d2cd8
+  2 (0x040) 0000000000000000...0000000000000000000000005eeb6cb2
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 3856434567097763172371602
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+
+level: 1
+readOffset: 1
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = 3856434567097763172371602
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...00000000000330a1bc9ded644856cc92 <=o
+  1 (0x020) 0000000000000000...000000000000038cf70ad8e1468d2cd8 <-r
+  2 (0x040) 0000000000000000...0000000000000000000000005eeb6cb2
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 3856434567097763172371602
+  1: uint112 _reserve1 = 16767444897867471072472
+  2: uint32 _blockTimestampLast = <>
+
+level: 1
+readOffset: 2
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = 3856434567097763172371602
+  1: uint112 _reserve1 = 16767444897867471072472
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...00000000000330a1bc9ded644856cc92 <=o
+  1 (0x020) 0000000000000000...000000000000038cf70ad8e1468d2cd8
+  2 (0x040) 0000000000000000...0000000000000000000000005eeb6cb2 <-r
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 3856434567097763172371602
+  1: uint112 _reserve1 = 16767444897867471072472
+  2: uint32 _blockTimestampLast = 1592487090
+params.size: 3
+  0: uint112 _reserve0 = 3856434567097763172371602
+  1: uint112 _reserve1 = 16767444897867471072472
+  2: uint32 _blockTimestampLast = 1592487090
+==================================================
+
 , {
   "hash": "0xad8410eead2eb335e7ce3462d71023a1f73ad62521385154d583b8fd794fc92f",
   "blockHash": "0xfe43fcc353b9ac3101c00dceba3b77f9bd942e92750044e8372953e68ea11ced",
@@ -4754,7 +5430,8 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "selfDestructOut": "",
       "gasCostOut": "",
       "reconciliationType": "regular",
-      "spotPrice": 232.88000,
+      "spotPrice": 229.99536,
+      "priceSource": "uniswap",
       "begBalDiff": "",
       "endBalCalc": "5.171985758179548557",
       "endBalDiff": "",
@@ -4788,6 +5465,7 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "selfDestructOut": "",
       "gasCostOut": "",
       "spotPrice": 1.00000,
+      "priceSource": "stable-coin",
       "begBalDiff": "",
       "endBalCalc": "1209.117776639199461740",
       "endBalDiff": "",
@@ -4830,6 +5508,66 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    5171985758179548557
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
+
+level: 1
+readOffset: 0
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = <>
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...00000000000330a99b6c4de711d8c2af <=o <-r
+  1 (0x020) 0000000000000000...000000000000038cee704d02860415e3
+  2 (0x040) 0000000000000000...0000000000000000000000005eeb73cc
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 3856579749182115604382383
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+
+level: 1
+readOffset: 1
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = 3856579749182115604382383
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...00000000000330a99b6c4de711d8c2af <=o
+  1 (0x020) 0000000000000000...000000000000038cee704d02860415e3 <-r
+  2 (0x040) 0000000000000000...0000000000000000000000005eeb73cc
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 3856579749182115604382383
+  1: uint112 _reserve1 = 16766824936179924997603
+  2: uint32 _blockTimestampLast = <>
+
+level: 1
+readOffset: 2
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = 3856579749182115604382383
+  1: uint112 _reserve1 = 16766824936179924997603
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...00000000000330a99b6c4de711d8c2af <=o
+  1 (0x020) 0000000000000000...000000000000038cee704d02860415e3
+  2 (0x040) 0000000000000000...0000000000000000000000005eeb73cc <-r
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 3856579749182115604382383
+  1: uint112 _reserve1 = 16766824936179924997603
+  2: uint32 _blockTimestampLast = 1592488908
+params.size: 3
+  0: uint112 _reserve0 = 3856579749182115604382383
+  1: uint112 _reserve1 = 16766824936179924997603
+  2: uint32 _blockTimestampLast = 1592488908
+==================================================
+
 , {
   "hash": "0xf2efaad8c0842881ef6c04ee17ba6b4c308c1daa1cdc55d5afa6eefd2c9d43e2",
   "blockHash": "0x6438e075d91cfc466938778d76e99555b9c75e1427f20b484db76a2274f59164",
@@ -5445,7 +6183,8 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "selfDestructOut": "",
       "gasCostOut": "",
       "reconciliationType": "regular",
-      "spotPrice": 232.88000,
+      "spotPrice": 230.01253,
+      "priceSource": "uniswap",
       "begBalDiff": "",
       "endBalCalc": "5.171985758179548557",
       "endBalDiff": "",
@@ -5479,6 +6218,7 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "selfDestructOut": "",
       "gasCostOut": "",
       "spotPrice": 1.00000,
+      "priceSource": "stable-coin",
       "begBalDiff": "",
       "endBalCalc": "1211.097776639199461740",
       "endBalDiff": "",
@@ -5575,6 +6315,66 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    5170246415179548557
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
+
+level: 1
+readOffset: 0
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = <>
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...00000000000330319158c90952cc38c4 <=o <-r
+  1 (0x020) 0000000000000000...000000000000038d8372dfd4c0b1beb8
+  2 (0x040) 0000000000000000...0000000000000000000000005eeb7cd2
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 3854365413823217593497796
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+
+level: 1
+readOffset: 1
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = 3854365413823217593497796
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...00000000000330319158c90952cc38c4 <=o
+  1 (0x020) 0000000000000000...000000000000038d8372dfd4c0b1beb8 <-r
+  2 (0x040) 0000000000000000...0000000000000000000000005eeb7cd2
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 3854365413823217593497796
+  1: uint112 _reserve1 = 16777562242073154928312
+  2: uint32 _blockTimestampLast = <>
+
+level: 1
+readOffset: 2
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = 3854365413823217593497796
+  1: uint112 _reserve1 = 16777562242073154928312
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...00000000000330319158c90952cc38c4 <=o
+  1 (0x020) 0000000000000000...000000000000038d8372dfd4c0b1beb8
+  2 (0x040) 0000000000000000...0000000000000000000000005eeb7cd2 <-r
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 3854365413823217593497796
+  1: uint112 _reserve1 = 16777562242073154928312
+  2: uint32 _blockTimestampLast = 1592491218
+params.size: 3
+  0: uint112 _reserve0 = 3854365413823217593497796
+  1: uint112 _reserve1 = 16777562242073154928312
+  2: uint32 _blockTimestampLast = 1592491218
+==================================================
+
 , {
   "hash": "0x717d21a307469b781a8231f177fcb2b2a683d537ddeea2da6eec69f4b12b1c42",
   "blockHash": "0x733f333febe506bb353d8ad78d0a743330cd5b2eaa0f103968877d1e9265be28",
@@ -5653,7 +6453,8 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "selfDestructOut": "",
       "gasCostOut": "0.001739343000000000",
       "reconciliationType": "prevdiff-partial",
-      "spotPrice": 232.88000,
+      "spotPrice": 229.73334,
+      "priceSource": "uniswap",
       "begBalDiff": "",
       "endBalCalc": "5.170246415179548557",
       "endBalDiff": "",
@@ -5687,6 +6488,7 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "selfDestructOut": "",
       "gasCostOut": "",
       "spotPrice": 1.00000,
+      "priceSource": "stable-coin",
       "begBalDiff": "",
       "endBalCalc": "1206.097776639199461740",
       "endBalDiff": "",
@@ -5783,6 +6585,66 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    5168485149679548557
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
+
+level: 1
+readOffset: 0
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = <>
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...00000000000330319158c90952cc38c4 <=o <-r
+  1 (0x020) 0000000000000000...000000000000038d8372dfd4c0b1beb8
+  2 (0x040) 0000000000000000...0000000000000000000000005eeb7cd2
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 3854365413823217593497796
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+
+level: 1
+readOffset: 1
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = 3854365413823217593497796
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...00000000000330319158c90952cc38c4 <=o
+  1 (0x020) 0000000000000000...000000000000038d8372dfd4c0b1beb8 <-r
+  2 (0x040) 0000000000000000...0000000000000000000000005eeb7cd2
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 3854365413823217593497796
+  1: uint112 _reserve1 = 16777562242073154928312
+  2: uint32 _blockTimestampLast = <>
+
+level: 1
+readOffset: 2
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = 3854365413823217593497796
+  1: uint112 _reserve1 = 16777562242073154928312
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...00000000000330319158c90952cc38c4 <=o
+  1 (0x020) 0000000000000000...000000000000038d8372dfd4c0b1beb8
+  2 (0x040) 0000000000000000...0000000000000000000000005eeb7cd2 <-r
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 3854365413823217593497796
+  1: uint112 _reserve1 = 16777562242073154928312
+  2: uint32 _blockTimestampLast = 1592491218
+params.size: 3
+  0: uint112 _reserve0 = 3854365413823217593497796
+  1: uint112 _reserve1 = 16777562242073154928312
+  2: uint32 _blockTimestampLast = 1592491218
+==================================================
+
 , {
   "hash": "0x1ff4ec58cb6aaa757257bc26b957501de46b0f3aa9708813a40626585cd52b41",
   "blockHash": "0x733f333febe506bb353d8ad78d0a743330cd5b2eaa0f103968877d1e9265be28",
@@ -5878,7 +6740,8 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "selfDestructOut": "",
       "gasCostOut": "0.001761265500000000",
       "reconciliationType": "partial-nextdiff",
-      "spotPrice": 232.88000,
+      "spotPrice": 229.73334,
+      "priceSource": "uniswap",
       "begBalDiff": "",
       "endBalCalc": "5.168485149679548557",
       "endBalDiff": "",
@@ -5921,6 +6784,66 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    5168485149679548557
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
+
+level: 1
+readOffset: 0
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = <>
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...0000000000032e01c94245e7f099b228 <=o <-r
+  1 (0x020) 0000000000000000...000000000000039281c713ca01764965
+  2 (0x040) 0000000000000000...0000000000000000000000005eebc758
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 3844039266030577476284968
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+
+level: 1
+readOffset: 1
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = 3844039266030577476284968
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...0000000000032e01c94245e7f099b228 <=o
+  1 (0x020) 0000000000000000...000000000000039281c713ca01764965 <-r
+  2 (0x040) 0000000000000000...0000000000000000000000005eebc758
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 3844039266030577476284968
+  1: uint112 _reserve1 = 16869675548280117152101
+  2: uint32 _blockTimestampLast = <>
+
+level: 1
+readOffset: 2
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = 3844039266030577476284968
+  1: uint112 _reserve1 = 16869675548280117152101
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...0000000000032e01c94245e7f099b228 <=o
+  1 (0x020) 0000000000000000...000000000000039281c713ca01764965
+  2 (0x040) 0000000000000000...0000000000000000000000005eebc758 <-r
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 3844039266030577476284968
+  1: uint112 _reserve1 = 16869675548280117152101
+  2: uint32 _blockTimestampLast = 1592510296
+params.size: 3
+  0: uint112 _reserve0 = 3844039266030577476284968
+  1: uint112 _reserve1 = 16869675548280117152101
+  2: uint32 _blockTimestampLast = 1592510296
+==================================================
+
 , {
   "hash": "0x4c34ffa20e28f1e53254c6165e5a211665c9936c88cb6ee478015ddc0d5f89f7",
   "blockHash": "0x7e0925d35b292cbcc553ffe78e890ab04bc4fb813612e6e7a55baf51cbfdfba9",
@@ -6176,7 +7099,8 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "selfDestructOut": "",
       "gasCostOut": "",
       "reconciliationType": "regular",
-      "spotPrice": 232.88000,
+      "spotPrice": 227.86682,
+      "priceSource": "uniswap",
       "begBalDiff": "",
       "endBalCalc": "5.168485149679548557",
       "endBalDiff": "",
@@ -6210,6 +7134,7 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "selfDestructOut": "",
       "gasCostOut": "",
       "spotPrice": 1.00000,
+      "priceSource": "stable-coin",
       "begBalDiff": "",
       "endBalCalc": "1207.047776639199461740",
       "endBalDiff": "",
@@ -6306,6 +7231,66 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    5167252197679548557
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
+
+level: 1
+readOffset: 0
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = <>
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...0000000000032a32eed10105ec715c42 <=o <-r
+  1 (0x020) 0000000000000000...0000000000000396dfb88605172b11c5
+  2 (0x040) 0000000000000000...0000000000000000000000005eebd74c
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 3826056396864874213366850
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+
+level: 1
+readOffset: 1
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = 3826056396864874213366850
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...0000000000032a32eed10105ec715c42 <=o
+  1 (0x020) 0000000000000000...0000000000000396dfb88605172b11c5 <-r
+  2 (0x040) 0000000000000000...0000000000000000000000005eebd74c
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 3826056396864874213366850
+  1: uint112 _reserve1 = 16950231841887962730949
+  2: uint32 _blockTimestampLast = <>
+
+level: 1
+readOffset: 2
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = 3826056396864874213366850
+  1: uint112 _reserve1 = 16950231841887962730949
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...0000000000032a32eed10105ec715c42 <=o
+  1 (0x020) 0000000000000000...0000000000000396dfb88605172b11c5
+  2 (0x040) 0000000000000000...0000000000000000000000005eebd74c <-r
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 3826056396864874213366850
+  1: uint112 _reserve1 = 16950231841887962730949
+  2: uint32 _blockTimestampLast = 1592514380
+params.size: 3
+  0: uint112 _reserve0 = 3826056396864874213366850
+  1: uint112 _reserve1 = 16950231841887962730949
+  2: uint32 _blockTimestampLast = 1592514380
+==================================================
+
 , {
   "hash": "0x54df753f5a53c2ee4ef08e6b03e5e44cf1ceab98459b9bacd6f3c7aeee5d54d8",
   "blockHash": "0x8b5178b7a72f9f2169a6c0860ac1fe75c913404216282b6544abb45b1ffff757",
@@ -6384,7 +7369,8 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "selfDestructOut": "",
       "gasCostOut": "0.001232952000000000",
       "reconciliationType": "prevdiff-partial",
-      "spotPrice": 232.85000,
+      "spotPrice": 225.72295,
+      "priceSource": "uniswap",
       "begBalDiff": "",
       "endBalCalc": "5.167252197679548557",
       "endBalDiff": "",
@@ -6418,6 +7404,7 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "selfDestructOut": "",
       "gasCostOut": "",
       "spotPrice": 1.00000,
+      "priceSource": "stable-coin",
       "begBalDiff": "",
       "endBalCalc": "1202.047776639199461740",
       "endBalDiff": "",
@@ -6514,6 +7501,66 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    5165331677679548557
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
+
+level: 1
+readOffset: 0
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = <>
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...0000000000032a32eed10105ec715c42 <=o <-r
+  1 (0x020) 0000000000000000...0000000000000396dfb88605172b11c5
+  2 (0x040) 0000000000000000...0000000000000000000000005eebd74c
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 3826056396864874213366850
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+
+level: 1
+readOffset: 1
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = 3826056396864874213366850
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...0000000000032a32eed10105ec715c42 <=o
+  1 (0x020) 0000000000000000...0000000000000396dfb88605172b11c5 <-r
+  2 (0x040) 0000000000000000...0000000000000000000000005eebd74c
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 3826056396864874213366850
+  1: uint112 _reserve1 = 16950231841887962730949
+  2: uint32 _blockTimestampLast = <>
+
+level: 1
+readOffset: 2
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = 3826056396864874213366850
+  1: uint112 _reserve1 = 16950231841887962730949
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...0000000000032a32eed10105ec715c42 <=o
+  1 (0x020) 0000000000000000...0000000000000396dfb88605172b11c5
+  2 (0x040) 0000000000000000...0000000000000000000000005eebd74c <-r
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 3826056396864874213366850
+  1: uint112 _reserve1 = 16950231841887962730949
+  2: uint32 _blockTimestampLast = 1592514380
+params.size: 3
+  0: uint112 _reserve0 = 3826056396864874213366850
+  1: uint112 _reserve1 = 16950231841887962730949
+  2: uint32 _blockTimestampLast = 1592514380
+==================================================
+
 , {
   "hash": "0x845ee9238e7b0c4507cb5998ea859666498c8bea1ccd5fc6633631ce962f3959",
   "blockHash": "0x8b5178b7a72f9f2169a6c0860ac1fe75c913404216282b6544abb45b1ffff757",
@@ -6649,7 +7696,8 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "selfDestructOut": "",
       "gasCostOut": "0.001920520000000000",
       "reconciliationType": "partial-nextdiff",
-      "spotPrice": 232.85000,
+      "spotPrice": 225.72295,
+      "priceSource": "uniswap",
       "begBalDiff": "",
       "endBalCalc": "5.165331677679548557",
       "endBalDiff": "",
@@ -6719,6 +7767,66 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    5355331677679548557
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
+
+level: 1
+readOffset: 0
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = <>
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...0000000000032a0fe864b6f951738b61 <=o <-r
+  1 (0x020) 0000000000000000...0000000000000396fc38835d5dba7ed0
+  2 (0x040) 0000000000000000...0000000000000000000000005eebda0b
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 3825410297996014666353505
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+
+level: 1
+readOffset: 1
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = 3825410297996014666353505
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...0000000000032a0fe864b6f951738b61 <=o
+  1 (0x020) 0000000000000000...0000000000000396fc38835d5dba7ed0 <-r
+  2 (0x040) 0000000000000000...0000000000000000000000005eebda0b
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 3825410297996014666353505
+  1: uint112 _reserve1 = 16952285480398649720528
+  2: uint32 _blockTimestampLast = <>
+
+level: 1
+readOffset: 2
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = 3825410297996014666353505
+  1: uint112 _reserve1 = 16952285480398649720528
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...0000000000032a0fe864b6f951738b61 <=o
+  1 (0x020) 0000000000000000...0000000000000396fc38835d5dba7ed0
+  2 (0x040) 0000000000000000...0000000000000000000000005eebda0b <-r
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 3825410297996014666353505
+  1: uint112 _reserve1 = 16952285480398649720528
+  2: uint32 _blockTimestampLast = 1592515083
+params.size: 3
+  0: uint112 _reserve0 = 3825410297996014666353505
+  1: uint112 _reserve1 = 16952285480398649720528
+  2: uint32 _blockTimestampLast = 1592515083
+==================================================
+
 , {
   "hash": "0x6ad90f7ebfa375681129804ab2c525e3702312dfd1691ef26352bd8f0485b6ff",
   "blockHash": "0xa15f935d6dc94f1a0a47ca83e3f85e1d3720f8080fd640d60263c0d23220b602",
@@ -6881,7 +7989,8 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "selfDestructOut": "",
       "gasCostOut": "",
       "reconciliationType": "by-trace",
-      "spotPrice": 228.43000,
+      "spotPrice": 225.65750,
+      "priceSource": "uniswap",
       "begBalDiff": "",
       "endBalCalc": "5.355331677679548557",
       "endBalDiff": "",
@@ -6924,6 +8033,66 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    5355331677679548557
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
+
+level: 1
+readOffset: 0
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = <>
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...0000000000032a311f6a598bffcb3aa5 <=o <-r
+  1 (0x020) 0000000000000000...0000000000000396d7719373e9d9a109
+  2 (0x040) 0000000000000000...0000000000000000000000005eebdd36
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 3826023005304244925053605
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+
+level: 1
+readOffset: 1
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = 3826023005304244925053605
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...0000000000032a311f6a598bffcb3aa5 <=o
+  1 (0x020) 0000000000000000...0000000000000396d7719373e9d9a109 <-r
+  2 (0x040) 0000000000000000...0000000000000000000000005eebdd36
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 3826023005304244925053605
+  1: uint112 _reserve1 = 16949635411181945069833
+  2: uint32 _blockTimestampLast = <>
+
+level: 1
+readOffset: 2
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = 3826023005304244925053605
+  1: uint112 _reserve1 = 16949635411181945069833
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...0000000000032a311f6a598bffcb3aa5 <=o
+  1 (0x020) 0000000000000000...0000000000000396d7719373e9d9a109
+  2 (0x040) 0000000000000000...0000000000000000000000005eebdd36 <-r
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 3826023005304244925053605
+  1: uint112 _reserve1 = 16949635411181945069833
+  2: uint32 _blockTimestampLast = 1592515894
+params.size: 3
+  0: uint112 _reserve0 = 3826023005304244925053605
+  1: uint112 _reserve1 = 16949635411181945069833
+  2: uint32 _blockTimestampLast = 1592515894
+==================================================
+
 , {
   "hash": "0x9c888fac75ae127e51584ed32ac5b65283e61ad4eb5ef2947196f4469b785a8a",
   "blockHash": "0x874e52295b00d519f0744158329e9199601c11218573361c153f341ed06635a7",
@@ -7059,7 +8228,8 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "selfDestructOut": "",
       "gasCostOut": "",
       "reconciliationType": "regular",
-      "spotPrice": 228.43000,
+      "spotPrice": 225.72893,
+      "priceSource": "uniswap",
       "begBalDiff": "",
       "endBalCalc": "5.355331677679548557",
       "endBalDiff": "",
@@ -7093,6 +8263,7 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "selfDestructOut": "",
       "gasCostOut": "",
       "spotPrice": 1.00000,
+      "priceSource": "stable-coin",
       "begBalDiff": "",
       "endBalCalc": "1249.547776639199461740",
       "endBalDiff": "",
@@ -7189,6 +8360,66 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    5354010217339548557
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
+
+level: 1
+readOffset: 0
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = <>
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...000000000003214ecf1630b6aab4c7f7 <=o <-r
+  1 (0x020) 0000000000000000...0000000000000389084e5411e2c769ea
+  2 (0x040) 0000000000000000...0000000000000000000000005eec2853
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 3784069320984311606069239
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+
+level: 1
+readOffset: 1
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = 3784069320984311606069239
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...000000000003214ecf1630b6aab4c7f7 <=o
+  1 (0x020) 0000000000000000...0000000000000389084e5411e2c769ea <-r
+  2 (0x040) 0000000000000000...0000000000000000000000005eec2853
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 3784069320984311606069239
+  1: uint112 _reserve1 = 16694901894943426963946
+  2: uint32 _blockTimestampLast = <>
+
+level: 1
+readOffset: 2
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = 3784069320984311606069239
+  1: uint112 _reserve1 = 16694901894943426963946
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...000000000003214ecf1630b6aab4c7f7 <=o
+  1 (0x020) 0000000000000000...0000000000000389084e5411e2c769ea
+  2 (0x040) 0000000000000000...0000000000000000000000005eec2853 <-r
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 3784069320984311606069239
+  1: uint112 _reserve1 = 16694901894943426963946
+  2: uint32 _blockTimestampLast = 1592535123
+params.size: 3
+  0: uint112 _reserve0 = 3784069320984311606069239
+  1: uint112 _reserve1 = 16694901894943426963946
+  2: uint32 _blockTimestampLast = 1592535123
+==================================================
+
 , {
   "hash": "0x510acf20070895b13a5e7fe050e4756a22c0f274ae7d6416a175a863c7cdcb23",
   "blockHash": "0x5f464a4fec4ef7df373e331c1804662b2a64030f22735d611b7d939e14224f15",
@@ -7267,7 +8498,8 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "selfDestructOut": "",
       "gasCostOut": "0.001321460340000000",
       "reconciliationType": "prevdiff-partial",
-      "spotPrice": 228.43000,
+      "spotPrice": 226.66017,
+      "priceSource": "uniswap",
       "begBalDiff": "",
       "endBalCalc": "5.354010217339548557",
       "endBalDiff": "",
@@ -7301,6 +8533,7 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "selfDestructOut": "",
       "gasCostOut": "",
       "spotPrice": 1.00000,
+      "priceSource": "stable-coin",
       "begBalDiff": "",
       "endBalCalc": "1244.547776639199461740",
       "endBalDiff": "",
@@ -7397,6 +8630,66 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    5351951831439548557
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
+
+level: 1
+readOffset: 0
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = <>
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...000000000003214ecf1630b6aab4c7f7 <=o <-r
+  1 (0x020) 0000000000000000...0000000000000389084e5411e2c769ea
+  2 (0x040) 0000000000000000...0000000000000000000000005eec2853
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 3784069320984311606069239
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+
+level: 1
+readOffset: 1
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = 3784069320984311606069239
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...000000000003214ecf1630b6aab4c7f7 <=o
+  1 (0x020) 0000000000000000...0000000000000389084e5411e2c769ea <-r
+  2 (0x040) 0000000000000000...0000000000000000000000005eec2853
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 3784069320984311606069239
+  1: uint112 _reserve1 = 16694901894943426963946
+  2: uint32 _blockTimestampLast = <>
+
+level: 1
+readOffset: 2
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = 3784069320984311606069239
+  1: uint112 _reserve1 = 16694901894943426963946
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...000000000003214ecf1630b6aab4c7f7 <=o
+  1 (0x020) 0000000000000000...0000000000000389084e5411e2c769ea
+  2 (0x040) 0000000000000000...0000000000000000000000005eec2853 <-r
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 3784069320984311606069239
+  1: uint112 _reserve1 = 16694901894943426963946
+  2: uint32 _blockTimestampLast = 1592535123
+params.size: 3
+  0: uint112 _reserve0 = 3784069320984311606069239
+  1: uint112 _reserve1 = 16694901894943426963946
+  2: uint32 _blockTimestampLast = 1592535123
+==================================================
+
 , {
   "hash": "0x13cb17bca242f05bbff17e240a3e554c97888f850059ce3f40b845fe736043e6",
   "blockHash": "0x5f464a4fec4ef7df373e331c1804662b2a64030f22735d611b7d939e14224f15",
@@ -7532,7 +8825,8 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "selfDestructOut": "",
       "gasCostOut": "0.002058385900000000",
       "reconciliationType": "partial-nextdiff",
-      "spotPrice": 228.43000,
+      "spotPrice": 226.66017,
+      "priceSource": "uniswap",
       "begBalDiff": "",
       "endBalCalc": "5.351951831439548557",
       "endBalDiff": "",
@@ -7575,6 +8869,66 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    5351951831439548557
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
+
+level: 1
+readOffset: 0
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = <>
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...00000000000327170a122d1a2c865f5a <=o <-r
+  1 (0x020) 0000000000000000...00000000000003841d4aceb221d8d663
+  2 (0x040) 0000000000000000...0000000000000000000000005eeccb6e
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 3811374752481579406614362
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+
+level: 1
+readOffset: 1
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = 3811374752481579406614362
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...00000000000327170a122d1a2c865f5a <=o
+  1 (0x020) 0000000000000000...00000000000003841d4aceb221d8d663 <-r
+  2 (0x040) 0000000000000000...0000000000000000000000005eeccb6e
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 3811374752481579406614362
+  1: uint112 _reserve1 = 16604180392978440312419
+  2: uint32 _blockTimestampLast = <>
+
+level: 1
+readOffset: 2
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = 3811374752481579406614362
+  1: uint112 _reserve1 = 16604180392978440312419
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...00000000000327170a122d1a2c865f5a <=o
+  1 (0x020) 0000000000000000...00000000000003841d4aceb221d8d663
+  2 (0x040) 0000000000000000...0000000000000000000000005eeccb6e <-r
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 3811374752481579406614362
+  1: uint112 _reserve1 = 16604180392978440312419
+  2: uint32 _blockTimestampLast = 1592576878
+params.size: 3
+  0: uint112 _reserve0 = 3811374752481579406614362
+  1: uint112 _reserve1 = 16604180392978440312419
+  2: uint32 _blockTimestampLast = 1592576878
+==================================================
+
 , {
   "hash": "0x0e3bd37010ef2c371f26a6059e1cd22f7fbc9e009dc01896ce97ad636d914202",
   "blockHash": "0xd11210e343cb8e03f44421ad1d38526393ba138e2d5cc0c20df8e695ff4fb014",
@@ -8992,7 +10346,8 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "selfDestructOut": "",
       "gasCostOut": "",
       "reconciliationType": "regular",
-      "spotPrice": 1.00000,
+      "spotPrice": 229.54308,
+      "priceSource": "uniswap",
       "begBalDiff": "",
       "endBalCalc": "5.351951831439548557",
       "endBalDiff": "",
@@ -9026,6 +10381,7 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "selfDestructOut": "",
       "gasCostOut": "",
       "spotPrice": 1.00000,
+      "priceSource": "stable-coin",
       "begBalDiff": "",
       "endBalCalc": "1254.047776639199461740",
       "endBalDiff": "",

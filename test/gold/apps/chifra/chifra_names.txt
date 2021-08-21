@@ -85,6 +85,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x03c9436d54db599018842387d9d6075d81580726	AirEthereumMax INU	aiReMax	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x03dd1a67ef52107dd86b590ec62aaf5048973647	MAMASHIBA	MAMASHIBA	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x03df4c372a29376d2c8df33a1b5f001cd8d68b0e	Bitcoinereum	BTCM	On chain	8		false	false	false	true	true	false
+50-Tokens:ERC20	0x03fb52d4ee633ab0d06c833e32efdd8d388f3e6a	Black Hole	HOLE	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x041b10db04de10c1005029ce498d09446e935316	Green INU	GINUX	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x041d37f02b4219e5a038b22c1f69e7e55f3a82d8	Marshmallow Governance	MGT	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x0448da445a2ed1262890b42fb6d578c59ec470d5	ShibaRise	ShibaRise	On chain	9		false	false	false	true	true	false
@@ -112,6 +113,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x05767d9ef41dc40689678ffca0608878fb3de906	SushiSwap LP Token	SLP	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x05860d453c7974cbf46508c06cba14e211c629ce	Eden Coin	EDN	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x05984006707585f66465e8a6505341f46b64fa7a	Nam Coin	NAM	On chain	18		false	false	false	true	true	false
+50-Tokens:ERC721	0x059edd72cd353df5106d2b9cc5ab83a52287ac3a	Art Blocks	BLOCKS	On chain	18		false	false	false	true	true	true
 50-Tokens:ERC20	0x05aaaa829afa407d83315cded1d45eb16025910c	SP8DE Token	SPX	On chain	18	The Game of Chance.Changed	false	false	false	true	true	false
 50-Tokens:ERC20	0x05c26a876ce988f0ca83f367d77d4d68e90805c6	CZ easy 100X	CZ100	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x05c7065d644096a4e4c3fe24af86e36de021074b	LendConnect Token	LCT	On chain	18	Aims to be a passive-income-generating Platform.	false	false	false	true	true	false
@@ -203,5 +205,3 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x0aef06dcccc531e581f0440059e6ffcc206039ee	Intelligent Trading Technologies	ITT	On chain	8	Applying artificial intelligence and technical analysis, our fleet of data bots follow real-time data sources and send you actionable alerts for success in cryptocurrency markets.	false	false	false	true	true	false
 50-Tokens:ERC20	0x0af44e2784637218dd1d32a322d44e603a8f0c6a	MatryxToken	MTX	On chain	18	Matryx is the Collaborative Research Development Engine of Nanome‚Äö√Ñ√¥s VR toolset.	false	false	false	true	true	false
 50-Tokens:ERC20	0x0affa06e7fbe5bc9a764c979aa66e8256a631f02	Polybius Token	PLBT	On chain	6	Private banking platform	false	false	false	true	true	false
-50-Tokens:ERC20	0x0b08af3b5a4877ae471342342743f7cb86db604b	3901 PunkBabies	3901PB	On chain	18		false	false	false	true	true	true
-50-Tokens:ERC20	0x0b099d8ebd41c44601fdf79eb0bd0c2e02ec56cf	Nothing	NOT	On chain	18		false	false	false	true	true	false

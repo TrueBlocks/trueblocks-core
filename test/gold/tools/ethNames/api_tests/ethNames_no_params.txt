@@ -1748,6 +1748,15 @@
     },
     {
       "tags": "50-Tokens:ERC20",
+      "address": "0x03fb52d4ee633ab0d06c833e32efdd8d388f3e6a",
+      "name": "Black Hole",
+      "symbol": "HOLE",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
       "address": "0x041b10db04de10c1005029ce498d09446e935316",
       "name": "Green INU",
       "symbol": "GINUX",
@@ -1799,15 +1808,6 @@
       "source": "On chain",
       "decimals": 9,
       "description": ""
-    },
-    {
-      "tags": "90-Individuals:Twitter",
-      "address": "0x04498150b495a1f126b88952a756b5b9a4385e30",
-      "name": "Name 0x04498150",
-      "symbol": "",
-      "source": "Twitter",
-      "decimals": 0,
-      "description": "okoro"
     }
   ],
   "types": [

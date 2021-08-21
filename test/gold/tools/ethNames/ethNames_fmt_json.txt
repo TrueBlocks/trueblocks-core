@@ -1372,6 +1372,14 @@ ethNames --named --custom --fmt json
   },
   {
     "tags": "50-Tokens:ERC20",
+    "address": "0x03fb52d4ee633ab0d06c833e32efdd8d388f3e6a",
+    "name": "Black Hole",
+    "symbol": "HOLE",
+    "source": "On chain",
+    "decimals": 18
+  },
+  {
+    "tags": "50-Tokens:ERC20",
     "address": "0x041b10db04de10c1005029ce498d09446e935316",
     "name": "Green INU",
     "symbol": "GINUX",
@@ -1385,10 +1393,4 @@ ethNames --named --custom --fmt json
     "symbol": "MGT",
     "source": "On chain",
     "decimals": 18
-  },
-  {
-    "tags": "31-Gitcoin:Grants",
-    "address": "0x04335c092bc8c06f48f9def5e3285140138fbbfc",
-    "name": "Grant 1496 Optimistic Casino",
-    "source": "https://gitcoin.co/grants/1496/optimistic-casino"
   }] }
