@@ -2,8 +2,10 @@ getState argc: 4 [1:--call] [2:0xa4f29fc548856180f6b1e319ee4d86715875cce4!0x1206
 getState --call 0xa4f29fc548856180f6b1e319ee4d86715875cce4!0x12065fe0 6523977-6540000:2000 
 { "data": [
   {
+    "encoding": "0x12065fe0",
     "blockNumber": 6523977,
-    "encoding": "0x12065fe0",
+    "balance": 0,
+    "address": "0xa4f29fc548856180f6b1e319ee4d86715875cce4",
     "result": {
       "name": "getBalance",
       "signature": "getBalance()",
@@ -11,13 +13,13 @@ getState --call 0xa4f29fc548856180f6b1e319ee4d86715875cce4!0x12065fe0 6523977-65
       "outputs": {
         "balance": "0"
       }
-    },
-    "balance": 0,
-    "address": "0xa4f29fc548856180f6b1e319ee4d86715875cce4"
+    }
   },
   {
+    "encoding": "0x12065fe0",
     "blockNumber": 6525977,
-    "encoding": "0x12065fe0",
+    "balance": 0,
+    "address": "0xa4f29fc548856180f6b1e319ee4d86715875cce4",
     "result": {
       "name": "getBalance",
       "signature": "getBalance()",
@@ -25,13 +27,13 @@ getState --call 0xa4f29fc548856180f6b1e319ee4d86715875cce4!0x12065fe0 6523977-65
       "outputs": {
         "balance": "0"
       }
-    },
-    "balance": 0,
-    "address": "0xa4f29fc548856180f6b1e319ee4d86715875cce4"
+    }
   },
   {
+    "encoding": "0x12065fe0",
     "blockNumber": 6527977,
-    "encoding": "0x12065fe0",
+    "balance": 0,
+    "address": "0xa4f29fc548856180f6b1e319ee4d86715875cce4",
     "result": {
       "name": "getBalance",
       "signature": "getBalance()",
@@ -39,13 +41,13 @@ getState --call 0xa4f29fc548856180f6b1e319ee4d86715875cce4!0x12065fe0 6523977-65
       "outputs": {
         "balance": "0"
       }
-    },
-    "balance": 0,
-    "address": "0xa4f29fc548856180f6b1e319ee4d86715875cce4"
+    }
   },
   {
+    "encoding": "0x12065fe0",
     "blockNumber": 6529977,
-    "encoding": "0x12065fe0",
+    "balance": 0,
+    "address": "0xa4f29fc548856180f6b1e319ee4d86715875cce4",
     "result": {
       "name": "getBalance",
       "signature": "getBalance()",
@@ -53,13 +55,13 @@ getState --call 0xa4f29fc548856180f6b1e319ee4d86715875cce4!0x12065fe0 6523977-65
       "outputs": {
         "balance": "0"
       }
-    },
-    "balance": 0,
-    "address": "0xa4f29fc548856180f6b1e319ee4d86715875cce4"
+    }
   },
   {
+    "encoding": "0x12065fe0",
     "blockNumber": 6531977,
-    "encoding": "0x12065fe0",
+    "balance": 0,
+    "address": "0xa4f29fc548856180f6b1e319ee4d86715875cce4",
     "result": {
       "name": "getBalance",
       "signature": "getBalance()",
@@ -67,13 +69,13 @@ getState --call 0xa4f29fc548856180f6b1e319ee4d86715875cce4!0x12065fe0 6523977-65
       "outputs": {
         "balance": "0"
       }
-    },
-    "balance": 0,
-    "address": "0xa4f29fc548856180f6b1e319ee4d86715875cce4"
+    }
   },
   {
+    "encoding": "0x12065fe0",
     "blockNumber": 6533977,
-    "encoding": "0x12065fe0",
+    "balance": 0,
+    "address": "0xa4f29fc548856180f6b1e319ee4d86715875cce4",
     "result": {
       "name": "getBalance",
       "signature": "getBalance()",
@@ -81,13 +83,13 @@ getState --call 0xa4f29fc548856180f6b1e319ee4d86715875cce4!0x12065fe0 6523977-65
       "outputs": {
         "balance": "0"
       }
-    },
-    "balance": 0,
-    "address": "0xa4f29fc548856180f6b1e319ee4d86715875cce4"
+    }
   },
   {
+    "encoding": "0x12065fe0",
     "blockNumber": 6535977,
-    "encoding": "0x12065fe0",
+    "balance": 0,
+    "address": "0xa4f29fc548856180f6b1e319ee4d86715875cce4",
     "result": {
       "name": "getBalance",
       "signature": "getBalance()",
@@ -95,13 +97,13 @@ getState --call 0xa4f29fc548856180f6b1e319ee4d86715875cce4!0x12065fe0 6523977-65
       "outputs": {
         "balance": "0"
       }
-    },
-    "balance": 0,
-    "address": "0xa4f29fc548856180f6b1e319ee4d86715875cce4"
+    }
   },
   {
+    "encoding": "0x12065fe0",
     "blockNumber": 6537977,
-    "encoding": "0x12065fe0",
+    "balance": 0,
+    "address": "0xa4f29fc548856180f6b1e319ee4d86715875cce4",
     "result": {
       "name": "getBalance",
       "signature": "getBalance()",
@@ -109,13 +111,13 @@ getState --call 0xa4f29fc548856180f6b1e319ee4d86715875cce4!0x12065fe0 6523977-65
       "outputs": {
         "balance": "0"
       }
-    },
-    "balance": 0,
-    "address": "0xa4f29fc548856180f6b1e319ee4d86715875cce4"
+    }
   },
   {
-    "blockNumber": 6539977,
     "encoding": "0x12065fe0",
+    "blockNumber": 6539977,
+    "balance": 0,
+    "address": "0xa4f29fc548856180f6b1e319ee4d86715875cce4",
     "result": {
       "name": "getBalance",
       "signature": "getBalance()",
@@ -123,7 +125,5 @@ getState --call 0xa4f29fc548856180f6b1e319ee4d86715875cce4!0x12065fe0 6523977-65
       "outputs": {
         "balance": "0"
       }
-    },
-    "balance": 0,
-    "address": "0xa4f29fc548856180f6b1e319ee4d86715875cce4"
+    }
   }] }
