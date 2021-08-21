@@ -201,7 +201,6 @@ bool CAbi::loadAbiFromSolidity(const address_t& addr) {
             }
         }
     }
-    sortInterfaces();
     return true;
 }
 

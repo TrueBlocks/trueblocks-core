@@ -146,7 +146,8 @@ bool COptions::parseArguments(string_q& command) {
     if (classes) {
         return usage(usageErrs[ERR_OPTIONNOTIMPL]);
 #if 0
-        for (auto func : abi_spec.interfaces) {
+        for (auto item : abi_spec.interfaceMap) {
+            CFunction func = item.second;
             establishFolder("./classes/classDefinitions/");
             ostringstream os;
             os << "[settings]" << endl;

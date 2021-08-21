@@ -30,7 +30,7 @@ typedef map<string, CFunction> CStringFunctionMap;
 class CAbi : public CBaseNode {
   public:
     address_t address;
-    CFunctionArray interfaces;
+    CStringFunctionMap interfaceMap;
 
   public:
     CAbi(void);
@@ -55,12 +55,10 @@ class CAbi : public CBaseNode {
     bool loadAbisFromKnown(bool tokensOnly = false);
     bool loadAbisOneKnown(const string_q& addr);
 
-    CStringFunctionMap abiInterfacesMap;
     bool findInterface(const string_q& enc, CFunction& func) const;
     bool hasInterface(const string_q& enc) const;
     void addInterfaceToMap(const CFunction& func);
     void clearInterfaceMap(void);
-    void sortInterfaces(void);
 
     size_t nInterfaces(void) const;
     size_t nFunctions(void) const;
@@ -118,7 +116,7 @@ inline CAbi::~CAbi(void) {
 //--------------------------------------------------------------------------
 inline void CAbi::clear(void) {
     // EXISTING_CODE
-    abiInterfacesMap.clear();
+    interfaceMap.clear();
     abiSourcesMap.clear();
     // EXISTING_CODE
 }
@@ -128,10 +126,9 @@ inline void CAbi::initialize(void) {
     CBaseNode::initialize();
 
     address = "";
-    interfaces.clear();
+    interfaceMap.clear();
 
     // EXISTING_CODE
-    abiInterfacesMap.clear();
     abiSourcesMap.clear();
     // EXISTING_CODE
 }
@@ -142,10 +139,9 @@ inline void CAbi::duplicate(const CAbi& ab) {
     CBaseNode::duplicate(ab);
 
     address = ab.address;
-    interfaces = ab.interfaces;
+    interfaceMap = ab.interfaceMap;
 
     // EXISTING_CODE
-    abiInterfacesMap = ab.abiInterfacesMap;
     abiSourcesMap = ab.abiSourcesMap;
     // EXISTING_CODE
 }
@@ -190,7 +186,7 @@ extern const char* STR_DISPLAY_ABI;
 // EXISTING_CODE
 extern bool fromDefinition(CFunction& func, const string_q& lineIn);
 extern bool fromDefinition(CParameter& parm, const string_q& input);
-extern bool decodeRLP(CParameterArray& interfaces, const string_q& desc, const string_q& input);
+extern bool decodeRLP(CParameterArray& ifaces, const string_q& desc, const string_q& input);
 extern bool sortByFuncName(const CFunction& f1, const CFunction& f2);
 bool isKnownAbi(const string_q& addr, string_q& path);
 // EXISTING_CODE
