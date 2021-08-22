@@ -785,6 +785,15 @@
                     explode: true,
                     schema: {type: 'boolean'},
                   },
+                  {
+                    name: 'reconcile',
+                    in: 'query',
+                    description: 'reconcile the transaction as per the provided address',
+                    required: false,
+                    style: 'form',
+                    explode: true,
+                    schema: {type: 'string'},
+                  },
                 ],
                 responses: {
                   '200': {

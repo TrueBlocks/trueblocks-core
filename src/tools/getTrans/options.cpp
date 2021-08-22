@@ -25,6 +25,7 @@ static const COption params[] = {
     COption("trace", "t", "", OPT_SWITCH, "include the transaction's traces in the results"),
     COption("uniq", "u", "", OPT_SWITCH, "display a list of uniq addresses found in the transaction instead of the underlying data"),  // NOLINT
     COption("cache", "o", "", OPT_SWITCH, "force the results of the query into the tx cache (and the trace cache if applicable)"),  // NOLINT
+    COption("reconcile", "r", "<string>", OPT_FLAG, "reconcile the transaction as per the provided address"),
     COption("", "", "", OPT_DESCRIPTION, "Retrieve one or more transactions from the chain or local cache."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -57,6 +58,13 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-o" || arg == "--cache") {
             cache = true;
 
+        } else if (startsWith(arg, "-r:") || startsWith(arg, "--reconcile:")) {
+            reconcile = substitute(substitute(arg, "-r:", ""), "--reconcile:", "");
+            if (!isAddress(reconcile))
+                return usage("The provided value (" + reconcile + ") is not a properly formatted address.");
+        } else if (arg == "-r" || arg == "--reconcile") {
+            return flag_required("reconcile");
+
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
@@ -77,7 +85,14 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("trace", trace);
     LOG_TEST_BOOL("uniq", uniq);
     LOG_TEST_BOOL("cache", cache);
+    LOG_TEST("reconcile", reconcile, (reconcile == ""));
     // END_DEBUG_DISPLAY
+
+    bool isReconcile = !reconcile.empty();
+    if (isReconcile) {
+        if (cache || trace || articulate)
+            return usage("Do not use other options with the --reconcile option.");
+    }
 
     if (Mocked("transactions"))
         return false;
@@ -113,6 +128,9 @@ bool COptions::parseArguments(string_q& command) {
     // Display formatting
     if (uniq) {
         configureDisplay("getTrans", "CAppearance", STR_DISPLAY_APPEARANCE);
+    } else if (!reconcile.empty()) {
+        string_q fmt = STR_DISPLAY_RECONCILIATION;
+        configureDisplay("getTrans", "CReconciliation", fmt);
     } else {
         string_q fmt = STR_DISPLAY_TRANSACTION + string_q(trace ? "\t[{TRACESCNT}]" : "");
         configureDisplay("getTrans", "CTransaction", fmt);
@@ -131,6 +149,7 @@ void COptions::Init(void) {
     trace = false;
     uniq = false;
     cache = false;
+    reconcile = "";
     // END_CODE_INIT
 
     transList.Init();

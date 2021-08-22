@@ -1,4 +1,3 @@
-#pragma once
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -11,36 +10,26 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-/*
- * Parts of this file were generated with makeClass --options. Edit only those parts of
- * the code outside of the BEG_CODE/END_CODE sections
- */
-#include "etherlib.h"
+#include "options.h"
 
-// BEG_ERROR_DEFINES
-#define ERR_PROVIDEONETXID 1
-// END_ERROR_DEFINES
+//--------------------------------------------------------------
+bool visitReconciliation(CTransaction& trans, void* data) {
+    LOG4("blockNumber.txid: ", trans.blockNumber, "\t", trans.transactionIndex);
 
-//-----------------------------------------------------------------------------
-class COptions : public CAbiOptions {
-  public:
-    // BEG_CODE_DECLARE
-    bool articulate;
-    bool trace;
-    bool uniq;
-    bool cache;
-    address_t reconcile;
-    // END_CODE_DECLARE
+    COptions* opt = reinterpret_cast<COptions*>(data);
+    bool isText = (expContext().exportFmt & (TXT1 | CSV1));
 
-    COptionsTransList transList;
+    if (isText) {
+        cout << trim(trans.Format(expContext().fmtMap["format"]), '\t') << endl;
+    } else {
+        if (!opt->firstOut)
+            cout << ",";
+        cout << "  ";
+        indent();
+        trans.toJson(cout);
+        unindent();
+        opt->firstOut = false;
+    }
 
-    COptions(void);
-    ~COptions(void);
-
-    bool parseArguments(string_q& command) override;
-    void Init(void) override;
-};
-
-//-----------------------------------------------------------------------------
-extern bool visitTransaction(CTransaction& trans, void* data);
-extern bool visitReconciliation(CTransaction& trans, void* data);
+    return true;
+}
