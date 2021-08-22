@@ -9482,7 +9482,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0xea5e4a7a1f29bd8357f1817ff0e873be83f1fc7d	万国链(WGBC)	WGBC	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0xea5f88e54d982cbb0c441cde4e79bc305e5b43bc	Pareto Network Token	PARETO	On chain	18	The Pareto Network is a peer to peer financial content marketplace.	false	false	false	true	true	false
 50-Tokens:ERC20	0xea610b1153477720748dc13ed378003941d84fab	AlisToken	ALIS	On chain	18	A new social media concept revealing and providing access to reliable, articles, news, and people.	false	false	false	true	true	false
-91-Early:Addresses	0xea674fdde714fd979de3edf0f56aa9716b898ec8	KNOWN_MINERS_008		Ether Camp			false	false	false	false	false	false
+91-Early:Addresses	0xea674fdde714fd979de3edf0f56aa9716b898ec8	Ethermine					false	false	false	false	false	false
 31-Gitcoin:Grants	0xea6bf819283fd7f820197c41176629c44be3ca56	Grant 1876 Moovit Fitness		https://gitcoin.co/grants/1876/moovit-fitness			false	false	false	false	false	false
 31-Gitcoin:Grants	0xea6cdbe70e5c18c605427d93dc6374b648843fac	Grant 1487 Memorial.network		https://gitcoin.co/grants/1487/memorialnetwork			false	false	false	false	false	false
 90-Individuals:Gitcoin Grants	0xea96d9273947eef024c404f24341c81156e77e45	volleykrypton		Gitcoin Website			false	false	false	false	false	false

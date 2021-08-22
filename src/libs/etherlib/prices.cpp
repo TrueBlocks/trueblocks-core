@@ -27,6 +27,9 @@ static const address_t sai = "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359";
 static const address_t dai = "0x6b175474e89094c44da98b954eedeac495271d0f";
 static const address_t wEth = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2";
 static const string_q uniswapFactory = "0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f";
+// deployed 10000835
+// v3 factory 0x1f98431c8ad98523631ae4a59f267346ea31f984
+// deployed 12369621
 static const string_q getPair = "0xe6a43905";      // getPair(address,address)
 static const string_q getReserves = "0x0902f1ac";  // getReserves()
 static const string_q reserveBytes = "";
