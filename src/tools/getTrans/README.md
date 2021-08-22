@@ -8,7 +8,7 @@ The `--trace` option attachs an array transaction traces to the output (if the n
 
 ### Usage
 
-`Usage:`    chifra transactions [-a|-t|-u|-o|-v|-h] &lt;tx_id&gt; [tx_id...]  
+`Usage:`    chifra transactions [-a|-t|-u|-o|-r|-v|-h] &lt;tx_id&gt; [tx_id...]  
 `Purpose:`  Retrieve one or more transactions from the chain or local cache.
 
 `Where:`  
@@ -20,6 +20,7 @@ The `--trace` option attachs an array transaction traces to the output (if the n
 | -t | --trace | include the transaction's traces in the results |
 | -u | --uniq | display a list of uniq addresses found in the transaction instead of the underlying data |
 | -o | --cache | force the results of the query into the tx cache (and the trace cache if applicable) |
+| -r | --reconcile &lt;str&gt; | reconcile the transaction as per the provided address |
 | -v | --verbose | set verbose level (optional level defaults to 1) |
 | -h | --help | display this help screen |
 
