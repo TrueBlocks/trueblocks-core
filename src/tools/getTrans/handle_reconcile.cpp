@@ -20,13 +20,14 @@ bool visitReconciliation(CTransaction& trans, void* data) {
     bool isText = (expContext().exportFmt & (TXT1 | CSV1));
 
     CAccountName name;
+    name.address = opt->reconcile;
     opt->getNamedAccount(name, opt->reconcile);
     CReconciliation prev;
+    prev.assetAddr = opt->reconcile;
     prev.endBal = trans.blockNumber == 0 ? 0 : getBalanceAt(opt->reconcile, trans.blockNumber - 1);
     CReconciliation eth(trans.blockNumber, trans.transactionIndex, trans.timestamp);
     eth.reconcileEth(prev, trans.blockNumber + 1, &trans, name);
     eth.spotPrice = getPriceInUsd(trans.blockNumber, eth.priceSource);
-    trans.statements.push_back(eth);
 
     if (isText) {
         cout << trim(eth.Format(expContext().fmtMap["format"]), '\t') << endl;

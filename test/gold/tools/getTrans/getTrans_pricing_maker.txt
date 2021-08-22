@@ -1,0 +1,107 @@
+getTrans argc: 8 [1:5218355.232] [2:--reconcile] [3:0x7fd5c846121bed2e2e46a55f992e35d85da7ffad] [4:--fmt] [5:json] [6:--verbose] [7:10] 
+getTrans 5218355.232 --reconcile 0x7fd5c846121bed2e2e46a55f992e35d85da7ffad --fmt json --verbose 10 
+{ "data": [
+TIME ~ CLOCK - : 4-----blockNum.txid5218355232
+TIME ~ CLOCK - : 4-----not from cache
+TIME ~ CLOCK - : 4-----blockNumber.txid: 5218355	232
+TIME ~ CLOCK - : 4-----blockNumber.txid: 5218355	232
+TIME ~ CLOCK - : 8------Entering loadNames...
+TIME ~ CLOCK - : 8------Reading names from binary cache
+TIME ~ CLOCK - : 4-----Trial balance: regular
+TIME ~ CLOCK - : 4-----  hash: 0x4973ab1d7be0aa2823946359bbea1831f10ceaa096a4fce9c20b5658cc237f33
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  prevBal:       1259925280741022040
+TIME ~ CLOCK - : 4-----  begBal:        1259925280741022040
+TIME ~ CLOCK - : 4-----  begBalDiff:    0
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 8------  amountIn:      0
+TIME ~ CLOCK - : 8------  internalIn:    0
+TIME ~ CLOCK - : 8------  slfDstrctIn:   0
+TIME ~ CLOCK - : 8------  minBRwdIn:     0
+TIME ~ CLOCK - : 8------  minNRwdIn:     0
+TIME ~ CLOCK - : 8------  minTxFeeIn:    0
+TIME ~ CLOCK - : 8------  minURwdIn:     0
+TIME ~ CLOCK - : 8------  prefundIn:     0
+TIME ~ CLOCK - : 4-----  totalIn:       0
+TIME ~ CLOCK - : 8------  amountOut:     0
+TIME ~ CLOCK - : 8------  internalOut:   0
+TIME ~ CLOCK - : 8------  slfDstrctOt:   0
+TIME ~ CLOCK - : 8------  gasCostOut:    214832000000000
+TIME ~ CLOCK - : 4-----  totalOut:      214832000000000
+TIME ~ CLOCK - : 4-----  amountNet:     -214832000000000
+TIME ~ CLOCK - : 4-----  endBal:        1259710448741022040
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  endBalCalc:    1259710448741022040
+TIME ~ CLOCK - : 4-----  endBalDiff:    0
+TIME ~ CLOCK - : 4-----  regular-recon: true
+TIME ~ CLOCK - : 4-----Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 5218355 prior to its deployment 10042267
+
+level: 1
+readOffset: 0
+objectStart: 0
+params.size: 2
+  0: bytes32 val_0 = <>
+  1: bool val_1 = <>
+dataArray.size: 2
+  0 (0x000) 0000000000000000...000000000000002993a384ff8db78000 <=o <-r
+  1 (0x020) 0000000000000000...00000000000000000000000000000001
+
+==================================================
+params.size: 2
+  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000002993a384ff8db78000
+  1: bool val_1 = <>
+
+level: 1
+readOffset: 1
+objectStart: 0
+params.size: 2
+  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000002993a384ff8db78000
+  1: bool val_1 = <>
+dataArray.size: 2
+  0 (0x000) 0000000000000000...000000000000002993a384ff8db78000 <=o
+  1 (0x020) 0000000000000000...00000000000000000000000000000001 <-r
+
+==================================================
+params.size: 2
+  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000002993a384ff8db78000
+  1: bool val_1 = true
+params.size: 2
+  0: bytes32 val_0 = 0x00000000000000000000000000000000000000000000002993a384ff8db78000
+  1: bool val_1 = true
+==================================================
+
+  {
+    "blockNumber": 5218355,
+    "transactionIndex": 232,
+    "timestamp": 1520510761,
+    "assetAddr": "0x7fd5c846121bed2e2e46a55f992e35d85da7ffad",
+    "assetSymbol": "WEI",
+    "decimals": 18,
+    "prevBlk": 0,
+    "prevBlkBal": "1259925280741022040",
+    "begBal": "1259925280741022040",
+    "endBal": "1259710448741022040",
+    "amountIn": "",
+    "internalIn": "",
+    "selfDestructIn": "",
+    "minerBaseRewardIn": "",
+    "minerNephewRewardIn": "",
+    "minerTxFeeIn": "",
+    "minerUncleRewardIn": "",
+    "prefundIn": "",
+    "amountOut": "",
+    "internalOut": "",
+    "selfDestructOut": "",
+    "gasCostOut": "214832000000000",
+    "reconciliationType": "regular",
+    "spotPrice": 766.95000,
+    "priceSource": "maker",
+    "begBalDiff": "",
+    "endBalCalc": "1259710448741022040",
+    "endBalDiff": "",
+    "totalIn": "",
+    "totalOut": "214832000000000",
+    "totalOutLessGas": "",
+    "amountNet": "-214832000000000",
+    "reconciled": true
+  }] }

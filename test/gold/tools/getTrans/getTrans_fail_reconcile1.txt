@@ -1,5 +1,5 @@
-getTrans argc: 6 [1:0x8699f14af8aca02073f3008099526a6e77f724bee280e5e3c2fa64b589be9a63] [2:--fmt] [3:json] [4:--reconcile] [5:0x12] 
-getTrans 0x8699f14af8aca02073f3008099526a6e77f724bee280e5e3c2fa64b589be9a63 --fmt json --reconcile 0x12 
+getTrans argc: 6 [1:0x8699f14af8aca02073f3008099526a6e77f724bee280e5e3c2fa64b589be9a63] [2:--reconcile] [3:0x12] [4:--fmt] [5:json] 
+getTrans 0x8699f14af8aca02073f3008099526a6e77f724bee280e5e3c2fa64b589be9a63 --reconcile 0x12 --fmt json 
 
   The provided value (0x12) is not a properly formatted address. Quitting...
 
