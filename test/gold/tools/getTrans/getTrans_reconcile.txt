@@ -1,0 +1,98 @@
+getTrans argc: 6 [1:0x8699f14af8aca02073f3008099526a6e77f724bee280e5e3c2fa64b589be9a63] [2:--fmt] [3:json] [4:--reconcile] [5:0xf503017d7baf7fbc0fff7492b751025c6a78179b] 
+getTrans 0x8699f14af8aca02073f3008099526a6e77f724bee280e5e3c2fa64b589be9a63 --fmt json --reconcile 0xf503017d7baf7fbc0fff7492b751025c6a78179b 
+{ "data": [
+
+level: 1
+readOffset: 0
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = <>
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...000000000021f86f5a4a55701856269f <=o <-r
+  1 (0x020) 0000000000000000...000000000000046ea141427d56fa74ec
+  2 (0x040) 0000000000000000...00000000000000000000000060d4930b
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 41067753029733168161629855
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+
+level: 1
+readOffset: 1
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = 41067753029733168161629855
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...000000000021f86f5a4a55701856269f <=o
+  1 (0x020) 0000000000000000...000000000000046ea141427d56fa74ec <-r
+  2 (0x040) 0000000000000000...00000000000000000000000060d4930b
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 41067753029733168161629855
+  1: uint112 _reserve1 = 20930227421206321722604
+  2: uint32 _blockTimestampLast = <>
+
+level: 1
+readOffset: 2
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = 41067753029733168161629855
+  1: uint112 _reserve1 = 20930227421206321722604
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...000000000021f86f5a4a55701856269f <=o
+  1 (0x020) 0000000000000000...000000000000046ea141427d56fa74ec
+  2 (0x040) 0000000000000000...00000000000000000000000060d4930b <-r
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 41067753029733168161629855
+  1: uint112 _reserve1 = 20930227421206321722604
+  2: uint32 _blockTimestampLast = 1624544011
+params.size: 3
+  0: uint112 _reserve0 = 41067753029733168161629855
+  1: uint112 _reserve1 = 20930227421206321722604
+  2: uint32 _blockTimestampLast = 1624544011
+==================================================
+
+  {
+    "blockNumber": 12697303,
+    "transactionIndex": 99,
+    "timestamp": 1624544065,
+    "assetAddr": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+    "assetSymbol": "WEI",
+    "decimals": 18,
+    "prevBlk": 0,
+    "prevBlkBal": "31419034761192445316",
+    "begBal": "31419034761192445316",
+    "endBal": "31419034761192445316",
+    "amountIn": "",
+    "internalIn": "",
+    "selfDestructIn": "",
+    "minerBaseRewardIn": "",
+    "minerNephewRewardIn": "",
+    "minerTxFeeIn": "",
+    "minerUncleRewardIn": "",
+    "prefundIn": "",
+    "amountOut": "",
+    "internalOut": "",
+    "selfDestructOut": "",
+    "gasCostOut": "",
+    "reconciliationType": "regular",
+    "spotPrice": 1962.12646,
+    "priceSource": "uniswap",
+    "begBalDiff": "",
+    "endBalCalc": "31419034761192445316",
+    "endBalDiff": "",
+    "totalIn": "",
+    "totalOut": "",
+    "totalOutLessGas": "",
+    "amountNet": "",
+    "reconciled": true
+  }] }

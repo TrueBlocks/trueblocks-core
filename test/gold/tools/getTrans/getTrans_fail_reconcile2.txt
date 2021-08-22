@@ -1,7 +1,7 @@
-getTrans argc: 5 [1:2222222.0] [2:2332332.0] [3:--fmt] [4:junk] 
-getTrans 2222222.0 2332332.0 --fmt junk 
+getTrans argc: 7 [1:0x8699f14af8aca02073f3008099526a6e77f724bee280e5e3c2fa64b589be9a63] [2:--fmt] [3:json] [4:--reconcile] [5:0xf503017d7baf7fbc0fff7492b751025c6a78179b] [6:--cache] 
+getTrans 0x8699f14af8aca02073f3008099526a6e77f724bee280e5e3c2fa64b589be9a63 --fmt json --reconcile 0xf503017d7baf7fbc0fff7492b751025c6a78179b --cache 
 
-  Export format (junk) must be one of [ json | txt | csv | api ]. Quitting...
+  Do not use other options with the --reconcile option. Quitting...
 
   Usage:    getTrans [-a|-t|-u|-o|-r|-v|-h] <tx_id> [tx_id...]  
   Purpose:  Retrieve one or more transactions from the chain or local cache.

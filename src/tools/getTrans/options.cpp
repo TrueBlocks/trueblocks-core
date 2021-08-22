@@ -25,7 +25,7 @@ static const COption params[] = {
     COption("trace", "t", "", OPT_SWITCH, "include the transaction's traces in the results"),
     COption("uniq", "u", "", OPT_SWITCH, "display a list of uniq addresses found in the transaction instead of the underlying data"),  // NOLINT
     COption("cache", "o", "", OPT_SWITCH, "force the results of the query into the tx cache (and the trace cache if applicable)"),  // NOLINT
-    COption("reconcile", "r", "<string>", OPT_FLAG, "reconcile the transaction as per the provided address"),
+    COption("reconcile", "r", "<address>", OPT_FLAG, "reconcile the transaction as per the provided address"),
     COption("", "", "", OPT_DESCRIPTION, "Retrieve one or more transactions from the chain or local cache."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -88,14 +88,12 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST("reconcile", reconcile, (reconcile == ""));
     // END_DEBUG_DISPLAY
 
-    bool isReconcile = !reconcile.empty();
-    if (isReconcile) {
-        if (cache || trace || articulate)
-            return usage("Do not use other options with the --reconcile option.");
-    }
-
     if (Mocked("transactions"))
         return false;
+
+    bool isReconcile = !reconcile.empty();
+    if (isReconcile && (cache || trace || articulate))
+        return usage("Do not use other options with the --reconcile option.");
 
     // Data wrangling
     if (transList.empty())

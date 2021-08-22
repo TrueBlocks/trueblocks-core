@@ -20,7 +20,7 @@ The `--trace` option attachs an array transaction traces to the output (if the n
 | -t | --trace | include the transaction's traces in the results |
 | -u | --uniq | display a list of uniq addresses found in the transaction instead of the underlying data |
 | -o | --cache | force the results of the query into the tx cache (and the trace cache if applicable) |
-| -r | --reconcile &lt;str&gt; | reconcile the transaction as per the provided address |
+| -r | --reconcile &lt;address&gt; | reconcile the transaction as per the provided address |
 | -v | --verbose | set verbose level (optional level defaults to 1) |
 | -h | --help | display this help screen |
 

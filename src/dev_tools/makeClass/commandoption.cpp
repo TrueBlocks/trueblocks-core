@@ -534,7 +534,8 @@ CCommandOption::CCommandOption(const string_q& line) {
     if (def_val.empty() && !generate.empty()) {
         if (data_type == "<boolean>") {
             def_val = "false";
-        } else if (data_type == "<string>" || data_type == "<path>" || contains(data_type, "enum")) {
+        } else if (data_type == "<address>" || data_type == "<string>" || data_type == "<path>" ||
+                   contains(data_type, "enum")) {
             def_val = "\"\"";
         } else {
             def_val = "NOPOS";
@@ -560,6 +561,7 @@ CCommandOption::CCommandOption(const string_q& line) {
     isUint32 = contains(data_type, "uint32");
     isUint64 = contains(data_type, "uint64");
     isDouble = contains(data_type, "double");
+    isAddress = contains(data_type, "address");
     isNote = option_type == "note";
     isErr = option_type == "error";
 
@@ -570,6 +572,7 @@ CCommandOption::CCommandOption(const string_q& line) {
     replace(real_type, "string", "string_q");
     replace(real_type, "uint32", "uint32_t");
     replace(real_type, "uint64", "uint64_t");
+    replace(real_type, "address", "address_t");
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -591,7 +594,7 @@ void CCommandOption::verifyOptions(CStringArray& warnings) {
     // Check valid data types
     CStringArray validTypes = {
         "<addr>",   "<blknum>", "<pair>",    "<path>", "<range>",  "<string>",
-        "<uint32>", "<uint64>", "<boolean>", "<path>", "<double>",
+        "<uint32>", "<uint64>", "<boolean>", "<path>", "<double>", "<address>",
     };
 
     bool valid_type = false;
