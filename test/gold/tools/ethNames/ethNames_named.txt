@@ -5,6 +5,7 @@ ethNames --named --fmt txt --no_header
 50-Tokens:ERC20	0x0000000000004946c0e9f43f4dee607b0ef1fa1c	1inch.exchange v2	CHI		18
 50-Tokens:ERC20	0x0000000000085d4780b73119b644ae5ecd22b376	TrueUSD	TUSD		18
 34-ENS	0x00000000000c2e074ec69a0dfb2997ba6c7d2e1e	ENS: Registry with Fallback
+30-Contracts	0x0000000000a84fe7f5d858c8a22121c975ff0b42	Poster
 50-Tokens:ERC20	0x0000000000b3f879cb30fe243b4dfee438691c04	Gastoken.io	GST2		2
 30-Contracts	0x0000000000c90bc353314b6911180ed7e06019a9	Arbitrage Bot
 30-Contracts	0x0000000006adbd7c01bc0738cdbfc3932600ad63	1inch Exchange
@@ -200,4 +201,3 @@ ethNames --named --fmt txt --no_header
 31-Gitcoin:Grants	0x04335c092bc8c06f48f9def5e3285140138fbbfc	Grant 1496 Optimistic Casino
 90-Individuals:Gitcoin Grants	0x04373aac4df8be1696be816b97f4ad8bcd93beb7	Name 0x04373aac
 91-Early:Addresses	0x0444f06a52320af2df7e60d1923080002838ce93	Resetponzi
-50-Tokens:ERC20	0x0448da445a2ed1262890b42fb6d578c59ec470d5	ShibaRise	ShibaRise		9

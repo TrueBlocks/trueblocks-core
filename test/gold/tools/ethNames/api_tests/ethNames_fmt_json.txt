@@ -82,6 +82,15 @@
       "description": ""
     },
     {
+      "tags": "30-Contracts",
+      "address": "0x0000000000a84fe7f5d858c8a22121c975ff0b42",
+      "name": "Poster",
+      "symbol": "",
+      "source": "",
+      "decimals": 0,
+      "description": ""
+    },
+    {
       "tags": "50-Tokens:ERC20",
       "address": "0x0000000000b3f879cb30fe243b4dfee438691c04",
       "name": "Gastoken.io",
@@ -1796,15 +1805,6 @@
       "address": "0x041b10db04de10c1005029ce498d09446e935316",
       "name": "Green INU",
       "symbol": "GINUX",
-      "source": "On chain",
-      "decimals": 18,
-      "description": ""
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x041d37f02b4219e5a038b22c1f69e7e55f3a82d8",
-      "name": "Marshmallow Governance",
-      "symbol": "MGT",
       "source": "On chain",
       "decimals": 18,
       "description": ""

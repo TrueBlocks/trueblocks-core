@@ -46,6 +46,15 @@
       "description": ""
     },
     {
+      "tags": "30-Contracts",
+      "address": "0x0000000000a84fe7f5d858c8a22121c975ff0b42",
+      "name": "Poster",
+      "symbol": "",
+      "source": "",
+      "decimals": 0,
+      "description": ""
+    },
+    {
       "tags": "50-Tokens:ERC20",
       "address": "0x0000000000b3f879cb30fe243b4dfee438691c04",
       "name": "Gastoken.io",
@@ -1798,15 +1807,6 @@
       "symbol": "",
       "source": "EtherScan.io",
       "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x0448da445a2ed1262890b42fb6d578c59ec470d5",
-      "name": "ShibaRise",
-      "symbol": "ShibaRise",
-      "source": "On chain",
-      "decimals": 9,
       "description": ""
     }
   ],

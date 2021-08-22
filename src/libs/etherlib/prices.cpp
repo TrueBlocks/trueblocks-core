@@ -157,6 +157,20 @@ double getPrice_UsdPerEth(blknum_t bn, string_q& priceSource) {
 
 //---------------------------------------------------------------------------
 double getPrice_UsdPerTok(blknum_t bn, string_q& priceSource, const address_t& tok) {
+    static const CStringArray stableCoins = {
+        dai,
+        "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",  // USDC
+        "0xdAC17F958D2ee523a2206206994597C13D831ec7",  // Tether
+        "0xdac17f958d2ee523a2206206994597c13d831ec7",  // USDT
+        sai,
+    };
+    for (auto coin : stableCoins) {
+        if (coin == tok) {
+            priceSource = "stable-coin";
+            return 1.;  // Short curcuit...not accuate, but fast
+        }
+    }
+
     double ethPerTok = getPrice_EthPerTok(bn, priceSource, tok);
     if (ethPerTok == 0.)
         return 0.;
@@ -166,20 +180,6 @@ double getPrice_UsdPerTok(blknum_t bn, string_q& priceSource, const address_t& t
 
 //---------------------------------------------------------------------------
 double getPrice_EthPerTok(blknum_t bn, string_q& priceSource, const address_t& tok) {
-    // static const CStringArray stableCoins = {
-    //     dai,
-    //     "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",  // USDC
-    //     "0xdAC17F958D2ee523a2206206994597C13D831ec7",  // Tether
-    //     "0xdac17f958d2ee523a2206206994597c13d831ec7",  // USDT
-    //     sai,
-    // };
-    // for (auto coin : stableCoins) {
-    //     if (coin == tok) {
-    //         priceSource = "stable-coin";
-    //         return 1.;  // Short curcuit...not accuate, but fast
-    //     }
-    // }
-
     CUniPair thePair(wEth, tok);
     if (thePair.findPair()) {
         double price;

@@ -1203,6 +1203,14 @@ ethNames 0x1 --fmt api
     "decimals": 18
   },
   {
+    "tags": "50-Tokens:ERC20",
+    "address": "0x1482295df16e7761d128b9823b61785d43ca038b",
+    "name": "The Employment Commons Work Token",
+    "symbol": "WORK",
+    "source": "On chain",
+    "decimals": 18
+  },
+  {
     "tags": "91-Early:Addresses",
     "address": "0x1482662691085c305f329c111e5b79ecb226ceb8",
     "name": "Wallet_id177_cnt8_3mo",
@@ -1401,14 +1409,6 @@ ethNames 0x1 --fmt api
     "address": "0x156a5f53a48dd8430dc0f65501be577b27c5462c",
     "name": "Big Shiba Inu",
     "symbol": "BSI",
-    "source": "On chain",
-    "decimals": 18
-  },
-  {
-    "tags": "50-Tokens:ERC20",
-    "address": "0x156b36ec68fdbf84a925230ba96cb1ca4c4bde45",
-    "name": "Wrapped MNT Token",
-    "symbol": "MNT",
     "source": "On chain",
     "decimals": 18
   }], "types": [
