@@ -474,7 +474,7 @@ void COptions::Init(void) {
     fileRange = make_pair(NOPOS, NOPOS);
     allMonitors.clear();
     possibles.clear();
-    slowQuery = false;
+    slowQueries = 0;
 
     // Establish folders. This may be redundant, but it's cheap.
     establishMonitorFolders();

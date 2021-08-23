@@ -98,8 +98,8 @@ int main(int argc, const char* argv[]) {
         }
         os << ", \"accountedFor\": " << options.allMonitors[0] << endl;
     }
-    if (!isTestMode() && options.slowQuery) {
-        os << ", \"slowQuery\": true" << endl;
+    if (!isTestMode() && options.slowQueries) {
+        os << ", \"slowQueries\": true" << endl;
     }
     expContext().fmtMap["meta"] += os.str();
 
@@ -151,8 +151,7 @@ void prog_Log(CTraverser* trav, void* data) {
     if (!trav->logging)
         return;
 
-#define REPORT_FREQ 5
-    if (trav->nProcessed % REPORT_FREQ)
+    if (trav->nProcessed % opt->reportFreq())
         return;
 
     blknum_t prog = opt->first_record + trav->nProcessed;
@@ -199,7 +198,7 @@ bool loadTx_Func(CTraverser* trav, void* data) {
 
     } else {
         trav->readStatus = "Extracting";
-        opt->slowQuery = true;
+        opt->slowQueries++;
         dirty = true;
         if (trav->app->blk == 0) {
             address_t addr = opt->prefundAddrMap[trav->app->txid];

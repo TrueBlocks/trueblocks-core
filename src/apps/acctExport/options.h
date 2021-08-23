@@ -79,7 +79,7 @@ class COptions : public CAbiOptions {
 
     string_q className;
     CBlockProgress bp;
-    bool slowQuery;
+    size_t slowQueries;
 
     COptions(void);
     ~COptions(void);
@@ -114,6 +114,10 @@ class COptions : public CAbiOptions {
     bool isReconciled(CTraverser* trav) const;
     void cacheIfReconciled(CTraverser* trav, bool isNew) const;
     bool token_list_from_logs(CAccountNameMap& tokenList, const CTraverser* trav);
+
+    size_t reportFreq(void) const {
+        return slowQueries > 0 ? 1 : 7;
+    }
 };
 
 //--------------------------------------------------------------------------------

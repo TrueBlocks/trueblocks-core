@@ -70,7 +70,7 @@ bool acct_Display(CTraverser* trav, void* data) {
     }
 
     prog_Log(trav, data);
-    return !shouldQuit();
+    return opt->slowQueries < 13 && !shouldQuit();
 }
 
 //-----------------------------------------------------------------------
@@ -116,7 +116,7 @@ bool COptions::process_reconciliation(CTraverser* trav) {
     }
 
     trav->readStatus = "Reconciling";
-    slowQuery = true;
+    slowQueries++;
 
     blknum_t nextAppBlk = trav->index < monApps.size() - 1 ? monApps[trav->index + 1].blk : NOPOS;
     blknum_t prevAppBlk = trav->index > 0 ? monApps[trav->index - 1].blk : 0;
