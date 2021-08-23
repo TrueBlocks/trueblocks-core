@@ -655,7 +655,7 @@ string_q nextReconciliationChunk_custom(const string_q& fieldIn, const void* dat
 bool CReconciliation::readBackLevel(CArchive& archive) {
     bool done = false;
     // EXISTING_CODE
-    if (m_schema < getVersionNum(0, 11, 7)) {
+    if (m_schema < getVersionNum(0, 11, 8)) {
         // This class has a complicated history, so we hide back level gunk in a single function below
         return readBackLevel_old(archive);
     }
@@ -1155,7 +1155,7 @@ bool CReconciliation::readBackLevel_old(CArchive& archive) {
         archive >> reconciliationType;
         // archive >> reconTrail;
         archive >> unusedBool;  // reconciled;
-    } else if (m_schema < getVersionNum(0, 11, 7)) {
+    } else if (m_schema < getVersionNum(0, 11, 8)) {
         archive >> blockNumber;
         archive >> transactionIndex;
         archive >> timestamp;

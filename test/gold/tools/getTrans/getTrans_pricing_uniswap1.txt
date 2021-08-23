@@ -121,6 +121,8 @@ params.size: 3
   2: uint32 _blockTimestampLast = 1597714516
 ==================================================
 
+TIME ~ CLOCK - : 4-----r1: 0x6b175474e89094c44da98b954eedeac495271d0f r2: 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TIME ~ CLOCK - : 4-----reserve1: 5.82602e+06 reserve2: 13533.8 priceOut: 430.478 reversed: 0
   {
     "blockNumber": 10681057,
     "transactionIndex": 170,
@@ -246,6 +248,8 @@ params.size: 3
   2: uint32 _blockTimestampLast = 1596729929
 ==================================================
 
+TIME ~ CLOCK - : 4-----r1: 0x6b175474e89094c44da98b954eedeac495271d0f r2: 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TIME ~ CLOCK - : 4-----reserve1: 6.02951e+06 reserve2: 15218 priceOut: 396.208 reversed: 0
 ,  {
     "blockNumber": 10607241,
     "transactionIndex": 278,

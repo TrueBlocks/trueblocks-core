@@ -158,7 +158,7 @@ totalOutLessGas     	1035	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
 amountNet           	1036	0	545259568	T_INT256 TS_NUMERAL TS_BIGNUM
 reconciled          	1037	0	8388628	T_BOOL TS_NUMERAL
 {
-  "schema": 11007,
+  "schema": 11008,
   "deleted": false,
   "showing": true,
   "cname": "Reconciliation",

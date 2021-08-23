@@ -88,7 +88,10 @@ bool COptions::process_reconciliation(CTraverser* trav) {
             if (isReconciled(trav)) {
                 bool backLevel = false;
                 for (auto& statement : trav->trans.statements) {
-                    backLevel = backLevel || (statement.m_schema < getVersionNum(0, 11, 7));
+                    // At version 0.11.8, we finally got pricing of reconcilations correct. We didn't
+                    // want to add an upgrade of reconcilations to the migration, so we do it here
+                    // but only when the user reads an older file
+                    backLevel = backLevel || (statement.m_schema < getVersionNum(0, 11, 8));
                     CAccountName tokenName;
                     if (contains(statement.assetSymbol, "reverted"))
                         statement.assetSymbol = "";

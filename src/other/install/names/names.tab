@@ -2179,6 +2179,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 90-Individuals:Gitcoin Grants	0x3401e897bad3ff5489dae5201b88b14a6019e919	sharathchandangoudar		Gitcoin Website			false	false	false	false	false	false
 50-Tokens:ERC20	0x3408b204d67ba2dbca13b9c50e8a45701d8a1ca6	Sendvibe	SVB	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x340d2bde5eb28c1eed91b2f790723e3b160613b7	BLOCKv Token	VEE	On chain	18	Create and Public Digital virtual goods on the blockchain	false	false	false	true	true	false
+30-Contracts	0x340d693ed55d7ba167d184ea76ea2fd092a35bdc	Uphold.com					false	false	false	false	false	false
 91-Early:Addresses	0x341e790174e3a4d35b65fdc067b6b5634a61caea	IAmTheFork_Contract		EtherScan.io			false	false	false	true	false	false
 30-Contracts	0x342e62732b76875da9305083ea8ae63125a4e667	Hacker Gold Sender		TrueBlocks.io			false	false	false	false	false	false
 50-Tokens:ERC20	0x34364bee11607b1963d66bca665fde93fca666a8	YOU Chain	YOU	On chain	18		false	false	false	true	true	false
@@ -3663,6 +3664,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x585c2cf94c41b528ec7329cbc3cde3c4f8d268db	STETHDaiRebalancingSetToken	STETHDai	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x585cf9be62a8767c78f3fc800f30e4dd5fbbf84b	LOAN	Uniloans	On chain	18		false	false	false	true	true	false
 90-Individuals:Kickback	0x586b0e631a2d0c7803a375cef67aec6e8139d437	cspannos		https://kickback.events/			false	false	false	false	false	false
+30-Contracts	0x587044b74004e3d5ef2d453b7f8d198d9e4cb558	Bancor: Converter #124					false	false	false	true	false	false
 50-Tokens:ERC20	0x5874548c51822da642661b235e101d6d636b6feb	MESSE Coin	MESSE	On chain	18		false	false	false	true	true	false
 90-Individuals:DevCon2	0x587777871be1204a746a540fb935d832c51c79c5	Stefan George		DevCon2 Token Contract			false	false	false	false	false	false
 50-Tokens:ERC20	0x587a07ce5c265a38dd6d42def1566ba73eeb06f5	Yam.finance	YAMF				false	false	false	true	false	false
@@ -5998,6 +6000,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x930ed81ad809603baf727117385d01f04354612e	SOLARITE	SOLARITE	On chain	18		false	false	false	true	true	false
 30-Contracts:Humanity DAO	0x9312b86c153ed78abdbfdf47076c550171fdd7f6	heavycrag		https://www.humanitydao.org/humans			false	false	false	false	false	false
 50-Tokens:ERC20	0x9314941c11d6dee1d7bf93113eb74d4718949f3b	Uniswap V2	UNI-V2	On chain	18		false	false	false	true	true	false
+31-Gitcoin:Workstreams	0x931896a8a9313f622a2afca76d1471b97955e551	dGrants					false	false	false	true	false	false
 50-Tokens:ERC20	0x93190dbce9b9bd4aa546270a8d1d65905b5fdd28	DAPSTOKEN	DAPS	On chain	18	The DAPS project plans to create the world's first fully private blockchain that also maintains the 'Trustless' structure of traditional public blockchains.	false	false	false	true	true	false
 30-Contracts:Set Protocol	0x931a809658b677390c80a443415d16f4fcd37d1e	Rebalancing Helper Library		https://github.com/SetProtocol/set-protocol-contracts			false	false	false	true	false	false
 30-Contracts	0x932348df588923ba3f1fd50593b22c4e2a287919	DEX.AG		0xTracker			false	false	false	true	false	false
@@ -7899,6 +7902,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin:Grants	0xc21b25479ce9fed4a5bb9c66833e33c50b0e044a	Grant 1331 Boost Blocks by Broke		https://gitcoin.co/grants/1331/boost-blocks-by-broke			false	false	false	false	false	false
 90-Individuals:Gitcoin Grants	0xc2287a3184e1920cd3417ecc37b3a2d7739b00ac	xyony		Gitcoin Website			false	false	false	false	false	false
 50-Tokens:ERC20	0xc22b30e4cce6b78aaaadae91e44e73593929a3e9	RAC	RAC	On chain	18		false	false	false	true	true	false
+31-Gitcoin:Workstreams	0xc23da3ca9300571b9cf43298228353cbb3e1b4c0	MMM					false	false	false	true	false	false
 31-Gitcoin:Grants	0xc23f65b2c9869482204b2af68f1c6002983c7fc3	Grant 1232 Bullionschain		https://gitcoin.co/grants/1232/bullionschain			false	false	false	false	false	false
 30-Contracts:Humanity DAO	0xc2569af22883c23ed4bc423051dfb8afa8808ba1	myxboxbroke		https://www.humanitydao.org/humans			false	false	false	false	false	false
 50-Tokens:ERC20	0xc25a3a3b969415c80451098fa907ec722572917f	Curve.fi DAI/USDC/USDT/sUSD	crvPlain3andSUSD	On chain	18		false	false	false	true	true	false
@@ -8590,6 +8594,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0xd44bb6663936cab1310584a277f7daa6943d4904	Winco	WCO	On chain	8		false	false	false	true	true	false
 90-Individuals:Kickback	0xd44d3947d23ec6a7908a8b777614cf24860715e9	gm		https://kickback.events/			false	false	false	false	false	false
 50-Tokens:ERC20	0xd45247c07379d94904e0a87b4481f0a1ddfa0c64	Buggyra Coin Zero	BCZERO	On chain	18	BCZERO will act as the payment platform for racing series in China, India, Europe, South America and for Sponsorships and Fans.	false	false	false	true	true	false
+31-Gitcoin:Workstreams	0xd4567069c5a1c1fc8261d8ff5c0b1d98f069cf47	FDD Workstream					false	false	false	true	false	false
 50-Tokens:ERC20	0xd4568b270962f0e416a135fe89b8365907d35ece	水贝	SBTC	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0xd45f89c83689c58ec649ae62f8bb2737a1c53200	Ethereum Pro	ETHPRO	On chain	18		false	false	false	true	true	false
 31-Gitcoin:Grants	0xd461cf004eda0ddb0028b831b62bf38b3a6d1e5a	Grant 0461 Aleph.im - Decentralized Open-source Cloud Platform		https://gitcoin.co/grants/461/alephim-decentralized-open-source-cloud-platform		https://aleph.im	false	false	false	false	false	false

@@ -144,6 +144,8 @@ bool CUniPair::getPrice(blknum_t bn, string_q& priceSource, double& priceOut) {
         priceOut = reserve1 / reserve2;
     }
     priceSource = "uniswap";
+    LOG4("r1: ", r1, " r2: ", r2);
+    LOG4("reserve1: ", reserve1, " reserve2: ", reserve2, " priceOut: ", priceOut, " reversed: ", reversed);
     return true;
 }
 
@@ -162,23 +164,27 @@ double getPrice_UsdPerEth(blknum_t bn, string_q& priceSource) {
 double getPrice_UsdPerTok(blknum_t bn, string_q& priceSource, const address_t& tok) {
     static const CStringArray stableCoins = {
         dai,
-        "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",  // USDC
-        "0xdAC17F958D2ee523a2206206994597C13D831ec7",  // Tether
+        "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",  // USDC
+        "0xdac17f958d2ee523a2206206994597c13d831ec7",  // Tether
         "0xdac17f958d2ee523a2206206994597c13d831ec7",  // USDT
         sai,
     };
     for (auto coin : stableCoins) {
-        if (coin == tok) {
+        if (coin % tok) {
             priceSource = "stable-coin";
             return 1.;  // Short curcuit...not accuate, but fast
         }
     }
 
+    if (tok % wEth)
+        return getPrice_UsdPerEth(bn, priceSource);
+
     double ethPerTok = getPrice_EthPerTok(bn, priceSource, tok);
     if (ethPerTok == 0.)
         return 0.;
     double usdPerEth = getPrice_UsdPerEth(bn, priceSource);
-    return usdPerEth / ethPerTok;
+    LOG4("ethPerTok: ", ethPerTok, " usdPerEth: ", usdPerEth, " price: ", (usdPerEth * ethPerTok));
+    return usdPerEth * ethPerTok;
 }
 
 //---------------------------------------------------------------------------

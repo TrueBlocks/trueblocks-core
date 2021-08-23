@@ -61,6 +61,8 @@ params.size: 3
   2: uint32 _blockTimestampLast = 1592323295
 ==================================================
 
+TIME ~ CLOCK - : 4-----r1: 0x6b175474e89094c44da98b954eedeac495271d0f r2: 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TIME ~ CLOCK - : 4-----reserve1: 3.85861e+06 reserve2: 16688.7 priceOut: 231.211 reversed: 0
 TIME ~ CLOCK - : 4-----Trial balance: regular
 TIME ~ CLOCK - : 4-----  hash: 0xdfa263cb6a202c9f301944cbd8be76f8cdd97e1abb42f1ca1347bb3e31fafd00
 TIME ~ CLOCK - : 4-----  ------------------------------
@@ -148,6 +150,8 @@ params.size: 3
   2: uint32 _blockTimestampLast = 1592323295
 ==================================================
 
+TIME ~ CLOCK - : 4-----r1: 0x6b175474e89094c44da98b954eedeac495271d0f r2: 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TIME ~ CLOCK - : 4-----reserve1: 3.85861e+06 reserve2: 16688.7 priceOut: 231.211 reversed: 0
 TIME ~ CLOCK - : 4-----Trial balance: regular
 TIME ~ CLOCK - : 4-----  hash: 0x4bbabbb0cf842635caea3dcc46107ca3dbf88fcb096ae7feaabcd6c039cafa65
 TIME ~ CLOCK - : 4-----  ------------------------------
@@ -235,6 +239,8 @@ params.size: 3
   2: uint32 _blockTimestampLast = 1592343673
 ==================================================
 
+TIME ~ CLOCK - : 4-----r1: 0x6b175474e89094c44da98b954eedeac495271d0f r2: 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TIME ~ CLOCK - : 4-----reserve1: 3.87445e+06 reserve2: 16581.1 priceOut: 233.666 reversed: 0
 TIME ~ CLOCK - : 4-----Trial balance: regular
 TIME ~ CLOCK - : 4-----  hash: 0x2f83088fa87f6054779a5511ec4f6b64f1e773e9bd7ec97956d6e04910d59303
 TIME ~ CLOCK - : 4-----  ------------------------------
@@ -322,6 +328,8 @@ params.size: 3
   2: uint32 _blockTimestampLast = 1592344195
 ==================================================
 
+TIME ~ CLOCK - : 4-----r1: 0x6b175474e89094c44da98b954eedeac495271d0f r2: 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TIME ~ CLOCK - : 4-----reserve1: 3.87235e+06 reserve2: 16570.5 priceOut: 233.69 reversed: 0
 TIME ~ CLOCK - : 4-----Trial balance: regular
 TIME ~ CLOCK - : 4-----  hash: 0xc670a40b06e179b459f8bb7ae8e3d9cf985abb325b355ea2ea8b4822e66c1f55
 TIME ~ CLOCK - : 4-----  ------------------------------
@@ -409,6 +417,8 @@ params.size: 3
   2: uint32 _blockTimestampLast = 1592348626
 ==================================================
 
+TIME ~ CLOCK - : 4-----r1: 0x6b175474e89094c44da98b954eedeac495271d0f r2: 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TIME ~ CLOCK - : 4-----reserve1: 3.86856e+06 reserve2: 16588.1 priceOut: 233.213 reversed: 0
 TIME ~ CLOCK - : 4-----Trial balance: regular
 TIME ~ CLOCK - : 4-----  hash: 0x39654adb110500924d5693d1cff285e6a7196cfc1a7b833eeb7583df4efab098
 TIME ~ CLOCK - : 4-----  ------------------------------
@@ -523,6 +533,8 @@ params.size: 3
   2: uint32 _blockTimestampLast = 1592352354
 ==================================================
 
+TIME ~ CLOCK - : 4-----r1: 0x6b175474e89094c44da98b954eedeac495271d0f r2: 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TIME ~ CLOCK - : 4-----reserve1: 3.87183e+06 reserve2: 16572.1 priceOut: 233.636 reversed: 0
 TIME ~ CLOCK - : 4-----Trial balance: regular
 TIME ~ CLOCK - : 4-----  hash: 0xe60db84c0133325d44a41a0de0b5b41b56693437f098e4394a9608ea7d4398f7
 TIME ~ CLOCK - : 4-----  ------------------------------
@@ -610,6 +622,8 @@ params.size: 3
   2: uint32 _blockTimestampLast = 1592360598
 ==================================================
 
+TIME ~ CLOCK - : 4-----r1: 0x6b175474e89094c44da98b954eedeac495271d0f r2: 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TIME ~ CLOCK - : 4-----reserve1: 3.85647e+06 reserve2: 16638.6 priceOut: 231.778 reversed: 0
 TIME ~ CLOCK - : 4-----Trial balance: regular
 TIME ~ CLOCK - : 4-----  hash: 0x6e6bbba83b32bf9e0c42cb82433dfee65d47f287a5b7756cdc8f057ab879fbb3
 TIME ~ CLOCK - : 4-----  ------------------------------
@@ -697,6 +711,8 @@ params.size: 3
   2: uint32 _blockTimestampLast = 1592364804
 ==================================================
 
+TIME ~ CLOCK - : 4-----r1: 0x6b175474e89094c44da98b954eedeac495271d0f r2: 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TIME ~ CLOCK - : 4-----reserve1: 3.8512e+06 reserve2: 16660.9 priceOut: 231.152 reversed: 0
 TIME ~ CLOCK - : 4-----Trial balance: regular
 TIME ~ CLOCK - : 4-----  hash: 0xd7ded45b123006b183f73adbab5d58478e41dae2715ea6986a96fa954a6f15c5
 TIME ~ CLOCK - : 4-----  ------------------------------
@@ -784,6 +800,8 @@ params.size: 3
   2: uint32 _blockTimestampLast = 1592401806
 ==================================================
 
+TIME ~ CLOCK - : 4-----r1: 0x6b175474e89094c44da98b954eedeac495271d0f r2: 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TIME ~ CLOCK - : 4-----reserve1: 3.87391e+06 reserve2: 16667.9 priceOut: 232.418 reversed: 0
 TIME ~ CLOCK - : 4-----Trial balance: regular
 TIME ~ CLOCK - : 4-----  hash: 0x83e221d1132253c902bbc35126752031256640e01206573c4961f879055b97c5
 TIME ~ CLOCK - : 4-----  ------------------------------
@@ -871,6 +889,8 @@ params.size: 3
   2: uint32 _blockTimestampLast = 1592403238
 ==================================================
 
+TIME ~ CLOCK - : 4-----r1: 0x6b175474e89094c44da98b954eedeac495271d0f r2: 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TIME ~ CLOCK - : 4-----reserve1: 3.86035e+06 reserve2: 16726.6 priceOut: 230.791 reversed: 0
 TIME ~ CLOCK - : 4-----Trial balance: regular
 TIME ~ CLOCK - : 4-----  hash: 0xad8410eead2eb335e7ce3462d71023a1f73ad62521385154d583b8fd794fc92f
 TIME ~ CLOCK - : 4-----  ------------------------------
@@ -958,6 +978,8 @@ params.size: 3
   2: uint32 _blockTimestampLast = 1592487090
 ==================================================
 
+TIME ~ CLOCK - : 4-----r1: 0x6b175474e89094c44da98b954eedeac495271d0f r2: 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TIME ~ CLOCK - : 4-----reserve1: 3.85643e+06 reserve2: 16767.4 priceOut: 229.995 reversed: 0
 TIME ~ CLOCK - : 4-----Trial balance: regular
 TIME ~ CLOCK - : 4-----  hash: 0xf2efaad8c0842881ef6c04ee17ba6b4c308c1daa1cdc55d5afa6eefd2c9d43e2
 TIME ~ CLOCK - : 4-----  ------------------------------
@@ -1045,6 +1067,8 @@ params.size: 3
   2: uint32 _blockTimestampLast = 1592488908
 ==================================================
 
+TIME ~ CLOCK - : 4-----r1: 0x6b175474e89094c44da98b954eedeac495271d0f r2: 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TIME ~ CLOCK - : 4-----reserve1: 3.85658e+06 reserve2: 16766.8 priceOut: 230.013 reversed: 0
 TIME ~ CLOCK - : 4-----Trial balance: prevdiff-partial
 TIME ~ CLOCK - : 4-----  hash: 0x717d21a307469b781a8231f177fcb2b2a683d537ddeea2da6eec69f4b12b1c42
 TIME ~ CLOCK - : 4-----  ------------------------------
@@ -1186,6 +1210,8 @@ params.size: 3
   2: uint32 _blockTimestampLast = 1592491218
 ==================================================
 
+TIME ~ CLOCK - : 4-----r1: 0x6b175474e89094c44da98b954eedeac495271d0f r2: 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TIME ~ CLOCK - : 4-----reserve1: 3.85437e+06 reserve2: 16777.6 priceOut: 229.733 reversed: 0
 TIME ~ CLOCK - : 4-----Trial balance: partial-nextdiff
 TIME ~ CLOCK - : 4-----  hash: 0x1ff4ec58cb6aaa757257bc26b957501de46b0f3aa9708813a40626585cd52b41
 TIME ~ CLOCK - : 4-----  ------------------------------
@@ -1327,6 +1353,8 @@ params.size: 3
   2: uint32 _blockTimestampLast = 1592491218
 ==================================================
 
+TIME ~ CLOCK - : 4-----r1: 0x6b175474e89094c44da98b954eedeac495271d0f r2: 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TIME ~ CLOCK - : 4-----reserve1: 3.85437e+06 reserve2: 16777.6 priceOut: 229.733 reversed: 0
 TIME ~ CLOCK - : 4-----Trial balance: regular
 TIME ~ CLOCK - : 4-----  hash: 0x4c34ffa20e28f1e53254c6165e5a211665c9936c88cb6ee478015ddc0d5f89f7
 TIME ~ CLOCK - : 4-----  ------------------------------
@@ -1414,6 +1442,8 @@ params.size: 3
   2: uint32 _blockTimestampLast = 1592510296
 ==================================================
 
+TIME ~ CLOCK - : 4-----r1: 0x6b175474e89094c44da98b954eedeac495271d0f r2: 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TIME ~ CLOCK - : 4-----reserve1: 3.84404e+06 reserve2: 16869.7 priceOut: 227.867 reversed: 0
 TIME ~ CLOCK - : 4-----Trial balance: prevdiff-partial
 TIME ~ CLOCK - : 4-----  hash: 0x54df753f5a53c2ee4ef08e6b03e5e44cf1ceab98459b9bacd6f3c7aeee5d54d8
 TIME ~ CLOCK - : 4-----  ------------------------------
@@ -1555,6 +1585,8 @@ params.size: 3
   2: uint32 _blockTimestampLast = 1592514380
 ==================================================
 
+TIME ~ CLOCK - : 4-----r1: 0x6b175474e89094c44da98b954eedeac495271d0f r2: 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TIME ~ CLOCK - : 4-----reserve1: 3.82606e+06 reserve2: 16950.2 priceOut: 225.723 reversed: 0
 TIME ~ CLOCK - : 4-----Trial balance: partial-nextdiff
 TIME ~ CLOCK - : 4-----  hash: 0x845ee9238e7b0c4507cb5998ea859666498c8bea1ccd5fc6633631ce962f3959
 TIME ~ CLOCK - : 4-----  ------------------------------
@@ -1696,6 +1728,8 @@ params.size: 3
   2: uint32 _blockTimestampLast = 1592514380
 ==================================================
 
+TIME ~ CLOCK - : 4-----r1: 0x6b175474e89094c44da98b954eedeac495271d0f r2: 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TIME ~ CLOCK - : 4-----reserve1: 3.82606e+06 reserve2: 16950.2 priceOut: 225.723 reversed: 0
 TIME ~ CLOCK - : 4-----Trial balance: regular
 TIME ~ CLOCK - : 4-----  hash: 0x6ad90f7ebfa375681129804ab2c525e3702312dfd1691ef26352bd8f0485b6ff
 TIME ~ CLOCK - : 4-----  ------------------------------
@@ -1810,6 +1844,8 @@ params.size: 3
   2: uint32 _blockTimestampLast = 1592515083
 ==================================================
 
+TIME ~ CLOCK - : 4-----r1: 0x6b175474e89094c44da98b954eedeac495271d0f r2: 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TIME ~ CLOCK - : 4-----reserve1: 3.82541e+06 reserve2: 16952.3 priceOut: 225.657 reversed: 0
 TIME ~ CLOCK - : 4-----Trial balance: regular
 TIME ~ CLOCK - : 4-----  hash: 0x9c888fac75ae127e51584ed32ac5b65283e61ad4eb5ef2947196f4469b785a8a
 TIME ~ CLOCK - : 4-----  ------------------------------
@@ -1897,6 +1933,8 @@ params.size: 3
   2: uint32 _blockTimestampLast = 1592515894
 ==================================================
 
+TIME ~ CLOCK - : 4-----r1: 0x6b175474e89094c44da98b954eedeac495271d0f r2: 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TIME ~ CLOCK - : 4-----reserve1: 3.82602e+06 reserve2: 16949.6 priceOut: 225.729 reversed: 0
 TIME ~ CLOCK - : 4-----Trial balance: prevdiff-partial
 TIME ~ CLOCK - : 4-----  hash: 0x510acf20070895b13a5e7fe050e4756a22c0f274ae7d6416a175a863c7cdcb23
 TIME ~ CLOCK - : 4-----  ------------------------------
@@ -2038,6 +2076,8 @@ params.size: 3
   2: uint32 _blockTimestampLast = 1592535123
 ==================================================
 
+TIME ~ CLOCK - : 4-----r1: 0x6b175474e89094c44da98b954eedeac495271d0f r2: 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TIME ~ CLOCK - : 4-----reserve1: 3.78407e+06 reserve2: 16694.9 priceOut: 226.66 reversed: 0
 TIME ~ CLOCK - : 4-----Trial balance: partial-nextdiff
 TIME ~ CLOCK - : 4-----  hash: 0x13cb17bca242f05bbff17e240a3e554c97888f850059ce3f40b845fe736043e6
 TIME ~ CLOCK - : 4-----  ------------------------------
@@ -2179,6 +2219,8 @@ params.size: 3
   2: uint32 _blockTimestampLast = 1592535123
 ==================================================
 
+TIME ~ CLOCK - : 4-----r1: 0x6b175474e89094c44da98b954eedeac495271d0f r2: 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TIME ~ CLOCK - : 4-----reserve1: 3.78407e+06 reserve2: 16694.9 priceOut: 226.66 reversed: 0
 TIME ~ CLOCK - : 4-----Trial balance: regular
 TIME ~ CLOCK - : 4-----  hash: 0x0e3bd37010ef2c371f26a6059e1cd22f7fbc9e009dc01896ce97ad636d914202
 TIME ~ CLOCK - : 4-----  ------------------------------
@@ -2266,4 +2308,6 @@ params.size: 3
   2: uint32 _blockTimestampLast = 1592576878
 ==================================================
 
+TIME ~ CLOCK - : 4-----r1: 0x6b175474e89094c44da98b954eedeac495271d0f r2: 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TIME ~ CLOCK - : 4-----reserve1: 3.81137e+06 reserve2: 16604.2 priceOut: 229.543 reversed: 0
 { "outputFilename": "--output_filename--" }
