@@ -48,6 +48,8 @@ void COptions::finishClean(CAccountName& account) {
                           contains(lTag, "55-defi"));
             account.tags = maybe ? (account.is_erc721 ? "50-Tokens:ERC721" : "50-Tokens:ERC20") : account.tags;
         }
+    } else {
+        account.tags = account.tags == "30-Contracts" ? "90-Individuals:Other" : account.tags;
     }
 
     if (contains(toLower(account.source), "etherscan"))
