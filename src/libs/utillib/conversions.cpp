@@ -409,6 +409,11 @@ bool isHash(const hash_t& hashIn) {
 }
 
 //--------------------------------------------------------------------------------
+bool isFourByte(const fourbyte_t& fourByteIn) {
+    return (fourByteIn.length() == 10 && isHexStr(fourByteIn));
+}
+
+//--------------------------------------------------------------------------------
 bool isUnsigned(const string_q& in) {
     // Empty string is not valid...
     if (in.empty())
