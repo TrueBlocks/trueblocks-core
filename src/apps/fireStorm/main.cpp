@@ -53,9 +53,13 @@ int main(int argc, const char* argv[]) {
             }
 
             if (options.local) {
-                // replace(url, "https://etherscan.io/block/", "http://localhost:3002/explorer/blocks/");
-                // replace(url, "https://etherscan.io/tx/", "http://localhost:3002/transactions/");
-                // replace(url, "https://etherscan.io/address/", "http://etherscan.io/address/");
+                string_q base =
+                    getGlobalConfig("fireStorm")->getConfigStr("settings", "baseURL", "http://localhost:1234/");
+                if (!endsWith(base, "/"))
+                    base += "/";
+                replace(url, "https://etherscan.io/block/", base + "explorer/blocks/");
+                replace(url, "https://etherscan.io/tx/", base + "explorer/transactions/");
+                replace(url, "https://etherscan.io/address/", base + "dashboard/accounts/");
             }
 
             cerr << "Opening " << url << endl;
