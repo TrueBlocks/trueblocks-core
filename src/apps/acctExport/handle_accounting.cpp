@@ -70,7 +70,8 @@ bool acct_Display(CTraverser* trav, void* data) {
     }
 
     prog_Log(trav, data);
-    return opt->slowQueries < 13 && !shouldQuit();
+    bool tooSlow = (isApiMode() && opt->slowQueries > 9);
+    return !tooSlow && !shouldQuit();
 }
 
 //-----------------------------------------------------------------------
