@@ -39,6 +39,11 @@ ethNames --fmt json
     "source": "EtherScan.io"
   },
   {
+    "tags": "30-Contracts",
+    "address": "0x0000000000a84fe7f5d858c8a22121c975ff0b42",
+    "name": "Poster"
+  },
+  {
     "tags": "50-Tokens:ERC20",
     "address": "0x0000000000b3f879cb30fe243b4dfee438691c04",
     "name": "Gastoken.io",
@@ -1344,6 +1349,14 @@ ethNames --fmt json
   },
   {
     "tags": "50-Tokens:ERC20",
+    "address": "0x03fb52d4ee633ab0d06c833e32efdd8d388f3e6a",
+    "name": "Black Hole",
+    "symbol": "HOLE",
+    "source": "On chain",
+    "decimals": 18
+  },
+  {
+    "tags": "50-Tokens:ERC20",
     "address": "0x041b10db04de10c1005029ce498d09446e935316",
     "name": "Green INU",
     "symbol": "GINUX",
@@ -1375,19 +1388,4 @@ ethNames --fmt json
     "address": "0x0444f06a52320af2df7e60d1923080002838ce93",
     "name": "Resetponzi",
     "source": "EtherScan.io"
-  },
-  {
-    "tags": "50-Tokens:ERC20",
-    "address": "0x0448da445a2ed1262890b42fb6d578c59ec470d5",
-    "name": "ShibaRise",
-    "symbol": "ShibaRise",
-    "source": "On chain",
-    "decimals": 9
-  },
-  {
-    "tags": "90-Individuals:Twitter",
-    "address": "0x04498150b495a1f126b88952a756b5b9a4385e30",
-    "name": "Name 0x04498150",
-    "source": "Twitter",
-    "description": "okoro"
   }] }

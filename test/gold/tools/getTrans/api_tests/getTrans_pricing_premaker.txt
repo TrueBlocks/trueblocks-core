@@ -1,0 +1,39 @@
+{
+  "data": [
+    {
+      "blockNumber": 1433233,
+      "transactionIndex": 8,
+      "timestamp": 1462044111,
+      "assetAddr": "0xea674fdde714fd979de3edf0f56aa9716b898ec8",
+      "assetSymbol": "WEI",
+      "decimals": 18,
+      "prevBlk": 0,
+      "prevBlkBal": "359699855029506296530",
+      "begBal": "359699855029506296530",
+      "endBal": "358693424617370130430",
+      "amountIn": "",
+      "internalIn": "",
+      "selfDestructIn": "",
+      "minerBaseRewardIn": "",
+      "minerNephewRewardIn": "",
+      "minerTxFeeIn": "",
+      "minerUncleRewardIn": "",
+      "prefundIn": "",
+      "amountOut": "1006010412136166100",
+      "internalOut": "",
+      "selfDestructOut": "",
+      "gasCostOut": "420000000000000",
+      "reconciliationType": "regular",
+      "spotPrice": 1,
+      "priceSource": "not-priced",
+      "begBalDiff": "",
+      "endBalCalc": "358693424617370130430",
+      "endBalDiff": "",
+      "totalIn": "",
+      "totalOut": "1006430412136166100",
+      "totalOutLessGas": "1006010412136166100",
+      "amountNet": "-1006430412136166100",
+      "reconciled": true
+    }
+  ]
+}

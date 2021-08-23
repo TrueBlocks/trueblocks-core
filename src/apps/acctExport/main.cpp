@@ -28,9 +28,12 @@ int main(int argc, const char* argv[]) {
              : (options.traces
                 ? GETRUNTIME_CLASS(CTrace)->m_ClassName
                 : (options.receipts
-                   ? GETRUNTIME_CLASS(CReceipt)->m_ClassName
-                   : (options.logs ? GETRUNTIME_CLASS(CLogEntry)->m_ClassName
-                      : GETRUNTIME_CLASS(CTransaction)->m_ClassName))));
+                ? GETRUNTIME_CLASS(CReceipt)->m_ClassName
+                  : (options.statements
+                  ? GETRUNTIME_CLASS(CReconciliation)->m_ClassName
+                    : (options.logs
+                    ? GETRUNTIME_CLASS(CLogEntry)->m_ClassName
+                      : GETRUNTIME_CLASS(CTransaction)->m_ClassName)))));
             // clang-format on
 
             once = once && !options.freshenOnly;
@@ -47,6 +50,12 @@ int main(int argc, const char* argv[]) {
                 CReceiptTraverser rt;
                 rt.exportRange = options.exportRange;
                 traversers.push_back(rt);
+            }
+
+            if (options.statements) {
+                CStatementTraverser st;
+                st.exportRange = options.exportRange;
+                traversers.push_back(st);
             }
 
             if (options.logs) {

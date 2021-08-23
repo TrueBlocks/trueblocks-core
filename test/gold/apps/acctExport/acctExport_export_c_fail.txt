@@ -3,7 +3,7 @@ acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --count --logs
 
   --count option is only available with --appearances option. Quitting...
 
-  Usage:    acctExport [-p|-r|-l|-t|-C|-A|-a|-i|-R|-y|-U|-c|-e|-v|-h] <address> [address...] [topics] [fourbytes]  
+  Usage:    acctExport [-p|-r|-A|-l|-t|-C|-a|-i|-R|-y|-U|-c|-e|-v|-h] <address> [address...] [topics] [fourbytes]  
   Purpose:  Export full detail of transactions for one or more addresses.
 
   Where:  
@@ -12,10 +12,10 @@ acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --count --logs
 	fourbytes             filter by one or more fourbytes (only for transactions and trace options)
 	-p  (--appearances)   export a list of appearances
 	-r  (--receipts)      export receipts instead of transaction list
+	-A  (--statements)    for use with --accounting option only, export only reconciliation statements
 	-l  (--logs)          export logs instead of transaction list
 	-t  (--traces)        export traces instead of transaction list
 	-C  (--accounting)    export accounting records instead of transaction list
-	-A  (--statements)    for use with --accounting option only, export only reconciliation statements
 	-a  (--articulate)    articulate transactions, traces, logs, and outputs
 	-i  (--cache_txs)     write transactions to the cache (see notes)
 	-R  (--cache_traces)  write traces to the cache (see notes)

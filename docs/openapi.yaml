@@ -108,6 +108,14 @@ paths:
         explode: true
         schema:
           type: boolean
+      - name: statements
+        in: query
+        description: for use with --accounting option only, export only reconciliation statements
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
       - name: logs
         in: query
         description: export logs instead of transaction list
@@ -127,14 +135,6 @@ paths:
       - name: accounting
         in: query
         description: export accounting records instead of transaction list
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: statements
-        in: query
-        description: for use with --accounting option only, export only reconciliation statements
         required: false
         style: form
         explode: true
@@ -744,6 +744,14 @@ paths:
         explode: true
         schema:
           type: boolean
+      - name: reconcile
+        in: query
+        description: reconcile the transaction as per the provided address
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
       responses:
         "200":
           description: status of the scraper

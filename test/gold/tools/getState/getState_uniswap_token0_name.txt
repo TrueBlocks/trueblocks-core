@@ -20,8 +20,10 @@ params.size: 1
 ==================================================
 
   {
-    "blockNumber": 10092000,
     "encoding": "0x06fdde03",
+    "blockNumber": 10092000,
+    "balance": 0,
+    "address": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
     "result": {
       "name": "name",
       "signature": "name()",
@@ -29,7 +31,5 @@ params.size: 1
       "outputs": {
         "_name": "Wrapped BTC"
       }
-    },
-    "balance": 0,
-    "address": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599"
+    }
   }] }

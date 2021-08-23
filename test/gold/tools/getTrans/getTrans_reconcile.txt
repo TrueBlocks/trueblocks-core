@@ -1,0 +1,133 @@
+getTrans argc: 8 [1:0x8699f14af8aca02073f3008099526a6e77f724bee280e5e3c2fa64b589be9a63] [2:--reconcile] [3:0xf503017d7baf7fbc0fff7492b751025c6a78179b] [4:--fmt] [5:json] [6:--verbose] [7:10] 
+getTrans 0x8699f14af8aca02073f3008099526a6e77f724bee280e5e3c2fa64b589be9a63 --reconcile 0xf503017d7baf7fbc0fff7492b751025c6a78179b --fmt json --verbose 10 
+{ "data": [
+TIME ~ CLOCK - : 4-----transHash0x8699f14af8aca02073f3008099526a6e77f724bee280e5e3c2fa64b589be9a63
+TIME ~ CLOCK - : 4-----not from cache
+TIME ~ CLOCK - : 4-----blockNumber.txid: 12697303	99
+TIME ~ CLOCK - : 4-----blockNumber.txid: 12697303	99
+TIME ~ CLOCK - : 8------Entering loadNames...
+TIME ~ CLOCK - : 8------Reading names from binary cache
+TIME ~ CLOCK - : 4-----Trial balance: regular
+TIME ~ CLOCK - : 4-----  hash: 0x8699f14af8aca02073f3008099526a6e77f724bee280e5e3c2fa64b589be9a63
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  prevBal:       31419034761192445316
+TIME ~ CLOCK - : 4-----  begBal:        31419034761192445316
+TIME ~ CLOCK - : 4-----  begBalDiff:    0
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 8------  amountIn:      0
+TIME ~ CLOCK - : 8------  internalIn:    0
+TIME ~ CLOCK - : 8------  slfDstrctIn:   0
+TIME ~ CLOCK - : 8------  minBRwdIn:     0
+TIME ~ CLOCK - : 8------  minNRwdIn:     0
+TIME ~ CLOCK - : 8------  minTxFeeIn:    0
+TIME ~ CLOCK - : 8------  minURwdIn:     0
+TIME ~ CLOCK - : 8------  prefundIn:     0
+TIME ~ CLOCK - : 4-----  totalIn:       0
+TIME ~ CLOCK - : 8------  amountOut:     0
+TIME ~ CLOCK - : 8------  internalOut:   0
+TIME ~ CLOCK - : 8------  slfDstrctOt:   0
+TIME ~ CLOCK - : 8------  gasCostOut:    0
+TIME ~ CLOCK - : 4-----  totalOut:      0
+TIME ~ CLOCK - : 4-----  amountNet:     0
+TIME ~ CLOCK - : 4-----  endBal:        31419034761192445316
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  endBalCalc:    31419034761192445316
+TIME ~ CLOCK - : 4-----  endBalDiff:    0
+TIME ~ CLOCK - : 4-----  regular-recon: true
+
+level: 1
+readOffset: 0
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = <>
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...000000000021f86f5a4a55701856269f <=o <-r
+  1 (0x020) 0000000000000000...000000000000046ea141427d56fa74ec
+  2 (0x040) 0000000000000000...00000000000000000000000060d4930b
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 41067753029733168161629855
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+
+level: 1
+readOffset: 1
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = 41067753029733168161629855
+  1: uint112 _reserve1 = <>
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...000000000021f86f5a4a55701856269f <=o
+  1 (0x020) 0000000000000000...000000000000046ea141427d56fa74ec <-r
+  2 (0x040) 0000000000000000...00000000000000000000000060d4930b
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 41067753029733168161629855
+  1: uint112 _reserve1 = 20930227421206321722604
+  2: uint32 _blockTimestampLast = <>
+
+level: 1
+readOffset: 2
+objectStart: 0
+params.size: 3
+  0: uint112 _reserve0 = 41067753029733168161629855
+  1: uint112 _reserve1 = 20930227421206321722604
+  2: uint32 _blockTimestampLast = <>
+dataArray.size: 3
+  0 (0x000) 0000000000000000...000000000021f86f5a4a55701856269f <=o
+  1 (0x020) 0000000000000000...000000000000046ea141427d56fa74ec
+  2 (0x040) 0000000000000000...00000000000000000000000060d4930b <-r
+
+==================================================
+params.size: 3
+  0: uint112 _reserve0 = 41067753029733168161629855
+  1: uint112 _reserve1 = 20930227421206321722604
+  2: uint32 _blockTimestampLast = 1624544011
+params.size: 3
+  0: uint112 _reserve0 = 41067753029733168161629855
+  1: uint112 _reserve1 = 20930227421206321722604
+  2: uint32 _blockTimestampLast = 1624544011
+==================================================
+
+TIME ~ CLOCK - : 4-----r1: 0x6b175474e89094c44da98b954eedeac495271d0f r2: 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+TIME ~ CLOCK - : 4-----reserve1: 4.10678e+07 reserve2: 20930.2 priceOut: 1962.13 reversed: 0
+  {
+    "blockNumber": 12697303,
+    "transactionIndex": 99,
+    "timestamp": 1624544065,
+    "assetAddr": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+    "assetSymbol": "WEI",
+    "decimals": 18,
+    "prevBlk": 0,
+    "prevBlkBal": "31419034761192445316",
+    "begBal": "31419034761192445316",
+    "endBal": "31419034761192445316",
+    "amountIn": "",
+    "internalIn": "",
+    "selfDestructIn": "",
+    "minerBaseRewardIn": "",
+    "minerNephewRewardIn": "",
+    "minerTxFeeIn": "",
+    "minerUncleRewardIn": "",
+    "prefundIn": "",
+    "amountOut": "",
+    "internalOut": "",
+    "selfDestructOut": "",
+    "gasCostOut": "",
+    "reconciliationType": "regular",
+    "spotPrice": 1962.12646,
+    "priceSource": "uniswap",
+    "begBalDiff": "",
+    "endBalCalc": "31419034761192445316",
+    "endBalDiff": "",
+    "totalIn": "",
+    "totalOut": "",
+    "totalOutLessGas": "",
+    "amountNet": "",
+    "reconciled": true
+  }] }

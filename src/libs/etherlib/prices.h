@@ -8,9 +8,6 @@
 
 namespace qblocks {
 
-extern double getPriceInUsd(blknum_t bn, const address_t& address = "");
-extern double getPriceFromMaker_EthUsd(blknum_t bn);
-extern double getPriceFromUni_EthUsd(blknum_t bn);
-extern string_q addr_2_Pad64(const address_t& addr);
+extern double getPriceInUsd(blknum_t bn, string_q& priceSource, const address_t& address = "");
 
 }  // namespace qblocks

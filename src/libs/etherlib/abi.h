@@ -53,7 +53,7 @@ class CAbi : public CBaseNode {
     bool loadAbiFromEtherscan(const address_t& addr);
     bool loadAbiFromSolidity(const address_t& addr);
     bool loadAbisFromKnown(bool tokensOnly = false);
-    bool loadAbisOneKnown(const string_q& addr);
+    bool loadAbisKnown(const string_q& addrOrName);
 
     bool findInterface(const string_q& enc, CFunction& func) const;
     bool hasInterface(const string_q& enc) const;
@@ -82,10 +82,10 @@ class CAbi : public CBaseNode {
   private:
     bool loadAbiFromFile(const string_q& fileName);
     bool loadAbiFromAddress(const address_t& addr, bool recurse);
-    bool loadAbiFromString(const string_q& str);
+    bool loadAbiFromJson(const string_q& str);
     void loadAbiAddInterface(const CFunction& func);
     friend bool loadAbiFile(const string_q& path, void* data);
-    friend bool loadAbiString(const string_q& path, CAbi& abi);
+    friend bool loadAbiJsonString(const string_q& path, CAbi& abi);
     // EXISTING_CODE
 };
 

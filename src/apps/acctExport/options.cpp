@@ -18,10 +18,10 @@ static const COption params[] = {
     COption("fourbytes", "", "list<fourbyte>", OPT_POSITIONAL, "filter by one or more fourbytes (only for transactions and trace options)"),  // NOLINT
     COption("appearances", "p", "", OPT_SWITCH, "export a list of appearances"),
     COption("receipts", "r", "", OPT_SWITCH, "export receipts instead of transaction list"),
+    COption("statements", "A", "", OPT_SWITCH, "for use with --accounting option only, export only reconciliation statements"),  // NOLINT
     COption("logs", "l", "", OPT_SWITCH, "export logs instead of transaction list"),
     COption("traces", "t", "", OPT_SWITCH, "export traces instead of transaction list"),
     COption("accounting", "C", "", OPT_SWITCH, "export accounting records instead of transaction list"),
-    COption("statements", "A", "", OPT_SWITCH, "for use with --accounting option only, export only reconciliation statements"),  // NOLINT
     COption("articulate", "a", "", OPT_SWITCH, "articulate transactions, traces, logs, and outputs"),
     COption("cache_txs", "i", "", OPT_SWITCH, "write transactions to the cache (see notes)"),
     COption("cache_traces", "R", "", OPT_SWITCH, "write traces to the cache (see notes)"),
@@ -77,6 +77,9 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-r" || arg == "--receipts") {
             receipts = true;
 
+        } else if (arg == "-A" || arg == "--statements") {
+            statements = true;
+
         } else if (arg == "-l" || arg == "--logs") {
             logs = true;
 
@@ -85,9 +88,6 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-C" || arg == "--accounting") {
             accounting = true;
-
-        } else if (arg == "-A" || arg == "--statements") {
-            statements = true;
 
         } else if (arg == "-a" || arg == "--articulate") {
             articulate = true;
@@ -207,10 +207,10 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_LIST("fourbytes", fourbytes, fourbytes.empty());
     LOG_TEST_BOOL("appearances", appearances);
     LOG_TEST_BOOL("receipts", receipts);
+    LOG_TEST_BOOL("statements", statements);
     LOG_TEST_BOOL("logs", logs);
     LOG_TEST_BOOL("traces", traces);
     LOG_TEST_BOOL("accounting", accounting);
-    LOG_TEST_BOOL("statements", statements);
     LOG_TEST_BOOL("articulate", articulate);
     LOG_TEST_BOOL("cache_txs", cache_txs);
     LOG_TEST_BOOL("cache_traces", cache_traces);
@@ -263,11 +263,11 @@ bool COptions::parseArguments(string_q& command) {
     if (topics.size() && !logs)
         return usage("Use the topics option only with --logs.");
 
-    if (fourbytes.size() && (logs || receipts || appearances))
+    if (fourbytes.size() && (logs || receipts || statements || appearances))
         return usage("Use the fourbytes option only with non-logs commands.");
 
-    if ((appearances + receipts + logs + traces) > 1)
-        return usage("Please export only one of list, receipts, logs, or traces.");
+    if ((appearances + receipts + statements + logs + traces) > 1)
+        return usage("Please export only one of list, receipts, statements, logs, or traces.");
 
     if (emitter && !logs)
         return usage("The --emitter option is only available when exporting logs.");
@@ -278,7 +278,7 @@ bool COptions::parseArguments(string_q& command) {
     if (factory && !traces)
         return usage("The --factory option is only available when exporting traces.");
 
-    if (count && (receipts || logs || traces || emitter || factory))
+    if (count && (receipts || statements || logs || traces || emitter || factory))
         return usage("--count option is only available with --appearances option.");
 
     if ((accounting) && (addrs.size() != 1))
@@ -287,10 +287,10 @@ bool COptions::parseArguments(string_q& command) {
     if ((accounting) && freshenOnly)
         return usage("Do not use the --accounting option with --freshen.");
 
-    if ((accounting) && (appearances || logs || traces || receipts))
+    if ((accounting) && (appearances || logs || traces || receipts || statements))
         return usage("Do not use the --accounting option with other options.");
 
-    if (freshenOnly && (appearances || logs || traces || receipts))
+    if (freshenOnly && (appearances || logs || traces || receipts || statements))
         return usage("Do not use the --freshen option with other options.");
 
     // Where will we start?
@@ -428,10 +428,10 @@ void COptions::Init(void) {
     // BEG_CODE_INIT
     appearances = false;
     receipts = false;
+    statements = false;
     logs = false;
     traces = false;
     accounting = false;
-    statements = false;
     articulate = false;
     // clang-format off
     cache_txs = getGlobalConfig("acctExport")->getConfigBool("settings", "cache_txs", false);
@@ -593,6 +593,8 @@ bool COptions::setDisplayFormatting(void) {
                 expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["trace_fmt"]);
             } else if (receipts) {
                 expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["receipt_fmt"]);
+            } else if (statements) {
+                expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["reconciliation_fmt"]);
             } else if (logs) {
                 expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["logentry_fmt"]);
             } else if (appearances) {
@@ -649,7 +651,8 @@ bool COptions::setDisplayFormatting(void) {
 }
 
 // TODO(tjayrush): If an abi file is changed, we should re-articulate.
-// TODO(tjayrush): accounting can not be freshen, appearances, logs, receipts, traces, but must be articulate - why?
+// TODO(tjayrush): accounting can not be freshen, appearances, logs, receipts, statements, traces, but must be
+// TODO(tjayrush): articulate - why?
 // TODO(tjayrush): accounting must be exportFmt API1 - why?
 // TODO(tjayrush): accounting must be for one monitor address - why?
 // TODO(tjayrush): accounting requires node balances - why?

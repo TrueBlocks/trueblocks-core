@@ -1,0 +1,75 @@
+getTrans argc: 8 [1:1433233.8] [2:--reconcile] [3:0xea674fdde714fd979de3edf0f56aa9716b898ec8] [4:--fmt] [5:json] [6:--verbose] [7:10] 
+getTrans 1433233.8 --reconcile 0xea674fdde714fd979de3edf0f56aa9716b898ec8 --fmt json --verbose 10 
+{ "data": [
+TIME ~ CLOCK - : 4-----blockNum.txid14332338
+TIME ~ CLOCK - : 4-----not from cache
+TIME ~ CLOCK - : 4-----blockNumber.txid: 1433233	8
+TIME ~ CLOCK - : 4-----blockNumber.txid: 1433233	8
+TIME ~ CLOCK - : 8------Entering loadNames...
+TIME ~ CLOCK - : 8------Reading names from binary cache
+TIME ~ CLOCK - : 4-----Trial balance: regular
+TIME ~ CLOCK - : 4-----  hash: 0xaf85793cdd046530b1a0f8eb2ba45a26a4d9c4ef815f4896dc65182fe4322ddc
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  prevBal:       359699855029506296530
+TIME ~ CLOCK - : 4-----  begBal:        359699855029506296530
+TIME ~ CLOCK - : 4-----  begBalDiff:    0
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 8------  amountIn:      0
+TIME ~ CLOCK - : 8------  internalIn:    0
+TIME ~ CLOCK - : 8------  slfDstrctIn:   0
+TIME ~ CLOCK - : 8------  minBRwdIn:     0
+TIME ~ CLOCK - : 8------  minNRwdIn:     0
+TIME ~ CLOCK - : 8------  minTxFeeIn:    0
+TIME ~ CLOCK - : 8------  minURwdIn:     0
+TIME ~ CLOCK - : 8------  prefundIn:     0
+TIME ~ CLOCK - : 4-----  totalIn:       0
+TIME ~ CLOCK - : 8------  amountOut:     1006010412136166100
+TIME ~ CLOCK - : 8------  internalOut:   0
+TIME ~ CLOCK - : 8------  slfDstrctOt:   0
+TIME ~ CLOCK - : 8------  gasCostOut:    420000000000000
+TIME ~ CLOCK - : 4-----  totalOut:      1006430412136166100
+TIME ~ CLOCK - : 4-----  amountNet:     -1006430412136166100
+TIME ~ CLOCK - : 4-----  endBal:        358693424617370130430
+TIME ~ CLOCK - : 4-----  ------------------------------
+TIME ~ CLOCK - : 4-----  endBalCalc:    358693424617370130430
+TIME ~ CLOCK - : 4-----  endBalDiff:    0
+TIME ~ CLOCK - : 4-----  regular-recon: true
+TIME ~ CLOCK - : 4-----Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 1433233 prior to its deployment 10042267
+params.size: 0
+==================================================
+
+  {
+    "blockNumber": 1433233,
+    "transactionIndex": 8,
+    "timestamp": 1462044111,
+    "assetAddr": "0xea674fdde714fd979de3edf0f56aa9716b898ec8",
+    "assetSymbol": "WEI",
+    "decimals": 18,
+    "prevBlk": 0,
+    "prevBlkBal": "359699855029506296530",
+    "begBal": "359699855029506296530",
+    "endBal": "358693424617370130430",
+    "amountIn": "",
+    "internalIn": "",
+    "selfDestructIn": "",
+    "minerBaseRewardIn": "",
+    "minerNephewRewardIn": "",
+    "minerTxFeeIn": "",
+    "minerUncleRewardIn": "",
+    "prefundIn": "",
+    "amountOut": "1006010412136166100",
+    "internalOut": "",
+    "selfDestructOut": "",
+    "gasCostOut": "420000000000000",
+    "reconciliationType": "regular",
+    "spotPrice": 1.00000,
+    "priceSource": "not-priced",
+    "begBalDiff": "",
+    "endBalCalc": "358693424617370130430",
+    "endBalDiff": "",
+    "totalIn": "",
+    "totalOut": "1006430412136166100",
+    "totalOutLessGas": "1006010412136166100",
+    "amountNet": "-1006430412136166100",
+    "reconciled": true
+  }] }

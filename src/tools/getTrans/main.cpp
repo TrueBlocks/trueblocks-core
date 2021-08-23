@@ -24,8 +24,10 @@ int main(int argc, const char* argv[]) {
     for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
             return 0;
+        CRuntimeClass* pClass =
+            !options.reconcile.empty() ? GETRUNTIME_CLASS(CReconciliation) : GETRUNTIME_CLASS(CTransaction);
         if (once)
-            cout << exportPreamble(expContext().fmtMap["header"], GETRUNTIME_CLASS(CTransaction));
+            cout << exportPreamble(expContext().fmtMap["header"], pClass);
         forEveryTransaction(visitTransaction, &options, options.transList.queries);
         once = false;
     }
@@ -77,6 +79,9 @@ bool visitTransaction(CTransaction& trans, void* data) {
         opt->errors.push_back("Transaction " + hash + " not found.");
         return true;  // continue even with an invalid item
     }
+
+    if (!opt->reconcile.empty())
+        return visitReconciliation(trans, opt);
 
     if (opt->uniq) {
         trans.forEveryUniqueAppearanceInTxPerTx(visitAddrs, transFilter, opt);

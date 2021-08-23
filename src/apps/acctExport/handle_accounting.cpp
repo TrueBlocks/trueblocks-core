@@ -86,7 +86,12 @@ bool COptions::process_reconciliation(CTraverser* trav) {
             archive >> trav->trans.statements;
             archive.Release();
             if (isReconciled(trav)) {
+                bool backLevel = false;
                 for (auto& statement : trav->trans.statements) {
+                    // At version 0.11.8, we finally got pricing of reconcilations correct. We didn't
+                    // want to add an upgrade of reconcilations to the migration, so we do it here
+                    // but only when the user reads an older file
+                    backLevel = backLevel || (statement.m_schema < getVersionNum(0, 11, 8));
                     CAccountName tokenName;
                     if (contains(statement.assetSymbol, "reverted"))
                         statement.assetSymbol = "";
@@ -97,6 +102,11 @@ bool COptions::process_reconciliation(CTraverser* trav) {
                         statement.decimals = tokenName.decimals;
                     }
                     prevStatements[accountedFor.address + "_" + toLower(statement.assetAddr)] = statement;
+                }
+                if (backLevel) {
+                    // LOG_WARN(cYellow, "Updating statements", cOff);
+                    trav->readStatus = "Updating";
+                    cacheIfReconciled(trav, true /* isNew */);
                 }
                 return !shouldQuit();
             } else {
@@ -126,13 +136,13 @@ bool COptions::process_reconciliation(CTraverser* trav) {
         // TODO(tjayrush): Also, we used to handle reversed mode here, that code was removed
         pEth.endBal =
             trav->trans.blockNumber == 0 ? 0 : getBalanceAt(accountedFor.address, trav->trans.blockNumber - 1);
-        // pEth.spotPrice = getPriceInUsd(trav->trans.blockNumber - 1);
+        pEth.spotPrice = getPriceInUsd(trav->trans.blockNumber - 1, pEth.priceSource);
         prevStatements[accountedFor.address + "_eth"] = pEth;
     }
 
     CReconciliation eth(trav->trans.blockNumber, trav->trans.transactionIndex, trav->trans.timestamp);
     eth.reconcileEth(prevStatements[accountedFor.address + "_eth"], nextAppBlk, &trav->trans, accountedFor);
-    // eth.spotPrice = getPriceInUsd(trav->trans.blockNumber);
+    eth.spotPrice = getPriceInUsd(trav->trans.blockNumber, eth.priceSource);
     trav->trans.statements.push_back(eth);
     prevStatements[accountedFor.address + "_eth"] = eth;
 
@@ -154,7 +164,7 @@ bool COptions::process_reconciliation(CTraverser* trav) {
                 if (trav->trans.blockNumber > 0)
                     pBal.blockNumber = trav->trans.blockNumber - 1;
                 pBal.endBal = getTokenBalanceOf2(tokenName.address, accountedFor.address, pBal.blockNumber);
-                // pBal.spotPrice = getPriceInUsd(pBal.blockNumber, tokenName.address);
+                pBal.spotPrice = getPriceInUsd(pBal.blockNumber, pBal.priceSource, tokenName.address);
                 prevStatements[psKey] = pBal;
             }
 
@@ -169,7 +179,8 @@ bool COptions::process_reconciliation(CTraverser* trav) {
             }
             tokStatement.reconciliationType = "";
             if (tokStatement.amountNet() != 0) {
-                // tokStatement.spotPrice = getPriceInUsd(trav->trans.blockNumber, tokenName.address);
+                tokStatement.spotPrice =
+                    getPriceInUsd(trav->trans.blockNumber, tokStatement.priceSource, tokenName.address);
                 trav->trans.statements.push_back(tokStatement);
                 prevStatements[psKey] = tokStatement;
             }

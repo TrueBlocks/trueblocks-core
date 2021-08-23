@@ -26,6 +26,7 @@ extern const char* STR_AUTO_FLAG_ADDRESS_LIST;
 extern const char* STR_AUTO_FLAG_BLOCKNUM;
 extern const char* STR_AUTO_FLAG_UINT;
 extern const char* STR_AUTO_FLAG_DOUBLE;
+extern const char* STR_AUTO_FLAG_ADDRESS;
 extern const char* STR_CHECK_BUILTIN;
 extern const char* STR_BLOCKLIST_PROCESSOR;
 extern const char* STR_TXLIST_PROCESSOR;
@@ -300,6 +301,8 @@ void COptions::generate_flag(const CCommandOption& option) {
                 autoStream << option.Format(STR_AUTO_FLAG_UINT) << endl;
             else if (option.isDouble)
                 autoStream << option.Format(STR_AUTO_FLAG_DOUBLE) << endl;
+            else if (option.isAddress)
+                autoStream << option.Format(STR_AUTO_FLAG_ADDRESS) << endl;
             else
                 autoStream << substitute(option.Format(STR_AUTO_FLAG), "substitute(substitute(arg, \"-:\", )",
                                          "substitute(arg")
@@ -334,6 +337,8 @@ void COptions::generate_flag(const CCommandOption& option) {
                 autoStream << option.Format(STR_AUTO_FLAG_UINT) << endl;
             else if (option.isDouble)
                 autoStream << option.Format(STR_AUTO_FLAG_DOUBLE) << endl;
+            else if (option.isAddress)
+                autoStream << option.Format(STR_AUTO_FLAG_ADDRESS) << endl;
             else
                 autoStream << substitute(option.Format(STR_AUTO_FLAG), "substitute(substitute(arg, \"-:\", )",
                                          "substitute(arg")
@@ -576,6 +581,16 @@ const char* STR_AUTO_FLAG_BLOCKNUM =
     "        } else if ([startsWith(arg, \"-{HOTKEY}:\") || ]startsWith(arg, \"--[{COMMAND}]:\")) {\n"
     "            if (!confirmBlockNum(\"[{COMMAND}]\", [{COMMAND}], arg, latest))\n"
     "                return false;\n"
+    "        } else if ([arg == \"-{HOTKEY}\" || ]arg == \"--[{COMMAND}]\") {\n"
+    "            return flag_required(\"[{COMMAND}]\");\n";
+
+//---------------------------------------------------------------------------------------------------
+const char* STR_AUTO_FLAG_ADDRESS =
+    "        } else if ([startsWith(arg, \"-{HOTKEY}:\") || ]startsWith(arg, \"--[{COMMAND}]:\")) {\n"
+    "            [{COMMAND}] = substitute(substitute(arg, \"-[{HOTKEY}]:\", \"\"), \"--[{COMMAND}]:\", \"\");\n"
+    "            if (!isAddress([{COMMAND}]))\n"
+    "                return usage(\"The provided value (\" + [{COMMAND}] + \") is not a properly formatted "
+    "address.\");\n"
     "        } else if ([arg == \"-{HOTKEY}\" || ]arg == \"--[{COMMAND}]\") {\n"
     "            return flag_required(\"[{COMMAND}]\");\n";
 

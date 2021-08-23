@@ -105,14 +105,14 @@ bool test_generation(void) {
     {
         CAbi abi;
         cout << "Testing of already sorted JSON" << endl;
-        loadAbiString(getAlreadySortedJson(), abi);
+        loadAbiJsonString(getAlreadySortedJson(), abi);
         cout << abi.Format() << endl << endl;
     }
 
     {
         CAbi abi;
         cout << "Testing of not sorted JSON" << endl;
-        loadAbiString(getNotSortedJson(), abi);
+        loadAbiJsonString(getNotSortedJson(), abi);
         cout << abi.Format() << endl << endl;
     }
 

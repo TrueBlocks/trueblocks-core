@@ -29,6 +29,7 @@ class COptions : public CAbiOptions {
     bool trace;
     bool uniq;
     bool cache;
+    address_t reconcile;
     // END_CODE_DECLARE
 
     COptionsTransList transList;
@@ -42,3 +43,4 @@ class COptions : public CAbiOptions {
 
 //-----------------------------------------------------------------------------
 extern bool visitTransaction(CTransaction& trans, void* data);
+extern bool visitReconciliation(CTransaction& trans, void* data);

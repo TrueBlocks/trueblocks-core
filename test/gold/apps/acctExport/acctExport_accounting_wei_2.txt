@@ -2,6 +2,10 @@ acctExport argc: 9 [1:0x05a56e2d52c817161883f50c441c3228cfe54d9f] [2:--max_recor
 acctExport 0x05a56e2d52c817161883f50c441c3228cfe54d9f --max_records 15 --accounting --fmt api --verbose 10 
 TIME ~ CLOCK - : 4-----0x05a56e2d52c817161883f50c441c3228cfe54d9f freshened to 11854827
 {"data": [
+TIME ~ CLOCK - : 4-----Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 0 prior to its deployment 10042267
+params.size: 0
+==================================================
+
 TIME ~ CLOCK - : 4-----Trial balance: regular
 TIME ~ CLOCK - : 4-----  hash: 
 TIME ~ CLOCK - : 4-----  ------------------------------
@@ -29,6 +33,10 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    5000000000000000000
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
+TIME ~ CLOCK - : 4-----Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 1 prior to its deployment 10042267
+params.size: 0
+==================================================
+
 {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -70,6 +78,7 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "gasCostOut": "",
       "reconciliationType": "regular",
       "spotPrice": 1.00000,
+      "priceSource": "not-priced",
       "begBalDiff": "",
       "endBalCalc": "5000000000000000000",
       "endBalDiff": "",
@@ -112,6 +121,10 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    10000000000000000000
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
+TIME ~ CLOCK - : 4-----Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 5 prior to its deployment 10042267
+params.size: 0
+==================================================
+
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -153,6 +166,7 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "gasCostOut": "",
       "reconciliationType": "regular",
       "spotPrice": 1.00000,
+      "priceSource": "not-priced",
       "begBalDiff": "",
       "endBalCalc": "10000000000000000000",
       "endBalDiff": "",
@@ -195,6 +209,10 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    13750000000000000000
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
+TIME ~ CLOCK - : 4-----Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 56 prior to its deployment 10042267
+params.size: 0
+==================================================
+
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -236,6 +254,7 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "gasCostOut": "",
       "reconciliationType": "regular",
       "spotPrice": 1.00000,
+      "priceSource": "not-priced",
       "begBalDiff": "",
       "endBalCalc": "13750000000000000000",
       "endBalDiff": "",
@@ -278,6 +297,10 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    18750000000000000000
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
+TIME ~ CLOCK - : 4-----Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 235 prior to its deployment 10042267
+params.size: 0
+==================================================
+
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -319,6 +342,7 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "gasCostOut": "",
       "reconciliationType": "regular",
       "spotPrice": 1.00000,
+      "priceSource": "not-priced",
       "begBalDiff": "",
       "endBalCalc": "18750000000000000000",
       "endBalDiff": "",
@@ -361,6 +385,10 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    21875000000000000000
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
+TIME ~ CLOCK - : 4-----Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 247 prior to its deployment 10042267
+params.size: 0
+==================================================
+
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -402,6 +430,7 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "gasCostOut": "",
       "reconciliationType": "regular",
       "spotPrice": 1.00000,
+      "priceSource": "not-priced",
       "begBalDiff": "",
       "endBalCalc": "21875000000000000000",
       "endBalDiff": "",
@@ -444,6 +473,10 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    26875000000000000000
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
+TIME ~ CLOCK - : 4-----Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 348 prior to its deployment 10042267
+params.size: 0
+==================================================
+
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -485,6 +518,7 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "gasCostOut": "",
       "reconciliationType": "regular",
       "spotPrice": 1.00000,
+      "priceSource": "not-priced",
       "begBalDiff": "",
       "endBalCalc": "26875000000000000000",
       "endBalDiff": "",
@@ -527,6 +561,10 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    30625000000000000000
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
+TIME ~ CLOCK - : 4-----Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 500 prior to its deployment 10042267
+params.size: 0
+==================================================
+
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -568,6 +606,7 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "gasCostOut": "",
       "reconciliationType": "regular",
       "spotPrice": 1.00000,
+      "priceSource": "not-priced",
       "begBalDiff": "",
       "endBalCalc": "30625000000000000000",
       "endBalDiff": "",
@@ -610,6 +649,10 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    34375000000000000000
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
+TIME ~ CLOCK - : 4-----Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 563 prior to its deployment 10042267
+params.size: 0
+==================================================
+
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -651,6 +694,7 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "gasCostOut": "",
       "reconciliationType": "regular",
       "spotPrice": 1.00000,
+      "priceSource": "not-priced",
       "begBalDiff": "",
       "endBalCalc": "34375000000000000000",
       "endBalDiff": "",
@@ -693,6 +737,10 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    36875000000000000000
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
+TIME ~ CLOCK - : 4-----Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 987 prior to its deployment 10042267
+params.size: 0
+==================================================
+
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -734,6 +782,7 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "gasCostOut": "",
       "reconciliationType": "regular",
       "spotPrice": 1.00000,
+      "priceSource": "not-priced",
       "begBalDiff": "",
       "endBalCalc": "36875000000000000000",
       "endBalDiff": "",
@@ -776,6 +825,10 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    42031250000000000000
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
+TIME ~ CLOCK - : 4-----Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 1450 prior to its deployment 10042267
+params.size: 0
+==================================================
+
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -817,6 +870,7 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "gasCostOut": "",
       "reconciliationType": "regular",
       "spotPrice": 1.00000,
+      "priceSource": "not-priced",
       "begBalDiff": "",
       "endBalCalc": "42031250000000000000",
       "endBalDiff": "",
@@ -859,6 +913,10 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    45781250000000000000
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
+TIME ~ CLOCK - : 4-----Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 1580 prior to its deployment 10042267
+params.size: 0
+==================================================
+
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -900,6 +958,7 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "gasCostOut": "",
       "reconciliationType": "regular",
       "spotPrice": 1.00000,
+      "priceSource": "not-priced",
       "begBalDiff": "",
       "endBalCalc": "45781250000000000000",
       "endBalDiff": "",
@@ -942,6 +1001,10 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    49531250000000000000
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
+TIME ~ CLOCK - : 4-----Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 1586 prior to its deployment 10042267
+params.size: 0
+==================================================
+
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -983,6 +1046,7 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "gasCostOut": "",
       "reconciliationType": "regular",
       "spotPrice": 1.00000,
+      "priceSource": "not-priced",
       "begBalDiff": "",
       "endBalCalc": "49531250000000000000",
       "endBalDiff": "",
@@ -1025,6 +1089,10 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    54531250000000000000
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
+TIME ~ CLOCK - : 4-----Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 1861 prior to its deployment 10042267
+params.size: 0
+==================================================
+
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -1066,6 +1134,7 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "gasCostOut": "",
       "reconciliationType": "regular",
       "spotPrice": 1.00000,
+      "priceSource": "not-priced",
       "begBalDiff": "",
       "endBalCalc": "54531250000000000000",
       "endBalDiff": "",
@@ -1108,6 +1177,10 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    58281250000000000000
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
+TIME ~ CLOCK - : 4-----Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 1912 prior to its deployment 10042267
+params.size: 0
+==================================================
+
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -1149,6 +1222,7 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "gasCostOut": "",
       "reconciliationType": "regular",
       "spotPrice": 1.00000,
+      "priceSource": "not-priced",
       "begBalDiff": "",
       "endBalCalc": "58281250000000000000",
       "endBalDiff": "",
@@ -1191,6 +1265,10 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    63281250000000000000
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
+TIME ~ CLOCK - : 4-----Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 2057 prior to its deployment 10042267
+params.size: 0
+==================================================
+
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -1232,6 +1310,7 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "gasCostOut": "",
       "reconciliationType": "regular",
       "spotPrice": 1.00000,
+      "priceSource": "not-priced",
       "begBalDiff": "",
       "endBalCalc": "63281250000000000000",
       "endBalDiff": "",

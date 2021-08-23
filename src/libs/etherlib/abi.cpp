@@ -286,6 +286,14 @@ string_q nextAbiChunk_custom(const string_q& fieldIn, const void* dataPtr) {
 bool CAbi::readBackLevel(CArchive& archive) {
     bool done = false;
     // EXISTING_CODE
+    if (m_schema < getVersionNum(0, 11, 6)) {
+        CFunctionArray interfaces;
+        archive >> address;
+        archive >> interfaces;
+        for (auto func : interfaces)
+            loadAbiAddInterface(func);
+        done = true;
+    }
     // EXISTING_CODE
     return done;
 }
@@ -359,8 +367,8 @@ bool loadAbiFile(const string_q& path, void* data) {
 }
 
 //---------------------------------------------------------------------------
-bool loadAbiString(const string_q& jsonStr, CAbi& abi) {
-    return abi.loadAbiFromString(jsonStr);
+bool loadAbiJsonString(const string_q& jsonStr, CAbi& abi) {
+    return abi.loadAbiFromJson(jsonStr);
 }
 
 //-----------------------------------------------------------------------
@@ -482,7 +490,7 @@ bool CAbi::loadAbiFromFile(const string_q& fileName) {
     }
     LOG_TEST("loadAbiFromFile", dispName(fileName));
 
-    if (loadAbiFromString(asciiFileToString(fileName))) {
+    if (loadAbiFromJson(asciiFileToString(fileName))) {
         for (auto& item : interfaceMap)
             if (item.second.abi_source.empty()) {
                 string_q str = substitute(substitute(fileName, getCachePath("abis/"), ""), configPath("abis/"), "");
@@ -496,7 +504,7 @@ bool CAbi::loadAbiFromFile(const string_q& fileName) {
 }
 
 //---------------------------------------------------------------------------
-bool CAbi::loadAbiFromString(const string_q& in) {
+bool CAbi::loadAbiFromJson(const string_q& in) {
     string_q contents = in;
     CFunction func;
     while (func.parseJson3(contents)) {
@@ -523,7 +531,7 @@ bool CAbi::loadAbiFromEtherscan(const address_t& addr) {
         return true;
     }
 
-    if (loadAbisOneKnown(addr)) {
+    if (loadAbisKnown(addr)) {
         abiSourcesMap[addr] = true;
         return true;
     }
@@ -623,24 +631,18 @@ bool sortByFuncName(const CFunction& f1, const CFunction& f2) {
 
 //-----------------------------------------------------------------------
 bool isKnownAbi(const string_q& addr, string_q& path) {
-    path = configPath("abis/known-000/" + addr + ".json");
-    if (fileExists(path))
-        return true;
-    path = configPath("abis/known-005/" + addr + ".json");
-    if (fileExists(path))
-        return true;
-    path = configPath("abis/known-010/" + addr + ".json");
-    if (fileExists(path))
-        return true;
-    path = configPath("abis/known-015/" + addr + ".json");
-    if (fileExists(path))
-        return true;
+    CStringArray paths = {"000", "005", "010", "015"};
+    for (auto p : paths) {
+        path = configPath("abis/known-" + p + "/" + addr + ".json");
+        if (fileExists(path))
+            return true;
+    }
     path = "";
     return false;
 }
 
 //-----------------------------------------------------------------------
-bool CAbi::loadAbisOneKnown(const string_q& addr) {
+bool CAbi::loadAbisKnown(const string_q& addr) {
     string_q path;
     if (!isKnownAbi(addr, path))
         return false;
