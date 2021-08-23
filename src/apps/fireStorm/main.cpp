@@ -28,6 +28,7 @@ int main(int argc, const char* argv[]) {
             string url = "https://etherscan.io/";
             if (isAddress(lower)) {
                 url += "address/" + lower;
+
             } else if (isHash(lower)) {
                 CTransaction trans;
                 getTransaction(trans, lower);
@@ -36,6 +37,12 @@ int main(int argc, const char* argv[]) {
                 } else {
                     url += "block/" + lower;
                 }
+
+            } else if (isFourByte(lower)) {
+                if (options.local)
+                    LOG_WARN("Local fourbyte is not implemented");
+                url = "https://www.4byte.directory/signatures/?bytes4_signature=" + lower;
+
             } else {
                 if (endsWith(lower, ".eth")) {
                     url = "https://etherscan.io/enslookup-search?search=" + lower;
@@ -60,6 +67,7 @@ int main(int argc, const char* argv[]) {
                 replace(url, "https://etherscan.io/block/", base + "explorer/blocks/");
                 replace(url, "https://etherscan.io/tx/", base + "explorer/transactions/");
                 replace(url, "https://etherscan.io/address/", base + "dashboard/accounts/");
+                replace(url, "https://www.4byte.directory/signatures/?bytes4_signature=", base + "/");
             }
 
             cerr << "Opening " << url << endl;
