@@ -421,6 +421,11 @@ ethNames 0x1 --fmt api
     "decimals": 18
   },
   {
+    "tags": "90-Individuals:Other",
+    "address": "0x11ededebf63bef0ea2d2d071bdf88f71543ec6fb",
+    "name": "Name 0x11ededeb"
+  },
+  {
     "tags": "50-Tokens:ERC20",
     "address": "0x11f39d29d67f281d659085c6935dfc9e338baa93",
     "name": "ReBaser",
@@ -1401,14 +1406,6 @@ ethNames 0x1 --fmt api
     "address": "0x1563d521ba309e2ad9f4affd6f4de9759e8d4f21",
     "name": "VisionX",
     "symbol": "VNX",
-    "source": "On chain",
-    "decimals": 18
-  },
-  {
-    "tags": "50-Tokens:ERC20",
-    "address": "0x156a5f53a48dd8430dc0f65501be577b27c5462c",
-    "name": "Big Shiba Inu",
-    "symbol": "BSI",
     "source": "On chain",
     "decimals": 18
   }], "types": [

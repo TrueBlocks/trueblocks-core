@@ -1413,6 +1413,17 @@ ethNames Ether --expand --verbose --fmt json
   },
   {
     "deleted": false,
+    "tags": "50-Tokens:ERC20",
+    "address": "0x1e83916ea2ef2d7a6064775662e163b2d4c330a7",
+    "name": "EthereumGasLimit",
+    "symbol": "EGL",
+    "source": "On chain",
+    "decimals": 18,
+    "is_contract": true,
+    "is_erc20": true
+  },
+  {
+    "deleted": false,
     "tags": "91-Early:Addresses",
     "address": "0x1e9d5e4ed8ef31cfece10b4c92c9057f991f36bc",
     "name": "Ethervote_Stake-Voice",
@@ -1722,15 +1733,4 @@ ethNames Ether --expand --verbose --fmt json
     "name": "Wallet",
     "source": "EtherScan.io",
     "is_contract": true
-  },
-  {
-    "deleted": false,
-    "tags": "80-Malicious:DaoDrain",
-    "address": "0x253488078a4edf4d6f42f113d1e62836a942cf1a",
-    "name": "DAO Drain 097",
-    "source": "GethSource Ether Camp",
-    "decimals": 1,
-    "is_contract": true,
-    "is_erc20": true,
-    "is_erc721": true
   }] }

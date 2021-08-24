@@ -165,6 +165,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x1daed74ed1dd7c9dabbe51361ac90a69d851234d	Sashimi Swap: Staking Pool		EtherScan.io			false	false	false	true	false	false
 91-Early:Addresses	0x1dce4922337d44c8a187ce5bee12d26107340e4b	DynamicToken_id340		Ether Camp			false	false	false	true	false	false
 91-Early:Addresses	0x1e4a14f2ab0563005b392be6c590843019a1809c	ProjectKudos_id12		Ether Camp			false	false	false	true	false	false
+50-Tokens:ERC20	0x1e83916ea2ef2d7a6064775662e163b2d4c330a7	EthereumGasLimit	EGL	On chain	18		false	false	false	true	true	false
 91-Early:Addresses	0x1e9d5e4ed8ef31cfece10b4c92c9057f991f36bc	Ethervote_Stake-Voice		EtherScan.io			false	false	false	true	false	false
 91-Early:Addresses	0x1ea51f9d4b69745a25b06bf18f8461740322940a	CrowdFund_id295_cnt1_2mo		Ether Camp			false	false	false	true	false	false
 30-Contracts:Chainlink	0x1eeaf25f2ecbcaf204ecadc8db7b0db9da845327	Chainlink LEND-ETH Aggregator		EtherScan.io			false	false	false	true	false	false
@@ -201,4 +202,3 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin:Grants	0x2489404ede77ec853c3345424bb919c9031856e2	Grant 0079 Lodestar -ethereum 2.0 Client		https://gitcoin.co/grants/79/lodestar-ethereum-20-client			false	false	false	false	false	false
 91-Early:Addresses	0x24ec083b6a022099003e3d035fed48b9a58296e5	Tomeka		EtherScan.io			false	false	false	true	false	false
 91-Early:Addresses	0x253137971b86074021334fb5b7e03ebf2545ead3	Wallet		EtherScan.io			false	false	false	true	false	false
-80-Malicious:DaoDrain	0x253488078a4edf4d6f42f113d1e62836a942cf1a	DAO Drain 097		GethSource Ether Camp	1		false	false	false	true	true	true

@@ -18,7 +18,7 @@ fields = string client_version|\
         bool has_eskey|\
         bool has_pinkey|\
         timestamp ts=date_2_Ts(Now()) (nowrite)|\
-        CCachePtrArray caches
+        CCachePtrArray caches (nowrite)
 includes = etherlib.h|cache.h
 serialize = true
 disabled = true
