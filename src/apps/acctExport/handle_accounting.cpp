@@ -108,6 +108,7 @@ bool COptions::process_reconciliation(CTraverser* trav) {
                     // LOG_WARN(cYellow, "Updating statements", cOff);
                     trav->readStatus = "Updating";
                     cacheIfReconciled(trav, true /* isNew */);
+                    slowQueries++;
                 }
                 return !shouldQuit();
             } else {
