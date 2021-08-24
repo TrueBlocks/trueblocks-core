@@ -95,13 +95,13 @@ string_q CAbi::getValueByName(const string_q& fieldName) const {
                 return addr_2_Str(address);
             }
             break;
-        case 'i':
-            if (fieldName % "interfaceMap") {
-                if (interfaceMap == CStringFunctionMap())
-                    return "{}";
-                return interfaceMap.Format();
-            }
-            break;
+        // case 'i':
+        //     if (fieldName % "interfaceMap") {
+        //         if (interfaceMap == CStringFunctionMap())
+        //             return "{}";
+        //         return interfaceMap.Format();
+        //     }
+        //     break;
         default:
             break;
     }
@@ -137,11 +137,11 @@ bool CAbi::setValueByName(const string_q& fieldNameIn, const string_q& fieldValu
                 return true;
             }
             break;
-        case 'i':
-            if (fieldName % "interfaceMap") {
-                return interfaceMap.parseJson3(fieldValue);
-            }
-            break;
+        // case 'i':
+        //     if (fieldName % "interfaceMap") {
+        //         return interfaceMap.parseJson3(fieldValue);
+        //     }
+        //     break;
         default:
             break;
     }
@@ -245,7 +245,7 @@ void CAbi::registerClass(void) {
     ADD_FIELD(CAbi, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CAbi, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CAbi, "address", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
-    ADD_OBJECT(CAbi, "interfaceMap", T_OBJECT | TS_OMITEMPTY, ++fieldNum, GETRUNTIME_CLASS(CStringFunctionMap));
+    // ADD_OBJECT(CAbi, "interfaceMap", T_OBJECT | TS_OMITEMPTY, ++fieldNum, GETRUNTIME_CLASS(CStringFunctionMap));
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CAbi, "schema");
@@ -256,7 +256,6 @@ void CAbi::registerClass(void) {
     builtIns.push_back(_biCAbi);
 
     // EXISTING_CODE
-    REMOVE_FIELD(CAbi, "interfaceMap");
     ADD_FIELD(CAbi, "interfaceMap", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     // EXISTING_CODE
 }
@@ -335,8 +334,6 @@ ostream& operator<<(ostream& os, const CAbi& it) {
 const CBaseNode* CAbi::getObjectAt(const string_q& fieldName, size_t index) const {
     // EXISTING_CODE
     // EXISTING_CODE
-    if (fieldName % "interfaceMap")
-        return &interfaceMap;
     // EXISTING_CODE
     // EXISTING_CODE
 
