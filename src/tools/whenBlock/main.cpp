@@ -32,6 +32,7 @@ int main(int argc, const char* argv[]) {
         } else {
             if (options.firstOut)
                 cout << exportPreamble(expContext().fmtMap["header"], GETRUNTIME_CLASS(CBlock));
+
             if (options.requests.size() > 0) {
                 options.applyFilter();
 

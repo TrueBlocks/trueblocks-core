@@ -183,9 +183,6 @@ inline string_q exportPreamble(const string_q& format, const CRuntimeClass* pCla
 string_q exportPostamble(const CStringArray& errors, const string_q& extra);
 
 //-------------------------------------------------------------------------
-extern bool findTimestamp_binarySearch(CBlock& block, size_t first, size_t last, bool progress = false);
-
-//-------------------------------------------------------------------------
 extern bool excludeTrace(const CTransaction* trans, size_t maxTraces);
 
 extern wei_t getBalanceAt(const address_t& addr, blknum_t blockNum);

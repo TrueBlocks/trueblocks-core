@@ -30,5 +30,6 @@
 #include "cacheentry.h"
 #include "prices.h"
 #include "reconciliation.h"
+#include "timestamps.h"
 
 using namespace qblocks;  // NOLINT

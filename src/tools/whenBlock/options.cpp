@@ -34,13 +34,6 @@ static const COption params[] = {
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
-//-------------------------------------------------------------------------
-size_t nTimestamps(void) {
-    size_t nTs;
-    loadTimestamps(NULL, nTs);
-    return nTs;
-}
-
 extern const char* STR_DISPLAY_WHEN;
 extern const char* STR_DISPLAY_TIMESTAMP;
 //---------------------------------------------------------------------------------------------------
@@ -56,7 +49,6 @@ bool COptions::parseArguments(string_q& commandIn) {
     // END_CODE_LOCAL_INIT
 
     blknum_t latest = getBlockProgress(BP_CLIENT).client;
-    hasHelp = contains(command, "-h") || contains(command, "-th");
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
@@ -176,11 +168,9 @@ bool COptions::parseArguments(string_q& commandIn) {
                 if (tsArray[index] != bn) {
                     err << "Stored block number (" << tsArray[index] << ") is different to block number " << bn << ".";
                 } else if (tsArray[index] != lastBlk + 1) {
-                    ostringstream err;
                     err << "Stored block number (" << tsArray[index] << ") at block number " << bn
                         << " is not bn plus 1.";
                 } else if (tsArray[index + 1] <= lastTs) {
-                    ostringstream err;
                     err << "Stored timestamp (" << tsArray[index] << ") at block number " << bn
                         << " is not greater than previous.";
                 }
@@ -237,7 +227,6 @@ void COptions::Init(void) {
     skip = NOPOS;
     isText = false;
     cnt = 0;
-    hasHelp = false;
     requests.clear();
     blocks.Init();
 }

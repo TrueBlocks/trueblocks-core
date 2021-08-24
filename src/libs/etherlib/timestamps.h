@@ -11,42 +11,12 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-/*
- * Parts of this file were generated with makeClass --options. Edit only those parts of
- * the code outside of the BEG_CODE/END_CODE sections
- */
-#include "pinlib.h"
 
-// BEG_ERROR_DEFINES
-#define ERR_INVALIDSKIPVAL 1
-#define ERR_OPENINGTIMESTAMPS 2
-#define ERR_INVALIDDATE1 3
-#define ERR_INVALIDDATE2 4
-#define ERR_INVALIDDATE3 5
-#define ERR_INVALIDDATE4 6
-// END_ERROR_DEFINES
+namespace qblocks {
 
-//-----------------------------------------------------------------------------
-class COptions : public CBlockOptions {
-  public:
-    // BEG_CODE_DECLARE
-    bool list;
-    bool timestamps;
-    uint64_t skip;
-    // END_CODE_DECLARE
+extern bool freshenTimestamps(blknum_t minBlock);
+extern bool loadTimestamps(uint32_t** theArray, size_t& cnt);
+extern timestamp_t getBlockTimestamp(blknum_t bn);
+extern size_t nTimestamps(void);
 
-    CNameValueArray requests;
-    bool isText;
-    blknum_t stop;
-    blknum_t cnt;
-
-    COptions(void);
-    ~COptions(void);
-
-    bool parseArguments(string_q& command) override;
-    void Init(void) override;
-
-    void applyFilter(void);
-};
-
-extern bool showSpecials(CNameValue& pair, void* data);
+}  // namespace qblocks

@@ -50,7 +50,6 @@ class COptions : public COptionsBase {
 //-----------------------------------------------------------------------------
 extern bool visitNonEmptyBlock(CBlock& node, void* data);
 extern bool visitEmptyBlock(CBlock& node, void* data);
-extern timestamp_t getBlockTimestamp(blknum_t bn);
 extern string_q STR_DISPLAY_EXPORT;
 extern string_q STR_HEADER_EXPORT;
 extern biguint_t operator-(const biguint_t& a, const bigint_t& b);
