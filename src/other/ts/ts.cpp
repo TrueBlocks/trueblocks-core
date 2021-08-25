@@ -49,15 +49,15 @@ void list(void) {
     if (!file.Lock(fn, modeReadOnly, LOCK_NOWAIT))
         return;
 
-    size_t tsCnt = ((fileSize(fn) / sizeof(uint32_t)) / 2);
-    uint32_t* ts_array = new uint32_t[tsCnt * 2];  // blknum - timestamp
+    size_t ts Cnt = ((fileSize(fn) / sizeof(uint32_t)) / 2);
+    uint32_t* ts_array = new uint32_t[ts Cnt * 2];  // blknum - timestamp
     if (!ts_array)
         return;
 
-    file.Read(ts_array, sizeof(uint32_t) * 2, tsCnt);
+    file.Read(ts_array, sizeof(uint32_t) * 2, ts Cnt);
     file.Release();
 
-    for (size_t i = 0; i < tsCnt; i++)
+    for (size_t i = 0; i < ts Cnt; i++)
         cout << ts_array[2 * i] << "\t" << ts_array[2 * i + 1] << "\t"
              << ts_2_Date(ts_array[2 * i + 1]).Format(FMT_EXPORT) << endl;
 }
@@ -69,12 +69,12 @@ void check(void) {
     if (!file.Lock(fn, modeReadOnly, LOCK_NOWAIT))
         return;
 
-    size_t tsCnt = ((fileSize(fn) / sizeof(uint32_t)) / 2);
-    uint32_t* ts_array = new uint32_t[tsCnt * 2];  // blknum - timestamp
+    size_t ts Cnt = ((fileSize(fn) / sizeof(uint32_t)) / 2);
+    uint32_t* ts_array = new uint32_t[ts Cnt * 2];  // blknum - timestamp
     if (!ts_array)
         return;
 
-    file.Read(ts_array, sizeof(uint32_t) * 2, tsCnt);
+    file.Read(ts_array, sizeof(uint32_t) * 2, ts Cnt);
     file.Release();
 
     cout << "chain:\t";
@@ -90,7 +90,7 @@ void check(void) {
     blknum_t start = 8250000;  // 7264000; //2071099;
 #define skip 1
     //((blknum_t)RandomValue(11,221))
-    for (blknum_t bn = start; bn < tsCnt; bn = bn + skip) {
+    for (blknum_t bn = start; bn < ts Cnt; bn = bn + skip) {
         CBlock block;
         getBlock_header(block, bn);
         cout << "chain:\t";
@@ -117,17 +117,17 @@ void trunc(void) {
     CArchive file(READING_ARCHIVE);
     if (!file.Lock(fn, modeReadOnly, LOCK_NOWAIT))
         return;
-    size_t tsCnt = ((fileSize(fn) / sizeof(uint32_t)) / 2);
-    uint32_t* ts_array = new uint32_t[tsCnt * 2];  // blknum - timestamp
+    size_t ts Cnt = ((fileSize(fn) / sizeof(uint32_t)) / 2);
+    uint32_t* ts_array = new uint32_t[ts Cnt * 2];  // blknum - timestamp
     if (!ts_array)
         return;
-    file.Read(ts_array, sizeof(uint32_t) * 2, tsCnt);
+    file.Read(ts_array, sizeof(uint32_t) * 2, ts Cnt);
     file.Release();
 
     ts_array[1] = blockZeroTs;
     if (!file.Lock(fn, modeWriteCreate, LOCK_WAIT))
         return;
-    file.Write(ts_array, sizeof(uint32_t) * 2, tsCnt);  // 8264850);
+    file.Write(ts_array, sizeof(uint32_t) * 2, ts Cnt);  // 8264850);
     file.Release();
     delete[] ts_array;
 

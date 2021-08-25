@@ -238,13 +238,13 @@ string_q nextAppearancedisplayChunk_custom(const string_q& fieldIn, const void* 
             // EXISTING_CODE
             case 'd':
                 if (fieldIn % "date") {
-                    timestamp_t ts = (timestamp_t)expContext().tsMemMap[(app->blockNumber * 2) + 1];
+                    timestamp_t ts = getTimestampAt(app->blockNumber);
                     return ts_2_Date(ts).Format(FMT_JSON);
                 }
                 break;
             case 't':
                 if (fieldIn % "timestamp")
-                    return ts_2_Str((timestamp_t)expContext().tsMemMap[(app->blockNumber * 2) + 1]);
+                    return ts_2_Str(getTimestampAt(app->blockNumber));
                 break;
             // EXISTING_CODE
             case 'p':

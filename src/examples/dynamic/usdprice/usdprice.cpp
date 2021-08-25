@@ -51,8 +51,8 @@ bool header(CTraverser* trav, void* data) {
 bool display(CTraverser* trav, void* data) {
     CTestTraverser* tt = (CTestTraverser*)trav;
     tt->perTxCall.blockNumber = tt->app->blk;
-    tt->trans.timestamp = (timestamp_t)expContext().tsMemMap[(tt->app->blk * 2) + 1];
-    tt->block.timestamp = (timestamp_t)expContext().tsMemMap[(tt->app->blk * 2) + 1];
+    tt->trans.timestamp = getTimestampAt(tt->app->blk);
+    tt->block.timestamp = getTimestampAt(tt->app->blk);
 
     cerr << tt->readStatus << " ";
     if (doEthCall(tt->perTxCall) && !tt->perTxCall.result.outputs.empty()) {

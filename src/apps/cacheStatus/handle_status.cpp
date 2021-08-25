@@ -464,15 +464,9 @@ bool noteIndex(const string_q& path, void* data) {
             aci.indexSizeBytes = (uint32_t)fileSize(path);
         }
 
-        if (expContext().tsMemMap) {
-            if (aci.firstApp < expContext().tsCnt && aci.latestApp < expContext().tsCnt) {
-                aci.firstTs = (timestamp_t)expContext().tsMemMap[(aci.firstApp * 2) + 1];
-                aci.latestTs = (timestamp_t)expContext().tsMemMap[(aci.latestApp * 2) + 1];
-            } else {
-                aci.firstTs = (timestamp_t)0;
-                aci.latestTs = (timestamp_t)0;
-            }
-        }
+        aci.firstTs = getTimestampAt(aci.firstApp);
+        aci.latestTs = getTimestampAt(aci.latestApp);
+
         getIndexMetrics(path, aci.nApps, aci.nAddrs);
         counter->indexArray->push_back(aci);
     }

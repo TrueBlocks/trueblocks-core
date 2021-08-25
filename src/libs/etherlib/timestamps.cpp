@@ -15,6 +15,20 @@
 namespace qblocks {
 
 //-------------------------------------------------------------------------
+timestamp_t getTimestampBlockAt(blknum_t blk) {
+    if (expContext().tsMemMap && blk < expContext().tsCnt)
+        return timestamp_t(expContext().tsMemMap[(blk * 2)]);
+    return 0;
+}
+
+//-------------------------------------------------------------------------
+timestamp_t getTimestampAt(blknum_t blk) {
+    if (expContext().tsMemMap && blk < expContext().tsCnt)
+        return timestamp_t(expContext().tsMemMap[(blk * 2) + 1]);
+    return 0;
+}
+
+//-------------------------------------------------------------------------
 size_t nTimestamps(void) {
     size_t nTs;
     loadTimestamps(NULL, nTs);
@@ -27,7 +41,7 @@ timestamp_t getBlockTimestamp(blknum_t bn) {
         loadTimestamps(&expContext().tsMemMap, expContext().tsCnt);
         cerr << "Timestamps loaded..." << endl;
     }
-    return bn < expContext().tsCnt ? expContext().tsMemMap[(bn * 2) + 1] : 0;
+    return getTimestampAt(bn);
 }
 
 //-----------------------------------------------------------------------
@@ -147,10 +161,10 @@ bool forEveryTimestamp(BLOCKVISITFUNC func, void* data, uint64_t start, uint64_t
         return false;
 
     count = count <= expContext().tsCnt ? count : expContext().tsCnt;
-    for (size_t bn = start; bn < count; bn += skip) {
+    for (size_t index = start; index < count; index += skip) {
         CBlock block;
-        block.blockNumber = expContext().tsMemMap[bn];
-        block.timestamp = expContext().tsMemMap[bn + 1];
+        block.blockNumber = getTimestampBlockAt(index / 2);
+        block.timestamp = getTimestampAt(index / 2);
         bool ret = (*func)(block, data);
         if (!ret) {
             // IMPORTANT NOTE - loadTimestamps does not return an allocated pointer. It returns
