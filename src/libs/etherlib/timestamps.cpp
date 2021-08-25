@@ -23,13 +23,11 @@ size_t nTimestamps(void) {
 
 //--------------------------------------------------------------
 timestamp_t getBlockTimestamp(blknum_t bn) {
-    static uint32_t* timestamps = NULL;
-    static size_t nTimestamps = 0;
-    if (nTimestamps == 0) {
-        loadTimestamps(&timestamps, nTimestamps);
+    if (expContext().tsCnt == 0) {
+        loadTimestamps(&expContext().tsMemMap, expContext().tsCnt);
         cerr << "Timestamps loaded..." << endl;
     }
-    return bn < nTimestamps ? timestamps[(bn * 2) + 1] : 0;
+    return bn < expContext().tsCnt ? expContext().tsMemMap[(bn * 2) + 1] : 0;
 }
 
 //-----------------------------------------------------------------------
@@ -134,6 +132,37 @@ bool loadTimestamps(uint32_t** theArray, size_t& cnt) {
     file.open(tsIndex);
     if (file.isValid())
         *theArray = (uint32_t*)file.getData();  // NOLINT
+
+    return true;
+}
+
+//-------------------------------------------------------------------------
+bool forEveryTimestamp(BLOCKVISITFUNC func, void* data, uint64_t start, uint64_t count, uint64_t skip) {
+    if (!func)
+        return false;
+
+    if (!loadTimestamps(&expContext().tsMemMap, expContext().tsCnt))
+        return false;
+    if (!expContext().tsMemMap)  // it may not have failed, but there may be no timestamps
+        return false;
+
+    count = count <= expContext().tsCnt ? count : expContext().tsCnt;
+    for (size_t bn = start; bn < count; bn += skip) {
+        CBlock block;
+        block.blockNumber = expContext().tsMemMap[bn];
+        block.timestamp = expContext().tsMemMap[bn + 1];
+        bool ret = (*func)(block, data);
+        if (!ret) {
+            // IMPORTANT NOTE - loadTimestamps does not return an allocated pointer. It returns
+            // a pointer to a memory mapped file, don't delete it. We leave this here as documentation.
+            // delete[] tsArray;
+            return false;
+        }
+    }
+
+    // IMPORTANT NOTE - loadTimestamps does not return an allocated pointer. It returns
+    // a pointer to a memory mapped file, don't delete it. We leave this here as documentation.
+    // delete[] tsArray;
 
     return true;
 }

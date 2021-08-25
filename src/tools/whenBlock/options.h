@@ -27,14 +27,25 @@
 // END_ERROR_DEFINES
 
 //-----------------------------------------------------------------------------
+class CTimeStamper {
+  public:
+    size_t expected = 0;
+    blknum_t prevBn = 0;
+    timestamp_t prevTs = blockZeroTs;
+};
+
+//-----------------------------------------------------------------------------
 class COptions : public CBlockOptions {
   public:
     // BEG_CODE_DECLARE
     bool list;
     bool timestamps;
+    bool check;
+    bool fix;
     uint64_t skip;
     // END_CODE_DECLARE
 
+    CTimeStamper checker;
     CNameValueArray requests;
     bool isText;
     blknum_t stop;
@@ -50,3 +61,4 @@ class COptions : public CBlockOptions {
 };
 
 extern bool showSpecials(CNameValue& pair, void* data);
+extern bool checkTimestamp(CBlock& block, void* data);
