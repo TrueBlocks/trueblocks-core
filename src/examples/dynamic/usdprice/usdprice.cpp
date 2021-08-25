@@ -87,9 +87,6 @@ bool display(CTraverser* trav, void* data) {
 extern "C" CTraverser* makeTraverser(void) {
     acctlib_init(quickQuitHandler);
 
-    freshenTimestamps(getBlockProgress().client);
-    loadTimestamps(&expContext().tsMemMap, expContext().tsCnt);
-
     CTestTraverser* trav = new CTestTraverser;
     trav->preFunc = header;
     trav->dataFunc = noopFunc;

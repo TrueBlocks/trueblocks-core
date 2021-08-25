@@ -52,7 +52,7 @@ bool CUniPrice::setPair(const address_t& r1, const address_t& r2) {
     this->abi_spec.loadAbiFromEtherscan(this->address);
     this->encoding = getReservesSelector;
     this->bytes = getReservesBytes;
-    LOG_INFO(bGreen, "Found USD Pair: ", this->address, " with ", this->abi_spec.nInterfaces(), " endpoints", cOff);
+    // LOG_INFO(bGreen, "Found USD Pair: ", this->address, " with ", this->abi_spec.nInterfaces(), " endpoints", cOff);
     return true;
 }
 
@@ -127,14 +127,15 @@ bool display(CTraverser* trav, void* data) {
                         cout << double_2_Str(totIn * price, 2) << "\t";
                         cout << double_2_Str(totOut * price, 2) << "\t";
                         cout << double_2_Str(endBal * price, 2) << "\t";
-                        if (tt->prevBlock == trav->app->blk && !statement.reconciled) {
+                        if (tt->prevBlock == trav->app->blk && !statement.reconciled()) {
                             cout << "same block" << endl;
-                            LOG_INFO(trav->trans.blockNumber, ".", trav->trans.transactionIndex, "\t",
-                                     double_2_Str(endBal * price, 2), "\tsame block");
+                            // LOG_INFO(trav->trans.blockNumber, ".", trav->trans.transactionIndex, "\t",
+                            //          double_2_Str(endBal * price, 2), "\tsame block");
                         } else {
-                            cout << (statement.reconciled ? "true" : "false") << endl;
-                            LOG_INFO(trav->trans.blockNumber, ".", trav->trans.transactionIndex, "\t",
-                                     double_2_Str(endBal * price, 2), "\t", (statement.reconciled ? "true" : "false"));
+                            cout << (statement.reconciled() ? "true" : "false") << endl;
+                            // LOG_INFO(trav->trans.blockNumber, ".", trav->trans.transactionIndex, "\t",
+                            //         double_2_Str(endBal * price, 2), "\t",
+                            //         (statement.reconciled() ? "true" : "false"));
                         }
                         usleep(30000);
                     }
@@ -160,8 +161,6 @@ bool display(CTraverser* trav, void* data) {
 extern "C" CTraverser* makeTraverser(void) {
     acctlib_init(quickQuitHandler);
 
-    freshenTimestamps(getBlockProgress().client);
-    loadTimestamps(&expContext().tsMemMap, expContext().tsCnt);
     expContext().asEther = true;
 
     CTestTraverser* trav = new CTestTraverser;
