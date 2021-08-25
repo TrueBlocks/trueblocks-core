@@ -14,7 +14,7 @@ whenBlock 2015-03-02 --list
 
 	#### Hidden options
 	-c  (--check)         available only with --timestamps option, checks the validity of the timestamp data
-	-f  (--fix <num>)     available only with --timestamps option, fixes incorrect timestamp entries
+	-f  (--fix)           available only with --timestamps option, fixes incorrect timestamps if found
 	#### Hidden options
 
 	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]

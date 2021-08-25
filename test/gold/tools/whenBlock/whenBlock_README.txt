@@ -15,7 +15,7 @@ whenBlock -th
 | -s | --skip &lt;num&gt; | only applicable if --timestamps is on, the step between block numbers in the export |
 |####|Hidden options||
 | -c | --check | available only with --timestamps option, checks the validity of the timestamp data |
-| -f | --fix &lt;num&gt; | available only with --timestamps option, fixes incorrect timestamp entries |
+| -f | --fix | available only with --timestamps option, fixes incorrect timestamps if found |
 |####|Hidden options||
 | -x | --fmt &lt;val&gt; | export format, one of *[ none \| json\* \| txt \| csv \| api ]* |
 | -v | --verbose | set verbose level (optional level defaults to 1) |
