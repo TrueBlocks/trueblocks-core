@@ -980,12 +980,12 @@ paths:
           type: boolean
       - name: fix
         in: query
-        description: available only with --timestamps option, fixes incorrect timestamp entries
+        description: available only with --timestamps option, fixes incorrect timestamps if found
         required: false
         style: form
         explode: true
         schema:
-          type: string
+          type: boolean
       - name: skip
         in: query
         description: only applicable if --timestamps is on, the step between block

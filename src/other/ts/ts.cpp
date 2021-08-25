@@ -43,7 +43,7 @@ void regenerate(void) {
 }
 
 void list(void) {
-    string_q fn = tsIndex;
+    string_q fn = ts Index;
 
     CArchive file(READING_ARCHIVE);
     if (!file.Lock(fn, modeReadOnly, LOCK_NOWAIT))
@@ -63,7 +63,7 @@ void list(void) {
 }
 
 void check(void) {
-    string_q fn = tsIndex;
+    string_q fn = ts Index;
 
     CArchive file(READING_ARCHIVE);
     if (!file.Lock(fn, modeReadOnly, LOCK_NOWAIT))
@@ -112,7 +112,7 @@ void check(void) {
 }
 
 void trunc(void) {
-    string_q fn = tsIndex;
+    string_q fn = ts Index;
 
     CArchive file(READING_ARCHIVE);
     if (!file.Lock(fn, modeReadOnly, LOCK_NOWAIT))
