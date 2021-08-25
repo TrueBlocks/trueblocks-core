@@ -146,8 +146,6 @@ bool COptions::parseArguments(string_q& commandIn) {
     configureDisplay("whenBlock", "CBlock", format);
     manageFields("CBlock:" + string_q(format));
 
-    freshenTimestamps(getBlockProgress(BP_CLIENT).client);
-
     return true;
 }
 

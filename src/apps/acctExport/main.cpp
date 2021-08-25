@@ -113,7 +113,7 @@ int main(int argc, const char* argv[]) {
 
 //-----------------------------------------------------------------------
 bool tsRangeFunc(CTraverser* trav, void* data) {
-    if (trav->app->blk >= expContext().tsCnt || shouldQuit())
+    if (!getTimestampAt(trav->app->blk) || shouldQuit())
         return false;
     return inRange(blknum_t(trav->app->blk), trav->exportRange.first, trav->exportRange.second);
 }

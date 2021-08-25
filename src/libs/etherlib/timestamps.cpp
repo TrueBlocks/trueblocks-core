@@ -15,14 +15,31 @@
 namespace qblocks {
 
 //-------------------------------------------------------------------------
-timestamp_t getTimestampBlockAt(blknum_t blk) {
+bool freshenAndLoad(void) {
+    freshenTimestamps(getBlockProgress().client);  // opens, freshens, and closes the fle
+    if (!loadTimestamps(&expContext().tsMemMap, expContext().tsCnt)) {
+        LOG_WARN("Could not load timestamp file");
+        return false;
+    }
+    LOG4("Loaded timestamp file");
+    return true;
+}
+
+//-------------------------------------------------------------------------
+blknum_t getTimestampBlockAt(blknum_t blk) {
+    if (!expContext().tsMemMap)
+        if (!freshenAndLoad())
+            return 0;
     if (expContext().tsMemMap && blk < expContext().tsCnt)
-        return timestamp_t(expContext().tsMemMap[(blk * 2)]);
+        return expContext().tsMemMap[(blk * 2)];
     return 0;
 }
 
 //-------------------------------------------------------------------------
 timestamp_t getTimestampAt(blknum_t blk) {
+    if (!expContext().tsMemMap)
+        if (!freshenAndLoad())
+            return 0;
     if (expContext().tsMemMap && blk < expContext().tsCnt)
         return timestamp_t(expContext().tsMemMap[(blk * 2) + 1]);
     return 0;
@@ -30,18 +47,7 @@ timestamp_t getTimestampAt(blknum_t blk) {
 
 //-------------------------------------------------------------------------
 size_t nTimestamps(void) {
-    size_t nTs;
-    loadTimestamps(NULL, nTs);
-    return nTs;
-}
-
-//--------------------------------------------------------------
-timestamp_t getBlockTimestamp(blknum_t bn) {
-    if (expContext().tsCnt == 0) {
-        loadTimestamps(&expContext().tsMemMap, expContext().tsCnt);
-        cerr << "Timestamps loaded..." << endl;
-    }
-    return getTimestampAt(bn);
+    return ((fileSize(tsIndex) / sizeof(uint32_t)) / 2);
 }
 
 //-----------------------------------------------------------------------
@@ -151,33 +157,19 @@ bool loadTimestamps(uint32_t** theArray, size_t& cnt) {
 }
 
 //-------------------------------------------------------------------------
-bool forEveryTimestamp(BLOCKVISITFUNC func, void* data, uint64_t start, uint64_t count, uint64_t skip) {
+bool forEveryTimestamp(BLOCKVISITFUNC func, void* data) {
     if (!func)
         return false;
 
-    if (!loadTimestamps(&expContext().tsMemMap, expContext().tsCnt))
-        return false;
-    if (!expContext().tsMemMap)  // it may not have failed, but there may be no timestamps
-        return false;
-
-    count = count <= expContext().tsCnt ? count : expContext().tsCnt;
-    for (size_t index = start; index < count; index += skip) {
+    size_t n = nTimestamps();
+    for (size_t index = 0; index < n; index++) {
         CBlock block;
-        block.blockNumber = getTimestampBlockAt(index / 2);
-        block.timestamp = getTimestampAt(index / 2);
+        block.blockNumber = getTimestampBlockAt(index);
+        block.timestamp = getTimestampAt(index);
         bool ret = (*func)(block, data);
-        if (!ret) {
-            // IMPORTANT NOTE - loadTimestamps does not return an allocated pointer. It returns
-            // a pointer to a memory mapped file, don't delete it. We leave this here as documentation.
-            // delete[] tsArray;
+        if (!ret)
             return false;
-        }
     }
-
-    // IMPORTANT NOTE - loadTimestamps does not return an allocated pointer. It returns
-    // a pointer to a memory mapped file, don't delete it. We leave this here as documentation.
-    // delete[] tsArray;
-
     return true;
 }
 

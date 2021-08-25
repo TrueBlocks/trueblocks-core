@@ -36,7 +36,7 @@ int main(int argc, const char* argv[]) {
                 options.applyFilter();
 
             } else if (options.timestamps) {
-                forEveryTimestamp(visitBlock, &options, 0, nTimestamps() * 2, 2);
+                forEveryTimestamp(visitBlock, &options);
             }
 
             cout << exportPostamble(options.errors, expContext().fmtMap["meta"]);

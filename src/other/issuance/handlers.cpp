@@ -28,7 +28,7 @@ bool COptions::model_issuance(void) {
             if (true) {
                 CReconciliation rec;
                 rec.blockNum = bn;
-                rec.timestamp = getBlockTimestamp(bn);
+                rec.timestamp = getTimestampAt(bn);
                 if (bn == 0) {
                     cout << STR_HEADER_EXPORT << endl;
                     for (auto item : prefundWeiMap)
@@ -57,9 +57,10 @@ bool COptions::model_issuance(void) {
 
 CStringArray header;
 ////--------------------------------------------------------------
-//bool auditLine(const char* str, void* data) {
+// bool auditLine(const char* str, void* data) {
 //    if (header.empty()) {
-//        string_q headers = "blockNum,timestamp,month,day,minerBaseRewardIn,minerNephewRewardIn,minerIssuance,minerUncleRewardIn,issuance";
+//        string_q headers =
+//        "blockNum,timestamp,month,day,minerBaseRewardIn,minerNephewRewardIn,minerIssuance,minerUncleRewardIn,issuance";
 //        explode(header, headers, ',');
 //        return true;
 //    }
@@ -87,9 +88,9 @@ CStringArray header;
 //}
 
 //--------------------------------------------------------------
-int sortByFirstAppearance(const void *v1, const void *v2) {
-    CAddressRecord_base *vv1 = (CAddressRecord_base*)v1;
-    CAddressRecord_base *vv2 = (CAddressRecord_base*)v2;
+int sortByFirstAppearance(const void* v1, const void* v2) {
+    CAddressRecord_base* vv1 = (CAddressRecord_base*)v1;
+    CAddressRecord_base* vv2 = (CAddressRecord_base*)v2;
     if (vv1->offset > vv2->offset)
         return 1;
     else if (vv1->offset < vv2->offset)
@@ -98,9 +99,9 @@ int sortByFirstAppearance(const void *v1, const void *v2) {
 }
 
 //--------------------------------------------------------------
-int sortReverseByTxid(const void *v1, const void *v2) {
-    CAppearance_base *vv1 = (CAppearance_base*)v1;
-    CAppearance_base *vv2 = (CAppearance_base*)v2;
+int sortReverseByTxid(const void* v1, const void* v2) {
+    CAppearance_base* vv1 = (CAppearance_base*)v1;
+    CAppearance_base* vv2 = (CAppearance_base*)v2;
     if (vv2->txid > vv1->txid)
         return 1;
     else if (vv2->txid < vv1->txid)
@@ -116,7 +117,7 @@ bool reconcileIssuance(const CAppearance& app) {
         return true;
 
     bigint_t minerReward, nephewReward, minerTxFee, uncleReward1, uncleReward2, netTx;
-    uint64_t d1=0, d2=0;
+    uint64_t d1 = 0, d2 = 0;
     uint64_t uncleCount = getUncleCount(app.bn);
     if (app.tx != 99998) {
         minerReward = getBlockReward2(app.bn);
@@ -124,7 +125,7 @@ bool reconcileIssuance(const CAppearance& app) {
         minerTxFee = getTransFees(app.bn);
     }
 
-    for (size_t i = 0 ; i < uncleCount ; i++) {
+    for (size_t i = 0; i < uncleCount; i++) {
         CBlock uncle;
         getUncle(uncle, app.bn, i);
         if (uncle.miner == app.addr) {
@@ -157,8 +158,10 @@ bool reconcileIssuance(const CAppearance& app) {
             netTx += trans.isError ? 0 : trans.value;
         }
         expected = begBal + minerReward + nephewReward + minerTxFee + uncleReward1 + uncleReward2 + netTx;
-        cerr << expected << " : " << endBal << " : " << (expected - endBal) << string_q(90, ' ') << "\r"; cerr.flush();
-        if (endBal == expected) return true;
+        cerr << expected << " : " << endBal << " : " << (expected - endBal) << string_q(90, ' ') << "\r";
+        cerr.flush();
+        if (endBal == expected)
+            return true;
     }
 
     if (endBal != expected) {
@@ -196,12 +199,12 @@ bool visitIndexChunk(CIndexArchive& chunk, void* data) {
     size_t nMiners = 0;
     size_t nUncles = 0;
     CAppearanceArray checkList;
-    for (size_t i = 0 ; i < chunk.nAddrs ; i++) {
-        CAddressRecord_base *rec = &chunk.addresses[i];
-        CAppearance_base *start = &chunk.appearances[rec->offset];
+    for (size_t i = 0; i < chunk.nAddrs; i++) {
+        CAddressRecord_base* rec = &chunk.addresses[i];
+        CAppearance_base* start = &chunk.appearances[rec->offset];
         qsort(start, rec->cnt, sizeof(CAppearance_base), sortReverseByTxid);
         if (start[0].blk != 0 && (start[0].txid == 99997 || start[0].txid == 99998 || start[0].txid == 99999)) {
-            CAppearance_base *appPtr = &chunk.appearances[rec->offset];
+            CAppearance_base* appPtr = &chunk.appearances[rec->offset];
             CAppearance app;
             app.bn = appPtr->blk;
             app.tx = appPtr->txid;
@@ -215,9 +218,12 @@ bool visitIndexChunk(CIndexArchive& chunk, void* data) {
     cout << fn << " nMiners: " << nMiners << " nUncles: " << nUncles << string_q(120, ' ') << endl;
     for (auto app : checkList) {
         if (reconcileIssuance(app)) {
-            cerr << fn << ": Block reward for  " << app.addr << " at block " << app.bn << " balances" << "    \r"; cerr.flush();
+            cerr << fn << ": Block reward for  " << app.addr << " at block " << app.bn << " balances"
+                 << "    \r";
+            cerr.flush();
         } else {
-            cout << fn << ": Block reward for  " << app.addr << " at block " << app.bn << bRed << " does not balance" << cOff << endl;
+            cout << fn << ": Block reward for  " << app.addr << " at block " << app.bn << bRed << " does not balance"
+                 << cOff << endl;
         }
     }
     return true;
@@ -230,9 +236,9 @@ bool COptions::audit_issuance(void) {
 }
 
 //--------------------------------------------------------------
-int sortByBlockNumber(const void *v1, const void *v2) {
-    CAppearance_base *vv1 = (CAppearance_base*)v1;
-    CAppearance_base *vv2 = (CAppearance_base*)v2;
+int sortByBlockNumber(const void* v1, const void* v2) {
+    CAppearance_base* vv1 = (CAppearance_base*)v1;
+    CAppearance_base* vv2 = (CAppearance_base*)v2;
     if (vv1->blk > vv2->blk)
         return 1;
     else if (vv1->blk < vv2->blk)
@@ -241,10 +247,10 @@ int sortByBlockNumber(const void *v1, const void *v2) {
 }
 
 //--------------------------------------------------------------
-bool listUncleBlocks(CIndexArchive& chunk, void *data) {
+bool listUncleBlocks(CIndexArchive& chunk, void* data) {
     qsort(chunk.appearances, chunk.nApps, sizeof(CAppearance_base), sortByBlockNumber);
-    for (size_t i = 0 ; i < chunk.nApps ; i++) {
-        CAppearance_base *start = &chunk.appearances[i];
+    for (size_t i = 0; i < chunk.nApps; i++) {
+        CAppearance_base* start = &chunk.appearances[i];
         if (start->txid == 99998)
             cout << start[0].blk << endl;
     }
@@ -267,10 +273,11 @@ bool COptions::check_uncles(void) {
 
     for (auto uncleBn : uncleBlocks) {
         uint64_t nUncles = getUncleCount(uncleBn);
-        for (size_t index = 0 ; index < nUncles ; index++) {
+        for (size_t index = 0; index < nUncles; index++) {
             string_q uncleStr = getRawUncle(uncleBn, index);
             if (contains(uncleStr, "uncles:[]")) {
-                cerr << "No uncles in uncle block " << uncleBn << "." << index << "\r"; cerr.flush();
+                cerr << "No uncles in uncle block " << uncleBn << "." << index << "\r";
+                cerr.flush();
             } else {
                 cout << "Uncle block " << uncleBn << "." << index << " has children" << endl;
             }
@@ -282,23 +289,22 @@ bool COptions::check_uncles(void) {
 
 //--------------------------------------------------------------------------------
 string_q STR_DISPLAY_EXPORT =
-"[{BLOCKNUM}],"\
-"[{TIMESTAMP}],"\
-"[{MONTH}],"\
-"[{DAY}],"\
-"[{MINERBASEREWARDIN}],"\
-"[{MINERNEPHEWREWARDIN}],"\
-"[{MINERISSUANCE}],"\
-"[{MINERUNCLEREWARDIN}],"\
-"[{ISSUANCE}]";
-
+    "[{BLOCKNUM}],"
+    "[{TIMESTAMP}],"
+    "[{MONTH}],"
+    "[{DAY}],"
+    "[{MINERBASEREWARDIN}],"
+    "[{MINERNEPHEWREWARDIN}],"
+    "[{MINERISSUANCE}],"
+    "[{MINERUNCLEREWARDIN}],"
+    "[{ISSUANCE}]";
 
 string_q STR_HEADER_EXPORT =
-"blockNum,timestamp,month,day,minerBaseRewardIn,minerNephewRewardIn,minerIssuance,minerUncleRewardIn,issuance";
+    "blockNum,timestamp,month,day,minerBaseRewardIn,minerNephewRewardIn,minerIssuance,minerUncleRewardIn,issuance";
 
 //--------------------------------------------------------------
 class CAccumulator {
-public:
+  public:
     CReconciliation sum;
     period_t period;
     string_q fmt;
@@ -319,16 +325,19 @@ public:
         return !isBlockSummary();
     }
     bool isBlockSummary(void) const {
-        return (period == BY_1 || period == BY_10 || period == BY_100 || period == BY_1000 || period == BY_10000 || period == BY_100000 || period == BY_1000000);
+        return (period == BY_1 || period == BY_10 || period == BY_100 || period == BY_1000 || period == BY_10000 ||
+                period == BY_100000 || period == BY_1000000);
     }
 };
 
 //--------------------------------------------------------------
 bool visitLine(const char* str, void* data) {
-    CAccumulator *acc = (CAccumulator*)data;
+    CAccumulator* acc = (CAccumulator*)data;
 
     if (header.empty()) {
-        string_q headers = "blockNum,timestamp,month,day,minerBaseRewardIn,minerNephewRewardIn,minerIssuance,minerUncleRewardIn,issuance";
+        string_q headers =
+            "blockNum,timestamp,month,day,minerBaseRewardIn,minerNephewRewardIn,minerIssuance,minerUncleRewardIn,"
+            "issuance";
         explode(header, headers, ',');
         return true;
     }
@@ -348,7 +357,7 @@ bool visitLine(const char* str, void* data) {
             acc->sum = reset;
         }
     } else {
-        if (!(rec.timestamp % 23)) { // skip
+        if (!(rec.timestamp % 23)) {  // skip
             cerr << "Processing " << rec.blockNum << ": " << ts_2_Date(rec.timestamp).Format(FMT_JSON) << "\r";
             cerr.flush();
         }
@@ -360,7 +369,6 @@ bool visitLine(const char* str, void* data) {
 
 //--------------------------------------------------------------
 bool COptions::summary_by_period(void) {
-
     CAccumulator accumulator;
     accumulator.period = by_period;
     accumulator.fmt = substitute(STR_DISPLAY_EXPORT, "[{MONTH}],[{DAY}]", per_2_Str(by_period));

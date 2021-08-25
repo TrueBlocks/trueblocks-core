@@ -15,10 +15,10 @@
 
 namespace qblocks {
 
+extern size_t nTimestamps(void);
+extern blknum_t getTimestampBlockAt(blknum_t blk);
+extern timestamp_t getTimestampAt(blknum_t bn);
 extern bool freshenTimestamps(blknum_t minBlock);
 extern bool loadTimestamps(uint32_t** theArray, size_t& cnt);
-extern timestamp_t getBlockTimestamp(blknum_t bn);
-extern size_t nTimestamps(void);
-timestamp_t getTimestampAt(blknum_t bn);
 
 }  // namespace qblocks

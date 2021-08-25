@@ -1,6 +1,7 @@
 acctExport argc: 9 [1:0x05a56e2d52c817161883f50c441c3228cfe54d9f] [2:--max_records] [3:15] [4:--accounting] [5:--fmt] [6:api] [7:--verbose] [8:10] 
 acctExport 0x05a56e2d52c817161883f50c441c3228cfe54d9f --max_records 15 --accounting --fmt api --verbose 10 
 TIME ~ CLOCK - : 4-----0x05a56e2d52c817161883f50c441c3228cfe54d9f freshened to 11854827
+TIME ~ CLOCK - : 4-----Loaded timestamp file
 {"data": [
 TIME ~ CLOCK - : 4-----Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 0 prior to its deployment 10042267
 params.size: 0

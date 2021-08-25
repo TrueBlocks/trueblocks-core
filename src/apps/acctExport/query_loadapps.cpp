@@ -78,11 +78,9 @@ bool COptions::loadAllAppearances(void) {
     // Make sure the timestamps column is at least as up to date as this monitor
     if (monApps.size()) {
         // it's okay to not be able to freshen this. We'll just report less txs
-        freshenTimestamps(monApps[monApps.size() - 1].blk);
-        if (!loadTimestamps(&expContext().tsMemMap, expContext().tsCnt)) {
-            LOG_ERR("Could not open timestamp file.");
+        if (!getTimestampAt(1))  // loads the timestamp file and returns non-zero
             return false;
-        }
+
     } else {
         if (!freshenOnly)
             LOG_INFO("Nothing to export" + (allMonitors.size() ? (" from " + accountedFor.address) : "") + ".");

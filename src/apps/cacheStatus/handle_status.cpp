@@ -50,7 +50,6 @@ bool COptions::handle_status(ostream& os) {
             forEveryFileInFolder(thePath, countFiles, &index);
             LOG8("Counted files");
             CItemCounter counter(this);
-            loadTimestamps(&expContext().tsMemMap, expContext().tsCnt);
             index.path = pathName("index", indexFolder_finalized);
             counter.cachePtr = &index;
             counter.indexArray = &index.items;
