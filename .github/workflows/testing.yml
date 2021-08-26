@@ -19,7 +19,7 @@ jobs:
           command_timeout: 40m
           script_stop: true
       - name: Remove and then clone the repo
-        script:
+        run: |
           echo $HOME
           cd $HOME
           rm -rf Development/trueblocks-core
