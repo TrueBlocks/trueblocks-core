@@ -13,7 +13,7 @@ jobs:
         uses: appleboy/ssh-action@master
         with:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          known_hosts: ${{ secrets.KNOWN_HOSTS }}
+          # known_hosts: ${{ secrets.KNOWN_HOSTS }}
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           command_timeout: 40m
