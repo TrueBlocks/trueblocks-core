@@ -133,8 +133,7 @@ bool COptions::handle_clean(void) {
 
     ::remove(getCachePath("names/names.bin").c_str());
     ::remove(getCachePath("names/names.db").c_str());
-    CAccountName acct;
-    getNamedAccount(acct, "0x0");  // reloads
+    loadNames();
 
     return false;  // don't proceed
 }

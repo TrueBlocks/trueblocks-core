@@ -112,17 +112,16 @@ class COptionsBase {
   protected:
     // supporting named accounts
     // TODO(tjayrush): All of these can (and should) be moved to expContext as it would be available to things other
-    // TODO(tjayrush): than options. See fmtMap and tsMemMa p for examples
+    // TODO(tjayrush): than options. See fmtMap and tsMemMap for examples
     CAddressNameMap tokenMap;
     CAddressBoolMap airdropMap;
-    bool loadNames(void);
-    bool loadNamesDatabase(CAccountNameArray& names);
-    bool finishMaps(void);
+    bool buildOtherMaps(void);
 
   public:
     CAddressNameMap namesMap;
     bool loadNamesDatabaseFromSQL(void);
-    bool getNamedAccount(CAccountName& acct, const string_q& addr);
+    bool loadNames(void);
+    bool findName(const string_q& addr, CAccountName& acct);
 
     // enabling options
     bool isEnabled(uint32_t q) const;

@@ -75,7 +75,7 @@ bool doOne(COptions* options, const CAddressUintMap& theMap, const string_q& typ
     for (auto addr : theMap) {
         CAccountName acct;
         acct.address = addr.first;
-        options->getNamedAccount(acct, addr.first);
+        options->findName(addr.first, acct);
         if (acct.name.empty()) {
             CNameStats stats(acct, addr.second);
             unnamed.push_back(stats);

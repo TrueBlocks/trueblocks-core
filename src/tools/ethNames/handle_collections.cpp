@@ -12,6 +12,7 @@
  *-------------------------------------------------------------------------------------------*/
 #include "options.h"
 
+//--------------------------------------------------------------------
 void COptions::handle_collections(const CStringArray& terms) {
     string_q contents = asciiFileToString(configPath("names/collections.csv"));
     CStringArray lines;

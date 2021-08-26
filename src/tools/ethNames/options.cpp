@@ -187,8 +187,7 @@ bool COptions::parseArguments(string_q& command) {
         return false;
     }
 
-    CAccountName unused;
-    getNamedAccount(unused, "0x0");
+    loadNames();
 
     if (expand) {
         searchFields = STR_DISPLAY_ACCOUNTNAME;
@@ -302,7 +301,7 @@ void COptions::Init(void) {
 COptions::COptions(void) {
     establishFolder(getCachePath("names/"));
     CAccountName acct;
-    getNamedAccount(acct, "0x0");  // loads names database
+    findName("0x0", acct);  // loads names database
     Init();
 
     // BEG_CODE_NOTES

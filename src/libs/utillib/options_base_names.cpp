@@ -171,12 +171,7 @@ bool importTabFile(CAddressNameMap& theMap, const string_q& tabFilename) {
 }
 
 //-----------------------------------------------------------------------
-bool loadNamesDatabase(CAccountNameArray& names) {
-    return true;
-}
-
-//-----------------------------------------------------------------------
-bool COptionsBase::finishMaps(void) {
+bool COptionsBase::buildOtherMaps(void) {
     for (const auto& item : namesMap) {
         if (contains(item.second.tags, "Airdrop"))
             airdropMap[item.second.address] = true;
@@ -191,8 +186,6 @@ bool COptionsBase::finishMaps(void) {
 //-----------------------------------------------------------------------
 bool COptionsBase::loadNames(void) {
     establishFolder(getCachePath("names/"));
-    if (getEnvStr("NO_NAMES") == "true")
-        return true;
     if (namesMap.size() > 0)  // already loaded
         return true;
 
@@ -210,7 +203,7 @@ bool COptionsBase::loadNames(void) {
         if (!importTabFile(namesMap, prefundFile))
             return usage("Could not open prefunds database...");
         // LOG8("Finished adding names from prefunds database...");
-        finishMaps();
+        buildOtherMaps();
 
     } else {
         string_q txtFile = configPath("names/names.tab");
@@ -227,40 +220,34 @@ bool COptionsBase::loadNames(void) {
             if (nameCache.Lock(binFile, modeReadOnly, LOCK_NOWAIT)) {
                 nameCache >> namesMap;
                 nameCache.Release();
-                finishMaps();
+                buildOtherMaps();
                 return true;
             }
         }
 
         if (!importTabFile(namesMap, txtFile))
             return usage("Could not open names database...");
-        LOG8("Finished adding names from regular database...");
 
         if (!importTabFile(namesMap, customFile))
             return usage("Could not open custom names database...");
-        LOG8("Finished adding names from custom database...");
 
         if (!importTabFile(namesMap, prefundFile))
             return usage("Could not open prefunds database...");
-        LOG8("Finished adding names from prefunds database...");
 
-        finishMaps();
+        buildOtherMaps();
 
-        LOG8("Writing binary cache");
         CArchive nameCache(WRITING_ARCHIVE);
         if (nameCache.Lock(binFile, modeWriteCreate, LOCK_CREATE)) {
             nameCache << namesMap;
             nameCache.Release();
         }
-
-        LOG8("Finished writing binary cache...");
     }
 
     return true;
 }
 
 //-----------------------------------------------------------------------
-bool COptionsBase::getNamedAccount(CAccountName& acct, const string_q& addr) {
+bool COptionsBase::findName(const string_q& addr, CAccountName& acct) {
     if (!loadNames())
         return false;
 
@@ -280,7 +267,7 @@ bool COptionsBase::findToken(CAccountName& acct, const address_t& addr) {
     }
 
     if (airdropMap[addr])
-        return getNamedAccount(acct, addr);
+        return findName(addr, acct);
 
     return false;
 }

@@ -92,7 +92,7 @@ int main(int argc, const char* argv[]) {
     os << ", \"first_block\": " << (isTestMode() ? "\"0xdeadbeef\"" : uint_2_Str(options.exportRange.first)) << endl;
     os << ", \"last_block\": " << (isTestMode() ? "\"0xdeadbeef\"" : uint_2_Str(options.exportRange.second)) << endl;
     if (!options.count && options.allMonitors.size() == 1) {
-        options.getNamedAccount(options.allMonitors[0], options.accountedFor.address);
+        options.findName(options.accountedFor.address, options.allMonitors[0]);
         if (options.abi_spec.nInterfaces() == 0) {
             HIDE_FIELD(CMonitor, "abi_spec");
         }

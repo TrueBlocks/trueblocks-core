@@ -18,7 +18,7 @@ bool COptions::handle_traversers(void) {
         trav->dataFunc = loadTx_Func;
     trav->exportRange = exportRange;
     for (auto monitor : allMonitors) {
-        getNamedAccount(monitor, monitor.address);
+        findName(monitor.address, monitor);
         trav->monitorMap[monitor.address] = monitor;
     }
 

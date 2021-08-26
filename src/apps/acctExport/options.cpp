@@ -324,7 +324,7 @@ bool COptions::parseArguments(string_q& command) {
         }
         if (accountedFor.address.empty()) {
             accountedFor.address = monitor.address;
-            getNamedAccount(accountedFor, monitor.address);
+            findName(monitor.address, accountedFor);
             accountedFor.is_contract = !getCodeAt(monitor.address, latest).empty();
         }
         allMonitors.push_back(monitor);
@@ -423,7 +423,7 @@ void COptions::Init(void) {
     optionOn(OPT_CRUD);
     // Since we need prefunds, let's load the names library here
     CAccountName unused;
-    getNamedAccount(unused, "0x0");
+    findName("0x0", unused);
 
     // BEG_CODE_INIT
     appearances = false;

@@ -121,8 +121,7 @@ void COptions::Init(void) {
     registerOptions(nParams, params);
     optionOn(OPT_PREFUND);
     // Since we need prefunds, let's load the names library here
-    CAccountName unused;
-    getNamedAccount(unused, "0x0");
+    loadNames();
 
     startBlock = 0;
     endBlock = getBlockProgress(BP_CLIENT).client;
@@ -140,7 +139,7 @@ COptions::~COptions(void) {
 
 //--------------------------------------------------------------
 biguint_t operator-(const biguint_t& a, const bigint_t& b) {
-    ASSERT(b < a); // Can't make a negative unsigned big int
+    ASSERT(b < a);  // Can't make a negative unsigned big int
     bigint_t aa = str_2_BigInt(bnu_2_Str(a));
     return str_2_BigUint(bni_2_Str(aa - b));
 }
