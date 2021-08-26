@@ -36,14 +36,14 @@ jobs:
           make -j 4
       - name: Reconfigure TrueBlocks to use the right ports, etc.
         run: |
-          mkdir -p /home/runner/.local/share/trueblocks
-          touch /home/runner/.local/share/trueblocks/trueBlocks.toml
-          sed -i 's/8545/36963/' /home/runner/.local/share/trueblocks/trueBlocks.toml
-          sed -i 's/etherscan_key/junk/' /home/runner/.local/share/trueblocks/trueBlocks.toml
-          echo etherscan_key = ${{secrets.ES_KEY}} >>/home/runner/.local/share/trueblocks/trueBlocks.toml
+          mkdir -p $HOME/.local/share/trueblocks
+          touch $HOME/.local/share/trueblocks/trueBlocks.toml
+          sed -i 's/8545/36963/' $HOME/.local/share/trueblocks/trueBlocks.toml
+          sed -i 's/etherscan_key/junk/' $HOME/.local/share/trueblocks/trueBlocks.toml
+          echo etherscan_key = ${{secrets.ES_KEY}} >>$HOME/.local/share/trueblocks/trueBlocks.toml
           export PATH=$(pwd)/../bin:$(pwd)/../bin/test:$PATH
           # show the config file
-          cat /home/runner/.local/share/trueblocks/trueBlocks.toml
+          cat $HOME/.local/share/trueblocks/trueBlocks.toml
           # show the path
           echo $PATH | tr ':' '\n' | grep Development
           # open a tunnel to the RPC
