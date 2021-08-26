@@ -1,0 +1,28 @@
+name: Tests
+on: [pull_request, push, workflow_dispatch]
+jobs:
+  Explore-GitHub-Actions:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run tests remotely
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          command_timeout: 40m
+          script_stop: true
+          script: |
+            rm -rf Development/trueblocks-core
+            cd Development
+            git clone --quiet https://github.com/${{ github.repository }}
+            cd trueblocks-core
+            git reset --hard ${{ github.sha }}
+            mkdir build && cd build
+            cmake ../src
+            make -j 4
+            export PATH=$(pwd)/../bin:$(pwd)/../bin/test:$PATH
+            make test-all
+      - name: Finish
+        run: |
+          echo "🍏 This job's status is ${{ job.status }}"
