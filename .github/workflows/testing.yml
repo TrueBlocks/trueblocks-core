@@ -14,8 +14,8 @@ jobs:
         with:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           # known_hosts: ${{ secrets.KNOWN_HOSTS }}
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
+          host: ${{ secrets.TESTING_HOST }}
+          username: ${{ secrets.TESTING_USERNAME }}
           command_timeout: 40m
           script_stop: true
       - name: Remove and then clone the repo
