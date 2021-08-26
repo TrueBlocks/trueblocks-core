@@ -1002,7 +1002,7 @@
     {
       "tags": "50-Tokens:ERC20",
       "address": "0x01cc47d73e69d00b7d8f54f2ae6ddbfa3c2e82e3",
-      "name": "Ethereum Developers' Night",
+      "name": "Ethereum Developers Night",
       "symbol": "",
       "source": "https://kickback.events/event/[{ADDRESS}]",
       "decimals": 18,

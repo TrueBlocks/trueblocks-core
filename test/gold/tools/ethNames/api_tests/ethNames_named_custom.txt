@@ -114,7 +114,7 @@
 "50-Tokens:ERC20","0x01b12471f701eca76b583796cf3fd84e2ce6f8ff","Shiba Inu Bone","BONE","","18"
 "50-Tokens:ERC20","0x01b8bcc8b75dd86025b455373f3c0814a060e6a8","DogeRocket","DGRO","","18"
 "91-Early:Addresses","0x01bfbb9b1a2abe32ceb0a9f2291e5d7e36e38b20","kissBTC","kissBTC","","8"
-"50-Tokens:ERC20","0x01cc47d73e69d00b7d8f54f2ae6ddbfa3c2e82e3","Ethereum Developers' Night","","","18"
+"50-Tokens:ERC20","0x01cc47d73e69d00b7d8f54f2ae6ddbfa3c2e82e3","Ethereum Developers Night","","","18"
 "91-Early:Addresses","0x01d04122aeccab138a47103b500f7b3d3b356a27","XYZ","XYZ","","18"
 "50-Tokens:ERC20","0x01d1a934129f208dfbe60ef31ca63f4ad2757d84","Ethereum Cherry","ECHERRY 🍒","","18"
 "30-Contracts","0x01da73c4ec1355f953ad0aaca3ef20e342aea92a","Arbitrage Bot","","",""

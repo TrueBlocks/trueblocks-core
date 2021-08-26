@@ -126,7 +126,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x01b8bcc8b75dd86025b455373f3c0814a060e6a8	DogeRocket	DGRO	On chain	18		false	false	false	true	true	false
 91-Early:Addresses	0x01bfbb9b1a2abe32ceb0a9f2291e5d7e36e38b20	kissBTC	kissBTC	On chain	8		false	false	false	true	true	false
 30-Contracts:Humanity DAO	0x01c7664ea0e4fa975ad3b9b97794e9b0c3901985	_jdkanani		https://www.humanitydao.org/humans			false	false	false	false	false	false
-50-Tokens:ERC20	0x01cc47d73e69d00b7d8f54f2ae6ddbfa3c2e82e3	Ethereum Developers' Night		https://kickback.events/event/[{ADDRESS}]	18		false	false	false	true	true	false
+50-Tokens:ERC20	0x01cc47d73e69d00b7d8f54f2ae6ddbfa3c2e82e3	Ethereum Developers Night		https://kickback.events/event/[{ADDRESS}]	18		false	false	false	true	true	false
 91-Early:Addresses	0x01d04122aeccab138a47103b500f7b3d3b356a27	XYZ	XYZ	On chain	18		false	false	false	true	true	false
 30-Contracts:Humanity DAO	0x01d0d009f94604de56b9c3290aab7ac3cb83e8ce	cryptonewsfeeds		https://www.humanitydao.org/humans			false	false	false	false	false	false
 50-Tokens:ERC20	0x01d1a934129f208dfbe60ef31ca63f4ad2757d84	Ethereum Cherry	ECHERRY 🍒	On chain	18		false	false	false	true	true	false
