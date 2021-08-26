@@ -13,8 +13,11 @@ jobs:
           command_timeout: 40m
           script_stop: true
           script: |
+            echo $HOME
+            pwd
             rm -rf Development/trueblocks-core
             cd Development
+            echo repo: ${{ github.repository }}
             git clone --quiet https://github.com/${{ github.repository }}
             cd trueblocks-core
             git reset --hard ${{ github.sha }}
