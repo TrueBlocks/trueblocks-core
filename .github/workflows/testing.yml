@@ -18,7 +18,8 @@ jobs:
             rm -rf Development/trueblocks-core
             cd Development
             echo repo: ${{ github.repository }}
-            git clone --quiet https://github.com/${{ github.repository }}
+            git clone https://github.com/${{ github.repository }}
+            echo cloned...
             cd trueblocks-core
             git reset --hard ${{ github.sha }}
             mkdir build && cd build
