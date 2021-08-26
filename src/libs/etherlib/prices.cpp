@@ -20,7 +20,6 @@ extern double getPrice_UsdPerEth(blknum_t bn, string_q& priceSource);
 extern double getPrice_UsdPerTok(blknum_t bn, string_q& priceSource, const address_t& address);
 extern double getPrice_EthPerTok(blknum_t bn, string_q& priceSource, const address_t& address);
 extern double getPriceMaker_UsdPerEth(blknum_t bn, string_q& priceSource);
-extern string_q addr_2_Pad64(const address_t& addr);
 
 //---------------------------------------------------------------------------
 static const address_t sai = "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359";
@@ -100,7 +99,7 @@ bool CUniPair::findPair(void) {
         uniFactory.blockNumber = getBlockProgress(BP_CLIENT).client;  // doesn't really matter
         uniFactory.deployed = getDeployBlock(uniswapFactory);
     }
-    uniFactory.bytes = addr_2_Pad64(r1) + addr_2_Pad64(r2);
+    uniFactory.bytes = hex_2_Pad64(r1) + hex_2_Pad64(r2);
     if (!doEthCall(uniFactory)) {
         notPairs[key] = true;
         return false;
@@ -226,11 +225,6 @@ double getPriceMaker_UsdPerEth(blknum_t bn, string_q& priceSource) {
 
     priceSource = "not-priced";
     return 1.;
-}
-
-//---------------------------------------------------------------------------
-string_q addr_2_Pad64(const address_t& addr) {
-    return padLeft(substitute(addr, "0x", ""), 64, '0');
 }
 
 //---------------------------------------------------------------------------

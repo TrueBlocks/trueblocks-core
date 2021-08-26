@@ -549,6 +549,11 @@ uchar_t hex_2_Ascii(char c1, char c2) {
     return c;
 }
 
+//---------------------------------------------------------------------------
+string_q hex_2_Pad64(const address_t& inHex) {
+    return padLeft(substitute(inHex, "0x", ""), 64, '0');
+}
+
 //----------------------------------------------------------------------------
 string_q hex_2_Str(const string_q& inHex, size_t nBytes) {
     string_q in = (startsWith(inHex, "0x") ? extract(inHex, 2) : inHex);

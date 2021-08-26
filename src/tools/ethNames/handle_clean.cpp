@@ -15,6 +15,8 @@
 //--------------------------------------------------------------------
 void COptions::finishClean(CAccountName& account) {
     LOG_INFO("Cleaning ", account.address, "                                  \r");
+    if (startsWith(account.tags, "80-Malicious"))
+        return;
 
     account.is_contract = isContractAt(account.address, latestBlock) || account.is_contract;
     if (account.is_contract) {
