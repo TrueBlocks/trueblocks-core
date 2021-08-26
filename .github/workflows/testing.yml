@@ -20,6 +20,7 @@ jobs:
           script_stop: true
       - name: Remove and then clone the repo
         run: |
+          export HOME=testrunner
           echo $HOME
           cd $HOME
           rm -rf Development/trueblocks-core
