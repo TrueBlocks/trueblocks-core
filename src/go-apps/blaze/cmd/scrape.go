@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"os"
 
 	"sort"
@@ -307,13 +308,13 @@ func writeAddresses(blockNum string, addressMap map[string]bool) {
 		os.Exit(1) // caller will start over if this process exits with non-zero value
 	}
 	// Show fifty dots no matter how many blocks we're scraping
-	skip := Options.nBlocks / 100
+	skip := 43 // Options.nBlocks / 100
 	if skip < 1 {
 		skip = 1
 	}
 	counter++
 	if counter%skip == 0 {
-		fmt.Fprint(os.Stderr, ".")
+		log.Print("- <PROG> : Scraping ", counter, " of ", Options.nBlocks)
 	}
 }
 
