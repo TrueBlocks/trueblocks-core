@@ -300,8 +300,7 @@ void COptions::Init(void) {
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
     establishFolder(getCachePath("names/"));
-    CAccountName acct;
-    findName("0x0", acct);  // loads names database
+    loadNames();  // loads names database
     Init();
 
     // BEG_CODE_NOTES

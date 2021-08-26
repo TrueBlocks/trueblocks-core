@@ -422,8 +422,7 @@ void COptions::Init(void) {
     optionOn(OPT_PREFUND);
     optionOn(OPT_CRUD);
     // Since we need prefunds, let's load the names library here
-    CAccountName unused;
-    findName("0x0", unused);
+    loadNames();
 
     // BEG_CODE_INIT
     appearances = false;
