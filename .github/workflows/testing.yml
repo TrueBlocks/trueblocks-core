@@ -1,28 +1,55 @@
-name: Tests
-on: [pull_request, push, workflow_dispatch]
+name: Build and run tests on Ubuntu
+on: [pull_request, workflow_dispatch]
 jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
     steps:
-      - name: Run tests remotely
+      # - name: Checkout TrueBlocks repo
+      #   uses: actions/checkout@v2
+      # - name: Install prerequistes
+      #   run: |
+      #     sudo apt-get install build-essential git cmake python python-dev libcurl3-dev clang-format jq tree
+      - name: Install SSH key
         uses: appleboy/ssh-action@master
         with:
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          known_hosts: ${{ secrets.KNOWN_HOSTS }}
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
           command_timeout: 40m
           script_stop: true
-          script: |
-            rm -rf Development/trueblocks-core
-            cd Development
-            git clone --quiet https://github.com/${{ github.repository }}
-            cd trueblocks-core
-            git reset --hard ${{ github.sha }}
-            mkdir build && cd build
-            cmake ../src
-            make -j 4
-            export PATH=$(pwd)/../bin:$(pwd)/../bin/test:$PATH
-            make test-all
+      - name: Remove and then clone the repo
+        run: |
+          rm -rf Development/trueblocks-core
+          cd Development
+          git clone --quiet https://github.com/${{ github.repository }}
+          cd trueblocks-core
+          git reset --hard ${{ github.sha }}
+      - name: Build TrueBlocks
+        run: |
+          mkdir -p build && cd build
+          cmake ../src
+          make -j 4
+      - name: Reconfigure TrueBlocks to use the right ports, etc.
+        run: |
+          mkdir -p /home/runner/.local/share/trueblocks
+          touch /home/runner/.local/share/trueblocks/trueBlocks.toml
+          sed -i 's/8545/36963/' /home/runner/.local/share/trueblocks/trueBlocks.toml
+          sed -i 's/etherscan_key/junk/' /home/runner/.local/share/trueblocks/trueBlocks.toml
+          echo etherscan_key = ${{secrets.ES_KEY}} >>/home/runner/.local/share/trueblocks/trueBlocks.toml
+          export PATH=$(pwd)/../bin:$(pwd)/../bin/test:$PATH
+          # show the config file
+          cat /home/runner/.local/share/trueblocks/trueBlocks.toml
+          # show the path
+          echo $PATH | tr ':' '\n' | grep Development
+          # open a tunnel to the RPC
+          ssh -i ~/.ssh/github_action -o StrictHostKeyChecking=no -N -v ${{secrets.SSH_COMMAND}} -p 36963 -L 36963:localhost:8545 >/dev/null 2>err.log </dev/null &
+          sleep 3
+          # where are we?
+          pwd
+          cd ./build
+          chifra serve >/dev/null 2>&1 &
+          make test-all
       - name: Finish
         run: |
           echo "🍏 This job's status is ${{ job.status }}"
