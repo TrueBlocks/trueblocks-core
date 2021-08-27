@@ -14,8 +14,9 @@ whenBlock -th
 | -t | --timestamps | ignore other options and generate timestamps only |
 | -s | --skip &lt;num&gt; | only applicable if --timestamps is on, the step between block numbers in the export |
 |####|Hidden options||
-| -c | --check | available only with --timestamps option, checks the validity of the timestamp data |
-| -f | --fix | available only with --timestamps option, fixes incorrect timestamps if found |
+| -c | --check | available only with --timestamps, checks the validity of the timestamp data |
+| -f | --fix | available only with --timestamps, fixes incorrect timestamps if any |
+| -u | --count | available only with --timestamps, returns the number of timestamps in the cache |
 |####|Hidden options||
 | -x | --fmt &lt;val&gt; | export format, one of *[ none \| json\* \| txt \| csv \| api ]* |
 | -v | --verbose | set verbose level (optional level defaults to 1) |
