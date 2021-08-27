@@ -41,7 +41,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x01afc37f4f85babc47c0e2d0eababc7fb49793c8	W-GNT	W-GNT				false	false	false	true	false	false
 50-Tokens:ERC20	0x01b12471f701eca76b583796cf3fd84e2ce6f8ff	Shiba Inu Bone	BONE	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x01b8bcc8b75dd86025b455373f3c0814a060e6a8	DogeRocket	DGRO	On chain	18		false	false	false	true	true	false
-50-Tokens:ERC20	0x01cc47d73e69d00b7d8f54f2ae6ddbfa3c2e82e3	Ethereum Developers' Night		https://kickback.events/event/[{ADDRESS}]	18		false	false	false	true	true	false
+50-Tokens:ERC20	0x01cc47d73e69d00b7d8f54f2ae6ddbfa3c2e82e3	Ethereum Developers Night		https://kickback.events/event/[{ADDRESS}]	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x01d1a934129f208dfbe60ef31ca63f4ad2757d84	Ethereum Cherry	ECHERRY 🍒	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x01da76dea59703578040012357b81ffe62015c2d	Cream yETH	crYETH	On chain	8		false	false	false	true	true	false
 50-Tokens:ERC20	0x01ddc27a46027cb45e39e47cf9204e2e6b0c92cd	🎇Floki Fireworks🎆	FLOKIFIRE	On chain	18		false	false	false	true	true	false

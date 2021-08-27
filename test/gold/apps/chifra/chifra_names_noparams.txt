@@ -41,7 +41,7 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x01afc37f4f85babc47c0e2d0eababc7fb49793c8	W-GNT	W-GNT
 50-Tokens:ERC20	0x01b12471f701eca76b583796cf3fd84e2ce6f8ff	Shiba Inu Bone	BONE		18
 50-Tokens:ERC20	0x01b8bcc8b75dd86025b455373f3c0814a060e6a8	DogeRocket	DGRO		18
-50-Tokens:ERC20	0x01cc47d73e69d00b7d8f54f2ae6ddbfa3c2e82e3	Ethereum Developers' Night			18
+50-Tokens:ERC20	0x01cc47d73e69d00b7d8f54f2ae6ddbfa3c2e82e3	Ethereum Developers Night			18
 50-Tokens:ERC20	0x01d1a934129f208dfbe60ef31ca63f4ad2757d84	Ethereum Cherry	ECHERRY 🍒		18
 50-Tokens:ERC20	0x01da76dea59703578040012357b81ffe62015c2d	Cream yETH	crYETH		8
 50-Tokens:ERC20	0x01ddc27a46027cb45e39e47cf9204e2e6b0c92cd	🎇Floki Fireworks🎆	FLOKIFIRE		18
