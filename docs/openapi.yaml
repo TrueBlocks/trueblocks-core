@@ -972,7 +972,7 @@ paths:
           type: boolean
       - name: check
         in: query
-        description: available only with --timestamps option, checks the validity of the timestamp data
+        description: available only with --timestamps, checks the validity of the timestamp data
         required: false
         style: form
         explode: true
@@ -980,7 +980,15 @@ paths:
           type: boolean
       - name: fix
         in: query
-        description: available only with --timestamps option, fixes incorrect timestamps if found
+        description: available only with --timestamps, fixes incorrect timestamps if any
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+      - name: count
+        in: query
+        description: available only with --timestamps, returns the number of timestamps (may be less than latest block)
         required: false
         style: form
         explode: true

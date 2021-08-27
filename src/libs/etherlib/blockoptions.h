@@ -55,6 +55,3 @@ extern bool parseFourbyteList(COptionsBase* opt, CFourbyteArray& fourbytes, cons
 extern bool parseStringList2(COptionsBase* opt, CStringArray& strings, const string_q& argIn);
 extern bool getDirectionalTxId(blknum_t bn, txnum_t txid, const string_q& dir, string_q& argOut, string_q& errorMsg);
 extern bool wrangleTxId(string_q& argIn, string_q& errorMsg);
-
-//-----------------------------------------------------------------------------
-extern time_q bn_2_Date(const blknum_t& bn);

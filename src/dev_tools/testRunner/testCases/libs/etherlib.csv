@@ -90,3 +90,4 @@ on,cmd,fast,null,etherlib/serializeTest,README,n,@th
 on,cmd,fast,null,etherlib/serializeTest,00,n,
 on,cmd,fast,null,etherlib/sha3Test,00,n,
 on,cmd,fast,null,etherlib/sha3Test,01,n,@t
+off,cmd,fast,null,etherlib/parseLists,test,n,

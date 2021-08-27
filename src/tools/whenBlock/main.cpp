@@ -36,8 +36,13 @@ int main(int argc, const char* argv[]) {
                 options.applyFilter();
 
             } else if (options.timestamps) {
-                getTimestampAt(1);  // freshens timestamp file
-                forEveryTimestamp(visitBlock, &options);
+                if (options.count) {
+                    cout << (options.isText ? uint_2_Str(nTimestamps())
+                                            : "{ \"nTimestamps\": " + uint_2_Str(nTimestamps()) + "}");
+                } else {
+                    getTimestampAt(options.latest);  // freshens timestamp file but otherwise ignored
+                    forEveryTimestamp(visitBlock, &options);
+                }
             }
 
             cout << exportPostamble(options.errors, expContext().fmtMap["meta"]);

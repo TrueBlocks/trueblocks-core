@@ -42,9 +42,11 @@ class COptions : public CBlockOptions {
     bool timestamps;
     bool check;
     bool fix;
+    bool count;
     uint64_t skip;
     // END_CODE_DECLARE
 
+    blknum_t latest;
     CTimeStamper checker;
     CNameValueArray requests;
     bool isText;

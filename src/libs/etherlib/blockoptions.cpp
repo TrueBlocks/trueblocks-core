@@ -172,15 +172,8 @@ time_q getBlockDate(blknum_t num) {
 }
 
 //--------------------------------------------------------------
-extern bool findTimestamp_binarySearch(CBlock& block, size_t first, size_t last, bool progress = false);
-bool findTimestamp_binarySearch(CBlock& block, size_t first, size_t last, bool progress) {
-    string_q t("|/-\\|/-\\");
-    static int i = 0;
-    if (progress && !isTestMode()) {
-        cerr << "\r" << cGreen << t[(i++ % 8)] << " working" << cOff;
-        cerr.flush();
-    }
-
+extern bool findTimestamp_binarySearch(CBlock& block, size_t first, size_t last);
+bool findTimestamp_binarySearch(CBlock& block, size_t first, size_t last) {
     if (last > first) {
         size_t mid = first + ((last - first) / 2);
         CBlock b1, b2;
@@ -228,7 +221,7 @@ bool lookupDate(CBlock& block, const timestamp_t& ts, blknum_t latest) {
     }
 
     block.timestamp = ts;
-    bool ret = findTimestamp_binarySearch(block, start, stop, true);
+    bool ret = findTimestamp_binarySearch(block, start, stop);
     if (!isTestMode()) {
         cerr << "\r";
         cerr.flush();
@@ -321,11 +314,4 @@ bool parseFourbyteList(COptionsBase* opt, CFourbyteArray& fourbytes, const strin
 bool parseStringList2(COptionsBase* opt, CStringArray& strings, const string& argIn) {
     strings.push_back(argIn);
     return true;
-}
-
-//----------------------------------------------------------------------------------------------------
-time_q bn_2_Date(const blknum_t& bn) {
-    CBlock block;
-    getBlock_light(block, bn);
-    return ts_2_Date(block.timestamp);
 }

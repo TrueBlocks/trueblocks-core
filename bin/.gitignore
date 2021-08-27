@@ -67,6 +67,7 @@ generalTest
 jsonTest
 lastBlockTest
 loggingTest
+parseLists
 parsingTest
 pinTest
 printFloatTest

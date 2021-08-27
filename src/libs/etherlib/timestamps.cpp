@@ -15,9 +15,9 @@
 namespace qblocks {
 
 //-------------------------------------------------------------------------
-bool freshenAndLoad(void) {
+bool freshenAndLoad(blknum_t minBlk) {
     if (!isTestMode() && !isApiMode())
-        freshenTimestamps(getBlockProgress().client);  // opens, freshens, and closes the file
+        freshenTimestamps(minBlk);  // opens, freshens, and closes the file
     if (!loadTimestamps(&expContext().tsMemMap, expContext().tsCnt)) {
         LOG_WARN("Could not load timestamp file");
         return false;
@@ -29,7 +29,7 @@ bool freshenAndLoad(void) {
 //-------------------------------------------------------------------------
 blknum_t getTimestampBlockAt(blknum_t blk) {
     if (!expContext().tsMemMap)
-        if (!freshenAndLoad())
+        if (!freshenAndLoad(blk))
             return 0;
     if (expContext().tsMemMap && blk < expContext().tsCnt)
         return expContext().tsMemMap[(blk * 2)];
@@ -39,7 +39,7 @@ blknum_t getTimestampBlockAt(blknum_t blk) {
 //-------------------------------------------------------------------------
 timestamp_t getTimestampAt(blknum_t blk) {
     if (!expContext().tsMemMap)
-        if (!freshenAndLoad())
+        if (!freshenAndLoad(blk))
             return 0;
     if (expContext().tsMemMap && blk < expContext().tsCnt)
         return timestamp_t(expContext().tsMemMap[(blk * 2) + 1]);

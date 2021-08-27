@@ -19,18 +19,21 @@
 extern bool parseRequestDates(COptionsBase* opt, CNameValueArray& blocks, const string_q& arg);
 extern bool parseRequestTs(COptionsBase* opt, CNameValueArray& blocks, timestamp_t ts);
 //---------------------------------------------------------------------------------------------------
-static const COption params[] = {
-    // BEG_CODE_OPTIONS
-    // clang-format off
+static const COption
+    params[] =
+        {
+            // BEG_CODE_OPTIONS
+            // clang-format off
     COption("block_list", "", "list<string>", OPT_POSITIONAL, "one or more dates, block numbers, hashes, or special named blocks (see notes)"),  // NOLINT
     COption("list", "l", "", OPT_SWITCH, "export a list of the 'special' blocks"),
     COption("timestamps", "t", "", OPT_SWITCH, "ignore other options and generate timestamps only"),
-    COption("check", "c", "", OPT_HIDDEN | OPT_SWITCH, "available only with --timestamps option, checks the validity of the timestamp data"),  // NOLINT
-    COption("fix", "f", "", OPT_HIDDEN | OPT_SWITCH, "available only with --timestamps option, fixes incorrect timestamps if found"),  // NOLINT
+    COption("check", "c", "", OPT_HIDDEN | OPT_SWITCH, "available only with --timestamps, checks the validity of the timestamp data"),  // NOLINT
+    COption("fix", "f", "", OPT_HIDDEN | OPT_SWITCH, "available only with --timestamps, fixes incorrect timestamps if any"),  // NOLINT
+    COption("count", "u", "", OPT_HIDDEN | OPT_SWITCH, "available only with --timestamps, returns the number of timestamps (may be less than latest block)"),  // NOLINT
     COption("skip", "s", "<uint64>", OPT_FLAG, "only applicable if --timestamps is on, the step between block numbers in the export"),  // NOLINT
     COption("", "", "", OPT_DESCRIPTION, "Find block(s) based on date, blockNum, timestamp, or 'special'."),
-    // clang-format on
-    // END_CODE_OPTIONS
+            // clang-format on
+            // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
@@ -45,7 +48,7 @@ bool COptions::parseArguments(string_q& commandIn) {
     CStringArray block_list;
     // END_CODE_LOCAL_INIT
 
-    blknum_t latest = getBlockProgress(BP_CLIENT).client;
+    latest = getBlockProgress(BP_CLIENT).client;
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
@@ -65,6 +68,9 @@ bool COptions::parseArguments(string_q& commandIn) {
 
         } else if (arg == "-f" || arg == "--fix") {
             fix = true;
+
+        } else if (arg == "-u" || arg == "--count") {
+            count = true;
 
         } else if (startsWith(arg, "-s:") || startsWith(arg, "--skip:")) {
             if (!confirmUint("skip", skip, arg))
@@ -92,6 +98,7 @@ bool COptions::parseArguments(string_q& commandIn) {
     LOG_TEST_BOOL("timestamps", timestamps);
     LOG_TEST_BOOL("check", check);
     LOG_TEST_BOOL("fix", fix);
+    LOG_TEST_BOOL("count", count);
     LOG_TEST("skip", skip, (skip == NOPOS));
     // END_DEBUG_DISPLAY
 
@@ -136,16 +143,17 @@ bool COptions::parseArguments(string_q& commandIn) {
     if (list)
         forEverySpecialBlock(showSpecials, &requests);
 
-    if ((fix || check) && !timestamps)
-        return usage("The --check and --fix options is only available with the --timestamps option.");
+    if ((fix || check || count) && !timestamps)
+        return usage("The --check, --fix and --count options are only available with the --timestamps option.");
 
     if (requests.size() == 0 && !timestamps)
         return usage(usageErrs[ERR_INVALIDDATE1]);
 
     string_q format = getGlobalConfig("whenBlock")->getConfigStr("display", "format", STR_DISPLAY_WHEN);
+    if (count)
+        format = "[{nTimestamps}]";
     configureDisplay("whenBlock", "CBlock", format);
     manageFields("CBlock:" + string_q(format));
-
     return true;
 }
 
@@ -159,6 +167,7 @@ void COptions::Init(void) {
     timestamps = false;
     check = false;
     fix = false;
+    count = false;
     skip = NOPOS;
     // END_CODE_INIT
 
