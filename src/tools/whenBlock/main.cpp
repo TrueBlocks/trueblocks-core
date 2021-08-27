@@ -36,6 +36,7 @@ int main(int argc, const char* argv[]) {
                 options.applyFilter();
 
             } else if (options.timestamps) {
+                getTimestampAt(1);  // freshens timestamp file
                 forEveryTimestamp(visitBlock, &options);
             }
 

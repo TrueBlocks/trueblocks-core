@@ -16,7 +16,8 @@ namespace qblocks {
 
 //-------------------------------------------------------------------------
 bool freshenAndLoad(void) {
-    freshenTimestamps(getBlockProgress().client);  // opens, freshens, and closes the fle
+    if (!isTestMode() && !isApiMode())
+        freshenTimestamps(getBlockProgress().client);  // opens, freshens, and closes the file
     if (!loadTimestamps(&expContext().tsMemMap, expContext().tsCnt)) {
         LOG_WARN("Could not load timestamp file");
         return false;
@@ -77,7 +78,8 @@ bool establishTsFile(void) {
         return fileExists(tsIndex);
     }
 
-    return false;
+    // starts at zero...
+    return true;
 }
 
 //-----------------------------------------------------------------------
