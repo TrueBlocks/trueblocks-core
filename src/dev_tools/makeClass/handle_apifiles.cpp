@@ -25,7 +25,7 @@ void COptions::writeOpenApiFile(void) {
     counter = CCounter();  // reset
 
     CCommandOptionArray endpointArray;
-    forEveryLineInAsciiFile("../src/cmd-line-endpoints.csv", parseEndpoints, &endpointArray);
+    forEveryLineInAsciiFile("../src/cmd-line-endpoints.csv", parseCommandData, &endpointArray);
 
     for (auto ep : endpointArray) {
         CCommandOptionArray params;
@@ -56,22 +56,4 @@ void COptions::writeOpenApiFile(void) {
 
     LOG_INFO(cYellow, "makeClass --openapi", cOff, " processed ", counter.routeCount, "/", counter.cmdCount,
              " routes/cmds ", " (changed ", counter.nProcessed, ").", string_q(40, ' '));
-}
-
-static CStringArray header;
-//---------------------------------------------------------------------------------------------------
-bool parseEndpoints(const char* str, void* data) {
-    string_q line = str;
-    replaceAny(line, "\n\r", "");
-    if (header.empty()) {
-        explode(header, line, ',');
-        return true;
-    }
-
-    CCommandOptionArray* array = (CCommandOptionArray*)data;
-    CCommandOption option;
-    option.parseCSV(header, line);
-    array->push_back(option);
-
-    return true;
 }

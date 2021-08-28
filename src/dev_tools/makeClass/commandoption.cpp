@@ -263,6 +263,7 @@ bool CCommandOption::setValueByName(const string_q& fieldNameIn, const string_q&
 //---------------------------------------------------------------------------------------------------
 void CCommandOption::finishParse() {
     // EXISTING_CODE
+    finishCleanup();
     // EXISTING_CODE
 }
 
@@ -439,6 +440,8 @@ string_q nextCommandoptionChunk_custom(const string_q& fieldIn, const void* data
                         ret += ("|OPT_POSITIONAL");
                     else if (com->option_type == "note")
                         ret = com->description;
+                    else if (com->option_type == "config")
+                        ret = com->description;
                     else if (com->option_type == "error")
                         ret = com->description;
                     else
@@ -490,7 +493,7 @@ const char* STR_DISPLAY_COMMANDOPTION = "";
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //---------------------------------------------------------------------------------------------------
-CCommandOption::CCommandOption(const string_q& line) {
+CCommandOption::CCommandOption(const string_q& line, int x) {
     CStringArray parts;
     explode(parts, line, ',');
     if (parts.size() > 0)
@@ -508,7 +511,7 @@ CCommandOption::CCommandOption(const string_q& line) {
     if (parts.size() > 6)
         hotkey = parts[6];
     if (parts.size() > 7)
-        def_val = substitute(substitute(parts[7], "TRUE", "true"), "FALSE", "false");
+        def_val = parts[7];
     if (parts.size() > 8)
         is_required = str_2_Bool(parts[8]);
     if (parts.size() > 9)
@@ -524,7 +527,19 @@ CCommandOption::CCommandOption(const string_q& line) {
     if (parts.size() > 14)
         data_type = parts[14];
     if (parts.size() > 15)
-        description = substitute(parts[15], "&#44;", ",");
+        description = parts[15];
+
+    finishParse();
+}
+
+//---------------------------------------------------------------------------------------------------
+static const CStringArray validOptionTypes = {"switch",      "toggle", "flag", "deprecated", "positional",
+                                              "description", "error",  "note", "config"};
+
+//---------------------------------------------------------------------------------------------------
+bool CCommandOption::finishCleanup(void) {
+    def_val = substitute(substitute(def_val, "TRUE", "true"), "FALSE", "false");
+    description = substitute(description, "&#44;", ",");
 
     if (!def_val.empty() && (data_type == "<string>" || data_type == "<path>" || contains(data_type, "enum")))
         def_val = "\"" + def_val + "\"";
@@ -543,10 +558,10 @@ CCommandOption::CCommandOption(const string_q& line) {
     }
     if (option_type == "description") {
         swagger_descr = trim(substitute(description, "|", "\n        "));
-    } else if (option_type != "note" && option_type != "error") {
+    } else if (option_type != "note" && option_type != "error" && option_type != "config") {
         swagger_descr = trim(substitute(description, "|", "\n          "));
     }
-    if (option_type != "note" && option_type != "error") {
+    if (option_type != "note" && option_type != "error" && option_type != "config") {
         description = trim(substitute(description, "|", " "));
     }
 
@@ -563,26 +578,44 @@ CCommandOption::CCommandOption(const string_q& line) {
     isDouble = contains(data_type, "double");
     isAddress = contains(data_type, "address");
     isNote = option_type == "note";
+    isConfig = option_type == "config";
     isErr = option_type == "error";
 
-    real_type = substituteAny(substitute(data_type, "boolean", "bool"), "<>", "");
-    if (contains(data_type, "enum"))
-        real_type = "string";
+    real_type = data_type;
+    replaceAny(real_type, "<>", "");
+    replace(real_type, "boolean", "bool");
     replace(real_type, "blknum", "blknum_t");
     replace(real_type, "string", "string_q");
     replace(real_type, "uint32", "uint32_t");
     replace(real_type, "uint64", "uint64_t");
     replace(real_type, "address", "address_t");
+    if (startsWith(data_type, "enum") || startsWith(data_type, "list<enum"))  // in every case of enum
+        real_type = "string_q";
+    return true;
+}
+
+static CStringArray header;
+//---------------------------------------------------------------------------------------------------
+bool parseCommandData(const char* str, void* data) {
+    string_q line = str;
+    replaceAny(line, "\n\r", "");
+    if (header.empty()) {
+        explode(header, line, ',');
+        return true;
+    }
+
+    CCommandOptionArray* array = (CCommandOptionArray*)data;
+    CCommandOption option;
+    option.parseCSV(header, line);
+    array->push_back(option);
+
+    return true;
 }
 
 //---------------------------------------------------------------------------------------------------
 void CCommandOption::verifyOptions(CStringArray& warnings) {
-    // Check valid option kinds
-    CStringArray validKinds = {
-        "switch", "toggle", "flag", "deprecated", "positional", "description", "error", "note",
-    };
     bool valid_kind = false;
-    for (auto kind : validKinds) {
+    for (auto kind : validOptionTypes) {
         if (kind == option_type) {
             valid_kind = true;
         }
@@ -609,7 +642,8 @@ void CCommandOption::verifyOptions(CStringArray& warnings) {
         if (startsWith(data_type, "list"))
             valid_type = true;
     }
-    if (!valid_type && (option_type == "description" || option_type == "note" || option_type == "error") &&
+    if (!valid_type &&
+        (option_type == "description" || option_type == "note" || option_type == "error" || option_type == "config") &&
         data_type.empty())
         valid_type = true;
     if (!valid_type && startsWith(data_type, "opt_"))
@@ -621,9 +655,13 @@ void CCommandOption::verifyOptions(CStringArray& warnings) {
         warnstream << "Description '" << description << "' should end with a period or colon.|";
     if (option_type == "note" && !endsWith(description, ".") && !endsWith(description, ":"))
         warnstream << "Note '" << description << "' should end with a period or colon.|";
+    if (option_type == "config") {  // do nothing
+        // warnstream << "Note '" << description << "' should end with a period or colon.|";
+    }
     if (option_type == "error" && !endsWith(description, ".") && !endsWith(description, ":"))
         warnstream << "Error string '" << description << "' should end with a period or colon.|";
-    if ((option_type != "description" && option_type != "note" && option_type != "error") && endsWith(description, "."))
+    if ((option_type != "description" && option_type != "note" && option_type != "error" && option_type != "config") &&
+        endsWith(description, "."))
         warnstream << "Option '" << description << "' should not end with a period.|";
     if (isReserved(command))
         warnstream << "Option '" << command << "' is a reserved word.|";
@@ -634,7 +672,7 @@ void CCommandOption::verifyOptions(CStringArray& warnings) {
 //---------------------------------------------------------------------------------------------------
 void CCommandOption::verifyHotkey(CStringArray& warnings) {
     if (hotkey.empty() || contains(option_type, "positional") || contains(option_type, "description") ||
-        contains(option_type, "note") || !contains(option_type, "error")) {
+        contains(option_type, "note") || contains(option_type, "config") || contains(option_type, "error")) {
         return;
     }
 
@@ -646,19 +684,26 @@ void CCommandOption::verifyHotkey(CStringArray& warnings) {
     if (hotkey == "x")
         warnstream << tool << ":hotkey '" << command << "-" << hotkey << "' conflicts with --fmt hotkey|";
 
-    static map<string, string> shortCmds;
-    if (!shortCmds[hotkey].empty())
-        warnstream << "Hotkey '" << command << "-" << hotkey << "' conflicts with existing '" << shortCmds[hotkey]
-                   << "'|";
-    shortCmds[hotkey] = command + "-" + hotkey;  // store for later to find dups
+    const string_q HOTKEY_WARNING =
+        "Hotkey (-[{HOTKEY}]) for tool '[{TOOL}]' at command '[{COMMAND}]:[{HOTKEY}]' +MSG+|";
+    static map<string, string> existing;
+    string_q key = tool + ":" + hotkey;
+    if (!existing[key].empty()) {
+        string_q warn = Format(HOTKEY_WARNING);
+        replace(warn, "+MSG+", "conflicts with existing '" + existing[key] + "'");
+        warnstream << warn;
+    }
+    existing[key] = command + ":" + hotkey;  // store for later to find dups
 
     bool isUpper = (toLower(hotkey) != hotkey);
     bool isFirst = hotkey == command.substr(0, 1);
     bool isSecond = hotkey == command.substr(1, 1);
     bool isContained = contains(command, hotkey);
-    if (!isUpper && !isFirst && !isSecond && (!verbose && !isContained)) {
-        warnstream << "Hotkey '" << hotkey << "' ";
-        warnstream << "of command '" << command << "' is not first or second character|";
+    bool isCache = contains(command, "cache");  // special weird case -- just ignore it
+    if (!isUpper && !isFirst && !isSecond && (!verbose && !isContained && !isCache)) {
+        string_q warn = Format(HOTKEY_WARNING);
+        replace(warn, "+MSG+", "is not first or second character");
+        warnstream << warn;
     }
 
     explode(warnings, warnstream.str(), '|');
@@ -699,7 +744,7 @@ bool isApiRoute(const string_q& route) {
 //---------------------------------------------------------------------------------------------------
 bool CCommandOption::isChifraRoute(void) const {
     return (option_type != "deprecated" && option_type != "description" && option_type != "note" &&
-            option_type != "error");
+            option_type != "config" && option_type != "error");
 }
 
 //---------------------------------------------------------------------------------------------------

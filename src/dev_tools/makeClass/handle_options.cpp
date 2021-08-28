@@ -55,12 +55,10 @@ bool COptions::handle_options(void) {
     CStringArray lines;
     asciiFileToLines(cmdFile, lines);
     for (auto line : lines) {
-        if (!startsWith(line, '#')) {
-            CCommandOption opt(line);
-            if (!opt.tool.empty() && opt.tool != "all" && opt.tool != "tool" && opt.tool != "templates") {
-                optionArray.push_back(opt);
-                tools[opt.group + "/" + opt.tool] = true;
-            }
+        CCommandOption opt(line, 1);
+        if (!opt.tool.empty() && opt.tool != "all" && opt.tool != "tool" && opt.tool != "templates") {
+            optionArray.push_back(opt);
+            tools[opt.group + "/" + opt.tool] = true;
         }
     }
 
@@ -75,12 +73,12 @@ bool COptions::handle_options(void) {
         CStringArray warnings;
         for (auto option : optionArray) {
             option.verifyOptions(warnings);
-            option.verifyHotkey(warnings);
             if ((option.group + "/" + option.tool) == tool.first) {
+                option.verifyHotkey(warnings);
                 if (option.tool == "chifra")
                     allAuto = false;
 
-                if (option.isNote) {
+                if (option.isNote || option.isConfig) {
                     string_q note = option.Format(STR_OPTION_NOTESTR);
                     if (note.length() > 120)
                         note += "  // NOLINT";
@@ -100,16 +98,13 @@ bool COptions::handle_options(void) {
                     optionStream << opt << endl;
                 }
 
-                bool oneOfEm = (option.isEnum || option.isEnumList || option.isStringList || option.isAddressList ||
-                                option.isTopicList);
-                // clang-format off
                 string_q initFmt = "    [{COMMAND}] = [{DEF_VAL}];";
-                if (option.is_customizable)
+                if (option.is_customizable) {
                     initFmt = substitute(STR_CUSTOM_INIT, "[CTYPE]",
-                                         (oneOfEm ? "String"
-                                          : (option.isBool)                    ? "Bool"
-                                                                               : "Int"));
-                // clang-format on
+                                         (option.isStringType() ? "String"
+                                          : (option.isBool)     ? "Bool"
+                                                                : "Int"));
+                }
 
                 if (option.option_type == "switch") {
                     generate_switch(option);
@@ -218,15 +213,12 @@ string_q replaceCode(const string_q& orig, const string_q& which, const string_q
 //---------------------------------------------------------------------------------------------------
 void COptions::generate_toggle(const CCommandOption& option) {
     string_q initFmt = "    [{COMMAND}] = [{DEF_VAL}];";
-    bool oneOfEm =
-        (option.isEnum || option.isEnumList || option.isStringList || option.isAddressList || option.isTopicList);
-    // clang-format off
-    if (option.is_customizable)
+    if (option.is_customizable) {
         initFmt = substitute(STR_CUSTOM_INIT, "[CTYPE]",
-                             (oneOfEm ? "String"
-                              : (option.isBool)                    ? "Bool"
-                                                                   : "Int"));
-    // clang-format on
+                             (option.isStringType() ? "String"
+                              : (option.isBool)     ? "Bool"
+                                                    : "Int"));
+    }
 
     if (option.generate == "local") {
         localStream << option.Format(STR_DEFAULT_ASSIGNMENT) << endl;
@@ -243,15 +235,12 @@ void COptions::generate_toggle(const CCommandOption& option) {
 //---------------------------------------------------------------------------------------------------
 void COptions::generate_switch(const CCommandOption& option) {
     string_q initFmt = "    [{COMMAND}] = [{DEF_VAL}];";
-    bool oneOfEm =
-        (option.isEnum || option.isEnumList || option.isStringList || option.isAddressList || option.isTopicList);
-    // clang-format off
-    if (option.is_customizable)
+    if (option.is_customizable) {
         initFmt = substitute(STR_CUSTOM_INIT, "[CTYPE]",
-                             (oneOfEm ? "String"
-                              : (option.isBool)                    ? "Bool"
-                                                                   : "Int"));
-    // clang-format on
+                             (option.isStringType() ? "String"
+                              : (option.isBool)     ? "Bool"
+                                                    : "Int"));
+    }
 
     if (option.generate == "local") {
         localStream << option.Format(STR_DEFAULT_ASSIGNMENT) << endl;
@@ -268,15 +257,12 @@ void COptions::generate_switch(const CCommandOption& option) {
 //---------------------------------------------------------------------------------------------------
 void COptions::generate_flag(const CCommandOption& option) {
     string_q initFmt = "    [{COMMAND}] = [{DEF_VAL}];";
-    bool oneOfEm =
-        (option.isEnum || option.isEnumList || option.isStringList || option.isAddressList || option.isTopicList);
-    // clang-format off
-    if (option.is_customizable)
+    if (option.is_customizable) {
         initFmt = substitute(STR_CUSTOM_INIT, "[CTYPE]",
-                             (oneOfEm ? "String"
-                              : (option.isBool)                    ? "Bool"
-                                                                   : "Int"));
-    // clang-format on
+                             (option.isStringType() ? "String"
+                              : (option.isBool)     ? "Bool"
+                                                    : "Int"));
+    }
 
     if (option.generate == "local") {
         if (option.isEnumList) {

@@ -16,7 +16,7 @@ static const COption params[] = {
     // clang-format off
     COption("list", "l", "", OPT_SWITCH, "list the index and Bloom filter hashes from local manifest or pinning service"),  // NOLINT
     COption("init", "i", "", OPT_SWITCH, "initialize local index by downloading Bloom filters from pinning service"),
-    COption("init_all", "k", "", OPT_SWITCH, "initialize local index by downloading both Bloom filters and index chunks"),  // NOLINT
+    COption("init_all", "n", "", OPT_SWITCH, "initialize local index by downloading both Bloom filters and index chunks"),  // NOLINT
     COption("sleep", "s", "<double>", OPT_HIDDEN | OPT_FLAG, "the number of seconds to sleep between requests during init (default .25)"),  // NOLINT
     COption("remote", "r", "", OPT_HIDDEN | OPT_SWITCH, "applicable only to --list mode, recover the manifest from pinning service"),  // NOLINT
     COption("pin_locally", "p", "", OPT_SWITCH, "pin all local files in the index to an IPFS store (requires IPFS)"),
@@ -47,7 +47,7 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-i" || arg == "--init") {
             init = true;
 
-        } else if (arg == "-k" || arg == "--init_all") {
+        } else if (arg == "-n" || arg == "--init_all") {
             init_all = true;
 
         } else if (startsWith(arg, "-s:") || startsWith(arg, "--sleep:")) {

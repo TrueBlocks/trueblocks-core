@@ -32,8 +32,8 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 10080,apps,Accounts,export,acctExport,unripe,u,,false,false,false,false,header,switch,<boolean>,enable search of unripe (neither staged nor finalized) folder|(assumes --staging)
 10092,apps,Accounts,export,acctExport,load,,,false,false,false,false,header,flag,<string>,a comma separated list of dynamic traversers to load
 10093,apps,Accounts,export,acctExport,reversed,,,false,false,false,false,header,switch,<boolean>,produce results in reverse chronological order
-10094,apps,Accounts,export,acctExport,by_date,y,,false,false,false,false,header,switch,<boolean>,produce results sorted by date (default is to report by address)
-10095,apps,Accounts,export,acctExport,summarize_by,b,,false,false,false,false,header,flag,enum[yearly|quarterly|monthly|weekly|daily|hourly|blockly|tx],for --accounting only&#44; summarize reconciliations by this time period
+10094,apps,Accounts,export,acctExport,by_date,b,,false,false,false,false,header,switch,<boolean>,produce results sorted by date (default is to report by address)
+10095,apps,Accounts,export,acctExport,summarize_by,z,,false,false,false,false,header,flag,enum[yearly|quarterly|monthly|weekly|daily|hourly|blockly|tx],for --accounting only&#44; summarize reconciliations by this time period
 10460,apps,Accounts,export,acctExport,,,,false,false,true,true,--,description,,Export full detail of transactions for one or more addresses.
 10470,apps,Accounts,export,acctExport,,,,false,false,false,false,--,note,,An `address` must start with '0x' and be forty-two characters long.
 
@@ -63,7 +63,7 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 13850,tools,Accounts,abis,grabABI,known,k,,false,false,true,false,local,switch,<boolean>,load common 'known' ABIs from cache
 13860,tools,Accounts,abis,grabABI,sol,s,,false,false,true,true,local,flag,<string>,file name of .sol file from which to create a new known abi (without|.sol)
 13865,tools,Accounts,abis,grabABI,find,f,,false,false,true,true,local,flag,<string>,try to search for a function declaration given a four byte code
-13865,tools,Accounts,abis,grabABI,source,s,,false,false,false,false,local,switch,<boolean>,show the source of the ABI information
+13865,tools,Accounts,abis,grabABI,source,o,,false,false,false,false,local,switch,<boolean>,show the source of the ABI information
 13867,tools,Accounts,abis,grabABI,classes,c,,false,false,false,false,local,switch,<boolean>,generate classDefinitions folder and class definitions
 13880,tools,Accounts,abis,grabABI,,,,false,false,true,true,--,description,,Fetches the ABI for a smart contract.
 13885,tools,Accounts,abis,grabABI,,,,false,false,false,false,--,note,,Solidity files found in the local folder with the name '<address>.sol' are converted to an ABI prior to processing (and then removed).
@@ -199,7 +199,7 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 
 10950,apps,Admin,pins,pinMan,list,l,,false,false,true,true,local,switch,<boolean>,list the index and Bloom filter hashes from local manifest or pinning service
 10950,apps,Admin,pins,pinMan,init,i,,false,false,true,true,header,switch,<boolean>,initialize local index by downloading Bloom filters from pinning service
-10951,apps,Admin,pins,pinMan,init_all,k,,false,false,true,true,header,switch,<boolean>,initialize local index by downloading both Bloom filters and index chunks
+10951,apps,Admin,pins,pinMan,init_all,n,,false,false,true,true,header,switch,<boolean>,initialize local index by downloading both Bloom filters and index chunks
 10980,apps,Admin,pins,pinMan,sleep,s,.25,false,false,false,false,header,flag,<double>,the number of seconds to sleep between requests during init (default [{DEF}])
 10950,apps,Admin,pins,pinMan,remote,r,,false,false,false,false,header,switch,<boolean>,applicable only to --list mode&#44; recover the manifest from pinning service
 10952,apps,Admin,pins,pinMan,pin_locally,p,,false,false,true,true,header,switch,<boolean>,pin all local files in the index to an IPFS store (requires IPFS)

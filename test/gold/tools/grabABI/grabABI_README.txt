@@ -14,7 +14,7 @@ grabABI -th
 | -s | --sol &lt;str&gt; | file name of .sol file from which to create a new known abi (without .sol) |
 | -f | --find &lt;str&gt; | try to search for a function declaration given a four byte code |
 |####|Hidden options||
-| -s | --source | show the source of the ABI information |
+| -o | --source | show the source of the ABI information |
 | -c | --classes | generate classDefinitions folder and class definitions |
 |####|Hidden options||
 | -x | --fmt &lt;val&gt; | export format, one of *[ none \| json\* \| txt \| csv \| api ]* |

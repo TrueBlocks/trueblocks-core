@@ -42,8 +42,8 @@ static const COption params[] = {
     COption("unripe", "u", "", OPT_HIDDEN | OPT_SWITCH, "enable search of unripe (neither staged nor finalized) folder (assumes --staging)"),  // NOLINT
     COption("load", "", "<string>", OPT_HIDDEN | OPT_FLAG, "a comma separated list of dynamic traversers to load"),
     COption("reversed", "", "", OPT_HIDDEN | OPT_SWITCH, "produce results in reverse chronological order"),
-    COption("by_date", "y", "", OPT_HIDDEN | OPT_SWITCH, "produce results sorted by date (default is to report by address)"),  // NOLINT
-    COption("summarize_by", "b", "enum[yearly|quarterly|monthly|weekly|daily|hourly|blockly|tx]", OPT_HIDDEN | OPT_FLAG, "for --accounting only, summarize reconciliations by this time period"),  // NOLINT
+    COption("by_date", "b", "", OPT_HIDDEN | OPT_SWITCH, "produce results sorted by date (default is to report by address)"),  // NOLINT
+    COption("summarize_by", "z", "enum[yearly|quarterly|monthly|weekly|daily|hourly|blockly|tx]", OPT_HIDDEN | OPT_FLAG, "for --accounting only, summarize reconciliations by this time period"),  // NOLINT
     COption("", "", "", OPT_DESCRIPTION, "Export full detail of transactions for one or more addresses."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -170,13 +170,13 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "--reversed") {
             reversed = true;
 
-        } else if (arg == "-y" || arg == "--by_date") {
+        } else if (arg == "-b" || arg == "--by_date") {
             by_date = true;
 
-        } else if (startsWith(arg, "-b:") || startsWith(arg, "--summarize_by:")) {
+        } else if (startsWith(arg, "-z:") || startsWith(arg, "--summarize_by:")) {
             if (!confirmEnum("summarize_by", summarize_by, arg))
                 return false;
-        } else if (arg == "-b" || arg == "--summarize_by") {
+        } else if (arg == "-z" || arg == "--summarize_by") {
             return flag_required("summarize_by");
 
         } else if (startsWith(arg, '-')) {  // do not collapse

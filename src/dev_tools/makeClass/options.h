@@ -212,8 +212,5 @@ extern const char* STR_DEFAULT_TAGS;
 void doReplace(string_q& str, const string_q& type, const string_q& rep, const string_q& spaces);
 
 //---------------------------------------------------------------------------------------------------
-extern bool parseEndpoints(const char* str, void* data);
-
-//---------------------------------------------------------------------------------------------------
 #define routeCount fileCount
 #define cmdCount nVisited
