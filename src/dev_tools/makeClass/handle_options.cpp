@@ -80,7 +80,7 @@ bool COptions::handle_options(void) {
                 if (option.tool == "chifra")
                     allAuto = false;
 
-                if (option.isNote || option.isConfig) {
+                if (option.isNote) {
                     string_q note = option.Format(STR_OPTION_NOTESTR);
                     if (note.length() > 120)
                         note += "  // NOLINT";
@@ -481,7 +481,7 @@ bool COptions::writeCode(const string_q& fn) {
         converted = replaceCode(converted, "CODE_OPTIONS", optionStream.str());
         converted = replaceCode(converted, "CODE_LOCAL_INIT", localStream.str());
         converted = replaceCode(converted, "CODE_INIT", initStream.str());
-        converted = replaceCode(converted, "CODE_NOTES", notesStream.str() + configStream.str());
+        converted = replaceCode(converted, "CODE_NOTES", notesStream.str());
         converted = replaceCode(converted, "ERROR_STRINGS", errorStrStream.str());
         converted = replaceCode(converted, "DEBUG_DISPLAY", debugStream.str());
         converted = replaceCode(converted, "CODE_CHIFRA_CMDMAP", chifraCmdStream.str());

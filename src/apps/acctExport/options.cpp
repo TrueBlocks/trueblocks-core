@@ -485,12 +485,15 @@ COptions::COptions(void) {
     // BEG_CODE_NOTES
     // clang-format off
     notes.push_back("An `address` must start with '0x' and be forty-two characters long.");
+    // clang-format on
+    // END_CODE_NOTES
+
+    // clang-format off
     configs.push_back("`cache_txs`: write transactions to the cache (see notes).");
     configs.push_back("`cache_traces`: write traces to the cache (see notes).");
     configs.push_back("`skip_ddos`: toggle skipping over 2016 dDos transactions ('on' by default).");
     configs.push_back("`max_traces`: if --skip_ddos is on, this many traces defines what a ddos transaction | is (default = 250).");  // NOLINT
     // clang-format on
-    // END_CODE_NOTES
 
     // BEG_ERROR_STRINGS
     // END_ERROR_STRINGS

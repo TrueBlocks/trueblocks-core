@@ -215,11 +215,14 @@ COptions::COptions(void) {
 
     // BEG_CODE_NOTES
     // clang-format off
+    // clang-format on
+    // END_CODE_NOTES
+
+    // clang-format off
     configs.push_back("`n_blocks`: maximum number of blocks to process (defaults to 5000).");
     configs.push_back("`n_block_procs`: number of concurrent block channels for blaze.");
     configs.push_back("`n_addr_procs`: number of concurrent address channels for blaze.");
     // clang-format on
-    // END_CODE_NOTES
 
     // BEG_ERROR_STRINGS
     // END_ERROR_STRINGS

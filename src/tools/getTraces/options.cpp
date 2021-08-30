@@ -217,10 +217,13 @@ COptions::COptions(void) {
     notes.push_back("If the queried node does not store historical state, the results for most older transactions are undefined.");  // NOLINT
     notes.push_back("A bang seperated filter has the following fields (at least one of which is required) and is separated | with a bang (!): fromBlk, toBlk, fromAddr, toAddr, after, count.");  // NOLINT
     notes.push_back("A state diff trace describes, for each modified address, what changed during that trace.");
+    // clang-format on
+    // END_CODE_NOTES
+
+    // clang-format off
     configs.push_back("`skip_ddos`: skip over the 2016 ddos during export ('on' by default).");
     configs.push_back("`max`: if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250).");  // NOLINT
     // clang-format on
-    // END_CODE_NOTES
 
     // BEG_ERROR_STRINGS
     usageErrs[ERR_PROVIDEONETXID] = "Please specify at least one transaction identifier.";
