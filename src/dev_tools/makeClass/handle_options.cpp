@@ -80,7 +80,7 @@ bool COptions::handle_options(void) {
                 if (option.tool == "chifra")
                     allAuto = false;
 
-                if (option.isNote) {
+                if (option.isNote || option.isConfig) {
                     string_q note = option.Format(STR_OPTION_NOTESTR);
                     if (note.length() > 120)
                         note += "  // NOLINT";

@@ -442,6 +442,8 @@ string_q nextCommandoptionChunk_custom(const string_q& fieldIn, const void* data
                         ret += ("|OPT_POSITIONAL");
                     else if (com->option_type == "note")
                         ret = com->description;
+                    else if (com->option_type == "config")
+                        ret = com->description;
                     else if (com->option_type == "error")
                         ret = com->description;
                     else
@@ -530,7 +532,7 @@ bool CCommandOption::finishCleanup(void) {
     }
     if (option_type == "description") {
         swagger_descr = trim(substitute(description, "|", "\n        "));
-    } else if (option_type != "note" && option_type != "error") {
+    } else if (option_type != "note" && option_type != "error" && option_type != "config") {
         swagger_descr = trim(substitute(description, "|", "\n          "));
     }
     if (option_type != "note" && option_type != "error" && generate != "config") {
@@ -550,6 +552,7 @@ bool CCommandOption::finishCleanup(void) {
     isDouble = contains(data_type, "double");
     isAddress = contains(data_type, "address");
     isNote = option_type == "note";
+    isConfig = option_type == "config";
     isErr = option_type == "error";
     isConfig = generate == "config";
 
@@ -614,7 +617,8 @@ void CCommandOption::verifyOptions(CStringArray& warnings) {
         if (startsWith(data_type, "list"))
             valid_type = true;
     }
-    if (!valid_type && (option_type == "description" || option_type == "note" || option_type == "error") &&
+    if (!valid_type &&
+        (option_type == "description" || option_type == "note" || option_type == "error" || option_type == "config") &&
         data_type.empty())
         valid_type = true;
     if (!valid_type && startsWith(data_type, "opt_"))
@@ -626,9 +630,13 @@ void CCommandOption::verifyOptions(CStringArray& warnings) {
         warnstream << "Description '" << description << "' should end with a period or colon.|";
     if (option_type == "note" && !endsWith(description, ".") && !endsWith(description, ":"))
         warnstream << "Note '" << description << "' should end with a period or colon.|";
+    if (option_type == "config") {  // do nothing
+        // warnstream << "Note '" << description << "' should end with a period or colon.|";
+    }
     if (option_type == "error" && !endsWith(description, ".") && !endsWith(description, ":"))
         warnstream << "Error string '" << description << "' should end with a period or colon.|";
-    if ((option_type != "description" && option_type != "note" && option_type != "error") && endsWith(description, "."))
+    if ((option_type != "description" && option_type != "note" && option_type != "error" && option_type != "config") &&
+        endsWith(description, "."))
         warnstream << "Option '" << description << "' should not end with a period.|";
     if (isReserved(command))
         warnstream << "Option '" << command << "' is a reserved word.|";
@@ -711,7 +719,7 @@ bool isApiRoute(const string_q& route) {
 //---------------------------------------------------------------------------------------------------
 bool CCommandOption::isChifraRoute(void) const {
     return (option_type != "deprecated" && option_type != "description" && option_type != "note" &&
-            option_type != "error");
+            option_type != "config" && option_type != "error");
 }
 
 //---------------------------------------------------------------------------------------------------
