@@ -30,8 +30,8 @@ uint64_t findBlockNumByHash(const hash_t& hash, void* data) {
     CBlock block;
     getBlock(block, hash);  // getBlock returns true if it has transactions and false otherwise
     if (block.hash != hash) {
-        cerr << "Block hash '" << hash << "' does not appear to be a valid block hash.";
-        exit(0);
+        LOG_WARN("Block hash '", hash, "' does not appear to be a valid block hash.");
+        return NOPOS;
     }
     return block.blockNumber;
 }

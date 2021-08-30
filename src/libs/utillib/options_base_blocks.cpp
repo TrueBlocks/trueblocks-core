@@ -190,8 +190,10 @@ bool COptionsBlockList::forEveryBlockNumber(UINT64VISITFUNC func, void* data) co
     if (hashFind) {
         for (size_t i = 0; i < hashList.size(); i++) {
             uint64_t n = (*hashFind)(hashList[i], data);
-            if (!(*func)(n, data))
-                return false;
+            if (n != NOPOS) {
+                if (!(*func)(n, data))
+                    return false;
+            }
         }
     }
     return true;

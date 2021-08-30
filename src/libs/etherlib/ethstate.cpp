@@ -420,7 +420,7 @@ wei_t getBalanceAt(const string_q& addr, blknum_t num) {
     replace(params, "[{ADDRESS}]", str_2_Addr(addr));
     replace(params, "[{NUM}]", uint_2_Hex(num));
     string_q ret = callRPC("eth_getBalance", params, false);
-    if (contains(ret, "error"))
+    if (contains(ret, "error") || contains(ret, "message"))
         return 0;
     return str_2_Wei(ret);
 }
