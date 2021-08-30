@@ -32,3 +32,8 @@ getTraces -th
   with a bang (!): fromBlk, toBlk, fromAddr, toAddr, after, count.
 - A state diff trace describes, for each modified address, what changed during that trace.
 
+`Configurable Items:`
+
+`skip_ddos`: skip over the 2016 ddos during export ('on' by default).
+`max`: if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250).
+

@@ -72,7 +72,7 @@ class COptions : public COptionsBase {
     timestamp_t lastFormat;
     timestamp_t lastLint;
 
-    ostringstream optionStream, initStream, localStream, autoStream, headerStream;
+    ostringstream optionStream, initStream, localStream, autoStream, headerStream, configStream;
     ostringstream notesStream, errorStrStream, errorDefStream, debugStream, goCallStream;
     ostringstream goRouteStream, chifraCmdStream, chifraHelpStream, pairMapStream;
     ostringstream apiTagStream, htmlTagStream, apiPathStream, htmlPathStream;
@@ -84,6 +84,7 @@ class COptions : public COptionsBase {
         localStream.str("");
         autoStream.str("");
         headerStream.str("");
+        configStream.str("");
         notesStream.str("");
         errorStrStream.str("");
         errorDefStream.str("");
@@ -107,6 +108,7 @@ class COptions : public COptionsBase {
         localStream.clear();
         autoStream.clear();
         headerStream.clear();
+        configStream.clear();
         notesStream.clear();
         errorStrStream.clear();
         errorDefStream.clear();
@@ -210,9 +212,6 @@ extern const char* STR_DEFAULT_TAGS;
 
 //------------------------------------------------------------------------------------------------------------
 void doReplace(string_q& str, const string_q& type, const string_q& rep, const string_q& spaces);
-
-//---------------------------------------------------------------------------------------------------
-extern bool parseEndpoints(const char* str, void* data);
 
 //---------------------------------------------------------------------------------------------------
 #define routeCount fileCount

@@ -15,8 +15,6 @@ static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
     COption("n_blocks", "n", "<uint64>", OPT_FLAG, "maximum number of blocks to process (defaults to 5000)"),
-    COption("n_block_procs", "b", "<uint64>", OPT_HIDDEN | OPT_FLAG, "number of block channels for blaze"),
-    COption("n_addr_procs", "a", "<uint64>", OPT_HIDDEN | OPT_FLAG, "number of address channels for blaze"),
     COption("pin", "p", "", OPT_SWITCH, "pin new chunks (and blooms) to IPFS (requires Pinata key and running IPFS node)"),  // NOLINT
     COption("sleep", "s", "<double>", OPT_FLAG, "the number of seconds to sleep between passes (default 14)"),
     COption("quit", "q", "", OPT_HIDDEN | OPT_SWITCH, "quit the program if it's running"),
@@ -53,18 +51,6 @@ bool COptions::parseArguments(string_q& command) {
                 return false;
         } else if (arg == "-n" || arg == "--n_blocks") {
             return flag_required("n_blocks");
-
-        } else if (startsWith(arg, "-b:") || startsWith(arg, "--n_block_procs:")) {
-            if (!confirmUint("n_block_procs", n_block_procs, arg))
-                return false;
-        } else if (arg == "-b" || arg == "--n_block_procs") {
-            return flag_required("n_block_procs");
-
-        } else if (startsWith(arg, "-a:") || startsWith(arg, "--n_addr_procs:")) {
-            if (!confirmUint("n_addr_procs", n_addr_procs, arg))
-                return false;
-        } else if (arg == "-a" || arg == "--n_addr_procs") {
-            return flag_required("n_addr_procs");
 
         } else if (arg == "-p" || arg == "--pin") {
             pin = true;
@@ -229,6 +215,9 @@ COptions::COptions(void) {
 
     // BEG_CODE_NOTES
     // clang-format off
+    configs.push_back("`n_blocks`: maximum number of blocks to process (defaults to 5000).");
+    configs.push_back("`n_block_procs`: number of concurrent block channels for blaze.");
+    configs.push_back("`n_addr_procs`: number of concurrent address channels for blaze.");
     // clang-format on
     // END_CODE_NOTES
 

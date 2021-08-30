@@ -25,8 +25,6 @@ static const COption params[] = {
     COption("articulate", "a", "", OPT_SWITCH, "articulate transactions, traces, logs, and outputs"),
     COption("cache_txs", "i", "", OPT_SWITCH, "write transactions to the cache (see notes)"),
     COption("cache_traces", "R", "", OPT_SWITCH, "write traces to the cache (see notes)"),
-    COption("skip_ddos", "d", "", OPT_HIDDEN | OPT_TOGGLE, "toggle skipping over 2016 dDos transactions ('on' by default)"),  // NOLINT
-    COption("max_traces", "m", "<uint64>", OPT_HIDDEN | OPT_FLAG, "if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250)"),  // NOLINT
     COption("freshen", "f", "", OPT_HIDDEN | OPT_SWITCH, "freshen but do not print the exported data"),
     COption("factory", "y", "", OPT_SWITCH, "scan for contract creations from the given address(es) and report address of those contracts"),  // NOLINT
     COption("emitter", "", "", OPT_SWITCH, "for log export only, export only if one of the given export addresses emitted the event"),  // NOLINT
@@ -42,8 +40,8 @@ static const COption params[] = {
     COption("unripe", "u", "", OPT_HIDDEN | OPT_SWITCH, "enable search of unripe (neither staged nor finalized) folder (assumes --staging)"),  // NOLINT
     COption("load", "", "<string>", OPT_HIDDEN | OPT_FLAG, "a comma separated list of dynamic traversers to load"),
     COption("reversed", "", "", OPT_HIDDEN | OPT_SWITCH, "produce results in reverse chronological order"),
-    COption("by_date", "y", "", OPT_HIDDEN | OPT_SWITCH, "produce results sorted by date (default is to report by address)"),  // NOLINT
-    COption("summarize_by", "b", "enum[yearly|quarterly|monthly|weekly|daily|hourly|blockly|tx]", OPT_HIDDEN | OPT_FLAG, "for --accounting only, summarize reconciliations by this time period"),  // NOLINT
+    COption("by_date", "b", "", OPT_HIDDEN | OPT_SWITCH, "produce results sorted by date (default is to report by address)"),  // NOLINT
+    COption("summarize_by", "z", "enum[yearly|quarterly|monthly|weekly|daily|hourly|blockly|tx]", OPT_HIDDEN | OPT_FLAG, "for --accounting only, summarize reconciliations by this time period"),  // NOLINT
     COption("", "", "", OPT_DESCRIPTION, "Export full detail of transactions for one or more addresses."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -97,15 +95,6 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-R" || arg == "--cache_traces") {
             cache_traces = true;
-
-        } else if (arg == "-d" || arg == "--skip_ddos") {
-            skip_ddos = !skip_ddos;
-
-        } else if (startsWith(arg, "-m:") || startsWith(arg, "--max_traces:")) {
-            if (!confirmUint("max_traces", max_traces, arg))
-                return false;
-        } else if (arg == "-m" || arg == "--max_traces") {
-            return flag_required("max_traces");
 
         } else if (arg == "-f" || arg == "--freshen") {
             freshen = true;
@@ -170,13 +159,13 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "--reversed") {
             reversed = true;
 
-        } else if (arg == "-y" || arg == "--by_date") {
+        } else if (arg == "-b" || arg == "--by_date") {
             by_date = true;
 
-        } else if (startsWith(arg, "-b:") || startsWith(arg, "--summarize_by:")) {
+        } else if (startsWith(arg, "-z:") || startsWith(arg, "--summarize_by:")) {
             if (!confirmEnum("summarize_by", summarize_by, arg))
                 return false;
-        } else if (arg == "-b" || arg == "--summarize_by") {
+        } else if (arg == "-z" || arg == "--summarize_by") {
             return flag_required("summarize_by");
 
         } else if (startsWith(arg, '-')) {  // do not collapse
@@ -437,8 +426,8 @@ void COptions::Init(void) {
     cache_traces = getGlobalConfig("acctExport")->getConfigBool("settings", "cache_traces", false);
     skip_ddos = getGlobalConfig("acctExport")->getConfigBool("settings", "skip_ddos", true);
     max_traces = getGlobalConfig("acctExport")->getConfigInt("settings", "max_traces", 250);
-    factory = getGlobalConfig("acctExport")->getConfigBool("settings", "factory", false);
     // clang-format on
+    factory = false;
     emitter = false;
     source.clear();
     relevant = false;
@@ -496,6 +485,10 @@ COptions::COptions(void) {
     // BEG_CODE_NOTES
     // clang-format off
     notes.push_back("An `address` must start with '0x' and be forty-two characters long.");
+    configs.push_back("`cache_txs`: write transactions to the cache (see notes).");
+    configs.push_back("`cache_traces`: write traces to the cache (see notes).");
+    configs.push_back("`skip_ddos`: toggle skipping over 2016 dDos transactions ('on' by default).");
+    configs.push_back("`max_traces`: if --skip_ddos is on, this many traces defines what a ddos transaction | is (default = 250).");  // NOLINT
     // clang-format on
     // END_CODE_NOTES
 

@@ -24,7 +24,7 @@ static const COption params[] = {
     COption("known", "k", "", OPT_SWITCH, "load common 'known' ABIs from cache"),
     COption("sol", "s", "<string>", OPT_FLAG, "file name of .sol file from which to create a new known abi (without .sol)"),  // NOLINT
     COption("find", "f", "<string>", OPT_FLAG, "try to search for a function declaration given a four byte code"),
-    COption("source", "s", "", OPT_HIDDEN | OPT_SWITCH, "show the source of the ABI information"),
+    COption("source", "o", "", OPT_HIDDEN | OPT_SWITCH, "show the source of the ABI information"),
     COption("classes", "c", "", OPT_HIDDEN | OPT_SWITCH, "generate classDefinitions folder and class definitions"),
     COption("", "", "", OPT_DESCRIPTION, "Fetches the ABI for a smart contract."),
     // clang-format on
@@ -70,7 +70,7 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-f" || arg == "--find") {
             return flag_required("find");
 
-        } else if (arg == "-s" || arg == "--source") {
+        } else if (arg == "-o" || arg == "--source") {
             source = true;
 
         } else if (arg == "-c" || arg == "--classes") {

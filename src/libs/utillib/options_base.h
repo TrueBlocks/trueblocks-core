@@ -62,6 +62,7 @@ class COptionsBase {
     CStringArray commandLines;
     CStringArray arguments;
     CStringArray notes;
+    CStringArray configs;
     CErrorStringMap usageErrs;
     CStringArray errors;
 
@@ -140,6 +141,8 @@ class COptionsBase {
                             bool required = false) const;
     string_q get_notes(void) const;
     string_q format_notes(const CStringArray& strs) const;
+    string_q get_configs(void) const;
+    string_q format_configs(const CStringArray& strs) const;
 
     const COption* findParam(const string_q& name) const;
     string_q expandOption(string_q& arg);

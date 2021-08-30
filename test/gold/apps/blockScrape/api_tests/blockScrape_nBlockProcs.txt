@@ -1,7 +1,1 @@
-{
-  "message": "Testing only",
-  "n_blocks": 2000,
-  "n_block_procs": 12,
-  "n_addr_procs": 20,
-  "pin": 0,
-}
+{ "errors": [ "chifra scrape - Invalid option: --n_block_procs" ] }

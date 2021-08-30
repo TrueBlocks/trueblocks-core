@@ -29,8 +29,6 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
 	    (--clean)         clean (i.e. remove duplicate appearances) from all existing monitors
 
 	#### Hidden options
-	-d  (--skip_ddos)     toggle skipping over 2016 dDos transactions ('on' by default)
-	-m  (--max_traces <num>)if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250)
 	-f  (--freshen)       freshen but do not print the exported data
 	-F  (--first_block <num>)first block to process (inclusive)
 	-L  (--last_block <num>)last block to process (inclusive)
@@ -38,8 +36,8 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --l
 	-u  (--unripe)        enable search of unripe (neither staged nor finalized) folder (assumes --staging)
 	    (--load <str>)    a comma separated list of dynamic traversers to load
 	    (--reversed)      produce results in reverse chronological order
-	-y  (--by_date)       produce results sorted by date (default is to report by address)
-	-b  (--summarize_by <val>)for --accounting only, summarize reconciliations by this time period, one of [yearly|quarterly|monthly|weekly|daily|hourly|blockly|tx]
+	-b  (--by_date)       produce results sorted by date (default is to report by address)
+	-z  (--summarize_by <val>)for --accounting only, summarize reconciliations by this time period, one of [yearly|quarterly|monthly|weekly|daily|hourly|blockly|tx]
 	#### Hidden options
 
 	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]

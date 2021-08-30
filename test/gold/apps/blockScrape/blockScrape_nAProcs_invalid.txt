@@ -1,7 +1,7 @@
 blockScrape argc: 3 [1:--n_addr_procs] [2:-12] 
 blockScrape --n_addr_procs -12 
 
-  Invalid option: -2
+  Invalid option: --n_addr_procs
 
   Usage:    blockScrape [-n|-p|-s|-v|-h]  
   Purpose:  Scan the chain and update the TrueBlocks index of appearances.
@@ -12,8 +12,6 @@ blockScrape --n_addr_procs -12
 	-s  (--sleep <double>)the number of seconds to sleep between passes (default 14)
 
 	#### Hidden options
-	-b  (--n_block_procs <num>)number of block channels for blaze
-	-a  (--n_addr_procs <num>)number of address channels for blaze
 	-q  (--quit)          quit the program if it's running
 	#### Hidden options
 

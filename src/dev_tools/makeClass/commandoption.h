@@ -64,6 +64,7 @@ class CCommandOption : public CBaseNode {
     bool isUint64;
     bool isDouble;
     bool isAddress;
+    bool isConfig;
     bool isNote;
     bool isErr;
     void* params{nullptr};
@@ -84,6 +85,10 @@ class CCommandOption : public CBaseNode {
     string_q toHtmlPath(void) const;
     bool isChifraRoute(void) const;
     string_q getType(bool quoted) const;
+    bool isStringType(void) const {
+        return (isEnum || isEnumList || isStringList || isAddressList || isTopicList);
+    }
+    bool finishCleanup(void);
     // EXISTING_CODE
     bool operator==(const CCommandOption& it) const;
     bool operator!=(const CCommandOption& it) const {
@@ -167,6 +172,7 @@ inline void CCommandOption::initialize(void) {
     isUint64 = false;
     isDouble = false;
     isAddress = false;
+    isConfig = false;
     isNote = false;
     isErr = false;
     swagger_descr = "";
@@ -210,6 +216,7 @@ inline void CCommandOption::duplicate(const CCommandOption& co) {
     isUint64 = co.isUint64;
     isDouble = co.isDouble;
     isAddress = co.isAddress;
+    isConfig = co.isConfig;
     isNote = co.isNote;
     isErr = co.isErr;
     swagger_descr = co.swagger_descr;
@@ -251,5 +258,6 @@ extern const char* STR_DISPLAY_COMMANDOPTION;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
+extern bool parseCommandData(const char* str, void* data);
 // EXISTING_CODE
 }  // namespace qblocks

@@ -21,6 +21,12 @@ The scraper can scrape either the index only, previously created monitors only, 
 | -v | --verbose | set verbose level (optional level defaults to 1) |
 | -h | --help | display this help screen |
 
+`Configurable Items:`
+
+`n_blocks`: maximum number of blocks to process (defaults to 5000).
+`n_block_procs`: number of concurrent block channels for blaze.
+`n_addr_procs`: number of concurrent address channels for blaze.
+
 ### explainer
 
 Each time `chifra scrape` runs, it begins at the last block it completed (plus one) and decends as deeply as it can into the block's data. (This is why we need a `--tracing` node.) As address appearances are encountered, the system adds the appearance to a binary index. Periodically (at the end of the block containing the 2,000,000th appearance), the system consolidates a **chunk**.

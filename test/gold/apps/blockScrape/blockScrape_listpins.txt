@@ -12,8 +12,6 @@ blockScrape --listpins
 	-s  (--sleep <double>)the number of seconds to sleep between passes (default 14)
 
 	#### Hidden options
-	-b  (--n_block_procs <num>)number of block channels for blaze
-	-a  (--n_addr_procs <num>)number of address channels for blaze
 	-q  (--quit)          quit the program if it's running
 	#### Hidden options
 
