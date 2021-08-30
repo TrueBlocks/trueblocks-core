@@ -66,7 +66,6 @@ class CCommandOption : public CBaseNode {
     bool isAddress;
     bool isConfig;
     bool isNote;
-    bool isConfig;
     bool isErr;
     void* params{nullptr};
     explicit CCommandOption(const string_q& line);
@@ -175,7 +174,6 @@ inline void CCommandOption::initialize(void) {
     isAddress = false;
     isConfig = false;
     isNote = false;
-    isConfig = false;
     isErr = false;
     swagger_descr = "";
     route_list = "";
@@ -220,7 +218,6 @@ inline void CCommandOption::duplicate(const CCommandOption& co) {
     isAddress = co.isAddress;
     isConfig = co.isConfig;
     isNote = co.isNote;
-    isConfig = co.isConfig;
     isErr = co.isErr;
     swagger_descr = co.swagger_descr;
     route_list = co.route_list;
