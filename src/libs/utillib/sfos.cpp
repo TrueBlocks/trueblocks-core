@@ -13,6 +13,13 @@
 #include <glob.h>
 #include <libgen.h>
 #include <algorithm>
+#include <unistd.h>
+#ifdef __APPLE__
+#include <libproc.h>
+#else
+#include <iostream>
+#include <filesystem>
+#endif
 #include "basetypes.h"
 #include "conversions.h"
 #include "sfos.h"
@@ -311,6 +318,21 @@ string_q getHostName(void) {
     char hostname[HOST_NAME_MAX + 1] = {0};
     gethostname(hostname, HOST_NAME_MAX);
     return hostname;
+}
+
+string_q getExecutablePath(void) {
+    string_q dir;
+    pid_t pid = getpid();
+#ifdef __APPLE__
+    char pathbuf[PROC_PIDPATHINFO_MAXSIZE];
+    proc_pidpath(pid, pathbuf, sizeof(pathbuf));
+    dir = pathbuf;
+#else
+    string_q ret = doCommand("ls -l /proc/" + uint_2_Str(pid) + "/exe");
+    dir = substitute(substitute(ret, "/proc/self/exe/", ""), "-> ", "|");
+    nextTokenClear(dir, '|');
+#endif
+    return dir;
 }
 
 }  // namespace qblocks

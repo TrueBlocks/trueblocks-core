@@ -37,5 +37,6 @@ extern bool isRunning(const string_q& prog);
 
 extern string_q getUserName(void);
 extern string_q getHostName(void);
+extern string_q getExecutablePath(void);
 
 }  // namespace qblocks
