@@ -18,11 +18,7 @@ jobs:
             git clone --quiet https://github.com/${{ github.repository }}
             cd trueblocks-core
             git reset --hard ${{ github.sha }}
-            mkdir build && cd build
-            cmake ../src
-            make -j 4
-            export PATH=$(pwd)/../bin:$(pwd)/../bin/test:$PATH
-            make test-all
+            sh src/dev_tools/build_and_test.sh
       - name: Finish
         run: |
           echo "🍏 This job's status is ${{ job.status }}"
