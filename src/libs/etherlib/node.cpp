@@ -616,12 +616,16 @@ string_q getVersionFromClient(void) {
         // We do this to avoid constantly hitting the node just to see if it's there.
         // If the rpcProvider changed or we haven't checked for a while, check it again.
         string_q clientVersion = callRPC("web3_clientVersion", "[]", false);
-        stringToAsciiFile(clientVersionFn, getCurlContext()->baseURL + "\t" + clientVersion);
-        return clientVersion;
+        if (!clientVersion.empty()) {
+            stringToAsciiFile(clientVersionFn, getCurlContext()->baseURL + "\t" + clientVersion);
+            return clientVersion;
+        }
     }
 
     CStringArray parts;
     explode(parts, contents, '\t');
+    if (parts.size() < 2)
+        return uint_2_Str(NOPOS);
     return parts[1];
 }
 
@@ -637,8 +641,9 @@ bool isGeth(void) {
 
 //-------------------------------------------------------------------------
 bool isParity(void) {
-    return contains(toLower(getVersionFromClient()), "parity") ||
-           contains(toLower(getVersionFromClient()), "openethereum");
+    return isErigon() ||
+        contains(toLower(getVersionFromClient()), "parity") ||
+        contains(toLower(getVersionFromClient()), "openethereum");
 }
 
 //--------------------------------------------------------------------------
