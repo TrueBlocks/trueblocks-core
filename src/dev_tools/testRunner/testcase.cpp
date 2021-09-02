@@ -93,6 +93,11 @@ string_q CTestCase::getValueByName(const string_q& fieldName) const {
                 return goldPath;
             }
             break;
+        case 'i':
+            if (fieldName % "isCmd") {
+                return bool_2_Str(isCmd);
+            }
+            break;
         case 'm':
             if (fieldName % "mode") {
                 return mode;
@@ -186,6 +191,12 @@ bool CTestCase::setValueByName(const string_q& fieldNameIn, const string_q& fiel
         case 'g':
             if (fieldName % "goldPath") {
                 goldPath = fieldValue;
+                return true;
+            }
+            break;
+        case 'i':
+            if (fieldName % "isCmd") {
+                isCmd = str_2_Bool(fieldValue);
                 return true;
             }
             break;
@@ -294,6 +305,7 @@ bool CTestCase::Serialize(CArchive& archive) {
     archive >> workPath;
     archive >> fileName;
     // archive >> test_id;
+    archive >> isCmd;
     // EXISTING_CODE
     // EXISTING_CODE
     finishParse();
@@ -323,6 +335,7 @@ bool CTestCase::SerializeC(CArchive& archive) const {
     archive << workPath;
     archive << fileName;
     // archive << test_id;
+    archive << isCmd;
     // EXISTING_CODE
     // EXISTING_CODE
     return true;
@@ -389,6 +402,7 @@ void CTestCase::registerClass(void) {
     ADD_FIELD(CTestCase, "fileName", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CTestCase, "test_id", T_UNUMBER, ++fieldNum);
     HIDE_FIELD(CTestCase, "test_id");
+    ADD_FIELD(CTestCase, "isCmd", T_BOOL | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CTestCase, "schema");
@@ -539,6 +553,9 @@ CTestCase::CTestCase(const string_q& line, uint32_t id) {
     if (endsWith(path, "lib"))
         path = "libs/" + path;
 
+    isCmd = contains(path, "tools") || contains(path, "apps") || contains(path, "go-apps");
+    if (isCmd)
+        isCmd = !contains(path, "dev_tools") && !contains(tool, "chifra");
     fileName = tool + "_" + name + ".txt";
 
     replaceAll(post, "n", "");
@@ -599,6 +616,7 @@ void CTestCase::prepareTest(bool cmdLine, bool removeWorking) {
     if (!extra.empty() && !contains(extra, "=")) {  // order matters
         tool = extra;
         extra = "";
+        fileName = substitute(fileName, "/cmds/chifra", "/chifra");
     }
 }
 // EXISTING_CODE

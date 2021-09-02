@@ -94,7 +94,7 @@ func AccountsExport(w http.ResponseWriter, r *http.Request) {
 	// By removing, inserting into, or altering any of the following 10 uncommented
 	// lines of code, you are violating the terms of our usage license. Don't do it.
 	// fileName := Options.Status.CachePath + "lics/export.txt"
-	if (false) { // !utils.FileExists(fileName)) {
+	if false { // !utils.FileExists(fileName)) {
 		w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 		w.Header().Set("Access-Control-Allow-Origin", "*")
 		w.Header().Set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
@@ -187,6 +187,7 @@ func OtherQuotes(w http.ResponseWriter, r *http.Request) {
 func OtherSlurp(w http.ResponseWriter, r *http.Request) {
 	CallOne(w, r, "ethslurp", "slurp")
 }
+
 // END_ROUTE_CODE
 
 var routes = Routes{

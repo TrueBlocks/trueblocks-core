@@ -8,7 +8,7 @@ project (getState)
 file(GLOB SOURCE_FILES "*.cpp")
 
 # Output
-set(EXECUTABLE_OUTPUT_PATH "${CMAKE_SOURCE_DIR}/../bin")
+set(EXECUTABLE_OUTPUT_PATH "${BIN_CMDS_DIR}")
 
 # Define the executable to be generated
 set(TOOL_NAME "getState")

@@ -726,7 +726,7 @@ bool CCommandOption::isChifraRoute(void) const {
 string_q CCommandOption::toChifraCmd(void) const {
     if (api_route.empty())
         return Format("    // -- [{GROUP}]");
-    return Format("    {\"[{API_ROUTE}]\", \"[{TOOL}]\"},");
+    return Format("    {\"[{API_ROUTE}]\", \"cmds/[{TOOL}]\"},");
 }
 
 //---------------------------------------------------------------------------------------------------

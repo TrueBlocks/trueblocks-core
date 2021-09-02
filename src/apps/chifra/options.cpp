@@ -124,10 +124,11 @@ bool COptions::call_command(int argc, const char* argv[]) {
             os << " --monitor";
     }
 
-    LOG_TEST_CALL(os.str());
+    string_q cmd = substitute(os.str(), "cmds/", getExecutablePath("/chifra", "/cmds/"));
+    LOG_TEST_CALL(cmd);
 
     // Make the actual system call and return the result
-    return system(os.str().c_str());
+    return system(cmd.c_str());
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -154,31 +155,31 @@ COptions::~COptions(void) {
 map<string, string> chifraCmdMap = {
     // BEG_CODE_CHIFRA_CMDMAP
     // -- Accounts
-    {"list", "acctExport --appearances"},
-    {"export", "acctExport"},
-    {"monitors", "acctExport --appearances"},
-    {"names", "ethNames"},
-    {"abis", "grabABI"},
+    {"list", "cmds/acctExport --appearances"},
+    {"export", "cmds/acctExport"},
+    {"monitors", "cmds/acctExport --appearances"},
+    {"names", "cmds/ethNames"},
+    {"abis", "cmds/grabABI"},
     // -- Chain Data
-    {"blocks", "getBlocks"},
-    {"transactions", "getTrans"},
-    {"receipts", "getReceipts"},
-    {"logs", "getLogs"},
-    {"traces", "getTraces"},
-    {"when", "whenBlock"},
+    {"blocks", "cmds/getBlocks"},
+    {"transactions", "cmds/getTrans"},
+    {"receipts", "cmds/getReceipts"},
+    {"logs", "cmds/getLogs"},
+    {"traces", "cmds/getTraces"},
+    {"when", "cmds/whenBlock"},
     // -- Chain State
-    {"state", "getState"},
-    {"tokens", "getTokens"},
+    {"state", "cmds/getState"},
+    {"tokens", "cmds/getTokens"},
     // -- Admin
-    {"status", "cacheStatus"},
-    {"serve", "flame"},
-    {"scrape", "blockScrape"},
-    {"init", "pinMan local --init"},
-    {"pins", "pinMan"},
+    {"status", "cmds/cacheStatus"},
+    {"serve", "cmds/flame"},
+    {"scrape", "cmds/blockScrape"},
+    {"init", "cmds/pinMan local --init"},
+    {"pins", "cmds/pinMan"},
     // -- Other
-    {"quotes", "getQuotes"},
-    {"explore", "fireStorm"},
-    {"slurp", "ethslurp"},
+    {"quotes", "cmds/getQuotes"},
+    {"explore", "cmds/fireStorm"},
+    {"slurp", "cmds/ethslurp"},
     // END_CODE_CHIFRA_CMDMAP
 };
 

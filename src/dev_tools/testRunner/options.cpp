@@ -255,21 +255,21 @@ void establishTestData(void) {
     // TODO(tjayrush): and re-run. You will see the tests that fail.
 
     // Forces a few blocks into the cache
-    doCommand("getBlocks --uniq_tx 0");
-    doCommand("getBlocks --cache 4369999");
-    doCommand("getTrans --cache 47055.0");
-    doCommand("getTrans --cache 46147.0");
+    doCommand("chifra blocks --uniq_tx 0");
+    doCommand("chifra blocks --cache 4369999");
+    doCommand("chifra transactions --cache 47055.0");
+    doCommand("chifra transactions --cache 46147.0");
 
     // Forces the retreival of a few ABI files without which some tests will fail
-    doCommand("grabABI 0x45f783cce6b7ff23b2ab2d70e416cdb7d6055f51");
-    doCommand("grabABI 0xd7edd2f2bcccdb24afe9a4ab538264b0bbb31373");
-    doCommand("grabABI 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359");
-    doCommand("grabABI 0x226159d592e2b063810a10ebf6dcbada94ed68b8");
-    doCommand("grabABI 0x17996cbddd23c2a912de8477c37d43a1b79770b8");
-    doCommand("grabABI 0x0000000000004946c0e9f43f4dee607b0ef1fa1c");
-    doCommand("grabABI 0x7c66550c9c730b6fdd4c03bc2e73c5462c5f7acc");
-    doCommand("grabABI 0xa478c2975ab1ea89e8196811f51a7b7ade33eb11");
-    doCommand("grabABI 0x7d655c57f71464b6f83811c55d84009cd9f5221c");
+    doCommand("chifra abis 0x45f783cce6b7ff23b2ab2d70e416cdb7d6055f51");
+    doCommand("chifra abis 0xd7edd2f2bcccdb24afe9a4ab538264b0bbb31373");
+    doCommand("chifra abis 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359");
+    doCommand("chifra abis 0x226159d592e2b063810a10ebf6dcbada94ed68b8");
+    doCommand("chifra abis 0x17996cbddd23c2a912de8477c37d43a1b79770b8");
+    doCommand("chifra abis 0x0000000000004946c0e9f43f4dee607b0ef1fa1c");
+    doCommand("chifra abis 0x7c66550c9c730b6fdd4c03bc2e73c5462c5f7acc");
+    doCommand("chifra abis 0xa478c2975ab1ea89e8196811f51a7b7ade33eb11");
+    doCommand("chifra abis 0x7d655c57f71464b6f83811c55d84009cd9f5221c");
 
 // TODO(tjayrush): Not sure what this is about.
 #if 1

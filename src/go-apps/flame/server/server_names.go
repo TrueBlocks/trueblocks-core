@@ -18,23 +18,23 @@ import (
 )
 
 func EditName(w http.ResponseWriter, r *http.Request) {
-    r.ParseForm()
+	r.ParseForm()
 	newName := NewNamedAddress()
-    for k, _ := range r.Form {
-		json.Unmarshal([]byte(k), &newName);
-    }
-	log.Print(utils.Yellow, "Adding name: ", newName.ToJson(), utils.Off);
+	for k, _ := range r.Form {
+		json.Unmarshal([]byte(k), &newName)
+	}
+	log.Print(utils.Yellow, "Adding name: ", newName.ToJson(), utils.Off)
 
 	// Do the actual call
-	cmd := exec.Command("ethNames", "--create" )
-	cmd.Env = append(os.Environ(), "TB_NAME_ADDRESS=" + newName.Address)
-	cmd.Env = append(cmd.Env, "TB_NAME_NAME=" + newName.Name)
-	cmd.Env = append(cmd.Env, "TB_NAME_TAG=" + newName.Tags)
-	cmd.Env = append(cmd.Env, "TB_NAME_SOURCE=" + newName.Source)
-	cmd.Env = append(cmd.Env, "TB_NAME_SYMBOL=" + newName.Symbol)
-	cmd.Env = append(cmd.Env, "TB_NAME_DECIMALS=" + newName.Decimals)
-	cmd.Env = append(cmd.Env, "TB_NAME_DESCR=" + newName.Description)
-	out, err := cmd.Output();
+	cmd := exec.Command(GetExecutablePath("ethNames"), "--create")
+	cmd.Env = append(os.Environ(), "TB_NAME_ADDRESS="+newName.Address)
+	cmd.Env = append(cmd.Env, "TB_NAME_NAME="+newName.Name)
+	cmd.Env = append(cmd.Env, "TB_NAME_TAG="+newName.Tags)
+	cmd.Env = append(cmd.Env, "TB_NAME_SOURCE="+newName.Source)
+	cmd.Env = append(cmd.Env, "TB_NAME_SYMBOL="+newName.Symbol)
+	cmd.Env = append(cmd.Env, "TB_NAME_DECIMALS="+newName.Decimals)
+	cmd.Env = append(cmd.Env, "TB_NAME_DESCR="+newName.Description)
+	out, err := cmd.Output()
 	if err != nil {
 		log.Print("Error from server: ", err)
 	}
@@ -50,23 +50,23 @@ func EditName(w http.ResponseWriter, r *http.Request) {
 	} else {
 		w.WriteHeader(http.StatusOK)
 	}
-	fmt.Fprintf(w, "{ \"data\": [ " + newName.ToJson() + " ]}")
+	fmt.Fprintf(w, "{ \"data\": [ "+newName.ToJson()+" ]}")
 }
 
 type NamedAddress struct {
-	Tags string `json:"tags"`
-	Address string `json:"address"`
-	Name string `json:"name"`
-	Symbol string `json:"symbol,omitempty"`
-	Source string `json:"source"`
-	Decimals string `json:"decimals,omitempty"`
+	Tags        string `json:"tags"`
+	Address     string `json:"address"`
+	Name        string `json:"name"`
+	Symbol      string `json:"symbol,omitempty"`
+	Source      string `json:"source"`
+	Decimals    string `json:"decimals,omitempty"`
 	Description string `json:"description,omitempty"`
-	Deleted bool `json:"deleted,omitempty"`
-	IsCustom bool `json:"is_custom,omitempty"`
-	IsPrefund bool `json:"is_prefund,omitempty"`
-	IsContract bool `json:"is_contract,omitempty"`
-	IsErc20 bool `json:"is_erc20,omitempty"`
-	IsErc721 bool `json:"is_erc721,omitempty"`
+	Deleted     bool   `json:"deleted,omitempty"`
+	IsCustom    bool   `json:"is_custom,omitempty"`
+	IsPrefund   bool   `json:"is_prefund,omitempty"`
+	IsContract  bool   `json:"is_contract,omitempty"`
+	IsErc20     bool   `json:"is_erc20,omitempty"`
+	IsErc721    bool   `json:"is_erc721,omitempty"`
 }
 
 func NewNamedAddress() NamedAddress {

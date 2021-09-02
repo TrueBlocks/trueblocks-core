@@ -320,7 +320,7 @@ string_q getHostName(void) {
     return hostname;
 }
 
-string_q getExecutablePath(void) {
+string_q getExecutablePath(const string_q& remove, const string_q& replace) {
     string_q dir;
     pid_t pid = getpid();
 #ifdef __APPLE__
@@ -332,7 +332,7 @@ string_q getExecutablePath(void) {
     dir = substitute(substitute(ret, "/proc/self/exe/", ""), "-> ", "|");
     nextTokenClear(dir, '|');
 #endif
-    return dir;
+    return substitute(dir, remove, replace);
 }
 
 }  // namespace qblocks
