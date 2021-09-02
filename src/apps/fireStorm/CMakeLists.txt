@@ -12,7 +12,7 @@ set(EXECUTABLE_OUTPUT_PATH "${BIN_CMDS_DIR}")
 
 # Define the executable to be generated
 set(TOOL_NAME "fireStorm")
-set(PROJ_NAME "tools")
+set(PROJ_NAME "apps")
 add_executable(${TOOL_NAME} ${SOURCE_FILES})
 
 # Add the project static libs at linking
