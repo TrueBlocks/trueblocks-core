@@ -124,10 +124,11 @@ bool COptions::call_command(int argc, const char* argv[]) {
             os << " --monitor";
     }
 
-    LOG_TEST_CALL(os.str());
+    string_q cmd = os.str();
+    LOG_TEST_CALL(cmd);
 
     // Make the actual system call and return the result
-    return system(os.str().c_str());
+    return system(cmd.c_str());
 }
 
 //---------------------------------------------------------------------------------------------------

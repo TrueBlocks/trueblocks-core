@@ -67,17 +67,22 @@ set (BASE_INCLUDE
      "${CMAKE_SOURCE_DIR}/libs/pinlib")
 
 # ----------------------------------------------------------------------------------------
+set (BIN_DIR ${CMAKE_SOURCE_DIR}/../bin)
+set (BIN_CMDS_DIR ${BIN_DIR})
+set (BIN_TEST_DIR ${BIN_DIR}/test)
+
+# ----------------------------------------------------------------------------------------
 # Enable testing
 # enable_testing()
 
-add_custom_target(lint COMMAND "${CMAKE_SOURCE_DIR}/../bin/makeClass" "--lint" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
-add_custom_target(format COMMAND "${CMAKE_SOURCE_DIR}/../bin/makeClass" "--format" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
-add_custom_target(options COMMAND "${CMAKE_SOURCE_DIR}/../bin/makeClass" "--options --api" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
-add_custom_target(generate COMMAND "${CMAKE_SOURCE_DIR}/../bin/makeClass" "-Aaopm" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
-add_custom_target(readmes COMMAND "${CMAKE_SOURCE_DIR}/../bin/makeClass" "--readmes" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
-add_custom_target(finish COMMAND "${CMAKE_SOURCE_DIR}/../bin/makeClass" "-lf" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
-add_custom_target(tests COMMAND "${CMAKE_SOURCE_DIR}/../bin/test/test.sh" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/../build")
-add_custom_target(test-all COMMAND "${CMAKE_SOURCE_DIR}/../bin/test/test-all.sh" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/../build")
+add_custom_target(lint COMMAND "${BIN_DIR}/makeClass" "--lint" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
+add_custom_target(format COMMAND "${BIN_DIR}/makeClass" "--format" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
+add_custom_target(options COMMAND "${BIN_DIR}/makeClass" "--options --api" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
+add_custom_target(generate COMMAND "${BIN_DIR}/makeClass" "-Aaopm" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
+add_custom_target(readmes COMMAND "${BIN_DIR}/makeClass" "--readmes" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
+add_custom_target(finish COMMAND "${BIN_DIR}/makeClass" "-lf" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
+add_custom_target(tests COMMAND "${BIN_DIR}/test/test.sh" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/../build")
+add_custom_target(test-all COMMAND "${BIN_DIR}/test/test-all.sh" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/../build")
 
 # ----------------------------------------------------------------------------------------
 # Compilation order for the subfolders

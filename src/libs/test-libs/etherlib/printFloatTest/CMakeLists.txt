@@ -8,7 +8,7 @@ project (printFloatTest)
 file(GLOB SOURCE_FILES "*.cpp")
 
 # Output
-set(EXECUTABLE_OUTPUT_PATH "${CMAKE_SOURCE_DIR}/../bin/test")
+set(EXECUTABLE_OUTPUT_PATH "${BIN_TEST_DIR}")
 
 # Define the executable to be generated
 set(TOOL_NAME "printFloatTest")

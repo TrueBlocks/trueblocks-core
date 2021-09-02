@@ -9,12 +9,11 @@ function(ADD_GO_INSTALLABLE_PROGRAM NAME MAIN_SRC)
   add_custom_target(${NAME})
   add_custom_command(TARGET ${NAME}
                     COMMAND go build
-                    -o "${CMAKE_SOURCE_DIR}/../bin/${NAME}"
+                    -o "${BIN_CMDS_DIR}/${NAME}"
                     ${CMAKE_GO_FLAGS} ${MAIN_SRC}
                     WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
                     DEPENDS ${MAIN_SRC_ABS} ${MAIN_SRC})
   add_custom_target(${NAME}_all ALL DEPENDS ${NAME})
-  install(PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/${NAME} DESTINATION bin)
 endfunction(ADD_GO_INSTALLABLE_PROGRAM)
 
 ADD_GO_INSTALLABLE_PROGRAM(flame *.go)

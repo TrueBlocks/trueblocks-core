@@ -100,7 +100,7 @@ bool COptions::parseArguments(string_q& command) {
 
     // Nor should we run if the index is being actively scanned...
     if (isRunning("acctExport")) {
-        LOG_WARN("Refusing to run while acctExport is running.");
+        LOG_WARN("Refusing to run while 'chifra export' is running.");
         return false;
     }
 
