@@ -11,4 +11,4 @@ make -j 4
 export PATH=$(pwd)/../bin:$(pwd)/../bin/test:$PATH
 
 # Run test
-make test-all
+make tests
