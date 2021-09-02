@@ -46,34 +46,43 @@ endif (CURL_FOUND)
 
 # ----------------------------------------------------------------------------------------
 # Globally available C++ settings
+set(DL_LIB "-ldl")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1z -Werror -Wall -O2 -fPIC")
 if(APPLE)
+    set(DL_LIB "")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1z -Werror -Wconversion -Wall -O2 -fPIC")
 endif()
 
 # ----------------------------------------------------------------------------------------
 # Linkable libraries
-set (BASE_LIBS pin acct ether util ${CURL_LIBRARIES})
+set (BASE_LIBS pin acct ether util sqlite3 ${CURL_LIBRARIES})
 
 # ----------------------------------------------------------------------------------------
 # Base included paths
 set (BASE_INCLUDE 
+     "${CMAKE_SOURCE_DIR}/libs/sqlite3lib"
      "${CMAKE_SOURCE_DIR}/libs/utillib"
      "${CMAKE_SOURCE_DIR}/libs/etherlib"
      "${CMAKE_SOURCE_DIR}/libs/acctlib"
      "${CMAKE_SOURCE_DIR}/libs/pinlib")
 
 # ----------------------------------------------------------------------------------------
+set (BIN_DIR ${CMAKE_SOURCE_DIR}/../bin)
+set (BIN_CMDS_DIR ${BIN_DIR})
+set (BIN_TEST_DIR ${BIN_DIR}/test)
+
+# ----------------------------------------------------------------------------------------
 # Enable testing
 # enable_testing()
 
-add_custom_target(lint COMMAND "${CMAKE_SOURCE_DIR}/../bin/makeClass" "--lint" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
-add_custom_target(format COMMAND "${CMAKE_SOURCE_DIR}/../bin/makeClass" "--format" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
-add_custom_target(options COMMAND "${CMAKE_SOURCE_DIR}/../bin/makeClass" "--options --api" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
-add_custom_target(generate COMMAND "${CMAKE_SOURCE_DIR}/../bin/makeClass" "-aopA" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
-add_custom_target(finish COMMAND "${CMAKE_SOURCE_DIR}/../bin/makeClass" "-lf" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
-add_custom_target(tests COMMAND "${BIN_TEST_DIR}/test.sh" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/../build")
-add_custom_target(test-all COMMAND "${BIN_TEST_DIR}/test-all.sh" "--no_quit" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/../build")
+add_custom_target(lint COMMAND "${BIN_DIR}/makeClass" "--lint" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
+add_custom_target(format COMMAND "${BIN_DIR}/makeClass" "--format" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
+add_custom_target(options COMMAND "${BIN_DIR}/makeClass" "--options --api" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
+add_custom_target(generate COMMAND "${BIN_DIR}/makeClass" "-Aaopm" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
+add_custom_target(readmes COMMAND "${BIN_DIR}/makeClass" "--readmes" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
+add_custom_target(finish COMMAND "${BIN_DIR}/makeClass" "-lf" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
+add_custom_target(tests COMMAND "${BIN_DIR}/test/test.sh" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/../build")
+add_custom_target(test-all COMMAND "${BIN_DIR}/test/test-all.sh" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/../build")
 
 # ----------------------------------------------------------------------------------------
 # Compilation order for the subfolders
