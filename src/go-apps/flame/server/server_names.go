@@ -26,7 +26,7 @@ func EditName(w http.ResponseWriter, r *http.Request) {
 	log.Print(utils.Yellow, "Adding name: ", newName.ToJson(), utils.Off)
 
 	// Do the actual call
-	cmd := exec.Command(GetExecutablePath("ethNames"), "--create")
+	cmd := exec.Command(GetCommandPath("ethNames"), "--create")
 	cmd.Env = append(os.Environ(), "TB_NAME_ADDRESS="+newName.Address)
 	cmd.Env = append(cmd.Env, "TB_NAME_NAME="+newName.Name)
 	cmd.Env = append(cmd.Env, "TB_NAME_TAG="+newName.Tags)

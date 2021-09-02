@@ -68,8 +68,8 @@ set (BASE_INCLUDE
 
 # ----------------------------------------------------------------------------------------
 set (BIN_DIR ${CMAKE_SOURCE_DIR}/../bin)
-set (BIN_CMDS_DIR ${BIN_DIR}/cmds)
-set (BIN_TEST_DIR ${BIN_DIR}/test)
+set (BIN_CMDS_DIR $ENV{HOME}/.local/bin/chifra)
+set (BIN_TEST_DIR ${BIN_CMDS_DIR}/test)
 
 # ----------------------------------------------------------------------------------------
 # Enable testing
@@ -81,8 +81,8 @@ add_custom_target(options COMMAND "${BIN_DIR}/makeClass" "--options --api" WORKI
 add_custom_target(generate COMMAND "${BIN_DIR}/makeClass" "-Aaopm" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
 add_custom_target(readmes COMMAND "${BIN_DIR}/makeClass" "--readmes" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
 add_custom_target(finish COMMAND "${BIN_DIR}/makeClass" "-lf" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
-add_custom_target(tests COMMAND "${BIN_DIR}/test/test.sh" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/../build")
-add_custom_target(test-all COMMAND "${BIN_DIR}/test/test-all.sh" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/../build")
+add_custom_target(tests COMMAND "${BIN_TEST_DIR}/test.sh" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/../build")
+add_custom_target(test-all COMMAND "${BIN_TEST_DIR}/test-all.sh" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/../build")
 
 # ----------------------------------------------------------------------------------------
 # Compilation order for the subfolders

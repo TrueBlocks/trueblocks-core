@@ -104,7 +104,7 @@ bool COptions::call_command(int argc, const char* argv[]) {
         replace(realCmd, "blockScrape", "flame");
     string_q prev;
     ostringstream os;
-    os << realCmd;
+    os << getCommandPath(realCmd);
     for (int i = 2; i < argc; i++) {
         // If we're not removing it...
         if (!removeMap[argv[i]]) {
@@ -124,11 +124,10 @@ bool COptions::call_command(int argc, const char* argv[]) {
             os << " --monitor";
     }
 
-    string_q cmd = substitute(os.str(), "cmds/", getExecutablePath("/chifra", "/cmds/"));
-    LOG_TEST_CALL(cmd);
+    LOG_TEST_CALL(os.str());
 
     // Make the actual system call and return the result
-    return system(cmd.c_str());
+    return system(os.str().c_str());
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -155,31 +154,31 @@ COptions::~COptions(void) {
 map<string, string> chifraCmdMap = {
     // BEG_CODE_CHIFRA_CMDMAP
     // -- Accounts
-    {"list", "cmds/acctExport --appearances"},
-    {"export", "cmds/acctExport"},
-    {"monitors", "cmds/acctExport --appearances"},
-    {"names", "cmds/ethNames"},
-    {"abis", "cmds/grabABI"},
+    {"list", "acctExport --appearances"},
+    {"export", "acctExport"},
+    {"monitors", "acctExport --appearances"},
+    {"names", "ethNames"},
+    {"abis", "grabABI"},
     // -- Chain Data
-    {"blocks", "cmds/getBlocks"},
-    {"transactions", "cmds/getTrans"},
-    {"receipts", "cmds/getReceipts"},
-    {"logs", "cmds/getLogs"},
-    {"traces", "cmds/getTraces"},
-    {"when", "cmds/whenBlock"},
+    {"blocks", "getBlocks"},
+    {"transactions", "getTrans"},
+    {"receipts", "getReceipts"},
+    {"logs", "getLogs"},
+    {"traces", "getTraces"},
+    {"when", "whenBlock"},
     // -- Chain State
-    {"state", "cmds/getState"},
-    {"tokens", "cmds/getTokens"},
+    {"state", "getState"},
+    {"tokens", "getTokens"},
     // -- Admin
-    {"status", "cmds/cacheStatus"},
-    {"serve", "cmds/flame"},
-    {"scrape", "cmds/blockScrape"},
-    {"init", "cmds/pinMan local --init"},
-    {"pins", "cmds/pinMan"},
+    {"status", "cacheStatus"},
+    {"serve", "flame"},
+    {"scrape", "blockScrape"},
+    {"init", "pinMan local --init"},
+    {"pins", "pinMan"},
     // -- Other
-    {"quotes", "cmds/getQuotes"},
-    {"explore", "cmds/fireStorm"},
-    {"slurp", "cmds/ethslurp"},
+    {"quotes", "getQuotes"},
+    {"explore", "fireStorm"},
+    {"slurp", "ethslurp"},
     // END_CODE_CHIFRA_CMDMAP
 };
 

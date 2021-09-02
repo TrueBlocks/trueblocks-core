@@ -157,6 +157,9 @@ CBlockProgress getBlockProgress(size_t which = BP_ALL);
 
 //-------------------------------------------------------------------------
 extern string_q getIndexPath(const string_q& _part);
+inline string_q getCommandPath(const string_q& _part) {
+    return "~/.local/bin/chifra/" + _part;
+}
 
 //-------------------------------------------------------------------------
 #define blockFolder (getCachePath("blocks/"))

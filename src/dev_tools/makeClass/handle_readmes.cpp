@@ -35,7 +35,7 @@ bool visitReadme(const string_q& templatePath, void* data) {
         string_q source = asciiFileToString(templatePath);
         string_q cmd = tool;
         if (tool != "chifra" && tool != "makeClass" && tool != "testRunner")
-            cmd = getExecutablePath("makeClass", "cmds/" + tool);
+            cmd = getCommandPath(tool);
         if (system((cmd + " -th >file 2>&1").c_str())) {
         }  // Don't remove cruft. Silences compiler warnings
         string_q usage = trim(asciiFileToString("./file"), '\n');

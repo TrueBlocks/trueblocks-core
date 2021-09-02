@@ -553,7 +553,7 @@ CTestCase::CTestCase(const string_q& line, uint32_t id) {
     if (endsWith(path, "lib"))
         path = "libs/" + path;
 
-    isCmd = contains(path, "tools") || contains(path, "apps") || contains(path, "go-apps");
+    isCmd = contains(path, "tools") || contains(path, "apps") || contains(path, "go-apps") || contains(path, "libs");
     if (isCmd)
         isCmd = !contains(path, "dev_tools") && !contains(tool, "chifra");
     fileName = tool + "_" + name + ".txt";
@@ -616,7 +616,7 @@ void CTestCase::prepareTest(bool cmdLine, bool removeWorking) {
     if (!extra.empty() && !contains(extra, "=")) {  // order matters
         tool = extra;
         extra = "";
-        fileName = substitute(fileName, "/cmds/chifra", "/chifra");
+        // fileName = substitute(fileName, "/cmds/chifra", "/chifra");
     }
 }
 // EXISTING_CODE

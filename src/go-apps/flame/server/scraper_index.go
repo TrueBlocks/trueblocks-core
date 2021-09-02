@@ -38,7 +38,7 @@ func RunIndexScraper() {
 				options += " --verbose " + strconv.Itoa(int(IndexScraper.Verbose))
 			}
 			log.Print(IndexScraper.Color, IndexScraper.Name, ": blockScrape", options, utils.Off, "\n")
-			cmd := exec.Command(GetExecutablePath("blockScrape"), options)
+			cmd := exec.Command(GetCommandPath("blockScrape"), options)
 			stderrPipe, err := cmd.StderrPipe()
 			if err != nil {
 				log.Printf("%s", err)

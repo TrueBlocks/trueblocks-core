@@ -59,7 +59,7 @@ func RunMonitorScraper() {
 				}
 				options += " " + addr
 				log.Print("<PROG> : ", MonitorScraper.Color, "Freshening ", index, " of ", len(addresses), " acctExport", options, utils.Off, "\n")
-				cmd := exec.Command(GetExecutablePath("acctExport"), options)
+				cmd := exec.Command(GetCommandPath("acctExport"), options)
 				stderrPipe, err := cmd.StderrPipe()
 				if err != nil {
 					log.Printf("%s", err)

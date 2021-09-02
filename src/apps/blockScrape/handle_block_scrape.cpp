@@ -89,11 +89,10 @@ bool COptions::scrape_blocks(void) {
         EXIT_NOMSG(false);
     }
 
-    string_q execPath = getExecutablePath("blockScrape", "blaze");
     // We're ready to scrape, so build the blaze command line...
     os.clear();
     os.str("");
-    os << execPath + " scrape ";
+    os << getCommandPath("blaze") + " scrape ";
     os << "--startBlock " << cons.blazeStart << " ";
     os << "--nBlocks " << cons.blazeCnt << " ";
     os << "--ripeBlock " << cons.blazeRipe << " ";

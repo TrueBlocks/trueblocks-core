@@ -12,7 +12,7 @@ import (
 	"net/http"
 	"os"
 	"os/exec"
-	"path/filepath"
+	"os/user"
 	"strconv"
 	"strings"
 
@@ -24,19 +24,16 @@ func isTestMode(r *http.Request) bool {
 	return r.Header.Get("User-Agent") == "testRunner"
 }
 
-// GetExecutablePath returns full path the the given tool
-func GetExecutablePath(cmd string) string {
-	ex, err1 := os.Executable()
-	if err1 != nil {
-		panic(err1)
-	}
-	exPath := filepath.Dir(ex)
-	return exPath + "/" + cmd
+// GetCommandPath returns full path the the given tool
+func GetCommandPath(cmd string) string {
+	usr, _ := user.Current()
+	dir := usr.HomeDir
+	return dir + "/.local/bin/chifra/" + cmd
 }
 
 // CallOne handles a route that calls the underlying TrueBlocks tool directly
 func CallOne(w http.ResponseWriter, r *http.Request, tbCmd, apiCmd string) {
-	CallOneExtra(w, r, GetExecutablePath(tbCmd), "", apiCmd)
+	CallOneExtra(w, r, GetCommandPath(tbCmd), "", apiCmd)
 }
 
 // CallOneExtra handles a route by calling into chifra
@@ -112,7 +109,7 @@ func CallOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd s
 			}
 			log.Println("apiCmd: ", apiCmd)
 			if apiCmd == "scrape" {
-				out, err := exec.Command(GetExecutablePath("blockScrape"), "--quit --verbose").Output()
+				out, err := exec.Command(GetCommandPath("blockScrape"), "--quit --verbose").Output()
 				if err != nil {
 					fmt.Printf("%s", err)
 				} else {
