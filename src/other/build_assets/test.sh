@@ -13,6 +13,8 @@ make -j 8
 cd ..
 make -j 8
 ~/.local/bin/chifra/test/test-api.sh --filter fast --mode cmd $@
+RESULT=$?
 
 cd $BUILD_FOLDER
 echo "Done..."
+exit $RESULT
