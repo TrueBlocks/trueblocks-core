@@ -15,28 +15,28 @@
 
 //------------------------------------------------------------------------------------------------------------
 bool COptions::handle_lint(void) {
-    // CToml config(configPath("makeClass.toml"));
+    CToml config(configPath("makeClass.toml"));
 
-    // bool enabled = false;  // config.getConfigBool("enabled", "lint_all", false);
-    // string_q res = doCommand(getCommandPath("test/pylint.py"));
-    // if (!enabled || res.empty()) {
-    LOG_WARN("Skipping linting...");
+    bool enabled = config.getConfigBool("enabled", "lint_all", false);
+    string_q res = doCommand("which pylin.py");  // getCommandPath("test/pylint.py"));
+    if (!enabled || res.empty()) {
+        LOG_WARN("Skipping linting...");
+        return true;
+    }
+
+    LOG_INFO(cYellow, "handling linting...", cOff);
+    counter = CCounter();
+    counter.is_counting = true;
+    forEveryFileInFolder("./", lintFiles, this);
+    counter.is_counting = false;
+    forEveryFileInFolder("./", lintFiles, this);
+    config.setConfigStr("settings", "lastLint", uint_2_Str(static_cast<uint64_t>(date_2_Ts(Now()))));
+    config.writeFile();
+    config.Release();
+    LOG_INFO(cYellow, "makeClass --lint", cOff, " processed ", counter.nVisited, " files (", counter.nProcessed,
+             " lints).", string_q(40, ' '));
+
     return true;
-    // }
-
-    // LOG_INFO(cYellow, "handling linting...", cOff);
-    // counter = CCounter();
-    // counter.is_counting = true;
-    // forEveryFileInFolder("./", lintFiles, this);
-    // counter.is_counting = false;
-    // forEveryFileInFolder("./", lintFiles, this);
-    // config.setConfigStr("settings", "lastLint", uint_2_Str(static_cast<uint64_t>(date_2_Ts(Now()))));
-    // config.writeFile();
-    // config.Release();
-    // LOG_INFO(cYellow, "makeClass --lint", cOff, " processed ", counter.nVisited, " files (", counter.nProcessed,
-    //          " lints).", string_q(40, ' '));
-
-    // return true;
 }
 
 //--------------------------------------------------------------------------------
