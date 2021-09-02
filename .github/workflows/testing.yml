@@ -13,9 +13,10 @@ jobs:
           command_timeout: 40m
           script_stop: true
           script: |
-            rm -rf Development/trueblocks-core
+            # FIXME: uncomment all lines
+            # rm -rf Development/trueblocks-core
             cd Development
-            git clone --quiet https://github.com/${{ github.repository }}
+            # git clone --quiet https://github.com/${{ github.repository }}
             cd trueblocks-core
             git reset --hard ${{ github.sha }}
             sh src/dev_tools/build_and_test.sh
