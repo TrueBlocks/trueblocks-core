@@ -641,8 +641,13 @@ bool isGeth(void) {
 
 //-------------------------------------------------------------------------
 bool isParity(void) {
-    return isErigon() || contains(toLower(getVersionFromClient()), "parity") ||
+    return contains(toLower(getVersionFromClient()), "parity") ||
            contains(toLower(getVersionFromClient()), "openethereum");
+}
+
+//-------------------------------------------------------------------------
+bool hasParityTraces(void) {
+    return isErigon() || isParity();
 }
 
 //--------------------------------------------------------------------------

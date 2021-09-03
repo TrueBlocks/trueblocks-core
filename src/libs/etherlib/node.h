@@ -108,6 +108,7 @@ extern string_q getVersionFromClient(void);
 extern bool isErigon(void);
 extern bool isGeth(void);
 extern bool isParity(void);
+extern bool hasParityTraces(void);
 extern bool getNodeIds(uint64_t& clientId, uint64_t& networkId);
 
 //-------------------------------------------------------------------------
