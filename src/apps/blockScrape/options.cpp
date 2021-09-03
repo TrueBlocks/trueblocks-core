@@ -14,10 +14,8 @@
 static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
-    COption("n_blocks", "n", "<uint64>", OPT_FLAG, "maximum number of blocks to process (defaults to 5000)"),
     COption("pin", "p", "", OPT_SWITCH, "pin new chunks (and blooms) to IPFS (requires Pinata key and running IPFS node)"),  // NOLINT
     COption("sleep", "s", "<double>", OPT_FLAG, "the number of seconds to sleep between passes (default 14)"),
-    COption("quit", "q", "", OPT_HIDDEN | OPT_SWITCH, "quit the program if it's running"),
     COption("", "", "", OPT_DESCRIPTION, "Scan the chain and update the TrueBlocks index of appearances."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -32,7 +30,6 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     // BEG_CODE_LOCAL_INIT
-    bool quit = false;
     // END_CODE_LOCAL_INIT
 
     CBlock block;
@@ -46,12 +43,6 @@ bool COptions::parseArguments(string_q& command) {
         if (false) {
             // do nothing -- make auto code generation easier
             // BEG_CODE_AUTO
-        } else if (startsWith(arg, "-n:") || startsWith(arg, "--n_blocks:")) {
-            if (!confirmUint("n_blocks", n_blocks, arg))
-                return false;
-        } else if (arg == "-n" || arg == "--n_blocks") {
-            return flag_required("n_blocks");
-
         } else if (arg == "-p" || arg == "--pin") {
             pin = true;
 
@@ -60,9 +51,6 @@ bool COptions::parseArguments(string_q& command) {
                 return false;
         } else if (arg == "-s" || arg == "--sleep") {
             return flag_required("sleep");
-
-        } else if (arg == "-q" || arg == "--quit") {
-            quit = true;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -75,12 +63,11 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     // BEG_DEBUG_DISPLAY
+    LOG_TEST_BOOL("pin", pin);
+    LOG_TEST("sleep", sleep, (sleep == 14));
     LOG_TEST("n_blocks", n_blocks, (n_blocks == (isDockerMode() ? 100 : 2000)));
     LOG_TEST("n_block_procs", n_block_procs, (n_block_procs == (isDockerMode() ? 5 : 10)));
     LOG_TEST("n_addr_procs", n_addr_procs, (n_addr_procs == (isDockerMode() ? 10 : 20)));
-    LOG_TEST_BOOL("pin", pin);
-    LOG_TEST("sleep", sleep, (sleep == 14));
-    LOG_TEST_BOOL("quit", quit);
     // END_DEBUG_DISPLAY
 
     if (Mocked(""))
@@ -196,13 +183,13 @@ void COptions::Init(void) {
     loadNames();
 
     // BEG_CODE_INIT
+    pin = false;
+    sleep = 14;
     // clang-format off
     n_blocks = getGlobalConfig("blockScrape")->getConfigInt("settings", "n_blocks", (isDockerMode() ? 100 : 2000));
     n_block_procs = getGlobalConfig("blockScrape")->getConfigInt("settings", "n_block_procs", (isDockerMode() ? 5 : 10));
     n_addr_procs = getGlobalConfig("blockScrape")->getConfigInt("settings", "n_addr_procs", (isDockerMode() ? 10 : 20));
     // clang-format on
-    pin = false;
-    sleep = 14;
     // END_CODE_INIT
 
     minArgs = 0;

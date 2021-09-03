@@ -124,7 +124,8 @@ bool freshenTimestamps(blknum_t minBlock) {
         block = CBlock();  // reset
         getBlock_header(block, bn);
         if (block.timestamp < blockZeroTs) {
-            LOG_ERR("Bad data when requesting block '", bn, "'. ", block.Format("[{BLOCKNUMBER}].[{TIMESTAMP}]"), " Cannot continue.");
+            LOG_ERR("Bad data when requesting block '", bn, "'. ", block.Format("[{BLOCKNUMBER}].[{TIMESTAMP}]"),
+                    " Cannot continue.");
             file.Release();
             unlockSection();
             return false;

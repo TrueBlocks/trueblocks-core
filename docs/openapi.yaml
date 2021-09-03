@@ -1323,22 +1323,6 @@ paths:
       description: Scan the chain and update the TrueBlocks index of appearances.
       operationId: admin-scrape
       parameters:
-      - name: n_block_procs
-        in: query
-        description: number of concurrent block channels for blaze
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: number
-      - name: n_addr_procs
-        in: query
-        description: number of concurrent address channels for blaze
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: number
       - name: pin
         in: query
         description: pin new chunks (and blooms) to IPFS (requires Pinata key and running IPFS node)
@@ -1355,14 +1339,30 @@ paths:
         explode: true
         schema:
           type: number
-      - name: quit
+      - name: n_blocks
         in: query
-        description: quit the program if it's running
+        description: maximum number of blocks to process (default 2000)
         required: false
         style: form
         explode: true
         schema:
-          type: boolean
+          type: number
+      - name: n_block_procs
+        in: query
+        description: number of concurrent block channels for blaze
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: number
+      - name: n_addr_procs
+        in: query
+        description: number of concurrent address channels for blaze
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: number
       responses:
         "200":
           description: status of the scraper
