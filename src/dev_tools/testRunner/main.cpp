@@ -222,7 +222,14 @@ void COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
             if (cmdTests) {
                 string_q env = substitute(substitute(linesToString(envLines, '|'), " ", ""), "|", " ");
                 string_q e = "env " + env + " TEST_MODE=true NO_COLOR=true REDIR_CERR=true ";
+#ifdef NEW_CMD_PATH
+                string_q p = contains(test.path, "libs") ? "test/" + test.tool : test.tool;
+                if (test.isCmd)
+                    p = getCommandPath(p);
+                string_q c = p + " " + test.options + " >" + test.workPath + test.fileName + " 2>&1";
+#else
                 string_q c = test.tool + test.options + " >" + test.workPath + test.fileName + " 2>&1";
+#endif
                 cmd << e << c;
 
             } else {

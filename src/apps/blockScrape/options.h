@@ -19,11 +19,11 @@ class CConsolidator;
 class COptions : public COptionsBase {
   public:
     // BEG_CODE_DECLARE
+    bool pin;
+    double sleep;
     uint64_t n_blocks;
     uint64_t n_block_procs;
     uint64_t n_addr_procs;
-    bool pin;
-    double sleep;
     // END_CODE_DECLARE
 
     timestamp_t latestBlockTs;

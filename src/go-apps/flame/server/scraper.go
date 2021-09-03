@@ -26,11 +26,11 @@ type Scraper struct {
 	Verbose    int64  `json:"Verbose"`
 }
 
-func NewScraper(color, name string, secs int64, verbose int) Scraper {
+func NewScraper(color, name string, secs int, verbose int) Scraper {
 	scraper := new(Scraper)
 	scraper.Color = color
 	scraper.Name = name
-	scraper.SleepSecs = secs
+	scraper.SleepSecs = int64(secs)
 	scraper.Running = scraper.LoadStateFromCache()
 	scraper.Verbose = int64(verbose)
 	return *scraper
