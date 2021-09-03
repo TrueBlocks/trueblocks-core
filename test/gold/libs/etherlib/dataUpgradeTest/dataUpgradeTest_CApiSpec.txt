@@ -37,7 +37,7 @@ method              	1005	0	20971570	T_TEXT TS_STRING TS_OMITEMPTY
 uri                 	1006	0	20971570	T_TEXT TS_STRING TS_OMITEMPTY
 headers             	1007	0	20971570	T_TEXT TS_STRING TS_OMITEMPTY
 {
-  "schema": 11008,
+  "schema": 12001,
   "deleted": false,
   "showing": true,
   "cname": "ApiSpec"

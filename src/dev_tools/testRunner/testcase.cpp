@@ -616,7 +616,6 @@ void CTestCase::prepareTest(bool cmdLine, bool removeWorking) {
     if (!extra.empty() && !contains(extra, "=")) {  // order matters
         tool = extra;
         extra = "";
-        // fileName = substitute(fileName, "/cmds/chifra", "/chifra");
     }
 }
 // EXISTING_CODE
