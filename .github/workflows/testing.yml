@@ -18,7 +18,7 @@ jobs:
             git clone --quiet https://github.com/${{ github.repository }}
             cd trueblocks-core
             git reset --hard ${{ github.sha }}
-            sh src/other/build_assets/build_and_test.sh
+            sh src/other/build_assets/build_and_test.sh test-all
       - name: Finish
         run: |
           echo "🍏 This job's status is ${{ job.status }}"
