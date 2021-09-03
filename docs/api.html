@@ -1301,15 +1301,6 @@
                 operationId: 'admin-scrape',
                 parameters: [
                   {
-                    name: 'n_blocks',
-                    in: 'query',
-                    description: 'maximum number of blocks to process (defaults to 5000)',
-                    required: false,
-                    style: 'form',
-                    explode: true,
-                    schema: {type: 'number'},
-                  },
-                  {
                     name: 'n_block_procs',
                     in: 'query',
                     description: 'number of concurrent block channels for blaze',
