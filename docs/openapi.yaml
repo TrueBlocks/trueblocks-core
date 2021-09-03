@@ -1323,9 +1323,25 @@ paths:
       description: Scan the chain and update the TrueBlocks index of appearances.
       operationId: admin-scrape
       parameters:
+      - name: pin
+        in: query
+        description: pin new chunks (and blooms) to IPFS (requires Pinata key and running IPFS node)
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+      - name: sleep
+        in: query
+        description: the number of seconds to sleep between passes (default 14)
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: number
       - name: n_blocks
         in: query
-        description: maximum number of blocks to process (defaults to 5000)
+        description: maximum number of blocks to process (default 2000)
         required: false
         style: form
         explode: true
@@ -1347,30 +1363,6 @@ paths:
         explode: true
         schema:
           type: number
-      - name: pin
-        in: query
-        description: pin new chunks (and blooms) to IPFS (requires Pinata key and running IPFS node)
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: sleep
-        in: query
-        description: the number of seconds to sleep between passes (default 14)
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: number
-      - name: quit
-        in: query
-        description: quit the program if it's running
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
       responses:
         "200":
           description: status of the scraper

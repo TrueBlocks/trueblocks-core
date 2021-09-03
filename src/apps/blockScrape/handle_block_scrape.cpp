@@ -124,7 +124,7 @@ bool COptions::scrape_blocks(void) {
     // Because we don't want acctExport to produce incorrect results, so we bail out knowing that the ripe
     // folder is in a consistant state, and the next scrape will pick up where it left off.
     if (isRunning("acctExport")) {
-        LOG_WARN("acctExport is running. blockScrape cannot run at this time...");
+        LOG_WARN("'chifra export' is running. 'chifra scrape' cannot run at this time...");
         EXIT_NOMSG(false);
     }
 

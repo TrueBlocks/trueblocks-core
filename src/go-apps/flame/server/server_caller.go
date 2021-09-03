@@ -12,6 +12,9 @@ import (
 	"net/http"
 	"os"
 	"os/exec"
+
+	// NEW_CMD_PATH
+	// "os/user"
 	"strconv"
 	"strings"
 
@@ -21,6 +24,15 @@ import (
 // isTestMode return true if we are running from the testing harness
 func isTestMode(r *http.Request) bool {
 	return r.Header.Get("User-Agent") == "testRunner"
+}
+
+// GetCommandPath returns full path the the given tool
+func GetCommandPath(cmd string) string {
+	// NEW_CMD_PATH
+	// usr, _ := user.Current()
+	// dir := usr.HomeDir
+	// return dir + "/.local/bin/chifra/" + cmd
+	return cmd
 }
 
 // CallOne handles a route that calls the underlying TrueBlocks tool directly
