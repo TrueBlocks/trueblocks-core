@@ -10,7 +10,8 @@ getBlocks --file:cmd_file2 --cache
   "miner": "0x7e6930b63d03e88f5928c5cd6ee3fcee4d714f7f",
   "difficulty": 3535435273529,
   "finalized": true,
-  "timestamp": 1439674369
+  "timestamp": 1439674369,
+  "baseFeePerGas": 0
 },
 {
   "gasLimit": 3141592,
@@ -21,7 +22,8 @@ getBlocks --file:cmd_file2 --cache
   "miner": "0x580992b51e3925e23280efb93d3047c82f17e038",
   "difficulty": 5027618839306,
   "finalized": true,
-  "timestamp": 1440511996
+  "timestamp": 1440511996,
+  "baseFeePerGas": 0
 },
 {
   "gasLimit": 3141592,
@@ -32,7 +34,8 @@ getBlocks --file:cmd_file2 --cache
   "miner": "0x3061512be32988b7cae01fabe2daabe55b0a9482",
   "difficulty": 6585165874233,
   "finalized": true,
-  "timestamp": 1440826383
+  "timestamp": 1440826383,
+  "baseFeePerGas": 0
 },
 {
   "gasLimit": 3141592,
@@ -43,7 +46,8 @@ getBlocks --file:cmd_file2 --cache
   "miner": "0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5",
   "difficulty": 7089068477500,
   "finalized": true,
-  "timestamp": 1443211927
+  "timestamp": 1443211927,
+  "baseFeePerGas": 0
 },
 {
   "gasLimit": 3141592,
@@ -54,7 +58,8 @@ getBlocks --file:cmd_file2 --cache
   "miner": "0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5",
   "difficulty": 6494932654393,
   "finalized": true,
-  "timestamp": 1444799304
+  "timestamp": 1444799304,
+  "baseFeePerGas": 0
 },
 {
   "gasLimit": 3141592,
@@ -65,7 +70,8 @@ getBlocks --file:cmd_file2 --cache
   "miner": "0xf927a40c8b7f6e07c5af7fa2155b4864a4112b13",
   "difficulty": 5792849968684,
   "finalized": true,
-  "timestamp": 1445036868
+  "timestamp": 1445036868,
+  "baseFeePerGas": 0
 },
 {
   "gasLimit": 3141592,
@@ -76,7 +82,8 @@ getBlocks --file:cmd_file2 --cache
   "miner": "0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5",
   "difficulty": 6510650687506,
   "finalized": true,
-  "timestamp": 1445864379
+  "timestamp": 1445864379,
+  "baseFeePerGas": 0
 },
 {
   "gasLimit": 3141592,
@@ -87,7 +94,8 @@ getBlocks --file:cmd_file2 --cache
   "miner": "0x63a9975ba31b0b9626b34300f7f627147df1f526",
   "difficulty": 7828374427132,
   "finalized": true,
-  "timestamp": 1446452690
+  "timestamp": 1446452690,
+  "baseFeePerGas": 0
 },
 {
   "gasLimit": 3141592,
@@ -99,6 +107,7 @@ getBlocks --file:cmd_file2 --cache
   "difficulty": 7588129354316,
   "finalized": true,
   "timestamp": 1448545183,
+  "baseFeePerGas": 0,
   "transactions": [
     {
       "hash": "0x4adcf842547ea26cdeec8f2cb3aefdedb9969426af315d8b26a3b55b3a9cd8d3",
@@ -112,6 +121,8 @@ getBlocks --file:cmd_file2 --cache
       "value": 1151132200000000000,
       "gas": 90000,
       "gasPrice": 50000000000,
+      "maxFeePerGas": 0,
+      "maxPriorityFeePerGas": 0,
       "input": "0x",
       "isError": 0,
       "hasToken": 0,
@@ -135,6 +146,7 @@ getBlocks --file:cmd_file2 --cache
   "difficulty": 7406139158036,
   "finalized": true,
   "timestamp": 1449158435,
+  "baseFeePerGas": 0,
   "transactions": [
     {
       "hash": "0xcd14c0a696acdfc8f6a4045ed8fb5bd07bb878b0ec30ac581ce8eb0de459e886",
@@ -148,6 +160,8 @@ getBlocks --file:cmd_file2 --cache
       "value": 1222482780000000256,
       "gas": 90000,
       "gasPrice": 50000000000,
+      "maxFeePerGas": 0,
+      "maxPriorityFeePerGas": 0,
       "input": "0x",
       "isError": 0,
       "hasToken": 0,
@@ -170,7 +184,8 @@ getBlocks --file:cmd_file2 --cache
   "miner": "0x24f03a0786f459be40c38ba1c47714e08f9947e5",
   "difficulty": 7760507970649,
   "finalized": true,
-  "timestamp": 1449247432
+  "timestamp": 1449247432,
+  "baseFeePerGas": 0
 },
 {
   "gasLimit": 3141592,
@@ -181,7 +196,8 @@ getBlocks --file:cmd_file2 --cache
   "miner": "0x738db714c08b8a32a29e0e68af00215079aa9c5c",
   "difficulty": 8640284807276,
   "finalized": true,
-  "timestamp": 1450655797
+  "timestamp": 1450655797,
+  "baseFeePerGas": 0
 },
 {
   "gasLimit": 3141592,
@@ -193,6 +209,7 @@ getBlocks --file:cmd_file2 --cache
   "difficulty": 8190827447647,
   "finalized": true,
   "timestamp": 1451947020,
+  "baseFeePerGas": 0,
   "transactions": [
     {
       "hash": "0x8a4558d90cfbf65541e9ee93c41a51e26513da734db5ac477eb20ca1af0f5aea",
@@ -206,6 +223,8 @@ getBlocks --file:cmd_file2 --cache
       "value": 2033772390000000256,
       "gas": 90000,
       "gasPrice": 50000000000,
+      "maxFeePerGas": 0,
+      "maxPriorityFeePerGas": 0,
       "input": "0x",
       "isError": 0,
       "hasToken": 0,
@@ -229,6 +248,7 @@ getBlocks --file:cmd_file2 --cache
   "difficulty": 8886631266194,
   "finalized": true,
   "timestamp": 1452855767,
+  "baseFeePerGas": 0,
   "transactions": [
     {
       "hash": "0x966468a87707c04effe35e2c5708220ecf340044df905cbabbc75d27ed4e6e42",
@@ -242,6 +262,8 @@ getBlocks --file:cmd_file2 --cache
       "value": 9422000000000000000,
       "gas": 90000,
       "gasPrice": 50000000000,
+      "maxFeePerGas": 0,
+      "maxPriorityFeePerGas": 0,
       "input": "0x",
       "isError": 0,
       "hasToken": 0,
@@ -265,6 +287,7 @@ getBlocks --file:cmd_file2 --cache
   "difficulty": 12517095426659,
   "finalized": true,
   "timestamp": 1455850443,
+  "baseFeePerGas": 0,
   "transactions": [
     {
       "hash": "0x22ec23cddeed4782eec30fa911257b8b43a96cf48e67dd0bf5f61354ba4288ed",
@@ -278,6 +301,8 @@ getBlocks --file:cmd_file2 --cache
       "value": 4739379280000000000,
       "gas": 90000,
       "gasPrice": 50000000000,
+      "maxFeePerGas": 0,
+      "maxPriorityFeePerGas": 0,
       "input": "0x",
       "isError": 0,
       "hasToken": 0,
@@ -301,6 +326,8 @@ getBlocks --file:cmd_file2 --cache
       "value": 2027587470000000000,
       "gas": 90000,
       "gasPrice": 50000000000,
+      "maxFeePerGas": 0,
+      "maxPriorityFeePerGas": 0,
       "input": "0x",
       "isError": 0,
       "hasToken": 0,
@@ -324,6 +351,7 @@ getBlocks --file:cmd_file2 --cache
   "difficulty": 12607178900885,
   "finalized": true,
   "timestamp": 1455872128,
+  "baseFeePerGas": 0,
   "transactions": [
     {
       "hash": "0xa2c956f318a16d0ff5e7e3061873054d1d4835137b517f745669229d6e0be4cf",
@@ -337,6 +365,8 @@ getBlocks --file:cmd_file2 --cache
       "value": 2436919200000000000,
       "gas": 21000,
       "gasPrice": 60000000000,
+      "maxFeePerGas": 0,
+      "maxPriorityFeePerGas": 0,
       "input": "0x",
       "isError": 0,
       "hasToken": 0,
@@ -360,6 +390,8 @@ getBlocks --file:cmd_file2 --cache
       "value": 1842601080000000000,
       "gas": 21000,
       "gasPrice": 60000000000,
+      "maxFeePerGas": 0,
+      "maxPriorityFeePerGas": 0,
       "input": "0x",
       "isError": 0,
       "hasToken": 0,
@@ -383,6 +415,8 @@ getBlocks --file:cmd_file2 --cache
       "value": 2874941670000000000,
       "gas": 21000,
       "gasPrice": 60000000000,
+      "maxFeePerGas": 0,
+      "maxPriorityFeePerGas": 0,
       "input": "0x",
       "isError": 0,
       "hasToken": 0,
@@ -406,6 +440,8 @@ getBlocks --file:cmd_file2 --cache
       "value": 1265129540000000000,
       "gas": 21000,
       "gasPrice": 60000000000,
+      "maxFeePerGas": 0,
+      "maxPriorityFeePerGas": 0,
       "input": "0x",
       "isError": 0,
       "hasToken": 0,
@@ -429,6 +465,8 @@ getBlocks --file:cmd_file2 --cache
       "value": 2062575220000000000,
       "gas": 21000,
       "gasPrice": 60000000000,
+      "maxFeePerGas": 0,
+      "maxPriorityFeePerGas": 0,
       "input": "0x",
       "isError": 0,
       "hasToken": 0,
@@ -452,6 +490,8 @@ getBlocks --file:cmd_file2 --cache
       "value": 4948740000000000000,
       "gas": 21000,
       "gasPrice": 60000000000,
+      "maxFeePerGas": 0,
+      "maxPriorityFeePerGas": 0,
       "input": "0x",
       "isError": 0,
       "hasToken": 0,
@@ -475,6 +515,8 @@ getBlocks --file:cmd_file2 --cache
       "value": 7623633560000000000,
       "gas": 21000,
       "gasPrice": 60000000000,
+      "maxFeePerGas": 0,
+      "maxPriorityFeePerGas": 0,
       "input": "0x",
       "isError": 0,
       "hasToken": 0,
@@ -498,6 +540,8 @@ getBlocks --file:cmd_file2 --cache
       "value": 4700892570000000000,
       "gas": 21000,
       "gasPrice": 60000000000,
+      "maxFeePerGas": 0,
+      "maxPriorityFeePerGas": 0,
       "input": "0x",
       "isError": 0,
       "hasToken": 0,
@@ -521,6 +565,8 @@ getBlocks --file:cmd_file2 --cache
       "value": 1,
       "gas": 300000,
       "gasPrice": 52000000000,
+      "maxFeePerGas": 0,
+      "maxPriorityFeePerGas": 0,
       "input": "0x3ed48679000000000000000000000000e73d305a231ab10a7e6c0f6faa3f8bdc1aa1246c0000000000000000000000000000000000000000000000000000000056c6d86b00000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000001a000000000000000000000000002e433afd75df65fbf4e263d84238f5628453d700000000000000000000000000000000000000000000000000000000002faf0800000000000000000000000000000000000000000000000000000000000000006c5769c0d4ff941ff7fbbc8218b2eb69939dd565a10dcbab53847aa5aea92b2075114b0930ae0f72775084df65ece28bc24f37d34c0030f96c8c68b9c26facdd9b45898983ede41887f90850c4b4b037a3908d7fcb6ab673fff0d2fb434adc5686ef72c42d329a337fc7caa1336a1f04293b9b3a5e8d32a9391444f2dc00a63895f2026457858175cde28bd9d64db09ecd172029fdea012be7598940f86567bc212808c13718e2de7fafd1cf4f05610cfc954fc1213202e866913aacc94b827c80000000000000000000000000000000000000000000000000000000000000003000000000000000000000000000000000000000000000000000000000000001b000000000000000000000000000000000000000000000000000000000000001c000000000000000000000000000000000000000000000000000000000000001b",
       "isError": 0,
       "hasToken": 0,
@@ -587,6 +633,7 @@ getBlocks --file:cmd_file2 --cache
   "difficulty": 15032592181868,
   "finalized": true,
   "timestamp": 1456761851,
+  "baseFeePerGas": 0,
   "transactions": [
     {
       "hash": "0xdd1acdd9d0d868b2ddb9952f1319279939a72df06633521a4a39b90d12636fe4",
@@ -600,6 +647,8 @@ getBlocks --file:cmd_file2 --cache
       "value": 3235588700000000000,
       "gas": 90000,
       "gasPrice": 50000000000,
+      "maxFeePerGas": 0,
+      "maxPriorityFeePerGas": 0,
       "input": "0x",
       "isError": 0,
       "hasToken": 0,
@@ -623,6 +672,8 @@ getBlocks --file:cmd_file2 --cache
       "value": 163187560000000000,
       "gas": 90000,
       "gasPrice": 50000000000,
+      "maxFeePerGas": 0,
+      "maxPriorityFeePerGas": 0,
       "input": "0x",
       "isError": 0,
       "hasToken": 0,
@@ -656,6 +707,8 @@ getBlocks --file:cmd_file2 --cache
       "value": 106019380000000000,
       "gas": 90000,
       "gasPrice": 50000000000,
+      "maxFeePerGas": 0,
+      "maxPriorityFeePerGas": 0,
       "input": "0x",
       "isError": 0,
       "hasToken": 0,
@@ -679,6 +732,8 @@ getBlocks --file:cmd_file2 --cache
       "value": 21602970000000000,
       "gas": 90000,
       "gasPrice": 50000000000,
+      "maxFeePerGas": 0,
+      "maxPriorityFeePerGas": 0,
       "input": "0x",
       "isError": 0,
       "hasToken": 0,
@@ -702,6 +757,8 @@ getBlocks --file:cmd_file2 --cache
       "value": 99464970000000000,
       "gas": 90000,
       "gasPrice": 50000000000,
+      "maxFeePerGas": 0,
+      "maxPriorityFeePerGas": 0,
       "input": "0x",
       "isError": 0,
       "hasToken": 0,
@@ -725,6 +782,7 @@ getBlocks --file:cmd_file2 --cache
   "difficulty": 17542881926868,
   "finalized": true,
   "timestamp": 1458022602,
+  "baseFeePerGas": 0,
   "transactions": [
     {
       "hash": "0xd0751323314ec7d19437c1bd538146972f026186c40288208605ab35f22529bc",
@@ -738,6 +796,8 @@ getBlocks --file:cmd_file2 --cache
       "value": 1090740360000000000,
       "gas": 90000,
       "gasPrice": 20000000000,
+      "maxFeePerGas": 0,
+      "maxPriorityFeePerGas": 0,
       "input": "0x",
       "isError": 0,
       "hasToken": 0,
@@ -761,6 +821,8 @@ getBlocks --file:cmd_file2 --cache
       "value": 1092623490000000000,
       "gas": 90000,
       "gasPrice": 20000000000,
+      "maxFeePerGas": 0,
+      "maxPriorityFeePerGas": 0,
       "input": "0x",
       "isError": 0,
       "hasToken": 0,
@@ -784,6 +846,7 @@ getBlocks --file:cmd_file2 --cache
   "difficulty": 12549332509227,
   "finalized": true,
   "timestamp": 1455404053,
+  "baseFeePerGas": 0,
   "transactions": [
     {
       "hash": "0xea1093d492a1dcb1bef708f771a99a96ff05dcab81ca76c31940300177fcf49f",
@@ -797,6 +860,8 @@ getBlocks --file:cmd_file2 --cache
       "value": 100000000000000000000,
       "gas": 129244,
       "gasPrice": 80525500000,
+      "maxFeePerGas": 0,
+      "maxPriorityFeePerGas": 0,
       "input": "0x",
       "isError": 0,
       "hasToken": 0,
@@ -830,6 +895,8 @@ getBlocks --file:cmd_file2 --cache
       "value": 437194980000000000,
       "gas": 50000,
       "gasPrice": 60000000000,
+      "maxFeePerGas": 0,
+      "maxPriorityFeePerGas": 0,
       "input": "0x",
       "isError": 0,
       "hasToken": 0,
@@ -852,7 +919,8 @@ getBlocks --file:cmd_file2 --cache
   "miner": "0x2a65aca4d5fc5b5c859090a6c34d164135398226",
   "difficulty": 12573717012075,
   "finalized": true,
-  "timestamp": 1455405670
+  "timestamp": 1455405670,
+  "baseFeePerGas": 0
 },
 {
   "gasLimit": 3141592,
@@ -864,6 +932,7 @@ getBlocks --file:cmd_file2 --cache
   "difficulty": 12573567148160,
   "finalized": true,
   "timestamp": 1455407489,
+  "baseFeePerGas": 0,
   "transactions": [
     {
       "hash": "0xda6a3b4b3d7dd27a699a8d396806067a115794f1433b174e29baf7819201a621",
@@ -877,6 +946,8 @@ getBlocks --file:cmd_file2 --cache
       "value": 3719363190000000000,
       "gas": 21000,
       "gasPrice": 60000000000,
+      "maxFeePerGas": 0,
+      "maxPriorityFeePerGas": 0,
       "input": "0x",
       "isError": 0,
       "hasToken": 0,
@@ -900,6 +971,8 @@ getBlocks --file:cmd_file2 --cache
       "value": 2821992340000000000,
       "gas": 90000,
       "gasPrice": 50000000000,
+      "maxFeePerGas": 0,
+      "maxPriorityFeePerGas": 0,
       "input": "0x",
       "isError": 0,
       "hasToken": 0,
@@ -923,6 +996,7 @@ getBlocks --file:cmd_file2 --cache
   "difficulty": 12622628253728,
   "finalized": true,
   "timestamp": 1455409384,
+  "baseFeePerGas": 0,
   "transactions": [
     {
       "hash": "0xa81ca811c4dfc5aa611ca6dbcf3e6cfcecf40d49f4077dc3b2a358845fdff63e",
@@ -936,6 +1010,8 @@ getBlocks --file:cmd_file2 --cache
       "value": 100000000000000000000,
       "gas": 21000,
       "gasPrice": 50000000000,
+      "maxFeePerGas": 0,
+      "maxPriorityFeePerGas": 0,
       "input": "0x",
       "isError": 0,
       "hasToken": 0,
@@ -959,6 +1035,8 @@ getBlocks --file:cmd_file2 --cache
       "value": 1994166410000000000,
       "gas": 22050,
       "gasPrice": 50000000000,
+      "maxFeePerGas": 0,
+      "maxPriorityFeePerGas": 0,
       "input": "0x",
       "isError": 0,
       "hasToken": 0,
@@ -982,6 +1060,8 @@ getBlocks --file:cmd_file2 --cache
       "value": 20152230880000000000,
       "gas": 250000,
       "gasPrice": 50000000000,
+      "maxFeePerGas": 0,
+      "maxPriorityFeePerGas": 0,
       "input": "0x",
       "isError": 0,
       "hasToken": 0,
@@ -1005,6 +1085,8 @@ getBlocks --file:cmd_file2 --cache
       "value": 1089015400000000000,
       "gas": 90000,
       "gasPrice": 50000000000,
+      "maxFeePerGas": 0,
+      "maxPriorityFeePerGas": 0,
       "input": "0x",
       "isError": 0,
       "hasToken": 0,
@@ -1028,6 +1110,7 @@ getBlocks --file:cmd_file2 --cache
   "difficulty": 12610157184222,
   "finalized": true,
   "timestamp": 1455410960,
+  "baseFeePerGas": 0,
   "transactions": [
     {
       "hash": "0xa536ae5dbebae6ec3ce7637e812511fe28f16b801e021be9b4389e12c8117b5d",
@@ -1041,6 +1124,8 @@ getBlocks --file:cmd_file2 --cache
       "value": 100000000000000000000,
       "gas": 21000,
       "gasPrice": 500000000000,
+      "maxFeePerGas": 0,
+      "maxPriorityFeePerGas": 0,
       "input": "0x",
       "isError": 0,
       "hasToken": 0,
@@ -1064,6 +1149,8 @@ getBlocks --file:cmd_file2 --cache
       "value": 1729671320000000000,
       "gas": 90000,
       "gasPrice": 50000000000,
+      "maxFeePerGas": 0,
+      "maxPriorityFeePerGas": 0,
       "input": "0x",
       "isError": 0,
       "hasToken": 0,
@@ -1086,7 +1173,8 @@ getBlocks --file:cmd_file2 --cache
   "miner": "0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5",
   "difficulty": 12573117566903,
   "finalized": true,
-  "timestamp": 1455412740
+  "timestamp": 1455412740,
+  "baseFeePerGas": 0
 },
 {
   "gasLimit": 3141592,
@@ -1098,6 +1186,7 @@ getBlocks --file:cmd_file2 --cache
   "difficulty": 12597548286229,
   "finalized": true,
   "timestamp": 1455414307,
+  "baseFeePerGas": 0,
   "transactions": [
     {
       "hash": "0xe9a19384f67f2a074718562450bcb373497f3428b3836c7819d157f251ad67e2",
@@ -1111,6 +1200,8 @@ getBlocks --file:cmd_file2 --cache
       "value": 407622410000000000,
       "gas": 90000,
       "gasPrice": 50000000000,
+      "maxFeePerGas": 0,
+      "maxPriorityFeePerGas": 0,
       "input": "0x",
       "isError": 0,
       "hasToken": 0,
@@ -1134,6 +1225,8 @@ getBlocks --file:cmd_file2 --cache
       "value": 19990000000000000000,
       "gas": 200000,
       "gasPrice": 50000000000,
+      "maxFeePerGas": 0,
+      "maxPriorityFeePerGas": 0,
       "input": "0x",
       "isError": 0,
       "hasToken": 0,
@@ -1157,6 +1250,8 @@ getBlocks --file:cmd_file2 --cache
       "value": 47707400000000000000,
       "gas": 200000,
       "gasPrice": 50000000000,
+      "maxFeePerGas": 0,
+      "maxPriorityFeePerGas": 0,
       "input": "0x",
       "isError": 0,
       "hasToken": 0,
@@ -1180,6 +1275,8 @@ getBlocks --file:cmd_file2 --cache
       "value": 176990000000000000000,
       "gas": 200000,
       "gasPrice": 50000000000,
+      "maxFeePerGas": 0,
+      "maxPriorityFeePerGas": 0,
       "input": "0x",
       "isError": 0,
       "hasToken": 0,
@@ -1203,6 +1300,8 @@ getBlocks --file:cmd_file2 --cache
       "value": 189990000000000000000,
       "gas": 200000,
       "gasPrice": 50000000000,
+      "maxFeePerGas": 0,
+      "maxPriorityFeePerGas": 0,
       "input": "0x",
       "isError": 0,
       "hasToken": 0,
@@ -1226,6 +1325,7 @@ getBlocks --file:cmd_file2 --cache
   "difficulty": 12634358695961,
   "finalized": true,
   "timestamp": 1455416270,
+  "baseFeePerGas": 0,
   "transactions": [
     {
       "hash": "0x55113a1a1665227c679a6d5d237c1001127ac277f8ccd92e2dae2672ee5436ca",
@@ -1239,6 +1339,8 @@ getBlocks --file:cmd_file2 --cache
       "value": 201443171100000000000,
       "gas": 250000,
       "gasPrice": 50000000000,
+      "maxFeePerGas": 0,
+      "maxPriorityFeePerGas": 0,
       "input": "0x",
       "isError": 0,
       "hasToken": 0,
@@ -1261,7 +1363,8 @@ getBlocks --file:cmd_file2 --cache
   "miner": "0x2a65aca4d5fc5b5c859090a6c34d164135398226",
   "difficulty": 12597247991954,
   "finalized": true,
-  "timestamp": 1455418125
+  "timestamp": 1455418125,
+  "baseFeePerGas": 0
 },
 {
   "gasLimit": 3141592,
@@ -1273,6 +1376,7 @@ getBlocks --file:cmd_file2 --cache
   "difficulty": 12572518150222,
   "finalized": true,
   "timestamp": 1455419841,
+  "baseFeePerGas": 0,
   "transactions": [
     {
       "hash": "0x5e4273be15b0f642e91ef4b62f5a1e725305fd870cef9f3a42eb599da67ecd50",
@@ -1286,6 +1390,8 @@ getBlocks --file:cmd_file2 --cache
       "value": 188950000000000000,
       "gas": 21000,
       "gasPrice": 50000000000,
+      "maxFeePerGas": 0,
+      "maxPriorityFeePerGas": 0,
       "input": "0x",
       "isError": 0,
       "hasToken": 0,

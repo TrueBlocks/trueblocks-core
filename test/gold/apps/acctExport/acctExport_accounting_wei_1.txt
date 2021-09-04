@@ -1,6 +1,7 @@
 acctExport argc: 9 [1:0x001d14804b399c6ef80e64576f657660804fec0b] [2:--max_records] [3:5] [4:--accounting] [5:--fmt] [6:api] [7:--verbose] [8:10] 
 acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --max_records 5 --accounting --fmt api --verbose 10 
 TIME ~ CLOCK - : 4-----0x001d14804b399c6ef80e64576f657660804fec0b freshened to 11854827
+TIME ~ CLOCK - : 4-----Loaded timestamp file
 {"data": [
 TIME ~ CLOCK - : 4-----Trial balance: genesis
 TIME ~ CLOCK - : 4-----  hash: 
@@ -56,6 +57,10 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    4200000000000000000000
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
+TIME ~ CLOCK - : 4-----Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 0 prior to its deployment 10042267
+params.size: 0
+==================================================
+
 {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -67,6 +72,8 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
   "value": 4200000000000000000000,
   "gas": 0,
   "gasPrice": 0,
+  "maxFeePerGas": 0,
+  "maxPriorityFeePerGas": 0,
   "isError": 0,
   "hasToken": 0,
   "statements": [
@@ -94,7 +101,8 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "selfDestructOut": "",
       "gasCostOut": "",
       "reconciliationType": "by-trace",
-      "spotPrice": "-1",
+      "spotPrice": 1.00000,
+      "priceSource": "not-priced",
       "begBalDiff": "",
       "endBalCalc": "4200000000000000000000",
       "endBalDiff": "",
@@ -137,6 +145,10 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    74679320489077336
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
+TIME ~ CLOCK - : 4-----Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 202249 prior to its deployment 10042267
+params.size: 0
+==================================================
+
 , {
   "hash": "0x6e443af86a84920cace198340020e4ca54321a2c515cd3ad1f274d3506b4aff8",
   "blockHash": "0x1816ff22f84af23df70df8e6ae5c40a8780c16a0860ca1a25a4c911eba76c65a",
@@ -148,6 +160,8 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
   "value": 4199900000000000000000,
   "gas": 50000,
   "gasPrice": 1171602790622,
+  "maxFeePerGas": 0,
+  "maxPriorityFeePerGas": 0,
   "isError": 0,
   "hasToken": 0,
   "receipt": {
@@ -182,7 +196,8 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "selfDestructOut": "",
       "gasCostOut": "25320679510922664",
       "reconciliationType": "regular",
-      "spotPrice": "-1",
+      "spotPrice": 1.00000,
+      "priceSource": "not-priced",
       "begBalDiff": "",
       "endBalCalc": "74679320489077336",
       "endBalDiff": "",
@@ -225,6 +240,10 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    0
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
+TIME ~ CLOCK - : 4-----Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 1501459 prior to its deployment 10042267
+params.size: 0
+==================================================
+
 , {
   "hash": "0xe1822bdf66fb415883f85b61a4a5ab1c13c4c7ab4b102c5d00504347a69b84f5",
   "blockHash": "0x66b5597c4a991decb68f56b94245a93485e4a30a3d77f95e6c32a3d4f91e2051",
@@ -236,6 +255,8 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
   "value": 74259320489077336,
   "gas": 21000,
   "gasPrice": 20000000000,
+  "maxFeePerGas": 0,
+  "maxPriorityFeePerGas": 0,
   "isError": 0,
   "hasToken": 0,
   "receipt": {
@@ -270,7 +291,8 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "selfDestructOut": "",
       "gasCostOut": "420000000000000",
       "reconciliationType": "regular",
-      "spotPrice": "-1",
+      "spotPrice": 1.00000,
+      "priceSource": "not-priced",
       "begBalDiff": "",
       "endBalCalc": "",
       "endBalDiff": "",
@@ -287,7 +309,7 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
   "ether": 0.074259320489077336
 }
 ], "types": [
-{ "type": "CTransaction", "fields": [{ "name": "hash", "type": "hash" }, { "name": "blockHash", "type": "hash" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "transactionIndex", "type": "blocknum" }, { "name": "timestamp", "type": "timestamp" }, { "name": "from", "type": "address" }, { "name": "to", "type": "address" }, { "name": "value", "type": "wei" }, { "name": "gas", "type": "gas" }, { "name": "gasPrice", "type": "gas" }, { "name": "isError", "type": "unumber" }, { "name": "hasToken", "type": "unumber" }, { "name": "receipt", "type": "object" }, { "name": "traces", "type": "object|ts_array" }, { "name": "articulatedTx", "type": "object" }, { "name": "compressedTx", "type": "text" }, { "name": "statements", "type": "object|ts_array" }, { "name": "gasCost", "type": "wei" }, { "name": "gasUsed", "type": "gas" }, { "name": "date", "type": "date" }, { "name": "ether", "type": "ether" }] }
+{ "type": "CTransaction", "fields": [{ "name": "hash", "type": "hash" }, { "name": "blockHash", "type": "hash" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "transactionIndex", "type": "blocknum" }, { "name": "timestamp", "type": "timestamp" }, { "name": "from", "type": "address" }, { "name": "to", "type": "address" }, { "name": "value", "type": "wei" }, { "name": "gas", "type": "gas" }, { "name": "gasPrice", "type": "gas" }, { "name": "maxFeePerGas", "type": "gas" }, { "name": "maxPriorityFeePerGas", "type": "gas" }, { "name": "isError", "type": "unumber" }, { "name": "hasToken", "type": "unumber" }, { "name": "receipt", "type": "object" }, { "name": "traces", "type": "object|ts_array" }, { "name": "articulatedTx", "type": "object" }, { "name": "compressedTx", "type": "text" }, { "name": "statements", "type": "object|ts_array" }, { "name": "gasCost", "type": "wei" }, { "name": "gasUsed", "type": "gas" }, { "name": "date", "type": "date" }, { "name": "ether", "type": "ether" }] }
 ], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef", "namedFrom": {}
 , "unNamedFrom": {"0xPrefund": 1}, "namedTo": {"0x2910543af39aba0cd09dbb2d50200b3e800a63d2": { "tags": "40-Exchanges", "name": "Kraken Exchange", "count": 1 }}
 , "unNamedTo": {"0xcfab9ac2bb2e1dcfc2d50f01f4e61f2f72fb5902": 1}, "first_block": "0xdeadbeef"

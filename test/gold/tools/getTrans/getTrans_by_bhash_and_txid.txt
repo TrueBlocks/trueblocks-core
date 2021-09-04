@@ -13,6 +13,8 @@ getTrans 0xb8a3f7f5cfc1748f91a684f20fe89031202cbadcd15078c49b85ec2a57f43853.4 --
     "value": "0xdda3a6b505a6800",
     "gas": "0x9c40",
     "gasPrice": "0xb96ddd6a4",
+    "maxFeePerGas": "0x0",
+    "maxPriorityFeePerGas": "0x0",
     "input": "0x",
     "isError": "0x0",
     "hasToken": "0x0",

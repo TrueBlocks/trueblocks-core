@@ -103,7 +103,7 @@ bool COptions::handle_editcmds(CStringArray& terms, bool to_custom, bool autonam
     setenv("TEST_MODE", "false", true);
     dataStream2 << fieldStr << endl;
     for (auto name : outArray) {
-        if (!name.is_prefund)  // if the user has customized a prefund, save it as a custom as well
+        if (!isZeroAddr(name.address) && !name.is_prefund)
             dataStream2 << name.Format(fmt) << endl;
     }
     setenv("TEST_MODE", testMode.c_str(), true);

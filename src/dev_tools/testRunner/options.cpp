@@ -25,8 +25,6 @@ static const COption params[] = {
     COption("filter", "f", "enum[fast*|medi|slow|all]", OPT_FLAG, "determine how long it takes to run tests"),
     COption("clean", "c", "", OPT_SWITCH, "clean working folder before running tests"),
     COption("skip", "s", "<uint64>", OPT_HIDDEN | OPT_FLAG, "run only every 'skip' test (faster)"),
-    COption("no_quit", "n", "", OPT_SWITCH, "do not quit testing on first error"),
-    COption("no_post", "o", "", OPT_SWITCH, "do not complete the post processing step"),
     COption("report", "r", "", OPT_SWITCH, "display performance report to screen"),
     COption("", "", "", OPT_DESCRIPTION, "Run TrueBlocks' test cases with options."),
     // clang-format on
@@ -71,12 +69,6 @@ bool COptions::parseArguments(string_q& command) {
                 return false;
         } else if (arg == "-s" || arg == "--skip") {
             return flag_required("skip");
-
-        } else if (arg == "-n" || arg == "--no_quit") {
-            no_quit = true;
-
-        } else if (arg == "-o" || arg == "--no_post") {
-            no_post = true;
 
         } else if (arg == "-r" || arg == "--report") {
             report = true;
@@ -151,8 +143,6 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST("filter", filter, (filter == ""));
     LOG_TEST_BOOL("clean", clean);
     LOG_TEST("skip", skip, (skip == 1));
-    LOG_TEST_BOOL("no_quit", no_quit);
-    LOG_TEST_BOOL("no_post", no_post);
     LOG_TEST_BOOL("report", report);
     // END_DEBUG_DISPLAY
 
@@ -160,18 +150,14 @@ bool COptions::parseArguments(string_q& command) {
     if (!isNodeRunning())
         return usage("Ethereum at " + getCurlContext()->baseURL + " was not found. All tests will fail.");
 
+    if (nFilesInFolder(indexFolder_blooms) < 3)
+        return usage("The trueblocks index is not present. Run 'chifra init' prior to running tests.");
+
     if (filter.empty())
         filter = "fast";
     else if (filter == "all")
         filter = "";
 
-#if 0
-    mode = "cmd";
-    filter = "all";
-    tests.clear();
-    tests.push_back("tools/ethNames");
-    no_quit = true;
-#endif
     if (tests.empty()) {
         full_test = true;
         tests.push_back("libs/utillib");
@@ -219,8 +205,6 @@ void COptions::Init(void) {
     filter = "";
     clean = false;
     skip = 1;
-    no_quit = false;
-    no_post = false;
     report = false;
     // END_CODE_INIT
 
@@ -271,21 +255,21 @@ void establishTestData(void) {
     // TODO(tjayrush): and re-run. You will see the tests that fail.
 
     // Forces a few blocks into the cache
-    doCommand("getBlocks --uniq_tx 0");
-    doCommand("getBlocks --cache 4369999");
-    doCommand("getTrans --cache 47055.0");
-    doCommand("getTrans --cache 46147.0");
+    doCommand("chifra blocks --uniq_tx 0");
+    doCommand("chifra blocks --cache 4369999");
+    doCommand("chifra transactions --cache 47055.0");
+    doCommand("chifra transactions --cache 46147.0");
 
     // Forces the retreival of a few ABI files without which some tests will fail
-    doCommand("grabABI 0x45f783cce6b7ff23b2ab2d70e416cdb7d6055f51");
-    doCommand("grabABI 0xd7edd2f2bcccdb24afe9a4ab538264b0bbb31373");
-    doCommand("grabABI 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359");
-    doCommand("grabABI 0x226159d592e2b063810a10ebf6dcbada94ed68b8");
-    doCommand("grabABI 0x17996cbddd23c2a912de8477c37d43a1b79770b8");
-    doCommand("grabABI 0x0000000000004946c0e9f43f4dee607b0ef1fa1c");
-    doCommand("grabABI 0x7c66550c9c730b6fdd4c03bc2e73c5462c5f7acc");
-    doCommand("grabABI 0xa478c2975ab1ea89e8196811f51a7b7ade33eb11");
-    doCommand("grabABI 0x7d655c57f71464b6f83811c55d84009cd9f5221c");
+    doCommand("chifra abis 0x45f783cce6b7ff23b2ab2d70e416cdb7d6055f51");
+    doCommand("chifra abis 0xd7edd2f2bcccdb24afe9a4ab538264b0bbb31373");
+    doCommand("chifra abis 0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359");
+    doCommand("chifra abis 0x226159d592e2b063810a10ebf6dcbada94ed68b8");
+    doCommand("chifra abis 0x17996cbddd23c2a912de8477c37d43a1b79770b8");
+    doCommand("chifra abis 0x0000000000004946c0e9f43f4dee607b0ef1fa1c");
+    doCommand("chifra abis 0x7c66550c9c730b6fdd4c03bc2e73c5462c5f7acc");
+    doCommand("chifra abis 0xa478c2975ab1ea89e8196811f51a7b7ade33eb11");
+    doCommand("chifra abis 0x7d655c57f71464b6f83811c55d84009cd9f5221c");
 
 // TODO(tjayrush): Not sure what this is about.
 #if 1

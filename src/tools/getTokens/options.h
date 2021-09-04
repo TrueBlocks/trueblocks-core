@@ -15,7 +15,7 @@
  * Parts of this file were generated with makeClass --options. Edit only those parts of
  * the code outside of the BEG_CODE/END_CODE sections
  */
-#include "acctlib.h"
+#include "pinlib.h"
 #include "tokenbalancerecord.h"
 
 // BEG_ERROR_DEFINES
@@ -31,14 +31,10 @@ class COptions : public CHistoryOptions {
     bool no_zero;
     // END_CODE_DECLARE
 
-    uint32_t* tsMemMap;
-    size_t tsCnt;
-
     CAddressArray tokens;
     CAddressArray holders;
 
     CTokenBalanceRecord curToken;
-    CMonitor standards;
 
     tokstate_t modeBits;
     blknum_t latestBlock;

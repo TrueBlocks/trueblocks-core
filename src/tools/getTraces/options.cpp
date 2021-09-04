@@ -220,6 +220,11 @@ COptions::COptions(void) {
     // clang-format on
     // END_CODE_NOTES
 
+    // clang-format off
+    configs.push_back("`skip_ddos`: skip over the 2016 ddos during export ('on' by default).");
+    configs.push_back("`max`: if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250).");  // NOLINT
+    // clang-format on
+
     // BEG_ERROR_STRINGS
     usageErrs[ERR_PROVIDEONETXID] = "Please specify at least one transaction identifier.";
     // END_ERROR_STRINGS

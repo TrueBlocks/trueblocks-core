@@ -213,6 +213,18 @@ bool CNewReceipt::SerializeC(CArchive& archive) const {
     return true;
 }
 
+//---------------------------------------------------------------------------------------------------
+bool CNewReceipt::Migrate(CArchive& archiveIn, CArchive& archiveOut) const {
+    ASSERT(archiveIn.isReading());
+    ASSERT(archiveOut.isWriting());
+    CNewReceipt copy;
+    // EXISTING_CODE
+    // EXISTING_CODE
+    copy.Serialize(archiveIn);
+    copy.SerializeC(archiveOut);
+    return true;
+}
+
 //---------------------------------------------------------------------------
 CArchive& operator>>(CArchive& archive, CNewReceiptArray& array) {
     uint64_t count;
@@ -285,6 +297,9 @@ string_q nextNewreceiptChunk_custom(const string_q& fieldIn, const void* dataPtr
 
     return "";
 }
+
+// EXISTING_CODE
+// EXISTING_CODE
 
 //---------------------------------------------------------------------------
 bool CNewReceipt::readBackLevel(CArchive& archive) {

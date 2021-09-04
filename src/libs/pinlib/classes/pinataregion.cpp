@@ -175,6 +175,18 @@ bool CPinataRegion::SerializeC(CArchive& archive) const {
     return true;
 }
 
+//---------------------------------------------------------------------------------------------------
+bool CPinataRegion::Migrate(CArchive& archiveIn, CArchive& archiveOut) const {
+    ASSERT(archiveIn.isReading());
+    ASSERT(archiveOut.isWriting());
+    CPinataRegion copy;
+    // EXISTING_CODE
+    // EXISTING_CODE
+    copy.Serialize(archiveIn);
+    copy.SerializeC(archiveOut);
+    return true;
+}
+
 //---------------------------------------------------------------------------
 CArchive& operator>>(CArchive& archive, CPinataRegionArray& array) {
     uint64_t count;
@@ -245,6 +257,9 @@ string_q nextPinataregionChunk_custom(const string_q& fieldIn, const void* dataP
 
     return "";
 }
+
+// EXISTING_CODE
+// EXISTING_CODE
 
 //---------------------------------------------------------------------------
 bool CPinataRegion::readBackLevel(CArchive& archive) {

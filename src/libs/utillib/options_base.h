@@ -62,6 +62,7 @@ class COptionsBase {
     CStringArray commandLines;
     CStringArray arguments;
     CStringArray notes;
+    CStringArray configs;
     CErrorStringMap usageErrs;
     CStringArray errors;
 
@@ -115,14 +116,13 @@ class COptionsBase {
     // TODO(tjayrush): than options. See fmtMap and tsMemMap for examples
     CAddressNameMap tokenMap;
     CAddressBoolMap airdropMap;
-    bool loadNames(void);
-    bool loadNamesDatabase(CAccountNameArray& names);
-    bool finishMaps(void);
+    bool buildOtherMaps(void);
 
   public:
     CAddressNameMap namesMap;
     bool loadNamesDatabaseFromSQL(void);
-    bool getNamedAccount(CAccountName& acct, const string_q& addr);
+    bool loadNames(void);
+    bool findName(const string_q& addr, CAccountName& acct);
 
     // enabling options
     bool isEnabled(uint32_t q) const;
@@ -141,6 +141,8 @@ class COptionsBase {
                             bool required = false) const;
     string_q get_notes(void) const;
     string_q format_notes(const CStringArray& strs) const;
+    string_q get_configs(void) const;
+    string_q format_configs(const CStringArray& strs) const;
 
     const COption* findParam(const string_q& name) const;
     string_q expandOption(string_q& arg);
@@ -153,6 +155,9 @@ class COptionsBase {
 
     bool findToken(CAccountName& acct, const address_t& addr);
 
+    void configureDisplay(const string_q& tool, const string_q& dataType, const string_q& defFormat,
+                          const string_q& meta = "");
+
   protected:
     const COption* pParams;
     size_t cntParams;
@@ -162,8 +167,6 @@ class COptionsBase {
 
     virtual void Init(void) = 0;
     virtual bool Mocked(const string_q& which);
-    void configureDisplay(const string_q& tool, const string_q& dataType, const string_q& defFormat,
-                          const string_q& meta = "");
     void registerOptions(size_t nP, COption const* pP);
 
   private:

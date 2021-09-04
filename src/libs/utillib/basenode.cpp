@@ -381,19 +381,6 @@ char* cleanUpJson(char* s) {
 }
 
 //---------------------------------------------------------------------------
-bool CBaseNode::readBackLevel(CArchive& archive) {
-    // The following code assumes we do not change the format of the header
-    archive >> m_deleted;
-    archive >> m_schema;
-    archive >> m_showing;
-    string_q str;
-    archive >> str;
-    ASSERT(str == string_q(getRuntimeClass()->getClassNamePtr()));
-    // We can never upgrade the base node data, so we always return false here (true means we've upgraded)
-    return false;
-}
-
-//---------------------------------------------------------------------------
 bool CBaseNode::Serialize(CArchive& archive) {
     archive >> m_deleted;
     archive >> m_schema;

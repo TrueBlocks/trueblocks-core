@@ -51,7 +51,7 @@ type ChifraResponse struct {
 }
 
 func GetChifraResponse() (ChifraResponse, error) {
-	cmd := exec.Command("cacheStatus", "--terse")
+	cmd := exec.Command(GetCommandPath("cacheStatus"), "--terse")
 	cmd.Env = append(os.Environ(), "API_MODE=true")
 	out, err := cmd.Output()
 	if err != nil {
@@ -99,6 +99,8 @@ type OptionsType struct {
 	Monitor bool
 	Port    string
 	Verbose int
+	Sleep   int
+	Pin     bool
 	Status  ChifraStatus
 	Meta    ChifraMeta
 }
@@ -118,18 +120,24 @@ func ParseOptions() error {
 	}
 
 	flag.IntVar(&Options.Verbose, "verbose", 0, "verbose level (between 0 and 10 inclusive)")
+	flag.BoolVar(&Options.Pin, "pin", false, "pins Bloom filters and chunks to pinning service (requires API key)")
+	flag.IntVar(&Options.Sleep, "sleep", 14, "specifies sleep interval between scrapes")
+
 	flag.Parse()
 
 	Options.Status, _ = GetChifraData()
 	Options.Meta, _ = GetChifraMeta()
 
-	IndexScraper = NewScraper(utils.Yellow, "IndexScraper", 14, Options.Verbose)
+	IndexScraper = NewScraper(utils.Yellow, "IndexScraper", Options.Sleep, Options.Verbose)
 	if Options.Scrape {
 		log.Print(utils.Green, "scraping:    ", utils.Off, Options.Scrape, "\n")
+		if Options.Sleep != 14 {
+			log.Print(utils.Green, "sleep:    ", utils.Off, Options.Sleep, "\n")
+		}
 		IndexScraper.ChangeState(true)
 	}
 
-	MonitorScraper = NewScraper(utils.Purple, "MonitorScraper", 14, Options.Verbose)
+	MonitorScraper = NewScraper(utils.Purple, "MonitorScraper", Options.Sleep, Options.Verbose)
 	if Options.Monitor {
 		log.Print(utils.Green, "monitoring:  ", utils.Off, Options.Monitor, "\n")
 		MonitorScraper.ChangeState(true)

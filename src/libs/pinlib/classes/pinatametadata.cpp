@@ -177,6 +177,18 @@ bool CPinataMetadata::SerializeC(CArchive& archive) const {
     return true;
 }
 
+//---------------------------------------------------------------------------------------------------
+bool CPinataMetadata::Migrate(CArchive& archiveIn, CArchive& archiveOut) const {
+    ASSERT(archiveIn.isReading());
+    ASSERT(archiveOut.isWriting());
+    CPinataMetadata copy;
+    // EXISTING_CODE
+    // EXISTING_CODE
+    copy.Serialize(archiveIn);
+    copy.SerializeC(archiveOut);
+    return true;
+}
+
 //---------------------------------------------------------------------------
 CArchive& operator>>(CArchive& archive, CPinataMetadataArray& array) {
     uint64_t count;
@@ -246,6 +258,9 @@ string_q nextPinatametadataChunk_custom(const string_q& fieldIn, const void* dat
 
     return "";
 }
+
+// EXISTING_CODE
+// EXISTING_CODE
 
 //---------------------------------------------------------------------------
 bool CPinataMetadata::readBackLevel(CArchive& archive) {

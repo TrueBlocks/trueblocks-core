@@ -1,777 +1,6 @@
 {
   "data": [
     {
-      "name": "actualBalance",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "actualBalance()",
-      "encoding": "0x39d1f908",
-      "inputs": [],
-      "outputs": [
-        {
-          "type": "uint256",
-          "name": "_actualBalance",
-          "indexed": false,
-          "internalType": "uint256",
-          "components": [],
-          "is_array": false
-        }
-      ]
-    },
-    {
-      "name": "allowance",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "allowance(address,address)",
-      "encoding": "0xdd62ed3e",
-      "inputs": [
-        {
-          "type": "address",
-          "name": "_owner",
-          "indexed": false,
-          "internalType": "address",
-          "components": [],
-          "is_array": false
-        },
-        {
-          "type": "address",
-          "name": "_spender",
-          "indexed": false,
-          "internalType": "address",
-          "components": [],
-          "is_array": false
-        }
-      ],
-      "outputs": [
-        {
-          "type": "uint256",
-          "name": "remaining",
-          "indexed": false,
-          "internalType": "uint256",
-          "components": [],
-          "is_array": false
-        }
-      ]
-    },
-    {
-      "name": "allowedRecipients",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "allowedRecipients(address)",
-      "encoding": "0x4df6d6cc",
-      "inputs": [
-        {
-          "type": "address",
-          "name": "val_0",
-          "indexed": false,
-          "internalType": "address",
-          "components": [],
-          "is_array": false
-        }
-      ],
-      "outputs": [
-        {
-          "type": "bool",
-          "name": "val_0",
-          "indexed": false,
-          "internalType": "bool",
-          "components": [],
-          "is_array": false
-        }
-      ]
-    },
-    {
-      "name": "approve",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "approve(address,uint256)",
-      "encoding": "0x095ea7b3",
-      "inputs": [
-        {
-          "type": "address",
-          "name": "_spender",
-          "indexed": false,
-          "internalType": "address",
-          "components": [],
-          "is_array": false
-        },
-        {
-          "type": "uint256",
-          "name": "_amount",
-          "indexed": false,
-          "internalType": "uint256",
-          "components": [],
-          "is_array": false
-        }
-      ],
-      "outputs": [
-        {
-          "type": "bool",
-          "name": "success",
-          "indexed": false,
-          "internalType": "bool",
-          "components": [],
-          "is_array": false
-        }
-      ]
-    },
-    {
-      "name": "balanceOf",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "balanceOf(address)",
-      "encoding": "0x70a08231",
-      "inputs": [
-        {
-          "type": "address",
-          "name": "_owner",
-          "indexed": false,
-          "internalType": "address",
-          "components": [],
-          "is_array": false
-        }
-      ],
-      "outputs": [
-        {
-          "type": "uint256",
-          "name": "balance",
-          "indexed": false,
-          "internalType": "uint256",
-          "components": [],
-          "is_array": false
-        }
-      ]
-    },
-    {
-      "name": "blocked",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "blocked(address)",
-      "encoding": "0xe5962195",
-      "inputs": [
-        {
-          "type": "address",
-          "name": "val_0",
-          "indexed": false,
-          "internalType": "address",
-          "components": [],
-          "is_array": false
-        }
-      ],
-      "outputs": [
-        {
-          "type": "uint256",
-          "name": "val_0",
-          "indexed": false,
-          "internalType": "uint256",
-          "components": [],
-          "is_array": false
-        }
-      ]
-    },
-    {
-      "name": "changeAllowedRecipients",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "changeAllowedRecipients(address,bool)",
-      "encoding": "0x749f9889",
-      "inputs": [
-        {
-          "type": "address",
-          "name": "_recipient",
-          "indexed": false,
-          "internalType": "address",
-          "components": [],
-          "is_array": false
-        },
-        {
-          "type": "bool",
-          "name": "_allowed",
-          "indexed": false,
-          "internalType": "bool",
-          "components": [],
-          "is_array": false
-        }
-      ],
-      "outputs": [
-        {
-          "type": "bool",
-          "name": "_success",
-          "indexed": false,
-          "internalType": "bool",
-          "components": [],
-          "is_array": false
-        }
-      ]
-    },
-    {
-      "name": "changeProposalDeposit",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "changeProposalDeposit(uint256)",
-      "encoding": "0xe33734fd",
-      "inputs": [
-        {
-          "type": "uint256",
-          "name": "_proposalDeposit",
-          "indexed": false,
-          "internalType": "uint256",
-          "components": [],
-          "is_array": false
-        }
-      ],
-      "outputs": []
-    },
-    {
-      "name": "checkProposalCode",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "checkProposalCode(uint256,address,uint256,bytes)",
-      "encoding": "0xeceb2945",
-      "inputs": [
-        {
-          "type": "uint256",
-          "name": "_proposalID",
-          "indexed": false,
-          "internalType": "uint256",
-          "components": [],
-          "is_array": false
-        },
-        {
-          "type": "address",
-          "name": "_recipient",
-          "indexed": false,
-          "internalType": "address",
-          "components": [],
-          "is_array": false
-        },
-        {
-          "type": "uint256",
-          "name": "_amount",
-          "indexed": false,
-          "internalType": "uint256",
-          "components": [],
-          "is_array": false
-        },
-        {
-          "type": "bytes",
-          "name": "_transactionData",
-          "indexed": false,
-          "internalType": "bytes",
-          "components": [],
-          "is_array": false
-        }
-      ],
-      "outputs": [
-        {
-          "type": "bool",
-          "name": "_codeChecksOut",
-          "indexed": false,
-          "internalType": "bool",
-          "components": [],
-          "is_array": false
-        }
-      ]
-    },
-    {
-      "name": "closingTime",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "closingTime()",
-      "encoding": "0x4b6753bc",
-      "inputs": [],
-      "outputs": [
-        {
-          "type": "uint256",
-          "name": "val_0",
-          "indexed": false,
-          "internalType": "uint256",
-          "components": [],
-          "is_array": false
-        }
-      ]
-    },
-    {
-      "name": "createTokenProxy",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "createTokenProxy(address)",
-      "encoding": "0xbaac5300",
-      "inputs": [
-        {
-          "type": "address",
-          "name": "_tokenHolder",
-          "indexed": false,
-          "internalType": "address",
-          "components": [],
-          "is_array": false
-        }
-      ],
-      "outputs": [
-        {
-          "type": "bool",
-          "name": "success",
-          "indexed": false,
-          "internalType": "bool",
-          "components": [],
-          "is_array": false
-        }
-      ]
-    },
-    {
-      "name": "curator",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "curator()",
-      "encoding": "0xe66f53b7",
-      "inputs": [],
-      "outputs": [
-        {
-          "type": "address",
-          "name": "val_0",
-          "indexed": false,
-          "internalType": "address",
-          "components": [],
-          "is_array": false
-        }
-      ]
-    },
-    {
-      "name": "daoCreator",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "daoCreator()",
-      "encoding": "0x149acf9a",
-      "inputs": [],
-      "outputs": [
-        {
-          "type": "address",
-          "name": "val_0",
-          "indexed": false,
-          "internalType": "address",
-          "components": [],
-          "is_array": false
-        }
-      ]
-    },
-    {
-      "name": "DAOpaidOut",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "DAOpaidOut(address)",
-      "encoding": "0x643f7cdd",
-      "inputs": [
-        {
-          "type": "address",
-          "name": "val_0",
-          "indexed": false,
-          "internalType": "address",
-          "components": [],
-          "is_array": false
-        }
-      ],
-      "outputs": [
-        {
-          "type": "uint256",
-          "name": "val_0",
-          "indexed": false,
-          "internalType": "uint256",
-          "components": [],
-          "is_array": false
-        }
-      ]
-    },
-    {
-      "name": "DAOrewardAccount",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "DAOrewardAccount()",
-      "encoding": "0x82bf6464",
-      "inputs": [],
-      "outputs": [
-        {
-          "type": "address",
-          "name": "val_0",
-          "indexed": false,
-          "internalType": "address",
-          "components": [],
-          "is_array": false
-        }
-      ]
-    },
-    {
-      "name": "divisor",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "divisor()",
-      "encoding": "0x1f2dc5ef",
-      "inputs": [],
-      "outputs": [
-        {
-          "type": "uint256",
-          "name": "divisor",
-          "indexed": false,
-          "internalType": "uint256",
-          "components": [],
-          "is_array": false
-        }
-      ]
-    },
-    {
-      "name": "executeProposal",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "executeProposal(uint256,bytes)",
-      "encoding": "0x237e9492",
-      "inputs": [
-        {
-          "type": "uint256",
-          "name": "_proposalID",
-          "indexed": false,
-          "internalType": "uint256",
-          "components": [],
-          "is_array": false
-        },
-        {
-          "type": "bytes",
-          "name": "_transactionData",
-          "indexed": false,
-          "internalType": "bytes",
-          "components": [],
-          "is_array": false
-        }
-      ],
-      "outputs": [
-        {
-          "type": "bool",
-          "name": "_success",
-          "indexed": false,
-          "internalType": "bool",
-          "components": [],
-          "is_array": false
-        }
-      ]
-    },
-    {
-      "name": "extraBalance",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "extraBalance()",
-      "encoding": "0x21b5b8dd",
-      "inputs": [],
-      "outputs": [
-        {
-          "type": "address",
-          "name": "val_0",
-          "indexed": false,
-          "internalType": "address",
-          "components": [],
-          "is_array": false
-        }
-      ]
-    },
-    {
-      "name": "getMyReward",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "getMyReward()",
-      "encoding": "0xcc9ae3f6",
-      "inputs": [],
-      "outputs": [
-        {
-          "type": "bool",
-          "name": "_success",
-          "indexed": false,
-          "internalType": "bool",
-          "components": [],
-          "is_array": false
-        }
-      ]
-    },
-    {
-      "name": "getNewDAOAddress",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "getNewDAOAddress(uint256)",
-      "encoding": "0xbe7c29c1",
-      "inputs": [
-        {
-          "type": "uint256",
-          "name": "_proposalID",
-          "indexed": false,
-          "internalType": "uint256",
-          "components": [],
-          "is_array": false
-        }
-      ],
-      "outputs": [
-        {
-          "type": "address",
-          "name": "_newDAO",
-          "indexed": false,
-          "internalType": "address",
-          "components": [],
-          "is_array": false
-        }
-      ]
-    },
-    {
-      "name": "halveMinQuorum",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "halveMinQuorum()",
-      "encoding": "0x78524b2e",
-      "inputs": [],
-      "outputs": [
-        {
-          "type": "bool",
-          "name": "_success",
-          "indexed": false,
-          "internalType": "bool",
-          "components": [],
-          "is_array": false
-        }
-      ]
-    },
-    {
-      "name": "isFueled",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "isFueled()",
-      "encoding": "0xb7bc2c84",
-      "inputs": [],
-      "outputs": [
-        {
-          "type": "bool",
-          "name": "val_0",
-          "indexed": false,
-          "internalType": "bool",
-          "components": [],
-          "is_array": false
-        }
-      ]
-    },
-    {
-      "name": "lastTimeMinQuorumMet",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "lastTimeMinQuorumMet()",
-      "encoding": "0x96d7f3f5",
-      "inputs": [],
-      "outputs": [
-        {
-          "type": "uint256",
-          "name": "val_0",
-          "indexed": false,
-          "internalType": "uint256",
-          "components": [],
-          "is_array": false
-        }
-      ]
-    },
-    {
-      "name": "minQuorumDivisor",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "minQuorumDivisor()",
-      "encoding": "0x674ed066",
-      "inputs": [],
-      "outputs": [
-        {
-          "type": "uint256",
-          "name": "val_0",
-          "indexed": false,
-          "internalType": "uint256",
-          "components": [],
-          "is_array": false
-        }
-      ]
-    },
-    {
-      "name": "minTokensToCreate",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "minTokensToCreate()",
-      "encoding": "0x0c3b7b96",
-      "inputs": [],
-      "outputs": [
-        {
-          "type": "uint256",
-          "name": "val_0",
-          "indexed": false,
-          "internalType": "uint256",
-          "components": [],
-          "is_array": false
-        }
-      ]
-    },
-    {
-      "name": "newContract",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "newContract(address)",
-      "encoding": "0x6837ff1e",
-      "inputs": [
-        {
-          "type": "address",
-          "name": "_newContract",
-          "indexed": false,
-          "internalType": "address",
-          "components": [],
-          "is_array": false
-        }
-      ],
-      "outputs": []
-    },
-    {
-      "name": "newProposal",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "newProposal(address,uint256,string,bytes,uint256,bool)",
-      "encoding": "0x612e45a3",
-      "inputs": [
-        {
-          "type": "address",
-          "name": "_recipient",
-          "indexed": false,
-          "internalType": "address",
-          "components": [],
-          "is_array": false
-        },
-        {
-          "type": "uint256",
-          "name": "_amount",
-          "indexed": false,
-          "internalType": "uint256",
-          "components": [],
-          "is_array": false
-        },
-        {
-          "type": "string",
-          "name": "_description",
-          "indexed": false,
-          "internalType": "string",
-          "components": [],
-          "is_array": false
-        },
-        {
-          "type": "bytes",
-          "name": "_transactionData",
-          "indexed": false,
-          "internalType": "bytes",
-          "components": [],
-          "is_array": false
-        },
-        {
-          "type": "uint256",
-          "name": "_debatingPeriod",
-          "indexed": false,
-          "internalType": "uint256",
-          "components": [],
-          "is_array": false
-        },
-        {
-          "type": "bool",
-          "name": "_newCurator",
-          "indexed": false,
-          "internalType": "bool",
-          "components": [],
-          "is_array": false
-        }
-      ],
-      "outputs": [
-        {
-          "type": "uint256",
-          "name": "_proposalID",
-          "indexed": false,
-          "internalType": "uint256",
-          "components": [],
-          "is_array": false
-        }
-      ]
-    },
-    {
-      "name": "numberOfProposals",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "numberOfProposals()",
-      "encoding": "0x8d7af473",
-      "inputs": [],
-      "outputs": [
-        {
-          "type": "uint256",
-          "name": "_numberOfProposals",
-          "indexed": false,
-          "internalType": "uint256",
-          "components": [],
-          "is_array": false
-        }
-      ]
-    },
-    {
-      "name": "paidOut",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "paidOut(address)",
-      "encoding": "0x81f03fcb",
-      "inputs": [
-        {
-          "type": "address",
-          "name": "val_0",
-          "indexed": false,
-          "internalType": "address",
-          "components": [],
-          "is_array": false
-        }
-      ],
-      "outputs": [
-        {
-          "type": "uint256",
-          "name": "val_0",
-          "indexed": false,
-          "internalType": "uint256",
-          "components": [],
-          "is_array": false
-        }
-      ]
-    },
-    {
-      "name": "privateCreation",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "privateCreation()",
-      "encoding": "0xf8c80d26",
-      "inputs": [],
-      "outputs": [
-        {
-          "type": "address",
-          "name": "val_0",
-          "indexed": false,
-          "internalType": "address",
-          "components": [],
-          "is_array": false
-        }
-      ]
-    },
-    {
-      "name": "proposalDeposit",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "proposalDeposit()",
-      "encoding": "0x8b15a605",
-      "inputs": [],
-      "outputs": [
-        {
-          "type": "uint256",
-          "name": "val_0",
-          "indexed": false,
-          "internalType": "uint256",
-          "components": [],
-          "is_array": false
-        }
-      ]
-    },
-    {
       "name": "proposals",
       "type": "function",
       "stateMutability": "nonpayable",
@@ -887,16 +116,33 @@
       ]
     },
     {
-      "name": "receiveEther",
+      "name": "approve",
       "type": "function",
       "stateMutability": "nonpayable",
-      "signature": "receiveEther()",
-      "encoding": "0xa3912ec8",
-      "inputs": [],
+      "signature": "approve(address,uint256)",
+      "encoding": "0x095ea7b3",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "_spender",
+          "indexed": false,
+          "internalType": "address",
+          "components": [],
+          "is_array": false
+        },
+        {
+          "type": "uint256",
+          "name": "_amount",
+          "indexed": false,
+          "internalType": "uint256",
+          "components": [],
+          "is_array": false
+        }
+      ],
       "outputs": [
         {
           "type": "bool",
-          "name": "val_0",
+          "name": "success",
           "indexed": false,
           "internalType": "bool",
           "components": [],
@@ -905,36 +151,18 @@
       ]
     },
     {
-      "name": "refund",
+      "name": "minTokensToCreate",
       "type": "function",
       "stateMutability": "nonpayable",
-      "signature": "refund()",
-      "encoding": "0x590e1ae3",
+      "signature": "minTokensToCreate()",
+      "encoding": "0x0c3b7b96",
       "inputs": [],
-      "outputs": []
-    },
-    {
-      "name": "retrieveDAOReward",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "retrieveDAOReward(bool)",
-      "encoding": "0xa1da2fb9",
-      "inputs": [
-        {
-          "type": "bool",
-          "name": "_toMembers",
-          "indexed": false,
-          "internalType": "bool",
-          "components": [],
-          "is_array": false
-        }
-      ],
       "outputs": [
         {
-          "type": "bool",
-          "name": "_success",
+          "type": "uint256",
+          "name": "val_0",
           "indexed": false,
-          "internalType": "bool",
+          "internalType": "uint256",
           "components": [],
           "is_array": false
         }
@@ -959,11 +187,590 @@
       ]
     },
     {
-      "name": "rewardToken",
+      "name": "daoCreator",
       "type": "function",
       "stateMutability": "nonpayable",
-      "signature": "rewardToken(address)",
-      "encoding": "0xcdef91d0",
+      "signature": "daoCreator()",
+      "encoding": "0x149acf9a",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "address",
+          "name": "val_0",
+          "indexed": false,
+          "internalType": "address",
+          "components": [],
+          "is_array": false
+        }
+      ]
+    },
+    {
+      "name": "totalSupply",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "totalSupply()",
+      "encoding": "0x18160ddd",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "uint256",
+          "name": "val_0",
+          "indexed": false,
+          "internalType": "uint256",
+          "components": [],
+          "is_array": false
+        }
+      ]
+    },
+    {
+      "name": "divisor",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "divisor()",
+      "encoding": "0x1f2dc5ef",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "uint256",
+          "name": "divisor",
+          "indexed": false,
+          "internalType": "uint256",
+          "components": [],
+          "is_array": false
+        }
+      ]
+    },
+    {
+      "name": "extraBalance",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "extraBalance()",
+      "encoding": "0x21b5b8dd",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "address",
+          "name": "val_0",
+          "indexed": false,
+          "internalType": "address",
+          "components": [],
+          "is_array": false
+        }
+      ]
+    },
+    {
+      "name": "executeProposal",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "executeProposal(uint256,bytes)",
+      "encoding": "0x237e9492",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "_proposalID",
+          "indexed": false,
+          "internalType": "uint256",
+          "components": [],
+          "is_array": false
+        },
+        {
+          "type": "bytes",
+          "name": "_transactionData",
+          "indexed": false,
+          "internalType": "bytes",
+          "components": [],
+          "is_array": false
+        }
+      ],
+      "outputs": [
+        {
+          "type": "bool",
+          "name": "_success",
+          "indexed": false,
+          "internalType": "bool",
+          "components": [],
+          "is_array": false
+        }
+      ]
+    },
+    {
+      "name": "transferFrom",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "transferFrom(address,address,uint256)",
+      "encoding": "0x23b872dd",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "_from",
+          "indexed": false,
+          "internalType": "address",
+          "components": [],
+          "is_array": false
+        },
+        {
+          "type": "address",
+          "name": "_to",
+          "indexed": false,
+          "internalType": "address",
+          "components": [],
+          "is_array": false
+        },
+        {
+          "type": "uint256",
+          "name": "_value",
+          "indexed": false,
+          "internalType": "uint256",
+          "components": [],
+          "is_array": false
+        }
+      ],
+      "outputs": [
+        {
+          "type": "bool",
+          "name": "success",
+          "indexed": false,
+          "internalType": "bool",
+          "components": [],
+          "is_array": false
+        }
+      ]
+    },
+    {
+      "name": "unblockMe",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "unblockMe()",
+      "encoding": "0x2632bf20",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "bool",
+          "name": "val_0",
+          "indexed": false,
+          "internalType": "bool",
+          "components": [],
+          "is_array": false
+        }
+      ]
+    },
+    {
+      "name": "totalRewardToken",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "totalRewardToken()",
+      "encoding": "0x34145808",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "uint256",
+          "name": "val_0",
+          "indexed": false,
+          "internalType": "uint256",
+          "components": [],
+          "is_array": false
+        }
+      ]
+    },
+    {
+      "name": "actualBalance",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "actualBalance()",
+      "encoding": "0x39d1f908",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "uint256",
+          "name": "_actualBalance",
+          "indexed": false,
+          "internalType": "uint256",
+          "components": [],
+          "is_array": false
+        }
+      ]
+    },
+    {
+      "name": "closingTime",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "closingTime()",
+      "encoding": "0x4b6753bc",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "uint256",
+          "name": "val_0",
+          "indexed": false,
+          "internalType": "uint256",
+          "components": [],
+          "is_array": false
+        }
+      ]
+    },
+    {
+      "name": "allowedRecipients",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "allowedRecipients(address)",
+      "encoding": "0x4df6d6cc",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "val_0",
+          "indexed": false,
+          "internalType": "address",
+          "components": [],
+          "is_array": false
+        }
+      ],
+      "outputs": [
+        {
+          "type": "bool",
+          "name": "val_0",
+          "indexed": false,
+          "internalType": "bool",
+          "components": [],
+          "is_array": false
+        }
+      ]
+    },
+    {
+      "name": "transferWithoutReward",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "transferWithoutReward(address,uint256)",
+      "encoding": "0x4e10c3ee",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "_to",
+          "indexed": false,
+          "internalType": "address",
+          "components": [],
+          "is_array": false
+        },
+        {
+          "type": "uint256",
+          "name": "_value",
+          "indexed": false,
+          "internalType": "uint256",
+          "components": [],
+          "is_array": false
+        }
+      ],
+      "outputs": [
+        {
+          "type": "bool",
+          "name": "success",
+          "indexed": false,
+          "internalType": "bool",
+          "components": [],
+          "is_array": false
+        }
+      ]
+    },
+    {
+      "name": "ProposalAdded",
+      "type": "event",
+      "stateMutability": "nonpayable",
+      "signature": "ProposalAdded(uint256,address,uint256,bool,string)",
+      "encoding": "0x5790de2c279e58269b93b12828f56fd5f2bc8ad15e61ce08572585c81a38756f",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "proposalID",
+          "indexed": true,
+          "internalType": "uint256",
+          "components": [],
+          "is_array": false
+        },
+        {
+          "type": "address",
+          "name": "recipient",
+          "indexed": false,
+          "internalType": "address",
+          "components": [],
+          "is_array": false
+        },
+        {
+          "type": "uint256",
+          "name": "amount",
+          "indexed": false,
+          "internalType": "uint256",
+          "components": [],
+          "is_array": false
+        },
+        {
+          "type": "bool",
+          "name": "newCurator",
+          "indexed": false,
+          "internalType": "bool",
+          "components": [],
+          "is_array": false
+        },
+        {
+          "type": "string",
+          "name": "description",
+          "indexed": false,
+          "internalType": "string",
+          "components": [],
+          "is_array": false
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "name": "refund",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "refund()",
+      "encoding": "0x590e1ae3",
+      "inputs": [],
+      "outputs": []
+    },
+    {
+      "name": "newProposal",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "newProposal(address,uint256,string,bytes,uint256,bool)",
+      "encoding": "0x612e45a3",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "_recipient",
+          "indexed": false,
+          "internalType": "address",
+          "components": [],
+          "is_array": false
+        },
+        {
+          "type": "uint256",
+          "name": "_amount",
+          "indexed": false,
+          "internalType": "uint256",
+          "components": [],
+          "is_array": false
+        },
+        {
+          "type": "string",
+          "name": "_description",
+          "indexed": false,
+          "internalType": "string",
+          "components": [],
+          "is_array": false
+        },
+        {
+          "type": "bytes",
+          "name": "_transactionData",
+          "indexed": false,
+          "internalType": "bytes",
+          "components": [],
+          "is_array": false
+        },
+        {
+          "type": "uint256",
+          "name": "_debatingPeriod",
+          "indexed": false,
+          "internalType": "uint256",
+          "components": [],
+          "is_array": false
+        },
+        {
+          "type": "bool",
+          "name": "_newCurator",
+          "indexed": false,
+          "internalType": "bool",
+          "components": [],
+          "is_array": false
+        }
+      ],
+      "outputs": [
+        {
+          "type": "uint256",
+          "name": "_proposalID",
+          "indexed": false,
+          "internalType": "uint256",
+          "components": [],
+          "is_array": false
+        }
+      ]
+    },
+    {
+      "name": "DAOpaidOut",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "DAOpaidOut(address)",
+      "encoding": "0x643f7cdd",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "val_0",
+          "indexed": false,
+          "internalType": "address",
+          "components": [],
+          "is_array": false
+        }
+      ],
+      "outputs": [
+        {
+          "type": "uint256",
+          "name": "val_0",
+          "indexed": false,
+          "internalType": "uint256",
+          "components": [],
+          "is_array": false
+        }
+      ]
+    },
+    {
+      "name": "minQuorumDivisor",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "minQuorumDivisor()",
+      "encoding": "0x674ed066",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "uint256",
+          "name": "val_0",
+          "indexed": false,
+          "internalType": "uint256",
+          "components": [],
+          "is_array": false
+        }
+      ]
+    },
+    {
+      "name": "newContract",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "newContract(address)",
+      "encoding": "0x6837ff1e",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "_newContract",
+          "indexed": false,
+          "internalType": "address",
+          "components": [],
+          "is_array": false
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "name": "balanceOf",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "balanceOf(address)",
+      "encoding": "0x70a08231",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "_owner",
+          "indexed": false,
+          "internalType": "address",
+          "components": [],
+          "is_array": false
+        }
+      ],
+      "outputs": [
+        {
+          "type": "uint256",
+          "name": "balance",
+          "indexed": false,
+          "internalType": "uint256",
+          "components": [],
+          "is_array": false
+        }
+      ]
+    },
+    {
+      "name": "AllowedRecipientChanged",
+      "type": "event",
+      "stateMutability": "nonpayable",
+      "signature": "AllowedRecipientChanged(address,bool)",
+      "encoding": "0x73ad2a153c8b67991df9459024950b318a609782cee8c7eeda47b905f9baa91f",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "_recipient",
+          "indexed": true,
+          "internalType": "address",
+          "components": [],
+          "is_array": false
+        },
+        {
+          "type": "bool",
+          "name": "_allowed",
+          "indexed": false,
+          "internalType": "bool",
+          "components": [],
+          "is_array": false
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "name": "changeAllowedRecipients",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "changeAllowedRecipients(address,bool)",
+      "encoding": "0x749f9889",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "_recipient",
+          "indexed": false,
+          "internalType": "address",
+          "components": [],
+          "is_array": false
+        },
+        {
+          "type": "bool",
+          "name": "_allowed",
+          "indexed": false,
+          "internalType": "bool",
+          "components": [],
+          "is_array": false
+        }
+      ],
+      "outputs": [
+        {
+          "type": "bool",
+          "name": "_success",
+          "indexed": false,
+          "internalType": "bool",
+          "components": [],
+          "is_array": false
+        }
+      ]
+    },
+    {
+      "name": "halveMinQuorum",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "halveMinQuorum()",
+      "encoding": "0x78524b2e",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "bool",
+          "name": "_success",
+          "indexed": false,
+          "internalType": "bool",
+          "components": [],
+          "is_array": false
+        }
+      ]
+    },
+    {
+      "name": "paidOut",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "paidOut(address)",
+      "encoding": "0x81f03fcb",
       "inputs": [
         {
           "type": "address",
@@ -1021,11 +828,63 @@
       ]
     },
     {
-      "name": "totalRewardToken",
+      "name": "DAOrewardAccount",
       "type": "function",
       "stateMutability": "nonpayable",
-      "signature": "totalRewardToken()",
-      "encoding": "0x34145808",
+      "signature": "DAOrewardAccount()",
+      "encoding": "0x82bf6464",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "address",
+          "name": "val_0",
+          "indexed": false,
+          "internalType": "address",
+          "components": [],
+          "is_array": false
+        }
+      ]
+    },
+    {
+      "name": "Voted",
+      "type": "event",
+      "stateMutability": "nonpayable",
+      "signature": "Voted(uint256,bool,address)",
+      "encoding": "0x86abfce99b7dd908bec0169288797f85049ec73cbe046ed9de818fab3a497ae0",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "proposalID",
+          "indexed": true,
+          "internalType": "uint256",
+          "components": [],
+          "is_array": false
+        },
+        {
+          "type": "bool",
+          "name": "position",
+          "indexed": false,
+          "internalType": "bool",
+          "components": [],
+          "is_array": false
+        },
+        {
+          "type": "address",
+          "name": "voter",
+          "indexed": true,
+          "internalType": "address",
+          "components": [],
+          "is_array": false
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "name": "proposalDeposit",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "proposalDeposit()",
+      "encoding": "0x8b15a605",
       "inputs": [],
       "outputs": [
         {
@@ -1039,11 +898,81 @@
       ]
     },
     {
-      "name": "totalSupply",
+      "name": "Approval",
+      "type": "event",
+      "stateMutability": "nonpayable",
+      "signature": "Approval(address,address,uint256)",
+      "encoding": "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "_owner",
+          "indexed": true,
+          "internalType": "address",
+          "components": [],
+          "is_array": false
+        },
+        {
+          "type": "address",
+          "name": "_spender",
+          "indexed": true,
+          "internalType": "address",
+          "components": [],
+          "is_array": false
+        },
+        {
+          "type": "uint256",
+          "name": "_amount",
+          "indexed": false,
+          "internalType": "uint256",
+          "components": [],
+          "is_array": false
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "name": "numberOfProposals",
       "type": "function",
       "stateMutability": "nonpayable",
-      "signature": "totalSupply()",
-      "encoding": "0x18160ddd",
+      "signature": "numberOfProposals()",
+      "encoding": "0x8d7af473",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "uint256",
+          "name": "_numberOfProposals",
+          "indexed": false,
+          "internalType": "uint256",
+          "components": [],
+          "is_array": false
+        }
+      ]
+    },
+    {
+      "name": "NewCurator",
+      "type": "event",
+      "stateMutability": "nonpayable",
+      "signature": "NewCurator(address)",
+      "encoding": "0x9046fefd66f538ab35263248a44217dcb70e2eb2cd136629e141b8b8f9f03b60",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "_newCurator",
+          "indexed": true,
+          "internalType": "address",
+          "components": [],
+          "is_array": false
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "name": "lastTimeMinQuorumMet",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "lastTimeMinQuorumMet()",
+      "encoding": "0x96d7f3f5",
       "inputs": [],
       "outputs": [
         {
@@ -1051,6 +980,51 @@
           "name": "val_0",
           "indexed": false,
           "internalType": "uint256",
+          "components": [],
+          "is_array": false
+        }
+      ]
+    },
+    {
+      "name": "retrieveDAOReward",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "retrieveDAOReward(bool)",
+      "encoding": "0xa1da2fb9",
+      "inputs": [
+        {
+          "type": "bool",
+          "name": "_toMembers",
+          "indexed": false,
+          "internalType": "bool",
+          "components": [],
+          "is_array": false
+        }
+      ],
+      "outputs": [
+        {
+          "type": "bool",
+          "name": "_success",
+          "indexed": false,
+          "internalType": "bool",
+          "components": [],
+          "is_array": false
+        }
+      ]
+    },
+    {
+      "name": "receiveEther",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "receiveEther()",
+      "encoding": "0xa3912ec8",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "bool",
+          "name": "val_0",
+          "indexed": false,
+          "internalType": "bool",
           "components": [],
           "is_array": false
         }
@@ -1092,33 +1066,35 @@
       ]
     },
     {
-      "name": "transferFrom",
+      "name": "isFueled",
       "type": "function",
       "stateMutability": "nonpayable",
-      "signature": "transferFrom(address,address,uint256)",
-      "encoding": "0x23b872dd",
+      "signature": "isFueled()",
+      "encoding": "0xb7bc2c84",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "bool",
+          "name": "val_0",
+          "indexed": false,
+          "internalType": "bool",
+          "components": [],
+          "is_array": false
+        }
+      ]
+    },
+    {
+      "name": "createTokenProxy",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "createTokenProxy(address)",
+      "encoding": "0xbaac5300",
       "inputs": [
         {
           "type": "address",
-          "name": "_from",
+          "name": "_tokenHolder",
           "indexed": false,
           "internalType": "address",
-          "components": [],
-          "is_array": false
-        },
-        {
-          "type": "address",
-          "name": "_to",
-          "indexed": false,
-          "internalType": "address",
-          "components": [],
-          "is_array": false
-        },
-        {
-          "type": "uint256",
-          "name": "_value",
-          "indexed": false,
-          "internalType": "uint256",
           "components": [],
           "is_array": false
         }
@@ -1133,6 +1109,165 @@
           "is_array": false
         }
       ]
+    },
+    {
+      "name": "Refund",
+      "type": "event",
+      "stateMutability": "nonpayable",
+      "signature": "Refund(address,uint256)",
+      "encoding": "0xbb28353e4598c3b9199101a66e0989549b659a59a54d2c27fbb183f1932c8e6d",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "to",
+          "indexed": true,
+          "internalType": "address",
+          "components": [],
+          "is_array": false
+        },
+        {
+          "type": "uint256",
+          "name": "value",
+          "indexed": false,
+          "internalType": "uint256",
+          "components": [],
+          "is_array": false
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "name": "getNewDAOAddress",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "getNewDAOAddress(uint256)",
+      "encoding": "0xbe7c29c1",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "_proposalID",
+          "indexed": false,
+          "internalType": "uint256",
+          "components": [],
+          "is_array": false
+        }
+      ],
+      "outputs": [
+        {
+          "type": "address",
+          "name": "_newDAO",
+          "indexed": false,
+          "internalType": "address",
+          "components": [],
+          "is_array": false
+        }
+      ]
+    },
+    {
+      "name": "vote",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "vote(uint256,bool)",
+      "encoding": "0xc9d27afe",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "_proposalID",
+          "indexed": false,
+          "internalType": "uint256",
+          "components": [],
+          "is_array": false
+        },
+        {
+          "type": "bool",
+          "name": "_supportsProposal",
+          "indexed": false,
+          "internalType": "bool",
+          "components": [],
+          "is_array": false
+        }
+      ],
+      "outputs": [
+        {
+          "type": "uint256",
+          "name": "_voteID",
+          "indexed": false,
+          "internalType": "uint256",
+          "components": [],
+          "is_array": false
+        }
+      ]
+    },
+    {
+      "name": "getMyReward",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "getMyReward()",
+      "encoding": "0xcc9ae3f6",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "bool",
+          "name": "_success",
+          "indexed": false,
+          "internalType": "bool",
+          "components": [],
+          "is_array": false
+        }
+      ]
+    },
+    {
+      "name": "rewardToken",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "rewardToken(address)",
+      "encoding": "0xcdef91d0",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "val_0",
+          "indexed": false,
+          "internalType": "address",
+          "components": [],
+          "is_array": false
+        }
+      ],
+      "outputs": [
+        {
+          "type": "uint256",
+          "name": "val_0",
+          "indexed": false,
+          "internalType": "uint256",
+          "components": [],
+          "is_array": false
+        }
+      ]
+    },
+    {
+      "name": "CreatedToken",
+      "type": "event",
+      "stateMutability": "nonpayable",
+      "signature": "CreatedToken(address,uint256)",
+      "encoding": "0xdbccb92686efceafb9bb7e0394df7f58f71b954061b81afb57109bf247d3d75a",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "to",
+          "indexed": true,
+          "internalType": "address",
+          "components": [],
+          "is_array": false
+        },
+        {
+          "type": "uint256",
+          "name": "amount",
+          "indexed": false,
+          "internalType": "uint256",
+          "components": [],
+          "is_array": false
+        }
+      ],
+      "outputs": []
     },
     {
       "name": "transferFromWithoutReward",
@@ -1178,130 +1313,16 @@
       ]
     },
     {
-      "name": "transferWithoutReward",
+      "name": "allowance",
       "type": "function",
       "stateMutability": "nonpayable",
-      "signature": "transferWithoutReward(address,uint256)",
-      "encoding": "0x4e10c3ee",
-      "inputs": [
-        {
-          "type": "address",
-          "name": "_to",
-          "indexed": false,
-          "internalType": "address",
-          "components": [],
-          "is_array": false
-        },
-        {
-          "type": "uint256",
-          "name": "_value",
-          "indexed": false,
-          "internalType": "uint256",
-          "components": [],
-          "is_array": false
-        }
-      ],
-      "outputs": [
-        {
-          "type": "bool",
-          "name": "success",
-          "indexed": false,
-          "internalType": "bool",
-          "components": [],
-          "is_array": false
-        }
-      ]
-    },
-    {
-      "name": "unblockMe",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "unblockMe()",
-      "encoding": "0x2632bf20",
-      "inputs": [],
-      "outputs": [
-        {
-          "type": "bool",
-          "name": "val_0",
-          "indexed": false,
-          "internalType": "bool",
-          "components": [],
-          "is_array": false
-        }
-      ]
-    },
-    {
-      "name": "vote",
-      "type": "function",
-      "stateMutability": "nonpayable",
-      "signature": "vote(uint256,bool)",
-      "encoding": "0xc9d27afe",
-      "inputs": [
-        {
-          "type": "uint256",
-          "name": "_proposalID",
-          "indexed": false,
-          "internalType": "uint256",
-          "components": [],
-          "is_array": false
-        },
-        {
-          "type": "bool",
-          "name": "_supportsProposal",
-          "indexed": false,
-          "internalType": "bool",
-          "components": [],
-          "is_array": false
-        }
-      ],
-      "outputs": [
-        {
-          "type": "uint256",
-          "name": "_voteID",
-          "indexed": false,
-          "internalType": "uint256",
-          "components": [],
-          "is_array": false
-        }
-      ]
-    },
-    {
-      "name": "AllowedRecipientChanged",
-      "type": "event",
-      "stateMutability": "nonpayable",
-      "signature": "AllowedRecipientChanged(address,bool)",
-      "encoding": "0x73ad2a153c8b67991df9459024950b318a609782cee8c7eeda47b905f9baa91f",
-      "inputs": [
-        {
-          "type": "address",
-          "name": "_recipient",
-          "indexed": true,
-          "internalType": "address",
-          "components": [],
-          "is_array": false
-        },
-        {
-          "type": "bool",
-          "name": "_allowed",
-          "indexed": false,
-          "internalType": "bool",
-          "components": [],
-          "is_array": false
-        }
-      ],
-      "outputs": []
-    },
-    {
-      "name": "Approval",
-      "type": "event",
-      "stateMutability": "nonpayable",
-      "signature": "Approval(address,address,uint256)",
-      "encoding": "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925",
+      "signature": "allowance(address,address)",
+      "encoding": "0xdd62ed3e",
       "inputs": [
         {
           "type": "address",
           "name": "_owner",
-          "indexed": true,
+          "indexed": false,
           "internalType": "address",
           "components": [],
           "is_array": false
@@ -1309,6 +1330,41 @@
         {
           "type": "address",
           "name": "_spender",
+          "indexed": false,
+          "internalType": "address",
+          "components": [],
+          "is_array": false
+        }
+      ],
+      "outputs": [
+        {
+          "type": "uint256",
+          "name": "remaining",
+          "indexed": false,
+          "internalType": "uint256",
+          "components": [],
+          "is_array": false
+        }
+      ]
+    },
+    {
+      "name": "Transfer",
+      "type": "event",
+      "stateMutability": "nonpayable",
+      "signature": "Transfer(address,address,uint256)",
+      "encoding": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "_from",
+          "indexed": true,
+          "internalType": "address",
+          "components": [],
+          "is_array": false
+        },
+        {
+          "type": "address",
+          "name": "_to",
           "indexed": true,
           "internalType": "address",
           "components": [],
@@ -1319,118 +1375,6 @@
           "name": "_amount",
           "indexed": false,
           "internalType": "uint256",
-          "components": [],
-          "is_array": false
-        }
-      ],
-      "outputs": []
-    },
-    {
-      "name": "CreatedToken",
-      "type": "event",
-      "stateMutability": "nonpayable",
-      "signature": "CreatedToken(address,uint256)",
-      "encoding": "0xdbccb92686efceafb9bb7e0394df7f58f71b954061b81afb57109bf247d3d75a",
-      "inputs": [
-        {
-          "type": "address",
-          "name": "to",
-          "indexed": true,
-          "internalType": "address",
-          "components": [],
-          "is_array": false
-        },
-        {
-          "type": "uint256",
-          "name": "amount",
-          "indexed": false,
-          "internalType": "uint256",
-          "components": [],
-          "is_array": false
-        }
-      ],
-      "outputs": []
-    },
-    {
-      "name": "FuelingToDate",
-      "type": "event",
-      "stateMutability": "nonpayable",
-      "signature": "FuelingToDate(uint256)",
-      "encoding": "0xf381a3e2428fdda36615919e8d9c35878d9eb0cf85ac6edf575088e80e4c147e",
-      "inputs": [
-        {
-          "type": "uint256",
-          "name": "value",
-          "indexed": false,
-          "internalType": "uint256",
-          "components": [],
-          "is_array": false
-        }
-      ],
-      "outputs": []
-    },
-    {
-      "name": "NewCurator",
-      "type": "event",
-      "stateMutability": "nonpayable",
-      "signature": "NewCurator(address)",
-      "encoding": "0x9046fefd66f538ab35263248a44217dcb70e2eb2cd136629e141b8b8f9f03b60",
-      "inputs": [
-        {
-          "type": "address",
-          "name": "_newCurator",
-          "indexed": true,
-          "internalType": "address",
-          "components": [],
-          "is_array": false
-        }
-      ],
-      "outputs": []
-    },
-    {
-      "name": "ProposalAdded",
-      "type": "event",
-      "stateMutability": "nonpayable",
-      "signature": "ProposalAdded(uint256,address,uint256,bool,string)",
-      "encoding": "0x5790de2c279e58269b93b12828f56fd5f2bc8ad15e61ce08572585c81a38756f",
-      "inputs": [
-        {
-          "type": "uint256",
-          "name": "proposalID",
-          "indexed": true,
-          "internalType": "uint256",
-          "components": [],
-          "is_array": false
-        },
-        {
-          "type": "address",
-          "name": "recipient",
-          "indexed": false,
-          "internalType": "address",
-          "components": [],
-          "is_array": false
-        },
-        {
-          "type": "uint256",
-          "name": "amount",
-          "indexed": false,
-          "internalType": "uint256",
-          "components": [],
-          "is_array": false
-        },
-        {
-          "type": "bool",
-          "name": "newCurator",
-          "indexed": false,
-          "internalType": "bool",
-          "components": [],
-          "is_array": false
-        },
-        {
-          "type": "string",
-          "name": "description",
-          "indexed": false,
-          "internalType": "string",
           "components": [],
           "is_array": false
         }
@@ -1472,20 +1416,126 @@
       "outputs": []
     },
     {
-      "name": "Refund",
-      "type": "event",
+      "name": "changeProposalDeposit",
+      "type": "function",
       "stateMutability": "nonpayable",
-      "signature": "Refund(address,uint256)",
-      "encoding": "0xbb28353e4598c3b9199101a66e0989549b659a59a54d2c27fbb183f1932c8e6d",
+      "signature": "changeProposalDeposit(uint256)",
+      "encoding": "0xe33734fd",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "_proposalDeposit",
+          "indexed": false,
+          "internalType": "uint256",
+          "components": [],
+          "is_array": false
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "name": "blocked",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "blocked(address)",
+      "encoding": "0xe5962195",
       "inputs": [
         {
           "type": "address",
-          "name": "to",
-          "indexed": true,
+          "name": "val_0",
+          "indexed": false,
+          "internalType": "address",
+          "components": [],
+          "is_array": false
+        }
+      ],
+      "outputs": [
+        {
+          "type": "uint256",
+          "name": "val_0",
+          "indexed": false,
+          "internalType": "uint256",
+          "components": [],
+          "is_array": false
+        }
+      ]
+    },
+    {
+      "name": "curator",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "curator()",
+      "encoding": "0xe66f53b7",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "address",
+          "name": "val_0",
+          "indexed": false,
+          "internalType": "address",
+          "components": [],
+          "is_array": false
+        }
+      ]
+    },
+    {
+      "name": "checkProposalCode",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "signature": "checkProposalCode(uint256,address,uint256,bytes)",
+      "encoding": "0xeceb2945",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "_proposalID",
+          "indexed": false,
+          "internalType": "uint256",
+          "components": [],
+          "is_array": false
+        },
+        {
+          "type": "address",
+          "name": "_recipient",
+          "indexed": false,
           "internalType": "address",
           "components": [],
           "is_array": false
         },
+        {
+          "type": "uint256",
+          "name": "_amount",
+          "indexed": false,
+          "internalType": "uint256",
+          "components": [],
+          "is_array": false
+        },
+        {
+          "type": "bytes",
+          "name": "_transactionData",
+          "indexed": false,
+          "internalType": "bytes",
+          "components": [],
+          "is_array": false
+        }
+      ],
+      "outputs": [
+        {
+          "type": "bool",
+          "name": "_codeChecksOut",
+          "indexed": false,
+          "internalType": "bool",
+          "components": [],
+          "is_array": false
+        }
+      ]
+    },
+    {
+      "name": "FuelingToDate",
+      "type": "event",
+      "stateMutability": "nonpayable",
+      "signature": "FuelingToDate(uint256)",
+      "encoding": "0xf381a3e2428fdda36615919e8d9c35878d9eb0cf85ac6edf575088e80e4c147e",
+      "inputs": [
         {
           "type": "uint256",
           "name": "value",
@@ -1498,72 +1548,22 @@
       "outputs": []
     },
     {
-      "name": "Transfer",
-      "type": "event",
+      "name": "privateCreation",
+      "type": "function",
       "stateMutability": "nonpayable",
-      "signature": "Transfer(address,address,uint256)",
-      "encoding": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
-      "inputs": [
+      "signature": "privateCreation()",
+      "encoding": "0xf8c80d26",
+      "inputs": [],
+      "outputs": [
         {
           "type": "address",
-          "name": "_from",
-          "indexed": true,
-          "internalType": "address",
-          "components": [],
-          "is_array": false
-        },
-        {
-          "type": "address",
-          "name": "_to",
-          "indexed": true,
-          "internalType": "address",
-          "components": [],
-          "is_array": false
-        },
-        {
-          "type": "uint256",
-          "name": "_amount",
+          "name": "val_0",
           "indexed": false,
-          "internalType": "uint256",
-          "components": [],
-          "is_array": false
-        }
-      ],
-      "outputs": []
-    },
-    {
-      "name": "Voted",
-      "type": "event",
-      "stateMutability": "nonpayable",
-      "signature": "Voted(uint256,bool,address)",
-      "encoding": "0x86abfce99b7dd908bec0169288797f85049ec73cbe046ed9de818fab3a497ae0",
-      "inputs": [
-        {
-          "type": "uint256",
-          "name": "proposalID",
-          "indexed": true,
-          "internalType": "uint256",
-          "components": [],
-          "is_array": false
-        },
-        {
-          "type": "bool",
-          "name": "position",
-          "indexed": false,
-          "internalType": "bool",
-          "components": [],
-          "is_array": false
-        },
-        {
-          "type": "address",
-          "name": "voter",
-          "indexed": true,
           "internalType": "address",
           "components": [],
           "is_array": false
         }
-      ],
-      "outputs": []
+      ]
     }
   ],
   "types": [

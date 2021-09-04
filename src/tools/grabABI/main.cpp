@@ -35,13 +35,13 @@ int main(int argc, const char* argv[]) {
         if (isText && !options.noHeader)
             cout << expContext().fmtMap["header"] << endl;
 
-        for (auto func : options.abi_spec.interfaces) {
+        for (auto func : options.abi_spec.interfaceMap) {
             if (!options.firstOut) {
                 if (!isText)
                     cout << ",";
                 cout << endl;
             }
-            cout << func.Format(expContext().fmtMap["format"]);
+            cout << func.second.Format(expContext().fmtMap["format"]);
             options.firstOut = false;
         }
         once = false;

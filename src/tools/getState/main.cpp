@@ -28,7 +28,7 @@ int main(int argc, const char* argv[]) {
         if (!options.call.empty()) {
             if (once)
                 cout << exportPreamble(expContext().fmtMap["header"], GETRUNTIME_CLASS(CEthCall));
-            cout << options.theCall << endl;
+            options.blocks.forEveryBlockNumber(visitBlock, &options);
             once = false;
 
         } else {
@@ -63,50 +63,76 @@ bool visitBlock(uint64_t blockNum, void* data) {
     if (opt->requestsHistory() && !nodeHasBalances(true))
         opt->errors.push_back("Request for historical state at block " + uint_2_Str(blockNum) + " not available.");
 
-    CEthState state;
-    state.address = opt->current;
-    wei_t balance = getBalanceAt(state.address, blockNum);
-    if (opt->changes) {
-        if (balance == opt->prevBal)
-            return !shouldQuit();
-        opt->prevBal = balance;
-    }
-
-    if (opt->no_zero && balance <= opt->deminimus)
-        return !shouldQuit();
-
-    state.blockNumber = blockNum;
-    if (opt->modeBits & ST_BALANCE)
-        state.balance = balance;
-    if (opt->modeBits & ST_NONCE)
-        state.nonce = getNonceAt(state.address, blockNum);
-    if (opt->modeBits & ST_CODE) {
-        string_q code = getCodeAt(state.address, opt->latestBlock);
-        state.code = code;
-        if (code.length() > 250 && !verbose)
-            state.code = code.substr(0, 20) + "..." + code.substr(code.length() - 20, 100);
-    }
-    if (opt->modeBits & ST_STORAGE)
-        state.storage = getStorageAt(state.address, 0, opt->latestBlock);
-    if (opt->modeBits & ST_DEPLOYED)
-        state.deployed = getDeployBlock(state.address);
-    if (opt->modeBits & ST_ACCTTYPE)
-        state.accttype = (isContractAt(state.address, opt->latestBlock) ? "Contract" : "EOA");
-
-    if (true) {
-        if (isText) {
-            cout << state.Format(expContext().fmtMap["format"]) << endl;
-
-        } else {
+    if (!opt->theCall.address.empty()) {
+        opt->theCall.blockNumber = blockNum;
+        if (doEthCall(opt->theCall)) {
+            CTransaction art;
+            art.input = opt->theCall.encoding + opt->theCall.bytes;
+            opt->abi_spec.articulateTransaction(&art);
+            opt->theCall.result.inputs = art.articulatedTx.inputs;
+            //            opt->theCall.address = opt->opt->callVariables[0];
             if (!opt->firstOut)
                 cout << "," << endl;
             cout << "  ";
             indent();
-            state.toJson(cout);
+            opt->theCall.toJson(cout);
             unindent();
             opt->firstOut = false;
+
+        } else {
+            ostringstream os;
+            os << "No result from call to " << opt->theCall.address << " with fourbyte " << opt->theCall.encoding
+               << " at block " << blockNum;
+            opt->errors.push_back(os.str());
+        }
+
+    } else {
+        CEthState state;
+        state.address = opt->current;
+        wei_t balance = getBalanceAt(state.address, blockNum);
+        if (opt->changes) {
+            if (balance == opt->prevBal)
+                return !shouldQuit();
+            opt->prevBal = balance;
+        }
+
+        if (opt->no_zero && balance <= opt->deminimus)
+            return !shouldQuit();
+
+        state.blockNumber = blockNum;
+        if (opt->modeBits & ST_BALANCE)
+            state.balance = balance;
+        if (opt->modeBits & ST_NONCE)
+            state.nonce = getNonceAt(state.address, blockNum);
+        if (opt->modeBits & ST_CODE) {
+            string_q code = getCodeAt(state.address, opt->latestBlock);
+            state.code = code;
+            if (code.length() > 250 && !verbose)
+                state.code = code.substr(0, 20) + "..." + code.substr(code.length() - 20, 100);
+        }
+        if (opt->modeBits & ST_STORAGE)
+            state.storage = getStorageAt(state.address, 0, opt->latestBlock);
+        if (opt->modeBits & ST_DEPLOYED) {
+            blknum_t dep = getDeployBlock(state.address);
+            state.deployed = dep == NOPOS ? 0 : dep;
+        }
+        if (opt->modeBits & ST_ACCTTYPE)
+            state.accttype = (isContractAt(state.address, opt->latestBlock) ? "Contract" : "EOA");
+
+        if (true) {
+            if (isText) {
+                cout << state.Format(expContext().fmtMap["format"]) << endl;
+
+            } else {
+                if (!opt->firstOut)
+                    cout << "," << endl;
+                cout << "  ";
+                indent();
+                state.toJson(cout);
+                unindent();
+                opt->firstOut = false;
+            }
         }
     }
-
     return !shouldQuit();
 }

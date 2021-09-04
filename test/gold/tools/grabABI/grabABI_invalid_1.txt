@@ -13,7 +13,7 @@ grabABI 0x00001
 	-f  (--find <str>)    try to search for a function declaration given a four byte code
 
 	#### Hidden options
-	-s  (--source)        show the source of the ABI information
+	-o  (--source)        show the source of the ABI information
 	-c  (--classes)       generate classDefinitions folder and class definitions
 	#### Hidden options
 

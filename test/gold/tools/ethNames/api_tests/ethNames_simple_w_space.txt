@@ -59,6 +59,7 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x960b236a07cf122663c4303350609a66a7b288c0	Aragon Network Token	ANT		18
 30-Contracts:Kyber Network	0x9ae49c0d7f8f9ef4b864e004fe86ac8294e20950	Kyber Network
 31-Gitcoin:Grants	0x9c159121ceebf937e9bad98fd0c895d7f6038bd4	Grant 0565 Our Network - Community Driven Analytics
+50-Tokens:ERC20	0x9dd91d61a7aa58537fcdbf16fd21be25731341b3	Opium Network Position Token	ONP		18
 50-Tokens:ERC20	0xa117000000f279d81a1d3cc75430faa017fa5a2e	Aragon Network Token	ANT		18
 31-Gitcoin:Grants	0xa1381b40e0a6b91814f77de19a7ad2cb21753184	Grant 0334 Interstate Network EVM optimistic rollup
 50-Tokens:ERC20	0xa4ea687a2a7f29cf2dc66b39c68e4411c0d00c49	IvyKoin Public Network Tokens	IVY		18
@@ -96,7 +97,7 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0xdfdc0d82d96f8fd40ca0cfb4a288955becec2088	MTC Mesh Network	MTC		18
 50-Tokens:ERC20	0xe25bcec5d3801ce3a794079bf94adf1b8ccd802d	MATRIX AI Network	MAN		18
 31-Gitcoin:Grants	0xe302ca18c14ab31a002ac14a0889560d99e54633	Grant 1827 Fission Network
-50-Tokens:ERC20	0xe469c4473af82217b30cf17b10bcdb6c8c796e75	EXRP Network	EXRN
+50-Tokens:ERC20	0xe469c4473af82217b30cf17b10bcdb6c8c796e75	EXRP Network	EXRN		18
 50-Tokens:ERC20	0xe530441f4f73bdb6dc2fa5af7c3fc5fd551ec838	GSENetwork	GSE		4
 50-Tokens:ERC20	0xe7e4279b80d319ede2889855135a22021baf0907	ZeusNetwork	ZEUS		18
 50-Tokens:ERC20	0xe95990825aab1a7f0af4cc648f76a3bcc99f25b2	Zenswap Network Token	ZNT		18

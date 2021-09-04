@@ -99,8 +99,8 @@ bool COptionsBase::prePrepareArguments(CStringArray& separatedArgs_, int argCoun
         CStringArray envs = {
             "API_MODE", "DOCKER_MODE", "PROG_NAME", "HIDE_NAMES", "LIVE_TEST",
             // "FRESHEN_FLAG S", "IPFS_PATH",
-            "SILENCE", "NO_CACHE", "NO_NAMES", "NO_PROGRESS", "NO_SCHEMAS", "TB_NAME_ADDRESS", "TB_NAME_CUSTOM",
-            "TB_NAME_DECIMALS", "TB_NAME_DESCR", "TB_NAME_NAME", "TB_NAME_SOURCE", "TB_NAME_SYMBOL", "TB_NAME_TAG",
+            "SILENCE", "NO_CACHE", "NO_PROGRESS", "NO_SCHEMAS", "TB_NAME_ADDRESS", "TB_NAME_CUSTOM", "TB_NAME_DECIMALS",
+            "TB_NAME_DESCR", "TB_NAME_NAME", "TB_NAME_SOURCE", "TB_NAME_SYMBOL", "TB_NAME_TAG",
             // "TEST_MODE", "NO_COLOR", "REDIR_CERR", "EDITOR",
         };
         for (auto key : envs) {
@@ -806,6 +806,7 @@ string_q COptionsBase::usageStr(const string_q& errMsgIn) const {
     os << purpose();
     os << descriptions() << "\n";
     os << get_notes();
+    os << get_configs();
     if (!isReadme) {
         os << bBlue << "  Powered by TrueBlocks";
         os << (isTestMode() ? "" : " (" + getVersionStr() + ")") << "\n" << cOff;
@@ -940,6 +941,41 @@ string_q COptionsBase::get_notes(void) const {
     ostringstream os;
     os << hiUp1 << "Notes:" << hiDown << "\n" << (isReadme ? "\n" : "");
     os << format_notes(notes);
+    os << "\n";
+
+    return substitute(os.str(), "-   ", "  - ");
+}
+
+//--------------------------------------------------------------------------------
+string_q COptionsBase::format_configs(const CStringArray& strs) const {
+    string_q nn;
+    for (auto n : strs) {
+        string_q s = substitute(n, "[{CONFIG}]", configPathRelative(""));
+        if (isTestMode())
+            s = substitute(n, "[{CONFIG}]", "$CONFIG/");
+        nn += (s + "\n");
+    }
+    while (!isReadme && contains(nn, '`')) {
+        replace(nn, "`", hiUp2);
+        replace(nn, "`", hiDown);
+    }
+    string_q lead = (isReadme ? "" : "\t");
+    ostringstream os;
+    while (!nn.empty()) {
+        string_q line = substitute(substitute(nextTokenClear(nn, '\n'), " |", "|"), "|", "\n" + lead + " ");
+        os << lead << line << "\n";
+    }
+    return os.str();
+}
+
+//--------------------------------------------------------------------------------
+string_q COptionsBase::get_configs(void) const {
+    if ((!isReadme && !verbose) || (configs.size() == 0))
+        return "";
+
+    ostringstream os;
+    os << hiUp1 << "Configurable Items:" << hiDown << "\n" << (isReadme ? "\n" : "");
+    os << format_configs(configs);
     os << "\n";
 
     return substitute(os.str(), "-   ", "  - ");
@@ -1399,6 +1435,9 @@ void COptionsBase::closeRedirect(void) {
         }
 
         rd_zipOnClose = false;
+        if (isTestMode()) {
+            ::remove(rd_outputFilename.c_str());
+        }
         rd_outputFilename = "";
     }
 }

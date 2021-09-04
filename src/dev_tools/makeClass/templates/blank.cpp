@@ -130,6 +130,18 @@ bool [{CLASS_NAME}]::SerializeC(CArchive& archive) const {
     return true;
 }
 
+//---------------------------------------------------------------------------------------------------
+bool [{CLASS_NAME}]::Migrate(CArchive& archiveIn, CArchive& archiveOut) const {
+    ASSERT(archiveIn.isReading());
+    ASSERT(archiveOut.isWriting());
+    [{CLASS_NAME}] copy;
+    // EXISTING_CODE
+    // EXISTING_CODE
+    copy.Serialize(archiveIn);
+    copy.SerializeC(archiveOut);
+    return true;
+}
+
 //---------------------------------------------------------------------------
 CArchive& operator>>(CArchive& archive, [{CLASS_NAME}]Array& array) {
     uint64_t count;
@@ -198,6 +210,9 @@ string_q next[{PROPER}]Chunk_custom(const string_q& fieldIn, const void* dataPtr
 
     return "";
 }
+
+// EXISTING_CODE
+// EXISTING_CODE
 
 //---------------------------------------------------------------------------
 bool [{CLASS_NAME}]::readBackLevel(CArchive& archive) {

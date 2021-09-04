@@ -402,4 +402,23 @@ void CArchive::writeHeader(void) {
     operator<<(unused);
 }
 
+//-----------------------------------------------------------------------
+bool CArchive::needsUpgrade(bool arrayFile) {
+    if (!isOpen())
+        return false;
+
+    long t = Tell();  // so we can put it back
+    uint64_t schema = 0;
+    if (arrayFile) {
+        Seek(sizeof(uint64_t) * 2, SEEK_SET);  // skip to the third 64 bit int which is schema (first is count, second
+                                               // is first items deleted flag
+    } else {
+        Seek(sizeof(uint64_t), SEEK_SET);  // skip to the second 64 bit int which is schema
+    }
+    this->Read(schema);
+    Seek(t, SEEK_SET);  // go back where we started
+
+    return schema < getVersionNum();
+}
+
 }  // namespace qblocks

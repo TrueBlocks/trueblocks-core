@@ -65,7 +65,7 @@ blknum_t COptionsBlockList::parseBlockOption(string_q& msg, blknum_t lastBlock, 
 }
 
 //--------------------------------------------------------------------------------
-static string_q skip_markers = "untimed|hourly|daily|weekly|monthly|quarterly|annually";
+static string_q skip_markers = "untimed|annually|quarterly|monthly|weekly|daily|hourly";
 
 //--------------------------------------------------------------------------------
 string_q COptionsBlockList::parseBlockList_inner(const string_q& argIn, blknum_t lastBlock) {
@@ -103,7 +103,7 @@ string_q COptionsBlockList::parseBlockList_inner(const string_q& argIn, blknum_t
             }
             CStringArray m;
             explode(m, skip_markers, '|');
-            LOG_INFO("skip_type: ", m[skip_type]);
+            LOG_INFO("skip_type: ", m[skip_type - 19]);  // see definition of BY_YEAR for this offset
         }
     }
 
@@ -190,8 +190,10 @@ bool COptionsBlockList::forEveryBlockNumber(UINT64VISITFUNC func, void* data) co
     if (hashFind) {
         for (size_t i = 0; i < hashList.size(); i++) {
             uint64_t n = (*hashFind)(hashList[i], data);
-            if (!(*func)(n, data))
-                return false;
+            if (n != NOPOS) {
+                if (!(*func)(n, data))
+                    return false;
+            }
         }
     }
     return true;

@@ -183,6 +183,18 @@ bool CAbiCacheItem::SerializeC(CArchive& archive) const {
     return true;
 }
 
+//---------------------------------------------------------------------------------------------------
+bool CAbiCacheItem::Migrate(CArchive& archiveIn, CArchive& archiveOut) const {
+    ASSERT(archiveIn.isReading());
+    ASSERT(archiveOut.isWriting());
+    CAbiCacheItem copy;
+    // EXISTING_CODE
+    // EXISTING_CODE
+    copy.Serialize(archiveIn);
+    copy.SerializeC(archiveOut);
+    return true;
+}
+
 //---------------------------------------------------------------------------
 CArchive& operator>>(CArchive& archive, CAbiCacheItemArray& array) {
     uint64_t count;
@@ -256,6 +268,9 @@ string_q nextAbicacheitemChunk_custom(const string_q& fieldIn, const void* dataP
 
     return "";
 }
+
+// EXISTING_CODE
+// EXISTING_CODE
 
 //---------------------------------------------------------------------------
 bool CAbiCacheItem::readBackLevel(CArchive& archive) {

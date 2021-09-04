@@ -28,9 +28,12 @@ int main(int argc, const char* argv[]) {
              : (options.traces
                 ? GETRUNTIME_CLASS(CTrace)->m_ClassName
                 : (options.receipts
-                   ? GETRUNTIME_CLASS(CReceipt)->m_ClassName
-                   : (options.logs ? GETRUNTIME_CLASS(CLogEntry)->m_ClassName
-                      : GETRUNTIME_CLASS(CTransaction)->m_ClassName))));
+                ? GETRUNTIME_CLASS(CReceipt)->m_ClassName
+                  : (options.statements
+                  ? GETRUNTIME_CLASS(CReconciliation)->m_ClassName
+                    : (options.logs
+                    ? GETRUNTIME_CLASS(CLogEntry)->m_ClassName
+                      : GETRUNTIME_CLASS(CTransaction)->m_ClassName)))));
             // clang-format on
 
             once = once && !options.freshenOnly;
@@ -47,6 +50,12 @@ int main(int argc, const char* argv[]) {
                 CReceiptTraverser rt;
                 rt.exportRange = options.exportRange;
                 traversers.push_back(rt);
+            }
+
+            if (options.statements) {
+                CStatementTraverser st;
+                st.exportRange = options.exportRange;
+                traversers.push_back(st);
             }
 
             if (options.logs) {
@@ -83,14 +92,14 @@ int main(int argc, const char* argv[]) {
     os << ", \"first_block\": " << (isTestMode() ? "\"0xdeadbeef\"" : uint_2_Str(options.exportRange.first)) << endl;
     os << ", \"last_block\": " << (isTestMode() ? "\"0xdeadbeef\"" : uint_2_Str(options.exportRange.second)) << endl;
     if (!options.count && options.allMonitors.size() == 1) {
-        options.getNamedAccount(options.allMonitors[0], options.accountedFor.address);
+        options.findName(options.accountedFor.address, options.allMonitors[0]);
         if (options.abi_spec.nInterfaces() == 0) {
             HIDE_FIELD(CMonitor, "abi_spec");
         }
         os << ", \"accountedFor\": " << options.allMonitors[0] << endl;
     }
-    if (!isTestMode() && options.slowQuery) {
-        os << ", \"slowQuery\": true" << endl;
+    if (!isTestMode() && options.slowQueries) {
+        os << ", \"slowQueries\": true" << endl;
     }
     expContext().fmtMap["meta"] += os.str();
 
@@ -104,7 +113,7 @@ int main(int argc, const char* argv[]) {
 
 //-----------------------------------------------------------------------
 bool tsRangeFunc(CTraverser* trav, void* data) {
-    if (trav->app->blk >= expContext().tsCnt || shouldQuit())
+    if (!getTimestampAt(trav->app->blk) || shouldQuit())
         return false;
     return inRange(blknum_t(trav->app->blk), trav->exportRange.first, trav->exportRange.second);
 }
@@ -142,8 +151,7 @@ void prog_Log(CTraverser* trav, void* data) {
     if (!trav->logging)
         return;
 
-#define REPORT_FREQ 5
-    if (trav->nProcessed % REPORT_FREQ)
+    if (trav->nProcessed % opt->reportFreq())
         return;
 
     blknum_t prog = opt->first_record + trav->nProcessed;
@@ -190,7 +198,7 @@ bool loadTx_Func(CTraverser* trav, void* data) {
 
     } else {
         trav->readStatus = "Extracting";
-        opt->slowQuery = true;
+        opt->slowQueries++;
         dirty = true;
         if (trav->app->blk == 0) {
             address_t addr = opt->prefundAddrMap[trav->app->txid];
@@ -216,8 +224,8 @@ bool loadTx_Func(CTraverser* trav, void* data) {
     }
 
     trav->trans.pBlock = &trav->block;
-    trav->trans.timestamp = (timestamp_t)expContext().tsMemMap[(trav->app->blk * 2) + 1];
-    trav->block.timestamp = (timestamp_t)expContext().tsMemMap[(trav->app->blk * 2) + 1];
+    trav->trans.timestamp = getTimestampAt(trav->app->blk);
+    trav->block.timestamp = getTimestampAt(trav->app->blk);
 
     if (opt->traces && trav->trans.traces.size() == 0) {
         dirty = true;

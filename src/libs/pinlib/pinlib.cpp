@@ -38,16 +38,25 @@ void pinlib_cleanup(void) {
 
 //----------------------------------------------------------------
 bool pinlib_downloadManifest(void) {
+    static string_q gatewayUrl;
+    if (gatewayUrl.empty()) {
+        gatewayUrl =
+            getGlobalConfig("blockScrape")->getConfigStr("dev", "ipfs_gateway", "http://gateway.ipfs.io/ipfs/");
+        if (!endsWith(gatewayUrl, "/"))
+            gatewayUrl += "/";
+    }
+
     CEthCall theCall;
     theCall.address = unchainedIndexAddr;
     theCall.encoding = manifestHashEncoding;
     theCall.blockNumber = getBlockProgress(BP_CLIENT).client;
-    theCall.abi_spec.loadAbiFromEtherscan(theCall.address);
+    theCall.abi_spec.loadAbisKnown("unchained");  // unchained index is a known contract
     LOG_INFO("Calling unchained index smart contract...");
     if (doEthCall(theCall)) {
         ipfshash_t ipfshash = theCall.result.outputs[0].value;
-        LOG_INFO("Found manifest hash at ", ipfshash);
-        string_q remoteData = doCommand("curl -s \"http://gateway.ipfs.io/ipfs/" + ipfshash + "\"");
+        LOG_INFO("Found manifest hash at ", cGreen, ipfshash, cOff);
+        LOG_INFO("IPFS gateway ", cGreen, gatewayUrl, cOff);
+        string_q remoteData = doCommand("curl -s \"" + gatewayUrl + ipfshash + "\"");
         string fn = configPath("manifest/manifest.txt");
         stringToAsciiFile(fn, remoteData);
         LOG_INFO("Freshened manifest with ", fileSize(fn), " bytes");
@@ -309,16 +318,23 @@ bool pinlib_getChunkFromRemote(CPinnedChunk& pin, ipfsdown_t which, double sleep
         string_q zipFile = outFile + ".gz";
         if (!fileExists(getIndexPath(zipFile))) {
             // download from ipfs gateway
+            static string_q gatewayUrl;
+            if (gatewayUrl.empty()) {
+                gatewayUrl =
+                    getGlobalConfig("blockScrape")->getConfigStr("dev", "ipfs_gateway", "http://gateway.ipfs.io/ipfs/");
+                if (!endsWith(gatewayUrl, "/"))
+                    gatewayUrl += "/";
+            }
+
             ostringstream cmd;
             cmd << "curl --silent -o ";
             cmd << "\"" << getIndexPath(zipFile) << "\" ";
-            cmd << "\"http://gateway.ipfs.io/ipfs/" << ipfshash << "\"";
+            cmd << "\"" << gatewayUrl << ipfshash << "\"";
             LOG_INFO(bBlue, "Unchaining ", (contains(outFile, "bloom") ? "bloom" : "index"), " ", ipfshash, " to ",
                      pin.fileName, cOff);
             lockSection();
             int ret = system(cmd.str().c_str());
             unlockSection();
-            // cerr << "result: " << ret << endl;
             if (ret != 0) {
                 // clean up on failure
                 if (ret == 2)
@@ -333,8 +349,9 @@ bool pinlib_getChunkFromRemote(CPinnedChunk& pin, ipfsdown_t which, double sleep
         if (fileExists(getIndexPath(zipFile))) {
             ostringstream cmd;
             cmd << "cd \"" << getIndexPath("") << "\" && gunzip -k " << zipFile;
+            lockSection();
             int ret = system(cmd.str().c_str());
-            // cerr << "result: " << ret << endl;
+            unlockSection();
             if (ret != 0) {
                 // clean up on failure
                 if (ret == 2)

@@ -532,13 +532,15 @@ string_q getTokenSymbol(const address_t& token, blknum_t blockNum) {
 }
 
 //-------------------------------------------------------------------------
-string_q getTokenState(const address_t& token, const string_q& what, const CAbi& abi_spec, blknum_t blockNum) {
+string_q getTokenState(const address_t& token, const string_q& what, const CAbi& abi_spec, blknum_t blockNum,
+                       const string_q& bytes) {
     static map<string_q, string_q> sigMap;
     if (sigMap.size() == 0) {
         sigMap["totalSupply"] = "0x18160ddd";
         sigMap["decimals"] = "0x313ce567";
         sigMap["symbol"] = "0x95d89b41";
         sigMap["name"] = "0x06fdde03";
+        sigMap["supportsInterface"] = "0x01ffc9a7";
     }
 
     if (sigMap[what].empty())
@@ -547,7 +549,7 @@ string_q getTokenState(const address_t& token, const string_q& what, const CAbi&
     CEthCall theCall;
     theCall.address = token;
     theCall.encoding = sigMap[what];
-    theCall.bytes = "";
+    theCall.bytes = bytes;
     theCall.blockNumber = blockNum;
     theCall.abi_spec = abi_spec;
     if (doEthCall(theCall))
@@ -614,12 +616,16 @@ string_q getVersionFromClient(void) {
         // We do this to avoid constantly hitting the node just to see if it's there.
         // If the rpcProvider changed or we haven't checked for a while, check it again.
         string_q clientVersion = callRPC("web3_clientVersion", "[]", false);
-        stringToAsciiFile(clientVersionFn, getCurlContext()->baseURL + "\t" + clientVersion);
-        return clientVersion;
+        if (!clientVersion.empty()) {
+            stringToAsciiFile(clientVersionFn, getCurlContext()->baseURL + "\t" + clientVersion);
+            return clientVersion;
+        }
     }
 
     CStringArray parts;
     explode(parts, contents, '\t');
+    if (parts.size() < 2)
+        return uint_2_Str(NOPOS);
     return parts[1];
 }
 
@@ -637,6 +643,11 @@ bool isGeth(void) {
 bool isParity(void) {
     return contains(toLower(getVersionFromClient()), "parity") ||
            contains(toLower(getVersionFromClient()), "openethereum");
+}
+
+//-------------------------------------------------------------------------
+bool hasParityTraces(void) {
+    return isErigon() || isParity();
 }
 
 //--------------------------------------------------------------------------
@@ -1258,36 +1269,6 @@ string_q exportPostamble(const CStringArray& errorsIn, const string_q& extra) {
     return os.str();
 }
 
-//--------------------------------------------------------------
-bool findTimestamp_binarySearch(CBlock& block, size_t first, size_t last, bool progress) {
-    string_q t("|/-\\|/-\\");
-    static int i = 0;
-    if (progress && !isTestMode()) {
-        cerr << "\r" << cGreen << t[(i++ % 8)] << " working" << cOff;
-        cerr.flush();
-    }
-
-    if (last > first) {
-        size_t mid = first + ((last - first) / 2);
-        CBlock b1, b2;
-        getBlock_light(b1, mid);
-        getBlock_light(b2, mid + 1);
-        bool atMid = (b1.timestamp <= block.timestamp);
-        bool atMid1 = (b2.timestamp <= block.timestamp);
-        if (atMid && !atMid1) {
-            block = b1;
-            return true;
-        } else if (!atMid) {
-            // we're too high, so search below
-            return findTimestamp_binarySearch(block, first, mid - 1);
-        }
-        // we're too low, so search above
-        return findTimestamp_binarySearch(block, mid + 1, last);
-    }
-    getBlock_light(block, first);
-    return true;
-}
-
 //----------------------------------------------------------------
 bool excludeTrace(const CTransaction* trans, size_t maxTraces) {
     if (!ddosRange(trans->blockNumber))
@@ -1303,112 +1284,6 @@ bool excludeTrace(const CTransaction* trans, size_t maxTraces) {
             return true;
     }
     return (getTraceCount(trans->hash) > maxTraces);
-}
-
-//-----------------------------------------------------------------------
-bool establishTsFile(void) {
-    if (fileExists(tsIndex))
-        return true;
-
-    establishFolder(indexFolder);
-
-    string_q zipFile = configPath("ts.bin.gz");
-    time_q zipDate = fileLastModifyDate(zipFile);
-    time_q tsDate = fileLastModifyDate(tsIndex);
-
-    if (zipDate > tsDate) {
-        ostringstream cmd;
-        cmd << "cd \"" << indexFolder << "\" ; ";
-        cmd << "cp \"" << zipFile << "\" . ; ";
-        cmd << "gunzip ts.bin.gz";
-        string_q result = doCommand(cmd.str());
-        LOG_INFO(result);
-        // The original zip file still exists
-        ASSERT(fileExists(zipFile));
-        // The new timestamp file exists
-        ASSERT(fileExists(tsIndex));
-        // The copy of the zip file does not exist
-        ASSERT(!fileExists(tsIndex + ".gz"));
-        return fileExists(tsIndex);
-    }
-
-    return false;
-}
-
-//-----------------------------------------------------------------------
-bool freshenTimestamps(blknum_t minBlock) {
-    if (isTestMode())
-        return true;
-
-    // LOG_INFO("Not test mode. minBlock: ", minBlock);
-    if (!establishTsFile())
-        return false;
-
-    // LOG_INFO("Established ts file");
-    size_t nRecords = ((fileSize(tsIndex) / sizeof(uint32_t)) / 2);
-    if (nRecords >= minBlock)
-        return true;
-
-    // LOG_INFO("Found ", nRecords, " records");
-    if (fileExists(tsIndex + ".lck")) {  // it's being updated elsewhere
-        LOG_ERR("Timestamp file ", tsIndex, " is locked. Cannot update.");
-        return false;
-    }
-
-    // LOG_INFO("Updating");
-    CArchive file(WRITING_ARCHIVE);
-    if (!file.Lock(tsIndex, modeWriteAppend, LOCK_NOWAIT)) {
-        LOG_ERR("Failed to open ", tsIndex);
-        return false;
-    }
-
-    if (nRecords == 0) {
-        file << (uint32_t)0 << (uint32_t)blockZeroTs;
-        file.flush();
-        LOG_INFO(padNum9(0), "\t", blockZeroTs, "\t", ts_2_Date(blockZeroTs).Format(FMT_EXPORT), "          \r");
-        nRecords++;
-    }
-
-    CBlock block;
-    for (blknum_t bn = nRecords; bn <= minBlock; bn++) {
-        block = CBlock();  // reset
-        getBlock_header(block, bn);
-        file << ((uint32_t)block.blockNumber) << ((uint32_t)block.timestamp);
-        file.flush();
-        ostringstream post;
-        post << " (" << block.timestamp << " - " << ts_2_Date(block.timestamp).Format(FMT_EXPORT) << ")"
-             << "\r";
-        ostringstream pre;
-        pre << "Updating " << (minBlock - block.blockNumber) << " timestamps ";
-        LOG_PROGRESS(pre.str(), block.blockNumber, minBlock, post.str());
-    }
-    cerr << "\r" << string_q(150, ' ') << "\r";
-    cerr.flush();
-
-    file.Release();
-    return true;
-}
-
-//-----------------------------------------------------------------------
-bool loadTimestamps(uint32_t** theArray, size_t& cnt) {
-    static CMemMapFile file;
-    if (file.is_open())
-        file.close();
-
-    if (!establishTsFile())
-        return false;
-
-    // Order matters.
-    // User may call us with a NULL array pointer, but we still want to file 'cnt'
-    cnt = ((fileSize(tsIndex) / sizeof(uint32_t)) / 2);
-    if (theArray == NULL)
-        return cnt;
-
-    file.open(tsIndex);
-    if (file.isValid())
-        *theArray = (uint32_t*)file.getData();  // NOLINT
-
-    return true;
 }
 
 //-----------------------------------------------------------------------

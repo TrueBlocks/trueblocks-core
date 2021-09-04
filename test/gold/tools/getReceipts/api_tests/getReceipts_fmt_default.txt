@@ -75,6 +75,14 @@
           "type": "gas"
         },
         {
+          "name": "maxFeePerGas",
+          "type": "gas"
+        },
+        {
+          "name": "maxPriorityFeePerGas",
+          "type": "gas"
+        },
+        {
           "name": "input",
           "type": "text"
         },

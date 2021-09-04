@@ -34,7 +34,6 @@ class COptions : public CAbiOptions {
 
     blknum_t latestBlock;
 
-    CMonitor standards;
     CAccountNameMap items;
     CStringArray searches;
     string_q searchFields;
@@ -53,7 +52,6 @@ class COptions : public CAbiOptions {
     bool handle_editcmds(CStringArray& terms, bool to_custom, bool autoname);
     bool handle_clean(void);
 
-    bool isTokenContract(const CAccountName& account);
     void finishClean(CAccountName& name);
     bool cleanNames(const string_q& sourceIn, const string_q& destIn);
 };

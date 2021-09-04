@@ -15,6 +15,7 @@ cacheStatus config
 	-p  (--depth <num>)   for cache mode only, number of levels deep to report
 	-r  (--report)        show a summary of the current status of TrueBlocks (deprecated)
 	-e  (--terse)         show a terse summary report
+	-m  (--migrate <val>) either effectuate or test to see if a migration is necessary, one or more of [test|abi_cache|block_cache|tx_cache|trace_cache|recon_cache|name_cache|slurp_cache|all]
 	-g  (--get_config)    returns JSON data of the editable configuration file items
 	-s  (--set_config)    accepts JSON in an env variable and writes it to configuration files
 	-S  (--test_start <num>)first block to process (inclusive -- testing only)

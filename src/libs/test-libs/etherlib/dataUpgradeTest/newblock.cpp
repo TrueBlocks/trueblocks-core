@@ -243,8 +243,10 @@ bool CNewBlock::setValueByName(const string_q& fieldNameIn, const string_q& fiel
 //---------------------------------------------------------------------------------------------------
 void CNewBlock::finishParse() {
     // EXISTING_CODE
-    for (size_t i = 0; i < transactions.size(); i++)
+    for (size_t i = 0; i < transactions.size(); i++) {
         transactions.at(i).pBlock = reinterpret_cast<CBlock*>(this);  // .at cannot access past the end of vector
+        transactions.at(i).timestamp = timestamp;
+    }
     // EXISTING_CODE
 }
 
@@ -299,6 +301,18 @@ bool CNewBlock::SerializeC(CArchive& archive) const {
     archive << transactions;
     // EXISTING_CODE
     // EXISTING_CODE
+    return true;
+}
+
+//---------------------------------------------------------------------------------------------------
+bool CNewBlock::Migrate(CArchive& archiveIn, CArchive& archiveOut) const {
+    ASSERT(archiveIn.isReading());
+    ASSERT(archiveOut.isWriting());
+    CNewBlock copy;
+    // EXISTING_CODE
+    // EXISTING_CODE
+    copy.Serialize(archiveIn);
+    copy.SerializeC(archiveOut);
     return true;
 }
 
@@ -398,6 +412,9 @@ string_q nextNewblockChunk_custom(const string_q& fieldIn, const void* dataPtr) 
     return "";
 }
 
+// EXISTING_CODE
+// EXISTING_CODE
+
 //---------------------------------------------------------------------------
 bool CNewBlock::readBackLevel(CArchive& archive) {
     bool done = false;
@@ -420,6 +437,25 @@ bool CNewBlock::readBackLevel(CArchive& archive) {
         miner = upgrade.miner;
         difficulty = upgrade.difficulty;
         price = 0.0;
+        finishParse();
+        done = true;
+    } else if (m_schema < getVersionNum(0, 11, 3)) {
+        double removed1;
+        wei_t unused1;
+        archive >> gasLimit;
+        archive >> gasUsed;
+        archive >> hash;
+        archive >> blockNumber;
+        archive >> parentHash;
+        archive >> miner;
+        archive >> difficulty;
+        archive >> removed1;  // price;
+        archive >> finalized;
+        archive >> timestamp;
+        archive >> transactions;
+        if (m_schema >= getVersionNum(0, 10, 3))
+            archive >> unused1;  // we need to read it, but we reset it anyway
+        finalized = false;
         finishParse();
         done = true;
     }
@@ -469,7 +505,7 @@ CNewBlock::CNewBlock(const CBlock& block) {
     parentHash = block.parentHash;
     miner = block.miner;
     difficulty = block.difficulty;
-    price = block.price;
+    price = 0.0;
     finalized = block.finalized;
     timestamp = block.timestamp;
     transactions = block.transactions;

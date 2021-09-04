@@ -14,7 +14,6 @@
 "output":"0x"
 "refundAddress":"0x00a3819199113fc6a6e6ba1298afde7377e2009b"
 "result":
-"result":null
 "subtraces":0
 "subtraces":1
 "to":"0xd450aafdb8a225c901d5379a3d0ff8fea1344bfa"

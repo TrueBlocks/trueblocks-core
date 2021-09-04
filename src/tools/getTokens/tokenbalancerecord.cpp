@@ -237,6 +237,18 @@ bool CTokenBalanceRecord::SerializeC(CArchive& archive) const {
     return true;
 }
 
+//---------------------------------------------------------------------------------------------------
+bool CTokenBalanceRecord::Migrate(CArchive& archiveIn, CArchive& archiveOut) const {
+    ASSERT(archiveIn.isReading());
+    ASSERT(archiveOut.isWriting());
+    CTokenBalanceRecord copy;
+    // EXISTING_CODE
+    // EXISTING_CODE
+    copy.Serialize(archiveIn);
+    copy.SerializeC(archiveOut);
+    return true;
+}
+
 //---------------------------------------------------------------------------
 CArchive& operator>>(CArchive& archive, CTokenBalanceRecordArray& array) {
     uint64_t count;
@@ -341,6 +353,9 @@ string_q nextTokenbalancerecordChunk_custom(const string_q& fieldIn, const void*
 
     return "";
 }
+
+// EXISTING_CODE
+// EXISTING_CODE
 
 //---------------------------------------------------------------------------
 bool CTokenBalanceRecord::readBackLevel(CArchive& archive) {

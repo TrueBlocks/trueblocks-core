@@ -12,6 +12,8 @@
       "value": "0xdda3a6b505a6800",
       "gas": "0x9c40",
       "gasPrice": "0xb96ddd6a4",
+      "maxFeePerGas": "0x0",
+      "maxPriorityFeePerGas": "0x0",
       "input": "0x",
       "isError": "0x0",
       "hasToken": "0x0",

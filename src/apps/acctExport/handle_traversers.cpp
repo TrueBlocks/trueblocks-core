@@ -11,9 +11,6 @@ bool COptions::handle_traversers(void) {
     if (!lib.is_valid())
         return usage("Dynamic library " + load + " was found but is not valid.");
 
-    freshenTimestamps(getBlockProgress().client);
-    loadTimestamps(&expContext().tsMemMap, expContext().tsCnt);
-
     auto libFactory = lib.get_function<CTraverser*(void)>("makeTraverser");
     LOG_INFO(bBlue, "Instantiating traverser", cOff);
     CTraverser* trav = libFactory();
@@ -21,7 +18,7 @@ bool COptions::handle_traversers(void) {
         trav->dataFunc = loadTx_Func;
     trav->exportRange = exportRange;
     for (auto monitor : allMonitors) {
-        getNamedAccount(monitor, monitor.address);
+        findName(monitor.address, monitor);
         trav->monitorMap[monitor.address] = monitor;
     }
 

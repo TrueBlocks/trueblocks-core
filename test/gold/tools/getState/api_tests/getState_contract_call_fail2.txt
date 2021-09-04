@@ -1,5 +1,5 @@
 {
   "errors": [
-    "chifra state - The four byte must be a hex string."
+    "chifra state - The four byte signature must be a hex string."
   ]
 }

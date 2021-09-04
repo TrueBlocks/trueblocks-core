@@ -62293,6 +62293,10 @@
           "type": "timestamp"
         },
         {
+          "name": "baseFeePerGas",
+          "type": "wei"
+        },
+        {
           "name": "transactions",
           "type": "object|ts_array"
         }

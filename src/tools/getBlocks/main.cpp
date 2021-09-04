@@ -68,7 +68,7 @@ string_q doOneLightBlock(blknum_t num) {
 
 //------------------------------------------------------------
 string_q doOneHeavyBlock(CBlock& gold, blknum_t num, const COptions& opt) {
-    queryBlock(gold, uint_2_Str(num), (isApiMode() ? false : true));
+    queryBlock(gold, uint_2_Str(num), true);
     if (gold.blockNumber == 0 && gold.timestamp == 0)
         gold.timestamp = blockZeroTs;
     gold.finalized = isBlockFinal(gold.timestamp, opt.latestBlock.timestamp, opt.secsFinal);

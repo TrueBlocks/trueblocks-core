@@ -43,7 +43,7 @@ int main(int argc, const char* argv[]) {
             options.show_uncle_blocks();
 
         } else {
-            ASSERT(0); // can't happen
+            ASSERT(0);  // can't happen
         }
         once = false;
     }
@@ -52,15 +52,3 @@ int main(int argc, const char* argv[]) {
     acctlib_cleanup();
     return 0;
 }
-
-//--------------------------------------------------------------
-timestamp_t getBlockTimestamp(blknum_t bn) {
-    static uint32_t* timestamps = NULL;
-    static size_t nTimestamps = 0;
-    if (nTimestamps == 0) {
-        loadTimestamps(&timestamps, nTimestamps);
-        cerr << "Timestamps loaded..." << endl;
-    }
-    return bn < nTimestamps ? timestamps[(bn * 2) + 1] : 0;
-}
-

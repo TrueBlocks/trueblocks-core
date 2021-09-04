@@ -13,7 +13,8 @@ Using toJson
   "parentHash": "0xdef41ed6a4120cfe32d55a0217a685989d1f5b99b5836e85c84f53a710ca4780",
   "miner": "0x24339341f29d2aad7d3c591c0f9931e7d4bfed6e",
   "difficulty": 1010564536890,
-  "timestamp": 1438521506
+  "timestamp": 1438521506,
+  "baseFeePerGas": 0
 }------------------------------------------------------------------------------------------------------------------------
 Using operator<<
 ------------------------------------------------------------------------------------------------------------------------
@@ -25,7 +26,8 @@ Using operator<<
   "parentHash": "0xdef41ed6a4120cfe32d55a0217a685989d1f5b99b5836e85c84f53a710ca4780",
   "miner": "0x24339341f29d2aad7d3c591c0f9931e7d4bfed6e",
   "difficulty": 1010564536890,
-  "timestamp": 1438521506
+  "timestamp": 1438521506,
+  "baseFeePerGas": 0
 }
 ------------------------------------------------------------------------------------------------------------------------
 Using Format
@@ -38,7 +40,8 @@ Using Format
   "parentHash": "0xdef41ed6a4120cfe32d55a0217a685989d1f5b99b5836e85c84f53a710ca4780",
   "miner": "0x24339341f29d2aad7d3c591c0f9931e7d4bfed6e",
   "difficulty": 1010564536890,
-  "timestamp": 1438521506
+  "timestamp": 1438521506,
+  "baseFeePerGas": 0
 }
 ------------------------------------------------------------------------------------------------------------------------
 Using Format(fmt) - TODO(tjayrush): should report missing field, does not.
@@ -51,7 +54,8 @@ Using Format(fmt) - TODO(tjayrush): should report missing field, does not.
   "parentHash": "0xdef41ed6a4120cfe32d55a0217a685989d1f5b99b5836e85c84f53a710ca4780",
   "miner": "0x24339341f29d2aad7d3c591c0f9931e7d4bfed6e",
   "difficulty": 1010564536890,
-  "timestamp": 1438521506
+  "timestamp": 1438521506,
+  "baseFeePerGas": 0
 }	22000	0xc3c2c9855c9f939d283666fcd2e3ed228b43cebcd4413af6cd09082230e1c775	0x24339341f29d2aad7d3c591c0f9931e7d4bfed6e	
 ------------------------------------------------------------------------------------------------------------------------
 Using Format(fmt) on a derived class QTransferFrom.
@@ -71,6 +75,8 @@ Using Format(fmt) on a derived class QTransferFrom.
   "value": 0,
   "gas": 0,
   "gasPrice": 0,
+  "maxFeePerGas": 0,
+  "maxPriorityFeePerGas": 0,
   "isError": 0,
   "hasToken": 0,
   "gasUsed": 0
@@ -102,6 +108,8 @@ Using Format(fmt) on a derived class derived from QTransferFrom.
   "value": 0,
   "gas": 0,
   "gasPrice": 0,
+  "maxFeePerGas": 0,
+  "maxPriorityFeePerGas": 0,
   "isError": 0,
   "hasToken": 0,
   "gasUsed": 0

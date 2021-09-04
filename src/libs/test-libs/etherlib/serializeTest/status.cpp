@@ -12,7 +12,7 @@
  *-------------------------------------------------------------------------------------------*/
 /*
  * Parts of this file were generated with makeClass --run. Edit only those parts of
- *  the code inside of 'EXISTING_CODE' tags.
+ * the code inside of 'EXISTING_CODE' tags.
  */
 #include "status.h"
 
@@ -214,6 +214,8 @@ bool CStatus::Serialize(CArchive& archive) {
     archive >> host;
     archive >> is_scraping;
     // archive >> caches;
+    // EXISTING_CODE
+    // EXISTING_CODE
     finishParse();
     return true;
 }
@@ -232,7 +234,20 @@ bool CStatus::SerializeC(CArchive& archive) const {
     archive << host;
     archive << is_scraping;
     // archive << caches;
+    // EXISTING_CODE
+    // EXISTING_CODE
+    return true;
+}
 
+//---------------------------------------------------------------------------------------------------
+bool CStatus::Migrate(CArchive& archiveIn, CArchive& archiveOut) const {
+    ASSERT(archiveIn.isReading());
+    ASSERT(archiveOut.isWriting());
+    CStatus copy;
+    // EXISTING_CODE
+    // EXISTING_CODE
+    copy.Serialize(archiveIn);
+    copy.SerializeC(archiveOut);
     return true;
 }
 
@@ -313,6 +328,9 @@ string_q nextStatusChunk_custom(const string_q& fieldIn, const void* dataPtr) {
     return "";
 }
 
+// EXISTING_CODE
+// EXISTING_CODE
+
 //---------------------------------------------------------------------------
 bool CStatus::readBackLevel(CArchive& archive) {
     bool done = false;
@@ -333,6 +351,8 @@ ostream& operator<<(ostream& os, const CStatus& it) {
 
 //---------------------------------------------------------------------------
 const CBaseNode* CStatus::getObjectAt(const string_q& fieldName, size_t index) const {
+    // EXISTING_CODE
+    // EXISTING_CODE
     if (fieldName % "caches") {
         if (index == NOPOS) {
             CCache* empty = nullptr;
@@ -342,6 +362,8 @@ const CBaseNode* CStatus::getObjectAt(const string_q& fieldName, size_t index) c
         if (index < caches.size())
             return caches[index];
     }
+    // EXISTING_CODE
+    // EXISTING_CODE
 
     return NULL;
 }

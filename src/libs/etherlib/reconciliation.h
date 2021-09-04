@@ -49,7 +49,8 @@ class CReconciliation : public CBaseNode {
     bigint_t selfDestructOut;
     bigint_t gasCostOut;
     string_q reconciliationType;
-    bigint_t spotPrice;
+    double spotPrice;
+    string_q priceSource;
 
   public:
     CReconciliation(void);
@@ -79,6 +80,7 @@ class CReconciliation : public CBaseNode {
     bigint_t amountNet(void) const;
     bool reconciled(void) const;
     CReconciliation& operator+=(const CReconciliation& r);
+    bool readBackLevel_old(CArchive& archive);
     // EXISTING_CODE
     bool operator==(const CReconciliation& it) const;
     bool operator!=(const CReconciliation& it) const {
@@ -154,7 +156,8 @@ inline void CReconciliation::initialize(void) {
     selfDestructOut = 0;
     gasCostOut = 0;
     reconciliationType = "";
-    spotPrice = int64_t(-1);
+    spotPrice = 1.0;
+    priceSource = "";
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -189,6 +192,7 @@ inline void CReconciliation::duplicate(const CReconciliation& re) {
     gasCostOut = re.gasCostOut;
     reconciliationType = re.reconciliationType;
     spotPrice = re.spotPrice;
+    priceSource = re.priceSource;
 
     // EXISTING_CODE
     // EXISTING_CODE

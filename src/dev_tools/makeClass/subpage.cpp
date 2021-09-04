@@ -233,6 +233,18 @@ bool CSubpage::SerializeC(CArchive& archive) const {
     return true;
 }
 
+//---------------------------------------------------------------------------------------------------
+bool CSubpage::Migrate(CArchive& archiveIn, CArchive& archiveOut) const {
+    ASSERT(archiveIn.isReading());
+    ASSERT(archiveOut.isWriting());
+    CSubpage copy;
+    // EXISTING_CODE
+    // EXISTING_CODE
+    copy.Serialize(archiveIn);
+    copy.SerializeC(archiveOut);
+    return true;
+}
+
 //---------------------------------------------------------------------------
 CArchive& operator>>(CArchive& archive, CSubpageArray& array) {
     uint64_t count;
@@ -307,6 +319,9 @@ string_q nextSubpageChunk_custom(const string_q& fieldIn, const void* dataPtr) {
 
     return "";
 }
+
+// EXISTING_CODE
+// EXISTING_CODE
 
 //---------------------------------------------------------------------------
 bool CSubpage::readBackLevel(CArchive& archive) {

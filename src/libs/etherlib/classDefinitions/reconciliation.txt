@@ -23,12 +23,13 @@ fields = blknum blockNumber|\
         int256 selfDestructOut|\
         int256 gasCostOut|\
         string reconciliationType|\
-        int256 spotPrice=int64_t(-1)
+        double spotPrice=1.0|\
+        string priceSource
 includes = utillib.h
 cpp_includes = etherlib.h
 serializable = true
 equals = ((blockNumber == it.blockNumber) && (assetAddr == it.assetAddr))
-display_str = assetAddr,assetSymbol,decimals,blockNumber,transactionIndex,timestamp,prevBlk,prevBlkBal,begBal,amountIn,internalIn,selfDestructIn,minerBaseRewardIn,minerNephewRewardIn,minerTxFeeIn,minerUncleRewardIn,prefundIn,totalIn,amountOut,internalOut,selfDestructOut,gasCostOut,totalOut,totalOutLessGas,amountNet,endBal,begBalDiff,endBalCalc,endBalDiff,reconciled,spotPrice,reconciliationType,reconTrail
+display_str = assetAddr,assetSymbol,decimals,blockNumber,transactionIndex,timestamp,prevBlk,prevBlkBal,begBal,amountIn,internalIn,selfDestructIn,minerBaseRewardIn,minerNephewRewardIn,minerTxFeeIn,minerUncleRewardIn,prefundIn,totalIn,amountOut,internalOut,selfDestructOut,gasCostOut,totalOut,totalOutLessGas,amountNet,endBal,begBalDiff,endBalCalc,endBalDiff,reconciled,spotPrice,priceSource,reconciliationType
 js = true
 
 #        CLineItem

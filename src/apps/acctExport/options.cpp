@@ -18,15 +18,13 @@ static const COption params[] = {
     COption("fourbytes", "", "list<fourbyte>", OPT_POSITIONAL, "filter by one or more fourbytes (only for transactions and trace options)"),  // NOLINT
     COption("appearances", "p", "", OPT_SWITCH, "export a list of appearances"),
     COption("receipts", "r", "", OPT_SWITCH, "export receipts instead of transaction list"),
+    COption("statements", "A", "", OPT_SWITCH, "for use with --accounting option only, export only reconciliation statements"),  // NOLINT
     COption("logs", "l", "", OPT_SWITCH, "export logs instead of transaction list"),
     COption("traces", "t", "", OPT_SWITCH, "export traces instead of transaction list"),
     COption("accounting", "C", "", OPT_SWITCH, "export accounting records instead of transaction list"),
-    COption("statements", "A", "", OPT_SWITCH, "for use with --accounting option only, export only reconciliation statements"),  // NOLINT
     COption("articulate", "a", "", OPT_SWITCH, "articulate transactions, traces, logs, and outputs"),
     COption("cache_txs", "i", "", OPT_SWITCH, "write transactions to the cache (see notes)"),
     COption("cache_traces", "R", "", OPT_SWITCH, "write traces to the cache (see notes)"),
-    COption("skip_ddos", "d", "", OPT_HIDDEN | OPT_TOGGLE, "toggle skipping over 2016 dDos transactions ('on' by default)"),  // NOLINT
-    COption("max_traces", "m", "<uint64>", OPT_HIDDEN | OPT_FLAG, "if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250)"),  // NOLINT
     COption("freshen", "f", "", OPT_HIDDEN | OPT_SWITCH, "freshen but do not print the exported data"),
     COption("factory", "y", "", OPT_SWITCH, "scan for contract creations from the given address(es) and report address of those contracts"),  // NOLINT
     COption("emitter", "", "", OPT_SWITCH, "for log export only, export only if one of the given export addresses emitted the event"),  // NOLINT
@@ -42,8 +40,8 @@ static const COption params[] = {
     COption("unripe", "u", "", OPT_HIDDEN | OPT_SWITCH, "enable search of unripe (neither staged nor finalized) folder (assumes --staging)"),  // NOLINT
     COption("load", "", "<string>", OPT_HIDDEN | OPT_FLAG, "a comma separated list of dynamic traversers to load"),
     COption("reversed", "", "", OPT_HIDDEN | OPT_SWITCH, "produce results in reverse chronological order"),
-    COption("by_date", "y", "", OPT_HIDDEN | OPT_SWITCH, "produce results sorted by date (default is to report by address)"),  // NOLINT
-    COption("summarize_by", "b", "enum[yearly|quarterly|monthly|weekly|daily|hourly|blockly|tx]", OPT_HIDDEN | OPT_FLAG, "for --accounting only, summarize reconciliations by this time period"),  // NOLINT
+    COption("by_date", "b", "", OPT_HIDDEN | OPT_SWITCH, "produce results sorted by date (default is to report by address)"),  // NOLINT
+    COption("summarize_by", "z", "enum[yearly|quarterly|monthly|weekly|daily|hourly|blockly|tx]", OPT_HIDDEN | OPT_FLAG, "for --accounting only, summarize reconciliations by this time period"),  // NOLINT
     COption("", "", "", OPT_DESCRIPTION, "Export full detail of transactions for one or more addresses."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -77,6 +75,9 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-r" || arg == "--receipts") {
             receipts = true;
 
+        } else if (arg == "-A" || arg == "--statements") {
+            statements = true;
+
         } else if (arg == "-l" || arg == "--logs") {
             logs = true;
 
@@ -86,9 +87,6 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-C" || arg == "--accounting") {
             accounting = true;
 
-        } else if (arg == "-A" || arg == "--statements") {
-            statements = true;
-
         } else if (arg == "-a" || arg == "--articulate") {
             articulate = true;
 
@@ -97,15 +95,6 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-R" || arg == "--cache_traces") {
             cache_traces = true;
-
-        } else if (arg == "-d" || arg == "--skip_ddos") {
-            skip_ddos = !skip_ddos;
-
-        } else if (startsWith(arg, "-m:") || startsWith(arg, "--max_traces:")) {
-            if (!confirmUint("max_traces", max_traces, arg))
-                return false;
-        } else if (arg == "-m" || arg == "--max_traces") {
-            return flag_required("max_traces");
 
         } else if (arg == "-f" || arg == "--freshen") {
             freshen = true;
@@ -170,13 +159,13 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "--reversed") {
             reversed = true;
 
-        } else if (arg == "-y" || arg == "--by_date") {
+        } else if (arg == "-b" || arg == "--by_date") {
             by_date = true;
 
-        } else if (startsWith(arg, "-b:") || startsWith(arg, "--summarize_by:")) {
+        } else if (startsWith(arg, "-z:") || startsWith(arg, "--summarize_by:")) {
             if (!confirmEnum("summarize_by", summarize_by, arg))
                 return false;
-        } else if (arg == "-b" || arg == "--summarize_by") {
+        } else if (arg == "-z" || arg == "--summarize_by") {
             return flag_required("summarize_by");
 
         } else if (startsWith(arg, '-')) {  // do not collapse
@@ -207,10 +196,10 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_LIST("fourbytes", fourbytes, fourbytes.empty());
     LOG_TEST_BOOL("appearances", appearances);
     LOG_TEST_BOOL("receipts", receipts);
+    LOG_TEST_BOOL("statements", statements);
     LOG_TEST_BOOL("logs", logs);
     LOG_TEST_BOOL("traces", traces);
     LOG_TEST_BOOL("accounting", accounting);
-    LOG_TEST_BOOL("statements", statements);
     LOG_TEST_BOOL("articulate", articulate);
     LOG_TEST_BOOL("cache_txs", cache_txs);
     LOG_TEST_BOOL("cache_traces", cache_traces);
@@ -263,11 +252,11 @@ bool COptions::parseArguments(string_q& command) {
     if (topics.size() && !logs)
         return usage("Use the topics option only with --logs.");
 
-    if (fourbytes.size() && (logs || receipts || appearances))
+    if (fourbytes.size() && (logs || receipts || statements || appearances))
         return usage("Use the fourbytes option only with non-logs commands.");
 
-    if ((appearances + receipts + logs + traces) > 1)
-        return usage("Please export only one of list, receipts, logs, or traces.");
+    if ((appearances + receipts + statements + logs + traces) > 1)
+        return usage("Please export only one of list, receipts, statements, logs, or traces.");
 
     if (emitter && !logs)
         return usage("The --emitter option is only available when exporting logs.");
@@ -278,7 +267,7 @@ bool COptions::parseArguments(string_q& command) {
     if (factory && !traces)
         return usage("The --factory option is only available when exporting traces.");
 
-    if (count && (receipts || logs || traces || emitter || factory))
+    if (count && (receipts || statements || logs || traces || emitter || factory))
         return usage("--count option is only available with --appearances option.");
 
     if ((accounting) && (addrs.size() != 1))
@@ -287,10 +276,10 @@ bool COptions::parseArguments(string_q& command) {
     if ((accounting) && freshenOnly)
         return usage("Do not use the --accounting option with --freshen.");
 
-    if ((accounting) && (appearances || logs || traces || receipts))
+    if ((accounting) && (appearances || logs || traces || receipts || statements))
         return usage("Do not use the --accounting option with other options.");
 
-    if (freshenOnly && (appearances || logs || traces || receipts))
+    if (freshenOnly && (appearances || logs || traces || receipts || statements))
         return usage("Do not use the --freshen option with other options.");
 
     // Where will we start?
@@ -324,7 +313,7 @@ bool COptions::parseArguments(string_q& command) {
         }
         if (accountedFor.address.empty()) {
             accountedFor.address = monitor.address;
-            getNamedAccount(accountedFor, monitor.address);
+            findName(monitor.address, accountedFor);
             accountedFor.is_contract = !getCodeAt(monitor.address, latest).empty();
         }
         allMonitors.push_back(monitor);
@@ -422,24 +411,23 @@ void COptions::Init(void) {
     optionOn(OPT_PREFUND);
     optionOn(OPT_CRUD);
     // Since we need prefunds, let's load the names library here
-    CAccountName unused;
-    getNamedAccount(unused, "0x0");
+    loadNames();
 
     // BEG_CODE_INIT
     appearances = false;
     receipts = false;
+    statements = false;
     logs = false;
     traces = false;
     accounting = false;
-    statements = false;
     articulate = false;
     // clang-format off
     cache_txs = getGlobalConfig("acctExport")->getConfigBool("settings", "cache_txs", false);
     cache_traces = getGlobalConfig("acctExport")->getConfigBool("settings", "cache_traces", false);
     skip_ddos = getGlobalConfig("acctExport")->getConfigBool("settings", "skip_ddos", true);
     max_traces = getGlobalConfig("acctExport")->getConfigInt("settings", "max_traces", 250);
-    factory = getGlobalConfig("acctExport")->getConfigBool("settings", "factory", false);
     // clang-format on
+    factory = false;
     emitter = false;
     source.clear();
     relevant = false;
@@ -474,7 +462,7 @@ void COptions::Init(void) {
     fileRange = make_pair(NOPOS, NOPOS);
     allMonitors.clear();
     possibles.clear();
-    slowQuery = false;
+    slowQueries = 0;
 
     // Establish folders. This may be redundant, but it's cheap.
     establishMonitorFolders();
@@ -499,6 +487,13 @@ COptions::COptions(void) {
     notes.push_back("An `address` must start with '0x' and be forty-two characters long.");
     // clang-format on
     // END_CODE_NOTES
+
+    // clang-format off
+    configs.push_back("`cache_txs`: write transactions to the cache (see notes).");
+    configs.push_back("`cache_traces`: write traces to the cache (see notes).");
+    configs.push_back("`skip_ddos`: toggle skipping over 2016 dDos transactions ('on' by default).");
+    configs.push_back("`max_traces`: if --skip_ddos is on, this many traces defines what a ddos transaction | is (default = 250).");  // NOLINT
+    // clang-format on
 
     // BEG_ERROR_STRINGS
     // END_ERROR_STRINGS
@@ -593,6 +588,8 @@ bool COptions::setDisplayFormatting(void) {
                 expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["trace_fmt"]);
             } else if (receipts) {
                 expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["receipt_fmt"]);
+            } else if (statements) {
+                expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["reconciliation_fmt"]);
             } else if (logs) {
                 expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["logentry_fmt"]);
             } else if (appearances) {
@@ -649,7 +646,8 @@ bool COptions::setDisplayFormatting(void) {
 }
 
 // TODO(tjayrush): If an abi file is changed, we should re-articulate.
-// TODO(tjayrush): accounting can not be freshen, appearances, logs, receipts, traces, but must be articulate - why?
+// TODO(tjayrush): accounting can not be freshen, appearances, logs, receipts, statements, traces, but must be
+// TODO(tjayrush): articulate - why?
 // TODO(tjayrush): accounting must be exportFmt API1 - why?
 // TODO(tjayrush): accounting must be for one monitor address - why?
 // TODO(tjayrush): accounting requires node balances - why?

@@ -216,8 +216,7 @@ bool COptions::parseArguments(string_q& command) {
 
     abi_spec.loadAbisFromKnown(true);
 
-    freshenTimestamps(getBlockProgress(BP_CLIENT).client);
-    if (!loadTimestamps(&tsMemMap, tsCnt))
+    if (!getTimestampAt(1))  // loads the timestamp file and returns non-zero on success
         return usage("Could not open timestamp file.");
 
     if ((!isTestMode() && !requestsHistory()) || nodeHasBalances(true))
@@ -253,8 +252,6 @@ void COptions::Init(void) {
     tokens.clear();
     holders.clear();
     modeBits = TOK_NONE;
-    tsMemMap = NULL;
-    tsCnt = 0;
 
     optionOff(OPT_DOLLARS | OPT_ETHER);
     blocks.Init();

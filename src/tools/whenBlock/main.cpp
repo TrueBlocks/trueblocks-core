@@ -12,7 +12,6 @@
  *-------------------------------------------------------------------------------------------*/
 #include "options.h"
 
-extern bool forEveryTimestamp(BLOCKVISITFUNC func, void* data, uint64_t start, uint64_t count, uint64_t skip);
 //-----------------------------------------------------------------------
 int main(int argc, const char* argv[]) {
     etherlib_init(quickQuitHandler);
@@ -32,16 +31,25 @@ int main(int argc, const char* argv[]) {
         } else {
             if (options.firstOut)
                 cout << exportPreamble(expContext().fmtMap["header"], GETRUNTIME_CLASS(CBlock));
+
             if (options.requests.size() > 0) {
-                options.applyFilter();  // for (auto item : options.items)
-                                        // visitBlock(item.second, &options);
+                options.applyFilter();
 
             } else if (options.timestamps) {
-                forEveryTimestamp(visitBlock, &options, 0, options.stop,
-                                  2 * (options.skip == NOPOS ? 1 : options.skip));
+                if (options.count) {
+                    cout << (options.isText ? uint_2_Str(nTimestamps())
+                                            : "{ \"nTimestamps\": " + uint_2_Str(nTimestamps()) + "}");
+                } else {
+                    getTimestampAt(options.latest);  // freshens timestamp file but otherwise ignored
+                    forEveryTimestamp(visitBlock, &options);
+                    if (options.corrections.size() > 0) {
+                        options.applyCorrections();
+                    }
+                }
             }
+
+            cout << exportPostamble(options.errors, expContext().fmtMap["meta"]);
         }
-        cout << exportPostamble(options.errors, expContext().fmtMap["meta"]);
     }
 
     etherlib_cleanup();
@@ -51,6 +59,14 @@ int main(int argc, const char* argv[]) {
 //-----------------------------------------------------------------------
 bool visitBlock(CBlock& block, void* data) {
     COptions* opt = reinterpret_cast<COptions*>(data);
+    if (opt->check || opt->fix) {
+        if (opt->checker.expected == 0) {
+            opt->checker.expected++;
+            return true;
+        }
+        return checkTimestamp(block, data);
+    }
+
     if (opt->isText) {
         cout << block.Format(expContext().fmtMap["format"]) << endl;
 
@@ -65,39 +81,6 @@ bool visitBlock(CBlock& block, void* data) {
     opt->firstOut = false;
     if (isTestMode() && (++opt->cnt > 100))
         return false;
-    return true;
-}
-
-//-------------------------------------------------------------------------
-bool forEveryTimestamp(BLOCKVISITFUNC func, void* data, uint64_t start, uint64_t count, uint64_t skip) {
-    if (!func)
-        return false;
-
-    uint32_t* tsArray = NULL;
-    size_t nItems;
-    if (!loadTimestamps(&tsArray, nItems))
-        return false;
-    if (!tsArray)  // it may not have failed, but there may be no timestamps
-        return false;
-
-    for (size_t bn = start; bn < count; bn += skip) {
-        CBlock block;
-        block.blockNumber = tsArray[bn];
-        block.timestamp = tsArray[bn + 1];
-        bool ret = (*func)(block, data);
-        if (!ret) {
-            // IMPORTANT NOTE - loadTimestamps does not return a pointer that's been allocated. It returns
-            // a pointer to a memory mapped file, so we can't delete it. We leave this here as documentation.
-            // ASSERT(tsArray)
-            // delete[] tsArray;
-            return false;
-        }
-    }
-
-    // IMPORTANT NOTE - loadTimestamps does not return a pointer that's been allocated. It returns
-    // a pointer to a memory mapped file, so we can't delete it. We leave this here as documentation.
-    // ASSERT(tsArray)
-    // delete[] tsArray;
 
     return true;
 }
@@ -116,7 +99,8 @@ void COptions::applyFilter() {
 
             getBlock_light(block, str_2_Uint(bnStr));
 
-            // TODO(tjayrush): this should be in the library so every request for zero block gets a valid blockNumber
+            // TODO(tjayrush): this should be in the library so every request for zero block gets a valid
+            // blockNumber
             if (block.blockNumber == 0) {
                 blknum_t bn = str_2_Uint(bnStr);
                 if (bn != 0) {

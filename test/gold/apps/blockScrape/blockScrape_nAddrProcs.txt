@@ -1,10 +1,9 @@
-blockScrape argc: 3 [1:--n_addr_procs] [2:12] 
-blockScrape --n_addr_procs 12 
-TIME ~ CLOCK - <INFO>  : n_addr_procs: 12
+blockScrape argc: 1 
+blockScrape 
 {
   "message": "Testing only",
   "n_blocks": 2000,
   "n_block_procs": 10,
-  "n_addr_procs": 12,
+  "n_addr_procs": 20,
   "pin": 0,
 }

@@ -1,3 +1,7 @@
+# Recent Migrations
+
+Please see this [Migration](https://github.com/TrueBlocks/trueblocks-core/blob/develop/src/other/migrations/README-0.12.1.md) which is required as of version 0.12.1 (Sept. 3, 2020 : 10:50 PM EST)
+
 # TrueBlocks Core
 
 ![GitHub repo size](https://img.shields.io/github/repo-size/scottydocs/README-template.md)

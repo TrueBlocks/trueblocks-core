@@ -152,6 +152,18 @@ bool CCollectionCacheItem::SerializeC(CArchive& archive) const {
     return true;
 }
 
+//---------------------------------------------------------------------------------------------------
+bool CCollectionCacheItem::Migrate(CArchive& archiveIn, CArchive& archiveOut) const {
+    ASSERT(archiveIn.isReading());
+    ASSERT(archiveOut.isWriting());
+    CCollectionCacheItem copy;
+    // EXISTING_CODE
+    // EXISTING_CODE
+    copy.Serialize(archiveIn);
+    copy.SerializeC(archiveOut);
+    return true;
+}
+
 //---------------------------------------------------------------------------
 CArchive& operator>>(CArchive& archive, CCollectionCacheItemArray& array) {
     uint64_t count;
@@ -222,6 +234,9 @@ string_q nextCollectioncacheitemChunk_custom(const string_q& fieldIn, const void
 
     return "";
 }
+
+// EXISTING_CODE
+// EXISTING_CODE
 
 //---------------------------------------------------------------------------
 bool CCollectionCacheItem::readBackLevel(CArchive& archive) {

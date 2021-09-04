@@ -14,9 +14,9 @@ blockNumber         	1008	0	1082130460	T_BLOCKNUM TS_NUMERAL TS_INTEGER
 parentHash          	1009	0	20971580	T_HASH TS_STRING TS_OMITEMPTY
 miner               	1010	0	20971575	T_ADDRESS TS_STRING TS_OMITEMPTY
 difficulty          	1011	0	8388635	T_UNUMBER TS_NUMERAL
-price               	1012	1	8388638	T_DOUBLE TS_NUMERAL
-finalized           	1013	0	12582932	T_BOOL TS_NUMERAL TS_OMITEMPTY
-timestamp           	1014	0	1082130447	T_TIMESTAMP TS_NUMERAL TS_INTEGER
+finalized           	1012	0	12582932	T_BOOL TS_NUMERAL TS_OMITEMPTY
+timestamp           	1013	0	1082130447	T_TIMESTAMP TS_NUMERAL TS_INTEGER
+baseFeePerGas       	1014	0	545259555	T_WEI TS_NUMERAL TS_BIGNUM
 transactions        	1015	0	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
 tx_hashes           	1016	1	88080434	T_TEXT|TS_ARRAY TS_STRING TS_ARRAY TS_OMITEMPTY
 name                	1017	1	20971570	T_TEXT TS_STRING TS_OMITEMPTY
@@ -31,7 +31,8 @@ age                 	1020	1	33554437	T_DATE TS_DATE
   "parentHash": "0x0",
   "miner": "0x0",
   "difficulty": 0,
-  "timestamp": 0
+  "timestamp": 0,
+  "baseFeePerGas": 0
 }
 
 --------------------------------------------------------------------------------
@@ -48,9 +49,9 @@ blockNumber         	1008	1	1082130460	T_BLOCKNUM TS_NUMERAL TS_INTEGER
 parentHash          	1009	1	20971580	T_HASH TS_STRING TS_OMITEMPTY
 miner               	1010	1	20971575	T_ADDRESS TS_STRING TS_OMITEMPTY
 difficulty          	1011	1	8388635	T_UNUMBER TS_NUMERAL
-price               	1012	1	8388638	T_DOUBLE TS_NUMERAL
-finalized           	1013	1	12582932	T_BOOL TS_NUMERAL TS_OMITEMPTY
-timestamp           	1014	1	1082130447	T_TIMESTAMP TS_NUMERAL TS_INTEGER
+finalized           	1012	1	12582932	T_BOOL TS_NUMERAL TS_OMITEMPTY
+timestamp           	1013	1	1082130447	T_TIMESTAMP TS_NUMERAL TS_INTEGER
+baseFeePerGas       	1014	1	545259555	T_WEI TS_NUMERAL TS_BIGNUM
 transactions        	1015	1	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
 tx_hashes           	1016	1	88080434	T_TEXT|TS_ARRAY TS_STRING TS_ARRAY TS_OMITEMPTY
 name                	1017	1	20971570	T_TEXT TS_STRING TS_OMITEMPTY
@@ -74,9 +75,9 @@ blockNumber         	1008	0	1082130460	T_BLOCKNUM TS_NUMERAL TS_INTEGER
 parentHash          	1009	0	20971580	T_HASH TS_STRING TS_OMITEMPTY
 miner               	1010	0	20971575	T_ADDRESS TS_STRING TS_OMITEMPTY
 difficulty          	1011	0	8388635	T_UNUMBER TS_NUMERAL
-price               	1012	0	8388638	T_DOUBLE TS_NUMERAL
-finalized           	1013	0	12582932	T_BOOL TS_NUMERAL TS_OMITEMPTY
-timestamp           	1014	0	1082130447	T_TIMESTAMP TS_NUMERAL TS_INTEGER
+finalized           	1012	0	12582932	T_BOOL TS_NUMERAL TS_OMITEMPTY
+timestamp           	1013	0	1082130447	T_TIMESTAMP TS_NUMERAL TS_INTEGER
+baseFeePerGas       	1014	0	545259555	T_WEI TS_NUMERAL TS_BIGNUM
 transactions        	1015	0	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
 tx_hashes           	1016	0	88080434	T_TEXT|TS_ARRAY TS_STRING TS_ARRAY TS_OMITEMPTY
 name                	1017	0	20971570	T_TEXT TS_STRING TS_OMITEMPTY
@@ -84,7 +85,7 @@ light               	1018	0	12582932	T_BOOL TS_NUMERAL TS_OMITEMPTY
 date                	1019	0	33554437	T_DATE TS_DATE
 age                 	1020	0	33554437	T_DATE TS_DATE
 {
-  "schema": 10002,
+  "schema": 12001,
   "deleted": false,
   "showing": true,
   "cname": "Block",
@@ -95,8 +96,8 @@ age                 	1020	0	33554437	T_DATE TS_DATE
   "parentHash": "0x0",
   "miner": "0x0",
   "difficulty": 0,
-  "price": 0.00000,
   "timestamp": 0,
+  "baseFeePerGas": 0,
   "date": "1970-01-01 00:00:00 UTC",
   "age": "100"
 }

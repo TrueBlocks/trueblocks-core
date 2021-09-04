@@ -16,8 +16,8 @@
 namespace qblocks {
 
 #define MAJOR 0
-#define MINOR 10
-#define BUILD 2
+#define MINOR 12
+#define BUILD 1
 #define SUBVERS "alpha"
 #define PRODUCT_NAME "GHC-TrueBlocks//"
 //--------------------------------------------------------------------------------
@@ -35,7 +35,13 @@ string_q getVersionStr(bool incProg, bool incGit) {
     ostringstream os;
     if (incProg)
         os << PRODUCT_NAME;
-    os << MAJOR << "." << MINOR << "." << BUILD << "-" << SUBVERS;
+
+    if (isTestMode())
+        os << "vers"
+           << "-" << SUBVERS;
+    else
+        os << MAJOR << "." << MINOR << "." << BUILD << "-" << SUBVERS;
+
     if (incGit) {
         if (isTestMode())
             os << "-"

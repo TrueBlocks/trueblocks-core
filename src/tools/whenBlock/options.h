@@ -15,7 +15,7 @@
  * Parts of this file were generated with makeClass --options. Edit only those parts of
  * the code outside of the BEG_CODE/END_CODE sections
  */
-#include "etherlib.h"
+#include "pinlib.h"
 
 // BEG_ERROR_DEFINES
 #define ERR_INVALIDSKIPVAL 1
@@ -27,19 +27,33 @@
 // END_ERROR_DEFINES
 
 //-----------------------------------------------------------------------------
+class CTimeStamper {
+  public:
+    size_t expected = 0;
+    blknum_t prevBn = 0;
+    timestamp_t prevTs = blockZeroTs;
+    bool verbose = false;
+};
+
+//-----------------------------------------------------------------------------
 class COptions : public CBlockOptions {
   public:
     // BEG_CODE_DECLARE
     bool list;
     bool timestamps;
+    bool check;
+    bool fix;
+    bool count;
     uint64_t skip;
     // END_CODE_DECLARE
 
+    blknum_t latest;
+    CTimeStamper checker;
     CNameValueArray requests;
     bool isText;
     blknum_t stop;
     blknum_t cnt;
-    bool hasHelp;
+    CBlockArray corrections;
 
     COptions(void);
     ~COptions(void);
@@ -48,6 +62,8 @@ class COptions : public CBlockOptions {
     void Init(void) override;
 
     void applyFilter(void);
+    bool applyCorrections(void);
 };
 
 extern bool showSpecials(CNameValue& pair, void* data);
+extern bool checkTimestamp(CBlock& block, void* data);

@@ -165,6 +165,18 @@ bool CAppearanceDisplay::SerializeC(CArchive& archive) const {
     return true;
 }
 
+//---------------------------------------------------------------------------------------------------
+bool CAppearanceDisplay::Migrate(CArchive& archiveIn, CArchive& archiveOut) const {
+    ASSERT(archiveIn.isReading());
+    ASSERT(archiveOut.isWriting());
+    CAppearanceDisplay copy;
+    // EXISTING_CODE
+    // EXISTING_CODE
+    copy.Serialize(archiveIn);
+    copy.SerializeC(archiveOut);
+    return true;
+}
+
 //---------------------------------------------------------------------------
 CArchive& operator>>(CArchive& archive, CAppearanceDisplayArray& array) {
     uint64_t count;
@@ -226,13 +238,13 @@ string_q nextAppearancedisplayChunk_custom(const string_q& fieldIn, const void* 
             // EXISTING_CODE
             case 'd':
                 if (fieldIn % "date") {
-                    timestamp_t ts = (timestamp_t)expContext().tsMemMap[(app->blockNumber * 2) + 1];
+                    timestamp_t ts = getTimestampAt(app->blockNumber);
                     return ts_2_Date(ts).Format(FMT_JSON);
                 }
                 break;
             case 't':
                 if (fieldIn % "timestamp")
-                    return ts_2_Str((timestamp_t)expContext().tsMemMap[(app->blockNumber * 2) + 1]);
+                    return ts_2_Str(getTimestampAt(app->blockNumber));
                 break;
             // EXISTING_CODE
             case 'p':
@@ -250,6 +262,9 @@ string_q nextAppearancedisplayChunk_custom(const string_q& fieldIn, const void* 
 
     return "";
 }
+
+// EXISTING_CODE
+// EXISTING_CODE
 
 //---------------------------------------------------------------------------
 bool CAppearanceDisplay::readBackLevel(CArchive& archive) {

@@ -161,6 +161,18 @@ bool QFromTransferFrom::SerializeC(CArchive& archive) const {
     return true;
 }
 
+//---------------------------------------------------------------------------------------------------
+bool QFromTransferFrom::Migrate(CArchive& archiveIn, CArchive& archiveOut) const {
+    ASSERT(archiveIn.isReading());
+    ASSERT(archiveOut.isWriting());
+    QFromTransferFrom copy;
+    // EXISTING_CODE
+    // EXISTING_CODE
+    copy.Serialize(archiveIn);
+    copy.SerializeC(archiveOut);
+    return true;
+}
+
 //---------------------------------------------------------------------------
 CArchive& operator>>(CArchive& archive, QFromTransferFromArray& array) {
     uint64_t count;
@@ -232,6 +244,9 @@ string_q nextFromtransferfromChunk_custom(const string_q& fieldIn, const void* d
 
     return "";
 }
+
+// EXISTING_CODE
+// EXISTING_CODE
 
 //---------------------------------------------------------------------------
 bool QFromTransferFrom::readBackLevel(CArchive& archive) {

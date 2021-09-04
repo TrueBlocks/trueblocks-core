@@ -123,7 +123,7 @@ bool COptions::parseArguments(string_q& command) {
 
     // We need an ABI (although we could run without it)
     if (!abi_spec.loadAbiFromEtherscan(tokens[0]))
-        return usage("Could not find the ABI. Run grabABI " + tokens[0] + " to retrieve it.");
+        return usage("Could not find the ABI. Run 'chifra abis " + tokens[0] + "' to retrieve it.");
 
     return true;
 }

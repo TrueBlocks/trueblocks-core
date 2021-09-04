@@ -33,6 +33,11 @@ The `--filter` option calls your node's `trace_filter` routine (if available) us
   with a bang (!): fromBlk, toBlk, fromAddr, toAddr, after, count.
 - A state diff trace describes, for each modified address, what changed during that trace.
 
+`Configurable Items:`
+
+`skip_ddos`: skip over the 2016 ddos during export ('on' by default).
+`max`: if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250).
+
 #### Other Options
 
 All **TrueBlocks** command-line tools support the following commands (although in some case, they have no meaning):

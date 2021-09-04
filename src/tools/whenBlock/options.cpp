@@ -16,8 +16,8 @@
  */
 #include "options.h"
 
-bool parseRequestDates(COptionsBase* opt, CNameValueArray& blocks, const string_q& arg);
-bool parseRequestTs(COptionsBase* opt, CNameValueArray& blocks, timestamp_t ts);
+extern bool parseRequestDates(COptionsBase* opt, CNameValueArray& blocks, const string_q& arg);
+extern bool parseRequestTs(COptionsBase* opt, CNameValueArray& blocks, timestamp_t ts);
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
     // BEG_CODE_OPTIONS
@@ -25,6 +25,9 @@ static const COption params[] = {
     COption("block_list", "", "list<string>", OPT_POSITIONAL, "one or more dates, block numbers, hashes, or special named blocks (see notes)"),  // NOLINT
     COption("list", "l", "", OPT_SWITCH, "export a list of the 'special' blocks"),
     COption("timestamps", "t", "", OPT_SWITCH, "ignore other options and generate timestamps only"),
+    COption("check", "c", "", OPT_HIDDEN | OPT_SWITCH, "available only with --timestamps, checks the validity of the timestamp data"),  // NOLINT
+    COption("fix", "f", "", OPT_HIDDEN | OPT_SWITCH, "available only with --timestamps, fixes incorrect timestamps if any"),  // NOLINT
+    COption("count", "u", "", OPT_HIDDEN | OPT_SWITCH, "available only with --timestamps, returns the number of timestamps in the cache"),  // NOLINT
     COption("skip", "s", "<uint64>", OPT_FLAG, "only applicable if --timestamps is on, the step between block numbers in the export"),  // NOLINT
     COption("", "", "", OPT_DESCRIPTION, "Find block(s) based on date, blockNum, timestamp, or 'special'."),
     // clang-format on
@@ -32,15 +35,7 @@ static const COption params[] = {
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
-//-------------------------------------------------------------------------
-size_t nTimestamps(void) {
-    size_t nTs;
-    loadTimestamps(NULL, nTs);
-    return nTs;
-}
-
 extern const char* STR_DISPLAY_WHEN;
-extern const char* STR_DISPLAY_TIMESTAMP;
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& commandIn) {
     string_q command = commandIn;
@@ -51,7 +46,7 @@ bool COptions::parseArguments(string_q& commandIn) {
     CStringArray block_list;
     // END_CODE_LOCAL_INIT
 
-    hasHelp = contains(command, "-h") || contains(command, "-th");
+    latest = getBlockProgress(BP_CLIENT).client;
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
@@ -65,6 +60,15 @@ bool COptions::parseArguments(string_q& commandIn) {
 
         } else if (arg == "-t" || arg == "--timestamps") {
             timestamps = true;
+
+        } else if (arg == "-c" || arg == "--check") {
+            check = true;
+
+        } else if (arg == "-f" || arg == "--fix") {
+            fix = true;
+
+        } else if (arg == "-u" || arg == "--count") {
+            count = true;
 
         } else if (startsWith(arg, "-s:") || startsWith(arg, "--skip:")) {
             if (!confirmUint("skip", skip, arg))
@@ -90,6 +94,9 @@ bool COptions::parseArguments(string_q& commandIn) {
     LOG_TEST_LIST("block_list", block_list, block_list.empty());
     LOG_TEST_BOOL("list", list);
     LOG_TEST_BOOL("timestamps", timestamps);
+    LOG_TEST_BOOL("check", check);
+    LOG_TEST_BOOL("fix", fix);
+    LOG_TEST_BOOL("count", count);
     LOG_TEST("skip", skip, (skip == NOPOS));
     // END_DEBUG_DISPLAY
 
@@ -99,7 +106,6 @@ bool COptions::parseArguments(string_q& commandIn) {
     if (skip != NOPOS && !skip)
         return usage(usageErrs[ERR_INVALIDSKIPVAL]);
 
-    blknum_t latest = getBlockProgress(BP_CLIENT).client;
     for (auto item : block_list) {
         if (isDate(item)) {
             if (!parseRequestDates(this, requests, item))
@@ -135,28 +141,17 @@ bool COptions::parseArguments(string_q& commandIn) {
     if (list)
         forEverySpecialBlock(showSpecials, &requests);
 
-    // Display formatting
-    // timestamp mode dominates
-    if (timestamps) {
-        string_q format = getGlobalConfig("whenBlock")->getConfigStr("display", "fmt_ts", STR_DISPLAY_TIMESTAMP);
-        configureDisplay("whenBlock", "CBlock", format);
-        manageFields("CBlock:" + string_q(format));
-        isText = (expContext().exportFmt == TXT1 || expContext().exportFmt == CSV1);
-        if (!isText)
-            expContext().fmtMap["header"] = expContext().fmtMap["format"] = "";
-        stop = (nTimestamps() * 2);
-        if (stop == 0)
-            return usage(usageErrs[ERR_OPENINGTIMESTAMPS]);
-    } else {
-        // Data verifictions
-        if (requests.size() == 0)
-            return usage(usageErrs[ERR_INVALIDDATE1]);
-        string_q format = getGlobalConfig("whenBlock")->getConfigStr("display", "format", STR_DISPLAY_WHEN);
-        configureDisplay("whenBlock", "CBlock", format);
-        if (expContext().exportFmt == API1 || expContext().exportFmt == JSON1)
-            manageFields("CBlock:" + string_q(format));
-    }
+    if ((fix || check || count) && !timestamps)
+        return usage("The --check, --fix and --count options are only available with the --timestamps option.");
 
+    if (requests.size() == 0 && !timestamps)
+        return usage(usageErrs[ERR_INVALIDDATE1]);
+
+    string_q format = getGlobalConfig("whenBlock")->getConfigStr("display", "format", STR_DISPLAY_WHEN);
+    if (count)
+        format = "[{nTimestamps}]";
+    configureDisplay("whenBlock", "CBlock", format);
+    manageFields("CBlock:" + string_q(format));
     return true;
 }
 
@@ -168,6 +163,9 @@ void COptions::Init(void) {
     // BEG_CODE_INIT
     list = false;
     timestamps = false;
+    check = false;
+    fix = false;
+    count = false;
     skip = NOPOS;
     // END_CODE_INIT
 
@@ -175,7 +173,6 @@ void COptions::Init(void) {
     skip = NOPOS;
     isText = false;
     cnt = 0;
-    hasHelp = false;
     requests.clear();
     blocks.Init();
 }
@@ -248,8 +245,3 @@ const char* STR_DISPLAY_WHEN =
     "[{TIMESTAMP}]\t"
     "[{DATE}]"
     "[\t{NAME}]";
-
-//-----------------------------------------------------------------------
-const char* STR_DISPLAY_TIMESTAMP =
-    "[{BLOCKNUMBER}]\t"
-    "[{TIMESTAMP}]";

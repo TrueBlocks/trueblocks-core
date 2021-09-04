@@ -78,6 +78,9 @@ string_q CBlock::getValueByName(const string_q& fieldName) const {
             if (fieldName % "blockNumber") {
                 return uint_2_Str(blockNumber);
             }
+            if (fieldName % "baseFeePerGas") {
+                return wei_2_Str(baseFeePerGas);
+            }
             break;
         case 'd':
             if (fieldName % "difficulty") {
@@ -120,9 +123,6 @@ string_q CBlock::getValueByName(const string_q& fieldName) const {
         case 'p':
             if (fieldName % "parentHash") {
                 return hash_2_Str(parentHash);
-            }
-            if (fieldName % "price") {
-                return double_2_Str(price, 5);
             }
             break;
         case 't':
@@ -206,6 +206,10 @@ bool CBlock::setValueByName(const string_q& fieldNameIn, const string_q& fieldVa
                 blockNumber = str_2_Uint(fieldValue);
                 return true;
             }
+            if (fieldName % "baseFeePerGas") {
+                baseFeePerGas = str_2_Wei(fieldValue);
+                return true;
+            }
             break;
         case 'd':
             if (fieldName % "difficulty") {
@@ -256,10 +260,6 @@ bool CBlock::setValueByName(const string_q& fieldNameIn, const string_q& fieldVa
         case 'p':
             if (fieldName % "parentHash") {
                 parentHash = str_2_Hash(fieldValue);
-                return true;
-            }
-            if (fieldName % "price") {
-                price = str_2_Double(fieldValue);
                 return true;
             }
             break;
@@ -329,9 +329,9 @@ bool CBlock::Serialize(CArchive& archive) {
     archive >> parentHash;
     archive >> miner;
     archive >> difficulty;
-    archive >> price;
     archive >> finalized;
     archive >> timestamp;
+    archive >> baseFeePerGas;
     archive >> transactions;
     // archive >> tx_hashes;
     // archive >> name;
@@ -356,15 +356,27 @@ bool CBlock::SerializeC(CArchive& archive) const {
     archive << parentHash;
     archive << miner;
     archive << difficulty;
-    archive << price;
     archive << finalized;
     archive << timestamp;
+    archive << baseFeePerGas;
     archive << transactions;
     // archive << tx_hashes;
     // archive << name;
     // archive << light;
     // EXISTING_CODE
     // EXISTING_CODE
+    return true;
+}
+
+//---------------------------------------------------------------------------------------------------
+bool CBlock::Migrate(CArchive& archiveIn, CArchive& archiveOut) const {
+    ASSERT(archiveIn.isReading());
+    ASSERT(archiveOut.isWriting());
+    CBlock copy;
+    // EXISTING_CODE
+    // EXISTING_CODE
+    copy.Serialize(archiveIn);
+    copy.SerializeC(archiveOut);
     return true;
 }
 
@@ -407,9 +419,9 @@ void CBlock::registerClass(void) {
     ADD_FIELD(CBlock, "parentHash", T_HASH | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CBlock, "miner", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CBlock, "difficulty", T_UNUMBER, ++fieldNum);
-    ADD_FIELD(CBlock, "price", T_DOUBLE, ++fieldNum);
     ADD_FIELD(CBlock, "finalized", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CBlock, "timestamp", T_TIMESTAMP, ++fieldNum);
+    ADD_FIELD(CBlock, "baseFeePerGas", T_WEI, ++fieldNum);
     ADD_FIELD(CBlock, "transactions", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CBlock, "tx_hashes", T_TEXT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CBlock, "tx_hashes");
@@ -496,16 +508,20 @@ string_q nextBlockChunk_custom(const string_q& fieldIn, const void* dataPtr) {
     return "";
 }
 
+// EXISTING_CODE
+// EXISTING_CODE
+
 //---------------------------------------------------------------------------
 bool CBlock::readBackLevel(CArchive& archive) {
     bool done = false;
     // EXISTING_CODE
-    biguint_t removed;
+    double removed1;
+    biguint_t removed2;
     if (m_schema < getVersionNum(0, 3, 1)) {
         archive >> gasLimit;
         archive >> gasUsed;
         archive >> hash;
-        archive >> removed;  // used to be logsB loom
+        archive >> removed2;  // used to be logsB loom
         archive >> blockNumber;
         archive >> parentHash;
         archive >> timestamp;
@@ -517,7 +533,6 @@ bool CBlock::readBackLevel(CArchive& archive) {
         setDataSource(prev);
         miner = upgrade.miner;
         difficulty = upgrade.difficulty;
-        price = 0.0;
         finalized = false;
         finishParse();
         done = true;
@@ -529,9 +544,34 @@ bool CBlock::readBackLevel(CArchive& archive) {
         archive >> parentHash;
         archive >> miner;
         archive >> difficulty;
-        archive >> price;
+        archive >> removed1;  // price;
         archive >> timestamp;
         archive >> transactions;
+        finalized = false;
+        finishParse();
+        done = true;
+    } else if (m_schema < getVersionNum(0, 10, 4)) {
+        archive >> gasLimit;
+        archive >> gasUsed;
+        archive >> hash;
+        archive >> blockNumber;
+        archive >> parentHash;
+        archive >> miner;
+        archive >> difficulty;
+        archive >> removed1;  // price;
+        archive >> finalized;
+        archive >> timestamp;
+        archive >> transactions;
+        if (m_schema == getVersionNum(0, 10, 3))
+            archive >> baseFeePerGas;  // we need to read it, but we reset it anyway
+        if (blockNumber < londonBlock) {
+            baseFeePerGas = 0;
+        } else {
+            CBlock upgrade;
+            upgrade.light = true;
+            getObjectViaRPC(upgrade, "eth_getBlockByNumber", "[" + quote(uint_2_Hex(blockNumber)) + ",false]");
+            baseFeePerGas = upgrade.baseFeePerGas;
+        }
         finalized = false;
         finishParse();
         done = true;
@@ -595,6 +635,7 @@ const char* STR_DISPLAY_BLOCK =
     "[{DIFFICULTY}]\t"
     "[{GASUSED}]\t"
     "[{GASLIMIT}]\t"
+    "[{BASEFEEPERGAS}]\t"
     "[{MINER}]\t"
     "[{HASH}]\t"
     "[{PARENTHASH}]\t"

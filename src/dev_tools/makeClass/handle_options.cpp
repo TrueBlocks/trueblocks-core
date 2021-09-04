@@ -14,6 +14,7 @@
 
 extern const char* STR_DECLARATION;
 extern const char* STR_DEFAULT_ASSIGNMENT;
+extern const char* STR_OPTION_CONFIGSTR;
 extern const char* STR_OPTION_NOTESTR;
 extern const char* STR_OPTION_STR;
 extern const char* STR_AUTO_SWITCH;
@@ -26,6 +27,7 @@ extern const char* STR_AUTO_FLAG_ADDRESS_LIST;
 extern const char* STR_AUTO_FLAG_BLOCKNUM;
 extern const char* STR_AUTO_FLAG_UINT;
 extern const char* STR_AUTO_FLAG_DOUBLE;
+extern const char* STR_AUTO_FLAG_ADDRESS;
 extern const char* STR_CHECK_BUILTIN;
 extern const char* STR_BLOCKLIST_PROCESSOR;
 extern const char* STR_TXLIST_PROCESSOR;
@@ -54,12 +56,10 @@ bool COptions::handle_options(void) {
     CStringArray lines;
     asciiFileToLines(cmdFile, lines);
     for (auto line : lines) {
-        if (!startsWith(line, '#')) {
-            CCommandOption opt(line);
-            if (!opt.tool.empty() && opt.tool != "all" && opt.tool != "tool" && opt.tool != "templates") {
-                optionArray.push_back(opt);
-                tools[opt.group + "/" + opt.tool] = true;
-            }
+        CCommandOption opt(line);
+        if (!opt.tool.empty() && opt.tool != "all" && opt.tool != "tool" && opt.tool != "templates") {
+            optionArray.push_back(opt);
+            tools[opt.group + "/" + opt.tool] = true;
         }
     }
 
@@ -71,11 +71,12 @@ bool COptions::handle_options(void) {
         errCnt = 1;
         optionStream << "    // clang-format off" << endl;
         notesStream << "    // clang-format off" << endl;
+        configStream << "    // clang-format off" << endl;
         CStringArray warnings;
         for (auto option : optionArray) {
             option.verifyOptions(warnings);
-            option.verifyHotkey(warnings);
             if ((option.group + "/" + option.tool) == tool.first) {
+                option.verifyHotkey(warnings);
                 if (option.tool == "chifra")
                     allAuto = false;
 
@@ -92,23 +93,32 @@ bool COptions::handle_options(void) {
                     errorStrStream << err << endl;
                     errorDefStream << option.Format("#define [{COMMAND}] " + uint_2_Str(errCnt++)) << endl;
 
+                } else if (option.isConfig) {
+                    string_q config = option.Format(STR_OPTION_CONFIGSTR);
+                    if (config.length() > 120)
+                        config += "  // NOLINT";
+                    configStream << config << endl;
+
                 } else {
+                    if (option.is_customizable) {
+                        string_q config = option.Format(substitute(STR_OPTION_CONFIGSTR, "OPTS", "DESCRIPTION"));
+                        if (config.length() > 120)
+                            config += "  // NOLINT";
+                        configStream << config << endl;
+                    }
                     string_q opt = option.Format(STR_OPTION_STR);
                     if (opt.length() > 120)
                         opt += "  // NOLINT";
                     optionStream << opt << endl;
                 }
 
-                bool oneOfEm = (option.isEnum || option.isEnumList || option.isStringList || option.isAddressList ||
-                                option.isTopicList);
-                // clang-format off
                 string_q initFmt = "    [{COMMAND}] = [{DEF_VAL}];";
-                if (option.is_customizable)
+                if (option.is_customizable) {
                     initFmt = substitute(STR_CUSTOM_INIT, "[CTYPE]",
-                                         (oneOfEm ? "String"
-                                          : (option.isBool)                    ? "Bool"
-                                                                               : "Int"));
-                // clang-format on
+                                         (option.isStringType() ? "String"
+                                          : (option.isBool)     ? "Bool"
+                                                                : "Int"));
+                }
 
                 if (option.option_type == "switch") {
                     generate_switch(option);
@@ -170,6 +180,7 @@ bool COptions::handle_options(void) {
                 }
             }
         }
+        configStream << "    // clang-format on" << endl;
         notesStream << "    // clang-format on" << endl;
         optionStream << "    // clang-format on" << endl;
 
@@ -217,24 +228,23 @@ string_q replaceCode(const string_q& orig, const string_q& which, const string_q
 //---------------------------------------------------------------------------------------------------
 void COptions::generate_toggle(const CCommandOption& option) {
     string_q initFmt = "    [{COMMAND}] = [{DEF_VAL}];";
-    bool oneOfEm =
-        (option.isEnum || option.isEnumList || option.isStringList || option.isAddressList || option.isTopicList);
-    // clang-format off
-    if (option.is_customizable)
+    if (option.is_customizable) {
         initFmt = substitute(STR_CUSTOM_INIT, "[CTYPE]",
-                             (oneOfEm ? "String"
-                              : (option.isBool)                    ? "Bool"
-                                                                   : "Int"));
-    // clang-format on
+                             (option.isStringType() ? "String"
+                              : (option.isBool)     ? "Bool"
+                                                    : "Int"));
+    }
 
     if (option.generate == "local") {
         localStream << option.Format(STR_DEFAULT_ASSIGNMENT) << endl;
-        autoStream << option.Format(STR_AUTO_TOGGLE) << endl;
+        if (!option.isConfig)
+            autoStream << option.Format(STR_AUTO_TOGGLE) << endl;
 
-    } else if (option.generate == "header") {
+    } else if (option.generate == "header" || option.isConfig) {
         initStream << option.Format(initFmt) << endl;
         headerStream << option.Format(STR_DECLARATION) << endl;
-        autoStream << option.Format(STR_AUTO_TOGGLE) << endl;
+        if (!option.isConfig)
+            autoStream << option.Format(STR_AUTO_TOGGLE) << endl;
     }
     debugStream << option.debugCode() << endl;
 }
@@ -242,24 +252,23 @@ void COptions::generate_toggle(const CCommandOption& option) {
 //---------------------------------------------------------------------------------------------------
 void COptions::generate_switch(const CCommandOption& option) {
     string_q initFmt = "    [{COMMAND}] = [{DEF_VAL}];";
-    bool oneOfEm =
-        (option.isEnum || option.isEnumList || option.isStringList || option.isAddressList || option.isTopicList);
-    // clang-format off
-    if (option.is_customizable)
+    if (option.is_customizable) {
         initFmt = substitute(STR_CUSTOM_INIT, "[CTYPE]",
-                             (oneOfEm ? "String"
-                              : (option.isBool)                    ? "Bool"
-                                                                   : "Int"));
-    // clang-format on
+                             (option.isStringType() ? "String"
+                              : (option.isBool)     ? "Bool"
+                                                    : "Int"));
+    }
 
     if (option.generate == "local") {
         localStream << option.Format(STR_DEFAULT_ASSIGNMENT) << endl;
-        autoStream << option.Format(STR_AUTO_SWITCH) << endl;
+        if (!option.isConfig)
+            autoStream << option.Format(STR_AUTO_SWITCH) << endl;
 
-    } else if (option.generate == "header") {
+    } else if (option.generate == "header" || option.isConfig) {
         initStream << option.Format(initFmt) << endl;
         headerStream << option.Format(STR_DECLARATION) << endl;
-        autoStream << option.Format(STR_AUTO_SWITCH) << endl;
+        if (!option.isConfig)
+            autoStream << option.Format(STR_AUTO_SWITCH) << endl;
     }
     debugStream << option.debugCode() << endl;
 }
@@ -267,77 +276,90 @@ void COptions::generate_switch(const CCommandOption& option) {
 //---------------------------------------------------------------------------------------------------
 void COptions::generate_flag(const CCommandOption& option) {
     string_q initFmt = "    [{COMMAND}] = [{DEF_VAL}];";
-    bool oneOfEm =
-        (option.isEnum || option.isEnumList || option.isStringList || option.isAddressList || option.isTopicList);
-    // clang-format off
-    if (option.is_customizable)
+    if (option.is_customizable) {
         initFmt = substitute(STR_CUSTOM_INIT, "[CTYPE]",
-                             (oneOfEm ? "String"
-                              : (option.isBool)                    ? "Bool"
-                                                                   : "Int"));
-    // clang-format on
+                             (option.isStringType() ? "String"
+                              : (option.isBool)     ? "Bool"
+                                                    : "Int"));
+    }
 
     if (option.generate == "local") {
         if (option.isEnumList) {
             localStream << option.Format("    CStringArray [{COMMAND}];") << endl;
-            autoStream << option.Format(STR_AUTO_FLAG_ENUM_LIST) << endl;
+            if (!option.isConfig)
+                autoStream << option.Format(STR_AUTO_FLAG_ENUM_LIST) << endl;
         } else if (option.isStringList) {
             localStream << option.Format("    CStringArray [{COMMAND}];") << endl;
-            autoStream << option.Format(STR_AUTO_FLAG_STRING_LIST) << endl;
+            if (!option.isConfig)
+                autoStream << option.Format(STR_AUTO_FLAG_STRING_LIST) << endl;
         } else if (option.isTopicList) {
             localStream << option.Format("    CStringArray [{COMMAND}];") << endl;
-            autoStream << option.Format(STR_AUTO_FLAG_STRING_LIST) << endl;
+            if (!option.isConfig)
+                autoStream << option.Format(STR_AUTO_FLAG_STRING_LIST) << endl;
         } else if (option.isAddressList) {
             localStream << option.Format("    CAddressArray [{COMMAND}];") << endl;
-            autoStream << option.Format(STR_AUTO_FLAG_ADDRESS_LIST) << endl;
+            if (!option.isConfig)
+                autoStream << option.Format(STR_AUTO_FLAG_ADDRESS_LIST) << endl;
         } else {
             localStream << option.Format(STR_DEFAULT_ASSIGNMENT) << endl;
-            if (option.isEnum)
-                autoStream << option.Format(STR_AUTO_FLAG_ENUM) << endl;
-            else if (option.isBlockNum)
-                autoStream << option.Format(STR_AUTO_FLAG_BLOCKNUM) << endl;
-            else if (option.isUint32 || option.isUint64)
-                autoStream << option.Format(STR_AUTO_FLAG_UINT) << endl;
-            else if (option.isDouble)
-                autoStream << option.Format(STR_AUTO_FLAG_DOUBLE) << endl;
-            else
-                autoStream << substitute(option.Format(STR_AUTO_FLAG), "substitute(substitute(arg, \"-:\", )",
-                                         "substitute(arg")
-                           << endl;
+            if (!option.isConfig) {
+                if (option.isEnum)
+                    autoStream << option.Format(STR_AUTO_FLAG_ENUM) << endl;
+                else if (option.isBlockNum)
+                    autoStream << option.Format(STR_AUTO_FLAG_BLOCKNUM) << endl;
+                else if (option.isUint32 || option.isUint64)
+                    autoStream << option.Format(STR_AUTO_FLAG_UINT) << endl;
+                else if (option.isDouble)
+                    autoStream << option.Format(STR_AUTO_FLAG_DOUBLE) << endl;
+                else if (option.isAddress)
+                    autoStream << option.Format(STR_AUTO_FLAG_ADDRESS) << endl;
+                else
+                    autoStream << substitute(option.Format(STR_AUTO_FLAG), "substitute(substitute(arg, \"-:\", )",
+                                             "substitute(arg")
+                               << endl;
+            }
         }
 
-    } else if (option.generate == "header") {
+    } else if (option.generate == "header" || option.isConfig) {
         if (option.isEnumList) {
             initStream << option.Format("    [{COMMAND}].clear();") << endl;
             headerStream << option.Format("    CStringArray [{COMMAND}];") << endl;
-            autoStream << option.Format(STR_AUTO_FLAG_ENUM_LIST) << endl;
+            if (!option.isConfig)
+                autoStream << option.Format(STR_AUTO_FLAG_ENUM_LIST) << endl;
         } else if (option.isStringList) {
             initStream << option.Format("    [{COMMAND}].clear();") << endl;
             headerStream << option.Format("    CStringArray [{COMMAND}];") << endl;
-            autoStream << option.Format(STR_AUTO_FLAG_STRING_LIST) << endl;
+            if (!option.isConfig)
+                autoStream << option.Format(STR_AUTO_FLAG_STRING_LIST) << endl;
         } else if (option.isTopicList) {
             initStream << option.Format("    [{COMMAND}].clear();") << endl;
             headerStream << option.Format("    CTopicArray [{COMMAND}];") << endl;
-            autoStream << option.Format(STR_AUTO_FLAG_STRING_LIST) << endl;
+            if (!option.isConfig)
+                autoStream << option.Format(STR_AUTO_FLAG_STRING_LIST) << endl;
         } else if (option.isAddressList) {
             initStream << option.Format("    [{COMMAND}].clear();") << endl;
             headerStream << option.Format("    CAddressArray [{COMMAND}];") << endl;
-            autoStream << option.Format(STR_AUTO_FLAG_ADDRESS_LIST) << endl;
+            if (!option.isConfig)
+                autoStream << option.Format(STR_AUTO_FLAG_ADDRESS_LIST) << endl;
         } else {
             initStream << option.Format(initFmt) << endl;
             headerStream << option.Format(STR_DECLARATION) << endl;
-            if (option.isEnum)
-                autoStream << option.Format(STR_AUTO_FLAG_ENUM) << endl;
-            else if (option.isBlockNum)
-                autoStream << option.Format(STR_AUTO_FLAG_BLOCKNUM) << endl;
-            else if (option.isUint32 || option.isUint64)
-                autoStream << option.Format(STR_AUTO_FLAG_UINT) << endl;
-            else if (option.isDouble)
-                autoStream << option.Format(STR_AUTO_FLAG_DOUBLE) << endl;
-            else
-                autoStream << substitute(option.Format(STR_AUTO_FLAG), "substitute(substitute(arg, \"-:\", )",
-                                         "substitute(arg")
-                           << endl;
+            if (!option.isConfig) {
+                if (option.isEnum)
+                    autoStream << option.Format(STR_AUTO_FLAG_ENUM) << endl;
+                else if (option.isBlockNum)
+                    autoStream << option.Format(STR_AUTO_FLAG_BLOCKNUM) << endl;
+                else if (option.isUint32 || option.isUint64)
+                    autoStream << option.Format(STR_AUTO_FLAG_UINT) << endl;
+                else if (option.isDouble)
+                    autoStream << option.Format(STR_AUTO_FLAG_DOUBLE) << endl;
+                else if (option.isAddress)
+                    autoStream << option.Format(STR_AUTO_FLAG_ADDRESS) << endl;
+                else
+                    autoStream << substitute(option.Format(STR_AUTO_FLAG), "substitute(substitute(arg, \"-:\", )",
+                                             "substitute(arg")
+                               << endl;
+            }
         }
     }
     debugStream << option.debugCode() << endl;
@@ -387,7 +409,7 @@ void COptions::generate_positional(const CCommandOption& option) {
             // don't know type
         }
 
-    } else if (option.generate == "header") {
+    } else if (option.generate == "header" || option.isConfig) {
         if (option.data_type == "list<addr>") {
             headerStream << substitute(option.Format("    CAddressArray [{COMMAND}];"), "addrs2", "addrs") << endl;
             posStream << option.Format(STR_ADDRLIST_PROCESSOR) << endl;
@@ -513,6 +535,9 @@ bool COptions::writeCode(const string_q& fn) {
 }
 
 //---------------------------------------------------------------------------------------------------
+const char* STR_OPTION_CONFIGSTR = "    configs.push_back(\"`[{COMMAND}]`: [{OPTS}].\");";
+
+//---------------------------------------------------------------------------------------------------
 const char* STR_OPTION_NOTESTR = "    notes.push_back(\"[{OPTS}]\");";
 
 //---------------------------------------------------------------------------------------------------
@@ -576,6 +601,16 @@ const char* STR_AUTO_FLAG_BLOCKNUM =
     "        } else if ([startsWith(arg, \"-{HOTKEY}:\") || ]startsWith(arg, \"--[{COMMAND}]:\")) {\n"
     "            if (!confirmBlockNum(\"[{COMMAND}]\", [{COMMAND}], arg, latest))\n"
     "                return false;\n"
+    "        } else if ([arg == \"-{HOTKEY}\" || ]arg == \"--[{COMMAND}]\") {\n"
+    "            return flag_required(\"[{COMMAND}]\");\n";
+
+//---------------------------------------------------------------------------------------------------
+const char* STR_AUTO_FLAG_ADDRESS =
+    "        } else if ([startsWith(arg, \"-{HOTKEY}:\") || ]startsWith(arg, \"--[{COMMAND}]:\")) {\n"
+    "            [{COMMAND}] = substitute(substitute(arg, \"-[{HOTKEY}]:\", \"\"), \"--[{COMMAND}]:\", \"\");\n"
+    "            if (!isAddress([{COMMAND}]))\n"
+    "                return usage(\"The provided value (\" + [{COMMAND}] + \") is not a properly formatted "
+    "address.\");\n"
     "        } else if ([arg == \"-{HOTKEY}\" || ]arg == \"--[{COMMAND}]\") {\n"
     "            return flag_required(\"[{COMMAND}]\");\n";
 

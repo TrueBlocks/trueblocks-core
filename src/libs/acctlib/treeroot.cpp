@@ -171,6 +171,18 @@ bool CTreeRoot::SerializeC(CArchive& archive) const {
     return true;
 }
 
+//---------------------------------------------------------------------------------------------------
+bool CTreeRoot::Migrate(CArchive& archiveIn, CArchive& archiveOut) const {
+    ASSERT(archiveIn.isReading());
+    ASSERT(archiveOut.isWriting());
+    CTreeRoot copy;
+    // EXISTING_CODE
+    // EXISTING_CODE
+    copy.Serialize(archiveIn);
+    copy.SerializeC(archiveOut);
+    return true;
+}
+
 //---------------------------------------------------------------------------
 CArchive& operator>>(CArchive& archive, CTreeRootArray& array) {
     uint64_t count;
@@ -239,6 +251,9 @@ string_q nextTreerootChunk_custom(const string_q& fieldIn, const void* dataPtr) 
 
     return "";
 }
+
+// EXISTING_CODE
+// EXISTING_CODE
 
 //---------------------------------------------------------------------------
 bool CTreeRoot::readBackLevel(CArchive& archive) {

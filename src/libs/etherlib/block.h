@@ -35,9 +35,9 @@ class CBlock : public CBaseNode {
     hash_t parentHash;
     address_t miner;
     uint64_t difficulty;
-    double price;
     bool finalized;
     timestamp_t timestamp;
+    wei_t baseFeePerGas;
     CTransactionArray transactions;
     CStringArray tx_hashes;
     string_q name;
@@ -120,9 +120,9 @@ inline void CBlock::initialize(void) {
     parentHash = "";
     miner = "";
     difficulty = 0;
-    price = 0.0;
     finalized = false;
     timestamp = 0;
+    baseFeePerGas = 0;
     transactions.clear();
     tx_hashes.clear();
     name = "";
@@ -144,9 +144,9 @@ inline void CBlock::duplicate(const CBlock& bl) {
     parentHash = bl.parentHash;
     miner = bl.miner;
     difficulty = bl.difficulty;
-    price = bl.price;
     finalized = bl.finalized;
     timestamp = bl.timestamp;
+    baseFeePerGas = bl.baseFeePerGas;
     transactions = bl.transactions;
     tx_hashes = bl.tx_hashes;
     name = bl.name;

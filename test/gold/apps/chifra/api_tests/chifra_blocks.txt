@@ -10,6 +10,7 @@
       "difficulty": 17179844608,
       "finalized": true,
       "timestamp": 1438270144,
+      "baseFeePerGas": 0,
       "transactions": []
     }
   ],
@@ -52,6 +53,10 @@
         {
           "name": "timestamp",
           "type": "timestamp"
+        },
+        {
+          "name": "baseFeePerGas",
+          "type": "wei"
         },
         {
           "name": "transactions",

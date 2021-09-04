@@ -12,6 +12,8 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --max_records 10 0xa9059cb
   "value": 0,
   "gas": 200000,
   "gasPrice": 4000000000,
+  "maxFeePerGas": 0,
+  "maxPriorityFeePerGas": 0,
   "isError": 0,
   "hasToken": 1,
   "receipt": {
@@ -49,6 +51,8 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --max_records 10 0xa9059cb
   "value": 0,
   "gas": 200000,
   "gasPrice": 5000000000,
+  "maxFeePerGas": 0,
+  "maxPriorityFeePerGas": 0,
   "isError": 0,
   "hasToken": 1,
   "receipt": {
@@ -86,6 +90,8 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --max_records 10 0xa9059cb
   "value": 0,
   "gas": 200000,
   "gasPrice": 10000000000,
+  "maxFeePerGas": 0,
+  "maxPriorityFeePerGas": 0,
   "isError": 0,
   "hasToken": 1,
   "receipt": {

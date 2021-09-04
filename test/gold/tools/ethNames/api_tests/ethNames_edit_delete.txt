@@ -12,7 +12,7 @@
       "is_custom": false,
       "is_prefund": false,
       "is_contract": false,
-      "is_erc20": true,
+      "is_erc20": false,
       "is_erc721": false
     }
   ],

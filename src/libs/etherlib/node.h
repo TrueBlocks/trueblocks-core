@@ -71,7 +71,13 @@ inline bigint_t getTokenBalanceOf2(const address_t& token, const address_t& hold
 };
 extern string_q getTokenSymbol(const address_t& token, blknum_t blockNum);
 extern string_q getTokenState(const address_t& token, const string_q& whichState, const CAbi& abi_spec,
-                              blknum_t blockNum);
+                              blknum_t blockNum, const string_q& bytes = "");
+
+//-----------------------------------------------------------------------
+// https://ethereum.stackexchange.com/questions/82822/obtaining-erc721-interface-ids
+#define _INTERFACE_ID_ERC721 "0x80ac58cd"
+#define _INTERFACE_ID_ERC721_METADATA "0x5b5e139f"
+#define _INTERFACE_ID_ERC721_ENUMERABLE "0x780e9d63"
 
 //-----------------------------------------------------------------------
 extern string_q getRawBlock(blknum_t bn);
@@ -102,6 +108,7 @@ extern string_q getVersionFromClient(void);
 extern bool isErigon(void);
 extern bool isGeth(void);
 extern bool isParity(void);
+extern bool hasParityTraces(void);
 extern bool getNodeIds(uint64_t& clientId, uint64_t& networkId);
 
 //-------------------------------------------------------------------------
@@ -129,6 +136,7 @@ extern bool forEveryBlock(BLOCKVISITFUNC func, void* data, uint64_t start, uint6
 extern bool forEveryBlock_light(BLOCKVISITFUNC func, void* data, uint64_t start, uint64_t count,
                                 uint64_t skip = 1);  // NOLINT
 extern bool forEveryTransaction(TRANSVISITFUNC func, void* data, const string_q& trans_list);
+extern bool forEveryTimestamp(BLOCKVISITFUNC func, void* data);
 
 //-------------------------------------------------------------------------
 // forEvery functions
@@ -150,6 +158,9 @@ CBlockProgress getBlockProgress(size_t which = BP_ALL);
 
 //-------------------------------------------------------------------------
 extern string_q getIndexPath(const string_q& _part);
+inline string_q getCommandPath(const string_q& _part) {
+    return "~/.local/bin/chifra/" + _part;
+}
 
 //-------------------------------------------------------------------------
 #define blockFolder (getCachePath("blocks/"))
@@ -175,11 +186,6 @@ inline string_q exportPreamble(const string_q& format, const CRuntimeClass* pCla
     return exportPreamble(format, (pClass ? pClass->m_ClassName : "unknown"));
 }
 string_q exportPostamble(const CStringArray& errors, const string_q& extra);
-
-//-------------------------------------------------------------------------
-extern bool findTimestamp_binarySearch(CBlock& block, size_t first, size_t last, bool progress = false);
-extern bool freshenTimestamps(blknum_t minBlock);
-extern bool loadTimestamps(uint32_t** theArray, size_t& cnt);
 
 //-------------------------------------------------------------------------
 extern bool excludeTrace(const CTransaction* trans, size_t maxTraces);

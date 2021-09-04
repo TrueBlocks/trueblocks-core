@@ -169,10 +169,11 @@ ethNames 0x1 --fmt api
     "source": "https://gitcoin.co/grants/1830/the-augmented-reality-game-cryptolandy"
   },
   {
-    "tags": "30-Contracts:DAO Related",
+    "tags": "50-Tokens:ERC20",
     "address": "0x10abb5efecdc09581f8b7cb95791fe2936790b4e",
     "name": "DAO_id315_cnt602_1mo",
-    "source": "Ether Camp"
+    "source": "Ether Camp",
+    "decimals": 1
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -380,6 +381,13 @@ ethNames 0x1 --fmt api
     "source": "Gitcoin Website"
   },
   {
+    "tags": "50-Tokens:ERC20",
+    "address": "0x11cecf7284682eb936151533284761e40ca31720",
+    "name": "Evening with Aztec Maker and Melon",
+    "source": "https://kickback.events/event/[{ADDRESS}]",
+    "decimals": 18
+  },
+  {
     "tags": "90-Individuals:Gitcoin Grants",
     "address": "0x11d0395f8e04a02b113d5598e27c14731dbab48e",
     "name": "Name 0x11d0395f",
@@ -411,6 +419,11 @@ ethNames 0x1 --fmt api
     "symbol": "LCG",
     "source": "On chain",
     "decimals": 18
+  },
+  {
+    "tags": "90-Individuals:Other",
+    "address": "0x11ededebf63bef0ea2d2d071bdf88f71543ec6fb",
+    "name": "Name 0x11ededeb"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -1195,6 +1208,14 @@ ethNames 0x1 --fmt api
     "decimals": 18
   },
   {
+    "tags": "50-Tokens:ERC20",
+    "address": "0x1482295df16e7761d128b9823b61785d43ca038b",
+    "name": "The Employment Commons Work Token",
+    "symbol": "WORK",
+    "source": "On chain",
+    "decimals": 18
+  },
+  {
     "tags": "91-Early:Addresses",
     "address": "0x1482662691085c305f329c111e5b79ecb226ceb8",
     "name": "Wallet_id177_cnt8_3mo",
@@ -1387,28 +1408,6 @@ ethNames 0x1 --fmt api
     "symbol": "VNX",
     "source": "On chain",
     "decimals": 18
-  },
-  {
-    "tags": "50-Tokens:ERC20",
-    "address": "0x156a5f53a48dd8430dc0f65501be577b27c5462c",
-    "name": "Big Shiba Inu",
-    "symbol": "BSI",
-    "source": "On chain",
-    "decimals": 18
-  },
-  {
-    "tags": "50-Tokens:ERC20",
-    "address": "0x156b36ec68fdbf84a925230ba96cb1ca4c4bde45",
-    "name": "Wrapped MNT Token",
-    "symbol": "MNT",
-    "source": "On chain",
-    "decimals": 18
-  },
-  {
-    "tags": "80-Malicious:Shanghai",
-    "address": "0x157ddd802ab7831a2e1966baf2cc804bc7f95bd8",
-    "name": "Possibly Malicious 0x157",
-    "source": "TrueBlocks.io"
   }], "types": [
 { "type": "CAccountName", "fields": [{ "name": "tags", "type": "text" }, { "name": "address", "type": "address" }, { "name": "name", "type": "text" }, { "name": "symbol", "type": "text" }, { "name": "source", "type": "text" }, { "name": "decimals", "type": "unumber" }, { "name": "description", "type": "text" }] }
 ], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef", "namePath": "--" } }

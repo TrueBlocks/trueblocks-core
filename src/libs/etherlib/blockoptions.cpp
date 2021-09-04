@@ -30,8 +30,8 @@ uint64_t findBlockNumByHash(const hash_t& hash, void* data) {
     CBlock block;
     getBlock(block, hash);  // getBlock returns true if it has transactions and false otherwise
     if (block.hash != hash) {
-        cerr << "Block hash '" << hash << "' does not appear to be a valid block hash.";
-        exit(0);
+        LOG_WARN("Block hash '", hash, "' does not appear to be a valid block hash.");
+        return NOPOS;
     }
     return block.blockNumber;
 }
@@ -171,6 +171,30 @@ time_q getBlockDate(blknum_t num) {
     return ts_2_Date(block.timestamp);
 }
 
+//--------------------------------------------------------------
+extern bool findTimestamp_binarySearch(CBlock& block, size_t first, size_t last);
+bool findTimestamp_binarySearch(CBlock& block, size_t first, size_t last) {
+    if (last > first) {
+        size_t mid = first + ((last - first) / 2);
+        CBlock b1, b2;
+        getBlock_light(b1, mid);
+        getBlock_light(b2, mid + 1);
+        bool atMid = (b1.timestamp <= block.timestamp);
+        bool atMid1 = (b2.timestamp <= block.timestamp);
+        if (atMid && !atMid1) {
+            block = b1;
+            return true;
+        } else if (!atMid) {
+            // we're too high, so search below
+            return findTimestamp_binarySearch(block, first, mid - 1);
+        }
+        // we're too low, so search above
+        return findTimestamp_binarySearch(block, mid + 1, last);
+    }
+    getBlock_light(block, first);
+    return true;
+}
+
 //---------------------------------------------------------------
 bool lookupDate(CBlock& block, const timestamp_t& ts, blknum_t latest) {
     time_q date = ts_2_Date(ts);
@@ -197,7 +221,7 @@ bool lookupDate(CBlock& block, const timestamp_t& ts, blknum_t latest) {
     }
 
     block.timestamp = ts;
-    bool ret = findTimestamp_binarySearch(block, start, stop, true);
+    bool ret = findTimestamp_binarySearch(block, start, stop);
     if (!isTestMode()) {
         cerr << "\r";
         cerr.flush();
@@ -290,11 +314,4 @@ bool parseFourbyteList(COptionsBase* opt, CFourbyteArray& fourbytes, const strin
 bool parseStringList2(COptionsBase* opt, CStringArray& strings, const string& argIn) {
     strings.push_back(argIn);
     return true;
-}
-
-//----------------------------------------------------------------------------------------------------
-time_q bn_2_Date(const blknum_t& bn) {
-    CBlock block;
-    getBlock_light(block, bn);
-    return ts_2_Date(block.timestamp);
 }

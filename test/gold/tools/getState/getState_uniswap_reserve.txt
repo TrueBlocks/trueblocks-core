@@ -1,5 +1,6 @@
 getState argc: 4 [1:--call] [2:0xbb2b8038a1640196fbe3e38816f3e67cba72d940!0x0902f1ac] [3:10092000] 
 getState --call 0xbb2b8038a1640196fbe3e38816f3e67cba72d940!0x0902f1ac 10092000 
+{ "data": [
 
 level: 1
 readOffset: 0
@@ -60,22 +61,19 @@ params.size: 3
   2: uint32 _blockTimestampLast = 1589829395
 ==================================================
 
-{ "data": [
-{
-  "blockNumber": 10092000,
-  "encoding": "0x0902f1ac",
-  "result": {
-    "name": "getReserves",
-    "signature": "getReserves()",
+  {
     "encoding": "0x0902f1ac",
-    "outputs": {
-      "_blockTimestampLast": "1589829395",
-      "_reserve0": "11186797",
-      "_reserve1": "5095051840848895862"
+    "blockNumber": 10092000,
+    "balance": 0,
+    "address": "0xbb2b8038a1640196fbe3e38816f3e67cba72d940",
+    "result": {
+      "name": "getReserves",
+      "signature": "getReserves()",
+      "encoding": "0x0902f1ac",
+      "outputs": {
+        "_blockTimestampLast": "1589829395",
+        "_reserve0": "11186797",
+        "_reserve1": "5095051840848895862"
+      }
     }
-  },
-  "balance": 0,
-  "address": "0xbb2b8038a1640196fbe3e38816f3e67cba72d940"
-}
-
-] }
+  }] }

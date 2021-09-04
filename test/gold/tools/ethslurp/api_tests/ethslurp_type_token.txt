@@ -11,6 +11,8 @@
     "value": "1",
     "gas": "136032",
     "gasPrice": "20000000000",
+    "maxFeePerGas": "0",
+    "maxPriorityFeePerGas": "0",
     "input": "deprecated",
     "isError": "0",
     "hasToken": "1",

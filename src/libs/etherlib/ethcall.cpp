@@ -82,9 +82,6 @@ string_q CEthCall::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 'b':
-            if (fieldName % "blockNumber") {
-                return uint_2_Str(blockNumber);
-            }
             if (fieldName % "bytes") {
                 return bytes;
             }
@@ -92,13 +89,6 @@ string_q CEthCall::getValueByName(const string_q& fieldName) const {
         case 'e':
             if (fieldName % "encoding") {
                 return encoding;
-            }
-            break;
-        case 'r':
-            if (fieldName % "result") {
-                if (result == CFunction())
-                    return "{}";
-                return result.Format();
             }
             break;
         default:
@@ -114,14 +104,6 @@ string_q CEthCall::getValueByName(const string_q& fieldName) const {
         string_q f = fieldName;
         replaceAll(f, s, "");
         f = abi_spec.getValueByName(f);
-        return f;
-    }
-
-    s = toUpper(string_q("result")) + "::";
-    if (contains(fieldName, s)) {
-        string_q f = fieldName;
-        replaceAll(f, s, "");
-        f = result.getValueByName(f);
         return f;
     }
 
@@ -147,10 +129,6 @@ bool CEthCall::setValueByName(const string_q& fieldNameIn, const string_q& field
             }
             break;
         case 'b':
-            if (fieldName % "blockNumber") {
-                blockNumber = str_2_Uint(fieldValue);
-                return true;
-            }
             if (fieldName % "bytes") {
                 bytes = fieldValue;
                 return true;
@@ -160,11 +138,6 @@ bool CEthCall::setValueByName(const string_q& fieldNameIn, const string_q& field
             if (fieldName % "encoding") {
                 encoding = fieldValue;
                 return true;
-            }
-            break;
-        case 'r':
-            if (fieldName % "result") {
-                return result.parseJson3(fieldValue);
             }
             break;
         default:
@@ -192,11 +165,9 @@ bool CEthCall::Serialize(CArchive& archive) {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive >> blockNumber;
     archive >> encoding;
     archive >> bytes;
     archive >> abi_spec;
-    archive >> result;
     // EXISTING_CODE
     // EXISTING_CODE
     finishParse();
@@ -210,13 +181,23 @@ bool CEthCall::SerializeC(CArchive& archive) const {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive << blockNumber;
     archive << encoding;
     archive << bytes;
     archive << abi_spec;
-    archive << result;
     // EXISTING_CODE
     // EXISTING_CODE
+    return true;
+}
+
+//---------------------------------------------------------------------------------------------------
+bool CEthCall::Migrate(CArchive& archiveIn, CArchive& archiveOut) const {
+    ASSERT(archiveIn.isReading());
+    ASSERT(archiveOut.isWriting());
+    CEthCall copy;
+    // EXISTING_CODE
+    // EXISTING_CODE
+    copy.Serialize(archiveIn);
+    copy.SerializeC(archiveOut);
     return true;
 }
 
@@ -254,11 +235,9 @@ void CEthCall::registerClass(void) {
     ADD_FIELD(CEthCall, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CEthCall, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CEthCall, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CEthCall, "blockNumber", T_BLOCKNUM, ++fieldNum);
     ADD_FIELD(CEthCall, "encoding", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CEthCall, "bytes", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_OBJECT(CEthCall, "abi_spec", T_OBJECT | TS_OMITEMPTY, ++fieldNum, GETRUNTIME_CLASS(CAbi));
-    ADD_OBJECT(CEthCall, "result", T_OBJECT | TS_OMITEMPTY, ++fieldNum, GETRUNTIME_CLASS(CFunction));
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CEthCall, "schema");
@@ -295,6 +274,9 @@ string_q nextEthcallChunk_custom(const string_q& fieldIn, const void* dataPtr) {
     return "";
 }
 
+// EXISTING_CODE
+// EXISTING_CODE
+
 //---------------------------------------------------------------------------
 bool CEthCall::readBackLevel(CArchive& archive) {
     bool done = false;
@@ -316,11 +298,11 @@ ostream& operator<<(ostream& os, const CEthCall& it) {
 //---------------------------------------------------------------------------
 const CBaseNode* CEthCall::getObjectAt(const string_q& fieldName, size_t index) const {
     // EXISTING_CODE
+    if (fieldName % "result")
+        return &result;
     // EXISTING_CODE
     if (fieldName % "abi_spec")
         return &abi_spec;
-    if (fieldName % "result")
-        return &result;
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -363,6 +345,12 @@ bool CEthCall::getResults(CStringArray& out) const {
 
 //-------------------------------------------------------------------------
 bool doEthCall(CEthCall& theCall) {
+    if (theCall.deployed != NOPOS && theCall.deployed > theCall.blockNumber) {
+        LOG4(theCall.Format(
+            "Calling a contract ([{ADDRESS}]) at block [{BLOCKNUMBER}] prior to its deployment [{DEPLOYED}]"));
+        return false;
+    }
+
     string_q orig = theCall.encoding;
 
     ostringstream cmd;

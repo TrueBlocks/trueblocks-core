@@ -60,10 +60,8 @@ const vector<marker_t> bals = {{TOK_BALANCE, "balanceOf"}};
 bool processPair(uint64_t blockNum, void* data) {
     COptions* opt = reinterpret_cast<COptions*>(data);
     opt->curToken.blockNumber = blockNum;
-    if (opt->tsMemMap && opt->tsCnt > blockNum) {
-        opt->curToken.date = ts_2_Date((timestamp_t)opt->tsMemMap[(blockNum * 2) + 1]).Format(FMT_JSON);
-    }
-    if ((opt->modeBits & TOK_TOTALSUPPLY) || !opt->getNamedAccount(opt->curToken, opt->curToken.address)) {
+    opt->curToken.date = getTimestampAt(blockNum) ? ts_2_Date(getTimestampAt(blockNum)).Format(FMT_JSON) : "";
+    if ((opt->modeBits & TOK_TOTALSUPPLY) || !opt->findName(opt->curToken.address, opt->curToken)) {
         for (auto marker : base) {
             if (opt->modeBits & marker.bits) {
                 string_q value = getTokenState(opt->curToken.address, marker.field, opt->abi_spec, blockNum);

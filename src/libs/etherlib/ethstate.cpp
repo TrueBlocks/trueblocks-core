@@ -260,6 +260,18 @@ bool CEthState::SerializeC(CArchive& archive) const {
     return true;
 }
 
+//---------------------------------------------------------------------------------------------------
+bool CEthState::Migrate(CArchive& archiveIn, CArchive& archiveOut) const {
+    ASSERT(archiveIn.isReading());
+    ASSERT(archiveOut.isWriting());
+    CEthState copy;
+    // EXISTING_CODE
+    // EXISTING_CODE
+    copy.Serialize(archiveIn);
+    copy.SerializeC(archiveOut);
+    return true;
+}
+
 //---------------------------------------------------------------------------
 CArchive& operator>>(CArchive& archive, CEthStateArray& array) {
     uint64_t count;
@@ -354,6 +366,9 @@ string_q nextEthstateChunk_custom(const string_q& fieldIn, const void* dataPtr) 
     return "";
 }
 
+// EXISTING_CODE
+// EXISTING_CODE
+
 //---------------------------------------------------------------------------
 bool CEthState::readBackLevel(CArchive& archive) {
     bool done = false;
@@ -405,7 +420,7 @@ wei_t getBalanceAt(const string_q& addr, blknum_t num) {
     replace(params, "[{ADDRESS}]", str_2_Addr(addr));
     replace(params, "[{NUM}]", uint_2_Hex(num));
     string_q ret = callRPC("eth_getBalance", params, false);
-    if (contains(ret, "error"))
+    if (contains(ret, "error") || contains(ret, "message"))
         return 0;
     return str_2_Wei(ret);
 }

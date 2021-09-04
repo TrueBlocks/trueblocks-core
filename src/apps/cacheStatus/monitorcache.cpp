@@ -193,6 +193,18 @@ bool CMonitorCache::SerializeC(CArchive& archive) const {
     return true;
 }
 
+//---------------------------------------------------------------------------------------------------
+bool CMonitorCache::Migrate(CArchive& archiveIn, CArchive& archiveOut) const {
+    ASSERT(archiveIn.isReading());
+    ASSERT(archiveOut.isWriting());
+    CMonitorCache copy;
+    // EXISTING_CODE
+    // EXISTING_CODE
+    copy.Serialize(archiveIn);
+    copy.SerializeC(archiveOut);
+    return true;
+}
+
 //---------------------------------------------------------------------------
 CArchive& operator>>(CArchive& archive, CMonitorCacheArray& array) {
     uint64_t count;
@@ -264,6 +276,9 @@ string_q nextMonitorcacheChunk_custom(const string_q& fieldIn, const void* dataP
 
     return "";
 }
+
+// EXISTING_CODE
+// EXISTING_CODE
 
 //---------------------------------------------------------------------------
 bool CMonitorCache::readBackLevel(CArchive& archive) {

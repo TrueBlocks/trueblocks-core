@@ -217,13 +217,13 @@
       "name": "DAO Drain 075",
       "symbol": "",
       "source": "GethSource Ether Camp",
-      "decimals": 0,
+      "decimals": 1,
       "description": "",
       "is_custom": false,
       "is_prefund": false,
       "is_contract": true,
-      "is_erc20": false,
-      "is_erc721": false
+      "is_erc20": true,
+      "is_erc721": true
     },
     {
       "deleted": false,
@@ -268,6 +268,21 @@
       "is_prefund": false,
       "is_contract": true,
       "is_erc20": false,
+      "is_erc721": false
+    },
+    {
+      "deleted": false,
+      "tags": "50-Tokens:ERC20",
+      "address": "0x01cc47d73e69d00b7d8f54f2ae6ddbfa3c2e82e3",
+      "name": "Ethereum Developers Night",
+      "symbol": "",
+      "source": "https://kickback.events/event/[{ADDRESS}]",
+      "decimals": 18,
+      "description": "",
+      "is_custom": false,
+      "is_prefund": false,
+      "is_contract": true,
+      "is_erc20": true,
       "is_erc721": false
     },
     {
@@ -802,13 +817,13 @@
       "name": "DAO Drain 059",
       "symbol": "",
       "source": "GethSource Ether Camp",
-      "decimals": 0,
+      "decimals": 1,
       "description": "",
       "is_custom": false,
       "is_prefund": false,
       "is_contract": true,
-      "is_erc20": false,
-      "is_erc721": false
+      "is_erc20": true,
+      "is_erc721": true
     },
     {
       "deleted": false,
@@ -822,7 +837,7 @@
       "is_custom": false,
       "is_prefund": false,
       "is_contract": true,
-      "is_erc20": true,
+      "is_erc20": false,
       "is_erc721": false
     },
     {
@@ -937,27 +952,12 @@
       "name": "Edgeless",
       "symbol": "EDG",
       "source": "On chain",
-      "decimals": 0,
+      "decimals": 18,
       "description": "The Ethereum smart contract-based that offers a 0% house edge and solves the transparency question once and for all.",
       "is_custom": false,
       "is_prefund": false,
       "is_contract": true,
       "is_erc20": true,
-      "is_erc721": false
-    },
-    {
-      "deleted": false,
-      "tags": "30-Contracts:Pasta",
-      "address": "0x08a2e41fb99a7599725190b9c970ad3893fa33cf",
-      "name": "Pasta V1 Token",
-      "symbol": "",
-      "source": "EtherScan.io",
-      "decimals": 0,
-      "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": false,
       "is_erc721": false
     },
     {
@@ -1102,6 +1102,21 @@
       "name": "Ethereum Lite",
       "symbol": "ELITE",
       "source": "On chain",
+      "decimals": 18,
+      "description": "",
+      "is_custom": false,
+      "is_prefund": false,
+      "is_contract": true,
+      "is_erc20": true,
+      "is_erc721": false
+    },
+    {
+      "deleted": false,
+      "tags": "50-Tokens:ERC20",
+      "address": "0x0ab305931a717b8227d76de52e19a23066150360",
+      "name": "Creating a Decentralized World Together",
+      "symbol": "",
+      "source": "https://kickback.events/event/[{ADDRESS}]",
       "decimals": 18,
       "description": "",
       "is_custom": false,
@@ -1292,21 +1307,6 @@
     },
     {
       "deleted": false,
-      "tags": "50-Tokens:ERC20",
-      "address": "0x0d88ed6e74bbfd96b831231638b66c05571e824f",
-      "name": "AVT",
-      "symbol": "AVT",
-      "source": "EtherScan.io",
-      "decimals": 0,
-      "description": "An open-source protocol that delivers the global standard for ticketing.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
-    },
-    {
-      "deleted": false,
       "tags": "91-Early:Addresses",
       "address": "0x0d8fe53f653e2ad61a9d82d9e24484f2e9b5646c",
       "name": "Etheropt_id102_cnt2_5mo",
@@ -1387,13 +1387,13 @@
       "name": "DAO Drain 087",
       "symbol": "",
       "source": "GethSource Ether Camp",
-      "decimals": 0,
+      "decimals": 1,
       "description": "",
       "is_custom": false,
       "is_prefund": false,
       "is_contract": true,
-      "is_erc20": false,
-      "is_erc721": false
+      "is_erc20": true,
+      "is_erc721": true
     },
     {
       "deleted": false,
@@ -1472,18 +1472,18 @@
     },
     {
       "deleted": false,
-      "tags": "30-Contracts:DAO Related",
+      "tags": "50-Tokens:ERC20",
       "address": "0x10abb5efecdc09581f8b7cb95791fe2936790b4e",
       "name": "DAO_id315_cnt602_1mo",
       "symbol": "",
       "source": "Ether Camp",
-      "decimals": 0,
+      "decimals": 1,
       "description": "",
       "is_custom": false,
       "is_prefund": false,
       "is_contract": true,
-      "is_erc20": false,
-      "is_erc721": false
+      "is_erc20": true,
+      "is_erc721": true
     },
     {
       "deleted": false,
@@ -1992,7 +1992,7 @@
       "is_custom": false,
       "is_prefund": false,
       "is_contract": true,
-      "is_erc20": true,
+      "is_erc20": false,
       "is_erc721": false
     },
     {
@@ -2022,7 +2022,7 @@
       "is_custom": false,
       "is_prefund": false,
       "is_contract": true,
-      "is_erc20": true,
+      "is_erc20": false,
       "is_erc721": false
     },
     {
@@ -2122,13 +2122,13 @@
       "name": "DAO Drain 005",
       "symbol": "",
       "source": "GethSource Ether Camp",
-      "decimals": 0,
+      "decimals": 1,
       "description": "",
       "is_custom": false,
       "is_prefund": false,
       "is_contract": true,
-      "is_erc20": false,
-      "is_erc721": false
+      "is_erc20": true,
+      "is_erc721": true
     },
     {
       "deleted": false,
@@ -2462,6 +2462,21 @@
     },
     {
       "deleted": false,
+      "tags": "50-Tokens:ERC20",
+      "address": "0x1e83916ea2ef2d7a6064775662e163b2d4c330a7",
+      "name": "EthereumGasLimit",
+      "symbol": "EGL",
+      "source": "On chain",
+      "decimals": 18,
+      "description": "",
+      "is_custom": false,
+      "is_prefund": false,
+      "is_contract": true,
+      "is_erc20": true,
+      "is_erc721": false
+    },
+    {
+      "deleted": false,
       "tags": "91-Early:Addresses",
       "address": "0x1e9d5e4ed8ef31cfece10b4c92c9057f991f36bc",
       "name": "Ethervote_Stake-Voice",
@@ -2533,7 +2548,7 @@
       "is_prefund": false,
       "is_contract": true,
       "is_erc20": true,
-      "is_erc721": false
+      "is_erc721": true
     },
     {
       "deleted": false,
@@ -2542,7 +2557,7 @@
       "name": "Unicorns",
       "symbol": "🦄",
       "source": "On chain",
-      "decimals": 0,
+      "decimals": 18,
       "description": "Ethereum tip jar unicorn tokens",
       "is_custom": false,
       "is_prefund": false,
@@ -2632,13 +2647,13 @@
       "name": "DAO Drain 015",
       "symbol": "",
       "source": "GethSource Ether Camp",
-      "decimals": 0,
+      "decimals": 1,
       "description": "",
       "is_custom": false,
       "is_prefund": false,
       "is_contract": true,
-      "is_erc20": false,
-      "is_erc721": false
+      "is_erc20": true,
+      "is_erc721": true
     },
     {
       "deleted": false,
@@ -2992,21 +3007,6 @@
       "name": "Wallet",
       "symbol": "",
       "source": "EtherScan.io",
-      "decimals": 0,
-      "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": false,
-      "is_erc721": false
-    },
-    {
-      "deleted": false,
-      "tags": "80-Malicious:DaoDrain",
-      "address": "0x253488078a4edf4d6f42f113d1e62836a942cf1a",
-      "name": "DAO Drain 097",
-      "symbol": "",
-      "source": "GethSource Ether Camp",
       "decimals": 0,
       "description": "",
       "is_custom": false,

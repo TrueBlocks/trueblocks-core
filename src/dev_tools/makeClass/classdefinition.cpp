@@ -385,6 +385,18 @@ bool CClassDefinition::SerializeC(CArchive& archive) const {
     return true;
 }
 
+//---------------------------------------------------------------------------------------------------
+bool CClassDefinition::Migrate(CArchive& archiveIn, CArchive& archiveOut) const {
+    ASSERT(archiveIn.isReading());
+    ASSERT(archiveOut.isWriting());
+    CClassDefinition copy;
+    // EXISTING_CODE
+    // EXISTING_CODE
+    copy.Serialize(archiveIn);
+    copy.SerializeC(archiveOut);
+    return true;
+}
+
 //---------------------------------------------------------------------------
 CArchive& operator>>(CArchive& archive, CClassDefinitionArray& array) {
     uint64_t count;
@@ -475,6 +487,9 @@ string_q nextClassdefinitionChunk_custom(const string_q& fieldIn, const void* da
 
     return "";
 }
+
+// EXISTING_CODE
+// EXISTING_CODE
 
 //---------------------------------------------------------------------------
 bool CClassDefinition::readBackLevel(CArchive& archive) {

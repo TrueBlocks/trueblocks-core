@@ -1,5 +1,6 @@
 getState argc: 4 [1:--call] [2:0x2260fac5e5542a773aa44fbcfedf7c193bc2c599!0x06fdde03] [3:10092000] 
 getState --call 0x2260fac5e5542a773aa44fbcfedf7c193bc2c599!0x06fdde03 10092000 
+{ "data": [
 
 level: 1
 readOffset: 0
@@ -18,20 +19,17 @@ params.size: 1
   0: string _name = Wrapped BTC
 ==================================================
 
-{ "data": [
-{
-  "blockNumber": 10092000,
-  "encoding": "0x06fdde03",
-  "result": {
-    "name": "name",
-    "signature": "name()",
+  {
     "encoding": "0x06fdde03",
-    "outputs": {
-      "_name": "Wrapped BTC"
+    "blockNumber": 10092000,
+    "balance": 0,
+    "address": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+    "result": {
+      "name": "name",
+      "signature": "name()",
+      "encoding": "0x06fdde03",
+      "outputs": {
+        "_name": "Wrapped BTC"
+      }
     }
-  },
-  "balance": 0,
-  "address": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599"
-}
-
-] }
+  }] }

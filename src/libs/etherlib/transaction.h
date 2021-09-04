@@ -56,6 +56,8 @@ class CTransaction : public CBaseNode {
     wei_t extraValue2;
     gas_t gas;
     gas_t gasPrice;
+    gas_t maxFeePerGas;
+    gas_t maxPriorityFeePerGas;
     string_q input;
     uint8_t isError;
     uint8_t hasToken;
@@ -154,6 +156,8 @@ inline void CTransaction::initialize(void) {
     extraValue2 = 0;
     gas = 0;
     gasPrice = 0;
+    maxFeePerGas = 0;
+    maxPriorityFeePerGas = 0;
     input = "";
     isError = 0;
     hasToken = 0;
@@ -189,6 +193,8 @@ inline void CTransaction::duplicate(const CTransaction& tr) {
     extraValue2 = tr.extraValue2;
     gas = tr.gas;
     gasPrice = tr.gasPrice;
+    maxFeePerGas = tr.maxFeePerGas;
+    maxPriorityFeePerGas = tr.maxPriorityFeePerGas;
     input = tr.input;
     isError = tr.isError;
     hasToken = tr.hasToken;

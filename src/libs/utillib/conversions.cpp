@@ -409,6 +409,11 @@ bool isHash(const hash_t& hashIn) {
 }
 
 //--------------------------------------------------------------------------------
+bool isFourByte(const fourbyte_t& fourByteIn) {
+    return (fourByteIn.length() == 10 && isHexStr(fourByteIn));
+}
+
+//--------------------------------------------------------------------------------
 bool isUnsigned(const string_q& in) {
     // Empty string is not valid...
     if (in.empty())
@@ -542,6 +547,11 @@ uchar_t hex_2_Ascii(char c1, char c2) {
     c *= 16;
     c = (uchar_t)(c + (c2 >= 'A' ? ((c2 & 0xDF) - 'A') + 10 : (c2 - '0')));
     return c;
+}
+
+//---------------------------------------------------------------------------
+string_q hex_2_Pad64(const address_t& inHex) {
+    return padLeft(substitute(inHex, "0x", ""), 64, '0');
 }
 
 //----------------------------------------------------------------------------

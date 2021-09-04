@@ -1,5 +1,6 @@
 getState argc: 4 [1:--call] [2:0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2!0x06fdde03] [3:10092000] 
 getState --call 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2!0x06fdde03 10092000 
+{ "data": [
 
 level: 1
 readOffset: 0
@@ -18,20 +19,17 @@ params.size: 1
   0: string _name = Wrapped Ether
 ==================================================
 
-{ "data": [
-{
-  "blockNumber": 10092000,
-  "encoding": "0x06fdde03",
-  "result": {
-    "name": "name",
-    "signature": "name()",
+  {
     "encoding": "0x06fdde03",
-    "outputs": {
-      "_name": "Wrapped Ether"
+    "blockNumber": 10092000,
+    "balance": 0,
+    "address": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+    "result": {
+      "name": "name",
+      "signature": "name()",
+      "encoding": "0x06fdde03",
+      "outputs": {
+        "_name": "Wrapped Ether"
+      }
     }
-  },
-  "balance": 0,
-  "address": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
-}
-
-] }
+  }] }

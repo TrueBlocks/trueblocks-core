@@ -1,1 +1,1 @@
-{ "errors": [ "chifra scrape - Invalid option: -2" ] }
+{ "errors": [ "chifra scrape - Invalid option: --n_block_procs" ] }

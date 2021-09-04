@@ -39,21 +39,16 @@ bool CAbi::articulateTransaction(CTransaction* p) const {
             trace.articulatedTrace.m_showing = true;
     }
 
-    if (p->input.length() >= 10 || p->input == "0x") {
-        string_q encoding = extract(p->input, 0, 10);
-        string_q input = extract(p->input, 10);
-        ((CAbi*)this)->loadAbiFromEtherscan(p->to);  // NOLINT
-        for (auto interface : interfaces) {
-            if (encoding % interface.encoding) {
-                p->articulatedTx = CFunction(interface);
-                bool ret1 = decodeRLP(p->articulatedTx.inputs, "", input);
-                bool ret2 = (hasTraces ? decodeRLP(p->articulatedTx.outputs, "", p->traces[0].result.output) : false);
-                return (ret1 || ret2);
-            }
-        }
-        if (!toPrintable(p->input, p->articulatedTx.message))
-            p->articulatedTx.message = "";
+    string_q encoding = extract(p->input, 0, 10);
+    string_q input = extract(p->input, 10);
+    ((CAbi*)this)->loadAbiFromEtherscan(p->to);  // NOLINT
+    if (findInterface(encoding, p->articulatedTx)) {
+        bool ret1 = decodeRLP(p->articulatedTx.inputs, "", input);
+        bool ret2 = (hasTraces ? decodeRLP(p->articulatedTx.outputs, "", p->traces[0].result.output) : false);
+        return (ret1 || ret2);
     }
+    if (!toPrintable(p->input, p->articulatedTx.message))
+        p->articulatedTx.message = "";
 
     return false;
 }
@@ -137,47 +132,39 @@ bool CAbi::articulateLog(CLogEntry* p) const {
     // data params back into the copied array and from there into the event's inputs array. See the note below
     // from the Solidity documentation.
 
-    CAbi* ncABI = (CAbi*)this;  // NOLINT
-    for (size_t i = 0; i < ncABI->interfaces.size(); i++) {
-        CFunction* funcPtr = &ncABI->interfaces[i];
-        string_q encoding = funcPtr->encoding;
-        if (topic_2_Str(p->topics[0]) % encoding) {
-            // We found the topic we're looking for...work on a copy...
-            p->articulatedLog = CFunction(*funcPtr);
+    if (findInterface(topic_2_Str(p->topics[0]), p->articulatedLog)) {
+        bool ret1 = true, ret2 = true;
+        size_t which = 1;
+        CParameterArray dataParams;
+        for (auto& param : p->articulatedLog.inputs) {
+            if (param.indexed && p->topics.size() > which) {
+                string_q top = substitute(topic_2_Str(p->topics[which++]), "0x", "");
+                if (param.type == "string" || param.type == "bytes") {
+                    param.value = parse_by32(top);
 
-            bool ret1 = true, ret2 = true;
-            size_t which = 1;
-            CParameterArray dataParams;
-            for (auto& param : p->articulatedLog.inputs) {
-                if (param.indexed && p->topics.size() > which) {
-                    string_q top = substitute(topic_2_Str(p->topics[which++]), "0x", "");
-                    if (param.type == "string" || param.type == "bytes") {
-                        param.value = parse_by32(top);
+                } else if (contains(param.type, "[")) {
+                    param.value = "0x" + top;
 
-                    } else if (contains(param.type, "[")) {
-                        param.value = "0x" + top;
-
-                    } else {
-                        CParameterArray tmp;
-                        tmp.push_back(param);
-                        if (!decodeRLP(tmp, param.type, "0x" + top))
-                            ret1 = false;
-                        else
-                            param = tmp[0];
-                    }
                 } else {
-                    dataParams.push_back(param);
+                    CParameterArray tmp;
+                    tmp.push_back(param);
+                    if (!decodeRLP(tmp, param.type, "0x" + top))
+                        ret1 = false;
+                    else
+                        param = tmp[0];
                 }
+            } else {
+                dataParams.push_back(param);
             }
-            ret2 = decodeRLP(dataParams, "", p->data);
-            for (auto d : dataParams) {
-                for (auto& param : p->articulatedLog.inputs) {
-                    if (d.name == param.name)
-                        param.value = d.value;
-                }
-            }
-            return (ret1 && ret2);
         }
+        ret2 = decodeRLP(dataParams, "", p->data);
+        for (auto d : dataParams) {
+            for (auto& param : p->articulatedLog.inputs) {
+                if (d.name == param.name)
+                    param.value = d.value;
+            }
+        }
+        return (ret1 && ret2);
     }
 
     return false;
@@ -204,29 +191,20 @@ bool CAbi::articulateTrace(CTrace* p) const {
     if (!p)
         return false;
 
-    if (p->action.input.length() >= 10 || p->action.input == "0x") {
-        string_q encoding = extract(p->action.input, 0, 10);
-        string_q input = extract(p->action.input, 10);
-        for (auto interface : interfaces) {
-            if (encoding % interface.encoding) {
-                p->articulatedTrace = CFunction(interface);
-                bool ret1 = decodeRLP(p->articulatedTrace.inputs, "", input);
-                bool ret2 = decodeRLP(p->articulatedTrace.outputs, "", p->result.output);
-                return (ret1 || ret2);
-            }
-        }
+    string_q encoding = extract(p->action.input, 0, 10);
+    string_q input = extract(p->action.input, 10);
+    if (findInterface(encoding, p->articulatedTrace)) {
+        bool ret1 = decodeRLP(p->articulatedTrace.inputs, "", input);
+        bool ret2 = decodeRLP(p->articulatedTrace.outputs, "", p->result.output);
+        return (ret1 || ret2);
     }
     return false;
 }
 
 //-----------------------------------------------------------------------
 bool CAbi::articulateOutputs(const string_q& encoding, const string_q& output, CFunction& ret) const {
-    for (auto interface : interfaces) {
-        if (encoding % interface.encoding) {
-            ret = CFunction(interface);
-            return decodeRLP(ret.outputs, "", output);
-        }
-    }
+    if (findInterface(encoding, ret))
+        return decodeRLP(ret.outputs, "", output);
     return true;
 }
 

@@ -98,6 +98,7 @@ extern string_q ts_2_Str(timestamp_t ts);
 //----------------------------------------------------------------------------
 extern string_q hex_2_Str(const string_q& inHex, size_t nBytes = NOPOS);
 extern uchar_t hex_2_Ascii(char c1, char c2);
+extern string_q hex_2_Pad64(const string_q& inHex);
 extern hashbytes_t hash_2_Bytes(const hash_t& in);
 extern addrbytes_t addr_2_Bytes(const address_t& in);
 extern hash_t bytes_2_Hash(uint8_t const bytes[32]);
@@ -127,6 +128,7 @@ extern bool isAddress(const string_q& addr);
 extern bool isDate(const string_q& date);
 extern bool isTimestamp(const string_q& ts);
 extern bool isHash(const hash_t& hashIn);
+extern bool isFourByte(const fourbyte_t& encodingIn);
 extern bool isUnsigned(const string_q& in);
 inline bool isTopic(const string_q& topic) {
     return isHash(topic);

@@ -1,0 +1,5 @@
+{
+  "errors": [
+    "chifra transactions - The provided value (0x12) is not a properly formatted address."
+  ]
+}

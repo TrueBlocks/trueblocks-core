@@ -82,7 +82,7 @@
       "name": "Unicorns",
       "symbol": "🦄",
       "source": "On chain",
-      "decimals": 0,
+      "decimals": 18,
       "description": "Ethereum tip jar unicorn tokens",
       "is_custom": false,
       "is_prefund": false,
@@ -132,7 +132,7 @@
       "is_custom": false,
       "is_prefund": false,
       "is_contract": true,
-      "is_erc20": true,
+      "is_erc20": false,
       "is_erc721": false
     },
     {
@@ -157,7 +157,7 @@
       "name": "Unicorns",
       "symbol": "🦄",
       "source": "On chain",
-      "decimals": 0,
+      "decimals": 18,
       "description": "Ethereum tip jar unicorn tokens",
       "is_custom": false,
       "is_prefund": false,
@@ -187,7 +187,7 @@
       "name": "Unicorns",
       "symbol": "🦄",
       "source": "On chain",
-      "decimals": 0,
+      "decimals": 18,
       "description": "Ethereum tip jar unicorn tokens",
       "is_custom": false,
       "is_prefund": false,
@@ -312,7 +312,7 @@
       "is_custom": false,
       "is_prefund": false,
       "is_contract": true,
-      "is_erc20": true,
+      "is_erc20": false,
       "is_erc721": false
     },
     {

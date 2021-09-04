@@ -292,6 +292,18 @@ bool CLogEntry::SerializeC(CArchive& archive) const {
     return true;
 }
 
+//---------------------------------------------------------------------------------------------------
+bool CLogEntry::Migrate(CArchive& archiveIn, CArchive& archiveOut) const {
+    ASSERT(archiveIn.isReading());
+    ASSERT(archiveOut.isWriting());
+    CLogEntry copy;
+    // EXISTING_CODE
+    // EXISTING_CODE
+    copy.Serialize(archiveIn);
+    copy.SerializeC(archiveOut);
+    return true;
+}
+
 //---------------------------------------------------------------------------
 CArchive& operator>>(CArchive& archive, CLogEntryArray& array) {
     uint64_t count;
@@ -409,6 +421,9 @@ string_q nextLogentryChunk_custom(const string_q& fieldIn, const void* dataPtr) 
 
     return "";
 }
+
+// EXISTING_CODE
+// EXISTING_CODE
 
 //---------------------------------------------------------------------------
 bool CLogEntry::readBackLevel(CArchive& archive) {

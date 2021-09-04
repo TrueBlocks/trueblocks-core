@@ -20,7 +20,7 @@ You may run all tests from the `./build` folder by entering `make test-all` (or 
 
 ### usage
 
-`Usage:`    testRunner [-m|-f|-c|-n|-o|-r|-v|-h]
+`Usage:`    testRunner [-m|-f|-c|-r|-v|-h]
 `Purpose:`  Run TrueBlocks' test cases with options.
 
 `Where:`
@@ -30,8 +30,6 @@ You may run all tests from the `./build` folder by entering `make test-all` (or 
 | -m | --mode &lt;val&gt; | determine which set of tests to run, one of *[ cmd\* \| api \| both ]* |
 | -f | --filter &lt;val&gt; | determine how long it takes to run tests, one of *[ fast\* \| medi \| slow \| all ]* |
 | -c | --clean | clean working folder before running tests |
-| -n | --no_quit | do not quit testing on first error |
-| -o | --no_post | do not complete the post processing step |
 | -r | --report | display performance report to screen |
 | -v | --verbose | set verbose level (optional level defaults to 1) |
 | -h | --help | display this help screen |

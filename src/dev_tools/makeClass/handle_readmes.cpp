@@ -33,7 +33,10 @@ bool visitReadme(const string_q& templatePath, void* data) {
         string_q srcPath = "../src/" + folder + "/" + tool + "/README.md";
 
         string_q source = asciiFileToString(templatePath);
-        if (system((tool + " -th >file 2>&1").c_str())) {
+        string_q cmd = tool;
+        if (tool != "chifra" && tool != "makeClass" && tool != "testRunner")
+            cmd = getCommandPath(tool);
+        if (system((cmd + " -th >file 2>&1").c_str())) {
         }  // Don't remove cruft. Silences compiler warnings
         string_q usage = trim(asciiFileToString("./file"), '\n');
         ::remove("./file");

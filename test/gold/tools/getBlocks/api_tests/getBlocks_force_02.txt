@@ -10,6 +10,7 @@
       "difficulty": 75086032611208,
       "finalized": true,
       "timestamp": 1481190424,
+      "baseFeePerGas": 0,
       "transactions": [
         {
           "hash": "0x37b782add315701ae7c1bb5ea2759bf75851940aec1459e6284d8c6e61f15519",
@@ -23,6 +24,8 @@
           "value": 1052000000000000000,
           "gas": 21000,
           "gasPrice": 50000000000,
+          "maxFeePerGas": 0,
+          "maxPriorityFeePerGas": 0,
           "input": "0x",
           "isError": 0,
           "hasToken": 0,
@@ -52,6 +55,8 @@
           "value": 94299178842130530,
           "gas": 21000,
           "gasPrice": 40000000000,
+          "maxFeePerGas": 0,
+          "maxPriorityFeePerGas": 0,
           "input": "0x",
           "isError": 0,
           "hasToken": 0,
@@ -81,6 +86,8 @@
           "value": 0,
           "gas": 135000,
           "gasPrice": 20000000000,
+          "maxFeePerGas": 0,
+          "maxPriorityFeePerGas": 0,
           "input": "0xa9059cbb000000000000000000000000b6907884085f2e1710b95c15c8da4552fd51722200000000000000000000000000000000000000000000000003d9e0c79d2bc000",
           "isError": 0,
           "hasToken": 0,
@@ -121,6 +128,8 @@
           "value": 1009137432003723100,
           "gas": 39000,
           "gasPrice": 20000000000,
+          "maxFeePerGas": 0,
+          "maxPriorityFeePerGas": 0,
           "input": "0x",
           "isError": 0,
           "hasToken": 0,
@@ -150,6 +159,8 @@
           "value": 90567000000000000000,
           "gas": 21000,
           "gasPrice": 20000000000,
+          "maxFeePerGas": 0,
+          "maxPriorityFeePerGas": 0,
           "input": "0x",
           "isError": 0,
           "hasToken": 0,
@@ -179,6 +190,8 @@
           "value": 60122000000000000000,
           "gas": 90000,
           "gasPrice": 20000000000,
+          "maxFeePerGas": 0,
+          "maxPriorityFeePerGas": 0,
           "input": "0x",
           "isError": 0,
           "hasToken": 0,
@@ -208,6 +221,8 @@
           "value": 1002827260130989400,
           "gas": 39000,
           "gasPrice": 20000000000,
+          "maxFeePerGas": 0,
+          "maxPriorityFeePerGas": 0,
           "input": "0x",
           "isError": 0,
           "hasToken": 0,
@@ -248,6 +263,7 @@
       "difficulty": 81881924985250,
       "finalized": true,
       "timestamp": 1481621074,
+      "baseFeePerGas": 0,
       "transactions": []
     },
     {
@@ -260,6 +276,7 @@
       "difficulty": 77217903307043,
       "finalized": true,
       "timestamp": 1482663926,
+      "baseFeePerGas": 0,
       "transactions": []
     },
     {
@@ -272,6 +289,7 @@
       "difficulty": 112182607379608,
       "finalized": true,
       "timestamp": 1485564456,
+      "baseFeePerGas": 0,
       "transactions": []
     }
   ],
@@ -314,6 +332,10 @@
         {
           "name": "timestamp",
           "type": "timestamp"
+        },
+        {
+          "name": "baseFeePerGas",
+          "type": "wei"
         },
         {
           "name": "transactions",

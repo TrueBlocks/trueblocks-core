@@ -18,6 +18,8 @@ params.size: 0
     "value": 1000000000000000000,
     "gas": 150000,
     "gasPrice": 20000000000,
+    "maxFeePerGas": 0,
+    "maxPriorityFeePerGas": 0,
     "input": "0xd0e30db0",
     "isError": 0,
     "hasToken": 0,

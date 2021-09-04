@@ -12,6 +12,8 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --last_block 9000000 --fmt
   "value": 5000000000000000000,
   "gas": 21000,
   "gasPrice": 10000000000,
+  "maxFeePerGas": 0,
+  "maxPriorityFeePerGas": 0,
   "isError": 0,
   "hasToken": 0,
   "receipt": {
@@ -37,6 +39,8 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --last_block 9000000 --fmt
   "value": 0,
   "gas": 55144,
   "gasPrice": 1000000000,
+  "maxFeePerGas": 0,
+  "maxPriorityFeePerGas": 0,
   "isError": 0,
   "hasToken": 0,
   "receipt": {
@@ -82,6 +86,8 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --last_block 9000000 --fmt
   "value": 10000000000000000,
   "gas": 21000,
   "gasPrice": 10000000000,
+  "maxFeePerGas": 0,
+  "maxPriorityFeePerGas": 0,
   "isError": 0,
   "hasToken": 0,
   "receipt": {
@@ -107,6 +113,8 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --last_block 9000000 --fmt
   "value": 10000000000000000,
   "gas": 21000,
   "gasPrice": 10000000000,
+  "maxFeePerGas": 0,
+  "maxPriorityFeePerGas": 0,
   "isError": 0,
   "hasToken": 0,
   "receipt": {
@@ -132,6 +140,8 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --last_block 9000000 --fmt
   "value": 0,
   "gas": 200000,
   "gasPrice": 4000000000,
+  "maxFeePerGas": 0,
+  "maxPriorityFeePerGas": 0,
   "isError": 0,
   "hasToken": 1,
   "receipt": {
@@ -169,6 +179,8 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --last_block 9000000 --fmt
   "value": 0,
   "gas": 200000,
   "gasPrice": 5000000000,
+  "maxFeePerGas": 0,
+  "maxPriorityFeePerGas": 0,
   "isError": 0,
   "hasToken": 1,
   "receipt": {
@@ -206,6 +218,8 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --last_block 9000000 --fmt
   "value": 0,
   "gas": 200000,
   "gasPrice": 10000000000,
+  "maxFeePerGas": 0,
+  "maxPriorityFeePerGas": 0,
   "isError": 0,
   "hasToken": 1,
   "receipt": {
@@ -243,6 +257,8 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --last_block 9000000 --fmt
   "value": 0,
   "gas": 68977,
   "gasPrice": 1000000000,
+  "maxFeePerGas": 0,
+  "maxPriorityFeePerGas": 0,
   "isError": 0,
   "hasToken": 1,
   "receipt": {
@@ -280,6 +296,8 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --last_block 9000000 --fmt
   "value": 0,
   "gas": 53918,
   "gasPrice": 1000000000,
+  "maxFeePerGas": 0,
+  "maxPriorityFeePerGas": 0,
   "isError": 0,
   "hasToken": 1,
   "receipt": {
@@ -325,6 +343,8 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --last_block 9000000 --fmt
   "value": 0,
   "gas": 69073,
   "gasPrice": 1000000000,
+  "maxFeePerGas": 0,
+  "maxPriorityFeePerGas": 0,
   "isError": 0,
   "hasToken": 1,
   "receipt": {
@@ -362,6 +382,8 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --last_block 9000000 --fmt
   "value": 0,
   "gas": 53989,
   "gasPrice": 1000000000,
+  "maxFeePerGas": 0,
+  "maxPriorityFeePerGas": 0,
   "isError": 0,
   "hasToken": 1,
   "receipt": {
@@ -407,6 +429,8 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --last_block 9000000 --fmt
   "value": 0,
   "gas": 105491,
   "gasPrice": 1000000000,
+  "maxFeePerGas": 0,
+  "maxPriorityFeePerGas": 0,
   "isError": 0,
   "hasToken": 0,
   "receipt": {
@@ -453,6 +477,8 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --last_block 9000000 --fmt
   "value": 0,
   "gas": 414390,
   "gasPrice": 3000000000,
+  "maxFeePerGas": 0,
+  "maxPriorityFeePerGas": 0,
   "isError": 0,
   "hasToken": 0,
   "receipt": {
@@ -510,6 +536,8 @@ acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --last_block 9000000 --fmt
   "value": 0,
   "gas": 340046,
   "gasPrice": 3000000000,
+  "maxFeePerGas": 0,
+  "maxPriorityFeePerGas": 0,
   "isError": 0,
   "hasToken": 1,
   "receipt": {

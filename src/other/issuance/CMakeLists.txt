@@ -8,7 +8,7 @@ project (issuance)
 file(GLOB SOURCE_FILES "*.cpp")
 
 # Output
-set(EXECUTABLE_OUTPUT_PATH "${CMAKE_CURRENT_LIST_DIR}/bin")
+set(EXECUTABLE_OUTPUT_PATH "${BIN_CMDS_DIR}")
 
 # Define the executable to be generated
 set(TOOL_NAME "issuance")

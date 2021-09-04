@@ -278,6 +278,18 @@ bool CIndexCacheItem::SerializeC(CArchive& archive) const {
     return true;
 }
 
+//---------------------------------------------------------------------------------------------------
+bool CIndexCacheItem::Migrate(CArchive& archiveIn, CArchive& archiveOut) const {
+    ASSERT(archiveIn.isReading());
+    ASSERT(archiveOut.isWriting());
+    CIndexCacheItem copy;
+    // EXISTING_CODE
+    // EXISTING_CODE
+    copy.Serialize(archiveIn);
+    copy.SerializeC(archiveOut);
+    return true;
+}
+
 //---------------------------------------------------------------------------
 CArchive& operator>>(CArchive& archive, CIndexCacheItemArray& array) {
     uint64_t count;
@@ -358,6 +370,9 @@ string_q nextIndexcacheitemChunk_custom(const string_q& fieldIn, const void* dat
 
     return "";
 }
+
+// EXISTING_CODE
+// EXISTING_CODE
 
 //---------------------------------------------------------------------------
 bool CIndexCacheItem::readBackLevel(CArchive& archive) {

@@ -1,0 +1,5 @@
+{
+  "errors": [
+    "chifra transactions - Do not use other options with the --reconcile option."
+  ]
+}

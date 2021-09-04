@@ -1,0 +1,292 @@
+Testing parseStringList2
+the list:
+	argIn
+Testing parseFourbyteList
+
+  Invalid fourbyte '0xnotafour'. Length (10) is not equal to 8 characters (4 bytes). Quitting...
+
+  Usage:    trueBlocks [-v|-h]  
+  Purpose:  
+
+  Where:  
+	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+	-v  (--verbose)       set verbose level (optional level defaults to 1)
+	-h  (--help)          display this help screen
+
+  Powered by TrueBlocks
+
+  Invalid fourbyte '0x'. Length (2) is not equal to 8 characters (4 bytes). Quitting...
+
+  Usage:    trueBlocks [-v|-h]  
+  Purpose:  
+
+  Where:  
+	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+	-v  (--verbose)       set verbose level (optional level defaults to 1)
+	-h  (--help)          display this help screen
+
+  Powered by TrueBlocks
+
+  Invalid fourbyte '0x0000000000'. Length (12) is not equal to 8 characters (4 bytes). Quitting...
+
+  Usage:    trueBlocks [-v|-h]  
+  Purpose:  
+
+  Where:  
+	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+	-v  (--verbose)       set verbose level (optional level defaults to 1)
+	-h  (--help)          display this help screen
+
+  Powered by TrueBlocks
+the list:
+	0xdeadbeef
+Testing parseTopicList
+
+  Invalid topic '0xnotatopic'. Length (11) is not equal to 64 characters (32 bytes). Quitting...
+
+  Usage:    trueBlocks [-v|-h]  
+  Purpose:  
+
+  Where:  
+	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+	-v  (--verbose)       set verbose level (optional level defaults to 1)
+	-h  (--help)          display this help screen
+
+  Powered by TrueBlocks
+
+  Invalid topic '0x'. Length (2) is not equal to 64 characters (32 bytes). Quitting...
+
+  Usage:    trueBlocks [-v|-h]  
+  Purpose:  
+
+  Where:  
+	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+	-v  (--verbose)       set verbose level (optional level defaults to 1)
+	-h  (--help)          display this help screen
+
+  Powered by TrueBlocks
+the list:
+	0xdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef
+	0x0000000000000000000000000000000000000000000000000000000000000000
+Testing parseAddressList
+
+  Invalid address '0xnotanaddress'. Length (14) is not equal to 40 characters (20 bytes). Quitting...
+
+  Usage:    trueBlocks [-v|-h]  
+  Purpose:  
+
+  Where:  
+	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+	-v  (--verbose)       set verbose level (optional level defaults to 1)
+	-h  (--help)          display this help screen
+
+  Powered by TrueBlocks
+
+  Invalid address '0x0'. Length (3) is not equal to 40 characters (20 bytes). Quitting...
+
+  Usage:    trueBlocks [-v|-h]  
+  Purpose:  
+
+  Where:  
+	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+	-v  (--verbose)       set verbose level (optional level defaults to 1)
+	-h  (--help)          display this help screen
+
+  Powered by TrueBlocks
+
+  Invalid address '0x0000000000000000000000000000000000000000000000000000000000000000'. Length (66) is not equal to 40 characters (20 bytes). Quitting...
+
+  Usage:    trueBlocks [-v|-h]  
+  Purpose:  
+
+  Where:  
+	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+	-v  (--verbose)       set verbose level (optional level defaults to 1)
+	-h  (--help)          display this help screen
+
+  Powered by TrueBlocks
+TIME ~ CLOCK - <WARNG> : Duplicate address. Not adding 0xdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef
+the list:
+	0xdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef
+Testing parseTransactionList
+
+  The argument '0xnotatxid' is not properly formatted. Is it the right length? Quitting...
+
+  Usage:    trueBlocks [-v|-h]  
+  Purpose:  
+
+  Where:  
+	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+	-v  (--verbose)       set verbose level (optional level defaults to 1)
+	-h  (--help)          display this help screen
+
+  Powered by TrueBlocks
+
+  ab.cd does not appear to be a valid transaction index. Quitting...
+
+  Usage:    trueBlocks [-v|-h]  
+  Purpose:  
+
+  Where:  
+	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+	-v  (--verbose)       set verbose level (optional level defaults to 1)
+	-h  (--help)          display this help screen
+
+  Powered by TrueBlocks
+
+  ab.cd.dd.ee does not appear to be a valid transaction index. Quitting...
+
+  Usage:    trueBlocks [-v|-h]  
+  Purpose:  
+
+  Where:  
+	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+	-v  (--verbose)       set verbose level (optional level defaults to 1)
+	-h  (--help)          display this help screen
+
+  Powered by TrueBlocks
+
+  2002001.5.next.next does not appear to be a valid transaction index. Quitting...
+
+  Usage:    trueBlocks [-v|-h]  
+  Purpose:  
+
+  Where:  
+	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+	-v  (--verbose)       set verbose level (optional level defaults to 1)
+	-h  (--help)          display this help screen
+
+  Powered by TrueBlocks
+
+  2002001.5.next.next.prev.prev does not appear to be a valid transaction index. Quitting...
+
+  Usage:    trueBlocks [-v|-h]  
+  Purpose:  
+
+  Where:  
+	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+	-v  (--verbose)       set verbose level (optional level defaults to 1)
+	-h  (--help)          display this help screen
+
+  Powered by TrueBlocks
+the list:
+	2002001.0
+	2002001.1
+	2002001.2
+	2002001.3
+	2002001.4
+	2002001.5
+	2002001.1
+	0x7ec79e64cc8f3301b98ca2dab208af3b340f171b1ee1c6a6115354df2e311134
+	0xf161f6657d145bd12bd70bd930d28506b347e08a69b3fb78499a36cca398ef12.0
+	0xf161f6657d145bd12bd70bd930d28506b347e08a69b3fb78499a36cca398ef12.111
+	46147.0
+	2002001.4
+	2002003.0
+	2002001.0
+	2001998.0
+Testing parseBlockList
+---------------------- 10000.next ----------------------
+	10001
+---------------------- 10000.prev ----------------------
+	9999
+---------------------- first ----------------------
+	0
+
+  Input argument appears to be invalid. No such skip marker: 1-10000:glimp Quitting...
+
+  Usage:    trueBlocks [-v|-h]  
+  Purpose:  
+
+  Where:  
+	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+	-v  (--verbose)       set verbose level (optional level defaults to 1)
+	-h  (--help)          display this help screen
+
+  Powered by TrueBlocks
+---------------------- 1-10000:glimp ----------------------
+TIME ~ CLOCK - <INFO>  : skip_type: annually
+---------------------- 1-4000000:annually ----------------------
+	1
+	778482
+	2912406
+	4832685
+TIME ~ CLOCK - <INFO>  : skip_type: quarterly
+---------------------- 1-1400000:quarterly ----------------------
+	1
+	314572
+	778482
+	1253720
+	1801798
+TIME ~ CLOCK - <INFO>  : skip_type: monthly
+---------------------- 1-15000:monthly ----------------------
+	1
+	13774
+	170394
+TIME ~ CLOCK - <INFO>  : skip_type: weekly
+---------------------- 1-400000:weekly ----------------------
+	1
+	19067
+	55869
+	93129
+	128130
+	162118
+	190656
+	225596
+	259991
+	295664
+	330002
+	364660
+	399788
+	434957
+TIME ~ CLOCK - <INFO>  : skip_type: daily
+---------------------- 1-15000:daily ----------------------
+	1
+	6911
+	13774
+	19067
+TIME ~ CLOCK - <INFO>  : skip_type: hourly
+---------------------- 1-4000:hourly ----------------------
+	1
+	929
+	2332
+	3391
+	4257
+---------------------- 1-10000:1000 ----------------------
+	1
+	1001
+	2001
+	3001
+	4001
+	5001
+	6001
+	7001
+	8001
+	9001
+---------------------- 1+10 ----------------------
+	1
+	2
+	3
+	4
+	5
+	6
+	7
+	8
+	9
+	10
+
+  'stop' must be strictly larger than 'start' Quitting...
+
+  Usage:    trueBlocks [-v|-h]  
+  Purpose:  
+
+  Where:  
+	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+	-v  (--verbose)       set verbose level (optional level defaults to 1)
+	-h  (--help)          display this help screen
+
+  Powered by TrueBlocks
+---------------------- 100-99 ----------------------
+---------------------- 0x49e93db18c70c64d8cba2248e15f07fc3e885ffba74b12027d561504ff61a71d ----------------------
+---------------------- 12 ----------------------
+	12

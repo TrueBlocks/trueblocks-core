@@ -70,7 +70,8 @@ bool acct_Display(CTraverser* trav, void* data) {
     }
 
     prog_Log(trav, data);
-    return !shouldQuit();
+    bool tooSlow = (isApiMode() && opt->slowQueries > 9);
+    return !tooSlow && !shouldQuit();
 }
 
 //-----------------------------------------------------------------------
@@ -86,8 +87,15 @@ bool COptions::process_reconciliation(CTraverser* trav) {
             archive >> trav->trans.statements;
             archive.Release();
             if (isReconciled(trav)) {
+                bool backLevel = false;
                 for (auto& statement : trav->trans.statements) {
+                    // At version 0.11.8, we finally got pricing of reconcilations correct. We didn't
+                    // want to add an upgrade of reconcilations to the migration, so we do it here
+                    // but only when the user reads an older file
+                    backLevel = backLevel || (statement.m_schema < getVersionNum(0, 11, 8));
                     CAccountName tokenName;
+                    if (contains(statement.assetSymbol, "reverted"))
+                        statement.assetSymbol = "";
                     if (statement.assetSymbol != "ETH" && statement.assetSymbol != "WEI" &&
                         findToken(tokenName, statement.assetAddr)) {
                         // We always freshen these in case user has changed names database
@@ -95,6 +103,12 @@ bool COptions::process_reconciliation(CTraverser* trav) {
                         statement.decimals = tokenName.decimals;
                     }
                     prevStatements[accountedFor.address + "_" + toLower(statement.assetAddr)] = statement;
+                }
+                if (backLevel) {
+                    // LOG_WARN(cYellow, "Updating statements", cOff);
+                    trav->readStatus = "Updating";
+                    cacheIfReconciled(trav, true /* isNew */);
+                    slowQueries++;
                 }
                 return !shouldQuit();
             } else {
@@ -104,7 +118,7 @@ bool COptions::process_reconciliation(CTraverser* trav) {
     }
 
     trav->readStatus = "Reconciling";
-    slowQuery = true;
+    slowQueries++;
 
     blknum_t nextAppBlk = trav->index < monApps.size() - 1 ? monApps[trav->index + 1].blk : NOPOS;
     blknum_t prevAppBlk = trav->index > 0 ? monApps[trav->index - 1].blk : 0;
@@ -120,14 +134,17 @@ bool COptions::process_reconciliation(CTraverser* trav) {
         // TODO(tjayrush): appearance list. When we're called with first_record or start_block not zero
         // TODO(tjayrush): we don't have this (since we only load those appearances we're asked for)
         // TODO(tjayrush): To fix this, we need to be able to get the previous appearance's block.
-        // TODO(tjayrush): Also, we used to do something different for reversed mode
+        // TODO(tjayrush):
+        // TODO(tjayrush): Also, we used to handle reversed mode here, that code was removed
         pEth.endBal =
             trav->trans.blockNumber == 0 ? 0 : getBalanceAt(accountedFor.address, trav->trans.blockNumber - 1);
+        pEth.spotPrice = getPriceInUsd(trav->trans.blockNumber - 1, pEth.priceSource);
         prevStatements[accountedFor.address + "_eth"] = pEth;
     }
 
     CReconciliation eth(trav->trans.blockNumber, trav->trans.transactionIndex, trav->trans.timestamp);
     eth.reconcileEth(prevStatements[accountedFor.address + "_eth"], nextAppBlk, &trav->trans, accountedFor);
+    eth.spotPrice = getPriceInUsd(trav->trans.blockNumber, eth.priceSource);
     trav->trans.statements.push_back(eth);
     prevStatements[accountedFor.address + "_eth"] = eth;
 
@@ -149,6 +166,7 @@ bool COptions::process_reconciliation(CTraverser* trav) {
                 if (trav->trans.blockNumber > 0)
                     pBal.blockNumber = trav->trans.blockNumber - 1;
                 pBal.endBal = getTokenBalanceOf2(tokenName.address, accountedFor.address, pBal.blockNumber);
+                pBal.spotPrice = getPriceInUsd(pBal.blockNumber, pBal.priceSource, tokenName.address);
                 prevStatements[psKey] = pBal;
             }
 
@@ -162,9 +180,12 @@ bool COptions::process_reconciliation(CTraverser* trav) {
                 tokStatement.amountIn = (tokStatement.endBal - tokStatement.begBal);
             }
             tokStatement.reconciliationType = "";
-            if (tokStatement.amountNet() != 0)
+            if (tokStatement.amountNet() != 0) {
+                tokStatement.spotPrice =
+                    getPriceInUsd(trav->trans.blockNumber, tokStatement.priceSource, tokenName.address);
                 trav->trans.statements.push_back(tokStatement);
-            prevStatements[psKey] = tokStatement;
+                prevStatements[psKey] = tokStatement;
+            }
         }
     }
 

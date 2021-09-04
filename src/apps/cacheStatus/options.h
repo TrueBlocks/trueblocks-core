@@ -40,6 +40,7 @@ class COptions : public CAbiOptions {
     CIndexHashMap bloomHashes;
     CIndexHashMap indexHashes;
     blkrange_t scanRange;
+    CStringArray cachePaths;
 
     COptions(void);
     ~COptions(void);
@@ -50,6 +51,8 @@ class COptions : public CAbiOptions {
     bool handle_status(ostream& os);
     bool handle_config(ostream& os);
     bool handle_config_get(ostream& os);
+    bool handle_migrate(void);
+    bool handle_migrate_test(void);
 };
 
 //-------------------------------------------------------------------------
@@ -73,8 +76,6 @@ class CItemCounter : public CCache {
     CAbiCacheItemArray* abiArray;
     CPriceCacheItemArray* priceArray;
     CCollectionCacheItemArray* collectionArray;
-    uint32_t* tsMemMap;
-    size_t tsCnt;
     blkrange_t fileRange;
     CItemCounter(COptions* opt) : CCache(), options(opt) {
         cachePtr = NULL;
@@ -82,11 +83,53 @@ class CItemCounter : public CCache {
         monitorArray = NULL;
         abiArray = NULL;
         priceArray = NULL;
-        tsMemMap = NULL;
-        tsCnt = 0;
     }
 
   public:
     CItemCounter(void) : CCache() {
     }
+};
+
+//-------------------------------------------------------------------------
+class CMigrationChecker {
+  public:
+    bool needs;
+    string_q path;
+    string_q type;
+    size_t nSeen;
+    size_t nMigrated;
+    size_t nSkipped;
+
+    CMigrationChecker(const string_q& p, const string_q& t)
+        : needs(false), path(p), type(t), nSeen(0), nMigrated(0), nSkipped(0) {
+    }
+
+    CMigrationChecker(const CMigrationChecker& mig) {
+        nSeen = mig.nSeen;
+        nMigrated = mig.nMigrated;
+        nSkipped = mig.nSkipped;
+        type = mig.type;
+        path = mig.path;
+    }
+
+    CMigrationChecker& operator+=(const CMigrationChecker& mig) {
+        nSeen += mig.nSeen;
+        nMigrated += mig.nMigrated;
+        nSkipped += mig.nSkipped;
+        return *this;
+    }
+
+    string_q Report(void) const {
+        ostringstream os;
+        os << type << ": ";
+        os << nSeen << " files seen. ";
+        os << nMigrated << " files migrated. ";
+        os << (nSeen - nMigrated) << " files up to date. ";
+        os << nSkipped << " files skipped.";
+        return os.str();
+    }
+
+  private:
+    CMigrationChecker(void) = delete;
+    CMigrationChecker& operator=(const CMigrationChecker&) = delete;
 };

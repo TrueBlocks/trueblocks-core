@@ -1,7 +1,12 @@
 acctExport argc: 9 [1:0x05a56e2d52c817161883f50c441c3228cfe54d9f] [2:--max_records] [3:15] [4:--accounting] [5:--fmt] [6:api] [7:--verbose] [8:10] 
 acctExport 0x05a56e2d52c817161883f50c441c3228cfe54d9f --max_records 15 --accounting --fmt api --verbose 10 
 TIME ~ CLOCK - : 4-----0x05a56e2d52c817161883f50c441c3228cfe54d9f freshened to 11854827
+TIME ~ CLOCK - : 4-----Loaded timestamp file
 {"data": [
+TIME ~ CLOCK - : 4-----Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 0 prior to its deployment 10042267
+params.size: 0
+==================================================
+
 TIME ~ CLOCK - : 4-----Trial balance: regular
 TIME ~ CLOCK - : 4-----  hash: 
 TIME ~ CLOCK - : 4-----  ------------------------------
@@ -29,6 +34,10 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    5000000000000000000
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
+TIME ~ CLOCK - : 4-----Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 1 prior to its deployment 10042267
+params.size: 0
+==================================================
+
 {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -40,6 +49,8 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
   "value": 5000000000000000000,
   "gas": 0,
   "gasPrice": 0,
+  "maxFeePerGas": 0,
+  "maxPriorityFeePerGas": 0,
   "isError": 0,
   "hasToken": 0,
   "statements": [
@@ -67,7 +78,8 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "selfDestructOut": "",
       "gasCostOut": "",
       "reconciliationType": "regular",
-      "spotPrice": "-1",
+      "spotPrice": 1.00000,
+      "priceSource": "not-priced",
       "begBalDiff": "",
       "endBalCalc": "5000000000000000000",
       "endBalDiff": "",
@@ -83,7 +95,7 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
   "date": "2015-07-30 15:26:28 UTC",
   "ether": 5.000000000000000000
 }
-TIME ~ CLOCK - : 4-----Trial balance: regular
+TIME ~ CLOCK - <PROG>  : Reconciling      1 of    260 txs (max 260) for address 0x05a56e2d52c817161883f50c441c3228cfe54d9fTIME ~ CLOCK - : 4-----Trial balance: regular
 TIME ~ CLOCK - : 4-----  hash: 
 TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  prevBal:       5000000000000000000
@@ -110,6 +122,10 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    10000000000000000000
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
+TIME ~ CLOCK - : 4-----Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 5 prior to its deployment 10042267
+params.size: 0
+==================================================
+
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -121,6 +137,8 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
   "value": 5000000000000000000,
   "gas": 0,
   "gasPrice": 0,
+  "maxFeePerGas": 0,
+  "maxPriorityFeePerGas": 0,
   "isError": 0,
   "hasToken": 0,
   "statements": [
@@ -148,7 +166,8 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "selfDestructOut": "",
       "gasCostOut": "",
       "reconciliationType": "regular",
-      "spotPrice": "-1",
+      "spotPrice": 1.00000,
+      "priceSource": "not-priced",
       "begBalDiff": "",
       "endBalCalc": "10000000000000000000",
       "endBalDiff": "",
@@ -164,7 +183,7 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
   "date": "2015-07-30 15:28:03 UTC",
   "ether": 5.000000000000000000
 }
-TIME ~ CLOCK - : 4-----Trial balance: regular
+TIME ~ CLOCK - <PROG>  : Reconciling      2 of    260 txs (max 260) for address 0x05a56e2d52c817161883f50c441c3228cfe54d9fTIME ~ CLOCK - : 4-----Trial balance: regular
 TIME ~ CLOCK - : 4-----  hash: 
 TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  prevBal:       10000000000000000000
@@ -191,6 +210,10 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    13750000000000000000
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
+TIME ~ CLOCK - : 4-----Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 56 prior to its deployment 10042267
+params.size: 0
+==================================================
+
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -202,6 +225,8 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
   "value": 3750000000000000000,
   "gas": 0,
   "gasPrice": 0,
+  "maxFeePerGas": 0,
+  "maxPriorityFeePerGas": 0,
   "isError": 0,
   "hasToken": 0,
   "statements": [
@@ -229,7 +254,8 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "selfDestructOut": "",
       "gasCostOut": "",
       "reconciliationType": "regular",
-      "spotPrice": "-1",
+      "spotPrice": 1.00000,
+      "priceSource": "not-priced",
       "begBalDiff": "",
       "endBalCalc": "13750000000000000000",
       "endBalDiff": "",
@@ -245,7 +271,7 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
   "date": "2015-07-30 15:32:02 UTC",
   "ether": 3.750000000000000000
 }
-TIME ~ CLOCK - : 4-----Trial balance: regular
+TIME ~ CLOCK - <PROG>  : Reconciling      3 of    260 txs (max 260) for address 0x05a56e2d52c817161883f50c441c3228cfe54d9fTIME ~ CLOCK - : 4-----Trial balance: regular
 TIME ~ CLOCK - : 4-----  hash: 
 TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  prevBal:       13750000000000000000
@@ -272,6 +298,10 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    18750000000000000000
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
+TIME ~ CLOCK - : 4-----Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 235 prior to its deployment 10042267
+params.size: 0
+==================================================
+
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -283,6 +313,8 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
   "value": 5000000000000000000,
   "gas": 0,
   "gasPrice": 0,
+  "maxFeePerGas": 0,
+  "maxPriorityFeePerGas": 0,
   "isError": 0,
   "hasToken": 0,
   "statements": [
@@ -310,7 +342,8 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "selfDestructOut": "",
       "gasCostOut": "",
       "reconciliationType": "regular",
-      "spotPrice": "-1",
+      "spotPrice": 1.00000,
+      "priceSource": "not-priced",
       "begBalDiff": "",
       "endBalCalc": "18750000000000000000",
       "endBalDiff": "",
@@ -326,7 +359,7 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
   "date": "2015-07-30 15:38:33 UTC",
   "ether": 5.000000000000000000
 }
-TIME ~ CLOCK - : 4-----Trial balance: regular
+TIME ~ CLOCK - <PROG>  : Reconciling      4 of    260 txs (max 260) for address 0x05a56e2d52c817161883f50c441c3228cfe54d9fTIME ~ CLOCK - : 4-----Trial balance: regular
 TIME ~ CLOCK - : 4-----  hash: 
 TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  prevBal:       18750000000000000000
@@ -353,6 +386,10 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    21875000000000000000
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
+TIME ~ CLOCK - : 4-----Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 247 prior to its deployment 10042267
+params.size: 0
+==================================================
+
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -364,6 +401,8 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
   "value": 3125000000000000000,
   "gas": 0,
   "gasPrice": 0,
+  "maxFeePerGas": 0,
+  "maxPriorityFeePerGas": 0,
   "isError": 0,
   "hasToken": 0,
   "statements": [
@@ -391,7 +430,8 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "selfDestructOut": "",
       "gasCostOut": "",
       "reconciliationType": "regular",
-      "spotPrice": "-1",
+      "spotPrice": 1.00000,
+      "priceSource": "not-priced",
       "begBalDiff": "",
       "endBalCalc": "21875000000000000000",
       "endBalDiff": "",
@@ -434,6 +474,10 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    26875000000000000000
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
+TIME ~ CLOCK - : 4-----Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 348 prior to its deployment 10042267
+params.size: 0
+==================================================
+
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -445,6 +489,8 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
   "value": 5000000000000000000,
   "gas": 0,
   "gasPrice": 0,
+  "maxFeePerGas": 0,
+  "maxPriorityFeePerGas": 0,
   "isError": 0,
   "hasToken": 0,
   "statements": [
@@ -472,7 +518,8 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "selfDestructOut": "",
       "gasCostOut": "",
       "reconciliationType": "regular",
-      "spotPrice": "-1",
+      "spotPrice": 1.00000,
+      "priceSource": "not-priced",
       "begBalDiff": "",
       "endBalCalc": "26875000000000000000",
       "endBalDiff": "",
@@ -488,7 +535,7 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
   "date": "2015-07-30 15:42:23 UTC",
   "ether": 5.000000000000000000
 }
-TIME ~ CLOCK - : 4-----Trial balance: regular
+TIME ~ CLOCK - <PROG>  : Reconciling      6 of    260 txs (max 260) for address 0x05a56e2d52c817161883f50c441c3228cfe54d9fTIME ~ CLOCK - : 4-----Trial balance: regular
 TIME ~ CLOCK - : 4-----  hash: 
 TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  prevBal:       26875000000000000000
@@ -515,6 +562,10 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    30625000000000000000
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
+TIME ~ CLOCK - : 4-----Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 500 prior to its deployment 10042267
+params.size: 0
+==================================================
+
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -526,6 +577,8 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
   "value": 3750000000000000000,
   "gas": 0,
   "gasPrice": 0,
+  "maxFeePerGas": 0,
+  "maxPriorityFeePerGas": 0,
   "isError": 0,
   "hasToken": 0,
   "statements": [
@@ -553,7 +606,8 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "selfDestructOut": "",
       "gasCostOut": "",
       "reconciliationType": "regular",
-      "spotPrice": "-1",
+      "spotPrice": 1.00000,
+      "priceSource": "not-priced",
       "begBalDiff": "",
       "endBalCalc": "30625000000000000000",
       "endBalDiff": "",
@@ -569,7 +623,7 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
   "date": "2015-07-30 15:46:52 UTC",
   "ether": 3.750000000000000000
 }
-TIME ~ CLOCK - : 4-----Trial balance: regular
+TIME ~ CLOCK - <PROG>  : Reconciling      7 of    260 txs (max 260) for address 0x05a56e2d52c817161883f50c441c3228cfe54d9fTIME ~ CLOCK - : 4-----Trial balance: regular
 TIME ~ CLOCK - : 4-----  hash: 
 TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  prevBal:       30625000000000000000
@@ -596,6 +650,10 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    34375000000000000000
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
+TIME ~ CLOCK - : 4-----Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 563 prior to its deployment 10042267
+params.size: 0
+==================================================
+
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -607,6 +665,8 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
   "value": 3750000000000000000,
   "gas": 0,
   "gasPrice": 0,
+  "maxFeePerGas": 0,
+  "maxPriorityFeePerGas": 0,
   "isError": 0,
   "hasToken": 0,
   "statements": [
@@ -634,7 +694,8 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "selfDestructOut": "",
       "gasCostOut": "",
       "reconciliationType": "regular",
-      "spotPrice": "-1",
+      "spotPrice": 1.00000,
+      "priceSource": "not-priced",
       "begBalDiff": "",
       "endBalCalc": "34375000000000000000",
       "endBalDiff": "",
@@ -650,7 +711,7 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
   "date": "2015-07-30 15:48:57 UTC",
   "ether": 3.750000000000000000
 }
-TIME ~ CLOCK - : 4-----Trial balance: regular
+TIME ~ CLOCK - <PROG>  : Reconciling      8 of    260 txs (max 260) for address 0x05a56e2d52c817161883f50c441c3228cfe54d9fTIME ~ CLOCK - : 4-----Trial balance: regular
 TIME ~ CLOCK - : 4-----  hash: 
 TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  prevBal:       34375000000000000000
@@ -677,6 +738,10 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    36875000000000000000
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
+TIME ~ CLOCK - : 4-----Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 987 prior to its deployment 10042267
+params.size: 0
+==================================================
+
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -688,6 +753,8 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
   "value": 2500000000000000000,
   "gas": 0,
   "gasPrice": 0,
+  "maxFeePerGas": 0,
+  "maxPriorityFeePerGas": 0,
   "isError": 0,
   "hasToken": 0,
   "statements": [
@@ -715,7 +782,8 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "selfDestructOut": "",
       "gasCostOut": "",
       "reconciliationType": "regular",
-      "spotPrice": "-1",
+      "spotPrice": 1.00000,
+      "priceSource": "not-priced",
       "begBalDiff": "",
       "endBalCalc": "36875000000000000000",
       "endBalDiff": "",
@@ -731,7 +799,7 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
   "date": "2015-07-30 16:01:54 UTC",
   "ether": 2.500000000000000000
 }
-TIME ~ CLOCK - : 4-----Trial balance: regular
+TIME ~ CLOCK - <PROG>  : Reconciling      9 of    260 txs (max 260) for address 0x05a56e2d52c817161883f50c441c3228cfe54d9fTIME ~ CLOCK - : 4-----Trial balance: regular
 TIME ~ CLOCK - : 4-----  hash: 
 TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  prevBal:       36875000000000000000
@@ -758,6 +826,10 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    42031250000000000000
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
+TIME ~ CLOCK - : 4-----Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 1450 prior to its deployment 10042267
+params.size: 0
+==================================================
+
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -769,6 +841,8 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
   "value": 5000000000000000000,
   "gas": 0,
   "gasPrice": 0,
+  "maxFeePerGas": 0,
+  "maxPriorityFeePerGas": 0,
   "isError": 0,
   "hasToken": 0,
   "statements": [
@@ -796,7 +870,8 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "selfDestructOut": "",
       "gasCostOut": "",
       "reconciliationType": "regular",
-      "spotPrice": "-1",
+      "spotPrice": 1.00000,
+      "priceSource": "not-priced",
       "begBalDiff": "",
       "endBalCalc": "42031250000000000000",
       "endBalDiff": "",
@@ -839,6 +914,10 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    45781250000000000000
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
+TIME ~ CLOCK - : 4-----Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 1580 prior to its deployment 10042267
+params.size: 0
+==================================================
+
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -850,6 +929,8 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
   "value": 3750000000000000000,
   "gas": 0,
   "gasPrice": 0,
+  "maxFeePerGas": 0,
+  "maxPriorityFeePerGas": 0,
   "isError": 0,
   "hasToken": 0,
   "statements": [
@@ -877,7 +958,8 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "selfDestructOut": "",
       "gasCostOut": "",
       "reconciliationType": "regular",
-      "spotPrice": "-1",
+      "spotPrice": 1.00000,
+      "priceSource": "not-priced",
       "begBalDiff": "",
       "endBalCalc": "45781250000000000000",
       "endBalDiff": "",
@@ -893,7 +975,7 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
   "date": "2015-07-30 16:24:38 UTC",
   "ether": 3.750000000000000000
 }
-TIME ~ CLOCK - : 4-----Trial balance: regular
+TIME ~ CLOCK - <PROG>  : Reconciling     11 of    260 txs (max 260) for address 0x05a56e2d52c817161883f50c441c3228cfe54d9fTIME ~ CLOCK - : 4-----Trial balance: regular
 TIME ~ CLOCK - : 4-----  hash: 
 TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  prevBal:       45781250000000000000
@@ -920,6 +1002,10 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    49531250000000000000
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
+TIME ~ CLOCK - : 4-----Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 1586 prior to its deployment 10042267
+params.size: 0
+==================================================
+
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -931,6 +1017,8 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
   "value": 3750000000000000000,
   "gas": 0,
   "gasPrice": 0,
+  "maxFeePerGas": 0,
+  "maxPriorityFeePerGas": 0,
   "isError": 0,
   "hasToken": 0,
   "statements": [
@@ -958,7 +1046,8 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "selfDestructOut": "",
       "gasCostOut": "",
       "reconciliationType": "regular",
-      "spotPrice": "-1",
+      "spotPrice": 1.00000,
+      "priceSource": "not-priced",
       "begBalDiff": "",
       "endBalCalc": "49531250000000000000",
       "endBalDiff": "",
@@ -974,7 +1063,7 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
   "date": "2015-07-30 16:24:52 UTC",
   "ether": 3.750000000000000000
 }
-TIME ~ CLOCK - : 4-----Trial balance: regular
+TIME ~ CLOCK - <PROG>  : Reconciling     12 of    260 txs (max 260) for address 0x05a56e2d52c817161883f50c441c3228cfe54d9fTIME ~ CLOCK - : 4-----Trial balance: regular
 TIME ~ CLOCK - : 4-----  hash: 
 TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  prevBal:       49531250000000000000
@@ -1001,6 +1090,10 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    54531250000000000000
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
+TIME ~ CLOCK - : 4-----Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 1861 prior to its deployment 10042267
+params.size: 0
+==================================================
+
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -1012,6 +1105,8 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
   "value": 5000000000000000000,
   "gas": 0,
   "gasPrice": 0,
+  "maxFeePerGas": 0,
+  "maxPriorityFeePerGas": 0,
   "isError": 0,
   "hasToken": 0,
   "statements": [
@@ -1039,7 +1134,8 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "selfDestructOut": "",
       "gasCostOut": "",
       "reconciliationType": "regular",
-      "spotPrice": "-1",
+      "spotPrice": 1.00000,
+      "priceSource": "not-priced",
       "begBalDiff": "",
       "endBalCalc": "54531250000000000000",
       "endBalDiff": "",
@@ -1055,7 +1151,7 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
   "date": "2015-07-30 16:37:21 UTC",
   "ether": 5.000000000000000000
 }
-TIME ~ CLOCK - : 4-----Trial balance: regular
+TIME ~ CLOCK - <PROG>  : Reconciling     13 of    260 txs (max 260) for address 0x05a56e2d52c817161883f50c441c3228cfe54d9fTIME ~ CLOCK - : 4-----Trial balance: regular
 TIME ~ CLOCK - : 4-----  hash: 
 TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  prevBal:       54531250000000000000
@@ -1082,6 +1178,10 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    58281250000000000000
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
+TIME ~ CLOCK - : 4-----Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 1912 prior to its deployment 10042267
+params.size: 0
+==================================================
+
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -1093,6 +1193,8 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
   "value": 3750000000000000000,
   "gas": 0,
   "gasPrice": 0,
+  "maxFeePerGas": 0,
+  "maxPriorityFeePerGas": 0,
   "isError": 0,
   "hasToken": 0,
   "statements": [
@@ -1120,7 +1222,8 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "selfDestructOut": "",
       "gasCostOut": "",
       "reconciliationType": "regular",
-      "spotPrice": "-1",
+      "spotPrice": 1.00000,
+      "priceSource": "not-priced",
       "begBalDiff": "",
       "endBalCalc": "58281250000000000000",
       "endBalDiff": "",
@@ -1136,7 +1239,7 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
   "date": "2015-07-30 16:39:38 UTC",
   "ether": 3.750000000000000000
 }
-TIME ~ CLOCK - : 4-----Trial balance: regular
+TIME ~ CLOCK - <PROG>  : Reconciling     14 of    260 txs (max 260) for address 0x05a56e2d52c817161883f50c441c3228cfe54d9fTIME ~ CLOCK - : 4-----Trial balance: regular
 TIME ~ CLOCK - : 4-----  hash: 
 TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  prevBal:       58281250000000000000
@@ -1163,6 +1266,10 @@ TIME ~ CLOCK - : 4-----  ------------------------------
 TIME ~ CLOCK - : 4-----  endBalCalc:    63281250000000000000
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
+TIME ~ CLOCK - : 4-----Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 2057 prior to its deployment 10042267
+params.size: 0
+==================================================
+
 , {
   "hash": "0x0",
   "blockHash": "0x0",
@@ -1174,6 +1281,8 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
   "value": 5000000000000000000,
   "gas": 0,
   "gasPrice": 0,
+  "maxFeePerGas": 0,
+  "maxPriorityFeePerGas": 0,
   "isError": 0,
   "hasToken": 0,
   "statements": [
@@ -1201,7 +1310,8 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
       "selfDestructOut": "",
       "gasCostOut": "",
       "reconciliationType": "regular",
-      "spotPrice": "-1",
+      "spotPrice": 1.00000,
+      "priceSource": "not-priced",
       "begBalDiff": "",
       "endBalCalc": "63281250000000000000",
       "endBalDiff": "",
@@ -1218,7 +1328,7 @@ TIME ~ CLOCK - : 4-----  regular-recon: true
   "ether": 5.000000000000000000
 }
 TIME ~ CLOCK - <PROG>  : Reconciling     15 of    260 txs (max 260) for address 0x05a56e2d52c817161883f50c441c3228cfe54d9f], "types": [
-{ "type": "CTransaction", "fields": [{ "name": "hash", "type": "hash" }, { "name": "blockHash", "type": "hash" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "transactionIndex", "type": "blocknum" }, { "name": "timestamp", "type": "timestamp" }, { "name": "from", "type": "address" }, { "name": "to", "type": "address" }, { "name": "value", "type": "wei" }, { "name": "gas", "type": "gas" }, { "name": "gasPrice", "type": "gas" }, { "name": "isError", "type": "unumber" }, { "name": "hasToken", "type": "unumber" }, { "name": "receipt", "type": "object" }, { "name": "traces", "type": "object|ts_array" }, { "name": "articulatedTx", "type": "object" }, { "name": "compressedTx", "type": "text" }, { "name": "statements", "type": "object|ts_array" }, { "name": "gasCost", "type": "wei" }, { "name": "gasUsed", "type": "gas" }, { "name": "date", "type": "date" }, { "name": "ether", "type": "ether" }] }
+{ "type": "CTransaction", "fields": [{ "name": "hash", "type": "hash" }, { "name": "blockHash", "type": "hash" }, { "name": "blockNumber", "type": "blocknum" }, { "name": "transactionIndex", "type": "blocknum" }, { "name": "timestamp", "type": "timestamp" }, { "name": "from", "type": "address" }, { "name": "to", "type": "address" }, { "name": "value", "type": "wei" }, { "name": "gas", "type": "gas" }, { "name": "gasPrice", "type": "gas" }, { "name": "maxFeePerGas", "type": "gas" }, { "name": "maxPriorityFeePerGas", "type": "gas" }, { "name": "isError", "type": "unumber" }, { "name": "hasToken", "type": "unumber" }, { "name": "receipt", "type": "object" }, { "name": "traces", "type": "object|ts_array" }, { "name": "articulatedTx", "type": "object" }, { "name": "compressedTx", "type": "text" }, { "name": "statements", "type": "object|ts_array" }, { "name": "gasCost", "type": "wei" }, { "name": "gasUsed", "type": "gas" }, { "name": "date", "type": "date" }, { "name": "ether", "type": "ether" }] }
 ], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef", "namedFrom": {}
 , "unNamedFrom": {"0xUncleReward": 8,"0xBlockReward": 7}, "first_block": "0xdeadbeef"
 , "last_block": "0xdeadbeef"

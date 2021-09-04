@@ -93,6 +93,11 @@ string_q CTestCase::getValueByName(const string_q& fieldName) const {
                 return goldPath;
             }
             break;
+        case 'i':
+            if (fieldName % "isCmd") {
+                return bool_2_Str(isCmd);
+            }
+            break;
         case 'm':
             if (fieldName % "mode") {
                 return mode;
@@ -186,6 +191,12 @@ bool CTestCase::setValueByName(const string_q& fieldNameIn, const string_q& fiel
         case 'g':
             if (fieldName % "goldPath") {
                 goldPath = fieldValue;
+                return true;
+            }
+            break;
+        case 'i':
+            if (fieldName % "isCmd") {
+                isCmd = str_2_Bool(fieldValue);
                 return true;
             }
             break;
@@ -294,6 +305,7 @@ bool CTestCase::Serialize(CArchive& archive) {
     archive >> workPath;
     archive >> fileName;
     // archive >> test_id;
+    archive >> isCmd;
     // EXISTING_CODE
     // EXISTING_CODE
     finishParse();
@@ -323,8 +335,21 @@ bool CTestCase::SerializeC(CArchive& archive) const {
     archive << workPath;
     archive << fileName;
     // archive << test_id;
+    archive << isCmd;
     // EXISTING_CODE
     // EXISTING_CODE
+    return true;
+}
+
+//---------------------------------------------------------------------------------------------------
+bool CTestCase::Migrate(CArchive& archiveIn, CArchive& archiveOut) const {
+    ASSERT(archiveIn.isReading());
+    ASSERT(archiveOut.isWriting());
+    CTestCase copy;
+    // EXISTING_CODE
+    // EXISTING_CODE
+    copy.Serialize(archiveIn);
+    copy.SerializeC(archiveOut);
     return true;
 }
 
@@ -377,6 +402,7 @@ void CTestCase::registerClass(void) {
     ADD_FIELD(CTestCase, "fileName", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CTestCase, "test_id", T_UNUMBER, ++fieldNum);
     HIDE_FIELD(CTestCase, "test_id");
+    ADD_FIELD(CTestCase, "isCmd", T_BOOL | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CTestCase, "schema");
@@ -417,6 +443,9 @@ string_q nextTestcaseChunk_custom(const string_q& fieldIn, const void* dataPtr) 
 
     return "";
 }
+
+// EXISTING_CODE
+// EXISTING_CODE
 
 //---------------------------------------------------------------------------
 bool CTestCase::readBackLevel(CArchive& archive) {
@@ -509,6 +538,8 @@ CTestCase::CTestCase(const string_q& line, uint32_t id) {
     explode(parts, line, ',');
     test_id = id;
     onOff = parts.size() > 0 ? trim(parts[0]) : "";
+    if (onOff == "local")
+        onOff = "off";
     mode = parts.size() > 1 ? trim(parts[1]) : "";
     speed = parts.size() > 2 ? trim(parts[2]) : "";
     route = parts.size() > 3 ? trim(parts[3]) : "";
@@ -522,6 +553,9 @@ CTestCase::CTestCase(const string_q& line, uint32_t id) {
     if (endsWith(path, "lib"))
         path = "libs/" + path;
 
+    isCmd = contains(path, "tools") || contains(path, "apps") || contains(path, "go-apps") || contains(path, "libs");
+    if (isCmd)
+        isCmd = !contains(path, "dev_tools") && !contains(tool, "chifra");
     fileName = tool + "_" + name + ".txt";
 
     replaceAll(post, "n", "");

@@ -11,6 +11,8 @@
       "value": 4.2e+21,
       "gas": 0,
       "gasPrice": 0,
+      "maxFeePerGas": 0,
+      "maxPriorityFeePerGas": 0,
       "input": "",
       "isError": 0,
       "hasToken": 0,
@@ -48,7 +50,8 @@
           "selfDestructOut": "",
           "gasCostOut": "",
           "reconciliationType": "by-trace",
-          "spotPrice": "-1",
+          "spotPrice": 1,
+          "priceSource": "not-priced",
           "begBalDiff": "",
           "endBalCalc": "4200000000000000000000",
           "endBalDiff": "",
@@ -78,6 +81,8 @@
       "value": 4.1999e+21,
       "gas": 50000,
       "gasPrice": 1171602790622,
+      "maxFeePerGas": 0,
+      "maxPriorityFeePerGas": 0,
       "input": "0x454e34563147544238",
       "isError": 0,
       "hasToken": 0,
@@ -118,7 +123,8 @@
           "selfDestructOut": "",
           "gasCostOut": "25320679510922664",
           "reconciliationType": "regular",
-          "spotPrice": "-1",
+          "spotPrice": 1,
+          "priceSource": "not-priced",
           "begBalDiff": "",
           "endBalCalc": "74679320489077336",
           "endBalDiff": "",
@@ -148,6 +154,8 @@
       "value": 74259320489077340,
       "gas": 21000,
       "gasPrice": 20000000000,
+      "maxFeePerGas": 0,
+      "maxPriorityFeePerGas": 0,
       "input": "0x",
       "isError": 0,
       "hasToken": 0,
@@ -185,7 +193,8 @@
           "selfDestructOut": "",
           "gasCostOut": "420000000000000",
           "reconciliationType": "regular",
-          "spotPrice": "-1",
+          "spotPrice": 1,
+          "priceSource": "not-priced",
           "begBalDiff": "",
           "endBalCalc": "",
           "endBalDiff": "",
@@ -247,6 +256,14 @@
         },
         {
           "name": "gasPrice",
+          "type": "gas"
+        },
+        {
+          "name": "maxFeePerGas",
+          "type": "gas"
+        },
+        {
+          "name": "maxPriorityFeePerGas",
           "type": "gas"
         },
         {

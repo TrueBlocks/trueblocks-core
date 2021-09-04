@@ -2,6 +2,7 @@ getBlocks argc: 3 [1:728708] [2:--parity]
 getBlocks 728708 --parity 
 { "data": [
 {
+  "baseFeePerGas": "0x0",
   "difficulty": "0x80001821ea8",
   "finalized": true,
   "gasLimit": "0x2fefd8",

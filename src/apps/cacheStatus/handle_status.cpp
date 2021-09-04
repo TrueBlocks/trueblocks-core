@@ -50,7 +50,6 @@ bool COptions::handle_status(ostream& os) {
             forEveryFileInFolder(thePath, countFiles, &index);
             LOG8("Counted files");
             CItemCounter counter(this);
-            loadTimestamps(&counter.tsMemMap, counter.tsCnt);
             index.path = pathName("index", indexFolder_finalized);
             counter.cachePtr = &index;
             counter.indexArray = &index.items;
@@ -367,7 +366,7 @@ bool noteMonitor(const string_q& path, void* data) {
         string_q addr = substitute(path, "/0x", "|");
         nextTokenClear(addr, '|');
         mdi.address = "0x" + nextTokenClear(addr, '.');
-        counter->options->getNamedAccount(mdi, mdi.address);
+        counter->options->findName(mdi.address, mdi);
         if (!isTestMode()) {
             CArchive archive(READING_ARCHIVE);
             if (archive.Lock(path, modeReadOnly, LOCK_NOWAIT)) {
@@ -464,15 +463,9 @@ bool noteIndex(const string_q& path, void* data) {
             aci.indexSizeBytes = (uint32_t)fileSize(path);
         }
 
-        if (counter->tsMemMap) {
-            if (aci.firstApp < counter->tsCnt && aci.latestApp < counter->tsCnt) {
-                aci.firstTs = (timestamp_t)counter->tsMemMap[(aci.firstApp * 2) + 1];
-                aci.latestTs = (timestamp_t)counter->tsMemMap[(aci.latestApp * 2) + 1];
-            } else {
-                aci.firstTs = (timestamp_t)0;
-                aci.latestTs = (timestamp_t)0;
-            }
-        }
+        aci.firstTs = getTimestampAt(aci.firstApp);
+        aci.latestTs = getTimestampAt(aci.latestApp);
+
         getIndexMetrics(path, aci.nApps, aci.nAddrs);
         counter->indexArray->push_back(aci);
     }
@@ -498,7 +491,7 @@ bool noteABI(const string_q& path, void* data) {
         nextTokenClear(addr, '|');
         abii.address = "0x" + nextTokenClear(addr, '.');
         CAccountName n;
-        counter->options->getNamedAccount(n, abii.address);
+        counter->options->findName(abii.address, n);
         if (isTestMode()) {
             abii.address = "---address---";
             abii.name = "--name--";

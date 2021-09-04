@@ -1,24 +1,6 @@
 getState argc: 4 [1:--call] [2:0xbb2b8038a1640196fbe3e38816f3e67cba72d940!0x0902f1ad] [3:10092000] 
 getState --call 0xbb2b8038a1640196fbe3e38816f3e67cba72d940!0x0902f1ad 10092000 
-
-  No result from call to 0xbb2b8038a1640196fbe3e38816f3e67cba72d940 with fourbyte 0x0902f1ad. Quitting...
-
-  Usage:    getState [-p|-c|-n|-v|-h] <address> [address...] [block...]  
-  Purpose:  Retrieve account balance(s) for one or more addresses at given block(s).
-
-  Where:  
-	addrs                 one or more addresses (0x...) from which to retrieve balances (required)
-	blocks                an optional list of one or more blocks at which to report balances, defaults to 'latest'
-	-p  (--parts <val>)   control which state to export, one or more of [none|some*|all|balance|nonce|code|storage|deployed|accttype]
-	-c  (--changes)       only report a balance when it changes from one block to the next
-	-n  (--no_zero)       suppress the display of zero balance accounts
-
-	#### Hidden options
-	-a  (--call <str>)    a bang-separated string consisting of address!4-byte!bytes
-	#### Hidden options
-
-	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
-	-v  (--verbose)       set verbose level (optional level defaults to 1)
-	-h  (--help)          display this help screen
-
-  Powered by TrueBlocks
+{ "data": [
+], "errors": [
+"No result from call to 0xbb2b8038a1640196fbe3e38816f3e67cba72d940 with fourbyte 0x0902f1ad at block 10092000"
+] }

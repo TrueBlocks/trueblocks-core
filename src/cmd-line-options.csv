@@ -8,17 +8,17 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 10207,apps,Accounts,export,acctExport,fourbytes,,,false,false,true,true,header,positional,list<fourbyte>,filter by one or more fourbytes (only for transactions and trace options)
 10210,apps,Accounts,export,acctExport,appearances,p,,false,false,true,true,header,switch,<boolean>,export a list of appearances
 10220,apps,Accounts,export,acctExport,receipts,r,,false,false,true,true,header,switch,<boolean>,export receipts instead of transaction list
+10282,apps,Accounts,export,acctExport,statements,A,,false,false,true,true,header,switch,<boolean>,for use with --accounting option only&#44; export only reconciliation statements
 10230,apps,Accounts,export,acctExport,logs,l,,false,false,true,true,header,switch,<boolean>,export logs instead of transaction list
 10240,apps,Accounts,export,acctExport,traces,t,,false,false,true,true,header,switch,<boolean>,export traces instead of transaction list
 10280,apps,Accounts,export,acctExport,accounting,C,,false,false,true,true,header,switch,<boolean>,export accounting records instead of transaction list
-10282,apps,Accounts,export,acctExport,statements,A,,false,false,true,true,header,switch,<boolean>,for use with --accounting option only&#44; export only reconciliation statements
 10310,apps,Accounts,export,acctExport,articulate,a,,false,false,true,true,header,switch,<boolean>,articulate transactions&#44; traces&#44; logs&#44; and outputs
 10320,apps,Accounts,export,acctExport,cache_txs,i,false,false,true,true,true,header,switch,<boolean>,write transactions to the cache (see notes)
 10330,apps,Accounts,export,acctExport,cache_traces,R,false,false,true,true,true,header,switch,<boolean>,write traces to the cache (see notes)
-10340,apps,Accounts,export,acctExport,skip_ddos,d,true,false,true,false,false,header,toggle,<boolean>,toggle skipping over 2016 dDos transactions ([{DEF}] by default)
-10350,apps,Accounts,export,acctExport,max_traces,m,250,false,true,false,false,header,flag,<uint64>,if --skip_ddos is on&#44; this many traces defines what a ddos transaction|is (default = [{DEF}])
+10340,apps,Accounts,export,acctExport,skip_ddos,d,true,false,true,false,false,config,toggle,<boolean>,toggle skipping over 2016 dDos transactions ([{DEF}] by default)
+10350,apps,Accounts,export,acctExport,max_traces,m,250,false,true,false,false,config,flag,<uint64>,if --skip_ddos is on&#44; this many traces defines what a ddos transaction|is (default = [{DEF}])
 10380,apps,Accounts,export,acctExport,freshen,f,,false,false,false,false,local,switch,<boolean>,freshen but do not print the exported data
-10395,apps,Accounts,export,acctExport,factory,y,false,false,true,true,false,header,switch,<boolean>,scan for contract creations from the given address(es) and report|address of those contracts
+10395,apps,Accounts,export,acctExport,factory,y,false,false,false,true,false,header,switch,<boolean>,scan for contract creations from the given address(es) and report|address of those contracts
 10430,apps,Accounts,export,acctExport,emitter,,,false,false,true,true,header,switch,<boolean>,for log export only&#44; export only if one of the given export addresses emitted the event
 10431,apps,Accounts,export,acctExport,source,,,false,false,true,true,header,flag,list<addr>,for log export only&#44; export only one of these addresses emitted the event
 10433,apps,Accounts,export,acctExport,relevant,,,false,false,true,true,header,switch,<boolean>,for log and accounting export only&#44; if true export only logs relevant to one of the given export addresses
@@ -32,8 +32,8 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 10080,apps,Accounts,export,acctExport,unripe,u,,false,false,false,false,header,switch,<boolean>,enable search of unripe (neither staged nor finalized) folder|(assumes --staging)
 10092,apps,Accounts,export,acctExport,load,,,false,false,false,false,header,flag,<string>,a comma separated list of dynamic traversers to load
 10093,apps,Accounts,export,acctExport,reversed,,,false,false,false,false,header,switch,<boolean>,produce results in reverse chronological order
-10094,apps,Accounts,export,acctExport,by_date,y,,false,false,false,false,header,switch,<boolean>,produce results sorted by date (default is to report by address)
-10095,apps,Accounts,export,acctExport,summarize_by,b,,false,false,false,false,header,flag,enum[yearly|quarterly|monthly|weekly|daily|hourly|blockly|tx],for --accounting only&#44; summarize reconciliations by this time period
+10094,apps,Accounts,export,acctExport,by_date,b,,false,false,false,false,header,switch,<boolean>,produce results sorted by date (default is to report by address)
+10095,apps,Accounts,export,acctExport,summarize_by,z,,false,false,false,false,header,flag,enum[yearly|quarterly|monthly|weekly|daily|hourly|blockly|tx],for --accounting only&#44; summarize reconciliations by this time period
 10460,apps,Accounts,export,acctExport,,,,false,false,true,true,--,description,,Export full detail of transactions for one or more addresses.
 10470,apps,Accounts,export,acctExport,,,,false,false,false,false,--,note,,An `address` must start with '0x' and be forty-two characters long.
 
@@ -63,7 +63,7 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 13850,tools,Accounts,abis,grabABI,known,k,,false,false,true,false,local,switch,<boolean>,load common 'known' ABIs from cache
 13860,tools,Accounts,abis,grabABI,sol,s,,false,false,true,true,local,flag,<string>,file name of .sol file from which to create a new known abi (without|.sol)
 13865,tools,Accounts,abis,grabABI,find,f,,false,false,true,true,local,flag,<string>,try to search for a function declaration given a four byte code
-13865,tools,Accounts,abis,grabABI,source,s,,false,false,false,false,local,switch,<boolean>,show the source of the ABI information
+13865,tools,Accounts,abis,grabABI,source,o,,false,false,false,false,local,switch,<boolean>,show the source of the ABI information
 13867,tools,Accounts,abis,grabABI,classes,c,,false,false,false,false,local,switch,<boolean>,generate classDefinitions folder and class definitions
 13880,tools,Accounts,abis,grabABI,,,,false,false,true,true,--,description,,Fetches the ABI for a smart contract.
 13885,tools,Accounts,abis,grabABI,,,,false,false,false,false,--,note,,Solidity files found in the local folder with the name '<address>.sol' are converted to an ABI prior to processing (and then removed).
@@ -92,6 +92,7 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 13580,tools,ChainData,transactions,getTrans,trace,t,,false,false,true,true,header,switch,<boolean>,include the transaction's traces in the results
 13605,tools,ChainData,transactions,getTrans,uniq,u,,false,false,true,true,header,switch,<boolean>,display a list of uniq addresses found in the transaction instead of the underlying data
 13600,tools,ChainData,transactions,getTrans,cache,o,,false,false,true,true,header,switch,<boolean>,force the results of the query into the tx cache (and the trace cache if applicable)
+13605,tools,ChainData,transactions,getTrans,reconcile,r,,false,false,true,true,header,flag,<address>,reconcile the transaction as per the provided address
 13620,tools,ChainData,transactions,getTrans,,,,false,false,true,true,--,description,,Retrieve one or more transactions from the chain or local cache.
 13622,tools,ChainData,transactions,getTrans,,,,false,false,false,false,--,note,,The `transactions` list may be one or more space-separated identifiers which are either a transaction hash&#44;|a blockNumber.transactionID pair&#44; or a blockHash.transactionID pair&#44; or any combination.
 13624,tools,ChainData,transactions,getTrans,,,,false,false,false,false,--,note,,This tool checks for valid input syntax&#44; but does not check that the transaction requested actually exists.
@@ -135,7 +136,10 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 13940,tools,ChainData,when,whenBlock,block_list,,,false,false,true,false,local,positional,list<string>,one or more dates&#44; block numbers&#44; hashes&#44; or special named blocks|(see notes)
 13960,tools,ChainData,when,whenBlock,list,l,,false,false,true,false,header,switch,<boolean>,export a list of the 'special' blocks
 13962,tools,ChainData,when,whenBlock,timestamps,t,,false,false,true,true,header,switch,<boolean>,ignore other options and generate timestamps only
-13962,tools,ChainData,when,whenBlock,skip,s,,false,false,true,true,header,flag,<uint64>,only applicable if --timestamps is on&#44; the step between block|numbers in the export
+13963,tools,ChainData,when,whenBlock,check,c,,false,false,false,false,header,switch,<boolean>,available only with --timestamps&#44; checks the validity of the timestamp data
+13965,tools,ChainData,when,whenBlock,fix,f,,false,false,false,false,header,switch,<boolean>,available only with --timestamps&#44; fixes incorrect timestamps if any
+13966,tools,ChainData,when,whenBlock,count,u,,false,false,false,false,header,switch,<boolean>,available only with --timestamps&#44; returns the number of timestamps in the cache
+13967,tools,ChainData,when,whenBlock,skip,s,,false,false,true,true,header,flag,<uint64>,only applicable if --timestamps is on&#44; the step between block|numbers in the export
 13980,tools,ChainData,when,whenBlock,,,,false,false,true,false,--,description,,Find block(s) based on date&#44; blockNum&#44; timestamp&#44; or 'special'.
 13982,tools,ChainData,when,whenBlock,,,,false,false,false,false,--,note,,The block list may contain any combination of `number`&#44; `hash`&#44; `date`&#44; special `named` blocks.
 13984,tools,ChainData,when,whenBlock,,,,false,false,false,false,--,note,,Dates must be formatted in JSON format: YYYY-MM-DD[THH[:MM[:SS]]].
@@ -172,13 +176,12 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 13370,tools,ChainState,tokens,getTokens,,,,false,false,false,false,--,note,,If the queried node does not store historical state&#44; the results are undefined.
 13372,tools,ChainState,tokens,getTokens,,,,false,false,false,false,--,note,,`special` blocks are detailed under `chifra when --list`.
 
-10615,apps,Admin,scrape,blockScrape,n_blocks,n,(isDockerMode() ? 100 : 2000),false,true,true,true,header,flag,<uint64>,maximum number of blocks to process (defaults to 5000)
-10620,apps,Admin,scrape,blockScrape,n_block_procs,b,(isDockerMode() ? 5 : 10),false,true,false,false,header,flag,<uint64>,number of block channels for blaze
-10640,apps,Admin,scrape,blockScrape,n_addr_procs,a,(isDockerMode() ? 10 : 20),false,true,false,false,header,flag,<uint64>,number of address channels for blaze
-10645,apps,Admin,scrape,blockScrape,pin,p,,false,false,true,true,header,switch,<boolean>,pin new chunks (and blooms) to IPFS (requires Pinata key and running IPFS node)
-10650,apps,Admin,scrape,blockScrape,sleep,s,14,false,false,true,false,header,flag,<double>,the number of seconds to sleep between passes (default [{DEF}])
-10650,apps,Admin,scrape,blockScrape,quit,q,,false,false,false,false,local,switch,<boolean>,quit the program if it's running
-10660,apps,Admin,scrape,blockScrape,,,,false,false,true,true,--,description,,Scan the chain and update the TrueBlocks index of appearances.
+10620,apps,Admin,scrape,blockScrape,pin,p,,false,false,true,true,header,switch,<boolean>,pin new chunks (and blooms) to IPFS (requires Pinata key and running IPFS node)
+10625,apps,Admin,scrape,blockScrape,sleep,s,14,false,false,true,false,header,flag,<double>,the number of seconds to sleep between passes (default [{DEF}])
+10635,apps,Admin,scrape,blockScrape,n_blocks,n,(isDockerMode() ? 100 : 2000),false,true,true,true,config,flag,<uint64>,maximum number of blocks to process (default 2000)
+10640,apps,Admin,scrape,blockScrape,n_block_procs,b,(isDockerMode() ? 5 : 10),false,true,false,false,config,flag,<uint64>,number of concurrent block channels for blaze
+10645,apps,Admin,scrape,blockScrape,n_addr_procs,a,(isDockerMode() ? 10 : 20),false,true,false,false,config,flag,<uint64>,number of concurrent address channels for blaze
+10650,apps,Admin,scrape,blockScrape,,,,false,false,true,true,--,description,,Scan the chain and update the TrueBlocks index of appearances.
 
 10700,apps,Admin,status,cacheStatus,modes,,,false,false,true,true,local,positional,list<enum[index|monitors|collections|names|abis|caches|some*|all]>,the type of status info to retrieve
 10720,apps,Admin,status,cacheStatus,details,d,,false,false,true,true,header,switch,<boolean>,include details about items found in monitors&#44; slurps&#44; abis&#44;|or price caches
@@ -186,6 +189,7 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 10735,apps,Admin,status,cacheStatus,depth,p,,false,false,false,false,header,flag,<uint64>,for cache mode only&#44; number of levels deep to report
 10760,apps,Admin,status,cacheStatus,report,r,,false,false,false,true,local,switch,<boolean>,show a summary of the current status of TrueBlocks (deprecated)
 10770,apps,Admin,status,cacheStatus,terse,e,,false,false,false,true,header,switch,<boolean>,show a terse summary report
+10782,apps,Admin,status,cacheStatus,migrate,m,,false,false,false,false,local,flag,list<enum[test|abi_cache|block_cache|tx_cache|trace_cache|recon_cache|name_cache|slurp_cache|all]>,either effectuate or test to see if a migration is necessary
 10780,apps,Admin,status,cacheStatus,get_config,g,,false,false,false,false,local,switch,<boolean>,returns JSON data of the editable configuration file items
 10800,apps,Admin,status,cacheStatus,set_config,s,,false,false,false,false,local,switch,<boolean>,accepts JSON in an env variable and writes it to configuration|files
 10820,apps,Admin,status,cacheStatus,test_start,S,0,false,false,false,false,local,flag,<blknum>,first block to process (inclusive -- testing only)
@@ -194,7 +198,7 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 
 10950,apps,Admin,pins,pinMan,list,l,,false,false,true,true,local,switch,<boolean>,list the index and Bloom filter hashes from local manifest or pinning service
 10950,apps,Admin,pins,pinMan,init,i,,false,false,true,true,header,switch,<boolean>,initialize local index by downloading Bloom filters from pinning service
-10951,apps,Admin,pins,pinMan,init_all,k,,false,false,true,true,header,switch,<boolean>,initialize local index by downloading both Bloom filters and index chunks
+10951,apps,Admin,pins,pinMan,init_all,n,,false,false,true,true,header,switch,<boolean>,initialize local index by downloading both Bloom filters and index chunks
 10980,apps,Admin,pins,pinMan,sleep,s,.25,false,false,false,false,header,flag,<double>,the number of seconds to sleep between requests during init (default [{DEF}])
 10950,apps,Admin,pins,pinMan,remote,r,,false,false,false,false,header,switch,<boolean>,applicable only to --list mode&#44; recover the manifest from pinning service
 10952,apps,Admin,pins,pinMan,pin_locally,p,,false,false,true,true,header,switch,<boolean>,pin all local files in the index to an IPFS store (requires IPFS)
@@ -250,8 +254,6 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 11900,dev_tools,,,testRunner,filter,f,,false,false,true,false,header,flag,enum[fast*|medi|slow|all],determine how long it takes to run tests
 11920,dev_tools,,,testRunner,clean,c,,false,false,true,false,header,switch,<boolean>,clean working folder before running tests
 11930,dev_tools,,,testRunner,skip,s,1,false,false,false,false,header,flag,<uint64>,run only every 'skip' test (faster)
-11940,dev_tools,,,testRunner,no_quit,n,,false,false,true,false,header,switch,<boolean>,do not quit testing on first error
-11940,dev_tools,,,testRunner,no_post,o,,false,false,true,false,header,switch,<boolean>,do not complete the post processing step
 11960,dev_tools,,,testRunner,report,r,,false,false,true,false,header,switch,<boolean>,display performance report to screen
 11980,dev_tools,,,testRunner,,,,false,false,true,false,--,description,,Run TrueBlocks' test cases with options.
 

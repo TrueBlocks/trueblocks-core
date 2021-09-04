@@ -15,20 +15,14 @@ TIME ~ CLOCK - <INFO>  : {
   "symbol": "SYMBOL_CHANGED",
   "source": "SOURCE_CHANGED",
   "decimals": 13,
-  "description": "DESCRIPTION_CHANGED",
-  "is_erc20": true
+  "description": "DESCRIPTION_CHANGED"
 }
 TIME ~ CLOCK - <INFO>  : ---------------------------------------------
 TIME ~ CLOCK - : 4-----Editing 0x0000000000000000000000000000000010101010
 TIME ~ CLOCK - : 4-----Finished sorting...
 TIME ~ CLOCK - : 4-----Finished writing...
 TIME ~ CLOCK - : 8------Entering loadNames...
-TIME ~ CLOCK - : 8------Finished adding names from regular database...
-TIME ~ CLOCK - : 8------Finished adding names from custom database...
 TIME ~ CLOCK - : 4-----Reading prefund names from binary cache
-TIME ~ CLOCK - : 8------Finished adding names from prefunds database...
-TIME ~ CLOCK - : 8------Writing binary cache
-TIME ~ CLOCK - : 8------Finished writing binary cache...
 {"data": [
   {
     "deleted": false,
@@ -38,8 +32,7 @@ TIME ~ CLOCK - : 8------Finished writing binary cache...
     "symbol": "SYMBOL_CHANGED",
     "source": "SOURCE_CHANGED",
     "decimals": 13,
-    "description": "DESCRIPTION_CHANGED",
-    "is_erc20": true
+    "description": "DESCRIPTION_CHANGED"
   }], "types": [
 { "type": "CAccountName", "fields": [{ "name": "deleted", "type": "bool" }, { "name": "tags", "type": "text" }, { "name": "address", "type": "address" }, { "name": "name", "type": "text" }, { "name": "symbol", "type": "text" }, { "name": "source", "type": "text" }, { "name": "decimals", "type": "unumber" }, { "name": "description", "type": "text" }, { "name": "is_custom", "type": "bool" }, { "name": "is_prefund", "type": "bool" }, { "name": "is_contract", "type": "bool" }, { "name": "is_erc20", "type": "bool" }, { "name": "is_erc721", "type": "bool" }] }
 ], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef", "namePath": "--" } }

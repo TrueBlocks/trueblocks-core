@@ -32,8 +32,6 @@ class COptions : public COptionsBase {
     string_q filter;
     bool clean;
     uint64_t skip;
-    bool no_quit;
-    bool no_post;
     bool report;
     // END_CODE_DECLARE
 
@@ -50,7 +48,7 @@ class COptions : public COptionsBase {
     bool parseArguments(string_q& command) override;
     void Init(void) override;
 
-    bool doTests(CTestCaseArray& testArray, const string_q& testPath, const string_q& testName, int which);
+    void doTests(CTestCaseArray& testArray, const string_q& testPath, const string_q& testName, int which);
     bool cleanTest(const string_q& path, const string_q& testName);
 };
 

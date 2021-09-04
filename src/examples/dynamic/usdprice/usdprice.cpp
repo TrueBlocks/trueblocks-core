@@ -24,7 +24,7 @@ class CTestTraverser : public CTraverser {
         if (doEthCall(theCall)) {
             perTxCall.address = theCall.getResults();
             perTxCall.abi_spec.loadAbiFromEtherscan(perTxCall.address);
-            LOG_INFO(bGreen, "Found USD Pair: ", perTxCall.address, " with ", perTxCall.abi_spec.interfaces.size(),
+            LOG_INFO(bGreen, "Found USD Pair: ", perTxCall.address, " with ", perTxCall.abi_spec.nInterfaces(),
                      " endpoints", cOff);
         } else {
             LOG_WARN(bRed, "Could not find USD Pair: ", perTxCall.address, cOff);
@@ -51,8 +51,8 @@ bool header(CTraverser* trav, void* data) {
 bool display(CTraverser* trav, void* data) {
     CTestTraverser* tt = (CTestTraverser*)trav;
     tt->perTxCall.blockNumber = tt->app->blk;
-    tt->trans.timestamp = (timestamp_t)expContext().tsMemMap[(tt->app->blk * 2) + 1];
-    tt->block.timestamp = (timestamp_t)expContext().tsMemMap[(tt->app->blk * 2) + 1];
+    tt->trans.timestamp = getTimestampAt(tt->app->blk);
+    tt->block.timestamp = getTimestampAt(tt->app->blk);
 
     cerr << tt->readStatus << " ";
     if (doEthCall(tt->perTxCall) && !tt->perTxCall.result.outputs.empty()) {
@@ -86,9 +86,6 @@ bool display(CTraverser* trav, void* data) {
 //-----------------------------------------------------------------------
 extern "C" CTraverser* makeTraverser(void) {
     acctlib_init(quickQuitHandler);
-
-    freshenTimestamps(getBlockProgress().client);
-    loadTimestamps(&expContext().tsMemMap, expContext().tsCnt);
 
     CTestTraverser* trav = new CTestTraverser;
     trav->preFunc = header;

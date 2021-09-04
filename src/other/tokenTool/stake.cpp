@@ -12,7 +12,7 @@
  *-------------------------------------------------------------------------------------------*/
 /*
  * Parts of this file were generated with makeClass --run. Edit only those parts of
- *  the code inside of 'EXISTING_CODE' tags.
+ * the code inside of 'EXISTING_CODE' tags.
  */
 #include "stake.h"
 
@@ -35,7 +35,11 @@ void CStake::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
 
     string_q fmt = (fmtIn.empty() ? expContext().fmtMap["stake_fmt"] : fmtIn);
     if (fmt.empty()) {
-        toJson(ctx);
+        if (expContext().exportFmt == YAML1) {
+            toYaml(ctx);
+        } else {
+            toJson(ctx);
+        }
         return;
     }
 
@@ -75,7 +79,7 @@ string_q CStake::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 'l':
-            if (fieldName % "lastPos ") {
+            if (fieldName % "lastPos") {
                 return uint_2_Str(lastPos);
             }
             break;
@@ -111,7 +115,7 @@ bool CStake::setValueByName(const string_q& fieldNameIn, const string_q& fieldVa
             }
             break;
         case 'l':
-            if (fieldName % "lastPos ") {
+            if (fieldName % "lastPos") {
                 lastPos = str_2_Uint(fieldValue);
                 return true;
             }
@@ -164,7 +168,18 @@ bool CStake::SerializeC(CArchive& archive) const {
     archive << address;
     archive << lastPos;
     archive << stake;
+    return true;
+}
 
+//---------------------------------------------------------------------------------------------------
+bool CStake::Migrate(CArchive& archiveIn, CArchive& archiveOut) const {
+    ASSERT(archiveIn.isReading());
+    ASSERT(archiveOut.isWriting());
+    CStake copy;
+    // FUTURE_WORK
+    // FUTURE_WORK
+    copy.Serialize(archiveIn);
+    copy.SerializeC(archiveOut);
     return true;
 }
 
@@ -201,7 +216,7 @@ void CStake::registerClass(void) {
     ADD_FIELD(CStake, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CStake, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CStake, "address", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CStake, "lastPos ", T_UNUMBER, ++fieldNum);
+    ADD_FIELD(CStake, "lastPos", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CStake, "stake", T_WEI, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
@@ -282,3 +297,5 @@ string_q CStake::display(uint64_t pos) {
 }
 // EXISTING_CODE
 }  // namespace qblocks
+
+    
