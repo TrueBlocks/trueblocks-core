@@ -189,8 +189,8 @@ bool correctTimestamp(blknum_t blk, timestamp_t ts) {
         LOG_ERR("Failed to open ", tsIndex);
         return false;
     }
-    
-    uint32_t *buffer = new uint32_t[nRecords * 2];
+
+    uint32_t* buffer = new uint32_t[nRecords * 2];
     if (!buffer) {
         LOG_ERR("Could not allocate memory for timestamps");
         file.Release();
@@ -199,11 +199,11 @@ bool correctTimestamp(blknum_t blk, timestamp_t ts) {
 
     if (!file.Read(buffer, sizeof(uint32_t), nRecords * 2)) {
         LOG_ERR("Could not read timestamp file ", tsIndex);
-        delete [] buffer;
+        delete[] buffer;
         file.Release();
         return false;
     }
-    
+
     buffer[blk * 2] = uint32_t(blk);
     buffer[blk * 2 + 1] = uint32_t(ts);
     lockSection();
@@ -211,8 +211,8 @@ bool correctTimestamp(blknum_t blk, timestamp_t ts) {
     file.Write(buffer, sizeof(uint32_t), nRecords * 2);
     unlockSection();
     file.Release();
-    delete [] buffer;
-    
+    delete[] buffer;
+
     return true;
 }
 

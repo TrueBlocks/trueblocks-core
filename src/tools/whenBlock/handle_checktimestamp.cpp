@@ -38,10 +38,8 @@ bool checkTimestamp(CBlock& block, void* data) {
         ostringstream os;
         CBlock blk;
         getBlock_light(blk, c->expected);
-        LOG_WARN(reason, " at block ", c->expected, " ==> ",
-                 " sb:", block.blockNumber, ".", block.timestamp,
-                 " is: ", blk.blockNumber, ".", blk.timestamp,
-                 " c: ", c->expected, ".", c->prevBn, ".", c->prevTs);
+        LOG_WARN(reason, " at block ", c->expected, " ==> ", " sb:", block.blockNumber, ".", block.timestamp,
+                 " is: ", blk.blockNumber, ".", blk.timestamp, " c: ", c->expected, ".", c->prevBn, ".", c->prevTs);
         opt->corrections.push_back(blk);
     }
 
