@@ -102,10 +102,13 @@ bool freshenTimestamps(blknum_t minBlock) {
         return false;
     }
 
+    lockSection();
+
     // LOG_INFO("Updating");
     CArchive file(WRITING_ARCHIVE);
     if (!file.Lock(tsIndex, modeWriteAppend, LOCK_NOWAIT)) {
         LOG_ERR("Failed to open ", tsIndex);
+        unlockSection();
         return false;
     }
 
@@ -117,22 +120,32 @@ bool freshenTimestamps(blknum_t minBlock) {
     }
 
     CBlock block;
-    for (blknum_t bn = nRecords; bn <= minBlock; bn++) {
+    for (blknum_t bn = nRecords; bn <= minBlock && !shouldQuit(); bn++) {
         block = CBlock();  // reset
         getBlock_header(block, bn);
-        file << ((uint32_t)block.blockNumber) << ((uint32_t)block.timestamp);
-        file.flush();
-        ostringstream post;
-        post << " (" << block.timestamp << " - " << ts_2_Date(block.timestamp).Format(FMT_EXPORT) << ")"
-             << "\r";
-        ostringstream pre;
-        pre << "Updating " << (minBlock - block.blockNumber) << " timestamps ";
-        LOG_PROGRESS(pre.str(), block.blockNumber, minBlock, post.str());
+        if (block.timestamp < blockZeroTs) {
+            LOG_ERR("Bad data when requesting block '", bn, "'. ", block.Format("[{BLOCKNUMBER}].[{TIMESTAMP}]"),
+                    " Cannot continue.");
+            file.Release();
+            unlockSection();
+            return false;
+        } else {
+            file << ((uint32_t)block.blockNumber) << ((uint32_t)block.timestamp);
+            file.flush();
+            ostringstream post;
+            post << " (" << block.timestamp << " - " << ts_2_Date(block.timestamp).Format(FMT_EXPORT) << ")"
+                 << "\r";
+            ostringstream pre;
+            pre << "Updating " << (minBlock - block.blockNumber) << " timestamps ";
+            LOG_PROGRESS(pre.str(), block.blockNumber, minBlock, post.str());
+        }
     }
     cerr << "\r" << string_q(150, ' ') << "\r";
     cerr.flush();
 
     file.Release();
+    unlockSection();
+
     return true;
 }
 
