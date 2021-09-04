@@ -78,11 +78,9 @@ class CCommandOption : public CBaseNode {
     string_q toChifraHelp(void) const;
     string_q toPairMap(void) const;
     string_q toApiTag(void) const;
-    string_q toHtmlTag(void) const;
     string_q toGoCall(void) const;
     string_q toGoRoute(void) const;
     string_q toApiPath(void) const;
-    string_q toHtmlPath(void) const;
     bool isChifraRoute(void) const;
     string_q getType(bool quoted) const;
     bool isStringType(void) const {

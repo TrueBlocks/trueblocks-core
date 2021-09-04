@@ -706,8 +706,6 @@ const char* STR_DEBUG_DISPLAY_LIST = "    LOG_TEST_LIST(\"[{COMMAND}]\", [{COMMA
 //---------------------------------------------------------------------------------------------------
 extern const char* STR_PATH_YAML;
 extern const char* STR_PARAM_YAML;
-extern const char* STR_PATH_HTML;
-extern const char* STR_PARAM_HTML;
 
 //---------------------------------------------------------------------------------------------------
 bool isApiRoute(const string_q& route) {
@@ -772,17 +770,6 @@ string_q CCommandOption::toApiTag(void) const {
 }
 
 //---------------------------------------------------------------------------------------------------
-string_q CCommandOption::toHtmlTag(void) const {
-    if (isApiRoute(tool))
-        return "";
-
-    const char* STR_TAG_HTML = "            {name: '[{GROUP}]', description: '[{DESCRIPTION}]'},\n";
-    CCommandOption ret = *this;
-    replaceAll(ret.group, " ", "");
-    return ret.Format(STR_TAG_HTML);
-}
-
-//---------------------------------------------------------------------------------------------------
 string_q CCommandOption::toGoCall(void) const {
     if (!isApiRoute(api_route))
         return "";
@@ -842,32 +829,6 @@ string_q CCommandOption::toApiPath(void) const {
     replace(ret, "[{PARAMS}]", paramStream.str());
     replace(ret, "[{SUMMARY}]", description);
     replace(ret, "[{DESCR}]", description);
-    replace(ret, "[{ID}]", toLower(substitute(group, " ", "") + "-" + api_route));
-    return ret;
-}
-
-//---------------------------------------------------------------------------------------------------
-string_q CCommandOption::toHtmlPath(void) const {
-    if (!isApiRoute(api_route))
-        return "";
-
-    ostringstream paramStream;
-    for (auto param : *(CCommandOptionArray*)params) {
-        if (param.command.empty())
-            continue;
-        string_q yp = STR_PARAM_HTML;
-        replace(yp, "[{NAME}]", param.command);
-        replace(yp, "[{DESCR}]", substitute(substitute(param.swagger_descr, "'", "\\'"), "\n         ", ""));
-        replace(yp, "[{REQ}]", param.is_required ? "true" : "false");
-        replace(yp, "[{TYPE}]", param.getType(true /* forHtml */));
-        paramStream << yp << endl;
-    }
-    string_q ret = STR_PATH_HTML;
-    replace(ret, "[{TAGS}]", substitute(group, " ", ""));
-    replace(ret, "[{PATH}]", api_route);
-    replace(ret, "[{PARAMS}]", paramStream.str());
-    replace(ret, "[{SUMMARY}]", substitute(substitute(description, "'", "\\'"), "\n         ", ""));
-    replace(ret, "[{DESCR}]", substitute(substitute(description, "'", "\\'"), "\n         ", ""));
     replace(ret, "[{ID}]", toLower(substitute(group, " ", "") + "-" + api_route));
     return ret;
 }
@@ -996,37 +957,5 @@ const char* STR_PARAM_YAML =
     "        explode: true\n"
     "        schema:\n"
     "[{TYPE}]";
-
-//---------------------------------------------------------------------------------------------------
-const char* STR_PATH_HTML =
-    "            '/[{PATH}]': {\n"
-    "              get: {\n"
-    "                tags: ['[{TAGS}]'],\n"
-    "                summary: '[{SUMMARY}]',\n"
-    "                description: '[{DESCR}]',\n"
-    "                operationId: '[{ID}]',\n"
-    "                parameters: [\n[{PARAMS}]"
-    "                ],\n"
-    "                responses: {\n"
-    "                  '200': {\n"
-    "                    description: 'status of the scraper',\n"
-    "                    content: { 'application/json': {schema: {type: 'array', items: {$ref: "
-    "'#/components/schemas/response'}}} }, },\n"
-    "                  '400': {description: 'bad input parameter'},\n"
-    "                },\n"
-    "              },\n"
-    "            },\n";
-
-//---------------------------------------------------------------------------------------------------
-const char* STR_PARAM_HTML =
-    "                  {\n"
-    "                    name: '[{NAME}]',\n"
-    "                    in: 'query',\n"
-    "                    description: '[{DESCR}]',\n"
-    "                    required: [{REQ}],\n"
-    "                    style: 'form',\n"
-    "                    explode: true,\n"
-    "                    schema: [{TYPE}],\n"
-    "                  },";
 // EXISTING_CODE
 }  // namespace qblocks

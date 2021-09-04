@@ -75,7 +75,7 @@ class COptions : public COptionsBase {
     ostringstream optionStream, initStream, localStream, autoStream, headerStream, configStream;
     ostringstream notesStream, errorStrStream, errorDefStream, debugStream, goCallStream;
     ostringstream goRouteStream, chifraCmdStream, chifraHelpStream, pairMapStream;
-    ostringstream apiTagStream, htmlTagStream, apiPathStream, htmlPathStream;
+    ostringstream apiTagStream, apiPathStream;
     ostringstream jsLocationStream, jsTemplateStream, jsHotkeyStream, jsRouteStream;
 
     void clearStreams(void) {
@@ -95,9 +95,7 @@ class COptions : public COptionsBase {
         chifraHelpStream.str("");
         pairMapStream.str("");
         apiTagStream.str("");
-        htmlTagStream.str("");
         apiPathStream.str("");
-        htmlPathStream.str("");
         jsLocationStream.str("");
         jsTemplateStream.str("");
         jsHotkeyStream.str("");
@@ -119,9 +117,7 @@ class COptions : public COptionsBase {
         chifraHelpStream.clear();
         pairMapStream.clear();
         apiTagStream.clear();
-        htmlTagStream.clear();
         apiPathStream.clear();
-        htmlPathStream.clear();
         jsLocationStream.clear();
         jsTemplateStream.clear();
         jsHotkeyStream.clear();

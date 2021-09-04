@@ -38,17 +38,13 @@ void COptions::writeOpenApiFile(void) {
         chifraHelpStream << ep.toChifraHelp() << endl;
         pairMapStream << ep.toPairMap() << endl;
         apiTagStream << ep.toApiTag();
-        htmlTagStream << ep.toHtmlTag();
         goCallStream << ep.toGoCall();
         goRouteStream << ep.toGoRoute();
         apiPathStream << ep.toApiPath();
-        htmlPathStream << ep.toHtmlPath();
-
         counter.cmdCount += params.size();
         counter.routeCount++;
     }
 
-    // writeCode("../docs/api.html");
     writeCode("../docs/openapi.yaml");
     writeCode("../src/go-apps/flame/cmd/routes.go");
     writeCode("../src/apps/chifra/options.cpp");
