@@ -17,6 +17,7 @@
 
 namespace qblocks {
 
+extern bool writeBinaryManifest(CPinnedChunkArray& pList);
 extern bool parseOneLine(const char* line, void* data);
 #define hashToEmptyFile "QmP4i6ihnVrj8Tx7cTFw4aY6ungpaPYxDJEZ7Vg1RSNSdm"
 
@@ -97,13 +98,13 @@ bool pinlib_readManifest(CPinnedChunkArray& pinArray) {
         LOG4("Done loading pins");
         sort(pinArray.begin(), pinArray.end());
         if (!isTestMode())
-            pinlib_updateManifest(pinArray);
+            writeBinaryManifest(pinArray);
     }
     return true;
 }
 
 //---------------------------------------------------------------------------
-bool pinlib_updateManifest(CPinnedChunkArray& pList) {
+bool writeBinaryManifest(CPinnedChunkArray& pList) {
     string_q binFile = getCachePath("tmp/pins.bin");
     establishFolder(binFile);
 
@@ -187,43 +188,6 @@ static string_q pinOneChunk(const string_q& fileName, const string_q& type) {
 }
 
 //----------------------------------------------------------------
-static string_q unpinOneChunk(const string_q& hash) {
-    CApiKey lic;
-    if (!getApiKey(lic)) {
-        cerr << "You need to put Pinata API keys in $CONFIG/blockScrape.toml" << endl;
-        return "";
-    }
-
-    string_q result;
-    CURL* curl;
-    curl = curl_easy_init();
-    if (curl) {
-        curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, "DELETE");
-        curl_easy_setopt(curl, CURLOPT_URL, ("https://api.pinata.cloud/pinning/unpin/" + hash).c_str());
-        curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
-        curl_easy_setopt(curl, CURLOPT_DEFAULT_PROTOCOL, "https");
-        struct curl_slist* headers = NULL;
-        headers = curl_slist_append(headers, ("pinata_api_key: " + lic.key).c_str());
-        headers = curl_slist_append(headers, ("pinata_secret_api_key: " + lic.secret).c_str());
-        headers = curl_slist_append(headers, "Content-Type: application/json");
-        curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
-        curl_easy_setopt(curl, CURLOPT_WRITEDATA, &result);
-        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, curlCallback);
-        CURLcode res = curl_easy_perform(curl);
-        if (res != CURLE_OK) {
-            result += curl_easy_strerror(res);
-        }
-        curl_slist_free_all(headers);
-    }
-    curl_easy_cleanup(curl);
-    if (contains(result, "error"))
-        LOG_WARN("Pinata returned an error: ", result);
-    else
-        LOG_INFO("Finishing unpin: ", result);
-    return result;
-}
-
-//----------------------------------------------------------------
 bool pinlib_pinChunk(CPinnedChunkArray& pList, const string_q& fileName, CPinnedChunk& item) {
     // If already pinned, no reason to pin it again...
     CPinnedChunk copy;
@@ -271,38 +235,21 @@ bool pinlib_pinChunk(CPinnedChunkArray& pList, const string_q& fileName, CPinned
 
     // write the array (after sorting it) to the database
     sort(pList.begin(), pList.end());
-    return pinlib_updateManifest(pList);
+    return writeBinaryManifest(pList);
 }
 
-//---------------------------------------------------------------------------
-bool pinlib_unpinChunk(CPinnedChunkArray& pList, const string_q& fileName, CPinnedChunk& item) {
-    // If we don't think it's pinned, Pinata may, so proceed even if not found
-    CPinnedChunk copy;
-    if (!pinlib_findChunk(pList, fileName, copy)) {
-        item = copy;
-        item.fileName = fileName;
-        // return true;
-    }
+//--------------------------------------------------------------------------------
+void pinlib_loadMaps(CPinnedChunkArray& pList, CIndexStringMap& filenameMap, CIndexHashMap& bloomMap,
+                     CIndexHashMap& indexMap) {
+    if (!pinlib_readManifest(pList))
+        return;
 
-    CPinnedChunkArray array;
     for (auto pin : pList) {
-        if (pin.fileName == fileName) {
-            cout << "Unpinning: " << pin.fileName << endl;
-            unpinOneChunk(pin.indexHash);
-            unpinOneChunk(pin.bloomHash);
-            item = pin;
-        } else {
-            cout << "Keeping " << pin.fileName << "\r";
-            cout.flush();
-            array.push_back(pin);
-        }
+        blknum_t num = str_2_Uint(pin.fileName);
+        filenameMap[num] = pin.fileName;
+        bloomMap[num] = pin.bloomHash;
+        indexMap[num] = pin.indexHash;
     }
-    cout << endl;
-
-    pList.clear();
-    pList = array;
-    sort(pList.begin(), pList.end());
-    return pinlib_updateManifest(pList);
 }
 
 //---------------------------------------------------------------------------
@@ -424,14 +371,14 @@ bool parseOneLine(const char* line, void* data) {
 /*
 //---------------------------------------------------------------------------
 // Assumes the license is valid
-bool pinlib_getPinList(const CPinApiLicense& lic, string& result) {
+bool pin lib_get PinList(const CPinApiLicense& lic, string& result) {
     result = "";
     result.clear();
 
     bool ret = true;  // assume success
 
     CURL* curl;
-    curl = curl_easy_init();  // TODO(tjayrush): Creating and destroying curl context is slow
+    curl = curl_easy_init();  // TO DO(tjayrush): Creating and destroying curl context is slow
     if (!curl) {
         curl_easy_cleanup(curl);
         result = "Could not open curl context";
@@ -465,5 +412,74 @@ bool pinlib_getPinList(const CPinApiLicense& lic, string& result) {
     }
 
     return true;
+}
+
+//---------------------------------------------------------------------------
+extern bool pin lib_unpin Chunk(CPinnedChunkArray& pList, const string_q& fn, CPinnedChunk& item);
+bool pin lib_unpin Chunk(CPinnedChunkArray& pList, const string_q& fileName, CPinnedChunk& item) {
+    // If we don't think it's pinned, Pinata may, so proceed even if not found
+    CPinnedChunk copy;
+    if (!pinlib_findChunk(pList, fileName, copy)) {
+        item = copy;
+        item.fileName = fileName;
+        // return true;
+    }
+
+    CPinnedChunkArray array;
+    for (auto pin : pList) {
+        if (pin.fileName == fileName) {
+            cout << "Unpinning: " << pin.fileName << endl;
+            un pinOneChunk(pin.indexHash);
+            un pinOneChunk(pin.bloomHash);
+            item = pin;
+        } else {
+            cout << "Keeping " << pin.fileName << "\r";
+            cout.flush();
+            array.push_back(pin);
+        }
+    }
+    cout << endl;
+
+    pList.clear();
+    pList = array;
+    sort(pList.begin(), pList.end());
+    return writeBinaryManifest(pList);
+}
+
+//----------------------------------------------------------------
+static string_q un pinOneChunk(const string_q& hash) {
+    CApiKey lic;
+    if (!getApiKey(lic)) {
+        cerr << "You need to put Pinata API keys in $CONFIG/blockScrape.toml" << endl;
+        return "";
+    }
+
+    string_q result;
+    CURL* curl;
+    curl = curl_easy_init();
+    if (curl) {
+        curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, "DELETE");
+        curl_easy_setopt(curl, CURLOPT_URL, ("https://api.pinata.cloud/pinning/unpin/" + hash).c_str());
+        curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
+        curl_easy_setopt(curl, CURLOPT_DEFAULT_PROTOCOL, "https");
+        struct curl_slist* headers = NULL;
+        headers = curl_slist_append(headers, ("pinata_api_key: " + lic.key).c_str());
+        headers = curl_slist_append(headers, ("pinata_secret_api_key: " + lic.secret).c_str());
+        headers = curl_slist_append(headers, "Content-Type: application/json");
+        curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
+        curl_easy_setopt(curl, CURLOPT_WRITEDATA, &result);
+        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, curlCallback);
+        CURLcode res = curl_easy_perform(curl);
+        if (res != CURLE_OK) {
+            result += curl_easy_strerror(res);
+        }
+        curl_slist_free_all(headers);
+    }
+    curl_easy_cleanup(curl);
+    if (contains(result, "error"))
+        LOG_WARN("Pinata returned an error: ", result);
+    else
+        LOG_INFO("Finishing unpin: ", result);
+    return result;
 }
 */

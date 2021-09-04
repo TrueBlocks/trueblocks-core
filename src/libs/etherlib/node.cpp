@@ -1052,6 +1052,8 @@ bool forEveryTransaction(TRANSVISITFUNC func, void* data, const string_q& trans_
 }
 
 //-------------------------------------------------------------------------
+// Makes it impossible to run a live test on real index data without first having
+// configured the `indexPath` value to a path with the word 'mocked' in it.
 void guardLiveTest(const string_q& path) {
     static bool been_here = false;
     if (!isLiveTest() || been_here)

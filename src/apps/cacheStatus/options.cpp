@@ -37,7 +37,6 @@ static const COption params[] = {
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
-extern void loadPinMaps(CIndexStringMap& filenameMap, CIndexHashMap& bloomMap, CIndexHashMap& indexMap);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
     ENTER("parseArguments");
@@ -242,8 +241,9 @@ bool COptions::parseArguments(string_q& command) {
         HIDE_FIELD(CAbiCache, "items");
         HIDE_FIELD(CChainCache, "items");
     } else {
-        CIndexStringMap unused;
-        loadPinMaps(unused, bloomHashes, indexHashes);
+        CPinnedChunkArray unused1;
+        CIndexStringMap unused2;
+        pinlib_loadMaps(unused1, unused2, bloomHashes, indexHashes);
     }
     HIDE_FIELD(CChainCache, "max_depth");
 
@@ -357,18 +357,4 @@ COptions::COptions(void) {
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
-}
-
-//--------------------------------------------------------------------------------
-void loadPinMaps(CIndexStringMap& filenameMap, CIndexHashMap& bloomMap, CIndexHashMap& indexMap) {
-    CPinnedChunkArray pinList;
-    if (!pinlib_readManifest(pinList))
-        return;
-
-    for (auto pin : pinList) {
-        blknum_t num = str_2_Uint(pin.fileName);
-        filenameMap[num] = pin.fileName;
-        bloomMap[num] = pin.bloomHash;
-        indexMap[num] = pin.indexHash;
-    }
 }
