@@ -1,4 +1,4 @@
-# NOT COMPLETE
+# NOT COMPLETE - DO NOT FOLLOW THESE INSTRUCTIONS YET
 
 # v0.12.1 Fix for Index Bug / New Executable Folders
 
