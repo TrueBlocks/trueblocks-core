@@ -154,6 +154,8 @@ bool loadTimestamps(uint32_t** theArray, size_t& cnt) {
     static CMemMapFile file;
     if (file.is_open())
         file.close();
+    if (cnt == size_t(NOPOS))
+        return false;
 
     if (!establishTsFile())
         return false;
@@ -168,6 +170,49 @@ bool loadTimestamps(uint32_t** theArray, size_t& cnt) {
     if (file.isValid())
         *theArray = (uint32_t*)file.getData();  // NOLINT
 
+    return true;
+}
+
+//-------------------------------------------------------------------------
+bool correctTimestamp(blknum_t blk, timestamp_t ts) {
+    size_t nRecords = ((fileSize(tsIndex) / sizeof(uint32_t)) / 2);
+
+    // If we're in test mode, the timestamps file doesn't exist, or the block number is too damn high, quit
+    if (isTestMode() || !fileExists(tsIndex) || blk >= nRecords)
+        return true;
+
+    expContext().tsCnt = size_t(NOPOS);
+    loadTimestamps(&expContext().tsMemMap, expContext().tsCnt);
+
+    CArchive file(WRITING_ARCHIVE);
+    if (!file.Lock(tsIndex, modeReadWrite, LOCK_WAIT)) {
+        LOG_ERR("Failed to open ", tsIndex);
+        return false;
+    }
+    
+    uint32_t *buffer = new uint32_t[nRecords * 2];
+    if (!buffer) {
+        LOG_ERR("Could not allocate memory for timestamps");
+        file.Release();
+        return false;
+    }
+
+    if (!file.Read(buffer, sizeof(uint32_t), nRecords * 2)) {
+        LOG_ERR("Could not read timestamp file ", tsIndex);
+        delete [] buffer;
+        file.Release();
+        return false;
+    }
+    
+    buffer[blk * 2] = uint32_t(blk);
+    buffer[blk * 2 + 1] = uint32_t(ts);
+    lockSection();
+    file.Seek(0, SEEK_SET);
+    file.Write(buffer, sizeof(uint32_t), nRecords * 2);
+    unlockSection();
+    file.Release();
+    delete [] buffer;
+    
     return true;
 }
 
