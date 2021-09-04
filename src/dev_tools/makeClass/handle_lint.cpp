@@ -18,6 +18,7 @@ bool COptions::handle_lint(void) {
     CToml config(configPath("makeClass.toml"));
 
     bool enabled = config.getConfigBool("enabled", "lint_all", false);
+    // TODO: There's a misspelling with pylin!!!
     string_q res = doCommand("which pylin.py");  // getCommandPath("test/pylint.py"));
     if (!enabled || res.empty()) {
         LOG_WARN("Skipping linting...");

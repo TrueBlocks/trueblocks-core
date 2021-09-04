@@ -42,6 +42,9 @@ int main(int argc, const char* argv[]) {
                 } else {
                     getTimestampAt(options.latest);  // freshens timestamp file but otherwise ignored
                     forEveryTimestamp(visitBlock, &options);
+                    if (options.corrections.size() > 0) {
+                        options.applyCorrections();
+                    }
                 }
             }
 
@@ -125,37 +128,4 @@ void COptions::applyFilter() {
             }
         }
     }
-}
-
-//-----------------------------------------------------------------------
-bool checkTimestamp(CBlock& block, void* data) {
-    COptions* opt = (COptions*)data;
-    CTimeStamper* c = &opt->checker;
-    LOG_INFO("Checking block (", block.blockNumber, ", ", block.timestamp, ")\r");
-
-    bool err = false;
-    if (block.blockNumber != c->expected)
-        err = true;
-
-    if (block.blockNumber != c->prevBn + 1)
-        err = true;
-
-    else if (block.timestamp <= c->prevTs)
-        err = true;
-
-    if (err) {
-        ostringstream os;
-        CBlock blk;
-        getBlock_light(blk, c->expected);
-        os << "chifra when --timestamps --fix " << c->expected << " ";
-        os << "# should be (" << blk.blockNumber << ", " << blk.timestamp << ") ";
-        os << "is (" << block.blockNumber << ", " << block.timestamp << ") ";
-        LOG_WARN(os.str());
-    }
-
-    c->expected++;
-    c->prevBn = block.blockNumber;
-    c->prevTs = block.timestamp;
-
-    return true;
 }

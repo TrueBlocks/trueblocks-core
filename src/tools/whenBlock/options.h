@@ -32,6 +32,7 @@ class CTimeStamper {
     size_t expected = 0;
     blknum_t prevBn = 0;
     timestamp_t prevTs = blockZeroTs;
+    bool verbose = false;
 };
 
 //-----------------------------------------------------------------------------
@@ -52,6 +53,7 @@ class COptions : public CBlockOptions {
     bool isText;
     blknum_t stop;
     blknum_t cnt;
+    CBlockArray corrections;
 
     COptions(void);
     ~COptions(void);
@@ -60,6 +62,7 @@ class COptions : public CBlockOptions {
     void Init(void) override;
 
     void applyFilter(void);
+    bool applyCorrections(void);
 };
 
 extern bool showSpecials(CNameValue& pair, void* data);
