@@ -130,7 +130,7 @@ bool COptions::parseArguments(string_q& command) {
     // Parity traces are much better (and easier to use) than Geth's. But, in some
     // cases, the user may not care and tells us she doesn't need parity
     bool needsParity = config->getConfigBool("requires", "parity", true);
-    if (needsParity && !isParity()) {
+    if (needsParity && !hasParityTraces()) {
         return usage(
             "This tool requires Parity traces. Add [requires]\\nparity=false to $CONFIG/blockScrape.toml to turn "
             "this restriction off.");
