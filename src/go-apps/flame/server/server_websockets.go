@@ -1,10 +1,17 @@
 package server
 
-/*-------------------------------------------------------------------------
- * This source code is confidential proprietary information which is
+/*-------------------------------------------------------------------------------------------
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
- * All Rights Reserved
- *------------------------------------------------------------------------*/
+ *
+ * This program is free software: you may redistribute it and/or modify it under the terms
+ * of the GNU General Public License as published by the Free Software Foundation, either
+ * version 3 of the License, or (at your option) any later version. This program is
+ * distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+ * the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details. You should have received a copy of the GNU General
+ * Public License along with this program. If not, see http://www.gnu.org/licenses/.
+ *-------------------------------------------------------------------------------------------*/
 
 import (
 	"fmt"
@@ -20,20 +27,20 @@ type MessageType string
 
 const (
 	// CommandErrorMessage is a message send when the server encounters an error
-	CommandErrorMessage  MessageType = "command_error"
+	CommandErrorMessage MessageType = "command_error"
 	// CommandOutputMessage is currently not used, but may in the future carry the actual data
 	CommandOutputMessage MessageType = "output"
 	// ProgressMessage is a message carried on the stderr stream
-	ProgressMessage      MessageType = "progress"
+	ProgressMessage MessageType = "progress"
 )
 
 var upgrader = websocket.Upgrader{}
 
 // Message is a structure used to send messages via websockets
 type Message struct {
-	Action   MessageType      `json:"action"`
-	ID       string           `json:"id"`
-	Content  string           `json:"content"`
+	Action  MessageType `json:"action"`
+	ID      string      `json:"id"`
+	Content string      `json:"content"`
 }
 
 // Connection is a structure representing a websocket connection
