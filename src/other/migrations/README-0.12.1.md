@@ -68,6 +68,8 @@ would require a full re-scrape of the entire index.
 
 ### Migration for Change to Subcommand Paths
 
+This second migration is technically optional, but you should complete it anyway as it cleans up a few unnecessary files and will prevent potential future problems with your PATH.
+
 Complete the following steps from the `./trueblocks-core/build` folder:
 
 ```[bash]
