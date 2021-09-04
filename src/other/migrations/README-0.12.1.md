@@ -1,5 +1,3 @@
-# NOT COMPLETE - DO NOT FOLLOW THESE INSTRUCTIONS YET - NOT READY
-
 # v0.12.1 Fix for Index Bug / New Executable Folders
 
 **Warning:** If you're not confident using the command line, please contact us prior to proceeding. If you make a mistake and delete the wrong files, you may damage your computer.
