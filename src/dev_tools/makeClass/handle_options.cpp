@@ -498,10 +498,10 @@ bool COptions::writeCode(const string_q& fn) {
         replace(converted, "[{TAGS}]", apiTagStream.str());
         replace(converted, "[{PATHS}]", apiPathStream.str());
 
-    } else if (endsWith(fn, ".html")) {
-        converted = asciiFileToString(configPath("makeClass/blank_api.html"));
-        replace(converted, "[{TAGS}]", htmlTagStream.str());
-        replace(converted, "[{PATHS}]", htmlPathStream.str());
+    // } else if (endsWith(fn, ".html")) {
+    //     converted = asciiFileToString(configPath("makeClass/blank_api.html"));
+    //     replace(converted, "[{TAGS}]", htmlTagStream.str());
+    //     replace(converted, "[{PATHS}]", htmlPathStream.str());
 
     } else if (endsWith(fn, ".h")) {
         CStringArray tokens = {"ERROR_DEFINES", "_CODE_DECLARE"};
