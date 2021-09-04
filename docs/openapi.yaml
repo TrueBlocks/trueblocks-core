@@ -1,9 +1,30 @@
-openapi: 3.0.0
+openapi: 3.0.3
 info:
   title: TrueBlocks API
-  description: An API for accessing cached Ethereum blockchain data and accounts
+  description: >
+   A REST layer over the TrueBlocks application. With `chifra serve`, you can
+   run this on your own machine, and make calls to local host.
+
+   ## Before you begin.
+   * [Install the trueblocks-core application] on your machine, change your configs as needed.
+   * Run `chifra serve`
+
+  ## How to make calls
+  
+  By default, all calls are to localhost:8080. All options and flags are passed
+  through query parameters. Like the endpoints, the query parameters are exact
+  translations of the chifra cli application. These commands [have their own
+  documentation page](https://trueblocks.io/docs/chifra/introducing-chifra/).
+
+  For detailed descriptions of fields, see [the data model reference](/data-model/intro/intro).
+
+  ### Examples
+
+  
+   
   contact:
     email: jrush@quickblocks.io
+    url: https://trueblocks.io
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
@@ -11,8 +32,6 @@ info:
 servers:
 - url: http://localhost:8080
   description: Local endpoints
-- url: https://virtserver.swaggerhub.com/trueblocks/TrueBlocks/0.8.04
-  description: SwaggerHub API Auto Mocking
 tags:
 - name: Accounts
   description: Access and cache transactional data
@@ -29,7 +48,7 @@ paths:
     get:
       tags:
       - Accounts
-      summary: List every appearance of an address anywhere on the chain.
+      summary: List accounts
       description: List every appearance of an address anywhere on the chain.
       operationId: accounts-list
       parameters:
@@ -50,15 +69,24 @@ paths:
             application/json:
               schema:
                 type: array
-                items:
-                  $ref: '#/components/schemas/response'
+                example:
+                  {
+                    "data": [
+                      {
+                        "blockNumber": 8854723,
+                        "transactionIndex": 61,
+                        "address": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+                        "name": "TrueBlocks 2020 Wallet 0xf503"
+                      }
+                    ]
+                  }
         "400":
           description: bad input parameter
   /export:
     get:
       tags:
       - Accounts
-      summary: Export full detail of transactions for one or more addresses.
+      summary: Export account details
       description: Export full detail of transactions for one or more addresses.
       operationId: accounts-export
       parameters:
@@ -338,15 +366,44 @@ paths:
             application/json:
               schema:
                 type: array
-                items:
-                  $ref: '#/components/schemas/response'
+                example: {
+                  "data": [
+                    {
+                      "hash": "0x1a898c5448b37f693343917ea40b7ad1c43b28a4ddd37af1bd6d0bb4a0c99891",
+                      "blockHash": "0x1d7f60b34bad8ce0ba5e49e3845c7a62ba8db440b81f8df98ec6349c4d28ca8e",
+                      "blockNumber": 8854723,
+                      "transactionIndex": 61,
+                      "timestamp": 1572639538,
+                      "from": "0xbb984f85bd52d78eb2fbf2c5598bae7abb98c5bc",
+                      "to": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+                      "value": 5e+18,
+                      "gas": 21000,
+                      "gasPrice": 10000000000,
+                      "maxFeePerGas": 0,
+                      "maxPriorityFeePerGas": 0,
+                      "isError": 0,
+                      "hasToken": 0,
+                      "receipt": {
+                        "contractAddress": "0x0",
+                        "gasUsed": 21000,
+                        "effectiveGasPrice": 10000000000,
+                        "status": 1
+                      },
+                      "compressedTx": "0x ( )",
+                      "gasCost": 210000000000000,
+                      "gasUsed": 21000,
+                      "date": "2019-11-01 20:18:58 UTC",
+                      "ether": 5
+                    }
+                  ]
+                }
         "400":
           description: bad input parameter
   /monitors:
     get:
       tags:
       - Accounts
-      summary: Add, remove, clean, and list address monitors.
+      summary: Monitor
       description: Add, remove, clean, and list address monitors.
       operationId: accounts-monitors
       parameters:
@@ -391,7 +448,7 @@ paths:
     get:
       tags:
       - Accounts
-      summary: Query addresses or names of well known accounts.
+      summary: Names
       description: Query addresses or names of well known accounts.
       operationId: accounts-names
       parameters:
@@ -509,15 +566,21 @@ paths:
             application/json:
               schema:
                 type: array
-                items:
-                  $ref: '#/components/schemas/response'
-        "400":
-          description: bad input parameter
+                example:   
+                  {"data": [{
+                    "tags": "50-Tokens:ERC20",
+                    "address": "0xfe5f141bf94fe84bc28ded0ab966c16b17490657",
+                    "name": "LibraToken",
+                    "symbol": "LBA",
+                    "source": "On chain",
+                    "decimals": 18,
+                    "description": "Decentralized lending infrastructure facilitating open access to credit networks on Ethereum."
+                  }]}  
   /abis:
     get:
       tags:
       - Accounts
-      summary: Fetches the ABI for a smart contract.
+      summary: ABIs
       description: Fetches the ABI for a smart contract.
       operationId: accounts-abis
       parameters:
@@ -579,15 +642,45 @@ paths:
             application/json:
               schema:
                 type: array
-                items:
-                  $ref: '#/components/schemas/response'
+                example:
+                 {"data":[
+                  {"name": "PairCreated",
+                   "type": "event",
+                   "stateMutability": "nonpayable",
+                   "signature": "PairCreated(address,address,address,uint256)",
+                   "encoding": "0x0d3648bd0f6ba80134a33ba9275ac585d9d315f0ad8355cddefde31afa28d0e9",
+                   "inputs": [
+                     {
+                       "type": "address",
+                       "name": "token0",
+                       "indexed": true,
+                       "internalType": "address"
+                     },
+                     {
+                       "type": "address",
+                       "name": "token1",
+                       "indexed": true,
+                       "internalType": "address"
+                     },
+                     {
+                       "type": "address",
+                       "name": "pair",
+                       "internalType": "address"
+                     },
+                     {
+                       "type": "uint256",
+                       "name": "val_0",
+                       "internalType": "uint256"
+                     }
+                   ]
+                 }]}
         "400":
           description: bad input parameter
   /blocks:
     get:
       tags:
       - ChainData
-      summary: Retrieve one or more blocks from the chain or local cache.
+      summary: Get blocks
       description: Retrieve one or more blocks from the chain or local cache.
       operationId: chaindata-blocks
       parameters:
@@ -689,16 +782,19 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/response'
+                properties:
+                  data:
+                    type: array
+                    description: array of blocks
+                    items:
+                      $ref: '#/components/schemas/block'
         "400":
           description: bad input parameter
   /transactions:
     get:
       tags:
       - ChainData
-      summary: Retrieve one or more transactions from the chain or local cache.
+      summary: Get transactions
       description: Retrieve one or more transactions from the chain or local cache.
       operationId: chaindata-transactions
       parameters:
@@ -758,16 +854,19 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/response'
+                properties:
+                  data:
+                    description: "array of transactions"
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/transactions'
         "400":
           description: bad input parameter
   /receipts:
     get:
       tags:
       - ChainData
-      summary: Retrieve receipts for the given transaction(s).
+      summary: Get receipts
       description: Retrieve receipts for the given transaction(s).
       operationId: chaindata-receipts
       parameters:
@@ -795,16 +894,19 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/response'
+                properties:
+                  data:
+                    description: array of receipts
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/receipts'
         "400":
           description: bad input parameter
   /logs:
     get:
       tags:
       - ChainData
-      summary: Retrieve logs for the given transaction(s).
+      summary: Get logs
       description: Retrieve logs for the given transaction(s).
       operationId: chaindata-logs
       parameters:
@@ -852,16 +954,19 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/response'
+                properties:
+                  data:
+                    type: array
+                    description: array of logs
+                    items:
+                      $ref: '#/components/schemas/logs'
         "400":
           description: bad input parameter
   /traces:
     get:
       tags:
       - ChainData
-      summary: Retrieve traces for the given transaction(s).
+      summary: Get Traces
       description: Retrieve traces for the given transaction(s).
       operationId: chaindata-traces
       parameters:
@@ -930,16 +1035,19 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/response'
+                properties:
+                  data:
+                    type: array
+                    description: "array of trace objects"
+                    items:
+                      $ref: '#/components/schemas/traces'
         "400":
           description: bad input parameter
   /when:
     get:
       tags:
       - ChainData
-      summary: Find block(s) based on date, blockNum, timestamp, or 'special'.
+      summary: Get block date
       description: Find block(s) based on date, blockNum, timestamp, or 'special'.
       operationId: chaindata-when
       parameters:
@@ -972,7 +1080,7 @@ paths:
           type: boolean
       - name: check
         in: query
-        description: available only with --timestamps, checks the validity of the timestamp data
+        description: available only with --timestamps option, checks the validity of the timestamp data
         required: false
         style: form
         explode: true
@@ -980,15 +1088,7 @@ paths:
           type: boolean
       - name: fix
         in: query
-        description: available only with --timestamps, fixes incorrect timestamps if any
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: count
-        in: query
-        description: available only with --timestamps, returns the number of timestamps in the cache
+        description: available only with --timestamps option, fixes incorrect timestamps if found
         required: false
         style: form
         explode: true
@@ -1009,16 +1109,25 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/response'
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        blockNumber:
+                          $ref: '#/components/schemas/blockNumber'
+                        timestamp:
+                          $ref: '#/components/schemas/timestamp'
+                        date:
+                          $ref: '#/components/schemas/date'
         "400":
           description: bad input parameter
   /state:
     get:
       tags:
       - ChainState
-      summary: Retrieve account balance(s) for one or more addresses at given block(s).
+      summary: Get account balance(s)
       description: Retrieve account balance(s) for one or more addresses at given block(s).
       operationId: chainstate-state
       parameters:
@@ -1102,7 +1211,7 @@ paths:
     get:
       tags:
       - ChainState
-      summary: Retrieve token balance(s) for one or more addresses at given block(s).
+      summary: Get token balance(s)
       description: Retrieve token balance(s) for one or more addresses at given block(s).
       operationId: chainstate-tokens
       parameters:
@@ -1178,7 +1287,7 @@ paths:
     get:
       tags:
       - Admin
-      summary: Report on the status of the TrueBlocks system.
+      summary: Report TrueBlocks status
       description: Report on the status of the TrueBlocks system.
       operationId: admin-status
       parameters:
@@ -1323,6 +1432,30 @@ paths:
       description: Scan the chain and update the TrueBlocks index of appearances.
       operationId: admin-scrape
       parameters:
+      - name: n_blocks
+        in: query
+        description: maximum number of blocks to process (defaults to 5000)
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: number
+      - name: n_block_procs
+        in: query
+        description: number of block channels for blaze
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: number
+      - name: n_addr_procs
+        in: query
+        description: number of address channels for blaze
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: number
       - name: pin
         in: query
         description: pin new chunks (and blooms) to IPFS (requires Pinata key and running IPFS node)
@@ -1339,30 +1472,14 @@ paths:
         explode: true
         schema:
           type: number
-      - name: n_blocks
+      - name: quit
         in: query
-        description: maximum number of blocks to process (default 2000)
+        description: quit the program if it's running
         required: false
         style: form
         explode: true
         schema:
-          type: number
-      - name: n_block_procs
-        in: query
-        description: number of concurrent block channels for blaze
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: number
-      - name: n_addr_procs
-        in: query
-        description: number of concurrent address channels for blaze
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: number
+          type: boolean
       responses:
         "200":
           description: status of the scraper
@@ -1378,7 +1495,7 @@ paths:
     get:
       tags:
       - Admin
-      summary: Manage pinned index of appearances and associated Bloom filters.
+      summary: Manage pins
       description: Manage pinned index of appearances and associated Bloom filters.
       operationId: admin-pins
       parameters:
@@ -1445,7 +1562,7 @@ paths:
     get:
       tags:
       - Other
-      summary: Freshen and/or display Ethereum price data.
+      summary: Get Ethereum price data.
       description: Freshen and/or display Ethereum price data.
       operationId: other-quotes
       parameters:
@@ -1582,9 +1699,6 @@ components:
       properties:
         data:
           type: object
-          example:
-          - $ref: '#/components/schemas/scrape_response'
-          - $ref: '#/components/schemas/trans_response'
         error:
           type: array
           example:
@@ -1592,9 +1706,431 @@ components:
           - error 2
           items:
             type: string
-    scrape_response:
+    block:
+      type: object
+      properties:
+        gasLimit:
+          $ref: '#/components/schemas/gasLimit'
+        hash:
+          $ref: '#/components/schemas/hash'
+        blockNumber:
+          $ref: '#/components/schemas/blockNumber'
+        parentHash:
+          $ref: '#/components/schemas/parentHash'
+        miner:
+          $ref: '#/components/schemas/miner'
+        difficulty:
+          $ref: '#/components/schemas/difficulty'
+        timestamp:
+          $ref: '#/components/schemas/timestamp'
+        transactions:
+          $ref: '#/components/schemas/transactions'
+        baseFeePerGas:
+          $ref: '#/components/schemas/baseFeePerGas'
+        finalized:
+          $ref: '#/components/schemas/finalized'
+    receipts:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/status'
+        contractAddress:
+          $ref: '#/components/schemas/contractAddress'
+        gasUsed:
+          $ref: '#/components/schemas/gasUsed'
+        logs:
+          type: array
+          description: possibly empty array of logs
+          items:
+            $ref: '#/components/schemas/logs'
+    transactions:
+      type: object
+      properties:
+        hash:
+          $ref: '#/components/schemas/hash'
+        blockHash:
+          $ref: '#/components/schemas/hash'
+        blockNumber:
+          $ref: '#/components/schemas/blockNumber'
+        transactionIndex:
+          $ref: '#/components/schemas/transactionIndex'
+        nonce:
+          $ref: '#/components/schemas/nonce'
+        timestamp:
+          $ref: '#/components/schemas/timestamp'
+        from:
+          $ref: '#/components/schemas/from'
+        to:
+          $ref: '#/components/schemas/to'
+        value:
+          $ref: '#/components/schemas/value'
+        gas:
+          $ref: '#/components/schemas/gasPrice'
+        input:
+          $ref: '#/components/schemas/input'
+        receipt:
+          $ref: '#/components/schemas/receipts'
+        statements:
+          type: array
+          description: "array of reconciliations"
+          items:
+            $ref: '#/components/schemas/reconciliations'
+        articulatedTx:
+          $ref: "#/components/schemas/articulatedTx"
+        compressedTx:
+          $ref: "#/components/schemas/compressedTx"
+        hasToken:
+          $ref: "#/components/schemas/hasToken"
+        finalized:
+          $ref: "#/components/schemas/finalized"
+    articulatedTx:
+      type: object
+      description: "a human readable articulation of the input field"
+    compressedTx:
       type: string
-      example: Scrape response
-    trans_response:
+      example: "0x3d18b912 ( )"
+      description: "truncated, more readable version of the articulation"
+    reconciliations:
+      type: object
+      properties:
+        blockNumber:
+          $ref: "#/components/schemas/blockNumber"
+        transactionIndex:
+          $ref: '#/components/schemas/transactionIndex'
+        timestamp:
+          $ref: '#/components/schemas/timestamp'
+        assetAddr:
+          description: for reconciliations whose assetSymbol is ETH or WEI, the accountedFor address. For all assets, the address of the asset itself
+          allOf:
+            - $ref: '#/components/schemas/address'
+        assetSymbol:
+          description: either ETH, WEI or the symbol of the asset being reconciled as extracted from the chain
+          type: string
+        decimals: 
+          description: Equivilent to the extracted value of getSymbol from ERC20 or, if ETH or WEI then 18
+          type: number
+        prevBlk:
+          description: the block number of the previous reconciliation 
+          allOf:
+            - $ref: "#/components/schemas/blockNumber"
+        prevBlkBal:
+          description: the account balance for the given asset for the previous reconciliation
+          allOf:
+            - $ref: "#/components/schemas/blockNumber"
+        begBal:
+          description: the begining balance of the asset at the blockNumber
+          type: number
+          format: bigint
+        begBalDiff:
+          description: the difference between the expected beginning balance (prevBlkBal) and the queried balance from the chain
+          type: number
+          format: bigint
+        amountIn:
+          description: for ETH reconciliations, the value of the transactions if the from address is the same as the accountedFor address. Otherwise, the value of the ERC20’s transfer amount.
+          type: number
+          format: bigint
+        amountOut:
+          description: the amount (in terms of the asset) of regular outflow during this bigint
+        internalIn:
+          description: for ETH reconciliations only, the value of any internal value transfers into the accountedFor account 
+          type: number 
+          format: bigint
+        internalOut:
+          description: for ETH reconciliations only, the value of any internal value transfers out of the accountedFor account
+          type: number 
+          format: bigint
+        selfDestructIn:
+          description: for ETH reconciliations for transactions ending in self-destrution only, the value received by the accountedFor account from the self-destructed account bigint
+        selfDestructOut:
+          description: for ETH reconciliations for transactions ending in self-destrution only, the value transfered out of the accountedFor account 
+          type: number 
+          format: bigint
+        minerBaseRewardIn:
+          description: for blocks won by the accountedFor address, this is the base fee reward for the miner 
+          type: number 
+          format: bigint
+        minerNephewRewardIn:
+          description: for blocks won by the accountedFor address, this is the netphew reward for the miner 
+          type: number 
+          format: bigint
+        minerTxFeeIn:
+          description: for blocks won by the accountedFor address, this is the transaction fee reward for the miner 
+          type: number 
+          format: bigint
+        minerUncleRewardIn:
+          description: for blocks in which the accountedFor address generated an uncle, this value is the uncle reward 
+          type: number 
+          format: bigint
+        prefundIn:
+          description: at block zero (0) only, the amount of genesis income for the accountedFor address 
+          type: number 
+          format: bigint
+        gasCostOut:
+          description: if accountedFor address is the transaction’s sender (i.e. from at the top level), the amount of gas expended denominated in either ETH or WEI. 
+          type: number 
+          format: bigint
+        endBal:
+          description: the balance of the reconciled asset at the end of this transaction found by querying the chain (see the note above about intra-block reconciliations) 
+          type: number 
+          format: bigint
+        totalIn:
+          description: a calculated field -- the sum of all In fields 
+          type: number 
+          format: bigint
+        totalOut:
+          description: a calculated field -- the sum of all Out fields 
+          type: number 
+          format: bigint
+        amountNet:
+          description: a calculated field -- totalIn - totalOut 
+          type: number 
+          format: bigint
+        endBalCalc:
+          description: a calculated field -- begBal + amountNet 
+          type: number 
+          format: bigint
+        endBalDiff:
+          description: a calculated field -- endBal - endBalCalc, if non-zero, the reconciliation failed 
+          type: number 
+          format: bigint
+        reconciled:
+          description: a calculated field -- true if `endBal === endBalCalc` and `begBal === prevBlkBal`. `false` otherwise.
+          type: boolean
+        reconciliationType:
+          description: One of regular, traces, prevdiff-partial, partial-nextdiff, or `partial-partial depending on previous, following or both transactions in the same block 	string
+        spotPrice:
+          description: The price (if available) at the time of the transaction in US dollars for ETH reconciliations and ETH for other assets 
+          type: number 
+          format: bigint
+    transactionIndex:
+     example: 305
+     type: number
+     description: "the transaction’s zero-indexed position in the block"
+    nonce:
+      example: 232
+      type: number
+      description: "sequence number of the transactions sent by the sender"
+    from:
+      description: "address from which transaction originated"
+      allOf:
+        - $ref: "#/components/schemas/address"
+    to:
+      description: "address from which transaction originated"
+      allOf:
+       - $ref: "#/components/schemas/address"
+    address:
+      description: The address of the named account
       type: string
-      example: Trans response
+      format: address
+      example: "0xf503017d7baf7fbc0fff7492b751025c6a78179b"
+    value:
+      example: 0
+      type: number
+      format: wei
+      description: the amount of wei sent with this transactions
+    gas:
+      example: 158660
+      type: number
+      format: wei
+      description: the maximum number of gas allowed for this action
+    gasPrice:
+      example: 63525836552
+      type: number
+      format: wei
+      description: "gasPrice 	the number of wei per unit of gas used the sender is willing to spend"
+    maxFeePerGas:
+      example: 107596001741
+      type: number
+    maxPriorityFeePerGas:
+      example: 2000000000
+      type: number
+    input:
+      example: "0x3d18b912"
+      description:  "byte data either containing a message or funcational data for a smart contracts. See the --articulate "
+      type: string
+    hasToken:
+      example: 0
+      type: number
+    gasLimit:
+      type: number
+      format: wei
+      example: 5000
+      description: "the system-wide maximum amount of gas permitted in this block"
+    hash:
+      type: string
+      format: hash
+      description: "The hash of the current transaction or block"
+      example: "0xf12869a900c2fd345f9d6a93e25e6118fd7f99f2b04bff6da59c8bc4218a1e98"
+    blockNumber:
+      example: 10021
+      type: number
+      format: blockNum
+      description: the number of the block
+    parentHash:
+      type: string
+      example: "0x66fc978cfe3d0d0dee8590600f9955c6ae658b8cda1573a0793b95841f9231c9"
+      format: hash
+      description: hash of previous block
+    miner:
+      example: "0xf927a40c8b7f6e07c5af7fa2155b4864a4112b13"
+      description: Address of block's winning miner
+      type: string
+      format: address
+    difficulty:
+     description: "The computational difficulty at this block"
+     format: bigint
+     type: number
+     example: 598133194256
+    timestamp:
+      description: "the unix timestamp of the object"
+      type: number
+      format: timestamp
+      example: 1438335038
+    baseFeePerGas:
+      type: number
+      example: 0
+    finalized:
+      description: "a flag indicating if TrueBlocks considers this block final"
+      type: boolean
+      example: true
+    date:
+      description: "Human readable version of timestamp"
+      example: "2015-07-30 15:34:53 UTC"
+      type: string
+    status:
+      type: boolean
+      description: >
+        "`1` if the transaction suceeded, `0` otherwise"
+    contractAddress:
+      description:  the address of the newly created contract, if any
+      type: string
+      format: address
+    gasUsed:
+      description: the amount of gas used by this transaction
+      type: number
+      format: wei
+    logs:
+      type: object
+      properties:
+        blockNumber:
+          $ref: "#/components/schemas/blockNumber"
+        transactionIndex:
+          $ref: "#/components/schemas/transactionIndex"
+        address:
+          description: the smart contract that emitted this log
+          allOf:
+            - $ref: "#/components/schemas/address"
+        logIndex:
+          description: >
+            the zero-indexed position of this log relative to the block
+          example: 354
+        topics:
+          description: The first topic hashes event signature of the log, up to 3 additional index parameters may appear
+          type: array
+          maxItems: 4
+          example:
+           [
+            "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+            "0x000000000000000000000000cfa5b526105ec86d893f24bc173b1d4166979f54",
+            "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"
+           ]
+        data:
+          description: any remaining un-indexed parameters to the event
+          type: string
+          format: bytes
+          example: "0x000000000000000000000000000000000000000000000001456b4ee641bd3ff6"
+        articulatedLog:
+          description: a human-readable version of the topic and data fields
+          type: object
+          properties:
+            name:
+              type: string
+              example: "Transfer"
+            inputs:
+              type: object
+              properties:
+                _amount:
+                  example: "23448922635686985718"
+                _from:
+                  $ref: "#/components/schemas/from"
+                _to:
+                  $ref: "#/components/schemas/to"
+        compressedLog:
+          description: a truncated, more readable version of the articulation
+          type: string
+          example: "Transfer(0xcfa5b526105ec86d893f24bc173b1d4166979f54 /*_from*/, 0xf503017d7baf7fbc0fff7492b751025c6a78179b /*_to*/, 23448922635686985718 /*_amount*/); "
+    traces:
+      type: object
+      properties:   
+        blockHash:
+          $ref: "#/components/schemas/hash"
+        blockNumber:
+          $ref: "#/components/schemas/blockNumber"
+        transactionHash:
+          description: the transaction's hash
+          type: string
+          format: hash
+        transactionIndex:
+          $ref: "#/components/schemas/transactionIndex"
+        traceAddress:
+          description: a particular trace's address in the trace tree
+          type: string
+        subTraces:
+          description: the number of children traces that the trace hash
+          type: number
+        type:
+          description: the type of the trace
+          type: string
+        action:
+          $ref: "#/components/schemas/traceAction"
+        result:
+          $ref: "#/components/schemas/traceResult"
+    traceAction:
+      description: the trace action object
+      type: object
+      properties:
+        from:
+         description: the smart contract that called the trace
+         allOf:
+           - $ref: '#/components/schemas/address'
+        to:
+          description: the smart contract that the trace calls
+          allOf:
+            - $ref: '#/components/schemas/address'
+        gas:
+          $ref: "#/components/schemas/gas"
+        input:
+          description: an encoded version of the function call.
+          type: string
+          format: bytes
+        callType:
+          description: the type of call
+          type: string
+        refundAddress:
+          description: if the call type is self-destruct, the address to which the refund is sent
+          allOf:
+            - $ref: '#/components/schemas/address'
+        articulatedTrace:
+          description: A human-readable version of the trace action’s input and the result’s output
+          type: object
+        compressedTrace:
+          description: a truncated, more readable version of the articulation
+          type: string
+    traceResult:
+      description: the trace result
+      type: object
+      properties:
+        newContract:
+          description: Address of new contract, if any
+          allOf:
+            - $ref: "#/components/schemas/address"
+        code:
+          description: if this trace is creating a new smart contract, the byte code of that contract
+          type: string
+          format: bytes
+        gasUsed:
+          $ref: "#/components/schemas/gasUsed"
+        output:
+          description: the result of the call of this trace
+          type: string
+          format: byte
