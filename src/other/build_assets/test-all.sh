@@ -16,7 +16,7 @@ cd ..
 make generate finish
 make -j 8
 
-test-api.sh --filter all --mode both --clean --report $@
+~/.local/bin/chifra/test/test-api.sh --filter all --mode both --clean --report $@
 RESULT=$?
 
 # Special case for customized customized names

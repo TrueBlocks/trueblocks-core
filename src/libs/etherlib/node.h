@@ -159,12 +159,7 @@ CBlockProgress getBlockProgress(size_t which = BP_ALL);
 //-------------------------------------------------------------------------
 extern string_q getIndexPath(const string_q& _part);
 inline string_q getCommandPath(const string_q& _part) {
-#ifdef NEW_CMD_PATH
-#error - not implemented yet
     return "~/.local/bin/chifra/" + _part;
-#else
-    return _part;
-#endif
 }
 
 //-------------------------------------------------------------------------

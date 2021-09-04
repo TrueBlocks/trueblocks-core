@@ -68,8 +68,8 @@ set (BASE_INCLUDE
 
 # ----------------------------------------------------------------------------------------
 set (BIN_DIR ${CMAKE_SOURCE_DIR}/../bin)
-set (BIN_CMDS_DIR ${BIN_DIR})
-set (BIN_TEST_DIR ${BIN_DIR}/test)
+set (BIN_CMDS_DIR $ENV{HOME}/.local/bin/chifra)
+set (BIN_TEST_DIR ${BIN_CMDS_DIR}/test)
 
 # ----------------------------------------------------------------------------------------
 # Enable testing

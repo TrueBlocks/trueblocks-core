@@ -104,7 +104,7 @@ bool COptions::parseArguments(string_q& command) {
 
     if (!find.empty()) {
         ostringstream os;
-        os << "findSig " << find;
+        os << getCommandPath("findSig") << " " << find;
         LOG_TEST_CALL(os.str());
         // clang-format off
         if (system(os.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings

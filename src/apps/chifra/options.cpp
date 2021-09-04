@@ -104,7 +104,7 @@ bool COptions::call_command(int argc, const char* argv[]) {
         replace(realCmd, "blockScrape", "flame");
     string_q prev;
     ostringstream os;
-    os << realCmd;
+    os << getCommandPath(realCmd);
     for (int i = 2; i < argc; i++) {
         // If we're not removing it...
         if (!removeMap[argv[i]]) {

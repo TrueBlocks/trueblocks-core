@@ -12,9 +12,7 @@ import (
 	"net/http"
 	"os"
 	"os/exec"
-
-	// NEW_CMD_PATH
-	// "os/user"
+	"os/user"
 	"strconv"
 	"strings"
 
@@ -28,16 +26,14 @@ func isTestMode(r *http.Request) bool {
 
 // GetCommandPath returns full path the the given tool
 func GetCommandPath(cmd string) string {
-	// NEW_CMD_PATH
-	// usr, _ := user.Current()
-	// dir := usr.HomeDir
-	// return dir + "/.local/bin/chifra/" + cmd
-	return cmd
+	usr, _ := user.Current()
+	dir := usr.HomeDir
+	return dir + "/.local/bin/chifra/" + cmd
 }
 
 // CallOne handles a route that calls the underlying TrueBlocks tool directly
 func CallOne(w http.ResponseWriter, r *http.Request, tbCmd, apiCmd string) {
-	CallOneExtra(w, r, tbCmd, "", apiCmd)
+	CallOneExtra(w, r, GetCommandPath(tbCmd), "", apiCmd)
 }
 
 // CallOneExtra handles a route by calling into chifra
@@ -113,7 +109,7 @@ func CallOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd s
 			}
 			log.Println("apiCmd: ", apiCmd)
 			if apiCmd == "scrape" {
-				out, err := exec.Command("blockScrape", "--quit --verbose").Output()
+				out, err := exec.Command(GetCommandPath("blockScrape"), "--quit --verbose").Output()
 				if err != nil {
 					fmt.Printf("%s", err)
 				} else {

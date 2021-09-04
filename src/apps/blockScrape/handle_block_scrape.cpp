@@ -92,7 +92,7 @@ bool COptions::scrape_blocks(void) {
     // We're ready to scrape, so build the blaze command line...
     os.clear();
     os.str("");
-    os << "blaze scrape ";
+    os << getCommandPath("blaze") + " scrape ";
     os << "--startBlock " << cons.blazeStart << " ";
     os << "--nBlocks " << cons.blazeCnt << " ";
     os << "--ripeBlock " << cons.blazeRipe << " ";

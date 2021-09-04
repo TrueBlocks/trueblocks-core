@@ -51,7 +51,7 @@ type ChifraResponse struct {
 }
 
 func GetChifraResponse() (ChifraResponse, error) {
-	cmd := exec.Command("cacheStatus", "--terse")
+	cmd := exec.Command(GetCommandPath("cacheStatus"), "--terse")
 	cmd.Env = append(os.Environ(), "API_MODE=true")
 	out, err := cmd.Output()
 	if err != nil {
