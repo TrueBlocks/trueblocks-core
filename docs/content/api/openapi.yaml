@@ -5,7 +5,7 @@ info:
    A REST layer over the TrueBlocks application. With `chifra serve`, you can
    run this on your own machine, and make calls to local host.
 
-   ## Before you begin.
+   ## Before you begin.  
    * [Install the trueblocks-core application] on your machine, change your configs as needed.
    * Run `chifra serve`
 
@@ -46,7 +46,7 @@ paths:
     get:
       tags:
       - Accounts
-      summary: List every appearance of an address anywhere on the chain.
+      summary: List accounts
       description: List every appearance of an address anywhere on the chain.
       operationId: accounts-list
       parameters:
@@ -84,7 +84,7 @@ paths:
     get:
       tags:
       - Accounts
-      summary: Export full detail of transactions for one or more addresses.
+      summary: Export account details
       description: Export full detail of transactions for one or more addresses.
       operationId: accounts-export
       parameters:
@@ -401,7 +401,7 @@ paths:
     get:
       tags:
       - Accounts
-      summary: Add, remove, clean, and list address monitors.
+      summary: Monitor
       description: Add, remove, clean, and list address monitors.
       operationId: accounts-monitors
       parameters:
@@ -446,7 +446,7 @@ paths:
     get:
       tags:
       - Accounts
-      summary: Query addresses or names of well known accounts.
+      summary: Names
       description: Query addresses or names of well known accounts.
       operationId: accounts-names
       parameters:
@@ -578,7 +578,7 @@ paths:
     get:
       tags:
       - Accounts
-      summary: Fetches the ABI for a smart contract.
+      summary: ABIs
       description: Fetches the ABI for a smart contract.
       operationId: accounts-abis
       parameters:
@@ -678,7 +678,7 @@ paths:
     get:
       tags:
       - ChainData
-      summary: Retrieve one or more blocks from the chain or local cache.
+      summary: Get blocks
       description: Retrieve one or more blocks from the chain or local cache.
       operationId: chaindata-blocks
       parameters:
@@ -792,7 +792,7 @@ paths:
     get:
       tags:
       - ChainData
-      summary: Retrieve one or more transactions from the chain or local cache.
+      summary: Get transactions
       description: Retrieve one or more transactions from the chain or local cache.
       operationId: chaindata-transactions
       parameters:
@@ -864,7 +864,7 @@ paths:
     get:
       tags:
       - ChainData
-      summary: Retrieve receipts for the given transaction(s).
+      summary: Get receipts
       description: Retrieve receipts for the given transaction(s).
       operationId: chaindata-receipts
       parameters:
@@ -904,7 +904,7 @@ paths:
     get:
       tags:
       - ChainData
-      summary: Retrieve logs for the given transaction(s).
+      summary: Get logs
       description: Retrieve logs for the given transaction(s).
       operationId: chaindata-logs
       parameters:
@@ -964,7 +964,7 @@ paths:
     get:
       tags:
       - ChainData
-      summary: Retrieve traces for the given transaction(s).
+      summary: Get Traces
       description: Retrieve traces for the given transaction(s).
       operationId: chaindata-traces
       parameters:
@@ -1045,7 +1045,7 @@ paths:
     get:
       tags:
       - ChainData
-      summary: Find block(s) based on date, blockNum, timestamp, or 'special'.
+      summary: Get block date
       description: Find block(s) based on date, blockNum, timestamp, or 'special'.
       operationId: chaindata-when
       parameters:
@@ -1133,7 +1133,7 @@ paths:
     get:
       tags:
       - ChainState
-      summary: Retrieve account balance(s) for one or more addresses at given block(s).
+      summary: Get account balance(s)
       description: Retrieve account balance(s) for one or more addresses at given block(s).
       operationId: chainstate-state
       parameters:
@@ -1224,7 +1224,7 @@ paths:
     get:
       tags:
       - ChainState
-      summary: Retrieve token balance(s) for one or more addresses at given block(s).
+      summary: Get token balance(s)
       description: Retrieve token balance(s) for one or more addresses at given block(s).
       operationId: chainstate-tokens
       parameters:
@@ -1312,7 +1312,7 @@ paths:
     get:
       tags:
       - Admin
-      summary: Report on the status of the TrueBlocks system.
+      summary: Report TrueBlocks status
       description: Report on the status of the TrueBlocks system.
       operationId: admin-status
       parameters:
@@ -1538,7 +1538,7 @@ paths:
     get:
       tags:
       - Admin
-      summary: Manage pinned index of appearances and associated Bloom filters.
+      summary: Manage pins
       description: Manage pinned index of appearances and associated Bloom filters.
       operationId: admin-pins
       parameters:
@@ -1605,7 +1605,7 @@ paths:
     get:
       tags:
       - Other
-      summary: Freshen and/or display Ethereum price data.
+      summary: Get Ethereum price data.
       description: Freshen and/or display Ethereum price data.
       operationId: other-quotes
       parameters:
