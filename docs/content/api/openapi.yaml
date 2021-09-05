@@ -1525,11 +1525,11 @@ paths:
           description: bad input parameter
   /init:
     get:
-      summary: init
+      tags:
+      - Admin
+      summary: Init
+      description: Initalize the TrueBlocks index of appearances
       operationId: admin-init
-      description:
-        There is no response from chifra init. It only downloads
-        Bloom and index files from IPFS and reports to the screen.
       responses:
         "200":
            description: no response
