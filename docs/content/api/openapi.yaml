@@ -2,24 +2,24 @@ openapi: 3.0.3
 info:
   title: TrueBlocks API
   description: >
-    A REST layer over the TrueBlocks application. With `chifra serve`, you can
-    run this on your own machine, and make calls to local host.
+   A REST layer over the TrueBlocks application. With `chifra serve`, you can
+   run this on your own machine, and make calls to local host.
 
-    ## Before you begin.
-    * [Install the trueblocks-core application] on your machine, change your configs as needed.
-    * Run `chifra serve`
+   ## Before you begin.
+   * [Install the trueblocks-core application] on your machine, change your configs as needed.
+   * Run `chifra serve`
 
     ## How to make calls
-  
+    
     By default, all calls are to localhost:8080. All options and flags are passed
     through query parameters. Like the endpoints, the query parameters are exact
     translations of the chifra cli application. These commands [have their own
     documentation page](https://trueblocks.io/docs/chifra/introducing-chifra/).
-
+  
     For detailed descriptions of fields, see [the data model reference](/data-model/intro/intro).
-
+  
     ### Examples
-
+    
   contact:
     email: jrush@trueblocks.io
     url: https://www.trueblocks.io
