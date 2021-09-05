@@ -19,9 +19,10 @@ info:
     For detailed descriptions of fields, see [the data model reference](/data-model/intro/intro).
 
     ### Examples
+
   contact:
-    email: jrush@quickblocks.io
-    url: https://trueblocks.io
+    email: jrush@trueblocks.io
+    url: https://www.trueblocks.io
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
@@ -2176,3 +2177,4 @@ components:
           description: the result of the call of this trace
           type: string
           format: byte
+

@@ -497,6 +497,8 @@ bool COptions::writeCode(const string_q& fn) {
         converted = asciiFileToString(configPath("makeClass/blank_openapi.yaml"));
         replace(converted, "[{TAGS}]", apiTagStream.str());
         replace(converted, "[{PATHS}]", apiPathStream.str());
+        replace(converted, "[{DESCRIPTION}]", asciiFileToString("../docs/content/api/templates/description.txt"));
+        replace(converted, "[{COMPONENTS}]", asciiFileToString("../docs/content/api/templates/components.txt"));
 
     } else if (endsWith(fn, ".h")) {
         CStringArray tokens = {"ERROR_DEFINES", "_CODE_DECLARE"};
