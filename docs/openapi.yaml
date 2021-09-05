@@ -2,26 +2,24 @@ openapi: 3.0.3
 info:
   title: TrueBlocks API
   description: >
-   A REST layer over the TrueBlocks application. With `chifra serve`, you can
-   run this on your own machine, and make calls to local host.
+    A REST layer over the TrueBlocks application. With `chifra serve`, you can
+    run this on your own machine, and make calls to local host.
 
-   ## Before you begin.
-   * [Install the trueblocks-core application] on your machine, change your configs as needed.
-   * Run `chifra serve`
+    ## Before you begin.
+    * [Install the trueblocks-core application] on your machine, change your configs as needed.
+    * Run `chifra serve`
 
-  ## How to make calls
+    ## How to make calls
   
-  By default, all calls are to localhost:8080. All options and flags are passed
-  through query parameters. Like the endpoints, the query parameters are exact
-  translations of the chifra cli application. These commands [have their own
-  documentation page](https://trueblocks.io/docs/chifra/introducing-chifra/).
+    By default, all calls are to localhost:8080. All options and flags are passed
+    through query parameters. Like the endpoints, the query parameters are exact
+    translations of the chifra cli application. These commands [have their own
+    documentation page](https://trueblocks.io/docs/chifra/introducing-chifra/).
 
-  For detailed descriptions of fields, see [the data model reference](/data-model/intro/intro).
+    For detailed descriptions of fields, see [the data model reference](/data-model/intro/intro).
 
-  ### Examples
+    ### Examples
 
-  
-   
   contact:
     email: jrush@quickblocks.io
     url: https://trueblocks.io
@@ -1210,9 +1208,16 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/response'
+                example: 
+                  {
+                  "data": [
+                    {
+                      "blockNumber": 13154749,
+                      "balance": 29930129965150564000,
+                      "address": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+                      "ether": 29.930129965150567
+                    }
+                  ]}
         "400":
           description: bad input parameter
   /tokens:
@@ -1286,9 +1291,21 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/response'
+                example:
+                  {
+                   "data": [
+                     {
+                       "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+                       "balance": "400",
+                       "address": "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984",
+                       "name": "Uniswap",
+                       "symbol": "UNI",
+                       "decimals": 18,
+                       "is_contract": true,
+                       "is_erc20": true,
+                       "is_erc721": false
+                     }
+                       ]}
         "400":
           description: bad input parameter
   /status:
@@ -1427,9 +1444,25 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/response'
+                example:
+                  {
+                  "data": [
+                    {
+                      "client_version": "erigon/2021.09.2/linux-amd64/go1.16.3",
+                      "trueblocks_version": "GHC-TrueBlocks//0.12.1-alpha-7ac3196d7-20210903",
+                      "rpc_provider": "http://localhost:23456",
+                      "config_path": "/Users/user/Library/Application Support/TrueBlocks/",
+                      "cache_path": "/Users/user/Library/Application Support/TrueBlocks/cache/",
+                      "index_path": "/Users/user/Development/trueblocks-index/wild.0/unchained/",
+                      "is_testing": false,
+                      "is_docker": false,
+                      "is_archive": true,
+                      "is_tracing": true,
+                      "has_eskey": true,
+                      "has_pinkey": true,
+                      "date": "2021-09-03 19:38:19 UTC"
+                    }
+                  ]}
         "400":
           description: bad input parameter
   /scrape:
@@ -1491,6 +1524,16 @@ paths:
                   $ref: '#/components/schemas/response'
         "400":
           description: bad input parameter
+  /init:
+    get:
+      summary: init
+      operationId: admin-init
+      description:
+        There is no response from chifra init. It only downloads
+        Bloom and index files from IPFS and reports to the screen.
+      responses:
+        "200":
+           description: no response
   /pins:
     get:
       tags:
