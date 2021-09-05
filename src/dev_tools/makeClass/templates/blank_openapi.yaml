@@ -10,8 +10,8 @@ info:
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   version: 0.8.04
 servers:
-- url: http://localhost:8080
-  description: Local endpoints
+  - url: http://localhost:8080
+    description: Local endpoints
 tags:
 [{TAGS}]paths:
 [{PATHS}]components:

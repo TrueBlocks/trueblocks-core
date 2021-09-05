@@ -83,7 +83,7 @@ class CCommandOption : public CBaseNode {
     string_q toGoRoute(void) const;
     string_q toApiPath(void) const;
     bool isChifraRoute(void) const;
-    string_q getType(bool quoted) const;
+    string_q getSchema(void) const;
     bool isStringType(void) const {
         return (isEnum || isEnumList || isStringList || isAddressList || isTopicList);
     }

@@ -494,12 +494,15 @@ bool COptions::writeCode(const string_q& fn) {
         converted = replaceCode(converted, "ROUTE_ITEMS", goRouteStream.str());
 
     } else if (endsWith(fn, ".yaml")) {
+        string_q components = trim(asciiFileToString("../docs/content/api/templates/components.txt"), '\n');
+        string_q descr = asciiFileToString("../docs/content/api/templates/description.txt");
+        replaceAll(descr, "~~~~", "    ");
+
         converted = asciiFileToString(configPath("makeClass/blank_openapi.yaml"));
         replace(converted, "[{TAGS}]", apiTagStream.str());
         replace(converted, "[{PATHS}]", apiPathStream.str());
-        replace(converted, "[{DESCRIPTION}]", asciiFileToString("../docs/content/api/templates/description.txt"));
-        replace(converted, "[{COMPONENTS}]",
-                trim(asciiFileToString("../docs/content/api/templates/components.txt"), '\n'));
+        replace(converted, "[{DESCRIPTION}]", descr);
+        replace(converted, "[{COMPONENTS}]", components);
 
     } else if (endsWith(fn, ".h")) {
         CStringArray tokens = {"ERROR_DEFINES", "_CODE_DECLARE"};

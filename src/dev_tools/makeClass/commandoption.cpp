@@ -776,8 +776,8 @@ string_q CCommandOption::toApiTag(void) const {
         return "";
 
     const char* STR_TAG_YAML =
-        "- name: [{GROUP}]\n"
-        "  description: [{DESCRIPTION}]\n";
+        "  - name: [{GROUP}]\n"
+        "    description: [{DESCRIPTION}]\n";
     CCommandOption ret = *this;
     replaceAll(ret.group, " ", "");
     return ret.Format(STR_TAG_YAML);
@@ -822,19 +822,26 @@ string_q CCommandOption::toGoRoute(void) const {
 }
 
 //---------------------------------------------------------------------------------------------------
+string_q prepareDescr(const string_q& in) {
+    if (in.length() < 75)
+        return in;
+    return ">\n            " + substitute(in, "\n         ", "");
+}
+
+//---------------------------------------------------------------------------------------------------
 string_q CCommandOption::toApiPath(void) const {
     if (!isApiRoute(api_route))
         return "";
 
     ostringstream paramStream;
     for (auto param : *(CCommandOptionArray*)params) {
-        if (param.command.empty())
+        if (param.command.empty() || !param.is_visible_docs)
             continue;
         string_q yp = STR_PARAM_YAML;
         replace(yp, "[{NAME}]", param.command);
-        replace(yp, "[{DESCR}]", param.swagger_descr);
+        replace(yp, "[{DESCR}]", prepareDescr(param.swagger_descr));
         replace(yp, "[{REQ}]", param.is_required ? "true" : "false");
-        replace(yp, "[{TYPE}]", param.getType(false /* forHtml */));
+        replace(yp, "[{SCHEMA}]", param.getSchema());
         paramStream << yp << endl;
     }
     string_q ret = STR_PATH_YAML;
@@ -848,94 +855,67 @@ string_q CCommandOption::toApiPath(void) const {
 }
 
 //---------------------------------------------------------------------------------------------------
-string_q CCommandOption::getType(bool forHtml) const {
-    string_q lead = (forHtml ? "{" : "          ");
-    string_q trail = (forHtml ? "}" : "");
+string_q CCommandOption::getSchema(void) const {
+    string_q lead = "            ";
 
     if (contains(data_type, "list")) {
-        if (trail == "}") {
-            if (contains(data_type, "enum")) {
-                string_q e = substitute(substitute(data_type, "list<", ""), ">", "");
-                string_q str = substitute(substitute(substitute(e, "*", ""), "enum[", ""), "]", "");
-                CStringArray opts;
-                explode(opts, str, '|');
-                ostringstream os;
-                bool first = true;
-                for (auto o : opts) {
-                    if (!first)
-                        os << ", ";
-                    os << "'" << o << "'";
-                    first = false;
-                }
-                string_q str_array_enum = "{ type: 'array', items: { type: 'string', enum: [";
-                return str_array_enum + os.str() + "] } }";
-            } else {
-                return "{type: 'array', items: {type: 'string'}}";
-            }
-        } else {
-            if (contains(data_type, "enum")) {
-                string_q e = substitute(substitute(data_type, "list<", ""), ">", "");
-                string_q str = substitute(substitute(substitute(e, "*", ""), "enum[", ""), "]", "");
-                CStringArray opts;
-                explode(opts, str, '|');
-                ostringstream os;
-                for (auto o : opts) {
-                    if (isNumeral(o)) {
-                        os << substitute("            - \"[{VAL}]\"\n", "[{VAL}]", o);
-                    } else {
-                        os << substitute("            - [{VAL}]\n", "[{VAL}]", o);
-                    }
-                }
-                string_q str_array_enum =
-                    "          type: array\n"
-                    "          items:\n"
-                    "            type: string\n"
-                    "            enum:\n";
-                return str_array_enum + trim(os.str(), '\n');
-            } else {
-                return "          type: array\n          items:\n            type: string";
-            }
-        }
-    }
-
-    if (contains(data_type, "boolean")) {
-        return lead + "type: " + (forHtml ? "'boolean'" : "boolean") + trail;
-
-    } else if (contains(data_type, "uint") || contains(data_type, "double")) {
-        return lead + "type: " + (forHtml ? "'number'" : "number") + trail;
-
-    } else if (contains(data_type, "enum")) {
-        if (trail == "}") {
-            string_q str = substitute(substitute(substitute(data_type, "*", ""), "enum[", ""), "]", "");
-            CStringArray opts;
-            explode(opts, str, '|');
-            ostringstream os;
-            bool first = true;
-            for (auto o : opts) {
-                if (!first)
-                    os << ", ";
-                os << "'" << o << "'";
-                first = false;
-            }
-            return lead + "type: 'string', enum: [" + os.str() + "] }";
-        } else {
-            string_q str = substitute(substitute(substitute(data_type, "*", ""), "enum[", ""), "]", "");
+        if (contains(data_type, "enum")) {
+            string_q e = substitute(substitute(data_type, "list<", ""), ">", "");
+            string_q str = substitute(substitute(substitute(e, "*", ""), "enum[", ""), "]", "");
             CStringArray opts;
             explode(opts, str, '|');
             ostringstream os;
             for (auto o : opts) {
                 if (isNumeral(o)) {
-                    os << substitute(lead + "- \"[{VAL}]\"\n", "[{VAL}]", o);
+                    os << substitute(lead + "    - \"[{VAL}]\"\n", "[{VAL}]", o);
                 } else {
-                    os << substitute(lead + "- [{VAL}]\n", "[{VAL}]", o);
+                    os << substitute(lead + "    - [{VAL}]\n", "[{VAL}]", o);
                 }
             }
-            string_q enum_head = lead + "type: string\n" + lead + "enum:\n" + trail;
-            return enum_head + trim(os.str(), '\n');
+            string_q str_array_enum =
+                "~type: array\n"
+                "~items:\n"
+                "~  type: string\n"
+                "~  enum:\n";
+            replaceAll(str_array_enum, "~", lead);
+            return str_array_enum + trim(os.str(), '\n');
         }
+
+        string_q ret;
+        ret += lead + "type: array\n";
+        ret += lead + "items:\n";
+        ret += lead + "  type: string\n";
+        string_q type = substitute(substitute(data_type, "list<", ""), ">", "");
+        replace(type, "addr", "address_t");
+        if (!endsWith(type, "_t"))
+            type += "_t";
+        ret += lead + "  format: " + type;
+        return ret;
     }
 
-    return lead + "type: " + (forHtml ? "'string'" : "string") + trail;
+    if (contains(data_type, "boolean")) {
+        return lead + "type: " + "boolean";
+
+    } else if (contains(data_type, "uint") || contains(data_type, "double")) {
+        return lead + "type: " + "number";
+
+    } else if (contains(data_type, "enum")) {
+        string_q str = substitute(substitute(substitute(data_type, "*", ""), "enum[", ""), "]", "");
+        CStringArray opts;
+        explode(opts, str, '|');
+        ostringstream os;
+        for (auto o : opts) {
+            if (isNumeral(o)) {
+                os << substitute(lead + "  - \"[{VAL}]\"\n", "[{VAL}]", o);
+            } else {
+                os << substitute(lead + "  - [{VAL}]\n", "[{VAL}]", o);
+            }
+        }
+        string_q enum_head = lead + "type: string\n" + lead + "enum:\n";
+        return enum_head + trim(os.str(), '\n');
+    }
+
+    return lead + "type: " + "string";
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -943,7 +923,7 @@ const char* STR_PATH_YAML =
     "  /[{PATH}]:\n"
     "    get:\n"
     "      tags:\n"
-    "      - [{TAGS}]\n"
+    "        - [{TAGS}]\n"
     "      summary: [{SUMMARY}]\n"
     "      description: [{DESCR}]\n"
     "      operationId: [{ID}]\n"
@@ -951,25 +931,25 @@ const char* STR_PATH_YAML =
     "[{PARAMS}]"
     "      responses:\n"
     "        \"200\":\n"
-    "          description: status of the scraper\n"
+    "          description: returns the requested data\n"
     "          content:\n"
     "            application/json:\n"
     "              schema:\n"
     "                type: array\n"
     "                items:\n"
-    "                  $ref: '#/components/schemas/response'\n"
+    "                  $ref: \"#/components/schemas/response\"\n"
     "        \"400\":\n"
     "          description: bad input parameter\n";
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_PARAM_YAML =
-    "      - name: [{NAME}]\n"
-    "        in: query\n"
-    "        description: [{DESCR}]\n"
-    "        required: [{REQ}]\n"
-    "        style: form\n"
-    "        explode: true\n"
-    "        schema:\n"
-    "[{TYPE}]";
+    "        - name: [{NAME}]\n"
+    "          description: [{DESCR}]\n"
+    "          required: [{REQ}]\n"
+    "          style: form\n"
+    "          in: query\n"
+    "          explode: true\n"
+    "          schema:\n"
+    "[{SCHEMA}]";
 // EXISTING_CODE
 }  // namespace qblocks
