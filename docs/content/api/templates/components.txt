@@ -449,6 +449,18 @@
     function:
       type: object
       description: "a human readable representation of a Solidity function call or event"
+    parameter:
+      type: object
+      description: "a parameter to a function or event"
+    state:
+      type: object
+      description: "the state of a smart contract"
+    monitor:
+      type: object
+      description: "an address that is being (or has been) monitored"
+    quote:
+      type: object
+      description: "a price quote from an external API"
     hash:
       type: string
       format: hash_t
@@ -468,3 +480,4 @@
             - error 2
           items:
             type: string
+ 

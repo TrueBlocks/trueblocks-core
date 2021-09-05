@@ -1,0 +1,11 @@
+                  [
+                    {
+                      "tags": "50-Tokens:ERC20",
+                      "address": "0xfe5f141bf94fe84bc28ded0ab966c16b17490657",
+                      "name": "LibraToken",
+                      "symbol": "LBA",
+                      "source": "On chain",
+                      "decimals": 18,
+                      "description": "Decentralized lending infrastructure facilitating open access to credit networks on Ethereum.",
+                    },
+                  ]

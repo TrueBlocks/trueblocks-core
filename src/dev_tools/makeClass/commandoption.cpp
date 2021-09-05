@@ -844,13 +844,30 @@ string_q CCommandOption::toApiPath(void) const {
         replace(yp, "[{SCHEMA}]", param.getSchema());
         paramStream << yp << endl;
     }
+
+    string_q propertyFn = "../docs/content/api/properties/" + api_route + ".txt";
+    string_q exampleFn = "../docs/content/api/examples/" + api_route + ".txt";
+
+    ostringstream example;
+    if (fileExists(exampleFn))
+        example << string_q(16, ' ') << "example:" << endl << asciiFileToString(exampleFn) << endl;
+
+    ostringstream properties;
+    if (fileExists(propertyFn))
+        properties << string_q(16, ' ') << "properties:" << endl << asciiFileToString(propertyFn) << endl;
+
+    if (!fileExists(exampleFn) && !fileExists(propertyFn))
+        properties << string_q(16, ' ') << "items:\n                  $ref: \"#/components/schemas/response\"\n";
+
     string_q ret = STR_PATH_YAML;
-    replace(ret, "[{TAGS}]", substitute(group, " ", ""));
-    replace(ret, "[{PATH}]", api_route);
-    replace(ret, "[{PARAMS}]", paramStream.str());
-    replace(ret, "[{SUMMARY}]", summary);
-    replace(ret, "[{DESCR}]", description);
-    replace(ret, "[{ID}]", toLower(substitute(group, " ", "") + "-" + api_route));
+    replaceAll(ret, "[{TAGS}]", substitute(group, " ", ""));
+    replaceAll(ret, "[{PROPERTIES}]", properties.str());
+    replaceAll(ret, "[{EXAMPLE}]", example.str());
+    replaceAll(ret, "[{PATH}]", api_route);
+    replaceAll(ret, "[{PARAMS}]", paramStream.str());
+    replaceAll(ret, "[{SUMMARY}]", summary);
+    replaceAll(ret, "[{DESCR}]", description);
+    replaceAll(ret, "[{ID}]", toLower(substitute(group, " ", "") + "-" + api_route));
     return ret;
 }
 
@@ -936,9 +953,7 @@ const char* STR_PATH_YAML =
     "            application/json:\n"
     "              schema:\n"
     "                type: array\n"
-    "                items:\n"
-    "                  $ref: \"#/components/schemas/response\"\n"
-    "        \"400\":\n"
+    "[{PROPERTIES}][{EXAMPLE}]        \"400\":\n"
     "          description: bad input parameter\n";
 
 //---------------------------------------------------------------------------------------------------

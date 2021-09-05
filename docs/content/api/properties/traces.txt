@@ -1,0 +1,5 @@
+                  data:
+                    type: array
+                    description: "array of trace objects"
+                    items:
+                      $ref: "#/components/schemas/trace"

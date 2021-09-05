@@ -10,60 +10,60 @@ info:
   version: 0.12.1-alpha
   description: >
 
-    A REST layer over the TrueBlocks application. With `chifra serve`, you can
-    run this on your own machine, and make calls to `localhost`.
+   A REST layer over the TrueBlocks application. With `chifra serve`, you can
+   run this on your own machine, and make calls to `localhost`.
 
-    ## How to use this API
+   ## How to use this API
 
-    This API's endpoints are exact translations of the commands used by the chifra
-    CLI application, and the query parameters mirror the commands' options and
-    flags. If you want details, [the commands have their own documentation page](https://trueblocks.io/docs/chifra/introducing-chifra/).
+   This API's endpoints are exact translations of the commands used by the chifra
+   CLI application, and the query parameters mirror the commands' options and
+   flags. If you want details, [the commands have their own documentation page](https://trueblocks.io/docs/chifra/introducing-chifra/).
 
-    For detailed descriptions of fields, see [the data model reference](https://trueblocks.io/data-model/intro/intro).
+   For detailed descriptions of fields, see [the data model reference](https://trueblocks.io/data-model/intro/intro).
 
-      ### Before you begin
+     ### Before you begin
 
-    1. [Install the trueblocks-core application](https://trueblocks.io/docs/prologue/installing-trueblocks/)
-      on your machine, change your configs as needed.
-    2. Run `chifra serve`
+   1. [Install the trueblocks-core application](https://trueblocks.io/docs/prologue/installing-trueblocks/)
+     on your machine, change your configs as needed.
+   2. Run `chifra serve`
 
 
-      ### Example queries
+     ### Example queries
 
-     By default, all calls are to `localhost:8080`.
-     All options and flags are passed through query parameters.
+    By default, all calls are to `localhost:8080`.
+    All options and flags are passed through query parameters.
 
-     For example, to get block `100`, make a call to `/blocks` and specify
-     the block you want in the query parameter:
+    For example, to get block `100`, make a call to `/blocks` and specify
+    the block you want in the query parameter:
 
-     ```shell
-     curl "http://localhost:8080/blocks?blocks=100"
-     ```
+    ```shell
+    curl "http://localhost:8080/blocks?blocks=100"
+    ```
 
-     Some parameters support ranges:
+    Some parameters support ranges:
 
-     ```shell
-     curl "http://localhost:8080/blocks?blocks=100-120"
-     ```
+    ```shell
+    curl "http://localhost:8080/blocks?blocks=100-120"
+    ```
 
-     Other parameters let you filter your responses. For example, to get only
-     the unique addresses from that block range:
+    Other parameters let you filter your responses. For example, to get only
+    the unique addresses from that block range:
 
-     ```shell
-     curl "http://localhost:8080/blocks?blocks=100-110&uniq=true"
-     ```
+    ```shell
+    curl "http://localhost:8080/blocks?blocks=100-110&uniq=true"
+    ```
 
-     You might want to cache queries on your local machine.
+    You might want to cache queries on your local machine.
 
-     ```shell
-     "http://localhost:8080/blocks?blocks=100-110&cache=true"
-     ```
+    ```shell
+    "http://localhost:8080/blocks?blocks=100-110&cache=true"
+    ```
 
-     Cacheing speeds up repeat queries significantly. The cache options are
-     particularly useful for calls to data-rich endpoints, like most endpoints
-     in the  "Accounts" collection.
+    Cacheing speeds up repeat queries significantly. The cache options are
+    particularly useful for calls to data-rich endpoints, like most endpoints
+    in the  "Accounts" collection.
 
-     Of course, caches occupy local storage. So cache wisely.
+    Of course, caches occupy local storage. So cache wisely.
 servers:
   - url: http://localhost:8080
     description: Local endpoints
@@ -490,20 +490,19 @@ paths:
               schema:
                 type: array
                 example:
-                  {
-                    "data":
-                      [
-                        {
-                          "tags": "50-Tokens:ERC20",
-                          "address": "0xfe5f141bf94fe84bc28ded0ab966c16b17490657",
-                          "name": "LibraToken",
-                          "symbol": "LBA",
-                          "source": "On chain",
-                          "decimals": 18,
-                          "description": "Decentralized lending infrastructure facilitating open access to credit networks on Ethereum.",
-                        },
-                      ],
-                  }
+                  [
+                    {
+                      "tags": "50-Tokens:ERC20",
+                      "address": "0xfe5f141bf94fe84bc28ded0ab966c16b17490657",
+                      "name": "LibraToken",
+                      "symbol": "LBA",
+                      "source": "On chain",
+                      "decimals": 18,
+                      "description": "Decentralized lending infrastructure facilitating open access to credit networks on Ethereum.",
+                    },
+                  ]
+        "400":
+          description: bad input parameter
   /abis:
     get:
       tags:
@@ -1935,6 +1934,18 @@ components:
     function:
       type: object
       description: "a human readable representation of a Solidity function call or event"
+    parameter:
+      type: object
+      description: "a parameter to a function or event"
+    state:
+      type: object
+      description: "the state of a smart contract"
+    monitor:
+      type: object
+      description: "an address that is being (or has been) monitored"
+    quote:
+      type: object
+      description: "a price quote from an external API"
     hash:
       type: string
       format: hash_t

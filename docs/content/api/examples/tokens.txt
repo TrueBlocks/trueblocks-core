@@ -1,0 +1,16 @@
+                  {
+                    "data":
+                      [
+                        {
+                          "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+                          "balance": "400",
+                          "address": "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984",
+                          "name": "Uniswap",
+                          "symbol": "UNI",
+                          "decimals": 18,
+                          "is_contract": true,
+                          "is_erc20": true,
+                          "is_erc721": false,
+                        },
+                      ],
+                  }
