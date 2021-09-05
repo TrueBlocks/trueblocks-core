@@ -15,4 +15,3 @@
     For detailed descriptions of fields, see [the data model reference](/data-model/intro/intro).
   
     ### Examples
-    
