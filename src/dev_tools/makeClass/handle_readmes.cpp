@@ -27,8 +27,8 @@ bool visitReadme(const string_q& templatePath, void* data) {
 
         CStringArray parts;
         explode(parts, templatePath, '/');
-        string_q folder = parts[3];
-        string_q tool = substitute(parts[4], ".md", "");
+        string_q folder = parts[5];
+        string_q tool = substitute(parts[6], ".md", "");
         string_q docPath = "../docs/content/readmes/" + folder + "/" + tool + "/README.md";
         string_q srcPath = "../src/" + folder + "/" + tool + "/README.md";
 
