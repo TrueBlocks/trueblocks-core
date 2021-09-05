@@ -498,7 +498,8 @@ bool COptions::writeCode(const string_q& fn) {
         replace(converted, "[{TAGS}]", apiTagStream.str());
         replace(converted, "[{PATHS}]", apiPathStream.str());
         replace(converted, "[{DESCRIPTION}]", asciiFileToString("../docs/content/api/templates/description.txt"));
-        replace(converted, "[{COMPONENTS}]", asciiFileToString("../docs/content/api/templates/components.txt"));
+        replace(converted, "[{COMPONENTS}]",
+                trim(asciiFileToString("../docs/content/api/templates/components.txt"), '\n'));
 
     } else if (endsWith(fn, ".h")) {
         CStringArray tokens = {"ERROR_DEFINES", "_CODE_DECLARE"};

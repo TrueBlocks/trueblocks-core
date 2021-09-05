@@ -19,7 +19,6 @@ info:
     For detailed descriptions of fields, see [the data model reference](/data-model/intro/intro).
   
     ### Examples
-    
   contact:
     email: jrush@trueblocks.io
     url: https://www.trueblocks.io

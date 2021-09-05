@@ -2,8 +2,7 @@ openapi: 3.0.3
 info:
   title: TrueBlocks API
   description: >
-[{DESCRIPTION}]
-  contact:
+[{DESCRIPTION}]  contact:
     email: jrush@trueblocks.io
     url: https://www.trueblocks.io
   license:

@@ -1,7 +1,7 @@
    A REST layer over the TrueBlocks application. With `chifra serve`, you can
    run this on your own machine, and make calls to local host.
 
-   ## Before you begin.
+   ## Before you begin.  
    * [Install the trueblocks-core application] on your machine, change your configs as needed.
    * Run `chifra serve`
 
