@@ -66,827 +66,700 @@ info:
     Of course, caches occupy local storage. So cache wisely.
 
 servers:
-- url: http://localhost:8080
-  description: Local endpoints
+  - url: http://localhost:8080
+    description: Local endpoints
 tags:
-- name: Accounts
-  description: Access and cache transactional data
-- name: ChainData
-  description: Access and cache blockchain-related data
-- name: ChainState
-  description: Access to account and token state
-- name: Admin
-  description: Control the scraper and build the index
-- name: Other
-  description: Access to other and external data
+  - name: Accounts
+    description: Access and cache transactional data
+  - name: ChainData
+    description: Access and cache blockchain-related data
+  - name: ChainState
+    description: Access to account and token state
+  - name: Admin
+    description: Control the scraper and build the index
+  - name: Other
+    description: Access to other and external data
 paths:
   /list:
     get:
       tags:
-      - Accounts
+        - Accounts
       summary: List transactions
       description: List every appearance of an address anywhere on the chain.
       operationId: accounts-list
       parameters:
-      - name: addrs
-        in: query
-        description: one or more addresses (0x...) to list
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: array
-          items:
-            type: string
+        - name: addrs
+          description: one or more addresses (0x...) to list
+          required: true
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: address_t
       responses:
         "200":
-          description: status of the scraper
+          description: returns the requested data
           content:
             application/json:
               schema:
                 type: array
+                properties:
+                  data:
+                    description: an array of appearances
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/appearance"
                 example:
                   {
-                    "data": [
-                      {
-                        "blockNumber": 8854723,
-                        "transactionIndex": 61,
-                        "address": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-                        "name": "TrueBlocks 2020 Wallet 0xf503"
-                      }
-                    ]
+                    "data":
+                      [
+                        {
+                          "blockNumber": 8854723,
+                          "transactionIndex": 61,
+                          "address": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+                          "name": "TrueBlocks 2020 Wallet 0xf503",
+                        },
+                      ],
                   }
         "400":
           description: bad input parameter
   /export:
     get:
       tags:
-      - Accounts
+        - Accounts
       summary: Export details
       description: Export full detail of transactions for one or more addresses.
       operationId: accounts-export
       parameters:
-      - name: addrs
-        in: query
-        description: one or more addresses (0x...) to export
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: array
-          items:
+        - name: addrs
+          description: one or more addresses (0x...) to export
+          required: true
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: address_t
+        - name: topics
+          description: filter by one or more log topics (only for --logs option)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: topic_t
+        - name: fourbytes
+          description: filter by one or more fourbytes (only for transactions and trace options)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: fourbyte_t
+        - name: appearances
+          description: export a list of appearances
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: receipts
+          description: export receipts instead of transaction list
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: statements
+          description: >
+            for use with --accounting option only, export only reconciliation statements
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: logs
+          description: export logs instead of transaction list
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: traces
+          description: export traces instead of transaction list
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: accounting
+          description: export accounting records instead of transaction list
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: articulate
+          description: articulate transactions, traces, logs, and outputs
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: cache_txs
+          description: write transactions to the cache (see notes)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: cache_traces
+          description: write traces to the cache (see notes)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: emitter
+          description: >
+            for log export only, export only if one of the given export addresses emitted the event
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: source
+          description: for log export only, export only one of these addresses emitted the event
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: address_t
+        - name: relevant
+          description: >
+            for log and accounting export only, if true export only logs relevant to one of the given export addresses
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: count
+          description: >
+            only available for --appearances mode, if present return only the number of records
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: first_record
+          description: the first record to process
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
             type: string
-      - name: topics
-        in: query
-        description: filter by one or more log topics (only for --logs option)
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: array
-          items:
+        - name: max_records
+          description: the maximum number of records to process before reporting
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
             type: string
-      - name: fourbytes
-        in: query
-        description: filter by one or more fourbytes (only for transactions and trace options)
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: array
-          items:
-            type: string
-      - name: appearances
-        in: query
-        description: export a list of appearances
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: receipts
-        in: query
-        description: export receipts instead of transaction list
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: statements
-        in: query
-        description: for use with --accounting option only, export only reconciliation statements
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: logs
-        in: query
-        description: export logs instead of transaction list
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: traces
-        in: query
-        description: export traces instead of transaction list
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: accounting
-        in: query
-        description: export accounting records instead of transaction list
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: articulate
-        in: query
-        description: articulate transactions, traces, logs, and outputs
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: cache_txs
-        in: query
-        description: write transactions to the cache (see notes)
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: cache_traces
-        in: query
-        description: write traces to the cache (see notes)
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: skip_ddos
-        in: query
-        description: toggle skipping over 2016 dDos transactions ('on' by default)
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: max_traces
-        in: query
-        description: if --skip_ddos is on, this many traces defines what a ddos transaction
-          is (default = 250)
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: number
-      - name: freshen
-        in: query
-        description: freshen but do not print the exported data
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: factory
-        in: query
-        description: scan for contract creations from the given address(es) and report
-          address of those contracts
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: emitter
-        in: query
-        description: for log export only, export only if one of the given export addresses emitted the event
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: source
-        in: query
-        description: for log export only, export only one of these addresses emitted the event
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: array
-          items:
-            type: string
-      - name: relevant
-        in: query
-        description: for log and accounting export only, if true export only logs relevant to one of the given export addresses
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: count
-        in: query
-        description: only available for --appearances mode, if present return only
-          the number of records
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: first_block
-        in: query
-        description: first block to process (inclusive)
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-      - name: last_block
-        in: query
-        description: last block to process (inclusive)
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-      - name: first_record
-        in: query
-        description: the first record to process
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-      - name: max_records
-        in: query
-        description: the maximum number of records to process before reporting
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-      - name: clean
-        in: query
-        description: clean (i.e. remove duplicate appearances) from all existing monitors
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: staging
-        in: query
-        description: enable search of staging (not yet finalized) folder
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: unripe
-        in: query
-        description: enable search of unripe (neither staged nor finalized) folder
-          (assumes --staging)
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: load
-        in: query
-        description: a comma separated list of dynamic traversers to load
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-      - name: reversed
-        in: query
-        description: produce results in reverse chronological order
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: by_date
-        in: query
-        description: produce results sorted by date (default is to report by address)
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: summarize_by
-        in: query
-        description: for --accounting only, summarize reconciliations by this time period
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-          enum:
-          - yearly
-          - quarterly
-          - monthly
-          - weekly
-          - daily
-          - hourly
-          - blockly
-          - tx
+        - name: clean
+          description: clean (i.e. remove duplicate appearances) from all existing monitors
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
       responses:
         "200":
-          description: status of the scraper
+          description: returns the requested data
           content:
             application/json:
               schema:
                 type: array
-                example: {
-                  "data": [
-                    {
-                      "hash": "0x1a898c5448b37f693343917ea40b7ad1c43b28a4ddd37af1bd6d0bb4a0c99891",
-                      "blockHash": "0x1d7f60b34bad8ce0ba5e49e3845c7a62ba8db440b81f8df98ec6349c4d28ca8e",
-                      "blockNumber": 8854723,
-                      "transactionIndex": 61,
-                      "timestamp": 1572639538,
-                      "from": "0xbb984f85bd52d78eb2fbf2c5598bae7abb98c5bc",
-                      "to": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-                      "value": 5e+18,
-                      "gas": 21000,
-                      "gasPrice": 10000000000,
-                      "maxFeePerGas": 0,
-                      "maxPriorityFeePerGas": 0,
-                      "isError": 0,
-                      "hasToken": 0,
-                      "receipt": {
-                        "contractAddress": "0x0",
-                        "gasUsed": 21000,
-                        "effectiveGasPrice": 10000000000,
-                        "status": 1
-                      },
-                      "compressedTx": "0x ( )",
-                      "gasCost": 210000000000000,
-                      "gasUsed": 21000,
-                      "date": "2019-11-01 20:18:58 UTC",
-                      "ether": 5
-                    }
-                  ]
-                }
+                example:
+                  {
+                    "data":
+                      [
+                        {
+                          "hash": "0x1a898c5448b37f693343917ea40b7ad1c43b28a4ddd37af1bd6d0bb4a0c99891",
+                          "blockHash": "0x1d7f60b34bad8ce0ba5e49e3845c7a62ba8db440b81f8df98ec6349c4d28ca8e",
+                          "blockNumber": 8854723,
+                          "transactionIndex": 61,
+                          "timestamp": 1572639538,
+                          "from": "0xbb984f85bd52d78eb2fbf2c5598bae7abb98c5bc",
+                          "to": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+                          "value": 5e+18,
+                          "gas": 21000,
+                          "gasPrice": 10000000000,
+                          "maxFeePerGas": 0,
+                          "maxPriorityFeePerGas": 0,
+                          "isError": 0,
+                          "hasToken": 0,
+                          "receipt":
+                            {
+                              "contractAddress": "0x0",
+                              "gasUsed": 21000,
+                              "effectiveGasPrice": 10000000000,
+                              "status": 1,
+                            },
+                          "compressedTx": "0x ( )",
+                          "gasCost": 210000000000000,
+                          "gasUsed": 21000,
+                          "date": "2019-11-01 20:18:58 UTC",
+                          "ether": 5,
+                        },
+                      ],
+                  }
         "400":
           description: bad input parameter
   /monitors:
     get:
       tags:
-      - Accounts
-      summary: Monitors
+        - Accounts
+      summary: Manage Monitors
       description: Add, remove, clean, and list address monitors.
       operationId: accounts-monitors
       parameters:
-      - name: addrs
-        in: query
-        description: one or more addresses (0x...) to list
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: array
-          items:
-            type: string
-      - name: delete
-        in: query
-        description: delete a previously created monitor (or undelete if already deleted)
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: remove
-        in: query
-        description: remove a previously deleted monitor
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
+        - name: addrs
+          description: one or more addresses (0x...) to list
+          required: true
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: address_t
+        - name: delete
+          description: delete a previously created monitor (or undelete if already deleted)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: remove
+          description: remove a previously deleted monitor
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
       responses:
         "200":
-          description: status of the scraper
+          description: returns the requested data
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/response'
+                  $ref: "#/components/schemas/response"
         "400":
           description: bad input parameter
   /names:
     get:
       tags:
-      - Accounts
+        - Accounts
       summary: Names
       description: Query addresses or names of well known accounts.
       operationId: accounts-names
       parameters:
-      - name: terms
-        in: query
-        description: a space separated list of one or more search terms
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: array
-          items:
-            type: string
-      - name: expand
-        in: query
-        description: expand search to include all fields (default searches name, address,
-          and symbol only)
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: match_case
-        in: query
-        description: do case-sensitive search
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: all
-        in: query
-        description: include all accounts in the search
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: custom
-        in: query
-        description: include your custom named accounts
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: prefund
-        in: query
-        description: include prefund accounts
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: named
-        in: query
-        description: include well know token and airdrop addresses in the search
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: addr
-        in: query
-        description: display only addresses in the results (useful for scripting)
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: collections
-        in: query
-        description: display collections data
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: tags
-        in: query
-        description: export the list of tags and subtags only
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: to_custom
-        in: query
-        description: for editCmd only, is the edited name a custom name or not
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: clean
-        in: query
-        description: clean the data (addrs to lower case, sort by addr)
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: autoname
-        in: query
-        description: an address assumed to be a token, added automatically to names database if true
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
+        - name: terms
+          description: a space separated list of one or more search terms
+          required: true
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: string_t
+        - name: expand
+          description: >
+            expand search to include all fields (default searches name, address, and symbol only)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: match_case
+          description: do case-sensitive search
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: all
+          description: include all accounts in the search
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: custom
+          description: include your custom named accounts
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: prefund
+          description: include prefund accounts
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: named
+          description: include well know token and airdrop addresses in the search
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: addr
+          description: display only addresses in the results (useful for scripting)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: collections
+          description: display collections data
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: tags
+          description: export the list of tags and subtags only
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
       responses:
         "200":
-          description: status of the scraper
+          description: returns the requested data
           content:
             application/json:
               schema:
                 type: array
                 example:
-                  {"data": [{
-                    "tags": "50-Tokens:ERC20",
-                    "address": "0xfe5f141bf94fe84bc28ded0ab966c16b17490657",
-                    "name": "LibraToken",
-                    "symbol": "LBA",
-                    "source": "On chain",
-                    "decimals": 18,
-                    "description": "Decentralized lending infrastructure facilitating open access to credit networks on Ethereum."
-                  }]}
+                  {
+                    "data":
+                      [
+                        {
+                          "tags": "50-Tokens:ERC20",
+                          "address": "0xfe5f141bf94fe84bc28ded0ab966c16b17490657",
+                          "name": "LibraToken",
+                          "symbol": "LBA",
+                          "source": "On chain",
+                          "decimals": 18,
+                          "description": "Decentralized lending infrastructure facilitating open access to credit networks on Ethereum.",
+                        },
+                      ],
+                  }
   /abis:
     get:
       tags:
-      - Accounts
+        - Accounts
       summary: ABIs
       description: Fetches the ABI for a smart contract.
       operationId: accounts-abis
       parameters:
-      - name: addrs
-        in: query
-        description: list of one or more smart contracts whose ABI to grab from EtherScan
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: array
-          items:
+        - name: addrs
+          description: list of one or more smart contracts whose ABI to grab from EtherScan
+          required: true
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: address_t
+        - name: sol
+          description: >
+            file name of .sol file from which to create a new known abi (without .sol)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
             type: string
-      - name: known
-        in: query
-        description: load common 'known' ABIs from cache
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: sol
-        in: query
-        description: file name of .sol file from which to create a new known abi (without
-          .sol)
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-      - name: find
-        in: query
-        description: try to search for a function declaration given a four byte code
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-      - name: source
-        in: query
-        description: show the source of the ABI information
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: classes
-        in: query
-        description: generate classDefinitions folder and class definitions
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
+        - name: find
+          description: try to search for a function declaration given a four byte code
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
       responses:
         "200":
-          description: status of the scraper
+          description: returns the requested data
           content:
             application/json:
               schema:
                 type: array
                 example:
-                 {"data":[
-                  {"name": "PairCreated",
-                   "type": "event",
-                   "stateMutability": "nonpayable",
-                   "signature": "PairCreated(address,address,address,uint256)",
-                   "encoding": "0x0d3648bd0f6ba80134a33ba9275ac585d9d315f0ad8355cddefde31afa28d0e9",
-                   "inputs": [
-                     {
-                       "type": "address",
-                       "name": "token0",
-                       "indexed": true,
-                       "internalType": "address"
-                     },
-                     {
-                       "type": "address",
-                       "name": "token1",
-                       "indexed": true,
-                       "internalType": "address"
-                     },
-                     {
-                       "type": "address",
-                       "name": "pair",
-                       "internalType": "address"
-                     },
-                     {
-                       "type": "uint256",
-                       "name": "val_0",
-                       "internalType": "uint256"
-                     }
-                   ]
-                 }]}
+                  {
+                    "data":
+                      [
+                        {
+                          "name": "PairCreated",
+                          "type": "event",
+                          "stateMutability": "nonpayable",
+                          "signature": "PairCreated(address,address,address,uint256)",
+                          "encoding": "0x0d3648bd0f6ba80134a33ba9275ac585d9d315f0ad8355cddefde31afa28d0e9",
+                          "inputs":
+                            [
+                              {
+                                "type": "address",
+                                "name": "token0",
+                                "indexed": true,
+                                "internalType": "address",
+                              },
+                              {
+                                "type": "address",
+                                "name": "token1",
+                                "indexed": true,
+                                "internalType": "address",
+                              },
+                              {
+                                "type": "address",
+                                "name": "pair",
+                                "internalType": "address",
+                              },
+                              {
+                                "type": "uint256",
+                                "name": "val_0",
+                                "internalType": "uint256",
+                              },
+                            ],
+                        },
+                      ],
+                  }
         "400":
           description: bad input parameter
   /blocks:
     get:
       tags:
-      - ChainData
+        - ChainData
       summary: Get blocks
       description: Retrieve one or more blocks from the chain or local cache.
       operationId: chaindata-blocks
       parameters:
-      - name: blocks
-        in: query
-        description: a space-separated list of one or more blocks to retrieve
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: array
-          items:
-            type: string
-      - name: hashes
-        in: query
-        description: display only transaction hashes, default is to display full transaction
-          detail
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: uncles
-        in: query
-        description: display uncle blocks (if any) instead of the requested block
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: trace
-        in: query
-        description: export the traces from the block as opposed to the block data
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: apps
-        in: query
-        description: display all address appearances in the block
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: uniq
-        in: query
-        description: display only uniq address appearances per block
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: uniq_tx
-        in: query
-        description: display only uniq address appearances per transaction
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: count
-        in: query
-        description: display counts of appearances (for --apps, --uniq, or --uniq_tx)
-          or transactions
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: cache
-        in: query
-        description: force a write of the block to the cache
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: list
-        in: query
-        description: summary list of blocks running backwards from latest block minus num
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-      - name: list_count
-        in: query
-        description: the number of blocks to report for --list option
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
+        - name: blocks
+          description: a space-separated list of one or more block identifiers
+          required: true
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: blknum_t
+        - name: hashes
+          description: >
+            display only transaction hashes, default is to display full transaction detail
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: uncles
+          description: display uncle blocks (if any) instead of the requested block
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: trace
+          description: export the traces from the block as opposed to the block data
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: apps
+          description: display only the list of address appearances in the block
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: uniq
+          description: display only the list of uniq address appearances in the block
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: uniq_tx
+          description: display only the list of uniq address appearances in each transaction
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: count
+          description: >
+            display the number of the lists of appearances for --apps, --uniq, or --uniq_tx
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: cache
+          description: force a write of the block to the cache
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
       responses:
         "200":
-          description: status of the scraper
+          description: returns the requested data
           content:
             application/json:
               schema:
                 properties:
                   data:
                     type: array
-                    description: array of blocks
                     items:
-                      $ref: '#/components/schemas/block'
+                      oneOf:
+                        - $ref: "#/components/schemas/block"
+                        - $ref: "#/components/schemas/trace"
+                        - $ref: "#/components/schemas/appearance"
+                example:
+                  {
+                    "blockNumber": 3141592,
+                    "hash": "0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53",
+                    "...": "...",
+                    "transactions": [],
+                  }
         "400":
           description: bad input parameter
   /transactions:
     get:
       tags:
-      - ChainData
+        - ChainData
       summary: Get transactions
       description: Retrieve one or more transactions from the chain or local cache.
       operationId: chaindata-transactions
       parameters:
-      - name: transactions
-        in: query
-        description: a space-separated list of one or more transaction identifiers
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: array
-          items:
+        - name: transactions
+          description: a space-separated list of one or more transaction identifiers
+          required: true
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: tx_id_t
+        - name: articulate
+          description: articulate the retrieved data if ABIs can be found
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: trace
+          description: include the transaction's traces in the results
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: uniq
+          description: >
+            display a list of uniq addresses found in the transaction instead of the underlying data
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: reconcile
+          description: reconcile the transaction as per the provided address
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
             type: string
-      - name: articulate
-        in: query
-        description: articulate the retrieved data if ABIs can be found
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: trace
-        in: query
-        description: include the transaction's traces in the results
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: uniq
-        in: query
-        description: display a list of uniq addresses found in the transaction instead of the underlying data
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: cache
-        in: query
-        description: force the results of the query into the tx cache (and the trace cache if applicable)
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: reconcile
-        in: query
-        description: reconcile the transaction as per the provided address
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
+        - name: cache
+          description: >
+            force the results of the query into the tx cache (and the trace cache if applicable)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
       responses:
         "200":
-          description: status of the scraper
+          description: returns the requested data
           content:
             application/json:
               schema:
@@ -895,38 +768,39 @@ paths:
                     description: "array of transactions"
                     type: array
                     items:
-                      $ref: '#/components/schemas/transactions'
+                      $ref: "#/components/schemas/transaction"
         "400":
           description: bad input parameter
   /receipts:
     get:
       tags:
-      - ChainData
+        - ChainData
       summary: Get receipts
       description: Retrieve receipts for the given transaction(s).
       operationId: chaindata-receipts
       parameters:
-      - name: transactions
-        in: query
-        description: a space-separated list of one or more transaction identifiers
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: array
-          items:
-            type: string
-      - name: articulate
-        in: query
-        description: articulate the retrieved data if ABIs can be found
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
+        - name: transactions
+          description: a space-separated list of one or more transaction identifiers
+          required: true
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: tx_id_t
+        - name: articulate
+          description: articulate the retrieved data if ABIs can be found
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
       responses:
         "200":
-          description: status of the scraper
+          description: returns the requested data
           content:
             application/json:
               schema:
@@ -935,58 +809,61 @@ paths:
                     description: array of receipts
                     type: array
                     items:
-                      $ref: '#/components/schemas/receipts'
+                      $ref: "#/components/schemas/receipts"
         "400":
           description: bad input parameter
   /logs:
     get:
       tags:
-      - ChainData
+        - ChainData
       summary: Get logs
       description: Retrieve logs for the given transaction(s).
       operationId: chaindata-logs
       parameters:
-      - name: transactions
-        in: query
-        description: a space-separated list of one or more transaction identifiers
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: array
-          items:
-            type: string
-      - name: topic
-        in: query
-        description: filter by one or more log topics (not implemented)
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: array
-          items:
-            type: string
-      - name: source
-        in: query
-        description: export only if the given address emitted the event (not implemented)
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: array
-          items:
-            type: string
-      - name: articulate
-        in: query
-        description: articulate the retrieved data if ABIs can be found
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
+        - name: transactions
+          description: a space-separated list of one or more transaction identifiers
+          required: true
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: tx_id_t
+        - name: topic
+          description: filter by one or more log topics (not implemented)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: topic_t
+        - name: source
+          description: export only if the given address emitted the event (not implemented)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: address_t
+        - name: articulate
+          description: articulate the retrieved data if ABIs can be found
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
       responses:
         "200":
-          description: status of the scraper
+          description: returns the requested data
           content:
             application/json:
               schema:
@@ -995,79 +872,63 @@ paths:
                     type: array
                     description: array of logs
                     items:
-                      $ref: '#/components/schemas/logs'
+                      $ref: "#/components/schemas/logs"
         "400":
           description: bad input parameter
   /traces:
     get:
       tags:
-      - ChainData
+        - ChainData
       summary: Get traces
       description: Retrieve traces for the given transaction(s).
       operationId: chaindata-traces
       parameters:
-      - name: transactions
-        in: query
-        description: a space-separated list of one or more transaction identifiers
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: array
-          items:
+        - name: transactions
+          description: a space-separated list of one or more transaction identifiers
+          required: true
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: tx_id_t
+        - name: articulate
+          description: articulate the retrieved data if ABIs can be found
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: filter
+          description: call the node's `trace_filter` routine with bang-seperated filter
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
             type: string
-      - name: articulate
-        in: query
-        description: articulate the retrieved data if ABIs can be found
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: filter
-        in: query
-        description: call the node's `trace_filter` routine with bang-seperated filter
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-      - name: statediff
-        in: query
-        description: export state diff traces (not implemented)
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: count
-        in: query
-        description: show the number of traces for the transaction only (fast)
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: skip_ddos
-        in: query
-        description: skip over the 2016 ddos during export ('on' by default)
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: max
-        in: query
-        description: if --skip_ddos is on, this many traces defines what a ddos transaction
-          is (default = 250)
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: number
+        - name: statediff
+          description: export state diff traces (not implemented)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: count
+          description: show the number of traces for the transaction only (fast)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
       responses:
         "200":
-          description: status of the scraper
+          description: returns the requested data
           content:
             application/json:
               schema:
@@ -1076,80 +937,28 @@ paths:
                     type: array
                     description: "array of trace objects"
                     items:
-                      $ref: '#/components/schemas/traces'
+                      $ref: "#/components/schemas/trace"
         "400":
           description: bad input parameter
   /when:
     get:
       tags:
-      - ChainData
+        - ChainData
       summary: Get block dates
       description: Find block(s) based on date, blockNum, timestamp, or 'special'.
       operationId: chaindata-when
       parameters:
-      - name: block_list
-        in: query
-        description: one or more dates, block numbers, hashes, or special named blocks
-          (see notes)
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: array
-          items:
-            type: string
-      - name: list
-        in: query
-        description: export a list of the 'special' blocks
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: timestamps
-        in: query
-        description: ignore other options and generate timestamps only
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: check
-        in: query
-        description: available only with --timestamps, checks the validity of the timestamp data
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: fix
-        in: query
-        description: available only with --timestamps, fixes incorrect timestamps if any
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: count
-        in: query
-        description: available only with --timestamps, returns the number of timestamps in the cache
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: skip
-        in: query
-        description: only applicable if --timestamps is on, the step between block
-          numbers in the export
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: number
+        - name: timestamps
+          description: ignore other options and generate timestamps only
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
       responses:
         "200":
-          description: status of the scraper
+          description: returns the requested data
           content:
             application/json:
               schema:
@@ -1160,702 +969,620 @@ paths:
                       type: object
                       properties:
                         blockNumber:
-                          $ref: '#/components/schemas/blockNumber'
+                          type: number
+                          format: blknum_t
+                          example: 10021
+                          description: "the number of the block"
                         timestamp:
-                          $ref: '#/components/schemas/timestamp'
+                          type: number
+                          format: timestamp_t
+                          example: 1438335038
+                          description: "the unix timestamp of the block"
                         date:
-                          $ref: '#/components/schemas/date'
+                          $ref: "#/components/schemas/date"
         "400":
           description: bad input parameter
   /state:
     get:
       tags:
-      - ChainState
+        - ChainState
       summary: Get balance(s)
       description: Retrieve account balance(s) for one or more addresses at given block(s).
       operationId: chainstate-state
       parameters:
-      - name: addrs
-        in: query
-        description: one or more addresses (0x...) from which to retrieve balances
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: array
-          items:
+        - name: addrs
+          description: one or more addresses (0x...) from which to retrieve balances
+          required: true
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: address_t
+        - name: blocks
+          description: >
+            an optional list of one or more blocks at which to report balances, defaults to 'latest'
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: blknum_t
+        - name: parts
+          description: control which state to export
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - none
+                - some
+                - all
+                - balance
+                - nonce
+                - code
+                - storage
+                - deployed
+                - accttype
+        - name: changes
+          description: only report a balance when it changes from one block to the next
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: no_zero
+          description: suppress the display of zero balance accounts
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: call
+          description: a bang-separated string consisting of address!4-byte!bytes
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
             type: string
-      - name: blocks
-        in: query
-        description: an optional list of one or more blocks at which to report balances,
-          defaults to 'latest'
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: array
-          items:
-            type: string
-      - name: parts
-        in: query
-        description: control which state to export
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: array
-          items:
-            type: string
-            enum:
-            - none
-            - some
-            - all
-            - balance
-            - nonce
-            - code
-            - storage
-            - deployed
-            - accttype
-      - name: changes
-        in: query
-        description: only report a balance when it changes from one block to the next
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: no_zero
-        in: query
-        description: suppress the display of zero balance accounts
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: call
-        in: query
-        description: a bang-separated string consisting of address!4-byte!bytes
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
       responses:
         "200":
-          description: status of the scraper
+          description: returns the requested data
           content:
             application/json:
               schema:
                 example:
                   {
-                  "data": [
-                    {
-                      "blockNumber": 13154749,
-                      "balance": 29930129965150564000,
-                      "address": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-                      "ether": 29.930129965150567
-                    }
-                  ]}
+                    "data":
+                      [
+                        {
+                          "blockNumber": 13154749,
+                          "balance": 29930129965150564000,
+                          "address": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+                          "ether": 29.930129965150567,
+                        },
+                      ],
+                  }
         "400":
           description: bad input parameter
   /tokens:
     get:
       tags:
-      - ChainState
+        - ChainState
       summary: Get token balance(s)
       description: Retrieve token balance(s) for one or more addresses at given block(s).
       operationId: chainstate-tokens
       parameters:
-      - name: addrs2
-        in: query
-        description: two or more addresses (0x...), the first is an ERC20 token, balances
-          for the rest are reported
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: array
-          items:
-            type: string
-      - name: blocks
-        in: query
-        description: an optional list of one or more blocks at which to report balances,
-          defaults to 'latest'
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: array
-          items:
-            type: string
-      - name: parts
-        in: query
-        description: one or more parts of the token information to retreive
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: array
-          items:
-            type: string
-            enum:
-            - name
-            - symbol
-            - decimals
-            - totalSupply
-            - version
-            - none
-            - all
-      - name: by_acct
-        in: query
-        description: consider each address an ERC20 token except the last, whose balance
-          is reported for each token
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: no_zero
-        in: query
-        description: suppress the display of zero balance accounts
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
+        - name: addrs2
+          description: >
+            two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported
+          required: true
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: address_t
+        - name: blocks
+          description: >
+            an optional list of one or more blocks at which to report balances, defaults to 'latest'
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: blknum_t
+        - name: parts
+          description: one or more parts of the token information to retreive
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - name
+                - symbol
+                - decimals
+                - totalSupply
+                - version
+                - none
+                - all
+        - name: by_acct
+          description: >
+            consider each address an ERC20 token except the last, whose balance is reported for each token
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: no_zero
+          description: suppress the display of zero balance accounts
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
       responses:
         "200":
-          description: status of the scraper
+          description: returns the requested data
           content:
             application/json:
               schema:
                 example:
                   {
-                   "data": [
-                     {
-                       "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-                       "balance": "400",
-                       "address": "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984",
-                       "name": "Uniswap",
-                       "symbol": "UNI",
-                       "decimals": 18,
-                       "is_contract": true,
-                       "is_erc20": true,
-                       "is_erc721": false
-                     }
-                       ]}
+                    "data":
+                      [
+                        {
+                          "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+                          "balance": "400",
+                          "address": "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984",
+                          "name": "Uniswap",
+                          "symbol": "UNI",
+                          "decimals": 18,
+                          "is_contract": true,
+                          "is_erc20": true,
+                          "is_erc721": false,
+                        },
+                      ],
+                  }
         "400":
           description: bad input parameter
   /status:
     get:
       tags:
-      - Admin
+        - Admin
       summary: Report status
       description: Report on the status of the TrueBlocks system.
       operationId: admin-status
       parameters:
-      - name: modes
-        in: query
-        description: the type of status info to retrieve
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: array
-          items:
-            type: string
-            enum:
-            - index
-            - monitors
-            - collections
-            - names
-            - abis
-            - caches
-            - some
-            - all
-      - name: details
-        in: query
-        description: include details about items found in monitors, slurps, abis,
-          or price caches
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: types
-        in: query
-        description: for caches mode only, which type(s) of cache to report
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: array
-          items:
-            type: string
-            enum:
-            - blocks
-            - transactions
-            - traces
-            - slurps
-            - prices
-            - all
-      - name: depth
-        in: query
-        description: for cache mode only, number of levels deep to report
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: number
-      - name: report
-        in: query
-        description: show a summary of the current status of TrueBlocks (deprecated)
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: terse
-        in: query
-        description: show a terse summary report
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: migrate
-        in: query
-        description: either effectuate or test to see if a migration is necessary
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: array
-          items:
-            type: string
-            enum:
-            - test
-            - abi_cache
-            - block_cache
-            - tx_cache
-            - trace_cache
-            - recon_cache
-            - name_cache
-            - slurp_cache
-            - all
-      - name: get_config
-        in: query
-        description: returns JSON data of the editable configuration file items
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: set_config
-        in: query
-        description: accepts JSON in an env variable and writes it to configuration
-          files
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: test_start
-        in: query
-        description: first block to process (inclusive -- testing only)
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-      - name: test_end
-        in: query
-        description: last block to process (inclusive -- testing only)
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
+        - name: modes
+          description: the type of status info to retrieve
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - index
+                - monitors
+                - collections
+                - names
+                - abis
+                - caches
+                - some
+                - all
+        - name: details
+          description: >
+            include details about items found in monitors, slurps, abis, or price caches
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: report
+          description: show a summary of the current status of TrueBlocks (deprecated)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: terse
+          description: show a terse summary report
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
       responses:
         "200":
-          description: status of the scraper
+          description: returns the requested data
           content:
             application/json:
               schema:
                 example:
                   {
-                  "data": [
-                    {
-                      "client_version": "erigon/2021.09.2/linux-amd64/go1.16.3",
-                      "trueblocks_version": "GHC-TrueBlocks//0.12.1-alpha-7ac3196d7-20210903",
-                      "rpc_provider": "http://localhost:23456",
-                      "config_path": "/Users/user/Library/Application Support/TrueBlocks/",
-                      "cache_path": "/Users/user/Library/Application Support/TrueBlocks/cache/",
-                      "index_path": "/Users/user/Development/trueblocks-index/wild.0/unchained/",
-                      "is_testing": false,
-                      "is_docker": false,
-                      "is_archive": true,
-                      "is_tracing": true,
-                      "has_eskey": true,
-                      "has_pinkey": true,
-                      "date": "2021-09-03 19:38:19 UTC"
-                    }
-                  ]}
+                    "data":
+                      [
+                        {
+                          "client_version": "erigon/2021.09.2/linux-amd64/go1.16.3",
+                          "trueblocks_version": "GHC-TrueBlocks//0.12.1-alpha-7ac3196d7-20210903",
+                          "rpc_provider": "http://localhost:23456",
+                          "config_path": "/Users/user/Library/Application Support/TrueBlocks/",
+                          "cache_path": "/Users/user/Library/Application Support/TrueBlocks/cache/",
+                          "index_path": "/Users/user/Development/trueblocks-index/wild.0/unchained/",
+                          "is_testing": false,
+                          "is_docker": false,
+                          "is_archive": true,
+                          "is_tracing": true,
+                          "has_eskey": true,
+                          "has_pinkey": true,
+                          "date": "2021-09-03 19:38:19 UTC",
+                        },
+                      ],
+                  }
         "400":
           description: bad input parameter
   /scrape:
     get:
       tags:
-      - Admin
-      summary: Scrape
+        - Admin
+      summary: Scrape index
       description: Scan the chain and update the TrueBlocks index of appearances.
       operationId: admin-scrape
       parameters:
-      - name: pin
-        in: query
-        description: pin new chunks (and blooms) to IPFS (requires Pinata key and running IPFS node)
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: sleep
-        in: query
-        description: the number of seconds to sleep between passes (default 14)
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: number
-      - name: n_blocks
-        in: query
-        description: maximum number of blocks to process (default 2000)
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: number
-      - name: n_block_procs
-        in: query
-        description: number of concurrent block channels for blaze
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: number
-      - name: n_addr_procs
-        in: query
-        description: number of concurrent address channels for blaze
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: number
+        - name: pin
+          description: >
+            pin new chunks (and blooms) to IPFS (requires Pinata key and running IPFS node)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: n_blocks
+          description: maximum number of blocks to process (default 2000)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: number
       responses:
         "200":
-          description: status of the scraper
+          description: returns the requested data
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/response'
+                  $ref: "#/components/schemas/response"
         "400":
           description: bad input parameter
   /init:
     get:
       tags:
-      - Admin
-      summary: Init
+        - Admin
+      summary: Initialize index
       description: Initalize the TrueBlocks index of appearances
       operationId: admin-init
       responses:
         "200":
-           description: no response
+          description: no response
   /pins:
     get:
       tags:
-      - Admin
+        - Admin
       summary: Manage pins
       description: Manage pinned index of appearances and associated Bloom filters.
       operationId: admin-pins
       parameters:
-      - name: list
-        in: query
-        description: list the index and Bloom filter hashes from local manifest or pinning service
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: init
-        in: query
-        description: initialize local index by downloading Bloom filters from pinning service
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: init_all
-        in: query
-        description: initialize local index by downloading both Bloom filters and index chunks
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: sleep
-        in: query
-        description: the number of seconds to sleep between requests during init (default .25)
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: number
-      - name: remote
-        in: query
-        description: applicable only to --list mode, recover the manifest from pinning service
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: pin_locally
-        in: query
-        description: pin all local files in the index to an IPFS store (requires IPFS)
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
+        - name: list
+          description: >
+            list the index and Bloom filter hashes from local manifest or pinning service
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: init
+          description: initialize local index by downloading Bloom filters from pinning service
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: init_all
+          description: initialize local index by downloading both Bloom filters and index chunks
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: pin_locally
+          description: pin all local files in the index to an IPFS store (requires IPFS)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
       responses:
         "200":
-          description: status of the scraper
+          description: returns the requested data
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/response'
+                  $ref: "#/components/schemas/response"
         "400":
           description: bad input parameter
   /quotes:
     get:
       tags:
-      - Other
+        - Other
       summary: Price quotes
       description: Freshen and/or display Ethereum price data.
       operationId: other-quotes
       parameters:
-      - name: freshen
-        in: query
-        description: Freshen price database (append new data)
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
-      - name: period
-        in: query
-        description: increment of display
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-          enum:
-          - "5"
-          - "15"
-          - "30"
-          - "60"
-          - "120"
-          - "240"
-          - "1440"
-          - "10080"
-          - hourly
-          - daily
-          - weekly
-      - name: pair
-        in: query
-        description: which price pair to freshen or list (see Poloniex)
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-      - name: feed
-        in: query
-        description: the feed for the price data
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-          enum:
-          - poloniex
-          - maker
-          - tellor
+        - name: freshen
+          description: Freshen price database (append new data)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: period
+          description: increment of display
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+            enum:
+              - "5"
+              - "15"
+              - "30"
+              - "60"
+              - "120"
+              - "240"
+              - "1440"
+              - "10080"
+              - hourly
+              - daily
+              - weekly
+        - name: pair
+          description: which price pair to freshen or list (see Poloniex)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+        - name: feed
+          description: the feed for the price data
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+            enum:
+              - poloniex
+              - maker
+              - tellor
       responses:
         "200":
-          description: status of the scraper
+          description: returns the requested data
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/response'
+                  $ref: "#/components/schemas/response"
         "400":
           description: bad input parameter
   /slurp:
     get:
       tags:
-      - Other
-      summary: Slurp
+        - Other
+      summary: Slurp Etherscan
       description: Fetch data from EtherScan for any address.
       operationId: other-slurp
       parameters:
-      - name: addrs
-        in: query
-        description: one or more addresses to slurp from Etherscan
-        required: true
-        style: form
-        explode: true
-        schema:
-          type: array
-          items:
-            type: string
-      - name: blocks
-        in: query
-        description: an optional range of blocks to slurp
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: array
-          items:
-            type: string
-      - name: types
-        in: query
-        description: one or more types of transactions to request
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: array
-          items:
-            type: string
-            enum:
-            - ext
-            - int
-            - token
-            - nfts
-            - miner
-            - uncles
-            - all
-      - name: appearances
-        in: query
-        description: show only the blocknumer.tx_id appearances of the exported transactions
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: boolean
+        - name: addrs
+          description: one or more addresses to slurp from Etherscan
+          required: true
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: address_t
+        - name: blocks
+          description: an optional range of blocks to slurp
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: blknum_t
+        - name: types
+          description: one or more types of transactions to request
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - ext
+                - int
+                - token
+                - nfts
+                - miner
+                - uncles
+                - all
+        - name: appearances
+          description: show only the blocknumer.tx_id appearances of the exported transactions
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
       responses:
         "200":
-          description: status of the scraper
+          description: returns the requested data
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/response'
+                  $ref: "#/components/schemas/response"
         "400":
           description: bad input parameter
 components:
   schemas:
-    response:
-      required:
-      - result
-      type: object
-      properties:
-        data:
-          type: object
-        error:
-          type: array
-          example:
-          - error 1
-          - error 2
-          items:
-            type: string
     block:
       type: object
       properties:
         gasLimit:
-          $ref: '#/components/schemas/gasLimit'
+          type: string
+          format: wei_t
+          example: "5000"
+          description: "the system-wide maximum amount of gas permitted in this block"
         hash:
-          $ref: '#/components/schemas/hash'
+          type: string
+          format: hash_t
+          example: "0xf12869a900c2fd345f9d6a93e25e6118fd7f99f2b04bff6da59c8bc4218a1e98"
+          description: "The hash of the current block"
         blockNumber:
-          $ref: '#/components/schemas/blockNumber'
+          type: number
+          format: blknum_t
+          example: 10021
+          description: the number of the block
         parentHash:
-          $ref: '#/components/schemas/parentHash'
+          type: string
+          format: hash_t
+          example: "0x66fc978cfe3d0d0dee8590600f9955c6ae658b8cda1573a0793b95841f9231c9"
+          description: hash of previous block
         miner:
-          $ref: '#/components/schemas/miner'
+          type: string
+          format: address_t
+          example: "0xf927a40c8b7f6e07c5af7fa2155b4864a4112b13"
+          description: Address of block's winning miner
         difficulty:
-          $ref: '#/components/schemas/difficulty'
+          type: string
+          format: uint256_t
+          example: 598133194256
+          description: "The computational difficulty at this block"
         timestamp:
-          $ref: '#/components/schemas/timestamp'
+          type: number
+          format: timestamp_t
+          example: 1438335038
+          description: "the unix timestamp of the object"
         transactions:
-          $ref: '#/components/schemas/transactions'
+          $ref: "#/components/schemas/transaction"
         baseFeePerGas:
-          $ref: '#/components/schemas/baseFeePerGas'
+          $ref: "#/components/schemas/baseFeePerGas"
         finalized:
-          $ref: '#/components/schemas/finalized'
+          $ref: "#/components/schemas/finalized"
     receipts:
       type: object
       properties:
         status:
-          $ref: '#/components/schemas/status'
+          $ref: "#/components/schemas/status"
         contractAddress:
-          $ref: '#/components/schemas/contractAddress'
+          $ref: "#/components/schemas/contractAddress"
         gasUsed:
-          $ref: '#/components/schemas/gasUsed'
+          $ref: "#/components/schemas/gasUsed"
         logs:
           type: array
           description: possibly empty array of logs
           items:
-            $ref: '#/components/schemas/logs'
-    transactions:
+            $ref: "#/components/schemas/logs"
+    transaction:
       type: object
       properties:
         hash:
-          $ref: '#/components/schemas/hash'
+          $ref: "#/components/schemas/hash"
         blockHash:
-          $ref: '#/components/schemas/hash'
+          $ref: "#/components/schemas/hash"
         blockNumber:
-          $ref: '#/components/schemas/blockNumber'
+          type: number
+          format: blknum_t
+          example: 10021
+          description: the number of the block
         transactionIndex:
-          $ref: '#/components/schemas/transactionIndex'
+          type: number
+          format: txnum_t
+          example: 305
+          description: "the zero-indexed position of the transaction in the block"
         nonce:
-          $ref: '#/components/schemas/nonce'
+          $ref: "#/components/schemas/nonce"
         timestamp:
-          $ref: '#/components/schemas/timestamp'
+          type: number
+          format: timestamp_t
+          example: 1438335038
+          description: "the unix timestamp of the object"
         from:
-          $ref: '#/components/schemas/from'
+          $ref: "#/components/schemas/from"
         to:
-          $ref: '#/components/schemas/to'
+          $ref: "#/components/schemas/to"
         value:
-          $ref: '#/components/schemas/value'
+          $ref: "#/components/schemas/value"
         gas:
-          $ref: '#/components/schemas/gasPrice'
+          $ref: "#/components/schemas/gasPrice"
         input:
-          $ref: '#/components/schemas/input'
+          $ref: "#/components/schemas/input"
         receipt:
-          $ref: '#/components/schemas/receipts'
+          $ref: "#/components/schemas/receipts"
         statements:
           type: array
           description: "array of reconciliations"
           items:
-            $ref: '#/components/schemas/reconciliations'
+            $ref: "#/components/schemas/reconciliations"
         articulatedTx:
           $ref: "#/components/schemas/articulatedTx"
         compressedTx:
@@ -1864,6 +1591,163 @@ components:
           $ref: "#/components/schemas/hasToken"
         finalized:
           $ref: "#/components/schemas/finalized"
+    logs:
+      type: object
+      properties:
+        blockNumber:
+          type: number
+          format: blknum_t
+          example: 10021
+          description: the number of the block
+        transactionIndex:
+          type: number
+          format: txnum_t
+          example: 305
+          description: "the zero-indexed position of the transaction in the block"
+        address:
+          description: the smart contract that emitted this log
+          allOf:
+            - $ref: "#/components/schemas/address"
+        logIndex:
+          description: >
+            the zero-indexed position of this log relative to the block
+          example: 354
+        topics:
+          description: The first topic hashes event signature of the log, up to 3 additional index parameters may appear
+          type: array
+          maxItems: 4
+          example:
+            [
+              "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+              "0x000000000000000000000000cfa5b526105ec86d893f24bc173b1d4166979f54",
+              "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b",
+            ]
+        data:
+          description: any remaining un-indexed parameters to the event
+          type: string
+          format: bytes
+          example: "0x000000000000000000000000000000000000000000000001456b4ee641bd3ff6"
+        articulatedLog:
+          description: a human-readable version of the topic and data fields
+          type: object
+          properties:
+            name:
+              type: string
+              example: "Transfer"
+            inputs:
+              type: object
+              properties:
+                _amount:
+                  example: "23448922635686985718"
+                _from:
+                  $ref: "#/components/schemas/from"
+                _to:
+                  $ref: "#/components/schemas/to"
+        compressedLog:
+          description: a truncated, more readable version of the articulation
+          type: string
+          example: "Transfer(0xcfa5b526105ec86d893f24bc173b1d4166979f54 /*_from*/, 0xf503017d7baf7fbc0fff7492b751025c6a78179b /*_to*/, 23448922635686985718 /*_amount*/); "
+    trace:
+      type: object
+      properties:
+        blockHash:
+          $ref: "#/components/schemas/hash"
+        blockNumber:
+          type: number
+          format: blknum_t
+          example: 10021
+          description: the number of the block
+        transactionHash:
+          description: the transaction's hash
+          type: string
+          format: hash_t
+        transactionIndex:
+          type: number
+          format: txnum_t
+          example: 305
+          description: "the zero-indexed position of the transaction in the block"
+        traceAddress:
+          description: a particular trace's address in the trace tree
+          type: string
+        subTraces:
+          description: the number of children traces that the trace hash
+          type: number
+        type:
+          description: the type of the trace
+          type: string
+        action:
+          $ref: "#/components/schemas/traceAction"
+        result:
+          $ref: "#/components/schemas/traceResult"
+    traceAction:
+      description: the trace action object
+      type: object
+      properties:
+        from:
+          description: the smart contract that called the trace
+          allOf:
+            - $ref: "#/components/schemas/address"
+        to:
+          description: the smart contract that the trace calls
+          allOf:
+            - $ref: "#/components/schemas/address"
+        gas:
+          $ref: "#/components/schemas/gas"
+        input:
+          description: an encoded version of the function call.
+          type: string
+          format: bytes
+        callType:
+          description: the type of call
+          type: string
+        refundAddress:
+          description: if the call type is self-destruct, the address to which the refund is sent
+          allOf:
+            - $ref: "#/components/schemas/address"
+        articulatedTrace:
+          description: A human-readable version of the trace action’s input and the result’s output
+          type: object
+        compressedTrace:
+          description: a truncated, more readable version of the articulation
+          type: string
+    traceResult:
+      description: the trace result
+      type: object
+      properties:
+        newContract:
+          description: Address of new contract, if any
+          allOf:
+            - $ref: "#/components/schemas/address"
+        code:
+          description: if this trace is creating a new smart contract, the byte code of that contract
+          type: string
+          format: bytes
+        gasUsed:
+          $ref: "#/components/schemas/gasUsed"
+        output:
+          description: the result of the call of this trace
+          type: string
+          format: byte
+    appearance:
+      type: object
+      properties:
+        blockNumber:
+          type: number
+          format: blknum_t
+          example: 10021
+          description: the number of the block
+        transactionIndex:
+          type: number
+          format: txnum_t
+          example: 305
+          description: "the zero-indexed position of the transaction in the block"
+        address:
+          type: string
+          format: address
+          description: the address of the appearance
+        names:
+          type: string
+          description: the name of the address, if found
     articulatedTx:
       type: object
       description: "a human readable articulation of the input field"
@@ -1871,19 +1755,42 @@ components:
       type: string
       example: "0x3d18b912 ( )"
       description: "truncated, more readable version of the articulation"
+    response:
+      required:
+        - result
+      type: object
+      properties:
+        data:
+          type: object
+        error:
+          type: array
+          example:
+            - error 1
+            - error 2
+          items:
+            type: string
     reconciliations:
       type: object
       properties:
         blockNumber:
-          $ref: "#/components/schemas/blockNumber"
+          type: number
+          format: blknum_t
+          example: 10021
+          description: the number of the block
         transactionIndex:
-          $ref: '#/components/schemas/transactionIndex'
+          type: number
+          format: txnum_t
+          example: 305
+          description: "the zero-indexed position of the transaction in the block"
         timestamp:
-          $ref: '#/components/schemas/timestamp'
+          type: number
+          format: timestamp_t
+          example: 1438335038
+          description: "the unix timestamp of the object"
         assetAddr:
           description: for reconciliations whose assetSymbol is ETH or WEI, the accountedFor address. For all assets, the address of the asset itself
           allOf:
-            - $ref: '#/components/schemas/address'
+            - $ref: "#/components/schemas/address"
         assetSymbol:
           description: either ETH, WEI or the symbol of the asset being reconciled as extracted from the chain
           type: string
@@ -1891,13 +1798,12 @@ components:
           description: Equivilent to the extracted value of getSymbol from ERC20 or, if ETH or WEI then 18
           type: number
         prevBlk:
+          type: number
+          format: blknum_t
+          example: 10021
           description: the block number of the previous reconciliation
-          allOf:
-            - $ref: "#/components/schemas/blockNumber"
         prevBlkBal:
           description: the account balance for the given asset for the previous reconciliation
-          allOf:
-            - $ref: "#/components/schemas/blockNumber"
         begBal:
           description: the begining balance of the asset at the blockNumber
           type: number
@@ -1983,10 +1889,6 @@ components:
           description: The price (if available) at the time of the transaction in US dollars for ETH reconciliations and ETH for other assets
           type: number
           format: bigint
-    transactionIndex:
-     example: 305
-     type: number
-     description: "the transaction’s zero-indexed position in the block"
     nonce:
       example: 232
       type: number
@@ -1998,7 +1900,7 @@ components:
     to:
       description: "address from which transaction originated"
       allOf:
-       - $ref: "#/components/schemas/address"
+        - $ref: "#/components/schemas/address"
     address:
       description: The address of the named account
       type: string
@@ -2007,17 +1909,17 @@ components:
     value:
       example: 0
       type: number
-      format: wei
+      format: wei_t
       description: the amount of wei sent with this transactions
     gas:
       example: 158660
       type: number
-      format: wei
+      format: wei_t
       description: the maximum number of gas allowed for this action
     gasPrice:
       example: 63525836552
       type: number
-      format: wei
+      format: wei_t
       description: "gasPrice 	the number of wei per unit of gas used the sender is willing to spend"
     maxFeePerGas:
       example: 107596001741
@@ -2027,46 +1929,21 @@ components:
       type: number
     input:
       example: "0x3d18b912"
-      description:  "byte data either containing a message or funcational data for a smart contracts. See the --articulate "
+      description: "byte data either containing a message or funcational data for a smart contracts. See the --articulate "
       type: string
     hasToken:
       example: 0
       type: number
-    gasLimit:
-      type: number
-      format: wei
-      example: 5000
-      description: "the system-wide maximum amount of gas permitted in this block"
     hash:
       type: string
-      format: hash
+      format: hash_t
       description: "The hash of the current transaction or block"
       example: "0xf12869a900c2fd345f9d6a93e25e6118fd7f99f2b04bff6da59c8bc4218a1e98"
     blockNumber:
       example: 10021
       type: number
-      format: blockNum
+      format: blknum_t
       description: the number of the block
-    parentHash:
-      type: string
-      example: "0x66fc978cfe3d0d0dee8590600f9955c6ae658b8cda1573a0793b95841f9231c9"
-      format: hash
-      description: hash of previous block
-    miner:
-      example: "0xf927a40c8b7f6e07c5af7fa2155b4864a4112b13"
-      description: Address of block's winning miner
-      type: string
-      format: address
-    difficulty:
-     description: "The computational difficulty at this block"
-     format: bigint
-     type: number
-     example: 598133194256
-    timestamp:
-      description: "the unix timestamp of the object"
-      type: number
-      format: timestamp
-      example: 1438335038
     baseFeePerGas:
       type: number
       example: 0
@@ -2083,135 +1960,10 @@ components:
       description: >
         "`1` if the transaction suceeded, `0` otherwise"
     contractAddress:
-      description:  the address of the newly created contract, if any
+      description: the address of the newly created contract, if any
       type: string
       format: address
     gasUsed:
       description: the amount of gas used by this transaction
       type: number
-      format: wei
-    logs:
-      type: object
-      properties:
-        blockNumber:
-          $ref: "#/components/schemas/blockNumber"
-        transactionIndex:
-          $ref: "#/components/schemas/transactionIndex"
-        address:
-          description: the smart contract that emitted this log
-          allOf:
-            - $ref: "#/components/schemas/address"
-        logIndex:
-          description: >
-            the zero-indexed position of this log relative to the block
-          example: 354
-        topics:
-          description: The first topic hashes event signature of the log, up to 3 additional index parameters may appear
-          type: array
-          maxItems: 4
-          example:
-           [
-            "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
-            "0x000000000000000000000000cfa5b526105ec86d893f24bc173b1d4166979f54",
-            "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"
-           ]
-        data:
-          description: any remaining un-indexed parameters to the event
-          type: string
-          format: bytes
-          example: "0x000000000000000000000000000000000000000000000001456b4ee641bd3ff6"
-        articulatedLog:
-          description: a human-readable version of the topic and data fields
-          type: object
-          properties:
-            name:
-              type: string
-              example: "Transfer"
-            inputs:
-              type: object
-              properties:
-                _amount:
-                  example: "23448922635686985718"
-                _from:
-                  $ref: "#/components/schemas/from"
-                _to:
-                  $ref: "#/components/schemas/to"
-        compressedLog:
-          description: a truncated, more readable version of the articulation
-          type: string
-          example: "Transfer(0xcfa5b526105ec86d893f24bc173b1d4166979f54 /*_from*/, 0xf503017d7baf7fbc0fff7492b751025c6a78179b /*_to*/, 23448922635686985718 /*_amount*/); "
-    traces:
-      type: object
-      properties:
-        blockHash:
-          $ref: "#/components/schemas/hash"
-        blockNumber:
-          $ref: "#/components/schemas/blockNumber"
-        transactionHash:
-          description: the transaction's hash
-          type: string
-          format: hash
-        transactionIndex:
-          $ref: "#/components/schemas/transactionIndex"
-        traceAddress:
-          description: a particular trace's address in the trace tree
-          type: string
-        subTraces:
-          description: the number of children traces that the trace hash
-          type: number
-        type:
-          description: the type of the trace
-          type: string
-        action:
-          $ref: "#/components/schemas/traceAction"
-        result:
-          $ref: "#/components/schemas/traceResult"
-    traceAction:
-      description: the trace action object
-      type: object
-      properties:
-        from:
-         description: the smart contract that called the trace
-         allOf:
-           - $ref: '#/components/schemas/address'
-        to:
-          description: the smart contract that the trace calls
-          allOf:
-            - $ref: '#/components/schemas/address'
-        gas:
-          $ref: "#/components/schemas/gas"
-        input:
-          description: an encoded version of the function call.
-          type: string
-          format: bytes
-        callType:
-          description: the type of call
-          type: string
-        refundAddress:
-          description: if the call type is self-destruct, the address to which the refund is sent
-          allOf:
-            - $ref: '#/components/schemas/address'
-        articulatedTrace:
-          description: A human-readable version of the trace action’s input and the result’s output
-          type: object
-        compressedTrace:
-          description: a truncated, more readable version of the articulation
-          type: string
-    traceResult:
-      description: the trace result
-      type: object
-      properties:
-        newContract:
-          description: Address of new contract, if any
-          allOf:
-            - $ref: "#/components/schemas/address"
-        code:
-          description: if this trace is creating a new smart contract, the byte code of that contract
-          type: string
-          format: bytes
-        gasUsed:
-          $ref: "#/components/schemas/gasUsed"
-        output:
-          description: the result of the call of this trace
-          type: string
-          format: byte
+      format: wei_t
