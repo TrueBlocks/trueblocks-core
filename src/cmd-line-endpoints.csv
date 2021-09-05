@@ -1,27 +1,27 @@
-num ,group       ,is_visible ,api_route    ,tool                     ,summary                  ,description
-01  ,Accounts    ,false      ,             ,                         ,                         ,Access and cache transactional data
-01  ,Accounts    ,true       ,list         ,acctExport --appearances ,List transactions        ,List every appearance of an address anywhere on the chain.
-01  ,Accounts    ,true       ,export       ,acctExport               ,Export details           ,Export full detail of transactions for one or more addresses.
-01  ,Accounts    ,true       ,monitors     ,acctExport --appearances ,Monitors                 ,Add&#44; remove&#44; clean&#44; and list address monitors.
-01  ,Accounts    ,true       ,names        ,ethNames                 ,Names                    ,Query addresses or names of well known accounts.
-01  ,Accounts    ,true       ,abis         ,grabABI                  ,ABIs                     ,Fetches the ABI for a smart contract.
-02  ,Chain Data  ,false      ,             ,                         ,                         ,Access and cache blockchain-related data
-02  ,Chain Data  ,true       ,blocks       ,getBlocks                ,Get blocks               ,Retrieve one or more blocks from the chain or local cache.
-02  ,Chain Data  ,true       ,transactions ,getTrans                 ,Get transactions         ,Retrieve one or more transactions from the chain or local cache.
-02  ,Chain Data  ,true       ,receipts     ,getReceipts              ,Get receipts             ,Retrieve receipts for the given transaction(s).
-02  ,Chain Data  ,true       ,logs         ,getLogs                  ,Get logs                 ,Retrieve logs for the given transaction(s).
-02  ,Chain Data  ,true       ,traces       ,getTraces                ,Get traces               ,Retrieve traces for the given transaction(s).
-02  ,Chain Data  ,true       ,when         ,whenBlock                ,Get block date           ,Find block(s) based on date&#44; blockNum&#44; timestamp&#44; or 'special'.
-03  ,Chain State ,false      ,             ,                         ,                         ,Access to account and token state
-03  ,Chain State ,true       ,state        ,getState                 ,Get account balance(s)   ,Retrieve account balance(s) for one or more addresses at given block(s).
-03  ,Chain State ,true       ,tokens       ,getTokens                ,Get token balance(s)     ,Retrieve token balance(s) for one or more addresses at given block(s).
-04  ,Admin       ,false      ,             ,                         ,                         ,Control the scraper and build the index
-04  ,Admin       ,true       ,status       ,cacheStatus              ,Report TrueBlocks status ,Report on the status of the TrueBlocks system.
-04  ,Admin       ,false      ,serve        ,flame                    ,                         ,Serve the TrueBlocks API using the flame server.
-04  ,Admin       ,true       ,scrape       ,blockScrape              ,Scrape                   ,Scan the chain and update the TrueBlocks index of appearances.
-04  ,Admin       ,false      ,init         ,pinMan local --init      ,Init                     ,Initialize the index of appearances by downloading Bloom filters.
-04  ,Admin       ,true       ,pins         ,pinMan                   ,Manage pins              ,Manage pinned index of appearances and associated Bloom filters.
-05  ,Other       ,false      ,             ,                         ,                         ,Access to other and external data
-05  ,Other       ,true       ,quotes       ,getQuotes                ,Get price quotes         ,Freshen and/or display Ethereum price data.
-05  ,Other       ,false      ,explore      ,fireStorm                ,Explore                  ,Open an explorer for a given address&#44; block&#44; or transaction.
-05  ,Other       ,true       ,slurp        ,ethslurp                 ,Slurp                    ,Fetch data from EtherScan for any address.
+num,group,is_visible,api_route,tool,summary,description
+01,Accounts,false,,,,Access and cache transactional data
+01,Accounts,true,list,acctExport --appearances,List transactions,List every appearance of an address anywhere on the chain.
+01,Accounts,true,export,acctExport,Export details,Export full detail of transactions for one or more addresses.
+01,Accounts,true,monitors,acctExport --appearances,Monitors,Add&#44; remove&#44; clean&#44; and list address monitors.
+01,Accounts,true,names,ethNames,Names,Query addresses or names of well known accounts.
+01,Accounts,true,abis,grabABI,ABIs,Fetches the ABI for a smart contract.
+02,Chain Data,false,,,,Access and cache blockchain-related data
+02,Chain Data,true,blocks,getBlocks,Get blocks,Retrieve one or more blocks from the chain or local cache.
+02,Chain Data,true,transactions,getTrans,Get transactions,Retrieve one or more transactions from the chain or local cache.
+02,Chain Data,true,receipts,getReceipts,Get receipts,Retrieve receipts for the given transaction(s).
+02,Chain Data,true,logs,getLogs,Get logs,Retrieve logs for the given transaction(s).
+02,Chain Data,true,traces,getTraces,Get traces,Retrieve traces for the given transaction(s).
+02,Chain Data,true,when,whenBlock,Get block dates,Find block(s) based on date&#44; blockNum&#44; timestamp&#44; or 'special'.
+03,Chain State,false,,,,Access to account and token state
+03,Chain State,true,state,getState,Get balance(s),Retrieve account balance(s) for one or more addresses at given block(s).
+03,Chain State,true,tokens,getTokens,Get token balance(s),Retrieve token balance(s) for one or more addresses at given block(s).
+04,Admin,false,,,,Control the scraper and build the index
+04,Admin,true,status,cacheStatus,Report status,Report on the status of the TrueBlocks system.
+04,Admin,false,serve,flame,,Serve the TrueBlocks API using the flame server.
+04,Admin,true,scrape,blockScrape,Scrape,Scan the chain and update the TrueBlocks index of appearances.
+04,Admin,true,init,pinMan local --init,Init,Initialize the index of appearances by downloading Bloom filters.
+04,Admin,true,pins,pinMan,Manage pins,Manage pinned index of appearances and associated Bloom filters.
+05,Other,false,,,,Access to other and external data
+05,Other,true,quotes,getQuotes,Price quotes,Freshen and/or display Ethereum price data.
+05,Other,true,explore,fireStorm,Explore,Open an explorer for a given address&#44; block&#44; or transaction.
+05,Other,true,slurp,ethslurp,Slurp,Fetch data from EtherScan for any address.

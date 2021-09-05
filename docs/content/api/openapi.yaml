@@ -45,7 +45,7 @@ paths:
     get:
       tags:
       - Accounts
-      summary: List accounts
+      summary: List transactions
       description: List every appearance of an address anywhere on the chain.
       operationId: accounts-list
       parameters:
@@ -83,7 +83,7 @@ paths:
     get:
       tags:
       - Accounts
-      summary: Export account details
+      summary: Export details
       description: Export full detail of transactions for one or more addresses.
       operationId: accounts-export
       parameters:
@@ -400,7 +400,7 @@ paths:
     get:
       tags:
       - Accounts
-      summary: Manage monitored addresses
+      summary: Monitors
       description: Add, remove, clean, and list address monitors.
       operationId: accounts-monitors
       parameters:
@@ -963,7 +963,7 @@ paths:
     get:
       tags:
       - ChainData
-      summary: Get Traces
+      summary: Get traces
       description: Retrieve traces for the given transaction(s).
       operationId: chaindata-traces
       parameters:
@@ -1044,7 +1044,7 @@ paths:
     get:
       tags:
       - ChainData
-      summary: Get block date
+      summary: Get block dates
       description: Find block(s) based on date, blockNum, timestamp, or 'special'.
       operationId: chaindata-when
       parameters:
@@ -1132,7 +1132,7 @@ paths:
     get:
       tags:
       - ChainState
-      summary: Get account balance(s)
+      summary: Get balance(s)
       description: Retrieve account balance(s) for one or more addresses at given block(s).
       operationId: chainstate-state
       parameters:
@@ -1311,7 +1311,7 @@ paths:
     get:
       tags:
       - Admin
-      summary: Report TrueBlocks status
+      summary: Report status
       description: Report on the status of the TrueBlocks system.
       operationId: admin-status
       parameters:
@@ -1604,7 +1604,7 @@ paths:
     get:
       tags:
       - Other
-      summary: Get price quotes
+      summary: Price quotes
       description: Freshen and/or display Ethereum price data.
       operationId: other-quotes
       parameters:
