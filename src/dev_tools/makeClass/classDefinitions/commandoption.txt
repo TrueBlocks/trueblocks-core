@@ -16,5 +16,6 @@ fields = string num|\
         string option_type|\
         string data_type|\
         string real_type|\
+        string summary|\
         string description
 includes = etherlib.h

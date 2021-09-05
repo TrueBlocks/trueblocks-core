@@ -139,6 +139,11 @@ string_q CCommandOption::getValueByName(const string_q& fieldName) const {
                 return real_type;
             }
             break;
+        case 's':
+            if (fieldName % "summary") {
+                return summary;
+            }
+            break;
         case 't':
             if (fieldName % "tool") {
                 return tool;
@@ -248,6 +253,12 @@ bool CCommandOption::setValueByName(const string_q& fieldNameIn, const string_q&
                 return true;
             }
             break;
+        case 's':
+            if (fieldName % "summary") {
+                summary = fieldValue;
+                return true;
+            }
+            break;
         case 't':
             if (fieldName % "tool") {
                 tool = fieldValue;
@@ -296,6 +307,7 @@ bool CCommandOption::Serialize(CArchive& archive) {
     archive >> option_type;
     archive >> data_type;
     archive >> real_type;
+    archive >> summary;
     archive >> description;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -326,6 +338,7 @@ bool CCommandOption::SerializeC(CArchive& archive) const {
     archive << option_type;
     archive << data_type;
     archive << real_type;
+    archive << summary;
     archive << description;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -392,6 +405,7 @@ void CCommandOption::registerClass(void) {
     ADD_FIELD(CCommandOption, "option_type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CCommandOption, "data_type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CCommandOption, "real_type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CCommandOption, "summary", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CCommandOption, "description", T_TEXT | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
@@ -827,7 +841,7 @@ string_q CCommandOption::toApiPath(void) const {
     replace(ret, "[{TAGS}]", substitute(group, " ", ""));
     replace(ret, "[{PATH}]", api_route);
     replace(ret, "[{PARAMS}]", paramStream.str());
-    replace(ret, "[{SUMMARY}]", description);
+    replace(ret, "[{SUMMARY}]", summary);
     replace(ret, "[{DESCR}]", description);
     replace(ret, "[{ID}]", toLower(substitute(group, " ", "") + "-" + api_route));
     return ret;

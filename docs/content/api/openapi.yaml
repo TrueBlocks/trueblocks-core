@@ -400,7 +400,7 @@ paths:
     get:
       tags:
       - Accounts
-      summary: Monitor
+      summary: Manage monitored addresses
       description: Add, remove, clean, and list address monitors.
       operationId: accounts-monitors
       parameters:
@@ -1468,7 +1468,7 @@ paths:
     get:
       tags:
       - Admin
-      summary: Scan the chain and update the TrueBlocks index of appearances.
+      summary: Scrape
       description: Scan the chain and update the TrueBlocks index of appearances.
       operationId: admin-scrape
       parameters:
@@ -1604,7 +1604,7 @@ paths:
     get:
       tags:
       - Other
-      summary: Get Ethereum price data.
+      summary: Get price quotes
       description: Freshen and/or display Ethereum price data.
       operationId: other-quotes
       parameters:
@@ -1671,7 +1671,7 @@ paths:
     get:
       tags:
       - Other
-      summary: Fetch data from EtherScan for any address.
+      summary: Slurp
       description: Fetch data from EtherScan for any address.
       operationId: other-slurp
       parameters:
@@ -2176,4 +2176,3 @@ components:
           description: the result of the call of this trace
           type: string
           format: byte
-
