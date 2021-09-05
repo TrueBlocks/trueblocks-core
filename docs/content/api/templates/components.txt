@@ -1,0 +1,443 @@
+  schemas:
+    response:
+      required:
+      - result
+      type: object
+      properties:
+        data:
+          type: object
+        error:
+          type: array
+          example:
+          - error 1
+          - error 2
+          items:
+            type: string
+    block:
+      type: object
+      properties:
+        gasLimit:
+          $ref: '#/components/schemas/gasLimit'
+        hash:
+          $ref: '#/components/schemas/hash'
+        blockNumber:
+          $ref: '#/components/schemas/blockNumber'
+        parentHash:
+          $ref: '#/components/schemas/parentHash'
+        miner:
+          $ref: '#/components/schemas/miner'
+        difficulty:
+          $ref: '#/components/schemas/difficulty'
+        timestamp:
+          $ref: '#/components/schemas/timestamp'
+        transactions:
+          $ref: '#/components/schemas/transactions'
+        baseFeePerGas:
+          $ref: '#/components/schemas/baseFeePerGas'
+        finalized:
+          $ref: '#/components/schemas/finalized'
+    receipts:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/status'
+        contractAddress:
+          $ref: '#/components/schemas/contractAddress'
+        gasUsed:
+          $ref: '#/components/schemas/gasUsed'
+        logs:
+          type: array
+          description: possibly empty array of logs
+          items:
+            $ref: '#/components/schemas/logs'
+    transactions:
+      type: object
+      properties:
+        hash:
+          $ref: '#/components/schemas/hash'
+        blockHash:
+          $ref: '#/components/schemas/hash'
+        blockNumber:
+          $ref: '#/components/schemas/blockNumber'
+        transactionIndex:
+          $ref: '#/components/schemas/transactionIndex'
+        nonce:
+          $ref: '#/components/schemas/nonce'
+        timestamp:
+          $ref: '#/components/schemas/timestamp'
+        from:
+          $ref: '#/components/schemas/from'
+        to:
+          $ref: '#/components/schemas/to'
+        value:
+          $ref: '#/components/schemas/value'
+        gas:
+          $ref: '#/components/schemas/gasPrice'
+        input:
+          $ref: '#/components/schemas/input'
+        receipt:
+          $ref: '#/components/schemas/receipts'
+        statements:
+          type: array
+          description: "array of reconciliations"
+          items:
+            $ref: '#/components/schemas/reconciliations'
+        articulatedTx:
+          $ref: "#/components/schemas/articulatedTx"
+        compressedTx:
+          $ref: "#/components/schemas/compressedTx"
+        hasToken:
+          $ref: "#/components/schemas/hasToken"
+        finalized:
+          $ref: "#/components/schemas/finalized"
+    articulatedTx:
+      type: object
+      description: "a human readable articulation of the input field"
+    compressedTx:
+      type: string
+      example: "0x3d18b912 ( )"
+      description: "truncated, more readable version of the articulation"
+    reconciliations:
+      type: object
+      properties:
+        blockNumber:
+          $ref: "#/components/schemas/blockNumber"
+        transactionIndex:
+          $ref: '#/components/schemas/transactionIndex'
+        timestamp:
+          $ref: '#/components/schemas/timestamp'
+        assetAddr:
+          description: for reconciliations whose assetSymbol is ETH or WEI, the accountedFor address. For all assets, the address of the asset itself
+          allOf:
+            - $ref: '#/components/schemas/address'
+        assetSymbol:
+          description: either ETH, WEI or the symbol of the asset being reconciled as extracted from the chain
+          type: string
+        decimals: 
+          description: Equivilent to the extracted value of getSymbol from ERC20 or, if ETH or WEI then 18
+          type: number
+        prevBlk:
+          description: the block number of the previous reconciliation 
+          allOf:
+            - $ref: "#/components/schemas/blockNumber"
+        prevBlkBal:
+          description: the account balance for the given asset for the previous reconciliation
+          allOf:
+            - $ref: "#/components/schemas/blockNumber"
+        begBal:
+          description: the begining balance of the asset at the blockNumber
+          type: number
+          format: bigint
+        begBalDiff:
+          description: the difference between the expected beginning balance (prevBlkBal) and the queried balance from the chain
+          type: number
+          format: bigint
+        amountIn:
+          description: for ETH reconciliations, the value of the transactions if the from address is the same as the accountedFor address. Otherwise, the value of the ERC20’s transfer amount.
+          type: number
+          format: bigint
+        amountOut:
+          description: the amount (in terms of the asset) of regular outflow during this bigint
+        internalIn:
+          description: for ETH reconciliations only, the value of any internal value transfers into the accountedFor account 
+          type: number 
+          format: bigint
+        internalOut:
+          description: for ETH reconciliations only, the value of any internal value transfers out of the accountedFor account
+          type: number 
+          format: bigint
+        selfDestructIn:
+          description: for ETH reconciliations for transactions ending in self-destrution only, the value received by the accountedFor account from the self-destructed account bigint
+        selfDestructOut:
+          description: for ETH reconciliations for transactions ending in self-destrution only, the value transfered out of the accountedFor account 
+          type: number 
+          format: bigint
+        minerBaseRewardIn:
+          description: for blocks won by the accountedFor address, this is the base fee reward for the miner 
+          type: number 
+          format: bigint
+        minerNephewRewardIn:
+          description: for blocks won by the accountedFor address, this is the netphew reward for the miner 
+          type: number 
+          format: bigint
+        minerTxFeeIn:
+          description: for blocks won by the accountedFor address, this is the transaction fee reward for the miner 
+          type: number 
+          format: bigint
+        minerUncleRewardIn:
+          description: for blocks in which the accountedFor address generated an uncle, this value is the uncle reward 
+          type: number 
+          format: bigint
+        prefundIn:
+          description: at block zero (0) only, the amount of genesis income for the accountedFor address 
+          type: number 
+          format: bigint
+        gasCostOut:
+          description: if accountedFor address is the transaction’s sender (i.e. from at the top level), the amount of gas expended denominated in either ETH or WEI. 
+          type: number 
+          format: bigint
+        endBal:
+          description: the balance of the reconciled asset at the end of this transaction found by querying the chain (see the note above about intra-block reconciliations) 
+          type: number 
+          format: bigint
+        totalIn:
+          description: a calculated field -- the sum of all In fields 
+          type: number 
+          format: bigint
+        totalOut:
+          description: a calculated field -- the sum of all Out fields 
+          type: number 
+          format: bigint
+        amountNet:
+          description: a calculated field -- totalIn - totalOut 
+          type: number 
+          format: bigint
+        endBalCalc:
+          description: a calculated field -- begBal + amountNet 
+          type: number 
+          format: bigint
+        endBalDiff:
+          description: a calculated field -- endBal - endBalCalc, if non-zero, the reconciliation failed 
+          type: number 
+          format: bigint
+        reconciled:
+          description: a calculated field -- true if `endBal === endBalCalc` and `begBal === prevBlkBal`. `false` otherwise.
+          type: boolean
+        reconciliationType:
+          description: One of regular, traces, prevdiff-partial, partial-nextdiff, or `partial-partial depending on previous, following or both transactions in the same block 	string
+        spotPrice:
+          description: The price (if available) at the time of the transaction in US dollars for ETH reconciliations and ETH for other assets 
+          type: number 
+          format: bigint
+    transactionIndex:
+     example: 305
+     type: number
+     description: "the transaction’s zero-indexed position in the block"
+    nonce:
+      example: 232
+      type: number
+      description: "sequence number of the transactions sent by the sender"
+    from:
+      description: "address from which transaction originated"
+      allOf:
+        - $ref: "#/components/schemas/address"
+    to:
+      description: "address from which transaction originated"
+      allOf:
+       - $ref: "#/components/schemas/address"
+    address:
+      description: The address of the named account
+      type: string
+      format: address
+      example: "0xf503017d7baf7fbc0fff7492b751025c6a78179b"
+    value:
+      example: 0
+      type: number
+      format: wei
+      description: the amount of wei sent with this transactions
+    gas:
+      example: 158660
+      type: number
+      format: wei
+      description: the maximum number of gas allowed for this action
+    gasPrice:
+      example: 63525836552
+      type: number
+      format: wei
+      description: "gasPrice 	the number of wei per unit of gas used the sender is willing to spend"
+    maxFeePerGas:
+      example: 107596001741
+      type: number
+    maxPriorityFeePerGas:
+      example: 2000000000
+      type: number
+    input:
+      example: "0x3d18b912"
+      description:  "byte data either containing a message or funcational data for a smart contracts. See the --articulate "
+      type: string
+    hasToken:
+      example: 0
+      type: number
+    gasLimit:
+      type: number
+      format: wei
+      example: 5000
+      description: "the system-wide maximum amount of gas permitted in this block"
+    hash:
+      type: string
+      format: hash
+      description: "The hash of the current transaction or block"
+      example: "0xf12869a900c2fd345f9d6a93e25e6118fd7f99f2b04bff6da59c8bc4218a1e98"
+    blockNumber:
+      example: 10021
+      type: number
+      format: blockNum
+      description: the number of the block
+    parentHash:
+      type: string
+      example: "0x66fc978cfe3d0d0dee8590600f9955c6ae658b8cda1573a0793b95841f9231c9"
+      format: hash
+      description: hash of previous block
+    miner:
+      example: "0xf927a40c8b7f6e07c5af7fa2155b4864a4112b13"
+      description: Address of block's winning miner
+      type: string
+      format: address
+    difficulty:
+     description: "The computational difficulty at this block"
+     format: bigint
+     type: number
+     example: 598133194256
+    timestamp:
+      description: "the unix timestamp of the object"
+      type: number
+      format: timestamp
+      example: 1438335038
+    baseFeePerGas:
+      type: number
+      example: 0
+    finalized:
+      description: "a flag indicating if TrueBlocks considers this block final"
+      type: boolean
+      example: true
+    date:
+      description: "Human readable version of timestamp"
+      example: "2015-07-30 15:34:53 UTC"
+      type: string
+    status:
+      type: boolean
+      description: >
+        "`1` if the transaction suceeded, `0` otherwise"
+    contractAddress:
+      description:  the address of the newly created contract, if any
+      type: string
+      format: address
+    gasUsed:
+      description: the amount of gas used by this transaction
+      type: number
+      format: wei
+    logs:
+      type: object
+      properties:
+        blockNumber:
+          $ref: "#/components/schemas/blockNumber"
+        transactionIndex:
+          $ref: "#/components/schemas/transactionIndex"
+        address:
+          description: the smart contract that emitted this log
+          allOf:
+            - $ref: "#/components/schemas/address"
+        logIndex:
+          description: >
+            the zero-indexed position of this log relative to the block
+          example: 354
+        topics:
+          description: The first topic hashes event signature of the log, up to 3 additional index parameters may appear
+          type: array
+          maxItems: 4
+          example:
+           [
+            "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+            "0x000000000000000000000000cfa5b526105ec86d893f24bc173b1d4166979f54",
+            "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b"
+           ]
+        data:
+          description: any remaining un-indexed parameters to the event
+          type: string
+          format: bytes
+          example: "0x000000000000000000000000000000000000000000000001456b4ee641bd3ff6"
+        articulatedLog:
+          description: a human-readable version of the topic and data fields
+          type: object
+          properties:
+            name:
+              type: string
+              example: "Transfer"
+            inputs:
+              type: object
+              properties:
+                _amount:
+                  example: "23448922635686985718"
+                _from:
+                  $ref: "#/components/schemas/from"
+                _to:
+                  $ref: "#/components/schemas/to"
+        compressedLog:
+          description: a truncated, more readable version of the articulation
+          type: string
+          example: "Transfer(0xcfa5b526105ec86d893f24bc173b1d4166979f54 /*_from*/, 0xf503017d7baf7fbc0fff7492b751025c6a78179b /*_to*/, 23448922635686985718 /*_amount*/); "
+    traces:
+      type: object
+      properties:   
+        blockHash:
+          $ref: "#/components/schemas/hash"
+        blockNumber:
+          $ref: "#/components/schemas/blockNumber"
+        transactionHash:
+          description: the transaction's hash
+          type: string
+          format: hash
+        transactionIndex:
+          $ref: "#/components/schemas/transactionIndex"
+        traceAddress:
+          description: a particular trace's address in the trace tree
+          type: string
+        subTraces:
+          description: the number of children traces that the trace hash
+          type: number
+        type:
+          description: the type of the trace
+          type: string
+        action:
+          $ref: "#/components/schemas/traceAction"
+        result:
+          $ref: "#/components/schemas/traceResult"
+    traceAction:
+      description: the trace action object
+      type: object
+      properties:
+        from:
+         description: the smart contract that called the trace
+         allOf:
+           - $ref: '#/components/schemas/address'
+        to:
+          description: the smart contract that the trace calls
+          allOf:
+            - $ref: '#/components/schemas/address'
+        gas:
+          $ref: "#/components/schemas/gas"
+        input:
+          description: an encoded version of the function call.
+          type: string
+          format: bytes
+        callType:
+          description: the type of call
+          type: string
+        refundAddress:
+          description: if the call type is self-destruct, the address to which the refund is sent
+          allOf:
+            - $ref: '#/components/schemas/address'
+        articulatedTrace:
+          description: A human-readable version of the trace action’s input and the result’s output
+          type: object
+        compressedTrace:
+          description: a truncated, more readable version of the articulation
+          type: string
+    traceResult:
+      description: the trace result
+      type: object
+      properties:
+        newContract:
+          description: Address of new contract, if any
+          allOf:
+            - $ref: "#/components/schemas/address"
+        code:
+          description: if this trace is creating a new smart contract, the byte code of that contract
+          type: string
+          format: bytes
+        gasUsed:
+          $ref: "#/components/schemas/gasUsed"
+        output:
+          description: the result of the call of this trace
+          type: string
+          format: byte

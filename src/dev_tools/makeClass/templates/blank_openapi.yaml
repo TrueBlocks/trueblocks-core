@@ -1,7 +1,8 @@
 openapi: 3.0.3
 info:
   title: TrueBlocks API
-  description: An API for accessing cached Ethereum blockchain data and accounts
+  description: >
+[{DESCRIPTION}]
   contact:
     email: jrush@trueblocks.io
     url: https://www.trueblocks.io
@@ -15,24 +16,4 @@ servers:
 tags:
 [{TAGS}]paths:
 [{PATHS}]components:
-  schemas:
-    response:
-      required:
-      - result
-      type: object
-      properties:
-        data:
-          type: object
-        error:
-          type: array
-          example:
-          - error 1
-          - error 2
-          items:
-            type: string
-    scrape_response:
-      type: string
-      example: Scrape response
-    trans_response:
-      type: string
-      example: Trans response
+[{COMPONENTS}]
