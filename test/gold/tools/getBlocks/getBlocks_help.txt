@@ -5,14 +5,14 @@ getBlocks -h
   Purpose:  Retrieve one or more blocks from the chain or local cache.
 
   Where:  
-	blocks                a space-separated list of one or more blocks to retrieve (required)
+	blocks                a space-separated list of one or more block identifiers (required)
 	-e  (--hashes)        display only transaction hashes, default is to display full transaction detail
 	-U  (--uncles)        display uncle blocks (if any) instead of the requested block
 	-t  (--trace)         export the traces from the block as opposed to the block data
-	-a  (--apps)          display all address appearances in the block
-	-u  (--uniq)          display only uniq address appearances per block
-	-n  (--uniq_tx)       display only uniq address appearances per transaction
-	-c  (--count)         display counts of appearances (for --apps, --uniq, or --uniq_tx) or transactions
+	-a  (--apps)          display only the list of address appearances in the block
+	-u  (--uniq)          display only the list of uniq address appearances in the block
+	-n  (--uniq_tx)       display only the list of uniq address appearances in each transaction
+	-c  (--count)         display the number of the lists of appearances for --apps, --uniq, or --uniq_tx
 	-o  (--cache)         force a write of the block to the cache
 
 	#### Hidden options
