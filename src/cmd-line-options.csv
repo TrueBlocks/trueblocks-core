@@ -71,14 +71,14 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 13885,tools,Accounts,abis,grabABI,ERR_SUPPLYONEADDR,,,false,false,false,false,--,error,,Please supply at least one Ethereum address.
 13885,tools,Accounts,abis,grabABI,ERR_OPTIONNOTIMPL,,,false,false,false,false,--,error,,--classes option is not implemented.
 
-12500,tools,ChainData,blocks,getBlocks,blocks,,,true,false,true,true,local,positional,list<blknum>,a space-separated list of one or more blocks to retrieve
+12500,tools,ChainData,blocks,getBlocks,blocks,,,true,false,true,true,local,positional,list<blknum>,a space-separated list of one or more block identifiers
 12510,tools,ChainData,blocks,getBlocks,hashes,e,,false,false,true,true,header,switch,<boolean>,display only transaction hashes&#44; default is to display full transaction|detail
 12520,tools,ChainData,blocks,getBlocks,uncles,U,,false,false,true,true,header,switch,<boolean>,display uncle blocks (if any) instead of the requested block
 12530,tools,ChainData,blocks,getBlocks,trace,t,,false,false,true,true,header,switch,<boolean>,export the traces from the block as opposed to the block data
-12540,tools,ChainData,blocks,getBlocks,apps,a,,false,false,true,true,local,switch,<boolean>,display all address appearances in the block
-12550,tools,ChainData,blocks,getBlocks,uniq,u,,false,false,true,true,local,switch,<boolean>,display only uniq address appearances per block
-12560,tools,ChainData,blocks,getBlocks,uniq_tx,n,,false,false,true,true,local,switch,<boolean>,display only uniq address appearances per transaction
-12570,tools,ChainData,blocks,getBlocks,count,c,,false,false,true,true,header,switch,<boolean>,display counts of appearances (for --apps&#44; --uniq&#44; or --uniq_tx)|or transactions
+12540,tools,ChainData,blocks,getBlocks,apps,a,,false,false,true,true,local,switch,<boolean>,display only the list of address appearances in the block
+12550,tools,ChainData,blocks,getBlocks,uniq,u,,false,false,true,true,local,switch,<boolean>,display only the list of uniq address appearances in the block
+12560,tools,ChainData,blocks,getBlocks,uniq_tx,n,,false,false,true,true,local,switch,<boolean>,display only the list of uniq address appearances in each transaction
+12570,tools,ChainData,blocks,getBlocks,count,c,,false,false,true,true,header,switch,<boolean>,display the number of the lists of appearances for --apps&#44; --uniq&#44; or --uniq_tx
 12580,tools,ChainData,blocks,getBlocks,cache,o,,false,false,true,true,header,switch,<boolean>,force a write of the block to the cache
 12582,tools,ChainData,blocks,getBlocks,list,l,,false,false,false,false,local,flag,<blknum>,summary list of blocks running backwards from latest block minus num
 12582,tools,ChainData,blocks,getBlocks,list_count,C,20,false,false,false,false,header,flag,<blknum>,the number of blocks to report for --list option
@@ -91,8 +91,8 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 13560,tools,ChainData,transactions,getTrans,articulate,a,,false,false,true,true,header,switch,<boolean>,articulate the retrieved data if ABIs can be found
 13580,tools,ChainData,transactions,getTrans,trace,t,,false,false,true,true,header,switch,<boolean>,include the transaction's traces in the results
 13605,tools,ChainData,transactions,getTrans,uniq,u,,false,false,true,true,header,switch,<boolean>,display a list of uniq addresses found in the transaction instead of the underlying data
-13600,tools,ChainData,transactions,getTrans,cache,o,,false,false,true,true,header,switch,<boolean>,force the results of the query into the tx cache (and the trace cache if applicable)
 13605,tools,ChainData,transactions,getTrans,reconcile,r,,false,false,true,true,header,flag,<address>,reconcile the transaction as per the provided address
+13600,tools,ChainData,transactions,getTrans,cache,o,,false,false,true,true,header,switch,<boolean>,force the results of the query into the tx cache (and the trace cache if applicable)
 13620,tools,ChainData,transactions,getTrans,,,,false,false,true,true,--,description,,Retrieve one or more transactions from the chain or local cache.
 13622,tools,ChainData,transactions,getTrans,,,,false,false,false,false,--,note,,The `transactions` list may be one or more space-separated identifiers which are either a transaction hash&#44;|a blockNumber.transactionID pair&#44; or a blockHash.transactionID pair&#44; or any combination.
 13624,tools,ChainData,transactions,getTrans,,,,false,false,false,false,--,note,,This tool checks for valid input syntax&#44; but does not check that the transaction requested actually exists.
@@ -139,7 +139,7 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 13963,tools,ChainData,when,whenBlock,check,c,,false,false,false,false,header,switch,<boolean>,available only with --timestamps&#44; checks the validity of the timestamp data
 13965,tools,ChainData,when,whenBlock,fix,f,,false,false,false,false,header,switch,<boolean>,available only with --timestamps&#44; fixes incorrect timestamps if any
 13966,tools,ChainData,when,whenBlock,count,u,,false,false,false,false,header,switch,<boolean>,available only with --timestamps&#44; returns the number of timestamps in the cache
-13967,tools,ChainData,when,whenBlock,skip,s,,false,false,true,true,header,flag,<uint64>,only applicable if --timestamps is on&#44; the step between block|numbers in the export
+13967,tools,ChainData,when,whenBlock,skip,s,,false,false,false,false,header,flag,<uint64>,only applicable if --timestamps is on&#44; the step between block|numbers in the export
 13980,tools,ChainData,when,whenBlock,,,,false,false,true,false,--,description,,Find block(s) based on date&#44; blockNum&#44; timestamp&#44; or 'special'.
 13982,tools,ChainData,when,whenBlock,,,,false,false,false,false,--,note,,The block list may contain any combination of `number`&#44; `hash`&#44; `date`&#44; special `named` blocks.
 13984,tools,ChainData,when,whenBlock,,,,false,false,false,false,--,note,,Dates must be formatted in JSON format: YYYY-MM-DD[THH[:MM[:SS]]].

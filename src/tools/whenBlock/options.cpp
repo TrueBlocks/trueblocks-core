@@ -28,7 +28,7 @@ static const COption params[] = {
     COption("check", "c", "", OPT_HIDDEN | OPT_SWITCH, "available only with --timestamps, checks the validity of the timestamp data"),  // NOLINT
     COption("fix", "f", "", OPT_HIDDEN | OPT_SWITCH, "available only with --timestamps, fixes incorrect timestamps if any"),  // NOLINT
     COption("count", "u", "", OPT_HIDDEN | OPT_SWITCH, "available only with --timestamps, returns the number of timestamps in the cache"),  // NOLINT
-    COption("skip", "s", "<uint64>", OPT_FLAG, "only applicable if --timestamps is on, the step between block numbers in the export"),  // NOLINT
+    COption("skip", "s", "<uint64>", OPT_HIDDEN | OPT_FLAG, "only applicable if --timestamps is on, the step between block numbers in the export"),  // NOLINT
     COption("", "", "", OPT_DESCRIPTION, "Find block(s) based on date, blockNum, timestamp, or 'special'."),
     // clang-format on
     // END_CODE_OPTIONS

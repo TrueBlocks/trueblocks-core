@@ -20,14 +20,14 @@
 static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
-    COption("blocks", "", "list<blknum>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more blocks to retrieve"),  // NOLINT
+    COption("blocks", "", "list<blknum>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more block identifiers"),  // NOLINT
     COption("hashes", "e", "", OPT_SWITCH, "display only transaction hashes, default is to display full transaction detail"),  // NOLINT
     COption("uncles", "U", "", OPT_SWITCH, "display uncle blocks (if any) instead of the requested block"),
     COption("trace", "t", "", OPT_SWITCH, "export the traces from the block as opposed to the block data"),
-    COption("apps", "a", "", OPT_SWITCH, "display all address appearances in the block"),
-    COption("uniq", "u", "", OPT_SWITCH, "display only uniq address appearances per block"),
-    COption("uniq_tx", "n", "", OPT_SWITCH, "display only uniq address appearances per transaction"),
-    COption("count", "c", "", OPT_SWITCH, "display counts of appearances (for --apps, --uniq, or --uniq_tx) or transactions"),  // NOLINT
+    COption("apps", "a", "", OPT_SWITCH, "display only the list of address appearances in the block"),
+    COption("uniq", "u", "", OPT_SWITCH, "display only the list of uniq address appearances in the block"),
+    COption("uniq_tx", "n", "", OPT_SWITCH, "display only the list of uniq address appearances in each transaction"),
+    COption("count", "c", "", OPT_SWITCH, "display the number of the lists of appearances for --apps, --uniq, or --uniq_tx"),  // NOLINT
     COption("cache", "o", "", OPT_SWITCH, "force a write of the block to the cache"),
     COption("list", "l", "<blknum>", OPT_HIDDEN | OPT_FLAG, "summary list of blocks running backwards from latest block minus num"),  // NOLINT
     COption("list_count", "C", "<blknum>", OPT_HIDDEN | OPT_FLAG, "the number of blocks to report for --list option"),

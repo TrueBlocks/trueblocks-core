@@ -24,8 +24,8 @@ static const COption params[] = {
     COption("articulate", "a", "", OPT_SWITCH, "articulate the retrieved data if ABIs can be found"),
     COption("trace", "t", "", OPT_SWITCH, "include the transaction's traces in the results"),
     COption("uniq", "u", "", OPT_SWITCH, "display a list of uniq addresses found in the transaction instead of the underlying data"),  // NOLINT
-    COption("cache", "o", "", OPT_SWITCH, "force the results of the query into the tx cache (and the trace cache if applicable)"),  // NOLINT
     COption("reconcile", "r", "<address>", OPT_FLAG, "reconcile the transaction as per the provided address"),
+    COption("cache", "o", "", OPT_SWITCH, "force the results of the query into the tx cache (and the trace cache if applicable)"),  // NOLINT
     COption("", "", "", OPT_DESCRIPTION, "Retrieve one or more transactions from the chain or local cache."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -55,15 +55,15 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-u" || arg == "--uniq") {
             uniq = true;
 
-        } else if (arg == "-o" || arg == "--cache") {
-            cache = true;
-
         } else if (startsWith(arg, "-r:") || startsWith(arg, "--reconcile:")) {
             reconcile = substitute(substitute(arg, "-r:", ""), "--reconcile:", "");
             if (!isAddress(reconcile))
                 return usage("The provided value (" + reconcile + ") is not a properly formatted address.");
         } else if (arg == "-r" || arg == "--reconcile") {
             return flag_required("reconcile");
+
+        } else if (arg == "-o" || arg == "--cache") {
+            cache = true;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -84,8 +84,8 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("articulate", articulate);
     LOG_TEST_BOOL("trace", trace);
     LOG_TEST_BOOL("uniq", uniq);
-    LOG_TEST_BOOL("cache", cache);
     LOG_TEST("reconcile", reconcile, (reconcile == ""));
+    LOG_TEST_BOOL("cache", cache);
     // END_DEBUG_DISPLAY
 
     if (Mocked("transactions"))
@@ -146,8 +146,8 @@ void COptions::Init(void) {
     articulate = false;
     trace = false;
     uniq = false;
-    cache = false;
     reconcile = "";
+    cache = false;
     // END_CODE_INIT
 
     transList.Init();

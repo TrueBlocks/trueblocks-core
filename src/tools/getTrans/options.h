@@ -28,8 +28,8 @@ class COptions : public CAbiOptions {
     bool articulate;
     bool trace;
     bool uniq;
-    bool cache;
     address_t reconcile;
+    bool cache;
     // END_CODE_DECLARE
 
     COptionsTransList transList;
