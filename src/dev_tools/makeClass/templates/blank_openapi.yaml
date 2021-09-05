@@ -1,15 +1,15 @@
 openapi: 3.0.3
 info:
   title: TrueBlocks API
-  description: >
-[{DESCRIPTION}]  contact:
+  contact:
     email: jrush@trueblocks.io
     url: https://www.trueblocks.io
   license:
-    name: Apache 2.0
-    url: http://www.apache.org/licenses/LICENSE-2.0.html
-  version: 0.8.04
-servers:
+    name: GPL 3.0
+    url: http://www.gnu.org/licenses/
+  version: [{VERSION}]
+  description: >
+[{DESCRIPTION}]servers:
   - url: http://localhost:8080
     description: Local endpoints
 tags:

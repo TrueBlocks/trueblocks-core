@@ -5,66 +5,65 @@ info:
     email: jrush@trueblocks.io
     url: https://www.trueblocks.io
   license:
-    name: Apache 2.0
-    url: http://www.apache.org/licenses/LICENSE-2.0.html
-  version: 0.8.04
+    name: GPL 3.0
+    url: http://www.gnu.org/licenses/
+  version: 0.12.1-alpha
   description: >
 
-   A REST layer over the TrueBlocks application. With `chifra serve`, you can
-   run this on your own machine, and make calls to `localhost`.
+    A REST layer over the TrueBlocks application. With `chifra serve`, you can
+    run this on your own machine, and make calls to `localhost`.
 
-   ## How to use this API
+    ## How to use this API
 
-   This API's endpoints are exact translations of the commands used by the chifra
-   CLI application, and the query parameters mirror the commands' options and
-   flags. If you want details, [the commands have their own documentation page](https://trueblocks.io/docs/chifra/introducing-chifra/).
+    This API's endpoints are exact translations of the commands used by the chifra
+    CLI application, and the query parameters mirror the commands' options and
+    flags. If you want details, [the commands have their own documentation page](https://trueblocks.io/docs/chifra/introducing-chifra/).
 
-   For detailed descriptions of fields, see [the data model reference](https://trueblocks.io/data-model/intro/intro).
+    For detailed descriptions of fields, see [the data model reference](https://trueblocks.io/data-model/intro/intro).
 
-     ### Before you begin
+      ### Before you begin
 
-   1. [Install the trueblocks-core application](https://trueblocks.io/docs/prologue/installing-trueblocks/)
-     on your machine, change your configs as needed.
-   2. Run `chifra serve`
+    1. [Install the trueblocks-core application](https://trueblocks.io/docs/prologue/installing-trueblocks/)
+      on your machine, change your configs as needed.
+    2. Run `chifra serve`
 
 
-     ### Example queries
+      ### Example queries
 
-    By default, all calls are to `localhost:8080`.
-    All options and flags are passed through query parameters.
+     By default, all calls are to `localhost:8080`.
+     All options and flags are passed through query parameters.
 
-    For example, to get block `100`, make a call to `/blocks` and specify
-    the block you want in the query parameter:
+     For example, to get block `100`, make a call to `/blocks` and specify
+     the block you want in the query parameter:
 
-    ```shell
-    curl "http://localhost:8080/blocks?blocks=100"
-    ```
+     ```shell
+     curl "http://localhost:8080/blocks?blocks=100"
+     ```
 
-    Some parameters support ranges:
+     Some parameters support ranges:
 
-    ```shell
-    curl "http://localhost:8080/blocks?blocks=100-120"
-    ```
+     ```shell
+     curl "http://localhost:8080/blocks?blocks=100-120"
+     ```
 
-    Other parameters let you filter your responses. For example, to get only
-    the unique addresses from that block range:
+     Other parameters let you filter your responses. For example, to get only
+     the unique addresses from that block range:
 
-    ```shell
-    curl "http://localhost:8080/blocks?blocks=100-110&uniq=true"
-    ```
+     ```shell
+     curl "http://localhost:8080/blocks?blocks=100-110&uniq=true"
+     ```
 
-    You might want to cache queries on your local machine.
+     You might want to cache queries on your local machine.
 
-    ```shell
-    "http://localhost:8080/blocks?blocks=100-110&cache=true"
-    ```
+     ```shell
+     "http://localhost:8080/blocks?blocks=100-110&cache=true"
+     ```
 
-    Cacheing speeds up repeat queries significantly. The cache options are
-    particularly useful for calls to data-rich endpoints, like most endpoints
-    in the  "Accounts" collection.
+     Cacheing speeds up repeat queries significantly. The cache options are
+     particularly useful for calls to data-rich endpoints, like most endpoints
+     in the  "Accounts" collection.
 
-    Of course, caches occupy local storage. So cache wisely.
-
+     Of course, caches occupy local storage. So cache wisely.
 servers:
   - url: http://localhost:8080
     description: Local endpoints
@@ -1491,12 +1490,12 @@ components:
           type: string
           format: wei_t
           example: "5000"
-          description: "the system-wide maximum amount of gas permitted in this block"
+          description: the system-wide maximum amount of gas permitted in this block
         hash:
           type: string
           format: hash_t
           example: "0xf12869a900c2fd345f9d6a93e25e6118fd7f99f2b04bff6da59c8bc4218a1e98"
-          description: "The hash of the current block"
+          description: the hash of the current block
         blockNumber:
           type: number
           format: blknum_t
@@ -1516,30 +1515,45 @@ components:
           type: string
           format: uint256_t
           example: 598133194256
-          description: "The computational difficulty at this block"
+          description: the computational difficulty at this block
         timestamp:
           type: number
           format: timestamp_t
           example: 1438335038
-          description: "the unix timestamp of the object"
+          description: the unix timestamp of the object
         transactions:
-          $ref: "#/components/schemas/transaction"
+          type: array
+          description: a possibly empty array of transactions or transaction hashes
+          items:
+            oneOf:
+              - $ref: "#/components/schemas/transaction"
+              - $ref: "#/components/schemas/hash"
         baseFeePerGas:
-          $ref: "#/components/schemas/baseFeePerGas"
+          type: number
+          example: 120911
+          description: the base fee for this block
         finalized:
-          $ref: "#/components/schemas/finalized"
+          type: boolean
+          example: true
+          description: flag indicating the system considers this data final
     receipts:
       type: object
       properties:
         status:
-          $ref: "#/components/schemas/status"
+          type: boolean
+          description: >
+            `1` on transaction suceess, `null` if tx preceeds Byzantium, `0` otherwise
         contractAddress:
-          $ref: "#/components/schemas/contractAddress"
+          type: string
+          format: address_t
+          description: the address of the newly created contract, if any
         gasUsed:
-          $ref: "#/components/schemas/gasUsed"
+          type: number
+          format: wei_t
+          description: the amount of gas used by the transaction
         logs:
           type: array
-          description: possibly empty array of logs
+          description: a possibly empty array of logs
           items:
             $ref: "#/components/schemas/logs"
     transaction:
@@ -1590,7 +1604,9 @@ components:
         hasToken:
           $ref: "#/components/schemas/hasToken"
         finalized:
-          $ref: "#/components/schemas/finalized"
+          type: boolean
+          example: true
+          description: "flag indicating the system considers this data final"
     logs:
       type: object
       properties:
@@ -1723,7 +1739,9 @@ components:
           type: string
           format: bytes
         gasUsed:
-          $ref: "#/components/schemas/gasUsed"
+          type: number
+          format: wei_t
+          description: the amount of gas used by this trace
         output:
           description: the result of the call of this trace
           type: string
@@ -1937,33 +1955,14 @@ components:
     hash:
       type: string
       format: hash_t
-      description: "The hash of the current transaction or block"
+      description: "The hash of a transaction or block"
       example: "0xf12869a900c2fd345f9d6a93e25e6118fd7f99f2b04bff6da59c8bc4218a1e98"
     blockNumber:
       example: 10021
       type: number
       format: blknum_t
       description: the number of the block
-    baseFeePerGas:
-      type: number
-      example: 0
-    finalized:
-      description: "a flag indicating if TrueBlocks considers this block final"
-      type: boolean
-      example: true
     date:
       description: "Human readable version of timestamp"
       example: "2015-07-30 15:34:53 UTC"
       type: string
-    status:
-      type: boolean
-      description: >
-        "`1` if the transaction suceeded, `0` otherwise"
-    contractAddress:
-      description: the address of the newly created contract, if any
-      type: string
-      format: address
-    gasUsed:
-      description: the amount of gas used by this transaction
-      type: number
-      format: wei_t

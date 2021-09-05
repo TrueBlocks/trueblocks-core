@@ -6,12 +6,12 @@
           type: string
           format: wei_t
           example: "5000"
-          description: "the system-wide maximum amount of gas permitted in this block"
+          description: the system-wide maximum amount of gas permitted in this block
         hash:
           type: string
           format: hash_t
           example: "0xf12869a900c2fd345f9d6a93e25e6118fd7f99f2b04bff6da59c8bc4218a1e98"
-          description: "The hash of the current block"
+          description: the hash of the current block
         blockNumber:
           type: number
           format: blknum_t
@@ -31,30 +31,45 @@
           type: string
           format: uint256_t
           example: 598133194256
-          description: "The computational difficulty at this block"
+          description: the computational difficulty at this block
         timestamp:
           type: number
           format: timestamp_t
           example: 1438335038
-          description: "the unix timestamp of the object"
+          description: the unix timestamp of the object
         transactions:
-          $ref: "#/components/schemas/transaction"
+          type: array
+          description: a possibly empty array of transactions or transaction hashes
+          items:
+            oneOf:
+              - $ref: "#/components/schemas/transaction"
+              - $ref: "#/components/schemas/hash"
         baseFeePerGas:
-          $ref: "#/components/schemas/baseFeePerGas"
+          type: number
+          example: 120911
+          description: the base fee for this block
         finalized:
-          $ref: "#/components/schemas/finalized"
+          type: boolean
+          example: true
+          description: flag indicating the system considers this data final
     receipts:
       type: object
       properties:
         status:
-          $ref: "#/components/schemas/status"
+          type: boolean
+          description: >
+            `1` on transaction suceess, `null` if tx preceeds Byzantium, `0` otherwise
         contractAddress:
-          $ref: "#/components/schemas/contractAddress"
+          type: string
+          format: address_t
+          description: the address of the newly created contract, if any
         gasUsed:
-          $ref: "#/components/schemas/gasUsed"
+          type: number
+          format: wei_t
+          description: the amount of gas used by the transaction
         logs:
           type: array
-          description: possibly empty array of logs
+          description: a possibly empty array of logs
           items:
             $ref: "#/components/schemas/logs"
     transaction:
@@ -105,7 +120,9 @@
         hasToken:
           $ref: "#/components/schemas/hasToken"
         finalized:
-          $ref: "#/components/schemas/finalized"
+          type: boolean
+          example: true
+          description: "flag indicating the system considers this data final"
     logs:
       type: object
       properties:
@@ -238,7 +255,9 @@
           type: string
           format: bytes
         gasUsed:
-          $ref: "#/components/schemas/gasUsed"
+          type: number
+          format: wei_t
+          description: the amount of gas used by this trace
         output:
           description: the result of the call of this trace
           type: string
@@ -452,33 +471,14 @@
     hash:
       type: string
       format: hash_t
-      description: "The hash of the current transaction or block"
+      description: "The hash of a transaction or block"
       example: "0xf12869a900c2fd345f9d6a93e25e6118fd7f99f2b04bff6da59c8bc4218a1e98"
     blockNumber:
       example: 10021
       type: number
       format: blknum_t
       description: the number of the block
-    baseFeePerGas:
-      type: number
-      example: 0
-    finalized:
-      description: "a flag indicating if TrueBlocks considers this block final"
-      type: boolean
-      example: true
     date:
       description: "Human readable version of timestamp"
       example: "2015-07-30 15:34:53 UTC"
       type: string
-    status:
-      type: boolean
-      description: >
-        "`1` if the transaction suceeded, `0` otherwise"
-    contractAddress:
-      description: the address of the newly created contract, if any
-      type: string
-      format: address
-    gasUsed:
-      description: the amount of gas used by this transaction
-      type: number
-      format: wei_t

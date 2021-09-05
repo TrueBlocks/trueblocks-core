@@ -503,6 +503,7 @@ bool COptions::writeCode(const string_q& fn) {
         replace(converted, "[{PATHS}]", apiPathStream.str());
         replace(converted, "[{DESCRIPTION}]", descr);
         replace(converted, "[{COMPONENTS}]", components);
+        replace(converted, "[{VERSION}]", getVersionStr(false /* product */, false /* git_hash */));
 
     } else if (endsWith(fn, ".h")) {
         CStringArray tokens = {"ERROR_DEFINES", "_CODE_DECLARE"};
