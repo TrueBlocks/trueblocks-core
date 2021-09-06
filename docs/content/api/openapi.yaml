@@ -118,6 +118,15 @@ paths:
                         "transactionIndex": 61,
                         "address": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
                         "name": "TrueBlocks 2020 Wallet 0xf503"
+                      },
+                      {
+                        "blockNumber": 8855603,
+                        "transactionIndex": 121,
+                        "address": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+                        "name": "TrueBlocks 2020 Wallet 0xf503"
+                      },
+                      {
+                        "...": "..."
                       }
                     ]
                   }
@@ -1289,11 +1298,22 @@ paths:
       tags:
         - Admin
       summary: Initialize index
-      description: Initalize the TrueBlocks index of appearances
+      description: Initialize the index of appearances by downloading Bloom filters.
       operationId: admin-init
       responses:
         "200":
-          description: no response
+          description: returns the requested data
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    description: "array of pins"
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/pin"
+        "400":
+          description: bad input parameter
   /pins:
     get:
       tags:
@@ -1341,8 +1361,30 @@ paths:
           content:
             application/json:
               schema:
-                items:
-                  $ref: "#/components/schemas/response"
+                properties:
+                  data:
+                    description: "array of pins"
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/pin"
+                example:
+                  {
+                    "data": [
+                      {
+                        "fileName": "000000000-000000000",
+                        "bloomHash": "QmbCQaYmfTR3sGNAvASoVjPynaY9UD31Hfxv7dGtzsptkb",
+                        "indexHash": "QmPmfSrYT5HDpfjj4uYSycaFECo9EqPSuADQ3YPbVp3yu4"
+                      },
+                      {
+                        "fileName": "000000001-000590501",
+                        "bloomHash": "QmSGuSQHgK4S9yiZQ3dKrykQVpLTmdFettY9sAwa537gPL",
+                        "indexHash": "QmSaoxc3XA9DEaA3inhLW5ZKsk5C5LWvowSXpHwVHsMjQp"
+                      },
+                      {
+                        "...": "..."
+                      }
+                    ]
+                  }
         "400":
           description: bad input parameter
   /quotes:
@@ -1407,6 +1449,12 @@ paths:
           content:
             application/json:
               schema:
+                properties:
+                  data:
+                    description: "array of quotes"
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/quote"
                 example:
                   {
                     "data": [
@@ -2051,6 +2099,23 @@ components:
           type: string
           example: Byzantium
           description: the name of the block for some named 'special' blocks
+    pin:
+      type: object
+      properties:
+        fileName:
+          type: string
+          example: 013142464-013145212
+          description: for each chunk, the range of blocks contained in that chunk
+        bloomHash:
+          type: string
+          format: hash
+          example: QmXHjjYUAtLQqk4gm88THVNhcMn5uZHbZAV6NqGSHDqvWT
+          description: the IPFS hash of the bloom filter at that range
+        indexHash:
+          type: string
+          format: hash
+          example: QmTbYpRKBC4M5ZKX59MGUfwu1xfR5gXaaPsgw1zLqWLj44
+          description: the IPFS hash of the index chunk at that range
     hash:
       type: string
       format: hash_t

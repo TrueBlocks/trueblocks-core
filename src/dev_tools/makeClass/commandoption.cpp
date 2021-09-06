@@ -723,7 +723,7 @@ extern const char* STR_PARAM_YAML;
 
 //---------------------------------------------------------------------------------------------------
 bool isApiRoute(const string_q& route) {
-    if (route == "serve" || route == "init" || route == "explore")
+    if (route == "serve" || route == "explore")
         return false;
     return !route.empty();
 }
@@ -842,6 +842,8 @@ string_q CCommandOption::toApiPath(void) const {
         replace(yp, "[{DESCR}]", prepareDescr(param.swagger_descr));
         replace(yp, "[{REQ}]", param.is_required ? "true" : "false");
         replace(yp, "[{SCHEMA}]", param.getSchema());
+        if (paramStream.str().empty())
+            paramStream << "      parameters:\n";
         paramStream << yp << endl;
     }
 
@@ -956,7 +958,6 @@ const char* STR_PATH_YAML =
     "      summary: [{SUMMARY}]\n"
     "      description: [{DESCR}]\n"
     "      operationId: [{ID}]\n"
-    "      parameters:\n"
     "[{PARAMS}]"
     "      responses:\n"
     "        \"200\":\n"
