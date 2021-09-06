@@ -1,0 +1,4 @@
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/name"

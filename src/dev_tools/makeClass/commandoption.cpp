@@ -849,12 +849,24 @@ string_q CCommandOption::toApiPath(void) const {
     string_q exampleFn = "../docs/content/api/examples/" + api_route + ".txt";
 
     ostringstream example;
-    if (fileExists(exampleFn))
-        example << string_q(16, ' ') << "example:" << endl << asciiFileToString(exampleFn) << endl;
+    if (fileExists(exampleFn)) {
+        string_q content = trim(asciiFileToString(exampleFn), '\n');
+        if (!contains(content, string_q(18, ' '))) {
+            replaceAll(content, "\n", "\n" + string_q(18, ' '));
+            content = string_q(18, ' ') + content;
+        }
+        example << string_q(16, ' ') << "example:" << endl << content << endl;
+    }
 
     ostringstream properties;
-    if (fileExists(propertyFn))
-        properties << string_q(16, ' ') << "properties:" << endl << asciiFileToString(propertyFn) << endl;
+    if (fileExists(propertyFn)) {
+        string_q content = trim(asciiFileToString(propertyFn), '\n');
+        if (!contains(content, string_q(18, ' '))) {
+            replaceAll(content, "\n", "\n" + string_q(18, ' '));
+            content = string_q(18, ' ') + content;
+        }
+        properties << string_q(16, ' ') << "properties:" << endl << content << endl;
+    }
 
     if (!fileExists(exampleFn) && !fileExists(propertyFn))
         properties << string_q(16, ' ') << "items:\n                  $ref: \"#/components/schemas/response\"\n";
@@ -952,7 +964,6 @@ const char* STR_PATH_YAML =
     "          content:\n"
     "            application/json:\n"
     "              schema:\n"
-    "                type: array\n"
     "[{PROPERTIES}][{EXAMPLE}]        \"400\":\n"
     "          description: bad input parameter\n";
 

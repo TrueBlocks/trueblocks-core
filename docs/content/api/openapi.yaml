@@ -104,7 +104,6 @@ paths:
           content:
             application/json:
               schema:
-                type: array
                 properties:
                   data:
                     description: an array of appearances
@@ -113,15 +112,14 @@ paths:
                       $ref: "#/components/schemas/appearance"
                 example:
                   {
-                    "data":
-                      [
-                        {
-                          "blockNumber": 8854723,
-                          "transactionIndex": 61,
-                          "address": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-                          "name": "TrueBlocks 2020 Wallet 0xf503",
-                        },
-                      ],
+                    "data": [
+                      {
+                        "blockNumber": 8854723,
+                        "transactionIndex": 61,
+                        "address": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+                        "name": "TrueBlocks 2020 Wallet 0xf503"
+                      }
+                    ]
                   }
         "400":
           description: bad input parameter
@@ -307,7 +305,6 @@ paths:
           content:
             application/json:
               schema:
-                type: array
                 example:
                   {
                     "data":
@@ -385,7 +382,6 @@ paths:
           content:
             application/json:
               schema:
-                type: array
                 items:
                   $ref: "#/components/schemas/response"
         "400":
@@ -488,7 +484,11 @@ paths:
           content:
             application/json:
               schema:
-                type: array
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/name"
                 example:
                   [
                     {
@@ -545,7 +545,6 @@ paths:
           content:
             application/json:
               schema:
-                type: array
                 example:
                   {
                     "data":
@@ -690,7 +689,7 @@ paths:
                     "blockNumber": 3141592,
                     "hash": "0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53",
                     "...": "...",
-                    "transactions": [],
+                    "transactions": []
                   }
         "400":
           description: bad input parameter
@@ -1281,7 +1280,6 @@ paths:
           content:
             application/json:
               schema:
-                type: array
                 items:
                   $ref: "#/components/schemas/response"
         "400":
@@ -1343,7 +1341,6 @@ paths:
           content:
             application/json:
               schema:
-                type: array
                 items:
                   $ref: "#/components/schemas/response"
         "400":
@@ -1410,9 +1407,21 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/response"
+                example:
+                  {
+                    "data": [
+                      {
+                        "timestamp": 1439078400,
+                        "close": 1.4,
+                        "date": "2015-08-09 00:00:00 UTC"
+                      },
+                      {
+                        "timestamp": 1439085600,
+                        "close": 1.4,
+                        "date": "2015-08-09 02:00:00 UTC"
+                      }
+                    ]
+                  }
         "400":
           description: bad input parameter
   /slurp:
@@ -1477,9 +1486,36 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/response"
+                properties:
+                  data:
+                    description: "array of transactions"
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/transaction"
+                example:
+                  [
+                    {
+                      "hash": "0x2ec382949ba0b22443aa4cb38267b1fb5e68e188109ac11f7a82f67571a0adf3",
+                      "blockHash": "0xeab8fe9da0b41b2c003db620bb9adbedd5fcc7222cc50d53431aa1df47a20dda",
+                      "blockNumber": "46217",
+                      "transactionIndex": "0",
+                      "nonce": "0",
+                      "timestamp": "1438919451",
+                      "from": "0xc8ebccc5f5689fa8659d83713341e5ad19349448",
+                      "to": "0xc8ebccc5f5689fa8659d83713341e5ad19349448",
+                      "value": "0",
+                      "gas": "21000",
+                      "gasPrice": "65334370444",
+                      "maxFeePerGas": "0",
+                      "maxPriorityFeePerGas": "0",
+                      "input": "0x",
+                      "isError": "0",
+                      "hasToken": "0",
+                      "gasUsed": "21000",
+                      "date": "2015-08-07 03:50:51 UTC",
+                      "ether": "0.000000000000000000"
+                    }
+                  ]
         "400":
           description: bad input parameter
 components:
@@ -1931,6 +1967,56 @@ components:
           description: The price (if available) at the time of the transaction in US dollars for ETH reconciliations and ETH for other assets
           type: number
           format: bigint
+    name:
+      type: object
+      properties:
+        tags:
+          type: string
+          example: 31-Gitcoin:Core
+          description: colon separated list of tags
+        address:
+          type: string
+          format: address_t
+          example: 0xabea9132b05a70803a4e85094fd0e1800777fbef
+          description: the address associated with this name
+        name:
+          type: string
+          example: zkSync
+          description: the name associated with this address (retreived from on-chain data if available)
+        symbol:
+          type: string
+          example: GTC
+          description: the symbol for this address (retreived from on-chain data if available)
+        source:
+          type: string
+          example: On-chain
+          description: user supplied source of where this name was found (or on-chain if name is on-chain)
+        decimals:
+          type: number
+          example: 18
+          description: number of decimals retreived from an ERC20 smart contract, defaults to 18
+        description:
+          type: string
+          example: any test
+          description: user supplied description for the address
+        deleted:
+          type: boolean
+          description: "`true` if deleted, `false` otherwise"
+        is_custom:
+          type: boolean
+          description: "`true` if the address is a custom address, `false` otherwise"
+        is_prefund:
+          type: boolean
+          description: "`true` if the address was one of the prefund addresses, `false` otherwise"
+        is_contract:
+          type: boolean
+          description: "`true` if the address is a smart contract, `false` otherwise"
+        is_erc20:
+          type: boolean
+          description: "`true` if the address is an ERC20, `false` otherwise"
+        is_erc721:
+          type: boolean
+          description: "`true` if the address is an ERC720, `false` otherwise"
     function:
       type: object
       description: "a human readable representation of a Solidity function call or event"
@@ -1945,7 +2031,26 @@ components:
       description: "an address that is being (or has been) monitored"
     quote:
       type: object
-      description: "a price quote from an external API"
+      properties:
+        timestamp:
+          type: number
+          format: timestamp_t
+          example: 1438270144
+          description: the timestamp of this quote
+        close:
+          type: number
+          format: double
+          example: 1240.10
+          description: price of the asset in US dollars
+        date:
+          type: string
+          format: date
+          example: 2018-09-30 01:15:17 UTC
+          description: the date of the associated timestamp
+        name:
+          type: string
+          example: Byzantium
+          description: the name of the block for some named 'special' blocks
     hash:
       type: string
       format: hash_t
@@ -1965,4 +2070,3 @@ components:
             - error 2
           items:
             type: string
- 

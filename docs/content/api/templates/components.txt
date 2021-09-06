@@ -446,6 +446,56 @@
           description: The price (if available) at the time of the transaction in US dollars for ETH reconciliations and ETH for other assets
           type: number
           format: bigint
+    name:
+      type: object
+      properties:
+        tags:
+          type: string
+          example: 31-Gitcoin:Core
+          description: colon separated list of tags
+        address:
+          type: string
+          format: address_t
+          example: 0xabea9132b05a70803a4e85094fd0e1800777fbef
+          description: the address associated with this name
+        name:
+          type: string
+          example: zkSync
+          description: the name associated with this address (retreived from on-chain data if available)
+        symbol:
+          type: string
+          example: GTC
+          description: the symbol for this address (retreived from on-chain data if available)
+        source:
+          type: string
+          example: On-chain
+          description: user supplied source of where this name was found (or on-chain if name is on-chain)
+        decimals:
+          type: number
+          example: 18
+          description: number of decimals retreived from an ERC20 smart contract, defaults to 18
+        description:
+          type: string
+          example: any test
+          description: user supplied description for the address
+        deleted:
+          type: boolean
+          description: "`true` if deleted, `false` otherwise"
+        is_custom:
+          type: boolean
+          description: "`true` if the address is a custom address, `false` otherwise"
+        is_prefund:
+          type: boolean
+          description: "`true` if the address was one of the prefund addresses, `false` otherwise"
+        is_contract:
+          type: boolean
+          description: "`true` if the address is a smart contract, `false` otherwise"
+        is_erc20:
+          type: boolean
+          description: "`true` if the address is an ERC20, `false` otherwise"
+        is_erc721:
+          type: boolean
+          description: "`true` if the address is an ERC720, `false` otherwise"
     function:
       type: object
       description: "a human readable representation of a Solidity function call or event"
@@ -460,7 +510,26 @@
       description: "an address that is being (or has been) monitored"
     quote:
       type: object
-      description: "a price quote from an external API"
+      properties:
+        timestamp:
+          type: number
+          format: timestamp_t
+          example: 1438270144
+          description: the timestamp of this quote
+        close:
+          type: number
+          format: double
+          example: 1240.10
+          description: price of the asset in US dollars
+        date:
+          type: string
+          format: date
+          example: 2018-09-30 01:15:17 UTC
+          description: the date of the associated timestamp
+        name:
+          type: string
+          example: Byzantium
+          description: the name of the block for some named 'special' blocks
     hash:
       type: string
       format: hash_t
@@ -480,4 +549,3 @@
             - error 2
           items:
             type: string
- 
