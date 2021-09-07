@@ -1792,21 +1792,21 @@
       "description": ""
     },
     {
+      "tags": "30-Contracts",
+      "address": "0x15468b45ed46c8383f5c0b1b6cf2ecf403c2aec2",
+      "name": "Hermez Auction Protocol",
+      "symbol": "",
+      "source": "",
+      "decimals": 0,
+      "description": ""
+    },
+    {
       "tags": "91-Early:Addresses",
       "address": "0x155999f23ba40f22b24863d9c21cd8b9ab192cc9",
       "name": "Crypted_Rps",
       "symbol": "",
       "source": "EtherScan.io",
       "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x1563d521ba309e2ad9f4affd6f4de9759e8d4f21",
-      "name": "VisionX",
-      "symbol": "VNX",
-      "source": "On chain",
-      "decimals": 18,
       "description": ""
     }
   ],
