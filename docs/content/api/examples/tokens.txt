@@ -1,16 +1,14 @@
-                  {
-                    "data":
-                      [
-                        {
-                          "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-                          "balance": "400",
-                          "address": "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984",
-                          "name": "Uniswap",
-                          "symbol": "UNI",
-                          "decimals": 18,
-                          "is_contract": true,
-                          "is_erc20": true,
-                          "is_erc721": false,
-                        },
-                      ],
-                  }
+{
+  "data": [
+    {
+      "holder": "0x2910543af39aba0cd09dbb2d50200b3e800a63d2",
+      "balance": "624980000000000000",
+      "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
+      "name": "The DAO Original",
+      "decimals": 1,
+      "is_contract": true,
+      "is_erc20": true,
+      "is_erc721": true
+    }
+  ]
+}

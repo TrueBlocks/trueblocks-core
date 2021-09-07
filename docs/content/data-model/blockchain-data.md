@@ -37,7 +37,7 @@ This is a very powerful way to understand the story behind a smart contract.
   - Use the `--articulate` option to turn the `input` field human readable.
   - [See the command's documentation](/docs/chifra/chaindata/#chifra-transactions)
 - **API**:
-  - [Calls to `/transactions`](https://www.tokenomics.io/api.html#/ChainData/chaindata-transactions)
+  - [Calls to `/transactions`](/api#operation/chaindata-transactions)
 - **Explorer**
 
 ### Reference of transaction fields
@@ -76,7 +76,7 @@ an array for the blocks' transactions.
 - **CLI**:
   - [See the command's documentation](/docs/chifra/chaindata/#chifra-blocks)
 - **API**:
-  - [Calls to `/transactions`](https://www.tokenomics.io/api.html#/ChainData/chaindata-blocks)
+  - [Calls to `/blocks`](/api#operation/chaindata-blocks)
 - **Explorer**
 
 ### Reference of block fields
@@ -108,7 +108,7 @@ If the `to` address of a transaction is `0x0`, the `input` data is considered to
   - run `chifra receipts <txn_id>`.
   - [See the command's documentation](/docs/chifra/chaindata/#chifra-receipts)
 - **API**:
-  - [Calls to `/receipts`](https://www.tokenomics.io/api.html#/ChainData/chaindata-receipts)
+  - [Calls to `/receipts`](/api#operation/chaindata-receipts)
 - **Explorer**
 
 ### Reference of receipt fields
@@ -130,7 +130,7 @@ Logs appear in a possibly empty array in the transaction's receipt. They are onl
   - run `chifra logs <txn_id>`.
   - [See the command's documentation](/docs/chifra/chaindata/#chifra-logs)
 - **API**:
-  - [Calls to `/logs`](https://www.tokenomics.io/api.html#/ChainData/chaindata-logs)
+  - [Calls to `/logs`](/api#operation/chaindata-logs)
 - **Explorer**
 
 ### Reference of log fields
@@ -160,7 +160,7 @@ Traces may be arbitrarily deep (up to the gasLimit) and ultimately represent a t
   - run `chifra traces <txn_id>`.
   - [See the command's documentation](/docs/chifra/chaindata/#chifra-traces)
 - **API**:
-  - [Calls to `/traces`](https://www.tokenomics.io/api.html#/ChainData/chaindata-traces)
+  - [Calls to `/traces`](/api#operation/chaindata-traces)
 - **Explorer**
 
 ### Reference of trace fields
@@ -212,7 +212,7 @@ As mentioned above, other than the first trace, traces represent calls into othe
   - run `chifra when <block_id>`.
   - [See the command's documentation](/docs/chifra/chaindata/#chifra-when)
 - **API**:
-  - [Calls to `/when`](https://www.tokenomics.io/api.html#/ChainData/chaindata-when)
+  - [Calls to `/when`](/api#operation/chaindata-when)
 - **Explorer**
 
 ### Reference of whenblock fields

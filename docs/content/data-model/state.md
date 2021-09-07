@@ -27,7 +27,7 @@ _For information about how to refine balance queries, see
 The balance of an address at a given block.
 
 * CLI: [chifra state](/docs/chifra/chainstate/#chifra-state)
-* [API](https://www.tokenomics.io/api.html#/ChainState/chainstate-state)
+* [API](/api#operation/chainstate-state)
 
 ### State fields
 
@@ -41,7 +41,7 @@ The balance of an address at a given block.
 ## Tokens
 
 * CLI: [chifra tokens](/docs/chifra/chainstate/#chifra-tokens)
-* [API](https://www.tokenomics.io/api.html#/ChainState/chainstate-tokens)
+* [API](/api#operation/chainstate-tokens)
 
 ### Token fields
 

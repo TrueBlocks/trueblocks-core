@@ -554,43 +554,47 @@ paths:
           content:
             application/json:
               schema:
+                properties:
+                  data:
+                    description: an array of abi definitions
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/abis"
                 example:
                   {
-                    "data":
-                      [
-                        {
-                          "name": "PairCreated",
-                          "type": "event",
-                          "stateMutability": "nonpayable",
-                          "signature": "PairCreated(address,address,address,uint256)",
-                          "encoding": "0x0d3648bd0f6ba80134a33ba9275ac585d9d315f0ad8355cddefde31afa28d0e9",
-                          "inputs":
-                            [
-                              {
-                                "type": "address",
-                                "name": "token0",
-                                "indexed": true,
-                                "internalType": "address",
-                              },
-                              {
-                                "type": "address",
-                                "name": "token1",
-                                "indexed": true,
-                                "internalType": "address",
-                              },
-                              {
-                                "type": "address",
-                                "name": "pair",
-                                "internalType": "address",
-                              },
-                              {
-                                "type": "uint256",
-                                "name": "val_0",
-                                "internalType": "uint256",
-                              },
-                            ],
-                        },
-                      ],
+                    "data": [
+                      {
+                        "name": "PairCreated",
+                        "type": "event",
+                        "stateMutability": "nonpayable",
+                        "signature": "PairCreated(address,address,address,uint256)",
+                        "encoding": "0x0d3648bd0f6ba80134a33ba9275ac585d9d315f0ad8355cddefde31afa28d0e9",
+                        "inputs": [
+                          {
+                            "type": "address",
+                            "name": "token0",
+                            "indexed": true,
+                            "internalType": "address"
+                          },
+                          {
+                            "type": "address",
+                            "name": "token1",
+                            "indexed": true,
+                            "internalType": "address"
+                          },
+                          {
+                            "type": "address",
+                            "name": "pair",
+                            "internalType": "address"
+                          },
+                          {
+                            "type": "uint256",
+                            "name": "val_0",
+                            "internalType": "uint256"
+                          }
+                        ]
+                      }
+                    ]
                   }
         "400":
           description: bad input parameter
@@ -1071,17 +1075,27 @@ paths:
           content:
             application/json:
               schema:
+                properties:
+                  data:
+                    description: an array of state objects
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/state"
                 example:
                   {
-                    "data":
-                      [
-                        {
-                          "blockNumber": 13154749,
-                          "balance": 29930129965150564000,
-                          "address": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-                          "ether": 29.930129965150567,
-                        },
-                      ],
+                    "data": [
+                      {
+                        "blockNumber": 13176226,
+                        "balance": 258843698360318500,
+                        "nonce": 115,
+                        "code": "0x",
+                        "storage": "0x0000000000000000000000000000000000000000000000000000000000000000",
+                        "address": "0xa1e4380a3b1f749673e270229993ee55f35663b4",
+                        "deployed": 0,
+                        "accttype": "EOA",
+                        "ether": 0.2588436983603185
+                      }
+                    ]
                   }
         "400":
           description: bad input parameter
@@ -1158,22 +1172,26 @@ paths:
           content:
             application/json:
               schema:
+                properties:
+                  data:
+                    description: an array of token state objects
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/token"
                 example:
                   {
-                    "data":
-                      [
-                        {
-                          "holder": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-                          "balance": "400",
-                          "address": "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984",
-                          "name": "Uniswap",
-                          "symbol": "UNI",
-                          "decimals": 18,
-                          "is_contract": true,
-                          "is_erc20": true,
-                          "is_erc721": false,
-                        },
-                      ],
+                    "data": [
+                      {
+                        "holder": "0x2910543af39aba0cd09dbb2d50200b3e800a63d2",
+                        "balance": "624980000000000000",
+                        "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
+                        "name": "The DAO Original",
+                        "decimals": 1,
+                        "is_contract": true,
+                        "is_erc20": true,
+                        "is_erc721": true
+                      }
+                    ]
                   }
         "400":
           description: bad input parameter
@@ -2065,6 +2083,9 @@ components:
         is_erc721:
           type: boolean
           description: "`true` if the address is an ERC720, `false` otherwise"
+    abis:
+      type: object
+      description: "a collection of function and event definitions as described elsewhere in the Ethereum system"
     function:
       type: object
       description: "a human readable representation of a Solidity function call or event"
@@ -2073,7 +2094,85 @@ components:
       description: "a parameter to a function or event"
     state:
       type: object
-      description: "the state of a smart contract"
+      properties:
+        blockNumber:
+          type: number
+          format: blknum_t
+          example: 10021
+          description: the block number at which this state was taken
+        balance:
+          type: string
+          format: wei_t
+          example: "258843698360318500"
+          description: the balance at the address at the given block height
+        nonce:
+          type: number
+          example: 115
+          description: the nonce of the address at the given block height
+        code:
+          type: string
+          format: bytes
+          example: "0x"
+          description: the byte code at the address (if this is a smart contract)
+        storage:
+          type: string
+          format: bytes
+          example: "0x0000000000000000000000000000000000000000000000000000000000000000"
+          description: this field is un-implemented and current returns the first storage location in a smart contract
+        address:
+          type: string
+          format: address_t
+          example: "0xa1e4380a3b1f749673e270229993ee55f35663b4"
+          description: the address of the state being queried
+        deployed:
+          type: number
+          format: blknum_t
+          example: 8901011,
+          description: the block number at which this smart contract was deployed (if a smart contact)
+        accttype:
+          type: string
+          example: "one of 'EOA' or 'Contract'"
+          description: the type of the address at the given block
+        ether:
+          type: number
+          format: double
+          example: 0.2588436983603185
+          description: the balance of the address in ethers
+    token:
+      type: object
+      properties:
+        holder:
+          type: string
+          format: address_t
+          example: "0x2910543af39aba0cd09dbb2d50200b3e800a63d2"
+          description: the address for which we are reporting the token balance
+        balance:
+          type: string
+          format: wei_t
+          example: "258843698360318500"
+          description: the balance at the address at the given block height
+        address:
+          type: string
+          format: address_t
+          example: "0xa1e4380a3b1f749673e270229993ee55f35663b4"
+          description: the address of the token contract being queried
+        name:
+          type: string
+          example: "The DAO Original"
+          description: the name of the token contract, if available
+        decimals:
+          type: number
+          example: "18"
+          description: the number of decimals for the token contract
+        is_contract:
+          type: boolean
+          description: "`true` if the address is a smart contract, `false` otherwise"
+        is_erc20:
+          type: boolean
+          description: "`true` if the address is an ERC20, `false` otherwise"
+        is_erc721:
+          type: boolean
+          description: "`true` if the address is an ERC720, `false` otherwise"
     monitor:
       type: object
       description: "an address that is being (or has been) monitored"
