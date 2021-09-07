@@ -560,6 +560,8 @@ CTestCase::CTestCase(const string_q& line, uint32_t id) {
 
     replaceAll(post, "n", "");
     replaceAll(post, "y", getGlobalConfig("makeClass")->getConfigStr("settings", "json_pretty_print", "jq ."));
+    if (!post.empty() && post != "jq .")
+        LOG_WARN("test post processor (", post, ") has unexpected value. Is it correct?");
 
     builtin = prepareBuiltIn(options);
     if (!builtin) {
