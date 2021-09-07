@@ -25,7 +25,14 @@ export PATH=$(pwd)/../bin:$(pwd)/../bin/test:$PATH
 # Run server if needed
 if $RUN_SERVER
 then
-    chifra serve &
+
+    if [ -n "$(pgrep -u $USER flame)" ]
+    then
+        echo "Error: Chifra serve is already running"
+        exit 1
+    fi
+
+    chifra serve > /dev/null 2>&1 &
 
     echo "Waiting for chifra to start up..."
     sleep 5
