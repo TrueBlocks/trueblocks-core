@@ -10,7 +10,7 @@ on      ,both ,fast  ,scrape ,apps/blockScrape ,nAProcs_invalid              ,n 
 on      ,both ,fast  ,scrape ,apps/blockScrape ,nBlocks                      ,n    ,
 on      ,both ,fast  ,scrape ,apps/blockScrape ,nBlockProcs                  ,n    ,
 on      ,both ,fast  ,scrape ,apps/blockScrape ,nAddrProcs                   ,n    ,
-on      ,both ,fast  ,scrape ,apps/blockScrape ,all                          ,n    ,n_blocks = 12 & n_block_procs = 12 & n_addr_procs = 12
+off     ,both ,fast  ,scrape ,apps/blockScrape ,all                          ,n    ,n_blocks = 12 & n_block_procs = 12 & n_addr_procs = 12
 on      ,both ,fast  ,scrape ,apps/blockScrape ,listpins                     ,n    ,listpins
 on      ,both ,fast  ,scrape ,apps/blockScrape ,pin                          ,n    ,pin
 on      ,both ,fast  ,scrape ,apps/blockScrape ,publish                      ,n    ,publish

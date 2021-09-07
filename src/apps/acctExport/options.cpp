@@ -72,6 +72,23 @@ bool COptions::parseArguments(string_q& command) {
 
     Init();
     explode(arguments, command, ' ');
+
+    // Weirdness, if the user doesn't provide a valid address, topic, or fourbyte, report bad addr
+    string_q term, legit;
+    for (auto arg : arguments) {
+        if (!contains(arg, "-")) {  // is positional
+            if (isAddress(arg) || isTopic(arg) || isFourbyte(arg)) {
+                legit = arg;
+            }
+            term = arg;
+        } else if (arg == "--clean") {
+            clean = true;
+        }
+    }
+    if (!clean && legit.empty() && !term.empty())
+        return parseAddressList(this, addrs, term);
+    // Weirdness, if the user doesn't provide a valid address, topic, or fourbyte, report bad addr
+
     for (auto arg : arguments) {
         if (false) {
             // do nothing -- make auto code generation easier
