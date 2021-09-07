@@ -945,6 +945,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 90-Individuals:DevCon2	0x153195e211e1f751f8adef169d281b3ccf6b968a	d2friend		DevCon2 Token Contract			false	false	false	false	false	false
 50-Tokens:ERC20	0x153ed9cc1b792979d2bde0bbf45cc2a7e436a5f9	XOVBank	XOV	On chain	18	XOV is researching and building a Global Decentralised Bank using blockchain technology.	false	false	false	true	true	false
 50-Tokens:ERC20	0x1541b47fca37b7accc7489cd20d4da7b9682ea7d	YinYang Finance	YYF	On chain	18		false	false	false	true	true	false
+30-Contracts	0x15468b45ed46c8383f5c0b1b6cf2ecf403c2aec2	Hermez Auction Protocol					false	false	false	true	false	false
 30-Contracts:Humanity DAO	0x1553ac92870727b4e7fd9b0644ba9849fc8a1765	Klemzon		https://www.humanitydao.org/humans			false	false	false	false	false	false
 91-Early:Addresses	0x155999f23ba40f22b24863d9c21cd8b9ab192cc9	Crypted_Rps		EtherScan.io			false	false	false	true	false	false
 30-Contracts:Humanity DAO	0x155ccf41305f5fe3faae64ecea8a1e2cad08f085	cristianmalfesi		https://www.humanitydao.org/humans			false	false	false	false	false	false
@@ -2373,6 +2374,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 30-Contracts:Humanity DAO	0x390f59ffc15da30359478554d4432d48f3b10dbf	maisuid		https://www.humanitydao.org/humans			false	false	false	false	false	false
 30-Contracts:Humanity DAO	0x3917d5db38879bab97cb5b65ec5562f4cf648196	dsolovyevbot		https://www.humanitydao.org/humans			false	false	false	false	false	false
 50-Tokens:ERC20	0x3918c42f14f2eb1168365f911f63e540e5a306b5	Neural Protocol	NRP	On chain	8	NEURAL PROTOCOL NRP is a decentralized blockchain-based payment instrument that aims to bring together buyers and sellers in a marketplace.	false	false	false	true	true	false
+30-Contracts	0x392361427ef5e17b69cfdd1294f31ab555c86124	Hermez Withdrawal Delayer Address					false	false	false	true	false	false
 30-Contracts:Humanity DAO	0x392805fd4a2044131178b2a88e149a837890a06f	clearlyfake		https://www.humanitydao.org/humans			false	false	false	false	false	false
 31-Gitcoin:Grants	0x392acfd0792c32222edf31c20dd0cc51528bb9ea	Grant 0815 DeFi777		https://gitcoin.co/grants/815/defi777		https://gitcoin.co/grants/815/defi777,https://defi777.com	false	false	false	false	false	false
 30-Contracts:Humanity DAO	0x39361c47398bd9377aad662a35a01b52b99e664c	jiajian007		https://www.humanitydao.org/humans			false	false	false	false	false	false
@@ -6776,6 +6778,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0xa66daa57432024023db65477ba87d4e7f5f95213	HuobiPoolToken	HPT	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0xa6714a2e5f0b1bdb97b895b0913b4fcd3a775e4d	PromotionCoin	PC	On chain	5		false	false	false	true	true	false
 50-Tokens:ERC20	0xa68920f6d3c996ac3c232e4e93914e9d76150735	民宿通	MST	On chain	18		false	false	false	true	true	false
+30-Contracts	0xa68d85df56e733a06443306a095646317b5fa633	Hermez Address					false	false	false	true	false	false
 91-Early:Addresses	0xa68f65bb1169359df1a7c66113c5b4e9a9bbb5d6	CrowdFund_id237_cnt12_2mo		Ether Camp			false	false	false	true	false	false
 39-Yearn	0xa696a63cc78dffa1a63e9e50587c197387ff6c7e	WBTC yVault	yvWBTC	On chain	8		false	false	false	true	true	false
 60-Airdrops	0xa69858f49385060371beb872c39d2f90b7a26e03	Katerium Airdrop		EtherScan.io			false	false	false	true	false	false

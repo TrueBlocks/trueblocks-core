@@ -16,7 +16,7 @@ migration addresses issues presented by several users who report installation pr
 
 ### Fix to Index Data when Using Erigon as Data Source
 
-Prior to last week, TrueBlocks only supported OpenEthereum. One of the change we made last week enabled support for the Erigon client. A single line in [this commit](https://github.com/TrueBlocks/trueblocks-core/commit/af24fe5db5af8b28a30453a77b67ef15b75d08bf) incorrectly causes a call to a routine that only OpenEthereum supports (`parity_getBlockHeaderByNumber`). Obviously, Erigon does  not support Parity only endpoints. Our testing did not find this error and, as a result, any indexes created after this commit that used Erigon contain invalid data. This same error caused various issues with timestamp data files. These timestamp related issues are also corrected with this migration.
+Prior to last week, TrueBlocks only supported OpenEthereum. One of the changes we made last week enabled support for the Erigon client. A single line in [this commit](https://github.com/TrueBlocks/trueblocks-core/commit/af24fe5db5af8b28a30453a77b67ef15b75d08bf) incorrectly causes a call to a routine that only OpenEthereum supports (`parity_getBlockHeaderByNumber`). Obviously, Erigon does  not support Parity only endpoints. Our testing did not find this error and, as a result, any indexes created after this commit that used Erigon contain invalid data. This same error caused various issues with timestamp data files. These timestamp related issues are also corrected with this migration.
 
 This first migration, detailed below, is required for all users.
 
@@ -29,7 +29,7 @@ problems, we decided to fix it once and for all by removing `chifra's` subcomman
 This migration allows us to begin the process of committing to a public (version 1.0) command line interface as
 we prepare to leave beta status. It also allows us greater flexibility in changing underlying non-public interfaces and forces users who may be using the underlying non-public interfaces to switch to the corresponding `chifra` options. 
 
-While this second migration, details of which are below, is technical optional, we advise you to complete it anyway.
+While this second migration, details of which are below, is technically optional, we advise you to complete it anyway.
 
 ## Migrations
 
