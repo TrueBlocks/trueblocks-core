@@ -179,7 +179,7 @@ bool CToml::writeFile(void) {
     }
     ostringstream os;
     os << *this;
-    WriteLine(os.str().c_str());
+    WriteLine(substitute(os.str(), "\n\n\n", "\n\n").c_str());
     Release();
     return true;
 }
