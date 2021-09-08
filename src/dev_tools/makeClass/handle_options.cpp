@@ -40,7 +40,7 @@ extern const char* STR_ENUM_PROCESSOR;
 extern const char* STR_CUSTOM_INIT;
 //---------------------------------------------------------------------------------------------------
 bool COptions::handle_options(void) {
-    LOG_INFO(cYellow, "handling options...", cOff);
+    LOG_INFO(cYellow, "handling options...", string_q(50, ' '), cOff);
     counter = CCounter();  // reset
 
     // Look for local file first

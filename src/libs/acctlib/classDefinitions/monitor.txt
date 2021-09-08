@@ -28,7 +28,7 @@ extra_fields = \
     string tags
 includes = etherlib.h|transaction.h|reconciliation.h|ethstate.h|monitoredapp.h
 force_objget = true
-js = true
+tsx = true
 
 #    monitor:
 #      type: object

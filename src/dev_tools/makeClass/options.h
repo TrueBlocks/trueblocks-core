@@ -54,7 +54,7 @@ class COptions : public COptionsBase {
   public:
     // BEG_CODE_DECLARE
     bool all;
-    bool js;
+    bool tsx;
     string_q nspace;
     string_q filter;
     bool force;
@@ -136,8 +136,8 @@ class COptions : public COptionsBase {
     bool handle_lint(void);
     bool handle_format(void);
     bool handle_generate(CToml& toml, const CClassDefinition& classDef, const string_q& namespc, bool asJs);
-    bool handle_js(void);
-    bool handle_js_type(const CClassDefinition& classDef);
+    bool handle_tsx(void);
+    bool handle_tsx_type(const CClassDefinition& classDef);
 
     void generate_switch(const CCommandOption& option);
     void generate_toggle(const CCommandOption& option);

@@ -21,6 +21,6 @@ fields = \
     string eq_str|\
     string scope_str|\
     bool serializable (omitempty)|\
-    bool js (omitempty)|\
+    bool tsx (omitempty)|\
     CParameterArray fieldArray (nowrite)
 includes = etherlib.h

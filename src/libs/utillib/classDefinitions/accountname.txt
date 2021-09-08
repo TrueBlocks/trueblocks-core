@@ -20,7 +20,7 @@ cpp_includes = options_base.h
 display_str = tags, address, name, symbol, source, decimals, description, deleted, is_custom, is_prefund, is_contract, is_erc20, is_erc721
 sort = v1.address < v2.address
 equals = address % it.address
-js = true
+tsx = true
 
 #CTokenList
 #    name            1-20

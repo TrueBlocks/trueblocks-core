@@ -29,7 +29,7 @@ static const COption params[] = {
     COption("readmes", "m", "", OPT_SWITCH, "create readme files for each tool and app"),
     COption("format", "f", "", OPT_SWITCH, "format source code files (.cpp and .h) found in local folder and below"),
     COption("lint", "l", "", OPT_SWITCH, "lint source code files (.cpp and .h) found in local folder and below"),
-    COption("js", "j", "", OPT_SWITCH, "create javascript routes and help routes for the front end"),
+    COption("tsx", "t", "", OPT_SWITCH, "create typescript routes"),
     COption("dump", "d", "", OPT_HIDDEN | OPT_SWITCH, "dump any classDefinition config tomls to screen and quit"),
     COption("nspace", "n", "<string>", OPT_FLAG, "surround generated c++ code with a namespace"),
     COption("filter", "i", "<string>", OPT_FLAG, "process only files whose filename or contents contain 'filter'"),
@@ -84,8 +84,8 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-l" || arg == "--lint") {
             lint = true;
 
-        } else if (arg == "-j" || arg == "--js") {
-            js = true;
+        } else if (arg == "-t" || arg == "--tsx") {
+            tsx = true;
 
         } else if (arg == "-d" || arg == "--dump") {
             dump = true;
@@ -129,7 +129,7 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("readmes", readmes);
     LOG_TEST_BOOL("format", format);
     LOG_TEST_BOOL("lint", lint);
-    LOG_TEST_BOOL("js", js);
+    LOG_TEST_BOOL("tsx", tsx);
     LOG_TEST_BOOL("dump", dump);
     LOG_TEST("nspace", nspace, (nspace == "qblocks"));
     LOG_TEST("filter", filter, (filter == ""));
@@ -143,8 +143,8 @@ bool COptions::parseArguments(string_q& command) {
     establishFolder(getDocsPath("content/docs/"));
     establishFolder(getDocsPath("content/docs/chifra/"));
 
-    if (js)
-        handle_js();
+    if (tsx)
+        handle_tsx();
 
     // If the user has explicitly specified a classDef, use that
     LOG8("pwd: ", getCWD());
@@ -241,7 +241,7 @@ void COptions::Init(void) {
 
     // BEG_CODE_INIT
     all = false;
-    js = false;
+    tsx = false;
     nspace = "qblocks";
     filter = "";
     force = false;

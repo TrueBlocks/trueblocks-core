@@ -14,7 +14,7 @@ fields = \
     uint64 precision=5 (nowrite)
 includes = utillib.h
 display_str = type, name, str_default, value, internalType, indexed, is_pointer, is_array, is_object, is_builtin, no_write, omit_empty, is_minimal
-js = true
+tsx = true
 
 #    parameter:
 #      type: object
