@@ -1,5 +1,5 @@
 name: Tests
-on: [pull_request, push, workflow_dispatch]
+on: [pull_request, workflow_dispatch]
 jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
@@ -18,11 +18,7 @@ jobs:
             git clone --quiet https://github.com/${{ github.repository }}
             cd trueblocks-core
             git reset --hard ${{ github.sha }}
-            mkdir build && cd build
-            cmake ../src
-            make -j 4
-            export PATH=$(pwd)/../bin:$(pwd)/../bin/test:$PATH
-            make test-all
+            bash src/other/build_assets/build_and_test.sh test-all
       - name: Finish
         run: |
           echo "🍏 This job's status is ${{ job.status }}"
