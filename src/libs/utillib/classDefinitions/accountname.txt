@@ -6,7 +6,7 @@ fields = \
     string name|\
     string symbol|\
     string source|\
-    suint64 decimals|\
+    uint64 decimals (omitempty)|\
     string description|\
     bool is_custom|\
     bool is_prefund|\

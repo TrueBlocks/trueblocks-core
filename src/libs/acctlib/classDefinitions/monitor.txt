@@ -7,7 +7,7 @@ fields = \
     blknum firstAppearance (nowrite)|\
     blknum latestAppearance = UINT_MAX (nowrite)|\
     blknum lastVisitedBlock (nowrite)|\
-    suint64 sizeInBytes (nowrite)
+    uint64 sizeInBytes (nowrite,omitempty)
 extra_fields = \
     blknum nApps|\
     blknum firstApp|\

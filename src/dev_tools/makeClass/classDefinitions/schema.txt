@@ -5,17 +5,17 @@ fields = \
     string selector|\
     string type|\
     string unused (nowrite)|\
-    suint64 width|\
+    uint64 width (omitempty)|\
     bool editable|\
-    suint64 id|\
-    suint64 decimals|\
+    uint64 id (omitempty)|\
+    uint64 decimals (omitempty)|\
     bool isPill|\
     string align|\
     string cn|\
     bool download|\
     string chart|\
     bool searchable|\
-    suint64 detail|\
+    uint64 detail (omitempty)|\
     bool wide|\
     string underField|\
     string onDisplay|\
