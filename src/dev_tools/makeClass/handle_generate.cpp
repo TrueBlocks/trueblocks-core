@@ -104,7 +104,6 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
         } else if (fld.type == "suint64")         { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_UNUMBER | TS_OMITEMPTY"; fld.type = "uint64";
         } else if (fld.type == "uint256")         { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_UINT256";
         } else if (fld.type == "bool")            { setFmt = "`[{NAME}] = [{DEFB}];\n";   regType = "T_BOOL | TS_OMITEMPTY";
-        } else if (fld.type == "sbool")           { setFmt = "`[{NAME}] = [{DEFB}];\n";   regType = "T_BOOL | TS_OMITEMPTY";
         } else if (fld.type == "double")          { setFmt = "`[{NAME}] = [{DEFF}];\n";   regType = "T_DOUBLE";
         } else if (startsWith(fld.type, "bytes")) { setFmt = "`[{NAME}] = [{DEFS}];\n";   regType = "T_TEXT | TS_OMITEMPTY";
         } else if (endsWith(fld.type, "_e"))      { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_NUMBER";
@@ -362,10 +361,10 @@ string_q getCaseGetCode(const CParameterArray& fieldsIn) {
                     outStream << str;
 
                 } else if (p.type == "bool") {
-                    outStream << ("return bool_2_Str([{PTR}]" + p.name + ");");
-
-                } else if (p.type == "sbool") {
-                    outStream << ("return bool_2_Str_t([{PTR}]" + p.name + ");");
+                    if (p.omit_empty)
+                        outStream << ("return bool_2_Str_t([{PTR}]" + p.name + ");");
+                    else
+                        outStream << ("return bool_2_Str([{PTR}]" + p.name + ");");
 
                 } else if (p.type == "wei") {
                     outStream << ("return wei_2_Str([{PTR}]" + p.name + ");");
@@ -514,7 +513,7 @@ string_q getCaseSetCode(const CParameterArray& fieldsIn) {
                 if (p.type == "Value") {
                     outStream << (p.name + " = fieldValue;\n````return true;");
 
-                } else if (p.type == "bool" || p.type == "sbool") {
+                } else if (p.type == "bool") {
                     outStream << (p.name + " = str_2_Bool(fieldValue);\n````return true;");
 
                 } else if (p.type == "wei") {
@@ -668,7 +667,6 @@ string_q convertTypes(const string_q& inStr) {
     replaceAll(outStr, "timestamp ", "timestamp_t ");
     replaceAll(outStr, "datetime ", "time_q ");
     replaceAll(outStr, "bool ", "bool ");
-    replaceAll(outStr, "sbool ", "bool ");
 
     replaceAll(outStr, "hash ", "hash_t ");
     replaceAll(outStr, "sgas ", "gas_t ");

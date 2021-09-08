@@ -107,6 +107,11 @@ string_q CParameter::getValueByName(const string_q& fieldName) const {
                 return bool_2_Str_t(no_write);
             }
             break;
+        case 'o':
+            if (fieldName % "omit_empty") {
+                return bool_2_Str_t(omit_empty);
+            }
+            break;
         case 'p':
             if (fieldName % "precision") {
                 return uint_2_Str(precision);
@@ -191,6 +196,12 @@ bool CParameter::setValueByName(const string_q& fieldNameIn, const string_q& fie
                 return true;
             }
             break;
+        case 'o':
+            if (fieldName % "omit_empty") {
+                omit_empty = str_2_Bool(fieldValue);
+                return true;
+            }
+            break;
         case 'p':
             if (fieldName % "precision") {
                 precision = str_2_Uint(fieldValue);
@@ -250,6 +261,7 @@ bool CParameter::Serialize(CArchive& archive) {
     archive >> internalType;
     archive >> components;
     archive >> no_write;
+    archive >> omit_empty;
     archive >> is_flags;
     // archive >> precision;
     // EXISTING_CODE
@@ -273,6 +285,7 @@ bool CParameter::SerializeC(CArchive& archive) const {
     archive << internalType;
     archive << components;
     archive << no_write;
+    archive << omit_empty;
     archive << is_flags;
     // archive << precision;
     // EXISTING_CODE
@@ -332,6 +345,7 @@ void CParameter::registerClass(void) {
     ADD_FIELD(CParameter, "internalType", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CParameter, "components", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CParameter, "no_write", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CParameter, "omit_empty", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CParameter, "is_flags", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CParameter, "precision", T_UNUMBER, ++fieldNum);
     HIDE_FIELD(CParameter, "precision");
@@ -462,6 +476,7 @@ const char* STR_DISPLAY_PARAMETER =
     "[{IS_OBJECT}]\t"
     "[{IS_BUILTIN}]\t"
     "[{NO_WRITE}]\t"
+    "[{OMIT_EMPTY}]\t"
     "[{IS_MINIMAL}]";
 
 //---------------------------------------------------------------------------
@@ -473,13 +488,15 @@ CParameter::CParameter(string_q& textIn) {
     replaceAll(textIn, " *", "* ");                    // cleanup
     replaceAll(textIn, "address[]", "CAddressArray");  // cleanup
 
-    if (contains(textIn, "nowrite")) {
-        no_write = true;
-        if (contains(textIn, "-min"))
-            is_flags |= IS_MINIMAL;
-        replace(textIn, " (nowrite)", "");
-        replace(textIn, " (nowrite-min)", "");
-    }
+    omit_empty = contains(textIn, "omitempty");
+    no_write = contains(textIn, "nowrite");
+    if (no_write && contains(textIn, "-min"))
+        is_flags |= IS_MINIMAL;
+   
+    replace(textIn, " (nowrite)", "");
+    replace(textIn, " (nowrite-min)", "");
+    replace(textIn, " (nowrite,omitempty)", "");
+    replace(textIn, " (omitempty)", "");
 
     if (contains(textIn, "=")) {
         str_default = textIn;

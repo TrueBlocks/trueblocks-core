@@ -9,7 +9,7 @@ fields = \
     address miner|\
     uint64 difficulty|\
     double price|\
-    sbool finalized|\
+    bool finalized (omitempty)|\
     timestamp timestamp|\
     CTransactionArray transactions
 includes = etherlib.h|transaction.h

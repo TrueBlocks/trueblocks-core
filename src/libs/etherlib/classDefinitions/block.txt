@@ -14,7 +14,7 @@ fields = \
     CTransactionArray transactions|\
     CStringArray tx_hashes (nowrite)|\
     string name (nowrite)|\
-    sbool light (nowrite)
+    bool light (nowrite,omitempty)
 extra_fields = date date|\
     uint64 unclesCnt|\
     string extraData
