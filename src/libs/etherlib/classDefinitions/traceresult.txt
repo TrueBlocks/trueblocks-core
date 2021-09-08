@@ -9,7 +9,7 @@ includes = utillib.h|abi.h
 cpp_includes = trace.h
 serializable = true
 equals = ((newContract == it.newContract) && (code == it.code) && (gasUsed == it.gasUsed) && (output == it.output))
-js = true
+tsx = true
 
 #   traceResult:
 #      description: the trace result

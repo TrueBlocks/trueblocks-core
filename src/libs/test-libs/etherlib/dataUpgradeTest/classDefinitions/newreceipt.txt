@@ -5,7 +5,7 @@ fields = \
     gas gasUsed|\
     CLogEntryArray logs|\
     string logsBloom|\
-    sbool isErr
+    bool isErr (omitempty)
 includes = etherlib.h|logentry.h
 scope = extern
 serialize = true

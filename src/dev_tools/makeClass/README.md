@@ -4,7 +4,7 @@
 
 ### Usage
 
-`Usage:`    makeClass [-r|-a|-o|-m|-f|-l|-j|-n|-i|-c|-v|-h] &lt;file&gt; [file...]  
+`Usage:`    makeClass [-r|-a|-o|-m|-f|-l|-t|-n|-i|-c|-v|-h] &lt;file&gt; [file...]  
 `Purpose:`  Automatically writes C++ for various purposes.
 
 `Where:`  
@@ -18,7 +18,7 @@
 | -m | --readmes | create readme files for each tool and app |
 | -f | --format | format source code files (.cpp and .h) found in local folder and below |
 | -l | --lint | lint source code files (.cpp and .h) found in local folder and below |
-| -j | --js | create javascript routes and help routes for the front end |
+| -t | --tsx | create typescript routes |
 | -n | --nspace &lt;str&gt; | surround generated c++ code with a namespace |
 | -i | --filter &lt;str&gt; | process only files whose filename or contents contain 'filter' |
 | -c | --force | for both code generation and options generation, force writing of changes |

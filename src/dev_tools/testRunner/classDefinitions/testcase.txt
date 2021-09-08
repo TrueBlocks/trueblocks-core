@@ -2,7 +2,7 @@
 class = CTestCase
 fields = \
     string origLine|\
-    sbool builtin|\
+    bool builtin (omitempty)|\
     string onOff|\
     string mode|\
     string speed|\

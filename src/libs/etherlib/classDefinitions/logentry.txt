@@ -13,13 +13,13 @@ fields = \
     blknum transactionIndex (nowrite-min)|\
     blknum transactionLogIndex (nowrite)|\
     string type (nowrite)|\
-    sbool removed (nowrite)
+    bool removed (nowrite,omitempty)
 includes = utillib.h|abi.h
 cpp_includes = etherlib.h
 scope = extern
 serializable = true
 display_str = blockNumber, transactionIndex, logIndex, address, topic0, topic1, topic2, topic3, data, type, compressedLog
-js = true
+tsx = true
 
 #    log:
 #      type: object

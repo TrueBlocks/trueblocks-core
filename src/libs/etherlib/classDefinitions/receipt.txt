@@ -20,7 +20,7 @@ scope = extern
 serializable = true
 display_str = blockNumber, transactionIndex, hash, gasUsed, status, isError
 equals = (getValueByName("transactionHash") == it.getValueByName("transactionHash"))
-js = true
+tsx = true
 
 #   receipt:
 #      type: object

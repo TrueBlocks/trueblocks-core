@@ -6,7 +6,7 @@ fields = \
     blknum firstApp (nowrite)|\
     blknum latestApp (nowrite)|\
     string path (nowrite)|\
-    suint64 sizeInBytes (nowrite)
+    uint64 sizeInBytes (nowrite,omitempty)
 includes = etherlib.h
 serialize = true
 display_str = display_name, firstApp, lastApp, appearanceRange, nRecords, appearanceInterval, sizeInBytes

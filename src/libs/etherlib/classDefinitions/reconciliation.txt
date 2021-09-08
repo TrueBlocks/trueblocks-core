@@ -31,7 +31,7 @@ cpp_includes = etherlib.h
 serializable = true
 equals = ((blockNumber == it.blockNumber) && (assetAddr == it.assetAddr))
 display_str = assetAddr,assetSymbol,decimals,blockNumber,transactionIndex,timestamp,prevBlk,prevBlkBal,begBal,amountIn,internalIn,selfDestructIn,minerBaseRewardIn,minerNephewRewardIn,minerTxFeeIn,minerUncleRewardIn,prefundIn,totalIn,amountOut,internalOut,selfDestructOut,gasCostOut,totalOut,totalOutLessGas,amountNet,endBal,begBalDiff,endBalCalc,endBalDiff,reconciled,spotPrice,priceSource,reconciliationType
-js = true
+tsx = true
 
 #        CLineItem
 #                int type; [AMOUNT|INTERNAL|SELFDESTRUCT|MINERBASE|

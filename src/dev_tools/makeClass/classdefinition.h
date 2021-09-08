@@ -45,7 +45,7 @@ class CClassDefinition : public CBaseNode {
     string_q eq_str;
     string_q scope_str;
     bool serializable;
-    bool js;
+    bool tsx;
     CParameterArray fieldArray;
 
   public:
@@ -135,7 +135,7 @@ inline void CClassDefinition::initialize(void) {
     eq_str = "";
     scope_str = "";
     serializable = false;
-    js = false;
+    tsx = false;
     fieldArray.clear();
 
     // EXISTING_CODE
@@ -167,7 +167,7 @@ inline void CClassDefinition::duplicate(const CClassDefinition& cl) {
     eq_str = cl.eq_str;
     scope_str = cl.scope_str;
     serializable = cl.serializable;
-    js = cl.js;
+    tsx = cl.tsx;
     fieldArray = cl.fieldArray;
 
     // EXISTING_CODE

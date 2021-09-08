@@ -19,7 +19,7 @@ sort = v1.encoding < v2.encoding
 equals = encoding % it.encoding && message % it.message
 serializable = true
 display_str = abi_source, name, type, stateMutability, signature, encoding, inputs, outputs
-js = true
+tsx = true
 
 #    function:
 #      type: object

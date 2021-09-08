@@ -25,9 +25,9 @@ static CRouteArray routes;
 #define explorerPath string_q("/Users/jrush/Development/trueblocks-explorer/")
 
 //------------------------------------------------------------------------------------------------------------
-bool COptions::handle_js(void) {
+bool COptions::handle_tsx(void) {
     CToml config(configPath("makeClass.toml"));
-    bool enabled = config.getConfigBool("enabled", "js", false);
+    bool enabled = config.getConfigBool("enabled", "tsx", false);
     if (isTestMode() || !enabled) {
         LOG_WARN("Skipping javascript generation...");
         return true;
@@ -87,13 +87,13 @@ bool COptions::handle_js(void) {
 
 //------------------------------------------------------------------------------------------------
 const char* STR_TYPE_FILE =
-    "import {++TYPES++} from '@modules/types';\n"
+    "import {\n ++TYPES++\n} from '@modules/types';\n"
     "\n"
-    "export declare type [{BASE_PROPER}] = {\n++FIELDS++};\n"
-    "export declare type [{BASE_PROPER}]Array = [{BASE_PROPER}]++BRACKETS++;\n";
+    "export type [{BASE_PROPER}] = {\n++FIELDS++};\n"
+    "export type [{BASE_PROPER}]Array = [{BASE_PROPER}]++BRACKETS++;\n";
 
 //------------------------------------------------------------------------------------------------
-bool COptions::handle_js_type(const CClassDefinition& classDef) {
+bool COptions::handle_tsx_type(const CClassDefinition& classDef) {
     ostringstream fields, types;
     CNameValueMap typeMap;
 
@@ -116,12 +116,9 @@ bool COptions::handle_js_type(const CClassDefinition& classDef) {
             replace(field.name, "C", "");
         if (startsWith(field.type, "C"))
             replace(field.type, "C", "");
-        replace(field.type, "sbool", "bbb");
         replace(field.type, "bool", "bbb");
         replace(field.type, "uint8", "bbb");
         replaceAll(field.type, "bbb", "boolean");
-        replace(field.type, "sgas", "gas");
-        replace(field.type, "suint64", "uint64");
         replace(field.type, "Value", "string");
         replace(field.type, "TraceAction", "Traceaction");
         replace(field.type, "TraceResult", "Traceresult");
@@ -146,7 +143,7 @@ bool COptions::handle_js_type(const CClassDefinition& classDef) {
         typesStr += ",";
         typesStr = "\n  " + trim(typesStr, ' ') + "\n";
     } else {
-        typesStr = " " + typesStr + " ";
+        typesStr = " " + typesStr + "";
     }
 
     string_q out = classDef.Format(STR_TYPE_FILE);
@@ -180,7 +177,7 @@ void loadRoutes(const string_q& fn) {
 
 //------------------------------------------------------------------------------------------------------------
 const char* STR_MOUSETRAP =
-    "Mousetrap.bind('[{HOTKEY}]', function () {\n"
+    "Mousetrap.bind('[{HOTKEY}]', () => {\n"
     "  window.location.href = [{NAME}];\n"
     "});";
 

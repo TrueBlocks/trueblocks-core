@@ -14,7 +14,7 @@ fields = \
     CTransactionArray transactions|\
     CStringArray tx_hashes (nowrite)|\
     string name (nowrite)|\
-    sbool light (nowrite)
+    bool light (nowrite,omitempty)
 extra_fields = date date|\
     uint64 unclesCnt|\
     string extraData
@@ -23,7 +23,7 @@ cpp_includes = appearance.h
 scope = extern
 serializable = true
 display_str = blockNumber, timestamp, difficulty, gasUsed, gasLimit, baseFeePerGas, miner, hash, parentHash, transactionsCnt, finalized
-js = true
+tsx = true
 
 #    block:
 #      type: object

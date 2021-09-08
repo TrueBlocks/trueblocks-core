@@ -28,7 +28,7 @@ fields = gas gasLimit|\
         CTransactionArray transactions|\
         CStringArray tx_hashes (nowrite)|\
         string name (nowrite)|\
-        sbool light (nowrite)
+        bool light (nowrite,omitempty)
 
 [many other items removed for clarity]
 ```
@@ -68,7 +68,7 @@ fields = gas gasLimit|\
         CTransactionArray transactions|\
         CStringArray tx_hashes (nowrite)|\
         string name (nowrite)|\
-        sbool light (nowrite)
+        bool light (nowrite,omitempty)
 ```
 
 The format of each line is `fieldType fieldName|\`

@@ -81,7 +81,6 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
         // clang-format off
                if (fld.type == "Value")           { setFmt = "`[{NAME}] = [{DEF}]\n";     regType = "T_JSONVAL | TS_OMITEMPTY";
         } else if (fld.type == "wei")             { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_WEI";
-        } else if (fld.type == "sgas")            { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_GAS | TS_OMITEMPTY";
         } else if (fld.type == "gas")             { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_GAS";
         } else if (fld.type == "timestamp")       { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_TIMESTAMP";
         } else if (fld.type == "datetime")        { setFmt = "`[{NAME}] = [{DEFT}];\n";   regType = "T_DATE";
@@ -100,11 +99,8 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
         } else if (fld.type == "uint16")          { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_UNUMBER";
         } else if (fld.type == "uint32")          { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_UNUMBER";
         } else if (fld.type == "uint64")          { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_UNUMBER";
-        } else if (fld.type == "suint32")         { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_UNUMBER | TS_OMITEMPTY"; fld.type = "uint32";
-        } else if (fld.type == "suint64")         { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_UNUMBER | TS_OMITEMPTY"; fld.type = "uint64";
         } else if (fld.type == "uint256")         { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_UINT256";
         } else if (fld.type == "bool")            { setFmt = "`[{NAME}] = [{DEFB}];\n";   regType = "T_BOOL | TS_OMITEMPTY";
-        } else if (fld.type == "sbool")           { setFmt = "`[{NAME}] = [{DEFB}];\n";   regType = "T_BOOL | TS_OMITEMPTY";
         } else if (fld.type == "double")          { setFmt = "`[{NAME}] = [{DEFF}];\n";   regType = "T_DOUBLE";
         } else if (startsWith(fld.type, "bytes")) { setFmt = "`[{NAME}] = [{DEFS}];\n";   regType = "T_TEXT | TS_OMITEMPTY";
         } else if (endsWith(fld.type, "_e"))      { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_NUMBER";
@@ -112,6 +108,9 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
         } else if ((fld.is_flags & IS_OBJECT))    { setFmt = "`[{NAME}] = [{TYPE}]();\n"; regType = "T_OBJECT | TS_OMITEMPTY";
         } else                                    { setFmt = STR_UNKOWNTYPE;              regType = "T_TEXT | TS_OMITEMPTY"; }
         // clang-format on
+
+        if (fld.omit_empty && !contains(regType, " | TS_OMITEMPTY"))
+            regType += " | TS_OMITEMPTY";
 
         if ((fld.type == "Value")) {
             setFmt = "\t[{NAME}].clear();\n";
@@ -317,8 +316,8 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
     replaceAll(srcSource, "`", string_q(1, '\t'));
     counter.nProcessed += writeTheCode(codewrite_t(srcFile, srcSource, namespc, 4, true, force));
 
-    if (js && classDef.js)
-        handle_js_type(classDef);
+    if (tsx && classDef.tsx)
+        handle_tsx_type(classDef);
 
     return true;
 }
@@ -362,19 +361,19 @@ string_q getCaseGetCode(const CParameterArray& fieldsIn) {
                     outStream << str;
 
                 } else if (p.type == "bool") {
-                    outStream << ("return bool_2_Str([{PTR}]" + p.name + ");");
-
-                } else if (p.type == "sbool") {
-                    outStream << ("return bool_2_Str_t([{PTR}]" + p.name + ");");
+                    if (p.omit_empty)
+                        outStream << ("return bool_2_Str_t([{PTR}]" + p.name + ");");
+                    else
+                        outStream << ("return bool_2_Str([{PTR}]" + p.name + ");");
 
                 } else if (p.type == "wei") {
                     outStream << ("return wei_2_Str([{PTR}]" + p.name + ");");
 
-                } else if (p.type == "sgas") {
-                    outStream << ("return " + p.name + " == 0 ? \"\" : gas_2_Str([{PTR}]" + p.name + ");");
-
                 } else if (p.type == "gas") {
-                    outStream << ("return gas_2_Str([{PTR}]" + p.name + ");");
+                    if (p.omit_empty)
+                        outStream << ("return " + p.name + " == 0 ? \"\" : gas_2_Str([{PTR}]" + p.name + ");");
+                    else
+                        outStream << ("return gas_2_Str([{PTR}]" + p.name + ");");
 
                 } else if (p.type == "timestamp") {
                     outStream << ("return ts_2_Str([{PTR}]" + p.name + ");");
@@ -398,10 +397,10 @@ string_q getCaseGetCode(const CParameterArray& fieldsIn) {
                     outStream << ("return uint_2_Str([{PTR}]" + p.name + ");");
 
                 } else if (p.type == "uint32" || p.type == "uint64") {
-                    outStream << ("return uint_2_Str([{PTR}]" + p.name + ");");
-
-                } else if (p.type == "suint64" || p.type == "suint32") {
-                    outStream << ("return " + p.name + " == 0 ? \"\" : uint_2_Str([{PTR}]" + p.name + ");");
+                    if (p.omit_empty)
+                        outStream << ("return " + p.name + " == 0 ? \"\" : uint_2_Str([{PTR}]" + p.name + ");");
+                    else
+                        outStream << ("return uint_2_Str([{PTR}]" + p.name + ");");
 
                 } else if (p.type == "blknum") {
                     outStream << ("return uint_2_Str([{PTR}]" + p.name + ");");
@@ -514,13 +513,13 @@ string_q getCaseSetCode(const CParameterArray& fieldsIn) {
                 if (p.type == "Value") {
                     outStream << (p.name + " = fieldValue;\n````return true;");
 
-                } else if (p.type == "bool" || p.type == "sbool") {
+                } else if (p.type == "bool") {
                     outStream << (p.name + " = str_2_Bool(fieldValue);\n````return true;");
 
                 } else if (p.type == "wei") {
                     outStream << (p.name + " = str_2_Wei(fieldValue);\n````return true;");
 
-                } else if (p.type == "gas" || p.type == "sgas") {
+                } else if (p.type == "gas") {
                     outStream << (p.name + " = str_2_Gas(fieldValue);\n````return true;");
 
                 } else if (p.type == "timestamp") {
@@ -550,7 +549,7 @@ string_q getCaseSetCode(const CParameterArray& fieldsIn) {
                 } else if (p.type == "int256") {
                     outStream << (p.name + " = str_2_BigInt(fieldValue);\n````return true;");
 
-                } else if (p.type == "uint64" || p.type == "suint64") {
+                } else if (p.type == "uint64") {
                     outStream << (p.name + " = str_2_Uint(fieldValue);\n````return true;");
 
                 } else if (p.type == "uint256") {
@@ -571,7 +570,7 @@ string_q getCaseSetCode(const CParameterArray& fieldsIn) {
                 } else if (p.type == "uint16") {
                     outStream << (p.name + " = (uint16_t)str_2_Uint(fieldValue);\n````return true;");
 
-                } else if (p.type == "uint32" || p.type == "suint32") {
+                } else if (p.type == "uint32") {
                     outStream << (p.name + " = (uint32_t)str_2_Uint(fieldValue);\n````return true;");
 
                 } else if (startsWith(p.type, "bytes")) {
@@ -668,10 +667,8 @@ string_q convertTypes(const string_q& inStr) {
     replaceAll(outStr, "timestamp ", "timestamp_t ");
     replaceAll(outStr, "datetime ", "time_q ");
     replaceAll(outStr, "bool ", "bool ");
-    replaceAll(outStr, "sbool ", "bool ");
 
     replaceAll(outStr, "hash ", "hash_t ");
-    replaceAll(outStr, "sgas ", "gas_t ");
     replaceAll(outStr, "gas ", "gas_t ");
     replaceAll(outStr, "wei ", "wei_t ");
 

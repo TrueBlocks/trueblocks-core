@@ -26,7 +26,7 @@ fields = \
     CFunction articulatedTx|\
     string compressedTx (nowrite)|\
     CReconciliationArray statements (nowrite)|\
-    sbool finalized (nowrite)
+    bool finalized (nowrite,omitempty)
 extra_fields = date date|\
     string fromName|\
     string toName|\
@@ -37,7 +37,7 @@ scope = extern
 serializable = true
 display_str = blockNumber, transactionIndex, date, timestamp, from, to, ether, etherGasPrice, gasUsed, hash, isError, encoding, compressedTx
 equals = (hash == it.hash)
-js = true
+tsx = true
 
 #   transaction:
 #      type: object

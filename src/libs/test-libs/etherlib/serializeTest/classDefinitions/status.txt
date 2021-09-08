@@ -6,7 +6,7 @@ fields = \
     string rpc_provider|\
     string balance_provider|\
     string host|\
-    sbool is_scraping|\
+    bool is_scraping (omitempty)|\
     CCachePtrArray caches (nowrite)
 includes = etherlib.h|cache.h
 serialize = true
