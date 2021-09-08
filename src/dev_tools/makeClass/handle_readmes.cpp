@@ -142,7 +142,7 @@ bool COptions::handle_readmes(void) {
         }
 
         string_q outPath = getDocsChifraPath(fn + ".md");
-        stringToAsciiFile(outPath, os.str());
+        stringToAsciiFile(outPath, substitute(os.str(), "$DATE", "2021-05-08T01:35:20"));
 
         weight += 200;
     }
