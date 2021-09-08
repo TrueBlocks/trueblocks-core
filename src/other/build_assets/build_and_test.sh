@@ -12,7 +12,16 @@ then
     RUN_SERVER=true
 fi
 
+if [ -n "$TEST_UNIQUE_ID" ]
+then
+    echo "TEST_UNIQUE_ID environment variable is not defined"
+    exit 1
+fi
+
+echo "TEST_UNIQUE_ID is: $TEST_UNIQUE_ID"
 echo $(pwd)
+
+export HOME="$TEST_UNIQUE_ID"
 
 # Build the binaries
 mkdir build && cd build
