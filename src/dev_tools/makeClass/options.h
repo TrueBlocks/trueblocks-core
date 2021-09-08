@@ -58,7 +58,6 @@ class COptions : public COptionsBase {
     string_q nspace;
     string_q filter;
     bool force;
-    bool api;
     bool openapi;
     // END_CODE_DECLARE
 

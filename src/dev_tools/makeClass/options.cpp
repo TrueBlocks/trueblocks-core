@@ -34,7 +34,6 @@ static const COption params[] = {
     COption("nspace", "n", "<string>", OPT_FLAG, "surround generated c++ code with a namespace"),
     COption("filter", "i", "<string>", OPT_FLAG, "process only files whose filename or contents contain 'filter'"),
     COption("force", "c", "", OPT_SWITCH, "for both code generation and options generation, force writing of changes"),
-    COption("api", "p", "", OPT_HIDDEN | OPT_SWITCH, "generate api options file in explorer repo"),
     COption("openapi", "A", "", OPT_HIDDEN | OPT_SWITCH, "export openapi.yaml file for API documentation"),
     COption("", "", "", OPT_DESCRIPTION, "Automatically writes C++ for various purposes."),
     // clang-format on
@@ -104,9 +103,6 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-c" || arg == "--force") {
             force = true;
 
-        } else if (arg == "-p" || arg == "--api") {
-            api = true;
-
         } else if (arg == "-A" || arg == "--openapi") {
             openapi = true;
 
@@ -138,7 +134,6 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST("nspace", nspace, (nspace == "qblocks"));
     LOG_TEST("filter", filter, (filter == ""));
     LOG_TEST_BOOL("force", force);
-    LOG_TEST_BOOL("api", api);
     LOG_TEST_BOOL("openapi", openapi);
     // END_DEBUG_DISPLAY
 
@@ -175,6 +170,7 @@ bool COptions::parseArguments(string_q& command) {
             forEveryFileInFolder("./classDefinitions/", listClasses, this);
         }
     }
+    LOG4("Processing ", classDefs.size(), " class definition files.");
 
     // Ignoring classDefs for a moment, process special options. Note: order matters
     if (options && !handle_options())
@@ -249,7 +245,6 @@ void COptions::Init(void) {
     nspace = "qblocks";
     filter = "";
     force = false;
-    api = false;
     openapi = false;
     // END_CODE_INIT
 

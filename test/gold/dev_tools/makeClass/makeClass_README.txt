@@ -23,7 +23,6 @@ makeClass -th
 |####|Hidden options||
 | -e | --edit | edit <class_name(s)> definition file in local folder |
 | -d | --dump | dump any classDefinition config tomls to screen and quit |
-| -p | --api | generate api options file in explorer repo |
 | -A | --openapi | export openapi.yaml file for API documentation |
 |####|Hidden options||
 | -v | --verbose | set verbose level (optional level defaults to 1) |
