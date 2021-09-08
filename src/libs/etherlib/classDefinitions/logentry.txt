@@ -13,7 +13,7 @@ fields = \
     blknum transactionIndex (nowrite-min)|\
     blknum transactionLogIndex (nowrite)|\
     string type (nowrite)|\
-    sbool removed (nowrite)
+    bool removed (nowrite,omitempty)
 includes = utillib.h|abi.h
 cpp_includes = etherlib.h
 scope = extern

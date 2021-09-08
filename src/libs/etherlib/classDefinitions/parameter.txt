@@ -5,14 +5,15 @@ fields = \
     string name|\
     string str_default|\
     string value|\
-    sbool indexed|\
+    bool indexed (omitempty)|\
     string internalType|\
     CParameterArray components|\
-    sbool no_write|\
+    bool no_write (omitempty)|\
+    bool omit_empty (nowrite,omitempty)|\
     uint64 is_flags=IS_ENABLED|\
     uint64 precision=5 (nowrite)
 includes = utillib.h
-display_str = type, name, str_default, value, internalType, indexed, is_pointer, is_array, is_object, is_builtin, no_write, is_minimal
+display_str = type, name, str_default, value, internalType, indexed, is_pointer, is_array, is_object, is_builtin, no_write, omit_empty, is_minimal
 js = true
 
 #    parameter:

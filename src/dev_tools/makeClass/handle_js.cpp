@@ -116,7 +116,6 @@ bool COptions::handle_js_type(const CClassDefinition& classDef) {
             replace(field.name, "C", "");
         if (startsWith(field.type, "C"))
             replace(field.type, "C", "");
-        replace(field.type, "sbool", "bbb");
         replace(field.type, "bool", "bbb");
         replace(field.type, "uint8", "bbb");
         replaceAll(field.type, "bbb", "boolean");
