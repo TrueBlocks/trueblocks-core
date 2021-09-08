@@ -19,8 +19,9 @@ jobs:
             git clone --quiet https://github.com/${{ github.repository }}
             cd trueblocks-core
             git reset --hard ${{ github.sha }}
-            chroot testroot/$TEST_UNIQUE_ID src/other/build_assets/build_and_test.sh test-all
-            cp -r testroot/$TEST_UNIQUE_ID/test/working /home/testrunner/artifacts/$TEST_UNIQUE_ID
+            chroot ./ src/other/build_assets/build_and_test.sh test-all
+            cp -r ./test/working /home/testrunner/artifacts/$TEST_UNIQUE_ID
+            cd /home/testrunner
             rm -rf testroot/$TEST_UNIQUE_ID
       - name: Finish
         run: |
