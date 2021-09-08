@@ -260,5 +260,15 @@ extern const char* STR_DISPLAY_COMMANDOPTION;
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 extern bool parseCommandData(const char* str, void* data);
+//---------------------------------------------------------------------------------------------------
+inline string_q getDocsPath(const string_q& _part) {
+    return "../docs/" + _part;
+}
+inline string_q getReadmePath(const string_q& _part) {
+    return getDocsPath("readmes/" + _part);
+}
+inline string_q getApiDocsPath(const string_q& _part) {
+    return getDocsPath("content/api/" + _part);
+}
 // EXISTING_CODE
 }  // namespace qblocks

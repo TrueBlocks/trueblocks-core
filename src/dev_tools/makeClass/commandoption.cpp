@@ -847,8 +847,8 @@ string_q CCommandOption::toApiPath(void) const {
         paramStream << yp << endl;
     }
 
-    string_q propertyFn = "../docs/content/api/properties/" + api_route + ".txt";
-    string_q exampleFn = "../docs/content/api/examples/" + api_route + ".txt";
+    string_q propertyFn = getDocsPath("templates/api/properties/" + api_route + ".txt");
+    string_q exampleFn = getDocsPath("templates/api/examples/" + api_route + ".txt");
 
     ostringstream example;
     if (fileExists(exampleFn)) {
