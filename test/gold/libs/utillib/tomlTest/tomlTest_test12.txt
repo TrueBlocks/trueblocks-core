@@ -62,7 +62,6 @@ current = "vers-alpha"
 [settings]
 name = "accts"
 
-
 [display]
 accounting = false
 debug = false
@@ -71,7 +70,6 @@ trace = false
 bloom = false
 single = false
 parse = false
-
 
 [formats]
 screen_fmt = "{ \"date\": \"[{DATE}]\", \"position\": \"[{BLOCKNUMBER}].[{r:5:TRANSACTIONINDEX}]\", \"from\": \"[{FROM}]\", \"to\": \"[{w:42:TO}]\", \"ether\": \"[{r:25:ETHER}]\", \"gasCost\": \"[{r:20:GASCOST}]\", \"hash\": \"[{HASH}]\" }"
