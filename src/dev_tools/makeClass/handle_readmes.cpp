@@ -27,9 +27,9 @@ bool visitReadme(const string_q& templatePath, void* data) {
 
         CStringArray parts;
         explode(parts, templatePath, '/');
-        string_q folder = parts[5];
-        string_q tool = substitute(parts[6], ".md", "");
-        string_q docPath = "../docs/content/readmes/" + folder + "/" + tool + "/README.md";
+        string_q folder = parts[4];
+        string_q tool = substitute(parts[5], ".md", "");
+        string_q docPath = getReadmePath(folder + "/" + tool + "/README.md");
         string_q srcPath = "../src/" + folder + "/" + tool + "/README.md";
 
         string_q source = asciiFileToString(templatePath);
@@ -110,8 +110,8 @@ bool COptions::handle_readmes(void) {
 
     LOG_INFO(cYellow, "handling readmes...", cOff);
     counter = CCounter();  // reset
-    forEveryFileInFolder("../docs/content/readmes/templates", findReplacements, this);
-    forEveryFileInFolder("../docs/content/readmes/templates", visitReadme, this);
+    forEveryFileInFolder(getReadmeTemplate(""), findReplacements, this);
+    forEveryFileInFolder(getReadmeTemplate(""), visitReadme, this);
     LOG_INFO(cYellow, "makeClass --readmes", cOff, " processed ", counter.nVisited, " files (changed ",
              counter.nProcessed, ").", string_q(40, ' '));
     return true;
