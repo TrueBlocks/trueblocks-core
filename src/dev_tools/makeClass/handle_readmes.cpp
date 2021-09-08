@@ -99,6 +99,7 @@ bool findReplacements(const string_q& templatePath, void* data) {
     return true;
 }
 
+extern const char* STR_YAML_FRONTMATTER;
 //------------------------------------------------------------------------------------------------------------
 bool COptions::handle_readmes(void) {
     CToml config(configPath("makeClass.toml"));
@@ -112,7 +113,61 @@ bool COptions::handle_readmes(void) {
     counter = CCounter();  // reset
     forEveryFileInFolder(getReadmeTemplate(""), findReplacements, this);
     forEveryFileInFolder(getReadmeTemplate(""), visitReadme, this);
+
+    CStringArray items = {
+        "Accounts:apps/list,apps/acctExport,apps/monitors,tools/ethNames,tools/grabABI",
+        "Chain Data:tools/getBlocks,tools/getTrans,tools/getReceipts,tools/getLogs,tools/getTraces,tools/whenBlock",
+        "Chain State:tools/getState,tools/getTokens",
+        "Admin:apps/cacheStatus,apps/serve,apps/blockScrape,apps/init,apps/pinMan",
+        "Other:tools/getQuotes,apps/fireStorm,tools/ethslurp"};
+    uint32_t weight = 1100;
+    for (auto item : items) {
+        CStringArray parts;
+        explode(parts, item, ':');
+
+        string_q str = STR_YAML_FRONTMATTER;
+        replace(str, "[{TITLE}]", parts[0]);
+        replace(str, "[{WEIGHT}]", uint_2_Str(weight));
+        string fn = substitute(toLower(parts[0]), " ", "");
+
+        ostringstream os;
+        os << str;
+        os << asciiFileToString(getDocsTemplate("docs-intros/" + fn + ".md"));
+
+        CStringArray paths;
+        explode(paths, parts[1], ',');
+        for (auto p : paths) {
+            string_q pp = getReadmePath(p + "/README.md");
+            os << asciiFileToString(pp);
+        }
+
+        string_q outPath = getDocsChifraPath(fn + ".md");
+        stringToAsciiFile(outPath, os.str());
+
+        weight += 200;
+    }
+
     LOG_INFO(cYellow, "makeClass --readmes", cOff, " processed ", counter.nVisited, " files (changed ",
              counter.nProcessed, ").", string_q(40, ' '));
     return true;
 }
+
+const char* STR_YAML_FRONTMATTER =
+    "---\n"
+    "title: \"[{TITLE}]\"\n"
+    "description: \"\"\n"
+    "lead: \"\"\n"
+    "date: $DATE\n"
+    "lastmod:\n"
+    "  - :git\n"
+    "  - lastmod\n"
+    "  - date\n"
+    "  - publishDate\n"
+    "draft: false\n"
+    "images: []\n"
+    "menu:\n"
+    "  docs:\n"
+    "    parent: \"chifra\"\n"
+    "weight: [{WEIGHT}]\n"
+    "toc: true\n"
+    "---\n";

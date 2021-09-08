@@ -142,6 +142,12 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("openapi", openapi);
     // END_DEBUG_DISPLAY
 
+    establishFolder(getDocsPath("content/"));
+    establishFolder(getDocsPath("content/api/"));
+    establishFolder(getDocsPath("content/data-model/"));
+    establishFolder(getDocsPath("content/docs/"));
+    establishFolder(getDocsPath("content/docs/chifra/"));
+
     if (js)
         handle_js();
 

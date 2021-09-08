@@ -13,7 +13,7 @@ images: []
 menu:
   docs:
     parent: "chifra"
-weight: 1500
+weight: 1900
 toc: true
 ---
 These commands call some useful miscellaneous tools:

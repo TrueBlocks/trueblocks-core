@@ -13,7 +13,7 @@ images: []
 menu:
   docs:
     parent: "chifra"
-weight: 1400
+weight: 1700
 toc: true
 ---
 With TrueBlocks' admin component, you can query the status of the system,

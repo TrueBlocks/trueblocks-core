@@ -13,7 +13,7 @@ images: []
 menu:
   docs:
     parent: "chifra"
-weight: 1200
+weight: 1300
 toc: true
 ---
 The chaindata tools extract raw blockchain data directly from the node.
