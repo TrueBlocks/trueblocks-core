@@ -1,6 +1,7 @@
 [settings]
 class = CCollectionCacheItem
 base_class = CCacheBase
-fields = string type
+fields = \
+    string type
 includes = etherlib.h|cachebase.h
 serialize = true

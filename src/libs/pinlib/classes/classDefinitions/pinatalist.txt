@@ -1,7 +1,8 @@
 [settings]
 class = CPinataPinlist
-fields = string count|\
-        CPinataPinArray rows
+fields = \
+    string count|\
+    CPinataPinArray rows
 includes = utillib.h|pinatapin.h
 cpp_includes =
 serializable = true

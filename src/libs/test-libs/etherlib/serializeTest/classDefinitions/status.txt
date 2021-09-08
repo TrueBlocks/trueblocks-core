@@ -1,12 +1,13 @@
 [settings]
 class = CStatus
-fields = string client_version|\
-        string trueblocks_version|\
-        string rpc_provider|\
-        string balance_provider|\
-        string host|\
-        sbool is_scraping|\
-        CCachePtrArray caches (nowrite)
+fields = \
+    string client_version|\
+    string trueblocks_version|\
+    string rpc_provider|\
+    string balance_provider|\
+    string host|\
+    sbool is_scraping|\
+    CCachePtrArray caches (nowrite)
 includes = etherlib.h|cache.h
 serialize = true
 disabled = true

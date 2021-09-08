@@ -1,7 +1,8 @@
 [settings]
 class = CChainCache
 base_class = CCache
-fields = uint64 max_depth=NOPOS|\
-        CStringArray items
+fields = \
+    uint64 max_depth=NOPOS|\
+    CStringArray items
 includes = cache.h
 serialize = true

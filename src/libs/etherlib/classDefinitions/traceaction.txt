@@ -1,17 +1,54 @@
 [settings]
 class = CTraceAction
-fields = address selfDestructed|\
-        wei balance|\
-        string callType|\
-        address from|\
-        gas gas|\
-        string init|\
-        string input|\
-        address refundAddress|\
-        address to|\
-        wei value
+fields = \
+    address selfDestructed|\
+    wei balance|\
+    string callType|\
+    address from|\
+    gas gas|\
+    string init|\
+    string input|\
+    address refundAddress|\
+    address to|\
+    wei value
 includes = utillib.h|abi.h
 cpp_includes = trace.h|reconciliation.h
 serializable = true
 equals = ((selfDestructed == it.selfDestructed) && (balance == it.balance) && (callType == it.callType) &&|(from == it.from) && (gas == it.gas) && (init == it.init) && (input == it.input) &&|(refundAddress == it.refundAddress) && (to == it.to) && (value == it.value))
 js = true
+
+#    traceAction:
+#      description: the trace action object
+#      type: object
+#      properties:
+#        from:
+#          description: "address from which the trace was sent"
+#          type: string
+#          format: address_t
+#        to:
+#          description: "address to which the trace was sent"
+#          type: string
+#          format: address_t
+#        gas:
+#          type: number
+#          format: wei_t
+#          example: 158660
+#          description: the maximum number of gas allowed for this trace
+#        input:
+#          description: an encoded version of the function call.
+#          type: string
+#          format: bytes
+#        callType:
+#          description: the type of call
+#          type: string
+#        refundAddress:
+#          type: string
+#          format: address_t
+#          example: "0xf503017d7baf7fbc0fff7492b751025c6a78179b"
+#          description: if the call type is self-destruct, the address to which the refund is sent
+#        articulatedTrace:
+#          description: A human-readable version of the trace action’s input and the result’s output
+#          type: object
+#        compressedTrace:
+#          description: a truncated, more readable version of the articulation
+#          type: string

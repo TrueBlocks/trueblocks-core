@@ -1,16 +1,64 @@
 [settings]
 class = CEthState
-fields = blknum blockNumber|\
-        wei balance|\
-        uint64 nonce (nowrite)|\
-        string code (nowrite)|\
-        string storage (nowrite)|\
-        address address (nowrite)|\
-        blknum deployed (nowrite)|\
-        string accttype (nowrite)|\
-        CFunction result (nowrite)
+fields = \
+    blknum blockNumber|\
+    wei balance|\
+    uint64 nonce (nowrite)|\
+    string code (nowrite)|\
+    string storage (nowrite)|\
+    address address (nowrite)|\
+    blknum deployed (nowrite)|\
+    string accttype (nowrite)|\
+    CFunction result (nowrite)
 includes = utillib.h|abi.h
 cpp_includes = etherlib.h
 sort = v1.blockNumber < v2.blockNumber
 equals = blockNumber == it.blockNumber
 display_str = blockNumber, address, balance, nonce, code, storage, deployed, acctType
+
+#    state:
+#      type: object
+#      properties:
+#        blockNumber:
+#          type: number
+#          format: blknum_t
+#          example: 10021
+#          description: the block number at which this state was taken
+#        balance:
+#          type: string
+#          format: wei_t
+#          example: "258843698360318500"
+#          description: the balance at the address at the given block height
+#        nonce:
+#          type: number
+#          example: 115
+#          description: the nonce of the address at the given block height
+#        code:
+#          type: string
+#          format: bytes
+#          example: "0x"
+#          description: the byte code at the address (if this is a smart contract)
+#        storage:
+#          type: string
+#          format: bytes
+#          example: "0x0000000000000000000000000000000000000000000000000000000000000000"
+#          description: this field is un-implemented and current returns the first storage location in a smart contract
+#        address:
+#          type: string
+#          format: address_t
+#          example: "0xa1e4380a3b1f749673e270229993ee55f35663b4"
+#          description: the address of the state being queried
+#        deployed:
+#          type: number
+#          format: blknum_t
+#          example: 8901011,
+#          description: the block number at which this smart contract was deployed (if a smart contact)
+#        accttype:
+#          type: string
+#          example: "one of 'EOA' or 'Contract'"
+#          description: the type of the address at the given block
+#        ether:
+#          type: number
+#          format: double
+#          example: 0.2588436983603185
+#          description: the balance of the address in ethers

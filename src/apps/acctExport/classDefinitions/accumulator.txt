@@ -1,4 +1,5 @@
 [settings]
 class = CAccumulator
-fields = datetime endOfPeriod = earliestDate
+fields = \
+    datetime endOfPeriod = earliestDate
 includes = acctlib.h

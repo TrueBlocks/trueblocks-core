@@ -1,29 +1,35 @@
 [settings]
 class = CMonitor
 base_class = CAccountName
-fields = blknum nAppearances (nowrite)|\
-        blknum lastExport (nowrite)|\
-        blknum firstAppearance (nowrite)|\
-        blknum latestAppearance = UINT_MAX (nowrite)|\
-        blknum lastVisitedBlock (nowrite)|\
-        suint64 sizeInBytes (nowrite)
-extra_fields = blknum nApps|\
-        blknum firstApp|\
-        blknum latestApp|\
-        string path|\
-        address address|\
-        uint64 decimals|\
-        bool deleted|\
-        string description|\
-        bool is_contract|\
-        bool is_custom|\
-        bool is_erc20|\
-        bool is_erc721|\
-        bool is_prefund|\
-        string name|\
-        string source|\
-        string symbol|\
-        string tags
+fields = \
+    blknum nAppearances (nowrite)|\
+    blknum lastExport (nowrite)|\
+    blknum firstAppearance (nowrite)|\
+    blknum latestAppearance = UINT_MAX (nowrite)|\
+    blknum lastVisitedBlock (nowrite)|\
+    suint64 sizeInBytes (nowrite)
+extra_fields = \
+    blknum nApps|\
+    blknum firstApp|\
+    blknum latestApp|\
+    string path|\
+    address address|\
+    uint64 decimals|\
+    bool deleted|\
+    string description|\
+    bool is_contract|\
+    bool is_custom|\
+    bool is_erc20|\
+    bool is_erc721|\
+    bool is_prefund|\
+    string name|\
+    string source|\
+    string symbol|\
+    string tags
 includes = etherlib.h|transaction.h|reconciliation.h|ethstate.h|monitoredapp.h
 force_objget = true
 js = true
+
+#    monitor:
+#      type: object
+#      description: "an address that is being (or has been) monitored"

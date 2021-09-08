@@ -1,7 +1,10 @@
 [settings]
-class     = CStake
-fields    = address address|uint64 lastPos = NOPOS|wei stake
-includes  = etherlib.h
+class = CStake
+fields = \
+    address address|\
+    uint64 lastPos = NOPOS|\
+    wei stake
+includes = etherlib.h
 cpp_includes =
 serialize = true
 disabled  = true

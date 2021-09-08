@@ -1,6 +1,7 @@
 [settings]
 class = CApiKey
-fields = string key|\
+fields = \
+    string key|\
     string secret
 includes = utillib.h
 cpp_includes =

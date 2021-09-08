@@ -1,6 +1,7 @@
 [settings]
 class = CCollectionCache
 base_class = CCache
-fields = CCollectionCacheItemArray items
+fields = \
+    CCollectionCacheItemArray items
 includes = cache.h|collectioncacheitem.h
 serialize = true

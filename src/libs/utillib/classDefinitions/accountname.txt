@@ -1,19 +1,20 @@
 [settings]
 class = CAccountName
 fields = \
-  string tags|\
-  address address|\
-  string name|\
-  string symbol|\
-  string source|\
-  suint64 decimals|\
-  string description|\
-  bool is_custom|\
-  bool is_prefund|\
-  bool is_contract|\
-  bool is_erc20|\
-  bool is_erc721
-extra_fields = bool deleted
+    string tags|\
+    address address|\
+    string name|\
+    string symbol|\
+    string source|\
+    suint64 decimals|\
+    string description|\
+    bool is_custom|\
+    bool is_prefund|\
+    bool is_contract|\
+    bool is_erc20|\
+    bool is_erc721
+extra_fields = \
+    bool deleted
 includes = basetypes.h|basenode.h|sfarchive.h
 cpp_includes = options_base.h
 display_str = tags, address, name, symbol, source, decimals, description, deleted, is_custom, is_prefund, is_contract, is_erc20, is_erc721
@@ -32,3 +33,54 @@ js = true
 #        string name
 #        string symbol
 #        string logoURI
+
+#    name:
+#      type: object
+#      properties:
+#        tags:
+#          type: string
+#          example: 31-Gitcoin:Core
+#          description: colon separated list of tags
+#        address:
+#          type: string
+#          format: address_t
+#          example: 0xabea9132b05a70803a4e85094fd0e1800777fbef
+#          description: the address associated with this name
+#        name:
+#          type: string
+#          example: zkSync
+#          description: the name associated with this address (retreived from on-chain data if available)
+#        symbol:
+#          type: string
+#          example: GTC
+#          description: the symbol for this address (retreived from on-chain data if available)
+#        source:
+#          type: string
+#          example: On-chain
+#          description: user supplied source of where this name was found (or on-chain if name is on-chain)
+#        decimals:
+#          type: number
+#          example: 18
+#          description: number of decimals retreived from an ERC20 smart contract, defaults to 18
+#        description:
+#          type: string
+#          example: any test
+#          description: user supplied description for the address
+#        deleted:
+#          type: boolean
+#          description: "`true` if deleted, `false` otherwise"
+#        is_custom:
+#          type: boolean
+#          description: "`true` if the address is a custom address, `false` otherwise"
+#        is_prefund:
+#          type: boolean
+#          description: "`true` if the address was one of the prefund addresses, `false` otherwise"
+#        is_contract:
+#          type: boolean
+#          description: "`true` if the address is a smart contract, `false` otherwise"
+#        is_erc20:
+#          type: boolean
+#          description: "`true` if the address is an ERC20, `false` otherwise"
+#        is_erc721:
+#          type: boolean
+#          description: "`true` if the address is an ERC720, `false` otherwise"

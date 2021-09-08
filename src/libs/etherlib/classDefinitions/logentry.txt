@@ -1,21 +1,84 @@
 [settings]
 class = CLogEntry
-fields = address address|\
-        hash blockHash (nowrite-min)|\
-        blknum blockNumber (nowrite-min)|\
-        blknum logIndex|\
-        CTopicArray topics|\
-        string data|\
-        CFunction articulatedLog|\
-        string compressedLog (nowrite)|\
-        hash transactionHash (nowrite-min)|\
-        blknum transactionIndex (nowrite-min)|\
-        blknum transactionLogIndex (nowrite)|\
-        string type (nowrite)|\
-        sbool removed (nowrite)
+fields = \
+    address address|\
+    hash blockHash (nowrite-min)|\
+    blknum blockNumber (nowrite-min)|\
+    blknum logIndex|\
+    CTopicArray topics|\
+    string data|\
+    CFunction articulatedLog|\
+    string compressedLog (nowrite)|\
+    hash transactionHash (nowrite-min)|\
+    blknum transactionIndex (nowrite-min)|\
+    blknum transactionLogIndex (nowrite)|\
+    string type (nowrite)|\
+    sbool removed (nowrite)
 includes = utillib.h|abi.h
 cpp_includes = etherlib.h
 scope = extern
 serializable = true
 display_str = blockNumber, transactionIndex, logIndex, address, topic0, topic1, topic2, topic3, data, type, compressedLog
 js = true
+
+#    log:
+#      type: object
+#      properties:
+#        blockNumber:
+#          type: number
+#          format: blknum_t
+#          example: 10021
+#          description: the number of the block
+#        transactionIndex:
+#          type: number
+#          format: txnum_t
+#          example: 305
+#          description: "the zero-indexed position of the transaction in the block"
+#        address:
+#          type: string
+#          format: address_t
+#          example: "0xf503017d7baf7fbc0fff7492b751025c6a78179b"
+#          description: the smart contract that emitted this log
+#        logIndex:
+#          description: >
+#            the zero-indexed position of this log relative to the block
+#          example: 354
+#        topics:
+#          description: The first topic hashes event signature of the log, up to 3 additional index parameters may appear
+#          type: array
+#          maxItems: 4
+#          example:
+#            [
+#              "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
+#              "0x000000000000000000000000cfa5b526105ec86d893f24bc173b1d4166979f54",
+#              "0x000000000000000000000000f503017d7baf7fbc0fff7492b751025c6a78179b",
+#            ]
+#        data:
+#          description: any remaining un-indexed parameters to the event
+#          type: string
+#          format: bytes
+#          example: "0x000000000000000000000000000000000000000000000001456b4ee641bd3ff6"
+#        articulatedLog:
+#          description: a human-readable version of the topic and data fields
+#          type: object
+#          properties:
+#            name:
+#              type: string
+#              example: "Transfer"
+#            inputs:
+#              type: object
+#              properties:
+#                _amount:
+#                  example: "23448922635686985718"
+#                _from:
+#                  description: "address from which the transaction was sent"
+#                  type: string
+#                  format: address_t
+#                _to:
+#                  description: "address to which the transaction was sent"
+#                  type: string
+#                  format: address_t
+#        compressedLog:
+#          description: a truncated, more readable version of the articulation
+#          type: string
+#          example: "Transfer(0xcfa5b526105ec86d893f24bc173b1d4166979f54 /*_from*/, 0xf503017d7baf7fbc0fff7492b751025c6a78179b /*_to*/, 23448922635686985718 /*_amount*/); "

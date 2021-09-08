@@ -1,10 +1,11 @@
 [settings]
 class = CNewReceipt
-fields = address contractAddress|\
-        gas gasUsed|\
-        CLogEntryArray logs|\
-        string logsBloom|\
-        sbool isErr
+fields = \
+    address contractAddress|\
+    gas gasUsed|\
+    CLogEntryArray logs|\
+    string logsBloom|\
+    sbool isErr
 includes = etherlib.h|logentry.h
 scope = extern
 serialize = true
