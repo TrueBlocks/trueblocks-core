@@ -1,6 +1,7 @@
 FROM golang:1.14-alpine3.12 as builder
 
 ARG commit_sha
+ARG test_target
 
 RUN apk add --no-cache g++ gcc make cmake git nano libcurl python3 python3-dev \
         curl bash curl-dev linux-headers sqlite-dev
@@ -24,17 +25,4 @@ RUN cd /root/src && \
         cmake ../src && \
         make -j 4
 
-FROM alpine:3.12
-WORKDIR /root
-
-ARG test_target
-
-RUN apk add --no-cache libstdc++ libgcc libcurl python3 python3-dev procps bash make jq
-COPY --from=builder /root/src/bin /usr/local/bin
-COPY --from=builder /root/.local/share/trueblocks /root/.local/share/trueblocks
-COPY build_and_test.sh /root
-
-# To make the shell easier to use
-RUN apk add curl nano
-
-ENTRYPOINT bash /root/build_and_test.sh $test_target
+ENTRYPOINT bash src/other/build_assets/build_and_test.sh $test_target

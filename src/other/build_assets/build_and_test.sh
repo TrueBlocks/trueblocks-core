@@ -12,6 +12,7 @@ then
     RUN_SERVER=true
 fi
 
+cd /root/src/build
 echo $(pwd)
 
 # Set the correct PATH

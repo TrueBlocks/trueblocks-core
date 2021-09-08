@@ -13,16 +13,7 @@ jobs:
           command_timeout: 40m
           script_stop: true
           script: |
-            export TEST_UNIQUE_ID="${{ github.run_id }}_${{ github.run_number }}"
-            mkdir testroot/$TEST_UNIQUE_ID
-            cd testroot/$TEST_UNIQUE_ID
-            git clone --quiet https://github.com/${{ github.repository }}
-            cd trueblocks-core
-            git reset --hard ${{ github.sha }}
-            chroot ./ src/other/build_assets/build_and_test.sh test-all
-            cp -r ./test/working /home/testrunner/artifacts/$TEST_UNIQUE_ID
-            cd /home/testrunner
-            rm -rf testroot/$TEST_UNIQUE_ID
+
       - name: Finish
         run: |
           echo "🍏 This job's status is ${{ job.status }}"
