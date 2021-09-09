@@ -1,0 +1,53 @@
+block:
+    type: object
+    properties:
+        gasLimit:
+            type: string
+            format: wei_t
+            example: "5000"
+            description: the system-wide maximum amount of gas permitted in this block
+        hash:
+            type: string
+            format: hash_t
+            example: "0xf12869a900c2fd345f9d6a93e25e6118fd7f99f2b04bff6da59c8bc4218a1e98"
+            description: the hash of the current block
+        blockNumber:
+            type: number
+            format: blknum_t
+            example: 10021
+            description: the number of the block
+        parentHash:
+            type: string
+            format: hash_t
+            example: "0x66fc978cfe3d0d0dee8590600f9955c6ae658b8cda1573a0793b95841f9231c9"
+            description: hash of previous block
+        miner:
+            type: string
+            format: address_t
+            example: "0xf927a40c8b7f6e07c5af7fa2155b4864a4112b13"
+            description: Address of block's winning miner
+        difficulty:
+            type: string
+            format: uint256_t
+            example: 598133194256
+            description: the computational difficulty at this block
+        timestamp:
+            type: number
+            format: timestamp_t
+            example: 1438335038
+            description: the unix timestamp of the object
+        transactions:
+            type: array
+            description: a possibly empty array of transactions or transaction hashes
+            items:
+                oneOf:
+                    - $ref: "#/components/schemas/transaction"
+                    - $ref: "#/components/schemas/hash"
+        baseFeePerGas:
+            type: number
+            example: 120911
+            description: the base fee for this block
+        finalized:
+            type: boolean
+            example: true
+            description: flag indicating the system considers this data final

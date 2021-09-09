@@ -59,6 +59,7 @@ class CParameter : public CBaseNode {
     CParameterArray components;
     bool no_write;
     bool omit_empty;
+    bool extra;
     uint64_t is_flags;
     uint64_t precision;
 
@@ -145,6 +146,7 @@ inline void CParameter::initialize(void) {
     components.clear();
     no_write = false;
     omit_empty = false;
+    extra = false;
     is_flags = IS_ENABLED;
     precision = 5;
 
@@ -166,6 +168,7 @@ inline void CParameter::duplicate(const CParameter& pa) {
     components = pa.components;
     no_write = pa.no_write;
     omit_empty = pa.omit_empty;
+    extra = pa.extra;
     is_flags = pa.is_flags;
     precision = pa.precision;
 

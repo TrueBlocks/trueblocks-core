@@ -558,7 +558,17 @@ CClassDefinition::CClassDefinition(const CToml& toml) {
     base_upper = toUpper(base_name);
     base_base = toProper(extract(base_class, 1));
 
-    explode(fieldArray, field_str, '|');
+    CParameterArray tmpArray;
+    explode(tmpArray, field_str, '|');
+    for (auto tmp : tmpArray) {
+        if (tmp.extra) {
+            if (!extra_fields.empty())
+                extra_fields += "|";
+            extra_fields += tmp.Format("[{TYPE}][ {NAME}]");
+        } else {
+            fieldArray.push_back(tmp);
+        }
+    }
 }
 // EXISTING_CODE
 }  // namespace qblocks

@@ -7,25 +7,24 @@ fields = \
     blknum firstAppearance (nowrite)|\
     blknum latestAppearance = UINT_MAX (nowrite)|\
     blknum lastVisitedBlock (nowrite)|\
-    uint64 sizeInBytes (nowrite,omitempty)
-extra_fields = \
-    blknum nApps|\
-    blknum firstApp|\
-    blknum latestApp|\
-    string path|\
-    address address|\
-    uint64 decimals|\
-    bool deleted|\
-    string description|\
-    bool is_contract|\
-    bool is_custom|\
-    bool is_erc20|\
-    bool is_erc721|\
-    bool is_prefund|\
-    string name|\
-    string source|\
-    string symbol|\
-    string tags
+    uint64 sizeInBytes (nowrite,omitempty)|\
+    blknum nApps (extra)|\
+    blknum firstApp (extra)|\
+    blknum latestApp (extra)|\
+    string path (extra)|\
+    address address (extra)|\
+    uint64 decimals (extra)|\
+    bool deleted (extra)|\
+    string description (extra)|\
+    bool is_contract (extra)|\
+    bool is_custom (extra)|\
+    bool is_erc20 (extra)|\
+    bool is_erc721 (extra)|\
+    bool is_prefund (extra)|\
+    string name (extra)|\
+    string source (extra)|\
+    string symbol (extra)|\
+    string tags (extra)
 includes = etherlib.h|transaction.h|reconciliation.h|ethstate.h|monitoredapp.h
 force_objget = true
 tsx = true

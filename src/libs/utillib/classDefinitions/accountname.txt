@@ -12,9 +12,8 @@ fields = \
     bool is_prefund|\
     bool is_contract|\
     bool is_erc20|\
-    bool is_erc721
-extra_fields = \
-    bool deleted
+    bool is_erc721|\
+    bool deleted (extra)
 includes = basetypes.h|basenode.h|sfarchive.h
 cpp_includes = options_base.h
 display_str = tags, address, name, symbol, source, decimals, description, deleted, is_custom, is_prefund, is_contract, is_erc20, is_erc721

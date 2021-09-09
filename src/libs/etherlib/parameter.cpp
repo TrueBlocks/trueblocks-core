@@ -88,6 +88,11 @@ string_q CParameter::getValueByName(const string_q& fieldName) const {
                 return retS;
             }
             break;
+        case 'e':
+            if (fieldName % "extra") {
+                return bool_2_Str_t(extra);
+            }
+            break;
         case 'i':
             if (fieldName % "indexed") {
                 return bool_2_Str_t(indexed);
@@ -169,6 +174,12 @@ bool CParameter::setValueByName(const string_q& fieldNameIn, const string_q& fie
                     components.push_back(obj);
                     obj = CParameter();  // reset
                 }
+                return true;
+            }
+            break;
+        case 'e':
+            if (fieldName % "extra") {
+                extra = str_2_Bool(fieldValue);
                 return true;
             }
             break;
@@ -262,6 +273,7 @@ bool CParameter::Serialize(CArchive& archive) {
     archive >> components;
     archive >> no_write;
     // archive >> omit_empty;
+    // archive >> extra;
     archive >> is_flags;
     // archive >> precision;
     // EXISTING_CODE
@@ -286,6 +298,7 @@ bool CParameter::SerializeC(CArchive& archive) const {
     archive << components;
     archive << no_write;
     // archive << omit_empty;
+    // archive << extra;
     archive << is_flags;
     // archive << precision;
     // EXISTING_CODE
@@ -347,6 +360,8 @@ void CParameter::registerClass(void) {
     ADD_FIELD(CParameter, "no_write", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CParameter, "omit_empty", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CParameter, "omit_empty");
+    ADD_FIELD(CParameter, "extra", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CParameter, "extra");
     ADD_FIELD(CParameter, "is_flags", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CParameter, "precision", T_UNUMBER, ++fieldNum);
     HIDE_FIELD(CParameter, "precision");
@@ -492,6 +507,7 @@ CParameter::CParameter(string_q& textIn) {
 
     omit_empty = contains(textIn, "omitempty");
     no_write = contains(textIn, "nowrite");
+    extra = contains(textIn, "(extra)");
     if (no_write && contains(textIn, "-min"))
         is_flags |= IS_MINIMAL;
    
@@ -499,6 +515,7 @@ CParameter::CParameter(string_q& textIn) {
     replace(textIn, " (nowrite-min)", "");
     replace(textIn, " (nowrite,omitempty)", "");
     replace(textIn, " (omitempty)", "");
+    replace(textIn, " (extra)", "");
     if (contains(textIn, "(")) {
         cerr << "Invalid data in " << textIn <<endl;
         quickQuitHandler(0);

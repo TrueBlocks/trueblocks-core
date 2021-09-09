@@ -10,6 +10,7 @@ fields = \
     CParameterArray components|\
     bool no_write (omitempty)|\
     bool omit_empty (nowrite,omitempty)|\
+    bool extra (nowrite,omitempty)|\
     uint64 is_flags=IS_ENABLED|\
     uint64 precision=5 (nowrite)
 includes = utillib.h

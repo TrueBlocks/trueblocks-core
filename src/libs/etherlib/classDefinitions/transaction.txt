@@ -26,11 +26,11 @@ fields = \
     CFunction articulatedTx|\
     string compressedTx (nowrite)|\
     CReconciliationArray statements (nowrite)|\
-    bool finalized (nowrite,omitempty)
-extra_fields = date date|\
-    string fromName|\
-    string toName|\
-    string extraData
+    bool finalized (nowrite,omitempty)|\
+    date date (extra)|\
+    string fromName (extra)|\
+    string toName (extra)|\
+    string extraData (extra)
 includes = utillib.h|abi.h|receipt.h|trace.h|reconciliation.h|ethstate.h
 cpp_includes = etherlib.h
 scope = extern
