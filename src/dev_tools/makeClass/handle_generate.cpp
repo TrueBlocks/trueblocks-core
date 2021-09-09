@@ -174,7 +174,7 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
         }
 
         add_fieldStream << fieldAddLine;
-        if (fld.no_write)
+        if (fld.is_flags & IS_NOWRITE)
             add_fieldStream << substitute(fld.Format(regHideFmt), "CL_NM", "[{CLASS_NAME}]");
 
         // minimal means that a field is part of the object's data (such as CReceipt::blockNumber) but should not be
@@ -186,7 +186,7 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
                                      "[{CLASS_NAME}]");
             defaultsStream << fld.Format(setFmt);
             clearStream << (((fld.is_flags & IS_POINTER) && !(fld.is_flags & IS_ARRAY)) ? fld.Format(ptrClearFmt) : "");
-            if (fld.no_write) {
+            if (fld.is_flags & IS_NOWRITE) {
                 ar_readStream << substitute(fld.Format(STR_READFMT), "`archive", "`// archive");
                 ar_writeStream << substitute(fld.Format(STR_WRITEFMT), "`archive", "`// archive");
             } else {

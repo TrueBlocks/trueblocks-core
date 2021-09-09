@@ -135,8 +135,8 @@ bool COptions::parseArguments(string_q& command) {
         expContext().exportFmt = JSON1;
         configureDisplay("getState", "CEthState", STR_DISPLAY_FUNCTION);
         manageFields(
-            "CParameter:str_default,indexed,internalType,components,no_write,is_pointer,is_array,is_object,is_builtin,"
-            "is_minimal,type",
+            "CParameter:str_default,indexed,internalType,components,is_pointer,"
+            "is_array,is_object,is_builtin,is_minimal,is_nowrite,type",
             FLD_HIDE);
         manageFields("CFunction:stateMutability,type,constant", FLD_HIDE);
         manageFields("CEthCall:abi_spec", FLD_HIDE);
