@@ -1,5 +1,4 @@
                   data:
-                    description: an array of state objects
                     type: array
                     items:
                       $ref: "#/components/schemas/state"

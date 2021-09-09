@@ -206,7 +206,7 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 10990,apps,Admin,pins,pinMan,,,,false,false,false,false,--,note,,One of `--list`&#44; `--init`&#44; or `--init_all` is required.
 10991,apps,Admin,pins,pinMan,,,,false,false,false,false,--,note,,the `--pin_locally` option only works if the IPFS executable is in your path.
 
-12020,tools,Other,quotes,getQuotes,freshen,f,,false,false,true,true,local,switch,<boolean>,Freshen price database (append new data)
+12020,tools,Other,quotes,getQuotes,freshen,f,,false,false,true,true,local,switch,<boolean>,Freshen price database (this tool will soon be deprecated)
 12040,tools,Other,quotes,getQuotes,period,p,,false,false,true,true,local,flag,enum[5|15|30|60|120*|240|1440|10080|hourly|daily|weekly],increment of display
 12060,tools,Other,quotes,getQuotes,pair,a,,false,false,true,true,local,flag,<string>,which price pair to freshen or list (see Poloniex)
 12060,tools,Other,quotes,getQuotes,feed,e,,false,false,true,true,header,flag,enum[poloniex*|maker|tellor],the feed for the price data

@@ -1,5 +1,4 @@
                   data:
-                    description: "array of quotes"
                     type: array
                     items:
                       $ref: "#/components/schemas/quote"
