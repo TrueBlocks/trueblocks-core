@@ -1579,37 +1579,37 @@ components:
       properties:
         gasLimit:
           type: string
-          format: wei_t
+          format: gas
           example: "5000"
           description: the system-wide maximum amount of gas permitted in this block
         hash:
           type: string
-          format: hash_t
+          format: hash
           example: "0xf12869a900c2fd345f9d6a93e25e6118fd7f99f2b04bff6da59c8bc4218a1e98"
           description: the hash of the current block
         blockNumber:
           type: number
-          format: blknum_t
+          format: blknum
           example: 10021
           description: the number of the block
         parentHash:
           type: string
-          format: hash_t
+          format: hash
           example: "0x66fc978cfe3d0d0dee8590600f9955c6ae658b8cda1573a0793b95841f9231c9"
           description: hash of previous block
         miner:
           type: string
-          format: address_t
+          format: address
           example: "0xf927a40c8b7f6e07c5af7fa2155b4864a4112b13"
           description: Address of block's winning miner
         difficulty:
-          type: string
-          format: uint256_t
+          type: number
+          format: uint64
           example: 598133194256
           description: the computational difficulty at this block
         timestamp:
           type: number
-          format: timestamp_t
+          format: timestamp
           example: 1438335038
           description: the unix timestamp of the object
         transactions:
@@ -1620,7 +1620,8 @@ components:
               - $ref: "#/components/schemas/transaction"
               - $ref: "#/components/schemas/hash"
         baseFeePerGas:
-          type: number
+          type: string
+          format: wei
           example: 120911
           description: the base fee for this block
         finalized:
@@ -1632,22 +1633,22 @@ components:
       properties:
         hash:
           type: string
-          format: hash_t
+          format: hash
           description: "The hash of the transaction"
           example: "0xf12869a900c2fd345f9d6a93e25e6118fd7f99f2b04bff6da59c8bc4218a1e98"
         blockHash:
           type: string
-          format: hash_t
+          format: hash
           description: "The hash of the block containing this transaction"
           example: "0xc4218a1e98f12869a900c2fd345f9d6abff6da59c8b93e25e6118fd7f99fb04"
         blockNumber:
           type: number
-          format: blknum_t
+          format: blknum
           example: 10021
           description: the number of the block
         transactionIndex:
           type: number
-          format: txnum_t
+          format: txnum
           example: 305
           description: "the zero-indexed position of the transaction in the block"
         nonce:
@@ -1656,30 +1657,30 @@ components:
           description: "sequence number of the transactions sent by the sender"
         timestamp:
           type: number
-          format: timestamp_t
+          format: timestamp
           example: 1438335038
           description: "the unix timestamp of the object"
         from:
           description: "address from which the transaction was sent"
           type: string
-          format: address_t
+          format: address
         to:
           description: "address to which the transaction was sent"
           type: string
-          format: address_t
+          format: address
         value:
           type: number
-          format: wei_t
+          format: wei
           example: 0
           description: the amount of wei sent with this transactions
         gas:
           type: number
-          format: wei_t
+          format: gas
           example: 158660
           description: the maximum number of gas allowed for this transaction
         gasPrice:
           type: number
-          format: wei_t
+          format: wei
           description: "the number of wei per unit of gas the sender is willing to spend"
           example: 63525836552
         input:
@@ -1717,11 +1718,11 @@ components:
             `1` on transaction suceess, `null` if tx preceeds Byzantium, `0` otherwise
         contractAddress:
           type: string
-          format: address_t
+          format: address
           description: the address of the newly created contract, if any
         gasUsed:
           type: number
-          format: wei_t
+          format: gas
           description: the amount of gas actually used by the transaction
         logs:
           type: array
@@ -1733,17 +1734,17 @@ components:
       properties:
         blockNumber:
           type: number
-          format: blknum_t
+          format: blknum
           example: 10021
           description: the number of the block
         transactionIndex:
           type: number
-          format: txnum_t
+          format: txnum
           example: 305
           description: "the zero-indexed position of the transaction in the block"
         address:
           type: string
-          format: address_t
+          format: address
           example: "0xf503017d7baf7fbc0fff7492b751025c6a78179b"
           description: the smart contract that emitted this log
         logIndex:
@@ -1780,11 +1781,11 @@ components:
                 _from:
                   description: "address from which the transaction was sent"
                   type: string
-                  format: address_t
+                  format: address
                 _to:
                   description: "address to which the transaction was sent"
                   type: string
-                  format: address_t
+                  format: address
         compressedLog:
           description: a truncated, more readable version of the articulation
           type: string
@@ -1794,21 +1795,21 @@ components:
       properties:
         blockHash:
           type: string
-          format: hash_t
+          format: hash
           description: "The hash of the block containing this trace"
           example: "0xf12869a900c2fd345f9d6a93e25e6118fd7f99f2b04bff6da59c8bc4218a1e98"
         blockNumber:
           type: number
-          format: blknum_t
+          format: blknum
           example: 10021
           description: the number of the block
         transactionHash:
           description: the transaction's hash containing this trace
           type: string
-          format: hash_t
+          format: hash
         transactionIndex:
           type: number
-          format: txnum_t
+          format: txnum
           example: 305
           description: "the zero-indexed position of the transaction in the block"
         traceAddress:
@@ -1831,14 +1832,14 @@ components:
         from:
           description: "address from which the trace was sent"
           type: string
-          format: address_t
+          format: address
         to:
           description: "address to which the trace was sent"
           type: string
-          format: address_t
+          format: address
         gas:
           type: number
-          format: wei_t
+          format: gas
           example: 158660
           description: the maximum number of gas allowed for this trace
         input:
@@ -1850,7 +1851,7 @@ components:
           type: string
         refundAddress:
           type: string
-          format: address_t
+          format: address
           example: "0xf503017d7baf7fbc0fff7492b751025c6a78179b"
           description: if the call type is self-destruct, the address to which the refund is sent
         articulatedTrace:
@@ -1865,7 +1866,7 @@ components:
       properties:
         newContract:
           type: string
-          format: address_t
+          format: address
           example: "0xf503017d7baf7fbc0fff7492b751025c6a78179b"
           description: Address of new contract, if any
         code:
@@ -1874,7 +1875,7 @@ components:
           format: bytes
         gasUsed:
           type: number
-          format: wei_t
+          format: gas
           description: the amount of gas used by this trace
         output:
           description: the result of the call of this trace
@@ -1885,12 +1886,12 @@ components:
       properties:
         blockNumber:
           type: number
-          format: blknum_t
+          format: blknum
           example: 10021
           description: the number of the block
         transactionIndex:
           type: number
-          format: txnum_t
+          format: txnum
           example: 305
           description: "the zero-indexed position of the transaction in the block"
         address:
@@ -1905,22 +1906,22 @@ components:
       properties:
         blockNumber:
           type: number
-          format: blknum_t
+          format: blknum
           example: 10021
           description: the number of the block
         transactionIndex:
           type: number
-          format: txnum_t
+          format: txnum
           example: 305
           description: "the zero-indexed position of the transaction in the block"
         timestamp:
           type: number
-          format: timestamp_t
+          format: timestamp
           example: 1438335038
           description: "the unix timestamp of the object"
         assetAddr:
           type: string
-          format: address_t
+          format: address
           example: "0xf503017d7baf7fbc0fff7492b751025c6a78179b"
           description: for reconciliations whose assetSymbol is ETH or WEI, the accountedFor address. For all assets, the address of the asset itself
         assetSymbol:
@@ -1931,7 +1932,7 @@ components:
           type: number
         prevBlk:
           type: number
-          format: blknum_t
+          format: blknum
           example: 10021
           description: the block number of the previous reconciliation
         prevBlkBal:
@@ -2030,7 +2031,7 @@ components:
           description: colon separated list of tags
         address:
           type: string
-          format: address_t
+          format: address
           example: 0xabea9132b05a70803a4e85094fd0e1800777fbef
           description: the address associated with this name
         name:
@@ -2085,12 +2086,12 @@ components:
       properties:
         blockNumber:
           type: number
-          format: blknum_t
+          format: blknum
           example: 10021
           description: the block number at which this state was taken
         balance:
           type: string
-          format: wei_t
+          format: wei
           example: "258843698360318500"
           description: the balance at the address at the given block height
         nonce:
@@ -2109,12 +2110,12 @@ components:
           description: this field is un-implemented and current returns the first storage location in a smart contract
         address:
           type: string
-          format: address_t
+          format: address
           example: "0xa1e4380a3b1f749673e270229993ee55f35663b4"
           description: the address of the state being queried
         deployed:
           type: number
-          format: blknum_t
+          format: blknum
           example: 8901011,
           description: the block number at which this smart contract was deployed (if a smart contact)
         accttype:
@@ -2131,17 +2132,17 @@ components:
       properties:
         holder:
           type: string
-          format: address_t
+          format: address
           example: "0x2910543af39aba0cd09dbb2d50200b3e800a63d2"
           description: the address for which we are reporting the token balance
         balance:
           type: string
-          format: wei_t
+          format: wei
           example: "258843698360318500"
           description: the balance at the address at the given block height
         address:
           type: string
-          format: address_t
+          format: address
           example: "0xa1e4380a3b1f749673e270229993ee55f35663b4"
           description: the address of the token contract being queried
         name:
@@ -2169,7 +2170,7 @@ components:
       properties:
         timestamp:
           type: number
-          format: timestamp_t
+          format: timestamp
           example: 1438270144
           description: the timestamp of this quote
         close:
@@ -2205,7 +2206,7 @@ components:
           description: the IPFS hash of the index chunk at that range
     hash:
       type: string
-      format: hash_t
+      format: hash
       description: "The 32-byte hash"
       example: "0xf12869a900c2fd345f9d6a93e25e6118fd7f99f2b04bff6da59c8bc4218a1e98"
     response:
