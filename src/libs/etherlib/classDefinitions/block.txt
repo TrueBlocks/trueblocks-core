@@ -24,3 +24,5 @@ scope = extern
 serializable = true
 display_str = blockNumber, timestamp, difficulty, gasUsed, gasLimit, baseFeePerGas, miner, hash, parentHash, transactionsCnt, finalized
 tsx = true
+
+xxfields = block_fields.csv
