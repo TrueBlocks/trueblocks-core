@@ -1,4 +1,4 @@
-                  data:
-                    type: array
-                    items:
-                      $ref: "#/components/schemas/log"
+data:
+  type: array
+  items:
+    $ref: "#/components/schemas/log"

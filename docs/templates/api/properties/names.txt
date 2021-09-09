@@ -1,4 +1,4 @@
-                  data:
-                    type: array
-                    items:
-                      $ref: "#/components/schemas/name"
+data:
+  type: array
+  items:
+    $ref: "#/components/schemas/name"

@@ -1,19 +1,19 @@
-                  data:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        blockNumber:
-                          type: number
-                          format: blknum_t
-                          example: 10021
-                          description: "the number of the block"
-                        timestamp:
-                          type: number
-                          format: timestamp_t
-                          example: 1438335038
-                          description: "the unix timestamp of the block"
-                        date:
-                          description: "Human readable version of timestamp"
-                          example: "2015-07-30 15:34:53 UTC"
-                          type: string
+data:
+  type: array
+  items:
+    type: object
+    properties:
+      blockNumber:
+        type: number
+        format: blknum_t
+        example: 10021
+        description: "the number of the block"
+      timestamp:
+        type: number
+        format: timestamp_t
+        example: 1438335038
+        description: "the unix timestamp of the block"
+      date:
+        description: "Human readable version of timestamp"
+        example: "2015-07-30 15:34:53 UTC"
+        type: string

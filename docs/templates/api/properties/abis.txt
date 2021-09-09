@@ -1,4 +1,4 @@
-                  data:
-                    type: array
-                    items:
-                      $ref: "#/components/schemas/abis"
+data:
+  type: array
+  items:
+    $ref: "#/components/schemas/abis"
