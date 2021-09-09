@@ -38,7 +38,7 @@ The `chifra quotes` tool provides USD ($) price data to other tools and to the c
 
 | | Option | Description |
 | :----- | :----- | :---------- |
-| -f | --freshen | Freshen price database (append new data) |
+| -f | --freshen | Freshen price database (this tool will soon be deprecated) |
 | -p | --period &lt;val&gt; | increment of display, one of *[ 5 \| 15 \| 30 \| 60 \| 120\* \| 240 \| 1440 \| 10080 \| hourly \| daily \| weekly ]* |
 | -a | --pair &lt;str&gt; | which price pair to freshen or list (see Poloniex) |
 | -e | --feed &lt;val&gt; | the feed for the price data, one of *[ poloniex\* \| maker \| tellor ]* |

@@ -1404,7 +1404,7 @@ paths:
       operationId: other-quotes
       parameters:
         - name: freshen
-          description: Freshen price database (append new data)
+          description: Freshen price database (this tool will soon be deprecated)
           required: false
           style: form
           in: query
