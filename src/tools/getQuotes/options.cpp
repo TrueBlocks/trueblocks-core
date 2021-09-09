@@ -20,11 +20,11 @@
 static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
-    COption("freshen", "f", "", OPT_SWITCH, "Freshen price database (this tool will soon be deprecated)"),
+    COption("freshen", "f", "", OPT_SWITCH, "Freshen price database"),
     COption("period", "p", "enum[5|15|30|60|120*|240|1440|10080|hourly|daily|weekly]", OPT_FLAG, "increment of display"),  // NOLINT
     COption("pair", "a", "<string>", OPT_FLAG, "which price pair to freshen or list (see Poloniex)"),
     COption("feed", "e", "enum[poloniex*|maker|tellor]", OPT_FLAG, "the feed for the price data"),
-    COption("", "", "", OPT_DESCRIPTION, "Freshen and/or display Ethereum price data."),
+    COption("", "", "", OPT_DESCRIPTION, "Freshen and/or display Ethereum price data. This has been deprecated."),
     // clang-format on
     // END_CODE_OPTIONS
 };

@@ -557,7 +557,7 @@ paths:
                   data:
                     type: array
                     items:
-                      $ref: "#/components/schemas/abis"
+                      $ref: "#/components/schemas/abi"
                 example:
                   {
                     "data": [
@@ -1404,7 +1404,7 @@ paths:
       operationId: other-quotes
       parameters:
         - name: freshen
-          description: Freshen price database (this tool will soon be deprecated)
+          description: Freshen price database
           required: false
           style: form
           in: query
@@ -2071,7 +2071,7 @@ components:
         is_erc721:
           type: boolean
           description: "`true` if the address is an ERC720, `false` otherwise"
-    abis:
+    abi:
       type: object
       description: "a collection of function and event definitions as described elsewhere in the Ethereum system"
     function:

@@ -496,7 +496,7 @@
         is_erc721:
           type: boolean
           description: "`true` if the address is an ERC720, `false` otherwise"
-    abis:
+    abi:
       type: object
       description: "a collection of function and event definitions as described elsewhere in the Ethereum system"
     function:
