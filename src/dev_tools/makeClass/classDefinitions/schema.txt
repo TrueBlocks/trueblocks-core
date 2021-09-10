@@ -1,24 +1,4 @@
 [settings]
 class = CSchema
-fields = \
-    string name|\
-    string selector|\
-    string type|\
-    string unused (nowrite)|\
-    uint64 width (omitempty)|\
-    bool editable|\
-    uint64 id (omitempty)|\
-    uint64 decimals (omitempty)|\
-    bool isPill|\
-    string align|\
-    string cn|\
-    bool download|\
-    string chart|\
-    bool searchable|\
-    uint64 detail (omitempty)|\
-    bool wide|\
-    string underField|\
-    string onDisplay|\
-    string onAccept|\
-    string onValidate
+fields = schema.csv
 includes = etherlib.h
