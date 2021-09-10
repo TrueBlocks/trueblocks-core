@@ -1,0 +1,4 @@
+name     ,type
+path     ,string
+helpText ,string
+hotKey   ,string

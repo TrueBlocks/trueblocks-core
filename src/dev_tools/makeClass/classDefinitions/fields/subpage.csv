@@ -1,0 +1,8 @@
+name      ,type
+page      ,string
+subpage   ,string
+route     ,string
+options   ,string
+component ,string
+extract   ,string
+icon      ,string
