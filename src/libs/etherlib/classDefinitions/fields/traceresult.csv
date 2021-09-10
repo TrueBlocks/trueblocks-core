@@ -1,0 +1,5 @@
+name        ,type    ,doc ,example       ,description
+newContract ,address ,1   ,0xf503...179b ,Address of new contract&#44; if any
+code        ,bytes   ,2   ,              ,if this trace is creating a new smart contract&#44; the byte code of that contract
+gasUsed     ,gas     ,3   ,              ,the amount of gas used by this trace
+output      ,bytes   ,4   ,              ,the result of the call of this trace

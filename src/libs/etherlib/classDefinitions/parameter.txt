@@ -13,7 +13,7 @@ fields = \
     uint64 precision=5 (nowrite)
 includes = utillib.h
 display_str = type, name, str_default, value, internalType, indexed, is_pointer, is_array, \
-    is_object, is_builtin, is_minimal, is_nowrite, is_omitempty, is_extra
+    is_object, is_builtin, is_minimal, is_noaddfld, is_nowrite, is_omitempty, is_extra
 tsx = true
 
 #    parameter:

@@ -33,11 +33,6 @@ equals = ((blockNumber == it.blockNumber) && (assetAddr == it.assetAddr))
 display_str = assetAddr,assetSymbol,decimals,blockNumber,transactionIndex,timestamp,prevBlk,prevBlkBal,begBal,amountIn,internalIn,selfDestructIn,minerBaseRewardIn,minerNephewRewardIn,minerTxFeeIn,minerUncleRewardIn,prefundIn,totalIn,amountOut,internalOut,selfDestructOut,gasCostOut,totalOut,totalOutLessGas,amountNet,endBal,begBalDiff,endBalCalc,endBalDiff,reconciled,spotPrice,priceSource,reconciliationType
 tsx = true
 
-#        CLineItem
-#                int type; [AMOUNT|INTERNAL|SELFDESTRUCT|MINERBASE|
-# MINERNEPHEW|MINERTX|MINERUNCLE|PREFUND|GASCOST]
-#                int256 amount;
-
 #    reconciliation:
 #      type: object
 #      properties:

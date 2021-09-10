@@ -1,7 +1,4 @@
 [settings]
 class = CESResult
-fields = \
-    string status|\
-    string message|\
-    string result
+fields = esresult.csv
 includes = utillib.h

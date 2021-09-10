@@ -27,8 +27,7 @@ tsx = true
 #      properties:
 #        status:
 #          type: boolean
-#          description: >
-#            `1` on transaction suceess, `null` if tx preceeds Byzantium, `0` otherwise
+#          description: `1` on transaction suceess, `null` if tx preceeds Byzantium, `0` otherwise
 #        contractAddress:
 #          type: string
 #          format: address_t
