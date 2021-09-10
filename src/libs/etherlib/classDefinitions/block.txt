@@ -7,22 +7,3 @@ scope = extern
 serializable = true
 display_str = blockNumber, timestamp, difficulty, gasUsed, gasLimit, baseFeePerGas, miner, hash, parentHash, transactionsCnt, finalized
 tsx = true
-
-# fields = \
-#      gas gasLimit|\
-#      gas gasUsed|\
-#      hash hash|\
-#      blknum blockNumber|\
-#      hash parentHash|\
-#      address miner|\
-#      uint64 difficulty|\
-#      bool finalized|\
-#      timestamp timestamp|\
-#      wei baseFeePerGas|\
-#      CTransactionArray transactions|\
-#      CStringArray tx_hashes (nowrite)|\
-#      string name (nowrite)|\
-#      bool light (nowrite,omitempty)|\
-#      date date (extra)|\
-#      uint64 unclesCnt (extra)|\
-#      string extraData (extra)
