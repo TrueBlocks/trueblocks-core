@@ -242,6 +242,7 @@ void COptions::convertFromSol(const address_t& addr) {
         HIDE_FIELD(CParameter, "is_object");
         HIDE_FIELD(CParameter, "is_pointer");
         HIDE_FIELD(CParameter, "is_minimal");
+        HIDE_FIELD(CParameter, "is_noaddfld");
         HIDE_FIELD(CParameter, "is_nowrite");
         HIDE_FIELD(CParameter, "is_omitempty");
         HIDE_FIELD(CParameter, "is_extra");

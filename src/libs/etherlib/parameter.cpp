@@ -154,6 +154,7 @@ bool CParameter::setValueByName(const string_q& fieldNameIn, const string_q& fie
     if (fieldName % "is_builtin")   { BOOL_ASSIGN_MASK(is_flags, IS_BUILTIN);   return true; }
     if (fieldName % "is_enabled")   { BOOL_ASSIGN_MASK(is_flags, IS_ENABLED);   return true; }
     if (fieldName % "is_minimal")   { BOOL_ASSIGN_MASK(is_flags, IS_MINIMAL);   return true; }
+    if (fieldName % "is_noaddfld")  { BOOL_ASSIGN_MASK(is_flags, IS_NOADDFLD);  return true; }
     if (fieldName % "is_nowrite")   { BOOL_ASSIGN_MASK(is_flags, IS_NOWRITE);   return true; }
     if (fieldName % "is_omitempty") { BOOL_ASSIGN_MASK(is_flags, IS_OMITEMPTY); return true; }
     if (fieldName % "is_extra")     { BOOL_ASSIGN_MASK(is_flags, IS_EXTRA);     return true; }
@@ -358,6 +359,7 @@ void CParameter::registerClass(void) {
     ADD_FIELD(CParameter, "is_builtin", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CParameter, "is_enabled", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CParameter, "is_minimal", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CParameter, "is_noaddfld", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CParameter, "is_nowrite", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CParameter, "is_omitempty", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CParameter, "is_extra", T_BOOL | TS_OMITEMPTY, ++fieldNum);
@@ -380,6 +382,7 @@ string_q nextParameterChunk_custom(const string_q& fieldIn, const void* dataPtr)
                 if (fieldIn % "is_builtin")   return bool_2_Str_t(par->is_flags & IS_BUILTIN);
                 if (fieldIn % "is_enabled")   return bool_2_Str_t(par->is_flags & IS_ENABLED);
                 if (fieldIn % "is_minimal")   return bool_2_Str_t(par->is_flags & IS_MINIMAL);
+                if (fieldIn % "is_noaddfld")  return bool_2_Str_t(par->is_flags & IS_NOADDFLD);
                 if (fieldIn % "is_nowrite")   return bool_2_Str_t(par->is_flags & IS_NOWRITE);
                 if (fieldIn % "is_omitempty") return bool_2_Str_t(par->is_flags & IS_OMITEMPTY);
                 if (fieldIn % "is_extra")     return bool_2_Str_t(par->is_flags & IS_EXTRA);
@@ -477,6 +480,7 @@ const char* STR_DISPLAY_PARAMETER =
     "[{IS_OBJECT}]\t"
     "[{IS_BUILTIN}]\t"
     "[{IS_MINIMAL}]\t"
+    "[{IS_NOADDFLD}]\t"
     "[{IS_NOWRITE}]\t"
     "[{IS_OMITEMPTY}]\t"
     "[{IS_EXTRA}]";
@@ -494,6 +498,8 @@ CParameter::CParameter(string_q& textIn) {
         is_flags |= IS_EXTRA;
     if (contains(textIn, "omitempty"))
         is_flags |= IS_OMITEMPTY;
+    if (contains(textIn, "noaddfld"))
+        is_flags |= IS_NOADDFLD;
     if (contains(textIn, "nowrite")) {
         is_flags |= IS_NOWRITE;
         if (contains(textIn, "-min"))

@@ -137,7 +137,7 @@ bool COptions::parseArguments(string_q& command) {
         // TODO: This is terrible. Can we remove it?
         manageFields(
             "CParameter:str_default,indexed,internalType,components,is_pointer,is_array,"
-            "is_object,is_builtin,is_minimal,is_nowrite,is_omitempty,is_extra,type",
+            "is_object,is_builtin,is_minimal,is_noaddfld,is_nowrite,is_omitempty,is_extra,type",
             FLD_HIDE);
         manageFields("CFunction:stateMutability,type,constant", FLD_HIDE);
         manageFields("CEthCall:abi_spec", FLD_HIDE);

@@ -46,6 +46,7 @@ namespace qblocks {
 #define IS_NOWRITE (1 << 7)
 #define IS_OMITEMPTY (1 << 8)
 #define IS_EXTRA (1 << 9)
+#define IS_NOADDFLD (1 << 10)
 class CParameter;
 typedef vector<CParameter> CParameterArray;
 // EXISTING_CODE

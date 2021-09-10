@@ -591,7 +591,7 @@ CClassDefinition::CClassDefinition(const CToml& toml) {
         CStringArray fields;
         explode(fields, header, ',');
         for (auto& fld : fields) {
-            string_q isFields = "object,array,minimal,nowrite,omitempty,extra";
+            string_q isFields = "object,array,minimal,noaddfld,nowrite,omitempty,extra";
             if (contains(isFields, fld))
                 fld = "is_" + fld;
         }
@@ -607,10 +607,9 @@ CClassDefinition::CClassDefinition(const CToml& toml) {
                 extraArray.push_back(tmp);
             } else {
                 if (tmp.is_flags & IS_ARRAY) {
-                    if (tmp.type == "string_q")
-                        tmp.type = "CStringArray";
-                    else
-                        tmp.type = "C" + toProper(tmp.type) + "Array";
+                    tmp.type = "C" + string_q(1, char(toupper(tmp.type[0]))) + tmp.type.substr(1, 100) + "Array";
+                } else if (tmp.is_flags & IS_OBJECT) {
+                    tmp.type = "C" + string_q(1, char(toupper(tmp.type[0]))) + tmp.type.substr(1, 100);
                 }
                 tmp.postProcessType();
                 fieldArray.push_back(tmp);
@@ -621,6 +620,7 @@ CClassDefinition::CClassDefinition(const CToml& toml) {
         CStringArray strs;
         explode(strs, field_str, '|');
         for (auto str : strs) {
+            replace(str, "~", "|");
             CParameter param(str);
             tmpArray.push_back(param);
         }

@@ -118,7 +118,7 @@ bool CTraceResult::setValueByName(const string_q& fieldNameIn, const string_q& f
     switch (tolower(fieldName[0])) {
         case 'c':
             if (fieldName % "code") {
-                code = fieldValue;
+                code = toLower(fieldValue);
                 return true;
             }
             break;
@@ -136,7 +136,7 @@ bool CTraceResult::setValueByName(const string_q& fieldNameIn, const string_q& f
             break;
         case 'o':
             if (fieldName % "output") {
-                output = fieldValue;
+                output = toLower(fieldValue);
                 return true;
             }
             break;

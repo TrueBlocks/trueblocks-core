@@ -213,8 +213,6 @@ void CAppearanceDisplay::registerClass(void) {
     ADD_FIELD(CAppearanceDisplay, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CAppearanceDisplay, "blockNumber", T_BLOCKNUM, ++fieldNum);
     ADD_FIELD(CAppearanceDisplay, "transactionIndex", T_BLOCKNUM, ++fieldNum);
-    ADD_FIELD(CAppearanceDisplay, "address", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CAppearanceDisplay, "name", T_TEXT | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CAppearanceDisplay, "schema");
