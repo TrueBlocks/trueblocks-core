@@ -109,7 +109,7 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
         } else                                    { setFmt = STR_UNKOWNTYPE;              regType = "T_TEXT | TS_OMITEMPTY"; }
         // clang-format on
 
-        if (fld.omit_empty && !contains(regType, " | TS_OMITEMPTY"))
+        if (fld.is_flags & IS_OMITEMPTY && !contains(regType, " | TS_OMITEMPTY"))
             regType += " | TS_OMITEMPTY";
 
         if ((fld.type == "Value")) {
@@ -361,7 +361,7 @@ string_q getCaseGetCode(const CParameterArray& fieldsIn) {
                     outStream << str;
 
                 } else if (p.type == "bool") {
-                    if (p.omit_empty)
+                    if (p.is_flags & IS_OMITEMPTY)
                         outStream << ("return bool_2_Str_t([{PTR}]" + p.name + ");");
                     else
                         outStream << ("return bool_2_Str([{PTR}]" + p.name + ");");
@@ -370,7 +370,7 @@ string_q getCaseGetCode(const CParameterArray& fieldsIn) {
                     outStream << ("return wei_2_Str([{PTR}]" + p.name + ");");
 
                 } else if (p.type == "gas") {
-                    if (p.omit_empty)
+                    if (p.is_flags & IS_OMITEMPTY)
                         outStream << ("return " + p.name + " == 0 ? \"\" : gas_2_Str([{PTR}]" + p.name + ");");
                     else
                         outStream << ("return gas_2_Str([{PTR}]" + p.name + ");");
@@ -397,7 +397,7 @@ string_q getCaseGetCode(const CParameterArray& fieldsIn) {
                     outStream << ("return uint_2_Str([{PTR}]" + p.name + ");");
 
                 } else if (p.type == "uint32" || p.type == "uint64") {
-                    if (p.omit_empty)
+                    if (p.is_flags & IS_OMITEMPTY)
                         outStream << ("return " + p.name + " == 0 ? \"\" : uint_2_Str([{PTR}]" + p.name + ");");
                     else
                         outStream << ("return uint_2_Str([{PTR}]" + p.name + ");");

@@ -242,6 +242,7 @@ void COptions::convertFromSol(const address_t& addr) {
         HIDE_FIELD(CParameter, "is_pointer");
         HIDE_FIELD(CParameter, "is_minimal");
         HIDE_FIELD(CParameter, "is_nowrite");
+        HIDE_FIELD(CParameter, "is_omitempty");
     }
     expContext().spcs = 2;
 

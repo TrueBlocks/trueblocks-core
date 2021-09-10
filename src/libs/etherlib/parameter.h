@@ -61,7 +61,6 @@ class CParameter : public CBaseNode {
     string_q internalType;
     CParameterArray components;
     bool unused;
-    bool omit_empty;
     bool extra;
     uint64_t is_flags;
     uint64_t precision;
@@ -148,7 +147,6 @@ inline void CParameter::initialize(void) {
     internalType = "";
     components.clear();
     unused = false;
-    omit_empty = false;
     extra = false;
     is_flags = IS_ENABLED;
     precision = 5;
@@ -170,7 +168,6 @@ inline void CParameter::duplicate(const CParameter& pa) {
     internalType = pa.internalType;
     components = pa.components;
     unused = pa.unused;
-    omit_empty = pa.omit_empty;
     extra = pa.extra;
     is_flags = pa.is_flags;
     precision = pa.precision;
