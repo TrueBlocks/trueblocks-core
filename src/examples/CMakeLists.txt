@@ -8,8 +8,8 @@ project (examples)
 # message (WARNING  "*** Entering examples folder ***")
 
 # Compilation order of the src subdirectories
-add_subdirectory(simple)
-add_subdirectory(forEvery)
-add_subdirectory(txCounter)
-add_subdirectory(findFirst)
-add_subdirectory(dynamic)
+#add_subdirectory(simple)
+#add_subdirectory(forEvery)
+#add_subdirectory(txCounter)
+#add_subdirectory(findFirst)
+#add_subdirectory(dynamic)

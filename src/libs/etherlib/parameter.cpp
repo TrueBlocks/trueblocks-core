@@ -88,11 +88,6 @@ string_q CParameter::getValueByName(const string_q& fieldName) const {
                 return retS;
             }
             break;
-        case 'e':
-            if (fieldName % "extra") {
-                return bool_2_Str_t(extra);
-            }
-            break;
         case 'i':
             if (fieldName % "indexed") {
                 return bool_2_Str_t(indexed);
@@ -153,14 +148,15 @@ bool CParameter::setValueByName(const string_q& fieldNameIn, const string_q& fie
     // EXISTING_CODE
     // clang-format off
 #define BOOL_ASSIGN_MASK(a, b) { if (str_2_Bool(fieldValue)) { a |= (b); } else { a &= uint64_t(~b); } }
-    if (fieldName % "is_pointer")   { BOOL_ASSIGN_MASK(is_flags, IS_POINTER); return true; }
-    if (fieldName % "is_array")     { BOOL_ASSIGN_MASK(is_flags, IS_ARRAY);   return true; }
-    if (fieldName % "is_object")    { BOOL_ASSIGN_MASK(is_flags, IS_OBJECT);  return true; }
-    if (fieldName % "is_builtin")   { BOOL_ASSIGN_MASK(is_flags, IS_BUILTIN); return true; }
-    if (fieldName % "is_enabled")   { BOOL_ASSIGN_MASK(is_flags, IS_ENABLED); return true; }
-    if (fieldName % "is_minimal")   { BOOL_ASSIGN_MASK(is_flags, IS_MINIMAL); return true; }
-    if (fieldName % "is_nowrite")   { BOOL_ASSIGN_MASK(is_flags, IS_NOWRITE); return true; }
+    if (fieldName % "is_pointer")   { BOOL_ASSIGN_MASK(is_flags, IS_POINTER);   return true; }
+    if (fieldName % "is_array")     { BOOL_ASSIGN_MASK(is_flags, IS_ARRAY);     return true; }
+    if (fieldName % "is_object")    { BOOL_ASSIGN_MASK(is_flags, IS_OBJECT);    return true; }
+    if (fieldName % "is_builtin")   { BOOL_ASSIGN_MASK(is_flags, IS_BUILTIN);   return true; }
+    if (fieldName % "is_enabled")   { BOOL_ASSIGN_MASK(is_flags, IS_ENABLED);   return true; }
+    if (fieldName % "is_minimal")   { BOOL_ASSIGN_MASK(is_flags, IS_MINIMAL);   return true; }
+    if (fieldName % "is_nowrite")   { BOOL_ASSIGN_MASK(is_flags, IS_NOWRITE);   return true; }
     if (fieldName % "is_omitempty") { BOOL_ASSIGN_MASK(is_flags, IS_OMITEMPTY); return true; }
+    if (fieldName % "is_extra")     { BOOL_ASSIGN_MASK(is_flags, IS_EXTRA);     return true; }
     // clang-format on
     // EXISTING_CODE
 
@@ -173,12 +169,6 @@ bool CParameter::setValueByName(const string_q& fieldNameIn, const string_q& fie
                     components.push_back(obj);
                     obj = CParameter();  // reset
                 }
-                return true;
-            }
-            break;
-        case 'e':
-            if (fieldName % "extra") {
-                extra = str_2_Bool(fieldValue);
                 return true;
             }
             break;
@@ -267,7 +257,6 @@ bool CParameter::Serialize(CArchive& archive) {
     archive >> internalType;
     archive >> components;
     archive >> unused;
-    // archive >> extra;
     archive >> is_flags;
     // archive >> precision;
     // EXISTING_CODE
@@ -291,7 +280,6 @@ bool CParameter::SerializeC(CArchive& archive) const {
     archive << internalType;
     archive << components;
     archive << unused;
-    // archive << extra;
     archive << is_flags;
     // archive << precision;
     // EXISTING_CODE
@@ -351,8 +339,6 @@ void CParameter::registerClass(void) {
     ADD_FIELD(CParameter, "internalType", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CParameter, "components", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CParameter, "unused", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CParameter, "extra", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    HIDE_FIELD(CParameter, "extra");
     ADD_FIELD(CParameter, "is_flags", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CParameter, "precision", T_UNUMBER, ++fieldNum);
     HIDE_FIELD(CParameter, "precision");
@@ -374,9 +360,9 @@ void CParameter::registerClass(void) {
     ADD_FIELD(CParameter, "is_minimal", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CParameter, "is_nowrite", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CParameter, "is_omitempty", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CParameter, "is_extra", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CParameter, "is_enabled");
     HIDE_FIELD(CParameter, "is_flags");
-    SHOW_FIELD(CParameter, "omit_empty");
     // EXISTING_CODE
 }
 
@@ -396,6 +382,7 @@ string_q nextParameterChunk_custom(const string_q& fieldIn, const void* dataPtr)
                 if (fieldIn % "is_minimal")   return bool_2_Str_t(par->is_flags & IS_MINIMAL);
                 if (fieldIn % "is_nowrite")   return bool_2_Str_t(par->is_flags & IS_NOWRITE);
                 if (fieldIn % "is_omitempty") return bool_2_Str_t(par->is_flags & IS_OMITEMPTY);
+                if (fieldIn % "is_extra")     return bool_2_Str_t(par->is_flags & IS_EXTRA);
                 break;
             case 'v':
                 if (fieldIn % "value") {
@@ -489,9 +476,10 @@ const char* STR_DISPLAY_PARAMETER =
     "[{IS_ARRAY}]\t"
     "[{IS_OBJECT}]\t"
     "[{IS_BUILTIN}]\t"
-    "[{OMIT_EMPTY}]\t"
     "[{IS_MINIMAL}]\t"
-    "[{IS_NOWRITE}]";
+    "[{IS_NOWRITE}]\t"
+    "[{IS_OMITEMPTY}]\t"
+    "[{IS_EXTRA}]";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
@@ -502,7 +490,8 @@ CParameter::CParameter(string_q& textIn) {
     replaceAll(textIn, " *", "* ");                    // cleanup
     replaceAll(textIn, "address[]", "CAddressArray");  // cleanup
 
-    extra = contains(textIn, "(extra)");
+    if (contains(textIn, "(extra)"))
+        is_flags |= IS_EXTRA;
     if (contains(textIn, "omitempty"))
         is_flags |= IS_OMITEMPTY;
     if (contains(textIn, "nowrite")) {

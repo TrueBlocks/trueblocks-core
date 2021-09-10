@@ -561,7 +561,7 @@ CClassDefinition::CClassDefinition(const CToml& toml) {
     CParameterArray tmpArray;
     explode(tmpArray, field_str, '|');
     for (auto tmp : tmpArray) {
-        if (tmp.extra) {
+        if (tmp.is_flags & IS_EXTRA) {
             if (!extra_fields.empty())
                 extra_fields += "|";
             extra_fields += tmp.Format("[{TYPE}][ {NAME}]");
