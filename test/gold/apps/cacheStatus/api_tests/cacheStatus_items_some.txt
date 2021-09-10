@@ -33,7 +33,6 @@
           "items": [
             {
               "type": "",
-              "deleted": false,
               "nApps": 0,
               "firstApp": 0,
               "latestApp": 0,
@@ -214,10 +213,6 @@
         {
           "name": "type",
           "type": "text"
-        },
-        {
-          "name": "deleted",
-          "type": "bool"
         },
         {
           "name": "nApps",
