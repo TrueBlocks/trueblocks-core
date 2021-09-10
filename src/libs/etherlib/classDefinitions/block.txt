@@ -1,23 +1,6 @@
 [settings]
 class = CBlock
-fields = \
-    gas gasLimit|\
-    gas gasUsed|\
-    hash hash|\
-    blknum blockNumber|\
-    hash parentHash|\
-    address miner|\
-    uint64 difficulty|\
-    bool finalized|\
-    timestamp timestamp|\
-    wei baseFeePerGas|\
-    CTransactionArray transactions|\
-    CStringArray tx_hashes (nowrite)|\
-    string name (nowrite)|\
-    bool light (nowrite,omitempty)|\
-    date date (extra)|\
-    uint64 unclesCnt (extra)|\
-    string extraData (extra)
+fields = block_fields.csv
 includes = etherlib.h|transaction.h
 cpp_includes = appearance.h
 scope = extern
@@ -25,4 +8,21 @@ serializable = true
 display_str = blockNumber, timestamp, difficulty, gasUsed, gasLimit, baseFeePerGas, miner, hash, parentHash, transactionsCnt, finalized
 tsx = true
 
-xxfields = block_fields.csv
+# fields = \
+#      gas gasLimit|\
+#      gas gasUsed|\
+#      hash hash|\
+#      blknum blockNumber|\
+#      hash parentHash|\
+#      address miner|\
+#      uint64 difficulty|\
+#      bool finalized|\
+#      timestamp timestamp|\
+#      wei baseFeePerGas|\
+#      CTransactionArray transactions|\
+#      CStringArray tx_hashes (nowrite)|\
+#      string name (nowrite)|\
+#      bool light (nowrite,omitempty)|\
+#      date date (extra)|\
+#      uint64 unclesCnt (extra)|\
+#      string extraData (extra)

@@ -110,11 +110,21 @@ string_q CClassDefinition::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 'e':
-            if (fieldName % "extra_fields") {
-                return extra_fields;
-            }
             if (fieldName % "eq_str") {
                 return eq_str;
+            }
+            if (fieldName % "extraArray" || fieldName % "extraArrayCnt") {
+                size_t cnt = extraArray.size();
+                if (endsWith(toLower(fieldName), "cnt"))
+                    return uint_2_Str(cnt);
+                if (!cnt)
+                    return "";
+                string_q retS;
+                for (size_t i = 0; i < cnt; i++) {
+                    retS += extraArray[i].Format();
+                    retS += ((i < cnt - 1) ? ",\n" : "\n");
+                }
+                return retS;
             }
             break;
         case 'f':
@@ -234,12 +244,17 @@ bool CClassDefinition::setValueByName(const string_q& fieldNameIn, const string_
             }
             break;
         case 'e':
-            if (fieldName % "extra_fields") {
-                extra_fields = fieldValue;
-                return true;
-            }
             if (fieldName % "eq_str") {
                 eq_str = fieldValue;
+                return true;
+            }
+            if (fieldName % "extraArray") {
+                CParameter obj;
+                string_q str = fieldValue;
+                while (obj.parseJson3(str)) {
+                    extraArray.push_back(obj);
+                    obj = CParameter();  // reset
+                }
                 return true;
             }
             break;
@@ -337,7 +352,6 @@ bool CClassDefinition::Serialize(CArchive& archive) {
     archive >> head_includes;
     archive >> src_includes;
     archive >> field_str;
-    archive >> extra_fields;
     archive >> display_str;
     archive >> sort_str;
     archive >> eq_str;
@@ -345,6 +359,7 @@ bool CClassDefinition::Serialize(CArchive& archive) {
     archive >> serializable;
     archive >> tsx;
     // archive >> fieldArray;
+    // archive >> extraArray;
     // EXISTING_CODE
     // EXISTING_CODE
     finishParse();
@@ -372,7 +387,6 @@ bool CClassDefinition::SerializeC(CArchive& archive) const {
     archive << head_includes;
     archive << src_includes;
     archive << field_str;
-    archive << extra_fields;
     archive << display_str;
     archive << sort_str;
     archive << eq_str;
@@ -380,6 +394,7 @@ bool CClassDefinition::SerializeC(CArchive& archive) const {
     archive << serializable;
     archive << tsx;
     // archive << fieldArray;
+    // archive << extraArray;
     // EXISTING_CODE
     // EXISTING_CODE
     return true;
@@ -443,7 +458,6 @@ void CClassDefinition::registerClass(void) {
     ADD_FIELD(CClassDefinition, "head_includes", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "src_includes", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "field_str", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CClassDefinition, "extra_fields", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "display_str", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "sort_str", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "eq_str", T_TEXT | TS_OMITEMPTY, ++fieldNum);
@@ -452,6 +466,8 @@ void CClassDefinition::registerClass(void) {
     ADD_FIELD(CClassDefinition, "tsx", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "fieldArray", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CClassDefinition, "fieldArray");
+    ADD_FIELD(CClassDefinition, "extraArray", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CClassDefinition, "extraArray");
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CClassDefinition, "schema");
@@ -522,6 +538,15 @@ const CBaseNode* CClassDefinition::getObjectAt(const string_q& fieldName, size_t
         if (index < fieldArray.size())
             return &fieldArray[index];
     }
+    if (fieldName % "extraArray") {
+        if (index == NOPOS) {
+            CParameter empty;
+            ((CClassDefinition*)this)->extraArray.push_back(empty);  // NOLINT
+            index = extraArray.size() - 1;
+        }
+        if (index < extraArray.size())
+            return &extraArray[index];
+    }
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -540,7 +565,6 @@ CClassDefinition::CClassDefinition(const CToml& toml) {
     field_str = toml.getConfigStr("settings", "fields", "");
     head_includes = toml.getConfigStr("settings", "includes", "");
     src_includes = toml.getConfigStr("settings", "cpp_includes", "");
-    extra_fields = toml.getConfigStr("settings", "extra_fields", "");
     display_str = toml.getConfigStr("settings", "display_str", "");
     sort_str = toml.getConfigStr("settings", "sort", "");
     eq_str = toml.getConfigStr("settings", "equals", "");
@@ -558,15 +582,55 @@ CClassDefinition::CClassDefinition(const CToml& toml) {
     base_upper = toUpper(base_name);
     base_base = toProper(extract(base_class, 1));
 
-    CParameterArray tmpArray;
-    explode(tmpArray, field_str, '|');
-    for (auto tmp : tmpArray) {
-        if (tmp.is_flags & IS_EXTRA) {
-            if (!extra_fields.empty())
-                extra_fields += "|";
-            extra_fields += tmp.Format("[{TYPE}][ {NAME}]");
-        } else {
-            fieldArray.push_back(tmp);
+    string_q fn = toml.getFilename();
+    replace(fn, "classDefinitions/", "classDefinitions/fields/");
+    replace(fn, ".txt", ".csv");
+    if (fileExists(fn)) {
+        string_q contents = asciiFileToString(fn);
+        string_q header = nextTokenClear(contents, '\n');
+        CStringArray fields;
+        explode(fields, header, ',');
+        for (auto& fld : fields) {
+            string_q isFields = "object,array,minimal,nowrite,omitempty,extra";
+            if (contains(isFields, fld))
+                fld = "is_" + fld;
+        }
+        field_str.clear();
+        CStringArray lines;
+        explode(lines, contents, '\n');
+        for (auto line : lines) {
+            CParameter tmp;
+            tmp.parseCSV(fields, line);
+            if (tmp.is_flags & IS_EXTRA) {
+                tmp.is_flags |= IS_MINIMAL;
+                tmp.postProcessType();
+                extraArray.push_back(tmp);
+            } else {
+                if (tmp.is_flags & IS_ARRAY) {
+                    if (tmp.type == "string_q")
+                        tmp.type = "CStringArray";
+                    else
+                        tmp.type = "C" + toProper(tmp.type) + "Array";
+                }
+                tmp.postProcessType();
+                fieldArray.push_back(tmp);
+            }
+        }
+    } else {
+        CParameterArray tmpArray;
+        CStringArray strs;
+        explode(strs, field_str, '|');
+        for (auto str : strs) {
+            CParameter param(str);
+            tmpArray.push_back(param);
+        }
+        for (auto tmp : tmpArray) {
+            if (tmp.is_flags & IS_EXTRA) {
+                tmp.is_flags |= IS_MINIMAL;
+                extraArray.push_back(tmp);
+            } else {
+                fieldArray.push_back(tmp);
+            }
         }
     }
 }

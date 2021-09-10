@@ -317,7 +317,6 @@ bool forEverySmartContractInIndex(ADDRESSFUNC func, void* data) {
 //                cout << i << "\t" << app.bn << "\t" << uncle.blockNumber << "\t" << (float(uncle.blockNumber + 8 -
 //                app.bn) / 8) << endl;
 //            }
-//            printf("");
 //        }
 //
 //        return true;

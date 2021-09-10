@@ -1,0 +1,5 @@
+name             ,type    ,minimal ,  ,doc ,disp  ,example                                                   ,description
+blockNumber      ,blknum  ,        ,1 ,1   ,10021 ,the number of the block
+transactionIndex ,blknum  ,        ,2 ,2   ,305   ,the zero-indexed position of the transaction in the block
+address          ,address ,true    ,3 ,3   ,      ,the address of the appearance
+name             ,string  ,true    ,4 ,4   ,      ,the name of the address&#44; if found

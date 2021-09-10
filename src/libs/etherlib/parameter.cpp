@@ -517,6 +517,12 @@ CParameter::CParameter(string_q& textIn) {
     }
 
     type = nextTokenClear(textIn, ' ');
+    postProcessType();
+    name = trim(textIn);
+}
+
+//-----------------------------------------------------------------------
+void CParameter::postProcessType(void) {
     if (startsWith(type, "double")) {
         precision = str_2_Uint(substitute(type, "double", "") == "" ? "5" : substitute(type, "double", ""));
         type = "double";
@@ -535,9 +541,7 @@ CParameter::CParameter(string_q& textIn) {
             is_flags |= IS_BUILTIN;
         }
     }
-
     type = substitute(type, "*", "");
-    name = trim(textIn);
 }
 
 //-----------------------------------------------------------------------
@@ -666,17 +670,6 @@ bool CParameter::isValid(void) const {
         return n > 0 && n <= 32;
     }
     return true;
-}
-
-//--------------------------------------------------------------------------------
-size_t explode(CParameterArray& result, const string& input, char needle) {
-    CStringArray strs;
-    explode(strs, input, needle);
-    for (auto str : strs) {
-        CParameter param(str);
-        result.push_back(param);
-    }
-    return result.size();
 }
 
 //--------------------------------------------------------------------------------

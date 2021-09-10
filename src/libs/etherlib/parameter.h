@@ -86,6 +86,7 @@ class CParameter : public CBaseNode {
     string_q getFunctionAssign(uint64_t which) const;
     string_q getEventAssign(uint64_t which, uint64_t nIndexed = NOPOS) const;
     bool isValid(void) const;
+    void postProcessType(void);
     // EXISTING_CODE
     bool operator==(const CParameter& it) const;
     bool operator!=(const CParameter& it) const {
@@ -207,7 +208,6 @@ extern const char* STR_DISPLAY_PARAMETER;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-size_t explode(CParameterArray& result, const string& input, char needle);
 enum {
     COMMENT1 = (char)1,         // NOLINT
     COMMENT_END1 = (char)'\n',  // NOLINT

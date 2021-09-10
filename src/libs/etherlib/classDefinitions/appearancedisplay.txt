@@ -1,8 +1,6 @@
 [settings]
 class = CAppearanceDisplay
 base_class = CAccountName
-fields = \
-    blknum blockNumber|\
-    blknum transactionIndex
+fields = appearancedisplay.csv
 includes = etherlib.h
 display_str = address, blockNumber, transactionIndex, timestamp, date, name
