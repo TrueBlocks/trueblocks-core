@@ -7,3 +7,4 @@ equals = encoding % it.encoding && message % it.message
 serializable = true
 display_str = abi_source, name, type, stateMutability, signature, encoding, inputs, outputs
 tsx = true
+openapi = function

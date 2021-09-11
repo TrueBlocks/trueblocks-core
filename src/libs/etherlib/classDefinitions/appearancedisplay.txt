@@ -4,3 +4,4 @@ base_class = CAccountName
 fields = appearancedisplay.csv
 includes = etherlib.h
 display_str = address, blockNumber, transactionIndex, timestamp, date, name
+openapi = appearance

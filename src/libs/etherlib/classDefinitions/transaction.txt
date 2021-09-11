@@ -8,3 +8,4 @@ serializable = true
 display_str = blockNumber, transactionIndex, date, timestamp, from, to, ether, etherGasPrice, gasUsed, hash, isError, encoding, compressedTx
 equals = (hash == it.hash)
 tsx = true
+openapi = transaction

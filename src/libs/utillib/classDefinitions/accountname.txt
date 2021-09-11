@@ -7,3 +7,4 @@ display_str = tags, address, name, symbol, source, decimals, description, delete
 sort = v1.address < v2.address
 equals = address % it.address
 tsx = true
+openapi = name

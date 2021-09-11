@@ -8,3 +8,4 @@ display_str = address, encoding, type, name, signature, input_names, output_name
 equals = (address == it.address)
 tsx = true
 disabled = true
+openapi = abi

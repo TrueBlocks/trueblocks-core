@@ -5,3 +5,4 @@ fields = monitor.csv
 includes = etherlib.h|transaction.h|reconciliation.h|ethstate.h|monitoredapp.h
 force_objget = true
 tsx = true
+openapi = monitor
