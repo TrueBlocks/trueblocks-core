@@ -1,15 +1,15 @@
-name,type,str_default,object,array,nowrite,omitempty,minimal,extra,noaddfld,doc,disp,example,description
-blockNumber,blknum,,,,,,,,,,,,
-date,string,,,,,,,,,,,,
-totalSupply,wei,,,,,,,,,,,,
-transactionIndex,blknum,,,,,,,,,,,,
-holder,address,,,,true,,,,,1,,0x2910...63d2,the address for which we are reporting the token balance
-priorBalance,wei,,,,,,,,,,,,
-balance,wei,,,,,,,,,2,,258843698360318500,the balance at the address at the given block height
-diff,int256,,,,,,,,,,,,
-address,address,,,,,,true,,true,3,,0xa1e4...63b4,description: the address of the token contract being queried
-name,string,,,,,,true,,true,4,,The DAO Original,the name of the token contract&#44; if available
-decimals,uint64,,,,,,true,,true,5,,18,the number of decimals for the token contract
-is_contract,boolean,,,,,,true,,true,6,,,`true` if the address is a smart contract&#44; `false` otherwise
-is_erc20,boolean,,,,,,true,,true,7,,,`true` if the address is an ERC20&#44; `false` otherwise
-is_erc721,boolean,,,,,,true,,true,8,,,`true` if the address is an ERC720&#44; `false` otherwise
+name             ,type    ,str_default ,object ,array ,nowrite ,omitempty ,minimal ,extra ,noaddfld ,doc ,disp ,example            ,description
+blockNumber      ,blknum  ,            ,       ,      ,        ,          ,        ,      ,         ,    ,     ,                   ,
+date             ,string  ,            ,       ,      ,        ,          ,        ,      ,         ,    ,     ,                   ,
+totalSupply      ,wei     ,            ,       ,      ,        ,          ,        ,      ,         ,    ,     ,                   ,
+transactionIndex ,blknum  ,            ,       ,      ,        ,          ,        ,      ,         ,    ,     ,                   ,
+holder           ,address ,            ,       ,      ,true    ,          ,        ,      ,         ,1   ,     ,0x2910...63d2      ,the address for which we are reporting the token balance
+priorBalance     ,wei     ,            ,       ,      ,        ,          ,        ,      ,         ,    ,     ,                   ,
+balance          ,wei     ,            ,       ,      ,        ,          ,        ,      ,         ,2   ,     ,258843698360318500 ,the balance at the address at the given block height
+diff             ,int256  ,            ,       ,      ,        ,          ,        ,      ,         ,    ,     ,                   ,
+address          ,address ,            ,       ,      ,        ,          ,true    ,      ,true     ,3   ,     ,0xa1e4...63b4      ,description: the address of the token contract being queried
+name             ,string  ,            ,       ,      ,        ,          ,true    ,      ,true     ,4   ,     ,The DAO Original   ,the name of the token contract&#44; if available
+decimals         ,uint64  ,            ,       ,      ,        ,          ,true    ,      ,true     ,5   ,     ,18                 ,the number of decimals for the token contract
+is_contract      ,boolean ,            ,       ,      ,        ,          ,true    ,      ,true     ,6   ,     ,                   ,`true` if the address is a smart contract&#44; `false` otherwise
+is_erc20         ,boolean ,            ,       ,      ,        ,          ,true    ,      ,true     ,7   ,     ,                   ,`true` if the address is an ERC20&#44; `false` otherwise
+is_erc721        ,boolean ,            ,       ,      ,        ,          ,true    ,      ,true     ,8   ,     ,                   ,`true` if the address is an ERC720&#44; `false` otherwise

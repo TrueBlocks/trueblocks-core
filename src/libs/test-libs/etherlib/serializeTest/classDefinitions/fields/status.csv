@@ -1,8 +1,8 @@
-name,type,str_default,object,array,nowrite,omitempty,minimal,extra,noaddfld,doc,disp,example,description
-client_version,string,,,,,,,,,,,,
-trueblocks_version,string,,,,,,,,,,,,
-rpc_provider,string,,,,,,,,,,,,
-balance_provider,string,,,,,,,,,,,,
-host,string,,,,,,,,,,,,
-is_scraping,bool,,,,,true,,,,,,,
-caches,cachePtr,,true,true,true,,,,,,,,
+name               ,type     ,str_default ,object ,array ,nowrite ,omitempty ,minimal ,extra ,noaddfld ,doc ,disp ,example ,description
+client_version     ,string   ,            ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
+trueblocks_version ,string   ,            ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
+rpc_provider       ,string   ,            ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
+balance_provider   ,string   ,            ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
+host               ,string   ,            ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
+is_scraping        ,bool     ,            ,       ,      ,        ,true      ,        ,      ,         ,    ,     ,        ,
+caches             ,cachePtr ,            ,true   ,true  ,true    ,          ,        ,      ,         ,    ,     ,        ,

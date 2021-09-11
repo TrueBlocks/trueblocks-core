@@ -1,7 +1,7 @@
-name,type,str_default,object,array,nowrite,omitempty,minimal,extra,noaddfld,doc,disp,example,description
-fileName,string,,,,,,,,,,,,
-indexFormat,string,,,,,,,,,,,,
-bloomFormat,string,,,,,,,,,,,,
-firstPin,blknum,,,,,,,,,,,,
-lastPin,blknum,,,,,,,,,,,,
-pins,pinnedChunk,,true,true,,,,,,,,,
+name        ,type        ,str_default ,object ,array ,nowrite ,omitempty ,minimal ,extra ,noaddfld ,doc ,disp ,example ,description
+fileName    ,string      ,            ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
+indexFormat ,string      ,            ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
+bloomFormat ,string      ,            ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
+firstPin    ,blknum      ,            ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
+lastPin     ,blknum      ,            ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
+pins        ,pinnedChunk ,            ,true   ,true  ,        ,          ,        ,      ,         ,    ,     ,        ,

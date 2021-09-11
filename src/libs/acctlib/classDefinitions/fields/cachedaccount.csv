@@ -1,5 +1,5 @@
-name,type,str_default,object,array,nowrite,omitempty,minimal,extra,noaddfld,doc,disp,example,description
-addr,address,,,,,,,,,,,,
-latestPage,uint64,1,,,,,,,,,,,
-latestTx,transaction,,true,,,,,,,,,,
-transactions,transaction,,true,true,,,,,,,,,
+name         ,type        ,str_default ,object ,array ,nowrite ,omitempty ,minimal ,extra ,noaddfld ,doc ,disp ,example ,description
+addr         ,address     ,            ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
+latestPage   ,uint64      ,1           ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
+latestTx     ,transaction ,            ,true   ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
+transactions ,transaction ,            ,true   ,true  ,        ,          ,        ,      ,         ,    ,     ,        ,

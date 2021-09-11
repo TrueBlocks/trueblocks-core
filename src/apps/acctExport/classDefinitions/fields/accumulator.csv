@@ -1,2 +1,2 @@
-name,type,str_default,object,array,nowrite,omitempty,minimal,extra,noaddfld,doc,disp,example,description
-endOfPeriod,datetime,earliestDate,,,,,,,,,,,
+name        ,type     ,str_default  ,object ,array ,nowrite ,omitempty ,minimal ,extra ,noaddfld ,doc ,disp ,example ,description
+endOfPeriod ,datetime ,earliestDate ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
