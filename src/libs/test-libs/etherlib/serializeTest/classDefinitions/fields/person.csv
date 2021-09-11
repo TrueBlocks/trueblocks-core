@@ -1,4 +1,4 @@
-name ,type    ,object
-name ,string  ,
-age  ,uint64  ,
-next ,person* ,true
+name,type,str_default,object,array,nowrite,omitempty,minimal,extra,noaddfld,doc,disp,example,description
+name,string,,,,,,,,,,,,
+age,uint64,,,,,,,,,,,,
+next,person*,,true,,,,,,,,,,

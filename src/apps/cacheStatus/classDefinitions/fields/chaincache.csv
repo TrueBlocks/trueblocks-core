@@ -1,3 +1,3 @@
-name      ,type   ,str_default ,array
-max_depth ,uint64 ,NOPOS       ,
-items     ,string ,            ,true
+name,type,str_default,object,array,nowrite,omitempty,minimal,extra,noaddfld,doc,disp,example,description
+max_depth,uint64,NOPOS,,,,,,,,,,,
+items,string,,,true,,,,,,,,,

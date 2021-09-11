@@ -1,6 +1,6 @@
-name      ,type      ,array
-fromBlock ,blknum    ,
-toBlock   ,blknum    ,
-blockHash ,hash      ,
-addresses ,address ,true
-topics    ,topic     ,true
+name,type,str_default,object,array,nowrite,omitempty,minimal,extra,noaddfld,doc,disp,example,description
+fromBlock,blknum,,,,,,,,,,,,
+toBlock,blknum,,,,,,,,,,,,
+blockHash,hash,,,,,,,,,,,,
+addresses,address,,,true,,,,,,,,,
+topics,topic,,,true,,,,,,,,,

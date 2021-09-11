@@ -1,4 +1,4 @@
-name    ,type
-jsonrpc ,string
-result  ,string
-id      ,string
+name,type,str_default,object,array,nowrite,omitempty,minimal,extra,noaddfld,doc,disp,example,description
+jsonrpc,string,,,,,,,,,,,,
+result,string,,,,,,,,,,,,
+id,string,,,,,,,,,,,,

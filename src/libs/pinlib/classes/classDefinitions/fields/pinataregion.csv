@@ -1,4 +1,4 @@
-name                    ,type
-regionId                ,string
-currentReplicationCount ,string
-desiredReplicationCount ,string
+name,type,str_default,object,array,nowrite,omitempty,minimal,extra,noaddfld,doc,disp,example,description
+regionId,string,,,,,,,,,,,,
+currentReplicationCount,string,,,,,,,,,,,,
+desiredReplicationCount,string,,,,,,,,,,,,

@@ -89,8 +89,8 @@ string_q CParameter::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 'd':
-            if (fieldName % "docs") {
-                return docs == 0 ? "" : uint_2_Str(docs);
+            if (fieldName % "doc") {
+                return doc == 0 ? "" : uint_2_Str(doc);
             }
             if (fieldName % "disp") {
                 return disp == 0 ? "" : uint_2_Str(disp);
@@ -190,8 +190,8 @@ bool CParameter::setValueByName(const string_q& fieldNameIn, const string_q& fie
             }
             break;
         case 'd':
-            if (fieldName % "docs") {
-                docs = str_2_Uint(fieldValue);
+            if (fieldName % "doc") {
+                doc = str_2_Uint(fieldValue);
                 return true;
             }
             if (fieldName % "disp") {
@@ -296,7 +296,7 @@ bool CParameter::Serialize(CArchive& archive) {
     archive >> unused;
     archive >> is_flags;
     // archive >> precision;
-    // archive >> docs;
+    // archive >> doc;
     // archive >> disp;
     // archive >> example;
     // archive >> description;
@@ -323,7 +323,7 @@ bool CParameter::SerializeC(CArchive& archive) const {
     archive << unused;
     archive << is_flags;
     // archive << precision;
-    // archive << docs;
+    // archive << doc;
     // archive << disp;
     // archive << example;
     // archive << description;
@@ -387,8 +387,8 @@ void CParameter::registerClass(void) {
     ADD_FIELD(CParameter, "is_flags", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CParameter, "precision", T_UNUMBER, ++fieldNum);
     HIDE_FIELD(CParameter, "precision");
-    ADD_FIELD(CParameter, "docs", T_UNUMBER | TS_OMITEMPTY, ++fieldNum);
-    HIDE_FIELD(CParameter, "docs");
+    ADD_FIELD(CParameter, "doc", T_UNUMBER | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CParameter, "doc");
     ADD_FIELD(CParameter, "disp", T_UNUMBER | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CParameter, "disp");
     ADD_FIELD(CParameter, "example", T_TEXT | TS_OMITEMPTY, ++fieldNum);

@@ -1,8 +1,8 @@
-name      ,type
-page      ,string
-subpage   ,string
-route     ,string
-options   ,string
-component ,string
-extract   ,string
-icon      ,string
+name,type,str_default,object,array,nowrite,omitempty,minimal,extra,noaddfld,doc,disp,example,description
+page,string,,,,,,,,,,,,
+subpage,string,,,,,,,,,,,,
+route,string,,,,,,,,,,,,
+options,string,,,,,,,,,,,,
+component,string,,,,,,,,,,,,
+extract,string,,,,,,,,,,,,
+icon,string,,,,,,,,,,,,

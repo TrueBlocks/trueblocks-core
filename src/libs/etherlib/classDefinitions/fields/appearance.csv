@@ -1,6 +1,6 @@
-name   ,type    ,doc
-bn     ,blknum  ,1
-tx     ,blknum  ,2
-tc     ,blknum  ,3
-addr   ,address ,4
-reason ,string  ,5
+name,type,str_default,object,array,nowrite,omitempty,minimal,extra,noaddfld,doc,disp,example,description
+bn,blknum,,,,,,,,,1,,,
+tx,blknum,,,,,,,,,2,,,
+tc,blknum,,,,,,,,,3,,,
+addr,address,,,,,,,,,4,,,
+reason,string,,,,,,,,,5,,,

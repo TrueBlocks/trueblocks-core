@@ -1,7 +1,7 @@
-name        ,type    ,array
-fromBlock   ,blknum  ,
-toBlock     ,blknum  ,
-fromAddress ,address ,true
-toAddress   ,address ,true
-after       ,uint64  ,
-count       ,uint64  ,
+name,type,str_default,object,array,nowrite,omitempty,minimal,extra,noaddfld,doc,disp,example,description
+fromBlock,blknum,,,,,,,,,,,,
+toBlock,blknum,,,,,,,,,,,,
+fromAddress,address,,,true,,,,,,,,,
+toAddress,address,,,true,,,,,,,,,
+after,uint64,,,,,,,,,,,,
+count,uint64,,,,,,,,,,,,
