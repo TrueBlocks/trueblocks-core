@@ -64,6 +64,10 @@ class CParameter : public CBaseNode {
     bool unused;
     uint64_t is_flags;
     uint64_t precision;
+    uint64_t docs;
+    uint64_t disp;
+    string_q example;
+    string_q description;
 
   public:
     CParameter(void);
@@ -150,6 +154,10 @@ inline void CParameter::initialize(void) {
     unused = false;
     is_flags = IS_ENABLED;
     precision = 5;
+    docs = 0;
+    disp = 0;
+    example = "";
+    description = "";
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -170,6 +178,10 @@ inline void CParameter::duplicate(const CParameter& pa) {
     unused = pa.unused;
     is_flags = pa.is_flags;
     precision = pa.precision;
+    docs = pa.docs;
+    disp = pa.disp;
+    example = pa.example;
+    description = pa.description;
 
     // EXISTING_CODE
     // EXISTING_CODE

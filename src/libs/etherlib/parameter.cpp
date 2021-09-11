@@ -88,6 +88,22 @@ string_q CParameter::getValueByName(const string_q& fieldName) const {
                 return retS;
             }
             break;
+        case 'd':
+            if (fieldName % "docs") {
+                return docs == 0 ? "" : uint_2_Str(docs);
+            }
+            if (fieldName % "disp") {
+                return disp == 0 ? "" : uint_2_Str(disp);
+            }
+            if (fieldName % "description") {
+                return description;
+            }
+            break;
+        case 'e':
+            if (fieldName % "example") {
+                return example;
+            }
+            break;
         case 'i':
             if (fieldName % "indexed") {
                 return bool_2_Str_t(indexed);
@@ -170,6 +186,26 @@ bool CParameter::setValueByName(const string_q& fieldNameIn, const string_q& fie
                     components.push_back(obj);
                     obj = CParameter();  // reset
                 }
+                return true;
+            }
+            break;
+        case 'd':
+            if (fieldName % "docs") {
+                docs = str_2_Uint(fieldValue);
+                return true;
+            }
+            if (fieldName % "disp") {
+                disp = str_2_Uint(fieldValue);
+                return true;
+            }
+            if (fieldName % "description") {
+                description = fieldValue;
+                return true;
+            }
+            break;
+        case 'e':
+            if (fieldName % "example") {
+                example = fieldValue;
                 return true;
             }
             break;
@@ -260,6 +296,10 @@ bool CParameter::Serialize(CArchive& archive) {
     archive >> unused;
     archive >> is_flags;
     // archive >> precision;
+    // archive >> docs;
+    // archive >> disp;
+    // archive >> example;
+    // archive >> description;
     // EXISTING_CODE
     // EXISTING_CODE
     finishParse();
@@ -283,6 +323,10 @@ bool CParameter::SerializeC(CArchive& archive) const {
     archive << unused;
     archive << is_flags;
     // archive << precision;
+    // archive << docs;
+    // archive << disp;
+    // archive << example;
+    // archive << description;
     // EXISTING_CODE
     // EXISTING_CODE
     return true;
@@ -343,6 +387,14 @@ void CParameter::registerClass(void) {
     ADD_FIELD(CParameter, "is_flags", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CParameter, "precision", T_UNUMBER, ++fieldNum);
     HIDE_FIELD(CParameter, "precision");
+    ADD_FIELD(CParameter, "docs", T_UNUMBER | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CParameter, "docs");
+    ADD_FIELD(CParameter, "disp", T_UNUMBER | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CParameter, "disp");
+    ADD_FIELD(CParameter, "example", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CParameter, "example");
+    ADD_FIELD(CParameter, "description", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CParameter, "description");
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CParameter, "schema");
