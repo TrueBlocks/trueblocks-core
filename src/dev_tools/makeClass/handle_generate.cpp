@@ -109,7 +109,7 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
         } else                                    { setFmt = STR_UNKOWNTYPE;              regType = "T_TEXT | TS_OMITEMPTY"; }
         // clang-format on
 
-        if (fld.omit_empty && !contains(regType, " | TS_OMITEMPTY"))
+        if (fld.is_flags & IS_OMITEMPTY && !contains(regType, " | TS_OMITEMPTY"))
             regType += " | TS_OMITEMPTY";
 
         if ((fld.type == "Value")) {
@@ -165,17 +165,18 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
         if (!(fld.is_flags & IS_POINTER) || (fld.is_flags & IS_ARRAY))
             replace(declareFmt, "*", "");
 
-        string_q fieldAddLine = fld.Format(regAddFmt);
-        replaceAll(fieldAddLine, "T_TEXT", regType);
-        replaceAll(fieldAddLine, "CL_NM", "[{CLASS_NAME}]");
-        if ((fld.is_flags & IS_OBJECT) && !(fld.is_flags & IS_ARRAY) && !(fld.is_flags & IS_POINTER)) {
-            replaceAll(fieldAddLine, "ADD_FIELD", "ADD_OBJECT");
-            replaceAll(fieldAddLine, "++fieldNum);\n", "++fieldNum, GETRUNTIME_CLASS(" + fld.type + "));\n");
+        if (!(fld.is_flags & IS_NOADDFLD)) {
+            string_q fieldAddLine = fld.Format(regAddFmt);
+            replaceAll(fieldAddLine, "T_TEXT", regType);
+            replaceAll(fieldAddLine, "CL_NM", "[{CLASS_NAME}]");
+            if ((fld.is_flags & IS_OBJECT) && !(fld.is_flags & IS_ARRAY) && !(fld.is_flags & IS_POINTER)) {
+                replaceAll(fieldAddLine, "ADD_FIELD", "ADD_OBJECT");
+                replaceAll(fieldAddLine, "++fieldNum);\n", "++fieldNum, GETRUNTIME_CLASS(" + fld.type + "));\n");
+            }
+            add_fieldStream << fieldAddLine;
+            if (fld.is_flags & IS_NOWRITE)
+                add_fieldStream << substitute(fld.Format(regHideFmt), "CL_NM", "[{CLASS_NAME}]");
         }
-
-        add_fieldStream << fieldAddLine;
-        if (fld.no_write)
-            add_fieldStream << substitute(fld.Format(regHideFmt), "CL_NM", "[{CLASS_NAME}]");
 
         // minimal means that a field is part of the object's data (such as CReceipt::blockNumber) but should not be
         // part of the 'class' proper -- i.e. it gets its value from its containing class (in this case the block it
@@ -186,7 +187,7 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
                                      "[{CLASS_NAME}]");
             defaultsStream << fld.Format(setFmt);
             clearStream << (((fld.is_flags & IS_POINTER) && !(fld.is_flags & IS_ARRAY)) ? fld.Format(ptrClearFmt) : "");
-            if (fld.no_write) {
+            if (fld.is_flags & IS_NOWRITE) {
                 ar_readStream << substitute(fld.Format(STR_READFMT), "`archive", "`// archive");
                 ar_writeStream << substitute(fld.Format(STR_WRITEFMT), "`archive", "`// archive");
             } else {
@@ -361,7 +362,7 @@ string_q getCaseGetCode(const CParameterArray& fieldsIn) {
                     outStream << str;
 
                 } else if (p.type == "bool") {
-                    if (p.omit_empty)
+                    if (p.is_flags & IS_OMITEMPTY)
                         outStream << ("return bool_2_Str_t([{PTR}]" + p.name + ");");
                     else
                         outStream << ("return bool_2_Str([{PTR}]" + p.name + ");");
@@ -370,7 +371,7 @@ string_q getCaseGetCode(const CParameterArray& fieldsIn) {
                     outStream << ("return wei_2_Str([{PTR}]" + p.name + ");");
 
                 } else if (p.type == "gas") {
-                    if (p.omit_empty)
+                    if (p.is_flags & IS_OMITEMPTY)
                         outStream << ("return " + p.name + " == 0 ? \"\" : gas_2_Str([{PTR}]" + p.name + ");");
                     else
                         outStream << ("return gas_2_Str([{PTR}]" + p.name + ");");
@@ -397,7 +398,7 @@ string_q getCaseGetCode(const CParameterArray& fieldsIn) {
                     outStream << ("return uint_2_Str([{PTR}]" + p.name + ");");
 
                 } else if (p.type == "uint32" || p.type == "uint64") {
-                    if (p.omit_empty)
+                    if (p.is_flags & IS_OMITEMPTY)
                         outStream << ("return " + p.name + " == 0 ? \"\" : uint_2_Str([{PTR}]" + p.name + ");");
                     else
                         outStream << ("return uint_2_Str([{PTR}]" + p.name + ");");

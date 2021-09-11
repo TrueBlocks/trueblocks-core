@@ -233,15 +233,19 @@ void COptions::convertFromSol(const address_t& addr) {
     abi_spec.loadAbiFromSolidity(addr);
     GETRUNTIME_CLASS(CFunction)->sortFieldList();
     GETRUNTIME_CLASS(CParameter)->sortFieldList();
+    // TODO: This is terrible. Can we remove it?
     if (isTestMode()) {
+        HIDE_FIELD(CParameter, "value");
+        HIDE_FIELD(CParameter, "str_default");
         HIDE_FIELD(CParameter, "is_array");
         HIDE_FIELD(CParameter, "is_builtin");
-        HIDE_FIELD(CParameter, "is_minimal");
         HIDE_FIELD(CParameter, "is_object");
         HIDE_FIELD(CParameter, "is_pointer");
-        HIDE_FIELD(CParameter, "no_write");
-        HIDE_FIELD(CParameter, "str_default");
-        HIDE_FIELD(CParameter, "value");
+        HIDE_FIELD(CParameter, "is_minimal");
+        HIDE_FIELD(CParameter, "is_noaddfld");
+        HIDE_FIELD(CParameter, "is_nowrite");
+        HIDE_FIELD(CParameter, "is_omitempty");
+        HIDE_FIELD(CParameter, "is_extra");
     }
     expContext().spcs = 2;
 

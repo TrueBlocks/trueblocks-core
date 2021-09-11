@@ -1,15 +1,4 @@
 [settings]
 class = CSkin
-fields = \
-    string name|\
-    string bgPrimary|\
-    string bgSecondary|\
-    string textPrimary|\
-    string borderPrimary|\
-    string bgHover|\
-    string textHover|\
-    string tableBgPrimary|\
-    string tableBgSecondary|\
-    string tableTextPrimary|\
-    string tableBorderPrimary
+fields = skin.csv
 includes = utillib.h

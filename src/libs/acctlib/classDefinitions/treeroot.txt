@@ -1,5 +1,4 @@
 [settings]
 class = CTreeRoot
-fields = \
-    CTreeNode* root
+fields = branch.csv
 includes = etherlib.h|treenode.h|leaf.h|branch.h|infix.h

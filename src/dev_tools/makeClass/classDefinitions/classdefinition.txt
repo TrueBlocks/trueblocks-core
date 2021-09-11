@@ -1,26 +1,4 @@
 [settings]
 class = CClassDefinition
-fields = \
-    string short_fn|\
-    string input_path|\
-    string class_name|\
-    string class_base|\
-    string class_upper|\
-    string base_class|\
-    string base_name|\
-    string base_proper|\
-    string base_lower|\
-    string base_upper|\
-    string base_base|\
-    string head_includes|\
-    string src_includes|\
-    string field_str|\
-    string extra_fields|\
-    string display_str|\
-    string sort_str|\
-    string eq_str|\
-    string scope_str|\
-    bool serializable (omitempty)|\
-    bool tsx (omitempty)|\
-    CParameterArray fieldArray (nowrite)
+fields = classdefinition.csv
 includes = etherlib.h

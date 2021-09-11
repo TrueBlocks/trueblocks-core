@@ -1,55 +1,7 @@
 [settings]
 class = CTrace
-fields = \
-    hash blockHash|\
-    blknum blockNumber|\
-    uint64 subtraces|\
-    CStringArray traceAddress|\
-    hash transactionHash|\
-    blknum transactionIndex|\
-    string type|\
-    string error|\
-    CTraceAction action|\
-    CTraceResult result|\
-    CFunction articulatedTrace|\
-    string compressedTrace (nowrite)
+fields = trace.csv
 includes = utillib.h|abi.h|traceaction.h|traceresult.h
 cpp_includes = transaction.h|node.h
 display_str = blockNumber, transactionIndex, traceAddress, action::callType, error, action::from, action::to, action::value, action::ether, action::gas, result::gasUsed, action::input, compressedTrace, result::output
 tsx = true
-
-#    trace:
-#      type: object
-#      properties:
-#        blockHash:
-#          type: string
-#          format: hash_t
-#          description: "The hash of the block containing this trace"
-#          example: "0xf12869a900c2fd345f9d6a93e25e6118fd7f99f2b04bff6da59c8bc4218a1e98"
-#        blockNumber:
-#          type: number
-#          format: blknum_t
-#          example: 10021
-#          description: the number of the block
-#        transactionHash:
-#          description: the transaction's hash containing this trace
-#          type: string
-#          format: hash_t
-#        transactionIndex:
-#          type: number
-#          format: txnum_t
-#          example: 305
-#          description: "the zero-indexed position of the transaction in the block"
-#        traceAddress:
-#          description: a particular trace's address in the trace tree
-#          type: string
-#        subTraces:
-#          description: the number of children traces that the trace hash
-#          type: number
-#        type:
-#          description: the type of the trace
-#          type: string
-#        action:
-#          $ref: "#/components/schemas/traceAction"
-#        result:
-#          $ref: "#/components/schemas/traceResult"

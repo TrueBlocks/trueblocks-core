@@ -1,10 +1,7 @@
 [settings]
 base_class = CEthState
 class = CEthCall
-fields = \
-    string encoding|\
-    string bytes|\
-    CAbi abi_spec
+fields = ethcall.csv
 includes = utillib.h|ethstate.h
 cpp_includes = etherlib.h
 sort = v1.blockNumber < v2.blockNumber

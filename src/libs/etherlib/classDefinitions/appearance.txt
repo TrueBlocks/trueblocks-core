@@ -1,31 +1,5 @@
 [settings]
 class = CAppearance
-fields = \
-    blknum bn|\
-    blknum tx|\
-    blknum tc|\
-    address addr|\
-    string reason
+fields = appearance_fields.csv
 includes = etherlib.h|indexarchive.h
 display_str = bn, tx, tc, addr, reason
-
-#    appearance:
-#      type: object
-#      properties:
-#        blockNumber:
-#          type: number
-#          format: blknum_t
-#          example: 10021
-#          description: the number of the block
-#        transactionIndex:
-#          type: number
-#          format: txnum_t
-#          example: 305
-#          description: "the zero-indexed position of the transaction in the block"
-#        address:
-#          type: string
-#          format: address
-#          description: the address of the appearance
-#        names:
-#          type: string
-#          description: the name of the address, if found

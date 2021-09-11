@@ -1,8 +1,6 @@
 [settings]
 class = CPriceCacheItem
 base_class = CCacheBase
-fields = \
-    string type|\
-    string pair
+fields = pricecacheitem.csv
 includes = etherlib.h|cachebase.h
 serialize = true

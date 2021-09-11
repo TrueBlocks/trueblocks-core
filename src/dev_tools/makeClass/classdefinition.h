@@ -39,7 +39,6 @@ class CClassDefinition : public CBaseNode {
     string_q head_includes;
     string_q src_includes;
     string_q field_str;
-    string_q extra_fields;
     string_q display_str;
     string_q sort_str;
     string_q eq_str;
@@ -47,6 +46,7 @@ class CClassDefinition : public CBaseNode {
     bool serializable;
     bool tsx;
     CParameterArray fieldArray;
+    CParameterArray extraArray;
 
   public:
     CClassDefinition(void);
@@ -129,7 +129,6 @@ inline void CClassDefinition::initialize(void) {
     head_includes = "";
     src_includes = "";
     field_str = "";
-    extra_fields = "";
     display_str = "";
     sort_str = "";
     eq_str = "";
@@ -137,6 +136,7 @@ inline void CClassDefinition::initialize(void) {
     serializable = false;
     tsx = false;
     fieldArray.clear();
+    extraArray.clear();
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -161,7 +161,6 @@ inline void CClassDefinition::duplicate(const CClassDefinition& cl) {
     head_includes = cl.head_includes;
     src_includes = cl.src_includes;
     field_str = cl.field_str;
-    extra_fields = cl.extra_fields;
     display_str = cl.display_str;
     sort_str = cl.sort_str;
     eq_str = cl.eq_str;
@@ -169,6 +168,7 @@ inline void CClassDefinition::duplicate(const CClassDefinition& cl) {
     serializable = cl.serializable;
     tsx = cl.tsx;
     fieldArray = cl.fieldArray;
+    extraArray = cl.extraArray;
 
     // EXISTING_CODE
     // EXISTING_CODE

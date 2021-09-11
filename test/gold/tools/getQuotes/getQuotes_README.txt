@@ -3,13 +3,13 @@ getQuotes -th
 ### Usage
 
 `Usage:`    chifra quotes [-f|-p|-a|-e|-v|-h]  
-`Purpose:`  Freshen and/or display Ethereum price data.
+`Purpose:`  Freshen and/or display Ethereum price data. This tool has been deprecated.
 
 `Where:`  
 
 | | Option | Description |
 | :----- | :----- | :---------- |
-| -f | --freshen | Freshen price database (append new data) |
+| -f | --freshen | Freshen price database |
 | -p | --period &lt;val&gt; | increment of display, one of *[ 5 \| 15 \| 30 \| 60 \| 120\* \| 240 \| 1440 \| 10080 \| hourly \| daily \| weekly ]* |
 | -a | --pair &lt;str&gt; | which price pair to freshen or list (see Poloniex) |
 | -e | --feed &lt;val&gt; | the feed for the price data, one of *[ poloniex\* \| maker \| tellor ]* |

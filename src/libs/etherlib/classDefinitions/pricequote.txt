@@ -1,31 +1,6 @@
 [settings]
 class = CPriceQuote
-fields = \
-    timestamp timestamp|\
-    double close
+fields = pricequote.csv
 includes = utillib.h|abi.h
 cpp_includes = pricesource.h|reconciliation.h
 display_str = timestamp, date, close
-
-#    quote:
-#      type: object
-#      properties:
-#        timestamp:
-#          type: number
-#          format: timestamp_t
-#          example: 1438270144
-#          description: the timestamp of this quote
-#        close:
-#          type: number
-#          format: double
-#          example: 1240.10
-#          description: price of the asset in US dollars
-#        date:
-#          type: string
-#          format: date
-#          example: 2018-09-30 01:15:17 UTC
-#          description: the date of the associated timestamp
-#        name:
-#          type: string
-#          example: Byzantium
-#          description: the name of the block for some named 'special' blocks

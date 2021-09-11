@@ -1,17 +1,5 @@
 [settings]
 class = CScrapeStatistics
-fields = \
-    uint64 nFiles|\
-    uint64 nSkipped|\
-    uint64 nChecked|\
-    uint64 nBloomMisses|\
-    uint64 nBloomHits|\
-    uint64 nFalsePositive|\
-    uint64 nPositive|\
-    uint64 nStageChecked|\
-    uint64 nStageHits|\
-    uint64 nTotalHits|\
-    uint64 nFileRecords|\
-    uint64 nCacheWrites
+fields = scrapstatistics.csv
 includes = etherlib.h
 display_str = nFiles, nSkipped, nChecked, nBloomMisses, nBloomHits, nFalsePositive, nPositive, nTotalHits, nFileRecords, nCacheWrites

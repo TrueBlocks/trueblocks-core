@@ -1,10 +1,6 @@
 [settings]
 class = CAbiCacheItem
 base_class = CCacheBase
-fields = \
-    string type|\
-    uint64 nFunctions|\
-    uint64 nEvents|\
-    uint64 nOther
+fields = abicacheitem.csv
 includes = etherlib.h|cachebase.h
 serialize = true

@@ -1,8 +1,4 @@
 [settings]
 class = CCachedAccount
-fields = \
-    address addr|\
-    uint64 latestPage=1|\
-    CTransaction latestTx|\
-    CTransactionArray transactions
+fields = cachedaccount.csv
 includes = etherlib.h

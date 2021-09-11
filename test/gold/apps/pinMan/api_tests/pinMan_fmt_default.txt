@@ -1366,11 +1366,11 @@
         },
         {
           "name": "bloomHash",
-          "type": "text"
+          "type": "ipfshash"
         },
         {
           "name": "indexHash",
-          "type": "text"
+          "type": "ipfshash"
         }
       ]
     }

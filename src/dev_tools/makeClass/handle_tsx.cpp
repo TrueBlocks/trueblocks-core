@@ -98,18 +98,11 @@ bool COptions::handle_tsx_type(const CClassDefinition& classDef) {
     CNameValueMap typeMap;
 
     CParameterArray allFields;
-    for (auto field : classDef.fieldArray) {
+    for (auto field : classDef.fieldArray)
         allFields.push_back(field);
-    }
 
-    CStringArray extras;
-    explode(extras, classDef.extra_fields, '|');
-    for (auto name : extras) {
-        replaceAll(name, "  ", " ");
-        string_q type = nextTokenClear(name, ' ');
-        CParameter param(name, type);
-        allFields.push_back(param);
-    }
+    for (auto extra : classDef.extraArray)
+        allFields.push_back(extra);
 
     for (auto field : allFields) {
         if (startsWith(field.name, "C"))

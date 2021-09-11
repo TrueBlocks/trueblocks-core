@@ -1,13 +1,6 @@
 [settings]
 class = CConfigItem
 base_class = CBaseNode
-fields = \
-    string name|\
-    string value|\
-    string type|\
-    string tip|\
-    bool required|\
-    bool read_only|\
-    CAccountNameArray named (nowrite)
+fields = configitem.csv
 includes = etherlib.h|cachebase.h
 serialize = true

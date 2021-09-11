@@ -1,54 +1,10 @@
 [settings]
 class = CTokenBalanceRecord
 base_class = CMonitor
-fields = \
-    blknum blockNumber|\
-    string date|\
-    wei totalSupply|\
-    blknum transactionIndex|\
-    address holder (nowrite)|\
-    wei priorBalance|\
-    wei balance|\
-    int256 diff
+fields = tokenbalancerecord.csv
 includes = acctlib.h
 scope = extern
 serializable = true
 equals = address == it.address
 sort = v1.address < v2.address
 display_str = blockNumber, holder, address, name, symbol, decimals, totalsupply, balance
-
-#    token:
-#      type: object
-#      properties:
-#        holder:
-#          type: string
-#          format: address_t
-#          example: "0x2910543af39aba0cd09dbb2d50200b3e800a63d2"
-#          description: the address for which we are reporting the token balance
-#        balance:
-#          type: string
-#          format: wei_t
-#          example: "258843698360318500"
-#          description: the balance at the address at the given block height
-#        address:
-#          type: string
-#          format: address_t
-#          example: "0xa1e4380a3b1f749673e270229993ee55f35663b4"
-#          description: the address of the token contract being queried
-#        name:
-#          type: string
-#          example: "The DAO Original"
-#          description: the name of the token contract, if available
-#        decimals:
-#          type: number
-#          example: "18"
-#          description: the number of decimals for the token contract
-#        is_contract:
-#          type: boolean
-#          description: "`true` if the address is a smart contract, `false` otherwise"
-#        is_erc20:
-#          type: boolean
-#          description: "`true` if the address is an ERC20, `false` otherwise"
-#        is_erc721:
-#          type: boolean
-#          description: "`true` if the address is an ERC720, `false` otherwise"

@@ -1,7 +1,4 @@
 [settings]
 class = CRoute
-fields = \
-    string path|\
-    string helpText|\
-    string hotKey
+fields = route.csv
 includes = utillib.h

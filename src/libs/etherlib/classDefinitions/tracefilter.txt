@@ -1,10 +1,4 @@
 [settings]
 class = CTraceFilter
-fields = \
-    blknum fromBlock|\
-    blknum toBlock|\
-    CAddressArray fromAddress|\
-    CAddressArray toAddress|\
-    uint64 after|\
-    uint64 count
+fields = tracefilter.csv
 includes = utillib.h

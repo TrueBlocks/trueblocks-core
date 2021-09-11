@@ -1,17 +1,6 @@
 [settings]
 class = CNewBlock
-fields = \
-    gas gasLimit|\
-    gas gasUsed|\
-    hash hash|\
-    blknum blockNumber|\
-    hash parentHash|\
-    address miner|\
-    uint64 difficulty|\
-    double price|\
-    bool finalized (omitempty)|\
-    timestamp timestamp|\
-    CTransactionArray transactions
+fields = newblock.csv
 includes = etherlib.h|transaction.h
 scope = extern
 serialize = true

@@ -1,0 +1,7 @@
+name        ,type   ,str_default ,object ,array ,nowrite ,omitempty ,minimal ,extra ,noaddfld ,doc ,disp ,example ,description
+type        ,string ,            ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
+path        ,string ,            ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
+nFiles      ,uint64 ,            ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
+nFolders    ,uint64 ,            ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
+sizeInBytes ,uint64 ,            ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
+is_valid    ,bool   ,false       ,       ,      ,        ,true      ,        ,      ,         ,    ,     ,        ,

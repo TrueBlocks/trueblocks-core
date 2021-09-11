@@ -198,7 +198,7 @@ bool CLogEntry::setValueByName(const string_q& fieldNameIn, const string_q& fiel
             break;
         case 'd':
             if (fieldName % "data") {
-                data = fieldValue;
+                data = toLower(fieldValue);
                 return true;
             }
             break;

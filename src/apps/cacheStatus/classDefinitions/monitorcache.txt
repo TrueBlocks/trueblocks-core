@@ -1,8 +1,6 @@
 [settings]
 class = CMonitorCache
 base_class = CCache
-fields = \
-    CAddressArray addrs|\
-    CMonitorCacheItemArray items
+fields = monitorcache.csv
 includes = cache.h|monitorcacheitem.h
 serialize = true

@@ -54,8 +54,6 @@ CFieldData* CRuntimeClass::findField(const string_q& fieldName) {
         if (fieldList[i].getName() % fieldName)
             return &fieldList[i];
     }
-    // if (fieldName != "schema")
-    //    LOG_WARN("Field not found: ", m_ClassName, "::", fieldName);
     return NULL;
 }
 
@@ -69,12 +67,24 @@ bool CRuntimeClass::isFieldHidden(const string_q& fieldName) {
 
 //-------------------------------------------------------------------------
 void CRuntimeClass::addField(const string_q& fieldName, size_t dataType, size_t fieldID) {
+    if (findField(fieldName)) {
+        // TODO(tjayrush): can we turn this off?
+        if (fieldName != "deleted" && fieldName != "schema")
+            LOG_WARN("Field ", fieldName, " already exists");
+        return;
+    }
     CFieldData field(fieldName, fieldID, dataType);
     fieldList.push_back(field);
 }
 
 //-------------------------------------------------------------------------
 void CRuntimeClass::addObject(const string_q& fieldName, size_t dataType, size_t fieldID, const CRuntimeClass* pClass) {
+    if (findField(fieldName)) {
+        // TODO(tjayrush): can we turn this off?
+        if (fieldName != "deleted" && fieldName != "schema")
+            LOG_WARN("Field ", fieldName, " already exists");
+        return;
+    }
     CFieldData field(fieldName, fieldID, dataType, pClass);
     fieldList.push_back(field);
 }

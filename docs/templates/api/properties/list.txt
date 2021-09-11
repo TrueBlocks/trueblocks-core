@@ -1,5 +1,4 @@
-                  data:
-                    description: an array of appearances
-                    type: array
-                    items:
-                      $ref: "#/components/schemas/appearance"
+data:
+  type: array
+  items:
+    $ref: "#/components/schemas/appearance"

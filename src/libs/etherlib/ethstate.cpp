@@ -172,7 +172,7 @@ bool CEthState::setValueByName(const string_q& fieldNameIn, const string_q& fiel
             break;
         case 'c':
             if (fieldName % "code") {
-                code = fieldValue;
+                code = toLower(fieldValue);
                 return true;
             }
             break;

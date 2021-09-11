@@ -1,31 +1,9 @@
 [settings]
 class = CPinnedChunk
-fields = \
-    string fileName|\
-    string bloomHash|\
-    string indexHash|\
-    bool onDisc (nowrite)
+fields = pinnedchunk.csv
 includes = utillib.h
 cpp_includes =
 sort = v1.fileName < v2.fileName
 equals = fileName == it.fileName
 serializable = true
 display_str = fileName, bloomHash, indexHash
-
-#    pin:
-#      type: object
-#      properties:
-#        fileName:
-#          type: string
-#          example: 013142464-013145212
-#          description: for each chunk, the range of blocks contained in that chunk
-#        bloomHash:
-#          type: string
-#          format: hash
-#          example: QmXHjjYUAtLQqk4gm88THVNhcMn5uZHbZAV6NqGSHDqvWT
-#          description: the IPFS hash of the bloom filter at that range
-#        indexHash:
-#          type: string
-#          format: hash
-#          example: QmTbYpRKBC4M5ZKX59MGUfwu1xfR5gXaaPsgw1zLqWLj44
-#          description: the IPFS hash of the index chunk at that range

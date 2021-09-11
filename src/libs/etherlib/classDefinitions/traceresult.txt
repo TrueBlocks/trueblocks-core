@@ -1,34 +1,8 @@
 [settings]
 class = CTraceResult
-fields = \
-    address newContract|\
-    string code|\
-    gas gasUsed|\
-    string output
+fields = traceresult.csv
 includes = utillib.h|abi.h
 cpp_includes = trace.h
 serializable = true
 equals = ((newContract == it.newContract) && (code == it.code) && (gasUsed == it.gasUsed) && (output == it.output))
 tsx = true
-
-#   traceResult:
-#      description: the trace result
-#      type: object
-#      properties:
-#        newContract:
-#          type: string
-#          format: address_t
-#          example: "0xf503017d7baf7fbc0fff7492b751025c6a78179b"
-#          description: Address of new contract, if any
-#        code:
-#          description: if this trace is creating a new smart contract, the byte code of that contract
-#          type: string
-#          format: bytes
-#        gasUsed:
-#          type: number
-#          format: wei_t
-#          description: the amount of gas used by this trace
-#        output:
-#          description: the result of the call of this trace
-#          type: string
-#          format: byte
