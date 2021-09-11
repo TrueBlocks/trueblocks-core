@@ -1,0 +1,31 @@
+name                 ,type           ,str_default ,nowrite ,omitempty ,extra ,noaddfld ,object ,array ,doc ,example       ,description
+hash                 ,hash           ,            ,        ,          ,      ,         ,       ,      ,1   ,0xf128...1e98 ,The hash of the transaction
+blockHash            ,hash           ,            ,        ,          ,      ,         ,       ,      ,2   ,0xc421...fb04 ,The hash of the block containing this transaction
+blockNumber          ,blknum         ,            ,        ,          ,      ,         ,       ,      ,3   ,10021         ,the number of the block
+transactionIndex     ,blknum         ,            ,        ,          ,      ,         ,       ,      ,4   ,305           ,the zero-indexed position of the transaction in the block
+nonce                ,uint64         ,            ,        ,          ,      ,         ,       ,      ,5   ,232           ,sequence number of the transactions sent by the sender
+timestamp            ,timestamp      ,            ,        ,          ,      ,         ,       ,      ,6   ,1438335038    ,the unix timestamp of the object
+from                 ,address        ,            ,        ,          ,      ,         ,       ,      ,7   ,              ,address from which the transaction was sent
+to                   ,address        ,            ,        ,          ,      ,         ,       ,      ,8   ,              ,address to which the transaction was sent
+value                ,wei            ,            ,        ,          ,      ,         ,       ,      ,9   ,0             ,the amount of wei sent with this transactions
+extraValue1          ,wei            ,            ,        ,          ,      ,         ,       ,      ,    ,              ,
+extraValue2          ,wei            ,            ,        ,          ,      ,         ,       ,      ,    ,              ,
+gas                  ,gas            ,            ,        ,          ,      ,         ,       ,      ,10  ,158660        ,the maximum number of gas allowed for this transaction
+gasPrice             ,gas            ,            ,        ,          ,      ,         ,       ,      ,1   ,63525836552   ,the number of wei per unit of gas the sender is willing to spend
+maxFeePerGas         ,gas            ,            ,        ,          ,      ,         ,       ,      ,    ,              ,
+maxPriorityFeePerGas ,gas            ,            ,        ,          ,      ,         ,       ,      ,    ,              ,
+input                ,bytes          ,            ,        ,          ,      ,         ,       ,      ,12  ,0x3d18b912    ,byte data either containing a message or funcational data for a smart contracts. See the --articulate
+isError              ,uint8          ,            ,        ,          ,      ,         ,       ,      ,    ,              ,
+hasToken             ,uint8          ,            ,        ,          ,      ,         ,       ,      ,17  ,0             ,`true` if the transaction is token related&#44; `false` otherwise
+cachebits            ,uint8          ,CB_NONE     ,        ,          ,      ,         ,       ,      ,    ,              ,
+reserved2            ,uint8          ,            ,        ,          ,      ,         ,       ,      ,    ,              ,
+receipt              ,receipt        ,            ,        ,          ,      ,         ,true   ,      ,13  ,              ,
+traces               ,trace          ,            ,        ,          ,      ,         ,true   ,true  ,    ,              ,
+articulatedTx        ,function       ,            ,        ,          ,      ,         ,true   ,      ,15  ,              ,
+compressedTx         ,string         ,            ,true    ,          ,      ,         ,       ,      ,16  ,0x3d18b912( ) ,truncated&#44; more readable version of the articulation
+statements           ,reconciliation ,            ,true    ,          ,      ,         ,true   ,true  ,14  ,              ,array of reconciliations
+finalized            ,bool           ,            ,true    ,true      ,      ,         ,       ,      ,18  ,true          ,flag indicating the system considers this data final
+date                 ,date           ,            ,        ,          ,true  ,true     ,       ,      ,    ,              ,
+fromName             ,string         ,            ,        ,          ,true  ,true     ,       ,      ,    ,              ,
+toName               ,string         ,            ,        ,          ,true  ,true     ,       ,      ,    ,              ,
+extraData            ,string         ,            ,        ,          ,true  ,true     ,       ,      ,    ,              ,

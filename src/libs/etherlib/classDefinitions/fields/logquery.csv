@@ -1,0 +1,6 @@
+name      ,type      ,array
+fromBlock ,blknum    ,
+toBlock   ,blknum    ,
+blockHash ,hash      ,
+addresses ,address ,true
+topics    ,topic     ,true

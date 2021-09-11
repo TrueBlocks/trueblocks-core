@@ -1,4 +1,4 @@
-name                  ,type      ,object ,array ,def_string       ,nowrite
+name                  ,type      ,object ,array ,str_default      ,nowrite
 client_version        ,string    ,       ,      ,                 ,
 client_ids            ,string    ,       ,      ,                 ,
 trueblocks_version    ,string    ,       ,      ,                 ,

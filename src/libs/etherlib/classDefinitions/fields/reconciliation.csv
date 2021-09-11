@@ -1,0 +1,33 @@
+name                ,type      ,str_default ,extra ,doc ,example       ,description
+blockNumber         ,blknum    ,            ,      ,1   ,10021         ,the number of the block
+transactionIndex    ,blknum    ,            ,      ,2   ,305           ,the zero-indexed position of the transaction in the block
+timestamp           ,timestamp ,            ,      ,3   ,1438335038    ,the unix timestamp of the object
+assetAddr           ,address   ,            ,      ,4   ,0xf503...179b ,for reconciliations whose assetSymbol is ETH or WEI&#44; the accountedFor address. For all assets&#44; the address of the asset itself
+assetSymbol         ,string    ,            ,      ,5   ,              ,either ETH&#44; WEI or the symbol of the asset being reconciled as extracted from the chain
+decimals            ,uint64    ,18          ,      ,6   ,              ,Equivilent to the extracted value of getSymbol from ERC20 or&#44; if ETH or WEI then 18
+prevBlk             ,blknum    ,            ,      ,7   ,10021         ,the block number of the previous reconciliation
+prevBlkBal          ,int256    ,            ,      ,8   ,              ,the account balance for the given asset for the previous reconciliation
+begBal              ,int256    ,            ,      ,9   ,              ,the begining balance of the asset at the blockNumber
+endBal              ,int256    ,            ,      ,24  ,              ,the balance of the reconciled asset at the end of this transaction found by querying the chain (see the note above about intra-block reconciliations)
+amountIn            ,int256    ,            ,      ,11  ,              ,for ETH reconciliations&#44; the value of the transactions if the from address is the same as the accountedFor address. Otherwise&#44; the value of the ERC20’s transfer amount.
+internalIn          ,int256    ,            ,      ,13  ,              ,for ETH reconciliations only&#44; the value of any internal value transfers into the accountedFor account
+selfDestructIn      ,int256    ,            ,      ,15  ,              ,for ETH reconciliations for transactions ending in self-destrution only&#44; the value received by the accountedFor account from the self-destructed account bigint
+minerBaseRewardIn   ,int256    ,            ,      ,17  ,              ,for blocks won by the accountedFor address&#44; this is the base fee reward for the miner
+minerNephewRewardIn ,int256    ,            ,      ,18  ,              ,for blocks won by the accountedFor address&#44; this is the netphew reward for the miner
+minerTxFeeIn        ,int256    ,            ,      ,19  ,              ,for blocks won by the accountedFor address&#44; this is the transaction fee reward for the miner
+minerUncleRewardIn  ,int256    ,            ,      ,20  ,              ,for blocks in which the accountedFor address generated an uncle&#44; this value is the uncle reward
+prefundIn           ,int256    ,            ,      ,21  ,              ,at block zero (0) only&#44; the amount of genesis income for the accountedFor address
+amountOut           ,int256    ,            ,      ,12  ,              ,the amount (in terms of the asset) of regular outflow during this bigint
+internalOut         ,int256    ,            ,      ,14  ,              ,for ETH reconciliations only&#44; the value of any internal value transfers out of the accountedFor account
+selfDestructOut     ,int256    ,            ,      ,16  ,              ,for ETH reconciliations for transactions ending in self-destrution only&#44; the value transfered out of the accountedFor account
+gasCostOut          ,int256    ,            ,      ,23  ,              ,if accountedFor address is the transaction’s sender (i.e. from at the top level)&#44; the amount of gas expended denominated in either ETH or WEI.
+reconciliationType  ,string    ,            ,      ,30  ,              ,One of regular&#44; traces&#44; prevdiff-partial&#44; partial-nextdiff&#44; or `partial-partial depending on previous&#44; following or both transactions in the same block 	string
+spotPrice           ,double    ,1.0         ,      ,21  ,              ,The price (if available) at the time of the transaction in US dollars for ETH reconciliations and ETH for other assets
+priceSource         ,string    ,            ,      ,22  ,              ,The place from where the spot price was taken
+begBalDiff          ,int256    ,            ,true  ,10  ,              ,the difference between the expected beginning balance (prevBlkBal) and the queried balance from the chain
+totalIn             ,int256    ,            ,true  ,25  ,              ,a calculated field -- the sum of all In fields
+totalOut            ,int256    ,            ,true  ,26  ,              ,a calculated field -- the sum of all Out fields
+amountNet           ,int256    ,            ,true  ,27  ,              ,a calculated field -- totalIn - totalOut
+endBalCalc          ,int256    ,            ,true  ,28  ,              ,a calculated field -- begBal + amountNet
+endBalDiff          ,int256    ,            ,true  ,29  ,              ,a calculated field -- endBal - endBalCalc&#44; if non-zero&#44; the reconciliation failed
+reconciled          ,boolean   ,            ,true  ,30  ,              ,a calculated field -- true if `endBal === endBalCalc` and `begBal === prevBlkBal`. `false` otherwise.

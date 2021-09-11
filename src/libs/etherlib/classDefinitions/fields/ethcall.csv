@@ -1,0 +1,4 @@
+name     ,type   ,object
+encoding ,string ,
+bytes    ,string ,
+abi_spec ,abi    ,true

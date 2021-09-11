@@ -1,8 +1,6 @@
 [settings]
 class = CAbi
-fields = \
-    address address|\
-    CStringFunctionMap interfaceMap
+fields = abi.csv
 includes = function.h
 cpp_includes = node.h
 serializable = true
@@ -10,7 +8,3 @@ display_str = address, encoding, type, name, signature, input_names, output_name
 equals = (address == it.address)
 tsx = true
 disabled = true
-
-#    abis:
-#      type: object
-#      description: "a collection of function and event definitions as described elsewhere in the Ethereum system"

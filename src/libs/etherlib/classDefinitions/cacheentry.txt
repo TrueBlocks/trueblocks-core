@@ -1,8 +1,4 @@
 [settings]
 class = CCacheEntry
-fields = \
-    uint64 type|\
-    string extra|\
-    bool cached|\
-    string path
+fields = cacheentry.csv
 includes = basetypes.h|basenode.h|sfarchive.h

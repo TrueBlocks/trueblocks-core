@@ -1,6 +1,6 @@
 [settings]
 class = CTraceResult
-fields = traceresult.txt
+fields = traceresult.csv
 includes = utillib.h|abi.h
 cpp_includes = trace.h
 serializable = true

@@ -1,0 +1,11 @@
+name         ,type      ,str_default ,omitempty ,nowrite ,object ,array
+type         ,string    ,            ,          ,        ,       ,
+name         ,string    ,            ,          ,        ,       ,
+str_default  ,string    ,            ,          ,        ,       ,
+value        ,string    ,            ,          ,        ,       ,
+indexed      ,bool      ,            ,true      ,        ,       ,
+internalType ,string    ,            ,          ,        ,       ,
+components   ,parameter ,            ,          ,        ,true   ,true
+unused       ,bool      ,            ,true      ,        ,       ,
+is_flags     ,uint64    ,IS_ENABLED  ,          ,        ,       ,
+precision    ,uint64    ,5           ,          ,true    ,       ,

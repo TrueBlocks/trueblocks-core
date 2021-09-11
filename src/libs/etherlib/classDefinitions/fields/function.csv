@@ -1,0 +1,14 @@
+name            ,type      ,object ,array ,nowrite
+name            ,string    ,       ,      ,
+type            ,string    ,       ,      ,
+abi_source      ,string    ,       ,      ,
+anonymous       ,bool      ,       ,      ,
+constant        ,bool      ,       ,      ,
+stateMutability ,string    ,       ,      ,
+signature       ,string    ,       ,      ,
+encoding        ,string    ,       ,      ,
+message         ,string    ,       ,      ,true
+inputs          ,parameter ,true   ,true  ,
+outputs         ,parameter ,true   ,true  ,
+inputs_dict     ,Value     ,       ,      ,true
+outputs_dict    ,Value     ,       ,      ,true

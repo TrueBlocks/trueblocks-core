@@ -369,7 +369,7 @@ bool CTransaction::setValueByName(const string_q& fieldNameIn, const string_q& f
             break;
         case 'i':
             if (fieldName % "input") {
-                input = fieldValue;
+                input = toLower(fieldValue);
                 return true;
             }
             if (fieldName % "isError") {

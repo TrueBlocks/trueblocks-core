@@ -1,4 +1,4 @@
-name    ,type    ,def_string
+name    ,type    ,str_default
 address ,address ,
 lastPos ,uint64  ,NOPOS
 stake   ,wei     ,

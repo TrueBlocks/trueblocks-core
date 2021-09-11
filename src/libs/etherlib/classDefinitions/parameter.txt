@@ -1,21 +1,7 @@
 [settings]
 class = CParameter
-fields = \
-    string type|\
-    string name|\
-    string str_default|\
-    string value|\
-    bool indexed (omitempty)|\
-    string internalType|\
-    CParameterArray components|\
-    bool unused (omitempty)|\
-    uint64 is_flags=IS_ENABLED|\
-    uint64 precision=5 (nowrite)
+fields = paramter.csv
 includes = utillib.h
 display_str = type, name, str_default, value, internalType, indexed, is_pointer, is_array, \
     is_object, is_builtin, is_minimal, is_noaddfld, is_nowrite, is_omitempty, is_extra
 tsx = true
-
-#    parameter:
-#      type: object
-#      description: "a parameter to a function or event"
