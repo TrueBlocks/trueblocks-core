@@ -17,6 +17,14 @@ extern const char* STR_CASE_CODE_STRINGARRAY;
 extern bool writeTheCode(const codewrite_t& cw);
 //------------------------------------------------------------------------------------------------------------
 bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, const string_q& namespc, bool asJs) {
+    CClassDefinition classDef(toml);
+    classDef.short_fn = classDefIn.short_fn;
+    classDef.input_path = classDefIn.input_path;
+
+    // Do this before we check for being disabled
+    if (!classDef.openapi.empty())
+        handle_datamodel(classDef);
+
     //------------------------------------------------------------------------------------------------
     if (toml.getConfigBool("settings", "disabled", false)) {
         if (verbose)
@@ -27,16 +35,12 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
     //------------------------------------------------------------------------------------------------
     counter.nVisited++;
 
-    CClassDefinition classDef(toml);
-    classDef.short_fn = classDefIn.short_fn;
-    classDef.input_path = classDefIn.input_path;
-
     //------------------------------------------------------------------------------------------------
     ostringstream lheaderStream, clearStream, copyStream;
     ostringstream ar_readStream, ar_writeStream;
     ostringstream src_incStream, head_incStream;
     ostringstream child_objStream, add_fieldStream, hide_fieldStream;
-    ostringstream defaultsStream;
+    ostringstream defaultsStream, openapi_componentStream;
 
     //------------------------------------------------------------------------------------------------
     string_q fieldGetObj, fieldGetStr;
@@ -263,11 +267,7 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
     replaceAll(headSource, "[{NAMESPACE1}]", (namespc.empty() ? "" : "\nnamespace qblocks {\n\n"));
     replaceAll(headSource, "[{NAMESPACE2}]", (namespc.empty() ? "" : "}  // namespace qblocks\n"));
     replaceAll(headSource, "public:\n\n  public:", "public:");
-    replaceAll(headSource, "`````", string_q(5, '\t'));
-    replaceAll(headSource, "````", string_q(4, '\t'));
-    replaceAll(headSource, "```", string_q(3, '\t'));
-    replaceAll(headSource, "``", string_q(2, '\t'));
-    replaceAll(headSource, "`", string_q(1, '\t'));
+    expandTabbys(headSource);
     counter.nProcessed += writeTheCode(codewrite_t(headerFile, headSource, namespc, 4, true, force));
 
     //------------------------------------------------------------------------------------------------
@@ -310,11 +310,7 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
     replaceAll(srcSource, "[{NAMESPACE1}]", (namespc.empty() ? "" : "\nnamespace qblocks {\n\n"));
     replaceAll(srcSource, "[{NAMESPACE2}]", (namespc.empty() ? "" : "}  // namespace qblocks\n"));
     replaceAll(srcSource, "[{FN}]", classDef.short_fn);
-    replaceAll(srcSource, "`````", string_q(5, '\t'));
-    replaceAll(srcSource, "````", string_q(4, '\t'));
-    replaceAll(srcSource, "```", string_q(3, '\t'));
-    replaceAll(srcSource, "``", string_q(2, '\t'));
-    replaceAll(srcSource, "`", string_q(1, '\t'));
+    expandTabbys(srcSource);
     counter.nProcessed += writeTheCode(codewrite_t(srcFile, srcSource, namespc, 4, true, force));
 
     if (tsx && classDef.tsx)
@@ -759,6 +755,15 @@ bool writeTheCode(const codewrite_t& cw) {
 
     // We return 'false' if we would NOT have written the file (not if we actually did).
     return false;
+}
+
+//------------------------------------------------------------------------------------------------------------
+void expandTabbys(string_q& strOut) {
+    replaceAll(strOut, "`````", string_q(5, '\t'));
+    replaceAll(strOut, "````", string_q(4, '\t'));
+    replaceAll(strOut, "```", string_q(3, '\t'));
+    replaceAll(strOut, "``", string_q(2, '\t'));
+    replaceAll(strOut, "`", string_q(1, '\t'));
 }
 
 //------------------------------------------------------------------------------------------------------------

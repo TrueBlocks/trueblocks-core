@@ -155,6 +155,11 @@ string_q CClassDefinition::getValueByName(const string_q& fieldName) const {
                 return input_path;
             }
             break;
+        case 'o':
+            if (fieldName % "openapi") {
+                return openapi;
+            }
+            break;
         case 's':
             if (fieldName % "short_fn") {
                 return short_fn;
@@ -285,6 +290,12 @@ bool CClassDefinition::setValueByName(const string_q& fieldNameIn, const string_
                 return true;
             }
             break;
+        case 'o':
+            if (fieldName % "openapi") {
+                openapi = fieldValue;
+                return true;
+            }
+            break;
         case 's':
             if (fieldName % "short_fn") {
                 short_fn = fieldValue;
@@ -360,6 +371,7 @@ bool CClassDefinition::Serialize(CArchive& archive) {
     archive >> tsx;
     // archive >> fieldArray;
     // archive >> extraArray;
+    archive >> openapi;
     // EXISTING_CODE
     // EXISTING_CODE
     finishParse();
@@ -395,6 +407,7 @@ bool CClassDefinition::SerializeC(CArchive& archive) const {
     archive << tsx;
     // archive << fieldArray;
     // archive << extraArray;
+    archive << openapi;
     // EXISTING_CODE
     // EXISTING_CODE
     return true;
@@ -468,6 +481,7 @@ void CClassDefinition::registerClass(void) {
     HIDE_FIELD(CClassDefinition, "fieldArray");
     ADD_FIELD(CClassDefinition, "extraArray", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CClassDefinition, "extraArray");
+    ADD_FIELD(CClassDefinition, "openapi", T_TEXT | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CClassDefinition, "schema");
@@ -571,6 +585,7 @@ CClassDefinition::CClassDefinition(const CToml& toml) {
     scope_str = toml.getConfigStr("settings", "scope", "static");  // TODO(tjayrush): global data
     serializable = toml.getConfigBool("settings", "serializable", false);
     tsx = toml.getConfigBool("settings", "tsx", false);
+    openapi = toml.getConfigStr("settings", "openapi", "");
 
     //------------------------------------------------------------------------------------------------
     class_base = toProper(extract(class_name, 1));

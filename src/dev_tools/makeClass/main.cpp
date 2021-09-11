@@ -30,6 +30,7 @@ int main(int argc, const char* argv[]) {
 
         options.counter = CCounter();  // reset
         LOG_INFO(cYellow, "handling generate...", cOff);
+        sort(options.classDefs.begin(), options.classDefs.end(), sortByClassName);
         for (auto classDef : options.classDefs) {
             CToml toml(classDef.input_path);
             if (options.mode & EDIT) {
@@ -44,6 +45,7 @@ int main(int argc, const char* argv[]) {
                 options.handle_generate(toml, classDef, options.nspace, false);
             }
         }
+
         LOG_INFO(cYellow, "makeClass --run", cOff, " processed ", options.counter.nVisited, " files (changed ",
                  options.counter.nProcessed, ").", string_q(40, ' '));
     }
