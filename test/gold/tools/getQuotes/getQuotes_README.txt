@@ -3,7 +3,7 @@ getQuotes -th
 ### Usage
 
 `Usage:`    chifra quotes [-f|-p|-a|-e|-v|-h]  
-`Purpose:`  Freshen and/or display Ethereum price data. This has been deprecated.
+`Purpose:`  Freshen and/or display Ethereum price data. This tool has been deprecated.
 
 `Where:`  
 
