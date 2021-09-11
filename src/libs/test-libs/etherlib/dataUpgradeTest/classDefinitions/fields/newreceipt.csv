@@ -1,0 +1,6 @@
+name            ,type     ,object ,array ,omitempty
+contractAddress ,address  ,       ,      ,
+gasUsed         ,gas      ,       ,      ,
+logs            ,logEntry ,true   ,true  ,
+logsBloom       ,string   ,       ,      ,
+isErr           ,bool     ,       ,      ,true

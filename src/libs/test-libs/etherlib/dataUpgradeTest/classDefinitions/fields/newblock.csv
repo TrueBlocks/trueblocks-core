@@ -1,0 +1,12 @@
+name         ,type        ,object ,array ,omitempty
+gasLimit     ,gas         ,       ,      ,
+gasUsed      ,gas         ,       ,      ,
+hash         ,hash        ,       ,      ,
+blockNumber  ,blknum      ,       ,      ,
+parentHash   ,hash        ,       ,      ,
+miner        ,address     ,       ,      ,
+difficulty   ,uint64      ,       ,      ,
+price        ,double      ,       ,      ,
+finalized    ,bool        ,       ,      ,true
+timestamp    ,timestamp   ,       ,      ,
+transactions ,transaction ,true   ,true  ,

@@ -1,7 +1,4 @@
 [settings]
 class = CPerson
-fields = \
-    string name|\
-    uint64 age|\
-    CPerson* next
+fields = person.csv
 includes = etherlib.h

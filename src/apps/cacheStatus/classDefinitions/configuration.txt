@@ -1,7 +1,6 @@
 [settings]
 class = CConfiguration
 base_class = CBaseNode
-fields = \
-    CConfigFileArray files
+fields = configuration.csv
 includes = etherlib.h|configfile.h
 serialize = true

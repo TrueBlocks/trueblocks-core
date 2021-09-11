@@ -1,11 +1,5 @@
 [settings]
 class = CPinManifest
-fields = \
-    string fileName|\
-    string indexFormat|\
-    string bloomFormat|\
-    blknum firstPin|\
-    blknum lastPin|\
-    CPinnedChunkArray pins
+fields = manifest.csv
 includes = etherlib.h|pinnedchunk.h
 serializable = true

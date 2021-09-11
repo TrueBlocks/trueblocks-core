@@ -1,0 +1,8 @@
+name               ,type     ,omitempty ,nowrite ,object ,array
+client_version     ,string   ,          ,        ,       ,
+trueblocks_version ,string   ,          ,        ,       ,
+rpc_provider       ,string   ,          ,        ,       ,
+balance_provider   ,string   ,          ,        ,       ,
+host               ,string   ,          ,        ,       ,
+is_scraping        ,bool     ,true      ,        ,       ,
+caches             ,cachePtr ,          ,true    ,true   ,true

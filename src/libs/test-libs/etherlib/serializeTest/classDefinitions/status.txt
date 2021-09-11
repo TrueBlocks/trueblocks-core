@@ -1,13 +1,6 @@
 [settings]
 class = CStatus
-fields = \
-    string client_version|\
-    string trueblocks_version|\
-    string rpc_provider|\
-    string balance_provider|\
-    string host|\
-    bool is_scraping (omitempty)|\
-    CCachePtrArray caches (nowrite)
+fields = status.csv
 includes = etherlib.h|cache.h
 serialize = true
 disabled = true

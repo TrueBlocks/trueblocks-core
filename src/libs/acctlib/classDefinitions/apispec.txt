@@ -1,8 +1,5 @@
 [settings]
 class = CApiSpec
-fields = \
-    string method|\
-    string uri|\
-    string headers
+fields = apispec.csv
 includes = utillib.h
 serializable = true

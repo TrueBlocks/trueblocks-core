@@ -1,15 +1,6 @@
 [settings]
 class = CCollection
-fields = \
-    string cid|\
-    string tags|\
-    string name|\
-    string client|\
-    bool monitored|\
-    bool deleted|\
-    uint64 sizeInBytes|\
-    CAddressArray addresses|\
-    string addressList (nowrite)
+fields = collection.csv
 includes = basetypes.h|basenode.h|conversions.h
 cpp_includes = options_base.h
 display_str = cid, tags, name, client, monitored, deleted, sizeInBytes, addresses

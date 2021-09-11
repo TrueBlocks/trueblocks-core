@@ -1091,5 +1091,5 @@ TIME ~ CLOCK - <INFO>  : manifestHashEncoding:	0x337f3f32
     "bloomHash": "QmfNKytXVEz9qjYNBkuoiDALEjHHdLqcNSQuzU4CwGEWjw",
     "indexHash": "QmebtBgXHGECsATgHPgfikfSJ4SrP2Eg4PdWJpzBcZLKEB"
   }], "types": [
-{ "type": "CPinnedChunk", "fields": [{ "name": "fileName", "type": "text" }, { "name": "bloomHash", "type": "text" }, { "name": "indexHash", "type": "text" }] }
+{ "type": "CPinnedChunk", "fields": [{ "name": "fileName", "type": "text" }, { "name": "bloomHash", "type": "ipfshash" }, { "name": "indexHash", "type": "ipfshash" }] }
 ], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }

@@ -1,9 +1,6 @@
 [settings]
 class = CPinataRegion
-fields = \
-    string regionId|\
-    string currentReplicationCount|\
-    string desiredReplicationCount
+fields = pinataregion.csv
 includes = utillib.h
 cpp_includes =
 serializable = true

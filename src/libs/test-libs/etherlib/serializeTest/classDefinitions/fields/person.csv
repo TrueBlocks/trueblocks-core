@@ -1,0 +1,4 @@
+name ,type    ,object
+name ,string  ,
+age  ,uint64  ,
+next ,person* ,true

@@ -1,7 +1,4 @@
 [settings]
 class = CRPCResult
-fields = \
-    string jsonrpc|\
-    string result|\
-    string id
+fields = rpcresult.csv
 includes = utillib.h
