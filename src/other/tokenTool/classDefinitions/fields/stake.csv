@@ -1,0 +1,4 @@
+name    ,type    ,def_string
+address ,address ,
+lastPos ,uint64  ,NOPOS
+stake   ,wei     ,

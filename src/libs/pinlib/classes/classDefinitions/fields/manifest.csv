@@ -1,0 +1,7 @@
+name        ,type        ,object ,array
+fileName    ,string      ,       ,
+indexFormat ,string      ,       ,
+bloomFormat ,string      ,       ,
+firstPin    ,blknum      ,       ,
+lastPin     ,blknum      ,       ,
+pins        ,pinnedChunk ,true   ,true

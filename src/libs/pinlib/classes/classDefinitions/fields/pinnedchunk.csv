@@ -1,0 +1,5 @@
+name      ,type     ,nowrite ,example             ,description
+fileName  ,string   ,        ,013142464-013145212 ,for each chunk&#44; the range of blocks contained in that chunk
+bloomHash ,ipfshash ,        ,QmXHjjY...HDqvWT    ,the IPFS hash of the bloom filter at that range
+indexHash ,ipfshash ,        ,QmTbYpR...qWLj44    ,the IPFS hash of the index chunk at that range
+onDisc    ,bool     ,true    ,                    ,

@@ -1,0 +1,8 @@
+name      ,type        ,object ,array ,nowrite
+name      ,string      ,       ,      ,
+value     ,string      ,       ,      ,
+type      ,string      ,       ,      ,
+tip       ,string      ,       ,      ,
+required  ,bool        ,       ,      ,
+read_only ,bool        ,       ,      ,
+named     ,accountName ,true   ,true  ,true

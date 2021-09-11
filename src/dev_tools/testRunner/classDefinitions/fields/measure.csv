@@ -1,0 +1,12 @@
+name     ,type
+git_hash ,string
+date     ,string
+machine  ,string
+node     ,string
+epoch    ,string
+group    ,string
+cmd      ,string
+type     ,string
+nTests   ,uint64
+nPassed  ,uint64
+totSecs  ,double

@@ -1,0 +1,4 @@
+name    ,type
+jsonrpc ,string
+result  ,string
+id      ,string

@@ -1,0 +1,14 @@
+name           ,type
+type           ,string
+nAddrs         ,uint32
+nApps          ,uint32
+firstApp       ,blknum
+latestApp      ,blknum
+firstTs        ,timestamp
+latestTs       ,timestamp
+filename       ,string
+fileDate       ,datetime
+indexSizeBytes ,uint32
+indexHash      ,ipfshash
+bloomSizeBytes ,uint32
+bloomHash      ,ipfshash

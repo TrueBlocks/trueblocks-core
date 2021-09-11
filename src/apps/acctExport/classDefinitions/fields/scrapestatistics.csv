@@ -1,0 +1,13 @@
+name           ,type
+nFiles         ,uint64
+nSkipped       ,uint64
+nChecked       ,uint64
+nBloomMisses   ,uint64
+nBloomHits     ,uint64
+nFalsePositive ,uint64
+nPositive      ,uint64
+nStageChecked  ,uint64
+nStageHits     ,uint64
+nTotalHits     ,uint64
+nFileRecords   ,uint64
+nCacheWrites   ,uint64

@@ -1,0 +1,4 @@
+name     ,type
+address  ,address
+nRecords ,uint64
+fileSize ,uint64

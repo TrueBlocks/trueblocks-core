@@ -1,0 +1,4 @@
+name    ,type       ,object ,array
+section ,string     ,       ,
+name    ,string     ,       ,
+keys    ,configItem ,true   ,true

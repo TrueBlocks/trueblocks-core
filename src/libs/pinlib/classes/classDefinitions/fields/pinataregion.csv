@@ -1,0 +1,4 @@
+name                    ,type
+regionId                ,string
+currentReplicationCount ,string
+desiredReplicationCount ,string

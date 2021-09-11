@@ -1,0 +1,2 @@
+name  ,type       ,object ,array
+files ,configFile ,true   ,true

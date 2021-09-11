@@ -1,0 +1,24 @@
+name             ,type    ,str_default ,nowrite ,omitempty ,extra
+nAppearances     ,blknum  ,            ,true
+lastExport       ,blknum  ,            ,true
+firstAppearance  ,blknum  ,            ,true
+latestAppearance ,blknum  ,UINT_MAX    ,true
+lastVisitedBlock ,blknum  ,            ,true
+sizeInBytes      ,uint64  ,            ,true    ,true
+nApps            ,blknum  ,            ,        ,          ,true
+firstApp         ,blknum  ,            ,        ,          ,true
+latestApp        ,blknum  ,            ,        ,          ,true
+path             ,string  ,            ,        ,          ,true
+address          ,address ,            ,        ,          ,true
+decimals         ,uint64  ,            ,        ,          ,true
+deleted          ,bool    ,            ,        ,          ,true
+description      ,string  ,            ,        ,          ,true
+is_contract      ,bool    ,            ,        ,          ,true
+is_custom        ,bool    ,            ,        ,          ,true
+is_erc20         ,bool    ,            ,        ,          ,true
+is_erc721        ,bool    ,            ,        ,          ,true
+is_prefund       ,bool    ,            ,        ,          ,true
+name             ,string  ,            ,        ,          ,true
+source           ,string  ,            ,        ,          ,true
+symbol           ,string  ,            ,        ,          ,true
+tags             ,string  ,            ,        ,          ,true

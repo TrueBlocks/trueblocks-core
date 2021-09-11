@@ -1,0 +1,20 @@
+name                  ,type      ,object ,array ,def_string       ,nowrite
+client_version        ,string    ,       ,      ,                 ,
+client_ids            ,string    ,       ,      ,                 ,
+trueblocks_version    ,string    ,       ,      ,                 ,
+rpc_provider          ,string    ,       ,      ,                 ,
+balance_provider      ,string    ,       ,      ,                 ,
+config_path (nowrite) ,string    ,       ,      ,                 ,
+cache_path            ,string    ,       ,      ,                 ,
+index_path            ,string    ,       ,      ,                 ,
+host                  ,bool      ,       ,      ,                 ,
+is_testing            ,bool      ,       ,      ,                 ,
+is_api                ,bool      ,       ,      ,                 ,
+is_docker             ,bool      ,       ,      ,                 ,
+is_scraping           ,bool      ,       ,      ,                 ,
+is_archive            ,bool      ,       ,      ,                 ,
+is_tracing            ,bool      ,       ,      ,                 ,
+has_eskey             ,bool      ,       ,      ,                 ,
+has_pinkey            ,bool      ,       ,      ,                 ,
+ts                    ,timestamp ,       ,      ,date_2_Ts(Now()) ,true
+caches                ,cachePtr  ,true   ,true  ,                 ,true

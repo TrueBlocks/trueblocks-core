@@ -1,0 +1,6 @@
+name        ,type   ,nowrite ,omitempty
+nApps       ,blknum ,true    ,
+firstApp    ,blknum ,true    ,
+latestApp   ,blknum ,true    ,
+path        ,string ,true    ,
+sizeInBytes ,uint64 ,true    ,true

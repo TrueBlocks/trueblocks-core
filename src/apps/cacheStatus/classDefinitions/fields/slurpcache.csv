@@ -1,0 +1,3 @@
+name  ,type             ,object ,array
+addrs ,address          ,true   ,true
+items ,monitorCacheItem ,true   ,true
