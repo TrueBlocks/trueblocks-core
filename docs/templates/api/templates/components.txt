@@ -156,6 +156,33 @@ components:
     monitor:
       description: "an address that is being (or has been) monitored"
       type: object
+      properties:
+        nApps:
+          type: number
+          format: blknum
+          description: "the number of appearances for this monitor"
+        firstApp:
+          type: number
+          format: blknum
+          description: "the first block at which this address appears"
+        latestApp:
+          type: number
+          format: blknum
+          description: "the latest block at which this address appears"
+        sizeInBytes:
+          type: number
+          format: uint64
+          description: "the size of this monitor on disc"
+        tags:
+          type: string
+          description: "the tag given to this address"
+        address:
+          type: string
+          format: address
+          description: "the address being monitored"
+        is_custom:
+          type: boolean
+          description: "`true` if this address is customized"
     name:
       type: object
       properties:
@@ -207,6 +234,27 @@ components:
     parameter:
       description: "a parameter to a function or event"
       type: object
+      properties:
+        type:
+          type: string
+          description: "the type of this parameter"
+        name:
+          type: string
+          description: "the name of this parameter"
+        str_default:
+          type: string
+          description: "the defaul value of this parameter, if any"
+        indexed:
+          type: boolean
+          description: "`true` if this parameter is indexed"
+        internalType:
+          type: string
+          description: "for composite types, the interal type of the parameter"
+        components:
+          type: array
+          items:
+            $ref: "#/components/schemas/parameter"
+          description: "for composite types, the parameters making up the composite"
     pin:
       type: object
       properties:

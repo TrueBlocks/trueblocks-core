@@ -82,7 +82,8 @@ string_q typeFmt(const CParameter& fld) {
         if (startsWith(t, "C"))
             replace(t, "C", "");
         replace(t, "Array", "");
-        replace(ret, "++X++", toLower(t));
+        replace(ret, "++X++", string_q(1, (char)tolower(t[0])) + t.substr(1, 100));
+        replace(ret, "logentry", "log");
         return ret;
     }
     if (fld.is_flags & IS_OBJECT) {
@@ -91,7 +92,8 @@ string_q typeFmt(const CParameter& fld) {
         if (startsWith(t, "C"))
             replace(t, "C", "");
         replace(t, "Array", "");
-        replace(ret, "++X++", toLower(t));
+        replace(ret, "++X++", string_q(1, (char)tolower(t[0])) + t.substr(1, 100));
+        replace(ret, "logEntry", "log");
         return ret;
     }
     if (fld.type == "blknum" || fld.type == "uint64" || fld.type == "timestamp" || fld.type == "double" ||

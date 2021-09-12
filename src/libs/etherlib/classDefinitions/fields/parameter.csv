@@ -1,11 +1,11 @@
 name         ,type      ,str_default ,object ,array ,nowrite ,omitempty ,minimal ,extra ,noaddfld ,doc ,disp ,example ,description
-type         ,string    ,            ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
-name         ,string    ,            ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
-str_default  ,string    ,            ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
+type         ,string    ,            ,       ,      ,        ,          ,        ,      ,         ,1   ,     ,        ,the type of this parameter
+name         ,string    ,            ,       ,      ,        ,          ,        ,      ,         ,2   ,     ,        ,the name of this parameter
+str_default  ,string    ,            ,       ,      ,        ,          ,        ,      ,         ,3   ,     ,        ,the defaul value of this parameter&#44; if any
 value        ,string    ,            ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
-indexed      ,bool      ,            ,       ,      ,        ,true      ,        ,      ,         ,    ,     ,        ,
-internalType ,string    ,            ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
-components   ,parameter ,            ,true   ,true  ,        ,          ,        ,      ,         ,    ,     ,        ,
+indexed      ,bool      ,            ,       ,      ,        ,true      ,        ,      ,         ,4   ,     ,        ,`true` if this parameter is indexed
+internalType ,string    ,            ,       ,      ,        ,          ,        ,      ,         ,5   ,     ,        ,for composite types&#44; the interal type of the parameter
+components   ,parameter ,            ,true   ,true  ,        ,          ,        ,      ,         ,6   ,     ,        ,for composite types&#44; the parameters making up the composite
 unused       ,bool      ,            ,       ,      ,        ,true      ,        ,      ,         ,    ,     ,        ,
 is_flags     ,uint64    ,IS_ENABLED  ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
 precision    ,uint64    ,5           ,       ,      ,true    ,          ,        ,      ,         ,    ,     ,        ,
