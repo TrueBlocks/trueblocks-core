@@ -13,18 +13,104 @@
 #include "acctlib.h"
 #include "options.h"
 
+extern const char* STR_TAIL_THING;
+extern bool sortByDataModelName(const CClassDefinition& c1, const CClassDefinition& c2);
+extern bool sortByDoc(const CParameter& c1, const CParameter& c2);
+extern string_q typeFmt(const CParameter& fld);
+extern string_q exFmt(const CParameter& fld);
+
 //------------------------------------------------------------------------------------------------------------
-bool COptions::handle_datamodel(const CClassDefinition& classDef) {
-    if (classDef.openapi.empty())
-        return true;
+bool COptions::handle_datamodel(void) {
+    CClassDefinitionArray dataModels;
 
-    ostringstream os;
-    os << classDef.Format("[`{OPENAPI}:") << endl;
+    for (auto classDefIn : classDefs) {
+        CToml toml(classDefIn.input_path);
+        CClassDefinition classDef(toml);
+        classDef.short_fn = classDefIn.short_fn;
+        classDef.input_path = classDefIn.input_path;
+        if (!classDef.openapi.empty())
+            dataModels.push_back(classDef);
+    }
 
-    string_q components = os.str();
-    expandTabbys(components);
-    replaceAll(components, "\t", "  ");
-    cerr << components;
+    sort(dataModels.begin(), dataModels.end(), sortByDataModelName);
+
+    ostringstream theStream;
+    theStream << "  schemas:" << endl;
+    for (auto model : dataModels) {
+        if (!model.openapi.empty()) {
+            sort(model.fieldArray.begin(), model.fieldArray.end(), sortByDoc);
+            string_q fmt;
+            fmt += "[    {OPENAPI}:\n]";
+            fmt += "[      description: \"{DESCRIPTION}\"\n]";
+            fmt += "[      type: object\n]";
+            fmt += "[      properties:\n]";
+            theStream << model.Format(fmt);
+            ostringstream props;
+            for (auto fld : model.fieldArray) {
+                if (fld.doc) {
+                    props << fld.Format("[        {NAME}:\n]");
+                    props << fld.Format(typeFmt(fld));
+                    props << fld.Format(exFmt(fld));
+                    props << fld.Format("[          description: \"{DESCRIPTION}\"\n]");
+                }
+            }
+            theStream << props.str();
+        }
+    }
+    theStream << STR_TAIL_THING;
+    stringToAsciiFile(getDocsTemplate("api/templates/components.txt"), substitute(theStream.str(), "&#44;", ","));
 
     return true;
 }
+
+//------------------------------------------------------------------------------------------------------------
+bool sortByDataModelName(const CClassDefinition& c1, const CClassDefinition& c2) {
+    return c1.openapi < c2.openapi;
+}
+
+//------------------------------------------------------------------------------------------------------------
+bool sortByDoc(const CParameter& c1, const CParameter& c2) {
+    return c1.doc < c2.doc;
+}
+
+//------------------------------------------------------------------------------------------------------------
+string_q typeFmt(const CParameter& fld) {
+    if (fld.type == "blknum" || fld.type == "uint64" || fld.type == "timestamp" || fld.type == "double")
+        return "[          type: number\n          format: {TYPE}\n]";
+    if (fld.type == "address" || fld.type == "hash" || fld.type == "bytes" || fld.type == "gas" || fld.type == "wei" ||
+        fld.type == "int256" || fld.type == "uint256")
+        return "[          type: string\n          format: {TYPE}\n]";
+    if (fld.type == "bool")
+        return "[          type: boolean\n]";
+    return "[          type: {TYPE}\n]";
+}
+
+//------------------------------------------------------------------------------------------------------------
+string_q exFmt(const CParameter& fld) {
+    if (fld.type == "blknum" || fld.type == "uint64" || fld.type == "timestamp" || fld.type == "bool" ||
+        fld.type == "double")
+        return "[          example: {EXAMPLE}\n]";
+    return "[          example: \"{EXAMPLE}\"\n]";
+}
+
+//------------------------------------------------------------------------------------------------------------
+const char* STR_TAIL_THING =
+    "    response:\n"
+    "      required:\n"
+    "        - result\n"
+    "      type: object\n"
+    "      properties:\n"
+    "        data:\n"
+    "          type: object\n"
+    "        error:\n"
+    "          type: array\n"
+    "          example:\n"
+    "            - error 1\n"
+    "            - error 2\n"
+    "          items:\n"
+    "            type: string\n"
+    "    hash:\n"
+    "      type: string\n"
+    "      format: hash\n"
+    "      description: \"The 32-byte hash\"\n"
+    "      example: \"0xf128...1e98\"\n";

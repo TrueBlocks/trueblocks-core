@@ -6,3 +6,4 @@ includes = etherlib.h|transaction.h|reconciliation.h|ethstate.h|monitoredapp.h
 force_objget = true
 tsx = true
 openapi = monitor
+description = an address that is being (or has been) monitored

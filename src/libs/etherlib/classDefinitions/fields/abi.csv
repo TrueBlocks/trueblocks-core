@@ -1,3 +1,4 @@
 name         ,type              ,str_default ,object ,array ,nowrite ,omitempty ,minimal ,extra ,noaddfld ,doc ,disp ,example ,description
-address      ,address           ,            ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
+address      ,address           ,            ,       ,      ,        ,          ,        ,      ,         ,1   ,     ,        ,the smart contract that implements this abi
 interfaceMap ,stringFunctionMap ,            ,true   ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
+interfaces   ,function          ,            ,true   ,true  ,        ,          ,true    ,      ,true     ,2   ,     ,        ,the list of events and functions on this abi

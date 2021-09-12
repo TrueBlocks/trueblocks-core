@@ -21,10 +21,6 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
     classDef.short_fn = classDefIn.short_fn;
     classDef.input_path = classDefIn.input_path;
 
-    // Do this before we check for being disabled
-    if (!classDef.openapi.empty())
-        handle_datamodel(classDef);
-
     //------------------------------------------------------------------------------------------------
     if (toml.getConfigBool("settings", "disabled", false)) {
         if (verbose)

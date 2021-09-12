@@ -48,6 +48,7 @@ class CClassDefinition : public CBaseNode {
     CParameterArray fieldArray;
     CParameterArray extraArray;
     string_q openapi;
+    string_q description;
 
   public:
     CClassDefinition(void);
@@ -139,6 +140,7 @@ inline void CClassDefinition::initialize(void) {
     fieldArray.clear();
     extraArray.clear();
     openapi = "";
+    description = "";
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -172,6 +174,7 @@ inline void CClassDefinition::duplicate(const CClassDefinition& cl) {
     fieldArray = cl.fieldArray;
     extraArray = cl.extraArray;
     openapi = cl.openapi;
+    description = cl.description;
 
     // EXISTING_CODE
     // EXISTING_CODE

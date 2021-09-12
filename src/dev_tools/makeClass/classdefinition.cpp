@@ -108,6 +108,9 @@ string_q CClassDefinition::getValueByName(const string_q& fieldName) const {
             if (fieldName % "display_str") {
                 return display_str;
             }
+            if (fieldName % "description") {
+                return description;
+            }
             break;
         case 'e':
             if (fieldName % "eq_str") {
@@ -247,6 +250,10 @@ bool CClassDefinition::setValueByName(const string_q& fieldNameIn, const string_
                 display_str = fieldValue;
                 return true;
             }
+            if (fieldName % "description") {
+                description = fieldValue;
+                return true;
+            }
             break;
         case 'e':
             if (fieldName % "eq_str") {
@@ -372,6 +379,7 @@ bool CClassDefinition::Serialize(CArchive& archive) {
     // archive >> fieldArray;
     // archive >> extraArray;
     archive >> openapi;
+    archive >> description;
     // EXISTING_CODE
     // EXISTING_CODE
     finishParse();
@@ -408,6 +416,7 @@ bool CClassDefinition::SerializeC(CArchive& archive) const {
     // archive << fieldArray;
     // archive << extraArray;
     archive << openapi;
+    archive << description;
     // EXISTING_CODE
     // EXISTING_CODE
     return true;
@@ -482,6 +491,7 @@ void CClassDefinition::registerClass(void) {
     ADD_FIELD(CClassDefinition, "extraArray", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CClassDefinition, "extraArray");
     ADD_FIELD(CClassDefinition, "openapi", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CClassDefinition, "description", T_TEXT | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CClassDefinition, "schema");
@@ -584,6 +594,7 @@ CClassDefinition::CClassDefinition(const CToml& toml) {
     eq_str = toml.getConfigStr("settings", "equals", "");
     scope_str = toml.getConfigStr("settings", "scope", "static");  // TODO(tjayrush): global data
     serializable = toml.getConfigBool("settings", "serializable", false);
+    description = toml.getConfigStr("settings", "description", "");
     tsx = toml.getConfigBool("settings", "tsx", false);
     openapi = toml.getConfigStr("settings", "openapi", "");
 

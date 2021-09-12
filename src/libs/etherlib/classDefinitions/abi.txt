@@ -9,3 +9,4 @@ equals = (address == it.address)
 tsx = true
 disabled = true
 openapi = abi
+description = a collection of function and event definitions as described elsewhere in the Ethereum system

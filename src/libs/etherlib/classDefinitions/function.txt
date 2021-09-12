@@ -8,3 +8,4 @@ serializable = true
 display_str = abi_source, name, type, stateMutability, signature, encoding, inputs, outputs
 tsx = true
 openapi = function
+description = a human readable representation of a Solidity function call or event

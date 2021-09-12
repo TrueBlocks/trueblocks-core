@@ -30,7 +30,6 @@ int main(int argc, const char* argv[]) {
 
         options.counter = CCounter();  // reset
         LOG_INFO(cYellow, "handling generate...", cOff);
-        sort(options.classDefs.begin(), options.classDefs.end(), sortByClassName);
         for (auto classDef : options.classDefs) {
             CToml toml(classDef.input_path);
             if (options.mode & EDIT) {

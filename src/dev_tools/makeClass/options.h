@@ -136,7 +136,7 @@ class COptions : public COptionsBase {
     bool handle_lint(void);
     bool handle_format(void);
     bool handle_generate(CToml& toml, const CClassDefinition& classDef, const string_q& namespc, bool asJs);
-    bool handle_datamodel(const CClassDefinition& classDef);
+    bool handle_datamodel(void);
     bool handle_tsx(void);
     bool handle_tsx_type(const CClassDefinition& classDef);
 
@@ -212,8 +212,3 @@ void doReplace(string_q& str, const string_q& type, const string_q& rep, const s
 //---------------------------------------------------------------------------------------------------
 #define routeCount fileCount
 #define cmdCount nVisited
-
-//---------------------------------------------------------------------------------------------------
-inline bool sortByClassName(const CClassDefinition& c1, const CClassDefinition& c2) {
-    return c1.class_name < c2.class_name;
-}

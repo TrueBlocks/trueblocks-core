@@ -80,7 +80,7 @@ add_custom_target(format COMMAND "${BIN_DIR}/makeClass" "--format" WORKING_DIREC
 add_custom_target(options COMMAND "${BIN_DIR}/makeClass" "--options -openapi" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
 add_custom_target(generate COMMAND "${BIN_DIR}/makeClass" "--openapi --all --options --readmes" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
 add_custom_target(readmes COMMAND "${BIN_DIR}/makeClass" "--readmes" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
-add_custom_target(finish COMMAND "${BIN_DIR}/makeClass" "-lf" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
+add_custom_target(finish COMMAND "${BIN_DIR}/makeClass" "--lint --format" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
 add_custom_target(tests COMMAND "${BIN_TEST_DIR}/test.sh" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/../build")
 add_custom_target(test-all COMMAND "${BIN_TEST_DIR}/test-all.sh" WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/../build")
 

@@ -173,6 +173,8 @@ bool COptions::parseArguments(string_q& command) {
     LOG4("Processing ", classDefs.size(), " class definition files.");
 
     // Ignoring classDefs for a moment, process special options. Note: order matters
+    if (openapi && !handle_datamodel())
+        return false;
     if (options && !handle_options())
         return false;
     if (readmes && !handle_readmes())
