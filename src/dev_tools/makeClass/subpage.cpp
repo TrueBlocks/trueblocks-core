@@ -331,6 +331,18 @@ bool CSubpage::readBackLevel(CArchive& archive) {
     return done;
 }
 
+//---------------------------------------------------------------------------
+CArchive& operator<<(CArchive& archive, const CSubpage& sub) {
+    sub.SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator>>(CArchive& archive, CSubpage& sub) {
+    sub.Serialize(archive);
+    return archive;
+}
+
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CSubpage& it) {
     // EXISTING_CODE

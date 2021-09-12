@@ -287,6 +287,18 @@ bool CCacheEntry::readBackLevel(CArchive& archive) {
     return done;
 }
 
+//---------------------------------------------------------------------------
+CArchive& operator<<(CArchive& archive, const CCacheEntry& cac) {
+    cac.SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator>>(CArchive& archive, CCacheEntry& cac) {
+    cac.Serialize(archive);
+    return archive;
+}
+
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CCacheEntry& it) {
     // EXISTING_CODE

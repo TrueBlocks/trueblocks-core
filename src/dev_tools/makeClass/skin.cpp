@@ -349,6 +349,18 @@ bool CSkin::readBackLevel(CArchive& archive) {
     return done;
 }
 
+//---------------------------------------------------------------------------
+CArchive& operator<<(CArchive& archive, const CSkin& ski) {
+    ski.SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator>>(CArchive& archive, CSkin& ski) {
+    ski.Serialize(archive);
+    return archive;
+}
+
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CSkin& it) {
     // EXISTING_CODE

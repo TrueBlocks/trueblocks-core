@@ -3,5 +3,5 @@ class = CStake
 fields = stake.csv
 includes = etherlib.h
 cpp_includes =
-serialize = true
+serializable = true
 disabled  = true

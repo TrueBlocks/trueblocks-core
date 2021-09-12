@@ -483,6 +483,18 @@ bool CTrace::readBackLevel(CArchive& archive) {
     return done;
 }
 
+//---------------------------------------------------------------------------
+CArchive& operator<<(CArchive& archive, const CTrace& tra) {
+    tra.SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator>>(CArchive& archive, CTrace& tra) {
+    tra.Serialize(archive);
+    return archive;
+}
+
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CTrace& it) {
     // EXISTING_CODE

@@ -152,6 +152,10 @@ extern CArchive& operator>>(CArchive& archive, CInfixArray& array);
 extern CArchive& operator<<(CArchive& archive, const CInfixArray& array);
 
 //---------------------------------------------------------------------------
+extern CArchive& operator<<(CArchive& archive, const CInfix& inf);
+extern CArchive& operator>>(CArchive& archive, CInfix& inf);
+
+//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_INFIX;
 
 //---------------------------------------------------------------------------

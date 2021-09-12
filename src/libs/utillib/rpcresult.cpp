@@ -276,6 +276,18 @@ bool CRPCResult::readBackLevel(CArchive& archive) {
     return done;
 }
 
+//---------------------------------------------------------------------------
+CArchive& operator<<(CArchive& archive, const CRPCResult& rpc) {
+    rpc.SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator>>(CArchive& archive, CRPCResult& rpc) {
+    rpc.Serialize(archive);
+    return archive;
+}
+
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CRPCResult& it) {
     // EXISTING_CODE

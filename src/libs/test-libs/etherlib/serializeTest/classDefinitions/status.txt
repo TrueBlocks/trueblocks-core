@@ -2,5 +2,5 @@
 class = CStatus
 fields = status.csv
 includes = etherlib.h|cache.h
-serialize = true
+serializable = true
 disabled = true

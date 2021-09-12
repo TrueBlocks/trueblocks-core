@@ -256,6 +256,18 @@ bool CStatusTerse::readBackLevel(CArchive& archive) {
     return done;
 }
 
+//---------------------------------------------------------------------------
+CArchive& operator<<(CArchive& archive, const CStatusTerse& sta) {
+    sta.SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator>>(CArchive& archive, CStatusTerse& sta) {
+    sta.Serialize(archive);
+    return archive;
+}
+
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CStatusTerse& it) {
     // EXISTING_CODE

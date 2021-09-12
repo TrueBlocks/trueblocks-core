@@ -280,6 +280,18 @@ bool CAbiCacheItem::readBackLevel(CArchive& archive) {
     return done;
 }
 
+//---------------------------------------------------------------------------
+CArchive& operator<<(CArchive& archive, const CAbiCacheItem& abi) {
+    abi.SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator>>(CArchive& archive, CAbiCacheItem& abi) {
+    abi.Serialize(archive);
+    return archive;
+}
+
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CAbiCacheItem& it) {
     // EXISTING_CODE

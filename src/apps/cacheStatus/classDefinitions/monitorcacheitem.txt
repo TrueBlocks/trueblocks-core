@@ -3,5 +3,5 @@ class = CMonitorCacheItem
 base_class = CCacheBase
 fields = monitorcacheitem.csv
 includes = etherlib.h|cachebase.h
-serialize = true
+serializable = true
 display_str = display_name, firstApp, lastApp, appearanceRange, nRecords, appearanceInterval, sizeInBytes

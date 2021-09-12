@@ -141,6 +141,10 @@ extern CArchive& operator>>(CArchive& archive, CMonitorCountArray& array);
 extern CArchive& operator<<(CArchive& archive, const CMonitorCountArray& array);
 
 //---------------------------------------------------------------------------
+extern CArchive& operator<<(CArchive& archive, const CMonitorCount& mon);
+extern CArchive& operator>>(CArchive& archive, CMonitorCount& mon);
+
+//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_MONITORCOUNT;
 
 //---------------------------------------------------------------------------

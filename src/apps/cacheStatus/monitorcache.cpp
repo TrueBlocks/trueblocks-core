@@ -288,6 +288,18 @@ bool CMonitorCache::readBackLevel(CArchive& archive) {
     return done;
 }
 
+//---------------------------------------------------------------------------
+CArchive& operator<<(CArchive& archive, const CMonitorCache& mon) {
+    mon.SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator>>(CArchive& archive, CMonitorCache& mon) {
+    mon.Serialize(archive);
+    return archive;
+}
+
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CMonitorCache& it) {
     // EXISTING_CODE

@@ -3,4 +3,4 @@ class = CNewReceipt
 fields = newreceipt.csv
 includes = etherlib.h|logentry.h
 scope = extern
-serialize = true
+serializable = true

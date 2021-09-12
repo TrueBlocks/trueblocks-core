@@ -539,6 +539,18 @@ bool CClassDefinition::readBackLevel(CArchive& archive) {
     return done;
 }
 
+//---------------------------------------------------------------------------
+CArchive& operator<<(CArchive& archive, const CClassDefinition& cla) {
+    cla.SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator>>(CArchive& archive, CClassDefinition& cla) {
+    cla.Serialize(archive);
+    return archive;
+}
+
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CClassDefinition& it) {
     // EXISTING_CODE
@@ -592,8 +604,8 @@ CClassDefinition::CClassDefinition(const CToml& toml) {
     display_str = toml.getConfigStr("settings", "display_str", "");
     sort_str = toml.getConfigStr("settings", "sort", "");
     eq_str = toml.getConfigStr("settings", "equals", "");
-    scope_str = toml.getConfigStr("settings", "scope", "static");  // TODO(tjayrush): global data
-    serializable = toml.getConfigBool("settings", "serializable", false);
+    scope_str = "shit";   // toml.getConfigStr("settings", "scope", "static");  // TODO(tjayrush): global data
+    serializable = true;  // toml.getConfigBool("settings", "serializable", false);
     description = toml.getConfigStr("settings", "description", "");
     tsx = toml.getConfigBool("settings", "tsx", false);
     openapi = toml.getConfigStr("settings", "openapi", "");

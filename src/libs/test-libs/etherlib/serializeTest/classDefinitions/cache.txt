@@ -2,4 +2,4 @@
 class = CCache
 fields = cache.csv
 includes = etherlib.h
-serialize = true
+serializable = true

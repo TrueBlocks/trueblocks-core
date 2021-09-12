@@ -185,6 +185,10 @@ extern CArchive& operator>>(CArchive& archive, CTestCaseArray& array);
 extern CArchive& operator<<(CArchive& archive, const CTestCaseArray& array);
 
 //---------------------------------------------------------------------------
+extern CArchive& operator<<(CArchive& archive, const CTestCase& tes);
+extern CArchive& operator>>(CArchive& archive, CTestCase& tes);
+
+//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_TESTCASE;
 
 //---------------------------------------------------------------------------

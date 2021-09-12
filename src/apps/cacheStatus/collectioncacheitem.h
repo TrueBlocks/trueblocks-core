@@ -136,6 +136,10 @@ extern CArchive& operator>>(CArchive& archive, CCollectionCacheItemArray& array)
 extern CArchive& operator<<(CArchive& archive, const CCollectionCacheItemArray& array);
 
 //---------------------------------------------------------------------------
+extern CArchive& operator<<(CArchive& archive, const CCollectionCacheItem& col);
+extern CArchive& operator>>(CArchive& archive, CCollectionCacheItem& col);
+
+//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_COLLECTIONCACHEITEM;
 
 //---------------------------------------------------------------------------

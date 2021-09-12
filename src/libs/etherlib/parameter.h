@@ -217,6 +217,10 @@ extern CArchive& operator>>(CArchive& archive, CParameterArray& array);
 extern CArchive& operator<<(CArchive& archive, const CParameterArray& array);
 
 //---------------------------------------------------------------------------
+extern CArchive& operator<<(CArchive& archive, const CParameter& par);
+extern CArchive& operator>>(CArchive& archive, CParameter& par);
+
+//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_PARAMETER;
 
 //---------------------------------------------------------------------------

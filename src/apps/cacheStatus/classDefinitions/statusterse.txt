@@ -3,4 +3,4 @@ base_class = CStatus
 class = CStatusTerse
 fields = statusterse.csv
 includes = etherlib.h|status.h
-serialize = true
+serializable = true

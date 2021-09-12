@@ -256,6 +256,18 @@ bool QFromTransferFrom::readBackLevel(CArchive& archive) {
     return done;
 }
 
+//---------------------------------------------------------------------------
+CArchive& operator<<(CArchive& archive, const QFromTransferFrom& fro) {
+    fro.SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator>>(CArchive& archive, QFromTransferFrom& fro) {
+    fro.Serialize(archive);
+    return archive;
+}
+
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const QFromTransferFrom& it) {
     // EXISTING_CODE

@@ -22,7 +22,7 @@
 IMPLEMENT_NODE([{CLASS_NAME}], [{BASE_CLASS}]);
 
 //---------------------------------------------------------------------------
-[SCOPE_CODE] string_q next[{PROPER}]Chunk(const string_q& fieldIn, const void* dataPtr);
+extern string_q next[{PROPER}]Chunk(const string_q& fieldIn, const void* dataPtr);
 static string_q next[{PROPER}]Chunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
@@ -239,4 +239,4 @@ const char* STR_DISPLAY_[{CLASS_UPPER}] =[{DISPLAY_FIELDS}];
 // EXISTING_CODE
 // EXISTING_CODE
 [{NAMESPACE2}]
-// clang-format on
+    // clang-format on

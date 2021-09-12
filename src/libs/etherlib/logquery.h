@@ -150,6 +150,10 @@ extern CArchive& operator>>(CArchive& archive, CLogQueryArray& array);
 extern CArchive& operator<<(CArchive& archive, const CLogQueryArray& array);
 
 //---------------------------------------------------------------------------
+extern CArchive& operator<<(CArchive& archive, const CLogQuery& log);
+extern CArchive& operator>>(CArchive& archive, CLogQuery& log);
+
+//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_LOGQUERY;
 
 //---------------------------------------------------------------------------

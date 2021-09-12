@@ -399,6 +399,18 @@ bool CIndexCacheItem::readBackLevel(CArchive& archive) {
     return done;
 }
 
+//---------------------------------------------------------------------------
+CArchive& operator<<(CArchive& archive, const CIndexCacheItem& ind) {
+    ind.SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator>>(CArchive& archive, CIndexCacheItem& ind) {
+    ind.Serialize(archive);
+    return archive;
+}
+
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CIndexCacheItem& it) {
     // EXISTING_CODE

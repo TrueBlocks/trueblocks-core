@@ -192,6 +192,10 @@ extern CArchive& operator>>(CArchive& archive, CTraceArray& array);
 extern CArchive& operator<<(CArchive& archive, const CTraceArray& array);
 
 //---------------------------------------------------------------------------
+extern CArchive& operator<<(CArchive& archive, const CTrace& tra);
+extern CArchive& operator>>(CArchive& archive, CTrace& tra);
+
+//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_TRACE;
 
 //---------------------------------------------------------------------------

@@ -262,6 +262,18 @@ bool CPriceCacheItem::readBackLevel(CArchive& archive) {
     return done;
 }
 
+//---------------------------------------------------------------------------
+CArchive& operator<<(CArchive& archive, const CPriceCacheItem& pri) {
+    pri.SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator>>(CArchive& archive, CPriceCacheItem& pri) {
+    pri.Serialize(archive);
+    return archive;
+}
+
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CPriceCacheItem& it) {
     // EXISTING_CODE

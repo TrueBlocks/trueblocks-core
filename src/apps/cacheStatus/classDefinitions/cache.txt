@@ -3,4 +3,4 @@ class = CCache
 fields = cache.csv
 includes = etherlib.h
 cpp_includes = status.h
-serialize = true
+serializable = true

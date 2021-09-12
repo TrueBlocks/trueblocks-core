@@ -10,6 +10,6 @@ diff             ,int256  ,            ,       ,      ,        ,          ,     
 address          ,address ,            ,       ,      ,        ,          ,true    ,      ,true     ,3   ,     ,0xa1e4...63b4      ,description: the address of the token contract being queried
 name             ,string  ,            ,       ,      ,        ,          ,true    ,      ,true     ,4   ,     ,The DAO Original   ,the name of the token contract&#44; if available
 decimals         ,uint64  ,            ,       ,      ,        ,          ,true    ,      ,true     ,5   ,     ,18                 ,the number of decimals for the token contract
-is_contract      ,boolean ,            ,       ,      ,        ,          ,true    ,      ,true     ,6   ,     ,                   ,`true` if the address is a smart contract&#44; `false` otherwise
-is_erc20         ,boolean ,            ,       ,      ,        ,          ,true    ,      ,true     ,7   ,     ,                   ,`true` if the address is an ERC20&#44; `false` otherwise
-is_erc721        ,boolean ,            ,       ,      ,        ,          ,true    ,      ,true     ,8   ,     ,                   ,`true` if the address is an ERC720&#44; `false` otherwise
+is_contract      ,bool    ,            ,       ,      ,        ,          ,true    ,      ,true     ,6   ,     ,                   ,`true` if the address is a smart contract&#44; `false` otherwise
+is_erc20         ,bool    ,            ,       ,      ,        ,          ,true    ,      ,true     ,7   ,     ,                   ,`true` if the address is an ERC20&#44; `false` otherwise
+is_erc721        ,bool    ,            ,       ,      ,        ,          ,true    ,      ,true     ,8   ,     ,                   ,`true` if the address is an ERC720&#44; `false` otherwise

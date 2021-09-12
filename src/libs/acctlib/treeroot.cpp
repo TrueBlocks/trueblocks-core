@@ -263,6 +263,18 @@ bool CTreeRoot::readBackLevel(CArchive& archive) {
     return done;
 }
 
+//---------------------------------------------------------------------------
+CArchive& operator<<(CArchive& archive, const CTreeRoot& tre) {
+    tre.SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator>>(CArchive& archive, CTreeRoot& tre) {
+    tre.Serialize(archive);
+    return archive;
+}
+
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CTreeRoot& it) {
     // EXISTING_CODE

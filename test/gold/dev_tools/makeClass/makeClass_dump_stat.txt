@@ -11,6 +11,7 @@ makeClass --dump -a -i CStatus --verbose
   "base_base": "Basenode",
   "head_includes": "etherlib.h|cache.h",
   "scope_str": "static",
+  "serializable": true,
   "fieldArray": [
     {
       "type": "string",

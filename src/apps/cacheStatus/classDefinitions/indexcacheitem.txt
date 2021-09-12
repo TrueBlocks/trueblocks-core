@@ -2,4 +2,4 @@
 class = CIndexCacheItem
 fields = indexcacheitem.csv
 includes = etherlib.h
-serialize = true
+serializable = true

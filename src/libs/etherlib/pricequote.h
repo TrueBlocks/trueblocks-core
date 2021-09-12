@@ -143,6 +143,10 @@ extern CArchive& operator>>(CArchive& archive, CPriceQuoteArray& array);
 extern CArchive& operator<<(CArchive& archive, const CPriceQuoteArray& array);
 
 //---------------------------------------------------------------------------
+extern CArchive& operator<<(CArchive& archive, const CPriceQuote& pri);
+extern CArchive& operator>>(CArchive& archive, CPriceQuote& pri);
+
+//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_PRICEQUOTE;
 
 //---------------------------------------------------------------------------

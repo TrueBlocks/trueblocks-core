@@ -3,4 +3,4 @@ class = CCollectionCacheItem
 base_class = CCacheBase
 fields = collectioncacheitem.csv
 includes = etherlib.h|cachebase.h
-serialize = true
+serializable = true

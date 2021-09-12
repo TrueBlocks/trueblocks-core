@@ -351,6 +351,18 @@ bool CScrapeStatistics::readBackLevel(CArchive& archive) {
     return done;
 }
 
+//---------------------------------------------------------------------------
+CArchive& operator<<(CArchive& archive, const CScrapeStatistics& scr) {
+    scr.SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator>>(CArchive& archive, CScrapeStatistics& scr) {
+    scr.Serialize(archive);
+    return archive;
+}
+
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CScrapeStatistics& it) {
     // EXISTING_CODE

@@ -210,6 +210,10 @@ extern CArchive& operator>>(CArchive& archive, CClassDefinitionArray& array);
 extern CArchive& operator<<(CArchive& archive, const CClassDefinitionArray& array);
 
 //---------------------------------------------------------------------------
+extern CArchive& operator<<(CArchive& archive, const CClassDefinition& cla);
+extern CArchive& operator>>(CArchive& archive, CClassDefinition& cla);
+
+//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_CLASSDEFINITION;
 
 //---------------------------------------------------------------------------

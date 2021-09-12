@@ -3,4 +3,4 @@ class = CIndexCache
 base_class = CCache
 fields = indexcache.csv
 includes = cache.h|indexcacheitem.h
-serialize = true
+serializable = true

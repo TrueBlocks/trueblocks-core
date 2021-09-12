@@ -288,6 +288,18 @@ bool CSlurpCache::readBackLevel(CArchive& archive) {
     return done;
 }
 
+//---------------------------------------------------------------------------
+CArchive& operator<<(CArchive& archive, const CSlurpCache& slu) {
+    slu.SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator>>(CArchive& archive, CSlurpCache& slu) {
+    slu.Serialize(archive);
+    return archive;
+}
+
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CSlurpCache& it) {
     // EXISTING_CODE

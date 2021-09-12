@@ -274,6 +274,18 @@ bool CAppearanceDisplay::readBackLevel(CArchive& archive) {
     return done;
 }
 
+//---------------------------------------------------------------------------
+CArchive& operator<<(CArchive& archive, const CAppearanceDisplay& app) {
+    app.SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator>>(CArchive& archive, CAppearanceDisplay& app) {
+    app.Serialize(archive);
+    return archive;
+}
+
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CAppearanceDisplay& it) {
     // EXISTING_CODE

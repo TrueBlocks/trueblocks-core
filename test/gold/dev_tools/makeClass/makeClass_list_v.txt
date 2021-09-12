@@ -11,6 +11,7 @@ makeClass --dump function --verbose
   "base_base": "Basenode",
   "head_includes": "utillib.h|parameter.h",
   "scope_str": "static",
+  "serializable": true,
   "fieldArray": [
     {
       "type": "string",

@@ -246,6 +246,18 @@ bool CCollectionCacheItem::readBackLevel(CArchive& archive) {
     return done;
 }
 
+//---------------------------------------------------------------------------
+CArchive& operator<<(CArchive& archive, const CCollectionCacheItem& col) {
+    col.SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator>>(CArchive& archive, CCollectionCacheItem& col) {
+    col.Serialize(archive);
+    return archive;
+}
+
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CCollectionCacheItem& it) {
     // EXISTING_CODE

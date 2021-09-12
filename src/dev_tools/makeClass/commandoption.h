@@ -255,6 +255,10 @@ extern CArchive& operator>>(CArchive& archive, CCommandOptionArray& array);
 extern CArchive& operator<<(CArchive& archive, const CCommandOptionArray& array);
 
 //---------------------------------------------------------------------------
+extern CArchive& operator<<(CArchive& archive, const CCommandOption& com);
+extern CArchive& operator>>(CArchive& archive, CCommandOption& com);
+
+//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_COMMANDOPTION;
 
 //---------------------------------------------------------------------------

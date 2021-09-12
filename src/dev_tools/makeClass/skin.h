@@ -165,6 +165,10 @@ extern CArchive& operator>>(CArchive& archive, CSkinArray& array);
 extern CArchive& operator<<(CArchive& archive, const CSkinArray& array);
 
 //---------------------------------------------------------------------------
+extern CArchive& operator<<(CArchive& archive, const CSkin& ski);
+extern CArchive& operator>>(CArchive& archive, CSkin& ski);
+
+//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_SKIN;
 
 //---------------------------------------------------------------------------
