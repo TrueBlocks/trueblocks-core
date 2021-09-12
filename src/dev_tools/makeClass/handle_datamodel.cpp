@@ -35,6 +35,7 @@ bool COptions::handle_datamodel(void) {
     sort(dataModels.begin(), dataModels.end(), sortByDataModelName);
 
     ostringstream theStream;
+    theStream << "components:" << endl;
     theStream << "  schemas:" << endl;
     for (auto model : dataModels) {
         if (!model.openapi.empty()) {

@@ -14,5 +14,4 @@ info:
     description: Local endpoints
 tags:
 [{TAGS}]paths:
-[{PATHS}]components:
-[{COMPONENTS}]
+[{PATHS}][{COMPONENTS}]
