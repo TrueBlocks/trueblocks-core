@@ -10,60 +10,60 @@ info:
   version: 0.12.1-alpha
   description: >
 
-   A REST layer over the TrueBlocks application. With `chifra serve`, you can
-   run this on your own machine, and make calls to `localhost`.
+    A REST layer over the TrueBlocks application. With `chifra serve`, you can
+    run this on your own machine, and make calls to `localhost`.
 
-   ## How to use this API
+    ## How to use this API
 
-   This API's endpoints are exact translations of the commands used by the chifra
-   CLI application, and the query parameters mirror the commands' options and
-   flags. If you want details, [the commands have their own documentation page](https://trueblocks.io/docs/chifra/introducing-chifra/).
+    This API's endpoints are exact translations of the commands used by the chifra
+    CLI application, and the query parameters mirror the commands' options and
+    flags. If you want details, [the commands have their own documentation page](https://trueblocks.io/docs/chifra/introducing-chifra/).
 
-   For detailed descriptions of fields, see [the data model reference](https://trueblocks.io/data-model/intro/intro).
+    For detailed descriptions of fields, see [the data model reference](https://trueblocks.io/data-model/intro/intro).
 
-     ### Before you begin
+      ### Before you begin
 
-   1. [Install the trueblocks-core application](https://trueblocks.io/docs/prologue/installing-trueblocks/)
-     on your machine, change your configs as needed.
-   2. Run `chifra serve`
+    1. [Install the trueblocks-core application](https://trueblocks.io/docs/prologue/installing-trueblocks/)
+      on your machine, change your configs as needed.
+    2. Run `chifra serve`
 
 
-     ### Example queries
+      ### Example queries
 
-    By default, all calls are to `localhost:8080`.
-    All options and flags are passed through query parameters.
+     By default, all calls are to `localhost:8080`.
+     All options and flags are passed through query parameters.
 
-    For example, to get block `100`, make a call to `/blocks` and specify
-    the block you want in the query parameter:
+     For example, to get block `100`, make a call to `/blocks` and specify
+     the block you want in the query parameter:
 
-    ```shell
-    curl "http://localhost:8080/blocks?blocks=100"
-    ```
+     ```shell
+     curl "http://localhost:8080/blocks?blocks=100"
+     ```
 
-    Some parameters support ranges:
+     Some parameters support ranges:
 
-    ```shell
-    curl "http://localhost:8080/blocks?blocks=100-120"
-    ```
+     ```shell
+     curl "http://localhost:8080/blocks?blocks=100-120"
+     ```
 
-    Other parameters let you filter your responses. For example, to get only
-    the unique addresses from that block range:
+     Other parameters let you filter your responses. For example, to get only
+     the unique addresses from that block range:
 
-    ```shell
-    curl "http://localhost:8080/blocks?blocks=100-110&uniq=true"
-    ```
+     ```shell
+     curl "http://localhost:8080/blocks?blocks=100-110&uniq=true"
+     ```
 
-    You might want to cache queries on your local machine.
+     You might want to cache queries on your local machine.
 
-    ```shell
-    "http://localhost:8080/blocks?blocks=100-110&cache=true"
-    ```
+     ```shell
+     "http://localhost:8080/blocks?blocks=100-110&cache=true"
+     ```
 
-    Cacheing speeds up repeat queries significantly. The cache options are
-    particularly useful for calls to data-rich endpoints, like most endpoints
-    in the  "Accounts" collection.
+     Cacheing speeds up repeat queries significantly. The cache options are
+     particularly useful for calls to data-rich endpoints, like most endpoints
+     in the  "Accounts" collection.
 
-    Of course, caches occupy local storage. So cache wisely.
+     Of course, caches occupy local storage. So cache wisely.
 servers:
   - url: http://localhost:8080
     description: Local endpoints
@@ -111,23 +111,22 @@ paths:
                       $ref: "#/components/schemas/appearance"
                 example:
                   {
-                    "data": [
-                      {
-                        "blockNumber": 8854723,
-                        "transactionIndex": 61,
-                        "address": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-                        "name": "TrueBlocks 2020 Wallet 0xf503"
-                      },
-                      {
-                        "blockNumber": 8855603,
-                        "transactionIndex": 121,
-                        "address": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
-                        "name": "TrueBlocks 2020 Wallet 0xf503"
-                      },
-                      {
-                        "...": "..."
-                      }
-                    ]
+                    "data":
+                      [
+                        {
+                          "blockNumber": 8854723,
+                          "transactionIndex": 61,
+                          "address": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+                          "name": "TrueBlocks 2020 Wallet 0xf503",
+                        },
+                        {
+                          "blockNumber": 8855603,
+                          "transactionIndex": 121,
+                          "address": "0xf503017d7baf7fbc0fff7492b751025c6a78179b",
+                          "name": "TrueBlocks 2020 Wallet 0xf503",
+                        },
+                        { "...": "..." },
+                      ],
                   }
         "400":
           description: bad input parameter
@@ -560,39 +559,41 @@ paths:
                       $ref: "#/components/schemas/abi"
                 example:
                   {
-                    "data": [
-                      {
-                        "name": "PairCreated",
-                        "type": "event",
-                        "stateMutability": "nonpayable",
-                        "signature": "PairCreated(address,address,address,uint256)",
-                        "encoding": "0x0d3648bd0f6ba80134a33ba9275ac585d9d315f0ad8355cddefde31afa28d0e9",
-                        "inputs": [
-                          {
-                            "type": "address",
-                            "name": "token0",
-                            "indexed": true,
-                            "internalType": "address"
-                          },
-                          {
-                            "type": "address",
-                            "name": "token1",
-                            "indexed": true,
-                            "internalType": "address"
-                          },
-                          {
-                            "type": "address",
-                            "name": "pair",
-                            "internalType": "address"
-                          },
-                          {
-                            "type": "uint256",
-                            "name": "val_0",
-                            "internalType": "uint256"
-                          }
-                        ]
-                      }
-                    ]
+                    "data":
+                      [
+                        {
+                          "name": "PairCreated",
+                          "type": "event",
+                          "stateMutability": "nonpayable",
+                          "signature": "PairCreated(address,address,address,uint256)",
+                          "encoding": "0x0d3648bd0f6ba80134a33ba9275ac585d9d315f0ad8355cddefde31afa28d0e9",
+                          "inputs":
+                            [
+                              {
+                                "type": "address",
+                                "name": "token0",
+                                "indexed": true,
+                                "internalType": "address",
+                              },
+                              {
+                                "type": "address",
+                                "name": "token1",
+                                "indexed": true,
+                                "internalType": "address",
+                              },
+                              {
+                                "type": "address",
+                                "name": "pair",
+                                "internalType": "address",
+                              },
+                              {
+                                "type": "uint256",
+                                "name": "val_0",
+                                "internalType": "uint256",
+                              },
+                            ],
+                        },
+                      ],
                   }
         "400":
           description: bad input parameter
@@ -700,7 +701,7 @@ paths:
                     "blockNumber": 3141592,
                     "hash": "0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53",
                     "...": "...",
-                    "transactions": []
+                    "transactions": [],
                   }
         "400":
           description: bad input parameter
@@ -1076,19 +1077,20 @@ paths:
                       $ref: "#/components/schemas/state"
                 example:
                   {
-                    "data": [
-                      {
-                        "blockNumber": 13176226,
-                        "balance": 258843698360318500,
-                        "nonce": 115,
-                        "code": "0x",
-                        "storage": "0x0000000000000000000000000000000000000000000000000000000000000000",
-                        "address": "0xa1e4380a3b1f749673e270229993ee55f35663b4",
-                        "deployed": 0,
-                        "accttype": "EOA",
-                        "ether": 0.2588436983603185
-                      }
-                    ]
+                    "data":
+                      [
+                        {
+                          "blockNumber": 13176226,
+                          "balance": 258843698360318500,
+                          "nonce": 115,
+                          "code": "0x",
+                          "storage": "0x0000000000000000000000000000000000000000000000000000000000000000",
+                          "address": "0xa1e4380a3b1f749673e270229993ee55f35663b4",
+                          "deployed": 0,
+                          "accttype": "EOA",
+                          "ether": 0.2588436983603185,
+                        },
+                      ],
                   }
         "400":
           description: bad input parameter
@@ -1172,18 +1174,19 @@ paths:
                       $ref: "#/components/schemas/token"
                 example:
                   {
-                    "data": [
-                      {
-                        "holder": "0x2910543af39aba0cd09dbb2d50200b3e800a63d2",
-                        "balance": "624980000000000000",
-                        "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
-                        "name": "The DAO Original",
-                        "decimals": 1,
-                        "is_contract": true,
-                        "is_erc20": true,
-                        "is_erc721": true
-                      }
-                    ]
+                    "data":
+                      [
+                        {
+                          "holder": "0x2910543af39aba0cd09dbb2d50200b3e800a63d2",
+                          "balance": "624980000000000000",
+                          "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
+                          "name": "The DAO Original",
+                          "decimals": 1,
+                          "is_contract": true,
+                          "is_erc20": true,
+                          "is_erc721": true,
+                        },
+                      ],
                   }
         "400":
           description: bad input parameter
@@ -1377,21 +1380,20 @@ paths:
                       $ref: "#/components/schemas/pin"
                 example:
                   {
-                    "data": [
-                      {
-                        "fileName": "000000000-000000000",
-                        "bloomHash": "QmbCQaYmfTR3sGNAvASoVjPynaY9UD31Hfxv7dGtzsptkb",
-                        "indexHash": "QmPmfSrYT5HDpfjj4uYSycaFECo9EqPSuADQ3YPbVp3yu4"
-                      },
-                      {
-                        "fileName": "000000001-000590501",
-                        "bloomHash": "QmSGuSQHgK4S9yiZQ3dKrykQVpLTmdFettY9sAwa537gPL",
-                        "indexHash": "QmSaoxc3XA9DEaA3inhLW5ZKsk5C5LWvowSXpHwVHsMjQp"
-                      },
-                      {
-                        "...": "..."
-                      }
-                    ]
+                    "data":
+                      [
+                        {
+                          "fileName": "000000000-000000000",
+                          "bloomHash": "QmbCQaYmfTR3sGNAvASoVjPynaY9UD31Hfxv7dGtzsptkb",
+                          "indexHash": "QmPmfSrYT5HDpfjj4uYSycaFECo9EqPSuADQ3YPbVp3yu4",
+                        },
+                        {
+                          "fileName": "000000001-000590501",
+                          "bloomHash": "QmSGuSQHgK4S9yiZQ3dKrykQVpLTmdFettY9sAwa537gPL",
+                          "indexHash": "QmSaoxc3XA9DEaA3inhLW5ZKsk5C5LWvowSXpHwVHsMjQp",
+                        },
+                        { "...": "..." },
+                      ],
                   }
         "400":
           description: bad input parameter
@@ -1464,18 +1466,19 @@ paths:
                       $ref: "#/components/schemas/quote"
                 example:
                   {
-                    "data": [
-                      {
-                        "timestamp": 1439078400,
-                        "close": 1.4,
-                        "date": "2015-08-09 00:00:00 UTC"
-                      },
-                      {
-                        "timestamp": 1439085600,
-                        "close": 1.4,
-                        "date": "2015-08-09 02:00:00 UTC"
-                      }
-                    ]
+                    "data":
+                      [
+                        {
+                          "timestamp": 1439078400,
+                          "close": 1.4,
+                          "date": "2015-08-09 00:00:00 UTC",
+                        },
+                        {
+                          "timestamp": 1439085600,
+                          "close": 1.4,
+                          "date": "2015-08-09 02:00:00 UTC",
+                        },
+                      ],
                   }
         "400":
           description: bad input parameter
@@ -1567,8 +1570,8 @@ paths:
                       "hasToken": "0",
                       "gasUsed": "21000",
                       "date": "2015-08-07 03:50:51 UTC",
-                      "ether": "0.000000000000000000"
-                    }
+                      "ether": "0.000000000000000000",
+                    },
                   ]
         "400":
           description: bad input parameter
@@ -2152,7 +2155,8 @@ components:
           items:
             $ref: "#/components/schemas/reconciliation"
         articulatedTx:
-          $ref: "#/components/schemas/function"
+          items:
+            $ref: "#/components/schemas/function"
         compressedTx:
           type: string
           example: "0x3d18b912( )"
