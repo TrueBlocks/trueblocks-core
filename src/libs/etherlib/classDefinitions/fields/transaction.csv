@@ -16,7 +16,7 @@ maxFeePerGas         ,gas            ,            ,       ,      ,        ,     
 maxPriorityFeePerGas ,gas            ,            ,       ,      ,        ,          ,        ,      ,         ,    ,     ,              ,
 input                ,bytes          ,            ,       ,      ,        ,          ,        ,      ,         ,12  ,     ,0x3d18b912    ,byte data either containing a message or funcational data for a smart contracts. See the --articulate
 isError              ,uint8          ,            ,       ,      ,        ,          ,        ,      ,         ,    ,     ,              ,
-hasToken             ,uint8          ,            ,       ,      ,        ,          ,        ,      ,         ,17  ,     ,0             ,`true` if the transaction is token related&#44; `false` otherwise
+hasToken             ,uint8          ,            ,       ,      ,        ,          ,        ,      ,         ,17  ,     ,              ,`true` if the transaction is token related&#44; `false` otherwise
 cachebits            ,uint8          ,CB_NONE     ,       ,      ,        ,          ,        ,      ,         ,    ,     ,              ,
 reserved2            ,uint8          ,            ,       ,      ,        ,          ,        ,      ,         ,    ,     ,              ,
 receipt              ,receipt        ,            ,true   ,      ,        ,          ,        ,      ,         ,13  ,     ,              ,

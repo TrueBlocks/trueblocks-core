@@ -195,7 +195,7 @@ bool CEthState::setValueByName(const string_q& fieldNameIn, const string_q& fiel
             break;
         case 's':
             if (fieldName % "storage") {
-                storage = fieldValue;
+                storage = toLower(fieldValue);
                 return true;
             }
             break;

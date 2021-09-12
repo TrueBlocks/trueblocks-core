@@ -76,12 +76,31 @@ bool sortByDoc(const CParameter& c1, const CParameter& c2) {
 
 //------------------------------------------------------------------------------------------------------------
 string_q typeFmt(const CParameter& fld) {
-    if (fld.type == "blknum" || fld.type == "uint64" || fld.type == "timestamp" || fld.type == "double")
+    if (fld.is_flags & IS_ARRAY) {
+        string_q ret = "          type: array\n          items:\n            $ref: \"#/components/schemas/++X++\"\n";
+        string_q t = fld.type;
+        if (startsWith(t, "C"))
+            replace(t, "C", "");
+        replace(t, "Array", "");
+        replace(ret, "++X++", toLower(t));
+        return ret;
+    }
+    if (fld.is_flags & IS_OBJECT) {
+        string_q ret = "          type: object\n          items:\n            $ref: \"#/components/schemas/++X++\"\n";
+        string_q t = fld.type;
+        if (startsWith(t, "C"))
+            replace(t, "C", "");
+        replace(t, "Array", "");
+        replace(ret, "++X++", toLower(t));
+        return ret;
+    }
+    if (fld.type == "blknum" || fld.type == "uint64" || fld.type == "timestamp" || fld.type == "double" ||
+        fld.type == "uint32")
         return "[          type: number\n          format: {TYPE}\n]";
     if (fld.type == "address" || fld.type == "hash" || fld.type == "bytes" || fld.type == "gas" || fld.type == "wei" ||
-        fld.type == "int256" || fld.type == "uint256")
+        fld.type == "int256" || fld.type == "uint256" || fld.type == "date")
         return "[          type: string\n          format: {TYPE}\n]";
-    if (fld.type == "bool")
+    if (fld.type == "bool" || fld.type == "uint8")
         return "[          type: boolean\n]";
     return "[          type: {TYPE}\n]";
 }
@@ -114,4 +133,9 @@ const char* STR_TAIL_THING =
     "      type: string\n"
     "      format: hash\n"
     "      description: \"The 32-byte hash\"\n"
+    "      example: \"0xf128...1e98\"\n"
+    "    topic:\n"
+    "      type: string\n"
+    "      format: bytes\n"
+    "      description: \"One of four 32-byte topics of a log\"\n"
     "      example: \"0xf128...1e98\"\n";

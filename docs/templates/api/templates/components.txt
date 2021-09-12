@@ -9,10 +9,10 @@ components:
           format: address
           description: "the smart contract that implements this abi"
         interfaces:
-          type: object
-          description: "the list of events and functions on this abi"
+          type: array
           items:
-            $ref: "#/components/schemas/function
+            $ref: "#/components/schemas/function"
+          description: "the list of events and functions on this abi"
     appearance:
       type: object
       properties:
@@ -73,9 +73,9 @@ components:
           description: "the unix timestamp of the object"
         transactions:
           type: array
-          description: "a possibly empty array of transactions or transaction hashes"
           items:
             $ref: "#/components/schemas/transaction"
+          description: "a possibly empty array of transactions or transaction hashes"
         baseFeePerGas:
           type: string
           format: wei
@@ -88,6 +88,29 @@ components:
     function:
       description: "a human readable representation of a Solidity function call or event"
       type: object
+      properties:
+        name:
+          type: string
+          description: "the name of the interface"
+        type:
+          type: string
+          description: "the type of the interface, either 'event' or 'function'"
+        signature:
+          type: string
+          description: "the canonical signature of the interface"
+        encoding:
+          type: string
+          description: "the signature encoded with keccak"
+        inputs:
+          type: array
+          items:
+            $ref: "#/components/schemas/parameter"
+          description: "the input parameters to the function, if any"
+        outputs:
+          type: array
+          items:
+            $ref: "#/components/schemas/parameter"
+          description: "the output parameters to the function, if any"
     log:
       type: object
       properties:
@@ -113,6 +136,8 @@ components:
           description: "the zero-indexed position of this log relative to the block"
         topics:
           type: array
+          items:
+            $ref: "#/components/schemas/topic"
           description: "The first topic hashes event signature of the log, up to 3 additional index parameters may appear"
         data:
           type: string
@@ -121,9 +146,9 @@ components:
           description: "any remaining un-indexed parameters to the event"
         articulatedLog:
           type: object
-          description: "a human-readable version of the topic and data fields"
           items:
-            $ref: "#/components/schemas/function
+            $ref: "#/components/schemas/function"
+          description: "a human-readable version of the topic and data fields"
         compressedLog:
           type: string
           example: "Transfer(0xcfa...9f54..."
@@ -203,17 +228,18 @@ components:
         date:
           type: string
           format: date
-          example: 2018-09-30 01:15:17 UTC
-          description: the date of the associated timestamp
+          example: "2018-09-30 01:15:17 UTC"
+          description: "the date of the associated timestamp"
         name:
           type: string
-          example: Byzantium
-          description: the name of the block for some named 'special' blocks
+          example: "Byzantium"
+          description: "the name of the block for some named 'special' blocks"
     receipt:
       type: object
       properties:
         status:
-          type: uint32
+          type: number
+          format: uint32
           description: "`1` on transaction suceess, `null` if tx preceeds Byzantium, `0` otherwise"
         contractAddress:
           type: string
@@ -225,9 +251,9 @@ components:
           description: "the amount of gas actually used by the transaction"
         logs:
           type: array
-          description: "a possibly empty array of logs"
           items:
             $ref: "#/components/schemas/log"
+          description: "a possibly empty array of logs"
     reconciliation:
       type: object
       properties:
@@ -378,8 +404,8 @@ components:
         ether:
           type: number
           format: double
-          example: 0.2588436983603185
-          description: the balance of the address in ethers
+          example: 0.25884369
+          description: "the balance of the address in ethers"
     token:
       type: object
       properties:
@@ -439,9 +465,9 @@ components:
           example: 305
           description: "the zero-indexed position of the transaction in the block"
         traceAddress:
-          type: string
+          type: array
           description: "a particular trace's address in the trace tree"
-        subTraces:
+        subtraces:
           type: number
           format: uint64
           description: "the number of children traces that the trace hash"
@@ -449,9 +475,23 @@ components:
           type: string
           description: "the type of the trace"
         action:
-          $ref: "#/components/schemas/traceAction"
+          type: object
+          items:
+            $ref: "#/components/schemas/traceAction"
+          description: "the trace action for this trace"
         result:
-          $ref: "#/components/schemas/traceResult"
+          type: object
+          items:
+            $ref: "#/components/schemas/traceResult"
+          description: "the trace result of this trace"
+        articulatedTrace:
+          type: object
+          items:
+            $ref: "#/components/schemas/function"
+          description: "human readable version of the trace action input data"
+        compressedTrace:
+          type: string
+          description: "a compressed string version of the articulated trace"
     traceAction:
       description: "the trace action object"
       type: object
@@ -570,14 +610,18 @@ components:
           example: "0x3d18b912"
           description: "byte data either containing a message or funcational data for a smart contracts. See the --articulate"
         receipt:
-          $ref: "#/components/schemas/receipt"
+          type: object
+          items:
+            $ref: "#/components/schemas/receipt"
         statements:
           type: array
-          description: "array of reconciliations"
           items:
             $ref: "#/components/schemas/reconciliation"
+          description: "array of reconciliations"
         articulatedTx:
-          $ref: "#/components/schemas/function"
+          type: object
+          items:
+            $ref: "#/components/schemas/function"
         compressedTx:
           type: string
           example: "0x3d18b912( )"
@@ -607,4 +651,9 @@ components:
       type: string
       format: hash
       description: "The 32-byte hash"
+      example: "0xf128...1e98"
+    topic:
+      type: string
+      format: bytes
+      description: "One of four 32-byte topics of a log"
       example: "0xf128...1e98"
