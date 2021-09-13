@@ -132,7 +132,7 @@ extern CArchive& operator>>(CArchive& archive, [{CLASS_NAME}]Array& array);
 extern CArchive& operator<<(CArchive& archive, const [{CLASS_NAME}]Array& array);
 
 [OPERATORS_DECL]//---------------------------------------------------------------------------
-extern const char* STR_DISPLAY_[{CLASS_UPPER}];
+extern const char* STR_DISPLAY_[{CLASS_UPPER}];[PARENT_BYVALUE]
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

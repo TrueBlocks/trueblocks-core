@@ -145,6 +145,9 @@ extern CArchive& operator>>(CArchive& archive, CPriceCache& pri);
 extern const char* STR_DISPLAY_PRICECACHE;
 
 //---------------------------------------------------------------------------
+extern string_q nextCacheChunk(const string_q& fieldIn, const void* data);
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks

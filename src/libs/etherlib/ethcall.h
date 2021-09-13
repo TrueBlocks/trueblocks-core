@@ -157,6 +157,9 @@ extern CArchive& operator>>(CArchive& archive, CEthCall& eth);
 extern const char* STR_DISPLAY_ETHCALL;
 
 //---------------------------------------------------------------------------
+extern string_q nextEthstateChunk(const string_q& fieldIn, const void* data);
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 extern bool doEthCall(CEthCall& call);
 // EXISTING_CODE

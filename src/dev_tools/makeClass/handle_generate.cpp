@@ -89,6 +89,20 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
     }
 
     //------------------------------------------------------------------------------------------------
+<<<<<<< HEAD
+=======
+    ASSERT(!classDef.base_class.empty());
+    bool isBase = (classDef.base_class == "CBaseNode");
+    // clang-format off
+    string_q parSer2 = !isBase ? "`[{BASE_CLASS}]::SerializeC(archive);\n\n"        : "`[{BASE_CLASS}]::SerializeC(archive);\n";
+    string_q parReg  = !isBase ? "[{BASE_CLASS}]::registerClass();\n\n`"            : "";
+    // string_q parCnk  = !isBase ? "ret = next[{BASE_BASE}]Chunk(fieldName, this);\n" : "ret = next[{BASE_BASE}]Chunk(fieldName, this);\n";
+    string_q parSet  = !isBase ? "`if ([{BASE_CLASS}]::setValueByName(fieldName, fieldValue))\n``return true;\n\n" : "";
+    string_q parGetH = !isBase ? STR_PARENT_BYVALUE : "";
+    // clang-format on
+
+    //------------------------------------------------------------------------------------------------
+>>>>>>> 7fa4469f7 (Enabling better processing for contained classes)
     for (auto fld : classDef.fieldArray) {
         // keep these in this scope since they may change per field
         string_q declareFmt = "`[{TYPE}]* [{NAME}];";
@@ -284,6 +298,7 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
     replaceAll(headSource, "[H_INCLUDES]", head_incStream.str());
     replaceAll(headSource, "[INIT_DEFAULTS]", defaultsStream.str());
     replaceAll(headSource, "[OPERATORS_DECL]", operators_decl);
+    replaceAll(headSource, "[PARENT_BYVALUE]", parGetH);
     replaceAll(headSource, "[{COMMENT_LINE}]", STR_COMMENT_LINE);
     replaceAll(headSource, "[{BASE_CLASS}]", classDef.base_class);
     replaceAll(headSource, "[{LONG}]", classDef.base_lower);
