@@ -159,9 +159,6 @@ extern CArchive& operator>>(CArchive& archive, CInfix& inf);
 extern const char* STR_DISPLAY_INFIX;
 
 //---------------------------------------------------------------------------
-extern string_q nextTreenodeChunk(const string_q& fieldIn, const void* data);
-
-//---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks

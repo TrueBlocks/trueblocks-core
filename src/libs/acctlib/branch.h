@@ -163,9 +163,6 @@ extern CArchive& operator>>(CArchive& archive, CBranch& bra);
 extern const char* STR_DISPLAY_BRANCH;
 
 //---------------------------------------------------------------------------
-extern string_q nextTreenodeChunk(const string_q& fieldIn, const void* data);
-
-//---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
