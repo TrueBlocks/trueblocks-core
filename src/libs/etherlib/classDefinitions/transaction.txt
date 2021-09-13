@@ -7,3 +7,6 @@ equals = (hash == it.hash)
 tsx = true
 openapi = transaction
 contained_by = Block
+description = the transaction data for a given transaction directly from the blockchain
+doc_group = Chain Data
+produced_by = transactions, slurp, export

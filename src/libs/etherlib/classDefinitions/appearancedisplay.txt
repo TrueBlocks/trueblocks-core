@@ -4,3 +4,6 @@ base_class = CAccountName
 fields = appearancedisplay.csv
 includes = etherlib.h
 openapi = appearance
+description = a single appearance of an address anywhere in the chain in the form of blockNumber.transactionIndex
+doc_group = Accounts
+produced_by = list, export

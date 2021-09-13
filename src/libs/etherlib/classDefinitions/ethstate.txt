@@ -6,3 +6,6 @@ cpp_includes = etherlib.h
 sort = v1.blockNumber < v2.blockNumber
 equals = blockNumber == it.blockNumber
 openapi = state
+description = the on-chain state of a given address
+doc_group = Chain State
+produced_by = state

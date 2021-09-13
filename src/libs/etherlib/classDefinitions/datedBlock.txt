@@ -1,0 +1,7 @@
+[settings]
+description = An indentified block named for convienience
+class_name = datedBlock
+fields = datedBlocks.csv
+openapi = datedBlock
+produced_by = when
+disabled = true

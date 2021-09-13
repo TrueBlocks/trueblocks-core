@@ -6,3 +6,6 @@ includes = acctlib.h
 equals = address == it.address
 sort = v1.address < v2.address
 openapi = token
+description = on-chain token related data for a give address at a given block height
+doc_group = Chain State
+produced_by = tokens

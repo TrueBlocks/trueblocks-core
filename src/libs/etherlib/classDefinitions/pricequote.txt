@@ -4,3 +4,6 @@ fields = pricequote.csv
 includes = utillib.h|abi.h
 cpp_includes = pricesource.h|reconciliation.h
 openapi = quote
+description = the closing price of Ether in USD at a particular moment
+doc_group = Other
+produced_by = quotes

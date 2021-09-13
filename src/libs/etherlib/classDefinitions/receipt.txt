@@ -7,3 +7,6 @@ equals = (getValueByName("transactionHash") == it.getValueByName("transactionHas
 tsx = true
 openapi = receipt
 contained_by = Transaction
+description = receipt data for a given transaction directly from the blockchain
+doc_group = Chain Data
+produced_by = receipts, export

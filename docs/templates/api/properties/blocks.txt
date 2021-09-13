@@ -1,7 +1,0 @@
-data:
-  type: array
-  items:
-    oneOf:
-      - $ref: "#/components/schemas/block"
-      - $ref: "#/components/schemas/trace"
-      - $ref: "#/components/schemas/appearance"
