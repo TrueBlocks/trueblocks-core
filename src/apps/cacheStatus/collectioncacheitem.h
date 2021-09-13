@@ -143,9 +143,6 @@ extern CArchive& operator>>(CArchive& archive, CCollectionCacheItem& col);
 extern const char* STR_DISPLAY_COLLECTIONCACHEITEM;
 
 //---------------------------------------------------------------------------
-extern string_q nextCachebaseChunk(const string_q& fieldIn, const void* data);
-
-//---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks

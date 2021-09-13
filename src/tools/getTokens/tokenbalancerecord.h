@@ -175,9 +175,6 @@ extern CArchive& operator>>(CArchive& archive, CTokenBalanceRecord& tok);
 extern const char* STR_DISPLAY_TOKENBALANCERECORD;
 
 //---------------------------------------------------------------------------
-extern string_q nextMonitorChunk(const string_q& fieldIn, const void* data);
-
-//---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks

@@ -154,9 +154,6 @@ extern CArchive& operator>>(CArchive& archive, CCacheBase& cac);
 extern const char* STR_DISPLAY_CACHEBASE;
 
 //---------------------------------------------------------------------------
-extern string_q nextAccountnameChunk(const string_q& fieldIn, const void* data);
-
-//---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks

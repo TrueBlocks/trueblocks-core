@@ -148,9 +148,6 @@ extern CArchive& operator>>(CArchive& archive, CMonitorCacheItem& mon);
 extern const char* STR_DISPLAY_MONITORCACHEITEM;
 
 //---------------------------------------------------------------------------
-extern string_q nextCachebaseChunk(const string_q& fieldIn, const void* data);
-
-//---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks

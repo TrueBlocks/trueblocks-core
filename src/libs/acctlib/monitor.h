@@ -209,9 +209,6 @@ extern CArchive& operator>>(CArchive& archive, CMonitor& mon);
 extern const char* STR_DISPLAY_MONITOR;
 
 //---------------------------------------------------------------------------
-extern string_q nextAccountnameChunk(const string_q& fieldIn, const void* data);
-
-//---------------------------------------------------------------------------
 // EXISTING_CODE
 typedef map<address_t, CMonitor> CMonitorMap;  // NOLINT
 extern void establishMonitorFolders(void);

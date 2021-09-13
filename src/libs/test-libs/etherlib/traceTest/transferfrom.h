@@ -149,9 +149,6 @@ extern CArchive& operator>>(CArchive& archive, QTransferFrom& tra);
 extern const char* STR_DISPLAY_TRANSFERFROM;
 
 //---------------------------------------------------------------------------
-extern string_q nextTransactionChunk(const string_q& fieldIn, const void* data);
-
-//---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks

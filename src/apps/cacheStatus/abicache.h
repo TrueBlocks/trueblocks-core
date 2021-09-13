@@ -145,9 +145,6 @@ extern CArchive& operator>>(CArchive& archive, CAbiCache& abi);
 extern const char* STR_DISPLAY_ABICACHE;
 
 //---------------------------------------------------------------------------
-extern string_q nextCacheChunk(const string_q& fieldIn, const void* data);
-
-//---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
