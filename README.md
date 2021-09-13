@@ -51,7 +51,7 @@ If you need help with a step, see the [installation's troubleshooting section](h
     cmake ../src
     make
     ```
-    _(You may use `make -j <ncores>` to parallelize the build. <Ncores> represents the number of cores to devote to the job)_
+    _(You may use `make -j <ncores>` to parallelize the build. <ncores> represents the number of cores to devote to the `make` job)_
 
 2. Add `trueblocks-core/bin` to your shell `PATH`.
 
