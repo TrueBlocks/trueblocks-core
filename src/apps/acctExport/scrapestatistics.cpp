@@ -382,6 +382,8 @@ const char* STR_DISPLAY_SCRAPESTATISTICS =
     "[{NBLOOMHITS}]\t"
     "[{NFALSEPOSITIVE}]\t"
     "[{NPOSITIVE}]\t"
+    "[{NSTAGECHECKED}]\t"
+    "[{NSTAGEHITS}]\t"
     "[{NTOTALHITS}]\t"
     "[{NFILERECORDS}]\t"
     "[{NCACHEWRITES}]";

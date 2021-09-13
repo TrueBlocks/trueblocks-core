@@ -212,6 +212,21 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
     classDef.eq_str = substitute(classDef.eq_str, "|", "\n```");
 
     //------------------------------------------------------------------------------------------------
+    map<uint64_t, string_q> dispMap;
+    for (auto fld : classDef.fieldArray)
+        if (fld.disp > 0)
+            dispMap[fld.disp] = fld.name;
+    if (dispMap.size()) {
+        string_q add = classDef.display_str;
+        classDef.display_str = "";
+        for (auto item : dispMap) {
+            classDef.display_str += item.second + ",";
+        }
+        classDef.display_str = trim(classDef.display_str, ',');
+        if (!add.empty())
+            classDef.display_str += "," + add;
+    }
+
     if (classDef.display_str.empty()) {
         classDef.display_str = " \"\"";
     } else {
