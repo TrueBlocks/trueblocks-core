@@ -1,5 +1,5 @@
 name      ,type      ,str_default ,object ,array ,nowrite ,omitempty ,minimal ,extra ,noaddfld ,doc ,disp ,example                 ,description
-timestamp ,timestamp ,            ,       ,      ,        ,          ,        ,      ,         ,1   ,     ,1438270144              ,the timestamp of this quote
-close     ,double    ,            ,       ,      ,        ,          ,        ,      ,         ,2   ,     ,1240.10                 ,price of the asset in US dollars
-date      ,date      ,            ,       ,      ,true    ,          ,true    ,      ,true     ,3   ,     ,2018-09-30 01:15:17 UTC ,the date of the associated timestamp
+timestamp ,timestamp ,            ,       ,      ,        ,          ,        ,      ,         ,1   ,1    ,1438270144              ,the timestamp of this quote
+close     ,double    ,            ,       ,      ,        ,          ,        ,      ,         ,2   ,3    ,1240.10                 ,price of the asset in US dollars
+date      ,date      ,            ,       ,      ,true    ,          ,true    ,      ,true     ,3   ,2    ,2018-09-30 01:15:17 UTC ,the date of the associated timestamp
 name      ,string    ,            ,       ,      ,true    ,          ,true    ,      ,true     ,4   ,     ,Byzantium               ,the name of the block for some named 'special' blocks

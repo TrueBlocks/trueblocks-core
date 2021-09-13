@@ -2,4 +2,3 @@
 class = CAppearance
 fields = appearance_fields.csv
 includes = etherlib.h|indexarchive.h
-display_str = bn, tx, tc, addr, reason

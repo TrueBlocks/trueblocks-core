@@ -3,6 +3,5 @@ class = CLogEntry
 fields = logentry.csv
 includes = utillib.h|abi.h
 cpp_includes = etherlib.h
-display_str = blockNumber, transactionIndex, logIndex, address, topic0, topic1, topic2, topic3, data, type, compressedLog
 tsx = true
 openapi = log

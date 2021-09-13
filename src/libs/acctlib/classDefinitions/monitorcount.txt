@@ -2,4 +2,3 @@
 class = CMonitorCount
 fields = monitorcount.csv
 includes = etherlib.h
-display_str = address, nRecords, fileSize

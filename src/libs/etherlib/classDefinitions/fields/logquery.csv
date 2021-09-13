@@ -1,6 +1,6 @@
 name      ,type    ,str_default ,object ,array ,nowrite ,omitempty ,minimal ,extra ,noaddfld ,doc ,disp ,example ,description
-fromBlock ,blknum  ,            ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
-toBlock   ,blknum  ,            ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
-blockHash ,hash    ,            ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
-addresses ,address ,            ,       ,true  ,        ,          ,        ,      ,         ,    ,     ,        ,
-topics    ,topic   ,            ,       ,true  ,        ,          ,        ,      ,         ,    ,     ,        ,
+fromBlock ,blknum  ,            ,       ,      ,        ,          ,        ,      ,         ,    ,1    ,        ,
+toBlock   ,blknum  ,            ,       ,      ,        ,          ,        ,      ,         ,    ,2    ,        ,
+blockHash ,hash    ,            ,       ,      ,        ,          ,        ,      ,         ,    ,3    ,        ,
+addresses ,address ,            ,       ,true  ,        ,          ,        ,      ,         ,    ,4    ,        ,
+topics    ,topic   ,            ,       ,true  ,        ,          ,        ,      ,         ,    ,5    ,        ,

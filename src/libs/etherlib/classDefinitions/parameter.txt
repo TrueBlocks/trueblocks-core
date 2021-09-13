@@ -1,8 +1,8 @@
 [settings]
+description = a parameter to a function or event
 class = CParameter
 fields = paramter.csv
 includes = utillib.h
 display_str = type, name, str_default, value, internalType, indexed, is_pointer, is_array, is_object, is_builtin, is_minimal, is_noaddfld, is_nowrite, is_omitempty, is_extra
 tsx = true
 openapi = parameter
-description = a parameter to a function or event

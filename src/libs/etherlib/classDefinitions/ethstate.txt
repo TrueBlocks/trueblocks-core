@@ -5,5 +5,4 @@ includes = utillib.h|abi.h
 cpp_includes = etherlib.h
 sort = v1.blockNumber < v2.blockNumber
 equals = blockNumber == it.blockNumber
-display_str = blockNumber, address, balance, nonce, code, storage, deployed, acctType
 openapi = state
