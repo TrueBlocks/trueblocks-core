@@ -127,6 +127,7 @@ string_q CReceipt::getValueByName(const string_q& fieldName) const {
         if (tmpName == "transactionHash")
             tmpName = "hash";  // NOLINT -- we want transction class to find this, so rename
         // See if this field belongs to the item's container
+        extern string_q nextTransactionChunk(const string_q& fieldIn, const void* data);
         ret = nextTransactionChunk(tmpName, pTrans);
         if (contains(ret, "Field not found"))
             ret = "";

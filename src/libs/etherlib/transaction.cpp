@@ -211,6 +211,7 @@ string_q CTransaction::getValueByName(const string_q& fieldName) const {
     // EXISTING_CODE
     if (fieldName != "schema" && fieldName != "deleted" && fieldName != "showing" && fieldName != "cname") {
         // See if this field belongs to the item's container
+        extern string_q nextBlockChunk(const string_q& fieldIn, const void* data);
         ret = nextBlockChunk(fieldName, pBlock);
         if (contains(ret, "Field not found"))
             ret = "";

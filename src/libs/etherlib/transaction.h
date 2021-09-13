@@ -252,6 +252,5 @@ extern const char* STR_DISPLAY_TRANSACTION;
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 extern bool sortTransactionsForWrite(const CTransaction& t1, const CTransaction& t2);
-extern string_q nextBlockChunk(const string_q& fieldIn, const void* data);
 // EXISTING_CODE
 }  // namespace qblocks

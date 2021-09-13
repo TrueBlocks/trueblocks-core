@@ -59,12 +59,14 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
     }
 
     //------------------------------------------------------------------------------------------------
+    ASSERT(!classDef.base_class.empty());
     bool isBase = (classDef.base_class == "CBaseNode");
     // clang-format off
     string_q parSer2 = !isBase ? "`[{BASE_CLASS}]::SerializeC(archive);\n\n"        : "`[{BASE_CLASS}]::SerializeC(archive);\n";
     string_q parReg  = !isBase ? "[{BASE_CLASS}]::registerClass();\n\n`"            : "";
-    string_q parCnk  = !isBase ? "ret = next[{BASE_BASE}]Chunk(fieldName, this);\n" : "ret = next[{BASE_BASE}]Chunk(fieldName, this);\n";
+    // string_q parCnk  = !isBase ? "ret = next[{BASE_BASE}]Chunk(fieldName, this);\n" : "ret = next[{BASE_BASE}]Chunk(fieldName, this);\n";
     string_q parSet  = !isBase ? "`if ([{BASE_CLASS}]::setValueByName(fieldName, fieldValue))\n``return true;\n\n" : "";
+    string_q parGetH = !isBase ? STR_PARENT_BYVALUE : "";
     // clang-format on
 
     //------------------------------------------------------------------------------------------------
@@ -258,6 +260,7 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
     replaceAll(headSource, "[H_INCLUDES]", head_incStream.str());
     replaceAll(headSource, "[INIT_DEFAULTS]", defaultsStream.str());
     replaceAll(headSource, "[OPERATORS_DECL]", operators_decl);
+    replaceAll(headSource, "[PARENT_BYVALUE]", parGetH);
     replaceAll(headSource, "[{COMMENT_LINE}]", STR_COMMENT_LINE);
     replaceAll(headSource, "[{BASE_CLASS}]", classDef.base_class);
     replaceAll(headSource, "[{LONG}]", classDef.base_lower);
@@ -302,7 +305,7 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
     replaceAll(srcSource, "[OPERATORS_IMPL]", operators_impl);
     replaceAll(srcSource, "[{PARENT_SER2}]", parSer2);
     replaceAll(srcSource, "[{PARENT_REG}]", parReg);
-    replaceAll(srcSource, "[{PARENT_CHNK}]\n", parCnk);
+    // replaceAll(srcSource, "[{PARENT_CHNK}]\n", parCnk);
     replaceAll(srcSource, "[{PARENT_SET}]\n", parSet);
     replaceAll(srcSource, "[{COMMENT_LINE}]", STR_COMMENT_LINE);
     replaceAll(srcSource, "[{BASE_CLASS}]", classDef.base_class);
@@ -785,6 +788,12 @@ const char* STR_OPERATOR_DECL =
     "extern CArchive& operator<<(CArchive& archive, const [{CLASS_NAME}]& [{SHORT3}]);\n"
     "extern CArchive& operator>>(CArchive& archive, [{CLASS_NAME}]& [{SHORT3}]);\n"
     "\n";
+
+//------------------------------------------------------------------------------------------------------------
+const char* STR_PARENT_BYVALUE =
+    "\n\n"
+    "[{COMMENT_LINE}]"
+    "extern string_q next[{BASE_BASE}]Chunk(const string_q& fieldIn, const void* data);\n";
 
 //------------------------------------------------------------------------------------------------------------
 const char* STR_OPERATOR_IMPL =

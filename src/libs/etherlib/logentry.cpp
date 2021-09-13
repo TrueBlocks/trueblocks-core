@@ -132,6 +132,7 @@ string_q CLogEntry::getValueByName(const string_q& fieldName) const {
     // EXISTING_CODE
     // See if this field belongs to the item's container
     if (fieldName != "schema" && fieldName != "deleted" && fieldName != "showing" && fieldName != "cname") {
+        extern string_q nextReceiptChunk(const string_q& fieldIn, const void* data);
         ret = nextReceiptChunk(fieldName, pReceipt);
         if (contains(ret, "Field not found"))
             ret = "";

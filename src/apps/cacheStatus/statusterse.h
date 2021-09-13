@@ -147,6 +147,9 @@ extern CArchive& operator>>(CArchive& archive, CStatusTerse& sta);
 extern const char* STR_DISPLAY_STATUSTERSE;
 
 //---------------------------------------------------------------------------
+extern string_q nextStatusChunk(const string_q& fieldIn, const void* data);
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks

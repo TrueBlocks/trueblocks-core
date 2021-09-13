@@ -150,6 +150,9 @@ extern CArchive& operator>>(CArchive& archive, CAppearanceDisplay& app);
 extern const char* STR_DISPLAY_APPEARANCEDISPLAY;
 
 //---------------------------------------------------------------------------
+extern string_q nextAccountnameChunk(const string_q& fieldIn, const void* data);
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks

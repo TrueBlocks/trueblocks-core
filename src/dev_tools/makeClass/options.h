@@ -183,6 +183,7 @@ inline string_q short3(const string_q& str) {
 extern const char* STR_COMMENT_LINE;
 extern const char* STR_OPERATOR_DECL;
 extern const char* STR_OPERATOR_IMPL;
+extern const char* STR_PARENT_BYVALUE;
 extern const char* STR_GETVALUE1;
 extern const char* STR_GETVALUE2;
 extern const char* STR_GETOBJ_CODE;

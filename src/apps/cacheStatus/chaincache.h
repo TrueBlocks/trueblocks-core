@@ -147,6 +147,9 @@ extern CArchive& operator>>(CArchive& archive, CChainCache& cha);
 extern const char* STR_DISPLAY_CHAINCACHE;
 
 //---------------------------------------------------------------------------
+extern string_q nextCacheChunk(const string_q& fieldIn, const void* data);
+
+//---------------------------------------------------------------------------
 // EXISTING_CODE
 // EXISTING_CODE
 }  // namespace qblocks
