@@ -42,8 +42,6 @@ class CClassDefinition : public CBaseNode {
     string_q display_str;
     string_q sort_str;
     string_q eq_str;
-    string_q scope_str;
-    bool serializable;
     bool tsx;
     CParameterArray fieldArray;
     CParameterArray extraArray;
@@ -134,8 +132,6 @@ inline void CClassDefinition::initialize(void) {
     display_str = "";
     sort_str = "";
     eq_str = "";
-    scope_str = "";
-    serializable = false;
     tsx = false;
     fieldArray.clear();
     extraArray.clear();
@@ -168,8 +164,6 @@ inline void CClassDefinition::duplicate(const CClassDefinition& cl) {
     display_str = cl.display_str;
     sort_str = cl.sort_str;
     eq_str = cl.eq_str;
-    scope_str = cl.scope_str;
-    serializable = cl.serializable;
     tsx = cl.tsx;
     fieldArray = cl.fieldArray;
     extraArray = cl.extraArray;
@@ -208,6 +202,10 @@ inline bool operator<(const CClassDefinition& v1, const CClassDefinition& v2) {
 typedef vector<CClassDefinition> CClassDefinitionArray;
 extern CArchive& operator>>(CArchive& archive, CClassDefinitionArray& array);
 extern CArchive& operator<<(CArchive& archive, const CClassDefinitionArray& array);
+
+//---------------------------------------------------------------------------
+extern CArchive& operator<<(CArchive& archive, const CClassDefinition& cla);
+extern CArchive& operator>>(CArchive& archive, CClassDefinition& cla);
 
 //---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_CLASSDEFINITION;

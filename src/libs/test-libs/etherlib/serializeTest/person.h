@@ -151,6 +151,10 @@ extern CArchive& operator>>(CArchive& archive, CPersonArray& array);
 extern CArchive& operator<<(CArchive& archive, const CPersonArray& array);
 
 //---------------------------------------------------------------------------
+extern CArchive& operator<<(CArchive& archive, const CPerson& per);
+extern CArchive& operator>>(CArchive& archive, CPerson& per);
+
+//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_PERSON;
 
 //---------------------------------------------------------------------------

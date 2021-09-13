@@ -163,6 +163,10 @@ extern CArchive& operator>>(CArchive& archive, CCollectionArray& array);
 extern CArchive& operator<<(CArchive& archive, const CCollectionArray& array);
 
 //---------------------------------------------------------------------------
+extern CArchive& operator<<(CArchive& archive, const CCollection& col);
+extern CArchive& operator>>(CArchive& archive, CCollection& col);
+
+//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_COLLECTION;
 
 //---------------------------------------------------------------------------

@@ -22,7 +22,7 @@ namespace qblocks {
 IMPLEMENT_NODE(CAbiCache, CCache);
 
 //---------------------------------------------------------------------------
-static string_q nextAbicacheChunk(const string_q& fieldIn, const void* dataPtr);
+extern string_q nextAbicacheChunk(const string_q& fieldIn, const void* dataPtr);
 static string_q nextAbicacheChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
@@ -259,6 +259,18 @@ bool CAbiCache::readBackLevel(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator<<(CArchive& archive, const CAbiCache& abi) {
+    abi.SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator>>(CArchive& archive, CAbiCache& abi) {
+    abi.Serialize(archive);
+    return archive;
 }
 
 //-------------------------------------------------------------------------

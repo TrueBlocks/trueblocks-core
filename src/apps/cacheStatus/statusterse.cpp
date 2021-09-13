@@ -22,7 +22,7 @@ namespace qblocks {
 IMPLEMENT_NODE(CStatusTerse, CStatus);
 
 //---------------------------------------------------------------------------
-static string_q nextStatusterseChunk(const string_q& fieldIn, const void* dataPtr);
+extern string_q nextStatusterseChunk(const string_q& fieldIn, const void* dataPtr);
 static string_q nextStatusterseChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
@@ -254,6 +254,18 @@ bool CStatusTerse::readBackLevel(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator<<(CArchive& archive, const CStatusTerse& sta) {
+    sta.SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator>>(CArchive& archive, CStatusTerse& sta) {
+    sta.Serialize(archive);
+    return archive;
 }
 
 //-------------------------------------------------------------------------

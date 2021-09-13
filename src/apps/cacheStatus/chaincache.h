@@ -140,6 +140,10 @@ extern CArchive& operator>>(CArchive& archive, CChainCacheArray& array);
 extern CArchive& operator<<(CArchive& archive, const CChainCacheArray& array);
 
 //---------------------------------------------------------------------------
+extern CArchive& operator<<(CArchive& archive, const CChainCache& cha);
+extern CArchive& operator>>(CArchive& archive, CChainCache& cha);
+
+//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_CHAINCACHE;
 
 //---------------------------------------------------------------------------

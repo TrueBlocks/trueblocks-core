@@ -172,6 +172,10 @@ extern CArchive& operator>>(CArchive& archive, CIndexCacheItemArray& array);
 extern CArchive& operator<<(CArchive& archive, const CIndexCacheItemArray& array);
 
 //---------------------------------------------------------------------------
+extern CArchive& operator<<(CArchive& archive, const CIndexCacheItem& ind);
+extern CArchive& operator>>(CArchive& archive, CIndexCacheItem& ind);
+
+//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_INDEXCACHEITEM;
 
 //---------------------------------------------------------------------------

@@ -22,7 +22,7 @@ namespace qblocks {
 IMPLEMENT_NODE(CTestCase, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextTestcaseChunk(const string_q& fieldIn, const void* dataPtr);
+extern string_q nextTestcaseChunk(const string_q& fieldIn, const void* dataPtr);
 static string_q nextTestcaseChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
@@ -453,6 +453,18 @@ bool CTestCase::readBackLevel(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator<<(CArchive& archive, const CTestCase& tes) {
+    tes.SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator>>(CArchive& archive, CTestCase& tes) {
+    tes.Serialize(archive);
+    return archive;
 }
 
 //-------------------------------------------------------------------------

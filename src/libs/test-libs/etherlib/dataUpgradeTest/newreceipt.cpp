@@ -309,6 +309,18 @@ bool CNewReceipt::readBackLevel(CArchive& archive) {
     return done;
 }
 
+//---------------------------------------------------------------------------
+CArchive& operator<<(CArchive& archive, const CNewReceipt& newr) {
+    newr.SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator>>(CArchive& archive, CNewReceipt& newr) {
+    newr.Serialize(archive);
+    return archive;
+}
+
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CNewReceipt& it) {
     // EXISTING_CODE

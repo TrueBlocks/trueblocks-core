@@ -22,7 +22,7 @@ namespace qblocks {
 IMPLEMENT_NODE(CSlurpCache, CCache);
 
 //---------------------------------------------------------------------------
-static string_q nextSlurpcacheChunk(const string_q& fieldIn, const void* dataPtr);
+extern string_q nextSlurpcacheChunk(const string_q& fieldIn, const void* dataPtr);
 static string_q nextSlurpcacheChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
@@ -286,6 +286,18 @@ bool CSlurpCache::readBackLevel(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator<<(CArchive& archive, const CSlurpCache& slu) {
+    slu.SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator>>(CArchive& archive, CSlurpCache& slu) {
+    slu.Serialize(archive);
+    return archive;
 }
 
 //-------------------------------------------------------------------------

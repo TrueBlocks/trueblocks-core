@@ -22,7 +22,7 @@ namespace qblocks {
 IMPLEMENT_NODE(CESResult, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextEsresultChunk(const string_q& fieldIn, const void* dataPtr);
+extern string_q nextEsresultChunk(const string_q& fieldIn, const void* dataPtr);
 static string_q nextEsresultChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
@@ -267,6 +267,18 @@ bool CESResult::readBackLevel(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator<<(CArchive& archive, const CESResult& esr) {
+    esr.SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator>>(CArchive& archive, CESResult& esr) {
+    esr.Serialize(archive);
+    return archive;
 }
 
 //-------------------------------------------------------------------------

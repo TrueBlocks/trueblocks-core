@@ -2,4 +2,3 @@
 class = CApiSpec
 fields = apispec.csv
 includes = utillib.h
-serializable = true

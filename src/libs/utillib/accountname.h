@@ -172,6 +172,10 @@ extern CArchive& operator>>(CArchive& archive, CAccountNameArray& array);
 extern CArchive& operator<<(CArchive& archive, const CAccountNameArray& array);
 
 //---------------------------------------------------------------------------
+extern CArchive& operator<<(CArchive& archive, const CAccountName& acc);
+extern CArchive& operator>>(CArchive& archive, CAccountName& acc);
+
+//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_ACCOUNTNAME;
 
 //---------------------------------------------------------------------------

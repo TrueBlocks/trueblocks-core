@@ -22,7 +22,7 @@ namespace qblocks {
 IMPLEMENT_NODE(CAppearanceDisplay, CAccountName);
 
 //---------------------------------------------------------------------------
-static string_q nextAppearancedisplayChunk(const string_q& fieldIn, const void* dataPtr);
+extern string_q nextAppearancedisplayChunk(const string_q& fieldIn, const void* dataPtr);
 static string_q nextAppearancedisplayChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
@@ -272,6 +272,18 @@ bool CAppearanceDisplay::readBackLevel(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator<<(CArchive& archive, const CAppearanceDisplay& app) {
+    app.SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator>>(CArchive& archive, CAppearanceDisplay& app) {
+    app.Serialize(archive);
+    return archive;
 }
 
 //-------------------------------------------------------------------------

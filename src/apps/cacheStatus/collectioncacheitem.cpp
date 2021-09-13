@@ -22,7 +22,7 @@ namespace qblocks {
 IMPLEMENT_NODE(CCollectionCacheItem, CCacheBase);
 
 //---------------------------------------------------------------------------
-static string_q nextCollectioncacheitemChunk(const string_q& fieldIn, const void* dataPtr);
+extern string_q nextCollectioncacheitemChunk(const string_q& fieldIn, const void* dataPtr);
 static string_q nextCollectioncacheitemChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
@@ -244,6 +244,18 @@ bool CCollectionCacheItem::readBackLevel(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator<<(CArchive& archive, const CCollectionCacheItem& col) {
+    col.SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator>>(CArchive& archive, CCollectionCacheItem& col) {
+    col.Serialize(archive);
+    return archive;
 }
 
 //-------------------------------------------------------------------------

@@ -30,4 +30,4 @@ totalOut            ,int256    ,            ,       ,      ,        ,          ,
 amountNet           ,int256    ,            ,       ,      ,        ,          ,        ,true  ,         ,27  ,     ,              ,a calculated field -- totalIn - totalOut
 endBalCalc          ,int256    ,            ,       ,      ,        ,          ,        ,true  ,         ,28  ,     ,              ,a calculated field -- begBal + amountNet
 endBalDiff          ,int256    ,            ,       ,      ,        ,          ,        ,true  ,         ,29  ,     ,              ,a calculated field -- endBal - endBalCalc&#44; if non-zero&#44; the reconciliation failed
-reconciled          ,boolean   ,            ,       ,      ,        ,          ,        ,true  ,         ,30  ,     ,              ,a calculated field -- true if `endBal === endBalCalc` and `begBal === prevBlkBal`. `false` otherwise.
+reconciled          ,bool      ,            ,       ,      ,        ,          ,        ,true  ,         ,30  ,     ,              ,a calculated field -- true if `endBal === endBalCalc` and `begBal === prevBlkBal`. `false` otherwise.

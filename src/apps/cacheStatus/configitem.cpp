@@ -22,7 +22,7 @@ namespace qblocks {
 IMPLEMENT_NODE(CConfigItem, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextConfigitemChunk(const string_q& fieldIn, const void* dataPtr);
+extern string_q nextConfigitemChunk(const string_q& fieldIn, const void* dataPtr);
 static string_q nextConfigitemChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
@@ -349,6 +349,18 @@ bool CConfigItem::readBackLevel(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator<<(CArchive& archive, const CConfigItem& con) {
+    con.SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator>>(CArchive& archive, CConfigItem& con) {
+    con.Serialize(archive);
+    return archive;
 }
 
 //-------------------------------------------------------------------------

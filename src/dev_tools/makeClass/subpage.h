@@ -156,6 +156,10 @@ extern CArchive& operator>>(CArchive& archive, CSubpageArray& array);
 extern CArchive& operator<<(CArchive& archive, const CSubpageArray& array);
 
 //---------------------------------------------------------------------------
+extern CArchive& operator<<(CArchive& archive, const CSubpage& sub);
+extern CArchive& operator>>(CArchive& archive, CSubpage& sub);
+
+//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_SUBPAGE;
 
 //---------------------------------------------------------------------------

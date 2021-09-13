@@ -22,7 +22,7 @@ namespace qblocks {
 IMPLEMENT_NODE(CRoute, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextRouteChunk(const string_q& fieldIn, const void* dataPtr);
+extern string_q nextRouteChunk(const string_q& fieldIn, const void* dataPtr);
 static string_q nextRouteChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
@@ -301,6 +301,18 @@ bool CRoute::readBackLevel(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator<<(CArchive& archive, const CRoute& rou) {
+    rou.SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator>>(CArchive& archive, CRoute& rou) {
+    rou.Serialize(archive);
+    return archive;
 }
 
 //-------------------------------------------------------------------------

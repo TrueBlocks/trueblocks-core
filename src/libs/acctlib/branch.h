@@ -156,6 +156,10 @@ extern CArchive& operator>>(CArchive& archive, CBranchArray& array);
 extern CArchive& operator<<(CArchive& archive, const CBranchArray& array);
 
 //---------------------------------------------------------------------------
+extern CArchive& operator<<(CArchive& archive, const CBranch& bra);
+extern CArchive& operator>>(CArchive& archive, CBranch& bra);
+
+//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_BRANCH;
 
 //---------------------------------------------------------------------------

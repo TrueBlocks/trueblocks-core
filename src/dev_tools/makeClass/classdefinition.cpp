@@ -22,7 +22,7 @@ namespace qblocks {
 IMPLEMENT_NODE(CClassDefinition, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextClassdefinitionChunk(const string_q& fieldIn, const void* dataPtr);
+extern string_q nextClassdefinitionChunk(const string_q& fieldIn, const void* dataPtr);
 static string_q nextClassdefinitionChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
@@ -173,12 +173,6 @@ string_q CClassDefinition::getValueByName(const string_q& fieldName) const {
             if (fieldName % "sort_str") {
                 return sort_str;
             }
-            if (fieldName % "scope_str") {
-                return scope_str;
-            }
-            if (fieldName % "serializable") {
-                return bool_2_Str_t(serializable);
-            }
             break;
         case 't':
             if (fieldName % "tsx") {
@@ -316,14 +310,6 @@ bool CClassDefinition::setValueByName(const string_q& fieldNameIn, const string_
                 sort_str = fieldValue;
                 return true;
             }
-            if (fieldName % "scope_str") {
-                scope_str = fieldValue;
-                return true;
-            }
-            if (fieldName % "serializable") {
-                serializable = str_2_Bool(fieldValue);
-                return true;
-            }
             break;
         case 't':
             if (fieldName % "tsx") {
@@ -373,8 +359,6 @@ bool CClassDefinition::Serialize(CArchive& archive) {
     archive >> display_str;
     archive >> sort_str;
     archive >> eq_str;
-    archive >> scope_str;
-    archive >> serializable;
     archive >> tsx;
     // archive >> fieldArray;
     // archive >> extraArray;
@@ -410,8 +394,6 @@ bool CClassDefinition::SerializeC(CArchive& archive) const {
     archive << display_str;
     archive << sort_str;
     archive << eq_str;
-    archive << scope_str;
-    archive << serializable;
     archive << tsx;
     // archive << fieldArray;
     // archive << extraArray;
@@ -483,8 +465,6 @@ void CClassDefinition::registerClass(void) {
     ADD_FIELD(CClassDefinition, "display_str", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "sort_str", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "eq_str", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CClassDefinition, "scope_str", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CClassDefinition, "serializable", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "tsx", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "fieldArray", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CClassDefinition, "fieldArray");
@@ -537,6 +517,18 @@ bool CClassDefinition::readBackLevel(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator<<(CArchive& archive, const CClassDefinition& cla) {
+    cla.SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator>>(CArchive& archive, CClassDefinition& cla) {
+    cla.Serialize(archive);
+    return archive;
 }
 
 //-------------------------------------------------------------------------
@@ -592,8 +584,6 @@ CClassDefinition::CClassDefinition(const CToml& toml) {
     display_str = toml.getConfigStr("settings", "display_str", "");
     sort_str = toml.getConfigStr("settings", "sort", "");
     eq_str = toml.getConfigStr("settings", "equals", "");
-    scope_str = toml.getConfigStr("settings", "scope", "static");  // TODO(tjayrush): global data
-    serializable = toml.getConfigBool("settings", "serializable", false);
     description = toml.getConfigStr("settings", "description", "");
     tsx = toml.getConfigBool("settings", "tsx", false);
     openapi = toml.getConfigStr("settings", "openapi", "");

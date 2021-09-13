@@ -22,7 +22,7 @@ namespace qblocks {
 IMPLEMENT_NODE(CPriceCache, CCache);
 
 //---------------------------------------------------------------------------
-static string_q nextPricecacheChunk(const string_q& fieldIn, const void* dataPtr);
+extern string_q nextPricecacheChunk(const string_q& fieldIn, const void* dataPtr);
 static string_q nextPricecacheChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
@@ -259,6 +259,18 @@ bool CPriceCache::readBackLevel(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator<<(CArchive& archive, const CPriceCache& pri) {
+    pri.SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator>>(CArchive& archive, CPriceCache& pri) {
+    pri.Serialize(archive);
+    return archive;
 }
 
 //-------------------------------------------------------------------------

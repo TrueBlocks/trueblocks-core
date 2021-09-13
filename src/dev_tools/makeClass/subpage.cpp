@@ -22,7 +22,7 @@ namespace qblocks {
 IMPLEMENT_NODE(CSubpage, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextSubpageChunk(const string_q& fieldIn, const void* dataPtr);
+extern string_q nextSubpageChunk(const string_q& fieldIn, const void* dataPtr);
 static string_q nextSubpageChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
@@ -329,6 +329,18 @@ bool CSubpage::readBackLevel(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator<<(CArchive& archive, const CSubpage& sub) {
+    sub.SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator>>(CArchive& archive, CSubpage& sub) {
+    sub.Serialize(archive);
+    return archive;
 }
 
 //-------------------------------------------------------------------------

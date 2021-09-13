@@ -22,7 +22,7 @@ namespace qblocks {
 IMPLEMENT_NODE(QTransferFrom, CTransaction);
 
 //---------------------------------------------------------------------------
-static string_q nextTransferfromChunk(const string_q& fieldIn, const void* dataPtr);
+extern string_q nextTransferfromChunk(const string_q& fieldIn, const void* dataPtr);
 static string_q nextTransferfromChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
@@ -264,6 +264,18 @@ bool QTransferFrom::readBackLevel(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator<<(CArchive& archive, const QTransferFrom& tra) {
+    tra.SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator>>(CArchive& archive, QTransferFrom& tra) {
+    tra.Serialize(archive);
+    return archive;
 }
 
 //-------------------------------------------------------------------------

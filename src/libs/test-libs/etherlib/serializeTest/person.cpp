@@ -22,7 +22,7 @@ namespace qblocks {
 IMPLEMENT_NODE(CPerson, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextPersonChunk(const string_q& fieldIn, const void* dataPtr);
+extern string_q nextPersonChunk(const string_q& fieldIn, const void* dataPtr);
 static string_q nextPersonChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
@@ -285,6 +285,18 @@ bool CPerson::readBackLevel(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator<<(CArchive& archive, const CPerson& per) {
+    per.SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator>>(CArchive& archive, CPerson& per) {
+    per.Serialize(archive);
+    return archive;
 }
 
 //-------------------------------------------------------------------------

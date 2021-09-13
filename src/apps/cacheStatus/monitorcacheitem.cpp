@@ -22,7 +22,7 @@ namespace qblocks {
 IMPLEMENT_NODE(CMonitorCacheItem, CCacheBase);
 
 //---------------------------------------------------------------------------
-static string_q nextMonitorcacheitemChunk(const string_q& fieldIn, const void* dataPtr);
+extern string_q nextMonitorcacheitemChunk(const string_q& fieldIn, const void* dataPtr);
 static string_q nextMonitorcacheitemChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
@@ -258,6 +258,18 @@ bool CMonitorCacheItem::readBackLevel(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator<<(CArchive& archive, const CMonitorCacheItem& mon) {
+    mon.SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator>>(CArchive& archive, CMonitorCacheItem& mon) {
+    mon.Serialize(archive);
+    return archive;
 }
 
 //-------------------------------------------------------------------------

@@ -23,7 +23,7 @@ namespace qblocks {
 IMPLEMENT_NODE(CEthState, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextEthstateChunk(const string_q& fieldIn, const void* dataPtr);
+extern string_q nextEthstateChunk(const string_q& fieldIn, const void* dataPtr);
 static string_q nextEthstateChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
@@ -375,6 +375,18 @@ bool CEthState::readBackLevel(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator<<(CArchive& archive, const CEthState& eth) {
+    eth.SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator>>(CArchive& archive, CEthState& eth) {
+    eth.Serialize(archive);
+    return archive;
 }
 
 //-------------------------------------------------------------------------

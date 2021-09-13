@@ -4,7 +4,6 @@ fields = function.csv
 includes = utillib.h|parameter.h
 sort = v1.encoding < v2.encoding
 equals = encoding % it.encoding && message % it.message
-serializable = true
 display_str = abi_source, name, type, stateMutability, signature, encoding, inputs, outputs
 tsx = true
 openapi = function

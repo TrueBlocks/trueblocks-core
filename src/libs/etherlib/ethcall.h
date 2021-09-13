@@ -150,6 +150,10 @@ extern CArchive& operator>>(CArchive& archive, CEthCallArray& array);
 extern CArchive& operator<<(CArchive& archive, const CEthCallArray& array);
 
 //---------------------------------------------------------------------------
+extern CArchive& operator<<(CArchive& archive, const CEthCall& eth);
+extern CArchive& operator>>(CArchive& archive, CEthCall& eth);
+
+//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_ETHCALL;
 
 //---------------------------------------------------------------------------

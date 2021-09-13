@@ -22,7 +22,7 @@ namespace qblocks {
 IMPLEMENT_NODE(CApiSpec, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextApispecChunk(const string_q& fieldIn, const void* dataPtr);
+extern string_q nextApispecChunk(const string_q& fieldIn, const void* dataPtr);
 static string_q nextApispecChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------

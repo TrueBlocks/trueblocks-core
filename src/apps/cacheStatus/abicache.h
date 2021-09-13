@@ -138,6 +138,10 @@ extern CArchive& operator>>(CArchive& archive, CAbiCacheArray& array);
 extern CArchive& operator<<(CArchive& archive, const CAbiCacheArray& array);
 
 //---------------------------------------------------------------------------
+extern CArchive& operator<<(CArchive& archive, const CAbiCache& abi);
+extern CArchive& operator>>(CArchive& archive, CAbiCache& abi);
+
+//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_ABICACHE;
 
 //---------------------------------------------------------------------------

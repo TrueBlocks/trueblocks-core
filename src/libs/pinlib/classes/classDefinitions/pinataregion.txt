@@ -3,4 +3,3 @@ class = CPinataRegion
 fields = pinataregion.csv
 includes = utillib.h
 cpp_includes =
-serializable = true

@@ -23,7 +23,7 @@ namespace qblocks {
 IMPLEMENT_NODE(CTraceResult, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextTraceresultChunk(const string_q& fieldIn, const void* dataPtr);
+extern string_q nextTraceresultChunk(const string_q& fieldIn, const void* dataPtr);
 static string_q nextTraceresultChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------

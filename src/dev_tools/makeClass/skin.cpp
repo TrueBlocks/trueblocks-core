@@ -22,7 +22,7 @@ namespace qblocks {
 IMPLEMENT_NODE(CSkin, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextSkinChunk(const string_q& fieldIn, const void* dataPtr);
+extern string_q nextSkinChunk(const string_q& fieldIn, const void* dataPtr);
 static string_q nextSkinChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
@@ -347,6 +347,18 @@ bool CSkin::readBackLevel(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator<<(CArchive& archive, const CSkin& ski) {
+    ski.SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator>>(CArchive& archive, CSkin& ski) {
+    ski.Serialize(archive);
+    return archive;
 }
 
 //-------------------------------------------------------------------------

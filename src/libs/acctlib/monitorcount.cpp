@@ -22,7 +22,7 @@ namespace qblocks {
 IMPLEMENT_NODE(CMonitorCount, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextMonitorcountChunk(const string_q& fieldIn, const void* dataPtr);
+extern string_q nextMonitorcountChunk(const string_q& fieldIn, const void* dataPtr);
 static string_q nextMonitorcountChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
@@ -267,6 +267,18 @@ bool CMonitorCount::readBackLevel(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator<<(CArchive& archive, const CMonitorCount& mon) {
+    mon.SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator>>(CArchive& archive, CMonitorCount& mon) {
+    mon.Serialize(archive);
+    return archive;
 }
 
 //-------------------------------------------------------------------------

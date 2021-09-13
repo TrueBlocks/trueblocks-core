@@ -204,8 +204,8 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
     }
 
     //------------------------------------------------------------------------------------------------
-    string_q operators_decl = string_q(classDef.serializable ? STR_OPERATOR_DECL : "\n");
-    string_q operators_impl = string_q(classDef.serializable ? STR_OPERATOR_IMPL : "\n");
+    string_q operators_decl = STR_OPERATOR_DECL;
+    string_q operators_impl = STR_OPERATOR_IMPL;
 
     //------------------------------------------------------------------------------------------------
     classDef.sort_str = substitute(classDef.sort_str, "|", "\n```");
@@ -284,7 +284,6 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
     replaceAll(srcSource, "[HIDE_FIELDS]", hide_fieldStream.str());
     replaceAll(srcSource, "[SET_CASE_CODE]", getCaseSetCode(classDef.fieldArray));
     replaceAll(srcSource, "[GET_CASE_CODE]", getCaseGetCode(classDef.fieldArray));
-    replaceAll(srcSource, "[SCOPE_CODE]", classDef.scope_str);
     replaceAll(srcSource, "[OPERATORS_IMPL]", operators_impl);
     replaceAll(srcSource, "[{PARENT_SER2}]", parSer2);
     replaceAll(srcSource, "[{PARENT_REG}]", parReg);
