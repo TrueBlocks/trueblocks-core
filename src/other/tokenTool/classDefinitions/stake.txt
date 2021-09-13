@@ -2,5 +2,4 @@
 class = CStake
 fields = stake.csv
 includes = etherlib.h
-cpp_includes =
 disabled  = true

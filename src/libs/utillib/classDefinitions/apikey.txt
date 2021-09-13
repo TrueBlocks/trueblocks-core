@@ -2,6 +2,5 @@
 class = CApiKey
 fields = apikey.csv
 includes = utillib.h
-cpp_includes =
 equals = (key == it.key)
 display_str = key, secret

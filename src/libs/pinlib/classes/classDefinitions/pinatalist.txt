@@ -2,4 +2,3 @@
 class = CPinataPinlist
 fields = pinatalist.csv
 includes = utillib.h|pinatapin.h
-cpp_includes =
