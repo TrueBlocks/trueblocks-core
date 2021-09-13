@@ -40,7 +40,7 @@ and edit configuration files.
 If you need help with a step, see the [installation's troubleshooting section](https://trueblocks.io/docs/prologue/installing-trueblocks/#troubleshooting).
 
 0. Install dependencies
-    - &#9745; [Install Go, version 1.12x or later](https://golang.org/doc/install).
+    - &#9745; [Install the latest version of Go](https://golang.org/doc/install).
     - &#9745; Install the other dependencies with your command line: `build-essential` `git` `cmake` `python` `python-dev` `libcurl3-dev` `clang-format` `jq`.
 
 1. Compile from the codebase
@@ -51,21 +51,22 @@ If you need help with a step, see the [installation's troubleshooting section](h
     cmake ../src
     make
     ```
-    _(You may use `make -j nproc` to parallelize the build.)_
+    _(You may use `make -j <ncores>` to parallelize the build. <Ncores> represents the number of cores to devote to the job)_
 
-2. Add `trueblocks-core/bin` to your shell PATH.
+2. Add `trueblocks-core/bin` to your shell `PATH`.
 
-3. Find your TrueBlocks configuration directory. It should be in either `$XDG_DATA_HOME`, or:
+3. Find your TrueBlocks configuration directory. It should be in one of these places:
 
     * On linux at `~/.local/share/trueblocks`
     * On mac at `~/Library/Application Support/TrueBlocks`
+    * If you've configured it, wherever the location of `$XDG_DATA_HOME` is
 
 4. In the configuration directory, edit `trueblocks.toml` to add your RPC and API keys. It should look something like this:
 ```toml
 [settings]
 rpcProvider = "<url-to-rpc-endpoint>"
-etherscan_key = "<key>"
 ```
+
 5. Test a command!
 ```shell
 chifra blocks 12345
