@@ -124,14 +124,11 @@ string_q CEthState::getValueByName(const string_q& fieldName) const {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    string_q s;
-    s = toUpper(string_q("result")) + "::";
-    if (contains(fieldName, s)) {
-        string_q f = fieldName;
-        replaceAll(f, s, "");
-        f = result.getValueByName(f);
-        return f;
-    }
+    // test for contained object field specifiers
+    string_q objSpec;
+    objSpec = toUpper("result") + "::";
+    if (contains(fieldName, objSpec))
+        return result.getValueByName(substitute(fieldName, objSpec, ""));
 
     // Finally, give the parent class a chance
     return CBaseNode::getValueByName(fieldName);

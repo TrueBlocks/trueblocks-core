@@ -141,14 +141,11 @@ string_q CLogEntry::getValueByName(const string_q& fieldName) const {
     }
     // EXISTING_CODE
 
-    string_q s;
-    s = toUpper(string_q("articulatedLog")) + "::";
-    if (contains(fieldName, s)) {
-        string_q f = fieldName;
-        replaceAll(f, s, "");
-        f = articulatedLog.getValueByName(f);
-        return f;
-    }
+    // test for contained object field specifiers
+    string_q objSpec;
+    objSpec = toUpper("articulatedLog") + "::";
+    if (contains(fieldName, objSpec))
+        return articulatedLog.getValueByName(substitute(fieldName, objSpec, ""));
 
     // Finally, give the parent class a chance
     return CBaseNode::getValueByName(fieldName);

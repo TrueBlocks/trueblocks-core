@@ -110,7 +110,6 @@ bool CAbiCacheItem::setValueByName(const string_q& fieldNameIn, const string_q& 
 
     if (CCacheBase::setValueByName(fieldName, fieldValue))
         return true;
-
     switch (tolower(fieldName[0])) {
         case 'n':
             if (fieldName % "nFunctions") {

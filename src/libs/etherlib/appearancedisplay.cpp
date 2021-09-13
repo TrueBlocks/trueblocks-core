@@ -104,7 +104,6 @@ bool CAppearanceDisplay::setValueByName(const string_q& fieldNameIn, const strin
 
     if (CAccountName::setValueByName(fieldName, fieldValue))
         return true;
-
     switch (tolower(fieldName[0])) {
         case 'b':
             if (fieldName % "blockNumber") {

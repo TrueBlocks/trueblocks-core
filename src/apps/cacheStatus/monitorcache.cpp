@@ -124,7 +124,6 @@ bool CMonitorCache::setValueByName(const string_q& fieldNameIn, const string_q& 
 
     if (CCache::setValueByName(fieldName, fieldValue))
         return true;
-
     switch (tolower(fieldName[0])) {
         case 'a':
             if (fieldName % "addrs") {

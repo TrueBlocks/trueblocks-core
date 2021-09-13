@@ -99,7 +99,6 @@ bool CCollectionCacheItem::setValueByName(const string_q& fieldNameIn, const str
 
     if (CCacheBase::setValueByName(fieldName, fieldValue))
         return true;
-
     switch (tolower(fieldName[0])) {
         case 't':
             if (fieldName % "type") {

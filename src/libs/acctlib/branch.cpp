@@ -100,7 +100,6 @@ bool CBranch::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
 
     if (CTreeNode::setValueByName(fieldName, fieldValue))
         return true;
-
     switch (tolower(fieldName[0])) {
         case 'b':
             if (fieldName % "branchValue") {

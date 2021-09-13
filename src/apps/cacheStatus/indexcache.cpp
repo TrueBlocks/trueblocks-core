@@ -109,7 +109,6 @@ bool CIndexCache::setValueByName(const string_q& fieldNameIn, const string_q& fi
 
     if (CCache::setValueByName(fieldName, fieldValue))
         return true;
-
     switch (tolower(fieldName[0])) {
         case 'i':
             if (fieldName % "items") {

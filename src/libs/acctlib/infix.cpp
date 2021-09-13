@@ -102,7 +102,6 @@ bool CInfix::setValueByName(const string_q& fieldNameIn, const string_q& fieldVa
 
     if (CTreeNode::setValueByName(fieldName, fieldValue))
         return true;
-
     switch (tolower(fieldName[0])) {
         case 'n':
             if (fieldName % "next") {

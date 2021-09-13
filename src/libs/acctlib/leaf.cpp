@@ -115,7 +115,6 @@ bool CLeaf::setValueByName(const string_q& fieldNameIn, const string_q& fieldVal
 
     if (CTreeNode::setValueByName(fieldName, fieldValue))
         return true;
-
     switch (tolower(fieldName[0])) {
         case 'b':
             if (fieldName % "blocks") {

@@ -102,7 +102,6 @@ bool QFromTransferFrom::setValueByName(const string_q& fieldNameIn, const string
 
     if (QTransferFrom::setValueByName(fieldName, fieldValue))
         return true;
-
     switch (tolower(fieldName[0])) {
         case 'w':
             if (fieldName % "whop") {

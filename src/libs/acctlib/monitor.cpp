@@ -120,7 +120,6 @@ bool CMonitor::setValueByName(const string_q& fieldNameIn, const string_q& field
 
     if (CAccountName::setValueByName(fieldName, fieldValue))
         return true;
-
     switch (tolower(fieldName[0])) {
         case 'f':
             if (fieldName % "firstAppearance") {

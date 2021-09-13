@@ -105,7 +105,6 @@ bool QTransferFrom::setValueByName(const string_q& fieldNameIn, const string_q& 
 
     if (CTransaction::setValueByName(fieldName, fieldValue))
         return true;
-
     switch (tolower(fieldName[0])) {
         case '_':
             if (fieldName % "_from") {

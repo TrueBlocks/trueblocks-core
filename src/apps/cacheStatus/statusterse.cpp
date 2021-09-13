@@ -102,7 +102,6 @@ bool CStatusTerse::setValueByName(const string_q& fieldNameIn, const string_q& f
 
     if (CStatus::setValueByName(fieldName, fieldValue))
         return true;
-
     switch (tolower(fieldName[0])) {
         case 'm':
             if (fieldName % "modes1") {

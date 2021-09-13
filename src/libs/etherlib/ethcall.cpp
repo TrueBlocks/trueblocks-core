@@ -98,14 +98,11 @@ string_q CEthCall::getValueByName(const string_q& fieldName) const {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    string_q s;
-    s = toUpper(string_q("abi_spec")) + "::";
-    if (contains(fieldName, s)) {
-        string_q f = fieldName;
-        replaceAll(f, s, "");
-        f = abi_spec.getValueByName(f);
-        return f;
-    }
+    // test for contained object field specifiers
+    string_q objSpec;
+    objSpec = toUpper("abi_spec") + "::";
+    if (contains(fieldName, objSpec))
+        return abi_spec.getValueByName(substitute(fieldName, objSpec, ""));
 
     // Finally, give the parent class a chance
     return CEthState::getValueByName(fieldName);
@@ -121,7 +118,6 @@ bool CEthCall::setValueByName(const string_q& fieldNameIn, const string_q& field
 
     if (CEthState::setValueByName(fieldName, fieldValue))
         return true;
-
     switch (tolower(fieldName[0])) {
         case 'a':
             if (fieldName % "abi_spec") {

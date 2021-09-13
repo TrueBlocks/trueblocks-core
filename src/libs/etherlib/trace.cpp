@@ -149,30 +149,19 @@ string_q CTrace::getValueByName(const string_q& fieldName) const {
     // Weird note here -- the above case for traceAddress is not used because it's overridden further up.
     // EXISTING_CODE
 
-    string_q s;
-    s = toUpper(string_q("action")) + "::";
-    if (contains(fieldName, s)) {
-        string_q f = fieldName;
-        replaceAll(f, s, "");
-        f = action.getValueByName(f);
-        return f;
-    }
+    // test for contained object field specifiers
+    string_q objSpec;
+    objSpec = toUpper("action") + "::";
+    if (contains(fieldName, objSpec))
+        return action.getValueByName(substitute(fieldName, objSpec, ""));
 
-    s = toUpper(string_q("result")) + "::";
-    if (contains(fieldName, s)) {
-        string_q f = fieldName;
-        replaceAll(f, s, "");
-        f = result.getValueByName(f);
-        return f;
-    }
+    objSpec = toUpper("result") + "::";
+    if (contains(fieldName, objSpec))
+        return result.getValueByName(substitute(fieldName, objSpec, ""));
 
-    s = toUpper(string_q("articulatedTrace")) + "::";
-    if (contains(fieldName, s)) {
-        string_q f = fieldName;
-        replaceAll(f, s, "");
-        f = articulatedTrace.getValueByName(f);
-        return f;
-    }
+    objSpec = toUpper("articulatedTrace") + "::";
+    if (contains(fieldName, objSpec))
+        return articulatedTrace.getValueByName(substitute(fieldName, objSpec, ""));
 
     // Finally, give the parent class a chance
     return CBaseNode::getValueByName(fieldName);

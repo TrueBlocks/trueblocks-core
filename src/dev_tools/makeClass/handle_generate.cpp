@@ -13,7 +13,37 @@
 #include "acctlib.h"
 #include "options.h"
 
+//------------------------------------------------------------------------------------------------------------
 extern const char* STR_CASE_CODE_STRINGARRAY;
+extern const char* STR_COMMENT_LINE;
+extern const char* STR_OPERATOR_DECL;
+extern const char* STR_OPERATOR_IMPL;
+extern const char* STR_PARENT_BYVALUE;
+extern const char* STR_PARENT_REGISTER;
+extern const char* STR_PARENT_SET;
+extern const char* STR_GETVALUE1;
+extern const char* STR_GETVALUE2;
+extern const char* STR_GETOBJ_CODE;
+extern const char* STR_GETOBJ_CODE_FIELD;
+extern const char* STR_GETOBJ_CODE_FIELD_OBJ;
+extern const char* STR_GETSTR_CODE;
+extern const char* STR_GETSTR_CODE_FIELD;
+extern const char* STR_GETOBJ_HEAD;
+extern const char* STR_GETSTR_HEAD;
+extern const char* STR_UPGRADE_CODE;
+extern const char* STR_SORT_COMMENT_1;
+extern const char* STR_SORT_COMMENT_2;
+extern const char* STR_EQUAL_COMMENT_1;
+extern const char* STR_EQUAL_COMMENT_2;
+extern const char* STR_PRTREADFMT;
+extern const char* STR_READFMT;
+extern const char* STR_PTRWRITEFMT;
+extern const char* STR_WRITEFMT;
+extern const char* STR_UNKOWNTYPE;
+extern const char* STR_CHILD_OBJS;
+extern const char* STR_DELETE_CMDS;
+extern const char* STR_DEFAULT_TAGS;
+extern const char* STR_PARENT_SERIALIZE;
 extern bool writeTheCode(const codewrite_t& cw);
 //------------------------------------------------------------------------------------------------------------
 bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, const string_q& namespc, bool asJs) {
@@ -57,17 +87,6 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
         else
             src_incStream << ("#include \"" + inc + "\"\n");
     }
-
-    //------------------------------------------------------------------------------------------------
-    ASSERT(!classDef.base_class.empty());
-    bool isBase = (classDef.base_class == "CBaseNode");
-    // clang-format off
-    string_q parSer2 = !isBase ? "`[{BASE_CLASS}]::SerializeC(archive);\n\n"        : "`[{BASE_CLASS}]::SerializeC(archive);\n";
-    string_q parReg  = !isBase ? "[{BASE_CLASS}]::registerClass();\n\n`"            : "";
-    // string_q parCnk  = !isBase ? "ret = next[{BASE_BASE}]Chunk(fieldName, this);\n" : "ret = next[{BASE_BASE}]Chunk(fieldName, this);\n";
-    string_q parSet  = !isBase ? "`if ([{BASE_CLASS}]::setValueByName(fieldName, fieldValue))\n``return true;\n\n" : "";
-    string_q parGetH = !isBase ? STR_PARENT_BYVALUE : "";
-    // clang-format on
 
     //------------------------------------------------------------------------------------------------
     for (auto fld : classDef.fieldArray) {
@@ -199,7 +218,7 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
 
             if ((fld.is_flags & IS_OBJECT) && !(fld.is_flags & IS_POINTER) && !contains(fld.type, "Array")) {
                 if (child_objStream.str().empty())
-                    child_objStream << "\n`string_q s;\n";
+                    child_objStream << "\n\n`// test for contained object field specifiers\n`string_q objSpec;\n";
                 child_objStream << fld.Format(STR_CHILD_OBJS) << endl;
             }
         }
@@ -247,6 +266,10 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
     if (hasStrGetter)
         fieldGetStr = substitute(string_q(STR_GETSTR_CODE), "[{FIELDS}]", fieldGetStr);
 
+    //------------------------------------------------------------------------------------------------
+    ASSERT(!classDef.base_class.empty());
+    bool isBase = (classDef.base_class == "CBaseNode");
+
     string_q headerFile = classDef.outputPath(".h");
     string_q headSource = asciiFileToString(configPath("makeClass/blank.h"));
     replace(headSource, "// clang-format off\n", "");
@@ -260,7 +283,7 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
     replaceAll(headSource, "[H_INCLUDES]", head_incStream.str());
     replaceAll(headSource, "[INIT_DEFAULTS]", defaultsStream.str());
     replaceAll(headSource, "[OPERATORS_DECL]", operators_decl);
-    replaceAll(headSource, "[PARENT_BYVALUE]", parGetH);
+    replaceAll(headSource, "[PARENT_BYVALUE]", isBase ? "" : STR_PARENT_BYVALUE);
     replaceAll(headSource, "[{COMMENT_LINE}]", STR_COMMENT_LINE);
     replaceAll(headSource, "[{BASE_CLASS}]", classDef.base_class);
     replaceAll(headSource, "[{LONG}]", classDef.base_lower);
@@ -303,10 +326,9 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
     replaceAll(srcSource, "[SET_CASE_CODE]", getCaseSetCode(classDef.fieldArray));
     replaceAll(srcSource, "[GET_CASE_CODE]", getCaseGetCode(classDef.fieldArray));
     replaceAll(srcSource, "[OPERATORS_IMPL]", operators_impl);
-    replaceAll(srcSource, "[{PARENT_SER2}]", parSer2);
-    replaceAll(srcSource, "[{PARENT_REG}]", parReg);
-    // replaceAll(srcSource, "[{PARENT_CHNK}]\n", parCnk);
-    replaceAll(srcSource, "[{PARENT_SET}]\n", parSet);
+    replaceAll(srcSource, "[{PARENT_SER}]", STR_PARENT_SERIALIZE);
+    replaceAll(srcSource, "[{PARENT_REG}]", isBase ? "" : STR_PARENT_REGISTER);
+    replaceAll(srcSource, "[{PARENT_SET}]", isBase ? "" : STR_PARENT_SET);
     replaceAll(srcSource, "[{COMMENT_LINE}]", STR_COMMENT_LINE);
     replaceAll(srcSource, "[{BASE_CLASS}]", classDef.base_class);
     replaceAll(srcSource, "[{LONG}]", classDef.base_lower);
@@ -796,6 +818,12 @@ const char* STR_PARENT_BYVALUE =
     "extern string_q next[{BASE_BASE}]Chunk(const string_q& fieldIn, const void* data);\n";
 
 //------------------------------------------------------------------------------------------------------------
+const char* STR_PARENT_REGISTER = "[{BASE_CLASS}]::registerClass();\n\n`";
+
+//------------------------------------------------------------------------------------------------------------
+const char* STR_PARENT_SET = "`if ([{BASE_CLASS}]::setValueByName(fieldName, fieldValue))\n``return true;\n";
+
+//------------------------------------------------------------------------------------------------------------
 const char* STR_OPERATOR_IMPL =
     "[{COMMENT_LINE}]"
     "CArchive& operator<<(CArchive& archive, const [{CLASS_NAME}]& [{SHORT3}]) {\n"
@@ -902,13 +930,10 @@ const char* STR_UNKOWNTYPE =
 
 //------------------------------------------------------------------------------------------------------------
 const char* STR_CHILD_OBJS =
-    "`s = toUpper(string_q(\"[{NAME}]\")) + \"::\";\n"
-    "`if (contains(fieldName, s)) {\n"
-    "``string_q f = fieldName;\n"
-    "``replaceAll(f, s, \"\");\n"
-    "``f = [{NAME}].getValueByName(f);\n"
-    "``return f;\n"
-    "`}\n";
+    "`objSpec = toUpper(\"[{NAME}]\") + \"::\";\n"
+    "`if (contains(fieldName, objSpec))\n"
+    "``return [{NAME}].getValueByName(substitute(fieldName, objSpec, \"\"));\n"
+    "\n";
 
 //------------------------------------------------------------------------------------------------------------
 const char* STR_READFMT = "`archive >> [{NAME}];\n";
@@ -929,3 +954,6 @@ const char* STR_CASE_CODE_STRINGARRAY =
     "`retS += ((i < cnt - 1) ? \",\\n\" + indentStr() : \"\\n\");\n"
     "}\n"
     "return retS;";
+
+//------------------------------------------------------------------------------------------------------------
+const char* STR_PARENT_SERIALIZE = "`[{BASE_CLASS}]::SerializeC(archive);\n";

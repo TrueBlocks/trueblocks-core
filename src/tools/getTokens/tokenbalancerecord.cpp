@@ -132,7 +132,6 @@ bool CTokenBalanceRecord::setValueByName(const string_q& fieldNameIn, const stri
 
     if (CMonitor::setValueByName(fieldName, fieldValue))
         return true;
-
     switch (tolower(fieldName[0])) {
         case 'b':
             if (fieldName % "blockNumber") {
