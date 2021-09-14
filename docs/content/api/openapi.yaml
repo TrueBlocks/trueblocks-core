@@ -321,6 +321,7 @@ paths:
                     items:
                       oneOf:
                         - $ref: "#/components/schemas/appearance"
+                        - $ref: "#/components/schemas/log"
                         - $ref: "#/components/schemas/receipt"
                         - $ref: "#/components/schemas/reconciliation"
                         - $ref: "#/components/schemas/trace"
@@ -2311,7 +2312,7 @@ components:
           example: "0xf503...179b"
           description: "if the call type is self-destruct, the address to which the refund is sent"
     traceResult:
-      description: "the trace result"
+      description: "the trace result data for a given trace directly from the blockchain"
       type: object
       properties:
         newContract:

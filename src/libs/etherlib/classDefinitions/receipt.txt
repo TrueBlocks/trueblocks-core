@@ -4,9 +4,9 @@ fields = receipt.csv
 includes = utillib.h|abi.h|logentry.h
 cpp_includes = etherlib.h
 equals = (getValueByName("transactionHash") == it.getValueByName("transactionHash"))
-tsx = true
-openapi = receipt
 contained_by = Transaction
-description = receipt data for a given transaction directly from the blockchain
+tsx = true
 doc_group = Chain Data
+description = receipt data for a given transaction directly from the blockchain
+openapi = receipt
 produced_by = receipts, export

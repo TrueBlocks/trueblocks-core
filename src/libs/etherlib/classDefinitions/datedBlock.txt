@@ -1,7 +1,8 @@
 [settings]
-description = An indentified block named for convienience
 class_name = datedBlock
 fields = datedBlocks.csv
+disabled = true
+doc_group = Chain Data
+description = An indentified block named for convienience
 openapi = datedBlock
 produced_by = when
-disabled = true
