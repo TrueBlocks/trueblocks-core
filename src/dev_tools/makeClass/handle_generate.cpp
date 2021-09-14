@@ -19,6 +19,7 @@ extern const char* STR_COMMENT_LINE;
 extern const char* STR_OPERATOR_DECL;
 extern const char* STR_OPERATOR_IMPL;
 <<<<<<< HEAD
+<<<<<<< HEAD
 extern const char* STR_PARENT_GETBYVALUE;
 extern const char* STR_PARENT_REGISTER;
 extern const char* STR_PARENT_SET;
@@ -28,6 +29,12 @@ extern const char* STR_PARENT_BYVALUE;
 extern const char* STR_PARENT_REGISTER;
 extern const char* STR_PARENT_SET;
 >>>>>>> a16f16f8b (More fixes to auto code generation)
+=======
+extern const char* STR_PARENT_GETBYVALUE;
+extern const char* STR_PARENT_REGISTER;
+extern const char* STR_PARENT_SET;
+extern const char* STR_PARENT_SERIALIZE;
+>>>>>>> cb5c9a8e9 (Addec contained_by to classDefinition.h)
 extern const char* STR_GETVALUE1;
 extern const char* STR_GETVALUE2;
 extern const char* STR_GETOBJ_CODE;
@@ -51,9 +58,12 @@ extern const char* STR_CHILD_OBJS;
 extern const char* STR_DELETE_CMDS;
 extern const char* STR_DEFAULT_TAGS;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 extern const char* STR_PARENT_SERIALIZE;
 >>>>>>> a16f16f8b (More fixes to auto code generation)
+=======
+>>>>>>> cb5c9a8e9 (Addec contained_by to classDefinition.h)
 extern bool writeTheCode(const codewrite_t& cw);
 //------------------------------------------------------------------------------------------------------------
 bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, const string_q& namespc, bool asJs) {
@@ -297,9 +307,13 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
     ASSERT(!classDef.base_class.empty());
     bool isBase = (classDef.base_class == "CBaseNode");
 <<<<<<< HEAD
+<<<<<<< HEAD
     bool isContained = !classDef.contained_by.empty();
 =======
 >>>>>>> a16f16f8b (More fixes to auto code generation)
+=======
+    bool isContained = !classDef.contained_by.empty();
+>>>>>>> cb5c9a8e9 (Addec contained_by to classDefinition.h)
 
     string_q headerFile = classDef.outputPath(".h");
     string_q headSource = asciiFileToString(configPath("makeClass/blank.h"));
@@ -314,7 +328,6 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
     replaceAll(headSource, "[H_INCLUDES]", head_incStream.str());
     replaceAll(headSource, "[INIT_DEFAULTS]", defaultsStream.str());
     replaceAll(headSource, "[OPERATORS_DECL]", operators_decl);
-    replaceAll(headSource, "[PARENT_BYVALUE]", isBase ? "" : STR_PARENT_BYVALUE);
     replaceAll(headSource, "[{COMMENT_LINE}]", STR_COMMENT_LINE);
     replaceAll(headSource, "[{BASE_CLASS}]", classDef.base_class);
     replaceAll(headSource, "[{LONG}]", classDef.base_lower);
@@ -361,10 +374,15 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
     replaceAll(srcSource, "[{PARENT_REG}]", isBase ? "" : STR_PARENT_REGISTER);
     replaceAll(srcSource, "[{PARENT_SET}]", isBase ? "" : STR_PARENT_SET);
 <<<<<<< HEAD
+<<<<<<< HEAD
     replaceAll(srcSource, "[PARENT_GETBYVALUE]",
                isContained ? substitute(STR_PARENT_GETBYVALUE, "CONTAINED", classDef.contained_by) : "");
 =======
 >>>>>>> a16f16f8b (More fixes to auto code generation)
+=======
+    replaceAll(srcSource, "[PARENT_GETBYVALUE]",
+               isContained ? substitute(STR_PARENT_GETBYVALUE, "CONTAINED", classDef.contained_by) : "");
+>>>>>>> cb5c9a8e9 (Addec contained_by to classDefinition.h)
     replaceAll(srcSource, "[{COMMENT_LINE}]", STR_COMMENT_LINE);
     replaceAll(srcSource, "[{BASE_CLASS}]", classDef.base_class);
     replaceAll(srcSource, "[{LONG}]", classDef.base_lower);
@@ -849,6 +867,7 @@ const char* STR_OPERATOR_DECL =
 
 //------------------------------------------------------------------------------------------------------------
 const char* STR_PARENT_GETBYVALUE =
+<<<<<<< HEAD
     "`extern string_q nextCONTAINEDChunk(const string_q& fieldIn, const void* data);\n"
     "`ret = nextCONTAINEDChunk(fieldName, pCONTAINED);\n"
     "`if (contains(ret, \"Field not found\"))\n"
@@ -864,12 +883,27 @@ const char* STR_PARENT_SET = "`if ([{BASE_CLASS}]::setValueByName(fieldName, fie
 
 //------------------------------------------------------------------------------------------------------------
 const char* STR_PARENT_SERIALIZE = "`[{BASE_CLASS}]::SerializeC(archive);\n";
+=======
+    "`// See if this field belongs to the item's container\n"
+    "`if (fieldName != \"schema\" && fieldName != \"deleted\" && fieldName != \"showing\" && fieldName != \"cname\") "
+    "{\n"
+    "`    extern string_q nextCONTAINEDChunk(const string_q& fieldIn, const void* data);\n"
+    "`    ret = nextCONTAINEDChunk(fieldName, pCONTAINED);\n"
+    "`    if (contains(ret, \"Field not found\"))\n"
+    "`        ret = \"\";\n"
+    "`    if (!ret.empty())\n"
+    "`        return ret;\n"
+    "`}\n";
+>>>>>>> cb5c9a8e9 (Addec contained_by to classDefinition.h)
 
 //------------------------------------------------------------------------------------------------------------
 const char* STR_PARENT_REGISTER = "[{BASE_CLASS}]::registerClass();\n\n`";
 
 //------------------------------------------------------------------------------------------------------------
 const char* STR_PARENT_SET = "`if ([{BASE_CLASS}]::setValueByName(fieldName, fieldValue))\n``return true;\n";
+
+//------------------------------------------------------------------------------------------------------------
+const char* STR_PARENT_SERIALIZE = "`[{BASE_CLASS}]::SerializeC(archive);\n";
 
 //------------------------------------------------------------------------------------------------------------
 const char* STR_OPERATOR_IMPL =
@@ -1002,6 +1036,3 @@ const char* STR_CASE_CODE_STRINGARRAY =
     "`retS += ((i < cnt - 1) ? \",\\n\" + indentStr() : \"\\n\");\n"
     "}\n"
     "return retS;";
-
-//------------------------------------------------------------------------------------------------------------
-const char* STR_PARENT_SERIALIZE = "`[{BASE_CLASS}]::SerializeC(archive);\n";

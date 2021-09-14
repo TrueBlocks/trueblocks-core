@@ -383,7 +383,10 @@ bool CClassDefinition::Serialize(CArchive& archive) {
     archive >> openapi;
     archive >> description;
     archive >> contained_by;
+<<<<<<< HEAD
     archive >> produced_by;
+=======
+>>>>>>> cb5c9a8e9 (Addec contained_by to classDefinition.h)
     // EXISTING_CODE
     // EXISTING_CODE
     finishParse();
@@ -420,7 +423,10 @@ bool CClassDefinition::SerializeC(CArchive& archive) const {
     archive << openapi;
     archive << description;
     archive << contained_by;
+<<<<<<< HEAD
     archive << produced_by;
+=======
+>>>>>>> cb5c9a8e9 (Addec contained_by to classDefinition.h)
     // EXISTING_CODE
     // EXISTING_CODE
     return true;
@@ -495,7 +501,10 @@ void CClassDefinition::registerClass(void) {
     ADD_FIELD(CClassDefinition, "openapi", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "description", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "contained_by", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+<<<<<<< HEAD
     ADD_FIELD(CClassDefinition, "produced_by", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+=======
+>>>>>>> cb5c9a8e9 (Addec contained_by to classDefinition.h)
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CClassDefinition, "schema");
