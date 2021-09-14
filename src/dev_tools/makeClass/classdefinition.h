@@ -48,10 +48,7 @@ class CClassDefinition : public CBaseNode {
     string_q openapi;
     string_q description;
     string_q contained_by;
-<<<<<<< HEAD
     string_q produced_by;
-=======
->>>>>>> cb5c9a8e9 (Addec contained_by to classDefinition.h)
 
   public:
     CClassDefinition(void);
