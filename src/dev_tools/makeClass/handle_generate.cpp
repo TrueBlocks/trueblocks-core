@@ -815,16 +815,12 @@ const char* STR_OPERATOR_DECL =
 
 //------------------------------------------------------------------------------------------------------------
 const char* STR_PARENT_GETBYVALUE =
-    "`// See if this field belongs to the item's container\n"
-    "`if (fieldName != \"schema\" && fieldName != \"deleted\" && fieldName != \"showing\" && fieldName != \"cname\") "
-    "{\n"
-    "`    extern string_q nextCONTAINEDChunk(const string_q& fieldIn, const void* data);\n"
-    "`    ret = nextCONTAINEDChunk(fieldName, pCONTAINED);\n"
-    "`    if (contains(ret, \"Field not found\"))\n"
-    "`        ret = \"\";\n"
-    "`    if (!ret.empty())\n"
-    "`        return ret;\n"
-    "`}\n";
+    "`extern string_q nextCONTAINEDChunk(const string_q& fieldIn, const void* data);\n"
+    "`ret = nextCONTAINEDChunk(fieldName, pCONTAINED);\n"
+    "`if (contains(ret, \"Field not found\"))\n"
+    "`    ret = \"\";\n"
+    "`if (!ret.empty())\n"
+    "`    return ret;\n";
 
 //------------------------------------------------------------------------------------------------------------
 const char* STR_PARENT_REGISTER = "[{BASE_CLASS}]::registerClass();\n\n`";

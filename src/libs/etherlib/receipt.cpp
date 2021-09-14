@@ -121,15 +121,12 @@ string_q CReceipt::getValueByName(const string_q& fieldName) const {
             break;
     }
 
-    // See if this field belongs to the item's container
-    if (fieldName != "schema" && fieldName != "deleted" && fieldName != "showing" && fieldName != "cname") {
-        extern string_q nextTransactionChunk(const string_q& fieldIn, const void* data);
-        ret = nextTransactionChunk(fieldName, pTransaction);
-        if (contains(ret, "Field not found"))
-            ret = "";
-        if (!ret.empty())
-            return ret;
-    }
+    extern string_q nextTransactionChunk(const string_q& fieldIn, const void* data);
+    ret = nextTransactionChunk(fieldName, pTransaction);
+    if (contains(ret, "Field not found"))
+        ret = "";
+    if (!ret.empty())
+        return ret;
 
     // EXISTING_CODE
     // EXISTING_CODE
