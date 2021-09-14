@@ -256,7 +256,7 @@ bool readNodeFromBinary(CBaseNode& item, const string_q& fileName) {
 
 //-------------------------------------------------------------------------
 bool getReceipt(CReceipt& receipt, const hash_t& txHash) {
-    receipt = CReceipt(receipt.pTrans);
+    receipt = CReceipt(receipt.pTransaction);
     getObjectViaRPC(receipt, "eth_getTransactionReceipt", "[\"" + str_2_Hash(txHash) + "\"]");
     return true;
 }
@@ -1038,7 +1038,7 @@ bool forEveryTransaction(TRANSVISITFUNC func, void* data, const string_q& trans_
                 getBlock_light(block, trans.blockNumber);
                 getFullReceipt(&trans, true);
                 trans.timestamp = block.timestamp;
-                trans.receipt.pTrans = &trans;
+                trans.receipt.pTransaction = &trans;
                 trans.finishParse();
             } else {
                 // If the transaction has no hash here, there was a problem. Let the caller know

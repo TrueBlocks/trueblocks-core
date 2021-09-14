@@ -103,6 +103,9 @@ string_q CClassDefinition::getValueByName(const string_q& fieldName) const {
             if (fieldName % "class_upper") {
                 return class_upper;
             }
+            if (fieldName % "contained_by") {
+                return contained_by;
+            }
             break;
         case 'd':
             if (fieldName % "display_str") {
@@ -238,6 +241,10 @@ bool CClassDefinition::setValueByName(const string_q& fieldNameIn, const string_
                 class_upper = fieldValue;
                 return true;
             }
+            if (fieldName % "contained_by") {
+                contained_by = fieldValue;
+                return true;
+            }
             break;
         case 'd':
             if (fieldName % "display_str") {
@@ -364,6 +371,7 @@ bool CClassDefinition::Serialize(CArchive& archive) {
     // archive >> extraArray;
     archive >> openapi;
     archive >> description;
+    archive >> contained_by;
     // EXISTING_CODE
     // EXISTING_CODE
     finishParse();
@@ -399,6 +407,7 @@ bool CClassDefinition::SerializeC(CArchive& archive) const {
     // archive << extraArray;
     archive << openapi;
     archive << description;
+    archive << contained_by;
     // EXISTING_CODE
     // EXISTING_CODE
     return true;
@@ -472,6 +481,7 @@ void CClassDefinition::registerClass(void) {
     HIDE_FIELD(CClassDefinition, "extraArray");
     ADD_FIELD(CClassDefinition, "openapi", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "description", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CClassDefinition, "contained_by", T_TEXT | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CClassDefinition, "schema");
@@ -583,6 +593,7 @@ CClassDefinition::CClassDefinition(const CToml& toml) {
     src_includes = toml.getConfigStr("settings", "cpp_includes", "");
     display_str = toml.getConfigStr("settings", "display_str", "");
     sort_str = toml.getConfigStr("settings", "sort", "");
+    contained_by = toml.getConfigStr("settings", "contained_by", "");
     eq_str = toml.getConfigStr("settings", "equals", "");
     description = toml.getConfigStr("settings", "description", "");
     tsx = toml.getConfigBool("settings", "tsx", false);

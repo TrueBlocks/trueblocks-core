@@ -129,7 +129,6 @@ string_q CLogEntry::getValueByName(const string_q& fieldName) const {
             break;
     }
 
-    // EXISTING_CODE
     // See if this field belongs to the item's container
     if (fieldName != "schema" && fieldName != "deleted" && fieldName != "showing" && fieldName != "cname") {
         extern string_q nextReceiptChunk(const string_q& fieldIn, const void* data);
@@ -139,6 +138,8 @@ string_q CLogEntry::getValueByName(const string_q& fieldName) const {
         if (!ret.empty())
             return ret;
     }
+
+    // EXISTING_CODE
     // EXISTING_CODE
 
     // test for contained object field specifiers

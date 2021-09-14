@@ -64,6 +64,7 @@ class COptions : public COptionsBase {
     map<string_q, CPage> pageMap;
     runmode_t mode;
     CClassDefinitionArray classDefs;
+    CClassDefinitionArray dataModels;
     CCommandOptionArray optionArray;
     CStringArray positionals;
     CToml classFile;

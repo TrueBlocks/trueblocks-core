@@ -173,8 +173,8 @@ bool CTrace::setValueByName(const string_q& fieldNameIn, const string_q& fieldVa
     string_q fieldValue = fieldValueIn;
 
     // EXISTING_CODE
-    if (pTrans)
-        if (((CTransaction*)pTrans)->setValueByName(fieldName, fieldValue))  // NOLINT
+    if (pTransaction)
+        if (((CTransaction*)pTransaction)->setValueByName(fieldName, fieldValue))  // NOLINT
             return true;
     if (fieldName % "transactionPosition")  // order matters
         fieldName = "transactionIndex";
@@ -403,14 +403,14 @@ string_q nextTraceChunk_custom(const string_q& fieldIn, const void* dataPtr) {
                     return tra->articulatedTrace.compressed("");
                 break;
             case 'd':
-                if (tra->pTrans) {
+                if (tra->pTransaction) {
                     extern string_q nextTransactionChunk(const string_q& fieldIn, const void* data);
                     if (fieldIn % "date" || fieldIn % "datesh")
-                        return nextTransactionChunk(fieldIn, tra->pTrans);
+                        return nextTransactionChunk(fieldIn, tra->pTransaction);
                 }
                 break;
             case 'f':
-                if (tra->pTrans) {
+                if (tra->pTransaction) {
                     if (fieldIn % "function") {
                         string_q ret = tra->Format("[{ARTICULATEDTRACE}]");
                         if (ret.empty())

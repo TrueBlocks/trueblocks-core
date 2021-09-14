@@ -5,3 +5,4 @@ includes = utillib.h|abi.h
 cpp_includes = etherlib.h
 tsx = true
 openapi = log
+contained_by = Receipt

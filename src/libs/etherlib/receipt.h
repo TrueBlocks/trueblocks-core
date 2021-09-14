@@ -48,9 +48,9 @@ class CReceipt : public CBaseNode {
     const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
-    explicit CReceipt(const CTransaction* pT) : pTrans(pT) {
+    explicit CReceipt(const CTransaction* pT) : pTransaction(pT) {
     }
-    const CTransaction* pTrans;
+    const CTransaction* pTransaction;
     friend class CTransaction;
     // EXISTING_CODE
     bool operator==(const CReceipt& it) const;
@@ -113,7 +113,7 @@ inline void CReceipt::initialize(void) {
     status = NO_STATUS;
 
     // EXISTING_CODE
-    pTrans = NULL;
+    pTransaction = NULL;
     // EXISTING_CODE
 }
 
@@ -131,7 +131,7 @@ inline void CReceipt::duplicate(const CReceipt& re) {
     status = re.status;
 
     // EXISTING_CODE
-    pTrans = re.pTrans;  // no deep copy becuase it's const
+    pTransaction = re.pTransaction;  // no deep copy becuase it's const
     finishParse();
     // EXISTING_CODE
 }

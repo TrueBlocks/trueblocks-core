@@ -72,7 +72,7 @@ string_q [{CLASS_NAME}]::getValueByName(const string_q& fieldName) const {
     // EXISTING_CODE
 
     [GET_CASE_CODE]
-
+[PARENT_GETBYVALUE]
     // EXISTING_CODE
     // EXISTING_CODE
 

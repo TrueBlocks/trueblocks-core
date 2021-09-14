@@ -21,17 +21,6 @@ extern string_q exFmt(const CParameter& fld);
 
 //------------------------------------------------------------------------------------------------------------
 bool COptions::handle_datamodel(void) {
-    CClassDefinitionArray dataModels;
-
-    for (auto classDefIn : classDefs) {
-        CToml toml(classDefIn.input_path);
-        CClassDefinition classDef(toml);
-        classDef.short_fn = classDefIn.short_fn;
-        classDef.input_path = classDefIn.input_path;
-        if (!classDef.openapi.empty())
-            dataModels.push_back(classDef);
-    }
-
     sort(dataModels.begin(), dataModels.end(), sortByDataModelName);
 
     ostringstream theStream;

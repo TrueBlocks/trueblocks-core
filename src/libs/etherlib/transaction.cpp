@@ -208,9 +208,8 @@ string_q CTransaction::getValueByName(const string_q& fieldName) const {
             break;
     }
 
-    // EXISTING_CODE
+    // See if this field belongs to the item's container
     if (fieldName != "schema" && fieldName != "deleted" && fieldName != "showing" && fieldName != "cname") {
-        // See if this field belongs to the item's container
         extern string_q nextBlockChunk(const string_q& fieldIn, const void* data);
         ret = nextBlockChunk(fieldName, pBlock);
         if (contains(ret, "Field not found"))
@@ -218,6 +217,8 @@ string_q CTransaction::getValueByName(const string_q& fieldName) const {
         if (!ret.empty())
             return ret;
     }
+
+    // EXISTING_CODE
     // EXISTING_CODE
 
     // test for contained object field specifiers
@@ -445,7 +446,7 @@ bool CTransaction::setValueByName(const string_q& fieldNameIn, const string_q& f
 //---------------------------------------------------------------------------------------------------
 void CTransaction::finishParse() {
     // EXISTING_CODE
-    receipt.pTrans = this;
+    receipt.pTransaction = this;
     // EXISTING_CODE
 }
 
@@ -827,6 +828,8 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void* dataPt
                 }
                 break;
             case 't':
+                if (fieldIn % "transactionHash")
+                    return tra->getValueByName("hash");
                 if (fieldIn % "timestamp" && tra->pBlock)
                     return int_2_Str(tra->pBlock->timestamp);
                 if (fieldIn % "time") {

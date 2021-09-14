@@ -121,19 +121,17 @@ string_q CReceipt::getValueByName(const string_q& fieldName) const {
             break;
     }
 
-    // EXISTING_CODE
+    // See if this field belongs to the item's container
     if (fieldName != "schema" && fieldName != "deleted" && fieldName != "showing" && fieldName != "cname") {
-        string_q tmpName = fieldName;
-        if (tmpName == "transactionHash")
-            tmpName = "hash";  // NOLINT -- we want transction class to find this, so rename
-        // See if this field belongs to the item's container
         extern string_q nextTransactionChunk(const string_q& fieldIn, const void* data);
-        ret = nextTransactionChunk(tmpName, pTrans);
+        ret = nextTransactionChunk(fieldName, pTransaction);
         if (contains(ret, "Field not found"))
             ret = "";
         if (!ret.empty())
             return ret;
     }
+
+    // EXISTING_CODE
     // EXISTING_CODE
 
     // Finally, give the parent class a chance
@@ -151,8 +149,8 @@ bool CReceipt::setValueByName(const string_q& fieldNameIn, const string_q& field
     } else if (fieldName == "status" && (fieldValue == "null" || fieldValue == "0x")) {
         *((string_q*)&fieldValue) = uint_2_Str(NO_STATUS);  // NOLINT
     }
-    if (pTrans) {
-        bool ret = ((CTransaction*)pTrans)->setValueByName(fieldName, fieldValue);  // NOLINT
+    if (pTransaction) {
+        bool ret = ((CTransaction*)pTransaction)->setValueByName(fieldName, fieldValue);  // NOLINT
         if (ret) {
             bool done = (fieldName != "gasUsed");
             // LOG4(fieldName, done);
@@ -366,16 +364,16 @@ string_q nextReceiptChunk_custom(const string_q& fieldIn, const void* dataPtr) {
                 break;
             case 'e':
                 if (fieldIn % "effectiveGasPrice") {
-                    if (!rec->pTrans || !rec->pTrans->pBlock)
+                    if (!rec->pTransaction || !rec->pTransaction->pBlock)
                         return "";
-                    bool preLondon = rec->pTrans->pBlock->blockNumber < londonBlock;
-                    return preLondon ? gas_2_Str(rec->pTrans->gasPrice) : "";
+                    bool preLondon = rec->pTransaction->pBlock->blockNumber < londonBlock;
+                    return preLondon ? gas_2_Str(rec->pTransaction->gasPrice) : "";
                 }
                 break;
             case 's':
                 if (fieldIn % "status") {
-                    bool preByzantium =
-                        rec->pTrans && rec->pTrans->pBlock && rec->pTrans->pBlock->blockNumber < byzantiumBlock;
+                    bool preByzantium = rec->pTransaction && rec->pTransaction->pBlock &&
+                                        rec->pTransaction->pBlock->blockNumber < byzantiumBlock;
                     if (rec->status == NO_STATUS) {
                         return "null";
                     } else if (preByzantium) {

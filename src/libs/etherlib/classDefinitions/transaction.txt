@@ -7,3 +7,4 @@ display_str = blockNumber, transactionIndex, date, timestamp, from, to, ether, e
 equals = (hash == it.hash)
 tsx = true
 openapi = transaction
+contained_by = Block
