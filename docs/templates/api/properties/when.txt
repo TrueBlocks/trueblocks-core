@@ -1,5 +1,0 @@
-data:
-  description: An indentified block named for convienience
-  type: array
-  items:
-    $ref: "#/components/schemas/datedBlock"

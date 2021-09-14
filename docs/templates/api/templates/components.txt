@@ -94,6 +94,25 @@ components:
           type: boolean
           example: true
           description: "flag indicating the system considers this data final"
+    datedBlock:
+      description: "An indentified block named for convienience"
+      type: object
+      properties:
+        blockNumber:
+          type: number
+          format: blknum
+          example: 10021
+          description: "the number of the block"
+        timestamp:
+          type: number
+          format: timestamp
+          example: 1438335038
+          description: "the unix timestamp of the block"
+        date:
+          type: string
+          format: date
+          example: "2015-07-30 15:34:53 UTC"
+          description: "Human readable version of timestamp"
     function:
       description: "a human readable representation of a Solidity function call or event"
       type: object
@@ -816,23 +835,6 @@ components:
             - error 2
           items:
             type: string
-    datedBlock:
-      type: object
-      properties:
-        blockNumber:
-          type: number
-          format: blknum_t
-          example: 10021
-          description: "the number of the block"
-        timestamp:
-          type: number
-          format: timestamp_t
-          example: 1438335038
-          description: "the unix timestamp of the block"
-        date:
-          description: "Human readable version of timestamp"
-          example: "2015-07-30 15:34:53 UTC"
-          type: string*/
     hash:
       type: string
       format: hash
