@@ -1,0 +1,4 @@
+name        ,type      ,str_default ,object ,array ,nowrite ,omitempty ,minimal ,extra ,noaddfld ,doc ,disp ,example                 ,description
+blockNumber ,blknum    ,            ,       ,      ,        ,          ,true    ,      ,true     ,1   ,     ,10021                   ,the number of the block
+timestamp   ,timestamp ,            ,       ,      ,        ,          ,true    ,      ,true     ,2   ,     ,1438335038              ,the unix timestamp of the block
+date        ,date      ,            ,       ,      ,        ,          ,true    ,      ,true     ,3   ,     ,2015-07-30 15:34:53 UTC ,Human readable version of timestamp
