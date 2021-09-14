@@ -591,7 +591,6 @@ CClassDefinition::CClassDefinition(const CToml& toml) {
     field_str = toml.getConfigStr("settings", "fields", "");
     head_includes = toml.getConfigStr("settings", "includes", "");
     src_includes = toml.getConfigStr("settings", "cpp_includes", "");
-    display_str = toml.getConfigStr("settings", "display_str", "");
     sort_str = toml.getConfigStr("settings", "sort", "");
     contained_by = toml.getConfigStr("settings", "contained_by", "");
     eq_str = toml.getConfigStr("settings", "equals", "");
