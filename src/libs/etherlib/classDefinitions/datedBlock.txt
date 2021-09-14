@@ -1,7 +1,7 @@
 [settings]
-class_name = datedBlock
+class = CDatedBlock
 fields = datedBlocks.csv
-disabled = true
+includes = etherlib.h
 doc_group = Chain Data
 description = An indentified block named for convienience
 openapi = datedBlock
