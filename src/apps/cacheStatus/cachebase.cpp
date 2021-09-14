@@ -22,7 +22,7 @@ namespace qblocks {
 IMPLEMENT_NODE(CCacheBase, CAccountName);
 
 //---------------------------------------------------------------------------
-static string_q nextCachebaseChunk(const string_q& fieldIn, const void* dataPtr);
+extern string_q nextCachebaseChunk(const string_q& fieldIn, const void* dataPtr);
 static string_q nextCachebaseChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
@@ -119,7 +119,6 @@ bool CCacheBase::setValueByName(const string_q& fieldNameIn, const string_q& fie
 
     if (CAccountName::setValueByName(fieldName, fieldValue))
         return true;
-
     switch (tolower(fieldName[0])) {
         case 'f':
             if (fieldName % "firstApp") {
@@ -307,6 +306,18 @@ bool CCacheBase::readBackLevel(CArchive& archive) {
     return done;
 }
 
+//---------------------------------------------------------------------------
+CArchive& operator<<(CArchive& archive, const CCacheBase& cac) {
+    cac.SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator>>(CArchive& archive, CCacheBase& cac) {
+    cac.Serialize(archive);
+    return archive;
+}
+
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CCacheBase& it) {
     // EXISTING_CODE
@@ -321,7 +332,7 @@ ostream& operator<<(ostream& os, const CCacheBase& it) {
 const char* STR_DISPLAY_CACHEBASE =
     "[{DISPLAY_NAME}]\t"
     "[{FIRSTAPP}]\t"
-    "[{LASTAPP}]\t"
+    "[{LATESTAPP}]\t"
     "[{APPEARANCERANGE}]\t"
     "[{NRECORDS}]\t"
     "[{APPEARANCEINTERVAL}]\t"

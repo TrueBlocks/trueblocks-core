@@ -22,7 +22,7 @@ namespace qblocks {
 IMPLEMENT_NODE(CMonitor, CAccountName);
 
 //---------------------------------------------------------------------------
-static string_q nextMonitorChunk(const string_q& fieldIn, const void* dataPtr);
+extern string_q nextMonitorChunk(const string_q& fieldIn, const void* dataPtr);
 static string_q nextMonitorChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
@@ -120,7 +120,6 @@ bool CMonitor::setValueByName(const string_q& fieldNameIn, const string_q& field
 
     if (CAccountName::setValueByName(fieldName, fieldValue))
         return true;
-
     switch (tolower(fieldName[0])) {
         case 'f':
             if (fieldName % "firstAppearance") {
@@ -331,6 +330,18 @@ bool CMonitor::readBackLevel(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator<<(CArchive& archive, const CMonitor& mon) {
+    mon.SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator>>(CArchive& archive, CMonitor& mon) {
+    mon.Serialize(archive);
+    return archive;
 }
 
 //-------------------------------------------------------------------------

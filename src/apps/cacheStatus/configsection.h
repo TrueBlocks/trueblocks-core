@@ -146,6 +146,10 @@ extern CArchive& operator>>(CArchive& archive, CConfigSectionArray& array);
 extern CArchive& operator<<(CArchive& archive, const CConfigSectionArray& array);
 
 //---------------------------------------------------------------------------
+extern CArchive& operator<<(CArchive& archive, const CConfigSection& con);
+extern CArchive& operator>>(CArchive& archive, CConfigSection& con);
+
+//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_CONFIGSECTION;
 
 //---------------------------------------------------------------------------

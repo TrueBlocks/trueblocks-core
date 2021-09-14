@@ -22,7 +22,7 @@ namespace qblocks {
 IMPLEMENT_NODE(CRPCResult, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextRpcresultChunk(const string_q& fieldIn, const void* dataPtr);
+extern string_q nextRpcresultChunk(const string_q& fieldIn, const void* dataPtr);
 static string_q nextRpcresultChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
@@ -274,6 +274,18 @@ bool CRPCResult::readBackLevel(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator<<(CArchive& archive, const CRPCResult& rpc) {
+    rpc.SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator>>(CArchive& archive, CRPCResult& rpc) {
+    rpc.Serialize(archive);
+    return archive;
 }
 
 //-------------------------------------------------------------------------

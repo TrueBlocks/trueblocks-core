@@ -141,6 +141,10 @@ extern CArchive& operator>>(CArchive& archive, CRouteArray& array);
 extern CArchive& operator<<(CArchive& archive, const CRouteArray& array);
 
 //---------------------------------------------------------------------------
+extern CArchive& operator<<(CArchive& archive, const CRoute& rou);
+extern CArchive& operator>>(CArchive& archive, CRoute& rou);
+
+//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_ROUTE;
 
 //---------------------------------------------------------------------------

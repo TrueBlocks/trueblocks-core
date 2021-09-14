@@ -167,6 +167,10 @@ extern CArchive& operator>>(CArchive& archive, CTreeRootArray& array);
 extern CArchive& operator<<(CArchive& archive, const CTreeRootArray& array);
 
 //---------------------------------------------------------------------------
+extern CArchive& operator<<(CArchive& archive, const CTreeRoot& tre);
+extern CArchive& operator>>(CArchive& archive, CTreeRoot& tre);
+
+//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_TREEROOT;
 
 //---------------------------------------------------------------------------

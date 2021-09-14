@@ -3,4 +3,3 @@ class = CAbiCacheItem
 base_class = CCacheBase
 fields = abicacheitem.csv
 includes = etherlib.h|cachebase.h
-serialize = true

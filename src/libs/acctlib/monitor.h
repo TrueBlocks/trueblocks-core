@@ -202,6 +202,10 @@ extern CArchive& operator>>(CArchive& archive, CMonitorArray& array);
 extern CArchive& operator<<(CArchive& archive, const CMonitorArray& array);
 
 //---------------------------------------------------------------------------
+extern CArchive& operator<<(CArchive& archive, const CMonitor& mon);
+extern CArchive& operator>>(CArchive& archive, CMonitor& mon);
+
+//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_MONITOR;
 
 //---------------------------------------------------------------------------

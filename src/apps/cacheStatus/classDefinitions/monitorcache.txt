@@ -3,4 +3,3 @@ class = CMonitorCache
 base_class = CCache
 fields = monitorcache.csv
 includes = cache.h|monitorcacheitem.h
-serialize = true

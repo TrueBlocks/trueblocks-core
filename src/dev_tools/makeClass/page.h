@@ -189,6 +189,10 @@ extern CArchive& operator>>(CArchive& archive, CPageArray& array);
 extern CArchive& operator<<(CArchive& archive, const CPageArray& array);
 
 //---------------------------------------------------------------------------
+extern CArchive& operator<<(CArchive& archive, const CPage& pag);
+extern CArchive& operator>>(CArchive& archive, CPage& pag);
+
+//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_PAGE;
 
 //---------------------------------------------------------------------------

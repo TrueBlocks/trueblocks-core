@@ -139,6 +139,10 @@ extern CArchive& operator>>(CArchive& archive, QFromTransferFromArray& array);
 extern CArchive& operator<<(CArchive& archive, const QFromTransferFromArray& array);
 
 //---------------------------------------------------------------------------
+extern CArchive& operator<<(CArchive& archive, const QFromTransferFrom& fro);
+extern CArchive& operator>>(CArchive& archive, QFromTransferFrom& fro);
+
+//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_FROMTRANSFERFROM;
 
 //---------------------------------------------------------------------------

@@ -28,7 +28,7 @@ void CTrace::loadTraceAsBlockReward(const CTransaction& trans, blknum_t bn, blkn
     traceAddress.push_back("null-b-s");
     // transactionHash = uint_2_Hex(bn * 100000 + txid);
     action.input = "0x";
-    pTrans = &trans;
+    pTransaction = &trans;
 }
 
 //---------------------------------------------------------------------------
@@ -42,7 +42,7 @@ void CTrace::loadTraceAsUncleReward(const CTransaction& trans, blknum_t bn, blkn
     action.value +=
         getUncleReward(bn, uncleBn);  // we use += here because you can win more than one uncle block per block
     action.input = "0x";
-    pTrans = &trans;
+    pTransaction = &trans;
 }
 
 //---------------------------------------------------------------------------
@@ -56,7 +56,7 @@ void CTrace::loadTraceAsTransFee(const CTransaction& trans, blknum_t bn, blknum_
     traceAddress.push_back("null-f-s");
     // transactionHash = uint_2_Hex(bn * 100000 + txid);
     action.input = "0x";
-    pTrans = &trans;
+    pTransaction = &trans;
 }
 
 //---------------------------------------------------------------------------
@@ -70,7 +70,7 @@ void CTrace::loadTraceAsDdos(const CTransaction& trans, blknum_t bn, blknum_t tx
     traceAddress.push_back("s");
     transactionHash = uint_2_Hex(bn * 100000 + txid);
     action.input = "0xdd05";
-    pTrans = &trans;
+    pTransaction = &trans;
 }
 
 //-------------------------------------------------------------------------
@@ -82,7 +82,7 @@ bool CTransaction::loadTransAsPrefund(blknum_t bn, blknum_t txid, const address_
     to = addr;
     value = amount;
     receipt = CReceipt();
-    receipt.pTrans = this;
+    receipt.pTransaction = this;
     return true;
 }
 
@@ -98,7 +98,7 @@ bool CTransaction::loadTransAsBlockReward(blknum_t bn, blknum_t txid, const addr
     extraValue1 = getNephewReward(bn);
     extraValue2 = getTransFees(bn);  // weird temp value for reconciliation only
     receipt = CReceipt();
-    receipt.pTrans = this;
+    receipt.pTransaction = this;
     return true;
 }
 
@@ -112,7 +112,7 @@ bool CTransaction::loadTransAsUncleReward(blknum_t bn, blknum_t uncleBn, const a
     to = addr;
     value += getUncleReward(bn, uncleBn);  // we use += here because you can win more than one uncle block per block
     receipt = CReceipt();
-    receipt.pTrans = this;
+    receipt.pTransaction = this;
     return true;
 }
 

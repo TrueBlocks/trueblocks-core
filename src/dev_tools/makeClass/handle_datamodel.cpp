@@ -21,17 +21,6 @@ extern string_q exFmt(const CParameter& fld);
 
 //------------------------------------------------------------------------------------------------------------
 bool COptions::handle_datamodel(void) {
-    CClassDefinitionArray dataModels;
-
-    for (auto classDefIn : classDefs) {
-        CToml toml(classDefIn.input_path);
-        CClassDefinition classDef(toml);
-        classDef.short_fn = classDefIn.short_fn;
-        classDef.input_path = classDefIn.input_path;
-        if (!classDef.openapi.empty())
-            dataModels.push_back(classDef);
-    }
-
     sort(dataModels.begin(), dataModels.end(), sortByDataModelName);
 
     ostringstream theStream;
@@ -83,7 +72,7 @@ string_q typeFmt(const CParameter& fld) {
             replace(t, "C", "");
         replace(t, "Array", "");
         replace(ret, "++X++", string_q(1, (char)tolower(t[0])) + t.substr(1, 100));
-        replace(ret, "logentry", "log");
+        replace(ret, "logEntry", "log");
         return ret;
     }
     if (fld.is_flags & IS_OBJECT) {
@@ -136,8 +125,11 @@ const char* STR_TAIL_THING =
     "      format: hash\n"
     "      description: \"The 32-byte hash\"\n"
     "      example: \"0xf128...1e98\"\n"
+    "    string:\n"
+    "      type: string\n"
     "    topic:\n"
     "      type: string\n"
     "      format: bytes\n"
     "      description: \"One of four 32-byte topics of a log\"\n"
-    "      example: \"0xf128...1e98\"\n";
+    "      example: \"0xf128...1e98\"\n"
+    "\n";

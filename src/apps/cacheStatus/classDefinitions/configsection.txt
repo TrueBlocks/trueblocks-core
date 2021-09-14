@@ -3,4 +3,3 @@ class = CConfigSection
 base_class = CBaseNode
 fields = configsection.csv
 includes = etherlib.h|configitem.h
-serialize = true

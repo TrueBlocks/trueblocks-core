@@ -22,7 +22,7 @@ namespace qblocks {
 IMPLEMENT_NODE(CTreeRoot, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextTreerootChunk(const string_q& fieldIn, const void* dataPtr);
+extern string_q nextTreerootChunk(const string_q& fieldIn, const void* dataPtr);
 static string_q nextTreerootChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
@@ -261,6 +261,18 @@ bool CTreeRoot::readBackLevel(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator<<(CArchive& archive, const CTreeRoot& tre) {
+    tre.SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator>>(CArchive& archive, CTreeRoot& tre) {
+    tre.Serialize(archive);
+    return archive;
 }
 
 //-------------------------------------------------------------------------

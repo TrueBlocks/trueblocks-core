@@ -147,6 +147,10 @@ extern CArchive& operator>>(CArchive& archive, CCacheBaseArray& array);
 extern CArchive& operator<<(CArchive& archive, const CCacheBaseArray& array);
 
 //---------------------------------------------------------------------------
+extern CArchive& operator<<(CArchive& archive, const CCacheBase& cac);
+extern CArchive& operator>>(CArchive& archive, CCacheBase& cac);
+
+//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_CACHEBASE;
 
 //---------------------------------------------------------------------------

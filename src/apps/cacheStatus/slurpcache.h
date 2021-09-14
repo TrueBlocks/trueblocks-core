@@ -142,6 +142,10 @@ extern CArchive& operator>>(CArchive& archive, CSlurpCacheArray& array);
 extern CArchive& operator<<(CArchive& archive, const CSlurpCacheArray& array);
 
 //---------------------------------------------------------------------------
+extern CArchive& operator<<(CArchive& archive, const CSlurpCache& slu);
+extern CArchive& operator>>(CArchive& archive, CSlurpCache& slu);
+
+//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_SLURPCACHE;
 
 //---------------------------------------------------------------------------

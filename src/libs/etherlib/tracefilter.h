@@ -152,6 +152,10 @@ extern CArchive& operator>>(CArchive& archive, CTraceFilterArray& array);
 extern CArchive& operator<<(CArchive& archive, const CTraceFilterArray& array);
 
 //---------------------------------------------------------------------------
+extern CArchive& operator<<(CArchive& archive, const CTraceFilter& tra);
+extern CArchive& operator>>(CArchive& archive, CTraceFilter& tra);
+
+//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_TRACEFILTER;
 
 //---------------------------------------------------------------------------

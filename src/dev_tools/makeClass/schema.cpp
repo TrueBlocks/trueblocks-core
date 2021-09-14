@@ -22,7 +22,7 @@ namespace qblocks {
 IMPLEMENT_NODE(CSchema, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextSchemaChunk(const string_q& fieldIn, const void* dataPtr);
+extern string_q nextSchemaChunk(const string_q& fieldIn, const void* dataPtr);
 static string_q nextSchemaChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
@@ -470,6 +470,18 @@ bool CSchema::readBackLevel(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator<<(CArchive& archive, const CSchema& sch) {
+    sch.SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator>>(CArchive& archive, CSchema& sch) {
+    sch.Serialize(archive);
+    return archive;
 }
 
 //-------------------------------------------------------------------------

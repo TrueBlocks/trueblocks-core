@@ -22,7 +22,7 @@ namespace qblocks {
 IMPLEMENT_NODE(CCommandOption, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextCommandoptionChunk(const string_q& fieldIn, const void* dataPtr);
+extern string_q nextCommandoptionChunk(const string_q& fieldIn, const void* dataPtr);
 static string_q nextCommandoptionChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
@@ -491,6 +491,18 @@ bool CCommandOption::readBackLevel(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator<<(CArchive& archive, const CCommandOption& com) {
+    com.SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator>>(CArchive& archive, CCommandOption& com) {
+    com.Serialize(archive);
+    return archive;
 }
 
 //-------------------------------------------------------------------------

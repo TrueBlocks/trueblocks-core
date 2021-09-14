@@ -2,4 +2,3 @@
 class = CLogQuery
 fields = logquery.csv
 includes = utillib.h
-display_str = fromBlock, toBlock, blockHash, addresses, topics

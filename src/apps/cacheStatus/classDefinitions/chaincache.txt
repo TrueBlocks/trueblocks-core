@@ -3,4 +3,3 @@ class = CChainCache
 base_class = CCache
 fields = chaincache.csv
 includes = cache.h
-serialize = true

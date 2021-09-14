@@ -151,6 +151,10 @@ extern CArchive& operator>>(CArchive& archive, CNewReceiptArray& array);
 extern CArchive& operator<<(CArchive& archive, const CNewReceiptArray& array);
 
 //---------------------------------------------------------------------------
+extern CArchive& operator<<(CArchive& archive, const CNewReceipt& newr);
+extern CArchive& operator>>(CArchive& archive, CNewReceipt& newr);
+
+//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_NEWRECEIPT;
 
 //---------------------------------------------------------------------------

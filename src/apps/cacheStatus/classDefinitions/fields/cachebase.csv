@@ -1,6 +1,10 @@
-name        ,type   ,str_default ,object ,array ,nowrite ,omitempty ,minimal ,extra ,noaddfld ,doc ,disp ,example ,description
-nApps       ,blknum ,            ,       ,      ,true    ,          ,        ,      ,         ,    ,     ,        ,
-firstApp    ,blknum ,            ,       ,      ,true    ,          ,        ,      ,         ,    ,     ,        ,
-latestApp   ,blknum ,            ,       ,      ,true    ,          ,        ,      ,         ,    ,     ,        ,
-path        ,string ,            ,       ,      ,true    ,          ,        ,      ,         ,    ,     ,        ,
-sizeInBytes ,uint64 ,            ,       ,      ,true    ,true      ,        ,      ,         ,    ,     ,        ,
+name               ,type   ,str_default ,object ,array ,nowrite ,omitempty ,minimal ,extra ,noaddfld ,doc ,disp ,example ,description
+nApps              ,blknum ,            ,       ,      ,true    ,          ,        ,      ,         ,    ,     ,        ,
+firstApp           ,blknum ,            ,       ,      ,true    ,          ,        ,      ,         ,    ,2    ,        ,
+latestApp          ,blknum ,            ,       ,      ,true    ,          ,        ,      ,         ,    ,3    ,        ,
+path               ,string ,            ,       ,      ,true    ,          ,        ,      ,         ,    ,     ,        ,
+sizeInBytes        ,uint64 ,            ,       ,      ,true    ,true      ,        ,      ,         ,    ,7    ,        ,
+display_name       ,string ,            ,       ,      ,        ,          ,true    ,      ,true     ,    ,1    ,        ,
+appearanceRange    ,string ,            ,       ,      ,        ,          ,true    ,      ,true     ,    ,4    ,        ,
+nRecords           ,uint64 ,            ,       ,      ,        ,          ,true    ,      ,true     ,    ,5    ,        ,
+appearanceInterval ,string ,            ,       ,      ,        ,          ,true    ,      ,true     ,    ,6    ,        ,

@@ -143,6 +143,10 @@ extern CArchive& operator>>(CArchive& archive, CAppearanceDisplayArray& array);
 extern CArchive& operator<<(CArchive& archive, const CAppearanceDisplayArray& array);
 
 //---------------------------------------------------------------------------
+extern CArchive& operator<<(CArchive& archive, const CAppearanceDisplay& app);
+extern CArchive& operator>>(CArchive& archive, CAppearanceDisplay& app);
+
+//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_APPEARANCEDISPLAY;
 
 //---------------------------------------------------------------------------

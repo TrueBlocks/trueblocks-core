@@ -2,4 +2,3 @@
 class = CScrapeStatistics
 fields = scrapstatistics.csv
 includes = etherlib.h
-display_str = nFiles, nSkipped, nChecked, nBloomMisses, nBloomHits, nFalsePositive, nPositive, nTotalHits, nFileRecords, nCacheWrites

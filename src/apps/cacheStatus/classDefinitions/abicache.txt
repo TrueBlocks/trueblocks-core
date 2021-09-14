@@ -3,4 +3,3 @@ class = CAbiCache
 base_class = CCache
 fields = abicache.csv
 includes = cache.h|abicacheitem.h
-serialize = true

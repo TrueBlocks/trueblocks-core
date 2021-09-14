@@ -13,7 +13,37 @@
 #include "acctlib.h"
 #include "options.h"
 
+//------------------------------------------------------------------------------------------------------------
 extern const char* STR_CASE_CODE_STRINGARRAY;
+extern const char* STR_COMMENT_LINE;
+extern const char* STR_OPERATOR_DECL;
+extern const char* STR_OPERATOR_IMPL;
+extern const char* STR_PARENT_GETBYVALUE;
+extern const char* STR_PARENT_REGISTER;
+extern const char* STR_PARENT_SET;
+extern const char* STR_PARENT_SERIALIZE;
+extern const char* STR_GETVALUE1;
+extern const char* STR_GETVALUE2;
+extern const char* STR_GETOBJ_CODE;
+extern const char* STR_GETOBJ_CODE_FIELD;
+extern const char* STR_GETOBJ_CODE_FIELD_OBJ;
+extern const char* STR_GETSTR_CODE;
+extern const char* STR_GETSTR_CODE_FIELD;
+extern const char* STR_GETOBJ_HEAD;
+extern const char* STR_GETSTR_HEAD;
+extern const char* STR_UPGRADE_CODE;
+extern const char* STR_SORT_COMMENT_1;
+extern const char* STR_SORT_COMMENT_2;
+extern const char* STR_EQUAL_COMMENT_1;
+extern const char* STR_EQUAL_COMMENT_2;
+extern const char* STR_PRTREADFMT;
+extern const char* STR_READFMT;
+extern const char* STR_PTRWRITEFMT;
+extern const char* STR_WRITEFMT;
+extern const char* STR_UNKOWNTYPE;
+extern const char* STR_CHILD_OBJS;
+extern const char* STR_DELETE_CMDS;
+extern const char* STR_DEFAULT_TAGS;
 extern bool writeTheCode(const codewrite_t& cw);
 //------------------------------------------------------------------------------------------------------------
 bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, const string_q& namespc, bool asJs) {
@@ -57,15 +87,6 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
         else
             src_incStream << ("#include \"" + inc + "\"\n");
     }
-
-    //------------------------------------------------------------------------------------------------
-    bool isBase = (classDef.base_class == "CBaseNode");
-    // clang-format off
-    string_q parSer2 = !isBase ? "`[{BASE_CLASS}]::SerializeC(archive);\n\n"        : "`[{BASE_CLASS}]::SerializeC(archive);\n";
-    string_q parReg  = !isBase ? "[{BASE_CLASS}]::registerClass();\n\n`"            : "";
-    string_q parCnk  = !isBase ? "ret = next[{BASE_BASE}]Chunk(fieldName, this);\n" : "ret = next[{BASE_BASE}]Chunk(fieldName, this);\n";
-    string_q parSet  = !isBase ? "`if ([{BASE_CLASS}]::setValueByName(fieldName, fieldValue))\n``return true;\n\n" : "";
-    // clang-format on
 
     //------------------------------------------------------------------------------------------------
     for (auto fld : classDef.fieldArray) {
@@ -197,21 +218,36 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
 
             if ((fld.is_flags & IS_OBJECT) && !(fld.is_flags & IS_POINTER) && !contains(fld.type, "Array")) {
                 if (child_objStream.str().empty())
-                    child_objStream << "\n`string_q s;\n";
+                    child_objStream << "\n\n`// test for contained object field specifiers\n`string_q objSpec;\n";
                 child_objStream << fld.Format(STR_CHILD_OBJS) << endl;
             }
         }
     }
 
     //------------------------------------------------------------------------------------------------
-    string_q operators_decl = string_q(classDef.serializable ? STR_OPERATOR_DECL : "\n");
-    string_q operators_impl = string_q(classDef.serializable ? STR_OPERATOR_IMPL : "\n");
+    string_q operators_decl = STR_OPERATOR_DECL;
+    string_q operators_impl = STR_OPERATOR_IMPL;
 
     //------------------------------------------------------------------------------------------------
     classDef.sort_str = substitute(classDef.sort_str, "|", "\n```");
     classDef.eq_str = substitute(classDef.eq_str, "|", "\n```");
 
     //------------------------------------------------------------------------------------------------
+    map<uint64_t, string_q> dispMap;
+    for (auto fld : classDef.fieldArray)
+        if (fld.disp > 0)
+            dispMap[fld.disp] = fld.name;
+    if (dispMap.size()) {
+        string_q add = classDef.display_str;
+        classDef.display_str = "";
+        for (auto item : dispMap) {
+            classDef.display_str += item.second + ",";
+        }
+        classDef.display_str = trim(classDef.display_str, ',');
+        if (!add.empty())
+            classDef.display_str += "," + add;
+    }
+
     if (classDef.display_str.empty()) {
         classDef.display_str = " \"\"";
     } else {
@@ -229,6 +265,11 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
     bool hasStrGetter = !fieldGetStr.empty();
     if (hasStrGetter)
         fieldGetStr = substitute(string_q(STR_GETSTR_CODE), "[{FIELDS}]", fieldGetStr);
+
+    //------------------------------------------------------------------------------------------------
+    ASSERT(!classDef.base_class.empty());
+    bool isBase = (classDef.base_class == "CBaseNode");
+    bool isContained = !classDef.contained_by.empty();
 
     string_q headerFile = classDef.outputPath(".h");
     string_q headSource = asciiFileToString(configPath("makeClass/blank.h"));
@@ -284,12 +325,12 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
     replaceAll(srcSource, "[HIDE_FIELDS]", hide_fieldStream.str());
     replaceAll(srcSource, "[SET_CASE_CODE]", getCaseSetCode(classDef.fieldArray));
     replaceAll(srcSource, "[GET_CASE_CODE]", getCaseGetCode(classDef.fieldArray));
-    replaceAll(srcSource, "[SCOPE_CODE]", classDef.scope_str);
     replaceAll(srcSource, "[OPERATORS_IMPL]", operators_impl);
-    replaceAll(srcSource, "[{PARENT_SER2}]", parSer2);
-    replaceAll(srcSource, "[{PARENT_REG}]", parReg);
-    replaceAll(srcSource, "[{PARENT_CHNK}]\n", parCnk);
-    replaceAll(srcSource, "[{PARENT_SET}]\n", parSet);
+    replaceAll(srcSource, "[{PARENT_SER}]", STR_PARENT_SERIALIZE);
+    replaceAll(srcSource, "[{PARENT_REG}]", isBase ? "" : STR_PARENT_REGISTER);
+    replaceAll(srcSource, "[{PARENT_SET}]", isBase ? "" : STR_PARENT_SET);
+    replaceAll(srcSource, "[PARENT_GETBYVALUE]",
+               isContained ? substitute(STR_PARENT_GETBYVALUE, "CONTAINED", classDef.contained_by) : "");
     replaceAll(srcSource, "[{COMMENT_LINE}]", STR_COMMENT_LINE);
     replaceAll(srcSource, "[{BASE_CLASS}]", classDef.base_class);
     replaceAll(srcSource, "[{LONG}]", classDef.base_lower);
@@ -773,6 +814,24 @@ const char* STR_OPERATOR_DECL =
     "\n";
 
 //------------------------------------------------------------------------------------------------------------
+const char* STR_PARENT_GETBYVALUE =
+    "`extern string_q nextCONTAINEDChunk(const string_q& fieldIn, const void* data);\n"
+    "`ret = nextCONTAINEDChunk(fieldName, pCONTAINED);\n"
+    "`if (contains(ret, \"Field not found\"))\n"
+    "`    ret = \"\";\n"
+    "`if (!ret.empty())\n"
+    "`    return ret;\n";
+
+//------------------------------------------------------------------------------------------------------------
+const char* STR_PARENT_REGISTER = "[{BASE_CLASS}]::registerClass();\n\n`";
+
+//------------------------------------------------------------------------------------------------------------
+const char* STR_PARENT_SET = "`if ([{BASE_CLASS}]::setValueByName(fieldName, fieldValue))\n``return true;\n";
+
+//------------------------------------------------------------------------------------------------------------
+const char* STR_PARENT_SERIALIZE = "`[{BASE_CLASS}]::SerializeC(archive);\n";
+
+//------------------------------------------------------------------------------------------------------------
 const char* STR_OPERATOR_IMPL =
     "[{COMMENT_LINE}]"
     "CArchive& operator<<(CArchive& archive, const [{CLASS_NAME}]& [{SHORT3}]) {\n"
@@ -879,13 +938,10 @@ const char* STR_UNKOWNTYPE =
 
 //------------------------------------------------------------------------------------------------------------
 const char* STR_CHILD_OBJS =
-    "`s = toUpper(string_q(\"[{NAME}]\")) + \"::\";\n"
-    "`if (contains(fieldName, s)) {\n"
-    "``string_q f = fieldName;\n"
-    "``replaceAll(f, s, \"\");\n"
-    "``f = [{NAME}].getValueByName(f);\n"
-    "``return f;\n"
-    "`}\n";
+    "`objSpec = toUpper(\"[{NAME}]\") + \"::\";\n"
+    "`if (contains(fieldName, objSpec))\n"
+    "``return [{NAME}].getValueByName(substitute(fieldName, objSpec, \"\"));\n"
+    "\n";
 
 //------------------------------------------------------------------------------------------------------------
 const char* STR_READFMT = "`archive >> [{NAME}];\n";

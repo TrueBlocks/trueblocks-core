@@ -144,6 +144,10 @@ extern CArchive& operator>>(CArchive& archive, CRPCResultArray& array);
 extern CArchive& operator<<(CArchive& archive, const CRPCResultArray& array);
 
 //---------------------------------------------------------------------------
+extern CArchive& operator<<(CArchive& archive, const CRPCResult& rpc);
+extern CArchive& operator>>(CArchive& archive, CRPCResult& rpc);
+
+//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_RPCRESULT;
 
 //---------------------------------------------------------------------------

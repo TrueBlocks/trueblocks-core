@@ -22,7 +22,7 @@ namespace qblocks {
 IMPLEMENT_NODE(CMeasure, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextMeasureChunk(const string_q& fieldIn, const void* dataPtr);
+extern string_q nextMeasureChunk(const string_q& fieldIn, const void* dataPtr);
 static string_q nextMeasureChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
@@ -382,6 +382,18 @@ bool CMeasure::readBackLevel(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator<<(CArchive& archive, const CMeasure& mea) {
+    mea.SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator>>(CArchive& archive, CMeasure& mea) {
+    mea.Serialize(archive);
+    return archive;
 }
 
 //-------------------------------------------------------------------------

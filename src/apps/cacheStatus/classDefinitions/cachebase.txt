@@ -3,5 +3,3 @@ class = CCacheBase
 base_class = CAccountName
 fields = cachebase.csv
 includes = etherlib.h
-serialize = true
-display_str = display_name, firstApp, lastApp, appearanceRange, nRecords, appearanceInterval, sizeInBytes

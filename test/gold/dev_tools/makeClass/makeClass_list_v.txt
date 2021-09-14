@@ -10,7 +10,6 @@ makeClass --dump function --verbose
   "base_upper": "FUNCTION",
   "base_base": "Basenode",
   "head_includes": "utillib.h|parameter.h",
-  "scope_str": "static",
   "fieldArray": [
     {
       "type": "string",

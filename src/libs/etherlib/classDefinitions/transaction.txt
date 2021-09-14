@@ -3,9 +3,7 @@ class = CTransaction
 fields = transactions.csv
 includes = utillib.h|abi.h|receipt.h|trace.h|reconciliation.h|ethstate.h
 cpp_includes = etherlib.h
-scope = extern
-serializable = true
-display_str = blockNumber, transactionIndex, date, timestamp, from, to, ether, etherGasPrice, gasUsed, hash, isError, encoding, compressedTx
 equals = (hash == it.hash)
 tsx = true
 openapi = transaction
+contained_by = Block

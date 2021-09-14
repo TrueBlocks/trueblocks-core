@@ -2,5 +2,3 @@
 class = CNewBlock
 fields = newblock.csv
 includes = etherlib.h|transaction.h
-scope = extern
-serialize = true

@@ -64,6 +64,7 @@ class COptions : public COptionsBase {
     map<string_q, CPage> pageMap;
     runmode_t mode;
     CClassDefinitionArray classDefs;
+    CClassDefinitionArray dataModels;
     CCommandOptionArray optionArray;
     CStringArray positionals;
     CToml classFile;
@@ -178,33 +179,6 @@ inline string_q short2(const string_q& str) {
 inline string_q short3(const string_q& str) {
     return extract(str, 0, (is_reserved(str) ? 4 : 3));
 }
-
-//------------------------------------------------------------------------------------------------------------
-extern const char* STR_COMMENT_LINE;
-extern const char* STR_OPERATOR_DECL;
-extern const char* STR_OPERATOR_IMPL;
-extern const char* STR_GETVALUE1;
-extern const char* STR_GETVALUE2;
-extern const char* STR_GETOBJ_CODE;
-extern const char* STR_GETOBJ_CODE_FIELD;
-extern const char* STR_GETOBJ_CODE_FIELD_OBJ;
-extern const char* STR_GETSTR_CODE;
-extern const char* STR_GETSTR_CODE_FIELD;
-extern const char* STR_GETOBJ_HEAD;
-extern const char* STR_GETSTR_HEAD;
-extern const char* STR_UPGRADE_CODE;
-extern const char* STR_SORT_COMMENT_1;
-extern const char* STR_SORT_COMMENT_2;
-extern const char* STR_EQUAL_COMMENT_1;
-extern const char* STR_EQUAL_COMMENT_2;
-extern const char* STR_PRTREADFMT;
-extern const char* STR_READFMT;
-extern const char* STR_PTRWRITEFMT;
-extern const char* STR_WRITEFMT;
-extern const char* STR_UNKOWNTYPE;
-extern const char* STR_CHILD_OBJS;
-extern const char* STR_DELETE_CMDS;
-extern const char* STR_DEFAULT_TAGS;
 
 //------------------------------------------------------------------------------------------------------------
 void doReplace(string_q& str, const string_q& type, const string_q& rep, const string_q& spaces);

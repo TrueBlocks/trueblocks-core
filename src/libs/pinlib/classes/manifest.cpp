@@ -22,7 +22,7 @@ namespace qblocks {
 IMPLEMENT_NODE(CPinManifest, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextPinmanifestChunk(const string_q& fieldIn, const void* dataPtr);
+extern string_q nextPinmanifestChunk(const string_q& fieldIn, const void* dataPtr);
 static string_q nextPinmanifestChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------

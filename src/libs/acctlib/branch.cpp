@@ -23,7 +23,7 @@ namespace qblocks {
 IMPLEMENT_NODE(CBranch, CTreeNode);
 
 //---------------------------------------------------------------------------
-static string_q nextBranchChunk(const string_q& fieldIn, const void* dataPtr);
+extern string_q nextBranchChunk(const string_q& fieldIn, const void* dataPtr);
 static string_q nextBranchChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
@@ -100,7 +100,6 @@ bool CBranch::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
 
     if (CTreeNode::setValueByName(fieldName, fieldValue))
         return true;
-
     switch (tolower(fieldName[0])) {
         case 'b':
             if (fieldName % "branchValue") {
@@ -281,6 +280,18 @@ bool CBranch::readBackLevel(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator<<(CArchive& archive, const CBranch& bra) {
+    bra.SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator>>(CArchive& archive, CBranch& bra) {
+    bra.Serialize(archive);
+    return archive;
 }
 
 //-------------------------------------------------------------------------

@@ -22,7 +22,7 @@ namespace qblocks {
 IMPLEMENT_NODE(CPinataRegion, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextPinataregionChunk(const string_q& fieldIn, const void* dataPtr);
+extern string_q nextPinataregionChunk(const string_q& fieldIn, const void* dataPtr);
 static string_q nextPinataregionChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------

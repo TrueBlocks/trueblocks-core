@@ -33,6 +33,13 @@ components:
         name:
           type: string
           description: "the name of the address, if found"
+        timestamp:
+          type: number
+          format: timestamp
+          description: "the timestamp for this appearance"
+        date:
+          type: string
+          description: "the date represented by the timestamp"
     block:
       type: object
       properties:
@@ -216,6 +223,9 @@ components:
           type: string
           example: "any test"
           description: "user supplied description for the address"
+        deleted:
+          type: boolean
+          description: "`true` if deleted, `false` otherwise"
         is_custom:
           type: boolean
           description: "`true` if the address is a custom address, `false` otherwise"
@@ -258,8 +268,18 @@ components:
     pin:
       type: object
       properties:
-        items:
-          $ref: "#/components/schemas/pin"
+        fileName:
+          type: string
+          example: "013142464-013145212"
+          description: "for each chunk, the range of blocks contained in that chunk"
+        bloomHash:
+          type: ipfshash
+          example: "QmXHjjY...HDqvWT"
+          description: "the IPFS hash of the bloom filter at that range"
+        indexHash:
+          type: ipfshash
+          example: "QmTbYpR...qWLj44"
+          description: "the IPFS hash of the index chunk at that range"
     quote:
       type: object
       properties:
@@ -345,6 +365,10 @@ components:
           type: string
           format: int256
           description: "the begining balance of the asset at the blockNumber"
+        begBalDiff:
+          type: string
+          format: int256
+          description: "the difference between the expected beginning balance (prevBlkBal) and the queried balance from the chain"
         amountIn:
           type: string
           format: int256
@@ -385,14 +409,14 @@ components:
           type: string
           format: int256
           description: "the uncle reward if the miner who won the uncle block is the accountedFor address"
-        spotPrice:
-          type: number
-          format: double
-          description: "The on-chain price in USD (or if a token in ETH, or zero) at the time of the transaction"
         prefundIn:
           type: string
           format: int256
           description: "at block zero (0) only, the amount of genesis income for the accountedFor address"
+        spotPrice:
+          type: number
+          format: double
+          description: "The on-chain price in USD (or if a token in ETH, or zero) at the time of the transaction"
         priceSource:
           type: string
           description: "The on-chain source from which the spot price was taken"
@@ -404,9 +428,35 @@ components:
           type: string
           format: int256
           description: "the on-chain balance of the asset (see notes above about intra-block reconciliations)"
+        totalIn:
+          type: string
+          format: int256
+          description: "a calculated field -- the sum of all In fields"
+        totalOut:
+          type: string
+          format: int256
+          description: "a calculated field -- the sum of all Out fields"
+        totalOutLessGas:
+          type: string
+          format: int256
+        amountNet:
+          type: string
+          format: int256
+          description: "a calculated field -- totalIn - totalOut"
+        endBalCalc:
+          type: string
+          format: int256
+          description: "a calculated field -- begBal + amountNet"
         reconciliationType:
           type: string
           description: "One of regular, traces, prevdiff-partial, partial-nextdiff, or `partial-partial`"
+        endBalDiff:
+          type: string
+          format: int256
+          description: "a calculated field -- endBal - endBalCalc, if non-zero, the reconciliation failed"
+        reconciled:
+          type: boolean
+          description: "a calculated field -- true if `endBal === endBalCalc` and `begBal === prevBlkBal`. `false` otherwise."
     state:
       type: object
       properties:
@@ -476,6 +526,10 @@ components:
           type: string
           example: "The DAO Original"
           description: "the name of the token contract, if available"
+        symbol:
+          type: string
+          example: "GTC"
+          description: "the symbol for this token contract"
         decimals:
           type: number
           format: uint64
@@ -514,6 +568,8 @@ components:
           description: "the zero-indexed position of the transaction in the block"
         traceAddress:
           type: array
+          items:
+            $ref: "#/components/schemas/string"
           description: "a particular trace's address in the trace tree"
         subtraces:
           type: number
@@ -545,36 +601,30 @@ components:
       type: object
       properties:
         from:
+          type: string
+          format: address
           description: "address from which the trace was sent"
-          type: string
-          format: address
         to:
-          description: "address to which the trace was sent"
           type: string
           format: address
+          description: "address to which the trace was sent"
         gas:
-          type: number
+          type: string
           format: gas
-          example: 158660
-          description: the maximum number of gas allowed for this trace
+          example: "158660"
+          description: "the maximum number of gas allowed for this trace"
         input:
-          description: an encoded version of the function call.
           type: string
           format: bytes
+          description: "an encoded version of the function call"
         callType:
-          description: the type of call
           type: string
+          description: "the type of call"
         refundAddress:
           type: string
           format: address
-          example: "0xf503017d7baf7fbc0fff7492b751025c6a78179b"
-          description: if the call type is self-destruct, the address to which the refund is sent
-        articulatedTrace:
-          description: A human-readable version of the trace action’s input and the result’s output
-          type: object
-        compressedTrace:
-          description: a truncated, more readable version of the articulation
-          type: string
+          example: "0xf503...179b"
+          description: "if the call type is self-destruct, the address to which the refund is sent"
     traceResult:
       description: "the trace result"
       type: object
@@ -700,8 +750,11 @@ components:
       format: hash
       description: "The 32-byte hash"
       example: "0xf128...1e98"
+    string:
+      type: string
     topic:
       type: string
       format: bytes
       description: "One of four 32-byte topics of a log"
       example: "0xf128...1e98"
+

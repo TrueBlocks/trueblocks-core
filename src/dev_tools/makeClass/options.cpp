@@ -172,6 +172,15 @@ bool COptions::parseArguments(string_q& command) {
     }
     LOG4("Processing ", classDefs.size(), " class definition files.");
 
+    for (auto classDefIn : classDefs) {
+        CToml toml(classDefIn.input_path);
+        CClassDefinition classDef(toml);
+        classDef.short_fn = classDefIn.short_fn;
+        classDef.input_path = classDefIn.input_path;
+        if (!classDef.openapi.empty())
+            dataModels.push_back(classDef);
+    }
+
     // Ignoring classDefs for a moment, process special options. Note: order matters
     if (openapi && !handle_datamodel())
         return false;

@@ -3,5 +3,4 @@ class = CPriceQuote
 fields = pricequote.csv
 includes = utillib.h|abi.h
 cpp_includes = pricesource.h|reconciliation.h
-display_str = timestamp, date, close
 openapi = quote

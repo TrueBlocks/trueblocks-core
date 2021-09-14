@@ -192,6 +192,10 @@ extern CArchive& operator>>(CArchive& archive, CSchemaArray& array);
 extern CArchive& operator<<(CArchive& archive, const CSchemaArray& array);
 
 //---------------------------------------------------------------------------
+extern CArchive& operator<<(CArchive& archive, const CSchema& sch);
+extern CArchive& operator>>(CArchive& archive, CSchema& sch);
+
+//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_SCHEMA;
 
 //---------------------------------------------------------------------------

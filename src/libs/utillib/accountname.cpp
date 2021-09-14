@@ -23,7 +23,7 @@ namespace qblocks {
 IMPLEMENT_NODE(CAccountName, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextAccountnameChunk(const string_q& fieldIn, const void* dataPtr);
+extern string_q nextAccountnameChunk(const string_q& fieldIn, const void* dataPtr);
 static string_q nextAccountnameChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
@@ -415,6 +415,18 @@ bool CAccountName::readBackLevel(CArchive& archive) {
     }
     // EXISTING_CODE
     return done;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator<<(CArchive& archive, const CAccountName& acc) {
+    acc.SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator>>(CArchive& archive, CAccountName& acc) {
+    acc.Serialize(archive);
+    return archive;
 }
 
 //-------------------------------------------------------------------------

@@ -2,4 +2,3 @@
 class = CPinManifest
 fields = manifest.csv
 includes = etherlib.h|pinnedchunk.h
-serializable = true

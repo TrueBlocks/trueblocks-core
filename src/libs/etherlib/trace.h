@@ -64,7 +64,7 @@ class CTrace : public CBaseNode {
 
     // EXISTING_CODE
     bool isErr(void) const;
-    const CTransaction* pTrans;
+    const CTransaction* pTransaction;
     void loadTraceAsBlockReward(const CTransaction& trans, blknum_t bn, blknum_t txid);
     void loadTraceAsUncleReward(const CTransaction& trans, blknum_t bn, blknum_t uncleBn);
     void loadTraceAsTransFee(const CTransaction& trans, blknum_t bn, blknum_t txid);
@@ -135,7 +135,7 @@ inline void CTrace::initialize(void) {
     compressedTrace = "";
 
     // EXISTING_CODE
-    pTrans = NULL;
+    pTransaction = NULL;
     // EXISTING_CODE
 }
 
@@ -158,7 +158,7 @@ inline void CTrace::duplicate(const CTrace& tr) {
     compressedTrace = tr.compressedTrace;
 
     // EXISTING_CODE
-    pTrans = tr.pTrans;  // no deep copy, we don't own it
+    pTransaction = tr.pTransaction;  // no deep copy, we don't own it
     // EXISTING_CODE
 }
 
@@ -190,6 +190,10 @@ inline bool operator<(const CTrace& v1, const CTrace& v2) {
 typedef vector<CTrace> CTraceArray;
 extern CArchive& operator>>(CArchive& archive, CTraceArray& array);
 extern CArchive& operator<<(CArchive& archive, const CTraceArray& array);
+
+//---------------------------------------------------------------------------
+extern CArchive& operator<<(CArchive& archive, const CTrace& tra);
+extern CArchive& operator>>(CArchive& archive, CTrace& tra);
 
 //---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_TRACE;

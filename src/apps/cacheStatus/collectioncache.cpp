@@ -22,7 +22,7 @@ namespace qblocks {
 IMPLEMENT_NODE(CCollectionCache, CCache);
 
 //---------------------------------------------------------------------------
-static string_q nextCollectioncacheChunk(const string_q& fieldIn, const void* dataPtr);
+extern string_q nextCollectioncacheChunk(const string_q& fieldIn, const void* dataPtr);
 static string_q nextCollectioncacheChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
@@ -109,7 +109,6 @@ bool CCollectionCache::setValueByName(const string_q& fieldNameIn, const string_
 
     if (CCache::setValueByName(fieldName, fieldValue))
         return true;
-
     switch (tolower(fieldName[0])) {
         case 'i':
             if (fieldName % "items") {
@@ -259,6 +258,18 @@ bool CCollectionCache::readBackLevel(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator<<(CArchive& archive, const CCollectionCache& col) {
+    col.SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator>>(CArchive& archive, CCollectionCache& col) {
+    col.Serialize(archive);
+    return archive;
 }
 
 //-------------------------------------------------------------------------

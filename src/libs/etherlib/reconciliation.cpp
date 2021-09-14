@@ -23,7 +23,7 @@ namespace qblocks {
 IMPLEMENT_NODE(CReconciliation, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextReconciliationChunk(const string_q& fieldIn, const void* dataPtr);
+extern string_q nextReconciliationChunk(const string_q& fieldIn, const void* dataPtr);
 static string_q nextReconciliationChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
