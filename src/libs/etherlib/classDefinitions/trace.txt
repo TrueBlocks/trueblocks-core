@@ -5,3 +5,6 @@ includes = utillib.h|abi.h|traceaction.h|traceresult.h
 cpp_includes = transaction.h|node.h
 tsx = true
 openapi = trace
+description = trace data for a given transaction directly from the blockchain
+doc_group = Chain Data
+produced_by = traces, export

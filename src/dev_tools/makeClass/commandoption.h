@@ -81,7 +81,7 @@ class CCommandOption : public CBaseNode {
     string_q toApiTag(void) const;
     string_q toGoCall(void) const;
     string_q toGoRoute(void) const;
-    string_q toApiPath(void) const;
+    string_q toApiPath(const string_q& inStr) const;
     bool isChifraRoute(void) const;
     string_q getSchema(void) const;
     bool isStringType(void) const {

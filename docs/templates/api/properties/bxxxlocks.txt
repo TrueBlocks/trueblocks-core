@@ -1,4 +1,5 @@
 data:
+  description: whatever
   type: array
   items:
     oneOf:

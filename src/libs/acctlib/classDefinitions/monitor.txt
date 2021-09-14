@@ -6,4 +6,6 @@ includes = etherlib.h|transaction.h|reconciliation.h|ethstate.h|monitoredapp.h
 force_objget = true
 tsx = true
 openapi = monitor
-description = an address that is being (or has been) monitored
+description = A local file indicating a user's interest in an address. Includes caches for reconicilations, transactions and appearances as well as an optional association to named account
+doc_group = Accounts
+produced_by = monitors

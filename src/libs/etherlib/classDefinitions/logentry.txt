@@ -6,3 +6,7 @@ cpp_includes = etherlib.h
 tsx = true
 openapi = log
 contained_by = Receipt
+description = log data for a given transaction directly from the blockchain
+doc_group = Chain Data
+produced_by = logs
+produced_by = export

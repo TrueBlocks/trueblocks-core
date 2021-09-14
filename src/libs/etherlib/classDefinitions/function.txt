@@ -7,3 +7,4 @@ equals = encoding % it.encoding && message % it.message
 tsx = true
 openapi = function
 description = a human readable representation of a Solidity function call or event
+doc_group = Other

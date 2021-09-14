@@ -149,6 +149,8 @@ class COptions : public COptionsBase {
 
     bool writeCode(const string_q& fn);
     void writeOpenApiFile(void);
+
+    string_q getProductions(const CCommandOption& ep);
 };
 
 //-------------------------------------------------------------------

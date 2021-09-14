@@ -14,6 +14,7 @@ components:
             $ref: "#/components/schemas/function"
           description: "the list of events and functions on this abi"
     appearance:
+      description: "a single appearance of an address anywhere in the chain in the form of blockNumber.transactionIndex"
       type: object
       properties:
         blockNumber:
@@ -41,6 +42,7 @@ components:
           type: string
           description: "the date represented by the timestamp"
     block:
+      description: "block data directly from the blockchain"
       type: object
       properties:
         gasLimit:
@@ -119,6 +121,7 @@ components:
             $ref: "#/components/schemas/parameter"
           description: "the output parameters to the function, if any"
     log:
+      description: "log data for a given transaction directly from the blockchain"
       type: object
       properties:
         blockNumber:
@@ -161,7 +164,7 @@ components:
           example: "Transfer(0xcfa...9f54..."
           description: "a truncated, more readable version of the articulation"
     monitor:
-      description: "an address that is being (or has been) monitored"
+      description: "A local file indicating a user's interest in an address. Includes caches for reconicilations, transactions and appearances as well as an optional association to named account"
       type: object
       properties:
         nApps:
@@ -191,6 +194,7 @@ components:
           type: boolean
           description: "`true` if this address is customized"
     name:
+      description: "an association between a name and address for use throughout TrueBlocks"
       type: object
       properties:
         tags:
@@ -265,7 +269,8 @@ components:
           items:
             $ref: "#/components/schemas/parameter"
           description: "for composite types, the parameters making up the composite"
-    pin:
+    pinnedChunk:
+      description: "the IPFS hashes of the index chunk and its associated Bloom filter for the given block range"
       type: object
       properties:
         fileName:
@@ -281,6 +286,7 @@ components:
           example: "QmTbYpR...qWLj44"
           description: "the IPFS hash of the index chunk at that range"
     quote:
+      description: "the closing price of Ether in USD at a particular moment"
       type: object
       properties:
         timestamp:
@@ -303,6 +309,7 @@ components:
           example: "Byzantium"
           description: "the name of the block for some named 'special' blocks"
     receipt:
+      description: "receipt data for a given transaction directly from the blockchain"
       type: object
       properties:
         status:
@@ -323,6 +330,7 @@ components:
             $ref: "#/components/schemas/log"
           description: "a possibly empty array of logs"
     reconciliation:
+      description: "a reconiciliation of all inflows and outflows to a given account at a given transaction"
       type: object
       properties:
         blockNumber:
@@ -458,6 +466,7 @@ components:
           type: boolean
           description: "a calculated field -- true if `endBal === endBalCalc` and `begBal === prevBlkBal`. `false` otherwise."
     state:
+      description: "the on-chain state of a given address"
       type: object
       properties:
         blockNumber:
@@ -504,7 +513,67 @@ components:
           format: double
           example: 0.25884369
           description: "the balance of the address in ethers"
+    status:
+      description: "This data model carries information about the TrueBlocks system including both the API server and the local binary caches"
+      type: object
+      properties:
+        client_version:
+          type: string
+          description: "the version string as reported by the rpcProvider"
+        client_ids:
+          type: string
+          description: "netword_id and chain_id from the rpcProvider"
+        trueblocks_version:
+          type: string
+          description: "the TrueBlocks version string"
+        rpc_provider:
+          type: string
+          description: "the current rpcProvider"
+        balance_provider:
+          type: string
+          description: "the current archive node balance provider (defaults to rpcProvider)"
+        config_path:
+          type: string
+          description: "the path to config files"
+        cache_path:
+          type: string
+          description: "the path to the local binary caches"
+        index_path:
+          type: string
+          description: "the path to the local binary indexes"
+        host:
+          type: string
+          description: "the host portion of the local API server"
+        is_testing:
+          type: boolean
+          description: "`true` if the server is running in test mode"
+        is_api:
+          type: boolean
+          description: "`true` if the server is running in API mode"
+        is_docker:
+          type: boolean
+          description: "`true` if running under a docker image"
+        is_scraping:
+          type: boolean
+          description: "`true` if the index scraper is running"
+        is_archive:
+          type: boolean
+          description: "`true` if the rpcProvider is an archive node"
+        is_tracing:
+          type: boolean
+          description: "`true` if the rpcProvider provides Parity traces"
+        has_eskey:
+          type: boolean
+          description: "`true` if an EtherScan key is present"
+        has_pinkey:
+          type: boolean
+          description: "`true` if a Pinata API key is present"
+        ts:
+          type: number
+          format: timestamp
+          description: "the timestamp when this status data was produced"
     token:
+      description: "on-chain token related data for a give address at a given block height"
       type: object
       properties:
         holder:
@@ -545,6 +614,7 @@ components:
           type: boolean
           description: "`true` if the address is an ERC720, `false` otherwise"
     trace:
+      description: "trace data for a given transaction directly from the blockchain"
       type: object
       properties:
         blockHash:
@@ -597,7 +667,7 @@ components:
           type: string
           description: "a compressed string version of the articulated trace"
     traceAction:
-      description: "the trace action object"
+      description: "the trace action data for a given trace directly from the blockchain"
       type: object
       properties:
         from:
@@ -647,6 +717,7 @@ components:
           format: bytes
           description: "the result of the call of this trace"
     transaction:
+      description: "the transaction data for a given transaction directly from the blockchain"
       type: object
       properties:
         hash:
@@ -745,6 +816,23 @@ components:
             - error 2
           items:
             type: string
+    datedBlock:
+      type: object
+      properties:
+        blockNumber:
+          type: number
+          format: blknum_t
+          example: 10021
+          description: "the number of the block"
+        timestamp:
+          type: number
+          format: timestamp_t
+          example: 1438335038
+          description: "the unix timestamp of the block"
+        date:
+          description: "Human readable version of timestamp"
+          example: "2015-07-30 15:34:53 UTC"
+          type: string*/
     hash:
       type: string
       format: hash

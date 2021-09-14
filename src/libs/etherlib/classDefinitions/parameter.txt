@@ -5,3 +5,5 @@ fields = paramter.csv
 includes = utillib.h
 tsx = true
 openapi = parameter
+description = an input or output paramter to a function
+doc_group = Other
