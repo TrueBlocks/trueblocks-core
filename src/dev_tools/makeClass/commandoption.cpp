@@ -792,6 +792,8 @@ string_q CCommandOption::toApiTag(void) const {
         "    description: [{DESCRIPTION}]\n";
     CCommandOption ret = *this;
     replaceAll(ret.group, " ", "");
+    replaceAll(ret.group, "ChainData", "Chain Data");
+    replaceAll(ret.group, "ChainState", "Chain State");
     return ret.Format(STR_TAG_YAML);
 }
 
@@ -841,7 +843,7 @@ string_q prepareDescr(const string_q& in) {
 }
 
 //---------------------------------------------------------------------------------------------------
-string_q CCommandOption::toApiPath(void) const {
+string_q CCommandOption::toApiPath(const string_q& inStr) const {
     if (!isApiRoute(api_route))
         return "";
 
@@ -874,30 +876,45 @@ string_q CCommandOption::toApiPath(void) const {
         }
     }
 
+    string_q content;
     ostringstream properties;
     if (fileExists(propertyFn)) {
-        string_q content = trim(asciiFileToString(propertyFn), '\n');
-        if (!content.empty()) {
-            if (!contains(content, string_q(18, ' '))) {
-                replaceAll(content, "\n", "\n" + string_q(18, ' '));
-                content = string_q(18, ' ') + content;
-            }
-            properties << string_q(16, ' ') << "properties:" << endl << content << endl;
-        }
+        content = trim(asciiFileToString(propertyFn), '\n');
+    } else if (!api_route.empty()) {
+        string_q descr = inStr;
+        string_q productions = nextTokenClear(descr, '|');
+        const char* STR_PROPERTIES =
+            "data:\n"
+            "  description: [{DESCR}]\n"
+            "  type: array\n"
+            "  items:\n"
+            "    [{PRODUCTIONS}]";
+        content = substitute(substitute(STR_PROPERTIES, "[{PRODUCTIONS}]", productions), "[{DESCR}]", descr);
     }
 
-    if (!fileExists(exampleFn) && !fileExists(propertyFn))
-        properties << string_q(16, ' ') << "items:\n                  $ref: \"#/components/schemas/response\"\n";
+    if (!content.empty()) {
+        if (!contains(content, string_q(18, ' '))) {
+            replaceAll(content, "\n", "\n" + string_q(18, ' '));
+            content = string_q(18, ' ') + content;
+        }
+        properties << string_q(16, ' ') << "properties:" << endl << content << endl;
+
+    } else {
+        if (!fileExists(exampleFn) && !fileExists(propertyFn))
+            properties << string_q(16, ' ') << "items:\n                  $ref: \"#/components/schemas/response\"\n";
+    }
+
+    string_q grp = substitute(substitute(group, "ChainData", "Chain Data"), "ChainState", "Chain State");
 
     string_q ret = STR_PATH_YAML;
-    replaceAll(ret, "[{TAGS}]", substitute(group, " ", ""));
+    replaceAll(ret, "[{TAGS}]", grp);
     replaceAll(ret, "[{PROPERTIES}]", properties.str());
     replaceAll(ret, "[{EXAMPLE}]", example.str());
     replaceAll(ret, "[{PATH}]", api_route);
     replaceAll(ret, "[{PARAMS}]", paramStream.str());
     replaceAll(ret, "[{SUMMARY}]", summary);
     replaceAll(ret, "[{DESCR}]", description);
-    replaceAll(ret, "[{ID}]", toLower(substitute(group, " ", "") + "-" + api_route));
+    replaceAll(ret, "[{ID}]", toLower(substitute(grp, " ", "") + "-" + api_route));
     return ret;
 }
 

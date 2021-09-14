@@ -5,5 +5,6 @@ includes = utillib.h|parameter.h
 sort = v1.encoding < v2.encoding
 equals = encoding % it.encoding && message % it.message
 tsx = true
-openapi = function
+doc_group = Accounts
 description = a human readable representation of a Solidity function call or event
+openapi = function

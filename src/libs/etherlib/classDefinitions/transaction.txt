@@ -4,6 +4,9 @@ fields = transactions.csv
 includes = utillib.h|abi.h|receipt.h|trace.h|reconciliation.h|ethstate.h
 cpp_includes = etherlib.h
 equals = (hash == it.hash)
-tsx = true
-openapi = transaction
 contained_by = Block
+tsx = true
+doc_group = Chain Data
+description = the transaction data for a given transaction directly from the blockchain
+openapi = transaction
+produced_by = transactions, slurp, export

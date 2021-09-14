@@ -4,4 +4,7 @@ fields = block_fields.csv
 includes = etherlib.h|transaction.h
 cpp_includes = appearance.h
 tsx = true
+doc_group = Chain Data
+description = block data directly from the blockchain
 openapi = block
+produced_by = blocks

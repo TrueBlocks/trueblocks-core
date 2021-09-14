@@ -1,0 +1,21 @@
+group      ,name           ,openapi        ,location
+Accounts   ,Appearance     ,appearance     ,./libs/etherlib/classDefinitions/appearancedisplay.txt
+Accounts   ,Reconciliation ,reconciliation ,./libs/etherlib/classDefinitions/reconciliation.txt
+Accounts   ,Monitor        ,monitor        ,./libs/acctlib/classDefinitions/monitor.txt
+Accounts   ,Name           ,name           ,./libs/utillib/classDefinitions/accountname.txt
+Accounts   ,Abi            ,abi            ,./libs/etherlib/classDefinitions/abi.txt
+Accounts   ,Function       ,function       ,./libs/etherlib/classDefinitions/function.txt
+Accounts   ,Parameter      ,parameter      ,./libs/etherlib/classDefinitions/parameter.txt
+Chain Data ,Block          ,block          ,./libs/etherlib/classDefinitions/block.txt
+Chain Data ,Transaction    ,transaction    ,./libs/etherlib/classDefinitions/transaction.txt
+Chain Data ,Receipt        ,receipt        ,./libs/etherlib/classDefinitions/receipt.txt
+Chain Data ,Log            ,log            ,./libs/etherlib/classDefinitions/logentry.txt
+Chain Data ,Trace          ,trace          ,./libs/etherlib/classDefinitions/trace.txt
+Chain Data ,TraceAction    ,traceAction    ,./libs/etherlib/classDefinitions/traceaction.txt
+Chain Data ,TraceResult    ,traceResult    ,./libs/etherlib/classDefinitions/traceresult.txt
+Chain Data ,DatedBlock     ,datedBlock     ,./libs/etherlib/classDefinitions/datedBlock.txt
+State      ,State          ,state          ,./libs/etherlib/classDefinitions/ethstate.txt
+State      ,Token          ,token          ,./tools/getTokens/classDefinitions/tokenbalancerecord.txt
+Admin      ,Status         ,status         ,./apps/cacheStatus/classDefinitions/status.txt
+Admin      ,Pin            ,pinnedChunk    ,./libs/pinlib/classes/classDefinitions/pinnedchunk.txt
+Other      ,Quote          ,quote          ,./libs/etherlib/classDefinitions/pricequote.txt

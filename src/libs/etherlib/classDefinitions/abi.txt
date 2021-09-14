@@ -6,5 +6,7 @@ cpp_includes = node.h
 equals = (address == it.address)
 tsx = true
 disabled = true
-openapi = abi
+doc_group = Accounts
 description = a collection of function and event definitions as described elsewhere in the Ethereum system
+openapi = abi
+produced_by = abis

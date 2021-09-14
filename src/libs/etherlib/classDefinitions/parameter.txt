@@ -4,4 +4,6 @@ class = CParameter
 fields = paramter.csv
 includes = utillib.h
 tsx = true
+doc_group = Accounts
+description = an input or output paramter to a function
 openapi = parameter

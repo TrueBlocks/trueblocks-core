@@ -166,6 +166,11 @@ string_q CClassDefinition::getValueByName(const string_q& fieldName) const {
                 return openapi;
             }
             break;
+        case 'p':
+            if (fieldName % "produced_by") {
+                return produced_by;
+            }
+            break;
         case 's':
             if (fieldName % "short_fn") {
                 return short_fn;
@@ -304,6 +309,12 @@ bool CClassDefinition::setValueByName(const string_q& fieldNameIn, const string_
                 return true;
             }
             break;
+        case 'p':
+            if (fieldName % "produced_by") {
+                produced_by = fieldValue;
+                return true;
+            }
+            break;
         case 's':
             if (fieldName % "short_fn") {
                 short_fn = fieldValue;
@@ -372,6 +383,7 @@ bool CClassDefinition::Serialize(CArchive& archive) {
     archive >> openapi;
     archive >> description;
     archive >> contained_by;
+    archive >> produced_by;
     // EXISTING_CODE
     // EXISTING_CODE
     finishParse();
@@ -408,6 +420,7 @@ bool CClassDefinition::SerializeC(CArchive& archive) const {
     archive << openapi;
     archive << description;
     archive << contained_by;
+    archive << produced_by;
     // EXISTING_CODE
     // EXISTING_CODE
     return true;
@@ -482,6 +495,7 @@ void CClassDefinition::registerClass(void) {
     ADD_FIELD(CClassDefinition, "openapi", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "description", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "contained_by", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CClassDefinition, "produced_by", T_TEXT | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CClassDefinition, "schema");
@@ -593,6 +607,7 @@ CClassDefinition::CClassDefinition(const CToml& toml) {
     src_includes = toml.getConfigStr("settings", "cpp_includes", "");
     sort_str = toml.getConfigStr("settings", "sort", "");
     contained_by = toml.getConfigStr("settings", "contained_by", "");
+    produced_by = toml.getConfigStr("settings", "produced_by", "");
     eq_str = toml.getConfigStr("settings", "equals", "");
     description = toml.getConfigStr("settings", "description", "");
     tsx = toml.getConfigBool("settings", "tsx", false);

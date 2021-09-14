@@ -40,7 +40,7 @@ void COptions::writeOpenApiFile(void) {
         apiTagStream << ep.toApiTag();
         goCallStream << ep.toGoCall();
         goRouteStream << ep.toGoRoute();
-        apiPathStream << ep.toApiPath();
+        apiPathStream << ep.toApiPath(getProductions(ep));
         counter.cmdCount += params.size();
         counter.routeCount++;
     }
@@ -52,4 +52,34 @@ void COptions::writeOpenApiFile(void) {
 
     LOG_INFO(cYellow, "makeClass --openapi", cOff, " processed ", counter.routeCount, "/", counter.cmdCount,
              " routes/cmds ", " (changed ", counter.nProcessed, ").", string_q(40, ' '));
+}
+
+namespace qblocks {
+extern bool isApiRoute(const string_q& route);
+}
+
+//---------------------------------------------------------------------------------------------------
+string_q COptions::getProductions(const CCommandOption& ep) {
+    if (!isApiRoute(ep.api_route))
+        return "";
+    CStringArray productions;
+    string_q descr;
+    for (auto model : dataModels) {
+        if (contains(model.produced_by, ep.api_route)) {
+            productions.push_back(model.openapi);
+            if (descr.empty())
+                descr = model.description;
+        }
+    }
+
+    string_q prods;
+    for (auto p : productions) {
+        prods += "$ref: \"#/components/schemas/" + p + "\"\n";
+    }
+    if (productions.size() > 1) {
+        prods = "oneOf:\n" + prods;
+        replaceAll(prods, "$ref:", "      - $ref:");
+    }
+
+    return trim(prods, '\n') + "|" + descr;
 }

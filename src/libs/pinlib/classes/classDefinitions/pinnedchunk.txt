@@ -4,4 +4,7 @@ fields = pinnedchunk.csv
 includes = utillib.h
 sort = v1.fileName < v2.fileName
 equals = fileName == it.fileName
-openapi = pin
+doc_group = Admin
+description = the IPFS hashes of the index chunk and its associated Bloom filter for the given block range
+openapi = pinnedChunk
+produced_by = pins, init, scrape

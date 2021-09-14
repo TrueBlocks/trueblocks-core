@@ -3,3 +3,7 @@ class = CStatus
 fields = status.csv
 includes = etherlib.h|cache.h
 disabled = true
+doc_group = Admin
+description = This data model carries information about the TrueBlocks system including both the API server and the local binary caches
+openapi = status
+produced_by = status
