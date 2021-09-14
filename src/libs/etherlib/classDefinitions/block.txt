@@ -3,6 +3,5 @@ class = CBlock
 fields = block_fields.csv
 includes = etherlib.h|transaction.h
 cpp_includes = appearance.h
-display_str = blockNumber, timestamp, difficulty, gasUsed, gasLimit, baseFeePerGas, miner, hash, parentHash, transactionsCnt, finalized
 tsx = true
 openapi = block

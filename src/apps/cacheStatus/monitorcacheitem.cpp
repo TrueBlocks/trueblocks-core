@@ -285,7 +285,7 @@ ostream& operator<<(ostream& os, const CMonitorCacheItem& it) {
 const char* STR_DISPLAY_MONITORCACHEITEM =
     "[{DISPLAY_NAME}]\t"
     "[{FIRSTAPP}]\t"
-    "[{LASTAPP}]\t"
+    "[{LATESTAPP}]\t"
     "[{APPEARANCERANGE}]\t"
     "[{NRECORDS}]\t"
     "[{APPEARANCEINTERVAL}]\t"

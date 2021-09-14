@@ -318,15 +318,7 @@ const CBaseNode* CEthCall::getObjectAt(const string_q& fieldName, size_t index) 
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_ETHCALL =
-    "[{BLOCKNUMBER}]\t"
-    "[{ADDRESS}]\t"
-    "[{BALANCE}]\t"
-    "[{NONCE}]\t"
-    "[{CODE}]\t"
-    "[{STORAGE}]\t"
-    "[{DEPLOYED}]\t"
-    "[{ACCTTYPE}]";
+const char* STR_DISPLAY_ETHCALL = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

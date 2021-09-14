@@ -1,18 +1,19 @@
-name          ,type        ,str_default ,object ,array ,nowrite ,omitempty ,minimal ,extra ,noaddfld ,doc ,disp ,example       ,description
-gasLimit      ,gas         ,            ,       ,      ,        ,          ,        ,      ,         ,1   ,     ,5000          ,the system-wide maximum amount of gas permitted in this block
-gasUsed       ,gas         ,            ,       ,      ,        ,          ,        ,      ,         ,    ,     ,500000000     ,the total amount of gas used in this block
-hash          ,hash        ,            ,       ,      ,        ,          ,        ,      ,         ,2   ,     ,0xf128...1e98 ,the hash of the current block
-blockNumber   ,blknum      ,            ,       ,      ,        ,          ,        ,      ,         ,3   ,     ,10021         ,the number of the block
-parentHash    ,hash        ,            ,       ,      ,        ,          ,        ,      ,         ,4   ,     ,0x66fc...31c9 ,hash of previous block
-miner         ,address     ,            ,       ,      ,        ,          ,        ,      ,         ,5   ,     ,0xf927...2b13 ,Address of block's winning miner
-difficulty    ,uint64      ,            ,       ,      ,        ,          ,        ,      ,         ,6   ,     ,598133194256  ,the computational difficulty at this block
-finalized     ,bool        ,            ,       ,      ,        ,          ,        ,      ,         ,10  ,     ,true          ,flag indicating the system considers this data final
-timestamp     ,timestamp   ,            ,       ,      ,        ,          ,        ,      ,         ,7   ,     ,1438335038    ,the unix timestamp of the object
-baseFeePerGas ,wei         ,            ,       ,      ,        ,          ,        ,      ,         ,9   ,     ,120911        ,the base fee for this block
-transactions  ,transaction ,            ,true   ,true  ,        ,          ,        ,      ,         ,8   ,     ,              ,a possibly empty array of transactions or transaction hashes
-tx_hashes     ,string      ,            ,       ,true  ,true    ,          ,        ,      ,         ,    ,     ,              ,a possibly empty array of transactions or transaction hashes
-name          ,string      ,            ,       ,      ,true    ,          ,        ,      ,         ,    ,     ,              ,the name of the block if any (see chifra when)
-light         ,bool        ,            ,       ,      ,true    ,true      ,        ,      ,         ,    ,     ,              ,`true` if this block is only the block header&#44; `false` otherwise
-date          ,date        ,            ,       ,      ,true    ,          ,        ,true  ,         ,    ,     ,              ,the date of this block as represented by its timestamp
-unclesCnt     ,uint64      ,            ,       ,      ,true    ,          ,        ,true  ,         ,    ,     ,              ,the number of uncles in this block
-extraData     ,string      ,            ,       ,      ,true    ,          ,        ,true  ,         ,    ,     ,              ,an extra data string for use in the front end only
+name            ,type        ,str_default ,object ,array ,nowrite ,omitempty ,minimal ,extra ,noaddfld ,doc ,disp ,example       ,description
+gasLimit        ,gas         ,            ,       ,      ,        ,          ,        ,      ,         ,1   ,5    ,5000          ,the system-wide maximum amount of gas permitted in this block
+gasUsed         ,gas         ,            ,       ,      ,        ,          ,        ,      ,         ,    ,4    ,500000000     ,the total amount of gas used in this block
+hash            ,hash        ,            ,       ,      ,        ,          ,        ,      ,         ,2   ,8    ,0xf128...1e98 ,the hash of the current block
+blockNumber     ,blknum      ,            ,       ,      ,        ,          ,        ,      ,         ,3   ,1    ,10021         ,the number of the block
+parentHash      ,hash        ,            ,       ,      ,        ,          ,        ,      ,         ,4   ,9    ,0x66fc...31c9 ,hash of previous block
+miner           ,address     ,            ,       ,      ,        ,          ,        ,      ,         ,5   ,7    ,0xf927...2b13 ,Address of block's winning miner
+difficulty      ,uint64      ,            ,       ,      ,        ,          ,        ,      ,         ,6   ,3    ,598133194256  ,the computational difficulty at this block
+finalized       ,bool        ,            ,       ,      ,        ,          ,        ,      ,         ,10  ,11   ,true          ,flag indicating the system considers this data final
+timestamp       ,timestamp   ,            ,       ,      ,        ,          ,        ,      ,         ,7   ,2    ,1438335038    ,the unix timestamp of the object
+baseFeePerGas   ,wei         ,            ,       ,      ,        ,          ,        ,      ,         ,9   ,6    ,120911        ,the base fee for this block
+transactions    ,transaction ,            ,true   ,true  ,        ,          ,        ,      ,         ,8   ,     ,              ,a possibly empty array of transactions or transaction hashes
+tx_hashes       ,string      ,            ,       ,true  ,true    ,          ,        ,      ,         ,    ,     ,              ,a possibly empty array of transactions or transaction hashes
+name            ,string      ,            ,       ,      ,true    ,          ,        ,      ,         ,    ,     ,              ,the name of the block if any (see chifra when)
+light           ,bool        ,            ,       ,      ,true    ,true      ,        ,      ,         ,    ,     ,              ,`true` if this block is only the block header&#44; `false` otherwise
+date            ,date        ,            ,       ,      ,true    ,          ,        ,true  ,         ,    ,     ,              ,the date of this block as represented by its timestamp
+unclesCnt       ,uint64      ,            ,       ,      ,true    ,          ,        ,true  ,         ,    ,     ,              ,the number of uncles in this block
+extraData       ,string      ,            ,       ,      ,true    ,          ,        ,true  ,         ,    ,     ,              ,an extra data string for use in the front end only
+transactionsCnt ,uint64      ,            ,       ,      ,        ,          ,true    ,      ,true     ,    ,10   ,              ,a possibly empty array of transactions or transaction hashes
