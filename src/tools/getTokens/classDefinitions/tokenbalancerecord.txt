@@ -5,5 +5,4 @@ fields = tokenbalancerecord.csv
 includes = acctlib.h
 equals = address == it.address
 sort = v1.address < v2.address
-display_str = blockNumber, holder, address, name, symbol, decimals, totalsupply, balance
 openapi = token

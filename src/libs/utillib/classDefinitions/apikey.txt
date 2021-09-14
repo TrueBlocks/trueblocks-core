@@ -3,4 +3,3 @@ class = CApiKey
 fields = apikey.csv
 includes = utillib.h
 equals = (key == it.key)
-display_str = key, secret

@@ -332,7 +332,7 @@ ostream& operator<<(ostream& os, const CCacheBase& it) {
 const char* STR_DISPLAY_CACHEBASE =
     "[{DISPLAY_NAME}]\t"
     "[{FIRSTAPP}]\t"
-    "[{LASTAPP}]\t"
+    "[{LATESTAPP}]\t"
     "[{APPEARANCERANGE}]\t"
     "[{NRECORDS}]\t"
     "[{APPEARANCEINTERVAL}]\t"

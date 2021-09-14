@@ -1607,6 +1607,13 @@ components:
         name:
           type: string
           description: "the name of the address, if found"
+        timestamp:
+          type: number
+          format: timestamp
+          description: "the timestamp for this appearance"
+        date:
+          type: string
+          description: "the date represented by the timestamp"
     block:
       type: object
       properties:
@@ -1790,6 +1797,9 @@ components:
           type: string
           example: "any test"
           description: "user supplied description for the address"
+        deleted:
+          type: boolean
+          description: "`true` if deleted, `false` otherwise"
         is_custom:
           type: boolean
           description: "`true` if the address is a custom address, `false` otherwise"
@@ -2090,6 +2100,10 @@ components:
           type: string
           example: "The DAO Original"
           description: "the name of the token contract, if available"
+        symbol:
+          type: string
+          example: "GTC"
+          description: "the symbol for this token contract"
         decimals:
           type: number
           format: uint64
