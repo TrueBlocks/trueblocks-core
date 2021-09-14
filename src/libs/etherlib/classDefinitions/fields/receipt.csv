@@ -1,14 +1,16 @@
 name              ,type     ,str_default ,object ,array ,nowrite ,omitempty ,minimal ,extra ,noaddfld ,doc ,disp ,example ,description
 blockHash         ,hash     ,            ,       ,      ,true    ,          ,true    ,      ,         ,    ,     ,        ,
-blockNumber       ,blknum   ,            ,       ,      ,true    ,          ,true    ,      ,         ,    ,     ,        ,
+blockNumber       ,blknum   ,            ,       ,      ,true    ,          ,true    ,      ,         ,    ,1    ,        ,
 contractAddress   ,address  ,            ,       ,      ,        ,          ,        ,      ,         ,2   ,     ,        ,the address of the newly created contract&#44; if any
 cumulativeGasUsed ,wei      ,            ,       ,      ,true    ,          ,        ,      ,         ,    ,     ,        ,
 from              ,address  ,            ,       ,      ,true    ,          ,true    ,      ,         ,    ,     ,        ,
-gasUsed           ,gas      ,            ,       ,      ,        ,          ,        ,      ,         ,3   ,     ,        ,the amount of gas actually used by the transaction
+gasUsed           ,gas      ,            ,       ,      ,        ,          ,        ,      ,         ,3   ,4    ,        ,the amount of gas actually used by the transaction
 effectiveGasPrice ,gas      ,            ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
 logs              ,logEntry ,            ,true   ,true  ,        ,          ,        ,      ,         ,4   ,     ,        ,a possibly empty array of logs
 root              ,bytes32  ,            ,       ,      ,true    ,          ,        ,      ,         ,    ,     ,        ,
-status            ,uint32   ,NO_STATUS   ,       ,      ,        ,          ,        ,      ,         ,1   ,     ,        ,`1` on transaction suceess&#44; `null` if tx preceeds Byzantium&#44; `0` otherwise
+status            ,uint32   ,NO_STATUS   ,       ,      ,        ,          ,        ,      ,         ,1   ,5    ,        ,`1` on transaction suceess&#44; `null` if tx preceeds Byzantium&#44; `0` otherwise
 to                ,address  ,            ,       ,      ,true    ,          ,true    ,      ,         ,    ,     ,        ,
 transactionHash   ,hash     ,            ,       ,      ,true    ,          ,true    ,      ,         ,    ,     ,        ,
-transactionIndex  ,blknum   ,            ,       ,      ,true    ,          ,true    ,      ,         ,    ,     ,        ,
+transactionIndex  ,blknum   ,            ,       ,      ,true    ,          ,true    ,      ,         ,    ,2    ,        ,
+hash              ,string   ,            ,       ,      ,        ,          ,true    ,      ,true     ,    ,3    ,        ,
+isError           ,bool     ,            ,       ,      ,        ,          ,true    ,      ,true     ,    ,6    ,        ,

@@ -355,6 +355,10 @@ components:
           type: string
           format: int256
           description: "the begining balance of the asset at the blockNumber"
+        begBalDiff:
+          type: string
+          format: int256
+          description: "the difference between the expected beginning balance (prevBlkBal) and the queried balance from the chain"
         amountIn:
           type: string
           format: int256
@@ -395,14 +399,14 @@ components:
           type: string
           format: int256
           description: "the uncle reward if the miner who won the uncle block is the accountedFor address"
-        spotPrice:
-          type: number
-          format: double
-          description: "The on-chain price in USD (or if a token in ETH, or zero) at the time of the transaction"
         prefundIn:
           type: string
           format: int256
           description: "at block zero (0) only, the amount of genesis income for the accountedFor address"
+        spotPrice:
+          type: number
+          format: double
+          description: "The on-chain price in USD (or if a token in ETH, or zero) at the time of the transaction"
         priceSource:
           type: string
           description: "The on-chain source from which the spot price was taken"
@@ -414,9 +418,35 @@ components:
           type: string
           format: int256
           description: "the on-chain balance of the asset (see notes above about intra-block reconciliations)"
+        totalIn:
+          type: string
+          format: int256
+          description: "a calculated field -- the sum of all In fields"
+        totalOut:
+          type: string
+          format: int256
+          description: "a calculated field -- the sum of all Out fields"
+        totalOutLessGas:
+          type: string
+          format: int256
+        amountNet:
+          type: string
+          format: int256
+          description: "a calculated field -- totalIn - totalOut"
+        endBalCalc:
+          type: string
+          format: int256
+          description: "a calculated field -- begBal + amountNet"
         reconciliationType:
           type: string
           description: "One of regular, traces, prevdiff-partial, partial-nextdiff, or `partial-partial`"
+        endBalDiff:
+          type: string
+          format: int256
+          description: "a calculated field -- endBal - endBalCalc, if non-zero, the reconciliation failed"
+        reconciled:
+          type: boolean
+          description: "a calculated field -- true if `endBal === endBalCalc` and `begBal === prevBlkBal`. `false` otherwise."
     state:
       type: object
       properties:
