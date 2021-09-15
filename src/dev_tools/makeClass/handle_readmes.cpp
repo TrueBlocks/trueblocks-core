@@ -74,9 +74,6 @@ bool visitReadme(const string_q& templatePath, void* data) {
 
 //------------------------------------------------------------------------------------------------------------
 bool writeIfDifferent(const string_q& outFn, const string_q& codeIn, const time_q& now) {
-#if 0
-    return writeIfDifferent(outFn, substitute(codeIn, "$DATE", "2021-06-30T12:13:03-03:00"));
-#else
     static uint32_t cnt = 1;
     string_q code = substitute(codeIn, "date: $DATE\n", "");
     stringToAsciiFile("../build/one/" + uint_2_Str(cnt) + ".txt", code);
@@ -99,7 +96,6 @@ bool writeIfDifferent(const string_q& outFn, const string_q& codeIn, const time_
         return true;
     }
     return false;
-#endif
 }
 
 //------------------------------------------------------------------------------------------------------------
