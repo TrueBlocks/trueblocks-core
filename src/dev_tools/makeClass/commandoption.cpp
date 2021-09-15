@@ -857,7 +857,7 @@ string_q CCommandOption::toApiPath(const string_q& inStr) const {
         paramStream << yp << endl;
     }
 
-    string_q exampleFn = getDocsPath("templates/api/examples/" + api_route + ".txt");
+    string_q exampleFn = getDocsPathTemplates("api/examples/" + api_route + ".txt");
 
     ostringstream example;
     if (fileExists(exampleFn)) {

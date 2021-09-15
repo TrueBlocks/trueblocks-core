@@ -137,11 +137,11 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("openapi", openapi);
     // END_DEBUG_DISPLAY
 
-    establishFolder(getDocsPath("content/"));
-    establishFolder(getDocsPath("content/api/"));
-    establishFolder(getDocsPath("content/data-model/"));
-    establishFolder(getDocsPath("content/docs/"));
-    establishFolder(getDocsPath("content/docs/chifra/"));
+    establishFolder(getDocsPathContent(""));
+    establishFolder(getDocsPathContent("api/"));
+    establishFolder(getDocsPathContent("data-model/"));
+    establishFolder(getDocsPathContent("docs/"));
+    establishFolder(getDocsPathContent("docs/chifra/"));
 
     if (tsx)
         handle_tsx();

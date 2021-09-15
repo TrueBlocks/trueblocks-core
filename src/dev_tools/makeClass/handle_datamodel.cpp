@@ -45,7 +45,7 @@ bool COptions::handle_datamodel(void) {
             doc << front << endl;
             weight += 200;
             doc << asciiFileToString(
-                getDocsPath("templates/model-groups/" + substitute(toLower(model.doc_group), " ", "") + ".md"));
+                getDocsPathTemplates("model-groups/" + substitute(toLower(model.doc_group), " ", "") + ".md"));
         }
 
         string_q name = model.openapi;
@@ -54,7 +54,7 @@ bool COptions::handle_datamodel(void) {
         doc << endl;
         doc << "## " << name << endl;
         doc << endl;
-        doc << asciiFileToString(getDocsPath("templates/model-intros/" + model.openapi) + ".md") << endl;
+        doc << asciiFileToString(getDocsPathTemplates("model-intros/" + model.openapi) + ".md") << endl;
 
         doc << "### Fields" << endl;
         doc << endl;
@@ -82,11 +82,11 @@ bool COptions::handle_datamodel(void) {
         dataDocs[model.doc_group] = dataDocs[model.doc_group] + doc.str();
     }
     theStream << STR_YAML_TAIL;
-    stringToAsciiFile(getDocsPath("templates/api/components.txt"), substitute(theStream.str(), "&#44;", ","));
+    stringToAsciiFile(getDocsPathTemplates("api/components.txt"), substitute(theStream.str(), "&#44;", ","));
 
     for (auto doc : dataDocs) {
         doc.second += STR_YAML_TAIL2;
-        string_q outFn = getDocsPath("content/data-model/" + substitute(toLower(doc.first), " ", "")) + ".md";
+        string_q outFn = getDocsPathContent("data-model/" + substitute(toLower(doc.first), " ", "")) + ".md";
         writeIfDifferent(outFn, doc.second, Now());
     }
 

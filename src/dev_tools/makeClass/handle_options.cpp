@@ -494,8 +494,8 @@ bool COptions::writeCode(const string_q& fn) {
         converted = replaceCode(converted, "ROUTE_ITEMS", goRouteStream.str());
 
     } else if (endsWith(fn, ".yaml")) {
-        string_q components = trim(asciiFileToString(getDocsPath("templates/api/components.txt")), '\n');
-        string_q descr = asciiFileToString(getDocsPath("templates/api/description.txt"));
+        string_q components = trim(asciiFileToString(getDocsPathTemplates("api/components.txt")), '\n');
+        string_q descr = asciiFileToString(getDocsPathTemplates("api/description.txt"));
         replaceAll(descr, "~~~~", "    ");
 
         converted = asciiFileToString(configPath("makeClass/blank_openapi.yaml"));
