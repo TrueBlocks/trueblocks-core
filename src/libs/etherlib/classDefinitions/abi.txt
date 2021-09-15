@@ -8,5 +8,5 @@ tsx = true
 disabled = true
 doc_group = Accounts
 description = a collection of function and event definitions as described elsewhere in the Ethereum system
-openapi = abi
+openapi = 05-abi
 produced_by = abis

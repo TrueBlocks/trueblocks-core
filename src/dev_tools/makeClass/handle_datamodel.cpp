@@ -13,7 +13,8 @@
 #include "acctlib.h"
 #include "options.h"
 
-extern const char* STR_TAIL_THING;
+extern const char* STR_YAML_TAIL;
+extern const char* STR_YAML_TAIL2;
 extern bool sortByDataModelName(const CClassDefinition& c1, const CClassDefinition& c2);
 extern bool sortByDoc(const CParameter& c1, const CParameter& c2);
 extern string_q typeFmt(const CParameter& fld);
@@ -23,39 +24,77 @@ extern string_q exFmt(const CParameter& fld);
 bool COptions::handle_datamodel(void) {
     sort(dataModels.begin(), dataModels.end(), sortByDataModelName);
 
+    uint32_t weight = 1000;
+
+    map<string_q, string_q> dataDocs;
+    map<string_q, bool> dataDocsFront;
     ostringstream theStream;
     theStream << "components:" << endl;
     theStream << "  schemas:" << endl;
     for (auto model : dataModels) {
-        if (!model.openapi.empty()) {
-            sort(model.fieldArray.begin(), model.fieldArray.end(), sortByDoc);
-            string_q fmt;
-            fmt += "[    {OPENAPI}:\n]";
-            fmt += "[      description: \"{DESCRIPTION}\"\n]";
-            fmt += "[      type: object\n]";
-            fmt += "[      properties:\n]";
-            theStream << model.Format(fmt);
-            ostringstream props;
-            for (auto fld : model.fieldArray) {
-                if (fld.doc) {
-                    props << fld.Format("[        {NAME}:\n]");
-                    props << fld.Format(typeFmt(fld));
-                    props << fld.Format(exFmt(fld));
-                    props << fld.Format("[          description: \"{DESCRIPTION}\"\n]");
-                }
-            }
-            theStream << props.str();
+        sort(model.fieldArray.begin(), model.fieldArray.end(), sortByDoc);
+        string_q fmt;
+        ostringstream doc;
+        if (!dataDocsFront[model.doc_group]) {
+            dataDocsFront[model.doc_group] = true;
+            string_q front = STR_YAML_FRONTMATTER;
+            replace(front, "[{TITLE}]", model.doc_group);
+            replace(front, "[{WEIGHT}]", uint_2_Str(weight));
+            replace(front, "[{M1}]", "data:");
+            replace(front, "[{M2}]", "parent: \"collections\"");
+            doc << front << endl;
+            weight += 200;
+            doc << asciiFileToString(
+                getDocsTemplate("model-groups/" + substitute(toLower(model.doc_group), " ", "") + ".md"));
         }
+
+        string_q name = model.openapi;
+        if (name.length())
+            name[0] = (char)toupper(name[0]);
+        doc << endl;
+        doc << "## " << name << endl;
+        doc << endl;
+        doc << asciiFileToString(getDocsTemplate("model-intros/" + model.openapi) + ".md") << endl;
+
+        doc << "### Fields" << endl;
+        doc << endl;
+        doc << "| Field | Description | Type |" << endl;
+        doc << "|-------|-------------|------|" << endl;
+
+        fmt += "[    {OPENAPI}:\n]";
+        fmt += "[      description: \"{DESCRIPTION}\"\n]";
+        fmt += "[      type: object\n]";
+        fmt += "[      properties:\n]";
+        theStream << model.Format(fmt);
+        ostringstream props;
+        for (auto fld : model.fieldArray) {
+            if (fld.doc) {
+                props << fld.Format("[        {NAME}:\n]");
+                props << fld.Format(typeFmt(fld));
+                props << fld.Format(exFmt(fld));
+                props << fld.Format("[          description: \"{DESCRIPTION}\"\n]");
+
+                doc << "| " << fld.name << " | " << fld.description << " | " << fld.type << " |" << endl;
+            }
+        }
+        theStream << props.str();
+        dataDocs[model.doc_group] = dataDocs[model.doc_group] + doc.str();
     }
-    theStream << STR_TAIL_THING;
+    theStream << STR_YAML_TAIL;
     stringToAsciiFile(getDocsTemplate("api/templates/components.txt"), substitute(theStream.str(), "&#44;", ","));
+
+    for (auto doc : dataDocs) {
+        doc.second += STR_YAML_TAIL2;
+        string_q res = substitute(doc.second, "$DATE", "2021-06-30T12:13:03-03:00");
+        stringToAsciiFile(getDataModelPath(substitute(toLower(doc.first), " ", "")) + ".md", res);
+    }
 
     return true;
 }
 
 //------------------------------------------------------------------------------------------------------------
 bool sortByDataModelName(const CClassDefinition& c1, const CClassDefinition& c2) {
-    return c1.openapi < c2.openapi;
+    return c1.doc_group + c1.doc_order + c1.openapi < c2.doc_group + c2.doc_order + c2.openapi;
 }
 
 //------------------------------------------------------------------------------------------------------------
@@ -71,7 +110,9 @@ string_q typeFmt(const CParameter& fld) {
         if (startsWith(t, "C"))
             replace(t, "C", "");
         replace(t, "Array", "");
-        replace(ret, "++X++", string_q(1, (char)tolower(t[0])) + t.substr(1, 100));
+        if (t.length())
+            t[0] = (char)tolower(t[0]);
+        replace(ret, "++X++", t);
         replace(ret, "logEntry", "log");
         return ret;
     }
@@ -81,7 +122,9 @@ string_q typeFmt(const CParameter& fld) {
         if (startsWith(t, "C"))
             replace(t, "C", "");
         replace(t, "Array", "");
-        replace(ret, "++X++", string_q(1, (char)tolower(t[0])) + t.substr(1, 100));
+        if (t.length())
+            t[0] = (char)tolower(t[0]);
+        replace(ret, "++X++", t);
         replace(ret, "logEntry", "log");
         return ret;
     }
@@ -105,7 +148,7 @@ string_q exFmt(const CParameter& fld) {
 }
 
 //------------------------------------------------------------------------------------------------------------
-const char* STR_TAIL_THING =
+const char* STR_YAML_TAIL =
     "    response:\n"
     "      required:\n"
     "        - result\n"
@@ -133,3 +176,22 @@ const char* STR_TAIL_THING =
     "      description: \"One of four 32-byte topics of a log\"\n"
     "      example: \"0xf128...1e98\"\n"
     "\n";
+
+//------------------------------------------------------------------------------------------------------------
+const char* STR_YAML_TAIL2 =
+    "## Base types\n"
+    "\n"
+    "In these docs, sometimes Trueblocks mentions a type format that is more\n"
+    "precise than the generic types, like \"string\" or \"object\".\n"
+    "\n"
+    "| Type Name | Description                         |\n"
+    "| --------- | ----------------------------------- |\n"
+    "| blknum    | a 64-bit unsigned int               |\n"
+    "| timestamp | a 64-bit unsigned int               |\n"
+    "| address   | a 20 byte string starting with '0x' |\n"
+    "| hash      | a 32 byte string starting with '0x' |\n"
+    "| string    | a plain c++ string                  |\n"
+    "| number    | standard c++ 64-bit unsigned int    |\n"
+    "| bigint    | arbitrarily sized signed int        |\n"
+    "| wei       | arbitrarily sized unsigned int      |\n"
+    "| boolean   | standard c++ boolean                |\n";

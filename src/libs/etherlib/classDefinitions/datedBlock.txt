@@ -4,5 +4,5 @@ fields = datedBlocks.csv
 includes = etherlib.h
 doc_group = Chain Data
 description = An indentified block named for convienience
-openapi = datedBlock
+openapi = 17-datedBlock
 produced_by = when

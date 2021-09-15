@@ -6,5 +6,5 @@ cpp_includes = transaction.h|node.h
 tsx = true
 doc_group = Chain Data
 description = trace data for a given transaction directly from the blockchain
-openapi = trace
+openapi = 14-trace
 produced_by = traces, export

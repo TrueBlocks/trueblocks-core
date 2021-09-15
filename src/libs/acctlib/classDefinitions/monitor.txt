@@ -7,5 +7,5 @@ force_objget = true
 tsx = true
 doc_group = Accounts
 description = A local file indicating a user's interest in an address. Includes caches for reconicilations, transactions and appearances as well as an optional association to named account
-openapi = monitor
+openapi = 02-monitor
 produced_by = monitors

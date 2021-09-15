@@ -111,6 +111,12 @@ string_q CClassDefinition::getValueByName(const string_q& fieldName) const {
             if (fieldName % "display_str") {
                 return display_str;
             }
+            if (fieldName % "doc_group") {
+                return doc_group;
+            }
+            if (fieldName % "doc_order") {
+                return doc_order;
+            }
             if (fieldName % "description") {
                 return description;
             }
@@ -204,6 +210,8 @@ bool CClassDefinition::setValueByName(const string_q& fieldNameIn, const string_
     string_q fieldValue = fieldValueIn;
 
     // EXISTING_CODE
+    if (fieldName == "doc_group" && contains("openapi", "-"))
+        doc_order = nextTokenClear(fieldValue, '-');
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {
@@ -254,6 +262,14 @@ bool CClassDefinition::setValueByName(const string_q& fieldNameIn, const string_
         case 'd':
             if (fieldName % "display_str") {
                 display_str = fieldValue;
+                return true;
+            }
+            if (fieldName % "doc_group") {
+                doc_group = fieldValue;
+                return true;
+            }
+            if (fieldName % "doc_order") {
+                doc_order = fieldValue;
                 return true;
             }
             if (fieldName % "description") {
@@ -380,9 +396,11 @@ bool CClassDefinition::Serialize(CArchive& archive) {
     archive >> tsx;
     // archive >> fieldArray;
     // archive >> extraArray;
-    archive >> openapi;
-    archive >> description;
     archive >> contained_by;
+    archive >> doc_group;
+    archive >> doc_order;
+    archive >> description;
+    archive >> openapi;
     archive >> produced_by;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -417,9 +435,11 @@ bool CClassDefinition::SerializeC(CArchive& archive) const {
     archive << tsx;
     // archive << fieldArray;
     // archive << extraArray;
-    archive << openapi;
-    archive << description;
     archive << contained_by;
+    archive << doc_group;
+    archive << doc_order;
+    archive << description;
+    archive << openapi;
     archive << produced_by;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -492,9 +512,11 @@ void CClassDefinition::registerClass(void) {
     HIDE_FIELD(CClassDefinition, "fieldArray");
     ADD_FIELD(CClassDefinition, "extraArray", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CClassDefinition, "extraArray");
-    ADD_FIELD(CClassDefinition, "openapi", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CClassDefinition, "description", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "contained_by", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CClassDefinition, "doc_group", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CClassDefinition, "doc_order", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CClassDefinition, "description", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CClassDefinition, "openapi", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "produced_by", T_TEXT | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
@@ -610,8 +632,10 @@ CClassDefinition::CClassDefinition(const CToml& toml) {
     produced_by = toml.getConfigStr("settings", "produced_by", "");
     eq_str = toml.getConfigStr("settings", "equals", "");
     description = toml.getConfigStr("settings", "description", "");
+    doc_group = toml.getConfigStr("settings", "doc_group", "");
     tsx = toml.getConfigBool("settings", "tsx", false);
     openapi = toml.getConfigStr("settings", "openapi", "");
+    doc_order = nextTokenClear(openapi, '-');
 
     //------------------------------------------------------------------------------------------------
     class_base = toProper(extract(class_name, 1));

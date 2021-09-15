@@ -321,11 +321,11 @@ paths:
                     items:
                       oneOf:
                         - $ref: "#/components/schemas/appearance"
-                        - $ref: "#/components/schemas/log"
-                        - $ref: "#/components/schemas/receipt"
                         - $ref: "#/components/schemas/reconciliation"
-                        - $ref: "#/components/schemas/trace"
                         - $ref: "#/components/schemas/transaction"
+                        - $ref: "#/components/schemas/receipt"
+                        - $ref: "#/components/schemas/log"
+                        - $ref: "#/components/schemas/trace"
                 example:
                   {
                     "data":
@@ -1597,19 +1597,6 @@ paths:
           description: bad input parameter
 components:
   schemas:
-    abi:
-      description: "a collection of function and event definitions as described elsewhere in the Ethereum system"
-      type: object
-      properties:
-        address:
-          type: string
-          format: address
-          description: "the smart contract that implements this abi"
-        interfaces:
-          type: array
-          items:
-            $ref: "#/components/schemas/function"
-          description: "the list of events and functions on this abi"
     appearance:
       description: "a single appearance of an address anywhere in the chain in the form of blockNumber.transactionIndex"
       type: object
@@ -1638,147 +1625,6 @@ components:
         date:
           type: string
           description: "the date represented by the timestamp"
-    block:
-      description: "block data directly from the blockchain"
-      type: object
-      properties:
-        gasLimit:
-          type: string
-          format: gas
-          example: "5000"
-          description: "the system-wide maximum amount of gas permitted in this block"
-        hash:
-          type: string
-          format: hash
-          example: "0xf128...1e98"
-          description: "the hash of the current block"
-        blockNumber:
-          type: number
-          format: blknum
-          example: 10021
-          description: "the number of the block"
-        parentHash:
-          type: string
-          format: hash
-          example: "0x66fc...31c9"
-          description: "hash of previous block"
-        miner:
-          type: string
-          format: address
-          example: "0xf927...2b13"
-          description: "Address of block's winning miner"
-        difficulty:
-          type: number
-          format: uint64
-          example: 598133194256
-          description: "the computational difficulty at this block"
-        timestamp:
-          type: number
-          format: timestamp
-          example: 1438335038
-          description: "the unix timestamp of the object"
-        transactions:
-          type: array
-          items:
-            $ref: "#/components/schemas/transaction"
-          description: "a possibly empty array of transactions or transaction hashes"
-        baseFeePerGas:
-          type: string
-          format: wei
-          example: "120911"
-          description: "the base fee for this block"
-        finalized:
-          type: boolean
-          example: true
-          description: "flag indicating the system considers this data final"
-    datedBlock:
-      description: "An indentified block named for convienience"
-      type: object
-      properties:
-        blockNumber:
-          type: number
-          format: blknum
-          example: 10021
-          description: "the number of the block"
-        timestamp:
-          type: number
-          format: timestamp
-          example: 1438335038
-          description: "the unix timestamp of the block"
-        date:
-          type: string
-          format: date
-          example: "2015-07-30 15:34:53 UTC"
-          description: "Human readable version of timestamp"
-    function:
-      description: "a human readable representation of a Solidity function call or event"
-      type: object
-      properties:
-        name:
-          type: string
-          description: "the name of the interface"
-        type:
-          type: string
-          description: "the type of the interface, either 'event' or 'function'"
-        signature:
-          type: string
-          description: "the canonical signature of the interface"
-        encoding:
-          type: string
-          description: "the signature encoded with keccak"
-        inputs:
-          type: array
-          items:
-            $ref: "#/components/schemas/parameter"
-          description: "the input parameters to the function, if any"
-        outputs:
-          type: array
-          items:
-            $ref: "#/components/schemas/parameter"
-          description: "the output parameters to the function, if any"
-    log:
-      description: "log data for a given transaction directly from the blockchain"
-      type: object
-      properties:
-        blockNumber:
-          type: number
-          format: blknum
-          example: 10021
-          description: "the number of the block"
-        transactionIndex:
-          type: number
-          format: blknum
-          example: 305
-          description: "the zero-indexed position of the transaction in the block"
-        address:
-          type: string
-          format: address
-          example: "0xf503...179b"
-          description: "the smart contract that emitted this log"
-        logIndex:
-          type: number
-          format: blknum
-          example: 354
-          description: "the zero-indexed position of this log relative to the block"
-        topics:
-          type: array
-          items:
-            $ref: "#/components/schemas/topic"
-          description: "The first topic hashes event signature of the log, up to 3 additional index parameters may appear"
-        data:
-          type: string
-          format: bytes
-          example: "0x0000...3ff6"
-          description: "any remaining un-indexed parameters to the event"
-        articulatedLog:
-          type: object
-          items:
-            $ref: "#/components/schemas/function"
-          description: "a human-readable version of the topic and data fields"
-        compressedLog:
-          type: string
-          example: "Transfer(0xcfa...9f54..."
-          description: "a truncated, more readable version of the articulation"
     monitor:
       description: "A local file indicating a user's interest in an address. Includes caches for reconicilations, transactions and appearances as well as an optional association to named account"
       type: object
@@ -1861,90 +1707,6 @@ components:
         is_erc721:
           type: boolean
           description: "`true` if the address is an ERC720, `false` otherwise"
-    parameter:
-      description: "a parameter to a function or event"
-      type: object
-      properties:
-        type:
-          type: string
-          description: "the type of this parameter"
-        name:
-          type: string
-          description: "the name of this parameter"
-        str_default:
-          type: string
-          description: "the defaul value of this parameter, if any"
-        indexed:
-          type: boolean
-          description: "`true` if this parameter is indexed"
-        internalType:
-          type: string
-          description: "for composite types, the interal type of the parameter"
-        components:
-          type: array
-          items:
-            $ref: "#/components/schemas/parameter"
-          description: "for composite types, the parameters making up the composite"
-    pinnedChunk:
-      description: "the IPFS hashes of the index chunk and its associated Bloom filter for the given block range"
-      type: object
-      properties:
-        fileName:
-          type: string
-          example: "013142464-013145212"
-          description: "for each chunk, the range of blocks contained in that chunk"
-        bloomHash:
-          type: ipfshash
-          example: "QmXHjjY...HDqvWT"
-          description: "the IPFS hash of the bloom filter at that range"
-        indexHash:
-          type: ipfshash
-          example: "QmTbYpR...qWLj44"
-          description: "the IPFS hash of the index chunk at that range"
-    quote:
-      description: "the closing price of Ether in USD at a particular moment"
-      type: object
-      properties:
-        timestamp:
-          type: number
-          format: timestamp
-          example: 1438270144
-          description: "the timestamp of this quote"
-        close:
-          type: number
-          format: double
-          example: 1240.10
-          description: "price of the asset in US dollars"
-        date:
-          type: string
-          format: date
-          example: "2018-09-30 01:15:17 UTC"
-          description: "the date of the associated timestamp"
-        name:
-          type: string
-          example: "Byzantium"
-          description: "the name of the block for some named 'special' blocks"
-    receipt:
-      description: "receipt data for a given transaction directly from the blockchain"
-      type: object
-      properties:
-        status:
-          type: number
-          format: uint32
-          description: "`1` on transaction suceess, `null` if tx preceeds Byzantium, `0` otherwise"
-        contractAddress:
-          type: string
-          format: address
-          description: "the address of the newly created contract, if any"
-        gasUsed:
-          type: string
-          format: gas
-          description: "the amount of gas actually used by the transaction"
-        logs:
-          type: array
-          items:
-            $ref: "#/components/schemas/log"
-          description: "a possibly empty array of logs"
     reconciliation:
       description: "a reconiciliation of all inflows and outflows to a given account at a given transaction"
       type: object
@@ -2081,54 +1843,69 @@ components:
         reconciled:
           type: boolean
           description: "a calculated field -- true if `endBal === endBalCalc` and `begBal === prevBlkBal`. `false` otherwise."
-    state:
-      description: "the on-chain state of a given address"
+    abi:
+      description: "a collection of function and event definitions as described elsewhere in the Ethereum system"
       type: object
       properties:
-        blockNumber:
-          type: number
-          format: blknum
-          example: 10021
-          description: "the block number at which this state was taken"
-        balance:
-          type: string
-          format: wei
-          example: "258843698360318500"
-          description: "the balance at the address at the given block height"
-        nonce:
-          type: number
-          format: uint64
-          example: 115
-          description: "the nonce of the address at the given block height"
-        code:
-          type: string
-          format: bytes
-          example: "0x"
-          description: "the byte code at the address (if this is a smart contract)"
-        storage:
-          type: string
-          format: bytes
-          example: "0x0000...0000"
-          description: "this field is un-implemented and current returns the first storage location in a smart contract"
         address:
           type: string
           format: address
-          example: "0xa1e4...63b4"
-          description: "the address of the state being queried"
-        deployed:
-          type: number
-          format: blknum
-          example: 8901011
-          description: "the block number at which this smart contract was deployed (if a smart contact)"
-        accttype:
+          description: "the smart contract that implements this abi"
+        interfaces:
+          type: array
+          items:
+            $ref: "#/components/schemas/function"
+          description: "the list of events and functions on this abi"
+    function:
+      description: "a human readable representation of a Solidity function call or event"
+      type: object
+      properties:
+        name:
           type: string
-          example: "one of 'EOA' or 'Contract'"
-          description: "the type of the address at the given block"
-        ether:
-          type: number
-          format: double
-          example: 0.25884369
-          description: "the balance of the address in ethers"
+          description: "the name of the interface"
+        type:
+          type: string
+          description: "the type of the interface, either 'event' or 'function'"
+        signature:
+          type: string
+          description: "the canonical signature of the interface"
+        encoding:
+          type: string
+          description: "the signature encoded with keccak"
+        inputs:
+          type: array
+          items:
+            $ref: "#/components/schemas/parameter"
+          description: "the input parameters to the function, if any"
+        outputs:
+          type: array
+          items:
+            $ref: "#/components/schemas/parameter"
+          description: "the output parameters to the function, if any"
+    parameter:
+      description: "a parameter to a function or event"
+      type: object
+      properties:
+        type:
+          type: string
+          description: "the type of this parameter"
+        name:
+          type: string
+          description: "the name of this parameter"
+        str_default:
+          type: string
+          description: "the defaul value of this parameter, if any"
+        indexed:
+          type: boolean
+          description: "`true` if this parameter is indexed"
+        internalType:
+          type: string
+          description: "for composite types, the interal type of the parameter"
+        components:
+          type: array
+          items:
+            $ref: "#/components/schemas/parameter"
+          description: "for composite types, the parameters making up the composite"
     status:
       description: "This data model carries information about the TrueBlocks system including both the API server and the local binary caches"
       type: object
@@ -2188,47 +1965,225 @@ components:
           type: number
           format: timestamp
           description: "the timestamp when this status data was produced"
-    token:
-      description: "on-chain token related data for a give address at a given block height"
+    pinnedChunk:
+      description: "the IPFS hashes of the index chunk and its associated Bloom filter for the given block range"
       type: object
       properties:
-        holder:
+        fileName:
+          type: string
+          example: "013142464-013145212"
+          description: "for each chunk, the range of blocks contained in that chunk"
+        bloomHash:
+          type: ipfshash
+          example: "QmXHjjY...HDqvWT"
+          description: "the IPFS hash of the bloom filter at that range"
+        indexHash:
+          type: ipfshash
+          example: "QmTbYpR...qWLj44"
+          description: "the IPFS hash of the index chunk at that range"
+    block:
+      description: "block data directly from the blockchain"
+      type: object
+      properties:
+        gasLimit:
+          type: string
+          format: gas
+          example: "5000"
+          description: "the system-wide maximum amount of gas permitted in this block"
+        hash:
+          type: string
+          format: hash
+          example: "0xf128...1e98"
+          description: "the hash of the current block"
+        blockNumber:
+          type: number
+          format: blknum
+          example: 10021
+          description: "the number of the block"
+        parentHash:
+          type: string
+          format: hash
+          example: "0x66fc...31c9"
+          description: "hash of previous block"
+        miner:
           type: string
           format: address
-          example: "0x2910...63d2"
-          description: "the address for which we are reporting the token balance"
-        balance:
+          example: "0xf927...2b13"
+          description: "Address of block's winning miner"
+        difficulty:
+          type: number
+          format: uint64
+          example: 598133194256
+          description: "the computational difficulty at this block"
+        timestamp:
+          type: number
+          format: timestamp
+          example: 1438335038
+          description: "the unix timestamp of the object"
+        transactions:
+          type: array
+          items:
+            $ref: "#/components/schemas/transaction"
+          description: "a possibly empty array of transactions or transaction hashes"
+        baseFeePerGas:
           type: string
           format: wei
-          example: "258843698360318500"
-          description: "the balance at the address at the given block height"
+          example: "120911"
+          description: "the base fee for this block"
+        finalized:
+          type: boolean
+          example: true
+          description: "flag indicating the system considers this data final"
+    transaction:
+      description: "the transaction data for a given transaction directly from the blockchain"
+      type: object
+      properties:
+        hash:
+          type: string
+          format: hash
+          example: "0xf128...1e98"
+          description: "The hash of the transaction"
+        gasPrice:
+          type: string
+          format: gas
+          example: "63525836552"
+          description: "the number of wei per unit of gas the sender is willing to spend"
+        blockHash:
+          type: string
+          format: hash
+          example: "0xc421...fb04"
+          description: "The hash of the block containing this transaction"
+        blockNumber:
+          type: number
+          format: blknum
+          example: 10021
+          description: "the number of the block"
+        transactionIndex:
+          type: number
+          format: blknum
+          example: 305
+          description: "the zero-indexed position of the transaction in the block"
+        nonce:
+          type: number
+          format: uint64
+          example: 232
+          description: "sequence number of the transactions sent by the sender"
+        timestamp:
+          type: number
+          format: timestamp
+          example: 1438335038
+          description: "the unix timestamp of the object"
+        from:
+          type: string
+          format: address
+          description: "address from which the transaction was sent"
+        to:
+          type: string
+          format: address
+          description: "address to which the transaction was sent"
+        value:
+          type: string
+          format: wei
+          example: "0"
+          description: "the amount of wei sent with this transactions"
+        gas:
+          type: string
+          format: gas
+          example: "158660"
+          description: "the maximum number of gas allowed for this transaction"
+        input:
+          type: string
+          format: bytes
+          example: "0x3d18b912"
+          description: "byte data either containing a message or funcational data for a smart contracts. See the --articulate"
+        receipt:
+          type: object
+          items:
+            $ref: "#/components/schemas/receipt"
+        statements:
+          type: array
+          items:
+            $ref: "#/components/schemas/reconciliation"
+          description: "array of reconciliations"
+        articulatedTx:
+          type: object
+          items:
+            $ref: "#/components/schemas/function"
+        compressedTx:
+          type: string
+          example: "0x3d18b912( )"
+          description: "truncated, more readable version of the articulation"
+        hasToken:
+          type: boolean
+          description: "`true` if the transaction is token related, `false` otherwise"
+        finalized:
+          type: boolean
+          example: true
+          description: "flag indicating the system considers this data final"
+    receipt:
+      description: "receipt data for a given transaction directly from the blockchain"
+      type: object
+      properties:
+        status:
+          type: number
+          format: uint32
+          description: "`1` on transaction suceess, `null` if tx preceeds Byzantium, `0` otherwise"
+        contractAddress:
+          type: string
+          format: address
+          description: "the address of the newly created contract, if any"
+        gasUsed:
+          type: string
+          format: gas
+          description: "the amount of gas actually used by the transaction"
+        logs:
+          type: array
+          items:
+            $ref: "#/components/schemas/log"
+          description: "a possibly empty array of logs"
+    log:
+      description: "log data for a given transaction directly from the blockchain"
+      type: object
+      properties:
+        blockNumber:
+          type: number
+          format: blknum
+          example: 10021
+          description: "the number of the block"
+        transactionIndex:
+          type: number
+          format: blknum
+          example: 305
+          description: "the zero-indexed position of the transaction in the block"
         address:
           type: string
           format: address
-          example: "0xa1e4...63b4"
-          description: "description: the address of the token contract being queried"
-        name:
-          type: string
-          example: "The DAO Original"
-          description: "the name of the token contract, if available"
-        symbol:
-          type: string
-          example: "GTC"
-          description: "the symbol for this token contract"
-        decimals:
+          example: "0xf503...179b"
+          description: "the smart contract that emitted this log"
+        logIndex:
           type: number
-          format: uint64
-          example: 18
-          description: "the number of decimals for the token contract"
-        is_contract:
-          type: boolean
-          description: "`true` if the address is a smart contract, `false` otherwise"
-        is_erc20:
-          type: boolean
-          description: "`true` if the address is an ERC20, `false` otherwise"
-        is_erc721:
-          type: boolean
-          description: "`true` if the address is an ERC720, `false` otherwise"
+          format: blknum
+          example: 354
+          description: "the zero-indexed position of this log relative to the block"
+        topics:
+          type: array
+          items:
+            $ref: "#/components/schemas/topic"
+          description: "The first topic hashes event signature of the log, up to 3 additional index parameters may appear"
+        data:
+          type: string
+          format: bytes
+          example: "0x0000...3ff6"
+          description: "any remaining un-indexed parameters to the event"
+        articulatedLog:
+          type: object
+          items:
+            $ref: "#/components/schemas/function"
+          description: "a human-readable version of the topic and data fields"
+        compressedLog:
+          type: string
+          example: "Transfer(0xcfa...9f54..."
+          description: "a truncated, more readable version of the articulation"
     trace:
       description: "trace data for a given transaction directly from the blockchain"
       type: object
@@ -2332,92 +2287,137 @@ components:
           type: string
           format: bytes
           description: "the result of the call of this trace"
-    transaction:
-      description: "the transaction data for a given transaction directly from the blockchain"
+    datedBlock:
+      description: "An indentified block named for convienience"
       type: object
       properties:
-        hash:
-          type: string
-          format: hash
-          example: "0xf128...1e98"
-          description: "The hash of the transaction"
-        gasPrice:
-          type: string
-          format: gas
-          example: "63525836552"
-          description: "the number of wei per unit of gas the sender is willing to spend"
-        blockHash:
-          type: string
-          format: hash
-          example: "0xc421...fb04"
-          description: "The hash of the block containing this transaction"
         blockNumber:
           type: number
           format: blknum
           example: 10021
           description: "the number of the block"
-        transactionIndex:
-          type: number
-          format: blknum
-          example: 305
-          description: "the zero-indexed position of the transaction in the block"
-        nonce:
-          type: number
-          format: uint64
-          example: 232
-          description: "sequence number of the transactions sent by the sender"
         timestamp:
           type: number
           format: timestamp
           example: 1438335038
-          description: "the unix timestamp of the object"
-        from:
+          description: "the unix timestamp of the block"
+        date:
           type: string
-          format: address
-          description: "address from which the transaction was sent"
-        to:
-          type: string
-          format: address
-          description: "address to which the transaction was sent"
-        value:
+          format: date
+          example: "2015-07-30 15:34:53 UTC"
+          description: "Human readable version of timestamp"
+    state:
+      description: "the on-chain state of a given address"
+      type: object
+      properties:
+        blockNumber:
+          type: number
+          format: blknum
+          example: 10021
+          description: "the block number at which this state was taken"
+        balance:
           type: string
           format: wei
-          example: "0"
-          description: "the amount of wei sent with this transactions"
-        gas:
-          type: string
-          format: gas
-          example: "158660"
-          description: "the maximum number of gas allowed for this transaction"
-        input:
+          example: "258843698360318500"
+          description: "the balance at the address at the given block height"
+        nonce:
+          type: number
+          format: uint64
+          example: 115
+          description: "the nonce of the address at the given block height"
+        code:
           type: string
           format: bytes
-          example: "0x3d18b912"
-          description: "byte data either containing a message or funcational data for a smart contracts. See the --articulate"
-        receipt:
-          type: object
-          items:
-            $ref: "#/components/schemas/receipt"
-        statements:
-          type: array
-          items:
-            $ref: "#/components/schemas/reconciliation"
-          description: "array of reconciliations"
-        articulatedTx:
-          type: object
-          items:
-            $ref: "#/components/schemas/function"
-        compressedTx:
+          example: "0x"
+          description: "the byte code at the address (if this is a smart contract)"
+        storage:
           type: string
-          example: "0x3d18b912( )"
-          description: "truncated, more readable version of the articulation"
-        hasToken:
+          format: bytes
+          example: "0x0000...0000"
+          description: "this field is un-implemented and current returns the first storage location in a smart contract"
+        address:
+          type: string
+          format: address
+          example: "0xa1e4...63b4"
+          description: "the address of the state being queried"
+        deployed:
+          type: number
+          format: blknum
+          example: 8901011
+          description: "the block number at which this smart contract was deployed (if a smart contact)"
+        accttype:
+          type: string
+          example: "one of 'EOA' or 'Contract'"
+          description: "the type of the address at the given block"
+        ether:
+          type: number
+          format: double
+          example: 0.25884369
+          description: "the balance of the address in ethers"
+    token:
+      description: "on-chain token related data for a give address at a given block height"
+      type: object
+      properties:
+        holder:
+          type: string
+          format: address
+          example: "0x2910...63d2"
+          description: "the address for which we are reporting the token balance"
+        balance:
+          type: string
+          format: wei
+          example: "258843698360318500"
+          description: "the balance at the address at the given block height"
+        address:
+          type: string
+          format: address
+          example: "0xa1e4...63b4"
+          description: "description: the address of the token contract being queried"
+        name:
+          type: string
+          example: "The DAO Original"
+          description: "the name of the token contract, if available"
+        symbol:
+          type: string
+          example: "GTC"
+          description: "the symbol for this token contract"
+        decimals:
+          type: number
+          format: uint64
+          example: 18
+          description: "the number of decimals for the token contract"
+        is_contract:
           type: boolean
-          description: "`true` if the transaction is token related, `false` otherwise"
-        finalized:
+          description: "`true` if the address is a smart contract, `false` otherwise"
+        is_erc20:
           type: boolean
-          example: true
-          description: "flag indicating the system considers this data final"
+          description: "`true` if the address is an ERC20, `false` otherwise"
+        is_erc721:
+          type: boolean
+          description: "`true` if the address is an ERC720, `false` otherwise"
+    quote:
+      description: "the closing price of Ether in USD at a particular moment"
+      type: object
+      properties:
+        timestamp:
+          type: number
+          format: timestamp
+          example: 1438270144
+          description: "the timestamp of this quote"
+        close:
+          type: number
+          format: double
+          example: 1240.10
+          description: "price of the asset in US dollars"
+        date:
+          type: string
+          format: date
+          example: "2018-09-30 01:15:17 UTC"
+          description: "the date of the associated timestamp"
+        name:
+          type: string
+          example: "Byzantium"
+          description: "the name of the block for some named 'special' blocks"
     response:
       required:
         - result

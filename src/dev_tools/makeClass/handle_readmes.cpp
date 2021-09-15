@@ -99,7 +99,6 @@ bool findReplacements(const string_q& templatePath, void* data) {
     return true;
 }
 
-extern const char* STR_YAML_FRONTMATTER;
 //------------------------------------------------------------------------------------------------------------
 bool COptions::handle_readmes(void) {
     CToml config(configPath("makeClass.toml"));
@@ -125,14 +124,16 @@ bool COptions::handle_readmes(void) {
         CStringArray parts;
         explode(parts, item, ':');
 
-        string_q str = STR_YAML_FRONTMATTER;
-        replace(str, "[{TITLE}]", parts[0]);
-        replace(str, "[{WEIGHT}]", uint_2_Str(weight));
+        string_q front = STR_YAML_FRONTMATTER;
+        replace(front, "[{TITLE}]", parts[0]);
+        replace(front, "[{WEIGHT}]", uint_2_Str(weight));
+        replace(front, "[{M1}]", "docs:");
+        replace(front, "[{M2}]", "parent: \"chifra\"");
         string fn = substitute(toLower(parts[0]), " ", "");
 
         ostringstream os;
-        os << str;
-        os << asciiFileToString(getDocsTemplate("docs-intros/" + fn + ".md"));
+        os << front;
+        os << asciiFileToString(getDocsTemplate("readme-groups/" + fn + ".md"));
 
         CStringArray paths;
         explode(paths, parts[1], ',');
@@ -152,6 +153,7 @@ bool COptions::handle_readmes(void) {
     return true;
 }
 
+//------------------------------------------------------------------------------------------------------------
 const char* STR_YAML_FRONTMATTER =
     "---\n"
     "title: \"[{TITLE}]\"\n"
@@ -166,8 +168,8 @@ const char* STR_YAML_FRONTMATTER =
     "draft: false\n"
     "images: []\n"
     "menu:\n"
-    "  docs:\n"
-    "    parent: \"chifra\"\n"
+    "  [{M1}]\n"
+    "    [{M2}]\n"
     "weight: [{WEIGHT}]\n"
     "toc: true\n"
     "---\n";

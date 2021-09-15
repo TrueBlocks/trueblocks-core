@@ -6,5 +6,5 @@ sort = v1.fileName < v2.fileName
 equals = fileName == it.fileName
 doc_group = Admin
 description = the IPFS hashes of the index chunk and its associated Bloom filter for the given block range
-openapi = pinnedChunk
+openapi = 31-pinnedChunk
 produced_by = pins, init, scrape

@@ -8,5 +8,5 @@ contained_by = Transaction
 tsx = true
 doc_group = Chain Data
 description = receipt data for a given transaction directly from the blockchain
-openapi = receipt
+openapi = 12-receipt
 produced_by = receipts, export

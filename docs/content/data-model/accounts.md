@@ -1,6 +1,6 @@
 ---
 title: "Accounts"
-description: "Explore accounts through associated blockchain data"
+description: ""
 lead: ""
 date: 2021-06-30T12:13:03-03:00
 lastmod:
@@ -12,84 +12,175 @@ draft: false
 images: []
 menu:
   data:
-    parent: collections
-weight: 1100
+    parent: "collections"
+weight: 1000
 toc: true
 ---
 
-TrueBlocks Data collections are built progressively.
-Each grouping comprises a building block on which another grouping is created.
+TrueBlocks Data collections are built progressively. Each grouping comprises a building block on which another grouping is created.
 
-_These fields describe the output of various Trueblocks account queries.
-For information about how to refine these queries, see
-[the corresponding CLI section](/docs/chifra/accounts/)_
+_These fields describe the output of various Trueblocks account queries. For information about how to refine these queries, see [the corresponding CLI section](/docs/chifra/accounts/)_
 
-## Accounts
+## Appearance
 
-_Accounts_ link an address to a name.
+TEXT ABOUT APPEARANCES
 
-Accounts are a combination of an`address`, a `name`, and optionally other data. Where possible, this information is queried directly from the blockchain, however in many cases the information was gathered from various websites over the years. For example, every time people say "Show me your address, and we will airdrop some tokens" on Twitter, we copy and paste all those addresses. If you're going to DOX yourselves, we're going to notice. Sorry. Not sorry.
+### Fields
 
-### Account fields
+| Field | Description | Type |
+|-------|-------------|------|
+| blockNumber | the number of the block | blknum |
+| transactionIndex | the zero-indexed position of the transaction in the block | blknum |
+| address | the address of the appearance | address |
+| name | the name of the address&#44; if found | string |
+| timestamp | the timestamp for this appearance | timestamp |
+| date | the date represented by the timestamp | string |
 
-| Field       | Description                                                                     | Type    |
-| ----------- | ------------------------------------------------------------------------------- | ------- |
-| name        | a user-set text string identifying the address                                  | string  |
-| address     | The address of the named account                                                | address |
-| tags        | a string catagorizing addresses by type                                         | string  |
-| symbol      | ticker-like symbol to identify an account (always acquired on-chain)            | string  |
-| source      | text indicating where we found the `name`-`address` association                 | string  |
-| is_custom   | `true` for private names not to be shared publically, `false` otherwise         | boolean |
-| is_prefund  | `true` if this address was a recipient in the genesis block, `false` otherwise. | boolean |
-| is_contract | `true` if this address is a smart contract, `false` otherwise                   | boolean |
-| is_erc20    | `true` if this address is an ERC20 token, `false` otherwise                     | boolean |
-| is_erc721   | `true` if this address is an ERC721 token, `false` otherwise                    | boolean |
-
-## Monitors actively update collections
+## Monitor
 
 Monitors are [Accounts](#account), but they have the special quality that the user has told us explicitly that they are interested in 'monitoring' the activity on the given address. He/she may do that by running either `chifra list` or `chifra export` on the address. Doing so creates a monitor for that address. See the Account data description above for information on the data fields of a monitor.
 
 Monitors can also be [Collections](#collection) of Accounts that are similar to straight up Account monitors but monitor multiple addresses at a time.
 
-### Monitor Fields
+### Fields
 
-See Account fields above.
+| Field | Description | Type |
+|-------|-------------|------|
+| nApps | the number of appearances for this monitor | blknum |
+| firstApp | the first block at which this address appears | blknum |
+| latestApp | the latest block at which this address appears | blknum |
+| sizeInBytes | the size of this monitor on disc | uint64 |
+| tags | the tag given to this address | string |
+| address | the address being monitored | address |
+| is_custom | `true` if this address is customized | bool |
 
-## Tags
+## Name
 
-Tags allow you to assign categories to Accounts. Separate tags with a colon (:) when adding new names.
+_Accounts_ link an address to a name.
 
-Running `chifra --tags` will list all currently available tags.
+Accounts are a combination of an`address`, a `name`, and optionally other data. Where possible, this information is queried directly from the blockchain, however in many cases the information was gathered from various websites over the years. For example, every time people say "Show me your address, and we will airdrop some tokens" on Twitter, we copy and paste all those addresses. If you're going to DOX yourselves, we're going to notice. Sorry. Not sorry.
 
-## ABIS
+### Fields
+
+| Field | Description | Type |
+|-------|-------------|------|
+| tags | colon separated list of tags | string |
+| address | the address associated with this name | address |
+| name | the name associated with this address (retreived from on-chain data if available) | string |
+| symbol | the symbol for this address (retreived from on-chain data if available) | string |
+| source | user supplied source of where this name was found (or on-chain if name is on-chain) | string |
+| decimals | number of decimals retreived from an ERC20 smart contract&#44; defaults to 18 | uint64 |
+| description | user supplied description for the address | string |
+| deleted | `true` if deleted&#44; `false` otherwise | bool |
+| is_custom | `true` if the address is a custom address&#44; `false` otherwise | bool |
+| is_prefund | `true` if the address was one of the prefund addresses&#44; `false` otherwise | bool |
+| is_contract | `true` if the address is a smart contract&#44; `false` otherwise | bool |
+| is_erc20 | `true` if the address is an ERC20&#44; `false` otherwise | bool |
+| is_erc721 | `true` if the address is an ERC720&#44; `false` otherwise | bool |
+
+## Reconciliation
+
+When exported with the `--accounting` option from `chifra export`, each transaction will have field called `statements`. Statements are an array for reconciliations. All such exported transactions will have at least one reconcilation (for ETH), however, many will have additional reconciliations for other assets (such as ERC20 and ERC721 tokens).
+
+Because DeFi is essentially swaps and trades around ERC20s, and because and 'programmable money' allows for unlimited actions to happen under a single transaction,many times a transaction has four or five reconciliations.
+
+Reconciliations are relative to an `accountedFor` address. For this reason, the same transaction will probably have different reconciliations depending on the `accountedFor` address. Consider a simple transfer of ETH from one address to another. Obviously, the sender's and the recipient's reconciliations will differ (in opposite proportion to each other). The `accountedFor` address is always present as the `assetAddress` in the first reconciliation of the statements array.
+
+**Note on intra-block transactions**: In many cases two or more transactions requiring a reconciliation may occur in a single block. Becuase the Ethereum blockchain only provides balance queries at the end of blocks, it is not possible to query for the balance of an asset at the end of transactions for which there are other following transactions in the block nor for the beginning balance for which there are transactions prior to the given transaction in the same block. In these cases, TrueBlocks simulates the beginning and ending balance as needed and adds `partial` to the `reconciliationType`.
+
+**Note on spotPrice**: If the `spotPrice` is available from an on-chain source (such as UniSwap), then it represents the ETH/DAI value at the time of the transaction if the reconcilation is for ETH. For other assets, the `spotPrice` represents the asset's value relative to `ETH`, so to price a non-ETH asset in US dollars, one would need to convert first to `ETH` then to dollars. If a price is not available on-chain, the `spotPrice` will be zero and the caller is encouraged to get the price for the asset from other sources.
+
+### Fields
+
+| Field | Description | Type |
+|-------|-------------|------|
+| blockNumber | the number of the block | blknum |
+| transactionIndex | the zero-indexed position of the transaction in the block | blknum |
+| timestamp | the unix timestamp of the object | timestamp |
+| assetAddr | the accountedFor address for ETH recons&#44; the token address itself otherwise | address |
+| assetSymbol | either ETH&#44; WEI or the symbol of the asset being reconciled as extracted from the chain | string |
+| decimals | Equivilent to the extracted value of getSymbol from ERC20 or&#44; if ETH or WEI then 18 | uint64 |
+| prevBlk | the block number of the previous reconciliation | blknum |
+| prevBlkBal | the account balance for the given asset for the previous reconciliation | int256 |
+| begBal | the begining balance of the asset at the blockNumber | int256 |
+| begBalDiff | the difference between the expected beginning balance (prevBlkBal) and the queried balance from the chain | int256 |
+| amountIn | the top-level value of the incoming transfer for the accountedFor address | int256 |
+| amountOut | the amount (in terms of the asset) of regular outflow during this bigint | int256 |
+| internalIn | the internal value of the incoming transfer for the accountedFor address | int256 |
+| internalOut | the value of any internal value transfers out of the accountedFor account | int256 |
+| selfDestructIn | the incoming value of a self-destruct if recipient is the accountedFor address | int256 |
+| selfDestructOut | the value of the self-destructed value out if the accountedFor address was self-destructed | int256 |
+| minerBaseRewardIn | the base fee reward if the miner is the accountedFor address | int256 |
+| minerNephewRewardIn | the netphew reward if the miner is the accountedFor address | int256 |
+| minerTxFeeIn | the transaction fee reward if the miner is the accountedFor address | int256 |
+| minerUncleRewardIn | the uncle reward if the miner who won the uncle block is the accountedFor address | int256 |
+| prefundIn | at block zero (0) only&#44; the amount of genesis income for the accountedFor address | int256 |
+| spotPrice | The on-chain price in USD (or if a token in ETH&#44; or zero) at the time of the transaction | double |
+| priceSource | The on-chain source from which the spot price was taken | string |
+| gasCostOut | if the transactions original sender is the accountedFor address&#44; the amount of gas expended denominated in WEI. | int256 |
+| endBal | the on-chain balance of the asset (see notes above about intra-block reconciliations) | int256 |
+| totalIn | a calculated field -- the sum of all In fields | int256 |
+| totalOut | a calculated field -- the sum of all Out fields | int256 |
+| totalOutLessGas |  | int256 |
+| amountNet | a calculated field -- totalIn - totalOut | int256 |
+| endBalCalc | a calculated field -- begBal + amountNet | int256 |
+| reconciliationType | One of regular&#44; traces&#44; prevdiff-partial&#44; partial-nextdiff&#44; or `partial-partial` | string |
+| endBalDiff | a calculated field -- endBal - endBalCalc&#44; if non-zero&#44; the reconciliation failed | int256 |
+| reconciled | a calculated field -- true if `endBal === endBalCalc` and `begBal === prevBlkBal`. `false` otherwise. | bool |
+
+## Abi
 
 For more information on ABIs please see any relevant Ethereum documentation, particularly that documentation related to Solidity coding. The fields or the ABI are mostly identical to the fields you will find in that documentation.
 
-### ABI fields
+### Fields
 
-| Field           | Description                                               | Type         |
-| --------------- | --------------------------------------------------------- | ------------ |
-| name            | the name of the function or event being described         | string       |
-| type            | one of `function` or `event`                              | string       |
-| abi_source      | the source of the ABI file (frequently EtherScan)         | string       |
-| anonymous       | unused                                                    | boolean      |
-| constant        | unused                                                    | boolean      |
-| stateMutability | unused                                                    | string       |
-| signature       | the Solidity function signature excluding parameter names | string       |
-| encoding        | the hash of the signature of the event or function        | hash         |
-| inputs          | the input fields to the function or event                 | object array |
-| outputs         | the output fields of the function or event                | object array |
+| Field | Description | Type |
+|-------|-------------|------|
+| address | the smart contract that implements this abi | address |
+| interfaces | the list of events and functions on this abi | CFunctionArray |
 
-° **Input/Output fields**
+## Function
 
-| Field        | Description                                                                       | Type        |
-| ------------ | --------------------------------------------------------------------------------- | ----------- |
-| type         | the data type (see Solidity docs) of the parameter                                | string      |
-| name         | the name of the parameter                                                         | string      |
-| internalType | if the parameter is a struct, this is the object string for the underlying struct | JSON string |
+TEXT FOR FUNCTIONS
 
-## Function Signatures
+### Fields
 
-## Event Signatures
+| Field | Description | Type |
+|-------|-------------|------|
+| name | the name of the interface | string |
+| type | the type of the interface&#44; either 'event' or 'function' | string |
+| signature | the canonical signature of the interface | string |
+| encoding | the signature encoded with keccak | string |
+| inputs | the input parameters to the function&#44; if any | CParameterArray |
+| outputs | the output parameters to the function&#44; if any | CParameterArray |
 
-Both of these data structures are identical to the above ABI fields. When articulating a transaction, event, or trace the ABI file is basically just an array of function and event types.
+## Parameter
+
+TEXT FOR PARAMETERS
+
+### Fields
+
+| Field | Description | Type |
+|-------|-------------|------|
+| type | the type of this parameter | string |
+| name | the name of this parameter | string |
+| str_default | the defaul value of this parameter&#44; if any | string |
+| indexed | `true` if this parameter is indexed | bool |
+| internalType | for composite types&#44; the interal type of the parameter | string |
+| components | for composite types&#44; the parameters making up the composite | CParameterArray |
+## Base types
+
+In these docs, sometimes Trueblocks mentions a type format that is more
+precise than the generic types, like "string" or "object".
+
+| Type Name | Description                         |
+| --------- | ----------------------------------- |
+| blknum    | a 64-bit unsigned int               |
+| timestamp | a 64-bit unsigned int               |
+| address   | a 20 byte string starting with '0x' |
+| hash      | a 32 byte string starting with '0x' |
+| string    | a plain c++ string                  |
+| number    | standard c++ 64-bit unsigned int    |
+| bigint    | arbitrarily sized signed int        |
+| wei       | arbitrarily sized unsigned int      |
+| boolean   | standard c++ boolean                |

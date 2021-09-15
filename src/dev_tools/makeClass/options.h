@@ -186,5 +186,6 @@ inline string_q short3(const string_q& str) {
 void doReplace(string_q& str, const string_q& type, const string_q& rep, const string_q& spaces);
 
 //---------------------------------------------------------------------------------------------------
+extern const char* STR_YAML_FRONTMATTER;
 #define routeCount fileCount
 #define cmdCount nVisited

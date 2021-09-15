@@ -6,5 +6,5 @@ cpp_includes = appearance.h
 tsx = true
 doc_group = Chain Data
 description = block data directly from the blockchain
-openapi = block
+openapi = 10-block
 produced_by = blocks

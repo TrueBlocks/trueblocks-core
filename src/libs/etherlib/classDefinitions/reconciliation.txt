@@ -7,5 +7,5 @@ equals = ((blockNumber == it.blockNumber) && (assetAddr == it.assetAddr))
 tsx = true
 doc_group = Accounts
 description = a reconiciliation of all inflows and outflows to a given account at a given transaction
-openapi = reconciliation
+openapi = 04-reconciliation
 produced_by = export

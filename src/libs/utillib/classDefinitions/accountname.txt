@@ -8,5 +8,5 @@ equals = address % it.address
 tsx = true
 doc_group = Accounts
 description = an association between a name and address for use throughout TrueBlocks
-openapi = name
+openapi = 03-name
 produced_by = names

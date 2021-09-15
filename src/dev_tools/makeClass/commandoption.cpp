@@ -760,7 +760,8 @@ string_q CCommandOption::toChifraHelp(void) const {
 
     CCommandOption ret = *this;
     replaceAll(ret.description, ".", "");
-    ret.description[0] = (char)tolower(ret.description[0]);
+    if (ret.description.length())
+        ret.description[0] = (char)tolower(ret.description[0]);
     if (api_route.empty())
         return toUpper(ret.Format("    \"[{GROUP}]|\""));
     return ret.Format("    \"  [{w:14:API_ROUTE}][{DESCRIPTION}]|\"");
@@ -786,15 +787,10 @@ string_q CCommandOption::toPairMap(void) const {
 string_q CCommandOption::toApiTag(void) const {
     if (isApiRoute(tool))
         return "";
-
     const char* STR_TAG_YAML =
         "  - name: [{GROUP}]\n"
         "    description: [{DESCRIPTION}]\n";
-    CCommandOption ret = *this;
-    replaceAll(ret.group, " ", "");
-    replaceAll(ret.group, "ChainData", "Chain Data");
-    replaceAll(ret.group, "ChainState", "Chain State");
-    return ret.Format(STR_TAG_YAML);
+    return Format(STR_TAG_YAML);
 }
 
 //---------------------------------------------------------------------------------------------------

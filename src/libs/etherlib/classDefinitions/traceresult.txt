@@ -7,4 +7,4 @@ equals = ((newContract == it.newContract) && (code == it.code) && (gasUsed == it
 tsx = true
 doc_group = Chain Data
 description = the trace result data for a given trace directly from the blockchain
-openapi = traceResult
+openapi = 16-traceResult

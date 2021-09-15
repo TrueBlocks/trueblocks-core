@@ -7,4 +7,4 @@ equals = ((selfDestructed == it.selfDestructed) && (balance == it.balance) && (c
 tsx = true
 doc_group = Chain Data
 description = the trace action data for a given trace directly from the blockchain
-openapi = traceAction
+openapi = 15-traceAction

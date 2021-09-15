@@ -274,6 +274,9 @@ inline string_q getReadmePath(const string_q& _part) {
 inline string_q getApiDocsPath(const string_q& _part) {
     return getDocsPath("content/api/" + _part);
 }
+inline string_q getDataModelPath(const string_q& _part) {
+    return getDocsPath("content/data-model/" + _part);
+}
 inline string_q getDocsChifraPath(const string_q& _part) {
     return getDocsPath("content/docs/chifra/" + _part);
 }

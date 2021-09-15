@@ -7,5 +7,5 @@ sort = v1.blockNumber < v2.blockNumber
 equals = blockNumber == it.blockNumber
 doc_group = Chain State
 description = the on-chain state of a given address
-openapi = state
+openapi = 20-state
 produced_by = state

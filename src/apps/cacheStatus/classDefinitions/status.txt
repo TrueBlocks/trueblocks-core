@@ -5,5 +5,5 @@ includes = etherlib.h|cache.h
 disabled = true
 doc_group = Admin
 description = This data model carries information about the TrueBlocks system including both the API server and the local binary caches
-openapi = status
+openapi = 30-status
 produced_by = status

@@ -45,9 +45,11 @@ class CClassDefinition : public CBaseNode {
     bool tsx;
     CParameterArray fieldArray;
     CParameterArray extraArray;
-    string_q openapi;
-    string_q description;
     string_q contained_by;
+    string_q doc_group;
+    string_q doc_order;
+    string_q description;
+    string_q openapi;
     string_q produced_by;
 
   public:
@@ -137,9 +139,11 @@ inline void CClassDefinition::initialize(void) {
     tsx = false;
     fieldArray.clear();
     extraArray.clear();
-    openapi = "";
-    description = "";
     contained_by = "";
+    doc_group = "";
+    doc_order = "";
+    description = "";
+    openapi = "";
     produced_by = "";
 
     // EXISTING_CODE
@@ -171,9 +175,11 @@ inline void CClassDefinition::duplicate(const CClassDefinition& cl) {
     tsx = cl.tsx;
     fieldArray = cl.fieldArray;
     extraArray = cl.extraArray;
-    openapi = cl.openapi;
-    description = cl.description;
     contained_by = cl.contained_by;
+    doc_group = cl.doc_group;
+    doc_order = cl.doc_order;
+    description = cl.description;
+    openapi = cl.openapi;
     produced_by = cl.produced_by;
 
     // EXISTING_CODE

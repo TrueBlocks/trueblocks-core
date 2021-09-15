@@ -7,5 +7,5 @@ equals = address == it.address
 sort = v1.address < v2.address
 doc_group = Chain State
 description = on-chain token related data for a give address at a given block height
-openapi = token
+openapi = 21-token
 produced_by = tokens
