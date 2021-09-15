@@ -857,7 +857,6 @@ string_q CCommandOption::toApiPath(const string_q& inStr) const {
         paramStream << yp << endl;
     }
 
-    string_q propertyFn = getDocsPath("templates/api/properties/" + api_route + ".txt");
     string_q exampleFn = getDocsPath("templates/api/examples/" + api_route + ".txt");
 
     ostringstream example;
@@ -874,19 +873,15 @@ string_q CCommandOption::toApiPath(const string_q& inStr) const {
 
     string_q content;
     ostringstream properties;
-    if (fileExists(propertyFn)) {
-        content = trim(asciiFileToString(propertyFn), '\n');
-    } else if (!api_route.empty()) {
-        string_q descr = inStr;
-        string_q productions = nextTokenClear(descr, '|');
-        const char* STR_PROPERTIES =
-            "data:\n"
-            "  description: [{DESCR}]\n"
-            "  type: array\n"
-            "  items:\n"
-            "    [{PRODUCTIONS}]";
-        content = substitute(substitute(STR_PROPERTIES, "[{PRODUCTIONS}]", productions), "[{DESCR}]", descr);
-    }
+    string_q descr = inStr;
+    string_q productions = nextTokenClear(descr, '|');
+    const char* STR_PROPERTIES =
+        "data:\n"
+        "  description: [{DESCR}]\n"
+        "  type: array\n"
+        "  items:\n"
+        "    [{PRODUCTIONS}]";
+    content = substitute(substitute(STR_PROPERTIES, "[{PRODUCTIONS}]", productions), "[{DESCR}]", descr);
 
     if (!content.empty()) {
         if (!contains(content, string_q(18, ' '))) {
@@ -896,7 +891,7 @@ string_q CCommandOption::toApiPath(const string_q& inStr) const {
         properties << string_q(16, ' ') << "properties:" << endl << content << endl;
 
     } else {
-        if (!fileExists(exampleFn) && !fileExists(propertyFn))
+        if (!fileExists(exampleFn))
             properties << string_q(16, ' ') << "items:\n                  $ref: \"#/components/schemas/response\"\n";
     }
 

@@ -55,12 +55,12 @@ The balance of an address at a given block.
 | holder | the address for which we are reporting the token balance | address |
 | balance | the balance at the address at the given block height | wei |
 | address | description: the address of the token contract being queried | address |
-| name | the name of the token contract&#44; if available | string |
+| name | the name of the token contract, if available | string |
 | symbol | the symbol for this token contract | string |
 | decimals | the number of decimals for the token contract | uint64 |
-| is_contract | `true` if the address is a smart contract&#44; `false` otherwise | bool |
-| is_erc20 | `true` if the address is an ERC20&#44; `false` otherwise | bool |
-| is_erc721 | `true` if the address is an ERC720&#44; `false` otherwise | bool |
+| is_contract | `true` if the address is a smart contract, `false` otherwise | bool |
+| is_erc20 | `true` if the address is an ERC20, `false` otherwise | bool |
+| is_erc721 | `true` if the address is an ERC720, `false` otherwise | bool |
 ## Base types
 
 In these docs, sometimes Trueblocks mentions a type format that is more

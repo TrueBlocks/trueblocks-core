@@ -32,7 +32,7 @@ TEXT ABOUT APPEARANCES
 | blockNumber | the number of the block | blknum |
 | transactionIndex | the zero-indexed position of the transaction in the block | blknum |
 | address | the address of the appearance | address |
-| name | the name of the address&#44; if found | string |
+| name | the name of the address, if found | string |
 | timestamp | the timestamp for this appearance | timestamp |
 | date | the date represented by the timestamp | string |
 
@@ -69,14 +69,14 @@ Accounts are a combination of an`address`, a `name`, and optionally other data. 
 | name | the name associated with this address (retreived from on-chain data if available) | string |
 | symbol | the symbol for this address (retreived from on-chain data if available) | string |
 | source | user supplied source of where this name was found (or on-chain if name is on-chain) | string |
-| decimals | number of decimals retreived from an ERC20 smart contract&#44; defaults to 18 | uint64 |
+| decimals | number of decimals retreived from an ERC20 smart contract, defaults to 18 | uint64 |
 | description | user supplied description for the address | string |
-| deleted | `true` if deleted&#44; `false` otherwise | bool |
-| is_custom | `true` if the address is a custom address&#44; `false` otherwise | bool |
-| is_prefund | `true` if the address was one of the prefund addresses&#44; `false` otherwise | bool |
-| is_contract | `true` if the address is a smart contract&#44; `false` otherwise | bool |
-| is_erc20 | `true` if the address is an ERC20&#44; `false` otherwise | bool |
-| is_erc721 | `true` if the address is an ERC720&#44; `false` otherwise | bool |
+| deleted | `true` if deleted, `false` otherwise | bool |
+| is_custom | `true` if the address is a custom address, `false` otherwise | bool |
+| is_prefund | `true` if the address was one of the prefund addresses, `false` otherwise | bool |
+| is_contract | `true` if the address is a smart contract, `false` otherwise | bool |
+| is_erc20 | `true` if the address is an ERC20, `false` otherwise | bool |
+| is_erc721 | `true` if the address is an ERC720, `false` otherwise | bool |
 
 ## Reconciliation
 
@@ -97,9 +97,9 @@ Reconciliations are relative to an `accountedFor` address. For this reason, the 
 | blockNumber | the number of the block | blknum |
 | transactionIndex | the zero-indexed position of the transaction in the block | blknum |
 | timestamp | the unix timestamp of the object | timestamp |
-| assetAddr | the accountedFor address for ETH recons&#44; the token address itself otherwise | address |
-| assetSymbol | either ETH&#44; WEI or the symbol of the asset being reconciled as extracted from the chain | string |
-| decimals | Equivilent to the extracted value of getSymbol from ERC20 or&#44; if ETH or WEI then 18 | uint64 |
+| assetAddr | the accountedFor address for ETH recons, the token address itself otherwise | address |
+| assetSymbol | either ETH, WEI or the symbol of the asset being reconciled as extracted from the chain | string |
+| decimals | Equivilent to the extracted value of getSymbol from ERC20 or, if ETH or WEI then 18 | uint64 |
 | prevBlk | the block number of the previous reconciliation | blknum |
 | prevBlkBal | the account balance for the given asset for the previous reconciliation | int256 |
 | begBal | the begining balance of the asset at the blockNumber | int256 |
@@ -114,18 +114,18 @@ Reconciliations are relative to an `accountedFor` address. For this reason, the 
 | minerNephewRewardIn | the netphew reward if the miner is the accountedFor address | int256 |
 | minerTxFeeIn | the transaction fee reward if the miner is the accountedFor address | int256 |
 | minerUncleRewardIn | the uncle reward if the miner who won the uncle block is the accountedFor address | int256 |
-| prefundIn | at block zero (0) only&#44; the amount of genesis income for the accountedFor address | int256 |
-| spotPrice | The on-chain price in USD (or if a token in ETH&#44; or zero) at the time of the transaction | double |
+| prefundIn | at block zero (0) only, the amount of genesis income for the accountedFor address | int256 |
+| spotPrice | The on-chain price in USD (or if a token in ETH, or zero) at the time of the transaction | double |
 | priceSource | The on-chain source from which the spot price was taken | string |
-| gasCostOut | if the transactions original sender is the accountedFor address&#44; the amount of gas expended denominated in WEI. | int256 |
+| gasCostOut | if the transactions original sender is the accountedFor address, the amount of gas expended denominated in WEI. | int256 |
 | endBal | the on-chain balance of the asset (see notes above about intra-block reconciliations) | int256 |
 | totalIn | a calculated field -- the sum of all In fields | int256 |
 | totalOut | a calculated field -- the sum of all Out fields | int256 |
 | totalOutLessGas |  | int256 |
 | amountNet | a calculated field -- totalIn - totalOut | int256 |
 | endBalCalc | a calculated field -- begBal + amountNet | int256 |
-| reconciliationType | One of regular&#44; traces&#44; prevdiff-partial&#44; partial-nextdiff&#44; or `partial-partial` | string |
-| endBalDiff | a calculated field -- endBal - endBalCalc&#44; if non-zero&#44; the reconciliation failed | int256 |
+| reconciliationType | One of regular, traces, prevdiff-partial, partial-nextdiff, or `partial-partial` | string |
+| endBalDiff | a calculated field -- endBal - endBalCalc, if non-zero, the reconciliation failed | int256 |
 | reconciled | a calculated field -- true if `endBal === endBalCalc` and `begBal === prevBlkBal`. `false` otherwise. | bool |
 
 ## Abi
@@ -148,11 +148,11 @@ TEXT FOR FUNCTIONS
 | Field | Description | Type |
 |-------|-------------|------|
 | name | the name of the interface | string |
-| type | the type of the interface&#44; either 'event' or 'function' | string |
+| type | the type of the interface, either 'event' or 'function' | string |
 | signature | the canonical signature of the interface | string |
 | encoding | the signature encoded with keccak | string |
-| inputs | the input parameters to the function&#44; if any | CParameterArray |
-| outputs | the output parameters to the function&#44; if any | CParameterArray |
+| inputs | the input parameters to the function, if any | CParameterArray |
+| outputs | the output parameters to the function, if any | CParameterArray |
 
 ## Parameter
 
@@ -164,10 +164,10 @@ TEXT FOR PARAMETERS
 |-------|-------------|------|
 | type | the type of this parameter | string |
 | name | the name of this parameter | string |
-| str_default | the defaul value of this parameter&#44; if any | string |
+| str_default | the defaul value of this parameter, if any | string |
 | indexed | `true` if this parameter is indexed | bool |
-| internalType | for composite types&#44; the interal type of the parameter | string |
-| components | for composite types&#44; the parameters making up the composite | CParameterArray |
+| internalType | for composite types, the interal type of the parameter | string |
+| components | for composite types, the parameters making up the composite | CParameterArray |
 ## Base types
 
 In these docs, sometimes Trueblocks mentions a type format that is more

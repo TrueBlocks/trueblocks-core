@@ -70,7 +70,7 @@ TEXT ABOUT PINNED CHUNKS
 
 | Field | Description | Type |
 |-------|-------------|------|
-| fileName | for each chunk&#44; the range of blocks contained in that chunk | string |
+| fileName | for each chunk, the range of blocks contained in that chunk | string |
 | bloomHash | the IPFS hash of the bloom filter at that range | ipfshash |
 | indexHash | the IPFS hash of the index chunk at that range | ipfshash |
 ## Base types

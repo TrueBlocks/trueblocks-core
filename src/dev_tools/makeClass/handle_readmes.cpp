@@ -29,7 +29,7 @@ bool visitReadme(const string_q& templatePath, void* data) {
         explode(parts, templatePath, '/');
         string_q folder = parts[4];
         string_q tool = substitute(parts[5], ".md", "");
-        string_q docPath = getReadmePath(folder + "/" + tool + "/README.md");
+        string_q docPath = getDocsPath("readmes/" + folder + "/" + tool + "/README.md");
         string_q srcPath = "../src/" + folder + "/" + tool + "/README.md";
 
         string_q source = asciiFileToString(templatePath);
@@ -110,8 +110,8 @@ bool COptions::handle_readmes(void) {
 
     LOG_INFO(cYellow, "handling readmes...", cOff);
     counter = CCounter();  // reset
-    forEveryFileInFolder(getReadmeTemplate(""), findReplacements, this);
-    forEveryFileInFolder(getReadmeTemplate(""), visitReadme, this);
+    forEveryFileInFolder(getDocsPath("templates/readme-intros/"), findReplacements, this);
+    forEveryFileInFolder(getDocsPath("templates/readme-intros/"), visitReadme, this);
 
     CStringArray items = {
         "Accounts:apps/list,apps/acctExport,apps/monitors,tools/ethNames,tools/grabABI",
@@ -133,16 +133,16 @@ bool COptions::handle_readmes(void) {
 
         ostringstream os;
         os << front;
-        os << asciiFileToString(getDocsTemplate("readme-groups/" + fn + ".md"));
+        os << asciiFileToString(getDocsPath("templates/readme-groups/" + fn + ".md"));
 
         CStringArray paths;
         explode(paths, parts[1], ',');
         for (auto p : paths) {
-            string_q pp = getReadmePath(p + "/README.md");
+            string_q pp = getDocsPath("readmes/" + p + "/README.md");
             os << asciiFileToString(pp);
         }
 
-        string_q outPath = getDocsChifraPath(fn + ".md");
+        string_q outPath = getDocsPath("content/docs/chifra/" + fn + ".md");
         stringToAsciiFile(outPath, substitute(os.str(), "$DATE", "2021-05-08T01:35:20"));
 
         weight += 200;

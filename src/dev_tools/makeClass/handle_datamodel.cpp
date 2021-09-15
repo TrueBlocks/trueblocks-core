@@ -45,7 +45,7 @@ bool COptions::handle_datamodel(void) {
             doc << front << endl;
             weight += 200;
             doc << asciiFileToString(
-                getDocsTemplate("model-groups/" + substitute(toLower(model.doc_group), " ", "") + ".md"));
+                getDocsPath("templates/model-groups/" + substitute(toLower(model.doc_group), " ", "") + ".md"));
         }
 
         string_q name = model.openapi;
@@ -54,7 +54,7 @@ bool COptions::handle_datamodel(void) {
         doc << endl;
         doc << "## " << name << endl;
         doc << endl;
-        doc << asciiFileToString(getDocsTemplate("model-intros/" + model.openapi) + ".md") << endl;
+        doc << asciiFileToString(getDocsPath("templates/model-intros/" + model.openapi) + ".md") << endl;
 
         doc << "### Fields" << endl;
         doc << endl;
@@ -74,19 +74,20 @@ bool COptions::handle_datamodel(void) {
                 props << fld.Format(exFmt(fld));
                 props << fld.Format("[          description: \"{DESCRIPTION}\"\n]");
 
-                doc << "| " << fld.name << " | " << fld.description << " | " << fld.type << " |" << endl;
+                doc << "| " << fld.name << " | " << substitute(fld.description, "&#44;", ",") << " | " << fld.type
+                    << " |" << endl;
             }
         }
         theStream << props.str();
         dataDocs[model.doc_group] = dataDocs[model.doc_group] + doc.str();
     }
     theStream << STR_YAML_TAIL;
-    stringToAsciiFile(getDocsTemplate("api/templates/components.txt"), substitute(theStream.str(), "&#44;", ","));
+    stringToAsciiFile(getDocsPath("templates/api/components.txt"), substitute(theStream.str(), "&#44;", ","));
 
     for (auto doc : dataDocs) {
         doc.second += STR_YAML_TAIL2;
         string_q res = substitute(doc.second, "$DATE", "2021-06-30T12:13:03-03:00");
-        stringToAsciiFile(getDataModelPath(substitute(toLower(doc.first), " ", "")) + ".md", res);
+        stringToAsciiFile(getDocsPath("content/data-model/" + substitute(toLower(doc.first), " ", "")) + ".md", res);
     }
 
     return true;

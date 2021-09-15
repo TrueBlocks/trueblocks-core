@@ -268,23 +268,5 @@ extern bool parseCommandData(const char* str, void* data);
 inline string_q getDocsPath(const string_q& _part) {
     return "../docs/" + _part;
 }
-inline string_q getReadmePath(const string_q& _part) {
-    return getDocsPath("readmes/" + _part);
-}
-inline string_q getApiDocsPath(const string_q& _part) {
-    return getDocsPath("content/api/" + _part);
-}
-inline string_q getDataModelPath(const string_q& _part) {
-    return getDocsPath("content/data-model/" + _part);
-}
-inline string_q getDocsChifraPath(const string_q& _part) {
-    return getDocsPath("content/docs/chifra/" + _part);
-}
-inline string_q getDocsTemplate(const string_q& _part) {
-    return getDocsPath("templates/" + _part);
-}
-inline string_q getReadmeTemplate(const string_q& _part) {
-    return getDocsTemplate("readme-intros/" + _part);
-}
 // EXISTING_CODE
 }  // namespace qblocks

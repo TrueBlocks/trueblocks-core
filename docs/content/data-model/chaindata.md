@@ -85,8 +85,8 @@ This is a very powerful way to understand the story behind a smart contract.
 | receipt |  | CReceipt |
 | statements | array of reconciliations | CReconciliationArray |
 | articulatedTx |  | CFunction |
-| compressedTx | truncated&#44; more readable version of the articulation | string |
-| hasToken | `true` if the transaction is token related&#44; `false` otherwise | uint8 |
+| compressedTx | truncated, more readable version of the articulation | string |
+| hasToken | `true` if the transaction is token related, `false` otherwise | uint8 |
 | finalized | flag indicating the system considers this data final | bool |
 
 ## Receipt
@@ -107,8 +107,8 @@ If the `to` address of a transaction is `0x0`, the `input` data is considered to
 
 | Field | Description | Type |
 |-------|-------------|------|
-| status | `1` on transaction suceess&#44; `null` if tx preceeds Byzantium&#44; `0` otherwise | uint32 |
-| contractAddress | the address of the newly created contract&#44; if any | address |
+| status | `1` on transaction suceess, `null` if tx preceeds Byzantium, `0` otherwise | uint32 |
+| contractAddress | the address of the newly created contract, if any | address |
 | gasUsed | the amount of gas actually used by the transaction | gas |
 | logs | a possibly empty array of logs | CLogEntryArray |
 
@@ -132,10 +132,10 @@ Logs appear in a possibly empty array in the transaction's receipt. They are onl
 | transactionIndex | the zero-indexed position of the transaction in the block | blknum |
 | address | the smart contract that emitted this log | address |
 | logIndex | the zero-indexed position of this log relative to the block | blknum |
-| topics | The first topic hashes event signature of the log&#44; up to 3 additional index parameters may appear | CTopicArray |
+| topics | The first topic hashes event signature of the log, up to 3 additional index parameters may appear | CTopicArray |
 | data | any remaining un-indexed parameters to the event | bytes |
 | articulatedLog | a human-readable version of the topic and data fields | CFunction |
-| compressedLog | a truncated&#44; more readable version of the articulation | string |
+| compressedLog | a truncated, more readable version of the articulation | string |
 
 ## Trace
 
@@ -180,7 +180,7 @@ Other than the first trace which is the trace of the transaction itself, traces 
 | gas | the maximum number of gas allowed for this trace | gas |
 | input | an encoded version of the function call | bytes |
 | callType | the type of call | string |
-| refundAddress | if the call type is self-destruct&#44; the address to which the refund is sent | address |
+| refundAddress | if the call type is self-destruct, the address to which the refund is sent | address |
 
 ## TraceResult
 
@@ -190,8 +190,8 @@ As mentioned above, other than the first trace, traces represent calls into othe
 
 | Field | Description | Type |
 |-------|-------------|------|
-| newContract | Address of new contract&#44; if any | address |
-| code | if this trace is creating a new smart contract&#44; the byte code of that contract | bytes |
+| newContract | Address of new contract, if any | address |
+| code | if this trace is creating a new smart contract, the byte code of that contract | bytes |
 | gasUsed | the amount of gas used by this trace | gas |
 | output | the result of the call of this trace | bytes |
 
