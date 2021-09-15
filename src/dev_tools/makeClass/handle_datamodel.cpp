@@ -86,8 +86,8 @@ bool COptions::handle_datamodel(void) {
 
     for (auto doc : dataDocs) {
         doc.second += STR_YAML_TAIL2;
-        string_q res = substitute(doc.second, "$DATE", "2021-06-30T12:13:03-03:00");
-        stringToAsciiFile(getDocsPath("content/data-model/" + substitute(toLower(doc.first), " ", "")) + ".md", res);
+        string_q outFn = getDocsPath("content/data-model/" + substitute(toLower(doc.first), " ", "")) + ".md";
+        writeIfDifferent(outFn, doc.second, Now());
     }
 
     return true;

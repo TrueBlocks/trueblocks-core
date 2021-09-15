@@ -13,7 +13,6 @@
 #include "acctlib.h"
 #include "options.h"
 
-extern bool writeIfDifferent(const string_q& path, const string_q& code);
 //------------------------------------------------------------------------------------------------------------
 bool visitReadme(const string_q& templatePath, void* data) {
     if (endsWith(templatePath, "/")) {
@@ -74,11 +73,41 @@ bool visitReadme(const string_q& templatePath, void* data) {
 }
 
 //------------------------------------------------------------------------------------------------------------
-bool writeIfDifferent(const string_q& path, const string_q& code) {
-    string_q existing = asciiFileToString(path);
+bool writeIfDifferent(const string_q& outFn, const string_q& codeIn, const time_q& now) {
+#if 0
+    return writeIfDifferent(outFn, substitute(codeIn, "$DATE", "2021-06-30T12:13:03-03:00"));
+#else
+    static uint32_t cnt = 1;
+    string_q code = substitute(codeIn, "date: $DATE\n", "");
+    stringToAsciiFile("../build/one/" + uint_2_Str(cnt) + ".txt", code);
+    string_q existingIn = asciiFileToString(outFn);
+    CStringArray lines;
+    explode(lines, existingIn, '\n', false);
+    ostringstream existing;
+    for (auto line : lines) {
+        if (!startsWith(line, "date: ")) {
+            existing << line << endl;
+        }
+    }
+    stringToAsciiFile("../build/two/" + uint_2_Str(cnt) + ".txt", existing.str());
+    cnt++;
+
+    if (existing.str() != code) {
+        string_q out = substitute(codeIn, "$DATE", now.Format(FMT_EXPORT));
+        stringToAsciiFile(outFn, out);
+        cerr << cGreen << "\tProcessed " << cOff << outFn << endl;
+        return true;
+    }
+    return false;
+#endif
+}
+
+//------------------------------------------------------------------------------------------------------------
+bool writeIfDifferent(const string_q& outFn, const string_q& code) {
+    string_q existing = asciiFileToString(outFn);
     if (existing != code) {
-        stringToAsciiFile(path, code);
-        cerr << cGreen << "\tProcessed " << cOff << path << endl;
+        stringToAsciiFile(outFn, code);
+        cerr << cGreen << "\tProcessed " << cOff << outFn << endl;
         return true;
     }
     return false;
@@ -142,8 +171,8 @@ bool COptions::handle_readmes(void) {
             os << asciiFileToString(pp);
         }
 
-        string_q outPath = getDocsPath("content/docs/chifra/" + fn + ".md");
-        stringToAsciiFile(outPath, substitute(os.str(), "$DATE", "2021-05-08T01:35:20"));
+        string_q outFn = getDocsPath("content/docs/chifra/" + fn + ".md");
+        writeIfDifferent(outFn, os.str(), Now());
 
         weight += 200;
     }
