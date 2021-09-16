@@ -117,8 +117,11 @@ string_q CClassDefinition::getValueByName(const string_q& fieldName) const {
             if (fieldName % "doc_order") {
                 return doc_order;
             }
-            if (fieldName % "description") {
-                return description;
+            if (fieldName % "doc_descr") {
+                return doc_descr;
+            }
+            if (fieldName % "doc_api") {
+                return doc_api;
             }
             break;
         case 'e':
@@ -167,11 +170,6 @@ string_q CClassDefinition::getValueByName(const string_q& fieldName) const {
                 return input_path;
             }
             break;
-        case 'o':
-            if (fieldName % "openapi") {
-                return openapi;
-            }
-            break;
         case 'p':
             if (fieldName % "produced_by") {
                 return produced_by;
@@ -210,8 +208,16 @@ bool CClassDefinition::setValueByName(const string_q& fieldNameIn, const string_
     string_q fieldValue = fieldValueIn;
 
     // EXISTING_CODE
-    if (fieldName == "doc_group" && contains("openapi", "-"))
-        doc_order = nextTokenClear(fieldValue, '-');
+    if (fieldName == "doc_group") {
+        string_q num = nextTokenClear(fieldValue, '-');
+        if (doc_order.length() < 4)
+            doc_order = num + doc_order;
+    }
+    if (fieldName == "doc_api") {
+        string_q num = nextTokenClear(fieldValue, '-');
+        if (doc_order.length() < 4)
+            doc_order = doc_order + num;
+    }
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {
@@ -272,8 +278,12 @@ bool CClassDefinition::setValueByName(const string_q& fieldNameIn, const string_
                 doc_order = fieldValue;
                 return true;
             }
-            if (fieldName % "description") {
-                description = fieldValue;
+            if (fieldName % "doc_descr") {
+                doc_descr = fieldValue;
+                return true;
+            }
+            if (fieldName % "doc_api") {
+                doc_api = fieldValue;
                 return true;
             }
             break;
@@ -316,12 +326,6 @@ bool CClassDefinition::setValueByName(const string_q& fieldNameIn, const string_
         case 'i':
             if (fieldName % "input_path") {
                 input_path = fieldValue;
-                return true;
-            }
-            break;
-        case 'o':
-            if (fieldName % "openapi") {
-                openapi = fieldValue;
                 return true;
             }
             break;
@@ -399,8 +403,8 @@ bool CClassDefinition::Serialize(CArchive& archive) {
     archive >> contained_by;
     archive >> doc_group;
     archive >> doc_order;
-    archive >> description;
-    archive >> openapi;
+    archive >> doc_descr;
+    archive >> doc_api;
     archive >> produced_by;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -438,8 +442,8 @@ bool CClassDefinition::SerializeC(CArchive& archive) const {
     archive << contained_by;
     archive << doc_group;
     archive << doc_order;
-    archive << description;
-    archive << openapi;
+    archive << doc_descr;
+    archive << doc_api;
     archive << produced_by;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -515,8 +519,8 @@ void CClassDefinition::registerClass(void) {
     ADD_FIELD(CClassDefinition, "contained_by", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "doc_group", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "doc_order", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CClassDefinition, "description", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CClassDefinition, "openapi", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CClassDefinition, "doc_descr", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CClassDefinition, "doc_api", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CClassDefinition, "produced_by", T_TEXT | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
@@ -631,11 +635,11 @@ CClassDefinition::CClassDefinition(const CToml& toml) {
     contained_by = toml.getConfigStr("settings", "contained_by", "");
     produced_by = toml.getConfigStr("settings", "produced_by", "");
     eq_str = toml.getConfigStr("settings", "equals", "");
-    description = toml.getConfigStr("settings", "description", "");
-    doc_group = toml.getConfigStr("settings", "doc_group", "");
     tsx = toml.getConfigBool("settings", "tsx", false);
-    openapi = toml.getConfigStr("settings", "openapi", "");
-    doc_order = nextTokenClear(openapi, '-');
+    doc_group = toml.getConfigStr("settings", "doc_group", "");
+    doc_descr = toml.getConfigStr("settings", "doc_descr", "");
+    doc_api = toml.getConfigStr("settings", "doc_api", "");
+    doc_order = nextTokenClear(doc_group, '-') + nextTokenClear(doc_api, '-');
 
     //------------------------------------------------------------------------------------------------
     class_base = toProper(extract(class_name, 1));

@@ -1,4 +1,3 @@
 These commands compare the balance of an address against a particular token or block.
 
-_For information about how to refine balance queries, see
-[the corresponding CLI section](/docs/chifra/chainstate/)_
+_Each data structure is created by one or more tools which are detailed below_

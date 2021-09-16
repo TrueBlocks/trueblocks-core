@@ -2,7 +2,7 @@
 title: "Accounts"
 description: ""
 lead: ""
-date: 2021-09-15T09:03:19
+date: 2021-09-16T09:21:36
 lastmod:
   - :git
   - lastmod
@@ -17,30 +17,23 @@ weight: 1000
 toc: true
 ---
 
-TrueBlocks Data collections are built progressively. Each grouping comprises a building block on which another grouping is created.
+The primary purpose of TrueBlocks is to extract, directly from the blockchain, the entire transactional history for one or more addresses and present that information for use outside the blockchain. The results of this extraction are stored in a data structure called a [Monitor](/data-model/accounts/#monitor).
 
-_These fields describe the output of various Trueblocks account queries. For information about how to refine these queries, see [the corresponding CLI section](/docs/chifra/accounts/)_
+Monitors collect together [Appearances](/data-model/accounts/#appearance) (`blknum.tx_id` pairs) along with additional information such as [Reconciliations](/data-model/accounts/#reconciliation) (18-decimal place accurate accounting for each asset transfer), [Names](/data-model/accounts/#names) (associations of human-readable names with addresses), and [Abis](/data-model/accounts/#abis) which track the "meaning" of each transaction through its [Functions](/data-model/accounts/#function) and [Parameters](/data-model/accounts/#parameters).
 
-## Appearance
-
-TEXT ABOUT APPEARANCES
-
-### Fields
-
-| Field | Description | Type |
-|-------|-------------|------|
-| blockNumber | the number of the block | blknum |
-| transactionIndex | the zero-indexed position of the transaction in the block | blknum |
-| address | the address of the appearance | address |
-| name | the name of the address, if found | string |
-| timestamp | the timestamp for this appearance | timestamp |
-| date | the date represented by the timestamp | string |
+_Each data structure is created by one or more tools which are detailed below_
 
 ## Monitor
 
-Monitors are [Accounts](#account), but they have the special quality that the user has told us explicitly that they are interested in 'monitoring' the activity on the given address. He/she may do that by running either `chifra list` or `chifra export` on the address. Doing so creates a monitor for that address. See the Account data description above for information on the data fields of a monitor.
+A Monitor is a list of [Appearances](/data-model/accounts/#appearance) associated with a given address along with various details about those Appearances. A Monitor is created when a user expresses interest in an address by calling either [chifra list](/docs/chifra/accounts/#chifra-list) or [chifra export](/docs/chifra/accounts/#chifra-export) tool (or querying thier associated APIs).
 
-Monitors can also be [Collections](#collection) of Accounts that are similar to straight up Account monitors but monitor multiple addresses at a time.
+Once created, a Monitor may be periodically *freshened* by calling either `chifra list` or `chifra export` again, however, it is also possible to keep a Monitor fresh continually by calling [chifra serve --monitor](). This tool watches the front of the chain and repeatedly calls `chifra list`.
+
+| **Tools**                                                          |                                                |
+| ------------------------------------------------------------------ | ---------------------------------------------- |
+| [chifra list &lt;address&gt;](/docs/chifra/admin/#chifra-status)   | create or freshen a Monitor                    |
+| [chifra export &lt;address&gt;](/docs/chifra/admin/#chifra-status) | create or freshen and then report on a Monitor |
+| [chifra status monitors](/docs/chifra/admin/#chifra-status)        | report on all existing monitors                |
 
 ### Fields
 
@@ -54,29 +47,19 @@ Monitors can also be [Collections](#collection) of Accounts that are similar to 
 | address | the address being monitored | address |
 | is_custom | `true` if this address is customized | bool |
 
-## Name
+## Appearance
 
-_Accounts_ link an address to a name.
-
-Accounts are a combination of an`address`, a `name`, and optionally other data. Where possible, this information is queried directly from the blockchain, however in many cases the information was gathered from various websites over the years. For example, every time people say "Show me your address, and we will airdrop some tokens" on Twitter, we copy and paste all those addresses. If you're going to DOX yourselves, we're going to notice. Sorry. Not sorry.
-
+<!-- An appearance is  -->
 ### Fields
 
 | Field | Description | Type |
 |-------|-------------|------|
-| tags | colon separated list of tags | string |
-| address | the address associated with this name | address |
-| name | the name associated with this address (retreived from on-chain data if available) | string |
-| symbol | the symbol for this address (retreived from on-chain data if available) | string |
-| source | user supplied source of where this name was found (or on-chain if name is on-chain) | string |
-| decimals | number of decimals retreived from an ERC20 smart contract, defaults to 18 | uint64 |
-| description | user supplied description for the address | string |
-| deleted | `true` if deleted, `false` otherwise | bool |
-| is_custom | `true` if the address is a custom address, `false` otherwise | bool |
-| is_prefund | `true` if the address was one of the prefund addresses, `false` otherwise | bool |
-| is_contract | `true` if the address is a smart contract, `false` otherwise | bool |
-| is_erc20 | `true` if the address is an ERC20, `false` otherwise | bool |
-| is_erc721 | `true` if the address is an ERC720, `false` otherwise | bool |
+| blockNumber | the number of the block | blknum |
+| transactionIndex | the zero-indexed position of the transaction in the block | blknum |
+| address | the address of the appearance | address |
+| name | the name of the address, if found | string |
+| timestamp | the timestamp for this appearance | timestamp |
+| date | the date represented by the timestamp | string |
 
 ## Reconciliation
 
@@ -128,6 +111,30 @@ Reconciliations are relative to an `accountedFor` address. For this reason, the 
 | endBalDiff | a calculated field -- endBal - endBalCalc, if non-zero, the reconciliation failed | int256 |
 | reconciled | a calculated field -- true if `endBal === endBalCalc` and `begBal === prevBlkBal`. `false` otherwise. | bool |
 
+## Name
+
+_Accounts_ link an address to a name.
+
+Accounts are a combination of an`address`, a `name`, and optionally other data. Where possible, this information is queried directly from the blockchain, however in many cases the information was gathered from various websites over the years. For example, every time people say "Show me your address, and we will airdrop some tokens" on Twitter, we copy and paste all those addresses. If you're going to DOX yourselves, we're going to notice. Sorry. Not sorry.
+
+### Fields
+
+| Field | Description | Type |
+|-------|-------------|------|
+| tags | colon separated list of tags | string |
+| address | the address associated with this name | address |
+| name | the name associated with this address (retreived from on-chain data if available) | string |
+| symbol | the symbol for this address (retreived from on-chain data if available) | string |
+| source | user supplied source of where this name was found (or on-chain if name is on-chain) | string |
+| decimals | number of decimals retreived from an ERC20 smart contract, defaults to 18 | uint64 |
+| description | user supplied description for the address | string |
+| deleted | `true` if deleted, `false` otherwise | bool |
+| is_custom | `true` if the address is a custom address, `false` otherwise | bool |
+| is_prefund | `true` if the address was one of the prefund addresses, `false` otherwise | bool |
+| is_contract | `true` if the address is a smart contract, `false` otherwise | bool |
+| is_erc20 | `true` if the address is an ERC20, `false` otherwise | bool |
+| is_erc721 | `true` if the address is an ERC720, `false` otherwise | bool |
+
 ## Abi
 
 For more information on ABIs please see any relevant Ethereum documentation, particularly that documentation related to Solidity coding. The fields or the ABI are mostly identical to the fields you will find in that documentation.
@@ -141,7 +148,7 @@ For more information on ABIs please see any relevant Ethereum documentation, par
 
 ## Function
 
-TEXT FOR FUNCTIONS
+<!-- TEXT FOR FUNCTIONS -->
 
 ### Fields
 
@@ -156,7 +163,7 @@ TEXT FOR FUNCTIONS
 
 ## Parameter
 
-TEXT FOR PARAMETERS
+<!-- TEXT FOR PARAMETERS -->
 
 ### Fields
 

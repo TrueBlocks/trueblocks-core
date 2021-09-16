@@ -5,7 +5,7 @@ fields = tokenbalancerecord.csv
 includes = acctlib.h
 equals = address == it.address
 sort = v1.address < v2.address
-doc_group = Chain State
-description = on-chain token related data for a give address at a given block height
-openapi = 21-token
+doc_group = 03-Chain State
+doc_descr = on-chain token related data for a give address at a given block height
+doc_api = 21-token
 produced_by = tokens

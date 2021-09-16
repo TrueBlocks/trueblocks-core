@@ -39,7 +39,7 @@ bool COptions::handle_datamodel(void) {
             dataDocsFront[model.doc_group] = true;
             string_q front = STR_YAML_FRONTMATTER;
             replace(front, "[{TITLE}]", model.doc_group);
-            replace(front, "[{WEIGHT}]", uint_2_Str(weight));
+            replace(front, "[{WEIGHT}]", uint_2_Str(model.doc_group == "Admin" ? 1700 : weight));
             replace(front, "[{M1}]", "data:");
             replace(front, "[{M2}]", "parent: \"collections\"");
             doc << front << endl;
@@ -48,21 +48,21 @@ bool COptions::handle_datamodel(void) {
                 getDocsPathTemplates("model-groups/" + substitute(toLower(model.doc_group), " ", "") + ".md"));
         }
 
-        string_q name = model.openapi;
+        string_q name = model.doc_api;
         if (name.length())
             name[0] = (char)toupper(name[0]);
         doc << endl;
         doc << "## " << name << endl;
         doc << endl;
-        doc << asciiFileToString(getDocsPathTemplates("model-intros/" + model.openapi) + ".md") << endl;
+        doc << asciiFileToString(getDocsPathTemplates("model-intros/" + model.doc_api) + ".md") << endl;
 
         doc << "### Fields" << endl;
         doc << endl;
         doc << "| Field | Description | Type |" << endl;
         doc << "|-------|-------------|------|" << endl;
 
-        fmt += "[    {OPENAPI}:\n]";
-        fmt += "[      description: \"{DESCRIPTION}\"\n]";
+        fmt += "[    {DOC_API}:\n]";
+        fmt += "[      description: \"{DOC_DESCR}\"\n]";
         fmt += "[      type: object\n]";
         fmt += "[      properties:\n]";
         theStream << model.Format(fmt);
@@ -95,7 +95,7 @@ bool COptions::handle_datamodel(void) {
 
 //------------------------------------------------------------------------------------------------------------
 bool sortByDataModelName(const CClassDefinition& c1, const CClassDefinition& c2) {
-    return c1.doc_group + c1.doc_order + c1.openapi < c2.doc_group + c2.doc_order + c2.openapi;
+    return c1.doc_order < c2.doc_order;
 }
 
 //------------------------------------------------------------------------------------------------------------

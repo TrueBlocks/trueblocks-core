@@ -1,4 +1,4 @@
-TEXT ABOUT PRICE QUOTES
+<!-- TEXT ABOUT PRICE QUOTES -->
 
 ### How to get price quotes
 

@@ -1,4 +1,4 @@
-TEXT ABOUT PINNED CHUNKS
+<!-- TEXT ABOUT PINNED CHUNKS -->
 
 ### How to get pinnedchunks
 

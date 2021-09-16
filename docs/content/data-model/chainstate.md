@@ -2,7 +2,7 @@
 title: "Chain State"
 description: ""
 lead: ""
-date: 2021-09-15T09:03:19
+date: 2021-09-16T08:22:30
 lastmod:
   - :git
   - lastmod
@@ -13,14 +13,13 @@ images: []
 menu:
   data:
     parent: "collections"
-weight: 1600
+weight: 1400
 toc: true
 ---
 
 These commands compare the balance of an address against a particular token or block.
 
-_For information about how to refine balance queries, see
-[the corresponding CLI section](/docs/chifra/chainstate/)_
+_Each data structure is created by one or more tools which are detailed below_
 
 ## State
 

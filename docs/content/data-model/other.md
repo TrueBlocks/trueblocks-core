@@ -2,7 +2,7 @@
 title: "Other"
 description: ""
 lead: ""
-date: 2021-09-15T09:03:19
+date: 2021-09-16T09:21:36
 lastmod:
   - :git
   - lastmod
@@ -26,10 +26,11 @@ These commands call some useful miscellaneous tools:
 text="Note: some of these tools, like `ethslurp`, require an EtherScan key." >}}
 [Follow these instructions to add a key to your config](https://docs.trueblocks.io/docs/prologue/installing-trueblocks/#3-update-the-configs-for-your-rpc-and-api-keys)
 
+_Each data structure is created by one or more tools which are detailed below_
 
 ## Quote
 
-TEXT ABOUT PRICE QUOTES
+<!-- TEXT ABOUT PRICE QUOTES -->
 
 ### How to get price quotes
 

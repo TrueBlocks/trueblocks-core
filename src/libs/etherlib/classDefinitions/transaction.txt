@@ -6,7 +6,7 @@ cpp_includes = etherlib.h
 equals = (hash == it.hash)
 contained_by = Block
 tsx = true
-doc_group = Chain Data
-description = the transaction data for a given transaction directly from the blockchain
-openapi = 11-transaction
+doc_group = 02-Chain Data
+doc_descr = the transaction data for a given transaction directly from the blockchain
+doc_api = 11-transaction
 produced_by = transactions, slurp, export

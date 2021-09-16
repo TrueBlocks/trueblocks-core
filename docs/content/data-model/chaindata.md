@@ -2,7 +2,7 @@
 title: "Chain Data"
 description: ""
 lead: ""
-date: 2021-09-15T09:03:19
+date: 2021-09-16T08:22:30
 lastmod:
   - :git
   - lastmod
@@ -13,13 +13,13 @@ images: []
 menu:
   data:
     parent: "collections"
-weight: 1400
+weight: 1200
 toc: true
 ---
 
 _These fields describe the output of various TrueBlocks blockchain queries.
-For information about how to refine these queries, see
-[the corresponding CLI section](/docs/chifra/chaindata/)_
+
+_Each data structure is created by one or more tools which are detailed below_
 
 ## Block
 
