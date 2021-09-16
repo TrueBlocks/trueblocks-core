@@ -8,4 +8,4 @@ sort = v1.address < v2.address
 doc_group = 03-Chain State
 doc_descr = on-chain token related data for a give address at a given block height
 doc_api = 21-token
-produced_by = tokens
+doc_producer = tokens

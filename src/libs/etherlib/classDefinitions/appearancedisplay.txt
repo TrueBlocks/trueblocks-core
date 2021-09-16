@@ -6,4 +6,4 @@ includes = etherlib.h
 doc_group = 01-Accounts
 doc_descr = a single appearance of an address anywhere in the chain in the form of blockNumber.transactionIndex
 doc_api = 02-appearance
-produced_by = list, export
+doc_producer = list, export

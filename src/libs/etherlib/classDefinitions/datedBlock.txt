@@ -5,4 +5,4 @@ includes = etherlib.h
 doc_group = 02-Chain Data
 doc_descr = An indentified block named for convienience
 doc_api = 17-datedBlock
-produced_by = when
+doc_producer = when

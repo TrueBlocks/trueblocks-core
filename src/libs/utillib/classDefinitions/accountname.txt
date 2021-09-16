@@ -9,4 +9,4 @@ tsx = true
 doc_group = 01-Accounts
 doc_descr = an association between a name and address for use throughout TrueBlocks
 doc_api = 04-name
-produced_by = names
+doc_producer = names

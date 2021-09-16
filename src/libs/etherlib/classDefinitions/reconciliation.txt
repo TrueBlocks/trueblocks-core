@@ -8,4 +8,4 @@ tsx = true
 doc_group = 01-Accounts
 doc_descr = a reconiciliation of all inflows and outflows to a given account at a given transaction
 doc_api = 03-reconciliation
-produced_by = export
+doc_producer = export

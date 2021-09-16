@@ -8,4 +8,4 @@ tsx = true
 doc_group = 01-Accounts
 doc_descr = A local file indicating a user's interest in an address. Includes caches for reconicilations, transactions and appearances as well as an optional association to named account
 doc_api = 01-monitor
-produced_by = monitors
+doc_producer = monitors

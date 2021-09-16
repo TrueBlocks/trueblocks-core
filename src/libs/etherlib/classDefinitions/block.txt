@@ -7,4 +7,4 @@ tsx = true
 doc_group = 02-Chain Data
 doc_descr = block data directly from the blockchain
 doc_api = 10-block
-produced_by = blocks
+doc_producer = blocks

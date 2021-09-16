@@ -9,4 +9,4 @@ tsx = true
 doc_group = 02-Chain Data
 doc_descr = receipt data for a given transaction directly from the blockchain
 doc_api = 12-receipt
-produced_by = receipts, export
+doc_producer = receipts, export

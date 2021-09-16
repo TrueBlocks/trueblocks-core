@@ -8,4 +8,4 @@ equals = blockNumber == it.blockNumber
 doc_group = 03-Chain State
 doc_descr = the on-chain state of a given address
 doc_api = 20-state
-produced_by = state
+doc_producer = state

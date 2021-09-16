@@ -7,4 +7,4 @@ tsx = true
 doc_group = 02-Chain Data
 doc_descr = trace data for a given transaction directly from the blockchain
 doc_api = 14-trace
-produced_by = traces, export
+doc_producer = traces, export
