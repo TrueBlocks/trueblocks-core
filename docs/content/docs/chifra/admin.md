@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2021-09-16T19:31:36
+date: 2021-09-16T22:32:14
 lastmod:
   - :git
   - lastmod
@@ -30,14 +30,16 @@ TrueBlocks maintains caches for the index of address appearances, named addresse
 
 `Where:`
 
-|     | Option              | Description                                                                                                                                |
-| --- | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
-|     | modes               | the type of status info to retrieve, one or more of *[ index \| monitors \| collections \| names \| abis \| caches \| some\* \| all ]*     |
-| -d  | --details           | include details about items found in monitors, slurps, abis, or price caches                                                               |
-| -t  | --types &lt;val&gt; | for caches mode only, which type(s) of cache to report, one or more of *[ blocks \| transactions \| traces \| slurps \| prices \| all\* ]* |
-| -x  | --fmt &lt;val&gt;   | export format, one of *[ none \| json\* \| txt \| csv \| api ]*                                                                            |
-| -v  | --verbose           | set verbose level (optional level defaults to 1)                                                                                           |
-| -h  | --help              | display this help screen                                                                                                                   |
+{{<td>}}
+|     | Option              | Description                                                                                                                        |
+| --- | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+|     | modes               | the type of status info to retrieve, one or more of<br/>[index, monitors, collections, names, abis, caches,<br/>some all]          |
+| -d  | --details           | include details about items found in monitors, slurps,<br/>abis, or price caches                                                   |
+| -t  | --types &lt;val&gt; | for caches mode only, which type(s) of cache to report,<br/>one or more of [blocks, transactions, traces, slurps,<br/>prices, all] |
+| -x  | --fmt &lt;val&gt;   | export format, one of [none, json, txt, csv, api]                                                                                  |
+| -v  | --verbose           | set verbose level (optional level defaults to 1)                                                                                   |
+| -h  | --help              | display this help screen                                                                                                           |
+{{</td>}}
 
 **Source code**: [`apps/cacheStatus`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/cacheStatus)
 
@@ -85,12 +87,14 @@ The scraper can scrape either the index only, previously created monitors only, 
 
 `Where:`
 
-|     | Option                 | Description                                                                     |
-| --- | ---------------------- | ------------------------------------------------------------------------------- |
-| -p  | --pin                  | pin new chunks (and blooms) to IPFS (requires Pinata key and running IPFS node) |
-| -s  | --sleep &lt;double&gt; | the number of seconds to sleep between passes (default 14)                      |
-| -v  | --verbose              | set verbose level (optional level defaults to 1)                                |
-| -h  | --help                 | display this help screen                                                        |
+{{<td>}}
+|     | Option                 | Description                                                                         |
+| --- | ---------------------- | ----------------------------------------------------------------------------------- |
+| -p  | --pin                  | pin new chunks (and blooms) to IPFS (requires Pinata<br/>key and running IPFS node) |
+| -s  | --sleep &lt;double&gt; | the number of seconds to sleep between passes (default<br/>14)                      |
+| -v  | --verbose              | set verbose level (optional level defaults to 1)                                    |
+| -h  | --help                 | display this help screen                                                            |
+{{</td>}}
 
 `Configurable Items:`
 
@@ -158,15 +162,17 @@ This tool is not yet ready for production use. Please return to this page later.
 
 `Where:`
 
-|     | Option            | Description                                                                   |
-| --- | ----------------- | ----------------------------------------------------------------------------- |
-| -l  | --list            | list the index and Bloom filter hashes from local manifest or pinning service |
-| -i  | --init            | initialize local index by downloading Bloom filters from pinning service      |
-| -n  | --init_all        | initialize local index by downloading both Bloom filters and index chunks     |
-| -p  | --pin_locally     | pin all local files in the index to an IPFS store (requires IPFS)             |
-| -x  | --fmt &lt;val&gt; | export format, one of *[ none \| json\* \| txt \| csv \| api ]*               |
-| -v  | --verbose         | set verbose level (optional level defaults to 1)                              |
-| -h  | --help            | display this help screen                                                      |
+{{<td>}}
+|     | Option            | Description                                                                       |
+| --- | ----------------- | --------------------------------------------------------------------------------- |
+| -l  | --list            | list the index and Bloom filter hashes from local manifest<br/>or pinning service |
+| -i  | --init            | initialize local index by downloading Bloom filters<br/>from pinning ervice       |
+| -n  | --init_all        | initialize local index by downloading both Bloom filters<br/>and index chunks     |
+| -p  | --pin_locally     | pin all local files in the index to an IPFS store (requires<br/>IPFS)             |
+| -x  | --fmt &lt;val&gt; | export format, one of [none, json, txt, csv, api]                                 |
+| -v  | --verbose         | set verbose level (optional level defaults to 1)                                  |
+| -h  | --help            | display this help screen                                                          |
+{{</td>}}
 
 `Notes:`
 

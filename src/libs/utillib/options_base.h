@@ -238,17 +238,7 @@ class COption {
         }
         return lName;
     }
-    string_q getDescription(bool isReadme) const {
-        string_q descr = trim(description);
-        descr = (descr + (!is_optional && is_positional ? " (required)" : ""));
-        if (isReadme) {
-            replace(descr, "*", "\\*");
-            replaceAll(descr, "|", " \\| ");
-            replaceAll(descr, "[", "*[ ");
-            replaceAll(descr, "]", " ]*");
-        }
-        return descr;
-    }
+    string_q getDescription(bool isReadme) const;
 };
 
 //--------------------------------------------------------------------------------

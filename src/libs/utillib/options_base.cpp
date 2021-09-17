@@ -1009,6 +1009,32 @@ string_q COptionsBase::descriptionOverride(void) const {
 }
 
 //--------------------------------------------------------------------------------
+string_q COption::getDescription(bool isReadme) const {
+    string_q descr = trim(description);
+    descr = (descr + (!is_optional && is_positional ? " (required)" : ""));
+    if (isReadme) {
+        replace(descr, "*", "");
+        replaceAll(descr, "|", ", ");
+    }
+    CStringArray lines;
+    while (!descr.empty()) {
+        string_q part = descr.substr(0, 50);
+        replace(descr, part, "");
+        string_q part2 = nextTokenClear(descr, ' ');
+        replace(descr, part2, "");
+        part += part2;
+        if (!descr.empty()) {
+            part += "<br/>";
+        }
+        lines.push_back(part);
+    }
+    string_q ret;
+    for (auto line : lines)
+        ret += line;
+    return substitute(ret, "&#124 ", "&#124; ");
+}
+
+//--------------------------------------------------------------------------------
 string_q COptionsBase::descriptions(void) const {
     if (!overrideStr.empty())
         return descriptionOverride();
@@ -1054,6 +1080,7 @@ string_q COptionsBase::descriptions(void) const {
 
     if (isReadme) {
         os << endl;
+        os << "{{<td>}}" << endl;
         COptionDescr dd1("", "Option", "Description", false, false, widths);
         os << dd1.oneDescription(isReadme);
         COptionDescr dd2("-", "", "", false, false, widths);
@@ -1100,6 +1127,9 @@ string_q COptionsBase::descriptions(void) const {
     }
 
     os << extra.str();
+    if (isReadme) {
+        os << "{{</td>}}" << endl;
+    }
     return os.str();
 }  // namespace qblocks
 

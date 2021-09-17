@@ -65,7 +65,8 @@ bool visitReadme(const string_q& templatePath, void* data) {
         replaceAll(srcCode, "[{NAME}]", progNameMap[tool].empty() ? opts->getProgName() : progNameMap[tool]);
 
         bool c1 = writeIfDifferent(docPath, docCode + "\n");
-        bool c2 = writeIfDifferent(srcPath, srcCode + "\n");
+        bool c2 =
+            writeIfDifferent(srcPath, substitute(substitute(srcCode, "{{<td>}}\n", ""), "{{</td>}}\n", "") + "\n");
         opts->counter.nVisited++;
         opts->counter.nProcessed += (c1 || c2);
     }

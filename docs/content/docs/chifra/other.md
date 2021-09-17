@@ -2,7 +2,7 @@
 title: "Other"
 description: ""
 lead: ""
-date: 2021-09-16T19:24:04
+date: 2021-09-16T22:32:14
 lastmod:
   - :git
   - lastmod
@@ -36,15 +36,17 @@ The `chifra quotes` tool provides USD ($) price data to other tools and to the c
 
 `Where:`
 
-|     | Option               | Description                                                                                                          |
-| --- | -------------------- | -------------------------------------------------------------------------------------------------------------------- |
-| -f  | --freshen            | Freshen price database                                                                                               |
-| -p  | --period &lt;val&gt; | increment of display, one of *[ 5 \| 15 \| 30 \| 60 \| 120\* \| 240 \| 1440 \| 10080 \| hourly \| daily \| weekly ]* |
-| -a  | --pair &lt;str&gt;   | which price pair to freshen or list (see Poloniex)                                                                   |
-| -e  | --feed &lt;val&gt;   | the feed for the price data, one of *[ poloniex\* \| maker \| tellor ]*                                              |
-| -x  | --fmt &lt;val&gt;    | export format, one of *[ none \| json\* \| txt \| csv \| api ]*                                                      |
-| -v  | --verbose            | set verbose level (optional level defaults to 1)                                                                     |
-| -h  | --help               | display this help screen                                                                                             |
+{{<td>}}
+|     | Option               | Description                                                                                    |
+| --- | -------------------- | ---------------------------------------------------------------------------------------------- |
+| -f  | --freshen            | Freshen price database                                                                         |
+| -p  | --period &lt;val&gt; | increment of display, one of [5, 15, 30, 60, 120, 240,<br/>1440, 10080, hourly, daily, weekly] |
+| -a  | --pair &lt;str&gt;   | which price pair to freshen or list (see Poloniex)                                             |
+| -e  | --feed &lt;val&gt;   | the feed for the price data, one of [poloniex, maker,<br/>tellor]                              |
+| -x  | --fmt &lt;val&gt;    | export format, one of [none, json, txt, csv, api]                                              |
+| -v  | --verbose            | set verbose level (optional level defaults to 1)                                               |
+| -h  | --help               | display this help screen                                                                       |
+{{</td>}}
 
 `Notes:`
 
@@ -66,14 +68,16 @@ The `chifra quotes` tool provides USD ($) price data to other tools and to the c
 
 `Where:`
 
-|     | Option            | Description                                                     |
-| --- | ----------------- | --------------------------------------------------------------- |
-|     | terms             | one or more addresses, names, block, or transaction identifiers |
-| -l  | --local           | open the local TrueBlocks explorer                              |
-| -g  | --google          | search google excluding popular blockchain explorers            |
-| -x  | --fmt &lt;val&gt; | export format, one of *[ none \| json\* \| txt \| csv \| api ]* |
-| -v  | --verbose         | set verbose level (optional level defaults to 1)                |
-| -h  | --help            | display this help screen                                        |
+{{<td>}}
+|     | Option            | Description                                                        |
+| --- | ----------------- | ------------------------------------------------------------------ |
+|     | terms             | one or more addresses, names, block, or transaction<br/>idetifiers |
+| -l  | --local           | open the local TrueBlocks explorer                                 |
+| -g  | --google          | search google excluding popular blockchain explorers               |
+| -x  | --fmt &lt;val&gt; | export format, one of [none, json, txt, csv, api]                  |
+| -v  | --verbose         | set verbose level (optional level defaults to 1)                   |
+| -h  | --help            | display this help screen                                           |
+{{</td>}}
 
 **Source code**: [`apps/fireStorm`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/fireStorm)
 
@@ -92,15 +96,17 @@ While `chifra slurp` has its shortcomings, it does provides some nice features. 
 
 `Where:`
 
-|     | Option              | Description                                                                                                                |
-| --- | ------------------- | -------------------------------------------------------------------------------------------------------------------------- |
-|     | addrs               | one or more addresses to slurp from Etherscan (required)                                                                   |
-|     | blocks              | an optional range of blocks to slurp                                                                                       |
-| -t  | --types &lt;val&gt; | one or more types of transactions to request, one or more of *[ ext\* \| int \| token \| nfts \| miner \| uncles \| all ]* |
-| -p  | --appearances       | show only the blocknumer.tx_id appearances of the exported transactions                                                    |
-| -x  | --fmt &lt;val&gt;   | export format, one of *[ none \| json\* \| txt \| csv \| api ]*                                                            |
-| -v  | --verbose           | set verbose level (optional level defaults to 1)                                                                           |
-| -h  | --help              | display this help screen                                                                                                   |
+{{<td>}}
+|     | Option              | Description                                                                                                |
+| --- | ------------------- | ---------------------------------------------------------------------------------------------------------- |
+|     | addrs               | one or more addresses to slurp from Etherscan (required)                                                   |
+|     | blocks              | an optional range of blocks to slurp                                                                       |
+| -t  | --types &lt;val&gt; | one or more types of transactions to request, one or<br/>me of [ext, int, token, nfts, miner, uncles, all] |
+| -p  | --appearances       | show only the blocknumer.tx_id appearances of the exported<br/>transactions                                |
+| -x  | --fmt &lt;val&gt;   | export format, one of [none, json, txt, csv, api]                                                          |
+| -v  | --verbose           | set verbose level (optional level defaults to 1)                                                           |
+| -h  | --help              | display this help screen                                                                                   |
+{{</td>}}
 
 `Notes:`
 

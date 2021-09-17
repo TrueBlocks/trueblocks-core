@@ -15,31 +15,31 @@ By default, the results of the extraction are delivered to your console, however
 
 `Where:`  
 
-|     | Option                     | Description                                                                                                |
-| --- | -------------------------- | ---------------------------------------------------------------------------------------------------------- |
-|     | addrs                      | one or more addresses (0x...) to export (required)                                                         |
-|     | topics                     | filter by one or more log topics (only for --logs option)                                                  |
-|     | fourbytes                  | filter by one or more fourbytes (only for transactions and trace options)                                  |
-| -p  | --appearances              | export a list of appearances                                                                               |
-| -r  | --receipts                 | export receipts instead of transaction list                                                                |
-| -A  | --statements               | for use with --accounting option only, export only reconciliation statements                               |
-| -l  | --logs                     | export logs instead of transaction list                                                                    |
-| -t  | --traces                   | export traces instead of transaction list                                                                  |
-| -C  | --accounting               | export accounting records instead of transaction list                                                      |
-| -a  | --articulate               | articulate transactions, traces, logs, and outputs                                                         |
-| -i  | --cache_txs                | write transactions to the cache (see notes)                                                                |
-| -R  | --cache_traces             | write traces to the cache (see notes)                                                                      |
-| -y  | --factory                  | scan for contract creations from the given address(es) and report address of those contracts               |
-|     | --emitter                  | for log export only, export only if one of the given export addresses emitted the event                    |
-|     | --source &lt;addr&gt;      | for log export only, export only one of these addresses emitted the event                                  |
-|     | --relevant                 | for log and accounting export only, if true export only logs relevant to one of the given export addresses |
-| -U  | --count                    | only available for --appearances mode, if present return only the number of records                        |
-| -c  | --first_record &lt;num&gt; | the first record to process                                                                                |
-| -e  | --max_records &lt;num&gt;  | the maximum number of records to process before reporting                                                  |
-|     | --clean                    | clean (i.e. remove duplicate appearances) from all existing monitors                                       |
-| -x  | --fmt &lt;val&gt;          | export format, one of *[ none \| json\* \| txt \| csv \| api ]*                                            |
-| -v  | --verbose                  | set verbose level (optional level defaults to 1)                                                           |
-| -h  | --help                     | display this help screen                                                                                   |
+|     | Option                     | Description                                                                                                    |
+| --- | -------------------------- | -------------------------------------------------------------------------------------------------------------- |
+|     | addrs                      | one or more addresses (0x...) to export (required)                                                             |
+|     | topics                     | filter by one or more log topics (only for --logs option)                                                      |
+|     | fourbytes                  | filter by one or more fourbytes (only for transactions<br/>and trace opt)                                      |
+| -p  | --appearances              | export a list of appearances                                                                                   |
+| -r  | --receipts                 | export receipts instead of transaction list                                                                    |
+| -A  | --statements               | for use with --accounting option only, export only<br/>reconciliation statements                               |
+| -l  | --logs                     | export logs instead of transaction list                                                                        |
+| -t  | --traces                   | export traces instead of transaction list                                                                      |
+| -C  | --accounting               | export accounting records instead of transaction list                                                          |
+| -a  | --articulate               | articulate transactions, traces, logs, and outputs                                                             |
+| -i  | --cache_txs                | write transactions to the cache (see notes)                                                                    |
+| -R  | --cache_traces             | write traces to the cache (see notes)                                                                          |
+| -y  | --factory                  | scan for contract creations from the given address(es)<br/>and report address of those contracts               |
+|     | --emitter                  | for log export only, export only if one of the given<br/>export addresses emitted the evt                      |
+|     | --source &lt;addr&gt;      | for log export only, export only one of these addresses<br/>emitted the event                                  |
+|     | --relevant                 | for log and accounting export only, if true export<br/>only logs relevant to one of the given export addresses |
+| -U  | --count                    | only available for --appearances mode, if present return<br/>only the number of records                        |
+| -c  | --first_record &lt;num&gt; | the first record to process                                                                                    |
+| -e  | --max_records &lt;num&gt;  | the maximum number of records to process before reporting                                                      |
+|     | --clean                    | clean (i.e. remove duplicate appearances) from all<br/>existing monitors                                       |
+| -x  | --fmt &lt;val&gt;          | export format, one of [none, json, txt, csv, api]                                                              |
+| -v  | --verbose                  | set verbose level (optional level defaults to 1)                                                               |
+| -h  | --help                     | display this help screen                                                                                       |
 
 `Notes:`
 

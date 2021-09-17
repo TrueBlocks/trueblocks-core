@@ -25,15 +25,15 @@ You may run all tests from the `./build` folder by entering `make test-all` (or 
 
 `Where:`  
 
-|     | Option               | Description                                                                          |
-| --- | -------------------- | ------------------------------------------------------------------------------------ |
-| -m  | --mode &lt;val&gt;   | determine which set of tests to run, one of *[ cmd\* \| api \| both ]*               |
-| -f  | --filter &lt;val&gt; | determine how long it takes to run tests, one of *[ fast\* \| medi \| slow \| all ]* |
-| -c  | --clean              | clean working folder before running tests                                            |
-| -r  | --report             | display performance report to screen                                                 |
-| -x  | --fmt &lt;val&gt;    | export format, one of *[ none \| json\* \| txt \| csv \| api ]*                      |
-| -v  | --verbose            | set verbose level (optional level defaults to 1)                                     |
-| -h  | --help               | display this help screen                                                             |
+|     | Option               | Description                                                                  |
+| --- | -------------------- | ---------------------------------------------------------------------------- |
+| -m  | --mode &lt;val&gt;   | determine which set of tests to run, one of [cmd, api,<br/>both]             |
+| -f  | --filter &lt;val&gt; | determine how long it takes to run tests, one of [fast,<br/>medi, slow, all] |
+| -c  | --clean              | clean working folder before running tests                                    |
+| -r  | --report             | display performance report to screen                                         |
+| -x  | --fmt &lt;val&gt;    | export format, one of [none, json, txt, csv, api]                            |
+| -v  | --verbose            | set verbose level (optional level defaults to 1)                             |
+| -h  | --help               | display this help screen                                                     |
 
 #### Other Options
 

@@ -13,16 +13,16 @@ The `--filter` option calls your node's `trace_filter` routine (if available) us
 
 `Where:`  
 
-|     | Option               | Description                                                              |
-| --- | -------------------- | ------------------------------------------------------------------------ |
-|     | transactions         | a space-separated list of one or more transaction identifiers (required) |
-| -a  | --articulate         | articulate the retrieved data if ABIs can be found                       |
-| -f  | --filter &lt;str&gt; | call the node's `trace_filter` routine with bang-seperated filter        |
-| -d  | --statediff          | export state diff traces (not implemented)                               |
-| -c  | --count              | show the number of traces for the transaction only (fast)                |
-| -x  | --fmt &lt;val&gt;    | export format, one of *[ none \| json\* \| txt \| csv \| api ]*          |
-| -v  | --verbose            | set verbose level (optional level defaults to 1)                         |
-| -h  | --help               | display this help screen                                                 |
+|     | Option               | Description                                                                  |
+| --- | -------------------- | ---------------------------------------------------------------------------- |
+|     | transactions         | a space-separated list of one or more transaction identifiers<br/>(required) |
+| -a  | --articulate         | articulate the retrieved data if ABIs can be found                           |
+| -f  | --filter &lt;str&gt; | call the node's `trace_filter` routine with bang-seperated<br/>filter        |
+| -d  | --statediff          | export state diff traces (not implemented)                                   |
+| -c  | --count              | show the number of traces for the transaction only<br/>(fast)                |
+| -x  | --fmt &lt;val&gt;    | export format, one of [none, json, txt, csv, api]                            |
+| -v  | --verbose            | set verbose level (optional level defaults to 1)                             |
+| -h  | --help               | display this help screen                                                     |
 
 `Notes:`
 

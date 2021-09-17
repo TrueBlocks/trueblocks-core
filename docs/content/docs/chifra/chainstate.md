@@ -2,7 +2,7 @@
 title: "Chain State"
 description: ""
 lead: ""
-date: 2021-09-16T19:24:04
+date: 2021-09-16T22:32:14
 lastmod:
   - :git
   - lastmod
@@ -41,16 +41,18 @@ You may also query to see if an address is a smart contract as well as retrieve 
 
 `Where:`
 
-|     | Option              | Description                                                                                                                              |
-| --- | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-|     | addrs               | one or more addresses (0x...) from which to retrieve balances (required)                                                                 |
-|     | blocks              | an optional list of one or more blocks at which to report balances, defaults to 'latest'                                                 |
-| -p  | --parts &lt;val&gt; | control which state to export, one or more of *[ none \| some\* \| all \| balance \| nonce \| code \| storage \| deployed \| accttype ]* |
-| -c  | --changes           | only report a balance when it changes from one block to the next                                                                         |
-| -n  | --no_zero           | suppress the display of zero balance accounts                                                                                            |
-| -x  | --fmt &lt;val&gt;   | export format, one of *[ none \| json\* \| txt \| csv \| api ]*                                                                          |
-| -v  | --verbose           | set verbose level (optional level defaults to 1)                                                                                         |
-| -h  | --help              | display this help screen                                                                                                                 |
+{{<td>}}
+|     | Option              | Description                                                                                                          |
+| --- | ------------------- | -------------------------------------------------------------------------------------------------------------------- |
+|     | addrs               | one or more addresses (0x...) from which to retrieve<br/>balances (required)                                         |
+|     | blocks              | an optional list of one or more blocks at which to<br/>report balances, defaults to 'latest'                         |
+| -p  | --parts &lt;val&gt; | control which state to export, one or more of [none,<br/>som all, balance, nonce, code, storage, deployed, accttype] |
+| -c  | --changes           | only report a balance when it changes from one block<br/>to the next                                                 |
+| -n  | --no_zero           | suppress the display of zero balance accounts                                                                        |
+| -x  | --fmt &lt;val&gt;   | export format, one of [none, json, txt, csv, api]                                                                    |
+| -v  | --verbose           | set verbose level (optional level defaults to 1)                                                                     |
+| -h  | --help              | display this help screen                                                                                             |
+{{</td>}}
 
 `Notes:`
 
@@ -80,15 +82,17 @@ You may optionally specify one or more blocks at which to report. If no block is
 
 `Where:`
 
-|     | Option              | Description                                                                                                                                        |
-| --- | ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-|     | addrs               | two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported (required)                                          |
-|     | blocks              | an optional list of one or more blocks at which to report balances, defaults to 'latest'                                                           |
-| -p  | --parts &lt;val&gt; | one or more parts of the token information to retreive, one or more of *[ name \| symbol \| decimals \| totalSupply \| version \| none \| all\* ]* |
-| -b  | --by_acct           | consider each address an ERC20 token except the last, whose balance is reported for each token                                                     |
-| -n  | --no_zero           | suppress the display of zero balance accounts                                                                                                      |
-| -v  | --verbose           | set verbose level (optional level defaults to 1)                                                                                                   |
-| -h  | --help              | display this help screen                                                                                                                           |
+{{<td>}}
+|     | Option              | Description                                                                                                                              |
+| --- | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+|     | addrs               | two or more addresses (0x...), the first is an ERC20<br/>token, balances for the rest are reported (required)                            |
+|     | blocks              | an optional list of one or more blocks at which to<br/>report balances, defaults to 'latest'                                             |
+| -p  | --parts &lt;val&gt; | one or more parts of the token information to retreive,<br/>one or more of [name, symbol, decimals, totalSupply,<br/>version, none, all] |
+| -b  | --by_acct           | consider each address an ERC20 token except the last,<br/>whose balance is reported for each token                                       |
+| -n  | --no_zero           | suppress the display of zero balance accounts                                                                                            |
+| -v  | --verbose           | set verbose level (optional level defaults to 1)                                                                                         |
+| -h  | --help              | display this help screen                                                                                                                 |
+{{</td>}}
 
 `Notes:`
 

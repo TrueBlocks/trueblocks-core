@@ -2,7 +2,7 @@
 title: "Chain Data"
 description: ""
 lead: ""
-date: 2021-09-16T19:24:04
+date: 2021-09-16T22:32:14
 lastmod:
   - :git
   - lastmod
@@ -35,20 +35,22 @@ Another useful feature of `chifra blocks` is the ability to extract address appe
 
 `Where:`
 
-|     | Option            | Description                                                                     |
-| --- | ----------------- | ------------------------------------------------------------------------------- |
-|     | blocks            | a space-separated list of one or more block identifiers (required)              |
-| -e  | --hashes          | display only transaction hashes, default is to display full transaction detail  |
-| -U  | --uncles          | display uncle blocks (if any) instead of the requested block                    |
-| -t  | --trace           | export the traces from the block as opposed to the block data                   |
-| -a  | --apps            | display only the list of address appearances in the block                       |
-| -u  | --uniq            | display only the list of uniq address appearances in the block                  |
-| -n  | --uniq_tx         | display only the list of uniq address appearances in each transaction           |
-| -c  | --count           | display the number of the lists of appearances for --apps, --uniq, or --uniq_tx |
-| -o  | --cache           | force a write of the block to the cache                                         |
-| -x  | --fmt &lt;val&gt; | export format, one of *[ none \| json\* \| txt \| csv \| api ]*                 |
-| -v  | --verbose         | set verbose level (optional level defaults to 1)                                |
-| -h  | --help            | display this help screen                                                        |
+{{<td>}}
+|     | Option            | Description                                                                         |
+| --- | ----------------- | ----------------------------------------------------------------------------------- |
+|     | blocks            | a space-separated list of one or more block identifiers<br/>(required)              |
+| -e  | --hashes          | display only transaction hashes, default is to display<br/>full transaction detail  |
+| -U  | --uncles          | display uncle blocks (if any) instead of the requested<br/>block                    |
+| -t  | --trace           | export the traces from the block as opposed to the<br/>block data                   |
+| -a  | --apps            | display only the list of address appearances in the<br/>block                       |
+| -u  | --uniq            | display only the list of uniq address appearances in<br/>the block                  |
+| -n  | --uniq_tx         | display only the list of uniq address appearances in<br/>each transaction           |
+| -c  | --count           | display the number of the lists of appearances for<br/>--apps, --uniq, or --uniq_tx |
+| -o  | --cache           | force a write of the block to the cache                                             |
+| -x  | --fmt &lt;val&gt; | export format, one of [none, json, txt, csv, api]                                   |
+| -v  | --verbose         | set verbose level (optional level defaults to 1)                                    |
+| -h  | --help            | display this help screen                                                            |
+{{</td>}}
 
 `Notes:`
 
@@ -73,17 +75,19 @@ The `--trace` option attachs an array transaction traces to the output (if the n
 
 `Where:`
 
-|     | Option                      | Description                                                                              |
-| --- | --------------------------- | ---------------------------------------------------------------------------------------- |
-|     | transactions                | a space-separated list of one or more transaction identifiers (required)                 |
-| -a  | --articulate                | articulate the retrieved data if ABIs can be found                                       |
-| -t  | --trace                     | include the transaction's traces in the results                                          |
-| -u  | --uniq                      | display a list of uniq addresses found in the transaction instead of the underlying data |
-| -r  | --reconcile &lt;address&gt; | reconcile the transaction as per the provided address                                    |
-| -o  | --cache                     | force the results of the query into the tx cache (and the trace cache if applicable)     |
-| -x  | --fmt &lt;val&gt;           | export format, one of *[ none \| json\* \| txt \| csv \| api ]*                          |
-| -v  | --verbose                   | set verbose level (optional level defaults to 1)                                         |
-| -h  | --help                      | display this help screen                                                                 |
+{{<td>}}
+|     | Option                      | Description                                                                                  |
+| --- | --------------------------- | -------------------------------------------------------------------------------------------- |
+|     | transactions                | a space-separated list of one or more transaction identifiers<br/>(required)                 |
+| -a  | --articulate                | articulate the retrieved data if ABIs can be found                                           |
+| -t  | --trace                     | include the transaction's traces in the results                                              |
+| -u  | --uniq                      | display a list of uniq addresses found in the transaction<br/>instead of the underlying data |
+| -r  | --reconcile &lt;address&gt; | reconcile the transaction as per the provided address                                        |
+| -o  | --cache                     | force the results of the query into the tx cache (and<br/>the trace cache if applicable)     |
+| -x  | --fmt &lt;val&gt;           | export format, one of [none, json, txt, csv, api]                                            |
+| -v  | --verbose                   | set verbose level (optional level defaults to 1)                                             |
+| -h  | --help                      | display this help screen                                                                     |
+{{</td>}}
 
 `Notes:`
 
@@ -109,13 +113,15 @@ Generally speaking, this tool is less useful than others as you may report the s
 
 `Where:`
 
-|     | Option            | Description                                                              |
-| --- | ----------------- | ------------------------------------------------------------------------ |
-|     | transactions      | a space-separated list of one or more transaction identifiers (required) |
-| -a  | --articulate      | articulate the retrieved data if ABIs can be found                       |
-| -x  | --fmt &lt;val&gt; | export format, one of *[ none \| json\* \| txt \| csv \| api ]*          |
-| -v  | --verbose         | set verbose level (optional level defaults to 1)                         |
-| -h  | --help            | display this help screen                                                 |
+{{<td>}}
+|     | Option            | Description                                                                  |
+| --- | ----------------- | ---------------------------------------------------------------------------- |
+|     | transactions      | a space-separated list of one or more transaction identifiers<br/>(required) |
+| -a  | --articulate      | articulate the retrieved data if ABIs can be found                           |
+| -x  | --fmt &lt;val&gt; | export format, one of [none, json, txt, csv, api]                            |
+| -v  | --verbose         | set verbose level (optional level defaults to 1)                             |
+| -h  | --help            | display this help screen                                                     |
+{{</td>}}
 
 `Notes:`
 
@@ -139,15 +145,17 @@ The `--articulate` option fetches the ABI from each encountered smart contract t
 
 `Where:`
 
-|     | Option                | Description                                                              |
-| --- | --------------------- | ------------------------------------------------------------------------ |
-|     | transactions          | a space-separated list of one or more transaction identifiers (required) |
-| -t  | --topic &lt;hash&gt;  | filter by one or more log topics (not implemented)                       |
-| -s  | --source &lt;addr&gt; | export only if the given address emitted the event (not implemented)     |
-| -a  | --articulate          | articulate the retrieved data if ABIs can be found                       |
-| -x  | --fmt &lt;val&gt;     | export format, one of *[ none \| json\* \| txt \| csv \| api ]*          |
-| -v  | --verbose             | set verbose level (optional level defaults to 1)                         |
-| -h  | --help                | display this help screen                                                 |
+{{<td>}}
+|     | Option                | Description                                                                  |
+| --- | --------------------- | ---------------------------------------------------------------------------- |
+|     | transactions          | a space-separated list of one or more transaction identifiers<br/>(required) |
+| -t  | --topic &lt;hash&gt;  | filter by one or more log topics (not implemented)                           |
+| -s  | --source &lt;addr&gt; | export only if the given address emitted the event<br/>(not implemented)     |
+| -a  | --articulate          | articulate the retrieved data if ABIs can be found                           |
+| -x  | --fmt &lt;val&gt;     | export format, one of [none, json, txt, csv, api]                            |
+| -v  | --verbose             | set verbose level (optional level defaults to 1)                             |
+| -h  | --help                | display this help screen                                                     |
+{{</td>}}
 
 `Notes:`
 
@@ -175,16 +183,18 @@ The `--filter` option calls your node's `trace_filter` routine (if available) us
 
 `Where:`
 
-|     | Option               | Description                                                              |
-| --- | -------------------- | ------------------------------------------------------------------------ |
-|     | transactions         | a space-separated list of one or more transaction identifiers (required) |
-| -a  | --articulate         | articulate the retrieved data if ABIs can be found                       |
-| -f  | --filter &lt;str&gt; | call the node's `trace_filter` routine with bang-seperated filter        |
-| -d  | --statediff          | export state diff traces (not implemented)                               |
-| -c  | --count              | show the number of traces for the transaction only (fast)                |
-| -x  | --fmt &lt;val&gt;    | export format, one of *[ none \| json\* \| txt \| csv \| api ]*          |
-| -v  | --verbose            | set verbose level (optional level defaults to 1)                         |
-| -h  | --help               | display this help screen                                                 |
+{{<td>}}
+|     | Option               | Description                                                                  |
+| --- | -------------------- | ---------------------------------------------------------------------------- |
+|     | transactions         | a space-separated list of one or more transaction identifiers<br/>(required) |
+| -a  | --articulate         | articulate the retrieved data if ABIs can be found                           |
+| -f  | --filter &lt;str&gt; | call the node's `trace_filter` routine with bang-seperated<br/>filter        |
+| -d  | --statediff          | export state diff traces (not implemented)                                   |
+| -c  | --count              | show the number of traces for the transaction only<br/>(fast)                |
+| -x  | --fmt &lt;val&gt;    | export format, one of [none, json, txt, csv, api]                            |
+| -v  | --verbose            | set verbose level (optional level defaults to 1)                             |
+| -h  | --help               | display this help screen                                                     |
+{{</td>}}
 
 `Notes:`
 
@@ -218,14 +228,16 @@ The values for `date` and `time` are specified in JSON format. `hour`/`minute`/`
 
 `Where:`
 
-|     | Option            | Description                                                                   |
-| --- | ----------------- | ----------------------------------------------------------------------------- |
-|     | block_list        | one or more dates, block numbers, hashes, or special named blocks (see notes) |
-| -l  | --list            | export a list of the 'special' blocks                                         |
-| -t  | --timestamps      | ignore other options and generate timestamps only                             |
-| -x  | --fmt &lt;val&gt; | export format, one of *[ none \| json\* \| txt \| csv \| api ]*               |
-| -v  | --verbose         | set verbose level (optional level defaults to 1)                              |
-| -h  | --help            | display this help screen                                                      |
+{{<td>}}
+|     | Option            | Description                                                                       |
+| --- | ----------------- | --------------------------------------------------------------------------------- |
+|     | block_list        | one or more dates, block numbers, hashes, or special<br/>named blocks (see notes) |
+| -l  | --list            | export a list of the 'special' blocks                                             |
+| -t  | --timestamps      | ignore other options and generate timestamps only                                 |
+| -x  | --fmt &lt;val&gt; | export format, one of [none, json, txt, csv, api]                                 |
+| -v  | --verbose         | set verbose level (optional level defaults to 1)                                  |
+| -h  | --help            | display this help screen                                                          |
+{{</td>}}
 
 `Notes:`
 
