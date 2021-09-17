@@ -8,7 +8,7 @@ The scraper can scrape either the index only, previously created monitors only, 
 
 ### usage
 
-`Usage:`    chifra scrape [-p|-s|-v|-h]
+`Usage:`    chifra scrape [-p|-s|-v|-h]  
 `Purpose:`  Scan the chain and update the TrueBlocks index of appearances.
 
 `Where:`

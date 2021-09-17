@@ -10,7 +10,7 @@ If you run `chifra init` and allow it to complete, the next time you run `chifra
 
 ### usage
 
-`Usage:`    chifra init
+`Usage:`    chifra init  
 `Purpose:`  Leech the Bloom filters from IPFS by first downloading the pin manifest from a smart contract and then downloading the blooms. Optionally `--pin` the resulting download in order to share it with others.
 
 `Where:`

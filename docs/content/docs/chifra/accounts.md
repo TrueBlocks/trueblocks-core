@@ -2,7 +2,7 @@
 title: "Accounts"
 description: ""
 lead: ""
-date: 2021-09-16T22:32:14
+date: 2021-09-17T13:47:08
 lastmod:
   - :git
   - lastmod
@@ -30,7 +30,7 @@ Note that `chifra list` only queries the index, it does not extract the full tra
 
 ### usage
 
-`Usage:`    chifra list &lt;address&gt; [address...]
+`Usage:`    chifra list &lt;address&gt; [address...]  
 `Purpose:`  List appearances for the given address(es).
 
 `Where:`
@@ -58,7 +58,7 @@ By default, the results of the extraction are delivered to your console, however
 
 ### usage
 
-`Usage:`    chifra export [-p|-r|-A|-l|-t|-C|-a|-i|-R|-y|-U|-c|-e|-v|-h] &lt;address&gt; [address...] [topics] [fourbytes]
+`Usage:`    chifra export [-p|-r|-A|-l|-t|-C|-a|-i|-R|-y|-U|-c|-e|-v|-h] &lt;address&gt; [address...] [topics] [fourbytes]  
 `Purpose:`  Export full detail of transactions for one or more addresses.
 
 `Where:`
@@ -115,7 +115,7 @@ Use the `--remove` command to permanently remove a monitor from your computer. T
 
 ### usage
 
-`Usage:`    chifra montiors [-d|-r|-v|-h] &lt;address&gt; [address...]
+`Usage:`    chifra monitors [-d|-r|-v|-h] &lt;address&gt; [address...]  
 `Purpose:`  Delete, undelete, and remove previously created monitors.
 
 `Where:`
@@ -145,7 +145,7 @@ You may use the TrueBlocks explorer to manage (add, edit, delete) address-name a
 
 ### usage
 
-`Usage:`    chifra names [-e|-m|-l|-c|-p|-n|-a|-s|-g|-v|-h] &lt;term&gt; [term...]
+`Usage:`    chifra names [-e|-m|-l|-c|-p|-n|-a|-s|-g|-v|-h] &lt;term&gt; [term...]  
 `Purpose:`  Query addresses or names of well known accounts.
 
 `Where:`
@@ -190,7 +190,7 @@ The `--sol` option will convert a single Solidity file found in the current fold
 
 ### usage
 
-`Usage:`    chifra abis [-k|-s|-f|-v|-h] &lt;address&gt; [address...]
+`Usage:`    chifra abis [-k|-s|-f|-v|-h] &lt;address&gt; [address...]  
 `Purpose:`  Fetches the ABI for a smart contract.
 
 `Where:`

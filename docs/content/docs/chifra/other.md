@@ -2,7 +2,7 @@
 title: "Other"
 description: ""
 lead: ""
-date: 2021-09-16T22:32:14
+date: 2021-09-17T13:40:30
 lastmod:
   - :git
   - lastmod
@@ -31,7 +31,7 @@ The `chifra quotes` tool provides USD ($) price data to other tools and to the c
 
 ### usage
 
-`Usage:`    chifra quotes [-f|-p|-a|-e|-v|-h]
+`Usage:`    chifra quotes [-f|-p|-a|-e|-v|-h]  
 `Purpose:`  Freshen and/or display Ethereum price data. This tool has been deprecated.
 
 `Where:`
@@ -63,7 +63,7 @@ The `chifra quotes` tool provides USD ($) price data to other tools and to the c
 
 ### usage
 
-`Usage:`    chifra explore [-l|-g|-v|-h] &lt;term&gt; [term...]
+`Usage:`    chifra explore [-l|-g|-v|-h] &lt;term&gt; [term...]  
 `Purpose:`  Open an explorer for a given address, block, or transaction.
 
 `Where:`
@@ -91,7 +91,7 @@ While `chifra slurp` has its shortcomings, it does provides some nice features. 
 
 ### usage
 
-`Usage:`    chifra slurp [-t|-p|-v|-h] &lt;address&gt; [address...] [block...]
+`Usage:`    chifra slurp [-t|-p|-v|-h] &lt;address&gt; [address...] [block...]  
 `Purpose:`  Fetch data from EtherScan for any address.
 
 `Where:`

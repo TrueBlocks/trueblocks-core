@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2021-09-16T22:32:14
+date: 2021-09-17T13:47:08
 lastmod:
   - :git
   - lastmod
@@ -25,7 +25,7 @@ TrueBlocks maintains caches for the index of address appearances, named addresse
 
 ### usage
 
-`Usage:`    chifra status [-d|-t|-v|-h] &lt;mode&gt; [mode...]
+`Usage:`    chifra status [-d|-t|-v|-h] &lt;mode&gt; [mode...]  
 `Purpose:`  Report on the status of the TrueBlocks system.
 
 `Where:`
@@ -54,7 +54,7 @@ Another way to get help to run `chifra --help` or `chifra <cmd> --help` on your 
 
 ### usage
 
-`Usage:`    chifra serve
+`Usage:`    chifra serve  
 `Purpose:`  Present each chifra command along with all of its options as a JSON api.
 
 `Where:`
@@ -82,7 +82,7 @@ The scraper can scrape either the index only, previously created monitors only, 
 
 ### usage
 
-`Usage:`    chifra scrape [-p|-s|-v|-h]
+`Usage:`    chifra scrape [-p|-s|-v|-h]  
 `Purpose:`  Scan the chain and update the TrueBlocks index of appearances.
 
 `Where:`
@@ -133,7 +133,7 @@ If you run `chifra init` and allow it to complete, the next time you run `chifra
 
 ### usage
 
-`Usage:`    chifra init
+`Usage:`    chifra init  
 `Purpose:`  Leech the Bloom filters from IPFS by first downloading the pin manifest from a smart contract and then downloading the blooms. Optionally `--pin` the resulting download in order to share it with others.
 
 `Where:`
@@ -157,7 +157,7 @@ This tool is not yet ready for production use. Please return to this page later.
 
 ### usage
 
-`Usage:`    chifra pins [-l|-i|-n|-p|-v|-h]
+`Usage:`    chifra pins [-l|-i|-n|-p|-v|-h]  
 `Purpose:`  Manage pinned index of appearances and associated Bloom filters.
 
 `Where:`

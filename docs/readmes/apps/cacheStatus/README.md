@@ -6,7 +6,7 @@ TrueBlocks maintains caches for the index of address appearances, named addresse
 
 ### usage
 
-`Usage:`    chifra status [-d|-t|-v|-h] &lt;mode&gt; [mode...]
+`Usage:`    chifra status [-d|-t|-v|-h] &lt;mode&gt; [mode...]  
 `Purpose:`  Report on the status of the TrueBlocks system.
 
 `Where:`

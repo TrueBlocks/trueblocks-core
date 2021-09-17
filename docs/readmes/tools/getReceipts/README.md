@@ -8,7 +8,7 @@ Generally speaking, this tool is less useful than others as you may report the s
 
 ### usage
 
-`Usage:`    chifra receipts [-a|-v|-h] &lt;tx_id&gt; [tx_id...]
+`Usage:`    chifra receipts [-a|-v|-h] &lt;tx_id&gt; [tx_id...]  
 `Purpose:`  Retrieve receipts for the given transaction(s).
 
 `Where:`

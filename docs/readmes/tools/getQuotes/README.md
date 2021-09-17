@@ -4,7 +4,7 @@ The `chifra quotes` tool provides USD ($) price data to other tools and to the c
 
 ### usage
 
-`Usage:`    chifra quotes [-f|-p|-a|-e|-v|-h]
+`Usage:`    chifra quotes [-f|-p|-a|-e|-v|-h]  
 `Purpose:`  Freshen and/or display Ethereum price data. This tool has been deprecated.
 
 `Where:`

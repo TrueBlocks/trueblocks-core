@@ -6,7 +6,7 @@ The `--articulate` option fetches the ABI from each encountered smart contract t
 
 ### usage
 
-`Usage:`    chifra logs [-t|-s|-a|-v|-h] &lt;tx_id&gt; [tx_id...]
+`Usage:`    chifra logs [-t|-s|-a|-v|-h] &lt;tx_id&gt; [tx_id...]  
 `Purpose:`  Retrieve logs for the given transaction(s).
 
 `Where:`

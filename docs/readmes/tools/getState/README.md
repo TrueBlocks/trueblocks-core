@@ -6,7 +6,7 @@ You may also query to see if an address is a smart contract as well as retrieve 
 
 ### usage
 
-`Usage:`    chifra state [-p|-c|-n|-v|-h] &lt;address&gt; [address...] [block...]
+`Usage:`    chifra state [-p|-c|-n|-v|-h] &lt;address&gt; [address...] [block...]  
 `Purpose:`  Retrieve account balance(s) for one or more addresses at given block(s).
 
 `Where:`

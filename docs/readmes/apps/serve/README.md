@@ -9,7 +9,7 @@ Another way to get help to run `chifra --help` or `chifra <cmd> --help` on your 
 
 ### usage
 
-`Usage:`    chifra serve
+`Usage:`    chifra serve  
 `Purpose:`  Present each chifra command along with all of its options as a JSON api.
 
 `Where:`
