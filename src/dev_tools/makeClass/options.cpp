@@ -142,29 +142,6 @@ bool COptions::parseArguments(string_q& command) {
     establishFolder(getDocsPathContent("data-model/"));
     establishFolder(getDocsPathContent("docs/"));
     establishFolder(getDocsPathContent("docs/chifra/"));
-    establishFolder(getDocsPathReadmes("apps/"));
-    establishFolder(getDocsPathReadmes("apps/acctExport/"));
-    establishFolder(getDocsPathReadmes("apps/blockScrape/"));
-    establishFolder(getDocsPathReadmes("apps/cacheStatus/"));
-    establishFolder(getDocsPathReadmes("apps/chifra/"));
-    establishFolder(getDocsPathReadmes("apps/pinMan/"));
-    establishFolder(getDocsPathReadmes("apps/fireStorm/"));
-    establishFolder(getDocsPathReadmes("dev_tools/"));
-    establishFolder(getDocsPathReadmes("dev_tools/makeClass/"));
-    establishFolder(getDocsPathReadmes("dev_tools/testRunner/"));
-    establishFolder(getDocsPathReadmes("tools/"));
-    establishFolder(getDocsPathReadmes("tools/ethNames/"));
-    establishFolder(getDocsPathReadmes("tools/ethslurp/"));
-    establishFolder(getDocsPathReadmes("tools/getBlocks/"));
-    establishFolder(getDocsPathReadmes("tools/getLogs/"));
-    establishFolder(getDocsPathReadmes("tools/getQuotes/"));
-    establishFolder(getDocsPathReadmes("tools/getReceipts/"));
-    establishFolder(getDocsPathReadmes("tools/getState/"));
-    establishFolder(getDocsPathReadmes("tools/getTokens/"));
-    establishFolder(getDocsPathReadmes("tools/getTraces/"));
-    establishFolder(getDocsPathReadmes("tools/getTrans/"));
-    establishFolder(getDocsPathReadmes("tools/grabABI/"));
-    establishFolder(getDocsPathReadmes("tools/whenBlock/"));
 
     if (tsx)
         handle_tsx();
