@@ -13,6 +13,12 @@ jobs:
           command_timeout: 40m
           script_stop: true
           script: |
+            mkdir -p testing/${{ github.sha }}
+            cd  testing/${{ github.sha }}
+            git clone --quiet https://github.com/${{ github.repository }}
+            cd trueblocks-core
+            git reset --hard ${{ github.sha }}
+            bash src/other/build_assets/test_with_docker ${{ github.repository }} ${{ github.sha }} test-all
 
       - name: Finish
         run: |

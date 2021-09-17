@@ -12,7 +12,7 @@ then
     RUN_SERVER=true
 fi
 
-cd /root/src/build
+cd /root/trueblocks-core/build
 echo $(pwd)
 
 # Set the correct PATH
