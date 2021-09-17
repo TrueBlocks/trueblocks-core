@@ -19,7 +19,7 @@ jobs:
             cd trueblocks-core
             git reset --hard ${{ github.sha }}
             cd src/other/build_assets
-            CONFIG_FILE=$HOME/trueBlocks.toml bash src/other/build_assets/test_with_docker.sh ${{ github.repository }} ${{ github.sha }} test-all
+            CONFIG_FILE=$HOME/trueBlocks.toml bash test_with_docker.sh ${{ github.repository }} ${{ github.sha }} test-all
             cd
             rm -rf testing/${{ github.sha }}
       - name: Finish
