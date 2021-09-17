@@ -15,13 +15,13 @@ If you run `chifra init` and allow it to complete, the next time you run `chifra
 
 `Where:`
 
-| | Option | Description |
-| :----- | :----- | :---------- |
-| -i | --init | initialize local index by downloading Bloom filters from pinning service |
-| -k | --init_all | initialize local index by downloading both Bloom filters and index chunks |
-| -p | --pin_locally | pin all local files in the index to an IPFS store (requires IPFS) |
-| -v | --verbose | set verbose level (optional level defaults to 1) |
-| -h | --help | display this help screen |
+|     | Option        | Description                                                               |
+| --- | ------------- | ------------------------------------------------------------------------- |
+| -i  | --init        | initialize local index by downloading Bloom filters from pinning service  |
+| -k  | --init_all    | initialize local index by downloading both Bloom filters and index chunks |
+| -p  | --pin_locally | pin all local files in the index to an IPFS store (requires IPFS)         |
+| -v  | --verbose     | set verbose level (optional level defaults to 1)                          |
+| -h  | --help        | display this help screen                                                  |
 
 `Notes:`
 

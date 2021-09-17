@@ -9,14 +9,15 @@ This tool is not yet ready for production use. Please return to this page later.
 
 `Where:`  
 
-| | Option | Description |
-| :----- | :----- | :---------- |
-| -l | --list | list the index and Bloom filter hashes from local manifest or pinning service |
-| -i | --init | initialize local index by downloading Bloom filters from pinning service |
-| -n | --init_all | initialize local index by downloading both Bloom filters and index chunks |
-| -p | --pin_locally | pin all local files in the index to an IPFS store (requires IPFS) |
-| -v | --verbose | set verbose level (optional level defaults to 1) |
-| -h | --help | display this help screen |
+|     | Option            | Description                                                                   |
+| --- | ----------------- | ----------------------------------------------------------------------------- |
+| -l  | --list            | list the index and Bloom filter hashes from local manifest or pinning service |
+| -i  | --init            | initialize local index by downloading Bloom filters from pinning service      |
+| -n  | --init_all        | initialize local index by downloading both Bloom filters and index chunks     |
+| -p  | --pin_locally     | pin all local files in the index to an IPFS store (requires IPFS)             |
+| -x  | --fmt &lt;val&gt; | export format, one of *[ none \| json\* \| txt \| csv \| api ]*               |
+| -v  | --verbose         | set verbose level (optional level defaults to 1)                              |
+| -h  | --help            | display this help screen                                                      |
 
 `Notes:`
 

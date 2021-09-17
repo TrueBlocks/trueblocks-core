@@ -14,11 +14,11 @@ Another way to get help to run `chifra --help` or `chifra <cmd> --help` on your 
 
 `Where:`
 
-| Short Cut | Option    | Description                                 |
-| --------: | :-------- | :------------------------------------------ |
-|           | --port    | specify the server's port (default ":8080") |
-|        -v | --verbose | set verbose level (optional level defaults to 1)  |
-|        -h | --help    | display this help screen                    |
+|     | Option    | Description                                      |
+| --- | --------- | ------------------------------------------------ |
+|     | --port    | specify the server's port (default ":8080")      |
+| -v  | --verbose | set verbose level (optional level defaults to 1) |
+| -h  | --help    | display this help screen                         |
 
 `Notes:`
 

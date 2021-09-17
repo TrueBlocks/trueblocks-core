@@ -33,6 +33,16 @@ bool COptions::handle_datamodel(void) {
     theStream << "  schemas:" << endl;
     for (auto model : dataModels) {
         sort(model.fieldArray.begin(), model.fieldArray.end(), sortByDoc);
+        size_t widths[5];
+        bzero(widths, sizeof(widths));
+        for (auto& fld : model.fieldArray) {
+            if (fld.doc) {
+                replaceAll(fld.description, "&#44;", ",");
+                widths[0] = max(size_t(3), max(widths[0], fld.name.length()));
+                widths[1] = max(size_t(3), max(widths[1], fld.description.length()));
+                widths[2] = max(size_t(3), max(widths[2], fld.type.length()));
+            }
+        }
         string_q fmt;
         ostringstream doc;
         if (!dataDocsFront[model.doc_group]) {
@@ -58,8 +68,8 @@ bool COptions::handle_datamodel(void) {
 
         doc << "### Fields" << endl;
         doc << endl;
-        doc << "| Field | Description | Type |" << endl;
-        doc << "|-------|-------------|------|" << endl;
+        doc << markDownRow("Field", "Description", "Type", widths);
+        doc << markDownRow("-", "", "", widths);
 
         fmt += "[    {DOC_API}:\n]";
         fmt += "[      description: \"{DOC_DESCR}\"\n]";
@@ -73,9 +83,7 @@ bool COptions::handle_datamodel(void) {
                 props << fld.Format(typeFmt(fld));
                 props << fld.Format(exFmt(fld));
                 props << fld.Format("[          description: \"{DESCRIPTION}\"\n]");
-
-                doc << "| " << fld.name << " | " << substitute(fld.description, "&#44;", ",") << " | " << fld.type
-                    << " |" << endl;
+                doc << markDownRow(fld.name, fld.description, fld.type, widths);
             }
         }
         theStream << props.str();
@@ -180,19 +188,27 @@ const char* STR_YAML_TAIL =
 
 //------------------------------------------------------------------------------------------------------------
 const char* STR_YAML_TAIL2 =
+    "\n"
     "## Base types\n"
     "\n"
     "In these docs, sometimes Trueblocks mentions a type format that is more\n"
     "precise than the generic types, like \"string\" or \"object\".\n"
     "\n"
-    "| Type Name | Description                         |\n"
-    "| --------- | ----------------------------------- |\n"
-    "| blknum    | a 64-bit unsigned int               |\n"
-    "| timestamp | a 64-bit unsigned int               |\n"
-    "| address   | a 20 byte string starting with '0x' |\n"
-    "| hash      | a 32 byte string starting with '0x' |\n"
-    "| string    | a plain c++ string                  |\n"
-    "| number    | standard c++ 64-bit unsigned int    |\n"
-    "| bigint    | arbitrarily sized signed int        |\n"
-    "| wei       | arbitrarily sized unsigned int      |\n"
-    "| boolean   | standard c++ boolean                |\n";
+    "| Type      | Description                                     | Notes          |\n"
+    "| --------- | ----------------------------------------------- | -------------- |\n"
+    "| address   | a 20-byte hexidecimal string starting with '0x' | lowercase      |\n"
+    "| blknum    | an alias for a uint64                           |                |\n"
+    "| bool      | a value either `true`, `false`, `1`, or `0`     |                |\n"
+    "| bytes     | an arbitrarily long string of bytes             |                |\n"
+    "| date      | a JSON formatted date                           | as a string    |\n"
+    "| double    | a floating point number of double precision     |                |\n"
+    "| gas       | an unsigned big number                          | as a string    |\n"
+    "| hash      | a 32-byte hexidecimal string starting with '0x' | lowercase      |\n"
+    "| int256    | a signed big number                             | as a string    |\n"
+    "| ipfshash  | a multi-hash produced by IPFS                   | mixed-case     |\n"
+    "| string    | a normal character string                       |                |\n"
+    "| timestamp | a 64-bit unsigned integer                       | unix timestamp |\n"
+    "| uint32    | a 32-bit unsigned integer                       |                |\n"
+    "| uint64    | a 64-bit unsigned integer                       |                |\n"
+    "| uint8     | an alias for the boolean type                   |                |\n"
+    "| wei       | an unsigned big number                          | as a string    |\n";

@@ -13,14 +13,15 @@ While `chifra slurp` has its shortcomings, it does provides some nice features. 
 
 `Where:`  
 
-| | Option | Description |
-| :----- | :----- | :---------- |
-|  | addrs | one or more addresses to slurp from Etherscan (required) |
-|  | blocks | an optional range of blocks to slurp |
-| -t | --types &lt;val&gt; | one or more types of transactions to request, one or more of *[ ext\* \| int \| token \| nfts \| miner \| uncles \| all ]* |
-| -p | --appearances | show only the blocknumer.tx_id appearances of the exported transactions |
-| -v | --verbose | set verbose level (optional level defaults to 1) |
-| -h | --help | display this help screen |
+|     | Option              | Description                                                                                                                |
+| --- | ------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+|     | addrs               | one or more addresses to slurp from Etherscan (required)                                                                   |
+|     | blocks              | an optional range of blocks to slurp                                                                                       |
+| -t  | --types &lt;val&gt; | one or more types of transactions to request, one or more of *[ ext\* \| int \| token \| nfts \| miner \| uncles \| all ]* |
+| -p  | --appearances       | show only the blocknumer.tx_id appearances of the exported transactions                                                    |
+| -x  | --fmt &lt;val&gt;   | export format, one of *[ none \| json\* \| txt \| csv \| api ]*                                                            |
+| -v  | --verbose           | set verbose level (optional level defaults to 1)                                                                           |
+| -h  | --help              | display this help screen                                                                                                   |
 
 `Notes:`
 

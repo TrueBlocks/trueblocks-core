@@ -7,9 +7,9 @@ serializeTest -th
         
 `Where:`  
 
-| | Option | Description |
-| :----- | :----- | :---------- |
-| -t | --testNum [1|2] | which test to run (either 1 and 2) |
-| -v | --verbose | set verbose level (optional level defaults to 1) |
-| -h | --help | display this help screen |
+|     | Option          | Description                                      |
+| --- | --------------- | ------------------------------------------------ |
+| -t  | --testNum [1|2] | which test to run (either 1 and 2)               |
+| -v  | --verbose       | set verbose level (optional level defaults to 1) |
+| -h  | --help          | display this help screen                         |
 

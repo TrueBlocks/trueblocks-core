@@ -2,7 +2,7 @@
 title: "Chain Data"
 description: ""
 lead: ""
-date: 2021-09-16T08:22:30
+date: 2021-09-16T11:03:44
 lastmod:
   - :git
   - lastmod
@@ -35,18 +35,18 @@ an array for the blocks' transactions.
 
 ### Fields
 
-| Field | Description | Type |
-|-------|-------------|------|
-| gasLimit | the system-wide maximum amount of gas permitted in this block | gas |
-| hash | the hash of the current block | hash |
-| blockNumber | the number of the block | blknum |
-| parentHash | hash of previous block | hash |
-| miner | Address of block's winning miner | address |
-| difficulty | the computational difficulty at this block | uint64 |
-| timestamp | the unix timestamp of the object | timestamp |
-| transactions | a possibly empty array of transactions or transaction hashes | CTransactionArray |
-| baseFeePerGas | the base fee for this block | wei |
-| finalized | flag indicating the system considers this data final | bool |
+| Field         | Description                                                   | Type              |
+| ------------- | ------------------------------------------------------------- | ----------------- |
+| gasLimit      | the system-wide maximum amount of gas permitted in this block | gas               |
+| hash          | the hash of the current block                                 | hash              |
+| blockNumber   | the number of the block                                       | blknum            |
+| parentHash    | hash of previous block                                        | hash              |
+| miner         | Address of block's winning miner                              | address           |
+| difficulty    | the computational difficulty at this block                    | uint64            |
+| timestamp     | the unix timestamp of the object                              | timestamp         |
+| transactions  | a possibly empty array of transactions or transaction hashes  | CTransactionArray |
+| baseFeePerGas | the base fee for this block                                   | wei               |
+| finalized     | flag indicating the system considers this data final          | bool              |
 
 ## Transaction
 
@@ -68,26 +68,26 @@ This is a very powerful way to understand the story behind a smart contract.
 
 ### Fields
 
-| Field | Description | Type |
-|-------|-------------|------|
-| hash | The hash of the transaction | hash |
-| gasPrice | the number of wei per unit of gas the sender is willing to spend | gas |
-| blockHash | The hash of the block containing this transaction | hash |
-| blockNumber | the number of the block | blknum |
-| transactionIndex | the zero-indexed position of the transaction in the block | blknum |
-| nonce | sequence number of the transactions sent by the sender | uint64 |
-| timestamp | the unix timestamp of the object | timestamp |
-| from | address from which the transaction was sent | address |
-| to | address to which the transaction was sent | address |
-| value | the amount of wei sent with this transactions | wei |
-| gas | the maximum number of gas allowed for this transaction | gas |
-| input | byte data either containing a message or funcational data for a smart contracts. See the --articulate | bytes |
-| receipt |  | CReceipt |
-| statements | array of reconciliations | CReconciliationArray |
-| articulatedTx |  | CFunction |
-| compressedTx | truncated, more readable version of the articulation | string |
-| hasToken | `true` if the transaction is token related, `false` otherwise | uint8 |
-| finalized | flag indicating the system considers this data final | bool |
+| Field            | Description                                                                                           | Type                 |
+| ---------------- | ----------------------------------------------------------------------------------------------------- | -------------------- |
+| hash             | The hash of the transaction                                                                           | hash                 |
+| gasPrice         | the number of wei per unit of gas the sender is willing to spend                                      | gas                  |
+| blockHash        | The hash of the block containing this transaction                                                     | hash                 |
+| blockNumber      | the number of the block                                                                               | blknum               |
+| transactionIndex | the zero-indexed position of the transaction in the block                                             | blknum               |
+| nonce            | sequence number of the transactions sent by the sender                                                | uint64               |
+| timestamp        | the unix timestamp of the object                                                                      | timestamp            |
+| from             | address from which the transaction was sent                                                           | address              |
+| to               | address to which the transaction was sent                                                             | address              |
+| value            | the amount of wei sent with this transactions                                                         | wei                  |
+| gas              | the maximum number of gas allowed for this transaction                                                | gas                  |
+| input            | byte data either containing a message or funcational data for a smart contracts. See the --articulate | bytes                |
+| receipt          |                                                                                                       | CReceipt             |
+| statements       | array of reconciliations                                                                              | CReconciliationArray |
+| articulatedTx    |                                                                                                       | CFunction            |
+| compressedTx     | truncated, more readable version of the articulation                                                  | string               |
+| hasToken         | `true` if the transaction is token related, `false` otherwise                                         | uint8                |
+| finalized        | flag indicating the system considers this data final                                                  | bool                 |
 
 ## Receipt
 
@@ -105,12 +105,12 @@ If the `to` address of a transaction is `0x0`, the `input` data is considered to
 
 ### Fields
 
-| Field | Description | Type |
-|-------|-------------|------|
-| status | `1` on transaction suceess, `null` if tx preceeds Byzantium, `0` otherwise | uint32 |
-| contractAddress | the address of the newly created contract, if any | address |
-| gasUsed | the amount of gas actually used by the transaction | gas |
-| logs | a possibly empty array of logs | CLogEntryArray |
+| Field           | Description                                                                | Type           |
+| --------------- | -------------------------------------------------------------------------- | -------------- |
+| status          | `1` on transaction suceess, `null` if tx preceeds Byzantium, `0` otherwise | uint32         |
+| contractAddress | the address of the newly created contract, if any                          | address        |
+| gasUsed         | the amount of gas actually used by the transaction                         | gas            |
+| logs            | a possibly empty array of logs                                             | CLogEntryArray |
 
 ## Log
 
@@ -126,16 +126,16 @@ Logs appear in a possibly empty array in the transaction's receipt. They are onl
 
 ### Fields
 
-| Field | Description | Type |
-|-------|-------------|------|
-| blockNumber | the number of the block | blknum |
-| transactionIndex | the zero-indexed position of the transaction in the block | blknum |
-| address | the smart contract that emitted this log | address |
-| logIndex | the zero-indexed position of this log relative to the block | blknum |
-| topics | The first topic hashes event signature of the log, up to 3 additional index parameters may appear | CTopicArray |
-| data | any remaining un-indexed parameters to the event | bytes |
-| articulatedLog | a human-readable version of the topic and data fields | CFunction |
-| compressedLog | a truncated, more readable version of the articulation | string |
+| Field            | Description                                                                                       | Type        |
+| ---------------- | ------------------------------------------------------------------------------------------------- | ----------- |
+| blockNumber      | the number of the block                                                                           | blknum      |
+| transactionIndex | the zero-indexed position of the transaction in the block                                         | blknum      |
+| address          | the smart contract that emitted this log                                                          | address     |
+| logIndex         | the zero-indexed position of this log relative to the block                                       | blknum      |
+| topics           | The first topic hashes event signature of the log, up to 3 additional index parameters may appear | CTopicArray |
+| data             | any remaining un-indexed parameters to the event                                                  | bytes       |
+| articulatedLog   | a human-readable version of the topic and data fields                                             | CFunction   |
+| compressedLog    | a truncated, more readable version of the articulation                                            | string      |
 
 ## Trace
 
@@ -153,19 +153,19 @@ Traces may be arbitrarily deep (up to the gasLimit) and ultimately represent a t
 
 ### Fields
 
-| Field | Description | Type |
-|-------|-------------|------|
-| blockHash | The hash of the block containing this trace | hash |
-| blockNumber | the number of the block | blknum |
-| transactionHash | the transaction's hash containing this trace | hash |
-| transactionIndex | the zero-indexed position of the transaction in the block | blknum |
-| traceAddress | a particular trace's address in the trace tree | CStringArray |
-| subtraces | the number of children traces that the trace hash | uint64 |
-| type | the type of the trace | string |
-| action | the trace action for this trace | CTraceAction |
-| result | the trace result of this trace | CTraceResult |
-| articulatedTrace | human readable version of the trace action input data | CFunction |
-| compressedTrace | a compressed string version of the articulated trace | string |
+| Field            | Description                                               | Type         |
+| ---------------- | --------------------------------------------------------- | ------------ |
+| blockHash        | The hash of the block containing this trace               | hash         |
+| blockNumber      | the number of the block                                   | blknum       |
+| transactionHash  | the transaction's hash containing this trace              | hash         |
+| transactionIndex | the zero-indexed position of the transaction in the block | blknum       |
+| traceAddress     | a particular trace's address in the trace tree            | CStringArray |
+| subtraces        | the number of children traces that the trace hash         | uint64       |
+| type             | the type of the trace                                     | string       |
+| action           | the trace action for this trace                           | CTraceAction |
+| result           | the trace result of this trace                            | CTraceResult |
+| articulatedTrace | human readable version of the trace action input data     | CFunction    |
+| compressedTrace  | a compressed string version of the articulated trace      | string       |
 
 ## TraceAction
 
@@ -173,13 +173,13 @@ Other than the first trace which is the trace of the transaction itself, traces 
 
 ### Fields
 
-| Field | Description | Type |
-|-------|-------------|------|
-| from | address from which the trace was sent | address |
-| to | address to which the trace was sent | address |
-| gas | the maximum number of gas allowed for this trace | gas |
-| input | an encoded version of the function call | bytes |
-| callType | the type of call | string |
+| Field         | Description                                                                | Type    |
+| ------------- | -------------------------------------------------------------------------- | ------- |
+| from          | address from which the trace was sent                                      | address |
+| to            | address to which the trace was sent                                        | address |
+| gas           | the maximum number of gas allowed for this trace                           | gas     |
+| input         | an encoded version of the function call                                    | bytes   |
+| callType      | the type of call                                                           | string  |
 | refundAddress | if the call type is self-destruct, the address to which the refund is sent | address |
 
 ## TraceResult
@@ -188,12 +188,12 @@ As mentioned above, other than the first trace, traces represent calls into othe
 
 ### Fields
 
-| Field | Description | Type |
-|-------|-------------|------|
-| newContract | Address of new contract, if any | address |
-| code | if this trace is creating a new smart contract, the byte code of that contract | bytes |
-| gasUsed | the amount of gas used by this trace | gas |
-| output | the result of the call of this trace | bytes |
+| Field       | Description                                                                    | Type    |
+| ----------- | ------------------------------------------------------------------------------ | ------- |
+| newContract | Address of new contract, if any                                                | address |
+| code        | if this trace is creating a new smart contract, the byte code of that contract | bytes   |
+| gasUsed     | the amount of gas used by this trace                                           | gas     |
+| output      | the result of the call of this trace                                           | bytes   |
 
 ## DatedBlock
 
@@ -207,24 +207,32 @@ As mentioned above, other than the first trace, traces represent calls into othe
 
 ### Fields
 
-| Field | Description | Type |
-|-------|-------------|------|
-| blockNumber | the number of the block | blknum |
-| timestamp | the unix timestamp of the block | timestamp |
-| date | Human readable version of timestamp | date |
+| Field       | Description                         | Type      |
+| ----------- | ----------------------------------- | --------- |
+| blockNumber | the number of the block             | blknum    |
+| timestamp   | the unix timestamp of the block     | timestamp |
+| date        | Human readable version of timestamp | date      |
+
 ## Base types
 
 In these docs, sometimes Trueblocks mentions a type format that is more
 precise than the generic types, like "string" or "object".
 
-| Type Name | Description                         |
-| --------- | ----------------------------------- |
-| blknum    | a 64-bit unsigned int               |
-| timestamp | a 64-bit unsigned int               |
-| address   | a 20 byte string starting with '0x' |
-| hash      | a 32 byte string starting with '0x' |
-| string    | a plain c++ string                  |
-| number    | standard c++ 64-bit unsigned int    |
-| bigint    | arbitrarily sized signed int        |
-| wei       | arbitrarily sized unsigned int      |
-| boolean   | standard c++ boolean                |
+| Type      | Description                                     | Notes          |
+| --------- | ----------------------------------------------- | -------------- |
+| address   | a 20-byte hexidecimal string starting with '0x' | lowercase      |
+| blknum    | an alias for a uint64                           |                |
+| bool      | a value either `true`, `false`, `1`, or `0`     |                |
+| bytes     | an arbitrarily long string of bytes             |                |
+| date      | a JSON formatted date                           | as a string    |
+| double    | a floating point number of double precision     |                |
+| gas       | an unsigned big number                          | as a string    |
+| hash      | a 32-byte hexidecimal string starting with '0x' | lowercase      |
+| int256    | a signed big number                             | as a string    |
+| ipfshash  | a multi-hash produced by IPFS                   | mixed-case     |
+| string    | a normal character string                       |                |
+| timestamp | a 64-bit unsigned integer                       | unix timestamp |
+| uint32    | a 32-bit unsigned integer                       |                |
+| uint64    | a 64-bit unsigned integer                       |                |
+| uint8     | an alias for the boolean type                   |                |
+| wei       | an unsigned big number                          | as a string    |

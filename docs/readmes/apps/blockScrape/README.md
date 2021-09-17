@@ -13,12 +13,12 @@ The scraper can scrape either the index only, previously created monitors only, 
 
 `Where:`
 
-| | Option | Description |
-| :----- | :----- | :---------- |
-| -p | --pin | pin new chunks (and blooms) to IPFS (requires Pinata key and running IPFS node) |
-| -s | --sleep &lt;double&gt; | the number of seconds to sleep between passes (default 14) |
-| -v | --verbose | set verbose level (optional level defaults to 1) |
-| -h | --help | display this help screen |
+|     | Option                 | Description                                                                     |
+| --- | ---------------------- | ------------------------------------------------------------------------------- |
+| -p  | --pin                  | pin new chunks (and blooms) to IPFS (requires Pinata key and running IPFS node) |
+| -s  | --sleep &lt;double&gt; | the number of seconds to sleep between passes (default 14)                      |
+| -v  | --verbose              | set verbose level (optional level defaults to 1)                                |
+| -h  | --help                 | display this help screen                                                        |
 
 `Configurable Items:`
 
