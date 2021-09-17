@@ -3,6 +3,7 @@ FROM golang:1.14-alpine3.12 as builder
 ARG repo
 ARG commit_sha
 ARG test_target
+ARG config_file
 
 RUN apk add --no-cache g++ gcc make cmake git nano libcurl python3 python3-dev \
         curl bash curl-dev linux-headers sqlite-dev
@@ -25,4 +26,5 @@ RUN cd /root/trueblocks-core && \
         cmake ../src && \
         make -j 4
 
+COPY $config_file /root/.local/share/trueblocks/trueBlocks.toml
 ENTRYPOINT bash /root/trueblocks-core/src/other/build_assets/build_and_test.sh $test_target
