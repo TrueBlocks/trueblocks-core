@@ -14,4 +14,4 @@ fi
 echo "Building image..."
 IMAGE_ID=`docker build -q --build-arg repo=$REPO --build-arg commit_sha=$COMMIT_SHA --build-arg test_target=$TEST_TARGET --build-arg config_file=$CONFIG_FILE .`
 echo "Done. Running Docker image and tests"
-docker run $IMAGE_ID --network=host --mount type=bind,source=/home/unchained,target=/root/unchained
+docker run --network=host --mount type=bind,source=/home/unchained,target=/root/unchained --mount type=bind,source=$HOME/trueBlocks.toml,target=/root/.local/share/trueblocks/trueBlocks.toml $IMAGE_ID

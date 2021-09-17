@@ -1,21 +1,18 @@
-FROM golang:1.14-alpine3.12 as builder
+FROM golang:1.14-buster as builder
 
 ARG repo
 ARG commit_sha
 ARG test_target
 ARG config_file
 
-RUN apk add --no-cache g++ gcc make cmake git nano libcurl python3 python3-dev \
-        curl bash curl-dev linux-headers sqlite-dev
+RUN apt-get update -y
+RUN apt install -y g++ gcc make cmake git nano libcurl3-dev python3 python3-dev \
+        curl bash linux-headers-amd64 libsqlite3-dev
 
-RUN apk --no-cache add ca-certificates wget
-RUN wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub
-RUN wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.28-r0/glibc-2.28-r0.apk
-RUN apk add glibc-2.28-r0.apk
+# RUN apk add glibc-2.28-r0.apk
 
 WORKDIR /root
 
-ADD https://api.github.com/repos/$repo/git/refs/heads/$commit_sha version.json
 RUN git clone -b $commit_sha --single-branch --progress --depth 1 \
         https://github.com/$repo.git \
         /root/trueblocks-core
@@ -26,5 +23,4 @@ RUN cd /root/trueblocks-core && \
         cmake ../src && \
         make -j 4
 
-COPY $config_file /root/.local/share/trueblocks/trueBlocks.toml
 ENTRYPOINT bash /root/trueblocks-core/src/other/build_assets/build_and_test.sh $test_target
