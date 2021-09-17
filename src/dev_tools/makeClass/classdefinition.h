@@ -48,9 +48,9 @@ class CClassDefinition : public CBaseNode {
     string_q contained_by;
     string_q doc_group;
     string_q doc_order;
-    string_q description;
-    string_q openapi;
-    string_q produced_by;
+    string_q doc_descr;
+    string_q doc_api;
+    string_q doc_producer;
 
   public:
     CClassDefinition(void);
@@ -142,9 +142,9 @@ inline void CClassDefinition::initialize(void) {
     contained_by = "";
     doc_group = "";
     doc_order = "";
-    description = "";
-    openapi = "";
-    produced_by = "";
+    doc_descr = "";
+    doc_api = "";
+    doc_producer = "";
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -178,9 +178,9 @@ inline void CClassDefinition::duplicate(const CClassDefinition& cl) {
     contained_by = cl.contained_by;
     doc_group = cl.doc_group;
     doc_order = cl.doc_order;
-    description = cl.description;
-    openapi = cl.openapi;
-    produced_by = cl.produced_by;
+    doc_descr = cl.doc_descr;
+    doc_api = cl.doc_api;
+    doc_producer = cl.doc_producer;
 
     // EXISTING_CODE
     // EXISTING_CODE

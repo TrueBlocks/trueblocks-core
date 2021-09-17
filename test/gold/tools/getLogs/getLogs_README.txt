@@ -7,15 +7,15 @@ getLogs -th
 
 `Where:`  
 
-| | Option | Description |
-| :----- | :----- | :---------- |
-|  | transactions | a space-separated list of one or more transaction identifiers (required) |
-| -t | --topic &lt;hash&gt; | filter by one or more log topics (not implemented) |
-| -s | --source &lt;addr&gt; | export only if the given address emitted the event (not implemented) |
-| -a | --articulate | articulate the retrieved data if ABIs can be found |
-| -x | --fmt &lt;val&gt; | export format, one of *[ none \| json\* \| txt \| csv \| api ]* |
-| -v | --verbose | set verbose level (optional level defaults to 1) |
-| -h | --help | display this help screen |
+|     | Option                | Description                                                              |
+| --- | --------------------- | ------------------------------------------------------------------------ |
+|     | transactions          | a space-separated list of one or more transaction identifiers (required) |
+| -t  | --topic &lt;hash&gt;  | filter by one or more log topics (not implemented)                       |
+| -s  | --source &lt;addr&gt; | export only if the given address emitted the event (not implemented)     |
+| -a  | --articulate          | articulate the retrieved data if ABIs can be found                       |
+| -x  | --fmt &lt;val&gt;     | export format, one of *[ none \| json\* \| txt \| csv \| api ]*          |
+| -v  | --verbose             | set verbose level (optional level defaults to 1)                         |
+| -h  | --help                | display this help screen                                                 |
 
 `Notes:`
 

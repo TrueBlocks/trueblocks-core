@@ -6,7 +6,7 @@ cpp_includes = etherlib.h
 equals = (getValueByName("transactionHash") == it.getValueByName("transactionHash"))
 contained_by = Transaction
 tsx = true
-doc_group = Chain Data
-description = receipt data for a given transaction directly from the blockchain
-openapi = 12-receipt
-produced_by = receipts, export
+doc_group = 02-Chain Data
+doc_descr = receipt data for a given transaction directly from the blockchain
+doc_api = 12-receipt
+doc_producer = receipts, export

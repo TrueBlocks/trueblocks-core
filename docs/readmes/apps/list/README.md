@@ -13,11 +13,11 @@ Note that `chifra list` only queries the index, it does not extract the full tra
 
 `Where:`
 
-| Short Cut | Option | Description |
-| -------: | :------- | :------- |
-|  | addrs | one or more addresses (0x...) to export (required) |
-| -v | --verbose | set verbose level (optional level defaults to 1) |
-| -h | --help | display this help screen |
+|     | Option    | Description                                        |
+| --- | --------- | -------------------------------------------------- |
+|     | addrs     | one or more addresses (0x...) to export (required) |
+| -v  | --verbose | set verbose level (optional level defaults to 1)   |
+| -h  | --help    | display this help screen                           |
 
 `Notes:`
 

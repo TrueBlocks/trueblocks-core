@@ -671,9 +671,8 @@ const COption* COptionsBase::findParam(const string_q& name) const {
 //--------------------------------------------------------------------------------
 COption::COption(const string_q& ln, const string_q& sn, const string_q& t, size_t opts, const string_q& d) {
     description = substitute(d, "&#44;", ",");
-    if (ln.empty())
-        return;
 
+    is_special = (opts & OPT_HELP || opts & OPT_VERBOSE);
     is_positional = (opts & OPT_POSITIONAL);
     is_hidden = (opts & OPT_HIDDEN);
     is_optional = !(opts & OPT_REQUIRED);
@@ -693,10 +692,17 @@ COption::COption(const string_q& ln, const string_q& sn, const string_q& t, size
         permitted = "<val>";
     }
 
-    longName = "--" + ln + (permitted.empty() ? "" : " " + permitted);
     hotKey = (sn.empty() ? "" : "-" + sn);
-    if (is_positional)
-        longName = hotKey = ln;
+    if (ln.empty())
+        return;
+
+    if (!is_special) {
+        longName = "--" + ln + (permitted.empty() ? "" : " " + permitted);
+        if (is_positional)
+            longName = hotKey = ln;
+    } else {
+        longName = "--" + ln;
+    }
 }
 
 //--------------------------------------------------------------------------------
@@ -878,40 +884,6 @@ string_q COptionsBase::purpose(void) const {
 }
 
 //--------------------------------------------------------------------------------
-const char* STR_ONE_LINE = "| {S} | {L} | {D} |\n";
-string_q COptionsBase::oneDescription(const string_q& sN, const string_q& lN, const string_q& d, bool isPositional,
-                                      bool required) const {
-    ostringstream os;
-    if (isReadme) {
-        string_q dd = (d + (required && isPositional ? " (required)" : ""));
-        replaceAll(dd, "|", " \\| ");
-        replace(dd, "*", "\\*");
-        replaceAll(dd, "[", "*[ ");
-        replaceAll(dd, "]", " ]*");
-
-        // When we are writing the readme file...
-        string_q line = STR_ONE_LINE;
-        replace(line, "{S}", sN);
-        replace(line, "{L}", substitute(substitute(lN, "<", "&lt;"), ">", "&gt;"));
-        replace(line, "{D}", dd);
-        os << line;
-
-    } else {
-        // When we are writing to the command line...
-        string_q line = "\t" + substitute(substitute(string_q(STR_ONE_LINE), " ", ""), "|", "");
-        replace(line, "{S}", (isPositional ? "" : padRight(sN, 3)));
-        if (isPositional) {
-            replace(line, "{L}", padRight(lN, 22));
-        } else {
-            replace(line, "{L}", padRight((lN.empty() ? "" : " (" + lN + ")"), 19));
-        }
-        replace(line, "{D}", d + (required && isPositional ? " (required)" : ""));
-        os << line;
-    }
-    return os.str();
-}
-
-//--------------------------------------------------------------------------------
 string_q COptionsBase::format_notes(const CStringArray& strs) const {
     string_q nn;
     for (auto n : strs) {
@@ -981,83 +953,155 @@ string_q COptionsBase::get_configs(void) const {
     return substitute(os.str(), "-   ", "  - ");
 }
 
-//--------------------------------------------------------------------------------
-string_q COptionsBase::descriptions(void) const {
+//------------------------------------------------------------------------------------------------------------
+string_q markDownRow(const string_q& s1, const string_q& s2, const string_q& s3, size_t* widths) {
+    string_q ss1 = (s1 == "-" ? string_q(widths[0], '-') : s1);
+    string_q ss2 = (s1 == "-" ? string_q(widths[1], '-') : s2);
+    string_q ss3 = (s1 == "-" ? string_q(widths[2], '-') : s3);
+
     ostringstream os;
-    os << hiUp1 << "Where:" << hiDown << "  \n";
-    if (!overrideStr.empty()) {
-        CStringArray strs;
-        strs.push_back(overrideStr);
-        string_q ret = format_notes(strs);
-        replace(ret, "-", "");
-        if (isReadme)
-            os << "```" << endl;
-        os << ret;
-        if (isReadme)
-            os << "```" << endl;
-
-    } else {
-        if (isReadme) {
-            os << "\n";
-            os << "| | Option | Description |\n";
-            os << "| :----- | :----- | :---------- |\n";
-        }
-
-        size_t nHidden = 0;
-        for (uint64_t i = 0; i < cntParams; i++) {
-            string_q hKey = pParams[i].hotKey;
-            string_q lName = substitute(pParams[i].longName, "addrs2", "addrs");
-            string_q descr = trim(pParams[i].description);
-            bool isPositional = pParams[i].is_positional;
-            if (!pParams[i].is_hidden && !pParams[i].is_deprecated && !pParams[i].longName.empty()) {
-                bool isReq = !pParams[i].is_optional;
-                hKey = (isPositional ? "" : hKey);
-                lName = substitute(substitute((isPositional ? substitute(lName, "-", "") : lName), "!", ""), "~", "");
-                os << oneDescription(hKey, lName, descr, isPositional, isReq);
-            }
-            if (pParams[i].is_hidden)
-                nHidden++;
-        }
-
-        // For testing purposes, we show the hidden options
-        if (nHidden && (isTestMode() || (verbose > 1))) {
-            if (isReadme) {
-                os << "|####|Hidden options||" << endl;
-            } else {
-                os << endl;
-                os << cTeal << italic << "\t#### Hidden options" << cOff << endl;
-            }
-            for (uint64_t i = 0; i < cntParams; i++) {
-                string_q hKey = pParams[i].hotKey;
-                string_q lName = pParams[i].longName;
-                string_q descr = trim(pParams[i].description);
-                bool isPositional = pParams[i].is_positional;
-                if (pParams[i].is_hidden && !pParams[i].is_deprecated && !pParams[i].longName.empty()) {
-                    bool isReq = !pParams[i].is_optional;
-                    lName =
-                        substitute(substitute((isPositional ? substitute(lName, "-", "") : lName), "!", ""), "~", "");
-                    lName = substitute(lName, "@-", "");
-                    hKey = (isPositional ? "" : pParams[i].hotKey);
-                    os << oneDescription(hKey, lName, descr, isPositional, isReq);
-                }
-            }
-            if (isReadme) {
-                os << "|####|Hidden options||" << endl;
-            } else {
-                os << cTeal << italic << "\t#### Hidden options" << cOff << endl;
-                os << endl;
-            }
-        }
-
-        if (isEnabled(OPT_FMT) && (verbose || isTestMode()))
-            os << oneDescription("-x", "--fmt <val>", "export format, one of [none|json*|txt|csv|api]");
-        if (isEnabled(OPT_VERBOSE))
-            os << oneDescription("-v", "--verbose", "set verbose level (optional level defaults to 1)");
-        if (isEnabled(OPT_HELP))
-            os << oneDescription("-h", "--help", "display this help screen");
-    }
+    os << "| ";
+    os << padRight(ss1, widths[0]) << " | ";
+    os << padRight(ss2, widths[1]) << " | ";
+    os << padRight(ss3, widths[2]);
+    os << " |";
+    os << endl;
     return os.str();
 }
+
+//--------------------------------------------------------------------------------
+const char* STR_ONE_LINE = "| {S} | {L} | {D} |\n";
+string_q COptionDescr::oneDescription(bool isReadme) const {
+    ostringstream os;
+
+    if (isReadme) {
+        os << markDownRow(shortKey, longKey, descr, (size_t*)widths);
+
+    } else {
+        string_q line = "\t" + substitute(substitute(string_q(STR_ONE_LINE), " ", ""), "|", "");
+        replace(line, "{S}", (positional ? "" : padRight(shortKey, 3)));
+        if (positional) {
+            replace(line, "{L}", padRight(longKey, 22));
+        } else {
+            replace(line, "{L}", padRight((longKey.empty() ? "" : " (" + longKey + ")"), 19));
+        }
+        replace(line, "{D}", descr);
+        os << line;
+    }
+
+    return os.str();
+}
+
+//--------------------------------------------------------------------------------
+string_q COptionsBase::descriptionOverride(void) const {
+    ostringstream os;
+    os << hiUp1 << "Where:" << hiDown << "  \n";
+    CStringArray strs;
+    strs.push_back(overrideStr);
+    string_q ret = format_notes(strs);
+    replace(ret, "-", "");
+    if (isReadme)
+        os << "```" << endl;
+    os << ret;
+    if (isReadme)
+        os << "```" << endl;
+    return os.str();
+}
+
+//--------------------------------------------------------------------------------
+string_q COptionsBase::descriptions(void) const {
+    if (!overrideStr.empty())
+        return descriptionOverride();
+
+    ostringstream os, extra;
+    os << hiUp1 << "Where:" << hiDown << "  \n";
+    size_t widths[5];
+    bzero(widths, sizeof(widths));
+    for (uint64_t i = 0; i < cntParams; i++) {
+        const COption* param = &pParams[i];
+        if (param->isPublic() || (param->is_hidden && (isTestMode() || (verbose > 1)))) {
+            widths[0] = max(widths[0], param->getHotKey().length());
+            widths[1] = max(widths[1], param->getLongKey(isReadme).length());
+            widths[2] = max(widths[2], param->getDescription(isReadme).length());
+        }
+    }
+    widths[0] = max(widths[0], size_t(3));
+
+    //---------------------------------------------------------------------------------------------------
+    static const COption opts[] = {
+        COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_FLAG, "export format"),
+        COption("verbose", "v", "<uint>", OPT_VERBOSE, "set verbose level (optional level defaults to 1)"),
+        COption("help", "h", "<boolean>", OPT_HELP, "display this help screen"),
+    };
+    static const size_t nOpts = sizeof(opts) / sizeof(COption);
+    for (size_t i = 0; i < nOpts; i++) {
+        bool show = false;
+        show |= (i == 0 && isEnabled(OPT_FMT));
+        show |= (i == 1 && isEnabled(OPT_VERBOSE));
+        show |= (i == 2 && isEnabled(OPT_HELP));
+        if (show) {
+            const COption* param = &opts[i];
+            if (param->isPublic()) {
+                widths[0] = max(widths[0], param->getHotKey().length());
+                widths[1] = max(widths[1], param->getLongKey(isReadme).length());
+                widths[2] = max(widths[2], param->getDescription(isReadme).length());
+            }
+            COptionDescr dd(param->getHotKey(), param->getLongKey(isReadme), param->getDescription(isReadme), false,
+                            false, widths);
+            extra << dd.oneDescription(isReadme);
+        }
+    }
+
+    if (isReadme) {
+        os << endl;
+        COptionDescr dd1("", "Option", "Description", false, false, widths);
+        os << dd1.oneDescription(isReadme);
+        COptionDescr dd2("-", "", "", false, false, widths);
+        os << dd2.oneDescription(isReadme);
+    }
+
+    size_t nHidden = 0;
+    for (uint64_t i = 0; i < cntParams; i++) {
+        const COption* param = &pParams[i];
+        if (param->isPublic()) {
+            COptionDescr dd(param->getHotKey(), param->getLongKey(isReadme), param->getDescription(isReadme),
+                            param->is_positional, !param->is_optional, widths);
+            os << dd.oneDescription(isReadme);
+        }
+
+        if (param->is_hidden)
+            nHidden++;
+    }
+
+    // For testing purposes, we show the hidden options
+    if (nHidden && (isTestMode() || (verbose > 1))) {
+        if (isReadme) {
+            COptionDescr dd("###", "Hidden options", "", false, false, widths);
+            os << dd.oneDescription(isReadme);
+        } else {
+            os << endl;
+            os << cTeal << italic << "\t#### Hidden options" << cOff << endl;
+        }
+        for (uint64_t i = 0; i < cntParams; i++) {
+            const COption* param = &pParams[i];
+            if (param->is_hidden && !param->is_deprecated && !param->longName.empty()) {
+                COptionDescr dd(param->getHotKey(), param->getLongKey(isReadme), param->getDescription(isReadme),
+                                param->is_positional, !param->is_optional, widths);
+                os << dd.oneDescription(isReadme);
+            }
+        }
+        if (isReadme) {
+            COptionDescr dd("###", "Hidden options", "", false, false, widths);
+            os << dd.oneDescription(isReadme);
+        } else {
+            os << cTeal << italic << "\t#### Hidden options" << cOff << endl;
+            os << endl;
+        }
+    }
+
+    os << extra.str();
+    return os.str();
+}  // namespace qblocks
 
 //--------------------------------------------------------------------------------
 string_q COptionsBase::expandOption(string_q& arg) {

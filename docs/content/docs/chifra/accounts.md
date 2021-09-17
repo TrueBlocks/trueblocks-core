@@ -2,7 +2,7 @@
 title: "Accounts"
 description: ""
 lead: ""
-date: 2021-09-15T09:03:20
+date: 2021-09-16T19:24:04
 lastmod:
   - :git
   - lastmod
@@ -35,11 +35,11 @@ Note that `chifra list` only queries the index, it does not extract the full tra
 
 `Where:`
 
-| Short Cut | Option | Description |
-| -------: | :------- | :------- |
-|  | addrs | one or more addresses (0x...) to export (required) |
-| -v | --verbose | set verbose level (optional level defaults to 1) |
-| -h | --help | display this help screen |
+|     | Option    | Description                                        |
+| --- | --------- | -------------------------------------------------- |
+|     | addrs     | one or more addresses (0x...) to export (required) |
+| -v  | --verbose | set verbose level (optional level defaults to 1)   |
+| -h  | --help    | display this help screen                           |
 
 `Notes:`
 
@@ -63,30 +63,31 @@ By default, the results of the extraction are delivered to your console, however
 
 `Where:`
 
-| | Option | Description |
-| :----- | :----- | :---------- |
-|  | addrs | one or more addresses (0x...) to export (required) |
-|  | topics | filter by one or more log topics (only for --logs option) |
-|  | fourbytes | filter by one or more fourbytes (only for transactions and trace options) |
-| -p | --appearances | export a list of appearances |
-| -r | --receipts | export receipts instead of transaction list |
-| -A | --statements | for use with --accounting option only, export only reconciliation statements |
-| -l | --logs | export logs instead of transaction list |
-| -t | --traces | export traces instead of transaction list |
-| -C | --accounting | export accounting records instead of transaction list |
-| -a | --articulate | articulate transactions, traces, logs, and outputs |
-| -i | --cache_txs | write transactions to the cache (see notes) |
-| -R | --cache_traces | write traces to the cache (see notes) |
-| -y | --factory | scan for contract creations from the given address(es) and report address of those contracts |
-|  | --emitter | for log export only, export only if one of the given export addresses emitted the event |
-|  | --source &lt;addr&gt; | for log export only, export only one of these addresses emitted the event |
-|  | --relevant | for log and accounting export only, if true export only logs relevant to one of the given export addresses |
-| -U | --count | only available for --appearances mode, if present return only the number of records |
-| -c | --first_record &lt;num&gt; | the first record to process |
-| -e | --max_records &lt;num&gt; | the maximum number of records to process before reporting |
-|  | --clean | clean (i.e. remove duplicate appearances) from all existing monitors |
-| -v | --verbose | set verbose level (optional level defaults to 1) |
-| -h | --help | display this help screen |
+|     | Option                     | Description                                                                                                |
+| --- | -------------------------- | ---------------------------------------------------------------------------------------------------------- |
+|     | addrs                      | one or more addresses (0x...) to export (required)                                                         |
+|     | topics                     | filter by one or more log topics (only for --logs option)                                                  |
+|     | fourbytes                  | filter by one or more fourbytes (only for transactions and trace options)                                  |
+| -p  | --appearances              | export a list of appearances                                                                               |
+| -r  | --receipts                 | export receipts instead of transaction list                                                                |
+| -A  | --statements               | for use with --accounting option only, export only reconciliation statements                               |
+| -l  | --logs                     | export logs instead of transaction list                                                                    |
+| -t  | --traces                   | export traces instead of transaction list                                                                  |
+| -C  | --accounting               | export accounting records instead of transaction list                                                      |
+| -a  | --articulate               | articulate transactions, traces, logs, and outputs                                                         |
+| -i  | --cache_txs                | write transactions to the cache (see notes)                                                                |
+| -R  | --cache_traces             | write traces to the cache (see notes)                                                                      |
+| -y  | --factory                  | scan for contract creations from the given address(es) and report address of those contracts               |
+|     | --emitter                  | for log export only, export only if one of the given export addresses emitted the event                    |
+|     | --source &lt;addr&gt;      | for log export only, export only one of these addresses emitted the event                                  |
+|     | --relevant                 | for log and accounting export only, if true export only logs relevant to one of the given export addresses |
+| -U  | --count                    | only available for --appearances mode, if present return only the number of records                        |
+| -c  | --first_record &lt;num&gt; | the first record to process                                                                                |
+| -e  | --max_records &lt;num&gt;  | the maximum number of records to process before reporting                                                  |
+|     | --clean                    | clean (i.e. remove duplicate appearances) from all existing monitors                                       |
+| -x  | --fmt &lt;val&gt;          | export format, one of *[ none \| json\* \| txt \| csv \| api ]*                                            |
+| -v  | --verbose                  | set verbose level (optional level defaults to 1)                                                           |
+| -h  | --help                     | display this help screen                                                                                   |
 
 `Notes:`
 
@@ -117,13 +118,13 @@ Use the `--remove` command to permanently remove a monitor from your computer. T
 
 `Where:`
 
-| Short Cut | Option | Description |
-| -------: | :------- | :------- |
-|  | addrs | one or more addresses (0x...) to export (required) |
-|  | --delete | delete a previously created monitor (or undelete if already deleted) |
-|  | --remove | remove a previously deleted monitor |
-| -v | --verbose | set verbose level (optional level defaults to 1) |
-| -h | --help | display this help screen |
+|     | Option    | Description                                                          |
+| --- | --------- | -------------------------------------------------------------------- |
+|     | addrs     | one or more addresses (0x...) to export (required)                   |
+|     | --delete  | delete a previously created monitor (or undelete if already deleted) |
+|     | --remove  | remove a previously deleted monitor                                  |
+| -v  | --verbose | set verbose level (optional level defaults to 1)                     |
+| -h  | --help    | display this help screen                                             |
 
 `Notes:`
 
@@ -147,20 +148,21 @@ You may use the TrueBlocks explorer to manage (add, edit, delete) address-name a
 
 `Where:`
 
-| | Option | Description |
-| :----- | :----- | :---------- |
-|  | terms | a space separated list of one or more search terms (required) |
-| -e | --expand | expand search to include all fields (default searches name, address, and symbol only) |
-| -m | --match_case | do case-sensitive search |
-| -l | --all | include all accounts in the search |
-| -c | --custom | include your custom named accounts |
-| -p | --prefund | include prefund accounts |
-| -n | --named | include well know token and airdrop addresses in the search |
-| -a | --addr | display only addresses in the results (useful for scripting) |
-| -s | --collections | display collections data |
-| -g | --tags | export the list of tags and subtags only |
-| -v | --verbose | set verbose level (optional level defaults to 1) |
-| -h | --help | display this help screen |
+|     | Option            | Description                                                                           |
+| --- | ----------------- | ------------------------------------------------------------------------------------- |
+|     | terms             | a space separated list of one or more search terms (required)                         |
+| -e  | --expand          | expand search to include all fields (default searches name, address, and symbol only) |
+| -m  | --match_case      | do case-sensitive search                                                              |
+| -l  | --all             | include all accounts in the search                                                    |
+| -c  | --custom          | include your custom named accounts                                                    |
+| -p  | --prefund         | include prefund accounts                                                              |
+| -n  | --named           | include well know token and airdrop addresses in the search                           |
+| -a  | --addr            | display only addresses in the results (useful for scripting)                          |
+| -s  | --collections     | display collections data                                                              |
+| -g  | --tags            | export the list of tags and subtags only                                              |
+| -x  | --fmt &lt;val&gt; | export format, one of *[ none \| json\* \| txt \| csv \| api ]*                       |
+| -v  | --verbose         | set verbose level (optional level defaults to 1)                                      |
+| -h  | --help            | display this help screen                                                              |
 
 `Notes:`
 
@@ -189,14 +191,15 @@ The `--sol` option will convert a single Solidity file found in the current fold
 
 `Where:`
 
-| | Option | Description |
-| :----- | :----- | :---------- |
-|  | addrs | list of one or more smart contracts whose ABI to grab from EtherScan (required) |
-| -k | --known | load common 'known' ABIs from cache |
-| -s | --sol &lt;str&gt; | file name of .sol file from which to create a new known abi (without .sol) |
-| -f | --find &lt;str&gt; | try to search for a function declaration given a four byte code |
-| -v | --verbose | set verbose level (optional level defaults to 1) |
-| -h | --help | display this help screen |
+|     | Option             | Description                                                                     |
+| --- | ------------------ | ------------------------------------------------------------------------------- |
+|     | addrs              | list of one or more smart contracts whose ABI to grab from EtherScan (required) |
+| -k  | --known            | load common 'known' ABIs from cache                                             |
+| -s  | --sol &lt;str&gt;  | file name of .sol file from which to create a new known abi (without .sol)      |
+| -f  | --find &lt;str&gt; | try to search for a function declaration given a four byte code                 |
+| -x  | --fmt &lt;val&gt;  | export format, one of *[ none \| json\* \| txt \| csv \| api ]*                 |
+| -v  | --verbose          | set verbose level (optional level defaults to 1)                                |
+| -h  | --help             | display this help screen                                                        |
 
 `Notes:`
 

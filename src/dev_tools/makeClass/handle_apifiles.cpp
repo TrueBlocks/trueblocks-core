@@ -65,10 +65,10 @@ string_q COptions::getProductions(const CCommandOption& ep) {
     CStringArray productions;
     string_q descr;
     for (auto model : dataModels) {
-        if (contains(model.produced_by, ep.api_route)) {
-            productions.push_back(model.openapi);
+        if (contains(model.doc_producer, ep.api_route)) {
+            productions.push_back(model.doc_api);
             if (descr.empty())
-                descr = model.description;
+                descr = model.doc_descr;
         }
     }
 

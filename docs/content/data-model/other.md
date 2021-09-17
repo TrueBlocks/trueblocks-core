@@ -2,7 +2,7 @@
 title: "Other"
 description: ""
 lead: ""
-date: 2021-09-15T09:03:19
+date: 2021-09-16T11:03:44
 lastmod:
   - :git
   - lastmod
@@ -26,10 +26,11 @@ These commands call some useful miscellaneous tools:
 text="Note: some of these tools, like `ethslurp`, require an EtherScan key." >}}
 [Follow these instructions to add a key to your config](https://docs.trueblocks.io/docs/prologue/installing-trueblocks/#3-update-the-configs-for-your-rpc-and-api-keys)
 
+_Each data structure is created by one or more tools which are detailed below_
 
 ## Quote
 
-TEXT ABOUT PRICE QUOTES
+<!-- TEXT ABOUT PRICE QUOTES -->
 
 ### How to get price quotes
 
@@ -42,25 +43,33 @@ TEXT ABOUT PRICE QUOTES
 
 ### Fields
 
-| Field | Description | Type |
-|-------|-------------|------|
-| timestamp | the timestamp of this quote | timestamp |
-| close | price of the asset in US dollars | double |
-| date | the date of the associated timestamp | date |
-| name | the name of the block for some named 'special' blocks | string |
+| Field     | Description                                           | Type      |
+| --------- | ----------------------------------------------------- | --------- |
+| timestamp | the timestamp of this quote                           | timestamp |
+| close     | price of the asset in US dollars                      | double    |
+| date      | the date of the associated timestamp                  | date      |
+| name      | the name of the block for some named 'special' blocks | string    |
+
 ## Base types
 
 In these docs, sometimes Trueblocks mentions a type format that is more
 precise than the generic types, like "string" or "object".
 
-| Type Name | Description                         |
-| --------- | ----------------------------------- |
-| blknum    | a 64-bit unsigned int               |
-| timestamp | a 64-bit unsigned int               |
-| address   | a 20 byte string starting with '0x' |
-| hash      | a 32 byte string starting with '0x' |
-| string    | a plain c++ string                  |
-| number    | standard c++ 64-bit unsigned int    |
-| bigint    | arbitrarily sized signed int        |
-| wei       | arbitrarily sized unsigned int      |
-| boolean   | standard c++ boolean                |
+| Type      | Description                                     | Notes          |
+| --------- | ----------------------------------------------- | -------------- |
+| address   | a 20-byte hexidecimal string starting with '0x' | lowercase      |
+| blknum    | an alias for a uint64                           |                |
+| bool      | a value either `true`, `false`, `1`, or `0`     |                |
+| bytes     | an arbitrarily long string of bytes             |                |
+| date      | a JSON formatted date                           | as a string    |
+| double    | a floating point number of double precision     |                |
+| gas       | an unsigned big number                          | as a string    |
+| hash      | a 32-byte hexidecimal string starting with '0x' | lowercase      |
+| int256    | a signed big number                             | as a string    |
+| ipfshash  | a multi-hash produced by IPFS                   | mixed-case     |
+| string    | a normal character string                       |                |
+| timestamp | a 64-bit unsigned integer                       | unix timestamp |
+| uint32    | a 32-bit unsigned integer                       |                |
+| uint64    | a 64-bit unsigned integer                       |                |
+| uint8     | an alias for the boolean type                   |                |
+| wei       | an unsigned big number                          | as a string    |

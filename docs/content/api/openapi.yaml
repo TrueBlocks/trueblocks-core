@@ -1597,34 +1597,6 @@ paths:
           description: bad input parameter
 components:
   schemas:
-    appearance:
-      description: "a single appearance of an address anywhere in the chain in the form of blockNumber.transactionIndex"
-      type: object
-      properties:
-        blockNumber:
-          type: number
-          format: blknum
-          example: 10021
-          description: "the number of the block"
-        transactionIndex:
-          type: number
-          format: blknum
-          example: 305
-          description: "the zero-indexed position of the transaction in the block"
-        address:
-          type: string
-          format: address
-          description: "the address of the appearance"
-        name:
-          type: string
-          description: "the name of the address, if found"
-        timestamp:
-          type: number
-          format: timestamp
-          description: "the timestamp for this appearance"
-        date:
-          type: string
-          description: "the date represented by the timestamp"
     monitor:
       description: "A local file indicating a user's interest in an address. Includes caches for reconicilations, transactions and appearances as well as an optional association to named account"
       type: object
@@ -1655,58 +1627,34 @@ components:
         is_custom:
           type: boolean
           description: "`true` if this address is customized"
-    name:
-      description: "an association between a name and address for use throughout TrueBlocks"
+    appearance:
+      description: "a single appearance of an address anywhere in the chain in the form of blockNumber.transactionIndex"
       type: object
       properties:
-        tags:
-          type: string
-          example: "31-Gitcoin:Core"
-          description: "colon separated list of tags"
+        blockNumber:
+          type: number
+          format: blknum
+          example: 10021
+          description: "the number of the block"
+        transactionIndex:
+          type: number
+          format: blknum
+          example: 305
+          description: "the zero-indexed position of the transaction in the block"
         address:
           type: string
           format: address
-          example: "0xabea...fbef"
-          description: "the address associated with this name"
+          description: "the address of the appearance"
         name:
           type: string
-          example: "zkSync"
-          description: "the name associated with this address (retreived from on-chain data if available)"
-        symbol:
-          type: string
-          example: "GTC"
-          description: "the symbol for this address (retreived from on-chain data if available)"
-        source:
-          type: string
-          example: "On-chain"
-          description: "user supplied source of where this name was found (or on-chain if name is on-chain)"
-        decimals:
+          description: "the name of the address, if found"
+        timestamp:
           type: number
-          format: uint64
-          example: 18
-          description: "number of decimals retreived from an ERC20 smart contract, defaults to 18"
-        description:
+          format: timestamp
+          description: "the timestamp for this appearance"
+        date:
           type: string
-          example: "any test"
-          description: "user supplied description for the address"
-        deleted:
-          type: boolean
-          description: "`true` if deleted, `false` otherwise"
-        is_custom:
-          type: boolean
-          description: "`true` if the address is a custom address, `false` otherwise"
-        is_prefund:
-          type: boolean
-          description: "`true` if the address was one of the prefund addresses, `false` otherwise"
-        is_contract:
-          type: boolean
-          description: "`true` if the address is a smart contract, `false` otherwise"
-        is_erc20:
-          type: boolean
-          description: "`true` if the address is an ERC20, `false` otherwise"
-        is_erc721:
-          type: boolean
-          description: "`true` if the address is an ERC720, `false` otherwise"
+          description: "the date represented by the timestamp"
     reconciliation:
       description: "a reconiciliation of all inflows and outflows to a given account at a given transaction"
       type: object
@@ -1843,6 +1791,58 @@ components:
         reconciled:
           type: boolean
           description: "a calculated field -- true if `endBal === endBalCalc` and `begBal === prevBlkBal`. `false` otherwise."
+    name:
+      description: "an association between a name and address for use throughout TrueBlocks"
+      type: object
+      properties:
+        tags:
+          type: string
+          example: "31-Gitcoin:Core"
+          description: "colon separated list of tags"
+        address:
+          type: string
+          format: address
+          example: "0xabea...fbef"
+          description: "the address associated with this name"
+        name:
+          type: string
+          example: "zkSync"
+          description: "the name associated with this address (retreived from on-chain data if available)"
+        symbol:
+          type: string
+          example: "GTC"
+          description: "the symbol for this address (retreived from on-chain data if available)"
+        source:
+          type: string
+          example: "On-chain"
+          description: "user supplied source of where this name was found (or on-chain if name is on-chain)"
+        decimals:
+          type: number
+          format: uint64
+          example: 18
+          description: "number of decimals retreived from an ERC20 smart contract, defaults to 18"
+        description:
+          type: string
+          example: "any test"
+          description: "user supplied description for the address"
+        deleted:
+          type: boolean
+          description: "`true` if deleted, `false` otherwise"
+        is_custom:
+          type: boolean
+          description: "`true` if the address is a custom address, `false` otherwise"
+        is_prefund:
+          type: boolean
+          description: "`true` if the address was one of the prefund addresses, `false` otherwise"
+        is_contract:
+          type: boolean
+          description: "`true` if the address is a smart contract, `false` otherwise"
+        is_erc20:
+          type: boolean
+          description: "`true` if the address is an ERC20, `false` otherwise"
+        is_erc721:
+          type: boolean
+          description: "`true` if the address is an ERC720, `false` otherwise"
     abi:
       description: "a collection of function and event definitions as described elsewhere in the Ethereum system"
       type: object
@@ -1883,7 +1883,7 @@ components:
             $ref: "#/components/schemas/parameter"
           description: "the output parameters to the function, if any"
     parameter:
-      description: "a parameter to a function or event"
+      description: "an input or output paramter to a function"
       type: object
       properties:
         type:
@@ -1906,81 +1906,6 @@ components:
           items:
             $ref: "#/components/schemas/parameter"
           description: "for composite types, the parameters making up the composite"
-    status:
-      description: "This data model carries information about the TrueBlocks system including both the API server and the local binary caches"
-      type: object
-      properties:
-        client_version:
-          type: string
-          description: "the version string as reported by the rpcProvider"
-        client_ids:
-          type: string
-          description: "netword_id and chain_id from the rpcProvider"
-        trueblocks_version:
-          type: string
-          description: "the TrueBlocks version string"
-        rpc_provider:
-          type: string
-          description: "the current rpcProvider"
-        balance_provider:
-          type: string
-          description: "the current archive node balance provider (defaults to rpcProvider)"
-        config_path:
-          type: string
-          description: "the path to config files"
-        cache_path:
-          type: string
-          description: "the path to the local binary caches"
-        index_path:
-          type: string
-          description: "the path to the local binary indexes"
-        host:
-          type: string
-          description: "the host portion of the local API server"
-        is_testing:
-          type: boolean
-          description: "`true` if the server is running in test mode"
-        is_api:
-          type: boolean
-          description: "`true` if the server is running in API mode"
-        is_docker:
-          type: boolean
-          description: "`true` if running under a docker image"
-        is_scraping:
-          type: boolean
-          description: "`true` if the index scraper is running"
-        is_archive:
-          type: boolean
-          description: "`true` if the rpcProvider is an archive node"
-        is_tracing:
-          type: boolean
-          description: "`true` if the rpcProvider provides Parity traces"
-        has_eskey:
-          type: boolean
-          description: "`true` if an EtherScan key is present"
-        has_pinkey:
-          type: boolean
-          description: "`true` if a Pinata API key is present"
-        ts:
-          type: number
-          format: timestamp
-          description: "the timestamp when this status data was produced"
-    pinnedChunk:
-      description: "the IPFS hashes of the index chunk and its associated Bloom filter for the given block range"
-      type: object
-      properties:
-        fileName:
-          type: string
-          example: "013142464-013145212"
-          description: "for each chunk, the range of blocks contained in that chunk"
-        bloomHash:
-          type: ipfshash
-          example: "QmXHjjY...HDqvWT"
-          description: "the IPFS hash of the bloom filter at that range"
-        indexHash:
-          type: ipfshash
-          example: "QmTbYpR...qWLj44"
-          description: "the IPFS hash of the index chunk at that range"
     block:
       description: "block data directly from the blockchain"
       type: object
@@ -2395,6 +2320,81 @@ components:
         is_erc721:
           type: boolean
           description: "`true` if the address is an ERC720, `false` otherwise"
+    status:
+      description: "This data model carries information about the TrueBlocks system including both the API server and the local binary caches"
+      type: object
+      properties:
+        client_version:
+          type: string
+          description: "the version string as reported by the rpcProvider"
+        client_ids:
+          type: string
+          description: "netword_id and chain_id from the rpcProvider"
+        trueblocks_version:
+          type: string
+          description: "the TrueBlocks version string"
+        rpc_provider:
+          type: string
+          description: "the current rpcProvider"
+        balance_provider:
+          type: string
+          description: "the current archive node balance provider (defaults to rpcProvider)"
+        config_path:
+          type: string
+          description: "the path to config files"
+        cache_path:
+          type: string
+          description: "the path to the local binary caches"
+        index_path:
+          type: string
+          description: "the path to the local binary indexes"
+        host:
+          type: string
+          description: "the host portion of the local API server"
+        is_testing:
+          type: boolean
+          description: "`true` if the server is running in test mode"
+        is_api:
+          type: boolean
+          description: "`true` if the server is running in API mode"
+        is_docker:
+          type: boolean
+          description: "`true` if running under a docker image"
+        is_scraping:
+          type: boolean
+          description: "`true` if the index scraper is running"
+        is_archive:
+          type: boolean
+          description: "`true` if the rpcProvider is an archive node"
+        is_tracing:
+          type: boolean
+          description: "`true` if the rpcProvider provides Parity traces"
+        has_eskey:
+          type: boolean
+          description: "`true` if an EtherScan key is present"
+        has_pinkey:
+          type: boolean
+          description: "`true` if a Pinata API key is present"
+        ts:
+          type: number
+          format: timestamp
+          description: "the timestamp when this status data was produced"
+    pinnedChunk:
+      description: "the IPFS hashes of the index chunk and its associated Bloom filter for the given block range"
+      type: object
+      properties:
+        fileName:
+          type: string
+          example: "013142464-013145212"
+          description: "for each chunk, the range of blocks contained in that chunk"
+        bloomHash:
+          type: ipfshash
+          example: "QmXHjjY...HDqvWT"
+          description: "the IPFS hash of the bloom filter at that range"
+        indexHash:
+          type: ipfshash
+          example: "QmTbYpR...qWLj44"
+          description: "the IPFS hash of the index chunk at that range"
     quote:
       description: "the closing price of Ether in USD at a particular moment"
       type: object

@@ -1,4 +1,4 @@
-TEXT ABOUT STATUS
+<!-- TEXT ABOUT STATUS -->
 
 ### How to get status
 

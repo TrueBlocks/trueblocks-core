@@ -57,6 +57,24 @@ typedef uint64_t (*HASHFINDFUNC)(const hash_t& hash, void* data);
 typedef map<address_t, CAccountName> CAddressNameMap;
 
 //-----------------------------------------------------------------------------
+class COptionDescr {
+  public:
+    string_q shortKey;
+    string_q longKey;
+    string_q descr;
+    bool positional;
+    bool required;
+    size_t widths[5];  // only five columns allowed
+    COptionDescr(const string_q& sN, const string_q& lN, const string_q& d, bool im, bool r, size_t* w)
+        : shortKey(sN), longKey(lN), descr(d), positional(im), required(r) {
+        for (size_t i = 0; i < 5; i++)
+            widths[i] = w[i];
+    }
+    string_q oneDescription(bool isReadme) const;
+};
+extern string_q markDownRow(const string_q& s1, const string_q& s2, const string_q& s3, size_t* widths);
+
+//-----------------------------------------------------------------------------
 class COptionsBase {
   public:
     CStringArray commandLines;
@@ -137,8 +155,7 @@ class COptionsBase {
     string_q purpose(void) const;
     string_q options(void) const;
     string_q descriptions(void) const;
-    string_q oneDescription(const string_q& sN, const string_q& lN, const string_q& d, bool isMode = false,
-                            bool required = false) const;
+    string_q descriptionOverride(void) const;
     string_q get_notes(void) const;
     string_q format_notes(const CStringArray& strs) const;
     string_q get_configs(void) const;
@@ -199,9 +216,39 @@ class COption {
     string_q type;
     bool is_hidden;
     bool is_positional;
+    bool is_special;
     bool is_optional;
     bool is_deprecated;
     COption(const string_q& ln, const string_q& sn, const string_q& type, size_t opts, const string_q& d);
+    bool isPublic(void) const {
+        return (!is_hidden && !is_deprecated && !longName.empty());
+    }
+    string_q getHotKey(void) const {
+        return is_positional ? "" : hotKey;
+    }
+    string_q getLongKey(bool isReadme) const {
+        if (is_special)
+            return longName;
+        string_q lName = substitute(longName, "addrs2", "addrs");
+        replaceAny(lName, "!~", "");
+        lName = (is_positional ? substitute(lName, "-", "") : lName);
+        lName = substitute(lName, "@-", "");
+        if (isReadme) {
+            lName = substitute(substitute(lName, "<", "&lt;"), ">", "&gt;");
+        }
+        return lName;
+    }
+    string_q getDescription(bool isReadme) const {
+        string_q descr = trim(description);
+        descr = (descr + (!is_optional && is_positional ? " (required)" : ""));
+        if (isReadme) {
+            replace(descr, "*", "\\*");
+            replaceAll(descr, "|", " \\| ");
+            replaceAll(descr, "[", "*[ ");
+            replaceAll(descr, "]", " ]*");
+        }
+        return descr;
+    }
 };
 
 //--------------------------------------------------------------------------------
