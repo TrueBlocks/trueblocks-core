@@ -13,12 +13,13 @@ RUN apt install -y g++ gcc make cmake git nano libcurl3-dev python3 python3-dev 
 
 WORKDIR /root
 
-RUN git clone -b $commit_sha --single-branch --progress --depth 1 \
+RUN git clone --progress \
         https://github.com/$repo.git \
-        /root/trueblocks-core
+        /root/trueblocks-core && \
+        cd /root/trueblocks-core && \
+        git reset --hard $commit_sha
 
-RUN cd /root/trueblocks-core && \
-        mkdir -v build && \
+RUN mkdir -v build && \
         cd build && \
         cmake ../src && \
         make -j 4
