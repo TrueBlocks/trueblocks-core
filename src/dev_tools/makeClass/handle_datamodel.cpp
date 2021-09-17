@@ -14,7 +14,8 @@
 #include "options.h"
 
 extern const char* STR_YAML_TAIL;
-extern const char* STR_YAML_TAIL2;
+extern const char* STR_DOCUMENT_TAIL;
+extern const char* STR_YAML_MODELHEADER;
 extern bool sortByDataModelName(const CClassDefinition& c1, const CClassDefinition& c2);
 extern bool sortByDoc(const CParameter& c1, const CParameter& c2);
 extern string_q typeFmt(const CParameter& fld);
@@ -26,13 +27,20 @@ bool COptions::handle_datamodel(void) {
 
     uint32_t weight = 1000;
 
-    map<string_q, string_q> dataDocs;
-    map<string_q, bool> dataDocsFront;
-    ostringstream theStream;
-    theStream << "components:" << endl;
-    theStream << "  schemas:" << endl;
+    map<string_q, string_q> documentMap;
+    map<string_q, bool> frontMatterMap;
+
+    ostringstream yamlStream;
+    yamlStream << "components:" << endl;
+    yamlStream << "  schemas:" << endl;
+
     for (auto model : dataModels) {
+        string_q groupLow = toLower(substitute(model.doc_group, " ", ""));
+        string_q groupFn = getDocsPathTemplates("model-groups/" + groupLow + ".md");
+        string_q modelFn = getDocsPathTemplates("model-intros/" + model.doc_api + ".md");
+
         sort(model.fieldArray.begin(), model.fieldArray.end(), sortByDoc);
+
         size_t widths[5];
         bzero(widths, sizeof(widths));
         for (auto& fld : model.fieldArray) {
@@ -43,59 +51,61 @@ bool COptions::handle_datamodel(void) {
                 widths[2] = max(size_t(3), max(widths[2], fld.type.length()));
             }
         }
-        string_q fmt;
-        ostringstream doc;
-        if (!dataDocsFront[model.doc_group]) {
-            dataDocsFront[model.doc_group] = true;
+
+        ostringstream docStream;
+        if (!frontMatterMap[model.doc_group]) {
+            frontMatterMap[model.doc_group] = true;
             string_q front = STR_YAML_FRONTMATTER;
             replace(front, "[{TITLE}]", model.doc_group);
             replace(front, "[{WEIGHT}]", uint_2_Str(model.doc_group == "Admin" ? 1700 : weight));
             replace(front, "[{M1}]", "data:");
             replace(front, "[{M2}]", "parent: \"collections\"");
-            doc << front << endl;
+            docStream << front << endl;
+            docStream << asciiFileToString(groupFn);
             weight += 200;
-            doc << asciiFileToString(
-                getDocsPathTemplates("model-groups/" + substitute(toLower(model.doc_group), " ", "") + ".md"));
         }
 
-        string_q name = model.doc_api;
-        if (name.length())
-            name[0] = (char)toupper(name[0]);
-        doc << endl;
-        doc << "## " << name << endl;
-        doc << endl;
-        doc << asciiFileToString(getDocsPathTemplates("model-intros/" + model.doc_api) + ".md") << endl;
+        docStream << endl;
+        docStream << "## " << firstUpper(model.doc_api) << endl;
+        docStream << endl;
+        docStream << asciiFileToString(modelFn) << endl;
 
-        doc << "### Fields" << endl;
-        doc << endl;
-        doc << markDownRow("Field", "Description", "Type", widths);
-        doc << markDownRow("-", "", "", widths);
+        ostringstream fieldStream;
+        fieldStream << "### Fields" << endl;
+        fieldStream << endl;
+        fieldStream << markDownRow("Field", "Description", "Type", widths);
+        fieldStream << markDownRow("-", "", "", widths);
 
-        fmt += "[    {DOC_API}:\n]";
-        fmt += "[      description: \"{DOC_DESCR}\"\n]";
-        fmt += "[      type: object\n]";
-        fmt += "[      properties:\n]";
-        theStream << model.Format(fmt);
-        ostringstream props;
+        ostringstream yamlPropStream;
         for (auto fld : model.fieldArray) {
             if (fld.doc) {
-                props << fld.Format("[        {NAME}:\n]");
-                props << fld.Format(typeFmt(fld));
-                props << fld.Format(exFmt(fld));
-                props << fld.Format("[          description: \"{DESCRIPTION}\"\n]");
-                doc << markDownRow(fld.name, fld.description, fld.type, widths);
+                yamlPropStream << fld.Format("[        {NAME}:\n]");
+                yamlPropStream << fld.Format(typeFmt(fld));
+                yamlPropStream << fld.Format(exFmt(fld));
+                yamlPropStream << fld.Format("[          description: \"{DESCRIPTION}\"\n]");
+                fieldStream << markDownRow(fld.name, fld.description, fld.type, widths);
             }
         }
-        theStream << props.str();
-        dataDocs[model.doc_group] = dataDocs[model.doc_group] + doc.str();
-    }
-    theStream << STR_YAML_TAIL;
-    stringToAsciiFile(getDocsPathTemplates("api/components.txt"), substitute(theStream.str(), "&#44;", ","));
 
-    for (auto doc : dataDocs) {
-        doc.second += STR_YAML_TAIL2;
-        string_q outFn = getDocsPathContent("data-model/" + substitute(toLower(doc.first), " ", "")) + ".md";
-        writeIfDifferent(outFn, doc.second, Now());
+        yamlStream << model.Format(STR_YAML_MODELHEADER);
+        yamlStream << yamlPropStream.str();
+
+        string_q thisDoc = docStream.str();
+        if (contains(thisDoc, "[{FIELDS}]"))
+            replace(thisDoc, "[{FIELDS}]", trim(fieldStream.str(), '\n'));
+        else
+            thisDoc += fieldStream.str();
+
+        documentMap[model.doc_group] = documentMap[model.doc_group] + thisDoc;
+    }
+
+    yamlStream << STR_YAML_TAIL;
+    writeIfDifferent(getDocsPathTemplates("api/components.txt"), substitute(yamlStream.str(), "&#44;", ","));
+
+    for (auto item : documentMap) {
+        item.second += STR_DOCUMENT_TAIL;
+        string_q outFn = getDocsPathContent("data-model/" + substitute(toLower(item.first), " ", "")) + ".md";
+        writeIfDifferent(outFn, item.second, Now());
     }
 
     return true;
@@ -119,24 +129,22 @@ string_q typeFmt(const CParameter& fld) {
         if (startsWith(t, "C"))
             replace(t, "C", "");
         replace(t, "Array", "");
-        if (t.length())
-            t[0] = (char)tolower(t[0]);
-        replace(ret, "++X++", t);
+        replace(ret, "++X++", firstLower(t));
         replace(ret, "logEntry", "log");
         return ret;
     }
+
     if (fld.is_flags & IS_OBJECT) {
         string_q ret = "          type: object\n          items:\n            $ref: \"#/components/schemas/++X++\"\n";
         string_q t = fld.type;
         if (startsWith(t, "C"))
             replace(t, "C", "");
         replace(t, "Array", "");
-        if (t.length())
-            t[0] = (char)tolower(t[0]);
-        replace(ret, "++X++", t);
+        replace(ret, "++X++", firstLower(t));
         replace(ret, "logEntry", "log");
         return ret;
     }
+
     if (fld.type == "blknum" || fld.type == "uint64" || fld.type == "timestamp" || fld.type == "double" ||
         fld.type == "uint32")
         return "[          type: number\n          format: {TYPE}\n]";
@@ -145,6 +153,7 @@ string_q typeFmt(const CParameter& fld) {
         return "[          type: string\n          format: {TYPE}\n]";
     if (fld.type == "bool" || fld.type == "uint8")
         return "[          type: boolean\n]";
+
     return "[          type: {TYPE}\n]";
 }
 
@@ -187,12 +196,11 @@ const char* STR_YAML_TAIL =
     "\n";
 
 //------------------------------------------------------------------------------------------------------------
-const char* STR_YAML_TAIL2 =
+const char* STR_DOCUMENT_TAIL =
     "\n"
     "## Base types\n"
     "\n"
-    "In these docs, sometimes Trueblocks mentions a type format that is more\n"
-    "precise than the generic types, like \"string\" or \"object\".\n"
+    "The above documentation mentions common data types as detailed below.\n"
     "\n"
     "| Type      | Description                                     | Notes          |\n"
     "| --------- | ----------------------------------------------- | -------------- |\n"
@@ -212,3 +220,10 @@ const char* STR_YAML_TAIL2 =
     "| uint64    | a 64-bit unsigned integer                       |                |\n"
     "| uint8     | an alias for the boolean type                   |                |\n"
     "| wei       | an unsigned big number                          | as a string    |\n";
+
+//------------------------------------------------------------------------------------------------------------
+const char* STR_YAML_MODELHEADER =
+    "[    {DOC_API}:\n]"
+    "[      description: \"{DOC_DESCR}\"\n]"
+    "[      type: object\n]"
+    "[      properties:\n]";

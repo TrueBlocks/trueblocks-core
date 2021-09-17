@@ -2,7 +2,7 @@
 title: "Accounts"
 description: ""
 lead: ""
-date: 2021-09-16T11:03:44
+date: 2021-09-17T07:00:16
 lastmod:
   - :git
   - lastmod
@@ -29,14 +29,6 @@ A Monitor is a list of [Appearances](/data-model/accounts/#appearance) associate
 
 Once created, a Monitor may be periodically *freshened* by calling either `chifra list` or `chifra export` again, however, it is also possible to keep a Monitor fresh continually by calling [chifra serve --monitor](). This tool watches the front of the chain and repeatedly calls `chifra list`.
 
-[{FIELDS}]
-
-| **Tools**                                                          |                                                |
-| ------------------------------------------------------------------ | ---------------------------------------------- |
-| [chifra status monitors](/docs/chifra/admin/#chifra-status)        | report on all existing monitors                |
-| [chifra list &lt;address&gt;](/docs/chifra/admin/#chifra-status)   | create or freshen a Monitor                    |
-| [chifra export &lt;address&gt;](/docs/chifra/admin/#chifra-status) | create or freshen and then report on a Monitor |
-
 ### Fields
 
 | Field       | Description                                    | Type    |
@@ -48,6 +40,12 @@ Once created, a Monitor may be periodically *freshened* by calling either `chifr
 | tags        | the tag given to this address                  | string  |
 | address     | the address being monitored                    | address |
 | is_custom   | `true` if this address is customized           | bool    |
+
+| **Tools**                                                          |                                                |
+| ------------------------------------------------------------------ | ---------------------------------------------- |
+| [chifra status monitors](/docs/chifra/admin/#chifra-status)        | report on all existing monitors                |
+| [chifra list &lt;address&gt;](/docs/chifra/admin/#chifra-status)   | create or freshen a Monitor                    |
+| [chifra export &lt;address&gt;](/docs/chifra/admin/#chifra-status) | create or freshen and then report on a Monitor |
 
 ## Appearance
 
@@ -70,10 +68,6 @@ When exported with the `--accounting` option from `chifra export`, each transact
 Because DeFi is essentially swaps and trades around ERC20s, and because and 'programmable money' allows for unlimited actions to happen under a single transaction,many times a transaction has four or five reconciliations.
 
 Reconciliations are relative to an `accountedFor` address. For this reason, the same transaction will probably have different reconciliations depending on the `accountedFor` address. Consider a simple transfer of ETH from one address to another. Obviously, the sender's and the recipient's reconciliations will differ (in opposite proportion to each other). The `accountedFor` address is always present as the `assetAddress` in the first reconciliation of the statements array.
-
-**Note on intra-block transactions**: In many cases two or more transactions requiring a reconciliation may occur in a single block. Becuase the Ethereum blockchain only provides balance queries at the end of blocks, it is not possible to query for the balance of an asset at the end of transactions for which there are other following transactions in the block nor for the beginning balance for which there are transactions prior to the given transaction in the same block. In these cases, TrueBlocks simulates the beginning and ending balance as needed and adds `partial` to the `reconciliationType`.
-
-**Note on spotPrice**: If the `spotPrice` is available from an on-chain source (such as UniSwap), then it represents the ETH/DAI value at the time of the transaction if the reconcilation is for ETH. For other assets, the `spotPrice` represents the asset's value relative to `ETH`, so to price a non-ETH asset in US dollars, one would need to convert first to `ETH` then to dollars. If a price is not available on-chain, the `spotPrice` will be zero and the caller is encouraged to get the price for the asset from other sources.
 
 ### Fields
 
@@ -112,6 +106,11 @@ Reconciliations are relative to an `accountedFor` address. For this reason, the 
 | reconciliationType  | One of regular, traces, prevdiff-partial, partial-nextdiff, or `partial-partial`                                | string    |
 | endBalDiff          | a calculated field -- endBal - endBalCalc, if non-zero, the reconciliation failed                               | int256    |
 | reconciled          | a calculated field -- true if `endBal === endBalCalc` and `begBal === prevBlkBal`. `false` otherwise.           | bool      |
+
+**Note on intra-block transactions**: In many cases two or more transactions requiring a reconciliation may occur in a single block. Becuase the Ethereum blockchain only provides balance queries at the end of blocks, it is not possible to query for the balance of an asset at the end of transactions for which there are other following transactions in the block nor for the beginning balance for which there are transactions prior to the given transaction in the same block. In these cases, TrueBlocks simulates the beginning and ending balance as needed and adds `partial` to the `reconciliationType`.
+
+**Note on spotPrice**: If the `spotPrice` is available from an on-chain source (such as UniSwap), then it represents the ETH/DAI value at the time of the transaction if the reconcilation is for ETH. For other assets, the `spotPrice` represents the asset's value relative to `ETH`, so to price a non-ETH asset in US dollars, one would need to convert first to `ETH` then to dollars. If a price is not available on-chain, the `spotPrice` will be zero and the caller is encouraged to get the price for the asset from other sources.
+
 
 ## Name
 
@@ -180,8 +179,7 @@ For more information on ABIs please see any relevant Ethereum documentation, par
 
 ## Base types
 
-In these docs, sometimes Trueblocks mentions a type format that is more
-precise than the generic types, like "string" or "object".
+The above documentation mentions common data types as detailed below.
 
 | Type      | Description                                     | Notes          |
 | --------- | ----------------------------------------------- | -------------- |

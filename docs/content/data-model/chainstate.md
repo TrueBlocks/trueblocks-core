@@ -2,7 +2,7 @@
 title: "Chain State"
 description: ""
 lead: ""
-date: 2021-09-16T11:03:44
+date: 2021-09-17T07:00:16
 lastmod:
   - :git
   - lastmod
@@ -63,8 +63,7 @@ The balance of an address at a given block.
 
 ## Base types
 
-In these docs, sometimes Trueblocks mentions a type format that is more
-precise than the generic types, like "string" or "object".
+The above documentation mentions common data types as detailed below.
 
 | Type      | Description                                     | Notes          |
 | --------- | ----------------------------------------------- | -------------- |

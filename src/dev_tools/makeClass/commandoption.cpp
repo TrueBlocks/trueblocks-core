@@ -760,8 +760,7 @@ string_q CCommandOption::toChifraHelp(void) const {
 
     CCommandOption ret = *this;
     replaceAll(ret.description, ".", "");
-    if (ret.description.length())
-        ret.description[0] = (char)tolower(ret.description[0]);
+    ret.description = firstLower(ret.description);
     if (api_route.empty())
         return toUpper(ret.Format("    \"[{GROUP}]|\""));
     return ret.Format("    \"  [{w:14:API_ROUTE}][{DESCRIPTION}]|\"");

@@ -2,7 +2,7 @@
 title: "Chain Data"
 description: ""
 lead: ""
-date: 2021-09-16T11:03:44
+date: 2021-09-17T07:00:16
 lastmod:
   - :git
   - lastmod
@@ -215,8 +215,7 @@ As mentioned above, other than the first trace, traces represent calls into othe
 
 ## Base types
 
-In these docs, sometimes Trueblocks mentions a type format that is more
-precise than the generic types, like "string" or "object".
+The above documentation mentions common data types as detailed below.
 
 | Type      | Description                                     | Notes          |
 | --------- | ----------------------------------------------- | -------------- |

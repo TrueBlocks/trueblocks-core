@@ -88,6 +88,8 @@ extern bool containsAny(const string_q& haystack, const string_q& needle);
 extern string_q toLower(const string_q& in);
 extern string_q toUpper(const string_q& in);
 extern string_q toProper(const string_q& in);
+extern string_q firstLower(const string_q& in);
+extern string_q firstUpper(const string_q& in);
 
 //--------------------------------------------------------------------
 extern string_q padRight(const string_q& str, size_t len, char p = ' ');
