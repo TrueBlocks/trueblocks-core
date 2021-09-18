@@ -798,6 +798,29 @@ components:
           type: ipfshash
           example: "QmTbYpR...qWLj44"
           description: "the IPFS hash of the index chunk at that range"
+    manifest:
+      description: "a manifest of the IPFS hashes created for the unchained index"
+      type: object
+      properties:
+        indexFormat:
+          type: string
+          description: "IPFS cid of file describing the file format of an index chunk"
+        bloomFormat:
+          type: string
+          description: "IPFS cid of file describing the assoicated bloom filter"
+        firstPin:
+          type: number
+          format: blknum
+          description: "the block number of the first pin in the manifest (always zero)"
+        lastPin:
+          type: number
+          format: blknum
+          description: "the most recent block included in this manifest"
+        pins:
+          type: array
+          items:
+            $ref: "#/components/schemas/pinnedChunk"
+          description: "a list of all the pins in the unchained index"
     quote:
       description: "the closing price of Ether in USD at a particular moment"
       type: object
