@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2021-09-17T22:46:26
+date: 2021-09-18T06:27:02
 lastmod:
   - :git
   - lastmod
@@ -75,6 +75,19 @@ Below is a list of the data fields for pinnedchunks. Following that are the comm
 | fileName  | for each chunk, the range of blocks contained in that chunk | string   |
 | bloomHash | the IPFS hash of the bloom filter at that range             | ipfshash |
 | indexHash | the IPFS hash of the index chunk at that range              | ipfshash |
+
+## Manifest
+
+
+Below is a list of the data fields for manifests. Following that are the commands that produce or manage manifests.  
+### Fields
+| Field       | Description                                                     | Type              |
+| ----------- | --------------------------------------------------------------- | ----------------- |
+| indexFormat | IPFS cid of file describing the file format of an index chunk   | string            |
+| bloomFormat | IPFS cid of file describing the assoicated bloom filter         | string            |
+| firstPin    | the block number of the first pin in the manifest (always zero) | blknum            |
+| lastPin     | the most recent block included in this manifest                 | blknum            |
+| pins        | a list of all the pins in the unchained index                   | CPinnedChunkArray |
 
 ## Base types
 
