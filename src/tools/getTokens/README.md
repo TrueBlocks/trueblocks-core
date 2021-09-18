@@ -15,15 +15,15 @@ You may optionally specify one or more blocks at which to report. If no block is
 
 `Where:`  
 
-|     | Option              | Description                                                                                                                              |
-| --- | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-|     | addrs               | two or more addresses (0x...), the first is an ERC20<br/>token, balances for the rest are reported (required)                            |
-|     | blocks              | an optional list of one or more blocks at which to<br/>report balances, defaults to 'latest'                                             |
-| -p  | --parts &lt;val&gt; | one or more parts of the token information to retreive,<br/>one or more of [name, symbol, decimals, totalSupply,<br/>version, none, all] |
-| -b  | --by_acct           | consider each address an ERC20 token except the last,<br/>whose balance is reported for each token                                       |
-| -n  | --no_zero           | suppress the display of zero balance accounts                                                                                            |
-| -v  | --verbose           | set verbose level (optional level defaults to 1)                                                                                         |
-| -h  | --help              | display this help screen                                                                                                                 |
+|          | Option                          | Description                                                                                                                              |
+| -------- | ------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+|          | addrs                           | two or more addresses (0x...), the first is an ERC20<br/>token, balances for the rest are reported (required)                            |
+|          | blocks                          | an optional list of one or more blocks at which to<br/>report balances, defaults to 'latest'                                             |
+| &#8208;p | &#8208;&#8208;parts &lt;val&gt; | one or more parts of the token information to retreive,<br/>one or more of [name, symbol, decimals, totalSupply,<br/>version, none, all] |
+| &#8208;b | &#8208;&#8208;by_acct           | consider each address an ERC20 token except the last,<br/>whose balance is reported for each token                                       |
+| &#8208;n | &#8208;&#8208;no_zero           | suppress the display of zero balance accounts                                                                                            |
+| &#8208;v | &#8208;&#8208;verbose           | set verbose level (optional level defaults to 1)                                                                                         |
+| &#8208;h | &#8208;&#8208;help              | display this help screen                                                                                                                 |
 
 `Notes:`
 
@@ -37,19 +37,18 @@ You may optionally specify one or more blocks at which to report. If no block is
 
 All **TrueBlocks** command-line tools support the following commands (although in some case, they have no meaning):
 
-| Command     | Description                                                                                     |
-| ----------- | ----------------------------------------------------------------------------------------------- |
-| --version   | display the current version of the tool                                                         |
-| --nocolor   | turn off colored display                                                                        |
-| --wei       | specify value in wei (the default)                                                              |
-| --ether     | specify value in ether                                                                          |
-| --dollars   | specify value in US dollars                                                                     |
-| --raw       | report JSON data from the node with minimal processing                                          |
-| --very_raw  | report JSON data from node with zero processing                                                 |
-| --fmt       | export format (where appropriate). One of [ none &#124; txt &#124; csv &#124; json &#124; api ] |
-| --to_file   | write the results to a temporary file and return the filename                                   |
-| --output:fn | write the results to file 'fn' and return the filename                                          |
-| --file:fn   | specify multiple sets of command line options in a file.                                        |
+| Command     | Description                                                   |
+| ----------- | ------------------------------------------------------------- |
+| --version   | display the current version of the tool                       |
+| --nocolor   | turn off colored display                                      |
+| --wei       | specify value in wei (the default)                            |
+| --ether     | specify value in ether                                        |
+| --dollars   | specify value in US dollars                                   |
+| --raw       | report JSON data from the node with minimal processing        |
+| --very_raw  | report JSON data from node with zero processing               |
+| --to_file   | write the results to a temporary file and return the filename |
+| --output:fn | write the results to file 'fn' and return the filename        |
+| --file:fn   | specify multiple sets of command line options in a file.      |
 
 <small>*For the `--file:fn` option, place a series of valid command lines in a file and use the above options. In some cases, this option may significantly improve performance. A semi-colon at the start of a line makes that line a comment.*</small>
 

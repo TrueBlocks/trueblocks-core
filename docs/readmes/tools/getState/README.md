@@ -12,16 +12,16 @@ You may also query to see if an address is a smart contract as well as retrieve 
 `Where:`
 
 {{<td>}}
-|     | Option              | Description                                                                                                          |
-| --- | ------------------- | -------------------------------------------------------------------------------------------------------------------- |
-|     | addrs               | one or more addresses (0x...) from which to retrieve<br/>balances (required)                                         |
-|     | blocks              | an optional list of one or more blocks at which to<br/>report balances, defaults to 'latest'                         |
-| -p  | --parts &lt;val&gt; | control which state to export, one or more of [none,<br/>som all, balance, nonce, code, storage, deployed, accttype] |
-| -c  | --changes           | only report a balance when it changes from one block<br/>to the next                                                 |
-| -n  | --no_zero           | suppress the display of zero balance accounts                                                                        |
-| -x  | --fmt &lt;val&gt;   | export format, one of [none, json, txt, csv, api]                                                                    |
-| -v  | --verbose           | set verbose level (optional level defaults to 1)                                                                     |
-| -h  | --help              | display this help screen                                                                                             |
+|          | Option                          | Description                                                                                                                |
+| -------- | ------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+|          | addrs                           | one or more addresses (0x...) from which to retrieve<br/>balances (required)                                               |
+|          | blocks                          | an optional list of one or more blocks at which to<br/>report balances, defaults to 'latest'                               |
+| &#8208;p | &#8208;&#8208;parts &lt;val&gt; | control which state to export, one or more of [none,<br/>some, all, balance, nonce, code, storage, deployed,<br/>accttype] |
+| &#8208;c | &#8208;&#8208;changes           | only report a balance when it changes from one block<br/>to the next                                                       |
+| &#8208;n | &#8208;&#8208;no_zero           | suppress the display of zero balance accounts                                                                              |
+| &#8208;x | &#8208;&#8208;fmt &lt;val&gt;   | export format, one of [none, json, txt, csv, api]                                                                          |
+| &#8208;v | &#8208;&#8208;verbose           | set verbose level (optional level defaults to 1)                                                                           |
+| &#8208;h | &#8208;&#8208;help              | display this help screen                                                                                                   |
 {{</td>}}
 
 `Notes:`

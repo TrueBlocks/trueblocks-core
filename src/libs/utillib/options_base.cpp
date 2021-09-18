@@ -1012,26 +1012,24 @@ string_q COptionsBase::descriptionOverride(void) const {
 string_q COption::getDescription(bool isReadme) const {
     string_q descr = trim(description);
     descr = (descr + (!is_optional && is_positional ? " (required)" : ""));
-    if (isReadme) {
-        replace(descr, "*", "");
-        replaceAll(descr, "|", ", ");
-    }
+    if (!isReadme)
+        return descr;
+    replace(descr, "*", "");
+    replaceAll(descr, "|", ", ");
     CStringArray lines;
     while (!descr.empty()) {
         string_q part = descr.substr(0, 50);
         replace(descr, part, "");
         string_q part2 = nextTokenClear(descr, ' ');
-        replace(descr, part2, "");
         part += part2;
-        if (!descr.empty()) {
-            part += "<br/>";
-        }
+        if (!descr.empty())
+            part += isReadme ? "<br/>" : " ";
         lines.push_back(part);
     }
     string_q ret;
     for (auto line : lines)
         ret += line;
-    return substitute(ret, "&#124 ", "&#124; ");
+    return ret;
 }
 
 //--------------------------------------------------------------------------------
@@ -1046,7 +1044,7 @@ string_q COptionsBase::descriptions(void) const {
     for (uint64_t i = 0; i < cntParams; i++) {
         const COption* param = &pParams[i];
         if (param->isPublic() || (param->is_hidden && (isTestMode() || (verbose > 1)))) {
-            widths[0] = max(widths[0], param->getHotKey().length());
+            widths[0] = max(widths[0], param->getHotKey(isReadme).length());
             widths[1] = max(widths[1], param->getLongKey(isReadme).length());
             widths[2] = max(widths[2], param->getDescription(isReadme).length());
         }
@@ -1068,12 +1066,12 @@ string_q COptionsBase::descriptions(void) const {
         if (show) {
             const COption* param = &opts[i];
             if (param->isPublic()) {
-                widths[0] = max(widths[0], param->getHotKey().length());
+                widths[0] = max(widths[0], param->getHotKey(isReadme).length());
                 widths[1] = max(widths[1], param->getLongKey(isReadme).length());
                 widths[2] = max(widths[2], param->getDescription(isReadme).length());
             }
-            COptionDescr dd(param->getHotKey(), param->getLongKey(isReadme), param->getDescription(isReadme), false,
-                            false, widths);
+            COptionDescr dd(param->getHotKey(isReadme), param->getLongKey(isReadme), param->getDescription(isReadme),
+                            false, false, widths);
             extra << dd.oneDescription(isReadme);
         }
     }
@@ -1091,7 +1089,7 @@ string_q COptionsBase::descriptions(void) const {
     for (uint64_t i = 0; i < cntParams; i++) {
         const COption* param = &pParams[i];
         if (param->isPublic()) {
-            COptionDescr dd(param->getHotKey(), param->getLongKey(isReadme), param->getDescription(isReadme),
+            COptionDescr dd(param->getHotKey(isReadme), param->getLongKey(isReadme), param->getDescription(isReadme),
                             param->is_positional, !param->is_optional, widths);
             os << dd.oneDescription(isReadme);
         }
@@ -1112,8 +1110,8 @@ string_q COptionsBase::descriptions(void) const {
         for (uint64_t i = 0; i < cntParams; i++) {
             const COption* param = &pParams[i];
             if (param->is_hidden && !param->is_deprecated && !param->longName.empty()) {
-                COptionDescr dd(param->getHotKey(), param->getLongKey(isReadme), param->getDescription(isReadme),
-                                param->is_positional, !param->is_optional, widths);
+                COptionDescr dd(param->getHotKey(isReadme), param->getLongKey(isReadme),
+                                param->getDescription(isReadme), param->is_positional, !param->is_optional, widths);
                 os << dd.oneDescription(isReadme);
             }
         }

@@ -25,33 +25,32 @@ You may run all tests from the `./build` folder by entering `make test-all` (or 
 
 `Where:`  
 
-|     | Option               | Description                                                                  |
-| --- | -------------------- | ---------------------------------------------------------------------------- |
-| -m  | --mode &lt;val&gt;   | determine which set of tests to run, one of [cmd, api,<br/>both]             |
-| -f  | --filter &lt;val&gt; | determine how long it takes to run tests, one of [fast,<br/>medi, slow, all] |
-| -c  | --clean              | clean working folder before running tests                                    |
-| -r  | --report             | display performance report to screen                                         |
-| -x  | --fmt &lt;val&gt;    | export format, one of [none, json, txt, csv, api]                            |
-| -v  | --verbose            | set verbose level (optional level defaults to 1)                             |
-| -h  | --help               | display this help screen                                                     |
+|          | Option                           | Description                                                                  |
+| -------- | -------------------------------- | ---------------------------------------------------------------------------- |
+| &#8208;m | &#8208;&#8208;mode &lt;val&gt;   | determine which set of tests to run, one of [cmd, api,<br/>both]             |
+| &#8208;f | &#8208;&#8208;filter &lt;val&gt; | determine how long it takes to run tests, one of [fast,<br/>medi, slow, all] |
+| &#8208;c | &#8208;&#8208;clean              | clean working folder before running tests                                    |
+| &#8208;r | &#8208;&#8208;report             | display performance report to screen                                         |
+| &#8208;x | &#8208;&#8208;fmt &lt;val&gt;    | export format, one of [none, json, txt, csv, api]                            |
+| &#8208;v | &#8208;&#8208;verbose            | set verbose level (optional level defaults to 1)                             |
+| &#8208;h | &#8208;&#8208;help               | display this help screen                                                     |
 
 #### Other Options
 
 All **TrueBlocks** command-line tools support the following commands (although in some case, they have no meaning):
 
-| Command     | Description                                                                                     |
-| ----------- | ----------------------------------------------------------------------------------------------- |
-| --version   | display the current version of the tool                                                         |
-| --nocolor   | turn off colored display                                                                        |
-| --wei       | specify value in wei (the default)                                                              |
-| --ether     | specify value in ether                                                                          |
-| --dollars   | specify value in US dollars                                                                     |
-| --raw       | report JSON data from the node with minimal processing                                          |
-| --very_raw  | report JSON data from node with zero processing                                                 |
-| --fmt       | export format (where appropriate). One of [ none &#124; txt &#124; csv &#124; json &#124; api ] |
-| --to_file   | write the results to a temporary file and return the filename                                   |
-| --output:fn | write the results to file 'fn' and return the filename                                          |
-| --file:fn   | specify multiple sets of command line options in a file.                                        |
+| Command     | Description                                                   |
+| ----------- | ------------------------------------------------------------- |
+| --version   | display the current version of the tool                       |
+| --nocolor   | turn off colored display                                      |
+| --wei       | specify value in wei (the default)                            |
+| --ether     | specify value in ether                                        |
+| --dollars   | specify value in US dollars                                   |
+| --raw       | report JSON data from the node with minimal processing        |
+| --very_raw  | report JSON data from node with zero processing               |
+| --to_file   | write the results to a temporary file and return the filename |
+| --output:fn | write the results to file 'fn' and return the filename        |
+| --file:fn   | specify multiple sets of command line options in a file.      |
 
 <small>*For the `--file:fn` option, place a series of valid command lines in a file and use the above options. In some cases, this option may significantly improve performance. A semi-colon at the start of a line makes that line a comment.*</small>
 

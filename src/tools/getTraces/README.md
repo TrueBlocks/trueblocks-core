@@ -13,16 +13,16 @@ The `--filter` option calls your node's `trace_filter` routine (if available) us
 
 `Where:`  
 
-|     | Option               | Description                                                                  |
-| --- | -------------------- | ---------------------------------------------------------------------------- |
-|     | transactions         | a space-separated list of one or more transaction identifiers<br/>(required) |
-| -a  | --articulate         | articulate the retrieved data if ABIs can be found                           |
-| -f  | --filter &lt;str&gt; | call the node's `trace_filter` routine with bang-seperated<br/>filter        |
-| -d  | --statediff          | export state diff traces (not implemented)                                   |
-| -c  | --count              | show the number of traces for the transaction only<br/>(fast)                |
-| -x  | --fmt &lt;val&gt;    | export format, one of [none, json, txt, csv, api]                            |
-| -v  | --verbose            | set verbose level (optional level defaults to 1)                             |
-| -h  | --help               | display this help screen                                                     |
+|          | Option                           | Description                                                                  |
+| -------- | -------------------------------- | ---------------------------------------------------------------------------- |
+|          | transactions                     | a space-separated list of one or more transaction identifiers<br/>(required) |
+| &#8208;a | &#8208;&#8208;articulate         | articulate the retrieved data if ABIs can be found                           |
+| &#8208;f | &#8208;&#8208;filter &lt;str&gt; | call the node's `trace_filter` routine with bang-seperated<br/>filter        |
+| &#8208;d | &#8208;&#8208;statediff          | export state diff traces (not implemented)                                   |
+| &#8208;c | &#8208;&#8208;count              | show the number of traces for the transaction only<br/>(fast)                |
+| &#8208;x | &#8208;&#8208;fmt &lt;val&gt;    | export format, one of [none, json, txt, csv, api]                            |
+| &#8208;v | &#8208;&#8208;verbose            | set verbose level (optional level defaults to 1)                             |
+| &#8208;h | &#8208;&#8208;help               | display this help screen                                                     |
 
 `Notes:`
 
@@ -43,19 +43,18 @@ The `--filter` option calls your node's `trace_filter` routine (if available) us
 
 All **TrueBlocks** command-line tools support the following commands (although in some case, they have no meaning):
 
-| Command     | Description                                                                                     |
-| ----------- | ----------------------------------------------------------------------------------------------- |
-| --version   | display the current version of the tool                                                         |
-| --nocolor   | turn off colored display                                                                        |
-| --wei       | specify value in wei (the default)                                                              |
-| --ether     | specify value in ether                                                                          |
-| --dollars   | specify value in US dollars                                                                     |
-| --raw       | report JSON data from the node with minimal processing                                          |
-| --very_raw  | report JSON data from node with zero processing                                                 |
-| --fmt       | export format (where appropriate). One of [ none &#124; txt &#124; csv &#124; json &#124; api ] |
-| --to_file   | write the results to a temporary file and return the filename                                   |
-| --output:fn | write the results to file 'fn' and return the filename                                          |
-| --file:fn   | specify multiple sets of command line options in a file.                                        |
+| Command     | Description                                                   |
+| ----------- | ------------------------------------------------------------- |
+| --version   | display the current version of the tool                       |
+| --nocolor   | turn off colored display                                      |
+| --wei       | specify value in wei (the default)                            |
+| --ether     | specify value in ether                                        |
+| --dollars   | specify value in US dollars                                   |
+| --raw       | report JSON data from the node with minimal processing        |
+| --very_raw  | report JSON data from node with zero processing               |
+| --to_file   | write the results to a temporary file and return the filename |
+| --output:fn | write the results to file 'fn' and return the filename        |
+| --file:fn   | specify multiple sets of command line options in a file.      |
 
 <small>*For the `--file:fn` option, place a series of valid command lines in a file and use the above options. In some cases, this option may significantly improve performance. A semi-colon at the start of a line makes that line a comment.*</small>
 

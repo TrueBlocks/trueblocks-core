@@ -223,12 +223,17 @@ class COption {
     bool isPublic(void) const {
         return (!is_hidden && !is_deprecated && !longName.empty());
     }
-    string_q getHotKey(void) const {
-        return is_positional ? "" : hotKey;
+    string_q readmeDash(const string_q& str, bool isReadme) const {
+        if (!isReadme)
+            return str;
+        return substitute(str, "-", "&#8208;");
+    }
+    string_q getHotKey(bool isReadme) const {
+        return is_positional ? "" : readmeDash(hotKey, isReadme);
     }
     string_q getLongKey(bool isReadme) const {
         if (is_special)
-            return longName;
+            return readmeDash(longName, isReadme);
         string_q lName = substitute(longName, "addrs2", "addrs");
         replaceAny(lName, "!~", "");
         lName = (is_positional ? substitute(lName, "-", "") : lName);
@@ -236,7 +241,7 @@ class COption {
         if (isReadme) {
             lName = substitute(substitute(lName, "<", "&lt;"), ">", "&gt;");
         }
-        return lName;
+        return readmeDash(lName, isReadme);
     }
     string_q getDescription(bool isReadme) const;
 };
