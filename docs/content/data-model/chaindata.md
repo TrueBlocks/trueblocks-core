@@ -2,7 +2,7 @@
 title: "Chain Data"
 description: ""
 lead: ""
-date: 2021-09-17T22:46:26
+date: 2021-09-18T08:45:20
 lastmod:
   - :git
   - lastmod
@@ -33,8 +33,7 @@ an array for the blocks' transactions.
 - **API**:
   - [Calls to `/blocks`](/api#operation/chaindata-blocks)
 
-Below is a list of the data fields for blocks. Following that are the commands that produce or manage blocks.  
-### Fields
+Below is a list of the data fields for blocks. Following that are the commands that produce or manage blocks.
 | Field         | Description                                                   | Type              |
 | ------------- | ------------------------------------------------------------- | ----------------- |
 | gasLimit      | the system-wide maximum amount of gas permitted in this block | gas               |
@@ -48,6 +47,8 @@ Below is a list of the data fields for blocks. Following that are the commands t
 | baseFeePerGas | the base fee for this block                                   | wei               |
 | finalized     | flag indicating the system considers this data final          | bool              |
 
+
+---
 ## Transaction
 
 Transactions represent eth transfers to and from other addresses.
@@ -66,8 +67,7 @@ This is a very powerful way to understand the story behind a smart contract.
 - **API**:
   - [Calls to `/transactions`](/api#operation/chaindata-transactions)
 
-Below is a list of the data fields for transactions. Following that are the commands that produce or manage transactions.  
-### Fields
+Below is a list of the data fields for transactions. Following that are the commands that produce or manage transactions.
 | Field            | Description                                                                                           | Type                 |
 | ---------------- | ----------------------------------------------------------------------------------------------------- | -------------------- |
 | hash             | The hash of the transaction                                                                           | hash                 |
@@ -89,6 +89,8 @@ Below is a list of the data fields for transactions. Following that are the comm
 | hasToken         | `true` if the transaction is token related, `false` otherwise                                         | uint8                |
 | finalized        | flag indicating the system considers this data final                                                  | bool                 |
 
+
+---
 ## Receipt
 
 Receipts record the amount of gas used for a transaction among other things. If the transaction succeeded, a receipt might also have logs.
@@ -103,8 +105,7 @@ If the `to` address of a transaction is `0x0`, the `input` data is considered to
 - **API**:
   - [Calls to `/receipts`](/api#operation/chaindata-receipts)
 
-Below is a list of the data fields for receipts. Following that are the commands that produce or manage receipts.  
-### Fields
+Below is a list of the data fields for receipts. Following that are the commands that produce or manage receipts.
 | Field           | Description                                                                | Type           |
 | --------------- | -------------------------------------------------------------------------- | -------------- |
 | status          | `1` on transaction suceess, `null` if tx preceeds Byzantium, `0` otherwise | uint32         |
@@ -112,6 +113,8 @@ Below is a list of the data fields for receipts. Following that are the commands
 | gasUsed         | the amount of gas actually used by the transaction                         | gas            |
 | logs            | a possibly empty array of logs                                             | CLogEntryArray |
 
+
+---
 ## Log
 
 Logs appear in a possibly empty array in the transaction's receipt. They are only created if the underlying transaction suceeded. In the case where the transaction failed, no logs will appear in the receipt. Logs are only ever generated during transactions whose `to` address is a smart contract.
@@ -124,8 +127,7 @@ Logs appear in a possibly empty array in the transaction's receipt. They are onl
 - **API**:
   - [Calls to `/logs`](/api#operation/chaindata-logs)
 
-Below is a list of the data fields for logs. Following that are the commands that produce or manage logs.  
-### Fields
+Below is a list of the data fields for logs. Following that are the commands that produce or manage logs.
 | Field            | Description                                                                                       | Type        |
 | ---------------- | ------------------------------------------------------------------------------------------------- | ----------- |
 | blockNumber      | the number of the block                                                                           | blknum      |
@@ -137,6 +139,8 @@ Below is a list of the data fields for logs. Following that are the commands tha
 | articulatedLog   | a human-readable version of the topic and data fields                                             | CFunction   |
 | compressedLog    | a truncated, more readable version of the articulation                                            | string      |
 
+
+---
 ## Trace
 
 The deepest layer of the Ethereum data is the trace. Every transaction has at least one trace which is itself a record of the transaction. If the `to` address of the transaction is a smart contract, other traces may appear, if, for example, that smart contract calls other smart contracts.
@@ -151,8 +155,7 @@ Traces may be arbitrarily deep (up to the gasLimit) and ultimately represent a t
 - **API**:
   - [Calls to `/traces`](/api#operation/chaindata-traces)
 
-Below is a list of the data fields for traces. Following that are the commands that produce or manage traces.  
-### Fields
+Below is a list of the data fields for traces. Following that are the commands that produce or manage traces.
 | Field            | Description                                               | Type         |
 | ---------------- | --------------------------------------------------------- | ------------ |
 | blockHash        | The hash of the block containing this trace               | hash         |
@@ -167,12 +170,13 @@ Below is a list of the data fields for traces. Following that are the commands t
 | articulatedTrace | human readable version of the trace action input data     | CFunction    |
 | compressedTrace  | a compressed string version of the articulated trace      | string       |
 
+
+---
 ## TraceAction
 
 Other than the first trace which is the trace of the transaction itself, traces represent calls into smart contracts. Because of this, `trace actions` closely resemble the fields of the [transaction](#transactions).
 
-Below is a list of the data fields for traceactions. Following that are the commands that produce or manage traceactions.  
-### Fields
+Below is a list of the data fields for traceactions. Following that are the commands that produce or manage traceactions.
 | Field         | Description                                                                | Type    |
 | ------------- | -------------------------------------------------------------------------- | ------- |
 | from          | address from which the trace was sent                                      | address |
@@ -182,12 +186,13 @@ Below is a list of the data fields for traceactions. Following that are the comm
 | callType      | the type of call                                                           | string  |
 | refundAddress | if the call type is self-destruct, the address to which the refund is sent | address |
 
+
+---
 ## TraceResult
 
 As mentioned above, other than the first trace, traces represent calls into other smart contracts. Because of this, the trace results closely resembles the fields of the [receipt](#receipts).
 
-Below is a list of the data fields for traceresults. Following that are the commands that produce or manage traceresults.  
-### Fields
+Below is a list of the data fields for traceresults. Following that are the commands that produce or manage traceresults.
 | Field       | Description                                                                    | Type    |
 | ----------- | ------------------------------------------------------------------------------ | ------- |
 | newContract | Address of new contract, if any                                                | address |
@@ -195,6 +200,8 @@ Below is a list of the data fields for traceresults. Following that are the comm
 | gasUsed     | the amount of gas used by this trace                                           | gas     |
 | output      | the result of the call of this trace                                           | bytes   |
 
+
+---
 ## DatedBlock
 
 ### How to get when blocks
@@ -205,30 +212,28 @@ Below is a list of the data fields for traceresults. Following that are the comm
 - **API**:
   - [Calls to `/when`](/api#operation/chaindata-when)
 
-Below is a list of the data fields for datedblocks. Following that are the commands that produce or manage datedblocks.  
-### Fields
+Below is a list of the data fields for datedblocks. Following that are the commands that produce or manage datedblocks.
 | Field       | Description                         | Type      |
 | ----------- | ----------------------------------- | --------- |
 | blockNumber | the number of the block             | blknum    |
 | timestamp   | the unix timestamp of the block     | timestamp |
 | date        | Human readable version of timestamp | date      |
 
+
+---
 ## Base types
 
-The above documentation mentions common data types as detailed below.
+The above documentation mentions the following basic data types.
 
 | Type      | Description                                     | Notes          |
 | --------- | ----------------------------------------------- | -------------- |
-| address   | a 20-byte hexidecimal string starting with '0x' | lowercase      |
+| address   | a 20-byte hexidecimal string starting with ‘0x’ | lowercase      |
 | blknum    | an alias for a uint64                           |                |
-| bool      | a value either `true`, `false`, `1`, or `0`     |                |
+| bool      | a value either true, false, 1, or 0             |                |
 | bytes     | an arbitrarily long string of bytes             |                |
 | date      | a JSON formatted date                           | as a string    |
-| double    | a floating point number of double precision     |                |
 | gas       | an unsigned big number                          | as a string    |
-| hash      | a 32-byte hexidecimal string starting with '0x' | lowercase      |
-| int256    | a signed big number                             | as a string    |
-| ipfshash  | a multi-hash produced by IPFS                   | mixed-case     |
+| hash      | a 32-byte hexidecimal string starting with ‘0x’ | lowercase      |
 | string    | a normal character string                       |                |
 | timestamp | a 64-bit unsigned integer                       | unix timestamp |
 | uint32    | a 32-bit unsigned integer                       |                |

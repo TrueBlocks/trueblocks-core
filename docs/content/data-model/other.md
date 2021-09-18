@@ -2,7 +2,7 @@
 title: "Other"
 description: ""
 lead: ""
-date: 2021-09-17T22:46:26
+date: 2021-09-18T08:45:20
 lastmod:
   - :git
   - lastmod
@@ -41,8 +41,7 @@ _Each data structure is created by one or more tools which are detailed below_
 - **API**:
   - [Calls to `/transactions`](/api#operation/chaindata-transactions)
 
-Below is a list of the data fields for quotes. Following that are the commands that produce or manage quotes.  
-### Fields
+Below is a list of the data fields for quotes. Following that are the commands that produce or manage quotes.
 | Field     | Description                                           | Type      |
 | --------- | ----------------------------------------------------- | --------- |
 | timestamp | the timestamp of this quote                           | timestamp |
@@ -50,25 +49,15 @@ Below is a list of the data fields for quotes. Following that are the commands t
 | date      | the date of the associated timestamp                  | date      |
 | name      | the name of the block for some named 'special' blocks | string    |
 
+
+---
 ## Base types
 
-The above documentation mentions common data types as detailed below.
+The above documentation mentions the following basic data types.
 
 | Type      | Description                                     | Notes          |
 | --------- | ----------------------------------------------- | -------------- |
-| address   | a 20-byte hexidecimal string starting with '0x' | lowercase      |
-| blknum    | an alias for a uint64                           |                |
-| bool      | a value either `true`, `false`, `1`, or `0`     |                |
-| bytes     | an arbitrarily long string of bytes             |                |
 | date      | a JSON formatted date                           | as a string    |
 | double    | a floating point number of double precision     |                |
-| gas       | an unsigned big number                          | as a string    |
-| hash      | a 32-byte hexidecimal string starting with '0x' | lowercase      |
-| int256    | a signed big number                             | as a string    |
-| ipfshash  | a multi-hash produced by IPFS                   | mixed-case     |
 | string    | a normal character string                       |                |
 | timestamp | a 64-bit unsigned integer                       | unix timestamp |
-| uint32    | a 32-bit unsigned integer                       |                |
-| uint64    | a 64-bit unsigned integer                       |                |
-| uint8     | an alias for the boolean type                   |                |
-| wei       | an unsigned big number                          | as a string    |

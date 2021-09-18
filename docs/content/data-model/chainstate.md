@@ -2,7 +2,7 @@
 title: "Chain State"
 description: ""
 lead: ""
-date: 2021-09-17T22:46:26
+date: 2021-09-18T08:45:20
 lastmod:
   - :git
   - lastmod
@@ -28,8 +28,7 @@ The balance of an address at a given block.
 * CLI: [chifra state](/docs/chifra/chainstate/#chifra-state)
 * [API](/api#operation/chainstate-state)
 
-Below is a list of the data fields for states. Following that are the commands that produce or manage states.  
-### Fields
+Below is a list of the data fields for states. Following that are the commands that produce or manage states.
 | Field       | Description                                                                                     | Type    |
 | ----------- | ----------------------------------------------------------------------------------------------- | ------- |
 | blockNumber | the block number at which this state was taken                                                  | blknum  |
@@ -42,13 +41,14 @@ Below is a list of the data fields for states. Following that are the commands t
 | accttype    | the type of the address at the given block                                                      | string  |
 | ether       | the balance of the address in ethers                                                            | double  |
 
+
+---
 ## Token
 
 * CLI: [chifra tokens](/docs/chifra/chainstate/#chifra-tokens)
 * [API](/api#operation/chainstate-tokens)
 
-Below is a list of the data fields for tokens. Following that are the commands that produce or manage tokens.  
-### Fields
+Below is a list of the data fields for tokens. Following that are the commands that produce or manage tokens.
 | Field       | Description                                                  | Type    |
 | ----------- | ------------------------------------------------------------ | ------- |
 | holder      | the address for which we are reporting the token balance     | address |
@@ -61,25 +61,19 @@ Below is a list of the data fields for tokens. Following that are the commands t
 | is_erc20    | `true` if the address is an ERC20, `false` otherwise         | bool    |
 | is_erc721   | `true` if the address is an ERC720, `false` otherwise        | bool    |
 
+
+---
 ## Base types
 
-The above documentation mentions common data types as detailed below.
+The above documentation mentions the following basic data types.
 
 | Type      | Description                                     | Notes          |
 | --------- | ----------------------------------------------- | -------------- |
-| address   | a 20-byte hexidecimal string starting with '0x' | lowercase      |
+| address   | a 20-byte hexidecimal string starting with ‘0x’ | lowercase      |
 | blknum    | an alias for a uint64                           |                |
-| bool      | a value either `true`, `false`, `1`, or `0`     |                |
+| bool      | a value either true, false, 1, or 0             |                |
 | bytes     | an arbitrarily long string of bytes             |                |
-| date      | a JSON formatted date                           | as a string    |
 | double    | a floating point number of double precision     |                |
-| gas       | an unsigned big number                          | as a string    |
-| hash      | a 32-byte hexidecimal string starting with '0x' | lowercase      |
-| int256    | a signed big number                             | as a string    |
-| ipfshash  | a multi-hash produced by IPFS                   | mixed-case     |
 | string    | a normal character string                       |                |
-| timestamp | a 64-bit unsigned integer                       | unix timestamp |
-| uint32    | a 32-bit unsigned integer                       |                |
 | uint64    | a 64-bit unsigned integer                       |                |
-| uint8     | an alias for the boolean type                   |                |
 | wei       | an unsigned big number                          | as a string    |
