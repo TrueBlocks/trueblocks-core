@@ -73,7 +73,7 @@ bool COptions::handle_datamodel(void) {
 
         string_q fieldIntro = STR_FIELDS_INTRO;
         replace(fieldIntro, "[{TYPE}]", model.doc_api);
-        replace(fieldIntro, "[{PLURAL}]", plural(model.doc_api, 0));
+        replaceAll(fieldIntro, "[{PLURAL}]", plural(model.doc_api, 0));
 
         ostringstream fieldStream;
         fieldStream << fieldIntro << endl;
@@ -234,5 +234,6 @@ const char* STR_YAML_MODELHEADER =
 
 //------------------------------------------------------------------------------------------------------------
 const char* STR_FIELDS_INTRO =
-    "Below are this structure's data fields. Following that are the "
-    "commands that produce or manage [{PLURAL}].";
+    "Below is a list of the data fields for [{PLURAL}]. Following that are the "
+    "commands that produce or manage [{PLURAL}].  \n"
+    "### Fields";

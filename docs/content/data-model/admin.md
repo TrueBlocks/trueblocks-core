@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2021-09-17T22:21:53
+date: 2021-09-17T22:46:26
 lastmod:
   - :git
   - lastmod
@@ -33,7 +33,8 @@ _Each data structure is created by one or more tools which are detailed below_
 - **API**:
   - [Calls to `/transactions`](/api#operation/chaindata-transactions)
 
-Below are this structure's data fields. Following that are the commands that produce or manage status.
+Below is a list of the data fields for status. Following that are the commands that produce or manage status.  
+### Fields
 | Field              | Description                                                         | Type      |
 | ------------------ | ------------------------------------------------------------------- | --------- |
 | client_version     | the version string as reported by the rpcProvider                   | string    |
@@ -67,7 +68,8 @@ Below are this structure's data fields. Following that are the commands that pro
 - **API**:
   - [Calls to `/pins`](/api#operation/admin-pins)
 
-Below are this structure's data fields. Following that are the commands that produce or manage pinnedchunks.
+Below is a list of the data fields for pinnedchunks. Following that are the commands that produce or manage pinnedchunks.  
+### Fields
 | Field     | Description                                                 | Type     |
 | --------- | ----------------------------------------------------------- | -------- |
 | fileName  | for each chunk, the range of blocks contained in that chunk | string   |

@@ -2,7 +2,7 @@
 title: "Chain Data"
 description: ""
 lead: ""
-date: 2021-09-17T22:21:53
+date: 2021-09-17T22:46:26
 lastmod:
   - :git
   - lastmod
@@ -33,7 +33,8 @@ an array for the blocks' transactions.
 - **API**:
   - [Calls to `/blocks`](/api#operation/chaindata-blocks)
 
-Below are this structure's data fields. Following that are the commands that produce or manage blocks.
+Below is a list of the data fields for blocks. Following that are the commands that produce or manage blocks.  
+### Fields
 | Field         | Description                                                   | Type              |
 | ------------- | ------------------------------------------------------------- | ----------------- |
 | gasLimit      | the system-wide maximum amount of gas permitted in this block | gas               |
@@ -65,7 +66,8 @@ This is a very powerful way to understand the story behind a smart contract.
 - **API**:
   - [Calls to `/transactions`](/api#operation/chaindata-transactions)
 
-Below are this structure's data fields. Following that are the commands that produce or manage transactions.
+Below is a list of the data fields for transactions. Following that are the commands that produce or manage transactions.  
+### Fields
 | Field            | Description                                                                                           | Type                 |
 | ---------------- | ----------------------------------------------------------------------------------------------------- | -------------------- |
 | hash             | The hash of the transaction                                                                           | hash                 |
@@ -101,7 +103,8 @@ If the `to` address of a transaction is `0x0`, the `input` data is considered to
 - **API**:
   - [Calls to `/receipts`](/api#operation/chaindata-receipts)
 
-Below are this structure's data fields. Following that are the commands that produce or manage receipts.
+Below is a list of the data fields for receipts. Following that are the commands that produce or manage receipts.  
+### Fields
 | Field           | Description                                                                | Type           |
 | --------------- | -------------------------------------------------------------------------- | -------------- |
 | status          | `1` on transaction suceess, `null` if tx preceeds Byzantium, `0` otherwise | uint32         |
@@ -121,7 +124,8 @@ Logs appear in a possibly empty array in the transaction's receipt. They are onl
 - **API**:
   - [Calls to `/logs`](/api#operation/chaindata-logs)
 
-Below are this structure's data fields. Following that are the commands that produce or manage logs.
+Below is a list of the data fields for logs. Following that are the commands that produce or manage logs.  
+### Fields
 | Field            | Description                                                                                       | Type        |
 | ---------------- | ------------------------------------------------------------------------------------------------- | ----------- |
 | blockNumber      | the number of the block                                                                           | blknum      |
@@ -147,7 +151,8 @@ Traces may be arbitrarily deep (up to the gasLimit) and ultimately represent a t
 - **API**:
   - [Calls to `/traces`](/api#operation/chaindata-traces)
 
-Below are this structure's data fields. Following that are the commands that produce or manage traces.
+Below is a list of the data fields for traces. Following that are the commands that produce or manage traces.  
+### Fields
 | Field            | Description                                               | Type         |
 | ---------------- | --------------------------------------------------------- | ------------ |
 | blockHash        | The hash of the block containing this trace               | hash         |
@@ -166,7 +171,8 @@ Below are this structure's data fields. Following that are the commands that pro
 
 Other than the first trace which is the trace of the transaction itself, traces represent calls into smart contracts. Because of this, `trace actions` closely resemble the fields of the [transaction](#transactions).
 
-Below are this structure's data fields. Following that are the commands that produce or manage traceactions.
+Below is a list of the data fields for traceactions. Following that are the commands that produce or manage traceactions.  
+### Fields
 | Field         | Description                                                                | Type    |
 | ------------- | -------------------------------------------------------------------------- | ------- |
 | from          | address from which the trace was sent                                      | address |
@@ -180,7 +186,8 @@ Below are this structure's data fields. Following that are the commands that pro
 
 As mentioned above, other than the first trace, traces represent calls into other smart contracts. Because of this, the trace results closely resembles the fields of the [receipt](#receipts).
 
-Below are this structure's data fields. Following that are the commands that produce or manage traceresults.
+Below is a list of the data fields for traceresults. Following that are the commands that produce or manage traceresults.  
+### Fields
 | Field       | Description                                                                    | Type    |
 | ----------- | ------------------------------------------------------------------------------ | ------- |
 | newContract | Address of new contract, if any                                                | address |
@@ -198,7 +205,8 @@ Below are this structure's data fields. Following that are the commands that pro
 - **API**:
   - [Calls to `/when`](/api#operation/chaindata-when)
 
-Below are this structure's data fields. Following that are the commands that produce or manage datedblocks.
+Below is a list of the data fields for datedblocks. Following that are the commands that produce or manage datedblocks.  
+### Fields
 | Field       | Description                         | Type      |
 | ----------- | ----------------------------------- | --------- |
 | blockNumber | the number of the block             | blknum    |
