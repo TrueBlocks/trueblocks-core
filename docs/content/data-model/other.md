@@ -42,6 +42,7 @@ _Each data structure is created by one or more tools which are detailed below_
   - [Calls to `/transactions`](/api#operation/chaindata-transactions)
 
 Below is a list of the data fields for quotes. Following that are the commands that produce or manage quotes.
+
 | Field     | Description                                           | Type      |
 | --------- | ----------------------------------------------------- | --------- |
 | timestamp | the timestamp of this quote                           | timestamp |
@@ -49,8 +50,8 @@ Below is a list of the data fields for quotes. Following that are the commands t
 | date      | the date of the associated timestamp                  | date      |
 | name      | the name of the block for some named 'special' blocks | string    |
 
-
 ---
+
 ## Base types
 
 The above documentation mentions the following basic data types.

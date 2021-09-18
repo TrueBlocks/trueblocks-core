@@ -105,7 +105,7 @@ bool COptions::handle_datamodel(void) {
         else
             thisDoc += fieldStream.str();
 
-        documentMap[model.doc_group] = documentMap[model.doc_group] + thisDoc + "\n\n---";
+        documentMap[model.doc_group] = documentMap[model.doc_group] + thisDoc + "\n---\n";
     }
 
     yamlStream << STR_YAML_TAIL;
@@ -251,4 +251,4 @@ const char* STR_YAML_MODELHEADER =
 //------------------------------------------------------------------------------------------------------------
 const char* STR_FIELDS_INTRO =
     "Below is a list of the data fields for [{PLURAL}]. Following that are the "
-    "commands that produce or manage [{PLURAL}].";
+    "commands that produce or manage [{PLURAL}].\n";

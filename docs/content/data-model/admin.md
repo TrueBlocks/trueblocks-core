@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2021-09-18T08:45:20
+date: 2021-09-18T09:10:08
 lastmod:
   - :git
   - lastmod
@@ -34,6 +34,7 @@ _Each data structure is created by one or more tools which are detailed below_
   - [Calls to `/transactions`](/api#operation/chaindata-transactions)
 
 Below is a list of the data fields for status. Following that are the commands that produce or manage status.
+
 | Field              | Description                                                         | Type      |
 | ------------------ | ------------------------------------------------------------------- | --------- |
 | client_version     | the version string as reported by the rpcProvider                   | string    |
@@ -55,8 +56,8 @@ Below is a list of the data fields for status. Following that are the commands t
 | has_pinkey         | `true` if a Pinata API key is present                               | bool      |
 | ts                 | the timestamp when this status data was produced                    | timestamp |
 
-
 ---
+
 ## PinnedChunk
 
 <!-- TEXT ABOUT PINNED CHUNKS -->
@@ -70,18 +71,20 @@ Below is a list of the data fields for status. Following that are the commands t
   - [Calls to `/pins`](/api#operation/admin-pins)
 
 Below is a list of the data fields for pinnedchunks. Following that are the commands that produce or manage pinnedchunks.
+
 | Field     | Description                                                 | Type     |
 | --------- | ----------------------------------------------------------- | -------- |
 | fileName  | for each chunk, the range of blocks contained in that chunk | string   |
 | bloomHash | the IPFS hash of the bloom filter at that range             | ipfshash |
 | indexHash | the IPFS hash of the index chunk at that range              | ipfshash |
 
-
 ---
+
 ## Manifest
 
 
 Below is a list of the data fields for manifests. Following that are the commands that produce or manage manifests.
+
 | Field       | Description                                                     | Type              |
 | ----------- | --------------------------------------------------------------- | ----------------- |
 | indexFormat | IPFS cid of file describing the file format of an index chunk   | string            |
@@ -90,8 +93,8 @@ Below is a list of the data fields for manifests. Following that are the command
 | lastPin     | the most recent block included in this manifest                 | blknum            |
 | pins        | a list of all the pins in the unchained index                   | CPinnedChunkArray |
 
-
 ---
+
 ## Base types
 
 The above documentation mentions the following basic data types.
@@ -99,7 +102,7 @@ The above documentation mentions the following basic data types.
 | Type      | Description                                     | Notes          |
 | --------- | ----------------------------------------------- | -------------- |
 | blknum    | an alias for a uint64                           |                |
-| bool      | a value either true, false, 1, or 0             |                |
+| bool      | a value either `true`, `false`, `1`, or `0`     |                |
 | ipfshash  | a multi-hash produced by IPFS                   | mixed-case     |
 | string    | a normal character string                       |                |
 | timestamp | a 64-bit unsigned integer                       | unix timestamp |

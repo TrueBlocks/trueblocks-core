@@ -2,7 +2,7 @@
 title: "Chain State"
 description: ""
 lead: ""
-date: 2021-09-18T08:45:20
+date: 2021-09-18T09:10:08
 lastmod:
   - :git
   - lastmod
@@ -29,6 +29,7 @@ The balance of an address at a given block.
 * [API](/api#operation/chainstate-state)
 
 Below is a list of the data fields for states. Following that are the commands that produce or manage states.
+
 | Field       | Description                                                                                     | Type    |
 | ----------- | ----------------------------------------------------------------------------------------------- | ------- |
 | blockNumber | the block number at which this state was taken                                                  | blknum  |
@@ -41,14 +42,15 @@ Below is a list of the data fields for states. Following that are the commands t
 | accttype    | the type of the address at the given block                                                      | string  |
 | ether       | the balance of the address in ethers                                                            | double  |
 
-
 ---
+
 ## Token
 
 * CLI: [chifra tokens](/docs/chifra/chainstate/#chifra-tokens)
 * [API](/api#operation/chainstate-tokens)
 
 Below is a list of the data fields for tokens. Following that are the commands that produce or manage tokens.
+
 | Field       | Description                                                  | Type    |
 | ----------- | ------------------------------------------------------------ | ------- |
 | holder      | the address for which we are reporting the token balance     | address |
@@ -61,17 +63,17 @@ Below is a list of the data fields for tokens. Following that are the commands t
 | is_erc20    | `true` if the address is an ERC20, `false` otherwise         | bool    |
 | is_erc721   | `true` if the address is an ERC720, `false` otherwise        | bool    |
 
-
 ---
+
 ## Base types
 
 The above documentation mentions the following basic data types.
 
 | Type      | Description                                     | Notes          |
 | --------- | ----------------------------------------------- | -------------- |
-| address   | a 20-byte hexidecimal string starting with ‘0x’ | lowercase      |
+| address   | a 20-byte hexidecimal string starting with '0x' | lowercase      |
 | blknum    | an alias for a uint64                           |                |
-| bool      | a value either true, false, 1, or 0             |                |
+| bool      | a value either `true`, `false`, `1`, or `0`     |                |
 | bytes     | an arbitrarily long string of bytes             |                |
 | double    | a floating point number of double precision     |                |
 | string    | a normal character string                       |                |
