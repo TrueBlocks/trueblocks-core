@@ -6,6 +6,6 @@ Over the years, we've paid careful attention to the 'airwaves' and have collecte
 
 [{FIELDS}]
 
-| **Tools**                                           |                                                 |
+| Tools                                               |                                                 |
 | --------------------------------------------------- | ----------------------------------------------- |
 | [chifra names](/docs/chifra/accounts/#chifra-names) | query addresses or names of well known accounts |

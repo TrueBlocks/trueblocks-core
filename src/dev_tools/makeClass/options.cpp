@@ -291,12 +291,7 @@ COptions::COptions(void) : classFile("") {
 
     CCommandOption::registerClass();
     CClassDefinition::registerClass();
-    CPage::registerClass();
-    CSubpage::registerClass();
-    CSkin::registerClass();
-    CSchema::registerClass();
     CCommandOption::registerClass();
-    CRoute::registerClass();
 }
 
 //--------------------------------------------------------------------------------

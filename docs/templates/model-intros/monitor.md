@@ -4,7 +4,7 @@ Once created, a monitor may be periodically *freshened* by calling either `chifr
 
 [{FIELDS}]
 
-| **Tools**                                                   |                                                              |
+| Tools                                                       |                                                              |
 | ----------------------------------------------------------- | ------------------------------------------------------------ |
 | [chifra status monitors](/docs/chifra/admin/#chifra-status) | report on the status of the TrueBlocks system                |
 | [chifra list](/docs/chifra/accounts/#chifra-list)           | list appearances for one or more addresses                   |

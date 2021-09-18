@@ -2,7 +2,7 @@
 title: "Accounts"
 description: ""
 lead: ""
-date: 2021-09-18T09:10:08
+date: 2021-09-18T14:53:50
 lastmod:
   - :git
   - lastmod
@@ -41,7 +41,7 @@ Below is a list of the data fields for monitors. Following that are the commands
 | address     | the address being monitored                    | address |
 | is_custom   | `true` if this address is customized           | bool    |
 
-| **Tools**                                                   |                                                              |
+| Tools                                                       |                                                              |
 | ----------------------------------------------------------- | ------------------------------------------------------------ |
 | [chifra status monitors](/docs/chifra/admin/#chifra-status) | report on the status of the TrueBlocks system                |
 | [chifra list](/docs/chifra/accounts/#chifra-list)           | list appearances for one or more addresses                   |
@@ -67,7 +67,7 @@ Below is a list of the data fields for appearances. Following that are the comma
 | timestamp        | the timestamp for this appearance                         | timestamp |
 | date             | the date represented by the timestamp                     | string    |
 
-| **Tools**                                                 |                                                              |
+| Tools                                                     |                                                              |
 | --------------------------------------------------------- | ------------------------------------------------------------ |
 | [chifra list](/docs/chifra/accounts/#chifra-list)         | list appearances for one or more addresses                   |
 | [chifra export](/docs/chifra/accounts/#chifra-export)     | export full detail of transactions for one or more addresses |
@@ -156,7 +156,7 @@ Below is a list of the data fields for names. Following that are the commands th
 | is_erc20    | `true` if the address is an ERC20, `false` otherwise                                | bool    |
 | is_erc721   | `true` if the address is an ERC720, `false` otherwise                               | bool    |
 
-| **Tools**                                           |                                                 |
+| Tools                                               |                                                 |
 | --------------------------------------------------- | ----------------------------------------------- |
 | [chifra names](/docs/chifra/accounts/#chifra-names) | query addresses or names of well known accounts |
 
@@ -201,7 +201,7 @@ Below is a list of the data fields for functions. Following that are the command
 | inputs    | the input parameters to the function, if any            | CParameterArray |
 | outputs   | the output parameters to the function, if any           | CParameterArray |
 
-| **Tools**                                             |                                                              |
+| Tools                                                 |                                                              |
 | ----------------------------------------------------- | ------------------------------------------------------------ |
 | [chaindata commands](/docs/chifra/chaindata/)         | various commands dealing with blockchain data                |
 | [chifra export](/docs/chifra/accounts/#chifra-export) | export full detail of transactions for one or more addresses |
@@ -211,7 +211,7 @@ Below is a list of the data fields for functions. Following that are the command
 
 ## Parameter
 
-<!-- TEXT FOR PARAMETERS -->
+Parameters are a constituant part of a [Function or Event](/data-model/accounts/#function). The parameters of a function are each individual value passed into the function. Along with the function's name, the parameters types (once canonicalized) are used to create a function's four byte signature (or an event's 32-byte signature). Parameters are important to TrueBlocks because we use them as part of the ABI decoding and the `--articulate` process to conver the blockchain's bytes into human-readable text.
 
 Below is a list of the data fields for parameters. Following that are the commands that produce or manage parameters.
 
@@ -223,6 +223,11 @@ Below is a list of the data fields for parameters. Following that are the comman
 | indexed      | `true` if this parameter is indexed                         | bool            |
 | internalType | for composite types, the interal type of the parameter      | string          |
 | components   | for composite types, the parameters making up the composite | CParameterArray |
+
+| Tools                                             |                                      |
+| ------------------------------------------------- | ------------------------------------ |
+| [chifra abis](/docs/chifra/accounts/#chifra-abis) | fetches the ABI for a smart contract |
+
 
 ---
 

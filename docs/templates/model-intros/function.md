@@ -2,7 +2,7 @@ ABI files are derived from the Solidity source code of a smart contract by extra
 
 [{FIELDS}]
 
-| **Tools**                                             |                                                              |
+| Tools                                                 |                                                              |
 | ----------------------------------------------------- | ------------------------------------------------------------ |
 | [chaindata commands](/docs/chifra/chaindata/)         | various commands dealing with blockchain data                |
 | [chifra export](/docs/chifra/accounts/#chifra-export) | export full detail of transactions for one or more addresses |

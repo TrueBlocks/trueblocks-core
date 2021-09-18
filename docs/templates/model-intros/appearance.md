@@ -4,7 +4,7 @@ The TrueBlocks [index of appearances](/data-model/the-index/) (created by [chifr
 
 [{FIELDS}]
 
-| **Tools**                                                 |                                                              |
+| Tools                                                     |                                                              |
 | --------------------------------------------------------- | ------------------------------------------------------------ |
 | [chifra list](/docs/chifra/accounts/#chifra-list)         | list appearances for one or more addresses                   |
 | [chifra export](/docs/chifra/accounts/#chifra-export)     | export full detail of transactions for one or more addresses |
