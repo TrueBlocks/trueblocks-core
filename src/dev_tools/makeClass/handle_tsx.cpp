@@ -21,7 +21,6 @@ extern const char* STR_TYPE_FILE;
 extern void loadRoutes(const string_q& fn);
 
 //------------------------------------------------------------------------------------------------------------
-// static CRouteArray routes;
 static CCommandOptionArray routes;
 #define explorerPath string_q("/Users/jrush/Development/trueblocks-explorer/")
 
