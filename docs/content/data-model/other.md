@@ -2,7 +2,7 @@
 title: "Other"
 description: ""
 lead: ""
-date: 2021-09-17T07:00:16
+date: 2021-09-17T22:21:53
 lastmod:
   - :git
   - lastmod
@@ -41,8 +41,7 @@ _Each data structure is created by one or more tools which are detailed below_
 - **API**:
   - [Calls to `/transactions`](/api#operation/chaindata-transactions)
 
-### Fields
-
+Below are this structure's data fields. Following that are the commands that produce or manage quotes.
 | Field     | Description                                           | Type      |
 | --------- | ----------------------------------------------------- | --------- |
 | timestamp | the timestamp of this quote                           | timestamp |

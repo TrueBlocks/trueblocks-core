@@ -1023,7 +1023,7 @@ string_q COption::getDescription(bool isReadme) const {
         string_q part2 = nextTokenClear(descr, ' ');
         part += part2;
         if (!descr.empty())
-            part += isReadme ? "<br/>" : " ";
+            part += "<br/>";
         lines.push_back(part);
     }
     string_q ret;

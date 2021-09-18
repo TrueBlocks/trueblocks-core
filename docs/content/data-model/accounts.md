@@ -2,7 +2,7 @@
 title: "Accounts"
 description: ""
 lead: ""
-date: 2021-09-17T07:00:16
+date: 2021-09-17T22:21:53
 lastmod:
   - :git
   - lastmod
@@ -25,12 +25,11 @@ _Each data structure is created by one or more tools which are detailed below_
 
 ## Monitor
 
-A Monitor is a list of [Appearances](/data-model/accounts/#appearance) associated with a given address along with various details about those Appearances. A Monitor is created when a user expresses interest in an address by calling either [chifra list](/docs/chifra/accounts/#chifra-list) or [chifra export](/docs/chifra/accounts/#chifra-export) tool (or querying thier associated APIs).
+A Monitor is a list of [Appearances](/data-model/accounts/#appearance) associated with a given address along with various details about those appearances. A monitor is created when a user expresses interest in an address by calling either [chifra list](/docs/chifra/accounts/#chifra-list) or [chifra export](/docs/chifra/accounts/#chifra-export) tool (or querying thier associated APIs).
 
-Once created, a Monitor may be periodically *freshened* by calling either `chifra list` or `chifra export` again, however, it is also possible to keep a Monitor fresh continually by calling [chifra serve --monitor](). This tool watches the front of the chain and repeatedly calls `chifra list`.
+Once created, a monitor may be periodically *freshened* by calling either `chifra list` or `chifra export`, however, it is also possible to freshen a monitor continually with [chifra scrape --monitors](/docs/chifra/admin/#chifra-scrape). This tool watches the front of the chain and repeatedly calls `chifra list`.
 
-### Fields
-
+Below are this structure's data fields. Following that are the commands that produce or manage monitors.
 | Field       | Description                                    | Type    |
 | ----------- | ---------------------------------------------- | ------- |
 | nApps       | the number of appearances for this monitor     | blknum  |
@@ -41,17 +40,20 @@ Once created, a Monitor may be periodically *freshened* by calling either `chifr
 | address     | the address being monitored                    | address |
 | is_custom   | `true` if this address is customized           | bool    |
 
-| **Tools**                                                          |                                                |
-| ------------------------------------------------------------------ | ---------------------------------------------- |
-| [chifra status monitors](/docs/chifra/admin/#chifra-status)        | report on all existing monitors                |
-| [chifra list &lt;address&gt;](/docs/chifra/admin/#chifra-status)   | create or freshen a Monitor                    |
-| [chifra export &lt;address&gt;](/docs/chifra/admin/#chifra-status) | create or freshen and then report on a Monitor |
+| **Tools**                                                   |                                                              |
+| ----------------------------------------------------------- | ------------------------------------------------------------ |
+| [chifra status monitors](/docs/chifra/admin/#chifra-status) | report on the status of the TrueBlocks system                |
+| [chifra list](/docs/chifra/accounts/#chifra-list)           | list appearances for one or more addresses                   |
+| [chifra export](/docs/chifra/accounts/#chifra-export)       | export full detail of transactions for one or more addresses |
+
 
 ## Appearance
 
-<!-- An appearance is  -->
-### Fields
+An appearance is a pointer (`blknum, tx_id` pair) into the blockchain indicating where a particular address appears. This includes obvioius locations such as `to` or `from` as well as esoteric locations such as deep inside a tenth-level trace or as the miner of an uncle block. The primary goal of TrueBlocks is to indentify every appearance for any address on the chain.
 
+The TrueBlocks [index of appearances](/data-model/the-index/) (created by [chifra scrape](/docs/chifra/admin/#chifra-scrape)) makes the production of such a list possible. Appearances are stored in [Monitors](http://localhost:1313/data-model/accounts/#monitor).
+
+Below are this structure's data fields. Following that are the commands that produce or manage appearances.
 | Field            | Description                                               | Type      |
 | ---------------- | --------------------------------------------------------- | --------- |
 | blockNumber      | the number of the block                                   | blknum    |
@@ -61,6 +63,12 @@ Once created, a Monitor may be periodically *freshened* by calling either `chifr
 | timestamp        | the timestamp for this appearance                         | timestamp |
 | date             | the date represented by the timestamp                     | string    |
 
+| **Tools**                                                 |                                                              |
+| --------------------------------------------------------- | ------------------------------------------------------------ |
+| [chifra list](/docs/chifra/accounts/#chifra-list)         | list appearances for one or more addresses                   |
+| [chifra export](/docs/chifra/accounts/#chifra-export)     | export full detail of transactions for one or more addresses |
+| [chifra monitors](/docs/chifra/accounts/#chifra-monitors) | delete, undelete, and remove previously created monitors     |
+
 ## Reconciliation
 
 When exported with the `--accounting` option from `chifra export`, each transaction will have field called `statements`. Statements are an array for reconciliations. All such exported transactions will have at least one reconcilation (for ETH), however, many will have additional reconciliations for other assets (such as ERC20 and ERC721 tokens).
@@ -69,8 +77,7 @@ Because DeFi is essentially swaps and trades around ERC20s, and because and 'pro
 
 Reconciliations are relative to an `accountedFor` address. For this reason, the same transaction will probably have different reconciliations depending on the `accountedFor` address. Consider a simple transfer of ETH from one address to another. Obviously, the sender's and the recipient's reconciliations will differ (in opposite proportion to each other). The `accountedFor` address is always present as the `assetAddress` in the first reconciliation of the statements array.
 
-### Fields
-
+Below are this structure's data fields. Following that are the commands that produce or manage reconciliations.
 | Field               | Description                                                                                                     | Type      |
 | ------------------- | --------------------------------------------------------------------------------------------------------------- | --------- |
 | blockNumber         | the number of the block                                                                                         | blknum    |
@@ -118,8 +125,7 @@ _Accounts_ link an address to a name.
 
 Accounts are a combination of an`address`, a `name`, and optionally other data. Where possible, this information is queried directly from the blockchain, however in many cases the information was gathered from various websites over the years. For example, every time people say "Show me your address, and we will airdrop some tokens" on Twitter, we copy and paste all those addresses. If you're going to DOX yourselves, we're going to notice. Sorry. Not sorry.
 
-### Fields
-
+Below are this structure's data fields. Following that are the commands that produce or manage names.
 | Field       | Description                                                                         | Type    |
 | ----------- | ----------------------------------------------------------------------------------- | ------- |
 | tags        | colon separated list of tags                                                        | string  |
@@ -140,8 +146,7 @@ Accounts are a combination of an`address`, a `name`, and optionally other data. 
 
 For more information on ABIs please see any relevant Ethereum documentation, particularly that documentation related to Solidity coding. The fields or the ABI are mostly identical to the fields you will find in that documentation.
 
-### Fields
-
+Below are this structure's data fields. Following that are the commands that produce or manage abis.
 | Field      | Description                                  | Type           |
 | ---------- | -------------------------------------------- | -------------- |
 | address    | the smart contract that implements this abi  | address        |
@@ -151,8 +156,7 @@ For more information on ABIs please see any relevant Ethereum documentation, par
 
 <!-- TEXT FOR FUNCTIONS -->
 
-### Fields
-
+Below are this structure's data fields. Following that are the commands that produce or manage functions.
 | Field     | Description                                             | Type            |
 | --------- | ------------------------------------------------------- | --------------- |
 | name      | the name of the interface                               | string          |
@@ -166,8 +170,7 @@ For more information on ABIs please see any relevant Ethereum documentation, par
 
 <!-- TEXT FOR PARAMETERS -->
 
-### Fields
-
+Below are this structure's data fields. Following that are the commands that produce or manage parameters.
 | Field        | Description                                                 | Type            |
 | ------------ | ----------------------------------------------------------- | --------------- |
 | type         | the type of this parameter                                  | string          |

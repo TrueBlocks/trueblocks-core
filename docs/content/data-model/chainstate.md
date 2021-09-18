@@ -2,7 +2,7 @@
 title: "Chain State"
 description: ""
 lead: ""
-date: 2021-09-17T07:00:16
+date: 2021-09-17T22:21:53
 lastmod:
   - :git
   - lastmod
@@ -28,8 +28,7 @@ The balance of an address at a given block.
 * CLI: [chifra state](/docs/chifra/chainstate/#chifra-state)
 * [API](/api#operation/chainstate-state)
 
-### Fields
-
+Below are this structure's data fields. Following that are the commands that produce or manage states.
 | Field       | Description                                                                                     | Type    |
 | ----------- | ----------------------------------------------------------------------------------------------- | ------- |
 | blockNumber | the block number at which this state was taken                                                  | blknum  |
@@ -47,8 +46,7 @@ The balance of an address at a given block.
 * CLI: [chifra tokens](/docs/chifra/chainstate/#chifra-tokens)
 * [API](/api#operation/chainstate-tokens)
 
-### Fields
-
+Below are this structure's data fields. Following that are the commands that produce or manage tokens.
 | Field       | Description                                                  | Type    |
 | ----------- | ------------------------------------------------------------ | ------- |
 | holder      | the address for which we are reporting the token balance     | address |

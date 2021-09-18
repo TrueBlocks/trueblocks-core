@@ -16,6 +16,7 @@
 extern const char* STR_YAML_TAIL;
 extern const char* STR_DOCUMENT_TAIL;
 extern const char* STR_YAML_MODELHEADER;
+extern const char* STR_FIELDS_INTRO;
 extern bool sortByDataModelName(const CClassDefinition& c1, const CClassDefinition& c2);
 extern bool sortByDoc(const CParameter& c1, const CParameter& c2);
 extern string_q typeFmt(const CParameter& fld);
@@ -70,9 +71,12 @@ bool COptions::handle_datamodel(void) {
         docStream << endl;
         docStream << asciiFileToString(modelFn) << endl;
 
+        string_q fieldIntro = STR_FIELDS_INTRO;
+        replace(fieldIntro, "[{TYPE}]", model.doc_api);
+        replace(fieldIntro, "[{PLURAL}]", plural(model.doc_api, 0));
+
         ostringstream fieldStream;
-        fieldStream << "### Fields" << endl;
-        fieldStream << endl;
+        fieldStream << fieldIntro << endl;
         fieldStream << markDownRow("Field", "Description", "Type", widths);
         fieldStream << markDownRow("-", "", "", widths);
 
@@ -227,3 +231,8 @@ const char* STR_YAML_MODELHEADER =
     "[      description: \"{DOC_DESCR}\"\n]"
     "[      type: object\n]"
     "[      properties:\n]";
+
+//------------------------------------------------------------------------------------------------------------
+const char* STR_FIELDS_INTRO =
+    "Below are this structure's data fields. Following that are the "
+    "commands that produce or manage [{PLURAL}].";
