@@ -5,7 +5,7 @@ blockTest -th
 `Usage:`     [-v|-h] mode  
 `Purpose:`  Test 'c' library strings against TrueBlocks strings.
         
-`Where:`  
+`Where:`
 
 {{<td>}}
 |          | Option                | Description                                      |

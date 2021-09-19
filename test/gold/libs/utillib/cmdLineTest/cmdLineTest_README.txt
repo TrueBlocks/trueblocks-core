@@ -5,7 +5,7 @@ cmdLineTest -th
 `Usage:`     [-b|-i|-u|-s|-r|-l|-v|-h] testNum optionalMode  
 `Purpose:`  Tests various command line behavior.
         
-`Where:`  
+`Where:`
 
 {{<td>}}
 |          | Option                            | Description                                                         |

@@ -15,7 +15,7 @@ The `--sol` option will convert a single Solidity file found in the current fold
 `Usage:`    chifra abis [-k|-s|-f|-v|-h] &lt;address&gt; [address...]  
 `Purpose:`  Fetches the ABI for a smart contract.
 
-`Where:`  
+`Where:`
 
 |          | Option                         | Description                                                                         |
 | -------- | ------------------------------ | ----------------------------------------------------------------------------------- |

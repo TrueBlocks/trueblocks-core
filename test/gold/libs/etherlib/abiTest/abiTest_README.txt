@@ -5,7 +5,7 @@ abiTest -th
 `Usage:`     [-s|-v|-h] &lt;mode&gt; [mode...]  
 `Purpose:`  Simple program to illustrate how to encode function and event signatures.
 
-`Where:`  
+`Where:`
 
 {{<td>}}
 |          | Option                        | Description                                                             |

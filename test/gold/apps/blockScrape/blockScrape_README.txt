@@ -5,7 +5,7 @@ blockScrape -th
 `Usage:`    chifra scrape [-p|-s|-v|-h]  
 `Purpose:`  Scan the chain and update the TrueBlocks index of appearances.
 
-`Where:`  
+`Where:`
 
 {{<td>}}
 |          | Option                             | Description                                                                         |

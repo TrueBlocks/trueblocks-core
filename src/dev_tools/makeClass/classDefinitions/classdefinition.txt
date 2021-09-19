@@ -1,4 +1,0 @@
-[settings]
-class = CClassDefinition
-fields = classdefinition.csv
-includes = etherlib.h

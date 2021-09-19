@@ -7,7 +7,7 @@
 `Usage:`    makeClass [-r|-a|-o|-m|-f|-l|-t|-n|-i|-c|-v|-h] &lt;file&gt; [file...]  
 `Purpose:`  Automatically writes C++ for various purposes.
 
-`Where:`  
+`Where:`
 
 |          | Option                           | Description                                                                   |
 | -------- | -------------------------------- | ----------------------------------------------------------------------------- |

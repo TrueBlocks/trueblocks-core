@@ -310,16 +310,6 @@ COptions::COptions(void) {
     // clang-format on
     // END_CODE_NOTES
 
-    string_q namesPath = configPathRelative("names/names.tab");
-    if (isTestMode())
-        namesPath = substitute(configPath("names/names.tab"), configPath(""), "$CONFIG/");
-
-    if (!isReadme && !isTestMode()) {
-        ostringstream os;
-        os << "Name file: `" << namesPath << "`";
-        notes.push_back(os.str());
-    }
-
     // BEG_ERROR_STRINGS
     // END_ERROR_STRINGS
 }

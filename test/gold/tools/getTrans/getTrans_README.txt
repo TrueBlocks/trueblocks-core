@@ -5,7 +5,7 @@ getTrans -th
 `Usage:`    chifra transactions [-a|-t|-u|-r|-o|-v|-h] &lt;tx_id&gt; [tx_id...]  
 `Purpose:`  Retrieve one or more transactions from the chain or local cache.
 
-`Where:`  
+`Where:`
 
 {{<td>}}
 |          | Option                                  | Description                                                                                  |

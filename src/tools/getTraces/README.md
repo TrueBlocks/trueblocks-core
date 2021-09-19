@@ -11,7 +11,7 @@ The `--filter` option calls your node's `trace_filter` routine (if available) us
 `Usage:`    chifra traces [-a|-f|-d|-c|-v|-h] &lt;tx_id&gt; [tx_id...]  
 `Purpose:`  Retrieve traces for the given transaction(s).
 
-`Where:`  
+`Where:`
 
 |          | Option                           | Description                                                                  |
 | -------- | -------------------------------- | ---------------------------------------------------------------------------- |

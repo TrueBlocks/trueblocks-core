@@ -6,7 +6,7 @@ getTokens 0xd26114cd6EE289AccF82350c8d84870000000000 0x5e44c3e467a49c9ca0296a9f1
   Usage:    getTokens [-p|-b|-n|-v|-h] <address> <address> [address...] [block...]  
   Purpose:  Retrieve token balance(s) for one or more addresses at given block(s).
 
-  Where:  
+  Where:
 	addrs                 two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported (required)
 	blocks                an optional list of one or more blocks at which to report balances, defaults to 'latest'
 	-p  (--parts <val>)   one or more parts of the token information to retreive, one or more of [name|symbol|decimals|totalSupply|version|none|all*]

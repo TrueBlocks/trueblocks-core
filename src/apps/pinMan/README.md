@@ -7,7 +7,7 @@ This tool is not yet ready for production use. Please return to this page later.
 `Usage:`    chifra pins [-l|-i|-n|-p|-v|-h]  
 `Purpose:`  Manage pinned index of appearances and associated Bloom filters.
 
-`Where:`  
+`Where:`
 
 |          | Option                        | Description                                                                       |
 | -------- | ----------------------------- | --------------------------------------------------------------------------------- |

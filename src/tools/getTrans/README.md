@@ -11,7 +11,7 @@ The `--trace` option attachs an array transaction traces to the output (if the n
 `Usage:`    chifra transactions [-a|-t|-u|-r|-o|-v|-h] &lt;tx_id&gt; [tx_id...]  
 `Purpose:`  Retrieve one or more transactions from the chain or local cache.
 
-`Where:`  
+`Where:`
 
 |          | Option                                  | Description                                                                                  |
 | -------- | --------------------------------------- | -------------------------------------------------------------------------------------------- |

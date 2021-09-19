@@ -7,7 +7,7 @@ PROG_NAME = [chifra scrape]
   Usage:    chifra scrape [-p|-s|-v|-h]  
   Purpose:  Scan the chain and update the TrueBlocks index of appearances.
 
-  Where:  
+  Where:
 	-p  (--pin)           pin new chunks (and blooms) to IPFS (requires Pinata key and running IPFS node)
 	-s  (--sleep <double>)the number of seconds to sleep between passes (default 14)
 	-v  (--verbose)       set verbose level (optional level defaults to 1)

@@ -5,7 +5,7 @@ ethslurp -th
 `Usage:`    chifra slurp [-t|-p|-v|-h] &lt;address&gt; [address...] [block...]  
 `Purpose:`  Fetch data from EtherScan for any address.
 
-`Where:`  
+`Where:`
 
 {{<td>}}
 |          | Option                          | Description                                                                                                  |

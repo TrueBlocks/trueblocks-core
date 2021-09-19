@@ -5,7 +5,7 @@ getState -th
 `Usage:`    chifra state [-p|-c|-n|-v|-h] &lt;address&gt; [address...] [block...]  
 `Purpose:`  Retrieve account balance(s) for one or more addresses at given block(s).
 
-`Where:`  
+`Where:`
 
 {{<td>}}
 |          | Option                          | Description                                                                                                                |

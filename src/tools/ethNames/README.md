@@ -13,7 +13,7 @@ You may use the TrueBlocks explorer to manage (add, edit, delete) address-name a
 `Usage:`    chifra names [-e|-m|-l|-c|-p|-n|-a|-s|-g|-v|-h] &lt;term&gt; [term...]  
 `Purpose:`  Query addresses or names of well known accounts.
 
-`Where:`  
+`Where:`
 
 |          | Option                        | Description                                                                               |
 | -------- | ----------------------------- | ----------------------------------------------------------------------------------------- |
@@ -35,7 +35,6 @@ You may use the TrueBlocks explorer to manage (add, edit, delete) address-name a
 
 - The tool will accept up to three terms, each of which must match against any field in the database.
 - The `--match_case` option enables case sensitive matching.
-- Name file: `$CONFIG/names/names.tab`
 
 #### Other Options
 

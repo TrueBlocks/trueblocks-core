@@ -4,7 +4,7 @@ cacheStatus --help
   Usage:    cacheStatus [-d|-t|-v|-h] <mode> [mode...]  
   Purpose:  Report on the status of the TrueBlocks system.
 
-  Where:  
+  Where:
 	modes                 the type of status info to retrieve, one or more of [index|monitors|collections|names|abis|caches|some*|all]
 	-d  (--details)       include details about items found in monitors, slurps, abis, or price caches
 	-t  (--types <val>)   for caches mode only, which type(s) of cache to report, one or more of [blocks|transactions|traces|slurps|prices|all*]

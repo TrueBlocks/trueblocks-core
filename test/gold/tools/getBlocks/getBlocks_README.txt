@@ -5,7 +5,7 @@ getBlocks -th
 `Usage:`    chifra blocks [-e|-U|-t|-a|-u|-n|-c|-o|-v|-h] &lt;block&gt; [block...]  
 `Purpose:`  Retrieve one or more blocks from the chain or local cache.
 
-`Where:`  
+`Where:`
 
 {{<td>}}
 |          | Option                               | Description                                                                         |

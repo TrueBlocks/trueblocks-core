@@ -5,7 +5,7 @@ cacheStatus -th
 `Usage:`    chifra status [-d|-t|-v|-h] &lt;mode&gt; [mode...]  
 `Purpose:`  Report on the status of the TrueBlocks system.
 
-`Where:`  
+`Where:`
 
 {{<td>}}
 |          | Option                               | Description                                                                                                                                                                               |

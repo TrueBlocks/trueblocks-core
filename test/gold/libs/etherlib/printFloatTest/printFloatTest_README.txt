@@ -5,7 +5,7 @@ printFloatTest -th
 `Usage:`     [-t|-v|-h]  
 `Purpose:`  This program tests floating point printing and conversions.
         
-`Where:`  
+`Where:`
 
 {{<td>}}
 |          | Option                      | Description                                      |

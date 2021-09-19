@@ -57,24 +57,6 @@ typedef uint64_t (*HASHFINDFUNC)(const hash_t& hash, void* data);
 typedef map<address_t, CAccountName> CAddressNameMap;
 
 //-----------------------------------------------------------------------------
-class COptionDescr {
-  public:
-    string_q shortKey;
-    string_q longKey;
-    string_q descr;
-    bool positional;
-    bool required;
-    size_t widths[5];  // only five columns allowed
-    COptionDescr(const string_q& sN, const string_q& lN, const string_q& d, bool im, bool r, size_t* w)
-        : shortKey(sN), longKey(lN), descr(d), positional(im), required(r) {
-        for (size_t i = 0; i < 5; i++)
-            widths[i] = w[i];
-    }
-    string_q oneDescription(bool isReadme) const;
-};
-extern string_q markDownRow(const string_q& s1, const string_q& s2, const string_q& s3, size_t* widths);
-
-//-----------------------------------------------------------------------------
 class COptionsBase {
   public:
     CStringArray commandLines;
@@ -216,34 +198,17 @@ class COption {
     string_q type;
     bool is_hidden;
     bool is_positional;
-    bool is_special;
     bool is_optional;
     bool is_deprecated;
     COption(const string_q& ln, const string_q& sn, const string_q& type, size_t opts, const string_q& d);
     bool isPublic(void) const {
         return (!is_hidden && !is_deprecated && !longName.empty());
     }
-    string_q readmeDash(const string_q& str, bool isReadme) const {
-        if (!isReadme)
-            return str;
-        return substitute(str, "-", "&#8208;");
-    }
-    string_q getHotKey(bool isReadme) const {
-        return is_positional ? "" : readmeDash(hotKey, isReadme);
-    }
-    string_q getLongKey(bool isReadme) const {
-        if (is_special)
-            return readmeDash(longName, isReadme);
-        string_q lName = substitute(longName, "addrs2", "addrs");
-        replaceAny(lName, "!~", "");
-        lName = (is_positional ? substitute(lName, "-", "") : lName);
-        lName = substitute(lName, "@-", "");
-        if (isReadme) {
-            lName = substitute(substitute(lName, "<", "&lt;"), ">", "&gt;");
-        }
-        return readmeDash(lName, isReadme);
-    }
+    string_q readmeDash(const string_q& str, bool isReadme) const;
+    string_q getHotKey(bool isReadme) const;
+    string_q getLongKey(bool isReadme) const;
     string_q getDescription(bool isReadme) const;
+    string_q oneDescription(bool isReadme, size_t* widths) const;
 };
 
 //--------------------------------------------------------------------------------

@@ -37,7 +37,6 @@ You may use the TrueBlocks explorer to manage (add, edit, delete) address-name a
 
 - The tool will accept up to three terms, each of which must match against any field in the database.
 - The `--match_case` option enables case sensitive matching.
-- Name file: `$CONFIG/names/names.tab`
 
 **Source code**: [`tools/ethNames`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/tools/ethNames)
 

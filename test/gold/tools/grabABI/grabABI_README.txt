@@ -5,7 +5,7 @@ grabABI -th
 `Usage:`    chifra abis [-k|-s|-f|-v|-h] &lt;address&gt; [address...]  
 `Purpose:`  Fetches the ABI for a smart contract.
 
-`Where:`  
+`Where:`
 
 {{<td>}}
 |          | Option                         | Description                                                                         |

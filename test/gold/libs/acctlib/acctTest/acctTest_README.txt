@@ -5,7 +5,7 @@ acctTest -th
 `Usage:`     [-a|-f|-l|-n|-v|-h]  
 `Purpose:`  Build an account tree listing first transaction, latest transaction, and node balance for each account.
         
-`Where:`  
+`Where:`
 
 {{<td>}}
 |          | Option                             | Description                                                      |

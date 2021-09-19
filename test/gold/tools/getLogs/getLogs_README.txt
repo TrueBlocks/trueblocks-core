@@ -5,7 +5,7 @@ getLogs -th
 `Usage:`    chifra logs [-t|-s|-a|-v|-h] &lt;tx_id&gt; [tx_id...]  
 `Purpose:`  Retrieve logs for the given transaction(s).
 
-`Where:`  
+`Where:`
 
 {{<td>}}
 |          | Option                            | Description                                                                  |

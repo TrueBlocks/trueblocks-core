@@ -5,7 +5,7 @@ pinMan -th
 `Usage:`    chifra pins [-l|-i|-n|-p|-v|-h]  
 `Purpose:`  Manage pinned index of appearances and associated Bloom filters.
 
-`Where:`  
+`Where:`
 
 {{<td>}}
 |          | Option                             | Description                                                                       |

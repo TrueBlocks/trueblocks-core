@@ -6,7 +6,7 @@ getBlocks 2769609 2799895 2872831 3076260 --cache --uniq_tx
   Usage:    getBlocks [-e|-U|-t|-a|-u|-n|-c|-o|-v|-h] <block> [block...]  
   Purpose:  Retrieve one or more blocks from the chain or local cache.
 
-  Where:  
+  Where:
 	blocks                a space-separated list of one or more block identifiers (required)
 	-e  (--hashes)        display only transaction hashes, default is to display full transaction detail
 	-U  (--uncles)        display uncle blocks (if any) instead of the requested block

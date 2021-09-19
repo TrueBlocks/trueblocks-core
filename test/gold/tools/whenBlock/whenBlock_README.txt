@@ -5,7 +5,7 @@ whenBlock -th
 `Usage:`    chifra when [-l|-t|-v|-h] &lt; block | date &gt; [ block... | date... ]  
 `Purpose:`  Find block(s) based on date, blockNum, timestamp, or 'special'.
 
-`Where:`  
+`Where:`
 
 {{<td>}}
 |          | Option                         | Description                                                                             |

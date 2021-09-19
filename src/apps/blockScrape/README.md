@@ -11,7 +11,7 @@ The scraper can scrape either the index only, previously created monitors only, 
 `Usage:`    chifra scrape [-p|-s|-v|-h]  
 `Purpose:`  Scan the chain and update the TrueBlocks index of appearances.
 
-`Where:`  
+`Where:`
 
 |          | Option                             | Description                                                                         |
 | -------- | ---------------------------------- | ----------------------------------------------------------------------------------- |

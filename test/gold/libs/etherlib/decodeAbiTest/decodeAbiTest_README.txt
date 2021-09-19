@@ -5,7 +5,7 @@ decodeAbiTest -th
 `Usage:`     [-v|-h]  
 `Purpose:`  Test abi decoding.
         
-`Where:`  
+`Where:`
 
 {{<td>}}
 |          | Option                | Description                                      |
