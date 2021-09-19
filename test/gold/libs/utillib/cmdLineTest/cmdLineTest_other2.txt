@@ -1,5 +1,11 @@
 cmdLineTest argc: 2 [1:--file:cmd_file_other2] 
 cmdLineTest --file:cmd_file_other2 
+Cmd: 5 --int:12 
+Cmd: 6 --int:-100 
+Cmd: 7 --uint:12 
+Cmd: 8 --uint:-100 
+Cmd: 9 --string:String 
+Cmd: 10 --string:1212 
 --------------------------------------------------------------------------------
 boolOption: 0
 boolSet: 0

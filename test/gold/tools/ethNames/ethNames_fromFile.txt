@@ -1,5 +1,11 @@
 ethNames argc: 2 [1:--file:names.txt] 
 ethNames --file:names.txt 
+Cmd: LockTrip 
+Cmd: UCASH 
+Cmd: XES 
+Cmd: b052f8a33d8bb0 
+Cmd: 68414eade06af6955199f9f010 
+Cmd: 0xb7cb1c96db6b22b0d3d9536e0108d062bd488f74 WTC Walton 
 No results for LockTrip
 tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x92e52a1a235d9a103d970901066ce910aacefd37	UCASH	UCASH		8

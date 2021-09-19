@@ -1,5 +1,22 @@
 dataUpgradeTest argc: 2 [1:--file:cmd_file2] 
 dataUpgradeTest --file:cmd_file2 
+Cmd: CAbi 
+Cmd: CFunction 
+Cmd: CParameter 
+Cmd: CCachedAccount 
+Cmd: CMonitor 
+Cmd: CBlock 
+Cmd: CReconcilationOutput 
+Cmd: CLogEntry 
+Cmd: CPriceQuote 
+Cmd: CReceipt 
+Cmd: CRPCResult 
+Cmd: CTrace 
+Cmd: CTraceAction 
+Cmd: CTraceResult 
+Cmd: CTransaction 
+Cmd: CNewBlock 
+Cmd: CNewReceipt 
 --------------------------------------------------------------------------------
 className: CAbi
 baseClass: CBaseNode

@@ -29,13 +29,14 @@ namespace qblocks {
 void COptionsBase::registerOptions(size_t nP, COption const* pP, uint32_t on, uint32_t off) {
     // TODO(tjayrush): global data
     arguments.clear();
-    parameters.clear();
-    for (size_t i = 0; i < nP; i++)
-        parameters.push_back(pP[i]);
-    if (on != NOOPT)
-        optionOn(on);
-    if (off != NOOPT)
-        optionOff(off);
+    if (parameters.empty()) {
+        for (size_t i = 0; i < nP; i++)
+            parameters.push_back(pP[i]);
+        if (on != NOOPT)
+            optionOn(on);
+        if (off != NOOPT)
+            optionOff(off);
+    }
 }
 
 //--------------------------------------------------------------------------------
@@ -286,6 +287,8 @@ bool COptionsBase::prepareArguments(int argCountIn, const char* argvIn[]) {
                 replace(command, "--fmt ", "--fmt:");
                 if (!command.empty() && !startsWith(command, ";") && !startsWith(command, "#")) {  // ignore comments
                     commandList += (command + toAll + "\n");
+                    if (isTestMode())
+                        cerr << "Cmd: " << command << toAll << endl;
                 }
             }
         }
