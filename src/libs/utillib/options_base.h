@@ -16,39 +16,12 @@
 #include "filenames.h"
 #include "toml.h"
 #include "exportcontext.h"
-
-// Bit flags to enable / disable various options
-#define OPT_DESCRIPTION (0)
-#define OPT_HELP (1 << 1)
-#define OPT_VERBOSE (1 << 2)
-#define OPT_FMT (1 << 3)
-#define OPT_DOLLARS (1 << 4)
-#define OPT_WEI (1 << 5)
-#define OPT_ETHER (1 << 6)
-#define OPT_PARITY (1 << 7)
-#define OPT_RAW (1 << 11)
-#define OPT_PREFUND (1 << 12)
-#define OPT_OUTPUT (1 << 13)
-#define OPT_CRUD (1 << 14)
-#define OPT_MOCKDATA (1 << 21)
-#define OPT_DENOM (OPT_DOLLARS | OPT_WEI | OPT_ETHER)
-#define OPT_DEFAULT (OPT_HELP | OPT_VERBOSE | OPT_FMT | OPT_DENOM | OPT_PARITY | OPT_MOCKDATA | OPT_OUTPUT)
-
-#define OPT_REQUIRED (1 << 14)
-#define OPT_POSITIONAL (1 << 15)
-#define OPT_FLAG (1 << 16)
-#define OPT_SWITCH OPT_FLAG
-#define OPT_TOGGLE OPT_SWITCH
-#define OPT_HIDDEN (1 << 17)
-#define OPT_DEPRECATED (OPT_HIDDEN | (1 << 18))
-#define NOOPT ((uint32_t)-1)
+#include "option.h"
 
 #define ERR_NOERROR 0
 
 //-----------------------------------------------------------------------------
 namespace qblocks {
-
-class COption;
 
 //-----------------------------------------------------------------------------
 typedef bool (*NAMEFUNC)(CAccountName& name, void* data);
@@ -186,31 +159,6 @@ class CDefaultOptions : public COptionsBase {
     }
     void Init(void) {
     }
-};
-
-//--------------------------------------------------------------------------------
-class COption {
-  public:
-    string_q hotKey;
-    string_q longName;
-    string_q description;
-    string_q permitted;
-    string_q type;
-    bool is_hidden;
-    bool is_positional;
-    bool is_optional;
-    bool is_deprecated;
-    COption(void) : is_hidden(false), is_positional(false), is_optional(false), is_deprecated(false) {
-    }
-    COption(const string_q& ln, const string_q& sn, const string_q& type, size_t opts, const string_q& d);
-    bool isPublic(void) const {
-        return (!is_hidden && !is_deprecated && !longName.empty());
-    }
-    string_q readmeDash(const string_q& str, bool isReadme) const;
-    string_q getHotKey(bool isReadme) const;
-    string_q getLongKey(bool isReadme) const;
-    string_q getDescription(bool isReadme) const;
-    string_q oneDescription(bool isReadme, size_t* widths) const;
 };
 
 //--------------------------------------------------------------------------------

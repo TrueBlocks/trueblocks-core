@@ -137,28 +137,6 @@ bool COptionsBase::isBadSingleDash(const string_q& arg) const {
 }
 
 //--------------------------------------------------------------------------------
-string_q COption::readmeDash(const string_q& str, bool isReadme) const {
-    if (!isReadme)
-        return str;
-    return substitute(str, "-", "&#8208;");
-}
-
-//--------------------------------------------------------------------------------
-string_q COption::getLongKey(bool isReadme) const {
-    string_q lName = substitute(longName, "addrs2", "addrs");
-    lName = (is_positional ? substitute(lName, "-", "") : lName);
-    if (isReadme) {
-        lName = substitute(substitute(lName, "<", "&lt;"), ">", "&gt;");
-    }
-    return readmeDash(lName, isReadme);
-}
-
-//--------------------------------------------------------------------------------
-string_q COption::getHotKey(bool isReadme) const {
-    return is_positional ? "" : readmeDash(hotKey, isReadme);
-}
-
-//--------------------------------------------------------------------------------
 bool COptionsBase::prepareArguments(int argCountIn, const char* argvIn[]) {
     CStringArray separatedArgs_;
     prePrepareArguments(separatedArgs_, argCountIn, argvIn);
@@ -689,42 +667,6 @@ bool COptionsBase::findParam(const string_q& name, COption& paramOut) const {
 }
 
 //--------------------------------------------------------------------------------
-COption::COption(const string_q& ln, const string_q& sn, const string_q& t, size_t opts, const string_q& d) {
-    description = substitute(d, "&#44;", ",");
-
-    is_positional = (opts & OPT_POSITIONAL);
-    is_hidden = (opts & OPT_HIDDEN);
-    is_optional = !(opts & OPT_REQUIRED);
-    is_deprecated = (opts == OPT_DEPRECATED);
-
-    type = t;
-    permitted = t;
-    permitted = substitute(permitted, "<uint32>", "<num>");
-    permitted = substitute(permitted, "<uint64>", "<num>");
-    permitted = substitute(permitted, "<blknum>", "<num>");
-    permitted = substitute(permitted, "<string>", "<str>");
-    permitted = substitute(permitted, "list<topic>", "<hash>");
-    permitted = substitute(permitted, "list<addr>", "<addr>");
-    if (contains(type, "enum")) {
-        description += ", one [X] of " + substitute(substitute(substitute(type, "list<", ""), ">", ""), "enum", "");
-        replace(description, " [X]", (contains(type, "list") ? " or more" : ""));
-        permitted = "<val>";
-    }
-
-    hotKey = (sn.empty() ? "" : "-" + sn);
-    if (ln.empty())
-        return;
-
-    if (!(opts & OPT_HELP || opts & OPT_VERBOSE)) {
-        longName = "--" + ln + (permitted.empty() ? "" : " " + permitted);
-        if (is_positional)
-            longName = ln;
-    } else {
-        longName = "--" + ln;
-    }
-}
-
-//--------------------------------------------------------------------------------
 bool COptionsBase::usage(const string_q& errMsg) const {
     if (errMsg.empty() || contains(errMsg, "Invalid option:") || isApiMode()) {
         cerr << usageStr(errMsg);
@@ -981,23 +923,6 @@ string_q COptionsBase::get_configs(void) const {
 }
 
 //--------------------------------------------------------------------------------
-string_q COption::oneDescription(bool isReadme, size_t* widths) const {
-    if (isReadme)
-        return markDownRow(getHotKey(true), getLongKey(true), getDescription(true), widths);
-
-    ostringstream os;
-    os << "\t";
-    if (is_positional) {
-        os << padRight(getLongKey(false), max(size_t(22), widths[0] + widths[1]));
-    } else {
-        os << padRight(getHotKey(false), max(size_t(3), widths[0]));
-        os << padRight(getLongKey(false).empty() ? "" : " (" + getLongKey(false) + ")", max(size_t(19), widths[1]));
-    }
-    os << getDescription(false) << endl;
-    return os.str();
-}
-
-//--------------------------------------------------------------------------------
 string_q COptionsBase::descriptionOverride(void) const {
     CStringArray strs;
     strs.push_back(overrideStr);
@@ -1015,30 +940,6 @@ string_q COptionsBase::descriptionOverride(void) const {
     }
 
     return os.str();
-}
-
-//--------------------------------------------------------------------------------
-string_q COption::getDescription(bool isReadme) const {
-    string_q descr = trim(description);
-    descr = (descr + (!is_optional && is_positional ? " (required)" : ""));
-    if (!isReadme)
-        return descr;
-    replace(descr, "*", "");
-    replaceAll(descr, "|", ", ");
-    CStringArray lines;
-    while (!descr.empty()) {
-        string_q part = descr.substr(0, 50);
-        replace(descr, part, "");
-        string_q part2 = nextTokenClear(descr, ' ');
-        part += part2;
-        if (!descr.empty())
-            part += "<br/>";
-        lines.push_back(part);
-    }
-    string_q ret;
-    for (auto line : lines)
-        ret += line;
-    return ret;
 }
 
 //--------------------------------------------------------------------------------
