@@ -159,7 +159,7 @@ class COptionsBase {
                           const string_q& meta = "");
 
   protected:
-    vector<COption> opts;
+    vector<COption> parameters;
     string_q hiUp1;
     string_q hiUp2;
     string_q hiDown;

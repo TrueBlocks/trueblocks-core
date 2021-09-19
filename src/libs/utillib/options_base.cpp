@@ -29,9 +29,9 @@ namespace qblocks {
 void COptionsBase::registerOptions(size_t nP, COption const* pP, uint32_t on, uint32_t off) {
     // TODO(tjayrush): global data
     arguments.clear();
-    opts.clear();
+    parameters.clear();
     for (size_t i = 0; i < nP; i++)
-        opts.push_back(pP[i]);
+        parameters.push_back(pP[i]);
     if (on != NOOPT)
         optionOn(on);
     if (off != NOOPT)
@@ -119,7 +119,7 @@ bool COptionsBase::prePrepareArguments(CStringArray& separatedArgs_, int argCoun
 
 //--------------------------------------------------------------------------------
 bool COptionsBase::isBadSingleDash(const string_q& arg) const {
-    for (const auto& option : opts) {
+    for (const auto& option : parameters) {
         string_q cmd = substitute(arg, "-", "");
         if (cmd == option.longName)
             return true;
@@ -189,7 +189,7 @@ bool COptionsBase::prepareArguments(int argCountIn, const char* argvIn[]) {
     for (size_t i = 0; i < argumentsIn.size(); i++) {
         string_q arg = argumentsIn[i];
         bool combine = false;
-        for (const auto& option : opts) {
+        for (const auto& option : parameters) {
             if (!option.permitted.empty()) {
                 string_q hotKey = option.hotKey;
                 string_q longName = option.longName;
@@ -674,7 +674,7 @@ bool COptionsBase::confirmEnum(const string_q& name, string_q& value, const stri
 
 //---------------------------------------------------------------------------------------------------
 bool COptionsBase::findParam(const string_q& name, COption& paramOut) const {
-    for (const auto& option : opts) {
+    for (const auto& option : parameters) {
         if (startsWith(option.longName, "--" + name)) {  // flags, toggles, switches
             paramOut = option;
             return true;
@@ -842,7 +842,7 @@ string_q COptionsBase::options(void) const {
     string_q positional;
 
     ostringstream shorts;
-    for (const auto& option : opts) {
+    for (const auto& option : parameters) {
         if (option.is_positional) {
             positional += (" " + option.longName);
 
@@ -884,7 +884,7 @@ string_q COptionsBase::purpose(void) const {
     ostringstream os;
     os << hiUp1 << "Purpose:" << hiDown << "  ";
     string_q purpose;
-    for (auto option : opts)
+    for (auto option : parameters)
         if (option.longName.empty())  // program description
             purpose = substitute(option.description, "|", "\n            ");
     os << substitute(purpose, "\n", "\n        ") << "\n";
@@ -1054,7 +1054,7 @@ string_q COptionsBase::descriptions(void) const {
     }
     size_t widths[5];
     bzero(widths, sizeof(widths));
-    for (const auto& option : opts) {
+    for (const auto& option : parameters) {
         if (option.isPublic() || (option.is_hidden && (isTestMode() || (verbose > 1)))) {
             widths[0] = max(widths[0], option.getHotKey(isReadme).length());
             widths[1] = max(widths[1], option.getLongKey(isReadme).length());
@@ -1094,7 +1094,7 @@ string_q COptionsBase::descriptions(void) const {
     }
 
     size_t nHidden = 0;
-    for (const auto& option : opts) {
+    for (const auto& option : parameters) {
         if (option.isPublic())
             os << option.oneDescription(isReadme, widths);
         if (option.is_hidden)
@@ -1110,7 +1110,7 @@ string_q COptionsBase::descriptions(void) const {
             os << "\t#### Hidden options" << endl;
         }
 
-        for (const auto& option : opts) {
+        for (const auto& option : parameters) {
             if (option.is_hidden && !option.is_deprecated && !option.longName.empty())
                 os << option.oneDescription(isReadme, widths);
         }
@@ -1136,7 +1136,7 @@ string_q COptionsBase::expandOption(string_q& arg) {
 
     // Check that we don't have a regular command with a single dash, which
     // should report an error in client code
-    for (const auto& option : opts) {
+    for (const auto& option : parameters) {
         if (option.longName == arg) {
             arg = "";
             return ret;
