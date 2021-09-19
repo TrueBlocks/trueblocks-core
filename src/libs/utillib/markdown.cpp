@@ -19,12 +19,12 @@ void CMarkdownTable::CMarkdownRow::addCol(const string_q& s) {
     cols.push_back(s);
 }
 
-string_q CMarkdownTable::CMarkdownRow::render(size_t* wids) const {
+string_q CMarkdownTable::CMarkdownRow::render(size_t* ww) const {
     ostringstream os;
     os << "| ";
     size_t cnt = 0;
     for (auto c : cols) {
-        os << padRight(c, wids[cnt++]) << " |";
+        os << padRight(c, ww[cnt++]) << " |";
     }
     os << endl;
     return os.str();

@@ -23,6 +23,7 @@
 | &#8208;n | &#8208;&#8208;nspace &lt;str&gt; | surround generated c++ code with a namespace                                  |
 | &#8208;i | &#8208;&#8208;filter &lt;str&gt; | process only files whose filename or contents contain<br/>'filter'            |
 | &#8208;c | &#8208;&#8208;force              | for both code generation and options generation, force<br/>writing of changes |
+| &#8208;x | &#8208;&#8208;fmt &lt;val&gt;    | export format, one of [none, json, txt, csv, api]                             |
 | &#8208;v | &#8208;&#8208;verbose            | set verbose level (optional level defaults to 1)                              |
 | &#8208;h | &#8208;&#8208;help               | display this help screen                                                      |
 {{</td>}}

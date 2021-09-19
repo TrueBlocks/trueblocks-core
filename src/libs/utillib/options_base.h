@@ -41,6 +41,7 @@
 #define OPT_TOGGLE OPT_SWITCH
 #define OPT_HIDDEN (1 << 17)
 #define OPT_DEPRECATED (OPT_HIDDEN | (1 << 18))
+#define NOOPT ((uint32_t)-1)
 
 #define ERR_NOERROR 0
 
@@ -143,7 +144,7 @@ class COptionsBase {
     string_q get_configs(void) const;
     string_q format_configs(const CStringArray& strs) const;
 
-    const COption* findParam(const string_q& name) const;
+    bool findParam(const string_q& name, COption& paramOut) const;
     string_q expandOption(string_q& arg);
     bool isBadSingleDash(const string_q& arg) const;
 
@@ -158,15 +159,14 @@ class COptionsBase {
                           const string_q& meta = "");
 
   protected:
-    const COption* pParams;
-    size_t cntParams;
+    vector<COption> options;
     string_q hiUp1;
     string_q hiUp2;
     string_q hiDown;
 
     virtual void Init(void) = 0;
     virtual bool Mocked(const string_q& which);
-    void registerOptions(size_t nP, COption const* pP);
+    void registerOptions(size_t nP, const COption* pP, uint32_t on = NOOPT, uint32_t off = NOOPT);
 
   private:
     streambuf* coutSaved;   // saves original cout buffer
@@ -200,6 +200,8 @@ class COption {
     bool is_positional;
     bool is_optional;
     bool is_deprecated;
+    COption(void) : is_hidden(false), is_positional(false), is_optional(false), is_deprecated(false) {
+    }
     COption(const string_q& ln, const string_q& sn, const string_q& type, size_t opts, const string_q& d);
     bool isPublic(void) const {
         return (!is_hidden && !is_deprecated && !longName.empty());

@@ -26,6 +26,7 @@ makeClass -th
 | &#8208;d | &#8208;&#8208;dump               | dump any classDefinition config tomls to screen and<br/>quit                  |
 | &#8208;A | &#8208;&#8208;openapi            | export openapi.yaml file for API documentation                                |
 | ###      | Hidden options                   |                                                                               |
+| &#8208;x | &#8208;&#8208;fmt &lt;val&gt;    | export format, one of [none, json, txt, csv, api]                             |
 | &#8208;v | &#8208;&#8208;verbose            | set verbose level (optional level defaults to 1)                              |
 | &#8208;h | &#8208;&#8208;help               | display this help screen                                                      |
 {{</td>}}

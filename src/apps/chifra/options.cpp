@@ -139,9 +139,7 @@ bool COptions::call_command(int argc, const char* argv[]) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
-    registerOptions(nParams, params);
-    optionOff(OPT_DEFAULT);
-    optionOn(OPT_MOCKDATA);
+    registerOptions(nParams, params, OPT_MOCKDATA, OPT_DEFAULT);
 
     // BEG_CODE_INIT
     // END_CODE_INIT

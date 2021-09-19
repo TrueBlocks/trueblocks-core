@@ -26,11 +26,16 @@
 namespace qblocks {
 
 //--------------------------------------------------------------------------------
-void COptionsBase::registerOptions(size_t nP, COption const* pP) {
+void COptionsBase::registerOptions(size_t nP, COption const* pP, uint32_t on, uint32_t off) {
     // TODO(tjayrush): global data
     arguments.clear();
-    cntParams = nP;
-    pParams = pP;
+    options.clear();
+    for (size_t i = 0; i < nP; i++)
+        options.push_back(pP[i]);
+    if (on != NOOPT)
+        optionOn(on);
+    if (off != NOOPT)
+        optionOff(off);
 }
 
 //--------------------------------------------------------------------------------
@@ -114,9 +119,9 @@ bool COptionsBase::prePrepareArguments(CStringArray& separatedArgs_, int argCoun
 
 //--------------------------------------------------------------------------------
 bool COptionsBase::isBadSingleDash(const string_q& arg) const {
-    for (size_t j = 0; j < cntParams; j++) {
+    for (const auto& option : options) {
         string_q cmd = substitute(arg, "-", "");
-        if (cmd == pParams[j].longName)
+        if (cmd == option.longName)
             return true;
     }
 
@@ -184,10 +189,10 @@ bool COptionsBase::prepareArguments(int argCountIn, const char* argvIn[]) {
     for (size_t i = 0; i < argumentsIn.size(); i++) {
         string_q arg = argumentsIn[i];
         bool combine = false;
-        for (size_t j = 0; j < cntParams && !combine; j++) {
-            if (!pParams[j].permitted.empty()) {
-                string_q hotKey = pParams[j].hotKey;
-                string_q longName = pParams[j].longName;
+        for (const auto& option : options) {
+            if (!option.permitted.empty()) {
+                string_q hotKey = option.hotKey;
+                string_q longName = option.longName;
                 if (hotKey == arg || startsWith(longName, arg)) {
                     // We want to pull the next parameter into this one since it's a ':' param
                     combine = true;
@@ -552,14 +557,14 @@ void COptionsBase::configureDisplay(const string_q& tool, const string_q& dataTy
 bool COptionsBase::confirmUint(const string_q& name, uint64_t& value, const string_q& argIn) const {
     value = NOPOS;
 
-    const COption* param = findParam(name);
-    if (!param)
+    COption param;
+    if (!findParam(name, param))
         return usage("Unknown parameter `" + name + "'.");
-    if (!contains(param->type, "uint") && !contains(param->type, "blknum"))
+    if (!contains(option.type, "uint") && !contains(option.type, "blknum"))
         return true;
 
     string_q arg = argIn;
-    replace(arg, param->hotKey + ":", "");
+    replace(arg, option.hotKey + ":", "");
     replace(arg, name + ":", "");
     replaceAll(arg, "-", "");
 
@@ -583,14 +588,14 @@ bool COptionsBase::confirmUint(const string_q& name, uint32_t& value, const stri
 bool COptionsBase::confirmDouble(const string_q& name, double& value, const string_q& argIn) const {
     value = NOPOS;
 
-    const COption* param = findParam(name);
-    if (!param)
+    COption param;
+    if (!findParam(name, param))
         return usage("Unknown parameter `" + name + "'.");
-    if (!contains(param->type, "double"))
+    if (!contains(option.type, "double"))
         return true;
 
     string_q arg = argIn;
-    replace(arg, param->hotKey + ":", "");
+    replace(arg, option.hotKey + ":", "");
     replace(arg, name + ":", "");
     replaceAll(arg, "-", "");
 
@@ -605,18 +610,18 @@ bool COptionsBase::confirmBlockNum(const string_q& name, blknum_t& value, const 
                                    blknum_t latest) const {
     value = NOPOS;
 
-    const COption* param = findParam(name);
-    if (!param)
+    COption param;
+    if (!findParam(name, param))
         return usage("Unknown parameter `" + name + "'.");
-    if (!contains(param->type, "uint") && !contains(param->type, "blknum"))
+    if (!contains(option.type, "uint") && !contains(option.type, "blknum"))
         return true;
 
     string_q arg = argIn;
-    replace(arg, param->hotKey + ":", "");
+    replace(arg, option.hotKey + ":", "");
     replace(arg, name + ":", "");
     replaceAll(arg, "-", "");
 
-    if (contains(param->type, "blknum")) {
+    if (contains(option.type, "blknum")) {
         if (arg == "first") {
             value = 0;
             return true;
@@ -638,13 +643,13 @@ bool COptionsBase::confirmBlockNum(const string_q& name, blknum_t& value, const 
 
 //---------------------------------------------------------------------------------------------------
 bool COptionsBase::confirmEnum(const string_q& name, string_q& value, const string_q& argIn) const {
-    const COption* param = findParam(name);
-    if (!param)
+    COption param;
+    if (!findParam(name, param))
         return usage("Unknown parameter `" + name + "'.");
-    if (param->type.empty() || !contains(param->type, "enum["))
+    if (option.type.empty() || !contains(option.type, "enum["))
         return true;
 
-    string_q type = param->type;
+    string_q type = option.type;
     replace(type, "*", "");
     replace(type, "enum", "");
     replace(type, "list<", "");
@@ -653,12 +658,12 @@ bool COptionsBase::confirmEnum(const string_q& name, string_q& value, const stri
     replace(type, "]", "|");
 
     string_q arg = argIn;
-    replace(arg, param->hotKey + ":", "");
+    replace(arg, option.hotKey + ":", "");
     replace(arg, name + ":", "");
     replaceAll(arg, "-", "");
 
     if (!contains(type, "|" + arg + "|")) {
-        string_q desc = substitute(substitute(param->description, ", one ", "| One "), "*", "");
+        string_q desc = substitute(substitute(option.description, ", one ", "| One "), "*", "");
         nextTokenClear(desc, '|');
         return usage("Invalid option '" + arg + "' for '" + name + "'." + desc + " required.");
     }
@@ -668,14 +673,19 @@ bool COptionsBase::confirmEnum(const string_q& name, string_q& value, const stri
 }
 
 //---------------------------------------------------------------------------------------------------
-const COption* COptionsBase::findParam(const string_q& name) const {
-    for (size_t i = 0; i < cntParams; i++) {
-        if (startsWith(pParams[i].longName, "--" + name))  // flags, toggles, switches
-            return &pParams[i];
-        if (startsWith(pParams[i].longName, name))  // positionals
-            return &pParams[i];
+bool COptionsBase::findParam(const string_q& name, COption& paramOut) const {
+    for (const auto& option : options) {
+        if (startsWith(option.longName, "--" + name)) {  // flags, toggles, switches
+            paramOut = param;
+            return true;
+        }
+        if (startsWith(option.longName, name)) {  // positionals
+            paramOut = param;
+            return true;
+        }
     }
-    return NULL;
+
+    return false;
 }
 
 //--------------------------------------------------------------------------------
@@ -832,15 +842,15 @@ string_q COptionsBase::options(void) const {
     string_q positional;
 
     ostringstream shorts;
-    for (uint64_t i = 0; i < cntParams; i++) {
-        if (pParams[i].is_positional) {
-            positional += (" " + pParams[i].longName);
+    for (const auto& option : options) {
+        if (option.is_positional) {
+            positional += (" " + option.longName);
 
-        } else if (pParams[i].is_hidden || pParams[i].is_deprecated) {
+        } else if (option.is_hidden || option.is_deprecated) {
             // invisible option
 
-        } else if (!pParams[i].hotKey.empty()) {
-            shorts << pParams[i].hotKey << "|";
+        } else if (!option.hotKey.empty()) {
+            shorts << option.hotKey << "|";
         }
     }
     if (isEnabled(OPT_VERBOSE))
@@ -874,9 +884,9 @@ string_q COptionsBase::purpose(void) const {
     ostringstream os;
     os << hiUp1 << "Purpose:" << hiDown << "  ";
     string_q purpose;
-    for (size_t p = 0; p < cntParams; p++)
-        if (pParams[p].longName.empty())  // program description
-            purpose = substitute(pParams[p].description, "|", "\n            ");
+    for (auto option : options)
+        if (option.longName.empty())  // program description
+            purpose = substitute(option.description, "|", "\n            ");
     os << substitute(purpose, "\n", "\n        ") << "\n";
     if (!endsWith(purpose, "\n"))
         os << "\n";
@@ -1044,12 +1054,11 @@ string_q COptionsBase::descriptions(void) const {
     }
     size_t widths[5];
     bzero(widths, sizeof(widths));
-    for (uint64_t i = 0; i < cntParams; i++) {
-        const COption* param = &pParams[i];
-        if (param->isPublic() || (param->is_hidden && (isTestMode() || (verbose > 1)))) {
-            widths[0] = max(widths[0], param->getHotKey(isReadme).length());
-            widths[1] = max(widths[1], param->getLongKey(isReadme).length());
-            widths[2] = max(widths[2], param->getDescription(isReadme).length());
+    for (const auto& option : options) {
+        if (option.isPublic() || (option.is_hidden && (isTestMode() || (verbose > 1)))) {
+            widths[0] = max(widths[0], option.getHotKey(isReadme).length());
+            widths[1] = max(widths[1], option.getLongKey(isReadme).length());
+            widths[2] = max(widths[2], option.getDescription(isReadme).length());
         }
     }
     widths[0] = max(widths[0], size_t(3));
@@ -1085,11 +1094,10 @@ string_q COptionsBase::descriptions(void) const {
     }
 
     size_t nHidden = 0;
-    for (uint64_t i = 0; i < cntParams; i++) {
-        const COption* param = &pParams[i];
-        if (param->isPublic())
-            os << param->oneDescription(isReadme, widths);
-        if (param->is_hidden)
+    for (const auto& option : options) {
+        if (option.isPublic())
+            os << option.oneDescription(isReadme, widths);
+        if (option.is_hidden)
             nHidden++;
     }
 
@@ -1102,10 +1110,9 @@ string_q COptionsBase::descriptions(void) const {
             os << "\t#### Hidden options" << endl;
         }
 
-        for (uint64_t i = 0; i < cntParams; i++) {
-            const COption* param = &pParams[i];
-            if (param->is_hidden && !param->is_deprecated && !param->longName.empty())
-                os << param->oneDescription(isReadme, widths);
+        for (const auto& option : options) {
+            if (option.is_hidden && !option.is_deprecated && !option.longName.empty())
+                os << option.oneDescription(isReadme, widths);
         }
 
         if (isReadme) {
@@ -1129,8 +1136,8 @@ string_q COptionsBase::expandOption(string_q& arg) {
 
     // Check that we don't have a regular command with a single dash, which
     // should report an error in client code
-    for (uint64_t i = 0; i < cntParams; i++) {
-        if (pParams[i].longName == arg) {
+    for (const auto& option : options) {
+        if (option.longName == arg) {
             arg = "";
             return ret;
         }
@@ -1447,8 +1454,6 @@ COptionsBase::COptionsBase(void) {
     tokenMap.clear();
     expContext().prefundMap.clear();
     airdropMap.clear();
-    pParams = NULL;
-    cntParams = 0;
     coutSaved = NULL;
     rd_outputFilename = "";
     rd_zipOnClose = false;
