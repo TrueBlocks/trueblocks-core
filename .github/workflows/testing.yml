@@ -13,6 +13,7 @@ jobs:
           command_timeout: 40m
           script_stop: true
           script: |
+            rm -rf testing/${{ github.sha }}
             mkdir -p testing/${{ github.sha }}
             cd  testing/${{ github.sha }}
             git clone --quiet https://github.com/${{ github.repository }}
