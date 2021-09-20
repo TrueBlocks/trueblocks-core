@@ -74,11 +74,11 @@ class COption : public CBaseNode {
     // EXISTING_CODE
     COption(const string_q& ln, const string_q& sn, const string_q& type, size_t opts, const string_q& d);
     bool isPublic(void) const;
-    string_q readmeDash(const string_q& str, bool isReadme) const;
-    string_q getHotKey(bool isReadme) const;
-    string_q getLongKey(bool isReadme) const;
-    string_q getDescription(bool isReadme) const;
-    string_q oneDescription(bool isReadme, size_t* widths) const;
+    string_q readmeDash(const string_q& str) const;
+    string_q getHotKey(void) const;
+    string_q getLongKey(void) const;
+    string_q getDescription(void) const;
+    string_q oneDescription(size_t* widths) const;
     // EXISTING_CODE
     bool operator==(const COption& it) const;
     bool operator!=(const COption& it) const {

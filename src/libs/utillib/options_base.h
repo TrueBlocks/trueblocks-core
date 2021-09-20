@@ -133,9 +133,6 @@ class COptionsBase {
 
   protected:
     vector<COption> parameters;
-    string_q hiUp1;
-    string_q hiUp2;
-    string_q hiDown;
 
     virtual void Init(void) = 0;
     virtual bool Mocked(const string_q& which);

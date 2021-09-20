@@ -46,7 +46,6 @@ bool COptions::call_command(int argc, const char* argv[]) {
         } else if (arg == "-th" || arg == "-ht") {
             has_help = true;
             isReadme = true;
-            hiUp1 = hiUp2 = hiDown = '`';
             return usage("");
 
         } else if (!chifraCmdMap[arg].empty()) {

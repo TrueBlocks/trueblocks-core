@@ -769,7 +769,12 @@ string_q COptionsBase::usageStr(const string_q& errMsgIn) const {
     string_q progName = getProgName();
     if (isReadme && !contains(progName, "chifra"))
         progName = progNameMap[progName];
-    os << hiUp1 << "Usage:" << hiDown << "    " << progName << " " << options() << "  " << endl;
+    if (isReadme) {
+        os << "`Usage:`"
+           << "    " << progName << " " << options() << "  " << endl;
+    } else {
+        os << cYellow << "  Usage:" << cOff << "    " << progName << " " << options() << "  " << endl;
+    }
     os << purpose();
     os << descriptions() << "\n";
     os << get_notes();
@@ -827,7 +832,12 @@ string_q COptionsBase::options(void) const {
 //--------------------------------------------------------------------------------
 string_q COptionsBase::purpose(void) const {
     ostringstream os;
-    os << hiUp1 << "Purpose:" << hiDown << "  ";
+    if (isReadme) {
+        os << "`Purpose:`"
+           << "  ";
+    } else {
+        os << cYellow << "  Purpose:" << cOff << "  ";
+    }
     string_q purpose;
     for (auto option : parameters)
         if (option.longName.empty())  // program description
@@ -838,8 +848,8 @@ string_q COptionsBase::purpose(void) const {
 
     string_q nn = os.str();
     while (!isReadme && contains(nn, '`')) {
-        replace(nn, "`", hiUp2);
-        replace(nn, "`", hiDown);
+        replace(nn, "`", cTeal);
+        replace(nn, "`", cOff);
     }
     return nn;
 }
@@ -854,8 +864,8 @@ string_q COptionsBase::format_notes(const CStringArray& strs) const {
         nn += (s + "\n");
     }
     while (!isReadme && contains(nn, '`')) {
-        replace(nn, "`", hiUp2);
-        replace(nn, "`", hiDown);
+        replace(nn, "`", cTeal);
+        replace(nn, "`", cOff);
     }
     string_q lead = (isReadme ? "" : "\t");
     ostringstream os;
@@ -900,8 +910,8 @@ string_q COptionsBase::format_configs(const CStringArray& strs) const {
         nn += (s + "\n");
     }
     while (!isReadme && contains(nn, '`')) {
-        replace(nn, "`", hiUp2);
-        replace(nn, "`", hiDown);
+        replace(nn, "`", cTeal);
+        replace(nn, "`", cOff);
     }
     string_q lead = (isReadme ? "" : "\t");
     ostringstream os;
@@ -914,14 +924,22 @@ string_q COptionsBase::format_configs(const CStringArray& strs) const {
 
 //--------------------------------------------------------------------------------
 string_q COptionsBase::get_configs(void) const {
-    if ((!isReadme && !verbose) || (configs.size() == 0))
+    if (!configs.size())
         return "";
 
     ostringstream os;
-    os << hiUp1 << "Configurable Items:" << hiDown << "\n" << (isReadme ? "\n" : "");
-    os << format_configs(configs);
-    os << "\n";
-
+    if (isReadme) {
+        os << "`Configurable Items:`" << endl;
+        os << endl;
+        os << format_configs(configs);
+        os << endl;
+    } else if (verbose) {
+        os << cYellow << "  Configurable Items:" << cOff << endl;
+        os << format_configs(configs);
+        os << endl;
+    } else {
+        // do nothing;
+    }
     return substitute(os.str(), "-   ", "  - ");
 }
 
@@ -950,75 +968,72 @@ string_q COptionsBase::descriptions(void) const {
     if (!overrideStr.empty())
         return descriptionOverride();
 
-    ostringstream os, extra;
-    if (isReadme) {
-        os << "`Where:`" << endl;
-    } else {
-        os << cYellow << "  Where:" << cOff << endl;
-    }
+    ostringstream os, hidden, extra;
+
     size_t widths[5];
     bzero(widths, sizeof(widths));
-    for (const auto& option : parameters) {
+    for (auto option : parameters) {
+        option.is_readme = isReadme;
         if (option.isPublic() || (option.is_hidden && (isTestMode() || (verbose > 1)))) {
-            widths[0] = max(widths[0], option.getHotKey(isReadme).length());
-            widths[1] = max(widths[1], option.getLongKey(isReadme).length());
-            widths[2] = max(widths[2], option.getDescription(isReadme).length());
+            widths[0] = max(widths[0], option.getHotKey().length());
+            widths[1] = max(widths[1], option.getLongKey().length());
+            widths[2] = max(widths[2], option.getDescription().length());
         }
     }
     widths[0] = max(widths[0], size_t(3));
 
     //---------------------------------------------------------------------------------------------------
-    static const COption opts[] = {
+    static COption opts[] = {
         COption("fmt", "x", "enum[none|json*|txt|csv|api]", OPT_FLAG, "export format"),
         COption("verbose", "v", "<uint>", OPT_VERBOSE, "set verbose level (optional level defaults to 1)"),
         COption("help", "h", "<boolean>", OPT_HELP, "display this help screen"),
     };
-    static const size_t nOpts = sizeof(opts) / sizeof(COption);
+    static size_t nOpts = sizeof(opts) / sizeof(COption);
     for (size_t i = 0; i < nOpts; i++) {
         bool show = false;
         show |= (i == 0 && isEnabled(OPT_FMT));
         show |= (i == 1 && isEnabled(OPT_VERBOSE));
         show |= (i == 2 && isEnabled(OPT_HELP));
         if (show) {
-            const COption* param = &opts[i];
+            COption* param = &opts[i];
+            param->is_readme = isReadme;
             if (param->isPublic()) {
-                widths[0] = max(widths[0], param->getHotKey(isReadme).length());
-                widths[1] = max(widths[1], param->getLongKey(isReadme).length());
-                widths[2] = max(widths[2], param->getDescription(isReadme).length());
+                widths[0] = max(widths[0], param->getHotKey().length());
+                widths[1] = max(widths[1], param->getLongKey().length());
+                widths[2] = max(widths[2], param->getDescription().length());
             }
-            extra << param->oneDescription(isReadme, widths);
+            extra << param->oneDescription(widths);
         }
     }
 
     if (isReadme) {
+        os << "`Where:`" << endl;
         os << endl;
         os << "{{<td>}}" << endl;
         os << markDownRow("", "Option", "Description", widths);
         os << markDownRow("-", "", "", widths);
+    } else {
+        os << cYellow << "  Where:" << cOff << endl;
     }
 
-    size_t nHidden = 0;
-    for (const auto& option : parameters) {
-        if (option.isPublic())
-            os << option.oneDescription(isReadme, widths);
-        if (option.is_hidden)
-            nHidden++;
+    for (auto option : parameters) {
+        option.is_readme = isReadme;
+        if (option.is_hidden) {
+            if (option.is_hidden && !option.is_deprecated && !option.longName.empty()) {
+                hidden << option.oneDescription(widths);
+            }
+        } else if (option.isPublic())
+            os << option.oneDescription(widths);
     }
 
-    // For testing purposes, we show the hidden options
-    if (nHidden && (isTestMode() || (verbose > 1))) {
+    if (!hidden.str().empty() && (isTestMode() || verbose > 1)) {
         if (isReadme) {
             os << markDownRow("###", "Hidden options", "", widths);
         } else {
             os << endl;
             os << "\t#### Hidden options" << endl;
         }
-
-        for (const auto& option : parameters) {
-            if (option.is_hidden && !option.is_deprecated && !option.longName.empty())
-                os << option.oneDescription(isReadme, widths);
-        }
-
+        os << hidden.str();
         if (isReadme) {
             os << markDownRow("###", "Hidden options", "", widths);
         } else {
@@ -1068,7 +1083,6 @@ string_q COptionsBase::expandOption(string_q& arg) {
     // Special case
     if (arg == "-th" || arg == "-ht") {
         isReadme = true;
-        hiUp1 = hiUp2 = hiDown = '`';
         arg = "";
         replaceAll(ret, "-th", "");
         replaceAll(ret, "-ht", "");
@@ -1346,9 +1360,6 @@ COptionsBase::COptionsBase(void) {
     freshenOnly = false;
     noHeader = false;
     enableBits = OPT_DEFAULT;
-    hiUp1 = (isTestMode() ? "" : cYellow) + "  ";
-    hiUp2 = (isTestMode() ? "" : cTeal);
-    hiDown = (isTestMode() ? "" : cOff);
     arguments.clear();
     usageErrs.clear();
     notes.clear();

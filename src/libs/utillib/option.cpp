@@ -418,49 +418,49 @@ bool COption::isPublic(void) const {
     return (!is_hidden && !is_deprecated && !longName.empty());
 }
 //--------------------------------------------------------------------------------
-string_q COption::readmeDash(const string_q& str, bool isReadme) const {
-    if (!isReadme)
+string_q COption::readmeDash(const string_q& str) const {
+    if (!is_readme)
         return str;
     return substitute(str, "-", "&#8208;");
 }
 
 //--------------------------------------------------------------------------------
-string_q COption::getLongKey(bool isReadme) const {
+string_q COption::getLongKey(void) const {
     string_q lName = substitute(longName, "addrs2", "addrs");
     lName = (is_positional ? substitute(lName, "-", "") : lName);
-    if (isReadme) {
+    if (is_readme) {
         lName = substitute(substitute(lName, "<", "&lt;"), ">", "&gt;");
     }
-    return readmeDash(lName, isReadme);
+    return readmeDash(lName);
 }
 
 //--------------------------------------------------------------------------------
-string_q COption::getHotKey(bool isReadme) const {
-    return is_positional ? "" : readmeDash(hotKey, isReadme);
+string_q COption::getHotKey(void) const {
+    return is_positional ? "" : readmeDash(hotKey);
 }
 
 //--------------------------------------------------------------------------------
-string_q COption::oneDescription(bool isReadme, size_t* widths) const {
-    if (isReadme)
-        return markDownRow(getHotKey(true), getLongKey(true), getDescription(true), widths);
+string_q COption::oneDescription(size_t* widths) const {
+    if (is_readme)
+        return markDownRow(getHotKey(), getLongKey(), getDescription(), widths);
 
     ostringstream os;
     os << "\t";
     if (is_positional) {
-        os << padRight(getLongKey(false), max(size_t(22), widths[0] + widths[1]));
+        os << padRight(getLongKey(), max(size_t(22), widths[0] + widths[1]));
     } else {
-        os << padRight(getHotKey(false), max(size_t(3), widths[0]));
-        os << padRight(getLongKey(false).empty() ? "" : " (" + getLongKey(false) + ")", max(size_t(19), widths[1]));
+        os << padRight(getHotKey(), max(size_t(3), widths[0]));
+        os << padRight(getLongKey().empty() ? "" : " (" + getLongKey() + ")", max(size_t(19), widths[1]));
     }
-    os << getDescription(false) << endl;
+    os << getDescription() << endl;
     return os.str();
 }
 
 //--------------------------------------------------------------------------------
-string_q COption::getDescription(bool isReadme) const {
+string_q COption::getDescription(void) const {
     string_q descr = trim(description);
     descr = (descr + (!is_optional && is_positional ? " (required)" : ""));
-    if (!isReadme)
+    if (!is_readme)
         return descr;
     replace(descr, "*", "");
     replaceAll(descr, "|", ", ");
