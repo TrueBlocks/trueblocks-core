@@ -17,9 +17,8 @@ RUN git clone --progress \
         https://github.com/$repo.git \
         /root/trueblocks-core && \
         cd /root/trueblocks-core && \
-        git reset --hard $commit_sha
-
-RUN mkdir -v build && \
+        git reset --hard $commit_sha && \
+        mkdir -v build && \
         cd build && \
         cmake ../src && \
         make -j 4
