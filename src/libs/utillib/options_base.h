@@ -37,6 +37,7 @@ class COptionsBase {
     CStringArray arguments;
     CStringArray notes;
     CStringArray configs;
+    CStringArray overrides;
     CErrorStringMap usageErrs;
     CStringArray errors;
 
@@ -50,7 +51,6 @@ class COptionsBase {
     bool mocked;
     bool firstOut;
     bool freshenOnly;
-    string_q overrideStr;
 
   public:
     COptionsBase(void);
@@ -105,17 +105,19 @@ class COptionsBase {
 
     // usage related
     bool usage(const string_q& errMsg = "") const;
+    string_q get_header(void) const;
+    string_q get_purpose(void) const;
+    string_q get_description(void) const;
+    string_q get_notes(void) const;
+    string_q get_configs(void) const;
+    string_q get_version(void) const;
+    string_q get_options(void) const;
+    string_q get_errmsg(const string_q& errMsg) const;
+    string_q get_override(void) const;
+
+    string_q format_notes(const CStringArray& strs) const;
     bool flag_required(const string_q& command) const;
     bool invalid_option(const string_q& arg) const;
-    string_q usageStr(const string_q& errMsg = "") const;
-    string_q purpose(void) const;
-    string_q options(void) const;
-    string_q descriptions(void) const;
-    string_q descriptionOverride(void) const;
-    string_q get_notes(void) const;
-    string_q format_notes(const CStringArray& strs) const;
-    string_q get_configs(void) const;
-    string_q format_configs(const CStringArray& strs) const;
 
     bool findParam(const string_q& name, COption& paramOut) const;
     string_q expandOption(string_q& arg);
@@ -234,6 +236,7 @@ class COptionsTransList {
     };
 };
 
+extern string_q colorize(const string_q& strIn);
 extern bool prepareEnv(int argc, const char* argv[]);
 extern string_q cleanFmt(const string_q& str);
 extern void errorMessage(const string_q& msg);

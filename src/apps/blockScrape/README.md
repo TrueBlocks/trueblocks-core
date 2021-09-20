@@ -23,9 +23,9 @@ The scraper can scrape either the index only, previously created monitors only, 
 
 `Configurable Items:`
 
-`n_blocks`: maximum number of blocks to process (defaults to 5000).
-`n_block_procs`: number of concurrent block channels for blaze.
-`n_addr_procs`: number of concurrent address channels for blaze.
+- `n_blocks`: maximum number of blocks to process (defaults to 5000).
+- `n_block_procs`: number of concurrent block channels for blaze.
+- `n_addr_procs`: number of concurrent address channels for blaze.
 
 ### explainer
 

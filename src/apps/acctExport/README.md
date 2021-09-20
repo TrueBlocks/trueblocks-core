@@ -47,10 +47,10 @@ By default, the results of the extraction are delivered to your console, however
 
 `Configurable Items:`
 
-`cache_txs`: write transactions to the cache (see notes).
-`cache_traces`: write traces to the cache (see notes).
-`skip_ddos`: toggle skipping over 2016 dDos transactions ('on' by default).
-`max_traces`: if --skip_ddos is on, this many traces defines what a ddos transaction
+- `cache_txs`: write transactions to the cache (see notes).
+- `cache_traces`: write traces to the cache (see notes).
+- `skip_ddos`: toggle skipping over 2016 dDos transactions ('on' by default).
+- `max_traces`: if --skip_ddos is on, this many traces defines what a ddos transaction
   is (default = 250).
 
 #### Other Options

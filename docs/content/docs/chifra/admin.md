@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2021-09-19T01:48:55
+date: 2021-09-19T21:39:18
 lastmod:
   - :git
   - lastmod
@@ -99,9 +99,9 @@ The scraper can scrape either the index only, previously created monitors only, 
 
 `Configurable Items:`
 
-`n_blocks`: maximum number of blocks to process (defaults to 5000).
-`n_block_procs`: number of concurrent block channels for blaze.
-`n_addr_procs`: number of concurrent address channels for blaze.
+- `n_blocks`: maximum number of blocks to process (defaults to 5000).
+- `n_block_procs`: number of concurrent block channels for blaze.
+- `n_addr_procs`: number of concurrent address channels for blaze.
 
 ### explainer
 

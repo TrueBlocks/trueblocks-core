@@ -36,6 +36,6 @@ getTraces -th
 
 `Configurable Items:`
 
-`skip_ddos`: skip over the 2016 ddos during export ('on' by default).
-`max`: if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250).
+- `skip_ddos`: skip over the 2016 ddos during export ('on' by default).
+- `max`: if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250).
 

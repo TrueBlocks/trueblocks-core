@@ -2,7 +2,7 @@
 title: "Chain Data"
 description: ""
 lead: ""
-date: 2021-09-19T01:48:55
+date: 2021-09-19T21:39:18
 lastmod:
   - :git
   - lastmod
@@ -208,8 +208,8 @@ The `--filter` option calls your node's `trace_filter` routine (if available) us
 
 `Configurable Items:`
 
-`skip_ddos`: skip over the 2016 ddos during export ('on' by default).
-`max`: if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250).
+- `skip_ddos`: skip over the 2016 ddos during export ('on' by default).
+- `max`: if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250).
 
 **Source code**: [`tools/getTraces`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/tools/getTraces)
 
