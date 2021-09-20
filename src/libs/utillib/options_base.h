@@ -16,38 +16,12 @@
 #include "filenames.h"
 #include "toml.h"
 #include "exportcontext.h"
-
-// Bit flags to enable / disable various options
-#define OPT_DESCRIPTION (0)
-#define OPT_HELP (1 << 1)
-#define OPT_VERBOSE (1 << 2)
-#define OPT_FMT (1 << 3)
-#define OPT_DOLLARS (1 << 4)
-#define OPT_WEI (1 << 5)
-#define OPT_ETHER (1 << 6)
-#define OPT_PARITY (1 << 7)
-#define OPT_RAW (1 << 11)
-#define OPT_PREFUND (1 << 12)
-#define OPT_OUTPUT (1 << 13)
-#define OPT_CRUD (1 << 14)
-#define OPT_MOCKDATA (1 << 21)
-#define OPT_DENOM (OPT_DOLLARS | OPT_WEI | OPT_ETHER)
-#define OPT_DEFAULT (OPT_HELP | OPT_VERBOSE | OPT_FMT | OPT_DENOM | OPT_PARITY | OPT_MOCKDATA | OPT_OUTPUT)
-
-#define OPT_REQUIRED (1 << 14)
-#define OPT_POSITIONAL (1 << 15)
-#define OPT_FLAG (1 << 16)
-#define OPT_SWITCH OPT_FLAG
-#define OPT_TOGGLE OPT_SWITCH
-#define OPT_HIDDEN (1 << 17)
-#define OPT_DEPRECATED (OPT_HIDDEN | (1 << 18))
+#include "option.h"
 
 #define ERR_NOERROR 0
 
 //-----------------------------------------------------------------------------
 namespace qblocks {
-
-class COption;
 
 //-----------------------------------------------------------------------------
 typedef bool (*NAMEFUNC)(CAccountName& name, void* data);
@@ -57,30 +31,13 @@ typedef uint64_t (*HASHFINDFUNC)(const hash_t& hash, void* data);
 typedef map<address_t, CAccountName> CAddressNameMap;
 
 //-----------------------------------------------------------------------------
-class COptionDescr {
-  public:
-    string_q shortKey;
-    string_q longKey;
-    string_q descr;
-    bool positional;
-    bool required;
-    size_t widths[5];  // only five columns allowed
-    COptionDescr(const string_q& sN, const string_q& lN, const string_q& d, bool im, bool r, size_t* w)
-        : shortKey(sN), longKey(lN), descr(d), positional(im), required(r) {
-        for (size_t i = 0; i < 5; i++)
-            widths[i] = w[i];
-    }
-    string_q oneDescription(bool isReadme) const;
-};
-extern string_q markDownRow(const string_q& s1, const string_q& s2, const string_q& s3, size_t* widths);
-
-//-----------------------------------------------------------------------------
 class COptionsBase {
   public:
     CStringArray commandLines;
     CStringArray arguments;
     CStringArray notes;
     CStringArray configs;
+    CStringArray overrides;
     CErrorStringMap usageErrs;
     CStringArray errors;
 
@@ -94,7 +51,6 @@ class COptionsBase {
     bool mocked;
     bool firstOut;
     bool freshenOnly;
-    string_q overrideStr;
 
   public:
     COptionsBase(void);
@@ -149,19 +105,21 @@ class COptionsBase {
 
     // usage related
     bool usage(const string_q& errMsg = "") const;
+    string_q get_header(void) const;
+    string_q get_purpose(void) const;
+    string_q get_description(void) const;
+    string_q get_notes(void) const;
+    string_q get_configs(void) const;
+    string_q get_version(void) const;
+    string_q get_options(void) const;
+    string_q get_errmsg(const string_q& errMsg) const;
+    string_q get_override(void) const;
+
+    string_q format_notes(const CStringArray& strs) const;
     bool flag_required(const string_q& command) const;
     bool invalid_option(const string_q& arg) const;
-    string_q usageStr(const string_q& errMsg = "") const;
-    string_q purpose(void) const;
-    string_q options(void) const;
-    string_q descriptions(void) const;
-    string_q descriptionOverride(void) const;
-    string_q get_notes(void) const;
-    string_q format_notes(const CStringArray& strs) const;
-    string_q get_configs(void) const;
-    string_q format_configs(const CStringArray& strs) const;
 
-    const COption* findParam(const string_q& name) const;
+    bool findParam(const string_q& name, COption& paramOut) const;
     string_q expandOption(string_q& arg);
     bool isBadSingleDash(const string_q& arg) const;
 
@@ -176,15 +134,11 @@ class COptionsBase {
                           const string_q& meta = "");
 
   protected:
-    const COption* pParams;
-    size_t cntParams;
-    string_q hiUp1;
-    string_q hiUp2;
-    string_q hiDown;
+    vector<COption> parameters;
 
     virtual void Init(void) = 0;
     virtual bool Mocked(const string_q& which);
-    void registerOptions(size_t nP, COption const* pP);
+    void registerOptions(size_t nP, const COption* pP, uint32_t on = NOOPT, uint32_t off = NOOPT);
 
   private:
     streambuf* coutSaved;   // saves original cout buffer
@@ -204,41 +158,6 @@ class CDefaultOptions : public COptionsBase {
     }
     void Init(void) {
     }
-};
-
-//--------------------------------------------------------------------------------
-class COption {
-  public:
-    string_q hotKey;
-    string_q longName;
-    string_q description;
-    string_q permitted;
-    string_q type;
-    bool is_hidden;
-    bool is_positional;
-    bool is_special;
-    bool is_optional;
-    bool is_deprecated;
-    COption(const string_q& ln, const string_q& sn, const string_q& type, size_t opts, const string_q& d);
-    bool isPublic(void) const {
-        return (!is_hidden && !is_deprecated && !longName.empty());
-    }
-    string_q getHotKey(void) const {
-        return is_positional ? "" : hotKey;
-    }
-    string_q getLongKey(bool isReadme) const {
-        if (is_special)
-            return longName;
-        string_q lName = substitute(longName, "addrs2", "addrs");
-        replaceAny(lName, "!~", "");
-        lName = (is_positional ? substitute(lName, "-", "") : lName);
-        lName = substitute(lName, "@-", "");
-        if (isReadme) {
-            lName = substitute(substitute(lName, "<", "&lt;"), ">", "&gt;");
-        }
-        return lName;
-    }
-    string_q getDescription(bool isReadme) const;
 };
 
 //--------------------------------------------------------------------------------
@@ -317,6 +236,7 @@ class COptionsTransList {
     };
 };
 
+extern string_q colorize(const string_q& strIn);
 extern bool prepareEnv(int argc, const char* argv[]);
 extern string_q cleanFmt(const string_q& str);
 extern void errorMessage(const string_q& msg);

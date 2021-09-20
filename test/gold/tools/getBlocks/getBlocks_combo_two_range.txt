@@ -6,7 +6,7 @@ getBlocks 1590000 4000001-4000002 1001001-1001100 1234567
   Usage:    getBlocks [-e|-U|-t|-a|-u|-n|-c|-o|-v|-h] <block> [block...]  
   Purpose:  Retrieve one or more blocks from the chain or local cache.
 
-  Where:  
+  Where:
 	blocks                a space-separated list of one or more block identifiers (required)
 	-e  (--hashes)        display only transaction hashes, default is to display full transaction detail
 	-U  (--uncles)        display uncle blocks (if any) instead of the requested block

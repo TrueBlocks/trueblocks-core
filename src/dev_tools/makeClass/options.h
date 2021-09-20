@@ -17,11 +17,6 @@
  */
 #include "etherlib.h"
 #include "commandoption.h"
-#include "classdefinition.h"
-#include "page.h"
-#include "skin.h"
-#include "schema.h"
-#include "route.h"
 
 // BEG_ERROR_DEFINES
 #define ERR_CLASSDEFNOTEXIST 1
@@ -61,7 +56,6 @@ class COptions : public COptionsBase {
     bool openapi;
     // END_CODE_DECLARE
 
-    map<string_q, CPage> pageMap;
     runmode_t mode;
     CClassDefinitionArray classDefs;
     CClassDefinitionArray dataModels;

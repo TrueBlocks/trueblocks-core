@@ -1,5 +1,11 @@
 cmdLineTest argc: 2 [1:--file:cmd_file_other1] 
 cmdLineTest --file:cmd_file_other1 
+Cmd: 5 --int:12 
+Cmd: 6 --int:-100 
+Cmd: 7 --uint:12 
+Cmd: 8 --uint:-100 
+Cmd: 9 --string:String 
+Cmd: 10 --string:1212 
 --------------------------------------------------------------------------------
 boolOption: 0
 boolSet: 0
@@ -38,7 +44,7 @@ testNum: 8
   Usage:    cmdLineTest [-b|-i|-u|-s|-r|-l|-v|-h] testNum optionalMode  
   Purpose:  Tests various command line behavior.
         
-  Where:  
+  Where:
 	testNum               the number of the test to run (required)
 	optionalMode          an optional mode with ~! start
 	-b  (--bool <bool>)   enter a boolean value (either '0', '1', 'false', or 'true')
@@ -52,6 +58,7 @@ testNum: 8
 	-d  (--hiddenOption)  a hidden option with an alternative hot key
 	#### Hidden options
 
+	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
 	-v  (--verbose)       set verbose level (optional level defaults to 1)
 	-h  (--help)          display this help screen
 

@@ -2,7 +2,7 @@
 title: "Chain Data"
 description: ""
 lead: ""
-date: 2021-09-16T22:32:14
+date: 2021-09-19T21:39:18
 lastmod:
   - :git
   - lastmod
@@ -30,26 +30,26 @@ Another useful feature of `chifra blocks` is the ability to extract address appe
 
 ### usage
 
-`Usage:`    chifra blocks [-e|-U|-t|-a|-u|-n|-c|-o|-v|-h] &lt;block&gt; [block...]
+`Usage:`    chifra blocks [-e|-U|-t|-a|-u|-n|-c|-o|-v|-h] &lt;block&gt; [block...]  
 `Purpose:`  Retrieve one or more blocks from the chain or local cache.
 
 `Where:`
 
 {{<td>}}
-|     | Option            | Description                                                                         |
-| --- | ----------------- | ----------------------------------------------------------------------------------- |
-|     | blocks            | a space-separated list of one or more block identifiers<br/>(required)              |
-| -e  | --hashes          | display only transaction hashes, default is to display<br/>full transaction detail  |
-| -U  | --uncles          | display uncle blocks (if any) instead of the requested<br/>block                    |
-| -t  | --trace           | export the traces from the block as opposed to the<br/>block data                   |
-| -a  | --apps            | display only the list of address appearances in the<br/>block                       |
-| -u  | --uniq            | display only the list of uniq address appearances in<br/>the block                  |
-| -n  | --uniq_tx         | display only the list of uniq address appearances in<br/>each transaction           |
-| -c  | --count           | display the number of the lists of appearances for<br/>--apps, --uniq, or --uniq_tx |
-| -o  | --cache           | force a write of the block to the cache                                             |
-| -x  | --fmt &lt;val&gt; | export format, one of [none, json, txt, csv, api]                                   |
-| -v  | --verbose         | set verbose level (optional level defaults to 1)                                    |
-| -h  | --help            | display this help screen                                                            |
+|          | Option                        | Description                                                                         |
+| -------- | ----------------------------- | ----------------------------------------------------------------------------------- |
+|          | blocks                        | a space-separated list of one or more block identifiers<br/>(required)              |
+| &#8208;e | &#8208;&#8208;hashes          | display only transaction hashes, default is to display<br/>full transaction detail  |
+| &#8208;U | &#8208;&#8208;uncles          | display uncle blocks (if any) instead of the requested<br/>block                    |
+| &#8208;t | &#8208;&#8208;trace           | export the traces from the block as opposed to the<br/>block data                   |
+| &#8208;a | &#8208;&#8208;apps            | display only the list of address appearances in the<br/>block                       |
+| &#8208;u | &#8208;&#8208;uniq            | display only the list of uniq address appearances in<br/>the block                  |
+| &#8208;n | &#8208;&#8208;uniq_tx         | display only the list of uniq address appearances in<br/>each transaction           |
+| &#8208;c | &#8208;&#8208;count           | display the number of the lists of appearances for<br/>--apps, --uniq, or --uniq_tx |
+| &#8208;o | &#8208;&#8208;cache           | force a write of the block to the cache                                             |
+| &#8208;x | &#8208;&#8208;fmt &lt;val&gt; | export format, one of [none, json, txt, csv, api]                                   |
+| &#8208;v | &#8208;&#8208;verbose         | set verbose level (optional level defaults to 1)                                    |
+| &#8208;h | &#8208;&#8208;help            | display this help screen                                                            |
 {{</td>}}
 
 `Notes:`
@@ -70,23 +70,23 @@ The `--trace` option attachs an array transaction traces to the output (if the n
 
 ### usage
 
-`Usage:`    chifra transactions [-a|-t|-u|-r|-o|-v|-h] &lt;tx_id&gt; [tx_id...]
+`Usage:`    chifra transactions [-a|-t|-u|-r|-o|-v|-h] &lt;tx_id&gt; [tx_id...]  
 `Purpose:`  Retrieve one or more transactions from the chain or local cache.
 
 `Where:`
 
 {{<td>}}
-|     | Option                      | Description                                                                                  |
-| --- | --------------------------- | -------------------------------------------------------------------------------------------- |
-|     | transactions                | a space-separated list of one or more transaction identifiers<br/>(required)                 |
-| -a  | --articulate                | articulate the retrieved data if ABIs can be found                                           |
-| -t  | --trace                     | include the transaction's traces in the results                                              |
-| -u  | --uniq                      | display a list of uniq addresses found in the transaction<br/>instead of the underlying data |
-| -r  | --reconcile &lt;address&gt; | reconcile the transaction as per the provided address                                        |
-| -o  | --cache                     | force the results of the query into the tx cache (and<br/>the trace cache if applicable)     |
-| -x  | --fmt &lt;val&gt;           | export format, one of [none, json, txt, csv, api]                                            |
-| -v  | --verbose                   | set verbose level (optional level defaults to 1)                                             |
-| -h  | --help                      | display this help screen                                                                     |
+|          | Option                                  | Description                                                                                  |
+| -------- | --------------------------------------- | -------------------------------------------------------------------------------------------- |
+|          | transactions                            | a space-separated list of one or more transaction identifiers<br/>(required)                 |
+| &#8208;a | &#8208;&#8208;articulate                | articulate the retrieved data if ABIs can be found                                           |
+| &#8208;t | &#8208;&#8208;trace                     | include the transaction's traces in the results                                              |
+| &#8208;u | &#8208;&#8208;uniq                      | display a list of uniq addresses found in the transaction<br/>instead of the underlying data |
+| &#8208;r | &#8208;&#8208;reconcile &lt;address&gt; | reconcile the transaction as per the provided address                                        |
+| &#8208;o | &#8208;&#8208;cache                     | force the results of the query into the tx cache (and<br/>the trace cache if applicable)     |
+| &#8208;x | &#8208;&#8208;fmt &lt;val&gt;           | export format, one of [none, json, txt, csv, api]                                            |
+| &#8208;v | &#8208;&#8208;verbose                   | set verbose level (optional level defaults to 1)                                             |
+| &#8208;h | &#8208;&#8208;help                      | display this help screen                                                                     |
 {{</td>}}
 
 `Notes:`
@@ -108,19 +108,19 @@ Generally speaking, this tool is less useful than others as you may report the s
 
 ### usage
 
-`Usage:`    chifra receipts [-a|-v|-h] &lt;tx_id&gt; [tx_id...]
+`Usage:`    chifra receipts [-a|-v|-h] &lt;tx_id&gt; [tx_id...]  
 `Purpose:`  Retrieve receipts for the given transaction(s).
 
 `Where:`
 
 {{<td>}}
-|     | Option            | Description                                                                  |
-| --- | ----------------- | ---------------------------------------------------------------------------- |
-|     | transactions      | a space-separated list of one or more transaction identifiers<br/>(required) |
-| -a  | --articulate      | articulate the retrieved data if ABIs can be found                           |
-| -x  | --fmt &lt;val&gt; | export format, one of [none, json, txt, csv, api]                            |
-| -v  | --verbose         | set verbose level (optional level defaults to 1)                             |
-| -h  | --help            | display this help screen                                                     |
+|          | Option                        | Description                                                                  |
+| -------- | ----------------------------- | ---------------------------------------------------------------------------- |
+|          | transactions                  | a space-separated list of one or more transaction identifiers<br/>(required) |
+| &#8208;a | &#8208;&#8208;articulate      | articulate the retrieved data if ABIs can be found                           |
+| &#8208;x | &#8208;&#8208;fmt &lt;val&gt; | export format, one of [none, json, txt, csv, api]                            |
+| &#8208;v | &#8208;&#8208;verbose         | set verbose level (optional level defaults to 1)                             |
+| &#8208;h | &#8208;&#8208;help            | display this help screen                                                     |
 {{</td>}}
 
 `Notes:`
@@ -140,21 +140,21 @@ The `--articulate` option fetches the ABI from each encountered smart contract t
 
 ### usage
 
-`Usage:`    chifra logs [-t|-s|-a|-v|-h] &lt;tx_id&gt; [tx_id...]
+`Usage:`    chifra logs [-t|-s|-a|-v|-h] &lt;tx_id&gt; [tx_id...]  
 `Purpose:`  Retrieve logs for the given transaction(s).
 
 `Where:`
 
 {{<td>}}
-|     | Option                | Description                                                                  |
-| --- | --------------------- | ---------------------------------------------------------------------------- |
-|     | transactions          | a space-separated list of one or more transaction identifiers<br/>(required) |
-| -t  | --topic &lt;hash&gt;  | filter by one or more log topics (not implemented)                           |
-| -s  | --source &lt;addr&gt; | export only if the given address emitted the event<br/>(not implemented)     |
-| -a  | --articulate          | articulate the retrieved data if ABIs can be found                           |
-| -x  | --fmt &lt;val&gt;     | export format, one of [none, json, txt, csv, api]                            |
-| -v  | --verbose             | set verbose level (optional level defaults to 1)                             |
-| -h  | --help                | display this help screen                                                     |
+|          | Option                            | Description                                                                  |
+| -------- | --------------------------------- | ---------------------------------------------------------------------------- |
+|          | transactions                      | a space-separated list of one or more transaction identifiers<br/>(required) |
+| &#8208;t | &#8208;&#8208;topic &lt;hash&gt;  | filter by one or more log topics (not implemented)                           |
+| &#8208;s | &#8208;&#8208;source &lt;addr&gt; | export only if the given address emitted the event<br/>(not implemented)     |
+| &#8208;a | &#8208;&#8208;articulate          | articulate the retrieved data if ABIs can be found                           |
+| &#8208;x | &#8208;&#8208;fmt &lt;val&gt;     | export format, one of [none, json, txt, csv, api]                            |
+| &#8208;v | &#8208;&#8208;verbose             | set verbose level (optional level defaults to 1)                             |
+| &#8208;h | &#8208;&#8208;help                | display this help screen                                                     |
 {{</td>}}
 
 `Notes:`
@@ -178,22 +178,22 @@ The `--filter` option calls your node's `trace_filter` routine (if available) us
 
 ### usage
 
-`Usage:`    chifra traces [-a|-f|-d|-c|-v|-h] &lt;tx_id&gt; [tx_id...]
+`Usage:`    chifra traces [-a|-f|-d|-c|-v|-h] &lt;tx_id&gt; [tx_id...]  
 `Purpose:`  Retrieve traces for the given transaction(s).
 
 `Where:`
 
 {{<td>}}
-|     | Option               | Description                                                                  |
-| --- | -------------------- | ---------------------------------------------------------------------------- |
-|     | transactions         | a space-separated list of one or more transaction identifiers<br/>(required) |
-| -a  | --articulate         | articulate the retrieved data if ABIs can be found                           |
-| -f  | --filter &lt;str&gt; | call the node's `trace_filter` routine with bang-seperated<br/>filter        |
-| -d  | --statediff          | export state diff traces (not implemented)                                   |
-| -c  | --count              | show the number of traces for the transaction only<br/>(fast)                |
-| -x  | --fmt &lt;val&gt;    | export format, one of [none, json, txt, csv, api]                            |
-| -v  | --verbose            | set verbose level (optional level defaults to 1)                             |
-| -h  | --help               | display this help screen                                                     |
+|          | Option                           | Description                                                                  |
+| -------- | -------------------------------- | ---------------------------------------------------------------------------- |
+|          | transactions                     | a space-separated list of one or more transaction identifiers<br/>(required) |
+| &#8208;a | &#8208;&#8208;articulate         | articulate the retrieved data if ABIs can be found                           |
+| &#8208;f | &#8208;&#8208;filter &lt;str&gt; | call the node's `trace_filter` routine with bang-seperated<br/>filter        |
+| &#8208;d | &#8208;&#8208;statediff          | export state diff traces (not implemented)                                   |
+| &#8208;c | &#8208;&#8208;count              | show the number of traces for the transaction only<br/>(fast)                |
+| &#8208;x | &#8208;&#8208;fmt &lt;val&gt;    | export format, one of [none, json, txt, csv, api]                            |
+| &#8208;v | &#8208;&#8208;verbose            | set verbose level (optional level defaults to 1)                             |
+| &#8208;h | &#8208;&#8208;help               | display this help screen                                                     |
 {{</td>}}
 
 `Notes:`
@@ -208,8 +208,8 @@ The `--filter` option calls your node's `trace_filter` routine (if available) us
 
 `Configurable Items:`
 
-`skip_ddos`: skip over the 2016 ddos during export ('on' by default).
-`max`: if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250).
+- `skip_ddos`: skip over the 2016 ddos during export ('on' by default).
+- `max`: if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250).
 
 **Source code**: [`tools/getTraces`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/tools/getTraces)
 
@@ -223,20 +223,20 @@ The values for `date` and `time` are specified in JSON format. `hour`/`minute`/`
 
 ### usage
 
-`Usage:`    chifra when [-l|-t|-v|-h] &lt; block | date &gt; [ block... | date... ]
+`Usage:`    chifra when [-l|-t|-v|-h] &lt; block | date &gt; [ block... | date... ]  
 `Purpose:`  Find block(s) based on date, blockNum, timestamp, or 'special'.
 
 `Where:`
 
 {{<td>}}
-|     | Option            | Description                                                                       |
-| --- | ----------------- | --------------------------------------------------------------------------------- |
-|     | block_list        | one or more dates, block numbers, hashes, or special<br/>named blocks (see notes) |
-| -l  | --list            | export a list of the 'special' blocks                                             |
-| -t  | --timestamps      | ignore other options and generate timestamps only                                 |
-| -x  | --fmt &lt;val&gt; | export format, one of [none, json, txt, csv, api]                                 |
-| -v  | --verbose         | set verbose level (optional level defaults to 1)                                  |
-| -h  | --help            | display this help screen                                                          |
+|          | Option                        | Description                                                                       |
+| -------- | ----------------------------- | --------------------------------------------------------------------------------- |
+|          | block_list                    | one or more dates, block numbers, hashes, or special<br/>named blocks (see notes) |
+| &#8208;l | &#8208;&#8208;list            | export a list of the 'special' blocks                                             |
+| &#8208;t | &#8208;&#8208;timestamps      | ignore other options and generate timestamps only                                 |
+| &#8208;x | &#8208;&#8208;fmt &lt;val&gt; | export format, one of [none, json, txt, csv, api]                                 |
+| &#8208;v | &#8208;&#8208;verbose         | set verbose level (optional level defaults to 1)                                  |
+| &#8208;h | &#8208;&#8208;help            | display this help screen                                                          |
 {{</td>}}
 
 `Notes:`

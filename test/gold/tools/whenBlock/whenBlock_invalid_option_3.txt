@@ -6,7 +6,7 @@ whenBlock 0-0
   Usage:    whenBlock [-l|-t|-v|-h] < block | date > [ block... | date... ]  
   Purpose:  Find block(s) based on date, blockNum, timestamp, or 'special'.
 
-  Where:  
+  Where:
 	block_list            one or more dates, block numbers, hashes, or special named blocks (see notes)
 	-l  (--list)          export a list of the 'special' blocks
 	-t  (--timestamps)    ignore other options and generate timestamps only

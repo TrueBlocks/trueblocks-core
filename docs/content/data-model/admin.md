@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2021-09-16T11:03:44
+date: 2021-09-18T09:10:08
 lastmod:
   - :git
   - lastmod
@@ -33,7 +33,7 @@ _Each data structure is created by one or more tools which are detailed below_
 - **API**:
   - [Calls to `/transactions`](/api#operation/chaindata-transactions)
 
-### Fields
+Below is a list of the data fields for status. Following that are the commands that produce or manage status.
 
 | Field              | Description                                                         | Type      |
 | ------------------ | ------------------------------------------------------------------- | --------- |
@@ -56,6 +56,8 @@ _Each data structure is created by one or more tools which are detailed below_
 | has_pinkey         | `true` if a Pinata API key is present                               | bool      |
 | ts                 | the timestamp when this status data was produced                    | timestamp |
 
+---
+
 ## PinnedChunk
 
 <!-- TEXT ABOUT PINNED CHUNKS -->
@@ -68,7 +70,7 @@ _Each data structure is created by one or more tools which are detailed below_
 - **API**:
   - [Calls to `/pins`](/api#operation/admin-pins)
 
-### Fields
+Below is a list of the data fields for pinnedchunks. Following that are the commands that produce or manage pinnedchunks.
 
 | Field     | Description                                                 | Type     |
 | --------- | ----------------------------------------------------------- | -------- |
@@ -76,26 +78,31 @@ _Each data structure is created by one or more tools which are detailed below_
 | bloomHash | the IPFS hash of the bloom filter at that range             | ipfshash |
 | indexHash | the IPFS hash of the index chunk at that range              | ipfshash |
 
+---
+
+## Manifest
+
+
+Below is a list of the data fields for manifests. Following that are the commands that produce or manage manifests.
+
+| Field       | Description                                                     | Type              |
+| ----------- | --------------------------------------------------------------- | ----------------- |
+| indexFormat | IPFS cid of file describing the file format of an index chunk   | string            |
+| bloomFormat | IPFS cid of file describing the assoicated bloom filter         | string            |
+| firstPin    | the block number of the first pin in the manifest (always zero) | blknum            |
+| lastPin     | the most recent block included in this manifest                 | blknum            |
+| pins        | a list of all the pins in the unchained index                   | CPinnedChunkArray |
+
+---
+
 ## Base types
 
-In these docs, sometimes Trueblocks mentions a type format that is more
-precise than the generic types, like "string" or "object".
+The above documentation mentions the following basic data types.
 
 | Type      | Description                                     | Notes          |
 | --------- | ----------------------------------------------- | -------------- |
-| address   | a 20-byte hexidecimal string starting with '0x' | lowercase      |
 | blknum    | an alias for a uint64                           |                |
 | bool      | a value either `true`, `false`, `1`, or `0`     |                |
-| bytes     | an arbitrarily long string of bytes             |                |
-| date      | a JSON formatted date                           | as a string    |
-| double    | a floating point number of double precision     |                |
-| gas       | an unsigned big number                          | as a string    |
-| hash      | a 32-byte hexidecimal string starting with '0x' | lowercase      |
-| int256    | a signed big number                             | as a string    |
 | ipfshash  | a multi-hash produced by IPFS                   | mixed-case     |
 | string    | a normal character string                       |                |
 | timestamp | a 64-bit unsigned integer                       | unix timestamp |
-| uint32    | a 32-bit unsigned integer                       |                |
-| uint64    | a 64-bit unsigned integer                       |                |
-| uint8     | an alias for the boolean type                   |                |
-| wei       | an unsigned big number                          | as a string    |

@@ -15,58 +15,82 @@
  * Parts of this file were generated with makeClass --run. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
-#include "etherlib.h"
+#include "basetypes.h"
+#include "basenode.h"
+#include "sfarchive.h"
 
 namespace qblocks {
 
 // EXISTING_CODE
+// Bit flags to enable / disable various options
+#define OPT_DESCRIPTION (0)
+#define OPT_HELP (1 << 1)
+#define OPT_VERBOSE (1 << 2)
+#define OPT_FMT (1 << 3)
+#define OPT_DOLLARS (1 << 4)
+#define OPT_WEI (1 << 5)
+#define OPT_ETHER (1 << 6)
+#define OPT_PARITY (1 << 7)
+#define OPT_RAW (1 << 11)
+#define OPT_PREFUND (1 << 12)
+#define OPT_OUTPUT (1 << 13)
+#define OPT_CRUD (1 << 14)
+#define OPT_MOCKDATA (1 << 21)
+#define OPT_DENOM (OPT_DOLLARS | OPT_WEI | OPT_ETHER)
+#define OPT_DEFAULT (OPT_HELP | OPT_VERBOSE | OPT_FMT | OPT_DENOM | OPT_PARITY | OPT_MOCKDATA | OPT_OUTPUT)
+
+#define OPT_REQUIRED (1 << 14)
+#define OPT_POSITIONAL (1 << 15)
+#define OPT_FLAG (1 << 16)
+#define OPT_SWITCH OPT_FLAG
+#define OPT_TOGGLE OPT_SWITCH
+#define OPT_HIDDEN (1 << 17)
+#define OPT_DEPRECATED (OPT_HIDDEN | (1 << 18))
+#define NOOPT ((uint32_t)-1)
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CSchema : public CBaseNode {
+class COption : public CBaseNode {
   public:
-    string_q name;
-    string_q selector;
+    string_q hotKey;
+    string_q longName;
+    string_q description;
+    string_q permitted;
     string_q type;
-    string_q unused;
-    uint64_t width;
-    bool editable;
-    uint64_t id;
-    uint64_t decimals;
-    bool isPill;
-    string_q align;
-    string_q cn;
-    bool download;
-    string_q chart;
-    bool searchable;
-    uint64_t detail;
-    bool wide;
-    string_q underField;
-    string_q onDisplay;
-    string_q onAccept;
-    string_q onValidate;
+    bool is_hidden;
+    bool is_positional;
+    bool is_optional;
+    bool is_deprecated;
+    bool is_readme;
 
   public:
-    CSchema(void);
-    CSchema(const CSchema& sc);
-    virtual ~CSchema(void);
-    CSchema& operator=(const CSchema& sc);
+    COption(void);
+    COption(const COption& op);
+    virtual ~COption(void);
+    COption& operator=(const COption& op);
 
-    DECLARE_NODE(CSchema);
+    DECLARE_NODE(COption);
 
     // EXISTING_CODE
+    COption(const string_q& ln, const string_q& sn, const string_q& type, size_t opts, const string_q& d);
+    bool isPublic(void) const;
+    string_q readmeDash(const string_q& str) const;
+    string_q getHotKey(void) const;
+    string_q getLongKey(void) const;
+    string_q getDescription(void) const;
+    string_q oneDescription(size_t* widths) const;
     // EXISTING_CODE
-    bool operator==(const CSchema& it) const;
-    bool operator!=(const CSchema& it) const {
+    bool operator==(const COption& it) const;
+    bool operator!=(const COption& it) const {
         return !operator==(it);
     }
-    friend bool operator<(const CSchema& v1, const CSchema& v2);
-    friend ostream& operator<<(ostream& os, const CSchema& it);
+    friend bool operator<(const COption& v1, const COption& v2);
+    friend ostream& operator<<(ostream& os, const COption& it);
 
   protected:
     void clear(void);
     void initialize(void);
-    void duplicate(const CSchema& sc);
+    void duplicate(const COption& op);
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
@@ -74,104 +98,84 @@ class CSchema : public CBaseNode {
 };
 
 //--------------------------------------------------------------------------
-inline CSchema::CSchema(void) {
+inline COption::COption(void) {
     initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CSchema::CSchema(const CSchema& sc) {
+inline COption::COption(const COption& op) {
     // EXISTING_CODE
     // EXISTING_CODE
-    duplicate(sc);
+    duplicate(op);
 }
 
 // EXISTING_CODE
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CSchema::~CSchema(void) {
+inline COption::~COption(void) {
     clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CSchema::clear(void) {
+inline void COption::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CSchema::initialize(void) {
+inline void COption::initialize(void) {
     CBaseNode::initialize();
 
-    name = "";
-    selector = "";
+    hotKey = "";
+    longName = "";
+    description = "";
+    permitted = "";
     type = "";
-    unused = "";
-    width = 0;
-    editable = false;
-    id = 0;
-    decimals = 0;
-    isPill = false;
-    align = "";
-    cn = "";
-    download = false;
-    chart = "";
-    searchable = false;
-    detail = 0;
-    wide = false;
-    underField = "";
-    onDisplay = "";
-    onAccept = "";
-    onValidate = "";
+    is_hidden = false;
+    is_positional = false;
+    is_optional = false;
+    is_deprecated = false;
+    is_readme = false;
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CSchema::duplicate(const CSchema& sc) {
+inline void COption::duplicate(const COption& op) {
     clear();
-    CBaseNode::duplicate(sc);
+    CBaseNode::duplicate(op);
 
-    name = sc.name;
-    selector = sc.selector;
-    type = sc.type;
-    unused = sc.unused;
-    width = sc.width;
-    editable = sc.editable;
-    id = sc.id;
-    decimals = sc.decimals;
-    isPill = sc.isPill;
-    align = sc.align;
-    cn = sc.cn;
-    download = sc.download;
-    chart = sc.chart;
-    searchable = sc.searchable;
-    detail = sc.detail;
-    wide = sc.wide;
-    underField = sc.underField;
-    onDisplay = sc.onDisplay;
-    onAccept = sc.onAccept;
-    onValidate = sc.onValidate;
+    hotKey = op.hotKey;
+    longName = op.longName;
+    description = op.description;
+    permitted = op.permitted;
+    type = op.type;
+    is_hidden = op.is_hidden;
+    is_positional = op.is_positional;
+    is_optional = op.is_optional;
+    is_deprecated = op.is_deprecated;
+    is_readme = op.is_readme;
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CSchema& CSchema::operator=(const CSchema& sc) {
-    duplicate(sc);
+inline COption& COption::operator=(const COption& op) {
+    duplicate(op);
     // EXISTING_CODE
     // EXISTING_CODE
     return *this;
 }
 
 //-------------------------------------------------------------------------
-inline bool CSchema::operator==(const CSchema& it) const {
+inline bool COption::operator==(const COption& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)
@@ -179,7 +183,7 @@ inline bool CSchema::operator==(const CSchema& it) const {
 }
 
 //-------------------------------------------------------------------------
-inline bool operator<(const CSchema& v1, const CSchema& v2) {
+inline bool operator<(const COption& v1, const COption& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default sort defined in class definition, assume already sorted, preserve ordering
@@ -187,16 +191,16 @@ inline bool operator<(const CSchema& v1, const CSchema& v2) {
 }
 
 //---------------------------------------------------------------------------
-typedef vector<CSchema> CSchemaArray;
-extern CArchive& operator>>(CArchive& archive, CSchemaArray& array);
-extern CArchive& operator<<(CArchive& archive, const CSchemaArray& array);
+typedef vector<COption> COptionArray;
+extern CArchive& operator>>(CArchive& archive, COptionArray& array);
+extern CArchive& operator<<(CArchive& archive, const COptionArray& array);
 
 //---------------------------------------------------------------------------
-extern CArchive& operator<<(CArchive& archive, const CSchema& sch);
-extern CArchive& operator>>(CArchive& archive, CSchema& sch);
+extern CArchive& operator<<(CArchive& archive, const COption& opt);
+extern CArchive& operator>>(CArchive& archive, COption& opt);
 
 //---------------------------------------------------------------------------
-extern const char* STR_DISPLAY_SCHEMA;
+extern const char* STR_DISPLAY_OPTION;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

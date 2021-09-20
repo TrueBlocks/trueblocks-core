@@ -8,20 +8,20 @@ The values for `date` and `time` are specified in JSON format. `hour`/`minute`/`
 
 ### usage
 
-`Usage:`    chifra when [-l|-t|-v|-h] &lt; block | date &gt; [ block... | date... ]
+`Usage:`    chifra when [-l|-t|-v|-h] &lt; block | date &gt; [ block... | date... ]  
 `Purpose:`  Find block(s) based on date, blockNum, timestamp, or 'special'.
 
 `Where:`
 
 {{<td>}}
-|     | Option            | Description                                                                       |
-| --- | ----------------- | --------------------------------------------------------------------------------- |
-|     | block_list        | one or more dates, block numbers, hashes, or special<br/>named blocks (see notes) |
-| -l  | --list            | export a list of the 'special' blocks                                             |
-| -t  | --timestamps      | ignore other options and generate timestamps only                                 |
-| -x  | --fmt &lt;val&gt; | export format, one of [none, json, txt, csv, api]                                 |
-| -v  | --verbose         | set verbose level (optional level defaults to 1)                                  |
-| -h  | --help            | display this help screen                                                          |
+|          | Option                        | Description                                                                       |
+| -------- | ----------------------------- | --------------------------------------------------------------------------------- |
+|          | block_list                    | one or more dates, block numbers, hashes, or special<br/>named blocks (see notes) |
+| &#8208;l | &#8208;&#8208;list            | export a list of the 'special' blocks                                             |
+| &#8208;t | &#8208;&#8208;timestamps      | ignore other options and generate timestamps only                                 |
+| &#8208;x | &#8208;&#8208;fmt &lt;val&gt; | export format, one of [none, json, txt, csv, api]                                 |
+| &#8208;v | &#8208;&#8208;verbose         | set verbose level (optional level defaults to 1)                                  |
+| &#8208;h | &#8208;&#8208;help            | display this help screen                                                          |
 {{</td>}}
 
 `Notes:`

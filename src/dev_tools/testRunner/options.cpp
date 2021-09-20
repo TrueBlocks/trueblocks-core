@@ -198,8 +198,7 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
-    registerOptions(nParams, params);
-    optionOn(0);
+    registerOptions(nParams, params, 0);
 
     // BEG_CODE_INIT
     filter = "";

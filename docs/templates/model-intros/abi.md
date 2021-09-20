@@ -1,1 +1,13 @@
-For more information on ABIs please see any relevant Ethereum documentation, particularly that documentation related to Solidity coding. The fields or the ABI are mostly identical to the fields you will find in that documentation.
+An ABI describes an Application Binary Interface -- in other words, the [Function]() and Event signatures for a given smart contract. Along with [Names]() the use of ABIs goes a very long way towards making your Etheruem data much more understandable.
+
+Similar to names of addresses, ABI files are not available on-chain which means they must be acquired somewhere. Unfortantely, the Ethereum community has not yet understand that EtherScan is not a good place to store this very important information. For this reason, TrueBlocks uses EtherScan to acquire ABI files and therefor one needs to get an EtherScan API key to use this function.
+
+[{FIELDS}]
+
+| **Tools**                                         |                                      |
+| ------------------------------------------------- | ------------------------------------ |
+| [chifra abis](/docs/chifra/accounts/#chifra-abis) | fetches the ABI for a smart contract |
+
+**Notes**
+
+See the `chifra abis` command line for information about getting an EtherScan key.

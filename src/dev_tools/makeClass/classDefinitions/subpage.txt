@@ -1,4 +1,0 @@
-[settings]
-class = CSubpage
-fields = subpage.csv
-includes = etherlib.h

@@ -237,9 +237,7 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
-    registerOptions(nParams, params);
-    optionOn(OPT_RAW);
-    optionOff(OPT_FMT);
+    registerOptions(nParams, params, OPT_RAW, OPT_DOLLARS | OPT_ETHER);
 
     // BEG_CODE_INIT
     by_acct = false;
@@ -253,7 +251,6 @@ void COptions::Init(void) {
     holders.clear();
     modeBits = TOK_NONE;
 
-    optionOff(OPT_DOLLARS | OPT_ETHER);
     blocks.Init();
     CHistoryOptions::Init();
     newestBlock = oldestBlock = getBlockProgress(BP_CLIENT).client;

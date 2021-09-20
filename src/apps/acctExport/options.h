@@ -135,7 +135,3 @@ extern bool visitUnripeIndexFiles(const string_q& path, void* data);
 extern bool isTokenFunc(const string_q& input);
 extern bool isTokenTopic(const topic_t& topic);
 extern bool fourByteFilter(const string_q& input, const COptions* opt);
-//--------------------------------------------------------------------------------
-inline string_q plural(const string_q& in) {
-    return substitute(toLower(in).substr(1, 1000) + "s", "logentrys", "logs");
-}

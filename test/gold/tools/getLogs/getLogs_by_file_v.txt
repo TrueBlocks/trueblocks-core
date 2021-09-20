@@ -1,5 +1,7 @@
 getLogs argc: 5 [1:--file:cmd_file] [2:--verbose] [3:--fmt] [4:json] 
 getLogs --file:cmd_file --verbose --fmt json 
+Cmd: 0x96c58614708ee5b51961a9903af7e0661e88d77f929842d05e29be4d37a004dc -a --verbose:1 
+Cmd: 3327450.0 --parity -a --verbose:1 
 { "data": [
   {
     "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",

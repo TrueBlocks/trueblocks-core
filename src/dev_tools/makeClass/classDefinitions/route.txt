@@ -1,4 +1,0 @@
-[settings]
-class = CRoute
-fields = route.csv
-includes = utillib.h

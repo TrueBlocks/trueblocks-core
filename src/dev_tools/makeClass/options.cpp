@@ -248,7 +248,6 @@ bool COptions::parseArguments(string_q& command) {
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
     registerOptions(nParams, params);
-    optionOff(OPT_FMT);
 
     // BEG_CODE_INIT
     all = false;
@@ -291,12 +290,7 @@ COptions::COptions(void) : classFile("") {
 
     CCommandOption::registerClass();
     CClassDefinition::registerClass();
-    CPage::registerClass();
-    CSubpage::registerClass();
-    CSkin::registerClass();
-    CSchema::registerClass();
     CCommandOption::registerClass();
-    CRoute::registerClass();
 }
 
 //--------------------------------------------------------------------------------
