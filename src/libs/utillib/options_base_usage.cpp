@@ -234,22 +234,18 @@ string_q COptionsBase::get_override(void) const {
 
 //--------------------------------------------------------------------------------
 string_q COptionsBase::get_version(void) const {
-    if (isReadme) {
-        return "";
-    }
-
     ostringstream os;
-    os << bBlue << "  Powered by TrueBlocks";
-    os << (isTestMode() ? "" : " (" + getVersionStr() + ")") << "\n" << cOff;
+    if (isReadme) {
+        // do nothing
+    } else {
+        os << bBlue << "  Powered by TrueBlocks";
+        os << (isTestMode() ? "" : " (" + getVersionStr() + ")") << "\n" << cOff;
+    }
     return os.str();
 }
 
 //--------------------------------------------------------------------------------
 string_q COptionsBase::get_errmsg(const string_q& errMsgIn) const {
-    if (isReadme) {
-        return "";
-    }
-
     if (errMsgIn.empty())
         return "";
 
@@ -259,8 +255,12 @@ string_q COptionsBase::get_errmsg(const string_q& errMsgIn) const {
         errorMessage(getProgName() + " - " + errMsg);
 
     ostringstream os;
-    os << endl;
-    os << cRed << "  " << errMsg << cOff << endl;
+    if (isReadme) {
+        // do nothing
+    } else {
+        os << endl;
+        os << cRed << "  " << errMsg << cOff << endl;
+    }
     return os.str();
 }
 
@@ -318,34 +318,29 @@ string_q colorize(const string_q& strIn) {
 }
 
 //--------------------------------------------------------------------------------
-string_q COptionsBase::format_notes(const CStringArray& strs) const {
-    string_q nn;
-    for (auto n : strs) {
-        string_q s = substitute(n, "[{CONFIG}]", configPathRelative(""));
-        if (isTestMode())
-            s = substitute(n, "[{CONFIG}]", "$CONFIG/");
-        nn += (s + "\n");
-    }
-    if (isReadme) {
-        // do nothing
-    } else {
-        nn = colorize(nn);
-    }
+string_q COptionsBase::format_notes(const CStringArray& noteList) const {
     string_q lead;
     if (isReadme) {
         // do nothing
     } else {
         lead = "\t";
     }
+
     ostringstream os;
-    while (!nn.empty()) {
-        string_q line = substitute(substitute(nextTokenClear(nn, '\n'), " |", "|"), "|", "\n" + lead + " ");
+    for (auto note : noteList) {
+        replaceAll(note, " |", "|");
+        replaceAll(note, "|", "\n" + lead + " ");
+        if (isReadme) {
+            // do nothing
+        } else {
+            note = colorize(note);
+        }
         os << lead;
         if (overrides.empty())
             os << "-";
-        os << " " << line << endl;
+        os << " " << note << endl;
     }
-    return substitute(os.str(), "-   ", "  - ");
+    return os.str();
 }
 
 //--------------------------------------------------------------------------------
