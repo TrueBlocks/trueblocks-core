@@ -1,5 +1,8 @@
 getReceipts argc: 6 [1:--file:cmd_file] [2:--verbose] [3:--parity] [4:--fmt] [5:json] 
 getReceipts --file:cmd_file --verbose --parity --fmt json 
+Cmd: 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.78 -v:1 --verbose:1 --parity 
+Cmd: 3657480.78 --verbose:1 --parity 
+Cmd: 0xda2f27fffb36c90c74fc53bd8b721074e87203c727640c95c4c802296e3bf8ad --parity --verbose:1 --parity 
 { "data": [
   {
     "contractAddress": "0x0",

@@ -63,6 +63,7 @@ bool visitReadme(const string_q& templatePath, void* data) {
         replaceAll(srcCode, "~/Library/Application Support/TrueBlocks/", "$CONFIG/");
         replaceAll(docCode, "[{NAME}]", progNameMap[tool].empty() ? opts->getProgName() : progNameMap[tool]);
         replaceAll(srcCode, "[{NAME}]", progNameMap[tool].empty() ? opts->getProgName() : progNameMap[tool]);
+        replaceAll(docCode, "\n`Purpose", "  \n`Purpose");
 
         bool c1 = writeIfDifferent(docPath, docCode + "\n");
         bool c2 =

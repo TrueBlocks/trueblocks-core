@@ -32,7 +32,8 @@ bool COptions::call_command(int argc, const char* argv[]) {
         return false;
 
     CStringArray unused;
-    prePrepareArguments(unused, argc, argv);
+    if (!prePrepareArguments(unused, argc, argv))  // returns false if readme is requested
+        return usage();
 
     setProgName("chifra");
 
@@ -42,12 +43,6 @@ bool COptions::call_command(int argc, const char* argv[]) {
         string_q arg = argv[i];
         if (arg == "-h" || arg == "--help") {
             has_help = true;
-
-        } else if (arg == "-th" || arg == "-ht") {
-            has_help = true;
-            isReadme = true;
-            hiUp1 = hiUp2 = hiDown = '`';
-            return usage("");
 
         } else if (!chifraCmdMap[arg].empty()) {
             if (mode == "status") {
@@ -139,9 +134,7 @@ bool COptions::call_command(int argc, const char* argv[]) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
-    registerOptions(nParams, params);
-    optionOff(OPT_DEFAULT);
-    optionOn(OPT_MOCKDATA);
+    registerOptions(nParams, params, OPT_MOCKDATA, OPT_DEFAULT);
 
     // BEG_CODE_INIT
     // END_CODE_INIT
@@ -150,7 +143,7 @@ void COptions::Init(void) {
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
     Init();
-    overrideStr = STR_CHIFRA_HELP;
+    overrides.push_back(STR_CHIFRA_HELP);
 }
 
 //--------------------------------------------------------------------------------

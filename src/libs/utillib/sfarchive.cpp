@@ -341,6 +341,17 @@ size_t asciiFileToLines(const string_q& fileName, CUintArray& lines) {
 }
 
 //----------------------------------------------------------------------
+size_t asciiFileToMap(const string_q& fileName, CNameValueMap& theMap) {
+    CStringArray lines;
+    asciiFileToLines(fileName, lines);
+    for (auto value : lines) {
+        string_q key = nextTokenClear(value, ',');
+        theMap[key] = value;
+    }
+    return theMap.size();
+}
+
+//----------------------------------------------------------------------
 string_q asciiFileToString(const string_q& filename) {
     string_q ret;
     asciiFileToString(filename, ret);

@@ -189,8 +189,7 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
-    registerOptions(nParams, params);
-    optionOn(OPT_RAW);
+    registerOptions(nParams, params, OPT_RAW);
 
     // BEG_CODE_INIT
     articulate = false;

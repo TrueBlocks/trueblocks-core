@@ -16,6 +16,8 @@
 extern const char* STR_YAML_TAIL;
 extern const char* STR_DOCUMENT_TAIL;
 extern const char* STR_YAML_MODELHEADER;
+extern const char* STR_FIELDS_INTRO;
+extern void addToTypeMap(map<string_q, string_q>& map, const string_q& group, const string& type);
 extern bool sortByDataModelName(const CClassDefinition& c1, const CClassDefinition& c2);
 extern bool sortByDoc(const CParameter& c1, const CParameter& c2);
 extern string_q typeFmt(const CParameter& fld);
@@ -28,7 +30,10 @@ bool COptions::handle_datamodel(void) {
     uint32_t weight = 1000;
 
     map<string_q, string_q> documentMap;
+    map<string_q, string_q> typeMaps;
     map<string_q, bool> frontMatterMap;
+    CNameValueMap types;
+    asciiFileToMap(getDocsPathTemplates("base-types.csv"), types);
 
     ostringstream yamlStream;
     yamlStream << "components:" << endl;
@@ -70,9 +75,12 @@ bool COptions::handle_datamodel(void) {
         docStream << endl;
         docStream << asciiFileToString(modelFn) << endl;
 
+        string_q fieldIntro = STR_FIELDS_INTRO;
+        replace(fieldIntro, "[{TYPE}]", model.doc_api);
+        replaceAll(fieldIntro, "[{PLURAL}]", plural(model.doc_api, 0));
+
         ostringstream fieldStream;
-        fieldStream << "### Fields" << endl;
-        fieldStream << endl;
+        fieldStream << fieldIntro << endl;
         fieldStream << markDownRow("Field", "Description", "Type", widths);
         fieldStream << markDownRow("-", "", "", widths);
 
@@ -84,6 +92,7 @@ bool COptions::handle_datamodel(void) {
                 yamlPropStream << fld.Format(exFmt(fld));
                 yamlPropStream << fld.Format("[          description: \"{DESCRIPTION}\"\n]");
                 fieldStream << markDownRow(fld.name, fld.description, fld.type, widths);
+                addToTypeMap(typeMaps, model.doc_group, fld.type);
             }
         }
 
@@ -96,16 +105,30 @@ bool COptions::handle_datamodel(void) {
         else
             thisDoc += fieldStream.str();
 
-        documentMap[model.doc_group] = documentMap[model.doc_group] + thisDoc;
+        documentMap[model.doc_group] = documentMap[model.doc_group] + thisDoc + "\n---\n";
     }
 
     yamlStream << STR_YAML_TAIL;
     writeIfDifferent(getDocsPathTemplates("api/components.txt"), substitute(yamlStream.str(), "&#44;", ","));
 
-    for (auto item : documentMap) {
-        item.second += STR_DOCUMENT_TAIL;
-        string_q outFn = getDocsPathContent("data-model/" + substitute(toLower(item.first), " ", "")) + ".md";
-        writeIfDifferent(outFn, item.second, Now());
+    for (auto document : documentMap) {
+        string_q tail;
+        CStringArray docTypes;
+        explode(docTypes, typeMaps[toLower(document.first)], ',');
+        sort(docTypes.begin(), docTypes.end());
+        size_t wids[5];
+        bzero(wids, sizeof(size_t) * 5);
+        wids[0] = 9;
+        wids[1] = 47;
+        wids[2] = 14;
+        for (auto type : docTypes) {
+            string_q notes = types[type];
+            string_q descr = substitute(nextTokenClear(notes, ','), "&#44;", ",");
+            tail += markDownRow(type, descr, notes, wids);
+        }
+        document.second += substitute(STR_DOCUMENT_TAIL, "[{TYPES}]", tail);
+        string_q outFn = getDocsPathContent("data-model/" + substitute(toLower(document.first), " ", "")) + ".md";
+        writeIfDifferent(outFn, document.second, Now());
     }
 
     return true;
@@ -166,6 +189,18 @@ string_q exFmt(const CParameter& fld) {
 }
 
 //------------------------------------------------------------------------------------------------------------
+void addToTypeMap(map<string_q, string_q>& map, const string_q& group, const string& type) {
+    string_q existing = map[toLower(group)];
+    if (contains("," + existing + ",", "," + type + ","))  // exact match
+        return;
+    if (toLower(type) != type)  // not a base type
+        return;
+    if (existing.length() > 0)
+        existing += ",";
+    map[toLower(group)] = existing + type;
+}
+
+//------------------------------------------------------------------------------------------------------------
 const char* STR_YAML_TAIL =
     "    response:\n"
     "      required:\n"
@@ -200,26 +235,11 @@ const char* STR_DOCUMENT_TAIL =
     "\n"
     "## Base types\n"
     "\n"
-    "The above documentation mentions common data types as detailed below.\n"
+    "The above documentation mentions the following basic data types.\n"
     "\n"
     "| Type      | Description                                     | Notes          |\n"
     "| --------- | ----------------------------------------------- | -------------- |\n"
-    "| address   | a 20-byte hexidecimal string starting with '0x' | lowercase      |\n"
-    "| blknum    | an alias for a uint64                           |                |\n"
-    "| bool      | a value either `true`, `false`, `1`, or `0`     |                |\n"
-    "| bytes     | an arbitrarily long string of bytes             |                |\n"
-    "| date      | a JSON formatted date                           | as a string    |\n"
-    "| double    | a floating point number of double precision     |                |\n"
-    "| gas       | an unsigned big number                          | as a string    |\n"
-    "| hash      | a 32-byte hexidecimal string starting with '0x' | lowercase      |\n"
-    "| int256    | a signed big number                             | as a string    |\n"
-    "| ipfshash  | a multi-hash produced by IPFS                   | mixed-case     |\n"
-    "| string    | a normal character string                       |                |\n"
-    "| timestamp | a 64-bit unsigned integer                       | unix timestamp |\n"
-    "| uint32    | a 32-bit unsigned integer                       |                |\n"
-    "| uint64    | a 64-bit unsigned integer                       |                |\n"
-    "| uint8     | an alias for the boolean type                   |                |\n"
-    "| wei       | an unsigned big number                          | as a string    |\n";
+    "[{TYPES}]";
 
 //------------------------------------------------------------------------------------------------------------
 const char* STR_YAML_MODELHEADER =
@@ -227,3 +247,8 @@ const char* STR_YAML_MODELHEADER =
     "[      description: \"{DOC_DESCR}\"\n]"
     "[      type: object\n]"
     "[      properties:\n]";
+
+//------------------------------------------------------------------------------------------------------------
+const char* STR_FIELDS_INTRO =
+    "Below is a list of the data fields for [{PLURAL}]. Following that are the "
+    "commands that produce or manage [{PLURAL}].\n";

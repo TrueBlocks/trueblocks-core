@@ -4,7 +4,7 @@ makeClass
   Usage:    makeClass [-r|-a|-o|-m|-f|-l|-t|-n|-i|-c|-v|-h] <file> [file...]  
   Purpose:  Automatically writes C++ for various purposes.
 
-  Where:  
+  Where:
 	files                 one or more class definition files (required)
 	-r  (--run)           run the class maker on associated <class_name(s)>
 	-a  (--all)           list, or run all class definitions found in the local folder
@@ -23,6 +23,7 @@ makeClass
 	-A  (--openapi)       export openapi.yaml file for API documentation
 	#### Hidden options
 
+	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
 	-v  (--verbose)       set verbose level (optional level defaults to 1)
 	-h  (--help)          display this help screen
 

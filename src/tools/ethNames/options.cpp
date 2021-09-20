@@ -281,8 +281,7 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
-    registerOptions(nParams, params);
-    optionOn(OPT_PREFUND | OPT_CRUD);
+    registerOptions(nParams, params, OPT_PREFUND | OPT_CRUD);
 
     // BEG_CODE_INIT
     match_case = false;
@@ -309,16 +308,6 @@ COptions::COptions(void) {
     notes.push_back("The `--match_case` option enables case sensitive matching.");
     // clang-format on
     // END_CODE_NOTES
-
-    string_q namesPath = configPathRelative("names/names.tab");
-    if (isTestMode())
-        namesPath = substitute(configPath("names/names.tab"), configPath(""), "$CONFIG/");
-
-    if (!isReadme && !isTestMode()) {
-        ostringstream os;
-        os << "Name file: `" << namesPath << "`";
-        notes.push_back(os.str());
-    }
 
     // BEG_ERROR_STRINGS
     // END_ERROR_STRINGS

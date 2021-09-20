@@ -1,7 +1,7 @@
 name        ,type        ,str_default ,object ,array ,nowrite ,omitempty ,minimal ,extra ,noaddfld ,doc ,disp ,example ,description
 fileName    ,string      ,            ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
-indexFormat ,string      ,            ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
-bloomFormat ,string      ,            ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
-firstPin    ,blknum      ,            ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
-lastPin     ,blknum      ,            ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
-pins        ,pinnedChunk ,            ,true   ,true  ,        ,          ,        ,      ,         ,    ,     ,        ,
+indexFormat ,string      ,            ,       ,      ,        ,          ,        ,      ,         ,1   ,     ,        ,IPFS cid of file describing the file format of an index chunk
+bloomFormat ,string      ,            ,       ,      ,        ,          ,        ,      ,         ,2   ,     ,        ,IPFS cid of file describing the assoicated bloom filter
+firstPin    ,blknum      ,            ,       ,      ,        ,          ,        ,      ,         ,3   ,     ,        ,the block number of the first pin in the manifest (always zero)
+lastPin     ,blknum      ,            ,       ,      ,        ,          ,        ,      ,         ,4   ,     ,        ,the most recent block included in this manifest
+pins        ,pinnedChunk ,            ,true   ,true  ,        ,          ,        ,      ,         ,5   ,     ,        ,a list of all the pins in the unchained index

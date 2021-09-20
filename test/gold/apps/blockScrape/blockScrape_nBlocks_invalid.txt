@@ -6,9 +6,10 @@ blockScrape --n_blocks -12
   Usage:    blockScrape [-p|-s|-v|-h]  
   Purpose:  Scan the chain and update the TrueBlocks index of appearances.
 
-  Where:  
+  Where:
 	-p  (--pin)           pin new chunks (and blooms) to IPFS (requires Pinata key and running IPFS node)
 	-s  (--sleep <double>)the number of seconds to sleep between passes (default 14)
+	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
 	-v  (--verbose)       set verbose level (optional level defaults to 1)
 	-h  (--help)          display this help screen
 

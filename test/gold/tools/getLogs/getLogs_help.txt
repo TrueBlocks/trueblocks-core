@@ -4,7 +4,7 @@ getLogs -h
   Usage:    getLogs [-t|-s|-a|-v|-h] <tx_id> [tx_id...]  
   Purpose:  Retrieve logs for the given transaction(s).
 
-  Where:  
+  Where:
 	transactions          a space-separated list of one or more transaction identifiers (required)
 	-t  (--topic <hash>)  filter by one or more log topics (not implemented)
 	-s  (--source <addr>) export only if the given address emitted the event (not implemented)

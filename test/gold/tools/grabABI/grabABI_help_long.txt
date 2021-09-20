@@ -4,7 +4,7 @@ grabABI --help
   Usage:    grabABI [-k|-s|-f|-v|-h] <address> [address...]  
   Purpose:  Fetches the ABI for a smart contract.
 
-  Where:  
+  Where:
 	addrs                 list of one or more smart contracts whose ABI to grab from EtherScan (required)
 	-k  (--known)         load common 'known' ABIs from cache
 	-s  (--sol <str>)     file name of .sol file from which to create a new known abi (without .sol)

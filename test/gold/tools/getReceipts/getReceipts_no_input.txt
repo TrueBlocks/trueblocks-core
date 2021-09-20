@@ -4,7 +4,7 @@ getReceipts
   Usage:    getReceipts [-a|-v|-h] <tx_id> [tx_id...]  
   Purpose:  Retrieve receipts for the given transaction(s).
 
-  Where:  
+  Where:
 	transactions          a space-separated list of one or more transaction identifiers (required)
 	-a  (--articulate)    articulate the retrieved data if ABIs can be found
 	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]

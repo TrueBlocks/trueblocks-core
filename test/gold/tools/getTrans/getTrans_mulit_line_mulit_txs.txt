@@ -1,5 +1,7 @@
 getTrans argc: 4 [1:--file:cmd_file_1] [2:--fmt] [3:json] 
 getTrans --file:cmd_file_1 --fmt json 
+Cmd: 0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521 
+Cmd: 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.2 0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521 
 { "data": [
   {
     "hash": "0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521",

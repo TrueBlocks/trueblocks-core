@@ -1,4 +1,0 @@
-[settings]
-class = CSchema
-fields = schema.csv
-includes = etherlib.h
