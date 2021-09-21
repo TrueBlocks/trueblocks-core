@@ -20,7 +20,7 @@ docker run \
     --network=host \
     --mount type=bind,source=/home/unchained,target=/root/unchained \
     --mount type=bind,source=$HOME/trueBlocks.toml,target=/root/.local/share/trueblocks/trueBlocks.toml \
-    --mount type=bind,source=$HOME/test_results/$COMMIT_SHA,target=/root/test_results
+    --mount type=bind,source=$HOME/test_results/$COMMIT_SHA,target=/root/test_results \
     $IMAGE_ID
 
 RESULT=$?
