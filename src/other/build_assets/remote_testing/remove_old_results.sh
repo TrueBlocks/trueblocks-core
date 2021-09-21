@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# This script removes old tests' results.
+
 DIR=$1
 
 if [ -z "$DIR" ]
