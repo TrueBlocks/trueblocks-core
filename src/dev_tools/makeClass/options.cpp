@@ -22,8 +22,6 @@ static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
     COption("files", "", "list<path>", OPT_REQUIRED | OPT_POSITIONAL, "one or more class definition files"),
-    COption("run", "r", "", OPT_SWITCH, "run the class maker on associated <class_name(s)>"),
-    COption("edit", "e", "", OPT_HIDDEN | OPT_SWITCH, "edit <class_name(s)> definition file in local folder"),
     COption("all", "a", "", OPT_SWITCH, "list, or run all class definitions found in the local folder"),
     COption("options", "o", "", OPT_SWITCH, "export options code (check validity in the process)"),
     COption("readmes", "m", "", OPT_SWITCH, "create readme files for each tool and app"),
@@ -31,8 +29,6 @@ static const COption params[] = {
     COption("lint", "l", "", OPT_SWITCH, "lint source code files (.cpp and .h) found in local folder and below"),
     COption("tsx", "t", "", OPT_SWITCH, "create typescript routes"),
     COption("dump", "d", "", OPT_HIDDEN | OPT_SWITCH, "dump any classDefinition config tomls to screen and quit"),
-    COption("filter", "i", "<string>", OPT_FLAG, "process only files whose filename or contents contain 'filter'"),
-    COption("force", "c", "", OPT_SWITCH, "for both code generation and options generation, force writing of changes"),
     COption("openapi", "A", "", OPT_HIDDEN | OPT_SWITCH, "export openapi.yaml file for API documentation"),
     COption("", "", "", OPT_DESCRIPTION, "Automatically writes C++ for various purposes."),
     // clang-format on
@@ -47,8 +43,6 @@ bool COptions::parseArguments(string_q& command) {
 
     // BEG_CODE_LOCAL_INIT
     CStringArray files;
-    bool run = false;
-    bool edit = false;
     bool options = false;
     bool readmes = false;
     bool format = false;
@@ -62,12 +56,6 @@ bool COptions::parseArguments(string_q& command) {
         if (false) {
             // do nothing -- make auto code generation easier
             // BEG_CODE_AUTO
-        } else if (arg == "-r" || arg == "--run") {
-            run = true;
-
-        } else if (arg == "-e" || arg == "--edit") {
-            edit = true;
-
         } else if (arg == "-a" || arg == "--all") {
             all = true;
 
@@ -89,14 +77,6 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-d" || arg == "--dump") {
             dump = true;
 
-        } else if (startsWith(arg, "-i:") || startsWith(arg, "--filter:")) {
-            filter = substitute(substitute(arg, "-i:", ""), "--filter:", "");
-        } else if (arg == "-i" || arg == "--filter") {
-            return flag_required("filter");
-
-        } else if (arg == "-c" || arg == "--force") {
-            force = true;
-
         } else if (arg == "-A" || arg == "--openapi") {
             openapi = true;
 
@@ -116,8 +96,6 @@ bool COptions::parseArguments(string_q& command) {
 
     // BEG_DEBUG_DISPLAY
     LOG_TEST_LIST("files", files, files.empty());
-    LOG_TEST_BOOL("run", run);
-    LOG_TEST_BOOL("edit", edit);
     LOG_TEST_BOOL("all", all);
     LOG_TEST_BOOL("options", options);
     LOG_TEST_BOOL("readmes", readmes);
@@ -125,8 +103,6 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("lint", lint);
     LOG_TEST_BOOL("tsx", tsx);
     LOG_TEST_BOOL("dump", dump);
-    LOG_TEST("filter", filter, (filter == ""));
-    LOG_TEST_BOOL("force", force);
     LOG_TEST_BOOL("openapi", openapi);
     // END_DEBUG_DISPLAY
 
@@ -186,16 +162,14 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     // Default to run if we get only all
-    if (!run && !edit && !dump && all)
-        run = true;
 
     // Maybe the user only wants to generate code, format, or lint...
-    if ((run + edit + dump) == 0 && (options + format + lint + readmes) > 0)
+    if (all && (options + format + lint + readmes) > 0)
         return false;
 
     // If not, we need classDefs to work with...
     if (classDefs.empty())
-        return usage(!filter.empty() ? usageErrs[ERR_NOFILTERMATCH] : usageErrs[ERR_NEEDONECLASS]);
+        return usage(usageErrs[ERR_NEEDONECLASS]);
 
     // If we're dumping, dump...
     if (dump) {
@@ -215,24 +189,13 @@ bool COptions::parseArguments(string_q& command) {
             }
         }
         // Maybe we're done..
-        if ((run + edit) == 0)
+        if (!all)
             return false;
     }
 
     // We need the template files
     if (!folderExists(configPath("makeClass/")))
         return false;  // usage(usageErrs[ERR_CONFIGMISSING]);
-
-    // If we got this far, user needs to tell us what to do...
-    if (!run && !edit)
-        return usage(usageErrs[ERR_CHOOSEONE]);
-
-    // ..but only one thing to do.
-    if ((run + edit) > 1)
-        return usage(usageErrs[ERR_CHOOSEONE]);
-
-    mode = (edit ? EDIT : RUN);
-    LOG8("run: ", run, " edit: ", edit, " classes: ", all, " mode: ", mode);
 
     return true;
 }
@@ -244,13 +207,9 @@ void COptions::Init(void) {
     // BEG_CODE_INIT
     all = false;
     tsx = false;
-    filter = "";
-    force = false;
     openapi = false;
     // END_CODE_INIT
 
-    nspace = "qblocks";
-    mode = NONE;
     classDefs.clear();
     counter = CCounter();
 
@@ -275,8 +234,6 @@ COptions::COptions(void) : classFile("") {
     // ERROR_STRINGS
     usageErrs[ERR_CLASSDEFNOTEXIST] = "./classDefinitions folder does not exist.";
     usageErrs[ERR_CONFIGMISSING] = "[{CONFIG_FOLDER}]makeClass/ folder does not exist.";
-    usageErrs[ERR_CHOOSEONE] = "Please chose exactly one of --run, --list, or --edit.";
-    usageErrs[ERR_NOFILTERMATCH] = "No definitions found that matched the filter: [{FILTER}].";
     usageErrs[ERR_NEEDONECLASS] = "Please specify at least one className.";
     // ERROR_STRINGS
 
@@ -310,20 +267,11 @@ bool listClasses(const string_q& path, void* data) {
             string_q class_name = path;
             class_name = substitute(substitute(nextTokenClearReverse(class_name, '/'), ".txt", ""), ".toml", "");
 
-            bool include = true;
-            if (!opts->filter.empty()) {
-                string_q contents;
-                asciiFileToString(path, contents);
-                include = (class_name == opts->filter) || contains(contents, opts->filter);
-            }
-
-            if (include) {
-                CClassDefinition cl;
-                cl.short_fn = class_name;
-                cl.input_path = path;
-                LOG8("Adding: ", cl.short_fn, " ", cl.input_path, " ", cl.outputPath(".cpp"));
-                opts->classDefs.push_back(cl);
-            }
+            CClassDefinition cl;
+            cl.short_fn = class_name;
+            cl.input_path = path;
+            LOG8("Adding: ", cl.short_fn, " ", cl.input_path, " ", cl.outputPath(".cpp"));
+            opts->classDefs.push_back(cl);
         }
     }
     return true;

@@ -1,4 +1,4 @@
-makeClass argc: 3 [1:--run] [2:block] 
-makeClass --run block 
+makeClass argc: 3 [1:--all] [2:block] 
+makeClass --all block 
 TIME ~ CLOCK - <INFO>  : handling generate...
 TIME ~ CLOCK - <INFO>  : makeClass --run processed 1 files (changed 2).                                        

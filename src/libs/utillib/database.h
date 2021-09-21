@@ -172,11 +172,11 @@ extern void cleanFileLocks(void);
 //----------------------------------------------------------------------
 class codewrite_t {
   public:
-    string_q fileName, codeOutIn, namespc;
+    string_q fileName, codeOutIn;
     uint32_t nSpaces;
     bool stripEOFNL, force;
-    codewrite_t(const string_q& fn, const string_q& c, const string_q& n, uint32_t ns, bool s = true, bool f = false)
-        : fileName(fn), codeOutIn(c), namespc(n), nSpaces(ns), stripEOFNL(s), force(f) {
+    codewrite_t(const string_q& fn, const string_q& c)
+        : fileName(fn), codeOutIn(c), nSpaces(4), stripEOFNL(true), force(false) {
     }
 };
 extern bool shouldQuit(void);

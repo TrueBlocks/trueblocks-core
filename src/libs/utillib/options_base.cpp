@@ -812,41 +812,17 @@ string_q configPathRelative(const string_q& part) {
     return substitute(configPath(part), getHomeFolder(), "~/");
 }
 
-//------------------------------------------------------------------
-void editFile(const string_q& fileName) {
-    CToml toml(configPath("trueBlocks.toml"));
-    string_q editor = toml.getConfigStr("dev", "editor", "<NOT_SET>");
-    if (!isTestMode() && editor == "<NOT_SET>") {
-        editor = getEnvStr("EDITOR");
-        if (editor.empty()) {
-            errorMessage("$EDITOR is not set. Either export it to your environment before calling.");
-            return;
-        }
-    }
-
-    CFilename fn(fileName);
-    string_q cmd = "cd \"" + fn.getPath() + "\" ; " + editor + " \"" + fn.getFilename() + "\"";
-    if (isTestMode()) {
-        cerr << "Testing editFile: " << fn.getFilename() << "\n";
-        string_q contents;
-        asciiFileToString(fileName, contents);
-        cout << contents << "\n";
-    } else {
-        // clang-format off
-        if (system(cmd.c_str())) {}  // Don't remove cruft. Silences compiler warnings
-        // clang-format on
-    }
-}
-
 //-------------------------------------------------------------------------
 bool COptionsBase::isEnabled(uint32_t q) const {
     return (enableBits & q);
 }
 
+//-------------------------------------------------------------------------
 void COptionsBase::optionOff(uint32_t q) {
     enableBits &= (~q);
 }
 
+//-------------------------------------------------------------------------
 void COptionsBase::optionOn(uint32_t q) {
     enableBits |= q;
 }

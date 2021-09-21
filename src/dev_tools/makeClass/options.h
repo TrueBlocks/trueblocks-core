@@ -21,9 +21,7 @@
 // BEG_ERROR_DEFINES
 #define ERR_CLASSDEFNOTEXIST 1
 #define ERR_CONFIGMISSING 2
-#define ERR_CHOOSEONE 3
-#define ERR_NOFILTERMATCH 4
-#define ERR_NEEDONECLASS 5
+#define ERR_NEEDONECLASS 3
 // END_ERROR_DEFINES
 
 //-------------------------------------------------------------------
@@ -38,25 +36,15 @@ class CCounter {
     }
 };
 
-typedef enum {
-    NONE = 0,
-    RUN = (1 << 1),
-    EDIT = (1 << 2),
-} runmode_t;
-
 //-------------------------------------------------------------------
 class COptions : public COptionsBase {
   public:
     // BEG_CODE_DECLARE
     bool all;
     bool tsx;
-    string_q filter;
-    bool force;
     bool openapi;
     // END_CODE_DECLARE
 
-    string_q nspace;
-    runmode_t mode;
     CClassDefinitionArray classDefs;
     CClassDefinitionArray dataModels;
     CCommandOptionArray optionArray;
@@ -130,7 +118,7 @@ class COptions : public COptionsBase {
     bool handle_options(void);
     bool handle_lint(void);
     bool handle_format(void);
-    bool handle_generate(CToml& toml, const CClassDefinition& classDef, const string_q& namespc, bool asJs);
+    bool handle_generate(CToml& toml, const CClassDefinition& classDef, bool asJs);
     bool handle_datamodel(void);
     bool handle_tsx(void);
     bool handle_tsx_type(const CClassDefinition& classDef);

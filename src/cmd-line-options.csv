@@ -227,8 +227,6 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 12222,tools,Other,slurp,ethslurp,,,,false,false,false,false,--,note,,Portions of this software are Powered by Etherscan.io APIs.
 
 11660,dev_tools,,,makeClass,files,,,true,false,true,false,local,positional,list<path>,one or more class definition files
-11700,dev_tools,,,makeClass,run,r,,false,false,true,false,local,switch,<boolean>,run the class maker on associated <class_name(s)>
-11720,dev_tools,,,makeClass,edit,e,,false,false,false,false,local,switch,<boolean>,edit <class_name(s)> definition file in local folder
 11740,dev_tools,,,makeClass,all,a,,false,false,true,false,header,switch,<boolean>,list&#44; or run all class definitions found in the local folder
 11780,dev_tools,,,makeClass,options,o,,false,false,true,false,local,switch,<boolean>,export options code (check validity in the process)
 11780,dev_tools,,,makeClass,readmes,m,,false,false,true,false,local,switch,<boolean>,create readme files for each tool and app
@@ -236,16 +234,12 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 11784,dev_tools,,,makeClass,lint,l,,false,false,true,false,local,switch,<boolean>,lint source code files (.cpp and .h) found in local folder and below
 11786,dev_tools,,,makeClass,tsx,t,,false,false,true,false,header,switch,<boolean>,create typescript routes, help text and types for the front end
 11788,dev_tools,,,makeClass,dump,d,,false,false,false,false,local,switch,<boolean>,dump any classDefinition config tomls to screen and quit
-11820,dev_tools,,,makeClass,filter,i,,false,false,true,false,header,flag,<string>,process only files whose filename or contents contain 'filter'
-11822,dev_tools,,,makeClass,force,c,false,false,false,true,false,header,switch,<boolean>,for both code generation and options generation&#44; force writing of changes
 11781,dev_tools,,,makeClass,openapi,A,,false,false,false,false,header,switch,<boolean>,export openapi.yaml file for API documentation
 11824,dev_tools,,,makeClass,,,,false,false,true,false,--,description,,Automatically writes C++ for various purposes.
 11826,dev_tools,,,makeClass,,,,false,false,false,false,--,note,,The `--options` flag generates `COption` code for each of the various tools.
 11830,dev_tools,,,makeClass,,,,false,false,false,false,--,note,,More information on class definition files is found in the documentation.
 11832,dev_tools,,,makeClass,ERR_CLASSDEFNOTEXIST,,,false,false,false,false,--,error,,./classDefinitions folder does not exist.
 11834,dev_tools,,,makeClass,ERR_CONFIGMISSING,,,false,false,false,false,--,error,,[{CONFIG_FOLDER}]makeClass/ folder does not exist.
-11838,dev_tools,,,makeClass,ERR_CHOOSEONE,,,false,false,false,false,--,error,,Please chose exactly one of --run&#44; --list&#44; or --edit.
-11840,dev_tools,,,makeClass,ERR_NOFILTERMATCH,,,false,false,false,false,--,error,,No definitions found that matched the filter: [{FILTER}].
 11842,dev_tools,,,makeClass,ERR_NEEDONECLASS,,,false,false,false,false,--,error,,Please specify at least one className.
 
 11880,dev_tools,,,testRunner,mode,m,,false,false,true,false,local,flag,enum[cmd*|api|both],determine which set of tests to run

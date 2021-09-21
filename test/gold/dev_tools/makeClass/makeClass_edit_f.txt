@@ -63,3 +63,5 @@ includes = "etherlib.h|cache.h"
 serialize = true
 enabled = false
 
+TIME ~ CLOCK - <INFO>  : handling generate...
+TIME ~ CLOCK - <INFO>  : makeClass --run processed 3 files (changed 6).                                        

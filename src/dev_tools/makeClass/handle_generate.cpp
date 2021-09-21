@@ -46,7 +46,7 @@ extern const char* STR_DELETE_CMDS;
 extern const char* STR_DEFAULT_TAGS;
 extern bool writeTheCode(const codewrite_t& cw);
 //------------------------------------------------------------------------------------------------------------
-bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, const string_q& namespc, bool asJs) {
+bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, bool asJs) {
     CClassDefinition classDef(toml);
     classDef.short_fn = classDefIn.short_fn;
     classDef.input_path = classDefIn.input_path;
@@ -301,11 +301,11 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
     replaceAll(headSource, "[{EQUAL_COMMENT}]", (classDef.eq_str.length() ? STR_EQUAL_COMMENT_1 : STR_EQUAL_COMMENT_2));
     replaceAll(headSource, "[{SORT_CODE}]", (classDef.sort_str.length() ? classDef.sort_str : "true"));
     replaceAll(headSource, "[{EQUAL_CODE}]", (classDef.eq_str.length() ? classDef.eq_str : "false"));
-    replaceAll(headSource, "[{NAMESPACE1}]", (namespc.empty() ? "" : "\nnamespace qblocks {\n\n"));
-    replaceAll(headSource, "[{NAMESPACE2}]", (namespc.empty() ? "" : "}  // namespace qblocks\n"));
+    replaceAll(headSource, "[{NAMESPACE1}]", "\nnamespace qblocks {\n\n");
+    replaceAll(headSource, "[{NAMESPACE2}]", "}  // namespace qblocks\n");
     replaceAll(headSource, "public:\n\n  public:", "public:");
     expandTabbys(headSource);
-    counter.nProcessed += writeTheCode(codewrite_t(headerFile, headSource, namespc, 4, true, force));
+    counter.nProcessed += writeTheCode(codewrite_t(headerFile, headSource));
 
     //------------------------------------------------------------------------------------------------
     string_q srcFile = classDef.outputPath(".cpp");
@@ -344,11 +344,11 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
     replaceAll(srcSource, "[{CLASS_BASE}]", classDef.class_base);
     replaceAll(srcSource, "[{CLASS_UPPER}]", classDef.base_upper);
     replaceAll(srcSource, "[{DISPLAY_FIELDS}]", classDef.display_str);
-    replaceAll(srcSource, "[{NAMESPACE1}]", (namespc.empty() ? "" : "\nnamespace qblocks {\n\n"));
-    replaceAll(srcSource, "[{NAMESPACE2}]", (namespc.empty() ? "" : "}  // namespace qblocks\n"));
+    replaceAll(srcSource, "[{NAMESPACE1}]", "\nnamespace qblocks {\n\n");
+    replaceAll(srcSource, "[{NAMESPACE2}]", "}  // namespace qblocks\n");
     replaceAll(srcSource, "[{FN}]", classDef.short_fn);
     expandTabbys(srcSource);
-    counter.nProcessed += writeTheCode(codewrite_t(srcFile, srcSource, namespc, 4, true, force));
+    counter.nProcessed += writeTheCode(codewrite_t(srcFile, srcSource));
 
     if (tsx && classDef.tsx)
         handle_tsx_type(classDef);

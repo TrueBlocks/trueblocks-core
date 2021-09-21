@@ -1,25 +1,21 @@
-makeClass argc: 3 [1:-e] [2:--run] 
-makeClass -e --run 
+makeClass argc: 3 [1:-e] [2:--all] 
+makeClass -e --all 
 
-  Please chose exactly one of --run, --list, or --edit. Quitting...
+  Invalid option: -e
 
-  Usage:    makeClass [-r|-a|-o|-m|-f|-l|-t|-i|-c|-v|-h] <file> [file...]  
+  Usage:    makeClass [-a|-o|-m|-f|-l|-t|-v|-h] <file> [file...]  
   Purpose:  Automatically writes C++ for various purposes.
 
   Where:
 	files                 one or more class definition files (required)
-	-r  (--run)           run the class maker on associated <class_name(s)>
 	-a  (--all)           list, or run all class definitions found in the local folder
 	-o  (--options)       export options code (check validity in the process)
 	-m  (--readmes)       create readme files for each tool and app
 	-f  (--format)        format source code files (.cpp and .h) found in local folder and below
 	-l  (--lint)          lint source code files (.cpp and .h) found in local folder and below
 	-t  (--tsx)           create typescript routes
-	-i  (--filter <str>)  process only files whose filename or contents contain 'filter'
-	-c  (--force)         for both code generation and options generation, force writing of changes
 
 	#### Hidden options
-	-e  (--edit)          edit <class_name(s)> definition file in local folder
 	-d  (--dump)          dump any classDefinition config tomls to screen and quit
 	-A  (--openapi)       export openapi.yaml file for API documentation
 	#### Hidden options

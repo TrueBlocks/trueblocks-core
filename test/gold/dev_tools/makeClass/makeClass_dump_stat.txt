@@ -1,51 +1,31 @@
 makeClass argc: 6 [1:--dump] [2:-a] [3:-i] [4:CStatus] [5:--verbose] 
 makeClass --dump -a -i CStatus --verbose 
-{
-  "class_name": "CStatus",
-  "class_base": "Status",
-  "base_class": "CBaseNode",
-  "base_name": "Status",
-  "base_proper": "Status",
-  "base_lower": "status",
-  "base_upper": "STATUS",
-  "base_base": "Basenode",
-  "head_includes": "etherlib.h|cache.h",
-  "fieldArray": [
-    {
-      "type": "string",
-      "name": "client_version"
-    },
-    {
-      "type": "string",
-      "name": "trueblocks_version"
-    },
-    {
-      "type": "string",
-      "name": "rpc_provider"
-    },
-    {
-      "type": "string",
-      "name": "api_provider"
-    },
-    {
-      "type": "string",
-      "name": "balance_provider"
-    },
-    {
-      "type": "string",
-      "name": "host"
-    },
-    {
-      "type": "sbool",
-      "name": "is_scraping"
-    },
-    {
-      "type": "CCachePtrArray",
-      "name": "caches",
-      "is_pointer": true,
-      "is_array": true,
-      "is_object": true
-    }
-  ]
-}
 
+  Invalid option: -i
+
+  Usage:    makeClass [-a|-o|-m|-f|-l|-t|-v|-h] <file> [file...]  
+  Purpose:  Automatically writes C++ for various purposes.
+
+  Where:
+	files                 one or more class definition files (required)
+	-a  (--all)           list, or run all class definitions found in the local folder
+	-o  (--options)       export options code (check validity in the process)
+	-m  (--readmes)       create readme files for each tool and app
+	-f  (--format)        format source code files (.cpp and .h) found in local folder and below
+	-l  (--lint)          lint source code files (.cpp and .h) found in local folder and below
+	-t  (--tsx)           create typescript routes
+
+	#### Hidden options
+	-d  (--dump)          dump any classDefinition config tomls to screen and quit
+	-A  (--openapi)       export openapi.yaml file for API documentation
+	#### Hidden options
+
+	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+	-v  (--verbose)       set verbose level (optional level defaults to 1)
+	-h  (--help)          display this help screen
+
+  Notes:
+	- The --options flag generates COption code for each of the various tools.
+	- More information on class definition files is found in the documentation.
+
+  Powered by TrueBlocks
