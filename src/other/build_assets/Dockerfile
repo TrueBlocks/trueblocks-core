@@ -7,7 +7,7 @@ ARG config_file
 
 RUN apt-get update -y
 RUN apt install -y g++ gcc make cmake git nano libcurl3-dev python3 python3-dev \
-        curl bash linux-headers-amd64 libsqlite3-dev
+        curl bash linux-headers-amd64 libsqlite3-dev xz-utils
 
 # RUN apk add glibc-2.28-r0.apk
 

@@ -29,4 +29,4 @@ RESULT=$?
 cd
 rm -rf testing/$COMMIT_SHA
 
-exit RESULT
+exit $RESULT
