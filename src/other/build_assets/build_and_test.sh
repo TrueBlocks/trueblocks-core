@@ -54,4 +54,7 @@ then
     killall flame
 fi
 
+echo "Compressing and saving test/working"
+tar -cJ --file /root/test_results/working.tar.xz ../test/working/
+
 exit $RESULT

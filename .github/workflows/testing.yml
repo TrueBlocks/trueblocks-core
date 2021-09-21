@@ -15,14 +15,13 @@ jobs:
           script: |
             rm -rf testing/${{ github.sha }}
             mkdir -p testing/${{ github.sha }}
+            mkdir -p test_results/${{ github.sha }}
             cd  testing/${{ github.sha }}
             git clone --quiet https://github.com/${{ github.repository }}
             cd trueblocks-core
             git reset --hard ${{ github.sha }}
             cd src/other/build_assets
             CONFIG_FILE=$HOME/trueBlocks.toml bash test_with_docker.sh ${{ github.repository }} ${{ github.sha }} test-all
-            cd
-            rm -rf testing/${{ github.sha }}
       - name: Finish
         run: |
           echo "🍏 This job's status is ${{ job.status }}"

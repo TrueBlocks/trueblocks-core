@@ -13,5 +13,20 @@ fi
 
 echo "Building image..."
 IMAGE_ID=`docker build -q --build-arg repo=$REPO --build-arg commit_sha=$COMMIT_SHA --build-arg test_target=$TEST_TARGET --build-arg config_file=$CONFIG_FILE .`
+
 echo "Done. Running Docker image and tests"
-docker run --rm --network=host --mount type=bind,source=/home/unchained,target=/root/unchained --mount type=bind,source=$HOME/trueBlocks.toml,target=/root/.local/share/trueblocks/trueBlocks.toml $IMAGE_ID
+docker run \
+    --rm \
+    --network=host \
+    --mount type=bind,source=/home/unchained,target=/root/unchained \
+    --mount type=bind,source=$HOME/trueBlocks.toml,target=/root/.local/share/trueblocks/trueBlocks.toml \
+    --mount type=bind,source=$HOME/test_results/$COMMIT_SHA,target=/root/test_results
+    $IMAGE_ID
+
+RESULT=$?
+
+# Remove code repository
+cd
+rm -rf testing/$COMMIT_SHA
+
+exit RESULT
