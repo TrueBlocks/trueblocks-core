@@ -4,6 +4,13 @@ Because DeFi is essentially swaps and trades around ERC20s, and because and 'pro
 
 Reconciliations are relative to an `accountedFor` address. For this reason, the same transaction will probably have different reconciliations depending on the `accountedFor` address. Consider a simple transfer of ETH from one address to another. Obviously, the sender's and the recipient's reconciliations will differ (in opposite proportion to each other). The `accountedFor` address is always present as the `assetAddress` in the first reconciliation of the statements array.
 
+The following commands produce and manage [{PLURAL}]:
+
+| Tools |     |
+| ----- | --- |
+
+[{PROPER}] data is made of the following data fields:
+
 [{FIELDS}]
 
 **Notes**

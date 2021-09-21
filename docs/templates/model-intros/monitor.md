@@ -2,10 +2,15 @@ A Monitor is a list of [Appearances](/data-model/accounts/#appearance) associate
 
 Once created, a monitor may be periodically *freshened* by calling either `chifra list` or `chifra export`, however, it is also possible to freshen a monitor continually with [chifra scrape --monitors](/docs/chifra/admin/#chifra-scrape). This tool watches the front of the chain and repeatedly calls `chifra list`.
 
-[{FIELDS}]
+The following commands produce and manage [{PLURAL}]:
 
 | Tools                                                       |                                                              |
 | ----------------------------------------------------------- | ------------------------------------------------------------ |
 | [chifra status monitors](/docs/chifra/admin/#chifra-status) | report on the status of the TrueBlocks system                |
 | [chifra list](/docs/chifra/accounts/#chifra-list)           | list appearances for one or more addresses                   |
 | [chifra export](/docs/chifra/accounts/#chifra-export)       | export full detail of transactions for one or more addresses |
+| [chifra monitors](/docs/chifra/accounts/#chifra-monitors)   | delete, undelete, and remove previously created monitors     |
+
+[{PROPER}] data is made of the following data fields:
+
+[{FIELDS}]

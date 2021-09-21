@@ -259,56 +259,6 @@ components:
           items:
             $ref: "#/components/schemas/function"
           description: "the list of events and functions on this abi"
-    function:
-      description: "a human readable representation of a Solidity function call or event"
-      type: object
-      properties:
-        name:
-          type: string
-          description: "the name of the interface"
-        type:
-          type: string
-          description: "the type of the interface, either 'event' or 'function'"
-        signature:
-          type: string
-          description: "the canonical signature of the interface"
-        encoding:
-          type: string
-          description: "the signature encoded with keccak"
-        inputs:
-          type: array
-          items:
-            $ref: "#/components/schemas/parameter"
-          description: "the input parameters to the function, if any"
-        outputs:
-          type: array
-          items:
-            $ref: "#/components/schemas/parameter"
-          description: "the output parameters to the function, if any"
-    parameter:
-      description: "an input or output paramter to a function"
-      type: object
-      properties:
-        type:
-          type: string
-          description: "the type of this parameter"
-        name:
-          type: string
-          description: "the name of this parameter"
-        str_default:
-          type: string
-          description: "the defaul value of this parameter, if any"
-        indexed:
-          type: boolean
-          description: "`true` if this parameter is indexed"
-        internalType:
-          type: string
-          description: "for composite types, the interal type of the parameter"
-        components:
-          type: array
-          items:
-            $ref: "#/components/schemas/parameter"
-          description: "for composite types, the parameters making up the composite"
     block:
       description: "block data directly from the blockchain"
       type: object
@@ -782,6 +732,28 @@ components:
           type: number
           format: timestamp
           description: "the timestamp when this status data was produced"
+    cache:
+      description: "The cache data model carries information about the various local binary caches"
+      type: object
+      properties:
+        type:
+          type: string
+          description: "the type of the cache (one of the nine different types)"
+        path:
+          type: string
+          description: "the physical path to the cache on the hard drive"
+        nFiles:
+          type: number
+          format: uint64
+          description: "the number of files in the cache"
+        nFolders:
+          type: number
+          format: uint64
+          description: "the number of subfolders in the cache"
+        sizeInBytes:
+          type: number
+          format: uint64
+          description: "the size of the cache in bytes"
     pinnedChunk:
       description: "the IPFS hashes of the index chunk and its associated Bloom filter for the given block range"
       type: object
@@ -821,6 +793,56 @@ components:
           items:
             $ref: "#/components/schemas/pinnedChunk"
           description: "a list of all the pins in the unchained index"
+    function:
+      description: "a human readable representation of a Solidity function call or event"
+      type: object
+      properties:
+        name:
+          type: string
+          description: "the name of the interface"
+        type:
+          type: string
+          description: "the type of the interface, either 'event' or 'function'"
+        signature:
+          type: string
+          description: "the canonical signature of the interface"
+        encoding:
+          type: string
+          description: "the signature encoded with keccak"
+        inputs:
+          type: array
+          items:
+            $ref: "#/components/schemas/parameter"
+          description: "the input parameters to the function, if any"
+        outputs:
+          type: array
+          items:
+            $ref: "#/components/schemas/parameter"
+          description: "the output parameters to the function, if any"
+    parameter:
+      description: "an input or output paramter to a function"
+      type: object
+      properties:
+        type:
+          type: string
+          description: "the type of this parameter"
+        name:
+          type: string
+          description: "the name of this parameter"
+        str_default:
+          type: string
+          description: "the defaul value of this parameter, if any"
+        indexed:
+          type: boolean
+          description: "`true` if this parameter is indexed"
+        internalType:
+          type: string
+          description: "for composite types, the interal type of the parameter"
+        components:
+          type: array
+          items:
+            $ref: "#/components/schemas/parameter"
+          description: "for composite types, the parameters making up the composite"
     quote:
       description: "the closing price of Ether in USD at a particular moment"
       type: object

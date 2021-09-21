@@ -5,5 +5,5 @@ includes = utillib.h|abi.h
 cpp_includes = pricesource.h|reconciliation.h
 doc_group = 05-Other
 doc_descr = the closing price of Ether in USD at a particular moment
-doc_api = 40-quote
+doc_api = 42-quote
 doc_producer = quotes

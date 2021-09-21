@@ -1,10 +1,11 @@
-<!-- TEXT ABOUT PRICE QUOTES -->
+Prior to sources of on-chain prices such as UniSwap, TrueBlocks would pull US dollar to Ether prices from the Poloniex price API. This data structure reports on those queries. Note that this tool has been deprecated.
 
-### How to get price quotes
+The following commands produce and manage [{PLURAL}]:
 
-- **CLI**:
-  - run `chifra transactions <txn_id>`.
-  - Use the `--articulate` option to turn the `input` field human readable.
-  - [See the command's documentation](/docs/chifra/chaindata/#chifra-transactions)
-- **API**:
-  - [Calls to `/transactions`](/api#operation/chaindata-transactions)
+| Tools                                              |                                                                               |
+| -------------------------------------------------- | ----------------------------------------------------------------------------- |
+| [chifra quotes](/docs/chifra/other/#chifra-quotes) | Freshen and/or display Ethereum price data.<br/>This tool has been deprecated |
+
+[{PROPER}] data is made of the following data fields:
+
+[{FIELDS}]

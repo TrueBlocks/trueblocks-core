@@ -4,8 +4,12 @@ Unlike the blockchain data itself, which is globally available and impossible to
 
 Over the years, we've paid careful attention to the 'airwaves' and have collected together a 'starter-set' of named addresses which is available through the [chifra names](/docs/chifra/accounts/#chifra-names) command line. For example, every time people say "Show me your address, and we will airdrop some tokens" on Twitter, we copy and paste all those addresses. We figure if you're going to DOX yourselves, we might as well take advantage of it. Sorry...not sorry.
 
-[{FIELDS}]
+The following commands produce and manage [{PLURAL}]:
 
 | Tools                                               |                                                 |
 | --------------------------------------------------- | ----------------------------------------------- |
 | [chifra names](/docs/chifra/accounts/#chifra-names) | query addresses or names of well known accounts |
+
+[{PROPER}] data is made of the following data fields:
+
+[{FIELDS}]

@@ -2,10 +2,12 @@ Receipts record the amount of gas used for a transaction among other things. If 
 
 If the `to` address of a transaction is `0x0`, the `input` data is considered to be the the source code (byte code) of a smart contract. In this case, if the creation of the contract succeeds, the `contractAddress` field of the receipt carries the address of the newly created contract.
 
-### How to get receipts
+The following commands produce and manage [{PLURAL}]:
 
-- **CLI**:
-  - run `chifra receipts <txn_id>`.
-  - [See the command's documentation](/docs/chifra/chaindata/#chifra-receipts)
-- **API**:
-  - [Calls to `/receipts`](/api#operation/chaindata-receipts)
+| Tools                                                      |                                                |
+| ---------------------------------------------------------- | ---------------------------------------------- |
+| [chifra receipts](/docs/chifra/chaindata/#chifra-receipts) | retrieve receipts for the given transaction(s) |
+
+[{PROPER}] data is made of the following data fields:
+
+[{FIELDS}]

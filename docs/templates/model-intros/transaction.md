@@ -5,11 +5,12 @@ However, one field is very interesting: `articulatedTx` provides a human readabl
 
 This is a very powerful way to understand the story behind a smart contract.
 
-### How to get transactions
+The following commands produce and manage [{PLURAL}]:
 
-- **CLI**:
-  - run `chifra transactions <txn_id>`.
-  - Use the `--articulate` option to turn the `input` field human readable.
-  - [See the command's documentation](/docs/chifra/chaindata/#chifra-transactions)
-- **API**:
-  - [Calls to `/transactions`](/api#operation/chaindata-transactions)
+| Tools                                                              |                                                                 |
+| ------------------------------------------------------------------ | --------------------------------------------------------------- |
+| [chifra transactions](/docs/chifra/chaindata/#chifra-transactions) | Retrieve one or more transactions from the chain or local cache |
+
+[{PROPER}] data is made of the following data fields:
+
+[{FIELDS}]

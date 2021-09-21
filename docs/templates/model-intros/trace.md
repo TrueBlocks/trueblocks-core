@@ -2,10 +2,12 @@ The deepest layer of the Ethereum data is the trace. Every transaction has at le
 
 Traces may be arbitrarily deep (up to the gasLimit) and ultimately represent a tree of function calls. Some transactions have 100s of traces. The format of the trace is similar to the transaction itself have a trace `action` (which contains `from`, `to`, `value` like the transaction) and the trace `result` (containing `gasUsed` like the receipt).
 
-### How to get traces
+The following commands produce and manage [{PLURAL}]:
 
-- **CLI**:
-  - run `chifra traces <txn_id>`.
-  - [See the command's documentation](/docs/chifra/chaindata/#chifra-traces)
-- **API**:
-  - [Calls to `/traces`](/api#operation/chaindata-traces)
+| Tools                                                  |                                              |
+| ------------------------------------------------------ | -------------------------------------------- |
+| [chifra traces](/docs/chifra/chaindata/#chifra-traces) | retrieve traces for the given transaction(s) |
+
+[{PROPER}] data is made of the following data fields:
+
+[{FIELDS}]

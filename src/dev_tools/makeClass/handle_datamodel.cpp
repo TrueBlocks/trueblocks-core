@@ -16,7 +16,6 @@
 extern const char* STR_YAML_TAIL;
 extern const char* STR_DOCUMENT_TAIL;
 extern const char* STR_YAML_MODELHEADER;
-extern const char* STR_FIELDS_INTRO;
 extern void addToTypeMap(map<string_q, string_q>& map, const string_q& group, const string& type);
 extern bool sortByDataModelName(const CClassDefinition& c1, const CClassDefinition& c2);
 extern bool sortByDoc(const CParameter& c1, const CParameter& c2);
@@ -75,12 +74,7 @@ bool COptions::handle_datamodel(void) {
         docStream << endl;
         docStream << asciiFileToString(modelFn) << endl;
 
-        string_q fieldIntro = STR_FIELDS_INTRO;
-        replace(fieldIntro, "[{TYPE}]", model.doc_api);
-        replaceAll(fieldIntro, "[{PLURAL}]", plural(model.doc_api, 0));
-
-        ostringstream fieldStream;
-        fieldStream << fieldIntro << endl;
+        ostringstream fieldStream, toolsStream;
         fieldStream << markDownRow("Field", "Description", "Type", widths);
         fieldStream << markDownRow("-", "", "", widths);
 
@@ -100,12 +94,19 @@ bool COptions::handle_datamodel(void) {
         yamlStream << yamlPropStream.str();
 
         string_q thisDoc = docStream.str();
+        replaceAll(thisDoc, "[{TYPE}]", model.doc_api);
+        replaceAll(thisDoc, "[{PLURAL}]", plural(model.doc_api, 0));
+        replaceAll(thisDoc, "[{PROPER}]", toProper(model.doc_api));
         if (contains(thisDoc, "[{FIELDS}]"))
             replace(thisDoc, "[{FIELDS}]", trim(fieldStream.str(), '\n'));
         else
             thisDoc += fieldStream.str();
+        if (contains(thisDoc, "[{TOOLS}]"))
+            replace(thisDoc, "[{TOOLS}]", trim(toolsStream.str(), '\n'));
+        else
+            thisDoc += toolsStream.str();
 
-        documentMap[model.doc_group] = documentMap[model.doc_group] + thisDoc + "\n---\n";
+        documentMap[model.doc_group] = documentMap[model.doc_group] + thisDoc;
     }
 
     yamlStream << STR_YAML_TAIL;
@@ -247,8 +248,3 @@ const char* STR_YAML_MODELHEADER =
     "[      description: \"{DOC_DESCR}\"\n]"
     "[      type: object\n]"
     "[      properties:\n]";
-
-//------------------------------------------------------------------------------------------------------------
-const char* STR_FIELDS_INTRO =
-    "Below is a list of the data fields for [{PLURAL}]. Following that are the "
-    "commands that produce or manage [{PLURAL}].\n";

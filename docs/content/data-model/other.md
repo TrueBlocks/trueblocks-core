@@ -2,7 +2,7 @@
 title: "Other"
 description: ""
 lead: ""
-date: 2021-09-18T08:45:20
+date: 2021-09-20T21:00:48
 lastmod:
   - :git
   - lastmod
@@ -28,20 +28,63 @@ text="Note: some of these tools, like `ethslurp`, require an EtherScan key." >}}
 
 _Each data structure is created by one or more tools which are detailed below_
 
+## Function
+
+ABI files are derived from the Solidity source code of a smart contract by extracting the canonical function and event signatures in a JSON structure. The function signatures are hashed (using keccak) into four-byte encodings for functions and 32-byte encodings for events. Because the blockchain only deals with byte data, TrueBlocks needs a way to decode the bytes back into the human-readable function and event signatures. We call this process `--articulate`. Most TrueBlocks commands provide an `--articulate` option. See the commands themselves for more information.
+
+The following commands produce and manage functions:
+
+| Tools                                                 |                                                              |
+| ----------------------------------------------------- | ------------------------------------------------------------ |
+| [chifra export](/docs/chifra/accounts/#chifra-export) | export full detail of transactions for one or more addresses |
+| [chifra abis](/docs/chifra/accounts/#chifra-abis)     | fetches the ABI for a smart contract                         |
+
+Function data is made of the following data fields:
+
+| Field     | Description                                             | Type            |
+| --------- | ------------------------------------------------------- | --------------- |
+| name      | the name of the interface                               | string          |
+| type      | the type of the interface, either 'event' or 'function' | string          |
+| signature | the canonical signature of the interface                | string          |
+| encoding  | the signature encoded with keccak                       | string          |
+| inputs    | the input parameters to the function, if any            | CParameterArray |
+| outputs   | the output parameters to the function, if any           | CParameterArray |
+
+
+## Parameter
+
+Parameters are a constituant part of a [Function or Event](/data-model/accounts/#function). The parameters of a function are each individual value passed into the function. Along with the function's name, the parameters types (once canonicalized) are used to create a function's four byte signature (or an event's 32-byte signature). Parameters are important to TrueBlocks because we use them as part of the ABI decoding and the `--articulate` process to conver the blockchain's bytes into human-readable text.
+
+The following commands produce and manage parameters:
+
+| Tools                                                 |                                                              |
+| ----------------------------------------------------- | ------------------------------------------------------------ |
+| [chifra export](/docs/chifra/accounts/#chifra-export) | export full detail of transactions for one or more addresses |
+| [chifra abis](/docs/chifra/accounts/#chifra-abis)     | fetches the ABI for a smart contract                         |
+
+Parameter data is made of the following data fields:
+
+| Field        | Description                                                 | Type            |
+| ------------ | ----------------------------------------------------------- | --------------- |
+| type         | the type of this parameter                                  | string          |
+| name         | the name of this parameter                                  | string          |
+| str_default  | the defaul value of this parameter, if any                  | string          |
+| indexed      | `true` if this parameter is indexed                         | bool            |
+| internalType | for composite types, the interal type of the parameter      | string          |
+| components   | for composite types, the parameters making up the composite | CParameterArray |
+
+
 ## Quote
 
-<!-- TEXT ABOUT PRICE QUOTES -->
+Prior to sources of on-chain prices such as UniSwap, TrueBlocks would pull US dollar to Ether prices from the Poloniex price API. This data structure reports on those queries. Note that this tool has been deprecated.
 
-### How to get price quotes
+The following commands produce and manage quotes:
 
-- **CLI**:
-  - run `chifra transactions <txn_id>`.
-  - Use the `--articulate` option to turn the `input` field human readable.
-  - [See the command's documentation](/docs/chifra/chaindata/#chifra-transactions)
-- **API**:
-  - [Calls to `/transactions`](/api#operation/chaindata-transactions)
+| Tools                                              |                                                                               |
+| -------------------------------------------------- | ----------------------------------------------------------------------------- |
+| [chifra quotes](/docs/chifra/other/#chifra-quotes) | Freshen and/or display Ethereum price data.<br/>This tool has been deprecated |
 
-Below is a list of the data fields for quotes. Following that are the commands that produce or manage quotes.
+Quote data is made of the following data fields:
 
 | Field     | Description                                           | Type      |
 | --------- | ----------------------------------------------------- | --------- |
@@ -50,7 +93,6 @@ Below is a list of the data fields for quotes. Following that are the commands t
 | date      | the date of the associated timestamp                  | date      |
 | name      | the name of the block for some named 'special' blocks | string    |
 
----
 
 ## Base types
 
@@ -58,6 +100,7 @@ The above documentation mentions the following basic data types.
 
 | Type      | Description                                     | Notes          |
 | --------- | ----------------------------------------------- | -------------- |
+| bool      | a value either `true`, `false`, `1`, or `0`     |                |
 | date      | a JSON formatted date                           | as a string    |
 | double    | a floating point number of double precision     |                |
 | string    | a normal character string                       |                |

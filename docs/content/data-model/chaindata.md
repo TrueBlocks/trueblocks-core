@@ -2,7 +2,7 @@
 title: "Chain Data"
 description: ""
 lead: ""
-date: 2021-09-18T09:10:08
+date: 2021-09-20T20:31:37
 lastmod:
   - :git
   - lastmod
@@ -26,14 +26,13 @@ _Each data structure is created by one or more tools which are detailed below_
 `chifra blocks` returns top level data specified block. You can also include
 an array for the blocks' transactions.
 
-### How to get blocks
+The following commands produce and manage blocks:
 
-- **CLI**:
-  - [See the command's documentation](/docs/chifra/chaindata/#chifra-blocks)
-- **API**:
-  - [Calls to `/blocks`](/api#operation/chaindata-blocks)
+| Tools                                                  |                                                           |
+| ------------------------------------------------------ | --------------------------------------------------------- |
+| [chifra blocks](/docs/chifra/chaindata/#chifra-blocks) | retrieve one or more blocks from the chain or local cache |
 
-Below is a list of the data fields for blocks. Following that are the commands that produce or manage blocks.
+Block data is made of the following data fields:
 
 | Field         | Description                                                   | Type              |
 | ------------- | ------------------------------------------------------------- | ----------------- |
@@ -48,7 +47,6 @@ Below is a list of the data fields for blocks. Following that are the commands t
 | baseFeePerGas | the base fee for this block                                   | wei               |
 | finalized     | flag indicating the system considers this data final          | bool              |
 
----
 
 ## Transaction
 
@@ -59,16 +57,13 @@ However, one field is very interesting: `articulatedTx` provides a human readabl
 
 This is a very powerful way to understand the story behind a smart contract.
 
-### How to get transactions
+The following commands produce and manage transactions:
 
-- **CLI**:
-  - run `chifra transactions <txn_id>`.
-  - Use the `--articulate` option to turn the `input` field human readable.
-  - [See the command's documentation](/docs/chifra/chaindata/#chifra-transactions)
-- **API**:
-  - [Calls to `/transactions`](/api#operation/chaindata-transactions)
+| Tools                                                              |                                                                 |
+| ------------------------------------------------------------------ | --------------------------------------------------------------- |
+| [chifra transactions](/docs/chifra/chaindata/#chifra-transactions) | Retrieve one or more transactions from the chain or local cache |
 
-Below is a list of the data fields for transactions. Following that are the commands that produce or manage transactions.
+Transaction data is made of the following data fields:
 
 | Field            | Description                                                                                           | Type                 |
 | ---------------- | ----------------------------------------------------------------------------------------------------- | -------------------- |
@@ -91,7 +86,6 @@ Below is a list of the data fields for transactions. Following that are the comm
 | hasToken         | `true` if the transaction is token related, `false` otherwise                                         | uint8                |
 | finalized        | flag indicating the system considers this data final                                                  | bool                 |
 
----
 
 ## Receipt
 
@@ -99,15 +93,13 @@ Receipts record the amount of gas used for a transaction among other things. If 
 
 If the `to` address of a transaction is `0x0`, the `input` data is considered to be the the source code (byte code) of a smart contract. In this case, if the creation of the contract succeeds, the `contractAddress` field of the receipt carries the address of the newly created contract.
 
-### How to get receipts
+The following commands produce and manage receipts:
 
-- **CLI**:
-  - run `chifra receipts <txn_id>`.
-  - [See the command's documentation](/docs/chifra/chaindata/#chifra-receipts)
-- **API**:
-  - [Calls to `/receipts`](/api#operation/chaindata-receipts)
+| Tools                                                      |                                                |
+| ---------------------------------------------------------- | ---------------------------------------------- |
+| [chifra receipts](/docs/chifra/chaindata/#chifra-receipts) | retrieve receipts for the given transaction(s) |
 
-Below is a list of the data fields for receipts. Following that are the commands that produce or manage receipts.
+Receipt data is made of the following data fields:
 
 | Field           | Description                                                                | Type           |
 | --------------- | -------------------------------------------------------------------------- | -------------- |
@@ -116,21 +108,18 @@ Below is a list of the data fields for receipts. Following that are the commands
 | gasUsed         | the amount of gas actually used by the transaction                         | gas            |
 | logs            | a possibly empty array of logs                                             | CLogEntryArray |
 
----
 
 ## Log
 
 Logs appear in a possibly empty array in the transaction's receipt. They are only created if the underlying transaction suceeded. In the case where the transaction failed, no logs will appear in the receipt. Logs are only ever generated during transactions whose `to` address is a smart contract.
 
-### How to get logs
+The following commands produce and manage logs:
 
-- **CLI**:
-  - run `chifra logs <txn_id>`.
-  - [See the command's documentation](/docs/chifra/chaindata/#chifra-logs)
-- **API**:
-  - [Calls to `/logs`](/api#operation/chaindata-logs)
+| Tools                                              |                                            |
+| -------------------------------------------------- | ------------------------------------------ |
+| [chifra logs](/docs/chifra/chaindata/#chifra-logs) | retrieve logs for the given transaction(s) |
 
-Below is a list of the data fields for logs. Following that are the commands that produce or manage logs.
+Log data is made of the following data fields:
 
 | Field            | Description                                                                                       | Type        |
 | ---------------- | ------------------------------------------------------------------------------------------------- | ----------- |
@@ -143,7 +132,6 @@ Below is a list of the data fields for logs. Following that are the commands tha
 | articulatedLog   | a human-readable version of the topic and data fields                                             | CFunction   |
 | compressedLog    | a truncated, more readable version of the articulation                                            | string      |
 
----
 
 ## Trace
 
@@ -151,15 +139,13 @@ The deepest layer of the Ethereum data is the trace. Every transaction has at le
 
 Traces may be arbitrarily deep (up to the gasLimit) and ultimately represent a tree of function calls. Some transactions have 100s of traces. The format of the trace is similar to the transaction itself have a trace `action` (which contains `from`, `to`, `value` like the transaction) and the trace `result` (containing `gasUsed` like the receipt).
 
-### How to get traces
+The following commands produce and manage traces:
 
-- **CLI**:
-  - run `chifra traces <txn_id>`.
-  - [See the command's documentation](/docs/chifra/chaindata/#chifra-traces)
-- **API**:
-  - [Calls to `/traces`](/api#operation/chaindata-traces)
+| Tools                                                  |                                              |
+| ------------------------------------------------------ | -------------------------------------------- |
+| [chifra traces](/docs/chifra/chaindata/#chifra-traces) | retrieve traces for the given transaction(s) |
 
-Below is a list of the data fields for traces. Following that are the commands that produce or manage traces.
+Trace data is made of the following data fields:
 
 | Field            | Description                                               | Type         |
 | ---------------- | --------------------------------------------------------- | ------------ |
@@ -175,13 +161,18 @@ Below is a list of the data fields for traces. Following that are the commands t
 | articulatedTrace | human readable version of the trace action input data     | CFunction    |
 | compressedTrace  | a compressed string version of the articulated trace      | string       |
 
----
 
 ## TraceAction
 
 Other than the first trace which is the trace of the transaction itself, traces represent calls into smart contracts. Because of this, `trace actions` closely resemble the fields of the [transaction](#transactions).
 
-Below is a list of the data fields for traceactions. Following that are the commands that produce or manage traceactions.
+The following commands produce and manage traceactions:
+
+| Tools                                                  |                                              |
+| ------------------------------------------------------ | -------------------------------------------- |
+| [chifra traces](/docs/chifra/chaindata/#chifra-traces) | retrieve traces for the given transaction(s) |
+
+Traceaction data is made of the following data fields:
 
 | Field         | Description                                                                | Type    |
 | ------------- | -------------------------------------------------------------------------- | ------- |
@@ -192,13 +183,18 @@ Below is a list of the data fields for traceactions. Following that are the comm
 | callType      | the type of call                                                           | string  |
 | refundAddress | if the call type is self-destruct, the address to which the refund is sent | address |
 
----
 
 ## TraceResult
 
 As mentioned above, other than the first trace, traces represent calls into other smart contracts. Because of this, the trace results closely resembles the fields of the [receipt](#receipts).
 
-Below is a list of the data fields for traceresults. Following that are the commands that produce or manage traceresults.
+The following commands produce and manage traceresults:
+
+| Tools                                                  |                                              |
+| ------------------------------------------------------ | -------------------------------------------- |
+| [chifra traces](/docs/chifra/chaindata/#chifra-traces) | retrieve traces for the given transaction(s) |
+
+Traceresult data is made of the following data fields:
 
 | Field       | Description                                                                    | Type    |
 | ----------- | ------------------------------------------------------------------------------ | ------- |
@@ -207,19 +203,18 @@ Below is a list of the data fields for traceresults. Following that are the comm
 | gasUsed     | the amount of gas used by this trace                                           | gas     |
 | output      | the result of the call of this trace                                           | bytes   |
 
----
 
 ## DatedBlock
 
-### How to get when blocks
+Left to its own devices, the blockchain would try to convince us that only hashes and bytes are imporant, but being human beings we know that this is not true. TrueBlocks `articulates` various types of data with [chifra names](/docs/chifra/accounts/#chifra-names) detailing the names for addresses, `-articulate` describing the Functions and Events of a transction, and [chifra when](/docs/chifra/chaindata/#chifra-when) describing dated blocks. Dated blocks assign a human-readable date to blocks given block numbers or timestamps and visa versa.
 
-- **CLI**:
-  - run `chifra when <block_id>`.
-  - [See the command's documentation](/docs/chifra/chaindata/#chifra-when)
-- **API**:
-  - [Calls to `/when`](/api#operation/chaindata-when)
+The following commands produce and manage datedblocks:
 
-Below is a list of the data fields for datedblocks. Following that are the commands that produce or manage datedblocks.
+| Tools                                              |                                                                |
+| -------------------------------------------------- | -------------------------------------------------------------- |
+| [chifra when](/docs/chifra/chaindata/#chifra-when) | find block(s) based on date, blockNum, timestamp, or 'special' |
+
+Datedblock data is made of the following data fields:
 
 | Field       | Description                         | Type      |
 | ----------- | ----------------------------------- | --------- |
@@ -227,7 +222,6 @@ Below is a list of the data fields for datedblocks. Following that are the comma
 | timestamp   | the unix timestamp of the block     | timestamp |
 | date        | Human readable version of timestamp | date      |
 
----
 
 ## Base types
 
