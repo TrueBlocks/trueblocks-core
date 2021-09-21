@@ -9,8 +9,6 @@ RUN apt-get update -y
 RUN apt install -y g++ gcc make cmake git nano libcurl3-dev python3 python3-dev \
         curl bash linux-headers-amd64 libsqlite3-dev xz-utils
 
-# RUN apk add glibc-2.28-r0.apk
-
 WORKDIR /root
 
 RUN git clone --progress \
@@ -23,4 +21,4 @@ RUN git clone --progress \
         cmake ../src && \
         make -j 4
 
-ENTRYPOINT bash /root/trueblocks-core/src/other/build_assets/build_and_test.sh $test_target
+ENTRYPOINT bash /root/trueblocks-core/src/other/build_assets/remote_testing/build_and_test.sh $test_target

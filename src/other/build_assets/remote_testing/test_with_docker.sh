@@ -26,7 +26,10 @@ docker run \
 RESULT=$?
 
 # Remove code repository
+echo "Cleaning up"
 cd
 rm -rf testing/$COMMIT_SHA
+docker container rm `docker ps -af ancestor=$IMAGE_ID --format "{{.ID}}"`
+docker image rm $IMAGE_ID
 
 exit $RESULT
