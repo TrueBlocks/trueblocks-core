@@ -10,6 +10,7 @@ project (test-utillib)
 # Compile the libraries in this order
 add_subdirectory(arrayTest)
 add_subdirectory(bigIntTest)
+add_subdirectory(builtInTest)
 add_subdirectory(cmdLineTest)
 add_subdirectory(colorTest)
 add_subdirectory(convertTest)

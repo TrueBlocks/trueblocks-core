@@ -774,7 +774,7 @@ CDateStruct time_q::CDate::getDateStruct() const {
 //---------------------------------------------------------------------------------------
 uint32_t getDayOfWeek(const time_q::CDate& date) {
     ASSERT(date.IsValid());
-    return (date.GetTotalDays() % 7) + 1;
+    return uint32_t((date.GetTotalDays() % 7)) + uint32_t(1);
 }
 
 //---------------------------------------------------------------------------------------

@@ -76,9 +76,7 @@ bool visitReadme(const string_q& templatePath, void* data) {
 
 //------------------------------------------------------------------------------------------------------------
 bool writeIfDifferent(const string_q& outFn, const string_q& codeIn, const time_q& now) {
-    static uint32_t cnt = 1;
     string_q code = substitute(codeIn, "date: $DATE\n", "");
-    stringToAsciiFile("../build/one/" + uint_2_Str(cnt) + ".txt", code);
     string_q existingIn = asciiFileToString(outFn);
     CStringArray lines;
     explode(lines, existingIn, '\n', false);
@@ -88,8 +86,6 @@ bool writeIfDifferent(const string_q& outFn, const string_q& codeIn, const time_
             existing << line << endl;
         }
     }
-    stringToAsciiFile("../build/two/" + uint_2_Str(cnt) + ".txt", existing.str());
-    cnt++;
 
     if (existing.str() != code) {
         string_q out = substitute(codeIn, "$DATE", now.Format(FMT_EXPORT));

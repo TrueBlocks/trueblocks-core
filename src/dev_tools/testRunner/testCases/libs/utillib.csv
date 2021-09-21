@@ -82,3 +82,5 @@ on      ,cmd  ,fast  ,null  ,utillib/typesTest   ,01           ,n    ,val = 0
 off     ,cmd  ,fast  ,null  ,utillib/runningTest ,01           ,n    ,val = 0
 on      ,cmd  ,fast  ,null  ,utillib/versionTest ,versions     ,n    ,
 on      ,cmd  ,fast  ,null  ,utillib/yamlTest    ,01           ,n    ,val = 0
+on      ,cmd  ,fast  ,null  ,utillib/builtInTest ,minimal      ,n    ,fmt = json & ether & mocked & wei & dollars & parity & nocolor & noop
+on      ,cmd  ,fast  ,null  ,utillib/builtInTest ,verbose      ,n    ,verbose & fmt = json & ether & mocked & wei & dollars & parity & nocolor & noop & output file & raw & very_raw & version

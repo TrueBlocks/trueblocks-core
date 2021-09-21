@@ -1,9 +1,10 @@
 fileTest argc: 1 
 fileTest 
 Non-recursive from ../
-Found 18 (18) files
+Found 19 (19) files
 ../arrayTest/
 ../bigIntTest/
+../builtInTest/
 ../cmdLineTest/
 ../colorTest/
 ../convertTest/
