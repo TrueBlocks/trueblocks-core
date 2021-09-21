@@ -31,7 +31,6 @@ static const COption params[] = {
     COption("lint", "l", "", OPT_SWITCH, "lint source code files (.cpp and .h) found in local folder and below"),
     COption("tsx", "t", "", OPT_SWITCH, "create typescript routes"),
     COption("dump", "d", "", OPT_HIDDEN | OPT_SWITCH, "dump any classDefinition config tomls to screen and quit"),
-    COption("nspace", "n", "<string>", OPT_FLAG, "surround generated c++ code with a namespace"),
     COption("filter", "i", "<string>", OPT_FLAG, "process only files whose filename or contents contain 'filter'"),
     COption("force", "c", "", OPT_SWITCH, "for both code generation and options generation, force writing of changes"),
     COption("openapi", "A", "", OPT_HIDDEN | OPT_SWITCH, "export openapi.yaml file for API documentation"),
@@ -90,11 +89,6 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-d" || arg == "--dump") {
             dump = true;
 
-        } else if (startsWith(arg, "-n:") || startsWith(arg, "--nspace:")) {
-            nspace = substitute(substitute(arg, "-n:", ""), "--nspace:", "");
-        } else if (arg == "-n" || arg == "--nspace") {
-            return flag_required("nspace");
-
         } else if (startsWith(arg, "-i:") || startsWith(arg, "--filter:")) {
             filter = substitute(substitute(arg, "-i:", ""), "--filter:", "");
         } else if (arg == "-i" || arg == "--filter") {
@@ -131,7 +125,6 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("lint", lint);
     LOG_TEST_BOOL("tsx", tsx);
     LOG_TEST_BOOL("dump", dump);
-    LOG_TEST("nspace", nspace, (nspace == "qblocks"));
     LOG_TEST("filter", filter, (filter == ""));
     LOG_TEST_BOOL("force", force);
     LOG_TEST_BOOL("openapi", openapi);
@@ -164,7 +157,6 @@ bool COptions::parseArguments(string_q& command) {
     if (classDefs.empty()) {
         // If not in a folder with a specific classDef, try to produce all classDefs
         if (!folderExists("./classDefinitions")) {
-            nspace = "qblocks";
             forEveryFileInFolder("./", listClasses, this);
         } else {
             forEveryFileInFolder("./classDefinitions/", listClasses, this);
@@ -252,12 +244,12 @@ void COptions::Init(void) {
     // BEG_CODE_INIT
     all = false;
     tsx = false;
-    nspace = "qblocks";
     filter = "";
     force = false;
     openapi = false;
     // END_CODE_INIT
 
+    nspace = "qblocks";
     mode = NONE;
     classDefs.clear();
     counter = CCounter();

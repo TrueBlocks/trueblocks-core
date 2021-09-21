@@ -50,12 +50,12 @@ class COptions : public COptionsBase {
     // BEG_CODE_DECLARE
     bool all;
     bool tsx;
-    string_q nspace;
     string_q filter;
     bool force;
     bool openapi;
     // END_CODE_DECLARE
 
+    string_q nspace;
     runmode_t mode;
     CClassDefinitionArray classDefs;
     CClassDefinitionArray dataModels;

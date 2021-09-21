@@ -1,4 +1,31 @@
 makeClass argc: 5 [1:-n] [2:qblocks] [3:--run] [4:function] 
 makeClass -n qblocks --run function 
-TIME ~ CLOCK - <INFO>  : handling generate...
-TIME ~ CLOCK - <INFO>  : makeClass --run processed 1 files (changed 2).                                        
+
+  Invalid option: -n
+
+  Usage:    makeClass [-r|-a|-o|-m|-f|-l|-t|-i|-c|-v|-h] <file> [file...]  
+  Purpose:  Automatically writes C++ for various purposes.
+
+  Where:
+	files                 one or more class definition files (required)
+	-r  (--run)           run the class maker on associated <class_name(s)>
+	-a  (--all)           list, or run all class definitions found in the local folder
+	-o  (--options)       export options code (check validity in the process)
+	-m  (--readmes)       create readme files for each tool and app
+	-f  (--format)        format source code files (.cpp and .h) found in local folder and below
+	-l  (--lint)          lint source code files (.cpp and .h) found in local folder and below
+	-t  (--tsx)           create typescript routes
+	-i  (--filter <str>)  process only files whose filename or contents contain 'filter'
+	-c  (--force)         for both code generation and options generation, force writing of changes
+
+	#### Hidden options
+	-e  (--edit)          edit <class_name(s)> definition file in local folder
+	-d  (--dump)          dump any classDefinition config tomls to screen and quit
+	-A  (--openapi)       export openapi.yaml file for API documentation
+	#### Hidden options
+
+	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+	-v  (--verbose)       set verbose level (optional level defaults to 1)
+	-h  (--help)          display this help screen
+
+  Powered by TrueBlocks

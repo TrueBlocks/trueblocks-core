@@ -2,7 +2,7 @@ makeClass argc: 2 [1:-th]
 makeClass -th 
 ### Usage
 
-`Usage:`    makeClass [-r|-a|-o|-m|-f|-l|-t|-n|-i|-c|-v|-h] &lt;file&gt; [file...]  
+`Usage:`    makeClass [-r|-a|-o|-m|-f|-l|-t|-i|-c|-v|-h] &lt;file&gt; [file...]  
 `Purpose:`  Automatically writes C++ for various purposes.
 
 `Where:`
@@ -18,7 +18,6 @@ makeClass -th
 | &#8208;f | &#8208;&#8208;format             | format source code files (.cpp and .h) found in local<br/>folder and below    |
 | &#8208;l | &#8208;&#8208;lint               | lint source code files (.cpp and .h) found in local<br/>folder and below      |
 | &#8208;t | &#8208;&#8208;tsx                | create typescript routes                                                      |
-| &#8208;n | &#8208;&#8208;nspace &lt;str&gt; | surround generated c++ code with a namespace                                  |
 | &#8208;i | &#8208;&#8208;filter &lt;str&gt; | process only files whose filename or contents contain<br/>'filter'            |
 | &#8208;c | &#8208;&#8208;force              | for both code generation and options generation, force<br/>writing of changes |
 | ###      | Hidden options                   |                                                                               |
