@@ -22,7 +22,7 @@ namespace qblocks {
 IMPLEMENT_NODE(CTestCase, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextTestcaseChunk(const string_q& fieldIn, const void* dataPtr);
+extern string_q nextTestcaseChunk(const string_q& fieldIn, const void* dataPtr);
 static string_q nextTestcaseChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
@@ -455,6 +455,18 @@ bool CTestCase::readBackLevel(CArchive& archive) {
     return done;
 }
 
+//---------------------------------------------------------------------------
+CArchive& operator<<(CArchive& archive, const CTestCase& tes) {
+    tes.SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator>>(CArchive& archive, CTestCase& tes) {
+    tes.Serialize(archive);
+    return archive;
+}
+
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CTestCase& it) {
     // EXISTING_CODE
@@ -560,7 +572,7 @@ CTestCase::CTestCase(const string_q& line, uint32_t id) {
 
     replaceAll(post, "n", "");
     replaceAll(post, "y", getGlobalConfig("makeClass")->getConfigStr("settings", "json_pretty_print", "jq ."));
-    if (!post.empty() && post != "jq .")
+    if (!post.empty() && post != "jq ." && post != "post")
         LOG_WARN("test post processor (", post, ") has unexpected value. Is it correct?");
 
     builtin = prepareBuiltIn(options);

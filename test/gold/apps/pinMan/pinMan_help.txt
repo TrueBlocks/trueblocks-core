@@ -4,7 +4,7 @@ pinMan -h
   Usage:    pinMan [-l|-i|-n|-p|-v|-h]  
   Purpose:  Manage pinned index of appearances and associated Bloom filters.
 
-  Where:  
+  Where:
 	-l  (--list)          list the index and Bloom filter hashes from local manifest or pinning service
 	-i  (--init)          initialize local index by downloading Bloom filters from pinning service
 	-n  (--init_all)      initialize local index by downloading both Bloom filters and index chunks

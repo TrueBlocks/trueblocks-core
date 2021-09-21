@@ -138,6 +138,10 @@ extern CArchive& operator>>(CArchive& archive, CConfigurationArray& array);
 extern CArchive& operator<<(CArchive& archive, const CConfigurationArray& array);
 
 //---------------------------------------------------------------------------
+extern CArchive& operator<<(CArchive& archive, const CConfiguration& con);
+extern CArchive& operator>>(CArchive& archive, CConfiguration& con);
+
+//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_CONFIGURATION;
 
 //---------------------------------------------------------------------------

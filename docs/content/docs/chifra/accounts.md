@@ -2,7 +2,7 @@
 title: "Accounts"
 description: ""
 lead: ""
-date: 2021-05-08T01:35:20
+date: 2021-09-19T21:39:18
 lastmod:
   - :git
   - lastmod
@@ -30,16 +30,16 @@ Note that `chifra list` only queries the index, it does not extract the full tra
 
 ### usage
 
-`Usage:`    chifra list &lt;address&gt; [address...]
+`Usage:`    chifra list &lt;address&gt; [address...]  
 `Purpose:`  List appearances for the given address(es).
 
 `Where:`
 
-| Short Cut | Option | Description |
-| -------: | :------- | :------- |
-|  | addrs | one or more addresses (0x...) to export (required) |
-| -v | --verbose | set verbose level (optional level defaults to 1) |
-| -h | --help | display this help screen |
+|          | Option                | Description                                        |
+| -------- | --------------------- | -------------------------------------------------- |
+|          | addrs                 | one or more addresses (0x...) to export (required) |
+| &#8208;v | &#8208;&#8208;verbose | set verbose level (optional level defaults to 1)   |
+| &#8208;h | &#8208;&#8208;help    | display this help screen                           |
 
 `Notes:`
 
@@ -58,35 +58,38 @@ By default, the results of the extraction are delivered to your console, however
 
 ### usage
 
-`Usage:`    chifra export [-p|-r|-A|-l|-t|-C|-a|-i|-R|-y|-U|-c|-e|-v|-h] &lt;address&gt; [address...] [topics] [fourbytes]
+`Usage:`    chifra export [-p|-r|-A|-l|-t|-C|-a|-i|-R|-y|-U|-c|-e|-v|-h] &lt;address&gt; [address...] [topics] [fourbytes]  
 `Purpose:`  Export full detail of transactions for one or more addresses.
 
 `Where:`
 
-| | Option | Description |
-| :----- | :----- | :---------- |
-|  | addrs | one or more addresses (0x...) to export (required) |
-|  | topics | filter by one or more log topics (only for --logs option) |
-|  | fourbytes | filter by one or more fourbytes (only for transactions and trace options) |
-| -p | --appearances | export a list of appearances |
-| -r | --receipts | export receipts instead of transaction list |
-| -A | --statements | for use with --accounting option only, export only reconciliation statements |
-| -l | --logs | export logs instead of transaction list |
-| -t | --traces | export traces instead of transaction list |
-| -C | --accounting | export accounting records instead of transaction list |
-| -a | --articulate | articulate transactions, traces, logs, and outputs |
-| -i | --cache_txs | write transactions to the cache (see notes) |
-| -R | --cache_traces | write traces to the cache (see notes) |
-| -y | --factory | scan for contract creations from the given address(es) and report address of those contracts |
-|  | --emitter | for log export only, export only if one of the given export addresses emitted the event |
-|  | --source &lt;addr&gt; | for log export only, export only one of these addresses emitted the event |
-|  | --relevant | for log and accounting export only, if true export only logs relevant to one of the given export addresses |
-| -U | --count | only available for --appearances mode, if present return only the number of records |
-| -c | --first_record &lt;num&gt; | the first record to process |
-| -e | --max_records &lt;num&gt; | the maximum number of records to process before reporting |
-|  | --clean | clean (i.e. remove duplicate appearances) from all existing monitors |
-| -v | --verbose | set verbose level (optional level defaults to 1) |
-| -h | --help | display this help screen |
+{{<td>}}
+|          | Option                                 | Description                                                                                                    |
+| -------- | -------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+|          | addrs                                  | one or more addresses (0x...) to export (required)                                                             |
+|          | topics                                 | filter by one or more log topics (only for --logs option)                                                      |
+|          | fourbytes                              | filter by one or more fourbytes (only for transactions<br/>and trace options)                                  |
+| &#8208;p | &#8208;&#8208;appearances              | export a list of appearances                                                                                   |
+| &#8208;r | &#8208;&#8208;receipts                 | export receipts instead of transaction list                                                                    |
+| &#8208;A | &#8208;&#8208;statements               | for use with --accounting option only, export only<br/>reconciliation statements                               |
+| &#8208;l | &#8208;&#8208;logs                     | export logs instead of transaction list                                                                        |
+| &#8208;t | &#8208;&#8208;traces                   | export traces instead of transaction list                                                                      |
+| &#8208;C | &#8208;&#8208;accounting               | export accounting records instead of transaction list                                                          |
+| &#8208;a | &#8208;&#8208;articulate               | articulate transactions, traces, logs, and outputs                                                             |
+| &#8208;i | &#8208;&#8208;cache_txs                | write transactions to the cache (see notes)                                                                    |
+| &#8208;R | &#8208;&#8208;cache_traces             | write traces to the cache (see notes)                                                                          |
+| &#8208;y | &#8208;&#8208;factory                  | scan for contract creations from the given address(es)<br/>and report address of those contracts               |
+|          | &#8208;&#8208;emitter                  | for log export only, export only if one of the given<br/>export addresses emitted the event                    |
+|          | &#8208;&#8208;source &lt;addr&gt;      | for log export only, export only one of these addresses<br/>emitted the event                                  |
+|          | &#8208;&#8208;relevant                 | for log and accounting export only, if true export<br/>only logs relevant to one of the given export addresses |
+| &#8208;U | &#8208;&#8208;count                    | only available for --appearances mode, if present return<br/>only the number of records                        |
+| &#8208;c | &#8208;&#8208;first_record &lt;num&gt; | the first record to process                                                                                    |
+| &#8208;e | &#8208;&#8208;max_records &lt;num&gt;  | the maximum number of records to process before reporting                                                      |
+|          | &#8208;&#8208;clean                    | clean (i.e. remove duplicate appearances) from all<br/>existing monitors                                       |
+| &#8208;x | &#8208;&#8208;fmt &lt;val&gt;          | export format, one of [none, json, txt, csv, api]                                                              |
+| &#8208;v | &#8208;&#8208;verbose                  | set verbose level (optional level defaults to 1)                                                               |
+| &#8208;h | &#8208;&#8208;help                     | display this help screen                                                                                       |
+{{</td>}}
 
 `Notes:`
 
@@ -94,10 +97,10 @@ By default, the results of the extraction are delivered to your console, however
 
 `Configurable Items:`
 
-`cache_txs`: write transactions to the cache (see notes).
-`cache_traces`: write traces to the cache (see notes).
-`skip_ddos`: toggle skipping over 2016 dDos transactions ('on' by default).
-`max_traces`: if --skip_ddos is on, this many traces defines what a ddos transaction
+- `cache_txs`: write transactions to the cache (see notes).
+- `cache_traces`: write traces to the cache (see notes).
+- `skip_ddos`: toggle skipping over 2016 dDos transactions ('on' by default).
+- `max_traces`: if --skip_ddos is on, this many traces defines what a ddos transaction
   is (default = 250).
 
 **Source code**: [`apps/acctExport`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/acctExport)
@@ -112,18 +115,18 @@ Use the `--remove` command to permanently remove a monitor from your computer. T
 
 ### usage
 
-`Usage:`    chifra montiors [-d|-r|-v|-h] &lt;address&gt; [address...]
+`Usage:`    chifra monitors [-d|-r|-v|-h] &lt;address&gt; [address...]  
 `Purpose:`  Delete, undelete, and remove previously created monitors.
 
 `Where:`
 
-| Short Cut | Option | Description |
-| -------: | :------- | :------- |
-|  | addrs | one or more addresses (0x...) to export (required) |
-|  | --delete | delete a previously created monitor (or undelete if already deleted) |
-|  | --remove | remove a previously deleted monitor |
-| -v | --verbose | set verbose level (optional level defaults to 1) |
-| -h | --help | display this help screen |
+|          | Option                | Description                                                          |
+| -------- | --------------------- | -------------------------------------------------------------------- |
+|          | addrs                 | one or more addresses (0x...) to export (required)                   |
+|          | &#8208;&#8208;delete  | delete a previously created monitor (or undelete if already deleted) |
+|          | &#8208;&#8208;remove  | remove a previously deleted monitor                                  |
+| &#8208;v | &#8208;&#8208;verbose | set verbose level (optional level defaults to 1)                     |
+| &#8208;h | &#8208;&#8208;-help   | display this help screen                                             |
 
 `Notes:`
 
@@ -142,31 +145,33 @@ You may use the TrueBlocks explorer to manage (add, edit, delete) address-name a
 
 ### usage
 
-`Usage:`    chifra names [-e|-m|-l|-c|-p|-n|-a|-s|-g|-v|-h] &lt;term&gt; [term...]
+`Usage:`    chifra names [-e|-m|-l|-c|-p|-n|-a|-s|-g|-v|-h] &lt;term&gt; [term...]  
 `Purpose:`  Query addresses or names of well known accounts.
 
 `Where:`
 
-| | Option | Description |
-| :----- | :----- | :---------- |
-|  | terms | a space separated list of one or more search terms (required) |
-| -e | --expand | expand search to include all fields (default searches name, address, and symbol only) |
-| -m | --match_case | do case-sensitive search |
-| -l | --all | include all accounts in the search |
-| -c | --custom | include your custom named accounts |
-| -p | --prefund | include prefund accounts |
-| -n | --named | include well know token and airdrop addresses in the search |
-| -a | --addr | display only addresses in the results (useful for scripting) |
-| -s | --collections | display collections data |
-| -g | --tags | export the list of tags and subtags only |
-| -v | --verbose | set verbose level (optional level defaults to 1) |
-| -h | --help | display this help screen |
+{{<td>}}
+|          | Option                        | Description                                                                               |
+| -------- | ----------------------------- | ----------------------------------------------------------------------------------------- |
+|          | terms                         | a space separated list of one or more search terms<br/>(required)                         |
+| &#8208;e | &#8208;&#8208;expand          | expand search to include all fields (default searches<br/>name, address, and symbol only) |
+| &#8208;m | &#8208;&#8208;match_case      | do case-sensitive search                                                                  |
+| &#8208;l | &#8208;&#8208;all             | include all accounts in the search                                                        |
+| &#8208;c | &#8208;&#8208;custom          | include your custom named accounts                                                        |
+| &#8208;p | &#8208;&#8208;prefund         | include prefund accounts                                                                  |
+| &#8208;n | &#8208;&#8208;named           | include well know token and airdrop addresses in the<br/>search                           |
+| &#8208;a | &#8208;&#8208;addr            | display only addresses in the results (useful for scripting)                              |
+| &#8208;s | &#8208;&#8208;collections     | display collections data                                                                  |
+| &#8208;g | &#8208;&#8208;tags            | export the list of tags and subtags only                                                  |
+| &#8208;x | &#8208;&#8208;fmt &lt;val&gt; | export format, one of [none, json, txt, csv, api]                                         |
+| &#8208;v | &#8208;&#8208;verbose         | set verbose level (optional level defaults to 1)                                          |
+| &#8208;h | &#8208;&#8208;help            | display this help screen                                                                  |
+{{</td>}}
 
 `Notes:`
 
 - The tool will accept up to three terms, each of which must match against any field in the database.
 - The `--match_case` option enables case sensitive matching.
-- Name file: `$CONFIG/names/names.tab`
 
 **Source code**: [`tools/ethNames`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/tools/ethNames)
 
@@ -184,19 +189,22 @@ The `--sol` option will convert a single Solidity file found in the current fold
 
 ### usage
 
-`Usage:`    chifra abis [-k|-s|-f|-v|-h] &lt;address&gt; [address...]
+`Usage:`    chifra abis [-k|-s|-f|-v|-h] &lt;address&gt; [address...]  
 `Purpose:`  Fetches the ABI for a smart contract.
 
 `Where:`
 
-| | Option | Description |
-| :----- | :----- | :---------- |
-|  | addrs | list of one or more smart contracts whose ABI to grab from EtherScan (required) |
-| -k | --known | load common 'known' ABIs from cache |
-| -s | --sol &lt;str&gt; | file name of .sol file from which to create a new known abi (without .sol) |
-| -f | --find &lt;str&gt; | try to search for a function declaration given a four byte code |
-| -v | --verbose | set verbose level (optional level defaults to 1) |
-| -h | --help | display this help screen |
+{{<td>}}
+|          | Option                         | Description                                                                         |
+| -------- | ------------------------------ | ----------------------------------------------------------------------------------- |
+|          | addrs                          | list of one or more smart contracts whose ABI to grab<br/>from EtherScan (required) |
+| &#8208;k | &#8208;&#8208;known            | load common 'known' ABIs from cache                                                 |
+| &#8208;s | &#8208;&#8208;sol &lt;str&gt;  | file name of .sol file from which to create a new known<br/>abi (without .sol)      |
+| &#8208;f | &#8208;&#8208;find &lt;str&gt; | try to search for a function declaration given a four<br/>byte code                 |
+| &#8208;x | &#8208;&#8208;fmt &lt;val&gt;  | export format, one of [none, json, txt, csv, api]                                   |
+| &#8208;v | &#8208;&#8208;verbose          | set verbose level (optional level defaults to 1)                                    |
+| &#8208;h | &#8208;&#8208;help             | display this help screen                                                            |
+{{</td>}}
 
 `Notes:`
 

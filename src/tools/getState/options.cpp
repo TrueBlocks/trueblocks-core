@@ -134,9 +134,10 @@ bool COptions::parseArguments(string_q& command) {
 
         expContext().exportFmt = JSON1;
         configureDisplay("getState", "CEthState", STR_DISPLAY_FUNCTION);
+        // TODO: This is terrible. Can we remove it?
         manageFields(
-            "CParameter:str_default,indexed,internalType,components,no_write,is_pointer,is_array,is_object,is_builtin,"
-            "is_minimal,type",
+            "CParameter:str_default,indexed,internalType,components,is_pointer,is_array,"
+            "is_object,is_builtin,is_minimal,is_noaddfld,is_nowrite,is_omitempty,is_extra,type",
             FLD_HIDE);
         manageFields("CFunction:stateMutability,type,constant", FLD_HIDE);
         manageFields("CEthCall:abi_spec", FLD_HIDE);
@@ -228,8 +229,7 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
-    registerOptions(nParams, params);
-    optionOn(OPT_RAW);
+    registerOptions(nParams, params, OPT_RAW);
 
     // BEG_CODE_INIT
     changes = false;

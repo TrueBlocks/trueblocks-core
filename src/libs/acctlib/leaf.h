@@ -149,10 +149,13 @@ extern CArchive& operator>>(CArchive& archive, CLeafArray& array);
 extern CArchive& operator<<(CArchive& archive, const CLeafArray& array);
 
 //---------------------------------------------------------------------------
+extern CArchive& operator<<(CArchive& archive, const CLeaf& lea);
+extern CArchive& operator>>(CArchive& archive, CLeaf& lea);
+
+//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_LEAF;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-extern string_q nextTreenodeChunk(const string_q& fieldIn, const void* data);
 // EXISTING_CODE
 }  // namespace qblocks

@@ -1,9 +1,4 @@
 [settings]
 class = CLogQuery
-fields = blknum fromBlock|\
-        blknum toBlock|\
-        hash blockHash|\
-        CAddressArray addresses|\
-        CTopicArray topics
+fields = logquery.csv
 includes = utillib.h
-display_str = fromBlock, toBlock, blockHash, addresses, topics

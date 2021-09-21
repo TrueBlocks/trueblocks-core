@@ -29,12 +29,11 @@ static const COption params[] = {
     COption("readmes", "m", "", OPT_SWITCH, "create readme files for each tool and app"),
     COption("format", "f", "", OPT_SWITCH, "format source code files (.cpp and .h) found in local folder and below"),
     COption("lint", "l", "", OPT_SWITCH, "lint source code files (.cpp and .h) found in local folder and below"),
-    COption("js", "j", "", OPT_SWITCH, "create javascript routes and help routes for the front end"),
+    COption("tsx", "t", "", OPT_SWITCH, "create typescript routes"),
     COption("dump", "d", "", OPT_HIDDEN | OPT_SWITCH, "dump any classDefinition config tomls to screen and quit"),
     COption("nspace", "n", "<string>", OPT_FLAG, "surround generated c++ code with a namespace"),
     COption("filter", "i", "<string>", OPT_FLAG, "process only files whose filename or contents contain 'filter'"),
     COption("force", "c", "", OPT_SWITCH, "for both code generation and options generation, force writing of changes"),
-    COption("api", "p", "", OPT_HIDDEN | OPT_SWITCH, "generate api options file in explorer repo"),
     COption("openapi", "A", "", OPT_HIDDEN | OPT_SWITCH, "export openapi.yaml file for API documentation"),
     COption("", "", "", OPT_DESCRIPTION, "Automatically writes C++ for various purposes."),
     // clang-format on
@@ -85,8 +84,8 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-l" || arg == "--lint") {
             lint = true;
 
-        } else if (arg == "-j" || arg == "--js") {
-            js = true;
+        } else if (arg == "-t" || arg == "--tsx") {
+            tsx = true;
 
         } else if (arg == "-d" || arg == "--dump") {
             dump = true;
@@ -103,9 +102,6 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-c" || arg == "--force") {
             force = true;
-
-        } else if (arg == "-p" || arg == "--api") {
-            api = true;
 
         } else if (arg == "-A" || arg == "--openapi") {
             openapi = true;
@@ -133,23 +129,22 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("readmes", readmes);
     LOG_TEST_BOOL("format", format);
     LOG_TEST_BOOL("lint", lint);
-    LOG_TEST_BOOL("js", js);
+    LOG_TEST_BOOL("tsx", tsx);
     LOG_TEST_BOOL("dump", dump);
     LOG_TEST("nspace", nspace, (nspace == "qblocks"));
     LOG_TEST("filter", filter, (filter == ""));
     LOG_TEST_BOOL("force", force);
-    LOG_TEST_BOOL("api", api);
     LOG_TEST_BOOL("openapi", openapi);
     // END_DEBUG_DISPLAY
 
-    establishFolder(getDocsPath("content/"));
-    establishFolder(getDocsPath("content/api/"));
-    establishFolder(getDocsPath("content/data-model/"));
-    establishFolder(getDocsPath("content/docs/"));
-    establishFolder(getDocsPath("content/docs/chifra/"));
+    establishFolder(getDocsPathContent(""));
+    establishFolder(getDocsPathContent("api/"));
+    establishFolder(getDocsPathContent("data-model/"));
+    establishFolder(getDocsPathContent("docs/"));
+    establishFolder(getDocsPathContent("docs/chifra/"));
 
-    if (js)
-        handle_js();
+    if (tsx)
+        handle_tsx();
 
     // If the user has explicitly specified a classDef, use that
     LOG8("pwd: ", getCWD());
@@ -175,8 +170,20 @@ bool COptions::parseArguments(string_q& command) {
             forEveryFileInFolder("./classDefinitions/", listClasses, this);
         }
     }
+    LOG4("Processing ", classDefs.size(), " class definition files.");
+
+    for (auto classDefIn : classDefs) {
+        CToml toml(classDefIn.input_path);
+        CClassDefinition classDef(toml);
+        classDef.short_fn = classDefIn.short_fn;
+        classDef.input_path = classDefIn.input_path;
+        if (!classDef.doc_api.empty())
+            dataModels.push_back(classDef);
+    }
 
     // Ignoring classDefs for a moment, process special options. Note: order matters
+    if (openapi && !handle_datamodel())
+        return false;
     if (options && !handle_options())
         return false;
     if (readmes && !handle_readmes())
@@ -241,15 +248,13 @@ bool COptions::parseArguments(string_q& command) {
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
     registerOptions(nParams, params);
-    optionOff(OPT_FMT);
 
     // BEG_CODE_INIT
     all = false;
-    js = false;
+    tsx = false;
     nspace = "qblocks";
     filter = "";
     force = false;
-    api = false;
     openapi = false;
     // END_CODE_INIT
 
@@ -285,12 +290,7 @@ COptions::COptions(void) : classFile("") {
 
     CCommandOption::registerClass();
     CClassDefinition::registerClass();
-    CPage::registerClass();
-    CSubpage::registerClass();
-    CSkin::registerClass();
-    CSchema::registerClass();
     CCommandOption::registerClass();
-    CRoute::registerClass();
 }
 
 //--------------------------------------------------------------------------------

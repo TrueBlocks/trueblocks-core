@@ -1,39 +1,12 @@
 [settings]
 class = CTransaction
-fields = hash hash|\
-        hash blockHash|\
-        blknum blockNumber|\
-        blknum transactionIndex|\
-        uint64 nonce|\
-        timestamp timestamp|\
-        address from|\
-        address to|\
-        wei value|\
-        wei extraValue1|\
-        wei extraValue2|\
-        gas gas|\
-        gas gasPrice|\
-        gas maxFeePerGas|\
-        gas maxPriorityFeePerGas|\
-        string input|\
-        uint8 isError|\
-        uint8 hasToken|\
-        uint8 cachebits=CB_NONE|\
-        uint8 reserved2|\
-        CReceipt receipt|\
-        CTraceArray traces|\
-        CFunction articulatedTx|\
-        string compressedTx (nowrite)|\
-        CReconciliationArray statements (nowrite)|\
-        sbool finalized (nowrite)
-extra_fields = date date|\
-        string fromName|\
-        string toName|\
-        string extraData
+fields = transactions.csv
 includes = utillib.h|abi.h|receipt.h|trace.h|reconciliation.h|ethstate.h
 cpp_includes = etherlib.h
-scope = extern
-serializable = true
-display_str = blockNumber, transactionIndex, date, timestamp, from, to, ether, etherGasPrice, gasUsed, hash, isError, encoding, compressedTx
 equals = (hash == it.hash)
-js = true
+contained_by = Block
+tsx = true
+doc_group = 02-Chain Data
+doc_descr = the transaction data for a given transaction directly from the blockchain
+doc_api = 11-transaction
+doc_producer = transactions, slurp, export

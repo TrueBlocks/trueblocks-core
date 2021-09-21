@@ -208,33 +208,25 @@ string_q CTransaction::getValueByName(const string_q& fieldName) const {
             break;
     }
 
+    extern string_q nextBlockChunk(const string_q& fieldIn, const void* data);
+    ret = nextBlockChunk(fieldName, pBlock);
+    if (contains(ret, "Field not found"))
+        ret = "";
+    if (!ret.empty())
+        return ret;
+
     // EXISTING_CODE
-    if (fieldName != "schema" && fieldName != "deleted" && fieldName != "showing" && fieldName != "cname") {
-        // See if this field belongs to the item's container
-        ret = nextBlockChunk(fieldName, pBlock);
-        if (contains(ret, "Field not found"))
-            ret = "";
-        if (!ret.empty())
-            return ret;
-    }
     // EXISTING_CODE
 
-    string_q s;
-    s = toUpper(string_q("receipt")) + "::";
-    if (contains(fieldName, s)) {
-        string_q f = fieldName;
-        replaceAll(f, s, "");
-        f = receipt.getValueByName(f);
-        return f;
-    }
+    // test for contained object field specifiers
+    string_q objSpec;
+    objSpec = toUpper("receipt") + "::";
+    if (contains(fieldName, objSpec))
+        return receipt.getValueByName(substitute(fieldName, objSpec, ""));
 
-    s = toUpper(string_q("articulatedTx")) + "::";
-    if (contains(fieldName, s)) {
-        string_q f = fieldName;
-        replaceAll(f, s, "");
-        f = articulatedTx.getValueByName(f);
-        return f;
-    }
+    objSpec = toUpper("articulatedTx") + "::";
+    if (contains(fieldName, objSpec))
+        return articulatedTx.getValueByName(substitute(fieldName, objSpec, ""));
 
     // Finally, give the parent class a chance
     return CBaseNode::getValueByName(fieldName);
@@ -369,7 +361,7 @@ bool CTransaction::setValueByName(const string_q& fieldNameIn, const string_q& f
             break;
         case 'i':
             if (fieldName % "input") {
-                input = fieldValue;
+                input = toLower(fieldValue);
                 return true;
             }
             if (fieldName % "isError") {
@@ -451,7 +443,7 @@ bool CTransaction::setValueByName(const string_q& fieldNameIn, const string_q& f
 //---------------------------------------------------------------------------------------------------
 void CTransaction::finishParse() {
     // EXISTING_CODE
-    receipt.pTrans = this;
+    receipt.pTransaction = this;
     // EXISTING_CODE
 }
 
@@ -833,6 +825,8 @@ string_q nextTransactionChunk_custom(const string_q& fieldIn, const void* dataPt
                 }
                 break;
             case 't':
+                if (fieldIn % "transactionHash")
+                    return tra->getValueByName("hash");
                 if (fieldIn % "timestamp" && tra->pBlock)
                     return int_2_Str(tra->pBlock->timestamp);
                 if (fieldIn % "time") {

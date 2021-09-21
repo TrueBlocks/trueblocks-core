@@ -281,7 +281,6 @@ bool COptions::check_uncles(void) {
             } else {
                 cout << "Uncle block " << uncleBn << "." << index << " has children" << endl;
             }
-            printf("");
         }
     }
     return true;

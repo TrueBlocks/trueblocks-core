@@ -23,7 +23,7 @@ namespace qblocks {
 IMPLEMENT_NODE(CTraceResult, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextTraceresultChunk(const string_q& fieldIn, const void* dataPtr);
+extern string_q nextTraceresultChunk(const string_q& fieldIn, const void* dataPtr);
 static string_q nextTraceresultChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
@@ -118,7 +118,7 @@ bool CTraceResult::setValueByName(const string_q& fieldNameIn, const string_q& f
     switch (tolower(fieldName[0])) {
         case 'c':
             if (fieldName % "code") {
-                code = fieldValue;
+                code = toLower(fieldValue);
                 return true;
             }
             break;
@@ -136,7 +136,7 @@ bool CTraceResult::setValueByName(const string_q& fieldNameIn, const string_q& f
             break;
         case 'o':
             if (fieldName % "output") {
-                output = fieldValue;
+                output = toLower(fieldValue);
                 return true;
             }
             break;

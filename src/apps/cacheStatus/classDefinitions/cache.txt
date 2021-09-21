@@ -1,11 +1,9 @@
 [settings]
 class = CCache
-fields = string type|\
-        string path|\
-        uint64 nFiles|\
-        uint64 nFolders|\
-        uint64 sizeInBytes|\
-        bool is_valid=false
+fields = cache.csv
 includes = etherlib.h
 cpp_includes = status.h
-serialize = true
+doc_group = 04-Admin
+doc_descr = The cache data model carries information about the various local binary caches
+doc_api = 31-cache
+doc_producer = status

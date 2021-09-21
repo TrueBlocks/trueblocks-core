@@ -8,18 +8,18 @@ Use the `--remove` command to permanently remove a monitor from your computer. T
 
 ### usage
 
-`Usage:`    chifra montiors [-d|-r|-v|-h] &lt;address&gt; [address...]
+`Usage:`    chifra monitors [-d|-r|-v|-h] &lt;address&gt; [address...]  
 `Purpose:`  Delete, undelete, and remove previously created monitors.
 
 `Where:`
 
-| Short Cut | Option | Description |
-| -------: | :------- | :------- |
-|  | addrs | one or more addresses (0x...) to export (required) |
-|  | --delete | delete a previously created monitor (or undelete if already deleted) |
-|  | --remove | remove a previously deleted monitor |
-| -v | --verbose | set verbose level (optional level defaults to 1) |
-| -h | --help | display this help screen |
+|          | Option                | Description                                                          |
+| -------- | --------------------- | -------------------------------------------------------------------- |
+|          | addrs                 | one or more addresses (0x...) to export (required)                   |
+|          | &#8208;&#8208;delete  | delete a previously created monitor (or undelete if already deleted) |
+|          | &#8208;&#8208;remove  | remove a previously deleted monitor                                  |
+| &#8208;v | &#8208;&#8208;verbose | set verbose level (optional level defaults to 1)                     |
+| &#8208;h | &#8208;&#8208;-help   | display this help screen                                             |
 
 `Notes:`
 

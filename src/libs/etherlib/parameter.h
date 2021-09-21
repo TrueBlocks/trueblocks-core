@@ -43,6 +43,10 @@ namespace qblocks {
 #define IS_BUILTIN (1 << 4)
 #define IS_MINIMAL (1 << 5)
 #define IS_ENABLED (1 << 6)
+#define IS_NOWRITE (1 << 7)
+#define IS_OMITEMPTY (1 << 8)
+#define IS_EXTRA (1 << 9)
+#define IS_NOADDFLD (1 << 10)
 class CParameter;
 typedef vector<CParameter> CParameterArray;
 // EXISTING_CODE
@@ -57,9 +61,13 @@ class CParameter : public CBaseNode {
     bool indexed;
     string_q internalType;
     CParameterArray components;
-    bool no_write;
+    bool unused;
     uint64_t is_flags;
     uint64_t precision;
+    uint64_t doc;
+    uint64_t disp;
+    string_q example;
+    string_q description;
 
   public:
     CParameter(void);
@@ -83,6 +91,7 @@ class CParameter : public CBaseNode {
     string_q getFunctionAssign(uint64_t which) const;
     string_q getEventAssign(uint64_t which, uint64_t nIndexed = NOPOS) const;
     bool isValid(void) const;
+    void postProcessType(void);
     // EXISTING_CODE
     bool operator==(const CParameter& it) const;
     bool operator!=(const CParameter& it) const {
@@ -142,9 +151,13 @@ inline void CParameter::initialize(void) {
     indexed = false;
     internalType = "";
     components.clear();
-    no_write = false;
+    unused = false;
     is_flags = IS_ENABLED;
     precision = 5;
+    doc = 0;
+    disp = 0;
+    example = "";
+    description = "";
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -162,9 +175,13 @@ inline void CParameter::duplicate(const CParameter& pa) {
     indexed = pa.indexed;
     internalType = pa.internalType;
     components = pa.components;
-    no_write = pa.no_write;
+    unused = pa.unused;
     is_flags = pa.is_flags;
     precision = pa.precision;
+    doc = pa.doc;
+    disp = pa.disp;
+    example = pa.example;
+    description = pa.description;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -200,11 +217,14 @@ extern CArchive& operator>>(CArchive& archive, CParameterArray& array);
 extern CArchive& operator<<(CArchive& archive, const CParameterArray& array);
 
 //---------------------------------------------------------------------------
+extern CArchive& operator<<(CArchive& archive, const CParameter& par);
+extern CArchive& operator>>(CArchive& archive, CParameter& par);
+
+//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_PARAMETER;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-size_t explode(CParameterArray& result, const string& input, char needle);
 enum {
     COMMENT1 = (char)1,         // NOLINT
     COMMENT_END1 = (char)'\n',  // NOLINT

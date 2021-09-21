@@ -149,6 +149,7 @@ extern string_q asciiFileToString(const string_q& filename);
 extern size_t asciiFileToString(const string_q& filename, string& contents);  // non-copy
 extern size_t asciiFileToLines(const string_q& fileName, CStringArray& lines);
 extern size_t asciiFileToLines(const string_q& fileName, CUintArray& lines);
+extern size_t asciiFileToMap(const string_q& fileName, CNameValueMap& lines);
 extern size_t stringToAsciiFile(const string_q& fileName, const string_q& contents);
 extern size_t linesToAsciiFile(const string_q& fileName, const CStringArray& lines, char sep = '\n');
 extern string_q linesToString(const CStringArray& lines, char sep = '\n');

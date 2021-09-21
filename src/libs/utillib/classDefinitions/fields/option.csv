@@ -1,0 +1,11 @@
+name          ,type   ,str_default ,object ,array ,nowrite ,omitempty ,minimal ,extra ,noaddfld ,doc ,disp ,example ,description
+hotKey        ,string ,            ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
+longName      ,string ,            ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
+description   ,string ,            ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
+permitted     ,string ,            ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
+type          ,string ,            ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
+is_hidden     ,bool   ,            ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
+is_positional ,bool   ,            ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
+is_optional   ,bool   ,            ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
+is_deprecated ,bool   ,            ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
+is_readme     ,bool   ,            ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,

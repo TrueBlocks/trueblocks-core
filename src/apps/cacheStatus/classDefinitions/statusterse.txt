@@ -1,7 +1,5 @@
 [settings]
 base_class = CStatus
 class = CStatusTerse
-fields = string modes1|\
-        string modes2
+fields = statusterse.csv
 includes = etherlib.h|status.h
-serialize = true

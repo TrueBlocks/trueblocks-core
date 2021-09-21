@@ -8,16 +8,16 @@ Note that `chifra list` only queries the index, it does not extract the full tra
 
 ### usage
 
-`Usage:`    chifra list &lt;address&gt; [address...]
+`Usage:`    chifra list &lt;address&gt; [address...]  
 `Purpose:`  List appearances for the given address(es).
 
 `Where:`
 
-| Short Cut | Option | Description |
-| -------: | :------- | :------- |
-|  | addrs | one or more addresses (0x...) to export (required) |
-| -v | --verbose | set verbose level (optional level defaults to 1) |
-| -h | --help | display this help screen |
+|          | Option                | Description                                        |
+| -------- | --------------------- | -------------------------------------------------- |
+|          | addrs                 | one or more addresses (0x...) to export (required) |
+| &#8208;v | &#8208;&#8208;verbose | set verbose level (optional level defaults to 1)   |
+| &#8208;h | &#8208;&#8208;help    | display this help screen                           |
 
 `Notes:`
 

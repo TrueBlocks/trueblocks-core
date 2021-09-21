@@ -1,21 +1,11 @@
 [settings]
 class = CLogEntry
-fields = address address|\
-        hash blockHash (nowrite-min)|\
-        blknum blockNumber (nowrite-min)|\
-        blknum logIndex|\
-        CTopicArray topics|\
-        string data|\
-        CFunction articulatedLog|\
-        string compressedLog (nowrite)|\
-        hash transactionHash (nowrite-min)|\
-        blknum transactionIndex (nowrite-min)|\
-        blknum transactionLogIndex (nowrite)|\
-        string type (nowrite)|\
-        sbool removed (nowrite)
+fields = logentry.csv
 includes = utillib.h|abi.h
 cpp_includes = etherlib.h
-scope = extern
-serializable = true
-display_str = blockNumber, transactionIndex, logIndex, address, topic0, topic1, topic2, topic3, data, type, compressedLog
-js = true
+contained_by = Receipt
+tsx = true
+doc_group = 02-Chain Data
+doc_descr = log data for a given transaction directly from the blockchain
+doc_api = 13-log
+doc_producer = logs, export

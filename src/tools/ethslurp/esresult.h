@@ -141,6 +141,10 @@ extern CArchive& operator>>(CArchive& archive, CESResultArray& array);
 extern CArchive& operator<<(CArchive& archive, const CESResultArray& array);
 
 //---------------------------------------------------------------------------
+extern CArchive& operator<<(CArchive& archive, const CESResult& esr);
+extern CArchive& operator>>(CArchive& archive, CESResult& esr);
+
+//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_ESRESULT;
 
 //---------------------------------------------------------------------------

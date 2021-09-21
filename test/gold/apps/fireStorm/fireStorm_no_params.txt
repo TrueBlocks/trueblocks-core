@@ -4,7 +4,7 @@ fireStorm
   Usage:    fireStorm [-l|-g|-v|-h] <term> [term...]  
   Purpose:  Open an explorer for a given address, block, or transaction.
 
-  Where:  
+  Where:
 	terms                 one or more addresses, names, block, or transaction identifiers
 	-l  (--local)         open the local TrueBlocks explorer
 	-g  (--google)        search google excluding popular blockchain explorers

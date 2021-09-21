@@ -1,0 +1,8 @@
+[settings]
+class = CDatedBlock
+fields = datedBlocks.csv
+includes = etherlib.h
+doc_group = 02-Chain Data
+doc_descr = An indentified block named for convienience
+doc_api = 17-datedBlock
+doc_producer = when

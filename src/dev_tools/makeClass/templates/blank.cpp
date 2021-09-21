@@ -22,7 +22,7 @@
 IMPLEMENT_NODE([{CLASS_NAME}], [{BASE_CLASS}]);
 
 //---------------------------------------------------------------------------
-[SCOPE_CODE] string_q next[{PROPER}]Chunk(const string_q& fieldIn, const void* dataPtr);
+extern string_q next[{PROPER}]Chunk(const string_q& fieldIn, const void* dataPtr);
 static string_q next[{PROPER}]Chunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
@@ -72,7 +72,7 @@ string_q [{CLASS_NAME}]::getValueByName(const string_q& fieldName) const {
     // EXISTING_CODE
 
     [GET_CASE_CODE]
-
+[PARENT_GETBYVALUE]
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -88,8 +88,7 @@ bool [{CLASS_NAME}]::setValueByName(const string_q& fieldNameIn, const string_q&
     // EXISTING_CODE
     // EXISTING_CODE
 
-[{PARENT_SET}]
-    switch (tolower(fieldName[0])) {
+[{PARENT_SET}]    switch (tolower(fieldName[0])) {
 [SET_CASE_CODE]    }
     return false;
 }
@@ -122,7 +121,7 @@ bool [{CLASS_NAME}]::Serialize(CArchive& archive) {
 //---------------------------------------------------------------------------------------------------
 bool [{CLASS_NAME}]::SerializeC(CArchive& archive) const {
     // Writing always write the latest version of the data
-[{PARENT_SER2}]
+[{PARENT_SER}]
     // EXISTING_CODE
     // EXISTING_CODE
 [ARCHIVE_WRITE]    // EXISTING_CODE

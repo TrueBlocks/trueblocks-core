@@ -1,6 +1,0 @@
-                  data:
-                    description: "array of pins"
-                    type: array
-                    items:
-                      $ref: "#/components/schemas/pin"
-

@@ -153,6 +153,10 @@ extern CArchive& operator>>(CArchive& archive, CTreeNodeArray& array);
 extern CArchive& operator<<(CArchive& archive, const CTreeNodeArray& array);
 
 //---------------------------------------------------------------------------
+extern CArchive& operator<<(CArchive& archive, const CTreeNode& tre);
+extern CArchive& operator>>(CArchive& archive, CTreeNode& tre);
+
+//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_TREENODE;
 
 //---------------------------------------------------------------------------

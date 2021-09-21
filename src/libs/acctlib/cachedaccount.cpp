@@ -22,7 +22,7 @@ namespace qblocks {
 IMPLEMENT_NODE(CCachedAccount, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextCachedaccountChunk(const string_q& fieldIn, const void* dataPtr);
+extern string_q nextCachedaccountChunk(const string_q& fieldIn, const void* dataPtr);
 static string_q nextCachedaccountChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
@@ -112,14 +112,11 @@ string_q CCachedAccount::getValueByName(const string_q& fieldName) const {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    string_q s;
-    s = toUpper(string_q("latestTx")) + "::";
-    if (contains(fieldName, s)) {
-        string_q f = fieldName;
-        replaceAll(f, s, "");
-        f = latestTx.getValueByName(f);
-        return f;
-    }
+    // test for contained object field specifiers
+    string_q objSpec;
+    objSpec = toUpper("latestTx") + "::";
+    if (contains(fieldName, objSpec))
+        return latestTx.getValueByName(substitute(fieldName, objSpec, ""));
 
     // Finally, give the parent class a chance
     return CBaseNode::getValueByName(fieldName);
@@ -316,6 +313,18 @@ bool CCachedAccount::readBackLevel(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator<<(CArchive& archive, const CCachedAccount& cac) {
+    cac.SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator>>(CArchive& archive, CCachedAccount& cac) {
+    cac.Serialize(archive);
+    return archive;
 }
 
 //-------------------------------------------------------------------------

@@ -9,17 +9,18 @@ You may also query to see if an address is a smart contract as well as retrieve 
 `Usage:`    chifra state [-p|-c|-n|-v|-h] &lt;address&gt; [address...] [block...]  
 `Purpose:`  Retrieve account balance(s) for one or more addresses at given block(s).
 
-`Where:`  
+`Where:`
 
-| | Option | Description |
-| :----- | :----- | :---------- |
-|  | addrs | one or more addresses (0x...) from which to retrieve balances (required) |
-|  | blocks | an optional list of one or more blocks at which to report balances, defaults to 'latest' |
-| -p | --parts &lt;val&gt; | control which state to export, one or more of *[ none \| some\* \| all \| balance \| nonce \| code \| storage \| deployed \| accttype ]* |
-| -c | --changes | only report a balance when it changes from one block to the next |
-| -n | --no_zero | suppress the display of zero balance accounts |
-| -v | --verbose | set verbose level (optional level defaults to 1) |
-| -h | --help | display this help screen |
+|          | Option                          | Description                                                                                                                |
+| -------- | ------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+|          | addrs                           | one or more addresses (0x...) from which to retrieve<br/>balances (required)                                               |
+|          | blocks                          | an optional list of one or more blocks at which to<br/>report balances, defaults to 'latest'                               |
+| &#8208;p | &#8208;&#8208;parts &lt;val&gt; | control which state to export, one or more of [none,<br/>some, all, balance, nonce, code, storage, deployed,<br/>accttype] |
+| &#8208;c | &#8208;&#8208;changes           | only report a balance when it changes from one block<br/>to the next                                                       |
+| &#8208;n | &#8208;&#8208;no_zero           | suppress the display of zero balance accounts                                                                              |
+| &#8208;x | &#8208;&#8208;fmt &lt;val&gt;   | export format, one of [none, json, txt, csv, api]                                                                          |
+| &#8208;v | &#8208;&#8208;verbose           | set verbose level (optional level defaults to 1)                                                                           |
+| &#8208;h | &#8208;&#8208;help              | display this help screen                                                                                                   |
 
 `Notes:`
 
@@ -34,19 +35,18 @@ You may also query to see if an address is a smart contract as well as retrieve 
 
 All **TrueBlocks** command-line tools support the following commands (although in some case, they have no meaning):
 
-| Command     | Description                                                                                     |
-| ----------- | ----------------------------------------------------------------------------------------------- |
-| --version   | display the current version of the tool                                                         |
-| --nocolor   | turn off colored display                                                                        |
-| --wei       | specify value in wei (the default)                                                              |
-| --ether     | specify value in ether                                                                          |
-| --dollars   | specify value in US dollars                                                                     |
-| --raw       | report JSON data from the node with minimal processing                                          |
-| --very_raw  | report JSON data from node with zero processing                                                 |
-| --fmt       | export format (where appropriate). One of [ none &#124; txt &#124; csv &#124; json &#124; api ] |
-| --to_file   | write the results to a temporary file and return the filename                                   |
-| --output:fn | write the results to file 'fn' and return the filename                                          |
-| --file:fn   | specify multiple sets of command line options in a file.                                        |
+| Command     | Description                                                   |
+| ----------- | ------------------------------------------------------------- |
+| --version   | display the current version of the tool                       |
+| --nocolor   | turn off colored display                                      |
+| --wei       | specify value in wei (the default)                            |
+| --ether     | specify value in ether                                        |
+| --dollars   | specify value in US dollars                                   |
+| --raw       | report JSON data from the node with minimal processing        |
+| --very_raw  | report JSON data from node with zero processing               |
+| --to_file   | write the results to a temporary file and return the filename |
+| --output:fn | write the results to file 'fn' and return the filename        |
+| --file:fn   | specify multiple sets of command line options in a file.      |
 
 <small>*For the `--file:fn` option, place a series of valid command lines in a file and use the above options. In some cases, this option may significantly improve performance. A semi-colon at the start of a line makes that line a comment.*</small>
 

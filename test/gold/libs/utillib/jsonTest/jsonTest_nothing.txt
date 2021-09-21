@@ -6,9 +6,10 @@ jsonTest
   Usage:    jsonTest [-w|-v|-h] <file> [file...]  
   Purpose:  Test the json parsing facility in TrueBlocks.
         
-  Where:  
+  Where:
 	files                 One or more files to parse (required)
 	-w  (--which uint64)  Which test to run
+	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
 	-v  (--verbose)       set verbose level (optional level defaults to 1)
 	-h  (--help)          display this help screen
 

@@ -24,7 +24,7 @@ namespace qblocks {
 IMPLEMENT_NODE(CTrace, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextTraceChunk(const string_q& fieldIn, const void* dataPtr);
+extern string_q nextTraceChunk(const string_q& fieldIn, const void* dataPtr);
 static string_q nextTraceChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
@@ -149,30 +149,19 @@ string_q CTrace::getValueByName(const string_q& fieldName) const {
     // Weird note here -- the above case for traceAddress is not used because it's overridden further up.
     // EXISTING_CODE
 
-    string_q s;
-    s = toUpper(string_q("action")) + "::";
-    if (contains(fieldName, s)) {
-        string_q f = fieldName;
-        replaceAll(f, s, "");
-        f = action.getValueByName(f);
-        return f;
-    }
+    // test for contained object field specifiers
+    string_q objSpec;
+    objSpec = toUpper("action") + "::";
+    if (contains(fieldName, objSpec))
+        return action.getValueByName(substitute(fieldName, objSpec, ""));
 
-    s = toUpper(string_q("result")) + "::";
-    if (contains(fieldName, s)) {
-        string_q f = fieldName;
-        replaceAll(f, s, "");
-        f = result.getValueByName(f);
-        return f;
-    }
+    objSpec = toUpper("result") + "::";
+    if (contains(fieldName, objSpec))
+        return result.getValueByName(substitute(fieldName, objSpec, ""));
 
-    s = toUpper(string_q("articulatedTrace")) + "::";
-    if (contains(fieldName, s)) {
-        string_q f = fieldName;
-        replaceAll(f, s, "");
-        f = articulatedTrace.getValueByName(f);
-        return f;
-    }
+    objSpec = toUpper("articulatedTrace") + "::";
+    if (contains(fieldName, objSpec))
+        return articulatedTrace.getValueByName(substitute(fieldName, objSpec, ""));
 
     // Finally, give the parent class a chance
     return CBaseNode::getValueByName(fieldName);
@@ -184,8 +173,8 @@ bool CTrace::setValueByName(const string_q& fieldNameIn, const string_q& fieldVa
     string_q fieldValue = fieldValueIn;
 
     // EXISTING_CODE
-    if (pTrans)
-        if (((CTransaction*)pTrans)->setValueByName(fieldName, fieldValue))  // NOLINT
+    if (pTransaction)
+        if (((CTransaction*)pTransaction)->setValueByName(fieldName, fieldValue))  // NOLINT
             return true;
     if (fieldName % "transactionPosition")  // order matters
         fieldName = "transactionIndex";
@@ -414,13 +403,14 @@ string_q nextTraceChunk_custom(const string_q& fieldIn, const void* dataPtr) {
                     return tra->articulatedTrace.compressed("");
                 break;
             case 'd':
-                if (tra->pTrans) {
+                if (tra->pTransaction) {
+                    extern string_q nextTransactionChunk(const string_q& fieldIn, const void* data);
                     if (fieldIn % "date" || fieldIn % "datesh")
-                        return nextTransactionChunk(fieldIn, tra->pTrans);
+                        return nextTransactionChunk(fieldIn, tra->pTransaction);
                 }
                 break;
             case 'f':
-                if (tra->pTrans) {
+                if (tra->pTransaction) {
                     if (fieldIn % "function") {
                         string_q ret = tra->Format("[{ARTICULATEDTRACE}]");
                         if (ret.empty())
@@ -481,6 +471,18 @@ bool CTrace::readBackLevel(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator<<(CArchive& archive, const CTrace& tra) {
+    tra.SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator>>(CArchive& archive, CTrace& tra) {
+    tra.Serialize(archive);
+    return archive;
 }
 
 //-------------------------------------------------------------------------

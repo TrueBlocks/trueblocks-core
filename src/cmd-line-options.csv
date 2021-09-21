@@ -206,11 +206,11 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 10990,apps,Admin,pins,pinMan,,,,false,false,false,false,--,note,,One of `--list`&#44; `--init`&#44; or `--init_all` is required.
 10991,apps,Admin,pins,pinMan,,,,false,false,false,false,--,note,,the `--pin_locally` option only works if the IPFS executable is in your path.
 
-12020,tools,Other,quotes,getQuotes,freshen,f,,false,false,true,true,local,switch,<boolean>,Freshen price database (append new data)
+12020,tools,Other,quotes,getQuotes,freshen,f,,false,false,true,true,local,switch,<boolean>,Freshen price database
 12040,tools,Other,quotes,getQuotes,period,p,,false,false,true,true,local,flag,enum[5|15|30|60|120*|240|1440|10080|hourly|daily|weekly],increment of display
 12060,tools,Other,quotes,getQuotes,pair,a,,false,false,true,true,local,flag,<string>,which price pair to freshen or list (see Poloniex)
 12060,tools,Other,quotes,getQuotes,feed,e,,false,false,true,true,header,flag,enum[poloniex*|maker|tellor],the feed for the price data
-12080,tools,Other,quotes,getQuotes,,,,false,false,true,true,--,description,,Freshen and/or display Ethereum price data.
+12080,tools,Other,quotes,getQuotes,,,,false,false,true,true,--,description,,Freshen and/or display Ethereum price data. This tool has been deprecated.
 12082,tools,Other,quotes,getQuotes,,,,false,false,false,false,--,note,,Valid pairs include any pair from the public Poloniex's API here:|https://poloniex.com/public?command=returnCurrencies.
 12082,tools,Other,quotes,getQuotes,,,,false,false,false,false,--,note,,Due to restrictions from Poloniex&#44; this tool retrieves only 30 days of data|at a time. You must repeatedly run this command until the data is up-to-date.
 
@@ -234,12 +234,11 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 11780,dev_tools,,,makeClass,readmes,m,,false,false,true,false,local,switch,<boolean>,create readme files for each tool and app
 11782,dev_tools,,,makeClass,format,f,,false,false,true,false,local,switch,<boolean>,format source code files (.cpp and .h) found in local folder and below
 11784,dev_tools,,,makeClass,lint,l,,false,false,true,false,local,switch,<boolean>,lint source code files (.cpp and .h) found in local folder and below
-11786,dev_tools,,,makeClass,js,j,,false,false,true,false,header,switch,<boolean>,create javascript routes and help routes for the front end
+11786,dev_tools,,,makeClass,tsx,t,,false,false,true,false,header,switch,<boolean>,create typescript routes, help text and types for the front end
 11788,dev_tools,,,makeClass,dump,d,,false,false,false,false,local,switch,<boolean>,dump any classDefinition config tomls to screen and quit
 11800,dev_tools,,,makeClass,nspace,n,qblocks,false,false,true,false,header,flag,<string>,surround generated c++ code with a namespace
 11820,dev_tools,,,makeClass,filter,i,,false,false,true,false,header,flag,<string>,process only files whose filename or contents contain 'filter'
 11822,dev_tools,,,makeClass,force,c,false,false,false,true,false,header,switch,<boolean>,for both code generation and options generation&#44; force writing of changes
-11823,dev_tools,,,makeClass,api,p,,false,false,false,false,header,switch,<boolean>,generate api options file in explorer repo
 11781,dev_tools,,,makeClass,openapi,A,,false,false,false,false,header,switch,<boolean>,export openapi.yaml file for API documentation
 11824,dev_tools,,,makeClass,,,,false,false,true,false,--,description,,Automatically writes C++ for various purposes.
 11826,dev_tools,,,makeClass,,,,false,false,false,false,--,note,,The `--options` flag generates `COption` code for each of the various tools.

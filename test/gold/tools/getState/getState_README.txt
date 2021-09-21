@@ -5,21 +5,23 @@ getState -th
 `Usage:`    chifra state [-p|-c|-n|-v|-h] &lt;address&gt; [address...] [block...]  
 `Purpose:`  Retrieve account balance(s) for one or more addresses at given block(s).
 
-`Where:`  
+`Where:`
 
-| | Option | Description |
-| :----- | :----- | :---------- |
-|  | addrs | one or more addresses (0x...) from which to retrieve balances (required) |
-|  | blocks | an optional list of one or more blocks at which to report balances, defaults to 'latest' |
-| -p | --parts &lt;val&gt; | control which state to export, one or more of *[ none \| some\* \| all \| balance \| nonce \| code \| storage \| deployed \| accttype ]* |
-| -c | --changes | only report a balance when it changes from one block to the next |
-| -n | --no_zero | suppress the display of zero balance accounts |
-|####|Hidden options||
-| -a | --call &lt;str&gt; | a bang-separated string consisting of address!4-byte!bytes |
-|####|Hidden options||
-| -x | --fmt &lt;val&gt; | export format, one of *[ none \| json\* \| txt \| csv \| api ]* |
-| -v | --verbose | set verbose level (optional level defaults to 1) |
-| -h | --help | display this help screen |
+{{<td>}}
+|          | Option                          | Description                                                                                                                |
+| -------- | ------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+|          | addrs                           | one or more addresses (0x...) from which to retrieve<br/>balances (required)                                               |
+|          | blocks                          | an optional list of one or more blocks at which to<br/>report balances, defaults to 'latest'                               |
+| &#8208;p | &#8208;&#8208;parts &lt;val&gt; | control which state to export, one or more of [none,<br/>some, all, balance, nonce, code, storage, deployed,<br/>accttype] |
+| &#8208;c | &#8208;&#8208;changes           | only report a balance when it changes from one block<br/>to the next                                                       |
+| &#8208;n | &#8208;&#8208;no_zero           | suppress the display of zero balance accounts                                                                              |
+| ###      | Hidden options                  |                                                                                                                            |
+| &#8208;a | &#8208;&#8208;call &lt;str&gt;  | a bang-separated string consisting of address!4-byte!bytes                                                                 |
+| ###      | Hidden options                  |                                                                                                                            |
+| &#8208;x | &#8208;&#8208;fmt &lt;val&gt;   | export format, one of [none, json, txt, csv, api]                                                                          |
+| &#8208;v | &#8208;&#8208;verbose           | set verbose level (optional level defaults to 1)                                                                           |
+| &#8208;h | &#8208;&#8208;help              | display this help screen                                                                                                   |
+{{</td>}}
 
 `Notes:`
 

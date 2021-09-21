@@ -149,6 +149,10 @@ extern CArchive& operator>>(CArchive& archive, CCachedAccountArray& array);
 extern CArchive& operator<<(CArchive& archive, const CCachedAccountArray& array);
 
 //---------------------------------------------------------------------------
+extern CArchive& operator<<(CArchive& archive, const CCachedAccount& cac);
+extern CArchive& operator>>(CArchive& archive, CCachedAccount& cac);
+
+//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_CACHEDACCOUNT;
 
 //---------------------------------------------------------------------------

@@ -15,16 +15,17 @@ The `--sol` option will convert a single Solidity file found in the current fold
 `Usage:`    chifra abis [-k|-s|-f|-v|-h] &lt;address&gt; [address...]  
 `Purpose:`  Fetches the ABI for a smart contract.
 
-`Where:`  
+`Where:`
 
-| | Option | Description |
-| :----- | :----- | :---------- |
-|  | addrs | list of one or more smart contracts whose ABI to grab from EtherScan (required) |
-| -k | --known | load common 'known' ABIs from cache |
-| -s | --sol &lt;str&gt; | file name of .sol file from which to create a new known abi (without .sol) |
-| -f | --find &lt;str&gt; | try to search for a function declaration given a four byte code |
-| -v | --verbose | set verbose level (optional level defaults to 1) |
-| -h | --help | display this help screen |
+|          | Option                         | Description                                                                         |
+| -------- | ------------------------------ | ----------------------------------------------------------------------------------- |
+|          | addrs                          | list of one or more smart contracts whose ABI to grab<br/>from EtherScan (required) |
+| &#8208;k | &#8208;&#8208;known            | load common 'known' ABIs from cache                                                 |
+| &#8208;s | &#8208;&#8208;sol &lt;str&gt;  | file name of .sol file from which to create a new known<br/>abi (without .sol)      |
+| &#8208;f | &#8208;&#8208;find &lt;str&gt; | try to search for a function declaration given a four<br/>byte code                 |
+| &#8208;x | &#8208;&#8208;fmt &lt;val&gt;  | export format, one of [none, json, txt, csv, api]                                   |
+| &#8208;v | &#8208;&#8208;verbose          | set verbose level (optional level defaults to 1)                                    |
+| &#8208;h | &#8208;&#8208;help             | display this help screen                                                            |
 
 `Notes:`
 
@@ -34,19 +35,18 @@ The `--sol` option will convert a single Solidity file found in the current fold
 
 All **TrueBlocks** command-line tools support the following commands (although in some case, they have no meaning):
 
-| Command     | Description                                                                                     |
-| ----------- | ----------------------------------------------------------------------------------------------- |
-| --version   | display the current version of the tool                                                         |
-| --nocolor   | turn off colored display                                                                        |
-| --wei       | specify value in wei (the default)                                                              |
-| --ether     | specify value in ether                                                                          |
-| --dollars   | specify value in US dollars                                                                     |
-| --raw       | report JSON data from the node with minimal processing                                          |
-| --very_raw  | report JSON data from node with zero processing                                                 |
-| --fmt       | export format (where appropriate). One of [ none &#124; txt &#124; csv &#124; json &#124; api ] |
-| --to_file   | write the results to a temporary file and return the filename                                   |
-| --output:fn | write the results to file 'fn' and return the filename                                          |
-| --file:fn   | specify multiple sets of command line options in a file.                                        |
+| Command     | Description                                                   |
+| ----------- | ------------------------------------------------------------- |
+| --version   | display the current version of the tool                       |
+| --nocolor   | turn off colored display                                      |
+| --wei       | specify value in wei (the default)                            |
+| --ether     | specify value in ether                                        |
+| --dollars   | specify value in US dollars                                   |
+| --raw       | report JSON data from the node with minimal processing        |
+| --very_raw  | report JSON data from node with zero processing               |
+| --to_file   | write the results to a temporary file and return the filename |
+| --output:fn | write the results to file 'fn' and return the filename        |
+| --file:fn   | specify multiple sets of command line options in a file.      |
 
 <small>*For the `--file:fn` option, place a series of valid command lines in a file and use the above options. In some cases, this option may significantly improve performance. A semi-colon at the start of a line makes that line a comment.*</small>
 

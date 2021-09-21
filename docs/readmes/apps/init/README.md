@@ -10,18 +10,18 @@ If you run `chifra init` and allow it to complete, the next time you run `chifra
 
 ### usage
 
-`Usage:`    chifra init
+`Usage:`    chifra init  
 `Purpose:`  Leech the Bloom filters from IPFS by first downloading the pin manifest from a smart contract and then downloading the blooms. Optionally `--pin` the resulting download in order to share it with others.
 
 `Where:`
 
-| | Option | Description |
-| :----- | :----- | :---------- |
-| -i | --init | initialize local index by downloading Bloom filters from pinning service |
-| -k | --init_all | initialize local index by downloading both Bloom filters and index chunks |
-| -p | --pin_locally | pin all local files in the index to an IPFS store (requires IPFS) |
-| -v | --verbose | set verbose level (optional level defaults to 1) |
-| -h | --help | display this help screen |
+|          | Option                    | Description                                                               |
+| -------- | ------------------------- | ------------------------------------------------------------------------- |
+| &#8208;i | &#8208;&#8208;init        | initialize local index by downloading Bloom filters from pinning service  |
+| &#8208;k | &#8208;&#8208;init_all    | initialize local index by downloading both Bloom filters and index chunks |
+| &#8208;p | &#8208;&#8208;pin_locally | pin all local files in the index to an IPFS store (requires IPFS)         |
+| &#8208;v | &#8208;&#8208;verbose     | set verbose level (optional level defaults to 1)                          |
+| &#8208;h | &#8208;&#8208;help        | display this help screen                                                  |
 
 `Notes:`
 

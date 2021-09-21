@@ -13,7 +13,6 @@
 #include "acctlib.h"
 #include "options.h"
 
-extern bool writeIfDifferent(const string_q& path, const string_q& code);
 //------------------------------------------------------------------------------------------------------------
 bool visitReadme(const string_q& templatePath, void* data) {
     if (endsWith(templatePath, "/")) {
@@ -29,7 +28,7 @@ bool visitReadme(const string_q& templatePath, void* data) {
         explode(parts, templatePath, '/');
         string_q folder = parts[4];
         string_q tool = substitute(parts[5], ".md", "");
-        string_q docPath = getReadmePath(folder + "/" + tool + "/README.md");
+        string_q docPath = getDocsPathReadmes(folder + "/" + tool + "/README.md");
         string_q srcPath = "../src/" + folder + "/" + tool + "/README.md";
 
         string_q source = asciiFileToString(templatePath);
@@ -64,9 +63,11 @@ bool visitReadme(const string_q& templatePath, void* data) {
         replaceAll(srcCode, "~/Library/Application Support/TrueBlocks/", "$CONFIG/");
         replaceAll(docCode, "[{NAME}]", progNameMap[tool].empty() ? opts->getProgName() : progNameMap[tool]);
         replaceAll(srcCode, "[{NAME}]", progNameMap[tool].empty() ? opts->getProgName() : progNameMap[tool]);
+        replaceAll(docCode, "\n`Purpose", "  \n`Purpose");
 
         bool c1 = writeIfDifferent(docPath, docCode + "\n");
-        bool c2 = writeIfDifferent(srcPath, srcCode + "\n");
+        bool c2 =
+            writeIfDifferent(srcPath, substitute(substitute(srcCode, "{{<td>}}\n", ""), "{{</td>}}\n", "") + "\n");
         opts->counter.nVisited++;
         opts->counter.nProcessed += (c1 || c2);
     }
@@ -74,11 +75,37 @@ bool visitReadme(const string_q& templatePath, void* data) {
 }
 
 //------------------------------------------------------------------------------------------------------------
-bool writeIfDifferent(const string_q& path, const string_q& code) {
-    string_q existing = asciiFileToString(path);
+bool writeIfDifferent(const string_q& outFn, const string_q& codeIn, const time_q& now) {
+    static uint32_t cnt = 1;
+    string_q code = substitute(codeIn, "date: $DATE\n", "");
+    stringToAsciiFile("../build/one/" + uint_2_Str(cnt) + ".txt", code);
+    string_q existingIn = asciiFileToString(outFn);
+    CStringArray lines;
+    explode(lines, existingIn, '\n', false);
+    ostringstream existing;
+    for (auto line : lines) {
+        if (!startsWith(line, "date: ")) {
+            existing << line << endl;
+        }
+    }
+    stringToAsciiFile("../build/two/" + uint_2_Str(cnt) + ".txt", existing.str());
+    cnt++;
+
+    if (existing.str() != code) {
+        string_q out = substitute(codeIn, "$DATE", now.Format(FMT_EXPORT));
+        stringToAsciiFile(outFn, out);
+        cerr << cGreen << "\tProcessed " << cOff << outFn << endl;
+        return true;
+    }
+    return false;
+}
+
+//------------------------------------------------------------------------------------------------------------
+bool writeIfDifferent(const string_q& outFn, const string_q& code) {
+    string_q existing = asciiFileToString(outFn);
     if (existing != code) {
-        stringToAsciiFile(path, code);
-        cerr << cGreen << "\tProcessed " << cOff << path << endl;
+        stringToAsciiFile(outFn, code);
+        cerr << cGreen << "\tProcessed " << cOff << outFn << endl;
         return true;
     }
     return false;
@@ -99,7 +126,6 @@ bool findReplacements(const string_q& templatePath, void* data) {
     return true;
 }
 
-extern const char* STR_YAML_FRONTMATTER;
 //------------------------------------------------------------------------------------------------------------
 bool COptions::handle_readmes(void) {
     CToml config(configPath("makeClass.toml"));
@@ -111,8 +137,8 @@ bool COptions::handle_readmes(void) {
 
     LOG_INFO(cYellow, "handling readmes...", cOff);
     counter = CCounter();  // reset
-    forEveryFileInFolder(getReadmeTemplate(""), findReplacements, this);
-    forEveryFileInFolder(getReadmeTemplate(""), visitReadme, this);
+    forEveryFileInFolder(getDocsPathTemplates("readme-intros/"), findReplacements, this);
+    forEveryFileInFolder(getDocsPathTemplates("readme-intros/"), visitReadme, this);
 
     CStringArray items = {
         "Accounts:apps/list,apps/acctExport,apps/monitors,tools/ethNames,tools/grabABI",
@@ -125,24 +151,26 @@ bool COptions::handle_readmes(void) {
         CStringArray parts;
         explode(parts, item, ':');
 
-        string_q str = STR_YAML_FRONTMATTER;
-        replace(str, "[{TITLE}]", parts[0]);
-        replace(str, "[{WEIGHT}]", uint_2_Str(weight));
+        string_q front = STR_YAML_FRONTMATTER;
+        replace(front, "[{TITLE}]", parts[0]);
+        replace(front, "[{WEIGHT}]", uint_2_Str(weight));
+        replace(front, "[{M1}]", "docs:");
+        replace(front, "[{M2}]", "parent: \"chifra\"");
         string fn = substitute(toLower(parts[0]), " ", "");
 
         ostringstream os;
-        os << str;
-        os << asciiFileToString(getDocsTemplate("docs-intros/" + fn + ".md"));
+        os << front;
+        os << asciiFileToString(getDocsPathTemplates("readme-groups/" + fn + ".md"));
 
         CStringArray paths;
         explode(paths, parts[1], ',');
         for (auto p : paths) {
-            string_q pp = getReadmePath(p + "/README.md");
+            string_q pp = getDocsPathReadmes(p + "/README.md");
             os << asciiFileToString(pp);
         }
 
-        string_q outPath = getDocsChifraPath(fn + ".md");
-        stringToAsciiFile(outPath, substitute(os.str(), "$DATE", "2021-05-08T01:35:20"));
+        string_q outFn = getDocsPathContent("docs/chifra/" + fn + ".md");
+        writeIfDifferent(outFn, os.str(), Now());
 
         weight += 200;
     }
@@ -152,6 +180,7 @@ bool COptions::handle_readmes(void) {
     return true;
 }
 
+//------------------------------------------------------------------------------------------------------------
 const char* STR_YAML_FRONTMATTER =
     "---\n"
     "title: \"[{TITLE}]\"\n"
@@ -166,8 +195,8 @@ const char* STR_YAML_FRONTMATTER =
     "draft: false\n"
     "images: []\n"
     "menu:\n"
-    "  docs:\n"
-    "    parent: \"chifra\"\n"
+    "  [{M1}]\n"
+    "    [{M2}]\n"
     "weight: [{WEIGHT}]\n"
     "toc: true\n"
     "---\n";

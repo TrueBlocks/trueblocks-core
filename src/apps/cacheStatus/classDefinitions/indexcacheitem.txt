@@ -1,17 +1,4 @@
 [settings]
 class = CIndexCacheItem
-fields = string type|\
-        uint32 nAddrs|\
-        uint32 nApps|\
-        blknum firstApp|\
-        blknum latestApp|\
-        timestamp firstTs|\
-        timestamp latestTs|\
-        string filename|\
-        datetime fileDate|\
-        uint32 indexSizeBytes|\
-        ipfshash indexHash|\
-        uint32 bloomSizeBytes|\
-        ipfshash bloomHash
+fields = indexcacheitem.csv
 includes = etherlib.h
-serialize = true

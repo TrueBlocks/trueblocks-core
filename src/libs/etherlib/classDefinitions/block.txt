@@ -1,25 +1,10 @@
 [settings]
 class = CBlock
-fields = gas gasLimit|\
-        gas gasUsed|\
-        hash hash|\
-        blknum blockNumber|\
-        hash parentHash|\
-        address miner|\
-        uint64 difficulty|\
-        bool finalized|\
-        timestamp timestamp|\
-        wei baseFeePerGas|\
-        CTransactionArray transactions|\
-        CStringArray tx_hashes (nowrite)|\
-        string name (nowrite)|\
-        sbool light (nowrite)
-extra_fields = date date|\
-        uint64 unclesCnt|\
-        string extraData
+fields = block_fields.csv
 includes = etherlib.h|transaction.h
 cpp_includes = appearance.h
-scope = extern
-serializable = true
-display_str = blockNumber, timestamp, difficulty, gasUsed, gasLimit, baseFeePerGas, miner, hash, parentHash, transactionsCnt, finalized
-js = true
+tsx = true
+doc_group = 02-Chain Data
+doc_descr = block data directly from the blockchain
+doc_api = 10-block
+doc_producer = blocks

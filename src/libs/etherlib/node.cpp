@@ -256,7 +256,7 @@ bool readNodeFromBinary(CBaseNode& item, const string_q& fileName) {
 
 //-------------------------------------------------------------------------
 bool getReceipt(CReceipt& receipt, const hash_t& txHash) {
-    receipt = CReceipt(receipt.pTrans);
+    receipt = CReceipt(receipt.pTransaction);
     getObjectViaRPC(receipt, "eth_getTransactionReceipt", "[\"" + str_2_Hash(txHash) + "\"]");
     return true;
 }
@@ -1038,7 +1038,7 @@ bool forEveryTransaction(TRANSVISITFUNC func, void* data, const string_q& trans_
                 getBlock_light(block, trans.blockNumber);
                 getFullReceipt(&trans, true);
                 trans.timestamp = block.timestamp;
-                trans.receipt.pTrans = &trans;
+                trans.receipt.pTransaction = &trans;
                 trans.finishParse();
             } else {
                 // If the transaction has no hash here, there was a problem. Let the caller know
@@ -1287,6 +1287,8 @@ bool excludeTrace(const CTransaction* trans, size_t maxTraces) {
 }
 
 //-----------------------------------------------------------------------
+// TODO(tjayrush): These two things are appalling
+//-----------------------------------------------------------------------
 const string_q defHide =
     "CTransaction: price, nonce, input"
     "|CLogEntry: data, topics"
@@ -1294,9 +1296,8 @@ const string_q defHide =
     "|CTraceAction: init"
     "|CTraceResult: code"
     "|CFunction: constant, payable, signature, encoding, type, articulate_str"
-    "|CParameter: type, indexed, is_pointer, is_array, is_object, is_builtin, no_write, is_minimal, "
-    "is_enabled, "
-    "is_flags";
+    "|CParameter: type, indexed, is_pointer, is_array, is_object, is_builtin, "
+    "is_enabled, is_minimal, is_noaddfld, is_nowrite, is_omitempty, is_extra, is_flags";
 
 const string_q defShow =
     "CTransaction: gasCost, articulatedTx, compressedTx, "

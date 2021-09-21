@@ -22,7 +22,7 @@ namespace qblocks {
 IMPLEMENT_NODE(CPinataPin, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextPinatapinChunk(const string_q& fieldIn, const void* dataPtr);
+extern string_q nextPinatapinChunk(const string_q& fieldIn, const void* dataPtr);
 static string_q nextPinatapinChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
@@ -128,14 +128,11 @@ string_q CPinataPin::getValueByName(const string_q& fieldName) const {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    string_q s;
-    s = toUpper(string_q("metadata")) + "::";
-    if (contains(fieldName, s)) {
-        string_q f = fieldName;
-        replaceAll(f, s, "");
-        f = metadata.getValueByName(f);
-        return f;
-    }
+    // test for contained object field specifiers
+    string_q objSpec;
+    objSpec = toUpper("metadata") + "::";
+    if (contains(fieldName, objSpec))
+        return metadata.getValueByName(substitute(fieldName, objSpec, ""));
 
     // Finally, give the parent class a chance
     return CBaseNode::getValueByName(fieldName);

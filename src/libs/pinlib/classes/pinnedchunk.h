@@ -26,8 +26,8 @@ namespace qblocks {
 class CPinnedChunk : public CBaseNode {
   public:
     string_q fileName;
-    string_q bloomHash;
-    string_q indexHash;
+    ipfshash_t bloomHash;
+    ipfshash_t indexHash;
     bool onDisc;
 
   public:

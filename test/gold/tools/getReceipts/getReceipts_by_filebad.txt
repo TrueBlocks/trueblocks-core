@@ -1,12 +1,15 @@
 getReceipts argc: 3 [1:--file:cmd_file] [2:--bad] 
 getReceipts --file:cmd_file --bad 
+Cmd: 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.78 -v:1 --bad 
+Cmd: 3657480.78 --bad 
+Cmd: 0xda2f27fffb36c90c74fc53bd8b721074e87203c727640c95c4c802296e3bf8ad --parity --bad 
 
   Invalid option: --bad
 
   Usage:    getReceipts [-a|-v|-h] <tx_id> [tx_id...]  
   Purpose:  Retrieve receipts for the given transaction(s).
 
-  Where:  
+  Where:
 	transactions          a space-separated list of one or more transaction identifiers (required)
 	-a  (--articulate)    articulate the retrieved data if ABIs can be found
 	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]

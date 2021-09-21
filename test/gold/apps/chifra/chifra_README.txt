@@ -5,7 +5,7 @@ chifra -th
 `Usage:`    chifra command  
 `Purpose:`  Access to all TrueBlocks tools (`chifra <cmd> --help` for more).
 
-`Where:`  
+`Where:`
 ```
  ACCOUNTS
    list          list every appearance of an address anywhere on the chain

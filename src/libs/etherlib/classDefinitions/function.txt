@@ -1,21 +1,10 @@
 [settings]
 class = CFunction
-fields = string name|\
-        string type|\
-        string abi_source|\
-        bool anonymous|\
-        bool constant|\
-        string stateMutability|\
-        string signature|\
-        string encoding|\
-        string message (nowrite)|\
-        CParameterArray inputs|\
-        CParameterArray outputs|\
-        Value inputs_dict (nowrite)|\
-        Value outputs_dict (nowrite)
+fields = function.csv
 includes = utillib.h|parameter.h
 sort = v1.encoding < v2.encoding
 equals = encoding % it.encoding && message % it.message
-serializable = true
-display_str = abi_source, name, type, stateMutability, signature, encoding, inputs, outputs
-js = true
+tsx = true
+doc_group = 05-Other
+doc_descr = a human readable representation of a Solidity function call or event
+doc_api = 40-function

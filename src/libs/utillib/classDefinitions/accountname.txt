@@ -1,34 +1,12 @@
 [settings]
 class = CAccountName
-fields = \
-  string tags|\
-  address address|\
-  string name|\
-  string symbol|\
-  string source|\
-  suint64 decimals|\
-  string description|\
-  bool is_custom|\
-  bool is_prefund|\
-  bool is_contract|\
-  bool is_erc20|\
-  bool is_erc721
-extra_fields = bool deleted
+fields = accountname.csv
 includes = basetypes.h|basenode.h|sfarchive.h
 cpp_includes = options_base.h
-display_str = tags, address, name, symbol, source, decimals, description, deleted, is_custom, is_prefund, is_contract, is_erc20, is_erc721
 sort = v1.address < v2.address
 equals = address % it.address
-js = true
-
-#CTokenList
-#    name            1-20
-#    timestamp       2021-01-02T12:12:12
-#    version         0.0.0
-#    CToken tokens[]
-#        int chainId 1
-#        address address
-#        int decimals
-#        string name
-#        string symbol
-#        string logoURI
+tsx = true
+doc_group = 01-Accounts
+doc_descr = an association between a name and address for use throughout TrueBlocks
+doc_api = 04-name
+doc_producer = names

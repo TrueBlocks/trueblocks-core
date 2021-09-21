@@ -22,7 +22,7 @@ namespace qblocks {
 IMPLEMENT_NODE(CMonitorCacheItem, CCacheBase);
 
 //---------------------------------------------------------------------------
-static string_q nextMonitorcacheitemChunk(const string_q& fieldIn, const void* dataPtr);
+extern string_q nextMonitorcacheitemChunk(const string_q& fieldIn, const void* dataPtr);
 static string_q nextMonitorcacheitemChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
@@ -104,7 +104,6 @@ bool CMonitorCacheItem::setValueByName(const string_q& fieldNameIn, const string
 
     if (CCacheBase::setValueByName(fieldName, fieldValue))
         return true;
-
     switch (tolower(fieldName[0])) {
         case 'd':
             if (fieldName % "deleted") {
@@ -260,6 +259,18 @@ bool CMonitorCacheItem::readBackLevel(CArchive& archive) {
     return done;
 }
 
+//---------------------------------------------------------------------------
+CArchive& operator<<(CArchive& archive, const CMonitorCacheItem& mon) {
+    mon.SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator>>(CArchive& archive, CMonitorCacheItem& mon) {
+    mon.Serialize(archive);
+    return archive;
+}
+
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CMonitorCacheItem& it) {
     // EXISTING_CODE
@@ -274,7 +285,7 @@ ostream& operator<<(ostream& os, const CMonitorCacheItem& it) {
 const char* STR_DISPLAY_MONITORCACHEITEM =
     "[{DISPLAY_NAME}]\t"
     "[{FIRSTAPP}]\t"
-    "[{LASTAPP}]\t"
+    "[{LATESTAPP}]\t"
     "[{APPEARANCERANGE}]\t"
     "[{NRECORDS}]\t"
     "[{APPEARANCEINTERVAL}]\t"

@@ -1,6 +1,6 @@
 [settings]
 class = CLeaf
 base_class = CTreeNode
-fields = CBlockNumArray blocks|uint64 counter
+fields = leaf.csv
 includes = etherlib.h|treenode.h
 cpp_includes = treeroot.h

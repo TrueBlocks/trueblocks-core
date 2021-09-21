@@ -44,6 +44,7 @@ int main(int argc, const char* argv[]) {
                 options.handle_generate(toml, classDef, options.nspace, false);
             }
         }
+
         LOG_INFO(cYellow, "makeClass --run", cOff, " processed ", options.counter.nVisited, " files (changed ",
                  options.counter.nProcessed, ").", string_q(40, ' '));
     }

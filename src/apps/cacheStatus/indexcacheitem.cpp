@@ -22,7 +22,7 @@ namespace qblocks {
 IMPLEMENT_NODE(CIndexCacheItem, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextIndexcacheitemChunk(const string_q& fieldIn, const void* dataPtr);
+extern string_q nextIndexcacheitemChunk(const string_q& fieldIn, const void* dataPtr);
 static string_q nextIndexcacheitemChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
@@ -397,6 +397,18 @@ bool CIndexCacheItem::readBackLevel(CArchive& archive) {
     }
     // EXISTING_CODE
     return done;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator<<(CArchive& archive, const CIndexCacheItem& ind) {
+    ind.SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator>>(CArchive& archive, CIndexCacheItem& ind) {
+    ind.Serialize(archive);
+    return archive;
 }
 
 //-------------------------------------------------------------------------

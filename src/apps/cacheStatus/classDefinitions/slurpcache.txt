@@ -1,7 +1,5 @@
 [settings]
 class = CSlurpCache
 base_class = CCache
-fields = CAddressArray addrs|\
-        CMonitorCacheItemArray items
+fields = slurpcache.csv
 includes = cache.h|monitorcacheitem.h
-serialize = true

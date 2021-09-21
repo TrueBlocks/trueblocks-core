@@ -9,7 +9,7 @@ PROG_NAME = [chifra names]
   Usage:    chifra names [-e|-m|-l|-c|-p|-n|-a|-s|-g|-v|-h] <term> [term...]  
   Purpose:  Query addresses or names of well known accounts.
 
-  Where:  
+  Where:
 	terms                 a space separated list of one or more search terms (required)
 	-e  (--expand)        expand search to include all fields (default searches name, address, and symbol only)
 	-m  (--match_case)    do case-sensitive search

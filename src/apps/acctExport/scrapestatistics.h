@@ -169,6 +169,10 @@ extern CArchive& operator>>(CArchive& archive, CScrapeStatisticsArray& array);
 extern CArchive& operator<<(CArchive& archive, const CScrapeStatisticsArray& array);
 
 //---------------------------------------------------------------------------
+extern CArchive& operator<<(CArchive& archive, const CScrapeStatistics& scr);
+extern CArchive& operator>>(CArchive& archive, CScrapeStatistics& scr);
+
+//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_SCRAPESTATISTICS;
 
 //---------------------------------------------------------------------------

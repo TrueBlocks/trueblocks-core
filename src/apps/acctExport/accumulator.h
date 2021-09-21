@@ -139,6 +139,10 @@ extern CArchive& operator>>(CArchive& archive, CAccumulatorArray& array);
 extern CArchive& operator<<(CArchive& archive, const CAccumulatorArray& array);
 
 //---------------------------------------------------------------------------
+extern CArchive& operator<<(CArchive& archive, const CAccumulator& acc);
+extern CArchive& operator>>(CArchive& archive, CAccumulator& acc);
+
+//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_ACCUMULATOR;
 
 //---------------------------------------------------------------------------

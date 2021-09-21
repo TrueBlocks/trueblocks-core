@@ -1,15 +1,8 @@
 [settings]
 class = CParameter
-fields = string type|\
-        string name|\
-        string str_default|\
-        string value|\
-        sbool indexed|\
-        string internalType|\
-        CParameterArray components|\
-        sbool no_write|\
-        uint64 is_flags=IS_ENABLED|\
-        uint64 precision=5 (nowrite)
+fields = paramter.csv
 includes = utillib.h
-display_str = type, name, str_default, value, internalType, indexed, is_pointer, is_array, is_object, is_builtin, no_write, is_minimal
-js = true
+tsx = true
+doc_group = 05-Other
+doc_descr = an input or output paramter to a function
+doc_api = 41-parameter

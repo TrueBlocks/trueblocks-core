@@ -173,6 +173,10 @@ extern CArchive& operator>>(CArchive& archive, CEthStateArray& array);
 extern CArchive& operator<<(CArchive& archive, const CEthStateArray& array);
 
 //---------------------------------------------------------------------------
+extern CArchive& operator<<(CArchive& archive, const CEthState& eth);
+extern CArchive& operator>>(CArchive& archive, CEthState& eth);
+
+//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_ETHSTATE;
 
 //---------------------------------------------------------------------------

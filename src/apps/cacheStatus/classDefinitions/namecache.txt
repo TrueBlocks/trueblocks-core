@@ -1,7 +1,5 @@
 [settings]
 class = CNameCache
 base_class = CCache
-fields = CAddressArray addrs|\
-        CNameCacheItemArray items
+fields = namecache.csv
 includes = cache.h|monitorcacheitem.h
-serialize = true

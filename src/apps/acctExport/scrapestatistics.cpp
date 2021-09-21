@@ -22,7 +22,7 @@ namespace qblocks {
 IMPLEMENT_NODE(CScrapeStatistics, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextScrapestatisticsChunk(const string_q& fieldIn, const void* dataPtr);
+extern string_q nextScrapestatisticsChunk(const string_q& fieldIn, const void* dataPtr);
 static string_q nextScrapestatisticsChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
@@ -351,6 +351,18 @@ bool CScrapeStatistics::readBackLevel(CArchive& archive) {
     return done;
 }
 
+//---------------------------------------------------------------------------
+CArchive& operator<<(CArchive& archive, const CScrapeStatistics& scr) {
+    scr.SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator>>(CArchive& archive, CScrapeStatistics& scr) {
+    scr.Serialize(archive);
+    return archive;
+}
+
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CScrapeStatistics& it) {
     // EXISTING_CODE
@@ -370,6 +382,8 @@ const char* STR_DISPLAY_SCRAPESTATISTICS =
     "[{NBLOOMHITS}]\t"
     "[{NFALSEPOSITIVE}]\t"
     "[{NPOSITIVE}]\t"
+    "[{NSTAGECHECKED}]\t"
+    "[{NSTAGEHITS}]\t"
     "[{NTOTALHITS}]\t"
     "[{NFILERECORDS}]\t"
     "[{NCACHEWRITES}]";

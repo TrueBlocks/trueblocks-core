@@ -159,6 +159,10 @@ extern CArchive& operator>>(CArchive& archive, CConfigItemArray& array);
 extern CArchive& operator<<(CArchive& archive, const CConfigItemArray& array);
 
 //---------------------------------------------------------------------------
+extern CArchive& operator<<(CArchive& archive, const CConfigItem& con);
+extern CArchive& operator>>(CArchive& archive, CConfigItem& con);
+
+//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_CONFIGITEM;
 
 //---------------------------------------------------------------------------

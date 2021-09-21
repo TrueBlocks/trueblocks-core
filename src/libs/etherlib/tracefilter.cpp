@@ -22,7 +22,7 @@ namespace qblocks {
 IMPLEMENT_NODE(CTraceFilter, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextTracefilterChunk(const string_q& fieldIn, const void* dataPtr);
+extern string_q nextTracefilterChunk(const string_q& fieldIn, const void* dataPtr);
 static string_q nextTracefilterChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
@@ -327,6 +327,18 @@ bool CTraceFilter::readBackLevel(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator<<(CArchive& archive, const CTraceFilter& tra) {
+    tra.SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator>>(CArchive& archive, CTraceFilter& tra) {
+    tra.Serialize(archive);
+    return archive;
 }
 
 //-------------------------------------------------------------------------

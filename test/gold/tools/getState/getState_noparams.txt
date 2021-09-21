@@ -4,7 +4,7 @@ getState
   Usage:    getState [-p|-c|-n|-v|-h] <address> [address...] [block...]  
   Purpose:  Retrieve account balance(s) for one or more addresses at given block(s).
 
-  Where:  
+  Where:
 	addrs                 one or more addresses (0x...) from which to retrieve balances (required)
 	blocks                an optional list of one or more blocks at which to report balances, defaults to 'latest'
 	-p  (--parts <val>)   control which state to export, one or more of [none|some*|all|balance|nonce|code|storage|deployed|accttype]

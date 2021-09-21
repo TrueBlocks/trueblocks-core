@@ -9,16 +9,16 @@ Another way to get help to run `chifra --help` or `chifra <cmd> --help` on your 
 
 ### usage
 
-`Usage:`    chifra serve
+`Usage:`    chifra serve  
 `Purpose:`  Present each chifra command along with all of its options as a JSON api.
 
 `Where:`
 
-| Short Cut | Option    | Description                                 |
-| --------: | :-------- | :------------------------------------------ |
-|           | --port    | specify the server's port (default ":8080") |
-|        -v | --verbose | set verbose level (optional level defaults to 1)  |
-|        -h | --help    | display this help screen                    |
+|          | Option                | Description                                      |
+| -------- | --------------------- | ------------------------------------------------ |
+|          | &#8208;&#8208;port    | specify the server's port (default ":8080")      |
+| &#8208;v | &#8208;&#8208;verbose | set verbose level (optional level defaults to 1) |
+| &#8208;h | &#8208;&#8208;help    | display this help screen                         |
 
 `Notes:`
 

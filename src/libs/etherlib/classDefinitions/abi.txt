@@ -1,11 +1,12 @@
 [settings]
 class = CAbi
-fields = address address|\
-        CStringFunctionMap interfaceMap
+fields = abi.csv
 includes = function.h
 cpp_includes = node.h
-serializable = true
-display_str = address, encoding, type, name, signature, input_names, output_names
 equals = (address == it.address)
-js = true
+tsx = true
 disabled = true
+doc_group = 01-Accounts
+doc_descr = a collection of function and event definitions as described elsewhere in the Ethereum system
+doc_api = 05-abi
+doc_producer = abis

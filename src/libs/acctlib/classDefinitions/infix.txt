@@ -1,6 +1,6 @@
 [settings]
 class = CInfix
 base_class = CTreeNode
-fields = CTreeNode* next
+fields = infix.csv
 includes = etherlib.h|treenode.h
 cpp_includes = treeroot.h

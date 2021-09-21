@@ -17,11 +17,6 @@
  */
 #include "etherlib.h"
 #include "commandoption.h"
-#include "classdefinition.h"
-#include "page.h"
-#include "skin.h"
-#include "schema.h"
-#include "route.h"
 
 // BEG_ERROR_DEFINES
 #define ERR_CLASSDEFNOTEXIST 1
@@ -54,17 +49,16 @@ class COptions : public COptionsBase {
   public:
     // BEG_CODE_DECLARE
     bool all;
-    bool js;
+    bool tsx;
     string_q nspace;
     string_q filter;
     bool force;
-    bool api;
     bool openapi;
     // END_CODE_DECLARE
 
-    map<string_q, CPage> pageMap;
     runmode_t mode;
     CClassDefinitionArray classDefs;
+    CClassDefinitionArray dataModels;
     CCommandOptionArray optionArray;
     CStringArray positionals;
     CToml classFile;
@@ -137,8 +131,9 @@ class COptions : public COptionsBase {
     bool handle_lint(void);
     bool handle_format(void);
     bool handle_generate(CToml& toml, const CClassDefinition& classDef, const string_q& namespc, bool asJs);
-    bool handle_js(void);
-    bool handle_js_type(const CClassDefinition& classDef);
+    bool handle_datamodel(void);
+    bool handle_tsx(void);
+    bool handle_tsx_type(const CClassDefinition& classDef);
 
     void generate_switch(const CCommandOption& option);
     void generate_toggle(const CCommandOption& option);
@@ -148,6 +143,8 @@ class COptions : public COptionsBase {
 
     bool writeCode(const string_q& fn);
     void writeOpenApiFile(void);
+
+    string_q getProductions(const CCommandOption& ep);
 };
 
 //-------------------------------------------------------------------
@@ -158,6 +155,7 @@ extern string_q getCaseGetCode(const CParameterArray& fields);
 extern string_q getCaseSetCode(const CParameterArray& fields);
 extern string_q convertTypes(const string_q& inStr);
 extern string_q splitIfTooWide(const string_q& in);
+extern void expandTabbys(string_q& strOut);
 
 //------------------------------------------------------------------------------------------------------------
 inline bool is_reserved(const string_q& str) {
@@ -179,35 +177,11 @@ inline string_q short3(const string_q& str) {
 }
 
 //------------------------------------------------------------------------------------------------------------
-extern const char* STR_COMMENT_LINE;
-extern const char* STR_OPERATOR_DECL;
-extern const char* STR_OPERATOR_IMPL;
-extern const char* STR_GETVALUE1;
-extern const char* STR_GETVALUE2;
-extern const char* STR_GETOBJ_CODE;
-extern const char* STR_GETOBJ_CODE_FIELD;
-extern const char* STR_GETOBJ_CODE_FIELD_OBJ;
-extern const char* STR_GETSTR_CODE;
-extern const char* STR_GETSTR_CODE_FIELD;
-extern const char* STR_GETOBJ_HEAD;
-extern const char* STR_GETSTR_HEAD;
-extern const char* STR_UPGRADE_CODE;
-extern const char* STR_SORT_COMMENT_1;
-extern const char* STR_SORT_COMMENT_2;
-extern const char* STR_EQUAL_COMMENT_1;
-extern const char* STR_EQUAL_COMMENT_2;
-extern const char* STR_PRTREADFMT;
-extern const char* STR_READFMT;
-extern const char* STR_PTRWRITEFMT;
-extern const char* STR_WRITEFMT;
-extern const char* STR_UNKOWNTYPE;
-extern const char* STR_CHILD_OBJS;
-extern const char* STR_DELETE_CMDS;
-extern const char* STR_DEFAULT_TAGS;
-
-//------------------------------------------------------------------------------------------------------------
-void doReplace(string_q& str, const string_q& type, const string_q& rep, const string_q& spaces);
+extern void doReplace(string_q& str, const string_q& type, const string_q& rep, const string_q& spaces);
+extern bool writeIfDifferent(const string_q& path, const string_q& code);
+extern bool writeIfDifferent(const string_q& path, const string_q& code, const time_q& now);
 
 //---------------------------------------------------------------------------------------------------
+extern const char* STR_YAML_FRONTMATTER;
 #define routeCount fileCount
 #define cmdCount nVisited

@@ -1,5 +1,0 @@
-                  data:
-                    type: array
-                    description: array of logs
-                    items:
-                      $ref: "#/components/schemas/log"

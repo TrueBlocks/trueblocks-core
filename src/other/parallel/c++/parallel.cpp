@@ -17,13 +17,14 @@ using namespace std;
 
 //------------------------------------------------------------------------------------------------
 class CScannerBucket {
-public:
+  public:
     bool active;
     blknum_t bucket_id;
     thread* thread_ptr;
     CStringArray hits;
     const CStringArray& files;
-    CScannerBucket(const CStringArray& f, blknum_t bucket, size_t expectedSize) : active(false), bucket_id(bucket), files(f) {
+    CScannerBucket(const CStringArray& f, blknum_t bucket, size_t expectedSize)
+        : active(false), bucket_id(bucket), files(f) {
         hits.reserve(expectedSize);
         thread_ptr = NULL;
     }
@@ -43,11 +44,12 @@ size_t thread_count(const CScannerBucketArray& buckets) {
 
 #define N_THREADS 4
 class COptions {
-public:
+  public:
     size_t nThreads;
     blknum_t lastBlockInFile;
     blkrange_t scanR ange;
-    COptions(void) : nThreads(N_THREADS), lastBlockInFile(0), scanR ange(0,NOPOS) {}
+    COptions(void) : nThreads(N_THREADS), lastBlockInFile(0), scanR ange(0, NOPOS) {
+    }
 };
 COptions opts;
 
@@ -57,7 +59,7 @@ bool visitFinalIndexFiles(const string_q& path, void* data) {
         return forEveryFileInFolder(path + "*", visitFinalIndexFiles, data);
 
     } else {
-        CScannerBucket *bucket = (CScannerBucket*)data;
+        CScannerBucket* bucket = (CScannerBucket*)data;
 
         // Pick up some useful data for either method...
         COptions* options = reinterpret_cast<COptions*>(&opts);
@@ -87,7 +89,7 @@ bool visitFinalIndexFiles(const string_q& path, void* data) {
             bucket->hits.push_back(path);
         }
         return true;
-        //return options->visitBinaryFile(path, data) && !shouldQuit();
+        // return options->visitBinaryFile(path, data) && !shouldQuit();
     }
 
     ASSERT(0);  // should not happen
@@ -96,10 +98,10 @@ bool visitFinalIndexFiles(const string_q& path, void* data) {
 
 bool newWay = false;
 //------------------------------------------------------------------------------------------------
-int processOneBucket(const string_q& path, CScannerBucket *bucket) {
+int processOneBucket(const string_q& path, CScannerBucket* bucket) {
     bucket->active = true;
     if (newWay) {
-        for (size_t x = 0 ; x < bucket->files.size() ; x++)
+        for (size_t x = 0; x < bucket->files.size(); x++)
             visitFinalIndexFiles(bucket->files[x], bucket);
     } else {
         forEveryFileInFolder(path, visitFinalIndexFiles, bucket);
@@ -109,18 +111,17 @@ int processOneBucket(const string_q& path, CScannerBucket *bucket) {
 }
 
 //------------------------------------------------------------------------------------------------
-int main(int argc, char *argv[]) {
-
-//    for (int i=0; i< argc; i++)
-//        cerr << i << ": " << argv[i] << endl;
+int main(int argc, char* argv[]) {
+    //    for (int i=0; i< argc; i++)
+    //        cerr << i << ": " << argv[i] << endl;
 
     if (argc > 1)
         opts.nThreads = str_2_Uint(argv[1]);
     if (argc > 2)
         newWay = true;
 
-//    if (newWay)
-//        cerr << argc << " nThreads: " << opts.nThreads << " newWay: " << newWay << endl;
+    //    if (newWay)
+    //        cerr << argc << " nThreads: " << opts.nThreads << " newWay: " << newWay << endl;
 
     size_t count = nFilesInFolder(bloomPath);
     blknum_t expected_count = (count / opts.nThreads) * 2;  // double just to be conservative
@@ -128,23 +129,22 @@ int main(int argc, char *argv[]) {
     CStringArray files;
     listFilesInFolder(files, bloomPath, false);
 
-    for (size_t x = 0 ; x < 40 ; x++) {
+    for (size_t x = 0; x < 40; x++) {
         // Create the buckets...
         CScannerBucketArray buckets;
-        for (size_t th = 0 ; th < opts.nThreads ; th++)
+        for (size_t th = 0; th < opts.nThreads; th++)
             buckets.push_back(CScannerBucket(files, th, expected_count));
 
         // Kick them all off...
-        for (size_t b = 0 ; b < buckets.size() ; b++) {
-            CScannerBucket *bucket = &buckets[b];
+        for (size_t b = 0; b < buckets.size(); b++) {
+            CScannerBucket* bucket = &buckets[b];
             bucket->thread_ptr = new thread(processOneBucket, bloomPath, bucket);
-            printf("");
         }
 
         // Wait until they finish...
         size_t item = 0;
-        for (size_t b = 0 ; b < buckets.size() ; b++) {
-            CScannerBucket *bucket = &buckets[b];
+        for (size_t b = 0; b < buckets.size(); b++) {
+            CScannerBucket* bucket = &buckets[b];
             bucket->thread_ptr->join();
             cout << "\tactive: " << bucket->active << endl;
             cout << "\tbucket_id: " << bucket->bucket_id << endl;

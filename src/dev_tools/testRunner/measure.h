@@ -178,6 +178,10 @@ extern CArchive& operator>>(CArchive& archive, CMeasureArray& array);
 extern CArchive& operator<<(CArchive& archive, const CMeasureArray& array);
 
 //---------------------------------------------------------------------------
+extern CArchive& operator<<(CArchive& archive, const CMeasure& mea);
+extern CArchive& operator>>(CArchive& archive, CMeasure& mea);
+
+//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_MEASURE;
 
 //---------------------------------------------------------------------------

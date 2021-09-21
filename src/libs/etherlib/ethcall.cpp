@@ -23,7 +23,7 @@ namespace qblocks {
 IMPLEMENT_NODE(CEthCall, CEthState);
 
 //---------------------------------------------------------------------------
-static string_q nextEthcallChunk(const string_q& fieldIn, const void* dataPtr);
+extern string_q nextEthcallChunk(const string_q& fieldIn, const void* dataPtr);
 static string_q nextEthcallChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
@@ -98,14 +98,11 @@ string_q CEthCall::getValueByName(const string_q& fieldName) const {
     // EXISTING_CODE
     // EXISTING_CODE
 
-    string_q s;
-    s = toUpper(string_q("abi_spec")) + "::";
-    if (contains(fieldName, s)) {
-        string_q f = fieldName;
-        replaceAll(f, s, "");
-        f = abi_spec.getValueByName(f);
-        return f;
-    }
+    // test for contained object field specifiers
+    string_q objSpec;
+    objSpec = toUpper("abi_spec") + "::";
+    if (contains(fieldName, objSpec))
+        return abi_spec.getValueByName(substitute(fieldName, objSpec, ""));
 
     // Finally, give the parent class a chance
     return CEthState::getValueByName(fieldName);
@@ -121,7 +118,6 @@ bool CEthCall::setValueByName(const string_q& fieldNameIn, const string_q& field
 
     if (CEthState::setValueByName(fieldName, fieldValue))
         return true;
-
     switch (tolower(fieldName[0])) {
         case 'a':
             if (fieldName % "abi_spec") {
@@ -285,6 +281,18 @@ bool CEthCall::readBackLevel(CArchive& archive) {
     return done;
 }
 
+//---------------------------------------------------------------------------
+CArchive& operator<<(CArchive& archive, const CEthCall& eth) {
+    eth.SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator>>(CArchive& archive, CEthCall& eth) {
+    eth.Serialize(archive);
+    return archive;
+}
+
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CEthCall& it) {
     // EXISTING_CODE
@@ -310,15 +318,7 @@ const CBaseNode* CEthCall::getObjectAt(const string_q& fieldName, size_t index) 
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_ETHCALL =
-    "[{BLOCKNUMBER}]\t"
-    "[{ADDRESS}]\t"
-    "[{BALANCE}]\t"
-    "[{NONCE}]\t"
-    "[{CODE}]\t"
-    "[{STORAGE}]\t"
-    "[{DEPLOYED}]\t"
-    "[{ACCTTYPE}]";
+const char* STR_DISPLAY_ETHCALL = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

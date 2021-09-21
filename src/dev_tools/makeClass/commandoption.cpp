@@ -22,7 +22,7 @@ namespace qblocks {
 IMPLEMENT_NODE(CCommandOption, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextCommandoptionChunk(const string_q& fieldIn, const void* dataPtr);
+extern string_q nextCommandoptionChunk(const string_q& fieldIn, const void* dataPtr);
 static string_q nextCommandoptionChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
@@ -493,6 +493,18 @@ bool CCommandOption::readBackLevel(CArchive& archive) {
     return done;
 }
 
+//---------------------------------------------------------------------------
+CArchive& operator<<(CArchive& archive, const CCommandOption& com) {
+    com.SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator>>(CArchive& archive, CCommandOption& com) {
+    com.Serialize(archive);
+    return archive;
+}
+
 //-------------------------------------------------------------------------
 ostream& operator<<(ostream& os, const CCommandOption& it) {
     // EXISTING_CODE
@@ -748,7 +760,7 @@ string_q CCommandOption::toChifraHelp(void) const {
 
     CCommandOption ret = *this;
     replaceAll(ret.description, ".", "");
-    ret.description[0] = (char)tolower(ret.description[0]);
+    ret.description = firstLower(ret.description);
     if (api_route.empty())
         return toUpper(ret.Format("    \"[{GROUP}]|\""));
     return ret.Format("    \"  [{w:14:API_ROUTE}][{DESCRIPTION}]|\"");
@@ -774,13 +786,10 @@ string_q CCommandOption::toPairMap(void) const {
 string_q CCommandOption::toApiTag(void) const {
     if (isApiRoute(tool))
         return "";
-
     const char* STR_TAG_YAML =
         "  - name: [{GROUP}]\n"
         "    description: [{DESCRIPTION}]\n";
-    CCommandOption ret = *this;
-    replaceAll(ret.group, " ", "");
-    return ret.Format(STR_TAG_YAML);
+    return Format(STR_TAG_YAML);
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -829,7 +838,7 @@ string_q prepareDescr(const string_q& in) {
 }
 
 //---------------------------------------------------------------------------------------------------
-string_q CCommandOption::toApiPath(void) const {
+string_q CCommandOption::toApiPath(const string_q& inStr) const {
     if (!isApiRoute(api_route))
         return "";
 
@@ -847,8 +856,7 @@ string_q CCommandOption::toApiPath(void) const {
         paramStream << yp << endl;
     }
 
-    string_q propertyFn = getDocsPath("templates/api/properties/" + api_route + ".txt");
-    string_q exampleFn = getDocsPath("templates/api/examples/" + api_route + ".txt");
+    string_q exampleFn = getDocsPathTemplates("api/examples/" + api_route + ".txt");
 
     ostringstream example;
     if (fileExists(exampleFn)) {
@@ -862,30 +870,41 @@ string_q CCommandOption::toApiPath(void) const {
         }
     }
 
+    string_q content;
     ostringstream properties;
-    if (fileExists(propertyFn)) {
-        string_q content = trim(asciiFileToString(propertyFn), '\n');
-        if (!content.empty()) {
-            if (!contains(content, string_q(18, ' '))) {
-                replaceAll(content, "\n", "\n" + string_q(18, ' '));
-                content = string_q(18, ' ') + content;
-            }
-            properties << string_q(16, ' ') << "properties:" << endl << content << endl;
+    string_q descr = inStr;
+    string_q productions = nextTokenClear(descr, '|');
+    const char* STR_PROPERTIES =
+        "data:\n"
+        "  description: [{DESCR}]\n"
+        "  type: array\n"
+        "  items:\n"
+        "    [{PRODUCTIONS}]";
+    content = substitute(substitute(STR_PROPERTIES, "[{PRODUCTIONS}]", productions), "[{DESCR}]", descr);
+
+    if (!content.empty()) {
+        if (!contains(content, string_q(18, ' '))) {
+            replaceAll(content, "\n", "\n" + string_q(18, ' '));
+            content = string_q(18, ' ') + content;
         }
+        properties << string_q(16, ' ') << "properties:" << endl << content << endl;
+
+    } else {
+        if (!fileExists(exampleFn))
+            properties << string_q(16, ' ') << "items:\n                  $ref: \"#/components/schemas/response\"\n";
     }
 
-    if (!fileExists(exampleFn) && !fileExists(propertyFn))
-        properties << string_q(16, ' ') << "items:\n                  $ref: \"#/components/schemas/response\"\n";
+    string_q grp = substitute(substitute(group, "ChainData", "Chain Data"), "ChainState", "Chain State");
 
     string_q ret = STR_PATH_YAML;
-    replaceAll(ret, "[{TAGS}]", substitute(group, " ", ""));
+    replaceAll(ret, "[{TAGS}]", grp);
     replaceAll(ret, "[{PROPERTIES}]", properties.str());
     replaceAll(ret, "[{EXAMPLE}]", example.str());
     replaceAll(ret, "[{PATH}]", api_route);
     replaceAll(ret, "[{PARAMS}]", paramStream.str());
     replaceAll(ret, "[{SUMMARY}]", summary);
     replaceAll(ret, "[{DESCR}]", description);
-    replaceAll(ret, "[{ID}]", toLower(substitute(group, " ", "") + "-" + api_route));
+    replaceAll(ret, "[{ID}]", toLower(substitute(grp, " ", "") + "-" + api_route));
     return ret;
 }
 

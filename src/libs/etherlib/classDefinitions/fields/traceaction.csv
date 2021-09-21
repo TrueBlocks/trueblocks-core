@@ -1,0 +1,11 @@
+name           ,type    ,str_default ,object ,array ,nowrite ,omitempty ,minimal ,extra ,noaddfld ,doc ,disp ,example       ,description
+selfDestructed ,address ,            ,       ,      ,        ,true      ,        ,      ,         ,    ,     ,              ,
+balance        ,wei     ,            ,       ,      ,        ,true      ,        ,      ,         ,    ,     ,              ,
+callType       ,string  ,            ,       ,      ,        ,          ,        ,      ,         ,5   ,     ,              ,the type of call
+from           ,address ,            ,       ,      ,        ,          ,        ,      ,         ,1   ,     ,              ,address from which the trace was sent
+gas            ,gas     ,            ,       ,      ,        ,          ,        ,      ,         ,3   ,     ,158660        ,the maximum number of gas allowed for this trace
+init           ,string  ,            ,       ,      ,        ,          ,        ,      ,         ,    ,     ,              ,
+input          ,bytes   ,            ,       ,      ,        ,          ,        ,      ,         ,4   ,     ,              ,an encoded version of the function call
+refundAddress  ,address ,            ,       ,      ,        ,          ,        ,      ,         ,6   ,     ,0xf503...179b ,if the call type is self-destruct&#44; the address to which the refund is sent
+to             ,address ,            ,       ,      ,        ,          ,        ,      ,         ,2   ,     ,              ,address to which the trace was sent
+value          ,wei     ,            ,       ,      ,        ,          ,        ,      ,         ,    ,     ,              ,

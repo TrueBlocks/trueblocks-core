@@ -13,10 +13,44 @@
 #include "acctlib.h"
 #include "options.h"
 
+//------------------------------------------------------------------------------------------------------------
 extern const char* STR_CASE_CODE_STRINGARRAY;
+extern const char* STR_COMMENT_LINE;
+extern const char* STR_OPERATOR_DECL;
+extern const char* STR_OPERATOR_IMPL;
+extern const char* STR_PARENT_GETBYVALUE;
+extern const char* STR_PARENT_REGISTER;
+extern const char* STR_PARENT_SET;
+extern const char* STR_PARENT_SERIALIZE;
+extern const char* STR_GETVALUE1;
+extern const char* STR_GETVALUE2;
+extern const char* STR_GETOBJ_CODE;
+extern const char* STR_GETOBJ_CODE_FIELD;
+extern const char* STR_GETOBJ_CODE_FIELD_OBJ;
+extern const char* STR_GETSTR_CODE;
+extern const char* STR_GETSTR_CODE_FIELD;
+extern const char* STR_GETOBJ_HEAD;
+extern const char* STR_GETSTR_HEAD;
+extern const char* STR_UPGRADE_CODE;
+extern const char* STR_SORT_COMMENT_1;
+extern const char* STR_SORT_COMMENT_2;
+extern const char* STR_EQUAL_COMMENT_1;
+extern const char* STR_EQUAL_COMMENT_2;
+extern const char* STR_PRTREADFMT;
+extern const char* STR_READFMT;
+extern const char* STR_PTRWRITEFMT;
+extern const char* STR_WRITEFMT;
+extern const char* STR_UNKOWNTYPE;
+extern const char* STR_CHILD_OBJS;
+extern const char* STR_DELETE_CMDS;
+extern const char* STR_DEFAULT_TAGS;
 extern bool writeTheCode(const codewrite_t& cw);
 //------------------------------------------------------------------------------------------------------------
 bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, const string_q& namespc, bool asJs) {
+    CClassDefinition classDef(toml);
+    classDef.short_fn = classDefIn.short_fn;
+    classDef.input_path = classDefIn.input_path;
+
     //------------------------------------------------------------------------------------------------
     if (toml.getConfigBool("settings", "disabled", false)) {
         if (verbose)
@@ -27,16 +61,12 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
     //------------------------------------------------------------------------------------------------
     counter.nVisited++;
 
-    CClassDefinition classDef(toml);
-    classDef.short_fn = classDefIn.short_fn;
-    classDef.input_path = classDefIn.input_path;
-
     //------------------------------------------------------------------------------------------------
     ostringstream lheaderStream, clearStream, copyStream;
     ostringstream ar_readStream, ar_writeStream;
     ostringstream src_incStream, head_incStream;
     ostringstream child_objStream, add_fieldStream, hide_fieldStream;
-    ostringstream defaultsStream;
+    ostringstream defaultsStream, openapi_componentStream;
 
     //------------------------------------------------------------------------------------------------
     string_q fieldGetObj, fieldGetStr;
@@ -59,15 +89,6 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
     }
 
     //------------------------------------------------------------------------------------------------
-    bool isBase = (classDef.base_class == "CBaseNode");
-    // clang-format off
-    string_q parSer2 = !isBase ? "`[{BASE_CLASS}]::SerializeC(archive);\n\n"        : "`[{BASE_CLASS}]::SerializeC(archive);\n";
-    string_q parReg  = !isBase ? "[{BASE_CLASS}]::registerClass();\n\n`"            : "";
-    string_q parCnk  = !isBase ? "ret = next[{BASE_BASE}]Chunk(fieldName, this);\n" : "ret = next[{BASE_BASE}]Chunk(fieldName, this);\n";
-    string_q parSet  = !isBase ? "`if ([{BASE_CLASS}]::setValueByName(fieldName, fieldValue))\n``return true;\n\n" : "";
-    // clang-format on
-
-    //------------------------------------------------------------------------------------------------
     for (auto fld : classDef.fieldArray) {
         // keep these in this scope since they may change per field
         string_q declareFmt = "`[{TYPE}]* [{NAME}];";
@@ -81,7 +102,6 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
         // clang-format off
                if (fld.type == "Value")           { setFmt = "`[{NAME}] = [{DEF}]\n";     regType = "T_JSONVAL | TS_OMITEMPTY";
         } else if (fld.type == "wei")             { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_WEI";
-        } else if (fld.type == "sgas")            { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_GAS | TS_OMITEMPTY";
         } else if (fld.type == "gas")             { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_GAS";
         } else if (fld.type == "timestamp")       { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_TIMESTAMP";
         } else if (fld.type == "datetime")        { setFmt = "`[{NAME}] = [{DEFT}];\n";   regType = "T_DATE";
@@ -100,11 +120,8 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
         } else if (fld.type == "uint16")          { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_UNUMBER";
         } else if (fld.type == "uint32")          { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_UNUMBER";
         } else if (fld.type == "uint64")          { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_UNUMBER";
-        } else if (fld.type == "suint32")         { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_UNUMBER | TS_OMITEMPTY"; fld.type = "uint32";
-        } else if (fld.type == "suint64")         { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_UNUMBER | TS_OMITEMPTY"; fld.type = "uint64";
         } else if (fld.type == "uint256")         { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_UINT256";
         } else if (fld.type == "bool")            { setFmt = "`[{NAME}] = [{DEFB}];\n";   regType = "T_BOOL | TS_OMITEMPTY";
-        } else if (fld.type == "sbool")           { setFmt = "`[{NAME}] = [{DEFB}];\n";   regType = "T_BOOL | TS_OMITEMPTY";
         } else if (fld.type == "double")          { setFmt = "`[{NAME}] = [{DEFF}];\n";   regType = "T_DOUBLE";
         } else if (startsWith(fld.type, "bytes")) { setFmt = "`[{NAME}] = [{DEFS}];\n";   regType = "T_TEXT | TS_OMITEMPTY";
         } else if (endsWith(fld.type, "_e"))      { setFmt = "`[{NAME}] = [{DEF}];\n";    regType = "T_NUMBER";
@@ -112,6 +129,9 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
         } else if ((fld.is_flags & IS_OBJECT))    { setFmt = "`[{NAME}] = [{TYPE}]();\n"; regType = "T_OBJECT | TS_OMITEMPTY";
         } else                                    { setFmt = STR_UNKOWNTYPE;              regType = "T_TEXT | TS_OMITEMPTY"; }
         // clang-format on
+
+        if (fld.is_flags & IS_OMITEMPTY && !contains(regType, " | TS_OMITEMPTY"))
+            regType += " | TS_OMITEMPTY";
 
         if ((fld.type == "Value")) {
             setFmt = "\t[{NAME}].clear();\n";
@@ -166,17 +186,18 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
         if (!(fld.is_flags & IS_POINTER) || (fld.is_flags & IS_ARRAY))
             replace(declareFmt, "*", "");
 
-        string_q fieldAddLine = fld.Format(regAddFmt);
-        replaceAll(fieldAddLine, "T_TEXT", regType);
-        replaceAll(fieldAddLine, "CL_NM", "[{CLASS_NAME}]");
-        if ((fld.is_flags & IS_OBJECT) && !(fld.is_flags & IS_ARRAY) && !(fld.is_flags & IS_POINTER)) {
-            replaceAll(fieldAddLine, "ADD_FIELD", "ADD_OBJECT");
-            replaceAll(fieldAddLine, "++fieldNum);\n", "++fieldNum, GETRUNTIME_CLASS(" + fld.type + "));\n");
+        if (!(fld.is_flags & IS_NOADDFLD)) {
+            string_q fieldAddLine = fld.Format(regAddFmt);
+            replaceAll(fieldAddLine, "T_TEXT", regType);
+            replaceAll(fieldAddLine, "CL_NM", "[{CLASS_NAME}]");
+            if ((fld.is_flags & IS_OBJECT) && !(fld.is_flags & IS_ARRAY) && !(fld.is_flags & IS_POINTER)) {
+                replaceAll(fieldAddLine, "ADD_FIELD", "ADD_OBJECT");
+                replaceAll(fieldAddLine, "++fieldNum);\n", "++fieldNum, GETRUNTIME_CLASS(" + fld.type + "));\n");
+            }
+            add_fieldStream << fieldAddLine;
+            if (fld.is_flags & IS_NOWRITE)
+                add_fieldStream << substitute(fld.Format(regHideFmt), "CL_NM", "[{CLASS_NAME}]");
         }
-
-        add_fieldStream << fieldAddLine;
-        if (fld.no_write)
-            add_fieldStream << substitute(fld.Format(regHideFmt), "CL_NM", "[{CLASS_NAME}]");
 
         // minimal means that a field is part of the object's data (such as CReceipt::blockNumber) but should not be
         // part of the 'class' proper -- i.e. it gets its value from its containing class (in this case the block it
@@ -187,7 +208,7 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
                                      "[{CLASS_NAME}]");
             defaultsStream << fld.Format(setFmt);
             clearStream << (((fld.is_flags & IS_POINTER) && !(fld.is_flags & IS_ARRAY)) ? fld.Format(ptrClearFmt) : "");
-            if (fld.no_write) {
+            if (fld.is_flags & IS_NOWRITE) {
                 ar_readStream << substitute(fld.Format(STR_READFMT), "`archive", "`// archive");
                 ar_writeStream << substitute(fld.Format(STR_WRITEFMT), "`archive", "`// archive");
             } else {
@@ -197,21 +218,36 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
 
             if ((fld.is_flags & IS_OBJECT) && !(fld.is_flags & IS_POINTER) && !contains(fld.type, "Array")) {
                 if (child_objStream.str().empty())
-                    child_objStream << "\n`string_q s;\n";
+                    child_objStream << "\n\n`// test for contained object field specifiers\n`string_q objSpec;\n";
                 child_objStream << fld.Format(STR_CHILD_OBJS) << endl;
             }
         }
     }
 
     //------------------------------------------------------------------------------------------------
-    string_q operators_decl = string_q(classDef.serializable ? STR_OPERATOR_DECL : "\n");
-    string_q operators_impl = string_q(classDef.serializable ? STR_OPERATOR_IMPL : "\n");
+    string_q operators_decl = STR_OPERATOR_DECL;
+    string_q operators_impl = STR_OPERATOR_IMPL;
 
     //------------------------------------------------------------------------------------------------
     classDef.sort_str = substitute(classDef.sort_str, "|", "\n```");
     classDef.eq_str = substitute(classDef.eq_str, "|", "\n```");
 
     //------------------------------------------------------------------------------------------------
+    map<uint64_t, string_q> dispMap;
+    for (auto fld : classDef.fieldArray)
+        if (fld.disp > 0)
+            dispMap[fld.disp] = fld.name;
+    if (dispMap.size()) {
+        string_q add = classDef.display_str;
+        classDef.display_str = "";
+        for (auto item : dispMap) {
+            classDef.display_str += item.second + ",";
+        }
+        classDef.display_str = trim(classDef.display_str, ',');
+        if (!add.empty())
+            classDef.display_str += "," + add;
+    }
+
     if (classDef.display_str.empty()) {
         classDef.display_str = " \"\"";
     } else {
@@ -229,6 +265,11 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
     bool hasStrGetter = !fieldGetStr.empty();
     if (hasStrGetter)
         fieldGetStr = substitute(string_q(STR_GETSTR_CODE), "[{FIELDS}]", fieldGetStr);
+
+    //------------------------------------------------------------------------------------------------
+    ASSERT(!classDef.base_class.empty());
+    bool isBase = (classDef.base_class == "CBaseNode");
+    bool isContained = !classDef.contained_by.empty();
 
     string_q headerFile = classDef.outputPath(".h");
     string_q headSource = asciiFileToString(configPath("makeClass/blank.h"));
@@ -263,11 +304,7 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
     replaceAll(headSource, "[{NAMESPACE1}]", (namespc.empty() ? "" : "\nnamespace qblocks {\n\n"));
     replaceAll(headSource, "[{NAMESPACE2}]", (namespc.empty() ? "" : "}  // namespace qblocks\n"));
     replaceAll(headSource, "public:\n\n  public:", "public:");
-    replaceAll(headSource, "`````", string_q(5, '\t'));
-    replaceAll(headSource, "````", string_q(4, '\t'));
-    replaceAll(headSource, "```", string_q(3, '\t'));
-    replaceAll(headSource, "``", string_q(2, '\t'));
-    replaceAll(headSource, "`", string_q(1, '\t'));
+    expandTabbys(headSource);
     counter.nProcessed += writeTheCode(codewrite_t(headerFile, headSource, namespc, 4, true, force));
 
     //------------------------------------------------------------------------------------------------
@@ -288,12 +325,12 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
     replaceAll(srcSource, "[HIDE_FIELDS]", hide_fieldStream.str());
     replaceAll(srcSource, "[SET_CASE_CODE]", getCaseSetCode(classDef.fieldArray));
     replaceAll(srcSource, "[GET_CASE_CODE]", getCaseGetCode(classDef.fieldArray));
-    replaceAll(srcSource, "[SCOPE_CODE]", classDef.scope_str);
     replaceAll(srcSource, "[OPERATORS_IMPL]", operators_impl);
-    replaceAll(srcSource, "[{PARENT_SER2}]", parSer2);
-    replaceAll(srcSource, "[{PARENT_REG}]", parReg);
-    replaceAll(srcSource, "[{PARENT_CHNK}]\n", parCnk);
-    replaceAll(srcSource, "[{PARENT_SET}]\n", parSet);
+    replaceAll(srcSource, "[{PARENT_SER}]", STR_PARENT_SERIALIZE);
+    replaceAll(srcSource, "[{PARENT_REG}]", isBase ? "" : STR_PARENT_REGISTER);
+    replaceAll(srcSource, "[{PARENT_SET}]", isBase ? "" : STR_PARENT_SET);
+    replaceAll(srcSource, "[PARENT_GETBYVALUE]",
+               isContained ? substitute(STR_PARENT_GETBYVALUE, "CONTAINED", classDef.contained_by) : "");
     replaceAll(srcSource, "[{COMMENT_LINE}]", STR_COMMENT_LINE);
     replaceAll(srcSource, "[{BASE_CLASS}]", classDef.base_class);
     replaceAll(srcSource, "[{LONG}]", classDef.base_lower);
@@ -310,15 +347,11 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
     replaceAll(srcSource, "[{NAMESPACE1}]", (namespc.empty() ? "" : "\nnamespace qblocks {\n\n"));
     replaceAll(srcSource, "[{NAMESPACE2}]", (namespc.empty() ? "" : "}  // namespace qblocks\n"));
     replaceAll(srcSource, "[{FN}]", classDef.short_fn);
-    replaceAll(srcSource, "`````", string_q(5, '\t'));
-    replaceAll(srcSource, "````", string_q(4, '\t'));
-    replaceAll(srcSource, "```", string_q(3, '\t'));
-    replaceAll(srcSource, "``", string_q(2, '\t'));
-    replaceAll(srcSource, "`", string_q(1, '\t'));
+    expandTabbys(srcSource);
     counter.nProcessed += writeTheCode(codewrite_t(srcFile, srcSource, namespc, 4, true, force));
 
-    if (js && classDef.js)
-        handle_js_type(classDef);
+    if (tsx && classDef.tsx)
+        handle_tsx_type(classDef);
 
     return true;
 }
@@ -362,19 +395,19 @@ string_q getCaseGetCode(const CParameterArray& fieldsIn) {
                     outStream << str;
 
                 } else if (p.type == "bool") {
-                    outStream << ("return bool_2_Str([{PTR}]" + p.name + ");");
-
-                } else if (p.type == "sbool") {
-                    outStream << ("return bool_2_Str_t([{PTR}]" + p.name + ");");
+                    if (p.is_flags & IS_OMITEMPTY)
+                        outStream << ("return bool_2_Str_t([{PTR}]" + p.name + ");");
+                    else
+                        outStream << ("return bool_2_Str([{PTR}]" + p.name + ");");
 
                 } else if (p.type == "wei") {
                     outStream << ("return wei_2_Str([{PTR}]" + p.name + ");");
 
-                } else if (p.type == "sgas") {
-                    outStream << ("return " + p.name + " == 0 ? \"\" : gas_2_Str([{PTR}]" + p.name + ");");
-
                 } else if (p.type == "gas") {
-                    outStream << ("return gas_2_Str([{PTR}]" + p.name + ");");
+                    if (p.is_flags & IS_OMITEMPTY)
+                        outStream << ("return " + p.name + " == 0 ? \"\" : gas_2_Str([{PTR}]" + p.name + ");");
+                    else
+                        outStream << ("return gas_2_Str([{PTR}]" + p.name + ");");
 
                 } else if (p.type == "timestamp") {
                     outStream << ("return ts_2_Str([{PTR}]" + p.name + ");");
@@ -398,10 +431,10 @@ string_q getCaseGetCode(const CParameterArray& fieldsIn) {
                     outStream << ("return uint_2_Str([{PTR}]" + p.name + ");");
 
                 } else if (p.type == "uint32" || p.type == "uint64") {
-                    outStream << ("return uint_2_Str([{PTR}]" + p.name + ");");
-
-                } else if (p.type == "suint64" || p.type == "suint32") {
-                    outStream << ("return " + p.name + " == 0 ? \"\" : uint_2_Str([{PTR}]" + p.name + ");");
+                    if (p.is_flags & IS_OMITEMPTY)
+                        outStream << ("return " + p.name + " == 0 ? \"\" : uint_2_Str([{PTR}]" + p.name + ");");
+                    else
+                        outStream << ("return uint_2_Str([{PTR}]" + p.name + ");");
 
                 } else if (p.type == "blknum") {
                     outStream << ("return uint_2_Str([{PTR}]" + p.name + ");");
@@ -514,13 +547,13 @@ string_q getCaseSetCode(const CParameterArray& fieldsIn) {
                 if (p.type == "Value") {
                     outStream << (p.name + " = fieldValue;\n````return true;");
 
-                } else if (p.type == "bool" || p.type == "sbool") {
+                } else if (p.type == "bool") {
                     outStream << (p.name + " = str_2_Bool(fieldValue);\n````return true;");
 
                 } else if (p.type == "wei") {
                     outStream << (p.name + " = str_2_Wei(fieldValue);\n````return true;");
 
-                } else if (p.type == "gas" || p.type == "sgas") {
+                } else if (p.type == "gas") {
                     outStream << (p.name + " = str_2_Gas(fieldValue);\n````return true;");
 
                 } else if (p.type == "timestamp") {
@@ -550,7 +583,7 @@ string_q getCaseSetCode(const CParameterArray& fieldsIn) {
                 } else if (p.type == "int256") {
                     outStream << (p.name + " = str_2_BigInt(fieldValue);\n````return true;");
 
-                } else if (p.type == "uint64" || p.type == "suint64") {
+                } else if (p.type == "uint64") {
                     outStream << (p.name + " = str_2_Uint(fieldValue);\n````return true;");
 
                 } else if (p.type == "uint256") {
@@ -571,7 +604,7 @@ string_q getCaseSetCode(const CParameterArray& fieldsIn) {
                 } else if (p.type == "uint16") {
                     outStream << (p.name + " = (uint16_t)str_2_Uint(fieldValue);\n````return true;");
 
-                } else if (p.type == "uint32" || p.type == "suint32") {
+                } else if (p.type == "uint32") {
                     outStream << (p.name + " = (uint32_t)str_2_Uint(fieldValue);\n````return true;");
 
                 } else if (startsWith(p.type, "bytes")) {
@@ -668,10 +701,8 @@ string_q convertTypes(const string_q& inStr) {
     replaceAll(outStr, "timestamp ", "timestamp_t ");
     replaceAll(outStr, "datetime ", "time_q ");
     replaceAll(outStr, "bool ", "bool ");
-    replaceAll(outStr, "sbool ", "bool ");
 
     replaceAll(outStr, "hash ", "hash_t ");
-    replaceAll(outStr, "sgas ", "gas_t ");
     replaceAll(outStr, "gas ", "gas_t ");
     replaceAll(outStr, "wei ", "wei_t ");
 
@@ -764,6 +795,15 @@ bool writeTheCode(const codewrite_t& cw) {
 }
 
 //------------------------------------------------------------------------------------------------------------
+void expandTabbys(string_q& strOut) {
+    replaceAll(strOut, "`````", string_q(5, '\t'));
+    replaceAll(strOut, "````", string_q(4, '\t'));
+    replaceAll(strOut, "```", string_q(3, '\t'));
+    replaceAll(strOut, "``", string_q(2, '\t'));
+    replaceAll(strOut, "`", string_q(1, '\t'));
+}
+
+//------------------------------------------------------------------------------------------------------------
 const char* STR_COMMENT_LINE = "//---------------------------------------------------------------------------\n";
 
 //------------------------------------------------------------------------------------------------------------
@@ -772,6 +812,24 @@ const char* STR_OPERATOR_DECL =
     "extern CArchive& operator<<(CArchive& archive, const [{CLASS_NAME}]& [{SHORT3}]);\n"
     "extern CArchive& operator>>(CArchive& archive, [{CLASS_NAME}]& [{SHORT3}]);\n"
     "\n";
+
+//------------------------------------------------------------------------------------------------------------
+const char* STR_PARENT_GETBYVALUE =
+    "`extern string_q nextCONTAINEDChunk(const string_q& fieldIn, const void* data);\n"
+    "`ret = nextCONTAINEDChunk(fieldName, pCONTAINED);\n"
+    "`if (contains(ret, \"Field not found\"))\n"
+    "`    ret = \"\";\n"
+    "`if (!ret.empty())\n"
+    "`    return ret;\n";
+
+//------------------------------------------------------------------------------------------------------------
+const char* STR_PARENT_REGISTER = "[{BASE_CLASS}]::registerClass();\n\n`";
+
+//------------------------------------------------------------------------------------------------------------
+const char* STR_PARENT_SET = "`if ([{BASE_CLASS}]::setValueByName(fieldName, fieldValue))\n``return true;\n";
+
+//------------------------------------------------------------------------------------------------------------
+const char* STR_PARENT_SERIALIZE = "`[{BASE_CLASS}]::SerializeC(archive);\n";
 
 //------------------------------------------------------------------------------------------------------------
 const char* STR_OPERATOR_IMPL =
@@ -880,13 +938,10 @@ const char* STR_UNKOWNTYPE =
 
 //------------------------------------------------------------------------------------------------------------
 const char* STR_CHILD_OBJS =
-    "`s = toUpper(string_q(\"[{NAME}]\")) + \"::\";\n"
-    "`if (contains(fieldName, s)) {\n"
-    "``string_q f = fieldName;\n"
-    "``replaceAll(f, s, \"\");\n"
-    "``f = [{NAME}].getValueByName(f);\n"
-    "``return f;\n"
-    "`}\n";
+    "`objSpec = toUpper(\"[{NAME}]\") + \"::\";\n"
+    "`if (contains(fieldName, objSpec))\n"
+    "``return [{NAME}].getValueByName(substitute(fieldName, objSpec, \"\"));\n"
+    "\n";
 
 //------------------------------------------------------------------------------------------------------------
 const char* STR_READFMT = "`archive >> [{NAME}];\n";

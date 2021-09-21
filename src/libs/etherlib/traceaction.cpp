@@ -24,7 +24,7 @@ namespace qblocks {
 IMPLEMENT_NODE(CTraceAction, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextTraceactionChunk(const string_q& fieldIn, const void* dataPtr);
+extern string_q nextTraceactionChunk(const string_q& fieldIn, const void* dataPtr);
 static string_q nextTraceactionChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
@@ -175,7 +175,7 @@ bool CTraceAction::setValueByName(const string_q& fieldNameIn, const string_q& f
                 return true;
             }
             if (fieldName % "input") {
-                input = fieldValue;
+                input = toLower(fieldValue);
                 return true;
             }
             break;
@@ -311,7 +311,7 @@ void CTraceAction::registerClass(void) {
     ADD_FIELD(CTraceAction, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CTraceAction, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CTraceAction, "selfDestructed", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CTraceAction, "balance", T_WEI, ++fieldNum);
+    ADD_FIELD(CTraceAction, "balance", T_WEI | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CTraceAction, "callType", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CTraceAction, "from", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CTraceAction, "gas", T_GAS, ++fieldNum);

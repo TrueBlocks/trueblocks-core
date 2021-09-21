@@ -1,9 +1,5 @@
 [settings]
 class = CApiKey
-fields = string key|\
-    string secret
+fields = apikey.csv
 includes = utillib.h
-cpp_includes =
-serializable = true
 equals = (key == it.key)
-display_str = key, secret

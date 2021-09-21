@@ -12,9 +12,7 @@ Please see this [Migration](https://github.com/TrueBlocks/trueblocks-core/blob/d
 
 ## Table of Contents
   - [Introduction](#introduction)
-  - [Prerequisites](#prerequisites)
-  - [Compiling TrueBlocks](#compiling-trueblocks)
-  - [Adding ./bin to your $PATH](#adding-bin-to-your-path)
+  - [Quick Install](#quick-install)
   - [Introducing chifra](#introducing-chifra)
   - [Using chifra](#using-chifra)
   - [Building the Index of Appearances](#building-the-trueblocks-index-of-appearances)
@@ -32,76 +30,51 @@ TrueBlocks is a collection of libraries, tools, and applications that improve ac
 
 3) TrueBlocks enhances the Ethereum RPC interfaces. For example, you may query blocks and transactions by date, by block range, by hashes or any combination. Furthermore, two additional endpoints are provided for extracting (`export`) and listing (`list`) historical transactions per address.
 
-## Prerequisites
+## Quick Install
 
----
+TrueBlocks runs on Linux and Mac. There is no official Windows support.
+Some users have had success using WSL─you're on your own!
 
-**Golang**:
+These instructions assume you can navigate directories with the command line
+and edit configuration files.
+If you need help with a step, see the [installation's troubleshooting section](https://trueblocks.io/docs/prologue/installing-trueblocks/#troubleshooting).
 
-For all operating systems, please follow [these instructions](https://golang.org/doc/install) to install `golang` on your system.
+0. Install dependencies
+    - &#9745; [Install the latest version of Go](https://golang.org/doc/install).
+    - &#9745; Install the other dependencies with your command line: `build-essential` `git` `cmake` `python` `python-dev` `libcurl3-dev` `clang-format` `jq`.
 
-**For Linux**:
+1. Compile from the codebase
+    ```shell
+    git clone -b develop https://github.com/trueblocks/trueblocks-core
+    cd trueblocks-core
+    mkdir build && cd build
+    cmake ../src
+    make
+    ```
+    _(You may use `make -j <ncores>` to parallelize the build. <ncores> represents the number of cores to devote to the `make` job)_
 
-```shell
-sudo apt install build-essential git cmake python python-dev libcurl3-dev clang-format jq
+2. Add `trueblocks-core/bin` to your shell `PATH`.
+
+3. Find your TrueBlocks configuration directory. It should be in one of these places:
+
+    * On linux at `~/.local/share/trueblocks`
+    * On mac at `~/Library/Application Support/TrueBlocks`
+    * If you've configured it, wherever the location of `$XDG_DATA_HOME` is
+
+4. In the configuration directory, edit `trueblocks.toml` to add your RPC and API keys. It should look something like this:
+```toml
+[settings]
+rpcProvider = "<url-to-rpc-endpoint>"
 ```
 
-**For Mac**:
-
+5. Test a command!
 ```shell
-brew install cmake
-brew install git
-brew install clang-format
-brew install jq
+chifra blocks 12345
 ```
+### Optional steps
 
-We recommend that you run MacOS Big Sur or later for best results.
-
-**For Windows**:
-
-TrueBlocks does not currently support Windows builds.
-Some users have had success with WSL.
-For now, you're on your own!
-
-## Compiling TrueBlocks
-
-```shell
-git clone -b develop https://github.com/trueblocks/trueblocks-core
-cd trueblocks-core
-mkdir build && cd build
-cmake ../src
-make -j2
-```
-
-(You may use `make -j <ncores>` to parallelize the build. Replace `<ncores>` with the number of cores on your machine.)
-
-The compilation creates a number of executables in `../bin`.
-
-Run this command
-
-```shell
-../bin/chifra --version
-```
-
-You should get a version string similar to the below
-
-```shell
-trueBlocks GHC-TrueBlocks//0.9.0-alpha-409aa9388-20210503
-```
-
-If not, review the above commands and make sure you didn't miss something. [Create an issue](https://github.com/TrueBlocks/trueblocks-core/issues) if you continue to have trouble.
-
-## Adding ./bin to your $PATH
-
-`chifra` only works if its underlying tools are found in your $PATH.
-
-Add the full path to `./trueblocks-core/bin` to your shell's default environment. To find the full path, do this
-
-```shell
-cd ../bin && pwd && cd -
-```
-
-Add the result of that command to your shell's $PATH. If you don't know what we mean, a Google search may be in order...
+6. To make deep data queries, [get the index](https://trueblocks.io/docs/prologue/how-can-i-get-the-index/)
+7. To explore the data visually, [install the explorer application](https://trueblocks.io/docs/prologue/install-explorer/).
 
 ## Introducing chifra
 
@@ -140,7 +113,7 @@ Depending on your setup, you may get the following error message when you run so
 If you get this error, edit the configuration file mentioned. The file is well documented, so refer to that file for further information.
 
 When the `chifra status` command returns a valid response, you may move to the next section. If
-you continue to have trouble, join our [discord disscussion](https://discord.gg/kAFcZH2x7K).
+you continue to have trouble, join our [discord discussion](https://discord.gg/kAFcZH2x7K).
 
 ## Using chifra
 
@@ -160,7 +133,7 @@ The primary data structure produced by TrueBlocks is an index of address appeara
 
 You may either build the entire index from scratch (requires a tracing, archive node), or you may download part of the index and build it from there on.
 
-This process is described in this article [Indexing Addresses](https://docs.trueblocks.io/docs/prologue/indexing-addresses/).
+This process is described in this article [Indexing Addresses](https://trueblocks.io/docs/prologue/how-can-i-get-the-index/).
 
 ## Contributing to TrueBlocks
 

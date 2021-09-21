@@ -1,38 +1,11 @@
 [settings]
 class = CReconciliation
-fields = blknum blockNumber|\
-        blknum transactionIndex|\
-        timestamp timestamp|\
-        address assetAddr|\
-        string assetSymbol|\
-        uint64 decimals=18|\
-        blknum prevBlk|\
-        int256 prevBlkBal|\
-        int256 begBal|\
-        int256 endBal|\
-        int256 amountIn|\
-        int256 internalIn|\
-        int256 selfDestructIn|\
-        int256 minerBaseRewardIn|\
-        int256 minerNephewRewardIn|\
-        int256 minerTxFeeIn|\
-        int256 minerUncleRewardIn|\
-        int256 prefundIn|\
-        int256 amountOut|\
-        int256 internalOut|\
-        int256 selfDestructOut|\
-        int256 gasCostOut|\
-        string reconciliationType|\
-        double spotPrice=1.0|\
-        string priceSource
+fields = reconciliation.csv
 includes = utillib.h
 cpp_includes = etherlib.h
-serializable = true
 equals = ((blockNumber == it.blockNumber) && (assetAddr == it.assetAddr))
-display_str = assetAddr,assetSymbol,decimals,blockNumber,transactionIndex,timestamp,prevBlk,prevBlkBal,begBal,amountIn,internalIn,selfDestructIn,minerBaseRewardIn,minerNephewRewardIn,minerTxFeeIn,minerUncleRewardIn,prefundIn,totalIn,amountOut,internalOut,selfDestructOut,gasCostOut,totalOut,totalOutLessGas,amountNet,endBal,begBalDiff,endBalCalc,endBalDiff,reconciled,spotPrice,priceSource,reconciliationType
-js = true
-
-#        CLineItem
-#                int type; [AMOUNT|INTERNAL|SELFDESTRUCT|MINERBASE|
-# MINERNEPHEW|MINERTX|MINERUNCLE|PREFUND|GASCOST]
-#                int256 amount;
+tsx = true
+doc_group = 01-Accounts
+doc_descr = a reconiciliation of all inflows and outflows to a given account at a given transaction
+doc_api = 03-reconciliation
+doc_producer = export

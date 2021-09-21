@@ -23,7 +23,7 @@ namespace qblocks {
 IMPLEMENT_NODE(CLeaf, CTreeNode);
 
 //---------------------------------------------------------------------------
-static string_q nextLeafChunk(const string_q& fieldIn, const void* dataPtr);
+extern string_q nextLeafChunk(const string_q& fieldIn, const void* dataPtr);
 static string_q nextLeafChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
@@ -115,7 +115,6 @@ bool CLeaf::setValueByName(const string_q& fieldNameIn, const string_q& fieldVal
 
     if (CTreeNode::setValueByName(fieldName, fieldValue))
         return true;
-
     switch (tolower(fieldName[0])) {
         case 'b':
             if (fieldName % "blocks") {
@@ -272,6 +271,18 @@ bool CLeaf::readBackLevel(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator<<(CArchive& archive, const CLeaf& lea) {
+    lea.SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator>>(CArchive& archive, CLeaf& lea) {
+    lea.Serialize(archive);
+    return archive;
 }
 
 //-------------------------------------------------------------------------

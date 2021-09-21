@@ -1,18 +1,10 @@
 [settings]
 class = CTrace
-fields = hash blockHash|\
-        blknum blockNumber|\
-        uint64 subtraces|\
-        CStringArray traceAddress|\
-        hash transactionHash|\
-        blknum transactionIndex|\
-        string type|\
-        string error|\
-        CTraceAction action|\
-        CTraceResult result|\
-        CFunction articulatedTrace|\
-        string compressedTrace (nowrite)
+fields = trace.csv
 includes = utillib.h|abi.h|traceaction.h|traceresult.h
 cpp_includes = transaction.h|node.h
-display_str = blockNumber, transactionIndex, traceAddress, action::callType, error, action::from, action::to, action::value, action::ether, action::gas, result::gasUsed, action::input, compressedTrace, result::output
-js = true
+tsx = true
+doc_group = 02-Chain Data
+doc_descr = trace data for a given transaction directly from the blockchain
+doc_api = 14-trace
+doc_producer = traces, export

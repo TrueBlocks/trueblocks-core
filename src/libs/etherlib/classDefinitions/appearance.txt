@@ -1,9 +1,5 @@
 [settings]
 class = CAppearance
-fields = blknum bn|\
-        blknum tx|\
-        blknum tc|\
-        address addr|\
-        string reason
+fields = appearance_fields.csv
 includes = etherlib.h|indexarchive.h
-display_str = bn, tx, tc, addr, reason
+doc_producer = list, export

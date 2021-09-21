@@ -1,17 +1,10 @@
 [settings]
 class = CTraceAction
-fields = address selfDestructed|\
-        wei balance|\
-        string callType|\
-        address from|\
-        gas gas|\
-        string init|\
-        string input|\
-        address refundAddress|\
-        address to|\
-        wei value
+fields = traceaction.csv
 includes = utillib.h|abi.h
 cpp_includes = trace.h|reconciliation.h
-serializable = true
 equals = ((selfDestructed == it.selfDestructed) && (balance == it.balance) && (callType == it.callType) &&|(from == it.from) && (gas == it.gas) && (init == it.init) && (input == it.input) &&|(refundAddress == it.refundAddress) && (to == it.to) && (value == it.value))
-js = true
+tsx = true
+doc_group = 02-Chain Data
+doc_descr = the trace action data for a given trace directly from the blockchain
+doc_api = 15-traceAction

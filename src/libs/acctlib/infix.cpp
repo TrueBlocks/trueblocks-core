@@ -23,7 +23,7 @@ namespace qblocks {
 IMPLEMENT_NODE(CInfix, CTreeNode);
 
 //---------------------------------------------------------------------------
-static string_q nextInfixChunk(const string_q& fieldIn, const void* dataPtr);
+extern string_q nextInfixChunk(const string_q& fieldIn, const void* dataPtr);
 static string_q nextInfixChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
@@ -102,7 +102,6 @@ bool CInfix::setValueByName(const string_q& fieldNameIn, const string_q& fieldVa
 
     if (CTreeNode::setValueByName(fieldName, fieldValue))
         return true;
-
     switch (tolower(fieldName[0])) {
         case 'n':
             if (fieldName % "next") {
@@ -267,6 +266,18 @@ bool CInfix::readBackLevel(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator<<(CArchive& archive, const CInfix& inf) {
+    inf.SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator>>(CArchive& archive, CInfix& inf) {
+    inf.Serialize(archive);
+    return archive;
 }
 
 //-------------------------------------------------------------------------

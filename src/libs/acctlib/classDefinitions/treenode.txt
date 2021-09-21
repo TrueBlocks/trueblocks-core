@@ -1,6 +1,5 @@
 [settings]
 class = CTreeNode
-fields = uint64 index|string prefixS
+fields = treenode.csv
 includes = etherlib.h
 cpp_includes = treeroot.h
-scope = extern

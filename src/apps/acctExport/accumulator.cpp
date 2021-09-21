@@ -22,7 +22,7 @@ namespace qblocks {
 IMPLEMENT_NODE(CAccumulator, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextAccumulatorChunk(const string_q& fieldIn, const void* dataPtr);
+extern string_q nextAccumulatorChunk(const string_q& fieldIn, const void* dataPtr);
 static string_q nextAccumulatorChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
@@ -247,6 +247,18 @@ bool CAccumulator::readBackLevel(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator<<(CArchive& archive, const CAccumulator& acc) {
+    acc.SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator>>(CArchive& archive, CAccumulator& acc) {
+    acc.Serialize(archive);
+    return archive;
 }
 
 //-------------------------------------------------------------------------

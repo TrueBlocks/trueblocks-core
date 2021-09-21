@@ -10,7 +10,6 @@ makeClass --dump -a -i CStatus --verbose
   "base_upper": "STATUS",
   "base_base": "Basenode",
   "head_includes": "etherlib.h|cache.h",
-  "scope_str": "static",
   "fieldArray": [
     {
       "type": "string",

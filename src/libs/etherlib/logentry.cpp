@@ -129,25 +129,21 @@ string_q CLogEntry::getValueByName(const string_q& fieldName) const {
             break;
     }
 
+    extern string_q nextReceiptChunk(const string_q& fieldIn, const void* data);
+    ret = nextReceiptChunk(fieldName, pReceipt);
+    if (contains(ret, "Field not found"))
+        ret = "";
+    if (!ret.empty())
+        return ret;
+
     // EXISTING_CODE
-    // See if this field belongs to the item's container
-    if (fieldName != "schema" && fieldName != "deleted" && fieldName != "showing" && fieldName != "cname") {
-        ret = nextReceiptChunk(fieldName, pReceipt);
-        if (contains(ret, "Field not found"))
-            ret = "";
-        if (!ret.empty())
-            return ret;
-    }
     // EXISTING_CODE
 
-    string_q s;
-    s = toUpper(string_q("articulatedLog")) + "::";
-    if (contains(fieldName, s)) {
-        string_q f = fieldName;
-        replaceAll(f, s, "");
-        f = articulatedLog.getValueByName(f);
-        return f;
-    }
+    // test for contained object field specifiers
+    string_q objSpec;
+    objSpec = toUpper("articulatedLog") + "::";
+    if (contains(fieldName, objSpec))
+        return articulatedLog.getValueByName(substitute(fieldName, objSpec, ""));
 
     // Finally, give the parent class a chance
     return CBaseNode::getValueByName(fieldName);
@@ -198,7 +194,7 @@ bool CLogEntry::setValueByName(const string_q& fieldNameIn, const string_q& fiel
             break;
         case 'd':
             if (fieldName % "data") {
-                data = fieldValue;
+                data = toLower(fieldValue);
                 return true;
             }
             break;

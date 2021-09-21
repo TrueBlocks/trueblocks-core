@@ -1,22 +1,12 @@
 [settings]
 class = CReceipt
-fields = hash blockHash (nowrite-min)|\
-        blknum blockNumber (nowrite-min)|\
-        address contractAddress|\
-        wei cumulativeGasUsed (nowrite)|\
-        address from (nowrite-min)|\
-        gas gasUsed|\
-        gas effectiveGasPrice|\
-        CLogEntryArray logs|\
-        bytes32 root (nowrite)|\
-        uint32 status=NO_STATUS|\
-        address to (nowrite-min)|\
-        hash transactionHash (nowrite-min)|\
-        blknum transactionIndex (nowrite-min)
+fields = receipt.csv
 includes = utillib.h|abi.h|logentry.h
 cpp_includes = etherlib.h
-scope = extern
-serializable = true
-display_str = blockNumber, transactionIndex, hash, gasUsed, status, isError
 equals = (getValueByName("transactionHash") == it.getValueByName("transactionHash"))
-js = true
+contained_by = Transaction
+tsx = true
+doc_group = 02-Chain Data
+doc_descr = receipt data for a given transaction directly from the blockchain
+doc_api = 12-receipt
+doc_producer = receipts, export

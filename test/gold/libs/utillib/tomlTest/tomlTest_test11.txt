@@ -22,6 +22,5 @@ File contents after write
 [version]
 version = "0:9:0"
 
-
 [settings]
 

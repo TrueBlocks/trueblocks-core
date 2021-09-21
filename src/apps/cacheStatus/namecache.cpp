@@ -22,7 +22,7 @@ namespace qblocks {
 IMPLEMENT_NODE(CNameCache, CCache);
 
 //---------------------------------------------------------------------------
-static string_q nextNamecacheChunk(const string_q& fieldIn, const void* dataPtr);
+extern string_q nextNamecacheChunk(const string_q& fieldIn, const void* dataPtr);
 static string_q nextNamecacheChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
@@ -124,7 +124,6 @@ bool CNameCache::setValueByName(const string_q& fieldNameIn, const string_q& fie
 
     if (CCache::setValueByName(fieldName, fieldValue))
         return true;
-
     switch (tolower(fieldName[0])) {
         case 'a':
             if (fieldName % "addrs") {
@@ -286,6 +285,18 @@ bool CNameCache::readBackLevel(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator<<(CArchive& archive, const CNameCache& nam) {
+    nam.SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator>>(CArchive& archive, CNameCache& nam) {
+    nam.Serialize(archive);
+    return archive;
 }
 
 //-------------------------------------------------------------------------

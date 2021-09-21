@@ -1,0 +1,24 @@
+name         ,type      ,str_default ,object ,array ,nowrite ,omitempty ,minimal ,extra ,noaddfld ,doc ,disp ,example ,description
+type         ,string    ,            ,       ,      ,        ,          ,        ,      ,         ,1   ,1    ,        ,the type of this parameter
+name         ,string    ,            ,       ,      ,        ,          ,        ,      ,         ,2   ,2    ,        ,the name of this parameter
+str_default  ,string    ,            ,       ,      ,        ,          ,        ,      ,         ,3   ,3    ,        ,the defaul value of this parameter&#44; if any
+value        ,string    ,            ,       ,      ,        ,          ,        ,      ,         ,    ,4    ,        ,
+indexed      ,bool      ,            ,       ,      ,        ,true      ,        ,      ,         ,4   ,6    ,        ,`true` if this parameter is indexed
+internalType ,string    ,            ,       ,      ,        ,          ,        ,      ,         ,5   ,5    ,        ,for composite types&#44; the interal type of the parameter
+components   ,parameter ,            ,true   ,true  ,        ,          ,        ,      ,         ,6   ,     ,        ,for composite types&#44; the parameters making up the composite
+unused       ,bool      ,            ,       ,      ,        ,true      ,        ,      ,         ,    ,     ,        ,
+is_flags     ,uint64    ,IS_ENABLED  ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
+precision    ,uint64    ,5           ,       ,      ,true    ,          ,        ,      ,         ,    ,     ,        ,
+doc          ,uint64    ,            ,       ,      ,true    ,true      ,        ,      ,         ,    ,     ,        ,
+disp         ,uint64    ,            ,       ,      ,true    ,true      ,        ,      ,         ,    ,     ,        ,
+example      ,string    ,            ,       ,      ,true    ,true      ,        ,      ,         ,    ,     ,        ,
+description  ,string    ,            ,       ,      ,true    ,true      ,        ,      ,         ,    ,     ,        ,
+is_pointer   ,bool      ,            ,       ,      ,        ,          ,true    ,      ,true     ,    ,7    ,        ,
+is_array     ,bool      ,            ,       ,      ,        ,          ,true    ,      ,true     ,    ,8    ,        ,
+is_object    ,bool      ,            ,       ,      ,        ,          ,true    ,      ,true     ,    ,9    ,        ,
+is_builtin   ,bool      ,            ,       ,      ,        ,          ,true    ,      ,true     ,    ,10   ,        ,
+is_minimal   ,bool      ,            ,       ,      ,        ,          ,true    ,      ,true     ,    ,11   ,        ,
+is_noaddfld  ,bool      ,            ,       ,      ,        ,          ,true    ,      ,true     ,    ,12   ,        ,
+is_nowrite   ,bool      ,            ,       ,      ,        ,          ,true    ,      ,true     ,    ,13   ,        ,
+is_omitempty ,bool      ,            ,       ,      ,        ,          ,true    ,      ,true     ,    ,14   ,        ,
+is_extra     ,bool      ,            ,       ,      ,        ,          ,true    ,      ,true     ,    ,15   ,        ,

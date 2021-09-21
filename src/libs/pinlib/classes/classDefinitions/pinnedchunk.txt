@@ -1,12 +1,10 @@
 [settings]
 class = CPinnedChunk
-fields = string fileName|\
-        string bloomHash|\
-        string indexHash|\
-        bool onDisc (nowrite)
+fields = pinnedchunk.csv
 includes = utillib.h
-cpp_includes =
 sort = v1.fileName < v2.fileName
 equals = fileName == it.fileName
-serializable = true
-display_str = fileName, bloomHash, indexHash
+doc_group = 04-Admin
+doc_descr = the IPFS hashes of the index chunk and its associated Bloom filter for the given block range
+doc_api = 32-pinnedChunk
+doc_producer = pins, init, scrape

@@ -140,6 +140,10 @@ extern CArchive& operator>>(CArchive& archive, CStatusTerseArray& array);
 extern CArchive& operator<<(CArchive& archive, const CStatusTerseArray& array);
 
 //---------------------------------------------------------------------------
+extern CArchive& operator<<(CArchive& archive, const CStatusTerse& sta);
+extern CArchive& operator>>(CArchive& archive, CStatusTerse& sta);
+
+//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_STATUSTERSE;
 
 //---------------------------------------------------------------------------

@@ -1,0 +1,14 @@
+name        ,type    ,str_default ,object ,array ,nowrite ,omitempty ,minimal ,extra ,noaddfld ,doc ,disp ,example         ,description
+tags        ,string  ,            ,       ,      ,        ,          ,        ,      ,         ,1   ,1    ,31-Gitcoin:Core ,colon separated list of tags
+address     ,address ,            ,       ,      ,        ,          ,        ,      ,         ,2   ,2    ,0xabea...fbef   ,the address associated with this name
+name        ,string  ,            ,       ,      ,        ,          ,        ,      ,         ,3   ,3    ,zkSync          ,the name associated with this address (retreived from on-chain data if available)
+symbol      ,string  ,            ,       ,      ,        ,          ,        ,      ,         ,4   ,4    ,GTC             ,the symbol for this address (retreived from on-chain data if available)
+source      ,string  ,            ,       ,      ,        ,          ,        ,      ,         ,5   ,5    ,On-chain        ,user supplied source of where this name was found (or on-chain if name is on-chain)
+decimals    ,uint64  ,            ,       ,      ,        ,true      ,        ,      ,         ,6   ,6    ,18              ,number of decimals retreived from an ERC20 smart contract&#44; defaults to 18
+description ,string  ,            ,       ,      ,        ,          ,        ,      ,         ,7   ,7    ,any test        ,user supplied description for the address
+is_custom   ,bool    ,            ,       ,      ,        ,          ,        ,      ,         ,9   ,9    ,                ,`true` if the address is a custom address&#44; `false` otherwise
+is_prefund  ,bool    ,            ,       ,      ,        ,          ,        ,      ,         ,10  ,10   ,                ,`true` if the address was one of the prefund addresses&#44; `false` otherwise
+is_contract ,bool    ,            ,       ,      ,        ,          ,        ,      ,         ,11  ,11   ,                ,`true` if the address is a smart contract&#44; `false` otherwise
+is_erc20    ,bool    ,            ,       ,      ,        ,          ,        ,      ,         ,12  ,12   ,                ,`true` if the address is an ERC20&#44; `false` otherwise
+is_erc721   ,bool    ,            ,       ,      ,        ,          ,        ,      ,         ,13  ,13   ,                ,`true` if the address is an ERC720&#44; `false` otherwise
+deleted     ,bool    ,            ,       ,      ,        ,          ,true   ,       ,true     ,8   ,8    ,                ,`true` if deleted&#44; `false` otherwise

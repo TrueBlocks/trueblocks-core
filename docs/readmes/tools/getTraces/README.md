@@ -8,20 +8,23 @@ The `--filter` option calls your node's `trace_filter` routine (if available) us
 
 ### usage
 
-`Usage:`    chifra traces [-a|-f|-d|-c|-v|-h] &lt;tx_id&gt; [tx_id...]
+`Usage:`    chifra traces [-a|-f|-d|-c|-v|-h] &lt;tx_id&gt; [tx_id...]  
 `Purpose:`  Retrieve traces for the given transaction(s).
 
 `Where:`
 
-| | Option | Description |
-| :----- | :----- | :---------- |
-|  | transactions | a space-separated list of one or more transaction identifiers (required) |
-| -a | --articulate | articulate the retrieved data if ABIs can be found |
-| -f | --filter &lt;str&gt; | call the node's `trace_filter` routine with bang-seperated filter |
-| -d | --statediff | export state diff traces (not implemented) |
-| -c | --count | show the number of traces for the transaction only (fast) |
-| -v | --verbose | set verbose level (optional level defaults to 1) |
-| -h | --help | display this help screen |
+{{<td>}}
+|          | Option                           | Description                                                                  |
+| -------- | -------------------------------- | ---------------------------------------------------------------------------- |
+|          | transactions                     | a space-separated list of one or more transaction identifiers<br/>(required) |
+| &#8208;a | &#8208;&#8208;articulate         | articulate the retrieved data if ABIs can be found                           |
+| &#8208;f | &#8208;&#8208;filter &lt;str&gt; | call the node's `trace_filter` routine with bang-seperated<br/>filter        |
+| &#8208;d | &#8208;&#8208;statediff          | export state diff traces (not implemented)                                   |
+| &#8208;c | &#8208;&#8208;count              | show the number of traces for the transaction only<br/>(fast)                |
+| &#8208;x | &#8208;&#8208;fmt &lt;val&gt;    | export format, one of [none, json, txt, csv, api]                            |
+| &#8208;v | &#8208;&#8208;verbose            | set verbose level (optional level defaults to 1)                             |
+| &#8208;h | &#8208;&#8208;help               | display this help screen                                                     |
+{{</td>}}
 
 `Notes:`
 
@@ -35,8 +38,8 @@ The `--filter` option calls your node's `trace_filter` routine (if available) us
 
 `Configurable Items:`
 
-`skip_ddos`: skip over the 2016 ddos during export ('on' by default).
-`max`: if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250).
+- `skip_ddos`: skip over the 2016 ddos during export ('on' by default).
+- `max`: if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250).
 
 **Source code**: [`tools/getTraces`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/tools/getTraces)
 

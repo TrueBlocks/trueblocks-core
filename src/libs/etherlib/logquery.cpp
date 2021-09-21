@@ -22,7 +22,7 @@ namespace qblocks {
 IMPLEMENT_NODE(CLogQuery, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextLogqueryChunk(const string_q& fieldIn, const void* dataPtr);
+extern string_q nextLogqueryChunk(const string_q& fieldIn, const void* dataPtr);
 static string_q nextLogqueryChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
@@ -317,6 +317,18 @@ bool CLogQuery::readBackLevel(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator<<(CArchive& archive, const CLogQuery& log) {
+    log.SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator>>(CArchive& archive, CLogQuery& log) {
+    log.Serialize(archive);
+    return archive;
 }
 
 //-------------------------------------------------------------------------

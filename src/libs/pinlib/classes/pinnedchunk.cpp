@@ -22,7 +22,7 @@ namespace qblocks {
 IMPLEMENT_NODE(CPinnedChunk, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextPinnedchunkChunk(const string_q& fieldIn, const void* dataPtr);
+extern string_q nextPinnedchunkChunk(const string_q& fieldIn, const void* dataPtr);
 static string_q nextPinnedchunkChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
@@ -233,8 +233,8 @@ void CPinnedChunk::registerClass(void) {
     ADD_FIELD(CPinnedChunk, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CPinnedChunk, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CPinnedChunk, "fileName", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CPinnedChunk, "bloomHash", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CPinnedChunk, "indexHash", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CPinnedChunk, "bloomHash", T_IPFSHASH | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CPinnedChunk, "indexHash", T_IPFSHASH | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CPinnedChunk, "onDisc", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CPinnedChunk, "onDisc");
 

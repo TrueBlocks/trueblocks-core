@@ -1,24 +1,9 @@
 [settings]
 class = CStatus
-fields = string client_version|\
-        string client_ids|\
-        string trueblocks_version|\
-        string rpc_provider|\
-        string balance_provider|\
-        string config_path (nowrite)|\
-        string cache_path|\
-        string index_path|\
-        string host|\
-        bool is_testing|\
-        bool is_api|\
-        bool is_docker|\
-        bool is_scraping|\
-        bool is_archive|\
-        bool is_tracing|\
-        bool has_eskey|\
-        bool has_pinkey|\
-        timestamp ts=date_2_Ts(Now()) (nowrite)|\
-        CCachePtrArray caches (nowrite)
+fields = status.csv
 includes = etherlib.h|cache.h
-serialize = true
 disabled = true
+doc_group = 04-Admin
+doc_descr = This data model carries information about the TrueBlocks system including both the API server and the local binary caches
+doc_api = 30-status
+doc_producer = status

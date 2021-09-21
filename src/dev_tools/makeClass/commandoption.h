@@ -81,7 +81,7 @@ class CCommandOption : public CBaseNode {
     string_q toApiTag(void) const;
     string_q toGoCall(void) const;
     string_q toGoRoute(void) const;
-    string_q toApiPath(void) const;
+    string_q toApiPath(const string_q& inStr) const;
     bool isChifraRoute(void) const;
     string_q getSchema(void) const;
     bool isStringType(void) const {
@@ -255,6 +255,10 @@ extern CArchive& operator>>(CArchive& archive, CCommandOptionArray& array);
 extern CArchive& operator<<(CArchive& archive, const CCommandOptionArray& array);
 
 //---------------------------------------------------------------------------
+extern CArchive& operator<<(CArchive& archive, const CCommandOption& com);
+extern CArchive& operator>>(CArchive& archive, CCommandOption& com);
+
+//---------------------------------------------------------------------------
 extern const char* STR_DISPLAY_COMMANDOPTION;
 
 //---------------------------------------------------------------------------
@@ -264,20 +268,14 @@ extern bool parseCommandData(const char* str, void* data);
 inline string_q getDocsPath(const string_q& _part) {
     return "../docs/" + _part;
 }
-inline string_q getReadmePath(const string_q& _part) {
-    return getDocsPath("readmes/" + _part);
+inline string_q getDocsPathContent(const string_q& _part) {
+    return getDocsPath("content/" + _part);
 }
-inline string_q getApiDocsPath(const string_q& _part) {
-    return getDocsPath("content/api/" + _part);
-}
-inline string_q getDocsChifraPath(const string_q& _part) {
-    return getDocsPath("content/docs/chifra/" + _part);
-}
-inline string_q getDocsTemplate(const string_q& _part) {
+inline string_q getDocsPathTemplates(const string_q& _part) {
     return getDocsPath("templates/" + _part);
 }
-inline string_q getReadmeTemplate(const string_q& _part) {
-    return getDocsTemplate("readme-intros/" + _part);
+inline string_q getDocsPathReadmes(const string_q& _part) {
+    return getDocsPath("readmes/" + _part);
 }
 // EXISTING_CODE
 }  // namespace qblocks

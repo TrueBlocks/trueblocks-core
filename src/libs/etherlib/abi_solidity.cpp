@@ -178,8 +178,6 @@ bool CAbi::loadAbiFromSolidity(const address_t& addr) {
             default:
                 break;
         }
-        // if (state != pre_state)
-        //     printf("");
         lastChar = ch;
     }
 

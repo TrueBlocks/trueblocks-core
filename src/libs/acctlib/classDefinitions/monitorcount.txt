@@ -1,5 +1,4 @@
 [settings]
 class = CMonitorCount
-fields = address address|uint64 nRecords|uint64 fileSize
+fields = monitorcount.csv
 includes = etherlib.h
-display_str = address, nRecords, fileSize

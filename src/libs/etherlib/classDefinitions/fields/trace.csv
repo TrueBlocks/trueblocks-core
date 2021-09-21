@@ -1,0 +1,23 @@
+name             ,type        ,str_default ,object ,array ,nowrite ,omitempty ,minimal ,extra ,noaddfld ,doc ,disp ,example       ,description
+blockHash        ,hash        ,            ,       ,      ,        ,          ,        ,      ,         ,1   ,     ,0xf128...1e98 ,The hash of the block containing this trace
+blockNumber      ,blknum      ,            ,       ,      ,        ,          ,        ,      ,         ,2   ,1    ,10021         ,the number of the block
+subtraces        ,uint64      ,            ,       ,      ,        ,          ,        ,      ,         ,6   ,     ,              ,the number of children traces that the trace hash
+traceAddress     ,string      ,            ,       ,true  ,        ,          ,        ,      ,         ,5   ,3    ,              ,a particular trace's address in the trace tree
+transactionHash  ,hash        ,            ,       ,      ,        ,          ,        ,      ,         ,3   ,     ,              ,the transaction's hash containing this trace
+transactionIndex ,blknum      ,            ,       ,      ,        ,          ,        ,      ,         ,4   ,2    ,305           ,the zero-indexed position of the transaction in the block
+type             ,string      ,            ,       ,      ,        ,          ,        ,      ,         ,7   ,     ,              ,the type of the trace
+error            ,string      ,            ,       ,      ,        ,          ,        ,      ,         ,    ,5    ,              ,
+action           ,traceAction ,            ,true   ,      ,        ,          ,        ,      ,         ,8   ,     ,              ,the trace action for this trace
+result           ,traceResult ,            ,true   ,      ,        ,          ,        ,      ,         ,9   ,     ,              ,the trace result of this trace
+articulatedTrace ,function    ,            ,true   ,      ,        ,          ,        ,      ,         ,10  ,     ,              ,human readable version of the trace action input data
+compressedTrace  ,string      ,            ,       ,      ,true    ,          ,        ,      ,         ,11  ,     ,              ,a compressed string version of the articulated trace
+action::callType ,string      ,            ,       ,      ,        ,          ,true    ,      ,true     ,    ,4    ,              ,
+action::from     ,string      ,            ,       ,      ,        ,          ,true    ,      ,true     ,    ,6    ,              ,
+action::to       ,string      ,            ,       ,      ,        ,          ,true    ,      ,true     ,    ,7    ,              ,
+action::value    ,string      ,            ,       ,      ,        ,          ,true    ,      ,true     ,    ,8    ,              ,
+action::ether    ,string      ,            ,       ,      ,        ,          ,true    ,      ,true     ,    ,9    ,              ,
+action::gas      ,string      ,            ,       ,      ,        ,          ,true    ,      ,true     ,    ,10   ,              ,
+result::gasUsed  ,string      ,            ,       ,      ,        ,          ,true    ,      ,true     ,    ,11   ,              ,
+action::input    ,string      ,            ,       ,      ,        ,          ,true    ,      ,true     ,    ,12   ,              ,
+compressedTrace  ,string      ,            ,       ,      ,        ,          ,true    ,      ,true     ,    ,13   ,              ,
+result::output   ,string      ,            ,       ,      ,        ,          ,true    ,      ,true     ,    ,14   ,              ,

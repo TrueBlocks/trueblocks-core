@@ -177,7 +177,5 @@ extern const char* STR_DISPLAY_LOGENTRY;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-extern string_q nextReceiptChunk(const string_q& fieldIn, const void* data);
-extern string_q nextLogentryChunk(const string_q& fieldIn, const void* data);
 // EXISTING_CODE
 }  // namespace qblocks

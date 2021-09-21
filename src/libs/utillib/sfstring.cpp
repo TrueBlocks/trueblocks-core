@@ -249,6 +249,22 @@ bool endsWithAny(const string_q& haystack, const string_q& needles) {
     return false;
 }
 
+//---------------------------------------------------------------------------------------------------
+string_q firstLower(const string_q& in) {
+    string_q ret = in;
+    if (ret.length())
+        ret[0] = (char)tolower(ret[0]);
+    return ret;
+}
+
+//---------------------------------------------------------------------------------------------------
+string_q firstUpper(const string_q& in) {
+    string_q ret = in;
+    if (ret.length())
+        ret[0] = (char)toupper(ret[0]);
+    return ret;
+}
+
 //--------------------------------------------------------------------
 string_q toLower(const string_q& in) {
     string ret;

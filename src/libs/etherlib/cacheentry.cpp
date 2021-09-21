@@ -22,7 +22,7 @@ namespace qblocks {
 IMPLEMENT_NODE(CCacheEntry, CBaseNode);
 
 //---------------------------------------------------------------------------
-static string_q nextCacheentryChunk(const string_q& fieldIn, const void* dataPtr);
+extern string_q nextCacheentryChunk(const string_q& fieldIn, const void* dataPtr);
 static string_q nextCacheentryChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
@@ -285,6 +285,18 @@ bool CCacheEntry::readBackLevel(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     return done;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator<<(CArchive& archive, const CCacheEntry& cac) {
+    cac.SerializeC(archive);
+    return archive;
+}
+
+//---------------------------------------------------------------------------
+CArchive& operator>>(CArchive& archive, CCacheEntry& cac) {
+    cac.Serialize(archive);
+    return archive;
 }
 
 //-------------------------------------------------------------------------

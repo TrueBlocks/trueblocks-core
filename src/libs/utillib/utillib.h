@@ -36,5 +36,6 @@
 #include "logging.h"
 #include "keccak.h"
 #include "apikey.h"
+#include "markdown.h"
 
 using namespace qblocks;  // NOLINT

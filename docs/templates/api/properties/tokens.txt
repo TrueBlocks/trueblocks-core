@@ -1,5 +1,0 @@
-                  data:
-                    description: an array of token state objects
-                    type: array
-                    items:
-                      $ref: "#/components/schemas/token"
