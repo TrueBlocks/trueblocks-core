@@ -150,13 +150,13 @@ string_q COptionsBase::get_description(void) const {
             os << markDownRow("###", "Hidden options", "", widths);
         } else {
             os << endl;
-            os << "\t#### Hidden options" << endl;
+            os << "    #### Hidden options" << endl;
         }
         os << hidden.str();
         if (isReadme) {
             os << markDownRow("###", "Hidden options", "", widths);
         } else {
-            os << "\t#### Hidden options" << endl;
+            os << "    #### Hidden options" << endl;
             os << endl;
         }
     }
@@ -323,7 +323,7 @@ string_q COptionsBase::format_notes(const CStringArray& noteList) const {
     if (isReadme) {
         // do nothing
     } else {
-        lead = "\t";
+        lead = "    ";
     }
 
     ostringstream os;

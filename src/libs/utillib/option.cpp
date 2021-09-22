@@ -445,7 +445,7 @@ string_q COption::oneDescription(size_t* widths) const {
         return markDownRow(getHotKey(), getLongKey(), getDescription(), widths);
 
     ostringstream os;
-    os << "\t";
+    os << "    ";
     if (is_positional) {
         os << padRight(getLongKey(), max(size_t(22), widths[0] + widths[1]));
     } else {
