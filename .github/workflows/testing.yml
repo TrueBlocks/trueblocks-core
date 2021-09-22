@@ -13,12 +13,15 @@ jobs:
           command_timeout: 40m
           script_stop: true
           script: |
-            rm -rf Development/trueblocks-core
-            cd Development
+            rm -rf testing/${{ github.sha }}
+            mkdir -p testing/${{ github.sha }}
+            mkdir -p test_results/${{ github.sha }}
+            cd  testing/${{ github.sha }}
             git clone --quiet https://github.com/${{ github.repository }}
             cd trueblocks-core
             git reset --hard ${{ github.sha }}
-            bash src/other/build_assets/build_and_test.sh test-all
+            cd src/other/build_assets/remote_testing
+            CONFIG_FILE=$HOME/trueBlocks.toml bash test_with_docker.sh ${{ github.repository }} ${{ github.sha }} test-all
       - name: Finish
         run: |
           echo "🍏 This job's status is ${{ job.status }}"

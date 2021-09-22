@@ -12,12 +12,8 @@ then
     RUN_SERVER=true
 fi
 
+cd /root/trueblocks-core/build
 echo $(pwd)
-
-# Build the binaries
-mkdir build && cd build
-cmake ../src
-make -j 4
 
 # Set the correct PATH
 export PATH=$(pwd)/../bin:$(pwd)/../bin/test:$PATH
@@ -57,5 +53,8 @@ if $RUN_SERVER
 then
     killall flame
 fi
+
+echo "Compressing and saving test/working"
+tar -cJ --file /root/test_results/working.tar.xz ../test/working/
 
 exit $RESULT
