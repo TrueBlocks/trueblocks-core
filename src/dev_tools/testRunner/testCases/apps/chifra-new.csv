@@ -1,0 +1,54 @@
+enabled,mode,speed,route,path/tool,filename,post,options,opt_cmd,has_env
+on,cmd,fast,null,apps/chifra-new,RESET,n,RESET
+on,cmd,fast,null,apps/chifra-new,README,n,@th
+on,cmd,fast,null,apps/chifra-new,help,n,@h
+on,cmd,fast,null,apps/chifra-new,help_long,n,help
+on,cmd,fast,null,apps/chifra-new,chifra_help,n,help
+on,cmd,fast,null,apps/chifra-new,help_list,n,modes = monitors & help
+on,cmd,fast,null,apps/chifra-new,help_export,n,modes = export & help
+on,cmd,fast,null,apps/chifra-new,help_explore,n,modes = explore & help
+on,cmd,fast,null,apps/chifra-new,help_slurp,n,modes = slurp & help
+on,cmd,fast,null,apps/chifra-new,help_rm,n,modes = monitors & delete & help
+on,cmd,fast,null,apps/chifra-new,help_collections,n,modes = collections & help
+on,cmd,fast,null,apps/chifra-new,help_names,n,modes = names & help
+on,cmd,fast,null,apps/chifra-new,help_tags,n,modes = tags & help
+on,cmd,fast,null,apps/chifra-new,help_abis,n,modes = abis & help
+on,cmd,fast,null,apps/chifra-new,help_blocks,n,modes = blocks & help
+on,cmd,fast,null,apps/chifra-new,help_transactions,n,modes = transactions & help
+on,cmd,fast,null,apps/chifra-new,help_receipts,n,modes = receipts & help
+on,cmd,fast,null,apps/chifra-new,help_logs,n,modes = logs & help
+on,cmd,fast,null,apps/chifra-new,help_traces,n,modes = traces & help
+on,cmd,fast,null,apps/chifra-new,help_state,n,modes = state & help
+on,cmd,fast,null,apps/chifra-new,help_tokens,n,modes = tokens & help
+on,cmd,fast,null,apps/chifra-new,help_scrape,n,modes = scrape & help
+off,cmd,fast,null,apps/chifra-new,help_server,n,modes = serve & help
+on,cmd,fast,null,apps/chifra-new,help_status,n,modes = status & help
+on,cmd,fast,null,apps/chifra-new,help_quotes,n,modes = quotes & help
+on,cmd,fast,null,apps/chifra-new,help_when,n,modes = when & help
+on,cmd,fast,null,apps/chifra-new,no_params,n,
+on,cmd,fast,null,apps/chifra-new,invalid_option,n,modes = not_a_mode
+
+#on,both,fast,export,apps/chifra-new,list,y,modes = monitors & addrs = 0xfb744b951d094b310262c8f986c860df9ab1de65 & test_end = 10000
+on,both,fast,export,apps/chifra-new,rm,y,modes = monitors & addrs = 0x807640a13483f8ac783c557fcdf27be11ea4ac7a & remove
+on,both,fast,names,apps/chifra-new,names,y,modes = names & names = 50-Tokens & expand
+on,both,fast,names,apps/chifra-new,names_noparams,n,modes = names & names = 50-Tokens & fmt = txt
+on,both,fast,names,apps/chifra-new,names_badparams,y,modes = names & not_an_option
+on,both,fast,names,apps/chifra-new,names_tags,y,modes = names & tags
+on,both,fast,names,apps/chifra-new,names_collections,y,modes = names & collections
+on,both,fast,quotes,apps/chifra-new,prices,y,modes = quotes @ p 1440
+on,both,fast,slurp,apps/chifra-new,slurp,y,modes = slurp & addrs = 0x1234567812345678123456781234567812345678
+on,cmd,fast,explore,apps/chifra-new,explore,n,modes = explore & terms = 0x1234567812345678123456781234567812345678
+on,both,fast,blocks,apps/chifra-new,blocks_noparams,y,modes = blocks
+on,both,fast,blocks,apps/chifra-new,blocks_badparams,y,modes = blocks & not_an_option
+on,both,fast,blocks,apps/chifra-new,blocks,y,modes = blocks & blocks = 12
+on,both,fast,blocks,apps/chifra-new,blocks2,n,modes = blocks & blocks = 12 & fmt = csv & no_header
+on,both,fast,abis,apps/chifra-new,abi,y,modes = abis & addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
+on,both,fast,when,apps/chifra-new,when,y,modes = when & list
+on,both,fast,status,apps/chifra-new,status,y,modes = status all
+on,both,fast,status,apps/chifra-new,status_details,y,modes = status all & details & test_start = 1400000 & test_end = 2000000
+#on,both,slow,export,apps/chifra-new,export,y,modes = export & addrs = 0xfdecc82ddfc56192e26f563c3d68cb544a96bfed & test_end = 10
+#on,both,fast,null,apps/chifra-new,daemon_noparms,n,modes = scrape & daemon
+#on,both,fast,null,apps/chifra-new,daemon_badparms,n,modes = scrape & daemon & not_an_option
+#on,both,fast,null,apps/chifra-new,daemon,n,modes = scrape & daemon & sleep 10 & filter 0x1 0x2
+#on,both,fast,null,apps/chifra-new,scrape,n,modes = scrape
+#on,both,fast,null,apps/chifra-new,server,n,modes = serve
