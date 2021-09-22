@@ -291,9 +291,11 @@ string_q COptionsBase::get_options(void) const {
 
     replaceAll(positional, "addrs2 blocks", "<address> <address> [address...] [block...]");
     replaceAll(positional, "addrs blocks", "<address> [address...] [block...]");
-    replaceAll(positional, "block_list", "< block | date > [ block... | date... ]");
     replaceAll(positional, "transactions", "<tx_id> [tx_id...]");
-    replaceAll(positional, "blocks", "<block> [block...]");
+    if (contains(toLower(getProgName()), "when"))
+        replaceAll(positional, "blocks", "< block | date > [ block... | date... ]");
+    else
+        replaceAll(positional, "blocks", "<block> [block...]");
     replaceAll(positional, "addrs topics fourbytes", "<address> [address...] [topics] [fourbytes]");
     replaceAll(positional, "addrs", "<address> [address...]");
     replaceAll(positional, "files", "<file> [file...]");

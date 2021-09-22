@@ -15,7 +15,7 @@ The values for `date` and `time` are specified in JSON format. `hour`/`minute`/`
 
 |          | Option                        | Description                                                                       |
 | -------- | ----------------------------- | --------------------------------------------------------------------------------- |
-|          | block_list                    | one or more dates, block numbers, hashes, or special<br/>named blocks (see notes) |
+|          | blocks                        | one or more dates, block numbers, hashes, or special<br/>named blocks (see notes) |
 | &#8208;l | &#8208;&#8208;list            | export a list of the 'special' blocks                                             |
 | &#8208;t | &#8208;&#8208;timestamps      | ignore other options and generate timestamps only                                 |
 | &#8208;x | &#8208;&#8208;fmt &lt;val&gt; | export format, one of [none, json, txt, csv, api]                                 |

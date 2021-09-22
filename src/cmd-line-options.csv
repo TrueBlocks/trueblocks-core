@@ -133,7 +133,7 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 13628,tools,ChainData,traces,getTraces,,,,false,false,false,false,--,note,,A state diff trace describes&#44; for each modified address&#44; what changed during that trace.
 13629,tools,ChainData,traces,getTraces,ERR_PROVIDEONETXID,,,false,false,false,false,--,error,,Please specify at least one transaction identifier.
 
-13940,tools,ChainData,when,whenBlock,block_list,,,false,false,true,false,local,positional,list<string>,one or more dates&#44; block numbers&#44; hashes&#44; or special named blocks|(see notes)
+13940,tools,ChainData,when,whenBlock,blocks,,,false,false,true,false,local,positional,list<string>,one or more dates&#44; block numbers&#44; hashes&#44; or special named blocks|(see notes)
 13960,tools,ChainData,when,whenBlock,list,l,,false,false,true,false,header,switch,<boolean>,export a list of the 'special' blocks
 13962,tools,ChainData,when,whenBlock,timestamps,t,,false,false,true,true,header,switch,<boolean>,ignore other options and generate timestamps only
 13963,tools,ChainData,when,whenBlock,check,c,,false,false,false,false,header,switch,<boolean>,available only with --timestamps&#44; checks the validity of the timestamp data

@@ -10,7 +10,7 @@ whenBlock -th
 {{<td>}}
 |          | Option                         | Description                                                                             |
 | -------- | ------------------------------ | --------------------------------------------------------------------------------------- |
-|          | block_list                     | one or more dates, block numbers, hashes, or special<br/>named blocks (see notes)       |
+|          | blocks                         | one or more dates, block numbers, hashes, or special<br/>named blocks (see notes)       |
 | &#8208;l | &#8208;&#8208;list             | export a list of the 'special' blocks                                                   |
 | &#8208;t | &#8208;&#8208;timestamps       | ignore other options and generate timestamps only                                       |
 | ###      | Hidden options                 |                                                                                         |

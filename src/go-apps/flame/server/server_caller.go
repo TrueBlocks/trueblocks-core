@@ -61,7 +61,6 @@ func CallOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd s
 			key != "modes" &&
 			key != "blocks" &&
 			key != "transactions" &&
-			key != "block_list" &&
 			key != "mode" &&
 			key != "topics" &&
 			key != "fourbytes" &&

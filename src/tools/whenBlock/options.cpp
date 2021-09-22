@@ -22,7 +22,7 @@ extern bool parseRequestTs(COptionsBase* opt, CNameValueArray& blocks, timestamp
 static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
-    COption("block_list", "", "list<string>", OPT_POSITIONAL, "one or more dates, block numbers, hashes, or special named blocks (see notes)"),  // NOLINT
+    COption("blocks", "", "list<string>", OPT_POSITIONAL, "one or more dates, block numbers, hashes, or special named blocks (see notes)"),  // NOLINT
     COption("list", "l", "", OPT_SWITCH, "export a list of the 'special' blocks"),
     COption("timestamps", "t", "", OPT_SWITCH, "ignore other options and generate timestamps only"),
     COption("check", "c", "", OPT_HIDDEN | OPT_SWITCH, "available only with --timestamps, checks the validity of the timestamp data"),  // NOLINT
@@ -43,7 +43,7 @@ bool COptions::parseArguments(string_q& commandIn) {
         return false;
 
     // BEG_CODE_LOCAL_INIT
-    CStringArray block_list;
+    CStringArray blocks;
     // END_CODE_LOCAL_INIT
 
     latest = getBlockProgress(BP_CLIENT).client;
@@ -83,7 +83,7 @@ bool COptions::parseArguments(string_q& commandIn) {
             }
 
         } else {
-            if (!parseStringList2(this, block_list, arg))
+            if (!parseStringList2(this, blocks, arg))
                 return false;
 
             // END_CODE_AUTO
@@ -91,7 +91,7 @@ bool COptions::parseArguments(string_q& commandIn) {
     }
 
     // BEG_DEBUG_DISPLAY
-    LOG_TEST_LIST("block_list", block_list, block_list.empty());
+    LOG_TEST_LIST("blocks", blocks, blocks.empty());
     LOG_TEST_BOOL("list", list);
     LOG_TEST_BOOL("timestamps", timestamps);
     LOG_TEST_BOOL("check", check);
@@ -106,7 +106,7 @@ bool COptions::parseArguments(string_q& commandIn) {
     if (skip != NOPOS && !skip)
         return usage(usageErrs[ERR_INVALIDSKIPVAL]);
 
-    for (auto item : block_list) {
+    for (auto item : blocks) {
         if (isDate(item)) {
             if (!parseRequestDates(this, requests, item))
                 return false;
@@ -115,7 +115,7 @@ bool COptions::parseArguments(string_q& commandIn) {
             if (!parseRequestTs(this, requests, str_2_Ts(item)))
                 return false;
 
-        } else if (!parseBlockList2(this, blocks, item, latest)) {
+        } else if (!parseBlockList2(this, CBlockOptions::blocks, item, latest)) {
             return false;
 
         } else {
@@ -126,8 +126,8 @@ bool COptions::parseArguments(string_q& commandIn) {
                 requests.push_back(CNameValue("block", spec.second + "|" + spec.first));
 
             } else {
-                blocks.Init();  // clear out blocks
-                if (!parseBlockList2(this, blocks, item, latest))
+                CBlockOptions::blocks.Init();  // clear out blocks
+                if (!parseBlockList2(this, CBlockOptions::blocks, item, latest))
                     return false;
                 string_q blockList = getBlockNumList();  // get the list from blocks
                 CStringArray blks;
