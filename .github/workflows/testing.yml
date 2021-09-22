@@ -7,8 +7,8 @@ jobs:
       - name: Run tests remotely
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
+          host: ${{ secrets.TESTING_HOST }}
+          username: ${{ secrets.TESTING_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           command_timeout: 40m
           script_stop: true
