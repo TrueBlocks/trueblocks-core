@@ -120,7 +120,7 @@ num,group,tags,api_route,tool,command,hotkey,def_val,is_required,is_customizable
 
 13400,tools,ChainData,traces,getTraces,transactions,,,true,false,true,true,local,positional,list<tx_id>,a space-separated list of one or more transaction identifiers
 13420,tools,ChainData,traces,getTraces,articulate,a,,false,false,true,true,header,switch,<boolean>,articulate the retrieved data if ABIs can be found
-13490,tools,ChainData,traces,getTraces,filter,f,,false,false,true,true,header,flag,<string>,call the node's `trace_filter` routine with bang-seperated filter
+13490,tools,ChainData,traces,getTraces,filter,f,,false,false,true,true,header,flag,<string>,call the node's trace_filter routine with bang-seperated filter
 13420,tools,ChainData,traces,getTraces,statediff,d,,false,false,true,true,header,switch,<boolean>,export state diff traces (not implemented)
 13440,tools,ChainData,traces,getTraces,count,c,,false,false,true,true,header,switch,<boolean>,show the number of traces for the transaction only (fast)
 13460,tools,ChainData,traces,getTraces,skip_ddos,s,true,false,true,false,false,header,toggle,<boolean>,skip over the 2016 ddos during export ([{DEF}] by default)
