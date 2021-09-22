@@ -568,7 +568,7 @@ CTestCase::CTestCase(const string_q& line, uint32_t id) {
     isCmd = contains(path, "tools") || contains(path, "apps") || contains(path, "go-apps") || contains(path, "libs");
     if (isCmd)
         isCmd = !contains(path, "dev_tools") && !contains(tool, "chifra");
-    fileName = tool + "_" + name + ".txt";
+    fileName = substitute(tool, "-new", "") + "_" + name + ".txt";
 
     replaceAll(post, "n", "");
     replaceAll(post, "y", getGlobalConfig("makeClass")->getConfigStr("settings", "json_pretty_print", "jq ."));

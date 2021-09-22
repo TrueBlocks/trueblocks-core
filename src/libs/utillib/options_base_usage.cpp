@@ -323,7 +323,7 @@ string_q COptionsBase::format_notes(const CStringArray& noteList) const {
     if (isReadme) {
         // do nothing
     } else {
-        lead = "\t";
+        lead = "   ";
     }
 
     ostringstream os;
