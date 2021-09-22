@@ -127,6 +127,7 @@ bool COptions::parseArguments(string_q& command) {
                 tests.push_back("apps/cacheStatus");
                 tests.push_back("apps/fireStorm");
                 tests.push_back("apps/chifra");
+                // tests.push_back("apps/chifra-new");
                 tests.push_back("apps/pinMan");
 
             } else {
@@ -182,6 +183,7 @@ bool COptions::parseArguments(string_q& command) {
         tests.push_back("apps/cacheStatus");
         tests.push_back("apps/fireStorm");
         tests.push_back("apps/chifra");
+        // tests.push_back("apps/chifra-new");
         tests.push_back("apps/pinMan");
     }
 
