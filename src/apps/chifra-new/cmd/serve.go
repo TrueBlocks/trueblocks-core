@@ -36,14 +36,19 @@ to quickly create a Cobra application.`,
 
 func init() {
 	rootCmd.AddCommand(serveCmd)
+	serveCmd.SetHelpTemplate(getHelpTextServe())
+}
 
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// serveCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// serveCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+func getHelpTextServe() string {
+	return `chifra argc: 5 [1:serve] [2:--help] [3:--verbose] [4:2] 
+chifra serve --help --verbose 2 
+Usage of flame:
+      --monitor       enable monitor scraper mode
+      --pin           pins Bloom filters and chunks to pinning service (requires API key)
+      --port string   specify the server's port (default ":8080")
+      --scrape        enable block scraper mode
+      --sleep int     specifies sleep interval between scrapes (default 14)
+      --verbose int   verbose level (between 0 and 10 inclusive)
+pflag: help requested
+`
 }

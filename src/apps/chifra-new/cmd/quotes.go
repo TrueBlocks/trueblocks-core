@@ -36,14 +36,34 @@ to quickly create a Cobra application.`,
 
 func init() {
 	rootCmd.AddCommand(quotesCmd)
+	quotesCmd.SetHelpTemplate(getHelpTextQuotes())
+}
 
-	// Here you will define your flags and configuration settings.
+func getHelpTextQuotes() string {
+	return `chifra argc: 5 [1:quotes] [2:--help] [3:--verbose] [4:2] 
+chifra quotes --help --verbose 2 
+chifra quotes argc: 4 [1:--help] [2:--verbose] [3:2] 
+chifra quotes --help --verbose 2 
+PROG_NAME = [chifra quotes]
 
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// quotesCmd.PersistentFlags().String("foo", "", "A help for foo")
+  Usage:    chifra quotes [-f|-p|-a|-e|-v|-h]  
+  Purpose:  Freshen and/or display Ethereum price data. This tool has been deprecated.
 
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// quotesCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+  Where:
+    -f  (--freshen)       Freshen price database
+    -p  (--period <val>)  increment of display, one of [5|15|30|60|120*|240|1440|10080|hourly|daily|weekly]
+    -a  (--pair <str>)    which price pair to freshen or list (see Poloniex)
+    -e  (--feed <val>)    the feed for the price data, one of [poloniex*|maker|tellor]
+    -x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+    -v  (--verbose)       set verbose level (optional level defaults to 1)
+    -h  (--help)          display this help screen
+
+  Notes:
+    - Valid pairs include any pair from the public Poloniex's API here:
+      https://poloniex.com/public?command=returnCurrencies.
+    - Due to restrictions from Poloniex, this tool retrieves only 30 days of data
+      at a time. You must repeatedly run this command until the data is up-to-date.
+
+  Powered by TrueBlocks
+`
 }

@@ -1,10 +1,8 @@
-chifra argc: 3 [1:names] [2:--not_an_option] 
-chifra names --not_an_option 
-chifra names argc: 2 [1:--not_an_option] 
-chifra names --not_an_option 
+chifra argc: 5 [1:names] [2:--help] [3:--verbose] [4:2] 
+chifra names --help --verbose 2 
+chifra names argc: 4 [1:--help] [2:--verbose] [3:2] 
+chifra names --help --verbose 2 
 PROG_NAME = [chifra names]
-
-  Invalid option: --not_an_option
 
   Usage:    chifra names [-e|-m|-l|-c|-p|-n|-a|-s|-g|-v|-h] <term> [term...]  
   Purpose:  Query addresses or names of well known accounts.
@@ -30,5 +28,9 @@ PROG_NAME = [chifra names]
     -x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
     -v  (--verbose)       set verbose level (optional level defaults to 1)
     -h  (--help)          display this help screen
+
+  Notes:
+    - The tool will accept up to three terms, each of which must match against any field in the database.
+    - The --match_case option enables case sensitive matching.
 
   Powered by TrueBlocks

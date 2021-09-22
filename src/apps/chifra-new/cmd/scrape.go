@@ -36,14 +36,31 @@ to quickly create a Cobra application.`,
 
 func init() {
 	rootCmd.AddCommand(scrapeCmd)
+	scrapeCmd.SetHelpTemplate(getHelpTextScrape())
+}
 
-	// Here you will define your flags and configuration settings.
+func getHelpTextScrape() string {
+	return `chifra argc: 5 [1:scrape] [2:--help] [3:--verbose] [4:2] 
+chifra scrape --help --verbose 2 
+chifra scrape argc: 5 [1:--help] [2:--verbose] [3:2] [4:--scrape] 
+chifra scrape --help --verbose 2 --scrape 
+PROG_NAME = [chifra scrape]
 
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// scrapeCmd.PersistentFlags().String("foo", "", "A help for foo")
+  Usage:    chifra scrape [-p|-s|-v|-h]  
+  Purpose:  Scan the chain and update the TrueBlocks index of appearances.
 
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// scrapeCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+  Where:
+    -p  (--pin)           pin new chunks (and blooms) to IPFS (requires Pinata key and running IPFS node)
+    -s  (--sleep <double>)the number of seconds to sleep between passes (default 14)
+    -x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+    -v  (--verbose)       set verbose level (optional level defaults to 1)
+    -h  (--help)          display this help screen
+
+  Configurable Items:
+    - n_blocks: maximum number of blocks to process (defaults to 5000).
+    - n_block_procs: number of concurrent block channels for blaze.
+    - n_addr_procs: number of concurrent address channels for blaze.
+
+  Powered by TrueBlocks
+`
 }

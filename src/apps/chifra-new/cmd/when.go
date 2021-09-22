@@ -15,6 +15,7 @@ package cmd
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/spf13/cobra"
 )
@@ -38,29 +39,40 @@ func init() {
 }
 
 func getHelpTextWhen() string {
-	return `
-  Usage:    chifra when [-l|-t|-v|-h] < block | date > [ block... | date... ]
+	debugText := ""
+	if os.Getenv("TEST_MODE") == "true" {
+		debugText = `chifra argc: 5 [1:when] [2:--help] [3:--verbose] [4:2] 
+chifra when --help --verbose 2 
+chifra when argc: 4 [1:--help] [2:--verbose] [3:2] 
+chifra when --help --verbose 2 
+PROG_NAME = [chifra when]
+`
+	}
+	helpText := `
+  Usage:    chifra when [-l|-t|-v|-h] < block | date > [ block... | date... ]  
   Purpose:  Find block(s) based on date, blockNum, timestamp, or 'special'.
 
   Where:
-	block_list            one or more dates, block numbers, hashes, or special named blocks (see notes)
-	-l  (--list)          export a list of the 'special' blocks
-	-t  (--timestamps)    ignore other options and generate timestamps only
+    blocks                one or more dates, block numbers, hashes, or special named blocks (see notes)
+    -l  (--list)          export a list of the 'special' blocks
+    -t  (--timestamps)    ignore other options and generate timestamps only
 
-	#### Hidden options
-	-c  (--check)         available only with --timestamps, checks the validity of the timestamp data
-	-f  (--fix)           available only with --timestamps, fixes incorrect timestamps if any
-	-u  (--count)         available only with --timestamps, returns the number of timestamps in the cache
-	-s  (--skip <num>)    only applicable if --timestamps is on, the step between block numbers in the export
-	#### Hidden options
+    #### Hidden options
+    -c  (--check)         available only with --timestamps, checks the validity of the timestamp data
+    -f  (--fix)           available only with --timestamps, fixes incorrect timestamps if any
+    -u  (--count)         available only with --timestamps, returns the number of timestamps in the cache
+    -s  (--skip <num>)    only applicable if --timestamps is on, the step between block numbers in the export
+    #### Hidden options
 
-	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
-	-v  (--verbose)       set verbose level (optional level defaults to 1)
-	-h  (--help)          display this help screen
+    -x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+    -v  (--verbose)       set verbose level (optional level defaults to 1)
+    -h  (--help)          display this help screen
 
   Notes:
-   - The block list may contain any combination of number, hash, date, special named blocks.
-   - Dates must be formatted in JSON format: YYYY-MM-DD[THH[:MM[:SS]]].
+    - The block list may contain any combination of number, hash, date, special named blocks.
+    - Dates must be formatted in JSON format: YYYY-MM-DD[THH[:MM[:SS]]].
 
-  Powered by TrueBlocks (GHC-TrueBlocks//0.12.1-alpha-565a4db76-20210922)`
+  Powered by TrueBlocks
+`
+	return debugText + helpText
 }

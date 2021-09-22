@@ -36,14 +36,36 @@ to quickly create a Cobra application.`,
 
 func init() {
 	rootCmd.AddCommand(tokensCmd)
+	tokensCmd.SetHelpTemplate(getHelpTextTokens())
+}
 
-	// Here you will define your flags and configuration settings.
+func getHelpTextTokens() string {
+	return `chifra argc: 5 [1:tokens] [2:--help] [3:--verbose] [4:2] 
+chifra tokens --help --verbose 2 
+chifra tokens argc: 4 [1:--help] [2:--verbose] [3:2] 
+chifra tokens --help --verbose 2 
+PROG_NAME = [chifra tokens]
 
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// tokensCmd.PersistentFlags().String("foo", "", "A help for foo")
+  Usage:    chifra tokens [-p|-b|-n|-v|-h] <address> <address> [address...] [block...]  
+  Purpose:  Retrieve token balance(s) for one or more addresses at given block(s).
 
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// tokensCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+  Where:
+    addrs                 two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported (required)
+    blocks                an optional list of one or more blocks at which to report balances, defaults to 'latest'
+    -p  (--parts <val>)   one or more parts of the token information to retreive, one or more of [name|symbol|decimals|totalSupply|version|none|all*]
+    -b  (--by_acct)       consider each address an ERC20 token except the last, whose balance is reported for each token
+    -n  (--no_zero)       suppress the display of zero balance accounts
+    -x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+    -v  (--verbose)       set verbose level (optional level defaults to 1)
+    -h  (--help)          display this help screen
+
+  Notes:
+    - An address must start with '0x' and be forty-two characters long.
+    - blocks may be a space-separated list of values, a start-end range, a special, or any combination.
+    - If the token contract(s) from which you request balances are not ERC20 compliant, the results are undefined.
+    - If the queried node does not store historical state, the results are undefined.
+    - special blocks are detailed under chifra when --list.
+
+  Powered by TrueBlocks
+`
 }

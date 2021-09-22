@@ -36,14 +36,31 @@ to quickly create a Cobra application.`,
 
 func init() {
 	rootCmd.AddCommand(slurpCmd)
+	slurpCmd.SetHelpTemplate(getHelpTextSlurp())
+}
 
-	// Here you will define your flags and configuration settings.
+func getHelpTextSlurp() string {
+	return `chifra argc: 5 [1:slurp] [2:--help] [3:--verbose] [4:2] 
+chifra slurp --help --verbose 2 
+chifra slurp argc: 4 [1:--help] [2:--verbose] [3:2] 
+chifra slurp --help --verbose 2 
+PROG_NAME = [chifra slurp]
 
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// slurpCmd.PersistentFlags().String("foo", "", "A help for foo")
+  Usage:    chifra slurp [-t|-p|-v|-h] <address> [address...] [block...]  
+  Purpose:  Fetch data from EtherScan for any address.
 
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// slurpCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+  Where:
+    addrs                 one or more addresses to slurp from Etherscan (required)
+    blocks                an optional range of blocks to slurp
+    -t  (--types <val>)   one or more types of transactions to request, one or more of [ext*|int|token|nfts|miner|uncles|all]
+    -p  (--appearances)   show only the blocknumer.tx_id appearances of the exported transactions
+    -x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+    -v  (--verbose)       set verbose level (optional level defaults to 1)
+    -h  (--help)          display this help screen
+
+  Notes:
+    - Portions of this software are Powered by Etherscan.io APIs.
+
+  Powered by TrueBlocks
+`
 }

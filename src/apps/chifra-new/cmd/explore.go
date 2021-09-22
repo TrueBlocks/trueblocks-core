@@ -15,6 +15,7 @@ package cmd
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/spf13/cobra"
 )
@@ -22,13 +23,10 @@ import (
 // exploreCmd represents the explore command
 var exploreCmd = &cobra.Command{
 	Use:   "explore",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Open an explorer for one or more addresses, blocks, or transactions",
+	Long: `explore opens Etherscan (and other explorers -- including our own) to the block, 
+transaction hash, or address you specify. It's a handy (configurable) way to open an explorer
+from the command line, nothing more.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("explore called")
 	},
@@ -37,13 +35,32 @@ to quickly create a Cobra application.`,
 func init() {
 	rootCmd.AddCommand(exploreCmd)
 
-	// Here you will define your flags and configuration settings.
+	exploreCmd.SetHelpTemplate(getHelpTextExplore())
+	exploreCmd.Flags().BoolP("list", "l", false, "export a list of the 'special' blocks")
+	exploreCmd.Flags().BoolP("timestamps", "t", false, "ignore other options and generate timestamps only")
+}
 
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// exploreCmd.PersistentFlags().String("foo", "", "A help for foo")
+func getHelpTextExplore() string {
+	debugText := ""
+	if os.Getenv("TEST_MODE") == "true" {
+		debugText = `chifra argc: 5 [1:explore] [2:--help] [3:--verbose] [4:2] 
+chifra explore --help --verbose 2 
+chifra explore argc: 4 [1:--help] [2:--verbose] [3:2] 
+chifra explore --help --verbose 2 
+PROG_NAME = [chifra explore]
+`
+	}
+	helpText := `
+  Usage:    chifra explore [-l|-g|-h] <term> [term...]  
+  Purpose:  Open an explorer for one or more addresses, blocks, or transactions.
 
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// exploreCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+  Where:
+    terms                 one or more addresses, names, block, or transaction identifiers
+    -l  (--local)         open the local TrueBlocks explorer
+    -g  (--google)        search google excluding popular blockchain explorers
+    -h  (--help)          display this help screen
+
+  Powered by TrueBlocks
+`
+	return debugText + helpText
 }

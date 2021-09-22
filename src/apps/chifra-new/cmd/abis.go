@@ -37,13 +37,37 @@ to quickly create a Cobra application.`,
 func init() {
 	rootCmd.AddCommand(abisCmd)
 
-	// Here you will define your flags and configuration settings.
+	abisCmd.SetHelpTemplate(getHelpTextAbis())
+}
 
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// abisCmd.PersistentFlags().String("foo", "", "A help for foo")
+func getHelpTextAbis() string {
+	return `chifra argc: 5 [1:abis] [2:--help] [3:--verbose] [4:2] 
+chifra abis --help --verbose 2 
+chifra abis argc: 4 [1:--help] [2:--verbose] [3:2] 
+chifra abis --help --verbose 2 
+PROG_NAME = [chifra abis]
 
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// abisCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+  Usage:    chifra abis [-k|-s|-f|-v|-h] <address> [address...]  
+  Purpose:  Fetches the ABI for a smart contract.
+
+  Where:
+    addrs                 list of one or more smart contracts whose ABI to grab from EtherScan (required)
+    -k  (--known)         load common 'known' ABIs from cache
+    -s  (--sol <str>)     file name of .sol file from which to create a new known abi (without .sol)
+    -f  (--find <str>)    try to search for a function declaration given a four byte code
+
+    #### Hidden options
+    -o  (--source)        show the source of the ABI information
+    -c  (--classes)       generate classDefinitions folder and class definitions
+    #### Hidden options
+
+    -x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+    -v  (--verbose)       set verbose level (optional level defaults to 1)
+    -h  (--help)          display this help screen
+
+  Notes:
+    - Solidity files found in the local folder with the name '<address>.sol' are converted to an ABI prior to processing (and then removed).
+
+  Powered by TrueBlocks
+`
 }
