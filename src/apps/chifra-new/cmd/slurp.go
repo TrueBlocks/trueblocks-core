@@ -18,9 +18,9 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// exploreCmd represents the explore command
-var exploreCmd = &cobra.Command{
-	Use:   "explore",
+// slurpCmd represents the slurp command
+var slurpCmd = &cobra.Command{
+	Use:   "slurp",
 	Short: "A brief description of your command",
 	Long: `A longer description that spans multiple lines and likely contains examples
 and usage of using your command. For example:
@@ -29,20 +29,20 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("explore called")
+		fmt.Println("slurp called")
 	},
 }
 
 func init() {
-	rootCmd.AddCommand(exploreCmd)
+	rootCmd.AddCommand(slurpCmd)
 
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
-	// exploreCmd.PersistentFlags().String("foo", "", "A help for foo")
+	// slurpCmd.PersistentFlags().String("foo", "", "A help for foo")
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	// exploreCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	// slurpCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
