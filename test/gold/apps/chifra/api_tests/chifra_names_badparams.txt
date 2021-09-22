@@ -1,0 +1,5 @@
+{
+  "errors": [
+    "chifra names - Invalid option: --not_an_option"
+  ]
+}
