@@ -45,21 +45,21 @@ testNum: 8
   Purpose:  Tests various command line behavior.
         
   Where:
-	testNum               the number of the test to run (required)
-	optionalMode          an optional mode with ~! start
-	-b  (--bool <bool>)   enter a boolean value (either '0', '1', 'false', or 'true')
-	-i  (--int <int>)     enter any numeric value
-	-u  (--uint <uint>)   enter any numeric value greater than or equal to zero
-	-s  (--string <str>)  enter any value
-	-r  (--range <range>) enter a range of numeric values
-	-l  (--list <list>)   enter a list of value separated by commas (no spaces or quoted)
+    testNum               the number of the test to run (required)
+    optionalMode          an optional mode with ~! start
+    -b  (--bool <bool>)   enter a boolean value (either '0', '1', 'false', or 'true')
+    -i  (--int <int>)     enter any numeric value
+    -u  (--uint <uint>)   enter any numeric value greater than or equal to zero
+    -s  (--string <str>)  enter any value
+    -r  (--range <range>) enter a range of numeric values
+    -l  (--list <list>)   enter a list of value separated by commas (no spaces or quoted)
 
-	#### Hidden options
-	-d  (--hiddenOption)  a hidden option with an alternative hot key
-	#### Hidden options
+    #### Hidden options
+    -d  (--hiddenOption)  a hidden option with an alternative hot key
+    #### Hidden options
 
-	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
-	-v  (--verbose)       set verbose level (optional level defaults to 1)
-	-h  (--help)          display this help screen
+    -x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+    -v  (--verbose)       set verbose level (optional level defaults to 1)
+    -h  (--help)          display this help screen
 
   Powered by TrueBlocks

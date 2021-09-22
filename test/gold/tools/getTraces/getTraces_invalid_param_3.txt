@@ -7,19 +7,19 @@ getTraces 1233123
   Purpose:  Retrieve traces for the given transaction(s).
 
   Where:
-	transactions          a space-separated list of one or more transaction identifiers (required)
-	-a  (--articulate)    articulate the retrieved data if ABIs can be found
-	-f  (--filter <str>)  call the node's `trace_filter` routine with bang-seperated filter
-	-d  (--statediff)     export state diff traces (not implemented)
-	-c  (--count)         show the number of traces for the transaction only (fast)
+    transactions          a space-separated list of one or more transaction identifiers (required)
+    -a  (--articulate)    articulate the retrieved data if ABIs can be found
+    -f  (--filter <str>)  call the node's trace_filter routine with bang-seperated filter
+    -d  (--statediff)     export state diff traces (not implemented)
+    -c  (--count)         show the number of traces for the transaction only (fast)
 
-	#### Hidden options
-	-s  (--skip_ddos)     skip over the 2016 ddos during export ('on' by default)
-	-m  (--max <num>)     if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250)
-	#### Hidden options
+    #### Hidden options
+    -s  (--skip_ddos)     skip over the 2016 ddos during export ('on' by default)
+    -m  (--max <num>)     if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250)
+    #### Hidden options
 
-	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
-	-v  (--verbose)       set verbose level (optional level defaults to 1)
-	-h  (--help)          display this help screen
+    -x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+    -v  (--verbose)       set verbose level (optional level defaults to 1)
+    -h  (--help)          display this help screen
 
   Powered by TrueBlocks

@@ -7,25 +7,25 @@ ethNames 0xbf4ed7b27f1d666546e30d74d50d173d20bca754 --pink --fmt txt
   Purpose:  Query addresses or names of well known accounts.
 
   Where:
-	terms                 a space separated list of one or more search terms (required)
-	-e  (--expand)        expand search to include all fields (default searches name, address, and symbol only)
-	-m  (--match_case)    do case-sensitive search
-	-l  (--all)           include all accounts in the search
-	-c  (--custom)        include your custom named accounts
-	-p  (--prefund)       include prefund accounts
-	-n  (--named)         include well know token and airdrop addresses in the search
-	-a  (--addr)          display only addresses in the results (useful for scripting)
-	-s  (--collections)   display collections data
-	-g  (--tags)          export the list of tags and subtags only
+    terms                 a space separated list of one or more search terms (required)
+    -e  (--expand)        expand search to include all fields (default searches name, address, and symbol only)
+    -m  (--match_case)    do case-sensitive search
+    -l  (--all)           include all accounts in the search
+    -c  (--custom)        include your custom named accounts
+    -p  (--prefund)       include prefund accounts
+    -n  (--named)         include well know token and airdrop addresses in the search
+    -a  (--addr)          display only addresses in the results (useful for scripting)
+    -s  (--collections)   display collections data
+    -g  (--tags)          export the list of tags and subtags only
 
-	#### Hidden options
-	-u  (--to_custom)     for editCmd only, is the edited name a custom name or not
-	-C  (--clean)         clean the data (addrs to lower case, sort by addr)
-	-A  (--autoname <str>)an address assumed to be a token, added automatically to names database if true
-	#### Hidden options
+    #### Hidden options
+    -u  (--to_custom)     for editCmd only, is the edited name a custom name or not
+    -C  (--clean)         clean the data (addrs to lower case, sort by addr)
+    -A  (--autoname <str>)an address assumed to be a token, added automatically to names database if true
+    #### Hidden options
 
-	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
-	-v  (--verbose)       set verbose level (optional level defaults to 1)
-	-h  (--help)          display this help screen
+    -x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+    -v  (--verbose)       set verbose level (optional level defaults to 1)
+    -h  (--help)          display this help screen
 
   Powered by TrueBlocks

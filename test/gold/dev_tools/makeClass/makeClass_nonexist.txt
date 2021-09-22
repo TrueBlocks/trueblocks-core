@@ -7,21 +7,21 @@ makeClass -e --x
   Purpose:  Automatically writes C++ for various purposes.
 
   Where:
-	files                 one or more class definition files (required)
-	-a  (--all)           list, or run all class definitions found in the local folder
-	-o  (--options)       export options code (check validity in the process)
-	-m  (--readmes)       create readme files for each tool and app
-	-f  (--format)        format source code files (.cpp and .h) found in local folder and below
-	-l  (--lint)          lint source code files (.cpp and .h) found in local folder and below
-	-t  (--tsx)           create typescript routes
+    files                 one or more class definition files (required)
+    -a  (--all)           list, or run all class definitions found in the local folder
+    -o  (--options)       export options code (check validity in the process)
+    -m  (--readmes)       create readme files for each tool and app
+    -f  (--format)        format source code files (.cpp and .h) found in local folder and below
+    -l  (--lint)          lint source code files (.cpp and .h) found in local folder and below
+    -t  (--tsx)           create typescript routes
 
-	#### Hidden options
-	-d  (--dump)          dump any classDefinition config tomls to screen and quit
-	-A  (--openapi)       export openapi.yaml file for API documentation
-	#### Hidden options
+    #### Hidden options
+    -d  (--dump)          dump any classDefinition config tomls to screen and quit
+    -A  (--openapi)       export openapi.yaml file for API documentation
+    #### Hidden options
 
-	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
-	-v  (--verbose)       set verbose level (optional level defaults to 1)
-	-h  (--help)          display this help screen
+    -x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+    -v  (--verbose)       set verbose level (optional level defaults to 1)
+    -h  (--help)          display this help screen
 
   Powered by TrueBlocks

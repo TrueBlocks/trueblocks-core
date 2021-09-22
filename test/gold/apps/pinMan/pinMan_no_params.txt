@@ -5,18 +5,18 @@ pinMan
   Purpose:  Manage pinned index of appearances and associated Bloom filters.
 
   Where:
-	-l  (--list)          list the index and Bloom filter hashes from local manifest or pinning service
-	-i  (--init)          initialize local index by downloading Bloom filters from pinning service
-	-n  (--init_all)      initialize local index by downloading both Bloom filters and index chunks
-	-p  (--pin_locally)   pin all local files in the index to an IPFS store (requires IPFS)
+    -l  (--list)          list the index and Bloom filter hashes from local manifest or pinning service
+    -i  (--init)          initialize local index by downloading Bloom filters from pinning service
+    -n  (--init_all)      initialize local index by downloading both Bloom filters and index chunks
+    -p  (--pin_locally)   pin all local files in the index to an IPFS store (requires IPFS)
 
-	#### Hidden options
-	-s  (--sleep <double>)the number of seconds to sleep between requests during init (default .25)
-	-r  (--remote)        applicable only to --list mode, recover the manifest from pinning service
-	#### Hidden options
+    #### Hidden options
+    -s  (--sleep <double>)the number of seconds to sleep between requests during init (default .25)
+    -r  (--remote)        applicable only to --list mode, recover the manifest from pinning service
+    #### Hidden options
 
-	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
-	-v  (--verbose)       set verbose level (optional level defaults to 1)
-	-h  (--help)          display this help screen
+    -x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
+    -v  (--verbose)       set verbose level (optional level defaults to 1)
+    -h  (--help)          display this help screen
 
   Powered by TrueBlocks
