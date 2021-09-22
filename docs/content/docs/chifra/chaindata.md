@@ -2,7 +2,7 @@
 title: "Chain Data"
 description: ""
 lead: ""
-date: 2021-09-19T21:39:18
+date: 2021-09-22T18:38:44
 lastmod:
   - :git
   - lastmod
@@ -188,7 +188,7 @@ The `--filter` option calls your node's `trace_filter` routine (if available) us
 | -------- | -------------------------------- | ---------------------------------------------------------------------------- |
 |          | transactions                     | a space-separated list of one or more transaction identifiers<br/>(required) |
 | &#8208;a | &#8208;&#8208;articulate         | articulate the retrieved data if ABIs can be found                           |
-| &#8208;f | &#8208;&#8208;filter &lt;str&gt; | call the node's `trace_filter` routine with bang-seperated<br/>filter        |
+| &#8208;f | &#8208;&#8208;filter &lt;str&gt; | call the node's trace_filter routine with bang-seperated<br/>filter          |
 | &#8208;d | &#8208;&#8208;statediff          | export state diff traces (not implemented)                                   |
 | &#8208;c | &#8208;&#8208;count              | show the number of traces for the transaction only<br/>(fast)                |
 | &#8208;x | &#8208;&#8208;fmt &lt;val&gt;    | export format, one of [none, json, txt, csv, api]                            |
@@ -231,7 +231,7 @@ The values for `date` and `time` are specified in JSON format. `hour`/`minute`/`
 {{<td>}}
 |          | Option                        | Description                                                                       |
 | -------- | ----------------------------- | --------------------------------------------------------------------------------- |
-|          | block_list                    | one or more dates, block numbers, hashes, or special<br/>named blocks (see notes) |
+|          | blocks                        | one or more dates, block numbers, hashes, or special<br/>named blocks (see notes) |
 | &#8208;l | &#8208;&#8208;list            | export a list of the 'special' blocks                                             |
 | &#8208;t | &#8208;&#8208;timestamps      | ignore other options and generate timestamps only                                 |
 | &#8208;x | &#8208;&#8208;fmt &lt;val&gt; | export format, one of [none, json, txt, csv, api]                                 |

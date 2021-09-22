@@ -928,7 +928,7 @@ paths:
           schema:
             type: boolean
         - name: filter
-          description: call the node's `trace_filter` routine with bang-seperated filter
+          description: call the node's trace_filter routine with bang-seperated filter
           required: false
           style: form
           in: query
