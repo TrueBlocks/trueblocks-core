@@ -22,7 +22,7 @@ static const COption params[] = {
     // clang-format off
     COption("transactions", "", "list<tx_id>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more transaction identifiers"),  // NOLINT
     COption("articulate", "a", "", OPT_SWITCH, "articulate the retrieved data if ABIs can be found"),
-    COption("filter", "f", "<string>", OPT_FLAG, "call the node's `trace_filter` routine with bang-seperated filter"),
+    COption("filter", "f", "<string>", OPT_FLAG, "call the node's trace_filter routine with bang-seperated filter"),
     COption("statediff", "d", "", OPT_SWITCH, "export state diff traces (not implemented)"),
     COption("count", "c", "", OPT_SWITCH, "show the number of traces for the transaction only (fast)"),
     COption("skip_ddos", "s", "", OPT_HIDDEN | OPT_TOGGLE, "skip over the 2016 ddos during export ('on' by default)"),
