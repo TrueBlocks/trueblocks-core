@@ -1,5 +1,5 @@
-blockScrape argc: 2 [1:-th] 
-blockScrape -th 
+blockScrape argc: 2 [1:--readme] 
+blockScrape --readme 
 ### Usage
 
 `Usage:`    chifra scrape [-p|-s|-v|-h]  

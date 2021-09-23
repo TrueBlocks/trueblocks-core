@@ -1,13 +1,13 @@
 enabled,mode,speed,route,path/tool,filename,post,options,opt_cmd,has_env
 on,cmd,fast,receipts,tools/getReceipts,preload,n,blocks = 3657480 & cache,getBlocks
-on,cmd,fast,receipts,tools/getReceipts,README,n,@th
+on,cmd,fast,receipts,tools/getReceipts,README,n,readme
 on,cmd,fast,receipts,tools/getReceipts,help,n,@h
 on,cmd,fast,receipts,tools/getReceipts,help_long,n,help
 on,both,fast,receipts,tools/getReceipts,no_input,y,
 on,both,fast,receipts,tools/getReceipts,bad_hash,y,transactions = 0x0012
 on,both,fast,receipts,tools/getReceipts,invalid_option_1,y,pink
 on,both,fast,receipts,tools/getReceipts,invalid_option_2,y,other
-on,both,fast,receipts,tools/getReceipts,invalid_param_1,y,transactions = .th
+on,both,fast,receipts,tools/getReceipts,invalid_param_1,y,transactions = .clink
 on,both,fast,receipts,tools/getReceipts,invalid_param_2,y,transactions = 1233123
 on,both,fast,receipts,tools/getReceipts,default,y,address = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
 on,both,fast,receipts,tools/getReceipts,three_ways,y,transactions = 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.79 3657480.79 0xda2f27fffb36c90c74fc53bd8b721074e87203c727640c95c4c802296e3bf8ad & fmt = json

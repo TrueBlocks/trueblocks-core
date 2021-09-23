@@ -76,7 +76,7 @@ bool COptionsBase::prePrepareArguments(CStringArray& separatedArgs_, int argCoun
             // remove the key
             if (cleaned_.size())
                 cleaned_.pop_back();
-        } else if (arg == "-th" || arg == "-ht") {
+        } else if (arg == "--readme") {
             isReadme = true;
             cleaned_.push_back(arg);
         } else {

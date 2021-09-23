@@ -1,5 +1,5 @@
-fireStorm argc: 2 [1:-th] 
-fireStorm -th 
+fireStorm argc: 2 [1:--readme] 
+fireStorm --readme 
 ### Usage
 
 `Usage:`    chifra explore [-l|-g|-h] &lt;term&gt; [term...]  

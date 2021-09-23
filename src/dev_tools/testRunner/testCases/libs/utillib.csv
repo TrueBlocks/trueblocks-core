@@ -1,8 +1,8 @@
 enabled,mode,speed,route,path/tool,filename,post,options,opt_cmd,has_env
-on,cmd,fast,null,utillib/arrayTest,README,n,@th
+on,cmd,fast,null,utillib/arrayTest,README,n,readme
 on,cmd,fast,null,utillib/arrayTest,Insertion,n,val = 0
 on,cmd,fast,null,utillib/bigIntTest,00,n,
-on,cmd,fast,null,utillib/cmdLineTest,README,n,@th
+on,cmd,fast,null,utillib/cmdLineTest,README,n,readme
 on,cmd,fast,null,utillib/cmdLineTest,bool1,n,file:cmd_file_bool1
 on,cmd,fast,null,utillib/cmdLineTest,bool2,n,file:cmd_file_bool2
 on,cmd,fast,null,utillib/cmdLineTest,other1,n,file:cmd_file_other1
@@ -32,15 +32,15 @@ on,cmd,fast,null,utillib/jsonTest,test_random,n,val = random & parity
 on,cmd,fast,null,utillib/jsonTest,test_spaces,n,val = spaces
 on,cmd,fast,null,utillib/jsonTest,test_traces,n,val = traces
 on,cmd,fast,null,utillib/loggingTest,test_logging,n,
-on,cmd,fast,null,utillib/parsingTest,README,n,@th
+on,cmd,fast,null,utillib/parsingTest,README,n,readme
 on,cmd,fast,null,utillib/parsingTest,00,n,val = 0
 on,cmd,fast,null,utillib/parsingTest,01,n,val = 1
 on,cmd,fast,null,utillib/parsingTest,02,n,val = 2
 on,cmd,fast,null,utillib/parsingTest,03,n,val = 3
 on,cmd,fast,null,utillib/parsingTest,04,n,val = 4
-on,cmd,fast,null,utillib/sizeofTest,README,n,@th
+on,cmd,fast,null,utillib/sizeofTest,README,n,readme
 on,cmd,fast,null,utillib/sizeofTest,00,n,
-on,cmd,fast,null,utillib/stringTest,README,n,@th
+on,cmd,fast,null,utillib/stringTest,README,n,readme
 on,cmd,fast,null,utillib/stringTest,Assignment,n,val = 2
 on,cmd,fast,null,utillib/stringTest,CStr,n,val = 3
 on,cmd,fast,null,utillib/stringTest,Clean,n,val = 5
@@ -77,7 +77,7 @@ on,cmd,fast,null,utillib/tomlTest2,getTrans,n,val = getTrans.toml
 on,cmd,fast,null,utillib/tomlTest2,grabABI,n,val = grabABI.toml
 on,cmd,fast,null,utillib/tomlTest2,quickBlocks,n,val = trueBlocks.toml
 on,cmd,fast,null,utillib/tomlTest2,whenBlock,n,val = whenBlock.toml
-on,cmd,fast,null,utillib/typesTest,README,n,@th
+on,cmd,fast,null,utillib/typesTest,README,n,readme
 on,cmd,fast,null,utillib/typesTest,01,n,val = 0
 off,cmd,fast,null,utillib/runningTest,01,n,val = 0
 on,cmd,fast,null,utillib/versionTest,versions,n,

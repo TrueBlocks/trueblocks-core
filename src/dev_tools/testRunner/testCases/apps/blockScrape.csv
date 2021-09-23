@@ -1,6 +1,6 @@
 enabled,mode,speed,route,path/tool,filename,post,options,opt_cmd,has_env
 on,cmd,fast,export,apps/blockScrape,RESET,n,RESET
-on,cmd,fast,scrape,apps/blockScrape,README,n,@th
+on,cmd,fast,scrape,apps/blockScrape,README,n,readme
 on,cmd,fast,scrape,apps/blockScrape,help,n,@h
 on,cmd,fast,scrape,apps/blockScrape,help_long,n,help
 on,both,fast,scrape,apps/blockScrape,invalid,n,junk

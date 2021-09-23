@@ -1,5 +1,5 @@
-ethslurp argc: 2 [1:-th] 
-ethslurp -th 
+ethslurp argc: 2 [1:--readme] 
+ethslurp --readme 
 ### Usage
 
 `Usage:`    chifra slurp [-t|-p|-v|-h] &lt;address&gt; [address...] [block...]  

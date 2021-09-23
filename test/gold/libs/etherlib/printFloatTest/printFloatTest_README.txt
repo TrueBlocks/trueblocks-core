@@ -1,5 +1,5 @@
-printFloatTest argc: 2 [1:-th] 
-printFloatTest -th 
+printFloatTest argc: 2 [1:--readme] 
+printFloatTest --readme 
 ### Usage
 
 `Usage:`     [-t|-v|-h]  

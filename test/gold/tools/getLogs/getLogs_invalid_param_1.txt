@@ -1,7 +1,7 @@
-getLogs argc: 2 [1:.th] 
-getLogs .th 
+getLogs argc: 2 [1:.clink] 
+getLogs .clink 
 
-  .th does not appear to be a valid transaction index. Quitting...
+  .clink does not appear to be a valid transaction index. Quitting...
 
   Usage:    getLogs [-t|-s|-a|-v|-h] <tx_id> [tx_id...]  
   Purpose:  Retrieve logs for the given transaction(s).

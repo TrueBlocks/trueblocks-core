@@ -1,5 +1,5 @@
 {
   "errors": [
-    "chifra transactions - .th does not appear to be a valid transaction index."
+    "chifra transactions - .clink does not appear to be a valid transaction index."
   ]
 }

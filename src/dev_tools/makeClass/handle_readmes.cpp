@@ -35,7 +35,7 @@ bool visitReadme(const string_q& templatePath, void* data) {
         string_q cmd = tool;
         if (tool != "chifra" && tool != "makeClass" && tool != "testRunner")
             cmd = getCommandPath(tool);
-        if (system((cmd + " -th >file 2>&1").c_str())) {
+        if (system((cmd + " --readme >file 2>&1").c_str())) {
         }  // Don't remove cruft. Silences compiler warnings
         string_q usage = trim(asciiFileToString("./file"), '\n');
         ::remove("./file");

@@ -1,7 +1,7 @@
-getTrans argc: 2 [1:.th] 
-getTrans .th 
+getTrans argc: 2 [1:.clink] 
+getTrans .clink 
 
-  .th does not appear to be a valid transaction index. Quitting...
+  .clink does not appear to be a valid transaction index. Quitting...
 
   Usage:    getTrans [-a|-t|-u|-r|-o|-v|-h] <tx_id> [tx_id...]  
   Purpose:  Retrieve one or more transactions from the chain or local cache.

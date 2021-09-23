@@ -1,5 +1,5 @@
-forEveryTest argc: 2 [1:-th] 
-forEveryTest -th 
+forEveryTest argc: 2 [1:--readme] 
+forEveryTest --readme 
 ### Usage
 
 `Usage:`     [-v|-h] mode  

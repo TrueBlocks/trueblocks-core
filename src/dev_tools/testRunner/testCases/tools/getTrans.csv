@@ -1,12 +1,12 @@
 enabled,mode,speed,route,path/tool,filename,post,options,opt_cmd,has_env
 on,cmd,fast,blocks,tools/getTrans,preload,n,blocks = 3657480 & cache,getBlocks
-on,cmd,fast,transactions,tools/getTrans,README,n,@th
+on,cmd,fast,transactions,tools/getTrans,README,n,readme
 on,cmd,fast,transactions,tools/getTrans,help,n,@h
 on,cmd,fast,transactions,tools/getTrans,help_long,n,help
 on,both,fast,transactions,tools/getTrans,no_input,y,
 on,both,fast,transactions,tools/getTrans,invalid_option_1,y,prot
 on,both,fast,transactions,tools/getTrans,invalid_option_2,y,other
-on,both,fast,transactions,tools/getTrans,invalid_param_1,y,transactions = .th
+on,both,fast,transactions,tools/getTrans,invalid_param_1,y,transactions = .clink
 on,both,fast,transactions,tools/getTrans,invalid_param_2,y,transactions = .whatever
 on,both,fast,transactions,tools/getTrans,invalid_param_3,y,transactions = 1233123
 on,both,fast,transactions,tools/getTrans,bad_hash,y,transactions = 0x0012

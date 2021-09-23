@@ -1,5 +1,5 @@
-decodeAbiTest argc: 2 [1:-th] 
-decodeAbiTest -th 
+decodeAbiTest argc: 2 [1:--readme] 
+decodeAbiTest --readme 
 ### Usage
 
 `Usage:`     [-v|-h]  

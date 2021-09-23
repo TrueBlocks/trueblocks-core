@@ -1,5 +1,5 @@
-getTokens argc: 2 [1:-th] 
-getTokens -th 
+getTokens argc: 2 [1:--readme] 
+getTokens --readme 
 ### Usage
 
 `Usage:`    chifra tokens [-p|-b|-n|-v|-h] &lt;address&gt; &lt;address&gt; [address...] [block...]  

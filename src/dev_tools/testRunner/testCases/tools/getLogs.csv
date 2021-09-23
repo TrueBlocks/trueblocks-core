@@ -1,13 +1,13 @@
 enabled,mode,speed,route,path/tool,filename,post,options,opt_cmd,has_env
 on,cmd,fast,logs,tools/getLogs,preload,y,blocks = 3657480 & cache,getBlocks
-on,cmd,fast,logs,tools/getLogs,README,y,@th
+on,cmd,fast,logs,tools/getLogs,README,y,readme
 on,cmd,fast,logs,tools/getLogs,help,y,@h
 on,cmd,fast,logs,tools/getLogs,help_long,y,help
 on,both,fast,logs,tools/getLogs,no_input,y,
 on,both,fast,logs,tools/getLogs,bad_hash,y,transactions = 0x0012
 on,both,fast,logs,tools/getLogs,invalid_option_1,y,oink
 on,both,fast,logs,tools/getLogs,invalid_option_2,y,other
-on,both,fast,logs,tools/getLogs,invalid_param_1,y,transactions = .th
+on,both,fast,logs,tools/getLogs,invalid_param_1,y,transactions = .clink
 on,both,fast,logs,tools/getLogs,invalid_param_2,y,transactions = 1233123
 on,both,fast,logs,tools/getLogs,bad_hash_msg,y,transactions = 0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521 0x0766ec95bf12f9600afc6c33c287f9d2356d85f15f0d7eeeb6647f5d4ddfbc11 0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521
 on,both,fast,logs,tools/getLogs,bad_hash_msg_raw,n,transactions = 0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521 0x0766ec95bf12f9600afc6c33c287f9d2356d85f15f0d7eeeb6647f5d4ddfbc11 0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521 & raw

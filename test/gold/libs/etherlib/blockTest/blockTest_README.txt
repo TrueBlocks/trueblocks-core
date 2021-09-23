@@ -1,5 +1,5 @@
-blockTest argc: 2 [1:-th] 
-blockTest -th 
+blockTest argc: 2 [1:--readme] 
+blockTest --readme 
 ### Usage
 
 `Usage:`     [-v|-h] mode  

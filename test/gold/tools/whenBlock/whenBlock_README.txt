@@ -1,5 +1,5 @@
-whenBlock argc: 2 [1:-th] 
-whenBlock -th 
+whenBlock argc: 2 [1:--readme] 
+whenBlock --readme 
 ### Usage
 
 `Usage:`    chifra when [-l|-t|-v|-h] &lt; block | date &gt; [ block... | date... ]  

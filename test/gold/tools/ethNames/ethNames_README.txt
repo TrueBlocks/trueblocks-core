@@ -1,5 +1,5 @@
-ethNames argc: 2 [1:-th] 
-ethNames -th 
+ethNames argc: 2 [1:--readme] 
+ethNames --readme 
 ### Usage
 
 `Usage:`    chifra names [-e|-m|-l|-c|-p|-n|-a|-s|-g|-v|-h] &lt;term&gt; [term...]  

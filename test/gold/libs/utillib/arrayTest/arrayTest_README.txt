@@ -1,5 +1,5 @@
-arrayTest argc: 2 [1:-th] 
-arrayTest -th 
+arrayTest argc: 2 [1:--readme] 
+arrayTest --readme 
 ### Usage
 
 `Usage:`     [-v|-h] mode  

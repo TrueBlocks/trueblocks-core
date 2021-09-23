@@ -1,5 +1,5 @@
-pinMan argc: 2 [1:-th] 
-pinMan -th 
+pinMan argc: 2 [1:--readme] 
+pinMan --readme 
 ### Usage
 
 `Usage:`    chifra pins [-l|-i|-n|-p|-v|-h]  

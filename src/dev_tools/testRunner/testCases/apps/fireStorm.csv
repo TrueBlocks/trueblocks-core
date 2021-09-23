@@ -1,5 +1,5 @@
 enabled,mode,speed,route,path/tool,filename,post,options,opt_cmd,has_env
-on,cmd,fast,explore,apps/fireStorm,README,n,@th
+on,cmd,fast,explore,apps/fireStorm,README,n,readme
 on,cmd,fast,explore,apps/fireStorm,help,n,@h
 on,cmd,fast,explore,apps/fireStorm,help_long,n,help
 on,cmd,fast,explore,apps/fireStorm,no_params,n,

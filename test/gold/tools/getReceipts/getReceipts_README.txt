@@ -1,5 +1,5 @@
-getReceipts argc: 2 [1:-th] 
-getReceipts -th 
+getReceipts argc: 2 [1:--readme] 
+getReceipts --readme 
 ### Usage
 
 `Usage:`    chifra receipts [-a|-v|-h] &lt;tx_id&gt; [tx_id...]  

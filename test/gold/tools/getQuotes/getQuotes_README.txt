@@ -1,5 +1,5 @@
-getQuotes argc: 2 [1:-th] 
-getQuotes -th 
+getQuotes argc: 2 [1:--readme] 
+getQuotes --readme 
 ### Usage
 
 `Usage:`    chifra quotes [-f|-p|-a|-e|-v|-h]  

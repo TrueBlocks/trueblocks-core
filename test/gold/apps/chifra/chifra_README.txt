@@ -1,5 +1,5 @@
-chifra argc: 2 [1:-th] 
-chifra -th 
+chifra argc: 2 [1:--readme] 
+chifra --readme 
 ### Usage
 
 `Usage:`    chifra command  

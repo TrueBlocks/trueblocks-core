@@ -1,5 +1,5 @@
-makeClass argc: 2 [1:-th] 
-makeClass -th 
+makeClass argc: 2 [1:--readme] 
+makeClass --readme 
 ### Usage
 
 `Usage:`    makeClass [-a|-o|-m|-f|-l|-t|-v|-h] &lt;file&gt; [file...]  

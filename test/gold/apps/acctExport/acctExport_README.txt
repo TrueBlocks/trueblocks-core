@@ -1,5 +1,5 @@
-acctExport argc: 2 [1:-th] 
-acctExport -th 
+acctExport argc: 2 [1:--readme] 
+acctExport --readme 
 ### Usage
 
 `Usage:`    chifra export [-p|-r|-A|-l|-t|-C|-a|-i|-R|-y|-U|-c|-e|-v|-h] &lt;address&gt; [address...] [topics] [fourbytes]  

@@ -1,5 +1,5 @@
-cmdLineTest argc: 2 [1:-th] 
-cmdLineTest -th 
+cmdLineTest argc: 2 [1:--readme] 
+cmdLineTest --readme 
 ### Usage
 
 `Usage:`     [-b|-i|-u|-s|-r|-l|-v|-h] testNum optionalMode  

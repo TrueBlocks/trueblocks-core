@@ -1,5 +1,5 @@
 enabled,mode,speed,route,path/tool,filename,post,options,opt_cmd,has_env
-on,cmd,medi,when,tools/whenBlock,README,y,@th
+on,cmd,medi,when,tools/whenBlock,README,y,readme
 on,cmd,fast,when,tools/whenBlock,help,y,@h
 on,cmd,fast,when,tools/whenBlock,long_help,y,help
 on,both,fast,when,tools/whenBlock,blockByHash,y,blocks = 0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b

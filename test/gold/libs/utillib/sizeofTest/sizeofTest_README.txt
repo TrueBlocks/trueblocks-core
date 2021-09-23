@@ -1,5 +1,5 @@
-sizeofTest argc: 2 [1:-th] 
-sizeofTest -th 
+sizeofTest argc: 2 [1:--readme] 
+sizeofTest --readme 
 ### Usage
 
 `Usage:`     [-v|-h] mode  

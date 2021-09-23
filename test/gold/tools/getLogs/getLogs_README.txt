@@ -1,5 +1,5 @@
-getLogs argc: 2 [1:-th] 
-getLogs -th 
+getLogs argc: 2 [1:--readme] 
+getLogs --readme 
 ### Usage
 
 `Usage:`    chifra logs [-t|-s|-a|-v|-h] &lt;tx_id&gt; [tx_id...]  

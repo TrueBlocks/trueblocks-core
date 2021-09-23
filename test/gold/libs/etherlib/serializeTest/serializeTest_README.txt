@@ -1,5 +1,5 @@
-serializeTest argc: 2 [1:-th] 
-serializeTest -th 
+serializeTest argc: 2 [1:--readme] 
+serializeTest --readme 
 ### Usage
 
 `Usage:`     [-t|-v|-h]  

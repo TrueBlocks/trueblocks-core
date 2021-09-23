@@ -1,5 +1,5 @@
-getTraces argc: 2 [1:-th] 
-getTraces -th 
+getTraces argc: 2 [1:--readme] 
+getTraces --readme 
 ### Usage
 
 `Usage:`    chifra traces [-a|-f|-d|-c|-v|-h] &lt;tx_id&gt; [tx_id...]  

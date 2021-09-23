@@ -1,5 +1,5 @@
-getState argc: 2 [1:-th] 
-getState -th 
+getState argc: 2 [1:--readme] 
+getState --readme 
 ### Usage
 
 `Usage:`    chifra state [-p|-c|-n|-v|-h] &lt;address&gt; [address...] [block...]  

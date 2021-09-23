@@ -1,6 +1,6 @@
 enabled,mode,speed,route,path/tool,filename,post,options,opt_cmd,has_env
 on,cmd,fast,blocks,tools/getTraces,preload,n,transactions = 3657480 & cache,getBlocks
-on,cmd,fast,traces,tools/getTraces,README,n,@th
+on,cmd,fast,traces,tools/getTraces,README,n,readme
 on,cmd,fast,traces,tools/getTraces,help,n,@h
 on,cmd,fast,traces,tools/getTraces,help_long,n,help
 on,cmd,fast,traces,tools/getTraces,by_file_v,y,verbose & file:cmd_file & fmt = api
@@ -8,7 +8,7 @@ on,both,fast,traces,tools/getTraces,default,y,address = 0xbb9bc244d798123fde783f
 on,both,fast,traces,tools/getTraces,no_input,y,
 on,both,fast,traces,tools/getTraces,invalid_option_1,y,pink
 on,both,fast,traces,tools/getTraces,invalid_option_2,y,other
-on,both,fast,traces,tools/getTraces,invalid_param_1,y,transactions = .th
+on,both,fast,traces,tools/getTraces,invalid_param_1,y,transactions = .clink
 on,both,fast,traces,tools/getTraces,invalid_param_2,y,transactions = .whatever
 on,both,fast,traces,tools/getTraces,bad_hash,y,transactions = 0x0012
 on,both,fast,traces,tools/getTraces,invalid_param_3,y,transactions = 1233123

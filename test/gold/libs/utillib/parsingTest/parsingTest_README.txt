@@ -1,5 +1,5 @@
-parsingTest argc: 2 [1:-th] 
-parsingTest -th 
+parsingTest argc: 2 [1:--readme] 
+parsingTest --readme 
 ### Usage
 
 `Usage:`     [-v|-h] mode  

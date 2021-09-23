@@ -1,5 +1,5 @@
-grabABI argc: 2 [1:-th] 
-grabABI -th 
+grabABI argc: 2 [1:--readme] 
+grabABI --readme 
 ### Usage
 
 `Usage:`    chifra abis [-k|-s|-f|-v|-h] &lt;address&gt; [address...]  

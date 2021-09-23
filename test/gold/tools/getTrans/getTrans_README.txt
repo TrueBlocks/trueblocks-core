@@ -1,5 +1,5 @@
-getTrans argc: 2 [1:-th] 
-getTrans -th 
+getTrans argc: 2 [1:--readme] 
+getTrans --readme 
 ### Usage
 
 `Usage:`    chifra transactions [-a|-t|-u|-r|-o|-v|-h] &lt;tx_id&gt; [tx_id...]  

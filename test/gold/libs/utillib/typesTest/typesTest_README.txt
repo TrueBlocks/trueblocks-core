@@ -1,5 +1,5 @@
-typesTest argc: 2 [1:-th] 
-typesTest -th 
+typesTest argc: 2 [1:--readme] 
+typesTest --readme 
 ### Usage
 
 `Usage:`     [-v|-h] mode  

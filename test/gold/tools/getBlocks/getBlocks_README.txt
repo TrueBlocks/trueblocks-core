@@ -1,5 +1,5 @@
-getBlocks argc: 2 [1:-th] 
-getBlocks -th 
+getBlocks argc: 2 [1:--readme] 
+getBlocks --readme 
 ### Usage
 
 `Usage:`    chifra blocks [-e|-U|-t|-a|-u|-n|-c|-o|-v|-h] &lt;block&gt; [block...]  

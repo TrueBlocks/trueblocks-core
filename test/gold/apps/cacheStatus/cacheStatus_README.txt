@@ -1,5 +1,5 @@
-cacheStatus argc: 2 [1:-th] 
-cacheStatus -th 
+cacheStatus argc: 2 [1:--readme] 
+cacheStatus --readme 
 ### Usage
 
 `Usage:`    chifra status [-d|-t|-v|-h] &lt;mode&gt; [mode...]  

@@ -1,6 +1,6 @@
 enabled,mode,speed,route,path/tool,filename,post,options,opt_cmd,has_env
 on,cmd,fast,status,apps/cacheStatus,RESET,n,RESET
-on,cmd,fast,status,apps/cacheStatus,README,n,@th
+on,cmd,fast,status,apps/cacheStatus,README,n,readme
 on,cmd,fast,status,apps/cacheStatus,help,n,@h
 on,cmd,fast,status,apps/cacheStatus,help_long,n,help
 on,both,fast,status,apps/cacheStatus,no_params,y,

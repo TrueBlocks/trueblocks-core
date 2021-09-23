@@ -1,5 +1,5 @@
-stringTest argc: 2 [1:-th] 
-stringTest -th 
+stringTest argc: 2 [1:--readme] 
+stringTest --readme 
 ### Usage
 
 `Usage:`     [-v|-h] mode  

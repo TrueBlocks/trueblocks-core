@@ -1,5 +1,5 @@
 enabled,mode,speed,route,path/tool,filename,post,options,opt_cmd,has_env
-on,cmd,fast,null,dev_tools/makeClass,README,n,@th
+on,cmd,fast,null,dev_tools/makeClass,README,n,readme
 on,cmd,fast,null,dev_tools/makeClass,help,n,@h
 on,cmd,fast,null,dev_tools/makeClass,help_long,n,@help
 on,cmd,fast,null,dev_tools/makeClass,noparams1,n,

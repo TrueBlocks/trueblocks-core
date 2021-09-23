@@ -1,5 +1,5 @@
 enabled,mode,speed,route,path/tool,filename,post,options,opt_cmd,has_env
-on,cmd,fast,tokens,tools/getTokens,README,n,@th
+on,cmd,fast,tokens,tools/getTokens,README,n,readme
 on,cmd,fast,tokens,tools/getTokens,help,n,@h
 on,cmd,fast,tokens,tools/getTokens,help_long,n,help
 on,cmd,fast,tokens,tools/getTokens,help_verbose,n,help & verbose
