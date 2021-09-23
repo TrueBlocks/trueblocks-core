@@ -27,6 +27,11 @@ namespace qblocks {
 
 //--------------------------------------------------------------------------------
 bool COptionsBase::usage(const string_q& errMsg) const {
+    if (isGoHelp()) {
+        cerr << "This is the go help file";
+        return false;
+    }
+
     bool quitting = !(errMsg.empty() || contains(errMsg, "Invalid option:") || isApiMode());
     cerr << get_errmsg(errMsg + (quitting ? " Quitting..." : ""));
     cerr << get_header();

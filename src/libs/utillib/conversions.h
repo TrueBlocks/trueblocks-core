@@ -169,6 +169,14 @@ inline bool isTestMode(void) {
 }
 
 //---------------------------------------------------------------------------
+inline bool isGoHelp(void) {
+    static uint64_t go_help = NOPOS;
+    if (go_help == NOPOS)
+        go_help = getEnvStr("GO_HELP") == "true";
+    return go_help;
+}
+
+//---------------------------------------------------------------------------
 inline bool isApiMode(void) {
     static uint64_t api_mode = NOPOS;
     if (api_mode == NOPOS)

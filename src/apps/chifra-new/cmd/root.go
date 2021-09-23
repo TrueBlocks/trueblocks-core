@@ -25,6 +25,14 @@ import (
 
 var cfgFile string
 
+// OptionsType Structure to carry command line and config file options
+type rootOptTypes struct {
+	oldHelp bool
+	verbose int
+}
+
+var RootOpts rootOptTypes
+
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "chifra",
@@ -38,17 +46,9 @@ to quickly create a Cobra application.`,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println(getHelpText())
+		fmt.Println(getHelpTextRoot())
 	},
-	Args: func(cmd *cobra.Command, args []string) error {
-		if len(args) < 1 {
-			return fmt.Errorf("repository url is required")
-		}
-		if len(args) > 2 {
-			return fmt.Errorf("unexpected positional arguments after url directory: %s", args[1])
-		}
-		return nil
-	},
+	Version: "Powered by TrueBlocks (GHC-TrueBlocks//0.12.1-alpha-7c5fb3f2a-20210923)",
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
@@ -62,22 +62,28 @@ func Execute() {
 
 func init() {
 	cobra.OnInitialize(initConfig)
-	rootCmd.SetHelpTemplate(getHelpText())
-	rootCmd.SetUsageTemplate(getHelpText())
+	// rootCmd.SetHelpTemplate(getHelpText())
+	// rootCmd.SetUsageTemplate(getHelpText())
 
 	// Here you will define your flags and configuration settings.
 	// Cobra supports persistent flags, which, if defined here,
 	// will be global for your application.
 
+	rootCmd.Flags().SortFlags = false
+
 	fmt := "json"
 	verbose := uint32(0)
-	rootCmd.PersistentFlags().StringVar(&fmt, "fmt", "x", "export format, one of [none|json*|txt|csv|api]")
-	rootCmd.PersistentFlags().Uint32Var(&verbose, "verbose", 0, "set verbose level (optional level defaults to 1)")
-	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.chifra.yaml)")
+	help := false
+	rootCmd.PersistentFlags().StringVarP(&fmt, "fmt", "x", "json", "export format, one of [none|json*|txt|csv|api]")
+	rootCmd.PersistentFlags().Uint32VarP(&verbose, "verbose", "v", 0, "set verbose level (optional level defaults to 1)")
+	rootCmd.PersistentFlags().BoolVarP(&help, "help", "h", false, "show this help text")
+	rootCmd.PersistentFlags().BoolVarP(&RootOpts.oldHelp, "helpold", "", false, "show the old help text")
+	rootCmd.PersistentFlags().MarkHidden("helpold")
+	// rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.chifra.yaml)")
 
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
-	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	// rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
 
 // initConfig reads in config file and ENV variables if set.
@@ -106,7 +112,7 @@ func initConfig() {
 	}
 }
 
-func getHelpText() string {
+func getHelpTextRoot() string {
 	return `
 
   Usage:    chifra command  
@@ -144,3 +150,25 @@ func getHelpText() string {
   Powered by TrueBlocks
 `
 }
+
+/*
+package main
+
+import (
+	"log"
+
+	"github.com/spf13/cobra"
+	"github.com/spf13/cobra/doc"
+)
+
+func main() {
+	cmd := &cobra.Command{
+		Use:   "test",
+		Short: "my test program",
+	}
+	err := doc.GenMarkdownTree(cmd, "/tmp")
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+*/
