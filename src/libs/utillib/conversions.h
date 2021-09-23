@@ -161,12 +161,8 @@ inline bool isDockerMode(void) {
 }
 
 //---------------------------------------------------------------------------
-inline bool isTestMode(bool turnOff = false) {
+inline bool isTestMode(void) {
     static uint64_t test_mode = NOPOS;
-    if (turnOff) {
-        test_mode = NOPOS;
-        return false;
-    }
     if (test_mode == NOPOS)
         test_mode = getEnvStr("TEST_MODE") == "true";
     return test_mode;
