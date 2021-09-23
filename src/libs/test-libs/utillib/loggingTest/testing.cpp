@@ -18,6 +18,7 @@
 //----------------------------------------------------------------------
 int main(int argc, const char* argv[]) {
     LOG_INFO("Starting the application..");
+    isTestMode(true /* turnOff */);
     for (size_t i = 0; i < 10; i++) {
         verbose = i;
         LOG0("The value of 'i' is ", i, ". ", 10 - i - 1, " more iterations left ");
@@ -33,6 +34,7 @@ int main(int argc, const char* argv[]) {
         LOG8("The value of 'i' is ", i, ". ", 10 - i - 1, " more iterations left ");
         LOG_PROGRESS("Logging", i, 2, "\n");
     }
+    isTestMode(false /* turnOff false --> turn back on */);
     LOG_WARN("Loop over");
     LOG_ERR("All good things come to an end.. :(");
     LOG_FATAL("Fatal error.. :(");

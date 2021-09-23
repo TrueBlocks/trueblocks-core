@@ -54,8 +54,7 @@ bool COptions::queryFlatFile(const string_q& path, bool sorted) {
         search[monitor->address.size()] = '\0';
         char* found = (char*)bsearch(search, rawData, nRecords, 59, findAppearance);
         if (!found) {
-            if (!isTestMode())
-                LOG_PROGRESS("Scanning", fileRange.first, listRange.second, " stage miss");
+            LOG_PROGRESS("Scanning", fileRange.first, listRange.second, " stage miss");
         } else {
             stats.nStageHits++;
             char* ptr = found;
@@ -87,8 +86,7 @@ bool COptions::queryFlatFile(const string_q& path, bool sorted) {
             }
 
             found = endOfData;
-            if (!isTestMode())
-                LOG_PROGRESS("Scanning", fileRange.first, listRange.second, " stage hit");
+            LOG_PROGRESS("Scanning", fileRange.first, listRange.second, " stage hit");
         }
     }
 

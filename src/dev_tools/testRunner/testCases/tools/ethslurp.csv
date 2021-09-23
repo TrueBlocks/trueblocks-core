@@ -20,7 +20,7 @@ on,both,slow,slurp,tools/ethslurp,type_token,y,addrs = 0x9519afbc60719a83c470cee
 on,both,slow,slurp,tools/ethslurp,type_nft,y,addrs = 0x00a3819199113fc6a6e6ba1298afde7377e2009b & types = nfts & blocks = 0-8500000
 off,both,medi,slurp,tools/ethslurp,type_miner,y,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & types = miner & blocks = 1-1000
 on,both,medu,slurp,tools/ethslurp,type_uncle,y,addrs = 0xc8ebccc5f5689fa8659d83713341e5ad19349448 & types = uncles & blocks = 1-10
-on,both,fast,slurp,tools/ethslurp,type_all,y,addrs = 0x1324e7b922b30B49Ab8EA81086341cc41C249346 & types = all & blocks = 0-3793420
+local,both,fast,slurp,tools/ethslurp,type_all,y,addrs = 0x1324e7b922b30B49Ab8EA81086341cc41C249346 & types = all & blocks = 0-3793420
 on,both,fast,slurp,tools/ethslurp,fmt_default,y,addrs = 0x1324e7b922b30B49Ab8EA81086341cc41C249346 & blocks = 3750000-4000000
 on,both,fast,slurp,tools/ethslurp,fmt_txt,n,addrs = 0x1324e7b922b30B49Ab8EA81086341cc41C249346 & blocks = 3750000-4000000 & fmt = txt
 on,both,fast,slurp,tools/ethslurp,fmt_csv,n,addrs = 0x1324e7b922b30B49Ab8EA81086341cc41C249346 & blocks = 3750000-4000000 & fmt = csv & no_header
