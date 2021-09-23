@@ -23,7 +23,7 @@ on,cmd,fast,null,apps/chifra,help_traces,n,modes = traces & help & verbose = 2
 on,cmd,fast,null,apps/chifra,help_state,n,modes = state & help & verbose = 2
 on,cmd,fast,null,apps/chifra,help_tokens,n,modes = tokens & help & verbose = 2
 on,cmd,fast,null,apps/chifra,help_scrape,n,modes = scrape & help & verbose = 2
-on,cmd,fast,null,apps/chifra,help_server,n,modes = serve & help & verbose = 2
+off,cmd,fast,null,apps/chifra,help_server,n,modes = serve & help & verbose = 2
 on,cmd,fast,null,apps/chifra,help_status,n,modes = status & help & verbose = 2
 on,cmd,fast,null,apps/chifra,help_quotes,n,modes = quotes & help & verbose = 2
 on,cmd,fast,null,apps/chifra,help_when,n,modes = when & help & verbose = 2

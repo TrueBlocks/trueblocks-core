@@ -272,7 +272,7 @@ void establishTestData(void) {
     doCommand("chifra abis 0xa478c2975ab1ea89e8196811f51a7b7ade33eb11");
     doCommand("chifra abis 0x7d655c57f71464b6f83811c55d84009cd9f5221c");
 
-// TODO(tjayrush): Not sure what this is about.
+    // TODO(tjayrush): Not sure what this is about.
 #if 1
     // Hard to explain, but this removes a few transactions from the cache
     ::remove(getBinaryCacheFilename(CT_TXS, 8854723, 61).c_str());
