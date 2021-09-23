@@ -55,9 +55,9 @@ local,both,fast,export,apps/acctExport,transfer_no_topics,y,addrs = 0xff9387a9aa
 local,both,fast,export,apps/acctExport,transfer_topics,y,addrs = 0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3 & max_records = 5 & topics = 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef & logs
 on,both,fast,export,apps/acctExport,transfer_fourbytes,y,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & max_records = 10 & fourbytes = 0xa9059cbb & fmt = json
 on,both,fast,export,apps/acctExport,transfer_fourbytes_trace,y,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & max_records = 10 & fourbytes = 0xa9059cbb & traces & fmt = json
-local,both,fast,monitors,apps/acctExport,freshen_apps_0-30,y,addrs = 0xbb7b8287f3f0a933474a79eae42cbca977791171 & first_block = 1 & last_block = 30 & appearances
-local,both,fast,monitors,apps/acctExport,freshen_apps_31-60,y,addrs = 0xbb7b8287f3f0a933474a79eae42cbca977791171 & first_block = 31 & last_block = 60 & appearances
-local,both,fast,monitors,apps/acctExport,freshen_apps_61-100,y,addrs = 0xbb7b8287f3f0a933474a79eae42cbca977791171 & first_block = 61 & last_block = 100 & appearances
+on,both,fast,monitors,apps/acctExport,freshen_apps_0-30,y,addrs = 0xbb7b8287f3f0a933474a79eae42cbca977791171 & first_block = 1 & last_block = 30 & appearances
+on,both,fast,monitors,apps/acctExport,freshen_apps_31-60,y,addrs = 0xbb7b8287f3f0a933474a79eae42cbca977791171 & first_block = 31 & last_block = 60 & appearances
+on,both,fast,monitors,apps/acctExport,freshen_apps_61-100,y,addrs = 0xbb7b8287f3f0a933474a79eae42cbca977791171 & first_block = 61 & last_block = 100 & appearances
 off,both,fast,export,apps/acctExport,reversed_reversed,y,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & fmt = json & accounting & ether & reversed & first_block = 8854723 & last_block = 8856511 & max_records = 10000 & verbose = 10
 off,both,fast,export,apps/acctExport,reversed_not_reversed,y,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & fmt = json & accounting & ether & first_block = 8854723 & last_block = 8856511 & verbose = 10
 off,both,fast,export,apps/acctExport,accounting_invalid1,y,addrs = 0x00a3819199113fc6a6e6ba1298afde7377e2009b & max_records = 30 & fmt = json & summarize_by = tx
