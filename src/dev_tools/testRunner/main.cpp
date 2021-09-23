@@ -123,8 +123,8 @@ int main(int argc, const char* argv[]) {
 
             expContext().exportFmt = CSV1;
             perf_fmt = substitute(cleanFmt(STR_DISPLAY_MEASURE), "\"", "");
-            options.doTests(testArray, path, testName, API);
-            options.doTests(testArray, path, testName, CMD);
+            options.doTests(testArray, path, substitute(testName, "-new", ""), API);
+            options.doTests(testArray, path, substitute(testName, "-new", ""), CMD);
             if (shouldQuit())
                 break;
 

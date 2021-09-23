@@ -550,12 +550,8 @@ CTestCase::CTestCase(const string_q& line, uint32_t id) {
     explode(parts, line, ',');
     test_id = id;
     onOff = parts.size() > 0 ? trim(parts[0]) : "";
-    static string_q runLocal;
-    if (runLocal.empty())
-        runLocal = getGlobalConfig("testRunner")->getConfigStr("settings", "runLocal", "off");
-    if (onOff == "local") {
+    if (onOff == "local")
         onOff = "off";
-    }
     mode = parts.size() > 1 ? trim(parts[1]) : "";
     speed = parts.size() > 2 ? trim(parts[2]) : "";
     route = parts.size() > 3 ? trim(parts[3]) : "";
@@ -572,7 +568,7 @@ CTestCase::CTestCase(const string_q& line, uint32_t id) {
     isCmd = contains(path, "tools") || contains(path, "apps") || contains(path, "go-apps") || contains(path, "libs");
     if (isCmd)
         isCmd = !contains(path, "dev_tools") && !contains(tool, "chifra");
-    fileName = substitute(tool, "-new", "") + "_" + name + ".txt";
+    fileName = tool + "_" + name + ".txt";
 
     replaceAll(post, "n", "");
     replaceAll(post, "y", getGlobalConfig("makeClass")->getConfigStr("settings", "json_pretty_print", "jq ."));
