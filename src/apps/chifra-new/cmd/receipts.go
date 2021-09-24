@@ -15,20 +15,21 @@ package cmd
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/spf13/cobra"
 )
 
 // receiptsCmd represents the receipts command
 var receiptsCmd = &cobra.Command{
-	Use:   "receipts",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+	Use: `receipts [flags] <tx_id> [tx_id...]
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+Arguments:
+  transactions - a space-separated list of one or more transaction identifiers (required)`,
+	Short: "Retrieve receipts for the given transaction(s)",
+	Long: `Purpose:
+  Retrieve receipts for the given transaction(s).
+`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("receipts called")
 	},
@@ -36,32 +37,10 @@ to quickly create a Cobra application.`,
 
 func init() {
 	rootCmd.AddCommand(receiptsCmd)
-	receiptsCmd.SetHelpTemplate(getHelpTextReceipts())
-}
 
-func getHelpTextReceipts() string {
-	return `chifra argc: 5 [1:receipts] [2:--help] [3:--verbose] [4:2] 
-chifra receipts --help --verbose 2 
-chifra receipts argc: 4 [1:--help] [2:--verbose] [3:2] 
-chifra receipts --help --verbose 2 
-PROG_NAME = [chifra receipts]
-
-  Usage:    chifra receipts [-a|-v|-h] <tx_id> [tx_id...]  
-  Purpose:  Retrieve receipts for the given transaction(s).
-
-  Where:
-    transactions          a space-separated list of one or more transaction identifiers (required)
-    -a  (--articulate)    articulate the retrieved data if ABIs can be found
-    -x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
-    -v  (--verbose)       set verbose level (optional level defaults to 1)
-    -h  (--help)          display this help screen
-
-  Notes:
-    - The transactions list may be one or more space-separated identifiers which are either a transaction hash,
-      a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.
-    - This tool checks for valid input syntax, but does not check that the transaction requested actually exists.
-    - If the queried node does not store historical state, the results for most older transactions are undefined.
-
-  Powered by TrueBlocks
-`
+	receiptsCmd.Flags().SortFlags = false
+	receiptsCmd.PersistentFlags().SortFlags = false
+	receiptsCmd.SetOut(os.Stderr)
+	receiptsCmd.Flags().BoolP("articulate", "a", false, "articulate the retrieved data if ABIs can be found")
+	receiptsCmd.Flags().MarkHidden("transactions")
 }

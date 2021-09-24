@@ -25,10 +25,11 @@ import (
 
 var cfgFile string
 
-// OptionsType Structure to carry command line and config file options
+// rootOptionsType Structure to carry command line and config file options
 type rootOptTypes struct {
-	oldHelp bool
-	verbose int
+	fmt     string
+	verbose uint
+	help    bool
 }
 
 var RootOpts rootOptTypes
@@ -61,29 +62,14 @@ func Execute() {
 }
 
 func init() {
-	cobra.OnInitialize(initConfig)
-	// rootCmd.SetHelpTemplate(getHelpText())
-	// rootCmd.SetUsageTemplate(getHelpText())
-
-	// Here you will define your flags and configuration settings.
-	// Cobra supports persistent flags, which, if defined here,
-	// will be global for your application.
-
 	rootCmd.Flags().SortFlags = false
+	rootCmd.PersistentFlags().SortFlags = false
+	rootCmd.SetOut(os.Stderr)
+	rootCmd.PersistentFlags().StringVarP(&RootOpts.fmt, "fmt", "x", "", "export format, one of [none|json*|txt|csv|api]")
+	rootCmd.PersistentFlags().UintVarP(&RootOpts.verbose, "verbose", "v", 0, "set verbose level (optional level defaults to 1)")
+	rootCmd.PersistentFlags().BoolVarP(&RootOpts.help, "help", "h", false, "display this help screen")
 
-	fmt := "json"
-	verbose := uint32(0)
-	help := false
-	rootCmd.PersistentFlags().StringVarP(&fmt, "fmt", "x", "json", "export format, one of [none|json*|txt|csv|api]")
-	rootCmd.PersistentFlags().Uint32VarP(&verbose, "verbose", "v", 0, "set verbose level (optional level defaults to 1)")
-	rootCmd.PersistentFlags().BoolVarP(&help, "help", "h", false, "show this help text")
-	rootCmd.PersistentFlags().BoolVarP(&RootOpts.oldHelp, "helpold", "", false, "show the old help text")
-	rootCmd.PersistentFlags().MarkHidden("helpold")
-	// rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.chifra.yaml)")
-
-	// Cobra also supports local flags, which will only run
-	// when this action is called directly.
-	// rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	cobra.OnInitialize(initConfig)
 }
 
 // initConfig reads in config file and ENV variables if set.
@@ -151,24 +137,5 @@ func getHelpTextRoot() string {
 `
 }
 
-/*
-package main
-
-import (
-	"log"
-
-	"github.com/spf13/cobra"
-	"github.com/spf13/cobra/doc"
-)
-
-func main() {
-	cmd := &cobra.Command{
-		Use:   "test",
-		Short: "my test program",
-	}
-	err := doc.GenMarkdownTree(cmd, "/tmp")
-	if err != nil {
-		log.Fatal(err)
-	}
-}
-*/
+// enums
+// https://pkg.go.dev/github.com/thediveo/enumflag

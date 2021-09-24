@@ -15,59 +15,93 @@ package cmd
 
 import (
 	"fmt"
+	"os"
+	"os/exec"
+	"strconv"
 
 	"github.com/spf13/cobra"
+	"github.com/spf13/pflag"
 )
+
+type abiOptionsType struct {
+	known   bool
+	sol     string
+	find    string
+	source  bool
+	classes bool
+}
+
+var abiOpts abiOptionsType
 
 // abisCmd represents the abis command
 var abisCmd = &cobra.Command{
-	Use:   "abis",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+	Use: `abis [flags] <address> [address...]
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
-	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("abis called")
+Arguments:
+  addrs - list of one or more smart contracts whose ABI to grab from EtherScan (required)`,
+	Short: "fetches the ABI for a smart contract",
+	Long: `Purpose:
+  Fetches the ABI for a smart contract.`,
+	PreRun: func(cmd *cobra.Command, args []string) {
 	},
+	Run: runAbi,
 }
 
 func init() {
-	rootCmd.AddCommand(abisCmd)
+	abisCmd.Flags().SortFlags = false
+	abisCmd.PersistentFlags().SortFlags = false
+	abisCmd.SetOut(os.Stderr)
 
-	abisCmd.SetHelpTemplate(getHelpTextAbis())
+	abisCmd.Flags().BoolVarP(&abiOpts.known, "known", "k", false, "load common 'known' ABIs from cache")
+	abisCmd.Flags().StringVarP(&abiOpts.sol, "sol", "s", "", "file name of .sol file from which to create a new known abi (without .sol)")
+	abisCmd.Flags().StringVarP(&abiOpts.find, "find", "f", "", "try to search for a function declaration given a four byte code")
+	abisCmd.Flags().BoolVarP(&abiOpts.source, "source", "o", false, "show the source of the ABI information")
+	abisCmd.Flags().BoolVarP(&abiOpts.classes, "classes", "c", false, "generate classDefinitions folder and class definitions")
+
+	rootCmd.AddCommand(abisCmd)
 }
 
-func getHelpTextAbis() string {
-	return `chifra argc: 5 [1:abis] [2:--help] [3:--verbose] [4:2] 
-chifra abis --help --verbose 2 
-chifra abis argc: 4 [1:--help] [2:--verbose] [3:2] 
-chifra abis --help --verbose 2 
-PROG_NAME = [chifra abis]
+func PassItOn(path string, options string) {
+	what := exec.Command(path, options)
+	what.Env = append(append(os.Environ(), "API_MODE=true"), "GO_HELP=true")
+	out, _ := what.Output()
+	output := string(out[:])
+	fmt.Printf("%s", output)
+}
 
-  Usage:    chifra abis [-k|-s|-f|-v|-h] <address> [address...]  
-  Purpose:  Fetches the ABI for a smart contract.
+func fn(f *pflag.Flag) {
+	fmt.Printf("%v\n", f)
+}
 
-  Where:
-    addrs                 list of one or more smart contracts whose ABI to grab from EtherScan (required)
-    -k  (--known)         load common 'known' ABIs from cache
-    -s  (--sol <str>)     file name of .sol file from which to create a new known abi (without .sol)
-    -f  (--find <str>)    try to search for a function declaration given a four byte code
+func runAbi(cmd *cobra.Command, args []string) {
+	fs := cmd.Flags()
+	fs.VisitAll(fn)
 
-    #### Hidden options
-    -o  (--source)        show the source of the ABI information
-    -c  (--classes)       generate classDefinitions folder and class definitions
-    #### Hidden options
-
-    -x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
-    -v  (--verbose)       set verbose level (optional level defaults to 1)
-    -h  (--help)          display this help screen
-
-  Notes:
-    - Solidity files found in the local folder with the name '<address>.sol' are converted to an ABI prior to processing (and then removed).
-
-  Powered by TrueBlocks
-`
+	options := ""
+	for _, option := range args {
+		options += " " + option
+	}
+	if abiOpts.known {
+		options += " --known"
+	}
+	if abiOpts.source {
+		options += " --source"
+	}
+	if abiOpts.classes {
+		options += " --classes"
+	}
+	if len(abiOpts.sol) > 0 {
+		options += " --sol " + abiOpts.sol
+	}
+	if len(abiOpts.find) > 0 {
+		options += " --find " + abiOpts.find
+	}
+	if len(RootOpts.fmt) > 0 {
+		options += " --fmt " + RootOpts.fmt
+	}
+	if RootOpts.verbose > 0 {
+		options += " --verbose " + strconv.FormatUint(uint64(RootOpts.verbose), 10)
+	}
+	path := "/Users/jrush/.local/bin/chifra/grabABI"
+	PassItOn(path, options)
 }

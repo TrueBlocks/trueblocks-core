@@ -1,19 +1,19 @@
 enabled,mode,speed,route,path/tool,filename,post,options,opt_cmd,has_env
 local,cmd,fast,null,apps/chifra-new,RESET,n,RESET
-local,cmd,fast,null,apps/chifra-new,README,n,readme
-local,cmd,fast,null,apps/chifra-new,help,n,@h
-local,cmd,fast,null,apps/chifra-new,help_long,n,help
-local,cmd,fast,null,apps/chifra-new,help_no_params,n,
-local,cmd,fast,null,apps/chifra-new,help_invalid_optilocal,n,modes = not_a_mode
-local,cmd,fast,null,apps/chifra-new,help_chifra,n,help
-local,cmd,fast,null,apps/chifra-new,help_list,n,modes = monitors & help & verbose = 2
+off,cmd,fast,null,apps/chifra-new,README,n,readme
+off,cmd,fast,null,apps/chifra-new,help,n,@h
+off,cmd,fast,null,apps/chifra-new,help_long,n,help
+off,cmd,fast,null,apps/chifra-new,help_no_params,n,
+off,cmd,fast,null,apps/chifra-new,help_invalid_option,n,modes = not_a_mode
+off,cmd,fast,null,apps/chifra-new,help_chifra,n,help
+off,cmd,fast,null,apps/chifra-new,help_list,n,modes = monitors & help & verbose = 2
 local,cmd,fast,null,apps/chifra-new,help_export,n,modes = export & help & verbose = 2
 local,cmd,fast,null,apps/chifra-new,help_explore,n,modes = explore & help & verbose = 2
 local,cmd,fast,null,apps/chifra-new,help_slurp,n,modes = slurp & help & verbose = 2
-local,cmd,fast,null,apps/chifra-new,help_rm,n,modes = monitors & delete & help & verbose = 2
-local,cmd,fast,null,apps/chifra-new,help_collections,n,modes = collections & help & verbose = 2
+off,cmd,fast,null,apps/chifra-new,help_rm,n,modes = monitors & delete & help & verbose = 2
+off,cmd,fast,null,apps/chifra-new,help_collections,n,modes = collections & help & verbose = 2
 local,cmd,fast,null,apps/chifra-new,help_names,n,modes = names & help & verbose = 2
-local,cmd,fast,null,apps/chifra-new,help_tags,n,modes = tags & help & verbose = 2
+off,cmd,fast,null,apps/chifra-new,help_tags,n,modes = tags & help & verbose = 2
 local,cmd,fast,null,apps/chifra-new,help_abis,n,modes = abis & help & verbose = 2
 local,cmd,fast,null,apps/chifra-new,help_blocks,n,modes = blocks & help & verbose = 2
 local,cmd,fast,null,apps/chifra-new,help_transactions,n,modes = transactions & help & verbose = 2
