@@ -1,7 +1,7 @@
 blockScrape argc: 2 [1:--help] 
 blockScrape --help 
 
-  Usage:    blockScrape [-p|-s|-v|-h]  
+  Usage:    blockScrape [-p|-s|-v|-h]
   Purpose:  Scan the chain and update the TrueBlocks index of appearances.
 
   Where:

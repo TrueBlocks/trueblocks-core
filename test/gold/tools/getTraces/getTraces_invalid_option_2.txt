@@ -3,7 +3,7 @@ getTraces --other
 
   Invalid option: --other
 
-  Usage:    getTraces [-a|-f|-d|-c|-v|-h] <tx_id> [tx_id...]  
+  Usage:    getTraces [-a|-f|-d|-c|-v|-h] <tx_id> [tx_id...]
   Purpose:  Retrieve traces for the given transaction(s).
 
   Where:

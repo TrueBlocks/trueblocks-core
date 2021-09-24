@@ -1,7 +1,7 @@
 makeClass argc: 2 [1:-help] 
 makeClass -help 
 
-  Usage:    makeClass [-a|-o|-m|-f|-l|-t|-v|-h] <file> [file...]  
+  Usage:    makeClass [-a|-o|-m|-f|-l|-t|-v|-h] <file> [file...]
   Purpose:  Automatically writes C++ for various purposes.
 
   Where:

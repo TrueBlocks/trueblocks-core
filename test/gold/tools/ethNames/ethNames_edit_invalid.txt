@@ -3,7 +3,7 @@ ethNames --invalid --expand --verbose 10 --fmt api
 
   Invalid option: --invalid
 
-  Usage:    ethNames [-e|-m|-l|-c|-p|-n|-a|-s|-g|-v|-h] <term> [term...]  
+  Usage:    ethNames [-e|-m|-l|-c|-p|-n|-a|-s|-g|-v|-h] <term> [term...]
   Purpose:  Query addresses or names of well known accounts.
 
   Where:

@@ -1,7 +1,7 @@
 getReceipts argc: 1 
 getReceipts 
 
-  Usage:    getReceipts [-a|-v|-h] <tx_id> [tx_id...]  
+  Usage:    getReceipts [-a|-v|-h] <tx_id> [tx_id...]
   Purpose:  Retrieve receipts for the given transaction(s).
 
   Where:

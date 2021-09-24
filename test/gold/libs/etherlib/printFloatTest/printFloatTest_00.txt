@@ -3,7 +3,7 @@ printFloatTest
 
   Unknown test: -1. Quitting...
 
-  Usage:    printFloatTest [-t|-v|-h]  
+  Usage:    printFloatTest [-t|-v|-h]
   Purpose:  This program tests floating point printing and conversions.
         
   Where:

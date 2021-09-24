@@ -3,7 +3,7 @@ cacheStatus --junk
 
   Invalid option: --junk
 
-  Usage:    cacheStatus [-d|-t|-v|-h] <mode> [mode...]  
+  Usage:    cacheStatus [-d|-t|-v|-h] <mode> [mode...]
   Purpose:  Report on the status of the TrueBlocks system.
 
   Where:

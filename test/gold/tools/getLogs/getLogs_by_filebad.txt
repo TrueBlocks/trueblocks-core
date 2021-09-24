@@ -5,7 +5,7 @@ Cmd: 3327450.0 --parity -a --bad
 
   Invalid option: --bad
 
-  Usage:    getLogs [-t|-s|-a|-v|-h] <tx_id> [tx_id...]  
+  Usage:    getLogs [-t|-s|-a|-v|-h] <tx_id> [tx_id...]
   Purpose:  Retrieve logs for the given transaction(s).
 
   Where:

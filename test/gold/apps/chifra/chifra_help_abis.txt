@@ -4,7 +4,7 @@ chifra abis argc: 4 [1:--help] [2:--verbose] [3:2]
 chifra abis --help --verbose 2 
 PROG_NAME = [chifra abis]
 
-  Usage:    chifra abis [-k|-s|-f|-v|-h] <address> [address...]  
+  Usage:    chifra abis [-k|-s|-f|-v|-h] <address> [address...]
   Purpose:  Fetches the ABI for a smart contract.
 
   Where:

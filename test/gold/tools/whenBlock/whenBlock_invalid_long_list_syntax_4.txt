@@ -3,7 +3,7 @@ whenBlock 2015-03-02 --list
 
   The date you specified (2015-03-02) is before the first block. Quitting...
 
-  Usage:    whenBlock [-l|-t|-v|-h] < block | date > [ block... | date... ]  
+  Usage:    whenBlock [-l|-t|-v|-h] < block | date > [ block... | date... ]
   Purpose:  Find block(s) based on date, blockNum, timestamp, or 'special'.
 
   Where:

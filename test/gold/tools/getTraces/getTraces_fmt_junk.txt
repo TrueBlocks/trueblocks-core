@@ -3,7 +3,7 @@ getTraces 2222222.0 2332332.0 --fmt junk
 
   Export format (junk) must be one of [ json | txt | csv | api ]. Quitting...
 
-  Usage:    getTraces [-a|-f|-d|-c|-v|-h] <tx_id> [tx_id...]  
+  Usage:    getTraces [-a|-f|-d|-c|-v|-h] <tx_id> [tx_id...]
   Purpose:  Retrieve traces for the given transaction(s).
 
   Where:

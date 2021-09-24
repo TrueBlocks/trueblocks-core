@@ -3,7 +3,7 @@ grabABI 0xe94327d07fc17907b4db788e5adf2ed424addff6 --fmt junk
 
   Export format (junk) must be one of [ json | txt | csv | api ]. Quitting...
 
-  Usage:    grabABI [-k|-s|-f|-v|-h] <address> [address...]  
+  Usage:    grabABI [-k|-s|-f|-v|-h] <address> [address...]
   Purpose:  Fetches the ABI for a smart contract.
 
   Where:

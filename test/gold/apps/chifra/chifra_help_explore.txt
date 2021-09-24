@@ -4,7 +4,7 @@ chifra explore argc: 4 [1:--help] [2:--verbose] [3:2]
 chifra explore --help --verbose 2 
 PROG_NAME = [chifra explore]
 
-  Usage:    chifra explore [-l|-g|-h] <term> [term...]  
+  Usage:    chifra explore [-l|-g|-h] <term> [term...]
   Purpose:  Open an explorer for one or more addresses, blocks, or transactions.
 
   Where:

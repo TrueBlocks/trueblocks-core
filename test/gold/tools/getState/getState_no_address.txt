@@ -3,7 +3,7 @@ getState 12
 
   You must provide at least one Ethereum address. Quitting...
 
-  Usage:    getState [-p|-c|-n|-v|-h] <address> [address...] [block...]  
+  Usage:    getState [-p|-c|-n|-v|-h] <address> [address...] [block...]
   Purpose:  Retrieve account balance(s) for one or more addresses at given block(s).
 
   Where:

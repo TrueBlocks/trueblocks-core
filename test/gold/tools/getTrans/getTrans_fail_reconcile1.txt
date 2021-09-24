@@ -3,7 +3,7 @@ getTrans 0x8699f14af8aca02073f3008099526a6e77f724bee280e5e3c2fa64b589be9a63 --re
 
   The provided value (0x12) is not a properly formatted address. Quitting...
 
-  Usage:    getTrans [-a|-t|-u|-r|-o|-v|-h] <tx_id> [tx_id...]  
+  Usage:    getTrans [-a|-t|-u|-r|-o|-v|-h] <tx_id> [tx_id...]
   Purpose:  Retrieve one or more transactions from the chain or local cache.
 
   Where:

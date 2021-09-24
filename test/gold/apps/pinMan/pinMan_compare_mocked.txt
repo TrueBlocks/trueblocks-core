@@ -3,7 +3,7 @@ pinMan --compare
 
   Invalid option: --compare
 
-  Usage:    pinMan [-l|-i|-n|-p|-v|-h]  
+  Usage:    pinMan [-l|-i|-n|-p|-v|-h]
   Purpose:  Manage pinned index of appearances and associated Bloom filters.
 
   Where:

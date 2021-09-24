@@ -4,7 +4,7 @@ chifra logs argc: 4 [1:--help] [2:--verbose] [3:2]
 chifra logs --help --verbose 2 
 PROG_NAME = [chifra logs]
 
-  Usage:    chifra logs [-t|-s|-a|-v|-h] <tx_id> [tx_id...]  
+  Usage:    chifra logs [-t|-s|-a|-v|-h] <tx_id> [tx_id...]
   Purpose:  Retrieve logs for the given transaction(s).
 
   Where:

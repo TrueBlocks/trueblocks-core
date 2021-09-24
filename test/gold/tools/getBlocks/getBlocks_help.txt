@@ -1,7 +1,7 @@
 getBlocks argc: 2 [1:-h] 
 getBlocks -h 
 
-  Usage:    getBlocks [-e|-U|-t|-a|-u|-n|-c|-o|-v|-h] <block> [block...]  
+  Usage:    getBlocks [-e|-U|-t|-a|-u|-n|-c|-o|-v|-h] <block> [block...]
   Purpose:  Retrieve one or more blocks from the chain or local cache.
 
   Where:

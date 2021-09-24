@@ -1,7 +1,7 @@
 pinMan argc: 2 [1:-h] 
 pinMan -h 
 
-  Usage:    pinMan [-l|-i|-n|-p|-v|-h]  
+  Usage:    pinMan [-l|-i|-n|-p|-v|-h]
   Purpose:  Manage pinned index of appearances and associated Bloom filters.
 
   Where:

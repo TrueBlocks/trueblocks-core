@@ -4,7 +4,7 @@ chifra receipts argc: 4 [1:--help] [2:--verbose] [3:2]
 chifra receipts --help --verbose 2 
 PROG_NAME = [chifra receipts]
 
-  Usage:    chifra receipts [-a|-v|-h] <tx_id> [tx_id...]  
+  Usage:    chifra receipts [-a|-v|-h] <tx_id> [tx_id...]
   Purpose:  Retrieve receipts for the given transaction(s).
 
   Where:

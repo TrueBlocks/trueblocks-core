@@ -4,7 +4,7 @@ chifra slurp argc: 4 [1:--help] [2:--verbose] [3:2]
 chifra slurp --help --verbose 2 
 PROG_NAME = [chifra slurp]
 
-  Usage:    chifra slurp [-t|-p|-v|-h] <address> [address...] [block...]  
+  Usage:    chifra slurp [-t|-p|-v|-h] <address> [address...] [block...]
   Purpose:  Fetch data from EtherScan for any address.
 
   Where:

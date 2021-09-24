@@ -3,7 +3,7 @@ getTraces .clink
 
   .clink does not appear to be a valid transaction index. Quitting...
 
-  Usage:    getTraces [-a|-f|-d|-c|-v|-h] <tx_id> [tx_id...]  
+  Usage:    getTraces [-a|-f|-d|-c|-v|-h] <tx_id> [tx_id...]
   Purpose:  Retrieve traces for the given transaction(s).
 
   Where:

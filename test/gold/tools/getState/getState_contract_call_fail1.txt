@@ -3,7 +3,7 @@ getState --call 0xa4f29fc548856180f6b1e319ee4d86715875!0x12065fe0 6523977-654000
 
   You must supply the address of a smart contract for the --call option. Quitting...
 
-  Usage:    getState [-p|-c|-n|-v|-h] <address> [address...] [block...]  
+  Usage:    getState [-p|-c|-n|-v|-h] <address> [address...] [block...]
   Purpose:  Retrieve account balance(s) for one or more addresses at given block(s).
 
   Where:

@@ -3,7 +3,7 @@ acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --first_block 100000 --las
 
   Please choose only one of --staging or --unripe. Quitting...
 
-  Usage:    acctExport [-p|-r|-A|-l|-t|-C|-a|-i|-R|-y|-U|-c|-e|-v|-h] <address> [address...] [topics] [fourbytes]  
+  Usage:    acctExport [-p|-r|-A|-l|-t|-C|-a|-i|-R|-y|-U|-c|-e|-v|-h] <address> [address...] [topics] [fourbytes]
   Purpose:  Export full detail of transactions for one or more addresses.
 
   Where:

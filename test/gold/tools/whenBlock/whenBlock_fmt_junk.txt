@@ -3,7 +3,7 @@ whenBlock 1001001 --fmt junk
 
   Export format (junk) must be one of [ json | txt | csv | api ]. Quitting...
 
-  Usage:    whenBlock [-l|-t|-v|-h] < block | date > [ block... | date... ]  
+  Usage:    whenBlock [-l|-t|-v|-h] < block | date > [ block... | date... ]
   Purpose:  Find block(s) based on date, blockNum, timestamp, or 'special'.
 
   Where:

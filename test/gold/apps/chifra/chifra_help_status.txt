@@ -4,7 +4,7 @@ chifra status argc: 4 [1:--help] [2:--verbose] [3:2]
 chifra status --help --verbose 2 
 PROG_NAME = [chifra status]
 
-  Usage:    chifra status [-d|-t|-v|-h] <mode> [mode...]  
+  Usage:    chifra status [-d|-t|-v|-h] <mode> [mode...]
   Purpose:  Report on the status of the TrueBlocks system.
 
   Where:

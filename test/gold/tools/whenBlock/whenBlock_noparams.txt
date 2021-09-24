@@ -1,7 +1,7 @@
 whenBlock argc: 1 
 whenBlock 
 
-  Usage:    whenBlock [-l|-t|-v|-h] < block | date > [ block... | date... ]  
+  Usage:    whenBlock [-l|-t|-v|-h] < block | date > [ block... | date... ]
   Purpose:  Find block(s) based on date, blockNum, timestamp, or 'special'.
 
   Where:

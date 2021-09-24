@@ -3,7 +3,7 @@ cacheStatus caches --types transactions --details --depth 4
 
   --depth parameter must be less than 4. Quitting...
 
-  Usage:    cacheStatus [-d|-t|-v|-h] <mode> [mode...]  
+  Usage:    cacheStatus [-d|-t|-v|-h] <mode> [mode...]
   Purpose:  Report on the status of the TrueBlocks system.
 
   Where:

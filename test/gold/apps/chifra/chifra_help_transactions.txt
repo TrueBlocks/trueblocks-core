@@ -4,7 +4,7 @@ chifra transactions argc: 4 [1:--help] [2:--verbose] [3:2]
 chifra transactions --help --verbose 2 
 PROG_NAME = [chifra transactions]
 
-  Usage:    chifra transactions [-a|-t|-u|-r|-o|-v|-h] <tx_id> [tx_id...]  
+  Usage:    chifra transactions [-a|-t|-u|-r|-o|-v|-h] <tx_id> [tx_id...]
   Purpose:  Retrieve one or more transactions from the chain or local cache.
 
   Where:

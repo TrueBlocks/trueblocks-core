@@ -3,7 +3,7 @@ chifra tags --help --verbose 2
 
   Unknown subcommand 'tags'. Quitting...
 
-  Usage:    chifra command  
+  Usage:    chifra command
   Purpose:  Access to all TrueBlocks tools (chifra <cmd> --help for more).
 
   Where:  

@@ -1,7 +1,7 @@
 dataUpgradeTest argc: 1 
 dataUpgradeTest 
 
-  Usage:    dataUpgradeTest [-v|-h] mode  
+  Usage:    dataUpgradeTest [-v|-h] mode
   Purpose:  Test upgrading binary data to new format.
         
   Where:

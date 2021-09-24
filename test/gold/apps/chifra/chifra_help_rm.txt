@@ -4,7 +4,7 @@ chifra monitors argc: 6 [1:--appearances] [2:--delete] [3:--help] [4:--verbose] 
 chifra monitors --appearances --delete --help --verbose 2 
 PROG_NAME = [chifra monitors]
 
-  Usage:    chifra monitors [-p|-r|-A|-l|-t|-C|-a|-i|-R|-y|-U|-c|-e|-v|-h] <address> [address...] [topics] [fourbytes]  
+  Usage:    chifra monitors [-p|-r|-A|-l|-t|-C|-a|-i|-R|-y|-U|-c|-e|-v|-h] <address> [address...] [topics] [fourbytes]
   Purpose:  Export full detail of transactions for one or more addresses.
 
   Where:

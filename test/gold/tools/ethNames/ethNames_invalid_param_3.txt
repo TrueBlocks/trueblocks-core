@@ -3,7 +3,7 @@ ethNames 0xbf4ed7b27f1d666546e30d74d50d173d20bca754 --pink --fmt txt
 
   Invalid option: --pink
 
-  Usage:    ethNames [-e|-m|-l|-c|-p|-n|-a|-s|-g|-v|-h] <term> [term...]  
+  Usage:    ethNames [-e|-m|-l|-c|-p|-n|-a|-s|-g|-v|-h] <term> [term...]
   Purpose:  Query addresses or names of well known accounts.
 
   Where:

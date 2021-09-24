@@ -3,7 +3,7 @@ getState --0x12
 
   Invalid option: --0x12
 
-  Usage:    getState [-p|-c|-n|-v|-h] <address> [address...] [block...]  
+  Usage:    getState [-p|-c|-n|-v|-h] <address> [address...] [block...]
   Purpose:  Retrieve account balance(s) for one or more addresses at given block(s).
 
   Where:

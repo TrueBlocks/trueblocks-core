@@ -3,7 +3,7 @@ getTraces 0x0012
 
   The argument '0x0012' is not properly formatted. Is it the right length? Quitting...
 
-  Usage:    getTraces [-a|-f|-d|-c|-v|-h] <tx_id> [tx_id...]  
+  Usage:    getTraces [-a|-f|-d|-c|-v|-h] <tx_id> [tx_id...]
   Purpose:  Retrieve traces for the given transaction(s).
 
   Where:

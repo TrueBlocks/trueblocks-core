@@ -1,7 +1,7 @@
 getTrans argc: 1 
 getTrans 
 
-  Usage:    getTrans [-a|-t|-u|-r|-o|-v|-h] <tx_id> [tx_id...]  
+  Usage:    getTrans [-a|-t|-u|-r|-o|-v|-h] <tx_id> [tx_id...]
   Purpose:  Retrieve one or more transactions from the chain or local cache.
 
   Where:

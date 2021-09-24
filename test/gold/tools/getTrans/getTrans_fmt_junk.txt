@@ -3,7 +3,7 @@ getTrans 2222222.0 2332332.0 --fmt junk
 
   Export format (junk) must be one of [ json | txt | csv | api ]. Quitting...
 
-  Usage:    getTrans [-a|-t|-u|-r|-o|-v|-h] <tx_id> [tx_id...]  
+  Usage:    getTrans [-a|-t|-u|-r|-o|-v|-h] <tx_id> [tx_id...]
   Purpose:  Retrieve one or more transactions from the chain or local cache.
 
   Where:

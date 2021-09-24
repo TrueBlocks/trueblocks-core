@@ -3,7 +3,7 @@ chifra not_a_mode
 
   Unknown subcommand 'not_a_mode'. Quitting...
 
-  Usage:    chifra command  
+  Usage:    chifra command
   Purpose:  Access to all TrueBlocks tools (chifra <cmd> --help for more).
 
   Where:  

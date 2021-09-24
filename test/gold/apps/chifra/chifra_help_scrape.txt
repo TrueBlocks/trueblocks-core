@@ -4,7 +4,7 @@ chifra scrape argc: 5 [1:--help] [2:--verbose] [3:2] [4:--scrape]
 chifra scrape --help --verbose 2 --scrape 
 PROG_NAME = [chifra scrape]
 
-  Usage:    chifra scrape [-p|-s|-v|-h]  
+  Usage:    chifra scrape [-p|-s|-v|-h]
   Purpose:  Scan the chain and update the TrueBlocks index of appearances.
 
   Where:

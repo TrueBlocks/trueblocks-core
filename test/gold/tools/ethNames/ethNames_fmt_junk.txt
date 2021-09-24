@@ -3,7 +3,7 @@ ethNames tip --expand --fmt junk
 
   Export format (junk) must be one of [ json | txt | csv | api ]. Quitting...
 
-  Usage:    ethNames [-e|-m|-l|-c|-p|-n|-a|-s|-g|-v|-h] <term> [term...]  
+  Usage:    ethNames [-e|-m|-l|-c|-p|-n|-a|-s|-g|-v|-h] <term> [term...]
   Purpose:  Query addresses or names of well known accounts.
 
   Where:

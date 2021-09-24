@@ -4,7 +4,7 @@ chifra blocks argc: 4 [1:--help] [2:--verbose] [3:2]
 chifra blocks --help --verbose 2 
 PROG_NAME = [chifra blocks]
 
-  Usage:    chifra blocks [-e|-U|-t|-a|-u|-n|-c|-o|-v|-h] <block> [block...]  
+  Usage:    chifra blocks [-e|-U|-t|-a|-u|-n|-c|-o|-v|-h] <block> [block...]
   Purpose:  Retrieve one or more blocks from the chain or local cache.
 
   Where:

@@ -3,7 +3,7 @@ getTrans 0x0012
 
   The argument '0x0012' is not properly formatted. Is it the right length? Quitting...
 
-  Usage:    getTrans [-a|-t|-u|-r|-o|-v|-h] <tx_id> [tx_id...]  
+  Usage:    getTrans [-a|-t|-u|-r|-o|-v|-h] <tx_id> [tx_id...]
   Purpose:  Retrieve one or more transactions from the chain or local cache.
 
   Where:

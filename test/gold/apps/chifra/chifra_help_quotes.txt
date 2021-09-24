@@ -4,7 +4,7 @@ chifra quotes argc: 4 [1:--help] [2:--verbose] [3:2]
 chifra quotes --help --verbose 2 
 PROG_NAME = [chifra quotes]
 
-  Usage:    chifra quotes [-f|-p|-a|-e|-v|-h]  
+  Usage:    chifra quotes [-f|-p|-a|-e|-v|-h]
   Purpose:  Freshen and/or display Ethereum price data. This tool has been deprecated.
 
   Where:

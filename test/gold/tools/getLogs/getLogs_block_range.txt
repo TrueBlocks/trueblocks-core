@@ -3,7 +3,7 @@ getLogs 1718400-1718420
 
   1718400-1718420 does not appear to be a valid transaction index. Quitting...
 
-  Usage:    getLogs [-t|-s|-a|-v|-h] <tx_id> [tx_id...]  
+  Usage:    getLogs [-t|-s|-a|-v|-h] <tx_id> [tx_id...]
   Purpose:  Retrieve logs for the given transaction(s).
 
   Where:

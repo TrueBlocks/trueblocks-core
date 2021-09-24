@@ -4,7 +4,7 @@ chifra traces argc: 4 [1:--help] [2:--verbose] [3:2]
 chifra traces --help --verbose 2 
 PROG_NAME = [chifra traces]
 
-  Usage:    chifra traces [-a|-f|-d|-c|-v|-h] <tx_id> [tx_id...]  
+  Usage:    chifra traces [-a|-f|-d|-c|-v|-h] <tx_id> [tx_id...]
   Purpose:  Retrieve traces for the given transaction(s).
 
   Where:

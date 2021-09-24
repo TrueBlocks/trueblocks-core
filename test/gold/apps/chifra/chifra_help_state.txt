@@ -4,7 +4,7 @@ chifra state argc: 4 [1:--help] [2:--verbose] [3:2]
 chifra state --help --verbose 2 
 PROG_NAME = [chifra state]
 
-  Usage:    chifra state [-p|-c|-n|-v|-h] <address> [address...] [block...]  
+  Usage:    chifra state [-p|-c|-n|-v|-h] <address> [address...] [block...]
   Purpose:  Retrieve account balance(s) for one or more addresses at given block(s).
 
   Where:

@@ -1,7 +1,7 @@
 chifra argc: 2 [1:-h] 
 chifra -h 
 
-  Usage:    chifra command  
+  Usage:    chifra command
   Purpose:  Access to all TrueBlocks tools (chifra <cmd> --help for more).
 
   Where:  

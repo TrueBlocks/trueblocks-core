@@ -1,7 +1,7 @@
 getState argc: 2 [1:--help] 
 getState --help 
 
-  Usage:    getState [-p|-c|-n|-v|-h] <address> [address...] [block...]  
+  Usage:    getState [-p|-c|-n|-v|-h] <address> [address...] [block...]
   Purpose:  Retrieve account balance(s) for one or more addresses at given block(s).
 
   Where:

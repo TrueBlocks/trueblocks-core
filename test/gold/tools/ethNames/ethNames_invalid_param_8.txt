@@ -3,7 +3,7 @@ ethNames 0xb6 torj --verbosez --fmt txt
 
   Invalid option: -z
 
-  Usage:    ethNames [-e|-m|-l|-c|-p|-n|-a|-s|-g|-v|-h] <term> [term...]  
+  Usage:    ethNames [-e|-m|-l|-c|-p|-n|-a|-s|-g|-v|-h] <term> [term...]
   Purpose:  Query addresses or names of well known accounts.
 
   Where:

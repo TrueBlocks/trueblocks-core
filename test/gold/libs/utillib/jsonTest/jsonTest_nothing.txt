@@ -3,7 +3,7 @@ jsonTest
 
   You must supply a filename to test. Quitting...
 
-  Usage:    jsonTest [-w|-v|-h] <file> [file...]  
+  Usage:    jsonTest [-w|-v|-h] <file> [file...]
   Purpose:  Test the json parsing facility in TrueBlocks.
         
   Where:

@@ -3,7 +3,7 @@ ethslurp --pank
 
   Invalid option: --pank
 
-  Usage:    ethslurp [-t|-p|-v|-h] <address> [address...] [block...]  
+  Usage:    ethslurp [-t|-p|-v|-h] <address> [address...] [block...]
   Purpose:  Fetch data from EtherScan for any address.
 
   Where:

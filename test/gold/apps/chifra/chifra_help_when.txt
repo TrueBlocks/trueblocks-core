@@ -4,7 +4,7 @@ chifra when argc: 4 [1:--help] [2:--verbose] [3:2]
 chifra when --help --verbose 2 
 PROG_NAME = [chifra when]
 
-  Usage:    chifra when [-l|-t|-v|-h] < block | date > [ block... | date... ]  
+  Usage:    chifra when [-l|-t|-v|-h] < block | date > [ block... | date... ]
   Purpose:  Find block(s) based on date, blockNum, timestamp, or 'special'.
 
   Where:

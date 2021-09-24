@@ -1,7 +1,7 @@
 displayStrsTest argc: 1 
 displayStrsTest 
 
-  Usage:    displayStrsTest [-v|-h] mode  
+  Usage:    displayStrsTest [-v|-h] mode
   Purpose:  Test upgrading binary data to new format.
         
   Where:

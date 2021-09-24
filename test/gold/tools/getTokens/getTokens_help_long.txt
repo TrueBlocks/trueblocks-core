@@ -1,7 +1,7 @@
 getTokens argc: 2 [1:--help] 
 getTokens --help 
 
-  Usage:    getTokens [-p|-b|-n|-v|-h] <address> <address> [address...] [block...]  
+  Usage:    getTokens [-p|-b|-n|-v|-h] <address> <address> [address...] [block...]
   Purpose:  Retrieve token balance(s) for one or more addresses at given block(s).
 
   Where:

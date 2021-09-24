@@ -3,7 +3,7 @@ ethNames --owned --no_header
 
   Invalid option: --owned
 
-  Usage:    ethNames [-e|-m|-l|-c|-p|-n|-a|-s|-g|-v|-h] <term> [term...]  
+  Usage:    ethNames [-e|-m|-l|-c|-p|-n|-a|-s|-g|-v|-h] <term> [term...]
   Purpose:  Query addresses or names of well known accounts.
 
   Where:

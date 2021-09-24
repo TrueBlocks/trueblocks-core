@@ -6,7 +6,7 @@ Cmd: 0xda2f27fffb36c90c74fc53bd8b721074e87203c727640c95c4c802296e3bf8ad --parity
 
   Invalid option: --bad
 
-  Usage:    getTraces [-a|-f|-d|-c|-v|-h] <tx_id> [tx_id...]  
+  Usage:    getTraces [-a|-f|-d|-c|-v|-h] <tx_id> [tx_id...]
   Purpose:  Retrieve traces for the given transaction(s).
 
   Where:

@@ -1,7 +1,7 @@
 acctExport argc: 2 [1:-h] 
 acctExport -h 
 
-  Usage:    acctExport [-p|-r|-A|-l|-t|-C|-a|-i|-R|-y|-U|-c|-e|-v|-h] <address> [address...] [topics] [fourbytes]  
+  Usage:    acctExport [-p|-r|-A|-l|-t|-C|-a|-i|-R|-y|-U|-c|-e|-v|-h] <address> [address...] [topics] [fourbytes]
   Purpose:  Export full detail of transactions for one or more addresses.
 
   Where:

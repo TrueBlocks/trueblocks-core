@@ -3,7 +3,7 @@ getBlocks 1590000 4000001-4000002 1001001-1001100 1234567
 
   Specify only a single block range at a time. Quitting...
 
-  Usage:    getBlocks [-e|-U|-t|-a|-u|-n|-c|-o|-v|-h] <block> [block...]  
+  Usage:    getBlocks [-e|-U|-t|-a|-u|-n|-c|-o|-v|-h] <block> [block...]
   Purpose:  Retrieve one or more blocks from the chain or local cache.
 
   Where:

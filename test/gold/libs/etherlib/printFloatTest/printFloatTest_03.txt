@@ -3,7 +3,7 @@ printFloatTest -t 3
 
   Invalid argument: -t:3. Quitting...
 
-  Usage:    printFloatTest [-t|-v|-h]  
+  Usage:    printFloatTest [-t|-v|-h]
   Purpose:  This program tests floating point printing and conversions.
         
   Where:

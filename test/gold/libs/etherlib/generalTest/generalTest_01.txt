@@ -3,7 +3,7 @@ generalTest -t
 
   Invalid option: -t
 
-  Usage:    generalTest [-v|-h]  
+  Usage:    generalTest [-v|-h]
   Purpose:  Testing code for the general functionality of etherlib.
         
   Where:
