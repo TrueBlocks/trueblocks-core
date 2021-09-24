@@ -16,6 +16,7 @@ package cmd
 import (
 	"fmt"
 	"os"
+	"os/exec"
 
 	"github.com/spf13/cobra"
 
@@ -135,6 +136,14 @@ func getHelpTextRoot() string {
 
   Powered by TrueBlocks
 `
+}
+
+func PassItOn(path string, options string) {
+	command := exec.Command(path, options)
+	command.Env = append(os.Environ(), "API_MODE=true")
+	out, _ := command.Output()
+	output := string(out[:])
+	fmt.Printf("%s", output)
 }
 
 // enums

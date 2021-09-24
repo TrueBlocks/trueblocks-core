@@ -14,9 +14,7 @@ package cmd
  *-------------------------------------------------------------------------------------------*/
 
 import (
-	"fmt"
 	"os"
-	"os/exec"
 	"strconv"
 
 	"github.com/spf13/cobra"
@@ -58,14 +56,6 @@ func init() {
 	abisCmd.Flags().BoolVarP(&abiOpts.classes, "classes", "c", false, "generate classDefinitions folder and class definitions")
 
 	rootCmd.AddCommand(abisCmd)
-}
-
-func PassItOn(path string, options string) {
-	command := exec.Command(path, options)
-	command.Env = append(os.Environ(), "API_MODE=true")
-	out, _ := command.Output()
-	output := string(out[:])
-	fmt.Printf("%s", output)
 }
 
 func runAbi(cmd *cobra.Command, args []string) {
