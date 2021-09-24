@@ -32,23 +32,23 @@ static const COption params[] = {
     COption("articulate", "a", "", OPT_SWITCH, "articulate transactions, traces, logs, and outputs"),
     COption("cache_txs", "i", "", OPT_SWITCH, "write transactions to the cache (see notes)"),
     COption("cache_traces", "R", "", OPT_SWITCH, "write traces to the cache (see notes)"),
-    COption("freshen", "f", "", OPT_HIDDEN | OPT_SWITCH, "freshen but do not print the exported data"),
     COption("factory", "y", "", OPT_SWITCH, "scan for contract creations from the given address(es) and report address of those contracts"),  // NOLINT
     COption("emitter", "", "", OPT_SWITCH, "for log export only, export only if one of the given export addresses emitted the event"),  // NOLINT
     COption("source", "", "list<addr>", OPT_FLAG, "for log export only, export only one of these addresses emitted the event"),  // NOLINT
     COption("relevant", "", "", OPT_SWITCH, "for log and accounting export only, if true export only logs relevant to one of the given export addresses"),  // NOLINT
     COption("count", "U", "", OPT_SWITCH, "only available for --appearances mode, if present return only the number of records"),  // NOLINT
-    COption("first_block", "F", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive)"),
-    COption("last_block", "L", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive)"),
     COption("first_record", "c", "<blknum>", OPT_FLAG, "the first record to process"),
     COption("max_records", "e", "<blknum>", OPT_FLAG, "the maximum number of records to process before reporting"),
     COption("clean", "", "", OPT_SWITCH, "clean (i.e. remove duplicate appearances) from all existing monitors"),
+    COption("freshen", "f", "", OPT_HIDDEN | OPT_SWITCH, "freshen but do not print the exported data"),
     COption("staging", "s", "", OPT_HIDDEN | OPT_SWITCH, "enable search of staging (not yet finalized) folder"),
     COption("unripe", "u", "", OPT_HIDDEN | OPT_SWITCH, "enable search of unripe (neither staged nor finalized) folder (assumes --staging)"),  // NOLINT
     COption("load", "", "<string>", OPT_HIDDEN | OPT_FLAG, "a comma separated list of dynamic traversers to load"),
     COption("reversed", "", "", OPT_HIDDEN | OPT_SWITCH, "produce results in reverse chronological order"),
     COption("by_date", "b", "", OPT_HIDDEN | OPT_SWITCH, "produce results sorted by date (default is to report by address)"),  // NOLINT
     COption("summarize_by", "z", "enum[yearly|quarterly|monthly|weekly|daily|hourly|blockly|tx]", OPT_HIDDEN | OPT_FLAG, "for --accounting only, summarize reconciliations by this time period"),  // NOLINT
+    COption("first_block", "F", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive)"),
+    COption("last_block", "L", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive)"),
     COption("", "", "", OPT_DESCRIPTION, "Export full detail of transactions for one or more addresses."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -120,9 +120,6 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-R" || arg == "--cache_traces") {
             cache_traces = true;
 
-        } else if (arg == "-f" || arg == "--freshen") {
-            freshen = true;
-
         } else if (arg == "-y" || arg == "--factory") {
             factory = true;
 
@@ -142,18 +139,6 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-U" || arg == "--count") {
             count = true;
 
-        } else if (startsWith(arg, "-F:") || startsWith(arg, "--first_block:")) {
-            if (!confirmBlockNum("first_block", first_block, arg, latest))
-                return false;
-        } else if (arg == "-F" || arg == "--first_block") {
-            return flag_required("first_block");
-
-        } else if (startsWith(arg, "-L:") || startsWith(arg, "--last_block:")) {
-            if (!confirmBlockNum("last_block", last_block, arg, latest))
-                return false;
-        } else if (arg == "-L" || arg == "--last_block") {
-            return flag_required("last_block");
-
         } else if (startsWith(arg, "-c:") || startsWith(arg, "--first_record:")) {
             if (!confirmBlockNum("first_record", first_record, arg, latest))
                 return false;
@@ -168,6 +153,9 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "--clean") {
             clean = true;
+
+        } else if (arg == "-f" || arg == "--freshen") {
+            freshen = true;
 
         } else if (arg == "-s" || arg == "--staging") {
             staging = true;
@@ -191,6 +179,18 @@ bool COptions::parseArguments(string_q& command) {
                 return false;
         } else if (arg == "-z" || arg == "--summarize_by") {
             return flag_required("summarize_by");
+
+        } else if (startsWith(arg, "-F:") || startsWith(arg, "--first_block:")) {
+            if (!confirmBlockNum("first_block", first_block, arg, latest))
+                return false;
+        } else if (arg == "-F" || arg == "--first_block") {
+            return flag_required("first_block");
+
+        } else if (startsWith(arg, "-L:") || startsWith(arg, "--last_block:")) {
+            if (!confirmBlockNum("last_block", last_block, arg, latest))
+                return false;
+        } else if (arg == "-L" || arg == "--last_block") {
+            return flag_required("last_block");
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -227,25 +227,25 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("articulate", articulate);
     LOG_TEST_BOOL("cache_txs", cache_txs);
     LOG_TEST_BOOL("cache_traces", cache_traces);
-    LOG_TEST_BOOL("skip_ddos", skip_ddos);
-    LOG_TEST("max_traces", max_traces, (max_traces == 250));
-    LOG_TEST_BOOL("freshen", freshen);
     LOG_TEST_BOOL("factory", factory);
     LOG_TEST_BOOL("emitter", emitter);
     LOG_TEST_LIST("source", source, source.empty());
     LOG_TEST_BOOL("relevant", relevant);
     LOG_TEST_BOOL("count", count);
-    LOG_TEST("first_block", first_block, (first_block == 0));
-    LOG_TEST("last_block", last_block, (last_block == NOPOS));
     LOG_TEST("first_record", first_record, (first_record == 0));
     LOG_TEST("max_records", max_records, (max_records == (isApiMode() ? 250 : NOPOS)));
     LOG_TEST_BOOL("clean", clean);
+    LOG_TEST_BOOL("freshen", freshen);
     LOG_TEST_BOOL("staging", staging);
     LOG_TEST_BOOL("unripe", unripe);
     LOG_TEST("load", load, (load == ""));
     LOG_TEST_BOOL("reversed", reversed);
     LOG_TEST_BOOL("by_date", by_date);
     LOG_TEST("summarize_by", summarize_by, (summarize_by == ""));
+    LOG_TEST_BOOL("skip_ddos", skip_ddos);
+    LOG_TEST("max_traces", max_traces, (max_traces == 250));
+    LOG_TEST("first_block", first_block, (first_block == 0));
+    LOG_TEST("last_block", last_block, (last_block == NOPOS));
     // END_DEBUG_DISPLAY
 
     if (Mocked(""))
@@ -447,8 +447,6 @@ void COptions::Init(void) {
     // clang-format off
     cache_txs = getGlobalConfig("acctExport")->getConfigBool("settings", "cache_txs", false);
     cache_traces = getGlobalConfig("acctExport")->getConfigBool("settings", "cache_traces", false);
-    skip_ddos = getGlobalConfig("acctExport")->getConfigBool("settings", "skip_ddos", true);
-    max_traces = getGlobalConfig("acctExport")->getConfigInt("settings", "max_traces", 250);
     // clang-format on
     factory = false;
     emitter = false;
@@ -464,6 +462,10 @@ void COptions::Init(void) {
     reversed = false;
     by_date = false;
     summarize_by = "";
+    // clang-format off
+    skip_ddos = getGlobalConfig("acctExport")->getConfigBool("settings", "skip_ddos", true);
+    max_traces = getGlobalConfig("acctExport")->getConfigInt("settings", "max_traces", 250);
+    // clang-format on
     // END_CODE_INIT
 
     bp = getBlockProgress(BP_ALL);

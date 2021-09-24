@@ -32,7 +32,7 @@ By default, the results of the extraction are delivered to your console, however
 | &#8208;R | &#8208;&#8208;cache_traces             | write traces to the cache (see notes)                                                                          |
 | &#8208;y | &#8208;&#8208;factory                  | scan for contract creations from the given address(es)<br/>and report address of those contracts               |
 |          | &#8208;&#8208;emitter                  | for log export only, export only if one of the given<br/>export addresses emitted the event                    |
-|          | &#8208;&#8208;source &lt;addr&gt;      | for log export only, export only one of these addresses<br/>emitted the event                                  |
+|          | &#8208;&#8208;source string            | for log export only, export only one of these addresses<br/>emitted the event                                  |
 |          | &#8208;&#8208;relevant                 | for log and accounting export only, if true export<br/>only logs relevant to one of the given export addresses |
 | &#8208;U | &#8208;&#8208;count                    | only available for --appearances mode, if present return<br/>only the number of records                        |
 | &#8208;c | &#8208;&#8208;first_record &lt;num&gt; | the first record to process                                                                                    |

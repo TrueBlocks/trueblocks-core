@@ -2,7 +2,7 @@
 title: "Accounts"
 description: ""
 lead: ""
-date: 2021-09-19T21:39:18
+date: 2021-09-24T07:16:59
 lastmod:
   - :git
   - lastmod
@@ -80,7 +80,7 @@ By default, the results of the extraction are delivered to your console, however
 | &#8208;R | &#8208;&#8208;cache_traces             | write traces to the cache (see notes)                                                                          |
 | &#8208;y | &#8208;&#8208;factory                  | scan for contract creations from the given address(es)<br/>and report address of those contracts               |
 |          | &#8208;&#8208;emitter                  | for log export only, export only if one of the given<br/>export addresses emitted the event                    |
-|          | &#8208;&#8208;source &lt;addr&gt;      | for log export only, export only one of these addresses<br/>emitted the event                                  |
+|          | &#8208;&#8208;source string            | for log export only, export only one of these addresses<br/>emitted the event                                  |
 |          | &#8208;&#8208;relevant                 | for log and accounting export only, if true export<br/>only logs relevant to one of the given export addresses |
 | &#8208;U | &#8208;&#8208;count                    | only available for --appearances mode, if present return<br/>only the number of records                        |
 | &#8208;c | &#8208;&#8208;first_record &lt;num&gt; | the first record to process                                                                                    |
@@ -195,15 +195,15 @@ The `--sol` option will convert a single Solidity file found in the current fold
 `Where:`
 
 {{<td>}}
-|          | Option                         | Description                                                                         |
-| -------- | ------------------------------ | ----------------------------------------------------------------------------------- |
-|          | addrs                          | list of one or more smart contracts whose ABI to grab<br/>from EtherScan (required) |
-| &#8208;k | &#8208;&#8208;known            | load common 'known' ABIs from cache                                                 |
-| &#8208;s | &#8208;&#8208;sol &lt;str&gt;  | file name of .sol file from which to create a new known<br/>abi (without .sol)      |
-| &#8208;f | &#8208;&#8208;find &lt;str&gt; | try to search for a function declaration given a four<br/>byte code                 |
-| &#8208;x | &#8208;&#8208;fmt &lt;val&gt;  | export format, one of [none, json, txt, csv, api]                                   |
-| &#8208;v | &#8208;&#8208;verbose          | set verbose level (optional level defaults to 1)                                    |
-| &#8208;h | &#8208;&#8208;help             | display this help screen                                                            |
+|          | Option                        | Description                                                                         |
+| -------- | ----------------------------- | ----------------------------------------------------------------------------------- |
+|          | addrs                         | list of one or more smart contracts whose ABI to grab<br/>from EtherScan (required) |
+| &#8208;k | &#8208;&#8208;known           | load common 'known' ABIs from cache                                                 |
+| &#8208;s | &#8208;&#8208;sol string      | file name of .sol file from which to create a new known<br/>abi (without .sol)      |
+| &#8208;f | &#8208;&#8208;find string     | try to search for a function declaration given a four<br/>byte code                 |
+| &#8208;x | &#8208;&#8208;fmt &lt;val&gt; | export format, one of [none, json, txt, csv, api]                                   |
+| &#8208;v | &#8208;&#8208;verbose         | set verbose level (optional level defaults to 1)                                    |
+| &#8208;h | &#8208;&#8208;help            | display this help screen                                                            |
 {{</td>}}
 
 `Notes:`

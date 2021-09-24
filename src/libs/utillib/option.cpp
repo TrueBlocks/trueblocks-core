@@ -402,10 +402,8 @@ COption::COption(const string_q& ln, const string_q& sn, const string_q& t, size
         permitted = "<val>";
     }
     // TODO(tjayrush): chifra-new weird conversions needed?
-    if (isGoHelp()) {
-        if (permitted == "<str>" || permitted == "<hash>" || permitted == "<addr>")
-            permitted = "string";
-    }
+    if (permitted == "<str>" || permitted == "<hash>" || permitted == "<addr>")
+        permitted = "string";
 
     hotKey = (sn.empty() ? "" : "-" + sn);
     if (ln.empty())
@@ -447,7 +445,9 @@ string_q COption::getHotKey(void) const {
 //--------------------------------------------------------------------------------
 string_q COption::oneDescription(size_t* widths) const {
     ostringstream os;
-    if (isGoHelp()) {
+    if (is_readme) {
+        return markDownRow(getHotKey(), getLongKey(), getDescription(), widths);
+    } else {
         if (is_positional)
             return "";
         // TODO(tjayrush): Weird chifra-new code
@@ -455,20 +455,10 @@ string_q COption::oneDescription(size_t* widths) const {
             return "";
         os << "  ";
         os << getHotKey();
-        os << ", ";
+        os << (getHotKey().empty() ? "    " : ", ");
         os << padRight(getLongKey().empty() ? "" : getLongKey(), widths[1] + 3);
-    } else if (is_readme) {
-        return markDownRow(getHotKey(), getLongKey(), getDescription(), widths);
-    } else {
-        os << "    ";
-        if (is_positional) {
-            os << padRight(getLongKey(), max(size_t(22), widths[0] + widths[1]));
-        } else {
-            os << padRight(getHotKey(), max(size_t(3), widths[0]));
-            os << padRight(getLongKey().empty() ? "" : " (" + getLongKey() + ")", max(size_t(19), widths[1]));
-        }
     }
-    os << getDescription() << endl;
+    os << getDescription() << (is_hidden ? " (hidden)" : "") << endl;
     return os.str();
 }
 

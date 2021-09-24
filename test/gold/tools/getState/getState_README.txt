@@ -16,7 +16,7 @@ getState --readme
 | &#8208;c | &#8208;&#8208;changes           | only report a balance when it changes from one block<br/>to the next                                                       |
 | &#8208;n | &#8208;&#8208;no_zero           | suppress the display of zero balance accounts                                                                              |
 | ###      | Hidden options                  |                                                                                                                            |
-| &#8208;a | &#8208;&#8208;call &lt;str&gt;  | a bang-separated string consisting of address!4-byte!bytes                                                                 |
+| &#8208;a | &#8208;&#8208;call string       | a bang-separated string consisting of address!4-byte!bytes                                                                 |
 | ###      | Hidden options                  |                                                                                                                            |
 | &#8208;x | &#8208;&#8208;fmt &lt;val&gt;   | export format, one of [none, json, txt, csv, api]                                                                          |
 | &#8208;v | &#8208;&#8208;verbose           | set verbose level (optional level defaults to 1)                                                                           |

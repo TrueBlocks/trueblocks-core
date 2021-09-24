@@ -11,15 +11,15 @@ The `--articulate` option fetches the ABI from each encountered smart contract t
 
 `Where:`
 
-|          | Option                            | Description                                                                  |
-| -------- | --------------------------------- | ---------------------------------------------------------------------------- |
-|          | transactions                      | a space-separated list of one or more transaction identifiers<br/>(required) |
-| &#8208;t | &#8208;&#8208;topic &lt;hash&gt;  | filter by one or more log topics (not implemented)                           |
-| &#8208;s | &#8208;&#8208;source &lt;addr&gt; | export only if the given address emitted the event<br/>(not implemented)     |
-| &#8208;a | &#8208;&#8208;articulate          | articulate the retrieved data if ABIs can be found                           |
-| &#8208;x | &#8208;&#8208;fmt &lt;val&gt;     | export format, one of [none, json, txt, csv, api]                            |
-| &#8208;v | &#8208;&#8208;verbose             | set verbose level (optional level defaults to 1)                             |
-| &#8208;h | &#8208;&#8208;help                | display this help screen                                                     |
+|          | Option                        | Description                                                                  |
+| -------- | ----------------------------- | ---------------------------------------------------------------------------- |
+|          | transactions                  | a space-separated list of one or more transaction identifiers<br/>(required) |
+| &#8208;t | &#8208;&#8208;topic string    | filter by one or more log topics (not implemented)                           |
+| &#8208;s | &#8208;&#8208;source string   | export only if the given address emitted the event<br/>(not implemented)     |
+| &#8208;a | &#8208;&#8208;articulate      | articulate the retrieved data if ABIs can be found                           |
+| &#8208;x | &#8208;&#8208;fmt &lt;val&gt; | export format, one of [none, json, txt, csv, api]                            |
+| &#8208;v | &#8208;&#8208;verbose         | set verbose level (optional level defaults to 1)                             |
+| &#8208;h | &#8208;&#8208;help            | display this help screen                                                     |
 
 `Notes:`
 

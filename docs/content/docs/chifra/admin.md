@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2021-09-19T21:39:18
+date: 2021-09-24T09:36:12
 lastmod:
   - :git
   - lastmod
@@ -92,7 +92,6 @@ The scraper can scrape either the index only, previously created monitors only, 
 | -------- | ---------------------------------- | ----------------------------------------------------------------------------------- |
 | &#8208;p | &#8208;&#8208;pin                  | pin new chunks (and blooms) to IPFS (requires Pinata<br/>key and running IPFS node) |
 | &#8208;s | &#8208;&#8208;sleep &lt;double&gt; | the number of seconds to sleep between passes (default<br/>14)                      |
-| &#8208;x | &#8208;&#8208;fmt &lt;val&gt;      | export format, one of [none, json, txt, csv, api]                                   |
 | &#8208;v | &#8208;&#8208;verbose              | set verbose level (optional level defaults to 1)                                    |
 | &#8208;h | &#8208;&#8208;help                 | display this help screen                                                            |
 {{</td>}}

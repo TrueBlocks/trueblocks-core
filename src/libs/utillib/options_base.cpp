@@ -77,6 +77,7 @@ bool COptionsBase::prePrepareArguments(CStringArray& separatedArgs_, int argCoun
             if (cleaned_.size())
                 cleaned_.pop_back();
         } else if (arg == "--readme") {
+            setenv("GO_HELP", "false", true);
             isReadme = true;
             cleaned_.push_back(arg);
         } else {

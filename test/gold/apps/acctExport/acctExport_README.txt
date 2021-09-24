@@ -24,7 +24,7 @@ acctExport --readme
 | &#8208;R | &#8208;&#8208;cache_traces             | write traces to the cache (see notes)                                                                                                                 |
 | &#8208;y | &#8208;&#8208;factory                  | scan for contract creations from the given address(es)<br/>and report address of those contracts                                                      |
 |          | &#8208;&#8208;emitter                  | for log export only, export only if one of the given<br/>export addresses emitted the event                                                           |
-|          | &#8208;&#8208;source &lt;addr&gt;      | for log export only, export only one of these addresses<br/>emitted the event                                                                         |
+|          | &#8208;&#8208;source string            | for log export only, export only one of these addresses<br/>emitted the event                                                                         |
 |          | &#8208;&#8208;relevant                 | for log and accounting export only, if true export<br/>only logs relevant to one of the given export addresses                                        |
 | &#8208;U | &#8208;&#8208;count                    | only available for --appearances mode, if present return<br/>only the number of records                                                               |
 | &#8208;c | &#8208;&#8208;first_record &lt;num&gt; | the first record to process                                                                                                                           |
@@ -32,14 +32,14 @@ acctExport --readme
 |          | &#8208;&#8208;clean                    | clean (i.e. remove duplicate appearances) from all<br/>existing monitors                                                                              |
 | ###      | Hidden options                         |                                                                                                                                                       |
 | &#8208;f | &#8208;&#8208;freshen                  | freshen but do not print the exported data                                                                                                            |
-| &#8208;F | &#8208;&#8208;first_block &lt;num&gt;  | first block to process (inclusive)                                                                                                                    |
-| &#8208;L | &#8208;&#8208;last_block &lt;num&gt;   | last block to process (inclusive)                                                                                                                     |
 | &#8208;s | &#8208;&#8208;staging                  | enable search of staging (not yet finalized) folder                                                                                                   |
 | &#8208;u | &#8208;&#8208;unripe                   | enable search of unripe (neither staged nor finalized)<br/>folder (assumes --staging)                                                                 |
-|          | &#8208;&#8208;load &lt;str&gt;         | a comma separated list of dynamic traversers to load                                                                                                  |
+|          | &#8208;&#8208;load string              | a comma separated list of dynamic traversers to load                                                                                                  |
 |          | &#8208;&#8208;reversed                 | produce results in reverse chronological order                                                                                                        |
 | &#8208;b | &#8208;&#8208;by_date                  | produce results sorted by date (default is to report<br/>by address)                                                                                  |
 | &#8208;z | &#8208;&#8208;summarize_by &lt;val&gt; | for --accounting only, summarize reconciliations by<br/>this time period, one of [yearly, quarterly, monthly,<br/>weekly, daily, hourly, blockly, tx] |
+| &#8208;F | &#8208;&#8208;first_block &lt;num&gt;  | first block to process (inclusive)                                                                                                                    |
+| &#8208;L | &#8208;&#8208;last_block &lt;num&gt;   | last block to process (inclusive)                                                                                                                     |
 | ###      | Hidden options                         |                                                                                                                                                       |
 | &#8208;x | &#8208;&#8208;fmt &lt;val&gt;          | export format, one of [none, json, txt, csv, api]                                                                                                     |
 | &#8208;v | &#8208;&#8208;verbose                  | set verbose level (optional level defaults to 1)                                                                                                      |

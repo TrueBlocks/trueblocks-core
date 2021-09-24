@@ -2,7 +2,7 @@
 title: "Chain Data"
 description: ""
 lead: ""
-date: 2021-09-22T18:38:44
+date: 2021-09-24T09:33:23
 lastmod:
   - :git
   - lastmod
@@ -146,15 +146,15 @@ The `--articulate` option fetches the ABI from each encountered smart contract t
 `Where:`
 
 {{<td>}}
-|          | Option                            | Description                                                                  |
-| -------- | --------------------------------- | ---------------------------------------------------------------------------- |
-|          | transactions                      | a space-separated list of one or more transaction identifiers<br/>(required) |
-| &#8208;t | &#8208;&#8208;topic &lt;hash&gt;  | filter by one or more log topics (not implemented)                           |
-| &#8208;s | &#8208;&#8208;source &lt;addr&gt; | export only if the given address emitted the event<br/>(not implemented)     |
-| &#8208;a | &#8208;&#8208;articulate          | articulate the retrieved data if ABIs can be found                           |
-| &#8208;x | &#8208;&#8208;fmt &lt;val&gt;     | export format, one of [none, json, txt, csv, api]                            |
-| &#8208;v | &#8208;&#8208;verbose             | set verbose level (optional level defaults to 1)                             |
-| &#8208;h | &#8208;&#8208;help                | display this help screen                                                     |
+|          | Option                        | Description                                                                  |
+| -------- | ----------------------------- | ---------------------------------------------------------------------------- |
+|          | transactions                  | a space-separated list of one or more transaction identifiers<br/>(required) |
+| &#8208;t | &#8208;&#8208;topic string    | filter by one or more log topics (not implemented)                           |
+| &#8208;s | &#8208;&#8208;source string   | export only if the given address emitted the event<br/>(not implemented)     |
+| &#8208;a | &#8208;&#8208;articulate      | articulate the retrieved data if ABIs can be found                           |
+| &#8208;x | &#8208;&#8208;fmt &lt;val&gt; | export format, one of [none, json, txt, csv, api]                            |
+| &#8208;v | &#8208;&#8208;verbose         | set verbose level (optional level defaults to 1)                             |
+| &#8208;h | &#8208;&#8208;help            | display this help screen                                                     |
 {{</td>}}
 
 `Notes:`
@@ -184,16 +184,16 @@ The `--filter` option calls your node's `trace_filter` routine (if available) us
 `Where:`
 
 {{<td>}}
-|          | Option                           | Description                                                                  |
-| -------- | -------------------------------- | ---------------------------------------------------------------------------- |
-|          | transactions                     | a space-separated list of one or more transaction identifiers<br/>(required) |
-| &#8208;a | &#8208;&#8208;articulate         | articulate the retrieved data if ABIs can be found                           |
-| &#8208;f | &#8208;&#8208;filter &lt;str&gt; | call the node's trace_filter routine with bang-seperated<br/>filter          |
-| &#8208;d | &#8208;&#8208;statediff          | export state diff traces (not implemented)                                   |
-| &#8208;c | &#8208;&#8208;count              | show the number of traces for the transaction only<br/>(fast)                |
-| &#8208;x | &#8208;&#8208;fmt &lt;val&gt;    | export format, one of [none, json, txt, csv, api]                            |
-| &#8208;v | &#8208;&#8208;verbose            | set verbose level (optional level defaults to 1)                             |
-| &#8208;h | &#8208;&#8208;help               | display this help screen                                                     |
+|          | Option                        | Description                                                                  |
+| -------- | ----------------------------- | ---------------------------------------------------------------------------- |
+|          | transactions                  | a space-separated list of one or more transaction identifiers<br/>(required) |
+| &#8208;a | &#8208;&#8208;articulate      | articulate the retrieved data if ABIs can be found                           |
+| &#8208;f | &#8208;&#8208;filter string   | call the node's trace_filter routine with bang-seperated<br/>filter          |
+| &#8208;d | &#8208;&#8208;statediff       | export state diff traces (not implemented)                                   |
+| &#8208;c | &#8208;&#8208;count           | show the number of traces for the transaction only<br/>(fast)                |
+| &#8208;x | &#8208;&#8208;fmt &lt;val&gt; | export format, one of [none, json, txt, csv, api]                            |
+| &#8208;v | &#8208;&#8208;verbose         | set verbose level (optional level defaults to 1)                             |
+| &#8208;h | &#8208;&#8208;help            | display this help screen                                                     |
 {{</td>}}
 
 `Notes:`
@@ -229,14 +229,14 @@ The values for `date` and `time` are specified in JSON format. `hour`/`minute`/`
 `Where:`
 
 {{<td>}}
-|          | Option                        | Description                                                                       |
-| -------- | ----------------------------- | --------------------------------------------------------------------------------- |
-|          | blocks                        | one or more dates, block numbers, hashes, or special<br/>named blocks (see notes) |
-| &#8208;l | &#8208;&#8208;list            | export a list of the 'special' blocks                                             |
-| &#8208;t | &#8208;&#8208;timestamps      | ignore other options and generate timestamps only                                 |
-| &#8208;x | &#8208;&#8208;fmt &lt;val&gt; | export format, one of [none, json, txt, csv, api]                                 |
-| &#8208;v | &#8208;&#8208;verbose         | set verbose level (optional level defaults to 1)                                  |
-| &#8208;h | &#8208;&#8208;help            | display this help screen                                                          |
+|          | Option                        | Description                                                                                  |
+| -------- | ----------------------------- | -------------------------------------------------------------------------------------------- |
+|          | blocks                        | one or more dates, block numbers, hashes, or special<br/>named blocks (see notes) (required) |
+| &#8208;l | &#8208;&#8208;list            | export a list of the 'special' blocks                                                        |
+| &#8208;t | &#8208;&#8208;timestamps      | ignore other options and generate timestamps only                                            |
+| &#8208;x | &#8208;&#8208;fmt &lt;val&gt; | export format, one of [none, json, txt, csv, api]                                            |
+| &#8208;v | &#8208;&#8208;verbose         | set verbose level (optional level defaults to 1)                                             |
+| &#8208;h | &#8208;&#8208;help            | display this help screen                                                                     |
 {{</td>}}
 
 `Notes:`

@@ -20,7 +20,6 @@ import (
 	"strconv"
 
 	"github.com/spf13/cobra"
-	"github.com/spf13/pflag"
 )
 
 type abiOptionsType struct {
@@ -62,21 +61,14 @@ func init() {
 }
 
 func PassItOn(path string, options string) {
-	what := exec.Command(path, options)
-	what.Env = append(append(os.Environ(), "API_MODE=true"), "GO_HELP=true")
-	out, _ := what.Output()
+	command := exec.Command(path, options)
+	command.Env = append(os.Environ(), "API_MODE=true")
+	out, _ := command.Output()
 	output := string(out[:])
 	fmt.Printf("%s", output)
 }
 
-func fn(f *pflag.Flag) {
-	fmt.Printf("%v\n", f)
-}
-
 func runAbi(cmd *cobra.Command, args []string) {
-	fs := cmd.Flags()
-	fs.VisitAll(fn)
-
 	options := ""
 	for _, option := range args {
 		options += " " + option

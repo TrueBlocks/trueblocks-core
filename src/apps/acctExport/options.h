@@ -37,8 +37,6 @@ class COptions : public CAbiOptions {
     bool articulate;
     bool cache_txs;
     bool cache_traces;
-    bool skip_ddos;
-    uint64_t max_traces;
     bool factory;
     bool emitter;
     CAddressArray source;
@@ -53,6 +51,8 @@ class COptions : public CAbiOptions {
     bool reversed;
     bool by_date;
     string_q summarize_by;
+    bool skip_ddos;
+    uint64_t max_traces;
     // END_CODE_DECLARE
 
     CAppearanceArray_mon monApps;

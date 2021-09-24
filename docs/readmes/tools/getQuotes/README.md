@@ -14,7 +14,7 @@ The `chifra quotes` tool provides USD ($) price data to other tools and to the c
 | -------- | -------------------------------- | ---------------------------------------------------------------------------------------------- |
 | &#8208;f | &#8208;&#8208;freshen            | Freshen price database                                                                         |
 | &#8208;p | &#8208;&#8208;period &lt;val&gt; | increment of display, one of [5, 15, 30, 60, 120, 240,<br/>1440, 10080, hourly, daily, weekly] |
-| &#8208;a | &#8208;&#8208;pair &lt;str&gt;   | which price pair to freshen or list (see Poloniex)                                             |
+| &#8208;a | &#8208;&#8208;pair string        | which price pair to freshen or list (see Poloniex)                                             |
 | &#8208;e | &#8208;&#8208;feed &lt;val&gt;   | the feed for the price data, one of [poloniex, maker,<br/>tellor]                              |
 | &#8208;x | &#8208;&#8208;fmt &lt;val&gt;    | export format, one of [none, json, txt, csv, api]                                              |
 | &#8208;v | &#8208;&#8208;verbose            | set verbose level (optional level defaults to 1)                                               |

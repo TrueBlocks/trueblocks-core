@@ -3,22 +3,27 @@ grabABI --sol 0x2234567812345678123456781234567812345678
 
   Cannot find .sol file at '0x2234567812345678123456781234567812345678'. Quitting...
 
-  Usage:    grabABI [-k|-s|-f|-v|-h] <address> [address...]
-  Purpose:  Fetches the ABI for a smart contract.
+Purpose:
+  Fetches the ABI for a smart contract.
 
-  Where:
-    addrs                 list of one or more smart contracts whose ABI to grab from EtherScan (required)
-    -k  (--known)         load common 'known' ABIs from cache
-    -s  (--sol <str>)     file name of .sol file from which to create a new known abi (without .sol)
-    -f  (--find <str>)    try to search for a function declaration given a four byte code
+Usage:
+  grabABI [flags] <address> [address...]
 
-    #### Hidden options
-    -o  (--source)        show the source of the ABI information
-    -c  (--classes)       generate classDefinitions folder and class definitions
-    #### Hidden options
+Arguments:
+  addrs - list of one or more smart contracts whose ABI to grab from EtherScan (required)
 
-    -x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
-    -v  (--verbose)       set verbose level (optional level defaults to 1)
-    -h  (--help)          display this help screen
+Flags:
+  -k, --known         load common 'known' ABIs from cache
+  -s, --sol string    file name of .sol file from which to create a new known abi (without .sol)
+  -f, --find string   try to search for a function declaration given a four byte code
+  -o, --source        show the source of the ABI information (hidden)
+  -c, --classes       generate classDefinitions folder and class definitions (hidden)
 
-  Powered by TrueBlocks
+Global Flags:
+  -x, --fmt string     export format, one of [none|json*|txt|csv|api]
+  -v, --verbose uint   set verbose level (optional level defaults to 1)
+  -h, --help           display this help screen
+
+Notes:
+  - Solidity files found in the local folder with the name '<address>.sol' are converted to an ABI prior to processing (and then removed).
+

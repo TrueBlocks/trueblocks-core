@@ -3,14 +3,19 @@ jsonTest
 
   You must supply a filename to test. Quitting...
 
-  Usage:    jsonTest [-w|-v|-h] <file> [file...]
-  Purpose:  Test the json parsing facility in TrueBlocks.
-        
-  Where:
-    files                 One or more files to parse (required)
-    -w  (--which uint64)  Which test to run
-    -x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
-    -v  (--verbose)       set verbose level (optional level defaults to 1)
-    -h  (--help)          display this help screen
+Purpose:
+  Test the json parsing facility in TrueBlocks.
 
-  Powered by TrueBlocks
+Usage:
+  jsonTest [flags] <file> [file...]
+
+Arguments:
+  files - One or more files to parse (required)
+
+Flags:
+  -w, --which uint64   Which test to run
+
+Global Flags:
+  -x, --fmt string     export format, one of [none|json*|txt|csv|api]
+  -v, --verbose uint   set verbose level (optional level defaults to 1)
+  -h, --help           display this help screen
