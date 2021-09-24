@@ -7,6 +7,8 @@
 MAKE_TARGET="${1:-tests}"
 RUN_SERVER=false
 
+echo "Will perform $MAKE_TARGET"
+
 if [ "$MAKE_TARGET" == "test-all" ]
 then
     RUN_SERVER=true

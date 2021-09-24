@@ -12,8 +12,9 @@ then
 fi
 
 echo "Building image..."
+
 # Build image and save its ID
-IMAGE_ID=`docker build -q --build-arg repo=$REPO --build-arg commit_sha=$COMMIT_SHA --build-arg test_target=$TEST_TARGET --build-arg config_file=$CONFIG_FILE .`
+IMAGE_ID=`docker build -q --build-arg repo=$REPO --build-arg commit_sha=$COMMIT_SHA --build-arg test_target=$TEST_TARGET .`
 
 echo "Done. Running Docker image and tests"
 # Note: we are using --rm flag, which will cause removal of the container after `docker run` exits
@@ -21,7 +22,7 @@ docker run \
     --rm \
     --network=host \
     --mount type=bind,source=/home/unchained,target=/root/unchained \
-    --mount type=bind,source=$HOME/trueBlocks.toml,target=/root/.local/share/trueblocks/trueBlocks.toml \
+    --mount type=bind,source=$CONFIG_FILE,target=/root/.local/share/trueblocks/trueBlocks.toml \
     --mount type=bind,source=$HOME/test_results/$COMMIT_SHA,target=/root/test_results \
     $IMAGE_ID
 
