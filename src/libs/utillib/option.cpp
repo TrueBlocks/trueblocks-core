@@ -401,6 +401,11 @@ COption::COption(const string_q& ln, const string_q& sn, const string_q& t, size
         replace(description, " [X]", (contains(type, "list") ? " or more" : ""));
         permitted = "<val>";
     }
+    // TODO(tjayrush): chifra-new weird conversions needed?
+    if (isGoHelp()) {
+        if (permitted == "<str>" || permitted == "<hash>" || permitted == "<addr>")
+            permitted = "string";
+    }
 
     hotKey = (sn.empty() ? "" : "-" + sn);
     if (ln.empty())
@@ -441,16 +446,27 @@ string_q COption::getHotKey(void) const {
 
 //--------------------------------------------------------------------------------
 string_q COption::oneDescription(size_t* widths) const {
-    if (is_readme)
-        return markDownRow(getHotKey(), getLongKey(), getDescription(), widths);
-
     ostringstream os;
-    os << "    ";
-    if (is_positional) {
-        os << padRight(getLongKey(), max(size_t(22), widths[0] + widths[1]));
+    if (isGoHelp()) {
+        if (is_positional)
+            return "";
+        // TODO(tjayrush): Weird chifra-new code
+        if (getLongKey() == "--fmt <val>" || getLongKey() == "--help" || getLongKey() == "--verbose")
+            return "";
+        os << "  ";
+        os << getHotKey();
+        os << ", ";
+        os << padRight(getLongKey().empty() ? "" : getLongKey(), widths[1] + 3);
+    } else if (is_readme) {
+        return markDownRow(getHotKey(), getLongKey(), getDescription(), widths);
     } else {
-        os << padRight(getHotKey(), max(size_t(3), widths[0]));
-        os << padRight(getLongKey().empty() ? "" : " (" + getLongKey() + ")", max(size_t(19), widths[1]));
+        os << "    ";
+        if (is_positional) {
+            os << padRight(getLongKey(), max(size_t(22), widths[0] + widths[1]));
+        } else {
+            os << padRight(getHotKey(), max(size_t(3), widths[0]));
+            os << padRight(getLongKey().empty() ? "" : " (" + getLongKey() + ")", max(size_t(19), widths[1]));
+        }
     }
     os << getDescription() << endl;
     return os.str();
