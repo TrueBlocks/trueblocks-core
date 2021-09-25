@@ -41,6 +41,7 @@ class CCommandOption : public CBaseNode {
     string_q option_type;
     string_q data_type;
     string_q real_type;
+    string_q go_type;
     string_q summary;
     string_q description;
 
@@ -156,6 +157,7 @@ inline void CCommandOption::initialize(void) {
     option_type = "";
     data_type = "";
     real_type = "";
+    go_type = "";
     summary = "";
     description = "";
 
@@ -201,6 +203,7 @@ inline void CCommandOption::duplicate(const CCommandOption& co) {
     option_type = co.option_type;
     data_type = co.data_type;
     real_type = co.real_type;
+    go_type = co.go_type;
     summary = co.summary;
     description = co.description;
 

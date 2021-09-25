@@ -82,14 +82,6 @@ string_q get_use(const CCommandOption& cmd) {
     return ret;
 }
 
-string_q goType(const string_q& typeIn) {
-    string_q ret = typeIn;
-    replace(ret, "string_q", "string");
-    replace(ret, "uint64_t", "uint64");
-    replace(ret, "blknum_t", "uint64");
-    return ret;
-}
-
 string_q get_optfields(const CCommandOption& cmd) {
     size_t wid = 0;
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
@@ -98,7 +90,7 @@ string_q get_optfields(const CCommandOption& cmd) {
     }
     ostringstream os;
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
-        string_q type = goType(p.real_type);
+        string_q type = p.go_type;
         if (p.option_type != "positional")
             os << "\t" << padRight(p.longName, wid) << " " << type << endl;
     }
@@ -106,7 +98,7 @@ string_q get_optfields(const CCommandOption& cmd) {
 }
 
 string_q goDefault(const CCommandOption& p) {
-    string_q type = goType(p.real_type);
+    string_q type = p.go_type;
     if (type == "string")
         return "\"\"";
     else if (type == "uint64")
@@ -117,7 +109,7 @@ string_q goDefault(const CCommandOption& p) {
 string_q get_setopts(const CCommandOption& cmd) {
     ostringstream os;
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
-        string_q type = goType(p.real_type);
+        string_q type = p.go_type;
         if (p.option_type != "positional") {
             os << "\t[{ROUTE}]Cmd.Flags().";
             os << toProper(type);
@@ -137,7 +129,7 @@ string_q get_copyopts(const CCommandOption& cmd) {
     ostringstream os;
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
         if (p.option_type != "positional") {
-            string_q type = goType(p.real_type);
+            string_q type = p.go_type;
             if (type == "string") {
                 os << "\tif len([{PROPER}]Opts." << p.longName << ") > 0 {" << endl;
                 os << "\t\toptions += \" --" << p.longName << " \" + [{PROPER}]Opts." << p.longName << endl;

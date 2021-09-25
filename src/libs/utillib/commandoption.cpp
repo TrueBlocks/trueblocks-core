@@ -99,6 +99,9 @@ string_q CCommandOption::getValueByName(const string_q& fieldName) const {
             if (fieldName % "generate") {
                 return generate;
             }
+            if (fieldName % "go_type") {
+                return go_type;
+            }
             break;
         case 'h':
             if (fieldName % "hotKey") {
@@ -204,6 +207,10 @@ bool CCommandOption::setValueByName(const string_q& fieldNameIn, const string_q&
                 generate = fieldValue;
                 return true;
             }
+            if (fieldName % "go_type") {
+                go_type = fieldValue;
+                return true;
+            }
             break;
         case 'h':
             if (fieldName % "hotKey") {
@@ -307,6 +314,7 @@ bool CCommandOption::Serialize(CArchive& archive) {
     archive >> option_type;
     archive >> data_type;
     archive >> real_type;
+    archive >> go_type;
     archive >> summary;
     archive >> description;
     // EXISTING_CODE
@@ -338,6 +346,7 @@ bool CCommandOption::SerializeC(CArchive& archive) const {
     archive << option_type;
     archive << data_type;
     archive << real_type;
+    archive << go_type;
     archive << summary;
     archive << description;
     // EXISTING_CODE
@@ -405,6 +414,7 @@ void CCommandOption::registerClass(void) {
     ADD_FIELD(CCommandOption, "option_type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CCommandOption, "data_type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CCommandOption, "real_type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CCommandOption, "go_type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CCommandOption, "summary", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CCommandOption, "description", T_TEXT | TS_OMITEMPTY, ++fieldNum);
 
@@ -592,6 +602,14 @@ bool CCommandOption::finishCleanup(void) {
     replace(real_type, "address", "address_t");
     if (startsWith(data_type, "enum") || startsWith(data_type, "list<enum"))  // in every case of enum
         real_type = "string_q";
+
+    go_type = real_type;
+    replace(go_type, "string_q", "string");
+    replace(go_type, "address_t", "string");
+    replace(go_type, "uint64_t", "uint64");
+    replace(go_type, "uint32_t", "uint32");
+    replace(go_type, "blknum_t", "uint64");
+
     return true;
 }
 
