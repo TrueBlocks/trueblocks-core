@@ -85,8 +85,8 @@ string_q COption::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 'i':
-            if (fieldName % "is_hidden") {
-                return bool_2_Str(is_hidden);
+            if (fieldName % "is_visible") {
+                return bool_2_Str(is_visible);
             }
             if (fieldName % "is_positional") {
                 return bool_2_Str(is_positional);
@@ -149,8 +149,8 @@ bool COption::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
             }
             break;
         case 'i':
-            if (fieldName % "is_hidden") {
-                is_hidden = str_2_Bool(fieldValue);
+            if (fieldName % "is_visible") {
+                is_visible = str_2_Bool(fieldValue);
                 return true;
             }
             if (fieldName % "is_positional") {
@@ -218,7 +218,7 @@ bool COption::Serialize(CArchive& archive) {
     archive >> description;
     archive >> permitted;
     archive >> option_type;
-    archive >> is_hidden;
+    archive >> is_visible;
     archive >> is_positional;
     archive >> is_required;
     archive >> is_deprecated;
@@ -241,7 +241,7 @@ bool COption::SerializeC(CArchive& archive) const {
     archive << description;
     archive << permitted;
     archive << option_type;
-    archive << is_hidden;
+    archive << is_visible;
     archive << is_positional;
     archive << is_required;
     archive << is_deprecated;
@@ -300,7 +300,7 @@ void COption::registerClass(void) {
     ADD_FIELD(COption, "description", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(COption, "permitted", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(COption, "option_type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(COption, "is_hidden", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(COption, "is_visible", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(COption, "is_positional", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(COption, "is_required", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(COption, "is_deprecated", T_BOOL | TS_OMITEMPTY, ++fieldNum);
@@ -384,7 +384,7 @@ COption::COption(const string_q& ln, const string_q& sn, const string_q& t, size
     description = substitute(d, "&#44;", ",");
 
     is_positional = (opts & OPT_POSITIONAL);
-    is_hidden = (opts & OPT_HIDDEN);
+    is_visible = !(opts & OPT_HIDDEN);
     is_required = (opts & OPT_REQUIRED);
     is_deprecated = (opts == OPT_DEPRECATED);
 
@@ -419,7 +419,7 @@ COption::COption(const string_q& ln, const string_q& sn, const string_q& t, size
     }
 }
 bool COption::isPublic(void) const {
-    return (!is_hidden && !is_deprecated && !longName.empty());
+    return (is_visible && !is_deprecated && !longName.empty());
 }
 //--------------------------------------------------------------------------------
 string_q COption::readmeDash(const string_q& str) const {
@@ -459,7 +459,7 @@ string_q COption::oneDescription(size_t* widths) const {
         os << (getHotKey().empty() ? "    " : ", ");
         os << padRight(getLongKey().empty() ? "" : getLongKey(), widths[1] + 3);
     }
-    os << getDescription() << (is_hidden ? " (hidden)" : "") << endl;
+    os << getDescription() << (is_visible ? "" : " (hidden)") << endl;
     return os.str();
 }
 

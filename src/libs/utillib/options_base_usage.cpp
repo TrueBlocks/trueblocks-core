@@ -99,13 +99,13 @@ string_q COptionsBase::get_description(void) const {
     for (auto option : parameters) {
         if (isReadme) {
             option.is_readme = true;
-            if (option.isPublic() || (option.is_hidden && (isTestMode() || (verbose > 1)))) {
+            if (option.isPublic() || (!option.is_visible && (isTestMode() || (verbose > 1)))) {
                 widths[0] = max(widths[0], option.getHotKey().length());
                 widths[1] = max(widths[1], option.getLongKey().length());
                 widths[2] = max(widths[2], option.getDescription().length());
             }
         } else {
-            if (option.isPublic() || (option.is_hidden && (isTestMode() || (verbose > 1)))) {
+            if (option.isPublic() || (!option.is_visible && (isTestMode() || (verbose > 1)))) {
                 widths[0] = max(widths[0], option.getHotKey().length());
                 widths[1] = max(widths[1], option.getLongKey().length());
                 widths[2] = max(widths[2], option.getDescription().length());
@@ -170,8 +170,8 @@ string_q COptionsBase::get_description(void) const {
         if (isReadme) {
             option.is_readme = true;
         }
-        if (option.is_hidden) {
-            if (option.is_hidden && !option.is_deprecated && !option.longName.empty()) {
+        if (!option.is_visible) {
+            if (!option.is_deprecated && !option.longName.empty()) {
                 if (isReadme) {
                     hidden << option.oneDescription(widths);
                 } else {
@@ -369,7 +369,7 @@ string_q COptionsBase::get_positionals(COptionArray& pos) const {
 string_q COptionsBase::get_options(void) const {
     ostringstream shorts;
     for (const auto& option : parameters) {
-        if (!option.is_positional && (option.is_hidden || option.is_deprecated)) {
+        if (!option.is_positional && (!option.is_visible || option.is_deprecated)) {
             // not an option
         } else if (!option.is_positional && !option.hotKey.empty()) {
             shorts << option.hotKey << "|";
