@@ -86,27 +86,26 @@ int main(int argc, const char* argv[]) {
                     if (ignore2 && !options.ignoreOff) {
                         cerr << iBlue << "   # " << line.substr(0, 120) << cOff << endl;
                         CTestCase test(line, 0);
-                        string_q outFile = substitute(test.fileName, "-new", "");
                         test.goldPath = substitute(getCWD(), "/test/gold/dev_tools/testRunner/",
-                                                   "/test/gold/" + test.path + "/" + test.tool + "/" + outFile);
+                                                   "/test/gold/" + test.path + "/" + test.tool + "/" + test.fileName);
                         // if the gold file exists, copy the test case back to working (it may have been removed)
                         if (fileExists(test.goldPath)) {
-                            test.workPath = substitute(getCWD(), "/test/gold/dev_tools/testRunner/",
-                                                       "/test/working/" + test.path + "/" + test.tool + "/" + outFile);
+                            test.workPath =
+                                substitute(getCWD(), "/test/gold/dev_tools/testRunner/",
+                                           "/test/working/" + test.path + "/" + test.tool + "/" + test.fileName);
                             copyFile(test.goldPath, test.workPath);
                         }
                         replace(test.goldPath, "/" + test.tool + "/", "/" + test.tool + "/api_tests/");
                         if (fileExists(test.goldPath)) {
-                            test.workPath =
-                                substitute(getCWD(), "/test/gold/dev_tools/testRunner/",
-                                           "/test/working/" + test.path + "/" + test.tool + "/api_tests/" + outFile);
+                            test.workPath = substitute(
+                                getCWD(), "/test/gold/dev_tools/testRunner/",
+                                "/test/working/" + test.path + "/" + test.tool + "/api_tests/" + test.fileName);
                             copyFile(test.goldPath, test.workPath);
                         }
                     }
 
                 } else {
                     CTestCase test(line, testID++);
-                    test.fileName = substitute(test.fileName, "-new", "");
                     string_q key = test.Format("[{KEY}]");
                     if (testMap[key] != CTestCase()) {
                         cerr << "Duplicate test names: " << key << ". Quitting..." << endl;
@@ -190,8 +189,6 @@ void COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
     cerr << measure.Format("Testing [{COMMAND}] ([{TYPE}] mode):") << endl;
 
     for (auto test : testArray) {
-        if (test.tool == "chifra" && test.mode != "api")
-            continue;
         if (skip != 1 && nRun++ % skip)
             continue;
         if (verbose)

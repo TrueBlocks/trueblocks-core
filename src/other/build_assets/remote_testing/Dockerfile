@@ -3,7 +3,8 @@ FROM golang:1.14-buster as builder
 ARG repo
 ARG commit_sha
 ARG test_target
-ARG config_file
+
+ENV TEST_TARGET=$test_target
 
 RUN apt-get update -y
 RUN apt install -y g++ gcc make cmake git nano libcurl3-dev python3 python3-dev \
@@ -21,4 +22,4 @@ RUN git clone --progress \
         cmake ../src && \
         make -j 4
 
-ENTRYPOINT bash /root/trueblocks-core/src/other/build_assets/remote_testing/build_and_test.sh $test_target
+ENTRYPOINT bash /root/trueblocks-core/src/other/build_assets/remote_testing/build_and_test.sh $TEST_TARGET
