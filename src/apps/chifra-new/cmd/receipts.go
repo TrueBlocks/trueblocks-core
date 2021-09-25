@@ -14,11 +14,17 @@ package cmd
  *-------------------------------------------------------------------------------------------*/
 
 import (
-	"fmt"
 	"os"
+	"strconv"
 
 	"github.com/spf13/cobra"
 )
+
+type receiptsOptionsType struct {
+	articulate bool
+}
+
+var ReceiptsOpts receiptsOptionsType
 
 // receiptsCmd represents the receipts command
 var receiptsCmd = &cobra.Command{
@@ -26,21 +32,29 @@ var receiptsCmd = &cobra.Command{
 
 Arguments:
   transactions - a space-separated list of one or more transaction identifiers (required)`,
-	Short: "Retrieve receipts for the given transaction(s)",
+	Short: "retrieve receipts for the given transaction(s)",
 	Long: `Purpose:
-  Retrieve receipts for the given transaction(s).
-`,
-	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("receipts called")
-	},
+  Retrieve receipts for the given transaction(s).`,
+	Run: runReceipts,
 }
 
 func init() {
-	rootCmd.AddCommand(receiptsCmd)
-
 	receiptsCmd.Flags().SortFlags = false
 	receiptsCmd.PersistentFlags().SortFlags = false
 	receiptsCmd.SetOut(os.Stderr)
-	receiptsCmd.Flags().BoolP("articulate", "a", false, "articulate the retrieved data if ABIs can be found")
-	receiptsCmd.Flags().MarkHidden("transactions")
+
+	receiptsCmd.Flags().BoolVarP(&ReceiptsOpts.articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
+
+	rootCmd.AddCommand(receiptsCmd)
+}
+
+func runReceipts(cmd *cobra.Command, args []string) {
+	options := ""
+	if ReceiptsOpts.articulate {
+		options += " --articulate"
+	}
+	for _, arg := range args {
+		options += " " + arg
+	}
+	PassItOn("/Users/jrush/.local/bin/chifra/getReceipts", options, strconv.FormatUint(0, 10))
 }

@@ -116,6 +116,7 @@ class COptions : public COptionsBase {
 
     bool handle_readmes(void);
     bool handle_options(void);
+    bool handle_gocmds(void);
     bool handle_lint(void);
     bool handle_format(void);
     bool handle_generate(CToml& toml, const CClassDefinition& classDef, bool asJs);

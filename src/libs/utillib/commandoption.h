@@ -15,7 +15,7 @@
  * Parts of this file were generated with makeClass --run. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
-#include "etherlib.h"
+#include "utillib.h"
 
 namespace qblocks {
 
@@ -30,8 +30,8 @@ class CCommandOption : public CBaseNode {
     string_q api_group;
     string_q api_route;
     string_q tool;
-    string_q command;
-    string_q hotkey;
+    string_q longName;
+    string_q hotKey;
     string_q def_val;
     bool is_required;
     bool is_customizable;
@@ -145,8 +145,8 @@ inline void CCommandOption::initialize(void) {
     api_group = "";
     api_route = "";
     tool = "";
-    command = "";
-    hotkey = "";
+    longName = "";
+    hotKey = "";
     def_val = "";
     is_required = false;
     is_customizable = false;
@@ -190,8 +190,8 @@ inline void CCommandOption::duplicate(const CCommandOption& co) {
     api_group = co.api_group;
     api_route = co.api_route;
     tool = co.tool;
-    command = co.command;
-    hotkey = co.hotkey;
+    longName = co.longName;
+    hotKey = co.hotKey;
     def_val = co.def_val;
     is_required = co.is_required;
     is_customizable = co.is_customizable;

@@ -14,9 +14,11 @@ package cmd
  *-------------------------------------------------------------------------------------------*/
 
 import (
+	"bufio"
 	"fmt"
 	"os"
 	"os/exec"
+	"strconv"
 
 	"github.com/spf13/cobra"
 
@@ -31,6 +33,7 @@ type rootOptTypes struct {
 	fmt     string
 	verbose uint
 	help    bool
+	raw     bool
 }
 
 var RootOpts rootOptTypes
@@ -66,6 +69,7 @@ func init() {
 	rootCmd.Flags().SortFlags = false
 	rootCmd.PersistentFlags().SortFlags = false
 	rootCmd.SetOut(os.Stderr)
+	rootCmd.PersistentFlags().BoolVarP(&RootOpts.raw, "raw", "", false, "report JSON data from the node with minimal processing")
 	rootCmd.PersistentFlags().StringVarP(&RootOpts.fmt, "fmt", "x", "", "export format, one of [none|json*|txt|csv|api]")
 	rootCmd.PersistentFlags().UintVarP(&RootOpts.verbose, "verbose", "v", 0, "set verbose level (optional level defaults to 1)")
 	rootCmd.PersistentFlags().BoolVarP(&RootOpts.help, "help", "h", false, "display this help screen")
@@ -138,12 +142,28 @@ func getHelpTextRoot() string {
 `
 }
 
-func PassItOn(path string, options string) {
-	command := exec.Command(path, options)
-	command.Env = append(os.Environ(), "API_MODE=true")
-	out, _ := command.Output()
-	output := string(out[:])
-	fmt.Printf("%s", output)
+func PassItOn(path string, optionsIn string, unused string) {
+	options := ""
+	if RootOpts.raw {
+		options += " --raw"
+	}
+	if len(RootOpts.fmt) > 0 {
+		options += " --fmt " + RootOpts.fmt
+	}
+	if RootOpts.verbose > 0 {
+		options += " --verbose " + strconv.FormatUint(uint64(RootOpts.verbose), 10)
+	}
+	options += optionsIn
+
+	cmd := exec.Command(path, options)
+	stdout, _ := cmd.StdoutPipe()
+	cmd.Start()
+	scanner := bufio.NewScanner(stdout)
+	for scanner.Scan() {
+		m := scanner.Text()
+		fmt.Println(m)
+	}
+	cmd.Wait()
 }
 
 // enums

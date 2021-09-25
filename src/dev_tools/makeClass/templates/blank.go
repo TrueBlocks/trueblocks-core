@@ -1,4 +1,5 @@
-#pragma once
+package cmd
+
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -11,32 +12,40 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-#include "basetypes.h"
-#include "sfstring.h"
-#include "basenode.h"
-#include "biglib.h"
-#include "jsonlib.h"
-#include "conversions.h"
-#include "sftime.h"
-#include "sfos.h"
-#include "database.h"
-#include "toml.h"
-#include "exportcontext.h"
-#include "sfarchive.h"
-#include "fielddata.h"
-#include "curl_code.h"
-#include "colors.h"
-#include "performance.h"
-#include "options_base.h"
-#include "filenames.h"
-#include "accountname.h"
-#include "collection.h"
-#include "memmap.h"
-#include "rpcresult.h"
-#include "logging.h"
-#include "keccak.h"
-#include "apikey.h"
-#include "markdown.h"
-#include "commandoption.h"
 
-using namespace qblocks;  // NOLINT
+import (
+	"os"
+	"strconv"
+
+	"github.com/spf13/cobra"
+)
+
+type [{ROUTE}]OptionsType struct {
+[{OPT_FIELDS}]}
+
+var [{PROPER}]Opts [{ROUTE}]OptionsType
+
+// [{ROUTE}]Cmd represents the [{ROUTE}] command
+var [{ROUTE}]Cmd = &cobra.Command{
+	Use: `[{USE}]`,
+	Short: "[{SHORT}]",
+	Long: `[{LONG}]`,
+	Run: run[{PROPER}],
+}
+
+func init() {
+	[{ROUTE}]Cmd.Flags().SortFlags = false
+	[{ROUTE}]Cmd.PersistentFlags().SortFlags = false
+	[{ROUTE}]Cmd.SetOut(os.Stderr)
+
+[{SET_OPTS}]
+	rootCmd.AddCommand([{ROUTE}]Cmd)
+}
+
+func run[{PROPER}](cmd *cobra.Command, args []string) {
+	options := ""
+[{COPY_OPTS}]	for _, arg := range args {
+		options += " " + arg
+	}
+	PassItOn("[{PATH}]", options, strconv.FormatUint(0, 10))
+}

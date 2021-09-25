@@ -56,10 +56,10 @@ class COption : public CBaseNode {
     string_q longName;
     string_q description;
     string_q permitted;
-    string_q type;
+    string_q option_type;
     bool is_hidden;
     bool is_positional;
-    bool is_optional;
+    bool is_required;
     bool is_deprecated;
     bool is_readme;
 
@@ -135,10 +135,10 @@ inline void COption::initialize(void) {
     longName = "";
     description = "";
     permitted = "";
-    type = "";
+    option_type = "";
     is_hidden = false;
     is_positional = false;
-    is_optional = false;
+    is_required = false;
     is_deprecated = false;
     is_readme = false;
 
@@ -155,10 +155,10 @@ inline void COption::duplicate(const COption& op) {
     longName = op.longName;
     description = op.description;
     permitted = op.permitted;
-    type = op.type;
+    option_type = op.option_type;
     is_hidden = op.is_hidden;
     is_positional = op.is_positional;
-    is_optional = op.is_optional;
+    is_required = op.is_required;
     is_deprecated = op.is_deprecated;
     is_readme = op.is_readme;
 

@@ -24,6 +24,7 @@ static const COption params[] = {
     COption("files", "", "list<path>", OPT_REQUIRED | OPT_POSITIONAL, "one or more class definition files"),
     COption("all", "a", "", OPT_SWITCH, "list, or run all class definitions found in the local folder"),
     COption("options", "o", "", OPT_SWITCH, "export options code (check validity in the process)"),
+    COption("gocmds", "g", "", OPT_SWITCH, "export go command code"),
     COption("readmes", "m", "", OPT_SWITCH, "create readme files for each tool and app"),
     COption("format", "f", "", OPT_SWITCH, "format source code files (.cpp and .h) found in local folder and below"),
     COption("lint", "l", "", OPT_SWITCH, "lint source code files (.cpp and .h) found in local folder and below"),
@@ -44,6 +45,7 @@ bool COptions::parseArguments(string_q& command) {
     // BEG_CODE_LOCAL_INIT
     CStringArray files;
     bool options = false;
+    bool gocmds = false;
     bool readmes = false;
     bool format = false;
     bool lint = false;
@@ -61,6 +63,9 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-o" || arg == "--options") {
             options = true;
+
+        } else if (arg == "-g" || arg == "--gocmds") {
+            gocmds = true;
 
         } else if (arg == "-m" || arg == "--readmes") {
             readmes = true;
@@ -98,6 +103,7 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_LIST("files", files, files.empty());
     LOG_TEST_BOOL("all", all);
     LOG_TEST_BOOL("options", options);
+    LOG_TEST_BOOL("gocmds", gocmds);
     LOG_TEST_BOOL("readmes", readmes);
     LOG_TEST_BOOL("format", format);
     LOG_TEST_BOOL("lint", lint);
@@ -153,6 +159,8 @@ bool COptions::parseArguments(string_q& command) {
     if (openapi && !handle_datamodel())
         return false;
     if (options && !handle_options())
+        return false;
+    if (gocmds && !handle_gocmds())
         return false;
     if (readmes && !handle_readmes())
         return false;

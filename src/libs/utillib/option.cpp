@@ -91,8 +91,8 @@ string_q COption::getValueByName(const string_q& fieldName) const {
             if (fieldName % "is_positional") {
                 return bool_2_Str(is_positional);
             }
-            if (fieldName % "is_optional") {
-                return bool_2_Str(is_optional);
+            if (fieldName % "is_required") {
+                return bool_2_Str(is_required);
             }
             if (fieldName % "is_deprecated") {
                 return bool_2_Str(is_deprecated);
@@ -106,14 +106,14 @@ string_q COption::getValueByName(const string_q& fieldName) const {
                 return longName;
             }
             break;
+        case 'o':
+            if (fieldName % "option_type") {
+                return option_type;
+            }
+            break;
         case 'p':
             if (fieldName % "permitted") {
                 return permitted;
-            }
-            break;
-        case 't':
-            if (fieldName % "type") {
-                return type;
             }
             break;
         default:
@@ -157,8 +157,8 @@ bool COption::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
                 is_positional = str_2_Bool(fieldValue);
                 return true;
             }
-            if (fieldName % "is_optional") {
-                is_optional = str_2_Bool(fieldValue);
+            if (fieldName % "is_required") {
+                is_required = str_2_Bool(fieldValue);
                 return true;
             }
             if (fieldName % "is_deprecated") {
@@ -176,15 +176,15 @@ bool COption::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
                 return true;
             }
             break;
-        case 'p':
-            if (fieldName % "permitted") {
-                permitted = fieldValue;
+        case 'o':
+            if (fieldName % "option_type") {
+                option_type = fieldValue;
                 return true;
             }
             break;
-        case 't':
-            if (fieldName % "type") {
-                type = fieldValue;
+        case 'p':
+            if (fieldName % "permitted") {
+                permitted = fieldValue;
                 return true;
             }
             break;
@@ -217,10 +217,10 @@ bool COption::Serialize(CArchive& archive) {
     archive >> longName;
     archive >> description;
     archive >> permitted;
-    archive >> type;
+    archive >> option_type;
     archive >> is_hidden;
     archive >> is_positional;
-    archive >> is_optional;
+    archive >> is_required;
     archive >> is_deprecated;
     archive >> is_readme;
     // EXISTING_CODE
@@ -240,10 +240,10 @@ bool COption::SerializeC(CArchive& archive) const {
     archive << longName;
     archive << description;
     archive << permitted;
-    archive << type;
+    archive << option_type;
     archive << is_hidden;
     archive << is_positional;
-    archive << is_optional;
+    archive << is_required;
     archive << is_deprecated;
     archive << is_readme;
     // EXISTING_CODE
@@ -299,10 +299,10 @@ void COption::registerClass(void) {
     ADD_FIELD(COption, "longName", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(COption, "description", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(COption, "permitted", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(COption, "type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(COption, "option_type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(COption, "is_hidden", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(COption, "is_positional", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(COption, "is_optional", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(COption, "is_required", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(COption, "is_deprecated", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(COption, "is_readme", T_BOOL | TS_OMITEMPTY, ++fieldNum);
 
@@ -385,10 +385,10 @@ COption::COption(const string_q& ln, const string_q& sn, const string_q& t, size
 
     is_positional = (opts & OPT_POSITIONAL);
     is_hidden = (opts & OPT_HIDDEN);
-    is_optional = !(opts & OPT_REQUIRED);
+    is_required = (opts & OPT_REQUIRED);
     is_deprecated = (opts == OPT_DEPRECATED);
 
-    type = t;
+    option_type = t;
     permitted = t;
     permitted = substitute(permitted, "<uint32>", "<num>");
     permitted = substitute(permitted, "<uint64>", "<num>");
@@ -396,9 +396,10 @@ COption::COption(const string_q& ln, const string_q& sn, const string_q& t, size
     permitted = substitute(permitted, "<string>", "<str>");
     permitted = substitute(permitted, "list<topic>", "<hash>");
     permitted = substitute(permitted, "list<addr>", "<addr>");
-    if (contains(type, "enum")) {
-        description += ", one [X] of " + substitute(substitute(substitute(type, "list<", ""), ">", ""), "enum", "");
-        replace(description, " [X]", (contains(type, "list") ? " or more" : ""));
+    if (contains(option_type, "enum")) {
+        description +=
+            ", one [X] of " + substitute(substitute(substitute(option_type, "list<", ""), ">", ""), "enum", "");
+        replace(description, " [X]", (contains(option_type, "list") ? " or more" : ""));
         permitted = "<val>";
     }
     // TODO(tjayrush): chifra-new weird conversions needed?
@@ -465,7 +466,7 @@ string_q COption::oneDescription(size_t* widths) const {
 //--------------------------------------------------------------------------------
 string_q COption::getDescription(void) const {
     string_q descr = trim(description);
-    descr = (descr + (!is_optional && is_positional ? " (required)" : ""));
+    descr = (descr + (is_required && is_positional ? " (required)" : ""));
     if (!is_readme)
         return descr;
     replace(descr, "*", "");

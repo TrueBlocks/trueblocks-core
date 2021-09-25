@@ -20,7 +20,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-type abiOptionsType struct {
+type abisOptionsType struct {
 	known   bool
 	sol     string
 	find    string
@@ -28,7 +28,7 @@ type abiOptionsType struct {
 	classes bool
 }
 
-var abiOpts abiOptionsType
+var AbisOpts abisOptionsType
 
 // abisCmd represents the abis command
 var abisCmd = &cobra.Command{
@@ -39,9 +39,7 @@ Arguments:
 	Short: "fetches the ABI for a smart contract",
 	Long: `Purpose:
   Fetches the ABI for a smart contract.`,
-	PreRun: func(cmd *cobra.Command, args []string) {
-	},
-	Run: runAbi,
+	Run: runAbis,
 }
 
 func init() {
@@ -49,41 +47,34 @@ func init() {
 	abisCmd.PersistentFlags().SortFlags = false
 	abisCmd.SetOut(os.Stderr)
 
-	abisCmd.Flags().BoolVarP(&abiOpts.known, "known", "k", false, "load common 'known' ABIs from cache")
-	abisCmd.Flags().StringVarP(&abiOpts.sol, "sol", "s", "", "file name of .sol file from which to create a new known abi (without .sol)")
-	abisCmd.Flags().StringVarP(&abiOpts.find, "find", "f", "", "try to search for a function declaration given a four byte code")
-	abisCmd.Flags().BoolVarP(&abiOpts.source, "source", "o", false, "show the source of the ABI information")
-	abisCmd.Flags().BoolVarP(&abiOpts.classes, "classes", "c", false, "generate classDefinitions folder and class definitions")
+	abisCmd.Flags().BoolVarP(&AbisOpts.known, "known", "k", false, "load common 'known' ABIs from cache")
+	abisCmd.Flags().StringVarP(&AbisOpts.sol, "sol", "s", "", "file name of .sol file from which to create a new known abi (without .sol)")
+	abisCmd.Flags().StringVarP(&AbisOpts.find, "find", "f", "", "try to search for a function declaration given a four byte code")
+	abisCmd.Flags().BoolVarP(&AbisOpts.source, "source", "o", false, "show the source of the ABI information")
+	abisCmd.Flags().BoolVarP(&AbisOpts.classes, "classes", "c", false, "generate classDefinitions folder and class definitions")
 
 	rootCmd.AddCommand(abisCmd)
 }
 
-func runAbi(cmd *cobra.Command, args []string) {
+func runAbis(cmd *cobra.Command, args []string) {
 	options := ""
-	for _, option := range args {
-		options += " " + option
-	}
-	if abiOpts.known {
+	if AbisOpts.known {
 		options += " --known"
 	}
-	if abiOpts.source {
+	if len(AbisOpts.sol) > 0 {
+		options += " --sol " + AbisOpts.sol
+	}
+	if len(AbisOpts.find) > 0 {
+		options += " --find " + AbisOpts.find
+	}
+	if AbisOpts.source {
 		options += " --source"
 	}
-	if abiOpts.classes {
+	if AbisOpts.classes {
 		options += " --classes"
 	}
-	if len(abiOpts.sol) > 0 {
-		options += " --sol " + abiOpts.sol
+	for _, arg := range args {
+		options += " " + arg
 	}
-	if len(abiOpts.find) > 0 {
-		options += " --find " + abiOpts.find
-	}
-	if len(RootOpts.fmt) > 0 {
-		options += " --fmt " + RootOpts.fmt
-	}
-	if RootOpts.verbose > 0 {
-		options += " --verbose " + strconv.FormatUint(uint64(RootOpts.verbose), 10)
-	}
-	path := "/Users/jrush/.local/bin/chifra/grabABI"
-	PassItOn(path, options)
+	PassItOn("/Users/jrush/.local/bin/chifra/grabABI", options, strconv.FormatUint(0, 10))
 }

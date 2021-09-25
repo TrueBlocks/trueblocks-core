@@ -81,11 +81,6 @@ string_q CCommandOption::getValueByName(const string_q& fieldName) const {
                 return api_route;
             }
             break;
-        case 'c':
-            if (fieldName % "command") {
-                return command;
-            }
-            break;
         case 'd':
             if (fieldName % "def_val") {
                 return def_val;
@@ -106,8 +101,8 @@ string_q CCommandOption::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 'h':
-            if (fieldName % "hotkey") {
-                return hotkey;
+            if (fieldName % "hotKey") {
+                return hotKey;
             }
             break;
         case 'i':
@@ -122,6 +117,11 @@ string_q CCommandOption::getValueByName(const string_q& fieldName) const {
             }
             if (fieldName % "is_visible_docs") {
                 return bool_2_Str(is_visible_docs);
+            }
+            break;
+        case 'l':
+            if (fieldName % "longName") {
+                return longName;
             }
             break;
         case 'n':
@@ -181,12 +181,6 @@ bool CCommandOption::setValueByName(const string_q& fieldNameIn, const string_q&
                 return true;
             }
             break;
-        case 'c':
-            if (fieldName % "command") {
-                command = fieldValue;
-                return true;
-            }
-            break;
         case 'd':
             if (fieldName % "def_val") {
                 def_val = fieldValue;
@@ -212,8 +206,8 @@ bool CCommandOption::setValueByName(const string_q& fieldNameIn, const string_q&
             }
             break;
         case 'h':
-            if (fieldName % "hotkey") {
-                hotkey = fieldValue;
+            if (fieldName % "hotKey") {
+                hotKey = fieldValue;
                 return true;
             }
             break;
@@ -232,6 +226,12 @@ bool CCommandOption::setValueByName(const string_q& fieldNameIn, const string_q&
             }
             if (fieldName % "is_visible_docs") {
                 is_visible_docs = str_2_Bool(fieldValue);
+                return true;
+            }
+            break;
+        case 'l':
+            if (fieldName % "longName") {
+                longName = fieldValue;
                 return true;
             }
             break;
@@ -296,8 +296,8 @@ bool CCommandOption::Serialize(CArchive& archive) {
     archive >> api_group;
     archive >> api_route;
     archive >> tool;
-    archive >> command;
-    archive >> hotkey;
+    archive >> longName;
+    archive >> hotKey;
     archive >> def_val;
     archive >> is_required;
     archive >> is_customizable;
@@ -327,8 +327,8 @@ bool CCommandOption::SerializeC(CArchive& archive) const {
     archive << api_group;
     archive << api_route;
     archive << tool;
-    archive << command;
-    archive << hotkey;
+    archive << longName;
+    archive << hotKey;
     archive << def_val;
     archive << is_required;
     archive << is_customizable;
@@ -394,8 +394,8 @@ void CCommandOption::registerClass(void) {
     ADD_FIELD(CCommandOption, "api_group", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CCommandOption, "api_route", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CCommandOption, "tool", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CCommandOption, "command", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CCommandOption, "hotkey", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CCommandOption, "longName", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CCommandOption, "hotKey", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CCommandOption, "def_val", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CCommandOption, "is_required", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CCommandOption, "is_customizable", T_BOOL | TS_OMITEMPTY, ++fieldNum);
@@ -623,7 +623,7 @@ void CCommandOption::verifyOptions(CStringArray& warnings) {
     }
     ostringstream warnstream;
     if (!valid_kind)
-        warnstream << "Skipping option kind '" << option_type << "' for option '" << command << "'|";
+        warnstream << "Skipping option kind '" << option_type << "' for option '" << longName << "'|";
 
     // Check valid data types
     CStringArray validTypes = {
@@ -651,7 +651,7 @@ void CCommandOption::verifyOptions(CStringArray& warnings) {
         valid_type = true;
 
     if (!valid_type)
-        warnstream << "Unknown type '" << data_type << "' for option '" << command << "'|";
+        warnstream << "Unknown type '" << data_type << "' for option '" << longName << "'|";
     if (option_type == "description" && !endsWith(description, ".") && !endsWith(description, ":"))
         warnstream << "Description '" << description << "' should end with a period or colon.|";
     if (option_type == "note" && !endsWith(description, ".") && !endsWith(description, ":"))
@@ -664,43 +664,43 @@ void CCommandOption::verifyOptions(CStringArray& warnings) {
     if ((option_type != "description" && option_type != "note" && option_type != "error" && option_type != "config") &&
         endsWith(description, "."))
         warnstream << "Option '" << description << "' should not end with a period.|";
-    if (isReserved(command))
-        warnstream << "Option '" << command << "' is a reserved word.|";
+    if (isReserved(longName))
+        warnstream << "Option '" << longName << "' is a reserved word.|";
 
     explode(warnings, warnstream.str(), '|');
 }
 
 //---------------------------------------------------------------------------------------------------
 void CCommandOption::verifyHotkey(CStringArray& warnings) {
-    if (hotkey.empty() || contains(option_type, "positional") || contains(option_type, "description") ||
+    if (hotKey.empty() || contains(option_type, "positional") || contains(option_type, "description") ||
         contains(option_type, "note") || contains(option_type, "error")) {
         return;
     }
 
     ostringstream warnstream;
-    if (hotkey == "v")
-        warnstream << tool << ":hotkey '" << command << "-" << hotkey << "' conflicts with --verbose hotkey|";
-    if (hotkey == "h")
-        warnstream << tool << ":hotkey '" << command << "-" << hotkey << "' conflicts with --help hotkey|";
-    if (hotkey == "x")
-        warnstream << tool << ":hotkey '" << command << "-" << hotkey << "' conflicts with --fmt hotkey|";
+    if (hotKey == "v")
+        warnstream << tool << ":hotKey '" << longName << "-" << hotKey << "' conflicts with --verbose hotKey|";
+    if (hotKey == "h")
+        warnstream << tool << ":hotKey '" << longName << "-" << hotKey << "' conflicts with --help hotKey|";
+    if (hotKey == "x")
+        warnstream << tool << ":hotKey '" << longName << "-" << hotKey << "' conflicts with --fmt hotKey|";
 
     const string_q HOTKEY_WARNING =
-        "Hotkey (-[{HOTKEY}]) for tool '[{TOOL}]' at command '[{COMMAND}]:[{HOTKEY}]' +MSG+|";
+        "Hotkey (-[{HOTKEY}]) for tool '[{TOOL}]' at command '[{LONGNAME}]:[{HOTKEY}]' +MSG+|";
     static map<string, string> existing;
-    string_q key = tool + ":" + hotkey;
+    string_q key = tool + ":" + hotKey;
     if (!existing[key].empty()) {
         string_q warn = Format(HOTKEY_WARNING);
         replace(warn, "+MSG+", "conflicts with existing '" + existing[key] + "'");
         warnstream << warn;
     }
-    existing[key] = command + ":" + hotkey;  // store for later to find dups
+    existing[key] = longName + ":" + hotKey;  // store for later to find dups
 
-    bool isUpper = (toLower(hotkey) != hotkey);
-    bool isFirst = hotkey == command.substr(0, 1);
-    bool isSecond = hotkey == command.substr(1, 1);
-    bool isContained = contains(command, hotkey);
-    bool isCache = contains(command, "cache");  // special weird case -- just ignore it
+    bool isUpper = (toLower(hotKey) != hotKey);
+    bool isFirst = hotKey == longName.substr(0, 1);
+    bool isSecond = hotKey == longName.substr(1, 1);
+    bool isContained = contains(longName, hotKey);
+    bool isCache = contains(longName, "cache");  // special weird case -- just ignore it
     if (!isUpper && !isFirst && !isSecond && (!verbose && !isContained && !isCache)) {
         string_q warn = Format(HOTKEY_WARNING);
         replace(warn, "+MSG+", "is not first or second character");
@@ -717,17 +717,17 @@ extern const char* STR_DEBUG_DISPLAY_LIST;
 //---------------------------------------------------------------------------------------------------
 string_q CCommandOption::debugCode(void) const {
     string_q fmt = isBool ? STR_DEBUG_DISPLAY_BOOL : isList ? STR_DEBUG_DISPLAY_LIST : STR_DEBUG_DISPLAY;
-    if (command == "addrs2")
-        replaceAll(fmt, "[{COMMAND}]", "addrs");
-    if (command == "transactions")
-        replaceAll(fmt, "[{COMMAND}]", "transList");
+    if (longName == "addrs2")
+        replaceAll(fmt, "[{LONGNAME}]", "addrs");
+    if (longName == "transactions")
+        replaceAll(fmt, "[{LONGNAME}]", "transList");
     return Format(fmt);
 }
 
 //---------------------------------------------------------------------------------------------------
-const char* STR_DEBUG_DISPLAY = "    LOG_TEST(\"[{COMMAND}]\", [{COMMAND}], ([{COMMAND}] == [{DEF_VAL}]));";
-const char* STR_DEBUG_DISPLAY_BOOL = "    LOG_TEST_BOOL(\"[{COMMAND}]\", [{COMMAND}]);";
-const char* STR_DEBUG_DISPLAY_LIST = "    LOG_TEST_LIST(\"[{COMMAND}]\", [{COMMAND}], [{COMMAND}].empty());";
+const char* STR_DEBUG_DISPLAY = "    LOG_TEST(\"[{LONGNAME}]\", [{LONGNAME}], ([{LONGNAME}] == [{DEF_VAL}]));";
+const char* STR_DEBUG_DISPLAY_BOOL = "    LOG_TEST_BOOL(\"[{LONGNAME}]\", [{LONGNAME}]);";
+const char* STR_DEBUG_DISPLAY_LIST = "    LOG_TEST_LIST(\"[{LONGNAME}]\", [{LONGNAME}], [{LONGNAME}].empty());";
 
 //---------------------------------------------------------------------------------------------------
 extern const char* STR_PATH_YAML;
@@ -844,10 +844,10 @@ string_q CCommandOption::toApiPath(const string_q& inStr) const {
 
     ostringstream paramStream;
     for (auto param : *(CCommandOptionArray*)params) {
-        if (param.command.empty() || !param.is_visible_docs)
+        if (param.longName.empty() || !param.is_visible_docs)
             continue;
         string_q yp = STR_PARAM_YAML;
-        replace(yp, "[{NAME}]", param.command);
+        replace(yp, "[{NAME}]", param.longName);
         replace(yp, "[{DESCR}]", prepareDescr(param.swagger_descr));
         replace(yp, "[{REQ}]", param.is_required ? "true" : "false");
         replace(yp, "[{SCHEMA}]", param.getSchema());

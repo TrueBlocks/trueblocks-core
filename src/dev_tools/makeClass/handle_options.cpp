@@ -87,11 +87,11 @@ bool COptions::handle_options(void) {
                     notesStream << note << endl;
 
                 } else if (option.isErr) {
-                    string_q err = option.Format("    usageErrs[[{COMMAND}]] = \"[{DESCRIPTION}]\";");
+                    string_q err = option.Format("    usageErrs[[{LONGNAME}]] = \"[{DESCRIPTION}]\";");
                     if (err.length() > 120)
                         err += "  // NOLINT";
                     errorStrStream << err << endl;
-                    errorDefStream << option.Format("#define [{COMMAND}] " + uint_2_Str(errCnt++)) << endl;
+                    errorDefStream << option.Format("#define [{LONGNAME}] " + uint_2_Str(errCnt++)) << endl;
 
                 } else if (option.isConfig) {
                     string_q config = option.Format(STR_OPTION_CONFIGSTR);
@@ -112,7 +112,7 @@ bool COptions::handle_options(void) {
                     optionStream << opt << endl;
                 }
 
-                string_q initFmt = "    [{COMMAND}] = [{DEF_VAL}];";
+                string_q initFmt = "    [{LONGNAME}] = [{DEF_VAL}];";
                 if (option.is_customizable) {
                     initFmt = substitute(STR_CUSTOM_INIT, "[CTYPE]",
                                          (option.isStringType() ? "String"
@@ -227,7 +227,7 @@ string_q replaceCode(const string_q& orig, const string_q& which, const string_q
 
 //---------------------------------------------------------------------------------------------------
 void COptions::generate_toggle(const CCommandOption& option) {
-    string_q initFmt = "    [{COMMAND}] = [{DEF_VAL}];";
+    string_q initFmt = "    [{LONGNAME}] = [{DEF_VAL}];";
     if (option.is_customizable) {
         initFmt = substitute(STR_CUSTOM_INIT, "[CTYPE]",
                              (option.isStringType() ? "String"
@@ -251,7 +251,7 @@ void COptions::generate_toggle(const CCommandOption& option) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::generate_switch(const CCommandOption& option) {
-    string_q initFmt = "    [{COMMAND}] = [{DEF_VAL}];";
+    string_q initFmt = "    [{LONGNAME}] = [{DEF_VAL}];";
     if (option.is_customizable) {
         initFmt = substitute(STR_CUSTOM_INIT, "[CTYPE]",
                              (option.isStringType() ? "String"
@@ -275,7 +275,7 @@ void COptions::generate_switch(const CCommandOption& option) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::generate_flag(const CCommandOption& option) {
-    string_q initFmt = "    [{COMMAND}] = [{DEF_VAL}];";
+    string_q initFmt = "    [{LONGNAME}] = [{DEF_VAL}];";
     if (option.is_customizable) {
         initFmt = substitute(STR_CUSTOM_INIT, "[CTYPE]",
                              (option.isStringType() ? "String"
@@ -285,19 +285,19 @@ void COptions::generate_flag(const CCommandOption& option) {
 
     if (option.generate == "local") {
         if (option.isEnumList) {
-            localStream << option.Format("    CStringArray [{COMMAND}];") << endl;
+            localStream << option.Format("    CStringArray [{LONGNAME}];") << endl;
             if (!option.isConfig)
                 autoStream << option.Format(STR_AUTO_FLAG_ENUM_LIST) << endl;
         } else if (option.isStringList) {
-            localStream << option.Format("    CStringArray [{COMMAND}];") << endl;
+            localStream << option.Format("    CStringArray [{LONGNAME}];") << endl;
             if (!option.isConfig)
                 autoStream << option.Format(STR_AUTO_FLAG_STRING_LIST) << endl;
         } else if (option.isTopicList) {
-            localStream << option.Format("    CStringArray [{COMMAND}];") << endl;
+            localStream << option.Format("    CStringArray [{LONGNAME}];") << endl;
             if (!option.isConfig)
                 autoStream << option.Format(STR_AUTO_FLAG_STRING_LIST) << endl;
         } else if (option.isAddressList) {
-            localStream << option.Format("    CAddressArray [{COMMAND}];") << endl;
+            localStream << option.Format("    CAddressArray [{LONGNAME}];") << endl;
             if (!option.isConfig)
                 autoStream << option.Format(STR_AUTO_FLAG_ADDRESS_LIST) << endl;
         } else {
@@ -322,23 +322,23 @@ void COptions::generate_flag(const CCommandOption& option) {
 
     } else if (option.generate == "header" || option.isConfig) {
         if (option.isEnumList) {
-            initStream << option.Format("    [{COMMAND}].clear();") << endl;
-            headerStream << option.Format("    CStringArray [{COMMAND}];") << endl;
+            initStream << option.Format("    [{LONGNAME}].clear();") << endl;
+            headerStream << option.Format("    CStringArray [{LONGNAME}];") << endl;
             if (!option.isConfig)
                 autoStream << option.Format(STR_AUTO_FLAG_ENUM_LIST) << endl;
         } else if (option.isStringList) {
-            initStream << option.Format("    [{COMMAND}].clear();") << endl;
-            headerStream << option.Format("    CStringArray [{COMMAND}];") << endl;
+            initStream << option.Format("    [{LONGNAME}].clear();") << endl;
+            headerStream << option.Format("    CStringArray [{LONGNAME}];") << endl;
             if (!option.isConfig)
                 autoStream << option.Format(STR_AUTO_FLAG_STRING_LIST) << endl;
         } else if (option.isTopicList) {
-            initStream << option.Format("    [{COMMAND}].clear();") << endl;
-            headerStream << option.Format("    CTopicArray [{COMMAND}];") << endl;
+            initStream << option.Format("    [{LONGNAME}].clear();") << endl;
+            headerStream << option.Format("    CTopicArray [{LONGNAME}];") << endl;
             if (!option.isConfig)
                 autoStream << option.Format(STR_AUTO_FLAG_STRING_LIST) << endl;
         } else if (option.isAddressList) {
-            initStream << option.Format("    [{COMMAND}].clear();") << endl;
-            headerStream << option.Format("    CAddressArray [{COMMAND}];") << endl;
+            initStream << option.Format("    [{LONGNAME}].clear();") << endl;
+            headerStream << option.Format("    CAddressArray [{LONGNAME}];") << endl;
             if (!option.isConfig)
                 autoStream << option.Format(STR_AUTO_FLAG_ADDRESS_LIST) << endl;
         } else {
@@ -370,27 +370,27 @@ void COptions::generate_positional(const CCommandOption& option) {
     ostringstream posStream;
     if (option.generate == "local") {
         if (option.data_type == "list<addr>") {
-            localStream << substitute(option.Format("    CAddressArray [{COMMAND}];"), "addrs2", "addrs") << endl;
+            localStream << substitute(option.Format("    CAddressArray [{LONGNAME}];"), "addrs2", "addrs") << endl;
             posStream << option.Format(STR_ADDRLIST_PROCESSOR) << endl;
 
         } else if (option.data_type == "list<topic>") {
-            localStream << option.Format("    CTopicArray [{COMMAND}];") << endl;
+            localStream << option.Format("    CTopicArray [{LONGNAME}];") << endl;
             posStream << option.Format(STR_TOPICLIST_PROCESSOR) << endl;
 
         } else if (option.data_type == "list<fourbyte>") {
-            localStream << option.Format("    CFourbyteArray [{COMMAND}];") << endl;
+            localStream << option.Format("    CFourbyteArray [{LONGNAME}];") << endl;
             posStream << option.Format(STR_FOURBYTELIST_PROCESSOR) << endl;
 
         } else if (startsWith(option.data_type, "list<enum[")) {
-            localStream << option.Format("    CStringArray [{COMMAND}];") << endl;
+            localStream << option.Format("    CStringArray [{LONGNAME}];") << endl;
             posStream << option.Format(STR_ENUMLIST_PROCESSOR) << endl;
 
         } else if (startsWith(option.data_type, "enum[")) {
-            headerStream << option.Format("    string_q [{COMMAND}];") << endl;
+            headerStream << option.Format("    string_q [{LONGNAME}];") << endl;
             posStream << option.Format(STR_ENUM_PROCESSOR) << endl;
 
         } else if (option.data_type == "list<string>" || option.data_type == "list<path>") {
-            localStream << option.Format("    CStringArray [{COMMAND}];") << endl;
+            localStream << option.Format("    CStringArray [{LONGNAME}];") << endl;
             posStream << option.Format(STR_STRINGLIST_PROCESSOR) << endl;
 
         } else if (option.data_type == "list<blknum>") {
@@ -411,27 +411,27 @@ void COptions::generate_positional(const CCommandOption& option) {
 
     } else if (option.generate == "header" || option.isConfig) {
         if (option.data_type == "list<addr>") {
-            headerStream << substitute(option.Format("    CAddressArray [{COMMAND}];"), "addrs2", "addrs") << endl;
+            headerStream << substitute(option.Format("    CAddressArray [{LONGNAME}];"), "addrs2", "addrs") << endl;
             posStream << option.Format(STR_ADDRLIST_PROCESSOR) << endl;
 
         } else if (option.data_type == "list<topic>") {
-            headerStream << option.Format("    CTopicArray [{COMMAND}];") << endl;
+            headerStream << option.Format("    CTopicArray [{LONGNAME}];") << endl;
             posStream << option.Format(STR_TOPICLIST_PROCESSOR) << endl;
 
         } else if (option.data_type == "list<fourbyte>") {
-            headerStream << option.Format("    CFourbyteArray [{COMMAND}];") << endl;
+            headerStream << option.Format("    CFourbyteArray [{LONGNAME}];") << endl;
             posStream << option.Format(STR_FOURBYTELIST_PROCESSOR) << endl;
 
         } else if (startsWith(option.data_type, "list<enum[")) {
-            headerStream << option.Format("    CStringArray [{COMMAND}];") << endl;
+            headerStream << option.Format("    CStringArray [{LONGNAME}];") << endl;
             posStream << option.Format(STR_ENUMLIST_PROCESSOR) << endl;
 
         } else if (startsWith(option.data_type, "enum[")) {
-            headerStream << option.Format("    string_q [{COMMAND}];") << endl;
+            headerStream << option.Format("    string_q [{LONGNAME}];") << endl;
             posStream << option.Format(STR_ENUM_PROCESSOR) << endl;
 
         } else if (option.data_type == "list<string>" || option.data_type == "list<path>") {
-            headerStream << option.Format("    CStringArray [{COMMAND}];") << endl;
+            headerStream << option.Format("    CStringArray [{LONGNAME}];") << endl;
             posStream << option.Format(STR_STRINGLIST_PROCESSOR) << endl;
 
         } else if (option.data_type == "list<blknum>") {
@@ -537,100 +537,100 @@ bool COptions::writeCode(const string_q& fn) {
 }
 
 //---------------------------------------------------------------------------------------------------
-const char* STR_OPTION_CONFIGSTR = "    configs.push_back(\"`[{COMMAND}]`: [{OPTS}].\");";
+const char* STR_OPTION_CONFIGSTR = "    configs.push_back(\"`[{LONGNAME}]`: [{OPTS}].\");";
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_OPTION_NOTESTR = "    notes.push_back(\"[{OPTS}]\");";
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_OPTION_STR =
-    "    COption(\"[{COMMAND}]\", \"[{HOTKEY}]\", \"[{DATATYPE}]\", [{OPTS}], \"[{DESCRIPTION}]\"),";
+    "    COption(\"[{LONGNAME}]\", \"[{HOTKEY}]\", \"[{DATATYPE}]\", [{OPTS}], \"[{DESCRIPTION}]\"),";
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_AUTO_SWITCH =
-    "        } else if ([arg == \"-{HOTKEY}\" || ]arg == \"--[{COMMAND}]\") {\n"
-    "            [{COMMAND}] = true;\n";
+    "        } else if ([arg == \"-{HOTKEY}\" || ]arg == \"--[{LONGNAME}]\") {\n"
+    "            [{LONGNAME}] = true;\n";
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_AUTO_TOGGLE =
-    "        } else if ([arg == \"-{HOTKEY}\" || ]arg == \"--[{COMMAND}]\") {\n"
-    "            [{COMMAND}] = ![{COMMAND}];\n";
+    "        } else if ([arg == \"-{HOTKEY}\" || ]arg == \"--[{LONGNAME}]\") {\n"
+    "            [{LONGNAME}] = ![{LONGNAME}];\n";
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_AUTO_FLAG =
-    "        } else if ([startsWith(arg, \"-{HOTKEY}:\") || ]startsWith(arg, \"--[{COMMAND}]:\")) {\n"
-    "            [{COMMAND}] = substitute(substitute(arg, \"-[{HOTKEY}]:\", \"\"), \"--[{COMMAND}]:\", \"\");\n"
-    "        } else if ([arg == \"-{HOTKEY}\" || ]arg == \"--[{COMMAND}]\") {\n"
-    "            return flag_required(\"[{COMMAND}]\");\n";
+    "        } else if ([startsWith(arg, \"-{HOTKEY}:\") || ]startsWith(arg, \"--[{LONGNAME}]:\")) {\n"
+    "            [{LONGNAME}] = substitute(substitute(arg, \"-[{HOTKEY}]:\", \"\"), \"--[{LONGNAME}]:\", \"\");\n"
+    "        } else if ([arg == \"-{HOTKEY}\" || ]arg == \"--[{LONGNAME}]\") {\n"
+    "            return flag_required(\"[{LONGNAME}]\");\n";
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_AUTO_FLAG_ENUM =
-    "        } else if ([startsWith(arg, \"-{HOTKEY}:\") || ]startsWith(arg, \"--[{COMMAND}]:\")) {\n"
-    "            if (!confirmEnum(\"[{COMMAND}]\", [{COMMAND}], arg))\n"
+    "        } else if ([startsWith(arg, \"-{HOTKEY}:\") || ]startsWith(arg, \"--[{LONGNAME}]:\")) {\n"
+    "            if (!confirmEnum(\"[{LONGNAME}]\", [{LONGNAME}], arg))\n"
     "                return false;\n"
-    "        } else if ([arg == \"-{HOTKEY}\" || ]arg == \"--[{COMMAND}]\") {\n"
-    "            return flag_required(\"[{COMMAND}]\");\n";
+    "        } else if ([arg == \"-{HOTKEY}\" || ]arg == \"--[{LONGNAME}]\") {\n"
+    "            return flag_required(\"[{LONGNAME}]\");\n";
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_AUTO_FLAG_ENUM_LIST =
-    "        } else if ([startsWith(arg, \"-{HOTKEY}:\") || ]startsWith(arg, \"--[{COMMAND}]:\")) {\n"
-    "            string_q [{COMMAND}_tmp];\n"
-    "            if (!confirmEnum(\"[{COMMAND}]\", [{COMMAND}]_tmp, arg))\n"
+    "        } else if ([startsWith(arg, \"-{HOTKEY}:\") || ]startsWith(arg, \"--[{LONGNAME}]:\")) {\n"
+    "            string_q [{LONGNAME}_tmp];\n"
+    "            if (!confirmEnum(\"[{LONGNAME}]\", [{LONGNAME}]_tmp, arg))\n"
     "                return false;\n"
-    "            [{COMMAND}].push_back([{COMMAND}]_tmp);\n"
-    "        } else if ([arg == \"-{HOTKEY}\" || ]arg == \"--[{COMMAND}]\") {\n"
-    "            return flag_required(\"[{COMMAND}]\");\n";
+    "            [{LONGNAME}].push_back([{LONGNAME}]_tmp);\n"
+    "        } else if ([arg == \"-{HOTKEY}\" || ]arg == \"--[{LONGNAME}]\") {\n"
+    "            return flag_required(\"[{LONGNAME}]\");\n";
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_AUTO_FLAG_STRING_LIST =
-    "        } else if ([startsWith(arg, \"-{HOTKEY}:\") || ]startsWith(arg, \"--[{COMMAND}]:\")) {\n"
-    "            arg = substitute(substitute(arg, \"-[{HOTKEY}]:\", \"\"), \"--[{COMMAND}]:\", \"\");\n"
-    "            [{COMMAND}].push_back(arg);\n"
-    "        } else if ([arg == \"-{HOTKEY}\" || ]arg == \"--[{COMMAND}]\") {\n"
-    "            return flag_required(\"[{COMMAND}]\");\n";
+    "        } else if ([startsWith(arg, \"-{HOTKEY}:\") || ]startsWith(arg, \"--[{LONGNAME}]:\")) {\n"
+    "            arg = substitute(substitute(arg, \"-[{HOTKEY}]:\", \"\"), \"--[{LONGNAME}]:\", \"\");\n"
+    "            [{LONGNAME}].push_back(arg);\n"
+    "        } else if ([arg == \"-{HOTKEY}\" || ]arg == \"--[{LONGNAME}]\") {\n"
+    "            return flag_required(\"[{LONGNAME}]\");\n";
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_AUTO_FLAG_ADDRESS_LIST =
-    "        } else if ([startsWith(arg, \"-{HOTKEY}:\") || ]startsWith(arg, \"--[{COMMAND}]:\")) {\n"
-    "            arg = substitute(substitute(arg, \"-[{HOTKEY}]:\", \"\"), \"--[{COMMAND}]:\", \"\");\n"
-    "            if (!parseAddressList(this, [{COMMAND}], arg))\n"
+    "        } else if ([startsWith(arg, \"-{HOTKEY}:\") || ]startsWith(arg, \"--[{LONGNAME}]:\")) {\n"
+    "            arg = substitute(substitute(arg, \"-[{HOTKEY}]:\", \"\"), \"--[{LONGNAME}]:\", \"\");\n"
+    "            if (!parseAddressList(this, [{LONGNAME}], arg))\n"
     "                return false;\n"
-    "        } else if ([arg == \"-{HOTKEY}\" || ]arg == \"--[{COMMAND}]\") {\n"
-    "            return flag_required(\"[{COMMAND}]\");\n";
+    "        } else if ([arg == \"-{HOTKEY}\" || ]arg == \"--[{LONGNAME}]\") {\n"
+    "            return flag_required(\"[{LONGNAME}]\");\n";
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_AUTO_FLAG_BLOCKNUM =
-    "        } else if ([startsWith(arg, \"-{HOTKEY}:\") || ]startsWith(arg, \"--[{COMMAND}]:\")) {\n"
-    "            if (!confirmBlockNum(\"[{COMMAND}]\", [{COMMAND}], arg, latest))\n"
+    "        } else if ([startsWith(arg, \"-{HOTKEY}:\") || ]startsWith(arg, \"--[{LONGNAME}]:\")) {\n"
+    "            if (!confirmBlockNum(\"[{LONGNAME}]\", [{LONGNAME}], arg, latest))\n"
     "                return false;\n"
-    "        } else if ([arg == \"-{HOTKEY}\" || ]arg == \"--[{COMMAND}]\") {\n"
-    "            return flag_required(\"[{COMMAND}]\");\n";
+    "        } else if ([arg == \"-{HOTKEY}\" || ]arg == \"--[{LONGNAME}]\") {\n"
+    "            return flag_required(\"[{LONGNAME}]\");\n";
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_AUTO_FLAG_ADDRESS =
-    "        } else if ([startsWith(arg, \"-{HOTKEY}:\") || ]startsWith(arg, \"--[{COMMAND}]:\")) {\n"
-    "            [{COMMAND}] = substitute(substitute(arg, \"-[{HOTKEY}]:\", \"\"), \"--[{COMMAND}]:\", \"\");\n"
-    "            if (!isAddress([{COMMAND}]))\n"
-    "                return usage(\"The provided value (\" + [{COMMAND}] + \") is not a properly formatted "
+    "        } else if ([startsWith(arg, \"-{HOTKEY}:\") || ]startsWith(arg, \"--[{LONGNAME}]:\")) {\n"
+    "            [{LONGNAME}] = substitute(substitute(arg, \"-[{HOTKEY}]:\", \"\"), \"--[{LONGNAME}]:\", \"\");\n"
+    "            if (!isAddress([{LONGNAME}]))\n"
+    "                return usage(\"The provided value (\" + [{LONGNAME}] + \") is not a properly formatted "
     "address.\");\n"
-    "        } else if ([arg == \"-{HOTKEY}\" || ]arg == \"--[{COMMAND}]\") {\n"
-    "            return flag_required(\"[{COMMAND}]\");\n";
+    "        } else if ([arg == \"-{HOTKEY}\" || ]arg == \"--[{LONGNAME}]\") {\n"
+    "            return flag_required(\"[{LONGNAME}]\");\n";
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_AUTO_FLAG_UINT =
-    "        } else if ([startsWith(arg, \"-{HOTKEY}:\") || ]startsWith(arg, \"--[{COMMAND}]:\")) {\n"
-    "            if (!confirmUint(\"[{COMMAND}]\", [{COMMAND}], arg))\n"
+    "        } else if ([startsWith(arg, \"-{HOTKEY}:\") || ]startsWith(arg, \"--[{LONGNAME}]:\")) {\n"
+    "            if (!confirmUint(\"[{LONGNAME}]\", [{LONGNAME}], arg))\n"
     "                return false;\n"
-    "        } else if ([arg == \"-{HOTKEY}\" || ]arg == \"--[{COMMAND}]\") {\n"
-    "            return flag_required(\"[{COMMAND}]\");\n";
+    "        } else if ([arg == \"-{HOTKEY}\" || ]arg == \"--[{LONGNAME}]\") {\n"
+    "            return flag_required(\"[{LONGNAME}]\");\n";
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_AUTO_FLAG_DOUBLE =
-    "        } else if ([startsWith(arg, \"-{HOTKEY}:\") || ]startsWith(arg, \"--[{COMMAND}]:\")) {\n"
-    "            if (!confirmDouble(\"[{COMMAND}]\", [{COMMAND}], arg))\n"
+    "        } else if ([startsWith(arg, \"-{HOTKEY}:\") || ]startsWith(arg, \"--[{LONGNAME}]:\")) {\n"
+    "            if (!confirmDouble(\"[{LONGNAME}]\", [{LONGNAME}], arg))\n"
     "                return false;\n"
-    "        } else if ([arg == \"-{HOTKEY}\" || ]arg == \"--[{COMMAND}]\") {\n"
-    "            return flag_required(\"[{COMMAND}]\");\n";
+    "        } else if ([arg == \"-{HOTKEY}\" || ]arg == \"--[{LONGNAME}]\") {\n"
+    "            return flag_required(\"[{LONGNAME}]\");\n";
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_CHECK_BUILTIN =
@@ -652,47 +652,47 @@ const char* STR_TXLIST_PROCESSOR =
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_ADDRLIST_PROCESSOR =
-    "            } else if (!parseAddressList(this, [{COMMAND}], arg))\n"
+    "            } else if (!parseAddressList(this, [{LONGNAME}], arg))\n"
     "                return false;\n";
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_TOPICLIST_PROCESSOR =
-    "            } else if (!parseTopicList2(this, [{COMMAND}], arg))\n"
+    "            } else if (!parseTopicList2(this, [{LONGNAME}], arg))\n"
     "                return false;\n";
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_FOURBYTELIST_PROCESSOR =
-    "            } else if (!parseFourbyteList(this, [{COMMAND}], arg))\n"
+    "            } else if (!parseFourbyteList(this, [{LONGNAME}], arg))\n"
     "                return false;\n";
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_STRINGLIST_PROCESSOR =
-    "            } else if (!parseStringList2(this, [{COMMAND}], arg))\n"
+    "            } else if (!parseStringList2(this, [{LONGNAME}], arg))\n"
     "                return false;\n";
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_ENUMLIST_PROCESSOR =
-    "            string_q [{COMMAND}_tmp];\n"
-    "            if (!confirmEnum(\"[{COMMAND}]\", [{COMMAND}]_tmp, arg))\n"
+    "            string_q [{LONGNAME}_tmp];\n"
+    "            if (!confirmEnum(\"[{LONGNAME}]\", [{LONGNAME}]_tmp, arg))\n"
     "                return false;\n"
-    "            [{COMMAND}].push_back([{COMMAND}]_tmp);\n";
+    "            [{LONGNAME}].push_back([{LONGNAME}]_tmp);\n";
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_ENUM_PROCESSOR =
-    "            if (![{COMMAND}].empty())\n"
-    "                return usage(\"Please specify only one [{COMMAND}].\");\n"
-    "            if (!confirmEnum(\"[{COMMAND}]\", [{COMMAND}], arg))\n"
+    "            if (![{LONGNAME}].empty())\n"
+    "                return usage(\"Please specify only one [{LONGNAME}].\");\n"
+    "            if (!confirmEnum(\"[{LONGNAME}]\", [{LONGNAME}], arg))\n"
     "                return false;\n";
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_CUSTOM_INIT =
     "    // clang-format off\n"
-    "    [{COMMAND}] = getGlobalConfig(\"[{TOOL}]\")->getConfig[CTYPE](\"settings\", \"[{COMMAND}]\", "
+    "    [{LONGNAME}] = getGlobalConfig(\"[{TOOL}]\")->getConfig[CTYPE](\"settings\", \"[{LONGNAME}]\", "
     "[{DEF_VAL}]);\n"
     "    // clang-format on";
 
 //---------------------------------------------------------------------------------------------------
-const char* STR_DEFAULT_ASSIGNMENT = "    [{REAL_TYPE}] [{COMMAND}] = [{DEF_VAL}];";
+const char* STR_DEFAULT_ASSIGNMENT = "    [{REAL_TYPE}] [{LONGNAME}] = [{DEF_VAL}];";
 
 //---------------------------------------------------------------------------------------------------
-const char* STR_DECLARATION = "    [{REAL_TYPE}] [{COMMAND}];";
+const char* STR_DECLARATION = "    [{REAL_TYPE}] [{LONGNAME}];";

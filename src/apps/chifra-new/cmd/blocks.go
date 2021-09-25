@@ -14,26 +14,92 @@ package cmd
  *-------------------------------------------------------------------------------------------*/
 
 import (
-	"fmt"
+	"os"
+	"strconv"
 
 	"github.com/spf13/cobra"
 )
 
+type blocksOptionsType struct {
+	hashes     bool
+	uncles     bool
+	trace      bool
+	apps       bool
+	uniq       bool
+	uniq_tx    bool
+	count      bool
+	cache      bool
+	list       uint64
+	list_count uint64
+}
+
+var BlocksOpts blocksOptionsType
+
 // blocksCmd represents the blocks command
 var blocksCmd = &cobra.Command{
-	Use:   "blocks [flags] <block> [block...]",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+	Use: `blocks [flags] <block> [block...]
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
-	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("blocks called")
-	},
+Arguments:
+  blocks - a space-separated list of one or more block identifiers (required)`,
+	Short: "retrieve one or more blocks from the chain or local cache",
+	Long: `Purpose:
+  Retrieve one or more blocks from the chain or local cache.`,
+	Run: runBlocks,
 }
 
 func init() {
+	blocksCmd.Flags().SortFlags = false
+	blocksCmd.PersistentFlags().SortFlags = false
+	blocksCmd.SetOut(os.Stderr)
+
+	blocksCmd.Flags().BoolVarP(&BlocksOpts.hashes, "hashes", "e", false, "display only transaction hashes, default is to display full transaction detail")
+	blocksCmd.Flags().BoolVarP(&BlocksOpts.uncles, "uncles", "U", false, "display uncle blocks (if any) instead of the requested block")
+	blocksCmd.Flags().BoolVarP(&BlocksOpts.trace, "trace", "t", false, "export the traces from the block as opposed to the block data")
+	blocksCmd.Flags().BoolVarP(&BlocksOpts.apps, "apps", "a", false, "display only the list of address appearances in the block")
+	blocksCmd.Flags().BoolVarP(&BlocksOpts.uniq, "uniq", "u", false, "display only the list of uniq address appearances in the block")
+	blocksCmd.Flags().BoolVarP(&BlocksOpts.uniq_tx, "uniq_tx", "n", false, "display only the list of uniq address appearances in each transaction")
+	blocksCmd.Flags().BoolVarP(&BlocksOpts.count, "count", "c", false, "display the number of the lists of appearances for --apps, --uniq, or --uniq_tx")
+	blocksCmd.Flags().BoolVarP(&BlocksOpts.cache, "cache", "o", false, "force a write of the block to the cache")
+	blocksCmd.Flags().Uint64VarP(&BlocksOpts.list, "list", "l", 0, "summary list of blocks running backwards from latest block minus num")
+	blocksCmd.Flags().Uint64VarP(&BlocksOpts.list_count, "list_count", "C", 0, "the number of blocks to report for --list option")
+
 	rootCmd.AddCommand(blocksCmd)
+}
+
+func runBlocks(cmd *cobra.Command, args []string) {
+	options := ""
+	if BlocksOpts.hashes {
+		options += " --hashes"
+	}
+	if BlocksOpts.uncles {
+		options += " --uncles"
+	}
+	if BlocksOpts.trace {
+		options += " --trace"
+	}
+	if BlocksOpts.apps {
+		options += " --apps"
+	}
+	if BlocksOpts.uniq {
+		options += " --uniq"
+	}
+	if BlocksOpts.uniq_tx {
+		options += " --uniq_tx"
+	}
+	if BlocksOpts.count {
+		options += " --count"
+	}
+	if BlocksOpts.cache {
+		options += " --cache"
+	}
+	if BlocksOpts.list > 0 {
+		options += " --list " + strconv.FormatUint(BlocksOpts.list, 10)
+	}
+	if BlocksOpts.list_count > 0 {
+		options += " --list_count " + strconv.FormatUint(BlocksOpts.list_count, 10)
+	}
+	for _, arg := range args {
+		options += " " + arg
+	}
+	PassItOn("/Users/jrush/.local/bin/chifra/getBlocks", options, strconv.FormatUint(0, 10))
 }

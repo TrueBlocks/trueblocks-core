@@ -14,11 +14,28 @@ package cmd
  *-------------------------------------------------------------------------------------------*/
 
 import (
-	"fmt"
 	"os"
+	"strconv"
 
 	"github.com/spf13/cobra"
 )
+
+type namesOptionsType struct {
+	expand      bool
+	match_case  bool
+	all         bool
+	custom      bool
+	prefund     bool
+	named       bool
+	addr        bool
+	collections bool
+	tags        bool
+	to_custom   bool
+	clean       bool
+	autoname    string
+}
+
+var NamesOpts namesOptionsType
 
 // namesCmd represents the names command
 var namesCmd = &cobra.Command{
@@ -29,29 +46,70 @@ Arguments:
 	Short: "query addresses or names of well known accounts",
 	Long: `Purpose:
   Query addresses or names of well known accounts.`,
-	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("names called")
-	},
+	Run: runNames,
 }
 
 func init() {
-	rootCmd.AddCommand(namesCmd)
-
 	namesCmd.Flags().SortFlags = false
 	namesCmd.PersistentFlags().SortFlags = false
 	namesCmd.SetOut(os.Stderr)
-	namesCmd.Flags().StringP("terms", "", "", "a space separated list of one or more search terms (required)")
-	namesCmd.Flags().BoolP("expand", "e", false, "expand search to include all fields (default searches name, address, and symbol only)")
-	namesCmd.Flags().BoolP("match_case", "m", false, "do case-sensitive search")
-	namesCmd.Flags().BoolP("all", "l", false, "include all accounts in the search")
-	namesCmd.Flags().BoolP("custom", "c", false, "include your custom named accounts")
-	namesCmd.Flags().BoolP("prefund", "p", false, "include prefund accounts")
-	namesCmd.Flags().BoolP("named", "n", false, "include well know token and airdrop addresses in the search")
-	namesCmd.Flags().BoolP("addr", "a", false, "display only addresses in the results (useful for scripting)")
-	namesCmd.Flags().BoolP("collections", "s", false, "display collections data")
-	namesCmd.Flags().BoolP("tags", "g", false, "export the list of tags and subtags only")
-	namesCmd.Flags().BoolP("to_custom", "u", false, "for editCmd only, is the edited name a custom name or not")
-	namesCmd.Flags().BoolP("clean", "C", false, "clean the data (addrs to lower case, sort by addr)")
-	namesCmd.Flags().StringP("autoname", "A", "", "an address assumed to be a token, added automatically to names database if true")
-	namesCmd.Flags().MarkHidden("terms")
+
+	namesCmd.Flags().BoolVarP(&NamesOpts.expand, "expand", "e", false, "expand search to include all fields (default searches name, address, and symbol only)")
+	namesCmd.Flags().BoolVarP(&NamesOpts.match_case, "match_case", "m", false, "do case-sensitive search")
+	namesCmd.Flags().BoolVarP(&NamesOpts.all, "all", "l", false, "include all accounts in the search")
+	namesCmd.Flags().BoolVarP(&NamesOpts.custom, "custom", "c", false, "include your custom named accounts")
+	namesCmd.Flags().BoolVarP(&NamesOpts.prefund, "prefund", "p", false, "include prefund accounts")
+	namesCmd.Flags().BoolVarP(&NamesOpts.named, "named", "n", false, "include well know token and airdrop addresses in the search")
+	namesCmd.Flags().BoolVarP(&NamesOpts.addr, "addr", "a", false, "display only addresses in the results (useful for scripting)")
+	namesCmd.Flags().BoolVarP(&NamesOpts.collections, "collections", "s", false, "display collections data")
+	namesCmd.Flags().BoolVarP(&NamesOpts.tags, "tags", "g", false, "export the list of tags and subtags only")
+	namesCmd.Flags().BoolVarP(&NamesOpts.to_custom, "to_custom", "u", false, "for editCmd only, is the edited name a custom name or not")
+	namesCmd.Flags().BoolVarP(&NamesOpts.clean, "clean", "C", false, "clean the data (addrs to lower case, sort by addr)")
+	namesCmd.Flags().StringVarP(&NamesOpts.autoname, "autoname", "A", "", "an address assumed to be a token, added automatically to names database if true")
+
+	rootCmd.AddCommand(namesCmd)
+}
+
+func runNames(cmd *cobra.Command, args []string) {
+	options := ""
+	if NamesOpts.expand {
+		options += " --expand"
+	}
+	if NamesOpts.match_case {
+		options += " --match_case"
+	}
+	if NamesOpts.all {
+		options += " --all"
+	}
+	if NamesOpts.custom {
+		options += " --custom"
+	}
+	if NamesOpts.prefund {
+		options += " --prefund"
+	}
+	if NamesOpts.named {
+		options += " --named"
+	}
+	if NamesOpts.addr {
+		options += " --addr"
+	}
+	if NamesOpts.collections {
+		options += " --collections"
+	}
+	if NamesOpts.tags {
+		options += " --tags"
+	}
+	if NamesOpts.to_custom {
+		options += " --to_custom"
+	}
+	if NamesOpts.clean {
+		options += " --clean"
+	}
+	if len(NamesOpts.autoname) > 0 {
+		options += " --autoname " + NamesOpts.autoname
+	}
+	for _, arg := range args {
+		options += " " + arg
+	}
+	PassItOn("/Users/jrush/.local/bin/chifra/ethNames", options, strconv.FormatUint(0, 10))
 }

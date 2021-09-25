@@ -25,21 +25,22 @@
 
 namespace qblocks {
 
+ostream& out = cerr;
 //--------------------------------------------------------------------------------
 bool COptionsBase::usage(const string_q& errMsg) const {
     bool quitting = !(errMsg.empty() || contains(errMsg, "Invalid option:") || isApiMode());
-    cerr << get_errmsg(errMsg + (quitting ? " Quitting..." : ""));
+    out << get_errmsg(errMsg + (quitting ? " Quitting..." : ""));
     if (isReadme) {
-        cerr << get_header();
-        cerr << get_purpose();
+        out << get_header();
+        out << get_purpose();
     } else {
-        cerr << get_purpose();
-        cerr << get_header();
+        out << get_purpose();
+        out << get_header();
     }
-    cerr << get_description();
-    cerr << get_notes();
-    cerr << get_configs();
-    cerr << get_version();
+    out << get_description();
+    out << get_notes();
+    out << get_configs();
+    out << get_version();
     return false;
 }
 
@@ -157,7 +158,7 @@ string_q COptionsBase::get_description(void) const {
         if (positionals.size()) {
             os << endl << "Arguments:" << endl;
             for (auto option : positionals) {
-                string_q req = (!option.is_optional ? " (required)" : "");
+                string_q req = (option.is_required ? " (required)" : "");
                 os << "  " << substitute(option.longName, "addrs2", "addrs") << " - " << option.description << req
                    << endl;
             }
@@ -346,7 +347,7 @@ string_q COptionsBase::get_positionals(COptionArray& pos) const {
             if (!os.str().empty())
                 os << " ";
             string_q str = clean_positional(option.longName);
-            if (option.is_optional) {
+            if (!option.is_required) {
                 replace(str, "<mode> [mode...]", "[mode...]");
                 replace(str, "<term> [term...]", "[term...]");
             }
@@ -445,9 +446,9 @@ void errorMessage(const string_q& msg) {
     } else {
         string_q message = substitute(substitute(msg, "|", "\n  "), "$CONFIG", configPath("trueBlocks.toml"));
         message = colorize(message);
-        cerr << endl
-             << cRed << "  Warning: " << cOff << message << (endsWith(msg, '.') ? "" : ".") << " Quitting..." << endl
-             << endl;
+        out << endl
+            << cRed << "  Warning: " << cOff << message << (endsWith(msg, '.') ? "" : ".") << " Quitting..." << endl
+            << endl;
     }
 }
 

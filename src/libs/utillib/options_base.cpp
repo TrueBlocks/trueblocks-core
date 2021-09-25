@@ -77,7 +77,6 @@ bool COptionsBase::prePrepareArguments(CStringArray& separatedArgs_, int argCoun
             if (cleaned_.size())
                 cleaned_.pop_back();
         } else if (arg == "--readme") {
-            setenv("GO_HELP", "false", true);
             isReadme = true;
             cleaned_.push_back(arg);
         } else {
@@ -544,7 +543,7 @@ bool COptionsBase::confirmUint(const string_q& name, uint64_t& value, const stri
     COption option;
     if (!findParam(name, option))
         return usage("Unknown parameter `" + name + "'.");
-    if (!contains(option.type, "uint") && !contains(option.type, "blknum"))
+    if (!contains(option.option_type, "uint") && !contains(option.option_type, "blknum"))
         return true;
 
     string_q arg = argIn;
@@ -575,7 +574,7 @@ bool COptionsBase::confirmDouble(const string_q& name, double& value, const stri
     COption option;
     if (!findParam(name, option))
         return usage("Unknown parameter `" + name + "'.");
-    if (!contains(option.type, "double"))
+    if (!contains(option.option_type, "double"))
         return true;
 
     string_q arg = argIn;
@@ -597,7 +596,7 @@ bool COptionsBase::confirmBlockNum(const string_q& name, blknum_t& value, const 
     COption option;
     if (!findParam(name, option))
         return usage("Unknown parameter `" + name + "'.");
-    if (!contains(option.type, "uint") && !contains(option.type, "blknum"))
+    if (!contains(option.option_type, "uint") && !contains(option.option_type, "blknum"))
         return true;
 
     string_q arg = argIn;
@@ -605,7 +604,7 @@ bool COptionsBase::confirmBlockNum(const string_q& name, blknum_t& value, const 
     replace(arg, name + ":", "");
     replaceAll(arg, "-", "");
 
-    if (contains(option.type, "blknum")) {
+    if (contains(option.option_type, "blknum")) {
         if (arg == "first") {
             value = 0;
             return true;
@@ -630,10 +629,10 @@ bool COptionsBase::confirmEnum(const string_q& name, string_q& value, const stri
     COption option;
     if (!findParam(name, option))
         return usage("Unknown parameter `" + name + "'.");
-    if (option.type.empty() || !contains(option.type, "enum["))
+    if (option.option_type.empty() || !contains(option.option_type, "enum["))
         return true;
 
-    string_q type = option.type;
+    string_q type = option.option_type;
     replace(type, "*", "");
     replace(type, "enum", "");
     replace(type, "list<", "");

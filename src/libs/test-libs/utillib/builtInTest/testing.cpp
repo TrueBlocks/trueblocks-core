@@ -68,9 +68,9 @@ int main(int argc, const char* argv[]) {
 //         bool combine = false;
 //         for (const auto& option : parameters) {
 //             if (!option.permitted.empty()) {
-//                 string_q hotKey = option.hotKey;
+//                 string_q hot Key = option.hot Key;
 //                 string_q longName = option.longName;
-//                 if (hotKey == arg || startsWith(longName, arg)) {
+//                 if (hot Key == arg || startsWith(longName, arg)) {
 //                     // We want to pull the next parameter into this one since it's a ':' param
 //                     combine = true;
 //                 }

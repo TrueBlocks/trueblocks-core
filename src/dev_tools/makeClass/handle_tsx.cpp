@@ -43,7 +43,7 @@ bool COptions::handle_tsx(void) {
     string_q current;
     jsRouteStream << "export const routes = [" << endl;
     for (auto route : routes) {
-        if (!route.hotkey.empty()) {
+        if (!route.hotKey.empty()) {
             if (!firstHotkey)
                 jsHotkeyStream << endl;
             jsHotkeyStream << route.Format(STR_MOUSETRAP);
@@ -152,7 +152,7 @@ bool COptions::handle_tsx_type(const CClassDefinition& classDef) {
 
 //------------------------------------------------------------------------------------------------------------
 void loadRoutes(const string_q& fn) {
-    CStringArray fields = {"api_route", "hotkey", "description"};
+    CStringArray fields = {"api_route", "hotKey", "description"};
 
     CStringArray lines;
     asciiFileToLines(fn, lines);
