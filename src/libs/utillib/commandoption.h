@@ -42,6 +42,7 @@ class CCommandOption : public CBaseNode {
     string_q data_type;
     string_q real_type;
     string_q go_type;
+    string_q go_flagtype;
     string_q summary;
     string_q description;
 
@@ -158,6 +159,7 @@ inline void CCommandOption::initialize(void) {
     data_type = "";
     real_type = "";
     go_type = "";
+    go_flagtype = "";
     summary = "";
     description = "";
 
@@ -204,6 +206,7 @@ inline void CCommandOption::duplicate(const CCommandOption& co) {
     data_type = co.data_type;
     real_type = co.real_type;
     go_type = co.go_type;
+    go_flagtype = co.go_flagtype;
     summary = co.summary;
     description = co.description;
 
@@ -280,6 +283,6 @@ inline string_q getDocsPathTemplates(const string_q& _part) {
 inline string_q getDocsPathReadmes(const string_q& _part) {
     return getDocsPath("readmes/" + _part);
 }
-extern string_q clean_positional(const string& progName, const string_q& strIn);
+extern string_q clean_positionals(const string& progName, const string_q& strIn);
 // EXISTING_CODE
 }  // namespace qblocks

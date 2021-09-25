@@ -12,10 +12,14 @@ package cmd
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+/*
+ * Parts of this file were generated with makeClass --gocmds.
+ */
 
 import (
+	"errors"
+	"fmt"
 	"os"
-	"strconv"
 
 	"github.com/spf13/cobra"
 )
@@ -31,30 +35,29 @@ type tracesOptionsType struct {
 
 var TracesOpts tracesOptionsType
 
-// tracesCmd represents the traces command
 var tracesCmd = &cobra.Command{
-	Use: `traces [flags] <tx_id> [tx_id...]
-
-Arguments:
-  transactions - a space-separated list of one or more transaction identifiers (required)`,
-	Short: "retrieve traces for the given transaction(s)",
-	Long: `Purpose:
-  Retrieve traces for the given transaction(s).`,
-	Run: runTraces,
+	Use:   usageTraces,
+	Short: shortTraces,
+	Long:  longTraces,
+	Run:   runTraces,
+	Args:  ValidatePositionals(validateArgs, cobra.MinimumNArgs(1)),
 }
 
 func init() {
-	tracesCmd.Flags().SortFlags = false
-	tracesCmd.PersistentFlags().SortFlags = false
 	tracesCmd.SetOut(os.Stderr)
 
+	tracesCmd.Flags().SortFlags = false
+	tracesCmd.PersistentFlags().SortFlags = false
 	tracesCmd.Flags().BoolVarP(&TracesOpts.articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
 	tracesCmd.Flags().StringVarP(&TracesOpts.filter, "filter", "f", "", "call the node's trace_filter routine with bang-seperated filter")
 	tracesCmd.Flags().BoolVarP(&TracesOpts.statediff, "statediff", "d", false, "export state diff traces (not implemented)")
 	tracesCmd.Flags().BoolVarP(&TracesOpts.count, "count", "c", false, "show the number of traces for the transaction only (fast)")
-	tracesCmd.Flags().BoolVarP(&TracesOpts.skip_ddos, "skip_ddos", "s", false, "skip over the 2016 ddos during export ('on' by default)")
-	tracesCmd.Flags().Uint64VarP(&TracesOpts.max, "max", "m", 0, "if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250)")
+	tracesCmd.Flags().BoolVarP(&TracesOpts.skip_ddos, "skip_ddos", "s", false, "skip over the 2016 ddos during export ('on' by default) (hidden)")
+	tracesCmd.Flags().Uint64VarP(&TracesOpts.max, "max", "m", 0, "if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250) (hidden)")
+	tracesCmd.Flags().SortFlags = false
+	tracesCmd.PersistentFlags().SortFlags = false
 
+	PostNotes = "THIS IS A POST NOTE"
 	rootCmd.AddCommand(tracesCmd)
 }
 
@@ -76,10 +79,28 @@ func runTraces(cmd *cobra.Command, args []string) {
 		options += " --skip_ddos"
 	}
 	if TracesOpts.max > 0 {
-		options += " --max " + strconv.FormatUint(TracesOpts.max, 10)
+		options += " --max " + fmt.Sprintf("%d", TracesOpts.max)
 	}
+	arguments := ""
 	for _, arg := range args {
-		options += " " + arg
+		arguments += " " + arg
 	}
-	PassItOn("/Users/jrush/.local/bin/chifra/getTraces", options, strconv.FormatUint(0, 10))
+	PassItOn("/Users/jrush/.local/bin/chifra/getTraces", options, arguments)
+}
+
+var usageTraces = `traces [flags] <tx_id> [tx_id...]
+
+Arguments:
+  transactions - a space-separated list of one or more transaction identifiers (required)`
+
+var shortTraces = "retrieve traces for the given transaction(s)"
+
+var longTraces = `Purpose:
+  Retrieve traces for the given transaction(s).`
+
+func validateArgs(cmd *cobra.Command, args []string) error {
+	if len(args) > 0 && args[0] == "12" {
+		return ErrFunc(cmd, errors.New("Invalid shit baby "+args[0]))
+	}
+	return nil
 }

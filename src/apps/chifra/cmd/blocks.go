@@ -12,10 +12,13 @@ package cmd
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+/*
+ * Parts of this file were generated with makeClass --gocmds.
+ */
 
 import (
+	"fmt"
 	"os"
-	"strconv"
 
 	"github.com/spf13/cobra"
 )
@@ -48,10 +51,10 @@ Arguments:
 }
 
 func init() {
-	blocksCmd.Flags().SortFlags = false
-	blocksCmd.PersistentFlags().SortFlags = false
 	blocksCmd.SetOut(os.Stderr)
 
+	blocksCmd.Flags().SortFlags = false
+	blocksCmd.PersistentFlags().SortFlags = false
 	blocksCmd.Flags().BoolVarP(&BlocksOpts.hashes, "hashes", "e", false, "display only transaction hashes, default is to display full transaction detail")
 	blocksCmd.Flags().BoolVarP(&BlocksOpts.uncles, "uncles", "U", false, "display uncle blocks (if any) instead of the requested block")
 	blocksCmd.Flags().BoolVarP(&BlocksOpts.trace, "trace", "t", false, "export the traces from the block as opposed to the block data")
@@ -60,8 +63,10 @@ func init() {
 	blocksCmd.Flags().BoolVarP(&BlocksOpts.uniq_tx, "uniq_tx", "n", false, "display only the list of uniq address appearances in each transaction")
 	blocksCmd.Flags().BoolVarP(&BlocksOpts.count, "count", "c", false, "display the number of the lists of appearances for --apps, --uniq, or --uniq_tx")
 	blocksCmd.Flags().BoolVarP(&BlocksOpts.cache, "cache", "o", false, "force a write of the block to the cache")
-	blocksCmd.Flags().Uint64VarP(&BlocksOpts.list, "list", "l", 0, "summary list of blocks running backwards from latest block minus num")
-	blocksCmd.Flags().Uint64VarP(&BlocksOpts.list_count, "list_count", "C", 0, "the number of blocks to report for --list option")
+	blocksCmd.Flags().Uint64VarP(&BlocksOpts.list, "list", "l", 0, "summary list of blocks running backwards from latest block minus num (hidden)")
+	blocksCmd.Flags().Uint64VarP(&BlocksOpts.list_count, "list_count", "C", 0, "the number of blocks to report for --list option (hidden)")
+	blocksCmd.Flags().SortFlags = false
+	blocksCmd.PersistentFlags().SortFlags = false
 
 	rootCmd.AddCommand(blocksCmd)
 }
@@ -93,13 +98,14 @@ func runBlocks(cmd *cobra.Command, args []string) {
 		options += " --cache"
 	}
 	if BlocksOpts.list > 0 {
-		options += " --list " + strconv.FormatUint(BlocksOpts.list, 10)
+		options += " --list " + fmt.Sprintf("%d", BlocksOpts.list)
 	}
 	if BlocksOpts.list_count > 0 {
-		options += " --list_count " + strconv.FormatUint(BlocksOpts.list_count, 10)
+		options += " --list_count " + fmt.Sprintf("%d", BlocksOpts.list_count)
 	}
-	for _, arg := range args {
-		options += " " + arg
+	arguments := ""
+    for _, arg := range args {
+		arguments += " " + arg
 	}
-	PassItOn("/Users/jrush/.local/bin/chifra/getBlocks", options, strconv.FormatUint(0, 10))
+	PassItOn("/Users/jrush/.local/bin/chifra/getBlocks", options, arguments)
 }

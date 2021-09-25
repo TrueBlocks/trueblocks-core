@@ -16,9 +16,11 @@ package cmd
 import (
 	"bufio"
 	"fmt"
+	"io"
 	"os"
 	"os/exec"
 	"strconv"
+	"strings"
 
 	"github.com/spf13/cobra"
 
@@ -40,39 +42,38 @@ var RootOpts rootOptTypes
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "chifra",
-	Short: "A brief description of your application",
-	Long: `A longer description that spans multiple lines and likely contains
-examples and usage of using your application. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
-	// Uncomment the following line if your bare application
-	// has an action associated with it:
-	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println(getHelpTextRoot())
-	},
+	Use:   "chifra command [flags] arguments",
+	Short: "access to all TrueBlocks tools (chifra <cmd> --help for more)",
+	Long: `Purpose:
+  Access to all TrueBlocks tools (chifra <cmd> --help for more).`,
 	Version: "Powered by TrueBlocks (GHC-TrueBlocks//0.12.1-alpha-7c5fb3f2a-20210923)",
 }
 
+var PostNotes = ""
+
 // Execute adds all child commands to the root command and sets flags appropriately.
-// This is called by main.main(). It only needs to happen once to the rootCmd.
 func Execute() {
 	if err := rootCmd.Execute(); err != nil {
-		fmt.Println(err)
+		fmt.Fprintf(os.Stderr, "%s", PostNotes)
 		os.Exit(1)
+	}
+	if RootOpts.help {
+		fmt.Fprintf(os.Stderr, "%s", PostNotes)
 	}
 }
 
 func init() {
+	rootCmd.SetOut(os.Stderr)
+	rootCmd.SetFlagErrorFunc(ErrFunc)
+
 	rootCmd.Flags().SortFlags = false
 	rootCmd.PersistentFlags().SortFlags = false
-	rootCmd.SetOut(os.Stderr)
 	rootCmd.PersistentFlags().BoolVarP(&RootOpts.raw, "raw", "", false, "report JSON data from the node with minimal processing")
 	rootCmd.PersistentFlags().StringVarP(&RootOpts.fmt, "fmt", "x", "", "export format, one of [none|json*|txt|csv|api]")
 	rootCmd.PersistentFlags().UintVarP(&RootOpts.verbose, "verbose", "v", 0, "set verbose level (optional level defaults to 1)")
 	rootCmd.PersistentFlags().BoolVarP(&RootOpts.help, "help", "h", false, "display this help screen")
+	rootCmd.Flags().SortFlags = false
+	rootCmd.PersistentFlags().SortFlags = false
 
 	cobra.OnInitialize(initConfig)
 }
@@ -103,47 +104,71 @@ func initConfig() {
 	}
 }
 
-func getHelpTextRoot() string {
-	return `
-
-  Usage:    chifra command  
-  Purpose:  Access to all TrueBlocks tools (chifra <cmd> --help for more).
-
-  Where:  
-     ACCOUNTS
-       list          list every appearance of an address anywhere on the chain
-       export        export full detail of transactions for one or more addresses
-       monitors      add, remove, clean, and list address monitors
-       names         query addresses or names of well known accounts
-       abis          fetches the ABI for a smart contract
-     CHAIN DATA
-       blocks        retrieve one or more blocks from the chain or local cache
-       transactions  retrieve one or more transactions from the chain or local cache
-       receipts      retrieve receipts for the given transaction(s)
-       logs          retrieve logs for the given transaction(s)
-       traces        retrieve traces for the given transaction(s)
-       when          find block(s) based on date, blockNum, timestamp, or 'special'
-     CHAIN STATE
-       state         retrieve account balance(s) for one or more addresses at given block(s)
-       tokens        retrieve token balance(s) for one or more addresses at given block(s)
-     ADMIN
-       status        report on the status of the TrueBlocks system
-       serve         serve the TrueBlocks API using the flame server
-       scrape        scan the chain and update the TrueBlocks index of appearances
-       init          initialize the index of appearances by downloading Bloom filters
-       pins          manage pinned index of appearances and associated Bloom filters
-     OTHER
-       quotes        freshen and/or display Ethereum price data
-       explore       open an explorer for a given address, block, or transaction
-       slurp         fetch data from EtherScan for any address
-     
-
-  Powered by TrueBlocks
-`
+func ValidatePositionals(funcs ...cobra.PositionalArgs) cobra.PositionalArgs {
+	return func(cmd *cobra.Command, args []string) error {
+		for _, f := range funcs {
+			err := f(cmd, args)
+			if err != nil {
+				return err
+			}
+		}
+		return nil
+	}
 }
 
-func PassItOn(path string, optionsIn string, unused string) {
-	options := ""
+func ErrFunc(cmd *cobra.Command, errMsg error) error {
+	msg := fmt.Sprintf("%s", errMsg)
+	if IsTestMode() {
+		msg = "\n  " + msg + "\n"
+	} else {
+		msg = "\n  \033[31m" + msg + "\033[0m\n"
+	}
+	return fmt.Errorf(msg)
+}
+
+// enums
+// https://pkg.go.dev/github.com/thediveo/enumflag
+
+// dropNL drops new line characters (\n) from the progress stream
+func dropNL(data []byte) []byte {
+	// if len(data) > 0 && data[len(data)-1] == '\n' {
+	// 	return data[0 : len(data)-1]
+	// }
+	return data
+}
+
+// ScanProgressLine looks for "lines" that end with `\r` not `\n` like usual
+func ScanProgressLine(data []byte, atEOF bool) (advance int, token []byte, err error) {
+	if atEOF && len(data) == 0 {
+		return 0, nil, nil
+	}
+	// if i := bytes.IndexByte(data, '\r'); i >= 0 {
+	// 	return i + 1, dropNL(data[0:i]), nil
+	// }
+	return bufio.ScanLines(data, atEOF)
+}
+
+// ScanForProgress watches stderr and picks of progress messages
+func ScanForProgress(stderrPipe io.Reader, fn func(string)) {
+	scanner := bufio.NewScanner(stderrPipe)
+	scanner.Split(ScanProgressLine)
+	for scanner.Scan() {
+		text := scanner.Text()
+		if len(text) > 0 {
+			fmt.Fprintf(os.Stderr, "\n%s\n\n", text)
+			if strings.Contains(text, "<PROG>") {
+				fn(strings.SplitAfter(text, ":")[1])
+			}
+		}
+	}
+
+	if err := scanner.Err(); err != nil {
+		fmt.Println("Error while reading stderr:", err)
+	}
+}
+
+func PassItOn(path string, flags, arguments string) {
+	options := flags
 	if RootOpts.raw {
 		options += " --raw"
 	}
@@ -153,9 +178,20 @@ func PassItOn(path string, optionsIn string, unused string) {
 	if RootOpts.verbose > 0 {
 		options += " --verbose " + strconv.FormatUint(uint64(RootOpts.verbose), 10)
 	}
-	options += optionsIn
+	options += arguments
 
 	cmd := exec.Command(path, options)
+
+	stderrPipe, err := cmd.StderrPipe()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "%s", err)
+	} else {
+		go func() {
+			ScanForProgress(stderrPipe, func(msg string) {
+			})
+		}()
+	}
+
 	stdout, _ := cmd.StdoutPipe()
 	cmd.Start()
 	scanner := bufio.NewScanner(stdout)
@@ -166,5 +202,6 @@ func PassItOn(path string, optionsIn string, unused string) {
 	cmd.Wait()
 }
 
-// enums
-// https://pkg.go.dev/github.com/thediveo/enumflag
+func IsTestMode() bool {
+	return os.Getenv("TEST_MODE") == "true"
+}

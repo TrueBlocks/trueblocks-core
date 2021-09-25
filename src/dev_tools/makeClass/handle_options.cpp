@@ -464,7 +464,7 @@ void COptions::generate_deprecated(const CCommandOption& option) {
 }
 //---------------------------------------------------------------------------------------------------
 bool COptions::writeCode(const string_q& fn) {
-    if (contains(fn, "/stub/"))
+    if (contains(fn, "/stub/") || contains(fn, "/chifra/"))
         return true;
 
     string_q orig = asciiFileToString(fn);

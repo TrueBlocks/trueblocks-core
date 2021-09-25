@@ -15,7 +15,6 @@ package cmd
 
 import (
 	"os"
-	"strconv"
 
 	"github.com/spf13/cobra"
 )
@@ -27,7 +26,7 @@ var ServeOpts serveOptionsType
 
 // serveCmd represents the serve command
 var serveCmd = &cobra.Command{
-	Use: `serve`,
+	Use:   `serve`,
 	Short: "serve the TrueBlocks API using the flame server",
 	Long: `Purpose:
   Serve the TrueBlocks API using the flame server.`,
@@ -46,5 +45,6 @@ func runServe(cmd *cobra.Command, args []string) {
 	for _, arg := range args {
 		options += " " + arg
 	}
-	PassItOn("/Users/jrush/.local/bin/chifra/flame", options, strconv.FormatUint(0, 10))
+    arguments := ""
+	PassItOn("/Users/jrush/.local/bin/chifra/flame", options, arguments)
 }

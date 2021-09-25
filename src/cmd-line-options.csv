@@ -257,7 +257,6 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 14460,all,,all,all,ether,,,false,false,true,false,--,switch,<boolean>,specify value in ether
 14480,all,,all,all,dollars,,,false,false,true,false,--,switch,<boolean>,specify value in US dollars
 14500,all,,all,all,raw,,,false,false,true,false,--,switch,<boolean>,report JSON data from the node with minimal processing
-14520,all,,all,all,very_raw,,,false,false,true,false,--,switch,<boolean>,report JSON data from node with zero processing
 14540,all,,all,all,fmt,,,false,false,true,true,--,flag,enum[none|json*|txt|csv|api],export format (where appropriate)
 14560,all,,all,all,api_mode,,,false,false,true,false,--,switch,<boolean>,simulate api_mode for testing
 14580,all,,all,all,to_file,,,false,false,true,false,--,switch,<boolean>,write the results to a temporary file and return the filename

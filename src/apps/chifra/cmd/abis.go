@@ -12,10 +12,12 @@ package cmd
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+/*
+ * Parts of this file were generated with makeClass --gocmds.
+ */
 
 import (
 	"os"
-	"strconv"
 
 	"github.com/spf13/cobra"
 )
@@ -43,15 +45,17 @@ Arguments:
 }
 
 func init() {
-	abisCmd.Flags().SortFlags = false
-	abisCmd.PersistentFlags().SortFlags = false
 	abisCmd.SetOut(os.Stderr)
 
+	abisCmd.Flags().SortFlags = false
+	abisCmd.PersistentFlags().SortFlags = false
 	abisCmd.Flags().BoolVarP(&AbisOpts.known, "known", "k", false, "load common 'known' ABIs from cache")
 	abisCmd.Flags().StringVarP(&AbisOpts.sol, "sol", "s", "", "file name of .sol file from which to create a new known abi (without .sol)")
 	abisCmd.Flags().StringVarP(&AbisOpts.find, "find", "f", "", "try to search for a function declaration given a four byte code")
-	abisCmd.Flags().BoolVarP(&AbisOpts.source, "source", "o", false, "show the source of the ABI information")
-	abisCmd.Flags().BoolVarP(&AbisOpts.classes, "classes", "c", false, "generate classDefinitions folder and class definitions")
+	abisCmd.Flags().BoolVarP(&AbisOpts.source, "source", "o", false, "show the source of the ABI information (hidden)")
+	abisCmd.Flags().BoolVarP(&AbisOpts.classes, "classes", "c", false, "generate classDefinitions folder and class definitions (hidden)")
+	abisCmd.Flags().SortFlags = false
+	abisCmd.PersistentFlags().SortFlags = false
 
 	rootCmd.AddCommand(abisCmd)
 }
@@ -73,8 +77,9 @@ func runAbis(cmd *cobra.Command, args []string) {
 	if AbisOpts.classes {
 		options += " --classes"
 	}
-	for _, arg := range args {
-		options += " " + arg
+	arguments := ""
+    for _, arg := range args {
+		arguments += " " + arg
 	}
-	PassItOn("/Users/jrush/.local/bin/chifra/grabABI", options, strconv.FormatUint(0, 10))
+	PassItOn("/Users/jrush/.local/bin/chifra/grabABI", options, arguments)
 }

@@ -12,10 +12,12 @@ package cmd
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+/*
+ * Parts of this file were generated with makeClass --gocmds.
+ */
 
 import (
 	"os"
-	"strconv"
 
 	"github.com/spf13/cobra"
 )
@@ -39,14 +41,16 @@ var quotesCmd = &cobra.Command{
 }
 
 func init() {
-	quotesCmd.Flags().SortFlags = false
-	quotesCmd.PersistentFlags().SortFlags = false
 	quotesCmd.SetOut(os.Stderr)
 
+	quotesCmd.Flags().SortFlags = false
+	quotesCmd.PersistentFlags().SortFlags = false
 	quotesCmd.Flags().BoolVarP(&QuotesOpts.freshen, "freshen", "f", false, "Freshen price database")
 	quotesCmd.Flags().StringVarP(&QuotesOpts.period, "period", "p", "", "increment of display")
 	quotesCmd.Flags().StringVarP(&QuotesOpts.pair, "pair", "a", "", "which price pair to freshen or list (see Poloniex)")
 	quotesCmd.Flags().StringVarP(&QuotesOpts.feed, "feed", "e", "", "the feed for the price data")
+	quotesCmd.Flags().SortFlags = false
+	quotesCmd.PersistentFlags().SortFlags = false
 
 	rootCmd.AddCommand(quotesCmd)
 }
@@ -65,8 +69,9 @@ func runQuotes(cmd *cobra.Command, args []string) {
 	if len(QuotesOpts.feed) > 0 {
 		options += " --feed " + QuotesOpts.feed
 	}
-	for _, arg := range args {
-		options += " " + arg
+	arguments := ""
+    for _, arg := range args {
+		arguments += " " + arg
 	}
-	PassItOn("/Users/jrush/.local/bin/chifra/getQuotes", options, strconv.FormatUint(0, 10))
+	PassItOn("/Users/jrush/.local/bin/chifra/getQuotes", options, arguments)
 }

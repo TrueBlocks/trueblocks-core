@@ -27,13 +27,13 @@ on,both,medi,traces,tools/getTraces,by_bhash_and_txid,y,transactions = 0x96a09b2
 on,both,fast,traces,tools/getTraces,by_blk_hash_good,y,transactions = 0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.55 & verbose
 on,both,fast,traces,tools/getTraces,by_blk_hash_bad,y,transactions = 0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.155 & verbose
 on,both,fast,traces,tools/getTraces,from_node_long,n,transactions = 4000000.5 & fmt = csv
-on,both,medi,traces,tools/getTraces,00,n,transactions = 0x0cc945824def6a5c81d86ca56848f92163838bbd480a3bd2ff85f6d5b13d72ab & very_raw
+on,both,medi,traces,tools/getTraces,00,n,transactions = 0x0cc945824def6a5c81d86ca56848f92163838bbd480a3bd2ff85f6d5b13d72ab & raw
 on,both,medi,traces,tools/getTraces,01,y,transactions = 0x27fe46968ee62ec01ccb5dd3cbabd479f03c0374c2b6897c0faabfc748367b12 0x0cc945824def6a5c81d86ca56848f92163838bbd480a3bd2ff85f6d5b13d72ab & parity & fmt = json
 on,both,fast,traces,tools/getTraces,03,y,transactions = 0x17104ac9d3312d8c136b7f44d4b8b47852618065ebfa534bd2d3b5ef218ca1f3 & fmt = json
-on,both,fast,traces,tools/getTraces,04,n,transactions = 0x3d762e5f4c2a5c4ed3f4678d81f9078ff68e9d236d87dbcf3eee024dbb11f497 & very_raw & fmt = json
+on,both,fast,traces,tools/getTraces,04,n,transactions = 0x3d762e5f4c2a5c4ed3f4678d81f9078ff68e9d236d87dbcf3eee024dbb11f497 & raw & fmt = json
 on,both,medi,traces,tools/getTraces,25,n,transactions = 0x8324490c68e6268db9eadcb4ce8303ee1d256e480f7637853bb13a3ae1fe1328 & raw
 on,both,fast,traces,tools/getTraces,26,n,transactions = 0x8324490c68e6268db9eadcb4ce8303ee1d256e480f7637853bb13a3ae1fe1328 & fmt = csv
-on,both,fast,traces,tools/getTraces,27,n,transactions = 0xf9d426284bd20415a53991a004122b3a3a619b295ea98d1d88a5fd3a4125408b & very_raw
+on,both,fast,traces,tools/getTraces,27,n,transactions = 0xf9d426284bd20415a53991a004122b3a3a619b295ea98d1d88a5fd3a4125408b & raw
 on,both,fast,traces,tools/getTraces,28,n,transactions = 0xf9d426284bd20415a53991a004122b3a3a619b295ea98d1d88a5fd3a4125408b & fmt = txt
 on,both,fast,traces,tools/getTraces,bad_hash_msg,n,transactions = 0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521 0x0766ec95bf12f9600afc6c33c287f9d2356d85f15f0d7eeeb6647f5d4ddfbc11 0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521 & fmt = txt
 on,both,fast,traces,tools/getTraces,bad_hash_msg_raw,y,transactions = 0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521 0x0766ec95bf12f9600afc6c33c287f9d2356d85f15f0d7eeeb6647f5d4ddfbc11 0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521 & raw

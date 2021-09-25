@@ -16,50 +16,41 @@ Here is a screen shot of an interaction with Chifra building a smart contract mo
 
 <img src=docs/image.png>
 
-Error: unknown flag: --readme
-Usage:
-  chifra [flags]
-  chifra [command]
+### Usage
 
-Available Commands:
-  abis         fetches the ABI for a smart contract
-  autodoc      A brief description of your command
-  blocks       retrieve one or more blocks from the chain or local cache
-  collections  A brief description of your command
-  completion   generate the autocompletion script for the specified shell
-  explore      open an explorer for a given address, block, or transaction
-  export       export full detail of transactions for one or more addresses
-  help         Help about any command
-  init         initialize the index of appearances by downloading Bloom filters
-  list         list every appearance of an address anywhere on the chain
-  logs         retrieve logs for the given transaction(s)
-  monitors     add, remove, clean, and list address monitors
-  names        query addresses or names of well known accounts
-  pins         manage pinned index of appearances and associated Bloom filters
-  quotes       freshen and/or display Ethereum price data
-  receipts     retrieve receipts for the given transaction(s)
-  rm           A brief description of your command
-  scrape       scan the chain and update the TrueBlocks index of appearances
-  serve        serve the TrueBlocks API using the flame server
-  slurp        fetch data from EtherScan for any address
-  state        retrieve account balance(s) for one or more addresses at given block(s)
-  status       report on the status of the TrueBlocks system
-  tags         A brief description of your command
-  tokens       retrieve token balance(s) for one or more addresses at given block(s)
-  traces       retrieve traces for the given transaction(s)
-  transactions retrieve one or more transactions from the chain or local cache
-  when         find block(s) based on date, blockNum, timestamp, or 'special'
+`Usage:`    chifra command  
+`Purpose:`  Access to all TrueBlocks tools (`chifra <cmd> --help` for more).
 
-Flags:
-      --raw            report JSON data from the node with minimal processing
-  -x, --fmt string     export format, one of [none|json*|txt|csv|api]
-  -v, --verbose uint   set verbose level (optional level defaults to 1)
-  -h, --help           display this help screen
-      --version        version for chifra
-
-Use "chifra [command] --help" for more information about a command.
-
-unknown flag: --readme
+`Where:`
+```
+ ACCOUNTS
+   list          list every appearance of an address anywhere on the chain
+   export        export full detail of transactions for one or more addresses
+   monitors      add, remove, clean, and list address monitors
+   names         query addresses or names of well known accounts
+   abis          fetches the ABI for a smart contract
+ CHAIN DATA
+   blocks        retrieve one or more blocks from the chain or local cache
+   transactions  retrieve one or more transactions from the chain or local cache
+   receipts      retrieve receipts for the given transaction(s)
+   logs          retrieve logs for the given transaction(s)
+   traces        retrieve traces for the given transaction(s)
+   when          find block(s) based on date, blockNum, timestamp, or 'special'
+ CHAIN STATE
+   state         retrieve account balance(s) for one or more addresses at given block(s)
+   tokens        retrieve token balance(s) for one or more addresses at given block(s)
+ ADMIN
+   status        report on the status of the TrueBlocks system
+   serve         serve the TrueBlocks API using the flame server
+   scrape        scan the chain and update the TrueBlocks index of appearances
+   init          initialize the index of appearances by downloading Bloom filters
+   pins          manage pinned index of appearances and associated Bloom filters
+ OTHER
+   quotes        freshen and/or display Ethereum price data
+   explore       open an explorer for a given address, block, or transaction
+   slurp         fetch data from EtherScan for any address
+ 
+```
 
 #### Other Options
 

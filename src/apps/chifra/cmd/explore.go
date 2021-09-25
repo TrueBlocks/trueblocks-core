@@ -12,10 +12,12 @@ package cmd
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+/*
+ * Parts of this file were generated with makeClass --gocmds.
+ */
 
 import (
 	"os"
-	"strconv"
 
 	"github.com/spf13/cobra"
 )
@@ -40,12 +42,14 @@ Arguments:
 }
 
 func init() {
-	exploreCmd.Flags().SortFlags = false
-	exploreCmd.PersistentFlags().SortFlags = false
 	exploreCmd.SetOut(os.Stderr)
 
+	exploreCmd.Flags().SortFlags = false
+	exploreCmd.PersistentFlags().SortFlags = false
 	exploreCmd.Flags().BoolVarP(&ExploreOpts.local, "local", "l", false, "open the local TrueBlocks explorer")
 	exploreCmd.Flags().BoolVarP(&ExploreOpts.google, "google", "g", false, "search google excluding popular blockchain explorers")
+	exploreCmd.Flags().SortFlags = false
+	exploreCmd.PersistentFlags().SortFlags = false
 
 	rootCmd.AddCommand(exploreCmd)
 }
@@ -58,8 +62,9 @@ func runExplore(cmd *cobra.Command, args []string) {
 	if ExploreOpts.google {
 		options += " --google"
 	}
-	for _, arg := range args {
-		options += " " + arg
+	arguments := ""
+    for _, arg := range args {
+		arguments += " " + arg
 	}
-	PassItOn("/Users/jrush/.local/bin/chifra/fireStorm", options, strconv.FormatUint(0, 10))
+	PassItOn("/Users/jrush/.local/bin/chifra/fireStorm", options, arguments)
 }

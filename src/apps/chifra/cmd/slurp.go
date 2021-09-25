@@ -12,10 +12,12 @@ package cmd
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+/*
+ * Parts of this file were generated with makeClass --gocmds.
+ */
 
 import (
 	"os"
-	"strconv"
 
 	"github.com/spf13/cobra"
 )
@@ -41,12 +43,14 @@ Arguments:
 }
 
 func init() {
-	slurpCmd.Flags().SortFlags = false
-	slurpCmd.PersistentFlags().SortFlags = false
 	slurpCmd.SetOut(os.Stderr)
 
+	slurpCmd.Flags().SortFlags = false
+	slurpCmd.PersistentFlags().SortFlags = false
 	slurpCmd.Flags().StringVarP(&SlurpOpts.types, "types", "t", "", "one or more types of transactions to request")
 	slurpCmd.Flags().BoolVarP(&SlurpOpts.appearances, "appearances", "p", false, "show only the blocknumer.tx_id appearances of the exported transactions")
+	slurpCmd.Flags().SortFlags = false
+	slurpCmd.PersistentFlags().SortFlags = false
 
 	rootCmd.AddCommand(slurpCmd)
 }
@@ -59,8 +63,9 @@ func runSlurp(cmd *cobra.Command, args []string) {
 	if SlurpOpts.appearances {
 		options += " --appearances"
 	}
-	for _, arg := range args {
-		options += " " + arg
+	arguments := ""
+    for _, arg := range args {
+		arguments += " " + arg
 	}
-	PassItOn("/Users/jrush/.local/bin/chifra/ethslurp", options, strconv.FormatUint(0, 10))
+	PassItOn("/Users/jrush/.local/bin/chifra/ethslurp", options, arguments)
 }

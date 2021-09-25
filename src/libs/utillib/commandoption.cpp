@@ -102,6 +102,9 @@ string_q CCommandOption::getValueByName(const string_q& fieldName) const {
             if (fieldName % "go_type") {
                 return go_type;
             }
+            if (fieldName % "go_flagtype") {
+                return go_flagtype;
+            }
             break;
         case 'h':
             if (fieldName % "hotKey") {
@@ -211,6 +214,10 @@ bool CCommandOption::setValueByName(const string_q& fieldNameIn, const string_q&
                 go_type = fieldValue;
                 return true;
             }
+            if (fieldName % "go_flagtype") {
+                go_flagtype = fieldValue;
+                return true;
+            }
             break;
         case 'h':
             if (fieldName % "hotKey") {
@@ -315,6 +322,7 @@ bool CCommandOption::Serialize(CArchive& archive) {
     archive >> data_type;
     archive >> real_type;
     archive >> go_type;
+    archive >> go_flagtype;
     archive >> summary;
     archive >> description;
     // EXISTING_CODE
@@ -347,6 +355,7 @@ bool CCommandOption::SerializeC(CArchive& archive) const {
     archive << data_type;
     archive << real_type;
     archive << go_type;
+    archive << go_flagtype;
     archive << summary;
     archive << description;
     // EXISTING_CODE
@@ -415,6 +424,7 @@ void CCommandOption::registerClass(void) {
     ADD_FIELD(CCommandOption, "data_type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CCommandOption, "real_type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CCommandOption, "go_type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CCommandOption, "go_flagtype", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CCommandOption, "summary", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CCommandOption, "description", T_TEXT | TS_OMITEMPTY, ++fieldNum);
 
@@ -609,6 +619,11 @@ bool CCommandOption::finishCleanup(void) {
     replace(go_type, "uint64_t", "uint64");
     replace(go_type, "uint32_t", "uint32");
     replace(go_type, "blknum_t", "uint64");
+    replace(go_type, "double", "float64");
+    replace(go_type, "listaddr", "[]string");
+    replace(go_type, "listtopic", "[]string");
+
+    go_flagtype = (go_type == "[]string" ? "StringSlice" : toProper(go_type)) + "VarP";
 
     return true;
 }
@@ -849,18 +864,21 @@ string_q CCommandOption::toGoRoute(void) const {
 }
 
 //--------------------------------------------------------------------------------
-string_q clean_positional(const string_q& progName, const string_q& strIn) {
+string_q clean_positionals(const string_q& progName, const string_q& strIn) {
     if (contains(strIn, "<")) {
         ostringstream os;
         os << (strIn == "list<addr>" ? "<address> [address...]" : "");
         os << (strIn == "list<blknum>" ? "<block> [block...]" : "");
         os << (strIn == "list<tx_id>" ? "<tx_id> [tx_id...]" : "");
-        os << (strIn == "list<path>" ? "xxx" : "");
-        if (contains(progName, "tokens"))
+        os << (startsWith(strIn, "list<addr> list<topic> list<fourbyte>")
+                   ? "<address> [address...] [topics...] [fourbytes...]"
+                   : "");
+        os << (startsWith(strIn, "list<enum") ? "[mode...]" : "");
+        if (contains(toLower(progName), "tokens"))
             os << (strIn == "list<addr> list<blknum>" ? "<address> <address> [address...] [block...]" : "");
         else
             os << (strIn == "list<addr> list<blknum>" ? "<address> [address...] [block...]" : "");
-        if (contains(progName, "when"))
+        if (contains(toLower(progName), "when"))
             os << (strIn == "list<string>" ? "< block | date > [ block... | date... ]" : "");
         else
             os << (strIn == "list<string>" ? "<term> [term...]" : "");
@@ -868,7 +886,8 @@ string_q clean_positional(const string_q& progName, const string_q& strIn) {
             cerr << "Could not convert " << strIn << " for tool " << progName << endl;
             os << strIn;
         }
-        return os.str();
+        os << endl;
+        return " " + os.str();
     }
     string_q strOut = strIn;
     replaceAll(strOut, "addrs2 blocks", "<address> <address> [address...] [block...]");

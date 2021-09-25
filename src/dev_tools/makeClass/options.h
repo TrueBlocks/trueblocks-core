@@ -59,6 +59,7 @@ class COptions : public COptionsBase {
     ostringstream goRouteStream, chifraCmdStream, chifraHelpStream, pairMapStream;
     ostringstream apiTagStream, apiPathStream;
     ostringstream jsLocationStream, jsTemplateStream, jsHotkeyStream, jsRouteStream;
+    ostringstream goStream;
 
     void clearStreams(void) {
         optionStream.str("");
@@ -82,6 +83,7 @@ class COptions : public COptionsBase {
         jsTemplateStream.str("");
         jsHotkeyStream.str("");
         jsRouteStream.str("");
+        goStream.str("");
 
         optionStream.clear();
         initStream.clear();
@@ -104,8 +106,8 @@ class COptions : public COptionsBase {
         jsTemplateStream.clear();
         jsHotkeyStream.clear();
         jsRouteStream.clear();
-
         positionals.clear();
+        goStream.clear();
     }
 
     COptions(void);
@@ -139,7 +141,8 @@ class COptions : public COptionsBase {
 //-------------------------------------------------------------------
 extern bool listClasses(const string_q& path, void* data);
 extern bool lintFiles(const string_q& path, void* data);
-extern bool formatFiles(const string_q& path, void* data);
+extern bool formatCppFiles(const string_q& path, void* data);
+extern bool formatGoFiles(const string_q& path, void* data);
 extern string_q getCaseGetCode(const CParameterArray& fields);
 extern string_q getCaseSetCode(const CParameterArray& fields);
 extern string_q convertTypes(const string_q& inStr);

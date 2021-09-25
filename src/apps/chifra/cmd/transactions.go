@@ -12,10 +12,12 @@ package cmd
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+/*
+ * Parts of this file were generated with makeClass --gocmds.
+ */
 
 import (
 	"os"
-	"strconv"
 
 	"github.com/spf13/cobra"
 )
@@ -43,15 +45,17 @@ Arguments:
 }
 
 func init() {
-	transactionsCmd.Flags().SortFlags = false
-	transactionsCmd.PersistentFlags().SortFlags = false
 	transactionsCmd.SetOut(os.Stderr)
 
+	transactionsCmd.Flags().SortFlags = false
+	transactionsCmd.PersistentFlags().SortFlags = false
 	transactionsCmd.Flags().BoolVarP(&TransactionsOpts.articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
 	transactionsCmd.Flags().BoolVarP(&TransactionsOpts.trace, "trace", "t", false, "include the transaction's traces in the results")
 	transactionsCmd.Flags().BoolVarP(&TransactionsOpts.uniq, "uniq", "u", false, "display a list of uniq addresses found in the transaction instead of the underlying data")
 	transactionsCmd.Flags().StringVarP(&TransactionsOpts.reconcile, "reconcile", "r", "", "reconcile the transaction as per the provided address")
 	transactionsCmd.Flags().BoolVarP(&TransactionsOpts.cache, "cache", "o", false, "force the results of the query into the tx cache (and the trace cache if applicable)")
+	transactionsCmd.Flags().SortFlags = false
+	transactionsCmd.PersistentFlags().SortFlags = false
 
 	rootCmd.AddCommand(transactionsCmd)
 }
@@ -73,8 +77,9 @@ func runTransactions(cmd *cobra.Command, args []string) {
 	if TransactionsOpts.cache {
 		options += " --cache"
 	}
-	for _, arg := range args {
-		options += " " + arg
+	arguments := ""
+    for _, arg := range args {
+		arguments += " " + arg
 	}
-	PassItOn("/Users/jrush/.local/bin/chifra/getTrans", options, strconv.FormatUint(0, 10))
+	PassItOn("/Users/jrush/.local/bin/chifra/getTrans", options, arguments)
 }

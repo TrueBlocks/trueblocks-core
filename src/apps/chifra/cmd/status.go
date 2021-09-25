@@ -12,10 +12,13 @@ package cmd
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+/*
+ * Parts of this file were generated with makeClass --gocmds.
+ */
 
 import (
+	"fmt"
 	"os"
-	"strconv"
 
 	"github.com/spf13/cobra"
 )
@@ -48,20 +51,22 @@ Arguments:
 }
 
 func init() {
-	statusCmd.Flags().SortFlags = false
-	statusCmd.PersistentFlags().SortFlags = false
 	statusCmd.SetOut(os.Stderr)
 
+	statusCmd.Flags().SortFlags = false
+	statusCmd.PersistentFlags().SortFlags = false
 	statusCmd.Flags().BoolVarP(&StatusOpts.details, "details", "d", false, "include details about items found in monitors, slurps, abis, or price caches")
 	statusCmd.Flags().StringVarP(&StatusOpts.types, "types", "t", "", "for caches mode only, which type(s) of cache to report")
-	statusCmd.Flags().Uint64VarP(&StatusOpts.depth, "depth", "p", 0, "for cache mode only, number of levels deep to report")
-	statusCmd.Flags().BoolVarP(&StatusOpts.report, "report", "r", false, "show a summary of the current status of TrueBlocks (deprecated)")
-	statusCmd.Flags().BoolVarP(&StatusOpts.terse, "terse", "e", false, "show a terse summary report")
-	statusCmd.Flags().StringVarP(&StatusOpts.migrate, "migrate", "m", "", "either effectuate or test to see if a migration is necessary")
-	statusCmd.Flags().BoolVarP(&StatusOpts.get_config, "get_config", "g", false, "returns JSON data of the editable configuration file items")
-	statusCmd.Flags().BoolVarP(&StatusOpts.set_config, "set_config", "s", false, "accepts JSON in an env variable and writes it to configuration files")
-	statusCmd.Flags().Uint64VarP(&StatusOpts.test_start, "test_start", "S", 0, "first block to process (inclusive -- testing only)")
-	statusCmd.Flags().Uint64VarP(&StatusOpts.test_end, "test_end", "E", 0, "last block to process (inclusive -- testing only)")
+	statusCmd.Flags().Uint64VarP(&StatusOpts.depth, "depth", "p", 0, "for cache mode only, number of levels deep to report (hidden)")
+	statusCmd.Flags().BoolVarP(&StatusOpts.report, "report", "r", false, "show a summary of the current status of TrueBlocks (deprecated) (hidden)")
+	statusCmd.Flags().BoolVarP(&StatusOpts.terse, "terse", "e", false, "show a terse summary report (hidden)")
+	statusCmd.Flags().StringVarP(&StatusOpts.migrate, "migrate", "m", "", "either effectuate or test to see if a migration is necessary (hidden)")
+	statusCmd.Flags().BoolVarP(&StatusOpts.get_config, "get_config", "g", false, "returns JSON data of the editable configuration file items (hidden)")
+	statusCmd.Flags().BoolVarP(&StatusOpts.set_config, "set_config", "s", false, "accepts JSON in an env variable and writes it to configuration files (hidden)")
+	statusCmd.Flags().Uint64VarP(&StatusOpts.test_start, "test_start", "S", 0, "first block to process (inclusive -- testing only) (hidden)")
+	statusCmd.Flags().Uint64VarP(&StatusOpts.test_end, "test_end", "E", 0, "last block to process (inclusive -- testing only) (hidden)")
+	statusCmd.Flags().SortFlags = false
+	statusCmd.PersistentFlags().SortFlags = false
 
 	rootCmd.AddCommand(statusCmd)
 }
@@ -75,7 +80,7 @@ func runStatus(cmd *cobra.Command, args []string) {
 		options += " --types " + StatusOpts.types
 	}
 	if StatusOpts.depth > 0 {
-		options += " --depth " + strconv.FormatUint(StatusOpts.depth, 10)
+		options += " --depth " + fmt.Sprintf("%d", StatusOpts.depth)
 	}
 	if StatusOpts.report {
 		options += " --report"
@@ -93,13 +98,14 @@ func runStatus(cmd *cobra.Command, args []string) {
 		options += " --set_config"
 	}
 	if StatusOpts.test_start > 0 {
-		options += " --test_start " + strconv.FormatUint(StatusOpts.test_start, 10)
+		options += " --test_start " + fmt.Sprintf("%d", StatusOpts.test_start)
 	}
 	if StatusOpts.test_end > 0 {
-		options += " --test_end " + strconv.FormatUint(StatusOpts.test_end, 10)
+		options += " --test_end " + fmt.Sprintf("%d", StatusOpts.test_end)
 	}
-	for _, arg := range args {
-		options += " " + arg
+	arguments := ""
+    for _, arg := range args {
+		arguments += " " + arg
 	}
-	PassItOn("/Users/jrush/.local/bin/chifra/cacheStatus", options, strconv.FormatUint(0, 10))
+	PassItOn("/Users/jrush/.local/bin/chifra/cacheStatus", options, arguments)
 }

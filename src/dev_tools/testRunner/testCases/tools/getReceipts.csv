@@ -19,10 +19,10 @@ on,both,medi,receipts,tools/getReceipts,by_bnun_and_txid,n,transactions = 400000
 on,both,fast,receipts,tools/getReceipts,by_bhash_and_txid,y,transactions = 0xb8a3f7f5cfc1748f91a684f20fe89031202cbadcd15078c49b85ec2a57f43853.4 & verbose & fmt = json & parity
 on,both,medi,receipts,tools/getReceipts,by_blk_hash_good,n,transactions = 0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.55 & verbose & fmt = csv
 on,both,fast,receipts,tools/getReceipts,by_blk_hash_bad,y,transactions = 0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.155
-on,both,fast,receipts,tools/getReceipts,from_node,y,transactions = 4000000.5 & very_raw
+on,both,fast,receipts,tools/getReceipts,from_node,y,transactions = 4000000.5 & raw
 on,both,fast,receipts,tools/getReceipts,from_node_long,y,transactions = 4000000.5 & raw
 on,both,fast,receipts,tools/getReceipts,bad_hash_msg,n,transactions = 0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521 0x0766ec95bf12f9600afc6c33c287f9d2356d85f15f0d7eeeb6647f5d4ddfbc11 0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521 & fmt = csv
-on,both,fast,receipts,tools/getReceipts,bad_hash_msg_raw,y,transactions = 0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521 0x0766ec95bf12f9600afc6c33c287f9d2356d85f15f0d7eeeb6647f5d4ddfbc11 0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521 & very_raw
+on,both,fast,receipts,tools/getReceipts,bad_hash_msg_raw,y,transactions = 0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521 0x0766ec95bf12f9600afc6c33c287f9d2356d85f15f0d7eeeb6647f5d4ddfbc11 0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521 & raw
 on,both,fast,receipts,tools/getReceipts,bad_blkhash_msg,y,transactions = 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.1 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.5
 on,both,fast,receipts,tools/getReceipts,bad_blkhash_msg_raw,y,transactions = 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.1 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.5 & raw
 on,both,medi,receipts,tools/getReceipts,prev_bug2_1,y,transactions = 4279119.46

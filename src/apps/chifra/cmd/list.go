@@ -12,54 +12,49 @@ package cmd
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+/*
+ * Parts of this file were generated with makeClass --gocmds.
+ */
 
 import (
 	"os"
-	"strconv"
 
 	"github.com/spf13/cobra"
 )
 
-type monitorsOptionsType struct {
-	delete bool
-	remove bool
+type listOptionsType struct {
 }
 
-var MonitorsOpts monitorsOptionsType
+var ListOpts listOptionsType
 
-// monitorsCmd represents the monitors command
-var monitorsCmd = &cobra.Command{
-	Use: `monitors [flags] <address> [address...]
+// listCmd represents the list command
+var listCmd = &cobra.Command{
+	Use: `list [flags] <address> [address...]
 
 Arguments:
   addrs - one or more addresses (0x...) to list (required)`,
-	Short: "add, remove, clean, and list address monitors",
+	Short: "list every appearance of an address anywhere on the chain",
 	Long: `Purpose:
-  Add, remove, clean, and list address monitors.`,
-	Run: runMonitors,
+  List every appearance of an address anywhere on the chain.`,
+	Run: runList,
 }
 
 func init() {
-	monitorsCmd.Flags().SortFlags = false
-	monitorsCmd.PersistentFlags().SortFlags = false
-	monitorsCmd.SetOut(os.Stderr)
+	listCmd.SetOut(os.Stderr)
 
-	monitorsCmd.Flags().BoolVarP(&MonitorsOpts.delete, "delete", "", false, "delete a previously created monitor (or undelete if already deleted)")
-	monitorsCmd.Flags().BoolVarP(&MonitorsOpts.remove, "remove", "", false, "remove a previously deleted monitor")
+	listCmd.Flags().SortFlags = false
+	listCmd.PersistentFlags().SortFlags = false
+	listCmd.Flags().SortFlags = false
+	listCmd.PersistentFlags().SortFlags = false
 
-	rootCmd.AddCommand(monitorsCmd)
+	rootCmd.AddCommand(listCmd)
 }
 
-func runMonitors(cmd *cobra.Command, args []string) {
+func runList(cmd *cobra.Command, args []string) {
 	options := ""
-	if MonitorsOpts.delete {
-		options += " --delete"
+	arguments := ""
+    for _, arg := range args {
+		arguments += " " + arg
 	}
-	if MonitorsOpts.remove {
-		options += " --remove"
-	}
-	for _, arg := range args {
-		options += " " + arg
-	}
-	PassItOn("/Users/jrush/.local/bin/chifra/acctExport --appearances", options, strconv.FormatUint(0, 10))
+	PassItOn("/Users/jrush/.local/bin/chifra/acctExport --appearances", options, arguments)
 }

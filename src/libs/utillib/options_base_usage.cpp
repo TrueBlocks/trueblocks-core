@@ -325,7 +325,7 @@ string_q COptionsBase::get_positionals(COptionArray& pos) const {
             pos.push_back(option);
             if (!os.str().empty())
                 os << " ";
-            string_q str = clean_positional(toLower(getProgName()), option.longName);
+            string_q str = clean_positionals(getProgName(), option.longName);
             if (isReadme) {
                 replaceAll(str, "<", "&lt;");
                 replaceAll(str, ">", "&gt;");

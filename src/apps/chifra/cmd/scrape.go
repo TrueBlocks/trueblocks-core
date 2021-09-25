@@ -12,10 +12,13 @@ package cmd
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+/*
+ * Parts of this file were generated with makeClass --gocmds.
+ */
 
 import (
+	"fmt"
 	"os"
-	"strconv"
 
 	"github.com/spf13/cobra"
 )
@@ -40,15 +43,17 @@ var scrapeCmd = &cobra.Command{
 }
 
 func init() {
-	scrapeCmd.Flags().SortFlags = false
-	scrapeCmd.PersistentFlags().SortFlags = false
 	scrapeCmd.SetOut(os.Stderr)
 
+	scrapeCmd.Flags().SortFlags = false
+	scrapeCmd.PersistentFlags().SortFlags = false
 	scrapeCmd.Flags().BoolVarP(&ScrapeOpts.pin, "pin", "p", false, "pin new chunks (and blooms) to IPFS (requires Pinata key and running IPFS node)")
 	scrapeCmd.Flags().Float64VarP(&ScrapeOpts.sleep, "sleep", "s", 0.0, "the number of seconds to sleep between passes (default 14)")
 	scrapeCmd.Flags().Uint64VarP(&ScrapeOpts.n_blocks, "n_blocks", "n", 0, "maximum number of blocks to process (default 2000)")
-	scrapeCmd.Flags().Uint64VarP(&ScrapeOpts.n_block_procs, "n_block_procs", "b", 0, "number of concurrent block channels for blaze")
-	scrapeCmd.Flags().Uint64VarP(&ScrapeOpts.n_addr_procs, "n_addr_procs", "a", 0, "number of concurrent address channels for blaze")
+	scrapeCmd.Flags().Uint64VarP(&ScrapeOpts.n_block_procs, "n_block_procs", "b", 0, "number of concurrent block channels for blaze (hidden)")
+	scrapeCmd.Flags().Uint64VarP(&ScrapeOpts.n_addr_procs, "n_addr_procs", "a", 0, "number of concurrent address channels for blaze (hidden)")
+	scrapeCmd.Flags().SortFlags = false
+	scrapeCmd.PersistentFlags().SortFlags = false
 
 	rootCmd.AddCommand(scrapeCmd)
 }
@@ -59,19 +64,20 @@ func runScrape(cmd *cobra.Command, args []string) {
 		options += " --pin"
 	}
 	if ScrapeOpts.sleep > 0.0 {
-		options += " --sleep"
+		options += " --sleep " + fmt.Sprintf("%.1f", ScrapeOpts.sleep)
 	}
 	if ScrapeOpts.n_blocks > 0 {
-		options += " --n_blocks " + strconv.FormatUint(ScrapeOpts.n_blocks, 10)
+		options += " --n_blocks " + fmt.Sprintf("%d", ScrapeOpts.n_blocks)
 	}
 	if ScrapeOpts.n_block_procs > 0 {
-		options += " --n_block_procs " + strconv.FormatUint(ScrapeOpts.n_block_procs, 10)
+		options += " --n_block_procs " + fmt.Sprintf("%d", ScrapeOpts.n_block_procs)
 	}
 	if ScrapeOpts.n_addr_procs > 0 {
-		options += " --n_addr_procs " + strconv.FormatUint(ScrapeOpts.n_addr_procs, 10)
+		options += " --n_addr_procs " + fmt.Sprintf("%d", ScrapeOpts.n_addr_procs)
 	}
-	for _, arg := range args {
-		options += " " + arg
+	arguments := ""
+    for _, arg := range args {
+		arguments += " " + arg
 	}
-	PassItOn("/Users/jrush/.local/bin/chifra/blockScrape", options, strconv.FormatUint(0, 10))
+	PassItOn("/Users/jrush/.local/bin/chifra/blockScrape", options, arguments)
 }

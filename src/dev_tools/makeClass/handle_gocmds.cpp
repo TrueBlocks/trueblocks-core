@@ -27,6 +27,8 @@ bool COptions::handle_gocmds(void) {
     forEveryLineInAsciiFile("../src/cmd-line-endpoints.csv", parseCommandData, &endpointArray);
 
     for (auto ep : endpointArray) {
+        if (!ep.is_visible)
+            continue;
         CCommandOptionArray params;
         for (auto option : optionArray)
             if (option.api_route == ep.api_route && option.isChifraRoute())
@@ -41,15 +43,17 @@ bool COptions::handle_gocmds(void) {
         replaceAll(source, "[{PROPER}]", toProper(ep.api_route));
         replaceAll(source, "[{PATH}]", path);
         replaceAll(source, "[{OPT_FIELDS}]", get_optfields(ep));
-
         replaceAll(source, "[{LONG}]", "Purpose:\n  " + ep.description);
         string_q descr = firstLower(ep.description);
         if (endsWith(descr, "."))
             replaceReverse(descr, ".", "");
         replaceAll(source, "[{SHORT}]", descr);
+        string_q imports;
+        if (contains(source, "fmt."))
+            imports += "\t\"fmt\"\n";
+        replaceAll(source, "[{IMPORTS}]", imports);
 
-        stringToAsciiFile("../src/apps/chifra-new/cmd/" + ep.api_route + ".go", source);
-        counter.nProcessed++;
+        counter.nProcessed += writeIfDifferent("../src/apps/chifra/cmd/" + ep.api_route + ".go", source);
         counter.nVisited++;
     }
 
@@ -60,24 +64,30 @@ bool COptions::handle_gocmds(void) {
 }
 
 string_q get_use(const CCommandOption& cmd) {
-    const char* STR_USE =
-        "[{ROUTE}] [flags] [{TYPES}]\n"
-        "\n"
-        "Arguments:\n"
-        "[{POSITIONALS}]";
-    ostringstream os, pTypes;
+    ostringstream arguments;
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
         if (p.option_type == "positional") {
-            os << p.Format("  [{LONGNAME}] - [{DESCRIPTION}]");
+            if (arguments.str().empty())
+                arguments << endl << "Arguments:" << endl;
+            else
+                arguments << endl;
+            arguments << substitute(p.Format("  [{LONGNAME}] - [{DESCRIPTION}]"), "addrs2", "addrs");
             if (p.is_required)
-                os << " (required)";
-            os << endl;
-            pTypes << p.data_type << " ";
+                arguments << " (required)";
         }
     }
-    string_q ret = STR_USE;
-    replace(ret, "[{TYPES}]", clean_positional(toLower(cmd.api_route), trim(pTypes.str(), ' ')));
-    replace(ret, "[{POSITIONALS}]", trim(os.str(), '\n'));
+
+    ostringstream positionals;
+    for (auto p : *((CCommandOptionArray*)cmd.params)) {
+        if (p.option_type == "positional") {
+            if (!positionals.str().empty())
+                positionals << " ";
+            positionals << p.data_type;
+        }
+    }
+    string_q ret = "[{ROUTE}] [flags][{TYPES}][{POSITIONALS}]";
+    replace(ret, "[{TYPES}]", clean_positionals(cmd.api_route, positionals.str()));
+    replace(ret, "[{POSITIONALS}]", arguments.str());
     return ret;
 }
 
@@ -96,7 +106,11 @@ string_q get_optfields(const CCommandOption& cmd) {
 }
 
 string_q goDefault(const CCommandOption& p) {
-    if (p.go_type == "string")
+    if (p.go_type == "[]string")
+        return "nil";
+    else if (p.go_type == "float64")
+        return "0.0";
+    else if (p.go_type == "string")
         return "\"\"";
     else if (p.go_type == "uint64")
         return "0";
@@ -108,13 +122,16 @@ string_q get_setopts(const CCommandOption& cmd) {
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
         if (p.option_type != "positional") {
             os << "\t[{ROUTE}]Cmd.Flags().";
-            os << toProper(p.go_type);
-            os << "VarP(&[{PROPER}]Opts.";
+            os << p.go_flagtype;
+            os << "(&[{PROPER}]Opts.";
             os << p.Format("[{LONGNAME}], ");
             os << p.Format("\"[{LONGNAME}]\", ");
             os << p.Format("\"[{HOTKEY}]\", ");
             os << goDefault(p) << ", ";
-            os << p.Format("\"[{DESCRIPTION}]\"");
+            if (p.is_visible)
+                os << p.Format("\"[{DESCRIPTION}]\"");
+            else
+                os << p.Format("\"[{DESCRIPTION}] (hidden)\"");
             os << ")" << endl;
         }
     }
@@ -125,17 +142,23 @@ string_q get_copyopts(const CCommandOption& cmd) {
     ostringstream os;
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
         if (p.option_type != "positional") {
-            if (p.go_type == "string") {
+            if (p.go_type == "[]string") {
+                os << "\tif len([{PROPER}]Opts." << p.longName << ") > 0 {" << endl;
+                os << "\t\t// TODO(tjayrush): this loses the remaining items after the first" << endl;
+                os << "\t\toptions += \" --" << p.longName << " \" + [{PROPER}]Opts." << p.longName << "[0]" << endl;
+            } else if (p.go_type == "string") {
                 os << "\tif len([{PROPER}]Opts." << p.longName << ") > 0 {" << endl;
                 os << "\t\toptions += \" --" << p.longName << " \" + [{PROPER}]Opts." << p.longName << endl;
             } else if (p.go_type == "uint64" || p.go_type == "uint32") {
                 os << "\tif [{PROPER}]Opts." << p.longName << " > 0 {" << endl;
                 os << "\t\toptions += \" --" << p.longName << " \" + ";
-                os << "strconv.FormatUint([{PROPER}]Opts." << p.longName << ", 10)" << endl;
+                os << "fmt.Sprintf(\"%d\", [{PROPER}]Opts." << p.longName << ")" << endl;
+            } else if (p.go_type == "float64") {
+                os << "\tif [{PROPER}]Opts." << p.longName << " > 0.0 {" << endl;
+                os << "\t\toptions += \" --" << p.longName << " \" + ";
+                os << "fmt.Sprintf(\"%.1f\", [{PROPER}]Opts." << p.longName << ")" << endl;
             } else {
-                os << "\tif [{PROPER}]Opts.";
-                os << p.longName;
-                os << " {" << endl;
+                os << "\tif [{PROPER}]Opts." << p.longName << " {" << endl;
                 os << "\t\toptions += \" --" << p.longName << "\"" << endl;
             }
             os << "\t}" << endl;

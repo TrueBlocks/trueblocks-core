@@ -1,3 +1,3 @@
-builtInTest argc: 16 [1:--verbose] [2:--fmt] [3:json] [4:--ether] [5:--mocked] [6:--wei] [7:--dollars] [8:--parity] [9:--nocolor] [10:--noop] [11:--output] [12:file] [13:--raw] [14:--very_raw] [15:--version] 
-builtInTest --verbose --fmt json --ether --mocked --wei --dollars --parity --nocolor --noop --output file --raw --very_raw --version 
+builtInTest argc: 15 [1:--verbose] [2:--fmt] [3:json] [4:--ether] [5:--mocked] [6:--wei] [7:--dollars] [8:--parity] [9:--nocolor] [10:--noop] [11:--output] [12:file] [13:--raw] [14:--version] 
+builtInTest --verbose --fmt json --ether --mocked --wei --dollars --parity --nocolor --noop --output file --raw --version 
 builtInTest GHC-TrueBlocks//vers-alpha--git-hash---git-ts-

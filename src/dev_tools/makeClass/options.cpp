@@ -155,6 +155,9 @@ bool COptions::parseArguments(string_q& command) {
             dataModels.push_back(classDef);
     }
 
+    if (gocmds && !options)
+        options = true;
+
     // Ignoring classDefs for a moment, process special options. Note: order matters
     if (openapi && !handle_datamodel())
         return false;

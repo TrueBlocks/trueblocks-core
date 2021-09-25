@@ -12,10 +12,12 @@ package cmd
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+/*
+ * Parts of this file were generated with makeClass --gocmds.
+ */
 
 import (
 	"os"
-	"strconv"
 
 	"github.com/spf13/cobra"
 )
@@ -50,10 +52,10 @@ Arguments:
 }
 
 func init() {
-	namesCmd.Flags().SortFlags = false
-	namesCmd.PersistentFlags().SortFlags = false
 	namesCmd.SetOut(os.Stderr)
 
+	namesCmd.Flags().SortFlags = false
+	namesCmd.PersistentFlags().SortFlags = false
 	namesCmd.Flags().BoolVarP(&NamesOpts.expand, "expand", "e", false, "expand search to include all fields (default searches name, address, and symbol only)")
 	namesCmd.Flags().BoolVarP(&NamesOpts.match_case, "match_case", "m", false, "do case-sensitive search")
 	namesCmd.Flags().BoolVarP(&NamesOpts.all, "all", "l", false, "include all accounts in the search")
@@ -63,9 +65,11 @@ func init() {
 	namesCmd.Flags().BoolVarP(&NamesOpts.addr, "addr", "a", false, "display only addresses in the results (useful for scripting)")
 	namesCmd.Flags().BoolVarP(&NamesOpts.collections, "collections", "s", false, "display collections data")
 	namesCmd.Flags().BoolVarP(&NamesOpts.tags, "tags", "g", false, "export the list of tags and subtags only")
-	namesCmd.Flags().BoolVarP(&NamesOpts.to_custom, "to_custom", "u", false, "for editCmd only, is the edited name a custom name or not")
-	namesCmd.Flags().BoolVarP(&NamesOpts.clean, "clean", "C", false, "clean the data (addrs to lower case, sort by addr)")
-	namesCmd.Flags().StringVarP(&NamesOpts.autoname, "autoname", "A", "", "an address assumed to be a token, added automatically to names database if true")
+	namesCmd.Flags().BoolVarP(&NamesOpts.to_custom, "to_custom", "u", false, "for editCmd only, is the edited name a custom name or not (hidden)")
+	namesCmd.Flags().BoolVarP(&NamesOpts.clean, "clean", "C", false, "clean the data (addrs to lower case, sort by addr) (hidden)")
+	namesCmd.Flags().StringVarP(&NamesOpts.autoname, "autoname", "A", "", "an address assumed to be a token, added automatically to names database if true (hidden)")
+	namesCmd.Flags().SortFlags = false
+	namesCmd.PersistentFlags().SortFlags = false
 
 	rootCmd.AddCommand(namesCmd)
 }
@@ -108,8 +112,9 @@ func runNames(cmd *cobra.Command, args []string) {
 	if len(NamesOpts.autoname) > 0 {
 		options += " --autoname " + NamesOpts.autoname
 	}
-	for _, arg := range args {
-		options += " " + arg
+	arguments := ""
+    for _, arg := range args {
+		arguments += " " + arg
 	}
-	PassItOn("/Users/jrush/.local/bin/chifra/ethNames", options, strconv.FormatUint(0, 10))
+	PassItOn("/Users/jrush/.local/bin/chifra/ethNames", options, arguments)
 }

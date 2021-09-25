@@ -12,10 +12,12 @@ package cmd
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+/*
+ * Parts of this file were generated with makeClass --gocmds.
+ */
 
 import (
 	"os"
-	"strconv"
 
 	"github.com/spf13/cobra"
 )
@@ -35,16 +37,21 @@ var initCmd = &cobra.Command{
 }
 
 func init() {
+	initCmd.SetOut(os.Stderr)
+
 	initCmd.Flags().SortFlags = false
 	initCmd.PersistentFlags().SortFlags = false
-	initCmd.SetOut(os.Stderr)
+	initCmd.Flags().SortFlags = false
+	initCmd.PersistentFlags().SortFlags = false
+
 	rootCmd.AddCommand(initCmd)
 }
 
 func runInit(cmd *cobra.Command, args []string) {
 	options := ""
-	for _, arg := range args {
-		options += " " + arg
+	arguments := ""
+    for _, arg := range args {
+		arguments += " " + arg
 	}
-	PassItOn("/Users/jrush/.local/bin/chifra/pinMan local --init", options, strconv.FormatUint(0, 10))
+	PassItOn("/Users/jrush/.local/bin/chifra/pinMan local --init", options, arguments)
 }

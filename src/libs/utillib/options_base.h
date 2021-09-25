@@ -242,7 +242,7 @@ extern string_q cleanFmt(const string_q& str);
 extern void errorMessage(const string_q& msg);
 inline bool isReserved(const string_q& command) {
     const char* STR_RESERVED =
-        "|help|verbose|fmt|output|noop|version|nocolor|no_header|very_raw|raw|"
+        "|help|verbose|fmt|output|noop|version|nocolor|no_header|raw|"
         "wei|ether|dollars|parity|cmd|mocked|api_mode|to_file|file|";
     return contains(STR_RESERVED, "|" + command + "|");
 }

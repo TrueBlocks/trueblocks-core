@@ -12,10 +12,13 @@ package cmd
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+/*
+ * Parts of this file were generated with makeClass --gocmds.
+ */
 
 import (
+	"fmt"
 	"os"
-	"strconv"
 
 	"github.com/spf13/cobra"
 )
@@ -41,16 +44,18 @@ var pinsCmd = &cobra.Command{
 }
 
 func init() {
-	pinsCmd.Flags().SortFlags = false
-	pinsCmd.PersistentFlags().SortFlags = false
 	pinsCmd.SetOut(os.Stderr)
 
+	pinsCmd.Flags().SortFlags = false
+	pinsCmd.PersistentFlags().SortFlags = false
 	pinsCmd.Flags().BoolVarP(&PinsOpts.list, "list", "l", false, "list the index and Bloom filter hashes from local manifest or pinning service")
 	pinsCmd.Flags().BoolVarP(&PinsOpts.init, "init", "i", false, "initialize local index by downloading Bloom filters from pinning service")
 	pinsCmd.Flags().BoolVarP(&PinsOpts.init_all, "init_all", "n", false, "initialize local index by downloading both Bloom filters and index chunks")
-	pinsCmd.Flags().Float64VarP(&PinsOpts.sleep, "sleep", "s", 0.0, "the number of seconds to sleep between requests during init (default .25)")
-	pinsCmd.Flags().BoolVarP(&PinsOpts.remote, "remote", "r", false, "applicable only to --list mode, recover the manifest from pinning service")
+	pinsCmd.Flags().Float64VarP(&PinsOpts.sleep, "sleep", "s", 0.0, "the number of seconds to sleep between requests during init (default .25) (hidden)")
+	pinsCmd.Flags().BoolVarP(&PinsOpts.remote, "remote", "r", false, "applicable only to --list mode, recover the manifest from pinning service (hidden)")
 	pinsCmd.Flags().BoolVarP(&PinsOpts.pin_locally, "pin_locally", "p", false, "pin all local files in the index to an IPFS store (requires IPFS)")
+	pinsCmd.Flags().SortFlags = false
+	pinsCmd.PersistentFlags().SortFlags = false
 
 	rootCmd.AddCommand(pinsCmd)
 }
@@ -67,7 +72,7 @@ func runPins(cmd *cobra.Command, args []string) {
 		options += " --init_all"
 	}
 	if PinsOpts.sleep > 0.0 {
-		options += " --sleep"
+		options += " --sleep " + fmt.Sprintf("%.1f", PinsOpts.sleep)
 	}
 	if PinsOpts.remote {
 		options += " --remote"
@@ -75,8 +80,9 @@ func runPins(cmd *cobra.Command, args []string) {
 	if PinsOpts.pin_locally {
 		options += " --pin_locally"
 	}
-	for _, arg := range args {
-		options += " " + arg
+	arguments := ""
+    for _, arg := range args {
+		arguments += " " + arg
 	}
-	PassItOn("/Users/jrush/.local/bin/chifra/pinMan", options, strconv.FormatUint(0, 10))
+	PassItOn("/Users/jrush/.local/bin/chifra/pinMan", options, arguments)
 }

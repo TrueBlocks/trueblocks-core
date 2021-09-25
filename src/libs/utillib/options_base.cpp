@@ -129,7 +129,7 @@ bool COptionsBase::isBadSingleDash(const string_q& arg) const {
             return true;
     }
 
-    CStringArray builtInCmds = {"verbose", "fmt",     "ether",  "output",  "raw",     "very_raw", "mocked",
+    CStringArray builtInCmds = {"verbose", "fmt",     "ether",  "output",  "raw",     "mocked",
                                 "wei",     "dollars", "parity", "version", "nocolor", "noop"};
 
     for (auto bi : builtInCmds) {
@@ -377,13 +377,6 @@ bool COptionsBase::standardOptions(string_q& cmdLine) {
         expContext().asWei = false;
     }
 
-    if (isEnabled(OPT_RAW) && contains(cmdLine, "--very_raw ")) {
-        replaceAll(cmdLine, "--very_raw ", "");
-        setenv("NO_SCHEMAS", "true", true);
-        isRaw = true;
-        isVeryRaw = true;
-    }
-
     if (isEnabled(OPT_RAW) && contains(cmdLine, "--raw ")) {
         replaceAll(cmdLine, "--raw ", "");
         setenv("NO_SCHEMAS", "true", true);
@@ -480,7 +473,7 @@ bool COptionsBase::builtInCmd(const string_q& arg) {
         return true;
     if (isEnabled(OPT_OUTPUT) && startsWith(arg, "--output:"))
         return true;
-    if (isEnabled(OPT_RAW) && (arg == "--raw" || arg == "--very_raw"))
+    if (isEnabled(OPT_RAW) && arg == "--raw")
         return true;
     if (isEnabled(OPT_MOCKDATA) && arg == "--mocked")
         return true;

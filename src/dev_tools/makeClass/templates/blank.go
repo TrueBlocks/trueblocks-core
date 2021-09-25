@@ -12,10 +12,12 @@ package cmd
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+/*
+ * Parts of this file were generated with makeClass --gocmds.
+ */
 
 import (
-	"os"
-	"strconv"
+[{IMPORTS}]	"os"
 
 	"github.com/spf13/cobra"
 )
@@ -34,18 +36,21 @@ var [{ROUTE}]Cmd = &cobra.Command{
 }
 
 func init() {
-	[{ROUTE}]Cmd.Flags().SortFlags = false
-	[{ROUTE}]Cmd.PersistentFlags().SortFlags = false
 	[{ROUTE}]Cmd.SetOut(os.Stderr)
 
-[{SET_OPTS}]
+	[{ROUTE}]Cmd.Flags().SortFlags = false
+	[{ROUTE}]Cmd.PersistentFlags().SortFlags = false
+[{SET_OPTS}]	[{ROUTE}]Cmd.Flags().SortFlags = false
+	[{ROUTE}]Cmd.PersistentFlags().SortFlags = false
+
 	rootCmd.AddCommand([{ROUTE}]Cmd)
 }
 
 func run[{PROPER}](cmd *cobra.Command, args []string) {
 	options := ""
-[{COPY_OPTS}]	for _, arg := range args {
-		options += " " + arg
+[{COPY_OPTS}]	arguments := ""
+    for _, arg := range args {
+		arguments += " " + arg
 	}
-	PassItOn("[{PATH}]", options, strconv.FormatUint(0, 10))
+	PassItOn("[{PATH}]", options, arguments)
 }

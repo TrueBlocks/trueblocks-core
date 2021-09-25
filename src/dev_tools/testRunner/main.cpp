@@ -190,6 +190,8 @@ void COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
     cerr << measure.Format("Testing [{COMMAND}] ([{TYPE}] mode):") << endl;
 
     for (auto test : testArray) {
+        if (test.tool == "chifra" && test.mode != "api")
+            continue;
         if (skip != 1 && nRun++ % skip)
             continue;
         if (verbose)
@@ -226,9 +228,19 @@ void COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
             if (cmdTests) {
                 string_q env = substitute(substitute(linesToString(envLines, '|'), " ", ""), "|", " ");
                 string_q e = "env " + env + " TEST_MODE=true NO_COLOR=true REDIR_CERR=true ";
-                string_q p = contains(test.path, "libs") ? "test/" + test.tool : test.tool;
-                if (test.isCmd)
-                    p = getCommandPath(p);
+                string_q p;
+                if (contains(test.path, "libs")) {
+                    p = "test/" + test.tool;
+                    if (test.isCmd)
+                        p = getCommandPath(p);
+
+                } else {
+                    p = test.tool;
+                    if (test.isCmd)
+                        p = getCommandPath(p);
+                    // if (contains(p, "getTrace"))
+                    //     p = "chifra traces";
+                }
                 string_q c = p + " " + test.options + " >" + test.workPath + test.fileName + " 2>&1";
                 cmd << e << c;
 

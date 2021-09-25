@@ -12,59 +12,54 @@ package cmd
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+/*
+ * Parts of this file were generated with makeClass --gocmds.
+ */
 
 import (
 	"os"
-	"strconv"
 
 	"github.com/spf13/cobra"
 )
 
-type logsOptionsType struct {
-	topic      string
-	source     string
+type receiptsOptionsType struct {
 	articulate bool
 }
 
-var LogsOpts logsOptionsType
+var ReceiptsOpts receiptsOptionsType
 
-// logsCmd represents the logs command
-var logsCmd = &cobra.Command{
-	Use: `logs [flags] <tx_id> [tx_id...]
+// receiptsCmd represents the receipts command
+var receiptsCmd = &cobra.Command{
+	Use: `receipts [flags] <tx_id> [tx_id...]
 
 Arguments:
   transactions - a space-separated list of one or more transaction identifiers (required)`,
-	Short: "retrieve logs for the given transaction(s)",
+	Short: "retrieve receipts for the given transaction(s)",
 	Long: `Purpose:
-  Retrieve logs for the given transaction(s).`,
-	Run: runLogs,
+  Retrieve receipts for the given transaction(s).`,
+	Run: runReceipts,
 }
 
 func init() {
-	logsCmd.Flags().SortFlags = false
-	logsCmd.PersistentFlags().SortFlags = false
-	logsCmd.SetOut(os.Stderr)
+	receiptsCmd.SetOut(os.Stderr)
 
-	// logsCmd.Flags().ListtopicVarP(&LogsOpts.topic, "topic", "t", false, "filter by one or more log topics (not implemented)")
-	// logsCmd.Flags().ListaddrVarP(&LogsOpts.source, "source", "s", false, "export only if the given address emitted the event (not implemented)")
-	logsCmd.Flags().BoolVarP(&LogsOpts.articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
+	receiptsCmd.Flags().SortFlags = false
+	receiptsCmd.PersistentFlags().SortFlags = false
+	receiptsCmd.Flags().BoolVarP(&ReceiptsOpts.articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
+	receiptsCmd.Flags().SortFlags = false
+	receiptsCmd.PersistentFlags().SortFlags = false
 
-	rootCmd.AddCommand(logsCmd)
+	rootCmd.AddCommand(receiptsCmd)
 }
 
-func runLogs(cmd *cobra.Command, args []string) {
+func runReceipts(cmd *cobra.Command, args []string) {
 	options := ""
-	// if LogsOpts.topic {
-	// 	options += " --topic"
-	// }
-	// if LogsOpts.source {
-	// 	options += " --source"
-	// }
-	if LogsOpts.articulate {
+	if ReceiptsOpts.articulate {
 		options += " --articulate"
 	}
-	for _, arg := range args {
-		options += " " + arg
+	arguments := ""
+    for _, arg := range args {
+		arguments += " " + arg
 	}
-	PassItOn("/Users/jrush/.local/bin/chifra/getLogs", options, strconv.FormatUint(0, 10))
+	PassItOn("/Users/jrush/.local/bin/chifra/getReceipts", options, arguments)
 }

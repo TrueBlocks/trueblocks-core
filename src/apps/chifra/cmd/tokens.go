@@ -12,10 +12,12 @@ package cmd
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+/*
+ * Parts of this file were generated with makeClass --gocmds.
+ */
 
 import (
 	"os"
-	"strconv"
 
 	"github.com/spf13/cobra"
 )
@@ -42,13 +44,15 @@ Arguments:
 }
 
 func init() {
-	tokensCmd.Flags().SortFlags = false
-	tokensCmd.PersistentFlags().SortFlags = false
 	tokensCmd.SetOut(os.Stderr)
 
+	tokensCmd.Flags().SortFlags = false
+	tokensCmd.PersistentFlags().SortFlags = false
 	tokensCmd.Flags().StringVarP(&TokensOpts.parts, "parts", "p", "", "one or more parts of the token information to retreive")
 	tokensCmd.Flags().BoolVarP(&TokensOpts.by_acct, "by_acct", "b", false, "consider each address an ERC20 token except the last, whose balance is reported for each token")
 	tokensCmd.Flags().BoolVarP(&TokensOpts.no_zero, "no_zero", "n", false, "suppress the display of zero balance accounts")
+	tokensCmd.Flags().SortFlags = false
+	tokensCmd.PersistentFlags().SortFlags = false
 
 	rootCmd.AddCommand(tokensCmd)
 }
@@ -64,8 +68,9 @@ func runTokens(cmd *cobra.Command, args []string) {
 	if TokensOpts.no_zero {
 		options += " --no_zero"
 	}
-	for _, arg := range args {
-		options += " " + arg
+	arguments := ""
+    for _, arg := range args {
+		arguments += " " + arg
 	}
-	PassItOn("/Users/jrush/.local/bin/chifra/getTokens", options, strconv.FormatUint(0, 10))
+	PassItOn("/Users/jrush/.local/bin/chifra/getTokens", options, arguments)
 }

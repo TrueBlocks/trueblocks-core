@@ -12,10 +12,13 @@ package cmd
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+/*
+ * Parts of this file were generated with makeClass --gocmds.
+ */
 
 import (
+	"fmt"
 	"os"
-	"strconv"
 
 	"github.com/spf13/cobra"
 )
@@ -32,7 +35,7 @@ type exportOptionsType struct {
 	cache_traces bool
 	factory      bool
 	emitter      bool
-	// source       string
+	source       []string
 	relevant     bool
 	count        bool
 	first_record uint64
@@ -55,7 +58,7 @@ var ExportOpts exportOptionsType
 
 // exportCmd represents the export command
 var exportCmd = &cobra.Command{
-	Use: `export [flags] <address> [address...] [topics] [fourbytes]
+	Use: `export [flags] <address> [address...] [topics...] [fourbytes...]
 
 Arguments:
   addrs - one or more addresses (0x...) to export (required)
@@ -68,10 +71,10 @@ Arguments:
 }
 
 func init() {
-	exportCmd.Flags().SortFlags = false
-	exportCmd.PersistentFlags().SortFlags = false
 	exportCmd.SetOut(os.Stderr)
 
+	exportCmd.Flags().SortFlags = false
+	exportCmd.PersistentFlags().SortFlags = false
 	exportCmd.Flags().BoolVarP(&ExportOpts.appearances, "appearances", "p", false, "export a list of appearances")
 	exportCmd.Flags().BoolVarP(&ExportOpts.receipts, "receipts", "r", false, "export receipts instead of transaction list")
 	exportCmd.Flags().BoolVarP(&ExportOpts.statements, "statements", "A", false, "for use with --accounting option only, export only reconciliation statements")
@@ -83,23 +86,25 @@ func init() {
 	exportCmd.Flags().BoolVarP(&ExportOpts.cache_traces, "cache_traces", "R", false, "write traces to the cache (see notes)")
 	exportCmd.Flags().BoolVarP(&ExportOpts.factory, "factory", "y", false, "scan for contract creations from the given address(es) and report address of those contracts")
 	exportCmd.Flags().BoolVarP(&ExportOpts.emitter, "emitter", "", false, "for log export only, export only if one of the given export addresses emitted the event")
-	// exportCmd.Flags().ListaddrVarP(&ExportOpts.source, "source", "", false, "for log export only, export only one of these addresses emitted the event")
+	exportCmd.Flags().StringSliceVarP(&ExportOpts.source, "source", "", nil, "for log export only, export only one of these addresses emitted the event")
 	exportCmd.Flags().BoolVarP(&ExportOpts.relevant, "relevant", "", false, "for log and accounting export only, if true export only logs relevant to one of the given export addresses")
 	exportCmd.Flags().BoolVarP(&ExportOpts.count, "count", "U", false, "only available for --appearances mode, if present return only the number of records")
 	exportCmd.Flags().Uint64VarP(&ExportOpts.first_record, "first_record", "c", 0, "the first record to process")
 	exportCmd.Flags().Uint64VarP(&ExportOpts.max_records, "max_records", "e", 0, "the maximum number of records to process before reporting")
 	exportCmd.Flags().BoolVarP(&ExportOpts.clean, "clean", "", false, "clean (i.e. remove duplicate appearances) from all existing monitors")
-	exportCmd.Flags().BoolVarP(&ExportOpts.freshen, "freshen", "f", false, "freshen but do not print the exported data")
-	exportCmd.Flags().BoolVarP(&ExportOpts.staging, "staging", "s", false, "enable search of staging (not yet finalized) folder")
-	exportCmd.Flags().BoolVarP(&ExportOpts.unripe, "unripe", "u", false, "enable search of unripe (neither staged nor finalized) folder (assumes --staging)")
-	exportCmd.Flags().StringVarP(&ExportOpts.load, "load", "", "", "a comma separated list of dynamic traversers to load")
-	exportCmd.Flags().BoolVarP(&ExportOpts.reversed, "reversed", "", false, "produce results in reverse chronological order")
-	exportCmd.Flags().BoolVarP(&ExportOpts.by_date, "by_date", "b", false, "produce results sorted by date (default is to report by address)")
-	exportCmd.Flags().StringVarP(&ExportOpts.summarize_by, "summarize_by", "z", "", "for --accounting only, summarize reconciliations by this time period")
-	exportCmd.Flags().BoolVarP(&ExportOpts.skip_ddos, "skip_ddos", "d", false, "toggle skipping over 2016 dDos transactions ('on' by default)")
-	exportCmd.Flags().Uint64VarP(&ExportOpts.max_traces, "max_traces", "m", 0, "if --skip_ddos is on, this many traces defines what a ddos transaction|is (default = 250)")
-	exportCmd.Flags().Uint64VarP(&ExportOpts.first_block, "first_block", "F", 0, "first block to process (inclusive)")
-	exportCmd.Flags().Uint64VarP(&ExportOpts.last_block, "last_block", "L", 0, "last block to process (inclusive)")
+	exportCmd.Flags().BoolVarP(&ExportOpts.freshen, "freshen", "f", false, "freshen but do not print the exported data (hidden)")
+	exportCmd.Flags().BoolVarP(&ExportOpts.staging, "staging", "s", false, "enable search of staging (not yet finalized) folder (hidden)")
+	exportCmd.Flags().BoolVarP(&ExportOpts.unripe, "unripe", "u", false, "enable search of unripe (neither staged nor finalized) folder (assumes --staging) (hidden)")
+	exportCmd.Flags().StringVarP(&ExportOpts.load, "load", "", "", "a comma separated list of dynamic traversers to load (hidden)")
+	exportCmd.Flags().BoolVarP(&ExportOpts.reversed, "reversed", "", false, "produce results in reverse chronological order (hidden)")
+	exportCmd.Flags().BoolVarP(&ExportOpts.by_date, "by_date", "b", false, "produce results sorted by date (default is to report by address) (hidden)")
+	exportCmd.Flags().StringVarP(&ExportOpts.summarize_by, "summarize_by", "z", "", "for --accounting only, summarize reconciliations by this time period (hidden)")
+	exportCmd.Flags().BoolVarP(&ExportOpts.skip_ddos, "skip_ddos", "d", false, "toggle skipping over 2016 dDos transactions ('on' by default) (hidden)")
+	exportCmd.Flags().Uint64VarP(&ExportOpts.max_traces, "max_traces", "m", 0, "if --skip_ddos is on, this many traces defines what a ddos transaction|is (default = 250) (hidden)")
+	exportCmd.Flags().Uint64VarP(&ExportOpts.first_block, "first_block", "F", 0, "first block to process (inclusive) (hidden)")
+	exportCmd.Flags().Uint64VarP(&ExportOpts.last_block, "last_block", "L", 0, "last block to process (inclusive) (hidden)")
+	exportCmd.Flags().SortFlags = false
+	exportCmd.PersistentFlags().SortFlags = false
 
 	rootCmd.AddCommand(exportCmd)
 }
@@ -139,9 +144,10 @@ func runExport(cmd *cobra.Command, args []string) {
 	if ExportOpts.emitter {
 		options += " --emitter"
 	}
-	// if ExportOpts.source {
-	// 	options += " --source"
-	// }
+	if len(ExportOpts.source) > 0 {
+		// TODO(tjayrush): this loses the remaining items after the first
+		options += " --source " + ExportOpts.source[0]
+	}
 	if ExportOpts.relevant {
 		options += " --relevant"
 	}
@@ -149,10 +155,10 @@ func runExport(cmd *cobra.Command, args []string) {
 		options += " --count"
 	}
 	if ExportOpts.first_record > 0 {
-		options += " --first_record " + strconv.FormatUint(ExportOpts.first_record, 10)
+		options += " --first_record " + fmt.Sprintf("%d", ExportOpts.first_record)
 	}
 	if ExportOpts.max_records > 0 {
-		options += " --max_records " + strconv.FormatUint(ExportOpts.max_records, 10)
+		options += " --max_records " + fmt.Sprintf("%d", ExportOpts.max_records)
 	}
 	if ExportOpts.clean {
 		options += " --clean"
@@ -182,16 +188,17 @@ func runExport(cmd *cobra.Command, args []string) {
 		options += " --skip_ddos"
 	}
 	if ExportOpts.max_traces > 0 {
-		options += " --max_traces " + strconv.FormatUint(ExportOpts.max_traces, 10)
+		options += " --max_traces " + fmt.Sprintf("%d", ExportOpts.max_traces)
 	}
 	if ExportOpts.first_block > 0 {
-		options += " --first_block " + strconv.FormatUint(ExportOpts.first_block, 10)
+		options += " --first_block " + fmt.Sprintf("%d", ExportOpts.first_block)
 	}
 	if ExportOpts.last_block > 0 {
-		options += " --last_block " + strconv.FormatUint(ExportOpts.last_block, 10)
+		options += " --last_block " + fmt.Sprintf("%d", ExportOpts.last_block)
 	}
-	for _, arg := range args {
-		options += " " + arg
+	arguments := ""
+    for _, arg := range args {
+		arguments += " " + arg
 	}
-	PassItOn("/Users/jrush/.local/bin/chifra/acctExport", options, strconv.FormatUint(0, 10))
+	PassItOn("/Users/jrush/.local/bin/chifra/acctExport", options, arguments)
 }

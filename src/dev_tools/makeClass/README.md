@@ -40,7 +40,6 @@ All **TrueBlocks** command-line tools support the following commands (although i
 | --ether     | specify value in ether                                        |
 | --dollars   | specify value in US dollars                                   |
 | --raw       | report JSON data from the node with minimal processing        |
-| --very_raw  | report JSON data from node with zero processing               |
 | --to_file   | write the results to a temporary file and return the filename |
 | --output:fn | write the results to file 'fn' and return the filename        |
 | --file:fn   | specify multiple sets of command line options in a file.      |

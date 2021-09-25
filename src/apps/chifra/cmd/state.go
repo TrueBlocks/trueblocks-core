@@ -12,10 +12,12 @@ package cmd
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+/*
+ * Parts of this file were generated with makeClass --gocmds.
+ */
 
 import (
 	"os"
-	"strconv"
 
 	"github.com/spf13/cobra"
 )
@@ -43,14 +45,16 @@ Arguments:
 }
 
 func init() {
-	stateCmd.Flags().SortFlags = false
-	stateCmd.PersistentFlags().SortFlags = false
 	stateCmd.SetOut(os.Stderr)
 
+	stateCmd.Flags().SortFlags = false
+	stateCmd.PersistentFlags().SortFlags = false
 	stateCmd.Flags().StringVarP(&StateOpts.parts, "parts", "p", "", "control which state to export")
 	stateCmd.Flags().BoolVarP(&StateOpts.changes, "changes", "c", false, "only report a balance when it changes from one block to the next")
 	stateCmd.Flags().BoolVarP(&StateOpts.no_zero, "no_zero", "n", false, "suppress the display of zero balance accounts")
-	stateCmd.Flags().StringVarP(&StateOpts.call, "call", "a", "", "a bang-separated string consisting of address!4-byte!bytes")
+	stateCmd.Flags().StringVarP(&StateOpts.call, "call", "a", "", "a bang-separated string consisting of address!4-byte!bytes (hidden)")
+	stateCmd.Flags().SortFlags = false
+	stateCmd.PersistentFlags().SortFlags = false
 
 	rootCmd.AddCommand(stateCmd)
 }
@@ -69,8 +73,9 @@ func runState(cmd *cobra.Command, args []string) {
 	if len(StateOpts.call) > 0 {
 		options += " --call " + StateOpts.call
 	}
-	for _, arg := range args {
-		options += " " + arg
+	arguments := ""
+    for _, arg := range args {
+		arguments += " " + arg
 	}
-	PassItOn("/Users/jrush/.local/bin/chifra/getState", options, strconv.FormatUint(0, 10))
+	PassItOn("/Users/jrush/.local/bin/chifra/getState", options, arguments)
 }
