@@ -14,58 +14,67 @@ package cmd
  *-------------------------------------------------------------------------------------------*/
 
 import (
-	"fmt"
+	"os"
+	"strconv"
 
 	"github.com/spf13/cobra"
 )
 
+type transactionsOptionsType struct {
+	articulate bool
+	trace      bool
+	uniq       bool
+	reconcile  string
+	cache      bool
+}
+
+var TransactionsOpts transactionsOptionsType
+
 // transactionsCmd represents the transactions command
 var transactionsCmd = &cobra.Command{
-	Use:   "transactions",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+	Use: `transactions [flags] <tx_id> [tx_id...]
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
-	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("transactions called")
-	},
+Arguments:
+  transactions - a space-separated list of one or more transaction identifiers (required)`,
+	Short: "retrieve one or more transactions from the chain or local cache",
+	Long: `Purpose:
+  Retrieve one or more transactions from the chain or local cache.`,
+	Run: runTransactions,
 }
 
 func init() {
+	transactionsCmd.Flags().SortFlags = false
+	transactionsCmd.PersistentFlags().SortFlags = false
+	transactionsCmd.SetOut(os.Stderr)
+
+	transactionsCmd.Flags().BoolVarP(&TransactionsOpts.articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
+	transactionsCmd.Flags().BoolVarP(&TransactionsOpts.trace, "trace", "t", false, "include the transaction's traces in the results")
+	transactionsCmd.Flags().BoolVarP(&TransactionsOpts.uniq, "uniq", "u", false, "display a list of uniq addresses found in the transaction instead of the underlying data")
+	transactionsCmd.Flags().StringVarP(&TransactionsOpts.reconcile, "reconcile", "r", "", "reconcile the transaction as per the provided address")
+	transactionsCmd.Flags().BoolVarP(&TransactionsOpts.cache, "cache", "o", false, "force the results of the query into the tx cache (and the trace cache if applicable)")
+
 	rootCmd.AddCommand(transactionsCmd)
-	transactionsCmd.SetHelpTemplate(getHelpTextTransactions())
 }
 
-func getHelpTextTransactions() string {
-	return `chifra argc: 5 [1:transactions] [2:--help] [3:--verbose] [4:2] 
-chifra transactions --help --verbose 2 
-chifra transactions argc: 4 [1:--help] [2:--verbose] [3:2] 
-chifra transactions --help --verbose 2 
-PROG_NAME = [chifra transactions]
-
-  Usage:    chifra transactions [-a|-t|-u|-r|-o|-v|-h] <tx_id> [tx_id...]  
-  Purpose:  Retrieve one or more transactions from the chain or local cache.
-
-  Where:
-    transactions            a space-separated list of one or more transaction identifiers (required)
-    -a  (--articulate)      articulate the retrieved data if ABIs can be found
-    -t  (--trace)           include the transaction's traces in the results
-    -u  (--uniq)            display a list of uniq addresses found in the transaction instead of the underlying data
-    -r  (--reconcile <address>)reconcile the transaction as per the provided address
-    -o  (--cache)           force the results of the query into the tx cache (and the trace cache if applicable)
-    -x  (--fmt <val>)       export format, one of [none|json*|txt|csv|api]
-    -v  (--verbose)         set verbose level (optional level defaults to 1)
-    -h  (--help)            display this help screen
-
-  Notes:
-    - The transactions list may be one or more space-separated identifiers which are either a transaction hash,
-      a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.
-    - This tool checks for valid input syntax, but does not check that the transaction requested actually exists.
-    - If the queried node does not store historical state, the results for most older transactions are undefined.
-
-  Powered by TrueBlocks
-`
+func runTransactions(cmd *cobra.Command, args []string) {
+	options := ""
+	if TransactionsOpts.articulate {
+		options += " --articulate"
+	}
+	if TransactionsOpts.trace {
+		options += " --trace"
+	}
+	if TransactionsOpts.uniq {
+		options += " --uniq"
+	}
+	if len(TransactionsOpts.reconcile) > 0 {
+		options += " --reconcile " + TransactionsOpts.reconcile
+	}
+	if TransactionsOpts.cache {
+		options += " --cache"
+	}
+	for _, arg := range args {
+		options += " " + arg
+	}
+	PassItOn("/Users/jrush/.local/bin/chifra/getTrans", options, strconv.FormatUint(0, 10))
 }

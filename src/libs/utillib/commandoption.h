@@ -280,5 +280,6 @@ inline string_q getDocsPathTemplates(const string_q& _part) {
 inline string_q getDocsPathReadmes(const string_q& _part) {
     return getDocsPath("readmes/" + _part);
 }
+extern string_q clean_positional(const string& progName, const string_q& strIn);
 // EXISTING_CODE
 }  // namespace qblocks

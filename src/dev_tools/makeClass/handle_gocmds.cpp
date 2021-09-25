@@ -32,28 +32,25 @@ bool COptions::handle_gocmds(void) {
             if (option.api_route == ep.api_route && option.isChifraRoute())
                 params.push_back(option);
         ep.params = &params;
-        if (ep.api_route == "abis" || ep.api_route == "when" || ep.api_route == "receipts" ||
-            ep.api_route == "blocks" || ep.api_route == "names") {
-            string_q source = asciiFileToString(configPath("makeClass/blank.go"));
-            string_q path = substitute(getCommandPath(chifraCmdMap[ep.api_route]), "~/", "/Users/jrush/");
-            replaceAll(source, "[{COPY_OPTS}]", get_copyopts(ep));
-            replaceAll(source, "[{SET_OPTS}]", get_setopts(ep));
-            replaceAll(source, "[{USE}]", get_use(ep));
-            replaceAll(source, "[{ROUTE}]", toLower(ep.api_route));
-            replaceAll(source, "[{PROPER}]", toProper(ep.api_route));
-            replaceAll(source, "[{PATH}]", path);
-            replaceAll(source, "[{OPT_FIELDS}]", get_optfields(ep));
+        string_q source = asciiFileToString(configPath("makeClass/blank.go"));
+        string_q path = substitute(getCommandPath(chifraCmdMap[ep.api_route]), "~/", "/Users/jrush/");
+        replaceAll(source, "[{COPY_OPTS}]", get_copyopts(ep));
+        replaceAll(source, "[{SET_OPTS}]", get_setopts(ep));
+        replaceAll(source, "[{USE}]", get_use(ep));
+        replaceAll(source, "[{ROUTE}]", toLower(ep.api_route));
+        replaceAll(source, "[{PROPER}]", toProper(ep.api_route));
+        replaceAll(source, "[{PATH}]", path);
+        replaceAll(source, "[{OPT_FIELDS}]", get_optfields(ep));
 
-            replaceAll(source, "[{LONG}]", "Purpose:\n  " + ep.description);
-            string_q descr = firstLower(ep.description);
-            if (endsWith(descr, "."))
-                replaceReverse(descr, ".", "");
-            replaceAll(source, "[{SHORT}]", descr);
+        replaceAll(source, "[{LONG}]", "Purpose:\n  " + ep.description);
+        string_q descr = firstLower(ep.description);
+        if (endsWith(descr, "."))
+            replaceReverse(descr, ".", "");
+        replaceAll(source, "[{SHORT}]", descr);
 
-            stringToAsciiFile("../src/apps/chifra-new/cmd/" + ep.api_route + ".go", source);
-            counter.nProcessed++;
-            counter.nVisited++;
-        }
+        stringToAsciiFile("../src/apps/chifra-new/cmd/" + ep.api_route + ".go", source);
+        counter.nProcessed++;
+        counter.nVisited++;
     }
 
     LOG_INFO(cYellow, "makeClass --gocmds", cOff, " processed ", counter.nVisited, " files (changed ",
@@ -64,20 +61,22 @@ bool COptions::handle_gocmds(void) {
 
 string_q get_use(const CCommandOption& cmd) {
     const char* STR_USE =
-        "[{ROUTE}] [flags] <address> [address...]\n"
+        "[{ROUTE}] [flags] [{TYPES}]\n"
         "\n"
         "Arguments:\n"
         "[{POSITIONALS}]";
-    ostringstream os;
+    ostringstream os, pTypes;
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
         if (p.option_type == "positional") {
-            os << "  " << p.longName << " - " << p.description;
+            os << p.Format("  [{LONGNAME}] - [{DESCRIPTION}]");
             if (p.is_required)
                 os << " (required)";
             os << endl;
+            pTypes << p.data_type << " ";
         }
     }
     string_q ret = STR_USE;
+    replace(ret, "[{TYPES}]", clean_positional(toLower(cmd.api_route), trim(pTypes.str(), ' ')));
     replace(ret, "[{POSITIONALS}]", trim(os.str(), '\n'));
     return ret;
 }
@@ -90,18 +89,16 @@ string_q get_optfields(const CCommandOption& cmd) {
     }
     ostringstream os;
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
-        string_q type = p.go_type;
         if (p.option_type != "positional")
-            os << "\t" << padRight(p.longName, wid) << " " << type << endl;
+            os << "\t" << padRight(p.longName, wid) << " " << p.go_type << endl;
     }
     return os.str();
 }
 
 string_q goDefault(const CCommandOption& p) {
-    string_q type = p.go_type;
-    if (type == "string")
+    if (p.go_type == "string")
         return "\"\"";
-    else if (type == "uint64")
+    else if (p.go_type == "uint64")
         return "0";
     return "false";
 }
@@ -109,10 +106,9 @@ string_q goDefault(const CCommandOption& p) {
 string_q get_setopts(const CCommandOption& cmd) {
     ostringstream os;
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
-        string_q type = p.go_type;
         if (p.option_type != "positional") {
             os << "\t[{ROUTE}]Cmd.Flags().";
-            os << toProper(type);
+            os << toProper(p.go_type);
             os << "VarP(&[{PROPER}]Opts.";
             os << p.Format("[{LONGNAME}], ");
             os << p.Format("\"[{LONGNAME}]\", ");
@@ -129,11 +125,10 @@ string_q get_copyopts(const CCommandOption& cmd) {
     ostringstream os;
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
         if (p.option_type != "positional") {
-            string_q type = p.go_type;
-            if (type == "string") {
+            if (p.go_type == "string") {
                 os << "\tif len([{PROPER}]Opts." << p.longName << ") > 0 {" << endl;
                 os << "\t\toptions += \" --" << p.longName << " \" + [{PROPER}]Opts." << p.longName << endl;
-            } else if (type == "uint64") {
+            } else if (p.go_type == "uint64" || p.go_type == "uint32") {
                 os << "\tif [{PROPER}]Opts." << p.longName << " > 0 {" << endl;
                 os << "\t\toptions += \" --" << p.longName << " \" + ";
                 os << "strconv.FormatUint([{PROPER}]Opts." << p.longName << ", 10)" << endl;

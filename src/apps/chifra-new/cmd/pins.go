@@ -14,36 +14,69 @@ package cmd
  *-------------------------------------------------------------------------------------------*/
 
 import (
-	"fmt"
+	"os"
+	"strconv"
 
 	"github.com/spf13/cobra"
 )
 
+type pinsOptionsType struct {
+	list        bool
+	init        bool
+	init_all    bool
+	sleep       float64
+	remote      bool
+	pin_locally bool
+}
+
+var PinsOpts pinsOptionsType
+
 // pinsCmd represents the pins command
 var pinsCmd = &cobra.Command{
-	Use:   "pins",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
-	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("pins called")
-	},
+	Use: `pins [flags]`,
+	Short: "manage pinned index of appearances and associated Bloom filters",
+	Long: `Purpose:
+  Manage pinned index of appearances and associated Bloom filters.`,
+	Run: runPins,
 }
 
 func init() {
+	pinsCmd.Flags().SortFlags = false
+	pinsCmd.PersistentFlags().SortFlags = false
+	pinsCmd.SetOut(os.Stderr)
+
+	pinsCmd.Flags().BoolVarP(&PinsOpts.list, "list", "l", false, "list the index and Bloom filter hashes from local manifest or pinning service")
+	pinsCmd.Flags().BoolVarP(&PinsOpts.init, "init", "i", false, "initialize local index by downloading Bloom filters from pinning service")
+	pinsCmd.Flags().BoolVarP(&PinsOpts.init_all, "init_all", "n", false, "initialize local index by downloading both Bloom filters and index chunks")
+	pinsCmd.Flags().Float64VarP(&PinsOpts.sleep, "sleep", "s", 0.0, "the number of seconds to sleep between requests during init (default .25)")
+	pinsCmd.Flags().BoolVarP(&PinsOpts.remote, "remote", "r", false, "applicable only to --list mode, recover the manifest from pinning service")
+	pinsCmd.Flags().BoolVarP(&PinsOpts.pin_locally, "pin_locally", "p", false, "pin all local files in the index to an IPFS store (requires IPFS)")
+
 	rootCmd.AddCommand(pinsCmd)
+}
 
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// pinsCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// pinsCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+func runPins(cmd *cobra.Command, args []string) {
+	options := ""
+	if PinsOpts.list {
+		options += " --list"
+	}
+	if PinsOpts.init {
+		options += " --init"
+	}
+	if PinsOpts.init_all {
+		options += " --init_all"
+	}
+	if PinsOpts.sleep > 0.0 {
+		options += " --sleep"
+	}
+	if PinsOpts.remote {
+		options += " --remote"
+	}
+	if PinsOpts.pin_locally {
+		options += " --pin_locally"
+	}
+	for _, arg := range args {
+		options += " " + arg
+	}
+	PassItOn("/Users/jrush/.local/bin/chifra/pinMan", options, strconv.FormatUint(0, 10))
 }

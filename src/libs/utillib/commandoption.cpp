@@ -848,6 +848,44 @@ string_q CCommandOption::toGoRoute(void) const {
     return out.str();
 }
 
+//--------------------------------------------------------------------------------
+string_q clean_positional(const string_q& progName, const string_q& strIn) {
+    if (contains(strIn, "<")) {
+        ostringstream os;
+        os << (strIn == "list<addr>" ? "<address> [address...]" : "");
+        os << (strIn == "list<blknum>" ? "<block> [block...]" : "");
+        os << (strIn == "list<tx_id>" ? "<tx_id> [tx_id...]" : "");
+        os << (strIn == "list<path>" ? "xxx" : "");
+        if (contains(progName, "tokens"))
+            os << (strIn == "list<addr> list<blknum>" ? "<address> <address> [address...] [block...]" : "");
+        else
+            os << (strIn == "list<addr> list<blknum>" ? "<address> [address...] [block...]" : "");
+        if (contains(progName, "when"))
+            os << (strIn == "list<string>" ? "< block | date > [ block... | date... ]" : "");
+        else
+            os << (strIn == "list<string>" ? "<term> [term...]" : "");
+        if (os.str().empty()) {
+            cerr << "Could not convert " << strIn << " for tool " << progName << endl;
+            os << strIn;
+        }
+        return os.str();
+    }
+    string_q strOut = strIn;
+    replaceAll(strOut, "addrs2 blocks", "<address> <address> [address...] [block...]");
+    replaceAll(strOut, "addrs blocks", "<address> [address...] [block...]");
+    replaceAll(strOut, "transactions", "<tx_id> [tx_id...]");
+    if (contains(progName, "when"))
+        replaceAll(strOut, "blocks", "< block | date > [ block... | date... ]");
+    else
+        replaceAll(strOut, "blocks", "<block> [block...]");
+    replaceAll(strOut, "addrs topics fourbytes", "<address> [address...] [topics] [fourbytes]");
+    replaceAll(strOut, "addrs", "<address> [address...]");
+    replaceAll(strOut, "files", "<file> [file...]");
+    replaceAll(strOut, "terms", "<term> [term...]");
+    replaceAll(strOut, "modes", "<mode> [mode...]");
+    return trim(strOut);
+}
+
 //---------------------------------------------------------------------------------------------------
 string_q prepareDescr(const string_q& in) {
     if (in.length() < 75)

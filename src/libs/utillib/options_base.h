@@ -115,7 +115,6 @@ class COptionsBase {
     string_q get_errmsg(const string_q& errMsg) const;
     string_q get_override(void) const;
     string_q get_positionals(COptionArray& pos) const;
-    string_q clean_positional(const string& strInOut) const;
 
     string_q format_notes(const CStringArray& strs) const;
     bool flag_required(const string_q& command) const;

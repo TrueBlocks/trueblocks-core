@@ -14,11 +14,19 @@ package cmd
  *-------------------------------------------------------------------------------------------*/
 
 import (
-	"fmt"
 	"os"
+	"strconv"
 
 	"github.com/spf13/cobra"
 )
+
+type logsOptionsType struct {
+	topic      string
+	source     string
+	articulate bool
+}
+
+var LogsOpts logsOptionsType
 
 // logsCmd represents the logs command
 var logsCmd = &cobra.Command{
@@ -26,23 +34,37 @@ var logsCmd = &cobra.Command{
 
 Arguments:
   transactions - a space-separated list of one or more transaction identifiers (required)`,
-	Short: "Retrieve logs for the given transaction(s)",
+	Short: "retrieve logs for the given transaction(s)",
 	Long: `Purpose:
-  Retrieve logs for the given transaction(s).
-`,
-	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("logs called")
-	},
+  Retrieve logs for the given transaction(s).`,
+	Run: runLogs,
 }
 
 func init() {
-	rootCmd.AddCommand(logsCmd)
-
 	logsCmd.Flags().SortFlags = false
 	logsCmd.PersistentFlags().SortFlags = false
 	logsCmd.SetOut(os.Stderr)
-	logsCmd.Flags().StringP("topic", "t", "", "filter by one or more log topics (not implemented)")
-	logsCmd.Flags().StringP("source", "s", "", "export only if the given address emitted the event (not implemented)")
-	logsCmd.Flags().BoolP("articulate", "a", false, "articulate the retrieved data if ABIs can be found")
-	logsCmd.Flags().MarkHidden("transactions")
+
+	// logsCmd.Flags().ListtopicVarP(&LogsOpts.topic, "topic", "t", false, "filter by one or more log topics (not implemented)")
+	// logsCmd.Flags().ListaddrVarP(&LogsOpts.source, "source", "s", false, "export only if the given address emitted the event (not implemented)")
+	logsCmd.Flags().BoolVarP(&LogsOpts.articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
+
+	rootCmd.AddCommand(logsCmd)
+}
+
+func runLogs(cmd *cobra.Command, args []string) {
+	options := ""
+	// if LogsOpts.topic {
+	// 	options += " --topic"
+	// }
+	// if LogsOpts.source {
+	// 	options += " --source"
+	// }
+	if LogsOpts.articulate {
+		options += " --articulate"
+	}
+	for _, arg := range args {
+		options += " " + arg
+	}
+	PassItOn("/Users/jrush/.local/bin/chifra/getLogs", options, strconv.FormatUint(0, 10))
 }

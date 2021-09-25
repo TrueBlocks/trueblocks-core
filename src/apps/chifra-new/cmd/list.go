@@ -14,36 +14,41 @@ package cmd
  *-------------------------------------------------------------------------------------------*/
 
 import (
-	"fmt"
+	"os"
+	"strconv"
 
 	"github.com/spf13/cobra"
 )
 
+type listOptionsType struct {
+}
+
+var ListOpts listOptionsType
+
 // listCmd represents the list command
 var listCmd = &cobra.Command{
-	Use:   "list",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+	Use: `list [flags] <address> [address...]
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
-	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("list called")
-	},
+Arguments:
+  addrs - one or more addresses (0x...) to list (required)`,
+	Short: "list every appearance of an address anywhere on the chain",
+	Long: `Purpose:
+  List every appearance of an address anywhere on the chain.`,
+	Run: runList,
 }
 
 func init() {
+	listCmd.Flags().SortFlags = false
+	listCmd.PersistentFlags().SortFlags = false
+	listCmd.SetOut(os.Stderr)
+
 	rootCmd.AddCommand(listCmd)
+}
 
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// listCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// listCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+func runList(cmd *cobra.Command, args []string) {
+	options := ""
+	for _, arg := range args {
+		options += " " + arg
+	}
+	PassItOn("/Users/jrush/.local/bin/chifra/acctExport --appearances", options, strconv.FormatUint(0, 10))
 }

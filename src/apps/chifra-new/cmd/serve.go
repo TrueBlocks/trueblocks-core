@@ -14,41 +14,37 @@ package cmd
  *-------------------------------------------------------------------------------------------*/
 
 import (
-	"fmt"
+	"os"
+	"strconv"
 
 	"github.com/spf13/cobra"
 )
 
+type serveOptionsType struct {
+}
+
+var ServeOpts serveOptionsType
+
 // serveCmd represents the serve command
 var serveCmd = &cobra.Command{
-	Use:   "serve",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
-	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("serve called")
-	},
+	Use: `serve`,
+	Short: "serve the TrueBlocks API using the flame server",
+	Long: `Purpose:
+  Serve the TrueBlocks API using the flame server.`,
+	Run: runServe,
 }
 
 func init() {
+	serveCmd.Flags().SortFlags = false
+	serveCmd.PersistentFlags().SortFlags = false
+	serveCmd.SetOut(os.Stderr)
 	rootCmd.AddCommand(serveCmd)
-	serveCmd.SetHelpTemplate(getHelpTextServe())
 }
 
-func getHelpTextServe() string {
-	return `chifra argc: 5 [1:serve] [2:--help] [3:--verbose] [4:2] 
-chifra serve --help --verbose 2 
-Usage of flame:
-      --monitor       enable monitor scraper mode
-      --pin           pins Bloom filters and chunks to pinning service (requires API key)
-      --port string   specify the server's port (default ":8080")
-      --scrape        enable block scraper mode
-      --sleep int     specifies sleep interval between scrapes (default 14)
-      --verbose int   verbose level (between 0 and 10 inclusive)
-pflag: help requested
-`
+func runServe(cmd *cobra.Command, args []string) {
+	options := ""
+	for _, arg := range args {
+		options += " " + arg
+	}
+	PassItOn("/Users/jrush/.local/bin/chifra/flame", options, strconv.FormatUint(0, 10))
 }

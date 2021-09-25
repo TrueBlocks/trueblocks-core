@@ -14,53 +14,64 @@ package cmd
  *-------------------------------------------------------------------------------------------*/
 
 import (
-	"fmt"
+	"os"
+	"strconv"
 
 	"github.com/spf13/cobra"
 )
 
+type scrapeOptionsType struct {
+	pin           bool
+	sleep         float64
+	n_blocks      uint64
+	n_block_procs uint64
+	n_addr_procs  uint64
+}
+
+var ScrapeOpts scrapeOptionsType
+
 // scrapeCmd represents the scrape command
 var scrapeCmd = &cobra.Command{
-	Use:   "scrape",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
-	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("scrape called")
-	},
+	Use: `scrape [flags]`,
+	Short: "scan the chain and update the TrueBlocks index of appearances",
+	Long: `Purpose:
+  Scan the chain and update the TrueBlocks index of appearances.`,
+	Run: runScrape,
 }
 
 func init() {
+	scrapeCmd.Flags().SortFlags = false
+	scrapeCmd.PersistentFlags().SortFlags = false
+	scrapeCmd.SetOut(os.Stderr)
+
+	scrapeCmd.Flags().BoolVarP(&ScrapeOpts.pin, "pin", "p", false, "pin new chunks (and blooms) to IPFS (requires Pinata key and running IPFS node)")
+	scrapeCmd.Flags().Float64VarP(&ScrapeOpts.sleep, "sleep", "s", 0.0, "the number of seconds to sleep between passes (default 14)")
+	scrapeCmd.Flags().Uint64VarP(&ScrapeOpts.n_blocks, "n_blocks", "n", 0, "maximum number of blocks to process (default 2000)")
+	scrapeCmd.Flags().Uint64VarP(&ScrapeOpts.n_block_procs, "n_block_procs", "b", 0, "number of concurrent block channels for blaze")
+	scrapeCmd.Flags().Uint64VarP(&ScrapeOpts.n_addr_procs, "n_addr_procs", "a", 0, "number of concurrent address channels for blaze")
+
 	rootCmd.AddCommand(scrapeCmd)
-	scrapeCmd.SetHelpTemplate(getHelpTextScrape())
 }
 
-func getHelpTextScrape() string {
-	return `chifra argc: 5 [1:scrape] [2:--help] [3:--verbose] [4:2] 
-chifra scrape --help --verbose 2 
-chifra scrape argc: 5 [1:--help] [2:--verbose] [3:2] [4:--scrape] 
-chifra scrape --help --verbose 2 --scrape 
-PROG_NAME = [chifra scrape]
-
-  Usage:    chifra scrape [-p|-s|-v|-h]  
-  Purpose:  Scan the chain and update the TrueBlocks index of appearances.
-
-  Where:
-    -p  (--pin)           pin new chunks (and blooms) to IPFS (requires Pinata key and running IPFS node)
-    -s  (--sleep <double>)the number of seconds to sleep between passes (default 14)
-    -x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
-    -v  (--verbose)       set verbose level (optional level defaults to 1)
-    -h  (--help)          display this help screen
-
-  Configurable Items:
-    - n_blocks: maximum number of blocks to process (defaults to 5000).
-    - n_block_procs: number of concurrent block channels for blaze.
-    - n_addr_procs: number of concurrent address channels for blaze.
-
-  Powered by TrueBlocks
-`
+func runScrape(cmd *cobra.Command, args []string) {
+	options := ""
+	if ScrapeOpts.pin {
+		options += " --pin"
+	}
+	if ScrapeOpts.sleep > 0.0 {
+		options += " --sleep"
+	}
+	if ScrapeOpts.n_blocks > 0 {
+		options += " --n_blocks " + strconv.FormatUint(ScrapeOpts.n_blocks, 10)
+	}
+	if ScrapeOpts.n_block_procs > 0 {
+		options += " --n_block_procs " + strconv.FormatUint(ScrapeOpts.n_block_procs, 10)
+	}
+	if ScrapeOpts.n_addr_procs > 0 {
+		options += " --n_addr_procs " + strconv.FormatUint(ScrapeOpts.n_addr_procs, 10)
+	}
+	for _, arg := range args {
+		options += " " + arg
+	}
+	PassItOn("/Users/jrush/.local/bin/chifra/blockScrape", options, strconv.FormatUint(0, 10))
 }

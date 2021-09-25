@@ -318,27 +318,6 @@ string_q COptionsBase::get_errmsg(const string_q& errMsgIn) const {
 }
 
 //--------------------------------------------------------------------------------
-string_q COptionsBase::clean_positional(const string_q& strIn) const {
-    string_q strOut = strIn;
-    replaceAll(strOut, "addrs2 blocks", "<address> <address> [address...] [block...]");
-    replaceAll(strOut, "addrs blocks", "<address> [address...] [block...]");
-    replaceAll(strOut, "transactions", "<tx_id> [tx_id...]");
-    if (contains(toLower(getProgName()), "when"))
-        replaceAll(strOut, "blocks", "< block | date > [ block... | date... ]");
-    else
-        replaceAll(strOut, "blocks", "<block> [block...]");
-    replaceAll(strOut, "addrs topics fourbytes", "<address> [address...] [topics] [fourbytes]");
-    replaceAll(strOut, "addrs", "<address> [address...]");
-    replaceAll(strOut, "files", "<file> [file...]");
-    replaceAll(strOut, "terms", "<term> [term...]");
-    replaceAll(strOut, "modes", "<mode> [mode...]");
-    if (isReadme) {
-        strOut = substitute(substitute(strOut, "<", "&lt;"), ">", "&gt;");
-    }
-    return trim(strOut);
-}
-
-//--------------------------------------------------------------------------------
 string_q COptionsBase::get_positionals(COptionArray& pos) const {
     ostringstream os;
     for (auto option : parameters) {
@@ -346,7 +325,11 @@ string_q COptionsBase::get_positionals(COptionArray& pos) const {
             pos.push_back(option);
             if (!os.str().empty())
                 os << " ";
-            string_q str = clean_positional(option.longName);
+            string_q str = clean_positional(toLower(getProgName()), option.longName);
+            if (isReadme) {
+                replaceAll(str, "<", "&lt;");
+                replaceAll(str, ">", "&gt;");
+            }
             if (!option.is_required) {
                 replace(str, "<mode> [mode...]", "[mode...]");
                 replace(str, "<term> [term...]", "[term...]");

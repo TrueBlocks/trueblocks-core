@@ -14,61 +14,92 @@ package cmd
  *-------------------------------------------------------------------------------------------*/
 
 import (
-	"fmt"
+	"os"
+	"strconv"
 
 	"github.com/spf13/cobra"
 )
 
+type statusOptionsType struct {
+	details    bool
+	types      string
+	depth      uint64
+	report     bool
+	terse      bool
+	migrate    string
+	get_config bool
+	set_config bool
+	test_start uint64
+	test_end   uint64
+}
+
+var StatusOpts statusOptionsType
+
 // statusCmd represents the status command
 var statusCmd = &cobra.Command{
-	Use:   "status",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+	Use: `status [flags] [mode...]
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
-	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("status called")
-	},
+Arguments:
+  modes - the type of status info to retrieve`,
+	Short: "report on the status of the TrueBlocks system",
+	Long: `Purpose:
+  Report on the status of the TrueBlocks system.`,
+	Run: runStatus,
 }
 
 func init() {
+	statusCmd.Flags().SortFlags = false
+	statusCmd.PersistentFlags().SortFlags = false
+	statusCmd.SetOut(os.Stderr)
+
+	statusCmd.Flags().BoolVarP(&StatusOpts.details, "details", "d", false, "include details about items found in monitors, slurps, abis, or price caches")
+	statusCmd.Flags().StringVarP(&StatusOpts.types, "types", "t", "", "for caches mode only, which type(s) of cache to report")
+	statusCmd.Flags().Uint64VarP(&StatusOpts.depth, "depth", "p", 0, "for cache mode only, number of levels deep to report")
+	statusCmd.Flags().BoolVarP(&StatusOpts.report, "report", "r", false, "show a summary of the current status of TrueBlocks (deprecated)")
+	statusCmd.Flags().BoolVarP(&StatusOpts.terse, "terse", "e", false, "show a terse summary report")
+	statusCmd.Flags().StringVarP(&StatusOpts.migrate, "migrate", "m", "", "either effectuate or test to see if a migration is necessary")
+	statusCmd.Flags().BoolVarP(&StatusOpts.get_config, "get_config", "g", false, "returns JSON data of the editable configuration file items")
+	statusCmd.Flags().BoolVarP(&StatusOpts.set_config, "set_config", "s", false, "accepts JSON in an env variable and writes it to configuration files")
+	statusCmd.Flags().Uint64VarP(&StatusOpts.test_start, "test_start", "S", 0, "first block to process (inclusive -- testing only)")
+	statusCmd.Flags().Uint64VarP(&StatusOpts.test_end, "test_end", "E", 0, "last block to process (inclusive -- testing only)")
+
 	rootCmd.AddCommand(statusCmd)
-	statusCmd.SetHelpTemplate(getHelpTextStatus())
 }
 
-func getHelpTextStatus() string {
-	return `chifra argc: 5 [1:status] [2:--help] [3:--verbose] [4:2] 
-chifra status --help --verbose 2 
-chifra status argc: 4 [1:--help] [2:--verbose] [3:2] 
-chifra status --help --verbose 2 
-PROG_NAME = [chifra status]
-
-  Usage:    chifra status [-d|-t|-v|-h] <mode> [mode...]  
-  Purpose:  Report on the status of the TrueBlocks system.
-
-  Where:
-    modes                 the type of status info to retrieve, one or more of [index|monitors|collections|names|abis|caches|some*|all]
-    -d  (--details)       include details about items found in monitors, slurps, abis, or price caches
-    -t  (--types <val>)   for caches mode only, which type(s) of cache to report, one or more of [blocks|transactions|traces|slurps|prices|all*]
-
-    #### Hidden options
-    -p  (--depth <num>)   for cache mode only, number of levels deep to report
-    -r  (--report)        show a summary of the current status of TrueBlocks (deprecated)
-    -e  (--terse)         show a terse summary report
-    -m  (--migrate <val>) either effectuate or test to see if a migration is necessary, one or more of [test|abi_cache|block_cache|tx_cache|trace_cache|recon_cache|name_cache|slurp_cache|all]
-    -g  (--get_config)    returns JSON data of the editable configuration file items
-    -s  (--set_config)    accepts JSON in an env variable and writes it to configuration files
-    -S  (--test_start <num>)first block to process (inclusive -- testing only)
-    -E  (--test_end <num>)last block to process (inclusive -- testing only)
-    #### Hidden options
-
-    -x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
-    -v  (--verbose)       set verbose level (optional level defaults to 1)
-    -h  (--help)          display this help screen
-
-  Powered by TrueBlocks
-`
+func runStatus(cmd *cobra.Command, args []string) {
+	options := ""
+	if StatusOpts.details {
+		options += " --details"
+	}
+	if len(StatusOpts.types) > 0 {
+		options += " --types " + StatusOpts.types
+	}
+	if StatusOpts.depth > 0 {
+		options += " --depth " + strconv.FormatUint(StatusOpts.depth, 10)
+	}
+	if StatusOpts.report {
+		options += " --report"
+	}
+	if StatusOpts.terse {
+		options += " --terse"
+	}
+	if len(StatusOpts.migrate) > 0 {
+		options += " --migrate " + StatusOpts.migrate
+	}
+	if StatusOpts.get_config {
+		options += " --get_config"
+	}
+	if StatusOpts.set_config {
+		options += " --set_config"
+	}
+	if StatusOpts.test_start > 0 {
+		options += " --test_start " + strconv.FormatUint(StatusOpts.test_start, 10)
+	}
+	if StatusOpts.test_end > 0 {
+		options += " --test_end " + strconv.FormatUint(StatusOpts.test_end, 10)
+	}
+	for _, arg := range args {
+		options += " " + arg
+	}
+	PassItOn("/Users/jrush/.local/bin/chifra/cacheStatus", options, strconv.FormatUint(0, 10))
 }

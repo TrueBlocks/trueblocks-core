@@ -14,53 +14,52 @@ package cmd
  *-------------------------------------------------------------------------------------------*/
 
 import (
-	"fmt"
 	"os"
+	"strconv"
 
 	"github.com/spf13/cobra"
 )
 
+type exploreOptionsType struct {
+	local  bool
+	google bool
+}
+
+var ExploreOpts exploreOptionsType
+
 // exploreCmd represents the explore command
 var exploreCmd = &cobra.Command{
-	Use:   "explore",
-	Short: "Open an explorer for one or more addresses, blocks, or transactions",
-	Long: `explore opens Etherscan (and other explorers -- including our own) to the block, 
-transaction hash, or address you specify. It's a handy (configurable) way to open an explorer
-from the command line, nothing more.`,
-	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("explore called")
-	},
+	Use: `explore [flags] <term> [term...]
+
+Arguments:
+  terms - one or more addresses, names, block, or transaction identifiers`,
+	Short: "open an explorer for a given address, block, or transaction",
+	Long: `Purpose:
+  Open an explorer for a given address, block, or transaction.`,
+	Run: runExplore,
 }
 
 func init() {
-	rootCmd.AddCommand(exploreCmd)
+	exploreCmd.Flags().SortFlags = false
+	exploreCmd.PersistentFlags().SortFlags = false
+	exploreCmd.SetOut(os.Stderr)
 
-	exploreCmd.SetHelpTemplate(getHelpTextExplore())
-	exploreCmd.Flags().BoolP("list", "l", false, "export a list of the 'special' blocks")
-	exploreCmd.Flags().BoolP("timestamps", "t", false, "ignore other options and generate timestamps only")
+	exploreCmd.Flags().BoolVarP(&ExploreOpts.local, "local", "l", false, "open the local TrueBlocks explorer")
+	exploreCmd.Flags().BoolVarP(&ExploreOpts.google, "google", "g", false, "search google excluding popular blockchain explorers")
+
+	rootCmd.AddCommand(exploreCmd)
 }
 
-func getHelpTextExplore() string {
-	debugText := ""
-	if os.Getenv("TEST_MODE") == "true" {
-		debugText = `chifra argc: 5 [1:explore] [2:--help] [3:--verbose] [4:2] 
-chifra explore --help --verbose 2 
-chifra explore argc: 4 [1:--help] [2:--verbose] [3:2] 
-chifra explore --help --verbose 2 
-PROG_NAME = [chifra explore]
-`
+func runExplore(cmd *cobra.Command, args []string) {
+	options := ""
+	if ExploreOpts.local {
+		options += " --local"
 	}
-	helpText := `
-  Usage:    chifra explore [-l|-g|-h] <term> [term...]  
-  Purpose:  Open an explorer for one or more addresses, blocks, or transactions.
-
-  Where:
-    terms                 one or more addresses, names, block, or transaction identifiers
-    -l  (--local)         open the local TrueBlocks explorer
-    -g  (--google)        search google excluding popular blockchain explorers
-    -h  (--help)          display this help screen
-
-  Powered by TrueBlocks
-`
-	return debugText + helpText
+	if ExploreOpts.google {
+		options += " --google"
+	}
+	for _, arg := range args {
+		options += " " + arg
+	}
+	PassItOn("/Users/jrush/.local/bin/chifra/fireStorm", options, strconv.FormatUint(0, 10))
 }

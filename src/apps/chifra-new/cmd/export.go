@@ -14,89 +14,184 @@ package cmd
  *-------------------------------------------------------------------------------------------*/
 
 import (
-	"fmt"
+	"os"
+	"strconv"
 
 	"github.com/spf13/cobra"
 )
 
+type exportOptionsType struct {
+	appearances  bool
+	receipts     bool
+	statements   bool
+	logs         bool
+	traces       bool
+	accounting   bool
+	articulate   bool
+	cache_txs    bool
+	cache_traces bool
+	factory      bool
+	emitter      bool
+	// source       string
+	relevant     bool
+	count        bool
+	first_record uint64
+	max_records  uint64
+	clean        bool
+	freshen      bool
+	staging      bool
+	unripe       bool
+	load         string
+	reversed     bool
+	by_date      bool
+	summarize_by string
+	skip_ddos    bool
+	max_traces   uint64
+	first_block  uint64
+	last_block   uint64
+}
+
+var ExportOpts exportOptionsType
+
 // exportCmd represents the export command
 var exportCmd = &cobra.Command{
-	Use:   "export",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+	Use: `export [flags] <address> [address...] [topics] [fourbytes]
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
-	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("export called")
-	},
+Arguments:
+  addrs - one or more addresses (0x...) to export (required)
+  topics - filter by one or more log topics (only for --logs option)
+  fourbytes - filter by one or more fourbytes (only for transactions and trace options)`,
+	Short: "export full detail of transactions for one or more addresses",
+	Long: `Purpose:
+  Export full detail of transactions for one or more addresses.`,
+	Run: runExport,
 }
 
 func init() {
+	exportCmd.Flags().SortFlags = false
+	exportCmd.PersistentFlags().SortFlags = false
+	exportCmd.SetOut(os.Stderr)
+
+	exportCmd.Flags().BoolVarP(&ExportOpts.appearances, "appearances", "p", false, "export a list of appearances")
+	exportCmd.Flags().BoolVarP(&ExportOpts.receipts, "receipts", "r", false, "export receipts instead of transaction list")
+	exportCmd.Flags().BoolVarP(&ExportOpts.statements, "statements", "A", false, "for use with --accounting option only, export only reconciliation statements")
+	exportCmd.Flags().BoolVarP(&ExportOpts.logs, "logs", "l", false, "export logs instead of transaction list")
+	exportCmd.Flags().BoolVarP(&ExportOpts.traces, "traces", "t", false, "export traces instead of transaction list")
+	exportCmd.Flags().BoolVarP(&ExportOpts.accounting, "accounting", "C", false, "export accounting records instead of transaction list")
+	exportCmd.Flags().BoolVarP(&ExportOpts.articulate, "articulate", "a", false, "articulate transactions, traces, logs, and outputs")
+	exportCmd.Flags().BoolVarP(&ExportOpts.cache_txs, "cache_txs", "i", false, "write transactions to the cache (see notes)")
+	exportCmd.Flags().BoolVarP(&ExportOpts.cache_traces, "cache_traces", "R", false, "write traces to the cache (see notes)")
+	exportCmd.Flags().BoolVarP(&ExportOpts.factory, "factory", "y", false, "scan for contract creations from the given address(es) and report address of those contracts")
+	exportCmd.Flags().BoolVarP(&ExportOpts.emitter, "emitter", "", false, "for log export only, export only if one of the given export addresses emitted the event")
+	// exportCmd.Flags().ListaddrVarP(&ExportOpts.source, "source", "", false, "for log export only, export only one of these addresses emitted the event")
+	exportCmd.Flags().BoolVarP(&ExportOpts.relevant, "relevant", "", false, "for log and accounting export only, if true export only logs relevant to one of the given export addresses")
+	exportCmd.Flags().BoolVarP(&ExportOpts.count, "count", "U", false, "only available for --appearances mode, if present return only the number of records")
+	exportCmd.Flags().Uint64VarP(&ExportOpts.first_record, "first_record", "c", 0, "the first record to process")
+	exportCmd.Flags().Uint64VarP(&ExportOpts.max_records, "max_records", "e", 0, "the maximum number of records to process before reporting")
+	exportCmd.Flags().BoolVarP(&ExportOpts.clean, "clean", "", false, "clean (i.e. remove duplicate appearances) from all existing monitors")
+	exportCmd.Flags().BoolVarP(&ExportOpts.freshen, "freshen", "f", false, "freshen but do not print the exported data")
+	exportCmd.Flags().BoolVarP(&ExportOpts.staging, "staging", "s", false, "enable search of staging (not yet finalized) folder")
+	exportCmd.Flags().BoolVarP(&ExportOpts.unripe, "unripe", "u", false, "enable search of unripe (neither staged nor finalized) folder (assumes --staging)")
+	exportCmd.Flags().StringVarP(&ExportOpts.load, "load", "", "", "a comma separated list of dynamic traversers to load")
+	exportCmd.Flags().BoolVarP(&ExportOpts.reversed, "reversed", "", false, "produce results in reverse chronological order")
+	exportCmd.Flags().BoolVarP(&ExportOpts.by_date, "by_date", "b", false, "produce results sorted by date (default is to report by address)")
+	exportCmd.Flags().StringVarP(&ExportOpts.summarize_by, "summarize_by", "z", "", "for --accounting only, summarize reconciliations by this time period")
+	exportCmd.Flags().BoolVarP(&ExportOpts.skip_ddos, "skip_ddos", "d", false, "toggle skipping over 2016 dDos transactions ('on' by default)")
+	exportCmd.Flags().Uint64VarP(&ExportOpts.max_traces, "max_traces", "m", 0, "if --skip_ddos is on, this many traces defines what a ddos transaction|is (default = 250)")
+	exportCmd.Flags().Uint64VarP(&ExportOpts.first_block, "first_block", "F", 0, "first block to process (inclusive)")
+	exportCmd.Flags().Uint64VarP(&ExportOpts.last_block, "last_block", "L", 0, "last block to process (inclusive)")
+
 	rootCmd.AddCommand(exportCmd)
-	exportCmd.SetHelpTemplate(getHelpTextExport())
 }
 
-func getHelpTextExport() string {
-	return `chifra argc: 5 [1:export] [2:--help] [3:--verbose] [4:2] 
-chifra export --help --verbose 2 
-chifra export argc: 4 [1:--help] [2:--verbose] [3:2] 
-chifra export --help --verbose 2 
-PROG_NAME = [chifra export]
-
-  Usage:    chifra export [-p|-r|-A|-l|-t|-C|-a|-i|-R|-y|-U|-c|-e|-v|-h] <address> [address...] [topics] [fourbytes]  
-  Purpose:  Export full detail of transactions for one or more addresses.
-
-  Where:
-    addrs                  one or more addresses (0x...) to export (required)
-    topics                 filter by one or more log topics (only for --logs option)
-    fourbytes              filter by one or more fourbytes (only for transactions and trace options)
-    -p  (--appearances)    export a list of appearances
-    -r  (--receipts)       export receipts instead of transaction list
-    -A  (--statements)     for use with --accounting option only, export only reconciliation statements
-    -l  (--logs)           export logs instead of transaction list
-    -t  (--traces)         export traces instead of transaction list
-    -C  (--accounting)     export accounting records instead of transaction list
-    -a  (--articulate)     articulate transactions, traces, logs, and outputs
-    -i  (--cache_txs)      write transactions to the cache (see notes)
-    -R  (--cache_traces)   write traces to the cache (see notes)
-    -y  (--factory)        scan for contract creations from the given address(es) and report address of those contracts
-        (--emitter)        for log export only, export only if one of the given export addresses emitted the event
-        (--source <addr>)  for log export only, export only one of these addresses emitted the event
-        (--relevant)       for log and accounting export only, if true export only logs relevant to one of the given export addresses
-    -U  (--count)          only available for --appearances mode, if present return only the number of records
-    -c  (--first_record <num>)the first record to process
-    -e  (--max_records <num>)the maximum number of records to process before reporting
-        (--clean)          clean (i.e. remove duplicate appearances) from all existing monitors
-
-    #### Hidden options
-    -f  (--freshen)        freshen but do not print the exported data
-    -F  (--first_block <num>)first block to process (inclusive)
-    -L  (--last_block <num>)last block to process (inclusive)
-    -s  (--staging)        enable search of staging (not yet finalized) folder
-    -u  (--unripe)         enable search of unripe (neither staged nor finalized) folder (assumes --staging)
-        (--load <str>)     a comma separated list of dynamic traversers to load
-        (--reversed)       produce results in reverse chronological order
-    -b  (--by_date)        produce results sorted by date (default is to report by address)
-    -z  (--summarize_by <val>)for --accounting only, summarize reconciliations by this time period, one of [yearly|quarterly|monthly|weekly|daily|hourly|blockly|tx]
-    #### Hidden options
-
-    -x  (--fmt <val>)      export format, one of [none|json*|txt|csv|api]
-    -v  (--verbose)        set verbose level (optional level defaults to 1)
-    -h  (--help)           display this help screen
-
-  Notes:
-    - An address must start with '0x' and be forty-two characters long.
-
-  Configurable Items:
-    - cache_txs: write transactions to the cache (see notes).
-    - cache_traces: write traces to the cache (see notes).
-    - skip_ddos: toggle skipping over 2016 dDos transactions ('on' by default).
-    - max_traces: if --skip_ddos is on, this many traces defines what a ddos transaction
-      is (default = 250).
-
-  Powered by TrueBlocks
-`
+func runExport(cmd *cobra.Command, args []string) {
+	options := ""
+	if ExportOpts.appearances {
+		options += " --appearances"
+	}
+	if ExportOpts.receipts {
+		options += " --receipts"
+	}
+	if ExportOpts.statements {
+		options += " --statements"
+	}
+	if ExportOpts.logs {
+		options += " --logs"
+	}
+	if ExportOpts.traces {
+		options += " --traces"
+	}
+	if ExportOpts.accounting {
+		options += " --accounting"
+	}
+	if ExportOpts.articulate {
+		options += " --articulate"
+	}
+	if ExportOpts.cache_txs {
+		options += " --cache_txs"
+	}
+	if ExportOpts.cache_traces {
+		options += " --cache_traces"
+	}
+	if ExportOpts.factory {
+		options += " --factory"
+	}
+	if ExportOpts.emitter {
+		options += " --emitter"
+	}
+	// if ExportOpts.source {
+	// 	options += " --source"
+	// }
+	if ExportOpts.relevant {
+		options += " --relevant"
+	}
+	if ExportOpts.count {
+		options += " --count"
+	}
+	if ExportOpts.first_record > 0 {
+		options += " --first_record " + strconv.FormatUint(ExportOpts.first_record, 10)
+	}
+	if ExportOpts.max_records > 0 {
+		options += " --max_records " + strconv.FormatUint(ExportOpts.max_records, 10)
+	}
+	if ExportOpts.clean {
+		options += " --clean"
+	}
+	if ExportOpts.freshen {
+		options += " --freshen"
+	}
+	if ExportOpts.staging {
+		options += " --staging"
+	}
+	if ExportOpts.unripe {
+		options += " --unripe"
+	}
+	if len(ExportOpts.load) > 0 {
+		options += " --load " + ExportOpts.load
+	}
+	if ExportOpts.reversed {
+		options += " --reversed"
+	}
+	if ExportOpts.by_date {
+		options += " --by_date"
+	}
+	if len(ExportOpts.summarize_by) > 0 {
+		options += " --summarize_by " + ExportOpts.summarize_by
+	}
+	if ExportOpts.skip_ddos {
+		options += " --skip_ddos"
+	}
+	if ExportOpts.max_traces > 0 {
+		options += " --max_traces " + strconv.FormatUint(ExportOpts.max_traces, 10)
+	}
+	if ExportOpts.first_block > 0 {
+		options += " --first_block " + strconv.FormatUint(ExportOpts.first_block, 10)
+	}
+	if ExportOpts.last_block > 0 {
+		options += " --last_block " + strconv.FormatUint(ExportOpts.last_block, 10)
+	}
+	for _, arg := range args {
+		options += " " + arg
+	}
+	PassItOn("/Users/jrush/.local/bin/chifra/acctExport", options, strconv.FormatUint(0, 10))
 }

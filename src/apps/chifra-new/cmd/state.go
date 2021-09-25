@@ -14,64 +14,63 @@ package cmd
  *-------------------------------------------------------------------------------------------*/
 
 import (
-	"fmt"
+	"os"
+	"strconv"
 
 	"github.com/spf13/cobra"
 )
 
+type stateOptionsType struct {
+	parts   string
+	changes bool
+	no_zero bool
+	call    string
+}
+
+var StateOpts stateOptionsType
+
 // stateCmd represents the state command
 var stateCmd = &cobra.Command{
-	Use:   "state",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+	Use: `state [flags] <address> [address...] [block...]
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
-	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("state called")
-	},
+Arguments:
+  addrs - one or more addresses (0x...) from which to retrieve balances (required)
+  blocks - an optional list of one or more blocks at which to report balances, defaults to 'latest'`,
+	Short: "retrieve account balance(s) for one or more addresses at given block(s)",
+	Long: `Purpose:
+  Retrieve account balance(s) for one or more addresses at given block(s).`,
+	Run: runState,
 }
 
 func init() {
+	stateCmd.Flags().SortFlags = false
+	stateCmd.PersistentFlags().SortFlags = false
+	stateCmd.SetOut(os.Stderr)
+
+	stateCmd.Flags().StringVarP(&StateOpts.parts, "parts", "p", "", "control which state to export")
+	stateCmd.Flags().BoolVarP(&StateOpts.changes, "changes", "c", false, "only report a balance when it changes from one block to the next")
+	stateCmd.Flags().BoolVarP(&StateOpts.no_zero, "no_zero", "n", false, "suppress the display of zero balance accounts")
+	stateCmd.Flags().StringVarP(&StateOpts.call, "call", "a", "", "a bang-separated string consisting of address!4-byte!bytes")
+
 	rootCmd.AddCommand(stateCmd)
-	stateCmd.SetHelpTemplate(getHelpTextState())
 }
 
-func getHelpTextState() string {
-	return `chifra argc: 5 [1:state] [2:--help] [3:--verbose] [4:2] 
-chifra state --help --verbose 2 
-chifra state argc: 4 [1:--help] [2:--verbose] [3:2] 
-chifra state --help --verbose 2 
-PROG_NAME = [chifra state]
-
-  Usage:    chifra state [-p|-c|-n|-v|-h] <address> [address...] [block...]  
-  Purpose:  Retrieve account balance(s) for one or more addresses at given block(s).
-
-  Where:
-    addrs                 one or more addresses (0x...) from which to retrieve balances (required)
-    blocks                an optional list of one or more blocks at which to report balances, defaults to 'latest'
-    -p  (--parts <val>)   control which state to export, one or more of [none|some*|all|balance|nonce|code|storage|deployed|accttype]
-    -c  (--changes)       only report a balance when it changes from one block to the next
-    -n  (--no_zero)       suppress the display of zero balance accounts
-
-    #### Hidden options
-    -a  (--call <str>)    a bang-separated string consisting of address!4-byte!bytes
-    #### Hidden options
-
-    -x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
-    -v  (--verbose)       set verbose level (optional level defaults to 1)
-    -h  (--help)          display this help screen
-
-  Notes:
-    - An address must start with '0x' and be forty-two characters long.
-    - blocks may be a space-separated list of values, a start-end range, a special, or any combination.
-    - If the queried node does not store historical state, the results are undefined.
-    - special blocks are detailed under chifra when --list.
-    - balance is the default mode. To select a single mode use none first, followed by that mode.
-    - You may specify multiple modes on a single line.
-
-  Powered by TrueBlocks
-`
+func runState(cmd *cobra.Command, args []string) {
+	options := ""
+	if len(StateOpts.parts) > 0 {
+		options += " --parts " + StateOpts.parts
+	}
+	if StateOpts.changes {
+		options += " --changes"
+	}
+	if StateOpts.no_zero {
+		options += " --no_zero"
+	}
+	if len(StateOpts.call) > 0 {
+		options += " --call " + StateOpts.call
+	}
+	for _, arg := range args {
+		options += " " + arg
+	}
+	PassItOn("/Users/jrush/.local/bin/chifra/getState", options, strconv.FormatUint(0, 10))
 }

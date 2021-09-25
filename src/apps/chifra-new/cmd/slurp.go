@@ -14,53 +14,53 @@ package cmd
  *-------------------------------------------------------------------------------------------*/
 
 import (
-	"fmt"
+	"os"
+	"strconv"
 
 	"github.com/spf13/cobra"
 )
 
+type slurpOptionsType struct {
+	types       string
+	appearances bool
+}
+
+var SlurpOpts slurpOptionsType
+
 // slurpCmd represents the slurp command
 var slurpCmd = &cobra.Command{
-	Use:   "slurp",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+	Use: `slurp [flags] <address> [address...] [block...]
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
-	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("slurp called")
-	},
+Arguments:
+  addrs - one or more addresses to slurp from Etherscan (required)
+  blocks - an optional range of blocks to slurp`,
+	Short: "fetch data from EtherScan for any address",
+	Long: `Purpose:
+  Fetch data from EtherScan for any address.`,
+	Run: runSlurp,
 }
 
 func init() {
+	slurpCmd.Flags().SortFlags = false
+	slurpCmd.PersistentFlags().SortFlags = false
+	slurpCmd.SetOut(os.Stderr)
+
+	slurpCmd.Flags().StringVarP(&SlurpOpts.types, "types", "t", "", "one or more types of transactions to request")
+	slurpCmd.Flags().BoolVarP(&SlurpOpts.appearances, "appearances", "p", false, "show only the blocknumer.tx_id appearances of the exported transactions")
+
 	rootCmd.AddCommand(slurpCmd)
-	slurpCmd.SetHelpTemplate(getHelpTextSlurp())
 }
 
-func getHelpTextSlurp() string {
-	return `chifra argc: 5 [1:slurp] [2:--help] [3:--verbose] [4:2] 
-chifra slurp --help --verbose 2 
-chifra slurp argc: 4 [1:--help] [2:--verbose] [3:2] 
-chifra slurp --help --verbose 2 
-PROG_NAME = [chifra slurp]
-
-  Usage:    chifra slurp [-t|-p|-v|-h] <address> [address...] [block...]  
-  Purpose:  Fetch data from EtherScan for any address.
-
-  Where:
-    addrs                 one or more addresses to slurp from Etherscan (required)
-    blocks                an optional range of blocks to slurp
-    -t  (--types <val>)   one or more types of transactions to request, one or more of [ext*|int|token|nfts|miner|uncles|all]
-    -p  (--appearances)   show only the blocknumer.tx_id appearances of the exported transactions
-    -x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
-    -v  (--verbose)       set verbose level (optional level defaults to 1)
-    -h  (--help)          display this help screen
-
-  Notes:
-    - Portions of this software are Powered by Etherscan.io APIs.
-
-  Powered by TrueBlocks
-`
+func runSlurp(cmd *cobra.Command, args []string) {
+	options := ""
+	if len(SlurpOpts.types) > 0 {
+		options += " --types " + SlurpOpts.types
+	}
+	if SlurpOpts.appearances {
+		options += " --appearances"
+	}
+	for _, arg := range args {
+		options += " " + arg
+	}
+	PassItOn("/Users/jrush/.local/bin/chifra/ethslurp", options, strconv.FormatUint(0, 10))
 }

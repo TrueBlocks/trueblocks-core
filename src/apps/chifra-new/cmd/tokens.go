@@ -14,58 +14,58 @@ package cmd
  *-------------------------------------------------------------------------------------------*/
 
 import (
-	"fmt"
+	"os"
+	"strconv"
 
 	"github.com/spf13/cobra"
 )
 
+type tokensOptionsType struct {
+	parts   string
+	by_acct bool
+	no_zero bool
+}
+
+var TokensOpts tokensOptionsType
+
 // tokensCmd represents the tokens command
 var tokensCmd = &cobra.Command{
-	Use:   "tokens",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+	Use: `tokens [flags] <address> <address> [address...] [block...]
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
-	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("tokens called")
-	},
+Arguments:
+  addrs - two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported (required)
+  blocks - an optional list of one or more blocks at which to report balances, defaults to 'latest'`,
+	Short: "retrieve token balance(s) for one or more addresses at given block(s)",
+	Long: `Purpose:
+  Retrieve token balance(s) for one or more addresses at given block(s).`,
+	Run: runTokens,
 }
 
 func init() {
+	tokensCmd.Flags().SortFlags = false
+	tokensCmd.PersistentFlags().SortFlags = false
+	tokensCmd.SetOut(os.Stderr)
+
+	tokensCmd.Flags().StringVarP(&TokensOpts.parts, "parts", "p", "", "one or more parts of the token information to retreive")
+	tokensCmd.Flags().BoolVarP(&TokensOpts.by_acct, "by_acct", "b", false, "consider each address an ERC20 token except the last, whose balance is reported for each token")
+	tokensCmd.Flags().BoolVarP(&TokensOpts.no_zero, "no_zero", "n", false, "suppress the display of zero balance accounts")
+
 	rootCmd.AddCommand(tokensCmd)
-	tokensCmd.SetHelpTemplate(getHelpTextTokens())
 }
 
-func getHelpTextTokens() string {
-	return `chifra argc: 5 [1:tokens] [2:--help] [3:--verbose] [4:2] 
-chifra tokens --help --verbose 2 
-chifra tokens argc: 4 [1:--help] [2:--verbose] [3:2] 
-chifra tokens --help --verbose 2 
-PROG_NAME = [chifra tokens]
-
-  Usage:    chifra tokens [-p|-b|-n|-v|-h] <address> <address> [address...] [block...]  
-  Purpose:  Retrieve token balance(s) for one or more addresses at given block(s).
-
-  Where:
-    addrs                 two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported (required)
-    blocks                an optional list of one or more blocks at which to report balances, defaults to 'latest'
-    -p  (--parts <val>)   one or more parts of the token information to retreive, one or more of [name|symbol|decimals|totalSupply|version|none|all*]
-    -b  (--by_acct)       consider each address an ERC20 token except the last, whose balance is reported for each token
-    -n  (--no_zero)       suppress the display of zero balance accounts
-    -x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
-    -v  (--verbose)       set verbose level (optional level defaults to 1)
-    -h  (--help)          display this help screen
-
-  Notes:
-    - An address must start with '0x' and be forty-two characters long.
-    - blocks may be a space-separated list of values, a start-end range, a special, or any combination.
-    - If the token contract(s) from which you request balances are not ERC20 compliant, the results are undefined.
-    - If the queried node does not store historical state, the results are undefined.
-    - special blocks are detailed under chifra when --list.
-
-  Powered by TrueBlocks
-`
+func runTokens(cmd *cobra.Command, args []string) {
+	options := ""
+	if len(TokensOpts.parts) > 0 {
+		options += " --parts " + TokensOpts.parts
+	}
+	if TokensOpts.by_acct {
+		options += " --by_acct"
+	}
+	if TokensOpts.no_zero {
+		options += " --no_zero"
+	}
+	for _, arg := range args {
+		options += " " + arg
+	}
+	PassItOn("/Users/jrush/.local/bin/chifra/getTokens", options, strconv.FormatUint(0, 10))
 }
