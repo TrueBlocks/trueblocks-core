@@ -2,7 +2,7 @@
 title: "Other"
 description: ""
 lead: ""
-date: 2021-09-24T10:16:59
+date: 2021-09-26T15:49:05
 lastmod:
   - :git
   - lastmod
@@ -95,15 +95,15 @@ While `chifra slurp` has its shortcomings, it does provides some nice features. 
 `Where:`
 
 {{<td>}}
-|          | Option                          | Description                                                                                                  |
-| -------- | ------------------------------- | ------------------------------------------------------------------------------------------------------------ |
-|          | addrs                           | one or more addresses to slurp from Etherscan (required)                                                     |
-|          | blocks                          | an optional range of blocks to slurp                                                                         |
-| &#8208;t | &#8208;&#8208;types &lt;val&gt; | one or more types of transactions to request, one or<br/>more of [ext, int, token, nfts, miner, uncles, all] |
-| &#8208;p | &#8208;&#8208;appearances       | show only the blocknumer.tx_id appearances of the exported<br/>transactions                                  |
-| &#8208;x | &#8208;&#8208;fmt &lt;val&gt;   | export format, one of [none, json, txt, csv, api]                                                            |
-| &#8208;v | &#8208;&#8208;verbose           | set verbose level (optional level defaults to 1)                                                             |
-| &#8208;h | &#8208;&#8208;help              | display this help screen                                                                                     |
+|          | Option                          | Description                                                                                            |
+| -------- | ------------------------------- | ------------------------------------------------------------------------------------------------------ |
+|          | addrs                           | one or more addresses to slurp from Etherscan (required)                                               |
+|          | blocks                          | an optional range of blocks to slurp                                                                   |
+| &#8208;t | &#8208;&#8208;types &lt;val&gt; | which types of transactions to request, one or more<br/>of [ext, int, token, nfts, miner, uncles, all] |
+| &#8208;p | &#8208;&#8208;appearances       | show only the blocknumer.tx_id appearances of the exported<br/>transactions                            |
+| &#8208;x | &#8208;&#8208;fmt &lt;val&gt;   | export format, one of [none, json, txt, csv, api]                                                      |
+| &#8208;v | &#8208;&#8208;verbose           | set verbose level (optional level defaults to 1)                                                       |
+| &#8208;h | &#8208;&#8208;help              | display this help screen                                                                               |
 {{</td>}}
 
 `Notes:`

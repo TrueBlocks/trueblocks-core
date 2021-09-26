@@ -1133,7 +1133,7 @@ paths:
               type: string
               format: blknum_t
         - name: parts
-          description: one or more parts of the token information to retreive
+          description: which parts of the token information to retreive
           required: false
           style: form
           in: query
@@ -1540,7 +1540,7 @@ paths:
               type: string
               format: blknum_t
         - name: types
-          description: one or more types of transactions to request
+          description: which types of transactions to request
           required: false
           style: form
           in: query
