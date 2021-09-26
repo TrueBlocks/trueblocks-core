@@ -29,7 +29,7 @@ var receiptsCmd = &cobra.Command{
 	Short: shortReceipts,
 	Long:  longReceipts,
 	Run:   runReceipts,
-	Args:  ValidatePositionals(validateReceiptsArgs, cobra.MinimumNArgs(1)),
+	Args:  ValidatePositionals(validateReceiptsArgs),
 }
 
 var usageReceipts = `receipts [flags] <tx_id> [tx_id...]
@@ -57,7 +57,7 @@ func init() {
 	receiptsCmd.Flags().SortFlags = false
 	receiptsCmd.PersistentFlags().SortFlags = false
 
-	PostNotes = "[{POSTNOTES}]"
+	PostNotes = ""
 	rootCmd.AddCommand(receiptsCmd)
 }
 

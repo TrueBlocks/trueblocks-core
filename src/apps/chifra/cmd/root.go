@@ -15,11 +15,11 @@ package cmd
 
 import (
 	"bufio"
+	"bytes"
 	"fmt"
 	"io"
 	"os"
 	"os/exec"
-	"strconv"
 	"strings"
 
 	"github.com/spf13/cobra"
@@ -32,10 +32,14 @@ var cfgFile string
 
 // rootOptionsType Structure to carry command line and config file options
 type rootOptTypes struct {
-	fmt     string
-	verbose uint
-	help    bool
-	raw     bool
+	fmt        string
+	verbose    bool
+	logLevel   uint
+	help       bool
+	raw        bool
+	outputFile string
+	toFile     bool
+	file       string
 }
 
 var RootOpts rootOptTypes
@@ -65,13 +69,22 @@ func Execute() {
 func init() {
 	rootCmd.SetOut(os.Stderr)
 	rootCmd.SetFlagErrorFunc(ErrFunc)
-
+	// rootCmd.SetPersistentFlagErrorFunc(ErrFunc)
 	rootCmd.Flags().SortFlags = false
 	rootCmd.PersistentFlags().SortFlags = false
 	rootCmd.PersistentFlags().BoolVarP(&RootOpts.raw, "raw", "", false, "report JSON data from the node with minimal processing")
 	rootCmd.PersistentFlags().StringVarP(&RootOpts.fmt, "fmt", "x", "", "export format, one of [none|json*|txt|csv|api]")
-	rootCmd.PersistentFlags().UintVarP(&RootOpts.verbose, "verbose", "v", 0, "set verbose level (optional level defaults to 1)")
+	rootCmd.PersistentFlags().BoolVarP(&RootOpts.verbose, "verbose", "v", false, "enable verbose (increase detail with --verbose.level)")
+	rootCmd.PersistentFlags().UintVarP(&RootOpts.logLevel, "verbose.level", "", 0, "")
+	rootCmd.PersistentFlags().BoolVarP(&RootOpts.toFile, "to_file", "", false, "write the results to a temporary file and return the filename")
+	rootCmd.PersistentFlags().StringVarP(&RootOpts.file, "file", "", "", "specify multiple sets of command line options in a file")
+	rootCmd.PersistentFlags().StringVarP(&RootOpts.outputFile, "output", "", "", "write the results to file 'fn' and return the filename")
 	rootCmd.PersistentFlags().BoolVarP(&RootOpts.help, "help", "h", false, "display this help screen")
+	rootCmd.PersistentFlags().MarkHidden("verbose.level")
+	rootCmd.PersistentFlags().MarkHidden("output")
+	rootCmd.PersistentFlags().MarkHidden("raw")
+	rootCmd.PersistentFlags().MarkHidden("file")
+	rootCmd.PersistentFlags().MarkHidden("to_file")
 	rootCmd.Flags().SortFlags = false
 	rootCmd.PersistentFlags().SortFlags = false
 
@@ -131,9 +144,9 @@ func ErrFunc(cmd *cobra.Command, errMsg error) error {
 
 // dropNL drops new line characters (\n) from the progress stream
 func dropNL(data []byte) []byte {
-	// if len(data) > 0 && data[len(data)-1] == '\n' {
-	// 	return data[0 : len(data)-1]
-	// }
+	if len(data) > 0 && data[len(data)-1] == '\n' {
+		return data[0 : len(data)-1]
+	}
 	return data
 }
 
@@ -142,9 +155,9 @@ func ScanProgressLine(data []byte, atEOF bool) (advance int, token []byte, err e
 	if atEOF && len(data) == 0 {
 		return 0, nil, nil
 	}
-	// if i := bytes.IndexByte(data, '\r'); i >= 0 {
-	// 	return i + 1, dropNL(data[0:i]), nil
-	// }
+	if i := bytes.IndexByte(data, '\r'); i >= 0 {
+		return i + 1, dropNL(data[0:i]), nil
+	}
 	return bufio.ScanLines(data, atEOF)
 }
 
@@ -154,8 +167,8 @@ func ScanForProgress(stderrPipe io.Reader, fn func(string)) {
 	scanner.Split(ScanProgressLine)
 	for scanner.Scan() {
 		text := scanner.Text()
+		fmt.Fprintf(os.Stderr, "%s\n", text)
 		if len(text) > 0 {
-			fmt.Fprintf(os.Stderr, "\n%s\n\n", text)
 			if strings.Contains(text, "<PROG>") {
 				fn(strings.SplitAfter(text, ":")[1])
 			}
@@ -175,8 +188,18 @@ func PassItOn(path string, flags, arguments string) {
 	if len(RootOpts.fmt) > 0 {
 		options += " --fmt " + RootOpts.fmt
 	}
-	if RootOpts.verbose > 0 {
-		options += " --verbose " + strconv.FormatUint(uint64(RootOpts.verbose), 10)
+	if RootOpts.verbose || RootOpts.logLevel > 0 {
+		level := RootOpts.logLevel
+		if level == 0 {
+			level = 1
+		}
+		options += " --verbose " + fmt.Sprintf("%d", level)
+	}
+	if len(RootOpts.outputFile) > 0 {
+		options += " --output " + RootOpts.outputFile
+	}
+	if RootOpts.toFile {
+		options += " --to_file"
 	}
 	options += arguments
 

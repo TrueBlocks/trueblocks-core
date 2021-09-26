@@ -30,7 +30,7 @@ var tracesCmd = &cobra.Command{
 	Short: shortTraces,
 	Long:  longTraces,
 	Run:   runTraces,
-	Args:  ValidatePositionals(validateTracesArgs, cobra.MinimumNArgs(1)),
+	Args:  ValidatePositionals(validateTracesArgs),
 }
 
 var usageTraces = `traces [flags] <tx_id> [tx_id...]
@@ -68,7 +68,7 @@ func init() {
 	tracesCmd.Flags().SortFlags = false
 	tracesCmd.PersistentFlags().SortFlags = false
 
-	PostNotes = "[{POSTNOTES}]"
+	PostNotes = ""
 	rootCmd.AddCommand(tracesCmd)
 }
 

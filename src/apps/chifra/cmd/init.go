@@ -29,7 +29,7 @@ var initCmd = &cobra.Command{
 	Short: shortInit,
 	Long:  longInit,
 	Run:   runInit,
-	Args:  ValidatePositionals(validateInitArgs, cobra.MinimumNArgs(1)),
+	Args:  ValidatePositionals(validateInitArgs),
 }
 
 var usageInit = `init [flags]`
@@ -52,7 +52,7 @@ func init() {
 	initCmd.Flags().SortFlags = false
 	initCmd.PersistentFlags().SortFlags = false
 
-	PostNotes = "[{POSTNOTES}]"
+	PostNotes = ""
 	rootCmd.AddCommand(initCmd)
 }
 

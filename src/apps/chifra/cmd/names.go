@@ -29,7 +29,7 @@ var namesCmd = &cobra.Command{
 	Short: shortNames,
 	Long:  longNames,
 	Run:   runNames,
-	Args:  ValidatePositionals(validateNamesArgs, cobra.MinimumNArgs(1)),
+	Args:  ValidatePositionals(validateNamesArgs),
 }
 
 var usageNames = `names [flags] <term> [term...]
@@ -79,7 +79,7 @@ func init() {
 	namesCmd.Flags().SortFlags = false
 	namesCmd.PersistentFlags().SortFlags = false
 
-	PostNotes = "[{POSTNOTES}]"
+	PostNotes = ""
 	rootCmd.AddCommand(namesCmd)
 }
 

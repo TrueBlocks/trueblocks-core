@@ -29,7 +29,7 @@ var exploreCmd = &cobra.Command{
 	Short: shortExplore,
 	Long:  longExplore,
 	Run:   runExplore,
-	Args:  ValidatePositionals(validateExploreArgs, cobra.MinimumNArgs(1)),
+	Args:  ValidatePositionals(validateExploreArgs),
 }
 
 var usageExplore = `explore [flags] <term> [term...]
@@ -59,7 +59,7 @@ func init() {
 	exploreCmd.Flags().SortFlags = false
 	exploreCmd.PersistentFlags().SortFlags = false
 
-	PostNotes = "[{POSTNOTES}]"
+	PostNotes = ""
 	rootCmd.AddCommand(exploreCmd)
 }
 

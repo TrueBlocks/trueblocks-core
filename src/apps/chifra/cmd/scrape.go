@@ -30,7 +30,7 @@ var scrapeCmd = &cobra.Command{
 	Short: shortScrape,
 	Long:  longScrape,
 	Run:   runScrape,
-	Args:  ValidatePositionals(validateScrapeArgs, cobra.MinimumNArgs(1)),
+	Args:  ValidatePositionals(validateScrapeArgs),
 }
 
 var usageScrape = `scrape [flags]`
@@ -63,7 +63,7 @@ func init() {
 	scrapeCmd.Flags().SortFlags = false
 	scrapeCmd.PersistentFlags().SortFlags = false
 
-	PostNotes = "[{POSTNOTES}]"
+	PostNotes = ""
 	rootCmd.AddCommand(scrapeCmd)
 }
 

@@ -1,5 +1,4 @@
 enabled,mode,speed,route,path/tool,filename,post,options,opt_cmd,has_env
-on,cmd,fast,pins,apps/pinMan,README,n,readme
 on,cmd,fast,pins,apps/pinMan,help,n,@h
 on,cmd,fast,pins,apps/pinMan,help_long,n,help
 on,both,fast,pins,apps/pinMan,no_params,y,

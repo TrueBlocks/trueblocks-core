@@ -1,6 +1,5 @@
 enabled,mode,speed,route,path/tool,filename,post,options,opt_cmd,has_env
 on,cmd,fast,receipts,tools/getReceipts,preload,n,blocks = 3657480 & cache,getBlocks
-on,cmd,fast,receipts,tools/getReceipts,README,n,readme
 on,cmd,fast,receipts,tools/getReceipts,help,n,@h
 on,cmd,fast,receipts,tools/getReceipts,help_long,n,help
 on,both,fast,receipts,tools/getReceipts,no_input,y,

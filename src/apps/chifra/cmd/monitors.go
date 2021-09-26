@@ -29,7 +29,7 @@ var monitorsCmd = &cobra.Command{
 	Short: shortMonitors,
 	Long:  longMonitors,
 	Run:   runMonitors,
-	Args:  ValidatePositionals(validateMonitorsArgs, cobra.MinimumNArgs(1)),
+	Args:  ValidatePositionals(validateMonitorsArgs),
 }
 
 var usageMonitors = `monitors [flags] <address> [address...]
@@ -59,7 +59,7 @@ func init() {
 	monitorsCmd.Flags().SortFlags = false
 	monitorsCmd.PersistentFlags().SortFlags = false
 
-	PostNotes = "[{POSTNOTES}]"
+	PostNotes = ""
 	rootCmd.AddCommand(monitorsCmd)
 }
 

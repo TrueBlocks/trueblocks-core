@@ -29,7 +29,7 @@ var slurpCmd = &cobra.Command{
 	Short: shortSlurp,
 	Long:  longSlurp,
 	Run:   runSlurp,
-	Args:  ValidatePositionals(validateSlurpArgs, cobra.MinimumNArgs(1)),
+	Args:  ValidatePositionals(validateSlurpArgs),
 }
 
 var usageSlurp = `slurp [flags] <address> [address...] [block...]
@@ -60,7 +60,7 @@ func init() {
 	slurpCmd.Flags().SortFlags = false
 	slurpCmd.PersistentFlags().SortFlags = false
 
-	PostNotes = "[{POSTNOTES}]"
+	PostNotes = ""
 	rootCmd.AddCommand(slurpCmd)
 }
 

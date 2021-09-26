@@ -1,5 +1,4 @@
 enabled,mode,speed,route,path/tool,filename,post,options,opt_cmd,has_env
-on,cmd,slow,names,tools/ethNames,README,n,readme
 on,cmd,fast,names,tools/ethNames,help,n,@h
 on,cmd,fast,names,tools/ethNames,help_long,n,help
 on,both,medi,names,tools/ethNames,no_params,y,

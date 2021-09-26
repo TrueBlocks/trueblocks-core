@@ -1,6 +1,5 @@
 enabled,mode,speed,route,path/tool,filename,post,options,opt_cmd,has_env
 on,cmd,fast,export,apps/acctExport,RESET,n,RESET
-on,cmd,fast,export,apps/acctExport,README,n,readme
 on,cmd,fast,export,apps/acctExport,help,n,@h
 on,cmd,fast,export,apps/acctExport,help_long,n,help
 on,both,fast,export,apps/acctExport,no_params,y,

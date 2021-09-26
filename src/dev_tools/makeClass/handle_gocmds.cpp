@@ -12,6 +12,7 @@
  *-------------------------------------------------------------------------------------------*/
 #include "options.h"
 
+extern string_q get_notes2(const CCommandOption& cmd);
 extern string_q get_optfields(const CCommandOption& cmd);
 extern string_q get_setopts(const CCommandOption& cmd);
 extern string_q get_copyopts(const CCommandOption& cmd);
@@ -44,6 +45,7 @@ bool COptions::handle_gocmds(void) {
         replaceAll(source, "[{PATH}]", path);
         replaceAll(source, "[{OPT_FIELDS}]", get_optfields(ep));
         replaceAll(source, "[{LONG}]", "Purpose:\n  " + ep.description);
+        replaceAll(source, "[{POSTNOTES}]", get_notes2(ep));
         string_q descr = firstLower(ep.description);
         if (endsWith(descr, "."))
             replaceReverse(descr, ".", "");
@@ -91,6 +93,16 @@ string_q get_use(const CCommandOption& cmd) {
     replace(ret, "[{TYPES}]", clean_positionals(cmd.api_route, positionals.str()));
     replace(ret, "[{POSITIONALS}]", arguments.str());
     return ret;
+}
+
+string_q get_notes2(const CCommandOption& cmd) {
+    return "\n\tPostNotes = \"\"\n";
+    // ostringstream os;
+    // for (auto p : *((CCommandOptionArray*)cmd.params)) {
+    //     if (p.option_type != "note")
+    //         os << "\t" << p.description << endl;
+    // }
+    // return os.str();
 }
 
 string_q get_optfields(const CCommandOption& cmd) {

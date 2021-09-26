@@ -65,11 +65,13 @@ bool visitReadme(const string_q& templatePath, void* data) {
         replaceAll(srcCode, "[{NAME}]", progNameMap[tool].empty() ? opts->getProgName() : progNameMap[tool]);
         replaceAll(docCode, "\n`Purpose", "  \n`Purpose");
 
-        bool c1 = writeIfDifferent(docPath, docCode + "\n");
-        bool c2 =
-            writeIfDifferent(srcPath, substitute(substitute(srcCode, "{{<td>}}\n", ""), "{{</td>}}\n", "") + "\n");
+        if (!contains(docPath, "chifra")) {
+            bool c1 = writeIfDifferent(docPath, docCode + "\n");
+            bool c2 =
+                writeIfDifferent(srcPath, substitute(substitute(srcCode, "{{<td>}}\n", ""), "{{</td>}}\n", "") + "\n");
+            opts->counter.nProcessed += (c1 || c2);
+        }
         opts->counter.nVisited++;
-        opts->counter.nProcessed += (c1 || c2);
     }
     return true;
 }

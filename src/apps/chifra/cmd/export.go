@@ -30,7 +30,7 @@ var exportCmd = &cobra.Command{
 	Short: shortExport,
 	Long:  longExport,
 	Run:   runExport,
-	Args:  ValidatePositionals(validateExportArgs, cobra.MinimumNArgs(1)),
+	Args:  ValidatePositionals(validateExportArgs),
 }
 
 var usageExport = `export [flags] <address> [address...] [topics...] [fourbytes...]
@@ -114,7 +114,7 @@ func init() {
 	exportCmd.Flags().SortFlags = false
 	exportCmd.PersistentFlags().SortFlags = false
 
-	PostNotes = "[{POSTNOTES}]"
+	PostNotes = ""
 	rootCmd.AddCommand(exportCmd)
 }
 

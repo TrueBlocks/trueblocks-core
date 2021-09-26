@@ -29,7 +29,7 @@ var tokensCmd = &cobra.Command{
 	Short: shortTokens,
 	Long:  longTokens,
 	Run:   runTokens,
-	Args:  ValidatePositionals(validateTokensArgs, cobra.MinimumNArgs(1)),
+	Args:  ValidatePositionals(validateTokensArgs),
 }
 
 var usageTokens = `tokens [flags] <address> <address> [address...] [block...]
@@ -62,7 +62,7 @@ func init() {
 	tokensCmd.Flags().SortFlags = false
 	tokensCmd.PersistentFlags().SortFlags = false
 
-	PostNotes = "[{POSTNOTES}]"
+	PostNotes = ""
 	rootCmd.AddCommand(tokensCmd)
 }
 

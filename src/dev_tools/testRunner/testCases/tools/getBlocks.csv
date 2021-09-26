@@ -1,7 +1,6 @@
 enabled,mode,speed,route,path/tool,filename,post,options,opt_cmd,has_env
 on,cmd,fast,blocks,tools/getBlocks,force_01,y,blocks = 2768801 1995314 1958017 & cache,getBlocks
 on,cmd,fast,blocks,tools/getBlocks,force_03,y,blocks = 4369999 & cache,getBlocks
-on,cmd,fast,blocks,tools/getBlocks,README,n,readme
 on,cmd,fast,blocks,tools/getBlocks,help,n,@h
 on,cmd,fast,blocks,tools/getBlocks,help_long,n,help
 on,both,fast,blocks,tools/getBlocks,no_params,y,

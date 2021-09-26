@@ -29,7 +29,7 @@ var logsCmd = &cobra.Command{
 	Short: shortLogs,
 	Long:  longLogs,
 	Run:   runLogs,
-	Args:  ValidatePositionals(validateLogsArgs, cobra.MinimumNArgs(1)),
+	Args:  ValidatePositionals(validateLogsArgs),
 }
 
 var usageLogs = `logs [flags] <tx_id> [tx_id...]
@@ -61,7 +61,7 @@ func init() {
 	logsCmd.Flags().SortFlags = false
 	logsCmd.PersistentFlags().SortFlags = false
 
-	PostNotes = "[{POSTNOTES}]"
+	PostNotes = ""
 	rootCmd.AddCommand(logsCmd)
 }
 

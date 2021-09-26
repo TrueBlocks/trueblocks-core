@@ -29,7 +29,7 @@ var transactionsCmd = &cobra.Command{
 	Short: shortTransactions,
 	Long:  longTransactions,
 	Run:   runTransactions,
-	Args:  ValidatePositionals(validateTransactionsArgs, cobra.MinimumNArgs(1)),
+	Args:  ValidatePositionals(validateTransactionsArgs),
 }
 
 var usageTransactions = `transactions [flags] <tx_id> [tx_id...]
@@ -65,7 +65,7 @@ func init() {
 	transactionsCmd.Flags().SortFlags = false
 	transactionsCmd.PersistentFlags().SortFlags = false
 
-	PostNotes = "[{POSTNOTES}]"
+	PostNotes = ""
 	rootCmd.AddCommand(transactionsCmd)
 }
 

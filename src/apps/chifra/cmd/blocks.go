@@ -30,7 +30,7 @@ var blocksCmd = &cobra.Command{
 	Short: shortBlocks,
 	Long:  longBlocks,
 	Run:   runBlocks,
-	Args:  ValidatePositionals(validateBlocksArgs, cobra.MinimumNArgs(1)),
+	Args:  ValidatePositionals(validateBlocksArgs),
 }
 
 var usageBlocks = `blocks [flags] <block> [block...]
@@ -76,7 +76,7 @@ func init() {
 	blocksCmd.Flags().SortFlags = false
 	blocksCmd.PersistentFlags().SortFlags = false
 
-	PostNotes = "[{POSTNOTES}]"
+	PostNotes = ""
 	rootCmd.AddCommand(blocksCmd)
 }
 

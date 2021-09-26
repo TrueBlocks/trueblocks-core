@@ -1,6 +1,5 @@
 enabled,mode,speed,route,path/tool,filename,post,options,opt_cmd,has_env
 local,cmd,fast,null,apps/chifra-new,RESET,n,RESET
-off,cmd,fast,null,apps/chifra-new,README,n,readme
 off,cmd,fast,null,apps/chifra-new,help,n,@h
 off,cmd,fast,null,apps/chifra-new,help_long,n,help
 off,cmd,fast,null,apps/chifra-new,help_no_params,n,

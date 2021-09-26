@@ -29,7 +29,7 @@ var abisCmd = &cobra.Command{
 	Short: shortAbis,
 	Long:  longAbis,
 	Run:   runAbis,
-	Args:  ValidatePositionals(validateAbisArgs, cobra.MinimumNArgs(1)),
+	Args:  ValidatePositionals(validateAbisArgs),
 }
 
 var usageAbis = `abis [flags] <address> [address...]
@@ -65,7 +65,7 @@ func init() {
 	abisCmd.Flags().SortFlags = false
 	abisCmd.PersistentFlags().SortFlags = false
 
-	PostNotes = "[{POSTNOTES}]"
+	PostNotes = ""
 	rootCmd.AddCommand(abisCmd)
 }
 

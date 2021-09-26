@@ -1,9 +1,8 @@
 enabled,mode,speed,route,path/tool,filename,post,options,opt_cmd,has_env
 on,cmd,fast,blocks,tools/getTraces,preload,n,transactions = 3657480 & cache,getBlocks
-on,cmd,fast,traces,tools/getTraces,README,n,readme
 on,cmd,fast,traces,tools/getTraces,help,n,@h
 on,cmd,fast,traces,tools/getTraces,help_long,n,help
-on,cmd,fast,traces,tools/getTraces,by_file_v,y,verbose & file:cmd_file & fmt = api
+on,cmd,fast,traces,tools/getTraces,by_file_v,y,verbose & file = cmd_file & fmt = api
 on,both,fast,traces,tools/getTraces,default,y,address = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
 on,both,fast,traces,tools/getTraces,no_input,y,
 on,both,fast,traces,tools/getTraces,invalid_option_1,y,pink
@@ -57,8 +56,8 @@ on,both,fast,traces,tools/getTraces,fmt_txt,n,transactions = 2222222.0 2332332.0
 on,both,fast,traces,tools/getTraces,fmt_csv,n,transactions = 2222222.0 2332332.0 & fmt = csv
 on,both,fast,traces,tools/getTraces,fmt_api,y,transactions = 2222222.0 2332332.0 & fmt = api
 on,cmd,fast,traces,tools/getTraces,fmt_junk,y,transactions = 2222222.0 2332332.0 & fmt = junk
-on,cmd,fast,traces,tools/getTraces,by_filebad,n,bad & file:cmd_file
-on,cmd,fast,traces,tools/getTraces,by_file,n,file:cmd_file
+on,cmd,fast,traces,tools/getTraces,by_filebad,n,bad & file = cmd_file
+on,cmd,fast,traces,tools/getTraces,by_file,n,file = cmd_file
 on,both,fast,traces,tools/getTraces,by_filter1,y,fmt = json & filter = 0x2ed0c4!0x2ed128!!0x8bbb73bcb5d553b5a556358d27625323fd781d37!1000!100
 on,both,fast,traces,tools/getTraces,by_filter2,y,fmt = json & filter = 0x2ed0c4!0x2ed128!!0x8bbb73bcb5d553b5a556358d27625323fd781d37!!
 on,both,fast,traces,tools/getTraces,by_filter3,y,fmt = json & filter = 0x2ed0c4!0x2ed128!!0x8bbb73bcb5d553b5a556358d27625323fd781d37!!1

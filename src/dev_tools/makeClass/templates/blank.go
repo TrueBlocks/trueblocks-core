@@ -28,7 +28,7 @@ var [{ROUTE}]Cmd = &cobra.Command{
 	Short: short[{PROPER}],
 	Long:  long[{PROPER}],
 	Run:   run[{PROPER}],
-	Args:  ValidatePositionals(validate[{PROPER}]Args, cobra.MinimumNArgs(1)),
+	Args:  ValidatePositionals(validate[{PROPER}]Args),
 }
 
 var usage[{PROPER}] = `[{USE}]`
@@ -49,9 +49,7 @@ func init() {
 	[{ROUTE}]Cmd.PersistentFlags().SortFlags = false
 [{SET_OPTS}]	[{ROUTE}]Cmd.Flags().SortFlags = false
 	[{ROUTE}]Cmd.PersistentFlags().SortFlags = false
-
-	PostNotes = "[{POSTNOTES}]"
-	rootCmd.AddCommand([{ROUTE}]Cmd)
+[{POSTNOTES}]	rootCmd.AddCommand([{ROUTE}]Cmd)
 }
 
 func run[{PROPER}](cmd *cobra.Command, args []string) {

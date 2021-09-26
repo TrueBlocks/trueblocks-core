@@ -30,7 +30,7 @@ var whenCmd = &cobra.Command{
 	Short: shortWhen,
 	Long:  longWhen,
 	Run:   runWhen,
-	Args:  ValidatePositionals(validateWhenArgs, cobra.MinimumNArgs(1)),
+	Args:  ValidatePositionals(validateWhenArgs),
 }
 
 var usageWhen = `when [flags] < block | date > [ block... | date... ]
@@ -68,7 +68,7 @@ func init() {
 	whenCmd.Flags().SortFlags = false
 	whenCmd.PersistentFlags().SortFlags = false
 
-	PostNotes = "[{POSTNOTES}]"
+	PostNotes = ""
 	rootCmd.AddCommand(whenCmd)
 }
 

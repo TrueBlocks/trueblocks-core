@@ -1,5 +1,5 @@
-getTraces argc: 4 [1:--fmt] [2:json] [3:4000000.5] 
-getTraces --fmt json 4000000.5 
+getTraces argc: 4 [1:4000000.5] [2:--fmt] [3:json] 
+getTraces 4000000.5 --fmt json 
 { "data": [
   {
     "blockHash": "0xb8a3f7f5cfc1748f91a684f20fe89031202cbadcd15078c49b85ec2a57f43853",

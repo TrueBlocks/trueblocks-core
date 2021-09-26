@@ -1,5 +1,5 @@
-getTraces argc: 5 [1:--articulate] [2:--fmt] [3:json] [4:0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33] 
-getTraces --articulate --fmt json 0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33 
+getTraces argc: 5 [1:0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33] [2:--fmt] [3:json] [4:--articulate] 
+getTraces 0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33 --fmt json --articulate 
 { "data": [
 params.size: 0
 ==================================================

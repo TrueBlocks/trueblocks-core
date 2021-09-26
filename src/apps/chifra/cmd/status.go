@@ -30,7 +30,7 @@ var statusCmd = &cobra.Command{
 	Short: shortStatus,
 	Long:  longStatus,
 	Run:   runStatus,
-	Args:  ValidatePositionals(validateStatusArgs, cobra.MinimumNArgs(1)),
+	Args:  ValidatePositionals(validateStatusArgs),
 }
 
 var usageStatus = `status [flags] [mode...]
@@ -76,7 +76,7 @@ func init() {
 	statusCmd.Flags().SortFlags = false
 	statusCmd.PersistentFlags().SortFlags = false
 
-	PostNotes = "[{POSTNOTES}]"
+	PostNotes = ""
 	rootCmd.AddCommand(statusCmd)
 }
 

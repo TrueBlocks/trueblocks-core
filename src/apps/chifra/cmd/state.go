@@ -29,7 +29,7 @@ var stateCmd = &cobra.Command{
 	Short: shortState,
 	Long:  longState,
 	Run:   runState,
-	Args:  ValidatePositionals(validateStateArgs, cobra.MinimumNArgs(1)),
+	Args:  ValidatePositionals(validateStateArgs),
 }
 
 var usageState = `state [flags] <address> [address...] [block...]
@@ -64,7 +64,7 @@ func init() {
 	stateCmd.Flags().SortFlags = false
 	stateCmd.PersistentFlags().SortFlags = false
 
-	PostNotes = "[{POSTNOTES}]"
+	PostNotes = ""
 	rootCmd.AddCommand(stateCmd)
 }
 

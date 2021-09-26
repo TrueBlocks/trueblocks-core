@@ -29,7 +29,7 @@ var quotesCmd = &cobra.Command{
 	Short: shortQuotes,
 	Long:  longQuotes,
 	Run:   runQuotes,
-	Args:  ValidatePositionals(validateQuotesArgs, cobra.MinimumNArgs(1)),
+	Args:  ValidatePositionals(validateQuotesArgs),
 }
 
 var usageQuotes = `quotes [flags]`
@@ -60,7 +60,7 @@ func init() {
 	quotesCmd.Flags().SortFlags = false
 	quotesCmd.PersistentFlags().SortFlags = false
 
-	PostNotes = "[{POSTNOTES}]"
+	PostNotes = ""
 	rootCmd.AddCommand(quotesCmd)
 }
 

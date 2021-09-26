@@ -1,9 +1,36 @@
-getTraces argc: 2 [1:--file:cmd_file] 
-getTraces --file:cmd_file 
-Cmd: 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.78 -v:1 
-Cmd: 3657480.78 
-Cmd: 0xda2f27fffb36c90c74fc53bd8b721074e87203c727640c95c4c802296e3bf8ad 
-blocknumber	transactionindex	traceaddress	action::calltype	error	action::from	action::to	action::value	action::ether	action::gas	result::gasused	action::input	compressedtrace	result::output
-3657480	78	null	call		0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5	0x8c222fb428f9f44715cf85349f79a18761c8e53c	233602441535478432	0.233602441535478432	29000	0	0x		0x
-3657480	78	null	call		0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5	0x8c222fb428f9f44715cf85349f79a18761c8e53c	233602441535478432	0.233602441535478432	29000	0	0x		0x
-3657480	79	null	call		0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5	0x85ac33fe36a146ca3651693c16fbb45b3832b3f6	207260709928115808	0.207260709928115808	29000	0	0x		0x
+getTraces argc: 3 [1:--file] [2:cmd_file] 
+getTraces --file cmd_file 
+
+  Invalid option: --file
+
+Purpose:
+  Retrieve traces for the given transaction(s).
+
+Usage:
+  getTraces [flags] <tx_id> [tx_id...]
+
+Arguments:
+  transactions - a space-separated list of one or more transaction identifiers (required)
+
+Flags:
+  -a, --articulate      articulate the retrieved data if ABIs can be found
+  -f, --filter string   call the node's trace_filter routine with bang-seperated filter
+  -d, --statediff       export state diff traces (not implemented)
+  -c, --count           show the number of traces for the transaction only (fast)
+  -s, --skip_ddos       skip over the 2016 ddos during export ('on' by default) (hidden)
+  -m, --max <num>       if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250) (hidden)
+
+Global Flags:
+  -x, --fmt string     export format, one of [none|json*|txt|csv|api]
+  -v, --verbose uint   set verbose level (optional level defaults to 1)
+  -h, --help           display this help screen
+
+Notes:
+  - The transactions list may be one or more space-separated identifiers which are either a transaction hash,
+    a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.
+  - This tool checks for valid input syntax, but does not check that the transaction requested actually exists.
+  - If the queried node does not store historical state, the results for most older transactions are undefined.
+  - A bang seperated filter has the following fields (at least one of which is required) and is separated
+    with a bang (!): fromBlk, toBlk, fromAddr, toAddr, after, count.
+  - A state diff trace describes, for each modified address, what changed during that trace.
+

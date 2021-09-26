@@ -29,7 +29,7 @@ var listCmd = &cobra.Command{
 	Short: shortList,
 	Long:  longList,
 	Run:   runList,
-	Args:  ValidatePositionals(validateListArgs, cobra.MinimumNArgs(1)),
+	Args:  ValidatePositionals(validateListArgs),
 }
 
 var usageList = `list [flags] <address> [address...]
@@ -55,7 +55,7 @@ func init() {
 	listCmd.Flags().SortFlags = false
 	listCmd.PersistentFlags().SortFlags = false
 
-	PostNotes = "[{POSTNOTES}]"
+	PostNotes = ""
 	rootCmd.AddCommand(listCmd)
 }
 

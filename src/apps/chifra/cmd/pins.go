@@ -30,7 +30,7 @@ var pinsCmd = &cobra.Command{
 	Short: shortPins,
 	Long:  longPins,
 	Run:   runPins,
-	Args:  ValidatePositionals(validatePinsArgs, cobra.MinimumNArgs(1)),
+	Args:  ValidatePositionals(validatePinsArgs),
 }
 
 var usagePins = `pins [flags]`
@@ -65,7 +65,7 @@ func init() {
 	pinsCmd.Flags().SortFlags = false
 	pinsCmd.PersistentFlags().SortFlags = false
 
-	PostNotes = "[{POSTNOTES}]"
+	PostNotes = ""
 	rootCmd.AddCommand(pinsCmd)
 }
 

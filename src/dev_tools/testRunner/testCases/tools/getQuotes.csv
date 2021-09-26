@@ -1,5 +1,4 @@
 enabled,mode,speed,route,path/tool,filename,post,options,opt_cmd,has_env
-on,cmd,fast,quotes,tools/getQuotes,README,n,readme
 on,cmd,fast,quotes,tools/getQuotes,help,n,@h
 on,cmd,fast,quotes,tools/getQuotes,help_long,n,help
 on,cmd,fast,quotes,tools/getQuotes,no_params,y,
