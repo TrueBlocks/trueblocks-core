@@ -5,11 +5,11 @@ on,cmd,fast,quotes,tools/getQuotes,no_params,y,
 on,both,fast,quotes,tools/getQuotes,invalid_param_1,y,junk
 on,both,fast,quotes,tools/getQuotes,period_invalid,y,period
 on,both,fast,quotes,tools/getQuotes,period_invalid_02,y,period = 12
-on,both,fast,quotes,tools/getQuotes,period_00,n,period = 240 & verbose = 2 & fmt = csv
+on,both,fast,quotes,tools/getQuotes,period_00,n,period = 240 & log_level = 2 & fmt = csv
 on,both,slow,quotes,tools/getQuotes,period_01,y,period = 60 & fmt = json
 on,both,slow,quotes,tools/getQuotes,verbose_00,y,verbose & fmt = json
-on,both,slow,quotes,tools/getQuotes,verbose_01,y,verbose = 1 & fmt = api
-on,cmd,slow,quotes,tools/getQuotes,from_file,n,file:cmd_file
+on,both,slow,quotes,tools/getQuotes,verbose_01,y,log_level = 1 & fmt = api
+local,cmd,slow,quotes,tools/getQuotes,from_file,n,file:cmd_file
 on,both,slow,quotes,tools/getQuotes,fmt_default,y,noop
 on,both,slow,quotes,tools/getQuotes,fmt_txt,n,fmt = txt
 on,both,slow,quotes,tools/getQuotes,fmt_csv,n,fmt = csv

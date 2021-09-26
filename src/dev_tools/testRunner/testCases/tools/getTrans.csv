@@ -31,7 +31,7 @@ on,both,fast,transactions,tools/getTrans,bad_blkhash_msg_raw,n,transactions = 0x
 on,both,fast,transactions,tools/getTrans,revert_not_err,y,transactions = 0x3551dac5e91df7f27c78118daa0da81211ad38acc527c08c74c5a7724397d49c & articulate & fmt = json & trace
 on,both,fast,transactions,tools/getTrans,message,y,transactions = 0xa152016a73c308e2ecdf9ff31d6a36f717604472a589f21e998e96c3e9500344 & articulate
 on,cmd,medi,transactions,tools/getTrans,core_dump_bug,y,transactions = 0xa5c9c1a65f998be86dc2131d57d0de0c418bb534d8d2b37b46c99888ccef8d10 @ avt & fmt = api
-on,cmd,fast,transactions,tools/getTrans,mulit_line_mulit_txs,n,file:cmd_file_1 & fmt = json
+local,cmd,fast,transactions,tools/getTrans,mulit_line_mulit_txs,n,file:cmd_file_1 & fmt = json
 off,both,fast,transactions,tools/getTrans,multi_articulate,y,transactions = 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f & articulate & fmt = json
 off,both,fast,transactions,tools/getTrans,multi_articulate_tra,y,transactions = 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f & articulate & fmt = json & trace
 on,both,fast,transactions,tools/getTrans,uniqAddrs_fail,y,transactions = 1301011.0 1301672.0 1301324.0 & uniq_tx & fmt json
@@ -50,9 +50,9 @@ on,both,medi,transactions,tools/getTrans,fmt_api,y,transactions = 2222222.0 2332
 on,both,fast,transactions,tools/getTrans,fmt_json,y,transactions = 2222222.0 2332332.0 & fmt = json
 on,cmd,fast,transactions,tools/getTrans,fmt_junk,y,transactions = 2222222.0 2332332.0 & fmt = junk
 on,both,fast,transactions,tools/getTrans,to_file,y,transactions = 2222222.0 2332332.0 & fmt = json & to_file
-on,cmd,fast,transactions,tools/getTrans,by_file,n,file:cmd_file & bad
-on,cmd,fast,transactions,tools/getTrans,by_file_1,n,file:cmd_file & fmt = csv
-on,cmd,fast,transactions,tools/getTrans,by_file_v,n,file:cmd_file & fmt = json
+local,cmd,fast,transactions,tools/getTrans,by_file,n,file:cmd_file & bad
+local,cmd,fast,transactions,tools/getTrans,by_file_1,n,file:cmd_file & fmt = csv
+local,cmd,fast,transactions,tools/getTrans,by_file_v,n,file:cmd_file & fmt = json
 on,both,fast,transactions,tools/getTrans,old_hang_bug,y,transactions = 6409270.108 & articulate & fmt = json
 on,both,slow,transactions,tools/getTrans,old_parsing_bug_1,y,transactions = 0xfa62ab036f36b4755bfa0d6e3e641d08daa7e41e95b0c1f2246485702319efb8 & fmt = json & articulate
 on,both,slow,transactions,tools/getTrans,old_parsing_bug_2,y,transactions = 0xfa62ab036f36b4755bfa0d6e3e641d08daa7e41e95b0c1f2246485702319efb8 & fmt = json & articulate
@@ -62,7 +62,7 @@ on,both,slow,transactions,tools/getTrans,issue_1583,y,transactions = 0x2f83088fa
 off,both,slow,transactions,tools/getTrans,articulate_proxy,y,transactions = 11476466.96 & articulate & fmt = json
 on,both,fast,transactions,tools/getTrans,fail_reconcile1,y,transactions = 0x8699f14af8aca02073f3008099526a6e77f724bee280e5e3c2fa64b589be9a63 & reconcile 0x12 & fmt json
 on,both,fast,transactions,tools/getTrans,fail_reconcile2,y,transactions = 0x8699f14af8aca02073f3008099526a6e77f724bee280e5e3c2fa64b589be9a63 & reconcile 0xf503017d7baf7fbc0fff7492b751025c6a78179b & fmt json & cache
-on,both,fast,transactions,tools/getTrans,reconcile,y,transactions = 0x8699f14af8aca02073f3008099526a6e77f724bee280e5e3c2fa64b589be9a63 & reconcile 0xf503017d7baf7fbc0fff7492b751025c6a78179b & fmt json & verbose 10
-on,both,fast,transactions,tools/getTrans,pricing_premaker,y,transactions = 1433233.8 & reconcile 0xea674fdde714fd979de3edf0f56aa9716b898ec8 & fmt json & verbose 10
-on,both,fast,transactions,tools/getTrans,pricing_maker,y,transactions = 5218355.232 & reconcile 0x7fd5c846121bed2e2e46a55f992e35d85da7ffad & fmt json & verbose 10
-on,both,fast,transactions,tools/getTrans,pricing_uniswap1,y,transactions = 10681057.170 10607241.278 & reconcile 0x65eab68cdb0dab6b3aad6fb4d915216a5fd002b3 & fmt json & verbose 10
+on,both,fast,transactions,tools/getTrans,reconcile,y,transactions = 0x8699f14af8aca02073f3008099526a6e77f724bee280e5e3c2fa64b589be9a63 & reconcile 0xf503017d7baf7fbc0fff7492b751025c6a78179b & fmt json & log_level = 10
+on,both,fast,transactions,tools/getTrans,pricing_premaker,y,transactions = 1433233.8 & reconcile 0xea674fdde714fd979de3edf0f56aa9716b898ec8 & fmt = json & log_level = 10
+on,both,fast,transactions,tools/getTrans,pricing_maker,y,transactions = 5218355.232 & reconcile 0x7fd5c846121bed2e2e46a55f992e35d85da7ffad & fmt = json & log_level = 10
+on,both,fast,transactions,tools/getTrans,pricing_uniswap1,y,transactions = 10681057.170 10607241.278 & reconcile 0x65eab68cdb0dab6b3aad6fb4d915216a5fd002b3 & fmt = json & log_level = 10

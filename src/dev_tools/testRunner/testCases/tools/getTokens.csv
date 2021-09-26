@@ -1,6 +1,6 @@
 enabled,mode,speed,route,path/tool,filename,post,options,opt_cmd,has_env
 on,cmd,fast,tokens,tools/getTokens,help,n,@h
-on,cmd,fast,tokens,tools/getTokens,help_long,n,help
+local,cmd,fast,tokens,tools/getTokens,help_long,n,help
 on,cmd,fast,tokens,tools/getTokens,help_verbose,n,help & verbose
 on,both,slow,tokens,tools/getTokens,noparams,y,
 on,both,slow,tokens,tools/getTokens,invalid_params_1,y,addrs2 = a b c
@@ -10,7 +10,7 @@ on,both,slow,tokens,tools/getTokens,invalid_token,y,addrs2 = 0xd26114cd6ee289acc
 on,both,slow,tokens,tools/getTokens,invalid_addr,y,addrs2 = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0x5e44c3e467a49c9ca0296a9f130fc433041aaa2
 on,both,slow,tokens,tools/getTokens,token_does_not_exist,y,addrs2 = 0xd26114cd6EE289AccF82350c8d84870000000000 0x5e44c3e467a49c9ca0296a9f130fc433041aaa28 4000000
 on,both,slow,tokens,tools/getTokens,acccount_does_not_exist,n,addrs2 = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0x5e44c3e467a49c9ca0296a9f130fc43304000000 & blocks = 4000000
-on,both,slow,tokens,tools/getTokens,invalid_dollars,n,addrs2 = 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98 0x6b65353ac052f6c3a0c9688911b078bd025d6ab3 0xa25d04fa348f107428708ba19c95d1c79b3744bf & blocks = 4285364 3510999 2510010 & dollars
+local,both,slow,tokens,tools/getTokens,invalid_dollars,n,addrs2 = 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98 0x6b65353ac052f6c3a0c9688911b078bd025d6ab3 0xa25d04fa348f107428708ba19c95d1c79b3744bf & blocks = 4285364 3510999 2510010 & dollars
 on,both,slow,tokens,tools/getTokens,single_account,n,addrs2 = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0x5e44c3e467a49c9ca0296a9f130fc433041aaa28 & blocks = 4000000
 on,both,slow,tokens,tools/getTokens,multiple_token_accounts,n,addrs2 = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0x5e44c3e467a49c9ca0296a9f130fc433041aaa28 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 & blocks = 4000000
 on,both,slow,tokens,tools/getTokens,block_out_of_range,y,addrs2 = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0x5e44c3e467a49c9ca0296a9f130fc433041aaa28 0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98 & blocks = 16000000

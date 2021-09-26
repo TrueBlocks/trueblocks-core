@@ -24,7 +24,7 @@ on,both,fast,logs,tools/getLogs,by_bnun_and_txid,y,transactions = 4000000.5 & fm
 on,both,medi,logs,tools/getLogs,by_blk_hash_good,y,transactions = 0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.55 & verbose
 on,both,fast,logs,tools/getLogs,by_blk_hash_bad,y,transactions = 0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.155 & verbose
 on,both,fast,logs,tools/getLogs,from_node,n,transactions = 4000000.5 & raw
-on,both,medi,logs,tools/getLogs,prev_bug2_2,n,transactions = 4279119.46 & raw
+local,both,medi,logs,tools/getLogs,prev_bug2_2,n,transactions = 4279119.46 & raw
 off,both,fast,logs,tools/getLogs,multi_articulate,y,transactions = 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f & articulate & fmt = json
 on,both,medi,logs,tools/getLogs,star,y,transactions = 1428993.* & fmt = api
 on,cmd,fast,logs,tools/getLogs,redir_output,y,transactions = 3657480.79 & output testing_file
@@ -37,4 +37,4 @@ on,cmd,fast,logs,tools/getLogs,fmt_junk,y,transactions = 2222222.0 2332332.0 & f
 on,both,fast,logs,tools/getLogs,to_file,y,transactions = 2222222.0 2332332.0 & fmt = json & to_file
 on,cmd,fast,logs,tools/getLogs,by_filebad,y,file:cmd_file & bad
 off,cmd,slow,logs,tools/getLogs,by_file,y,file:cmd_file
-on,cmd,fast,logs,tools/getLogs,by_file_v,y,file:cmd_file & verbose & fmt = json
+local,cmd,fast,logs,tools/getLogs,by_file_v,y,file:cmd_file & verbose & fmt = json

@@ -35,5 +35,5 @@ on,both,fast,receipts,tools/getReceipts,fmt_json,y,transactions = 2222222.0 2332
 on,cmd,fast,receipts,tools/getReceipts,fmt_junk,y,transactions = 2222222.0 2332332.0 & fmt = junk
 on,both,fast,receipts,tools/getReceipts,to_file,y,transactions = 2222222.0 2332332.0 & fmt = json & to_file
 on,cmd,fast,receipts,tools/getReceipts,by_filebad,n,file:cmd_file & bad
-on,cmd,fast,receipts,tools/getReceipts,by_file,n,file:cmd_file
-on,cmd,fast,receipts,tools/getReceipts,by_file_v,n,file:cmd_file & fmt = api & verbose
+local,cmd,fast,receipts,tools/getReceipts,by_file,n,file:cmd_file
+local,cmd,fast,receipts,tools/getReceipts,by_file_v,n,file:cmd_file & fmt = api & verbose
