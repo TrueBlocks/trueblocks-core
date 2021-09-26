@@ -1,4 +1,4 @@
-cacheStatus  --details monitors
+chifra status  --details monitors
 {
   "client_version": "Client version",
   "client_ids": "chainId: 1 networkId: 1",

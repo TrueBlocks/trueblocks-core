@@ -22,7 +22,7 @@ static const COption params[] = {
     // clang-format off
     COption("modes", "", "list<enum[index|monitors|collections|names|abis|caches|some*|all]>", OPT_POSITIONAL, "the type of status info to retrieve"),  // NOLINT
     COption("details", "d", "", OPT_SWITCH, "include details about items found in monitors, slurps, abis, or price caches"),  // NOLINT
-    COption("types", "t", "list<enum[blocks|transactions|traces|slurps|prices|all*]>", OPT_FLAG, "for caches mode only, which type(s) of cache to report"),  // NOLINT
+    COption("types", "t", "list<enum[blocks|txs|traces|slurps|prices|all*]>", OPT_FLAG, "for caches mode only, which type(s) of cache to report"),  // NOLINT
     COption("depth", "p", "<uint64>", OPT_HIDDEN | OPT_FLAG, "for cache mode only, number of levels deep to report"),
     COption("report", "r", "", OPT_HIDDEN | OPT_SWITCH, "show a summary of the current status of TrueBlocks (deprecated)"),  // NOLINT
     COption("terse", "e", "", OPT_HIDDEN | OPT_SWITCH, "show a terse summary report"),
@@ -230,7 +230,7 @@ bool COptions::parseArguments(string_q& command) {
                 if (t != "all")
                     mode += (t + "|");
             }
-            mode += (hasAll ? "blocks|transactions|traces|slurps|prices|" : "");
+            mode += (hasAll ? "blocks|txs|traces|slurps|prices|" : "");
         }
     }
 

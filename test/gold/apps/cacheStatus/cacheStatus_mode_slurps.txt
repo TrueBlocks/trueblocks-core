@@ -1,4 +1,4 @@
-cacheStatus  caches --types slurps
+chifra status  caches --types slurps
 {
   "client_version": "Client version",
   "client_ids": "chainId: 1 networkId: 1",

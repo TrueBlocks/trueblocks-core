@@ -14,17 +14,17 @@ on,both,slow,status,apps/cacheStatus,mode_collections,y,modes = collections
 on,both,slow,status,apps/cacheStatus,mode_names,y,modes = names
 on,both,slow,status,apps/cacheStatus,mode_abis,y,modes = abis
 on,both,fast,status,apps/cacheStatus,mode_blocks,y,modes = caches & types = blocks
-on,both,fast,status,apps/cacheStatus,mode_txs,y,modes = caches & types = transactions
+on,both,fast,status,apps/cacheStatus,mode_txs,y,modes = caches & types = txs
 on,both,fast,status,apps/cacheStatus,mode_traces,y,modes = caches & types = traces
 on,both,fast,status,apps/cacheStatus,mode_cache_fail,y,modes = caches & types = junk
 on,both,fast,status,apps/cacheStatus,mode_cache_all,y,modes = caches & types = all
-on,both,fast,status,apps/cacheStatus,mode_txs_l01,y,modes = caches & types = transactions & details
-on,both,fast,status,apps/cacheStatus,mode_txs_l02,y,modes = caches & types = transactions & details & depth = 0
-on,both,fast,status,apps/cacheStatus,mode_txs_l1,y,modes = caches & types = transactions & details  & depth = 1
-on,both,fast,status,apps/cacheStatus,mode_txs_l2,y,modes = caches & types = transactions & details  & depth = 2
-on,both,fast,status,apps/cacheStatus,mode_txs_l3,y,modes = caches & types = transactions & details  & depth = 3
-on,both,fast,status,apps/cacheStatus,mode_txs_l4_bad,y,modes = caches & types = transactions & details  & depth = 4
-on,both,fast,status,apps/cacheStatus,mode_txs_blks,y,modes = caches & types = transactions & types = blocks
+on,both,fast,status,apps/cacheStatus,mode_txs_l01,y,modes = caches & types = txs & details
+on,both,fast,status,apps/cacheStatus,mode_txs_l02,y,modes = caches & types = txs & details & depth = 0
+on,both,fast,status,apps/cacheStatus,mode_txs_l1,y,modes = caches & types = txs & details  & depth = 1
+on,both,fast,status,apps/cacheStatus,mode_txs_l2,y,modes = caches & types = txs & details  & depth = 2
+on,both,fast,status,apps/cacheStatus,mode_txs_l3,y,modes = caches & types = txs & details  & depth = 3
+on,both,fast,status,apps/cacheStatus,mode_txs_l4_bad,y,modes = caches & types = txs & details  & depth = 4
+on,both,fast,status,apps/cacheStatus,mode_txs_blks,y,modes = caches & types = txs & types = blocks
 on,both,fast,status,apps/cacheStatus,mode_slurps,y,modes = caches & types = slurps
 on,both,fast,status,apps/cacheStatus,mode_prices,y,modes = caches & types = prices
 on,both,fast,status,apps/cacheStatus,mode_some,y,modes = some

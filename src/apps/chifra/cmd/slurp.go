@@ -48,7 +48,7 @@ Notes:
   - Portions of this software are Powered by Etherscan.io APIs.`
 
 type slurpOptionsType struct {
-	types       string
+	types       []string
 	appearances bool
 }
 
@@ -59,7 +59,7 @@ func init() {
 
 	slurpCmd.Flags().SortFlags = false
 	slurpCmd.PersistentFlags().SortFlags = false
-	slurpCmd.Flags().StringVarP(&SlurpOpts.types, "types", "t", "", `which types of transactions to request
+	slurpCmd.Flags().StringSliceVarP(&SlurpOpts.types, "types", "t", nil, `which types of transactions to request
 One or more of ext, int, token, nfts, miner, uncles, all`)
 	slurpCmd.Flags().BoolVarP(&SlurpOpts.appearances, "appearances", "p", false, "show only the blocknumer.tx_id appearances of the exported transactions")
 	slurpCmd.Flags().SortFlags = false
@@ -71,8 +71,8 @@ One or more of ext, int, token, nfts, miner, uncles, all`)
 
 func runSlurp(cmd *cobra.Command, args []string) {
 	options := ""
-	if len(SlurpOpts.types) > 0 {
-		options += " --types " + SlurpOpts.types
+	for _, t := range SlurpOpts.types {
+		options += " --types " + t
 	}
 	if SlurpOpts.appearances {
 		options += " --appearances"

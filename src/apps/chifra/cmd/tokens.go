@@ -52,7 +52,7 @@ Notes:
   - special blocks are detailed under chifra when --list.`
 
 type tokensOptionsType struct {
-	parts   string
+	parts   []string
 	by_acct bool
 	no_zero bool
 }
@@ -64,7 +64,7 @@ func init() {
 
 	tokensCmd.Flags().SortFlags = false
 	tokensCmd.PersistentFlags().SortFlags = false
-	tokensCmd.Flags().StringVarP(&TokensOpts.parts, "parts", "p", "", `which parts of the token information to retreive
+	tokensCmd.Flags().StringSliceVarP(&TokensOpts.parts, "parts", "p", nil, `which parts of the token information to retreive
 One or more of name, symbol, decimals, totalSupply, version, none, all`)
 	tokensCmd.Flags().BoolVarP(&TokensOpts.by_acct, "by_acct", "b", false, "consider each address an ERC20 token except the last, whose balance is reported for each token")
 	tokensCmd.Flags().BoolVarP(&TokensOpts.no_zero, "no_zero", "n", false, "suppress the display of zero balance accounts")
@@ -77,8 +77,8 @@ One or more of name, symbol, decimals, totalSupply, version, none, all`)
 
 func runTokens(cmd *cobra.Command, args []string) {
 	options := ""
-	if len(TokensOpts.parts) > 0 {
-		options += " --parts " + TokensOpts.parts
+	for _, t := range TokensOpts.parts {
+		options += " --parts " + t
 	}
 	if TokensOpts.by_acct {
 		options += " --by_acct"

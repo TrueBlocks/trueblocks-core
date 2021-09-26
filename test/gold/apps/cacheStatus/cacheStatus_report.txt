@@ -1,4 +1,4 @@
-cacheStatus  --report --fmt txt
+chifra status  --report --fmt txt
 {
   "client_version": "Client version",
   "client_ids": "chainId: 1 networkId: 1",

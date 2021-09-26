@@ -1,4 +1,4 @@
-cacheStatus  caches --types all
+chifra status  caches --types all
 {
   "client_version": "Client version",
   "client_ids": "chainId: 1 networkId: 1",

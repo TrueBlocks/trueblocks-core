@@ -1,2 +1,2 @@
-cacheStatus  names --to_file
+chifra status  names --to_file
 --output_filename--

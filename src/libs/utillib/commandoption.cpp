@@ -620,8 +620,8 @@ bool CCommandOption::finishCleanup(void) {
     replace(go_type, "uint32_t", "uint32");
     replace(go_type, "blknum_t", "uint64");
     replace(go_type, "double", "float64");
-    replace(go_type, "listaddr", "[]string");
-    replace(go_type, "listtopic", "[]string");
+    if (startsWith(data_type, "list"))
+        go_type = "[]string";
 
     go_flagtype = (go_type == "[]string" ? "StringSlice" : toProper(go_type)) + "VarP";
 

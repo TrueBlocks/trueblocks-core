@@ -1,4 +1,4 @@
-cacheStatus  --terse
+chifra status  --terse
 client: Client version (testing, archive, tracing)
 --TIME-- trueblocks: GHC-TrueBlocks//vers-alpha--git-hash---git-ts- (eskey, no pinkey)
 --TIME-- configPath: --paths--

@@ -10,11 +10,11 @@ Arguments:
   blocks - an optional list of one or more blocks at which to report balances, defaults to 'latest'
 
 Flags:
-  -p, --parts string   control which state to export
-                       One or more of none, some, all, balance, nonce, code, storage, deployed, accttype
-  -c, --changes        only report a balance when it changes from one block to the next
-  -n, --no_zero        suppress the display of zero balance accounts
-  -a, --call string    a bang-separated string consisting of address!4-byte!bytes (hidden)
+  -p, --parts strings   control which state to export
+                        One or more of none, some, all, balance, nonce, code, storage, deployed, accttype
+  -c, --changes         only report a balance when it changes from one block to the next
+  -n, --no_zero         suppress the display of zero balance accounts
+  -a, --call string     a bang-separated string consisting of address!4-byte!bytes (hidden)
 
 Global Flags:
   -x, --fmt string   export format, one of [none|json*|txt|csv|api]

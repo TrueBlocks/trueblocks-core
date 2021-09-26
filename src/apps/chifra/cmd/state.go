@@ -53,7 +53,7 @@ Notes:
   - You may specify multiple modes on a single line.`
 
 type stateOptionsType struct {
-	parts   string
+	parts   []string
 	changes bool
 	no_zero bool
 	call    string
@@ -66,7 +66,7 @@ func init() {
 
 	stateCmd.Flags().SortFlags = false
 	stateCmd.PersistentFlags().SortFlags = false
-	stateCmd.Flags().StringVarP(&StateOpts.parts, "parts", "p", "", `control which state to export
+	stateCmd.Flags().StringSliceVarP(&StateOpts.parts, "parts", "p", nil, `control which state to export
 One or more of none, some, all, balance, nonce, code, storage, deployed, accttype`)
 	stateCmd.Flags().BoolVarP(&StateOpts.changes, "changes", "c", false, "only report a balance when it changes from one block to the next")
 	stateCmd.Flags().BoolVarP(&StateOpts.no_zero, "no_zero", "n", false, "suppress the display of zero balance accounts")
@@ -80,8 +80,8 @@ One or more of none, some, all, balance, nonce, code, storage, deployed, accttyp
 
 func runState(cmd *cobra.Command, args []string) {
 	options := ""
-	if len(StateOpts.parts) > 0 {
-		options += " --parts " + StateOpts.parts
+	for _, t := range StateOpts.parts {
+		options += " --parts " + t
 	}
 	if StateOpts.changes {
 		options += " --changes"

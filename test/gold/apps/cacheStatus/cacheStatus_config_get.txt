@@ -1,4 +1,4 @@
-cacheStatus  --get_config
+chifra status  --get_config
 {
   "files": [
     {

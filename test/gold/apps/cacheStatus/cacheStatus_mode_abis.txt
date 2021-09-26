@@ -1,4 +1,4 @@
-cacheStatus  abis
+chifra status  abis
 {
   "client_version": "Client version",
   "client_ids": "chainId: 1 networkId: 1",

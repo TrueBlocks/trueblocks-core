@@ -158,9 +158,8 @@ func runExport(cmd *cobra.Command, args []string) {
 	if ExportOpts.emitter {
 		options += " --emitter"
 	}
-	if len(ExportOpts.source) > 0 {
-		// TODO(tjayrush): this loses the remaining items after the first
-		options += " --source " + ExportOpts.source[0]
+	for _, t := range ExportOpts.source {
+		options += " --source " + t
 	}
 	if ExportOpts.relevant {
 		options += " --relevant"

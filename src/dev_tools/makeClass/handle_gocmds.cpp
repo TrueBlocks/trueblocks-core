@@ -72,6 +72,16 @@ bool COptions::handle_gocmds(void) {
     return true;
 }
 
+bool visitEnumItem2(string_q& item, void* data) {
+    ostringstream* osp = (ostringstream*)data;
+    if (osp->str().empty())
+        *osp << endl << "One of ";
+    else
+        *osp << ", ";
+    *osp << item;
+    return true;
+}
+
 string_q get_use(const CCommandOption& cmd) {
     ostringstream arguments;
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
@@ -83,6 +93,14 @@ string_q get_use(const CCommandOption& cmd) {
             arguments << substitute(p.Format("  [{LONGNAME}] - [{DESCRIPTION}]"), "addrs2", "addrs");
             if (p.is_required)
                 arguments << " (required)";
+            if (p.api_route == "status")
+                printf("");
+            if (contains(p.data_type, "enum")) {
+                ostringstream os;
+                forEveryEnum(visitEnumItem2, p.data_type, &os);
+                arguments << substitute(os.str(), "One of",
+                                        contains(p.data_type, "list") ? "    One or more of" : "    One of");
+            }
         }
     }
 
@@ -141,16 +159,6 @@ string_q goDefault(const CCommandOption& p) {
     return "false";
 }
 
-bool visitEnumItem2(string_q& item, void* data) {
-    ostringstream* osp = (ostringstream*)data;
-    if (osp->str().empty())
-        *osp << endl << "One of ";
-    else
-        *osp << ", ";
-    *osp << item;
-    return true;
-}
-
 string_q get_description(const CCommandOption& cmd) {
     string_q addendum;
     if (contains(cmd.data_type, "enum")) {
@@ -192,25 +200,28 @@ string_q get_copyopts(const CCommandOption& cmd) {
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
         if (p.option_type != "positional") {
             if (p.go_type == "[]string") {
-                os << "\tif len([{PROPER}]Opts." << p.longName << ") > 0 {" << endl;
-                os << "\t\t// TODO(tjayrush): this loses the remaining items after the first" << endl;
-                os << "\t\toptions += \" --" << p.longName << " \" + [{PROPER}]Opts." << p.longName << "[0]" << endl;
+                os << "\tfor _, t := range [{PROPER}]Opts." << p.longName << " {" << endl;
+                os << "\t\toptions += \" --" << p.longName << " \" + t" << endl;
+                os << "\t}" << endl;
             } else if (p.go_type == "string") {
                 os << "\tif len([{PROPER}]Opts." << p.longName << ") > 0 {" << endl;
                 os << "\t\toptions += \" --" << p.longName << " \" + [{PROPER}]Opts." << p.longName << endl;
+                os << "\t}" << endl;
             } else if (p.go_type == "uint64" || p.go_type == "uint32") {
                 os << "\tif [{PROPER}]Opts." << p.longName << " > 0 {" << endl;
                 os << "\t\toptions += \" --" << p.longName << " \" + ";
                 os << "fmt.Sprintf(\"%d\", [{PROPER}]Opts." << p.longName << ")" << endl;
+                os << "\t}" << endl;
             } else if (p.go_type == "float64") {
                 os << "\tif [{PROPER}]Opts." << p.longName << " > 0.0 {" << endl;
                 os << "\t\toptions += \" --" << p.longName << " \" + ";
                 os << "fmt.Sprintf(\"%.1f\", [{PROPER}]Opts." << p.longName << ")" << endl;
+                os << "\t}" << endl;
             } else {
                 os << "\tif [{PROPER}]Opts." << p.longName << " {" << endl;
                 os << "\t\toptions += \" --" << p.longName << "\"" << endl;
+                os << "\t}" << endl;
             }
-            os << "\t}" << endl;
         }
     }
     return os.str();

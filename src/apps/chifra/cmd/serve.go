@@ -29,7 +29,7 @@ var serveCmd = &cobra.Command{
 	Short: shortServe,
 	Long:  longServe,
 	Run:   runServe,
-	Args:  ValidatePositionals(validateServeArgs, cobra.MinimumNArgs(1)),
+	Args:  ValidatePositionals(validateServeArgs),
 }
 
 var usageServe = `serve [flags]`

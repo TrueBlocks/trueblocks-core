@@ -1,4 +1,4 @@
-cacheStatus  --details index --test_start 1000000 --test_end 2200000
+chifra status  --details index --test_start 1000000 --test_end 2200000
 {
   "client_version": "Client version",
   "client_ids": "chainId: 1 networkId: 1",

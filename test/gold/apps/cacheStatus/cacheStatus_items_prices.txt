@@ -1,4 +1,4 @@
-cacheStatus  --details caches --types prices
+chifra status  --details caches --types prices
 {
   "client_version": "Client version",
   "client_ids": "chainId: 1 networkId: 1",

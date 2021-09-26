@@ -185,7 +185,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 
 10700,apps,Admin,status,cacheStatus,modes,,,false,false,true,true,local,positional,list<enum[index|monitors|collections|names|abis|caches|some*|all]>,the type of status info to retrieve
 10720,apps,Admin,status,cacheStatus,details,d,,false,false,true,true,header,switch,<boolean>,include details about items found in monitors&#44; slurps&#44; abis&#44;|or price caches
-10730,apps,Admin,status,cacheStatus,types,t,,false,false,true,false,local,flag,list<enum[blocks|transactions|traces|slurps|prices|all*]>,for caches mode only&#44; which type(s) of cache to report
+10730,apps,Admin,status,cacheStatus,types,t,,false,false,true,false,local,flag,list<enum[blocks|txs|traces|slurps|prices|all*]>,for caches mode only&#44; which type(s) of cache to report
 10735,apps,Admin,status,cacheStatus,depth,p,,false,false,false,false,header,flag,<uint64>,for cache mode only&#44; number of levels deep to report
 10760,apps,Admin,status,cacheStatus,report,r,,false,false,false,true,local,switch,<boolean>,show a summary of the current status of TrueBlocks (deprecated)
 10770,apps,Admin,status,cacheStatus,terse,e,,false,false,false,true,header,switch,<boolean>,show a terse summary report

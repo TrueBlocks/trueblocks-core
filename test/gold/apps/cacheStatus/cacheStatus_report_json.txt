@@ -1,4 +1,4 @@
-cacheStatus  --report --fmt json
+chifra status  --report --fmt json
 { "data": [
 {
   "client_version": "Client version",

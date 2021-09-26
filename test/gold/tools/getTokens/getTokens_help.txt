@@ -10,10 +10,10 @@ Arguments:
   blocks - an optional list of one or more blocks at which to report balances, defaults to 'latest'
 
 Flags:
-  -p, --parts string   which parts of the token information to retreive
-                       One or more of name, symbol, decimals, totalSupply, version, none, all
-  -b, --by_acct        consider each address an ERC20 token except the last, whose balance is reported for each token
-  -n, --no_zero        suppress the display of zero balance accounts
+  -p, --parts strings   which parts of the token information to retreive
+                        One or more of name, symbol, decimals, totalSupply, version, none, all
+  -b, --by_acct         consider each address an ERC20 token except the last, whose balance is reported for each token
+  -n, --no_zero         suppress the display of zero balance accounts
 
 Global Flags:
   -x, --fmt string   export format, one of [none|json*|txt|csv|api]

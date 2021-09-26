@@ -239,6 +239,10 @@ void COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
                     // TODO(tjayrush): weird chifra related code
                     if (contains(test.path, "tools") && !contains(test.path, "dev_tools"))
                         exe = "chifra " + (test.extra.empty() ? test.route : test.extra);
+                    if (contains(test.tool, "pinMan"))
+                        exe = "chifra pins";
+                    if (contains(test.tool, "cacheStatus"))
+                        exe = "chifra status";
                 }
 
                 string_q fullCmd = exe + " " + test.options;

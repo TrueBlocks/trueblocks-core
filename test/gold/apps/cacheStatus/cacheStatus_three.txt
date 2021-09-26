@@ -1,4 +1,4 @@
-cacheStatus  abis caches monitors --types slurps
+chifra status  abis caches monitors --types slurps
 {
   "client_version": "Client version",
   "client_ids": "chainId: 1 networkId: 1",

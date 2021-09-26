@@ -76,13 +76,11 @@ func init() {
 
 func runLogs(cmd *cobra.Command, args []string) {
 	options := ""
-	if len(LogsOpts.topic) > 0 {
-		// TODO(tjayrush): this loses the remaining items after the first
-		options += " --topic " + LogsOpts.topic[0]
+	for _, t := range LogsOpts.topic {
+		options += " --topic " + t
 	}
-	if len(LogsOpts.source) > 0 {
-		// TODO(tjayrush): this loses the remaining items after the first
-		options += " --source " + LogsOpts.source[0]
+	for _, t := range LogsOpts.source {
+		options += " --source " + t
 	}
 	if LogsOpts.articulate {
 		options += " --articulate"

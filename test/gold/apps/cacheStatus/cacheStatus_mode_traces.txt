@@ -1,4 +1,4 @@
-cacheStatus  caches --types traces
+chifra status  caches --types traces
 {
   "client_version": "Client version",
   "client_ids": "chainId: 1 networkId: 1",

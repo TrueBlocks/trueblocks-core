@@ -1,4 +1,4 @@
-pinMan  --list --fmt junk
+chifra pins  --list --fmt junk
 
   Export format (junk) must be one of [ json | txt | csv | api ]. Quitting...
 

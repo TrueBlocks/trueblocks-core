@@ -1,4 +1,4 @@
-pinMan  
+chifra pins  
 Purpose:
   Manage pinned index of appearances and associated Bloom filters.
 

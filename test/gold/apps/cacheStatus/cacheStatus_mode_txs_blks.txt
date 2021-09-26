@@ -1,4 +1,4 @@
-cacheStatus  caches --types transactions --types blocks
+chifra status  caches --types txs --types blocks
 {
   "client_version": "Client version",
   "client_ids": "chainId: 1 networkId: 1",

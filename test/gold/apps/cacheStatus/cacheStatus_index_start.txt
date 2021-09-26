@@ -1,4 +1,4 @@
-cacheStatus  index --test_start 100
+chifra status  index --test_start 100
 {
   "client_version": "Client version",
   "client_ids": "chainId: 1 networkId: 1",

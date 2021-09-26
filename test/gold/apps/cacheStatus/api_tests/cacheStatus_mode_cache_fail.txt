@@ -1,5 +1,5 @@
 {
   "errors": [
-    "chifra status - Invalid option 'junk' for 'types'. One or more of [blocks|transactions|traces|slurps|prices|all] required."
+    "chifra status - Invalid option 'junk' for 'types'. One or more of [blocks|txs|traces|slurps|prices|all] required."
   ]
 }

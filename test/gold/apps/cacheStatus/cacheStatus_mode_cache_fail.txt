@@ -1,6 +1,6 @@
-cacheStatus  caches --types junk
+chifra status  caches --types junk
 
-  Invalid option 'junk' for 'types'. One or more of [blocks|transactions|traces|slurps|prices|all] required. Quitting...
+  Invalid option 'junk' for 'types'. One or more of [blocks|txs|traces|slurps|prices|all] required. Quitting...
 
 Purpose:
   Report on the status of the TrueBlocks system.
@@ -13,7 +13,7 @@ Arguments:
 
 Flags:
   -d, --details            include details about items found in monitors, slurps, abis, or price caches
-  -t, --types <val>        for caches mode only, which type(s) of cache to report, one or more of [blocks|transactions|traces|slurps|prices|all*]
+  -t, --types <val>        for caches mode only, which type(s) of cache to report, one or more of [blocks|txs|traces|slurps|prices|all*]
   -p, --depth <num>        for cache mode only, number of levels deep to report (hidden)
   -r, --report             show a summary of the current status of TrueBlocks (deprecated) (hidden)
   -e, --terse              show a terse summary report (hidden)
