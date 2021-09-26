@@ -1,5 +1,4 @@
-pinMan argc: 2 [1:--junk] 
-pinMan --junk 
+pinMan  --junk
 
   Invalid option: --junk
 

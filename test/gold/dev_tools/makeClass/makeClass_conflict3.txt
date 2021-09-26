@@ -1,5 +1,4 @@
-makeClass argc: 3 [1:-a] [2:--edit] 
-makeClass -a --edit 
+makeClass   -a --edit
 
   Invalid option: --edit
 

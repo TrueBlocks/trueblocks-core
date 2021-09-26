@@ -1,5 +1,4 @@
-tomlTest2 argc: 2 [1:acctExport.toml] 
-tomlTest2 acctExport.toml 
+tomlTest2  acctExport.toml
 tests/acctExport.toml
 [version]
 current = "vers-alpha"

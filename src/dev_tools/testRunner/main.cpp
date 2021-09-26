@@ -237,13 +237,15 @@ void COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
                     if (test.isCmd)
                         exe = getCommandPath(exe);
                     // TODO(tjayrush): weird chifra related code
-                    if (contains(test.path, "tools"))
+                    if (contains(test.path, "tools") && !contains(test.path, "dev_tools"))
                         exe = "chifra " + (test.extra.empty() ? test.route : test.extra);
                 }
 
                 string_q fullCmd = exe + " " + test.options;
+                string_q debugCmd =
+                    substitute(substitute(fullCmd, getCommandPath("test/"), ""), getCommandPath(""), "");
                 string_q redir = test.workPath + test.fileName;
-                cmd << "echo \"" << fullCmd << "\" >" << redir + " && ";
+                cmd << "echo \"" << debugCmd << "\" >" << redir + " && ";
                 cmd << env << fullCmd << " >>" << redir << " 2>&1";
 
             } else {

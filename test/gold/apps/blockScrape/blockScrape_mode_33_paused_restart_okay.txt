@@ -1,5 +1,4 @@
-blockScrape argc: 2 [1:restart] 
-blockScrape restart 
+blockScrape  restart
 {
   "message": "Testing only",
   "n_blocks": 2000,

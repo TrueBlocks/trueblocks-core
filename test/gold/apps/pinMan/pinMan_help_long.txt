@@ -1,5 +1,4 @@
-pinMan argc: 2 [1:--help] 
-pinMan --help 
+pinMan  --help
 Purpose:
   Manage pinned index of appearances and associated Bloom filters.
 

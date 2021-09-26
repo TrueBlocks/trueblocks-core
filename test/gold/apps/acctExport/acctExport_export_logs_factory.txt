@@ -1,5 +1,4 @@
-acctExport argc: 6 [1:0x8b3b3b624c3c0397d3da8fd861512393d51dcbac] [2:--factory] [3:--traces] [4:--last_block] [5:1603174] 
-acctExport 0x8b3b3b624c3c0397d3da8fd861512393d51dcbac --factory --traces --last_block 1603174 
+acctExport  0x8b3b3b624c3c0397d3da8fd861512393d51dcbac --factory --traces --last_block 1603174
 blocknumber	transactionindex	traceaddress	action::calltype	error	action::from	action::to	action::value	action::ether	action::gas	result::gasused	action::input	compressedtrace	result::output
 1600495	9	null-s	creation		0x0	0x8b3b3b624c3c0397d3da8fd861512393d51dcbac	0	0.000000000000000000	2192168	823600			
 1600546	15	0-s	creation		0x0	0xa8eced73b863886478a81b411868fbac8ffbd334	0	0.000000000000000000	195789	155966			

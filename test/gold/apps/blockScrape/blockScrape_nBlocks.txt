@@ -1,5 +1,4 @@
-blockScrape argc: 1 
-blockScrape 
+blockScrape  
 {
   "message": "Testing only",
   "n_blocks": 2000,

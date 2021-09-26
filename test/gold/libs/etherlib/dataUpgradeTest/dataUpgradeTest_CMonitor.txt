@@ -1,5 +1,4 @@
-dataUpgradeTest argc: 2 [1:CMonitor] 
-dataUpgradeTest CMonitor 
+dataUpgradeTest  CMonitor
 --------------------------------------------------------------------------------
 className: CMonitor
 baseClass: CAccountName

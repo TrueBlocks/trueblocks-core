@@ -1,5 +1,4 @@
-blockScrape argc: 3 [1:--n_addr_procs] [2:-12] 
-blockScrape --n_addr_procs -12 
+blockScrape  --n_addr_procs -12
 
   Invalid option: --n_addr_procs
 

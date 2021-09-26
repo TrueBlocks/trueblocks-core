@@ -1,5 +1,4 @@
-blockScrape argc: 2 [1:--junk] 
-blockScrape --junk 
+blockScrape  --junk
 
   Invalid option: --junk
 

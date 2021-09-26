@@ -1,5 +1,4 @@
-cacheStatus argc: 6 [1:caches] [2:--types] [3:transactions] [4:--types] [5:blocks] 
-cacheStatus caches --types transactions --types blocks 
+cacheStatus  caches --types transactions --types blocks
 {
   "client_version": "Client version",
   "client_ids": "chainId: 1 networkId: 1",

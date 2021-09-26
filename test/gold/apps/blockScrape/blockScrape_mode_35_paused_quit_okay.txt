@@ -1,5 +1,4 @@
-blockScrape argc: 2 [1:quit] 
-blockScrape quit 
+blockScrape  quit
 {
   "message": "Testing only",
   "n_blocks": 2000,

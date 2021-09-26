@@ -10,7 +10,7 @@ Arguments:
   blocks - an optional range of blocks to slurp
 
 Flags:
-  -t, --types string   one or more types of transactions to request
+  -t, --types string   which types of transactions to request
                        One or more of ext, int, token, nfts, miner, uncles, all
   -p, --appearances    show only the blocknumer.tx_id appearances of the exported transactions
 

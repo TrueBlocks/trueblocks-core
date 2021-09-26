@@ -1,5 +1,4 @@
-blockScrape argc: 3 [1:--publish] [2:--pin] 
-blockScrape --publish --pin 
+blockScrape  --publish --pin
 
   Invalid option: --publish
 

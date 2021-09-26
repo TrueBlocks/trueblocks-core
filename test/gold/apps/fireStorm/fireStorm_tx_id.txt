@@ -1,5 +1,4 @@
-fireStorm argc: 2 [1:46147.0] 
-fireStorm 46147.0 
+fireStorm  46147.0
 TIME ~ CLOCK - <INFO>  : terms
 TIME ~ CLOCK - <INFO>  :   46147.0
 Opening https://etherscan.io/tx/0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060

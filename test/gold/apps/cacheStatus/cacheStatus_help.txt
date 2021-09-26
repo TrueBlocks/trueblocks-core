@@ -1,5 +1,4 @@
-cacheStatus argc: 2 [1:-h] 
-cacheStatus -h 
+cacheStatus   -h
 Purpose:
   Report on the status of the TrueBlocks system.
 

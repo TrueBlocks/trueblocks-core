@@ -1,5 +1,4 @@
-cacheStatus argc: 7 [1:caches] [2:--types] [3:transactions] [4:--details] [5:--depth] [6:4] 
-cacheStatus caches --types transactions --details --depth 4 
+cacheStatus  caches --types transactions --details  --depth 4
 
   --depth parameter must be less than 4. Quitting...
 

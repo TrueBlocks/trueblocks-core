@@ -1,5 +1,4 @@
-stringTest argc: 2 [1:5] 
-stringTest 5 
+stringTest  5
 0. 	000.000 code as read    ==> pragma solidity 0.4.25;
 
 /* ----------------------------------------------------------------------------

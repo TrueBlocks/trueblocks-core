@@ -1,5 +1,4 @@
-dataUpgradeTest argc: 2 [1:CPriceQuote] 
-dataUpgradeTest CPriceQuote 
+dataUpgradeTest  CPriceQuote
 --------------------------------------------------------------------------------
 className: CPriceQuote
 baseClass: CBaseNode

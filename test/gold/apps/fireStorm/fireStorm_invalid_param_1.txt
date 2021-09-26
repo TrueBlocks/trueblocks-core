@@ -1,5 +1,4 @@
-fireStorm argc: 2 [1:--junk] 
-fireStorm --junk 
+fireStorm  --junk
 
   Invalid option: --junk
 

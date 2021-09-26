@@ -1,5 +1,4 @@
-pinMan argc: 4 [1:--list] [2:--fmt] [3:junk] 
-pinMan --list --fmt junk 
+pinMan  --list --fmt junk
 
   Export format (junk) must be one of [ json | txt | csv | api ]. Quitting...
 

@@ -1,5 +1,4 @@
-blockScrape argc: 6 [1:--sleep] [2:.5] [3:--pin] [4:--verbose] [5:8] 
-blockScrape --sleep .5 --pin --verbose 8 
+blockScrape  --sleep .5 --pin --verbose 8
 TIME ~ CLOCK - <INFO>  : pin: true
 TIME ~ CLOCK - <INFO>  : sleep: 0.5
 TIME ~ CLOCK - : 4-----

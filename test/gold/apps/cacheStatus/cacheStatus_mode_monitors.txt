@@ -1,5 +1,4 @@
-cacheStatus argc: 2 [1:monitors] 
-cacheStatus monitors 
+cacheStatus  monitors
 {
   "client_version": "Client version",
   "client_ids": "chainId: 1 networkId: 1",

@@ -1,5 +1,4 @@
-cacheStatus argc: 4 [1:caches] [2:--types] [3:junk] 
-cacheStatus caches --types junk 
+cacheStatus  caches --types junk
 
   Invalid option 'junk' for 'types'. One or more of [blocks|transactions|traces|slurps|prices|all] required. Quitting...
 

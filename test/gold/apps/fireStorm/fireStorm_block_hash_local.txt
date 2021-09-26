@@ -1,5 +1,4 @@
-fireStorm argc: 3 [1:0xc63f666315fa1eae17e354fab532aeeecf549be93e358737d0648f50d57083a0] [2:--local] 
-fireStorm 0xc63f666315fa1eae17e354fab532aeeecf549be93e358737d0648f50d57083a0 --local 
+fireStorm  0xc63f666315fa1eae17e354fab532aeeecf549be93e358737d0648f50d57083a0 --local
 TIME ~ CLOCK - <INFO>  : terms
 TIME ~ CLOCK - <INFO>  :   0xc63f666315fa1eae17e354fab532aeeecf549be93e358737d0648f50d57083a0
 TIME ~ CLOCK - <INFO>  : local: true

@@ -1,5 +1,4 @@
-serializeTest argc: 1 
-serializeTest 
+serializeTest  
 Creation
 --------------------------------------------------------------------------------
 Leader : 100

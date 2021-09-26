@@ -1,5 +1,4 @@
-dataUpgradeTest argc: 2 [1:CTransaction] 
-dataUpgradeTest CTransaction 
+dataUpgradeTest  CTransaction
 --------------------------------------------------------------------------------
 className: CTransaction
 baseClass: CBaseNode

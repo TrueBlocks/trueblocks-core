@@ -1,3 +1,2 @@
-cacheStatus argc: 3 [1:names] [2:--to_file] 
-cacheStatus names --to_file 
+cacheStatus  names --to_file
 --output_filename--

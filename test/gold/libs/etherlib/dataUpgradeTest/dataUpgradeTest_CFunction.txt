@@ -1,5 +1,4 @@
-dataUpgradeTest argc: 2 [1:CFunction] 
-dataUpgradeTest CFunction 
+dataUpgradeTest  CFunction
 --------------------------------------------------------------------------------
 className: CFunction
 baseClass: CBaseNode

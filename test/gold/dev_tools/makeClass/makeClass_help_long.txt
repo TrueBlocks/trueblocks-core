@@ -1,5 +1,4 @@
-makeClass argc: 2 [1:-help] 
-makeClass -help 
+makeClass   -help
 Purpose:
   Automatically writes C++ for various purposes.
 

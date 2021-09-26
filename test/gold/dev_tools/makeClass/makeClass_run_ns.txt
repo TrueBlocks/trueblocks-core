@@ -1,5 +1,4 @@
-makeClass argc: 5 [1:-n] [2:qblocks] [3:--all] [4:function] 
-makeClass -n qblocks --all function 
+makeClass   -n qblocks --all function
 
   Invalid option: -n
 

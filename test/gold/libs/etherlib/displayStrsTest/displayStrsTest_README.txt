@@ -1,5 +1,4 @@
-displayStrsTest argc: 1 
-displayStrsTest 
+displayStrsTest  
 Purpose:
   Test upgrading binary data to new format.
 

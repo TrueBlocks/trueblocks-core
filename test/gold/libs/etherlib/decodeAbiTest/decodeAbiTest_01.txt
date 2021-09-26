@@ -1,5 +1,4 @@
-decodeAbiTest argc: 2 [1:--verbose] 
-decodeAbiTest --verbose 
+decodeAbiTest  --verbose
 padTest:
   ✓	desc:     padLeft
 	input:    0x0F49DEA

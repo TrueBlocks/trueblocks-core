@@ -1,5 +1,4 @@
-sizeofTest argc: 1 
-sizeofTest 
+sizeofTest  
 0. Running TestSizes
 	000.000 sizeof(char)         ==> 1 : 8
 	000.001 sizeof(int)          ==> 4 : 32

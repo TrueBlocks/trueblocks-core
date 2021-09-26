@@ -1,5 +1,4 @@
-acctExport argc: 9 [1:0x001d14804b399c6ef80e64576f657660804fec0b] [2:--max_records] [3:5] [4:--accounting] [5:--fmt] [6:api] [7:--verbose] [8:10] 
-acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --max_records 5 --accounting --fmt api --verbose 10 
+acctExport  0x001d14804b399c6ef80e64576f657660804fec0b --max_records 5 --accounting --fmt api --verbose 10
 TIME ~ CLOCK - : 4-----0x001d14804b399c6ef80e64576f657660804fec0b freshened to 11854827
 TIME ~ CLOCK - : 4-----Loaded timestamp file
 {"data": [

@@ -1,5 +1,4 @@
-dataUpgradeTest argc: 2 [1:CNewBlock] 
-dataUpgradeTest CNewBlock 
+dataUpgradeTest  CNewBlock
 --------------------------------------------------------------------------------
 className: CNewBlock
 baseClass: CBaseNode

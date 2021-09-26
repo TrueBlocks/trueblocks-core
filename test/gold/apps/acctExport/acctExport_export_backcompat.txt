@@ -1,5 +1,4 @@
-acctExport argc: 8 [1:0x001d14804b399c6ef80e64576f657660804fec0b] [2:--first_record] [3:0] [4:--max_records] [5:1] [6:--staging] [7:--unripe] 
-acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --first_record 0 --max_records 1 --staging --unripe 
+acctExport  0x001d14804b399c6ef80e64576f657660804fec0b --first_record 0 --max_records 1 --staging --unripe
 
   Please choose only one of --staging or --unripe. Quitting...
 

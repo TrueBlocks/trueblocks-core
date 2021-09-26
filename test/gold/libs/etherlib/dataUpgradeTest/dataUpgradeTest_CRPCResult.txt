@@ -1,5 +1,4 @@
-dataUpgradeTest argc: 2 [1:CRPCResult] 
-dataUpgradeTest CRPCResult 
+dataUpgradeTest  CRPCResult
 --------------------------------------------------------------------------------
 className: CRPCResult
 baseClass: CBaseNode

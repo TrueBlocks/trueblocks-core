@@ -1,5 +1,4 @@
-fireStorm argc: 3 [1:46147.0] [2:--local] 
-fireStorm 46147.0 --local 
+fireStorm  46147.0 --local
 TIME ~ CLOCK - <INFO>  : terms
 TIME ~ CLOCK - <INFO>  :   46147.0
 TIME ~ CLOCK - <INFO>  : local: true

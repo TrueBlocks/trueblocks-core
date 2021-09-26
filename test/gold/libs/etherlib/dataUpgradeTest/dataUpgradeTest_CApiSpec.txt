@@ -1,5 +1,4 @@
-dataUpgradeTest argc: 2 [1:CApiSpec] 
-dataUpgradeTest CApiSpec 
+dataUpgradeTest  CApiSpec
 --------------------------------------------------------------------------------
 className: CApiSpec
 baseClass: CBaseNode

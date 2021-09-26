@@ -1,5 +1,4 @@
-cacheStatus argc: 2 [1:--get_config] 
-cacheStatus --get_config 
+cacheStatus  --get_config
 {
   "files": [
     {

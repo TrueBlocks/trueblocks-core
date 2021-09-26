@@ -1,5 +1,4 @@
-tomlTest2 argc: 2 [1:ethslurp.toml] 
-tomlTest2 ethslurp.toml 
+tomlTest2  ethslurp.toml
 tests/ethslurp.toml
 [version]
 current = "vers-alpha"

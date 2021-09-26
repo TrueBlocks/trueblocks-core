@@ -1,5 +1,4 @@
-dataUpgradeTest argc: 2 [1:CParameter] 
-dataUpgradeTest CParameter 
+dataUpgradeTest  CParameter
 --------------------------------------------------------------------------------
 className: CParameter
 baseClass: CBaseNode

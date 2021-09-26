@@ -1,5 +1,4 @@
-convertTest argc: 2 [1:3] 
-convertTest 3 
+convertTest  3
 0. Running TestConverts_3
 	000.000 time1                            ==> passed 'ts' is equal to '1517319693'
 	000.001 time2                            ==> passed 'str_2_Ts("1517319693")' is equal to '1517319693'

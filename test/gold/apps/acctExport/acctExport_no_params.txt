@@ -1,5 +1,4 @@
-acctExport argc: 1 
-acctExport 
+acctExport  
 
   You must provide at least one Ethereum address. Quitting...
 

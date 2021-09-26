@@ -1,5 +1,4 @@
-makeClass argc: 5 [1:--edit] [2:-a] [3:--filter] [4:function] 
-makeClass --edit -a --filter function 
+makeClass  --edit -a --filter function
 
   Invalid option: --edit
 

@@ -1,3 +1,4 @@
+versionTest  
 0. Running TestTest_1
 	000.000 getVersionNum                    ==> passed 'getVersionNum(0, 9, 5)' is equal to '9005'
 	000.001 getVersionNum                    ==> passed 'getVersionNum(0, 10, 1)' is equal to '10001'

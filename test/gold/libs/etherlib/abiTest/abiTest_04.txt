@@ -1,5 +1,4 @@
-abiTest argc: 4 [1:generation] [2:encoding] [3:bad] 
-abiTest generation encoding bad 
+abiTest  generation encoding bad
 
   Invalid argument bad. Please enter either 'encoding' or 'generation'. Quitting...
 

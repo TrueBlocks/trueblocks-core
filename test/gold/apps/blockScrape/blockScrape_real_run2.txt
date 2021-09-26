@@ -1,5 +1,4 @@
-blockScrape argc: 3 [1:--sleep] [2:.5] 
-blockScrape --sleep .5 
+blockScrape  --sleep .5
 TIME ~ CLOCK - <INFO>  : sleep: 0.5
 {
   "message": "Testing only",

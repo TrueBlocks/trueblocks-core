@@ -1,5 +1,4 @@
-printFloatTest argc: 1 
-printFloatTest 
+printFloatTest  
 
   Unknown test: -1. Quitting...
 

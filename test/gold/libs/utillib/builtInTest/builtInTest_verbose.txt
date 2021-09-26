@@ -1,3 +1,2 @@
-builtInTest argc: 14 [1:--verbose] [2:--fmt] [3:json] [4:--ether] [5:--mocked] [6:--wei] [7:--dollars] [8:--nocolor] [9:--noop] [10:--output] [11:file] [12:--raw] [13:--version] 
-builtInTest --verbose --fmt json --ether --mocked --wei --dollars --nocolor --noop --output file --raw --version 
+builtInTest  --verbose --fmt json --ether --mocked --wei --dollars --nocolor --noop --output file --raw --version
 builtInTest GHC-TrueBlocks//vers-alpha--git-hash---git-ts-

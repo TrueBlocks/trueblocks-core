@@ -1,5 +1,4 @@
-makeClass argc: 6 [1:--dump] [2:-a] [3:-i] [4:CStatus] [5:--verbose] 
-makeClass --dump -a -i CStatus --verbose 
+makeClass  --dump -a -i CStatus --verbose
 
   Invalid option: -i
 

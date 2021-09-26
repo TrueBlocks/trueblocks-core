@@ -1,5 +1,4 @@
-cacheStatus argc: 1 
-cacheStatus 
+cacheStatus  
 {
   "client_version": "Client version",
   "client_ids": "chainId: 1 networkId: 1",

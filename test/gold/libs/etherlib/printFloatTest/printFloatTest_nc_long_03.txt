@@ -1,5 +1,4 @@
-printFloatTest argc: 3 [1:--testNum] [2:3] 
-printFloatTest --testNum 3 
+printFloatTest  --testNum 3
 
   Invalid argument: --testNum:3. Quitting...
 

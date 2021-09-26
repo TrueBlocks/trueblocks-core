@@ -1,5 +1,4 @@
-stringTest argc: 2 [1:2] 
-stringTest 2 
+stringTest  2
 0. Running TestAssignment
 	000.000 c-string set1                    ==> passed 'str1' is equal to '"Test string: "'
 	000.001 qb-string set1                   ==> passed 'xstr1' is equal to '"Test string: "'

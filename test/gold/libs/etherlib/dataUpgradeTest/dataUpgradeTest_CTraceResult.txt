@@ -1,5 +1,4 @@
-dataUpgradeTest argc: 2 [1:CTraceResult] 
-dataUpgradeTest CTraceResult 
+dataUpgradeTest  CTraceResult
 --------------------------------------------------------------------------------
 className: CTraceResult
 baseClass: CBaseNode

@@ -1,5 +1,4 @@
-tomlTest2 argc: 2 [1:chifra.toml] 
-tomlTest2 chifra.toml 
+tomlTest2  chifra.toml
 tests/chifra.toml
 [version]
 current = "vers-alpha"

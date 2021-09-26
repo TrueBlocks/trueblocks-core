@@ -1,5 +1,4 @@
-blockScrape argc: 2 [1:-h] 
-blockScrape -h 
+blockScrape   -h
 Purpose:
   Scan the chain and update the TrueBlocks index of appearances.
 

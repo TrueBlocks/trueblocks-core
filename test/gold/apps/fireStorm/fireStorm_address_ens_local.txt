@@ -1,5 +1,4 @@
-fireStorm argc: 3 [1:trueblocks.eth] [2:--local] 
-fireStorm trueblocks.eth --local 
+fireStorm  trueblocks.eth --local
 TIME ~ CLOCK - <INFO>  : terms
 TIME ~ CLOCK - <INFO>  :   trueblocks.eth
 TIME ~ CLOCK - <INFO>  : local: true

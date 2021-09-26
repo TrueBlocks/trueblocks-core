@@ -1,5 +1,4 @@
-dataUpgradeTest argc: 2 [1:--file:cmd_file2] 
-dataUpgradeTest --file:cmd_file2 
+dataUpgradeTest  --file:cmd_file2
 Cmd: CAbi 
 Cmd: CFunction 
 Cmd: CParameter 

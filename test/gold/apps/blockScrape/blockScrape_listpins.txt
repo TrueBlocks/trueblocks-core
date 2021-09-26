@@ -1,5 +1,4 @@
-blockScrape argc: 2 [1:--listpins] 
-blockScrape --listpins 
+blockScrape  --listpins
 
   Invalid option: --listpins
 

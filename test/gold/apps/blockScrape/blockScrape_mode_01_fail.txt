@@ -1,5 +1,4 @@
-blockScrape argc: 2 [1:badmode] 
-blockScrape badmode 
+blockScrape  badmode
 {
   "message": "Testing only",
   "n_blocks": 2000,

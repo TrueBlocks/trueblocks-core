@@ -1,5 +1,4 @@
-acctExport argc: 8 [1:0x001d14804b399c6ef80e64576f657660804fec0b] [2:--first_block] [3:100000] [4:--last_block] [5:2000000] [6:--staging] [7:--unripe] 
-acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --first_block 100000 --last_block 2000000 --staging --unripe 
+acctExport  0x001d14804b399c6ef80e64576f657660804fec0b --first_block 100000 --last_block 2000000 --staging --unripe
 
   Please choose only one of --staging or --unripe. Quitting...
 

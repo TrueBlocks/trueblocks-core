@@ -1,5 +1,4 @@
-fireStorm argc: 2 [1:12] 
-fireStorm 12 
+fireStorm  12
 TIME ~ CLOCK - <INFO>  : terms
 TIME ~ CLOCK - <INFO>  :   12
 Opening https://etherscan.io/block/12

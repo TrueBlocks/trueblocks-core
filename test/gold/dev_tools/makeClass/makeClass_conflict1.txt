@@ -1,5 +1,4 @@
-makeClass argc: 3 [1:-e] [2:--all] 
-makeClass -e --all 
+makeClass   -e --all
 
   Invalid option: -e
 

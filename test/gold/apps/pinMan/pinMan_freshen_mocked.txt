@@ -1,5 +1,4 @@
-pinMan argc: 2 [1:--freshen] 
-pinMan --freshen 
+pinMan  --freshen
 
   Invalid option: --freshen
 

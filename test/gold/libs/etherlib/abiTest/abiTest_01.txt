@@ -1,5 +1,4 @@
-abiTest argc: 2 [1:ecoding] 
-abiTest ecoding 
+abiTest  ecoding
 
   Invalid argument ecoding. Please enter either 'encoding' or 'generation'. Quitting...
 

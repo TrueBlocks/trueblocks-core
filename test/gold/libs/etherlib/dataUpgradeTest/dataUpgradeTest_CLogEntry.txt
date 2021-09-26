@@ -1,5 +1,4 @@
-dataUpgradeTest argc: 2 [1:CLogEntry] 
-dataUpgradeTest CLogEntry 
+dataUpgradeTest  CLogEntry
 --------------------------------------------------------------------------------
 className: CLogEntry
 baseClass: CBaseNode

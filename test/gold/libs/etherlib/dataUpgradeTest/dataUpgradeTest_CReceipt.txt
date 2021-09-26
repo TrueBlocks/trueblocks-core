@@ -1,5 +1,4 @@
-dataUpgradeTest argc: 2 [1:CReceipt] 
-dataUpgradeTest CReceipt 
+dataUpgradeTest  CReceipt
 --------------------------------------------------------------------------------
 className: CReceipt
 baseClass: CBaseNode

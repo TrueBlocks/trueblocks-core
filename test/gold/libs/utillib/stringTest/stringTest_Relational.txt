@@ -1,5 +1,4 @@
-stringTest argc: 2 [1:0] 
-stringTest 0 
+stringTest  0
 0. Running TestRelational
 	c-string  -- foo:  alpha bar: beta
 	qb-string -- xfoo: alpha xbar: beta

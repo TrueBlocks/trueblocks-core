@@ -1,5 +1,4 @@
-displayStrsTest argc: 2 [1:CBlock] 
-displayStrsTest CBlock 
+displayStrsTest  CBlock
 ------------------------------CBlock------------------------------
 RESULT::code: This is the code field of trace result
 ACTION::inIT: This is the init field of the trace action

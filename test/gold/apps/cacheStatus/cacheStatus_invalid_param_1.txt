@@ -1,5 +1,4 @@
-cacheStatus argc: 2 [1:--junk] 
-cacheStatus --junk 
+cacheStatus  --junk
 
   Invalid option: --junk
 

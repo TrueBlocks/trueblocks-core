@@ -1,5 +1,4 @@
-cacheStatus argc: 6 [1:abis] [2:caches] [3:monitors] [4:--types] [5:slurps] 
-cacheStatus abis caches monitors --types slurps 
+cacheStatus  abis caches monitors --types slurps
 {
   "client_version": "Client version",
   "client_ids": "chainId: 1 networkId: 1",

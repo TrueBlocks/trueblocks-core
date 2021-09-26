@@ -1,5 +1,4 @@
-acctExport argc: 2 [1:-h] 
-acctExport -h 
+acctExport   -h
 Purpose:
   Export full detail of transactions for one or more addresses.
 

@@ -1,5 +1,4 @@
-generalTest argc: 2 [1:-t] 
-generalTest -t 
+generalTest   -t
 
   Invalid option: -t
 

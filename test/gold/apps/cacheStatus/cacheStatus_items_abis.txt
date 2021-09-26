@@ -1,5 +1,4 @@
-cacheStatus argc: 3 [1:--details] [2:abis] 
-cacheStatus --details abis 
+cacheStatus  --details abis
 {
   "client_version": "Client version",
   "client_ids": "chainId: 1 networkId: 1",

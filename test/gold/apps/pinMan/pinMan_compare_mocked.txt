@@ -1,5 +1,4 @@
-pinMan argc: 2 [1:--compare] 
-pinMan --compare 
+pinMan  --compare
 
   Invalid option: --compare
 
