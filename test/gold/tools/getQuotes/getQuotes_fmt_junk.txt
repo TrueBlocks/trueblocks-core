@@ -1,5 +1,4 @@
-getQuotes argc: 3 [1:--fmt] [2:junk] 
-getQuotes --fmt junk 
+chifra quotes  --fmt junk
 
   Export format (junk) must be one of [ json | txt | csv | api ]. Quitting...
 

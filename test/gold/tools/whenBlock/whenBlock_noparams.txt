@@ -1,5 +1,4 @@
-whenBlock argc: 1 
-whenBlock 
+chifra when  
 Purpose:
   Find block(s) based on date, blockNum, timestamp, or 'special'.
 

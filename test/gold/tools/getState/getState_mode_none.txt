@@ -1,4 +1,3 @@
-getState argc: 5 [1:0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359] [2:--parts] [3:none] [4:2500000] 
-getState 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 --parts none 2500000 
+chifra state  0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 --parts none 2500000
 blocknumber	address
 2500000	0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359

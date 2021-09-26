@@ -1,5 +1,4 @@
-getTrans argc: 5 [1:0xd886ab84df63e4eeb3ea07ccf12fa1f752afdc4d7b82ab4d71c95adae1d86b1f] [2:--fmt] [3:json] [4:--articulate] 
-getTrans 0xd886ab84df63e4eeb3ea07ccf12fa1f752afdc4d7b82ab4d71c95adae1d86b1f --fmt json --articulate 
+chifra transactions  0xd886ab84df63e4eeb3ea07ccf12fa1f752afdc4d7b82ab4d71c95adae1d86b1f --fmt json --articulate
 { "data": [
 
 level: 1

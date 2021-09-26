@@ -1,5 +1,4 @@
-ethNames argc: 3 [1:tip] [2:--expand] 
-ethNames tip --expand 
+chifra names  tip --expand
 tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefund	is_contract	is_erc20	is_erc721
 31-Gitcoin:Grants	0x133d705a9696882228f6bb7fe008745aef7cdc93	Grant 0160 @antiprosynth | Antiprosynthesis.eth ⟠ Twitter Account Activity		https://gitcoin.co/grants/160/antiprosynth-antiprosynthesiseth-twitter-account-			false	false	false	false	false	false
 50-Tokens:ERC20	0x1829aa045e21e0d59580024a951db48096e01782	FuzeX Token	FXT	On chain	18	Cryptocurrency, credit, debit and reward payments at your fingertips	false	false	false	true	true	false

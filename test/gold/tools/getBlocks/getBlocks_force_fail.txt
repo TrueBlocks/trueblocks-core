@@ -1,5 +1,4 @@
-getBlocks argc: 7 [1:2769609] [2:2799895] [3:2872831] [4:3076260] [5:--cache] [6:--uniq_tx] 
-getBlocks 2769609 2799895 2872831 3076260 --cache --uniq_tx 
+chifra blocks  2769609 2799895 2872831 3076260 --cache --uniq_tx
 
   The --cache option is not available when using one of the address options. Quitting...
 

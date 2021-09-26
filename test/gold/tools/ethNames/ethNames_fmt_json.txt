@@ -1,5 +1,4 @@
-ethNames argc: 5 [1:--named] [2:--custom] [3:--fmt] [4:json] 
-ethNames --named --custom --fmt json 
+chifra names  --named --custom --fmt json
 { "data": [
   {
     "tags": "81-Custom",

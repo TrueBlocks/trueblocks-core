@@ -1,5 +1,4 @@
-getTrans argc: 6 [1:0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f] [2:--trace] [3:--articulate] [4:--fmt] [5:api] 
-getTrans 0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f --trace --articulate --fmt api 
+chifra transactions  0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f --trace --articulate --fmt api
 {"data": [
 
 level: 1

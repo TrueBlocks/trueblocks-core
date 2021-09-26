@@ -1,5 +1,4 @@
-getBlocks argc: 1 
-getBlocks 
+chifra blocks  
 Purpose:
   Retrieve one or more blocks from the chain or local cache.
 

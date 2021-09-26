@@ -1,5 +1,4 @@
-ethNames argc: 4 [1:tip] [2:--fmt] [3:api] 
-ethNames tip --fmt api 
+chifra names  tip --fmt api
 {"data": [
   {
     "tags": "31-Gitcoin:Grants",

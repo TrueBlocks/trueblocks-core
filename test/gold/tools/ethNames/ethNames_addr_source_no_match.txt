@@ -1,4 +1,3 @@
-ethNames argc: 6 [1:cbCD] [2:an.io] [3:--verbose] [4:--fmt] [5:txt] 
-ethNames cbCD an.io --verbose --fmt txt 
+chifra names  cbCD an.io --verbose --fmt txt
 tags	address	name	symbol	decimals	source
 91-Early:Addresses	0x83051e225a06682ff0dde9bcd267d8418c4cbcd7	Parallelgambling				EtherScan.io

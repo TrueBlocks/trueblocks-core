@@ -1,5 +1,4 @@
-getQuotes argc: 1 
-getQuotes 
+chifra quotes  
 Purpose:
   Freshen and/or display Ethereum price data. This tool has been deprecated.
 

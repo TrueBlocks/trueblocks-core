@@ -1,5 +1,4 @@
-getTrans argc: 2 [1:.whatever] 
-getTrans .whatever 
+chifra transactions  .whatever
 
   .whatever does not appear to be a valid transaction index. Quitting...
 

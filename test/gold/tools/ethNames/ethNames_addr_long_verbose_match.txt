@@ -1,5 +1,4 @@
-ethNames argc: 5 [1:0xb6] [2:--verbose] [3:--fmt] [4:txt] 
-ethNames 0xb6 --verbose --fmt txt 
+chifra names  0xb6 --verbose --fmt txt
 tags	address	name	symbol	decimals	source
 50-Tokens:ERC20	0xb60ae39769664fe60444d5e4513d42c30b6100b9	USDD Stablecoin Governance Token	USDK		6	On chain
 30-Contracts:Balancer	0xb618f903ad1d00d6f7b92f5b0954dcdc056fc533	Balancer DAO

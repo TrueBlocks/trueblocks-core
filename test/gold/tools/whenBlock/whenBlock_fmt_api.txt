@@ -1,5 +1,4 @@
-whenBlock argc: 4 [1:1001001] [2:--fmt] [3:api] 
-whenBlock 1001001 --fmt api 
+chifra when  1001001 --fmt api
 {"data": [
   {
     "blockNumber": 1001001,

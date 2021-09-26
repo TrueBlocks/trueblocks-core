@@ -1,5 +1,4 @@
-getTrans argc: 2 [1:0x0012] 
-getTrans 0x0012 
+chifra transactions  0x0012
 
   The argument '0x0012' is not properly formatted. Is it the right length? Quitting...
 

@@ -1,5 +1,4 @@
-getState argc: 1 
-getState 
+chifra state  
 Purpose:
   Retrieve account balance(s) for one or more addresses at given block(s).
 

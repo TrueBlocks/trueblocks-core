@@ -1,5 +1,4 @@
-getTraces argc: 2 [1:.clink] 
-getTraces .clink 
+chifra traces  .clink
 
   .clink does not appear to be a valid transaction index. Quitting...
 

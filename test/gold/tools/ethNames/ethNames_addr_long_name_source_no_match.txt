@@ -1,3 +1,2 @@
-ethNames argc: 7 [1:Humaniq] [2:1e17] [3:Ether] [4:--verbose] [5:--fmt] [6:txt] 
-ethNames Humaniq 1e17 Ether --verbose --fmt txt 
-No results for Humaniq 1e17 Ether --verbose:1
+chifra names  Humaniq 1e17 Ether --verbose --fmt txt
+No results for -v:1 Humaniq 1e17 Ether

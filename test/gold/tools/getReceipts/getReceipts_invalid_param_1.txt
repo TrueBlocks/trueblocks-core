@@ -1,5 +1,4 @@
-getReceipts argc: 2 [1:.clink] 
-getReceipts .clink 
+chifra receipts  .clink
 
   .clink does not appear to be a valid transaction index. Quitting...
 

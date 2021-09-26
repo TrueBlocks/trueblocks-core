@@ -1,3 +1,2 @@
-ethNames argc: 5 [1:no_torj] [2:--verbose] [3:--fmt] [4:txt] 
-ethNames no_torj --verbose --fmt txt 
-No results for no_torj --verbose:1
+chifra names  no_torj --verbose --fmt txt
+No results for -v:1 no_torj

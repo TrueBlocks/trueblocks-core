@@ -1,5 +1,4 @@
-getBlocks argc: 5 [1:2222222] [2:2332332] [3:--fmt] [4:junk] 
-getBlocks 2222222 2332332 --fmt junk 
+chifra blocks  2222222 2332332 --fmt junk
 
   Export format (junk) must be one of [ json | txt | csv | api ]. Quitting...
 

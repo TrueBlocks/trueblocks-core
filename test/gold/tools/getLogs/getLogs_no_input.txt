@@ -1,5 +1,4 @@
-getLogs argc: 1 
-getLogs 
+chifra logs  
 Purpose:
   Retrieve logs for the given transaction(s).
 

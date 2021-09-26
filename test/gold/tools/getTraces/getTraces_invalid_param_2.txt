@@ -1,5 +1,4 @@
-getTraces argc: 2 [1:.whatever] 
-getTraces .whatever 
+chifra traces  .whatever
 
   .whatever does not appear to be a valid transaction index. Quitting...
 

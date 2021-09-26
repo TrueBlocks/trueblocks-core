@@ -1,5 +1,4 @@
-getQuotes argc: 3 [1:--period] [2:12] 
-getQuotes --period 12 
+chifra quotes  --period 12
 
   Invalid option '12' for 'period'. One of [5|15|30|60|120|240|1440|10080|hourly|daily|weekly] required. Quitting...
 

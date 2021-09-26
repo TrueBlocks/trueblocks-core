@@ -1,5 +1,4 @@
-getTraces argc: 2 [1:1233123] 
-getTraces 1233123 
+chifra traces  1233123
 
   1233123 does not appear to be a valid transaction index. Quitting...
 

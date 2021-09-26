@@ -1,3 +1,2 @@
-ethNames argc: 6 [1:0xCB] [2:torJ] [3:--match_case] [4:--fmt] [5:txt] 
-ethNames 0xCB torJ --match_case --fmt txt 
-No results for 0xCB torJ --match_case
+chifra names  0xCB torJ --match_case --fmt txt
+No results for --match_case 0xCB torJ

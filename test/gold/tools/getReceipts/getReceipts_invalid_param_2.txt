@@ -1,5 +1,4 @@
-getReceipts argc: 2 [1:1233123] 
-getReceipts 1233123 
+chifra receipts  1233123
 
   1233123 does not appear to be a valid transaction index. Quitting...
 

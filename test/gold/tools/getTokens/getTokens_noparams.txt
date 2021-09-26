@@ -1,5 +1,4 @@
-getTokens argc: 1 
-getTokens 
+chifra tokens  
 Purpose:
   Retrieve token balance(s) for one or more addresses at given block(s).
 

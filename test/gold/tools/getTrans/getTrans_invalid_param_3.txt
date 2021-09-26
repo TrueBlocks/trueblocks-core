@@ -1,5 +1,4 @@
-getTrans argc: 2 [1:1233123] 
-getTrans 1233123 
+chifra transactions  1233123
 
   1233123 does not appear to be a valid transaction index. Quitting...
 

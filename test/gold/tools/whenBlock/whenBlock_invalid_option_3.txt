@@ -1,5 +1,4 @@
-whenBlock argc: 2 [1:0-0] 
-whenBlock 0-0 
+chifra when  0-0
 
   'stop' must be strictly larger than 'start' Quitting...
 

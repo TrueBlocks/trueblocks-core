@@ -1,5 +1,4 @@
-ethslurp argc: 5 [1:0x1324e7b922b30B49Ab8EA81086341cc41C249346] [2:3750000-4000000] [3:--fmt] [4:junk] 
-ethslurp 0x1324e7b922b30B49Ab8EA81086341cc41C249346 3750000-4000000 --fmt junk 
+chifra slurp  0x1324e7b922b30B49Ab8EA81086341cc41C249346 3750000-4000000 --fmt junk
 
   Export format (junk) must be one of [ json | txt | csv | api ]. Quitting...
 

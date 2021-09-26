@@ -1,26 +1,22 @@
-getLogs argc: 3 [1:--address] [2:0xbb9bc244d798123fde783fcc1c72d3bb8c189413] 
-getLogs --address 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 
-
-  Invalid option: --address
-
-Purpose:
-  Retrieve logs for the given transaction(s).
+chifra logs  --address 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
+Error: 
+  unknown flag: --address
 
 Usage:
-  getLogs [flags] <tx_id> [tx_id...]
+  chifra logs [flags] <tx_id> [tx_id...]
 
 Arguments:
   transactions - a space-separated list of one or more transaction identifiers (required)
 
 Flags:
-  -t, --topic string    filter by one or more log topics (not implemented)
-  -s, --source string   export only if the given address emitted the event (not implemented)
-  -a, --articulate      articulate the retrieved data if ABIs can be found
+  -t, --topic strings    filter by one or more log topics (not implemented)
+  -s, --source strings   export only if the given address emitted the event (not implemented)
+  -a, --articulate       articulate the retrieved data if ABIs can be found
 
 Global Flags:
-  -x, --fmt string     export format, one of [none|json*|txt|csv|api]
-  -v, --verbose uint   set verbose level (optional level defaults to 1)
-  -h, --help           display this help screen
+  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
+  -h, --help         display this help screen
+  -v, --verbose      enable verbose (increase detail with --log_level)
 
 Notes:
   - The transactions list may be one or more space-separated identifiers which are either a transaction hash,
@@ -29,4 +25,3 @@ Notes:
   - If the queried node does not store historical state, the results for most older transactions are undefined.
   - If you specify a 32-byte hash, it will be assumed to be a transaction hash, if the transaction is
     not found, it will be used as a topic.
-

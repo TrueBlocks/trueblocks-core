@@ -1,5 +1,4 @@
-whenBlock argc: 4 [1:1001001] [2:--fmt] [3:junk] 
-whenBlock 1001001 --fmt junk 
+chifra when  1001001 --fmt junk
 
   Export format (junk) must be one of [ json | txt | csv | api ]. Quitting...
 

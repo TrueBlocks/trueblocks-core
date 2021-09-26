@@ -1,5 +1,4 @@
-getTrans argc: 5 [1:2222222.0] [2:2332332.0] [3:--fmt] [4:junk] 
-getTrans 2222222.0 2332332.0 --fmt junk 
+chifra transactions  2222222.0 2332332.0 --fmt junk
 
   Export format (junk) must be one of [ json | txt | csv | api ]. Quitting...
 

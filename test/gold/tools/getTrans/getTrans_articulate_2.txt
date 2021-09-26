@@ -1,5 +1,4 @@
-getTrans argc: 7 [1:3648669.24] [2:--articulate] [3:--verbose] [4:--trace] [5:--fmt] [6:json] 
-getTrans 3648669.24 --articulate --verbose --trace --fmt json 
+chifra transactions  3648669.24 --articulate --verbose --trace --fmt json
 { "data": [
 
 level: 1

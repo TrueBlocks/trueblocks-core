@@ -1,5 +1,4 @@
-ethslurp argc: 2 [1:invalid] 
-ethslurp invalid 
+chifra slurp  invalid
 
   The given value 'invalid' is not a numeral or a special named block.
 

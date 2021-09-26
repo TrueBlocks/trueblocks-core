@@ -1,5 +1,4 @@
-getBlocks argc: 5 [1:2222222] [2:2332332] [3:--fmt] [4:api] 
-getBlocks 2222222 2332332 --fmt api 
+chifra blocks  2222222 2332332 --fmt api
 {"data": [
 {
   "gasLimit": 4704588,

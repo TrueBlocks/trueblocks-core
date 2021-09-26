@@ -1,5 +1,4 @@
-getLogs argc: 4 [1:1718400-1718420] [2:transactions] [3:0xbb9bc244d798123fde783fcc1c72d3bb8c189413] 
-getLogs 1718400-1718420 transactions 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 
+chifra logs  1718400-1718420 transactions 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
 
   1718400-1718420 does not appear to be a valid transaction index. Quitting...
 

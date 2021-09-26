@@ -1,5 +1,4 @@
-ethNames argc: 3 [1:--fmt] [2:txt] 
-ethNames --fmt txt 
+chifra names  --fmt txt
 tags	address	name	symbol	decimals
 55-Defi	0x000000000000000000000000000000000000dead	ENS: Burn Address
 50-Tokens:ERC20	0x0000000000001b84b1cb32787b0d64758d019317	HomeWork 🏠🛠️	HWK		18

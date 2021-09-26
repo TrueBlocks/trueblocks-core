@@ -1,5 +1,4 @@
-getTrans argc: 2 [1:.clink] 
-getTrans .clink 
+chifra transactions  .clink
 
   .clink does not appear to be a valid transaction index. Quitting...
 

@@ -1,5 +1,4 @@
-getTrans argc: 1 
-getTrans 
+chifra transactions  
 Purpose:
   Retrieve one or more transactions from the chain or local cache.
 

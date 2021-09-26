@@ -1,5 +1,4 @@
-ethNames argc: 5 [1:0xcb] [2:--match_case] [3:--fmt] [4:txt] 
-ethNames 0xcb --match_case --fmt txt 
+chifra names  0xcb --match_case --fmt txt
 tags	address	name	symbol	decimals
 90-Individuals:Gitcoin Grants	0xcb18b23d3fd1a69b520a6f9fb7f0de37525fb291	Name 0xcb18b23d
 90-Individuals:Gitcoin Grants	0xcb23fbe30de52338156849c89fdea31a50c23a77	Name 0xcb23fbe3

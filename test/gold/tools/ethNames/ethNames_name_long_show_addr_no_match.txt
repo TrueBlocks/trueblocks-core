@@ -1,3 +1,2 @@
-ethNames argc: 5 [1:no_torj] [2:--addr] [3:--fmt] [4:txt] 
-ethNames no_torj --addr --fmt txt 
-No results for no_torj --addr
+chifra names  no_torj --addr --fmt txt
+No results for --addr no_torj

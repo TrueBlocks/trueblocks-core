@@ -1,5 +1,4 @@
-getLogs argc: 2 [1:1718400-1718420] 
-getLogs 1718400-1718420 
+chifra logs  1718400-1718420
 
   1718400-1718420 does not appear to be a valid transaction index. Quitting...
 

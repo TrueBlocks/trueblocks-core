@@ -1,5 +1,4 @@
-grabABI argc: 2 [1:0x00001] 
-grabABI 0x00001 
+chifra abis  0x00001
 
   Invalid address '0x00001'. Length (7) is not equal to 40 characters (20 bytes). Quitting...
 

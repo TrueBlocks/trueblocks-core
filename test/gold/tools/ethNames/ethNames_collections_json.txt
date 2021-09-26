@@ -1,5 +1,4 @@
-ethNames argc: 4 [1:--collections] [2:--fmt] [3:json] 
-ethNames --collections --fmt json 
+chifra names  --collections --fmt json
 { "data": [
   {
     "deleted": true,

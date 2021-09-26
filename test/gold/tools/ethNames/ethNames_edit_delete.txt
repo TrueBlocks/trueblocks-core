@@ -1,5 +1,4 @@
-ethNames argc: 8 [1:--delete] [2:0x0000000000000000000000000000000010101010] [3:--expand] [4:--verbose] [5:10] [6:--fmt] [7:api] 
-ethNames --delete 0x0000000000000000000000000000000010101010 --expand --verbose 10 --fmt api 
+chifra names  --delete 0x0000000000000000000000000000000010101010 --expand --log_level 10 --fmt api
 TIME ~ CLOCK - <INFO>  : Cleaning 0x0000000000000000000000000000000010101010                                  TIME ~ CLOCK - <INFO>  : ---------------------------------------------
 TIME ~ CLOCK - <INFO>  : {
   "address": "0x0000000000000000000000000000000010101010"

@@ -1,3 +1,2 @@
-getTraces argc: 5 [1:3657480.79] [2:--verbose] [3:--output] [4:test_file] 
-getTraces 3657480.79 --verbose --output test_file 
+chifra traces  3657480.79 --verbose --output test_file
 --output_filename--

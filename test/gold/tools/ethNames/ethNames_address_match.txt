@@ -1,5 +1,4 @@
-ethNames argc: 4 [1:0x1] [2:--fmt] [3:api] 
-ethNames 0x1 --fmt api 
+chifra names  0x1 --fmt api
 {"data": [
   {
     "tags": "90-Individuals:Gitcoin Grants",

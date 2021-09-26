@@ -1,5 +1,4 @@
-ethNames argc: 5 [1:--named] [2:--custom] [3:--prefund] [4:--addr] 
-ethNames --named --custom --prefund --addr 
+chifra names  --named --custom --prefund --addr
 0x0000000000000000000000000000000000000001
 0x0000000000000000000000000000000000000002
 0x0000000000000000000000000000000000000003

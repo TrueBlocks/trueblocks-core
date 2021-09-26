@@ -1,5 +1,4 @@
-ethNames argc: 7 [1:0x0000000000000000000000000000000010101010] [2:--expand] [3:--verbose] [4:10] [5:--fmt] [6:api] 
-ethNames 0x0000000000000000000000000000000010101010 --expand --verbose 10 --fmt api 
+chifra names  0x0000000000000000000000000000000010101010 --expand --log_level 10 --fmt api
 {"data": [
   {
     "deleted": true,

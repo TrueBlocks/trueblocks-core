@@ -1,5 +1,4 @@
-ethslurp argc: 1 
-ethslurp 
+chifra slurp  
 Purpose:
   Fetch data from EtherScan for any address.
 

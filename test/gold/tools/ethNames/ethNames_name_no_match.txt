@@ -1,3 +1,2 @@
-ethNames argc: 4 [1:torj_no_found] [2:--fmt] [3:txt] 
-ethNames torj_no_found --fmt txt 
+chifra names  torj_no_found --fmt txt
 No results for torj_no_found

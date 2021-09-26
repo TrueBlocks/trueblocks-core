@@ -1,5 +1,4 @@
-ethNames argc: 5 [1:--verbose] [2:--named] [3:--fmt] [4:txt] 
-ethNames --verbose --named --fmt txt 
+chifra names  --verbose --named --fmt txt
 tags	address	name	symbol	decimals	source
 55-Defi	0x000000000000000000000000000000000000dead	ENS: Burn Address				EtherScan.io
 50-Tokens:ERC20	0x0000000000001b84b1cb32787b0d64758d019317	HomeWork 🏠🛠️	HWK		18	On chain

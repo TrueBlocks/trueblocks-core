@@ -1,5 +1,4 @@
-getState argc: 2 [1:0x12] 
-getState 0x12 
+chifra state  0x12
 
   You must provide at least one Ethereum address. Quitting...
 

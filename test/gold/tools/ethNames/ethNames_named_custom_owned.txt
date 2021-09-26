@@ -1,5 +1,4 @@
-ethNames argc: 6 [1:--named] [2:--custom] [3:--fmt] [4:csv] [5:--no_header] 
-ethNames --named --custom --fmt csv --no_header 
+chifra names  --named --custom --fmt csv --no_header
 "81-Custom","0x0000000000000000000000000000000000000001","Account_1","","",""
 "81-Custom","0x0000000000000000000000000000000000000002","Account_2","AC_2","","2"
 "81-Custom","0x0000000000000000000000000000000000000003","Account_3","","",""

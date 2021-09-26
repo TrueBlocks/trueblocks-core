@@ -1,5 +1,4 @@
-getBlocks argc: 7 [1:3982128] [2:--apps] [3:--verbose] [4:1] [5:--fmt] [6:txt] 
-getBlocks 3982128 --apps --verbose 1 --fmt txt 
+chifra blocks  3982128 --apps --verbose 1 --fmt txt
 bn	tx	tc	addr	reason
 3982128	99999		0x1e9939daaad6924ad004c2560e90804164900341	miner
 3982128	0		0x8c34adf55edf3d3eabb2414dd3f7152536246c86	from
@@ -510,3 +509,5 @@ bn	tx	tc	addr	reason
 3982128	89		0x1e9939daaad6924ad004c2560e90804164900341	log_0_topic_1
 3982128	90		0x1e9939daaad6924ad004c2560e90804164900341	from
 3982128	90		0xa2a3c81b77817c998364accc93e91acb6ef017ea	to
+
+1	99999		0x05a56e2d52c817161883f50c441c3228cfe54d9f	miner

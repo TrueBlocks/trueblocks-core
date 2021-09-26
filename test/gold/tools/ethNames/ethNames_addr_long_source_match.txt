@@ -1,4 +1,3 @@
-ethNames argc: 6 [1:ETHER] [2:1e16] [3:--verbose] [4:--fmt] [5:txt] 
-ethNames ETHER 1e16 --verbose --fmt txt 
+chifra names  ETHER 1e16 --verbose --fmt txt
 tags	address	name	symbol	decimals	source
 40-Exchanges	0xfa52274dd61e1643d2205169732f29114bc240b3	Kraken 5				EtherScan.io

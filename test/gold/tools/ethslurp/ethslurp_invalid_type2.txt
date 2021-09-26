@@ -1,27 +1,23 @@
-ethslurp argc: 3 [1:0x1324e7b922b30B49Ab8EA81086341cc41C249346] [2:--types] 
-ethslurp 0x1324e7b922b30B49Ab8EA81086341cc41C249346 --types 
-
-  The --types option requires a value. Quitting...
-
-Purpose:
-  Fetch data from EtherScan for any address.
+chifra slurp  0x1324e7b922b30B49Ab8EA81086341cc41C249346 --types  
+Error: 
+  flag needs an argument: --types
 
 Usage:
-  ethslurp [flags] <address> [address...] [block...]
+  chifra slurp [flags] <address> [address...] [block...]
 
 Arguments:
   addrs - one or more addresses to slurp from Etherscan (required)
   blocks - an optional range of blocks to slurp
 
 Flags:
-  -t, --types <val>   one or more types of transactions to request, one or more of [ext*|int|token|nfts|miner|uncles|all]
-  -p, --appearances   show only the blocknumer.tx_id appearances of the exported transactions
+  -t, --types string   one or more types of transactions to request
+                       One or more of ext, int, token, nfts, miner, uncles, all
+  -p, --appearances    show only the blocknumer.tx_id appearances of the exported transactions
 
 Global Flags:
-  -x, --fmt string     export format, one of [none|json*|txt|csv|api]
-  -v, --verbose uint   set verbose level (optional level defaults to 1)
-  -h, --help           display this help screen
+  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
+  -h, --help         display this help screen
+  -v, --verbose      enable verbose (increase detail with --log_level)
 
 Notes:
   - Portions of this software are Powered by Etherscan.io APIs.
-

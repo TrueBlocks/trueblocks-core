@@ -1,5 +1,4 @@
-getTraces argc: 1 
-getTraces 
+chifra traces  
 Purpose:
   Retrieve traces for the given transaction(s).
 

@@ -1,5 +1,4 @@
-whenBlock argc: 2 [1:--verbose] 
-whenBlock --verbose 
+chifra when  --verbose
 
   Please supply either a JSON formatted date or a blockNumber. Quitting...
 

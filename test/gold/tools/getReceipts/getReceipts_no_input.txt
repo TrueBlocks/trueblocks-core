@@ -1,5 +1,4 @@
-getReceipts argc: 1 
-getReceipts 
+chifra receipts  
 Purpose:
   Retrieve receipts for the given transaction(s).
 

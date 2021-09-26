@@ -1,16 +1,9 @@
-getReceipts argc: 3 [1:--file:cmd_file] [2:--bad] 
-getReceipts --file:cmd_file --bad 
-Cmd: 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.78 -v:1 --bad 
-Cmd: 3657480.78 --bad 
-Cmd: 0xda2f27fffb36c90c74fc53bd8b721074e87203c727640c95c4c802296e3bf8ad --bad 
-
-  Invalid option: --bad
-
-Purpose:
-  Retrieve receipts for the given transaction(s).
+chifra receipts  --file:cmd_file --bad
+Error: 
+  unknown flag: --file:cmd_file
 
 Usage:
-  getReceipts [flags] <tx_id> [tx_id...]
+  chifra receipts [flags] <tx_id> [tx_id...]
 
 Arguments:
   transactions - a space-separated list of one or more transaction identifiers (required)
@@ -19,13 +12,12 @@ Flags:
   -a, --articulate   articulate the retrieved data if ABIs can be found
 
 Global Flags:
-  -x, --fmt string     export format, one of [none|json*|txt|csv|api]
-  -v, --verbose uint   set verbose level (optional level defaults to 1)
-  -h, --help           display this help screen
+  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
+  -h, --help         display this help screen
+  -v, --verbose      enable verbose (increase detail with --log_level)
 
 Notes:
   - The transactions list may be one or more space-separated identifiers which are either a transaction hash,
     a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.
   - This tool checks for valid input syntax, but does not check that the transaction requested actually exists.
   - If the queried node does not store historical state, the results for most older transactions are undefined.
-

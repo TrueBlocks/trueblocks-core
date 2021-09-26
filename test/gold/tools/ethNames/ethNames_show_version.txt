@@ -1,3 +1,2 @@
-ethNames argc: 2 [1:--version] 
-ethNames --version 
+chifra names  --version
 ethNames GHC-TrueBlocks//vers-alpha--git-hash---git-ts-

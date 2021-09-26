@@ -1,5 +1,4 @@
-ethNames argc: 5 [1:tip] [2:--expand] [3:--fmt] [4:junk] 
-ethNames tip --expand --fmt junk 
+chifra names  tip --expand --fmt junk
 
   Export format (junk) must be one of [ json | txt | csv | api ]. Quitting...
 

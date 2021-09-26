@@ -1,13 +1,9 @@
-getReceipts argc: 6 [1:4000000.5] [2:--logs] [3:--fmt] [4:txt] [5:--no_header] 
-getReceipts 4000000.5 --logs --fmt txt --no_header 
-
-  Invalid option: --logs
-
-Purpose:
-  Retrieve receipts for the given transaction(s).
+chifra receipts  4000000.5 --logs --fmt txt --no_header
+Error: 
+  unknown flag: --logs
 
 Usage:
-  getReceipts [flags] <tx_id> [tx_id...]
+  chifra receipts [flags] <tx_id> [tx_id...]
 
 Arguments:
   transactions - a space-separated list of one or more transaction identifiers (required)
@@ -16,13 +12,12 @@ Flags:
   -a, --articulate   articulate the retrieved data if ABIs can be found
 
 Global Flags:
-  -x, --fmt string     export format, one of [none|json*|txt|csv|api]
-  -v, --verbose uint   set verbose level (optional level defaults to 1)
-  -h, --help           display this help screen
+  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
+  -h, --help         display this help screen
+  -v, --verbose      enable verbose (increase detail with --log_level)
 
 Notes:
   - The transactions list may be one or more space-separated identifiers which are either a transaction hash,
     a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.
   - This tool checks for valid input syntax, but does not check that the transaction requested actually exists.
   - If the queried node does not store historical state, the results for most older transactions are undefined.
-

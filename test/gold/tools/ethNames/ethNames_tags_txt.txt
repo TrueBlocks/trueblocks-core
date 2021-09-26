@@ -1,5 +1,4 @@
-ethNames argc: 4 [1:--tags] [2:--fmt] [3:txt] 
-ethNames --tags --fmt txt 
+chifra names  --tags --fmt txt
 tags
 30-Contracts
 30-Contracts:Balancer

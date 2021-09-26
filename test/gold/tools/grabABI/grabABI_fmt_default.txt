@@ -1,5 +1,4 @@
-grabABI argc: 2 [1:0xe94327d07fc17907b4db788e5adf2ed424addff6] 
-grabABI 0xe94327d07fc17907b4db788e5adf2ed424addff6 
+chifra abis  0xe94327d07fc17907b4db788e5adf2ed424addff6
 encoding	type	name	signature	input_names	output_names
 0x06fdde03	function	name	name()		val_0,,
 0x095ea7b3	function	approve	approve(address,uint256)	_spender,_value,	val_0,,

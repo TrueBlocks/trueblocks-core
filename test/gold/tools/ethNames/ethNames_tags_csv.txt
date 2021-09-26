@@ -1,5 +1,4 @@
-ethNames argc: 4 [1:--tags] [2:--fmt] [3:csv] 
-ethNames --tags --fmt csv 
+chifra names  --tags --fmt csv
 "tags"
 "30-Contracts"
 "30-Contracts:Balancer"

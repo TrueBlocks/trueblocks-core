@@ -1,5 +1,4 @@
-getLogs argc: 2 [1:.clink] 
-getLogs .clink 
+chifra logs  .clink
 
   .clink does not appear to be a valid transaction index. Quitting...
 

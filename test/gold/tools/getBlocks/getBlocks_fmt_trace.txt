@@ -1,5 +1,4 @@
-getBlocks argc: 5 [1:2222222] [2:--trace] [3:--fmt] [4:json] 
-getBlocks 2222222 --trace --fmt json 
+chifra blocks  2222222 --trace --fmt json
 { "data": [
 {
   "blockHash": "0xc65ac7164218ff90ca8101c360f717c465da10bd63007b071c26dd7dedd41324",

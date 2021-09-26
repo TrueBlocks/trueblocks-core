@@ -1,4 +1,3 @@
-getState argc: 5 [1:0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359] [2:--parts] [3:storage] [4:2500000] 
-getState 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 --parts storage 2500000 
+chifra state  0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 --parts storage 2500000
 blocknumber	address	balance	storage
 2500000	0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359	3905662906205094119236	0x000000000000000000000000d176b08cfcb3872208f44b86f87b32faf32c531b
