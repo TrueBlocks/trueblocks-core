@@ -93,8 +93,6 @@ string_q get_use(const CCommandOption& cmd) {
             arguments << substitute(p.Format("  [{LONGNAME}] - [{DESCRIPTION}]"), "addrs2", "addrs");
             if (p.is_required)
                 arguments << " (required)";
-            if (p.api_route == "status")
-                printf("");
             if (contains(p.data_type, "enum")) {
                 ostringstream os;
                 forEveryEnum(visitEnumItem2, p.data_type, &os);
