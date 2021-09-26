@@ -71,6 +71,7 @@ class CCommandOption : public CBaseNode {
     bool isNote;
     bool isErr;
     void* params{nullptr};
+    void* notes{nullptr};
     explicit CCommandOption(const string_q& line);
     void verifyOptions(CStringArray& warnings);
     void verifyHotkey(CStringArray& warnings);
@@ -284,5 +285,6 @@ inline string_q getDocsPathReadmes(const string_q& _part) {
     return getDocsPath("readmes/" + _part);
 }
 extern string_q clean_positionals(const string& progName, const string_q& strIn);
+extern bool forEveryEnum(APPLYFUNC func, const string_q& enumStr, void* data);
 // EXISTING_CODE
 }  // namespace qblocks

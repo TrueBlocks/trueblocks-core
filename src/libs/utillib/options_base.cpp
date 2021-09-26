@@ -79,6 +79,8 @@ bool COptionsBase::prePrepareArguments(CStringArray& separatedArgs_, int argCoun
         } else if (arg == "--readme") {
             isReadme = true;
             cleaned_.push_back(arg);
+        } else if (arg == "--log_level") {
+            cleaned_.push_back("--verbose");
         } else {
             // add this arg
             cleaned_.push_back(arg);
@@ -97,15 +99,6 @@ bool COptionsBase::prePrepareArguments(CStringArray& separatedArgs_, int argCoun
     }
 
     if (isTestMode()) {
-        size_t cnt = 0;
-        ostringstream os;
-        cerr << getProgName() << " argc: " << (separatedArgs_.size() + 1) << " ";
-        for (auto arg : separatedArgs_) {
-            cerr << "[" << ++cnt << ":" << trim(arg) << "] ";
-            os << trim(arg) << " ";
-        }
-        cerr << endl;
-        cerr << getProgName() << " " << os.str() << endl;
         CStringArray envs = {
             // "TEST_MODE", "NO_COLOR", "REDIR_CERR",
             "API_MODE",      "DOCKER_MODE",  "PROG_NAME",      "HIDE_NAMES",      "LIVE_TEST",      "SILENCE",
@@ -118,6 +111,7 @@ bool COptionsBase::prePrepareArguments(CStringArray& separatedArgs_, int argCoun
                 cerr << key << " = [" << val << "]" << endl;
         }
     }
+
     return !isReadme;
 }
 
@@ -129,8 +123,8 @@ bool COptionsBase::isBadSingleDash(const string_q& arg) const {
             return true;
     }
 
-    CStringArray builtInCmds = {"verbose", "fmt",     "ether",   "output",  "raw", "mocked",
-                                "wei",     "dollars", "version", "nocolor", "noop"};
+    CStringArray builtInCmds = {"verbose", "log_level", "fmt",     "ether",   "output",  "raw",
+                                "mocked",  "wei",       "dollars", "version", "nocolor", "noop"};
 
     for (auto bi : builtInCmds) {
         if (arg == ("-" + bi))

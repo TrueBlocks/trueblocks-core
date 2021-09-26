@@ -984,30 +984,31 @@ string_q CCommandOption::toApiPath(const string_q& inStr) const {
 }
 
 //---------------------------------------------------------------------------------------------------
+bool visitEnumItem(string_q& item, void* data) {
+    ostringstream* osp = (ostringstream*)data;
+    if (isNumeral(item)) {
+        *osp << substitute("~- \"[{VAL}]\"\n", "[{VAL}]", item);
+    } else {
+        *osp << substitute("~- [{VAL}]\n", "[{VAL}]", item);
+    }
+    return true;
+}
+
+//---------------------------------------------------------------------------------------------------
 string_q CCommandOption::getSchema(void) const {
     string_q lead = "            ";
 
     if (contains(data_type, "list")) {
         if (contains(data_type, "enum")) {
-            string_q e = substitute(substitute(data_type, "list<", ""), ">", "");
-            string_q str = substitute(substitute(substitute(e, "*", ""), "enum[", ""), "]", "");
-            CStringArray opts;
-            explode(opts, str, '|');
             ostringstream os;
-            for (auto o : opts) {
-                if (isNumeral(o)) {
-                    os << substitute(lead + "    - \"[{VAL}]\"\n", "[{VAL}]", o);
-                } else {
-                    os << substitute(lead + "    - [{VAL}]\n", "[{VAL}]", o);
-                }
-            }
+            forEveryEnum(visitEnumItem, data_type, &os);
             string_q str_array_enum =
                 "~type: array\n"
                 "~items:\n"
                 "~  type: string\n"
-                "~  enum:\n";
-            replaceAll(str_array_enum, "~", lead);
-            return str_array_enum + trim(os.str(), '\n');
+                "~  enum:\n" +
+                substitute(substitute(trim(os.str(), '\n'), "~", "+    "), "+", "~");
+            return substitute(str_array_enum, "~", lead);
         }
 
         string_q ret;
@@ -1029,22 +1030,29 @@ string_q CCommandOption::getSchema(void) const {
         return lead + "type: " + "number";
 
     } else if (contains(data_type, "enum")) {
-        string_q str = substitute(substitute(substitute(data_type, "*", ""), "enum[", ""), "]", "");
-        CStringArray opts;
-        explode(opts, str, '|');
         ostringstream os;
-        for (auto o : opts) {
-            if (isNumeral(o)) {
-                os << substitute(lead + "  - \"[{VAL}]\"\n", "[{VAL}]", o);
-            } else {
-                os << substitute(lead + "  - [{VAL}]\n", "[{VAL}]", o);
-            }
-        }
-        string_q enum_head = lead + "type: string\n" + lead + "enum:\n";
-        return enum_head + trim(os.str(), '\n');
+        forEveryEnum(visitEnumItem, data_type, &os);
+        string_q str_array_enum = lead + "type: string\n" + lead + "enum:\n";
+        str_array_enum += substitute(substitute(trim(os.str(), '\n'), "~", "+  "), "+", "~");
+        return substitute(str_array_enum, "~", lead);
     }
 
     return lead + "type: " + "string";
+}
+
+//---------------------------------------------------------------------------------------------------
+bool forEveryEnum(APPLYFUNC func, const string_q& enumStr, void* data) {
+    string_q es = substitute(substitute(enumStr, "list<", ""), ">", "");
+    string_q cleaned = substitute(substitute(substitute(es, "*", ""), "enum[", ""), "]", "");
+    CStringArray items;
+    explode(items, cleaned, '|');
+    for (auto item : items) {
+        if (func) {
+            if (!(*func)(item, data))
+                return false;
+        }
+    }
+    return true;
 }
 
 //---------------------------------------------------------------------------------------------------

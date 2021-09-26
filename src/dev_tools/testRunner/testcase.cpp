@@ -629,7 +629,9 @@ void CTestCase::prepareTest(bool cmdLine, bool removeWorking) {
 
     if (!extra.empty() && !contains(extra, "=")) {  // order matters
         tool = extra;
-        extra = "";
+        // TODO(tjayrush): weird chifra related code
+        if (tool == "getBlocks")
+            extra = "blocks";
     }
 }
 // EXISTING_CODE

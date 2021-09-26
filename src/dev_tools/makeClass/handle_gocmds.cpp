@@ -31,10 +31,15 @@ bool COptions::handle_gocmds(void) {
         if (!ep.is_visible)
             continue;
         CCommandOptionArray params;
-        for (auto option : optionArray)
+        CCommandOptionArray notes;
+        for (auto option : optionArray) {
             if (option.api_route == ep.api_route && option.isChifraRoute())
                 params.push_back(option);
+            if (option.api_route == ep.api_route && option.option_type == "note")
+                notes.push_back(option);
+        }
         ep.params = &params;
+        ep.notes = &notes;
         string_q source = asciiFileToString(configPath("makeClass/blank.go"));
         string_q path = substitute(getCommandPath(chifraCmdMap[ep.api_route]), "~/", "/Users/jrush/");
         replaceAll(source, "[{COPY_OPTS}]", get_copyopts(ep));
@@ -96,13 +101,18 @@ string_q get_use(const CCommandOption& cmd) {
 }
 
 string_q get_notes2(const CCommandOption& cmd) {
-    return "\n\tPostNotes = \"\"\n";
-    // ostringstream os;
-    // for (auto p : *((CCommandOptionArray*)cmd.params)) {
-    //     if (p.option_type != "note")
-    //         os << "\t" << p.description << endl;
-    // }
-    // return os.str();
+    ostringstream os;
+    for (auto p : *((CCommandOptionArray*)cmd.notes)) {
+        if (os.str().empty()) {
+            os << endl;
+            os << "Notes:" << endl;
+        } else {
+            os << endl;
+        }
+        os << "  - " << substitute(p.description, "`", "");
+    }
+
+    return trim(substitute(os.str(), "|", "\n    "));
 }
 
 string_q get_optfields(const CCommandOption& cmd) {
@@ -131,6 +141,34 @@ string_q goDefault(const CCommandOption& p) {
     return "false";
 }
 
+bool visitEnumItem2(string_q& item, void* data) {
+    ostringstream* osp = (ostringstream*)data;
+    if (osp->str().empty())
+        *osp << endl << "One of ";
+    else
+        *osp << ", ";
+    *osp << item;
+    return true;
+}
+
+string_q get_description(const CCommandOption& cmd) {
+    string_q addendum;
+    if (contains(cmd.data_type, "enum")) {
+        ostringstream os;
+        forEveryEnum(visitEnumItem2, cmd.data_type, &os);
+        addendum += substitute(os.str(), "One of", contains(cmd.data_type, "list") ? "One or more of" : "One of");
+    }
+    string_q hidden = cmd.is_visible ? "" : " (hidden)";
+
+    string_q fmt = "\"[{DESCRIPTION}]+HIDDEN+ADD\"";
+    if (!addendum.empty())
+        replaceAll(fmt, "\"", "`");
+    string_q ret = cmd.Format(fmt);
+    replaceAll(ret, "+HIDDEN", hidden);
+    replaceAll(ret, "+ADD", addendum);
+    return ret;
+}
+
 string_q get_setopts(const CCommandOption& cmd) {
     ostringstream os;
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
@@ -142,10 +180,7 @@ string_q get_setopts(const CCommandOption& cmd) {
             os << p.Format("\"[{LONGNAME}]\", ");
             os << p.Format("\"[{HOTKEY}]\", ");
             os << goDefault(p) << ", ";
-            if (p.is_visible)
-                os << p.Format("\"[{DESCRIPTION}]\"");
-            else
-                os << p.Format("\"[{DESCRIPTION}] (hidden)\"");
+            os << get_description(p);
             os << ")" << endl;
         }
     }

@@ -223,23 +223,28 @@ void COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
                     envLines.push_back(f);
 
             if (cmdTests) {
-                string_q env = substitute(substitute(linesToString(envLines, '|'), " ", ""), "|", " ");
-                string_q e = "env " + env + " TEST_MODE=true NO_COLOR=true REDIR_CERR=true ";
-                string_q p;
+                string_q envs = substitute(substitute(linesToString(envLines, '|'), " ", ""), "|", " ");
+                string_q env = "env " + envs + " TEST_MODE=true NO_COLOR=true REDIR_CERR=true ";
+
+                string_q exe;
                 if (contains(test.path, "libs")) {
-                    p = "test/" + test.tool;
+                    exe = "test/" + test.tool;
                     if (test.isCmd)
-                        p = getCommandPath(p);
+                        exe = getCommandPath(exe);
 
                 } else {
-                    p = test.tool;
+                    exe = test.tool;
                     if (test.isCmd)
-                        p = getCommandPath(p);
-                    // if (contains(p, "getTrace"))
-                    //     p = "chifra traces";
+                        exe = getCommandPath(exe);
+                    // TODO(tjayrush): weird chifra related code
+                    if (contains(test.path, "tools"))
+                        exe = "chifra " + (test.extra.empty() ? test.route : test.extra);
                 }
-                string_q c = p + " " + test.options + " >" + test.workPath + test.fileName + " 2>&1";
-                cmd << e << c;
+
+                string_q fullCmd = exe + " " + test.options;
+                string_q redir = test.workPath + test.fileName;
+                cmd << "echo \"" << fullCmd << "\" >" << redir + " && ";
+                cmd << env << fullCmd << " >>" << redir << " 2>&1";
 
             } else {
                 bool has_options = (!test.builtin && !test.options.empty());
