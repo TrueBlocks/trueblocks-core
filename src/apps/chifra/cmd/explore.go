@@ -17,10 +17,30 @@ package cmd
  */
 
 import (
+	"errors"
 	"os"
 
 	"github.com/spf13/cobra"
 )
+
+// exploreCmd represents the explore command
+var exploreCmd = &cobra.Command{
+	Use:   usageExplore,
+	Short: shortExplore,
+	Long:  longExplore,
+	Run:   runExplore,
+	Args:  ValidatePositionals(validateExploreArgs, cobra.MinimumNArgs(1)),
+}
+
+var usageExplore = `explore [flags] <term> [term...]
+
+Arguments:
+  terms - one or more addresses, names, block, or transaction identifiers`
+
+var shortExplore = "open an explorer for a given address, block, or transaction"
+
+var longExplore = `Purpose:
+  Open an explorer for a given address, block, or transaction.`
 
 type exploreOptionsType struct {
 	local  bool
@@ -28,18 +48,6 @@ type exploreOptionsType struct {
 }
 
 var ExploreOpts exploreOptionsType
-
-// exploreCmd represents the explore command
-var exploreCmd = &cobra.Command{
-	Use: `explore [flags] <term> [term...]
-
-Arguments:
-  terms - one or more addresses, names, block, or transaction identifiers`,
-	Short: "open an explorer for a given address, block, or transaction",
-	Long: `Purpose:
-  Open an explorer for a given address, block, or transaction.`,
-	Run: runExplore,
-}
 
 func init() {
 	exploreCmd.SetOut(os.Stderr)
@@ -51,6 +59,7 @@ func init() {
 	exploreCmd.Flags().SortFlags = false
 	exploreCmd.PersistentFlags().SortFlags = false
 
+	PostNotes = "[{POSTNOTES}]"
 	rootCmd.AddCommand(exploreCmd)
 }
 
@@ -63,8 +72,15 @@ func runExplore(cmd *cobra.Command, args []string) {
 		options += " --google"
 	}
 	arguments := ""
-    for _, arg := range args {
+	for _, arg := range args {
 		arguments += " " + arg
 	}
 	PassItOn("/Users/jrush/.local/bin/chifra/fireStorm", options, arguments)
+}
+
+func validateExploreArgs(cmd *cobra.Command, args []string) error {
+	if len(args) > 0 && args[0] == "12" {
+		return ErrFunc(cmd, errors.New("Invalid argument "+args[0]))
+	}
+	return nil
 }

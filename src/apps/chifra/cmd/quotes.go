@@ -17,10 +17,27 @@ package cmd
  */
 
 import (
+	"errors"
 	"os"
 
 	"github.com/spf13/cobra"
 )
+
+// quotesCmd represents the quotes command
+var quotesCmd = &cobra.Command{
+	Use:   usageQuotes,
+	Short: shortQuotes,
+	Long:  longQuotes,
+	Run:   runQuotes,
+	Args:  ValidatePositionals(validateQuotesArgs, cobra.MinimumNArgs(1)),
+}
+
+var usageQuotes = `quotes [flags]`
+
+var shortQuotes = "freshen and/or display Ethereum price data"
+
+var longQuotes = `Purpose:
+  Freshen and/or display Ethereum price data.`
 
 type quotesOptionsType struct {
 	freshen bool
@@ -30,15 +47,6 @@ type quotesOptionsType struct {
 }
 
 var QuotesOpts quotesOptionsType
-
-// quotesCmd represents the quotes command
-var quotesCmd = &cobra.Command{
-	Use: `quotes [flags]`,
-	Short: "freshen and/or display Ethereum price data",
-	Long: `Purpose:
-  Freshen and/or display Ethereum price data.`,
-	Run: runQuotes,
-}
 
 func init() {
 	quotesCmd.SetOut(os.Stderr)
@@ -52,6 +60,7 @@ func init() {
 	quotesCmd.Flags().SortFlags = false
 	quotesCmd.PersistentFlags().SortFlags = false
 
+	PostNotes = "[{POSTNOTES}]"
 	rootCmd.AddCommand(quotesCmd)
 }
 
@@ -70,8 +79,15 @@ func runQuotes(cmd *cobra.Command, args []string) {
 		options += " --feed " + QuotesOpts.feed
 	}
 	arguments := ""
-    for _, arg := range args {
+	for _, arg := range args {
 		arguments += " " + arg
 	}
 	PassItOn("/Users/jrush/.local/bin/chifra/getQuotes", options, arguments)
+}
+
+func validateQuotesArgs(cmd *cobra.Command, args []string) error {
+	if len(args) > 0 && args[0] == "12" {
+		return ErrFunc(cmd, errors.New("Invalid argument "+args[0]))
+	}
+	return nil
 }

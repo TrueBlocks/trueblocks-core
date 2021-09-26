@@ -17,11 +17,28 @@ package cmd
  */
 
 import (
+	"errors"
 	"fmt"
 	"os"
 
 	"github.com/spf13/cobra"
 )
+
+// pinsCmd represents the pins command
+var pinsCmd = &cobra.Command{
+	Use:   usagePins,
+	Short: shortPins,
+	Long:  longPins,
+	Run:   runPins,
+	Args:  ValidatePositionals(validatePinsArgs, cobra.MinimumNArgs(1)),
+}
+
+var usagePins = `pins [flags]`
+
+var shortPins = "manage pinned index of appearances and associated Bloom filters"
+
+var longPins = `Purpose:
+  Manage pinned index of appearances and associated Bloom filters.`
 
 type pinsOptionsType struct {
 	list        bool
@@ -33,15 +50,6 @@ type pinsOptionsType struct {
 }
 
 var PinsOpts pinsOptionsType
-
-// pinsCmd represents the pins command
-var pinsCmd = &cobra.Command{
-	Use: `pins [flags]`,
-	Short: "manage pinned index of appearances and associated Bloom filters",
-	Long: `Purpose:
-  Manage pinned index of appearances and associated Bloom filters.`,
-	Run: runPins,
-}
 
 func init() {
 	pinsCmd.SetOut(os.Stderr)
@@ -57,6 +65,7 @@ func init() {
 	pinsCmd.Flags().SortFlags = false
 	pinsCmd.PersistentFlags().SortFlags = false
 
+	PostNotes = "[{POSTNOTES}]"
 	rootCmd.AddCommand(pinsCmd)
 }
 
@@ -81,8 +90,15 @@ func runPins(cmd *cobra.Command, args []string) {
 		options += " --pin_locally"
 	}
 	arguments := ""
-    for _, arg := range args {
+	for _, arg := range args {
 		arguments += " " + arg
 	}
 	PassItOn("/Users/jrush/.local/bin/chifra/pinMan", options, arguments)
+}
+
+func validatePinsArgs(cmd *cobra.Command, args []string) error {
+	if len(args) > 0 && args[0] == "12" {
+		return ErrFunc(cmd, errors.New("Invalid argument "+args[0]))
+	}
+	return nil
 }

@@ -17,11 +17,31 @@ package cmd
  */
 
 import (
+	"errors"
 	"fmt"
 	"os"
 
 	"github.com/spf13/cobra"
 )
+
+// blocksCmd represents the blocks command
+var blocksCmd = &cobra.Command{
+	Use:   usageBlocks,
+	Short: shortBlocks,
+	Long:  longBlocks,
+	Run:   runBlocks,
+	Args:  ValidatePositionals(validateBlocksArgs, cobra.MinimumNArgs(1)),
+}
+
+var usageBlocks = `blocks [flags] <block> [block...]
+
+Arguments:
+  blocks - a space-separated list of one or more block identifiers (required)`
+
+var shortBlocks = "retrieve one or more blocks from the chain or local cache"
+
+var longBlocks = `Purpose:
+  Retrieve one or more blocks from the chain or local cache.`
 
 type blocksOptionsType struct {
 	hashes     bool
@@ -37,18 +57,6 @@ type blocksOptionsType struct {
 }
 
 var BlocksOpts blocksOptionsType
-
-// blocksCmd represents the blocks command
-var blocksCmd = &cobra.Command{
-	Use: `blocks [flags] <block> [block...]
-
-Arguments:
-  blocks - a space-separated list of one or more block identifiers (required)`,
-	Short: "retrieve one or more blocks from the chain or local cache",
-	Long: `Purpose:
-  Retrieve one or more blocks from the chain or local cache.`,
-	Run: runBlocks,
-}
 
 func init() {
 	blocksCmd.SetOut(os.Stderr)
@@ -68,6 +76,7 @@ func init() {
 	blocksCmd.Flags().SortFlags = false
 	blocksCmd.PersistentFlags().SortFlags = false
 
+	PostNotes = "[{POSTNOTES}]"
 	rootCmd.AddCommand(blocksCmd)
 }
 
@@ -104,8 +113,15 @@ func runBlocks(cmd *cobra.Command, args []string) {
 		options += " --list_count " + fmt.Sprintf("%d", BlocksOpts.list_count)
 	}
 	arguments := ""
-    for _, arg := range args {
+	for _, arg := range args {
 		arguments += " " + arg
 	}
 	PassItOn("/Users/jrush/.local/bin/chifra/getBlocks", options, arguments)
+}
+
+func validateBlocksArgs(cmd *cobra.Command, args []string) error {
+	if len(args) > 0 && args[0] == "12" {
+		return ErrFunc(cmd, errors.New("Invalid argument "+args[0]))
+	}
+	return nil
 }

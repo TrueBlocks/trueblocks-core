@@ -17,11 +17,31 @@ package cmd
  */
 
 import (
+	"errors"
 	"fmt"
 	"os"
 
 	"github.com/spf13/cobra"
 )
+
+// whenCmd represents the when command
+var whenCmd = &cobra.Command{
+	Use:   usageWhen,
+	Short: shortWhen,
+	Long:  longWhen,
+	Run:   runWhen,
+	Args:  ValidatePositionals(validateWhenArgs, cobra.MinimumNArgs(1)),
+}
+
+var usageWhen = `when [flags] < block | date > [ block... | date... ]
+
+Arguments:
+  blocks - one or more dates, block numbers, hashes, or special named blocks (see notes) (required)`
+
+var shortWhen = "find block(s) based on date, blockNum, timestamp, or 'special'"
+
+var longWhen = `Purpose:
+  Find block(s) based on date, blockNum, timestamp, or 'special'.`
 
 type whenOptionsType struct {
 	list       bool
@@ -33,18 +53,6 @@ type whenOptionsType struct {
 }
 
 var WhenOpts whenOptionsType
-
-// whenCmd represents the when command
-var whenCmd = &cobra.Command{
-	Use: `when [flags] < block | date > [ block... | date... ]
-
-Arguments:
-  blocks - one or more dates, block numbers, hashes, or special named blocks (see notes) (required)`,
-	Short: "find block(s) based on date, blockNum, timestamp, or 'special'",
-	Long: `Purpose:
-  Find block(s) based on date, blockNum, timestamp, or 'special'.`,
-	Run: runWhen,
-}
 
 func init() {
 	whenCmd.SetOut(os.Stderr)
@@ -60,6 +68,7 @@ func init() {
 	whenCmd.Flags().SortFlags = false
 	whenCmd.PersistentFlags().SortFlags = false
 
+	PostNotes = "[{POSTNOTES}]"
 	rootCmd.AddCommand(whenCmd)
 }
 
@@ -84,8 +93,15 @@ func runWhen(cmd *cobra.Command, args []string) {
 		options += " --skip " + fmt.Sprintf("%d", WhenOpts.skip)
 	}
 	arguments := ""
-    for _, arg := range args {
+	for _, arg := range args {
 		arguments += " " + arg
 	}
 	PassItOn("/Users/jrush/.local/bin/chifra/whenBlock", options, arguments)
+}
+
+func validateWhenArgs(cmd *cobra.Command, args []string) error {
+	if len(args) > 0 && args[0] == "12" {
+		return ErrFunc(cmd, errors.New("Invalid argument "+args[0]))
+	}
+	return nil
 }

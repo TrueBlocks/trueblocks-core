@@ -17,10 +17,31 @@ package cmd
  */
 
 import (
+	"errors"
 	"os"
 
 	"github.com/spf13/cobra"
 )
+
+// stateCmd represents the state command
+var stateCmd = &cobra.Command{
+	Use:   usageState,
+	Short: shortState,
+	Long:  longState,
+	Run:   runState,
+	Args:  ValidatePositionals(validateStateArgs, cobra.MinimumNArgs(1)),
+}
+
+var usageState = `state [flags] <address> [address...] [block...]
+
+Arguments:
+  addrs - one or more addresses (0x...) from which to retrieve balances (required)
+  blocks - an optional list of one or more blocks at which to report balances, defaults to 'latest'`
+
+var shortState = "retrieve account balance(s) for one or more addresses at given block(s)"
+
+var longState = `Purpose:
+  Retrieve account balance(s) for one or more addresses at given block(s).`
 
 type stateOptionsType struct {
 	parts   string
@@ -30,19 +51,6 @@ type stateOptionsType struct {
 }
 
 var StateOpts stateOptionsType
-
-// stateCmd represents the state command
-var stateCmd = &cobra.Command{
-	Use: `state [flags] <address> [address...] [block...]
-
-Arguments:
-  addrs - one or more addresses (0x...) from which to retrieve balances (required)
-  blocks - an optional list of one or more blocks at which to report balances, defaults to 'latest'`,
-	Short: "retrieve account balance(s) for one or more addresses at given block(s)",
-	Long: `Purpose:
-  Retrieve account balance(s) for one or more addresses at given block(s).`,
-	Run: runState,
-}
 
 func init() {
 	stateCmd.SetOut(os.Stderr)
@@ -56,6 +64,7 @@ func init() {
 	stateCmd.Flags().SortFlags = false
 	stateCmd.PersistentFlags().SortFlags = false
 
+	PostNotes = "[{POSTNOTES}]"
 	rootCmd.AddCommand(stateCmd)
 }
 
@@ -74,8 +83,15 @@ func runState(cmd *cobra.Command, args []string) {
 		options += " --call " + StateOpts.call
 	}
 	arguments := ""
-    for _, arg := range args {
+	for _, arg := range args {
 		arguments += " " + arg
 	}
 	PassItOn("/Users/jrush/.local/bin/chifra/getState", options, arguments)
+}
+
+func validateStateArgs(cmd *cobra.Command, args []string) error {
+	if len(args) > 0 && args[0] == "12" {
+		return ErrFunc(cmd, errors.New("Invalid argument "+args[0]))
+	}
+	return nil
 }

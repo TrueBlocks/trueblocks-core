@@ -17,10 +17,30 @@ package cmd
  */
 
 import (
+	"errors"
 	"os"
 
 	"github.com/spf13/cobra"
 )
+
+// logsCmd represents the logs command
+var logsCmd = &cobra.Command{
+	Use:   usageLogs,
+	Short: shortLogs,
+	Long:  longLogs,
+	Run:   runLogs,
+	Args:  ValidatePositionals(validateLogsArgs, cobra.MinimumNArgs(1)),
+}
+
+var usageLogs = `logs [flags] <tx_id> [tx_id...]
+
+Arguments:
+  transactions - a space-separated list of one or more transaction identifiers (required)`
+
+var shortLogs = "retrieve logs for the given transaction(s)"
+
+var longLogs = `Purpose:
+  Retrieve logs for the given transaction(s).`
 
 type logsOptionsType struct {
 	topic      []string
@@ -29,18 +49,6 @@ type logsOptionsType struct {
 }
 
 var LogsOpts logsOptionsType
-
-// logsCmd represents the logs command
-var logsCmd = &cobra.Command{
-	Use: `logs [flags] <tx_id> [tx_id...]
-
-Arguments:
-  transactions - a space-separated list of one or more transaction identifiers (required)`,
-	Short: "retrieve logs for the given transaction(s)",
-	Long: `Purpose:
-  Retrieve logs for the given transaction(s).`,
-	Run: runLogs,
-}
 
 func init() {
 	logsCmd.SetOut(os.Stderr)
@@ -53,6 +61,7 @@ func init() {
 	logsCmd.Flags().SortFlags = false
 	logsCmd.PersistentFlags().SortFlags = false
 
+	PostNotes = "[{POSTNOTES}]"
 	rootCmd.AddCommand(logsCmd)
 }
 
@@ -70,8 +79,15 @@ func runLogs(cmd *cobra.Command, args []string) {
 		options += " --articulate"
 	}
 	arguments := ""
-    for _, arg := range args {
+	for _, arg := range args {
 		arguments += " " + arg
 	}
 	PassItOn("/Users/jrush/.local/bin/chifra/getLogs", options, arguments)
+}
+
+func validateLogsArgs(cmd *cobra.Command, args []string) error {
+	if len(args) > 0 && args[0] == "12" {
+		return ErrFunc(cmd, errors.New("Invalid argument "+args[0]))
+	}
+	return nil
 }

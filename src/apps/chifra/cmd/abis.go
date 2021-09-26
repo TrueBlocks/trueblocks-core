@@ -17,10 +17,30 @@ package cmd
  */
 
 import (
+	"errors"
 	"os"
 
 	"github.com/spf13/cobra"
 )
+
+// abisCmd represents the abis command
+var abisCmd = &cobra.Command{
+	Use:   usageAbis,
+	Short: shortAbis,
+	Long:  longAbis,
+	Run:   runAbis,
+	Args:  ValidatePositionals(validateAbisArgs, cobra.MinimumNArgs(1)),
+}
+
+var usageAbis = `abis [flags] <address> [address...]
+
+Arguments:
+  addrs - list of one or more smart contracts whose ABI to grab from EtherScan (required)`
+
+var shortAbis = "fetches the ABI for a smart contract"
+
+var longAbis = `Purpose:
+  Fetches the ABI for a smart contract.`
 
 type abisOptionsType struct {
 	known   bool
@@ -31,18 +51,6 @@ type abisOptionsType struct {
 }
 
 var AbisOpts abisOptionsType
-
-// abisCmd represents the abis command
-var abisCmd = &cobra.Command{
-	Use: `abis [flags] <address> [address...]
-
-Arguments:
-  addrs - list of one or more smart contracts whose ABI to grab from EtherScan (required)`,
-	Short: "fetches the ABI for a smart contract",
-	Long: `Purpose:
-  Fetches the ABI for a smart contract.`,
-	Run: runAbis,
-}
 
 func init() {
 	abisCmd.SetOut(os.Stderr)
@@ -57,6 +65,7 @@ func init() {
 	abisCmd.Flags().SortFlags = false
 	abisCmd.PersistentFlags().SortFlags = false
 
+	PostNotes = "[{POSTNOTES}]"
 	rootCmd.AddCommand(abisCmd)
 }
 
@@ -78,8 +87,15 @@ func runAbis(cmd *cobra.Command, args []string) {
 		options += " --classes"
 	}
 	arguments := ""
-    for _, arg := range args {
+	for _, arg := range args {
 		arguments += " " + arg
 	}
 	PassItOn("/Users/jrush/.local/bin/chifra/grabABI", options, arguments)
+}
+
+func validateAbisArgs(cmd *cobra.Command, args []string) error {
+	if len(args) > 0 && args[0] == "12" {
+		return ErrFunc(cmd, errors.New("Invalid argument "+args[0]))
+	}
+	return nil
 }

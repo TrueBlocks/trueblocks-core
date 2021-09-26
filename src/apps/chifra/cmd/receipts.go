@@ -17,28 +17,36 @@ package cmd
  */
 
 import (
+	"errors"
 	"os"
 
 	"github.com/spf13/cobra"
 )
+
+// receiptsCmd represents the receipts command
+var receiptsCmd = &cobra.Command{
+	Use:   usageReceipts,
+	Short: shortReceipts,
+	Long:  longReceipts,
+	Run:   runReceipts,
+	Args:  ValidatePositionals(validateReceiptsArgs, cobra.MinimumNArgs(1)),
+}
+
+var usageReceipts = `receipts [flags] <tx_id> [tx_id...]
+
+Arguments:
+  transactions - a space-separated list of one or more transaction identifiers (required)`
+
+var shortReceipts = "retrieve receipts for the given transaction(s)"
+
+var longReceipts = `Purpose:
+  Retrieve receipts for the given transaction(s).`
 
 type receiptsOptionsType struct {
 	articulate bool
 }
 
 var ReceiptsOpts receiptsOptionsType
-
-// receiptsCmd represents the receipts command
-var receiptsCmd = &cobra.Command{
-	Use: `receipts [flags] <tx_id> [tx_id...]
-
-Arguments:
-  transactions - a space-separated list of one or more transaction identifiers (required)`,
-	Short: "retrieve receipts for the given transaction(s)",
-	Long: `Purpose:
-  Retrieve receipts for the given transaction(s).`,
-	Run: runReceipts,
-}
 
 func init() {
 	receiptsCmd.SetOut(os.Stderr)
@@ -49,6 +57,7 @@ func init() {
 	receiptsCmd.Flags().SortFlags = false
 	receiptsCmd.PersistentFlags().SortFlags = false
 
+	PostNotes = "[{POSTNOTES}]"
 	rootCmd.AddCommand(receiptsCmd)
 }
 
@@ -58,8 +67,15 @@ func runReceipts(cmd *cobra.Command, args []string) {
 		options += " --articulate"
 	}
 	arguments := ""
-    for _, arg := range args {
+	for _, arg := range args {
 		arguments += " " + arg
 	}
 	PassItOn("/Users/jrush/.local/bin/chifra/getReceipts", options, arguments)
+}
+
+func validateReceiptsArgs(cmd *cobra.Command, args []string) error {
+	if len(args) > 0 && args[0] == "12" {
+		return ErrFunc(cmd, errors.New("Invalid argument "+args[0]))
+	}
+	return nil
 }

@@ -17,10 +17,30 @@ package cmd
  */
 
 import (
+	"errors"
 	"os"
 
 	"github.com/spf13/cobra"
 )
+
+// namesCmd represents the names command
+var namesCmd = &cobra.Command{
+	Use:   usageNames,
+	Short: shortNames,
+	Long:  longNames,
+	Run:   runNames,
+	Args:  ValidatePositionals(validateNamesArgs, cobra.MinimumNArgs(1)),
+}
+
+var usageNames = `names [flags] <term> [term...]
+
+Arguments:
+  terms - a space separated list of one or more search terms (required)`
+
+var shortNames = "query addresses or names of well known accounts"
+
+var longNames = `Purpose:
+  Query addresses or names of well known accounts.`
 
 type namesOptionsType struct {
 	expand      bool
@@ -38,18 +58,6 @@ type namesOptionsType struct {
 }
 
 var NamesOpts namesOptionsType
-
-// namesCmd represents the names command
-var namesCmd = &cobra.Command{
-	Use: `names [flags] <term> [term...]
-
-Arguments:
-  terms - a space separated list of one or more search terms (required)`,
-	Short: "query addresses or names of well known accounts",
-	Long: `Purpose:
-  Query addresses or names of well known accounts.`,
-	Run: runNames,
-}
 
 func init() {
 	namesCmd.SetOut(os.Stderr)
@@ -71,6 +79,7 @@ func init() {
 	namesCmd.Flags().SortFlags = false
 	namesCmd.PersistentFlags().SortFlags = false
 
+	PostNotes = "[{POSTNOTES}]"
 	rootCmd.AddCommand(namesCmd)
 }
 
@@ -113,8 +122,15 @@ func runNames(cmd *cobra.Command, args []string) {
 		options += " --autoname " + NamesOpts.autoname
 	}
 	arguments := ""
-    for _, arg := range args {
+	for _, arg := range args {
 		arguments += " " + arg
 	}
 	PassItOn("/Users/jrush/.local/bin/chifra/ethNames", options, arguments)
+}
+
+func validateNamesArgs(cmd *cobra.Command, args []string) error {
+	if len(args) > 0 && args[0] == "12" {
+		return ErrFunc(cmd, errors.New("Invalid argument "+args[0]))
+	}
+	return nil
 }

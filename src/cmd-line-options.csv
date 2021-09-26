@@ -264,4 +264,3 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 14620,all,,all,all,file,,,false,false,true,false,--,flag,<path>,specify multiple sets of command line options in a file.
 14640,all,,all,all,noop,,,false,false,true,false,--,switch,<boolean>,non operation (for testing for example)
 14660,all,,all,all,help,h,,false,false,true,true,--,switch,<boolean>,get help on this command
-14680,all,,all,all,parity,,,false,false,true,false,--,switch,<boolean>,mimic parity's output

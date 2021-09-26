@@ -17,10 +17,30 @@ package cmd
  */
 
 import (
+	"errors"
 	"os"
 
 	"github.com/spf13/cobra"
 )
+
+// monitorsCmd represents the monitors command
+var monitorsCmd = &cobra.Command{
+	Use:   usageMonitors,
+	Short: shortMonitors,
+	Long:  longMonitors,
+	Run:   runMonitors,
+	Args:  ValidatePositionals(validateMonitorsArgs, cobra.MinimumNArgs(1)),
+}
+
+var usageMonitors = `monitors [flags] <address> [address...]
+
+Arguments:
+  addrs - one or more addresses (0x...) to list (required)`
+
+var shortMonitors = "add, remove, clean, and list address monitors"
+
+var longMonitors = `Purpose:
+  Add, remove, clean, and list address monitors.`
 
 type monitorsOptionsType struct {
 	delete bool
@@ -28,18 +48,6 @@ type monitorsOptionsType struct {
 }
 
 var MonitorsOpts monitorsOptionsType
-
-// monitorsCmd represents the monitors command
-var monitorsCmd = &cobra.Command{
-	Use: `monitors [flags] <address> [address...]
-
-Arguments:
-  addrs - one or more addresses (0x...) to list (required)`,
-	Short: "add, remove, clean, and list address monitors",
-	Long: `Purpose:
-  Add, remove, clean, and list address monitors.`,
-	Run: runMonitors,
-}
 
 func init() {
 	monitorsCmd.SetOut(os.Stderr)
@@ -51,6 +59,7 @@ func init() {
 	monitorsCmd.Flags().SortFlags = false
 	monitorsCmd.PersistentFlags().SortFlags = false
 
+	PostNotes = "[{POSTNOTES}]"
 	rootCmd.AddCommand(monitorsCmd)
 }
 
@@ -63,8 +72,15 @@ func runMonitors(cmd *cobra.Command, args []string) {
 		options += " --remove"
 	}
 	arguments := ""
-    for _, arg := range args {
+	for _, arg := range args {
 		arguments += " " + arg
 	}
 	PassItOn("/Users/jrush/.local/bin/chifra/acctExport --appearances", options, arguments)
+}
+
+func validateMonitorsArgs(cmd *cobra.Command, args []string) error {
+	if len(args) > 0 && args[0] == "12" {
+		return ErrFunc(cmd, errors.New("Invalid argument "+args[0]))
+	}
+	return nil
 }

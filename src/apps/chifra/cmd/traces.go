@@ -24,6 +24,25 @@ import (
 	"github.com/spf13/cobra"
 )
 
+// tracesCmd represents the traces command
+var tracesCmd = &cobra.Command{
+	Use:   usageTraces,
+	Short: shortTraces,
+	Long:  longTraces,
+	Run:   runTraces,
+	Args:  ValidatePositionals(validateTracesArgs, cobra.MinimumNArgs(1)),
+}
+
+var usageTraces = `traces [flags] <tx_id> [tx_id...]
+
+Arguments:
+  transactions - a space-separated list of one or more transaction identifiers (required)`
+
+var shortTraces = "retrieve traces for the given transaction(s)"
+
+var longTraces = `Purpose:
+  Retrieve traces for the given transaction(s).`
+
 type tracesOptionsType struct {
 	articulate bool
 	filter     string
@@ -34,14 +53,6 @@ type tracesOptionsType struct {
 }
 
 var TracesOpts tracesOptionsType
-
-var tracesCmd = &cobra.Command{
-	Use:   usageTraces,
-	Short: shortTraces,
-	Long:  longTraces,
-	Run:   runTraces,
-	Args:  ValidatePositionals(validateArgs, cobra.MinimumNArgs(1)),
-}
 
 func init() {
 	tracesCmd.SetOut(os.Stderr)
@@ -57,7 +68,7 @@ func init() {
 	tracesCmd.Flags().SortFlags = false
 	tracesCmd.PersistentFlags().SortFlags = false
 
-	PostNotes = "THIS IS A POST NOTE"
+	PostNotes = "[{POSTNOTES}]"
 	rootCmd.AddCommand(tracesCmd)
 }
 
@@ -88,19 +99,9 @@ func runTraces(cmd *cobra.Command, args []string) {
 	PassItOn("/Users/jrush/.local/bin/chifra/getTraces", options, arguments)
 }
 
-var usageTraces = `traces [flags] <tx_id> [tx_id...]
-
-Arguments:
-  transactions - a space-separated list of one or more transaction identifiers (required)`
-
-var shortTraces = "retrieve traces for the given transaction(s)"
-
-var longTraces = `Purpose:
-  Retrieve traces for the given transaction(s).`
-
-func validateArgs(cmd *cobra.Command, args []string) error {
+func validateTracesArgs(cmd *cobra.Command, args []string) error {
 	if len(args) > 0 && args[0] == "12" {
-		return ErrFunc(cmd, errors.New("Invalid shit baby "+args[0]))
+		return ErrFunc(cmd, errors.New("Invalid argument "+args[0]))
 	}
 	return nil
 }

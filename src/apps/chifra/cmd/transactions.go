@@ -17,10 +17,30 @@ package cmd
  */
 
 import (
+	"errors"
 	"os"
 
 	"github.com/spf13/cobra"
 )
+
+// transactionsCmd represents the transactions command
+var transactionsCmd = &cobra.Command{
+	Use:   usageTransactions,
+	Short: shortTransactions,
+	Long:  longTransactions,
+	Run:   runTransactions,
+	Args:  ValidatePositionals(validateTransactionsArgs, cobra.MinimumNArgs(1)),
+}
+
+var usageTransactions = `transactions [flags] <tx_id> [tx_id...]
+
+Arguments:
+  transactions - a space-separated list of one or more transaction identifiers (required)`
+
+var shortTransactions = "retrieve one or more transactions from the chain or local cache"
+
+var longTransactions = `Purpose:
+  Retrieve one or more transactions from the chain or local cache.`
 
 type transactionsOptionsType struct {
 	articulate bool
@@ -31,18 +51,6 @@ type transactionsOptionsType struct {
 }
 
 var TransactionsOpts transactionsOptionsType
-
-// transactionsCmd represents the transactions command
-var transactionsCmd = &cobra.Command{
-	Use: `transactions [flags] <tx_id> [tx_id...]
-
-Arguments:
-  transactions - a space-separated list of one or more transaction identifiers (required)`,
-	Short: "retrieve one or more transactions from the chain or local cache",
-	Long: `Purpose:
-  Retrieve one or more transactions from the chain or local cache.`,
-	Run: runTransactions,
-}
 
 func init() {
 	transactionsCmd.SetOut(os.Stderr)
@@ -57,6 +65,7 @@ func init() {
 	transactionsCmd.Flags().SortFlags = false
 	transactionsCmd.PersistentFlags().SortFlags = false
 
+	PostNotes = "[{POSTNOTES}]"
 	rootCmd.AddCommand(transactionsCmd)
 }
 
@@ -78,8 +87,15 @@ func runTransactions(cmd *cobra.Command, args []string) {
 		options += " --cache"
 	}
 	arguments := ""
-    for _, arg := range args {
+	for _, arg := range args {
 		arguments += " " + arg
 	}
 	PassItOn("/Users/jrush/.local/bin/chifra/getTrans", options, arguments)
+}
+
+func validateTransactionsArgs(cmd *cobra.Command, args []string) error {
+	if len(args) > 0 && args[0] == "12" {
+		return ErrFunc(cmd, errors.New("Invalid argument "+args[0]))
+	}
+	return nil
 }

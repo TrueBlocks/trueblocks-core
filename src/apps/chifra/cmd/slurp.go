@@ -17,10 +17,31 @@ package cmd
  */
 
 import (
+	"errors"
 	"os"
 
 	"github.com/spf13/cobra"
 )
+
+// slurpCmd represents the slurp command
+var slurpCmd = &cobra.Command{
+	Use:   usageSlurp,
+	Short: shortSlurp,
+	Long:  longSlurp,
+	Run:   runSlurp,
+	Args:  ValidatePositionals(validateSlurpArgs, cobra.MinimumNArgs(1)),
+}
+
+var usageSlurp = `slurp [flags] <address> [address...] [block...]
+
+Arguments:
+  addrs - one or more addresses to slurp from Etherscan (required)
+  blocks - an optional range of blocks to slurp`
+
+var shortSlurp = "fetch data from EtherScan for any address"
+
+var longSlurp = `Purpose:
+  Fetch data from EtherScan for any address.`
 
 type slurpOptionsType struct {
 	types       string
@@ -28,19 +49,6 @@ type slurpOptionsType struct {
 }
 
 var SlurpOpts slurpOptionsType
-
-// slurpCmd represents the slurp command
-var slurpCmd = &cobra.Command{
-	Use: `slurp [flags] <address> [address...] [block...]
-
-Arguments:
-  addrs - one or more addresses to slurp from Etherscan (required)
-  blocks - an optional range of blocks to slurp`,
-	Short: "fetch data from EtherScan for any address",
-	Long: `Purpose:
-  Fetch data from EtherScan for any address.`,
-	Run: runSlurp,
-}
 
 func init() {
 	slurpCmd.SetOut(os.Stderr)
@@ -52,6 +60,7 @@ func init() {
 	slurpCmd.Flags().SortFlags = false
 	slurpCmd.PersistentFlags().SortFlags = false
 
+	PostNotes = "[{POSTNOTES}]"
 	rootCmd.AddCommand(slurpCmd)
 }
 
@@ -64,8 +73,15 @@ func runSlurp(cmd *cobra.Command, args []string) {
 		options += " --appearances"
 	}
 	arguments := ""
-    for _, arg := range args {
+	for _, arg := range args {
 		arguments += " " + arg
 	}
 	PassItOn("/Users/jrush/.local/bin/chifra/ethslurp", options, arguments)
+}
+
+func validateSlurpArgs(cmd *cobra.Command, args []string) error {
+	if len(args) > 0 && args[0] == "12" {
+		return ErrFunc(cmd, errors.New("Invalid argument "+args[0]))
+	}
+	return nil
 }

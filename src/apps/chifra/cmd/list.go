@@ -17,27 +17,35 @@ package cmd
  */
 
 import (
+	"errors"
 	"os"
 
 	"github.com/spf13/cobra"
 )
 
+// listCmd represents the list command
+var listCmd = &cobra.Command{
+	Use:   usageList,
+	Short: shortList,
+	Long:  longList,
+	Run:   runList,
+	Args:  ValidatePositionals(validateListArgs, cobra.MinimumNArgs(1)),
+}
+
+var usageList = `list [flags] <address> [address...]
+
+Arguments:
+  addrs - one or more addresses (0x...) to list (required)`
+
+var shortList = "list every appearance of an address anywhere on the chain"
+
+var longList = `Purpose:
+  List every appearance of an address anywhere on the chain.`
+
 type listOptionsType struct {
 }
 
 var ListOpts listOptionsType
-
-// listCmd represents the list command
-var listCmd = &cobra.Command{
-	Use: `list [flags] <address> [address...]
-
-Arguments:
-  addrs - one or more addresses (0x...) to list (required)`,
-	Short: "list every appearance of an address anywhere on the chain",
-	Long: `Purpose:
-  List every appearance of an address anywhere on the chain.`,
-	Run: runList,
-}
 
 func init() {
 	listCmd.SetOut(os.Stderr)
@@ -47,14 +55,22 @@ func init() {
 	listCmd.Flags().SortFlags = false
 	listCmd.PersistentFlags().SortFlags = false
 
+	PostNotes = "[{POSTNOTES}]"
 	rootCmd.AddCommand(listCmd)
 }
 
 func runList(cmd *cobra.Command, args []string) {
 	options := ""
 	arguments := ""
-    for _, arg := range args {
+	for _, arg := range args {
 		arguments += " " + arg
 	}
 	PassItOn("/Users/jrush/.local/bin/chifra/acctExport --appearances", options, arguments)
+}
+
+func validateListArgs(cmd *cobra.Command, args []string) error {
+	if len(args) > 0 && args[0] == "12" {
+		return ErrFunc(cmd, errors.New("Invalid argument "+args[0]))
+	}
+	return nil
 }

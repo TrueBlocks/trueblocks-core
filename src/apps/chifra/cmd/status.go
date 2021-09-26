@@ -17,11 +17,31 @@ package cmd
  */
 
 import (
+	"errors"
 	"fmt"
 	"os"
 
 	"github.com/spf13/cobra"
 )
+
+// statusCmd represents the status command
+var statusCmd = &cobra.Command{
+	Use:   usageStatus,
+	Short: shortStatus,
+	Long:  longStatus,
+	Run:   runStatus,
+	Args:  ValidatePositionals(validateStatusArgs, cobra.MinimumNArgs(1)),
+}
+
+var usageStatus = `status [flags] [mode...]
+
+Arguments:
+  modes - the type of status info to retrieve`
+
+var shortStatus = "report on the status of the TrueBlocks system"
+
+var longStatus = `Purpose:
+  Report on the status of the TrueBlocks system.`
 
 type statusOptionsType struct {
 	details    bool
@@ -37,18 +57,6 @@ type statusOptionsType struct {
 }
 
 var StatusOpts statusOptionsType
-
-// statusCmd represents the status command
-var statusCmd = &cobra.Command{
-	Use: `status [flags] [mode...]
-
-Arguments:
-  modes - the type of status info to retrieve`,
-	Short: "report on the status of the TrueBlocks system",
-	Long: `Purpose:
-  Report on the status of the TrueBlocks system.`,
-	Run: runStatus,
-}
 
 func init() {
 	statusCmd.SetOut(os.Stderr)
@@ -68,6 +76,7 @@ func init() {
 	statusCmd.Flags().SortFlags = false
 	statusCmd.PersistentFlags().SortFlags = false
 
+	PostNotes = "[{POSTNOTES}]"
 	rootCmd.AddCommand(statusCmd)
 }
 
@@ -104,8 +113,15 @@ func runStatus(cmd *cobra.Command, args []string) {
 		options += " --test_end " + fmt.Sprintf("%d", StatusOpts.test_end)
 	}
 	arguments := ""
-    for _, arg := range args {
+	for _, arg := range args {
 		arguments += " " + arg
 	}
 	PassItOn("/Users/jrush/.local/bin/chifra/cacheStatus", options, arguments)
+}
+
+func validateStatusArgs(cmd *cobra.Command, args []string) error {
+	if len(args) > 0 && args[0] == "12" {
+		return ErrFunc(cmd, errors.New("Invalid argument "+args[0]))
+	}
+	return nil
 }

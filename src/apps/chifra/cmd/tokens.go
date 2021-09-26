@@ -17,10 +17,31 @@ package cmd
  */
 
 import (
+	"errors"
 	"os"
 
 	"github.com/spf13/cobra"
 )
+
+// tokensCmd represents the tokens command
+var tokensCmd = &cobra.Command{
+	Use:   usageTokens,
+	Short: shortTokens,
+	Long:  longTokens,
+	Run:   runTokens,
+	Args:  ValidatePositionals(validateTokensArgs, cobra.MinimumNArgs(1)),
+}
+
+var usageTokens = `tokens [flags] <address> <address> [address...] [block...]
+
+Arguments:
+  addrs - two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported (required)
+  blocks - an optional list of one or more blocks at which to report balances, defaults to 'latest'`
+
+var shortTokens = "retrieve token balance(s) for one or more addresses at given block(s)"
+
+var longTokens = `Purpose:
+  Retrieve token balance(s) for one or more addresses at given block(s).`
 
 type tokensOptionsType struct {
 	parts   string
@@ -29,19 +50,6 @@ type tokensOptionsType struct {
 }
 
 var TokensOpts tokensOptionsType
-
-// tokensCmd represents the tokens command
-var tokensCmd = &cobra.Command{
-	Use: `tokens [flags] <address> <address> [address...] [block...]
-
-Arguments:
-  addrs - two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported (required)
-  blocks - an optional list of one or more blocks at which to report balances, defaults to 'latest'`,
-	Short: "retrieve token balance(s) for one or more addresses at given block(s)",
-	Long: `Purpose:
-  Retrieve token balance(s) for one or more addresses at given block(s).`,
-	Run: runTokens,
-}
 
 func init() {
 	tokensCmd.SetOut(os.Stderr)
@@ -54,6 +62,7 @@ func init() {
 	tokensCmd.Flags().SortFlags = false
 	tokensCmd.PersistentFlags().SortFlags = false
 
+	PostNotes = "[{POSTNOTES}]"
 	rootCmd.AddCommand(tokensCmd)
 }
 
@@ -69,8 +78,15 @@ func runTokens(cmd *cobra.Command, args []string) {
 		options += " --no_zero"
 	}
 	arguments := ""
-    for _, arg := range args {
+	for _, arg := range args {
 		arguments += " " + arg
 	}
 	PassItOn("/Users/jrush/.local/bin/chifra/getTokens", options, arguments)
+}
+
+func validateTokensArgs(cmd *cobra.Command, args []string) error {
+	if len(args) > 0 && args[0] == "12" {
+		return ErrFunc(cmd, errors.New("Invalid argument "+args[0]))
+	}
+	return nil
 }

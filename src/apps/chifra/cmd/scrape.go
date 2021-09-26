@@ -17,11 +17,28 @@ package cmd
  */
 
 import (
+	"errors"
 	"fmt"
 	"os"
 
 	"github.com/spf13/cobra"
 )
+
+// scrapeCmd represents the scrape command
+var scrapeCmd = &cobra.Command{
+	Use:   usageScrape,
+	Short: shortScrape,
+	Long:  longScrape,
+	Run:   runScrape,
+	Args:  ValidatePositionals(validateScrapeArgs, cobra.MinimumNArgs(1)),
+}
+
+var usageScrape = `scrape [flags]`
+
+var shortScrape = "scan the chain and update the TrueBlocks index of appearances"
+
+var longScrape = `Purpose:
+  Scan the chain and update the TrueBlocks index of appearances.`
 
 type scrapeOptionsType struct {
 	pin           bool
@@ -32,15 +49,6 @@ type scrapeOptionsType struct {
 }
 
 var ScrapeOpts scrapeOptionsType
-
-// scrapeCmd represents the scrape command
-var scrapeCmd = &cobra.Command{
-	Use: `scrape [flags]`,
-	Short: "scan the chain and update the TrueBlocks index of appearances",
-	Long: `Purpose:
-  Scan the chain and update the TrueBlocks index of appearances.`,
-	Run: runScrape,
-}
 
 func init() {
 	scrapeCmd.SetOut(os.Stderr)
@@ -55,6 +63,7 @@ func init() {
 	scrapeCmd.Flags().SortFlags = false
 	scrapeCmd.PersistentFlags().SortFlags = false
 
+	PostNotes = "[{POSTNOTES}]"
 	rootCmd.AddCommand(scrapeCmd)
 }
 
@@ -76,8 +85,15 @@ func runScrape(cmd *cobra.Command, args []string) {
 		options += " --n_addr_procs " + fmt.Sprintf("%d", ScrapeOpts.n_addr_procs)
 	}
 	arguments := ""
-    for _, arg := range args {
+	for _, arg := range args {
 		arguments += " " + arg
 	}
 	PassItOn("/Users/jrush/.local/bin/chifra/blockScrape", options, arguments)
+}
+
+func validateScrapeArgs(cmd *cobra.Command, args []string) error {
+	if len(args) > 0 && args[0] == "12" {
+		return ErrFunc(cmd, errors.New("Invalid argument "+args[0]))
+	}
+	return nil
 }

@@ -12,39 +12,62 @@ package cmd
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+/*
+ * Parts of this file were generated with makeClass --gocmds.
+ */
 
 import (
+	"errors"
 	"os"
 
 	"github.com/spf13/cobra"
 )
+
+// serveCmd represents the serve command
+var serveCmd = &cobra.Command{
+	Use:   usageServe,
+	Short: shortServe,
+	Long:  longServe,
+	Run:   runServe,
+	Args:  ValidatePositionals(validateServeArgs, cobra.MinimumNArgs(1)),
+}
+
+var usageServe = `serve [flags]`
+
+var shortServe = "serve the TrueBlocks API using the flame server"
+
+var longServe = `Purpose:
+  Serve the TrueBlocks API using the flame server.`
 
 type serveOptionsType struct {
 }
 
 var ServeOpts serveOptionsType
 
-// serveCmd represents the serve command
-var serveCmd = &cobra.Command{
-	Use:   `serve`,
-	Short: "serve the TrueBlocks API using the flame server",
-	Long: `Purpose:
-  Serve the TrueBlocks API using the flame server.`,
-	Run: runServe,
-}
-
 func init() {
+	serveCmd.SetOut(os.Stderr)
+
 	serveCmd.Flags().SortFlags = false
 	serveCmd.PersistentFlags().SortFlags = false
-	serveCmd.SetOut(os.Stderr)
+	serveCmd.Flags().SortFlags = false
+	serveCmd.PersistentFlags().SortFlags = false
+
+	PostNotes = "[{POSTNOTES}]"
 	rootCmd.AddCommand(serveCmd)
 }
 
 func runServe(cmd *cobra.Command, args []string) {
 	options := ""
+	arguments := ""
 	for _, arg := range args {
-		options += " " + arg
+		arguments += " " + arg
 	}
-    arguments := ""
 	PassItOn("/Users/jrush/.local/bin/chifra/flame", options, arguments)
+}
+
+func validateServeArgs(cmd *cobra.Command, args []string) error {
+	if len(args) > 0 && args[0] == "12" {
+		return ErrFunc(cmd, errors.New("Invalid argument "+args[0]))
+	}
+	return nil
 }

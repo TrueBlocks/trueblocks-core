@@ -17,11 +17,33 @@ package cmd
  */
 
 import (
+	"errors"
 	"fmt"
 	"os"
 
 	"github.com/spf13/cobra"
 )
+
+// exportCmd represents the export command
+var exportCmd = &cobra.Command{
+	Use:   usageExport,
+	Short: shortExport,
+	Long:  longExport,
+	Run:   runExport,
+	Args:  ValidatePositionals(validateExportArgs, cobra.MinimumNArgs(1)),
+}
+
+var usageExport = `export [flags] <address> [address...] [topics...] [fourbytes...]
+
+Arguments:
+  addrs - one or more addresses (0x...) to export (required)
+  topics - filter by one or more log topics (only for --logs option)
+  fourbytes - filter by one or more fourbytes (only for transactions and trace options)`
+
+var shortExport = "export full detail of transactions for one or more addresses"
+
+var longExport = `Purpose:
+  Export full detail of transactions for one or more addresses.`
 
 type exportOptionsType struct {
 	appearances  bool
@@ -55,20 +77,6 @@ type exportOptionsType struct {
 }
 
 var ExportOpts exportOptionsType
-
-// exportCmd represents the export command
-var exportCmd = &cobra.Command{
-	Use: `export [flags] <address> [address...] [topics...] [fourbytes...]
-
-Arguments:
-  addrs - one or more addresses (0x...) to export (required)
-  topics - filter by one or more log topics (only for --logs option)
-  fourbytes - filter by one or more fourbytes (only for transactions and trace options)`,
-	Short: "export full detail of transactions for one or more addresses",
-	Long: `Purpose:
-  Export full detail of transactions for one or more addresses.`,
-	Run: runExport,
-}
 
 func init() {
 	exportCmd.SetOut(os.Stderr)
@@ -106,6 +114,7 @@ func init() {
 	exportCmd.Flags().SortFlags = false
 	exportCmd.PersistentFlags().SortFlags = false
 
+	PostNotes = "[{POSTNOTES}]"
 	rootCmd.AddCommand(exportCmd)
 }
 
@@ -197,8 +206,15 @@ func runExport(cmd *cobra.Command, args []string) {
 		options += " --last_block " + fmt.Sprintf("%d", ExportOpts.last_block)
 	}
 	arguments := ""
-    for _, arg := range args {
+	for _, arg := range args {
 		arguments += " " + arg
 	}
 	PassItOn("/Users/jrush/.local/bin/chifra/acctExport", options, arguments)
+}
+
+func validateExportArgs(cmd *cobra.Command, args []string) error {
+	if len(args) > 0 && args[0] == "12" {
+		return ErrFunc(cmd, errors.New("Invalid argument "+args[0]))
+	}
+	return nil
 }

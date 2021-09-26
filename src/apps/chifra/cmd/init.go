@@ -17,24 +17,32 @@ package cmd
  */
 
 import (
+	"errors"
 	"os"
 
 	"github.com/spf13/cobra"
 )
 
+// initCmd represents the init command
+var initCmd = &cobra.Command{
+	Use:   usageInit,
+	Short: shortInit,
+	Long:  longInit,
+	Run:   runInit,
+	Args:  ValidatePositionals(validateInitArgs, cobra.MinimumNArgs(1)),
+}
+
+var usageInit = `init [flags]`
+
+var shortInit = "initialize the index of appearances by downloading Bloom filters"
+
+var longInit = `Purpose:
+  Initialize the index of appearances by downloading Bloom filters.`
+
 type initOptionsType struct {
 }
 
 var InitOpts initOptionsType
-
-// initCmd represents the init command
-var initCmd = &cobra.Command{
-	Use: `init [flags]`,
-	Short: "initialize the index of appearances by downloading Bloom filters",
-	Long: `Purpose:
-  Initialize the index of appearances by downloading Bloom filters.`,
-	Run: runInit,
-}
 
 func init() {
 	initCmd.SetOut(os.Stderr)
@@ -44,14 +52,22 @@ func init() {
 	initCmd.Flags().SortFlags = false
 	initCmd.PersistentFlags().SortFlags = false
 
+	PostNotes = "[{POSTNOTES}]"
 	rootCmd.AddCommand(initCmd)
 }
 
 func runInit(cmd *cobra.Command, args []string) {
 	options := ""
 	arguments := ""
-    for _, arg := range args {
+	for _, arg := range args {
 		arguments += " " + arg
 	}
 	PassItOn("/Users/jrush/.local/bin/chifra/pinMan local --init", options, arguments)
+}
+
+func validateInitArgs(cmd *cobra.Command, args []string) error {
+	if len(args) > 0 && args[0] == "12" {
+		return ErrFunc(cmd, errors.New("Invalid argument "+args[0]))
+	}
+	return nil
 }
