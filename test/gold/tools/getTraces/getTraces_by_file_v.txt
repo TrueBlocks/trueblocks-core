@@ -2,7 +2,7 @@ getTraces argc: 5 [1:--verbose] [2:--file:cmd_file] [3:--fmt] [4:api]
 getTraces --verbose --file:cmd_file --fmt api 
 Cmd: 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.78 -v:1 --verbose:1 
 Cmd: 3657480.78 --verbose:1 
-Cmd: 0xda2f27fffb36c90c74fc53bd8b721074e87203c727640c95c4c802296e3bf8ad --parity --verbose:1 
+Cmd: 0xda2f27fffb36c90c74fc53bd8b721074e87203c727640c95c4c802296e3bf8ad --verbose:1 
 {"data": [
   {
     "blockHash": "0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9",
@@ -54,26 +54,26 @@ Cmd: 0xda2f27fffb36c90c74fc53bd8b721074e87203c727640c95c4c802296e3bf8ad --parity
     }
   },  {
     "blockHash": "0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9",
-    "blockNumber": "0x37cf08",
-    "subtraces": "0x0",
+    "blockNumber": 3657480,
+    "subtraces": 0,
     "traceAddress": null,
     "transactionHash": "0xda2f27fffb36c90c74fc53bd8b721074e87203c727640c95c4c802296e3bf8ad",
-    "transactionIndex": "0x4f",
+    "transactionIndex": 79,
     "type": "call",
     "action": {
       "selfDestructed": "0x0",
-      "balance": "0x0",
+      "balance": 0,
       "callType": "call",
       "from": "0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5",
-      "gas": "0x7148",
+      "gas": 29000,
       "input": "0x",
       "refundAddress": "0x0",
       "to": "0x85ac33fe36a146ca3651693c16fbb45b3832b3f6",
-      "value": "0x2e056847f291e60"
+      "value": 207260709928115808
     },
     "result": {
       "newContract": "0x0",
-      "gasUsed": "0x0",
+      "gasUsed": 0,
       "output": "0x"
     }
   }], "types": [

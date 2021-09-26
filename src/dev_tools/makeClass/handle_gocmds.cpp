@@ -49,6 +49,8 @@ bool COptions::handle_gocmds(void) {
             replaceReverse(descr, ".", "");
         replaceAll(source, "[{SHORT}]", descr);
         string_q imports;
+        if (contains(source, "errors."))
+            imports += "\t\"errors\"\n";
         if (contains(source, "fmt."))
             imports += "\t\"fmt\"\n";
         replaceAll(source, "[{IMPORTS}]", imports);

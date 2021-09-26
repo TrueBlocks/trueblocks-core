@@ -425,7 +425,6 @@ CExportContext::CExportContext(void) {
     asEther = false;
     asDollars = false;
     asWei = true;
-    asParity = false;
     tsMemMap = nullptr;
     tsCnt = 0;
     exportFmt = (isApiMode() ? API1 : TXT1);

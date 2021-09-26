@@ -129,8 +129,8 @@ bool COptionsBase::isBadSingleDash(const string_q& arg) const {
             return true;
     }
 
-    CStringArray builtInCmds = {"verbose", "fmt",     "ether",  "output",  "raw",     "mocked",
-                                "wei",     "dollars", "parity", "version", "nocolor", "noop"};
+    CStringArray builtInCmds = {"verbose", "fmt",     "ether",   "output",  "raw", "mocked",
+                                "wei",     "dollars", "version", "nocolor", "noop"};
 
     for (auto bi : builtInCmds) {
         if (arg == ("-" + bi))
@@ -442,14 +442,6 @@ bool COptionsBase::standardOptions(string_q& cmdLine) {
         expContext().asWei = false;
     }
 
-    if (isEnabled(OPT_PARITY) && contains(cmdLine, "--parity ")) {
-        replaceAll(cmdLine, "--parity ", "");
-        expContext().spcs = 2;
-        expContext().hexNums = true;
-        expContext().quoteNums = true;
-        expContext().asParity = true;
-    }
-
     cmdLine = trim(cmdLine);
     return true;
 }
@@ -480,8 +472,6 @@ bool COptionsBase::builtInCmd(const string_q& arg) {
     if (isEnabled(OPT_WEI) && arg == "--wei")
         return true;
     if (isEnabled(OPT_DOLLARS) && arg == "--dollars")
-        return true;
-    if (isEnabled(OPT_PARITY) && (arg == "--parity"))
         return true;
     if (arg == "--version")
         return true;

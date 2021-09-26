@@ -28,7 +28,6 @@ on,cmd,fast,null,utillib/fileTest,test07,n,val = rm
 on,cmd,fast,null,utillib/jsonTest,nothing,n,
 on,cmd,fast,null,utillib/jsonTest,test_blocks,n,val = blocks
 on,cmd,fast,null,utillib/jsonTest,test_escaped,n,val = escaped
-on,cmd,fast,null,utillib/jsonTest,test_random,n,val = random & parity
 on,cmd,fast,null,utillib/jsonTest,test_spaces,n,val = spaces
 on,cmd,fast,null,utillib/jsonTest,test_traces,n,val = traces
 on,cmd,fast,null,utillib/loggingTest,test_logging,n,
@@ -82,5 +81,5 @@ on,cmd,fast,null,utillib/typesTest,01,n,val = 0
 off,cmd,fast,null,utillib/runningTest,01,n,val = 0
 on,cmd,fast,null,utillib/versionTest,versions,n,
 on,cmd,fast,null,utillib/yamlTest,01,n,val = 0
-on,cmd,fast,null,utillib/builtInTest,minimal,n,fmt = json & ether & mocked & wei & dollars & parity & nocolor & noop
-on,cmd,fast,null,utillib/builtInTest,verbose,n,verbose & fmt = json & ether & mocked & wei & dollars & parity & nocolor & noop & output file & raw & version
+on,cmd,fast,null,utillib/builtInTest,minimal,n,fmt = json & ether & mocked & wei & dollars & nocolor & noop
+on,cmd,fast,null,utillib/builtInTest,verbose,n,verbose & fmt = json & ether & mocked & wei & dollars & nocolor & noop & output file & raw & version

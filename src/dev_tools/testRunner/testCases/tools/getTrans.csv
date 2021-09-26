@@ -12,7 +12,6 @@ on,both,fast,transactions,tools/getTrans,invalid_param_3,y,transactions = 123312
 on,both,fast,transactions,tools/getTrans,bad_hash,y,transactions = 0x0012
 on,both,fast,transactions,tools/getTrans,by_txhash,n,transactions = 0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a070cd671d3d765 & fmt = txt
 on,both,medi,transactions,tools/getTrans,by_bnun_and_txid,n,transactions = 4000002.5 & trace & fmt = txt
-on,both,fast,transactions,tools/getTrans,by_bhash_and_txid,y,transactions = 0xb8a3f7f5cfc1748f91a684f20fe89031202cbadcd15078c49b85ec2a57f43853.4 & fmt = json & parity
 on,both,medi,transactions,tools/getTrans,keys_combination,y,transactions = 0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a070cd671d3d765 4000000.5 0xb8a3f7f5cfc1748f91a684f20fe89031202cbadcd15078c49b85ec2a57f43853.4 & fmt = json
 on,both,fast,transactions,tools/getTrans,from_node,n,transactions = 4000000.5 & raw
 on,both,fast,transactions,tools/getTrans,from_node_long,n,transactions = 4000000.5 & raw
@@ -55,7 +54,6 @@ on,both,fast,transactions,tools/getTrans,to_file,y,transactions = 2222222.0 2332
 on,cmd,fast,transactions,tools/getTrans,by_file,n,file:cmd_file & bad
 on,cmd,fast,transactions,tools/getTrans,by_file_1,n,file:cmd_file & fmt = csv
 on,cmd,fast,transactions,tools/getTrans,by_file_v,n,file:cmd_file & fmt = json
-on,cmd,fast,transactions,tools/getTrans,by_file_long_v,n,file:cmd_file & fmt = json & parity
 on,both,fast,transactions,tools/getTrans,old_hang_bug,y,transactions = 6409270.108 & articulate & fmt = json
 on,both,slow,transactions,tools/getTrans,old_parsing_bug_1,y,transactions = 0xfa62ab036f36b4755bfa0d6e3e641d08daa7e41e95b0c1f2246485702319efb8 & fmt = json & articulate
 on,both,slow,transactions,tools/getTrans,old_parsing_bug_2,y,transactions = 0xfa62ab036f36b4755bfa0d6e3e641d08daa7e41e95b0c1f2246485702319efb8 & fmt = json & articulate

@@ -23,12 +23,10 @@ on,both,fast,traces,tools/getTraces,verbose_blk_idx3,n,transactions = 0x0f1217b9
 on,both,slow,traces,tools/getTraces,by_txhash,y,transactions = 0x66e49e99a984cd88e097782a001afaac8c6ff786c936651895475dd88ec360f6 & fmt = api
 on,both,medi,traces,tools/getTraces,by_bnun_and_txid,y,transactions = 4348290.92 & fmt = api
 on,both,medi,traces,tools/getTraces,by_bnun_and_txid_c,y,transactions = 4348290.92 & fmt = api & count
-on,both,medi,traces,tools/getTraces,by_bhash_and_txid,y,transactions = 0x96a09b25c3748974bb7e08780074482a164ab5a21e2ffc6c7115ec73c84e7f73.92 & parity & fmt = api
 on,both,fast,traces,tools/getTraces,by_blk_hash_good,y,transactions = 0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.55 & verbose
 on,both,fast,traces,tools/getTraces,by_blk_hash_bad,y,transactions = 0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.155 & verbose
 on,both,fast,traces,tools/getTraces,from_node_long,n,transactions = 4000000.5 & fmt = csv
 on,both,medi,traces,tools/getTraces,00,n,transactions = 0x0cc945824def6a5c81d86ca56848f92163838bbd480a3bd2ff85f6d5b13d72ab & raw
-on,both,medi,traces,tools/getTraces,01,y,transactions = 0x27fe46968ee62ec01ccb5dd3cbabd479f03c0374c2b6897c0faabfc748367b12 0x0cc945824def6a5c81d86ca56848f92163838bbd480a3bd2ff85f6d5b13d72ab & parity & fmt = json
 on,both,fast,traces,tools/getTraces,03,y,transactions = 0x17104ac9d3312d8c136b7f44d4b8b47852618065ebfa534bd2d3b5ef218ca1f3 & fmt = json
 on,both,fast,traces,tools/getTraces,04,n,transactions = 0x3d762e5f4c2a5c4ed3f4678d81f9078ff68e9d236d87dbcf3eee024dbb11f497 & raw & fmt = json
 on,both,medi,traces,tools/getTraces,25,n,transactions = 0x8324490c68e6268db9eadcb4ce8303ee1d256e480f7637853bb13a3ae1fe1328 & raw
@@ -61,7 +59,6 @@ on,both,fast,traces,tools/getTraces,fmt_api,y,transactions = 2222222.0 2332332.0
 on,cmd,fast,traces,tools/getTraces,fmt_junk,y,transactions = 2222222.0 2332332.0 & fmt = junk
 on,cmd,fast,traces,tools/getTraces,by_filebad,n,bad & file:cmd_file
 on,cmd,fast,traces,tools/getTraces,by_file,n,file:cmd_file
-on,cmd,fast,traces,tools/getTraces,by_file_long_v,y,file:cmd_file & verbose & parity & fmt = api
 on,both,fast,traces,tools/getTraces,by_filter1,y,fmt = json & filter = 0x2ed0c4!0x2ed128!!0x8bbb73bcb5d553b5a556358d27625323fd781d37!1000!100
 on,both,fast,traces,tools/getTraces,by_filter2,y,fmt = json & filter = 0x2ed0c4!0x2ed128!!0x8bbb73bcb5d553b5a556358d27625323fd781d37!!
 on,both,fast,traces,tools/getTraces,by_filter3,y,fmt = json & filter = 0x2ed0c4!0x2ed128!!0x8bbb73bcb5d553b5a556358d27625323fd781d37!!1

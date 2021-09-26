@@ -22,11 +22,9 @@ on,both,fast,logs,tools/getLogs,verbose_blk_idx2,y,transactions = 0x0f1217b92276
 on,both,fast,logs,tools/getLogs,verbose_blk_idx3,y,transactions = 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.36 & fmt = json
 on,both,fast,logs,tools/getLogs,by_txhash,y,transactions = 0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a070cd671d3d765
 on,both,fast,logs,tools/getLogs,by_bnun_and_txid,y,transactions = 4000000.5 & fmt = api
-on,both,fast,logs,tools/getLogs,by_bhash_and_txid,y,transactions = 0xb8a3f7f5cfc1748f91a684f20fe89031202cbadcd15078c49b85ec2a57f43853.4 & fmt = json & parity
 on,both,medi,logs,tools/getLogs,by_blk_hash_good,y,transactions = 0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.55 & verbose
 on,both,fast,logs,tools/getLogs,by_blk_hash_bad,y,transactions = 0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.155 & verbose
 on,both,fast,logs,tools/getLogs,from_node,n,transactions = 4000000.5 & raw
-on,both,slow,logs,tools/getLogs,prev_bug2_1,y,transactions = 4279119.46 & fmt = api & parity
 on,both,medi,logs,tools/getLogs,prev_bug2_2,n,transactions = 4279119.46 & raw
 off,both,fast,logs,tools/getLogs,multi_articulate,y,transactions = 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f & articulate & fmt = json
 on,both,medi,logs,tools/getLogs,star,y,transactions = 1428993.* & fmt = api
@@ -41,4 +39,3 @@ on,both,fast,logs,tools/getLogs,to_file,y,transactions = 2222222.0 2332332.0 & f
 on,cmd,fast,logs,tools/getLogs,by_filebad,y,file:cmd_file & bad
 off,cmd,slow,logs,tools/getLogs,by_file,y,file:cmd_file
 on,cmd,fast,logs,tools/getLogs,by_file_v,y,file:cmd_file & verbose & fmt = json
-on,cmd,fast,logs,tools/getLogs,by_file_long_v,y,file:cmd_file & verbose & parity & fmt = json

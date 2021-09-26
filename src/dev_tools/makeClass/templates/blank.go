@@ -22,18 +22,25 @@ import (
 	"github.com/spf13/cobra"
 )
 
+// [{ROUTE}]Cmd represents the [{ROUTE}] command
+var [{ROUTE}]Cmd = &cobra.Command{
+	Use:   usage[{PROPER}],
+	Short: short[{PROPER}],
+	Long:  long[{PROPER}],
+	Run:   run[{PROPER}],
+	Args:  ValidatePositionals(validate[{PROPER}]Args, cobra.MinimumNArgs(1)),
+}
+
+var usage[{PROPER}] = `[{USE}]`
+
+var short[{PROPER}] = "[{SHORT}]"
+
+var long[{PROPER}] = `[{LONG}]`
+
 type [{ROUTE}]OptionsType struct {
 [{OPT_FIELDS}]}
 
 var [{PROPER}]Opts [{ROUTE}]OptionsType
-
-// [{ROUTE}]Cmd represents the [{ROUTE}] command
-var [{ROUTE}]Cmd = &cobra.Command{
-	Use: `[{USE}]`,
-	Short: "[{SHORT}]",
-	Long: `[{LONG}]`,
-	Run: run[{PROPER}],
-}
 
 func init() {
 	[{ROUTE}]Cmd.SetOut(os.Stderr)
@@ -43,14 +50,22 @@ func init() {
 [{SET_OPTS}]	[{ROUTE}]Cmd.Flags().SortFlags = false
 	[{ROUTE}]Cmd.PersistentFlags().SortFlags = false
 
+	PostNotes = "[{POSTNOTES}]"
 	rootCmd.AddCommand([{ROUTE}]Cmd)
 }
 
 func run[{PROPER}](cmd *cobra.Command, args []string) {
 	options := ""
 [{COPY_OPTS}]	arguments := ""
-    for _, arg := range args {
+	for _, arg := range args {
 		arguments += " " + arg
 	}
 	PassItOn("[{PATH}]", options, arguments)
+}
+
+func validate[{PROPER}]Args(cmd *cobra.Command, args []string) error {
+	if len(args) > 0 && args[0] == "12" {
+		return ErrFunc(cmd, errors.New("Invalid argument "+args[0]))
+	}
+	return nil
 }
