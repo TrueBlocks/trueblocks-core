@@ -40,6 +40,11 @@ var shortPins = "manage pinned index of appearances and associated Bloom filters
 var longPins = `Purpose:
   Manage pinned index of appearances and associated Bloom filters.`
 
+var notesPins = `
+Notes:
+  - One of --list, --init, or --init_all is required.
+  - the --pin_locally option only works if the IPFS executable is in your path.`
+
 type pinsOptionsType struct {
 	list        bool
 	init        bool
@@ -65,7 +70,7 @@ func init() {
 	pinsCmd.Flags().SortFlags = false
 	pinsCmd.PersistentFlags().SortFlags = false
 
-	PostNotes = ""
+	pinsCmd.SetUsageTemplate(HelpWithNotes(notesPins))
 	rootCmd.AddCommand(pinsCmd)
 }
 

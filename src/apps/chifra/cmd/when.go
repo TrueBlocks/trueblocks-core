@@ -43,6 +43,11 @@ var shortWhen = "find block(s) based on date, blockNum, timestamp, or 'special'"
 var longWhen = `Purpose:
   Find block(s) based on date, blockNum, timestamp, or 'special'.`
 
+var notesWhen = `
+Notes:
+  - The block list may contain any combination of number, hash, date, special named blocks.
+  - Dates must be formatted in JSON format: YYYY-MM-DD[THH[:MM[:SS]]].`
+
 type whenOptionsType struct {
 	list       bool
 	timestamps bool
@@ -68,7 +73,7 @@ func init() {
 	whenCmd.Flags().SortFlags = false
 	whenCmd.PersistentFlags().SortFlags = false
 
-	PostNotes = ""
+	whenCmd.SetUsageTemplate(HelpWithNotes(notesWhen))
 	rootCmd.AddCommand(whenCmd)
 }
 

@@ -42,6 +42,10 @@ var shortAbis = "fetches the ABI for a smart contract"
 var longAbis = `Purpose:
   Fetches the ABI for a smart contract.`
 
+var notesAbis = `
+Notes:
+  - Solidity files found in the local folder with the name '<address>.sol' are converted to an ABI prior to processing (and then removed).`
+
 type abisOptionsType struct {
 	known   bool
 	sol     string
@@ -65,7 +69,7 @@ func init() {
 	abisCmd.Flags().SortFlags = false
 	abisCmd.PersistentFlags().SortFlags = false
 
-	PostNotes = ""
+	abisCmd.SetUsageTemplate(HelpWithNotes(notesAbis))
 	rootCmd.AddCommand(abisCmd)
 }
 

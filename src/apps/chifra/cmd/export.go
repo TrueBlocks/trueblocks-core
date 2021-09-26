@@ -45,6 +45,10 @@ var shortExport = "export full detail of transactions for one or more addresses"
 var longExport = `Purpose:
   Export full detail of transactions for one or more addresses.`
 
+var notesExport = `
+Notes:
+  - An address must start with '0x' and be forty-two characters long.`
+
 type exportOptionsType struct {
 	appearances  bool
 	receipts     bool
@@ -106,7 +110,8 @@ func init() {
 	exportCmd.Flags().StringVarP(&ExportOpts.load, "load", "", "", "a comma separated list of dynamic traversers to load (hidden)")
 	exportCmd.Flags().BoolVarP(&ExportOpts.reversed, "reversed", "", false, "produce results in reverse chronological order (hidden)")
 	exportCmd.Flags().BoolVarP(&ExportOpts.by_date, "by_date", "b", false, "produce results sorted by date (default is to report by address) (hidden)")
-	exportCmd.Flags().StringVarP(&ExportOpts.summarize_by, "summarize_by", "z", "", "for --accounting only, summarize reconciliations by this time period (hidden)")
+	exportCmd.Flags().StringVarP(&ExportOpts.summarize_by, "summarize_by", "z", "", `for --accounting only, summarize reconciliations by this time period (hidden)
+One of yearly, quarterly, monthly, weekly, daily, hourly, blockly, tx`)
 	exportCmd.Flags().BoolVarP(&ExportOpts.skip_ddos, "skip_ddos", "d", false, "toggle skipping over 2016 dDos transactions ('on' by default) (hidden)")
 	exportCmd.Flags().Uint64VarP(&ExportOpts.max_traces, "max_traces", "m", 0, "if --skip_ddos is on, this many traces defines what a ddos transaction|is (default = 250) (hidden)")
 	exportCmd.Flags().Uint64VarP(&ExportOpts.first_block, "first_block", "F", 0, "first block to process (inclusive) (hidden)")
@@ -114,7 +119,7 @@ func init() {
 	exportCmd.Flags().SortFlags = false
 	exportCmd.PersistentFlags().SortFlags = false
 
-	PostNotes = ""
+	exportCmd.SetUsageTemplate(HelpWithNotes(notesExport))
 	rootCmd.AddCommand(exportCmd)
 }
 

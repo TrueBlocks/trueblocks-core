@@ -42,6 +42,15 @@ var shortLogs = "retrieve logs for the given transaction(s)"
 var longLogs = `Purpose:
   Retrieve logs for the given transaction(s).`
 
+var notesLogs = `
+Notes:
+  - The transactions list may be one or more space-separated identifiers which are either a transaction hash,
+    a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.
+  - This tool checks for valid input syntax, but does not check that the transaction requested actually exists.
+  - If the queried node does not store historical state, the results for most older transactions are undefined.
+  - If you specify a 32-byte hash, it will be assumed to be a transaction hash, if the transaction is
+    not found, it will be used as a topic.`
+
 type logsOptionsType struct {
 	topic      []string
 	source     []string
@@ -61,7 +70,7 @@ func init() {
 	logsCmd.Flags().SortFlags = false
 	logsCmd.PersistentFlags().SortFlags = false
 
-	PostNotes = ""
+	logsCmd.SetUsageTemplate(HelpWithNotes(notesLogs))
 	rootCmd.AddCommand(logsCmd)
 }
 

@@ -43,6 +43,8 @@ var shortStatus = "report on the status of the TrueBlocks system"
 var longStatus = `Purpose:
   Report on the status of the TrueBlocks system.`
 
+var notesStatus = ``
+
 type statusOptionsType struct {
 	details    bool
 	types      string
@@ -64,11 +66,13 @@ func init() {
 	statusCmd.Flags().SortFlags = false
 	statusCmd.PersistentFlags().SortFlags = false
 	statusCmd.Flags().BoolVarP(&StatusOpts.details, "details", "d", false, "include details about items found in monitors, slurps, abis, or price caches")
-	statusCmd.Flags().StringVarP(&StatusOpts.types, "types", "t", "", "for caches mode only, which type(s) of cache to report")
+	statusCmd.Flags().StringVarP(&StatusOpts.types, "types", "t", "", `for caches mode only, which type(s) of cache to report
+One or more of blocks, transactions, traces, slurps, prices, all`)
 	statusCmd.Flags().Uint64VarP(&StatusOpts.depth, "depth", "p", 0, "for cache mode only, number of levels deep to report (hidden)")
 	statusCmd.Flags().BoolVarP(&StatusOpts.report, "report", "r", false, "show a summary of the current status of TrueBlocks (deprecated) (hidden)")
 	statusCmd.Flags().BoolVarP(&StatusOpts.terse, "terse", "e", false, "show a terse summary report (hidden)")
-	statusCmd.Flags().StringVarP(&StatusOpts.migrate, "migrate", "m", "", "either effectuate or test to see if a migration is necessary (hidden)")
+	statusCmd.Flags().StringVarP(&StatusOpts.migrate, "migrate", "m", "", `either effectuate or test to see if a migration is necessary (hidden)
+One or more of test, abi_cache, block_cache, tx_cache, trace_cache, recon_cache, name_cache, slurp_cache, all`)
 	statusCmd.Flags().BoolVarP(&StatusOpts.get_config, "get_config", "g", false, "returns JSON data of the editable configuration file items (hidden)")
 	statusCmd.Flags().BoolVarP(&StatusOpts.set_config, "set_config", "s", false, "accepts JSON in an env variable and writes it to configuration files (hidden)")
 	statusCmd.Flags().Uint64VarP(&StatusOpts.test_start, "test_start", "S", 0, "first block to process (inclusive -- testing only) (hidden)")
@@ -76,7 +80,7 @@ func init() {
 	statusCmd.Flags().SortFlags = false
 	statusCmd.PersistentFlags().SortFlags = false
 
-	PostNotes = ""
+	statusCmd.SetUsageTemplate(HelpWithNotes(notesStatus))
 	rootCmd.AddCommand(statusCmd)
 }
 

@@ -43,6 +43,15 @@ var shortState = "retrieve account balance(s) for one or more addresses at given
 var longState = `Purpose:
   Retrieve account balance(s) for one or more addresses at given block(s).`
 
+var notesState = `
+Notes:
+  - An address must start with '0x' and be forty-two characters long.
+  - blocks may be a space-separated list of values, a start-end range, a special, or any combination.
+  - If the queried node does not store historical state, the results are undefined.
+  - special blocks are detailed under chifra when --list.
+  - balance is the default mode. To select a single mode use none first, followed by that mode.
+  - You may specify multiple modes on a single line.`
+
 type stateOptionsType struct {
 	parts   string
 	changes bool
@@ -57,14 +66,15 @@ func init() {
 
 	stateCmd.Flags().SortFlags = false
 	stateCmd.PersistentFlags().SortFlags = false
-	stateCmd.Flags().StringVarP(&StateOpts.parts, "parts", "p", "", "control which state to export")
+	stateCmd.Flags().StringVarP(&StateOpts.parts, "parts", "p", "", `control which state to export
+One or more of none, some, all, balance, nonce, code, storage, deployed, accttype`)
 	stateCmd.Flags().BoolVarP(&StateOpts.changes, "changes", "c", false, "only report a balance when it changes from one block to the next")
 	stateCmd.Flags().BoolVarP(&StateOpts.no_zero, "no_zero", "n", false, "suppress the display of zero balance accounts")
 	stateCmd.Flags().StringVarP(&StateOpts.call, "call", "a", "", "a bang-separated string consisting of address!4-byte!bytes (hidden)")
 	stateCmd.Flags().SortFlags = false
 	stateCmd.PersistentFlags().SortFlags = false
 
-	PostNotes = ""
+	stateCmd.SetUsageTemplate(HelpWithNotes(notesState))
 	rootCmd.AddCommand(stateCmd)
 }
 

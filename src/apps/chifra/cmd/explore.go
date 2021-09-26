@@ -42,6 +42,8 @@ var shortExplore = "open an explorer for a given address, block, or transaction"
 var longExplore = `Purpose:
   Open an explorer for a given address, block, or transaction.`
 
+var notesExplore = ``
+
 type exploreOptionsType struct {
 	local  bool
 	google bool
@@ -59,7 +61,7 @@ func init() {
 	exploreCmd.Flags().SortFlags = false
 	exploreCmd.PersistentFlags().SortFlags = false
 
-	PostNotes = ""
+	exploreCmd.SetUsageTemplate(HelpWithNotes(notesExplore))
 	rootCmd.AddCommand(exploreCmd)
 }
 

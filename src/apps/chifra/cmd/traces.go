@@ -43,6 +43,16 @@ var shortTraces = "retrieve traces for the given transaction(s)"
 var longTraces = `Purpose:
   Retrieve traces for the given transaction(s).`
 
+var notesTraces = `
+Notes:
+  - The transactions list may be one or more space-separated identifiers which are either a transaction hash,
+    a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.
+  - This tool checks for valid input syntax, but does not check that the transaction requested actually exists.
+  - If the queried node does not store historical state, the results for most older transactions are undefined.
+  - A bang seperated filter has the following fields (at least one of which is required) and is separated
+    with a bang (!): fromBlk, toBlk, fromAddr, toAddr, after, count.
+  - A state diff trace describes, for each modified address, what changed during that trace.`
+
 type tracesOptionsType struct {
 	articulate bool
 	filter     string
@@ -68,7 +78,7 @@ func init() {
 	tracesCmd.Flags().SortFlags = false
 	tracesCmd.PersistentFlags().SortFlags = false
 
-	PostNotes = ""
+	tracesCmd.SetUsageTemplate(HelpWithNotes(notesTraces))
 	rootCmd.AddCommand(tracesCmd)
 }
 

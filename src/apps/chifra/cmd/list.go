@@ -42,6 +42,8 @@ var shortList = "list every appearance of an address anywhere on the chain"
 var longList = `Purpose:
   List every appearance of an address anywhere on the chain.`
 
+var notesList = ``
+
 type listOptionsType struct {
 }
 
@@ -55,7 +57,7 @@ func init() {
 	listCmd.Flags().SortFlags = false
 	listCmd.PersistentFlags().SortFlags = false
 
-	PostNotes = ""
+	listCmd.SetUsageTemplate(HelpWithNotes(notesList))
 	rootCmd.AddCommand(listCmd)
 }
 

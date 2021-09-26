@@ -42,6 +42,8 @@ var shortMonitors = "add, remove, clean, and list address monitors"
 var longMonitors = `Purpose:
   Add, remove, clean, and list address monitors.`
 
+var notesMonitors = ``
+
 type monitorsOptionsType struct {
 	delete bool
 	remove bool
@@ -59,7 +61,7 @@ func init() {
 	monitorsCmd.Flags().SortFlags = false
 	monitorsCmd.PersistentFlags().SortFlags = false
 
-	PostNotes = ""
+	monitorsCmd.SetUsageTemplate(HelpWithNotes(notesMonitors))
 	rootCmd.AddCommand(monitorsCmd)
 }
 

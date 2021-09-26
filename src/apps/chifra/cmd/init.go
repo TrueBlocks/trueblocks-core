@@ -39,6 +39,8 @@ var shortInit = "initialize the index of appearances by downloading Bloom filter
 var longInit = `Purpose:
   Initialize the index of appearances by downloading Bloom filters.`
 
+var notesInit = ``
+
 type initOptionsType struct {
 }
 
@@ -52,7 +54,7 @@ func init() {
 	initCmd.Flags().SortFlags = false
 	initCmd.PersistentFlags().SortFlags = false
 
-	PostNotes = ""
+	initCmd.SetUsageTemplate(HelpWithNotes(notesInit))
 	rootCmd.AddCommand(initCmd)
 }
 

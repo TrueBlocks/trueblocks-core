@@ -43,6 +43,10 @@ var shortSlurp = "fetch data from EtherScan for any address"
 var longSlurp = `Purpose:
   Fetch data from EtherScan for any address.`
 
+var notesSlurp = `
+Notes:
+  - Portions of this software are Powered by Etherscan.io APIs.`
+
 type slurpOptionsType struct {
 	types       string
 	appearances bool
@@ -55,12 +59,13 @@ func init() {
 
 	slurpCmd.Flags().SortFlags = false
 	slurpCmd.PersistentFlags().SortFlags = false
-	slurpCmd.Flags().StringVarP(&SlurpOpts.types, "types", "t", "", "one or more types of transactions to request")
+	slurpCmd.Flags().StringVarP(&SlurpOpts.types, "types", "t", "", `which types of transactions to request
+One or more of ext, int, token, nfts, miner, uncles, all`)
 	slurpCmd.Flags().BoolVarP(&SlurpOpts.appearances, "appearances", "p", false, "show only the blocknumer.tx_id appearances of the exported transactions")
 	slurpCmd.Flags().SortFlags = false
 	slurpCmd.PersistentFlags().SortFlags = false
 
-	PostNotes = ""
+	slurpCmd.SetUsageTemplate(HelpWithNotes(notesSlurp))
 	rootCmd.AddCommand(slurpCmd)
 }
 

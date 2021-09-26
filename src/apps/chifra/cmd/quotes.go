@@ -39,6 +39,13 @@ var shortQuotes = "freshen and/or display Ethereum price data"
 var longQuotes = `Purpose:
   Freshen and/or display Ethereum price data.`
 
+var notesQuotes = `
+Notes:
+  - Valid pairs include any pair from the public Poloniex's API here:
+    https://poloniex.com/public?command=returnCurrencies.
+  - Due to restrictions from Poloniex, this tool retrieves only 30 days of data
+    at a time. You must repeatedly run this command until the data is up-to-date.`
+
 type quotesOptionsType struct {
 	freshen bool
 	period  string
@@ -54,13 +61,15 @@ func init() {
 	quotesCmd.Flags().SortFlags = false
 	quotesCmd.PersistentFlags().SortFlags = false
 	quotesCmd.Flags().BoolVarP(&QuotesOpts.freshen, "freshen", "f", false, "Freshen price database")
-	quotesCmd.Flags().StringVarP(&QuotesOpts.period, "period", "p", "", "increment of display")
+	quotesCmd.Flags().StringVarP(&QuotesOpts.period, "period", "p", "", `increment of display
+One of 5, 15, 30, 60, 120, 240, 1440, 10080, hourly, daily, weekly`)
 	quotesCmd.Flags().StringVarP(&QuotesOpts.pair, "pair", "a", "", "which price pair to freshen or list (see Poloniex)")
-	quotesCmd.Flags().StringVarP(&QuotesOpts.feed, "feed", "e", "", "the feed for the price data")
+	quotesCmd.Flags().StringVarP(&QuotesOpts.feed, "feed", "e", "", `the feed for the price data
+One of poloniex, maker, tellor`)
 	quotesCmd.Flags().SortFlags = false
 	quotesCmd.PersistentFlags().SortFlags = false
 
-	PostNotes = ""
+	quotesCmd.SetUsageTemplate(HelpWithNotes(notesQuotes))
 	rootCmd.AddCommand(quotesCmd)
 }
 

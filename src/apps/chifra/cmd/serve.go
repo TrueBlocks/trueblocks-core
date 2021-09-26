@@ -52,7 +52,7 @@ func init() {
 	serveCmd.Flags().SortFlags = false
 	serveCmd.PersistentFlags().SortFlags = false
 
-	PostNotes = "[{POSTNOTES}]"
+	serveCmd.SetHelpTemplate("[{POSTNOTES}]")
 	rootCmd.AddCommand(serveCmd)
 }
 

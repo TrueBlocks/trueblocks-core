@@ -21,6 +21,7 @@ import (
 	"os"
 	"os/exec"
 	"strings"
+	"sync"
 
 	"github.com/spf13/cobra"
 
@@ -35,11 +36,22 @@ type rootOptTypes struct {
 	fmt        string
 	verbose    bool
 	logLevel   uint
+	noHeader   bool
+	wei        bool
+	ether      bool
+	dollars    bool
 	help       bool
 	raw        bool
 	outputFile string
 	toFile     bool
 	file       string
+	version    bool
+	noop       bool
+	create     bool
+	delete     bool
+	update     bool
+	remove     bool
+	undelete   bool
 }
 
 var RootOpts rootOptTypes
@@ -53,16 +65,11 @@ var rootCmd = &cobra.Command{
 	Version: "Powered by TrueBlocks (GHC-TrueBlocks//0.12.1-alpha-7c5fb3f2a-20210923)",
 }
 
-var PostNotes = ""
-
 // Execute adds all child commands to the root command and sets flags appropriately.
 func Execute() {
 	if err := rootCmd.Execute(); err != nil {
-		fmt.Fprintf(os.Stderr, "%s", PostNotes)
+		// fmt.Fprintf(os.Stderr, "%s", err)
 		os.Exit(1)
-	}
-	if RootOpts.help {
-		fmt.Fprintf(os.Stderr, "%s", PostNotes)
 	}
 }
 
@@ -73,18 +80,42 @@ func init() {
 	rootCmd.Flags().SortFlags = false
 	rootCmd.PersistentFlags().SortFlags = false
 	rootCmd.PersistentFlags().BoolVarP(&RootOpts.raw, "raw", "", false, "report JSON data from the node with minimal processing")
+	rootCmd.PersistentFlags().BoolVarP(&RootOpts.version, "version", "", false, "display the current version of the tool")
+	rootCmd.PersistentFlags().BoolVarP(&RootOpts.noop, "noop", "", false, "")
+	rootCmd.PersistentFlags().BoolVarP(&RootOpts.create, "create", "", false, "")
+	rootCmd.PersistentFlags().BoolVarP(&RootOpts.delete, "delete", "", false, "")
+	rootCmd.PersistentFlags().BoolVarP(&RootOpts.update, "update", "", false, "")
+	rootCmd.PersistentFlags().BoolVarP(&RootOpts.remove, "remove", "", false, "")
+	rootCmd.PersistentFlags().BoolVarP(&RootOpts.undelete, "undelete", "", false, "")
+
 	rootCmd.PersistentFlags().StringVarP(&RootOpts.fmt, "fmt", "x", "", "export format, one of [none|json*|txt|csv|api]")
-	rootCmd.PersistentFlags().BoolVarP(&RootOpts.verbose, "verbose", "v", false, "enable verbose (increase detail with --verbose.level)")
-	rootCmd.PersistentFlags().UintVarP(&RootOpts.logLevel, "verbose.level", "", 0, "")
+	rootCmd.PersistentFlags().BoolVarP(&RootOpts.verbose, "verbose", "v", false, "enable verbose (increase detail with --log_level)")
+	rootCmd.PersistentFlags().UintVarP(&RootOpts.logLevel, "log_level", "", 0, "")
+	rootCmd.PersistentFlags().BoolVarP(&RootOpts.noHeader, "no_header", "", false, "supress export of header row for csv and txt exports")
+	rootCmd.PersistentFlags().BoolVarP(&RootOpts.wei, "wei", "", false, "specify value in wei (the default)")
+	rootCmd.PersistentFlags().BoolVarP(&RootOpts.ether, "ether", "", false, "specify value in ether")
+	rootCmd.PersistentFlags().BoolVarP(&RootOpts.dollars, "dollars", "", false, "specify value in US dollars")
 	rootCmd.PersistentFlags().BoolVarP(&RootOpts.toFile, "to_file", "", false, "write the results to a temporary file and return the filename")
 	rootCmd.PersistentFlags().StringVarP(&RootOpts.file, "file", "", "", "specify multiple sets of command line options in a file")
 	rootCmd.PersistentFlags().StringVarP(&RootOpts.outputFile, "output", "", "", "write the results to file 'fn' and return the filename")
 	rootCmd.PersistentFlags().BoolVarP(&RootOpts.help, "help", "h", false, "display this help screen")
-	rootCmd.PersistentFlags().MarkHidden("verbose.level")
+	rootCmd.PersistentFlags().MarkHidden("log_level")
 	rootCmd.PersistentFlags().MarkHidden("output")
 	rootCmd.PersistentFlags().MarkHidden("raw")
+	rootCmd.PersistentFlags().MarkHidden("create")
+	rootCmd.PersistentFlags().MarkHidden("delete")
+	rootCmd.PersistentFlags().MarkHidden("update")
+	rootCmd.PersistentFlags().MarkHidden("remove")
+	rootCmd.PersistentFlags().MarkHidden("undelete")
+
+	rootCmd.PersistentFlags().MarkHidden("noop")
+	rootCmd.PersistentFlags().MarkHidden("version")
+	rootCmd.PersistentFlags().MarkHidden("wei")
+	rootCmd.PersistentFlags().MarkHidden("ether")
+	rootCmd.PersistentFlags().MarkHidden("dollars")
 	rootCmd.PersistentFlags().MarkHidden("file")
 	rootCmd.PersistentFlags().MarkHidden("to_file")
+	rootCmd.PersistentFlags().MarkHidden("no_header")
 	rootCmd.Flags().SortFlags = false
 	rootCmd.PersistentFlags().SortFlags = false
 
@@ -185,6 +216,27 @@ func PassItOn(path string, flags, arguments string) {
 	if RootOpts.raw {
 		options += " --raw"
 	}
+	if RootOpts.create {
+		options += " --create"
+	}
+	if RootOpts.delete {
+		options += " --delete"
+	}
+	if RootOpts.update {
+		options += " --update"
+	}
+	if RootOpts.remove {
+		options += " --remove"
+	}
+	if RootOpts.undelete {
+		options += " --undelete"
+	}
+	// if RootOpts.noop {
+	// 	options += " --noop"
+	// }
+	if RootOpts.version {
+		options += " --version"
+	}
 	if len(RootOpts.fmt) > 0 {
 		options += " --fmt " + RootOpts.fmt
 	}
@@ -198,10 +250,28 @@ func PassItOn(path string, flags, arguments string) {
 	if len(RootOpts.outputFile) > 0 {
 		options += " --output " + RootOpts.outputFile
 	}
+	if RootOpts.noHeader {
+		options += " --no_header"
+	}
+	if RootOpts.wei {
+		options += " --wei"
+	}
+	if RootOpts.ether {
+		options += " --ether"
+	}
+	if RootOpts.dollars {
+		options += " --dollars"
+	}
 	if RootOpts.toFile {
 		options += " --to_file"
 	}
+	if len(RootOpts.file) > 0 {
+		options += " --file:" + RootOpts.file
+	}
 	options += arguments
+
+	var wg sync.WaitGroup
+	wg.Add(2)
 
 	cmd := exec.Command(path, options)
 
@@ -212,19 +282,59 @@ func PassItOn(path string, flags, arguments string) {
 		go func() {
 			ScanForProgress(stderrPipe, func(msg string) {
 			})
+			wg.Done()
 		}()
 	}
 
-	stdout, _ := cmd.StdoutPipe()
-	cmd.Start()
-	scanner := bufio.NewScanner(stdout)
-	for scanner.Scan() {
-		m := scanner.Text()
-		fmt.Println(m)
-	}
+	stdout, err := cmd.StdoutPipe()
+    if err != nil {
+		fmt.Fprintf(os.Stderr, "%s", err)
+    } else {
+        go func() {
+        	cmd.Start()
+        	scanner := bufio.NewScanner(stdout)
+        	for scanner.Scan() {
+        		m := scanner.Text()
+        		fmt.Println(m)
+        	}
+			wg.Done()
+        }()
+    }
+	wg.Wait()
 	cmd.Wait()
 }
 
 func IsTestMode() bool {
 	return os.Getenv("TEST_MODE") == "true"
+}
+
+func HelpWithNotes(notes string) string {
+	// 	template := `{{with (or .Long .Short)}}{{. | trimTrailingWhitespaces}}
+
+	// {{end}}{{if or .Runnable .HasSubCommands}}{{.UsageString}}{{end}}`
+	t := `Usage:{{if .Runnable}}
+  {{.UseLine}}{{end}}{{if .HasAvailableSubCommands}}
+  {{.CommandPath}} [command]{{end}}{{if gt (len .Aliases) 0}}
+
+Aliases:
+  {{.NameAndAliases}}{{end}}{{if .HasExample}}
+
+Examples:
+{{.Example}}{{end}}{{if .HasAvailableSubCommands}}
+
+Available Commands:{{range .Commands}}{{if (or .IsAvailableCommand (eq .Name "help"))}}
+  {{rpad .Name .NamePadding }} {{.Short}}{{end}}{{end}}{{end}}{{if .HasAvailableLocalFlags}}
+
+Flags:
+{{.LocalFlags.FlagUsages | trimTrailingWhitespaces}}{{end}}{{if .HasAvailableInheritedFlags}}
+
+Global Flags:
+{{.InheritedFlags.FlagUsages | trimTrailingWhitespaces}}{{end}}{{if .HasHelpSubCommands}}
+
+Additional help topics:{{range .Commands}}{{if .IsAdditionalHelpTopicCommand}}
+  {{rpad .CommandPath .CommandPathPadding}} {{.Short}}{{end}}{{end}}{{end}}{{if .HasAvailableSubCommands}}
+
+Use "{{.CommandPath}} [command] --help" for more information about a command.{{end}}
+`
+	return t + notes
 }

@@ -42,6 +42,11 @@ var shortNames = "query addresses or names of well known accounts"
 var longNames = `Purpose:
   Query addresses or names of well known accounts.`
 
+var notesNames = `
+Notes:
+  - The tool will accept up to three terms, each of which must match against any field in the database.
+  - The --match_case option enables case sensitive matching.`
+
 type namesOptionsType struct {
 	expand      bool
 	match_case  bool
@@ -79,7 +84,7 @@ func init() {
 	namesCmd.Flags().SortFlags = false
 	namesCmd.PersistentFlags().SortFlags = false
 
-	PostNotes = ""
+	namesCmd.SetUsageTemplate(HelpWithNotes(notesNames))
 	rootCmd.AddCommand(namesCmd)
 }
 

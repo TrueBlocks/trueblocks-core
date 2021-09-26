@@ -43,6 +43,12 @@ var shortBlocks = "retrieve one or more blocks from the chain or local cache"
 var longBlocks = `Purpose:
   Retrieve one or more blocks from the chain or local cache.`
 
+var notesBlocks = `
+Notes:
+  - blocks is a space-separated list of values, a start-end range, a special, or any combination.
+  - blocks may be specified as either numbers or hashes.
+  - special blocks are detailed under chifra when --list.`
+
 type blocksOptionsType struct {
 	hashes     bool
 	uncles     bool
@@ -76,7 +82,7 @@ func init() {
 	blocksCmd.Flags().SortFlags = false
 	blocksCmd.PersistentFlags().SortFlags = false
 
-	PostNotes = ""
+	blocksCmd.SetUsageTemplate(HelpWithNotes(notesBlocks))
 	rootCmd.AddCommand(blocksCmd)
 }
 

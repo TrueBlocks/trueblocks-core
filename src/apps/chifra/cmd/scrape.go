@@ -40,6 +40,8 @@ var shortScrape = "scan the chain and update the TrueBlocks index of appearances
 var longScrape = `Purpose:
   Scan the chain and update the TrueBlocks index of appearances.`
 
+var notesScrape = ``
+
 type scrapeOptionsType struct {
 	pin           bool
 	sleep         float64
@@ -63,7 +65,7 @@ func init() {
 	scrapeCmd.Flags().SortFlags = false
 	scrapeCmd.PersistentFlags().SortFlags = false
 
-	PostNotes = ""
+	scrapeCmd.SetUsageTemplate(HelpWithNotes(notesScrape))
 	rootCmd.AddCommand(scrapeCmd)
 }
 
