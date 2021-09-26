@@ -1,5 +1,5 @@
-getTraces argc: 5 [1:2222222.0] [2:2332332.0] [3:--fmt] [4:api] 
-getTraces 2222222.0 2332332.0 --fmt api 
+getTraces argc: 5 [1:--fmt] [2:api] [3:2222222.0] [4:2332332.0] 
+getTraces --fmt api 2222222.0 2332332.0 
 {"data": [
   {
     "blockHash": "0xc65ac7164218ff90ca8101c360f717c465da10bd63007b071c26dd7dedd41324",

@@ -1,5 +1,5 @@
-getTraces argc: 5 [1:2222222.0] [2:2332332.0] [3:--fmt] [4:junk] 
-getTraces 2222222.0 2332332.0 --fmt junk 
+getTraces argc: 5 [1:--fmt] [2:junk] [3:2222222.0] [4:2332332.0] 
+getTraces --fmt junk 2222222.0 2332332.0 
 
   Export format (junk) must be one of [ json | txt | csv | api ]. Quitting...
 

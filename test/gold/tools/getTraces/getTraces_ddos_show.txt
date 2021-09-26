@@ -1,5 +1,5 @@
-getTraces argc: 4 [1:0x37c469573ca24f538d91f39e9d0b8d49927a36d70496ef74521cbf5c44a056d4] [2:--fmt] [3:json] 
-getTraces 0x37c469573ca24f538d91f39e9d0b8d49927a36d70496ef74521cbf5c44a056d4 --fmt json 
+getTraces argc: 4 [1:--fmt] [2:json] [3:0x37c469573ca24f538d91f39e9d0b8d49927a36d70496ef74521cbf5c44a056d4] 
+getTraces --fmt json 0x37c469573ca24f538d91f39e9d0b8d49927a36d70496ef74521cbf5c44a056d4 
 NO_CACHE = [true]
 { "data": [
   {

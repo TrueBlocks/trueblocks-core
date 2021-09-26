@@ -1,13 +1,11 @@
 getTraces argc: 2 [1:--other] 
 getTraces --other 
 
-  Invalid option: --other
-
-Purpose:
-  Retrieve traces for the given transaction(s).
+Error: 
+  unknown flag: --other
 
 Usage:
-  getTraces [flags] <tx_id> [tx_id...]
+  chifra traces [flags] <tx_id> [tx_id...]
 
 Arguments:
   transactions - a space-separated list of one or more transaction identifiers (required)
@@ -18,7 +16,7 @@ Flags:
   -d, --statediff       export state diff traces (not implemented)
   -c, --count           show the number of traces for the transaction only (fast)
   -s, --skip_ddos       skip over the 2016 ddos during export ('on' by default) (hidden)
-  -m, --max <num>       if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250) (hidden)
+  -m, --max uint        if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250) (hidden)
 
 Global Flags:
   -x, --fmt string     export format, one of [none|json*|txt|csv|api]
