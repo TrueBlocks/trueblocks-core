@@ -37,6 +37,8 @@ var short[{PROPER}] = "[{SHORT}]"
 
 var long[{PROPER}] = `[{LONG}]`
 
+var notes[{PROPER}] = `[{POSTNOTES}]`
+
 type [{ROUTE}]OptionsType struct {
 [{OPT_FIELDS}]}
 
@@ -49,7 +51,9 @@ func init() {
 	[{ROUTE}]Cmd.PersistentFlags().SortFlags = false
 [{SET_OPTS}]	[{ROUTE}]Cmd.Flags().SortFlags = false
 	[{ROUTE}]Cmd.PersistentFlags().SortFlags = false
-[{POSTNOTES}]	rootCmd.AddCommand([{ROUTE}]Cmd)
+
+	[{ROUTE}]Cmd.SetUsageTemplate(HelpWithNotes(notes[{PROPER}]))
+	rootCmd.AddCommand([{ROUTE}]Cmd)
 }
 
 func run[{PROPER}](cmd *cobra.Command, args []string) {
