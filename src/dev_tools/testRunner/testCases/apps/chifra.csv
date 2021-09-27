@@ -5,32 +5,28 @@ on,cmd,fast,null,apps/chifra,help_long,n,help
 on,cmd,fast,null,apps/chifra,help_no_params,n,
 on,cmd,fast,null,apps/chifra,help_invalid_option,n,modes = not_a_mode
 on,cmd,fast,null,apps/chifra,help_chifra,n,help
-on,cmd,fast,null,apps/chifra,help_list,n,modes = monitors & help & verbose = 2
-on,cmd,fast,null,apps/chifra,help_export,n,modes = export & help & verbose = 2
-on,cmd,fast,null,apps/chifra,help_explore,n,modes = explore & help & verbose = 2
-on,cmd,fast,null,apps/chifra,help_slurp,n,modes = slurp & help & verbose = 2
-on,cmd,fast,null,apps/chifra,help_rm,n,modes = monitors & delete & help & verbose = 2
-on,cmd,fast,null,apps/chifra,help_collections,n,modes = collections & help & verbose = 2
-on,cmd,fast,null,apps/chifra,help_names,n,modes = names & help & verbose = 2
-on,cmd,fast,null,apps/chifra,help_tags,n,modes = tags & help & verbose = 2
-on,cmd,fast,null,apps/chifra,help_abis,n,modes = abis & help & verbose = 2
-on,cmd,fast,null,apps/chifra,help_blocks,n,modes = blocks & help & verbose = 2
-on,cmd,fast,null,apps/chifra,help_transactions,n,modes = transactions & help & verbose = 2
-on,cmd,fast,null,apps/chifra,help_receipts,n,modes = receipts & help & verbose = 2
-on,cmd,fast,null,apps/chifra,help_logs,n,modes = logs & help & verbose = 2
-on,cmd,fast,null,apps/chifra,help_traces,n,modes = traces & help & verbose = 2
-on,cmd,fast,null,apps/chifra,help_state,n,modes = state & help & verbose = 2
-on,cmd,fast,null,apps/chifra,help_tokens,n,modes = tokens & help & verbose = 2
-on,cmd,fast,null,apps/chifra,help_scrape,n,modes = scrape & help & verbose = 2
-off,cmd,fast,null,apps/chifra,help_server,n,modes = serve & help & verbose = 2
-on,cmd,fast,null,apps/chifra,help_status,n,modes = status & help & verbose = 2
-on,cmd,fast,null,apps/chifra,help_quotes,n,modes = quotes & help & verbose = 2
-on,cmd,fast,null,apps/chifra,help_when,n,modes = when & help & verbose = 2
+on,cmd,fast,null,apps/chifra,help_list,n,modes = monitors & help & log_level = 2
+on,cmd,fast,null,apps/chifra,help_export,n,modes = export & help & log_level = 2
+on,cmd,fast,null,apps/chifra,help_explore,n,modes = explore & help & log_level = 2
+on,cmd,fast,null,apps/chifra,help_slurp,n,modes = slurp & help & log_level = 2
+on,cmd,fast,null,apps/chifra,help_rm,n,modes = monitors & delete & help & log_level = 2
+on,cmd,fast,null,apps/chifra,help_names,n,modes = names & help & log_level = 2
+on,cmd,fast,null,apps/chifra,help_abis,n,modes = abis & help & log_level = 2
+on,cmd,fast,null,apps/chifra,help_blocks,n,modes = blocks & help & log_level = 2
+on,cmd,fast,null,apps/chifra,help_transactions,n,modes = transactions & help & log_level = 2
+on,cmd,fast,null,apps/chifra,help_receipts,n,modes = receipts & help & log_level = 2
+on,cmd,fast,null,apps/chifra,help_logs,n,modes = logs & help & log_level = 2
+on,cmd,fast,null,apps/chifra,help_traces,n,modes = traces & help & log_level = 2
+on,cmd,fast,null,apps/chifra,help_state,n,modes = state & help & log_level = 2
+on,cmd,fast,null,apps/chifra,help_tokens,n,modes = tokens & help & log_level = 2
+on,cmd,fast,null,apps/chifra,help_scrape,n,modes = scrape & help & log_level = 2
+off,cmd,fast,null,apps/chifra,help_server,n,modes = serve & help & log_level = 2
+on,cmd,fast,null,apps/chifra,help_status,n,modes = status & help & log_level = 2
+on,cmd,fast,null,apps/chifra,help_quotes,n,modes = quotes & help & log_level = 2
+on,cmd,fast,null,apps/chifra,help_when,n,modes = when & help & log_level = 2
 off,both,fast,export,apps/chifra,run_list,y,modes = monitors & addrs = 0xfb744b951d094b310262c8f986c860df9ab1de65 & test_end = 10000
 on,both,fast,export,apps/chifra,run_rm,y,modes = monitors & addrs = 0x807640a13483f8ac783c557fcdf27be11ea4ac7a & remove
-on,both,fast,names,apps/chifra,run_names,y,modes = names & names = 50-Tokens & expand
-on,both,fast,names,apps/chifra,run_names_tags,y,modes = names & tags
-on,both,fast,names,apps/chifra,run_names_collections,y,modes = names & collections
+on,both,fast,names,apps/chifra,run_names,y,modes = names & terms = 50-Tokens & expand
 on,both,fast,quotes,apps/chifra,run_prices,y,modes = quotes @ p 1440
 on,both,fast,slurp,apps/chifra,run_slurp,y,modes = slurp & addrs = 0x1234567812345678123456781234567812345678
 on,cmd,fast,explore,apps/chifra,run_explore,n,modes = explore & terms = 0x1234567812345678123456781234567812345678
