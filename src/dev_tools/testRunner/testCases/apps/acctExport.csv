@@ -5,7 +5,7 @@ on,cmd,fast,export,apps/acctExport,help_long,n,help
 on,both,fast,export,apps/acctExport,no_params,y,
 local,both,fast,monitors,apps/acctExport,list_list2,n,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & first_block = 0 & last_block = 3375495 & fmt = csv
 local,both,fast,monitors,apps/acctExport,list_test,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & first_block = 100000 & last_block = 2000000
-off,both,fast,monitors,apps/acctExport,list_chifra,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & first_block = 100000 & last_block = 2000000,chifra
+off,both,fast,monitors,apps/acctExport,list_chifra,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & first_block = 100000 & last_block = 2000000
 local,both,fast,monitors,apps/acctExport,list_final,n,addrs = 0x1234567890123456789012345678901234567890 0x001d14804b399c6ef80e64576f657660804fec0b & first_block = 3000000 & last_block = 3375498 & appearances & fmt = csv & no_header
 local,both,fast,monitors,apps/acctExport,list_prefund1,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & first_block = 0 & last_block = 0
 local,both,fast,monitors,apps/acctExport,list_prefund2,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & first_block = 0 & last_block = 1

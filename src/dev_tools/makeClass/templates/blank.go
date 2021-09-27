@@ -29,7 +29,7 @@ var [{ROUTE}]Cmd = &cobra.Command{
 	Long:  long[{PROPER}],
 	Run:   run[{PROPER}],
 	Args:  ValidatePositionals(validate[{PROPER}]Args),
-}
+[{PERPRERUN}]}
 
 var usage[{PROPER}] = `[{USE}]`
 

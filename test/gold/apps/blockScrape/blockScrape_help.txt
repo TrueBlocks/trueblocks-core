@@ -13,5 +13,6 @@ Flags:
   -a, --n_addr_procs uint    number of concurrent address channels for blaze (hidden)
 
 Global Flags:
+  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
   -h, --help         display this help screen
   -v, --verbose      enable verbose (increase detail with --log_level)
