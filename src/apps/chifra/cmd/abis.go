@@ -13,14 +13,17 @@ package cmd
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * Parts of this file were generated with makeClass --gocmds.
+ * Parts of this file were generated with makeClass --gocmds. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 
 import (
+	// EXISTING_CODE
 	"errors"
 	"os"
 
 	"github.com/spf13/cobra"
+	// EXISTING_CODE
 )
 
 // abisCmd represents the abis command
@@ -35,7 +38,7 @@ var abisCmd = &cobra.Command{
 var usageAbis = `abis [flags] <address> [address...]
 
 Arguments:
-  addrs - list of one or more smart contracts whose ABI to grab from EtherScan (required)`
+  addrs - a list of one or more smart contracts whose ABIs to display (required)`
 
 var shortAbis = "fetches the ABI for a smart contract"
 
@@ -44,12 +47,13 @@ var longAbis = `Purpose:
 
 var notesAbis = `
 Notes:
-  - Solidity files found in the local folder with the name '<address>.sol' are converted to an ABI prior to processing (and then removed).`
+  - Solidity files found in the local folder with the name '<address>.sol' are converted
+    to an ABI prior to processing (and then removed).`
 
 type abisOptionsType struct {
 	known   bool
 	sol     string
-	find    string
+	find    []string
 	source  bool
 	classes bool
 }
@@ -63,7 +67,7 @@ func init() {
 	abisCmd.PersistentFlags().SortFlags = false
 	abisCmd.Flags().BoolVarP(&AbisOpts.known, "known", "k", false, "load common 'known' ABIs from cache")
 	abisCmd.Flags().StringVarP(&AbisOpts.sol, "sol", "s", "", "file name of .sol file from which to create a new known abi (without .sol)")
-	abisCmd.Flags().StringVarP(&AbisOpts.find, "find", "f", "", "try to search for a function declaration given a four byte code")
+	abisCmd.Flags().StringSliceVarP(&AbisOpts.find, "find", "f", nil, "try to search for a function declaration given a four byte code")
 	abisCmd.Flags().BoolVarP(&AbisOpts.source, "source", "o", false, "show the source of the ABI information (hidden)")
 	abisCmd.Flags().BoolVarP(&AbisOpts.classes, "classes", "c", false, "generate classDefinitions folder and class definitions (hidden)")
 	if IsTestMode() == false {
@@ -85,8 +89,8 @@ func runAbis(cmd *cobra.Command, args []string) {
 	if len(AbisOpts.sol) > 0 {
 		options += " --sol " + AbisOpts.sol
 	}
-	if len(AbisOpts.find) > 0 {
-		options += " --find " + AbisOpts.find
+	for _, t := range AbisOpts.find {
+		options += " --find " + t
 	}
 	if AbisOpts.source {
 		options += " --source"
@@ -98,12 +102,38 @@ func runAbis(cmd *cobra.Command, args []string) {
 	for _, arg := range args {
 		arguments += " " + arg
 	}
+	// EXISTING_CODE
+	// EXISTING_CODE
 	PassItOn(GetCommandPath("grabABI"), options, arguments)
 }
 
 func validateAbisArgs(cmd *cobra.Command, args []string) error {
-	if len(args) > 0 && args[0] == "12" {
-		return ErrFunc(cmd, errors.New("Invalid argument "+args[0]))
+	var err error
+	// EXISTING_CODE
+	if AbisOpts.classes {
+		return errors.New(fmtError("chifra abis - --classes option is not implemented."))
+	}
+	if len(AbisOpts.sol) > 0 {
+		valid, _ := isValidAddress(AbisOpts.sol)
+		if !valid {
+			return errors.New(fmtError("--sol option requires a valid Ethereum address"))
+		}
+		if FileExists("./"+AbisOpts.sol+".sol") != true {
+			return errors.New(fmtError("Solidity code not found at at ./" + AbisOpts.sol + ".sol"))
+		}
+		return nil
+	}
+
+	if len(AbisOpts.find) == 0 && AbisOpts.known == false {
+		err = validateOneAddr(args)
+		if err != nil {
+			return err
+		}
+	}
+	// EXISTING_CODE
+	err = validateGlobalFlags()
+	if err != nil {
+		return err
 	}
 	return nil
 }

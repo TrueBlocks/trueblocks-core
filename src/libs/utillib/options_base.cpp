@@ -240,7 +240,7 @@ bool COptionsBase::prepareArguments(int argCountIn, const char* argvIn[]) {
             } else if (arg == "api") {
                 expContext().exportFmt = API1;
             } else {
-                return usage("Export format (" + arg + ") must be one of [ json | txt | csv | api ].");
+                return usage("The --fmt option (" + arg + ") must be one of [ json | txt | csv | api ].");
             }
             argumentsOut[i] = "";
         }

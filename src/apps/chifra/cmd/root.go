@@ -59,7 +59,7 @@ var RootOpts rootOptTypes
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "chifra command [flags] arguments",
+	Use:   "chifra [flags] commands",
 	Short: "access to all TrueBlocks tools (chifra <cmd> --help for more)",
 	Long: `Purpose:
   Access to all TrueBlocks tools (chifra <cmd> --help for more).`,
@@ -320,9 +320,6 @@ func IsTestMode() bool {
 }
 
 func HelpWithNotes(notes string) string {
-	// 	template := `{{with (or .Long .Short)}}{{. | trimTrailingWhitespaces}}
-
-	// {{end}}{{if or .Runnable .HasSubCommands}}{{.UsageString}}{{end}}`
 	t := `Usage:{{if .Runnable}}
   {{.UseLine}}{{end}}{{if .HasAvailableSubCommands}}
   {{.CommandPath}} [command]{{end}}{{if gt (len .Aliases) 0}}

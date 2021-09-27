@@ -13,14 +13,16 @@ package cmd
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * Parts of this file were generated with makeClass --gocmds.
+ * Parts of this file were generated with makeClass --gocmds. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 
 import (
-	"errors"
+	// EXISTING_CODE
 	"os"
 
 	"github.com/spf13/cobra"
+	// EXISTING_CODE
 )
 
 // transactionsCmd represents the transactions command
@@ -97,12 +99,18 @@ func runTransactions(cmd *cobra.Command, args []string) {
 	for _, arg := range args {
 		arguments += " " + arg
 	}
+	// EXISTING_CODE
+	// EXISTING_CODE
 	PassItOn(GetCommandPath("getTrans"), options, arguments)
 }
 
 func validateTransactionsArgs(cmd *cobra.Command, args []string) error {
-	if len(args) > 0 && args[0] == "12" {
-		return ErrFunc(cmd, errors.New("Invalid argument "+args[0]))
+	var err error
+	// EXISTING_CODE
+	// EXISTING_CODE
+	err = validateGlobalFlags()
+	if err != nil {
+		return err
 	}
 	return nil
 }
