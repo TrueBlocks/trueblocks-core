@@ -126,7 +126,7 @@ func runBlocks(cmd *cobra.Command, args []string) {
 	for _, arg := range args {
 		arguments += " " + arg
 	}
-	PassItOn("/Users/jrush/.local/bin/chifra/getBlocks", options, arguments)
+	PassItOn(GetCommandPath("getBlocks"), options, arguments)
 }
 
 func validateBlocksArgs(cmd *cobra.Command, args []string) error {

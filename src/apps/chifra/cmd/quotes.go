@@ -91,7 +91,7 @@ func runQuotes(cmd *cobra.Command, args []string) {
 	for _, arg := range args {
 		arguments += " " + arg
 	}
-	PassItOn("/Users/jrush/.local/bin/chifra/getQuotes", options, arguments)
+	PassItOn(GetCommandPath("getQuotes"), options, arguments)
 }
 
 func validateQuotesArgs(cmd *cobra.Command, args []string) error {

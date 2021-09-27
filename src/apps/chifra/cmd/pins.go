@@ -102,7 +102,7 @@ func runPins(cmd *cobra.Command, args []string) {
 	for _, arg := range args {
 		arguments += " " + arg
 	}
-	PassItOn("/Users/jrush/.local/bin/chifra/pinMan", options, arguments)
+	PassItOn(GetCommandPath("pinMan"), options, arguments)
 }
 
 func validatePinsArgs(cmd *cobra.Command, args []string) error {

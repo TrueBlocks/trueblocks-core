@@ -42,14 +42,13 @@ bool COptions::handle_gocmds(void) {
         ep.params = &params;
         ep.notes = &notes;
         string_q source = asciiFileToString(configPath("makeClass/blank.go"));
-        string_q path = substitute(getCommandPath(chifraCmdMap[ep.api_route]), "~/", "/Users/jrush/");
         replaceAll(source, "[{COPY_OPTS}]", get_copyopts(ep));
         replaceAll(source, "[{SET_OPTS}]", get_setopts(ep));
         replaceAll(source, "[{HIDDEN}]", get_help(ep));
         replaceAll(source, "[{USE}]", get_use(ep));
         replaceAll(source, "[{ROUTE}]", toLower(ep.api_route));
         replaceAll(source, "[{PROPER}]", toProper(ep.api_route));
-        replaceAll(source, "[{PATH}]", path);
+        replaceAll(source, "[{PATH}]", chifraCmdMap[ep.api_route]);
         replaceAll(source, "[{OPT_FIELDS}]", get_optfields(ep));
         replaceAll(source, "[{LONG}]", "Purpose:\n  " + ep.description);
         replaceAll(source, "[{POSTNOTES}]", get_notes2(ep));

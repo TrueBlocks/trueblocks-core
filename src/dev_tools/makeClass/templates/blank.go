@@ -62,7 +62,7 @@ func run[{PROPER}](cmd *cobra.Command, args []string) {
 	for _, arg := range args {
 		arguments += " " + arg
 	}
-	PassItOn("[{PATH}]", options, arguments)
+	PassItOn(GetCommandPath("[{PATH}]"), options, arguments)
 }
 
 func validate[{PROPER}]Args(cmd *cobra.Command, args []string) error {

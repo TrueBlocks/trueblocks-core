@@ -77,7 +77,7 @@ func runMonitors(cmd *cobra.Command, args []string) {
 	for _, arg := range args {
 		arguments += " " + arg
 	}
-	PassItOn("/Users/jrush/.local/bin/chifra/acctExport --appearances", options, arguments)
+	PassItOn(GetCommandPath("acctExport --appearances"), options, arguments)
 }
 
 func validateMonitorsArgs(cmd *cobra.Command, args []string) error {

@@ -97,7 +97,7 @@ func runTransactions(cmd *cobra.Command, args []string) {
 	for _, arg := range args {
 		arguments += " " + arg
 	}
-	PassItOn("/Users/jrush/.local/bin/chifra/getTrans", options, arguments)
+	PassItOn(GetCommandPath("getTrans"), options, arguments)
 }
 
 func validateTransactionsArgs(cmd *cobra.Command, args []string) error {

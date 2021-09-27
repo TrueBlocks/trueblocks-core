@@ -131,7 +131,7 @@ func runStatus(cmd *cobra.Command, args []string) {
 	for _, arg := range args {
 		arguments += " " + arg
 	}
-	PassItOn("/Users/jrush/.local/bin/chifra/cacheStatus", options, arguments)
+	PassItOn(GetCommandPath("cacheStatus"), options, arguments)
 }
 
 func validateStatusArgs(cmd *cobra.Command, args []string) error {

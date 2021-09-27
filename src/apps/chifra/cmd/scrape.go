@@ -94,7 +94,7 @@ func runScrape(cmd *cobra.Command, args []string) {
 	for _, arg := range args {
 		arguments += " " + arg
 	}
-	PassItOn("/Users/jrush/.local/bin/chifra/blockScrape", options, arguments)
+	PassItOn(GetCommandPath("blockScrape"), options, arguments)
 }
 
 func validateScrapeArgs(cmd *cobra.Command, args []string) error {

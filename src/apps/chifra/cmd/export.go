@@ -226,7 +226,7 @@ func runExport(cmd *cobra.Command, args []string) {
 	for _, arg := range args {
 		arguments += " " + arg
 	}
-	PassItOn("/Users/jrush/.local/bin/chifra/acctExport", options, arguments)
+	PassItOn(GetCommandPath("acctExport"), options, arguments)
 }
 
 func validateExportArgs(cmd *cobra.Command, args []string) error {

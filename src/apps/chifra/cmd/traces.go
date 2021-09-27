@@ -110,7 +110,7 @@ func runTraces(cmd *cobra.Command, args []string) {
 	for _, arg := range args {
 		arguments += " " + arg
 	}
-	PassItOn("/Users/jrush/.local/bin/chifra/getTraces", options, arguments)
+	PassItOn(GetCommandPath("getTraces"), options, arguments)
 }
 
 func validateTracesArgs(cmd *cobra.Command, args []string) error {

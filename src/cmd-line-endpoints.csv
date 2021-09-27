@@ -1,6 +1,6 @@
 num ,group       ,is_visible ,api_route    ,tool                     ,summary              ,description
 01  ,Accounts    ,false      ,             ,                         ,                     ,Access and cache transactional data
-01  ,Accounts    ,true       ,list         ,acctExport --appearances ,List transactions    ,List every appearance of an address anywhere on the chain.
+01  ,Accounts    ,false      ,list         ,acctExport --appearances ,List transactions    ,List every appearance of an address anywhere on the chain.
 01  ,Accounts    ,true       ,export       ,acctExport               ,Export details       ,Export full detail of transactions for one or more addresses.
 01  ,Accounts    ,true       ,monitors     ,acctExport --appearances ,Manage Monitors      ,Add&#44; remove&#44; clean&#44; and list address monitors.
 01  ,Accounts    ,true       ,names        ,ethNames                 ,Names                ,Query addresses or names of well known accounts.

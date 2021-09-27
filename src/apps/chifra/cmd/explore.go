@@ -77,7 +77,7 @@ func runExplore(cmd *cobra.Command, args []string) {
 	for _, arg := range args {
 		arguments += " " + arg
 	}
-	PassItOn("/Users/jrush/.local/bin/chifra/fireStorm", options, arguments)
+	PassItOn(GetCommandPath("fireStorm"), options, arguments)
 }
 
 func validateExploreArgs(cmd *cobra.Command, args []string) error {

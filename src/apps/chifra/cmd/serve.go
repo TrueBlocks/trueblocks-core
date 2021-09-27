@@ -39,6 +39,8 @@ var shortServe = "serve the TrueBlocks API using the flame server"
 var longServe = `Purpose:
   Serve the TrueBlocks API using the flame server.`
 
+var notesServe = ``
+
 type serveOptionsType struct {
 }
 
@@ -52,7 +54,7 @@ func init() {
 	serveCmd.Flags().SortFlags = false
 	serveCmd.PersistentFlags().SortFlags = false
 
-	serveCmd.SetHelpTemplate("[{POSTNOTES}]")
+	serveCmd.SetUsageTemplate(HelpWithNotes(notesServe))
 	rootCmd.AddCommand(serveCmd)
 }
 

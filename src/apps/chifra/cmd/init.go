@@ -64,7 +64,7 @@ func runInit(cmd *cobra.Command, args []string) {
 	for _, arg := range args {
 		arguments += " " + arg
 	}
-	PassItOn("/Users/jrush/.local/bin/chifra/pinMan local --init", options, arguments)
+	PassItOn(GetCommandPath("pinMan local --init"), options, arguments)
 }
 
 func validateInitArgs(cmd *cobra.Command, args []string) error {

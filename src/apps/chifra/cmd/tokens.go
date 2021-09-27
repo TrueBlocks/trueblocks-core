@@ -90,7 +90,7 @@ func runTokens(cmd *cobra.Command, args []string) {
 	for _, arg := range args {
 		arguments += " " + arg
 	}
-	PassItOn("/Users/jrush/.local/bin/chifra/getTokens", options, arguments)
+	PassItOn(GetCommandPath("getTokens"), options, arguments)
 }
 
 func validateTokensArgs(cmd *cobra.Command, args []string) error {

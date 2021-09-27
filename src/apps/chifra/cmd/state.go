@@ -99,7 +99,7 @@ func runState(cmd *cobra.Command, args []string) {
 	for _, arg := range args {
 		arguments += " " + arg
 	}
-	PassItOn("/Users/jrush/.local/bin/chifra/getState", options, arguments)
+	PassItOn(GetCommandPath("getState"), options, arguments)
 }
 
 func validateStateArgs(cmd *cobra.Command, args []string) error {

@@ -107,7 +107,7 @@ func runWhen(cmd *cobra.Command, args []string) {
 	for _, arg := range args {
 		arguments += " " + arg
 	}
-	PassItOn("/Users/jrush/.local/bin/chifra/whenBlock", options, arguments)
+	PassItOn(GetCommandPath("whenBlock"), options, arguments)
 }
 
 func validateWhenArgs(cmd *cobra.Command, args []string) error {

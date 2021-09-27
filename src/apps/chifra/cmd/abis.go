@@ -98,7 +98,7 @@ func runAbis(cmd *cobra.Command, args []string) {
 	for _, arg := range args {
 		arguments += " " + arg
 	}
-	PassItOn("/Users/jrush/.local/bin/chifra/grabABI", options, arguments)
+	PassItOn(GetCommandPath("grabABI"), options, arguments)
 }
 
 func validateAbisArgs(cmd *cobra.Command, args []string) error {

@@ -135,7 +135,7 @@ func runNames(cmd *cobra.Command, args []string) {
 	for _, arg := range args {
 		arguments += " " + arg
 	}
-	PassItOn("/Users/jrush/.local/bin/chifra/ethNames", options, arguments)
+	PassItOn(GetCommandPath("ethNames"), options, arguments)
 }
 
 func validateNamesArgs(cmd *cobra.Command, args []string) error {

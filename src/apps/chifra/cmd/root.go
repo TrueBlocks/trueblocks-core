@@ -20,6 +20,7 @@ import (
 	"io"
 	"os"
 	"os/exec"
+	"os/user"
 	"strings"
 	"sync"
 
@@ -209,6 +210,13 @@ func ScanForProgress(stderrPipe io.Reader, fn func(string)) {
 	if err := scanner.Err(); err != nil {
 		fmt.Println("Error while reading stderr:", err)
 	}
+}
+
+// GetCommandPath returns full path the the given tool
+func GetCommandPath(cmd string) string {
+	usr, _ := user.Current()
+	dir := usr.HomeDir
+	return dir + "/.local/bin/chifra/" + cmd
 }
 
 func PassItOn(path string, flags, arguments string) {
