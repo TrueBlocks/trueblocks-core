@@ -1,5 +1,5 @@
 {
   "errors": [
-    "chifra abis - Cannot find .sol file at '0x2234567812345678123456781234567812345678'."
+    "chifra abis - The --sol option requires a value."
   ]
 }

@@ -1,12 +1,9 @@
 chifra traces  2222222.0 2332332.0 --fmt junk
-
-  Export format (junk) must be one of [ json | txt | csv | api ]. Quitting...
-
-Purpose:
-  Retrieve traces for the given transaction(s).
+Error: 
+  The --fmt option (junk) must be one of [ json | txt | csv | api ]
 
 Usage:
-  getTraces [flags] <tx_id> [tx_id...]
+  chifra traces [flags] <tx_id> [tx_id...]
 
 Arguments:
   transactions - a space-separated list of one or more transaction identifiers (required)
@@ -17,12 +14,12 @@ Flags:
   -d, --statediff       export state diff traces (not implemented)
   -c, --count           show the number of traces for the transaction only (fast)
   -s, --skip_ddos       skip over the 2016 ddos during export ('on' by default) (hidden)
-  -m, --max <num>       if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250) (hidden)
+  -m, --max uint        if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250) (hidden)
 
 Global Flags:
-  -x, --fmt string     export format, one of [none|json*|txt|csv|api]
-  -v, --verbose uint   set verbose level (optional level defaults to 1)
-  -h, --help           display this help screen
+  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
+  -h, --help         display this help screen
+  -v, --verbose      enable verbose (increase detail with --log_level)
 
 Notes:
   - The transactions list may be one or more space-separated identifiers which are either a transaction hash,
@@ -32,4 +29,3 @@ Notes:
   - A bang seperated filter has the following fields (at least one of which is required) and is separated
     with a bang (!): fromBlk, toBlk, fromAddr, toAddr, after, count.
   - A state diff trace describes, for each modified address, what changed during that trace.
-

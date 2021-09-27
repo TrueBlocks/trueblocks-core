@@ -1,27 +1,23 @@
 chifra pins  --list --fmt junk
-
-  Export format (junk) must be one of [ json | txt | csv | api ]. Quitting...
-
-Purpose:
-  Manage pinned index of appearances and associated Bloom filters.
+Error: 
+  The --fmt option (junk) must be one of [ json | txt | csv | api ]
 
 Usage:
-  pinMan [flags]
+  chifra pins [flags]
 
 Flags:
-  -l, --list             list the index and Bloom filter hashes from local manifest or pinning service
-  -i, --init             initialize local index by downloading Bloom filters from pinning service
-  -n, --init_all         initialize local index by downloading both Bloom filters and index chunks
-  -s, --sleep <double>   the number of seconds to sleep between requests during init (default .25) (hidden)
-  -r, --remote           applicable only to --list mode, recover the manifest from pinning service (hidden)
-  -p, --pin_locally      pin all local files in the index to an IPFS store (requires IPFS)
+  -l, --list          list the index and Bloom filter hashes from local manifest or pinning service
+  -i, --init          initialize local index by downloading Bloom filters from pinning service
+  -n, --init_all      initialize local index by downloading both Bloom filters and index chunks
+  -s, --sleep float   the number of seconds to sleep between requests during init (default .25) (hidden)
+  -r, --remote        applicable only to --list mode, recover the manifest from pinning service (hidden)
+  -p, --pin_locally   pin all local files in the index to an IPFS store (requires IPFS)
 
 Global Flags:
-  -x, --fmt string     export format, one of [none|json*|txt|csv|api]
-  -v, --verbose uint   set verbose level (optional level defaults to 1)
-  -h, --help           display this help screen
+  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
+  -h, --help         display this help screen
+  -v, --verbose      enable verbose (increase detail with --log_level)
 
 Notes:
   - One of --list, --init, or --init_all is required.
   - the --pin_locally option only works if the IPFS executable is in your path.
-
