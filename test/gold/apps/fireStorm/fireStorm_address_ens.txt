@@ -1,4 +1,4 @@
-fireStorm  trueblocks.eth
+chifra explore  trueblocks.eth
 TIME ~ CLOCK - <INFO>  : terms
 TIME ~ CLOCK - <INFO>  :   trueblocks.eth
 Opening https://etherscan.io/enslookup-search?search=trueblocks.eth

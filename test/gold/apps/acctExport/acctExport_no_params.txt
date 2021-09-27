@@ -1,4 +1,4 @@
-acctExport  
+chifra export  
 
   You must provide at least one Ethereum address. Quitting...
 

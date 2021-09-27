@@ -1,4 +1,4 @@
-fireStorm  46147.0 --local
+chifra explore  46147.0 --local
 TIME ~ CLOCK - <INFO>  : terms
 TIME ~ CLOCK - <INFO>  :   46147.0
 TIME ~ CLOCK - <INFO>  : local: true

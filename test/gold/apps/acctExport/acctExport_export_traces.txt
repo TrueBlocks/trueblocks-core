@@ -1,4 +1,4 @@
-acctExport  0x001d14804b399c6ef80e64576f657660804fec0b --last_block 001506480 --max_records 5 --traces --fmt api
+chifra export  0x001d14804b399c6ef80e64576f657660804fec0b --last_block 1506480 --max_records 5 --traces --fmt api
 {"data": [
 {
   "subtraces": 0,

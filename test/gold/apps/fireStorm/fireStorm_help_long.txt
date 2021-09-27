@@ -1,9 +1,9 @@
-fireStorm  --help
+chifra explore  --help
 Purpose:
-  Open an explorer for one or more addresses, blocks, or transactions.
+  Open an explorer for a given address, block, or transaction.
 
 Usage:
-  fireStorm [flags] [term...]
+  chifra explore [flags] <term> [term...]
 
 Arguments:
   terms - one or more addresses, names, block, or transaction identifiers
@@ -13,4 +13,6 @@ Flags:
   -g, --google   search google excluding popular blockchain explorers
 
 Global Flags:
-  -h, --help           display this help screen
+  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
+  -h, --help         display this help screen
+  -v, --verbose      enable verbose (increase detail with --log_level)

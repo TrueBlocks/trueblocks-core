@@ -1,4 +1,4 @@
-fireStorm  0xf503017D7baF7FBC0fff7492b751025c6A78179b --local
+chifra explore  0xf503017D7baF7FBC0fff7492b751025c6A78179b --local
 TIME ~ CLOCK - <INFO>  : terms
 TIME ~ CLOCK - <INFO>  :   0xf503017D7baF7FBC0fff7492b751025c6A78179b
 TIME ~ CLOCK - <INFO>  : local: true

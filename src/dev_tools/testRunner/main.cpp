@@ -235,16 +235,7 @@ void COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
                 } else {
                     exe = test.tool;
                     if (test.isCmd)
-                        exe = getCommandPath(exe);
-                    // TODO(tjayrush): weird chifra related code
-                    if (contains(test.path, "tools") && !contains(test.path, "dev_tools"))
                         exe = "chifra " + (test.extra.empty() ? test.route : test.extra);
-                    if (contains(test.tool, "pinMan"))
-                        exe = "chifra pins";
-                    if (contains(test.tool, "cacheStatus"))
-                        exe = "chifra status";
-                    if (contains(test.tool, "blockScrape"))
-                        exe = "chifra scrape";
                 }
 
                 string_q fullCmd = exe + " " + test.options;

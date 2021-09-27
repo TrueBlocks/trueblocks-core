@@ -1,4 +1,4 @@
-acctExport  0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --last_block 10279650 --articulate --source 0x7d655c57f71464b6f83811c55d84009cd9f5221c
+chifra export  0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --last_block 10279650 --articulate --source 0x7d655c57f71464b6f83811c55d84009cd9f5221c
 
   The --source option is only available when exporting logs. Quitting...
 

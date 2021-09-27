@@ -1,4 +1,4 @@
-acctExport  0x05a56e2d52c817161883f50c441c3228cfe54d9f --max_records 15 --accounting --fmt api --verbose 10
+chifra export  0x05a56e2d52c817161883f50c441c3228cfe54d9f --max_records 15 --accounting --fmt api --log_level 10
 TIME ~ CLOCK - : 4-----0x05a56e2d52c817161883f50c441c3228cfe54d9f freshened to 11854827
 TIME ~ CLOCK - : 4-----Loaded timestamp file
 {"data": [
