@@ -65,7 +65,11 @@ bool COptions::handle_gocmds(void) {
             imports += "\t\"fmt\"\n";
         replaceAll(source, "[{IMPORTS}]", imports);
 
-        counter.nProcessed += writeIfDifferent("../src/apps/chifra/cmd/" + ep.api_route + ".go", source);
+        string_q fn = "../src/apps/chifra/cmd/" + ep.api_route + ".go";
+        codewrite_t cw(fn, source);
+        cw.nSpaces = 0;
+        cw.stripEOFNL = false;
+        counter.nProcessed += writeTheCode(cw);
         counter.nVisited++;
     }
 

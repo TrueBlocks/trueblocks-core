@@ -172,6 +172,7 @@ inline string_q short3(const string_q& str) {
 extern void doReplace(string_q& str, const string_q& type, const string_q& rep, const string_q& spaces);
 extern bool writeIfDifferent(const string_q& path, const string_q& code);
 extern bool writeIfDifferent(const string_q& path, const string_q& code, const time_q& now);
+extern bool writeTheCode(const codewrite_t& cw);
 
 //---------------------------------------------------------------------------------------------------
 extern const char* STR_YAML_FRONTMATTER;

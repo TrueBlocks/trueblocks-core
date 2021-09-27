@@ -44,7 +44,6 @@ extern const char* STR_UNKOWNTYPE;
 extern const char* STR_CHILD_OBJS;
 extern const char* STR_DELETE_CMDS;
 extern const char* STR_DEFAULT_TAGS;
-extern bool writeTheCode(const codewrite_t& cw);
 //------------------------------------------------------------------------------------------------------------
 bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, bool asJs) {
     CClassDefinition classDef(toml);
