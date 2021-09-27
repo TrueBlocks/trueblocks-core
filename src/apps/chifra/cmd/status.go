@@ -37,7 +37,7 @@ var usageStatus = `status [flags] [mode...]
 
 Arguments:
   modes - the type of status info to retrieve
-    One or more of index, monitors, collections, names, abis, caches, some, all`
+	One or more of index, monitors, collections, names, abis, caches, some, all`
 
 var shortStatus = "report on the status of the TrueBlocks system"
 
@@ -78,6 +78,16 @@ One or more of test, abi_cache, block_cache, tx_cache, trace_cache, recon_cache,
 	statusCmd.Flags().BoolVarP(&StatusOpts.set_config, "set_config", "s", false, "accepts JSON in an env variable and writes it to configuration files (hidden)")
 	statusCmd.Flags().Uint64VarP(&StatusOpts.test_start, "test_start", "S", 0, "first block to process (inclusive -- testing only) (hidden)")
 	statusCmd.Flags().Uint64VarP(&StatusOpts.test_end, "test_end", "E", 0, "last block to process (inclusive -- testing only) (hidden)")
+	if IsTestMode() == false {
+		statusCmd.Flags().MarkHidden("depth")
+		statusCmd.Flags().MarkHidden("report")
+		statusCmd.Flags().MarkHidden("terse")
+		statusCmd.Flags().MarkHidden("migrate")
+		statusCmd.Flags().MarkHidden("get_config")
+		statusCmd.Flags().MarkHidden("set_config")
+		statusCmd.Flags().MarkHidden("test_start")
+		statusCmd.Flags().MarkHidden("test_end")
+	}
 	statusCmd.Flags().SortFlags = false
 	statusCmd.PersistentFlags().SortFlags = false
 

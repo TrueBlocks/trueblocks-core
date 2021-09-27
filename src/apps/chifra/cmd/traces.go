@@ -75,6 +75,10 @@ func init() {
 	tracesCmd.Flags().BoolVarP(&TracesOpts.count, "count", "c", false, "show the number of traces for the transaction only (fast)")
 	tracesCmd.Flags().BoolVarP(&TracesOpts.skip_ddos, "skip_ddos", "s", false, "skip over the 2016 ddos during export ('on' by default) (hidden)")
 	tracesCmd.Flags().Uint64VarP(&TracesOpts.max, "max", "m", 0, "if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250) (hidden)")
+	if IsTestMode() == false {
+		tracesCmd.Flags().MarkHidden("skip_ddos")
+		tracesCmd.Flags().MarkHidden("max")
+	}
 	tracesCmd.Flags().SortFlags = false
 	tracesCmd.PersistentFlags().SortFlags = false
 

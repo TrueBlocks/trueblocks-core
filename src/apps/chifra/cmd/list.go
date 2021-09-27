@@ -45,6 +45,8 @@ var longList = `Purpose:
 var notesList = ``
 
 type listOptionsType struct {
+	appearances bool
+	count       bool
 }
 
 var ListOpts listOptionsType
@@ -54,6 +56,8 @@ func init() {
 
 	listCmd.Flags().SortFlags = false
 	listCmd.PersistentFlags().SortFlags = false
+	listCmd.Flags().BoolVarP(&ListOpts.appearances, "appearances", "p", false, "export a list of appearances")
+	listCmd.Flags().BoolVarP(&ListOpts.count, "count", "U", false, "return only the number of records")
 	listCmd.Flags().SortFlags = false
 	listCmd.PersistentFlags().SortFlags = false
 
@@ -63,11 +67,17 @@ func init() {
 
 func runList(cmd *cobra.Command, args []string) {
 	options := ""
+	// if ListOpts.appearances {
+	options += " --appearances"
+	// }
+	if ListOpts.count {
+		options += " --count"
+	}
 	arguments := ""
 	for _, arg := range args {
 		arguments += " " + arg
 	}
-	PassItOn("/Users/jrush/.local/bin/chifra/acctExport --appearances", options, arguments)
+	PassItOn("/Users/jrush/.local/bin/chifra/acctExport", options, arguments)
 }
 
 func validateListArgs(cmd *cobra.Command, args []string) error {

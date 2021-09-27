@@ -70,6 +70,12 @@ func init() {
 	whenCmd.Flags().BoolVarP(&WhenOpts.fix, "fix", "f", false, "available only with --timestamps, fixes incorrect timestamps if any (hidden)")
 	whenCmd.Flags().BoolVarP(&WhenOpts.count, "count", "u", false, "available only with --timestamps, returns the number of timestamps in the cache (hidden)")
 	whenCmd.Flags().Uint64VarP(&WhenOpts.skip, "skip", "s", 0, "only applicable if --timestamps is on, the step between block numbers in the export (hidden)")
+	if IsTestMode() == false {
+		whenCmd.Flags().MarkHidden("check")
+		whenCmd.Flags().MarkHidden("fix")
+		whenCmd.Flags().MarkHidden("count")
+		whenCmd.Flags().MarkHidden("skip")
+	}
 	whenCmd.Flags().SortFlags = false
 	whenCmd.PersistentFlags().SortFlags = false
 

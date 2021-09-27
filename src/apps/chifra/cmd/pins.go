@@ -67,6 +67,10 @@ func init() {
 	pinsCmd.Flags().Float64VarP(&PinsOpts.sleep, "sleep", "s", 0.0, "the number of seconds to sleep between requests during init (default .25) (hidden)")
 	pinsCmd.Flags().BoolVarP(&PinsOpts.remote, "remote", "r", false, "applicable only to --list mode, recover the manifest from pinning service (hidden)")
 	pinsCmd.Flags().BoolVarP(&PinsOpts.pin_locally, "pin_locally", "p", false, "pin all local files in the index to an IPFS store (requires IPFS)")
+	if IsTestMode() == false {
+		pinsCmd.Flags().MarkHidden("sleep")
+		pinsCmd.Flags().MarkHidden("remote")
+	}
 	pinsCmd.Flags().SortFlags = false
 	pinsCmd.PersistentFlags().SortFlags = false
 

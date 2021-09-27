@@ -49,7 +49,7 @@ func init() {
 
 	[{ROUTE}]Cmd.Flags().SortFlags = false
 	[{ROUTE}]Cmd.PersistentFlags().SortFlags = false
-[{SET_OPTS}]	[{ROUTE}]Cmd.Flags().SortFlags = false
+[{SET_OPTS}][{HIDDEN}]	[{ROUTE}]Cmd.Flags().SortFlags = false
 	[{ROUTE}]Cmd.PersistentFlags().SortFlags = false
 
 	[{ROUTE}]Cmd.SetUsageTemplate(HelpWithNotes(notes[{PROPER}]))

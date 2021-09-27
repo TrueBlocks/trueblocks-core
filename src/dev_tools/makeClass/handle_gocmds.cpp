@@ -12,6 +12,7 @@
  *-------------------------------------------------------------------------------------------*/
 #include "options.h"
 
+extern string_q get_help(const CCommandOption& cmd);
 extern string_q get_notes2(const CCommandOption& cmd);
 extern string_q get_optfields(const CCommandOption& cmd);
 extern string_q get_setopts(const CCommandOption& cmd);
@@ -44,6 +45,7 @@ bool COptions::handle_gocmds(void) {
         string_q path = substitute(getCommandPath(chifraCmdMap[ep.api_route]), "~/", "/Users/jrush/");
         replaceAll(source, "[{COPY_OPTS}]", get_copyopts(ep));
         replaceAll(source, "[{SET_OPTS}]", get_setopts(ep));
+        replaceAll(source, "[{HIDDEN}]", get_help(ep));
         replaceAll(source, "[{USE}]", get_use(ep));
         replaceAll(source, "[{ROUTE}]", toLower(ep.api_route));
         replaceAll(source, "[{PROPER}]", toProper(ep.api_route));
@@ -97,7 +99,7 @@ string_q get_use(const CCommandOption& cmd) {
                 ostringstream os;
                 forEveryEnum(visitEnumItem2, p.data_type, &os);
                 arguments << substitute(os.str(), "One of",
-                                        contains(p.data_type, "list") ? "    One or more of" : "    One of");
+                                        contains(p.data_type, "list") ? "\tOne or more of" : "\tOne of");
             }
         }
     }
@@ -173,6 +175,23 @@ string_q get_description(const CCommandOption& cmd) {
     replaceAll(ret, "+HIDDEN", hidden);
     replaceAll(ret, "+ADD", addendum);
     return ret;
+}
+
+string_q get_help(const CCommandOption& cmd) {
+    ostringstream os;
+    for (auto p : *((CCommandOptionArray*)cmd.params)) {
+        if (!p.is_visible) {
+            os << "\t\t[{ROUTE}]Cmd.Flags().MarkHidden(\"" + p.Format("[{LONGNAME}]") + "\")" << endl;
+        }
+    }
+    if (os.str().empty())
+        return "";
+
+    ostringstream ret;
+    ret << "\tif IsTestMode() == false {" << endl;
+    ret << os.str();
+    ret << "\t}" << endl;
+    return ret.str();
 }
 
 string_q get_setopts(const CCommandOption& cmd) {

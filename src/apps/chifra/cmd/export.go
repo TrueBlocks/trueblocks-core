@@ -116,6 +116,19 @@ One of yearly, quarterly, monthly, weekly, daily, hourly, blockly, tx`)
 	exportCmd.Flags().Uint64VarP(&ExportOpts.max_traces, "max_traces", "m", 0, "if --skip_ddos is on, this many traces defines what a ddos transaction|is (default = 250) (hidden)")
 	exportCmd.Flags().Uint64VarP(&ExportOpts.first_block, "first_block", "F", 0, "first block to process (inclusive) (hidden)")
 	exportCmd.Flags().Uint64VarP(&ExportOpts.last_block, "last_block", "L", 0, "last block to process (inclusive) (hidden)")
+	if IsTestMode() == false {
+		exportCmd.Flags().MarkHidden("freshen")
+		exportCmd.Flags().MarkHidden("staging")
+		exportCmd.Flags().MarkHidden("unripe")
+		exportCmd.Flags().MarkHidden("load")
+		exportCmd.Flags().MarkHidden("reversed")
+		exportCmd.Flags().MarkHidden("by_date")
+		exportCmd.Flags().MarkHidden("summarize_by")
+		exportCmd.Flags().MarkHidden("skip_ddos")
+		exportCmd.Flags().MarkHidden("max_traces")
+		exportCmd.Flags().MarkHidden("first_block")
+		exportCmd.Flags().MarkHidden("last_block")
+	}
 	exportCmd.Flags().SortFlags = false
 	exportCmd.PersistentFlags().SortFlags = false
 

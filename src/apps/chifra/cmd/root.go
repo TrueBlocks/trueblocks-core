@@ -274,6 +274,9 @@ func PassItOn(path string, flags, arguments string) {
 	wg.Add(2)
 
 	cmd := exec.Command(path, options)
+	if IsTestMode() {
+		cmd.Env = append(os.Environ(), "TEST_MODE=true")
+	}
 
 	stderrPipe, err := cmd.StderrPipe()
 	if err != nil {
@@ -287,19 +290,19 @@ func PassItOn(path string, flags, arguments string) {
 	}
 
 	stdout, err := cmd.StdoutPipe()
-    if err != nil {
+	if err != nil {
 		fmt.Fprintf(os.Stderr, "%s", err)
-    } else {
-        go func() {
-        	cmd.Start()
-        	scanner := bufio.NewScanner(stdout)
-        	for scanner.Scan() {
-        		m := scanner.Text()
-        		fmt.Println(m)
-        	}
+	} else {
+		go func() {
+			cmd.Start()
+			scanner := bufio.NewScanner(stdout)
+			for scanner.Scan() {
+				m := scanner.Text()
+				fmt.Println(m)
+			}
 			wg.Done()
-        }()
-    }
+		}()
+	}
 	wg.Wait()
 	cmd.Wait()
 }

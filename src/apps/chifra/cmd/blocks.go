@@ -79,6 +79,10 @@ func init() {
 	blocksCmd.Flags().BoolVarP(&BlocksOpts.cache, "cache", "o", false, "force a write of the block to the cache")
 	blocksCmd.Flags().Uint64VarP(&BlocksOpts.list, "list", "l", 0, "summary list of blocks running backwards from latest block minus num (hidden)")
 	blocksCmd.Flags().Uint64VarP(&BlocksOpts.list_count, "list_count", "C", 0, "the number of blocks to report for --list option (hidden)")
+	if IsTestMode() == false {
+		blocksCmd.Flags().MarkHidden("list")
+		blocksCmd.Flags().MarkHidden("list_count")
+	}
 	blocksCmd.Flags().SortFlags = false
 	blocksCmd.PersistentFlags().SortFlags = false
 
