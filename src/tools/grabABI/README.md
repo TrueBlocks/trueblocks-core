@@ -17,19 +17,20 @@ The `--sol` option will convert a single Solidity file found in the current fold
 
 `Where:`
 
-|          | Option                        | Description                                                                         |
-| -------- | ----------------------------- | ----------------------------------------------------------------------------------- |
-|          | addrs                         | list of one or more smart contracts whose ABI to grab<br/>from EtherScan (required) |
-| &#8208;k | &#8208;&#8208;known           | load common 'known' ABIs from cache                                                 |
-| &#8208;s | &#8208;&#8208;sol string      | file name of .sol file from which to create a new known<br/>abi (without .sol)      |
-| &#8208;f | &#8208;&#8208;find string     | try to search for a function declaration given a four<br/>byte code                 |
-| &#8208;x | &#8208;&#8208;fmt &lt;val&gt; | export format, one of [none, json, txt, csv, api]                                   |
-| &#8208;v | &#8208;&#8208;verbose         | set verbose level (optional level defaults to 1)                                    |
-| &#8208;h | &#8208;&#8208;help            | display this help screen                                                            |
+|          | Option                             | Description                                                                    |
+| -------- | ---------------------------------- | ------------------------------------------------------------------------------ |
+|          | addrs                              | a list of one or more smart contracts whose ABIs to<br/>display (required)     |
+| &#8208;k | &#8208;&#8208;known                | load common 'known' ABIs from cache                                            |
+| &#8208;s | &#8208;&#8208;sol string           | file name of .sol file from which to create a new known<br/>abi (without .sol) |
+| &#8208;f | &#8208;&#8208;find list&lt;str&gt; | try to search for a function declaration given a four<br/>byte code            |
+| &#8208;x | &#8208;&#8208;fmt &lt;val&gt;      | export format, one of [none, json, txt, csv, api]                              |
+| &#8208;v | &#8208;&#8208;verbose              | set verbose level (optional level defaults to 1)                               |
+| &#8208;h | &#8208;&#8208;help                 | display this help screen                                                       |
 
 `Notes:`
 
-- Solidity files found in the local folder with the name '<address>.sol' are converted to an ABI prior to processing (and then removed).
+- Solidity files found in the local folder with the name '<address>.sol' are converted
+  to an ABI prior to processing (and then removed).
 
 #### Other Options
 
