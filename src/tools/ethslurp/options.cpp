@@ -134,7 +134,7 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
-    registerOptions(nParams, params, OPT_OUTPUT);
+    registerOptions(nParams, params);
 
     // BEG_CODE_INIT
     appearances = false;

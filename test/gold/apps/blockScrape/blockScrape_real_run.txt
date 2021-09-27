@@ -1,4 +1,4 @@
-blockScrape  --sleep .5 --pin --verbose 8
+chifra scrape  --sleep .5 --pin --log_level 8
 TIME ~ CLOCK - <INFO>  : pin: true
 TIME ~ CLOCK - <INFO>  : sleep: 0.5
 TIME ~ CLOCK - : 4-----

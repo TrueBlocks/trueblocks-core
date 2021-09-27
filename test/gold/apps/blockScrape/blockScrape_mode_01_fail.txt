@@ -1,4 +1,4 @@
-blockScrape  badmode
+chifra scrape  badmode
 {
   "message": "Testing only",
   "n_blocks": 2000,

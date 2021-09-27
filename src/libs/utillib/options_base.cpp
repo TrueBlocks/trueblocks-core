@@ -32,10 +32,10 @@ void COptionsBase::registerOptions(size_t nP, COption const* pP, uint32_t on, ui
     if (parameters.empty()) {
         for (size_t i = 0; i < nP; i++)
             parameters.push_back(pP[i]);
-        if (on != NOOPT)
-            optionOn(on);
         if (off != NOOPT)
             optionOff(off);
+        if (on != NOOPT)
+            optionOn(on);
     }
 }
 

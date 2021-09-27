@@ -1,4 +1,4 @@
-blockScrape  --pin
+chifra scrape  --pin
 TIME ~ CLOCK - <INFO>  : pin: true
 {
   "message": "Testing only",

@@ -12,7 +12,7 @@
  *-------------------------------------------------------------------------------------------*/
 #include "options.h"
 
-extern string_q get_help(const CCommandOption& cmd);
+extern string_q get_hidden(const CCommandOption& cmd);
 extern string_q get_notes2(const CCommandOption& cmd);
 extern string_q get_optfields(const CCommandOption& cmd);
 extern string_q get_setopts(const CCommandOption& cmd);
@@ -44,7 +44,7 @@ bool COptions::handle_gocmds(void) {
         string_q source = asciiFileToString(configPath("makeClass/blank.go"));
         replaceAll(source, "[{COPY_OPTS}]", get_copyopts(ep));
         replaceAll(source, "[{SET_OPTS}]", get_setopts(ep));
-        replaceAll(source, "[{HIDDEN}]", get_help(ep));
+        replaceAll(source, "[{HIDDEN}]", get_hidden(ep));
         replaceAll(source, "[{USE}]", get_use(ep));
         replaceAll(source, "[{ROUTE}]", toLower(ep.api_route));
         replaceAll(source, "[{PROPER}]", toProper(ep.api_route));
@@ -176,12 +176,15 @@ string_q get_description(const CCommandOption& cmd) {
     return ret;
 }
 
-string_q get_help(const CCommandOption& cmd) {
+string_q get_hidden(const CCommandOption& cmd) {
     ostringstream os;
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
         if (!p.is_visible) {
             os << "\t\t[{ROUTE}]Cmd.Flags().MarkHidden(\"" + p.Format("[{LONGNAME}]") + "\")" << endl;
         }
+    }
+    if (cmd.api_route == "scrape") {
+        os << "\t\t[{ROUTE}]Cmd.PersistentFlags().MarkHidden(\"fmt\")" << endl;
     }
     if (os.str().empty())
         return "";

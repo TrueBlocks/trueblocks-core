@@ -243,6 +243,8 @@ void COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
                         exe = "chifra pins";
                     if (contains(test.tool, "cacheStatus"))
                         exe = "chifra status";
+                    if (contains(test.tool, "blockScrape"))
+                        exe = "chifra scrape";
                 }
 
                 string_q fullCmd = exe + " " + test.options;

@@ -65,6 +65,7 @@ func init() {
 	if IsTestMode() == false {
 		scrapeCmd.Flags().MarkHidden("n_block_procs")
 		scrapeCmd.Flags().MarkHidden("n_addr_procs")
+		scrapeCmd.PersistentFlags().MarkHidden("fmt")
 	}
 	scrapeCmd.Flags().SortFlags = false
 	scrapeCmd.PersistentFlags().SortFlags = false

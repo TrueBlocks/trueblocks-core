@@ -1,4 +1,4 @@
-blockScrape  quit
+chifra scrape  quit
 {
   "message": "Testing only",
   "n_blocks": 2000,

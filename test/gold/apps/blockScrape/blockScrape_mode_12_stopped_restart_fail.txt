@@ -1,4 +1,4 @@
-blockScrape  restart
+chifra scrape  restart
 {
   "message": "Testing only",
   "n_blocks": 2000,

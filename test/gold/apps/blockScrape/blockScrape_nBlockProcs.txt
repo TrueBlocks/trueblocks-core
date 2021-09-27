@@ -1,4 +1,4 @@
-blockScrape  
+chifra scrape  
 {
   "message": "Testing only",
   "n_blocks": 2000,
