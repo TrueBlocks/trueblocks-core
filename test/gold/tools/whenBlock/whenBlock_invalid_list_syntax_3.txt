@@ -17,7 +17,6 @@ Flags:
   -c, --check        available only with --timestamps, checks the validity of the timestamp data (hidden)
   -f, --fix          available only with --timestamps, fixes incorrect timestamps if any (hidden)
   -u, --count        available only with --timestamps, returns the number of timestamps in the cache (hidden)
-  -s, --skip <num>   only applicable if --timestamps is on, the step between block numbers in the export (hidden)
 
 Global Flags:
   -x, --fmt string     export format, one of [none|json*|txt|csv|api]

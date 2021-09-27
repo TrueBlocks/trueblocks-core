@@ -28,6 +28,11 @@ namespace qblocks {
 ostream& out = cerr;
 //--------------------------------------------------------------------------------
 bool COptionsBase::usage(const string_q& errMsg) const {
+    if (getEnvStr("OLD_PARSER") == "true") {
+        if (!isReadme && !endsWith(getProgName(), "Test") && getProgName() != "makeClass")
+            cerr << "I am in the old fashioned usage code" << endl;
+    }
+
     bool quitting = !(errMsg.empty() || contains(errMsg, "Invalid option:") || isApiMode());
     out << get_errmsg(errMsg + (quitting ? " Quitting..." : ""));
     if (isReadme) {

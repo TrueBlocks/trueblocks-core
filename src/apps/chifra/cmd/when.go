@@ -19,7 +19,6 @@ package cmd
 
 import (
 	// EXISTING_CODE
-	"fmt"
 	"os"
 
 	"github.com/spf13/cobra"
@@ -56,7 +55,6 @@ type whenOptionsType struct {
 	check      bool
 	fix        bool
 	count      bool
-	skip       uint64
 }
 
 var WhenOpts whenOptionsType
@@ -71,12 +69,10 @@ func init() {
 	whenCmd.Flags().BoolVarP(&WhenOpts.check, "check", "c", false, "available only with --timestamps, checks the validity of the timestamp data (hidden)")
 	whenCmd.Flags().BoolVarP(&WhenOpts.fix, "fix", "f", false, "available only with --timestamps, fixes incorrect timestamps if any (hidden)")
 	whenCmd.Flags().BoolVarP(&WhenOpts.count, "count", "u", false, "available only with --timestamps, returns the number of timestamps in the cache (hidden)")
-	whenCmd.Flags().Uint64VarP(&WhenOpts.skip, "skip", "s", 0, "only applicable if --timestamps is on, the step between block numbers in the export (hidden)")
 	if IsTestMode() == false {
 		whenCmd.Flags().MarkHidden("check")
 		whenCmd.Flags().MarkHidden("fix")
 		whenCmd.Flags().MarkHidden("count")
-		whenCmd.Flags().MarkHidden("skip")
 	}
 	whenCmd.Flags().SortFlags = false
 	whenCmd.PersistentFlags().SortFlags = false
@@ -102,9 +98,6 @@ func runWhen(cmd *cobra.Command, args []string) {
 	if WhenOpts.count {
 		options += " --count"
 	}
-	if WhenOpts.skip > 0 {
-		options += " --skip " + fmt.Sprintf("%d", WhenOpts.skip)
-	}
 	arguments := ""
 	for _, arg := range args {
 		arguments += " " + arg
@@ -117,6 +110,11 @@ func runWhen(cmd *cobra.Command, args []string) {
 func validateWhenArgs(cmd *cobra.Command, args []string) error {
 	var err error
 	// EXISTING_CODE
+	// if !WhenOpts.list {
+	// 	if len(args) == 0 {
+	// 		return errors.New(fmtError("You must provide either a date or a block number"))
+	// 	}
+	// }
 	// EXISTING_CODE
 	err = validateGlobalFlags()
 	if err != nil {
