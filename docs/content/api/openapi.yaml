@@ -538,7 +538,7 @@ paths:
       operationId: accounts-abis
       parameters:
         - name: addrs
-          description: list of one or more smart contracts whose ABI to grab from EtherScan
+          description: a list of one or more smart contracts whose ABIs to display
           required: true
           style: form
           in: query
@@ -564,7 +564,10 @@ paths:
           in: query
           explode: true
           schema:
-            type: string
+            type: array
+            items:
+              type: string
+              format: string_t
       responses:
         "200":
           description: returns the requested data
