@@ -1,28 +1,25 @@
 chifra abis  0x00001
-
-  Invalid address '0x00001'. Length (7) is not equal to 40 characters (20 bytes). Quitting...
-
-Purpose:
-  Fetches the ABI for a smart contract.
+Error: 
+  At least one valid Ethereum address is required
 
 Usage:
-  grabABI [flags] <address> [address...]
+  chifra abis [flags] <address> [address...]
 
 Arguments:
-  addrs - list of one or more smart contracts whose ABI to grab from EtherScan (required)
+  addrs - a list of one or more smart contracts whose ABIs to display (required)
 
 Flags:
-  -k, --known         load common 'known' ABIs from cache
-  -s, --sol string    file name of .sol file from which to create a new known abi (without .sol)
-  -f, --find string   try to search for a function declaration given a four byte code
-  -o, --source        show the source of the ABI information (hidden)
-  -c, --classes       generate classDefinitions folder and class definitions (hidden)
+  -k, --known          load common 'known' ABIs from cache
+  -s, --sol string     file name of .sol file from which to create a new known abi (without .sol)
+  -f, --find strings   try to search for a function declaration given a four byte code
+  -o, --source         show the source of the ABI information (hidden)
+  -c, --classes        generate classDefinitions folder and class definitions (hidden)
 
 Global Flags:
-  -x, --fmt string     export format, one of [none|json*|txt|csv|api]
-  -v, --verbose uint   set verbose level (optional level defaults to 1)
-  -h, --help           display this help screen
+  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
+  -h, --help         display this help screen
+  -v, --verbose      enable verbose (increase detail with --log_level)
 
 Notes:
-  - Solidity files found in the local folder with the name '<address>.sol' are converted to an ABI prior to processing (and then removed).
-
+  - Solidity files found in the local folder with the name '<address>.sol' are converted
+    to an ABI prior to processing (and then removed).
