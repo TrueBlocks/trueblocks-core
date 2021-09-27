@@ -1,13 +1,9 @@
-chifra argc: 6 [1:monitors] [2:--delete] [3:--help] [4:--verbose] [5:2] 
-chifra monitors --delete --help --verbose 2 
-chifra monitors argc: 6 [1:--appearances] [2:--delete] [3:--help] [4:--verbose] [5:2] 
-chifra monitors --appearances --delete --help --verbose 2 
-PROG_NAME = [chifra monitors]
+chifra  monitors --delete --help --log_level 2
 Purpose:
-  Export full detail of transactions for one or more addresses.
+  Add, remove, clean, and list address monitors.
 
 Usage:
-  chifra monitors [flags] <address> [address...] [topics] [fourbytes]
+  chifra monitors [flags] <address> [address...]
 
 Arguments:
   addrs - one or more addresses (0x...) to export (required)

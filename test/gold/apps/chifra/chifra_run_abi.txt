@@ -1,8 +1,4 @@
-chifra argc: 3 [1:abis] [2:0xbb9bc244d798123fde783fcc1c72d3bb8c189413] 
-chifra abis 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 
-chifra abis argc: 2 [1:0xbb9bc244d798123fde783fcc1c72d3bb8c189413] 
-chifra abis 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 
-PROG_NAME = [chifra abis]
+chifra  abis 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
 encoding	type	name	signature	input_names	output_names
 0x013cf08b	function	proposals	proposals(uint256)	val_0,	recipient,amount,description,votingDeadline,open,proposalPassed,proposalHash,proposalDeposit,newCurator,yea,nay,creator,,
 0x095ea7b3	function	approve	approve(address,uint256)	_spender,_amount,	success,,

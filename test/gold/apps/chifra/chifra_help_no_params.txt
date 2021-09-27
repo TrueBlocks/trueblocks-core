@@ -1,10 +1,9 @@
-chifra argc: 1 
-chifra 
+chifra  
 Purpose:
   Access to all TrueBlocks tools (chifra <cmd> --help for more).
 
 Usage:
-  chifra [flags] command
+  chifra [command]
 
 Commands:
    ACCOUNTS

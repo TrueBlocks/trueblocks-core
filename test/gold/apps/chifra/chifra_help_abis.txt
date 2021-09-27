@@ -1,8 +1,4 @@
-chifra argc: 5 [1:abis] [2:--help] [3:--verbose] [4:2] 
-chifra abis --help --verbose 2 
-chifra abis argc: 4 [1:--help] [2:--verbose] [3:2] 
-chifra abis --help --verbose 2 
-PROG_NAME = [chifra abis]
+chifra  abis --help --log_level 2
 Purpose:
   Fetches the ABI for a smart contract.
 
@@ -20,10 +16,9 @@ Flags:
   -c, --classes       generate classDefinitions folder and class definitions (hidden)
 
 Global Flags:
-  -x, --fmt string     export format, one of [none|json*|txt|csv|api]
-  -v, --verbose uint   set verbose level (optional level defaults to 1)
-  -h, --help           display this help screen
+  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
+  -h, --help         display this help screen
+  -v, --verbose      enable verbose (increase detail with --log_level)
 
 Notes:
   - Solidity files found in the local folder with the name '<address>.sol' are converted to an ABI prior to processing (and then removed).
-

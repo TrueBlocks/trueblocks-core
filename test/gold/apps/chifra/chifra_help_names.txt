@@ -1,8 +1,4 @@
-chifra argc: 5 [1:names] [2:--help] [3:--verbose] [4:2] 
-chifra names --help --verbose 2 
-chifra names argc: 4 [1:--help] [2:--verbose] [3:2] 
-chifra names --help --verbose 2 
-PROG_NAME = [chifra names]
+chifra  names --help --log_level 2
 Purpose:
   Query addresses or names of well known accounts.
 
@@ -27,11 +23,10 @@ Flags:
   -A, --autoname string   an address assumed to be a token, added automatically to names database if true (hidden)
 
 Global Flags:
-  -x, --fmt string     export format, one of [none|json*|txt|csv|api]
-  -v, --verbose uint   set verbose level (optional level defaults to 1)
-  -h, --help           display this help screen
+  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
+  -h, --help         display this help screen
+  -v, --verbose      enable verbose (increase detail with --log_level)
 
 Notes:
   - The tool will accept up to three terms, each of which must match against any field in the database.
   - The --match_case option enables case sensitive matching.
-

@@ -1,5 +1,4 @@
-chifra argc: 2 [1:--help] 
-chifra --help 
+chifra  --help
 Purpose:
   Access to all TrueBlocks tools (chifra <cmd> --help for more).
 
