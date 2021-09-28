@@ -133,12 +133,9 @@ func validateAbisArgs(cmd *cobra.Command, args []string) error {
 	}
 
 	if len(AbisOpts.sol) > 0 {
-		valid, _ := isValidAddress(AbisOpts.sol)
-		if !valid {
-			return makeError("", "{0} option requires a valid Ethereum address", "--sol")
-		}
-		if FileExists("./"+AbisOpts.sol+".sol") != true {
-			return makeError("", "Solidity code not found at at ./{0}.sol", AbisOpts.sol)
+		cleaned := "./" + strings.Replace(AbisOpts.sol, ".sol", "", 1) + ".sol"
+		if !FileExists(cleaned) {
+			return makeError("", "file not found at {0}", cleaned)
 		}
 		return nil
 	}
