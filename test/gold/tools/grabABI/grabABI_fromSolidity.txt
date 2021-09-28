@@ -1,6 +1,6 @@
 chifra abis  --sol 0x2234567812345678123456781234567812345678
 Error: 
-  file not found at ./0x2234567812345678123456781234567812345678.sol
+  Solidity code not found at at ./0x2234567812345678123456781234567812345678.sol
 
 Usage:
   chifra abis [flags] <address> [address...]
