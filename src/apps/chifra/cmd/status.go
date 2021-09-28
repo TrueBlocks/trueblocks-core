@@ -66,6 +66,8 @@ var StatusOpts statusOptionsType
 func init() {
 	statusCmd.SetOut(os.Stderr)
 
+	// EXISTING_CODE
+	// EXISTING_CODE
 	statusCmd.Flags().SortFlags = false
 	statusCmd.PersistentFlags().SortFlags = false
 	statusCmd.Flags().BoolVarP(&StatusOpts.details, "details", "d", false, "include details about items found in monitors, slurps, abis, or price caches")
@@ -92,6 +94,8 @@ One or more of test, abi_cache, block_cache, tx_cache, trace_cache, recon_cache,
 	}
 	statusCmd.Flags().SortFlags = false
 	statusCmd.PersistentFlags().SortFlags = false
+	// EXISTING_CODE
+	// EXISTING_CODE
 
 	statusCmd.SetUsageTemplate(HelpWithNotes(notesStatus))
 	rootCmd.AddCommand(statusCmd)

@@ -69,6 +69,8 @@ var NamesOpts namesOptionsType
 func init() {
 	namesCmd.SetOut(os.Stderr)
 
+	// EXISTING_CODE
+	// EXISTING_CODE
 	namesCmd.Flags().SortFlags = false
 	namesCmd.PersistentFlags().SortFlags = false
 	namesCmd.Flags().BoolVarP(&NamesOpts.expand, "expand", "e", false, "expand search to include all fields (default searches name, address, and symbol only)")
@@ -90,6 +92,8 @@ func init() {
 	}
 	namesCmd.Flags().SortFlags = false
 	namesCmd.PersistentFlags().SortFlags = false
+	// EXISTING_CODE
+	// EXISTING_CODE
 
 	namesCmd.SetUsageTemplate(HelpWithNotes(notesNames))
 	rootCmd.AddCommand(namesCmd)

@@ -64,6 +64,8 @@ var TransactionsOpts transactionsOptionsType
 func init() {
 	transactionsCmd.SetOut(os.Stderr)
 
+	// EXISTING_CODE
+	// EXISTING_CODE
 	transactionsCmd.Flags().SortFlags = false
 	transactionsCmd.PersistentFlags().SortFlags = false
 	transactionsCmd.Flags().BoolVarP(&TransactionsOpts.articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
@@ -73,6 +75,8 @@ func init() {
 	transactionsCmd.Flags().BoolVarP(&TransactionsOpts.cache, "cache", "o", false, "force the results of the query into the tx cache (and the trace cache if applicable)")
 	transactionsCmd.Flags().SortFlags = false
 	transactionsCmd.PersistentFlags().SortFlags = false
+	// EXISTING_CODE
+	// EXISTING_CODE
 
 	transactionsCmd.SetUsageTemplate(HelpWithNotes(notesTransactions))
 	rootCmd.AddCommand(transactionsCmd)

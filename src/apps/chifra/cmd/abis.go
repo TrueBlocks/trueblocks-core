@@ -66,6 +66,8 @@ var AbisOpts abisOptionsType
 func init() {
 	abisCmd.SetOut(os.Stderr)
 
+	// EXISTING_CODE
+	// EXISTING_CODE
 	abisCmd.Flags().SortFlags = false
 	abisCmd.PersistentFlags().SortFlags = false
 	abisCmd.Flags().BoolVarP(&AbisOpts.known, "known", "k", false, "load common 'known' ABIs from cache")
@@ -79,6 +81,8 @@ func init() {
 	}
 	abisCmd.Flags().SortFlags = false
 	abisCmd.PersistentFlags().SortFlags = false
+	// EXISTING_CODE
+	// EXISTING_CODE
 
 	abisCmd.SetUsageTemplate(HelpWithNotes(notesAbis))
 	rootCmd.AddCommand(abisCmd)
@@ -111,7 +115,7 @@ func runAbis(cmd *cobra.Command, args []string) {
 }
 
 // EXISTING_CODE
-func makeError(function, msg string, values ...string) error {
+func makeErrorEx(function, msg string, values []string) error {
 	var ret string
 	if len(function) > 0 {
 		ret = function + ": "
@@ -123,6 +127,9 @@ func makeError(function, msg string, values ...string) error {
 	}
 	return errors.New(fmtError(ret))
 }
+func makeError(msg string, values ...string) error {
+	return makeErrorEx("", msg, values)
+}
 
 // EXISTING_CODE
 
@@ -130,13 +137,13 @@ func validateAbisArgs(cmd *cobra.Command, args []string) error {
 	var err error
 	// EXISTING_CODE
 	if AbisOpts.classes {
-		return makeError("", "the '{0}' option is not implemented", "--classes")
+		return makeError("the '{0}' option is not implemented", "--classes")
 	}
 
 	if len(AbisOpts.sol) > 0 {
 		cleaned := "./" + strings.Replace(AbisOpts.sol, ".sol", "", 1) + ".sol"
 		if !utils.FileExists(cleaned) {
-			return makeError("", "file not found at {0}", cleaned)
+			return makeError("file not found at {0}", cleaned)
 		}
 		return nil
 	}

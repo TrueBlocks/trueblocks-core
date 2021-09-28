@@ -60,6 +60,8 @@ var QuotesOpts quotesOptionsType
 func init() {
 	quotesCmd.SetOut(os.Stderr)
 
+	// EXISTING_CODE
+	// EXISTING_CODE
 	quotesCmd.Flags().SortFlags = false
 	quotesCmd.PersistentFlags().SortFlags = false
 	quotesCmd.Flags().BoolVarP(&QuotesOpts.freshen, "freshen", "f", false, "Freshen price database")
@@ -70,6 +72,8 @@ One of 5, 15, 30, 60, 120, 240, 1440, 10080, hourly, daily, weekly`)
 One of poloniex, maker, tellor`)
 	quotesCmd.Flags().SortFlags = false
 	quotesCmd.PersistentFlags().SortFlags = false
+	// EXISTING_CODE
+	// EXISTING_CODE
 
 	quotesCmd.SetUsageTemplate(HelpWithNotes(notesQuotes))
 	rootCmd.AddCommand(quotesCmd)

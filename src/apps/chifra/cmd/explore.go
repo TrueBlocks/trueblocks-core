@@ -56,12 +56,16 @@ var ExploreOpts exploreOptionsType
 func init() {
 	exploreCmd.SetOut(os.Stderr)
 
+	// EXISTING_CODE
+	// EXISTING_CODE
 	exploreCmd.Flags().SortFlags = false
 	exploreCmd.PersistentFlags().SortFlags = false
 	exploreCmd.Flags().BoolVarP(&ExploreOpts.local, "local", "l", false, "open the local TrueBlocks explorer")
 	exploreCmd.Flags().BoolVarP(&ExploreOpts.google, "google", "g", false, "search google excluding popular blockchain explorers")
 	exploreCmd.Flags().SortFlags = false
 	exploreCmd.PersistentFlags().SortFlags = false
+	// EXISTING_CODE
+	// EXISTING_CODE
 
 	exploreCmd.SetUsageTemplate(HelpWithNotes(notesExplore))
 	rootCmd.AddCommand(exploreCmd)

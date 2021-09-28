@@ -57,6 +57,8 @@ var ScrapeOpts scrapeOptionsType
 func init() {
 	scrapeCmd.SetOut(os.Stderr)
 
+	// EXISTING_CODE
+	// EXISTING_CODE
 	scrapeCmd.Flags().SortFlags = false
 	scrapeCmd.PersistentFlags().SortFlags = false
 	scrapeCmd.Flags().BoolVarP(&ScrapeOpts.pin, "pin", "p", false, "pin new chunks (and blooms) to IPFS (requires Pinata key and running IPFS node)")
@@ -70,6 +72,8 @@ func init() {
 	}
 	scrapeCmd.Flags().SortFlags = false
 	scrapeCmd.PersistentFlags().SortFlags = false
+	// EXISTING_CODE
+	// EXISTING_CODE
 
 	scrapeCmd.SetUsageTemplate(HelpWithNotes(notesScrape))
 	rootCmd.AddCommand(scrapeCmd)

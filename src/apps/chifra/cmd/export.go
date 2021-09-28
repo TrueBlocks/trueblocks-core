@@ -87,6 +87,8 @@ var ExportOpts exportOptionsType
 func init() {
 	exportCmd.SetOut(os.Stderr)
 
+	// EXISTING_CODE
+	// EXISTING_CODE
 	exportCmd.Flags().SortFlags = false
 	exportCmd.PersistentFlags().SortFlags = false
 	exportCmd.Flags().BoolVarP(&ExportOpts.appearances, "appearances", "p", false, "export a list of appearances")
@@ -133,6 +135,8 @@ One of yearly, quarterly, monthly, weekly, daily, hourly, blockly, tx`)
 	}
 	exportCmd.Flags().SortFlags = false
 	exportCmd.PersistentFlags().SortFlags = false
+	// EXISTING_CODE
+	// EXISTING_CODE
 
 	exportCmd.SetUsageTemplate(HelpWithNotes(notesExport))
 	rootCmd.AddCommand(exportCmd)

@@ -56,12 +56,16 @@ var MonitorsOpts monitorsOptionsType
 func init() {
 	monitorsCmd.SetOut(os.Stderr)
 
+	// EXISTING_CODE
+	// EXISTING_CODE
 	monitorsCmd.Flags().SortFlags = false
 	monitorsCmd.PersistentFlags().SortFlags = false
 	monitorsCmd.Flags().BoolVarP(&MonitorsOpts.delete, "delete", "", false, "delete a previously created monitor (or undelete if already deleted)")
 	monitorsCmd.Flags().BoolVarP(&MonitorsOpts.remove, "remove", "", false, "remove a previously deleted monitor")
 	monitorsCmd.Flags().SortFlags = false
 	monitorsCmd.PersistentFlags().SortFlags = false
+	// EXISTING_CODE
+	// EXISTING_CODE
 
 	monitorsCmd.SetUsageTemplate(HelpWithNotes(notesMonitors))
 	rootCmd.AddCommand(monitorsCmd)

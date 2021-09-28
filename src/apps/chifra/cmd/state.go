@@ -66,6 +66,8 @@ var StateOpts stateOptionsType
 func init() {
 	stateCmd.SetOut(os.Stderr)
 
+	// EXISTING_CODE
+	// EXISTING_CODE
 	stateCmd.Flags().SortFlags = false
 	stateCmd.PersistentFlags().SortFlags = false
 	stateCmd.Flags().StringSliceVarP(&StateOpts.parts, "parts", "p", nil, `control which state to export
@@ -78,6 +80,8 @@ One or more of none, some, all, balance, nonce, code, storage, deployed, accttyp
 	}
 	stateCmd.Flags().SortFlags = false
 	stateCmd.PersistentFlags().SortFlags = false
+	// EXISTING_CODE
+	// EXISTING_CODE
 
 	stateCmd.SetUsageTemplate(HelpWithNotes(notesState))
 	rootCmd.AddCommand(stateCmd)

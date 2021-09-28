@@ -64,6 +64,8 @@ var TokensOpts tokensOptionsType
 func init() {
 	tokensCmd.SetOut(os.Stderr)
 
+	// EXISTING_CODE
+	// EXISTING_CODE
 	tokensCmd.Flags().SortFlags = false
 	tokensCmd.PersistentFlags().SortFlags = false
 	tokensCmd.Flags().StringSliceVarP(&TokensOpts.parts, "parts", "p", nil, `which parts of the token information to retreive
@@ -72,6 +74,8 @@ One or more of name, symbol, decimals, totalSupply, version, none, all`)
 	tokensCmd.Flags().BoolVarP(&TokensOpts.no_zero, "no_zero", "n", false, "suppress the display of zero balance accounts")
 	tokensCmd.Flags().SortFlags = false
 	tokensCmd.PersistentFlags().SortFlags = false
+	// EXISTING_CODE
+	// EXISTING_CODE
 
 	tokensCmd.SetUsageTemplate(HelpWithNotes(notesTokens))
 	rootCmd.AddCommand(tokensCmd)

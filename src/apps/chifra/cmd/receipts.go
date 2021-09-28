@@ -60,11 +60,15 @@ var ReceiptsOpts receiptsOptionsType
 func init() {
 	receiptsCmd.SetOut(os.Stderr)
 
+	// EXISTING_CODE
+	// EXISTING_CODE
 	receiptsCmd.Flags().SortFlags = false
 	receiptsCmd.PersistentFlags().SortFlags = false
 	receiptsCmd.Flags().BoolVarP(&ReceiptsOpts.articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
 	receiptsCmd.Flags().SortFlags = false
 	receiptsCmd.PersistentFlags().SortFlags = false
+	// EXISTING_CODE
+	// EXISTING_CODE
 
 	receiptsCmd.SetUsageTemplate(HelpWithNotes(notesReceipts))
 	rootCmd.AddCommand(receiptsCmd)

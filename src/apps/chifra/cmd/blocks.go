@@ -69,6 +69,8 @@ var BlocksOpts blocksOptionsType
 func init() {
 	blocksCmd.SetOut(os.Stderr)
 
+	// EXISTING_CODE
+	// EXISTING_CODE
 	blocksCmd.Flags().SortFlags = false
 	blocksCmd.PersistentFlags().SortFlags = false
 	blocksCmd.Flags().BoolVarP(&BlocksOpts.hashes, "hashes", "e", false, "display only transaction hashes, default is to display full transaction detail")
@@ -87,6 +89,8 @@ func init() {
 	}
 	blocksCmd.Flags().SortFlags = false
 	blocksCmd.PersistentFlags().SortFlags = false
+	// EXISTING_CODE
+	// EXISTING_CODE
 
 	blocksCmd.SetUsageTemplate(HelpWithNotes(notesBlocks))
 	rootCmd.AddCommand(blocksCmd)

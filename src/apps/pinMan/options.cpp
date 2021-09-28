@@ -128,6 +128,8 @@ void COptions::Init(void) {
     remote = false;
     pin_locally = false;
     // END_CODE_INIT
+
+    minArgs = 0;
 }
 
 //---------------------------------------------------------------------------------------------------

@@ -62,6 +62,8 @@ var WhenOpts whenOptionsType
 func init() {
 	whenCmd.SetOut(os.Stderr)
 
+	// EXISTING_CODE
+	// EXISTING_CODE
 	whenCmd.Flags().SortFlags = false
 	whenCmd.PersistentFlags().SortFlags = false
 	whenCmd.Flags().BoolVarP(&WhenOpts.list, "list", "l", false, "export a list of the 'special' blocks")
@@ -76,6 +78,8 @@ func init() {
 	}
 	whenCmd.Flags().SortFlags = false
 	whenCmd.PersistentFlags().SortFlags = false
+	// EXISTING_CODE
+	// EXISTING_CODE
 
 	whenCmd.SetUsageTemplate(HelpWithNotes(notesWhen))
 	rootCmd.AddCommand(whenCmd)

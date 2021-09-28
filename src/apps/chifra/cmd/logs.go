@@ -64,6 +64,8 @@ var LogsOpts logsOptionsType
 func init() {
 	logsCmd.SetOut(os.Stderr)
 
+	// EXISTING_CODE
+	// EXISTING_CODE
 	logsCmd.Flags().SortFlags = false
 	logsCmd.PersistentFlags().SortFlags = false
 	logsCmd.Flags().StringSliceVarP(&LogsOpts.topic, "topic", "t", nil, "filter by one or more log topics (not implemented)")
@@ -71,6 +73,8 @@ func init() {
 	logsCmd.Flags().BoolVarP(&LogsOpts.articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
 	logsCmd.Flags().SortFlags = false
 	logsCmd.PersistentFlags().SortFlags = false
+	// EXISTING_CODE
+	// EXISTING_CODE
 
 	logsCmd.SetUsageTemplate(HelpWithNotes(notesLogs))
 	rootCmd.AddCommand(logsCmd)

@@ -47,10 +47,14 @@ var [{PROPER}]Opts [{ROUTE}]OptionsType
 func init() {
 	[{ROUTE}]Cmd.SetOut(os.Stderr)
 
+	// EXISTING_CODE
+	// EXISTING_CODE
 	[{ROUTE}]Cmd.Flags().SortFlags = false
 	[{ROUTE}]Cmd.PersistentFlags().SortFlags = false
 [{SET_OPTS}][{HIDDEN}]	[{ROUTE}]Cmd.Flags().SortFlags = false
 	[{ROUTE}]Cmd.PersistentFlags().SortFlags = false
+	// EXISTING_CODE
+	// EXISTING_CODE
 
 	[{ROUTE}]Cmd.SetUsageTemplate(HelpWithNotes(notes[{PROPER}]))
 	rootCmd.AddCommand([{ROUTE}]Cmd)

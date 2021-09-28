@@ -61,6 +61,8 @@ var PinsOpts pinsOptionsType
 func init() {
 	pinsCmd.SetOut(os.Stderr)
 
+	// EXISTING_CODE
+	// EXISTING_CODE
 	pinsCmd.Flags().SortFlags = false
 	pinsCmd.PersistentFlags().SortFlags = false
 	pinsCmd.Flags().BoolVarP(&PinsOpts.list, "list", "l", false, "list the index and Bloom filter hashes from local manifest or pinning service")
@@ -75,6 +77,8 @@ func init() {
 	}
 	pinsCmd.Flags().SortFlags = false
 	pinsCmd.PersistentFlags().SortFlags = false
+	// EXISTING_CODE
+	// EXISTING_CODE
 
 	pinsCmd.SetUsageTemplate(HelpWithNotes(notesPins))
 	rootCmd.AddCommand(pinsCmd)
@@ -115,6 +119,9 @@ func runPins(cmd *cobra.Command, args []string) {
 func validatePinsArgs(cmd *cobra.Command, args []string) error {
 	var err error
 	// EXISTING_CODE
+	if !PinsOpts.list && !PinsOpts.init && !PinsOpts.init_all {
+		return makeError("You must choose at least one of {0}, {1}, or {2}", "--list", "--init", "--init_all")
+	}
 	// EXISTING_CODE
 	err = validateGlobalFlags(cmd, args)
 	if err != nil {

@@ -69,6 +69,8 @@ var TracesOpts tracesOptionsType
 func init() {
 	tracesCmd.SetOut(os.Stderr)
 
+	// EXISTING_CODE
+	// EXISTING_CODE
 	tracesCmd.Flags().SortFlags = false
 	tracesCmd.PersistentFlags().SortFlags = false
 	tracesCmd.Flags().BoolVarP(&TracesOpts.articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
@@ -83,6 +85,8 @@ func init() {
 	}
 	tracesCmd.Flags().SortFlags = false
 	tracesCmd.PersistentFlags().SortFlags = false
+	// EXISTING_CODE
+	// EXISTING_CODE
 
 	tracesCmd.SetUsageTemplate(HelpWithNotes(notesTraces))
 	rootCmd.AddCommand(tracesCmd)

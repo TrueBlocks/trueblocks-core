@@ -51,10 +51,14 @@ var InitOpts initOptionsType
 func init() {
 	initCmd.SetOut(os.Stderr)
 
+	// EXISTING_CODE
+	// EXISTING_CODE
 	initCmd.Flags().SortFlags = false
 	initCmd.PersistentFlags().SortFlags = false
 	initCmd.Flags().SortFlags = false
 	initCmd.PersistentFlags().SortFlags = false
+	// EXISTING_CODE
+	// EXISTING_CODE
 
 	initCmd.SetUsageTemplate(HelpWithNotes(notesInit))
 	rootCmd.AddCommand(initCmd)
