@@ -15,19 +15,10 @@ package cmd
 
 import (
 	"errors"
-	"os"
 	"strings"
 
 	"github.com/spf13/cobra"
 )
-
-func FileExists(filename string) bool {
-	info, err := os.Stat(filename)
-	if os.IsNotExist(err) {
-		return false
-	}
-	return !info.IsDir()
-}
 
 func fmtError(msg string) string {
 	return "\n  " + msg + "\n"

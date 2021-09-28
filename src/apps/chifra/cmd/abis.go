@@ -24,6 +24,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/utils"
 	"github.com/spf13/cobra"
 	// EXISTING_CODE
 )
@@ -134,7 +135,7 @@ func validateAbisArgs(cmd *cobra.Command, args []string) error {
 
 	if len(AbisOpts.sol) > 0 {
 		cleaned := "./" + strings.Replace(AbisOpts.sol, ".sol", "", 1) + ".sol"
-		if !FileExists(cleaned) {
+		if !utils.FileExists(cleaned) {
 			return makeError("", "file not found at {0}", cleaned)
 		}
 		return nil
