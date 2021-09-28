@@ -44,16 +44,18 @@ var longPins = `Purpose:
 
 var notesPins = `
 Notes:
-  - One of --list, --init, or --init_all is required.
-  - the --pin_locally option only works if the IPFS executable is in your path.`
+  - One of --list, --init, or --freshen is required.
+  - the --share option only works if the IPFS executable is in your path.`
 
 type pinsOptionsType struct {
-	list        bool
-	init        bool
-	init_all    bool
-	sleep       float64
-	remote      bool
-	pin_locally bool
+	list     bool
+	init     bool
+	freshen  bool
+	remote   bool
+	all      bool
+	sleep    float64
+	share    bool
+	init_all bool
 }
 
 var PinsOpts pinsOptionsType
@@ -66,14 +68,17 @@ func init() {
 	pinsCmd.Flags().SortFlags = false
 	pinsCmd.PersistentFlags().SortFlags = false
 	pinsCmd.Flags().BoolVarP(&PinsOpts.list, "list", "l", false, "list the index and Bloom filter hashes from local manifest or pinning service")
-	pinsCmd.Flags().BoolVarP(&PinsOpts.init, "init", "i", false, "initialize local index by downloading Bloom filters from pinning service")
-	pinsCmd.Flags().BoolVarP(&PinsOpts.init_all, "init_all", "n", false, "initialize local index by downloading both Bloom filters and index chunks")
-	pinsCmd.Flags().Float64VarP(&PinsOpts.sleep, "sleep", "s", 0.0, "the number of seconds to sleep between requests during init (default .25) (hidden)")
-	pinsCmd.Flags().BoolVarP(&PinsOpts.remote, "remote", "r", false, "applicable only to --list mode, recover the manifest from pinning service (hidden)")
-	pinsCmd.Flags().BoolVarP(&PinsOpts.pin_locally, "pin_locally", "p", false, "pin all local files in the index to an IPFS store (requires IPFS)")
+	pinsCmd.Flags().BoolVarP(&PinsOpts.init, "init", "i", false, "initialize index of appearances by downloading Bloom filters from pinning service")
+	pinsCmd.Flags().BoolVarP(&PinsOpts.freshen, "freshen", "f", false, "freshen index of appearances using the same mode from most recent --init")
+	pinsCmd.Flags().BoolVarP(&PinsOpts.remote, "remote", "r", false, "for --list mode only, recover the manifest from pinning service (hidden)")
+	pinsCmd.Flags().BoolVarP(&PinsOpts.all, "all", "a", false, "for --init and --freshen modes only, download full index chunks as well as Bloom filter")
+	pinsCmd.Flags().Float64VarP(&PinsOpts.sleep, "sleep", "s", 0.0, "the number of seconds to sleep between requests during download (default .25) (hidden)")
+	pinsCmd.Flags().BoolVarP(&PinsOpts.share, "share", "S", false, "pin downloaded files to your local IPFS store, that is, share them (requires IPFS)")
+	pinsCmd.Flags().BoolVarP(&PinsOpts.init_all, "init_all", "n", false, "use --init --all instead (hidden)")
 	if IsTestMode() == false {
-		pinsCmd.Flags().MarkHidden("sleep")
 		pinsCmd.Flags().MarkHidden("remote")
+		pinsCmd.Flags().MarkHidden("sleep")
+		pinsCmd.Flags().MarkHidden("init_all")
 	}
 	pinsCmd.Flags().SortFlags = false
 	pinsCmd.PersistentFlags().SortFlags = false
@@ -92,17 +97,20 @@ func runPins(cmd *cobra.Command, args []string) {
 	if PinsOpts.init {
 		options += " --init"
 	}
-	if PinsOpts.init_all {
-		options += " --init_all"
-	}
-	if PinsOpts.sleep > 0.0 {
-		options += " --sleep " + fmt.Sprintf("%.1f", PinsOpts.sleep)
+	if PinsOpts.freshen {
+		options += " --freshen"
 	}
 	if PinsOpts.remote {
 		options += " --remote"
 	}
-	if PinsOpts.pin_locally {
-		options += " --pin_locally"
+	if PinsOpts.all {
+		options += " --all"
+	}
+	if PinsOpts.sleep > 0.0 {
+		options += " --sleep " + fmt.Sprintf("%.1f", PinsOpts.sleep)
+	}
+	if PinsOpts.share {
+		options += " --share"
 	}
 	arguments := ""
 	for _, arg := range args {
@@ -119,10 +127,15 @@ func runPins(cmd *cobra.Command, args []string) {
 func validatePinsArgs(cmd *cobra.Command, args []string) error {
 	var err error
 	// EXISTING_CODE
-	if !PinsOpts.list && !PinsOpts.init && !PinsOpts.init_all {
-		return makeError("You must choose at least one of {0}, {1}, or {2}", "--list", "--init", "--init_all")
+	if !PinsOpts.list && !PinsOpts.init && !PinsOpts.freshen {
+		return makeError("You must choose at least one of {0}, {1}, or {2}", "--list", "--init", "--freshen")
+	}
+	// refuse to run deprecated commands
+	if PinsOpts.init_all {
+		return makeError("Flag --init_all has been deprecated, use --init --all instead")
 	}
 	// EXISTING_CODE
+	// validate global arguments
 	err = validateGlobalFlags(cmd, args)
 	if err != nil {
 		return err

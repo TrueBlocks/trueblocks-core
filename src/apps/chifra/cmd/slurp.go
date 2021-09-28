@@ -107,6 +107,7 @@ func validateSlurpArgs(cmd *cobra.Command, args []string) error {
 		return err
 	}
 	// EXISTING_CODE
+	// validate global arguments
 	err = validateGlobalFlags(cmd, args)
 	if err != nil {
 		return err

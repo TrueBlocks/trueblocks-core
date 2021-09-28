@@ -74,7 +74,7 @@ func init() {
 	statusCmd.Flags().StringSliceVarP(&StatusOpts.types, "types", "t", nil, `for caches mode only, which type(s) of cache to report
 One or more of blocks, txs, traces, slurps, prices, all`)
 	statusCmd.Flags().Uint64VarP(&StatusOpts.depth, "depth", "p", 0, "for cache mode only, number of levels deep to report (hidden)")
-	statusCmd.Flags().BoolVarP(&StatusOpts.report, "report", "r", false, "show a summary of the current status of TrueBlocks (deprecated) (hidden)")
+	statusCmd.Flags().BoolVarP(&StatusOpts.report, "report", "r", false, "run the command with no options for the same result (hidden)")
 	statusCmd.Flags().BoolVarP(&StatusOpts.terse, "terse", "e", false, "show a terse summary report (hidden)")
 	statusCmd.Flags().StringSliceVarP(&StatusOpts.migrate, "migrate", "m", nil, `either effectuate or test to see if a migration is necessary (hidden)
 One or more of test, abi_cache, block_cache, tx_cache, trace_cache, recon_cache, name_cache, slurp_cache, all`)
@@ -112,9 +112,6 @@ func runStatus(cmd *cobra.Command, args []string) {
 	if StatusOpts.depth > 0 {
 		options += " --depth " + fmt.Sprintf("%d", StatusOpts.depth)
 	}
-	if StatusOpts.report {
-		options += " --report"
-	}
 	if StatusOpts.terse {
 		options += " --terse"
 	}
@@ -149,6 +146,7 @@ func validateStatusArgs(cmd *cobra.Command, args []string) error {
 	var err error
 	// EXISTING_CODE
 	// EXISTING_CODE
+	// validate global arguments
 	err = validateGlobalFlags(cmd, args)
 	if err != nil {
 		return err

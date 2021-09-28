@@ -78,6 +78,7 @@ func validate[{PROPER}]Args(cmd *cobra.Command, args []string) error {
 	var err error
 	// EXISTING_CODE
 	// EXISTING_CODE
+	// validate global arguments
 	err = validateGlobalFlags(cmd, args)
 	if err != nil {
 		return err

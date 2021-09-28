@@ -18,6 +18,7 @@ extern const char* STR_OPTION_CONFIGSTR;
 extern const char* STR_OPTION_NOTESTR;
 extern const char* STR_OPTION_STR;
 extern const char* STR_AUTO_SWITCH;
+extern const char* STR_AUTO_DEPRECATED;
 extern const char* STR_AUTO_TOGGLE;
 extern const char* STR_AUTO_FLAG;
 extern const char* STR_AUTO_FLAG_ENUM;
@@ -80,7 +81,10 @@ bool COptions::handle_options(void) {
                 if (option.tool == "chifra")
                     allAuto = false;
 
-                if (option.isNote) {
+                if (option.isDeprecated) {
+                    // do nothing
+
+                } else if (option.isNote) {
                     string_q note = option.Format(STR_OPTION_NOTESTR);
                     if (note.length() > 120)
                         note += "  // NOLINT";
@@ -120,7 +124,10 @@ bool COptions::handle_options(void) {
                                                                 : "Int"));
                 }
 
-                if (option.option_type == "switch") {
+                if (option.option_type == "deprecated") {
+                    generate_deprecated(option);
+
+                } else if (option.option_type == "switch") {
                     generate_switch(option);
 
                 } else if (option.option_type == "toggle") {
@@ -128,9 +135,6 @@ bool COptions::handle_options(void) {
 
                 } else if (option.option_type == "flag") {
                     generate_flag(option);
-
-                } else if (option.option_type == "deprecated") {
-                    generate_deprecated(option);
 
                 } else if (option.option_type == "positional") {
                     generate_positional(option);
@@ -457,9 +461,8 @@ void COptions::generate_positional(const CCommandOption& option) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::generate_deprecated(const CCommandOption& option) {
-    if (option.option_type == "deprecated") {
-        localStream << option.Format(STR_DEFAULT_ASSIGNMENT) << endl;
-        autoStream << option.Format(STR_AUTO_FLAG_UINT) << endl;
+    if (option.isDeprecated) {
+        autoStream << option.Format(STR_AUTO_DEPRECATED) << endl;
     }
 }
 //---------------------------------------------------------------------------------------------------
@@ -550,6 +553,13 @@ const char* STR_OPTION_STR =
 const char* STR_AUTO_SWITCH =
     "        } else if ([arg == \"-{HOTKEY}\" || ]arg == \"--[{LONGNAME}]\") {\n"
     "            [{LONGNAME}] = true;\n";
+
+//---------------------------------------------------------------------------------------------------
+const char* STR_AUTO_DEPRECATED =
+    "        } else if ([arg == \"-{HOTKEY}\" || ]arg == \"--[{LONGNAME}]\") {\n"
+    "            // clang-format off\n"
+    "            return usage(\"the --[{LONGNAME}] option is deprecated, [{DESCRIPTION}]\");  // NOLINT\n"
+    "            // clang-format on\n";
 
 //---------------------------------------------------------------------------------------------------
 const char* STR_AUTO_TOGGLE =

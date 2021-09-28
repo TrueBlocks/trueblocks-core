@@ -30,7 +30,7 @@ void COptions::writeOpenApiFile(void) {
     for (auto ep : endpointArray) {
         CCommandOptionArray params;
         for (auto option : optionArray)
-            if (option.api_route == ep.api_route && option.isChifraRoute())
+            if (option.api_route == ep.api_route && option.isChifraRoute(false))
                 params.push_back(option);
         ep.params = &params;
 

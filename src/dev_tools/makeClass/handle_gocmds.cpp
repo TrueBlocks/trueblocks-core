@@ -35,8 +35,10 @@ bool COptions::handle_gocmds(void) {
         CCommandOptionArray params;
         CCommandOptionArray notes;
         for (auto option : optionArray) {
-            if (option.api_route == ep.api_route && option.isChifraRoute())
+            bool isOne = option.api_route == ep.api_route && option.isChifraRoute(true);
+            if (isOne) {
                 params.push_back(option);
+            }
             if (option.api_route == ep.api_route && option.option_type == "note")
                 notes.push_back(option);
         }
@@ -232,7 +234,7 @@ string_q get_setopts(const CCommandOption& cmd) {
 string_q get_copyopts(const CCommandOption& cmd) {
     ostringstream os;
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
-        if (p.option_type != "positional") {
+        if (p.option_type != "positional" && !p.isDeprecated) {
             if (p.go_type == "[]string") {
                 os << "\tfor _, t := range [{PROPER}]Opts." << p.longName << " {" << endl;
                 os << "\t\toptions += \" --" << p.longName << " \" + t" << endl;

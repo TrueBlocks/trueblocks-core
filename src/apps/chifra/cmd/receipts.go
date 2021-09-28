@@ -104,6 +104,7 @@ func validateReceiptsArgs(cmd *cobra.Command, args []string) error {
 	// 	}
 	// }
 	// EXISTING_CODE
+	// validate global arguments
 	err = validateGlobalFlags(cmd, args)
 	if err != nil {
 		return err
