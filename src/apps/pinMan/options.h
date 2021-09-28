@@ -25,12 +25,14 @@ class COptions : public CAbiOptions {
   public:
     // BEG_CODE_DECLARE
     bool init;
-    bool init_all;
-    double sleep;
+    bool freshen;
     bool remote;
-    bool pin_locally;
+    bool all;
+    double sleep;
+    bool share;
     // END_CODE_DECLARE
 
+    bool freshenAll;
     CPinnedChunkArray pins;
 
     COptions(void);

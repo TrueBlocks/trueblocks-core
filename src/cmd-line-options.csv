@@ -185,7 +185,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 10720,apps,Admin,status,cacheStatus,details,d,,false,false,true,true,header,switch,<boolean>,include details about items found in monitors&#44; slurps&#44; abis&#44;|or price caches
 10730,apps,Admin,status,cacheStatus,types,t,,false,false,true,false,local,flag,list<enum[blocks|txs|traces|slurps|prices|all*]>,for caches mode only&#44; which type(s) of cache to report
 10735,apps,Admin,status,cacheStatus,depth,p,,false,false,false,false,header,flag,<uint64>,for cache mode only&#44; number of levels deep to report
-10760,apps,Admin,status,cacheStatus,report,r,,false,false,false,true,local,switch,<boolean>,show a summary of the current status of TrueBlocks (deprecated)
+10760,apps,Admin,status,cacheStatus,report,r,,false,false,false,true,local,deprecated,<boolean>,run the command with no options for the same result
 10770,apps,Admin,status,cacheStatus,terse,e,,false,false,false,true,header,switch,<boolean>,show a terse summary report
 10782,apps,Admin,status,cacheStatus,migrate,m,,false,false,false,false,local,flag,list<enum[test|abi_cache|block_cache|tx_cache|trace_cache|recon_cache|name_cache|slurp_cache|all]>,either effectuate or test to see if a migration is necessary
 10780,apps,Admin,status,cacheStatus,get_config,g,,false,false,false,false,local,switch,<boolean>,returns JSON data of the editable configuration file items
@@ -195,14 +195,16 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 10860,apps,Admin,status,cacheStatus,,,,false,false,true,true,--,description,,Report on the status of the TrueBlocks system.
 
 10950,apps,Admin,pins,pinMan,list,l,,false,false,true,true,local,switch,<boolean>,list the index and Bloom filter hashes from local manifest or pinning service
-10950,apps,Admin,pins,pinMan,init,i,,false,false,true,true,header,switch,<boolean>,initialize local index by downloading Bloom filters from pinning service
-10951,apps,Admin,pins,pinMan,init_all,n,,false,false,true,true,header,switch,<boolean>,initialize local index by downloading both Bloom filters and index chunks
-10980,apps,Admin,pins,pinMan,sleep,s,.25,false,false,false,false,header,flag,<double>,the number of seconds to sleep between requests during init (default [{DEF}])
-10950,apps,Admin,pins,pinMan,remote,r,,false,false,false,false,header,switch,<boolean>,applicable only to --list mode&#44; recover the manifest from pinning service
-10952,apps,Admin,pins,pinMan,pin_locally,p,,false,false,true,true,header,switch,<boolean>,pin all local files in the index to an IPFS store (requires IPFS)
-10980,apps,Admin,pins,pinMan,,,,false,false,true,true,--,description,,Manage pinned index of appearances and associated Bloom filters.
-10990,apps,Admin,pins,pinMan,,,,false,false,false,false,--,note,,One of `--list`&#44; `--init`&#44; or `--init_all` is required.
-10991,apps,Admin,pins,pinMan,,,,false,false,false,false,--,note,,the `--pin_locally` option only works if the IPFS executable is in your path.
+10952,apps,Admin,pins,pinMan,init,i,,false,false,true,true,header,switch,<boolean>,initialize index of appearances by downloading Bloom filters from pinning service
+10954,apps,Admin,pins,pinMan,freshen,f,,false,false,true,true,header,switch,<boolean>,freshen index of appearances using the same mode from most recent --init
+10956,apps,Admin,pins,pinMan,remote,r,,false,false,false,false,header,switch,<boolean>,for --list mode only&#44; recover the manifest from pinning service
+10958,apps,Admin,pins,pinMan,all,a,,false,false,true,true,header,switch,<boolean>,for --init and --freshen modes only&#44; download full index chunks as well as Bloom filter
+10960,apps,Admin,pins,pinMan,sleep,s,.25,false,false,false,false,header,flag,<double>,the number of seconds to sleep between requests during download (default [{DEF}])
+10962,apps,Admin,pins,pinMan,share,S,,false,false,true,true,header,switch,<boolean>,pin downloaded files to your local IPFS store&#44; that is&#44; share them (requires IPFS)
+10964,apps,Admin,pins,pinMan,init_all,n,,false,false,false,false,header,deprecated,<boolean>,use --init --all instead
+10966,apps,Admin,pins,pinMan,,,,false,false,true,true,--,description,,Manage pinned index of appearances and associated Bloom filters.
+10968,apps,Admin,pins,pinMan,,,,false,false,false,false,--,note,,One of `--list`&#44; `--init`&#44; or `--freshen` is required.
+10970,apps,Admin,pins,pinMan,,,,false,false,false,false,--,note,,the `--share` option only works if the IPFS executable is in your path.
 
 12020,tools,Other,quotes,getQuotes,freshen,f,,false,false,true,true,local,switch,<boolean>,Freshen price database
 12040,tools,Other,quotes,getQuotes,period,p,,false,false,true,true,local,flag,enum[5|15|30|60|120*|240|1440|10080|hourly|daily|weekly],increment of display

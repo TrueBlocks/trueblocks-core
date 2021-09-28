@@ -1235,14 +1235,6 @@ paths:
           explode: true
           schema:
             type: boolean
-        - name: report
-          description: show a summary of the current status of TrueBlocks (deprecated)
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
         - name: terse
           description: show a terse summary report
           required: false
@@ -1370,23 +1362,34 @@ paths:
           schema:
             type: boolean
         - name: init
-          description: initialize local index by downloading Bloom filters from pinning service
+          description: >
+            initialize index of appearances by downloading Bloom filters from pinning service
           required: false
           style: form
           in: query
           explode: true
           schema:
             type: boolean
-        - name: init_all
-          description: initialize local index by downloading both Bloom filters and index chunks
+        - name: freshen
+          description: freshen index of appearances using the same mode from most recent --init
           required: false
           style: form
           in: query
           explode: true
           schema:
             type: boolean
-        - name: pin_locally
-          description: pin all local files in the index to an IPFS store (requires IPFS)
+        - name: all
+          description: >
+            for --init and --freshen modes only, download full index chunks as well as Bloom filter
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: share
+          description: >
+            pin downloaded files to your local IPFS store, that is, share them (requires IPFS)
           required: false
           style: form
           in: query

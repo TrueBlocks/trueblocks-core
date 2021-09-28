@@ -17,7 +17,7 @@ on,both,fast,abis,tools/grabABI,known_bug1_raw,y,addrs = 0xe94327d07fc17907b4db7
 on,both,fast,abis,tools/grabABI,known_bug2,y,addrs = 0xef638b4305b8a1620f4e0e562e127f1181ae16d2 & fmt = json
 on,both,fast,abis,tools/grabABI,known_bug2_raw,y,addrs = 0xef638b4305b8a1620f4e0e562e127f1181ae16d2 & fmt = json
 local,both,fast,abis,tools/grabABI,fromSolidity,y,sol & addrs = 0x2234567812345678123456781234567812345678
-on,both,fast,abis,tools/grabABI,fromSolidity2,y,sol & addrs = 0x7d655c57f71464b6f83811c55d84009cd9f5221c & fmt = json
+local,both,fast,abis,tools/grabABI,fromSolidity2,y,sol & addrs = 0x7d655c57f71464b6f83811c55d84009cd9f5221c & fmt = json
 on,both,fast,abis,tools/grabABI,fmt_newfields,y,addrs = 0xffa93aacf49297d51e211817452839052fdfb961
 on,both,fast,abis,tools/grabABI,fmt_default,y,addrs = 0xe94327d07fc17907b4db788e5adf2ed424addff6
 on,both,fast,abis,tools/grabABI,fmt_txt,n,addrs = 0xe94327d07fc17907b4db788e5adf2ed424addff6 & fmt = txt

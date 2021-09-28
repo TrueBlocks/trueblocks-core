@@ -22,11 +22,12 @@ static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
     COption("list", "l", "", OPT_SWITCH, "list the index and Bloom filter hashes from local manifest or pinning service"),  // NOLINT
-    COption("init", "i", "", OPT_SWITCH, "initialize local index by downloading Bloom filters from pinning service"),
-    COption("init_all", "n", "", OPT_SWITCH, "initialize local index by downloading both Bloom filters and index chunks"),  // NOLINT
-    COption("sleep", "s", "<double>", OPT_HIDDEN | OPT_FLAG, "the number of seconds to sleep between requests during init (default .25)"),  // NOLINT
-    COption("remote", "r", "", OPT_HIDDEN | OPT_SWITCH, "applicable only to --list mode, recover the manifest from pinning service"),  // NOLINT
-    COption("pin_locally", "p", "", OPT_SWITCH, "pin all local files in the index to an IPFS store (requires IPFS)"),
+    COption("init", "i", "", OPT_SWITCH, "initialize index of appearances by downloading Bloom filters from pinning service"),  // NOLINT
+    COption("freshen", "f", "", OPT_SWITCH, "freshen index of appearances using the same mode from most recent --init"),
+    COption("remote", "r", "", OPT_HIDDEN | OPT_SWITCH, "for --list mode only, recover the manifest from pinning service"),  // NOLINT
+    COption("all", "a", "", OPT_SWITCH, "for --init and --freshen modes only, download full index chunks as well as Bloom filter"),  // NOLINT
+    COption("sleep", "s", "<double>", OPT_HIDDEN | OPT_FLAG, "the number of seconds to sleep between requests during download (default .25)"),  // NOLINT
+    COption("share", "S", "", OPT_SWITCH, "pin downloaded files to your local IPFS store, that is, share them (requires IPFS)"),  // NOLINT
     COption("", "", "", OPT_DESCRIPTION, "Manage pinned index of appearances and associated Bloom filters."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -54,8 +55,14 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-i" || arg == "--init") {
             init = true;
 
-        } else if (arg == "-n" || arg == "--init_all") {
-            init_all = true;
+        } else if (arg == "-f" || arg == "--freshen") {
+            freshen = true;
+
+        } else if (arg == "-r" || arg == "--remote") {
+            remote = true;
+
+        } else if (arg == "-a" || arg == "--all") {
+            all = true;
 
         } else if (startsWith(arg, "-s:") || startsWith(arg, "--sleep:")) {
             if (!confirmDouble("sleep", sleep, arg))
@@ -63,11 +70,13 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-s" || arg == "--sleep") {
             return flag_required("sleep");
 
-        } else if (arg == "-r" || arg == "--remote") {
-            remote = true;
+        } else if (arg == "-S" || arg == "--share") {
+            share = true;
 
-        } else if (arg == "-p" || arg == "--pin_locally") {
-            pin_locally = true;
+        } else if (arg == "-n" || arg == "--init_all") {
+            // clang-format off
+            return usage("the --init_all option is deprecated, use --init --all instead");  // NOLINT
+            // clang-format on
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -82,10 +91,11 @@ bool COptions::parseArguments(string_q& command) {
     // BEG_DEBUG_DISPLAY
     LOG_TEST_BOOL("list", list);
     LOG_TEST_BOOL("init", init);
-    LOG_TEST_BOOL("init_all", init_all);
-    LOG_TEST("sleep", sleep, (sleep == .25));
+    LOG_TEST_BOOL("freshen", freshen);
     LOG_TEST_BOOL("remote", remote);
-    LOG_TEST_BOOL("pin_locally", pin_locally);
+    LOG_TEST_BOOL("all", all);
+    LOG_TEST("sleep", sleep, (sleep == .25));
+    LOG_TEST_BOOL("share", share);
     // END_DEBUG_DISPLAY
 
     if (Mocked(""))
@@ -96,20 +106,19 @@ bool COptions::parseArguments(string_q& command) {
     LOG_INFO("unchainedIndexAddr:\t", cGreen, unchainedIndexAddr, cOff);
     LOG_INFO("manifestHashEncoding:\t", cGreen, manifestHashEncoding, cOff);
 
-    if (list && (init || init_all))
+    if (list && (init || freshen))
         return usage("Please choose only a single option.");
 
-    if (!list && !init && !init_all)
-        return usage("You must choose at least one of --list, --init, or --init_all.");
+    if (!list && !init && !freshen)
+        return usage("You must choose at least one of --list, --init, or --freshen.");
 
-    if (init_all)
+    if (freshen)
         init = true;
 
-    if (pin_locally) {
+    if (share) {
         string_q res = doCommand("which ipfs");
         if (res.empty())
-            return usage(
-                "Could not find ipfs in your $PATH. You must install ipfs for the --pin_locally command to work.");
+            return usage("Could not find ipfs in your $PATH. You must install ipfs for the --share command to work.");
     }
 
     configureDisplay("pinMan", "CPinnedChunk", STR_DISPLAY_PINNEDCHUNK);
@@ -123,11 +132,14 @@ void COptions::Init(void) {
 
     // BEG_CODE_INIT
     init = false;
-    init_all = false;
-    sleep = .25;
+    freshen = false;
     remote = false;
-    pin_locally = false;
+    all = false;
+    sleep = .25;
+    share = false;
     // END_CODE_INIT
+
+    freshenAll = false;
 
     minArgs = 0;
 }
@@ -138,8 +150,8 @@ COptions::COptions(void) {
 
     // BEG_CODE_NOTES
     // clang-format off
-    notes.push_back("One of `--list`, `--init`, or `--init_all` is required.");
-    notes.push_back("the `--pin_locally` option only works if the IPFS executable is in your path.");
+    notes.push_back("One of `--list`, `--init`, or `--freshen` is required.");
+    notes.push_back("the `--share` option only works if the IPFS executable is in your path.");
     // clang-format on
     // END_CODE_NOTES
 

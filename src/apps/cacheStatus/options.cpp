@@ -24,7 +24,6 @@ static const COption params[] = {
     COption("details", "d", "", OPT_SWITCH, "include details about items found in monitors, slurps, abis, or price caches"),  // NOLINT
     COption("types", "t", "list<enum[blocks|txs|traces|slurps|prices|all*]>", OPT_FLAG, "for caches mode only, which type(s) of cache to report"),  // NOLINT
     COption("depth", "p", "<uint64>", OPT_HIDDEN | OPT_FLAG, "for cache mode only, number of levels deep to report"),
-    COption("report", "r", "", OPT_HIDDEN | OPT_SWITCH, "show a summary of the current status of TrueBlocks (deprecated)"),  // NOLINT
     COption("terse", "e", "", OPT_HIDDEN | OPT_SWITCH, "show a terse summary report"),
     COption("migrate", "m", "list<enum[test|abi_cache|block_cache|tx_cache|trace_cache|recon_cache|name_cache|slurp_cache|all]>", OPT_HIDDEN | OPT_FLAG, "either effectuate or test to see if a migration is necessary"),  // NOLINT
     COption("get_config", "g", "", OPT_HIDDEN | OPT_SWITCH, "returns JSON data of the editable configuration file items"),  // NOLINT
@@ -48,7 +47,6 @@ bool COptions::parseArguments(string_q& command) {
     // BEG_CODE_LOCAL_INIT
     CStringArray modes;
     CStringArray types;
-    bool report = false;
     CStringArray migrate;
     bool get_config = false;
     bool set_config = false;
@@ -82,7 +80,9 @@ bool COptions::parseArguments(string_q& command) {
             return flag_required("depth");
 
         } else if (arg == "-r" || arg == "--report") {
-            report = true;
+            // clang-format off
+            return usage("the --report option is deprecated, run the command with no options for the same result");  // NOLINT
+            // clang-format on
 
         } else if (arg == "-e" || arg == "--terse") {
             terse = true;
@@ -134,7 +134,6 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("details", details);
     LOG_TEST_LIST("types", types, types.empty());
     LOG_TEST("depth", depth, (depth == NOPOS));
-    LOG_TEST_BOOL("report", report);
     LOG_TEST_BOOL("terse", terse);
     LOG_TEST_LIST("migrate", migrate, migrate.empty());
     LOG_TEST_BOOL("get_config", get_config);
@@ -177,10 +176,6 @@ bool COptions::parseArguments(string_q& command) {
         cs |= (m == "caches");
     if (Mocked(cs ? "caches" : "status"))
         EXIT_NOMSG(false);
-
-    // removes warning on Ubuntu 20.04
-    if (report)
-        cerr << "";
 
     establishFolder(getCachePath("tmp/"));
     establishFolder(indexFolder_finalized);
