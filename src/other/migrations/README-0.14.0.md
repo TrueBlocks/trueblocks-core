@@ -29,3 +29,8 @@ You may still use the `--verbose` flag, but it will no longer accept a `log_leve
 ## You're Finished
 
 Please report any problems by creating an issue.
+
+## Deprecated Command Line Options
+
+The `--report` option of `chifra status` has been removed. Simply run `chifra status` with no options for the same result.
+The `--init_all` option of `chifra pins` has been removed. Use `chifra pins --init --all` instead.

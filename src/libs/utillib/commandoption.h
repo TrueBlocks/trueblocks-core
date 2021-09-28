@@ -68,6 +68,7 @@ class CCommandOption : public CBaseNode {
     bool isDouble;
     bool isAddress;
     bool isConfig;
+    bool isDeprecated;
     bool isNote;
     bool isErr;
     void* params{nullptr};
@@ -85,7 +86,7 @@ class CCommandOption : public CBaseNode {
     string_q toGoCall(void) const;
     string_q toGoRoute(void) const;
     string_q toApiPath(const string_q& inStr) const;
-    bool isChifraRoute(void) const;
+    bool isChifraRoute(bool depOk) const;
     string_q getSchema(void) const;
     bool isStringType(void) const {
         return (isEnum || isEnumList || isStringList || isAddressList || isTopicList);
@@ -178,6 +179,7 @@ inline void CCommandOption::initialize(void) {
     isDouble = false;
     isAddress = false;
     isConfig = false;
+    isDeprecated = false;
     isNote = false;
     isErr = false;
     swagger_descr = "";
@@ -225,6 +227,7 @@ inline void CCommandOption::duplicate(const CCommandOption& co) {
     isDouble = co.isDouble;
     isAddress = co.isAddress;
     isConfig = co.isConfig;
+    isDeprecated = co.isDeprecated;
     isNote = co.isNote;
     isErr = co.isErr;
     swagger_descr = co.swagger_descr;

@@ -470,7 +470,7 @@ string_q nextCommandoptionChunk_custom(const string_q& fieldIn, const void* data
                         ret += ("|OPT_TOGGLE");
                     else if (com->option_type == "flag")
                         ret += ("|OPT_FLAG");
-                    else if (startsWith(com->option_type, "deprecated"))
+                    else if (com->option_type == "deprecated")
                         ret += ("|OPT_DEPRECATED");
                     else if (com->option_type == "positional")
                         ret += ("|OPT_POSITIONAL");
@@ -601,6 +601,7 @@ bool CCommandOption::finishCleanup(void) {
     isConfig = option_type == "config";
     isErr = option_type == "error";
     isConfig = generate == "config";
+    isDeprecated = option_type == "deprecated";
 
     real_type = data_type;
     replaceAny(real_type, "<>", "");
@@ -774,7 +775,9 @@ bool isApiRoute(const string_q& route) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CCommandOption::isChifraRoute(void) const {
+bool CCommandOption::isChifraRoute(bool depOk) const {
+    if (depOk && option_type == "deprecated")
+        return true;
     return (option_type != "deprecated" && option_type != "description" && option_type != "note" &&
             option_type != "config" && option_type != "error");
 }

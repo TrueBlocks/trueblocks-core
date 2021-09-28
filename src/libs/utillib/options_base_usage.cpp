@@ -93,27 +93,45 @@ string_q COptionsBase::get_purpose(void) const {
 }
 
 //--------------------------------------------------------------------------------
+bool isPublic(const COption& opt) {
+    return (opt.is_visible && !opt.is_deprecated && !opt.longName.empty());
+}
+//--------------------------------------------------------------------------------
+bool isPublic2(const COption& opt) {
+    return (!opt.is_deprecated && !opt.longName.empty());
+}
+
+//--------------------------------------------------------------------------------
 string_q COptionsBase::get_description(void) const {
     if (!overrides.empty())
         return get_override();
 
     ostringstream os, hidden, extra;
 
+    for (auto& option : ((COptionsBase*)this)->parameters) {
+        if (option.is_visible) {
+            if (isReadme) {
+                option.is_readme = true;
+            }
+        }
+    }
+
     size_t widths[5];
     bzero(widths, sizeof(widths));
     for (auto option : parameters) {
-        if (isReadme) {
-            option.is_readme = true;
-            if (option.isPublic() || (!option.is_visible && (isTestMode() || (verbose > 1)))) {
-                widths[0] = max(widths[0], option.getHotKey().length());
-                widths[1] = max(widths[1], option.getLongKey().length());
-                widths[2] = max(widths[2], option.getDescription().length());
-            }
-        } else {
-            if (option.isPublic() || (!option.is_visible && (isTestMode() || (verbose > 1)))) {
-                widths[0] = max(widths[0], option.getHotKey().length());
-                widths[1] = max(widths[1], option.getLongKey().length());
-                widths[2] = max(widths[2], option.getDescription().length());
+        if (option.is_visible) {
+            if (isReadme) {
+                if (isPublic2(option)) {
+                    widths[0] = max(widths[0], option.getHotKey().length());
+                    widths[1] = max(widths[1], option.getLongKey().length());
+                    widths[2] = max(widths[2], option.getDescription().length());
+                }
+            } else {
+                if (isPublic2(option)) {
+                    widths[0] = max(widths[0], option.getHotKey().length());
+                    widths[1] = max(widths[1], option.getLongKey().length());
+                    widths[2] = max(widths[2], option.getDescription().length());
+                }
             }
         }
     }
@@ -133,15 +151,13 @@ string_q COptionsBase::get_description(void) const {
         show |= (i == 2 && isEnabled(OPT_HELP));
         if (show) {
             COption* param = &opts[i];
-            if (isReadme) {
-                param->is_readme = true;
-                if (param->isPublic()) {
+            if (isPublic(opts[i])) {
+                if (isReadme) {
+                    param->is_readme = true;
                     widths[0] = max(widths[0], param->getHotKey().length());
                     widths[1] = max(widths[1], param->getLongKey().length());
                     widths[2] = max(widths[2], param->getDescription().length());
-                }
-            } else {
-                if (param->isPublic()) {
+                } else {
                     widths[0] = max(widths[0], param->getHotKey().length());
                     widths[1] = max(widths[1], param->getLongKey().length());
                     widths[2] = max(widths[2], param->getDescription().length());
@@ -183,7 +199,7 @@ string_q COptionsBase::get_description(void) const {
                     os << option.oneDescription(widths);
                 }
             }
-        } else if (option.isPublic()) {
+        } else if (isPublic(option)) {
             os << option.oneDescription(widths);
         }
     }

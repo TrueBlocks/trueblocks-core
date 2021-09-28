@@ -72,7 +72,6 @@ class COption : public CBaseNode {
 
     // EXISTING_CODE
     COption(const string_q& ln, const string_q& sn, const string_q& type, size_t opts, const string_q& d);
-    bool isPublic(void) const;
     string_q readmeDash(const string_q& str) const;
     string_q getHotKey(void) const;
     string_q getLongKey(void) const;

@@ -418,9 +418,7 @@ COption::COption(const string_q& ln, const string_q& sn, const string_q& t, size
         longName = "--" + ln;
     }
 }
-bool COption::isPublic(void) const {
-    return (is_visible && !is_deprecated && !longName.empty());
-}
+
 //--------------------------------------------------------------------------------
 string_q COption::readmeDash(const string_q& str) const {
     if (!is_readme)
