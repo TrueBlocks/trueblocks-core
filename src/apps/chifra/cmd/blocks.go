@@ -32,7 +32,7 @@ var blocksCmd = &cobra.Command{
 	Short: shortBlocks,
 	Long:  longBlocks,
 	Run:   runBlocks,
-	Args:  ValidatePositionals(validateBlocksArgs),
+	Args:  validateBlocksArgs,
 }
 
 var usageBlocks = `blocks [flags] <block> [block...]
@@ -133,11 +133,14 @@ func runBlocks(cmd *cobra.Command, args []string) {
 	PassItOn(GetCommandPath("getBlocks"), options, arguments)
 }
 
+// EXISTING_CODE
+// EXISTING_CODE
+
 func validateBlocksArgs(cmd *cobra.Command, args []string) error {
 	var err error
 	// EXISTING_CODE
 	// EXISTING_CODE
-	err = validateGlobalFlags()
+	err = validateGlobalFlags(cmd, args)
 	if err != nil {
 		return err
 	}

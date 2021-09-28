@@ -31,7 +31,7 @@ var logsCmd = &cobra.Command{
 	Short: shortLogs,
 	Long:  longLogs,
 	Run:   runLogs,
-	Args:  ValidatePositionals(validateLogsArgs),
+	Args:  validateLogsArgs,
 }
 
 var usageLogs = `logs [flags] <tx_id> [tx_id...]
@@ -96,11 +96,14 @@ func runLogs(cmd *cobra.Command, args []string) {
 	PassItOn(GetCommandPath("getLogs"), options, arguments)
 }
 
+// EXISTING_CODE
+// EXISTING_CODE
+
 func validateLogsArgs(cmd *cobra.Command, args []string) error {
 	var err error
 	// EXISTING_CODE
 	// EXISTING_CODE
-	err = validateGlobalFlags()
+	err = validateGlobalFlags(cmd, args)
 	if err != nil {
 		return err
 	}

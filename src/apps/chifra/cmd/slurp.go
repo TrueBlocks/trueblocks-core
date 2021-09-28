@@ -31,7 +31,7 @@ var slurpCmd = &cobra.Command{
 	Short: shortSlurp,
 	Long:  longSlurp,
 	Run:   runSlurp,
-	Args:  ValidatePositionals(validateSlurpArgs),
+	Args:  validateSlurpArgs,
 }
 
 var usageSlurp = `slurp [flags] <address> [address...] [block...]
@@ -88,6 +88,9 @@ func runSlurp(cmd *cobra.Command, args []string) {
 	PassItOn(GetCommandPath("ethslurp"), options, arguments)
 }
 
+// EXISTING_CODE
+// EXISTING_CODE
+
 func validateSlurpArgs(cmd *cobra.Command, args []string) error {
 	var err error
 	// EXISTING_CODE
@@ -100,7 +103,7 @@ func validateSlurpArgs(cmd *cobra.Command, args []string) error {
 		return err
 	}
 	// EXISTING_CODE
-	err = validateGlobalFlags()
+	err = validateGlobalFlags(cmd, args)
 	if err != nil {
 		return err
 	}

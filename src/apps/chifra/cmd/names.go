@@ -31,7 +31,7 @@ var namesCmd = &cobra.Command{
 	Short: shortNames,
 	Long:  longNames,
 	Run:   runNames,
-	Args:  ValidatePositionals(validateNamesArgs),
+	Args:  validateNamesArgs,
 }
 
 var usageNames = `names [flags] <term> [term...]
@@ -142,11 +142,14 @@ func runNames(cmd *cobra.Command, args []string) {
 	PassItOn(GetCommandPath("ethNames"), options, arguments)
 }
 
+// EXISTING_CODE
+// EXISTING_CODE
+
 func validateNamesArgs(cmd *cobra.Command, args []string) error {
 	var err error
 	// EXISTING_CODE
 	// EXISTING_CODE
-	err = validateGlobalFlags()
+	err = validateGlobalFlags(cmd, args)
 	if err != nil {
 		return err
 	}

@@ -31,7 +31,7 @@ var exploreCmd = &cobra.Command{
 	Short: shortExplore,
 	Long:  longExplore,
 	Run:   runExplore,
-	Args:  ValidatePositionals(validateExploreArgs),
+	Args:  validateExploreArgs,
 }
 
 var usageExplore = `explore [flags] <term> [term...]
@@ -84,11 +84,14 @@ func runExplore(cmd *cobra.Command, args []string) {
 	PassItOn(GetCommandPath("fireStorm"), options, arguments)
 }
 
+// EXISTING_CODE
+// EXISTING_CODE
+
 func validateExploreArgs(cmd *cobra.Command, args []string) error {
 	var err error
 	// EXISTING_CODE
 	// EXISTING_CODE
-	err = validateGlobalFlags()
+	err = validateGlobalFlags(cmd, args)
 	if err != nil {
 		return err
 	}

@@ -17,6 +17,8 @@ import (
 	"errors"
 	"os"
 	"strings"
+
+	"github.com/spf13/cobra"
 )
 
 func FileExists(filename string) bool {
@@ -36,8 +38,8 @@ func isValidAddress(addr string) (bool, error) {
 		return false, errors.New(fmtError("address (" + addr + ") is not 42 characters long"))
 	} else if addr[:2] != "0x" {
 		return false, errors.New(fmtError("address (" + addr + ") does not start with '0x'"))
-		// } else if len(strings.Trim(addr[:2], "0123456789abcdefABCDEF")) > 0 {
-		// 	return false, errors.New("address (" + addr + ") does not appear to be hex")
+	} else if len(strings.Trim(addr[2:], "0123456789abcdefABCDEF")) > 0 {
+		return false, errors.New("address (" + addr + ") does not appear to be hex")
 	}
 	return true, nil
 }
@@ -90,7 +92,7 @@ func validateEnumSlice(field string, values []string, valid string) error {
 	return nil
 }
 
-func validateGlobalFlags() error {
+func validateGlobalFlags(cmd *cobra.Command, args []string) error {
 	err := validateEnum("--fmt", RootOpts.fmt, "[json|txt|csv|api]")
 	if err != nil {
 		return err

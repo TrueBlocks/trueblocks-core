@@ -31,7 +31,7 @@ var monitorsCmd = &cobra.Command{
 	Short: shortMonitors,
 	Long:  longMonitors,
 	Run:   runMonitors,
-	Args:  ValidatePositionals(validateMonitorsArgs),
+	Args:  validateMonitorsArgs,
 }
 
 var usageMonitors = `monitors [flags] <address> [address...]
@@ -84,11 +84,14 @@ func runMonitors(cmd *cobra.Command, args []string) {
 	PassItOn(GetCommandPath("acctExport --appearances"), options, arguments)
 }
 
+// EXISTING_CODE
+// EXISTING_CODE
+
 func validateMonitorsArgs(cmd *cobra.Command, args []string) error {
 	var err error
 	// EXISTING_CODE
 	// EXISTING_CODE
-	err = validateGlobalFlags()
+	err = validateGlobalFlags(cmd, args)
 	if err != nil {
 		return err
 	}

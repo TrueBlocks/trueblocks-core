@@ -32,7 +32,7 @@ var scrapeCmd = &cobra.Command{
 	Short: shortScrape,
 	Long:  longScrape,
 	Run:   runScrape,
-	Args:  ValidatePositionals(validateScrapeArgs),
+	Args:  validateScrapeArgs,
 }
 
 var usageScrape = `scrape [flags]`
@@ -101,11 +101,14 @@ func runScrape(cmd *cobra.Command, args []string) {
 	PassItOn(GetCommandPath("blockScrape"), options, arguments)
 }
 
+// EXISTING_CODE
+// EXISTING_CODE
+
 func validateScrapeArgs(cmd *cobra.Command, args []string) error {
 	var err error
 	// EXISTING_CODE
 	// EXISTING_CODE
-	err = validateGlobalFlags()
+	err = validateGlobalFlags(cmd, args)
 	if err != nil {
 		return err
 	}

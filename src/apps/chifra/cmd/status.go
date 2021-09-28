@@ -32,7 +32,7 @@ var statusCmd = &cobra.Command{
 	Short: shortStatus,
 	Long:  longStatus,
 	Run:   runStatus,
-	Args:  ValidatePositionals(validateStatusArgs),
+	Args:  validateStatusArgs,
 }
 
 var usageStatus = `status [flags] [mode...]
@@ -138,11 +138,14 @@ func runStatus(cmd *cobra.Command, args []string) {
 	PassItOn(GetCommandPath("cacheStatus"), options, arguments)
 }
 
+// EXISTING_CODE
+// EXISTING_CODE
+
 func validateStatusArgs(cmd *cobra.Command, args []string) error {
 	var err error
 	// EXISTING_CODE
 	// EXISTING_CODE
-	err = validateGlobalFlags()
+	err = validateGlobalFlags(cmd, args)
 	if err != nil {
 		return err
 	}

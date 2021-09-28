@@ -31,7 +31,7 @@ var initCmd = &cobra.Command{
 	Short: shortInit,
 	Long:  longInit,
 	Run:   runInit,
-	Args:  ValidatePositionals(validateInitArgs),
+	Args:  validateInitArgs,
 }
 
 var usageInit = `init [flags]`
@@ -71,11 +71,14 @@ func runInit(cmd *cobra.Command, args []string) {
 	PassItOn(GetCommandPath("pinMan local --init"), options, arguments)
 }
 
+// EXISTING_CODE
+// EXISTING_CODE
+
 func validateInitArgs(cmd *cobra.Command, args []string) error {
 	var err error
 	// EXISTING_CODE
 	// EXISTING_CODE
-	err = validateGlobalFlags()
+	err = validateGlobalFlags(cmd, args)
 	if err != nil {
 		return err
 	}

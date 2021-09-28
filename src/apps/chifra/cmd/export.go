@@ -32,7 +32,7 @@ var exportCmd = &cobra.Command{
 	Short: shortExport,
 	Long:  longExport,
 	Run:   runExport,
-	Args:  ValidatePositionals(validateExportArgs),
+	Args:  validateExportArgs,
 }
 
 var usageExport = `export [flags] <address> [address...] [topics...] [fourbytes...]
@@ -233,11 +233,14 @@ func runExport(cmd *cobra.Command, args []string) {
 	PassItOn(GetCommandPath("acctExport"), options, arguments)
 }
 
+// EXISTING_CODE
+// EXISTING_CODE
+
 func validateExportArgs(cmd *cobra.Command, args []string) error {
 	var err error
 	// EXISTING_CODE
 	// EXISTING_CODE
-	err = validateGlobalFlags()
+	err = validateGlobalFlags(cmd, args)
 	if err != nil {
 		return err
 	}

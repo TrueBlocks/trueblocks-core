@@ -31,7 +31,7 @@ var quotesCmd = &cobra.Command{
 	Short: shortQuotes,
 	Long:  longQuotes,
 	Run:   runQuotes,
-	Args:  ValidatePositionals(validateQuotesArgs),
+	Args:  validateQuotesArgs,
 }
 
 var usageQuotes = `quotes [flags]`
@@ -98,11 +98,14 @@ func runQuotes(cmd *cobra.Command, args []string) {
 	PassItOn(GetCommandPath("getQuotes"), options, arguments)
 }
 
+// EXISTING_CODE
+// EXISTING_CODE
+
 func validateQuotesArgs(cmd *cobra.Command, args []string) error {
 	var err error
 	// EXISTING_CODE
 	// EXISTING_CODE
-	err = validateGlobalFlags()
+	err = validateGlobalFlags(cmd, args)
 	if err != nil {
 		return err
 	}

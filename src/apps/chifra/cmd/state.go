@@ -31,7 +31,7 @@ var stateCmd = &cobra.Command{
 	Short: shortState,
 	Long:  longState,
 	Run:   runState,
-	Args:  ValidatePositionals(validateStateArgs),
+	Args:  validateStateArgs,
 }
 
 var usageState = `state [flags] <address> [address...] [block...]
@@ -106,11 +106,14 @@ func runState(cmd *cobra.Command, args []string) {
 	PassItOn(GetCommandPath("getState"), options, arguments)
 }
 
+// EXISTING_CODE
+// EXISTING_CODE
+
 func validateStateArgs(cmd *cobra.Command, args []string) error {
 	var err error
 	// EXISTING_CODE
 	// EXISTING_CODE
-	err = validateGlobalFlags()
+	err = validateGlobalFlags(cmd, args)
 	if err != nil {
 		return err
 	}

@@ -31,7 +31,7 @@ var tokensCmd = &cobra.Command{
 	Short: shortTokens,
 	Long:  longTokens,
 	Run:   runTokens,
-	Args:  ValidatePositionals(validateTokensArgs),
+	Args:  validateTokensArgs,
 }
 
 var usageTokens = `tokens [flags] <address> <address> [address...] [block...]
@@ -97,11 +97,14 @@ func runTokens(cmd *cobra.Command, args []string) {
 	PassItOn(GetCommandPath("getTokens"), options, arguments)
 }
 
+// EXISTING_CODE
+// EXISTING_CODE
+
 func validateTokensArgs(cmd *cobra.Command, args []string) error {
 	var err error
 	// EXISTING_CODE
 	// EXISTING_CODE
-	err = validateGlobalFlags()
+	err = validateGlobalFlags(cmd, args)
 	if err != nil {
 		return err
 	}

@@ -31,7 +31,7 @@ var whenCmd = &cobra.Command{
 	Short: shortWhen,
 	Long:  longWhen,
 	Run:   runWhen,
-	Args:  ValidatePositionals(validateWhenArgs),
+	Args:  validateWhenArgs,
 }
 
 var usageWhen = `when [flags] < block | date > [ block... | date... ]
@@ -107,6 +107,9 @@ func runWhen(cmd *cobra.Command, args []string) {
 	PassItOn(GetCommandPath("whenBlock"), options, arguments)
 }
 
+// EXISTING_CODE
+// EXISTING_CODE
+
 func validateWhenArgs(cmd *cobra.Command, args []string) error {
 	var err error
 	// EXISTING_CODE
@@ -116,7 +119,7 @@ func validateWhenArgs(cmd *cobra.Command, args []string) error {
 	// 	}
 	// }
 	// EXISTING_CODE
-	err = validateGlobalFlags()
+	err = validateGlobalFlags(cmd, args)
 	if err != nil {
 		return err
 	}

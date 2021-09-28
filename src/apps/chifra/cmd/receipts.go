@@ -19,6 +19,7 @@ package cmd
 
 import (
 	// EXISTING_CODE
+	"errors"
 	"os"
 
 	"github.com/spf13/cobra"
@@ -31,7 +32,7 @@ var receiptsCmd = &cobra.Command{
 	Short: shortReceipts,
 	Long:  longReceipts,
 	Run:   runReceipts,
-	Args:  ValidatePositionals(validateReceiptsArgs),
+	Args:  validateReceiptsArgs,
 }
 
 var usageReceipts = `receipts [flags] <tx_id> [tx_id...]
@@ -84,11 +85,23 @@ func runReceipts(cmd *cobra.Command, args []string) {
 	PassItOn(GetCommandPath("getReceipts"), options, arguments)
 }
 
+// EXISTING_CODE
+// EXISTING_CODE
+
 func validateReceiptsArgs(cmd *cobra.Command, args []string) error {
 	var err error
 	// EXISTING_CODE
+	if len(args) == 0 {
+		return errors.New(fmtError("You must provide at least one valid transaction identifier"))
+	}
+	// for _, arg := range args {
+	// 	valid, err := validateTxIdentifier(arg)
+	// 	if !valid || err != nil {
+	// 		return err
+	// 	}
+	// }
 	// EXISTING_CODE
-	err = validateGlobalFlags()
+	err = validateGlobalFlags(cmd, args)
 	if err != nil {
 		return err
 	}

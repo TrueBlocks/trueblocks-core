@@ -746,9 +746,11 @@ bool writeTheCode(const codewrite_t& cw) {
             replace(existingCode, tabs + "// EXISTING_CODE", "</code>");
         }
         while (contains(existingCode, "</code>")) {
-            string_q snipit = trim(snagFieldClear(existingCode, "code"), '\n');
+            string_q snip = snagFieldClear(existingCode, "code");
+            bool dub = endsWith(snip, "\n\n");
+            string_q snipit = trim(snip, '\n');
             string_q r1 = tabs + "// EXISTING_CODE\n" + tabs + "// EXISTING_CODE";
-            string_q r2 = tabs + "// EXISTING_CODE\n" + snipit + "\n" + tabs + "// EXISTING_CODE";
+            string_q r2 = tabs + "// EXISTING_CODE\n" + snipit + "\n" + (dub ? "\n" : "") + tabs + "// EXISTING_CODE";
             replace(codeOut, r1, r2);
         }
 

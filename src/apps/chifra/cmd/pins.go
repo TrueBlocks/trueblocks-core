@@ -32,7 +32,7 @@ var pinsCmd = &cobra.Command{
 	Short: shortPins,
 	Long:  longPins,
 	Run:   runPins,
-	Args:  ValidatePositionals(validatePinsArgs),
+	Args:  validatePinsArgs,
 }
 
 var usagePins = `pins [flags]`
@@ -109,11 +109,14 @@ func runPins(cmd *cobra.Command, args []string) {
 	PassItOn(GetCommandPath("pinMan"), options, arguments)
 }
 
+// EXISTING_CODE
+// EXISTING_CODE
+
 func validatePinsArgs(cmd *cobra.Command, args []string) error {
 	var err error
 	// EXISTING_CODE
 	// EXISTING_CODE
-	err = validateGlobalFlags()
+	err = validateGlobalFlags(cmd, args)
 	if err != nil {
 		return err
 	}

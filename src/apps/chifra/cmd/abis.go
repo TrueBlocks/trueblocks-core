@@ -32,7 +32,7 @@ var abisCmd = &cobra.Command{
 	Short: shortAbis,
 	Long:  longAbis,
 	Run:   runAbis,
-	Args:  ValidatePositionals(validateAbisArgs),
+	Args:  validateAbisArgs,
 }
 
 var usageAbis = `abis [flags] <address> [address...]
@@ -107,6 +107,9 @@ func runAbis(cmd *cobra.Command, args []string) {
 	PassItOn(GetCommandPath("grabABI"), options, arguments)
 }
 
+// EXISTING_CODE
+// EXISTING_CODE
+
 func validateAbisArgs(cmd *cobra.Command, args []string) error {
 	var err error
 	// EXISTING_CODE
@@ -131,7 +134,7 @@ func validateAbisArgs(cmd *cobra.Command, args []string) error {
 		}
 	}
 	// EXISTING_CODE
-	err = validateGlobalFlags()
+	err = validateGlobalFlags(cmd, args)
 	if err != nil {
 		return err
 	}

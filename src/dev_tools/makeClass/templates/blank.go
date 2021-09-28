@@ -28,7 +28,7 @@ var [{ROUTE}]Cmd = &cobra.Command{
 	Short: short[{PROPER}],
 	Long:  long[{PROPER}],
 	Run:   run[{PROPER}],
-	Args:  ValidatePositionals(validate[{PROPER}]Args),
+	Args:  validate[{PROPER}]Args,
 [{PERPRERUN}]}
 
 var usage[{PROPER}] = `[{USE}]`
@@ -67,11 +67,14 @@ func run[{PROPER}](cmd *cobra.Command, args []string) {
 	PassItOn(GetCommandPath("[{PATH}]"), options, arguments)
 }
 
+// EXISTING_CODE
+// EXISTING_CODE
+
 func validate[{PROPER}]Args(cmd *cobra.Command, args []string) error {
 	var err error
 	// EXISTING_CODE
 	// EXISTING_CODE
-	err = validateGlobalFlags()
+	err = validateGlobalFlags(cmd, args)
 	if err != nil {
 		return err
 	}

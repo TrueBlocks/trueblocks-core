@@ -31,7 +31,7 @@ var transactionsCmd = &cobra.Command{
 	Short: shortTransactions,
 	Long:  longTransactions,
 	Run:   runTransactions,
-	Args:  ValidatePositionals(validateTransactionsArgs),
+	Args:  validateTransactionsArgs,
 }
 
 var usageTransactions = `transactions [flags] <tx_id> [tx_id...]
@@ -104,11 +104,14 @@ func runTransactions(cmd *cobra.Command, args []string) {
 	PassItOn(GetCommandPath("getTrans"), options, arguments)
 }
 
+// EXISTING_CODE
+// EXISTING_CODE
+
 func validateTransactionsArgs(cmd *cobra.Command, args []string) error {
 	var err error
 	// EXISTING_CODE
 	// EXISTING_CODE
-	err = validateGlobalFlags()
+	err = validateGlobalFlags(cmd, args)
 	if err != nil {
 		return err
 	}

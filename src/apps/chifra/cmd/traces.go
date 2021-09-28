@@ -32,7 +32,7 @@ var tracesCmd = &cobra.Command{
 	Short: shortTraces,
 	Long:  longTraces,
 	Run:   runTraces,
-	Args:  ValidatePositionals(validateTracesArgs),
+	Args:  validateTracesArgs,
 }
 
 var usageTraces = `traces [flags] <tx_id> [tx_id...]
@@ -117,11 +117,14 @@ func runTraces(cmd *cobra.Command, args []string) {
 	PassItOn(GetCommandPath("getTraces"), options, arguments)
 }
 
+// EXISTING_CODE
+// EXISTING_CODE
+
 func validateTracesArgs(cmd *cobra.Command, args []string) error {
 	var err error
 	// EXISTING_CODE
 	// EXISTING_CODE
-	err = validateGlobalFlags()
+	err = validateGlobalFlags(cmd, args)
 	if err != nil {
 		return err
 	}
