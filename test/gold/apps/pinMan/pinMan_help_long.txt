@@ -7,11 +7,13 @@ Usage:
 
 Flags:
   -l, --list          list the index and Bloom filter hashes from local manifest or pinning service
-  -i, --init          initialize local index by downloading Bloom filters from pinning service
-  -n, --init_all      initialize local index by downloading both Bloom filters and index chunks
-  -s, --sleep float   the number of seconds to sleep between requests during init (default .25) (hidden)
-  -r, --remote        applicable only to --list mode, recover the manifest from pinning service (hidden)
-  -p, --pin_locally   pin all local files in the index to an IPFS store (requires IPFS)
+  -i, --init          initialize index of appearances by downloading Bloom filters from pinning service
+  -f, --freshen       freshen index of appearances using the same mode from most recent --init
+  -r, --remote        for --list mode only, recover the manifest from pinning service (hidden)
+  -a, --all           for --init and --freshen modes only, download full index chunks as well as Bloom filter
+  -s, --sleep float   the number of seconds to sleep between requests during download (default .25) (hidden)
+  -S, --share         pin downloaded files to your local IPFS store, that is, share them (requires IPFS)
+  -n, --init_all      use --init --all instead (hidden)
 
 Global Flags:
   -x, --fmt string   export format, one of [none|json*|txt|csv|api]
@@ -19,5 +21,5 @@ Global Flags:
   -v, --verbose      enable verbose (increase detail with --log_level)
 
 Notes:
-  - One of --list, --init, or --init_all is required.
-  - the --pin_locally option only works if the IPFS executable is in your path.
+  - One of --list, --init, or --freshen is required.
+  - the --share option only works if the IPFS executable is in your path.

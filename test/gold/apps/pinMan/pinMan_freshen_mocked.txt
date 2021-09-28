@@ -1,23 +1,302 @@
 chifra pins  --freshen
-Error: 
-  unknown flag: --freshen
+TIME ~ CLOCK - <INFO>  : freshen: true
+TIME ~ CLOCK - <INFO>  : hashToIndexFormatFile:	Qmart6XP9XjL43p72PGR93QKytbK8jWWcMguhFgxATTya2
+TIME ~ CLOCK - <INFO>  : hashToBloomFormatFile:	QmNhPk39DUFoEdhUmtGARqiFECUHeghyeryxZM9kyRxzHD
+TIME ~ CLOCK - <INFO>  : unchainedIndexAddr:	0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd
+TIME ~ CLOCK - <INFO>  : manifestHashEncoding:	0x337f3f32
+filename	bloomhash	indexhash
+TIME ~ CLOCK - <INFO>  : Calling unchained index smart contract...
 
-Usage:
-  chifra pins [flags]
+level: 1
+readOffset: 0
+objectStart: 0
+params.size: 1
+  0: string manifestHash = <>
+dataArray.size: 4
+  0 (0x000) 0000000000000000...00000000000000000000000000000020 <=o <-r
+  1 (0x020) 0000000000000000...0000000000000000000000000000002e
+  2 (0x040) 516d61314b395231...73474d566d4764524a7848444c425854
+  3 (0x060) 7879564166573365...00000000000000000000000000000000
 
-Flags:
-  -l, --list          list the index and Bloom filter hashes from local manifest or pinning service
-  -i, --init          initialize local index by downloading Bloom filters from pinning service
-  -n, --init_all      initialize local index by downloading both Bloom filters and index chunks
-  -s, --sleep float   the number of seconds to sleep between requests during init (default .25) (hidden)
-  -r, --remote        applicable only to --list mode, recover the manifest from pinning service (hidden)
-  -p, --pin_locally   pin all local files in the index to an IPFS store (requires IPFS)
+==================================================
+params.size: 1
+  0: string manifestHash = Qma1K9R17envRLcUsGMVmGdRJxHDLBXTxyVAfW3ev9WoBu
+params.size: 1
+  0: string manifestHash = Qma1K9R17envRLcUsGMVmGdRJxHDLBXTxyVAfW3ev9WoBu
+==================================================
 
-Global Flags:
-  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
-  -h, --help         display this help screen
-  -v, --verbose      enable verbose (increase detail with --log_level)
-
-Notes:
-  - One of --list, --init, or --init_all is required.
-  - the --pin_locally option only works if the IPFS executable is in your path.
+TIME ~ CLOCK - <INFO>  : Found manifest hash at Qma1K9R17envRLcUsGMVmGdRJxHDLBXTxyVAfW3ev9WoBu
+TIME ~ CLOCK - <INFO>  : IPFS gateway https://ipfs.unchainedindex.io/ipfs/
+TIME ~ CLOCK - <INFO>  : Freshened manifest with 253991 bytes
+TIME ~ CLOCK - <INFO>  : File blooms/000000000-000000000.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/000000001-000590501.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/000590502-000864332.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/000864333-001076298.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/001076299-001229769.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/001229770-001371352.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/001371353-001504328.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/001504329-001613033.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/001613034-001729008.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/001729009-001848054.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/001848055-001963090.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/001963091-002067748.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002067749-002172337.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002172338-002269847.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002269848-002288338.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002288339-002300000.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002300001-002328274.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002328275-002328946.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002328947-002329552.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002329553-002335351.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002335352-002376486.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002376487-002381410.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002381411-002382747.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002382748-002383272.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002383273-002383699.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002383700-002384095.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002384096-002384451.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002384452-002384824.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002384825-002385320.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002385321-002385675.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002385676-002385987.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002385988-002386281.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002386282-002386615.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002386616-002386931.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002386932-002393673.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002393674-002400000.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002400001-002402271.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002402272-002404080.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002404081-002404557.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002404558-002404985.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002404986-002405404.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002405405-002405844.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002405845-002406312.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002406313-002406808.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002406809-002407234.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002407235-002407824.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002407825-002408296.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002408297-002408882.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002408883-002409392.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002409393-002409941.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002409942-002410553.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002410554-002411144.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002411145-002411647.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002411648-002412236.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002412237-002412991.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002412992-002414067.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002414068-002414732.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002414733-002416416.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002416417-002423055.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002423056-002424442.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002424443-002426047.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002426048-002427601.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002427602-002429099.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002429100-002430891.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002430892-002433232.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002433233-002436985.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002436986-002440527.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002440528-002452024.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002452025-002461545.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002461546-002500000.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002500001-002600000.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002600001-002679108.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002679109-002683120.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002683121-002690830.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002690831-002697664.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002697665-002700000.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002700001-002703157.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002703158-002705941.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002705942-002708765.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002708766-002711377.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002711378-002713930.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002713931-002717324.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002717325-002800000.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002800001-002900000.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/002900001-003000000.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/003000001-003100000.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/003100001-003197417.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/003197418-003200000.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/003200001-003288034.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/003288035-003300000.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/003300001-003368131.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/003368132-003400000.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/003400001-003454581.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/003454582-003500000.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/003500001-003561468.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/003561469-003600000.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/003600001-003644512.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/003644513-003686952.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/003686953-003700000.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/003700001-003734159.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/003734160-003760701.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/003760702-003787514.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/003787515-003800000.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/003800001-003820889.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/003820890-003841752.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/003841753-003860521.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/003860522-003876021.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/003876022-003893410.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/003893411-003900000.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/003900001-003914814.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/003914815-003930079.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/003930080-003944044.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/003944045-003959265.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/003959266-003973709.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/003973710-003988232.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/003988233-004000000.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004000001-004012393.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004012394-004025574.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004025575-004039897.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004039898-004053179.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004053180-004067506.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004067507-004083282.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004083283-004099440.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004099441-004100000.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004100001-004113086.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004113087-004124853.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004124854-004135041.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004135042-004144466.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004144467-004153380.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004153381-004160838.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004160839-004167839.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004167840-004174991.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004174992-004183950.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004183951-004192178.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004192179-004200000.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004200001-004208156.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004208157-004215503.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004215504-004222227.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004222228-004229094.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004229095-004237104.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004237105-004242897.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004242898-004248222.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004248223-004254039.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004254040-004261620.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004261621-004268398.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004268399-004275542.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004275543-004281873.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004281874-004289570.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004289571-004297036.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004297037-004300000.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004300001-004307552.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004307553-004314362.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004314363-004320832.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004320833-004327666.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004327667-004334248.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004334249-004341029.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004341030-004347833.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004347834-004354210.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004354211-004360358.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004360359-004366275.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004366276-004373244.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004373245-004382273.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004382274-004391317.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004391318-004400000.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004400001-004411002.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004411003-004420191.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004420192-004429034.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004429035-004438104.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004438105-004447001.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004447002-004455680.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004455681-004463714.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004463715-004471861.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004471862-004480026.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004480027-004488960.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004488961-004499660.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004499661-004500000.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004500001-004509071.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004509072-004518540.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004518541-004527617.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004527618-004537215.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004537216-004546465.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004546466-004555345.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004555346-004563720.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004563721-004571993.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004571994-004581089.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004581090-004589747.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004589748-004598133.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004598134-004600000.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004600001-004608209.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004608210-004616720.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004616721-004624885.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004624886-004631949.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004631950-004635752.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004635753-004642669.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004642670-004649661.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004649662-004656724.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004656725-004663779.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004663780-004670425.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004670426-004676748.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004676749-004682966.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004682967-004688972.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004688973-004695531.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004695532-004700000.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004700001-004706332.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004706333-004712286.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004712287-004717639.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004717640-004722654.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004722655-004727482.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004727483-004732356.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004732357-004737289.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004737290-004742266.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004742267-004747265.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004747266-004752329.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004752330-004756766.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004756767-004760819.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004760820-004765357.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004765358-004769784.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004769785-004773978.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004773979-004778049.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004778050-004782852.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004782853-004788085.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004788086-004794312.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004794313-004800000.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004800001-004804981.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004804982-004809974.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004809975-004814624.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004814625-004819068.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004819069-004822933.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004822934-004827582.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004827583-004832502.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004832503-004837681.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004837682-004842063.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004842064-004845860.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004845861-004849602.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004849603-004853331.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004853332-004856652.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004856653-004860387.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004860388-004863929.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004863930-004867913.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004867914-004871882.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004871883-004875554.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004875555-004879177.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004879178-004882894.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004882895-004886754.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004886755-004890619.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004890620-004894620.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004894621-004898549.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004898550-004900000.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004900001-004903792.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004903793-004908009.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004908010-004912213.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004912214-004915727.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004915728-004919354.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004919355-004923045.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004923046-004926658.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004926659-004930416.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004930417-004934488.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004934489-004939020.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004939021-004943694.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004943695-004948194.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004948195-004953203.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004953204-004957853.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004957854-004962802.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004962803-004967728.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004967729-004973280.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004973281-004978091.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004978092-004983621.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004983622-004988949.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004988950-004994156.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004994157-004999276.bloom exists.
+TIME ~ CLOCK - <INFO>  : File blooms/004999277-005000000.bloom exists.
+TIME ~ CLOCK - <INFO>  : Pins were (re)initialized.                                      
