@@ -21,6 +21,8 @@ import (
 	// EXISTING_CODE
 	"errors"
 	"os"
+	"strconv"
+	"strings"
 
 	"github.com/spf13/cobra"
 	// EXISTING_CODE
@@ -108,26 +110,40 @@ func runAbis(cmd *cobra.Command, args []string) {
 }
 
 // EXISTING_CODE
+func makeError(function, msg string, values ...string) error {
+	var ret string
+	if len(function) > 0 {
+		ret = function + ": "
+	}
+	ret += msg
+	for index, val := range values {
+		rep := "{" + strconv.FormatInt(int64(index), 10) + "}"
+		ret = strings.Replace(ret, rep, val, -1)
+	}
+	return errors.New(fmtError(ret))
+}
+
 // EXISTING_CODE
 
 func validateAbisArgs(cmd *cobra.Command, args []string) error {
 	var err error
 	// EXISTING_CODE
 	if AbisOpts.classes {
-		return errors.New(fmtError("chifra abis - --classes option is not implemented."))
+		return makeError("", "the '{0}' option is not implemented", "--classes")
 	}
+
 	if len(AbisOpts.sol) > 0 {
 		valid, _ := isValidAddress(AbisOpts.sol)
 		if !valid {
-			return errors.New(fmtError("--sol option requires a valid Ethereum address"))
+			return makeError("", "{0} option requires a valid Ethereum address", "--sol")
 		}
 		if FileExists("./"+AbisOpts.sol+".sol") != true {
-			return errors.New(fmtError("Solidity code not found at at ./" + AbisOpts.sol + ".sol"))
+			return makeError("", "Solidity code not found at at ./{0}.sol", AbisOpts.sol)
 		}
 		return nil
 	}
 
-	if len(AbisOpts.find) == 0 && AbisOpts.known == false {
+	if len(AbisOpts.find) == 0 && !AbisOpts.known {
 		err = validateOneAddr(args)
 		if err != nil {
 			return err
