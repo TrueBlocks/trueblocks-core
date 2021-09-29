@@ -15,10 +15,28 @@ package cmd
 
 import (
 	"errors"
+	"strconv"
 	"strings"
 
 	"github.com/spf13/cobra"
 )
+
+func makeErrorEx(function, msg string, values []string) error {
+    var ret string
+    if len(function) > 0 {
+        ret = function + ": "
+    }
+    ret += msg
+    for index, val := range values {
+        rep := "{" + strconv.FormatInt(int64(index), 10) + "}"
+        ret = strings.Replace(ret, rep, val, -1)
+    }
+    return errors.New(fmtError(ret))
+}
+
+func makeError(msg string, values ...string) error {
+    return makeErrorEx("", msg, values)
+}
 
 func fmtError(msg string) string {
 	return "\n  " + msg + "\n"

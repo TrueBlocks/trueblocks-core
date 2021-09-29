@@ -10,67 +10,32 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-/*
- * Parts of this file were generated with makeClass --gocmds. Edit only those parts of
- * the code inside of 'EXISTING_CODE' tags.
- */
 package cmd
 
 import (
-	"os"
-
 	"github.com/spf13/cobra"
 )
 
-// transactionsCmd represents the transactions command
-var transactionsCmd = &cobra.Command{
-	Use:   usageTransactions,
-	Short: shortTransactions,
-	Long:  longTransactions,
-	Run:   runTransactions,
-	Args:  validateTransactionsArgs,
-}
-
-var usageTransactions = `transactions [flags] <tx_id> [tx_id...]
-
-Arguments:
-  transactions - a space-separated list of one or more transaction identifiers (required)`
-
-var shortTransactions = "retrieve one or more transactions from the chain or local cache"
-
-var longTransactions = `Purpose:
-  Retrieve one or more transactions from the chain or local cache.`
-
-var notesTransactions = `
-Notes:
-  - The transactions list may be one or more space-separated identifiers which are either a transaction hash,
-    a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.
-  - This tool checks for valid input syntax, but does not check that the transaction requested actually exists.
-  - If the queried node does not store historical state, the results for most older transactions are undefined.`
-
-type transactionsOptionsType struct {
-	articulate bool
-	trace      bool
-	uniq       bool
-	reconcile  string
-	cache      bool
-}
-
-var TransactionsOpts transactionsOptionsType
-
-func init() {
-	transactionsCmd.SetOut(os.Stderr)
-
-	transactionsCmd.Flags().SortFlags = false
-	transactionsCmd.PersistentFlags().SortFlags = false
-	transactionsCmd.Flags().BoolVarP(&TransactionsOpts.articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
-	transactionsCmd.Flags().BoolVarP(&TransactionsOpts.trace, "trace", "t", false, "include the transaction's traces in the results")
-	transactionsCmd.Flags().BoolVarP(&TransactionsOpts.uniq, "uniq", "u", false, "display a list of uniq addresses found in the transaction instead of the underlying data")
-	transactionsCmd.Flags().StringVarP(&TransactionsOpts.reconcile, "reconcile", "r", "", "reconcile the transaction as per the provided address")
-	transactionsCmd.Flags().BoolVarP(&TransactionsOpts.cache, "cache", "o", false, "force the results of the query into the tx cache (and the trace cache if applicable)")
-	transactionsCmd.Flags().SortFlags = false
-	transactionsCmd.PersistentFlags().SortFlags = false
-
-	transactionsCmd.SetUsageTemplate(HelpWithNotes(notesTransactions))
-	rootCmd.AddCommand(transactionsCmd)
+func runTransactions(cmd *cobra.Command, args []string) {
+	options := ""
+	if TransactionsOpts.articulate {
+		options += " --articulate"
+	}
+	if TransactionsOpts.trace {
+		options += " --trace"
+	}
+	if TransactionsOpts.uniq {
+		options += " --uniq"
+	}
+	if len(TransactionsOpts.reconcile) > 0 {
+		options += " --reconcile " + TransactionsOpts.reconcile
+	}
+	if TransactionsOpts.cache {
+		options += " --cache"
+	}
+	arguments := ""
+	for _, arg := range args {
+		arguments += " " + arg
+	}
+	PassItOn(GetCommandPath("getTrans"), options, arguments)
 }
