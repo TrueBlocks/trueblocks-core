@@ -126,7 +126,7 @@ bool findReplacements(const string_q& templatePath, void* data) {
 
 //------------------------------------------------------------------------------------------------------------
 bool COptions::handle_readmes(void) {
-    CToml config(configPath("makeClass.toml"));
+    CToml config(getConfigPath("makeClass.toml"));
     bool enabled = config.getConfigBool("enabled", "readmes", false);
     if (!enabled) {
         LOG_WARN("Skipping readmes...");

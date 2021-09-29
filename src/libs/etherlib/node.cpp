@@ -75,7 +75,7 @@ void etherlib_init(QUITHANDLER qh) {
     CCollection::registerClass();
     CCacheEntry::registerClass();
 
-    establishFolder(configPath(""));
+    establishFolder(getConfigPath(""));
     establishFolder(getCachePath(""));
 }
 
@@ -1074,7 +1074,7 @@ string_q getIndexPath(const string_q& _part) {
     string_q indexPath = getGlobalConfig()->getConfigStr("settings", "indexPath", "<not-set>");
     if (indexPath == "<not-set>") {
         guardLiveTest(indexPath + _part);
-        return configPath("unchained/" + _part);
+        return getConfigPath("unchained/" + _part);
     }
     if (!folderExists(indexPath)) {
         cerr << "Attempt to create customized indexPath (" << indexPath << ") failed." << endl;

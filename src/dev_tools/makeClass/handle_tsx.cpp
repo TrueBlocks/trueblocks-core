@@ -26,7 +26,7 @@ static CCommandOptionArray routes;
 
 //------------------------------------------------------------------------------------------------------------
 bool COptions::handle_tsx(void) {
-    CToml config(configPath("makeClass.toml"));
+    CToml config(getConfigPath("makeClass.toml"));
     bool enabled = config.getConfigBool("enabled", "tsx", false);
     if (isTestMode() || !enabled) {
         LOG_WARN("Skipping javascript generation...");

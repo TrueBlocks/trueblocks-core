@@ -271,7 +271,7 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
     bool isContained = !classDef.contained_by.empty();
 
     string_q headerFile = classDef.outputPath(".h");
-    string_q headSource = asciiFileToString(configPath("makeClass/blank.h"));
+    string_q headSource = asciiFileToString(getConfigPath("makeClass/blank.h"));
     replace(headSource, "// clang-format off\n", "");
     replace(headSource, "// clang-format on\n", "");
 
@@ -308,7 +308,7 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
 
     //------------------------------------------------------------------------------------------------
     string_q srcFile = classDef.outputPath(".cpp");
-    string_q srcSource = asciiFileToString(configPath("makeClass/blank.cpp"));
+    string_q srcSource = asciiFileToString(getConfigPath("makeClass/blank.cpp"));
     replace(srcSource, "// clang-format off\n", "");
     replace(srcSource, "// clang-format on\n", "");
     if ((startsWith(classDef.class_name, "CNew") || classDef.class_name == "CPriceQuote") &&

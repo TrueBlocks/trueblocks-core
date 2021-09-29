@@ -281,7 +281,7 @@ void COptions::Init(void) {
         status.host = string_q(hostname) + " (" + username + ")";
         status.rpc_provider = getGlobalConfig()->getConfigStr("settings", "rpcProvider", "http://localhost:8545");
         status.balance_provider = getGlobalConfig()->getConfigStr("settings", "balanceProvider", status.rpc_provider);
-        status.config_path = configPath("");
+        status.config_path = getConfigPath("");
         status.cache_path = getGlobalConfig()->getConfigStr("settings", "cachePath", getCachePath(""));
         status.index_path = getGlobalConfig()->getConfigStr("settings", "indexPath", getIndexPath(""));
     }

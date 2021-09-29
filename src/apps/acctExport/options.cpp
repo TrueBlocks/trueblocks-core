@@ -701,7 +701,7 @@ bool COptions::setDisplayFormatting(void) {
 //         }
 //     }
 //     uint64_t nMocked = getGlobalConfig("")->getConfigInt("dev", "n_mocked", 100);
-//     string_q path = configPath("mocked/" + origMode + ".json");
+//     string_q path = getConfigPath("mocked/" + origMode + ".json");
 //     if (fileExists(path)) {
 //         if (origMode == "export") {
 //             for (size_t i = 0; i < nMocked; i++) {
@@ -777,7 +777,7 @@ void COptions::writePerformanceData(void) {
     if (stats.nFiles == stats.nSkipped)
         return;
 
-    string_q statsFile = configPath("performance_scraper.csv");
+    string_q statsFile = getConfigPath("performance_scraper.csv");
 
     string_q fmt = substitute(STR_DISPLAY_SCRAPESTATISTICS, "\t", ",");
     if (!fileExists(statsFile)) {

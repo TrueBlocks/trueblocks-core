@@ -81,17 +81,17 @@ func initConfig() {
 		os.Exit(1)
 	}
 
-	configPath := "<unset>"
+	getConfigPath := "<unset>"
 	// TODO(tjayrush): This should read XDG_DATA_HOME and if the folder exists, use it
 	if runtime.GOOS == "darwin" {
-		configPath = home + "/Library/Application Support/TrueBlocks"
+		getConfigPath = home + "/Library/Application Support/TrueBlocks"
 	} else if runtime.GOOS == "linux" {
-		configPath = home + "/.local/share/trueblocks"
+		getConfigPath = home + "/.local/share/trueblocks"
 	} else {
 		fmt.Println("Windows not supported.")
 		// TODO(tjayrush): This should fail without proceeding
 	}
-	viper.AddConfigPath(configPath)
+	viper.AddConfigPath(getConfigPath)
 	viper.SetConfigName("trueBlocks")
 	viper.SetConfigType("toml")
 	err = viper.ReadInConfig()
@@ -121,7 +121,7 @@ func initConfig() {
 
 	Options.indexPath = viper.GetString("settings.indexPath")
 	if Options.indexPath == "" {
-		Options.indexPath = configPath + "/unchained/"
+		Options.indexPath = getConfigPath + "/unchained/"
 	}
 	if Options.indexPath[len(Options.indexPath)-1] != '/' {
 		Options.indexPath += "/"

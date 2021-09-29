@@ -44,7 +44,7 @@ bool COptions::handle_gocmds(void) {
         }
         ep.params = &params;
         ep.notes = &notes;
-        string_q source = asciiFileToString(configPath("makeClass/blank.go"));
+        string_q source = asciiFileToString(getConfigPath("makeClass/blank.go"));
         replaceAll(source, "[{COPY_OPTS}]", get_copyopts(ep));
         replaceAll(source, "[{SET_OPTS}]", get_setopts(ep));
         replaceAll(source, "[{HIDDEN}]", get_hidden(ep));

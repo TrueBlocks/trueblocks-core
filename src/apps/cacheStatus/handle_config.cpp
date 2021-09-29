@@ -44,8 +44,8 @@ bool COptions::handle_config_get(ostream& os) {
             bal = "--balance Prov--";
         values.push_back(bal);
 
-        string_q defFolder = configPathRelative("");
-        string_q conf = cc->getConfigStr(g1_2.name, "configPath", defFolder);
+        string_q defFolder = getConfigPathRel("");
+        string_q conf = cc->getConfigStr(g1_2.name, "getConfigPath", defFolder);
         if (isTestMode())
             conf = "--config Path--";
         values.push_back(conf);
@@ -72,7 +72,7 @@ bool COptions::handle_config_get(ostream& os) {
         f.sections.push_back(g1_1);
         items.clear();
 
-        items.push_back(CConfigItem("configPath", substitute(values[cnt++], "\t", "\\t"), "path",
+        items.push_back(CConfigItem("getConfigPath", substitute(values[cnt++], "\t", "\\t"), "path",
                                     "location of config files, read only", true, true));
         items.push_back(CConfigItem("cachePath", substitute(values[cnt++], "\t", "\\t"), "path",
                                     "location of cache (on external SSD, for example)", false, false));

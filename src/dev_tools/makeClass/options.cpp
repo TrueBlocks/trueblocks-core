@@ -205,7 +205,7 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     // We need the template files
-    if (!folderExists(configPath("makeClass/")))
+    if (!folderExists(getConfigPath("makeClass/")))
         return false;  // usage(usageErrs[ERR_CONFIGMISSING]);
 
     return true;
@@ -224,7 +224,7 @@ void COptions::Init(void) {
     classDefs.clear();
     counter = CCounter();
 
-    CToml toml(configPath("makeClass.toml"));
+    CToml toml(getConfigPath("makeClass.toml"));
     lastFormat = static_cast<timestamp_t>(toml.getConfigInt("settings", "lastFormat", 0));
     lastLint = static_cast<timestamp_t>(toml.getConfigInt("settings", "lastLint", 0));
     toml.Release();

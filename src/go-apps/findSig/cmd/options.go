@@ -153,15 +153,15 @@ func initConfig() {
 		os.Exit(1)
 	}
 
-	configPath := "<unset>"
+	getConfigPath := "<unset>"
 	if runtime.GOOS == "darwin" {
-		configPath = home + "/Library/Application Support/TrueBlocks"
+		getConfigPath = home + "/Library/Application Support/TrueBlocks"
 	} else if runtime.GOOS == "linux" {
-		configPath = home + "/.local/share/trueblocks"
+		getConfigPath = home + "/.local/share/trueblocks"
 	} else {
 		fmt.Println("Windows not supported.")
 	}
-	viper.AddConfigPath(configPath)
+	viper.AddConfigPath(getConfigPath)
 	viper.SetConfigName("trueBlocks")
 	viper.SetConfigType("toml")
 	err = viper.ReadInConfig()
@@ -174,5 +174,5 @@ func initConfig() {
 	viper.SetEnvKeyReplacer(strings.NewReplacer("SETTINGS.", ""))
 	viper.AutomaticEnv()
 
-	Options.signaturesPath = configPath + "/abis/known-000/"
+	Options.signaturesPath = getConfigPath + "/abis/known-000/"
 }

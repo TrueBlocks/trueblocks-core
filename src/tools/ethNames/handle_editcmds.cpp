@@ -110,7 +110,7 @@ bool COptions::handle_editcmds(CStringArray& terms, bool to_custom, bool autonam
 
     if (!autoname || target.name != target.address) {
         // We don't want to write this 'not found on chain' fact to the database
-        string_q dest = to_custom ? configPath("names/names_custom.tab") : configPath("names/names.tab");
+        string_q dest = to_custom ? getConfigPath("names/names_custom.tab") : getConfigPath("names/names.tab");
         stringToAsciiFile(dest, dataStream2.str());
         namesMap.clear();
         ::remove(getCachePath("names/names.bin").c_str());

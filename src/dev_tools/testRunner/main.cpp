@@ -142,9 +142,9 @@ int main(int argc, const char* argv[]) {
         perf << total.Format(perf_fmt) << endl;
         cerr << "    " << substitute(perf.str(), "\n", "\n    ") << endl;
         if (options.full_test && options.report) {
-            string_q perfFile = configPath(string_q("performance") + (total.allPassed ? "" : "_failed") + ".csv");
+            string_q perfFile = getConfigPath(string_q("performance") + (total.allPassed ? "" : "_failed") + ".csv");
             appendToAsciiFile(perfFile, perf.str());
-            appendToAsciiFile(configPath("performance_slow.csv"), slow.str());
+            appendToAsciiFile(getConfigPath("performance_slow.csv"), slow.str());
         } else {
             LOG_WARN(cRed, "Performance results not written because not full test", cOff);
         }
@@ -156,11 +156,11 @@ int main(int argc, const char* argv[]) {
         CStringArray files = {"performance.csv", "performance_failed.csv", "performance_slow.csv",
                               "performance_scraper.csv"};
         for (auto file : files) {
-            if (fileExists(configPath(file))) {
-                if (fileExists(configPath(file))) {
+            if (fileExists(getConfigPath(file))) {
+                if (fileExists(getConfigPath(file))) {
                     ostringstream copyCmd;
                     copyCmd << "cp -f \"";
-                    copyCmd << configPath(file) << "\" \"" << copyPath << "\"";
+                    copyCmd << getConfigPath(file) << "\" \"" << copyPath << "\"";
                     // clang-format off
                     if (system(copyCmd.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
                     // clang-format on
@@ -421,7 +421,7 @@ void COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
 bool saveAndCopy(const string_q& customFile, void* data) {
     CStringArray parts;
     explode(parts, customFile, '/');
-    string_q destFile = configPath(parts[parts.size() - 1]);
+    string_q destFile = getConfigPath(parts[parts.size() - 1]);
     string_q saveFile = getCachePath("tmp/" + parts[parts.size() - 1] + ".save");
     copyFile(destFile, saveFile);
     copyFile(customFile, destFile);
@@ -432,7 +432,7 @@ bool saveAndCopy(const string_q& customFile, void* data) {
 bool replaceFile(const string_q& customFile, void* data) {
     CStringArray parts;
     explode(parts, customFile, '/');
-    string_q destFile = configPath(parts[parts.size() - 1]);
+    string_q destFile = getConfigPath(parts[parts.size() - 1]);
     string_q saveFile = getCachePath("tmp/" + parts[parts.size() - 1] + ".save");
     copyFile(saveFile, destFile);
     ::remove(saveFile.c_str());

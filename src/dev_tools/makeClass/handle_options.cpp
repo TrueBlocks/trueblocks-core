@@ -501,7 +501,7 @@ bool COptions::writeCode(const string_q& fn) {
         string_q descr = asciiFileToString(getDocsPathTemplates("api/description.txt"));
         replaceAll(descr, "~~~~", "    ");
 
-        converted = asciiFileToString(configPath("makeClass/blank_openapi.yaml"));
+        converted = asciiFileToString(getConfigPath("makeClass/blank_openapi.yaml"));
         replace(converted, "[{TAGS}]", apiTagStream.str());
         replace(converted, "[{PATHS}]", apiPathStream.str());
         replace(converted, "[{DESCRIPTION}]", descr);

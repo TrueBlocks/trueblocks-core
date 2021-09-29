@@ -407,12 +407,12 @@ void CAbi::clearInterfaceMap(void) {
 //---------------------------------------------------------------------------
 bool CAbi::loadAbisFromKnown(bool tokensOnly) {
     if (tokensOnly) {
-        bool ret1 = loadAbiFromFile(configPath("abis/known-000/erc_00020.json"));
-        bool ret2 = loadAbiFromFile(configPath("abis/known-000/erc_00721.json"));
+        bool ret1 = loadAbiFromFile(getConfigPath("abis/known-000/erc_00020.json"));
+        bool ret2 = loadAbiFromFile(getConfigPath("abis/known-000/erc_00721.json"));
         return (ret1 && ret2);
     }
 
-    string_q srcPath = configPath("abis/");
+    string_q srcPath = getConfigPath("abis/");
     if (abiSourcesMap[srcPath])
         return true;
 
@@ -427,7 +427,7 @@ bool CAbi::loadAbisFromKnown(bool tokensOnly) {
                 archive >> *this;
                 archive.Release();
                 LOG_TEST("Loaded " + uint_2_Str(nInterfaces()) + " interfaces from",
-                         substitute(substitute(binPath, getCachePath(""), "$CACHE/"), configPath(""), "$CONFIG/"));
+                         substitute(substitute(binPath, getCachePath(""), "$CACHE/"), getConfigPath(""), "$CONFIG/"));
                 abiSourcesMap[srcPath] = true;
                 return true;
             }
@@ -445,7 +445,7 @@ bool CAbi::loadAbisFromKnown(bool tokensOnly) {
         archive << *this;
         archive.Release();
         LOG_TEST("Saved " + uint_2_Str(nInterfaces()) + " interfaces in",
-                 substitute(substitute(binPath, getCachePath(""), "$CACHE/"), configPath(""), "$CONFIG/"));
+                 substitute(substitute(binPath, getCachePath(""), "$CACHE/"), getConfigPath(""), "$CONFIG/"));
         return true;
     }
 
@@ -497,7 +497,7 @@ bool CAbi::loadAbiFromFile(const string_q& fileName) {
     if (loadAbiFromJson(asciiFileToString(fileName))) {
         for (auto& item : interfaceMap)
             if (item.second.abi_source.empty()) {
-                string_q str = substitute(substitute(fileName, getCachePath("abis/"), ""), configPath("abis/"), "");
+                string_q str = substitute(substitute(fileName, getCachePath("abis/"), ""), getConfigPath("abis/"), "");
                 nextTokenClear(str, '/');
                 item.second.abi_source = str;
             }
@@ -637,7 +637,7 @@ bool sortByFuncName(const CFunction& f1, const CFunction& f2) {
 bool isKnownAbi(const string_q& addr, string_q& path) {
     CStringArray paths = {"000", "005", "010", "015"};
     for (auto p : paths) {
-        path = configPath("abis/known-" + p + "/" + addr + ".json");
+        path = getConfigPath("abis/known-" + p + "/" + addr + ".json");
         if (fileExists(path))
             return true;
     }

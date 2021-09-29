@@ -14,7 +14,7 @@
 
 //----------------------------------------------------------------
 bool COptions::handle_init() {
-    CToml config(configPath("pinMan.toml"));
+    CToml config(getConfigPath("pinMan.toml"));
     bool enabled = config.getConfigBool("enabled", "downloadManifest", true);
     if (!enabled) {
         LOG_INFO("Manifest not downloaded. Not initializing.");
