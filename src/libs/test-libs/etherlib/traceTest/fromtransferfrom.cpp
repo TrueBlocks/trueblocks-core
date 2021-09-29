@@ -148,7 +148,7 @@ bool QFromTransferFrom::Serialize(CArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool QFromTransferFrom::SerializeC(CArchive& archive) const {
-    // Writing always write the latest version of the data
+    // Writing always writes the latest version of the data
     QTransferFrom::SerializeC(archive);
 
     // EXISTING_CODE

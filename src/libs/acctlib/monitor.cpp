@@ -193,7 +193,7 @@ bool CMonitor::Serialize(CArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CMonitor::SerializeC(CArchive& archive) const {
-    // Writing always write the latest version of the data
+    // Writing always writes the latest version of the data
     CAccountName::SerializeC(archive);
 
     // EXISTING_CODE

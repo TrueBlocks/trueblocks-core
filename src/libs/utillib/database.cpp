@@ -466,4 +466,15 @@ string_q manageRemoveList(const string_q& filename) {
     }
     return theList;
 }
+
+//--------------------------------------------------------------------------------
+string_q getSourcePath(const string_q& part) {
+    return "";
+}
+
+//--------------------------------------------------------------------------------
+string_q getTemplatePath(const string_q& part) {
+    return getConfigPath("makeClass/" + part);
+}
+
 }  // namespace qblocks

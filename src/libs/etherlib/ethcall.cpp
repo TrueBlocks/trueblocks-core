@@ -172,7 +172,7 @@ bool CEthCall::Serialize(CArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CEthCall::SerializeC(CArchive& archive) const {
-    // Writing always write the latest version of the data
+    // Writing always writes the latest version of the data
     CEthState::SerializeC(archive);
 
     // EXISTING_CODE

@@ -174,7 +174,7 @@ bool CPinnedChunk::Serialize(CArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CPinnedChunk::SerializeC(CArchive& archive) const {
-    // Writing always write the latest version of the data
+    // Writing always writes the latest version of the data
     CBaseNode::SerializeC(archive);
 
     // EXISTING_CODE

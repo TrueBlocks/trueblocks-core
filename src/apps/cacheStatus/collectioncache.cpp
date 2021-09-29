@@ -155,7 +155,7 @@ bool CCollectionCache::Serialize(CArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CCollectionCache::SerializeC(CArchive& archive) const {
-    // Writing always write the latest version of the data
+    // Writing always writes the latest version of the data
     CCache::SerializeC(archive);
 
     // EXISTING_CODE
