@@ -64,7 +64,7 @@ func runServe(cmd *cobra.Command, args []string) {
 	for _, arg := range args {
 		arguments += " " + arg
 	}
-	PassItOn("/Users/jrush/.local/bin/chifra/flame", options, arguments)
+	PassItOn(GetCommandPath("flame"), options, arguments)
 }
 
 func validateServeArgs(cmd *cobra.Command, args []string) error {
