@@ -28,7 +28,7 @@ chifra status  --get_config
           "name": "settings",
           "keys": [
             {
-              "name": "configPath",
+              "name": "getConfigPath",
               "value": "--config Path--",
               "type": "path",
               "tip": "location of config files, read only",
