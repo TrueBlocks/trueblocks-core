@@ -46,7 +46,7 @@ void COptions::writeOpenApiFile(void) {
     }
 
     writeCode(getDocsPathContent("api/openapi.yaml"));
-    writeCode("../src/go-apps/flame/cmd/routes.go");
+    writeCode("../src/go-apps/flame/server/server_routes.go");
     writeCode("../src/apps/chifra/options.cpp");
     writeCode("../src/libs/utillib/options_base.cpp");
 

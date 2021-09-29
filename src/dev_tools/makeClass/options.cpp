@@ -205,8 +205,12 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     // We need the template files
-    if (!folderExists(getConfigPath("makeClass/")))
-        return false;  // usage(usageErrs[ERR_CONFIGMISSING]);
+    CStringArray templs = {"", "blank.yaml", "blank.cpp", "blank.h", "blank.go"};
+    for (auto temp : templs) {
+        if (!fileExists(getTemplatePath(temp))) {
+            return makeError(ERR_CONFIGMISSING, getTemplatePath(temp));
+        }
+    }
 
     return true;
 }
@@ -244,7 +248,7 @@ COptions::COptions(void) : classFile("") {
     usageErrs[ERR_NOERROR] = "No error";
     // ERROR_STRINGS
     usageErrs[ERR_CLASSDEFNOTEXIST] = "./classDefinitions folder does not exist.";
-    usageErrs[ERR_CONFIGMISSING] = "[{CONFIG_FOLDER}]makeClass/ folder does not exist.";
+    usageErrs[ERR_CONFIGMISSING] = "File {0} does not exist.";
     usageErrs[ERR_NEEDONECLASS] = "Please specify at least one className.";
     // ERROR_STRINGS
 
@@ -286,4 +290,9 @@ bool listClasses(const string_q& path, void* data) {
         }
     }
     return true;
+}
+
+//--------------------------------------------------------------------------------
+string_q getTemplatePath(const string_q& part) {
+    return getConfigPath("makeClass/" + part);
 }

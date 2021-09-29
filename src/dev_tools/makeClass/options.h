@@ -173,8 +173,11 @@ extern void doReplace(string_q& str, const string_q& type, const string_q& rep, 
 extern bool writeIfDifferent(const string_q& path, const string_q& code);
 extern bool writeIfDifferent(const string_q& path, const string_q& code, const time_q& now);
 extern bool writeTheCode(const codewrite_t& cw);
+extern string_q getTemplatePath(const string_q& part);
 
 //---------------------------------------------------------------------------------------------------
 extern const char* STR_YAML_FRONTMATTER;
 #define routeCount fileCount
 #define cmdCount nVisited
+
+#define makeError(a, b) usage(substitute(usageErrs[(a)], "{0}", (b)))

@@ -98,20 +98,6 @@ func AccountsList(w http.ResponseWriter, r *http.Request) {
 
 // AccountsExport help text todo
 func AccountsExport(w http.ResponseWriter, r *http.Request) {
-	// By removing, inserting into, or altering any of the following 10 uncommented
-	// lines of code, you are violating the terms of our usage license. Don't do it.
-	// fileName := Options.Status.CachePath + "lics/export.txt"
-	if false { // !utils.FileExists(fileName)) {
-		w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-		w.Header().Set("Access-Control-Allow-Origin", "*")
-		w.Header().Set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
-		w.Header().Set("Access-Control-Allow-Methods", "PUT, POST, GET, DELETE, OPTIONS")
-		w.WriteHeader(http.StatusOK)
-		fmt.Fprint(w, "In order to use the 'export' route, you must license the module. Quitting")
-		return
-	}
-	// By removing, inserting into, or altering any of the above 10 uncommented
-	// lines of code, you are violating the terms of our usage license. Don't do it.
 	CallOne(w, r, "acctExport", "export")
 }
 
@@ -180,6 +166,11 @@ func AdminScrape(w http.ResponseWriter, r *http.Request) {
 	CallOne(w, r, "blockScrape", "scrape")
 }
 
+// AdminInit help text todo
+func AdminInit(w http.ResponseWriter, r *http.Request) {
+	CallOneExtra(w, r, "chifra", "init", "init")
+}
+
 // AdminPins help text todo
 func AdminPins(w http.ResponseWriter, r *http.Request) {
 	CallOne(w, r, "pinMan", "pins")
@@ -194,7 +185,6 @@ func OtherQuotes(w http.ResponseWriter, r *http.Request) {
 func OtherSlurp(w http.ResponseWriter, r *http.Request) {
 	CallOne(w, r, "ethslurp", "slurp")
 }
-
 // END_ROUTE_CODE
 
 var routes = Routes{
@@ -333,6 +323,13 @@ var routes = Routes{
 		"GET",
 		"/scrape",
 		AdminScrape,
+	},
+
+	Route{
+		"AdminInit",
+		"GET",
+		"/init",
+		AdminInit,
 	},
 
 	Route{
