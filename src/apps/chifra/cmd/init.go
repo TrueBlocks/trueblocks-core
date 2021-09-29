@@ -1,5 +1,3 @@
-package cmd
-
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -16,13 +14,12 @@ package cmd
  * Parts of this file were generated with makeClass --gocmds. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
+package cmd
 
 import (
-	// EXISTING_CODE
 	"os"
 
 	"github.com/spf13/cobra"
-	// EXISTING_CODE
 )
 
 // initCmd represents the init command
@@ -51,41 +48,11 @@ var InitOpts initOptionsType
 func init() {
 	initCmd.SetOut(os.Stderr)
 
-	// EXISTING_CODE
-	// EXISTING_CODE
 	initCmd.Flags().SortFlags = false
 	initCmd.PersistentFlags().SortFlags = false
 	initCmd.Flags().SortFlags = false
 	initCmd.PersistentFlags().SortFlags = false
-	// EXISTING_CODE
-	// EXISTING_CODE
 
 	initCmd.SetUsageTemplate(HelpWithNotes(notesInit))
 	rootCmd.AddCommand(initCmd)
-}
-
-func runInit(cmd *cobra.Command, args []string) {
-	options := ""
-	arguments := ""
-	for _, arg := range args {
-		arguments += " " + arg
-	}
-	// EXISTING_CODE
-	// EXISTING_CODE
-	PassItOn(GetCommandPath("pinMan local --init"), options, arguments)
-}
-
-// EXISTING_CODE
-// EXISTING_CODE
-
-func validateInitArgs(cmd *cobra.Command, args []string) error {
-	var err error
-	// EXISTING_CODE
-	// EXISTING_CODE
-	// validate global arguments
-	err = validateGlobalFlags(cmd, args)
-	if err != nil {
-		return err
-	}
-	return nil
 }

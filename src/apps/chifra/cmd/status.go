@@ -1,5 +1,3 @@
-package cmd
-
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -16,15 +14,12 @@ package cmd
  * Parts of this file were generated with makeClass --gocmds. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
+package cmd
 
 import (
-	// EXISTING_CODE
-	"fmt"
 	"os"
-	"strconv"
 
 	"github.com/spf13/cobra"
-	// EXISTING_CODE
 )
 
 // statusCmd represents the status command
@@ -67,8 +62,6 @@ var StatusOpts statusOptionsType
 func init() {
 	statusCmd.SetOut(os.Stderr)
 
-	// EXISTING_CODE
-	// EXISTING_CODE
 	statusCmd.Flags().SortFlags = false
 	statusCmd.PersistentFlags().SortFlags = false
 	statusCmd.Flags().BoolVarP(&StatusOpts.details, "details", "d", false, "include details about items found in monitors, slurps, abis, or price caches")
@@ -95,77 +88,7 @@ One or more of test, abi_cache, block_cache, tx_cache, trace_cache, recon_cache,
 	}
 	statusCmd.Flags().SortFlags = false
 	statusCmd.PersistentFlags().SortFlags = false
-	// EXISTING_CODE
-	// EXISTING_CODE
 
 	statusCmd.SetUsageTemplate(HelpWithNotes(notesStatus))
 	rootCmd.AddCommand(statusCmd)
-}
-
-func runStatus(cmd *cobra.Command, args []string) {
-	options := ""
-	if StatusOpts.details {
-		options += " --details"
-	}
-	for _, t := range StatusOpts.types {
-		options += " --types " + t
-	}
-	if StatusOpts.depth > 0 {
-		options += " --depth " + fmt.Sprintf("%d", StatusOpts.depth)
-	}
-	if StatusOpts.terse {
-		options += " --terse"
-	}
-	for _, t := range StatusOpts.migrate {
-		options += " --migrate " + t
-	}
-	if StatusOpts.get_config {
-		options += " --get_config"
-	}
-	if StatusOpts.set_config {
-		options += " --set_config"
-	}
-	if StatusOpts.test_start > 0 {
-		options += " --test_start " + fmt.Sprintf("%d", StatusOpts.test_start)
-	}
-	if StatusOpts.test_end > 0 {
-		options += " --test_end " + fmt.Sprintf("%d", StatusOpts.test_end)
-	}
-	arguments := ""
-	for _, arg := range args {
-		arguments += " " + arg
-	}
-	// EXISTING_CODE
-	// EXISTING_CODE
-	PassItOn(GetCommandPath("cacheStatus"), options, arguments)
-}
-
-// EXISTING_CODE
-// EXISTING_CODE
-
-func validateStatusArgs(cmd *cobra.Command, args []string) error {
-	var err error
-	// EXISTING_CODE
-	if StatusOpts.depth > 3 {
-		return makeError("--depth parameter ({0}) must be less than four (4)", strconv.FormatUint(StatusOpts.depth, 10))
-	}
-	err = validateEnumSlice("--types", StatusOpts.types, "[blocks|txs|traces|slurps|prices|all]")
-	if err != nil {
-		return err
-	}
-	err = validateEnumSlice("--migrate", StatusOpts.migrate, "[test|abi_cache|block_cache|tx_cache|trace_cache|recon_cache|name_cache|slurp_cache|all]")
-	if err != nil {
-		return err
-	}
-	err = validateEnumSlice("modes", args, "[index|monitors|collections|names|abis|caches|some|all]")
-	if err != nil {
-		return err
-	}
-	// EXISTING_CODE
-	// validate global arguments
-	err = validateGlobalFlags(cmd, args)
-	if err != nil {
-		return err
-	}
-	return nil
 }

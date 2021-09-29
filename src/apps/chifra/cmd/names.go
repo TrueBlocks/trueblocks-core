@@ -1,5 +1,3 @@
-package cmd
-
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -16,13 +14,12 @@ package cmd
  * Parts of this file were generated with makeClass --gocmds. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
+package cmd
 
 import (
-	// EXISTING_CODE
 	"os"
 
 	"github.com/spf13/cobra"
-	// EXISTING_CODE
 )
 
 // namesCmd represents the names command
@@ -69,8 +66,6 @@ var NamesOpts namesOptionsType
 func init() {
 	namesCmd.SetOut(os.Stderr)
 
-	// EXISTING_CODE
-	// EXISTING_CODE
 	namesCmd.Flags().SortFlags = false
 	namesCmd.PersistentFlags().SortFlags = false
 	namesCmd.Flags().BoolVarP(&NamesOpts.expand, "expand", "e", false, "expand search to include all fields (default searches name, address, and symbol only)")
@@ -92,71 +87,7 @@ func init() {
 	}
 	namesCmd.Flags().SortFlags = false
 	namesCmd.PersistentFlags().SortFlags = false
-	// EXISTING_CODE
-	// EXISTING_CODE
 
 	namesCmd.SetUsageTemplate(HelpWithNotes(notesNames))
 	rootCmd.AddCommand(namesCmd)
-}
-
-func runNames(cmd *cobra.Command, args []string) {
-	options := ""
-	if NamesOpts.expand {
-		options += " --expand"
-	}
-	if NamesOpts.match_case {
-		options += " --match_case"
-	}
-	if NamesOpts.all {
-		options += " --all"
-	}
-	if NamesOpts.custom {
-		options += " --custom"
-	}
-	if NamesOpts.prefund {
-		options += " --prefund"
-	}
-	if NamesOpts.named {
-		options += " --named"
-	}
-	if NamesOpts.addr {
-		options += " --addr"
-	}
-	if NamesOpts.collections {
-		options += " --collections"
-	}
-	if NamesOpts.tags {
-		options += " --tags"
-	}
-	if NamesOpts.to_custom {
-		options += " --to_custom"
-	}
-	if NamesOpts.clean {
-		options += " --clean"
-	}
-	if len(NamesOpts.autoname) > 0 {
-		options += " --autoname " + NamesOpts.autoname
-	}
-	arguments := ""
-	for _, arg := range args {
-		arguments += " " + arg
-	}
-	// EXISTING_CODE
-	// EXISTING_CODE
-	PassItOn(GetCommandPath("ethNames"), options, arguments)
-}
-
-// EXISTING_CODE
-// EXISTING_CODE
-
-func validateNamesArgs(cmd *cobra.Command, args []string) error {
-	var err error
-	// EXISTING_CODE
-	// EXISTING_CODE
-	// validate global arguments
-	err = validateGlobalFlags(cmd, args)
-	if err != nil {
-		return err
-	}
-	return nil
 }

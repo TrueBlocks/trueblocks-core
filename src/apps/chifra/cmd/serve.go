@@ -1,5 +1,3 @@
-package cmd
-
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -13,11 +11,12 @@ package cmd
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * Parts of this file were generated with makeClass --gocmds.
+ * Parts of this file were generated with makeClass --gocmds. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
+package cmd
 
 import (
-	"errors"
 	"os"
 
 	"github.com/spf13/cobra"
@@ -56,20 +55,4 @@ func init() {
 
 	serveCmd.SetUsageTemplate(HelpWithNotes(notesServe))
 	rootCmd.AddCommand(serveCmd)
-}
-
-func runServe(cmd *cobra.Command, args []string) {
-	options := ""
-	arguments := ""
-	for _, arg := range args {
-		arguments += " " + arg
-	}
-	PassItOn(GetCommandPath("flame"), options, arguments)
-}
-
-func validateServeArgs(cmd *cobra.Command, args []string) error {
-	if len(args) > 0 && args[0] == "12" {
-		return ErrFunc(cmd, errors.New("Invalid argument "+args[0]))
-	}
-	return nil
 }

@@ -1,5 +1,3 @@
-package cmd
-
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -16,13 +14,12 @@ package cmd
  * Parts of this file were generated with makeClass --gocmds. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
+package cmd
 
 import (
-	// EXISTING_CODE
 	"os"
 
 	"github.com/spf13/cobra"
-	// EXISTING_CODE
 )
 
 // logsCmd represents the logs command
@@ -64,8 +61,6 @@ var LogsOpts logsOptionsType
 func init() {
 	logsCmd.SetOut(os.Stderr)
 
-	// EXISTING_CODE
-	// EXISTING_CODE
 	logsCmd.Flags().SortFlags = false
 	logsCmd.PersistentFlags().SortFlags = false
 	logsCmd.Flags().StringSliceVarP(&LogsOpts.topic, "topic", "t", nil, "filter by one or more log topics (not implemented)")
@@ -73,44 +68,7 @@ func init() {
 	logsCmd.Flags().BoolVarP(&LogsOpts.articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
 	logsCmd.Flags().SortFlags = false
 	logsCmd.PersistentFlags().SortFlags = false
-	// EXISTING_CODE
-	// EXISTING_CODE
 
 	logsCmd.SetUsageTemplate(HelpWithNotes(notesLogs))
 	rootCmd.AddCommand(logsCmd)
-}
-
-func runLogs(cmd *cobra.Command, args []string) {
-	options := ""
-	for _, t := range LogsOpts.topic {
-		options += " --topic " + t
-	}
-	for _, t := range LogsOpts.source {
-		options += " --source " + t
-	}
-	if LogsOpts.articulate {
-		options += " --articulate"
-	}
-	arguments := ""
-	for _, arg := range args {
-		arguments += " " + arg
-	}
-	// EXISTING_CODE
-	// EXISTING_CODE
-	PassItOn(GetCommandPath("getLogs"), options, arguments)
-}
-
-// EXISTING_CODE
-// EXISTING_CODE
-
-func validateLogsArgs(cmd *cobra.Command, args []string) error {
-	var err error
-	// EXISTING_CODE
-	// EXISTING_CODE
-	// validate global arguments
-	err = validateGlobalFlags(cmd, args)
-	if err != nil {
-		return err
-	}
-	return nil
 }

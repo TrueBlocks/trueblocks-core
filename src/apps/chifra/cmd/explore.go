@@ -1,5 +1,3 @@
-package cmd
-
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -16,13 +14,12 @@ package cmd
  * Parts of this file were generated with makeClass --gocmds. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
+package cmd
 
 import (
-	// EXISTING_CODE
 	"os"
 
 	"github.com/spf13/cobra"
-	// EXISTING_CODE
 )
 
 // exploreCmd represents the explore command
@@ -56,52 +53,13 @@ var ExploreOpts exploreOptionsType
 func init() {
 	exploreCmd.SetOut(os.Stderr)
 
-	// EXISTING_CODE
-	// EXISTING_CODE
 	exploreCmd.Flags().SortFlags = false
 	exploreCmd.PersistentFlags().SortFlags = false
 	exploreCmd.Flags().BoolVarP(&ExploreOpts.local, "local", "l", false, "open the local TrueBlocks explorer")
 	exploreCmd.Flags().BoolVarP(&ExploreOpts.google, "google", "g", false, "search google excluding popular blockchain explorers")
 	exploreCmd.Flags().SortFlags = false
 	exploreCmd.PersistentFlags().SortFlags = false
-	// EXISTING_CODE
-	// EXISTING_CODE
 
 	exploreCmd.SetUsageTemplate(HelpWithNotes(notesExplore))
 	rootCmd.AddCommand(exploreCmd)
-}
-
-func runExplore(cmd *cobra.Command, args []string) {
-	options := ""
-	if ExploreOpts.local {
-		options += " --local"
-	}
-	if ExploreOpts.google {
-		options += " --google"
-	}
-	arguments := ""
-	for _, arg := range args {
-		arguments += " " + arg
-	}
-	// EXISTING_CODE
-	// EXISTING_CODE
-	PassItOn(GetCommandPath("fireStorm"), options, arguments)
-}
-
-// EXISTING_CODE
-// EXISTING_CODE
-
-func validateExploreArgs(cmd *cobra.Command, args []string) error {
-	var err error
-	// EXISTING_CODE
-	if len(args) == 0 {
-		return makeError("You must provide at least one search term")
-	}
-	// EXISTING_CODE
-	// validate global arguments
-	err = validateGlobalFlags(cmd, args)
-	if err != nil {
-		return err
-	}
-	return nil
 }

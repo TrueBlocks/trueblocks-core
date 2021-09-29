@@ -1,5 +1,3 @@
-package cmd
-
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -16,14 +14,12 @@ package cmd
  * Parts of this file were generated with makeClass --gocmds. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
+package cmd
 
 import (
-	// EXISTING_CODE
-	"fmt"
 	"os"
 
 	"github.com/spf13/cobra"
-	// EXISTING_CODE
 )
 
 // blocksCmd represents the blocks command
@@ -69,8 +65,6 @@ var BlocksOpts blocksOptionsType
 func init() {
 	blocksCmd.SetOut(os.Stderr)
 
-	// EXISTING_CODE
-	// EXISTING_CODE
 	blocksCmd.Flags().SortFlags = false
 	blocksCmd.PersistentFlags().SortFlags = false
 	blocksCmd.Flags().BoolVarP(&BlocksOpts.hashes, "hashes", "e", false, "display only transaction hashes, default is to display full transaction detail")
@@ -89,65 +83,7 @@ func init() {
 	}
 	blocksCmd.Flags().SortFlags = false
 	blocksCmd.PersistentFlags().SortFlags = false
-	// EXISTING_CODE
-	// EXISTING_CODE
 
 	blocksCmd.SetUsageTemplate(HelpWithNotes(notesBlocks))
 	rootCmd.AddCommand(blocksCmd)
-}
-
-func runBlocks(cmd *cobra.Command, args []string) {
-	options := ""
-	if BlocksOpts.hashes {
-		options += " --hashes"
-	}
-	if BlocksOpts.uncles {
-		options += " --uncles"
-	}
-	if BlocksOpts.trace {
-		options += " --trace"
-	}
-	if BlocksOpts.apps {
-		options += " --apps"
-	}
-	if BlocksOpts.uniq {
-		options += " --uniq"
-	}
-	if BlocksOpts.uniq_tx {
-		options += " --uniq_tx"
-	}
-	if BlocksOpts.count {
-		options += " --count"
-	}
-	if BlocksOpts.cache {
-		options += " --cache"
-	}
-	if BlocksOpts.list > 0 {
-		options += " --list " + fmt.Sprintf("%d", BlocksOpts.list)
-	}
-	if BlocksOpts.list_count > 0 {
-		options += " --list_count " + fmt.Sprintf("%d", BlocksOpts.list_count)
-	}
-	arguments := ""
-	for _, arg := range args {
-		arguments += " " + arg
-	}
-	// EXISTING_CODE
-	// EXISTING_CODE
-	PassItOn(GetCommandPath("getBlocks"), options, arguments)
-}
-
-// EXISTING_CODE
-// EXISTING_CODE
-
-func validateBlocksArgs(cmd *cobra.Command, args []string) error {
-	var err error
-	// EXISTING_CODE
-	// EXISTING_CODE
-	// validate global arguments
-	err = validateGlobalFlags(cmd, args)
-	if err != nil {
-		return err
-	}
-	return nil
 }

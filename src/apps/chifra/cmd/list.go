@@ -1,5 +1,3 @@
-package cmd
-
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -13,11 +11,12 @@ package cmd
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * Parts of this file were generated with makeClass --gocmds.
+ * Parts of this file were generated with makeClass --gocmds. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
+package cmd
 
 import (
-	"errors"
 	"os"
 
 	"github.com/spf13/cobra"
@@ -63,26 +62,4 @@ func init() {
 
 	listCmd.SetUsageTemplate(HelpWithNotes(notesList))
 	rootCmd.AddCommand(listCmd)
-}
-
-func runList(cmd *cobra.Command, args []string) {
-	options := ""
-	if ListOpts.appearances {
-		options += " --appearances"
-	}
-	if ListOpts.count {
-		options += " --count"
-	}
-	arguments := ""
-	for _, arg := range args {
-		arguments += " " + arg
-	}
-	PassItOn(GetCommandPath("acctExport"), options, arguments)
-}
-
-func validateListArgs(cmd *cobra.Command, args []string) error {
-	if len(args) > 0 && args[0] == "12" {
-		return ErrFunc(cmd, errors.New("Invalid argument "+args[0]))
-	}
-	return nil
 }

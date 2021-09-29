@@ -1,5 +1,3 @@
-package cmd
-
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -16,14 +14,12 @@ package cmd
  * Parts of this file were generated with makeClass --gocmds. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
+package cmd
 
 import (
-	// EXISTING_CODE
-	"fmt"
 	"os"
 
 	"github.com/spf13/cobra"
-	// EXISTING_CODE
 )
 
 // scrapeCmd represents the scrape command
@@ -57,8 +53,6 @@ var ScrapeOpts scrapeOptionsType
 func init() {
 	scrapeCmd.SetOut(os.Stderr)
 
-	// EXISTING_CODE
-	// EXISTING_CODE
 	scrapeCmd.Flags().SortFlags = false
 	scrapeCmd.PersistentFlags().SortFlags = false
 	scrapeCmd.Flags().BoolVarP(&ScrapeOpts.pin, "pin", "p", false, "pin new chunks (and blooms) to IPFS (requires Pinata key and running IPFS node)")
@@ -72,50 +66,7 @@ func init() {
 	}
 	scrapeCmd.Flags().SortFlags = false
 	scrapeCmd.PersistentFlags().SortFlags = false
-	// EXISTING_CODE
-	// EXISTING_CODE
 
 	scrapeCmd.SetUsageTemplate(HelpWithNotes(notesScrape))
 	rootCmd.AddCommand(scrapeCmd)
-}
-
-func runScrape(cmd *cobra.Command, args []string) {
-	options := ""
-	if ScrapeOpts.pin {
-		options += " --pin"
-	}
-	if ScrapeOpts.sleep > 0.0 {
-		options += " --sleep " + fmt.Sprintf("%.1f", ScrapeOpts.sleep)
-	}
-	if ScrapeOpts.n_blocks > 0 {
-		options += " --n_blocks " + fmt.Sprintf("%d", ScrapeOpts.n_blocks)
-	}
-	if ScrapeOpts.n_block_procs > 0 {
-		options += " --n_block_procs " + fmt.Sprintf("%d", ScrapeOpts.n_block_procs)
-	}
-	if ScrapeOpts.n_addr_procs > 0 {
-		options += " --n_addr_procs " + fmt.Sprintf("%d", ScrapeOpts.n_addr_procs)
-	}
-	arguments := ""
-	for _, arg := range args {
-		arguments += " " + arg
-	}
-	// EXISTING_CODE
-	// EXISTING_CODE
-	PassItOn(GetCommandPath("blockScrape"), options, arguments)
-}
-
-// EXISTING_CODE
-// EXISTING_CODE
-
-func validateScrapeArgs(cmd *cobra.Command, args []string) error {
-	var err error
-	// EXISTING_CODE
-	// EXISTING_CODE
-	// validate global arguments
-	err = validateGlobalFlags(cmd, args)
-	if err != nil {
-		return err
-	}
-	return nil
 }

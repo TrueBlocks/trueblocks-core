@@ -23,6 +23,8 @@ extern map<string, string> chifraCmdMap;
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::handle_gocmds(void) {
+    return true;
+#if 0
     LOG_INFO(cYellow, "handling go commands...", string_q(50, ' '), cOff);
     counter = CCounter();  // reset
 
@@ -79,6 +81,7 @@ bool COptions::handle_gocmds(void) {
              counter.nProcessed, ").", string_q(40, ' '));
 
     return true;
+#endif
 }
 
 bool visitEnumItem2(string_q& item, void* data) {

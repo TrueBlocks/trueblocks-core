@@ -1,5 +1,3 @@
-package cmd
-
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -16,13 +14,12 @@ package cmd
  * Parts of this file were generated with makeClass --gocmds. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
+package cmd
 
 import (
-	// EXISTING_CODE
 	"os"
 
 	"github.com/spf13/cobra"
-	// EXISTING_CODE
 )
 
 // quotesCmd represents the quotes command
@@ -60,8 +57,6 @@ var QuotesOpts quotesOptionsType
 func init() {
 	quotesCmd.SetOut(os.Stderr)
 
-	// EXISTING_CODE
-	// EXISTING_CODE
 	quotesCmd.Flags().SortFlags = false
 	quotesCmd.PersistentFlags().SortFlags = false
 	quotesCmd.Flags().BoolVarP(&QuotesOpts.freshen, "freshen", "f", false, "Freshen price database")
@@ -72,62 +67,7 @@ One of 5, 15, 30, 60, 120, 240, 1440, 10080, hourly, daily, weekly`)
 One of poloniex, maker, tellor`)
 	quotesCmd.Flags().SortFlags = false
 	quotesCmd.PersistentFlags().SortFlags = false
-	// EXISTING_CODE
-	// EXISTING_CODE
 
 	quotesCmd.SetUsageTemplate(HelpWithNotes(notesQuotes))
 	rootCmd.AddCommand(quotesCmd)
-}
-
-func runQuotes(cmd *cobra.Command, args []string) {
-	options := ""
-	if QuotesOpts.freshen {
-		options += " --freshen"
-	}
-	if len(QuotesOpts.period) > 0 {
-		options += " --period " + QuotesOpts.period
-	}
-	if len(QuotesOpts.pair) > 0 {
-		options += " --pair " + QuotesOpts.pair
-	}
-	if len(QuotesOpts.feed) > 0 {
-		options += " --feed " + QuotesOpts.feed
-	}
-	arguments := ""
-	for _, arg := range args {
-		arguments += " " + arg
-	}
-	// EXISTING_CODE
-	// EXISTING_CODE
-	PassItOn(GetCommandPath("getQuotes"), options, arguments)
-}
-
-// EXISTING_CODE
-// EXISTING_CODE
-
-func validateQuotesArgs(cmd *cobra.Command, args []string) error {
-	var err error
-	// EXISTING_CODE
-	if !QuotesOpts.freshen &&
-		len(QuotesOpts.period) == 0 &&
-		len(QuotesOpts.pair) == 0 &&
-		len(QuotesOpts.feed) == 0 &&
-		len(RootOpts.fmt) == 0 {
-		return makeError("You must provide at least one command line option")
-	}
-	err = validateEnum("--period", QuotesOpts.period, "[5|15|30|60|120|240|1440|10080|hourly|daily|weekly]")
-	if err != nil {
-		return err
-	}
-	err = validateEnum("--types", QuotesOpts.feed, "[poloniex|maker|tellor]")
-	if err != nil {
-		return err
-	}
-	// EXISTING_CODE
-	// validate global arguments
-	err = validateGlobalFlags(cmd, args)
-	if err != nil {
-		return err
-	}
-	return nil
 }

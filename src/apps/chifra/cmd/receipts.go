@@ -1,5 +1,3 @@
-package cmd
-
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -16,13 +14,12 @@ package cmd
  * Parts of this file were generated with makeClass --gocmds. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
+package cmd
 
 import (
-	// EXISTING_CODE
 	"os"
 
 	"github.com/spf13/cobra"
-	// EXISTING_CODE
 )
 
 // receiptsCmd represents the receipts command
@@ -60,54 +57,12 @@ var ReceiptsOpts receiptsOptionsType
 func init() {
 	receiptsCmd.SetOut(os.Stderr)
 
-	// EXISTING_CODE
-	// EXISTING_CODE
 	receiptsCmd.Flags().SortFlags = false
 	receiptsCmd.PersistentFlags().SortFlags = false
 	receiptsCmd.Flags().BoolVarP(&ReceiptsOpts.articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
 	receiptsCmd.Flags().SortFlags = false
 	receiptsCmd.PersistentFlags().SortFlags = false
-	// EXISTING_CODE
-	// EXISTING_CODE
 
 	receiptsCmd.SetUsageTemplate(HelpWithNotes(notesReceipts))
 	rootCmd.AddCommand(receiptsCmd)
-}
-
-func runReceipts(cmd *cobra.Command, args []string) {
-	options := ""
-	if ReceiptsOpts.articulate {
-		options += " --articulate"
-	}
-	arguments := ""
-	for _, arg := range args {
-		arguments += " " + arg
-	}
-	// EXISTING_CODE
-	// EXISTING_CODE
-	PassItOn(GetCommandPath("getReceipts"), options, arguments)
-}
-
-// EXISTING_CODE
-// EXISTING_CODE
-
-func validateReceiptsArgs(cmd *cobra.Command, args []string) error {
-	var err error
-	// EXISTING_CODE
-	// if len(args) == 0 {
-	// 	return errors.New(fmtError("You must provide at least one valid transaction identifier"))
-	// }
-	// for _, arg := range args {
-	// 	valid, err := validateTxIdentifier(arg)
-	// 	if !valid || err != nil {
-	// 		return err
-	// 	}
-	// }
-	// EXISTING_CODE
-	// validate global arguments
-	err = validateGlobalFlags(cmd, args)
-	if err != nil {
-		return err
-	}
-	return nil
 }

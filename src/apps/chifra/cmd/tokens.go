@@ -1,5 +1,3 @@
-package cmd
-
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -16,13 +14,12 @@ package cmd
  * Parts of this file were generated with makeClass --gocmds. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
+package cmd
 
 import (
-	// EXISTING_CODE
 	"os"
 
 	"github.com/spf13/cobra"
-	// EXISTING_CODE
 )
 
 // tokensCmd represents the tokens command
@@ -64,8 +61,6 @@ var TokensOpts tokensOptionsType
 func init() {
 	tokensCmd.SetOut(os.Stderr)
 
-	// EXISTING_CODE
-	// EXISTING_CODE
 	tokensCmd.Flags().SortFlags = false
 	tokensCmd.PersistentFlags().SortFlags = false
 	tokensCmd.Flags().StringSliceVarP(&TokensOpts.parts, "parts", "p", nil, `which parts of the token information to retreive
@@ -74,44 +69,7 @@ One or more of name, symbol, decimals, totalSupply, version, none, all`)
 	tokensCmd.Flags().BoolVarP(&TokensOpts.no_zero, "no_zero", "n", false, "suppress the display of zero balance accounts")
 	tokensCmd.Flags().SortFlags = false
 	tokensCmd.PersistentFlags().SortFlags = false
-	// EXISTING_CODE
-	// EXISTING_CODE
 
 	tokensCmd.SetUsageTemplate(HelpWithNotes(notesTokens))
 	rootCmd.AddCommand(tokensCmd)
-}
-
-func runTokens(cmd *cobra.Command, args []string) {
-	options := ""
-	for _, t := range TokensOpts.parts {
-		options += " --parts " + t
-	}
-	if TokensOpts.by_acct {
-		options += " --by_acct"
-	}
-	if TokensOpts.no_zero {
-		options += " --no_zero"
-	}
-	arguments := ""
-	for _, arg := range args {
-		arguments += " " + arg
-	}
-	// EXISTING_CODE
-	// EXISTING_CODE
-	PassItOn(GetCommandPath("getTokens"), options, arguments)
-}
-
-// EXISTING_CODE
-// EXISTING_CODE
-
-func validateTokensArgs(cmd *cobra.Command, args []string) error {
-	var err error
-	// EXISTING_CODE
-	// EXISTING_CODE
-	// validate global arguments
-	err = validateGlobalFlags(cmd, args)
-	if err != nil {
-		return err
-	}
-	return nil
 }

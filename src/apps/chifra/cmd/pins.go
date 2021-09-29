@@ -1,5 +1,3 @@
-package cmd
-
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -16,14 +14,12 @@ package cmd
  * Parts of this file were generated with makeClass --gocmds. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
+package cmd
 
 import (
-	// EXISTING_CODE
-	"fmt"
 	"os"
 
 	"github.com/spf13/cobra"
-	// EXISTING_CODE
 )
 
 // pinsCmd represents the pins command
@@ -63,8 +59,6 @@ var PinsOpts pinsOptionsType
 func init() {
 	pinsCmd.SetOut(os.Stderr)
 
-	// EXISTING_CODE
-	// EXISTING_CODE
 	pinsCmd.Flags().SortFlags = false
 	pinsCmd.PersistentFlags().SortFlags = false
 	pinsCmd.Flags().BoolVarP(&PinsOpts.list, "list", "l", false, "list the index and Bloom filter hashes from local manifest or pinning service")
@@ -82,63 +76,7 @@ func init() {
 	}
 	pinsCmd.Flags().SortFlags = false
 	pinsCmd.PersistentFlags().SortFlags = false
-	// EXISTING_CODE
-	// EXISTING_CODE
 
 	pinsCmd.SetUsageTemplate(HelpWithNotes(notesPins))
 	rootCmd.AddCommand(pinsCmd)
-}
-
-func runPins(cmd *cobra.Command, args []string) {
-	options := ""
-	if PinsOpts.list {
-		options += " --list"
-	}
-	if PinsOpts.init {
-		options += " --init"
-	}
-	if PinsOpts.freshen {
-		options += " --freshen"
-	}
-	if PinsOpts.remote {
-		options += " --remote"
-	}
-	if PinsOpts.all {
-		options += " --all"
-	}
-	if PinsOpts.sleep > 0.0 {
-		options += " --sleep " + fmt.Sprintf("%.1f", PinsOpts.sleep)
-	}
-	if PinsOpts.share {
-		options += " --share"
-	}
-	arguments := ""
-	for _, arg := range args {
-		arguments += " " + arg
-	}
-	// EXISTING_CODE
-	// EXISTING_CODE
-	PassItOn(GetCommandPath("pinMan"), options, arguments)
-}
-
-// EXISTING_CODE
-// EXISTING_CODE
-
-func validatePinsArgs(cmd *cobra.Command, args []string) error {
-	var err error
-	// EXISTING_CODE
-	if !PinsOpts.list && !PinsOpts.init && !PinsOpts.freshen {
-		return makeError("You must choose at least one of {0}, {1}, or {2}", "--list", "--init", "--freshen")
-	}
-	// refuse to run deprecated commands
-	if PinsOpts.init_all {
-		return makeError("Flag --init_all has been deprecated, use --init --all instead")
-	}
-	// EXISTING_CODE
-	// validate global arguments
-	err = validateGlobalFlags(cmd, args)
-	if err != nil {
-		return err
-	}
-	return nil
 }

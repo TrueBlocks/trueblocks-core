@@ -1,5 +1,3 @@
-package cmd
-
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -16,13 +14,12 @@ package cmd
  * Parts of this file were generated with makeClass --gocmds. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
+package cmd
 
 import (
-	// EXISTING_CODE
 	"os"
 
 	"github.com/spf13/cobra"
-	// EXISTING_CODE
 )
 
 // stateCmd represents the state command
@@ -66,8 +63,6 @@ var StateOpts stateOptionsType
 func init() {
 	stateCmd.SetOut(os.Stderr)
 
-	// EXISTING_CODE
-	// EXISTING_CODE
 	stateCmd.Flags().SortFlags = false
 	stateCmd.PersistentFlags().SortFlags = false
 	stateCmd.Flags().StringSliceVarP(&StateOpts.parts, "parts", "p", nil, `control which state to export
@@ -80,47 +75,7 @@ One or more of none, some, all, balance, nonce, code, storage, deployed, accttyp
 	}
 	stateCmd.Flags().SortFlags = false
 	stateCmd.PersistentFlags().SortFlags = false
-	// EXISTING_CODE
-	// EXISTING_CODE
 
 	stateCmd.SetUsageTemplate(HelpWithNotes(notesState))
 	rootCmd.AddCommand(stateCmd)
-}
-
-func runState(cmd *cobra.Command, args []string) {
-	options := ""
-	for _, t := range StateOpts.parts {
-		options += " --parts " + t
-	}
-	if StateOpts.changes {
-		options += " --changes"
-	}
-	if StateOpts.no_zero {
-		options += " --no_zero"
-	}
-	if len(StateOpts.call) > 0 {
-		options += " --call " + StateOpts.call
-	}
-	arguments := ""
-	for _, arg := range args {
-		arguments += " " + arg
-	}
-	// EXISTING_CODE
-	// EXISTING_CODE
-	PassItOn(GetCommandPath("getState"), options, arguments)
-}
-
-// EXISTING_CODE
-// EXISTING_CODE
-
-func validateStateArgs(cmd *cobra.Command, args []string) error {
-	var err error
-	// EXISTING_CODE
-	// EXISTING_CODE
-	// validate global arguments
-	err = validateGlobalFlags(cmd, args)
-	if err != nil {
-		return err
-	}
-	return nil
 }

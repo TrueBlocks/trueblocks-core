@@ -1,5 +1,3 @@
-package cmd
-
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -16,13 +14,12 @@ package cmd
  * Parts of this file were generated with makeClass --gocmds. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
+package cmd
 
 import (
-	// EXISTING_CODE
 	"os"
 
 	"github.com/spf13/cobra"
-	// EXISTING_CODE
 )
 
 // slurpCmd represents the slurp command
@@ -59,8 +56,6 @@ var SlurpOpts slurpOptionsType
 func init() {
 	slurpCmd.SetOut(os.Stderr)
 
-	// EXISTING_CODE
-	// EXISTING_CODE
 	slurpCmd.Flags().SortFlags = false
 	slurpCmd.PersistentFlags().SortFlags = false
 	slurpCmd.Flags().StringSliceVarP(&SlurpOpts.types, "types", "t", nil, `which types of transactions to request
@@ -68,49 +63,7 @@ One or more of ext, int, token, nfts, miner, uncles, all`)
 	slurpCmd.Flags().BoolVarP(&SlurpOpts.appearances, "appearances", "p", false, "show only the blocknumer.tx_id appearances of the exported transactions")
 	slurpCmd.Flags().SortFlags = false
 	slurpCmd.PersistentFlags().SortFlags = false
-	// EXISTING_CODE
-	// EXISTING_CODE
 
 	slurpCmd.SetUsageTemplate(HelpWithNotes(notesSlurp))
 	rootCmd.AddCommand(slurpCmd)
-}
-
-func runSlurp(cmd *cobra.Command, args []string) {
-	options := ""
-	for _, t := range SlurpOpts.types {
-		options += " --types " + t
-	}
-	if SlurpOpts.appearances {
-		options += " --appearances"
-	}
-	arguments := ""
-	for _, arg := range args {
-		arguments += " " + arg
-	}
-	// EXISTING_CODE
-	// EXISTING_CODE
-	PassItOn(GetCommandPath("ethslurp"), options, arguments)
-}
-
-// EXISTING_CODE
-// EXISTING_CODE
-
-func validateSlurpArgs(cmd *cobra.Command, args []string) error {
-	var err error
-	// EXISTING_CODE
-	err = validateOneAddr(args)
-	if err != nil {
-		return err
-	}
-	err = validateEnumSlice("--types", SlurpOpts.types, "[ext|int|token|nfts|miner|uncles|all]")
-	if err != nil {
-		return err
-	}
-	// EXISTING_CODE
-	// validate global arguments
-	err = validateGlobalFlags(cmd, args)
-	if err != nil {
-		return err
-	}
-	return nil
 }

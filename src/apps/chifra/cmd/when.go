@@ -1,5 +1,3 @@
-package cmd
-
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -16,13 +14,12 @@ package cmd
  * Parts of this file were generated with makeClass --gocmds. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
+package cmd
 
 import (
-	// EXISTING_CODE
 	"os"
 
 	"github.com/spf13/cobra"
-	// EXISTING_CODE
 )
 
 // whenCmd represents the when command
@@ -62,8 +59,6 @@ var WhenOpts whenOptionsType
 func init() {
 	whenCmd.SetOut(os.Stderr)
 
-	// EXISTING_CODE
-	// EXISTING_CODE
 	whenCmd.Flags().SortFlags = false
 	whenCmd.PersistentFlags().SortFlags = false
 	whenCmd.Flags().BoolVarP(&WhenOpts.list, "list", "l", false, "export a list of the 'special' blocks")
@@ -78,55 +73,7 @@ func init() {
 	}
 	whenCmd.Flags().SortFlags = false
 	whenCmd.PersistentFlags().SortFlags = false
-	// EXISTING_CODE
-	// EXISTING_CODE
 
 	whenCmd.SetUsageTemplate(HelpWithNotes(notesWhen))
 	rootCmd.AddCommand(whenCmd)
-}
-
-func runWhen(cmd *cobra.Command, args []string) {
-	options := ""
-	if WhenOpts.list {
-		options += " --list"
-	}
-	if WhenOpts.timestamps {
-		options += " --timestamps"
-	}
-	if WhenOpts.check {
-		options += " --check"
-	}
-	if WhenOpts.fix {
-		options += " --fix"
-	}
-	if WhenOpts.count {
-		options += " --count"
-	}
-	arguments := ""
-	for _, arg := range args {
-		arguments += " " + arg
-	}
-	// EXISTING_CODE
-	// EXISTING_CODE
-	PassItOn(GetCommandPath("whenBlock"), options, arguments)
-}
-
-// EXISTING_CODE
-// EXISTING_CODE
-
-func validateWhenArgs(cmd *cobra.Command, args []string) error {
-	var err error
-	// EXISTING_CODE
-	// if !WhenOpts.list {
-	// 	if len(args) == 0 {
-	// 		return errors.New(fmtError("You must provide either a date or a block number"))
-	// 	}
-	// }
-	// EXISTING_CODE
-	// validate global arguments
-	err = validateGlobalFlags(cmd, args)
-	if err != nil {
-		return err
-	}
-	return nil
 }

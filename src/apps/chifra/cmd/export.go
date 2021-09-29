@@ -1,5 +1,3 @@
-package cmd
-
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -16,14 +14,12 @@ package cmd
  * Parts of this file were generated with makeClass --gocmds. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
+package cmd
 
 import (
-	// EXISTING_CODE
-	"fmt"
 	"os"
 
 	"github.com/spf13/cobra"
-	// EXISTING_CODE
 )
 
 // exportCmd represents the export command
@@ -87,8 +83,6 @@ var ExportOpts exportOptionsType
 func init() {
 	exportCmd.SetOut(os.Stderr)
 
-	// EXISTING_CODE
-	// EXISTING_CODE
 	exportCmd.Flags().SortFlags = false
 	exportCmd.PersistentFlags().SortFlags = false
 	exportCmd.Flags().BoolVarP(&ExportOpts.appearances, "appearances", "p", false, "export a list of appearances")
@@ -135,119 +129,7 @@ One of yearly, quarterly, monthly, weekly, daily, hourly, blockly, tx`)
 	}
 	exportCmd.Flags().SortFlags = false
 	exportCmd.PersistentFlags().SortFlags = false
-	// EXISTING_CODE
-	// EXISTING_CODE
 
 	exportCmd.SetUsageTemplate(HelpWithNotes(notesExport))
 	rootCmd.AddCommand(exportCmd)
-}
-
-func runExport(cmd *cobra.Command, args []string) {
-	options := ""
-	if ExportOpts.appearances {
-		options += " --appearances"
-	}
-	if ExportOpts.receipts {
-		options += " --receipts"
-	}
-	if ExportOpts.statements {
-		options += " --statements"
-	}
-	if ExportOpts.logs {
-		options += " --logs"
-	}
-	if ExportOpts.traces {
-		options += " --traces"
-	}
-	if ExportOpts.accounting {
-		options += " --accounting"
-	}
-	if ExportOpts.articulate {
-		options += " --articulate"
-	}
-	if ExportOpts.cache_txs {
-		options += " --cache_txs"
-	}
-	if ExportOpts.cache_traces {
-		options += " --cache_traces"
-	}
-	if ExportOpts.factory {
-		options += " --factory"
-	}
-	if ExportOpts.emitter {
-		options += " --emitter"
-	}
-	for _, t := range ExportOpts.source {
-		options += " --source " + t
-	}
-	if ExportOpts.relevant {
-		options += " --relevant"
-	}
-	if ExportOpts.count {
-		options += " --count"
-	}
-	if ExportOpts.first_record > 0 {
-		options += " --first_record " + fmt.Sprintf("%d", ExportOpts.first_record)
-	}
-	if ExportOpts.max_records > 0 {
-		options += " --max_records " + fmt.Sprintf("%d", ExportOpts.max_records)
-	}
-	if ExportOpts.clean {
-		options += " --clean"
-	}
-	if ExportOpts.freshen {
-		options += " --freshen"
-	}
-	if ExportOpts.staging {
-		options += " --staging"
-	}
-	if ExportOpts.unripe {
-		options += " --unripe"
-	}
-	if len(ExportOpts.load) > 0 {
-		options += " --load " + ExportOpts.load
-	}
-	if ExportOpts.reversed {
-		options += " --reversed"
-	}
-	if ExportOpts.by_date {
-		options += " --by_date"
-	}
-	if len(ExportOpts.summarize_by) > 0 {
-		options += " --summarize_by " + ExportOpts.summarize_by
-	}
-	if ExportOpts.skip_ddos {
-		options += " --skip_ddos"
-	}
-	if ExportOpts.max_traces > 0 {
-		options += " --max_traces " + fmt.Sprintf("%d", ExportOpts.max_traces)
-	}
-	if ExportOpts.first_block > 0 {
-		options += " --first_block " + fmt.Sprintf("%d", ExportOpts.first_block)
-	}
-	if ExportOpts.last_block > 0 {
-		options += " --last_block " + fmt.Sprintf("%d", ExportOpts.last_block)
-	}
-	arguments := ""
-	for _, arg := range args {
-		arguments += " " + arg
-	}
-	// EXISTING_CODE
-	// EXISTING_CODE
-	PassItOn(GetCommandPath("acctExport"), options, arguments)
-}
-
-// EXISTING_CODE
-// EXISTING_CODE
-
-func validateExportArgs(cmd *cobra.Command, args []string) error {
-	var err error
-	// EXISTING_CODE
-	// EXISTING_CODE
-	// validate global arguments
-	err = validateGlobalFlags(cmd, args)
-	if err != nil {
-		return err
-	}
-	return nil
 }

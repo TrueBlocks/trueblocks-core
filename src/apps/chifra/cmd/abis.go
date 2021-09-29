@@ -1,5 +1,3 @@
-package cmd
-
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -16,17 +14,12 @@ package cmd
  * Parts of this file were generated with makeClass --gocmds. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
+package cmd
 
 import (
-	// EXISTING_CODE
-	"errors"
 	"os"
-	"strconv"
-	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/utils"
 	"github.com/spf13/cobra"
-	// EXISTING_CODE
 )
 
 // abisCmd represents the abis command
@@ -66,8 +59,6 @@ var AbisOpts abisOptionsType
 func init() {
 	abisCmd.SetOut(os.Stderr)
 
-	// EXISTING_CODE
-	// EXISTING_CODE
 	abisCmd.Flags().SortFlags = false
 	abisCmd.PersistentFlags().SortFlags = false
 	abisCmd.Flags().BoolVarP(&AbisOpts.known, "known", "k", false, "load common 'known' ABIs from cache")
@@ -81,84 +72,7 @@ func init() {
 	}
 	abisCmd.Flags().SortFlags = false
 	abisCmd.PersistentFlags().SortFlags = false
-	// EXISTING_CODE
-	// EXISTING_CODE
 
 	abisCmd.SetUsageTemplate(HelpWithNotes(notesAbis))
 	rootCmd.AddCommand(abisCmd)
-}
-
-func runAbis(cmd *cobra.Command, args []string) {
-	options := ""
-	if AbisOpts.known {
-		options += " --known"
-	}
-	if len(AbisOpts.sol) > 0 {
-		options += " --sol " + AbisOpts.sol
-	}
-	for _, t := range AbisOpts.find {
-		options += " --find " + t
-	}
-	if AbisOpts.source {
-		options += " --source"
-	}
-	if AbisOpts.classes {
-		options += " --classes"
-	}
-	arguments := ""
-	for _, arg := range args {
-		arguments += " " + arg
-	}
-	// EXISTING_CODE
-	// EXISTING_CODE
-	PassItOn(GetCommandPath("grabABI"), options, arguments)
-}
-
-// EXISTING_CODE
-func makeErrorEx(function, msg string, values []string) error {
-	var ret string
-	if len(function) > 0 {
-		ret = function + ": "
-	}
-	ret += msg
-	for index, val := range values {
-		rep := "{" + strconv.FormatInt(int64(index), 10) + "}"
-		ret = strings.Replace(ret, rep, val, -1)
-	}
-	return errors.New(fmtError(ret))
-}
-func makeError(msg string, values ...string) error {
-	return makeErrorEx("", msg, values)
-}
-
-// EXISTING_CODE
-
-func validateAbisArgs(cmd *cobra.Command, args []string) error {
-	var err error
-	// EXISTING_CODE
-	if AbisOpts.classes {
-		return makeError("the '{0}' option is not implemented", "--classes")
-	}
-
-	if len(AbisOpts.sol) > 0 {
-		cleaned := "./" + strings.Replace(AbisOpts.sol, ".sol", "", 1) + ".sol"
-		if !utils.FileExists(cleaned) {
-			return makeError("file not found at {0}", cleaned)
-		}
-		return nil
-	}
-
-	if len(AbisOpts.find) == 0 && !AbisOpts.known {
-		err = validateOneAddr(args)
-		if err != nil {
-			return err
-		}
-	}
-	// EXISTING_CODE
-	// validate global arguments
-	err = validateGlobalFlags(cmd, args)
-	if err != nil {
-		return err
-	}
-	return nil
 }

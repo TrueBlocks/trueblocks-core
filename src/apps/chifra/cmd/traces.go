@@ -1,5 +1,3 @@
-package cmd
-
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -16,14 +14,12 @@ package cmd
  * Parts of this file were generated with makeClass --gocmds. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
+package cmd
 
 import (
-	// EXISTING_CODE
-	"fmt"
 	"os"
 
 	"github.com/spf13/cobra"
-	// EXISTING_CODE
 )
 
 // tracesCmd represents the traces command
@@ -69,8 +65,6 @@ var TracesOpts tracesOptionsType
 func init() {
 	tracesCmd.SetOut(os.Stderr)
 
-	// EXISTING_CODE
-	// EXISTING_CODE
 	tracesCmd.Flags().SortFlags = false
 	tracesCmd.PersistentFlags().SortFlags = false
 	tracesCmd.Flags().BoolVarP(&TracesOpts.articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
@@ -85,53 +79,7 @@ func init() {
 	}
 	tracesCmd.Flags().SortFlags = false
 	tracesCmd.PersistentFlags().SortFlags = false
-	// EXISTING_CODE
-	// EXISTING_CODE
 
 	tracesCmd.SetUsageTemplate(HelpWithNotes(notesTraces))
 	rootCmd.AddCommand(tracesCmd)
-}
-
-func runTraces(cmd *cobra.Command, args []string) {
-	options := ""
-	if TracesOpts.articulate {
-		options += " --articulate"
-	}
-	if len(TracesOpts.filter) > 0 {
-		options += " --filter " + TracesOpts.filter
-	}
-	if TracesOpts.statediff {
-		options += " --statediff"
-	}
-	if TracesOpts.count {
-		options += " --count"
-	}
-	if TracesOpts.skip_ddos {
-		options += " --skip_ddos"
-	}
-	if TracesOpts.max > 0 {
-		options += " --max " + fmt.Sprintf("%d", TracesOpts.max)
-	}
-	arguments := ""
-	for _, arg := range args {
-		arguments += " " + arg
-	}
-	// EXISTING_CODE
-	// EXISTING_CODE
-	PassItOn(GetCommandPath("getTraces"), options, arguments)
-}
-
-// EXISTING_CODE
-// EXISTING_CODE
-
-func validateTracesArgs(cmd *cobra.Command, args []string) error {
-	var err error
-	// EXISTING_CODE
-	// EXISTING_CODE
-	// validate global arguments
-	err = validateGlobalFlags(cmd, args)
-	if err != nil {
-		return err
-	}
-	return nil
 }
