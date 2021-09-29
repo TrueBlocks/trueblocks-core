@@ -42,6 +42,8 @@ bool COptions::handle_lint(void) {
 
 //--------------------------------------------------------------------------------
 bool lintFiles(const string_q& path, void* data) {
+    return false;
+#if 0
     if (endsWith(path, "/")) {
         forEveryFileInFolder(path + "*", lintFiles, data);
 
@@ -77,7 +79,7 @@ bool lintFiles(const string_q& path, void* data) {
                 size_t lints = 0;
                 for (auto line : lines) {
                     if (!startsWith(line, "Linting")) {
-                        line = substitute(line, getCWD(), "../src/");
+                        line = substitute(line, getCWD(), should use getSource Path -> "../s rc/"); 
                         CStringArray parts;
                         explode(parts, line, ':');
                         if (parts.size() == 3) {
@@ -109,4 +111,5 @@ bool lintFiles(const string_q& path, void* data) {
     }
 
     return !shouldQuit();
+#endif
 }

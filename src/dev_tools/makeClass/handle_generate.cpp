@@ -304,7 +304,7 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
     replaceAll(headSource, "[{NAMESPACE2}]", "}  // namespace qblocks\n");
     replaceAll(headSource, "public:\n\n  public:", "public:");
     expandTabbys(headSource);
-    counter.nProcessed += writeTheCode(codewrite_t(headerFile, headSource));
+    counter.nProcessed += writeCodeIn(codewrite_t(headerFile, headSource));
 
     //------------------------------------------------------------------------------------------------
     string_q srcFile = classDef.outputPath(".cpp");
@@ -347,7 +347,7 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
     replaceAll(srcSource, "[{NAMESPACE2}]", "}  // namespace qblocks\n");
     replaceAll(srcSource, "[{FN}]", classDef.short_fn);
     expandTabbys(srcSource);
-    counter.nProcessed += writeTheCode(codewrite_t(srcFile, srcSource));
+    counter.nProcessed += writeCodeIn(codewrite_t(srcFile, srcSource));
 
     if (tsx && classDef.tsx)
         handle_tsx_type(classDef);
@@ -713,95 +713,6 @@ string_q convertTypes(const string_q& inStr) {
     replaceAll(outStr, "ubigint_t", "biguint_t");
 
     return outStr;
-}
-
-//------------------------------------------------------------------------------------------------------------
-bool writeTheCode(const codewrite_t& cw) {
-    string_q codeOut = cw.codeOutIn;
-    string_q orig;
-    asciiFileToString(cw.fileName, orig);
-    string_q existingCode = substitute(orig, "//EXISTING_CODE", "// EXISTING_CODE");
-
-    string_q checkCode = existingCode;
-    uint64_t cnt = 0;
-    while (contains(checkCode, "// EXISTING_CODE")) {
-        replace(checkCode, "// EXISTING_CODE", "");
-        cnt++;
-    }
-    if ((cnt % 2))
-        codeOut = "#error \"Uneven number of EXISTING_CODE blocks in the file.\"\n" + codeOut;
-    if (cw.nSpaces) {
-        replaceAll(existingCode, string_q(cw.nSpaces, ' '), "\t");
-        replaceAll(codeOut, string_q(cw.nSpaces, ' '), "\t");
-    }
-
-    string_q tabs;
-    int nTabs = 6;
-    while (nTabs >= 0) {
-        tabs = string_q((size_t)nTabs, '\t');
-        nTabs--;
-        //--------------------------------------------------------------------------------------
-        while (contains(existingCode, tabs + "// EXISTING_CODE")) {
-            replace(existingCode, tabs + "// EXISTING_CODE", "<code>");
-            replace(existingCode, tabs + "// EXISTING_CODE", "</code>");
-        }
-        while (contains(existingCode, "</code>")) {
-            string_q snip = snagFieldClear(existingCode, "code");
-            bool dub = endsWith(snip, "\n\n");
-            string_q snipit = trim(snip, '\n');
-            string_q r1 = tabs + "// EXISTING_CODE\n" + tabs + "// EXISTING_CODE";
-            string_q r2 = tabs + "// EXISTING_CODE\n" + snipit + "\n" + (dub ? "\n" : "") + tabs + "// EXISTING_CODE";
-            replace(codeOut, r1, r2);
-        }
-
-        replaceAll(codeOut, "// EXISTING_CODE\n\n" + tabs + "// EXISTING_CODE",
-                   "// EXISTING_CODE\n" + tabs + "// EXISTING_CODE");
-        //--------------------------------------------------------------------------------------
-    }
-
-    // One final cleanup
-    replaceAll(codeOut, "\n\n}", "\n}");
-    replaceAll(codeOut, "\n\n\n", "\n\n");
-    if (cw.stripEOFNL) {
-        if (endsWith(codeOut, "\n"))
-            replaceReverse(codeOut, "\n", "");
-    }
-
-    if (cw.nSpaces)
-        replaceAll(codeOut, "\t", string_q(cw.nSpaces, ' '));
-    replaceAll(codeOut, "[PTAB]", "\\t");
-
-    if (contains(codeOut, "virtual") || contains(codeOut, "override")) {
-        replace(codeOut, "~C", "virtual ~C");
-        replace(codeOut, "~Q", "virtual ~Q");
-        replace(codeOut, "::virtual ~C", "::~C");
-        replace(codeOut, "::virtual ~Q", "::~Q");
-    }
-
-    bool testing = isTestMode();
-    if (cw.force || orig != codeOut) {
-        // Do the actual writing of the data only if we're not testing or the user has told us not to
-        if (cw.force || !testing) {
-            LOG_INFO("Writing: ", cTeal, substitute(cw.fileName, getCWD(), "$TEST/"), cOff);
-            stringToAsciiFile(cw.fileName, codeOut);
-        } else {
-            LOG8("Not writing: ", cw.fileName);
-        }
-        // We return 'true' if we WOULD HAVE have written the file (even if we didn't).
-        return true;
-    }
-
-    // We return 'false' if we would NOT have written the file (not if we actually did).
-    return false;
-}
-
-//------------------------------------------------------------------------------------------------------------
-void expandTabbys(string_q& strOut) {
-    replaceAll(strOut, "`````", string_q(5, '\t'));
-    replaceAll(strOut, "````", string_q(4, '\t'));
-    replaceAll(strOut, "```", string_q(3, '\t'));
-    replaceAll(strOut, "``", string_q(2, '\t'));
-    replaceAll(strOut, "`", string_q(1, '\t'));
 }
 
 //------------------------------------------------------------------------------------------------------------

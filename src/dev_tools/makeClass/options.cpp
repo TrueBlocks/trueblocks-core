@@ -291,8 +291,3 @@ bool listClasses(const string_q& path, void* data) {
     }
     return true;
 }
-
-//--------------------------------------------------------------------------------
-string_q getTemplatePath(const string_q& part) {
-    return getConfigPath("makeClass/" + part);
-}

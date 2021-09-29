@@ -132,7 +132,6 @@ class COptions : public COptionsBase {
     void generate_positional(const CCommandOption& option);
     void generate_deprecated(const CCommandOption& option);
 
-    bool writeCode(const string_q& fn);
     void writeOpenApiFile(void);
 
     string_q getProductions(const CCommandOption& ep);
@@ -170,10 +169,10 @@ inline string_q short3(const string_q& str) {
 
 //------------------------------------------------------------------------------------------------------------
 extern void doReplace(string_q& str, const string_q& type, const string_q& rep, const string_q& spaces);
+extern bool writeCodeIn(const codewrite_t& cw);
+extern bool writeCodeOut(COptions* opts, const string_q& fn);
 extern bool writeIfDifferent(const string_q& path, const string_q& code);
 extern bool writeIfDifferent(const string_q& path, const string_q& code, const time_q& now);
-extern bool writeTheCode(const codewrite_t& cw);
-extern string_q getTemplatePath(const string_q& part);
 
 //---------------------------------------------------------------------------------------------------
 extern const char* STR_YAML_FRONTMATTER;
@@ -181,3 +180,13 @@ extern const char* STR_YAML_FRONTMATTER;
 #define cmdCount nVisited
 
 #define makeError(a, b) usage(substitute(usageErrs[(a)], "{0}", (b)))
+#define getSourcePath2(a) (string_q("../src/") + (a))
+#define endpointFile getSourcePath2("cmd-line-endpoints.csv")
+#define optionsFile getSourcePath2("cmd-line-options.csv")
+#define explorerPath string_q("/Users/jrush/Development/trueblocks-explorer/")
+inline string_q getSourcePath(const string_q& part) {
+    return "";
+}
+inline string_q getTemplatePath(const string_q& part) {
+    return getConfigPath("makeClass/" + part);
+}

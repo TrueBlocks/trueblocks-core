@@ -29,7 +29,7 @@ bool COptions::handle_gocmds(void) {
     counter = CCounter();  // reset
 
     CCommandOptionArray endpointArray;
-    forEveryLineInAsciiFile("../src/cmd-line-endpoints.csv", parseCommandData, &endpointArray);
+    forEveryLineInAsciiFile(endpointFile, parseCommandData, &endpointArray);
 
     for (auto ep : endpointArray) {
         if (!ep.is_visible)
@@ -69,11 +69,11 @@ bool COptions::handle_gocmds(void) {
             imports += "\t\"fmt\"\n";
         replaceAll(source, "[{IMPORTS}]", imports);
 
-        string_q fn = "../src/apps/chifra/cmd/" + ep.api_route + ".go";
+        string_q fn = getSourcePath2("apps/chifra/cmd/" + ep.api_route + ".go");
         codewrite_t cw(fn, source);
         cw.nSpaces = 0;
         cw.stripEOFNL = false;
-        counter.nProcessed += writeTheCode(cw);
+        counter.nProcessed += writeCodeIn(cw);
         counter.nVisited++;
     }
 

@@ -29,7 +29,7 @@ bool visitReadme(const string_q& templatePath, void* data) {
         string_q folder = parts[4];
         string_q tool = substitute(parts[5], ".md", "");
         string_q docPath = getDocsPathReadmes(folder + "/" + tool + "/README.md");
-        string_q srcPath = "../src/" + folder + "/" + tool + "/README.md";
+        string_q srcPath = getSourcePath2(folder + "/" + tool + "/README.md");
 
         string_q source = asciiFileToString(templatePath);
         string_q cmd = tool;
@@ -74,39 +74,6 @@ bool visitReadme(const string_q& templatePath, void* data) {
         opts->counter.nVisited++;
     }
     return true;
-}
-
-//------------------------------------------------------------------------------------------------------------
-bool writeIfDifferent(const string_q& outFn, const string_q& codeIn, const time_q& now) {
-    string_q code = substitute(codeIn, "date: $DATE\n", "");
-    string_q existingIn = asciiFileToString(outFn);
-    CStringArray lines;
-    explode(lines, existingIn, '\n', false);
-    ostringstream existing;
-    for (auto line : lines) {
-        if (!startsWith(line, "date: ")) {
-            existing << line << endl;
-        }
-    }
-
-    if (existing.str() != code) {
-        string_q out = substitute(codeIn, "$DATE", now.Format(FMT_EXPORT));
-        stringToAsciiFile(outFn, out);
-        cerr << cGreen << "\tProcessed " << cOff << outFn << endl;
-        return true;
-    }
-    return false;
-}
-
-//------------------------------------------------------------------------------------------------------------
-bool writeIfDifferent(const string_q& outFn, const string_q& code) {
-    string_q existing = asciiFileToString(outFn);
-    if (existing != code) {
-        stringToAsciiFile(outFn, code);
-        cerr << cGreen << "\tProcessed " << cOff << outFn << endl;
-        return true;
-    }
-    return false;
 }
 
 //------------------------------------------------------------------------------------------------------------

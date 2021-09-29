@@ -170,8 +170,6 @@ extern void registerQuitHandler(QUITHANDLER qh);
 extern void cleanFileLocks(void);
 
 //----------------------------------------------------------------------
-extern string_q getTemplatePath(const string_q& part);
-extern string_q getSourcePath(const string_q& part);
 class codewrite_t {
   public:
     string_q fileName, codeOutIn;

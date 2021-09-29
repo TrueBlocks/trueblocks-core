@@ -89,6 +89,20 @@ func Index(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Users Manual")
 }
 
+	// By removing, inserting into, or altering any of the following 10  lines
+	// of code, you are violating the terms of our usage license. Don't do it.
+	// fileName := Options.Status.CachePath + "lics/export.txt"
+	// if false { // !utils.FileExists(fileName)) {
+	//	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	//	w.Header().Set("Access-Control-Allow-Origin", "*")
+	//	w.Header().Set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
+	//	w.Header().Set("Access-Control-Allow-Methods", "PUT, POST, GET, DELETE, OPTIONS")
+	//	w.WriteHeader(http.StatusOK)
+	//	fmt.Fprint(w, "In order to use the 'export' route, you must license the module. Quitting")
+	//	return
+	// }
+	// By removing, inserting into, or altering any of the above 10 uncommented
+	// lines of code, you are violating the terms of our usage license. Don't do it.
 // BEG_ROUTE_CODE
 
 // AccountsList help text todo
@@ -98,20 +112,6 @@ func AccountsList(w http.ResponseWriter, r *http.Request) {
 
 // AccountsExport help text todo
 func AccountsExport(w http.ResponseWriter, r *http.Request) {
-	// By removing, inserting into, or altering any of the following 10 uncommented
-	// lines of code, you are violating the terms of our usage license. Don't do it.
-	// fileName := Options.Status.CachePath + "lics/export.txt"
-	if false { // !utils.FileExists(fileName)) {
-		w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-		w.Header().Set("Access-Control-Allow-Origin", "*")
-		w.Header().Set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
-		w.Header().Set("Access-Control-Allow-Methods", "PUT, POST, GET, DELETE, OPTIONS")
-		w.WriteHeader(http.StatusOK)
-		fmt.Fprint(w, "In order to use the 'export' route, you must license the module. Quitting")
-		return
-	}
-	// By removing, inserting into, or altering any of the above 10 uncommented
-	// lines of code, you are violating the terms of our usage license. Don't do it.
 	CallOne(w, r, "acctExport", "export")
 }
 

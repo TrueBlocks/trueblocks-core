@@ -22,7 +22,6 @@ extern void loadRoutes(const string_q& fn);
 
 //------------------------------------------------------------------------------------------------------------
 static CCommandOptionArray routes;
-#define explorerPath string_q("/Users/jrush/Development/trueblocks-explorer/")
 
 //------------------------------------------------------------------------------------------------------------
 bool COptions::handle_tsx(void) {
@@ -80,7 +79,7 @@ bool COptions::handle_tsx(void) {
     jsLocationStream << endl;
 
     string_q routesTSX = explorerPath + "src/ui/Routes.tsx";
-    writeCode(routesTSX);
+    writeCodeOut(this, routesTSX);
 
     return true;
 }

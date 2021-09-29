@@ -45,9 +45,7 @@ bool COptions::handle_options(void) {
     counter = CCounter();  // reset
 
     // Look for local file first
-    string_q cmdFile = "./cmd-line-options.csv";
-    if (!fileExists(cmdFile))
-        cmdFile = "../src/cmd-line-options.csv";
+    string_q cmdFile = getSourcePath2("cmd-line-options.csv");
 
     if (!fileExists(cmdFile))
         return usage("Could not find cmd-line-options.csv file at " + cmdFile);
@@ -193,11 +191,11 @@ bool COptions::handle_options(void) {
                 LOG_WARN(warning);
 
         } else {
-            string_q fn = "../src/" + tool.first + "/options.cpp";
+            string_q fn = getSourcePath2(tool.first + "/options.cpp");
             if (tool.first == "/./")
                 fn = "./options.cpp";
-            writeCode(substitute(fn, ".cpp", ".h"));
-            writeCode(fn);
+            writeCodeOut(this, substitute(fn, ".cpp", ".h"));
+            writeCodeOut(this, fn);
         }
 
         clearStreams();
@@ -209,24 +207,6 @@ bool COptions::handle_options(void) {
     writeOpenApiFile();
 
     return true;
-}
-
-//---------------------------------------------------------------------------------------------------
-string_q replaceCode(const string_q& orig, const string_q& which, const string_q& new_code) {
-    string_q converted = orig;
-    converted = substitute(converted, "// BEG_" + which, "// BEG_" + which + "\n[{NEW_CODE}]\n<remove>");
-    converted = substitute(converted, "\n// END_" + which, "</remove>\nX// END_" + which);
-    converted = substitute(converted, "\n\t// END_" + which, "</remove>\nY// END_" + which);
-    converted = substitute(converted, "\n    // END_" + which, "</remove>\n+// END_" + which);
-    converted = substitute(converted, "\n        // END_" + which, "</remove>\n-// END_" + which);
-    converted = substitute(converted, "\n            // END_" + which, "</remove>\n-// END_" + which);
-    snagFieldClear(converted, "remove");
-    replace(converted, "[{NEW_CODE}]\n\n", new_code);
-    replaceAll(converted, "X//", "//");
-    replaceAll(converted, "Y//", "\t//");
-    replaceAll(converted, "+//", "    //");
-    replaceAll(converted, "-//", "            //");
-    return converted;
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -464,79 +444,6 @@ void COptions::generate_deprecated(const CCommandOption& option) {
     if (option.isDeprecated) {
         autoStream << option.Format(STR_AUTO_DEPRECATED) << endl;
     }
-}
-//---------------------------------------------------------------------------------------------------
-bool COptions::writeCode(const string_q& fn) {
-    if (contains(fn, "/stub/") || contains(fn, "/chifra/"))
-        return true;
-
-    string_q orig = asciiFileToString(fn);
-    string_q converted = orig;
-    if (endsWith(fn, ".cpp")) {
-        CStringArray tokens = {"_CODE_AUTO",  "_CODE_OPTIONS", "_CODE_LOCAL_INIT", "_CODE_INIT",
-                               "_CODE_NOTES", "ERROR_STRINGS", "_DEBUG_DISPLAY"};
-
-        for (auto tok : tokens)
-            if (!contains(orig, tok) && !contains(orig, "_CHIFRA"))
-                LOG_WARN(fn, " does not contain token ", tok);
-
-        converted = replaceCode(converted, "CODE_AUTO", autoStream.str());
-        converted = replaceCode(converted, "CODE_OPTIONS", optionStream.str());
-        converted = replaceCode(converted, "CODE_LOCAL_INIT", localStream.str());
-        converted = replaceCode(converted, "CODE_INIT", initStream.str());
-        converted = replaceCode(converted, "CODE_NOTES", notesStream.str());
-        converted = replaceCode(converted, "ERROR_STRINGS", errorStrStream.str());
-        converted = replaceCode(converted, "DEBUG_DISPLAY", debugStream.str());
-        converted = replaceCode(converted, "CODE_CHIFRA_CMDMAP", chifraCmdStream.str());
-        converted = replaceCode(converted, "CODE_CHIFRA_HELP", chifraHelpStream.str());
-        converted = replaceCode(converted, "CODE_CHIFRA_PAIRMAP", pairMapStream.str());
-        replaceAll(converted, "    // clang-format on\n    // clang-format off\n", "");
-
-    } else if (endsWith(fn, ".go")) {
-        converted = replaceCode(converted, "ROUTE_CODE", goCallStream.str());
-        converted = replaceCode(converted, "ROUTE_ITEMS", goRouteStream.str());
-
-    } else if (endsWith(fn, ".yaml")) {
-        string_q components = trim(asciiFileToString(getDocsPathTemplates("api/components.txt")), '\n');
-        string_q descr = asciiFileToString(getDocsPathTemplates("api/description.txt"));
-        replaceAll(descr, "~~~~", "    ");
-
-        converted = asciiFileToString(getTemplatePath("blank.yaml"));
-        replace(converted, "[{TAGS}]", apiTagStream.str());
-        replace(converted, "[{PATHS}]", apiPathStream.str());
-        replace(converted, "[{DESCRIPTION}]", descr);
-        replace(converted, "[{COMPONENTS}]", components);
-        replace(converted, "[{VERSION}]", getVersionStr(false /* product */, false /* git_hash */));
-
-    } else if (endsWith(fn, ".h")) {
-        CStringArray tokens = {"ERROR_DEFINES", "_CODE_DECLARE"};
-        for (auto tok : tokens)
-            if (!contains(orig, tok))
-                LOG_WARN(fn, " does not contain token ", tok);
-        converted = replaceCode(converted, "CODE_DECLARE", headerStream.str());
-        converted = replaceCode(converted, "ERROR_DEFINES", errorDefStream.str());
-
-    } else if (endsWith(fn, "Routes.tsx")) {
-        converted = replaceCode(converted, "CODE_LOCATIONS", jsLocationStream.str());
-        // converted = replaceCode(converted, "CODE_TEMPLATES", jsTemplateStream.str());
-        converted = replaceCode(converted, "CODE_ROUTES", jsRouteStream.str());
-        converted = replaceCode(converted, "CODE_KEYS", jsHotkeyStream.str());
-
-    } else {
-        cerr << "Unkown file type for " << fn << endl;
-    }
-
-    cerr << bBlue << "Processing " << cOff << fn << " ";
-    counter.nVisited++;
-    if (converted != orig) {
-        cerr << cGreen << "wrote " << converted.size() << " bytes..." << cOff << endl;
-        stringToAsciiFile(fn, converted);
-        counter.nProcessed++;
-        return true;
-    }
-    cerr << cTeal << "no changes..." << cOff << "\r";
-    cerr.flush();
-    return false;
 }
 
 //---------------------------------------------------------------------------------------------------
