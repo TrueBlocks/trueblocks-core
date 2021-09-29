@@ -1,7 +1,7 @@
 chifra status  --terse
 client: Client version (testing, archive, tracing)
 --TIME-- trueblocks: GHC-TrueBlocks//vers-alpha--git-hash---git-ts- (eskey, no pinkey)
---TIME-- getConfigPath: --paths--
+--TIME-- configPath: --paths--
 --TIME-- cachePath: --paths--
 --TIME-- indexPath: --paths--
 --TIME-- rpcProvider: --providers--

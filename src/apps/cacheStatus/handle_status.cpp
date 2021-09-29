@@ -590,7 +590,7 @@ string_q pathName(const string_q& str, const string_q& path) {
 const char* STR_TERSE_REPORT =
     "client: [{CLIENT_VERSION}][{MODES1}]\n"
     "[{TIME}] trueblocks: [{TRUEBLOCKS_VERSION}][{MODES2}]\n"
-    "[{TIME}] getConfigPath: [{CONFIG_PATH}]\n"
+    "[{TIME}] configPath: [{CONFIG_PATH}]\n"
     "[{TIME}] cachePath: [{CACHE_PATH}]\n"
     "[{TIME}] indexPath: [{INDEX_PATH}]\n"
     "[{TIME}] rpcProvider: [{RPC_PROVIDER}]";
