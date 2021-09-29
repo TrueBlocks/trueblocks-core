@@ -30,9 +30,9 @@ int main(int argc, const char* argv[]) {
         if (once)
             cout << exportPreamble(expContext().fmtMap["header"], "CPinnedChunk");
 
+        string url = "https://etherscan.io/";
         for (auto term : options.terms) {
             string_q lower = toLower(term);
-            string url = "https://etherscan.io/";
             if (isAddress(lower)) {
                 url += "address/" + lower;
 
@@ -65,22 +65,22 @@ int main(int argc, const char* argv[]) {
                     url += "block/" + lower;
                 }
             }
-
-            if (options.local) {
-                string_q base =
-                    getGlobalConfig("fireStorm")->getConfigStr("settings", "baseURL", "http://localhost:1234/");
-                if (!endsWith(base, "/"))
-                    base += "/";
-                replace(url, "https://etherscan.io/block/", base + "explorer/blocks/");
-                replace(url, "https://etherscan.io/tx/", base + "explorer/transactions/");
-                replace(url, "https://etherscan.io/address/", base + "dashboard/accounts/");
-                replace(url, "https://www.4byte.directory/signatures/?bytes4_signature=", base + "/");
-            }
-
-            cerr << "Opening " << url << endl;
-            if (!isTestMode())
-                doCommand("open " + url);
         }
+
+        if (options.local) {
+            string_q base = getGlobalConfig("fireStorm")->getConfigStr("settings", "baseURL", "http://localhost:1234/");
+            if (!endsWith(base, "/"))
+                base += "/";
+            replace(url, "https://etherscan.io/block/", base + "explorer/blocks/");
+            replace(url, "https://etherscan.io/tx/", base + "explorer/transactions/");
+            replace(url, "https://etherscan.io/address/", base + "dashboard/accounts/");
+            replace(url, "https://www.4byte.directory/signatures/?bytes4_signature=", base + "/");
+            replace(url, "https://etherscan.io/", base + "explorer/");
+        }
+
+        cerr << "Opening " << url << endl;
+        if (!isTestMode())
+            doCommand("open " + url);
         once = false;
     }
 

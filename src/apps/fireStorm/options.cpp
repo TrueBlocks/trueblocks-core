@@ -81,11 +81,12 @@ bool COptions::parseArguments(string_q& command) {
             "etherscan", "etherchain", "bloxy",     "bitquery", "ethplorer",
             "tokenview", "blockshain", "anyblocks", "explorer",
         };
+        ostringstream addendum;
+        for (auto ex : exclusions)
+            addendum << "+-" << ex << " ";
         for (auto term : terms) {
             ostringstream query;
-            query << "open " << STR_GOOGLE << term;
-            for (auto ex : exclusions)
-                query << "+-" << ex;
+            query << "open " << STR_GOOGLE << term << addendum.str();
             if (!system(query.str().c_str()))
                 return false;
         }

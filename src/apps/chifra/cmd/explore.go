@@ -94,6 +94,9 @@ func runExplore(cmd *cobra.Command, args []string) {
 func validateExploreArgs(cmd *cobra.Command, args []string) error {
 	var err error
 	// EXISTING_CODE
+	if len(args) == 0 {
+		return makeError("You must provide at least one search term")
+	}
 	// EXISTING_CODE
 	// validate global arguments
 	err = validateGlobalFlags(cmd, args)

@@ -108,6 +108,21 @@ func runQuotes(cmd *cobra.Command, args []string) {
 func validateQuotesArgs(cmd *cobra.Command, args []string) error {
 	var err error
 	// EXISTING_CODE
+	if !QuotesOpts.freshen &&
+		len(QuotesOpts.period) == 0 &&
+		len(QuotesOpts.pair) == 0 &&
+		len(QuotesOpts.feed) == 0 &&
+		len(RootOpts.fmt) == 0 {
+		return makeError("You must provide at least one command line option")
+	}
+	err = validateEnum("--period", QuotesOpts.period, "[5|15|30|60|120|240|1440|10080|hourly|daily|weekly]")
+	if err != nil {
+		return err
+	}
+	err = validateEnum("--types", QuotesOpts.feed, "[poloniex|maker|tellor]")
+	if err != nil {
+		return err
+	}
 	// EXISTING_CODE
 	// validate global arguments
 	err = validateGlobalFlags(cmd, args)
