@@ -183,7 +183,7 @@ extern const char* STR_YAML_FRONTMATTER;
 #define makeError(a, b) usage(substitute(usageErrs[(a)], "{0}", (b)))
 
 //---------------------------------------------------------------------------------------------------
-#define getSourcePath(a) (string_q("../src/") + (a))
+extern string_q getSourcePath(const string_q& part);
 inline string_q getTemplatePath(const string_q& part) {
     return getSourcePath("dev_tools/makeClass/templates/" + part);
 }

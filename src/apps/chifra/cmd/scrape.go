@@ -61,7 +61,7 @@ func init() {
 	scrapeCmd.Flags().Uint64VarP(&ScrapeOpts.n_blocks, "n_blocks", "n", 0, "maximum number of blocks to process (default 2000)")
 	scrapeCmd.Flags().Uint64VarP(&ScrapeOpts.n_block_procs, "n_block_procs", "b", 0, "number of concurrent block channels for blaze (hidden)")
 	scrapeCmd.Flags().Uint64VarP(&ScrapeOpts.n_addr_procs, "n_addr_procs", "a", 0, "number of concurrent address channels for blaze (hidden)")
-	if utils.IsTestMode() {
+	if !utils.IsTestMode() {
 		scrapeCmd.Flags().MarkHidden("n_block_procs")
 		scrapeCmd.Flags().MarkHidden("n_addr_procs")
 	}

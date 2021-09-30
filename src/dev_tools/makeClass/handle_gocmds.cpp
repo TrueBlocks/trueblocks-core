@@ -209,7 +209,7 @@ string_q get_hidden(const CCommandOption& cmd) {
     }
 
     ostringstream ret;
-    ret << "\tif utils.IsTestMode() {" << endl;
+    ret << "\tif !utils.IsTestMode() {" << endl;
     ret << os.str();
     ret << "\t}" << endl;
     return ret.str();

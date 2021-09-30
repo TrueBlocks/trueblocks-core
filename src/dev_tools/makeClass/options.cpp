@@ -291,3 +291,19 @@ bool listClasses(const string_q& path, void* data) {
     }
     return true;
 }
+
+//--------------------------------------------------------------------------------
+#define getSourcePathA(a) (string_q("../src/") + (a))
+string_q getSourcePath(const string_q& rest) {
+    string_q cwd = getCWD();
+    CStringArray parts;
+    explode(parts, cwd, '/');
+    string_q ret;
+    for (auto part : parts) {
+        if (part != "trueblocks-core")
+            ret += ("/" + part);
+        else
+            return ret + "/trueblocks-core/src/" + rest;
+    }
+    return getSourcePathA(rest);
+}

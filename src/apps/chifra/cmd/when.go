@@ -67,7 +67,7 @@ func init() {
 	whenCmd.Flags().BoolVarP(&WhenOpts.check, "check", "c", false, "available only with --timestamps, checks the validity of the timestamp data (hidden)")
 	whenCmd.Flags().BoolVarP(&WhenOpts.fix, "fix", "f", false, "available only with --timestamps, fixes incorrect timestamps if any (hidden)")
 	whenCmd.Flags().BoolVarP(&WhenOpts.count, "count", "u", false, "available only with --timestamps, returns the number of timestamps in the cache (hidden)")
-	if utils.IsTestMode() {
+	if !utils.IsTestMode() {
 		whenCmd.Flags().MarkHidden("check")
 		whenCmd.Flags().MarkHidden("fix")
 		whenCmd.Flags().MarkHidden("count")

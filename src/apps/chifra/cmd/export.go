@@ -115,7 +115,7 @@ One of yearly, quarterly, monthly, weekly, daily, hourly, blockly, tx`)
 	exportCmd.Flags().Uint64VarP(&ExportOpts.max_traces, "max_traces", "m", 0, "if --skip_ddos is on, this many traces defines what a ddos transaction|is (default = 250) (hidden)")
 	exportCmd.Flags().Uint64VarP(&ExportOpts.first_block, "first_block", "F", 0, "first block to process (inclusive) (hidden)")
 	exportCmd.Flags().Uint64VarP(&ExportOpts.last_block, "last_block", "L", 0, "last block to process (inclusive) (hidden)")
-	if utils.IsTestMode() {
+	if !utils.IsTestMode() {
 		exportCmd.Flags().MarkHidden("freshen")
 		exportCmd.Flags().MarkHidden("staging")
 		exportCmd.Flags().MarkHidden("unripe")

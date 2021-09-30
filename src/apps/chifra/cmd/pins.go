@@ -70,7 +70,7 @@ func init() {
 	pinsCmd.Flags().Float64VarP(&PinsOpts.sleep, "sleep", "s", 0.0, "the number of seconds to sleep between requests during download (default .25) (hidden)")
 	pinsCmd.Flags().BoolVarP(&PinsOpts.share, "share", "S", false, "pin downloaded files to your local IPFS store, that is, share them (requires IPFS)")
 	pinsCmd.Flags().BoolVarP(&PinsOpts.init_all, "init_all", "n", false, "use --init --all instead (hidden)")
-	if utils.IsTestMode() {
+	if !utils.IsTestMode() {
 		pinsCmd.Flags().MarkHidden("remote")
 		pinsCmd.Flags().MarkHidden("sleep")
 		pinsCmd.Flags().MarkHidden("init_all")
