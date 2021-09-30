@@ -149,18 +149,6 @@ func initConfig() {
 	}
 }
 
-func ValidatePositionals(funcs ...cobra.PositionalArgs) cobra.PositionalArgs {
-	return func(cmd *cobra.Command, args []string) error {
-		for _, f := range funcs {
-			err := f(cmd, args)
-			if err != nil {
-				return err
-			}
-		}
-		return nil
-	}
-}
-
 func ErrFunc(cmd *cobra.Command, errMsg error) error {
 	msg := fmt.Sprintf("%s", errMsg)
 	if IsTestMode() {

@@ -28,7 +28,7 @@ var serveCmd = &cobra.Command{
 	Short: shortServe,
 	Long:  longServe,
 	Run:   runServe,
-	Args:  ValidatePositionals(validateServeArgs),
+	Args:  validateServeArgs,
 }
 
 var usageServe = `serve [flags]`

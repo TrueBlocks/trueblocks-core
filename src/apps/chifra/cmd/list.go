@@ -28,7 +28,7 @@ var listCmd = &cobra.Command{
 	Short: shortList,
 	Long:  longList,
 	Run:   runList,
-	Args:  ValidatePositionals(validateListArgs),
+	Args:  validateListArgs,
 }
 
 var usageList = `list [flags] <address> [address...]
