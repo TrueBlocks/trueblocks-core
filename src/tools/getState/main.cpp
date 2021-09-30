@@ -60,7 +60,7 @@ bool visitBlock(uint64_t blockNum, void* data) {
     if (blockNum < opt->oldestBlock)
         opt->oldestBlock = blockNum;
 
-    if (opt->requestsHistory() && !nodeHasBalances(true))
+    if (opt->requestsHistory() && !isArchiveNode())
         opt->errors.push_back("Request for historical state at block " + uint_2_Str(blockNum) + " not available.");
 
     if (!opt->theCall.address.empty()) {

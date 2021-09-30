@@ -212,7 +212,7 @@ bool COptions::parseArguments(string_q& command) {
     if (!requestsHistory())  // if the user did not request historical state, we can return safely
         return true;
 
-    if (!nodeHasBalances(false)) {
+    if (!isArchiveNode()) {
         // User requested history, but we have none. Try something else if available
         string_q rpcProvider = getGlobalConfig()->getConfigStr("settings", "rpcProvider", "http://localhost:8545");
         string_q balanceProvider = getGlobalConfig()->getConfigStr("settings", "balanceProvider", rpcProvider);
@@ -220,7 +220,7 @@ bool COptions::parseArguments(string_q& command) {
             return usage("The RPC server does not have historical state.");
 
         setRpcProvider(balanceProvider);
-        if (!nodeHasBalances(false))
+        if (!isArchiveNode())
             return usage("balanceServer set but it does not have historical state.");
     }
 
