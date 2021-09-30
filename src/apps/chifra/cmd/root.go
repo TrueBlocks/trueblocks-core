@@ -292,6 +292,8 @@ func PassItOn(path string, flags, arguments string) {
 		go func() {
 			cmd.Start()
 			scanner := bufio.NewScanner(stdout)
+			buf := make([]byte, 1024*1024)
+			scanner.Buffer(buf, 1024*1024)
 			for scanner.Scan() {
 				m := scanner.Text()
 				fmt.Println(m)
