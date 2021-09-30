@@ -25,6 +25,7 @@ import (
 
 	"github.com/spf13/cobra"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/utils"
 	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/viper"
 )
@@ -150,7 +151,7 @@ func initConfig() {
 
 func ErrFunc(cmd *cobra.Command, errMsg error) error {
 	msg := fmt.Sprintf("%s", errMsg)
-	if IsTestMode() {
+	if utils.IsTestMode() {
 		msg = "\n  " + msg + "\n"
 	} else {
 		msg = "\n  \033[31m" + msg + "\033[0m\n"
@@ -269,7 +270,7 @@ func PassItOn(path string, flags, arguments string) {
 	wg.Add(2)
 
 	cmd := exec.Command(path, options)
-	if IsTestMode() {
+	if utils.IsTestMode() {
 		cmd.Env = append(os.Environ(), "TEST_MODE=true")
 	}
 
@@ -300,10 +301,6 @@ func PassItOn(path string, flags, arguments string) {
 	}
 	wg.Wait()
 	cmd.Wait()
-}
-
-func IsTestMode() bool {
-	return os.Getenv("TEST_MODE") == "true"
 }
 
 func UsageWithNotes(notes string) string {
