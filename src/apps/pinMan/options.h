@@ -32,7 +32,6 @@ class COptions : public CAbiOptions {
     bool share;
     // END_CODE_DECLARE
 
-    bool freshenAll;
     CPinnedChunkArray pins;
 
     COptions(void);

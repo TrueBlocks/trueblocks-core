@@ -194,6 +194,9 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 10840,apps,Admin,status,cacheStatus,test_end,E,NOPOS,false,false,false,false,local,flag,<blknum>,last block to process (inclusive -- testing only)
 10860,apps,Admin,status,cacheStatus,,,,false,false,true,true,--,description,,Report on the status of the TrueBlocks system.
 
+11958,apps,Admin,init,pinMan,all,a,,false,false,true,true,header,switch,<boolean>,download full index chunks as well as Bloom filter
+11966,apps,Admin,init,pinMan,,,,false,false,true,true,--,description,,Initialize the TrueBlocks system by downloading Bloom fitlers and optionally chunks of index of appearances.
+
 10950,apps,Admin,pins,pinMan,list,l,,false,false,true,true,local,switch,<boolean>,list the index and Bloom filter hashes from local manifest or pinning service
 10952,apps,Admin,pins,pinMan,init,i,,false,false,true,true,header,switch,<boolean>,initialize index of appearances by downloading Bloom filters from pinning service
 10954,apps,Admin,pins,pinMan,freshen,f,,false,false,true,true,header,switch,<boolean>,freshen index of appearances using the same mode from most recent --init

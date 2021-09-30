@@ -49,7 +49,7 @@ bool COptions::handle_init() {
             LOG4(cGreen, "Removed zip file ", bloomFn, cOff);
         }
 
-        if (freshenAll) {
+        if (all) {
             if (!pinlib_getChunkFromRemote(pin, CHUNK_TYPE, sleep) || shouldQuit())
                 break;
             string_q binFn = pin.Format(getIndexPath("finalized/[{FILENAME}].bin.gz"));
