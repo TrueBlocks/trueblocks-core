@@ -1,5 +1,3 @@
-package cmd
-
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -12,6 +10,7 @@ package cmd
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+package cmd
 
 import (
 	"errors"
@@ -22,20 +21,20 @@ import (
 )
 
 func makeErrorEx(function, msg string, values []string) error {
-    var ret string
-    if len(function) > 0 {
-        ret = function + ": "
-    }
-    ret += msg
-    for index, val := range values {
-        rep := "{" + strconv.FormatInt(int64(index), 10) + "}"
-        ret = strings.Replace(ret, rep, val, -1)
-    }
-    return errors.New(fmtError(ret))
+	var ret string
+	if len(function) > 0 {
+		ret = function + ": "
+	}
+	ret += msg
+	for index, val := range values {
+		rep := "{" + strconv.FormatInt(int64(index), 10) + "}"
+		ret = strings.Replace(ret, rep, val, -1)
+	}
+	return errors.New(fmtError(ret))
 }
 
 func makeError(msg string, values ...string) error {
-    return makeErrorEx("", msg, values)
+	return makeErrorEx("", msg, values)
 }
 
 func fmtError(msg string) string {
