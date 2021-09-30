@@ -17,10 +17,7 @@ import (
 )
 
 func runList(cmd *cobra.Command, args []string) {
-	options := ""
-	if ListOpts.appearances {
-		options += " --appearances"
-	}
+	options := " --appearances"
 	if ListOpts.count {
 		options += " --count"
 	}
