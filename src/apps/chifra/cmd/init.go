@@ -41,6 +41,7 @@ var longInit = `Purpose:
 var notesInit = ``
 
 type initOptionsType struct {
+	all bool
 }
 
 var InitOpts initOptionsType
@@ -50,6 +51,7 @@ func init() {
 
 	initCmd.Flags().SortFlags = false
 	initCmd.PersistentFlags().SortFlags = false
+	initCmd.Flags().BoolVarP(&InitOpts.all, "all", "a", false, "download full index chunks as well as Bloom filter")
 	initCmd.Flags().SortFlags = false
 	initCmd.PersistentFlags().SortFlags = false
 

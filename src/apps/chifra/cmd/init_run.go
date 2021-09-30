@@ -17,10 +17,13 @@ import (
 )
 
 func runInit(cmd *cobra.Command, args []string) {
-	options := ""
+	options := "--init "
+	if InitOpts.all {
+		options += " --all"
+	}
 	arguments := ""
 	for _, arg := range args {
 		arguments += " " + arg
 	}
-	PassItOn(GetCommandPath("pinMan local --init"), options, arguments)
+	PassItOn(GetCommandPath("pinMan"), options, arguments)
 }

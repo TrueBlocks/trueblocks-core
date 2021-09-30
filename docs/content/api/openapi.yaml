@@ -1328,6 +1328,15 @@ paths:
       summary: Initialize index
       description: Initialize the index of appearances by downloading Bloom filters.
       operationId: admin-init
+      parameters:
+        - name: all
+          description: download full index chunks as well as Bloom filter
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
       responses:
         "200":
           description: returns the requested data

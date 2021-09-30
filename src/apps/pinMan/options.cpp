@@ -115,6 +115,9 @@ bool COptions::parseArguments(string_q& command) {
     if (freshen)
         init = true;
 
+    if (all && !init)
+        return usage("Use the --all option only with the --init or --freshen options.");
+
     if (share) {
         string_q res = doCommand("which ipfs");
         if (res.empty())
@@ -138,8 +141,6 @@ void COptions::Init(void) {
     sleep = .25;
     share = false;
     // END_CODE_INIT
-
-    freshenAll = false;
 
     minArgs = 0;
 }
