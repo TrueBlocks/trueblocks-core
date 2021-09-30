@@ -71,3 +71,6 @@ One of poloniex, maker, tellor`)
 	quotesCmd.SetUsageTemplate(UsageWithNotes(notesQuotes))
 	rootCmd.AddCommand(quotesCmd)
 }
+
+// EXISTING_CODE
+// EXISTING_CODE

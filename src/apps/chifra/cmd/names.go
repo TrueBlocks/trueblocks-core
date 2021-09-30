@@ -19,6 +19,7 @@ package cmd
 import (
 	"os"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -80,7 +81,7 @@ func init() {
 	namesCmd.Flags().BoolVarP(&NamesOpts.to_custom, "to_custom", "u", false, "for editCmd only, is the edited name a custom name or not (hidden)")
 	namesCmd.Flags().BoolVarP(&NamesOpts.clean, "clean", "C", false, "clean the data (addrs to lower case, sort by addr) (hidden)")
 	namesCmd.Flags().StringVarP(&NamesOpts.autoname, "autoname", "A", "", "an address assumed to be a token, added automatically to names database if true (hidden)")
-	if IsTestMode() == false {
+	if utils.IsTestMode() {
 		namesCmd.Flags().MarkHidden("to_custom")
 		namesCmd.Flags().MarkHidden("clean")
 		namesCmd.Flags().MarkHidden("autoname")
@@ -91,3 +92,6 @@ func init() {
 	namesCmd.SetUsageTemplate(UsageWithNotes(notesNames))
 	rootCmd.AddCommand(namesCmd)
 }
+
+// EXISTING_CODE
+// EXISTING_CODE

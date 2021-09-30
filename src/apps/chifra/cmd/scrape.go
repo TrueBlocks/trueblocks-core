@@ -19,6 +19,7 @@ package cmd
 import (
 	"os"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -60,7 +61,7 @@ func init() {
 	scrapeCmd.Flags().Uint64VarP(&ScrapeOpts.n_blocks, "n_blocks", "n", 0, "maximum number of blocks to process (default 2000)")
 	scrapeCmd.Flags().Uint64VarP(&ScrapeOpts.n_block_procs, "n_block_procs", "b", 0, "number of concurrent block channels for blaze (hidden)")
 	scrapeCmd.Flags().Uint64VarP(&ScrapeOpts.n_addr_procs, "n_addr_procs", "a", 0, "number of concurrent address channels for blaze (hidden)")
-	if IsTestMode() == false {
+	if utils.IsTestMode() {
 		scrapeCmd.Flags().MarkHidden("n_block_procs")
 		scrapeCmd.Flags().MarkHidden("n_addr_procs")
 	}
@@ -70,3 +71,6 @@ func init() {
 	scrapeCmd.SetUsageTemplate(UsageWithNotes(notesScrape))
 	rootCmd.AddCommand(scrapeCmd)
 }
+
+// EXISTING_CODE
+// EXISTING_CODE

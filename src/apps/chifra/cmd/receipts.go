@@ -66,3 +66,6 @@ func init() {
 	receiptsCmd.SetUsageTemplate(UsageWithNotes(notesReceipts))
 	rootCmd.AddCommand(receiptsCmd)
 }
+
+// EXISTING_CODE
+// EXISTING_CODE

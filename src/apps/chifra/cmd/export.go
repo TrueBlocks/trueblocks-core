@@ -19,6 +19,7 @@ package cmd
 import (
 	"os"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -114,7 +115,7 @@ One of yearly, quarterly, monthly, weekly, daily, hourly, blockly, tx`)
 	exportCmd.Flags().Uint64VarP(&ExportOpts.max_traces, "max_traces", "m", 0, "if --skip_ddos is on, this many traces defines what a ddos transaction|is (default = 250) (hidden)")
 	exportCmd.Flags().Uint64VarP(&ExportOpts.first_block, "first_block", "F", 0, "first block to process (inclusive) (hidden)")
 	exportCmd.Flags().Uint64VarP(&ExportOpts.last_block, "last_block", "L", 0, "last block to process (inclusive) (hidden)")
-	if IsTestMode() == false {
+	if utils.IsTestMode() {
 		exportCmd.Flags().MarkHidden("freshen")
 		exportCmd.Flags().MarkHidden("staging")
 		exportCmd.Flags().MarkHidden("unripe")
@@ -133,3 +134,6 @@ One of yearly, quarterly, monthly, weekly, daily, hourly, blockly, tx`)
 	exportCmd.SetUsageTemplate(UsageWithNotes(notesExport))
 	rootCmd.AddCommand(exportCmd)
 }
+
+// EXISTING_CODE
+// EXISTING_CODE

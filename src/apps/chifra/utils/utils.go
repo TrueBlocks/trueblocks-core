@@ -9,3 +9,7 @@ func FileExists(filename string) bool {
 	}
 	return !info.IsDir()
 }
+
+func IsTestMode() bool {
+	return os.Getenv("TEST_MODE") == "true"
+}

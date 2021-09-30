@@ -19,6 +19,7 @@ package cmd
 import (
 	"os"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -66,7 +67,7 @@ func init() {
 	abisCmd.Flags().StringSliceVarP(&AbisOpts.find, "find", "f", nil, "try to search for a function declaration given a four byte code")
 	abisCmd.Flags().BoolVarP(&AbisOpts.source, "source", "o", false, "show the source of the ABI information (hidden)")
 	abisCmd.Flags().BoolVarP(&AbisOpts.classes, "classes", "c", false, "generate classDefinitions folder and class definitions (hidden)")
-	if IsTestMode() == false {
+	if utils.IsTestMode() {
 		abisCmd.Flags().MarkHidden("source")
 		abisCmd.Flags().MarkHidden("classes")
 	}
@@ -76,3 +77,6 @@ func init() {
 	abisCmd.SetUsageTemplate(UsageWithNotes(notesAbis))
 	rootCmd.AddCommand(abisCmd)
 }
+
+// EXISTING_CODE
+// EXISTING_CODE

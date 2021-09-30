@@ -19,6 +19,7 @@ package cmd
 import (
 	"os"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -77,7 +78,7 @@ func init() {
 	blocksCmd.Flags().BoolVarP(&BlocksOpts.cache, "cache", "o", false, "force a write of the block to the cache")
 	blocksCmd.Flags().Uint64VarP(&BlocksOpts.list, "list", "l", 0, "summary list of blocks running backwards from latest block minus num (hidden)")
 	blocksCmd.Flags().Uint64VarP(&BlocksOpts.list_count, "list_count", "C", 0, "the number of blocks to report for --list option (hidden)")
-	if IsTestMode() == false {
+	if utils.IsTestMode() {
 		blocksCmd.Flags().MarkHidden("list")
 		blocksCmd.Flags().MarkHidden("list_count")
 	}
@@ -87,3 +88,6 @@ func init() {
 	blocksCmd.SetUsageTemplate(UsageWithNotes(notesBlocks))
 	rootCmd.AddCommand(blocksCmd)
 }
+
+// EXISTING_CODE
+// EXISTING_CODE
