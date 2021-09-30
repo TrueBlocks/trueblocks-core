@@ -17,7 +17,7 @@ import (
 )
 
 func runMonitors(cmd *cobra.Command, args []string) {
-	options := ""
+	options := " --appearances"
 	if MonitorsOpts.delete {
 		options += " --delete"
 	}
@@ -28,5 +28,5 @@ func runMonitors(cmd *cobra.Command, args []string) {
 	for _, arg := range args {
 		arguments += " " + arg
 	}
-	PassItOn(GetCommandPath("acctExport --appearances"), options, arguments)
+	PassItOn(GetCommandPath("acctExport"), options, arguments)
 }
