@@ -29,7 +29,7 @@ bool visitReadme(const string_q& templatePath, void* data) {
         string_q folder = parts[4];
         string_q tool = substitute(parts[5], ".md", "");
         string_q docPath = getDocsPathReadmes(folder + "/" + tool + "/README.md");
-        string_q srcPath = getSourcePath2(folder + "/" + tool + "/README.md");
+        string_q srcPath = getSourcePath(folder + "/" + tool + "/README.md");
 
         string_q source = asciiFileToString(templatePath);
         string_q cmd = tool;

@@ -46,9 +46,9 @@ void COptions::writeOpenApiFile(void) {
     }
 
     writeCodeOut(this, getDocsPathContent("api/openapi.yaml"));
-    writeCodeOut(this, getSourcePath2("go-apps/flame/server/server_routes.go"));
-    writeCodeOut(this, getSourcePath2("apps/chifra/options.cpp"));
-    writeCodeOut(this, getSourcePath2("libs/utillib/options_base.cpp"));
+    writeCodeOut(this, getSourcePath("go-apps/flame/server/server_routes.go"));
+    writeCodeOut(this, getSourcePath("apps/chifra/options.cpp"));
+    writeCodeOut(this, getSourcePath("libs/utillib/options_base.cpp"));
 
     LOG_INFO(cYellow, "makeClass --openapi", cOff, " processed ", counter.routeCount, "/", counter.cmdCount,
              " routes/cmds ", " (changed ", counter.nProcessed, ").", string_q(40, ' '));

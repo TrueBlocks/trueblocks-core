@@ -179,14 +179,14 @@ extern const char* STR_YAML_FRONTMATTER;
 #define routeCount fileCount
 #define cmdCount nVisited
 
+//---------------------------------------------------------------------------------------------------
 #define makeError(a, b) usage(substitute(usageErrs[(a)], "{0}", (b)))
-#define getSourcePath2(a) (string_q("../src/") + (a))
-#define endpointFile getSourcePath2("cmd-line-endpoints.csv")
-#define optionsFile getSourcePath2("cmd-line-options.csv")
-#define explorerPath string_q("/Users/jrush/Development/trueblocks-explorer/")
-inline string_q getSourcePath(const string_q& part) {
-    return "";
-}
+
+//---------------------------------------------------------------------------------------------------
+#define getSourcePath(a) (string_q("../src/") + (a))
 inline string_q getTemplatePath(const string_q& part) {
-    return getConfigPath("makeClass/" + part);
+    return getSourcePath("dev_tools/makeClass/templates/" + part);
 }
+#define explorerPath string_q("/Users/jrush/Development/trueblocks-explorer/")
+#define endpointFile getSourcePath("cmd-line-endpoints.csv")
+#define optionsFile getSourcePath("cmd-line-options.csv")

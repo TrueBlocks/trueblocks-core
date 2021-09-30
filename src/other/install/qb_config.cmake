@@ -30,7 +30,6 @@ file(MAKE_DIRECTORY "${DEST_PATH}/cache/prices")
 file(MAKE_DIRECTORY "${DEST_PATH}/cache/tmp")
 file(MAKE_DIRECTORY "${DEST_PATH}/cache/objs")
 file(MAKE_DIRECTORY "${DEST_PATH}/names")
-file(MAKE_DIRECTORY "${DEST_PATH}/makeClass")
 file(MAKE_DIRECTORY "${DEST_PATH}/abis")
 file(MAKE_DIRECTORY "${DEST_PATH}/abis/known-000")
 file(MAKE_DIRECTORY "${DEST_PATH}/abis/known-005")
@@ -100,34 +99,6 @@ endif()
 message(STATUS "Copying mocked data to ${DEST_PATH}/mocked")
 file(COPY "${SOURCE_PATH}/mocked/mocks.tar.gz" DESTINATION "${DEST_PATH}/mocked/" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
 file(COPY "${SOURCE_PATH}/mocked/monitors.tar.gz" DESTINATION "${DEST_PATH}/mocked/" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
-
-#---------------------------------------------------------------
-# makeClass content
-#---------------------------------------------------------------
-message(STATUS "Copying makeClass templates to ${DEST_PATH}/makeClass")
-file(GLOB TARGET_FILES "${CMAKE_SOURCE_DIR}/../../../src/dev_tools/makeClass/templates/*")
-foreach(FILE ${TARGET_FILES} )
-	file(COPY "${FILE}" DESTINATION "${DEST_PATH}/makeClass")
-endforeach( FILE )
-
-#---------------------------------------------------------------
-# grabABI content
-#---------------------------------------------------------------
-message(STATUS "Copying grabABI templates to ${DEST_PATH}/grabABI")
-file(GLOB TARGET_FILES "${CMAKE_SOURCE_DIR}/../../../src/tools/grabABI/templates/*")
-foreach(FILE ${TARGET_FILES} )
-    # message(STATUS "  Copied file to ${DEST_PATH}/grabABI")
-    file(COPY "${FILE}" DESTINATION "${DEST_PATH}/grabABI")
-endforeach( FILE )
-
-#---------------------------------------------------------------
-# chifra content
-#---------------------------------------------------------------
-message(STATUS "Copying chifra templates to ${DEST_PATH}/chifra")
-file(GLOB TARGET_FILES "${CMAKE_SOURCE_DIR}/../../../src/apps/chifra/templates/*")
-foreach(FILE ${TARGET_FILES} )
-	file(COPY "${FILE}" DESTINATION "${DEST_PATH}/chifra")
-endforeach( FILE )
 
 #---------------------------------------------------------------
 # abis

@@ -45,7 +45,7 @@ bool COptions::handle_options(void) {
     counter = CCounter();  // reset
 
     // Look for local file first
-    string_q cmdFile = getSourcePath2("cmd-line-options.csv");
+    string_q cmdFile = getSourcePath("cmd-line-options.csv");
 
     if (!fileExists(cmdFile))
         return usage("Could not find cmd-line-options.csv file at " + cmdFile);
@@ -191,7 +191,7 @@ bool COptions::handle_options(void) {
                 LOG_WARN(warning);
 
         } else {
-            string_q fn = getSourcePath2(tool.first + "/options.cpp");
+            string_q fn = getSourcePath(tool.first + "/options.cpp");
             if (tool.first == "/./")
                 fn = "./options.cpp";
             writeCodeOut(this, substitute(fn, ".cpp", ".h"));
