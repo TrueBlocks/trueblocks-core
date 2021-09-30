@@ -20,7 +20,6 @@ import (
 	"os"
 	"os/exec"
 	"os/user"
-	"strings"
 	"sync"
 
 	"github.com/spf13/cobra"
@@ -175,7 +174,12 @@ func ScanProgressLine(data []byte, atEOF bool) (advance int, token []byte, err e
 	if atEOF && len(data) == 0 {
 		return 0, nil, nil
 	}
+	if i := bytes.IndexByte(data, '\n'); i >= 0 {
+		fmt.Fprintf(os.Stderr, "%s\n", string(data[0:i]))
+		return i + 1, data[0:i], nil
+	}
 	if i := bytes.IndexByte(data, '\r'); i >= 0 {
+		fmt.Fprintf(os.Stderr, "%s\r", string(data[0:i]))
 		return i + 1, dropNL(data[0:i]), nil
 	}
 	return bufio.ScanLines(data, atEOF)
@@ -186,17 +190,10 @@ func ScanForProgress(stderrPipe io.Reader, fn func(string)) {
 	scanner := bufio.NewScanner(stderrPipe)
 	scanner.Split(ScanProgressLine)
 	for scanner.Scan() {
-		text := scanner.Text()
-		fmt.Fprintf(os.Stderr, "%s\n", text)
-		if len(text) > 0 {
-			if strings.Contains(text, "<PROG>") {
-				fn(strings.SplitAfter(text, ":")[1])
-			}
-		}
+		// we've already printed the token
 	}
-
 	if err := scanner.Err(); err != nil {
-		fmt.Println("Error while reading stderr:", err)
+		fmt.Println("TB: Error while reading stderr -- ", err)
 	}
 }
 
