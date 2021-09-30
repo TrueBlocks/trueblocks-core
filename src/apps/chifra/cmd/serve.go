@@ -53,6 +53,6 @@ func init() {
 	serveCmd.Flags().SortFlags = false
 	serveCmd.PersistentFlags().SortFlags = false
 
-	serveCmd.SetUsageTemplate(HelpWithNotes(notesServe))
+	serveCmd.SetUsageTemplate(UsageWithNotes(notesServe))
 	rootCmd.AddCommand(serveCmd)
 }

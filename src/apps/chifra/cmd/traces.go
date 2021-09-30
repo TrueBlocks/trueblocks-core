@@ -80,6 +80,6 @@ func init() {
 	tracesCmd.Flags().SortFlags = false
 	tracesCmd.PersistentFlags().SortFlags = false
 
-	tracesCmd.SetUsageTemplate(HelpWithNotes(notesTraces))
+	tracesCmd.SetUsageTemplate(UsageWithNotes(notesTraces))
 	rootCmd.AddCommand(tracesCmd)
 }

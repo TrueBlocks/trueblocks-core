@@ -53,6 +53,6 @@ func init() {
 	initCmd.Flags().SortFlags = false
 	initCmd.PersistentFlags().SortFlags = false
 
-	initCmd.SetUsageTemplate(HelpWithNotes(notesInit))
+	initCmd.SetUsageTemplate(UsageWithNotes(notesInit))
 	rootCmd.AddCommand(initCmd)
 }

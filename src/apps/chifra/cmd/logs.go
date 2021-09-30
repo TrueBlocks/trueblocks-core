@@ -69,6 +69,6 @@ func init() {
 	logsCmd.Flags().SortFlags = false
 	logsCmd.PersistentFlags().SortFlags = false
 
-	logsCmd.SetUsageTemplate(HelpWithNotes(notesLogs))
+	logsCmd.SetUsageTemplate(UsageWithNotes(notesLogs))
 	rootCmd.AddCommand(logsCmd)
 }

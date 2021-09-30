@@ -77,6 +77,6 @@ func init() {
 	pinsCmd.Flags().SortFlags = false
 	pinsCmd.PersistentFlags().SortFlags = false
 
-	pinsCmd.SetUsageTemplate(HelpWithNotes(notesPins))
+	pinsCmd.SetUsageTemplate(UsageWithNotes(notesPins))
 	rootCmd.AddCommand(pinsCmd)
 }

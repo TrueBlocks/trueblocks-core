@@ -60,6 +60,6 @@ func init() {
 	listCmd.Flags().SortFlags = false
 	listCmd.PersistentFlags().SortFlags = false
 
-	listCmd.SetUsageTemplate(HelpWithNotes(notesList))
+	listCmd.SetUsageTemplate(UsageWithNotes(notesList))
 	rootCmd.AddCommand(listCmd)
 }

@@ -130,6 +130,6 @@ One of yearly, quarterly, monthly, weekly, daily, hourly, blockly, tx`)
 	exportCmd.Flags().SortFlags = false
 	exportCmd.PersistentFlags().SortFlags = false
 
-	exportCmd.SetUsageTemplate(HelpWithNotes(notesExport))
+	exportCmd.SetUsageTemplate(UsageWithNotes(notesExport))
 	rootCmd.AddCommand(exportCmd)
 }

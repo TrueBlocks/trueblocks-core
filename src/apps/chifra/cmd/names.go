@@ -88,6 +88,6 @@ func init() {
 	namesCmd.Flags().SortFlags = false
 	namesCmd.PersistentFlags().SortFlags = false
 
-	namesCmd.SetUsageTemplate(HelpWithNotes(notesNames))
+	namesCmd.SetUsageTemplate(UsageWithNotes(notesNames))
 	rootCmd.AddCommand(namesCmd)
 }

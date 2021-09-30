@@ -60,6 +60,6 @@ func init() {
 	exploreCmd.Flags().SortFlags = false
 	exploreCmd.PersistentFlags().SortFlags = false
 
-	exploreCmd.SetUsageTemplate(HelpWithNotes(notesExplore))
+	exploreCmd.SetUsageTemplate(UsageWithNotes(notesExplore))
 	rootCmd.AddCommand(exploreCmd)
 }

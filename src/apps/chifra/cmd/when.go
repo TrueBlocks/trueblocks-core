@@ -74,6 +74,6 @@ func init() {
 	whenCmd.Flags().SortFlags = false
 	whenCmd.PersistentFlags().SortFlags = false
 
-	whenCmd.SetUsageTemplate(HelpWithNotes(notesWhen))
+	whenCmd.SetUsageTemplate(UsageWithNotes(notesWhen))
 	rootCmd.AddCommand(whenCmd)
 }

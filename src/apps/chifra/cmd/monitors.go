@@ -60,6 +60,6 @@ func init() {
 	monitorsCmd.Flags().SortFlags = false
 	monitorsCmd.PersistentFlags().SortFlags = false
 
-	monitorsCmd.SetUsageTemplate(HelpWithNotes(notesMonitors))
+	monitorsCmd.SetUsageTemplate(UsageWithNotes(notesMonitors))
 	rootCmd.AddCommand(monitorsCmd)
 }

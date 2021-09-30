@@ -71,6 +71,6 @@ func init() {
 	transactionsCmd.Flags().SortFlags = false
 	transactionsCmd.PersistentFlags().SortFlags = false
 
-	transactionsCmd.SetUsageTemplate(HelpWithNotes(notesTransactions))
+	transactionsCmd.SetUsageTemplate(UsageWithNotes(notesTransactions))
 	rootCmd.AddCommand(transactionsCmd)
 }

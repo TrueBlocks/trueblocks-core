@@ -76,6 +76,6 @@ One or more of none, some, all, balance, nonce, code, storage, deployed, accttyp
 	stateCmd.Flags().SortFlags = false
 	stateCmd.PersistentFlags().SortFlags = false
 
-	stateCmd.SetUsageTemplate(HelpWithNotes(notesState))
+	stateCmd.SetUsageTemplate(UsageWithNotes(notesState))
 	rootCmd.AddCommand(stateCmd)
 }

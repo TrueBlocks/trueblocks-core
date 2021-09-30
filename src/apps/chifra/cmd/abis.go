@@ -73,6 +73,6 @@ func init() {
 	abisCmd.Flags().SortFlags = false
 	abisCmd.PersistentFlags().SortFlags = false
 
-	abisCmd.SetUsageTemplate(HelpWithNotes(notesAbis))
+	abisCmd.SetUsageTemplate(UsageWithNotes(notesAbis))
 	rootCmd.AddCommand(abisCmd)
 }

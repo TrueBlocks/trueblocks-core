@@ -67,6 +67,6 @@ func init() {
 	scrapeCmd.Flags().SortFlags = false
 	scrapeCmd.PersistentFlags().SortFlags = false
 
-	scrapeCmd.SetUsageTemplate(HelpWithNotes(notesScrape))
+	scrapeCmd.SetUsageTemplate(UsageWithNotes(notesScrape))
 	rootCmd.AddCommand(scrapeCmd)
 }

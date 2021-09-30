@@ -68,6 +68,6 @@ One of poloniex, maker, tellor`)
 	quotesCmd.Flags().SortFlags = false
 	quotesCmd.PersistentFlags().SortFlags = false
 
-	quotesCmd.SetUsageTemplate(HelpWithNotes(notesQuotes))
+	quotesCmd.SetUsageTemplate(UsageWithNotes(notesQuotes))
 	rootCmd.AddCommand(quotesCmd)
 }

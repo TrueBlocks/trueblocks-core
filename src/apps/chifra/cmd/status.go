@@ -89,6 +89,6 @@ One or more of test, abi_cache, block_cache, tx_cache, trace_cache, recon_cache,
 	statusCmd.Flags().SortFlags = false
 	statusCmd.PersistentFlags().SortFlags = false
 
-	statusCmd.SetUsageTemplate(HelpWithNotes(notesStatus))
+	statusCmd.SetUsageTemplate(UsageWithNotes(notesStatus))
 	rootCmd.AddCommand(statusCmd)
 }

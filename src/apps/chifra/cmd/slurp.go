@@ -64,6 +64,6 @@ One or more of ext, int, token, nfts, miner, uncles, all`)
 	slurpCmd.Flags().SortFlags = false
 	slurpCmd.PersistentFlags().SortFlags = false
 
-	slurpCmd.SetUsageTemplate(HelpWithNotes(notesSlurp))
+	slurpCmd.SetUsageTemplate(UsageWithNotes(notesSlurp))
 	rootCmd.AddCommand(slurpCmd)
 }

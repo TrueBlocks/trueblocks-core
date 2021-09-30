@@ -307,7 +307,7 @@ func IsTestMode() bool {
 	return os.Getenv("TEST_MODE") == "true"
 }
 
-func HelpWithNotes(notes string) string {
+func UsageWithNotes(notes string) string {
 	t := `Usage:{{if .Runnable}}
   {{.UseLine}}{{end}}{{if .HasAvailableSubCommands}}
   {{.CommandPath}} [command]{{end}}{{if gt (len .Aliases) 0}}

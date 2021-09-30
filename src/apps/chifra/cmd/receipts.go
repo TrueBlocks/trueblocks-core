@@ -63,6 +63,6 @@ func init() {
 	receiptsCmd.Flags().SortFlags = false
 	receiptsCmd.PersistentFlags().SortFlags = false
 
-	receiptsCmd.SetUsageTemplate(HelpWithNotes(notesReceipts))
+	receiptsCmd.SetUsageTemplate(UsageWithNotes(notesReceipts))
 	rootCmd.AddCommand(receiptsCmd)
 }

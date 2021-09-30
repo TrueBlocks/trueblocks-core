@@ -84,6 +84,6 @@ func init() {
 	blocksCmd.Flags().SortFlags = false
 	blocksCmd.PersistentFlags().SortFlags = false
 
-	blocksCmd.SetUsageTemplate(HelpWithNotes(notesBlocks))
+	blocksCmd.SetUsageTemplate(UsageWithNotes(notesBlocks))
 	rootCmd.AddCommand(blocksCmd)
 }

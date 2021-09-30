@@ -70,6 +70,6 @@ One or more of name, symbol, decimals, totalSupply, version, none, all`)
 	tokensCmd.Flags().SortFlags = false
 	tokensCmd.PersistentFlags().SortFlags = false
 
-	tokensCmd.SetUsageTemplate(HelpWithNotes(notesTokens))
+	tokensCmd.SetUsageTemplate(UsageWithNotes(notesTokens))
 	rootCmd.AddCommand(tokensCmd)
 }

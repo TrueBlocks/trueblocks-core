@@ -56,7 +56,7 @@ func init() {
 	// EXISTING_CODE
 	// EXISTING_CODE
 
-	[{ROUTE}]Cmd.SetUsageTemplate(HelpWithNotes(notes[{PROPER}]))
+	[{ROUTE}]Cmd.SetUsageTemplate(UsageWithNotes(notes[{PROPER}]))
 	rootCmd.AddCommand([{ROUTE}]Cmd)
 }
 
