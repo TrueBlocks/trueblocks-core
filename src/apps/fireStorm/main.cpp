@@ -73,7 +73,7 @@ int main(int argc, const char* argv[]) {
                 base += "/";
             replace(url, "https://etherscan.io/block/", base + "explorer/blocks/");
             replace(url, "https://etherscan.io/tx/", base + "explorer/transactions/");
-            replace(url, "https://etherscan.io/address/", base + "dashboard/accounts/");
+            replace(url, "https://etherscan.io/address/", base + "dashboard/accounts?address=");
             replace(url, "https://www.4byte.directory/signatures/?bytes4_signature=", base + "/");
             replace(url, "https://etherscan.io/", base + "explorer/");
         }
