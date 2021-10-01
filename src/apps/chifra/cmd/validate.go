@@ -17,6 +17,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -101,6 +102,10 @@ func validateEnumSlice(field string, values []string, valid string) error {
 }
 
 func validateGlobalFlags(cmd *cobra.Command, args []string) error {
+	if len(RootOpts.file) > 0 && !utils.FileExists(RootOpts.file) {
+		return makeError("file {0} not found", RootOpts.file)
+	}
+
 	err := validateEnum("--fmt", RootOpts.fmt, "[json|txt|csv|api]")
 	if err != nil {
 		return err

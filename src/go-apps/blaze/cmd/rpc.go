@@ -16,27 +16,27 @@ import (
 // 		fmt.Println(err)
 // 		return nil, err
 // 	}
-
+// 
 // 	body := bytes.NewReader(payloadBytes)
 // 	req, err := http.NewRequest("POST", Options.rpcProvider, body)
 // 	if err != nil {
 // 		fmt.Println(err)
 // 		return nil, err
 // 	}
-
+// 
 // 	req.Header.Set("Content-Type", "application/json")
 // 	resp, err := http.DefaultClient.Do(req)
 // 	if err != nil {
 // 		fmt.Println(err)
 // 		return nil, err
 // 	}
-
+// 
 // 	blockHeaderBody, err := ioutil.ReadAll(resp.Body)
 // 	if err != nil {
 // 		fmt.Println(err)
 // 		return nil, err
 // 	}
-
+// 
 // 	defer resp.Body.Close()
 // 	return blockHeaderBody, nil
 // }

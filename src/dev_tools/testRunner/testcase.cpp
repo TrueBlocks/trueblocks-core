@@ -549,9 +549,7 @@ CTestCase::CTestCase(const string_q& line, uint32_t id) {
     CStringArray parts;
     explode(parts, line, ',');
     test_id = id;
-    onOff = parts.size() > 0 ? trim(parts[0]) : "";
-    if (onOff == "local")
-        onOff = "off";
+    onOff = substitute(parts.size() > 0 ? trim(parts[0]) : "", "local", "off");
     mode = parts.size() > 1 ? trim(parts[1]) : "";
     speed = parts.size() > 2 ? trim(parts[2]) : "";
     route = parts.size() > 3 ? trim(parts[3]) : "";

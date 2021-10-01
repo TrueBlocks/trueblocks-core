@@ -34,17 +34,17 @@ func processBlock(blockChannel chan int, blockWG *sync.WaitGroup) {
 func scanBlocks() {
 
 	// blockChannel := make(chan int)
-
+	// 
 	// var blockWG sync.WaitGroup
 	// blockWG.Add(Options.nBlockProcs)
 	// for i := 0; i < Options.nBlockProcs; i++ {
 	// 	go processBlock(blockChannel, &blockWG)
 	// }
-
+	// 
 	// for block := Options.startBlock; block < Options.startBlock+Options.nBlocks; block++ {
 	// 	blockChannel <- block
 	// }
-
+	// 
 	// close(blockChannel)
 	// blockWG.Wait()
 }

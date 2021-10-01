@@ -260,6 +260,12 @@ func PassItOn(path string, flags, arguments string) {
 		options += " --to_file"
 	}
 	if len(RootOpts.file) > 0 {
+		// TODO: one of the problems with this is that if the file contains invalid commands,
+		// TODO: because we don't see those commands until we're doing into the tool, we
+		// TODO: can't report on the 'bad command' in Cobra format. This will require us to
+		// TODO: keep validation code down in the tools which we want to avoid. To fix this
+		// TODO: the code below should open the file, read each command, and recursively call
+		// TODO: into chifra here.
 		options += " --file:" + RootOpts.file
 	}
 	options += arguments

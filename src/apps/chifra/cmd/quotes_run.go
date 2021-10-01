@@ -17,7 +17,8 @@ import (
 )
 
 func validateQuotesArgs(cmd *cobra.Command, args []string) error {
-	if !QuotesOpts.freshen &&
+	if len(RootOpts.file) == 0 &&
+		!QuotesOpts.freshen &&
 		len(QuotesOpts.period) == 0 &&
 		len(QuotesOpts.pair) == 0 &&
 		len(QuotesOpts.feed) == 0 &&

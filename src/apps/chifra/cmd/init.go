@@ -38,7 +38,9 @@ var shortInit = "initialize the index of appearances by downloading Bloom filter
 var longInit = `Purpose:
   Initialize the index of appearances by downloading Bloom filters.`
 
-var notesInit = ``
+var notesInit = `
+Notes:
+  - chifra init is an alais for the chifra pins --init command.`
 
 type initOptionsType struct {
 	all bool

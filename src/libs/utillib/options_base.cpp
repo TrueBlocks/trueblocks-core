@@ -98,20 +98,6 @@ bool COptionsBase::prePrepareArguments(CStringArray& separatedArgs_, int argCoun
         }
     }
 
-    if (isTestMode()) {
-        CStringArray envs = {
-            // "TEST_MODE", "NO_COLOR", "REDIR_CERR",
-            "API_MODE",      "DOCKER_MODE",  "PROG_NAME",      "HIDE_NAMES",      "LIVE_TEST",      "SILENCE",
-            "NO_CACHE",      "NO_PROGRESS",  "NO_SCHEMAS",     "TB_NAME_ADDRESS", "TB_NAME_CUSTOM", "TB_NAME_DECIMALS",
-            "TB_NAME_DESCR", "TB_NAME_NAME", "TB_NAME_SOURCE", "TB_NAME_SYMBOL",  "TB_NAME_TAG",
-        };
-        for (auto key : envs) {
-            string_q val = getEnvStr(key);
-            if (!val.empty())
-                cerr << key << " = [" << val << "]" << endl;
-        }
-    }
-
     return !isReadme;
 }
 

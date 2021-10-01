@@ -25,9 +25,10 @@
 
 namespace qblocks {
 
-ostream& out = cerr;
+static ostream& out = cerr;
 //--------------------------------------------------------------------------------
 bool COptionsBase::usage(const string_q& errMsg) const {
+    // TODO: remove this if no longer needed
     if (getEnvStr("OLD_PARSER") == "true") {
         if (!isReadme && !endsWith(getProgName(), "Test") && getProgName() != "makeClass") {
             cerr << "I am in the old fashioned usage code" << endl;

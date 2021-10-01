@@ -215,7 +215,7 @@ COptions::COptions(void) {
 
     // BEG_CODE_NOTES
     // clang-format off
-    notes.push_back("Solidity files found in the local folder with the name '<address>.sol' are converted | to an ABI prior to processing (and then removed).");  // NOLINT
+    notes.push_back("Solidity files found in the local folder with the name '<address>.sol' are converted to an ABI prior to processing (and then removed).");  // NOLINT
     // clang-format on
     // END_CODE_NOTES
 
