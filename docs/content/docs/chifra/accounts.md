@@ -2,7 +2,7 @@
 title: "Accounts"
 description: ""
 lead: ""
-date: 2021-09-29T17:33:02
+date: 2021-10-01T11:43:22
 lastmod:
   - :git
   - lastmod
@@ -208,8 +208,7 @@ The `--sol` option will convert a single Solidity file found in the current fold
 
 `Notes:`
 
-- Solidity files found in the local folder with the name '<address>.sol' are converted
-  to an ABI prior to processing (and then removed).
+- Solidity files found in the local folder with the name '<address>.sol' are converted to an ABI prior to processing (and then removed).
 
 **Source code**: [`tools/grabABI`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/tools/grabABI)
 
