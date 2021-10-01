@@ -54,27 +54,31 @@ func CallOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd s
 	hasVerbose := false
 	var scrapeCmd string
 	for key, value := range r.URL.Query() {
-		// These keys exist only in the API. We strip them here since the command line
-		// tools will report them as invalid options.
-		if key != "addrs" &&
-			key != "terms" &&
-			key != "modes" &&
-			key != "blocks" &&
-			key != "transactions" &&
-			key != "mode" &&
-			key != "topics" &&
-			key != "fourbytes" &&
-			key != "names" &&
-			key != "addrs2" {
-			allDogs = append(allDogs, "--"+key)
+		if len(value) > 0 && value[0] != "false" {
+			// These keys exist only in the API. We strip them here since the command line
+			// tools will report them as invalid options.
+			if key != "addrs" &&
+				key != "terms" &&
+				key != "modes" &&
+				key != "blocks" &&
+				key != "transactions" &&
+				key != "mode" &&
+				key != "topics" &&
+				key != "fourbytes" &&
+				key != "names" &&
+				key != "addrs2" {
+				allDogs = append(allDogs, "--"+key)
+			}
+			if key == "verbose" {
+				hasVerbose = true
+			}
+			if apiCmd == "scrape" && key == "terms" {
+				scrapeCmd = value[0]
+			}
+			if len(value) > 1 || value[0] != "true" {
+				allDogs = append(allDogs, value...)
+			}
 		}
-		if key == "verbose" {
-			hasVerbose = true
-		}
-		if apiCmd == "scrape" && key == "terms" {
-			scrapeCmd = value[0]
-		}
-		allDogs = append(allDogs, value...)
 	}
 
 	if apiCmd == "scrape" {
