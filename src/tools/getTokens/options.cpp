@@ -219,7 +219,7 @@ bool COptions::parseArguments(string_q& command) {
     if (!getTimestampAt(1))  // loads the timestamp file and returns non-zero on success
         return usage("Could not open timestamp file.");
 
-    if ((!isTestMode() && !requestsHistory()) || nodeHasBalances(true))
+    if ((!isTestMode() && !requestsHistory()) || isArchiveNode())
         return true;
     // fall through...
 

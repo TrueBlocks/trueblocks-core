@@ -145,7 +145,7 @@ bool COptions::parseArguments(string_q& command) {
 
     // Balances are needed to make reconcilations. The user may not need that, so we allow it
     bool needsBalances = config->getConfigBool("requires", "balances", false);
-    if (needsBalances && !nodeHasBalances(true)) {
+    if (needsBalances && !isArchiveNode()) {
         return usage("This tool requires an --archive node with historical balances.");
     }
 

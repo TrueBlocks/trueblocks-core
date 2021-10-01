@@ -435,7 +435,12 @@ wei_t getBalanceAt(const string_q& addr, blknum_t num) {
 }
 
 //-------------------------------------------------------------------------
-bool nodeHasBalances(bool showErrors) {
+bool isArchiveNode(void) {
+    // short curcuit for some situations
+    const CToml* config = getGlobalConfig("blockScrape");
+    if (!config->getConfigBool("requires", "archive", true))
+        return true;
+
     // Account 0xa1e4380a3b1f749673e270229993ee55f35663b4 owned 2000000000000000000000 (2000 ether)
     // at block zero. If the node is holding balances (i.e. its an archive node), then it will
     // return that value for block 1 as well. Otherwise, it will return a zero balance.
@@ -445,12 +450,12 @@ bool nodeHasBalances(bool showErrors) {
     uint64_t saveVerbose = verbose;
     bool saveErrors = getCurlContext()->reportErrors;
 
-    verbose = 0;
-    getCurlContext()->reportErrors = showErrors;
+    verbose = false;
+    getCurlContext()->reportErrors = false;
     bool ret = getBalanceAt("0xa1e4380a3b1f749673e270229993ee55f35663b4", 1) == str_2_Wei("2000000000000000000000");
-
     getCurlContext()->reportErrors = saveErrors;
     verbose = saveVerbose;
+
     return ret;
 }
 

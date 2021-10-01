@@ -627,14 +627,14 @@ bool COptions::setDisplayFormatting(void) {
         if (accounting) {
             articulate = true;
             manageFields("CTransaction:statements", true);
-            bool nodeHasBals = nodeHasBalances(false);
+            bool isArchive = isArchiveNode();
             string_q rpcProvider = getGlobalConfig()->getConfigStr("settings", "rpcProvider", "http://localhost:8545");
-            if (!nodeHasBals) {
+            if (!isArchive) {
                 string_q balanceProvider = getGlobalConfig()->getConfigStr("settings", "balanceProvider", rpcProvider);
                 if (rpcProvider == balanceProvider || balanceProvider.empty())
                     return usage("--accounting requires historical balances. The RPC server does not have them.");
                 setRpcProvider(balanceProvider);
-                if (!nodeHasBalances(false))
+                if (!isArchiveNode())
                     return usage("balanceServer is set, but it does not have historical state.");
             }
             if (statements) {
