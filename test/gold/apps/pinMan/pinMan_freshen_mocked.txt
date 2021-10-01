@@ -15,19 +15,19 @@ params.size: 1
 dataArray.size: 4
   0 (0x000) 0000000000000000...00000000000000000000000000000020 <=o <-r
   1 (0x020) 0000000000000000...0000000000000000000000000000002e
-  2 (0x040) 516d61314b395231...73474d566d4764524a7848444c425854
-  3 (0x060) 7879564166573365...00000000000000000000000000000000
+  2 (0x040) 516d597255417253...6d76316a4c4d4d62724d41536946686b
+  3 (0x060) 426f3350326e5134...00000000000000000000000000000000
 
 ==================================================
 params.size: 1
-  0: string manifestHash = Qma1K9R17envRLcUsGMVmGdRJxHDLBXTxyVAfW3ev9WoBu
+  0: string manifestHash = QmYrUArS8Ncu1LTnmv1jLMMbrMASiFhkBo3P2nQ4nU7r8X
 params.size: 1
-  0: string manifestHash = Qma1K9R17envRLcUsGMVmGdRJxHDLBXTxyVAfW3ev9WoBu
+  0: string manifestHash = QmYrUArS8Ncu1LTnmv1jLMMbrMASiFhkBo3P2nQ4nU7r8X
 ==================================================
 
-TIME ~ CLOCK - <INFO>  : Found manifest hash at Qma1K9R17envRLcUsGMVmGdRJxHDLBXTxyVAfW3ev9WoBu
+TIME ~ CLOCK - <INFO>  : Found manifest hash at QmYrUArS8Ncu1LTnmv1jLMMbrMASiFhkBo3P2nQ4nU7r8X
 TIME ~ CLOCK - <INFO>  : IPFS gateway https://ipfs.unchainedindex.io/ipfs/
-TIME ~ CLOCK - <INFO>  : Freshened manifest with 253991 bytes
+TIME ~ CLOCK - <INFO>  : Freshened manifest with 261287 bytes
 TIME ~ CLOCK - <INFO>  : File blooms/000000000-000000000.bloom exists.
 TIME ~ CLOCK - <INFO>  : File blooms/000000001-000590501.bloom exists.
 TIME ~ CLOCK - <INFO>  : File blooms/000590502-000864332.bloom exists.

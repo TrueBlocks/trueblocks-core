@@ -1,5 +1,4 @@
-ethNames argc: 2 [1:--file:names.txt] 
-ethNames --file:names.txt 
+chifra names  --file names.txt
 Cmd: LockTrip 
 Cmd: UCASH 
 Cmd: XES 

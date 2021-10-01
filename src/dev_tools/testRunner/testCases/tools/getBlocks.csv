@@ -39,8 +39,8 @@ on,both,fast,blocks,tools/getBlocks,addrCntFail,y,blocks = 3982128 & count
 on,both,fast,blocks,tools/getBlocks,addrMisconfig,y,blocks = 32279 & uniq_tx
 on,both,fast,blocks,tools/getBlocks,addrBlockZero,y,blocks = 0 & uniq_tx
 on,both,medi,blocks,tools/getBlocks,uniqTxCnt2,y,blocks = 1301011-1312011:313 & uniq_tx & count & fmt json
-local,cmd,fast,blocks,tools/getBlocks,cmd_file1,n,file:cmd_file1 & cache
-local,cmd,fast,blocks,tools/getBlocks,cmd_file2,n,file:cmd_file2 & cache
+on,cmd,fast,blocks,tools/getBlocks,cmd_file1,n,file = cmd_file1 & cache
+on,cmd,fast,blocks,tools/getBlocks,cmd_file2,n,file = cmd_file2 & cache
 on,both,fast,blocks,tools/getBlocks,fmt_default,y,blocks = 2222222 2332332
 on,both,fast,blocks,tools/getBlocks,fmt_txt,n,blocks = 2222222 2332332 & fmt = txt
 on,both,fast,blocks,tools/getBlocks,fmt_csv,n,blocks = 2222222 2332332 & fmt = csv & no_header

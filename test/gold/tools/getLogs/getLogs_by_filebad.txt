@@ -1,6 +1,6 @@
-chifra logs  --file:cmd_file --bad
+chifra logs  --file cmd_file --bad
 Error: 
-  unknown flag: --file:cmd_file
+  unknown flag: --bad
 
 Usage:
   chifra logs [flags] <tx_id> [tx_id...]

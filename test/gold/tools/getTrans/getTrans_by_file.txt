@@ -1,4 +1,4 @@
-chifra transactions  --file:cmd_file --bad
+chifra transactions  --file cmd_file --bad
 Error: 
   unknown flag: --bad
 

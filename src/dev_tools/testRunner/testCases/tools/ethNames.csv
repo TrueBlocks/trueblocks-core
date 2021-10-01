@@ -117,7 +117,7 @@ on,both,medi,names,tools/ethNames,fmt_api,y,named & custom & fmt = api
 on,both,medi,names,tools/ethNames,fmt_json,y,named & custom & fmt = json
 on,cmd,fast,names,tools/ethNames,fmt_junk,y,terms = tip & expand & fmt = junk
 on,both,medi,names,tools/ethNames,to_file,n,named & custom & fmt = json & to_file
-local,cmd,slow,names,tools/ethNames,fromFile,n,file:names.txt
+on,cmd,slow,names,tools/ethNames,fromFile,n,file = names.txt
 on,cmd,fast,names,tools/ethNames,prefund_output,n,output = test_file & prefund
 on,both,fast,names,tools/ethNames,tags,y,tags
 on,both,fast,names,tools/ethNames,tags_txt,n,tags & fmt = txt
@@ -138,5 +138,5 @@ on,both,fast,names,tools/ethNames,edit_undelete,y,undelete & terms = 0x000000000
 on,both,fast,names,tools/ethNames,show_undelete,y,terms = 0x0000000000000000000000000000000010101010 & expand & log_level = 10 & fmt = api
 on,both,fast,names,tools/ethNames,edit_remove,y,remove & terms = 0x0000000000000000000000000000000010101010 & expand & log_level = 10 & fmt = api
 on,both,fast,names,tools/ethNames,show_remove,y,terms = 0x0000000000000000000000000000000010101010 & expand & log_level = 10 & fmt = api
-local,both,fast,names,tools/ethNames,edit_custom_delete,y,delete & terms = 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 & expand & log_level = 10 & to_custom & all
-local,both,fast,names,tools/ethNames,edit_custom_undelete,y,undelete & terms = 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 & expand & log_level = 10 & to_custom & all
+on,both,fast,names,tools/ethNames,edit_custom_delete,y,delete & terms = 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 & expand & log_level = 10 & to_custom & all
+on,both,fast,names,tools/ethNames,edit_custom_undelete,y,undelete & terms = 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 & expand & log_level = 10 & to_custom & all

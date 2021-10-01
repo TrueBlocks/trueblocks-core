@@ -1,5 +1,4 @@
-getQuotes argc: 2 [1:--file:cmd_file] 
-getQuotes --file:cmd_file 
+chifra quotes  --file cmd_file
 Cmd: --period:240 
 Cmd: -p:1440 
 timestamp	date	close

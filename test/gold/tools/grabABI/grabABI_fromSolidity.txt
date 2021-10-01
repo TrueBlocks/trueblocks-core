@@ -1,6 +1,6 @@
 chifra abis  --sol 0x2234567812345678123456781234567812345678
 Error: 
-  Solidity code not found at at ./0x2234567812345678123456781234567812345678.sol
+  file not found at ./0x2234567812345678123456781234567812345678.sol
 
 Usage:
   chifra abis [flags] <address> [address...]
@@ -21,5 +21,4 @@ Global Flags:
   -v, --verbose      enable verbose (increase detail with --log_level)
 
 Notes:
-  - Solidity files found in the local folder with the name '<address>.sol' are converted
-    to an ABI prior to processing (and then removed).
+  - Solidity files found in the local folder with the name '<address>.sol' are converted to an ABI prior to processing (and then removed).

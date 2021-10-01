@@ -1,5 +1,4 @@
-ethNames argc: 8 [1:--undelete] [2:0x054993ab0f2b1acc0fdc65405ee203b4271bebe6] [3:--expand] [4:--verbose] [5:10] [6:--to_custom] [7:--all] 
-ethNames --undelete 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 --expand --verbose 10 --to_custom --all 
+chifra names  --undelete 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 --expand --log_level 10 --to_custom --all
 TIME ~ CLOCK - <INFO>  : Cleaning 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6                                  TIME ~ CLOCK - <INFO>  : ---------------------------------------------
 TIME ~ CLOCK - <INFO>  : {
   "address": "0x054993ab0f2b1acc0fdc65405ee203b4271bebe6",
