@@ -14,9 +14,38 @@ package cmd
 
 import (
 	"fmt"
+	"strconv"
 
 	"github.com/spf13/cobra"
 )
+
+func validateStatusArgs(cmd *cobra.Command, args []string) error {
+	if StatusOpts.depth > 3 {
+		return makeError("--depth parameter ({0}) must be less than four (4)", strconv.FormatUint(StatusOpts.depth, 10))
+	}
+
+	err := validateEnumSlice("--types", StatusOpts.types, "[blocks|txs|traces|slurps|prices|all]")
+	if err != nil {
+		return err
+	}
+
+	err = validateEnumSlice("--migrate", StatusOpts.migrate, "[test|abi_cache|block_cache|tx_cache|trace_cache|recon_cache|name_cache|slurp_cache|all]")
+	if err != nil {
+		return err
+	}
+
+	err = validateEnumSlice("modes", args, "[index|monitors|collections|names|abis|caches|some|all]")
+	if err != nil {
+		return err
+	}
+
+	err = validateGlobalFlags(cmd, args)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
 
 func runStatus(cmd *cobra.Command, args []string) {
 	options := ""

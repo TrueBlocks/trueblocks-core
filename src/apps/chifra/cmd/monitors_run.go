@@ -16,6 +16,15 @@ import (
 	"github.com/spf13/cobra"
 )
 
+func validateMonitorsArgs(cmd *cobra.Command, args []string) error {
+	err := validateGlobalFlags(cmd, args)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func runMonitors(cmd *cobra.Command, args []string) {
 	options := " --appearances"
 	if MonitorsOpts.delete {

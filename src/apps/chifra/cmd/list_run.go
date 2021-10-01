@@ -13,8 +13,18 @@
 package cmd
 
 import (
+	"errors"
+
 	"github.com/spf13/cobra"
 )
+
+func validateListArgs(cmd *cobra.Command, args []string) error {
+	if len(args) > 0 && args[0] == "12" {
+		return ErrFunc(cmd, errors.New("Invalid argument "+args[0]))
+	}
+
+	return nil
+}
 
 func runList(cmd *cobra.Command, args []string) {
 	options := " --appearances"

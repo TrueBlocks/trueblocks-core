@@ -18,6 +18,15 @@ import (
 	"github.com/spf13/cobra"
 )
 
+func validateExportArgs(cmd *cobra.Command, args []string) error {
+	err := validateGlobalFlags(cmd, args)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func runExport(cmd *cobra.Command, args []string) {
 	options := ""
 	if ExportOpts.appearances {

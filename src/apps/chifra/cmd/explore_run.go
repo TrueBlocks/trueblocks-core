@@ -16,6 +16,19 @@ import (
 	"github.com/spf13/cobra"
 )
 
+func validateExploreArgs(cmd *cobra.Command, args []string) error {
+	if len(args) == 0 {
+		return makeError("You must provide at least one search term")
+	}
+
+	err := validateGlobalFlags(cmd, args)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func runExplore(cmd *cobra.Command, args []string) {
 	options := ""
 	if ExploreOpts.local {

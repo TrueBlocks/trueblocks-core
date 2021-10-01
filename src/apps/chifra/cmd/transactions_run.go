@@ -16,6 +16,14 @@ import (
 	"github.com/spf13/cobra"
 )
 
+func validateTransactionsArgs(cmd *cobra.Command, args []string) error {
+	err := validateGlobalFlags(cmd, args)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 func runTransactions(cmd *cobra.Command, args []string) {
 	options := ""
 	if TransactionsOpts.articulate {

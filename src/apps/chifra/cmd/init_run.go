@@ -16,6 +16,15 @@ import (
 	"github.com/spf13/cobra"
 )
 
+func validateInitArgs(cmd *cobra.Command, args []string) error {
+	err := validateGlobalFlags(cmd, args)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func runInit(cmd *cobra.Command, args []string) {
 	options := "--init "
 	if InitOpts.all {

@@ -16,6 +16,15 @@ import (
 	"github.com/spf13/cobra"
 )
 
+func validateLogsArgs(cmd *cobra.Command, args []string) error {
+	err := validateGlobalFlags(cmd, args)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func runLogs(cmd *cobra.Command, args []string) {
 	options := ""
 	for _, t := range LogsOpts.topic {

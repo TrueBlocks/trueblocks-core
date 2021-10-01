@@ -16,6 +16,19 @@ import (
 	"github.com/spf13/cobra"
 )
 
+func validateWhenArgs(cmd *cobra.Command, args []string) error {
+	// if !WhenOpts.list {
+	// 	if len(args) == 0 {
+	// 		return errors.New(fmtError("You must provide either a date or a block number"))
+	// 	}
+	// }
+	err := validateGlobalFlags(cmd, args)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 func runWhen(cmd *cobra.Command, args []string) {
 	options := ""
 	if WhenOpts.list {

@@ -16,6 +16,25 @@ import (
 	"github.com/spf13/cobra"
 )
 
+func validateSlurpArgs(cmd *cobra.Command, args []string) error {
+	err := validateOneAddr(args)
+	if err != nil {
+		return err
+	}
+
+	err = validateEnumSlice("--types", SlurpOpts.types, "[ext|int|token|nfts|miner|uncles|all]")
+	if err != nil {
+		return err
+	}
+
+	err = validateGlobalFlags(cmd, args)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func runSlurp(cmd *cobra.Command, args []string) {
 	options := ""
 	for _, t := range SlurpOpts.types {

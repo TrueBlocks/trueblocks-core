@@ -16,6 +16,14 @@ import (
 	"github.com/spf13/cobra"
 )
 
+func validateStateArgs(cmd *cobra.Command, args []string) error {
+	err := validateGlobalFlags(cmd, args)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 func runState(cmd *cobra.Command, args []string) {
 	options := ""
 	for _, t := range StateOpts.parts {

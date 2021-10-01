@@ -18,6 +18,14 @@ import (
 	"github.com/spf13/cobra"
 )
 
+func validateScrapeArgs(cmd *cobra.Command, args []string) error {
+	err := validateGlobalFlags(cmd, args)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 func runScrape(cmd *cobra.Command, args []string) {
 	options := ""
 	if ScrapeOpts.pin {
