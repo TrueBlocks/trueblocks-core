@@ -138,11 +138,16 @@ bool CUniPair::getPrice(blknum_t bn, string_q& priceSource, double& priceOut) {
     double reserve1 = str_2_Double(wei_2_Ether(str_2_Wei(results[0]), 18));
     double reserve2 = str_2_Double(wei_2_Ether(str_2_Wei(results[1]), 18));
     if (reversed) {
-        priceOut = reserve2 / reserve1;
+        if (reserve1 != 0.0) {
+            priceOut = reserve2 / reserve1;
+            priceSource = "uniswap";
+        }
     } else {
-        priceOut = reserve1 / reserve2;
+        if (reserve2 != 0.0) {
+            priceOut = reserve1 / reserve2;
+            priceSource = "uniswap";
+        }
     }
-    priceSource = "uniswap";
     LOG4("r1: ", r1, " r2: ", r2);
     LOG4("reserve1: ", reserve1, " reserve2: ", reserve2, " priceOut: ", priceOut, " reversed: ", reversed);
     return true;
