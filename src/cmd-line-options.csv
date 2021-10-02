@@ -21,29 +21,33 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 10433,apps,Accounts,export,acctExport,relevant,,,false,false,true,true,header,switch,<boolean>,for log and accounting export only&#44; if true export only logs relevant to one of the given export addresses
 10439,apps,Accounts,export,acctExport,count,U,,false,false,true,true,header,switch,<boolean>,only available for --appearances mode&#44; if present return only|the number of records
 10453,apps,Accounts,export,acctExport,first_record,c,0,false,false,true,true,header,flag,<blknum>,the first record to process
-10457,apps,Accounts,export,acctExport,max_records,e,(isApiMode() ? 250 : NOPOS),false,false,true,true,header,flag,<blknum>,the maximum number of records to process before reporting
+10457,apps,Accounts,export,acctExport,max_records,e,250,false,false,true,true,header,flag,<blknum>,the maximum number of records to process before reporting
 10085,apps,Accounts,export,acctExport,clean,,false,false,false,true,true,header,switch,<boolean>,clean (i.e. remove duplicate appearances) from all existing monitors
 10380,apps,Accounts,export,acctExport,freshen,f,,false,false,false,false,local,switch,<boolean>,freshen but do not print the exported data
 10060,apps,Accounts,export,acctExport,staging,s,,false,false,false,false,header,switch,<boolean>,enable search of staging (not yet finalized) folder
 10080,apps,Accounts,export,acctExport,unripe,u,,false,false,false,false,header,switch,<boolean>,enable search of unripe (neither staged nor finalized) folder|(assumes --staging)
 10092,apps,Accounts,export,acctExport,load,,,false,false,false,false,header,flag,<string>,a comma separated list of dynamic traversers to load
 10093,apps,Accounts,export,acctExport,reversed,,,false,false,false,false,header,switch,<boolean>,produce results in reverse chronological order
-10094,apps,Accounts,export,acctExport,by_date,b,,false,false,false,false,header,switch,<boolean>,produce results sorted by date (default is to report by address)
+10094,apps,Accounts,export,acctExport,by_date,b,,false,false,false,false,header,switch,<boolean>,produce results sorted by date (report by address otherwise)
 10095,apps,Accounts,export,acctExport,summarize_by,z,,false,false,false,false,header,flag,enum[yearly|quarterly|monthly|weekly|daily|hourly|blockly|tx],for --accounting only&#44; summarize reconciliations by this time period
 10340,apps,Accounts,export,acctExport,skip_ddos,d,true,false,true,false,false,config,toggle,<boolean>,toggle skipping over 2016 dDos transactions ([{DEF}] by default)
-10350,apps,Accounts,export,acctExport,max_traces,m,250,false,true,false,false,config,flag,<uint64>,if --skip_ddos is on&#44; this many traces defines what a ddos transaction|is (default = [{DEF}])
+10350,apps,Accounts,export,acctExport,max_traces,m,250,false,true,false,false,config,flag,<uint64>,if --skip_ddos is on&#44; this many traces defines what a ddos transaction is
 10440,apps,Accounts,export,acctExport,first_block,F,0,false,false,false,false,local,flag,<blknum>,first block to process (inclusive)
 10450,apps,Accounts,export,acctExport,last_block,L,NOPOS,false,false,false,false,local,flag,<blknum>,last block to process (inclusive)
 10460,apps,Accounts,export,acctExport,,,,false,false,true,true,--,description,,Export full detail of transactions for one or more addresses.
 10470,apps,Accounts,export,acctExport,,,,false,false,false,false,--,note,,An `address` must start with '0x' and be forty-two characters long.
 
-10100,apps,Accounts,monitors,stub,addrs,,,true,false,true,true,local,positional,list<addr>,one or more addresses (0x...) to list
-10230,apps,Accounts,monitors,stub,delete,,,false,false,true,true,header,switch,<boolean>,delete a previously created monitor (or undelete if already deleted)
-10240,apps,Accounts,monitors,stub,remove,,,false,false,true,true,header,switch,<boolean>,remove a previously deleted monitor
-10120,apps,Accounts,monitors,stub,,,,false,false,true,true,--,description,,Add&#44; remove&#44; clean&#44; and list address monitors.
+11200,apps,Accounts,monitors,acctExport,addrs,,,true,false,true,true,local,positional,list<addr>,one or more addresses (0x...) to process
+11210,apps,Accounts,monitors,acctExport,appearances,p,,false,false,true,true,header,switch,<boolean>,export a list of appearances
+11085,apps,Accounts,monitors,acctExport,clean,,false,false,false,true,true,header,switch,<boolean>,clean (i.e. remove duplicate appearances) from all existing monitors
+11380,apps,Accounts,monitors,acctExport,freshen,f,,false,false,false,false,local,switch,<boolean>,freshen but do not print the monitored data
+11440,apps,Accounts,monitors,acctExport,first_block,F,0,false,false,false,false,local,flag,<blknum>,first block to process (inclusive)
+11450,apps,Accounts,monitors,acctExport,last_block,L,NOPOS,false,false,false,false,local,flag,<blknum>,last block to process (inclusive)
+11460,apps,Accounts,monitors,acctExport,,,,false,false,true,true,--,description,,Add&#44; remove&#44; clean&#44; and list address monitors.
+11470,apps,Accounts,monitors,acctExport,,,,false,false,false,false,--,note,,An `address` must start with '0x' and be forty-two characters long.
 
 12260,tools,Accounts,names,ethNames,terms,,,true,false,true,true,local,positional,list<string>,a space separated list of one or more search terms
-12280,tools,Accounts,names,ethNames,expand,e,,false,false,true,true,local,switch,<boolean>,expand search to include all fields (default searches name&#44; address&#44;|and symbol only)
+12280,tools,Accounts,names,ethNames,expand,e,,false,false,true,true,local,switch,<boolean>,expand search to include all fields (search name&#44; address&#44;|and symbol otherwise)
 12300,tools,Accounts,names,ethNames,match_case,m,,false,false,true,true,header,switch,<boolean>,do case-sensitive search
 12315,tools,Accounts,names,ethNames,all,l,,false,false,true,true,local,switch,<boolean>,include all accounts in the search
 12340,tools,Accounts,names,ethNames,custom,c,,false,false,true,true,local,switch,<boolean>,include your custom named accounts
@@ -124,7 +128,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 13420,tools,ChainData,traces,getTraces,statediff,d,,false,false,true,true,header,switch,<boolean>,export state diff traces (not implemented)
 13440,tools,ChainData,traces,getTraces,count,c,,false,false,true,true,header,switch,<boolean>,show the number of traces for the transaction only (fast)
 13460,tools,ChainData,traces,getTraces,skip_ddos,s,true,false,true,false,false,header,toggle,<boolean>,skip over the 2016 ddos during export ([{DEF}] by default)
-13480,tools,ChainData,traces,getTraces,max,m,250,false,true,false,false,header,flag,<uint64>,if --skip_ddos is on&#44; this many traces defines what a ddos transaction|is (default = [{DEF}])
+13480,tools,ChainData,traces,getTraces,max,m,250,false,true,false,false,header,flag,<uint64>,if --skip_ddos is on&#44; this many traces defines what a ddos transaction is
 13500,tools,ChainData,traces,getTraces,,,,false,false,true,true,--,description,,Retrieve traces for the given transaction(s).
 13622,tools,ChainData,traces,getTraces,,,,false,false,false,false,--,note,,The `transactions` list may be one or more space-separated identifiers which are either a transaction hash&#44;|a blockNumber.transactionID pair&#44; or a blockHash.transactionID pair&#44; or any combination.
 13624,tools,ChainData,traces,getTraces,,,,false,false,false,false,--,note,,This tool checks for valid input syntax&#44; but does not check that the transaction requested actually exists.
@@ -175,10 +179,10 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 13372,tools,ChainState,tokens,getTokens,,,,false,false,false,false,--,note,,`special` blocks are detailed under `chifra when --list`.
 
 10620,apps,Admin,scrape,blockScrape,pin,p,,false,false,true,true,header,switch,<boolean>,pin new chunks (and blooms) to IPFS (requires Pinata key and running IPFS node)
-10625,apps,Admin,scrape,blockScrape,sleep,s,14,false,false,true,false,header,flag,<double>,the number of seconds to sleep between passes (default [{DEF}])
-10635,apps,Admin,scrape,blockScrape,n_blocks,n,(isDockerMode() ? 100 : 2000),false,true,true,true,config,flag,<uint64>,maximum number of blocks to process (default 2000)
-10640,apps,Admin,scrape,blockScrape,n_block_procs,b,(isDockerMode() ? 5 : 10),false,true,false,false,config,flag,<uint64>,number of concurrent block channels for blaze
-10645,apps,Admin,scrape,blockScrape,n_addr_procs,a,(isDockerMode() ? 10 : 20),false,true,false,false,config,flag,<uint64>,number of concurrent address channels for blaze
+10625,apps,Admin,scrape,blockScrape,sleep,s,14,false,false,true,false,header,flag,<double>,the number of seconds to sleep between passes
+10635,apps,Admin,scrape,blockScrape,n_blocks,n,2000,false,true,true,true,config,flag,<uint64>,maximum number of blocks to process
+10640,apps,Admin,scrape,blockScrape,n_block_procs,b,10,false,true,false,false,config,flag,<uint64>,number of concurrent block channels for blaze
+10645,apps,Admin,scrape,blockScrape,n_addr_procs,a,20,false,true,false,false,config,flag,<uint64>,number of concurrent address channels for blaze
 10650,apps,Admin,scrape,blockScrape,,,,false,false,true,true,--,description,,Scan the chain and update the TrueBlocks index of appearances.
 
 10700,apps,Admin,status,cacheStatus,modes,,,false,false,true,true,local,positional,list<enum[index|monitors|collections|names|abis|caches|some*|all]>,the type of status info to retrieve

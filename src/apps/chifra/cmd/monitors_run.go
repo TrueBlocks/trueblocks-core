@@ -13,6 +13,9 @@
 package cmd
 
 import (
+	"fmt"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -26,12 +29,24 @@ func validateMonitorsArgs(cmd *cobra.Command, args []string) error {
 }
 
 func runMonitors(cmd *cobra.Command, args []string) {
-	options := " --appearances"
-	if MonitorsOpts.delete {
-		options += " --delete"
+	options := ""
+	if utils.IsApiMode() {
+		options += " --appearances"
 	}
-	if MonitorsOpts.remove {
-		options += " --remove"
+	if MonitorsOpts.appearances {
+		options += " --appearances"
+	}
+	if MonitorsOpts.clean {
+		options += " --clean"
+	}
+	if MonitorsOpts.freshen {
+		options += " --freshen"
+	}
+	if MonitorsOpts.first_block > 0 {
+		options += " --first_block " + fmt.Sprintf("%d", MonitorsOpts.first_block)
+	}
+	if MonitorsOpts.last_block > 0 {
+		options += " --last_block " + fmt.Sprintf("%d", MonitorsOpts.last_block)
 	}
 	arguments := ""
 	for _, arg := range args {

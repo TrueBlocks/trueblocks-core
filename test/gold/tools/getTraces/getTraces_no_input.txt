@@ -14,7 +14,7 @@ Flags:
   -d, --statediff       export state diff traces (not implemented)
   -c, --count           show the number of traces for the transaction only (fast)
   -s, --skip_ddos       skip over the 2016 ddos during export ('on' by default) (hidden)
-  -m, --max <num>       if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250) (hidden)
+  -m, --max <num>       if --skip_ddos is on, this many traces defines what a ddos transaction is (hidden)
 
 Global Flags:
   -x, --fmt string     export format, one of [none|json*|txt|csv|api]

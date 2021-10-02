@@ -19,8 +19,7 @@ chifra status  caches --types txs
       "path": "txsPath",
       "nFiles": 0,
       "nFolders": 0,
-      "sizeInBytes": 0,
-      "is_valid": true
+      "sizeInBytes": 0
     }
   ],
   "date": "--date--"

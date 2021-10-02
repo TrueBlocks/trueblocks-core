@@ -31,16 +31,16 @@ func runScrape(cmd *cobra.Command, args []string) {
 	if ScrapeOpts.pin {
 		options += " --pin"
 	}
-	if ScrapeOpts.sleep > 0.0 {
+	if ScrapeOpts.sleep != 14 {
 		options += " --sleep " + fmt.Sprintf("%.1f", ScrapeOpts.sleep)
 	}
-	if ScrapeOpts.n_blocks > 0 {
+	if ScrapeOpts.n_blocks != 2000 {
 		options += " --n_blocks " + fmt.Sprintf("%d", ScrapeOpts.n_blocks)
 	}
-	if ScrapeOpts.n_block_procs > 0 {
+	if ScrapeOpts.n_block_procs != 10 {
 		options += " --n_block_procs " + fmt.Sprintf("%d", ScrapeOpts.n_block_procs)
 	}
-	if ScrapeOpts.n_addr_procs > 0 {
+	if ScrapeOpts.n_addr_procs != 20 {
 		options += " --n_addr_procs " + fmt.Sprintf("%d", ScrapeOpts.n_addr_procs)
 	}
 	arguments := ""

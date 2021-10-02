@@ -56,7 +56,7 @@ func runBlocks(cmd *cobra.Command, args []string) {
 	if BlocksOpts.list > 0 {
 		options += " --list " + fmt.Sprintf("%d", BlocksOpts.list)
 	}
-	if BlocksOpts.list_count > 0 {
+	if BlocksOpts.list_count != 20 {
 		options += " --list_count " + fmt.Sprintf("%d", BlocksOpts.list_count)
 	}
 	arguments := ""

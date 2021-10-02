@@ -19,6 +19,7 @@ package cmd
 import (
 	"os"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -34,18 +35,23 @@ var monitorsCmd = &cobra.Command{
 var usageMonitors = `monitors [flags] <address> [address...]
 
 Arguments:
-  addrs - one or more addresses (0x...) to list (required)`
+  addrs - one or more addresses (0x...) to process (required)`
 
 var shortMonitors = "add, remove, clean, and list address monitors"
 
 var longMonitors = `Purpose:
   Add, remove, clean, and list address monitors.`
 
-var notesMonitors = ``
+var notesMonitors = `
+Notes:
+  - An address must start with '0x' and be forty-two characters long.`
 
 type monitorsOptionsType struct {
-	delete bool
-	remove bool
+	appearances bool
+	clean       bool
+	freshen     bool
+	first_block uint64
+	last_block  uint64
 }
 
 var MonitorsOpts monitorsOptionsType
@@ -55,8 +61,16 @@ func init() {
 
 	monitorsCmd.Flags().SortFlags = false
 	monitorsCmd.PersistentFlags().SortFlags = false
-	monitorsCmd.Flags().BoolVarP(&MonitorsOpts.delete, "delete", "", false, "delete a previously created monitor (or undelete if already deleted)")
-	monitorsCmd.Flags().BoolVarP(&MonitorsOpts.remove, "remove", "", false, "remove a previously deleted monitor")
+	monitorsCmd.Flags().BoolVarP(&MonitorsOpts.appearances, "appearances", "p", false, "export a list of appearances")
+	monitorsCmd.Flags().BoolVarP(&MonitorsOpts.clean, "clean", "", false, "clean (i.e. remove duplicate appearances) from all existing monitors")
+	monitorsCmd.Flags().BoolVarP(&MonitorsOpts.freshen, "freshen", "f", false, "freshen but do not print the monitored data (hidden)")
+	monitorsCmd.Flags().Uint64VarP(&MonitorsOpts.first_block, "first_block", "F", 0, "first block to process (inclusive) (hidden)")
+	monitorsCmd.Flags().Uint64VarP(&MonitorsOpts.last_block, "last_block", "L", 0, "last block to process (inclusive) (hidden)")
+	if !utils.IsTestMode() {
+		monitorsCmd.Flags().MarkHidden("freshen")
+		monitorsCmd.Flags().MarkHidden("first_block")
+		monitorsCmd.Flags().MarkHidden("last_block")
+	}
 	monitorsCmd.Flags().SortFlags = false
 	monitorsCmd.PersistentFlags().SortFlags = false
 

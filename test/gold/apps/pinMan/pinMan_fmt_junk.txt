@@ -11,7 +11,7 @@ Flags:
   -f, --freshen       freshen index of appearances using the same mode from most recent --init
   -r, --remote        for --list mode only, recover the manifest from pinning service (hidden)
   -a, --all           for --init and --freshen modes only, download full index chunks as well as Bloom filter
-  -s, --sleep float   the number of seconds to sleep between requests during download (default .25) (hidden)
+  -s, --sleep float   the number of seconds to sleep between requests during download (hidden) (default 0.25)
   -S, --share         pin downloaded files to your local IPFS store, that is, share them (requires IPFS)
   -n, --init_all      use --init --all instead (hidden)
 

@@ -16,6 +16,7 @@ import (
 	"fmt"
 	"strconv"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -55,7 +56,7 @@ func runStatus(cmd *cobra.Command, args []string) {
 	for _, t := range StatusOpts.types {
 		options += " --types " + t
 	}
-	if StatusOpts.depth > 0 {
+	if StatusOpts.depth != utils.NOPOS {
 		options += " --depth " + fmt.Sprintf("%d", StatusOpts.depth)
 	}
 	if StatusOpts.terse {
@@ -73,7 +74,7 @@ func runStatus(cmd *cobra.Command, args []string) {
 	if StatusOpts.test_start > 0 {
 		options += " --test_start " + fmt.Sprintf("%d", StatusOpts.test_start)
 	}
-	if StatusOpts.test_end > 0 {
+	if StatusOpts.test_end != utils.NOPOS {
 		options += " --test_end " + fmt.Sprintf("%d", StatusOpts.test_end)
 	}
 	arguments := ""

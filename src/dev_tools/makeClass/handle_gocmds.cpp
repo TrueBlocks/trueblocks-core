@@ -156,33 +156,44 @@ string_q get_optfields(const CCommandOption& cmd) {
     return os.str();
 }
 
-string_q goDefault(const CCommandOption& p) {
-    if (p.go_type == "[]string")
+string_q get_goDefault(const CCommandOption& p) {
+    if (p.go_type == "[]string") {
         return "nil";
-    else if (p.go_type == "float64")
+    } else if (p.go_type == "float64") {
+        if (!p.def_val.empty())
+            return p.def_val;
         return "0.0";
-    else if (p.go_type == "string")
-        return "\"\"";
-    else if (p.go_type == "uint64")
+    } else if (p.go_type == "string") {
+        return p.def_val;
+    } else if (p.go_type == "uint64") {
+        if (p.def_val == "NOPOS")
+            return "0";
+        else if (!p.def_val.empty() && !startsWith(p.def_val, "("))
+            return p.def_val;
         return "0";
+    }
     return "false";
 }
 
-string_q get_description(const CCommandOption& cmd) {
+string_q get_goDescription(const CCommandOption& cmd) {
     string_q addendum;
     if (contains(cmd.data_type, "enum")) {
         ostringstream os;
         forEveryEnum(visitEnumItem2, cmd.data_type, &os);
         addendum += substitute(os.str(), "One of", contains(cmd.data_type, "list") ? "One or more of" : "One of");
     }
-    string_q hidden = cmd.is_visible ? "" : " (hidden)";
 
-    string_q fmt = "\"[{DESCRIPTION}]+HIDDEN+ADD\"";
-    if (!addendum.empty())
-        replaceAll(fmt, "\"", "`");
+    string_q fmt = "[{DESCRIPTION}]";
     string_q ret = cmd.Format(fmt);
-    replaceAll(ret, "+HIDDEN", hidden);
-    replaceAll(ret, "+ADD", addendum);
+    if (contains(ret, " (default")) {
+        replace(ret, " (default", "#");
+        ret = nextTokenClear(ret, '#');
+    }
+    ret += cmd.is_visible ? "" : " (hidden)";
+    ret += addendum;
+    ret = "\"" + ret + "\"";
+    if (!addendum.empty())
+        replaceAll(ret, "\"", "`");
     return ret;
 }
 
@@ -225,8 +236,8 @@ string_q get_setopts(const CCommandOption& cmd) {
             os << p.Format("[{LONGNAME}], ");
             os << p.Format("\"[{LONGNAME}]\", ");
             os << p.Format("\"[{HOTKEY}]\", ");
-            os << goDefault(p) << ", ";
-            os << get_description(p);
+            os << get_goDefault(p) << ", ";
+            os << get_goDescription(p);
             os << ")" << endl;
         }
     }

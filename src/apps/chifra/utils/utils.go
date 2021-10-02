@@ -13,3 +13,10 @@ func FileExists(filename string) bool {
 func IsTestMode() bool {
 	return os.Getenv("TEST_MODE") == "true"
 }
+
+func IsApiMode() bool {
+	return os.Getenv("API_MODE") == "true"
+}
+
+// maximum uint64
+const NOPOS = ^uint64(0)

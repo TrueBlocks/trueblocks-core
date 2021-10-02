@@ -55,24 +55,21 @@ chifra status  all
       "path": "blocksPath",
       "nFiles": 0,
       "nFolders": 0,
-      "sizeInBytes": 0,
-      "is_valid": true
+      "sizeInBytes": 0
     },
     {
       "type": "CChainCache",
       "path": "txsPath",
       "nFiles": 0,
       "nFolders": 0,
-      "sizeInBytes": 0,
-      "is_valid": true
+      "sizeInBytes": 0
     },
     {
       "type": "CChainCache",
       "path": "tracesPath",
       "nFiles": 0,
       "nFolders": 0,
-      "sizeInBytes": 0,
-      "is_valid": true
+      "sizeInBytes": 0
     },
     {
       "type": "CSlurpCache",

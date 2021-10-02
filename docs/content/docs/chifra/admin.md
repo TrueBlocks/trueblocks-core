@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2021-10-01T11:09:49
+date: 2021-10-01T21:46:07
 lastmod:
   - :git
   - lastmod
@@ -91,7 +91,7 @@ The scraper can scrape either the index only, previously created monitors only, 
 |          | Option                             | Description                                                                         |
 | -------- | ---------------------------------- | ----------------------------------------------------------------------------------- |
 | &#8208;p | &#8208;&#8208;pin                  | pin new chunks (and blooms) to IPFS (requires Pinata<br/>key and running IPFS node) |
-| &#8208;s | &#8208;&#8208;sleep &lt;double&gt; | the number of seconds to sleep between passes (default<br/>14)                      |
+| &#8208;s | &#8208;&#8208;sleep &lt;double&gt; | the number of seconds to sleep between passes                                       |
 | &#8208;v | &#8208;&#8208;verbose              | set verbose level (optional level defaults to 1)                                    |
 | &#8208;h | &#8208;&#8208;help                 | display this help screen                                                            |
 {{</td>}}
@@ -151,13 +151,13 @@ If you run `chifra init` and allow it to complete, the next time you run `chifra
 - One of `--list`, `--init`, or `--init_all` is required.
 - the `--pin_locally` option only works if the IPFS executable is in your path.
 **Source code**: [`apps/pinMan`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/pinMan)
-## chifra pins
+## chifra init
 
 This tool is not yet ready for production use. Please return to this page later.
 
 ### usage
 
-`Usage:`    chifra pins [-l|-i|-f|-a|-S|-v|-h]  
+`Usage:`    chifra init [-l|-i|-f|-a|-S|-v|-h]  
 `Purpose:`  Manage pinned index of appearances and associated Bloom filters.
 
 `Where:`

@@ -18,7 +18,7 @@ Flags:
   -c, --count             display the number of the lists of appearances for --apps, --uniq, or --uniq_tx
   -o, --cache             force a write of the block to the cache
   -l, --list uint         summary list of blocks running backwards from latest block minus num (hidden)
-  -C, --list_count uint   the number of blocks to report for --list option (hidden)
+  -C, --list_count uint   the number of blocks to report for --list option (hidden) (default 20)
 
 Global Flags:
   -x, --fmt string   export format, one of [none|json*|txt|csv|api]

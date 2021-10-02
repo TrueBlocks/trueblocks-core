@@ -43,7 +43,7 @@ func runTraces(cmd *cobra.Command, args []string) {
 	if TracesOpts.skip_ddos {
 		options += " --skip_ddos"
 	}
-	if TracesOpts.max > 0 {
+	if TracesOpts.max != 250 {
 		options += " --max " + fmt.Sprintf("%d", TracesOpts.max)
 	}
 	arguments := ""

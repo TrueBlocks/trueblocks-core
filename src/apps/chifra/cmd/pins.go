@@ -67,7 +67,7 @@ func init() {
 	pinsCmd.Flags().BoolVarP(&PinsOpts.freshen, "freshen", "f", false, "freshen index of appearances using the same mode from most recent --init")
 	pinsCmd.Flags().BoolVarP(&PinsOpts.remote, "remote", "r", false, "for --list mode only, recover the manifest from pinning service (hidden)")
 	pinsCmd.Flags().BoolVarP(&PinsOpts.all, "all", "a", false, "for --init and --freshen modes only, download full index chunks as well as Bloom filter")
-	pinsCmd.Flags().Float64VarP(&PinsOpts.sleep, "sleep", "s", 0.0, "the number of seconds to sleep between requests during download (default .25) (hidden)")
+	pinsCmd.Flags().Float64VarP(&PinsOpts.sleep, "sleep", "s", .25, "the number of seconds to sleep between requests during download (hidden)")
 	pinsCmd.Flags().BoolVarP(&PinsOpts.share, "share", "S", false, "pin downloaded files to your local IPFS store, that is, share them (requires IPFS)")
 	pinsCmd.Flags().BoolVarP(&PinsOpts.init_all, "init_all", "n", false, "use --init --all instead (hidden)")
 	if !utils.IsTestMode() {

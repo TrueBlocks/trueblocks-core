@@ -9,7 +9,7 @@ Arguments:
   terms - a space separated list of one or more search terms (required)
 
 Flags:
-  -e, --expand            expand search to include all fields (default searches name, address, and symbol only)
+  -e, --expand            expand search to include all fields (search name, address, and symbol otherwise)
   -m, --match_case        do case-sensitive search
   -l, --all               include all accounts in the search
   -c, --custom            include your custom named accounts

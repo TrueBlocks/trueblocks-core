@@ -57,10 +57,10 @@ func init() {
 	scrapeCmd.Flags().SortFlags = false
 	scrapeCmd.PersistentFlags().SortFlags = false
 	scrapeCmd.Flags().BoolVarP(&ScrapeOpts.pin, "pin", "p", false, "pin new chunks (and blooms) to IPFS (requires Pinata key and running IPFS node)")
-	scrapeCmd.Flags().Float64VarP(&ScrapeOpts.sleep, "sleep", "s", 0.0, "the number of seconds to sleep between passes (default 14)")
-	scrapeCmd.Flags().Uint64VarP(&ScrapeOpts.n_blocks, "n_blocks", "n", 0, "maximum number of blocks to process (default 2000)")
-	scrapeCmd.Flags().Uint64VarP(&ScrapeOpts.n_block_procs, "n_block_procs", "b", 0, "number of concurrent block channels for blaze (hidden)")
-	scrapeCmd.Flags().Uint64VarP(&ScrapeOpts.n_addr_procs, "n_addr_procs", "a", 0, "number of concurrent address channels for blaze (hidden)")
+	scrapeCmd.Flags().Float64VarP(&ScrapeOpts.sleep, "sleep", "s", 14, "the number of seconds to sleep between passes")
+	scrapeCmd.Flags().Uint64VarP(&ScrapeOpts.n_blocks, "n_blocks", "n", 2000, "maximum number of blocks to process")
+	scrapeCmd.Flags().Uint64VarP(&ScrapeOpts.n_block_procs, "n_block_procs", "b", 10, "number of concurrent block channels for blaze (hidden)")
+	scrapeCmd.Flags().Uint64VarP(&ScrapeOpts.n_addr_procs, "n_addr_procs", "a", 20, "number of concurrent address channels for blaze (hidden)")
 	if !utils.IsTestMode() {
 		scrapeCmd.Flags().MarkHidden("n_block_procs")
 		scrapeCmd.Flags().MarkHidden("n_addr_procs")

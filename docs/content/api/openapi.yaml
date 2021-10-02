@@ -371,7 +371,7 @@ paths:
       operationId: accounts-monitors
       parameters:
         - name: addrs
-          description: one or more addresses (0x...) to list
+          description: one or more addresses (0x...) to process
           required: true
           style: form
           in: query
@@ -381,16 +381,16 @@ paths:
             items:
               type: string
               format: address_t
-        - name: delete
-          description: delete a previously created monitor (or undelete if already deleted)
+        - name: appearances
+          description: export a list of appearances
           required: false
           style: form
           in: query
           explode: true
           schema:
             type: boolean
-        - name: remove
-          description: remove a previously deleted monitor
+        - name: clean
+          description: clean (i.e. remove duplicate appearances) from all existing monitors
           required: false
           style: form
           in: query
@@ -432,7 +432,7 @@ paths:
               format: string_t
         - name: expand
           description: >
-            expand search to include all fields (default searches name, address, and symbol only)
+            expand search to include all fields (search name, address, and symbol otherwise)
           required: false
           style: form
           in: query
@@ -1298,7 +1298,7 @@ paths:
           schema:
             type: boolean
         - name: n_blocks
-          description: maximum number of blocks to process (default 2000)
+          description: maximum number of blocks to process
           required: false
           style: form
           in: query

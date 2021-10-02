@@ -74,7 +74,7 @@ func runExport(cmd *cobra.Command, args []string) {
 	if ExportOpts.first_record > 0 {
 		options += " --first_record " + fmt.Sprintf("%d", ExportOpts.first_record)
 	}
-	if ExportOpts.max_records > 0 {
+	if ExportOpts.max_records > 0 && ExportOpts.max_records != 250 {
 		options += " --max_records " + fmt.Sprintf("%d", ExportOpts.max_records)
 	}
 	if ExportOpts.clean {
@@ -104,7 +104,7 @@ func runExport(cmd *cobra.Command, args []string) {
 	if ExportOpts.skip_ddos {
 		options += " --skip_ddos"
 	}
-	if ExportOpts.max_traces > 0 {
+	if ExportOpts.max_traces != 250 {
 		options += " --max_traces " + fmt.Sprintf("%d", ExportOpts.max_traces)
 	}
 	if ExportOpts.first_block > 0 {

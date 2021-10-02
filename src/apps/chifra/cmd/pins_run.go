@@ -52,7 +52,7 @@ func runPins(cmd *cobra.Command, args []string) {
 	if PinsOpts.all {
 		options += " --all"
 	}
-	if PinsOpts.sleep > 0.0 {
+	if PinsOpts.sleep != .25 {
 		options += " --sleep " + fmt.Sprintf("%.1f", PinsOpts.sleep)
 	}
 	if PinsOpts.share {

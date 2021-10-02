@@ -77,7 +77,7 @@ func init() {
 	blocksCmd.Flags().BoolVarP(&BlocksOpts.count, "count", "c", false, "display the number of the lists of appearances for --apps, --uniq, or --uniq_tx")
 	blocksCmd.Flags().BoolVarP(&BlocksOpts.cache, "cache", "o", false, "force a write of the block to the cache")
 	blocksCmd.Flags().Uint64VarP(&BlocksOpts.list, "list", "l", 0, "summary list of blocks running backwards from latest block minus num (hidden)")
-	blocksCmd.Flags().Uint64VarP(&BlocksOpts.list_count, "list_count", "C", 0, "the number of blocks to report for --list option (hidden)")
+	blocksCmd.Flags().Uint64VarP(&BlocksOpts.list_count, "list_count", "C", 20, "the number of blocks to report for --list option (hidden)")
 	if !utils.IsTestMode() {
 		blocksCmd.Flags().MarkHidden("list")
 		blocksCmd.Flags().MarkHidden("list_count")

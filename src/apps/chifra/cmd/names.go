@@ -69,7 +69,7 @@ func init() {
 
 	namesCmd.Flags().SortFlags = false
 	namesCmd.PersistentFlags().SortFlags = false
-	namesCmd.Flags().BoolVarP(&NamesOpts.expand, "expand", "e", false, "expand search to include all fields (default searches name, address, and symbol only)")
+	namesCmd.Flags().BoolVarP(&NamesOpts.expand, "expand", "e", false, "expand search to include all fields (search name, address, and symbol otherwise)")
 	namesCmd.Flags().BoolVarP(&NamesOpts.match_case, "match_case", "m", false, "do case-sensitive search")
 	namesCmd.Flags().BoolVarP(&NamesOpts.all, "all", "l", false, "include all accounts in the search")
 	namesCmd.Flags().BoolVarP(&NamesOpts.custom, "custom", "c", false, "include your custom named accounts")
