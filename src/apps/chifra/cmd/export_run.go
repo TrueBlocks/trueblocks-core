@@ -19,7 +19,21 @@ import (
 )
 
 func validateExportArgs(cmd *cobra.Command, args []string) error {
-	err := validateGlobalFlags(cmd, args)
+	err := validateOneAddr(args)
+	if err != nil {
+		return err
+	}
+
+	err = validateEnum("--summarize_by", ExportOpts.summarize_by, "[yearly|quarterly|monthly|weekly|daily|hourly|blockly|tx]")
+	if err != nil {
+		return err
+	}
+
+	if len(ExportOpts.summarize_by) > 0 && !ExportOpts.accounting {
+		return makeError("You may use --summarized_by only with the --accounting option.")
+	}
+
+	err = validateGlobalFlags(cmd, args)
 	if err != nil {
 		return err
 	}

@@ -48,6 +48,7 @@ Notes:
 
 type monitorsOptionsType struct {
 	appearances bool
+	count       bool
 	clean       bool
 	freshen     bool
 	first_block uint64
@@ -62,6 +63,7 @@ func init() {
 	monitorsCmd.Flags().SortFlags = false
 	monitorsCmd.PersistentFlags().SortFlags = false
 	monitorsCmd.Flags().BoolVarP(&MonitorsOpts.appearances, "appearances", "p", false, "export a list of appearances")
+	monitorsCmd.Flags().BoolVarP(&MonitorsOpts.count, "count", "U", false, "present only the number of records")
 	monitorsCmd.Flags().BoolVarP(&MonitorsOpts.clean, "clean", "", false, "clean (i.e. remove duplicate appearances) from all existing monitors")
 	monitorsCmd.Flags().BoolVarP(&MonitorsOpts.freshen, "freshen", "f", false, "freshen but do not print the monitored data (hidden)")
 	monitorsCmd.Flags().Uint64VarP(&MonitorsOpts.first_block, "first_block", "F", 0, "first block to process (inclusive) (hidden)")

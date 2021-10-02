@@ -1,2 +1,0 @@
-chifra monitors  0x001d14804b399c6ef80e64576f657660804fec0b --undelete
-TIME ~ CLOCK - <INFO>  : Monitor 0x001d14804b399c6ef80e64576f657660804fec0b must be deleted first

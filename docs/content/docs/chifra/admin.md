@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2021-10-01T22:00:19
+date: 2021-10-01T22:16:04
 lastmod:
   - :git
   - lastmod
@@ -157,7 +157,7 @@ This tool is not yet ready for production use. Please return to this page later.
 
 ### usage
 
-`Usage:`    chifra init [-l|-i|-f|-a|-S|-v|-h]  
+`Usage:`    chifra pins [-l|-i|-f|-a|-S|-v|-h]  
 `Purpose:`  Manage pinned index of appearances and associated Bloom filters.
 
 `Where:`

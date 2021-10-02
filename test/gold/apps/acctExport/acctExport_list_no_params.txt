@@ -1,0 +1,20 @@
+chifra list  
+Error: 
+  At least one valid Ethereum address is required
+
+Usage:
+  chifra list [flags] <address> [address...]
+
+Arguments:
+  addrs - one or more addresses (0x...) to list (required)
+
+Flags:
+  -U, --count              return only the number of records
+  -F, --first_block uint   first block to process (inclusive) (hidden)
+  -L, --last_block uint    last block to process (inclusive) (hidden)
+
+Global Flags:
+  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
+  -h, --help         display this help screen
+  -v, --verbose      enable verbose (increase detail with --log_level)
+

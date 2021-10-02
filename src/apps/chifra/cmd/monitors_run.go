@@ -20,6 +20,13 @@ import (
 )
 
 func validateMonitorsArgs(cmd *cobra.Command, args []string) error {
+	if !utils.IsApiMode() && !MonitorsOpts.clean {
+		err := validateOneAddr(args)
+		if err != nil {
+			return err
+		}
+	}
+
 	err := validateGlobalFlags(cmd, args)
 	if err != nil {
 		return err
@@ -30,11 +37,11 @@ func validateMonitorsArgs(cmd *cobra.Command, args []string) error {
 
 func runMonitors(cmd *cobra.Command, args []string) {
 	options := ""
-	if utils.IsApiMode() {
-		options += " --appearances"
-	}
 	if MonitorsOpts.appearances {
 		options += " --appearances"
+	}
+	if MonitorsOpts.count {
+		options += " --count"
 	}
 	if MonitorsOpts.clean {
 		options += " --clean"

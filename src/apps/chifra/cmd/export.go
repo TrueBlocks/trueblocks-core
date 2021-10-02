@@ -99,7 +99,7 @@ func init() {
 	exportCmd.Flags().BoolVarP(&ExportOpts.emitter, "emitter", "", false, "for log export only, export only if one of the given export addresses emitted the event")
 	exportCmd.Flags().StringSliceVarP(&ExportOpts.source, "source", "", nil, "for log export only, export only one of these addresses emitted the event")
 	exportCmd.Flags().BoolVarP(&ExportOpts.relevant, "relevant", "", false, "for log and accounting export only, if true export only logs relevant to one of the given export addresses")
-	exportCmd.Flags().BoolVarP(&ExportOpts.count, "count", "U", false, "only available for --appearances mode, if present return only the number of records")
+	exportCmd.Flags().BoolVarP(&ExportOpts.count, "count", "U", false, "only available for --appearances mode, if present, return only the number of records")
 	exportCmd.Flags().Uint64VarP(&ExportOpts.first_record, "first_record", "c", 0, "the first record to process")
 	exportCmd.Flags().Uint64VarP(&ExportOpts.max_records, "max_records", "e", 250, "the maximum number of records to process before reporting")
 	exportCmd.Flags().BoolVarP(&ExportOpts.clean, "clean", "", false, "clean (i.e. remove duplicate appearances) from all existing monitors")

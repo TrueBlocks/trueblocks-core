@@ -13,14 +13,18 @@
 package cmd
 
 import (
-	"errors"
+	"fmt"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/utils"
 	"github.com/spf13/cobra"
 )
 
 func validateListArgs(cmd *cobra.Command, args []string) error {
-	if len(args) > 0 && args[0] == "12" {
-		return ErrFunc(cmd, errors.New("Invalid argument "+args[0]))
+	if !utils.IsApiMode() {
+		err := validateOneAddr(args)
+		if err != nil {
+			return err
+		}
 	}
 
 	return nil
@@ -30,6 +34,12 @@ func runList(cmd *cobra.Command, args []string) {
 	options := " --appearances"
 	if ListOpts.count {
 		options += " --count"
+	}
+	if ListOpts.first_block > 0 {
+		options += " --first_block " + fmt.Sprintf("%d", ListOpts.first_block)
+	}
+	if ListOpts.last_block > 0 {
+		options += " --last_block " + fmt.Sprintf("%d", ListOpts.last_block)
 	}
 	arguments := ""
 	for _, arg := range args {

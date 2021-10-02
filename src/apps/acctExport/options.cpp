@@ -294,16 +294,16 @@ bool COptions::parseArguments(string_q& command) {
     if (count && (receipts || statements || logs || traces || emitter || factory))
         return usage("--count option is only available with --appearances option.");
 
-    if ((accounting) && (addrs.size() != 1))
+    if (accounting && (addrs.size() != 1))
         return usage("You may only use --accounting option with a single address.");
 
-    if ((accounting) && freshenOnly)
+    if (accounting && freshenOnly)
         return usage("Do not use the --accounting option with --freshen.");
 
     if ((accounting) && (appearances || logs || traces || receipts || statements))
         return usage("Do not use the --accounting option with other options.");
 
-    if (freshenOnly && (appearances || logs || traces || receipts || statements))
+    if (freshenOnly && (logs || traces || receipts || statements))
         return usage("Do not use the --freshen option with other options.");
 
     // Where will we start?

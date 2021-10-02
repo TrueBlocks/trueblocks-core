@@ -62,7 +62,7 @@ func validateOneAddr(args []string) error {
 			// 	fmt.Println("%v", err)
 		}
 	}
-	return errors.New(fmtError("At least one valid Ethereum address is required"))
+	return makeError("At least one valid Ethereum address is required")
 }
 
 func validateEnum(field, value, valid string) error {

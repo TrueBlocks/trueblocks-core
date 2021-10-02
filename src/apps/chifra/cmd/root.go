@@ -273,6 +273,7 @@ func PassItOn(path string, flags, arguments string) {
 	var wg sync.WaitGroup
 	wg.Add(2)
 
+	// fmt.Fprintf(os.Stderr, "Calling: %s %s\n", path, options)
 	cmd := exec.Command(path, options)
 	if utils.IsTestMode() {
 		cmd.Env = append(os.Environ(), "TEST_MODE=true")

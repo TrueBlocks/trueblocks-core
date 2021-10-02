@@ -1,0 +1,180 @@
+{
+  "data": [
+    {
+      "blockNumber": 62,
+      "transactionIndex": 99999,
+      "address": "0xbb7b8287f3f0a933474a79eae42cbca977791171",
+      "name": "Miner_025_000"
+    },
+    {
+      "blockNumber": 65,
+      "transactionIndex": 99999,
+      "address": "0xbb7b8287f3f0a933474a79eae42cbca977791171",
+      "name": "Miner_025_000"
+    },
+    {
+      "blockNumber": 66,
+      "transactionIndex": 99999,
+      "address": "0xbb7b8287f3f0a933474a79eae42cbca977791171",
+      "name": "Miner_025_000"
+    },
+    {
+      "blockNumber": 69,
+      "transactionIndex": 99999,
+      "address": "0xbb7b8287f3f0a933474a79eae42cbca977791171",
+      "name": "Miner_025_000"
+    },
+    {
+      "blockNumber": 73,
+      "transactionIndex": 99999,
+      "address": "0xbb7b8287f3f0a933474a79eae42cbca977791171",
+      "name": "Miner_025_000"
+    },
+    {
+      "blockNumber": 74,
+      "transactionIndex": 99999,
+      "address": "0xbb7b8287f3f0a933474a79eae42cbca977791171",
+      "name": "Miner_025_000"
+    },
+    {
+      "blockNumber": 75,
+      "transactionIndex": 99999,
+      "address": "0xbb7b8287f3f0a933474a79eae42cbca977791171",
+      "name": "Miner_025_000"
+    },
+    {
+      "blockNumber": 76,
+      "transactionIndex": 99999,
+      "address": "0xbb7b8287f3f0a933474a79eae42cbca977791171",
+      "name": "Miner_025_000"
+    },
+    {
+      "blockNumber": 80,
+      "transactionIndex": 99999,
+      "address": "0xbb7b8287f3f0a933474a79eae42cbca977791171",
+      "name": "Miner_025_000"
+    },
+    {
+      "blockNumber": 86,
+      "transactionIndex": 99999,
+      "address": "0xbb7b8287f3f0a933474a79eae42cbca977791171",
+      "name": "Miner_025_000"
+    },
+    {
+      "blockNumber": 87,
+      "transactionIndex": 99999,
+      "address": "0xbb7b8287f3f0a933474a79eae42cbca977791171",
+      "name": "Miner_025_000"
+    },
+    {
+      "blockNumber": 92,
+      "transactionIndex": 99999,
+      "address": "0xbb7b8287f3f0a933474a79eae42cbca977791171",
+      "name": "Miner_025_000"
+    },
+    {
+      "blockNumber": 93,
+      "transactionIndex": 99998,
+      "address": "0xbb7b8287f3f0a933474a79eae42cbca977791171",
+      "name": "Miner_025_000"
+    },
+    {
+      "blockNumber": 93,
+      "transactionIndex": 99999,
+      "address": "0xbb7b8287f3f0a933474a79eae42cbca977791171",
+      "name": "Miner_025_000"
+    },
+    {
+      "blockNumber": 94,
+      "transactionIndex": 99998,
+      "address": "0xbb7b8287f3f0a933474a79eae42cbca977791171",
+      "name": "Miner_025_000"
+    },
+    {
+      "blockNumber": 95,
+      "transactionIndex": 99999,
+      "address": "0xbb7b8287f3f0a933474a79eae42cbca977791171",
+      "name": "Miner_025_000"
+    },
+    {
+      "blockNumber": 97,
+      "transactionIndex": 99999,
+      "address": "0xbb7b8287f3f0a933474a79eae42cbca977791171",
+      "name": "Miner_025_000"
+    },
+    {
+      "blockNumber": 98,
+      "transactionIndex": 99999,
+      "address": "0xbb7b8287f3f0a933474a79eae42cbca977791171",
+      "name": "Miner_025_000"
+    },
+    {
+      "blockNumber": 99,
+      "transactionIndex": 99998,
+      "address": "0xbb7b8287f3f0a933474a79eae42cbca977791171",
+      "name": "Miner_025_000"
+    },
+    {
+      "blockNumber": 99,
+      "transactionIndex": 99999,
+      "address": "0xbb7b8287f3f0a933474a79eae42cbca977791171",
+      "name": "Miner_025_000"
+    },
+    {
+      "blockNumber": 100,
+      "transactionIndex": 99999,
+      "address": "0xbb7b8287f3f0a933474a79eae42cbca977791171",
+      "name": "Miner_025_000"
+    }
+  ],
+  "types": [
+    {
+      "type": "CAppearance",
+      "fields": [
+        {
+          "name": "bn",
+          "type": "blocknum"
+        },
+        {
+          "name": "tx",
+          "type": "blocknum"
+        },
+        {
+          "name": "tc",
+          "type": "blocknum"
+        },
+        {
+          "name": "addr",
+          "type": "address"
+        },
+        {
+          "name": "reason",
+          "type": "text"
+        }
+      ]
+    }
+  ],
+  "meta": {
+    "unripe": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "client": "0xdeadbeef",
+    "first_block": "0xdeadbeef",
+    "last_block": "0xdeadbeef",
+    "accountedFor": {
+      "tags": "91-Early:Miners",
+      "address": "0xbb7b8287f3f0a933474a79eae42cbca977791171",
+      "name": "Miner_025_000",
+      "symbol": "",
+      "source": "",
+      "decimals": 0,
+      "description": "",
+      "is_custom": false,
+      "is_prefund": false,
+      "is_contract": false,
+      "is_erc20": false,
+      "is_erc721": false
+    }
+  }
+}

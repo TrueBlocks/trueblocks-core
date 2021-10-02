@@ -98,6 +98,14 @@ paths:
             items:
               type: string
               format: address_t
+        - name: count
+          description: present only the number of records
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
       responses:
         "200":
           description: returns the requested data
@@ -277,7 +285,7 @@ paths:
             type: boolean
         - name: count
           description: >
-            only available for --appearances mode, if present return only the number of records
+            only available for --appearances mode, if present, return only the number of records
           required: false
           style: form
           in: query
@@ -383,6 +391,14 @@ paths:
               format: address_t
         - name: appearances
           description: export a list of appearances
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: count
+          description: present only the number of records
           required: false
           style: form
           in: query
