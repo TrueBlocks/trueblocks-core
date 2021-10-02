@@ -1,4 +1,4 @@
-chifra names  0x0000000000000000000000000000000010101010 --expand --log_level 10 --fmt api
+chifra names  0x0000000000000000000000000000000010101010 --log_level 10 --fmt api --expand
 {"data": [
   {
     "deleted": false,

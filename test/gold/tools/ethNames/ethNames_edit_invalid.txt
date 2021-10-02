@@ -1,4 +1,4 @@
-chifra names  --invalid --expand --log_level 10 --fmt api
+chifra names  --invalid --log_level 10 --fmt api --expand
 Error: 
   unknown flag: --invalid
 

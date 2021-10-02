@@ -614,7 +614,7 @@ string_q getVersionFromClient(void) {
     timestamp_t diff = now - lastUpdate;
     if (diff > 20 || !contains(contents, getCurlContext()->baseURL)) {
         // We do this to avoid constantly hitting the node just to see if it's there.
-        // If the rpcProvider changed or we haven't checked for a while, check it again.
+        // If the rpcProvider changed or we haven't checked in 20 seconds, check again.
         string_q clientVersion = callRPC("web3_clientVersion", "[]", false);
         if (!clientVersion.empty()) {
             stringToAsciiFile(clientVersionFn, getCurlContext()->baseURL + "\t" + clientVersion);

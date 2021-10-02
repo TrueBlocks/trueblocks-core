@@ -1,4 +1,4 @@
-chifra names  torj --pink --fmt txt
+chifra names  --pink --fmt txt
 Error: 
   unknown flag: --pink
 

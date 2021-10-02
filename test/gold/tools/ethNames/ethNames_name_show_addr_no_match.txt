@@ -1,2 +1,0 @@
-chifra names  no_torj --addr --fmt txt
-No results for --addr no_torj

@@ -1,1 +1,7 @@
-0xb64ef51c888972c908cfacf59b47c1afbc0ab8ac
+{"data": [
+  {
+    "address": "0xb64ef51c888972c908cfacf59b47c1afbc0ab8ac",
+    "decimals": 8
+  }], "types": [
+{ "type": "CAccountName", "fields": [{ "name": "address", "type": "address" }, { "name": "decimals", "type": "unumber" }] }
+], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef", "namePath": "--" } }

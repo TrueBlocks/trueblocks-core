@@ -1,2 +1,0 @@
-chifra names  0xCB --match_case --fmt txt
-No results for --match_case 0xCB

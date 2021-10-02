@@ -1,2 +1,0 @@
-chifra names  no_ETHER --verbose --fmt txt
-No results for -v:1 no_ETHER

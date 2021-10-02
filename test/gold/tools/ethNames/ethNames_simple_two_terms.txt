@@ -1,0 +1,6 @@
+chifra names  etwork one
+tags	address	name	symbol	decimals
+50-Tokens:ERC20	0x07147220fa6c06295464d695e4ec012f6aebc275	Super Module Network One	SMN1		18
+50-Tokens:ERC20	0xcc1230436557f1250812fabbee5b8524b43250f3	NarutoNetwork	NARUTO		18
+50-Tokens:ERC20	0xda80b20038bdf968c7307bb5907a469482cf6251	BrokerNekoNetwork	BNN		8
+50-Tokens:ERC20	0xff603f43946a3a28df5e6a73172555d8c8b02386	OneRoot Network Token	RNT		18

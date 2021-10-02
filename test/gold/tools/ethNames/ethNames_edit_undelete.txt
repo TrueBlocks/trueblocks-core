@@ -1,4 +1,4 @@
-chifra names  --undelete 0x0000000000000000000000000000000010101010 --expand --log_level 10 --fmt api
+chifra names  --undelete 0x0000000000000000000000000000000010101010 --log_level 10 --fmt api --expand
 TIME ~ CLOCK - <INFO>  : Cleaning 0x0000000000000000000000000000000010101010                                  TIME ~ CLOCK - <INFO>  : ---------------------------------------------
 TIME ~ CLOCK - <INFO>  : {
   "address": "0x0000000000000000000000000000000010101010"

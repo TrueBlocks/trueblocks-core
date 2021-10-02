@@ -1,2 +1,0 @@
-chifra names  cbCD Humaniq EtherScan --verbose --fmt txt
-No results for -v:1 cbCD Humaniq EtherScan

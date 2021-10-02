@@ -1,2 +1,0 @@
-chifra names  cbCC Humaniq Ether --fmt csv --expand
-No results for --expand cbCC Humaniq Ether

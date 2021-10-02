@@ -1,0 +1,8 @@
+chifra names  --prefund --custom 0001 --verbose
+tags	address	name	symbol	decimals	source
+81-Custom	0x0000000000000000000000000000000000000001	Account_1				Testing
+80-Prefund	0x001762430ea9c3a26e5749afdb70da5f78ddbb8c	Prefund_0001				Genesis
+80-Prefund	0x28818e18b610001321b31df6fe7d2815cdadc9f5	Prefund_1377				Genesis
+80-Prefund	0x6ca5de00817de0cedce5fd000128dede12648b3c	Prefund_3718				Genesis
+80-Prefund	0x936dcf000194e3bff50ac5b4243a3ba014d661d8	Prefund_5047				Genesis
+80-Prefund	0xc1b500011cfba95d7cd636e95e6cbf6167464b25	Prefund_6662				Genesis

@@ -1,2 +1,0 @@
-chifra names  0xCB1 --addr --fmt txt
-0xcb18b23d3fd1a69b520a6f9fb7f0de37525fb291

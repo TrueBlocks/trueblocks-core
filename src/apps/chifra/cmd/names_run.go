@@ -16,7 +16,27 @@ import (
 	"github.com/spf13/cobra"
 )
 
+func anyBase() bool {
+	return NamesOpts.expand ||
+		NamesOpts.match_case ||
+		NamesOpts.all ||
+		NamesOpts.custom ||
+		NamesOpts.prefund ||
+		NamesOpts.named ||
+		NamesOpts.addr ||
+		NamesOpts.to_custom ||
+		NamesOpts.clean
+}
+
 func validateNamesArgs(cmd *cobra.Command, args []string) error {
+	if NamesOpts.tags && anyBase() {
+		return makeError("Do not use the --tags option with any other option.")
+	}
+
+	if NamesOpts.collections && anyBase() {
+		return makeError("Do not use the --collection option with any other option.")
+	}
+
 	err := validateGlobalFlags(cmd, args)
 	if err != nil {
 		return err

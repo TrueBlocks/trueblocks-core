@@ -1,3 +1,0 @@
-chifra names  0xcb Humaniq --match_case
-tags	address	name	symbol	decimals
-50-Tokens:ERC20	0xcbcc0f036ed4788f63fc0fee32873d6a7487b908	Humaniq	HMQ		8

@@ -1,3 +1,0 @@
-chifra names  0xCB1 --verbose --fmt txt
-tags	address	name	symbol	decimals	source
-90-Individuals:Gitcoin Grants	0xcb18b23d3fd1a69b520a6f9fb7f0de37525fb291	Name 0xcb18b23d				Gitcoin Website

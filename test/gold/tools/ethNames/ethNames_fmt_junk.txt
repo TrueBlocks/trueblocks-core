@@ -1,4 +1,4 @@
-chifra names  tip --expand --fmt junk
+chifra names  tip --fmt junk
 Error: 
   The --fmt option (junk) must be one of [ json | txt | csv | api ]
 

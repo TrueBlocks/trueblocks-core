@@ -1,2 +1,0 @@
-chifra names  Humaniq 1e17 Ether --verbose --fmt txt
-No results for -v:1 Humaniq 1e17 Ether

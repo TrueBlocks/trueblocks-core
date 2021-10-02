@@ -182,7 +182,11 @@ bool COptions::parseArguments(string_q& command) {
     for (auto term : terms)
         searches.push_back(term);
 
+#define anyBase() (match_case || expand || all || custom || prefund || named || addr || to_custom || clean)
+
     if (collections) {
+        if (anyBase())
+            return usage("Do not use the --collections option with any other option.");
         handle_collections(terms);
         return false;
     }
@@ -229,6 +233,8 @@ bool COptions::parseArguments(string_q& command) {
         searchFields += "\t[{SOURCE}]";
 
     if (tags) {
+        if (anyBase())
+            return usage("Do not use the --tags option with any other option.");
         manageFields("CAccountName:all", false);
         manageFields("CAccountName:tags", true);
         format = "[{TAGS}]";

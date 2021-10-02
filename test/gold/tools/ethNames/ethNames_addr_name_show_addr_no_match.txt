@@ -1,2 +1,0 @@
-chifra names  0x01 torj --addr --fmt txt
-No results for --addr 0x01 torj

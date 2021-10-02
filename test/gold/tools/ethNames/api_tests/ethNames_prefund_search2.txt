@@ -1,0 +1,137 @@
+{
+  "data": [
+    {
+      "tags": "80-Prefund",
+      "address": "0x012f396a2b5eb83559bac515e5210df2c8c362ba",
+      "name": "Prefund_0040",
+      "symbol": "",
+      "source": "Genesis",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "80-Prefund",
+      "address": "0x0134ff38155fabae94fd35c4ffe1d79de7ef9c59",
+      "name": "Prefund_0041",
+      "symbol": "",
+      "source": "Genesis",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "80-Prefund",
+      "address": "0x0136a5af6c3299c6b5f005fdaddb148c070b299b",
+      "name": "Prefund_0042",
+      "symbol": "",
+      "source": "Genesis",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "80-Prefund",
+      "address": "0x01488ad3da603c4cdd6cb0b7a1e30d2a30c8fc38",
+      "name": "Prefund_0043",
+      "symbol": "",
+      "source": "Genesis",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "80-Prefund",
+      "address": "0x014974a1f46bf204944a853111e52f1602617def",
+      "name": "Prefund_0044",
+      "symbol": "",
+      "source": "Genesis",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "80-Prefund",
+      "address": "0x014b7f67b14f5d983d87014f570c8b993b9872b5",
+      "name": "Prefund_0045",
+      "symbol": "",
+      "source": "Genesis",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "80-Prefund",
+      "address": "0x0151fa5d17a2dce2d7f1eb39ef7fe2ad213d5d89",
+      "name": "Prefund_0046",
+      "symbol": "",
+      "source": "Genesis",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "80-Prefund",
+      "address": "0x01577afd4e50890247c9b10d44af73229aec884f",
+      "name": "Prefund_0047",
+      "symbol": "",
+      "source": "Genesis",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "80-Prefund",
+      "address": "0x015f097d9acddcddafaf2a107eb93a40fc94b04c",
+      "name": "Prefund_0048",
+      "symbol": "",
+      "source": "Genesis",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "80-Prefund",
+      "address": "0x0169c1c210eae845e56840412e1f65993ea90fb4",
+      "name": "Prefund_0049",
+      "symbol": "",
+      "source": "Genesis",
+      "decimals": 0,
+      "description": ""
+    }
+  ],
+  "types": [
+    {
+      "type": "CAccountName",
+      "fields": [
+        {
+          "name": "tags",
+          "type": "text"
+        },
+        {
+          "name": "address",
+          "type": "address"
+        },
+        {
+          "name": "name",
+          "type": "text"
+        },
+        {
+          "name": "symbol",
+          "type": "text"
+        },
+        {
+          "name": "source",
+          "type": "text"
+        },
+        {
+          "name": "decimals",
+          "type": "unumber"
+        },
+        {
+          "name": "description",
+          "type": "text"
+        }
+      ]
+    }
+  ],
+  "meta": {
+    "unripe": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "client": "0xdeadbeef",
+    "namePath": "--"
+  }
+}

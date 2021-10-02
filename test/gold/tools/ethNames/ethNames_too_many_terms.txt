@@ -1,2 +1,0 @@
-chifra names  88897 torj scan etwork --verbose --fmt txt
-No results for -v:1 88897 torj scan etwork

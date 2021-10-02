@@ -1,2 +1,0 @@
-chifra names  Ether 1e17 --verbose --fmt txt
-No results for -v:1 Ether 1e17
