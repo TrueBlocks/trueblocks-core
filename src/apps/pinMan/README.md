@@ -4,7 +4,7 @@ This tool is not yet ready for production use. Please return to this page later.
 
 ### Usage
 
-`Usage:`    chifra pins [-l|-i|-f|-a|-S|-v|-h]  
+`Usage:`    chifra init [-l|-i|-f|-a|-S|-v|-h]  
 `Purpose:`  Manage pinned index of appearances and associated Bloom filters.
 
 `Where:`

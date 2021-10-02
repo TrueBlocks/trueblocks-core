@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2021-10-01T21:46:07
+date: 2021-10-01T22:00:19
 lastmod:
   - :git
   - lastmod
@@ -151,7 +151,7 @@ If you run `chifra init` and allow it to complete, the next time you run `chifra
 - One of `--list`, `--init`, or `--init_all` is required.
 - the `--pin_locally` option only works if the IPFS executable is in your path.
 **Source code**: [`apps/pinMan`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/pinMan)
-## chifra init
+## chifra pins
 
 This tool is not yet ready for production use. Please return to this page later.
 
