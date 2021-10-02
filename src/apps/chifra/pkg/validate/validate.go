@@ -10,7 +10,7 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-package cmd
+package validate
 
 import (
 	"errors"
@@ -38,24 +38,34 @@ func usage(msg string, values ...string) error {
 	return usageEx("", msg, values)
 }
 
-func fmtError(msg string) string {
+func FmtError(msg string) string {
 	return "\n  " + msg + "\n"
 }
 
-func isValidAddress(addr string) (bool, error) {
+/* Expects str to be in 0xNNNNNNN...NNNN format */
+// TODO: check if ParseUint has better performance
+func IsHex(str string) bool {
+	return len(strings.Trim(str[2:], "0123456789abcdefABCDEF")) == 0
+}
+
+func Is0xPrefixed(str string) bool {
+	return str[:2] == "0x"
+}
+
+func IsValidAddress(addr string) (bool, error) {
 	if len(addr) != 42 {
-		return false, errors.New(fmtError("address (" + addr + ") is not 42 characters long"))
-	} else if addr[:2] != "0x" {
-		return false, errors.New(fmtError("address (" + addr + ") does not start with '0x'"))
-	} else if len(strings.Trim(addr[2:], "0123456789abcdefABCDEF")) > 0 {
+		return false, errors.New(FmtError("address (" + addr + ") is not 42 characters long"))
+	} else if !Is0xPrefixed(addr) {
+		return false, errors.New(FmtError("address (" + addr + ") does not start with '0x'"))
+	} else if !IsHex(addr) {
 		return false, errors.New("address (" + addr + ") does not appear to be hex")
 	}
 	return true, nil
 }
 
-func validateOneAddr(args []string) error {
+func ValidateOneAddr(args []string) error {
 	for _, arg := range args {
-		val, _ := isValidAddress(arg)
+		val, _ := IsValidAddress(arg)
 		if val {
 			return nil
 			// } else {
@@ -65,7 +75,7 @@ func validateOneAddr(args []string) error {
 	return usage("At least one valid Ethereum address is required")
 }
 
-func validateEnum(field, value, valid string) error {
+func ValidateEnum(field, value, valid string) error {
 	if len(value) == 0 {
 		return nil
 	}
@@ -85,15 +95,15 @@ func validateEnum(field, value, valid string) error {
 	msg := "The " + field + " option ("
 	msg += value
 	msg += ") must be one of [ " + list + " ]"
-	return errors.New(fmtError(msg))
+	return errors.New(FmtError(msg))
 }
 
-func validateEnumSlice(field string, values []string, valid string) error {
+func ValidateEnumSlice(field string, values []string, valid string) error {
 	if len(values) == 0 {
 		return nil
 	}
 	for _, value := range values {
-		err := validateEnum(field, value, valid)
+		err := ValidateEnum(field, value, valid)
 		if err != nil {
 			return err
 		}
@@ -101,12 +111,12 @@ func validateEnumSlice(field string, values []string, valid string) error {
 	return nil
 }
 
-func validateGlobalFlags(cmd *cobra.Command, args []string) error {
-	if len(RootOpts.file) > 0 && !utils.FileExists(RootOpts.file) {
-		return usage("file {0} not found", RootOpts.file)
+func ValidateGlobalFlags(file string, fmt string, cmd *cobra.Command, args []string) error {
+	if len(file) > 0 && !utils.FileExists(file) {
+		return usage("file {0} not found", file)
 	}
 
-	err := validateEnum("--fmt", RootOpts.fmt, "[json|txt|csv|api]")
+	err := ValidateEnum("--fmt", fmt, "[json|txt|csv|api]")
 	if err != nil {
 		return err
 	}
