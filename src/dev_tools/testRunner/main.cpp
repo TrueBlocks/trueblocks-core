@@ -35,6 +35,11 @@ int main(int argc, const char* argv[]) {
         return EXIT_FAILURE;
 
     bool runLocal = getGlobalConfig("testRunner")->getConfigBool("settings", "runLocal", false);
+    if (runLocal) {
+        cerr << "Running local tests. Hit enter to continue." << endl;
+        getchar();
+    }
+
     total.git_hash = "git_" + string_q(GIT_COMMIT_HASH).substr(0, 10);
     string_q testFolder = getSourcePath3();
     uint32_t testID = 0;

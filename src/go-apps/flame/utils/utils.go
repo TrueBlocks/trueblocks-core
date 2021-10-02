@@ -27,6 +27,15 @@ func FileExists(filename string) bool {
 	return !info.IsDir()
 }
 
+// FolderExists help text todo
+func FolderExists(path string) bool {
+	info, err := os.Stat(path)
+	if os.IsNotExist(err) {
+		return false
+	}
+	return info.IsDir()
+}
+
 // GetParam returns a single the 'key' parameter in the URL
 func GetParam(key string, def string, r *http.Request) (string, bool) {
 	values, exists := r.URL.Query()[key]

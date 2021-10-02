@@ -104,6 +104,8 @@ void COptions::Init(void) {
     local = false;
     google = false;
     // END_CODE_INIT
+
+    minArgs = 0;
 }
 
 //---------------------------------------------------------------------------------------------------

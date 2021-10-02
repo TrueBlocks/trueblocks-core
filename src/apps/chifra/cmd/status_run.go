@@ -72,10 +72,14 @@ func runStatus(cmd *cobra.Command, args []string) {
 		options += " --set_config"
 	}
 	if StatusOpts.test_start > 0 {
-		options += " --test_start " + fmt.Sprintf("%d", StatusOpts.test_start)
+		if utils.IsTestMode() {
+			options += " --test_start " + fmt.Sprintf("%d", StatusOpts.test_start)
+		}
 	}
 	if StatusOpts.test_end != utils.NOPOS {
-		options += " --test_end " + fmt.Sprintf("%d", StatusOpts.test_end)
+		if utils.IsTestMode() {
+			options += " --test_end " + fmt.Sprintf("%d", StatusOpts.test_end)
+		}
 	}
 	arguments := ""
 	for _, arg := range args {

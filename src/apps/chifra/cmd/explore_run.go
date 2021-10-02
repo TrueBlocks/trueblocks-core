@@ -17,10 +17,6 @@ import (
 )
 
 func validateExploreArgs(cmd *cobra.Command, args []string) error {
-	if len(args) == 0 {
-		return makeError("You must provide at least one search term")
-	}
-
 	err := validateGlobalFlags(cmd, args)
 	if err != nil {
 		return err
