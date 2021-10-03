@@ -576,14 +576,16 @@ bool CCommandOption::finishCleanup(void) {
             def_val = "NOPOS";
         }
     }
+
     if (option_type == "description") {
         swagger_descr = trim(substitute(description, "|", "\n        "));
     } else if (option_type != "note" && option_type != "error" && option_type != "config") {
         swagger_descr = trim(substitute(description, "|", "\n          "));
     }
-    // if (option_type != "note" && option_type != "error" && generate != "config") {
-    //     description = trim(substitute(description, "|", " "));
-    // }
+
+    if (option_type != "note" && option_type != "error" && generate != "config") {
+        description = trim(substitute(description, "|", " "));
+    }
 
     isList = contains(data_type, "list<");
     isEnumList = contains(data_type, "list<enum");
