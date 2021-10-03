@@ -223,8 +223,8 @@ bool COptions::parseArguments(string_q& command) {
         return true;
     // fall through...
 
-    // We need history, we don't have it, so try a different server. Fail silently. The user will be warned in the
-    // response
+    // We need history, we don't have it, so try a different server. Fail silently.
+    // The user will be warned in the response
     string_q rpcProvider = getGlobalConfig()->getConfigStr("settings", "rpcProvider", "http://localhost:8545");
     string_q balanceProvider = getGlobalConfig()->getConfigStr("settings", "balanceProvider", rpcProvider);
     if (rpcProvider == balanceProvider || balanceProvider.empty())
