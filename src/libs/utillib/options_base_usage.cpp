@@ -63,7 +63,7 @@ string_q COptionsBase::get_header(void) const {
         os << "### Usage" << endl;
         os << endl;
         os << "`Usage:`"
-           << "    " << progNameMap[getProgName()] << " " << get_options() << "  " << endl;
+           << "    " << path_2_Cmd(getProgName()) << " " << get_options() << "  " << endl;
     } else {
         os << endl;
         os << "Usage:" << endl;
@@ -462,5 +462,80 @@ void errorMessage(const string_q& msg) {
             << endl;
     }
 }
+
+//--------------------------------------------------------------------------------
+map<string_q, string_q> pathCmdChifraMap = {
+    make_pair("acctExport --appearances", "chifra list"),
+    make_pair("acctExport", "chifra export"),
+    make_pair("acctExport --appearances", "chifra monitors"),
+    make_pair("ethNames", "chifra names"),
+    make_pair("grabABI", "chifra abis"),
+    make_pair("getBlocks", "chifra blocks"),
+    make_pair("getTrans", "chifra transactions"),
+    make_pair("getReceipts", "chifra receipts"),
+    make_pair("getLogs", "chifra logs"),
+    make_pair("getTraces", "chifra traces"),
+    make_pair("whenBlock", "chifra when"),
+    make_pair("getState", "chifra state"),
+    make_pair("getTokens", "chifra tokens"),
+    make_pair("cacheStatus", "chifra status"),
+    make_pair("flame", "chifra serve"),
+    make_pair("blockScrape", "chifra scrape"),
+    make_pair("pinMan --init", "chifra init"),
+    make_pair("pinMan", "chifra pins"),
+    make_pair("getQuotes", "chifra quotes"),
+    make_pair("fireStorm", "chifra explore"),
+    make_pair("ethslurp", "chifra slurp"),
+    make_pair("makeClass", "makeClass"),
+    make_pair("testRunner", "testRunner"),
+    make_pair("chifra", "chifra"),
+};
+string_q path_2_Cmd(const string_q& path) {
+    return pathCmdChifraMap[path];
+}
+
+//------------------------------------------------------------------------------------------------
+map<string, string> cmdPathChifraMap = {
+    {"list", "acctExport --appearances"},
+    {"export", "acctExport"},
+    {"monitors", "acctExport --appearances"},
+    {"names", "ethNames"},
+    {"abis", "grabABI"},
+    {"blocks", "getBlocks"},
+    {"transactions", "getTrans"},
+    {"receipts", "getReceipts"},
+    {"logs", "getLogs"},
+    {"traces", "getTraces"},
+    {"when", "whenBlock"},
+    {"state", "getState"},
+    {"tokens", "getTokens"},
+    {"status", "cacheStatus"},
+    {"serve", "flame"},
+    {"scrape", "blockScrape"},
+    {"init", "pinMan --init"},
+    {"pins", "pinMan"},
+    {"quotes", "getQuotes"},
+    {"explore", "fireStorm"},
+    {"slurp", "ethslurp"},
+};
+string_q cmd_2_Path(const string_q& cmd) {
+    return cmdPathChifraMap[cmd];
+}
+
+// BEG_CODE _CHIFRA_PAIRMAP
+// -- Accounts
+// -- Chain Data
+// -- Chain State
+// -- Admin
+// -- Other
+// END_CODE _CHIFRA_PAIRMAP
+//
+// BEG_CODE _CHIFRA_CMDMAP
+// -- Accounts
+// -- Chain Data
+// -- Chain State
+// -- Admin
+// -- Other
+// END_CODE _CHIFRA_CMDMAP
 
 }  // namespace qblocks

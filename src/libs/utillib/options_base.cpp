@@ -648,42 +648,6 @@ bool COptionsBase::flag_required(const string_q& command) const {
 }
 
 //--------------------------------------------------------------------------------
-map<string_q, string_q> progNameMap = {
-    // BEG_CODE_CHIFRA_PAIRMAP
-    // -- Accounts
-    // list
-    make_pair("acctExport", "chifra export"),
-    // monitors
-    make_pair("ethNames", "chifra names"),
-    make_pair("grabABI", "chifra abis"),
-    // -- Chain Data
-    make_pair("getBlocks", "chifra blocks"),
-    make_pair("getTrans", "chifra transactions"),
-    make_pair("getReceipts", "chifra receipts"),
-    make_pair("getLogs", "chifra logs"),
-    make_pair("getTraces", "chifra traces"),
-    make_pair("whenBlock", "chifra when"),
-    // -- Chain State
-    make_pair("getState", "chifra state"),
-    make_pair("getTokens", "chifra tokens"),
-    // -- Admin
-    make_pair("cacheStatus", "chifra status"),
-    // serve
-    make_pair("blockScrape", "chifra scrape"),
-    // init
-    make_pair("pinMan", "chifra pins"),
-    // -- Other
-    make_pair("getQuotes", "chifra quotes"),
-    make_pair("fireStorm", "chifra explore"),
-    make_pair("ethslurp", "chifra slurp"),
-    // END_CODE_CHIFRA_PAIRMAP
-    //
-    make_pair("makeClass", "makeClass"),
-    make_pair("testRunner", "testRunner"),
-    make_pair("chifra", "chifra"),
-};
-
-//--------------------------------------------------------------------------------
 string_q COptionsBase::expandOption(string_q& arg) {
     string_q ret = arg;
 

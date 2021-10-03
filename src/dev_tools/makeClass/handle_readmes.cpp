@@ -61,8 +61,9 @@ bool visitReadme(const string_q& templatePath, void* data) {
         replaceAll(srcCode, "[{TOOL_PATH}]", folder + "/" + tool);
         replaceAll(docCode, "~/Library/Application Support/TrueBlocks/", "$CONFIG/");
         replaceAll(srcCode, "~/Library/Application Support/TrueBlocks/", "$CONFIG/");
-        replaceAll(docCode, "[{NAME}]", progNameMap[tool].empty() ? opts->getProgName() : progNameMap[tool]);
-        replaceAll(srcCode, "[{NAME}]", progNameMap[tool].empty() ? opts->getProgName() : progNameMap[tool]);
+        string_q cmdd = path_2_Cmd(tool).empty() ? opts->getProgName() : path_2_Cmd(tool);
+        replaceAll(docCode, "[{NAME}]", cmdd);
+        replaceAll(srcCode, "[{NAME}]", cmdd);
         replaceAll(docCode, "\n`Purpose", "  \n`Purpose");
 
         if (!contains(docPath, "chifra")) {

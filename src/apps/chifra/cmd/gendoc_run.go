@@ -13,59 +13,47 @@
 package cmd
 
 import (
+	"fmt"
+	"log"
+	"os"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/utils"
 	"github.com/spf13/cobra"
+	"github.com/spf13/cobra/doc"
 )
 
-func validateAbisArgs(cmd *cobra.Command, args []string) error {
-	if AbisOpts.classes {
-		return makeError("the '{0}' option is not implemented", "--classes")
-	}
-
-	if len(AbisOpts.sol) > 0 {
-		cleaned := "./" + strings.Replace(AbisOpts.sol, ".sol", "", 1) + ".sol"
-		if !utils.FileExists(cleaned) {
-			return makeError("file not found at {0}", cleaned)
-		}
-		return nil
-	}
-
-	if len(AbisOpts.find) == 0 && !AbisOpts.known {
-		err := validateOneAddr(args)
-		if err != nil {
-			return err
-		}
+func validateGendocArgs(cmd *cobra.Command, args []string) error {
+	if !utils.FolderExists("../build/docs/") {
+		cwd, _ := os.Getwd()
+		return makeError("Cannot find local ./docs folder in {0}", cwd)
 	}
 
 	err := validateGlobalFlags(cmd, args)
 	if err != nil {
 		return err
 	}
+
 	return nil
 }
 
-func runAbis(cmd *cobra.Command, args []string) {
-	options := ""
-	if AbisOpts.known {
-		options += " --known"
+func runGendoc(cmd *cobra.Command, args []string) {
+	err := doc.GenMarkdownTree(rootCmd, "../build/docs/")
+	if err != nil {
+		log.Fatal(err)
 	}
-	if len(AbisOpts.sol) > 0 {
-		options += " --sol " + AbisOpts.sol
-	}
-	for _, t := range AbisOpts.find {
-		options += " --find " + t
-	}
-	if AbisOpts.source {
-		options += " --source"
-	}
-	if AbisOpts.classes {
-		options += " --classes"
-	}
-	arguments := ""
 	for _, arg := range args {
-		arguments += " " + arg
+		fn := "../build/docs/chifra_" + arg + ".md"
+		if utils.FileExists(fn) {
+			contents := utils.AsciiFileToString(fn)
+			contents = strings.Replace(contents, "\n### SEE ALSO\n", "[{BB}]", -1)
+			contents = strings.Replace(contents, "### Synopsis", "[{BB}]##### Synopsis", -1)
+			contents = strings.Replace(contents, "### Options inherited from parent commands", "##### Global Flags", -1)
+			contents = strings.Replace(contents, "### Options", "##### Flags", -1)
+			contents = strings.Replace(contents, "Purpose:\n", "", -1)
+			contents = strings.Replace(contents, "\nArguments:\n", "```\n\n##### Arguments:\n\n```\n", -1)
+			contents = strings.Replace(contents, "```\nchifra", "```\n  chifra", -1)
+			fmt.Printf("%s", strings.Split(contents, "[{BB}]")[1])
+		}
 	}
-	PassItOn("grabABI", options, arguments)
 }

@@ -40,5 +40,5 @@ func runLogs(cmd *cobra.Command, args []string) {
 	for _, arg := range args {
 		arguments += " " + arg
 	}
-	PassItOn(GetCommandPath("getLogs"), options, arguments)
+	PassItOn("getLogs", options, arguments)
 }

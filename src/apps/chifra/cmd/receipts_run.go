@@ -44,5 +44,5 @@ func runReceipts(cmd *cobra.Command, args []string) {
 	for _, arg := range args {
 		arguments += " " + arg
 	}
-	PassItOn(GetCommandPath("getReceipts"), options, arguments)
+	PassItOn("getReceipts", options, arguments)
 }

@@ -13,39 +13,31 @@
 package cmd
 
 import (
-	"fmt"
+	"os"
 
 	"github.com/spf13/cobra"
 )
 
-func validateScrapeArgs(cmd *cobra.Command, args []string) error {
-	err := validateGlobalFlags(cmd, args)
-	if err != nil {
-		return err
-	}
-	return nil
+type gendocOptionsType struct {
+	readmes     bool
+	completions bool
+	manpages    bool
 }
 
-func runScrape(cmd *cobra.Command, args []string) {
-	options := ""
-	if ScrapeOpts.pin {
-		options += " --pin"
-	}
-	if ScrapeOpts.sleep != 14 {
-		options += " --sleep " + fmt.Sprintf("%.1f", ScrapeOpts.sleep)
-	}
-	if ScrapeOpts.n_blocks != 2000 {
-		options += " --n_blocks " + fmt.Sprintf("%d", ScrapeOpts.n_blocks)
-	}
-	if ScrapeOpts.n_block_procs != 10 {
-		options += " --n_block_procs " + fmt.Sprintf("%d", ScrapeOpts.n_block_procs)
-	}
-	if ScrapeOpts.n_addr_procs != 20 {
-		options += " --n_addr_procs " + fmt.Sprintf("%d", ScrapeOpts.n_addr_procs)
-	}
-	arguments := ""
-	for _, arg := range args {
-		arguments += " " + arg
-	}
-	PassItOn("blockScrape", options, arguments)
+var GendocOpts gendocOptionsType
+
+var gendocCmd = &cobra.Command{
+	Use:   "gendoc",
+	Short: "Generate docs",
+	Run:   runGendoc,
+	Args:  validateGendocArgs,
+}
+
+func init() {
+	listCmd.SetOut(os.Stderr)
+	gendocCmd.Flags().BoolVarP(&GendocOpts.readmes, "reamdes", "r", true, "generate readme docs")
+	gendocCmd.Flags().BoolVarP(&GendocOpts.completions, "completions", "c", true, "generate completions")
+	gendocCmd.Flags().BoolVarP(&GendocOpts.manpages, "manpages", "m", true, "generate man pages")
+	gendocCmd.SetUsageTemplate(UsageWithNotes(""))
+	rootCmd.AddCommand(gendocCmd)
 }

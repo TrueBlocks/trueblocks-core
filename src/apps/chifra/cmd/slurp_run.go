@@ -47,5 +47,5 @@ func runSlurp(cmd *cobra.Command, args []string) {
 	for _, arg := range args {
 		arguments += " " + arg
 	}
-	PassItOn(GetCommandPath("ethslurp"), options, arguments)
+	PassItOn("ethslurp", options, arguments)
 }

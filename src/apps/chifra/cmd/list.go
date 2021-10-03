@@ -45,6 +45,7 @@ var longList = `Purpose:
 var notesList = ``
 
 type listOptionsType struct {
+	appearances bool
 	count       bool
 	first_block uint64
 	last_block  uint64
@@ -60,9 +61,11 @@ func init() {
 	listCmd.Flags().BoolVarP(&ListOpts.count, "count", "U", false, "return only the number of records")
 	listCmd.Flags().Uint64VarP(&ListOpts.first_block, "first_block", "F", 0, "first block to process (inclusive) (hidden)")
 	listCmd.Flags().Uint64VarP(&ListOpts.last_block, "last_block", "L", 0, "last block to process (inclusive) (hidden)")
+	listCmd.Flags().BoolVarP(&ListOpts.appearances, "appearances", "p", false, "export a list of appearances")
 	if !utils.IsTestMode() {
 		listCmd.Flags().MarkHidden("first_block")
 		listCmd.Flags().MarkHidden("last_block")
+		listCmd.Flags().MarkHidden("appearances")
 	}
 	listCmd.Flags().SortFlags = false
 	listCmd.PersistentFlags().SortFlags = false

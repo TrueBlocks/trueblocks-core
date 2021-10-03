@@ -62,5 +62,5 @@ func runQuotes(cmd *cobra.Command, args []string) {
 	for _, arg := range args {
 		arguments += " " + arg
 	}
-	PassItOn(GetCommandPath("getQuotes"), options, arguments)
+	PassItOn("getQuotes", options, arguments)
 }

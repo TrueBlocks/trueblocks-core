@@ -32,5 +32,5 @@ func runServe(cmd *cobra.Command, args []string) {
 	for _, arg := range args {
 		arguments += " " + arg
 	}
-	PassItOn(GetCommandPath("flame"), options, arguments)
+	PassItOn("flame", options, arguments)
 }

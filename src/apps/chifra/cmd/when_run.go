@@ -50,5 +50,5 @@ func runWhen(cmd *cobra.Command, args []string) {
 	for _, arg := range args {
 		arguments += " " + arg
 	}
-	PassItOn(GetCommandPath("whenBlock"), options, arguments)
+	PassItOn("whenBlock", options, arguments)
 }

@@ -42,5 +42,5 @@ func runState(cmd *cobra.Command, args []string) {
 	for _, arg := range args {
 		arguments += " " + arg
 	}
-	PassItOn(GetCommandPath("getState"), options, arguments)
+	PassItOn("getState", options, arguments)
 }

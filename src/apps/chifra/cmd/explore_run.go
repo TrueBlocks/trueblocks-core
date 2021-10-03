@@ -37,5 +37,5 @@ func runExplore(cmd *cobra.Command, args []string) {
 	for _, arg := range args {
 		arguments += " " + arg
 	}
-	PassItOn(GetCommandPath("fireStorm"), options, arguments)
+	PassItOn("fireStorm", options, arguments)
 }

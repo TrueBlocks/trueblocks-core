@@ -63,5 +63,5 @@ func runBlocks(cmd *cobra.Command, args []string) {
 	for _, arg := range args {
 		arguments += " " + arg
 	}
-	PassItOn(GetCommandPath("getBlocks"), options, arguments)
+	PassItOn("getBlocks", options, arguments)
 }

@@ -43,5 +43,5 @@ func runTokens(cmd *cobra.Command, args []string) {
 	for _, arg := range args {
 		arguments += " " + arg
 	}
-	PassItOn(GetCommandPath("getTokens"), options, arguments)
+	PassItOn("getTokens", options, arguments)
 }

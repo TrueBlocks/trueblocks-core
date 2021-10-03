@@ -45,5 +45,5 @@ func runTransactions(cmd *cobra.Command, args []string) {
 	for _, arg := range args {
 		arguments += " " + arg
 	}
-	PassItOn(GetCommandPath("getTrans"), options, arguments)
+	PassItOn("getTrans", options, arguments)
 }

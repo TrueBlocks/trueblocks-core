@@ -50,5 +50,5 @@ func runTraces(cmd *cobra.Command, args []string) {
 	for _, arg := range args {
 		arguments += " " + arg
 	}
-	PassItOn(GetCommandPath("getTraces"), options, arguments)
+	PassItOn("getTraces", options, arguments)
 }

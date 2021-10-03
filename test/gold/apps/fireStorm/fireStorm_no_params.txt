@@ -1,19 +1,2 @@
 chifra explore  
-Error: 
-  You must provide at least one search term
-
-Usage:
-  chifra explore [flags] <term> [term...]
-
-Arguments:
-  terms - one or more addresses, names, block, or transaction identifiers
-
-Flags:
-  -l, --local    open the local TrueBlocks explorer
-  -g, --google   search google excluding popular blockchain explorers
-
-Global Flags:
-  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
-  -h, --help         display this help screen
-  -v, --verbose      enable verbose (increase detail with --log_level)
-
+Opening https://etherscan.io/

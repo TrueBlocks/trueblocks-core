@@ -198,8 +198,8 @@ func ScanForProgress(stderrPipe io.Reader, fn func(string)) {
 	}
 }
 
-// GetCommandPath returns full path the the given tool
-func GetCommandPath(cmd string) string {
+// getCommandPath returns full path the the given tool
+func getCommandPath(cmd string) string {
 	usr, _ := user.Current()
 	dir := usr.HomeDir
 	return dir + "/.local/bin/chifra/" + cmd
@@ -274,7 +274,7 @@ func PassItOn(path string, flags, arguments string) {
 	wg.Add(2)
 
 	// fmt.Fprintf(os.Stderr, "Calling: %s %s\n", path, options)
-	cmd := exec.Command(path, options)
+	cmd := exec.Command(getCommandPath(path), options)
 	if utils.IsTestMode() {
 		cmd.Env = append(os.Environ(), "TEST_MODE=true")
 	}

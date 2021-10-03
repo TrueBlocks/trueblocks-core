@@ -19,7 +19,6 @@ extern string_q get_optfields(const CCommandOption& cmd);
 extern string_q get_setopts(const CCommandOption& cmd);
 extern string_q get_copyopts(const CCommandOption& cmd);
 extern string_q get_use(const CCommandOption& cmd);
-extern map<string, string> chifraCmdMap;
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::handle_gocmds(void) {
@@ -52,7 +51,7 @@ bool COptions::handle_gocmds(void) {
         replaceAll(source, "[{USE}]", get_use(ep));
         replaceAll(source, "[{ROUTE}]", toLower(ep.api_route));
         replaceAll(source, "[{PROPER}]", toProper(ep.api_route));
-        replaceAll(source, "[{PATH}]", chifraCmdMap[ep.api_route]);
+        replaceAll(source, "[{PATH}]", cmd_2_Path(ep.api_route));
         replaceAll(source, "[{OPT_FIELDS}]", get_optfields(ep));
         replaceAll(source, "[{LONG}]", "Purpose:\n  " + ep.description);
         replaceAll(source, "[{POSTNOTES}]", get_notes2(ep));
@@ -275,35 +274,3 @@ string_q get_copyopts(const CCommandOption& cmd) {
     }
     return os.str();
 }
-
-//------------------------------------------------------------------------------------------------
-map<string, string> chifraCmdMap = {
-    // BEG_CODE_CHIFRA_CMDMAP
-    // -- Accounts
-    {"list", "acctExport --appearances"},
-    {"export", "acctExport"},
-    {"monitors", "acctExport --appearances"},
-    {"names", "ethNames"},
-    {"abis", "grabABI"},
-    // -- Chain Data
-    {"blocks", "getBlocks"},
-    {"transactions", "getTrans"},
-    {"receipts", "getReceipts"},
-    {"logs", "getLogs"},
-    {"traces", "getTraces"},
-    {"when", "whenBlock"},
-    // -- Chain State
-    {"state", "getState"},
-    {"tokens", "getTokens"},
-    // -- Admin
-    {"status", "cacheStatus"},
-    {"serve", "flame"},
-    {"scrape", "blockScrape"},
-    {"init", "pinMan local --init"},
-    {"pins", "pinMan"},
-    // -- Other
-    {"quotes", "getQuotes"},
-    {"explore", "fireStorm"},
-    {"slurp", "ethslurp"},
-    // END_CODE_CHIFRA_CMDMAP
-};

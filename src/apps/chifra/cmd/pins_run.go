@@ -58,5 +58,5 @@ func runPins(cmd *cobra.Command, args []string) {
 	for _, arg := range args {
 		arguments += " " + arg
 	}
-	PassItOn(GetCommandPath("pinMan"), options, arguments)
+	PassItOn("pinMan", options, arguments)
 }
