@@ -2,7 +2,7 @@
 title: "Other"
 description: ""
 lead: ""
-date: 2021-10-02T19:43:50
+date: 2021-10-02T22:57:02
 lastmod:
   - :git
   - lastmod
@@ -50,8 +50,6 @@ The `chifra quotes` tool provides USD ($) price data to other tools and to the c
 
 `Notes:`
 
-- Valid pairs include any pair from the public Poloniex's API here:
-  https://poloniex.com/public?command=returnCurrencies.
 - Due to restrictions from Poloniex, this tool retrieves only 30 days of data
   at a time. You must repeatedly run this command until the data is up-to-date.
 

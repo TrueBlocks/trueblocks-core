@@ -72,10 +72,11 @@ bool COptions::handle_options(void) {
         notesStream << "    // clang-format off" << endl;
         configStream << "    // clang-format off" << endl;
         CStringArray warnings;
+        map<string, string> existing;
         for (auto option : optionArray) {
             option.verifyOptions(warnings);
             if ((option.group + "/" + option.tool) == tool.first) {
-                option.verifyHotkey(warnings);
+                option.verifyHotkey(warnings, existing);
                 if (option.tool == "chifra")
                     allAuto = false;
 

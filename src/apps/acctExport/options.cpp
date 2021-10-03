@@ -36,7 +36,7 @@ static const COption params[] = {
     COption("emitter", "", "", OPT_SWITCH, "for log export only, export only if one of the given export addresses emitted the event"),  // NOLINT
     COption("source", "", "list<addr>", OPT_FLAG, "for log export only, export only one of these addresses emitted the event"),  // NOLINT
     COption("relevant", "", "", OPT_SWITCH, "for log and accounting export only, if true export only logs relevant to one of the given export addresses"),  // NOLINT
-    COption("count", "U", "", OPT_SWITCH, "only available for --appearances mode, if present return only the number of records"),  // NOLINT
+    COption("count", "U", "", OPT_SWITCH, "only available for --appearances mode, if present, return only the number of records"),  // NOLINT
     COption("first_record", "c", "<blknum>", OPT_FLAG, "the first record to process"),
     COption("max_records", "e", "<blknum>", OPT_FLAG, "the maximum number of records to process before reporting"),
     COption("clean", "", "", OPT_SWITCH, "clean (i.e. remove duplicate appearances) from all existing monitors"),
@@ -45,7 +45,7 @@ static const COption params[] = {
     COption("unripe", "u", "", OPT_HIDDEN | OPT_SWITCH, "enable search of unripe (neither staged nor finalized) folder (assumes --staging)"),  // NOLINT
     COption("load", "", "<string>", OPT_HIDDEN | OPT_FLAG, "a comma separated list of dynamic traversers to load"),
     COption("reversed", "", "", OPT_HIDDEN | OPT_SWITCH, "produce results in reverse chronological order"),
-    COption("by_date", "b", "", OPT_HIDDEN | OPT_SWITCH, "produce results sorted by date (default is to report by address)"),  // NOLINT
+    COption("by_date", "b", "", OPT_HIDDEN | OPT_SWITCH, "produce results sorted by date (report by address otherwise)"),  // NOLINT
     COption("summarize_by", "z", "enum[yearly|quarterly|monthly|weekly|daily|hourly|blockly|tx]", OPT_HIDDEN | OPT_FLAG, "for --accounting only, summarize reconciliations by this time period"),  // NOLINT
     COption("first_block", "F", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive)"),
     COption("last_block", "L", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive)"),
@@ -233,7 +233,7 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("relevant", relevant);
     LOG_TEST_BOOL("count", count);
     LOG_TEST("first_record", first_record, (first_record == 0));
-    LOG_TEST("max_records", max_records, (max_records == (isApiMode() ? 250 : NOPOS)));
+    LOG_TEST("max_records", max_records, (max_records == 250));
     LOG_TEST_BOOL("clean", clean);
     LOG_TEST_BOOL("freshen", freshen);
     LOG_TEST_BOOL("staging", staging);
@@ -454,7 +454,7 @@ void COptions::Init(void) {
     relevant = false;
     count = false;
     first_record = 0;
-    max_records = (isApiMode() ? 250 : NOPOS);
+    max_records = 250;
     clean = false;
     staging = false;
     unripe = false;

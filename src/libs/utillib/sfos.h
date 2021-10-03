@@ -32,6 +32,7 @@ inline bool establishFolder(const string_q& path) {
 
 extern string_q getCWD(const string_q& filename = "");
 extern string_q doCommand(const string_q& cmd);
+extern string_q doCommand2(const string_q& cmd);
 extern string_q makeValidName(const string_q& inOut);
 extern bool isRunning(const string_q& prog);
 

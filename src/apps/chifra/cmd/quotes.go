@@ -33,15 +33,13 @@ var quotesCmd = &cobra.Command{
 
 var usageQuotes = `quotes [flags]`
 
-var shortQuotes = "freshen and/or display Ethereum price data"
+var shortQuotes = "freshen or display Ethereum price data"
 
 var longQuotes = `Purpose:
-  Freshen and/or display Ethereum price data.`
+  Freshen or display Ethereum price data.`
 
 var notesQuotes = `
 Notes:
-  - Valid pairs include any pair from the public Poloniex's API here:
-    https://poloniex.com/public?command=returnCurrencies.
   - Due to restrictions from Poloniex, this tool retrieves only 30 days of data
     at a time. You must repeatedly run this command until the data is up-to-date.`
 

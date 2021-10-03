@@ -31,7 +31,6 @@ class CCounter {
     size_t nVisited;
     size_t nProcessed;
     bool is_counting;
-    CStringArray replacements;
     CCounter(void) : fileCount(0), nVisited(0), nProcessed(0), is_counting(true) {
     }
 };
@@ -53,6 +52,7 @@ class COptions : public COptionsBase {
     CCounter counter;
     timestamp_t lastFormat;
     timestamp_t lastLint;
+    CCommandOptionArray endpointArray;
 
     ostringstream optionStream, initStream, localStream, autoStream, headerStream, configStream;
     ostringstream notesStream, errorStrStream, errorDefStream, debugStream, goCallStream;
@@ -190,3 +190,4 @@ inline string_q getTemplatePath(const string_q& part) {
 #define explorerPath string_q("/Users/jrush/Development/trueblocks-explorer/")
 #define endpointFile getSourcePath("cmd-line-endpoints.csv")
 #define optionsFile getSourcePath("cmd-line-options.csv")
+extern bool parseCommandData(const char* str, void* data);

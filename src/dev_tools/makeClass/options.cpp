@@ -117,6 +117,7 @@ bool COptions::parseArguments(string_q& command) {
     establishFolder(getDocsPathContent("data-model/"));
     establishFolder(getDocsPathContent("docs/"));
     establishFolder(getDocsPathContent("docs/chifra/"));
+    forEveryLineInAsciiFile(endpointFile, parseCommandData, &endpointArray);
 
     if (tsx)
         handle_tsx();
@@ -306,4 +307,22 @@ string_q getSourcePath(const string_q& rest) {
             return ret + "/trueblocks-core/src/" + rest;
     }
     return getSourcePathA(rest);
+}
+
+//---------------------------------------------------------------------------------------------------
+bool parseCommandData(const char* str, void* data) {
+    static CStringArray routeFields;
+    string_q line = str;
+    replaceAny(line, "\n\r", "");
+    if (routeFields.empty()) {
+        explode(routeFields, line, ',');
+        return true;
+    }
+
+    CCommandOptionArray* array = (CCommandOptionArray*)data;
+    CCommandOption option;
+    option.parseCSV(routeFields, line);
+    array->push_back(option);
+
+    return true;
 }

@@ -25,9 +25,6 @@ bool COptions::handle_gocmds(void) {
     LOG_INFO(cYellow, "handling go commands...", string_q(50, ' '), cOff);
     counter = CCounter();  // reset
 
-    CCommandOptionArray endpointArray;
-    forEveryLineInAsciiFile(endpointFile, parseCommandData, &endpointArray);
-
     for (auto ep : endpointArray) {
         if (!ep.is_visible)
             continue;
@@ -51,7 +48,6 @@ bool COptions::handle_gocmds(void) {
         replaceAll(source, "[{USE}]", get_use(ep));
         replaceAll(source, "[{ROUTE}]", toLower(ep.api_route));
         replaceAll(source, "[{PROPER}]", toProper(ep.api_route));
-        replaceAll(source, "[{PATH}]", cmd_2_Path(ep.api_route));
         replaceAll(source, "[{OPT_FIELDS}]", get_optfields(ep));
         replaceAll(source, "[{LONG}]", "Purpose:\n  " + ep.description);
         replaceAll(source, "[{POSTNOTES}]", get_notes2(ep));

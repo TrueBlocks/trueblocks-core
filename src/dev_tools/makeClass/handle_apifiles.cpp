@@ -24,9 +24,6 @@ void COptions::writeOpenApiFile(void) {
     LOG_INFO(cYellow, "handling openapi file...", cOff);
     counter = CCounter();  // reset
 
-    CCommandOptionArray endpointArray;
-    forEveryLineInAsciiFile(endpointFile, parseCommandData, &endpointArray);
-
     for (auto ep : endpointArray) {
         CCommandOptionArray params;
         for (auto option : optionArray)

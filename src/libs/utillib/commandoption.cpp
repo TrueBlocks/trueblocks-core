@@ -630,24 +630,6 @@ bool CCommandOption::finishCleanup(void) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool parseCommandData(const char* str, void* data) {
-    static CStringArray routeFields;
-    string_q line = str;
-    replaceAny(line, "\n\r", "");
-    if (routeFields.empty()) {
-        explode(routeFields, line, ',');
-        return true;
-    }
-
-    CCommandOptionArray* array = (CCommandOptionArray*)data;
-    CCommandOption option;
-    option.parseCSV(routeFields, line);
-    array->push_back(option);
-
-    return true;
-}
-
-//---------------------------------------------------------------------------------------------------
 void CCommandOption::verifyOptions(CStringArray& warnings) {
     bool valid_kind = false;
     for (auto kind : validOptionTypes) {
@@ -705,7 +687,7 @@ void CCommandOption::verifyOptions(CStringArray& warnings) {
 }
 
 //---------------------------------------------------------------------------------------------------
-void CCommandOption::verifyHotkey(CStringArray& warnings) {
+void CCommandOption::verifyHotkey(CStringArray& warnings, map<string, string> existing) {
     if (hotKey.empty() || contains(option_type, "positional") || contains(option_type, "description") ||
         contains(option_type, "note") || contains(option_type, "error")) {
         return;
@@ -721,7 +703,6 @@ void CCommandOption::verifyHotkey(CStringArray& warnings) {
 
     const string_q HOTKEY_WARNING =
         "Hotkey (-[{HOTKEY}]) for tool '[{TOOL}]' at command '[{LONGNAME}]:[{HOTKEY}]' +MSG+|";
-    static map<string, string> existing;
     string_q key = tool + ":" + hotKey;
     if (!existing[key].empty()) {
         string_q warn = Format(HOTKEY_WARNING);

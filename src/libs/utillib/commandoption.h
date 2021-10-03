@@ -75,7 +75,7 @@ class CCommandOption : public CBaseNode {
     void* notes{nullptr};
     explicit CCommandOption(const string_q& line);
     void verifyOptions(CStringArray& warnings);
-    void verifyHotkey(CStringArray& warnings);
+    void verifyHotkey(CStringArray& warnings, map<string, string> existing);
     string_q debugCode(void) const;
     string_q swagger_descr;
     string_q route_list;
@@ -273,7 +273,6 @@ extern const char* STR_DISPLAY_COMMANDOPTION;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-extern bool parseCommandData(const char* str, void* data);
 //---------------------------------------------------------------------------------------------------
 inline string_q getDocsPath(const string_q& _part) {
     return "../docs/" + _part;

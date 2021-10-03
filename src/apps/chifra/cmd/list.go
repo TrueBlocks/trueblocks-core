@@ -58,7 +58,7 @@ func init() {
 
 	listCmd.Flags().SortFlags = false
 	listCmd.PersistentFlags().SortFlags = false
-	listCmd.Flags().BoolVarP(&ListOpts.count, "count", "U", false, "return only the number of records")
+	listCmd.Flags().BoolVarP(&ListOpts.count, "count", "U", false, "present only the number of records")
 	listCmd.Flags().Uint64VarP(&ListOpts.first_block, "first_block", "F", 0, "first block to process (inclusive) (hidden)")
 	listCmd.Flags().Uint64VarP(&ListOpts.last_block, "last_block", "L", 0, "last block to process (inclusive) (hidden)")
 	listCmd.Flags().BoolVarP(&ListOpts.appearances, "appearances", "p", false, "export a list of appearances")
@@ -73,3 +73,6 @@ func init() {
 	listCmd.SetUsageTemplate(UsageWithNotes(notesList))
 	rootCmd.AddCommand(listCmd)
 }
+
+// EXISTING_CODE
+// EXISTING_CODE
