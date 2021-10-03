@@ -30,7 +30,7 @@ bool COptions::handle_gocmds(void) {
             continue;
         CCommandOptionArray params;
         CCommandOptionArray notes;
-        for (auto option : optionArray) {
+        for (auto option : routeOptionArray) {
             bool isOne = option.api_route == ep.api_route && option.isChifraRoute(true);
             if (isOne) {
                 params.push_back(option);

@@ -46,7 +46,8 @@ class COptions : public COptionsBase {
 
     CClassDefinitionArray classDefs;
     CClassDefinitionArray dataModels;
-    CCommandOptionArray optionArray;
+    CCommandOptionArray cmdOptionArray;
+    CCommandOptionArray routeOptionArray;
     CStringArray positionals;
     CToml classFile;
     CCounter counter;

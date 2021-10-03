@@ -77,7 +77,6 @@ bool COptionsBase::prePrepareArguments(CStringArray& separatedArgs_, int argCoun
             if (cleaned_.size())
                 cleaned_.pop_back();
         } else if (arg == "--readme") {
-            isReadme = true;
             cleaned_.push_back(arg);
         } else if (arg == "--log_level") {
             cleaned_.push_back("--verbose");
@@ -98,7 +97,7 @@ bool COptionsBase::prePrepareArguments(CStringArray& separatedArgs_, int argCoun
         }
     }
 
-    return !isReadme;
+    return true;
 }
 
 //--------------------------------------------------------------------------------
@@ -915,7 +914,6 @@ string_q getCachePath(const string_q& _part) {
 //---------------------------------------------------------------------------------------------------
 COptionsBase::COptionsBase(void) {
     minArgs = 1;
-    isReadme = false;
     isRaw = false;
     isVeryRaw = false;
     mocked = false;

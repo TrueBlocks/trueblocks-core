@@ -10,26 +10,29 @@ The `--find` option is experimental. It scans a cross of approx. 100,000 functio
 
 The `--sol` option will convert a single Solidity file found in the current folder into an ABI.
 
-### Usage
+```
+Purpose:
+  Fetches the ABI for a smart contract.
 
-`Usage:`    chifra abis [-k|-s|-f|-v|-h] &lt;address&gt; [address...]  
-`Purpose:`  Fetches the ABI for a smart contract.
+Usage:
+  chifra abis [flags] <address> [address...]
 
-`Where:`
+Arguments:
+  addrs - a list of one or more smart contracts whose ABIs to display (required)
 
-|          | Option                             | Description                                                                    |
-| -------- | ---------------------------------- | ------------------------------------------------------------------------------ |
-|          | addrs                              | a list of one or more smart contracts whose ABIs to<br/>display (required)     |
-| &#8208;k | &#8208;&#8208;known                | load common 'known' ABIs from cache                                            |
-| &#8208;s | &#8208;&#8208;sol string           | file name of .sol file from which to create a new known<br/>abi (without .sol) |
-| &#8208;f | &#8208;&#8208;find list&lt;str&gt; | try to search for a function declaration given a four<br/>byte code            |
-| &#8208;x | &#8208;&#8208;fmt &lt;val&gt;      | export format, one of [none, json, txt, csv, api]                              |
-| &#8208;v | &#8208;&#8208;verbose              | set verbose level (optional level defaults to 1)                               |
-| &#8208;h | &#8208;&#8208;help                 | display this help screen                                                       |
+Flags:
+  -k, --known          load common 'known' ABIs from cache
+  -s, --sol string     file name of .sol file from which to create a new known abi (without .sol)
+  -f, --find strings   try to search for a function declaration given a four byte code
 
-`Notes:`
+Global Flags:
+  -x, --fmt string   export format, one of [none|json|txt|csv|api]
+  -h, --help         display this help screen
+  -v, --verbose      enable verbose (increase detail with --log_level)
 
-- Solidity files found in the local folder with the name '<address>.sol' are converted to an ABI prior to processing (and then removed).
+Notes:
+  - Solidity files found in the local folder with the name '<address>.sol' are converted to an ABI prior to processing (and then removed).
+```
 
 #### Other Options
 

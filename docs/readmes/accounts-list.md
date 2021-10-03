@@ -6,21 +6,23 @@ Becuase TrueBlocks only extracts data from the Ethereum node when it's requested
 
 Note that `chifra list` only queries the index, it does not extract the full transactional details. You may use `chifra export` for that.
 
-### usage
+```
+Purpose:
+  List every appearance of an address anywhere on the chain.
 
-`Usage:`    chifra list &lt;address&gt; [address...]  
-`Purpose:`  List appearances for the given address(es).
+Usage:
+  chifra list [flags] <address> [address...]
 
-`Where:`
+Arguments:
+  addrs - one or more addresses (0x...) to list (required)
 
-|          | Option                | Description                                        |
-| -------- | --------------------- | -------------------------------------------------- |
-|          | addrs                 | one or more addresses (0x...) to export (required) |
-| &#8208;v | &#8208;&#8208;verbose | set verbose level (optional level defaults to 1)   |
-| &#8208;h | &#8208;&#8208;help    | display this help screen                           |
+Flags:
+  -U, --count   present only the number of records
 
-`Notes:`
+Global Flags:
+  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
+  -h, --help         display this help screen
+  -v, --verbose      enable verbose (increase detail with --log_level)
+```
+**Source code**: [`apps/acctExport --appearances`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/acctExport --appearances)
 
-- `addresses` must start with '0x' and be forty two characters long.
-
-**Source code**: [`apps/acctExport`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/acctExport)

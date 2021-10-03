@@ -27,7 +27,7 @@ Flags:
       --emitter              for log export only, export only if one of the given export addresses emitted the event
       --source string        for log export only, export only one of these addresses emitted the event
       --relevant             for log and accounting export only, if true export only logs relevant to one of the given export addresses
-  -U, --count                only available for --appearances mode, if present return only the number of records
+  -U, --count                only available for --appearances mode, if present, return only the number of records
   -c, --first_record <num>   the first record to process
   -e, --max_records <num>    the maximum number of records to process before reporting
       --clean                clean (i.e. remove duplicate appearances) from all existing monitors
@@ -36,7 +36,7 @@ Flags:
   -u, --unripe               enable search of unripe (neither staged nor finalized) folder (assumes --staging) (hidden)
       --load string          a comma separated list of dynamic traversers to load (hidden)
       --reversed             produce results in reverse chronological order (hidden)
-  -b, --by_date              produce results sorted by date (default is to report by address) (hidden)
+  -b, --by_date              produce results sorted by date (report by address otherwise) (hidden)
   -z, --summarize_by <val>   for --accounting only, summarize reconciliations by this time period, one of [yearly|quarterly|monthly|weekly|daily|hourly|blockly|tx] (hidden)
   -F, --first_block <num>    first block to process (inclusive) (hidden)
   -L, --last_block <num>     last block to process (inclusive) (hidden)

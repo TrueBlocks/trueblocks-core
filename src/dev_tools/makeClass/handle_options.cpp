@@ -51,13 +51,19 @@ bool COptions::handle_options(void) {
         return usage("Could not find cmd-line-options.csv file at " + cmdFile);
 
     // read in and prepare the options for all tools
+    CStringBoolMap exists;
     CStringBoolMap tools;
     CStringArray lines;
     asciiFileToLines(cmdFile, lines);
     for (auto line : lines) {
         CCommandOption opt(line);
         if (!opt.tool.empty() && opt.tool != "all" && opt.tool != "tool" && opt.tool != "templates") {
-            optionArray.push_back(opt);
+            string_q key = opt.tool + "-" + opt.longName + opt.option_type;
+            if (!exists[key]) {
+                cmdOptionArray.push_back(opt);
+                exists[key] = true;
+            }
+            routeOptionArray.push_back(opt);
             tools[opt.group + "/" + opt.tool] = true;
         }
     }
@@ -73,7 +79,7 @@ bool COptions::handle_options(void) {
         configStream << "    // clang-format off" << endl;
         CStringArray warnings;
         map<string, string> existing;
-        for (auto option : optionArray) {
+        for (auto option : cmdOptionArray) {
             option.verifyOptions(warnings);
             if ((option.group + "/" + option.tool) == tool.first) {
                 option.verifyHotkey(warnings, existing);

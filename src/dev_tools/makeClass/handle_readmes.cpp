@@ -77,10 +77,7 @@
 
 //------------------------------------------------------------------------------------------------------------
 string_q get_usage(const string_q& route) {
-    string_q ret = doCommand2("chifra " + route + " --help");
-    if (contains(ret, "/"))
-        return ret;
-    return "";
+    return doCommand2("chifra " + route + " --help");
 }
 
 //------------------------------------------------------------------------------------------------------------
@@ -99,76 +96,70 @@ bool COptions::handle_readmes(void) {
             string_q justTool = ep.tool;
             justTool = nextTokenClear(justTool, ' ');
 
-            cerr << string_q(120, '=') << endl;
-            cerr << ep << endl;
-
-            cerr << string_q(120, '-') << endl;
-            cerr << get_usage(ep.api_route) << endl;
-
             string_q grp = substitute(toLower(ep.group), " ", "");
             string_q docFn = grp + "-" + ep.api_route + ".md";
 
-            cerr << string_q(120, '=') << endl;
             string_q dSource = getDocsPathTemplates("readme-intros/" + docFn);
-            cerr << "d-INTRO:  " << fileExists(dSource) << "-0: " << dSource << endl;
-
             string_q dReadme = getDocsPathReadmes(docFn);
-            cerr << "d-README: " << fileExists(dReadme) << "-1: " << dReadme << endl;
-
             string_q tReadme = substitute(getSourcePath(ep.api_group + "/" + justTool + "/README.md"), "//", "/");
-            cerr << "t-README: " << fileExists(tReadme) << "-" << ep.is_visible_docs << ": " << tReadme << endl;
-            getchar();
+
+            string_q contents = asciiFileToString(dSource);
+            replaceAll(contents, "[{NAME}]", "chifra " + ep.api_route);
+            replaceAll(contents, "[{USAGE}]", "```\n" + get_usage(ep.api_route) + "\n```");
+
+            string_q dFooter = "\n**Source code**: [`[{GROUP}]/[{TOOL}]`]([{LOCATION}][{GROUP}]/[{TOOL}])\n";
+            replaceAll(dFooter, "[{GROUP}]", ep.api_group);
+            replaceAll(dFooter, "[{TOOL}]", ep.tool);
+            replaceAll(dFooter, "[{LOCATION}]", "https://github.com/TrueBlocks/trueblocks-core/tree/master/src/");
+            string_q dContents = substitute(contents, "[{FOOTER}]", dFooter);
+            stringToAsciiFile(dReadme, dContents);
+
+            stringToAsciiFile(tReadme, contents);
         }
     }
-    return true;
 #endif
 
-    // #if 1
     //     counter = CCounter();  // reset
     //     forEveryFileInFolder(getDocsPathTemplates("readme-intros/"), writeReadmes, this);
 
-    //     CStringArray items = {
-    //         "Accounts:apps/list,apps/acctExport,apps/monitors,tools/ethNames,tools/grabABI",
-    //         "Chain
-    //         Data:tools/getBlocks,tools/getTrans,tools/getReceipts,tools/getLogs,tools/getTraces,tools/whenBlock",
-    //         "Chain State:tools/getState,tools/getTokens",
-    //         "Admin:apps/cacheStatus,apps/serve,apps/blockScrape,apps/init,apps/pinMan",
-    //         "Other:tools/getQuotes,apps/fireStorm,tools/ethslurp"};
-    //     uint32_t weight = 1100;
-    //     for (auto item : items) {
-    //         CStringArray parts;
-    //         explode(parts, item, ':');
-    //         string_q tool = parts[1];
-    //         string_q group = parts[0];
+    CStringArray items = {"Accounts:list,export,monitors,names,abis",
+                          "Chain Data:blocks,trans,receipts,logs,traces,when", "Chain State:state,tokens",
+                          "Admin:cacheStatus,serve,scrape,init,pins", "Other:quotes,explore,ethslurp"};
+    uint32_t weight = 1100;
+    for (auto item : items) {
+        CStringArray parts;
+        explode(parts, item, ':');
+        string_q group = parts[0];
+        string_q tool = parts[1];
 
-    //         string_q front = STR_YAML_FRONTMATTER;
-    //         replace(front, "[{TITLE}]", group);
-    //         replace(front, "[{WEIGHT}]", uint_2_Str(weight));
-    //         replace(front, "[{M1}]", "docs:");
-    //         replace(front, "[{M2}]", "parent: \"chifra\"");
-    //         string fn = substitute(toLower(group), " ", "");
+        string_q front = STR_YAML_FRONTMATTER;
+        replace(front, "[{TITLE}]", group);
+        replace(front, "[{WEIGHT}]", uint_2_Str(weight));
+        replace(front, "[{M1}]", "docs:");
+        replace(front, "[{M2}]", "parent: \"chifra\"");
+        group = substitute(toLower(group), " ", "");
 
-    //         ostringstream os;
-    //         os << front;
-    //         os << asciiFileToString(getDocsPathTemplates("readme-groups/" + fn + ".md"));
+        ostringstream os;
+        os << front;
+        os << asciiFileToString(getDocsPathTemplates("readme-groups/" + group + ".md"));
 
-    //         CStringArray paths;
-    //         explode(paths, tool, ',');
-    //         for (auto p : paths) {
-    //             string_q pp = getDocsPathReadmes(p + "/README.md");
-    //             os << asciiFileToString(pp);
-    //         }
+        CStringArray paths;
+        explode(paths, tool, ',');
+        for (auto p : paths) {
+            string_q pp = getDocsPathReadmes(group + "-" + p + ".md");
+            os << asciiFileToString(pp);
+        }
 
-    //         string_q outFn = getDocsPathContent("docs/chifra/" + fn + ".md");
-    //         writeIfDifferent(outFn, os.str(), Now());
+        string_q outFn = getDocsPathContent("docs/chifra/" + group + ".md");
+        // cerr << "Out: " << fileExists(outFn) << endl;
+        writeIfDifferent(outFn, os.str(), Now());
 
-    //         weight += 200;
-    //     }
+        weight += 200;
+    }
 
-    //     LOG_INFO(cYellow, "makeClass --readmes", cOff, " processed ", counter.nVisited, " files (changed ",
-    //              counter.nProcessed, ").", string_q(40, ' '));
-    // #endif
-    //     return true;
+    LOG_INFO(cYellow, "makeClass --readmes", cOff, " processed ", counter.nVisited, " files (changed ",
+             counter.nProcessed, ").", string_q(40, ' '));
+    return true;
 }
 
 //------------------------------------------------------------------------------------------------------------

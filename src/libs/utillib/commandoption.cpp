@@ -581,9 +581,9 @@ bool CCommandOption::finishCleanup(void) {
     } else if (option_type != "note" && option_type != "error" && option_type != "config") {
         swagger_descr = trim(substitute(description, "|", "\n          "));
     }
-    if (option_type != "note" && option_type != "error" && generate != "config") {
-        description = trim(substitute(description, "|", " "));
-    }
+    // if (option_type != "note" && option_type != "error" && generate != "config") {
+    //     description = trim(substitute(description, "|", " "));
+    // }
 
     isList = contains(data_type, "list<");
     isEnumList = contains(data_type, "list<enum");
@@ -801,7 +801,7 @@ string_q CCommandOption::toPairMap(void) const {
 
 //---------------------------------------------------------------------------------------------------
 string_q CCommandOption::toApiTag(void) const {
-    if (isApiRoute(tool))
+    if (isApiRoute(tool) || !is_visible_docs)
         return "";
     const char* STR_TAG_YAML =
         "  - name: [{GROUP}]\n"

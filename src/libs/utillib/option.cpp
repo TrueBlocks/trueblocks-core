@@ -97,9 +97,6 @@ string_q COption::getValueByName(const string_q& fieldName) const {
             if (fieldName % "is_deprecated") {
                 return bool_2_Str(is_deprecated);
             }
-            if (fieldName % "is_readme") {
-                return bool_2_Str(is_readme);
-            }
             break;
         case 'l':
             if (fieldName % "longName") {
@@ -165,10 +162,6 @@ bool COption::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
                 is_deprecated = str_2_Bool(fieldValue);
                 return true;
             }
-            if (fieldName % "is_readme") {
-                is_readme = str_2_Bool(fieldValue);
-                return true;
-            }
             break;
         case 'l':
             if (fieldName % "longName") {
@@ -222,7 +215,6 @@ bool COption::Serialize(CArchive& archive) {
     archive >> is_positional;
     archive >> is_required;
     archive >> is_deprecated;
-    archive >> is_readme;
     // EXISTING_CODE
     // EXISTING_CODE
     finishParse();
@@ -245,7 +237,6 @@ bool COption::SerializeC(CArchive& archive) const {
     archive << is_positional;
     archive << is_required;
     archive << is_deprecated;
-    archive << is_readme;
     // EXISTING_CODE
     // EXISTING_CODE
     return true;
@@ -304,7 +295,6 @@ void COption::registerClass(void) {
     ADD_FIELD(COption, "is_positional", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(COption, "is_required", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(COption, "is_deprecated", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(COption, "is_readme", T_BOOL | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(COption, "schema");
@@ -421,18 +411,13 @@ COption::COption(const string_q& ln, const string_q& sn, const string_q& t, size
 
 //--------------------------------------------------------------------------------
 string_q COption::readmeDash(const string_q& str) const {
-    if (!is_readme)
-        return str;
-    return substitute(str, "-", "&#8208;");
+    return str;
 }
 
 //--------------------------------------------------------------------------------
 string_q COption::getLongKey(void) const {
     string_q lName = substitute(longName, "addrs2", "addrs");
     lName = (is_positional ? substitute(lName, "-", "") : lName);
-    if (is_readme) {
-        lName = substitute(substitute(lName, "<", "&lt;"), ">", "&gt;");
-    }
     return readmeDash(lName);
 }
 
@@ -444,19 +429,15 @@ string_q COption::getHotKey(void) const {
 //--------------------------------------------------------------------------------
 string_q COption::oneDescription(size_t* widths) const {
     ostringstream os;
-    if (is_readme) {
-        return markDownRow(getHotKey(), getLongKey(), getDescription(), widths);
-    } else {
-        if (is_positional)
-            return "";
-        // TODO(tjayrush): Weird chifra-new code
-        if (getLongKey() == "--fmt <val>" || getLongKey() == "--help" || getLongKey() == "--verbose")
-            return "";
-        os << "  ";
-        os << getHotKey();
-        os << (getHotKey().empty() ? "    " : ", ");
-        os << padRight(getLongKey().empty() ? "" : getLongKey(), widths[1] + 3);
-    }
+    if (is_positional)
+        return "";
+    // TODO(tjayrush): Weird chifra-new code
+    if (getLongKey() == "--fmt <val>" || getLongKey() == "--help" || getLongKey() == "--verbose")
+        return "";
+    os << "  ";
+    os << getHotKey();
+    os << (getHotKey().empty() ? "    " : ", ");
+    os << padRight(getLongKey().empty() ? "" : getLongKey(), widths[1] + 3);
     os << getDescription() << (is_visible ? "" : " (hidden)") << endl;
     return os.str();
 }
@@ -465,24 +446,7 @@ string_q COption::oneDescription(size_t* widths) const {
 string_q COption::getDescription(void) const {
     string_q descr = trim(description);
     descr = (descr + (is_required && is_positional ? " (required)" : ""));
-    if (!is_readme)
-        return descr;
-    replace(descr, "*", "");
-    replaceAll(descr, "|", ", ");
-    CStringArray lines;
-    while (!descr.empty()) {
-        string_q part = descr.substr(0, 50);
-        replace(descr, part, "");
-        string_q part2 = nextTokenClear(descr, ' ');
-        part += part2;
-        if (!descr.empty())
-            part += "<br/>";
-        lines.push_back(part);
-    }
-    string_q ret;
-    for (auto line : lines)
-        ret += line;
-    return ret;
+    return descr;
 }
 // EXISTING_CODE
 }  // namespace qblocks

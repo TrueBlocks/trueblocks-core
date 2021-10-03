@@ -106,6 +106,14 @@ paths:
           explode: true
           schema:
             type: boolean
+        - name: appearances
+          description: export a list of appearances
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
       responses:
         "200":
           description: returns the requested data

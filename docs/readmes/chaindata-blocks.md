@@ -6,7 +6,36 @@ By default, `chifra blocks` queries the full transactional details of the block 
 
 Another useful feature of `chifra blocks` is the ability to extract address appearances from a block. TrueBlocks uses a similar feature internally to build its index of appearances. This type of data is very insightful when studying end user behaviour and chain-wide adoption analysis.
 
-sh: getBlocks: command not found
+```
+Purpose:
+  Retrieve one or more blocks from the chain or local cache.
+
+Usage:
+  chifra blocks [flags] <block> [block...]
+
+Arguments:
+  blocks - a space-separated list of one or more block identifiers (required)
+
+Flags:
+  -e, --hashes    display only transaction hashes, default is to display full transaction detail
+  -U, --uncles    display uncle blocks (if any) instead of the requested block
+  -t, --trace     export the traces from the block as opposed to the block data
+  -a, --apps      display only the list of address appearances in the block
+  -u, --uniq      display only the list of uniq address appearances in the block
+  -n, --uniq_tx   display only the list of uniq address appearances in each transaction
+  -c, --count     display the number of the lists of appearances for --apps, --uniq, or --uniq_tx
+  -o, --cache     force a write of the block to the cache
+
+Global Flags:
+  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
+  -h, --help         display this help screen
+  -v, --verbose      enable verbose (increase detail with --log_level)
+
+Notes:
+  - blocks is a space-separated list of values, a start-end range, a special, or any combination.
+  - blocks may be specified as either numbers or hashes.
+  - special blocks are detailed under chifra when --list.
+```
 
 **Source code**: [`tools/getBlocks`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/tools/getBlocks)
 

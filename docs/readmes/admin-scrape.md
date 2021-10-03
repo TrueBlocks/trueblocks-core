@@ -6,7 +6,23 @@ The `chifra scrape` application creates TrueBlocks' index of address appearances
 
 The scraper can scrape either the index only, previously created monitors only, both, or neither. If you specify `none`, timestamps will be scraped but nothing else. If you're scraping monitors, you may tell the system to cache traces and transactions. This will speed up access, but take addition hard drive space. You may also adjust the speed of operation on different machines with the `--sleep` and `--n_blocks` options. Finally, you may choose to optionally `--pin` each new chunk to IPFS.
 
-sh: blockScrape: command not found
+```
+Purpose:
+  Scan the chain and update the TrueBlocks index of appearances.
+
+Usage:
+  chifra scrape [flags]
+
+Flags:
+  -p, --pin             pin new chunks (and blooms) to IPFS (requires Pinata key and running IPFS node)
+  -s, --sleep float     the number of seconds to sleep between passes (default 14)
+  -n, --n_blocks uint   maximum number of blocks to process (default 2000)
+
+Global Flags:
+  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
+  -h, --help         display this help screen
+  -v, --verbose      enable verbose (increase detail with --log_level)
+```
 
 ### explainer
 
@@ -23,7 +39,6 @@ In future versions of the software, we will pin these shared chunks and blooms o
 `chifra scrape` does not work without an RPC endpoint to an Ethereum node. The software works without an `--archive` node, but it works significantly better with one. An additional requirement for the software to work properly is an RPC that provides OpenEthereum's `trace_` routines. We've tested with OpenEthereum and Erigon.
 
 Please see [this article](.) for more information about running the scraper and building and sharing the index of appearances.
-
 
 **Source code**: [`apps/blockScrape`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/blockScrape)
 

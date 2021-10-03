@@ -60,7 +60,6 @@ class COption : public CBaseNode {
     bool is_positional;
     bool is_required;
     bool is_deprecated;
-    bool is_readme;
 
   public:
     COption(void);
@@ -138,7 +137,6 @@ inline void COption::initialize(void) {
     is_positional = false;
     is_required = false;
     is_deprecated = false;
-    is_readme = false;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -158,7 +156,6 @@ inline void COption::duplicate(const COption& op) {
     is_positional = op.is_positional;
     is_required = op.is_required;
     is_deprecated = op.is_deprecated;
-    is_readme = op.is_readme;
 
     // EXISTING_CODE
     // EXISTING_CODE

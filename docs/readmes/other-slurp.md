@@ -6,7 +6,29 @@ While it's useful, it has two shortcomings. First, it is fully centralized, pull
 
 While `chifra slurp` has its shortcomings, it does provides some nice features. You may use it to pull any transaction initiated by an EOA for example or to explore mining rewards. Visit the above referenced website for more information.
 
-sh: ethslurp: command not found
+```
+Purpose:
+  Fetch data from EtherScan for any address.
 
+Usage:
+  chifra slurp [flags] <address> [address...] [block...]
+
+Arguments:
+  addrs - one or more addresses to slurp from Etherscan (required)
+  blocks - an optional range of blocks to slurp
+
+Flags:
+  -t, --types strings   which types of transactions to request
+                        One or more of ext, int, token, nfts, miner, uncles, all
+  -p, --appearances     show only the blocknumer.tx_id appearances of the exported transactions
+
+Global Flags:
+  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
+  -h, --help         display this help screen
+  -v, --verbose      enable verbose (increase detail with --log_level)
+
+Notes:
+  - Portions of this software are Powered by Etherscan.io APIs.
+```
 **Source code**: [`tools/ethslurp`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/tools/ethslurp)
 

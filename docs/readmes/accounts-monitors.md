@@ -6,23 +6,28 @@ You may use the `--delete` command to delete (or undelete if already deleted) an
 
 Use the `--remove` command to permanently remove a monitor from your computer. This is an irreversable operation.
 
-### usage
+```
+Purpose:
+  Add, remove, clean, and list address monitors.
 
-`Usage:`    chifra monitors [-d|-r|-v|-h] &lt;address&gt; [address...]  
-`Purpose:`  Delete, undelete, and remove previously created monitors.
+Usage:
+  chifra monitors [flags] <address> [address...]
 
-`Where:`
+Arguments:
+  addrs - one or more addresses (0x...) to process (required)
 
-|          | Option                | Description                                                          |
-| -------- | --------------------- | -------------------------------------------------------------------- |
-|          | addrs                 | one or more addresses (0x...) to export (required)                   |
-|          | &#8208;&#8208;delete  | delete a previously created monitor (or undelete if already deleted) |
-|          | &#8208;&#8208;remove  | remove a previously deleted monitor                                  |
-| &#8208;v | &#8208;&#8208;verbose | set verbose level (optional level defaults to 1)                     |
-| &#8208;h | &#8208;&#8208;-help   | display this help screen                                             |
+Flags:
+  -p, --appearances   export a list of appearances
+  -U, --count         present only the number of records
+      --clean         clean (i.e. remove duplicate appearances) from all existing monitors
 
-`Notes:`
+Global Flags:
+  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
+  -h, --help         display this help screen
+  -v, --verbose      enable verbose (increase detail with --log_level)
 
-- `addresses` must start with '0x' and be forty two characters long.
+Notes:
+  - An address must start with '0x' and be forty-two characters long.
+```
+**Source code**: [`apps/acctExport --appearances`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/acctExport --appearances)
 
-**Source code**: [`apps/acctExport`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/acctExport)

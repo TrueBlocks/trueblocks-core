@@ -8,23 +8,23 @@ Certain parts of the system (`chifra list` and `chifra export` for example) if y
 
 If you run `chifra init` and allow it to complete, the next time you run `chifra scrape`, it will start where `init` finished. This means that only the blooms will be stored on your hard drive. Subsequent scraping will produce both chunks and blooms, although you can, if you wish delete chunks that are not being used. You may periodically run `chifra init` if you prefer not to scrape.
 
-### usage
+```
+Purpose:
+  Initialize the index of appearances by downloading Bloom filters.
 
-`Usage:`    chifra init  
-`Purpose:`  Leech the Bloom filters from IPFS by first downloading the pin manifest from a smart contract and then downloading the blooms. Optionally `--pin` the resulting download in order to share it with others.
+Usage:
+  chifra init [flags]
 
-`Where:`
+Flags:
+  -a, --all   download full index chunks as well as Bloom filter
 
-|          | Option                    | Description                                                               |
-| -------- | ------------------------- | ------------------------------------------------------------------------- |
-| &#8208;i | &#8208;&#8208;init        | initialize local index by downloading Bloom filters from pinning service  |
-| &#8208;k | &#8208;&#8208;init_all    | initialize local index by downloading both Bloom filters and index chunks |
-| &#8208;p | &#8208;&#8208;pin_locally | pin all local files in the index to an IPFS store (requires IPFS)         |
-| &#8208;v | &#8208;&#8208;verbose     | set verbose level (optional level defaults to 1)                          |
-| &#8208;h | &#8208;&#8208;help        | display this help screen                                                  |
+Global Flags:
+  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
+  -h, --help         display this help screen
+  -v, --verbose      enable verbose (increase detail with --log_level)
 
-`Notes:`
+Notes:
+  - chifra init is an alais for the chifra pins --init command.
+```
+**Source code**: [`apps/pinMan --init`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/pinMan --init)
 
-- One of `--list`, `--init`, or `--init_all` is required.
-- the `--pin_locally` option only works if the IPFS executable is in your path.
-**Source code**: [`apps/pinMan`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/pinMan)

@@ -44,7 +44,6 @@ class COptionsBase {
     // TODO(tjayrush): global data
     uint64_t minArgs;
     uint32_t enableBits;
-    bool isReadme;
     bool isRaw;
     bool isVeryRaw;
     bool noHeader;
