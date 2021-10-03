@@ -135,7 +135,7 @@ COptions::COptions(void) : source(STR_PRICE_URL, "USDT_ETH", parsePoloniex) {
 
     // BEG_CODE_NOTES
     // clang-format off
-    notes.push_back("Due to restrictions from Poloniex, this tool retrieves only 30 days of data | at a time. You must repeatedly run this command until the data is up-to-date.");  // NOLINT
+    notes.push_back("Due to restrictions from Poloniex, this tool retrieves only 30 days of data at a time. You must repeatedly run this command until the data is up-to-date.");  // NOLINT
     // clang-format on
     // END_CODE_NOTES
 

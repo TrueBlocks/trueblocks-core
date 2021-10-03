@@ -40,8 +40,7 @@ var longQuotes = `Purpose:
 
 var notesQuotes = `
 Notes:
-  - Due to restrictions from Poloniex, this tool retrieves only 30 days of data
-    at a time. You must repeatedly run this command until the data is up-to-date.`
+  - Due to restrictions from Poloniex, this tool retrieves only 30 days of data at a time. You must repeatedly run this command until the data is up-to-date.`
 
 type quotesOptionsType struct {
 	freshen bool
