@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2021-10-03T17:47:24
+date: 2021-10-03T18:11:37
 lastmod:
   - :git
   - lastmod
@@ -33,10 +33,17 @@ Purpose:
 Usage:
   chifra serve [flags]
 
+Flags:
+  -p, --port string   specify the server's port (:8080 default)
+
 Global Flags:
   -x, --fmt string   export format, one of [none|json*|txt|csv|api]
   -h, --help         display this help screen
   -v, --verbose      enable verbose (increase detail with --log_level)
+
+Notes:
+  - To start API open terminal window and run chifra serve.
+  - See the API documentation for more information.
 ```
 
 **Source code**: [`go-apps/flame`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/go-apps/flame)

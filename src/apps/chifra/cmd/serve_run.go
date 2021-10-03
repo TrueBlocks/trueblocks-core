@@ -13,21 +13,24 @@
 package cmd
 
 import (
-	"errors"
+	"strings"
 
 	"github.com/spf13/cobra"
 )
 
 func validateServeArgs(cmd *cobra.Command, args []string) error {
-	if len(args) > 0 && args[0] == "12" {
-		return ErrFunc(cmd, errors.New("Invalid argument "+args[0]))
+	if len(ServeOpts.port) > 0 && !strings.Contains(ServeOpts.port, ":") {
+		return makeError("The --port option must start with a ':'")
 	}
 
 	return nil
 }
 
 func runServe(cmd *cobra.Command, args []string) {
-	options := ""
+	options := ":8080"
+	if len(ServeOpts.port) > 0 {
+		options = " --port " + ServeOpts.port
+	}
 	arguments := ""
 	for _, arg := range args {
 		arguments += " " + arg

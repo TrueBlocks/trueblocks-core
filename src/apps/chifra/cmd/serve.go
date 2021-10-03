@@ -38,9 +38,13 @@ var shortServe = "serve the TrueBlocks API using the flame server"
 var longServe = `Purpose:
   Serve the TrueBlocks API using the flame server.`
 
-var notesServe = ``
+var notesServe = `
+Notes:
+  - To start API open terminal window and run chifra serve.
+  - See the API documentation for more information.`
 
 type serveOptionsType struct {
+	port string
 }
 
 var ServeOpts serveOptionsType
@@ -50,6 +54,7 @@ func init() {
 
 	serveCmd.Flags().SortFlags = false
 	serveCmd.PersistentFlags().SortFlags = false
+	serveCmd.Flags().StringVarP(&ServeOpts.port, "port", "p", "", "specify the server's port (:8080 default)")
 	serveCmd.Flags().SortFlags = false
 	serveCmd.PersistentFlags().SortFlags = false
 

@@ -190,6 +190,11 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 10645,apps,Admin,scrape,blockScrape,n_addr_procs,a,20,false,true,false,false,config,flag,<uint64>,number of concurrent address channels for blaze
 10650,apps,Admin,scrape,blockScrape,,,,false,false,true,true,--,description,,Scan the chain and update the TrueBlocks index of appearances.
 
+11720,apps,Admin,serve,flame,port,p,,false,false,true,true,header,switch,<string>,specify the server's port (:8080 default)
+11750,apps,Admin,serve,flame,,,,false,false,true,true,--,description,,Serve the TrueBlocks API using the flame server.
+11750,apps,Admin,serve,flame,n1,,,false,false,false,false,--,note,,To start API open terminal window and run "chifra serve".
+11751,apps,Admin,serve,flame,n2,,,false,false,false,false,--,note,,See the API documentation for more information.
+
 10700,apps,Admin,status,cacheStatus,modes,,,false,false,true,true,local,positional,list<enum[index|monitors|collections|names|abis|caches|some*|all]>,the type of status info to retrieve
 10720,apps,Admin,status,cacheStatus,details,d,,false,false,true,true,header,switch,<boolean>,include details about items found in monitors&#44; slurps&#44; abis&#44; or price caches
 10730,apps,Admin,status,cacheStatus,types,t,,false,false,true,false,local,flag,list<enum[blocks|txs|traces|slurps|prices|all*]>,for caches mode only&#44; which type(s) of cache to report

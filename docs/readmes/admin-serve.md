@@ -14,18 +14,18 @@ Purpose:
 Usage:
   chifra serve [flags]
 
-`Where:`
+Flags:
+  -p, --port string   specify the server's port (:8080 default)
 
-|          | Option                | Description                                      |
-| -------- | --------------------- | ------------------------------------------------ |
-|          | &#8208;&#8208;port    | specify the server's port (default ":8080")      |
-| &#8208;v | &#8208;&#8208;verbose | set verbose level (optional level defaults to 1) |
-| &#8208;h | &#8208;&#8208;help    | display this help screen                         |
+Global Flags:
+  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
+  -h, --help         display this help screen
+  -v, --verbose      enable verbose (increase detail with --log_level)
 
-`Notes:`
-
-- To use the API, first open a new terminal window and run `chifra serve`
-- Instead of the command line `chifra status index --details`, run `curl "http://localhost:8080/status?modes=index&details"`.
-- Treat other commands similarly.
+Notes:
+  - To start API open terminal window and run chifra serve.
+  - See the API documentation for more information.
+```
 
 **Source code**: [`go-apps/flame`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/go-apps/flame)
+
