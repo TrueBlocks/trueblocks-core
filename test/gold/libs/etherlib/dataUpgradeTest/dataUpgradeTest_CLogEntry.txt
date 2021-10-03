@@ -80,7 +80,7 @@ topic1              	1019	0	20971580	T_HASH TS_STRING TS_OMITEMPTY
 topic2              	1020	0	20971580	T_HASH TS_STRING TS_OMITEMPTY
 topic3              	1021	0	20971580	T_HASH TS_STRING TS_OMITEMPTY
 {
-  "schema": 12001,
+  "schema": 14000,
   "deleted": false,
   "showing": true,
   "cname": "LogEntry",
