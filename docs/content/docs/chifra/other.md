@@ -2,7 +2,7 @@
 title: "Other"
 description: ""
 lead: ""
-date: 2021-10-02T22:57:02
+date: 2021-10-03T17:51:18
 lastmod:
   - :git
   - lastmod
@@ -29,29 +29,29 @@ text="Note: some of these tools, like `ethslurp`, require an EtherScan key." >}}
 
 The `chifra quotes` tool provides USD ($) price data to other tools and to the command line. Currently, `chifra quotes` retrieves its price data from the Poloniex API. In future versions, we will add other sources and provide a mechanism for fair averaging. Ultimately, as more of this type of price data becomes available on chain, we will use those source, but this is not yet implemented.
 
-### usage
+```
+Purpose:
+  Freshen or display Ethereum price data.
 
-`Usage:`    chifra quotes [-f|-p|-a|-e|-v|-h]  
-`Purpose:`  Freshen and/or display Ethereum price data. This tool has been deprecated.
+Usage:
+  chifra quotes [flags]
 
-`Where:`
+Flags:
+  -f, --freshen         Freshen price database
+  -p, --period string   increment of display
+                        One of 5, 15, 30, 60, 120, 240, 1440, 10080, hourly, daily, weekly
+  -a, --pair string     which price pair to freshen or list (see Poloniex)
+  -e, --feed string     the feed for the price data
+                        One of poloniex, maker, tellor
 
-{{<td>}}
-|          | Option                           | Description                                                                                    |
-| -------- | -------------------------------- | ---------------------------------------------------------------------------------------------- |
-| &#8208;f | &#8208;&#8208;freshen            | Freshen price database                                                                         |
-| &#8208;p | &#8208;&#8208;period &lt;val&gt; | increment of display, one of [5, 15, 30, 60, 120, 240,<br/>1440, 10080, hourly, daily, weekly] |
-| &#8208;a | &#8208;&#8208;pair string        | which price pair to freshen or list (see Poloniex)                                             |
-| &#8208;e | &#8208;&#8208;feed &lt;val&gt;   | the feed for the price data, one of [poloniex, maker,<br/>tellor]                              |
-| &#8208;x | &#8208;&#8208;fmt &lt;val&gt;    | export format, one of [none, json, txt, csv, api]                                              |
-| &#8208;v | &#8208;&#8208;verbose            | set verbose level (optional level defaults to 1)                                               |
-| &#8208;h | &#8208;&#8208;help               | display this help screen                                                                       |
-{{</td>}}
+Global Flags:
+  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
+  -h, --help         display this help screen
+  -v, --verbose      enable verbose (increase detail with --log_level)
 
-`Notes:`
-
-- Due to restrictions from Poloniex, this tool retrieves only 30 days of data
-  at a time. You must repeatedly run this command until the data is up-to-date.
+Notes:
+  - Due to restrictions from Poloniex, this tool retrieves only 30 days of data at a time. You must repeatedly run this command until the data is up-to-date.
+```
 
 **Source code**: [`tools/getQuotes`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/tools/getQuotes)
 
@@ -59,54 +59,25 @@ The `chifra quotes` tool provides USD ($) price data to other tools and to the c
 
 `chifra explore` opens Etherscan (and other explorers -- including our own) to the block, transaction hash, or address you specify. It's a handy (configurable) way to open an explorer from the command line, nothing more.
 
-### usage
+```
+Purpose:
+  Open an explorer for a given address, block, or transaction.
 
-`Usage:`    chifra explore [-l|-g|-h] &lt;term&gt; [term...]  
-`Purpose:`  Open an explorer for one or more addresses, blocks, or transactions.
+Usage:
+  chifra explore [flags] <term> [term...]
 
-`Where:`
+Arguments:
+  terms - one or more addresses, names, block, or transaction identifiers
 
-{{<td>}}
-|          | Option               | Description                                                         |
-| -------- | -------------------- | ------------------------------------------------------------------- |
-|          | terms                | one or more addresses, names, block, or transaction<br/>identifiers |
-| &#8208;l | &#8208;&#8208;local  | open the local TrueBlocks explorer                                  |
-| &#8208;g | &#8208;&#8208;google | search google excluding popular blockchain explorers                |
-| &#8208;h | &#8208;&#8208;help   | display this help screen                                            |
-{{</td>}}
+Flags:
+  -l, --local    open the local TrueBlocks explorer
+  -g, --google   search google excluding popular blockchain explorers
+
+Global Flags:
+  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
+  -h, --help         display this help screen
+  -v, --verbose      enable verbose (increase detail with --log_level)
+```
 
 **Source code**: [`apps/fireStorm`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/fireStorm)
-
-## chifra slurp
-
-`chifra slurp` is the first tool we built in the Ethereum space. It even has its [own website](http://ethslurp.com).
-
-While it's useful, it has two shortcomings. First, it is fully centralized, pulling its data from [http://etherscan.io](http://etherscan.io). Second, is that it does not report every transaction for a given account. This is actually a shortcoming with EtherScan. It's too complicated to explain here, but see our blog.
-
-While `chifra slurp` has its shortcomings, it does provides some nice features. You may use it to pull any transaction initiated by an EOA for example or to explore mining rewards. Visit the above referenced website for more information.
-
-### usage
-
-`Usage:`    chifra slurp [-t|-p|-v|-h] &lt;address&gt; [address...] [block...]  
-`Purpose:`  Fetch data from EtherScan for any address.
-
-`Where:`
-
-{{<td>}}
-|          | Option                          | Description                                                                                            |
-| -------- | ------------------------------- | ------------------------------------------------------------------------------------------------------ |
-|          | addrs                           | one or more addresses to slurp from Etherscan (required)                                               |
-|          | blocks                          | an optional range of blocks to slurp                                                                   |
-| &#8208;t | &#8208;&#8208;types &lt;val&gt; | which types of transactions to request, one or more<br/>of [ext, int, token, nfts, miner, uncles, all] |
-| &#8208;p | &#8208;&#8208;appearances       | show only the blocknumer.tx_id appearances of the exported<br/>transactions                            |
-| &#8208;x | &#8208;&#8208;fmt &lt;val&gt;   | export format, one of [none, json, txt, csv, api]                                                      |
-| &#8208;v | &#8208;&#8208;verbose           | set verbose level (optional level defaults to 1)                                                       |
-| &#8208;h | &#8208;&#8208;help              | display this help screen                                                                               |
-{{</td>}}
-
-`Notes:`
-
-- Portions of this software are Powered by Etherscan.io APIs.
-
-**Source code**: [`tools/ethslurp`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/tools/ethslurp)
 

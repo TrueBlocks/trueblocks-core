@@ -6,45 +6,31 @@ The `--articulate` option fetches the ABI from each encountered smart contract (
 
 The `--trace` option attachs an array transaction traces to the output (if the node you're querying has --tracing enabled), while the `--uniq` option displays a list of uniq address appearances instead of the underlying data (including uniq addresses in traces if enabled).
 
-### Usage
+```
+Purpose:
+  Retrieve one or more transactions from the chain or local cache.
 
-`Usage:`    chifra transactions [-a|-t|-u|-r|-o|-v|-h] &lt;tx_id&gt; [tx_id...]  
-`Purpose:`  Retrieve one or more transactions from the chain or local cache.
+Usage:
+  chifra transactions [flags] <tx_id> [tx_id...]
 
-`Where:`
+Arguments:
+  transactions - a space-separated list of one or more transaction identifiers (required)
 
-|          | Option                                  | Description                                                                                  |
-| -------- | --------------------------------------- | -------------------------------------------------------------------------------------------- |
-|          | transactions                            | a space-separated list of one or more transaction identifiers<br/>(required)                 |
-| &#8208;a | &#8208;&#8208;articulate                | articulate the retrieved data if ABIs can be found                                           |
-| &#8208;t | &#8208;&#8208;trace                     | include the transaction's traces in the results                                              |
-| &#8208;u | &#8208;&#8208;uniq                      | display a list of uniq addresses found in the transaction<br/>instead of the underlying data |
-| &#8208;r | &#8208;&#8208;reconcile &lt;address&gt; | reconcile the transaction as per the provided address                                        |
-| &#8208;o | &#8208;&#8208;cache                     | force the results of the query into the tx cache (and<br/>the trace cache if applicable)     |
-| &#8208;x | &#8208;&#8208;fmt &lt;val&gt;           | export format, one of [none, json, txt, csv, api]                                            |
-| &#8208;v | &#8208;&#8208;verbose                   | set verbose level (optional level defaults to 1)                                             |
-| &#8208;h | &#8208;&#8208;help                      | display this help screen                                                                     |
+Flags:
+  -a, --articulate         articulate the retrieved data if ABIs can be found
+  -t, --trace              include the transaction's traces in the results
+  -u, --uniq               display a list of uniq addresses found in the transaction instead of the underlying data
+  -r, --reconcile string   reconcile the transaction as per the provided address
+  -o, --cache              force the results of the query into the tx cache (and the trace cache if applicable)
 
-`Notes:`
+Global Flags:
+  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
+  -h, --help         display this help screen
+  -v, --verbose      enable verbose (increase detail with --log_level)
 
-- The `transactions` list may be one or more space-separated identifiers which are either a transaction hash,
-  a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.
-- This tool checks for valid input syntax, but does not check that the transaction requested actually exists.
-- If the queried node does not store historical state, the results for most older transactions are undefined.
-
-#### Other Options
-
-All tools accept the following additional flags, although in some cases, they have no meaning.
-
-| Command     | Description                                                   |
-| ----------- | ------------------------------------------------------------- |
-| --version   | display the current version of the tool                       |
-| --wei       | export values in wei (the default)                            |
-| --ether     | export values in ether                                        |
-| --dollars   | export values in US dollars                                   |
-| --raw       | pass raw RPC data directly from the node with no processing   |
-| --to_file   | write the results to a temporary file and return the filename |
-| --output fn | write the results to file 'fn' and return the filename        |
-| --file fn   | specify multiple sets of command line options in a file       |
-
-<small>*For the `--file fn` option, you may place a series of valid command lines in a file using any of the above flags. In some cases, this may significantly improve performance. A semi-colon at the start of any line makes that line a comment.*</small>
+Notes:
+  - The transactions list may be one or more space-separated identifiers which are either a transaction hash, a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.
+  - This tool checks for valid input syntax, but does not check that the transaction requested actually exists.
+  - If the queried node does not store historical state, the results for most older transactions are undefined.
+```
+[{FOOTER}]

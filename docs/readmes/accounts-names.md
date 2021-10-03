@@ -38,5 +38,6 @@ Notes:
   - The tool will accept up to three terms, each of which must match against any field in the database.
   - The --match_case option enables case sensitive matching.
 ```
+
 **Source code**: [`tools/ethNames`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/tools/ethNames)
 

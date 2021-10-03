@@ -25,5 +25,6 @@ Notes:
   - One of --list, --init, or --freshen is required.
   - the --share option only works if the IPFS executable is in your path.
 ```
+
 **Source code**: [`apps/pinMan`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/pinMan)
 

@@ -21,5 +21,6 @@ Global Flags:
   -h, --help         display this help screen
   -v, --verbose      enable verbose (increase detail with --log_level)
 ```
+
 **Source code**: [`apps/fireStorm`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/fireStorm)
 

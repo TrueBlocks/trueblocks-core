@@ -37,5 +37,6 @@ Notes:
   - If the queried node does not store historical state, the results are undefined.
   - special blocks are detailed under chifra when --list.
 ```
+
 **Source code**: [`tools/getTokens`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/tools/getTokens)
 

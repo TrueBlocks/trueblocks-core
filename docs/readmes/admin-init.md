@@ -26,5 +26,6 @@ Global Flags:
 Notes:
   - chifra init is an alais for the chifra pins --init command.
 ```
+
 **Source code**: [`apps/pinMan --init`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/pinMan --init)
 

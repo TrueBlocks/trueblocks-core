@@ -573,8 +573,7 @@ paths:
               type: string
               format: address_t
         - name: sol
-          description: >
-            file name of .sol file from which to create a new known abi (without .sol)
+          description: file name of .sol file from which to create a new known abi (without .sol)
           required: false
           style: form
           in: query

@@ -34,5 +34,6 @@ Notes:
   - balance is the default mode. To select a single mode use none first, followed by that mode.
   - You may specify multiple modes on a single line.
 ```
+
 **Source code**: [`tools/getState`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/tools/getState)
 

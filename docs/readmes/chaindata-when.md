@@ -29,5 +29,6 @@ Notes:
   - The block list may contain any combination of number, hash, date, special named blocks.
   - Dates must be formatted in JSON format: YYYY-MM-DD[THH[:MM[:SS]]].
 ```
+
 **Source code**: [`tools/whenBlock`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/tools/whenBlock)
 

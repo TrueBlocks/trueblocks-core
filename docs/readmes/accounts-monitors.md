@@ -29,5 +29,6 @@ Global Flags:
 Notes:
   - An address must start with '0x' and be forty-two characters long.
 ```
+
 **Source code**: [`apps/acctExport --appearances`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/acctExport --appearances)
 

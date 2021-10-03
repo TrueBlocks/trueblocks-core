@@ -6,25 +6,23 @@ The `chifra scrape` application creates TrueBlocks' index of address appearances
 
 The scraper can scrape either the index only, previously created monitors only, both, or neither. If you specify `none`, timestamps will be scraped but nothing else. If you're scraping monitors, you may tell the system to cache traces and transactions. This will speed up access, but take addition hard drive space. You may also adjust the speed of operation on different machines with the `--sleep` and `--n_blocks` options. Finally, you may choose to optionally `--pin` each new chunk to IPFS.
 
-### Usage
+```
+Purpose:
+  Scan the chain and update the TrueBlocks index of appearances.
 
-`Usage:`    chifra scrape [-p|-s|-v|-h]  
-`Purpose:`  Scan the chain and update the TrueBlocks index of appearances.
+Usage:
+  chifra scrape [flags]
 
-`Where:`
+Flags:
+  -p, --pin             pin new chunks (and blooms) to IPFS (requires Pinata key and running IPFS node)
+  -s, --sleep float     the number of seconds to sleep between passes (default 14)
+  -n, --n_blocks uint   maximum number of blocks to process (default 2000)
 
-|          | Option                             | Description                                                                         |
-| -------- | ---------------------------------- | ----------------------------------------------------------------------------------- |
-| &#8208;p | &#8208;&#8208;pin                  | pin new chunks (and blooms) to IPFS (requires Pinata<br/>key and running IPFS node) |
-| &#8208;s | &#8208;&#8208;sleep &lt;double&gt; | the number of seconds to sleep between passes                                       |
-| &#8208;v | &#8208;&#8208;verbose              | set verbose level (optional level defaults to 1)                                    |
-| &#8208;h | &#8208;&#8208;help                 | display this help screen                                                            |
-
-`Configurable Items:`
-
-- `n_blocks`: maximum number of blocks to process (defaults to 5000).
-- `n_block_procs`: number of concurrent block channels for blaze.
-- `n_addr_procs`: number of concurrent address channels for blaze.
+Global Flags:
+  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
+  -h, --help         display this help screen
+  -v, --verbose      enable verbose (increase detail with --log_level)
+```
 
 ### explainer
 
@@ -42,20 +40,4 @@ In future versions of the software, we will pin these shared chunks and blooms o
 
 Please see [this article](.) for more information about running the scraper and building and sharing the index of appearances.
 
-
-#### Other Options
-
-All tools accept the following additional flags, although in some cases, they have no meaning.
-
-| Command     | Description                                                   |
-| ----------- | ------------------------------------------------------------- |
-| --version   | display the current version of the tool                       |
-| --wei       | export values in wei (the default)                            |
-| --ether     | export values in ether                                        |
-| --dollars   | export values in US dollars                                   |
-| --raw       | pass raw RPC data directly from the node with no processing   |
-| --to_file   | write the results to a temporary file and return the filename |
-| --output fn | write the results to file 'fn' and return the filename        |
-| --file fn   | specify multiple sets of command line options in a file       |
-
-<small>*For the `--file fn` option, you may place a series of valid command lines in a file using any of the above flags. In some cases, this may significantly improve performance. A semi-colon at the start of any line makes that line a comment.*</small>
+[{FOOTER}]
