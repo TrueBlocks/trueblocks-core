@@ -356,7 +356,11 @@ bool pinlib_getChunkFromRemote(CPinnedChunk& pin, ipfsdown_t which, double sleep
                 // clean up on failure
                 if (ret == 2)
                     defaultQuitHandler(-1);  // user hit control+c, let ourselves know
-                LOG_WARN("Could not download file ", outFile);
+                ostringstream err;
+                err << "Could not download file " << outFile;
+                LOG_WARN(err.str());
+                err << endl;
+                appendToAsciiFile(getConfigPath("manifest/failed_downloads.log"), err.str());
                 ::remove(getIndexPath(zipFile).c_str());
                 ::remove(getIndexPath(outFile).c_str());
             }
