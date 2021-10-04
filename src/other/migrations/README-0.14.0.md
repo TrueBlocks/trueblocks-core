@@ -1,6 +1,3 @@
-ADD SECTION ON --file:option
-
-
 # v0.14.0 Go Version of Chifra
 
 ---
@@ -9,25 +6,21 @@ ADD SECTION ON --file:option
 
 ## Why the Change?
 
-This is a major change to our code base, but a minor migration as no data structures changed. There is one breaking change to the `--verbose` option that only applies if you're using `chifra` in a script. If not, you may ignore this notice.
+Version 0.14.0 is a major change to our code base, but a minor migration, as no internal data structures changed.
+
+There was only one breaking change to command line options, but it was relatively obscure, so most likely it won't effect you. In fact, unless you've written shell scripts that use the `--verbose` option, you don't need to do anything.
 
 ### Breaking Change to --verbose flag
 
-Users have always been able to add a `--verbose` flag to any chifra command. This is still the case, but there has been a breaking change. Previously, you were able to specify a `log_level` with the `--verbose` command, but that is not longer the case. With this version `--verbose` has been made a `boolean` flag, which means it no longer accepts a `log_level`. A new command line option has been added to all commands to allows specifying detail level when debugging.
+It has always been possible to add a `--verbose` flag to any chifra command. This is still the case, but as of version 0.14.0, the `--verbose` flag has been made a **swith**. This means you may no longer add a value after the `--verbose` flag.
 
-If you previous had shell scripts or code that used a command option such as this:
+Previously, you could specify `--verbose N` where `N` was the log level. This will now report an error.
 
-```
---verbose <val>
-```
+To accomplish the same thing, do `--log_level N`. You will get the same result as previous.
 
-where `<val>` was some integer. You must replace that with:
+The only way to use the `--verbose` flag is to include it or omit it, you may no longer attach a number.
 
-```
---log_level <val>
-```
-
-You may still use the `--verbose` flag, but it will no longer accept a `log_level` value. An error will be reported.
+This change will break any previously-existing shell scripts or front end applications that used `--verbose N`.
 
 ## You're Finished
 
@@ -37,3 +30,4 @@ Please report any problems by creating an issue.
 
 The `--report` option of `chifra status` has been removed. Simply run `chifra status` with no options for the same result.
 The `--init_all` option of `chifra pins` has been removed. Use `chifra pins --init --all` instead.
+The `--file:fn` option has been made consistent with other Go language flags and no longer requires the colon (:).
