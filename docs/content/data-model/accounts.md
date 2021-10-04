@@ -2,7 +2,7 @@
 title: "Accounts"
 description: ""
 lead: ""
-date: 2021-10-03T19:59:18
+date: 2021-10-03T21:29:36
 lastmod:
   - :git
   - lastmod
@@ -193,7 +193,7 @@ See the `chifra abis` command line for information about getting an EtherScan ke
 
 ## Base types
 
-The above documentation mentions the following basic data types.
+This documentation mentions the following basic data types.
 
 | Type      | Description                                     | Notes          |
 | --------- | ----------------------------------------------- | -------------- |

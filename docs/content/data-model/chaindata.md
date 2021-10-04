@@ -2,7 +2,7 @@
 title: "Chain Data"
 description: ""
 lead: ""
-date: 2021-10-03T19:59:18
+date: 2021-10-03T21:29:36
 lastmod:
   - :git
   - lastmod
@@ -17,7 +17,7 @@ weight: 1200
 toc: true
 ---
 
-_These fields describe the output of various TrueBlocks blockchain queries.
+These fields describe the output of various TrueBlocks blockchain queries.
 
 _Each data structure is created by one or more tools which are detailed below_
 
@@ -225,7 +225,7 @@ Datedblock data is made of the following data fields:
 
 ## Base types
 
-The above documentation mentions the following basic data types.
+This documentation mentions the following basic data types.
 
 | Type      | Description                                     | Notes          |
 | --------- | ----------------------------------------------- | -------------- |

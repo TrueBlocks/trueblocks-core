@@ -236,7 +236,7 @@ const char* STR_DOCUMENT_TAIL =
     "\n"
     "## Base types\n"
     "\n"
-    "The above documentation mentions the following basic data types.\n"
+    "This documentation mentions the following basic data types.\n"
     "\n"
     "| Type      | Description                                     | Notes          |\n"
     "| --------- | ----------------------------------------------- | -------------- |\n"
