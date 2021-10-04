@@ -2,7 +2,7 @@
 title: "Chain Data"
 description: ""
 lead: ""
-date: 2021-10-03T19:59:18
+date: 2021-10-03T21:29:36
 lastmod:
   - :git
   - lastmod
@@ -225,7 +225,7 @@ Datedblock data is made of the following data fields:
 
 ## Base types
 
-The above documentation mentions the following basic data types.
+This documentation mentions the following basic data types.
 
 | Type      | Description                                     | Notes          |
 | --------- | ----------------------------------------------- | -------------- |
