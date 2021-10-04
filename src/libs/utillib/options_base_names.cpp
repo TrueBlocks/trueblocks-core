@@ -190,7 +190,7 @@ bool COptionsBase::loadNames(void) {
         return true;
 
     LOG8("Entering loadNames...");
-    string_q prefundFile = configPath("names/names_prefunds.tab");
+    string_q prefundFile = getConfigPath("names/names_prefunds.tab");
     if (isEnabled(OPT_PREFUND)) {
         if (!loadPrefunds(prefundFile)) {
             return usage("Could not open prefunds data.");
@@ -206,8 +206,8 @@ bool COptionsBase::loadNames(void) {
         buildOtherMaps();
 
     } else {
-        string_q txtFile = configPath("names/names.tab");
-        string_q customFile = configPath("names/names_custom.tab");
+        string_q txtFile = getConfigPath("names/names.tab");
+        string_q customFile = getConfigPath("names/names_custom.tab");
         time_q txtDate = laterOf(laterOf(fileLastModifyDate(txtFile), fileLastModifyDate(customFile)),
                                  fileLastModifyDate(prefundFile));
 

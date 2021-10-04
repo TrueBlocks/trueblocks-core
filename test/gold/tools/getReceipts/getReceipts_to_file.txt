@@ -1,3 +1,2 @@
-getReceipts argc: 6 [1:2222222.0] [2:2332332.0] [3:--fmt] [4:json] [5:--to_file] 
-getReceipts 2222222.0 2332332.0 --fmt json --to_file 
+chifra receipts  2222222.0 2332332.0 --fmt json --to_file
 { "outputFilename": "--output_filename--" }

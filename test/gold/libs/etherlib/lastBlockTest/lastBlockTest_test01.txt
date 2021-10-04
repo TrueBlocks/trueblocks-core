@@ -1,5 +1,4 @@
-lastBlockTest argc: 2 [1:recurse] 
-lastBlockTest recurse 
+lastBlockTest  recurse
 Recursive from ../
 Found 123 (123) files
 ../abiTest/abiTest_01.txt

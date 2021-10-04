@@ -1,5 +1,4 @@
-abiTest argc: 2 [1:old_bug] 
-abiTest old_bug 
+abiTest  old_bug
 Old bug test...
 ------------------------------------------------------------------------------------------------------------------------
 ABI of test1.json

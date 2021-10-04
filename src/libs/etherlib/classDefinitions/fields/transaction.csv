@@ -4,7 +4,7 @@ blockHash            ,hash           ,            ,       ,      ,        ,     
 blockNumber          ,blknum         ,            ,       ,      ,        ,          ,        ,      ,         ,3   ,1    ,10021         ,the number of the block
 transactionIndex     ,blknum         ,            ,       ,      ,        ,          ,        ,      ,         ,4   ,2    ,305           ,the zero-indexed position of the transaction in the block
 nonce                ,uint64         ,            ,       ,      ,        ,          ,        ,      ,         ,5   ,     ,232           ,sequence number of the transactions sent by the sender
-timestamp            ,timestamp      ,            ,       ,      ,        ,          ,        ,      ,         ,6   ,4    ,1438335038    ,the unix timestamp of the object
+timestamp            ,timestamp      ,            ,       ,      ,        ,          ,        ,      ,         ,6   ,4    ,1438335038    ,the Unix timestamp of the object
 from                 ,address        ,            ,       ,      ,        ,          ,        ,      ,         ,7   ,5    ,              ,address from which the transaction was sent
 to                   ,address        ,            ,       ,      ,        ,          ,        ,      ,         ,8   ,6    ,              ,address to which the transaction was sent
 value                ,wei            ,            ,       ,      ,        ,          ,        ,      ,         ,9   ,     ,0             ,the amount of wei sent with this transactions

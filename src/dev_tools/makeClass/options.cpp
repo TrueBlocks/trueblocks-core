@@ -24,6 +24,7 @@ static const COption params[] = {
     COption("files", "", "list<path>", OPT_REQUIRED | OPT_POSITIONAL, "one or more class definition files"),
     COption("all", "a", "", OPT_SWITCH, "list, or run all class definitions found in the local folder"),
     COption("options", "o", "", OPT_SWITCH, "export options code (check validity in the process)"),
+    COption("gocmds", "g", "", OPT_SWITCH, "export go command code"),
     COption("readmes", "m", "", OPT_SWITCH, "create readme files for each tool and app"),
     COption("format", "f", "", OPT_SWITCH, "format source code files (.cpp and .h) found in local folder and below"),
     COption("lint", "l", "", OPT_SWITCH, "lint source code files (.cpp and .h) found in local folder and below"),
@@ -44,6 +45,7 @@ bool COptions::parseArguments(string_q& command) {
     // BEG_CODE_LOCAL_INIT
     CStringArray files;
     bool options = false;
+    bool gocmds = false;
     bool readmes = false;
     bool format = false;
     bool lint = false;
@@ -61,6 +63,9 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-o" || arg == "--options") {
             options = true;
+
+        } else if (arg == "-g" || arg == "--gocmds") {
+            gocmds = true;
 
         } else if (arg == "-m" || arg == "--readmes") {
             readmes = true;
@@ -98,6 +103,7 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_LIST("files", files, files.empty());
     LOG_TEST_BOOL("all", all);
     LOG_TEST_BOOL("options", options);
+    LOG_TEST_BOOL("gocmds", gocmds);
     LOG_TEST_BOOL("readmes", readmes);
     LOG_TEST_BOOL("format", format);
     LOG_TEST_BOOL("lint", lint);
@@ -111,6 +117,7 @@ bool COptions::parseArguments(string_q& command) {
     establishFolder(getDocsPathContent("data-model/"));
     establishFolder(getDocsPathContent("docs/"));
     establishFolder(getDocsPathContent("docs/chifra/"));
+    forEveryLineInAsciiFile(endpointFile, parseCommandData, &endpointArray);
 
     if (tsx)
         handle_tsx();
@@ -149,10 +156,15 @@ bool COptions::parseArguments(string_q& command) {
             dataModels.push_back(classDef);
     }
 
+    if (gocmds && !options)
+        options = true;
+
     // Ignoring classDefs for a moment, process special options. Note: order matters
     if (openapi && !handle_datamodel())
         return false;
     if (options && !handle_options())
+        return false;
+    if (gocmds && !handle_gocmds())
         return false;
     if (readmes && !handle_readmes())
         return false;
@@ -194,8 +206,12 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     // We need the template files
-    if (!folderExists(configPath("makeClass/")))
-        return false;  // usage(usageErrs[ERR_CONFIGMISSING]);
+    CStringArray templs = {"", "blank.yaml", "blank.cpp", "blank.h", "blank.go"};
+    for (auto temp : templs) {
+        if (!fileExists(getTemplatePath(temp))) {
+            return makeError(ERR_CONFIGMISSING, getTemplatePath(temp));
+        }
+    }
 
     return true;
 }
@@ -213,7 +229,7 @@ void COptions::Init(void) {
     classDefs.clear();
     counter = CCounter();
 
-    CToml toml(configPath("makeClass.toml"));
+    CToml toml(getConfigPath("makeClass.toml"));
     lastFormat = static_cast<timestamp_t>(toml.getConfigInt("settings", "lastFormat", 0));
     lastLint = static_cast<timestamp_t>(toml.getConfigInt("settings", "lastLint", 0));
     toml.Release();
@@ -233,7 +249,7 @@ COptions::COptions(void) : classFile("") {
     usageErrs[ERR_NOERROR] = "No error";
     // ERROR_STRINGS
     usageErrs[ERR_CLASSDEFNOTEXIST] = "./classDefinitions folder does not exist.";
-    usageErrs[ERR_CONFIGMISSING] = "[{CONFIG_FOLDER}]makeClass/ folder does not exist.";
+    usageErrs[ERR_CONFIGMISSING] = "File {0} does not exist.";
     usageErrs[ERR_NEEDONECLASS] = "Please specify at least one className.";
     // ERROR_STRINGS
 
@@ -274,5 +290,39 @@ bool listClasses(const string_q& path, void* data) {
             opts->classDefs.push_back(cl);
         }
     }
+    return true;
+}
+
+//--------------------------------------------------------------------------------
+#define getSourcePathA(a) (string_q("../src/") + (a))
+string_q getSourcePath(const string_q& rest) {
+    string_q cwd = getCWD();
+    CStringArray parts;
+    explode(parts, cwd, '/');
+    string_q ret;
+    for (auto part : parts) {
+        if (part != "trueblocks-core")
+            ret += ("/" + part);
+        else
+            return ret + "/trueblocks-core/src/" + rest;
+    }
+    return getSourcePathA(rest);
+}
+
+//---------------------------------------------------------------------------------------------------
+bool parseCommandData(const char* str, void* data) {
+    static CStringArray routeFields;
+    string_q line = str;
+    replaceAny(line, "\n\r", "");
+    if (routeFields.empty()) {
+        explode(routeFields, line, ',');
+        return true;
+    }
+
+    CCommandOptionArray* array = (CCommandOptionArray*)data;
+    CCommandOption option;
+    option.parseCSV(routeFields, line);
+    array->push_back(option);
+
     return true;
 }

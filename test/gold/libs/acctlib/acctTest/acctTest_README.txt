@@ -1,5 +1,5 @@
-acctTest argc: 2 [1:-th] 
-acctTest -th 
+acctTest argc: 2 [1:--readme] 
+acctTest --readme 
 ### Usage
 
 `Usage:`     [-a|-f|-l|-n|-v|-h]  

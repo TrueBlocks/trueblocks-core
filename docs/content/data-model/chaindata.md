@@ -2,7 +2,7 @@
 title: "Chain Data"
 description: ""
 lead: ""
-date: 2021-09-20T20:31:37
+date: 2021-10-03T19:59:18
 lastmod:
   - :git
   - lastmod
@@ -42,7 +42,7 @@ Block data is made of the following data fields:
 | parentHash    | hash of previous block                                        | hash              |
 | miner         | Address of block's winning miner                              | address           |
 | difficulty    | the computational difficulty at this block                    | uint64            |
-| timestamp     | the unix timestamp of the object                              | timestamp         |
+| timestamp     | the Unix timestamp of the object                              | timestamp         |
 | transactions  | a possibly empty array of transactions or transaction hashes  | CTransactionArray |
 | baseFeePerGas | the base fee for this block                                   | wei               |
 | finalized     | flag indicating the system considers this data final          | bool              |
@@ -73,7 +73,7 @@ Transaction data is made of the following data fields:
 | blockNumber      | the number of the block                                                                               | blknum               |
 | transactionIndex | the zero-indexed position of the transaction in the block                                             | blknum               |
 | nonce            | sequence number of the transactions sent by the sender                                                | uint64               |
-| timestamp        | the unix timestamp of the object                                                                      | timestamp            |
+| timestamp        | the Unix timestamp of the object                                                                      | timestamp            |
 | from             | address from which the transaction was sent                                                           | address              |
 | to               | address to which the transaction was sent                                                             | address              |
 | value            | the amount of wei sent with this transactions                                                         | wei                  |
@@ -91,7 +91,7 @@ Transaction data is made of the following data fields:
 
 Receipts record the amount of gas used for a transaction among other things. If the transaction succeeded, a receipt might also have logs.
 
-If the `to` address of a transaction is `0x0`, the `input` data is considered to be the the source code (byte code) of a smart contract. In this case, if the creation of the contract succeeds, the `contractAddress` field of the receipt carries the address of the newly created contract.
+If the `to` address of a transaction is `0x0`, the `input` data is considered to be the source code (byte code) of a smart contract. In this case, if the creation of the contract succeeds, the `contractAddress` field of the receipt carries the address of the newly created contract.
 
 The following commands produce and manage receipts:
 
@@ -206,7 +206,7 @@ Traceresult data is made of the following data fields:
 
 ## DatedBlock
 
-Left to its own devices, the blockchain would try to convince us that only hashes and bytes are imporant, but being human beings we know that this is not true. TrueBlocks `articulates` various types of data with [chifra names](/docs/chifra/accounts/#chifra-names) detailing the names for addresses, `-articulate` describing the Functions and Events of a transction, and [chifra when](/docs/chifra/chaindata/#chifra-when) describing dated blocks. Dated blocks assign a human-readable date to blocks given block numbers or timestamps and visa versa.
+Left to its own devices, the blockchain would try to convince us that only hashes and bytes are important, but being human beings we know that this is not true. TrueBlocks `articulates` various types of data with [chifra names](/docs/chifra/accounts/#chifra-names) detailing the names for addresses, `-articulate` describing the Functions and Events of a transaction, and [chifra when](/docs/chifra/chaindata/#chifra-when) describing dated blocks. Dated blocks assign a human-readable date to blocks given block numbers or timestamps and visa versa.
 
 The following commands produce and manage datedblocks:
 
@@ -219,7 +219,7 @@ Datedblock data is made of the following data fields:
 | Field       | Description                         | Type      |
 | ----------- | ----------------------------------- | --------- |
 | blockNumber | the number of the block             | blknum    |
-| timestamp   | the unix timestamp of the block     | timestamp |
+| timestamp   | the Unix timestamp of the block     | timestamp |
 | date        | Human readable version of timestamp | date      |
 
 
@@ -229,15 +229,15 @@ The above documentation mentions the following basic data types.
 
 | Type      | Description                                     | Notes          |
 | --------- | ----------------------------------------------- | -------------- |
-| address   | a 20-byte hexidecimal string starting with '0x' | lowercase      |
+| address   | a 20-byte hexadecimal string starting with '0x' | lowercase      |
 | blknum    | an alias for a uint64                           |                |
 | bool      | a value either `true`, `false`, `1`, or `0`     |                |
 | bytes     | an arbitrarily long string of bytes             |                |
 | date      | a JSON formatted date                           | as a string    |
 | gas       | an unsigned big number                          | as a string    |
-| hash      | a 32-byte hexidecimal string starting with '0x' | lowercase      |
+| hash      | a 32-byte hexadecimal string starting with '0x' | lowercase      |
 | string    | a normal character string                       |                |
-| timestamp | a 64-bit unsigned integer                       | unix timestamp |
+| timestamp | a 64-bit unsigned integer                       | Unix timestamp |
 | uint32    | a 32-bit unsigned integer                       |                |
 | uint64    | a 64-bit unsigned integer                       |                |
 | uint8     | an alias for the boolean type                   |                |

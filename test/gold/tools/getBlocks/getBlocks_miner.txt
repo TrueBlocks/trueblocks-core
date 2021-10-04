@@ -1,5 +1,4 @@
-getBlocks argc: 5 [1:1] [2:--uniq_tx] [3:--fmt] [4:json] 
-getBlocks 1 --uniq_tx --fmt json 
+chifra blocks  1 --uniq_tx --fmt json
 { "data": [
   {
     "bn": 1,

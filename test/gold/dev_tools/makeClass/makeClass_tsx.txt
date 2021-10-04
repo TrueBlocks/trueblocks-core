@@ -1,5 +1,4 @@
-makeClass argc: 3 [1:--tsx] [2:CBlock] 
-makeClass --tsx CBlock 
+makeClass  --tsx CBlock
 TIME ~ CLOCK - <WARNG> : Skipping javascript generation...
 TIME ~ CLOCK - <INFO>  : handling generate...
 TIME ~ CLOCK - <INFO>  : makeClass --run processed 1 files (changed 2).                                        

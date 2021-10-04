@@ -1,4 +1,3 @@
-getBlocks argc: 6 [1:3982128] [2:--uniq] [3:--count] [4:--fmt] [5:txt] 
-getBlocks 3982128 --uniq --count --fmt txt 
+chifra blocks  3982128 --uniq --count --fmt txt
 blocknumber	transactionscnt	addr_count
 3982128	91	164

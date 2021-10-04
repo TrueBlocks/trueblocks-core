@@ -1,5 +1,4 @@
-ethNames argc: 2 [1:--tags] 
-ethNames --tags 
+chifra names  --tags
 tags
 30-Contracts
 30-Contracts:Balancer

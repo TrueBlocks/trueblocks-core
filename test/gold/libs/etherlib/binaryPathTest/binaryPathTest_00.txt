@@ -1,5 +1,4 @@
-binaryPathTest argc: 1 
-binaryPathTest 
+binaryPathTest  
 ./blocks/00/10/01/001001001.bin
 ./blooms/00/10/01/001001001.bin
 ./txs/00/10/01/001001001-00020.bin

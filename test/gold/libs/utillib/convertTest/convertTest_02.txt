@@ -1,5 +1,4 @@
-convertTest argc: 2 [1:2] 
-convertTest 2 
+convertTest  2
 0. Running TestConverts_2
 	000.000 wei1                             ==> passed 'one' is equal to '1200000000'
 	000.001 wei2                             ==> passed 'two' is equal to '1030000000'

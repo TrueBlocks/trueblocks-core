@@ -1,3 +1,4 @@
+loggingTest  
 TIME ~ CLOCK - [0m[0;32m[1m<INFO>  [0m: Starting the application..
 TIME ~ CLOCK - [0m: [0;37m0[0m-The value of 'i' is 0. 9 more iterations left 
 TIME ~ CLOCK - [0m: [0;37m0[0m-The value of 'i' is 1. 8 more iterations left 

@@ -168,7 +168,7 @@ bool COptions::handle_status(ostream& os) {
     }
 
     CChainCache txs;
-    if (contains(mode, "|transactions|") || contains(mode, "|data|")) {
+    if (contains(mode, "|txs|") || contains(mode, "|data|")) {
         LOG8("Reporting on txs");
         if (!txs.readBinaryCache("txs", details)) {
             string_q thePath = getCachePath("txs/");

@@ -1,3 +1,2 @@
-getQuotes argc: 4 [1:--fmt] [2:json] [3:--to_file] 
-getQuotes --fmt json --to_file 
+chifra quotes  --fmt json --to_file
 { "outputFilename": "--output_filename--" }

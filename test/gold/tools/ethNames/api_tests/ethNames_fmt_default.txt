@@ -1,344 +1,64 @@
 {
   "data": [
     {
-      "deleted": false,
       "tags": "31-Gitcoin:Grants",
       "address": "0x133d705a9696882228f6bb7fe008745aef7cdc93",
       "name": "Grant 0160 @antiprosynth | Antiprosynthesis.eth ⟠ Twitter Account Activity",
       "symbol": "",
       "source": "https://gitcoin.co/grants/160/antiprosynth-antiprosynthesiseth-twitter-account-",
       "decimals": 0,
-      "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": false,
-      "is_erc20": false,
-      "is_erc721": false
+      "description": ""
     },
     {
-      "deleted": false,
-      "tags": "50-Tokens:ERC20",
-      "address": "0x1829aa045e21e0d59580024a951db48096e01782",
-      "name": "FuzeX Token",
-      "symbol": "FXT",
-      "source": "On chain",
-      "decimals": 18,
-      "description": "Cryptocurrency, credit, debit and reward payments at your fingertips",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
-    },
-    {
-      "deleted": false,
-      "tags": "91-Early:Addresses",
-      "address": "0x198ef1ec325a96cc354c7266a038be8b5c558f67",
-      "name": "Dao Whale 100 (Prefund_0876)",
-      "symbol": "",
-      "source": "Genesis SlackNation Ethereum Tip Jar WhaleWatch.io",
-      "decimals": 0,
-      "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": false,
-      "is_erc20": false,
-      "is_erc721": false
-    },
-    {
-      "deleted": false,
       "tags": "30-Contracts:Giveth",
       "address": "0x1a88c052fc7a8401e00b2f76f96ac62a19427731",
       "name": "EtherIDTipJar",
       "symbol": "",
       "source": "Giveth Website",
       "decimals": 0,
-      "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": false,
-      "is_erc20": false,
-      "is_erc721": false
+      "description": ""
     },
     {
-      "deleted": false,
-      "tags": "50-Tokens:ERC20",
-      "address": "0x1cb3209d45b2a60b7fbca1ccdbf87f674237a4aa",
-      "name": "ThoreCoin",
-      "symbol": "THR",
-      "source": "On chain",
-      "decimals": 4,
-      "description": "THR represents a basket of top-traded high-demand coins Simply put, it‚Äö√Ñ√¥s a Basket of Multiple cryptocurrencies in which you can invest by buying tokens",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
-    },
-    {
-      "deleted": false,
-      "tags": "50-Tokens:ERC20",
-      "address": "0x1f75047233517dcf67970d9e3c3bb385cb647f30",
-      "name": "Unicorns",
-      "symbol": "🦄",
-      "source": "On chain",
-      "decimals": 18,
-      "description": "Ethereum tip jar unicorn tokens",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
-    },
-    {
-      "deleted": false,
-      "tags": "31-Gitcoin:Grants",
-      "address": "0x224cf0b963c59b95623b3dd6ce07b4ce40f7b134",
-      "name": "Grant 0522 Support the 🌟 Community Currency Alliance 🌟 Enabling An Inclusive Currency Ecosystem",
-      "symbol": "",
-      "source": "https://gitcoin.co/grants/522/support-the-community-currency-alliance-enabling-",
-      "decimals": 0,
-      "description": "https://multiply.charity",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": false,
-      "is_erc20": false,
-      "is_erc721": false
-    },
-    {
-      "deleted": false,
-      "tags": "90-Individuals:Twitter",
-      "address": "0x24029403d13c2e0cfee4a4ee1ba998e5b0367f03",
-      "name": "Name 0x24029403",
-      "symbol": "",
-      "source": "Twitter",
-      "decimals": 0,
-      "description": "@antiprosynth",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": false,
-      "is_erc20": false,
-      "is_erc721": false
-    },
-    {
-      "deleted": false,
-      "tags": "50-Tokens:ERC20",
-      "address": "0x2859021ee7f2cb10162e67f33af2d22764b31aff",
-      "name": "Silent Notary Token",
-      "symbol": "SNTR",
-      "source": "On chain",
-      "decimals": 4,
-      "description": "SilentNotary is a multiplatform decentralized service for confirmation of event existence. SilentNotary converts an event into legally significant evidence, excluding the possibility of falsification.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": false,
-      "is_erc721": false
-    },
-    {
-      "deleted": false,
-      "tags": "50-Tokens:ERC20",
-      "address": "0x2bdc0d42996017fce214b21607a515da41a9e0c5",
-      "name": "SkinCoin",
-      "symbol": "SKIN",
-      "source": "On chain",
-      "decimals": 6,
-      "description": "SkinCoin is a multipurpose cryptocurrency for gaming industry.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
-    },
-    {
-      "deleted": false,
-      "tags": "50-Tokens:ERC20",
-      "address": "0x41a7820c86f4bea29e6c9239aeb0fbdba12dd790",
-      "name": "Unicorns",
-      "symbol": "🦄",
-      "source": "On chain",
-      "decimals": 18,
-      "description": "Ethereum tip jar unicorn tokens",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
-    },
-    {
-      "deleted": false,
-      "tags": "50-Tokens:ERC20",
-      "address": "0x47dd62d4d075dead71d0e00299fc56a2d747bebb",
-      "name": "EQUAL",
-      "symbol": "EQL",
-      "source": "On chain",
-      "decimals": 18,
-      "description": "A Self-deflationary, Fairly Distributed, Multiplatform Utility Token.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
-    },
-    {
-      "deleted": false,
-      "tags": "50-Tokens:ERC20",
-      "address": "0x89205a3a3b2a69de6dbf7f01ed13b2108b2c43e7",
-      "name": "Unicorns",
-      "symbol": "🦄",
-      "source": "On chain",
-      "decimals": 18,
-      "description": "Ethereum tip jar unicorn tokens",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
-    },
-    {
-      "deleted": false,
       "tags": "50-Tokens:ERC20",
       "address": "0x94ca37d108e89775dc8ae65f51ae28c2d9599f9a",
       "name": "Cryptotipsfr Token V2",
       "symbol": "CRTS",
       "source": "On chain",
       "decimals": 9,
-      "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "description": ""
     },
     {
-      "deleted": false,
-      "tags": "50-Tokens:ERC20",
-      "address": "0x9a794dc1939f1d78fa48613b89b8f9d0a20da00e",
-      "name": "ABX Token",
-      "symbol": "ABX",
-      "source": "On chain",
-      "decimals": 18,
-      "description": "A blockchain powered trading platform that integrates crypto assets from multiple exchanges.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
-    },
-    {
-      "deleted": false,
-      "tags": "40-Exchanges",
-      "address": "0x9e6316f44baeeee5d41a1070516cc5fa47baf227",
-      "name": "Shapeshift 2",
-      "symbol": "",
-      "source": "CarbonVote",
-      "decimals": 0,
-      "description": "Also BigTipper at Ethereum Tip Jar and Known Exchanges_001 at Ether Camp",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": false,
-      "is_erc20": false,
-      "is_erc721": false
-    },
-    {
-      "deleted": false,
-      "tags": "50-Tokens:ERC20",
-      "address": "0xb9bb08ab7e9fa0a1356bd4a39ec0ca267e03b0b3",
-      "name": "PCHAIN",
-      "symbol": "PAI",
-      "source": "On chain",
-      "decimals": 18,
-      "description": "Native multichain system in the world that supports Ethereum Virtual Machine EVM, which consists of one main chain and multiple derived chains.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
-    },
-    {
-      "deleted": false,
-      "tags": "50-Tokens:ERC20",
-      "address": "0xc72fe8e3dd5bef0f9f31f259399f301272ef2a2d",
-      "name": "Insights Network",
-      "symbol": "INSTAR",
-      "source": "On chain",
-      "decimals": 18,
-      "description": "The Insights Network‚Äö√Ñ√¥s unique combination of blockchain technology, smart contracts, and secure multiparty computation enables the individual to securely own, manage, and monetize their data.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
-    },
-    {
-      "deleted": false,
       "tags": "91-Early:Addresses",
       "address": "0xe7f06e64e0d04c6cfedf7e9079d56d0fb7200a2e",
       "name": "Multiplyx10",
       "symbol": "",
       "source": "EtherScan.io",
       "decimals": 0,
-      "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": false,
-      "is_erc721": false
+      "description": ""
     },
     {
-      "deleted": false,
-      "tags": "50-Tokens:ERC20",
-      "address": "0xee74110fb5a1007b06282e0de5d73a61bf41d9cd",
-      "name": "BHPCash",
-      "symbol": "BHPC",
-      "source": "On chain",
-      "decimals": 18,
-      "description": "Distributed bank based on bitcoin hash power credit, offers innovative service of receiving dividend from mining and multiple derivative financial services on the basis of mining hash power.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
-    },
-    {
-      "deleted": false,
       "tags": "50-Tokens:ERC20",
       "address": "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359",
       "name": "Ethereum Tip Jar",
       "symbol": "TIP",
       "source": "TrueBlocks.io",
       "decimals": 0,
-      "description": "The ethereum tip jar",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": false,
-      "is_erc721": false
+      "description": "The ethereum tip jar"
     },
     {
-      "deleted": false,
       "tags": "50-Tokens:ERC20",
       "address": "0xfeb8b9496df7d8c9677dda076813dc6885fb0646",
       "name": "Tip",
       "symbol": "TIP",
       "source": "On chain",
       "decimals": 18,
-      "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "description": ""
     }
   ],
   "types": [
     {
       "type": "CAccountName",
       "fields": [
-        {
-          "name": "deleted",
-          "type": "bool"
-        },
         {
           "name": "tags",
           "type": "text"
@@ -366,26 +86,6 @@
         {
           "name": "description",
           "type": "text"
-        },
-        {
-          "name": "is_custom",
-          "type": "bool"
-        },
-        {
-          "name": "is_prefund",
-          "type": "bool"
-        },
-        {
-          "name": "is_contract",
-          "type": "bool"
-        },
-        {
-          "name": "is_erc20",
-          "type": "bool"
-        },
-        {
-          "name": "is_erc721",
-          "type": "bool"
         }
       ]
     }

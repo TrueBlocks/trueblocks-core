@@ -2,7 +2,7 @@
 title: "Other"
 description: ""
 lead: ""
-date: 2021-09-20T21:00:48
+date: 2021-10-03T20:13:02
 lastmod:
   - :git
   - lastmod
@@ -20,7 +20,7 @@ toc: true
 These commands call some useful miscellaneous tools:
 * `chifra quotes`, a rudimentary pricing tool,
 * `chifra explore` a quick way to open a blockchain explorer,
-* `ethslurp` an older tool that lets you call data from EtherScan. (This has issues of ceentralization and data quality, see explanation in its section).
+* `ethslurp` an older tool that lets you call data from EtherScan. (This has issues of centralization and data quality, see explanation in its section).
 
 {{< alert icon="👉" title="note about keys"
 text="Note: some of these tools, like `ethslurp`, require an EtherScan key." >}}
@@ -53,7 +53,7 @@ Function data is made of the following data fields:
 
 ## Parameter
 
-Parameters are a constituant part of a [Function or Event](/data-model/accounts/#function). The parameters of a function are each individual value passed into the function. Along with the function's name, the parameters types (once canonicalized) are used to create a function's four byte signature (or an event's 32-byte signature). Parameters are important to TrueBlocks because we use them as part of the ABI decoding and the `--articulate` process to conver the blockchain's bytes into human-readable text.
+Parameters are a constituent part of a [Function or Event](/data-model/accounts/#function). The parameters of a function are each individual value passed into the function. Along with the function's name, the parameters types (once canonicalized) are used to create a function's four byte signature (or an event's 32-byte signature). Parameters are important to TrueBlocks because we use them as part of the ABI decoding and the `--articulate` process to conver the blockchain's bytes into human-readable text.
 
 The following commands produce and manage parameters:
 
@@ -68,9 +68,9 @@ Parameter data is made of the following data fields:
 | ------------ | ----------------------------------------------------------- | --------------- |
 | type         | the type of this parameter                                  | string          |
 | name         | the name of this parameter                                  | string          |
-| str_default  | the defaul value of this parameter, if any                  | string          |
+| str_default  | the default value of this parameter, if any                 | string          |
 | indexed      | `true` if this parameter is indexed                         | bool            |
-| internalType | for composite types, the interal type of the parameter      | string          |
+| internalType | for composite types, the internal type of the parameter     | string          |
 | components   | for composite types, the parameters making up the composite | CParameterArray |
 
 
@@ -80,9 +80,9 @@ Prior to sources of on-chain prices such as UniSwap, TrueBlocks would pull US do
 
 The following commands produce and manage quotes:
 
-| Tools                                              |                                                                               |
-| -------------------------------------------------- | ----------------------------------------------------------------------------- |
-| [chifra quotes](/docs/chifra/other/#chifra-quotes) | Freshen and/or display Ethereum price data.<br/>This tool has been deprecated |
+| Tools                                              |                                                                           |
+| -------------------------------------------------- | ------------------------------------------------------------------------- |
+| [chifra quotes](/docs/chifra/other/#chifra-quotes) | Freshen or display Ethereum price data.<br/>This tool has been deprecated |
 
 Quote data is made of the following data fields:
 
@@ -104,4 +104,4 @@ The above documentation mentions the following basic data types.
 | date      | a JSON formatted date                           | as a string    |
 | double    | a floating point number of double precision     |                |
 | string    | a normal character string                       |                |
-| timestamp | a 64-bit unsigned integer                       | unix timestamp |
+| timestamp | a 64-bit unsigned integer                       | Unix timestamp |

@@ -314,7 +314,7 @@ bool CTestCase::Serialize(CArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CTestCase::SerializeC(CArchive& archive) const {
-    // Writing always write the latest version of the data
+    // Writing always writes the latest version of the data
     CBaseNode::SerializeC(archive);
 
     // EXISTING_CODE
@@ -484,10 +484,10 @@ const char* STR_DISPLAY_TESTCASE = "";
 // EXISTING_CODE
 //---------------------------------------------------------------------------------------------
 void establishTestMonitors(void) {
-    if (folderExists(configPath("mocked/monitors/")))
+    if (folderExists(getConfigPath("mocked/monitors/")))
         return;
 
-    string_q gzipFile = configPath("mocked/monitors.tar.gz");
+    string_q gzipFile = getConfigPath("mocked/monitors.tar.gz");
     if (!fileExists(gzipFile)) {
         LOG_WARN("Cannot find test monitors file: ", gzipFile);
         return;
@@ -501,7 +501,7 @@ void establishTestMonitors(void) {
         "tar -xvf monitors.tar 2>/dev/null && rm -f monitors.tar && "
         "tar -xvf mocks.tar 2>/dev/null && rm -f mocks.tar";
 
-    string_q cmd = substitute(STR_UNZIP_CMD, "[{PATH}]", configPath("mocked/"));
+    string_q cmd = substitute(STR_UNZIP_CMD, "[{PATH}]", getConfigPath("mocked/"));
     // LOG_INFO(cmd);
     // clang-format off
     if (system(cmd.c_str())) {}  // Don't remove cruft. Silences compiler warnings
@@ -519,7 +519,7 @@ bool prepareBuiltIn(string_q& options) {
             if (match == "RESET") {
                 establishTestMonitors();
                 cleanFolder(getCachePath("tmp/"));
-                cleanFolder(configPath("mocked/unchained"));
+                cleanFolder(getConfigPath("mocked/unchained"));
                 options = "";
                 if (debug)
                     os << "Cleanup" << endl;
@@ -531,7 +531,7 @@ bool prepareBuiltIn(string_q& options) {
                 os << options;
                 if (debug)
                     os << " ; find ./testing_data/ -exec ls -l {} ';' ; ";
-                options = substitute(os.str(), "$CONFIG/", configPath(""));
+                options = substitute(os.str(), "$CONFIG/", getConfigPath(""));
                 replaceAll(options, match, cmd);
             }
             if (debug)
@@ -550,12 +550,6 @@ CTestCase::CTestCase(const string_q& line, uint32_t id) {
     explode(parts, line, ',');
     test_id = id;
     onOff = parts.size() > 0 ? trim(parts[0]) : "";
-    static string_q runLocal;
-    if (runLocal.empty())
-        runLocal = getGlobalConfig("testRunner")->getConfigStr("settings", "runLocal", "off");
-    if (onOff == "local") {
-        onOff = "off";
-    }
     mode = parts.size() > 1 ? trim(parts[1]) : "";
     speed = parts.size() > 2 ? trim(parts[2]) : "";
     route = parts.size() > 3 ? trim(parts[3]) : "";
@@ -572,7 +566,7 @@ CTestCase::CTestCase(const string_q& line, uint32_t id) {
     isCmd = contains(path, "tools") || contains(path, "apps") || contains(path, "go-apps") || contains(path, "libs");
     if (isCmd)
         isCmd = !contains(path, "dev_tools") && !contains(tool, "chifra");
-    fileName = substitute(tool, "-new", "") + "_" + name + ".txt";
+    fileName = tool + "_" + name + ".txt";
 
     replaceAll(post, "n", "");
     replaceAll(post, "y", getGlobalConfig("makeClass")->getConfigStr("settings", "json_pretty_print", "jq ."));
@@ -633,7 +627,9 @@ void CTestCase::prepareTest(bool cmdLine, bool removeWorking) {
 
     if (!extra.empty() && !contains(extra, "=")) {  // order matters
         tool = extra;
-        extra = "";
+        // TODO(tjayrush): weird chifra related code
+        if (tool == "getBlocks")
+            extra = "blocks";
     }
 }
 // EXISTING_CODE

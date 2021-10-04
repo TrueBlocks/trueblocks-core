@@ -466,4 +466,5 @@ string_q manageRemoveList(const string_q& filename) {
     }
     return theList;
 }
+
 }  // namespace qblocks

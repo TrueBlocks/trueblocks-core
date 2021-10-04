@@ -1,5 +1,4 @@
-stringTest argc: 2 [1:4] 
-stringTest 4 
+stringTest  4
 0. 	000.000 base                             ==> passed 'foo' is equal to 'xfoo'
 	000.001 0-10                             ==> passed '"a fairly l"' is equal to 'extract(xfoo, 0, 10)'
 	000.002 5-10                             ==> passed '"rly long s"' is equal to 'extract(xfoo, 5, 10)'

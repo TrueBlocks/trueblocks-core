@@ -1,5 +1,4 @@
-forEveryTest argc: 2 [1:1] 
-forEveryTest 1 
+forEveryTest  1
 ------------------------------------------------------------------------------------------------------------------------
 Every unique addresses in block 4312145
 412149	99999		0xf927a40c8b7f6e07c5af7fa2155b4864a4112b13	miner

@@ -60,7 +60,7 @@ typedef vector<CTest> CTestArray;
 
 //--------------------------------------------------------------
 int main(int argc, const char* argv[]) {
-    string_q nodeStr = asciiFileToString(configPath("testing_nodes"));
+    string_q nodeStr = asciiFileToString(getConfigPath("testing_nodes"));
     CNodeArray nodes;
     while (!nodeStr.empty()) {
         string_q line = nextTokenClear(nodeStr, '\n');
@@ -114,17 +114,17 @@ int main(int argc, const char* argv[]) {
                 if (node.name == "Erigon") {
                     string_q turboFile = "./erigon/" + test.name + ".txt";
                     string_q parityFile = "./parity/" + test.name + ".txt";
-                    string_q turbo = asciiFileToString(turboFile);
-                    string_q parity;
+                    string_q turboDat = asciiFileToString(turboFile);
+                    string_q parityDat;
                     if (test.turbo) {
-                        parity = turbo;
-                        stringToAsciiFile(parityFile, parity);
+                        parityDat = turboDat;
+                        stringToAsciiFile(parityFile, parityDat);
                     } else {
-                        parity = asciiFileToString(parityFile);
+                        parityDat = asciiFileToString(parityFile);
                     }
-                    cout << ((!turbo.empty() && turbo == parity) ? greenCheck : redX);
-                    passed += (turbo == parity);
-                    failed += (turbo != parity);
+                    cout << ((!turboDat.empty() && turboDat == parityDat) ? greenCheck : redX);
+                    passed += (turboDat == parityDat);
+                    failed += (turboDat != parityDat);
                     cout << endl;
                 }
             }

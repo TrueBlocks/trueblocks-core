@@ -31,7 +31,6 @@ class CCounter {
     size_t nVisited;
     size_t nProcessed;
     bool is_counting;
-    CStringArray replacements;
     CCounter(void) : fileCount(0), nVisited(0), nProcessed(0), is_counting(true) {
     }
 };
@@ -47,18 +46,21 @@ class COptions : public COptionsBase {
 
     CClassDefinitionArray classDefs;
     CClassDefinitionArray dataModels;
-    CCommandOptionArray optionArray;
+    CCommandOptionArray cmdOptionArray;
+    CCommandOptionArray routeOptionArray;
     CStringArray positionals;
     CToml classFile;
     CCounter counter;
     timestamp_t lastFormat;
     timestamp_t lastLint;
+    CCommandOptionArray endpointArray;
 
     ostringstream optionStream, initStream, localStream, autoStream, headerStream, configStream;
     ostringstream notesStream, errorStrStream, errorDefStream, debugStream, goCallStream;
     ostringstream goRouteStream, chifraCmdStream, chifraHelpStream, pairMapStream;
     ostringstream apiTagStream, apiPathStream;
     ostringstream jsLocationStream, jsTemplateStream, jsHotkeyStream, jsRouteStream;
+    ostringstream goStream;
 
     void clearStreams(void) {
         optionStream.str("");
@@ -82,6 +84,7 @@ class COptions : public COptionsBase {
         jsTemplateStream.str("");
         jsHotkeyStream.str("");
         jsRouteStream.str("");
+        goStream.str("");
 
         optionStream.clear();
         initStream.clear();
@@ -104,8 +107,8 @@ class COptions : public COptionsBase {
         jsTemplateStream.clear();
         jsHotkeyStream.clear();
         jsRouteStream.clear();
-
         positionals.clear();
+        goStream.clear();
     }
 
     COptions(void);
@@ -116,6 +119,7 @@ class COptions : public COptionsBase {
 
     bool handle_readmes(void);
     bool handle_options(void);
+    bool handle_gocmds(void);
     bool handle_lint(void);
     bool handle_format(void);
     bool handle_generate(CToml& toml, const CClassDefinition& classDef, bool asJs);
@@ -129,7 +133,6 @@ class COptions : public COptionsBase {
     void generate_positional(const CCommandOption& option);
     void generate_deprecated(const CCommandOption& option);
 
-    bool writeCode(const string_q& fn);
     void writeOpenApiFile(void);
 
     string_q getProductions(const CCommandOption& ep);
@@ -138,7 +141,8 @@ class COptions : public COptionsBase {
 //-------------------------------------------------------------------
 extern bool listClasses(const string_q& path, void* data);
 extern bool lintFiles(const string_q& path, void* data);
-extern bool formatFiles(const string_q& path, void* data);
+extern bool formatCppFiles(const string_q& path, void* data);
+extern bool formatGoFiles(const string_q& path, void* data);
 extern string_q getCaseGetCode(const CParameterArray& fields);
 extern string_q getCaseSetCode(const CParameterArray& fields);
 extern string_q convertTypes(const string_q& inStr);
@@ -166,6 +170,8 @@ inline string_q short3(const string_q& str) {
 
 //------------------------------------------------------------------------------------------------------------
 extern void doReplace(string_q& str, const string_q& type, const string_q& rep, const string_q& spaces);
+extern bool writeCodeIn(const codewrite_t& cw);
+extern bool writeCodeOut(COptions* opts, const string_q& fn);
 extern bool writeIfDifferent(const string_q& path, const string_q& code);
 extern bool writeIfDifferent(const string_q& path, const string_q& code, const time_q& now);
 
@@ -173,3 +179,16 @@ extern bool writeIfDifferent(const string_q& path, const string_q& code, const t
 extern const char* STR_YAML_FRONTMATTER;
 #define routeCount fileCount
 #define cmdCount nVisited
+
+//---------------------------------------------------------------------------------------------------
+#define makeError(a, b) usage(substitute(usageErrs[(a)], "{0}", (b)))
+
+//---------------------------------------------------------------------------------------------------
+extern string_q getSourcePath(const string_q& part);
+inline string_q getTemplatePath(const string_q& part) {
+    return getSourcePath("dev_tools/makeClass/templates/" + part);
+}
+#define explorerPath string_q("/Users/jrush/Development/trueblocks-explorer/")
+#define endpointFile getSourcePath("cmd-line-endpoints.csv")
+#define optionsFile getSourcePath("cmd-line-options.csv")
+extern bool parseCommandData(const char* str, void* data);

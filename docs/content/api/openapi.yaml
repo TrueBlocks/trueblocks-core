@@ -7,7 +7,7 @@ info:
   license:
     name: GPL 3.0
     url: http://www.gnu.org/licenses/
-  version: 0.12.1-alpha
+  version: 0.14.0-alpha
   description: >
 
     A REST layer over the TrueBlocks application. With `chifra serve`, you can
@@ -98,6 +98,22 @@ paths:
             items:
               type: string
               format: address_t
+        - name: count
+          description: present only the number of records
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: appearances
+          description: export a list of appearances
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
       responses:
         "200":
           description: returns the requested data
@@ -163,7 +179,8 @@ paths:
               type: string
               format: topic_t
         - name: fourbytes
-          description: filter by one or more fourbytes (only for transactions and trace options)
+          description: >
+             filter by one or more fourbytes (only for transactions and trace options)
           required: false
           style: form
           in: query
@@ -277,7 +294,7 @@ paths:
             type: boolean
         - name: count
           description: >
-            only available for --appearances mode, if present return only the number of records
+            only available for --appearances mode, if present, return only the number of records
           required: false
           style: form
           in: query
@@ -371,7 +388,7 @@ paths:
       operationId: accounts-monitors
       parameters:
         - name: addrs
-          description: one or more addresses (0x...) to list
+          description: one or more addresses (0x...) to process
           required: true
           style: form
           in: query
@@ -381,16 +398,24 @@ paths:
             items:
               type: string
               format: address_t
-        - name: delete
-          description: delete a previously created monitor (or undelete if already deleted)
+        - name: appearances
+          description: export a list of appearances
           required: false
           style: form
           in: query
           explode: true
           schema:
             type: boolean
-        - name: remove
-          description: remove a previously deleted monitor
+        - name: count
+          description: present only the number of records
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: clean
+          description: clean (i.e. remove duplicate appearances) from all existing monitors
           required: false
           style: form
           in: query
@@ -432,7 +457,7 @@ paths:
               format: string_t
         - name: expand
           description: >
-            expand search to include all fields (default searches name, address, and symbol only)
+            expand search to include all fields (search name, address, and symbol otherwise)
           required: false
           style: form
           in: query
@@ -538,7 +563,7 @@ paths:
       operationId: accounts-abis
       parameters:
         - name: addrs
-          description: list of one or more smart contracts whose ABI to grab from EtherScan
+          description: a list of one or more smart contracts whose ABIs to display
           required: true
           style: form
           in: query
@@ -549,8 +574,7 @@ paths:
               type: string
               format: address_t
         - name: sol
-          description: >
-            file name of .sol file from which to create a new known abi (without .sol)
+          description: file name of .sol file from which to create a new known abi (without .sol)
           required: false
           style: form
           in: query
@@ -564,7 +588,10 @@ paths:
           in: query
           explode: true
           schema:
-            type: string
+            type: array
+            items:
+              type: string
+              format: string_t
       responses:
         "200":
           description: returns the requested data
@@ -928,7 +955,7 @@ paths:
           schema:
             type: boolean
         - name: filter
-          description: call the node's trace_filter routine with bang-seperated filter
+          description: call the node's trace_filter routine with bang-separated filter
           required: false
           style: form
           in: query
@@ -1133,7 +1160,7 @@ paths:
               type: string
               format: blknum_t
         - name: parts
-          description: one or more parts of the token information to retreive
+          description: which parts of the token information to retrieve
           required: false
           style: form
           in: query
@@ -1232,14 +1259,6 @@ paths:
           explode: true
           schema:
             type: boolean
-        - name: report
-          description: show a summary of the current status of TrueBlocks (deprecated)
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
         - name: terse
           description: show a terse summary report
           required: false
@@ -1264,24 +1283,23 @@ paths:
                         - $ref: "#/components/schemas/cache"
                 example:
                   {
-                    "data":
-                      [
-                        {
-                          "client_version": "erigon/2021.09.2/linux-amd64/go1.16.3",
-                          "trueblocks_version": "GHC-TrueBlocks//0.12.1-alpha-7ac3196d7-20210903",
-                          "rpc_provider": "http://localhost:23456",
-                          "config_path": "/Users/user/Library/Application Support/TrueBlocks/",
-                          "cache_path": "/Users/user/Library/Application Support/TrueBlocks/cache/",
-                          "index_path": "/Users/user/Development/trueblocks-index/wild.0/unchained/",
-                          "is_testing": false,
-                          "is_docker": false,
-                          "is_archive": true,
-                          "is_tracing": true,
-                          "has_eskey": true,
-                          "has_pinkey": true,
-                          "date": "2021-09-03 19:38:19 UTC",
-                        },
-                      ],
+                    "data": [
+                      {
+                        "client_version": "erigon/2021.09.2/linux-amd64/go1.16.3",
+                        "trueblocks_version": "GHC-TrueBlocks//0.12.1-alpha-7ac3196d7-20210903",
+                        "rpc_provider": "http://localhost:23456",
+                        "config_path": "~/Library/Application Support/TrueBlocks/",
+                        "cache_path": "~/Library/Application Support/TrueBlocks/cache/",
+                        "index_path": "~/Library/Application Support/TrueBlocks/unchained/",
+                        "is_testing": false,
+                        "is_docker": false,
+                        "is_archive": true,
+                        "is_tracing": true,
+                        "has_eskey": true,
+                        "has_pinkey": true,
+                        "date": "2021-09-03 19:38:19 UTC"
+                      }
+                    ]
                   }
         "400":
           description: bad input parameter
@@ -1303,7 +1321,7 @@ paths:
           schema:
             type: boolean
         - name: n_blocks
-          description: maximum number of blocks to process (default 2000)
+          description: maximum number of blocks to process
           required: false
           style: form
           in: query
@@ -1333,6 +1351,15 @@ paths:
       summary: Initialize index
       description: Initialize the index of appearances by downloading Bloom filters.
       operationId: admin-init
+      parameters:
+        - name: all
+          description: download full index chunks as well as Bloom filter
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
       responses:
         "200":
           description: returns the requested data
@@ -1367,23 +1394,34 @@ paths:
           schema:
             type: boolean
         - name: init
-          description: initialize local index by downloading Bloom filters from pinning service
+          description: >
+            initialize index of appearances by downloading Bloom filters from pinning service
           required: false
           style: form
           in: query
           explode: true
           schema:
             type: boolean
-        - name: init_all
-          description: initialize local index by downloading both Bloom filters and index chunks
+        - name: freshen
+          description: freshen index of appearances using the same mode from most recent --init
           required: false
           style: form
           in: query
           explode: true
           schema:
             type: boolean
-        - name: pin_locally
-          description: pin all local files in the index to an IPFS store (requires IPFS)
+        - name: all
+          description: >
+            for --init and --freshen modes only, download full index chunks as well as Bloom filter
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: share
+          description: >
+            pin downloaded files to your local IPFS store, that is, share them (requires IPFS)
           required: false
           style: form
           in: query
@@ -1429,7 +1467,7 @@ paths:
       tags:
         - Other
       summary: Price quotes
-      description: Freshen and/or display Ethereum price data.
+      description: Freshen or display Ethereum price data.
       operationId: other-quotes
       parameters:
         - name: freshen
@@ -1540,7 +1578,7 @@ paths:
               type: string
               format: blknum_t
         - name: types
-          description: one or more types of transactions to request
+          description: which types of transactions to request
           required: false
           style: form
           in: query
@@ -1681,7 +1719,7 @@ components:
           type: number
           format: timestamp
           example: 1438335038
-          description: "the unix timestamp of the object"
+          description: "the Unix timestamp of the object"
         assetAddr:
           type: string
           format: address
@@ -1693,7 +1731,7 @@ components:
         decimals:
           type: number
           format: uint64
-          description: "Equivilent to the extracted value of getSymbol from ERC20 or, if ETH or WEI then 18"
+          description: "Equivalent to the extracted value of getSymbol from ERC20 or, if ETH or WEI then 18"
         prevBlk:
           type: number
           format: blknum
@@ -1706,7 +1744,7 @@ components:
         begBal:
           type: string
           format: int256
-          description: "the begining balance of the asset at the blockNumber"
+          description: "the beginning balance of the asset at the blockNumber"
         begBalDiff:
           type: string
           format: int256
@@ -1742,7 +1780,7 @@ components:
         minerNephewRewardIn:
           type: string
           format: int256
-          description: "the netphew reward if the miner is the accountedFor address"
+          description: "the nephew reward if the miner is the accountedFor address"
         minerTxFeeIn:
           type: string
           format: int256
@@ -1815,11 +1853,11 @@ components:
         name:
           type: string
           example: "zkSync"
-          description: "the name associated with this address (retreived from on-chain data if available)"
+          description: "the name associated with this address (retrieved from on-chain data if available)"
         symbol:
           type: string
           example: "GTC"
-          description: "the symbol for this address (retreived from on-chain data if available)"
+          description: "the symbol for this address (retrieved from on-chain data if available)"
         source:
           type: string
           example: "On-chain"
@@ -1828,7 +1866,7 @@ components:
           type: number
           format: uint64
           example: 18
-          description: "number of decimals retreived from an ERC20 smart contract, defaults to 18"
+          description: "number of decimals retrieved from an ERC20 smart contract, defaults to 18"
         description:
           type: string
           example: "any test"
@@ -1902,7 +1940,7 @@ components:
           type: number
           format: timestamp
           example: 1438335038
-          description: "the unix timestamp of the object"
+          description: "the Unix timestamp of the object"
         transactions:
           type: array
           items:
@@ -1955,7 +1993,7 @@ components:
           type: number
           format: timestamp
           example: 1438335038
-          description: "the unix timestamp of the object"
+          description: "the Unix timestamp of the object"
         from:
           type: string
           format: address
@@ -2183,7 +2221,7 @@ components:
           type: number
           format: timestamp
           example: 1438335038
-          description: "the unix timestamp of the block"
+          description: "the Unix timestamp of the block"
         date:
           type: string
           format: date
@@ -2384,7 +2422,7 @@ components:
           description: "IPFS cid of file describing the file format of an index chunk"
         bloomFormat:
           type: string
-          description: "IPFS cid of file describing the assoicated bloom filter"
+          description: "IPFS cid of file describing the associated bloom filter"
         firstPin:
           type: number
           format: blknum
@@ -2436,13 +2474,13 @@ components:
           description: "the name of this parameter"
         str_default:
           type: string
-          description: "the defaul value of this parameter, if any"
+          description: "the default value of this parameter, if any"
         indexed:
           type: boolean
           description: "`true` if this parameter is indexed"
         internalType:
           type: string
-          description: "for composite types, the interal type of the parameter"
+          description: "for composite types, the internal type of the parameter"
         components:
           type: array
           items:

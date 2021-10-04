@@ -25,55 +25,60 @@
 
 namespace qblocks {
 
+static ostream& out = cerr;
 //--------------------------------------------------------------------------------
 bool COptionsBase::usage(const string_q& errMsg) const {
+    // TODO: remove this if no longer needed
+    if (getEnvStr("OLD_PARSER") == "true") {
+        if (!endsWith(getProgName(), "Test") && getProgName() != "makeClass") {
+            cerr << "I am in the old fashioned usage code" << endl;
+        }
+    }
+    if (getEnvStr("OLD_PARSER_API") == "true") {
+        if (!endsWith(getProgName(), "Test") && getProgName() != "makeClass") {
+            errorMessage("I am in the old fashioned usage code");
+        }
+    }
+
     bool quitting = !(errMsg.empty() || contains(errMsg, "Invalid option:") || isApiMode());
-    cerr << get_errmsg(errMsg + (quitting ? " Quitting..." : ""));
-    cerr << get_header();
-    cerr << get_purpose();
-    cerr << get_description();
-    cerr << get_notes();
-    cerr << get_configs();
-    cerr << get_version();
+    out << get_errmsg(errMsg + (quitting ? " Quitting..." : ""));
+    out << get_purpose();
+    out << get_header();
+    out << get_description();
+    out << get_notes();
+    out << get_configs();
+    out << get_version();
     return false;
 }
 
 //--------------------------------------------------------------------------------
 string_q COptionsBase::get_header(void) const {
     ostringstream os;
-    if (isReadme) {
-        os << "### Usage" << endl;
-        os << endl;
-        os << "`Usage:`"
-           << "    " << progNameMap[getProgName()] << " " << get_options() << "  " << endl;
-    } else {
-        os << endl;
-        os << cYellow << "  Usage:" << cOff << "    " << getProgName() << " " << get_options() << "  " << endl;
-    }
+    os << endl;
+    os << "Usage:" << endl;
+    os << "  " << getProgName() << " " << get_options() << endl;
     return os.str();
 }
 
 //--------------------------------------------------------------------------------
 string_q COptionsBase::get_purpose(void) const {
     ostringstream os;
-    if (isReadme) {
-        os << "`Purpose:`"
-           << "  ";
-    } else {
-        os << cYellow << "  Purpose:" << cOff << "  ";
-    }
+    os << "Purpose:" << endl;
     string_q purpose;
     for (auto option : parameters)
         if (option.longName.empty())  // program description
             purpose = substitute(option.description, "|", "\n            ");
-    os << substitute(purpose, "\n", "\n        ") << "\n";
-    if (!endsWith(purpose, "\n"))
-        os << "\n";
-
-    if (isReadme) {
-        return os.str();
-    }
+    os << "  " << purpose << endl;
     return colorize(os.str());
+}
+
+//--------------------------------------------------------------------------------
+bool isPublic(const COption& opt) {
+    return (opt.is_visible && !opt.is_deprecated && !opt.longName.empty());
+}
+//--------------------------------------------------------------------------------
+bool isPublic2(const COption& opt) {
+    return (!opt.is_deprecated && !opt.longName.empty());
 }
 
 //--------------------------------------------------------------------------------
@@ -86,13 +91,12 @@ string_q COptionsBase::get_description(void) const {
     size_t widths[5];
     bzero(widths, sizeof(widths));
     for (auto option : parameters) {
-        if (isReadme) {
-            option.is_readme = true;
-        }
-        if (option.isPublic() || (option.is_hidden && (isTestMode() || (verbose > 1)))) {
-            widths[0] = max(widths[0], option.getHotKey().length());
-            widths[1] = max(widths[1], option.getLongKey().length());
-            widths[2] = max(widths[2], option.getDescription().length());
+        if (option.is_visible) {
+            if (isPublic2(option)) {
+                widths[0] = max(widths[0], option.getHotKey().length());
+                widths[1] = max(widths[1], option.getLongKey().length());
+                widths[2] = max(widths[2], option.getDescription().length());
+            }
         }
     }
     widths[0] = max(widths[0], size_t(3));
@@ -111,10 +115,7 @@ string_q COptionsBase::get_description(void) const {
         show |= (i == 2 && isEnabled(OPT_HELP));
         if (show) {
             COption* param = &opts[i];
-            if (isReadme) {
-                param->is_readme = true;
-            }
-            if (param->isPublic()) {
+            if (isPublic(opts[i])) {
                 widths[0] = max(widths[0], param->getHotKey().length());
                 widths[1] = max(widths[1], param->getLongKey().length());
                 widths[2] = max(widths[2], param->getDescription().length());
@@ -123,49 +124,42 @@ string_q COptionsBase::get_description(void) const {
         }
     }
 
-    if (isReadme) {
-        os << "`Where:`" << endl;
-        os << endl;
-        os << "{{<td>}}" << endl;
-        os << markDownRow("", "Option", "Description", widths);
-        os << markDownRow("-", "", "", widths);
-    } else {
-        os << cYellow << "  Where:" << cOff << endl;
+    COptionArray positionals;
+    get_positionals(positionals);
+    if (positionals.size()) {
+        os << endl << "Arguments:" << endl;
+        for (auto option : positionals) {
+            string_q req = (option.is_required ? " (required)" : "");
+            os << "  " << substitute(option.longName, "addrs2", "addrs") << " - " << option.description << req << endl;
+        }
     }
+    os << endl << "Flags:" << endl;
 
     for (auto option : parameters) {
-        if (isReadme) {
-            option.is_readme = true;
-        }
-        if (option.is_hidden) {
-            if (option.is_hidden && !option.is_deprecated && !option.longName.empty()) {
-                hidden << option.oneDescription(widths);
+        if (!option.is_visible) {
+            if (!option.is_deprecated && !option.longName.empty()) {
+                os << option.oneDescription(widths);
             }
-        } else if (option.isPublic())
+        } else if (isPublic(option)) {
             os << option.oneDescription(widths);
+        }
     }
 
     if (!hidden.str().empty() && (isTestMode() || verbose > 1)) {
-        if (isReadme) {
-            os << markDownRow("###", "Hidden options", "", widths);
-        } else {
-            os << endl;
-            os << "    #### Hidden options" << endl;
-        }
+        os << endl;
+        os << "    #### Hidden options" << endl;
         os << hidden.str();
-        if (isReadme) {
-            os << markDownRow("###", "Hidden options", "", widths);
-        } else {
-            os << "    #### Hidden options" << endl;
-            os << endl;
-        }
+        os << "    #### Hidden options" << endl;
+        os << endl;
     }
 
     os << extra.str();
-    if (isReadme) {
-        os << "{{</td>}}" << endl;
-    }
     os << endl;
+    if (isEnabled(OPT_FMT) || isEnabled(OPT_VERBOSE) || isEnabled(OPT_HELP))
+        os << "Global Flags:\n";
+    os << (isEnabled(OPT_FMT) ? "  -x, --fmt string     export format, one of [none|json*|txt|csv|api]\n" : "");
+    os << (isEnabled(OPT_VERBOSE) ? "  -v, --verbose uint   set verbose level (optional level defaults to 1)\n" : "");
+    os << (isEnabled(OPT_HELP) ? "  -h, --help           display this help screen\n" : "");
 
     return os.str();
 }
@@ -176,17 +170,10 @@ string_q COptionsBase::get_notes(void) const {
         return "";
 
     ostringstream os;
-    if (isReadme) {
-        os << "`Notes:`" << endl;
-        os << endl;
+    if (verbose || isTestMode()) {
+        os << endl << "Notes:" << endl;
         os << format_notes(notes);
         os << endl;
-    } else if (verbose) {
-        os << cYellow << "  Notes:" << cOff << endl;
-        os << format_notes(notes);
-        os << endl;
-    } else {
-        // do nothing;
     }
     return os.str();
 }
@@ -197,17 +184,12 @@ string_q COptionsBase::get_configs(void) const {
         return "";
 
     ostringstream os;
-    if (isReadme) {
-        os << "`Configurable Items:`" << endl;
-        os << endl;
+    if (verbose) {
+        if (notes.size() == 0)
+            os << endl;
+        os << "Configurable Items:" << endl;
         os << format_notes(configs);
         os << endl;
-    } else if (verbose) {
-        os << cYellow << "  Configurable Items:" << cOff << endl;
-        os << format_notes(configs);
-        os << endl;
-    } else {
-        // do nothing;
     }
 
     return os.str();
@@ -216,32 +198,15 @@ string_q COptionsBase::get_configs(void) const {
 //--------------------------------------------------------------------------------
 string_q COptionsBase::get_override(void) const {
     ostringstream os;
-    if (isReadme) {
-        os << "`Where:`" << endl;
-        os << "```" << endl;
-        os << format_notes(overrides);
-        os << "```" << endl;
-        os << endl;
-
-    } else {
-        os << cYellow << "  Where:" << cOff << "  " << endl;
-        os << format_notes(overrides);
-        os << endl;
-    }
-
+    os << endl << "Commands:" << endl;
+    os << format_notes(overrides);
+    os << endl;
     return os.str();
 }
 
 //--------------------------------------------------------------------------------
 string_q COptionsBase::get_version(void) const {
-    ostringstream os;
-    if (isReadme) {
-        // do nothing
-    } else {
-        os << bBlue << "  Powered by TrueBlocks";
-        os << (isTestMode() ? "" : " (" + getVersionStr() + ")") << "\n" << cOff;
-    }
-    return os.str();
+    return "";
 }
 
 //--------------------------------------------------------------------------------
@@ -255,28 +220,46 @@ string_q COptionsBase::get_errmsg(const string_q& errMsgIn) const {
         errorMessage(getProgName() + " - " + errMsg);
 
     ostringstream os;
-    if (isReadme) {
-        // do nothing
-    } else {
-        os << endl;
-        os << cRed << "  " << errMsg << cOff << endl;
-    }
+    os << endl;
+    os << cRed << "  " << errMsg << cOff << endl;
+    os << endl;
     return os.str();
 }
 
 //--------------------------------------------------------------------------------
-string_q COptionsBase::get_options(void) const {
-    string_q positional;
+string_q COptionsBase::get_positionals(COptionArray& pos) const {
+    ostringstream os;
+    for (auto option : parameters) {
+        if (option.is_positional) {
+            pos.push_back(option);
+            if (!os.str().empty())
+                os << " ";
+            string_q str = clean_positionals(getProgName(), option.longName);
+            if (!option.is_required) {
+                replace(str, "<mode> [mode...]", "[mode...]");
+                replace(str, "<term> [term...]", "[term...]");
+            }
+            os << str;
+        }
+    }
+    string_q ret = os.str();
+    replace(ret, "&lt;address&gt; [address...] &lt;block&gt; [block...]", "&lt;address&gt; [address...] [block...]");
+    replace(ret, "<address> [address...] <block> [block...]", "<address> [address...] [block...]");
+    replace(ret, "<address> [address...]2 <block>", "<address> <address> [address...]");
+    replace(ret, "&lt;address&gt; [address...]2 &lt;block&gt; [block...]",
+            "&lt;address&gt; &lt;address&gt; [address...] [block...]");
+    replace(ret, "<address> [address...] topics fourbytes", "<address> [address...] [topics] [fourbytes]");
+    replace(ret, "&lt;address&gt; [address...] topics fourbytes", "&lt;address&gt; [address...] [topics] [fourbytes]");
+    return ret;
+}
 
+//--------------------------------------------------------------------------------
+string_q COptionsBase::get_options(void) const {
     ostringstream shorts;
     for (const auto& option : parameters) {
-        if (option.is_positional) {
-            positional += (" " + option.longName);
-
-        } else if (option.is_hidden || option.is_deprecated) {
-            // invisible option
-
-        } else if (!option.hotKey.empty()) {
+        if (!option.is_positional && (!option.is_visible || option.is_deprecated)) {
+            // not an option
+        } else if (!option.is_positional && !option.hotKey.empty()) {
             shorts << option.hotKey << "|";
         }
     }
@@ -284,27 +267,16 @@ string_q COptionsBase::get_options(void) const {
         shorts << "-v|";
     if (isEnabled(OPT_HELP))
         shorts << "-h";
+    shorts.str("");
+    shorts.clear();
+    shorts << "flags";
 
     ostringstream os;
     if (!shorts.str().empty())
         os << "[" << shorts.str() << "] ";
 
-    replaceAll(positional, "addrs2 blocks", "<address> <address> [address...] [block...]");
-    replaceAll(positional, "addrs blocks", "<address> [address...] [block...]");
-    replaceAll(positional, "transactions", "<tx_id> [tx_id...]");
-    if (contains(toLower(getProgName()), "when"))
-        replaceAll(positional, "blocks", "< block | date > [ block... | date... ]");
-    else
-        replaceAll(positional, "blocks", "<block> [block...]");
-    replaceAll(positional, "addrs topics fourbytes", "<address> [address...] [topics] [fourbytes]");
-    replaceAll(positional, "addrs", "<address> [address...]");
-    replaceAll(positional, "files", "<file> [file...]");
-    replaceAll(positional, "terms", "<term> [term...]");
-    replaceAll(positional, "modes", "<mode> [mode...]");
-    if (isReadme) {
-        positional = substitute(substitute(positional, "<", "&lt;"), ">", "&gt;");
-    }
-    os << trim(positional);
+    COptionArray unused;
+    os << get_positionals(unused);
 
     return trim(os.str());
 }
@@ -322,21 +294,13 @@ string_q colorize(const string_q& strIn) {
 //--------------------------------------------------------------------------------
 string_q COptionsBase::format_notes(const CStringArray& noteList) const {
     string_q lead;
-    if (isReadme) {
-        // do nothing
-    } else {
-        lead = "    ";
-    }
+    lead = "  ";
 
     ostringstream os;
     for (auto note : noteList) {
         replaceAll(note, " |", "|");
         replaceAll(note, "|", "\n" + lead + " ");
-        if (isReadme) {
-            // do nothing
-        } else {
-            note = colorize(note);
-        }
+        note = colorize(note);
         os << lead;
         if (overrides.empty())
             os << "-";
@@ -349,19 +313,94 @@ string_q COptionsBase::format_notes(const CStringArray& noteList) const {
 void errorMessage(const string_q& msg) {
     if (isApiMode()) {
         const char* STR_ERROR_JSON = "{ \"errors\": [ \"[ERRORS]\" ] }\n";
-        string_q message = substitute(msg, "$CONFIG", configPath("trueBlocks.toml"));
+        string_q message = substitute(msg, "$CONFIG", getConfigPath("trueBlocks.toml"));
         if (!contains(message, "[")) {
             message = substitute(message, "|", " ");
         }
         string_q errMsg = substitute(STR_ERROR_JSON, "[ERRORS]", message);
         cout << substitute(errMsg, "`", "");
     } else {
-        string_q message = substitute(substitute(msg, "|", "\n  "), "$CONFIG", configPath("trueBlocks.toml"));
+        string_q message = substitute(substitute(msg, "|", "\n  "), "$CONFIG", getConfigPath("trueBlocks.toml"));
         message = colorize(message);
-        cerr << endl
-             << cRed << "  Warning: " << cOff << message << (endsWith(msg, '.') ? "" : ".") << " Quitting..." << endl
-             << endl;
+        out << endl
+            << cRed << "  Warning: " << cOff << message << (endsWith(msg, '.') ? "" : ".") << " Quitting..." << endl
+            << endl;
     }
 }
+
+//--------------------------------------------------------------------------------
+map<string_q, string_q> pathCmdChifraMap = {
+    make_pair("acctExport --appearances", "chifra list"),
+    make_pair("acctExport", "chifra export"),
+    make_pair("acctExport --appearances", "chifra monitors"),
+    make_pair("ethNames", "chifra names"),
+    make_pair("grabABI", "chifra abis"),
+    make_pair("getBlocks", "chifra blocks"),
+    make_pair("getTrans", "chifra transactions"),
+    make_pair("getReceipts", "chifra receipts"),
+    make_pair("getLogs", "chifra logs"),
+    make_pair("getTraces", "chifra traces"),
+    make_pair("whenBlock", "chifra when"),
+    make_pair("getState", "chifra state"),
+    make_pair("getTokens", "chifra tokens"),
+    make_pair("cacheStatus", "chifra status"),
+    make_pair("flame", "chifra serve"),
+    make_pair("blockScrape", "chifra scrape"),
+    make_pair("pinMan --init", "chifra init"),
+    make_pair("pinMan", "chifra pins"),
+    make_pair("getQuotes", "chifra quotes"),
+    make_pair("fireStorm", "chifra explore"),
+    make_pair("ethslurp", "chifra slurp"),
+    make_pair("makeClass", "makeClass"),
+    make_pair("testRunner", "testRunner"),
+    make_pair("chifra", "chifra"),
+};
+string_q path_2_Cmd(const string_q& path) {
+    return pathCmdChifraMap[path];
+}
+
+//------------------------------------------------------------------------------------------------
+map<string, string> cmdPathChifraMap = {
+    {"list", "acctExport --appearances"},
+    {"export", "acctExport"},
+    {"monitors", "acctExport --appearances"},
+    {"names", "ethNames"},
+    {"abis", "grabABI"},
+    {"blocks", "getBlocks"},
+    {"transactions", "getTrans"},
+    {"receipts", "getReceipts"},
+    {"logs", "getLogs"},
+    {"traces", "getTraces"},
+    {"when", "whenBlock"},
+    {"state", "getState"},
+    {"tokens", "getTokens"},
+    {"status", "cacheStatus"},
+    {"serve", "flame"},
+    {"scrape", "blockScrape"},
+    {"init", "pinMan --init"},
+    {"pins", "pinMan"},
+    {"quotes", "getQuotes"},
+    {"explore", "fireStorm"},
+    {"slurp", "ethslurp"},
+};
+string_q cmd_2_Path(const string_q& cmd) {
+    return cmdPathChifraMap[cmd];
+}
+
+// BEG_CODE _CHIFRA_PAIRMAP
+// -- Accounts
+// -- Chain Data
+// -- Chain State
+// -- Admin
+// -- Other
+// END_CODE _CHIFRA_PAIRMAP
+//
+// BEG_CODE _CHIFRA_CMDMAP
+// -- Accounts
+// -- Chain Data
+// -- Chain State
+// -- Admin
+// -- Other
+// END_CODE _CHIFRA_CMDMAP
 
 }  // namespace qblocks

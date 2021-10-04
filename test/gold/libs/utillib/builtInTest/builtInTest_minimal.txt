@@ -1,3 +1,2 @@
-builtInTest argc: 10 [1:--fmt] [2:json] [3:--ether] [4:--mocked] [5:--wei] [6:--dollars] [7:--parity] [8:--nocolor] [9:--noop] 
-builtInTest --fmt json --ether --mocked --wei --dollars --parity --nocolor --noop 
+builtInTest  --fmt json --ether --mocked --wei --dollars --nocolor --noop
 Unprocessed commands: 

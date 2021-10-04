@@ -1,13 +1,18 @@
-fireStorm argc: 2 [1:--help] 
-fireStorm --help 
+chifra explore  --help
+Purpose:
+  Open an explorer for a given address, block, or transaction.
 
-  Usage:    fireStorm [-l|-g|-h] <term> [term...]  
-  Purpose:  Open an explorer for one or more addresses, blocks, or transactions.
+Usage:
+  chifra explore [flags] <term> [term...]
 
-  Where:
-    terms                 one or more addresses, names, block, or transaction identifiers
-    -l  (--local)         open the local TrueBlocks explorer
-    -g  (--google)        search google excluding popular blockchain explorers
-    -h  (--help)          display this help screen
+Arguments:
+  terms - one or more addresses, names, block, or transaction identifiers
 
-  Powered by TrueBlocks
+Flags:
+  -l, --local    open the local TrueBlocks explorer
+  -g, --google   search google excluding popular blockchain explorers
+
+Global Flags:
+  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
+  -h, --help         display this help screen
+  -v, --verbose      enable verbose (increase detail with --log_level)

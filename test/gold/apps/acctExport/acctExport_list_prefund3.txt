@@ -1,3 +1,0 @@
-acctExport argc: 6 [1:0x001d14804b399c6ef80e64576f657660804fec0b] [2:--first_block] [3:1] [4:--last_block] [5:2] 
-acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --first_block 1 --last_block 2 
-blocknumber	transactionindex	date	timestamp	from	to	ether	ethergasprice	gasused	hash	iserror	encoding	compressedtx

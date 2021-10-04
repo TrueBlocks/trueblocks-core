@@ -1,5 +1,4 @@
-getQuotes argc: 3 [1:--fmt] [2:api] 
-getQuotes --fmt api 
+chifra quotes  --fmt api
 {"data": [
   {
     "timestamp": 1439078400,

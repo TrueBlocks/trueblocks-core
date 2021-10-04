@@ -7,7 +7,7 @@ parentHash      ,hash        ,            ,       ,      ,        ,          ,  
 miner           ,address     ,            ,       ,      ,        ,          ,        ,      ,         ,5   ,7    ,0xf927...2b13 ,Address of block's winning miner
 difficulty      ,uint64      ,            ,       ,      ,        ,          ,        ,      ,         ,6   ,3    ,598133194256  ,the computational difficulty at this block
 finalized       ,bool        ,            ,       ,      ,        ,          ,        ,      ,         ,10  ,11   ,true          ,flag indicating the system considers this data final
-timestamp       ,timestamp   ,            ,       ,      ,        ,          ,        ,      ,         ,7   ,2    ,1438335038    ,the unix timestamp of the object
+timestamp       ,timestamp   ,            ,       ,      ,        ,          ,        ,      ,         ,7   ,2    ,1438335038    ,the Unix timestamp of the object
 baseFeePerGas   ,wei         ,            ,       ,      ,        ,          ,        ,      ,         ,9   ,6    ,120911        ,the base fee for this block
 transactions    ,transaction ,            ,true   ,true  ,        ,          ,        ,      ,         ,8   ,     ,              ,a possibly empty array of transactions or transaction hashes
 tx_hashes       ,string      ,            ,       ,true  ,true    ,          ,        ,      ,         ,    ,     ,              ,a possibly empty array of transactions or transaction hashes

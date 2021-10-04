@@ -1,5 +1,4 @@
-tomlTest2 argc: 2 [1:getState.toml] 
-tomlTest2 getState.toml 
+tomlTest2  getState.toml
 tests/getState.toml
 [version]
 current = "0.5.5-alpha"

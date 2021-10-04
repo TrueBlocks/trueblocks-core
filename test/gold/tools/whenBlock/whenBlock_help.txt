@@ -1,23 +1,25 @@
-whenBlock argc: 2 [1:-h] 
-whenBlock -h 
+chifra when   -h
+Purpose:
+  Find block(s) based on date, blockNum, timestamp, or 'special'.
 
-  Usage:    whenBlock [-l|-t|-v|-h] < block | date > [ block... | date... ]  
-  Purpose:  Find block(s) based on date, blockNum, timestamp, or 'special'.
+Usage:
+  chifra when [flags] < block | date > [ block... | date... ]
 
-  Where:
-    blocks                one or more dates, block numbers, hashes, or special named blocks (see notes)
-    -l  (--list)          export a list of the 'special' blocks
-    -t  (--timestamps)    ignore other options and generate timestamps only
+Arguments:
+  blocks - one or more dates, block numbers, hashes, or special named blocks (see notes) (required)
 
-    #### Hidden options
-    -c  (--check)         available only with --timestamps, checks the validity of the timestamp data
-    -f  (--fix)           available only with --timestamps, fixes incorrect timestamps if any
-    -u  (--count)         available only with --timestamps, returns the number of timestamps in the cache
-    -s  (--skip <num>)    only applicable if --timestamps is on, the step between block numbers in the export
-    #### Hidden options
+Flags:
+  -l, --list         export a list of the 'special' blocks
+  -t, --timestamps   ignore other options and generate timestamps only
+  -c, --check        available only with --timestamps, checks the validity of the timestamp data (hidden)
+  -f, --fix          available only with --timestamps, fixes incorrect timestamps if any (hidden)
+  -u, --count        available only with --timestamps, returns the number of timestamps in the cache (hidden)
 
-    -x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
-    -v  (--verbose)       set verbose level (optional level defaults to 1)
-    -h  (--help)          display this help screen
+Global Flags:
+  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
+  -h, --help         display this help screen
+  -v, --verbose      enable verbose (increase detail with --log_level)
 
-  Powered by TrueBlocks
+Notes:
+  - The block list may contain any combination of number, hash, date, special named blocks.
+  - Dates must be formatted in JSON format: YYYY-MM-DD[THH[:MM[:SS]]].

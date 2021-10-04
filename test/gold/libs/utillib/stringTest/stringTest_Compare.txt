@@ -1,5 +1,4 @@
-stringTest argc: 2 [1:1] 
-stringTest 1 
+stringTest  1
 0. Running TestCompare
 	c-string  -- str1:  green apple str2: red apple
 	qb-string -- xstr1: green apple xstr2: red apple

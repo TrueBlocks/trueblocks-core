@@ -1,5 +1,4 @@
 enabled,mode,speed,route,path/tool,filename,post,options,opt_cmd,has_env
-on,cmd,medi,when,tools/whenBlock,README,y,@th
 on,cmd,fast,when,tools/whenBlock,help,y,@h
 on,cmd,fast,when,tools/whenBlock,long_help,y,help
 on,both,fast,when,tools/whenBlock,blockByHash,y,blocks = 0xd19bc98080cd70951fad3951cef2d512e6334aa3c7e64a38985c955d4d2e273b
@@ -36,8 +35,8 @@ on,both,slow,when,tools/whenBlock,list_dates_long,y,list
 on,both,fast,when,tools/whenBlock,long_verbose_valid_block,y,verbose & blocks = 1000
 on,both,slow,when,tools/whenBlock,mixed_block_and_date,y,blocks = 2017-03-02 & blocks = 123123
 on,both,slow,when,tools/whenBlock,multiple_same,y,blocks = 12345 & blocks = 54321 & blocks = 2016-12-01 & blocks = 2016-12-01-01
-on,both,slow,when,tools/whenBlock,multiple_same_ts_true,y,blocks = 12345 & blocks = 54321 & blocks = 2016-12-01 & blocks = 2016-12-01-01 & timestamps = true
-on,both,slow,when,tools/whenBlock,multiple_same_ts_false,y,blocks = 12345 & blocks = 54321 & blocks = 2016-12-01 & blocks = 2016-12-01-01 & timestamps = false
+on,both,slow,when,tools/whenBlock,multiple_same_ts_true,y,blocks = 12345 & blocks = 54321 & blocks = 2016-12-01 & blocks = 2016-12-01-01 & timestamps
+on,both,slow,when,tools/whenBlock,multiple_same_ts_false,y,blocks = 12345 & blocks = 54321 & blocks = 2016-12-01 & blocks = 2016-12-01-01
 on,cmd,slow,when,tools/whenBlock,mixed_options,y,@vl
 on,both,fast,when,tools/whenBlock,noparams,y,
 on,both,slow,when,tools/whenBlock,not_present_block,y,blocks = 8000000
@@ -53,8 +52,8 @@ on,both,fast,when,tools/whenBlock,special_block_not_found,y,blocks = idonotexist
 on,both,fast,when,tools/whenBlock,special_block_spurious,y,blocks = spurious
 on,both,fast,when,tools/whenBlock,special_block_stateclear,y,blocks = stateclear & verbose
 on,both,fast,when,tools/whenBlock,special_block_tangerine,y,blocks = tangerine & verbose
-on,both,fast,when,tools/whenBlock,verbose_level_1,y,blocks = 1000 & verbose:1
-on,cmd,fast,when,tools/whenBlock,verbose_level_2,y,blocks = 1000 & verbose:j
+on,both,fast,when,tools/whenBlock,verbose_level_1,y,blocks = 1000 & log_level = 3
+on,cmd,fast,when,tools/whenBlock,verbose_level_2,y,blocks = 1000 & log_level = j
 on,cmd,fast,when,tools/whenBlock,upgrade_test,y,help
 on,both,fast,when,tools/whenBlock,fmt_default,y,blocks = 1001001
 on,both,fast,when,tools/whenBlock,fmt_txt,n,blocks = 1001001 & fmt = txt
@@ -64,11 +63,11 @@ on,both,fast,when,tools/whenBlock,fmt_json,y,blocks = 1001001 & fmt = json
 on,cmd,fast,when,tools/whenBlock,fmt_junk,y,blocks = 1001001 & fmt = junk
 on,both,fast,when,tools/whenBlock,to_file,y,blocks = 1001001 & fmt = json & to_file
 on,both,fast,when,tools/whenBlock,fmt_timestamps,y,timestamps
-off,cmd,medi,when,tools/whenBlock,skip_fail,n,fmt = txt & blocks = 1301000-1301250:junk
-off,cmd,medi,when,tools/whenBlock,skip_413,n,fmt = txt & blocks = 1301000-1301250:73
-off,cmd,medi,when,tools/whenBlock,skip_hourly,n,fmt = txt & blocks = 1125561-1130516:hourly
-off,cmd,medi,when,tools/whenBlock,skip_daily,n,fmt = txt & blocks = 1065497-1125561:daily
-off,cmd,medi,when,tools/whenBlock,skip_weekly,n,fmt = txt & blocks = 1065497-1856235:weekly
-off,cmd,medi,when,tools/whenBlock,skip_monthly,n,fmt = txt & blocks = 768414-1856235:monthly
-off,cmd,medi,when,tools/whenBlock,skip_quaterly,n,fmt = txt & blocks = 768414-1856235:quarterly
-off,cmd,medi,when,tools/whenBlock,skip_annually,n,fmt = txt & blocks = 768414-4838611:annually
+on,cmd,medi,when,tools/whenBlock,skip_fail,n,fmt = txt & blocks = 1301000-1301250:junk
+on,cmd,medi,when,tools/whenBlock,skip_413,n,fmt = txt & blocks = 1301000-1301250:73
+local,cmd,medi,when,tools/whenBlock,skip_hourly,n,fmt = txt & blocks = 1125561-1130516:hourly
+local,cmd,medi,when,tools/whenBlock,skip_daily,n,fmt = txt & blocks = 1065497-1125561:daily
+local,cmd,medi,when,tools/whenBlock,skip_weekly,n,fmt = txt & blocks = 1065497-1856235:weekly
+local,cmd,medi,when,tools/whenBlock,skip_monthly,n,fmt = txt & blocks = 768414-1856235:monthly
+local,cmd,medi,when,tools/whenBlock,skip_quaterly,n,fmt = txt & blocks = 768414-1856235:quarterly
+local,cmd,medi,when,tools/whenBlock,skip_annually,n,fmt = txt & blocks = 768414-4838611:annually

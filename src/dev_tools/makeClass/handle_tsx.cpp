@@ -22,11 +22,10 @@ extern void loadRoutes(const string_q& fn);
 
 //------------------------------------------------------------------------------------------------------------
 static CCommandOptionArray routes;
-#define explorerPath string_q("/Users/jrush/Development/trueblocks-explorer/")
 
 //------------------------------------------------------------------------------------------------------------
 bool COptions::handle_tsx(void) {
-    CToml config(configPath("makeClass.toml"));
+    CToml config(getConfigPath("makeClass.toml"));
     bool enabled = config.getConfigBool("enabled", "tsx", false);
     if (isTestMode() || !enabled) {
         LOG_WARN("Skipping javascript generation...");
@@ -43,7 +42,7 @@ bool COptions::handle_tsx(void) {
     string_q current;
     jsRouteStream << "export const routes = [" << endl;
     for (auto route : routes) {
-        if (!route.hotkey.empty()) {
+        if (!route.hotKey.empty()) {
             if (!firstHotkey)
                 jsHotkeyStream << endl;
             jsHotkeyStream << route.Format(STR_MOUSETRAP);
@@ -80,7 +79,7 @@ bool COptions::handle_tsx(void) {
     jsLocationStream << endl;
 
     string_q routesTSX = explorerPath + "src/ui/Routes.tsx";
-    writeCode(routesTSX);
+    writeCodeOut(this, routesTSX);
 
     return true;
 }
@@ -152,7 +151,7 @@ bool COptions::handle_tsx_type(const CClassDefinition& classDef) {
 
 //------------------------------------------------------------------------------------------------------------
 void loadRoutes(const string_q& fn) {
-    CStringArray fields = {"api_route", "hotkey", "description"};
+    CStringArray fields = {"api_route", "hotKey", "description"};
 
     CStringArray lines;
     asciiFileToLines(fn, lines);

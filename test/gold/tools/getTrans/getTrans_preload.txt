@@ -1,5 +1,4 @@
-getBlocks argc: 3 [1:3657480] [2:--cache] 
-getBlocks 3657480 --cache 
+chifra blocks  3657480 --cache
 { "data": [
 {
   "gasLimit": 4287079,

@@ -1,0 +1,101 @@
+{
+  "data": [
+    {
+      "tags": "81-Custom",
+      "address": "0x0000000000000000000000000000000000000001",
+      "name": "Account_1",
+      "symbol": "",
+      "source": "Testing",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "80-Prefund",
+      "address": "0x001762430ea9c3a26e5749afdb70da5f78ddbb8c",
+      "name": "Prefund_0001",
+      "symbol": "",
+      "source": "Genesis",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "80-Prefund",
+      "address": "0x28818e18b610001321b31df6fe7d2815cdadc9f5",
+      "name": "Prefund_1377",
+      "symbol": "",
+      "source": "Genesis",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "80-Prefund",
+      "address": "0x6ca5de00817de0cedce5fd000128dede12648b3c",
+      "name": "Prefund_3718",
+      "symbol": "",
+      "source": "Genesis",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "80-Prefund",
+      "address": "0x936dcf000194e3bff50ac5b4243a3ba014d661d8",
+      "name": "Prefund_5047",
+      "symbol": "",
+      "source": "Genesis",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "80-Prefund",
+      "address": "0xc1b500011cfba95d7cd636e95e6cbf6167464b25",
+      "name": "Prefund_6662",
+      "symbol": "",
+      "source": "Genesis",
+      "decimals": 0,
+      "description": ""
+    }
+  ],
+  "types": [
+    {
+      "type": "CAccountName",
+      "fields": [
+        {
+          "name": "tags",
+          "type": "text"
+        },
+        {
+          "name": "address",
+          "type": "address"
+        },
+        {
+          "name": "name",
+          "type": "text"
+        },
+        {
+          "name": "symbol",
+          "type": "text"
+        },
+        {
+          "name": "source",
+          "type": "text"
+        },
+        {
+          "name": "decimals",
+          "type": "unumber"
+        },
+        {
+          "name": "description",
+          "type": "text"
+        }
+      ]
+    }
+  ],
+  "meta": {
+    "unripe": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "client": "0xdeadbeef",
+    "namePath": "--"
+  }
+}

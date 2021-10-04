@@ -269,7 +269,7 @@ bool CLogEntry::Serialize(CArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CLogEntry::SerializeC(CArchive& archive) const {
-    // Writing always write the latest version of the data
+    // Writing always writes the latest version of the data
     CBaseNode::SerializeC(archive);
 
     // EXISTING_CODE

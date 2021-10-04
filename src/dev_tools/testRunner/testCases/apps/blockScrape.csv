@@ -1,6 +1,5 @@
 enabled,mode,speed,route,path/tool,filename,post,options,opt_cmd,has_env
 on,cmd,fast,export,apps/blockScrape,RESET,n,RESET
-on,cmd,fast,scrape,apps/blockScrape,README,n,@th
 on,cmd,fast,scrape,apps/blockScrape,help,n,@h
 on,cmd,fast,scrape,apps/blockScrape,help_long,n,help
 on,both,fast,scrape,apps/blockScrape,invalid,n,junk
@@ -33,11 +32,11 @@ on,both,fast,scrape,apps/blockScrape,mode_33_paused_restart_okay,n,terms = resta
 on,both,fast,scrape,apps/blockScrape,mode_34_running_pause_3_okay,n,terms = pause
 on,both,fast,scrape,apps/blockScrape,mode_35_paused_quit_okay,n,terms = quit
 on,cmd,fast,export,apps/blockScrape,RESET2,n,RESET
-on,cmd,fast,scrape,apps/blockScrape,real_run,n,sleep = .5 & pin & verbose = 8
+on,cmd,fast,scrape,apps/blockScrape,real_run,n,sleep = .5 & pin & log_level = 8
 on,cmd,fast,scrape,apps/blockScrape,real_run2,n,sleep = .5
-#off,both,fast,scrape,apps/blockScrape,tool_fail,n,tool = badtool
-#off,both,fast,scrape,apps/blockScrape,tool_fail2,n,tool = monitors & tool = index
-#off,both,fast,scrape,apps/blockScrape,tool_monitors,n,tool = monitors
-#off,both,fast,scrape,apps/blockScrape,tool_index,n,tool = index
-#off,both,fast,scrape,apps/blockScrape,tool_none,n,tool = none
-#off,both,fast,scrape,apps/blockScrape,tool_both,n,tool = both
+off,both,fast,scrape,apps/blockScrape,tool_fail,n,tool = badtool
+off,both,fast,scrape,apps/blockScrape,tool_fail2,n,tool = monitors & tool = index
+off,both,fast,scrape,apps/blockScrape,tool_monitors,n,tool = monitors
+off,both,fast,scrape,apps/blockScrape,tool_index,n,tool = index
+off,both,fast,scrape,apps/blockScrape,tool_none,n,tool = none
+off,both,fast,scrape,apps/blockScrape,tool_both,n,tool = both

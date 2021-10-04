@@ -127,7 +127,6 @@ bool COptions::parseArguments(string_q& command) {
                 tests.push_back("apps/cacheStatus");
                 tests.push_back("apps/fireStorm");
                 tests.push_back("apps/chifra");
-                // tests.push_back("apps/chifra-new");
                 tests.push_back("apps/pinMan");
 
             } else {
@@ -183,7 +182,6 @@ bool COptions::parseArguments(string_q& command) {
         tests.push_back("apps/cacheStatus");
         tests.push_back("apps/fireStorm");
         tests.push_back("apps/chifra");
-        // tests.push_back("apps/chifra-new");
         tests.push_back("apps/pinMan");
     }
 
@@ -249,7 +247,7 @@ bool COptions::cleanTest(const string_q& path, const string_q& testName) {
 //---------------------------------------------------------------------------------------------------
 void establishTestData(void) {
     cleanFolder(getCachePath("tmp/"));
-    cleanFolder(configPath("mocked/unchained"));
+    cleanFolder(getConfigPath("mocked/unchained"));
 
     // TODO(tjayrush): This code is a hack to make test cases pass. We should fix the underlyign reason
     // TODO(tjayrush): these tests fail. To reproduce, delete the entire cache, comment the lines below

@@ -1,5 +1,4 @@
-abiTest argc: 3 [1:generation] [2:encoding] 
-abiTest generation encoding 
+abiTest  generation encoding
 Generation test...
 Testing of already sorted JSON
 {

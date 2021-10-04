@@ -24,13 +24,10 @@ void COptions::writeOpenApiFile(void) {
     LOG_INFO(cYellow, "handling openapi file...", cOff);
     counter = CCounter();  // reset
 
-    CCommandOptionArray endpointArray;
-    forEveryLineInAsciiFile("../src/cmd-line-endpoints.csv", parseCommandData, &endpointArray);
-
     for (auto ep : endpointArray) {
         CCommandOptionArray params;
-        for (auto option : optionArray)
-            if (option.api_route == ep.api_route && option.isChifraRoute())
+        for (auto option : routeOptionArray)
+            if (option.api_route == ep.api_route && option.isChifraRoute(false))
                 params.push_back(option);
         ep.params = &params;
 
@@ -45,10 +42,10 @@ void COptions::writeOpenApiFile(void) {
         counter.routeCount++;
     }
 
-    writeCode(getDocsPathContent("api/openapi.yaml"));
-    writeCode("../src/go-apps/flame/cmd/routes.go");
-    writeCode("../src/apps/chifra/options.cpp");
-    writeCode("../src/libs/utillib/options_base.cpp");
+    writeCodeOut(this, getDocsPathContent("api/openapi.yaml"));
+    writeCodeOut(this, getSourcePath("go-apps/flame/server/server_routes.go"));
+    writeCodeOut(this, getSourcePath("apps/chifra/options.cpp"));
+    // writeCodeOut(this, getSourcePath("libs/utillib/options_base.cpp"));
 
     LOG_INFO(cYellow, "makeClass --openapi", cOff, " processed ", counter.routeCount, "/", counter.cmdCount,
              " routes/cmds ", " (changed ", counter.nProcessed, ").", string_q(40, ' '));

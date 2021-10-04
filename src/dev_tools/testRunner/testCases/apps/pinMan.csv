@@ -1,12 +1,11 @@
 enabled,mode,speed,route,path/tool,filename,post,options,opt_cmd,has_env
-on,cmd,fast,pins,apps/pinMan,README,n,@th
 on,cmd,fast,pins,apps/pinMan,help,n,@h
 on,cmd,fast,pins,apps/pinMan,help_long,n,help
 on,both,fast,pins,apps/pinMan,no_params,y,
 on,both,fast,pins,apps/pinMan,invalid_param_1,y,junk
 on,both,fast,pins,apps/pinMan,list_local,y,list
-on,both,fast,pins,apps/pinMan,freshen_mocked,y,freshen
-on,both,fast,pins,apps/pinMan,compare_mocked,y,compare
+local,both,fast,pins,apps/pinMan,freshen_mocked,y,freshen
+local,both,fast,pins,apps/pinMan,compare_mocked,y,compare
 on,both,fast,pins,apps/pinMan,fmt_default,y,list
 on,both,slow,pins,apps/pinMan,fmt_txt,n,list & fmt = txt
 on,both,fast,pins,apps/pinMan,fmt_csv,n,list & fmt = csv

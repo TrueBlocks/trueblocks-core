@@ -2,7 +2,7 @@
 title: "Chain State"
 description: ""
 lead: ""
-date: 2021-09-20T18:07:02
+date: 2021-09-29T17:33:01
 lastmod:
   - :git
   - lastmod
@@ -79,7 +79,7 @@ The above documentation mentions the following basic data types.
 
 | Type      | Description                                     | Notes          |
 | --------- | ----------------------------------------------- | -------------- |
-| address   | a 20-byte hexidecimal string starting with '0x' | lowercase      |
+| address   | a 20-byte hexadecimal string starting with '0x' | lowercase      |
 | blknum    | an alias for a uint64                           |                |
 | bool      | a value either `true`, `false`, `1`, or `0`     |                |
 | bytes     | an arbitrarily long string of bytes             |                |

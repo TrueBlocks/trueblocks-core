@@ -1,6 +1,4 @@
 enabled,mode,speed,route,path/tool,filename,post,options,opt_cmd,has_env
-on,cmd,slow,null,acctlib/acctTest,README,n,@th
 off,cmd,fast,null,acctlib/acctTest,01,n,first = 1500000 & nblocks = 25
 off,cmd,slow,null,acctlib/acctTest,11,n,first = 1500000 & nblocks = 12
 off,cmd,fast,null,acctlib/acctTest,02,n,@f = 4500000 @ n = 2
-on,cmd,slow,null,acctlib/ensTest,ensTest,n,@th

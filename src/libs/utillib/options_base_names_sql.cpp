@@ -90,11 +90,11 @@ bool COptionsBase::loadNamesDatabaseFromSQL(void) {
             return false;
         }
 
-        if (!insertNameRecords(db, configPath("names/names.tab"))) {
+        if (!insertNameRecords(db, getConfigPath("names/names.tab"))) {
             sqlite3_close(db);
             return false;
         }
-        if (!insertNameRecords(db, configPath("names/names_custom.tab"))) {
+        if (!insertNameRecords(db, getConfigPath("names/names_custom.tab"))) {
             sqlite3_close(db);
             return false;
         }

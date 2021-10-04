@@ -44,7 +44,6 @@ class COptionsBase {
     // TODO(tjayrush): global data
     uint64_t minArgs;
     uint32_t enableBits;
-    bool isReadme;
     bool isRaw;
     bool isVeryRaw;
     bool noHeader;
@@ -114,6 +113,7 @@ class COptionsBase {
     string_q get_options(void) const;
     string_q get_errmsg(const string_q& errMsg) const;
     string_q get_override(void) const;
+    string_q get_positionals(COptionArray& pos) const;
 
     string_q format_notes(const CStringArray& strs) const;
     bool flag_required(const string_q& command) const;
@@ -167,8 +167,8 @@ extern int sortParams(const void* c1, const void* c2);
 extern uint64_t verbose;
 
 //--------------------------------------------------------------------------------
-extern string_q configPath(const string_q& part);
-extern string_q configPathRelative(const string_q& part);
+extern string_q getConfigPath(const string_q& part);
+extern string_q getConfigPathRel(const string_q& part);
 
 //--------------------------------------------------------------------------------
 class CToml;
@@ -241,10 +241,12 @@ extern string_q cleanFmt(const string_q& str);
 extern void errorMessage(const string_q& msg);
 inline bool isReserved(const string_q& command) {
     const char* STR_RESERVED =
-        "|help|verbose|fmt|output|noop|version|nocolor|no_header|very_raw|raw|"
-        "wei|ether|dollars|parity|cmd|mocked|api_mode|to_file|file|";
+        "|help|verbose|fmt|output|noop|version|nocolor|no_header|raw|"
+        "wei|ether|dollars|cmd|mocked|api_mode|to_file|file|";
     return contains(STR_RESERVED, "|" + command + "|");
 }
-extern map<string_q, string_q> progNameMap;
+
+extern string_q path_2_Cmd(const string_q& path);
+extern string_q cmd_2_Path(const string_q& cmd);
 
 }  // namespace qblocks

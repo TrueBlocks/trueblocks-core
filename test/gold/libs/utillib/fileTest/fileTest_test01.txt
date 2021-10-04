@@ -1,5 +1,4 @@
-fileTest argc: 2 [1:recurse] 
-fileTest recurse 
+fileTest  recurse
 Recursive from ../
 Found 124 (124) files
 ../arrayTest/arrayTest_Insertion.txt

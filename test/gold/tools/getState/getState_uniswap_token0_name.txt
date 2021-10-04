@@ -1,5 +1,4 @@
-getState argc: 4 [1:--call] [2:0x2260fac5e5542a773aa44fbcfedf7c193bc2c599!0x06fdde03] [3:10092000] 
-getState --call 0x2260fac5e5542a773aa44fbcfedf7c193bc2c599!0x06fdde03 10092000 
+chifra state  --call 0x2260fac5e5542a773aa44fbcfedf7c193bc2c599!0x06fdde03 10092000
 { "data": [
 
 level: 1

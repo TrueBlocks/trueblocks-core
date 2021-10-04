@@ -1,5 +1,4 @@
-getReceipts argc: 5 [1:2222222.0] [2:2332332.0] [3:--fmt] [4:api] 
-getReceipts 2222222.0 2332332.0 --fmt api 
+chifra receipts  2222222.0 2332332.0 --fmt api
 {"data": [
   {
     "contractAddress": "0x0",

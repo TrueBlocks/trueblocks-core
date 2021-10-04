@@ -1,5 +1,4 @@
-getState argc: 6 [1:0xbb9bc244d798123fde783fcc1c72d3bb8c189413] [2:0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359] [3:1500000] [4:--fmt] [5:api] 
-getState 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 1500000 --fmt api 
+chifra state  0xbb9bc244d798123fde783fcc1c72d3bb8c189413 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 1500000 --fmt api
 {"data": [
   {
     "blockNumber": 1500000,

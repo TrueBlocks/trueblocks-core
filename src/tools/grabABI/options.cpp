@@ -20,10 +20,10 @@
 static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
-    COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "list of one or more smart contracts whose ABI to grab from EtherScan"),  // NOLINT
+    COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "a list of one or more smart contracts whose ABIs to display"),  // NOLINT
     COption("known", "k", "", OPT_SWITCH, "load common 'known' ABIs from cache"),
     COption("sol", "s", "<string>", OPT_FLAG, "file name of .sol file from which to create a new known abi (without .sol)"),  // NOLINT
-    COption("find", "f", "<string>", OPT_FLAG, "try to search for a function declaration given a four byte code"),
+    COption("find", "f", "list<string>", OPT_FLAG, "try to search for a function declaration given a four byte code"),
     COption("source", "o", "", OPT_HIDDEN | OPT_SWITCH, "show the source of the ABI information"),
     COption("classes", "c", "", OPT_HIDDEN | OPT_SWITCH, "generate classDefinitions folder and class definitions"),
     COption("", "", "", OPT_DESCRIPTION, "Fetches the ABI for a smart contract."),
@@ -41,7 +41,7 @@ bool COptions::parseArguments(string_q& command) {
     // BEG_CODE_LOCAL_INIT
     bool known = false;
     string_q sol = "";
-    string_q find = "";
+    CStringArray find;
     bool source = false;
     bool classes = false;
     // END_CODE_LOCAL_INIT
@@ -66,7 +66,8 @@ bool COptions::parseArguments(string_q& command) {
             return flag_required("sol");
 
         } else if (startsWith(arg, "-f:") || startsWith(arg, "--find:")) {
-            find = substitute(substitute(arg, "-f:", ""), "--find:", "");
+            arg = substitute(substitute(arg, "-f:", ""), "--find:", "");
+            find.push_back(arg);
         } else if (arg == "-f" || arg == "--find") {
             return flag_required("find");
 
@@ -94,7 +95,7 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_LIST("addrs", addrs, addrs.empty());
     LOG_TEST_BOOL("known", known);
     LOG_TEST("sol", sol, (sol == ""));
-    LOG_TEST("find", find, (find == ""));
+    LOG_TEST_LIST("find", find, find.empty());
     LOG_TEST_BOOL("source", source);
     LOG_TEST_BOOL("classes", classes);
     // END_DEBUG_DISPLAY
@@ -103,12 +104,14 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     if (!find.empty()) {
-        ostringstream os;
-        os << getCommandPath("findSig") << " " << find;
-        LOG_TEST_CALL(os.str());
-        // clang-format off
-        if (system(os.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
-        // clang-format on
+        for (auto f : find) {
+            ostringstream os;
+            os << getCommandPath("findSig") << " " << f;
+            LOG_TEST_CALL(os.str());
+            // clang-format off
+            if (system(os.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
+            // clang-format on
+        }
         return false;
     }
 
@@ -197,7 +200,7 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
-    registerOptions(nParams, params, OPT_RAW);
+    registerOptions(nParams, params, OPT_RAW, OPT_DENOM);
 
     // BEG_CODE_INIT
     // END_CODE_INIT

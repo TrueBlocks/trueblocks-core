@@ -1,5 +1,4 @@
-grabABI argc: 2 [1:--known] 
-grabABI --known 
+chifra abis  --known
 encoding	type	name	signature	input_names	output_names
 0x000a094ae8a9b5dfda733d953ccb49a019296de5996153c514d292f3255621b2	event	SubdomainCreated	SubdomainCreated(address,address,string,string)	creator,owner,subdomain,domain,	,
 0x0023de29	function	tokensReceived	tokensReceived(address,address,address,uint256,bytes,bytes)	operator,from,to,amount,userData,operatorData,	,

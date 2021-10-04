@@ -1,5 +1,4 @@
-dataUpgradeTest argc: 2 [1:1] 
-dataUpgradeTest 1 
+dataUpgradeTest  1
 1. Read from old binary format, write to JSON...
 --------------------------------------------------------------------------------
 className: CBlock

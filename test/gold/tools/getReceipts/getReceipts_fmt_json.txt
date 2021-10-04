@@ -1,5 +1,4 @@
-getReceipts argc: 5 [1:2222222.0] [2:2332332.0] [3:--fmt] [4:json] 
-getReceipts 2222222.0 2332332.0 --fmt json 
+chifra receipts  2222222.0 2332332.0 --fmt json
 { "data": [
   {
     "contractAddress": "0x0",

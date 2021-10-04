@@ -1,5 +1,4 @@
-cacheStatus argc: 4 [1:--report] [2:--fmt] [3:json] 
-cacheStatus --report --fmt json 
+chifra status  --report --fmt json
 { "data": [
 {
   "client_version": "Client version",

@@ -1,5 +1,4 @@
-getQuotes argc: 3 [1:--fmt] [2:json] 
-getQuotes --fmt json 
+chifra quotes  --fmt json
 { "data": [
   {
     "timestamp": 1439078400,

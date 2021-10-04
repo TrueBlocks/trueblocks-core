@@ -1,5 +1,4 @@
-abiTest argc: 2 [1:evt_assign] 
-abiTest evt_assign 
+abiTest  evt_assign
 event assignment test...
 CEthStateArray				a->_val = "0x" + extract(data, 0*64, 64);
 CBlockNumArray				a->_val = "0x" + extract(data, 0*64, 64);

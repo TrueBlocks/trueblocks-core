@@ -1,5 +1,4 @@
-getBlocks argc: 2 [1:1001001] 
-getBlocks 1001001 
+chifra blocks  1001001
 { "data": [
 {
   "gasLimit": 3141592,

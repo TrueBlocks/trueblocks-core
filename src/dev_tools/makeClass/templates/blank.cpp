@@ -120,7 +120,7 @@ bool [{CLASS_NAME}]::Serialize(CArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool [{CLASS_NAME}]::SerializeC(CArchive& archive) const {
-    // Writing always write the latest version of the data
+    // Writing always writes the latest version of the data
 [{PARENT_SER}]
     // EXISTING_CODE
     // EXISTING_CODE

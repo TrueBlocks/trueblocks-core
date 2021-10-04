@@ -1,16 +1,18 @@
-chifra argc: 5 [1:explore] [2:--help] [3:--verbose] [4:2] 
-chifra explore --help --verbose 2 
-chifra explore argc: 4 [1:--help] [2:--verbose] [3:2] 
-chifra explore --help --verbose 2 
-PROG_NAME = [chifra explore]
+chifra  explore --help --log_level 2
+Purpose:
+  Open an explorer for a given address, block, or transaction.
 
-  Usage:    chifra explore [-l|-g|-h] <term> [term...]  
-  Purpose:  Open an explorer for one or more addresses, blocks, or transactions.
+Usage:
+  chifra explore [flags] <term> [term...]
 
-  Where:
-    terms                 one or more addresses, names, block, or transaction identifiers
-    -l  (--local)         open the local TrueBlocks explorer
-    -g  (--google)        search google excluding popular blockchain explorers
-    -h  (--help)          display this help screen
+Arguments:
+  terms - one or more addresses, names, block, or transaction identifiers
 
-  Powered by TrueBlocks
+Flags:
+  -l, --local    open the local TrueBlocks explorer
+  -g, --google   search google excluding popular blockchain explorers
+
+Global Flags:
+  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
+  -h, --help         display this help screen
+  -v, --verbose      enable verbose (increase detail with --log_level)

@@ -1,5 +1,4 @@
-tomlTest2 argc: 2 [1:getBlocks.toml] 
-tomlTest2 getBlocks.toml 
+tomlTest2  getBlocks.toml
 tests/getBlocks.toml
 [version]
 current = "vers-alpha"

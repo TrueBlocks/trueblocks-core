@@ -1,16 +1,23 @@
-ethslurp argc: 1 
-ethslurp 
+chifra slurp  
+Error: 
+  At least one valid Ethereum address is required
 
-  Usage:    ethslurp [-t|-p|-v|-h] <address> [address...] [block...]  
-  Purpose:  Fetch data from EtherScan for any address.
+Usage:
+  chifra slurp [flags] <address> [address...] [block...]
 
-  Where:
-    addrs                 one or more addresses to slurp from Etherscan (required)
-    blocks                an optional range of blocks to slurp
-    -t  (--types <val>)   one or more types of transactions to request, one or more of [ext*|int|token|nfts|miner|uncles|all]
-    -p  (--appearances)   show only the blocknumer.tx_id appearances of the exported transactions
-    -x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
-    -v  (--verbose)       set verbose level (optional level defaults to 1)
-    -h  (--help)          display this help screen
+Arguments:
+  addrs - one or more addresses to slurp from Etherscan (required)
+  blocks - an optional range of blocks to slurp
 
-  Powered by TrueBlocks
+Flags:
+  -t, --types strings   which types of transactions to request
+                        One or more of ext, int, token, nfts, miner, uncles, all
+  -p, --appearances     show only the blocknumer.tx_id appearances of the exported transactions
+
+Global Flags:
+  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
+  -h, --help         display this help screen
+  -v, --verbose      enable verbose (increase detail with --log_level)
+
+Notes:
+  - Portions of this software are Powered by Etherscan.io APIs.

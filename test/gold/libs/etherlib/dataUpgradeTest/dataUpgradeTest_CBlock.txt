@@ -1,5 +1,4 @@
-dataUpgradeTest argc: 2 [1:CBlock] 
-dataUpgradeTest CBlock 
+dataUpgradeTest  CBlock
 --------------------------------------------------------------------------------
 className: CBlock
 baseClass: CBaseNode
@@ -85,7 +84,7 @@ light               	1018	0	12582932	T_BOOL TS_NUMERAL TS_OMITEMPTY
 date                	1019	0	33554437	T_DATE TS_DATE
 age                 	1020	0	33554437	T_DATE TS_DATE
 {
-  "schema": 12001,
+  "schema": 14000,
   "deleted": false,
   "showing": true,
   "cname": "Block",

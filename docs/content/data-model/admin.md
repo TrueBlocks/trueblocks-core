@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2021-09-20T20:43:38
+date: 2021-10-03T20:13:02
 lastmod:
   - :git
   - lastmod
@@ -110,7 +110,7 @@ Manifest data is made of the following data fields:
 | Field       | Description                                                     | Type              |
 | ----------- | --------------------------------------------------------------- | ----------------- |
 | indexFormat | IPFS cid of file describing the file format of an index chunk   | string            |
-| bloomFormat | IPFS cid of file describing the assoicated bloom filter         | string            |
+| bloomFormat | IPFS cid of file describing the associated bloom filter         | string            |
 | firstPin    | the block number of the first pin in the manifest (always zero) | blknum            |
 | lastPin     | the most recent block included in this manifest                 | blknum            |
 | pins        | a list of all the pins in the unchained index                   | CPinnedChunkArray |
@@ -126,5 +126,5 @@ The above documentation mentions the following basic data types.
 | bool      | a value either `true`, `false`, `1`, or `0`     |                |
 | ipfshash  | a multi-hash produced by IPFS                   | mixed-case     |
 | string    | a normal character string                       |                |
-| timestamp | a 64-bit unsigned integer                       | unix timestamp |
+| timestamp | a 64-bit unsigned integer                       | Unix timestamp |
 | uint64    | a 64-bit unsigned integer                       |                |

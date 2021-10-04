@@ -1,5 +1,4 @@
-fileTest argc: 1 
-fileTest 
+fileTest  
 Non-recursive from ../
 Found 19 (19) files
 ../arrayTest/

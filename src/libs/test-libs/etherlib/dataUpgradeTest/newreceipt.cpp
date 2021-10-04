@@ -197,7 +197,7 @@ bool CNewReceipt::Serialize(CArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CNewReceipt::SerializeC(CArchive& archive) const {
-    // Writing always write the latest version of the data
+    // Writing always writes the latest version of the data
     ((CNewReceipt*)this)->m_schema = getVersionNum();  // NOLINT
     CBaseNode::SerializeC(archive);
 

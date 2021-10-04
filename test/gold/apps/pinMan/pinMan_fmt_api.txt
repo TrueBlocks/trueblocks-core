@@ -1,5 +1,4 @@
-pinMan argc: 4 [1:--list] [2:--fmt] [3:api] 
-pinMan --list --fmt api 
+chifra pins  --list --fmt api
 TIME ~ CLOCK - <INFO>  : list: true
 TIME ~ CLOCK - <INFO>  : hashToIndexFormatFile:	Qmart6XP9XjL43p72PGR93QKytbK8jWWcMguhFgxATTya2
 TIME ~ CLOCK - <INFO>  : hashToBloomFormatFile:	QmNhPk39DUFoEdhUmtGARqiFECUHeghyeryxZM9kyRxzHD

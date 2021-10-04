@@ -187,6 +187,24 @@ string_q doCommand(const string_q& cmd) {
     return trim(ret, '\n');
 }
 
+//------------------------------------------------------------------------------------------
+string_q doCommand2(const string_q& cmd) {
+    time_q now = Now();
+    string_q tmpPath = "/tmp/";
+    string_q filename = tmpPath + makeValidName("qb_" + now.Format("%Y%m%d%H%M%S"));
+    string_q theCommand = (cmd + " >/dev/null 2>" + filename);
+    // clang-format off
+    if (system(theCommand.c_str())) {}  // Don't remove cruft. Silences compiler warnings
+    // clang-format on
+
+    // Check twice for existance since the previous command creates the file but may take some time
+    waitForCreate(filename);
+    string_q ret;
+    asciiFileToString(filename, ret);
+    ::remove(filename.c_str());
+    return trim(ret, '\n');
+}
+
 //------------------------------------------------------------------
 string_q getCWD(const string_q& filename) {
     string_q folder;

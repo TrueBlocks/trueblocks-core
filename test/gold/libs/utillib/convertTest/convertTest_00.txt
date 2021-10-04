@@ -1,5 +1,4 @@
-convertTest argc: 2 [1:0] 
-convertTest 0 
+convertTest  0
 0. Running TestConverts_0
 	000.000 empty address                    ==> passed 'array[0]' is equal to '""'
 	000.001 hex ony                          ==> passed 'array[1]' is equal to '"0x"'

@@ -1,12 +1,4 @@
-ethNames argc: 7 [1:--create] [2:--expand] [3:--verbose] [4:10] [5:--fmt] [6:api] 
-ethNames --create --expand --verbose 10 --fmt api 
-TB_NAME_ADDRESS = [0x0000000000000000000000000000000010101010]
-TB_NAME_DECIMALS = [11]
-TB_NAME_DESCR = [DESCRIPTION]
-TB_NAME_NAME = [NAME]
-TB_NAME_SOURCE = [SOURCE]
-TB_NAME_SYMBOL = [SYMBOL]
-TB_NAME_TAG = [TAGS]
+chifra names  --create --log_level 10 --fmt api --expand
 TIME ~ CLOCK - <INFO>  : Cleaning 0x0000000000000000000000000000000010101010                                  TIME ~ CLOCK - <INFO>  : ---------------------------------------------
 TIME ~ CLOCK - <INFO>  : {
   "tags": "TAGS",

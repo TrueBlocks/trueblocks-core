@@ -1,5 +1,4 @@
-blockScrape argc: 2 [1:--pin] 
-blockScrape --pin 
+chifra scrape  --pin
 TIME ~ CLOCK - <INFO>  : pin: true
 {
   "message": "Testing only",

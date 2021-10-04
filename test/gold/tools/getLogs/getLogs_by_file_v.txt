@@ -1,7 +1,6 @@
-getLogs argc: 5 [1:--file:cmd_file] [2:--verbose] [3:--fmt] [4:json] 
-getLogs --file:cmd_file --verbose --fmt json 
-Cmd: 0x96c58614708ee5b51961a9903af7e0661e88d77f929842d05e29be4d37a004dc -a --verbose:1 
-Cmd: 3327450.0 --parity -a --verbose:1 
+chifra logs  --file cmd_file --verbose --fmt json
+Cmd: 0x96c58614708ee5b51961a9903af7e0661e88d77f929842d05e29be4d37a004dc -a -v:1 
+Cmd: 3327450.0 -a -v:1 
 { "data": [
   {
     "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
@@ -26,7 +25,7 @@ Cmd: 3327450.0 --parity -a --verbose:1
 
 ,  {
     "address": "0x51ffc1b089392a5bb65bf24eaf04d07d0e6f88b5",
-    "logIndex": "0x0",
+    "logIndex": 0,
     "topics": [
       "0x016e128b6bdadd9e9068abd0b18db2fc8b27ed3dbced50e4aa6cc0a6934251ab"
     ],

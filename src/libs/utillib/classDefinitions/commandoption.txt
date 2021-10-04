@@ -1,0 +1,4 @@
+[settings]
+class = CCommandOption
+fields = commandoption.csv
+includes = utillib.h

@@ -1,5 +1,5 @@
-abiTest argc: 2 [1:-th] 
-abiTest -th 
+abiTest argc: 2 [1:--readme] 
+abiTest --readme 
 ### Usage
 
 `Usage:`     [-s|-v|-h] &lt;mode&gt; [mode...]  

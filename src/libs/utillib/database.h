@@ -174,9 +174,8 @@ class codewrite_t {
   public:
     string_q fileName, codeOutIn;
     uint32_t nSpaces;
-    bool stripEOFNL, force;
-    codewrite_t(const string_q& fn, const string_q& c)
-        : fileName(fn), codeOutIn(c), nSpaces(4), stripEOFNL(true), force(false) {
+    bool stripEOFNL;
+    codewrite_t(const string_q& fn, const string_q& c) : fileName(fn), codeOutIn(c), nSpaces(4), stripEOFNL(true) {
     }
 };
 extern bool shouldQuit(void);

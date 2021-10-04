@@ -1,5 +1,4 @@
-cacheStatus argc: 4 [1:caches] [2:--types] [3:transactions] 
-cacheStatus caches --types transactions 
+chifra status  caches --types txs
 {
   "client_version": "Client version",
   "client_ids": "chainId: 1 networkId: 1",
@@ -20,8 +19,7 @@ cacheStatus caches --types transactions
       "path": "txsPath",
       "nFiles": 0,
       "nFolders": 0,
-      "sizeInBytes": 0,
-      "is_valid": true
+      "sizeInBytes": 0
     }
   ],
   "date": "--date--"

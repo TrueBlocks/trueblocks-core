@@ -57,7 +57,7 @@ bool pinlib_downloadManifest(void) {
         LOG_INFO("Found manifest hash at ", cGreen, ipfshash, cOff);
         LOG_INFO("IPFS gateway ", cGreen, gatewayUrl, cOff);
         string_q remoteData = doCommand("curl -s \"" + gatewayUrl + ipfshash + "\"");
-        string fn = configPath("manifest/manifest.txt");
+        string fn = getConfigPath("manifest/manifest.txt");
         stringToAsciiFile(fn, remoteData);
         LOG_INFO("Freshened manifest with ", fileSize(fn), " bytes");
         return fileExists(fn);
@@ -73,7 +73,7 @@ bool pinlib_readManifest(CPinnedChunkArray& pinArray) {
         return true;
 
     string_q binFile = getCachePath("tmp/pins.bin");
-    string_q textFile = configPath("manifest/manifest.txt");
+    string_q textFile = getConfigPath("manifest/manifest.txt");
 
     time_q binDate = fileLastModifyDate(binFile);
     time_q textDate = fileLastModifyDate(textFile);

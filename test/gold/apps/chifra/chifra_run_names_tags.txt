@@ -1,8 +1,4 @@
-chifra argc: 3 [1:names] [2:--tags] 
-chifra names --tags 
-chifra names argc: 2 [1:--tags] 
-chifra names --tags 
-PROG_NAME = [chifra names]
+chifra  names --tags
 tags
 30-Contracts
 30-Contracts:Balancer

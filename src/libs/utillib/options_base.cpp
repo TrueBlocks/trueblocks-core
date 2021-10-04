@@ -32,10 +32,10 @@ void COptionsBase::registerOptions(size_t nP, COption const* pP, uint32_t on, ui
     if (parameters.empty()) {
         for (size_t i = 0; i < nP; i++)
             parameters.push_back(pP[i]);
-        if (on != NOOPT)
-            optionOn(on);
         if (off != NOOPT)
             optionOff(off);
+        if (on != NOOPT)
+            optionOn(on);
     }
 }
 
@@ -76,9 +76,10 @@ bool COptionsBase::prePrepareArguments(CStringArray& separatedArgs_, int argCoun
             // remove the key
             if (cleaned_.size())
                 cleaned_.pop_back();
-        } else if (arg == "-th" || arg == "-ht") {
-            isReadme = true;
+        } else if (arg == "--readme") {
             cleaned_.push_back(arg);
+        } else if (arg == "--log_level") {
+            cleaned_.push_back("--verbose");
         } else {
             // add this arg
             cleaned_.push_back(arg);
@@ -96,29 +97,7 @@ bool COptionsBase::prePrepareArguments(CStringArray& separatedArgs_, int argCoun
         }
     }
 
-    if (isTestMode()) {
-        size_t cnt = 0;
-        ostringstream os;
-        cerr << getProgName() << " argc: " << (separatedArgs_.size() + 1) << " ";
-        for (auto arg : separatedArgs_) {
-            cerr << "[" << ++cnt << ":" << trim(arg) << "] ";
-            os << trim(arg) << " ";
-        }
-        cerr << endl;
-        cerr << getProgName() << " " << os.str() << endl;
-        CStringArray envs = {
-            // "TEST_MODE", "NO_COLOR", "REDIR_CERR",
-            "API_MODE",      "DOCKER_MODE",  "PROG_NAME",      "HIDE_NAMES",      "LIVE_TEST",      "SILENCE",
-            "NO_CACHE",      "NO_PROGRESS",  "NO_SCHEMAS",     "TB_NAME_ADDRESS", "TB_NAME_CUSTOM", "TB_NAME_DECIMALS",
-            "TB_NAME_DESCR", "TB_NAME_NAME", "TB_NAME_SOURCE", "TB_NAME_SYMBOL",  "TB_NAME_TAG",
-        };
-        for (auto key : envs) {
-            string_q val = getEnvStr(key);
-            if (!val.empty())
-                cerr << key << " = [" << val << "]" << endl;
-        }
-    }
-    return !isReadme;
+    return true;
 }
 
 //--------------------------------------------------------------------------------
@@ -129,8 +108,8 @@ bool COptionsBase::isBadSingleDash(const string_q& arg) const {
             return true;
     }
 
-    CStringArray builtInCmds = {"verbose", "fmt",     "ether",  "output",  "raw",     "very_raw", "mocked",
-                                "wei",     "dollars", "parity", "version", "nocolor", "noop"};
+    CStringArray builtInCmds = {"verbose", "log_level", "fmt",     "ether",   "output",  "raw",
+                                "mocked",  "wei",       "dollars", "version", "nocolor", "noop"};
 
     for (auto bi : builtInCmds) {
         if (arg == ("-" + bi))
@@ -246,7 +225,7 @@ bool COptionsBase::prepareArguments(int argCountIn, const char* argvIn[]) {
             } else if (arg == "api") {
                 expContext().exportFmt = API1;
             } else {
-                return usage("Export format (" + arg + ") must be one of [ json | txt | csv | api ].");
+                return usage("The --fmt option (" + arg + ") must be one of [ json | txt | csv | api ].");
             }
             argumentsOut[i] = "";
         }
@@ -377,13 +356,6 @@ bool COptionsBase::standardOptions(string_q& cmdLine) {
         expContext().asWei = false;
     }
 
-    if (isEnabled(OPT_RAW) && contains(cmdLine, "--very_raw ")) {
-        replaceAll(cmdLine, "--very_raw ", "");
-        setenv("NO_SCHEMAS", "true", true);
-        isRaw = true;
-        isVeryRaw = true;
-    }
-
     if (isEnabled(OPT_RAW) && contains(cmdLine, "--raw ")) {
         replaceAll(cmdLine, "--raw ", "");
         setenv("NO_SCHEMAS", "true", true);
@@ -449,14 +421,6 @@ bool COptionsBase::standardOptions(string_q& cmdLine) {
         expContext().asWei = false;
     }
 
-    if (isEnabled(OPT_PARITY) && contains(cmdLine, "--parity ")) {
-        replaceAll(cmdLine, "--parity ", "");
-        expContext().spcs = 2;
-        expContext().hexNums = true;
-        expContext().quoteNums = true;
-        expContext().asParity = true;
-    }
-
     cmdLine = trim(cmdLine);
     return true;
 }
@@ -480,15 +444,13 @@ bool COptionsBase::builtInCmd(const string_q& arg) {
         return true;
     if (isEnabled(OPT_OUTPUT) && startsWith(arg, "--output:"))
         return true;
-    if (isEnabled(OPT_RAW) && (arg == "--raw" || arg == "--very_raw"))
+    if (isEnabled(OPT_RAW) && arg == "--raw")
         return true;
     if (isEnabled(OPT_MOCKDATA) && arg == "--mocked")
         return true;
     if (isEnabled(OPT_WEI) && arg == "--wei")
         return true;
     if (isEnabled(OPT_DOLLARS) && arg == "--dollars")
-        return true;
-    if (isEnabled(OPT_PARITY) && (arg == "--parity"))
         return true;
     if (arg == "--version")
         return true;
@@ -543,7 +505,7 @@ bool COptionsBase::confirmUint(const string_q& name, uint64_t& value, const stri
     COption option;
     if (!findParam(name, option))
         return usage("Unknown parameter `" + name + "'.");
-    if (!contains(option.type, "uint") && !contains(option.type, "blknum"))
+    if (!contains(option.option_type, "uint") && !contains(option.option_type, "blknum"))
         return true;
 
     string_q arg = argIn;
@@ -574,7 +536,7 @@ bool COptionsBase::confirmDouble(const string_q& name, double& value, const stri
     COption option;
     if (!findParam(name, option))
         return usage("Unknown parameter `" + name + "'.");
-    if (!contains(option.type, "double"))
+    if (!contains(option.option_type, "double"))
         return true;
 
     string_q arg = argIn;
@@ -596,7 +558,7 @@ bool COptionsBase::confirmBlockNum(const string_q& name, blknum_t& value, const 
     COption option;
     if (!findParam(name, option))
         return usage("Unknown parameter `" + name + "'.");
-    if (!contains(option.type, "uint") && !contains(option.type, "blknum"))
+    if (!contains(option.option_type, "uint") && !contains(option.option_type, "blknum"))
         return true;
 
     string_q arg = argIn;
@@ -604,7 +566,7 @@ bool COptionsBase::confirmBlockNum(const string_q& name, blknum_t& value, const 
     replace(arg, name + ":", "");
     replaceAll(arg, "-", "");
 
-    if (contains(option.type, "blknum")) {
+    if (contains(option.option_type, "blknum")) {
         if (arg == "first") {
             value = 0;
             return true;
@@ -629,10 +591,10 @@ bool COptionsBase::confirmEnum(const string_q& name, string_q& value, const stri
     COption option;
     if (!findParam(name, option))
         return usage("Unknown parameter `" + name + "'.");
-    if (option.type.empty() || !contains(option.type, "enum["))
+    if (option.option_type.empty() || !contains(option.option_type, "enum["))
         return true;
 
-    string_q type = option.type;
+    string_q type = option.option_type;
     replace(type, "*", "");
     replace(type, "enum", "");
     replace(type, "list<", "");
@@ -683,42 +645,6 @@ bool COptionsBase::flag_required(const string_q& command) const {
     string_q req = "The --[{COMMAND}] option requires a value.";
     return usage(substitute(req, "[{COMMAND}]", command));
 }
-
-//--------------------------------------------------------------------------------
-map<string_q, string_q> progNameMap = {
-    // BEG_CODE_CHIFRA_PAIRMAP
-    // -- Accounts
-    // list
-    make_pair("acctExport", "chifra export"),
-    // monitors
-    make_pair("ethNames", "chifra names"),
-    make_pair("grabABI", "chifra abis"),
-    // -- Chain Data
-    make_pair("getBlocks", "chifra blocks"),
-    make_pair("getTrans", "chifra transactions"),
-    make_pair("getReceipts", "chifra receipts"),
-    make_pair("getLogs", "chifra logs"),
-    make_pair("getTraces", "chifra traces"),
-    make_pair("whenBlock", "chifra when"),
-    // -- Chain State
-    make_pair("getState", "chifra state"),
-    make_pair("getTokens", "chifra tokens"),
-    // -- Admin
-    make_pair("cacheStatus", "chifra status"),
-    // serve
-    make_pair("blockScrape", "chifra scrape"),
-    // init
-    make_pair("pinMan", "chifra pins"),
-    // -- Other
-    make_pair("getQuotes", "chifra quotes"),
-    make_pair("fireStorm", "chifra explore"),
-    make_pair("ethslurp", "chifra slurp"),
-    // END_CODE_CHIFRA_PAIRMAP
-    //
-    make_pair("makeClass", "makeClass"),
-    make_pair("testRunner", "testRunner"),
-    make_pair("chifra", "chifra"),
-};
 
 //--------------------------------------------------------------------------------
 string_q COptionsBase::expandOption(string_q& arg) {
@@ -788,7 +714,7 @@ uint64_t verbose = false;
 
 extern const char* STR_OLD_FOLDER_ERROR;
 //---------------------------------------------------------------------------------------------------
-string_q configPath(const string_q& part) {
+string_q getConfigPath(const string_q& part) {
     static bool been_here = false;
     if (!been_here) {
         if (folderExists(getHomeFolder() + ".quickBlocks")) {
@@ -807,8 +733,8 @@ string_q configPath(const string_q& part) {
 }
 
 //---------------------------------------------------------------------------------------------------
-string_q configPathRelative(const string_q& part) {
-    return substitute(configPath(part), getHomeFolder(), "~/");
+string_q getConfigPathRel(const string_q& part) {
+    return substitute(getConfigPath(part), getHomeFolder(), "~/");
 }
 
 //-------------------------------------------------------------------------
@@ -849,9 +775,9 @@ const CToml* getGlobalConfig(const string_q& name) {
     static string_q components = "trueBlocks|";
 
     if (!toml) {
-        static CToml theToml(configPath("trueBlocks.toml"));
+        static CToml theToml(getConfigPath("trueBlocks.toml"));
         toml = &theToml;
-        string_q fileName = configPath(COptionsBase::g_progName + ".toml");
+        string_q fileName = getConfigPath(COptionsBase::g_progName + ".toml");
         if (fileExists(fileName) && !contains(components, COptionsBase::g_progName + "|")) {
             components += COptionsBase::g_progName + "|";
             CToml custom(fileName);
@@ -861,7 +787,7 @@ const CToml* getGlobalConfig(const string_q& name) {
 
     // If we're told explicitly to load another config, do that as well
     if (!name.empty()) {
-        string_q fileName = configPath(name + ".toml");
+        string_q fileName = getConfigPath(name + ".toml");
         if (fileExists(fileName) && !contains(components, name + "|")) {
             components += name + "|";
             CToml custom(fileName);
@@ -876,7 +802,7 @@ const CToml* getGlobalConfig(const string_q& name) {
 bool COptionsBase::Mocked(const string_q& which) {
     if (!mocked)
         return false;
-    string_q path = configPath("mocked/mocks/" + which + ".json");
+    string_q path = getConfigPath("mocked/mocks/" + which + ".json");
     if (!fileExists(path))
         return false;
     cout << asciiFileToString(path);
@@ -959,10 +885,10 @@ string_q getCachePath(const string_q& _part) {
             return substitute((g_cachePath + _part), "//", "/");
 
         // Otherwise, fill the value
-        CToml toml(configPath("trueBlocks.toml"));
+        CToml toml(getConfigPath("trueBlocks.toml"));
         string_q path = toml.getConfigStr("settings", "cachePath", "<NOT_SET>");
         if (path == "<NOT_SET>") {
-            path = configPath("cache/");
+            path = getConfigPath("cache/");
             toml.setConfigStr("settings", "cachePath", path);
             toml.writeFile();
         }
@@ -974,7 +900,7 @@ string_q getCachePath(const string_q& _part) {
         g_cachePath = folder.getFullPath();
         if (!folder.isValid()) {
             errorMessage("Invalid cachePath (" + folder.getFullPath() + ") in config file.");
-            path = configPath("cache/");
+            path = getConfigPath("cache/");
             CFilename fallback(path);
             g_cachePath = fallback.getFullPath();
         }
@@ -988,7 +914,6 @@ string_q getCachePath(const string_q& _part) {
 //---------------------------------------------------------------------------------------------------
 COptionsBase::COptionsBase(void) {
     minArgs = 1;
-    isReadme = false;
     isRaw = false;
     isVeryRaw = false;
     mocked = false;

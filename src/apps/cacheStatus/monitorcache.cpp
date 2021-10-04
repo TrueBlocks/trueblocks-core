@@ -180,7 +180,7 @@ bool CMonitorCache::Serialize(CArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CMonitorCache::SerializeC(CArchive& archive) const {
-    // Writing always write the latest version of the data
+    // Writing always writes the latest version of the data
     CCache::SerializeC(archive);
 
     // EXISTING_CODE

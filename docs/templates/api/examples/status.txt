@@ -1,20 +1,19 @@
-                  {
-                    "data":
-                      [
-                        {
-                          "client_version": "erigon/2021.09.2/linux-amd64/go1.16.3",
-                          "trueblocks_version": "GHC-TrueBlocks//0.12.1-alpha-7ac3196d7-20210903",
-                          "rpc_provider": "http://localhost:23456",
-                          "config_path": "/Users/user/Library/Application Support/TrueBlocks/",
-                          "cache_path": "/Users/user/Library/Application Support/TrueBlocks/cache/",
-                          "index_path": "/Users/user/Development/trueblocks-index/wild.0/unchained/",
-                          "is_testing": false,
-                          "is_docker": false,
-                          "is_archive": true,
-                          "is_tracing": true,
-                          "has_eskey": true,
-                          "has_pinkey": true,
-                          "date": "2021-09-03 19:38:19 UTC",
-                        },
-                      ],
-                  }
+{
+  "data": [
+    {
+      "client_version": "erigon/2021.09.2/linux-amd64/go1.16.3",
+      "trueblocks_version": "GHC-TrueBlocks//0.12.1-alpha-7ac3196d7-20210903",
+      "rpc_provider": "http://localhost:23456",
+      "config_path": "~/Library/Application Support/TrueBlocks/",
+      "cache_path": "~/Library/Application Support/TrueBlocks/cache/",
+      "index_path": "~/Library/Application Support/TrueBlocks/unchained/",
+      "is_testing": false,
+      "is_docker": false,
+      "is_archive": true,
+      "is_tracing": true,
+      "has_eskey": true,
+      "has_pinkey": true,
+      "date": "2021-09-03 19:38:19 UTC"
+    }
+  ]
+}

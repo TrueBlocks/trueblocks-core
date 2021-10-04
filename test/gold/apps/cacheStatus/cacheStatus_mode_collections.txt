@@ -1,5 +1,4 @@
-cacheStatus argc: 2 [1:collections] 
-cacheStatus collections 
+chifra status  collections
 {
   "client_version": "Client version",
   "client_ids": "chainId: 1 networkId: 1",

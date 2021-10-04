@@ -1,19 +1,19 @@
 name                ,type      ,str_default ,object ,array ,nowrite ,omitempty ,minimal ,extra ,noaddfld ,doc ,disp ,example       ,description
 blockNumber         ,blknum    ,            ,       ,      ,        ,          ,        ,      ,         ,1   ,4    ,10021         ,the number of the block
 transactionIndex    ,blknum    ,            ,       ,      ,        ,          ,        ,      ,         ,2   ,5    ,305           ,the zero-indexed position of the transaction in the block
-timestamp           ,timestamp ,            ,       ,      ,        ,          ,        ,      ,         ,3   ,6    ,1438335038    ,the unix timestamp of the object
+timestamp           ,timestamp ,            ,       ,      ,        ,          ,        ,      ,         ,3   ,6    ,1438335038    ,the Unix timestamp of the object
 assetAddr           ,address   ,            ,       ,      ,        ,          ,        ,      ,         ,4   ,1    ,0xf503...179b ,the accountedFor address for ETH recons&#44; the token address itself otherwise
 assetSymbol         ,string    ,            ,       ,      ,        ,          ,        ,      ,         ,5   ,2    ,              ,either ETH&#44; WEI or the symbol of the asset being reconciled as extracted from the chain
-decimals            ,uint64    ,18          ,       ,      ,        ,          ,        ,      ,         ,6   ,3    ,              ,Equivilent to the extracted value of getSymbol from ERC20 or&#44; if ETH or WEI then 18
+decimals            ,uint64    ,18          ,       ,      ,        ,          ,        ,      ,         ,6   ,3    ,              ,Equivalent to the extracted value of getSymbol from ERC20 or&#44; if ETH or WEI then 18
 prevBlk             ,blknum    ,            ,       ,      ,        ,          ,        ,      ,         ,7   ,7    ,10021         ,the block number of the previous reconciliation
 prevBlkBal          ,int256    ,            ,       ,      ,        ,          ,        ,      ,         ,8   ,8    ,              ,the account balance for the given asset for the previous reconciliation
-begBal              ,int256    ,            ,       ,      ,        ,          ,        ,      ,         ,9   ,9    ,              ,the begining balance of the asset at the blockNumber
+begBal              ,int256    ,            ,       ,      ,        ,          ,        ,      ,         ,9   ,9    ,              ,the beginning balance of the asset at the blockNumber
 endBal              ,int256    ,            ,       ,      ,        ,          ,        ,      ,         ,24  ,26   ,              ,the on-chain balance of the asset (see notes above about intra-block reconciliations)
 amountIn            ,int256    ,            ,       ,      ,        ,          ,        ,      ,         ,11  ,10   ,              ,the top-level value of the incoming transfer for the accountedFor address
 internalIn          ,int256    ,            ,       ,      ,        ,          ,        ,      ,         ,13  ,11   ,              ,the internal value of the incoming transfer for the accountedFor address
 selfDestructIn      ,int256    ,            ,       ,      ,        ,          ,        ,      ,         ,15  ,12   ,              ,the incoming value of a self-destruct if recipient is the accountedFor address
 minerBaseRewardIn   ,int256    ,            ,       ,      ,        ,          ,        ,      ,         ,17  ,13   ,              ,the base fee reward if the miner is the accountedFor address
-minerNephewRewardIn ,int256    ,            ,       ,      ,        ,          ,        ,      ,         ,18  ,14   ,              ,the netphew reward if the miner is the accountedFor address
+minerNephewRewardIn ,int256    ,            ,       ,      ,        ,          ,        ,      ,         ,18  ,14   ,              ,the nephew reward if the miner is the accountedFor address
 minerTxFeeIn        ,int256    ,            ,       ,      ,        ,          ,        ,      ,         ,19  ,15   ,              ,the transaction fee reward if the miner is the accountedFor address
 minerUncleRewardIn  ,int256    ,            ,       ,      ,        ,          ,        ,      ,         ,20  ,16   ,              ,the uncle reward if the miner who won the uncle block is the accountedFor address
 prefundIn           ,int256    ,            ,       ,      ,        ,          ,        ,      ,         ,21  ,17   ,              ,at block zero (0) only&#44; the amount of genesis income for the accountedFor address

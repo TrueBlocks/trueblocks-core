@@ -1,5 +1,4 @@
-getReceipts argc: 4 [1:1428993.*] [2:--fmt] [3:api] 
-getReceipts 1428993.* --fmt api 
+chifra receipts  1428993.* --fmt api
 {"data": [
   {
     "contractAddress": "0x0",

@@ -1,8 +1,4 @@
-chifra argc: 3 [1:status] [2:all] 
-chifra status all 
-chifra status argc: 2 [1:all] 
-chifra status all 
-PROG_NAME = [chifra status]
+chifra  status all
 {
   "client_version": "Client version",
   "client_ids": "chainId: 1 networkId: 1",
@@ -59,24 +55,21 @@ PROG_NAME = [chifra status]
       "path": "blocksPath",
       "nFiles": 0,
       "nFolders": 0,
-      "sizeInBytes": 0,
-      "is_valid": true
+      "sizeInBytes": 0
     },
     {
       "type": "CChainCache",
       "path": "txsPath",
       "nFiles": 0,
       "nFolders": 0,
-      "sizeInBytes": 0,
-      "is_valid": true
+      "sizeInBytes": 0
     },
     {
       "type": "CChainCache",
       "path": "tracesPath",
       "nFiles": 0,
       "nFolders": 0,
-      "sizeInBytes": 0,
-      "is_valid": true
+      "sizeInBytes": 0
     },
     {
       "type": "CSlurpCache",

@@ -1,16 +1,19 @@
-blockScrape argc: 3 [1:--n_addr_procs] [2:-12] 
-blockScrape --n_addr_procs -12 
+chifra scrape  --n_addr_procs -12
+Error: 
+  invalid argument "-12" for "-a, --n_addr_procs" flag: strconv.ParseUint: parsing "-12": invalid syntax
 
-  Invalid option: --n_addr_procs
+Usage:
+  chifra scrape [flags]
 
-  Usage:    blockScrape [-p|-s|-v|-h]  
-  Purpose:  Scan the chain and update the TrueBlocks index of appearances.
+Flags:
+  -p, --pin                  pin new chunks (and blooms) to IPFS (requires Pinata key and running IPFS node)
+  -s, --sleep float          the number of seconds to sleep between passes (default 14)
+  -n, --n_blocks uint        maximum number of blocks to process (default 2000)
+  -b, --n_block_procs uint   number of concurrent block channels for blaze (hidden) (default 10)
+  -a, --n_addr_procs uint    number of concurrent address channels for blaze (hidden) (default 20)
 
-  Where:
-    -p  (--pin)           pin new chunks (and blooms) to IPFS (requires Pinata key and running IPFS node)
-    -s  (--sleep <double>)the number of seconds to sleep between passes (default 14)
-    -x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
-    -v  (--verbose)       set verbose level (optional level defaults to 1)
-    -h  (--help)          display this help screen
+Global Flags:
+  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
+  -h, --help         display this help screen
+  -v, --verbose      enable verbose (increase detail with --log_level)
 
-  Powered by TrueBlocks

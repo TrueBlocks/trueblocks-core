@@ -1,17 +1,28 @@
-getTokens argc: 1 
-getTokens 
+chifra tokens  
+Purpose:
+  Retrieve token balance(s) for one or more addresses at given block(s).
 
-  Usage:    getTokens [-p|-b|-n|-v|-h] <address> <address> [address...] [block...]  
-  Purpose:  Retrieve token balance(s) for one or more addresses at given block(s).
+Usage:
+  getTokens [flags] <address> <address> [address...] [block...]
 
-  Where:
-    addrs                 two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported (required)
-    blocks                an optional list of one or more blocks at which to report balances, defaults to 'latest'
-    -p  (--parts <val>)   one or more parts of the token information to retreive, one or more of [name|symbol|decimals|totalSupply|version|none|all*]
-    -b  (--by_acct)       consider each address an ERC20 token except the last, whose balance is reported for each token
-    -n  (--no_zero)       suppress the display of zero balance accounts
-    -x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
-    -v  (--verbose)       set verbose level (optional level defaults to 1)
-    -h  (--help)          display this help screen
+Arguments:
+  addrs - two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported (required)
+  blocks - an optional list of one or more blocks at which to report balances, defaults to 'latest'
 
-  Powered by TrueBlocks
+Flags:
+  -p, --parts <val>   which parts of the token information to retrieve, one or more of [name|symbol|decimals|totalSupply|version|none|all*]
+  -b, --by_acct       consider each address an ERC20 token except the last, whose balance is reported for each token
+  -n, --no_zero       suppress the display of zero balance accounts
+
+Global Flags:
+  -x, --fmt string     export format, one of [none|json*|txt|csv|api]
+  -v, --verbose uint   set verbose level (optional level defaults to 1)
+  -h, --help           display this help screen
+
+Notes:
+  - An address must start with '0x' and be forty-two characters long.
+  - blocks may be a space-separated list of values, a start-end range, a special, or any combination.
+  - If the token contract(s) from which you request balances are not ERC20 compliant, the results are undefined.
+  - If the queried node does not store historical state, the results are undefined.
+  - special blocks are detailed under chifra when --list.
+

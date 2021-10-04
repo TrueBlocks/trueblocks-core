@@ -1,5 +1,4 @@
-getBlocks argc: 3 [1:--file:cmd_file1] [2:--cache] 
-getBlocks --file:cmd_file1 --cache 
+chifra blocks  --file cmd_file1 --cache
 Cmd: 1152642 -v:1 --cache 
 Cmd: 1166008 -v:1 --cache 
 Cmd: 1289438 -v:1 --cache 

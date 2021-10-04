@@ -1,5 +1,4 @@
-tomlTest argc: 2 [1:test09.toml] 
-tomlTest test09.toml 
+tomlTest  test09.toml
 test09.toml
 [version]
 version = "0:9:0"

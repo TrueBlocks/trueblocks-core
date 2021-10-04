@@ -30,14 +30,13 @@ namespace qblocks {
 #define OPT_DOLLARS (1 << 4)
 #define OPT_WEI (1 << 5)
 #define OPT_ETHER (1 << 6)
-#define OPT_PARITY (1 << 7)
 #define OPT_RAW (1 << 11)
 #define OPT_PREFUND (1 << 12)
 #define OPT_OUTPUT (1 << 13)
 #define OPT_CRUD (1 << 14)
 #define OPT_MOCKDATA (1 << 21)
 #define OPT_DENOM (OPT_DOLLARS | OPT_WEI | OPT_ETHER)
-#define OPT_DEFAULT (OPT_HELP | OPT_VERBOSE | OPT_FMT | OPT_DENOM | OPT_PARITY | OPT_MOCKDATA | OPT_OUTPUT)
+#define OPT_DEFAULT (OPT_HELP | OPT_VERBOSE | OPT_FMT | OPT_DENOM | OPT_MOCKDATA | OPT_OUTPUT)
 
 #define OPT_REQUIRED (1 << 14)
 #define OPT_POSITIONAL (1 << 15)
@@ -56,12 +55,11 @@ class COption : public CBaseNode {
     string_q longName;
     string_q description;
     string_q permitted;
-    string_q type;
-    bool is_hidden;
+    string_q option_type;
+    bool is_visible;
     bool is_positional;
-    bool is_optional;
+    bool is_required;
     bool is_deprecated;
-    bool is_readme;
 
   public:
     COption(void);
@@ -73,7 +71,6 @@ class COption : public CBaseNode {
 
     // EXISTING_CODE
     COption(const string_q& ln, const string_q& sn, const string_q& type, size_t opts, const string_q& d);
-    bool isPublic(void) const;
     string_q readmeDash(const string_q& str) const;
     string_q getHotKey(void) const;
     string_q getLongKey(void) const;
@@ -135,12 +132,11 @@ inline void COption::initialize(void) {
     longName = "";
     description = "";
     permitted = "";
-    type = "";
-    is_hidden = false;
+    option_type = "";
+    is_visible = false;
     is_positional = false;
-    is_optional = false;
+    is_required = false;
     is_deprecated = false;
-    is_readme = false;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -155,12 +151,11 @@ inline void COption::duplicate(const COption& op) {
     longName = op.longName;
     description = op.description;
     permitted = op.permitted;
-    type = op.type;
-    is_hidden = op.is_hidden;
+    option_type = op.option_type;
+    is_visible = op.is_visible;
     is_positional = op.is_positional;
-    is_optional = op.is_optional;
+    is_required = op.is_required;
     is_deprecated = op.is_deprecated;
-    is_readme = op.is_readme;
 
     // EXISTING_CODE
     // EXISTING_CODE

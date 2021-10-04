@@ -1,5 +1,4 @@
-arrayTest argc: 2 [1:0] 
-arrayTest 0 
+arrayTest  0
 0. 	000.000 array                ==> c-string
 	000.001 array                ==> string_q
 	000.002 array                ==> string

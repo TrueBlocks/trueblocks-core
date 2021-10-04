@@ -21,7 +21,7 @@ static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
     COption("terms", "", "list<string>", OPT_REQUIRED | OPT_POSITIONAL, "a space separated list of one or more search terms"),  // NOLINT
-    COption("expand", "e", "", OPT_SWITCH, "expand search to include all fields (default searches name, address, and symbol only)"),  // NOLINT
+    COption("expand", "e", "", OPT_SWITCH, "expand search to include all fields (search name, address, and symbol otherwise)"),  // NOLINT
     COption("match_case", "m", "", OPT_SWITCH, "do case-sensitive search"),
     COption("all", "l", "", OPT_SWITCH, "include all accounts in the search"),
     COption("custom", "c", "", OPT_SWITCH, "include your custom named accounts"),
@@ -182,7 +182,11 @@ bool COptions::parseArguments(string_q& command) {
     for (auto term : terms)
         searches.push_back(term);
 
+#define anyBase() (match_case || expand || all || custom || prefund || named || addr || to_custom || clean)
+
     if (collections) {
+        if (anyBase())
+            return usage("Do not use the --collections option with any other option.");
         handle_collections(terms);
         return false;
     }
@@ -229,6 +233,8 @@ bool COptions::parseArguments(string_q& command) {
         searchFields += "\t[{SOURCE}]";
 
     if (tags) {
+        if (anyBase())
+            return usage("Do not use the --tags option with any other option.");
         manageFields("CAccountName:all", false);
         manageFields("CAccountName:tags", true);
         format = "[{TAGS}]";

@@ -1,24 +1,24 @@
-grabABI argc: 2 [1:0x00001] 
-grabABI 0x00001 
+chifra abis  0x00001
+Error: 
+  At least one valid Ethereum address is required
 
-  Invalid address '0x00001'. Length (7) is not equal to 40 characters (20 bytes). Quitting...
+Usage:
+  chifra abis [flags] <address> [address...]
 
-  Usage:    grabABI [-k|-s|-f|-v|-h] <address> [address...]  
-  Purpose:  Fetches the ABI for a smart contract.
+Arguments:
+  addrs - a list of one or more smart contracts whose ABIs to display (required)
 
-  Where:
-    addrs                 list of one or more smart contracts whose ABI to grab from EtherScan (required)
-    -k  (--known)         load common 'known' ABIs from cache
-    -s  (--sol <str>)     file name of .sol file from which to create a new known abi (without .sol)
-    -f  (--find <str>)    try to search for a function declaration given a four byte code
+Flags:
+  -k, --known          load common 'known' ABIs from cache
+  -s, --sol string     file name of .sol file from which to create a new known abi (without .sol)
+  -f, --find strings   try to search for a function declaration given a four byte code
+  -o, --source         show the source of the ABI information (hidden)
+  -c, --classes        generate classDefinitions folder and class definitions (hidden)
 
-    #### Hidden options
-    -o  (--source)        show the source of the ABI information
-    -c  (--classes)       generate classDefinitions folder and class definitions
-    #### Hidden options
+Global Flags:
+  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
+  -h, --help         display this help screen
+  -v, --verbose      enable verbose (increase detail with --log_level)
 
-    -x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
-    -v  (--verbose)       set verbose level (optional level defaults to 1)
-    -h  (--help)          display this help screen
-
-  Powered by TrueBlocks
+Notes:
+  - Solidity files found in the local folder with the name '<address>.sol' are converted to an ABI prior to processing (and then removed).

@@ -1,5 +1,4 @@
-grabABI argc: 5 [1:--sol] [2:0x7d655c57f71464b6f83811c55d84009cd9f5221c] [3:--fmt] [4:json] 
-grabABI --sol 0x7d655c57f71464b6f83811c55d84009cd9f5221c --fmt json 
+chifra abis  --sol 0x7d655c57f71464b6f83811c55d84009cd9f5221c --fmt json
 contract ReentrancyGuard {
 contract Context {
 function _msgSender() view returns (address payable) {}

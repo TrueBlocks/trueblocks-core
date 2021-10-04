@@ -1,10 +1,10 @@
 name         ,type      ,str_default ,object ,array ,nowrite ,omitempty ,minimal ,extra ,noaddfld ,doc ,disp ,example ,description
 type         ,string    ,            ,       ,      ,        ,          ,        ,      ,         ,1   ,1    ,        ,the type of this parameter
 name         ,string    ,            ,       ,      ,        ,          ,        ,      ,         ,2   ,2    ,        ,the name of this parameter
-str_default  ,string    ,            ,       ,      ,        ,          ,        ,      ,         ,3   ,3    ,        ,the defaul value of this parameter&#44; if any
+str_default  ,string    ,            ,       ,      ,        ,          ,        ,      ,         ,3   ,3    ,        ,the default value of this parameter&#44; if any
 value        ,string    ,            ,       ,      ,        ,          ,        ,      ,         ,    ,4    ,        ,
 indexed      ,bool      ,            ,       ,      ,        ,true      ,        ,      ,         ,4   ,6    ,        ,`true` if this parameter is indexed
-internalType ,string    ,            ,       ,      ,        ,          ,        ,      ,         ,5   ,5    ,        ,for composite types&#44; the interal type of the parameter
+internalType ,string    ,            ,       ,      ,        ,          ,        ,      ,         ,5   ,5    ,        ,for composite types&#44; the internal type of the parameter
 components   ,parameter ,            ,true   ,true  ,        ,          ,        ,      ,         ,6   ,     ,        ,for composite types&#44; the parameters making up the composite
 unused       ,bool      ,            ,       ,      ,        ,true      ,        ,      ,         ,    ,     ,        ,
 is_flags     ,uint64    ,IS_ENABLED  ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,

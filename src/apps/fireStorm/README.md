@@ -2,38 +2,39 @@
 
 `chifra explore` opens Etherscan (and other explorers -- including our own) to the block, transaction hash, or address you specify. It's a handy (configurable) way to open an explorer from the command line, nothing more.
 
-### Usage
+```[plaintext]
+Purpose:
+  Open an explorer for a given address, block, or transaction.
 
-`Usage:`    chifra explore [-l|-g|-h] &lt;term&gt; [term...]  
-`Purpose:`  Open an explorer for one or more addresses, blocks, or transactions.
+Usage:
+  chifra explore [flags] <term> [term...]
 
-`Where:`
+Arguments:
+  terms - one or more addresses, names, block, or transaction identifiers
 
-|          | Option               | Description                                                         |
-| -------- | -------------------- | ------------------------------------------------------------------- |
-|          | terms                | one or more addresses, names, block, or transaction<br/>identifiers |
-| &#8208;l | &#8208;&#8208;local  | open the local TrueBlocks explorer                                  |
-| &#8208;g | &#8208;&#8208;google | search google excluding popular blockchain explorers                |
-| &#8208;h | &#8208;&#8208;help   | display this help screen                                            |
+Flags:
+  -l, --local    open the local TrueBlocks explorer
+  -g, --google   search google excluding popular blockchain explorers
 
-#### Other Options
+Global Flags:
+  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
+  -h, --help         display this help screen
+  -v, --verbose      enable verbose (increase detail with --log_level)
+```
 
-All **TrueBlocks** command-line tools support the following commands (although in some case, they have no meaning):
+Other Options
 
-| Command     | Description                                                   |
-| ----------- | ------------------------------------------------------------- |
-| --version   | display the current version of the tool                       |
-| --nocolor   | turn off colored display                                      |
-| --wei       | specify value in wei (the default)                            |
-| --ether     | specify value in ether                                        |
-| --dollars   | specify value in US dollars                                   |
-| --raw       | report JSON data from the node with minimal processing        |
-| --very_raw  | report JSON data from node with zero processing               |
-| --to_file   | write the results to a temporary file and return the filename |
-| --output:fn | write the results to file 'fn' and return the filename        |
-| --file:fn   | specify multiple sets of command line options in a file.      |
+All tools accept the following additional flags, although in some cases, they have no meaning.
 
-<small>*For the `--file:fn` option, place a series of valid command lines in a file and use the above options. In some cases, this option may significantly improve performance. A semi-colon at the start of a line makes that line a comment.*</small>
+```[plaintext]
+  -v, --version         display the current version of the tool
+      --wei             export values in wei (the default)
+      --ether           export values in ether
+      --dollars         export values in US dollars
+      --raw             pass raw RPC data directly from the node with no processing
+      --to_file         write the results to a temporary file and return the filename
+      --output string   write the results to file 'fn' and return the filename
+      --file string     specify multiple sets of command line options in a file
+```
 
-**Source code**: [`apps/fireStorm`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/fireStorm)
-
+*For the `--file string` option, you may place a series of valid command lines in a file using any valid flags. In some cases, this may significantly improve performance. A semi-colon at the start of any line makes it a comment.*

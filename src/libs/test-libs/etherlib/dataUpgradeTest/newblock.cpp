@@ -282,7 +282,7 @@ bool CNewBlock::Serialize(CArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CNewBlock::SerializeC(CArchive& archive) const {
-    // Writing always write the latest version of the data
+    // Writing always writes the latest version of the data
     ((CNewBlock*)this)->m_schema = getVersionNum();  // NOLINT
     CBaseNode::SerializeC(archive);
 

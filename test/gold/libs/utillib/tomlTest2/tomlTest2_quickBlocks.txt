@@ -1,5 +1,4 @@
-tomlTest2 argc: 2 [1:trueBlocks.toml] 
-tomlTest2 trueBlocks.toml 
+tomlTest2  trueBlocks.toml
 tests/trueBlocks.toml
 [version]
 current = "0.5.5-alpha"

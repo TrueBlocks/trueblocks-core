@@ -22,13 +22,12 @@ extern bool parseRequestTs(COptionsBase* opt, CNameValueArray& blocks, timestamp
 static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
-    COption("blocks", "", "list<string>", OPT_POSITIONAL, "one or more dates, block numbers, hashes, or special named blocks (see notes)"),  // NOLINT
+    COption("blocks", "", "list<string>", OPT_REQUIRED | OPT_POSITIONAL, "one or more dates, block numbers, hashes, or special named blocks (see notes)"),  // NOLINT
     COption("list", "l", "", OPT_SWITCH, "export a list of the 'special' blocks"),
     COption("timestamps", "t", "", OPT_SWITCH, "ignore other options and generate timestamps only"),
     COption("check", "c", "", OPT_HIDDEN | OPT_SWITCH, "available only with --timestamps, checks the validity of the timestamp data"),  // NOLINT
     COption("fix", "f", "", OPT_HIDDEN | OPT_SWITCH, "available only with --timestamps, fixes incorrect timestamps if any"),  // NOLINT
     COption("count", "u", "", OPT_HIDDEN | OPT_SWITCH, "available only with --timestamps, returns the number of timestamps in the cache"),  // NOLINT
-    COption("skip", "s", "<uint64>", OPT_HIDDEN | OPT_FLAG, "only applicable if --timestamps is on, the step between block numbers in the export"),  // NOLINT
     COption("", "", "", OPT_DESCRIPTION, "Find block(s) based on date, blockNum, timestamp, or 'special'."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -70,12 +69,6 @@ bool COptions::parseArguments(string_q& commandIn) {
         } else if (arg == "-u" || arg == "--count") {
             count = true;
 
-        } else if (startsWith(arg, "-s:") || startsWith(arg, "--skip:")) {
-            if (!confirmUint("skip", skip, arg))
-                return false;
-        } else if (arg == "-s" || arg == "--skip") {
-            return flag_required("skip");
-
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
@@ -97,14 +90,10 @@ bool COptions::parseArguments(string_q& commandIn) {
     LOG_TEST_BOOL("check", check);
     LOG_TEST_BOOL("fix", fix);
     LOG_TEST_BOOL("count", count);
-    LOG_TEST("skip", skip, (skip == NOPOS));
     // END_DEBUG_DISPLAY
 
     if (Mocked("when"))
         return false;
-
-    if (skip != NOPOS && !skip)
-        return usage(usageErrs[ERR_INVALIDSKIPVAL]);
 
     for (auto item : blocks) {
         if (isDate(item)) {
@@ -165,11 +154,9 @@ void COptions::Init(void) {
     check = false;
     fix = false;
     count = false;
-    skip = NOPOS;
     // END_CODE_INIT
 
     stop = 0;
-    skip = NOPOS;
     isText = false;
     cnt = 0;
     requests.clear();
@@ -188,7 +175,6 @@ COptions::COptions(void) {
     // END_CODE_NOTES
 
     // BEG_ERROR_STRINGS
-    usageErrs[ERR_INVALIDSKIPVAL] = "--skip value must be larger than zero.";
     usageErrs[ERR_OPENINGTIMESTAMPS] = "Could not open timestamp file.";
     usageErrs[ERR_INVALIDDATE1] = "Please supply either a JSON formatted date or a blockNumber.";
     usageErrs[ERR_INVALIDDATE2] = "Invalid date '[{ARG}]'.";

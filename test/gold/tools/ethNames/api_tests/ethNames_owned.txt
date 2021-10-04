@@ -1,5 +1,0 @@
-{
-  "errors": [
-    "chifra names - Invalid option: --owned"
-  ]
-}

@@ -18,12 +18,11 @@
 #include "pinlib.h"
 
 // BEG_ERROR_DEFINES
-#define ERR_INVALIDSKIPVAL 1
-#define ERR_OPENINGTIMESTAMPS 2
-#define ERR_INVALIDDATE1 3
-#define ERR_INVALIDDATE2 4
-#define ERR_INVALIDDATE3 5
-#define ERR_INVALIDDATE4 6
+#define ERR_OPENINGTIMESTAMPS 1
+#define ERR_INVALIDDATE1 2
+#define ERR_INVALIDDATE2 3
+#define ERR_INVALIDDATE3 4
+#define ERR_INVALIDDATE4 5
 // END_ERROR_DEFINES
 
 //-----------------------------------------------------------------------------
@@ -44,7 +43,6 @@ class COptions : public CBlockOptions {
     bool check;
     bool fix;
     bool count;
-    uint64_t skip;
     // END_CODE_DECLARE
 
     blknum_t latest;

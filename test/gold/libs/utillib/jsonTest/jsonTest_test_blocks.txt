@@ -1,5 +1,4 @@
-jsonTest argc: 2 [1:blocks] 
-jsonTest blocks 
+jsonTest  blocks
 tests/blocks.json
 {
   "gasLimit": 6712392,

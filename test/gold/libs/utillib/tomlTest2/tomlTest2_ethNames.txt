@@ -1,5 +1,4 @@
-tomlTest2 argc: 2 [1:ethNames.toml] 
-tomlTest2 ethNames.toml 
+tomlTest2  ethNames.toml
 tests/ethNames.toml
 [version]
 current = "vers-alpha"

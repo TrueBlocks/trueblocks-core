@@ -198,7 +198,7 @@ inline string_q relativize(const string_q& path) {
     string_q ret = path;
     replace(ret, getIndexPath(""), "$INDEX/");
     replace(ret, getCachePath(""), "$CACHE/");
-    replace(ret, configPath(""), "$CONFIG/");
+    replace(ret, getConfigPath(""), "$CONFIG/");
     replace(ret, getHomeFolder(), "$HOME/");
     return ret;
 }
