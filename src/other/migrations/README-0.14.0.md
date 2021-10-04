@@ -10,6 +10,8 @@ Version 0.14.0 was a major change to our code base, but requires only a minor mi
 
 There was one breaking change to command line options as detailed below. Most likely, this change won't effect you. In fact, unless you've written shell scripts that use the `--verbose` option, you don't need to do anything.
 
+The change involved a complete re-write of the `chifra` command line code in Go. Previously, all of this code was in C++ which made it very hard to maintain and especially hard to extend. By moving to Go, we can take advantage of one thing we've always wanted to take advantage of: concurrent code. Block data, it turns out, is amazing amenable to being processed in parallel. Here's a tracking issue: https://github.com/TrueBlocks/trueblocks-core/issues/1790
+
 ### Breaking Change to --verbose flag
 
 The `--verbose` flag has been part of `chifra` from the beginning. You may still use it, but as of version 0.14.0, the `--verbose` command line option has been made a **swith** as opposed to a **flag**. This means you may no longer attach a value to the `--verbose` flag.
