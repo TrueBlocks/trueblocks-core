@@ -8,7 +8,7 @@ Certain parts of the system (`chifra list` and `chifra export` for example) if y
 
 If you run `chifra init` and allow it to complete, the next time you run `chifra scrape`, it will start where `init` finished. This means that only the blooms will be stored on your hard drive. Subsequent scraping will produce both chunks and blooms, although you can, if you wish delete chunks that are not being used. You may periodically run `chifra init` if you prefer not to scrape.
 
-```
+```[plaintext]
 Purpose:
   Initialize the index of appearances by downloading Bloom filters.
 
@@ -24,8 +24,8 @@ Global Flags:
   -v, --verbose      enable verbose (increase detail with --log_level)
 
 Notes:
-  - chifra init is an alais for the chifra pins --init command.
+  - chifra init is an alias for the chifra pins --init command.
 ```
 
-**Source code**: [`apps/pinMan --init`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/pinMan --init)
+**Source code**: [`apps/pinMan`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/pinMan)
 

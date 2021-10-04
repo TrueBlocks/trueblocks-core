@@ -7,7 +7,7 @@
 
 Another way to get help to run `chifra --help` or `chifra <cmd> --help` on your command line. See below for an example of converting command line options to a call to the API. There's a one-to-one correspondence between the command line tools and options and the API routes and their options.
 
-```
+```[plaintext]
 Purpose:
   Serve the TrueBlocks API using the flame server.
 

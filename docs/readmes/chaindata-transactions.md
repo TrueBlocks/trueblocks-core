@@ -6,7 +6,7 @@ The `--articulate` option fetches the ABI from each encountered smart contract (
 
 The `--trace` option attachs an array transaction traces to the output (if the node you're querying has --tracing enabled), while the `--uniq` option displays a list of uniq address appearances instead of the underlying data (including uniq addresses in traces if enabled).
 
-```
+```[plaintext]
 Purpose:
   Retrieve one or more transactions from the chain or local cache.
 

@@ -2,7 +2,7 @@
 
 `chifra explore` opens Etherscan (and other explorers -- including our own) to the block, transaction hash, or address you specify. It's a handy (configurable) way to open an explorer from the command line, nothing more.
 
-```
+```[plaintext]
 Purpose:
   Open an explorer for a given address, block, or transaction.
 

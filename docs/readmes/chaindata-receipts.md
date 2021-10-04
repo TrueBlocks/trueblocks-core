@@ -6,7 +6,7 @@ The `--articulate` option fetches the ABI from each encountered smart contract (
 
 Generally speaking, this tool is less useful than others as you may report the same data using `chifra transactions` and more focused data using `chifra logs`. It is included here for completeness, as the `receipt` is a fundamental data structure in Ethereum.
 
-```
+```[plaintext]
 Purpose:
   Retrieve receipts for the given transaction(s).
 

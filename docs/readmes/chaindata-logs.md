@@ -4,7 +4,7 @@
 
 The `--articulate` option fetches the ABI from each encountered smart contract to better describe the reported data. The `--topic` and `--source` options allow you to filter your results.
 
-```
+```[plaintext]
 Purpose:
   Retrieve logs for the given transaction(s).
 

@@ -13,7 +13,7 @@ Arguments:
   blocks - an optional list of one or more blocks at which to report balances, defaults to 'latest'
 
 Flags:
-  -p, --parts <val>   which parts of the token information to retreive, one or more of [name|symbol|decimals|totalSupply|version|none|all*]
+  -p, --parts <val>   which parts of the token information to retrieve, one or more of [name|symbol|decimals|totalSupply|version|none|all*]
   -b, --by_acct       consider each address an ERC20 token except the last, whose balance is reported for each token
   -n, --no_zero       suppress the display of zero balance accounts
 

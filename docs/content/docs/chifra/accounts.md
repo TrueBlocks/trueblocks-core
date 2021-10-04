@@ -2,7 +2,7 @@
 title: "Accounts"
 description: ""
 lead: ""
-date: 2021-10-03T17:51:18
+date: 2021-10-03T19:00:08
 lastmod:
   - :git
   - lastmod
@@ -24,11 +24,11 @@ This includes re-directing output to remote or local databases.
 
 `chifra list` takes one or more addresses, queries the index of appearances, and builds TrueBlocks monitors. A TrueBlocks monitor is a file that contains blockNumber.transactionId pairs (transaction identifiers) representing the history of the address.
 
-Becuase TrueBlocks only extracts data from the Ethereum node when it's requested, the first time you list an address it takes about a minute. Subsequent queries are much faster because TrueBlocks caches the results.
+Because TrueBlocks only extracts data from the Ethereum node when it's requested, the first time you list an address it takes about a minute. Subsequent queries are much faster because TrueBlocks caches the results.
 
 Note that `chifra list` only queries the index, it does not extract the full transactional details. You may use `chifra export` for that.
 
-```
+```[plaintext]
 Purpose:
   List every appearance of an address anywhere on the chain.
 
@@ -47,7 +47,7 @@ Global Flags:
   -v, --verbose      enable verbose (increase detail with --log_level)
 ```
 
-**Source code**: [`apps/acctExport --appearances`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/acctExport --appearances)
+**Source code**: [`apps/acctExport`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/acctExport)
 
 ## chifra export
 
@@ -59,7 +59,7 @@ You may also choose which portions of the Ethereum data structures (`--transacti
 
 By default, the results of the extraction are delivered to your console, however, you may export the results to any database (with a little bit of work). The format of the data, its content and its destination are up to you.
 
-```
+```[plaintext]
 Purpose:
   Export full detail of transactions for one or more addresses.
 
@@ -103,13 +103,13 @@ Notes:
 
 ## chifra monitors
 
-A TrueBlock monitor is simply a file on your computer that represents the transactional history of a given Ethereum address. Monitors do not exist until you indicate your interest in a certain address. (See `chifra list`.)
+A TrueBlocks monitor is simply a file on your computer that represents the transactional history of a given Ethereum address. Monitors do not exist until you indicate your interest in a certain address. (See `chifra list`.)
 
 You may use the `--delete` command to delete (or undelete if already deleted) an address. The monitor is not removed from your computer if you delete it. It is just marked as deleted making it invisible to the TrueBlocks explorer.
 
-Use the `--remove` command to permanently remove a monitor from your computer. This is an irreversable operation.
+Use the `--remove` command to permanently remove a monitor from your computer. This is an irreversible operation.
 
-```
+```[plaintext]
 Purpose:
   Add, remove, clean, and list address monitors.
 
@@ -133,19 +133,19 @@ Notes:
   - An address must start with '0x' and be forty-two characters long.
 ```
 
-**Source code**: [`apps/acctExport --appearances`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/acctExport --appearances)
+**Source code**: [`apps/acctExport`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/acctExport)
 
 ## chifra names
 
 `chifra names` is a surprisingly useful tool. It allows one to associate textual names with Ethereum addresses. One may ask why this is necessary given that ENS exists. The answer is a single word: "privacy". ENS names are public. In many cases, users desire to keep personal addresses private. Try to do this on a website.
 
-Like `chifra abis`, this tool is useful from the command line but is primarily used in support of other tools, especially `chifra export` where naming addresses becomes the single best way to turn unintellagable blockchain data into understandable information.
+Like `chifra abis`, this tool is useful from the command line but is primarily used in support of other tools, especially `chifra export` where naming addresses becomes the single best way to turn unintelligible blockchain data into understandable information.
 
 The various options allow you to search and filter the results. The `collections` and `tags` options are used primarily by the TrueBlocks explorer.
 
 You may use the TrueBlocks explorer to manage (add, edit, delete) address-name associations.
 
-```
+```[plaintext]
 Purpose:
   Query addresses or names of well known accounts.
 
@@ -190,7 +190,7 @@ The `--find` option is experimental. It scans a cross of approx. 100,000 functio
 
 The `--sol` option will convert a single Solidity file found in the current folder into an ABI.
 
-```
+```[plaintext]
 Purpose:
   Fetches the ABI for a smart contract.
 

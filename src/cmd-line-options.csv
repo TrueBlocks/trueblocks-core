@@ -129,7 +129,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 
 13400,tools,ChainData,traces,getTraces,transactions,,,true,false,true,true,local,positional,list<tx_id>,a space-separated list of one or more transaction identifiers
 13420,tools,ChainData,traces,getTraces,articulate,a,,false,false,true,true,header,switch,<boolean>,articulate the retrieved data if ABIs can be found
-13490,tools,ChainData,traces,getTraces,filter,f,,false,false,true,true,header,flag,<string>,call the node's trace_filter routine with bang-seperated filter
+13490,tools,ChainData,traces,getTraces,filter,f,,false,false,true,true,header,flag,<string>,call the node's trace_filter routine with bang-separated filter
 13420,tools,ChainData,traces,getTraces,statediff,d,,false,false,true,true,header,switch,<boolean>,export state diff traces (not implemented)
 13440,tools,ChainData,traces,getTraces,count,c,,false,false,true,true,header,switch,<boolean>,show the number of traces for the transaction only (fast)
 13460,tools,ChainData,traces,getTraces,skip_ddos,s,true,false,true,false,false,header,toggle,<boolean>,skip over the 2016 ddos during export ([{DEF}] by default)
@@ -138,7 +138,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 13622,tools,ChainData,traces,getTraces,n1,,,false,false,false,false,--,note,,The `transactions` list may be one or more space-separated identifiers which are either a transaction hash&#44; a blockNumber.transactionID pair&#44; or a blockHash.transactionID pair&#44; or any combination.
 13624,tools,ChainData,traces,getTraces,n2,,,false,false,false,false,--,note,,This tool checks for valid input syntax&#44; but does not check that the transaction requested actually exists.
 13626,tools,ChainData,traces,getTraces,n3,,,false,false,false,false,--,note,,If the queried node does not store historical state&#44; the results for most older transactions are undefined.
-13627,tools,ChainData,traces,getTraces,n4,,,false,false,false,false,--,note,,A bang seperated filter has the following fields (at least one of which is required) and is separated with a bang (!): fromBlk&#44; toBlk&#44; fromAddr&#44; toAddr&#44; after&#44; count.
+13627,tools,ChainData,traces,getTraces,n4,,,false,false,false,false,--,note,,A bang separated filter has the following fields (at least one of which is required) and is separated with a bang (!): fromBlk&#44; toBlk&#44; fromAddr&#44; toAddr&#44; after&#44; count.
 13628,tools,ChainData,traces,getTraces,n5,,,false,false,false,false,--,note,,A state diff trace describes&#44; for each modified address&#44; what changed during that trace.
 13629,tools,ChainData,traces,getTraces,ERR_PROVIDEONETXID,,,false,false,false,false,--,error,,Please specify at least one transaction identifier.
 
@@ -173,7 +173,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 
 13260,tools,ChainState,tokens,getTokens,addrs2,,,true,false,true,true,header,positional,list<addr>,two or more addresses (0x...)&#44; the first is an ERC20 token&#44; balances for the rest are reported
 13280,tools,ChainState,tokens,getTokens,blocks,,,false,false,true,true,header,positional,list<blknum>,an optional list of one or more blocks at which to report balances&#44; defaults to 'latest'
-13300,tools,ChainState,tokens,getTokens,parts,p,,false,false,true,true,local,flag,list<enum[name|symbol|decimals|totalSupply|version|none|all*]>,which parts of the token information to retreive
+13300,tools,ChainState,tokens,getTokens,parts,p,,false,false,true,true,local,flag,list<enum[name|symbol|decimals|totalSupply|version|none|all*]>,which parts of the token information to retrieve
 13320,tools,ChainState,tokens,getTokens,by_acct,b,,false,false,true,true,header,switch,<boolean>,consider each address an ERC20 token except the last&#44; whose balance is reported for each token
 13340,tools,ChainState,tokens,getTokens,no_zero,n,,false,false,true,true,header,switch,<boolean>,suppress the display of zero balance accounts
 13360,tools,ChainState,tokens,getTokens,,,,false,false,true,true,--,description,,Retrieve token balance(s) for one or more addresses at given block(s).
@@ -222,7 +222,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 
 11958,apps,Admin,init,pinMan,all,a,,false,false,true,true,header,switch,<boolean>,download full index chunks as well as Bloom filter
 11966,apps,Admin,init,pinMan,,,,false,false,true,true,--,description,,Initialize the TrueBlocks system by downloading Bloom fitlers and optionally chunks of index of appearances.
-11966,apps,Admin,init,pinMan,n1,,,false,false,false,false,--,note,,`chifra init` is an alais for the `chifra pins --init` command.
+11966,apps,Admin,init,pinMan,n1,,,false,false,false,false,--,note,,`chifra init` is an alias for the `chifra pins --init` command.
 
 12020,tools,Other,quotes,getQuotes,freshen,f,,false,false,true,true,local,switch,<boolean>,Freshen price database
 12040,tools,Other,quotes,getQuotes,period,p,,false,false,true,true,local,flag,enum[5|15|30|60|120*|240|1440|10080|hourly|daily|weekly],increment of display

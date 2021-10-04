@@ -1,25 +1,43 @@
-## chifra monitors
+## chifra export
 
-A TrueBlock monitor is simply a file on your computer that represents the transactional history of a given Ethereum address. Monitors do not exist until you indicate your interest in a certain address. (See `chifra list`.)
+The `chifra export` tools provides a major part of the functionality of the TrueBlocks system. Using the index of appearances created with `chifra scrape` and the list of transaction identifiers created with `chifra list`, `chifra export` completes the actual extraction of an address's transactional history from the node.
 
-You may use the `--delete` command to delete (or undelete if already deleted) an address. The monitor is not removed from your computer if you delete it. It is just marked as deleted making it invisible to the TrueBlocks explorer.
+You may use `topics`, `fourbyte` values at the start of a transaction's input data, and/or a log's `source address` or `emitter` to filter the results.
 
-Use the `--remove` command to permanently remove a monitor from your computer. This is an irreversable operation.
+You may also choose which portions of the Ethereum data structures (`--transactions`, `--logs`, `--traces`, etc.) as you wish.
 
-```
+By default, the results of the extraction are delivered to your console, however, you may export the results to any database (with a little bit of work). The format of the data, its content and its destination are up to you.
+
+```[plaintext]
 Purpose:
-  Add, remove, clean, and list address monitors.
+  Export full detail of transactions for one or more addresses.
 
 Usage:
-  chifra monitors [flags] <address> [address...]
+  chifra export [flags] <address> [address...] [topics...] [fourbytes...]
 
 Arguments:
-  addrs - one or more addresses (0x...) to process (required)
+  addrs - one or more addresses (0x...) to export (required)
+  topics - filter by one or more log topics (only for --logs option)
+  fourbytes - filter by one or more fourbytes (only for transactions and trace options)
 
 Flags:
-  -p, --appearances   export a list of appearances
-  -U, --count         present only the number of records
-      --clean         clean (i.e. remove duplicate appearances) from all existing monitors
+  -p, --appearances         export a list of appearances
+  -r, --receipts            export receipts instead of transaction list
+  -A, --statements          for use with --accounting option only, export only reconciliation statements
+  -l, --logs                export logs instead of transaction list
+  -t, --traces              export traces instead of transaction list
+  -C, --accounting          export accounting records instead of transaction list
+  -a, --articulate          articulate transactions, traces, logs, and outputs
+  -i, --cache_txs           write transactions to the cache (see notes)
+  -R, --cache_traces        write traces to the cache (see notes)
+  -y, --factory             scan for contract creations from the given address(es) and report address of those contracts
+      --emitter             for log export only, export only if one of the given export addresses emitted the event
+      --source strings      for log export only, export only one of these addresses emitted the event
+      --relevant            for log and accounting export only, if true export only logs relevant to one of the given export addresses
+  -U, --count               only available for --appearances mode, if present, return only the number of records
+  -c, --first_record uint   the first record to process
+  -e, --max_records uint    the maximum number of records to process before reporting (default 250)
+      --clean               clean (i.e. remove duplicate appearances) from all existing monitors
 
 Global Flags:
   -x, --fmt string   export format, one of [none|json*|txt|csv|api]
@@ -29,4 +47,20 @@ Global Flags:
 Notes:
   - An address must start with '0x' and be forty-two characters long.
 ```
-[{FOOTER}]
+
+Other Options
+
+All tools accept the following additional flags, although in some cases, they have no meaning.
+
+```[plaintext]
+  -v, --version         display the current version of the tool
+      --wei             export values in wei (the default)
+      --ether           export values in ether
+      --dollars         export values in US dollars
+      --raw             pass raw RPC data directly from the node with no processing
+      --to_file         write the results to a temporary file and return the filename
+      --output string   write the results to file 'fn' and return the filename
+      --file string     specify multiple sets of command line options in a file
+```
+
+*For the `--file string` option, you may place a series of valid command lines in a file using any valid flags. In some cases, this may significantly improve performance. A semi-colon at the start of any line makes it a comment.*

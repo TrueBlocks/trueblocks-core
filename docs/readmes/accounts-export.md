@@ -8,7 +8,7 @@ You may also choose which portions of the Ethereum data structures (`--transacti
 
 By default, the results of the extraction are delivered to your console, however, you may export the results to any database (with a little bit of work). The format of the data, its content and its destination are up to you.
 
-```
+```[plaintext]
 Purpose:
   Export full detail of transactions for one or more addresses.
 

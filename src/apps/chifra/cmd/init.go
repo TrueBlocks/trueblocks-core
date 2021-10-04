@@ -40,7 +40,7 @@ var longInit = `Purpose:
 
 var notesInit = `
 Notes:
-  - chifra init is an alais for the chifra pins --init command.`
+  - chifra init is an alias for the chifra pins --init command.`
 
 type initOptionsType struct {
 	all bool

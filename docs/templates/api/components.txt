@@ -76,7 +76,7 @@ components:
           type: number
           format: timestamp
           example: 1438335038
-          description: "the unix timestamp of the object"
+          description: "the Unix timestamp of the object"
         assetAddr:
           type: string
           format: address
@@ -88,7 +88,7 @@ components:
         decimals:
           type: number
           format: uint64
-          description: "Equivilent to the extracted value of getSymbol from ERC20 or, if ETH or WEI then 18"
+          description: "Equivalent to the extracted value of getSymbol from ERC20 or, if ETH or WEI then 18"
         prevBlk:
           type: number
           format: blknum
@@ -101,7 +101,7 @@ components:
         begBal:
           type: string
           format: int256
-          description: "the begining balance of the asset at the blockNumber"
+          description: "the beginning balance of the asset at the blockNumber"
         begBalDiff:
           type: string
           format: int256
@@ -137,7 +137,7 @@ components:
         minerNephewRewardIn:
           type: string
           format: int256
-          description: "the netphew reward if the miner is the accountedFor address"
+          description: "the nephew reward if the miner is the accountedFor address"
         minerTxFeeIn:
           type: string
           format: int256
@@ -210,11 +210,11 @@ components:
         name:
           type: string
           example: "zkSync"
-          description: "the name associated with this address (retreived from on-chain data if available)"
+          description: "the name associated with this address (retrieved from on-chain data if available)"
         symbol:
           type: string
           example: "GTC"
-          description: "the symbol for this address (retreived from on-chain data if available)"
+          description: "the symbol for this address (retrieved from on-chain data if available)"
         source:
           type: string
           example: "On-chain"
@@ -223,7 +223,7 @@ components:
           type: number
           format: uint64
           example: 18
-          description: "number of decimals retreived from an ERC20 smart contract, defaults to 18"
+          description: "number of decimals retrieved from an ERC20 smart contract, defaults to 18"
         description:
           type: string
           example: "any test"
@@ -297,7 +297,7 @@ components:
           type: number
           format: timestamp
           example: 1438335038
-          description: "the unix timestamp of the object"
+          description: "the Unix timestamp of the object"
         transactions:
           type: array
           items:
@@ -350,7 +350,7 @@ components:
           type: number
           format: timestamp
           example: 1438335038
-          description: "the unix timestamp of the object"
+          description: "the Unix timestamp of the object"
         from:
           type: string
           format: address
@@ -578,7 +578,7 @@ components:
           type: number
           format: timestamp
           example: 1438335038
-          description: "the unix timestamp of the block"
+          description: "the Unix timestamp of the block"
         date:
           type: string
           format: date
@@ -779,7 +779,7 @@ components:
           description: "IPFS cid of file describing the file format of an index chunk"
         bloomFormat:
           type: string
-          description: "IPFS cid of file describing the assoicated bloom filter"
+          description: "IPFS cid of file describing the associated bloom filter"
         firstPin:
           type: number
           format: blknum
@@ -831,13 +831,13 @@ components:
           description: "the name of this parameter"
         str_default:
           type: string
-          description: "the defaul value of this parameter, if any"
+          description: "the default value of this parameter, if any"
         indexed:
           type: boolean
           description: "`true` if this parameter is indexed"
         internalType:
           type: string
-          description: "for composite types, the interal type of the parameter"
+          description: "for composite types, the internal type of the parameter"
         components:
           type: array
           items:

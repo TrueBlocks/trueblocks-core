@@ -47,7 +47,7 @@ Notes:
   - The transactions list may be one or more space-separated identifiers which are either a transaction hash, a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.
   - This tool checks for valid input syntax, but does not check that the transaction requested actually exists.
   - If the queried node does not store historical state, the results for most older transactions are undefined.
-  - A bang seperated filter has the following fields (at least one of which is required) and is separated with a bang (!): fromBlk, toBlk, fromAddr, toAddr, after, count.
+  - A bang separated filter has the following fields (at least one of which is required) and is separated with a bang (!): fromBlk, toBlk, fromAddr, toAddr, after, count.
   - A state diff trace describes, for each modified address, what changed during that trace.`
 
 type tracesOptionsType struct {
@@ -67,7 +67,7 @@ func init() {
 	tracesCmd.Flags().SortFlags = false
 	tracesCmd.PersistentFlags().SortFlags = false
 	tracesCmd.Flags().BoolVarP(&TracesOpts.articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
-	tracesCmd.Flags().StringVarP(&TracesOpts.filter, "filter", "f", "", "call the node's trace_filter routine with bang-seperated filter")
+	tracesCmd.Flags().StringVarP(&TracesOpts.filter, "filter", "f", "", "call the node's trace_filter routine with bang-separated filter")
 	tracesCmd.Flags().BoolVarP(&TracesOpts.statediff, "statediff", "d", false, "export state diff traces (not implemented)")
 	tracesCmd.Flags().BoolVarP(&TracesOpts.count, "count", "c", false, "show the number of traces for the transaction only (fast)")
 	tracesCmd.Flags().BoolVarP(&TracesOpts.skip_ddos, "skip_ddos", "s", false, "skip over the 2016 ddos during export ('on' by default) (hidden)")

@@ -2,7 +2,7 @@
 title: "Other"
 description: ""
 lead: ""
-date: 2021-10-03T17:51:18
+date: 2021-10-03T18:47:03
 lastmod:
   - :git
   - lastmod
@@ -19,7 +19,7 @@ toc: true
 These commands call some useful miscellaneous tools:
 * `chifra quotes`, a rudimentary pricing tool,
 * `chifra explore` a quick way to open a blockchain explorer,
-* `ethslurp` an older tool that lets you call data from EtherScan. (This has issues of ceentralization and data quality, see explanation in its section).
+* `ethslurp` an older tool that lets you call data from EtherScan. (This has issues of centralization and data quality, see explanation in its section).
 
 {{< alert icon="👉" title="note about keys"
 text="Note: some of these tools, like `ethslurp`, require an EtherScan key." >}}
@@ -29,7 +29,7 @@ text="Note: some of these tools, like `ethslurp`, require an EtherScan key." >}}
 
 The `chifra quotes` tool provides USD ($) price data to other tools and to the command line. Currently, `chifra quotes` retrieves its price data from the Poloniex API. In future versions, we will add other sources and provide a mechanism for fair averaging. Ultimately, as more of this type of price data becomes available on chain, we will use those source, but this is not yet implemented.
 
-```
+```[plaintext]
 Purpose:
   Freshen or display Ethereum price data.
 
@@ -59,7 +59,7 @@ Notes:
 
 `chifra explore` opens Etherscan (and other explorers -- including our own) to the block, transaction hash, or address you specify. It's a handy (configurable) way to open an explorer from the command line, nothing more.
 
-```
+```[plaintext]
 Purpose:
   Open an explorer for a given address, block, or transaction.
 

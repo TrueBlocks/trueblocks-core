@@ -4,7 +4,7 @@ Use this tool to retrieve the balance of an address (or list of addresses) at th
 
 You may also query to see if an address is a smart contract as well as retrieve a contract's byte code.
 
-```
+```[plaintext]
 Purpose:
   Retrieve account balance(s) for one or more addresses at given block(s).
 
@@ -34,4 +34,20 @@ Notes:
   - balance is the default mode. To select a single mode use none first, followed by that mode.
   - You may specify multiple modes on a single line.
 ```
-[{FOOTER}]
+
+Other Options
+
+All tools accept the following additional flags, although in some cases, they have no meaning.
+
+```[plaintext]
+  -v, --version         display the current version of the tool
+      --wei             export values in wei (the default)
+      --ether           export values in ether
+      --dollars         export values in US dollars
+      --raw             pass raw RPC data directly from the node with no processing
+      --to_file         write the results to a temporary file and return the filename
+      --output string   write the results to file 'fn' and return the filename
+      --file string     specify multiple sets of command line options in a file
+```
+
+*For the `--file string` option, you may place a series of valid command lines in a file using any valid flags. In some cases, this may significantly improve performance. A semi-colon at the start of any line makes it a comment.*

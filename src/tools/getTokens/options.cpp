@@ -22,7 +22,7 @@ static const COption params[] = {
     // clang-format off
     COption("addrs2", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "two or more addresses (0x...), the first is an ERC20 token, balances for the rest are reported"),  // NOLINT
     COption("blocks", "", "list<blknum>", OPT_POSITIONAL, "an optional list of one or more blocks at which to report balances, defaults to 'latest'"),  // NOLINT
-    COption("parts", "p", "list<enum[name|symbol|decimals|totalSupply|version|none|all*]>", OPT_FLAG, "which parts of the token information to retreive"),  // NOLINT
+    COption("parts", "p", "list<enum[name|symbol|decimals|totalSupply|version|none|all*]>", OPT_FLAG, "which parts of the token information to retrieve"),  // NOLINT
     COption("by_acct", "b", "", OPT_SWITCH, "consider each address an ERC20 token except the last, whose balance is reported for each token"),  // NOLINT
     COption("no_zero", "n", "", OPT_SWITCH, "suppress the display of zero balance accounts"),
     COption("", "", "", OPT_DESCRIPTION, "Retrieve token balance(s) for one or more addresses at given block(s)."),

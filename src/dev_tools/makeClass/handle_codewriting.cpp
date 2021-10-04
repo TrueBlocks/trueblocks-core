@@ -107,7 +107,7 @@ bool writeCodeOut(COptions* opts, const string_q& fn) {
                                "_CODE_NOTES", "ERROR_STRINGS", "_DEBUG_DISPLAY"};
 
         for (auto tok : tokens)
-            if (!contains(orig, tok) && !contains(orig, "_CHIFRA"))
+            if (!contains(orig, tok) && !contains(orig, "_CHIFRA") && !contains(fn, "flame"))
                 LOG_WARN(fn, " does not contain token ", tok);
 
         converted = replaceCode(converted, "CODE_AUTO", opts->autoStream.str());
@@ -141,7 +141,7 @@ bool writeCodeOut(COptions* opts, const string_q& fn) {
     } else if (endsWith(fn, ".h")) {
         CStringArray tokens = {"ERROR_DEFINES", "_CODE_DECLARE"};
         for (auto tok : tokens)
-            if (!contains(orig, tok))
+            if (!contains(orig, tok) && !contains(fn, "flame"))
                 LOG_WARN(fn, " does not contain token ", tok);
         converted = replaceCode(converted, "CODE_DECLARE", opts->headerStream.str());
         converted = replaceCode(converted, "ERROR_DEFINES", opts->errorDefStream.str());

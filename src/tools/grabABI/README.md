@@ -10,7 +10,7 @@ The `--find` option is experimental. It scans a cross of approx. 100,000 functio
 
 The `--sol` option will convert a single Solidity file found in the current folder into an ABI.
 
-```
+```[plaintext]
 Purpose:
   Fetches the ABI for a smart contract.
 
@@ -33,4 +33,20 @@ Global Flags:
 Notes:
   - Solidity files found in the local folder with the name '<address>.sol' are converted to an ABI prior to processing (and then removed).
 ```
-[{FOOTER}]
+
+Other Options
+
+All tools accept the following additional flags, although in some cases, they have no meaning.
+
+```[plaintext]
+  -v, --version         display the current version of the tool
+      --wei             export values in wei (the default)
+      --ether           export values in ether
+      --dollars         export values in US dollars
+      --raw             pass raw RPC data directly from the node with no processing
+      --to_file         write the results to a temporary file and return the filename
+      --output string   write the results to file 'fn' and return the filename
+      --file string     specify multiple sets of command line options in a file
+```
+
+*For the `--file string` option, you may place a series of valid command lines in a file using any valid flags. In some cases, this may significantly improve performance. A semi-colon at the start of any line makes it a comment.*

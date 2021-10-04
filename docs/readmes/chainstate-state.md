@@ -4,7 +4,7 @@ Use this tool to retrieve the balance of an address (or list of addresses) at th
 
 You may also query to see if an address is a smart contract as well as retrieve a contract's byte code.
 
-```
+```[plaintext]
 Purpose:
   Retrieve account balance(s) for one or more addresses at given block(s).
 

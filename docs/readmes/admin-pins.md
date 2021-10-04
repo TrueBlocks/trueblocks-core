@@ -2,7 +2,7 @@
 
 This tool is not yet ready for production use. Please return to this page later.
 
-```
+```[plaintext]
 Purpose:
   Manage pinned index of appearances and associated Bloom filters.
 

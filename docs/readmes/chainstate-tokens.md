@@ -8,7 +8,7 @@ In `--byAcct` mode, **all addresses** in the `address_list` are assumed to be ER
 
 You may optionally specify one or more blocks at which to report. If no block is specified, the latest block is assumed. You may also optionally specify which parts of the token data to extract.
 
-```
+```[plaintext]
 Purpose:
   Retrieve token balance(s) for one or more addresses at given block(s).
 
@@ -20,7 +20,7 @@ Arguments:
   blocks - an optional list of one or more blocks at which to report balances, defaults to 'latest'
 
 Flags:
-  -p, --parts strings   which parts of the token information to retreive
+  -p, --parts strings   which parts of the token information to retrieve
                         One or more of name, symbol, decimals, totalSupply, version, none, all
   -b, --by_acct         consider each address an ERC20 token except the last, whose balance is reported for each token
   -n, --no_zero         suppress the display of zero balance accounts

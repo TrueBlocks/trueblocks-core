@@ -8,7 +8,7 @@ In `--byAcct` mode, **all addresses** in the `address_list` are assumed to be ER
 
 You may optionally specify one or more blocks at which to report. If no block is specified, the latest block is assumed. You may also optionally specify which parts of the token data to extract.
 
-```
+```[plaintext]
 Purpose:
   Retrieve token balance(s) for one or more addresses at given block(s).
 
@@ -20,7 +20,7 @@ Arguments:
   blocks - an optional list of one or more blocks at which to report balances, defaults to 'latest'
 
 Flags:
-  -p, --parts strings   which parts of the token information to retreive
+  -p, --parts strings   which parts of the token information to retrieve
                         One or more of name, symbol, decimals, totalSupply, version, none, all
   -b, --by_acct         consider each address an ERC20 token except the last, whose balance is reported for each token
   -n, --no_zero         suppress the display of zero balance accounts
@@ -37,4 +37,20 @@ Notes:
   - If the queried node does not store historical state, the results are undefined.
   - special blocks are detailed under chifra when --list.
 ```
-[{FOOTER}]
+
+Other Options
+
+All tools accept the following additional flags, although in some cases, they have no meaning.
+
+```[plaintext]
+  -v, --version         display the current version of the tool
+      --wei             export values in wei (the default)
+      --ether           export values in ether
+      --dollars         export values in US dollars
+      --raw             pass raw RPC data directly from the node with no processing
+      --to_file         write the results to a temporary file and return the filename
+      --output string   write the results to file 'fn' and return the filename
+      --file string     specify multiple sets of command line options in a file
+```
+
+*For the `--file string` option, you may place a series of valid command lines in a file using any valid flags. In some cases, this may significantly improve performance. A semi-colon at the start of any line makes it a comment.*

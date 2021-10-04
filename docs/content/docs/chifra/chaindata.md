@@ -2,7 +2,7 @@
 title: "Chain Data"
 description: ""
 lead: ""
-date: 2021-10-03T17:51:18
+date: 2021-10-03T19:59:18
 lastmod:
   - :git
   - lastmod
@@ -16,7 +16,7 @@ menu:
 weight: 1300
 toc: true
 ---
-The chaindata tools extract raw blockchain data directly from the node.
+The TrueBlocks tools extract raw blockchain data directly from the node.
 You may extract block data, transactional data, receipts, logs, and traces.
 Each tool has it own set of options, allowing you to get exactly the data that
 you want.
@@ -24,11 +24,11 @@ you want.
 
 The `chifra blocks` tool retrieves block data from your Ethereum node or, if previously cached, from the TrueBlocks cache. You may specify multiple blocks per invocation.
 
-By default, `chifra blocks` queries the full transactional details of the block (including receipts). You may optionally retreive only the transaction hashes in the block (which is signifcantly faster). Additionally, you may also use this tool to retrieve uncle blocks at a give height.
+By default, `chifra blocks` queries the full transactional details of the block (including receipts). You may optionally retrieve only the transaction hashes in the block (which is significantly faster). Additionally, you may also use this tool to retrieve uncle blocks at a give height.
 
-Another useful feature of `chifra blocks` is the ability to extract address appearances from a block. TrueBlocks uses a similar feature internally to build its index of appearances. This type of data is very insightful when studying end user behaviour and chain-wide adoption analysis.
+Another useful feature of `chifra blocks` is the ability to extract address appearances from a block. TrueBlocks uses a similar feature internally to build its index of appearances. This type of data is very insightful when studying end user behavior and chain-wide adoption analysis.
 
-```
+```[plaintext]
 Purpose:
   Retrieve one or more blocks from the chain or local cache.
 
@@ -69,7 +69,7 @@ The `--articulate` option fetches the ABI from each encountered smart contract (
 
 Generally speaking, this tool is less useful than others as you may report the same data using `chifra transactions` and more focused data using `chifra logs`. It is included here for completeness, as the `receipt` is a fundamental data structure in Ethereum.
 
-```
+```[plaintext]
 Purpose:
   Retrieve receipts for the given transaction(s).
 
@@ -101,7 +101,7 @@ Notes:
 
 The `--articulate` option fetches the ABI from each encountered smart contract to better describe the reported data. The `--topic` and `--source` options allow you to filter your results.
 
-```
+```[plaintext]
 Purpose:
   Retrieve logs for the given transaction(s).
 
@@ -138,7 +138,7 @@ The `--articulate` option fetches the ABI from each encountered smart contract t
 
 The `--filter` option calls your node's `trace_filter` routine (if available) using a bang-separated string of the same values used by `trace_fitler`.
 
-```
+```[plaintext]
 Purpose:
   Retrieve traces for the given transaction(s).
 
@@ -150,7 +150,7 @@ Arguments:
 
 Flags:
   -a, --articulate      articulate the retrieved data if ABIs can be found
-  -f, --filter string   call the node's trace_filter routine with bang-seperated filter
+  -f, --filter string   call the node's trace_filter routine with bang-separated filter
   -d, --statediff       export state diff traces (not implemented)
   -c, --count           show the number of traces for the transaction only (fast)
 
@@ -163,7 +163,7 @@ Notes:
   - The transactions list may be one or more space-separated identifiers which are either a transaction hash, a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.
   - This tool checks for valid input syntax, but does not check that the transaction requested actually exists.
   - If the queried node does not store historical state, the results for most older transactions are undefined.
-  - A bang seperated filter has the following fields (at least one of which is required) and is separated with a bang (!): fromBlk, toBlk, fromAddr, toAddr, after, count.
+  - A bang separated filter has the following fields (at least one of which is required) and is separated with a bang (!): fromBlk, toBlk, fromAddr, toAddr, after, count.
   - A state diff trace describes, for each modified address, what changed during that trace.
 ```
 
@@ -175,9 +175,9 @@ The `chifra when` tool answers one of two questions: (1) "At what date and time 
 
 In the first case, supply a block number or hash and the date and time of that block are displayed. In the later case, supply a date (and optionally a time) and the block number that occurred at or just prior to that date is displayed.
 
-The values for `date` and `time` are specified in JSON format. `hour`/`minute`/`second` are optional, and if omitted, default to zero in each case. Block numbers may be specified as either integers or hexidecimal number or block hashes. You may specify any number of dates and/or blocks per invocation.
+The values for `date` and `time` are specified in JSON format. `hour`/`minute`/`second` are optional, and if omitted, default to zero in each case. Block numbers may be specified as either integers or hexadecimal number or block hashes. You may specify any number of dates and/or blocks per invocation.
 
-```
+```[plaintext]
 Purpose:
   Find block(s) based on date, blockNum, timestamp, or 'special'.
 

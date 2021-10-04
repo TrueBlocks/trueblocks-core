@@ -6,7 +6,7 @@ While it's useful, it has two shortcomings. First, it is fully centralized, pull
 
 While `chifra slurp` has its shortcomings, it does provides some nice features. You may use it to pull any transaction initiated by an EOA for example or to explore mining rewards. Visit the above referenced website for more information.
 
-```
+```[plaintext]
 Purpose:
   Fetch data from EtherScan for any address.
 

@@ -13,71 +13,9 @@
 #include "acctlib.h"
 #include "options.h"
 
-// //------------------------------------------------------------------------------------------------------------
-// bool writeReadmes(const string_q& templatePath, void* data) {
-//     if (endsWith(templatePath, "/")) {
-//         return forEveryFileInFolder(templatePath + "*", writeReadmes, data);
-
-//     } else {
-//         if (!endsWith(templatePath, ".md") || contains(templatePath, "README"))
-//             return true;
-
-//         COptions* opts = (COptions*)data;
-
-//         CStringArray parts;
-//         explode(parts, templatePath, '/');
-//         string_q folder = parts[4];
-//         string_q tool = substitute(parts[5], ".md", "");
-//         string_q toolPath = folder + "/" + tool;
-
-//         string_q tempCode = asciiFileToString(templatePath);
-//         replaceAll(tempCode, "[{NAME}]", path_2_Cmd(tool));
-//         replaceAll(tempCode, "~/Library/Application Support/TrueBlocks/", "$CONFIG/");
-
-//         string_q cmd = tool;
-//         if (tool != "chifra" && tool != "makeClass" && tool != "testRunner")
-//             cmd = getCommandPath(tool);
-//         if (system((cmd + " --readme >file 2>&1").c_str())) {
-//         }  // Don't remove cruft. Silences compiler warnings
-//         string_q usage = trim(asciiFileToString("./file"), '\n');
-//         ::remove("./file");
-
-//         replace(tempCode, "[{USAGE}]", usage);
-//         string_q srcCode = tempCode;
-//         replaceAll(srcCode, "{{<td>}}\n", "");
-//         replaceAll(srcCode, "{{</td>}}\n", "");
-
-//         string_q docCode = substitute(tempCode, "## Usage", "## usage");
-//         replaceAll(docCode, "]  \n", "]\n");
-//         replaceAll(docCode, ":`  \n", ":`\n");
-//         replaceAll(docCode, ": \n", ":\n");
-//         replaceAll(docCode, "\n`Purpose", "  \n`Purpose");
-
-//         string_q tail =
-//             "\n**Source code**: "
-//             "[`[{TOOL_PATH}]`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/[{TOOL_PATH}])\n";
-//         replaceAll(tail, "[{TOOL_PATH}]", toolPath);
-//         replaceAll(tail, "[{SOURCE_LOCATION}]", "https://github.com/TrueBlocks/trueblocks-core/tree/master/src/");
-
-//         string_q footer = "\n" + trim(asciiFileToString(getDocsPathTemplates("readme-intros/README.footer.md")),
-//         '\n'); replaceAll(docCode, "[{FOOTER}]", tail); replaceAll(srcCode, "[{FOOTER}]", footer);
-
-//         string_q docPath = getDocsPathReadmes(toolPath + "/README.md");
-//         string_q srcPath = getSourcePath(toolPath + "/README.md");
-//         if (!contains(docPath, "chifra")) {
-//             bool c1 = writeIfDifferent(docPath, docCode);
-//             bool c2 = writeIfDifferent(srcPath, srcCode);
-//             opts->counter.nProcessed += (c1 || c2);
-//         }
-
-//         opts->counter.nVisited++;
-//     }
-//     return true;
-// }
-
 //------------------------------------------------------------------------------------------------------------
 string_q get_usage(const string_q& route) {
-    return doCommand2("chifra " + route + " --help");
+    return "```[plaintext]\n" + doCommand2("chifra " + route + " --help") + "\n```";
 }
 
 //------------------------------------------------------------------------------------------------------------
@@ -90,7 +28,7 @@ bool COptions::handle_readmes(void) {
     }
 
     LOG_INFO(cYellow, "handling readmes...", cOff);
-#if 1
+
     for (auto ep : endpointArray) {
         if (!ep.api_route.empty()) {
             string_q justTool = ep.tool;
@@ -105,22 +43,23 @@ bool COptions::handle_readmes(void) {
 
             string_q contents = asciiFileToString(dSource);
             replaceAll(contents, "[{NAME}]", "chifra " + ep.api_route);
-            replaceAll(contents, "[{USAGE}]", "```\n" + get_usage(ep.api_route) + "\n```");
+            replaceAll(contents, "[{USAGE}]", get_usage(ep.api_route));
 
             string_q dFooter = "\n**Source code**: [`[{GROUP}]/[{TOOL}]`]([{LOCATION}][{GROUP}]/[{TOOL}])\n";
             replaceAll(dFooter, "[{GROUP}]", ep.api_group);
-            replaceAll(dFooter, "[{TOOL}]", ep.tool);
+            replaceAll(dFooter, "[{TOOL}]", justTool);
             replaceAll(dFooter, "[{LOCATION}]", "https://github.com/TrueBlocks/trueblocks-core/tree/master/src/");
             string_q dContents = substitute(contents, "[{FOOTER}]", dFooter);
-            stringToAsciiFile(dReadme, dContents);
+            writeIfDifferent(dReadme, dContents);
 
-            stringToAsciiFile(tReadme, contents);
+            if (ep.is_visible_docs) {
+                string_q sFooter =
+                    "\n" + trim(asciiFileToString(getDocsPathTemplates("readme-intros/README.footer.md")), '\n');
+                string_q sContents = substitute(contents, "[{FOOTER}]", sFooter);
+                writeIfDifferent(tReadme, sContents);
+            }
         }
     }
-#endif
-
-    //     counter = CCounter();  // reset
-    //     forEveryFileInFolder(getDocsPathTemplates("readme-intros/"), writeReadmes, this);
 
     CStringArray items = {"Accounts:list,export,monitors,names,abis",
                           "Chain Data:blocks,trans,receipts,logs,traces,when", "Chain State:state,tokens",

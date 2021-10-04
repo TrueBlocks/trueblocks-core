@@ -10,7 +10,7 @@ The `--find` option is experimental. It scans a cross of approx. 100,000 functio
 
 The `--sol` option will convert a single Solidity file found in the current folder into an ABI.
 
-```
+```[plaintext]
 Purpose:
   Fetches the ABI for a smart contract.
 
