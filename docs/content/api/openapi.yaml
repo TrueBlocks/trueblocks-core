@@ -179,7 +179,8 @@ paths:
               type: string
               format: topic_t
         - name: fourbytes
-          description: filter by one or more fourbytes (only for transactions and trace options)
+          description: >
+             filter by one or more fourbytes (only for transactions and trace options)
           required: false
           style: form
           in: query

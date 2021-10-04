@@ -2,7 +2,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 
 10200,apps,Accounts,export,acctExport,addrs,,,true,false,true,true,local,positional,list<addr>,one or more addresses (0x...) to export
 10205,apps,Accounts,export,acctExport,topics,,,false,false,true,true,header,positional,list<topic>,filter by one or more log topics (only for --logs option)
-10207,apps,Accounts,export,acctExport,fourbytes,,,false,false,true,true,header,positional,list<fourbyte>,filter by one or more fourbytes (only for transactions and trace options)
+10207,apps,Accounts,export,acctExport,fourbytes,,,false,false,true,true,header,positional,list<fourbyte>,|filter by one or more fourbytes (only for transactions and trace options)
 10210,apps,Accounts,export,acctExport,appearances,p,,false,false,true,true,header,switch,<boolean>,export a list of appearances
 10220,apps,Accounts,export,acctExport,receipts,r,,false,false,true,true,header,switch,<boolean>,export receipts instead of transaction list
 10282,apps,Accounts,export,acctExport,statements,A,,false,false,true,true,header,switch,<boolean>,for use with --accounting option only&#44; export only reconciliation statements
