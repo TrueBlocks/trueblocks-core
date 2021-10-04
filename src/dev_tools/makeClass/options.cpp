@@ -22,18 +22,14 @@ static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
     COption("files", "", "list<path>", OPT_REQUIRED | OPT_POSITIONAL, "one or more class definition files"),
-    COption("run", "r", "", OPT_SWITCH, "run the class maker on associated <class_name(s)>"),
-    COption("edit", "e", "", OPT_HIDDEN | OPT_SWITCH, "edit <class_name(s)> definition file in local folder"),
     COption("all", "a", "", OPT_SWITCH, "list, or run all class definitions found in the local folder"),
     COption("options", "o", "", OPT_SWITCH, "export options code (check validity in the process)"),
+    COption("gocmds", "g", "", OPT_SWITCH, "export go command code"),
     COption("readmes", "m", "", OPT_SWITCH, "create readme files for each tool and app"),
     COption("format", "f", "", OPT_SWITCH, "format source code files (.cpp and .h) found in local folder and below"),
     COption("lint", "l", "", OPT_SWITCH, "lint source code files (.cpp and .h) found in local folder and below"),
     COption("tsx", "t", "", OPT_SWITCH, "create typescript routes"),
     COption("dump", "d", "", OPT_HIDDEN | OPT_SWITCH, "dump any classDefinition config tomls to screen and quit"),
-    COption("nspace", "n", "<string>", OPT_FLAG, "surround generated c++ code with a namespace"),
-    COption("filter", "i", "<string>", OPT_FLAG, "process only files whose filename or contents contain 'filter'"),
-    COption("force", "c", "", OPT_SWITCH, "for both code generation and options generation, force writing of changes"),
     COption("openapi", "A", "", OPT_HIDDEN | OPT_SWITCH, "export openapi.yaml file for API documentation"),
     COption("", "", "", OPT_DESCRIPTION, "Automatically writes C++ for various purposes."),
     // clang-format on
@@ -48,9 +44,8 @@ bool COptions::parseArguments(string_q& command) {
 
     // BEG_CODE_LOCAL_INIT
     CStringArray files;
-    bool run = false;
-    bool edit = false;
     bool options = false;
+    bool gocmds = false;
     bool readmes = false;
     bool format = false;
     bool lint = false;
@@ -63,17 +58,14 @@ bool COptions::parseArguments(string_q& command) {
         if (false) {
             // do nothing -- make auto code generation easier
             // BEG_CODE_AUTO
-        } else if (arg == "-r" || arg == "--run") {
-            run = true;
-
-        } else if (arg == "-e" || arg == "--edit") {
-            edit = true;
-
         } else if (arg == "-a" || arg == "--all") {
             all = true;
 
         } else if (arg == "-o" || arg == "--options") {
             options = true;
+
+        } else if (arg == "-g" || arg == "--gocmds") {
+            gocmds = true;
 
         } else if (arg == "-m" || arg == "--readmes") {
             readmes = true;
@@ -89,19 +81,6 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-d" || arg == "--dump") {
             dump = true;
-
-        } else if (startsWith(arg, "-n:") || startsWith(arg, "--nspace:")) {
-            nspace = substitute(substitute(arg, "-n:", ""), "--nspace:", "");
-        } else if (arg == "-n" || arg == "--nspace") {
-            return flag_required("nspace");
-
-        } else if (startsWith(arg, "-i:") || startsWith(arg, "--filter:")) {
-            filter = substitute(substitute(arg, "-i:", ""), "--filter:", "");
-        } else if (arg == "-i" || arg == "--filter") {
-            return flag_required("filter");
-
-        } else if (arg == "-c" || arg == "--force") {
-            force = true;
 
         } else if (arg == "-A" || arg == "--openapi") {
             openapi = true;
@@ -122,26 +101,23 @@ bool COptions::parseArguments(string_q& command) {
 
     // BEG_DEBUG_DISPLAY
     LOG_TEST_LIST("files", files, files.empty());
-    LOG_TEST_BOOL("run", run);
-    LOG_TEST_BOOL("edit", edit);
     LOG_TEST_BOOL("all", all);
     LOG_TEST_BOOL("options", options);
+    LOG_TEST_BOOL("gocmds", gocmds);
     LOG_TEST_BOOL("readmes", readmes);
     LOG_TEST_BOOL("format", format);
     LOG_TEST_BOOL("lint", lint);
     LOG_TEST_BOOL("tsx", tsx);
     LOG_TEST_BOOL("dump", dump);
-    LOG_TEST("nspace", nspace, (nspace == "qblocks"));
-    LOG_TEST("filter", filter, (filter == ""));
-    LOG_TEST_BOOL("force", force);
     LOG_TEST_BOOL("openapi", openapi);
     // END_DEBUG_DISPLAY
 
-    establishFolder(getDocsPath("content/"));
-    establishFolder(getDocsPath("content/api/"));
-    establishFolder(getDocsPath("content/data-model/"));
-    establishFolder(getDocsPath("content/docs/"));
-    establishFolder(getDocsPath("content/docs/chifra/"));
+    establishFolder(getDocsPathContent(""));
+    establishFolder(getDocsPathContent("api/"));
+    establishFolder(getDocsPathContent("data-model/"));
+    establishFolder(getDocsPathContent("docs/"));
+    establishFolder(getDocsPathContent("docs/chifra/"));
+    forEveryLineInAsciiFile(endpointFile, parseCommandData, &endpointArray);
 
     if (tsx)
         handle_tsx();
@@ -164,7 +140,6 @@ bool COptions::parseArguments(string_q& command) {
     if (classDefs.empty()) {
         // If not in a folder with a specific classDef, try to produce all classDefs
         if (!folderExists("./classDefinitions")) {
-            nspace = "qblocks";
             forEveryFileInFolder("./", listClasses, this);
         } else {
             forEveryFileInFolder("./classDefinitions/", listClasses, this);
@@ -177,14 +152,19 @@ bool COptions::parseArguments(string_q& command) {
         CClassDefinition classDef(toml);
         classDef.short_fn = classDefIn.short_fn;
         classDef.input_path = classDefIn.input_path;
-        if (!classDef.openapi.empty())
+        if (!classDef.doc_api.empty())
             dataModels.push_back(classDef);
     }
+
+    if (gocmds && !options)
+        options = true;
 
     // Ignoring classDefs for a moment, process special options. Note: order matters
     if (openapi && !handle_datamodel())
         return false;
     if (options && !handle_options())
+        return false;
+    if (gocmds && !handle_gocmds())
         return false;
     if (readmes && !handle_readmes())
         return false;
@@ -194,16 +174,14 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     // Default to run if we get only all
-    if (!run && !edit && !dump && all)
-        run = true;
 
     // Maybe the user only wants to generate code, format, or lint...
-    if ((run + edit + dump) == 0 && (options + format + lint + readmes) > 0)
+    if (all && (options + format + lint + readmes) > 0)
         return false;
 
     // If not, we need classDefs to work with...
     if (classDefs.empty())
-        return usage(!filter.empty() ? usageErrs[ERR_NOFILTERMATCH] : usageErrs[ERR_NEEDONECLASS]);
+        return usage(usageErrs[ERR_NEEDONECLASS]);
 
     // If we're dumping, dump...
     if (dump) {
@@ -223,24 +201,17 @@ bool COptions::parseArguments(string_q& command) {
             }
         }
         // Maybe we're done..
-        if ((run + edit) == 0)
+        if (!all)
             return false;
     }
 
     // We need the template files
-    if (!folderExists(configPath("makeClass/")))
-        return false;  // usage(usageErrs[ERR_CONFIGMISSING]);
-
-    // If we got this far, user needs to tell us what to do...
-    if (!run && !edit)
-        return usage(usageErrs[ERR_CHOOSEONE]);
-
-    // ..but only one thing to do.
-    if ((run + edit) > 1)
-        return usage(usageErrs[ERR_CHOOSEONE]);
-
-    mode = (edit ? EDIT : RUN);
-    LOG8("run: ", run, " edit: ", edit, " classes: ", all, " mode: ", mode);
+    CStringArray templs = {"", "blank.yaml", "blank.cpp", "blank.h", "blank.go"};
+    for (auto temp : templs) {
+        if (!fileExists(getTemplatePath(temp))) {
+            return makeError(ERR_CONFIGMISSING, getTemplatePath(temp));
+        }
+    }
 
     return true;
 }
@@ -248,22 +219,17 @@ bool COptions::parseArguments(string_q& command) {
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
     registerOptions(nParams, params);
-    optionOff(OPT_FMT);
 
     // BEG_CODE_INIT
     all = false;
     tsx = false;
-    nspace = "qblocks";
-    filter = "";
-    force = false;
     openapi = false;
     // END_CODE_INIT
 
-    mode = NONE;
     classDefs.clear();
     counter = CCounter();
 
-    CToml toml(configPath("makeClass.toml"));
+    CToml toml(getConfigPath("makeClass.toml"));
     lastFormat = static_cast<timestamp_t>(toml.getConfigInt("settings", "lastFormat", 0));
     lastLint = static_cast<timestamp_t>(toml.getConfigInt("settings", "lastLint", 0));
     toml.Release();
@@ -283,20 +249,13 @@ COptions::COptions(void) : classFile("") {
     usageErrs[ERR_NOERROR] = "No error";
     // ERROR_STRINGS
     usageErrs[ERR_CLASSDEFNOTEXIST] = "./classDefinitions folder does not exist.";
-    usageErrs[ERR_CONFIGMISSING] = "[{CONFIG_FOLDER}]makeClass/ folder does not exist.";
-    usageErrs[ERR_CHOOSEONE] = "Please chose exactly one of --run, --list, or --edit.";
-    usageErrs[ERR_NOFILTERMATCH] = "No definitions found that matched the filter: [{FILTER}].";
+    usageErrs[ERR_CONFIGMISSING] = "File {0} does not exist.";
     usageErrs[ERR_NEEDONECLASS] = "Please specify at least one className.";
     // ERROR_STRINGS
 
     CCommandOption::registerClass();
     CClassDefinition::registerClass();
-    CPage::registerClass();
-    CSubpage::registerClass();
-    CSkin::registerClass();
-    CSchema::registerClass();
     CCommandOption::registerClass();
-    CRoute::registerClass();
 }
 
 //--------------------------------------------------------------------------------
@@ -324,21 +283,46 @@ bool listClasses(const string_q& path, void* data) {
             string_q class_name = path;
             class_name = substitute(substitute(nextTokenClearReverse(class_name, '/'), ".txt", ""), ".toml", "");
 
-            bool include = true;
-            if (!opts->filter.empty()) {
-                string_q contents;
-                asciiFileToString(path, contents);
-                include = (class_name == opts->filter) || contains(contents, opts->filter);
-            }
-
-            if (include) {
-                CClassDefinition cl;
-                cl.short_fn = class_name;
-                cl.input_path = path;
-                LOG8("Adding: ", cl.short_fn, " ", cl.input_path, " ", cl.outputPath(".cpp"));
-                opts->classDefs.push_back(cl);
-            }
+            CClassDefinition cl;
+            cl.short_fn = class_name;
+            cl.input_path = path;
+            LOG8("Adding: ", cl.short_fn, " ", cl.input_path, " ", cl.outputPath(".cpp"));
+            opts->classDefs.push_back(cl);
         }
     }
+    return true;
+}
+
+//--------------------------------------------------------------------------------
+#define getSourcePathA(a) (string_q("../src/") + (a))
+string_q getSourcePath(const string_q& rest) {
+    string_q cwd = getCWD();
+    CStringArray parts;
+    explode(parts, cwd, '/');
+    string_q ret;
+    for (auto part : parts) {
+        if (part != "trueblocks-core")
+            ret += ("/" + part);
+        else
+            return ret + "/trueblocks-core/src/" + rest;
+    }
+    return getSourcePathA(rest);
+}
+
+//---------------------------------------------------------------------------------------------------
+bool parseCommandData(const char* str, void* data) {
+    static CStringArray routeFields;
+    string_q line = str;
+    replaceAny(line, "\n\r", "");
+    if (routeFields.empty()) {
+        explode(routeFields, line, ',');
+        return true;
+    }
+
+    CCommandOptionArray* array = (CCommandOptionArray*)data;
+    CCommandOption option;
+    option.parseCSV(routeFields, line);
+    array->push_back(option);
+
     return true;
 }

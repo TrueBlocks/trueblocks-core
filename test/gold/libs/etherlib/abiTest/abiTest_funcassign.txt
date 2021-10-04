@@ -1,5 +1,4 @@
-abiTest argc: 2 [1:func_assign] 
-abiTest func_assign 
+abiTest  func_assign
 function assignment test...
 CEthStateArray				a->_val = extract(params, 0*64, 64);
 CBlockNumArray				a->_val = extract(params, 0*64, 64);

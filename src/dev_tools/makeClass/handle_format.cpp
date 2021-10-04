@@ -15,7 +15,7 @@
 
 //------------------------------------------------------------------------------------------------------------
 bool COptions::handle_format(void) {
-    CToml config(configPath("makeClass.toml"));
+    CToml config(getConfigPath("makeClass.toml"));
     bool enabled = config.getConfigBool("enabled", "auto_format", false);
     string_q res = doCommand("which clang-format");
     if (!enabled || res.empty()) {
@@ -26,12 +26,15 @@ bool COptions::handle_format(void) {
     LOG_INFO(cYellow, "handling formatting...", cOff);
     counter = CCounter();
     counter.is_counting = true;
-    forEveryFileInFolder("./", formatFiles, this);
+    forEveryFileInFolder("./", formatCppFiles, this);
+    forEveryFileInFolder("./", formatGoFiles, this);
     counter.is_counting = false;
-    forEveryFileInFolder("./", formatFiles, this);
+    forEveryFileInFolder("./", formatCppFiles, this);
+
     config.setConfigStr("settings", "lastFormat", uint_2_Str(static_cast<uint64_t>(date_2_Ts(Now()))));
     config.writeFile();
     config.Release();
+
     LOG_INFO(cYellow, "makeClass --format", cOff, " processed ", counter.nVisited, " files (changed ",
              counter.nProcessed, ").", string_q(40, ' '));
 
@@ -39,9 +42,9 @@ bool COptions::handle_format(void) {
 }
 
 //--------------------------------------------------------------------------------
-bool formatFiles(const string_q& path, void* data) {
+bool formatCppFiles(const string_q& path, void* data) {
     if (endsWith(path, "/")) {
-        forEveryFileInFolder(path + "*", formatFiles, data);
+        forEveryFileInFolder(path + "*", formatCppFiles, data);
 
     } else {
         if (contains(path, "/other/"))
@@ -93,6 +96,69 @@ bool formatFiles(const string_q& path, void* data) {
                     usleep(50000);  // do not remove cruft - allows control+C
             }
             ::remove(resPath.c_str());
+        }
+    }
+
+    return !shouldQuit();
+}
+
+//--------------------------------------------------------------------------------
+bool formatGoFiles(const string_q& path, void* data) {
+    if (endsWith(path, "/")) {
+        forEveryFileInFolder(path + "*", formatGoFiles, data);
+
+    } else {
+        if (contains(path, "/other/"))
+            return true;
+
+        if (contains(path, "/build/"))
+            return true;
+
+        if (contains(path, "/blank"))
+            return true;
+
+        if (endsWith(path, ".cpp") || endsWith(path, ".h")) {
+            COptions* opts = reinterpret_cast<COptions*>(data);
+            if (opts->counter.is_counting) {
+                opts->counter.fileCount++;
+                return true;
+            }
+            opts->counter.nVisited++;
+            timestamp_t ts = date_2_Ts(fileLastModifyDate(path));
+            if (ts < opts->lastFormat)
+                return true;
+
+            string_q fullPath = substitute(path, "./", getCWD());
+            establishFolder(getCachePath("tmp/"));
+            string_q resPath = getCachePath("tmp/" + CFilename(path).getFilename());
+            cerr << fullPath << endl;
+            cerr << resPath << endl;
+            // string_q cmd = "clang-format \"" + fullPath + "\" >\"" + resPath + "\" ";
+            // // clang-format off
+            // if (system(cmd.c_str())) {}  // Don't remove cruft. Silences compiler warnings
+            // // clang-format on
+            // if (!shouldQuit() && fileExists(resPath)) {
+            //     string_q oldFile = asciiFileToString(fullPath);
+            //     string_q newFile = asciiFileToString(resPath);
+            //     if (oldFile != newFile) {
+            //         opts->counter.nProcessed++;
+            //         copyFile(resPath, fullPath);
+            //         ostringstream os;
+            //         os << "Formatting: ";
+            //         os << cTeal << path << cOff << string_q(50, ' ');
+            //         LOG_INFO(os.str());
+
+            //     } else {
+            //         ostringstream os;
+            //         os << "Formatter (" << opts->counter.nVisited << " of " << opts->counter.fileCount
+            //            << "): no change ";
+            //         os << cTeal << path << cOff << string_q(20, ' ') << "\r";
+            //         LOG_INFO(os.str());
+            //     }
+            //     if (!(opts->counter.nVisited % 5))
+            //         usleep(50000);  // do not remove cruft - allows control+C
+            // }
+            // ::remove(resPath.c_str());
         }
     }
 

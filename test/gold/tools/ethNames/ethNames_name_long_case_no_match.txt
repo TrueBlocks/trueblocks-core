@@ -1,3 +1,0 @@
-ethNames argc: 5 [1:torJ] [2:--match_case] [3:--fmt] [4:txt] 
-ethNames torJ --match_case --fmt txt 
-No results for torJ --match_case

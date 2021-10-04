@@ -5,6 +5,6 @@ includes = utillib.h|abi.h
 cpp_includes = trace.h
 equals = ((newContract == it.newContract) && (code == it.code) && (gasUsed == it.gasUsed) && (output == it.output))
 tsx = true
-doc_group = Chain Data
-description = the trace result data for a given trace directly from the blockchain
-openapi = traceResult
+doc_group = 02-Chain Data
+doc_descr = the trace result data for a given trace directly from the blockchain
+doc_api = 16-traceResult

@@ -1,4 +1,3 @@
-getTraces argc: 4 [1:0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3] [2:--fmt] [3:txt] 
-getTraces 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3 --fmt txt 
+chifra traces  0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3 --fmt txt
 blocknumber	transactionindex	traceaddress	action::calltype	error	action::from	action::to	action::value	action::ether	action::gas	result::gasused	action::input	compressedtrace	result::output
 3657480	3	null	call		0x64014a5817e05a205bca161a6763e945659b50b0	0x0699c7874bc28fa9d8b1a17e4dd385fe5aa17614	306329900000000000	0.306329900000000000	0	0	0x		0x

@@ -1,5 +1,5 @@
 {
   "errors": [
-    "chifra tokens - Export format (junk) must be one of [ json | txt | csv | api ]."
+    "chifra tokens - The --fmt option (junk) must be one of [ json | txt | csv | api ]."
   ]
 }

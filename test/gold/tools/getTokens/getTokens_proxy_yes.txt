@@ -1,5 +1,4 @@
-getTokens argc: 7 [1:0x00000000441378008ea67f4284a57932b1c000a5] [2:--fmt] [3:json] [4:8000000] [5:--parts] [6:all] 
-getTokens 0x00000000441378008ea67f4284a57932b1c000a5 --fmt json 8000000 --parts all 
+chifra tokens  0x00000000441378008ea67f4284a57932b1c000a5 --fmt json 8000000 --parts all
 { "data": [
 
 level: 1

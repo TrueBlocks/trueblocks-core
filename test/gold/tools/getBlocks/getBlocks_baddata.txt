@@ -1,5 +1,4 @@
-getBlocks argc: 4 [1:1590000] [2:4000001-4000002] [3:x400x001] 
-getBlocks 1590000 4000001-4000002 x400x001 
+chifra blocks  1590000 4000001-4000002 x400x001
 
   The given value 'x400x001' is not a numeral or a special named block.
 

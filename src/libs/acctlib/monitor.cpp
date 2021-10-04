@@ -193,7 +193,7 @@ bool CMonitor::Serialize(CArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CMonitor::SerializeC(CArchive& archive) const {
-    // Writing always write the latest version of the data
+    // Writing always writes the latest version of the data
     CAccountName::SerializeC(archive);
 
     // EXISTING_CODE
@@ -412,7 +412,7 @@ string_q CMonitor::getMonitorPath(const address_t& addr, bool staging) const {
     string_q fn = isAddress(addr) ? addr + ".acct.bin" : addr;
     string_q base = getCachePath("monitors/") + (staging ? "staging/" : "");
     if (isTestMode())
-        base = configPath("mocked/monitors/") + (staging ? "staging/" : "");
+        base = getConfigPath("mocked/monitors/") + (staging ? "staging/" : "");
     return base + fn;
 }
 

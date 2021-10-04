@@ -1,10 +1,11 @@
-fileTest argc: 2 [1:recurse] 
-fileTest recurse 
+fileTest  recurse
 Recursive from ../
-Found 122 (122) files
+Found 124 (124) files
 ../arrayTest/arrayTest_Insertion.txt
 ../arrayTest/arrayTest_README.txt
 ../bigIntTest/bigIntTest_00.txt
+../builtInTest/builtInTest_minimal.txt
+../builtInTest/builtInTest_verbose.txt
 ../cmdLineTest/cmdLineTest_README.txt
 ../cmdLineTest/cmdLineTest_bool1.txt
 ../cmdLineTest/cmdLineTest_bool2.txt

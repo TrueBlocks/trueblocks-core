@@ -1,5 +1,4 @@
-convertTest argc: 2 [1:1] 
-convertTest 1 
+convertTest  1
 0. Running TestConverts_1
 	000.000 chr_2_HexStr1                    ==> passed 'chr_2_HexStr("This is a test of the emergency broadcast system")' is equal to '"0x5468697320697320612074657374206f662074686520656d657267656e63792062726f6164636173742073797374656d"'
 	000.001 chr_2_HexStr2                    ==> passed 'chr_2_HexStr("The quick brown fox jumps over the lazy dog")' is equal to '"0x54686520717569636b2062726f776e20666f78206a756d7073206f76657220746865206c617a7920646f67"'

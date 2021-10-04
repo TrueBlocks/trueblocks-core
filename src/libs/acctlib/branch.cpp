@@ -158,7 +158,7 @@ bool CBranch::Serialize(CArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CBranch::SerializeC(CArchive& archive) const {
-    // Writing always write the latest version of the data
+    // Writing always writes the latest version of the data
     CTreeNode::SerializeC(archive);
 
     // EXISTING_CODE

@@ -1,3 +1,2 @@
-dataUpgradeTest argc: 2 [1:CCachedAccount] 
-dataUpgradeTest CCachedAccount 
+dataUpgradeTest  CCachedAccount
 Unknown node of type CCachedAccount not created.

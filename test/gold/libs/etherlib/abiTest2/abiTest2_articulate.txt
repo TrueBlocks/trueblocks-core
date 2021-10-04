@@ -1,5 +1,4 @@
-abiTest2 argc: 1 
-abiTest2 
+abiTest2  
 [{
   "blockNumber": 10293554,
   "transactionIndex": 109,

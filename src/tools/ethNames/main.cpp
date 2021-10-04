@@ -28,19 +28,11 @@ int main(int argc, const char* argv[]) {
 
         bool isText = (expContext().exportFmt & (TXT1 | CSV1 | NONE1));
         if (isText && options.items.size() == 0) {
-            if (isApiMode()) {
-                // This is weird, but without it the ordering of the items
-                // in the command are randomly sorted making tests fail.
-                cout << "No results for";
-                for (auto s : options.searches)
-                    cout << " " << s;
-                cout << endl;
-            } else {
-                cout << "No results for " << command << endl;
-            }
+            cout << "No results for " << command << endl;
 
         } else if (options.items.size() == 0) {
-            cout << "{ \"data\": [ ";
+            cout << "{ \"data\": [ ";  // TODO: We used to send this, but it probably breaks something to not send it --
+                                       // TODO: {\"results\" \"none\"} ";
 
         } else {
             for (auto item : options.items) {

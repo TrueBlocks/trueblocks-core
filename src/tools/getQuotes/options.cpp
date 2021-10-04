@@ -24,7 +24,7 @@ static const COption params[] = {
     COption("period", "p", "enum[5|15|30|60|120*|240|1440|10080|hourly|daily|weekly]", OPT_FLAG, "increment of display"),  // NOLINT
     COption("pair", "a", "<string>", OPT_FLAG, "which price pair to freshen or list (see Poloniex)"),
     COption("feed", "e", "enum[poloniex*|maker|tellor]", OPT_FLAG, "the feed for the price data"),
-    COption("", "", "", OPT_DESCRIPTION, "Freshen and/or display Ethereum price data. This tool has been deprecated."),
+    COption("", "", "", OPT_DESCRIPTION, "Freshen or display Ethereum price data. This tool has been deprecated."),
     // clang-format on
     // END_CODE_OPTIONS
 };
@@ -135,8 +135,7 @@ COptions::COptions(void) : source(STR_PRICE_URL, "USDT_ETH", parsePoloniex) {
 
     // BEG_CODE_NOTES
     // clang-format off
-    notes.push_back("Valid pairs include any pair from the public Poloniex's API here: | https://poloniex.com/public?command=returnCurrencies.");  // NOLINT
-    notes.push_back("Due to restrictions from Poloniex, this tool retrieves only 30 days of data | at a time. You must repeatedly run this command until the data is up-to-date.");  // NOLINT
+    notes.push_back("Due to restrictions from Poloniex, this tool retrieves only 30 days of data at a time. You must repeatedly run this command until the data is up-to-date.");  // NOLINT
     // clang-format on
     // END_CODE_NOTES
 

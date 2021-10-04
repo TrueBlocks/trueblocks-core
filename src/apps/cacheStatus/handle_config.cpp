@@ -44,7 +44,7 @@ bool COptions::handle_config_get(ostream& os) {
             bal = "--balance Prov--";
         values.push_back(bal);
 
-        string_q defFolder = configPathRelative("");
+        string_q defFolder = getConfigPathRel("");
         string_q conf = cc->getConfigStr(g1_2.name, "configPath", defFolder);
         if (isTestMode())
             conf = "--config Path--";

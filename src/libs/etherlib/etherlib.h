@@ -31,5 +31,6 @@
 #include "prices.h"
 #include "reconciliation.h"
 #include "timestamps.h"
+#include "classdefinition.h"
 
 using namespace qblocks;  // NOLINT

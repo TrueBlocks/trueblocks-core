@@ -160,7 +160,7 @@ bool CStake::Serialize(CArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CStake::SerializeC(CArchive& archive) const {
-    // Writing always write the latest version of the data
+    // Writing always writes the latest version of the data
     CBaseNode::SerializeC(archive);
 
     // EXISTING_CODE
@@ -297,5 +297,3 @@ string_q CStake::display(uint64_t pos) {
 }
 // EXISTING_CODE
 }  // namespace qblocks
-
-    

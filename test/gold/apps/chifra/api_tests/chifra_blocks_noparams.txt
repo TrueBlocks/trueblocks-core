@@ -1,5 +1,0 @@
-{
-  "errors": [
-    "chifra blocks - Not enough arguments presented."
-  ]
-}

@@ -1,5 +1,4 @@
-cacheStatus argc: 5 [1:--details] [2:caches] [3:--types] [4:slurps] 
-cacheStatus --details caches --types slurps 
+chifra status  --details caches --types slurps
 {
   "client_version": "Client version",
   "client_ids": "chainId: 1 networkId: 1",

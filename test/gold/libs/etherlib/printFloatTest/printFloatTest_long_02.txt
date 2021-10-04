@@ -1,3 +1,2 @@
-printFloatTest argc: 3 [1:--testNum] [2:2] 
-printFloatTest --testNum 2 
+printFloatTest  --testNum 2
 Test 2

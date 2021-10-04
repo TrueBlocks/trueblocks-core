@@ -1,5 +1,4 @@
-whenBlock argc: 2 [1:idonotexist] 
-whenBlock idonotexist 
+chifra when  idonotexist
 
   The given value 'idonotexist' is not a numeral or a special named block.
 

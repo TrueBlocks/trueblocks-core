@@ -32,17 +32,9 @@ int main(int argc, const char* argv[]) {
         LOG_INFO(cYellow, "handling generate...", cOff);
         for (auto classDef : options.classDefs) {
             CToml toml(classDef.input_path);
-            if (options.mode & EDIT) {
-                editFile(classDef.input_path);
-
-            } else {
-                ASSERT(options.mode & RUN);
-                if (verbose > 3)
-                    cout << "Running class definition file '" << classDef.input_path << "'" << endl;
-                else if (verbose)
-                    cout << "Running class definition file '" << classDef.short_fn << "'" << endl;
-                options.handle_generate(toml, classDef, options.nspace, false);
-            }
+            if (verbose)
+                cout << "Running class definition file '" << classDef.short_fn << "'" << endl;
+            options.handle_generate(toml, classDef, false);
         }
 
         LOG_INFO(cYellow, "makeClass --run", cOff, " processed ", options.counter.nVisited, " files (changed ",

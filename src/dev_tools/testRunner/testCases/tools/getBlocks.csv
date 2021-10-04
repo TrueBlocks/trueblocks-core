@@ -1,7 +1,6 @@
 enabled,mode,speed,route,path/tool,filename,post,options,opt_cmd,has_env
 on,cmd,fast,blocks,tools/getBlocks,force_01,y,blocks = 2768801 1995314 1958017 & cache,getBlocks
 on,cmd,fast,blocks,tools/getBlocks,force_03,y,blocks = 4369999 & cache,getBlocks
-on,cmd,fast,blocks,tools/getBlocks,README,n,@th
 on,cmd,fast,blocks,tools/getBlocks,help,n,@h
 on,cmd,fast,blocks,tools/getBlocks,help_long,n,help
 on,both,fast,blocks,tools/getBlocks,no_params,y,
@@ -20,13 +19,8 @@ on,both,fast,blocks,tools/getBlocks,special_2,y,blocks = daofork & cache
 on,both,fast,blocks,tools/getBlocks,combo_one_range,y,blocks = 1590000 4000001-4000002 1001001 1234567 & cache
 on,both,fast,blocks,tools/getBlocks,combo_two_range,y,blocks = 1590000 4000001-4000002 1001001-1001100 1234567
 on,both,fast,blocks,tools/getBlocks,raw_01,n,blocks = 2768801 1995314 1958017 & raw
-on,both,fast,blocks,tools/getBlocks,parity_hex,y,blocks = 0x2e7721 & cache & parity
-on,both,fast,blocks,tools/getBlocks,parity_num,y,blocks = 728708 & parity
-on,both,fast,blocks,tools/getBlocks,parity_range,y,blocks = 358450-0x5785a & cache & parity
 on,both,fast,blocks,tools/getBlocks,force_02,y,blocks = 2769609 2799895 2872831 3076260 & cache
 on,both,fast,blocks,tools/getBlocks,force_fail,y,blocks = 2769609 2799895 2872831 3076260 & cache & uniq_tx
-on,both,fast,blocks,tools/getBlocks,multi1,y,blocks = 2769609 2799895 2872831 3076260 & parity & raw
-on,both,fast,blocks,tools/getBlocks,multi2,y,blocks = 2769609 2799895 2872831 3076260 & raw & parity
 on,both,slow,blocks,tools/getBlocks,terse_no_raw,y,blocks = 4001001-4001003 & hashes
 on,both,fast,blocks,tools/getBlocks,terse_yes_raw,y,blocks = 4001001 & hashes & raw
 on,both,medi,blocks,tools/getBlocks,hashes_1,y,blocks = 4001001 & hashes
@@ -45,8 +39,8 @@ on,both,fast,blocks,tools/getBlocks,addrCntFail,y,blocks = 3982128 & count
 on,both,fast,blocks,tools/getBlocks,addrMisconfig,y,blocks = 32279 & uniq_tx
 on,both,fast,blocks,tools/getBlocks,addrBlockZero,y,blocks = 0 & uniq_tx
 on,both,medi,blocks,tools/getBlocks,uniqTxCnt2,y,blocks = 1301011-1312011:313 & uniq_tx & count & fmt json
-on,cmd,fast,blocks,tools/getBlocks,cmd_file1,n,file:cmd_file1 & cache
-on,cmd,fast,blocks,tools/getBlocks,cmd_file2,n,file:cmd_file2 & cache
+on,cmd,fast,blocks,tools/getBlocks,cmd_file1,n,file = cmd_file1 & cache
+on,cmd,fast,blocks,tools/getBlocks,cmd_file2,n,file = cmd_file2 & cache
 on,both,fast,blocks,tools/getBlocks,fmt_default,y,blocks = 2222222 2332332
 on,both,fast,blocks,tools/getBlocks,fmt_txt,n,blocks = 2222222 2332332 & fmt = txt
 on,both,fast,blocks,tools/getBlocks,fmt_csv,n,blocks = 2222222 2332332 & fmt = csv & no_header

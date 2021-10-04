@@ -1,4 +1,3 @@
-getTokens argc: 6 [1:0xd26114cd6ee289accf82350c8d8487fedb8a0c07] [2:0xb9e7f8568e08d5659f5d29c4997173d84cdf2607] [3:--fmt] [4:txt] [5:2000000] 
-getTokens 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 --fmt txt 2000000 
+chifra tokens  0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 --fmt txt 2000000
 blocknumber	holder	address	name	symbol	decimals	balance
 2000000	0xb9e7f8568e08d5659f5d29c4997173d84cdf2607	0xd26114cd6ee289accf82350c8d8487fedb8a0c07	OMGToken Airdrop	OMG	18	""

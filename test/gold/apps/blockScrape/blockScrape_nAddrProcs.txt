@@ -1,5 +1,4 @@
-blockScrape argc: 1 
-blockScrape 
+chifra scrape  
 {
   "message": "Testing only",
   "n_blocks": 2000,

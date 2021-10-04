@@ -1,5 +1,4 @@
-getBlocks argc: 3 [1:stateclear] [2:--cache] 
-getBlocks stateclear --cache 
+chifra blocks  stateclear --cache
 { "data": [
 {
   "gasLimit": 3296773,

@@ -1,5 +1,4 @@
-blockScrape argc: 2 [1:pause] 
-blockScrape pause 
+chifra scrape  pause
 {
   "message": "Testing only",
   "n_blocks": 2000,

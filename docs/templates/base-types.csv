@@ -1,0 +1,17 @@
+name,description,notes
+address,a 20-byte hexadecimal string starting with '0x',lowercase
+blknum,an alias for a uint64,
+bool,a value either `true`&#44; `false`&#44; `1`&#44; or `0`,
+bytes,an arbitrarily long string of bytes,
+date,a JSON formatted date,as a string
+double,a floating point number of double precision,
+gas,an unsigned big number,as a string
+hash,a 32-byte hexadecimal string starting with '0x',lowercase
+int256,a signed big number,as a string
+ipfshash,a multi-hash produced by IPFS,mixed-case
+string,a normal character string,
+timestamp,a 64-bit unsigned integer,Unix timestamp
+uint32,a 32-bit unsigned integer,
+uint64,a 64-bit unsigned integer,
+uint8,an alias for the boolean type,
+wei,an unsigned big number,as a string

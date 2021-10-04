@@ -1,5 +1,4 @@
-cacheStatus argc: 4 [1:caches] [2:--types] [3:traces] 
-cacheStatus caches --types traces 
+chifra status  caches --types traces
 {
   "client_version": "Client version",
   "client_ids": "chainId: 1 networkId: 1",
@@ -20,8 +19,7 @@ cacheStatus caches --types traces
       "path": "tracesPath",
       "nFiles": 0,
       "nFolders": 0,
-      "sizeInBytes": 0,
-      "is_valid": true
+      "sizeInBytes": 0
     }
   ],
   "date": "--date--"

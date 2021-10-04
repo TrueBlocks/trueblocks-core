@@ -1,5 +1,8 @@
-getTrans argc: 4 [1:--file:cmd_file] [2:--fmt] [3:csv] 
-getTrans --file:cmd_file --fmt csv 
+chifra transactions  --file cmd_file --fmt csv
+Cmd: 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.78 --fmt:txt 
+Cmd: 3657480.78 
+Cmd: 0xda2f27fffb36c90c74fc53bd8b721074e87203c727640c95c4c802296e3bf8ad 
+Cmd: -fmt 
 "blocknumber","transactionindex","date","timestamp","from","to","ether","ethergasprice","gasused","hash","iserror","encoding","compressedtx"
 "3657480","78","2017-05-06 00:43:39 UTC","1494031419","0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5","0x8c222fb428f9f44715cf85349f79a18761c8e53c","0.233602441535478432","0.000000020000000000","21000","0x1e4e4d62951733dea1cce59eca0ffaf89a7881f13c9bb8558d61f6a9e0928c4b","0","0x","0x ( )"
 "3657480","78","2017-05-06 00:43:39 UTC","1494031419","0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5","0x8c222fb428f9f44715cf85349f79a18761c8e53c","0.233602441535478432","0.000000020000000000","21000","0x1e4e4d62951733dea1cce59eca0ffaf89a7881f13c9bb8558d61f6a9e0928c4b","0","0x","0x ( )"
@@ -7,18 +10,29 @@ getTrans --file:cmd_file --fmt csv
 
   Invalid option: -fmt. Did you mean --fmt?
 
-  Usage:    getTrans [-a|-t|-u|-r|-o|-v|-h] <tx_id> [tx_id...]  
-  Purpose:  Retrieve one or more transactions from the chain or local cache.
+Purpose:
+  Retrieve one or more transactions from the chain or local cache.
 
-  Where:  
-	transactions          a space-separated list of one or more transaction identifiers (required)
-	-a  (--articulate)    articulate the retrieved data if ABIs can be found
-	-t  (--trace)         include the transaction's traces in the results
-	-u  (--uniq)          display a list of uniq addresses found in the transaction instead of the underlying data
-	-r  (--reconcile <address>)reconcile the transaction as per the provided address
-	-o  (--cache)         force the results of the query into the tx cache (and the trace cache if applicable)
-	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
-	-v  (--verbose)       set verbose level (optional level defaults to 1)
-	-h  (--help)          display this help screen
+Usage:
+  getTrans [flags] <tx_id> [tx_id...]
 
-  Powered by TrueBlocks
+Arguments:
+  transactions - a space-separated list of one or more transaction identifiers (required)
+
+Flags:
+  -a, --articulate            articulate the retrieved data if ABIs can be found
+  -t, --trace                 include the transaction's traces in the results
+  -u, --uniq                  display a list of uniq addresses found in the transaction instead of the underlying data
+  -r, --reconcile <address>   reconcile the transaction as per the provided address
+  -o, --cache                 force the results of the query into the tx cache (and the trace cache if applicable)
+
+Global Flags:
+  -x, --fmt string     export format, one of [none|json*|txt|csv|api]
+  -v, --verbose uint   set verbose level (optional level defaults to 1)
+  -h, --help           display this help screen
+
+Notes:
+  - The transactions list may be one or more space-separated identifiers which are either a transaction hash, a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.
+  - This tool checks for valid input syntax, but does not check that the transaction requested actually exists.
+  - If the queried node does not store historical state, the results for most older transactions are undefined.
+

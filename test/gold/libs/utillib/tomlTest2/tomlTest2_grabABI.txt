@@ -1,5 +1,4 @@
-tomlTest2 argc: 2 [1:grabABI.toml] 
-tomlTest2 grabABI.toml 
+tomlTest2  grabABI.toml
 tests/grabABI.toml
 [version]
 current = "vers-alpha"

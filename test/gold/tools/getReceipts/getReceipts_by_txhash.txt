@@ -1,5 +1,4 @@
-getReceipts argc: 4 [1:0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a070cd671d3d765] [2:--fmt] [3:api] 
-getReceipts 0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a070cd671d3d765 --fmt api 
+chifra receipts  0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a070cd671d3d765 --fmt api
 {"data": [
   {
     "contractAddress": "0x0",

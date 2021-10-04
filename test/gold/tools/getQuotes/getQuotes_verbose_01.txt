@@ -1,5 +1,4 @@
-getQuotes argc: 5 [1:--verbose] [2:1] [3:--fmt] [4:api] 
-getQuotes --verbose 1 --fmt api 
+chifra quotes  --log_level 1 --fmt api
 Read cnt existing price quotes (lastRead: Now)
 {"data": [
   {

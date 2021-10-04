@@ -41,7 +41,7 @@ int main(int argc, const char* argv[]) {
         once = false;
     }
 
-    if (options.requestsHistory() && !nodeHasBalances(true))
+    if (options.requestsHistory() && !isArchiveNode())
         LOG_WARN("Your node does not report historical state. The results presented above are incorrect.");
 
     return 0;

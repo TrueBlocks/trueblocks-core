@@ -1,10 +1,33 @@
-makeClass argc: 5 [1:--edit] [2:-a] [3:--filter] [4:function] 
-makeClass --edit -a --filter function 
-TIME ~ CLOCK - <INFO>  : handling generate...
-Testing editFile: function.txt
-[settings]
-class    = CFunction
-fields   = string name|string type|bool anonymous|bool constant|bool payable|string signature|string encoding|CParameterArray inputs|CParameterArray outputs
-includes = utillib.h|parameter.h
+makeClass  --edit -a --filter function
 
-TIME ~ CLOCK - <INFO>  : makeClass --run processed 0 files (changed 0).                                        
+  Invalid option: --edit
+
+Purpose:
+  Automatically writes C++ for various purposes.
+
+Usage:
+  makeClass [flags] <file> [file...]
+
+Arguments:
+  files - one or more class definition files (required)
+
+Flags:
+  -a, --all         list, or run all class definitions found in the local folder
+  -o, --options     export options code (check validity in the process)
+  -g, --gocmds      export go command code
+  -m, --readmes     create readme files for each tool and app
+  -f, --format      format source code files (.cpp and .h) found in local folder and below
+  -l, --lint        lint source code files (.cpp and .h) found in local folder and below
+  -t, --tsx         create typescript routes
+  -d, --dump        dump any classDefinition config tomls to screen and quit (hidden)
+  -A, --openapi     export openapi.yaml file for API documentation (hidden)
+
+Global Flags:
+  -x, --fmt string     export format, one of [none|json*|txt|csv|api]
+  -v, --verbose uint   set verbose level (optional level defaults to 1)
+  -h, --help           display this help screen
+
+Notes:
+  - The --options flag generates COption code for each of the various tools.
+  - More information on class definition files is found in the documentation.
+

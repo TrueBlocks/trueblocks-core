@@ -1,5 +1,4 @@
-bigIntTest argc: 1 
-bigIntTest 
+bigIntTest  
 Test 0 [--a--]: 0 expected: 0 ✓
 Test 1 [--a--]: 535 expected: 535 ✓
 Test 2 [--f--]: 3141592653589793238462643383279 expected: 3141592653589793238462643383279 ✓

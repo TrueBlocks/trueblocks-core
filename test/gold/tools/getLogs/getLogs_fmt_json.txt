@@ -1,5 +1,4 @@
-getLogs argc: 5 [1:2222222.0] [2:2332332.0] [3:--fmt] [4:json] 
-getLogs 2222222.0 2332332.0 --fmt json 
+chifra logs  2222222.0 2332332.0 --fmt json
 { "data": [
   {
     "address": "0x37a9679c41e99db270bda88de8ff50c0cd23f326",

@@ -1,5 +1,4 @@
-cacheStatus argc: 7 [1:caches] [2:--types] [3:transactions] [4:--details] [5:--depth] [6:3] 
-cacheStatus caches --types transactions --details --depth 3 
+chifra status  caches --types txs --details  --depth 3
 {
   "client_version": "Client version",
   "client_ids": "chainId: 1 networkId: 1",

@@ -1,5 +1,4 @@
-ethNames argc: 4 [1:--custom] [2:--fmt] [3:txt] 
-ethNames --custom --fmt txt 
+chifra names  --custom --fmt txt
 tags	address	name	symbol	decimals
 81-Custom	0x0000000000000000000000000000000000000001	Account_1
 81-Custom	0x0000000000000000000000000000000000000002	Account_2	AC_2		2

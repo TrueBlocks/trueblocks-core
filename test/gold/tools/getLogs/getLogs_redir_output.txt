@@ -1,3 +1,2 @@
-getLogs argc: 4 [1:3657480.79] [2:--output] [3:testing_file] 
-getLogs 3657480.79 --output testing_file 
+chifra logs  3657480.79 --output testing_file
 --output_filename--

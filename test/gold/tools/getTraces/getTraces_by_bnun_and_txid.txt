@@ -1,5 +1,4 @@
-getTraces argc: 4 [1:4348290.92] [2:--fmt] [3:api] 
-getTraces 4348290.92 --fmt api 
+chifra traces  4348290.92 --fmt api
 {"data": [
   {
     "blockHash": "0x96a09b25c3748974bb7e08780074482a164ab5a21e2ffc6c7115ec73c84e7f73",

@@ -1,5 +1,4 @@
-getBlocks argc: 5 [1:3] [2:12] [3:469] [4:--uncles] 
-getBlocks 3 12 469 --uncles 
+chifra blocks  3 12 469 --uncles
 { "data": [
 {
   "gasLimit": 5000,

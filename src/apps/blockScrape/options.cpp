@@ -22,7 +22,7 @@ static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
     COption("pin", "p", "", OPT_SWITCH, "pin new chunks (and blooms) to IPFS (requires Pinata key and running IPFS node)"),  // NOLINT
-    COption("sleep", "s", "<double>", OPT_FLAG, "the number of seconds to sleep between passes (default 14)"),
+    COption("sleep", "s", "<double>", OPT_FLAG, "the number of seconds to sleep between passes"),
     COption("", "", "", OPT_DESCRIPTION, "Scan the chain and update the TrueBlocks index of appearances."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -72,9 +72,9 @@ bool COptions::parseArguments(string_q& command) {
     // BEG_DEBUG_DISPLAY
     LOG_TEST_BOOL("pin", pin);
     LOG_TEST("sleep", sleep, (sleep == 14));
-    LOG_TEST("n_blocks", n_blocks, (n_blocks == (isDockerMode() ? 100 : 2000)));
-    LOG_TEST("n_block_procs", n_block_procs, (n_block_procs == (isDockerMode() ? 5 : 10)));
-    LOG_TEST("n_addr_procs", n_addr_procs, (n_addr_procs == (isDockerMode() ? 10 : 20)));
+    LOG_TEST("n_blocks", n_blocks, (n_blocks == 2000));
+    LOG_TEST("n_block_procs", n_block_procs, (n_block_procs == 10));
+    LOG_TEST("n_addr_procs", n_addr_procs, (n_addr_procs == 20));
     // END_DEBUG_DISPLAY
 
     if (Mocked(""))
@@ -145,7 +145,7 @@ bool COptions::parseArguments(string_q& command) {
 
     // Balances are needed to make reconcilations. The user may not need that, so we allow it
     bool needsBalances = config->getConfigBool("requires", "balances", false);
-    if (needsBalances && !nodeHasBalances(true)) {
+    if (needsBalances && !isArchiveNode()) {
         return usage("This tool requires an --archive node with historical balances.");
     }
 
@@ -183,9 +183,7 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
-    registerOptions(nParams, params);
-    optionOn(OPT_PREFUND);
-    optionOff(OPT_FMT);
+    registerOptions(nParams, params, OPT_PREFUND, OPT_FMT);
     // Since we need prefunds, let's load the names library here
     loadNames();
 
@@ -193,9 +191,9 @@ void COptions::Init(void) {
     pin = false;
     sleep = 14;
     // clang-format off
-    n_blocks = getGlobalConfig("blockScrape")->getConfigInt("settings", "n_blocks", (isDockerMode() ? 100 : 2000));
-    n_block_procs = getGlobalConfig("blockScrape")->getConfigInt("settings", "n_block_procs", (isDockerMode() ? 5 : 10));
-    n_addr_procs = getGlobalConfig("blockScrape")->getConfigInt("settings", "n_addr_procs", (isDockerMode() ? 10 : 20));
+    n_blocks = getGlobalConfig("blockScrape")->getConfigInt("settings", "n_blocks", 2000);
+    n_block_procs = getGlobalConfig("blockScrape")->getConfigInt("settings", "n_block_procs", 10);
+    n_addr_procs = getGlobalConfig("blockScrape")->getConfigInt("settings", "n_addr_procs", 20);
     // clang-format on
     // END_CODE_INIT
 

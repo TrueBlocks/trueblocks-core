@@ -1,6 +1,5 @@
-fireStorm argc: 3 [1:trueblocks.eth] [2:--local] 
-fireStorm trueblocks.eth --local 
+chifra explore  trueblocks.eth --local
 TIME ~ CLOCK - <INFO>  : terms
 TIME ~ CLOCK - <INFO>  :   trueblocks.eth
 TIME ~ CLOCK - <INFO>  : local: true
-Opening https://etherscan.io/enslookup-search?search=trueblocks.eth
+Opening http://localhost:1234/explorer/enslookup-search?search=trueblocks.eth

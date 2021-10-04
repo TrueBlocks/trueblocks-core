@@ -1,0 +1,4 @@
+chifra monitors  0xbb7b8287f3f0a933474a79eae42cbca977791171 --first_block 1 --last_block 30 --appearances
+address	blocknumber	transactionindex
+0xbb7b8287f3f0a933474a79eae42cbca977791171	25	99999
+0xbb7b8287f3f0a933474a79eae42cbca977791171	30	99999

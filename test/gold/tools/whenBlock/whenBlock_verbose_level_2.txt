@@ -1,29 +1,25 @@
-whenBlock argc: 3 [1:1000] [2:--verbose:j] 
-whenBlock 1000 --verbose:j 
+chifra when  1000 --log_level j
+Error: 
+  invalid argument "j" for "--log_level" flag: strconv.ParseUint: parsing "j": invalid syntax
 
-  Invalid verbose level 'j'. Quitting...
+Usage:
+  chifra when [flags] < block | date > [ block... | date... ]
 
-  Usage:    whenBlock [-l|-t|-v|-h] < block | date > [ block... | date... ]  
-  Purpose:  Find block(s) based on date, blockNum, timestamp, or 'special'.
+Arguments:
+  blocks - one or more dates, block numbers, hashes, or special named blocks (see notes) (required)
 
-  Where:  
-	block_list            one or more dates, block numbers, hashes, or special named blocks (see notes)
-	-l  (--list)          export a list of the 'special' blocks
-	-t  (--timestamps)    ignore other options and generate timestamps only
+Flags:
+  -l, --list         export a list of the 'special' blocks
+  -t, --timestamps   ignore other options and generate timestamps only
+  -c, --check        available only with --timestamps, checks the validity of the timestamp data (hidden)
+  -f, --fix          available only with --timestamps, fixes incorrect timestamps if any (hidden)
+  -u, --count        available only with --timestamps, returns the number of timestamps in the cache (hidden)
 
-	#### Hidden options
-	-c  (--check)         available only with --timestamps, checks the validity of the timestamp data
-	-f  (--fix)           available only with --timestamps, fixes incorrect timestamps if any
-	-u  (--count)         available only with --timestamps, returns the number of timestamps in the cache
-	-s  (--skip <num>)    only applicable if --timestamps is on, the step between block numbers in the export
-	#### Hidden options
+Global Flags:
+  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
+  -h, --help         display this help screen
+  -v, --verbose      enable verbose (increase detail with --log_level)
 
-	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
-	-v  (--verbose)       set verbose level (optional level defaults to 1)
-	-h  (--help)          display this help screen
-
-  Notes:
-	- The block list may contain any combination of number, hash, date, special named blocks.
-	- Dates must be formatted in JSON format: YYYY-MM-DD[THH[:MM[:SS]]].
-
-  Powered by TrueBlocks
+Notes:
+  - The block list may contain any combination of number, hash, date, special named blocks.
+  - Dates must be formatted in JSON format: YYYY-MM-DD[THH[:MM[:SS]]].

@@ -1,3 +1,2 @@
-getState argc: 4 [1:0xf27daff52c38b2c373ad2b9392652ddf433303c5] [2:3500000] [3:--no_zero] 
-getState 0xf27daff52c38b2c373ad2b9392652ddf433303c5 3500000 --no_zero 
+chifra state  0xf27daff52c38b2c373ad2b9392652ddf433303c5 3500000 --no_zero
 blocknumber	address	balance

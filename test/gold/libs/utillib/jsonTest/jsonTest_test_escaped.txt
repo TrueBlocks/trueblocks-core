@@ -1,5 +1,4 @@
-jsonTest argc: 2 [1:escaped] 
-jsonTest escaped 
+jsonTest  escaped
 tests/escaped.json
 {
   "blockHash": "0x0529b5c60c99f177514df73dca383638cb27de1c8426aab95e017a33ac114727",

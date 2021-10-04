@@ -1,5 +1,4 @@
-getTrans argc: 4 [1:0xeec4ccd13fe05907f9d732a8ad245bcb7f918217157b89baaa23895c12eb329a] [2:--fmt] [3:api] 
-getTrans 0xeec4ccd13fe05907f9d732a8ad245bcb7f918217157b89baaa23895c12eb329a --fmt api 
+chifra transactions  0xeec4ccd13fe05907f9d732a8ad245bcb7f918217157b89baaa23895c12eb329a --fmt api
 {"data": [
   {
     "hash": "0xeec4ccd13fe05907f9d732a8ad245bcb7f918217157b89baaa23895c12eb329a",

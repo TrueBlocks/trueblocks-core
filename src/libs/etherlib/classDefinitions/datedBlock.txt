@@ -2,7 +2,7 @@
 class = CDatedBlock
 fields = datedBlocks.csv
 includes = etherlib.h
-doc_group = Chain Data
-description = An indentified block named for convienience
-openapi = datedBlock
-produced_by = when
+doc_group = 02-Chain Data
+doc_descr = An indentified block named for convienience
+doc_api = 17-datedBlock
+doc_producer = when

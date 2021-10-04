@@ -1,5 +1,4 @@
-getLogs argc: 4 [1:1428993.*] [2:--fmt] [3:api] 
-getLogs 1428993.* --fmt api 
+chifra logs  1428993.* --fmt api
 {"data": [
   {
     "address": "0x2bad3aa54d79b43cea3e859609d2de84e544ee74",

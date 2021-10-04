@@ -16,7 +16,7 @@
 static const COption params[] = {
     COption("files", "s", "list<fn>", OPT_REQUIRED | OPT_POSITIONAL, "One or more files to parse"),
     COption("which", "w", "uint64", OPT_FLAG, "Which test to run"),
-    COption("", "", "", OPT_DESCRIPTION, "Test the json parsing facility in TrueBlocks.\n"),
+    COption("", "", "", OPT_DESCRIPTION, "Test the json parsing facility in TrueBlocks."),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
@@ -56,7 +56,6 @@ bool COptions::parseArguments(string_q& command) {
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
     registerOptions(nParams, params);
-    optionOff(OPT_FMT);
 
     fileName = "";
     which = 0;

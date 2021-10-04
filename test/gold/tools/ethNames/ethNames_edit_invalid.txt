@@ -1,35 +1,32 @@
-ethNames argc: 7 [1:--invalid] [2:--expand] [3:--verbose] [4:10] [5:--fmt] [6:api] 
-ethNames --invalid --expand --verbose 10 --fmt api 
+chifra names  --invalid --log_level 10 --fmt api --expand
+Error: 
+  unknown flag: --invalid
 
-  Invalid option: --invalid
+Usage:
+  chifra names [flags] <term> [term...]
 
-  Usage:    ethNames [-e|-m|-l|-c|-p|-n|-a|-s|-g|-v|-h] <term> [term...]  
-  Purpose:  Query addresses or names of well known accounts.
+Arguments:
+  terms - a space separated list of one or more search terms (required)
 
-  Where:  
-	terms                 a space separated list of one or more search terms (required)
-	-e  (--expand)        expand search to include all fields (default searches name, address, and symbol only)
-	-m  (--match_case)    do case-sensitive search
-	-l  (--all)           include all accounts in the search
-	-c  (--custom)        include your custom named accounts
-	-p  (--prefund)       include prefund accounts
-	-n  (--named)         include well know token and airdrop addresses in the search
-	-a  (--addr)          display only addresses in the results (useful for scripting)
-	-s  (--collections)   display collections data
-	-g  (--tags)          export the list of tags and subtags only
+Flags:
+  -e, --expand            expand search to include all fields (search name, address, and symbol otherwise)
+  -m, --match_case        do case-sensitive search
+  -l, --all               include all accounts in the search
+  -c, --custom            include your custom named accounts
+  -p, --prefund           include prefund accounts
+  -n, --named             include well know token and airdrop addresses in the search
+  -a, --addr              display only addresses in the results (useful for scripting)
+  -s, --collections       display collections data
+  -g, --tags              export the list of tags and subtags only
+  -u, --to_custom         for editCmd only, is the edited name a custom name or not (hidden)
+  -C, --clean             clean the data (addrs to lower case, sort by addr) (hidden)
+  -A, --autoname string   an address assumed to be a token, added automatically to names database if true (hidden)
 
-	#### Hidden options
-	-u  (--to_custom)     for editCmd only, is the edited name a custom name or not
-	-C  (--clean)         clean the data (addrs to lower case, sort by addr)
-	-A  (--autoname <str>)an address assumed to be a token, added automatically to names database if true
-	#### Hidden options
+Global Flags:
+  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
+  -h, --help         display this help screen
+  -v, --verbose      enable verbose (increase detail with --log_level)
 
-	-x  (--fmt <val>)     export format, one of [none|json*|txt|csv|api]
-	-v  (--verbose)       set verbose level (optional level defaults to 1)
-	-h  (--help)          display this help screen
-
-  Notes:
-	- The tool will accept up to three terms, each of which must match against any field in the database.
-	- The --match_case option enables case sensitive matching.
-
-  Powered by TrueBlocks
+Notes:
+  - The tool will accept up to three terms, each of which must match against any field in the database.
+  - The --match_case option enables case sensitive matching.

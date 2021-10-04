@@ -219,7 +219,9 @@ extern logger<log_policy_i>* eLogger;
 #define SEP4(a) LOG4(cRed + string_q(10, '-') + (a) + string_q(10, '-') + cOff)
 #define SEP8(a) LOG8(cTeal + string_q(10, '-') + (a) + string_q(10, '-') + cOff)
 #define LOG_PROGRESS(op, progress, goal, post)                                                                         \
-    LOG_PROG((op), " ", padNum6T(uint64_t(progress)), " of ", padNum6T(uint64_t(goal)), (post))
+    if (!isTestMode()) {                                                                                               \
+        LOG_PROG((op), " ", padNum6T(uint64_t(progress)), " of ", padNum6T(uint64_t(goal)), (post));                   \
+    }
 #else
 #define LOG0(...)
 #define LOG1(...)

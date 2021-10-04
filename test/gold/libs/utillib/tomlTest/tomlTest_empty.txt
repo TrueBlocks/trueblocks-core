@@ -1,5 +1,4 @@
-tomlTest argc: 2 [1:empty.toml] 
-tomlTest empty.toml 
+tomlTest  empty.toml
 empty.toml
 [version]
 current = "vers-alpha"

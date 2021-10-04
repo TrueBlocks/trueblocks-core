@@ -158,7 +158,7 @@ bool CPriceQuote::Serialize(CArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CPriceQuote::SerializeC(CArchive& archive) const {
-    // Writing always write the latest version of the data
+    // Writing always writes the latest version of the data
     ((CPriceQuote*)this)->m_schema = getVersionNum();  // NOLINT
     CBaseNode::SerializeC(archive);
 

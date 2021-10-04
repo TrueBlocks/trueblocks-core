@@ -35,8 +35,13 @@ int main(int argc, const char* argv[]) {
         return EXIT_FAILURE;
 
     bool runLocal = getGlobalConfig("testRunner")->getConfigBool("settings", "runLocal", false);
+    if (runLocal) {
+        cerr << "Running local tests. Hit enter to continue." << endl;
+        getchar();
+    }
+
     total.git_hash = "git_" + string_q(GIT_COMMIT_HASH).substr(0, 10);
-    string_q testFolder = getCWD() + "../../../../src/dev_tools/testRunner/testCases/";
+    string_q testFolder = getSourcePath3();
     uint32_t testID = 0;
     for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
@@ -103,7 +108,6 @@ int main(int argc, const char* argv[]) {
                             copyFile(test.goldPath, test.workPath);
                         }
                     }
-                    // do nothing
 
                 } else {
                     CTestCase test(line, testID++);
@@ -143,9 +147,9 @@ int main(int argc, const char* argv[]) {
         perf << total.Format(perf_fmt) << endl;
         cerr << "    " << substitute(perf.str(), "\n", "\n    ") << endl;
         if (options.full_test && options.report) {
-            string_q perfFile = configPath(string_q("performance") + (total.allPassed ? "" : "_failed") + ".csv");
+            string_q perfFile = getConfigPath(string_q("performance") + (total.allPassed ? "" : "_failed") + ".csv");
             appendToAsciiFile(perfFile, perf.str());
-            appendToAsciiFile(configPath("performance_slow.csv"), slow.str());
+            appendToAsciiFile(getConfigPath("performance_slow.csv"), slow.str());
         } else {
             LOG_WARN(cRed, "Performance results not written because not full test", cOff);
         }
@@ -157,11 +161,11 @@ int main(int argc, const char* argv[]) {
         CStringArray files = {"performance.csv", "performance_failed.csv", "performance_slow.csv",
                               "performance_scraper.csv"};
         for (auto file : files) {
-            if (fileExists(configPath(file))) {
-                if (fileExists(configPath(file))) {
+            if (fileExists(getConfigPath(file))) {
+                if (fileExists(getConfigPath(file))) {
                     ostringstream copyCmd;
                     copyCmd << "cp -f \"";
-                    copyCmd << configPath(file) << "\" \"" << copyPath << "\"";
+                    copyCmd << getConfigPath(file) << "\" \"" << copyPath << "\"";
                     // clang-format off
                     if (system(copyCmd.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
                     // clang-format on
@@ -210,6 +214,10 @@ void COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
             ostringstream cmd;
 
             CStringArray fileLines;
+            string_q allFile = substitute(test.goldPath, "/api_tests", "") + "all_tests.env";
+            if (fileExists(allFile))
+                asciiFileToLines(allFile, fileLines);
+
             string_q envFile = substitute(test.goldPath, "/api_tests", "") + test.name + ".env";
             if (fileExists(envFile))
                 asciiFileToLines(envFile, fileLines);
@@ -220,13 +228,27 @@ void COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
                     envLines.push_back(f);
 
             if (cmdTests) {
-                string_q env = substitute(substitute(linesToString(envLines, '|'), " ", ""), "|", " ");
-                string_q e = "env " + env + " TEST_MODE=true NO_COLOR=true REDIR_CERR=true ";
-                string_q p = contains(test.path, "libs") ? "test/" + test.tool : test.tool;
-                if (test.isCmd)
-                    p = getCommandPath(p);
-                string_q c = p + " " + test.options + " >" + test.workPath + test.fileName + " 2>&1";
-                cmd << e << c;
+                string_q envs = substitute(substitute(linesToString(envLines, '|'), " ", ""), "|", " ");
+                string_q env = "env " + envs + " TEST_MODE=true NO_COLOR=true REDIR_CERR=true ";
+
+                string_q exe;
+                if (contains(test.path, "libs")) {
+                    exe = "test/" + test.tool;
+                    if (test.isCmd)
+                        exe = getCommandPath(exe);
+
+                } else {
+                    exe = test.tool;
+                    if (test.isCmd)
+                        exe = "chifra " + (test.extra.empty() ? test.route : test.extra);
+                }
+
+                string_q fullCmd = exe + " " + test.options;
+                string_q debugCmd =
+                    substitute(substitute(fullCmd, getCommandPath("test/"), ""), getCommandPath(""), "");
+                string_q redir = test.workPath + test.fileName;
+                cmd << "echo \"" << debugCmd << "\" >" << redir + " && ";
+                cmd << env << fullCmd << " >>" << redir << " 2>&1";
 
             } else {
                 bool has_options = (!test.builtin && !test.options.empty());
@@ -404,7 +426,7 @@ void COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
 bool saveAndCopy(const string_q& customFile, void* data) {
     CStringArray parts;
     explode(parts, customFile, '/');
-    string_q destFile = configPath(parts[parts.size() - 1]);
+    string_q destFile = getConfigPath(parts[parts.size() - 1]);
     string_q saveFile = getCachePath("tmp/" + parts[parts.size() - 1] + ".save");
     copyFile(destFile, saveFile);
     copyFile(customFile, destFile);
@@ -415,7 +437,7 @@ bool saveAndCopy(const string_q& customFile, void* data) {
 bool replaceFile(const string_q& customFile, void* data) {
     CStringArray parts;
     explode(parts, customFile, '/');
-    string_q destFile = configPath(parts[parts.size() - 1]);
+    string_q destFile = getConfigPath(parts[parts.size() - 1]);
     string_q saveFile = getCachePath("tmp/" + parts[parts.size() - 1] + ".save");
     copyFile(saveFile, destFile);
     ::remove(saveFile.c_str());

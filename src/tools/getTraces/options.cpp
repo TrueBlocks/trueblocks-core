@@ -22,11 +22,11 @@ static const COption params[] = {
     // clang-format off
     COption("transactions", "", "list<tx_id>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more transaction identifiers"),  // NOLINT
     COption("articulate", "a", "", OPT_SWITCH, "articulate the retrieved data if ABIs can be found"),
-    COption("filter", "f", "<string>", OPT_FLAG, "call the node's `trace_filter` routine with bang-seperated filter"),
+    COption("filter", "f", "<string>", OPT_FLAG, "call the node's trace_filter routine with bang-separated filter"),
     COption("statediff", "d", "", OPT_SWITCH, "export state diff traces (not implemented)"),
     COption("count", "c", "", OPT_SWITCH, "show the number of traces for the transaction only (fast)"),
     COption("skip_ddos", "s", "", OPT_HIDDEN | OPT_TOGGLE, "skip over the 2016 ddos during export ('on' by default)"),
-    COption("max", "m", "<uint64>", OPT_HIDDEN | OPT_FLAG, "if --skip_ddos is on, this many traces defines what a ddos transaction is (default = 250)"),  // NOLINT
+    COption("max", "m", "<uint64>", OPT_HIDDEN | OPT_FLAG, "if --skip_ddos is on, this many traces defines what a ddos transaction is"),  // NOLINT
     COption("", "", "", OPT_DESCRIPTION, "Retrieve traces for the given transaction(s)."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -189,8 +189,7 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
-    registerOptions(nParams, params);
-    optionOn(OPT_RAW);
+    registerOptions(nParams, params, OPT_RAW);
 
     // BEG_CODE_INIT
     articulate = false;
@@ -212,10 +211,10 @@ COptions::COptions(void) {
 
     // BEG_CODE_NOTES
     // clang-format off
-    notes.push_back("The `transactions` list may be one or more space-separated identifiers which are either a transaction hash, | a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.");  // NOLINT
+    notes.push_back("The `transactions` list may be one or more space-separated identifiers which are either a transaction hash, a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.");  // NOLINT
     notes.push_back("This tool checks for valid input syntax, but does not check that the transaction requested actually exists.");  // NOLINT
     notes.push_back("If the queried node does not store historical state, the results for most older transactions are undefined.");  // NOLINT
-    notes.push_back("A bang seperated filter has the following fields (at least one of which is required) and is separated | with a bang (!): fromBlk, toBlk, fromAddr, toAddr, after, count.");  // NOLINT
+    notes.push_back("A bang separated filter has the following fields (at least one of which is required) and is separated with a bang (!): fromBlk, toBlk, fromAddr, toAddr, after, count.");  // NOLINT
     notes.push_back("A state diff trace describes, for each modified address, what changed during that trace.");
     // clang-format on
     // END_CODE_NOTES

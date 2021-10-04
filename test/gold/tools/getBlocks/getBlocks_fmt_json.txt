@@ -1,5 +1,4 @@
-getBlocks argc: 5 [1:2222222] [2:2332332] [3:--fmt] [4:json] 
-getBlocks 2222222 2332332 --fmt json 
+chifra blocks  2222222 2332332 --fmt json
 { "data": [
 {
   "gasLimit": 4704588,

@@ -160,12 +160,6 @@ bool COptions::parseArguments(string_q& command) {
     secsFinal =
         (timestamp_t)getGlobalConfig("getBlocks")->getConfigInt("settings", "secs_when_final", (uint64_t)secsFinal);
 
-    if (expContext().asParity) {
-        manageFields("CTransaction:cumulativeGasUsed,gasUsed,timestamp", FLD_HIDE);
-        RENAME_FIELD(CBlock, "blockNumber", "number");
-        GETRUNTIME_CLASS(CBlock)->sortFieldList();
-    }
-
     if (hashes) {
         manageFields("CTransaction:all", FLD_HIDE);
         manageFields("CBlock:all", FLD_HIDE);
@@ -227,8 +221,7 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
-    registerOptions(nParams, params);
-    optionOn(OPT_RAW);
+    registerOptions(nParams, params, OPT_RAW);
 
     // BEG_CODE_INIT
     hashes = false;

@@ -1,5 +1,4 @@
-blockScrape argc: 2 [1:quit] 
-blockScrape quit 
+chifra scrape  quit
 {
   "message": "Testing only",
   "n_blocks": 2000,

@@ -1,4 +1,3 @@
-displayStrsTest argc: 2 [1:CTreeNode] 
-displayStrsTest CTreeNode 
+displayStrsTest  CTreeNode
 ------------------------------CTreeNode------------------------------
 Unknown node of type CTreeNode not created.

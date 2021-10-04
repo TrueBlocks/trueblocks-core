@@ -195,7 +195,7 @@ bool CCache::Serialize(CArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CCache::SerializeC(CArchive& archive) const {
-    // Writing always write the latest version of the data
+    // Writing always writes the latest version of the data
     CBaseNode::SerializeC(archive);
 
     // EXISTING_CODE
@@ -402,7 +402,7 @@ bool CCache::needsRefresh(const string_q& cacheType, bool details) {
 
     bool nR = fileLastModifyDate(tmpFn) < cacheInfo.fileTime;
     if (!nR) {
-        string_q configFn = configPath("trueblocks.toml");
+        string_q configFn = getConfigPath("trueblocks.toml");
         nR = fileLastModifyDate(tmpFn) < fileLastModifyDate(configFn);
     }
     LOG4("needsRefresh:", nR);

@@ -166,7 +166,7 @@ bool CLeaf::Serialize(CArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CLeaf::SerializeC(CArchive& archive) const {
-    // Writing always write the latest version of the data
+    // Writing always writes the latest version of the data
     CTreeNode::SerializeC(archive);
 
     // EXISTING_CODE

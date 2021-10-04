@@ -1,5 +1,4 @@
-stringTest argc: 2 [1:3] 
-stringTest 3 
+stringTest  3
 0. Running TestCStr
 	000.000 tokenize        ==> Please  	split this sentence into tokens
 	000.001 tokenize        ==> split   	this sentence into tokens

@@ -1,5 +1,4 @@
-whenBlock argc: 4 [1:1001001] [2:--fmt] [3:json] 
-whenBlock 1001001 --fmt json 
+chifra when  1001001 --fmt json
 { "data": [
   {
     "blockNumber": 1001001,

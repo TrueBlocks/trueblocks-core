@@ -1,5 +1,4 @@
-abiTest argc: 4 [1:eth_test] [2:-s] [3:0] 
-abiTest eth_test -s 0 
+abiTest  eth_test -s 0
 ethereum test box test...
 0. 	000.000 type_2_Serp(bytes) == 'b'        ==> passed 'type_2_Serp("bytes") == "s"' is true
 	000.001 type_2_Serp(int256) == 'i'       ==> passed 'type_2_Serp("int256") == "i"' is true

@@ -16,7 +16,7 @@
 static const COption params[] = {
     COption("mode", "m", "", OPT_REQUIRED | OPT_POSITIONAL,
             "either a number between 0 and 5, a C++ TrueBlocks class name, the word 'upgradeTest'"),
-    COption("", "", "", OPT_DESCRIPTION, "Test upgrading binary data to new format.\n"),
+    COption("", "", "", OPT_DESCRIPTION, "Test upgrading binary data to new format."),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
@@ -46,8 +46,6 @@ bool COptions::parseArguments(string_q& command) {
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
     registerOptions(nParams, params);
-    optionOff(OPT_FMT);
-
     testNum = -1;
 }
 

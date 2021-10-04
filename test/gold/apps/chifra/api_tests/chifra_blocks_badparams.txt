@@ -1,5 +1,0 @@
-{
-  "errors": [
-    "chifra blocks - Invalid option: --not_an_option"
-  ]
-}

@@ -1,0 +1,175 @@
+{
+  "data": [
+    {
+      "hash": "0x0",
+      "blockHash": "0x0",
+      "blockNumber": 1,
+      "transactionIndex": 99999,
+      "timestamp": 1438269988,
+      "from": "0xBlockReward",
+      "to": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+      "value": 5e+18,
+      "gas": 0,
+      "gasPrice": 0,
+      "maxFeePerGas": 0,
+      "maxPriorityFeePerGas": 0,
+      "input": "",
+      "isError": 0,
+      "hasToken": 0,
+      "receipt": {
+        "contractAddress": "0x0",
+        "gasUsed": 0,
+        "effectiveGasPrice": 0,
+        "logs": [],
+        "status": null
+      },
+      "traces": [],
+      "compressedTx": "",
+      "gasCost": 0,
+      "etherGasCost": 0,
+      "function": "",
+      "gasUsed": 0,
+      "date": "2015-07-30 15:26:28 UTC",
+      "ether": 5,
+      "encoding": ""
+    }
+  ],
+  "types": [
+    {
+      "type": "CTransaction",
+      "fields": [
+        {
+          "name": "hash",
+          "type": "hash"
+        },
+        {
+          "name": "blockHash",
+          "type": "hash"
+        },
+        {
+          "name": "blockNumber",
+          "type": "blocknum"
+        },
+        {
+          "name": "transactionIndex",
+          "type": "blocknum"
+        },
+        {
+          "name": "timestamp",
+          "type": "timestamp"
+        },
+        {
+          "name": "from",
+          "type": "address"
+        },
+        {
+          "name": "to",
+          "type": "address"
+        },
+        {
+          "name": "value",
+          "type": "wei"
+        },
+        {
+          "name": "gas",
+          "type": "gas"
+        },
+        {
+          "name": "gasPrice",
+          "type": "gas"
+        },
+        {
+          "name": "maxFeePerGas",
+          "type": "gas"
+        },
+        {
+          "name": "maxPriorityFeePerGas",
+          "type": "gas"
+        },
+        {
+          "name": "input",
+          "type": "text"
+        },
+        {
+          "name": "isError",
+          "type": "unumber"
+        },
+        {
+          "name": "hasToken",
+          "type": "unumber"
+        },
+        {
+          "name": "receipt",
+          "type": "object"
+        },
+        {
+          "name": "traces",
+          "type": "object|ts_array"
+        },
+        {
+          "name": "articulatedTx",
+          "type": "object"
+        },
+        {
+          "name": "compressedTx",
+          "type": "text"
+        },
+        {
+          "name": "gasCost",
+          "type": "wei"
+        },
+        {
+          "name": "etherGasCost",
+          "type": "wei"
+        },
+        {
+          "name": "function",
+          "type": "text"
+        },
+        {
+          "name": "gasUsed",
+          "type": "gas"
+        },
+        {
+          "name": "date",
+          "type": "date"
+        },
+        {
+          "name": "ether",
+          "type": "ether"
+        },
+        {
+          "name": "encoding",
+          "type": "text"
+        }
+      ]
+    }
+  ],
+  "meta": {
+    "unripe": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "client": "0xdeadbeef",
+    "namedFrom": {},
+    "unNamedFrom": {
+      "0xBlockReward": 1
+    },
+    "first_block": "0xdeadbeef",
+    "last_block": "0xdeadbeef",
+    "accountedFor": {
+      "tags": "",
+      "address": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+      "name": "0x05a56e2d52c817161883f50c441c3228cfe54d9f",
+      "symbol": "",
+      "source": "",
+      "decimals": 0,
+      "description": "",
+      "is_custom": false,
+      "is_prefund": false,
+      "is_contract": false,
+      "is_erc20": false,
+      "is_erc721": false
+    }
+  }
+}

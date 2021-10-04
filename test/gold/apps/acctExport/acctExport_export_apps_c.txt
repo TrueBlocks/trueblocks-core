@@ -1,4 +1,3 @@
-acctExport argc: 4 [1:0x001d14804b399c6ef80e64576f657660804fec0b] [2:--appearances] [3:--count] 
-acctExport 0x001d14804b399c6ef80e64576f657660804fec0b --appearances --count 
+chifra export  0x001d14804b399c6ef80e64576f657660804fec0b --appearances --count
 address	nrecords	filesize
 0x001d14804b399c6ef80e64576f657660804fec0b	3	24

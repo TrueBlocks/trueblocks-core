@@ -6,45 +6,44 @@ While it's useful, it has two shortcomings. First, it is fully centralized, pull
 
 While `chifra slurp` has its shortcomings, it does provides some nice features. You may use it to pull any transaction initiated by an EOA for example or to explore mining rewards. Visit the above referenced website for more information.
 
-### Usage
+```[plaintext]
+Purpose:
+  Fetch data from EtherScan for any address.
 
-`Usage:`    chifra slurp [-t|-p|-v|-h] &lt;address&gt; [address...] [block...]  
-`Purpose:`  Fetch data from EtherScan for any address.
+Usage:
+  chifra slurp [flags] <address> [address...] [block...]
 
-`Where:`  
+Arguments:
+  addrs - one or more addresses to slurp from Etherscan (required)
+  blocks - an optional range of blocks to slurp
 
-| | Option | Description |
-| :----- | :----- | :---------- |
-|  | addrs | one or more addresses to slurp from Etherscan (required) |
-|  | blocks | an optional range of blocks to slurp |
-| -t | --types &lt;val&gt; | one or more types of transactions to request, one or more of *[ ext\* \| int \| token \| nfts \| miner \| uncles \| all ]* |
-| -p | --appearances | show only the blocknumer.tx_id appearances of the exported transactions |
-| -v | --verbose | set verbose level (optional level defaults to 1) |
-| -h | --help | display this help screen |
+Flags:
+  -t, --types strings   which types of transactions to request
+                        One or more of ext, int, token, nfts, miner, uncles, all
+  -p, --appearances     show only the blocknumer.tx_id appearances of the exported transactions
 
-`Notes:`
+Global Flags:
+  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
+  -h, --help         display this help screen
+  -v, --verbose      enable verbose (increase detail with --log_level)
 
-- Portions of this software are Powered by Etherscan.io APIs.
+Notes:
+  - Portions of this software are Powered by Etherscan.io APIs.
+```
 
-#### Other Options
+Other Options
 
-All **TrueBlocks** command-line tools support the following commands (although in some case, they have no meaning):
+All tools accept the following additional flags, although in some cases, they have no meaning.
 
-| Command     | Description                                                                                     |
-| ----------- | ----------------------------------------------------------------------------------------------- |
-| --version   | display the current version of the tool                                                         |
-| --nocolor   | turn off colored display                                                                        |
-| --wei       | specify value in wei (the default)                                                              |
-| --ether     | specify value in ether                                                                          |
-| --dollars   | specify value in US dollars                                                                     |
-| --raw       | report JSON data from the node with minimal processing                                          |
-| --very_raw  | report JSON data from node with zero processing                                                 |
-| --fmt       | export format (where appropriate). One of [ none &#124; txt &#124; csv &#124; json &#124; api ] |
-| --to_file   | write the results to a temporary file and return the filename                                   |
-| --output:fn | write the results to file 'fn' and return the filename                                          |
-| --file:fn   | specify multiple sets of command line options in a file.                                        |
+```[plaintext]
+  -v, --version         display the current version of the tool
+      --wei             export values in wei (the default)
+      --ether           export values in ether
+      --dollars         export values in US dollars
+      --raw             pass raw RPC data directly from the node with no processing
+      --to_file         write the results to a temporary file and return the filename
+      --output string   write the results to file 'fn' and return the filename
+      --file string     specify multiple sets of command line options in a file
+```
 
-<small>*For the `--file:fn` option, place a series of valid command lines in a file and use the above options. In some cases, this option may significantly improve performance. A semi-colon at the start of a line makes that line a comment.*</small>
-
-**Source code**: [`tools/ethslurp`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/tools/ethslurp)
-
+*For the `--file string` option, you may place a series of valid command lines in a file using any valid flags. In some cases, this may significantly improve performance. A semi-colon at the start of any line makes it a comment.*

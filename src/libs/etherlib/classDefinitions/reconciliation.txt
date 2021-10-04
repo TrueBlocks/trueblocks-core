@@ -5,7 +5,7 @@ includes = utillib.h
 cpp_includes = etherlib.h
 equals = ((blockNumber == it.blockNumber) && (assetAddr == it.assetAddr))
 tsx = true
-doc_group = Accounts
-description = a reconiciliation of all inflows and outflows to a given account at a given transaction
-openapi = reconciliation
-produced_by = export
+doc_group = 01-Accounts
+doc_descr = a reconiciliation of all inflows and outflows to a given account at a given transaction
+doc_api = 03-reconciliation
+doc_producer = export

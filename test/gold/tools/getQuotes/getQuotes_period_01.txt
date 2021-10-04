@@ -1,5 +1,4 @@
-getQuotes argc: 5 [1:--period] [2:60] [3:--fmt] [4:json] 
-getQuotes --period 60 --fmt json 
+chifra quotes  --period 60 --fmt json
 { "data": [
   {
     "timestamp": 1439078400,

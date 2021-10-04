@@ -131,7 +131,7 @@ inline void CReceipt::duplicate(const CReceipt& re) {
     status = re.status;
 
     // EXISTING_CODE
-    pTransaction = re.pTransaction;  // no deep copy becuase it's const
+    pTransaction = re.pTransaction;  // no deep copy because it's const
     finishParse();
     // EXISTING_CODE
 }

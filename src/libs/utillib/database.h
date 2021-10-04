@@ -149,6 +149,7 @@ extern string_q asciiFileToString(const string_q& filename);
 extern size_t asciiFileToString(const string_q& filename, string& contents);  // non-copy
 extern size_t asciiFileToLines(const string_q& fileName, CStringArray& lines);
 extern size_t asciiFileToLines(const string_q& fileName, CUintArray& lines);
+extern size_t asciiFileToMap(const string_q& fileName, CNameValueMap& lines);
 extern size_t stringToAsciiFile(const string_q& fileName, const string_q& contents);
 extern size_t linesToAsciiFile(const string_q& fileName, const CStringArray& lines, char sep = '\n');
 extern string_q linesToString(const CStringArray& lines, char sep = '\n');
@@ -171,11 +172,10 @@ extern void cleanFileLocks(void);
 //----------------------------------------------------------------------
 class codewrite_t {
   public:
-    string_q fileName, codeOutIn, namespc;
+    string_q fileName, codeOutIn;
     uint32_t nSpaces;
-    bool stripEOFNL, force;
-    codewrite_t(const string_q& fn, const string_q& c, const string_q& n, uint32_t ns, bool s = true, bool f = false)
-        : fileName(fn), codeOutIn(c), namespc(n), nSpaces(ns), stripEOFNL(s), force(f) {
+    bool stripEOFNL;
+    codewrite_t(const string_q& fn, const string_q& c) : fileName(fn), codeOutIn(c), nSpaces(4), stripEOFNL(true) {
     }
 };
 extern bool shouldQuit(void);

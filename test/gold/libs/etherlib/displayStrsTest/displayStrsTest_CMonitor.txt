@@ -1,8 +1,7 @@
-displayStrsTest argc: 2 [1:CMonitor] 
-displayStrsTest CMonitor 
+displayStrsTest  CMonitor
 ------------------------------CMonitor------------------------------
 {
-  "schema": 12001,
+  "schema": 14000,
   "deleted": false,
   "showing": true,
   "cname": "Monitor",

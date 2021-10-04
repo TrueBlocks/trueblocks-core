@@ -1,15 +1,20 @@
-abiTest argc: 2 [1:ecoding] 
-abiTest ecoding 
+abiTest  ecoding
 
   Invalid argument ecoding. Please enter either 'encoding' or 'generation'. Quitting...
 
-  Usage:    abiTest [-s|-v|-h] <mode> [mode...]  
-  Purpose:  Simple program to illustrate how to encode function and event signatures.
+Purpose:
+  Simple program to illustrate how to encode function and event signatures.
 
-  Where:  
-	modes                 mode of operation, one or more of [encoding|generation] (required)
-	-s  (--sub <num>)     sub mode
-	-v  (--verbose)       set verbose level (optional level defaults to 1)
-	-h  (--help)          display this help screen
+Usage:
+  abiTest [flags] <mode> [mode...]
 
-  Powered by TrueBlocks
+Arguments:
+  modes - mode of operation, one or more of [encoding|generation] (required)
+
+Flags:
+  -s, --sub <num>   sub mode
+
+Global Flags:
+  -x, --fmt string     export format, one of [none|json*|txt|csv|api]
+  -v, --verbose uint   set verbose level (optional level defaults to 1)
+  -h, --help           display this help screen

@@ -168,7 +168,7 @@ bool COptions::handle_status(ostream& os) {
     }
 
     CChainCache txs;
-    if (contains(mode, "|transactions|") || contains(mode, "|data|")) {
+    if (contains(mode, "|txs|") || contains(mode, "|data|")) {
         LOG8("Reporting on txs");
         if (!txs.readBinaryCache("txs", details)) {
             string_q thePath = getCachePath("txs/");
@@ -429,9 +429,7 @@ bool noteIndex(const string_q& path, void* data) {
         timestamp_t unused;
         blknum_t last = NOPOS;
         blknum_t first = bnFromPath(path, last, unused);
-        if (!isTestMode()) {
-            LOG_PROGRESS("Scanning", ++counter->fileRange.first, counter->fileRange.second, "\r");
-        }
+        LOG_PROGRESS("Scanning", ++counter->fileRange.first, counter->fileRange.second, "\r");
 
         if (last < counter->options->scanRange.first)
             return true;

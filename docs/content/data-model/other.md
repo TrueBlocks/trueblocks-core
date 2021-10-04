@@ -1,8 +1,8 @@
 ---
 title: "Other"
-description: "TrueBlocks is build on blockchain data. This reference guides you."
-lead: "It all starts with transactions and addresses"
-date: 2021-07-06T10:43:22-03:00
+description: ""
+lead: ""
+date: 2021-10-03T20:13:02
 lastmod:
   - :git
   - lastmod
@@ -12,280 +12,96 @@ draft: false
 images: []
 menu:
   data:
-    parent: collections
-weight: 1900
+    parent: "collections"
+weight: 1800
 toc: true
 ---
 
-_These fields describe the output of various TrueBlocks blockchain queries.
-For information about how to refine these queries, see
-[the corresponding CLI section](/docs/chifra/chaindata/)_
+These commands call some useful miscellaneous tools:
+* `chifra quotes`, a rudimentary pricing tool,
+* `chifra explore` a quick way to open a blockchain explorer,
+* `ethslurp` an older tool that lets you call data from EtherScan. (This has issues of centralization and data quality, see explanation in its section).
 
-## Transactions
+{{< alert icon="👉" title="note about keys"
+text="Note: some of these tools, like `ethslurp`, require an EtherScan key." >}}
+[Follow these instructions to add a key to your config](https://docs.trueblocks.io/docs/prologue/installing-trueblocks/#3-update-the-configs-for-your-rpc-and-api-keys)
 
-Transactions represent eth transfers to and from other addresses.
+_Each data structure is created by one or more tools which are detailed below_
 
-Most of the fields that TrueBlocks returns are standard to all eth transaction.
-However, one field is very interesting: `articulatedTx` provides a human readable output of the `input` field.
+## Function
 
-This is a very powerful way to understand the story behind a smart contract.
+ABI files are derived from the Solidity source code of a smart contract by extracting the canonical function and event signatures in a JSON structure. The function signatures are hashed (using keccak) into four-byte encodings for functions and 32-byte encodings for events. Because the blockchain only deals with byte data, TrueBlocks needs a way to decode the bytes back into the human-readable function and event signatures. We call this process `--articulate`. Most TrueBlocks commands provide an `--articulate` option. See the commands themselves for more information.
 
-### How to get transactions
+The following commands produce and manage functions:
 
-- **CLI**:
-  - run `chifra transactions <txn_id>`.
-  - Use the `--articulate` option to turn the `input` field human readable.
-  - [See the command's documentation](/docs/chifra/chaindata/#chifra-transactions)
-- **API**:
-  - [Calls to `/transactions`](/api#operation/chaindata-transactions)
-- **Explorer**
+| Tools                                                 |                                                              |
+| ----------------------------------------------------- | ------------------------------------------------------------ |
+| [chifra export](/docs/chifra/accounts/#chifra-export) | export full detail of transactions for one or more addresses |
+| [chifra abis](/docs/chifra/accounts/#chifra-abis)     | fetches the ABI for a smart contract                         |
 
-### Reference of transaction fields
+Function data is made of the following data fields:
 
-| Field             | Description                                                                                                    | Type         |
-| ----------------- | -------------------------------------------------------------------------------------------------------------- | ------------ |
-| hash              | the transaction's hash                                                                                         | hash         |
-| blockHash         | the hash of the block in which this transaction appears                                                        | hash         |
-| blockNumber       | the block number of the containing block                                                                       | blknum       |
-| transactionIndex  | the transaction's zero-indexed position in the block                                                           | blknum       |
-| nonce             | sequence number of the transactions sent by the sender                                                         | number       |
-| timestamp         | the block's unix timestamp                                                                                     | timestamp    |
-| from              | the address from which this transaction was sent                                                               | address      |
-| to                | the recipient address for this transaction                                                                     | address      |
-| value             | the amount of wei sent with this transactions                                                                  | wei          |
-| gas               | the amount of gas the sender is willing to spend on this transaction                                           | wei          |
-| gasPrice          | the number of wei per unit of gas used the sender is willing to spend                                          | wei          |
-| input             | byte data either containing a message or funcational data for a smart contracts. See the `--articulate` option | bytes        |
-|                   |                                                                                                                |              |
-| receipt           | [receipt](#receipt) for the transaction                                                                        |
-| [traces](#traces) | an array of trace objects                                                                                      | object array |
-| statements        | an array of [reconciliations](#reconciliations). One for each asset present in the transaction                 | object array |
-| articulatedTx     | a human readable articulation of the `input` field                                                             | object       |
-| compressedTx      | truncated, more readable version of the articulation                                                           | string       |
-| isError           | `true` if transaction ended in error                                                                           | boolean      |
-| hasToken          | `true` if transaction is either ERC20- or ERC721-related                                                       | boolean      |
-| finalized         | `true` if TrueBlocks considers this block final                                                                | boolean      |
+| Field     | Description                                             | Type            |
+| --------- | ------------------------------------------------------- | --------------- |
+| name      | the name of the interface                               | string          |
+| type      | the type of the interface, either 'event' or 'function' | string          |
+| signature | the canonical signature of the interface                | string          |
+| encoding  | the signature encoded with keccak                       | string          |
+| inputs    | the input parameters to the function, if any            | CParameterArray |
+| outputs   | the output parameters to the function, if any           | CParameterArray |
 
-## Blocks
 
-`chifra blocks` returns top level data specified block. You can also include
-an array for the blocks' transactions.
+## Parameter
 
-### How to get blocks
+Parameters are a constituent part of a [Function or Event](/data-model/accounts/#function). The parameters of a function are each individual value passed into the function. Along with the function's name, the parameters types (once canonicalized) are used to create a function's four byte signature (or an event's 32-byte signature). Parameters are important to TrueBlocks because we use them as part of the ABI decoding and the `--articulate` process to conver the blockchain's bytes into human-readable text.
 
-- **CLI**:
-  - [See the command's documentation](/docs/chifra/chaindata/#chifra-blocks)
-- **API**:
-  - [Calls to `/blocks`](/api#operation/chaindata-blocks)
-- **Explorer**
+The following commands produce and manage parameters:
 
-### Reference of block fields
+| Tools                                                 |                                                              |
+| ----------------------------------------------------- | ------------------------------------------------------------ |
+| [chifra export](/docs/chifra/accounts/#chifra-export) | export full detail of transactions for one or more addresses |
+| [chifra abis](/docs/chifra/accounts/#chifra-abis)     | fetches the ABI for a smart contract                         |
 
-| Field           | Description                                                                   | Type         |
-| --------------- | ----------------------------------------------------------------------------- | ------------ |
-| gasLimit        | the system-wide maximum amount of gas permitted in this block                 | wei          |
-| hash            | the hash of the current block                                                 | hash         |
-| blockNumber     | the block number of the block                                                 | blknum       |
-| parentHash      | the hash of the previous block                                                | hash         |
-| miner           | address of the winning miner for this block                                   | address      |
-| difficulty      | the computational difficulty at this block                                    | bigint       |
-| timestamp       | the unix timestamp of the block                                               | timestamp    |
-| transactions    | a possibly empty array of [transactions](#transactions) or transaction hashes | object array |
-|                 |                                                                               |              |
-| gasUsed         | The amount of gas used                                                        | wei          |
-| transactionsCnt | the number of transactions in the array                                       | number       |
-| finalized       | a flag indicating if TrueBlocks considers this block final                    | boolean      |
+Parameter data is made of the following data fields:
 
-## Receipts
+| Field        | Description                                                 | Type            |
+| ------------ | ----------------------------------------------------------- | --------------- |
+| type         | the type of this parameter                                  | string          |
+| name         | the name of this parameter                                  | string          |
+| str_default  | the default value of this parameter, if any                 | string          |
+| indexed      | `true` if this parameter is indexed                         | bool            |
+| internalType | for composite types, the internal type of the parameter     | string          |
+| components   | for composite types, the parameters making up the composite | CParameterArray |
 
-Receipts record the amount of gas used for a transaction among other things. If the transaction succeeded, a receipt might also have logs.
 
-If the `to` address of a transaction is `0x0`, the `input` data is considered to be the the source code (byte code) of a smart contract. In this case, if the creation of the contract succeeds, the `contractAddress` field of the receipt carries the address of the newly created contract.
+## Quote
 
-### How to get receipts
+Prior to sources of on-chain prices such as UniSwap, TrueBlocks would pull US dollar to Ether prices from the Poloniex price API. This data structure reports on those queries. Note that this tool has been deprecated.
 
-- **CLI**:
-  - run `chifra receipts <txn_id>`.
-  - [See the command's documentation](/docs/chifra/chaindata/#chifra-receipts)
-- **API**:
-  - [Calls to `/receipts`](/api#operation/chaindata-receipts)
-- **Explorer**
+The following commands produce and manage quotes:
 
-### Reference of receipt fields
+| Tools                                              |                                                                           |
+| -------------------------------------------------- | ------------------------------------------------------------------------- |
+| [chifra quotes](/docs/chifra/other/#chifra-quotes) | Freshen or display Ethereum price data.<br/>This tool has been deprecated |
 
-| Field           | Description                                       | Type         |
-| --------------- | ------------------------------------------------- | ------------ |
-| status          | `1` if the transaction suceeds, `0` otherwise     | number       |
-| contractAddress | the address of the newly created contract, if any | address      |
-| gasUsed         | the amount of gas used by this transaction        | wei          |
-| logs            | a possibly empty array of [logs](#logs)           | object array |
+Quote data is made of the following data fields:
 
-## Logs
+| Field     | Description                                           | Type      |
+| --------- | ----------------------------------------------------- | --------- |
+| timestamp | the timestamp of this quote                           | timestamp |
+| close     | price of the asset in US dollars                      | double    |
+| date      | the date of the associated timestamp                  | date      |
+| name      | the name of the block for some named 'special' blocks | string    |
 
-Logs appear in a possibly empty array in the transaction's receipt. They are only created if the underlying transaction suceeded. In the case where the transaction failed, no logs will appear in the receipt. Logs are only ever generated during transactions whose `to` address is a smart contract.
 
-### How to get logs
+## Base types
 
-- **CLI**:
-  - run `chifra logs <txn_id>`.
-  - [See the command's documentation](/docs/chifra/chaindata/#chifra-logs)
-- **API**:
-  - [Calls to `/logs`](/api#operation/chaindata-logs)
-- **Explorer**
+The above documentation mentions the following basic data types.
 
-### Reference of log fields
-
-| Field            | description                                                                                       | type               |
-| ---------------- | ------------------------------------------------------------------------------------------------- | ------------------ |
-| blockNumber      | the block number of the containing block                                                          | blknum             |
-| transactionIndex | the transaction's zero-indexed position in the block                                              | blknum             |
-| address          | the smart contract that emitted this log                                                          | address            |
-| logIndex         | the zero-indexed position of this log relative to the block                                       | number             |
-| topics           | the first topic hashes event signature of the log, up to 3 additional index parameters may appear | hash array (max 4) |
-| data             | any remaining un-indexed parameters to the event                                                  | bytes              |
-| articulatedLog   | a human-readable version of the `topic` and `data` fields                                         | object             |
-| compressedLog    | a truncated, more readable version of the articulation                                            | string             |
-
-<!---emitter is used in chifra export --->
-
-## Traces
-
-The deepest layer of the Ethereum data is the trace. Every transaction has at least one trace which is itself a record of the transaction. If the `to` address of the transaction is a smart contract, other traces may appear, if, for example, that smart contract calls other smart contracts.
-
-Traces may be arbitrarily deep (up to the gasLimit) and ultimately represent a tree of function calls. Some transactions have 100s of traces. The format of the trace is similar to the transaction itself have a trace `action` (which contains `from`, `to`, `value` like the transaction) and the trace `result` (containing `gasUsed` like the receipt).
-
-### How to get traces
-
-- **CLI**:
-  - run `chifra traces <txn_id>`.
-  - [See the command's documentation](/docs/chifra/chaindata/#chifra-traces)
-- **API**:
-  - [Calls to `/traces`](/api#operation/chaindata-traces)
-- **Explorer**
-
-### Reference of trace fields
-
-| Field            | description                                             | type   |
-| ---------------- | ------------------------------------------------------- | ------ |
-| blockHash        | the hash of the block in which this transaction appears | hash   |
-| blockNumber      | the block number of the containing block                | blknum |
-| transactionHash  | the transaction's hash                                  | hash   |
-| transactionIndex | the transaction's zero-indexed position in the block    | blknum |
-| traceAddress     | a particular trace's address in the trace tree          | string |
-| subTraces        | the number of children traces that the trace has        | number |
-| type             | the type of the trace                                   | string |
-| action           | the [trace action](#trace-action)                       | object |
-| result           | the [trace result](#trace-result)                       | object |
-
-#### Trace action
-
-Other than the first trace which is the trace of the transaction itself, traces represent calls into smart contracts. Because of this, `trace actions` closely resemble the fields of the [transaction](#transactions).
-
-| Field            | Description                                                                        | Type    |
-| ---------------- | ---------------------------------------------------------------------------------- | ------- |
-| from             | the smart contract address that called the trace                                   | address |
-| to               | the smart contract address that the trace calls                                    | address |
-| gas              | The maximum amount of gas allowed for this call                                    | wei     |
-| input            | an encoded version of the function call. Use the `--articulate` to display details | bytes   |
-| callType         | the type of this call                                                              | string  |
-| refundAddress    | if the call type is `self-destruct`, the address to which the refund is sent       | address |
-|                  |                                                                                    |         |
-| articulatedTrace | A human-readable version of the trace action's `input` and the result's `output`   | object  |
-| compressedTrace  | a truncated, more readable version of the articulation                             | string  |
-
-#### Trace result
-
-As mentioned above, other than the first trace, traces represent calls into other smart contracts. Because of this, the trace results closely resembles the fields of the [receipt](#receipts).
-
-| Field       | description                                                                            | type   |
-| ----------- | -------------------------------------------------------------------------------------- | ------ |
-| newContract | address of the newly created contract, if any                                          | string |
-| code        | if this trace is creating a new smart contract, this is the byte code of that contract | bytes  |
-| gasUsed     | the amount of gas used during the call                                                 | wei    |
-| output      | the result of the call for this trace                                                  | bytes  |
-
-## when block
-
-### How to get when blocks
-
-- **CLI**:
-  - run `chifra when <block_id>`.
-  - [See the command's documentation](/docs/chifra/chaindata/#chifra-when)
-- **API**:
-  - [Calls to `/when`](/api#operation/chaindata-when)
-- **Explorer**
-
-### Reference of whenblock fields
-
-When a block appeared, in unix and human readable format:
-
-| Field       | Description                              | Type      |
-| ----------- | ---------------------------------------- | --------- |
-| blockNumber | the block number of the containing block | blknum    |
-| timestamp   | the block's unix timestamp               | timestamp |
-| date        | human readable version of the timestamp  | date      |
-
-## Reconciliations
-
-When exported with the `--accounting` option from `chifra export`, each transaction will have field called `statements`. Statements are an array for reconciliations. All such exported transactions will have at least one reconcilation (for ETH), however, many will have additional reconciliations for other assets (such as ERC20 and ERC721 tokens).
-
-Because DeFi is essentially swaps and trades around ERC20s, and because and 'programmable money' allows for unlimited actions to happen under a single transaction,many times a transaction has four or five reconciliations.
-
-Reconciliations are relative to an `accountedFor` address. For this reason, the same transaction will probably have different reconciliations depending on the `accountedFor` address. Consider a simple transfer of ETH from one address to another. Obviously, the sender's and the recipient's reconciliations will differ (in opposite proportion to each other). The `accountedFor` address is always present as the `assetAddress` in the first reconciliation of the statements array.
-
-**Note on intra-block transactions**: In many cases two or more transactions requiring a reconciliation may occur in a single block. Becuase the Ethereum blockchain only provides balance queries at the end of blocks, it is not possible to query for the balance of an asset at the end of transactions for which there are other following transactions in the block nor for the beginning balance for which there are transactions prior to the given transaction in the same block. In these cases, TrueBlocks simulates the beginning and ending balance as needed and adds `partial` to the `reconciliationType`.
-
-**Note on spotPrice**: If the `spotPrice` is available from an on-chain source (such as UniSwap), then it represents the ETH/DAI value at the time of the transaction if the reconcilation is for ETH. For other assets, the `spotPrice` represents the asset's value relative to `ETH`, so to price a non-ETH asset in US dollars, one would need to convert first to `ETH` then to dollars. If a price is not available on-chain, the `spotPrice` will be zero and the caller is encouraged to get the price for the asset from other sources.
-
-### Reference of reconciliation fields
-
-| Name                | Description                                                                                                                                                                        | Type      |
-| ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- |
-| blockNumber         | the block number of the containing block                                                                                                                                           | blknum    |
-| transactionIndex    | the transaction's zero-indexed position in the block                                                                                                                               | blknum    |
-| timestamp           | the block's unix timestamp                                                                                                                                                         | timestamp |
-| assetAddr           | for reconciliations whose `assetSymbol` is `ETH` or `WEI`, the accountedFor address. For all assets, the address of the asset itself                                               | address   |
-| assetSymbol         | either `ETH`, `WEI` or the symbol of the asset being reconciled as extracted from the chain                                                                                        | string    |
-| decimals            | eEquivilent to the extracted value of getSymbol from ERC20 or, if `ETH` or `WEI` then `18`                                                                                         | number    |
-| prevBlk             | the block number of the previous reconciliation                                                                                                                                    | blknum    |
-| prevBlkBal          | the account balance for the given asset for the previous reconciliation                                                                                                            | bigint    |
-| begBal              | the begining balance of the asset at the `blockNumber`                                                                                                                             | bigint    |
-| begBalDiff          | the difference between the expected beginning balance (prevBlkBal) and the queried balance from the chain                                                                          | bigint    |
-| amountIn            | for `ETH` reconciliations, the `value` of the transactions if the `from` address is the same as the `accountedFor` address. Otherwise, the value of the ERC20's transfer `amount`. | bigint    |
-| amountOut           | the amount (in terms of the asset) of regular outflow during this tx                                                                                                               | bigint    |
-| internalIn          | for `ETH` reconciliations only, the value of any internal value transfers into the `accountedFor` account                                                                          | bigint    |
-| internalOut         | for `ETH` reconciliations only, the value of any internal value transfers out of the `accountedFor` account                                                                        | bigint    |
-| selfDestructIn      | for `ETH` reconciliations for transactions ending in self-destrution only, the value received by the `accountedFor` account from the self-destructed account                       | bigint    |
-| selfDestructOut     | for `ETH` reconciliations for transactions ending in self-destrution only, the value transfered out of the `accountedFor` account                                                  | bigint    |
-| minerBaseRewardIn   | for blocks won by the `accountedFor` address, this is the base fee reward for the miner                                                                                            | bigint    |
-| minerNephewRewardIn | for blocks won by the `accountedFor` address, this is the netphew reward for the miner                                                                                             | bigint    |
-| minerTxFeeIn        | for blocks won by the `accountedFor` address, this is the transaction fee reward for the miner                                                                                     | bigint    |
-| minerUncleRewardIn  | for blocks in which the `accountedFor` address generated an uncle, this value is the uncle reward                                                                                  | bigint    |
-| prefundIn           | at block zero (0) only, the amount of genesis income for the `accountedFor` address                                                                                                | bigint    |
-| gasCostOut          | if `accountedFor` address is the transaction's sender (i.e. `from` at the top level), the amount of gas expended denominated in either `ETH` or `WEI`.                             | bigint    |
-| endBal              | the balance of the reconciled asset at the end of this transaction found by querying the chain (see the note above about intra-block reconciliations)                              | bigint    |
-| totalIn             | a calculated field: the sum of all `In` fields                                                                                                                                     | bigint    |
-| totalOut            | a calculated field: the sum of all `Out` fields                                                                                                                                    | bigint    |
-| amountNet           | a calculated field: `totalIn` - `totalOut`                                                                                                                                         | bigint    |
-| endBalCalc          | a calculated field: `begBal` + `amountNet`                                                                                                                                         | bigint    |
-| endBalDiff          | a calculated field: `endBal` - `endBalCalc`, if non-zero, the reconciliation failed                                                                                                | bigint    |
-| reconciled          | a calculated field: `true` if `endBal` === `endBalCalc` and `begBal` === `prevBlkBal`. `false` otherwise.                                                                          | bool      |
-| reconciliationType  | One of `regular`, `traces`, `prevdiff-partial`, `partial-nextdiff`, or `partial-partial depending on previous, following or both transactions in the same block                    | string    |
-| spotPrice           | The price (if available) at the time of the transaction in US dollars for ETH reconciliations and ETH for other assets                                                             | bigint    |
-
-## Reference of type formats
-
-In these docs, sometimes Trueblocks mentions a type format that is more
-precise than the generic types, like "string" or "object".
-
-| Type Name | Description                         |
-| --------- | ----------------------------------- |
-| blknum    | a 64-bit unsigned int               |
-| timestamp | a 64-bit unsigned int               |
-| address   | a 20 byte string starting with '0x' |
-| hash      | a 32 byte string starting with '0x' |
-| string    | a plain c++ string                  |
-| number    | standard c++ 64-bit unsigned int    |
-| bigint    | arbitrarily sized signed int        |
-| wei       | arbitrarily sized unsigned int      |
-| boolean   | standard c++ boolean                |
+| Type      | Description                                     | Notes          |
+| --------- | ----------------------------------------------- | -------------- |
+| bool      | a value either `true`, `false`, `1`, or `0`     |                |
+| date      | a JSON formatted date                           | as a string    |
+| double    | a floating point number of double precision     |                |
+| string    | a normal character string                       |                |
+| timestamp | a 64-bit unsigned integer                       | Unix timestamp |

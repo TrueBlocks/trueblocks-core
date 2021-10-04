@@ -14,7 +14,7 @@
 
 //----------------------------------------------------------------
 bool COptions::handle_init() {
-    CToml config(configPath("pinMan.toml"));
+    CToml config(getConfigPath("pinMan.toml"));
     bool enabled = config.getConfigBool("enabled", "downloadManifest", true);
     if (!enabled) {
         LOG_INFO("Manifest not downloaded. Not initializing.");
@@ -37,7 +37,7 @@ bool COptions::handle_init() {
         if (!pinlib_getChunkFromRemote(pin, BLOOM_TYPE, sleep) || shouldQuit())
             break;
         string_q bloomFn = pin.Format(getIndexPath("blooms/[{FILENAME}].bloom.gz"));
-        if (pin_locally) {
+        if (share) {
             ostringstream os;
             os << "ipfs add -Q --pin \"" << bloomFn + "\"";
             string_q newHash = doCommand(os.str());
@@ -49,11 +49,11 @@ bool COptions::handle_init() {
             LOG4(cGreen, "Removed zip file ", bloomFn, cOff);
         }
 
-        if (init_all) {
+        if (all) {
             if (!pinlib_getChunkFromRemote(pin, CHUNK_TYPE, sleep) || shouldQuit())
                 break;
             string_q binFn = pin.Format(getIndexPath("finalized/[{FILENAME}].bin.gz"));
-            if (pin_locally) {
+            if (share) {
                 ostringstream os;
                 os << "ipfs add -Q --pin \"" << binFn + "\"";
                 string_q newHash = doCommand(os.str());
@@ -66,7 +66,7 @@ bool COptions::handle_init() {
                 LOG4(cGreen, "Removed zip file ", binFn, cOff);
             }
         }
-        // pinlib_pinLocally(pin, pin_locally /* pinBloom */, (pin_locally && init_all) /* pinChunk */);
+        // pinlib_pinLocally(pin, share /* pinBloom */, (share && init_all) /* pinChunk */);
     }
 
     LOG_INFO(bBlue, "Pins were (re)initialized.                                      ", cOff);

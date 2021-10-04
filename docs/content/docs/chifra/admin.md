@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2021-05-08T01:35:20
+date: 2021-10-03T19:59:18
 lastmod:
   - :git
   - lastmod
@@ -16,34 +16,7 @@ menu:
 weight: 1700
 toc: true
 ---
-With TrueBlocks' admin component, you can query the status of the system,
-and control the creation, sharing , and pinning of the TrueBlocks index of appearances.
-
-Through the `chifra serve` command, you can also serve `chifra` subcommands as API endpoints.
-You test this out from your `localhost` on our [API reference](https://www.tokenomics.io/api.html).
-## chifra status
-
-The `chifra status` program allows you to manage the various TrueBlock caches. You may list all of the caches, some of the cache, or even individual caches either in terse or full detail. The cache of interest is specified with the `modes` option.
-
-TrueBlocks maintains caches for the index of address appearances, named addresses, abi files, as well as other data including blockchain data, address monitors, and groups of address monitors called collections.
-
-### usage
-
-`Usage:`    chifra status [-d|-t|-v|-h] &lt;mode&gt; [mode...]
-`Purpose:`  Report on the status of the TrueBlocks system.
-
-`Where:`
-
-| | Option | Description |
-| :----- | :----- | :---------- |
-|  | modes | the type of status info to retrieve, one or more of *[ index \| monitors \| collections \| names \| abis \| caches \| some\* \| all ]* |
-| -d | --details | include details about items found in monitors, slurps, abis, or price caches |
-| -t | --types &lt;val&gt; | for caches mode only, which type(s) of cache to report, one or more of *[ blocks \| transactions \| traces \| slurps \| prices \| all\* ]* |
-| -v | --verbose | set verbose level (optional level defaults to 1) |
-| -h | --help | display this help screen |
-
-**Source code**: [`apps/cacheStatus`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/cacheStatus)
-
+The Admin component allows you to query the status of the TrueBlocks system. You may query the status; query for information about TrueBlocks caches; control the creation, sharing, and pinning of the TrueBlocks index of appearances; and even serve the data through an API. See our [API documentation](/api) for more information.
 ## chifra serve
 
 `chifra serve` delivers a JSON API for each of the `chifra` commands along with each of its options. It does this through `flame` server which is written in Go.
@@ -53,63 +26,63 @@ TrueBlocks maintains caches for the index of address appearances, named addresse
 
 Another way to get help to run `chifra --help` or `chifra <cmd> --help` on your command line. See below for an example of converting command line options to a call to the API. There's a one-to-one correspondence between the command line tools and options and the API routes and their options.
 
-### usage
+```[plaintext]
+Purpose:
+  Serve the TrueBlocks API using the flame server.
 
-`Usage:`    chifra serve
-`Purpose:`  Present each chifra command along with all of its options as a JSON api.
+Usage:
+  chifra serve [flags]
 
-`Where:`
+Flags:
+  -p, --port string   specify the server's port (:8080 default)
 
-| Short Cut | Option    | Description                                 |
-| --------: | :-------- | :------------------------------------------ |
-|           | --port    | specify the server's port (default ":8080") |
-|        -v | --verbose | set verbose level (optional level defaults to 1)  |
-|        -h | --help    | display this help screen                    |
+Global Flags:
+  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
+  -h, --help         display this help screen
+  -v, --verbose      enable verbose (increase detail with --log_level)
 
-`Notes:`
-
-- To use the API, first open a new terminal window and run `chifra serve`
-- Instead of the command line `chifra status index --details`, run `curl "http://localhost:8080/status?modes=index&details"`.
-- Treat other commands similarly.
+Notes:
+  - To start API open terminal window and run chifra serve.
+  - See the API documentation for more information.
+```
 
 **Source code**: [`go-apps/flame`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/go-apps/flame)
+
 ## chifra scrape
 
-The `chifra scrape` application creates TrueBlocks' index of address appearances -- the fundemental data structure of the entire system. It also, optionally, pins the index to IPFS.
+The `chifra scrape` application creates TrueBlocks' index of address appearances -- the fundamental data structure of the entire system. It also, optionally, pins the index to IPFS.
 
 `chifra scrape` is a long running process, therefore we advise you run it as a service or in terminal multiplexer such as `tmux`. It is possible to start and stop `chifra scrape` as needed, but doing so means the scraper needs to catch up to the front of the chain, a process that may take some time depending on how frequently the scraper is run. See below for a more in depth explanation of how the scraping process works and prerequisites for it proper operation.
 
 The scraper can scrape either the index only, previously created monitors only, both, or neither. If you specify `none`, timestamps will be scraped but nothing else. If you're scraping monitors, you may tell the system to cache traces and transactions. This will speed up access, but take addition hard drive space. You may also adjust the speed of operation on different machines with the `--sleep` and `--n_blocks` options. Finally, you may choose to optionally `--pin` each new chunk to IPFS.
 
-### usage
+```[plaintext]
+Purpose:
+  Scan the chain and update the TrueBlocks index of appearances.
 
-`Usage:`    chifra scrape [-p|-s|-v|-h]
-`Purpose:`  Scan the chain and update the TrueBlocks index of appearances.
+Usage:
+  chifra scrape [flags]
 
-`Where:`
+Flags:
+  -p, --pin             pin new chunks (and blooms) to IPFS (requires Pinata key and running IPFS node)
+  -s, --sleep float     the number of seconds to sleep between passes (default 14)
+  -n, --n_blocks uint   maximum number of blocks to process (default 2000)
 
-| | Option | Description |
-| :----- | :----- | :---------- |
-| -p | --pin | pin new chunks (and blooms) to IPFS (requires Pinata key and running IPFS node) |
-| -s | --sleep &lt;double&gt; | the number of seconds to sleep between passes (default 14) |
-| -v | --verbose | set verbose level (optional level defaults to 1) |
-| -h | --help | display this help screen |
-
-`Configurable Items:`
-
-`n_blocks`: maximum number of blocks to process (defaults to 5000).
-`n_block_procs`: number of concurrent block channels for blaze.
-`n_addr_procs`: number of concurrent address channels for blaze.
+Global Flags:
+  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
+  -h, --help         display this help screen
+  -v, --verbose      enable verbose (increase detail with --log_level)
+```
 
 ### explainer
 
-Each time `chifra scrape` runs, it begins at the last block it completed (plus one) and decends as deeply as it can into the block's data. (This is why we need a `--tracing` node.) As address appearances are encountered, the system adds the appearance to a binary index. Periodically (at the end of the block containing the 2,000,000th appearance), the system consolidates a **chunk**.
+Each time `chifra scrape` runs, it begins at the last block it completed (plus one) and descends as deeply as it can into the block's data. (This is why we need a `--tracing` node.) As address appearances are encountered, the system adds the appearance to a binary index. Periodically (at the end of the block containing the 2,000,000th appearance), the system consolidates a **chunk**.
 
 A **chunk** is a portion of the index containing approximately 2,000,000 records. As part of the consolidation, the scraper creates a Bloom filter representing the chunk. The Bloom filters are an order of magnitude or more smaller than the chunks. The system then pushes both the chunk and the Bloom filter to IPFS. In this way, TrueBlocks creates an immutable, uncapturable index of appearances that can be used not only by TrueBlocks, but any member of the community who needs it. (Hint: we all need it.)
 
-Users of the [TrueBlocks Explorer](https://github.com/TrueBlocks/trueblocks-explorer) (or any other software, for that matter) subsequently downloads the Bloom filters, queries them to determine which **chunks** need to be downloaded to the user's machine and thereby build a historical list of transacitons for a given address. This is accomplished while imposing a minimum amount of data on the end user's machine.
+Users of the [TrueBlocks Explorer](https://github.com/TrueBlocks/trueblocks-explorer) (or any other software, for that matter) subsequently downloads the Bloom filters, queries them to determine which **chunks** need to be downloaded to the user's machine and thereby build a historical list of transactions for a given address. This is accomplished while imposing a minimum amount of data on the end user's machine.
 
-In future versions of the software, we will pin these shared chunks and blooms on end user's machines. They need the data for the software to operate and sharing it makes all user's better off. A naturally-born network effect.
+In future versions of the software, we will pin these shared chunks and blooms on end user's machines. They need the data for the software to operate and sharing it makes all users better off. A naturally-born network effect.
 
 ### prerequisites
 
@@ -130,50 +103,54 @@ Certain parts of the system (`chifra list` and `chifra export` for example) if y
 
 If you run `chifra init` and allow it to complete, the next time you run `chifra scrape`, it will start where `init` finished. This means that only the blooms will be stored on your hard drive. Subsequent scraping will produce both chunks and blooms, although you can, if you wish delete chunks that are not being used. You may periodically run `chifra init` if you prefer not to scrape.
 
-### usage
+```[plaintext]
+Purpose:
+  Initialize the index of appearances by downloading Bloom filters.
 
-`Usage:`    chifra init
-`Purpose:`  Leech the Bloom filters from IPFS by first downloading the pin manifest from a smart contract and then downloading the blooms. Optionally `--pin` the resulting download in order to share it with others.
+Usage:
+  chifra init [flags]
 
-`Where:`
+Flags:
+  -a, --all   download full index chunks as well as Bloom filter
 
-| | Option | Description |
-| :----- | :----- | :---------- |
-| -i | --init | initialize local index by downloading Bloom filters from pinning service |
-| -k | --init_all | initialize local index by downloading both Bloom filters and index chunks |
-| -p | --pin_locally | pin all local files in the index to an IPFS store (requires IPFS) |
-| -v | --verbose | set verbose level (optional level defaults to 1) |
-| -h | --help | display this help screen |
+Global Flags:
+  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
+  -h, --help         display this help screen
+  -v, --verbose      enable verbose (increase detail with --log_level)
 
-`Notes:`
+Notes:
+  - chifra init is an alias for the chifra pins --init command.
+```
 
-- One of `--list`, `--init`, or `--init_all` is required.
-- the `--pin_locally` option only works if the IPFS executable is in your path.
 **Source code**: [`apps/pinMan`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/pinMan)
+
 ## chifra pins
 
 This tool is not yet ready for production use. Please return to this page later.
 
-### usage
+```[plaintext]
+Purpose:
+  Manage pinned index of appearances and associated Bloom filters.
 
-`Usage:`    chifra pins [-l|-i|-n|-p|-v|-h]
-`Purpose:`  Manage pinned index of appearances and associated Bloom filters.
+Usage:
+  chifra pins [flags]
 
-`Where:`
+Flags:
+  -l, --list      list the index and Bloom filter hashes from local manifest or pinning service
+  -i, --init      initialize index of appearances by downloading Bloom filters from pinning service
+  -f, --freshen   freshen index of appearances using the same mode from most recent --init
+  -a, --all       for --init and --freshen modes only, download full index chunks as well as Bloom filter
+  -S, --share     pin downloaded files to your local IPFS store, that is, share them (requires IPFS)
 
-| | Option | Description |
-| :----- | :----- | :---------- |
-| -l | --list | list the index and Bloom filter hashes from local manifest or pinning service |
-| -i | --init | initialize local index by downloading Bloom filters from pinning service |
-| -n | --init_all | initialize local index by downloading both Bloom filters and index chunks |
-| -p | --pin_locally | pin all local files in the index to an IPFS store (requires IPFS) |
-| -v | --verbose | set verbose level (optional level defaults to 1) |
-| -h | --help | display this help screen |
+Global Flags:
+  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
+  -h, --help         display this help screen
+  -v, --verbose      enable verbose (increase detail with --log_level)
 
-`Notes:`
-
-- One of `--list`, `--init`, or `--init_all` is required.
-- the `--pin_locally` option only works if the IPFS executable is in your path.
+Notes:
+  - One of --list, --init, or --freshen is required.
+  - the --share option only works if the IPFS executable is in your path.
+```
 
 **Source code**: [`apps/pinMan`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/pinMan)
 

@@ -1,0 +1,2 @@
+chifra names  --custom account_1 --match_case
+No results for --match_case --custom account_1

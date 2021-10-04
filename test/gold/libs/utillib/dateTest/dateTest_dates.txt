@@ -1,3 +1,4 @@
+dateTest  
 0. Running TestTest_1
 	000.000 date                             ==> passed 'theDate' is equal to 'theDate'
 	000.001 BOH                              ==> passed 'BOH(theDate)' is equal to 'time_q(2019, 8, 7, 11, 0, 0)'

@@ -1,5 +1,4 @@
-whenBlock argc: 2 [1:pppppp1] 
-whenBlock pppppp1 
+chifra when  pppppp1
 
   The given value 'pppppp1' is not a numeral or a special named block.
 

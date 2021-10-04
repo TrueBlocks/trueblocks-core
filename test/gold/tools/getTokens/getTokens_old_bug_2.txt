@@ -1,5 +1,4 @@
-getTokens argc: 5 [1:0xa9fe4601811213c340e850ea305481aff02f5b28] [2:--parts] [3:all] [4:12000000] 
-getTokens 0xa9fe4601811213c340e850ea305481aff02f5b28 --parts all 12000000 
+chifra tokens  0xa9fe4601811213c340e850ea305481aff02f5b28 --parts all 12000000
 blocknumber	address	name	symbol	decimals	totalsupply
 
 level: 1

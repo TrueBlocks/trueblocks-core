@@ -37,8 +37,6 @@ class COptions : public CAbiOptions {
     bool articulate;
     bool cache_txs;
     bool cache_traces;
-    bool skip_ddos;
-    uint64_t max_traces;
     bool factory;
     bool emitter;
     CAddressArray source;
@@ -53,6 +51,8 @@ class COptions : public CAbiOptions {
     bool reversed;
     bool by_date;
     string_q summarize_by;
+    bool skip_ddos;
+    uint64_t max_traces;
     // END_CODE_DECLARE
 
     CAppearanceArray_mon monApps;
@@ -135,7 +135,3 @@ extern bool visitUnripeIndexFiles(const string_q& path, void* data);
 extern bool isTokenFunc(const string_q& input);
 extern bool isTokenTopic(const topic_t& topic);
 extern bool fourByteFilter(const string_q& input, const COptions* opt);
-//--------------------------------------------------------------------------------
-inline string_q plural(const string_q& in) {
-    return substitute(toLower(in).substr(1, 1000) + "s", "logentrys", "logs");
-}

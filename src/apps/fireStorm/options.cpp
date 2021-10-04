@@ -24,7 +24,7 @@ static const COption params[] = {
     COption("terms", "", "list<string>", OPT_POSITIONAL, "one or more addresses, names, block, or transaction identifiers"),  // NOLINT
     COption("local", "l", "", OPT_SWITCH, "open the local TrueBlocks explorer"),
     COption("google", "g", "", OPT_SWITCH, "search google excluding popular blockchain explorers"),
-    COption("", "", "", OPT_DESCRIPTION, "Open an explorer for a given address, block, or transaction."),
+    COption("", "", "", OPT_DESCRIPTION, "Open an explorer for one or more addresses, blocks, or transactions."),
     // clang-format on
     // END_CODE_OPTIONS
 };
@@ -81,11 +81,12 @@ bool COptions::parseArguments(string_q& command) {
             "etherscan", "etherchain", "bloxy",     "bitquery", "ethplorer",
             "tokenview", "blockshain", "anyblocks", "explorer",
         };
+        ostringstream addendum;
+        for (auto ex : exclusions)
+            addendum << "+-" << ex << " ";
         for (auto term : terms) {
             ostringstream query;
-            query << "open " << STR_GOOGLE << term;
-            for (auto ex : exclusions)
-                query << "+-" << ex;
+            query << "open " << STR_GOOGLE << term << addendum.str();
             if (!system(query.str().c_str()))
                 return false;
         }
@@ -97,12 +98,14 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
-    registerOptions(nParams, params);
+    registerOptions(nParams, params, NOOPT, OPT_FMT | OPT_VERBOSE);
 
     // BEG_CODE_INIT
     local = false;
     google = false;
     // END_CODE_INIT
+
+    minArgs = 0;
 }
 
 //---------------------------------------------------------------------------------------------------

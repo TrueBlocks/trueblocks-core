@@ -14,7 +14,7 @@
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
-    COption("", "", "", OPT_DESCRIPTION, "Testing code for the general functionality of etherlib.\n"),
+    COption("", "", "", OPT_DESCRIPTION, "Testing code for the general functionality of etherlib."),
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
@@ -38,8 +38,6 @@ bool COptions::parseArguments(string_q& command) {
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
     registerOptions(nParams, params);
-    optionOff(OPT_FMT);
-
     minArgs = 0;
 }
 

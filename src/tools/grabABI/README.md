@@ -10,45 +10,43 @@ The `--find` option is experimental. It scans a cross of approx. 100,000 functio
 
 The `--sol` option will convert a single Solidity file found in the current folder into an ABI.
 
-### Usage
+```[plaintext]
+Purpose:
+  Fetches the ABI for a smart contract.
 
-`Usage:`    chifra abis [-k|-s|-f|-v|-h] &lt;address&gt; [address...]  
-`Purpose:`  Fetches the ABI for a smart contract.
+Usage:
+  chifra abis [flags] <address> [address...]
 
-`Where:`  
+Arguments:
+  addrs - a list of one or more smart contracts whose ABIs to display (required)
 
-| | Option | Description |
-| :----- | :----- | :---------- |
-|  | addrs | list of one or more smart contracts whose ABI to grab from EtherScan (required) |
-| -k | --known | load common 'known' ABIs from cache |
-| -s | --sol &lt;str&gt; | file name of .sol file from which to create a new known abi (without .sol) |
-| -f | --find &lt;str&gt; | try to search for a function declaration given a four byte code |
-| -v | --verbose | set verbose level (optional level defaults to 1) |
-| -h | --help | display this help screen |
+Flags:
+  -k, --known          load common 'known' ABIs from cache
+  -s, --sol string     file name of .sol file from which to create a new known abi (without .sol)
+  -f, --find strings   try to search for a function declaration given a four byte code
 
-`Notes:`
+Global Flags:
+  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
+  -h, --help         display this help screen
+  -v, --verbose      enable verbose (increase detail with --log_level)
 
-- Solidity files found in the local folder with the name '<address>.sol' are converted to an ABI prior to processing (and then removed).
+Notes:
+  - Solidity files found in the local folder with the name '<address>.sol' are converted to an ABI prior to processing (and then removed).
+```
 
-#### Other Options
+Other Options
 
-All **TrueBlocks** command-line tools support the following commands (although in some case, they have no meaning):
+All tools accept the following additional flags, although in some cases, they have no meaning.
 
-| Command     | Description                                                                                     |
-| ----------- | ----------------------------------------------------------------------------------------------- |
-| --version   | display the current version of the tool                                                         |
-| --nocolor   | turn off colored display                                                                        |
-| --wei       | specify value in wei (the default)                                                              |
-| --ether     | specify value in ether                                                                          |
-| --dollars   | specify value in US dollars                                                                     |
-| --raw       | report JSON data from the node with minimal processing                                          |
-| --very_raw  | report JSON data from node with zero processing                                                 |
-| --fmt       | export format (where appropriate). One of [ none &#124; txt &#124; csv &#124; json &#124; api ] |
-| --to_file   | write the results to a temporary file and return the filename                                   |
-| --output:fn | write the results to file 'fn' and return the filename                                          |
-| --file:fn   | specify multiple sets of command line options in a file.                                        |
+```[plaintext]
+  -v, --version         display the current version of the tool
+      --wei             export values in wei (the default)
+      --ether           export values in ether
+      --dollars         export values in US dollars
+      --raw             pass raw RPC data directly from the node with no processing
+      --to_file         write the results to a temporary file and return the filename
+      --output string   write the results to file 'fn' and return the filename
+      --file string     specify multiple sets of command line options in a file
+```
 
-<small>*For the `--file:fn` option, place a series of valid command lines in a file and use the above options. In some cases, this option may significantly improve performance. A semi-colon at the start of a line makes that line a comment.*</small>
-
-**Source code**: [`tools/grabABI`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/tools/grabABI)
-
+*For the `--file string` option, you may place a series of valid command lines in a file using any valid flags. In some cases, this may significantly improve performance. A semi-colon at the start of any line makes it a comment.*

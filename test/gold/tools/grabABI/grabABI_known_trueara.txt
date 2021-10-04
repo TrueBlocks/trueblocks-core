@@ -1,5 +1,4 @@
-grabABI argc: 5 [1:truebit] [2:aragon] [3:--fmt] [4:json] 
-grabABI truebit aragon --fmt json 
+chifra abis  truebit aragon --fmt json
 { "data": [
 {
   "name": "NewVersion",

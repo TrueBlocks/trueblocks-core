@@ -8,69 +8,59 @@ You may also choose which portions of the Ethereum data structures (`--transacti
 
 By default, the results of the extraction are delivered to your console, however, you may export the results to any database (with a little bit of work). The format of the data, its content and its destination are up to you.
 
-### Usage
+```[plaintext]
+Purpose:
+  Export full detail of transactions for one or more addresses.
 
-`Usage:`    chifra export [-p|-r|-A|-l|-t|-C|-a|-i|-R|-y|-U|-c|-e|-v|-h] &lt;address&gt; [address...] [topics] [fourbytes]  
-`Purpose:`  Export full detail of transactions for one or more addresses.
+Usage:
+  chifra export [flags] <address> [address...] [topics...] [fourbytes...]
 
-`Where:`  
+Arguments:
+  addrs - one or more addresses (0x...) to export (required)
+  topics - filter by one or more log topics (only for --logs option)
+  fourbytes - filter by one or more fourbytes (only for transactions and trace options)
 
-| | Option | Description |
-| :----- | :----- | :---------- |
-|  | addrs | one or more addresses (0x...) to export (required) |
-|  | topics | filter by one or more log topics (only for --logs option) |
-|  | fourbytes | filter by one or more fourbytes (only for transactions and trace options) |
-| -p | --appearances | export a list of appearances |
-| -r | --receipts | export receipts instead of transaction list |
-| -A | --statements | for use with --accounting option only, export only reconciliation statements |
-| -l | --logs | export logs instead of transaction list |
-| -t | --traces | export traces instead of transaction list |
-| -C | --accounting | export accounting records instead of transaction list |
-| -a | --articulate | articulate transactions, traces, logs, and outputs |
-| -i | --cache_txs | write transactions to the cache (see notes) |
-| -R | --cache_traces | write traces to the cache (see notes) |
-| -y | --factory | scan for contract creations from the given address(es) and report address of those contracts |
-|  | --emitter | for log export only, export only if one of the given export addresses emitted the event |
-|  | --source &lt;addr&gt; | for log export only, export only one of these addresses emitted the event |
-|  | --relevant | for log and accounting export only, if true export only logs relevant to one of the given export addresses |
-| -U | --count | only available for --appearances mode, if present return only the number of records |
-| -c | --first_record &lt;num&gt; | the first record to process |
-| -e | --max_records &lt;num&gt; | the maximum number of records to process before reporting |
-|  | --clean | clean (i.e. remove duplicate appearances) from all existing monitors |
-| -v | --verbose | set verbose level (optional level defaults to 1) |
-| -h | --help | display this help screen |
+Flags:
+  -p, --appearances         export a list of appearances
+  -r, --receipts            export receipts instead of transaction list
+  -A, --statements          for use with --accounting option only, export only reconciliation statements
+  -l, --logs                export logs instead of transaction list
+  -t, --traces              export traces instead of transaction list
+  -C, --accounting          export accounting records instead of transaction list
+  -a, --articulate          articulate transactions, traces, logs, and outputs
+  -i, --cache_txs           write transactions to the cache (see notes)
+  -R, --cache_traces        write traces to the cache (see notes)
+  -y, --factory             scan for contract creations from the given address(es) and report address of those contracts
+      --emitter             for log export only, export only if one of the given export addresses emitted the event
+      --source strings      for log export only, export only one of these addresses emitted the event
+      --relevant            for log and accounting export only, if true export only logs relevant to one of the given export addresses
+  -U, --count               only available for --appearances mode, if present, return only the number of records
+  -c, --first_record uint   the first record to process
+  -e, --max_records uint    the maximum number of records to process before reporting (default 250)
+      --clean               clean (i.e. remove duplicate appearances) from all existing monitors
 
-`Notes:`
+Global Flags:
+  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
+  -h, --help         display this help screen
+  -v, --verbose      enable verbose (increase detail with --log_level)
 
-- An `address` must start with '0x' and be forty-two characters long.
+Notes:
+  - An address must start with '0x' and be forty-two characters long.
+```
 
-`Configurable Items:`
+Other Options
 
-`cache_txs`: write transactions to the cache (see notes).
-`cache_traces`: write traces to the cache (see notes).
-`skip_ddos`: toggle skipping over 2016 dDos transactions ('on' by default).
-`max_traces`: if --skip_ddos is on, this many traces defines what a ddos transaction
-  is (default = 250).
+All tools accept the following additional flags, although in some cases, they have no meaning.
 
-#### Other Options
+```[plaintext]
+  -v, --version         display the current version of the tool
+      --wei             export values in wei (the default)
+      --ether           export values in ether
+      --dollars         export values in US dollars
+      --raw             pass raw RPC data directly from the node with no processing
+      --to_file         write the results to a temporary file and return the filename
+      --output string   write the results to file 'fn' and return the filename
+      --file string     specify multiple sets of command line options in a file
+```
 
-All **TrueBlocks** command-line tools support the following commands (although in some case, they have no meaning):
-
-| Command     | Description                                                                                     |
-| ----------- | ----------------------------------------------------------------------------------------------- |
-| --version   | display the current version of the tool                                                         |
-| --nocolor   | turn off colored display                                                                        |
-| --wei       | specify value in wei (the default)                                                              |
-| --ether     | specify value in ether                                                                          |
-| --dollars   | specify value in US dollars                                                                     |
-| --raw       | report JSON data from the node with minimal processing                                          |
-| --very_raw  | report JSON data from node with zero processing                                                 |
-| --fmt       | export format (where appropriate). One of [ none &#124; txt &#124; csv &#124; json &#124; api ] |
-| --to_file   | write the results to a temporary file and return the filename                                   |
-| --output:fn | write the results to file 'fn' and return the filename                                          |
-| --file:fn   | specify multiple sets of command line options in a file.                                        |
-
-<small>*For the `--file:fn` option, place a series of valid command lines in a file and use the above options. In some cases, this option may significantly improve performance. A semi-colon at the start of a line makes that line a comment.*</small>
-
-**Source code**: [`apps/acctExport`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/acctExport)
-
+*For the `--file string` option, you may place a series of valid command lines in a file using any valid flags. In some cases, this may significantly improve performance. A semi-colon at the start of any line makes it a comment.*

@@ -1,5 +1,4 @@
-printFloatTest argc: 3 [1:--testNum] [2:1] 
-printFloatTest --testNum 1 
+printFloatTest  --testNum 1
 {
   "close": 1.40000
 }

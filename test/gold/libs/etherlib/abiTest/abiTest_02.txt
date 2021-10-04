@@ -1,5 +1,4 @@
-abiTest argc: 2 [1:encoding] 
-abiTest encoding 
+abiTest  encoding
 Encodings test...
 	event: ContributionMade(address) encoding: 0x97a3367c201ad38e0d37322fd0ffa1b93457541ae8baf20eb9aa50bb83fcabef ✓
 	event: RefundPayoutClaimed(uint256) encoding: 0x5e5c64a3ed3fb7fd17b9ca165f3ebe344a48d7c845dc947fc27249da676e7fbd ✓

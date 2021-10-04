@@ -1,5 +1,4 @@
-timeTest argc: 2 [1:2] 
-timeTest 2 
+timeTest  2
 0. Running TestAdvance2
 	time1:  2018-06-02 12:22:12 UTC
 	time2:  2018-12-31 23:22:12 UTC

@@ -148,7 +148,7 @@ bool CStatusTerse::Serialize(CArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CStatusTerse::SerializeC(CArchive& archive) const {
-    // Writing always write the latest version of the data
+    // Writing always writes the latest version of the data
     CStatus::SerializeC(archive);
 
     // EXISTING_CODE

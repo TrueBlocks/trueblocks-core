@@ -1,5 +1,4 @@
-jsonTest argc: 2 [1:traces] 
-jsonTest traces 
+jsonTest  traces
 tests/traces.json
 {
   "blockHash": "0x680e9bb9efe81c9e304d9c60d3804ea4ba1ff33aea5932be35b7bdd75b5f3107",

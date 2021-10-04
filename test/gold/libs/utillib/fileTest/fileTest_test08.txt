@@ -1,5 +1,4 @@
-fileTest argc: 2 [1:newest] 
-fileTest newest 
+fileTest  newest
 old file: oldText - 1
 new file: oldText - 1
 ./new.txt

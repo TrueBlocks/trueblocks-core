@@ -1,5 +1,4 @@
-getBlocks argc: 3 [1:4001001-4001003] [2:--hashes] 
-getBlocks 4001001-4001003 --hashes 
+chifra blocks  4001001-4001003 --hashes
 { "data": [
 {
   "hash": "0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f",

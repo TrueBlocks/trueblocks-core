@@ -1,5 +1,4 @@
-getTokens argc: 7 [1:0xd26114cd6ee289accf82350c8d8487fedb8a0c07] [2:0xb9e7f8568e08d5659f5d29c4997173d84cdf2607] [3:--parts] [4:name] [5:--fmt] [6:csv] 
-getTokens 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 --parts name --fmt csv 
+chifra tokens  0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 --parts name --fmt csv
 "address","name"
 "0xd26114cd6ee289accf82350c8d8487fedb8a0c07","OMGToken Airdrop"
 "0xb9e7f8568e08d5659f5d29c4997173d84cdf2607","Swarm City Token"

@@ -1,5 +1,4 @@
-whenBlock argc: 5 [1:homestead] [2:--verbose] [3:--fmt] [4:json] 
-whenBlock homestead --verbose --fmt json 
+chifra when  homestead --verbose --fmt json
 { "data": [
   {
     "blockNumber": 1150000,

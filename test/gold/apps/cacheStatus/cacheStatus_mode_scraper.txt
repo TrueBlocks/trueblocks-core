@@ -1,5 +1,4 @@
-cacheStatus argc: 2 [1:index] 
-cacheStatus index 
+chifra status  index
 {
   "client_version": "Client version",
   "client_ids": "chainId: 1 networkId: 1",

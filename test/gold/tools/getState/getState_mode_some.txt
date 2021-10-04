@@ -1,4 +1,3 @@
-getState argc: 5 [1:0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359] [2:--parts] [3:some] [4:2500000] 
-getState 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 --parts some 2500000 
+chifra state  0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 --parts some 2500000
 blocknumber	address	balance	nonce	code	accttype
 2500000	0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359	3905662906205094119236	0	0x606060405236156100...65c6b64bfe7fe36bd19b	Contract

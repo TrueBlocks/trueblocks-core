@@ -1,5 +1,8 @@
-cmdLineTest argc: 2 [1:--file:cmd_file_bool2] 
-cmdLineTest --file:cmd_file_bool2 
+cmdLineTest  --file:cmd_file_bool2
+Cmd: 1 --bool:0 
+Cmd: 2 --bool:1 
+Cmd: 3 --bool:false 
+Cmd: 4 --bool:true 
 --------------------------------------------------------------------------------
 boolOption: 0
 boolSet: 1

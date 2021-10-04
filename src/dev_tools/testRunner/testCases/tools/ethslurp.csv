@@ -1,5 +1,4 @@
 enabled,mode,speed,route,path/tool,filename,post,options,opt_cmd,has_env
-on,cmd,medi,slurp,tools/ethslurp,README,n,@th
 on,cmd,fast,slurp,tools/ethslurp,help,n,@h
 on,cmd,fast,slurp,tools/ethslurp,help_long,n,help
 on,both,fast,slurp,tools/ethslurp,no_params,y,

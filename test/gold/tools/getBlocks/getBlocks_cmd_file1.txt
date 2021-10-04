@@ -1,5 +1,18 @@
-getBlocks argc: 3 [1:--file:cmd_file1] [2:--cache] 
-getBlocks --file:cmd_file1 --cache 
+chifra blocks  --file cmd_file1 --cache
+Cmd: 1152642 -v:1 --cache 
+Cmd: 1166008 -v:1 --cache 
+Cmd: 1289438 -v:1 --cache 
+Cmd: 1399675 -v:1 --cache 
+Cmd: 1799404 -v:1 --cache 
+Cmd: 1909113 -v:1 --cache 
+Cmd: 2017468 -v:1 --cache 
+Cmd: 2127401 -v:1 --cache 
+Cmd: 2263030 -v:1 --cache 
+Cmd: 2268412 -v:1 --cache 
+Cmd: 2360712 -v:1 --cache 
+Cmd: 2513942 -v:1 --cache 
+Cmd: 2558337 -v:1 --cache 
+Cmd: 2728501 -v:1 --cache 
 { "data": [
 {
   "gasLimit": 4712388,

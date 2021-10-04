@@ -1,5 +1,4 @@
-grabABI argc: 4 [1:0xe94327d07fc17907b4db788e5adf2ed424addff6] [2:--fmt] [3:api] 
-grabABI 0xe94327d07fc17907b4db788e5adf2ed424addff6 --fmt api 
+chifra abis  0xe94327d07fc17907b4db788e5adf2ed424addff6 --fmt api
 {"data": [
 {
   "name": "name",

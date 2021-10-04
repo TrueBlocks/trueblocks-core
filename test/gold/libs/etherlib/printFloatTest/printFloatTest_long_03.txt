@@ -1,14 +1,18 @@
-printFloatTest argc: 3 [1:--testNum] [2:3] 
-printFloatTest --testNum 3 
+printFloatTest  --testNum 3
 
   Invalid argument: --testNum:3. Quitting...
 
-  Usage:    printFloatTest [-t|-v|-h]  
-  Purpose:  This program tests floating point printing and conversions.
-        
-  Where:  
-	-t  (--testNum [1|2]) which test to run (either 1 and 2)
-	-v  (--verbose)       set verbose level (optional level defaults to 1)
-	-h  (--help)          display this help screen
+Purpose:
+  This program tests floating point printing and conversions.
 
-  Powered by TrueBlocks
+
+Usage:
+  printFloatTest [flags]
+
+Flags:
+  -t, --testNum [1|2]   which test to run (either 1 and 2)
+
+Global Flags:
+  -x, --fmt string     export format, one of [none|json*|txt|csv|api]
+  -v, --verbose uint   set verbose level (optional level defaults to 1)
+  -h, --help           display this help screen

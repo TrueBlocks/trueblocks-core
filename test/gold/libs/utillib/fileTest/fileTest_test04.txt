@@ -1,3 +1,2 @@
-fileTest argc: 2 [1:first-recurse] 
-fileTest first-recurse 
+fileTest  first-recurse
 First file in folder: ../arrayTest/arrayTest_Insertion.txt

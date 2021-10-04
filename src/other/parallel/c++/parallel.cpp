@@ -32,7 +32,7 @@ class CScannerBucket {
 typedef vector<CScannerBucket> CScannerBucketArray;
 
 //------------------------------------------------------------------------------------------------
-string_q bloomPath = configPath("") + "cache/addr_index.save/finalized/";
+string_q bloomPath = getConfigPath("") + "cache/addr_index.save/finalized/";
 
 //------------------------------------------------------------------------------------------------
 size_t thread_count(const CScannerBucketArray& buckets) {

@@ -494,7 +494,7 @@ bool CTransaction::Serialize(CArchive& archive) {
 
 //---------------------------------------------------------------------------------------------------
 bool CTransaction::SerializeC(CArchive& archive) const {
-    // Writing always write the latest version of the data
+    // Writing always writes the latest version of the data
     CBaseNode::SerializeC(archive);
 
     // EXISTING_CODE

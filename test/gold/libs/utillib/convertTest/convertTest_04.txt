@@ -1,5 +1,4 @@
-convertTest argc: 2 [1:4] 
-convertTest 4 
+convertTest  4
 0. Running TestConverts_4
 	000.000 double_2_Str1                    ==> passed 'double_2_Str(14.15019, 5)' is equal to '"14.15019"'
 	000.001 double_2_Str2                    ==> passed 'double_2_Str(14.15019, 3)' is equal to '"14.150"'

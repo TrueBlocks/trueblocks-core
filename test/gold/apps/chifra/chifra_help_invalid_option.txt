@@ -1,0 +1,3 @@
+chifra  not_a_mode
+Error: unknown command "not_a_mode" for "chifra"
+Run 'chifra --help' for usage.

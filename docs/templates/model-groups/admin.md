@@ -1,0 +1,1 @@
+Tools in the Admin category produce data related to scraping the chain, producing the indexes, and querying the status of the system. Additional data related to sharing the indexes via IPFS and pinning the same are also produced by tools in this category.

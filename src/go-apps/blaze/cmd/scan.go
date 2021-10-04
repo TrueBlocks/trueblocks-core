@@ -1,9 +1,7 @@
 package cmd
 
 import (
-	"encoding/json"
 	"fmt"
-	"os"
 	"sync"
 
 	"github.com/spf13/cobra"
@@ -15,40 +13,40 @@ type scanOptionsT struct {
 
 func processBlock(blockChannel chan int, blockWG *sync.WaitGroup) {
 
-	for blockNum := range blockChannel {
-		fmt.Printf("%d\r", blockNum)
-		blockBytes, err := getBlockHeader(blockNum)
-		if err != nil {
-			fmt.Println(err)
-			os.Exit(1)
-		}
-		var block BlockHeader
-		err = json.Unmarshal(blockBytes, &block)
-		if err != nil {
-			fmt.Println(err)
-			os.Exit(1)
-		}
-		fmt.Printf("%d-%s\r", blockNum, block.Result.Number)
-	}
-	blockWG.Done()
+	// for blockNum := range blockChannel {
+	// 	fmt.Printf("%d\r", blockNum)
+	// 	blockBytes, err := getBlockHeader(blockNum)
+	// 	if err != nil {
+	// 		fmt.Println(err)
+	// 		os.Exit(1)
+	// 	}
+	// 	var block BlockHeader
+	// 	err = json.Unmarshal(blockBytes, &block)
+	// 	if err != nil {
+	// 		fmt.Println(err)
+	// 		os.Exit(1)
+	// 	}
+	// 	fmt.Printf("%d-%s\r", blockNum, block.Result.Number)
+	// }
+	// blockWG.Done()
 }
 
 func scanBlocks() {
 
-	blockChannel := make(chan int)
-
-	var blockWG sync.WaitGroup
-	blockWG.Add(Options.nBlockProcs)
-	for i := 0; i < Options.nBlockProcs; i++ {
-		go processBlock(blockChannel, &blockWG)
-	}
-
-	for block := Options.startBlock; block < Options.startBlock+Options.nBlocks; block++ {
-		blockChannel <- block
-	}
-
-	close(blockChannel)
-	blockWG.Wait()
+	// blockChannel := make(chan int)
+	// 
+	// var blockWG sync.WaitGroup
+	// blockWG.Add(Options.nBlockProcs)
+	// for i := 0; i < Options.nBlockProcs; i++ {
+	// 	go processBlock(blockChannel, &blockWG)
+	// }
+	// 
+	// for block := Options.startBlock; block < Options.startBlock+Options.nBlocks; block++ {
+	// 	blockChannel <- block
+	// }
+	// 
+	// close(blockChannel)
+	// blockWG.Wait()
 }
 
 // scanOptions carries local command line options related to the scan command

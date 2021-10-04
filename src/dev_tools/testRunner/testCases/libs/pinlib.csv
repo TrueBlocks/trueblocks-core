@@ -1,3 +1,2 @@
 enabled,mode,speed,route,path/tool,filename,post,options,opt_cmd,has_env
-off,cmd,fast,null,pinlib/pinTest,README,n,@th
 off,cmd,fast,null,pinlib/pinTest,pinTest,n,

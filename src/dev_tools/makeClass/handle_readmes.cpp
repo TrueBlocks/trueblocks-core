@@ -13,96 +13,14 @@
 #include "acctlib.h"
 #include "options.h"
 
-extern bool writeIfDifferent(const string_q& path, const string_q& code);
 //------------------------------------------------------------------------------------------------------------
-bool visitReadme(const string_q& templatePath, void* data) {
-    if (endsWith(templatePath, "/")) {
-        return forEveryFileInFolder(templatePath + "*", visitReadme, data);
-
-    } else {
-        if (!endsWith(templatePath, ".md") || contains(templatePath, "README"))
-            return true;
-
-        COptions* opts = (COptions*)data;
-
-        CStringArray parts;
-        explode(parts, templatePath, '/');
-        string_q folder = parts[4];
-        string_q tool = substitute(parts[5], ".md", "");
-        string_q docPath = getReadmePath(folder + "/" + tool + "/README.md");
-        string_q srcPath = "../src/" + folder + "/" + tool + "/README.md";
-
-        string_q source = asciiFileToString(templatePath);
-        string_q cmd = tool;
-        if (tool != "chifra" && tool != "makeClass" && tool != "testRunner")
-            cmd = getCommandPath(tool);
-        if (system((cmd + " -th >file 2>&1").c_str())) {
-        }  // Don't remove cruft. Silences compiler warnings
-        string_q usage = trim(asciiFileToString("./file"), '\n');
-        ::remove("./file");
-        replace(source, "[{USAGE_TABLE}]", usage);
-
-        string_q docCode = substitute(source, "## Usage", "## usage");
-        replaceAll(docCode, "]  \n", "]\n");
-        replaceAll(docCode, ":`  \n", ":`\n");
-        replaceAll(docCode, ": \n", ":\n");
-        string_q srcCode = source;
-        for (auto rep : opts->counter.replacements) {
-            CStringArray parts2;
-            explode(parts2, rep, '/');
-            string_q token = substitute(substitute(parts2[parts2.size() - 1], "README.", ""), ".md", "");
-            string_q code = trim(asciiFileToString(rep), '\n');
-            if (token != "footer")
-                replace(docCode, "[{" + toUpper(token) + "}]", "\n" + code);
-            else
-                replace(docCode, "[{" + toUpper(token) + "}]\n", "");
-            replace(srcCode, "[{" + toUpper(token) + "}]", "\n" + code);
-        }
-        replaceAll(docCode, "[{TOOL_PATH}]", folder + "/" + tool);
-        replaceAll(srcCode, "[{TOOL_PATH}]", folder + "/" + tool);
-        replaceAll(docCode, "~/Library/Application Support/TrueBlocks/", "$CONFIG/");
-        replaceAll(srcCode, "~/Library/Application Support/TrueBlocks/", "$CONFIG/");
-        replaceAll(docCode, "[{NAME}]", progNameMap[tool].empty() ? opts->getProgName() : progNameMap[tool]);
-        replaceAll(srcCode, "[{NAME}]", progNameMap[tool].empty() ? opts->getProgName() : progNameMap[tool]);
-
-        bool c1 = writeIfDifferent(docPath, docCode + "\n");
-        bool c2 = writeIfDifferent(srcPath, srcCode + "\n");
-        opts->counter.nVisited++;
-        opts->counter.nProcessed += (c1 || c2);
-    }
-    return true;
+string_q get_usage(const string_q& route) {
+    return "```[plaintext]\n" + doCommand2("chifra " + route + " --help") + "\n```";
 }
 
-//------------------------------------------------------------------------------------------------------------
-bool writeIfDifferent(const string_q& path, const string_q& code) {
-    string_q existing = asciiFileToString(path);
-    if (existing != code) {
-        stringToAsciiFile(path, code);
-        cerr << cGreen << "\tProcessed " << cOff << path << endl;
-        return true;
-    }
-    return false;
-}
-
-//------------------------------------------------------------------------------------------------------------
-bool findReplacements(const string_q& templatePath, void* data) {
-    if (endsWith(templatePath, "/")) {
-        return forEveryFileInFolder(templatePath + "*", findReplacements, data);
-
-    } else {
-        if (contains(templatePath, "README.") && endsWith(templatePath, ".md") &&
-            !contains(templatePath, "README.md")) {
-            COptions* opts = (COptions*)data;
-            opts->counter.replacements.push_back(templatePath);
-        }
-    }
-    return true;
-}
-
-extern const char* STR_YAML_FRONTMATTER;
 //------------------------------------------------------------------------------------------------------------
 bool COptions::handle_readmes(void) {
-    CToml config(configPath("makeClass.toml"));
+    CToml config(getConfigPath("makeClass.toml"));
     bool enabled = config.getConfigBool("enabled", "readmes", false);
     if (!enabled) {
         LOG_WARN("Skipping readmes...");
@@ -110,39 +28,70 @@ bool COptions::handle_readmes(void) {
     }
 
     LOG_INFO(cYellow, "handling readmes...", cOff);
-    counter = CCounter();  // reset
-    forEveryFileInFolder(getReadmeTemplate(""), findReplacements, this);
-    forEveryFileInFolder(getReadmeTemplate(""), visitReadme, this);
 
-    CStringArray items = {
-        "Accounts:apps/list,apps/acctExport,apps/monitors,tools/ethNames,tools/grabABI",
-        "Chain Data:tools/getBlocks,tools/getTrans,tools/getReceipts,tools/getLogs,tools/getTraces,tools/whenBlock",
-        "Chain State:tools/getState,tools/getTokens",
-        "Admin:apps/cacheStatus,apps/serve,apps/blockScrape,apps/init,apps/pinMan",
-        "Other:tools/getQuotes,apps/fireStorm,tools/ethslurp"};
+    for (auto ep : endpointArray) {
+        if (!ep.api_route.empty()) {
+            string_q justTool = ep.tool;
+            justTool = nextTokenClear(justTool, ' ');
+
+            string_q grp = substitute(toLower(ep.group), " ", "");
+            string_q docFn = grp + "-" + ep.api_route + ".md";
+
+            string_q dSource = getDocsPathTemplates("readme-intros/" + docFn);
+            string_q dReadme = getDocsPathReadmes(docFn);
+            string_q tReadme = substitute(getSourcePath(ep.api_group + "/" + justTool + "/README.md"), "//", "/");
+
+            string_q contents = asciiFileToString(dSource);
+            replaceAll(contents, "[{NAME}]", "chifra " + ep.api_route);
+            replaceAll(contents, "[{USAGE}]", get_usage(ep.api_route));
+
+            string_q dFooter = "\n**Source code**: [`[{GROUP}]/[{TOOL}]`]([{LOCATION}][{GROUP}]/[{TOOL}])\n";
+            replaceAll(dFooter, "[{GROUP}]", ep.api_group);
+            replaceAll(dFooter, "[{TOOL}]", justTool);
+            replaceAll(dFooter, "[{LOCATION}]", "https://github.com/TrueBlocks/trueblocks-core/tree/master/src/");
+            string_q dContents = substitute(contents, "[{FOOTER}]", dFooter);
+            writeIfDifferent(dReadme, dContents);
+
+            if (ep.is_visible_docs) {
+                string_q sFooter =
+                    "\n" + trim(asciiFileToString(getDocsPathTemplates("readme-intros/README.footer.md")), '\n');
+                string_q sContents = substitute(contents, "[{FOOTER}]", sFooter);
+                writeIfDifferent(tReadme, sContents);
+            }
+        }
+    }
+
+    CStringArray items = {"Accounts:list,export,monitors,names,abis",
+                          "Chain Data:blocks,trans,receipts,logs,traces,when", "Chain State:state,tokens",
+                          "Admin:cacheStatus,serve,scrape,init,pins", "Other:quotes,explore,ethslurp"};
     uint32_t weight = 1100;
     for (auto item : items) {
         CStringArray parts;
         explode(parts, item, ':');
+        string_q group = parts[0];
+        string_q tool = parts[1];
 
-        string_q str = STR_YAML_FRONTMATTER;
-        replace(str, "[{TITLE}]", parts[0]);
-        replace(str, "[{WEIGHT}]", uint_2_Str(weight));
-        string fn = substitute(toLower(parts[0]), " ", "");
+        string_q front = STR_YAML_FRONTMATTER;
+        replace(front, "[{TITLE}]", group);
+        replace(front, "[{WEIGHT}]", uint_2_Str(weight));
+        replace(front, "[{M1}]", "docs:");
+        replace(front, "[{M2}]", "parent: \"chifra\"");
+        group = substitute(toLower(group), " ", "");
 
         ostringstream os;
-        os << str;
-        os << asciiFileToString(getDocsTemplate("docs-intros/" + fn + ".md"));
+        os << front;
+        os << asciiFileToString(getDocsPathTemplates("readme-groups/" + group + ".md"));
 
         CStringArray paths;
-        explode(paths, parts[1], ',');
+        explode(paths, tool, ',');
         for (auto p : paths) {
-            string_q pp = getReadmePath(p + "/README.md");
+            string_q pp = getDocsPathReadmes(group + "-" + p + ".md");
             os << asciiFileToString(pp);
         }
 
-        string_q outPath = getDocsChifraPath(fn + ".md");
-        stringToAsciiFile(outPath, substitute(os.str(), "$DATE", "2021-05-08T01:35:20"));
+        string_q outFn = getDocsPathContent("docs/chifra/" + group + ".md");
+        // cerr << "Out: " << fileExists(outFn) << endl;
+        writeIfDifferent(outFn, os.str(), Now());
 
         weight += 200;
     }
@@ -152,6 +101,7 @@ bool COptions::handle_readmes(void) {
     return true;
 }
 
+//------------------------------------------------------------------------------------------------------------
 const char* STR_YAML_FRONTMATTER =
     "---\n"
     "title: \"[{TITLE}]\"\n"
@@ -166,8 +116,8 @@ const char* STR_YAML_FRONTMATTER =
     "draft: false\n"
     "images: []\n"
     "menu:\n"
-    "  docs:\n"
-    "    parent: \"chifra\"\n"
+    "  [{M1}]\n"
+    "    [{M2}]\n"
     "weight: [{WEIGHT}]\n"
     "toc: true\n"
     "---\n";

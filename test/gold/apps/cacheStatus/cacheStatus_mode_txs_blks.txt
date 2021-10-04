@@ -1,5 +1,4 @@
-cacheStatus argc: 6 [1:caches] [2:--types] [3:transactions] [4:--types] [5:blocks] 
-cacheStatus caches --types transactions --types blocks 
+chifra status  caches --types txs --types blocks
 {
   "client_version": "Client version",
   "client_ids": "chainId: 1 networkId: 1",
@@ -20,16 +19,14 @@ cacheStatus caches --types transactions --types blocks
       "path": "blocksPath",
       "nFiles": 0,
       "nFolders": 0,
-      "sizeInBytes": 0,
-      "is_valid": true
+      "sizeInBytes": 0
     },
     {
       "type": "CChainCache",
       "path": "txsPath",
       "nFiles": 0,
       "nFolders": 0,
-      "sizeInBytes": 0,
-      "is_valid": true
+      "sizeInBytes": 0
     }
   ],
   "date": "--date--"

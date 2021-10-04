@@ -19,7 +19,7 @@ static const COption params[] = {
     COption("bool", "b", "<bool>", OPT_FLAG, "enter a boolean value (either '0', '1', 'false', or 'true')"),
     COption("int", "i", "<int>", OPT_FLAG, "enter any numeric value"),
     COption("uint", "u", "<uint>", OPT_FLAG, "enter any numeric value greater than or equal to zero"),
-    COption("string", "s", "<string>", OPT_FLAG, "enter any value"),
+    COption("str", "s", "<string>", OPT_FLAG, "enter any value"),
     COption("range", "r", "<range>", OPT_FLAG, "enter a range of numeric values"),
     COption("list", "l", "<list>", OPT_FLAG, "enter a list of value separated by commas (no spaces or quoted)"),
     COption("hiddenOption", "d", "", OPT_HIDDEN | OPT_FLAG, "a hidden option with an alternative hot key"),
@@ -82,7 +82,6 @@ bool COptions::parseArguments(string_q& command) {
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
     registerOptions(nParams, params);
-    optionOff(OPT_FMT);
 
     boolOption = false;
     boolSet = false;

@@ -1,5 +1,4 @@
-acctExport argc: 8 [1:0xf503017d7baf7fbc0fff7492b751025c6a78179b] [2:--max_records] [3:10] [4:0xa9059cbb] [5:--traces] [6:--fmt] [7:json] 
-acctExport 0xf503017d7baf7fbc0fff7492b751025c6a78179b --max_records 10 0xa9059cbb --traces --fmt json 
+chifra export  0xf503017d7baf7fbc0fff7492b751025c6a78179b --max_records 10 0xa9059cbb --traces --fmt json
 { "data": [
 {
   "subtraces": 0,

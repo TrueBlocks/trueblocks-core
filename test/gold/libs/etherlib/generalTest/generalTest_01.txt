@@ -1,13 +1,16 @@
-generalTest argc: 2 [1:-t] 
-generalTest -t 
+generalTest   -t
 
   Invalid option: -t
 
-  Usage:    generalTest [-v|-h]  
-  Purpose:  Testing code for the general functionality of etherlib.
-        
-  Where:  
-	-v  (--verbose)       set verbose level (optional level defaults to 1)
-	-h  (--help)          display this help screen
+Purpose:
+  Testing code for the general functionality of etherlib.
 
-  Powered by TrueBlocks
+Usage:
+  generalTest [flags]
+
+Flags:
+
+Global Flags:
+  -x, --fmt string     export format, one of [none|json*|txt|csv|api]
+  -v, --verbose uint   set verbose level (optional level defaults to 1)
+  -h, --help           display this help screen

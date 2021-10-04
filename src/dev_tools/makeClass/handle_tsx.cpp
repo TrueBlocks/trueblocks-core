@@ -21,12 +21,11 @@ extern const char* STR_TYPE_FILE;
 extern void loadRoutes(const string_q& fn);
 
 //------------------------------------------------------------------------------------------------------------
-static CRouteArray routes;
-#define explorerPath string_q("/Users/jrush/Development/trueblocks-explorer/")
+static CCommandOptionArray routes;
 
 //------------------------------------------------------------------------------------------------------------
 bool COptions::handle_tsx(void) {
-    CToml config(configPath("makeClass.toml"));
+    CToml config(getConfigPath("makeClass.toml"));
     bool enabled = config.getConfigBool("enabled", "tsx", false);
     if (isTestMode() || !enabled) {
         LOG_WARN("Skipping javascript generation...");
@@ -51,7 +50,7 @@ bool COptions::handle_tsx(void) {
         }
 
         bool hasHelp =
-            (!route.path.empty() && !route.helpText.empty()) || contains(route.Format("[{NAME}]"), "Template");
+            (!route.api_route.empty() && !route.description.empty()) || contains(route.Format("[{NAME}]"), "Template");
         if (hasHelp) {
             if (!firstRoute)
                 jsRouteStream << "," << endl;
@@ -59,9 +58,9 @@ bool COptions::handle_tsx(void) {
             firstRoute = false;
         }
 
-        bool hasPath = route.path.empty() ? false : !contains(route.path, ":");
+        bool hasPath = route.api_route.empty() ? false : !contains(route.api_route, ":");
         if (hasPath) {
-            string_q tmp = route.path;
+            string_q tmp = route.api_route;
             nextTokenClear(tmp, '/');
             tmp = nextTokenClear(tmp, '/');
 
@@ -80,7 +79,7 @@ bool COptions::handle_tsx(void) {
     jsLocationStream << endl;
 
     string_q routesTSX = explorerPath + "src/ui/Routes.tsx";
-    writeCode(routesTSX);
+    writeCodeOut(this, routesTSX);
 
     return true;
 }
@@ -152,7 +151,7 @@ bool COptions::handle_tsx_type(const CClassDefinition& classDef) {
 
 //------------------------------------------------------------------------------------------------------------
 void loadRoutes(const string_q& fn) {
-    CStringArray fields = {"path", "hotKey", "helpText"};
+    CStringArray fields = {"api_route", "hotKey", "description"};
 
     CStringArray lines;
     asciiFileToLines(fn, lines);
@@ -160,7 +159,7 @@ void loadRoutes(const string_q& fn) {
     bool first = true;
     for (auto line : lines) {
         if (!first) {
-            CRoute route;
+            CCommandOption route;
             route.parseCSV(fields, line);
             routes.push_back(route);
         }
@@ -175,7 +174,7 @@ const char* STR_MOUSETRAP =
     "});";
 
 //------------------------------------------------------------------------------------------------------------
-const char* STR_LOCATION = "export const [{NAME}] = '[{PATH}]';";
+const char* STR_LOCATION = "export const [{NAME}] = '[{API_ROUTE}]';";
 
 //------------------------------------------------------------------------------------------------------------
 const char* STR_ROUTE =
@@ -183,5 +182,5 @@ const char* STR_ROUTE =
     "    path: [{NAME}],\n"
     "    exact: [{EXACT}],\n"
     "    component: [{COMPONENT}],\n"
-    "    helpText: '[{HELPTEXT}]',\n"
+    "    helpText: '[{DESCRIPTION}]',\n"
     "  }";

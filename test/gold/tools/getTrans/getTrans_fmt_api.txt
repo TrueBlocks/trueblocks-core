@@ -1,5 +1,4 @@
-getTrans argc: 5 [1:2222222.0] [2:2332332.0] [3:--fmt] [4:api] 
-getTrans 2222222.0 2332332.0 --fmt api 
+chifra transactions  2222222.0 2332332.0 --fmt api
 {"data": [
   {
     "hash": "0x9c34ba45c523f75009d279553fe2a7e9a99a991a297439226321bea26ab62bbb",

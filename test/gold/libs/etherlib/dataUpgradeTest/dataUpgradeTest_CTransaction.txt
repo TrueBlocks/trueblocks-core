@@ -1,5 +1,4 @@
-dataUpgradeTest argc: 2 [1:CTransaction] 
-dataUpgradeTest CTransaction 
+dataUpgradeTest  CTransaction
 --------------------------------------------------------------------------------
 className: CTransaction
 baseClass: CBaseNode
@@ -176,7 +175,7 @@ hour                	1046	0	12582937	T_NUMBER TS_NUMERAL TS_OMITEMPTY
 minute              	1047	0	12582937	T_NUMBER TS_NUMERAL TS_OMITEMPTY
 second              	1048	0	12582937	T_NUMBER TS_NUMERAL TS_OMITEMPTY
 {
-  "schema": 12001,
+  "schema": 14000,
   "deleted": false,
   "showing": true,
   "cname": "Transaction",

@@ -1,0 +1,1082 @@
+{
+  "data": [
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x04c62019ab478bff5874e7b7d9bc84fcf7e30025",
+      "name": "POA Network: MultiSig",
+      "symbol": "",
+      "source": "EtherScan.io",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "31-Gitcoin:Grants",
+      "address": "0x067f2bef6a1f929544253b9fb95f99bae77b2518",
+      "name": "Grant 1753 Resetdao ― Web 3.0 Programmable Social Network",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/1753/resetdao-web-30-programmable-social-network",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x069d653038db2f9d84e9620be140b3d404a40258",
+      "name": "Jarvis network Smart Relay Token",
+      "symbol": "JRTBNT",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x07147220fa6c06295464d695e4ec012f6aebc275",
+      "name": "Super Module Network One",
+      "symbol": "SMN1",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x08f5a9235b08173b7569f83645d2c7fb55e8ccd8",
+      "name": "Tierion Network Token",
+      "symbol": "TNT",
+      "source": "On chain",
+      "decimals": 8,
+      "description": "Tierion creates software to reduce the cost and complexity of trust. Anchoring data to the blockchain and generating a timestamp proof."
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x0a913bead80f321e7ac35285ee10d9d922659cb7",
+      "name": "DOS Network Token",
+      "symbol": "DOS",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x0abdace70d3790235af448c88547603b945604ea",
+      "name": "district0x Network Token",
+      "symbol": "DNT",
+      "source": "On chain",
+      "decimals": 18,
+      "description": "A network of decentralized markets and communities. Create, operate, and govern. Powered by Ethereum, Aragon, and IPFS."
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x0f7f961648ae6db43c75663ac7e5414eb79b5704",
+      "name": "XIO Network",
+      "symbol": "XIO",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "31-Gitcoin:Grants",
+      "address": "0x1074f62d7019c3184a2f7ea8c6a8acd6780beb48",
+      "name": "Grant 0083 Poa Network Community Management Grant for Adj",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/83/poa-network-community-management-grant-for-adj",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x14409b0fc5c7f87b5dad20754fe22d29a3de8217",
+      "name": "PYRO Network",
+      "symbol": "PYRO",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x1f573d6fb3f13d689ff844b4ce37794d79a7ff1c",
+      "name": "Bancor Network Token",
+      "symbol": "BNT",
+      "source": "On chain",
+      "decimals": 18,
+      "description": "Bancor Protocol is a standard for a new generation of cryptocurrencies called Smart Tokens"
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x20f7a3ddf244dc9299975b4da1c39f8d5d75f05a",
+      "name": "Sapien Network",
+      "symbol": "SPN",
+      "source": "On chain",
+      "decimals": 6,
+      "description": "Sapien is a decentralized social news platform."
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x21c9ea32bded0a07ca9c6ae6e0e43fd9001f5627",
+      "name": "BITVoxy NetworkTokens",
+      "symbol": "BVN",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x2233799ee2683d75dfefacbcd2a26c78d34b470d",
+      "name": "Network Token",
+      "symbol": "NTWK",
+      "source": "On chain",
+      "decimals": 18,
+      "description": "Network Learning is an e-learning platform where users who are new to cryptocurrency can come visit to learn the basics."
+    },
+    {
+      "tags": "30-Contracts",
+      "address": "0x2af47a65da8cd66729b4209c22017d6a5c2d2400",
+      "name": "Bounties Network",
+      "symbol": "",
+      "source": "EtherScan.io",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "31-Gitcoin:Grants",
+      "address": "0x2fefe22dbb33670a13039039982cd3d12b1a4b6f",
+      "name": "Grant 1875 Garuda Network (dmrd)",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/1875/garuda-network-dmrd",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "31-Gitcoin:Grants",
+      "address": "0x30755d3e65c0cf46c35b72d11e52d941c5fc3a3e",
+      "name": "Grant 0026 Peepeth: Social Network for a Better World",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/26/peepeth-social-network-for-a-better-world",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x3543638ed4a9006e4840b105944271bcea15605d",
+      "name": "UNetworkToken",
+      "symbol": "UUU",
+      "source": "On chain",
+      "decimals": 18,
+      "description": "A Decentralized Protocol for Publishing and Valuing Online Content"
+    },
+    {
+      "tags": "30-Contracts:Set Protocol",
+      "address": "0x3700414bb6716fcd8b14344fb10ddd91fdea59ec",
+      "name": "Kyber Network Wrapper",
+      "symbol": "",
+      "source": "TrueBlocks.io",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x3cc83c2400e00a54fa1e588d62bc28bf15d5def5",
+      "name": "OPTICAL NETWORK",
+      "symbol": "OPTC",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x4162178b78d6985480a308b2190ee5517460406d",
+      "name": "Colu Local Network",
+      "symbol": "CLN",
+      "source": "On chain",
+      "decimals": 18,
+      "description": "A Decentralized Payment Network Powered by Communities"
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x447f59850dc5f72609a5e5edc71fbf45fb3af17a",
+      "name": "DOG Network",
+      "symbol": "DOG",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "31-Gitcoin:Grants",
+      "address": "0x476f2d18d28fa1a4fc62ce680fa7852524eb820f",
+      "name": "Grant 1949 Network State Genesis",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/1949/network-state-genesis",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "30-Contracts",
+      "address": "0x4aa42145aa6ebf72e164c9bbc74fbd3788045016",
+      "name": "POA Network: DAI-XDAI Bridge",
+      "symbol": "",
+      "source": "EtherScan.io",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x4bbbc57af270138ef2ff2c50dbfad684e9e0e604",
+      "name": "WABnetwork",
+      "symbol": "WAB",
+      "source": "On chain",
+      "decimals": 18,
+      "description": "WAB network is a 5.0 Blockchain with outstanding features, a completed decentralization blockchain with remarkable transaction speed of millions per second."
+    },
+    {
+      "tags": "31-Gitcoin:Grants",
+      "address": "0x4c63f570590b7e145d5af265497aa23fa2bc0b8c",
+      "name": "Grant 0653 Gas Stations Network",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/653/gas-stations-network",
+      "decimals": 0,
+      "description": "https://gitcoin.co/grants/121/gas-stations-network,https://github.com/opengsn/gsn"
+    },
+    {
+      "tags": "30-Contracts:Kyber Network",
+      "address": "0x52166528fcc12681af996e409ee3a421a4e128a3",
+      "name": "Kyber Fee Burner",
+      "symbol": "",
+      "source": "TrueBlocks.io",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "30-Contracts",
+      "address": "0x521d32f3d23f1fc82b1dbe306edc3ef668e5d973",
+      "name": "Clovers Network Related",
+      "symbol": "",
+      "source": "EtherScan.io",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x53066cddbc0099eb6c96785d9b3df2aaeede5da3",
+      "name": "Penta Network Token",
+      "symbol": "PNT",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "30-Contracts",
+      "address": "0x5346d0f80e2816fad329f2c140c870ffc3c3e2ef",
+      "name": "EtherRouter: Colony Network",
+      "symbol": "",
+      "source": "EtherScan.io",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "30-Contracts:Kyber Network",
+      "address": "0x57f8160e1c59d16c01bbe181fd94db4e56b60495",
+      "name": "Kyber Weth Reserve",
+      "symbol": "",
+      "source": "TrueBlocks.io",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x5f3789907b35dce5605b00c0be0a7ecdbfa8a841",
+      "name": "Content and Ad Network",
+      "symbol": "CAN",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x607f4c5bb672230e8672085532f7e901544a7375",
+      "name": "iEx.ec Network Token",
+      "symbol": "RLC",
+      "source": "On chain",
+      "decimals": 9,
+      "description": "Blockchain Based distributed cloud computing"
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x62a8aa7a0b58b6f2e275796f84ba5ad48c65d36d",
+      "name": "CovidFree Network",
+      "symbol": "COVIDFREE",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "30-Contracts:Kyber Network",
+      "address": "0x63825c174ab367968ec60f061753d3bbd36a0d8f",
+      "name": "Kyber Reserve",
+      "symbol": "",
+      "source": "0xTracker",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "40-Exchanges",
+      "address": "0x64a9edd3f5fce0252cd708e26c8dd11205742826",
+      "name": "Uniswap: ANJ Aragon Network Juror",
+      "symbol": "ANJ",
+      "source": "EtherScan.io",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "55-Defi",
+      "address": "0x6626593c237f530d15ae9980a95ef938ac15c35c",
+      "name": "Gauntlet Network",
+      "symbol": "",
+      "source": "EtherScan.io",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "31-Gitcoin:Grants",
+      "address": "0x66aa8bee5366b6b48811ae0dac9fe5e1eefe1621",
+      "name": "Grant 0049 Blockchain Education Network (ben)",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/49/blockchain-education-network-ben",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x679131f591b4f369acb8cd8c51e68596806c3916",
+      "name": "Trustlines Network Token",
+      "symbol": "TLN",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x67b6d479c7bb412c54e03dca8e1bc6740ce6b99c",
+      "name": "Kylin Network",
+      "symbol": "KYL",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x69af81e73a73b40adf4f3d4223cd9b1ece623074",
+      "name": "Mask Network: MASK Token",
+      "symbol": "MASK",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x6fb3e0a217407efff7ca062d46c26e5d60a14d69",
+      "name": "IoTeX Network",
+      "symbol": "IOTX",
+      "source": "On chain",
+      "decimals": 18,
+      "description": "IoTeX is the next generation of the IoT-oriented blockchain platform with vast scalability, privacy, isolatability, and developability. IoTeX connects the physical world, block by block."
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x6fff3806bbac52a20e0d79bc538d527f6a22c96b",
+      "name": "Network",
+      "symbol": "",
+      "source": "On chain",
+      "decimals": 18,
+      "description": "Aims to be a disruptive ad network of creative minds who speak out against the powers that be."
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x70861e862e1ac0c96f853c8231826e469ead37b1",
+      "name": "DOS Network Token",
+      "symbol": "DOS",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x744d70fdbe2ba4cf95131626614a1763df805b9e",
+      "name": "Status Network Token",
+      "symbol": "SNT",
+      "source": "On chain",
+      "decimals": 18,
+      "description": "Status is an open source messaging platform and mobile browser to interact with decentralized applications that run on the Ethereum Network."
+    },
+    {
+      "tags": "30-Contracts:Kyber Network",
+      "address": "0x798abda6cc246d0edba912092a2a3dbd3d11191b",
+      "name": "Kyber Conversion Rates",
+      "symbol": "",
+      "source": "TrueBlocks.io",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x7b0c06043468469967dba22d1af33d77d44056c8",
+      "name": "Morpheus.Network",
+      "symbol": "MRPH",
+      "source": "On chain",
+      "decimals": 4,
+      "description": "Morpheus.Network was designed with some of the world's largest shipping, customs banking firms to create a full-service, global, automated, supply chain platform with an integrated cryptocurrency payment system"
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x7b2df125567815ac9b57da04b620f50bc93b320c",
+      "name": "Archetypal Network",
+      "symbol": "ACTP",
+      "source": "On chain",
+      "decimals": 8,
+      "description": "Archetypal Network is an Ethereum based cloudmining smart contract miner to support real-time mining and high transaction throughput."
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x7c5a0ce9267ed19b22f8cae653f198e3e8daf098",
+      "name": "SANtiment network token",
+      "symbol": "SAN",
+      "source": "On chain",
+      "decimals": 18,
+      "description": "A Better Way to Trade Crypto-Markets - Market Datafeeds, Newswires, and Crowd Sentiment Insights for the Blockchain World"
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x7c5d5100b339fe7d995a893af6cb496b9474373c",
+      "name": "Loon Network",
+      "symbol": "LOON",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x7c6c3b4e91923f080d6cc847a68d7330400a95d7",
+      "name": "Union Network Dollar Token",
+      "symbol": "UNDT",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "30-Contracts:Set Protocol",
+      "address": "0x818e6fecd516ecc3849daf6845e3ec868087b755",
+      "name": "Kyber Network Proxy",
+      "symbol": "",
+      "source": "https://github.com/SetProtocol/set-protocol-contracts",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x881ef48211982d01e2cb7092c915e647cd40d85c",
+      "name": "Open Trading Network",
+      "symbol": "OTN",
+      "source": "On chain",
+      "decimals": 18,
+      "description": "Open Trading Network OTN ‚Äö√Ñ√¨ a platform that offers cross-chain technology to unite all blockchain networks and market participants, and ensure their best interests."
+    },
+    {
+      "tags": "31-Gitcoin:Grants",
+      "address": "0x8a970573f88dbc7b69dfed2ba193c98c2d5d8314",
+      "name": "Grant 0101 Geon App: Augmented Reality App Leveraging Poa Core Network",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/101/geon-app-augmented-reality-app-leveraging-poa-cor",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "31-Gitcoin:Grants",
+      "address": "0x904065ba663879deb7e5f902220e7db97cbf04af",
+      "name": "Grant 0681 Flowstake - Activity Staking Blockchain Network",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/681/flowstake-activity-staking-blockchain-network",
+      "decimals": 0,
+      "description": "https://flowstake.webflow.io"
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x9469d013805bffb7d3debe5e7839237e535ec483",
+      "name": "Darwinia Network Token",
+      "symbol": "RING",
+      "source": "defipulse.com",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x95cda24d2515491095d21d94f1b94f319e016d35",
+      "name": "Vegetanetwork",
+      "symbol": "Vegeta",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x960b236a07cf122663c4303350609a66a7b288c0",
+      "name": "Aragon Network Token",
+      "symbol": "ANT",
+      "source": "On chain",
+      "decimals": 18,
+      "description": "Create and manage unstoppable organizations. Aragon lets you manage entire organizations using the blockchain. This makes Aragon organizations more efficient than their traditional counterparties."
+    },
+    {
+      "tags": "30-Contracts:Kyber Network",
+      "address": "0x9ae49c0d7f8f9ef4b864e004fe86ac8294e20950",
+      "name": "Kyber Network",
+      "symbol": "",
+      "source": "0xTracker",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "31-Gitcoin:Grants",
+      "address": "0x9c159121ceebf937e9bad98fd0c895d7f6038bd4",
+      "name": "Grant 0565 Our Network - Community Driven Analytics",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/565/our-network-community-driven-analytics",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x9dd91d61a7aa58537fcdbf16fd21be25731341b3",
+      "name": "Opium Network Position Token",
+      "symbol": "ONP",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0xa117000000f279d81a1d3cc75430faa017fa5a2e",
+      "name": "Aragon Network Token",
+      "symbol": "ANT",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "31-Gitcoin:Grants",
+      "address": "0xa1381b40e0a6b91814f77de19a7ad2cb21753184",
+      "name": "Grant 0334 Interstate Network EVM optimistic rollup",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/334/interstate-network-evm-generic-optimistic-rollups",
+      "decimals": 0,
+      "description": "https://www.interstate.network"
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0xa4ea687a2a7f29cf2dc66b39c68e4411c0d00c49",
+      "name": "IvyKoin Public Network Tokens",
+      "symbol": "IVY",
+      "source": "On chain",
+      "decimals": 18,
+      "description": "Ivy is a blockchain-based technology for FIAT cryptocurrency business transactions. the Ivy network utilizes IVY tokens which carry KYC KYT data points critical for Financial Institution validation."
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0xa5fd1a791c4dfcaacc963d4f73c6ae5824149ea7",
+      "name": "Jibrel Network Token",
+      "symbol": "JNT",
+      "source": "On chain",
+      "decimals": 18,
+      "description": "The Jibrel Network provides currencies, equities, commodities and other financial assets and instruments as standard ERC-20 tokens on the Ethereum blockchain."
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0xa74476443119a942de498590fe1f2454d7d4ac0d",
+      "name": "Golem Network Token",
+      "symbol": "GNT",
+      "source": "On chain",
+      "decimals": 18,
+      "description": "Golem is going to create the first decentralized global market for computing power"
+    },
+    {
+      "tags": "50-Tokens:ERC721",
+      "address": "0xade00c28244d5ce17d72e40330b1c318cd12b7c3",
+      "name": "AdEx Network",
+      "symbol": "ADX",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "30-Contracts:Kyber Network",
+      "address": "0xb0d27b025d5f79f955fa37cd3170b998661abff3",
+      "name": "Kyber Orderbook Reserve",
+      "symbol": "",
+      "source": "TrueBlocks.io",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "31-Gitcoin:Grants",
+      "address": "0xb101f7893738e34e5333ba1e385ebe6cd65bf1ef",
+      "name": "Grant 1096 Pareto Network - Financial Content Marketplace",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/1096/pareto-network-financial-content-marketplace",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "31-Gitcoin:Grants",
+      "address": "0xb1f6ddaafce638c21a56b0b2216e796ec9ca428e",
+      "name": "Grant 0073 Poa Network Community Management Grant for Aly",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/73/poa-network-community-management-grant-for-aly",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0xb2135ab9695a7678dd590b1a996cb0f37bcb0718",
+      "name": "Signals Network Token",
+      "symbol": "SGN",
+      "source": "On chain",
+      "decimals": 9,
+      "description": "Marketplace of data science powered signals for trading cryptocurrencies"
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0xb417fa71a03a9badbf962589f2478353fd5693e2",
+      "name": "Coin Display Network",
+      "symbol": "CDN",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "31-Gitcoin:Grants",
+      "address": "0xb422e46540153ddaaccd8f5e899893fc53ab77b8",
+      "name": "Grant 0338 2key Network Labs",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/338/2key-network-labs",
+      "decimals": 0,
+      "description": "https://2key.network"
+    },
+    {
+      "tags": "31-Gitcoin:Grants",
+      "address": "0xb5e48595afb989ddbc97763cd516ae3a983a3e36",
+      "name": "Grant 0072 Poa Network Community Management Grant for Khizer",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/72/poa-network-community-management-grant-for-khizer",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "31-Gitcoin:Grants",
+      "address": "0xb64850fe701fb64667b6cc762aa2c12f2e02193c",
+      "name": "Grant 0742 Crypto Community Ventures Network",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/742/crypto-community-ventures-network",
+      "decimals": 0,
+      "description": "https://www.bitfwd.com"
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0xc011a72400e58ecd99ee497cf89e3775d4bd732f",
+      "name": "Synthetix Network Token",
+      "symbol": "SNX",
+      "source": "EtherScan.io",
+      "decimals": 0,
+      "description": "Synthetix is a cryptoasset-backed network that enables the creation of on-chain synthetic assets."
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f",
+      "name": "Synthetix Network Token",
+      "symbol": "SNX",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "30-Contracts:Kyber Network",
+      "address": "0xc0d3e654676b117663143eac33b45b620171244b",
+      "name": "Kyber Order List",
+      "symbol": "",
+      "source": "TrueBlocks.io",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "31-Gitcoin:Grants",
+      "address": "0xc37e165fcfa2cb5cca7329dd9daa8cd72907b983",
+      "name": "Grant 0037 Connext Network",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/37/connext-network",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0xc72fe8e3dd5bef0f9f31f259399f301272ef2a2d",
+      "name": "Insights Network",
+      "symbol": "INSTAR",
+      "source": "On chain",
+      "decimals": 18,
+      "description": "The Insights Network‚Äö√Ñ√¥s unique combination of blockchain technology, smart contracts, and secure multiparty computation enables the individual to securely own, manage, and monetize their data."
+    },
+    {
+      "tags": "31-Gitcoin:Grants",
+      "address": "0xcb8f9c706f9f5683d1bd6261f52f5f2b2182d780",
+      "name": "Grant 1796 Crypton Network",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/1796/crypton-network",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0xcc1230436557f1250812fabbee5b8524b43250f3",
+      "name": "NarutoNetwork",
+      "symbol": "NARUTO",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0xcd62b1c403fa761baadfc74c525ce2b51780b184",
+      "name": "Aragon Network Juror",
+      "symbol": "ANJ",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "31-Gitcoin:Grants",
+      "address": "0xcfb3c2dc81718ff0087d46e4d7b1c4692ded1586",
+      "name": "Grant 1323 Resource Network",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/1323/resource-network",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0xcfb98637bcae43c13323eaa1731ced2b716962fd",
+      "name": "Nimiq Network Interim Token",
+      "symbol": "NET",
+      "source": "On chain",
+      "decimals": 18,
+      "description": "A Browser-based Blockchain Ecosystem"
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0xd29f0b5b3f50b07fe9a9511f7d86f4f4bac3f8c4",
+      "name": "Liquidity.Network Token",
+      "symbol": "LQD",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0xd2fa8f92ea72abb35dbd6deca57173d22db2ba49",
+      "name": "Origami Network",
+      "symbol": "ORI",
+      "source": "On chain",
+      "decimals": 18,
+      "description": "A protocol for building decentralized marketplaces using the Ethereum blockchain"
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0xd523a36bec9ffa8057d5f1fe2bc882124e2fbf55",
+      "name": "DECORUM.NETWORK",
+      "symbol": "DEC",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0xd559f20296ff4895da39b5bd9add54b442596a61",
+      "name": "FintruX Network",
+      "symbol": "FTX",
+      "source": "On chain",
+      "decimals": 18,
+      "description": "The Global P2P Lending Ecosystem Powered by Ethereum and No-Code Development."
+    },
+    {
+      "tags": "31-Gitcoin:Grants",
+      "address": "0xd77bab833568dd0c8e59ab62013165ce2fb611b7",
+      "name": "Grant 1971 Elixi/o Decentralized Social Network with Social Consensus Over Ipfs",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/1971/elixio-decentralized-social-network-with-social-c",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "31-Gitcoin:Grants",
+      "address": "0xda72e4f2f86cc4114844c5894241616c82667c48",
+      "name": "Grant 1229 Pulp Network",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/1229/pulp-network",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0xda80b20038bdf968c7307bb5907a469482cf6251",
+      "name": "BrokerNekoNetwork",
+      "symbol": "BNN",
+      "source": "On chain",
+      "decimals": 8,
+      "description": "BrokerNeko Network provides rational, quick and easy solutions for individual and institutional transactions with its own unique system."
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0xdd974d5c2e2928dea5f71b9825b8b646686bd200",
+      "name": "Kyber Network Crystal",
+      "symbol": "KNC",
+      "source": "On chain",
+      "decimals": 18,
+      "description": "KyberNetwork is a new system which allows the exchange and conversion of digital assets."
+    },
+    {
+      "tags": "31-Gitcoin:Grants",
+      "address": "0xddb5eb5b0ba08601af1feff591bf5be6b59ba5f6",
+      "name": "Grant 1505 Moip Network: Send Ethereum or Erc20 Tokens Through Email",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/1505/moip-network-send-ethereum-or-erc20-tokens-throug",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "30-Contracts:Kyber Network",
+      "address": "0xdfc85c08d5e5924ab49750e006cf8a826ffb7b13",
+      "name": "Kyber Sanity Rates",
+      "symbol": "",
+      "source": "TrueBlocks.io",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0xdfdc0d82d96f8fd40ca0cfb4a288955becec2088",
+      "name": "MTC Mesh Network",
+      "symbol": "MTC",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0xe25bcec5d3801ce3a794079bf94adf1b8ccd802d",
+      "name": "MATRIX AI Network",
+      "symbol": "MAN",
+      "source": "On chain",
+      "decimals": 18,
+      "description": "Aims to be an open source public intelligent blockchain platform"
+    },
+    {
+      "tags": "31-Gitcoin:Grants",
+      "address": "0xe302ca18c14ab31a002ac14a0889560d99e54633",
+      "name": "Grant 1827 Fission Network",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/1827/fission-network",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0xe469c4473af82217b30cf17b10bcdb6c8c796e75",
+      "name": "EXRP Network",
+      "symbol": "EXRN",
+      "source": "On chain",
+      "decimals": 18,
+      "description": "Connecting the blockchains using crosschain gateway built with smart contracts."
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0xe530441f4f73bdb6dc2fa5af7c3fc5fd551ec838",
+      "name": "GSENetwork",
+      "symbol": "GSE",
+      "source": "On chain",
+      "decimals": 4,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0xe7e4279b80d319ede2889855135a22021baf0907",
+      "name": "ZeusNetwork",
+      "symbol": "ZEUS",
+      "source": "On chain",
+      "decimals": 18,
+      "description": "Cryptocurrency that allows people to raise crypto for events to challenging circumstances like accidents and illnesses or real world emergencies. 'The GoFundMe of Crypto'"
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0xe95990825aab1a7f0af4cc648f76a3bcc99f25b2",
+      "name": "Zenswap Network Token",
+      "symbol": "ZNT",
+      "source": "On chain",
+      "decimals": 18,
+      "description": "Zenswap Network offers a new and practical cryptosphere for cryptocurrency and token swap, integrated with user-friendly value-added services to deliver the best crypto experience."
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0xea5f88e54d982cbb0c441cde4e79bc305e5b43bc",
+      "name": "Pareto Network Token",
+      "symbol": "PARETO",
+      "source": "On chain",
+      "decimals": 18,
+      "description": "The Pareto Network is a peer to peer financial content marketplace."
+    },
+    {
+      "tags": "31-Gitcoin:Grants",
+      "address": "0xea6cdbe70e5c18c605427d93dc6374b648843fac",
+      "name": "Grant 1487 Memorial.network",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/1487/memorialnetwork",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0xeef9f339514298c6a857efcfc1a762af84438dee",
+      "name": "Hermez Network Token",
+      "symbol": "HEZ",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0xef88808d0fbb5c0c2c89f6d9b45eda53c0150993",
+      "name": "iBuildApp Network Token",
+      "symbol": "IBA",
+      "source": "On chain",
+      "decimals": 4,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0xf330d59f6755bd3088a6513fcdf2a4b97f802856",
+      "name": "Future Network",
+      "symbol": "FUNE",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "31-Gitcoin:Grants",
+      "address": "0xf64bbc221f89cc882fba507908bbe4ae3ad2f470",
+      "name": "Grant 1595 Bloom Network - Panvala League",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/1595/bloom-network-panvala-league",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0xf970b8e36e23f7fc3fd752eea86f8be8d83375a6",
+      "name": "Ripio Credit Network Token",
+      "symbol": "RCN",
+      "source": "On chain",
+      "decimals": 18,
+      "description": "Ripio Credit Network is a global credit network based on cosigned smart contracts and blockchain technology that connects lenders and borrowers located anywhere in the world and on any currency"
+    },
+    {
+      "tags": "30-Contracts:Kyber Network",
+      "address": "0xfa71b63935cf9878e009ba6595da08f6d75c4aa1",
+      "name": "Kyber Pay Wrapper",
+      "symbol": "",
+      "source": "EtherScan.io",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "31-Gitcoin:Grants",
+      "address": "0xfcd819c8a13de2d9e409fdf7d61161091f58dd63",
+      "name": "Grant 0044 Chainid Network",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/44/chainid-network",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0xfedae5642668f8636a11987ff386bfd215f942ee",
+      "name": "PolicyPal Network Token",
+      "symbol": "PAL",
+      "source": "On chain",
+      "decimals": 18,
+      "description": "Dual-Layered Protocol for Financial Assets"
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0xff19138b039d938db46bdda0067dc4ba132ec71c",
+      "name": "Snetwork",
+      "symbol": "SNET",
+      "source": "On chain",
+      "decimals": 8,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0xff5c25d2f40b47c4a37f989de933e26562ef0ac0",
+      "name": "Kora Network Token",
+      "symbol": "KNT",
+      "source": "On chain",
+      "decimals": 16,
+      "description": "Kora is a digital banking solution powered by the Kora Network"
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0xff603f43946a3a28df5e6a73172555d8c8b02386",
+      "name": "OneRoot Network Token",
+      "symbol": "RNT",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    }
+  ],
+  "types": [
+    {
+      "type": "CAccountName",
+      "fields": [
+        {
+          "name": "tags",
+          "type": "text"
+        },
+        {
+          "name": "address",
+          "type": "address"
+        },
+        {
+          "name": "name",
+          "type": "text"
+        },
+        {
+          "name": "symbol",
+          "type": "text"
+        },
+        {
+          "name": "source",
+          "type": "text"
+        },
+        {
+          "name": "decimals",
+          "type": "unumber"
+        },
+        {
+          "name": "description",
+          "type": "text"
+        }
+      ]
+    }
+  ],
+  "meta": {
+    "unripe": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "client": "0xdeadbeef",
+    "namePath": "--"
+  }
+}

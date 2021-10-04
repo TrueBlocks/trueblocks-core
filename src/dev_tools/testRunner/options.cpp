@@ -198,8 +198,7 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
-    registerOptions(nParams, params);
-    optionOn(0);
+    registerOptions(nParams, params, 0);
 
     // BEG_CODE_INIT
     filter = "";
@@ -248,7 +247,7 @@ bool COptions::cleanTest(const string_q& path, const string_q& testName) {
 //---------------------------------------------------------------------------------------------------
 void establishTestData(void) {
     cleanFolder(getCachePath("tmp/"));
-    cleanFolder(configPath("mocked/unchained"));
+    cleanFolder(getConfigPath("mocked/unchained"));
 
     // TODO(tjayrush): This code is a hack to make test cases pass. We should fix the underlyign reason
     // TODO(tjayrush): these tests fail. To reproduce, delete the entire cache, comment the lines below
@@ -271,7 +270,7 @@ void establishTestData(void) {
     doCommand("chifra abis 0xa478c2975ab1ea89e8196811f51a7b7ade33eb11");
     doCommand("chifra abis 0x7d655c57f71464b6f83811c55d84009cd9f5221c");
 
-// TODO(tjayrush): Not sure what this is about.
+    // TODO(tjayrush): Not sure what this is about.
 #if 1
     // Hard to explain, but this removes a few transactions from the cache
     ::remove(getBinaryCacheFilename(CT_TXS, 8854723, 61).c_str());

@@ -1,4 +1,0 @@
-[settings]
-class = CCommandOption
-fields = commandoption.csv
-includes = etherlib.h
