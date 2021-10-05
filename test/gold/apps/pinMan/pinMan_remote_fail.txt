@@ -1,4 +1,4 @@
-chifra pins  
+chifra pins  --remote
 Error: 
   You must choose at least one of --list, --init, or --freshen.
 

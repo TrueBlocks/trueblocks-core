@@ -30,11 +30,11 @@ func anyBase() bool {
 
 func validateNamesArgs(cmd *cobra.Command, args []string) error {
 	if NamesOpts.tags && anyBase() {
-		return makeError("Do not use the --tags option with any other option.")
+		return usage("Do not use the --tags option with any other option.")
 	}
 
 	if NamesOpts.collections && anyBase() {
-		return makeError("Do not use the --collection option with any other option.")
+		return usage("Do not use the --collection option with any other option.")
 	}
 
 	err := validateGlobalFlags(cmd, args)

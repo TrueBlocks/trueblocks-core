@@ -30,7 +30,7 @@ func validateExportArgs(cmd *cobra.Command, args []string) error {
 	}
 
 	if len(ExportOpts.summarize_by) > 0 && !ExportOpts.accounting {
-		return makeError("You may use --summarized_by only with the --accounting option.")
+		return usage("You may use --summarized_by only with the --accounting option.")
 	}
 
 	err = validateGlobalFlags(cmd, args)

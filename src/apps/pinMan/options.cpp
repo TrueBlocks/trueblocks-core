@@ -101,28 +101,43 @@ bool COptions::parseArguments(string_q& command) {
     if (Mocked(""))
         return false;
 
-    LOG_INFO("hashToIndexFormatFile:\t", cGreen, hashToIndexFormatFile, cOff);
-    LOG_INFO("hashToBloomFormatFile:\t", cGreen, hashToBloomFormatFile, cOff);
-    LOG_INFO("unchainedIndexAddr:\t", cGreen, unchainedIndexAddr, cOff);
-    LOG_INFO("manifestHashEncoding:\t", cGreen, manifestHashEncoding, cOff);
-
-    if (list && (init || freshen))
+    if (list && (init || freshen)) {
         return usage("Please choose only a single option.");
+    }
 
-    if (!list && !init && !freshen)
+    if (!list && !init && !freshen) {
         return usage("You must choose at least one of --list, --init, or --freshen.");
+    }
 
-    if (freshen)
-        init = true;
+    if (remote && !list) {
+        return usage("The --remote option is only available with the --list option");
+    }
 
-    if (all && !init)
+    if (remote) {
+        return usage("The --remote option is not yet implemented");
+    }
+
+    if (all && !init) {
         return usage("Use the --all option only with the --init or --freshen options.");
+    }
+
+    // if (init_all) {
+    //     return usage("Flag --init_all has been deprecated, use --init --all instead")
+    // }
 
     if (share) {
         string_q res = doCommand("which ipfs");
         if (res.empty())
             return usage("Could not find ipfs in your $PATH. You must install ipfs for the --share command to work.");
     }
+
+    if (freshen)
+        init = true;
+
+    LOG_INFO("hashToIndexFormatFile:\t", cGreen, hashToIndexFormatFile, cOff);
+    LOG_INFO("hashToBloomFormatFile:\t", cGreen, hashToBloomFormatFile, cOff);
+    LOG_INFO("unchainedIndexAddr:\t", cGreen, unchainedIndexAddr, cOff);
+    LOG_INFO("manifestHashEncoding:\t", cGreen, manifestHashEncoding, cOff);
 
     configureDisplay("pinMan", "CPinnedChunk", STR_DISPLAY_PINNEDCHUNK);
 

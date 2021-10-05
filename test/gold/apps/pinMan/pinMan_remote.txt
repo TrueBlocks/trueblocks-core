@@ -1,6 +1,6 @@
-chifra pins  
+chifra pins  --list --remote
 Error: 
-  You must choose at least one of --list, --init, or --freshen.
+  The --remote option is not yet implemented
 
 Usage:
   chifra pins [flags]
