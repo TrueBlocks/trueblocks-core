@@ -102,27 +102,189 @@ func TestIsDateTimeString(t *testing.T) {
 }
 
 func TestIsRange(t *testing.T) {
-	if IsRange("-0100") {
+	if r, _ := IsRange("-0100"); r {
 		t.Error("Passes for malformed string (1) ")
 	}
 
-	if IsRange("100-") {
+	if r, _ := IsRange("100-"); r {
 		t.Error("Passes for malformed string (2) ")
 	}
 
-	if IsRange("0-100:") {
+	if r, _ := IsRange("0-100:"); r {
 		t.Error("Passes for malformed string (3) ")
 	}
 
-	if !IsRange("0-100") {
+	if r, _ := IsRange("0-100"); !r {
 		t.Error("Fails for range without step")
 	}
 
-	if !IsRange("100-100000:20") {
+	if r, _ := IsRange("100-100000:20"); !r {
 		t.Error("Fails for range with step")
 	}
 
-	if !IsRange("london") {
+	if r, _ := IsRange("london"); !r {
 		t.Error("Fails for special")
+	}
+
+	if r, _ := IsRange("100-2021-04-20"); !r {
+		t.Error("Fails for number and a date")
+	}
+}
+
+func TestIsRangeLatestAsStart(t *testing.T) {
+	expected := "Cannot start range with 'latest'"
+	_, err := IsRange("latest-10")
+
+	if err.Error() != expected {
+		t.Errorf("Error mismatch: %s", err)
+	}
+}
+
+func TestIsRangeEndGreaterThanStart(t *testing.T) {
+	expected := "'stop' must be strictly larger than 'start'"
+	_, err := IsRange("1000-10")
+
+	if err == nil {
+		t.Error("No error")
+	}
+
+	if err.Error() != expected {
+		t.Errorf("Error mismatch: %s", err)
+	}
+}
+
+func TestIsRangeModifierError(t *testing.T) {
+	expected := "Input argument appears to be invalid. No such skip marker: biweekly"
+	_, err := IsRange("0-1000:biweekly")
+
+	if err.Error() != expected {
+		t.Errorf("Error mismatch: %s", err)
+	}
+}
+
+func TestValidateBlockIdentifiers(t *testing.T) {
+	type args struct {
+		identifiers []string
+		validTypes  ValidArgumentType
+		maxRanges   int
+	}
+	tests := []struct {
+		name    string
+		args    args
+		wantErr bool
+	}{
+		{
+			name: "correct block numbers",
+			args: args{
+				identifiers: []string{"10", "100", "1000"},
+				validTypes:  ValidArgumentBlockNumber,
+				maxRanges:   1,
+			},
+			wantErr: false,
+		},
+		{
+			name: "correct block hashes",
+			args: args{
+				identifiers: []string{
+					"0xd3b9663a5f2367cb1ebeff5eab7d45cc24931678a1e96348291db13057ad438f",
+					"0x98862798ac03f688cba584931e0fe42bf17f37a7c48f905c6fc4e9f2a0ec7cb4",
+				},
+				validTypes: ValidArgumentBlockHash,
+				maxRanges:  1,
+			},
+			wantErr: false,
+		},
+		{
+			name: "correct datetime",
+			args: args{
+				identifiers: []string{
+					"2021-06-28",
+					"2021-07-15T10:25:30",
+				},
+				validTypes: ValidArgumentDate,
+				maxRanges:  1,
+			},
+			wantErr: false,
+		},
+		{
+			name: "correct special",
+			args: args{
+				identifiers: []string{
+					"london",
+					"devcon1",
+				},
+				validTypes: ValidArgumentSpecialBlock,
+				maxRanges:  1,
+			},
+			wantErr: false,
+		},
+		{
+			name: "correct range",
+			args: args{
+				identifiers: []string{
+					"10-1000:50",
+				},
+				validTypes: ValidArgumentRange,
+				maxRanges:  1,
+			},
+			wantErr: false,
+		},
+		{
+			name: "correct misc types",
+			args: args{
+				identifiers: []string{
+					"london",
+				},
+				validTypes: ValidArgumentBlockHash | ValidArgumentSpecialBlock,
+				maxRanges:  1,
+			},
+			wantErr: false,
+		},
+		{
+			name: "correct misc identifiers",
+			args: args{
+				identifiers: []string{
+					"london",
+					"10-1000:weekly",
+					"1000",
+				},
+				validTypes: ValidArgumentBlockNumber | ValidArgumentSpecialBlock | ValidArgumentRange,
+				maxRanges:  1,
+			},
+			wantErr: false,
+		},
+		{
+			name: "incorrect range number",
+			args: args{
+				identifiers: []string{
+					"10-1000:50",
+					"10-1000:50",
+					"10-1000:50",
+				},
+				validTypes: ValidArgumentRange,
+				maxRanges:  2,
+			},
+			wantErr: true,
+		},
+		{
+			name: "incorrect misc identifiers",
+			args: args{
+				identifiers: []string{
+					"london",
+					"10-1000:weekly",
+					"1000",
+				},
+				validTypes: ValidArgumentBlockNumber | ValidArgumentSpecialBlock,
+				maxRanges:  1,
+			},
+			wantErr: true,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if err := ValidateBlockIdentifiers(tt.args.identifiers, tt.args.validTypes, tt.args.maxRanges); (err != nil) != tt.wantErr {
+				t.Errorf("ValidateBlockIdentifiers() error = %v, wantErr %v", err, tt.wantErr)
+			}
+		})
 	}
 }

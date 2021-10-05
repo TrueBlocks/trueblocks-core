@@ -49,6 +49,10 @@ func IsHex(str string) bool {
 }
 
 func Is0xPrefixed(str string) bool {
+	if len(str) < 3 {
+		return false
+	}
+
 	return str[:2] == "0x"
 }
 

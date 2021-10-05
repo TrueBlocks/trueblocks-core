@@ -106,3 +106,16 @@ func TestNewSpecial(t *testing.T) {
 		t.Error("Wrong modifier")
 	}
 }
+
+func TestHandleParserErrors(t *testing.T) {
+	_, modifierErr := New("10-100:biweekly")
+
+	if me, ok := modifierErr.(*WrongModifierError); ok {
+		if me.Token != "biweekly" {
+			t.Errorf("Wrong token: %s", me.Token)
+		}
+	} else {
+		t.Error("Returned error is not WrongModifier")
+		t.Error(modifierErr)
+	}
+}

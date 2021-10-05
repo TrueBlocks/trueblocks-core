@@ -1,5 +1,11 @@
 package blockRange
 
+import (
+	"errors"
+	"fmt"
+	"regexp"
+)
+
 // Parses a string containing block range and returns a struct
 // that always has Start, StartType, EndType, ModifierType fields
 // and may as well have End and Modifier, if they are defined.
@@ -12,7 +18,7 @@ func New(rangeStr string) (*BlockRange, error) {
 	newBlockRange := &BlockRange{}
 
 	if err != nil {
-		return nil, err
+		return nil, handleParserErrors(err)
 	}
 
 	newBlockRange.StartType = getPointType(parsed.Points[0])
@@ -81,4 +87,30 @@ func getModifierType(m *Modifier) BlockRangeValue {
 	}
 
 	return BlockRangeStep
+}
+
+type WrongModifierError struct {
+	Token string
+}
+
+func (e *WrongModifierError) Error() string {
+	return fmt.Sprintf("wrong modifier: %s", e.Token)
+}
+
+func handleParserErrors(parseError error) error {
+	modifierMatch, err := regexp.MatchString("expected Modifier", parseError.Error())
+
+	if err != nil || !modifierMatch {
+		return parseError
+	}
+
+	matches := regexp.MustCompile(`unexpected token "(.+)"`).FindStringSubmatch(parseError.Error())
+
+	if len(matches) < 2 {
+		return errors.New("no matches")
+	}
+
+	return &WrongModifierError{
+		Token: matches[1],
+	}
 }
