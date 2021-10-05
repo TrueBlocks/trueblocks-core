@@ -1353,7 +1353,7 @@ paths:
       operationId: admin-init
       parameters:
         - name: all
-          description: in addition to Bloom filters, download full index chunks as well
+          description: in addition to Bloom filters, download full index chunks
           required: false
           style: form
           in: query
@@ -1401,8 +1401,7 @@ paths:
           schema:
             type: boolean
         - name: freshen
-          description: >
-            check for new bloom or index chunks and download if available (alias for --init)
+          description: check for new bloom or index chunks and download if available
           required: false
           style: form
           in: query
@@ -1410,7 +1409,7 @@ paths:
           schema:
             type: boolean
         - name: all
-          description: in addition to Bloom filters, download full index chunks as well
+          description: in addition to Bloom filters, download full index chunks
           required: false
           style: form
           in: query

@@ -16,7 +16,7 @@ Usage:
   chifra init [flags]
 
 Flags:
-  -a, --all   in addition to Bloom filters, download full index chunks as well
+  -a, --all   in addition to Bloom filters, download full index chunks
 
 Global Flags:
   -x, --fmt string   export format, one of [none|json*|txt|csv|api]

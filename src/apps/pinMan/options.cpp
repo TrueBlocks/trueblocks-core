@@ -23,8 +23,8 @@ static const COption params[] = {
     // clang-format off
     COption("list", "l", "", OPT_SWITCH, "list the bloom and index hashes from local cache or IPFS"),
     COption("init", "i", "", OPT_SWITCH, "download the blooms or index chunks from IPFS"),
-    COption("freshen", "f", "", OPT_SWITCH, "check for new bloom or index chunks and download if available (alias for --init)"),  // NOLINT
-    COption("all", "a", "", OPT_SWITCH, "in addition to Bloom filters, download full index chunks as well"),
+    COption("freshen", "f", "", OPT_SWITCH, "check for new bloom or index chunks and download if available"),
+    COption("all", "a", "", OPT_SWITCH, "in addition to Bloom filters, download full index chunks"),
     COption("share", "S", "", OPT_SWITCH, "share downloaded data by pinning it to IPFS (the IPFS daemon must be running)"),  // NOLINT
     COption("remote", "r", "", OPT_SWITCH, "for --list mode only, recover the manifest from IPFS via UnchainedIndex smart contract"),  // NOLINT
     COption("sleep", "s", "<double>", OPT_FLAG, "throttle requests by this many seconds (.25 seconds delay between requests by default)"),  // NOLINT
@@ -164,7 +164,7 @@ COptions::COptions(void) {
 
     // BEG_CODE_NOTES
     // clang-format off
-    notes.push_back("The --freshen option is an alias of the --init option.");
+    notes.push_back("The --freshen option is similar to --init, but checks UnchainedIndex first.");
     notes.push_back("One of `--list`, `--init`, or `--freshen` is required.");
     notes.push_back("The `--share` option only works if the IPFS daemon is running.");
     notes.push_back("Re-run `chifra init` as you wish. It will repair or freshen the index.");

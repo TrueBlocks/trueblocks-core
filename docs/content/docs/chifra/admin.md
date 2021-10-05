@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2021-10-04T22:46:17
+date: 2021-10-04T23:24:49
 lastmod:
   - :git
   - lastmod
@@ -111,7 +111,7 @@ Usage:
   chifra init [flags]
 
 Flags:
-  -a, --all   in addition to Bloom filters, download full index chunks as well
+  -a, --all   in addition to Bloom filters, download full index chunks
 
 Global Flags:
   -x, --fmt string   export format, one of [none|json*|txt|csv|api]
@@ -139,8 +139,8 @@ Usage:
 Flags:
   -l, --list          list the bloom and index hashes from local cache or IPFS
   -i, --init          download the blooms or index chunks from IPFS
-  -f, --freshen       check for new bloom or index chunks and download if available (alias for --init)
-  -a, --all           in addition to Bloom filters, download full index chunks as well
+  -f, --freshen       check for new bloom or index chunks and download if available
+  -a, --all           in addition to Bloom filters, download full index chunks
   -S, --share         share downloaded data by pinning it to IPFS (the IPFS daemon must be running)
   -r, --remote        for --list mode only, recover the manifest from IPFS via UnchainedIndex smart contract
   -s, --sleep float   throttle requests by this many seconds (.25 seconds delay between requests by default) (default 0.25)
@@ -151,7 +151,7 @@ Global Flags:
   -v, --verbose      enable verbose (increase detail with --log_level)
 
 Notes:
-  - The --freshen option is an alias of the --init option.
+  - The --freshen option is similar to --init, but checks UnchainedIndex first.
   - One of --list, --init, or --freshen is required.
   - The --share option only works if the IPFS daemon is running.
   - Re-run chifra init as you wish. It will repair or freshen the index.

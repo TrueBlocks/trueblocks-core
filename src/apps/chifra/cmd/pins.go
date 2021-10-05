@@ -41,7 +41,7 @@ var longPins = `Purpose:
 
 var notesPins = `
 Notes:
-  - The --freshen option is an alias of the --init option.
+  - The --freshen option is similar to --init, but checks UnchainedIndex first.
   - One of --list, --init, or --freshen is required.
   - The --share option only works if the IPFS daemon is running.
   - Re-run chifra init as you wish. It will repair or freshen the index.`
@@ -66,8 +66,8 @@ func init() {
 	pinsCmd.PersistentFlags().SortFlags = false
 	pinsCmd.Flags().BoolVarP(&PinsOpts.list, "list", "l", false, "list the bloom and index hashes from local cache or IPFS")
 	pinsCmd.Flags().BoolVarP(&PinsOpts.init, "init", "i", false, "download the blooms or index chunks from IPFS")
-	pinsCmd.Flags().BoolVarP(&PinsOpts.freshen, "freshen", "f", false, "check for new bloom or index chunks and download if available (alias for --init)")
-	pinsCmd.Flags().BoolVarP(&PinsOpts.all, "all", "a", false, "in addition to Bloom filters, download full index chunks as well")
+	pinsCmd.Flags().BoolVarP(&PinsOpts.freshen, "freshen", "f", false, "check for new bloom or index chunks and download if available")
+	pinsCmd.Flags().BoolVarP(&PinsOpts.all, "all", "a", false, "in addition to Bloom filters, download full index chunks")
 	pinsCmd.Flags().BoolVarP(&PinsOpts.share, "share", "S", false, "share downloaded data by pinning it to IPFS (the IPFS daemon must be running)")
 	pinsCmd.Flags().BoolVarP(&PinsOpts.remote, "remote", "r", false, "for --list mode only, recover the manifest from IPFS via UnchainedIndex smart contract")
 	pinsCmd.Flags().Float64VarP(&PinsOpts.sleep, "sleep", "s", .25, "throttle requests by this many seconds (.25 seconds delay between requests by default)")

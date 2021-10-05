@@ -54,7 +54,7 @@ func init() {
 
 	initCmd.Flags().SortFlags = false
 	initCmd.PersistentFlags().SortFlags = false
-	initCmd.Flags().BoolVarP(&InitOpts.all, "all", "a", false, "in addition to Bloom filters, download full index chunks as well")
+	initCmd.Flags().BoolVarP(&InitOpts.all, "all", "a", false, "in addition to Bloom filters, download full index chunks")
 	initCmd.Flags().SortFlags = false
 	initCmd.PersistentFlags().SortFlags = false
 

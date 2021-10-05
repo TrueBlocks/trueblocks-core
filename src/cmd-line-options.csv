@@ -210,19 +210,19 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 
 10950,apps,Admin,pins,pinMan,list,l,,false,false,true,true,local,switch,<boolean>,list the bloom and index hashes from local cache or IPFS
 10952,apps,Admin,pins,pinMan,init,i,,false,false,true,true,header,switch,<boolean>,download the blooms or index chunks from IPFS
-10954,apps,Admin,pins,pinMan,freshen,f,,false,false,true,true,header,switch,<boolean>,check for new bloom or index chunks and download if available (alias for --init)
-10958,apps,Admin,pins,pinMan,all,a,,false,false,true,true,header,switch,<boolean>,in addition to Bloom filters&#44; download full index chunks as well
+10954,apps,Admin,pins,pinMan,freshen,f,,false,false,true,true,header,switch,<boolean>,check for new bloom or index chunks and download if available
+10958,apps,Admin,pins,pinMan,all,a,,false,false,true,true,header,switch,<boolean>,in addition to Bloom filters&#44; download full index chunks
 10962,apps,Admin,pins,pinMan,share,S,,false,false,true,true,header,switch,<boolean>,share downloaded data by pinning it to IPFS (the IPFS daemon must be running)
 10956,apps,Admin,pins,pinMan,remote,r,,false,false,true,true,header,switch,<boolean>,for --list mode only&#44; recover the manifest from IPFS via UnchainedIndex smart contract
 10960,apps,Admin,pins,pinMan,sleep,s,.25,false,false,true,true,header,flag,<double>,throttle requests by this many seconds ([{DEF}] seconds delay between requests by default)
 10964,apps,Admin,pins,pinMan,init_all,n,,false,false,false,false,header,deprecated,<boolean>,use --init --all instead
 10966,apps,Admin,pins,pinMan,,,,false,false,true,true,--,description,,Manage pinned index of appearances and associated blooms.
-10968,apps,Admin,pins,pinMan,n1,,,false,false,false,false,--,note,,The --freshen option is an alias of the --init option.
+10968,apps,Admin,pins,pinMan,n1,,,false,false,false,false,--,note,,The --freshen option is similar to --init&#44; but checks UnchainedIndex first.
 10970,apps,Admin,pins,pinMan,n2,,,false,false,false,false,--,note,,One of `--list`&#44; `--init`&#44; or `--freshen` is required.
 10972,apps,Admin,pins,pinMan,n3,,,false,false,false,false,--,note,,The `--share` option only works if the IPFS daemon is running.
 10974,apps,Admin,pins,pinMan,n4,,,false,false,false,false,--,note,,Re-run `chifra init` as you wish. It will repair or freshen the index.
 
-11905,apps,Admin,init,pinMan,all,a,,false,false,true,true,header,switch,<boolean>,in addition to Bloom filters&#44; download full index chunks as well
+11905,apps,Admin,init,pinMan,all,a,,false,false,true,true,header,switch,<boolean>,in addition to Bloom filters&#44; download full index chunks
 11910,apps,Admin,init,pinMan,,,,false,false,true,true,--,description,,Initialize the TrueBlocks system by downloading from IPFS.
 11915,apps,Admin,init,pinMan,n1,,,false,false,false,false,--,note,,`chifra init` is an alias for the `chifra pins --init` command.
 11920,apps,Admin,init,pinMan,n2,,,false,false,false,false,--,note,,See `chifra pins --help` for more information.
