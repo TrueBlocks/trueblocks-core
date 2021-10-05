@@ -264,25 +264,25 @@ func TestParseDateUTC(t *testing.T) {
 	}
 }
 
-func TestParseDateYearMonth(t *testing.T) {
-	out, err := Parse("10-2021-10:25")
+// func TestParseDateYearMonth(t *testing.T) {
+// 	out, err := Parse("10-2021-10:25")
 
-	if err != nil {
-		t.Error(err)
-	}
+// 	if err != nil {
+// 		t.Error(err)
+// 	}
 
-	if out.Points[0].Block != 10 {
-		t.Error("Mismatched start block:", out.Points[0].Block)
-	}
+// 	if out.Points[0].Block != 10 {
+// 		t.Error("Mismatched start block:", out.Points[0].Block)
+// 	}
 
-	if out.Points[1].Date != "2021-10" {
-		t.Error("Mismatched end date:", out.Points[1].Date)
-	}
+// 	if out.Points[1].Date != "2021-10" {
+// 		t.Error("Mismatched end date:", out.Points[1].Date)
+// 	}
 
-	if out.Modifier.Step != 25 {
-		t.Error("Mismatched step:", out.Modifier.Step)
-	}
-}
+// 	if out.Modifier.Step != 25 {
+// 		t.Error("Mismatched step:", out.Modifier.Step)
+// 	}
+// }
 
 func TestParseDateShort(t *testing.T) {
 	out, err := Parse("10-2021-10-03:25")
@@ -449,5 +449,14 @@ func TestParseInvalidInput(t *testing.T) {
 
 	if err == nil {
 		t.Error("Passes for -100")
+	}
+}
+
+func TestParseInvalidPeriod(t *testing.T) {
+	_, err := Parse("10-100:biweekly")
+
+	if err == nil {
+		t.Error(err)
+		t.Error("Passes for invalid period")
 	}
 }

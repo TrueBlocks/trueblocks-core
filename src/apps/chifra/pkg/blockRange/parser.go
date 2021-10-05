@@ -53,7 +53,7 @@ import (
 
 // Define "tokens" for our lexer
 var rangeLexer = lexer.MustSimple([]lexer.Rule{
-	{`Date`, `\d{4}-\d{2}(-(\d{2}))?(T[\d]{2}(:[\d]{2})?(:[\d]{2})?(UTC)?)?`, nil},
+	{`Date`, `\d{4}-\d{2}-\d{2}(T[\d]{2}(:[\d]{2})?(:[\d]{2})?(UTC)?)?`, nil},
 	{`Special`, `[a-z_]+[0-9]*`, nil},
 	{`Hex`, `0x[a-f0-9]+`, nil},
 	{`Unsigned`, `^[0-9]+`, nil},
