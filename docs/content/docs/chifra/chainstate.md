@@ -1,5 +1,5 @@
 ---
-title: "Chain State"
+title: "Chain state"
 description: ""
 lead: ""
 date: 2021-10-03T19:59:18

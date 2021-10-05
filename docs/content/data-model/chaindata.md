@@ -1,5 +1,5 @@
 ---
-title: "Chain Data"
+title: "Chain data"
 description: ""
 lead: ""
 date: 2021-10-03T21:29:36
