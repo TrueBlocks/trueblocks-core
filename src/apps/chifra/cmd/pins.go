@@ -41,10 +41,10 @@ var longPins = `Purpose:
 
 var notesPins = `
 Notes:
+  - The --freshen option is an alias of the --init option.
   - One of --list, --init, or --freshen is required.
-  - The --share option only works if the IPFS executable is in your path.
-  - The --freshen option is an alias of --init.
-  - Re-run chifra init as often as you wish. It will correct previously interrupted downloads and freshen.`
+  - The --share option only works if the IPFS daemon is running.
+  - Re-run chifra init as you wish. It will repair or freshen the index.`
 
 type pinsOptionsType struct {
 	list     bool

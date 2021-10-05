@@ -164,10 +164,10 @@ COptions::COptions(void) {
 
     // BEG_CODE_NOTES
     // clang-format off
+    notes.push_back("The --freshen option is an alias of the --init option.");
     notes.push_back("One of `--list`, `--init`, or `--freshen` is required.");
-    notes.push_back("The `--share` option only works if the IPFS executable is in your path.");
-    notes.push_back("The --freshen option is an alias of --init.");
-    notes.push_back("Re-run `chifra init` as often as you wish. It will correct previously interrupted downloads and freshen.");  // NOLINT
+    notes.push_back("The `--share` option only works if the IPFS daemon is running.");
+    notes.push_back("Re-run `chifra init` as you wish. It will repair or freshen the index.");
     // clang-format on
     // END_CODE_NOTES
 

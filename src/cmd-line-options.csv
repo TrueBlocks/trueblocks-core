@@ -217,10 +217,10 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 10960,apps,Admin,pins,pinMan,sleep,s,.25,false,false,true,true,header,flag,<double>,throttle requests by this many seconds ([{DEF}] seconds delay between requests by default)
 10964,apps,Admin,pins,pinMan,init_all,n,,false,false,false,false,header,deprecated,<boolean>,use --init --all instead
 10966,apps,Admin,pins,pinMan,,,,false,false,true,true,--,description,,Manage pinned index of appearances and associated blooms.
-10968,apps,Admin,pins,pinMan,n1,,,false,false,false,false,--,note,,One of `--list`&#44; `--init`&#44; or `--freshen` is required.
-10970,apps,Admin,pins,pinMan,n2,,,false,false,false,false,--,note,,The `--share` option only works if the IPFS executable is in your path.
-10968,apps,Admin,pins,pinMan,n3,,,false,false,false,false,--,note,,The --freshen option is an alias of --init.
-10970,apps,Admin,pins,pinMan,n4,,,false,false,false,false,--,note,,Re-run `chifra init` as often as you wish. It will correct previously interrupted downloads and freshen.
+10968,apps,Admin,pins,pinMan,n1,,,false,false,false,false,--,note,,The --freshen option is an alias of the --init option.
+10970,apps,Admin,pins,pinMan,n2,,,false,false,false,false,--,note,,One of `--list`&#44; `--init`&#44; or `--freshen` is required.
+10972,apps,Admin,pins,pinMan,n3,,,false,false,false,false,--,note,,The `--share` option only works if the IPFS daemon is running.
+10974,apps,Admin,pins,pinMan,n4,,,false,false,false,false,--,note,,Re-run `chifra init` as you wish. It will repair or freshen the index.
 
 11905,apps,Admin,init,pinMan,all,a,,false,false,true,true,header,switch,<boolean>,in addition to Bloom filters&#44; download full index chunks as well
 11910,apps,Admin,init,pinMan,,,,false,false,true,true,--,description,,Initialize the TrueBlocks system by downloading from IPFS.

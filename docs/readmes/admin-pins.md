@@ -24,10 +24,10 @@ Global Flags:
   -v, --verbose      enable verbose (increase detail with --log_level)
 
 Notes:
+  - The --freshen option is an alias of the --init option.
   - One of --list, --init, or --freshen is required.
-  - The --share option only works if the IPFS executable is in your path.
-  - The --freshen option is an alias of --init.
-  - Re-run chifra init as often as you wish. It will correct previously interrupted downloads and freshen.
+  - The --share option only works if the IPFS daemon is running.
+  - Re-run chifra init as you wish. It will repair or freshen the index.
 ```
 
 **Source code**: [`apps/pinMan`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/pinMan)
