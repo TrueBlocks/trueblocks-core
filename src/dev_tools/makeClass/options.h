@@ -48,6 +48,8 @@ class COptions : public COptionsBase {
     CClassDefinitionArray dataModels;
     CCommandOptionArray cmdOptionArray;
     CCommandOptionArray routeOptionArray;
+    CStringBoolMap toolMap;
+    CStringBoolMap cmdExistsMap;
     CStringArray positionals;
     CToml classFile;
     CCounter counter;
@@ -136,6 +138,7 @@ class COptions : public COptionsBase {
     void writeOpenApiFile(void);
 
     string_q getProductions(const CCommandOption& ep);
+    void verifyDescriptions(void);
 };
 
 //-------------------------------------------------------------------
@@ -189,6 +192,5 @@ inline string_q getTemplatePath(const string_q& part) {
     return getSourcePath("dev_tools/makeClass/templates/" + part);
 }
 #define explorerPath string_q("/Users/jrush/Development/trueblocks-explorer/")
-#define endpointFile getSourcePath("cmd-line-endpoints.csv")
-#define optionsFile getSourcePath("cmd-line-options.csv")
-extern bool parseCommandData(const char* str, void* data);
+extern bool parseEndpointsFile(const char* str, void* data);
+extern bool parseOptionsFile(const char* str, void* data);

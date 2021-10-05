@@ -44,41 +44,16 @@ bool COptions::handle_options(void) {
     LOG_INFO(cYellow, "handling options...", string_q(50, ' '), cOff);
     counter = CCounter();  // reset
 
-    // Look for local file first
-    string_q cmdFile = getSourcePath("cmd-line-options.csv");
-
-    if (!fileExists(cmdFile))
-        return usage("Could not find cmd-line-options.csv file at " + cmdFile);
-
-    // read in and prepare the options for all tools
-    CStringBoolMap exists;
-    CStringBoolMap tools;
-    CStringArray lines;
-    asciiFileToLines(cmdFile, lines);
-    for (auto line : lines) {
-        CCommandOption opt(line);
-        if (!opt.tool.empty() && opt.tool != "all" && opt.tool != "tool" && opt.tool != "templates") {
-            string_q key = opt.tool + "-" + opt.longName + opt.option_type;
-            if (!exists[key]) {
-                cmdOptionArray.push_back(opt);
-                exists[key] = true;
-            }
-            routeOptionArray.push_back(opt);
-            tools[opt.group + "/" + opt.tool] = true;
-        }
-    }
-
     // For each tool...
-    size_t errCnt = 1;
-    for (auto tool : tools) {
-        bool allAuto = true;
-
-        errCnt = 1;
+    for (auto tool : toolMap) {
         optionStream << "    // clang-format off" << endl;
         notesStream << "    // clang-format off" << endl;
         configStream << "    // clang-format off" << endl;
         CStringArray warnings;
         map<string, string> existing;
+        size_t errCnt = 1;
+        bool allAuto = true;
+
         for (auto option : cmdOptionArray) {
             option.verifyOptions(warnings);
             if ((option.group + "/" + option.tool) == tool.first) {

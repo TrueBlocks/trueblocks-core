@@ -21,14 +21,14 @@
 static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
-    COption("list", "l", "", OPT_SWITCH, "list the index and Bloom filter hashes from local manifest or pinning service"),  // NOLINT
-    COption("init", "i", "", OPT_SWITCH, "initialize index of appearances by downloading Bloom filters from pinning service"),  // NOLINT
-    COption("freshen", "f", "", OPT_SWITCH, "freshen index of appearances using the same mode from most recent --init"),
-    COption("remote", "r", "", OPT_HIDDEN | OPT_SWITCH, "for --list mode only, recover the manifest from pinning service"),  // NOLINT
-    COption("all", "a", "", OPT_SWITCH, "for --init and --freshen modes only, download full index chunks as well as Bloom filter"),  // NOLINT
-    COption("sleep", "s", "<double>", OPT_HIDDEN | OPT_FLAG, "the number of seconds to sleep between requests during download (default .25)"),  // NOLINT
-    COption("share", "S", "", OPT_SWITCH, "pin downloaded files to your local IPFS store, that is, share them (requires IPFS)"),  // NOLINT
-    COption("", "", "", OPT_DESCRIPTION, "Manage pinned index of appearances and associated Bloom filters."),
+    COption("list", "l", "", OPT_SWITCH, "list the bloom and index hashes from local cache or IPFS"),
+    COption("init", "i", "", OPT_SWITCH, "download the blooms or index chunks from IPFS"),
+    COption("freshen", "f", "", OPT_SWITCH, "check for new bloom or index chunks and download if available (alias for --init)"),  // NOLINT
+    COption("all", "a", "", OPT_SWITCH, "in addition to Bloom filters, download full index chunks as well"),
+    COption("share", "S", "", OPT_SWITCH, "share download data by pinning to IPFS (if IPFS daemon is available)"),
+    COption("remote", "r", "", OPT_SWITCH, "for --list mode only, recover the manifest from IPFS via UnchainedIndex smart contract"),  // NOLINT
+    COption("sleep", "s", "<double>", OPT_FLAG, "throttle requests by this many seconds (.25 seconds delay between requests by default)"),  // NOLINT
+    COption("", "", "", OPT_DESCRIPTION, "Manage pinned index of appearances and associated blooms."),
     // clang-format on
     // END_CODE_OPTIONS
 };
@@ -58,20 +58,20 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-f" || arg == "--freshen") {
             freshen = true;
 
-        } else if (arg == "-r" || arg == "--remote") {
-            remote = true;
-
         } else if (arg == "-a" || arg == "--all") {
             all = true;
+
+        } else if (arg == "-S" || arg == "--share") {
+            share = true;
+
+        } else if (arg == "-r" || arg == "--remote") {
+            remote = true;
 
         } else if (startsWith(arg, "-s:") || startsWith(arg, "--sleep:")) {
             if (!confirmDouble("sleep", sleep, arg))
                 return false;
         } else if (arg == "-s" || arg == "--sleep") {
             return flag_required("sleep");
-
-        } else if (arg == "-S" || arg == "--share") {
-            share = true;
 
         } else if (arg == "-n" || arg == "--init_all") {
             // clang-format off
@@ -92,10 +92,10 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("list", list);
     LOG_TEST_BOOL("init", init);
     LOG_TEST_BOOL("freshen", freshen);
-    LOG_TEST_BOOL("remote", remote);
     LOG_TEST_BOOL("all", all);
-    LOG_TEST("sleep", sleep, (sleep == .25));
     LOG_TEST_BOOL("share", share);
+    LOG_TEST_BOOL("remote", remote);
+    LOG_TEST("sleep", sleep, (sleep == .25));
     // END_DEBUG_DISPLAY
 
     if (Mocked(""))
@@ -136,13 +136,11 @@ void COptions::Init(void) {
     // BEG_CODE_INIT
     init = false;
     freshen = false;
-    remote = false;
     all = false;
-    sleep = .25;
     share = false;
+    remote = false;
+    sleep = .25;
     // END_CODE_INIT
-
-    minArgs = 0;
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -152,7 +150,9 @@ COptions::COptions(void) {
     // BEG_CODE_NOTES
     // clang-format off
     notes.push_back("One of `--list`, `--init`, or `--freshen` is required.");
-    notes.push_back("the `--share` option only works if the IPFS executable is in your path.");
+    notes.push_back("The `--share` option only works if the IPFS executable is in your path.");
+    notes.push_back("The --freshen option is an alias of --init.");
+    notes.push_back("Re-run `chifra init` as often as you wish. It will correct previously interrupted downloads and freshen.");  // NOLINT
     // clang-format on
     // END_CODE_NOTES
 

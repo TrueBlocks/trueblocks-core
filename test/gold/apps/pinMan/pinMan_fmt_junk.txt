@@ -6,13 +6,13 @@ Usage:
   chifra pins [flags]
 
 Flags:
-  -l, --list          list the index and Bloom filter hashes from local manifest or pinning service
-  -i, --init          initialize index of appearances by downloading Bloom filters from pinning service
-  -f, --freshen       freshen index of appearances using the same mode from most recent --init
-  -r, --remote        for --list mode only, recover the manifest from pinning service (hidden)
-  -a, --all           for --init and --freshen modes only, download full index chunks as well as Bloom filter
-  -s, --sleep float   the number of seconds to sleep between requests during download (hidden) (default 0.25)
-  -S, --share         pin downloaded files to your local IPFS store, that is, share them (requires IPFS)
+  -l, --list          list the bloom and index hashes from local cache or IPFS
+  -i, --init          download the blooms or index chunks from IPFS
+  -f, --freshen       check for new bloom or index chunks and download if available (alias for --init)
+  -a, --all           in addition to Bloom filters, download full index chunks as well
+  -S, --share         share download data by pinning to IPFS (if IPFS daemon is available)
+  -r, --remote        for --list mode only, recover the manifest from IPFS via UnchainedIndex smart contract
+  -s, --sleep float   throttle requests by this many seconds (.25 seconds delay between requests by default) (default 0.25)
   -n, --init_all      use --init --all instead (hidden)
 
 Global Flags:
@@ -22,4 +22,6 @@ Global Flags:
 
 Notes:
   - One of --list, --init, or --freshen is required.
-  - the --share option only works if the IPFS executable is in your path.
+  - The --share option only works if the IPFS executable is in your path.
+  - The --freshen option is an alias of --init.
+  - Re-run chifra init as often as you wish. It will correct previously interrupted downloads and freshen.

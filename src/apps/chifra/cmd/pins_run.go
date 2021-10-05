@@ -19,6 +19,10 @@ import (
 )
 
 func validatePinsArgs(cmd *cobra.Command, args []string) error {
+	if !PinsOpts.list && !PinsOpts.init && !PinsOpts.freshen {
+		return makeError("Please choose one of --list, --init, or --freshen")
+	}
+
 	if PinsOpts.init_all {
 		return makeError("Flag --init_all has been deprecated, use --init --all instead")
 	}

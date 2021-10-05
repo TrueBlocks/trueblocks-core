@@ -34,24 +34,26 @@ var pinsCmd = &cobra.Command{
 
 var usagePins = `pins [flags]`
 
-var shortPins = "manage pinned index of appearances and associated Bloom filters"
+var shortPins = "manage pinned index of appearances and associated blooms"
 
 var longPins = `Purpose:
-  Manage pinned index of appearances and associated Bloom filters.`
+  Manage pinned index of appearances and associated blooms.`
 
 var notesPins = `
 Notes:
   - One of --list, --init, or --freshen is required.
-  - the --share option only works if the IPFS executable is in your path.`
+  - The --share option only works if the IPFS executable is in your path.
+  - The --freshen option is an alias of --init.
+  - Re-run chifra init as often as you wish. It will correct previously interrupted downloads and freshen.`
 
 type pinsOptionsType struct {
 	list     bool
 	init     bool
 	freshen  bool
-	remote   bool
 	all      bool
-	sleep    float64
 	share    bool
+	remote   bool
+	sleep    float64
 	init_all bool
 }
 
@@ -62,17 +64,15 @@ func init() {
 
 	pinsCmd.Flags().SortFlags = false
 	pinsCmd.PersistentFlags().SortFlags = false
-	pinsCmd.Flags().BoolVarP(&PinsOpts.list, "list", "l", false, "list the index and Bloom filter hashes from local manifest or pinning service")
-	pinsCmd.Flags().BoolVarP(&PinsOpts.init, "init", "i", false, "initialize index of appearances by downloading Bloom filters from pinning service")
-	pinsCmd.Flags().BoolVarP(&PinsOpts.freshen, "freshen", "f", false, "freshen index of appearances using the same mode from most recent --init")
-	pinsCmd.Flags().BoolVarP(&PinsOpts.remote, "remote", "r", false, "for --list mode only, recover the manifest from pinning service (hidden)")
-	pinsCmd.Flags().BoolVarP(&PinsOpts.all, "all", "a", false, "for --init and --freshen modes only, download full index chunks as well as Bloom filter")
-	pinsCmd.Flags().Float64VarP(&PinsOpts.sleep, "sleep", "s", .25, "the number of seconds to sleep between requests during download (hidden)")
-	pinsCmd.Flags().BoolVarP(&PinsOpts.share, "share", "S", false, "pin downloaded files to your local IPFS store, that is, share them (requires IPFS)")
+	pinsCmd.Flags().BoolVarP(&PinsOpts.list, "list", "l", false, "list the bloom and index hashes from local cache or IPFS")
+	pinsCmd.Flags().BoolVarP(&PinsOpts.init, "init", "i", false, "download the blooms or index chunks from IPFS")
+	pinsCmd.Flags().BoolVarP(&PinsOpts.freshen, "freshen", "f", false, "check for new bloom or index chunks and download if available (alias for --init)")
+	pinsCmd.Flags().BoolVarP(&PinsOpts.all, "all", "a", false, "in addition to Bloom filters, download full index chunks as well")
+	pinsCmd.Flags().BoolVarP(&PinsOpts.share, "share", "S", false, "share download data by pinning to IPFS (if IPFS daemon is available)")
+	pinsCmd.Flags().BoolVarP(&PinsOpts.remote, "remote", "r", false, "for --list mode only, recover the manifest from IPFS via UnchainedIndex smart contract")
+	pinsCmd.Flags().Float64VarP(&PinsOpts.sleep, "sleep", "s", .25, "throttle requests by this many seconds (.25 seconds delay between requests by default)")
 	pinsCmd.Flags().BoolVarP(&PinsOpts.init_all, "init_all", "n", false, "use --init --all instead (hidden)")
 	if !utils.IsTestMode() {
-		pinsCmd.Flags().MarkHidden("remote")
-		pinsCmd.Flags().MarkHidden("sleep")
 		pinsCmd.Flags().MarkHidden("init_all")
 	}
 	pinsCmd.Flags().SortFlags = false
