@@ -22,7 +22,7 @@ import (
 
 func validateStatusArgs(cmd *cobra.Command, args []string) error {
 	if StatusOpts.depth > 3 {
-		return makeError("--depth parameter ({0}) must be less than four (4)", strconv.FormatUint(StatusOpts.depth, 10))
+		return usage("--depth parameter ({0}) must be less than four (4)", strconv.FormatUint(StatusOpts.depth, 10))
 	}
 
 	err := validateEnumSlice("--types", StatusOpts.types, "[blocks|txs|traces|slurps|prices|all]")

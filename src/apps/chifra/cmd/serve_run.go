@@ -20,7 +20,7 @@ import (
 
 func validateServeArgs(cmd *cobra.Command, args []string) error {
 	if len(ServeOpts.port) > 0 && !strings.Contains(ServeOpts.port, ":") {
-		return makeError("The --port option must start with a ':'")
+		return usage("The --port option must start with a ':'")
 	}
 
 	return nil

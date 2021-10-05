@@ -1349,11 +1349,11 @@ paths:
       tags:
         - Admin
       summary: Initialize index
-      description: Initialize the index of appearances by downloading Bloom filters.
+      description: Initialize the TrueBlocks system by downloading from IPFS.
       operationId: admin-init
       parameters:
         - name: all
-          description: download full index chunks as well as Bloom filter
+          description: in addition to Bloom filters, download full index chunks
           required: false
           style: form
           in: query
@@ -1381,12 +1381,11 @@ paths:
       tags:
         - Admin
       summary: Manage pins
-      description: Manage pinned index of appearances and associated Bloom filters.
+      description: Manage pinned index of appearances and associated blooms.
       operationId: admin-pins
       parameters:
         - name: list
-          description: >
-            list the index and Bloom filter hashes from local manifest or pinning service
+          description: list the bloom and index hashes from local cache or IPFS
           required: false
           style: form
           in: query
@@ -1394,8 +1393,7 @@ paths:
           schema:
             type: boolean
         - name: init
-          description: >
-            initialize index of appearances by downloading Bloom filters from pinning service
+          description: download the blooms or index chunks from IPFS
           required: false
           style: form
           in: query
@@ -1403,7 +1401,7 @@ paths:
           schema:
             type: boolean
         - name: freshen
-          description: freshen index of appearances using the same mode from most recent --init
+          description: check for new bloom or index chunks and download if available
           required: false
           style: form
           in: query
@@ -1411,8 +1409,7 @@ paths:
           schema:
             type: boolean
         - name: all
-          description: >
-            for --init and --freshen modes only, download full index chunks as well as Bloom filter
+          description: in addition to Bloom filters, download full index chunks
           required: false
           style: form
           in: query
@@ -1421,13 +1418,31 @@ paths:
             type: boolean
         - name: share
           description: >
-            pin downloaded files to your local IPFS store, that is, share them (requires IPFS)
+            share downloaded data by pinning it to IPFS (the IPFS daemon must be running)
           required: false
           style: form
           in: query
           explode: true
           schema:
             type: boolean
+        - name: remote
+          description: >
+            for --list mode only, recover the manifest from IPFS via UnchainedIndex smart contract
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: sleep
+          description: >
+            throttle requests by this many seconds (.25 seconds delay between requests by default)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: number
       responses:
         "200":
           description: returns the requested data
@@ -1467,7 +1482,7 @@ paths:
       tags:
         - Other
       summary: Price quotes
-      description: Freshen or display Ethereum price data.
+      description: Freshen or display Ethereum price data. This tool has been deprecated.
       operationId: other-quotes
       parameters:
         - name: freshen

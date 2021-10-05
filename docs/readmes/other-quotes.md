@@ -4,7 +4,7 @@ The `chifra quotes` tool provides USD ($) price data to other tools and to the c
 
 ```[plaintext]
 Purpose:
-  Freshen or display Ethereum price data.
+  Freshen or display Ethereum price data. This tool has been deprecated.
 
 Usage:
   chifra quotes [flags]
