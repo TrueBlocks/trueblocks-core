@@ -212,7 +212,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 10952,apps,Admin,pins,pinMan,init,i,,false,false,true,true,header,switch,<boolean>,download the blooms or index chunks from IPFS
 10954,apps,Admin,pins,pinMan,freshen,f,,false,false,true,true,header,switch,<boolean>,check for new bloom or index chunks and download if available (alias for --init)
 10958,apps,Admin,pins,pinMan,all,a,,false,false,true,true,header,switch,<boolean>,in addition to Bloom filters&#44; download full index chunks as well
-10962,apps,Admin,pins,pinMan,share,S,,false,false,true,true,header,switch,<boolean>,share download data by pinning to IPFS (if IPFS daemon is available)
+10962,apps,Admin,pins,pinMan,share,S,,false,false,true,true,header,switch,<boolean>,share downloaded data by pinning it to IPFS (the IPFS daemon must be running)
 10956,apps,Admin,pins,pinMan,remote,r,,false,false,true,true,header,switch,<boolean>,for --list mode only&#44; recover the manifest from IPFS via UnchainedIndex smart contract
 10960,apps,Admin,pins,pinMan,sleep,s,.25,false,false,true,true,header,flag,<double>,throttle requests by this many seconds ([{DEF}] seconds delay between requests by default)
 10964,apps,Admin,pins,pinMan,init_all,n,,false,false,false,false,header,deprecated,<boolean>,use --init --all instead

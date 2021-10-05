@@ -25,7 +25,7 @@ static const COption params[] = {
     COption("init", "i", "", OPT_SWITCH, "download the blooms or index chunks from IPFS"),
     COption("freshen", "f", "", OPT_SWITCH, "check for new bloom or index chunks and download if available (alias for --init)"),  // NOLINT
     COption("all", "a", "", OPT_SWITCH, "in addition to Bloom filters, download full index chunks as well"),
-    COption("share", "S", "", OPT_SWITCH, "share download data by pinning to IPFS (if IPFS daemon is available)"),
+    COption("share", "S", "", OPT_SWITCH, "share downloaded data by pinning it to IPFS (the IPFS daemon must be running)"),  // NOLINT
     COption("remote", "r", "", OPT_SWITCH, "for --list mode only, recover the manifest from IPFS via UnchainedIndex smart contract"),  // NOLINT
     COption("sleep", "s", "<double>", OPT_FLAG, "throttle requests by this many seconds (.25 seconds delay between requests by default)"),  // NOLINT
     COption("", "", "", OPT_DESCRIPTION, "Manage pinned index of appearances and associated blooms."),

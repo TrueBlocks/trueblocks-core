@@ -68,7 +68,7 @@ func init() {
 	pinsCmd.Flags().BoolVarP(&PinsOpts.init, "init", "i", false, "download the blooms or index chunks from IPFS")
 	pinsCmd.Flags().BoolVarP(&PinsOpts.freshen, "freshen", "f", false, "check for new bloom or index chunks and download if available (alias for --init)")
 	pinsCmd.Flags().BoolVarP(&PinsOpts.all, "all", "a", false, "in addition to Bloom filters, download full index chunks as well")
-	pinsCmd.Flags().BoolVarP(&PinsOpts.share, "share", "S", false, "share download data by pinning to IPFS (if IPFS daemon is available)")
+	pinsCmd.Flags().BoolVarP(&PinsOpts.share, "share", "S", false, "share downloaded data by pinning it to IPFS (the IPFS daemon must be running)")
 	pinsCmd.Flags().BoolVarP(&PinsOpts.remote, "remote", "r", false, "for --list mode only, recover the manifest from IPFS via UnchainedIndex smart contract")
 	pinsCmd.Flags().Float64VarP(&PinsOpts.sleep, "sleep", "s", .25, "throttle requests by this many seconds (.25 seconds delay between requests by default)")
 	pinsCmd.Flags().BoolVarP(&PinsOpts.init_all, "init_all", "n", false, "use --init --all instead (hidden)")

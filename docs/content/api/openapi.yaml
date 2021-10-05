@@ -1418,7 +1418,8 @@ paths:
           schema:
             type: boolean
         - name: share
-          description: share download data by pinning to IPFS (if IPFS daemon is available)
+          description: >
+            share downloaded data by pinning it to IPFS (the IPFS daemon must be running)
           required: false
           style: form
           in: query
