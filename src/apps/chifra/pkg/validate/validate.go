@@ -31,10 +31,10 @@ func usageEx(function, msg string, values []string) error {
 		rep := "{" + strconv.FormatInt(int64(index), 10) + "}"
 		ret = strings.Replace(ret, rep, val, -1)
 	}
-	return errors.New(fmtError(ret))
+	return errors.New(FmtError(ret))
 }
 
-func usage(msg string, values ...string) error {
+func Usage(msg string, values ...string) error {
 	return usageEx("", msg, values)
 }
 
@@ -72,7 +72,7 @@ func ValidateOneAddr(args []string) error {
 			// 	fmt.Println("%v", err)
 		}
 	}
-	return usage("At least one valid Ethereum address is required")
+	return Usage("At least one valid Ethereum address is required")
 }
 
 func ValidateEnum(field, value, valid string) error {
@@ -113,7 +113,7 @@ func ValidateEnumSlice(field string, values []string, valid string) error {
 
 func ValidateGlobalFlags(file string, fmt string, cmd *cobra.Command, args []string) error {
 	if len(file) > 0 && !utils.FileExists(file) {
-		return usage("file {0} not found", file)
+		return Usage("file {0} not found", file)
 	}
 
 	err := ValidateEnum("--fmt", fmt, "[json|txt|csv|api]")

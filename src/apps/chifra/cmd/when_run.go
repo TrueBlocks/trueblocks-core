@@ -13,6 +13,7 @@
 package cmd
 
 import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/spf13/cobra"
 )
 
@@ -22,7 +23,7 @@ func validateWhenArgs(cmd *cobra.Command, args []string) error {
 	// 		return errors.New(fmtError("You must provide either a date or a block number"))
 	// 	}
 	// }
-	err := validateGlobalFlags(cmd, args)
+	err := validate.ValidateGlobalFlags(RootOpts.file, RootOpts.fmt, cmd, args)
 	if err != nil {
 		return err
 	}

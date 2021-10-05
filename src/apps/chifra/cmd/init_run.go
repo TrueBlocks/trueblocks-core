@@ -13,11 +13,12 @@
 package cmd
 
 import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/spf13/cobra"
 )
 
 func validateInitArgs(cmd *cobra.Command, args []string) error {
-	err := validateGlobalFlags(cmd, args)
+	err := validate.ValidateGlobalFlags(RootOpts.file, RootOpts.fmt, cmd, args)
 	if err != nil {
 		return err
 	}

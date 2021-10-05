@@ -15,19 +15,20 @@ package cmd
 import (
 	"fmt"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/utils"
 	"github.com/spf13/cobra"
 )
 
 func validateMonitorsArgs(cmd *cobra.Command, args []string) error {
 	if !utils.IsApiMode() && !MonitorsOpts.clean {
-		err := validateOneAddr(args)
+		err := validate.ValidateOneAddr(args)
 		if err != nil {
 			return err
 		}
 	}
 
-	err := validateGlobalFlags(cmd, args)
+	err := validate.ValidateGlobalFlags(RootOpts.file, RootOpts.fmt, cmd, args)
 	if err != nil {
 		return err
 	}
