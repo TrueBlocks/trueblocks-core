@@ -10,7 +10,7 @@ Flags:
   -i, --init          download the blooms or index chunks from IPFS
   -f, --freshen       check for new bloom or index chunks and download if available (alias for --init)
   -a, --all           in addition to Bloom filters, download full index chunks as well
-  -S, --share         share download data by pinning to IPFS (if IPFS daemon is available)
+  -S, --share         share downloaded data by pinning it to IPFS (the IPFS daemon must be running)
   -r, --remote        for --list mode only, recover the manifest from IPFS via UnchainedIndex smart contract
   -s, --sleep float   throttle requests by this many seconds (.25 seconds delay between requests by default) (default 0.25)
   -n, --init_all      use --init --all instead (hidden)
