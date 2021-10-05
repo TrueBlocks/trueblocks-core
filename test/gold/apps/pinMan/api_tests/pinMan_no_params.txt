@@ -1,5 +1,5 @@
 {
   "errors": [
-    "chifra pins - You must choose at least one of --list, --init, or --freshen."
+    "chifra pins - Not enough arguments presented."
   ]
 }

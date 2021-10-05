@@ -19,7 +19,7 @@ import (
 func validateTokensArgs(cmd *cobra.Command, args []string) error {
 	// special case for tokens which don't allow --dollars display
 	if RootOpts.dollars {
-		return makeError("The --dollars option does not work with chifra token.")
+		return usage("The --dollars option does not work with chifra token.")
 	}
 	err := validateGlobalFlags(cmd, args)
 	if err != nil {

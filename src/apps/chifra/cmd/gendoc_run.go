@@ -26,7 +26,7 @@ import (
 func validateGendocArgs(cmd *cobra.Command, args []string) error {
 	if !utils.FolderExists("../build/docs/") {
 		cwd, _ := os.Getwd()
-		return makeError("Cannot find local ./docs folder in {0}", cwd)
+		return usage("Cannot find local ./docs folder in {0}", cwd)
 	}
 
 	err := validateGlobalFlags(cmd, args)

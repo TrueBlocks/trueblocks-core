@@ -19,9 +19,43 @@ import (
 )
 
 func validatePinsArgs(cmd *cobra.Command, args []string) error {
-	if PinsOpts.init_all {
-		return makeError("Flag --init_all has been deprecated, use --init --all instead")
+	list := PinsOpts.list
+	init := PinsOpts.init
+	freshen := PinsOpts.freshen
+	remote := PinsOpts.remote
+	all := PinsOpts.all
+	init_all := PinsOpts.init_all
+
+	if list && (init || freshen) {
+		return usage("Please choose only a single option.")
 	}
+
+	if !list && !init && !freshen {
+		return usage("You must choose at least one of --list, --init, or --freshen.")
+	}
+
+	if remote && !list {
+		return usage("The --remote option is only available with the --list option")
+	}
+
+	if remote {
+		return usage("The --remote option is not yet implemented")
+	}
+
+	if all && !init {
+		return usage("Use the --all option only with the --init or --freshen options.")
+	}
+
+	if init_all {
+		return usage("Flag --init_all has been deprecated, use --init --all instead")
+	}
+
+	// if (share) {
+	//     string_q res := doCommand("which ipfs");
+	//     if (res.empty()) {
+	//         return usage("Could not find ipfs in your $PATH. You must install ipfs for the --share command to work.");
+	// 	}
+	// }
 
 	err := validateGlobalFlags(cmd, args)
 	if err != nil {
@@ -33,7 +67,7 @@ func validatePinsArgs(cmd *cobra.Command, args []string) error {
 
 func runPins(cmd *cobra.Command, args []string) {
 	options := ""
-	if (!PinsOpts.list && !PinsOpts.init && !PinsOpts.freshen) || PinsOpts.list {
+	if PinsOpts.list {
 		options += " --list"
 	}
 	if PinsOpts.init {

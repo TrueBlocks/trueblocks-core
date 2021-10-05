@@ -21,7 +21,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func makeErrorEx(function, msg string, values []string) error {
+func usageEx(function, msg string, values []string) error {
 	var ret string
 	if len(function) > 0 {
 		ret = function + ": "
@@ -34,8 +34,8 @@ func makeErrorEx(function, msg string, values []string) error {
 	return errors.New(fmtError(ret))
 }
 
-func makeError(msg string, values ...string) error {
-	return makeErrorEx("", msg, values)
+func usage(msg string, values ...string) error {
+	return usageEx("", msg, values)
 }
 
 func fmtError(msg string) string {
@@ -62,7 +62,7 @@ func validateOneAddr(args []string) error {
 			// 	fmt.Println("%v", err)
 		}
 	}
-	return makeError("At least one valid Ethereum address is required")
+	return usage("At least one valid Ethereum address is required")
 }
 
 func validateEnum(field, value, valid string) error {
@@ -103,7 +103,7 @@ func validateEnumSlice(field string, values []string, valid string) error {
 
 func validateGlobalFlags(cmd *cobra.Command, args []string) error {
 	if len(RootOpts.file) > 0 && !utils.FileExists(RootOpts.file) {
-		return makeError("file {0} not found", RootOpts.file)
+		return usage("file {0} not found", RootOpts.file)
 	}
 
 	err := validateEnum("--fmt", RootOpts.fmt, "[json|txt|csv|api]")

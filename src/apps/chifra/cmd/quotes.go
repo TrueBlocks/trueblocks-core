@@ -33,10 +33,10 @@ var quotesCmd = &cobra.Command{
 
 var usageQuotes = `quotes [flags]`
 
-var shortQuotes = "freshen or display Ethereum price data"
+var shortQuotes = "freshen or display Ethereum price data. This tool has been deprecated"
 
 var longQuotes = `Purpose:
-  Freshen or display Ethereum price data.`
+  Freshen or display Ethereum price data. This tool has been deprecated.`
 
 var notesQuotes = `
 Notes:

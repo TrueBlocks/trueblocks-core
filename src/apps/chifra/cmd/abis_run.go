@@ -21,13 +21,13 @@ import (
 
 func validateAbisArgs(cmd *cobra.Command, args []string) error {
 	if AbisOpts.classes {
-		return makeError("the '{0}' option is not implemented", "--classes")
+		return usage("the '{0}' option is not implemented", "--classes")
 	}
 
 	if len(AbisOpts.sol) > 0 {
 		cleaned := "./" + strings.Replace(AbisOpts.sol, ".sol", "", 1) + ".sol"
 		if !utils.FileExists(cleaned) {
-			return makeError("file not found at {0}", cleaned)
+			return usage("file not found at {0}", cleaned)
 		}
 		return nil
 	}
