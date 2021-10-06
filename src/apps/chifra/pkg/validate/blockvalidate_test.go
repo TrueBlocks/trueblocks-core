@@ -102,16 +102,20 @@ func TestIsDateTimeString(t *testing.T) {
 }
 
 func TestIsRange(t *testing.T) {
+	if r, _ := IsRange("100"); r {
+		t.Error("Passes for non-range")
+	}
+
 	if r, _ := IsRange("-0100"); r {
-		t.Error("Passes for malformed string (1) ")
+		t.Error("Passes for malformed string (1)")
 	}
 
 	if r, _ := IsRange("100-"); r {
-		t.Error("Passes for malformed string (2) ")
+		t.Error("Passes for malformed string (2)")
 	}
 
 	if r, _ := IsRange("0-100:"); r {
-		t.Error("Passes for malformed string (3) ")
+		t.Error("Passes for malformed string (3)")
 	}
 
 	if r, _ := IsRange("0-100"); !r {
@@ -122,7 +126,7 @@ func TestIsRange(t *testing.T) {
 		t.Error("Fails for range with step")
 	}
 
-	if r, _ := IsRange("london"); !r {
+	if r, _ := IsRange("london-100"); !r {
 		t.Error("Fails for special")
 	}
 

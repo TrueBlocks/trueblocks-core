@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"strconv"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/blockRange"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/specialBlock"
@@ -53,6 +54,13 @@ func IsDateTimeString(str string) bool {
 }
 
 func IsRange(str string) (bool, error) {
+	// Disallow "start only ranges" like "1000" or "london"
+	if !strings.Contains(str, "-") {
+		return false, &InvalidIdentifierLiteralError{
+			Value: str,
+		}
+	}
+
 	bRange, err := blockRange.New(str)
 
 	if err == nil {
