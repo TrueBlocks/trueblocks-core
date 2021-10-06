@@ -81,9 +81,9 @@ bool COptions::handle_gocmds(void) {
 bool visitEnumItem2(string_q& item, void* data) {
     ostringstream* osp = (ostringstream*)data;
     if (osp->str().empty())
-        *osp << endl << "One of ";
+        *osp << endl << "One of [ ";
     else
-        *osp << ", ";
+        *osp << " | ";
     *osp << item;
     return true;
 }
@@ -102,6 +102,7 @@ string_q get_use(const CCommandOption& cmd) {
             if (contains(p.data_type, "enum")) {
                 ostringstream os;
                 forEveryEnum(visitEnumItem2, p.data_type, &os);
+                os << " ]";
                 arguments << substitute(os.str(), "One of",
                                         contains(p.data_type, "list") ? "\tOne or more of" : "\tOne of");
             }
@@ -175,6 +176,7 @@ string_q get_goDescription(const CCommandOption& cmd) {
     if (contains(cmd.data_type, "enum")) {
         ostringstream os;
         forEveryEnum(visitEnumItem2, cmd.data_type, &os);
+        os << " ]";
         addendum += substitute(os.str(), "One of", contains(cmd.data_type, "list") ? "One or more of" : "One of");
     }
 
