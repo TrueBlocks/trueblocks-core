@@ -21,11 +21,6 @@ import (
 )
 
 func validateBlocksArgs(cmd *cobra.Command, args []string) error {
-	err := validateGlobalFlags(cmd, args)
-	if err != nil {
-		return err
-	}
-
 	validationErr := validate.ValidateBlockIdentifiers(
 		args,
 		validate.ValidArgumentBlockHash|
@@ -45,6 +40,11 @@ func validateBlocksArgs(cmd *cobra.Command, args []string) error {
 		}
 
 		return validationErr
+	}
+
+	err := validateGlobalFlags(cmd, args)
+	if err != nil {
+		return err
 	}
 
 	return nil

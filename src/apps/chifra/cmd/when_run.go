@@ -25,10 +25,6 @@ func validateWhenArgs(cmd *cobra.Command, args []string) error {
 	// 		return errors.New(fmtError("You must provide either a date or a block number"))
 	// 	}
 	// }
-	err := validateGlobalFlags(cmd, args)
-	if err != nil {
-		return err
-	}
 
 	validationErr := validate.ValidateBlockIdentifiers(args, validate.ValidArgumentAll, 1)
 
@@ -42,6 +38,11 @@ func validateWhenArgs(cmd *cobra.Command, args []string) error {
 		}
 
 		return validationErr
+	}
+
+	err := validateGlobalFlags(cmd, args)
+	if err != nil {
+		return err
 	}
 
 	return nil
