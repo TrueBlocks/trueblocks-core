@@ -85,7 +85,7 @@ class CCommandOption : public CBaseNode {
     string_q toApiTag(void) const;
     string_q toGoCall(void) const;
     string_q toGoRoute(void) const;
-    string_q toApiPath(const string_q& inStr) const;
+    string_q toApiPath(const string_q& inStr, const string_q& exampleFn) const;
     bool isChifraRoute(bool depOk) const;
     string_q getSchema(void) const;
     bool isStringType(void) const {
@@ -274,18 +274,6 @@ extern const char* STR_DISPLAY_COMMANDOPTION;
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //---------------------------------------------------------------------------------------------------
-inline string_q getDocsPath(const string_q& _part) {
-    return "../docs/" + _part;
-}
-inline string_q getDocsPathContent(const string_q& _part) {
-    return getDocsPath("content/" + _part);
-}
-inline string_q getDocsPathTemplates(const string_q& _part) {
-    return getDocsPath("templates/" + _part);
-}
-inline string_q getDocsPathReadmes(const string_q& _part) {
-    return getDocsPath("readmes/" + _part);
-}
 extern string_q clean_positionals(const string& progName, const string_q& strIn);
 extern bool forEveryEnum(APPLYFUNC func, const string_q& enumStr, void* data);
 // EXISTING_CODE
