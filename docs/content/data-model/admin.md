@@ -120,11 +120,11 @@ Manifest data is made of the following data fields:
 
 This documentation mentions the following basic data types.
 
-| Type      | Description                                     | Notes          |
-| --------- | ----------------------------------------------- | -------------- |
-| blknum    | an alias for a uint64                           |                |
-| bool      | a value either `true`, `false`, `1`, or `0`     |                |
-| ipfshash  | a multi-hash produced by IPFS                   | mixed-case     |
-| string    | a normal character string                       |                |
-| timestamp | a 64-bit unsigned integer                       | Unix timestamp |
-| uint64    | a 64-bit unsigned integer                       |                |
+| Type      | Description                                 | Notes          |
+| --------- | ------------------------------------------- | -------------- |
+| blknum    | an alias for a uint64                       |                |
+| bool      | a value either `true`, `false`, `1`, or `0` |                |
+| ipfshash  | a multi-hash produced by IPFS               | mixed-case     |
+| string    | a normal character string                   |                |
+| timestamp | a 64-bit unsigned integer                   | Unix timestamp |
+| uint64    | a 64-bit unsigned integer                   |                |
