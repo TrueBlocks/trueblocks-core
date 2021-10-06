@@ -3,10 +3,10 @@ package validate
 import (
 	"errors"
 	"fmt"
-	"regexp"
 	"strconv"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/blockRange"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/specialBlock"
 )
 
 func IsBlockHash(str string) bool {
@@ -32,9 +32,6 @@ func IsBlockNumber(str string) bool {
 }
 
 func IsSpecialBlock(str string) bool {
-	// We have no way to tell if a string is valid special block
-	// name without calling RPC, so we only check if it looks
-	// like a valid name here
 	_, err := strconv.Atoi(str)
 
 	if err == nil {
@@ -42,8 +39,7 @@ func IsSpecialBlock(str string) bool {
 		return false
 	}
 
-	valid, _ := regexp.MatchString(`^[a-z0-9]{3,}$`, str)
-	return valid
+	return specialBlock.IsStringSpecialBlock(str)
 }
 
 func IsDateTimeString(str string) bool {
@@ -62,6 +58,20 @@ func IsRange(str string) (bool, error) {
 	if err == nil {
 		if bRange.Start.Special == "latest" {
 			return false, errors.New("Cannot start range with 'latest'")
+		}
+
+		if bRange.StartType == blockRange.BlockRangeSpecial &&
+			!specialBlock.IsStringSpecialBlock(bRange.Start.Special) {
+			return false, &InvalidIdentifierLiteralError{
+				Value: bRange.Start.Special,
+			}
+		}
+
+		if bRange.EndType == blockRange.BlockRangeSpecial &&
+			!specialBlock.IsStringSpecialBlock(bRange.End.Special) {
+			return false, &InvalidIdentifierLiteralError{
+				Value: bRange.End.Special,
+			}
 		}
 
 		onlyNumbers := bRange.StartType == blockRange.BlockRangeBlockNumber &&

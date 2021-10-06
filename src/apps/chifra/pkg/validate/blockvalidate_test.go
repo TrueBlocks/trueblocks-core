@@ -162,6 +162,30 @@ func TestIsRangeModifierError(t *testing.T) {
 	}
 }
 
+func TestIsRangeInvalidSpecialStart(t *testing.T) {
+	valid, err := IsRange("notexisting-1000:10")
+
+	if valid {
+		t.Error("Invalid special passing")
+	}
+
+	if literalErr, ok := err.(*InvalidIdentifierLiteralError); !ok {
+		t.Errorf("Wrong error returned: %s", literalErr)
+	}
+}
+
+func TestIsRangeInvalidSpecialStop(t *testing.T) {
+	valid, err := IsRange("1000-notexisting:10")
+
+	if valid {
+		t.Error("Invalid special passing")
+	}
+
+	if literalErr, ok := err.(*InvalidIdentifierLiteralError); !ok {
+		t.Errorf("Wrong error returned: %s", literalErr)
+	}
+}
+
 func TestValidateBlockIdentifiers(t *testing.T) {
 	type args struct {
 		identifiers []string
