@@ -32,8 +32,8 @@ func TestIsBlockNumber(t *testing.T) {
 	}
 
 	// We only support decimal numbers for block numbers
-	if IsBlockNumber("0xff") {
-		t.Error("Passes for hex")
+	if !IsBlockNumber("0xff") {
+		t.Error("Fails for hex")
 	}
 
 	if !IsBlockNumber("0") {

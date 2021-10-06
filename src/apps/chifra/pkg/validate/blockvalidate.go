@@ -27,7 +27,15 @@ func IsBlockHash(str string) bool {
 }
 
 func IsBlockNumber(str string) bool {
-	_, err := strconv.ParseUint(str, 10, 64)
+	base := 10
+	source := str
+
+	if Is0xPrefixed(str) {
+		base = 16
+		source = str[2:]
+	}
+
+	_, err := strconv.ParseUint(source, base, 64)
 
 	return err == nil
 }
