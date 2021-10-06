@@ -121,7 +121,7 @@ void testParseBlockList(void) {
         //        "2020-10-01T01",
     };
     for (auto str : strings) {
-        COptionsBlockList items;
+        COptionsBlockList items(&options);
         parseBlockList2(&options, items, str, 13000000);
         cout << string_q(22, '-') << " " << str << " " << string_q(22, '-') << endl;
         for (size_t i = 0; i < items.size(); i++)

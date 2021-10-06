@@ -15,8 +15,9 @@
 
 static uint64_t findBlockNumByHash(const hash_t& hash, void* data);
 //--------------------------------------------------------------------------------
-CBlockOptions::CBlockOptions(void) {
+CBlockOptions::CBlockOptions(void) : blocks(nullptr) {
     Init();
+    blocks.opts = this;
 }
 
 //--------------------------------------------------------------------------------

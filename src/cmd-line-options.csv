@@ -148,6 +148,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 13963,tools,ChainData,when,whenBlock,check,c,,false,false,false,false,header,switch,<boolean>,available only with --timestamps&#44; checks the validity of the timestamp data
 13965,tools,ChainData,when,whenBlock,fix,f,,false,false,false,false,header,switch,<boolean>,available only with --timestamps&#44; fixes incorrect timestamps if any
 13966,tools,ChainData,when,whenBlock,count,u,,false,false,false,false,header,switch,<boolean>,available only with --timestamps&#44; returns the number of timestamps in the cache
+13966,tools,ChainData,when,whenBlock,predict,p,,false,false,false,false,local,switch,<boolean>,ignoring difficulty bomb&#44; predict date for given block or block for given date
 13980,tools,ChainData,when,whenBlock,,,,false,false,true,false,--,description,,Find block(s) based on date&#44; blockNum&#44; timestamp&#44; or 'special'.
 13982,tools,ChainData,when,whenBlock,n1,,,false,false,false,false,--,note,,The block list may contain any combination of `number`&#44; `hash`&#44; `date`&#44; special `named` blocks.
 13984,tools,ChainData,when,whenBlock,n2,,,false,false,false,false,--,note,,Dates must be formatted in JSON format: YYYY-MM-DD[THH[:MM[:SS]]].
