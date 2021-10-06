@@ -58,7 +58,7 @@ func validatePinsArgs(cmd *cobra.Command, args []string) error {
 	// 	}
 	// }
 
-	err := validate.ValidateGlobalFlags(RootOpts.file, RootOpts.fmt, cmd, args)
+	err := validateGlobalFlags(cmd, args)
 	if err != nil {
 		return err
 	}

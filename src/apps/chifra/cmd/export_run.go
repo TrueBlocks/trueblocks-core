@@ -34,7 +34,7 @@ func validateExportArgs(cmd *cobra.Command, args []string) error {
 		return validate.Usage("You may use --summarized_by only with the --accounting option.")
 	}
 
-	err = validate.ValidateGlobalFlags(RootOpts.file, RootOpts.fmt, cmd, args)
+	err = validateGlobalFlags(cmd, args)
 	if err != nil {
 		return err
 	}

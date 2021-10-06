@@ -41,7 +41,7 @@ func validateStatusArgs(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	err = validate.ValidateGlobalFlags(RootOpts.file, RootOpts.fmt, cmd, args)
+	err = validateGlobalFlags(cmd, args)
 	if err != nil {
 		return err
 	}

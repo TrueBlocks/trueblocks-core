@@ -22,7 +22,7 @@ func validateTokensArgs(cmd *cobra.Command, args []string) error {
 	if RootOpts.dollars {
 		return validate.Usage("The --dollars option does not work with chifra token.")
 	}
-	err := validate.ValidateGlobalFlags(RootOpts.file, RootOpts.fmt, cmd, args)
+	err := validateGlobalFlags(cmd, args)
 	if err != nil {
 		return err
 	}

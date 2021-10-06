@@ -16,9 +16,6 @@ import (
 	"errors"
 	"strconv"
 	"strings"
-
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/utils"
-	"github.com/spf13/cobra"
 )
 
 func usageEx(function, msg string, values []string) error {
@@ -111,18 +108,6 @@ func ValidateEnumSlice(field string, values []string, valid string) error {
 		if err != nil {
 			return err
 		}
-	}
-	return nil
-}
-
-func ValidateGlobalFlags(file string, fmt string, cmd *cobra.Command, args []string) error {
-	if len(file) > 0 && !utils.FileExists(file) {
-		return Usage("file {0} not found", file)
-	}
-
-	err := ValidateEnum("--fmt", fmt, "[json|txt|csv|api]")
-	if err != nil {
-		return err
 	}
 	return nil
 }

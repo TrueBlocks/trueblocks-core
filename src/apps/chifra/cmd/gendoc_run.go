@@ -30,7 +30,7 @@ func validateGendocArgs(cmd *cobra.Command, args []string) error {
 		return validate.Usage("Cannot find local ./docs folder in {0}", cwd)
 	}
 
-	err := validate.ValidateGlobalFlags(RootOpts.file, RootOpts.fmt, cmd, args)
+	err := validateGlobalFlags(cmd, args)
 	if err != nil {
 		return err
 	}

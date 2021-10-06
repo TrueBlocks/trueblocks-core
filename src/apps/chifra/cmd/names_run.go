@@ -38,7 +38,7 @@ func validateNamesArgs(cmd *cobra.Command, args []string) error {
 		return validate.Usage("Do not use the --collection option with any other option.")
 	}
 
-	err := validate.ValidateGlobalFlags(RootOpts.file, RootOpts.fmt, cmd, args)
+	err := validateGlobalFlags(cmd, args)
 	if err != nil {
 		return err
 	}
