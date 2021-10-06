@@ -188,9 +188,20 @@ extern const char* STR_YAML_FRONTMATTER;
 
 //---------------------------------------------------------------------------------------------------
 extern string_q getSourcePath(const string_q& part);
+inline string_q getDocsPath(const string_q& _part) {
+    return "../docs/" + _part;
+}
+inline string_q getDocsPathContent(const string_q& _part) {
+    return getDocsPath("content/" + _part);
+}
+inline string_q getDocsPathTemplates(const string_q& _part) {
+    return getDocsPath("templates/" + _part);
+}
+inline string_q getDocsPathReadmes(const string_q& _part) {
+    return getDocsPath("readmes/" + _part);
+}
 inline string_q getTemplatePath(const string_q& part) {
     return getSourcePath("dev_tools/makeClass/templates/" + part);
 }
-#define explorerPath string_q("/Users/jrush/Development/trueblocks-explorer/")
 extern bool parseEndpointsFile(const char* str, void* data);
 extern bool parseOptionsFile(const char* str, void* data);

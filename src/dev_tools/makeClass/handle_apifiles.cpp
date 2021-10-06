@@ -31,13 +31,17 @@ void COptions::writeOpenApiFile(void) {
                 params.push_back(option);
         ep.params = &params;
 
+        string_q productions = getProductions(ep);
+        string_q exampleFn = getDocsPathTemplates("api/examples/" + ep.api_route + ".txt");
+
         chifraCmdStream << ep.toChifraCmd() << endl;
         chifraHelpStream << ep.toChifraHelp() << endl;
         pairMapStream << ep.toPairMap() << endl;
         apiTagStream << ep.toApiTag();
         goCallStream << ep.toGoCall();
         goRouteStream << ep.toGoRoute();
-        apiPathStream << ep.toApiPath(getProductions(ep));
+        apiPathStream << ep.toApiPath(productions, exampleFn);
+
         counter.cmdCount += params.size();
         counter.routeCount++;
     }
