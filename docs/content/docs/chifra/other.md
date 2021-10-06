@@ -2,7 +2,7 @@
 title: "Other"
 description: ""
 lead: ""
-date: 2021-10-03T18:47:03
+date: 2021-10-05T22:20:10
 lastmod:
   - :git
   - lastmod

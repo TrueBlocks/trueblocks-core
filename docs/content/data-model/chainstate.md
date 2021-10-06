@@ -2,7 +2,7 @@
 title: "Chain state"
 description: ""
 lead: ""
-date: 2021-10-05T21:44:49
+date: 2021-10-05T21:53:25
 lastmod:
   - :git
   - lastmod
@@ -77,13 +77,13 @@ Token data is made of the following data fields:
 
 This documentation mentions the following basic data types.
 
-| Type    | Description                                     | Notes       |
-| ------- | ----------------------------------------------- | ----------- |
-| address | a 20-byte hexadecimal string starting with '0x' | lowercase   |
-| blknum  | an alias for a uint64                           |             |
-| bool    | a value either `true`, `false`, `1`, or `0`     |             |
-| bytes   | an arbitrarily long string of bytes             |             |
-| double  | a floating point number of double precision     |             |
-| string  | a normal character string                       |             |
-| uint64  | a 64-bit unsigned integer                       |             |
-| wei     | an unsigned big number                          | as a string |
+| Type      | Description                                     | Notes          |
+| --------- | ----------------------------------------------- | -------------- |
+| address   | a 20-byte hexadecimal string starting with '0x' | lowercase      |
+| blknum    | an alias for a uint64                           |                |
+| bool      | a value either `true`, `false`, `1`, or `0`     |                |
+| bytes     | an arbitrarily long string of bytes             |                |
+| double    | a floating point number of double precision     |                |
+| string    | a normal character string                       |                |
+| uint64    | a 64-bit unsigned integer                       |                |
+| wei       | an unsigned big number                          | as a string    |
