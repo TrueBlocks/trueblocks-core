@@ -33,10 +33,10 @@ then
     chifra serve > /dev/null 2>&1 &
 
     echo "Waiting for chifra to start up..."
-    sleep 5
+    sleep 10
 
     echo "Checking if chifra is running..."
-    pgrep -u $USER flame
+    pgrep flame
     if [ $? -gt 0 ]
     then
         echo "Error: Chifra is not running"
@@ -53,7 +53,7 @@ RESULT=$?
 
 if $RUN_SERVER
 then
-    killall flame
+    pkill flame
 fi
 
 echo "Compressing and saving test/working"
