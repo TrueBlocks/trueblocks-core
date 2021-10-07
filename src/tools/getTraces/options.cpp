@@ -236,7 +236,7 @@ COptions::~COptions(void) {
 //--------------------------------------------------------------------------------
 bool COptions::extractBlocksFromFilter(blknum_t& b1, const string_q& p1, blknum_t& b2, const string_q& p2) {
     blknum_t latest = getBlockProgress(BP_CLIENT).client;
-    COptionsBlockList blocks;
+    COptionsBlockList blocks(this);
 
     // if p1 is empty, the user provided nothing so just return
     if (p1.empty())

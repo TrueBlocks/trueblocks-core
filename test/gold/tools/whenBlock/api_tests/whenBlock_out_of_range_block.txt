@@ -1,5 +1,5 @@
 {
   "errors": [
-    "chifra when - Block 40000000000000000000000000000 is later than the last valid block --."
+    "chifra when - Please supply either a JSON formatted date or a blockNumber."
   ]
 }
