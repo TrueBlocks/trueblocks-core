@@ -21,9 +21,12 @@
 static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
-    COption("pin", "p", "", OPT_SWITCH, "pin new chunks (and blooms) to IPFS (requires Pinata key and running IPFS node)"),  // NOLINT
-    COption("sleep", "s", "<double>", OPT_FLAG, "the number of seconds to sleep between passes"),
-    COption("", "", "", OPT_DESCRIPTION, "Scan the chain and update the TrueBlocks index of appearances."),
+    COption("action", "a", "enum[toggle|run|restart|pause|quit]", OPT_FLAG, "command to apply to the specified scrape"),
+    COption("pin", "p", "", OPT_SWITCH, "pin chunks (and blooms) to IPFS as they are created (requires pinning service)"),  // NOLINT
+    COption("publish", "u", "", OPT_HIDDEN | OPT_SWITCH, "after pinning the chunk, publish it to UnchainedIndex"),
+    COption("sleep", "s", "<double>", OPT_FLAG, "seconds to sleep between scraper passes"),
+    COption("port", "o", "", OPT_HIDDEN | OPT_SWITCH, "specify the server's port (:8081 default)"),
+    COption("", "", "", OPT_DESCRIPTION, "Scan the chain and update (and optionally pin) the TrueBlocks index of appearances."),  // NOLINT
     // clang-format on
     // END_CODE_OPTIONS
 };
@@ -37,6 +40,7 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     // BEG_CODE_LOCAL_INIT
+    string_q action = "";
     // END_CODE_LOCAL_INIT
 
     CBlock block;
@@ -50,14 +54,26 @@ bool COptions::parseArguments(string_q& command) {
         if (false) {
             // do nothing -- make auto code generation easier
             // BEG_CODE_AUTO
+        } else if (startsWith(arg, "-a:") || startsWith(arg, "--action:")) {
+            if (!confirmEnum("action", action, arg))
+                return false;
+        } else if (arg == "-a" || arg == "--action") {
+            return flag_required("action");
+
         } else if (arg == "-p" || arg == "--pin") {
             pin = true;
+
+        } else if (arg == "-u" || arg == "--publish") {
+            publish = true;
 
         } else if (startsWith(arg, "-s:") || startsWith(arg, "--sleep:")) {
             if (!confirmDouble("sleep", sleep, arg))
                 return false;
         } else if (arg == "-s" || arg == "--sleep") {
             return flag_required("sleep");
+
+        } else if (arg == "-o" || arg == "--port") {
+            port = true;
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -70,8 +86,11 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     // BEG_DEBUG_DISPLAY
+    LOG_TEST("action", action, (action == ""));
     LOG_TEST_BOOL("pin", pin);
+    LOG_TEST_BOOL("publish", publish);
     LOG_TEST("sleep", sleep, (sleep == 14));
+    LOG_TEST("port", port, (port == ":8081"));
     LOG_TEST("n_blocks", n_blocks, (n_blocks == 2000));
     LOG_TEST("n_block_procs", n_block_procs, (n_block_procs == 10));
     LOG_TEST("n_addr_procs", n_addr_procs, (n_addr_procs == 20));
@@ -189,7 +208,9 @@ void COptions::Init(void) {
 
     // BEG_CODE_INIT
     pin = false;
+    publish = false;
     sleep = 14;
+    port = ":8081";
     // clang-format off
     n_blocks = getGlobalConfig("blockScrape")->getConfigInt("settings", "n_blocks", 2000);
     n_block_procs = getGlobalConfig("blockScrape")->getConfigInt("settings", "n_block_procs", 10);

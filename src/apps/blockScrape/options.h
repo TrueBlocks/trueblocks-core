@@ -27,7 +27,9 @@ class COptions : public COptionsBase {
   public:
     // BEG_CODE_DECLARE
     bool pin;
+    bool publish;
     double sleep;
+    string_q port;
     uint64_t n_blocks;
     uint64_t n_block_procs;
     uint64_t n_addr_procs;

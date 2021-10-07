@@ -18,6 +18,8 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"net/http"
+	"os/user"
 	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/go-apps/blaze/utils"
@@ -92,4 +94,16 @@ func (scraper *Scraper) Pause() {
 		}
 		time.Sleep(time.Duration(500) * time.Millisecond)
 	}
+}
+
+// isTestMode return true if we are running from the testing harness
+func isTestMode(r *http.Request) bool {
+	return r.Header.Get("User-Agent") == "testRunner"
+}
+
+// GetCommandPath returns full path the the given tool
+func GetCommandPath(cmd string) string {
+	usr, _ := user.Current()
+	dir := usr.HomeDir
+	return dir + "/.local/bin/chifra/" + cmd
 }

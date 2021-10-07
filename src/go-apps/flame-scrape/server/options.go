@@ -117,6 +117,10 @@ var Options OptionsType
 
 func ParseOptions() error {
 	// Establish and parse the command line input...
+	flag.BoolVar(&Options.Scrape, "scrape", false, "enable block scraper mode")
+
+	flag.BoolVar(&Options.Monitor, "monitor", false, "enable monitor scraper mode")
+
 	flag.StringVar(&Options.Port, "port", ":8080", "specify the server's port")
 	if !strings.HasPrefix(Options.Port, ":") {
 		Options.Port = ":" + Options.Port
@@ -130,6 +134,21 @@ func ParseOptions() error {
 
 	Options.Status, _ = GetChifraData()
 	Options.Meta, _ = GetChifraMeta()
+
+	IndexScraper = NewScraper(utils.Yellow, "IndexScraper", Options.Sleep, Options.Verbose)
+	if Options.Scrape {
+		log.Print(utils.Green, "scraping:    ", utils.Off, Options.Scrape, "\n")
+		if Options.Sleep != 14 {
+			log.Print(utils.Green, "sleep:    ", utils.Off, Options.Sleep, "\n")
+		}
+		IndexScraper.ChangeState(true)
+	}
+
+	MonitorScraper = NewScraper(utils.Purple, "MonitorScraper", Options.Sleep, Options.Verbose)
+	if Options.Monitor {
+		log.Print(utils.Green, "monitoring:  ", utils.Off, Options.Monitor, "\n")
+		MonitorScraper.ChangeState(true)
+	}
 
 	if Options.Port != ":8080" {
 		log.Print(utils.Green, "port:        ", utils.Off, Options.Port, "\n")

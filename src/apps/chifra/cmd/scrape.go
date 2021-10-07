@@ -32,18 +32,29 @@ var scrapeCmd = &cobra.Command{
 	Args:  validateScrapeArgs,
 }
 
-var usageScrape = `scrape [flags]`
+var usageScrape = `scrape [flags] [mode...]
 
-var shortScrape = "scan the chain and update the TrueBlocks index of appearances"
+Arguments:
+  modes - which scraper(s) to control (indexer is default)
+	One or more of [ indexer | monitors | both ]`
+
+var shortScrape = "scan the chain and update (and optionally pin) the TrueBlocks index of appearances"
 
 var longScrape = `Purpose:
-  Scan the chain and update the TrueBlocks index of appearances.`
+  Scan the chain and update (and optionally pin) the TrueBlocks index of appearances.`
 
-var notesScrape = ``
+var notesScrape = `
+Notes:
+  - if no mode is presented, chifra scrape indexer --action run is assumed.
+  - the --pin and --publish options require an API to the pinning service.
+  - the --n_* related options allow you to tune the scrapers.`
 
 type scrapeOptionsType struct {
-	pin           bool
+	action        string
 	sleep         float64
+	pin           bool
+	publish       bool
+	port          string
 	n_blocks      uint64
 	n_block_procs uint64
 	n_addr_procs  uint64
@@ -56,12 +67,18 @@ func init() {
 
 	scrapeCmd.Flags().SortFlags = false
 	scrapeCmd.PersistentFlags().SortFlags = false
-	scrapeCmd.Flags().BoolVarP(&ScrapeOpts.pin, "pin", "p", false, "pin new chunks (and blooms) to IPFS (requires Pinata key and running IPFS node)")
-	scrapeCmd.Flags().Float64VarP(&ScrapeOpts.sleep, "sleep", "s", 14, "the number of seconds to sleep between passes")
-	scrapeCmd.Flags().Uint64VarP(&ScrapeOpts.n_blocks, "n_blocks", "n", 2000, "maximum number of blocks to process")
-	scrapeCmd.Flags().Uint64VarP(&ScrapeOpts.n_block_procs, "n_block_procs", "b", 10, "number of concurrent block channels for blaze (hidden)")
-	scrapeCmd.Flags().Uint64VarP(&ScrapeOpts.n_addr_procs, "n_addr_procs", "a", 20, "number of concurrent address channels for blaze (hidden)")
+	scrapeCmd.Flags().StringVarP(&ScrapeOpts.action, "action", "a", "", `command to apply to the specified scrape
+One of [ toggle | run | restart | pause | quit ]`)
+	scrapeCmd.Flags().Float64VarP(&ScrapeOpts.sleep, "sleep", "s", 14, "seconds to sleep between scraper passes")
+	scrapeCmd.Flags().BoolVarP(&ScrapeOpts.pin, "pin", "p", false, "pin chunks (and blooms) to IPFS as they are created (requires pinning service)")
+	scrapeCmd.Flags().BoolVarP(&ScrapeOpts.publish, "publish", "u", false, "after pinning the chunk, publish it to UnchainedIndex (hidden)")
+	scrapeCmd.Flags().StringVarP(&ScrapeOpts.port, "port", "o", ":8081", "specify the server's port (:8081 default) (hidden)")
+	scrapeCmd.Flags().Uint64VarP(&ScrapeOpts.n_blocks, "n_blocks", "n", 2000, "maximum number of blocks to process per pass")
+	scrapeCmd.Flags().Uint64VarP(&ScrapeOpts.n_block_procs, "n_block_procs", "b", 10, "number of concurrent block processing channels (hidden)")
+	scrapeCmd.Flags().Uint64VarP(&ScrapeOpts.n_addr_procs, "n_addr_procs", "d", 20, "number of concurrent address processing channels (hidden)")
 	if !utils.IsTestMode() {
+		scrapeCmd.Flags().MarkHidden("publish")
+		scrapeCmd.Flags().MarkHidden("port")
 		scrapeCmd.Flags().MarkHidden("n_block_procs")
 		scrapeCmd.Flags().MarkHidden("n_addr_procs")
 	}
