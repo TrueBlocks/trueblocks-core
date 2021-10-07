@@ -36,7 +36,4 @@ func main() {
 	go server.RunIndexScraper(wg)
 	go server.RunMonitorScraper(wg)
 	wg.Wait()
-
-	// // Start listening for requests
-	// log.Fatal(http.ListenAndServe(server.Options.Port, server.NewRouter()))
 }
