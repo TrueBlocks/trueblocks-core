@@ -1308,12 +1308,40 @@ paths:
       tags:
         - Admin
       summary: Scrape index
-      description: Scan the chain and update the TrueBlocks index of appearances.
+      description: Scan the chain and update (and optionally pin) the TrueBlocks index of appearances.
       operationId: admin-scrape
       parameters:
+        - name: modes
+          description: which scraper(s) to control (indexer is default)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - indexer
+                - monitors
+                - both
+        - name: action
+          description: command to apply to the specified scrape
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+            enum:
+              - toggle
+              - run
+              - restart
+              - pause
+              - quit
         - name: pin
           description: >
-            pin new chunks (and blooms) to IPFS (requires Pinata key and running IPFS node)
+            pin chunks (and blooms) to IPFS as they are created (requires pinning service)
           required: false
           style: form
           in: query
@@ -1321,7 +1349,7 @@ paths:
           schema:
             type: boolean
         - name: n_blocks
-          description: maximum number of blocks to process
+          description: maximum number of blocks to process per pass
           required: false
           style: form
           in: query

@@ -21,7 +21,7 @@ num,group,is_visible,is_visible_docs,api_group,api_route,tool,summary,descriptio
 04,Admin,false,true,,,,,Control the scraper and build the index
 04,Admin,true,true,apps,status,cacheStatus,Report status,Report on the status of the TrueBlocks system.
 04,Admin,true,true,go-apps,serve,flame,,Serve the TrueBlocks API using the flame server.
-04,Admin,true,true,apps,scrape,blockScrape,Scrape index,Scan the chain and update the TrueBlocks index of appearances.
+04,Admin,true,true,apps,scrape,blockScrape,Scrape index,Scan the chain and update (and optionally pin) the TrueBlocks index of appearances.
 04,Admin,true,false,apps,init,pinMan --init,Initialize index,Initialize the TrueBlocks system by downloading from IPFS.
 04,Admin,true,true,apps,pins,pinMan,Manage pins,Manage pinned index of appearances and associated blooms.
 

@@ -323,6 +323,9 @@ string_q getSourcePath(const string_q& rest) {
 
 //---------------------------------------------------------------------------------------------------
 bool parseEndpointsFile(const char* str, void* data) {
+    if (startsWith(str, ';'))
+        return true;
+
     string_q line = str;
     replaceAny(line, "\n\r", "");
 
@@ -343,6 +346,9 @@ bool parseEndpointsFile(const char* str, void* data) {
 
 //---------------------------------------------------------------------------------------------------
 bool parseOptionsFile(const char* str, void* data) {
+    if (startsWith(str, ';'))
+        return true;
+
     string_q line = str;
     replaceAny(line, "\n\r", "");
 

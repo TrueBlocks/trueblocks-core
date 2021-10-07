@@ -308,7 +308,7 @@ func writeAddresses(blockNum string, addressMap map[string]bool) {
 		os.Exit(1) // caller will start over if this process exits with non-zero value
 	}
 	// Show fifty dots no matter how many blocks we're scraping
-	skip := 43 // Options.nBlocks / 100
+	skip := 31 // Options.nBlocks / 100
 	if skip < 1 {
 		skip = 1
 	}

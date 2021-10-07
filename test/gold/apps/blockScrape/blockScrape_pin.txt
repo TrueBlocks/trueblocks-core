@@ -1,5 +1,5 @@
 chifra scrape  --pin
-TIME ~ CLOCK - <INFO>  : pin: true
+flame-scrape  --scrape --pin --port :8081
 {
   "message": "Testing only",
   "n_blocks": 2000,
