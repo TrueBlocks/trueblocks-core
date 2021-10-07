@@ -15,6 +15,7 @@ package cmd
 import (
 	"fmt"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/spf13/cobra"
 )
 
@@ -27,27 +28,27 @@ func validatePinsArgs(cmd *cobra.Command, args []string) error {
 	init_all := PinsOpts.init_all
 
 	if list && (init || freshen) {
-		return usage("Please choose only a single option.")
+		return validate.Usage("Please choose only a single option.")
 	}
 
 	if !list && !init && !freshen {
-		return usage("You must choose at least one of --list, --init, or --freshen.")
+		return validate.Usage("You must choose at least one of --list, --init, or --freshen.")
 	}
 
 	if remote && !list {
-		return usage("The --remote option is only available with the --list option")
+		return validate.Usage("The --remote option is only available with the --list option")
 	}
 
 	if remote {
-		return usage("The --remote option is not yet implemented")
+		return validate.Usage("The --remote option is not yet implemented")
 	}
 
 	if all && !init {
-		return usage("Use the --all option only with the --init or --freshen options.")
+		return validate.Usage("Use the --all option only with the --init or --freshen options.")
 	}
 
 	if init_all {
-		return usage("Flag --init_all has been deprecated, use --init --all instead")
+		return validate.Usage("Flag --init_all has been deprecated, use --init --all instead")
 	}
 
 	// if (share) {

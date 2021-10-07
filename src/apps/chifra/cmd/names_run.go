@@ -13,6 +13,7 @@
 package cmd
 
 import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/spf13/cobra"
 )
 
@@ -30,11 +31,11 @@ func anyBase() bool {
 
 func validateNamesArgs(cmd *cobra.Command, args []string) error {
 	if NamesOpts.tags && anyBase() {
-		return usage("Do not use the --tags option with any other option.")
+		return validate.Usage("Do not use the --tags option with any other option.")
 	}
 
 	if NamesOpts.collections && anyBase() {
-		return usage("Do not use the --collection option with any other option.")
+		return validate.Usage("Do not use the --collection option with any other option.")
 	}
 
 	err := validateGlobalFlags(cmd, args)

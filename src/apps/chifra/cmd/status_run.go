@@ -16,26 +16,27 @@ import (
 	"fmt"
 	"strconv"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/utils"
 	"github.com/spf13/cobra"
 )
 
 func validateStatusArgs(cmd *cobra.Command, args []string) error {
 	if StatusOpts.depth > 3 {
-		return usage("--depth parameter ({0}) must be less than four (4)", strconv.FormatUint(StatusOpts.depth, 10))
+		return validate.Usage("--depth parameter ({0}) must be less than four (4)", strconv.FormatUint(StatusOpts.depth, 10))
 	}
 
-	err := validateEnumSlice("--types", StatusOpts.types, "[blocks|txs|traces|slurps|prices|all]")
+	err := validate.ValidateEnumSlice("--types", StatusOpts.types, "[blocks|txs|traces|slurps|prices|all]")
 	if err != nil {
 		return err
 	}
 
-	err = validateEnumSlice("--migrate", StatusOpts.migrate, "[test|abi_cache|block_cache|tx_cache|trace_cache|recon_cache|name_cache|slurp_cache|all]")
+	err = validate.ValidateEnumSlice("--migrate", StatusOpts.migrate, "[test|abi_cache|block_cache|tx_cache|trace_cache|recon_cache|name_cache|slurp_cache|all]")
 	if err != nil {
 		return err
 	}
 
-	err = validateEnumSlice("modes", args, "[index|monitors|collections|names|abis|caches|some|all]")
+	err = validate.ValidateEnumSlice("modes", args, "[index|monitors|collections|names|abis|caches|some|all]")
 	if err != nil {
 		return err
 	}
