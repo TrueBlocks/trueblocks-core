@@ -1311,20 +1311,6 @@ paths:
       description: Scan the chain and update the TrueBlocks index of appearances.
       operationId: admin-scrape
       parameters:
-        - name: mode
-          description: which scraper(s) to run (scrape by default)
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: array
-            items:
-              type: string
-              enum:
-                - index
-                - monitors
-                - both
         - name: pin
           description: >
             pin new chunks (and blooms) to IPFS (requires Pinata key and running IPFS node)
@@ -1334,14 +1320,14 @@ paths:
           explode: true
           schema:
             type: boolean
-        - name: port
-          description: specify the server's port (:8080 default)
+        - name: n_blocks
+          description: maximum number of blocks to process
           required: false
           style: form
           in: query
           explode: true
           schema:
-            type: string
+            type: number
       responses:
         "200":
           description: returns the requested data
@@ -2435,13 +2421,11 @@ components:
           example: "013142464-013145212"
           description: "for each chunk, the range of blocks contained in that chunk"
         bloomHash:
-          type: string
-          format: ipfshash
+          type: ipfshash
           example: "QmXHjjY...HDqvWT"
           description: "the IPFS hash of the bloom filter at that range"
         indexHash:
-          type: string
-          format: ipfshash
+          type: ipfshash
           example: "QmTbYpR...qWLj44"
           description: "the IPFS hash of the index chunk at that range"
     manifest:
