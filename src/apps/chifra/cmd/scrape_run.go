@@ -15,6 +15,7 @@ package cmd
 import (
 	"fmt"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/utils"
 	"github.com/spf13/cobra"
 )
@@ -24,30 +25,30 @@ func validateScrapeArgs(cmd *cobra.Command, args []string) error {
 		return nil // defaults to indexer
 	} else {
 		for _, arg := range args {
-			err := validateEnum("mode", arg, "[indexer|monitors|both]")
+			err := validate.ValidateEnum("mode", arg, "[indexer|monitors|both]")
 			if err != nil {
 				return err
 			}
 		}
 	}
-	err := validateEnum("action", ScrapeOpts.action, "[toggle|run|restart|pause|quit]")
+	err := validate.ValidateEnum("action", ScrapeOpts.action, "[toggle|run|restart|pause|quit]")
 	if err != nil {
 		return err
 	}
 
 	fmt.Println("action: ", ScrapeOpts.action)
 	if len(ScrapeOpts.action) > 0 {
-		return usage("the --action option is currently not implemented")
+		return validate.Usage("the --action option is currently not implemented")
 	}
 
 	if !utils.IsTestMode() && ScrapeOpts.publish {
-		return usage("the --publish option is current not implemented")
+		return validate.Usage("the --publish option is current not implemented")
 	}
 	if !utils.IsTestMode() && ScrapeOpts.pin {
-		return usage("the --pin option is current not implemented")
+		return validate.Usage("the --pin option is current not implemented")
 	}
 	if !utils.IsTestMode() && len(ScrapeOpts.port) > 0 {
-		return usage("the --publish option is current not implemented")
+		return validate.Usage("the --publish option is current not implemented")
 	}
 
 	// need api keys and/or IPFS running
