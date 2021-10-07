@@ -73,7 +73,7 @@ chifra blocks 12345
 ```
 ### Optional steps
 
-6. To make deep data queries, [get the index](https://trueblocks.io/docs/install/-get-the-index/)
+6. To make deep data queries, [get the index](https://trueblocks.io/docs/install/get-the-index/)
 7. To explore the data visually, [install the explorer application](https://trueblocks.io/docs/install/install-explorer/).
 
 ## Introducing chifra
@@ -133,7 +133,7 @@ The primary data structure produced by TrueBlocks is an index of address appeara
 
 You may either build the entire index from scratch (requires a tracing, archive node), or you may download part of the index and build it from there on.
 
-This process is described in this article [Indexing Addresses](https://trueblocks.io/docs/prologue/how-can-i-get-the-index/).
+This process is described in this article [Indexing Addresses](https://trueblocks.io/docs/install/get-the-index/).
 
 ## Contributing to TrueBlocks
 
