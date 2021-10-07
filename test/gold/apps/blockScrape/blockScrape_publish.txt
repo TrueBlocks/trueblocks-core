@@ -1,19 +1,9 @@
 chifra scrape  --publish
-Error: 
-  unknown flag: --publish
-
-Usage:
-  chifra scrape [flags]
-
-Flags:
-  -p, --pin                  pin new chunks (and blooms) to IPFS (requires Pinata key and running IPFS node)
-  -s, --sleep float          the number of seconds to sleep between passes (default 14)
-  -n, --n_blocks uint        maximum number of blocks to process (default 2000)
-  -b, --n_block_procs uint   number of concurrent block channels for blaze (hidden) (default 10)
-  -a, --n_addr_procs uint    number of concurrent address channels for blaze (hidden) (default 20)
-
-Global Flags:
-  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
-  -h, --help         display this help screen
-  -v, --verbose      enable verbose (increase detail with --log_level)
-
+flame-scrape  --scrape --publish --port :8081
+{
+  "message": "Testing only",
+  "n_blocks": 2000,
+  "n_block_procs": 10,
+  "n_addr_procs": 20,
+  "pin": 1,
+}

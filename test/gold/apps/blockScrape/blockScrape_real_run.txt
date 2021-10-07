@@ -1,9 +1,5 @@
 chifra scrape  --sleep .5 --pin --log_level 8
-TIME ~ CLOCK - <INFO>  : pin: true
-TIME ~ CLOCK - <INFO>  : sleep: 0.5
-TIME ~ CLOCK - : 4-----
-pgrep -lfa "acctExport"
- 0
+flame-scrape  --scrape --sleep 0.5 --pin --port :8081
 {
   "message": "Testing only",
   "n_blocks": 2000,
