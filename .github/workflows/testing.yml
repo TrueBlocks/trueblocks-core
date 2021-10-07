@@ -19,6 +19,7 @@ jobs:
             cd  testing/${{ github.sha }}
             git clone --quiet https://github.com/${{ github.repository }}
             cd trueblocks-core
+            git checkout ${{ github.ref }}
             git reset --hard ${{ github.sha }}
             cd src/other/build_assets/remote_testing
             CONFIG_FILE=$HOME/trueBlocks.toml bash test_with_docker.sh ${{ github.repository }} ${{ github.sha }} test-all
