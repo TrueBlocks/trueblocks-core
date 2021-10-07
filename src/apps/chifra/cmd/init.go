@@ -33,15 +33,14 @@ var initCmd = &cobra.Command{
 
 var usageInit = `init [flags]`
 
-var shortInit = "initialize the TrueBlocks system by downloading from IPFS"
+var shortInit = "initialize the index of appearances by downloading Bloom filters"
 
 var longInit = `Purpose:
-  Initialize the TrueBlocks system by downloading from IPFS.`
+  Initialize the index of appearances by downloading Bloom filters.`
 
 var notesInit = `
 Notes:
-  - chifra init is an alias for the chifra pins --init command.
-  - See chifra pins --help for more information.`
+  - chifra init is an alias for the chifra pins --init command.`
 
 type initOptionsType struct {
 	all bool
@@ -54,7 +53,7 @@ func init() {
 
 	initCmd.Flags().SortFlags = false
 	initCmd.PersistentFlags().SortFlags = false
-	initCmd.Flags().BoolVarP(&InitOpts.all, "all", "a", false, "in addition to Bloom filters, download full index chunks")
+	initCmd.Flags().BoolVarP(&InitOpts.all, "all", "a", false, "download full index chunks as well as Bloom filter")
 	initCmd.Flags().SortFlags = false
 	initCmd.PersistentFlags().SortFlags = false
 

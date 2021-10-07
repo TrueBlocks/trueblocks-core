@@ -148,7 +148,6 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 13963,tools,ChainData,when,whenBlock,check,c,,false,false,false,false,header,switch,<boolean>,available only with --timestamps&#44; checks the validity of the timestamp data
 13965,tools,ChainData,when,whenBlock,fix,f,,false,false,false,false,header,switch,<boolean>,available only with --timestamps&#44; fixes incorrect timestamps if any
 13966,tools,ChainData,when,whenBlock,count,u,,false,false,false,false,header,switch,<boolean>,available only with --timestamps&#44; returns the number of timestamps in the cache
-13966,tools,ChainData,when,whenBlock,predict,p,,false,false,false,false,local,switch,<boolean>,ignoring difficulty bomb&#44; predict date for given block or block for given date
 13980,tools,ChainData,when,whenBlock,,,,false,false,true,false,--,description,,Find block(s) based on date&#44; blockNum&#44; timestamp&#44; or 'special'.
 13982,tools,ChainData,when,whenBlock,n1,,,false,false,false,false,--,note,,The block list may contain any combination of `number`&#44; `hash`&#44; `date`&#44; special `named` blocks.
 13984,tools,ChainData,when,whenBlock,n2,,,false,false,false,false,--,note,,Dates must be formatted in JSON format: YYYY-MM-DD[THH[:MM[:SS]]].
@@ -209,24 +208,21 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 10840,apps,Admin,status,cacheStatus,test_end,E,NOPOS,false,false,false,false,local,flag,<blknum>,last block to process (inclusive -- testing only)
 10860,apps,Admin,status,cacheStatus,,,,false,false,true,true,--,description,,Report on the status of the TrueBlocks system.
 
-10950,apps,Admin,pins,pinMan,list,l,,false,false,true,true,local,switch,<boolean>,list the bloom and index hashes from local cache or IPFS
-10952,apps,Admin,pins,pinMan,init,i,,false,false,true,true,header,switch,<boolean>,download the blooms or index chunks from IPFS
-10954,apps,Admin,pins,pinMan,freshen,f,,false,false,true,true,header,switch,<boolean>,check for new bloom or index chunks and download if available
-10958,apps,Admin,pins,pinMan,all,a,,false,false,true,true,header,switch,<boolean>,in addition to Bloom filters&#44; download full index chunks
-10962,apps,Admin,pins,pinMan,share,S,,false,false,true,true,header,switch,<boolean>,share downloaded data by pinning it to IPFS (the IPFS daemon must be running)
-10956,apps,Admin,pins,pinMan,remote,r,,false,false,true,true,header,switch,<boolean>,for --list mode only&#44; recover the manifest from IPFS via UnchainedIndex smart contract
-10960,apps,Admin,pins,pinMan,sleep,s,.25,false,false,true,true,header,flag,<double>,throttle requests by this many seconds ([{DEF}] seconds delay between requests by default)
+10950,apps,Admin,pins,pinMan,list,l,,false,false,true,true,local,switch,<boolean>,list the index and Bloom filter hashes from local manifest or pinning service
+10952,apps,Admin,pins,pinMan,init,i,,false,false,true,true,header,switch,<boolean>,initialize index of appearances by downloading Bloom filters from pinning service
+10954,apps,Admin,pins,pinMan,freshen,f,,false,false,true,true,header,switch,<boolean>,freshen index of appearances using the same mode from most recent --init
+10956,apps,Admin,pins,pinMan,remote,r,,false,false,false,false,header,switch,<boolean>,for --list mode only&#44; recover the manifest from pinning service
+10958,apps,Admin,pins,pinMan,all,a,,false,false,true,true,header,switch,<boolean>,for --init and --freshen modes only&#44; download full index chunks as well as Bloom filter
+10960,apps,Admin,pins,pinMan,sleep,s,.25,false,false,false,false,header,flag,<double>,the number of seconds to sleep between requests during download (default [{DEF}])
+10962,apps,Admin,pins,pinMan,share,S,,false,false,true,true,header,switch,<boolean>,pin downloaded files to your local IPFS store&#44; that is&#44; share them (requires IPFS)
 10964,apps,Admin,pins,pinMan,init_all,n,,false,false,false,false,header,deprecated,<boolean>,use --init --all instead
-10966,apps,Admin,pins,pinMan,,,,false,false,true,true,--,description,,Manage pinned index of appearances and associated blooms.
-10968,apps,Admin,pins,pinMan,n1,,,false,false,false,false,--,note,,The --freshen option is similar to --init&#44; but checks UnchainedIndex first.
-10970,apps,Admin,pins,pinMan,n2,,,false,false,false,false,--,note,,One of `--list`&#44; `--init`&#44; or `--freshen` is required.
-10972,apps,Admin,pins,pinMan,n3,,,false,false,false,false,--,note,,The `--share` option only works if the IPFS daemon is running.
-10974,apps,Admin,pins,pinMan,n4,,,false,false,false,false,--,note,,Re-run `chifra init` as you wish. It will repair or freshen the index.
+10966,apps,Admin,pins,pinMan,,,,false,false,true,true,--,description,,Manage pinned index of appearances and associated Bloom filters.
+10968,apps,Admin,pins,pinMan,n1,,,false,false,false,false,--,note,,One of `--list`&#44; `--init`&#44; or `--freshen` is required.
+10970,apps,Admin,pins,pinMan,n2,,,false,false,false,false,--,note,,the `--share` option only works if the IPFS executable is in your path.
 
-11905,apps,Admin,init,pinMan,all,a,,false,false,true,true,header,switch,<boolean>,in addition to Bloom filters&#44; download full index chunks
-11910,apps,Admin,init,pinMan,,,,false,false,true,true,--,description,,Initialize the TrueBlocks system by downloading from IPFS.
-11915,apps,Admin,init,pinMan,n1,,,false,false,false,false,--,note,,`chifra init` is an alias for the `chifra pins --init` command.
-11920,apps,Admin,init,pinMan,n2,,,false,false,false,false,--,note,,See `chifra pins --help` for more information.
+11958,apps,Admin,init,pinMan,all,a,,false,false,true,true,header,switch,<boolean>,download full index chunks as well as Bloom filter
+11966,apps,Admin,init,pinMan,,,,false,false,true,true,--,description,,Initialize the TrueBlocks system by downloading Bloom fitlers and optionally chunks of index of appearances.
+11966,apps,Admin,init,pinMan,n1,,,false,false,false,false,--,note,,`chifra init` is an alias for the `chifra pins --init` command.
 
 12020,tools,Other,quotes,getQuotes,freshen,f,,false,false,true,true,local,switch,<boolean>,Freshen price database
 12040,tools,Other,quotes,getQuotes,period,p,,false,false,true,true,local,flag,enum[5|15|30|60|120*|240|1440|10080|hourly|daily|weekly],increment of display

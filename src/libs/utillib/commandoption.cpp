@@ -899,7 +899,7 @@ string_q prepareDescr(const string_q& in) {
 }
 
 //---------------------------------------------------------------------------------------------------
-string_q CCommandOption::toApiPath(const string_q& inStr, const string_q& exampleFn) const {
+string_q CCommandOption::toApiPath(const string_q& inStr) const {
     if (!isApiRoute(api_route))
         return "";
 
@@ -916,6 +916,8 @@ string_q CCommandOption::toApiPath(const string_q& inStr, const string_q& exampl
             paramStream << "      parameters:\n";
         paramStream << yp << endl;
     }
+
+    string_q exampleFn = getDocsPathTemplates("api/examples/" + api_route + ".txt");
 
     ostringstream example;
     if (fileExists(exampleFn)) {

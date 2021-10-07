@@ -1,5 +1,0 @@
-{
-  "errors": [
-    "chifra pins - You must choose at least one of --list, --init, or --freshen."
-  ]
-}

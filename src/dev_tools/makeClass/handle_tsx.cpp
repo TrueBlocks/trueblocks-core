@@ -23,7 +23,6 @@ extern void loadRoutes(const string_q& fn);
 //------------------------------------------------------------------------------------------------------------
 static CCommandOptionArray routes;
 
-#define explorerPath string_q("/Users/jrush/Development/trueblocks-explorer/")
 //------------------------------------------------------------------------------------------------------------
 bool COptions::handle_tsx(void) {
     CToml config(getConfigPath("makeClass.toml"));

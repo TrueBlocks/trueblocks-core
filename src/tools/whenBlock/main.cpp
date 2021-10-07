@@ -87,6 +87,7 @@ bool visitBlock(CBlock& block, void* data) {
 
 //--------------------------------------------------------------------------------
 void COptions::applyFilter() {
+    //    items.reserve(requests.size() + 10)
     for (auto request : requests) {
         CBlock block;
         if (request.first == "block") {
@@ -98,12 +99,12 @@ void COptions::applyFilter() {
 
             getBlock_light(block, str_2_Uint(bnStr));
 
-            // TODO(tjayrush): this should be in the library so every request for zero block
-            // TODO(tjayrush): gets a valid blockNumber
+            // TODO(tjayrush): this should be in the library so every request for zero block gets a valid
+            // blockNumber
             if (block.blockNumber == 0) {
                 blknum_t bn = str_2_Uint(bnStr);
                 if (bn != 0) {
-                    // We've been asked to find a block that is in the future...estimate 14 second blocks
+                    // We've been asked to find a block that is in the future...estimate 14 blocks
                     block.timestamp = istanbulTs + timestamp_t(14 * (bn - instanbulBlock));
                     block.blockNumber = bn;
                     request.second += " (est)";

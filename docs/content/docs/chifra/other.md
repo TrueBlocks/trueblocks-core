@@ -2,7 +2,7 @@
 title: "Other"
 description: ""
 lead: ""
-date: 2021-10-06T16:08:39
+date: 2021-10-03T18:47:03
 lastmod:
   - :git
   - lastmod
@@ -31,7 +31,7 @@ The `chifra quotes` tool provides USD ($) price data to other tools and to the c
 
 ```[plaintext]
 Purpose:
-  Freshen or display Ethereum price data. This tool has been deprecated.
+  Freshen or display Ethereum price data.
 
 Usage:
   chifra quotes [flags]
@@ -39,10 +39,10 @@ Usage:
 Flags:
   -f, --freshen         Freshen price database
   -p, --period string   increment of display
-                        One of [ 5 | 15 | 30 | 60 | 120 | 240 | 1440 | 10080 | hourly | daily | weekly ]
+                        One of 5, 15, 30, 60, 120, 240, 1440, 10080, hourly, daily, weekly
   -a, --pair string     which price pair to freshen or list (see Poloniex)
   -e, --feed string     the feed for the price data
-                        One of [ poloniex | maker | tellor ]
+                        One of poloniex, maker, tellor
 
 Global Flags:
   -x, --fmt string   export format, one of [none|json*|txt|csv|api]
@@ -61,7 +61,7 @@ Notes:
 
 ```[plaintext]
 Purpose:
-  Open an explorer for one or more addresses, blocks, or transactions.
+  Open an explorer for a given address, block, or transaction.
 
 Usage:
   chifra explore [flags] <term> [term...]

@@ -2161,7 +2161,6 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 91-Early:Addresses	0x3375ee30428b2a71c428afa5e89e427905f95f7e	Oraclize_id46_cnt13325_5mo		Ether Camp			false	false	false	true	false	false
 50-Tokens:ERC20	0x338286c0bc081891a4bda39c7667ae150bf5d206	Cream SushiToken	crSUSHI	On chain	8		false	false	false	true	true	false
 91-Early:Addresses	0x33990122638b9132ca29c723bdf037f1a891a70c	GlobalRegistrarAddr_frontier		https://github.com/ethereum/go-ethereum			false	false	false	true	false	false
-30-Contracts	0x33a5f4b107093cd9cbbbe844f939acb4cab2e260	Moloch DAO RBG Multi-sig					false	false	false	true	false	false
 91-Early:Addresses	0x33a683a7af55942220e4efec514da11b5dc47996	LastIsMe		EtherScan.io			false	false	false	true	false	false
 90-Individuals:Gitcoin Grants	0x33a7669fe56e55f4c14b7b53ad107fe238f1a46b	psybull		Gitcoin Website			false	false	false	false	false	false
 31-Gitcoin:Grants	0x33a8cdd353fb8842dcea6163fa76ed10e81edcf1	Grant 1040 Uproot		https://gitcoin.co/grants/1040/uproot			false	false	false	false	false	false
