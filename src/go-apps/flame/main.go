@@ -31,10 +31,6 @@ func main() {
 	// Start listening on web sockets
 	server.RunWebsocketPool()
 
-	// We always start the scrapers...the user will tell us to turn them on
-	go server.RunIndexScraper()
-	go server.RunMonitorScraper()
-
 	// Start listening for requests
 	log.Fatal(http.ListenAndServe(server.Options.Port, server.NewRouter()))
 }
