@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2021-10-06T18:19:03
+date: 2021-10-07T07:32:13
 lastmod:
   - :git
   - lastmod
@@ -61,16 +61,12 @@ Purpose:
   Scan the chain and update the TrueBlocks index of appearances.
 
 Usage:
-  chifra scrape [flags] [mode...]
-
-Arguments:
-  mode - which scraper(s) to run (scrape by default)
-	One or more of [ index | monitors | both ]
+  chifra scrape [flags]
 
 Flags:
-  -p, --pin           pin new chunks (and blooms) to IPFS (requires Pinata key and running IPFS node)
-  -o, --port string   specify the server's port (:8080 default)
-  -s, --sleep float   the number of seconds to sleep between passes (default 14)
+  -p, --pin             pin new chunks (and blooms) to IPFS (requires Pinata key and running IPFS node)
+  -s, --sleep float     the number of seconds to sleep between passes (default 14)
+  -n, --n_blocks uint   maximum number of blocks to process (default 2000)
 
 Global Flags:
   -x, --fmt string   export format, one of [none|json*|txt|csv|api]
