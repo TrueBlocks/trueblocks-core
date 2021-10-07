@@ -59,7 +59,7 @@ func init() {
 	slurpCmd.Flags().SortFlags = false
 	slurpCmd.PersistentFlags().SortFlags = false
 	slurpCmd.Flags().StringSliceVarP(&SlurpOpts.types, "types", "t", nil, `which types of transactions to request
-One or more of ext, int, token, nfts, miner, uncles, all`)
+One or more of [ ext | int | token | nfts | miner | uncles | all ]`)
 	slurpCmd.Flags().BoolVarP(&SlurpOpts.appearances, "appearances", "p", false, "show only the blocknumer.tx_id appearances of the exported transactions")
 	slurpCmd.Flags().SortFlags = false
 	slurpCmd.PersistentFlags().SortFlags = false

@@ -82,7 +82,7 @@ bool writeCodeIn(const codewrite_t& cw) {
     if (codeOut != orig || forceWrite) {
         // Do the actual writing of the data only if we're not testing or the user has told us not to
         if (!testing) {
-            LOG_INFO("Writing: ", cTeal, substitute(cw.fileName, getCWD(), "$TEST/"), cOff);
+            LOG_INFO("Writing: ", cTeal, cw.fileName, cOff);
             stringToAsciiFile(cw.fileName, codeOut);
         } else {
             LOG8("Not writing: ", cw.fileName);

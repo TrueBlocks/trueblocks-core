@@ -64,7 +64,7 @@ func init() {
 	tokensCmd.Flags().SortFlags = false
 	tokensCmd.PersistentFlags().SortFlags = false
 	tokensCmd.Flags().StringSliceVarP(&TokensOpts.parts, "parts", "p", nil, `which parts of the token information to retrieve
-One or more of name, symbol, decimals, totalSupply, version, none, all`)
+One or more of [ name | symbol | decimals | totalSupply | version | none | all ]`)
 	tokensCmd.Flags().BoolVarP(&TokensOpts.by_acct, "by_acct", "b", false, "consider each address an ERC20 token except the last, whose balance is reported for each token")
 	tokensCmd.Flags().BoolVarP(&TokensOpts.no_zero, "no_zero", "n", false, "suppress the display of zero balance accounts")
 	tokensCmd.Flags().SortFlags = false

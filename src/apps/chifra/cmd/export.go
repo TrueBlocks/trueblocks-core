@@ -110,7 +110,7 @@ func init() {
 	exportCmd.Flags().BoolVarP(&ExportOpts.reversed, "reversed", "", false, "produce results in reverse chronological order (hidden)")
 	exportCmd.Flags().BoolVarP(&ExportOpts.by_date, "by_date", "b", false, "produce results sorted by date (report by address otherwise) (hidden)")
 	exportCmd.Flags().StringVarP(&ExportOpts.summarize_by, "summarize_by", "z", "", `for --accounting only, summarize reconciliations by this time period (hidden)
-One of yearly, quarterly, monthly, weekly, daily, hourly, blockly, tx`)
+One of [ yearly | quarterly | monthly | weekly | daily | hourly | blockly | tx ]`)
 	exportCmd.Flags().BoolVarP(&ExportOpts.skip_ddos, "skip_ddos", "d", false, "toggle skipping over 2016 dDos transactions ('on' by default) (hidden)")
 	exportCmd.Flags().Uint64VarP(&ExportOpts.max_traces, "max_traces", "m", 250, "if --skip_ddos is on, this many traces defines what a ddos transaction is (hidden)")
 	exportCmd.Flags().Uint64VarP(&ExportOpts.first_block, "first_block", "F", 0, "first block to process (inclusive) (hidden)")

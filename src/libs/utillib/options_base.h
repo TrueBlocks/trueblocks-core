@@ -181,6 +181,7 @@ inline bool listBlocks(uint64_t bn, void* data) {
 }
 class COptionsBlockList {
   public:
+    const COptionsBase* opts;
     CBlockNumArray numList;
     CStringArray hashList;
     HASHFINDFUNC hashFind;
@@ -191,9 +192,9 @@ class COptionsBlockList {
     period_t skip_type;
     bool hasZeroBlock{false};
 
+    COptionsBlockList(const COptionsBase* o);
     void Init(void);
     string_q parseBlockList_inner(const string_q& arg, blknum_t latest);
-    COptionsBlockList(void);
     bool forEveryBlockNumber(UINT64VISITFUNC func, void*) const;
     bool empty(void) const {
         return !(hashList.size() || numList.size() || (start != stop));
@@ -213,6 +214,9 @@ class COptionsBlockList {
     }
     bool isInRange(blknum_t bn) const;
     blknum_t parseBlockOption(string_q& msg, blknum_t lastBlock, direction_t offset, bool& hasZero) const;
+
+  private:
+    COptionsBlockList(void) = delete;
 };
 
 class COptionsTransList {

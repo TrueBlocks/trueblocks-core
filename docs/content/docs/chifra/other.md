@@ -2,7 +2,7 @@
 title: "Other"
 description: ""
 lead: ""
-date: 2021-10-04T19:09:09
+date: 2021-10-06T16:08:39
 lastmod:
   - :git
   - lastmod
@@ -39,10 +39,10 @@ Usage:
 Flags:
   -f, --freshen         Freshen price database
   -p, --period string   increment of display
-                        One of 5, 15, 30, 60, 120, 240, 1440, 10080, hourly, daily, weekly
+                        One of [ 5 | 15 | 30 | 60 | 120 | 240 | 1440 | 10080 | hourly | daily | weekly ]
   -a, --pair string     which price pair to freshen or list (see Poloniex)
   -e, --feed string     the feed for the price data
-                        One of poloniex, maker, tellor
+                        One of [ poloniex | maker | tellor ]
 
 Global Flags:
   -x, --fmt string   export format, one of [none|json*|txt|csv|api]
