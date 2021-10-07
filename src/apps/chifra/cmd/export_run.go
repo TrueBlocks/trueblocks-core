@@ -15,23 +15,22 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/spf13/cobra"
 )
 
 func validateExportArgs(cmd *cobra.Command, args []string) error {
-	err := validate.ValidateOneAddr(args)
+	err := validateOneAddr(args)
 	if err != nil {
 		return err
 	}
 
-	err = validate.ValidateEnum("--summarize_by", ExportOpts.summarize_by, "[yearly|quarterly|monthly|weekly|daily|hourly|blockly|tx]")
+	err = validateEnum("--summarize_by", ExportOpts.summarize_by, "[yearly|quarterly|monthly|weekly|daily|hourly|blockly|tx]")
 	if err != nil {
 		return err
 	}
 
 	if len(ExportOpts.summarize_by) > 0 && !ExportOpts.accounting {
-		return validate.Usage("You may use --summarized_by only with the --accounting option.")
+		return makeError("You may use --summarized_by only with the --accounting option.")
 	}
 
 	err = validateGlobalFlags(cmd, args)

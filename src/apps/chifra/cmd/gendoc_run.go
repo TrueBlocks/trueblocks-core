@@ -18,7 +18,6 @@ import (
 	"os"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/utils"
 	"github.com/spf13/cobra"
 	"github.com/spf13/cobra/doc"
@@ -27,7 +26,7 @@ import (
 func validateGendocArgs(cmd *cobra.Command, args []string) error {
 	if !utils.FolderExists("../build/docs/") {
 		cwd, _ := os.Getwd()
-		return validate.Usage("Cannot find local ./docs folder in {0}", cwd)
+		return makeError("Cannot find local ./docs folder in {0}", cwd)
 	}
 
 	err := validateGlobalFlags(cmd, args)

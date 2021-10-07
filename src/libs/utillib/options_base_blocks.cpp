@@ -48,8 +48,7 @@ blknum_t COptionsBlockList::parseBlockOption(string_q& msg, blknum_t lastBlock, 
         }
     }
 
-    ASSERT(opts);
-    if (opts->isEnabled(OPT_CHECKLATEST) && ret > lastBlock) {
+    if (ret > lastBlock) {
         string_q lateStr = (isTestMode() ? "--" : uint_2_Str(lastBlock));
         msg = "Block " + arg + " is later than the last valid block " + lateStr + "." + (isApiMode() ? "" : "\n");
         return NOPOS;
@@ -170,9 +169,8 @@ void COptionsBlockList::Init(void) {
 }
 
 //--------------------------------------------------------------------------------
-COptionsBlockList::COptionsBlockList(const COptionsBase* o) {
+COptionsBlockList::COptionsBlockList(void) {
     Init();
-    opts = o;
 }
 
 //--------------------------------------------------------------------------------

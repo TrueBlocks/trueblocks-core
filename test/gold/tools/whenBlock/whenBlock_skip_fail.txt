@@ -1,7 +1,12 @@
 chifra when  --fmt txt 1301000-1301250:junk
-Error: Input argument appears to be invalid. No such skip marker: junk
+
+  Input argument appears to be invalid. No such skip marker: 1301000-1301250:junk Quitting...
+
+Purpose:
+  Find block(s) based on date, blockNum, timestamp, or 'special'.
+
 Usage:
-  chifra when [flags] < block | date > [ block... | date... ]
+  whenBlock [flags] < block | date > [ block... | date... ]
 
 Arguments:
   blocks - one or more dates, block numbers, hashes, or special named blocks (see notes) (required)
@@ -14,10 +19,11 @@ Flags:
   -u, --count        available only with --timestamps, returns the number of timestamps in the cache (hidden)
 
 Global Flags:
-  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
-  -h, --help         display this help screen
-  -v, --verbose      enable verbose (increase detail with --log_level)
+  -x, --fmt string     export format, one of [none|json*|txt|csv|api]
+  -v, --verbose uint   set verbose level (optional level defaults to 1)
+  -h, --help           display this help screen
 
 Notes:
   - The block list may contain any combination of number, hash, date, special named blocks.
   - Dates must be formatted in JSON format: YYYY-MM-DD[THH[:MM[:SS]]].
+

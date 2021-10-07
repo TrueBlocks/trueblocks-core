@@ -13,12 +13,12 @@ Usage:
 
 Arguments:
   modes - the type of status info to retrieve
-	One or more of [ index | monitors | collections | names | abis | caches | some | all ]
+	One or more of index, monitors, collections, names, abis, caches, some, all
 
 Flags:
   -d, --details         include details about items found in monitors, slurps, abis, or price caches
   -t, --types strings   for caches mode only, which type(s) of cache to report
-                        One or more of [ blocks | txs | traces | slurps | prices | all ]
+                        One or more of blocks, txs, traces, slurps, prices, all
 
 Global Flags:
   -x, --fmt string   export format, one of [none|json*|txt|csv|api]

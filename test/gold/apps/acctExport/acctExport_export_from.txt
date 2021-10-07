@@ -35,7 +35,7 @@ Flags:
       --reversed              produce results in reverse chronological order (hidden)
   -b, --by_date               produce results sorted by date (report by address otherwise) (hidden)
   -z, --summarize_by string   for --accounting only, summarize reconciliations by this time period (hidden)
-                              One of [ yearly | quarterly | monthly | weekly | daily | hourly | blockly | tx ]
+                              One of yearly, quarterly, monthly, weekly, daily, hourly, blockly, tx
   -d, --skip_ddos             toggle skipping over 2016 dDos transactions ('on' by default) (hidden)
   -m, --max_traces uint       if --skip_ddos is on, this many traces defines what a ddos transaction is (hidden) (default 250)
   -F, --first_block uint      first block to process (inclusive) (hidden)

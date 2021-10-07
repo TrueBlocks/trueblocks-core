@@ -117,19 +117,7 @@ bool COptions::parseArguments(string_q& command) {
     establishFolder(getDocsPathContent("data-model/"));
     establishFolder(getDocsPathContent("docs/"));
     establishFolder(getDocsPathContent("docs/chifra/"));
-
-#define endpointsFile getSourcePath("cmd-line-endpoints.csv")
-#define optionsFile getSourcePath("cmd-line-options.csv")
-
-    if (!fileExists(endpointsFile))
-        return usage("Could not find " + endpointsFile);
-    forEveryLineInAsciiFile(endpointsFile, parseEndpointsFile, this);
-
-    if (!fileExists(optionsFile))
-        return usage("Could not find " + optionsFile);
-    forEveryLineInAsciiFile(optionsFile, parseOptionsFile, this);
-
-    verifyDescriptions();
+    forEveryLineInAsciiFile(endpointFile, parseCommandData, &endpointArray);
 
     if (tsx)
         handle_tsx();
@@ -322,68 +310,19 @@ string_q getSourcePath(const string_q& rest) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool parseEndpointsFile(const char* str, void* data) {
+bool parseCommandData(const char* str, void* data) {
+    static CStringArray routeFields;
     string_q line = str;
     replaceAny(line, "\n\r", "");
-
-    /* The first row is the field names */
-    static CStringArray fields;
-    if (fields.empty()) {
-        explode(fields, line, ',');
+    if (routeFields.empty()) {
+        explode(routeFields, line, ',');
         return true;
     }
 
-    COptions* opts = (COptions*)data;
+    CCommandOptionArray* array = (CCommandOptionArray*)data;
     CCommandOption option;
-    option.parseCSV(fields, line);
-    opts->endpointArray.push_back(option);
+    option.parseCSV(routeFields, line);
+    array->push_back(option);
 
     return true;
-}
-
-//---------------------------------------------------------------------------------------------------
-bool parseOptionsFile(const char* str, void* data) {
-    string_q line = str;
-    replaceAny(line, "\n\r", "");
-
-    /* The first row is the field names */
-    static CStringArray fields;
-    if (fields.empty()) {
-        explode(fields, line, ',');
-        return true;
-    }
-
-    COptions* opts = (COptions*)data;
-    CCommandOption option;
-    option.parseCSV(fields, line);
-    if (!option.tool.empty() && option.tool != "all" && option.tool != "tool") {
-        string_q key = option.tool + "-" + option.longName + option.option_type;
-        if (!opts->cmdExistsMap[key]) {
-            opts->cmdOptionArray.push_back(option);
-            opts->cmdExistsMap[key] = true;
-        }
-        opts->routeOptionArray.push_back(option);
-        opts->toolMap[option.group + "/" + option.tool] = true;
-    }
-
-    return true;
-}
-
-//---------------------------------------------------------------------------------------------------
-void COptions::verifyDescriptions(void) {
-    for (auto ep : endpointArray) {
-        if (!ep.is_visible)
-            continue;
-        for (auto option : cmdOptionArray) {
-            if (ep.api_route == option.api_route && option.option_type == "description") {
-                if (ep.description != option.description) {
-                    ostringstream os;
-                    os << "Endpoint descriptions for " << ep.api_route << " do not agree:" << endl;
-                    os << "\tendpoint: " << ep.description << endl;
-                    os << "\toption:   " << option.description << endl;
-                    LOG_WARN(os.str());
-                }
-            }
-        }
-    }
 }

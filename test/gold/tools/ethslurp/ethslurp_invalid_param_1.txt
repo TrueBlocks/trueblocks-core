@@ -11,7 +11,7 @@ Arguments:
 
 Flags:
   -t, --types strings   which types of transactions to request
-                        One or more of [ ext | int | token | nfts | miner | uncles | all ]
+                        One or more of ext, int, token, nfts, miner, uncles, all
   -p, --appearances     show only the blocknumer.tx_id appearances of the exported transactions
 
 Global Flags:

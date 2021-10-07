@@ -13,17 +13,16 @@
 package cmd
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/spf13/cobra"
 )
 
 func validateSlurpArgs(cmd *cobra.Command, args []string) error {
-	err := validate.ValidateOneAddr(args)
+	err := validateOneAddr(args)
 	if err != nil {
 		return err
 	}
 
-	err = validate.ValidateEnumSlice("--types", SlurpOpts.types, "[ext|int|token|nfts|miner|uncles|all]")
+	err = validateEnumSlice("--types", SlurpOpts.types, "[ext|int|token|nfts|miner|uncles|all]")
 	if err != nil {
 		return err
 	}

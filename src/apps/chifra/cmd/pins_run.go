@@ -15,48 +15,13 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/spf13/cobra"
 )
 
 func validatePinsArgs(cmd *cobra.Command, args []string) error {
-	list := PinsOpts.list
-	init := PinsOpts.init
-	freshen := PinsOpts.freshen
-	remote := PinsOpts.remote
-	all := PinsOpts.all
-	init_all := PinsOpts.init_all
-
-	if list && (init || freshen) {
-		return validate.Usage("Please choose only a single option.")
+	if PinsOpts.init_all {
+		return makeError("Flag --init_all has been deprecated, use --init --all instead")
 	}
-
-	if !list && !init && !freshen {
-		return validate.Usage("You must choose at least one of --list, --init, or --freshen.")
-	}
-
-	if remote && !list {
-		return validate.Usage("The --remote option is only available with the --list option")
-	}
-
-	if remote {
-		return validate.Usage("The --remote option is not yet implemented")
-	}
-
-	if all && !init {
-		return validate.Usage("Use the --all option only with the --init or --freshen options.")
-	}
-
-	if init_all {
-		return validate.Usage("Flag --init_all has been deprecated, use --init --all instead")
-	}
-
-	// if (share) {
-	//     string_q res := doCommand("which ipfs");
-	//     if (res.empty()) {
-	//         return usage("Could not find ipfs in your $PATH. You must install ipfs for the --share command to work.");
-	// 	}
-	// }
 
 	err := validateGlobalFlags(cmd, args)
 	if err != nil {
@@ -68,7 +33,7 @@ func validatePinsArgs(cmd *cobra.Command, args []string) error {
 
 func runPins(cmd *cobra.Command, args []string) {
 	options := ""
-	if PinsOpts.list {
+	if (!PinsOpts.list && !PinsOpts.init && !PinsOpts.freshen) || PinsOpts.list {
 		options += " --list"
 	}
 	if PinsOpts.init {

@@ -1,23 +1,4 @@
 chifra when  myblock
-Error: The given value 'myblock' is not a numeral or a special named block.
-Usage:
-  chifra when [flags] < block | date > [ block... | date... ]
 
-Arguments:
-  blocks - one or more dates, block numbers, hashes, or special named blocks (see notes) (required)
+  The given value 'myblock' is not a numeral or a special named block.
 
-Flags:
-  -l, --list         export a list of the 'special' blocks
-  -t, --timestamps   ignore other options and generate timestamps only
-  -c, --check        available only with --timestamps, checks the validity of the timestamp data (hidden)
-  -f, --fix          available only with --timestamps, fixes incorrect timestamps if any (hidden)
-  -u, --count        available only with --timestamps, returns the number of timestamps in the cache (hidden)
-
-Global Flags:
-  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
-  -h, --help         display this help screen
-  -v, --verbose      enable verbose (increase detail with --log_level)
-
-Notes:
-  - The block list may contain any combination of number, hash, date, special named blocks.
-  - Dates must be formatted in JSON format: YYYY-MM-DD[THH[:MM[:SS]]].

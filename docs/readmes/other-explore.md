@@ -4,7 +4,7 @@
 
 ```[plaintext]
 Purpose:
-  Open an explorer for one or more addresses, blocks, or transactions.
+  Open an explorer for a given address, block, or transaction.
 
 Usage:
   chifra explore [flags] <term> [term...]

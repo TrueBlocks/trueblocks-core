@@ -1,5 +1,0 @@
-{
-  "errors": [
-    "chifra pins - The --remote option is not yet implemented"
-  ]
-}

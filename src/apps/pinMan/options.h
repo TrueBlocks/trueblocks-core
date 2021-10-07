@@ -26,10 +26,10 @@ class COptions : public CAbiOptions {
     // BEG_CODE_DECLARE
     bool init;
     bool freshen;
-    bool all;
-    bool share;
     bool remote;
+    bool all;
     double sleep;
+    bool share;
     // END_CODE_DECLARE
 
     CPinnedChunkArray pins;

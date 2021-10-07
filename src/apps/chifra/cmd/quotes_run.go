@@ -13,7 +13,6 @@
 package cmd
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/spf13/cobra"
 )
 
@@ -24,15 +23,15 @@ func validateQuotesArgs(cmd *cobra.Command, args []string) error {
 		len(QuotesOpts.pair) == 0 &&
 		len(QuotesOpts.feed) == 0 &&
 		len(RootOpts.fmt) == 0 {
-		return validate.Usage("You must provide at least one command line option")
+		return makeError("You must provide at least one command line option")
 	}
 
-	err := validate.ValidateEnum("--period", QuotesOpts.period, "[5|15|30|60|120|240|1440|10080|hourly|daily|weekly]")
+	err := validateEnum("--period", QuotesOpts.period, "[5|15|30|60|120|240|1440|10080|hourly|daily|weekly]")
 	if err != nil {
 		return err
 	}
 
-	err = validate.ValidateEnum("--types", QuotesOpts.feed, "[poloniex|maker|tellor]")
+	err = validateEnum("--types", QuotesOpts.feed, "[poloniex|maker|tellor]")
 	if err != nil {
 		return err
 	}

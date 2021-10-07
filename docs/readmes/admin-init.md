@@ -10,13 +10,13 @@ If you run `chifra init` and allow it to complete, the next time you run `chifra
 
 ```[plaintext]
 Purpose:
-  Initialize the TrueBlocks system by downloading from IPFS.
+  Initialize the index of appearances by downloading Bloom filters.
 
 Usage:
   chifra init [flags]
 
 Flags:
-  -a, --all   in addition to Bloom filters, download full index chunks
+  -a, --all   download full index chunks as well as Bloom filter
 
 Global Flags:
   -x, --fmt string   export format, one of [none|json*|txt|csv|api]
@@ -25,7 +25,6 @@ Global Flags:
 
 Notes:
   - chifra init is an alias for the chifra pins --init command.
-  - See chifra pins --help for more information.
 ```
 
 **Source code**: [`apps/pinMan`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/pinMan)

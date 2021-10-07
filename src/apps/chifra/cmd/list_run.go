@@ -15,14 +15,13 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/utils"
 	"github.com/spf13/cobra"
 )
 
 func validateListArgs(cmd *cobra.Command, args []string) error {
 	if !utils.IsApiMode() {
-		err := validate.ValidateOneAddr(args)
+		err := validateOneAddr(args)
 		if err != nil {
 			return err
 		}
