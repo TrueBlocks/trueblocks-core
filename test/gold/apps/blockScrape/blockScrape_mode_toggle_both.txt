@@ -1,6 +1,7 @@
-chifra scrape  --listpins
+chifra scrape  both --action toggle
+action:  toggle
 Error: 
-  unknown flag: --listpins
+  the --action option is currently not implemented
 
 Usage:
   chifra scrape [flags] [mode...]

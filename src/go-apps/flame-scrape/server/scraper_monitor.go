@@ -21,14 +21,17 @@ import (
 	"path/filepath"
 	"strconv"
 	"strings"
+	"sync"
 
 	utils "github.com/TrueBlocks/trueblocks-core/src/go-apps/blaze/utils"
 )
 
 var MonitorScraper Scraper
 
-func RunMonitorScraper() {
-	for true {
+func RunMonitorScraper(wg sync.WaitGroup) {
+	defer wg.Done()
+	for {
+		fmt.Println("%v", MonitorScraper, utils.Off)
 		if !MonitorScraper.Running {
 			if MonitorScraper.WasRunning {
 				MonitorScraper.ShowStateChange("running", "paused")

@@ -1,4 +1,4 @@
-package main
+package utils
 
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
@@ -14,23 +14,39 @@ package main
  *-------------------------------------------------------------------------------------------*/
 
 import (
-	"log"
 	"net/http"
-
-	server "github.com/TrueBlocks/trueblocks-core/src/go-apps/blaze/server"
+	"os"
 )
 
-func main() {
-	// Handle command line options
-	err := server.ParseOptions()
-	if err != nil {
-		log.Println("Could not parse command line.")
-		return
+// FileExists help text todo
+func FileExists(filename string) bool {
+	info, err := os.Stat(filename)
+	if os.IsNotExist(err) {
+		return false
 	}
+	return !info.IsDir()
+}
 
-	// Start listening on web sockets
-	server.RunWebsocketPool()
+// FolderExists help text todo
+func FolderExists(path string) bool {
+	info, err := os.Stat(path)
+	if os.IsNotExist(err) {
+		return false
+	}
+	return info.IsDir()
+}
 
-	// Start listening for requests
-	log.Fatal(http.ListenAndServe(server.Options.Port, server.NewRouter()))
+// GetParam returns a single the 'key' parameter in the URL
+func GetParam(key string, def string, r *http.Request) (string, bool) {
+	values, exists := r.URL.Query()[key]
+	if exists {
+		if len(values) < 1 {
+			return def, true
+		}
+		if values[0] == "" {
+			return def, true
+		}
+		return values[0], true
+	}
+	return def, false
 }

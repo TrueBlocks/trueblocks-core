@@ -1,19 +1,31 @@
 chifra scrape  --n_addr_procs -12
 Error: 
-  invalid argument "-12" for "-a, --n_addr_procs" flag: strconv.ParseUint: parsing "-12": invalid syntax
+  invalid argument "-12" for "-d, --n_addr_procs" flag: strconv.ParseUint: parsing "-12": invalid syntax
 
 Usage:
-  chifra scrape [flags]
+  chifra scrape [flags] [mode...]
+
+Arguments:
+  modes - which scraper(s) to control (indexer is default)
+	One or more of [ indexer | monitors | both ]
 
 Flags:
-  -p, --pin                  pin new chunks (and blooms) to IPFS (requires Pinata key and running IPFS node)
-  -s, --sleep float          the number of seconds to sleep between passes (default 14)
-  -n, --n_blocks uint        maximum number of blocks to process (default 2000)
-  -b, --n_block_procs uint   number of concurrent block channels for blaze (hidden) (default 10)
-  -a, --n_addr_procs uint    number of concurrent address channels for blaze (hidden) (default 20)
+  -a, --action string        command to apply to the specified scrape
+                             One of [ toggle | run | restart | pause | quit ]
+  -s, --sleep float          seconds to sleep between scraper passes (default 14)
+  -p, --pin                  pin chunks (and blooms) to IPFS as they are created (requires pinning service)
+  -u, --publish              after pinning the chunk, publish it to UnchainedIndex (hidden)
+  -o, --port string          specify the server's port (:8081 default) (hidden) (default ":8081")
+  -n, --n_blocks uint        maximum number of blocks to process per pass (default 2000)
+  -b, --n_block_procs uint   number of concurrent block processing channels (hidden) (default 10)
+  -d, --n_addr_procs uint    number of concurrent address processing channels (hidden) (default 20)
 
 Global Flags:
   -x, --fmt string   export format, one of [none|json*|txt|csv|api]
   -h, --help         display this help screen
   -v, --verbose      enable verbose (increase detail with --log_level)
 
+Notes:
+  - if no mode is presented, chifra scrape indexer --action run is assumed.
+  - the --pin and --publish options require an API to the pinning service.
+  - the --n_* related options allow you to tune the scrapers.

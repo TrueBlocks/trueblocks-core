@@ -18,14 +18,18 @@ import (
 	"log"
 	"os/exec"
 	"strconv"
+	"sync"
 
 	utils "github.com/TrueBlocks/trueblocks-core/src/go-apps/blaze/utils"
 )
 
 var IndexScraper Scraper
 
-func RunIndexScraper() {
-	for true {
+func RunIndexScraper(wg sync.WaitGroup) {
+	IndexScraper.Running = true
+	defer wg.Done()
+	for {
+		fmt.Println("%v", IndexScraper, utils.Off)
 		if !IndexScraper.Running {
 			if IndexScraper.WasRunning {
 				IndexScraper.ShowStateChange("running", "paused")

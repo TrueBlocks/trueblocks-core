@@ -15,7 +15,7 @@ package main
 
 import (
 	"log"
-	"net/http"
+	"sync"
 
 	server "github.com/TrueBlocks/trueblocks-core/src/go-apps/blaze/server"
 )
@@ -31,6 +31,9 @@ func main() {
 	// Start listening on web sockets
 	server.RunWebsocketPool()
 
-	// Start listening for requests
-	log.Fatal(http.ListenAndServe(server.Options.Port, server.NewRouter()))
+	var wg sync.WaitGroup
+	wg.Add(2)
+	go server.RunIndexScraper(wg)
+	go server.RunMonitorScraper(wg)
+	wg.Wait()
 }
