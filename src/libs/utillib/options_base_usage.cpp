@@ -29,14 +29,12 @@ static ostream& out = cerr;
 //--------------------------------------------------------------------------------
 bool COptionsBase::usage(const string_q& errMsg) const {
     // TODO: remove this if no longer needed
-    if (getEnvStr("OLD_PARSER") == "true") {
+    if (getEnvStr("OLD_PARSER") == "true" || getEnvStr("OLD_PARSER_API") == "true") {
         if (!endsWith(getProgName(), "Test") && getProgName() != "makeClass") {
-            cerr << "I am in the old fashioned usage code" << endl;
-        }
-    }
-    if (getEnvStr("OLD_PARSER_API") == "true") {
-        if (!endsWith(getProgName(), "Test") && getProgName() != "makeClass") {
-            errorMessage("I am in the old fashioned usage code");
+            if (isApiMode())
+                errorMessage("I am in the old fashioned usage code");
+            else
+                cerr << "I am in the old fashioned usage code" << endl;
         }
     }
 

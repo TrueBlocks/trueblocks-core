@@ -15,12 +15,13 @@ package cmd
 import (
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/spf13/cobra"
 )
 
 func validateServeArgs(cmd *cobra.Command, args []string) error {
 	if len(ServeOpts.port) > 0 && !strings.Contains(ServeOpts.port, ":") {
-		return makeError("The --port option must start with a ':'")
+		return validate.Usage("The --port option must start with a ':'")
 	}
 
 	return nil

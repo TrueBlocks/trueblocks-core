@@ -39,10 +39,10 @@ Purpose:
     status        report on the status of the TrueBlocks system
     serve         serve the TrueBlocks API using the flame server
     scrape        scan the chain and update the TrueBlocks index of appearances
-    init          initialize the index of appearances by downloading Bloom filters
-    pins          manage pinned index of appearances and associated Bloom filters
+    init          initialize the TrueBlocks system by downloading from IPFS
+    pins          manage pinned index of appearances and associated blooms
   Other:
-    quotes        freshen and/or display Ethereum price data
+    quotes        freshen or display Ethereum price data. This tool has been deprecated
     explore       open an explorer for a given address, block, or transaction
     slurp         fetch data from EtherScan for any address
   Flags:

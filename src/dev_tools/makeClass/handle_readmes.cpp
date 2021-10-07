@@ -72,7 +72,7 @@ bool COptions::handle_readmes(void) {
         string_q tool = parts[1];
 
         string_q front = STR_YAML_FRONTMATTER;
-        replace(front, "[{TITLE}]", group);
+        replace(front, "[{TITLE}]", firstUpper(toLower(group)));
         replace(front, "[{WEIGHT}]", uint_2_Str(weight));
         replace(front, "[{M1}]", "docs:");
         replace(front, "[{M2}]", "parent: \"chifra\"");
