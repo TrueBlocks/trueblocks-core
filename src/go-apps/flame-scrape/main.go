@@ -17,23 +17,23 @@ import (
 	"log"
 	"sync"
 
-	server "github.com/TrueBlocks/trueblocks-core/src/go-apps/blaze/server"
+	scraper "github.com/TrueBlocks/trueblocks-core/src/go-apps/flame-scrape/scraper"
 )
 
 func main() {
 	// Handle command line options
-	err := server.ParseOptions()
+	err := scraper.ParseOptions()
 	if err != nil {
 		log.Println("Could not parse command line.")
 		return
 	}
 
 	// Start listening on web sockets
-	server.RunWebsocketPool()
+	scraper.RunWebsocketPool()
 
 	var wg sync.WaitGroup
 	wg.Add(2)
-	go server.RunIndexScraper(wg)
-	go server.RunMonitorScraper(wg)
+	go scraper.RunIndexScraper(wg)
+	go scraper.RunMonitorScraper(wg)
 	wg.Wait()
 }
