@@ -1,4 +1,4 @@
-package server
+package scraper
 
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
@@ -18,7 +18,7 @@ import (
 	"log"
 	"net/http"
 
-	utils "github.com/TrueBlocks/trueblocks-core/src/go-apps/blaze/utils"
+	utils "github.com/TrueBlocks/trueblocks-core/src/go-apps/flame-scrape/utils"
 )
 
 // ManageScraper handles scraper commands

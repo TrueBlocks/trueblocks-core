@@ -1,4 +1,4 @@
-package server
+package scraper
 
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
@@ -23,7 +23,7 @@ import (
 	"strings"
 	"sync"
 
-	utils "github.com/TrueBlocks/trueblocks-core/src/go-apps/blaze/utils"
+	utils "github.com/TrueBlocks/trueblocks-core/src/go-apps/flame-scrape/utils"
 )
 
 var MonitorScraper Scraper

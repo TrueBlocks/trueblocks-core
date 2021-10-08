@@ -1,4 +1,4 @@
-package server
+package scraper
 
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
@@ -21,9 +21,6 @@ import (
 
 	"github.com/gorilla/websocket"
 )
-
-// MessageType is a message carried in a string
-type MessageType string
 
 const (
 	// CommandErrorMessage is a message send when the server encounters an error
@@ -156,3 +153,6 @@ var connectionPool = newConnectionPool()
 func RunWebsocketPool() {
 	go connectionPool.run()
 }
+
+// MessageType is a message carried in a string
+type MessageType string

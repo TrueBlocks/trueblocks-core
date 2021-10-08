@@ -1,4 +1,4 @@
-package server
+package scraper
 
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
@@ -21,7 +21,7 @@ import (
 	"os/exec"
 	"strings"
 
-	utils "github.com/TrueBlocks/trueblocks-core/src/go-apps/blaze/utils"
+	utils "github.com/TrueBlocks/trueblocks-core/src/go-apps/flame-scrape/utils"
 	flag "github.com/spf13/pflag"
 )
 
