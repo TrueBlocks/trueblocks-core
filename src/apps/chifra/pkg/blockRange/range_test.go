@@ -1,6 +1,9 @@
 package blockRange
 
-import "testing"
+import (
+	"encoding/json"
+	"testing"
+)
 
 func TestPointToPointTypeBlock(t *testing.T) {
 	point := &Point{Block: 100}
@@ -117,5 +120,36 @@ func TestHandleParserErrors(t *testing.T) {
 	} else {
 		t.Error("Returned error is not WrongModifier")
 		t.Error(modifierErr)
+	}
+}
+
+func TestBlockRange_UnmarshalJSON(t *testing.T) {
+	type SomeRecord struct {
+		Blocks BlockRange `json:"blocks"`
+	}
+
+	var record SomeRecord
+	source := []byte(`{"blocks":"000000000-010567003"}`)
+
+	err := json.Unmarshal(source, &record)
+
+	if err != nil {
+		t.Error(err)
+	}
+
+	if record.Blocks.StartType != BlockRangeBlockNumber {
+		t.Errorf("Wrong StartType %d", record.Blocks.StartType)
+	}
+
+	if record.Blocks.EndType != BlockRangeBlockNumber {
+		t.Errorf("Wrong EndType %d", record.Blocks.EndType)
+	}
+
+	if record.Blocks.Start.Block != uint(0) {
+		t.Error("Wrong start value")
+	}
+
+	if record.Blocks.End.Block != uint(10567003) {
+		t.Errorf("Wrong end value %d", record.Blocks.End.Block)
 	}
 }

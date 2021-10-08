@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"regexp"
+	"strconv"
 )
 
 // Parses a string containing block range and returns a struct
@@ -59,6 +60,24 @@ type BlockRange struct {
 	End          Point
 	ModifierType BlockRangeValue
 	Modifier     Modifier
+}
+
+func (br *BlockRange) UnmarshalJSON(data []byte) error {
+	str, err := strconv.Unquote(string(data))
+
+	if err != nil {
+		return err
+	}
+
+	newBlock, err := New(str)
+
+	if err != nil {
+		return err
+	}
+
+	*br = *newBlock
+
+	return nil
 }
 
 func getPointType(p *Point) BlockRangeValue {
