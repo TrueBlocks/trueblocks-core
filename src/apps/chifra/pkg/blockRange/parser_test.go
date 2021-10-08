@@ -24,6 +24,22 @@ func TestParseBlockNums(t *testing.T) {
 	}
 }
 
+func TestParseBlockNumsLeading0(t *testing.T) {
+	out, err := Parse("000000-020:10")
+
+	if err != nil {
+		t.Error(err)
+	}
+
+	if out.Points[0].Block != 0 {
+		t.Error("Mismatched start block:", out.Points[0].Block)
+	}
+
+	if out.Points[1].Block != 20 {
+		t.Error("Mismatched end block:", out.Points[1].Block)
+	}
+}
+
 func TestParseBlockNumsNoEnd(t *testing.T) {
 	out, err := Parse("10:25")
 

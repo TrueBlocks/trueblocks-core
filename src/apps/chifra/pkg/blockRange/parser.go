@@ -47,6 +47,8 @@ package blockRange
 // 2021-10-03T10:30:59-1000:100
 
 import (
+	"strconv"
+
 	"github.com/alecthomas/participle/v2"
 	"github.com/alecthomas/participle/v2/lexer"
 )
@@ -61,13 +63,37 @@ var rangeLexer = lexer.MustSimple([]lexer.Rule{
 	{`ModifierSeparator`, `:`, nil},
 })
 
+// chifra accepts block numbers with leading zeroes as decimals, which is different
+// from Go (which treats them as octal) and this is why we have to add custom capturing
+// for block numbers
+type BlockNumber uint64
+
+func (bn *BlockNumber) Capture(values []string) error {
+	readValue := values[0]
+	base := 10
+
+	// Is it a hex?
+	if len(readValue) > 2 && readValue[:2] == "0x" {
+		base = 16
+		readValue = readValue[2:]
+	}
+
+	// If base is set to 16, this will parse the hex value and return decimal.
+	// If base is still 10, this will parse both decimals and decimals with
+	// leading 0 (e.g. 024 meaning 24 and NOT octal 24, which would be decimal
+	// 20)
+	parsedValue, err := strconv.ParseUint(readValue, base, 64)
+	*bn = BlockNumber(parsedValue)
+	return err
+}
+
 // A Point carries information about when a range starts or ends. It can be
 // a block number, a date or special name (e.g. "london" is translated to
 // block 12965000)
 type Point struct {
-	Block   uint   `parser:"@Hex|@Unsigned"`
-	Date    string `parser:"| @Date"`
-	Special string `parser:"| @Special"`
+	Block   BlockNumber `parser:"@Hex|@Unsigned"`
+	Date    string      `parser:"| @Date"`
+	Special string      `parser:"| @Special"`
 }
 
 // Modifier changes the meaning of the given range. For example, if step of
