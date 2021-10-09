@@ -38,6 +38,8 @@ func validateScrapeArgs(cmd *cobra.Command, args []string) error {
 
 	fmt.Println("action: ", ScrapeOpts.action)
 	if len(ScrapeOpts.action) > 0 {
+		// TODO: this is a much more elegant way to do error strings:
+		// TODO: https://github.com/storj/uplink/blob/v1.7.0/bucket.go#L19
 		return validate.Usage("the --action option is currently not implemented")
 	}
 
