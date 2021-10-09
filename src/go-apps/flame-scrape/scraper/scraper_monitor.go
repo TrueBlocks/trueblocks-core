@@ -76,10 +76,8 @@ func RunMonitorScraper(wg sync.WaitGroup) {
 				} else {
 					go func() {
 						ScanForProgress(stderrPipe, func(msg string) {
-							connectionPool.broadcast <- &Message{
-								Action:  ProgressMessage,
-								ID:      "monitor-scrape",
-								Content: msg,
+							if len(msg) > 0 {
+								log.Printf("%s", msg)
 							}
 						})
 					}()

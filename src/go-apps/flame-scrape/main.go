@@ -28,9 +28,6 @@ func main() {
 		return
 	}
 
-	// Start listening on web sockets
-	scraper.RunWebsocketPool()
-
 	var wg sync.WaitGroup
 	wg.Add(2)
 	go scraper.RunIndexScraper(wg)
