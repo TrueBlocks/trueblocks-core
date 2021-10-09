@@ -1,12 +1,6 @@
 {
   "data": [
     {
-      "blockNumber": 213123213,
-      "timestamp": 4432523691,
-      "name": " (est)",
-      "date": "2110-06-18 08:34:51 UTC"
-    },
-    {
       "blockNumber": 0,
       "timestamp": 1438269960,
       "name": "first",
