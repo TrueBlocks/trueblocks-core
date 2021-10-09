@@ -599,12 +599,6 @@
       "timestamp": 1438270441,
       "name": "",
       "date": "2015-07-30 15:34:01 UTC"
-    },
-    {
-      "blockNumber": 100,
-      "timestamp": 1438270443,
-      "name": "",
-      "date": "2015-07-30 15:34:03 UTC"
     }
   ],
   "types": [
