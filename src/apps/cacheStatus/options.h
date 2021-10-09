@@ -15,18 +15,7 @@
  * Parts of this file were generated with makeClass --options. Edit only those parts of
  * the code outside of the BEG_CODE/END_CODE sections
  */
-#include "pinlib.h"
-#include "status.h"
-#include "statusterse.h"
-#include "cachebase.h"
-#include "chaincache.h"
-#include "collectioncache.h"
-#include "pricecache.h"
-#include "monitorcache.h"
-#include "indexcache.h"
-#include "abicache.h"
-#include "slurpcache.h"
-#include "namecache.h"
+#include "cachelib.h"
 #include "configuration.h"
 
 // BEG_ERROR_DEFINES

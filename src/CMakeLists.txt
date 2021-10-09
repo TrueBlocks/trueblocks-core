@@ -55,7 +55,7 @@ endif()
 
 # ----------------------------------------------------------------------------------------
 # Linkable libraries
-set (BASE_LIBS pin acct ether util sqlite3 ${CURL_LIBRARIES})
+set (BASE_LIBS cache pin acct ether util sqlite3 ${CURL_LIBRARIES})
 
 # ----------------------------------------------------------------------------------------
 # Base included paths
@@ -64,7 +64,8 @@ set (BASE_INCLUDE
      "${CMAKE_SOURCE_DIR}/libs/utillib"
      "${CMAKE_SOURCE_DIR}/libs/etherlib"
      "${CMAKE_SOURCE_DIR}/libs/acctlib"
-     "${CMAKE_SOURCE_DIR}/libs/pinlib")
+     "${CMAKE_SOURCE_DIR}/libs/pinlib"
+     "${CMAKE_SOURCE_DIR}/libs/cachelib")
 
 # ----------------------------------------------------------------------------------------
 set (BIN_DIR ${CMAKE_SOURCE_DIR}/../bin)
