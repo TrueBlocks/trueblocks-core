@@ -1,0 +1,16 @@
+chifra chunks  
+Error: 
+  You must choose at least one of --list or --check.
+
+Usage:
+  chifra chunks [flags]
+
+Flags:
+  -l, --list    list the bloom and index hashes from local cache or IPFS
+  -c, --check   for each chunk, put it to IPFS and verify its manifest hash
+
+Global Flags:
+  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
+  -h, --help         display this help screen
+  -v, --verbose      enable verbose (increase detail with --log_level)
+
