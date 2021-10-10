@@ -171,6 +171,7 @@ map<string, string> chifraCmdMap = {
     {"tokens", "getTokens"},
     // -- Admin
     {"status", "cacheStatus"},
+    {"chunks", "chunkMan"},
     {"serve", "flame"},
     {"scrape", "blockScrape"},
     {"init", "pinMan local --init"},

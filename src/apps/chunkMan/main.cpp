@@ -10,5 +10,37 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+#include "options.h"
 
-#include "cachelib.h"
+//----------------------------------------------------------------
+int main(int argc, const char* argv[]) {
+    nodeNotRequired();
+    pinlib_init(quickQuitHandler);
+
+    COptions options;
+    if (!options.prepareArguments(argc, argv))
+        return 0;
+
+    bool once = true;
+    for (auto command : options.commandLines) {
+        if (!options.parseArguments(command))
+            return 0;
+
+        pinlib_readManifest(options.pins);
+        if (once)
+            cout << exportPreamble(expContext().fmtMap["header"], "CPinnedChunk");
+
+        if (options.check) {
+            return options.handle_check();
+
+        } else {
+            options.handle_list();
+        }
+        once = false;
+    }
+
+    cout << exportPostamble(options.errors, expContext().fmtMap["meta"]);
+    pinlib_cleanup();
+
+    return 0;
+}

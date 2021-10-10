@@ -10,5 +10,26 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+#include "options.h"
 
-#include "cachelib.h"
+//----------------------------------------------------------------
+bool COptions::handle_list(void) {
+    // if (remote) {
+    //     cerr << "remote not implemented" << endl;
+
+    // } else {
+    ASSERT(pins.size());  // local pins have already been loaded
+    for (auto pin : pins) {
+        if (!isJson()) {
+            cout << trim(pin.Format(expContext().fmtMap["format"]), '\t') << endl;
+        } else {
+            cout << ((isJson() && !firstOut) ? ", " : "");
+            indent();
+            pin.toJson(cout);
+            unindent();
+        }
+        firstOut = false;
+    }
+    // }
+    return false;
+}

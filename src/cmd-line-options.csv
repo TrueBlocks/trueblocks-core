@@ -224,6 +224,10 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 10840,apps,Admin,status,cacheStatus,test_end,E,NOPOS,false,false,false,false,local,flag,<blknum>,last block to process (inclusive -- testing only)
 10860,apps,Admin,status,cacheStatus,,,,false,false,true,true,--,description,,Report on the status of the TrueBlocks system.
 
+21950,apps,Admin,chunks,chunkMan,list,l,,false,false,true,true,local,switch,<boolean>,list the bloom and index hashes from local cache or IPFS
+21950,apps,Admin,chunks,chunkMan,check,c,,false,false,true,true,header,switch,<boolean>,for each chunk&#44; put it to IPFS and verify its manifest hash
+21966,apps,Admin,chunks,chunkMan,,,,false,false,true,true,--,description,,Manage chunks and bloom filters.
+
 10950,apps,Admin,pins,pinMan,list,l,,false,false,true,true,local,switch,<boolean>,list the bloom and index hashes from local cache or IPFS
 10952,apps,Admin,pins,pinMan,init,i,,false,false,true,true,header,switch,<boolean>,download the blooms or index chunks from IPFS
 10954,apps,Admin,pins,pinMan,freshen,f,,false,false,true,true,header,switch,<boolean>,check for new bloom or index chunks and download if available

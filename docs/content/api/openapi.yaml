@@ -1505,6 +1505,44 @@ paths:
                   }
         "400":
           description: bad input parameter
+  /chunks:
+    get:
+      tags:
+        - Admin
+      summary: Manage chunks
+      description: Manage chunks and bloom filters.
+      operationId: admin-chunks
+      parameters:
+        - name: list
+          description: list the bloom and index hashes from local cache or IPFS
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: check
+          description: for each chunk, put it to IPFS and verify its manifest hash
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: returns the requested data
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    description: 
+                    type: array
+                    items:
+                      
+        "400":
+          description: bad input parameter
   /quotes:
     get:
       tags:

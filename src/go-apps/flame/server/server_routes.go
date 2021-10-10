@@ -190,6 +190,11 @@ func AdminPins(w http.ResponseWriter, r *http.Request) {
 	CallOne(w, r, "pinMan", "pins")
 }
 
+// AdminChunks help text todo
+func AdminChunks(w http.ResponseWriter, r *http.Request) {
+	CallOne(w, r, "chunkMan", "chunks")
+}
+
 // OtherQuotes help text todo
 func OtherQuotes(w http.ResponseWriter, r *http.Request) {
 	CallOne(w, r, "getQuotes", "quotes")
@@ -344,6 +349,13 @@ var routes = Routes{
 		"GET",
 		"/pins",
 		AdminPins,
+	},
+
+	Route{
+		"AdminChunks",
+		"GET",
+		"/chunks",
+		AdminChunks,
 	},
 
 	Route{
