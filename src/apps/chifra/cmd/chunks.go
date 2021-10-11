@@ -44,6 +44,7 @@ type chunksOptionsType struct {
 	list    bool
 	check   bool
 	extract bool
+	stats   bool
 	blooms  bool
 }
 
@@ -57,6 +58,7 @@ func init() {
 	chunksCmd.Flags().BoolVarP(&ChunksOpts.list, "list", "l", false, "list the bloom and index hashes from local cache or IPFS")
 	chunksCmd.Flags().BoolVarP(&ChunksOpts.check, "check", "c", false, "check the validity of the chunk or bloom")
 	chunksCmd.Flags().BoolVarP(&ChunksOpts.extract, "extract", "e", false, "show the contents of the chunk or bloom filters")
+	chunksCmd.Flags().BoolVarP(&ChunksOpts.stats, "stats", "s", false, "for the --list option only, display statistics about each chunk or bloom")
 	chunksCmd.Flags().BoolVarP(&ChunksOpts.blooms, "blooms", "b", false, "for the --check or --extract options, process blooms instead of chunks")
 	chunksCmd.Flags().SortFlags = false
 	chunksCmd.PersistentFlags().SortFlags = false

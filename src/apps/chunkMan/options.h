@@ -26,6 +26,7 @@ class COptions : public CAbiOptions {
     // BEG_CODE_DECLARE
     bool check;
     bool extract;
+    bool stats;
     bool blooms;
     // END_CODE_DECLARE
 

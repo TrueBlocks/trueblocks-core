@@ -20,12 +20,9 @@ import (
 func validateChunksArgs(cmd *cobra.Command, args []string) error {
 	list := ChunksOpts.list
 	check := ChunksOpts.check
-	extract := false // ChunksOpts.extract
-	blooms := false  // ChunkOpts.blooms
-	// freshen := ChunksOpts.freshen
-	// remote := ChunksOpts.remote
-	// all := ChunksOpts.all
-	// init_all := ChunksOpts.init_all
+	extract := ChunksOpts.extract
+	stats := ChunksOpts.stats
+	blooms := ChunksOpts.blooms
 
 	if !list && !check && !extract {
 		return validate.Usage("You must choose at least one of {0}.", "--list, --extract, or --check")
@@ -39,32 +36,9 @@ func validateChunksArgs(cmd *cobra.Command, args []string) error {
 		return validate.Usage("The {0} option is only available with the {1} option.", "--bloom", "--extract or --check")
 	}
 
-	// if !list && !init && !freshen {
-	// 	return validate.Usage("You must choose at least one of --list, --init, or --freshen.")
-	// }
-
-	// if remote && !list {
-	// 	return validate.Usage("The --remote option is only available with the --list option")
-	// }
-
-	// if remote {
-	// 	return validate.Usage("The --remote option is not yet implemented")
-	// }
-
-	// if all && !init {
-	// 	return validate.Usage("Use the --all option only with the --init or --freshen options.")
-	// }
-
-	// if init_all {
-	// 	return validate.Usage("Flag --init_all has been deprecated, use --init --all instead")
-	// }
-
-	// if (share) {
-	//     string_q res := doCommand("which ipfs");
-	//     if (res.empty()) {
-	//         return usage("Could not find ipfs in your $PATH. You must install ipfs for the --share command to work.");
-	// 	}
-	// }
+	if stats && !list {
+		return validate.Usage("The {0} option is only available with the {1} option.", "--stats", "--list")
+	}
 
 	err := validateGlobalFlags(cmd, args)
 	if err != nil {
@@ -88,15 +62,6 @@ func runChunks(cmd *cobra.Command, args []string) {
 	if ChunksOpts.blooms {
 		options += " --blooms"
 	}
-	// if ChunksOpts.all {
-	// 	options += " --all"
-	// }
-	// if ChunksOpts.sleep != .25 {
-	// 	options += " --sleep " + fmt.Sprintf("%.1f", ChunksOpts.sleep)
-	// }
-	// if ChunksOpts.share {
-	// 	options += " --share"
-	// }
 	arguments := ""
 	for _, arg := range args {
 		arguments += " " + arg
