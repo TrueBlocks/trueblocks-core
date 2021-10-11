@@ -86,3 +86,10 @@ extern bool writeBloomToBinary(const string_q& fileName, const CBloomArray& bloo
 extern bool readBloomFromBinary(const string_q& fileName, CBloomArray& blooms);
 
 }  // namespace qblocks
+
+//----------------------------------------------------------------------
+#define BLOOM_WIDTH_IN_BYTES (1048576 / 8)
+#define BLOOM_WIDTH_IN_BITS (BLOOM_WIDTH_IN_BYTES * 8)
+#define MAX_ADDRS_IN_BLOOM 50000
+#define NIBBLE_WID 8
+#define K 5

@@ -40,4 +40,5 @@ class COptions : public CAbiOptions {
 
     bool handle_list(void);
     bool handle_check(void);
+    bool handle_extract(void);
 };

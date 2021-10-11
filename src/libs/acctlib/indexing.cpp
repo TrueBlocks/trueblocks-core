@@ -203,16 +203,6 @@ bool forEveryIndexChunk(INDEXCHUNKFUNC func, void* data) {
 }
 
 //--------------------------------------------------------------
-bool bloomVisitFunc(const string_q& path, void* data) {
-    return true;
-}
-
-//--------------------------------------------------------------
-bool forEveryIndexBloom(INDEXBLOOMFUNC func, void* data) {
-    return forEveryFileInFolder(indexFolder_blooms, bloomVisitFunc, data);
-}
-
-//--------------------------------------------------------------
 bool addressVisitFunc(const string_q& path, void* data) {
     if (endsWith(path, "/")) {
         return forEveryFileInFolder(path + "*", chunkVisitFunc, data);

@@ -14,13 +14,6 @@
 
 namespace qblocks {
 
-//----------------------------------------------------------------------
-#define BLOOM_WIDTH_IN_BYTES (1048576 / 8)
-#define BLOOM_WIDTH_IN_BITS (BLOOM_WIDTH_IN_BYTES * 8)
-#define MAX_ADDRS_IN_BLOOM 50000
-#define NIBBLE_WID 8
-#define K 5
-
 //---------------------------------------------------------------------------
 void bloom_t::init(void) {
     nInserted = 0;

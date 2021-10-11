@@ -33,6 +33,9 @@ int main(int argc, const char* argv[]) {
         if (options.check) {
             return options.handle_check();
 
+        } else if (options.extract) {
+            options.handle_extract();
+
         } else {
             options.handle_list();
         }
