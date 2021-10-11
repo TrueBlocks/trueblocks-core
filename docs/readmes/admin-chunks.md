@@ -10,8 +10,10 @@ Usage:
   chifra chunks [flags]
 
 Flags:
-  -l, --list    list the bloom and index hashes from local cache or IPFS
-  -c, --check   for each chunk, put it to IPFS and verify its manifest hash
+  -l, --list      list the bloom and index hashes from local cache or IPFS
+  -c, --check     check the validity of the chunk or bloom
+  -e, --extract   show the contents of the chunk or bloom filters
+  -b, --blooms    for the --check or --extract options, process blooms instead of chunks
 
 Global Flags:
   -x, --fmt string   export format, one of [none|json*|txt|csv|api]
