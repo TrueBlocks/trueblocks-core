@@ -198,6 +198,10 @@ extern const char* STR_DISPLAY_BLOCK;
 typedef map<blknum_t, CBlock> CBlockMap;
 //---------------------------------------------------------------------------
 extern blknum_t bnFromPath(const string_q& path, blknum_t& endOut, timestamp_t& ts);
+inline blknum_t bnFromPath(const string_q& path, blknum_t& endOut) {
+    timestamp_t unused_ts;
+    return bnFromPath(path, endOut, unused_ts);
+}
 inline blknum_t bnFromPath(const string_q& path) {
     blknum_t unused = NOPOS;
     timestamp_t unused_ts;

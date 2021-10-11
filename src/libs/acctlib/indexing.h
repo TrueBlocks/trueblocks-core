@@ -38,10 +38,9 @@ class CChunkVisitor {
     void* callData = nullptr;
     blkrange_t range = make_pair(0, NOPOS);
 };
-extern bool forEveryIndexChunk(INDEXCHUNKFUNC func, void* data);
-extern bool forEveryIndexBloom(INDEXBLOOMFUNC func, void* data);
-extern bool forEveryAddressInIndex(ADDRESSFUNC func, const blkrange_t& range, void* data);
-extern bool forEverySmartContractInIndex(ADDRESSFUNC func, void* data);
+// extern bool forEveryIndexChunk(INDEXCHUNKFUNC func, void* data);
+// extern bool forEveryAddressInIndex(ADDRESSFUNC func, const blkrange_t& range, void* data);
+// extern bool forEverySmartContractInIndex(ADDRESSFUNC func, void* data);
 extern bool bloomsAreInitalized(void);
 extern bool chunksAreInitalized(void);
 }  // namespace qblocks
