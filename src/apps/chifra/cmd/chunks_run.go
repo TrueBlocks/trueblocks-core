@@ -20,17 +20,23 @@ import (
 func validateChunksArgs(cmd *cobra.Command, args []string) error {
 	list := ChunksOpts.list
 	check := ChunksOpts.check
+	extract := false // ChunksOpts.extract
+	blooms := false  // ChunkOpts.blooms
 	// freshen := ChunksOpts.freshen
 	// remote := ChunksOpts.remote
 	// all := ChunksOpts.all
 	// init_all := ChunksOpts.init_all
 
-	if !list && !check {
-		return validate.Usage("You must choose at least one of {0}.", "--list or --check")
+	if !list && !check && !extract {
+		return validate.Usage("You must choose at least one of {0}.", "--list, --extract, or --check")
 	}
 
-	if list && check {
-		return validate.Usage("Please choose just one of {0}.", "--list or --check")
+	if (list && check) || (list && extract) || (check && extract) {
+		return validate.Usage("Please choose just one of {0}.", "--list, --extract, or --check")
+	}
+
+	if blooms && !(extract || check) {
+		return validate.Usage("The {0} option is only available with the {1} option.", "--bloom", "--extract or --check")
 	}
 
 	// if !list && !init && !freshen {
@@ -76,12 +82,12 @@ func runChunks(cmd *cobra.Command, args []string) {
 	if ChunksOpts.check {
 		options += " --check"
 	}
-	// if ChunksOpts.freshen {
-	// 	options += " --freshen"
-	// }
-	// if ChunksOpts.remote {
-	// 	options += " --remote"
-	// }
+	if ChunksOpts.extract {
+		options += " --extract"
+	}
+	if ChunksOpts.blooms {
+		options += " --blooms"
+	}
 	// if ChunksOpts.all {
 	// 	options += " --all"
 	// }

@@ -1522,7 +1522,23 @@ paths:
           schema:
             type: boolean
         - name: check
-          description: for each chunk, put it to IPFS and verify its manifest hash
+          description: check the validity of the chunk or bloom
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: extract
+          description: show the contents of the chunk or bloom filters
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: blooms
+          description: for the --check or --extract options, process blooms instead of chunks
           required: false
           style: form
           in: query

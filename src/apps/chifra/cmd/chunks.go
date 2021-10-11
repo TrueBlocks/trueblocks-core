@@ -41,8 +41,10 @@ var longChunks = `Purpose:
 var notesChunks = ``
 
 type chunksOptionsType struct {
-	list  bool
-	check bool
+	list    bool
+	check   bool
+	extract bool
+	blooms  bool
 }
 
 var ChunksOpts chunksOptionsType
@@ -53,7 +55,9 @@ func init() {
 	chunksCmd.Flags().SortFlags = false
 	chunksCmd.PersistentFlags().SortFlags = false
 	chunksCmd.Flags().BoolVarP(&ChunksOpts.list, "list", "l", false, "list the bloom and index hashes from local cache or IPFS")
-	chunksCmd.Flags().BoolVarP(&ChunksOpts.check, "check", "c", false, "for each chunk, put it to IPFS and verify its manifest hash")
+	chunksCmd.Flags().BoolVarP(&ChunksOpts.check, "check", "c", false, "check the validity of the chunk or bloom")
+	chunksCmd.Flags().BoolVarP(&ChunksOpts.extract, "extract", "e", false, "show the contents of the chunk or bloom filters")
+	chunksCmd.Flags().BoolVarP(&ChunksOpts.blooms, "blooms", "b", false, "for the --check or --extract options, process blooms instead of chunks")
 	chunksCmd.Flags().SortFlags = false
 	chunksCmd.PersistentFlags().SortFlags = false
 

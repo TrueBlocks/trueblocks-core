@@ -25,6 +25,8 @@ class COptions : public CAbiOptions {
   public:
     // BEG_CODE_DECLARE
     bool check;
+    bool extract;
+    bool blooms;
     // END_CODE_DECLARE
 
     CPinnedChunkArray pins;

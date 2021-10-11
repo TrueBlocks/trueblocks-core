@@ -22,7 +22,9 @@ static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
     COption("list", "l", "", OPT_SWITCH, "list the bloom and index hashes from local cache or IPFS"),
-    COption("check", "c", "", OPT_SWITCH, "for each chunk, put it to IPFS and verify its manifest hash"),
+    COption("check", "c", "", OPT_SWITCH, "check the validity of the chunk or bloom"),
+    COption("extract", "e", "", OPT_SWITCH, "show the contents of the chunk or bloom filters"),
+    COption("blooms", "b", "", OPT_SWITCH, "for the --check or --extract options, process blooms instead of chunks"),
     COption("", "", "", OPT_DESCRIPTION, "Manage chunks and bloom filters."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -50,6 +52,12 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-c" || arg == "--check") {
             check = true;
 
+        } else if (arg == "-e" || arg == "--extract") {
+            extract = true;
+
+        } else if (arg == "-b" || arg == "--blooms") {
+            blooms = true;
+
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
@@ -63,6 +71,8 @@ bool COptions::parseArguments(string_q& command) {
     // BEG_DEBUG_DISPLAY
     LOG_TEST_BOOL("list", list);
     LOG_TEST_BOOL("check", check);
+    LOG_TEST_BOOL("extract", extract);
+    LOG_TEST_BOOL("blooms", blooms);
     // END_DEBUG_DISPLAY
 
     if (Mocked(""))
@@ -118,6 +128,8 @@ void COptions::Init(void) {
 
     // BEG_CODE_INIT
     check = false;
+    extract = false;
+    blooms = false;
     // END_CODE_INIT
 }
 
