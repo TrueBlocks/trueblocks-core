@@ -24,6 +24,7 @@ static const COption params[] = {
     COption("list", "l", "", OPT_SWITCH, "list the bloom and index hashes from local cache or IPFS"),
     COption("check", "c", "", OPT_SWITCH, "check the validity of the chunk or bloom"),
     COption("extract", "e", "", OPT_SWITCH, "show the contents of the chunk or bloom filters"),
+    COption("stats", "s", "", OPT_SWITCH, "for the --list option only, display statistics about each chunk or bloom"),
     COption("blooms", "b", "", OPT_SWITCH, "for the --check or --extract options, process blooms instead of chunks"),
     COption("", "", "", OPT_DESCRIPTION, "Manage chunks and bloom filters."),
     // clang-format on
@@ -55,6 +56,9 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-e" || arg == "--extract") {
             extract = true;
 
+        } else if (arg == "-s" || arg == "--stats") {
+            stats = true;
+
         } else if (arg == "-b" || arg == "--blooms") {
             blooms = true;
 
@@ -72,6 +76,7 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("list", list);
     LOG_TEST_BOOL("check", check);
     LOG_TEST_BOOL("extract", extract);
+    LOG_TEST_BOOL("stats", stats);
     LOG_TEST_BOOL("blooms", blooms);
     // END_DEBUG_DISPLAY
 
@@ -129,6 +134,7 @@ void COptions::Init(void) {
     // BEG_CODE_INIT
     check = false;
     extract = false;
+    stats = false;
     blooms = false;
     // END_CODE_INIT
 }

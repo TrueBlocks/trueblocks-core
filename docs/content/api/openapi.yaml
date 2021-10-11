@@ -1537,6 +1537,14 @@ paths:
           explode: true
           schema:
             type: boolean
+        - name: stats
+          description: for the --list option only, display statistics about each chunk or bloom
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
         - name: blooms
           description: for the --check or --extract options, process blooms instead of chunks
           required: false

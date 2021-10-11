@@ -13,6 +13,7 @@ Flags:
   -l, --list      list the bloom and index hashes from local cache or IPFS
   -c, --check     check the validity of the chunk or bloom
   -e, --extract   show the contents of the chunk or bloom filters
+  -s, --stats     for the --list option only, display statistics about each chunk or bloom
   -b, --blooms    for the --check or --extract options, process blooms instead of chunks
 
 Global Flags:
