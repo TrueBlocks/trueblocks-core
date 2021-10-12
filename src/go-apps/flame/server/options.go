@@ -60,6 +60,7 @@ type ChifraResponse struct {
 func GetChifraResponse() (ChifraResponse, error) {
 	cmd := exec.Command(GetCommandPath("cacheStatus"), "--terse")
 	cmd.Env = append(os.Environ(), "API_MODE=true")
+	// Don't set FROM_GO since we should not show colors in API_MODE
 	out, err := cmd.Output()
 	if err != nil {
 		fmt.Printf("ChifraResponse:cmd.Output() failed: %s", err)

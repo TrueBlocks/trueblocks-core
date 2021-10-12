@@ -50,3 +50,13 @@ func GetParam(key string, def string, r *http.Request) (string, bool) {
 	}
 	return def, false
 }
+
+// IsTestMode return true if we are running from the testing harness
+func IsTestMode(r *http.Request) bool {
+	return r.Header.Get("User-Agent") == "testRunner"
+}
+
+// IsApiMode return true if we are running in api mode
+func IsApiMode() bool {
+	return os.Getenv("API_MODE") == "true"
+}

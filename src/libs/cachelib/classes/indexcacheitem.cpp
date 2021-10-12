@@ -217,7 +217,6 @@ bool CIndexCacheItem::setValueByName(const string_q& fieldNameIn, const string_q
 //---------------------------------------------------------------------------------------------------
 void CIndexCacheItem::finishParse() {
     // EXISTING_CODE
-    fileDate = fileLastModifyDate(getIndexPath("finalized/" + filename));
     // EXISTING_CODE
 }
 
@@ -354,6 +353,11 @@ string_q nextIndexcacheitemChunk_custom(const string_q& fieldIn, const void* dat
     if (ind) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
+            case 'f':
+                if (fieldIn % "fileDate") {
+                    return fileLastModifyDate(getIndexPath("finalized/" + ind->filename)).Format(FMT_JSON);
+                }
+                break;
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type

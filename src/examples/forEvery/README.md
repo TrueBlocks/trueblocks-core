@@ -12,11 +12,6 @@ This example show how to use a few of TrueBlocks' `forEvery` functions.
   - bool `forEveryBlock_light`(BLOCKVISITFUNC func, void* data, uint64_t start, uint64_t count, uint64_t skip)
 - on Transactions
   - bool `forEveryTransaction`(TRANSVISITFUNC func, void* data, const string_q& trans_list)
-- on Index data
-  - bool `forEveryIndexChunk`(INDEXCHUNKFUNC func, void* data)
-  - bool `forEveryIndexBloom`(INDEXBLOOMFUNC func, void* data)
-  - bool `forEveryAddressInIndex`(ADDRESSFUNC func, const blkrange_t& range, void* data)
-  - bool `forEverySmartContractInIndex`(ADDRESSFUNC func, void* data)
 - on Traversers
   - bool `forEveryAppearance`(const CTraverserArray& traversers, const CAppearanceArray_base& apps, void* data)
 

@@ -14,13 +14,11 @@
 
 namespace qblocks {
 
-//----------------------------------------------------------------------
 #define BLOOM_WIDTH_IN_BYTES (1048576 / 8)
 #define BLOOM_WIDTH_IN_BITS (BLOOM_WIDTH_IN_BYTES * 8)
 #define MAX_ADDRS_IN_BLOOM 50000
 #define NIBBLE_WID 8
 #define K 5
-
 //---------------------------------------------------------------------------
 void bloom_t::init(void) {
     nInserted = 0;
@@ -48,10 +46,10 @@ bool bloom_t::operator==(const bloom_t& test) const {
 }
 
 //---------------------------------------------------------------------------
-void bloom_t::showBloom(ostream& os) const {
-    for (size_t i = 0; i < BLOOM_WIDTH_IN_BYTES; i++)
+void bloom_t::showBloom(ostream& os, size_t first, size_t cnt) const {
+    for (size_t i = first; i < first + cnt; i++) {
         os << byte_2_Bits(bits[i]) << " ";
-    os << endl;
+    }
 }
 
 //---------------------------------------------------------------------------
@@ -189,4 +187,19 @@ bool writeBloomToBinary(const string_q& fileName, const CBloomArray& blooms) {
     return true;
 }
 
+size_t getBloomWidthInBytes(void) {
+    return BLOOM_WIDTH_IN_BYTES;
+}
+size_t getBloomWidthInBits(void) {
+    return BLOOM_WIDTH_IN_BITS;
+}
+size_t getMaxAddrsInBloom(void) {
+    return MAX_ADDRS_IN_BLOOM;
+}
+size_t getNibbleWid(void) {
+    return NIBBLE_WID;
+}
+size_t getK(void) {
+    return K;
+}
 }  // namespace qblocks
