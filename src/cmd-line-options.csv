@@ -228,7 +228,6 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 21950,apps,Admin,chunks,chunkMan,check,c,,false,false,true,true,header,switch,<boolean>,check the validity of the chunk or bloom
 21950,apps,Admin,chunks,chunkMan,extract,e,,false,false,true,true,header,switch,<boolean>,show the contents of the chunk or bloom filters
 21950,apps,Admin,chunks,chunkMan,stats,s,,false,false,true,true,header,switch,<boolean>,for the --list option only&#44; display statistics about each chunk or bloom
-21950,apps,Admin,chunks,chunkMan,blooms,b,,false,false,true,true,header,switch,<boolean>,for the --check or --extract options&#44; process blooms instead of chunks
 21966,apps,Admin,chunks,chunkMan,,,,false,false,true,true,--,description,,Manage chunks and bloom filters.
 
 10950,apps,Admin,pins,pinMan,list,l,,false,false,true,true,local,switch,<boolean>,list the bloom and index hashes from local cache or IPFS

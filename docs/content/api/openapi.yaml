@@ -1545,14 +1545,6 @@ paths:
           explode: true
           schema:
             type: boolean
-        - name: blooms
-          description: for the --check or --extract options, process blooms instead of chunks
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
       responses:
         "200":
           description: returns the requested data

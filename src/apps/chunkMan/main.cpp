@@ -31,10 +31,13 @@ int main(int argc, const char* argv[]) {
             cout << exportPreamble(expContext().fmtMap["header"], "CPinnedChunk");
 
         if (options.check) {
-            return options.handle_check();
+            options.handle_check();
 
         } else if (options.extract) {
             options.handle_extract();
+
+        } else if (options.stats) {
+            options.handle_stats();
 
         } else {
             options.handle_list();
