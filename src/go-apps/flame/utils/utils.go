@@ -18,6 +18,11 @@ import (
 	"os"
 )
 
+// IsTestMode return true if we are running from the testing harness
+func IsTestMode(r *http.Request) bool {
+	return r.Header.Get("User-Agent") == "testRunner"
+}
+
 // FileExists help text todo
 func FileExists(filename string) bool {
 	info, err := os.Stat(filename)

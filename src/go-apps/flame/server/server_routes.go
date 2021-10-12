@@ -23,6 +23,7 @@ import (
 	"net/http"
 	"time"
 
+	utils "github.com/TrueBlocks/trueblocks-core/src/go-apps/blaze/utils"
 	"github.com/gorilla/mux"
 	"golang.org/x/time/rate"
 )
@@ -68,7 +69,7 @@ func Logger(inner http.Handler, name string) http.Handler {
 		start := time.Now()
 		inner.ServeHTTP(w, r)
 		t := ""
-		if isTestMode(r) {
+		if utils.IsTestMode(r) {
 			t = "-test"
 		}
 		log.Printf(
