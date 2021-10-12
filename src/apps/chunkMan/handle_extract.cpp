@@ -12,75 +12,8 @@
  *-------------------------------------------------------------------------------------------*/
 #include "options.h"
 
-//--------------------------------------------------------------
-bool bloomVisitFunc(const string_q& path, void* data) {
-    if (endsWith(path, "/")) {
-        return forEveryFileInFolder(path + "*", bloomVisitFunc, data);
-
-    } else {
-        if (!endsWith(path, ".bloom"))
-            return true;
-
-        CBloomArray blooms;
-        readBloomFromBinary(path, blooms);
-
-        char delim = '\t';
-
-        static bool been_here = false;
-        if (!been_here) {
-            cout << "startBlock" << delim;
-            cout << "endBlock" << delim;
-            cout << "nBlocks" << delim;
-            cout << "fileSize" << delim;
-            cout << "fileTs" << delim;
-            cout << "nBlooms" << delim;
-            cout << "recordSize" << delim;
-            cout << "nAddrs" << delim;
-            cout << "nBits" << delim;
-            cout << "avgBits" << delim;
-            cout << "fileSize2" << delim;
-            cout << "fileTs2" << delim;
-            cout << "nAddres2" << delim;
-            cout << "nApps" << delim;
-            cout << "checkSize" << delim;
-            cout << "checkCount" << endl;
-            been_here = true;
-        }
-
-        blknum_t endBlock = NOPOS;
-        blknum_t startBlock = bnFromPath(path, endBlock);
-        blknum_t nBlocks = (endBlock - startBlock) + 1;
-        size_t nBlooms = blooms.size();
-        size_t recordSize = (sizeof(uint32_t) + getBloomWidthInBytes());
-        string_q checkSize = sizeof(uint32_t) + (nBlooms * recordSize) == fileSize(path) ? greenCheck : redX;
-        size_t size = fileSize(path);
-        cout << startBlock << delim;
-        cout << endBlock << delim;
-        cout << nBlocks << delim;
-        cout << size << delim;
-        cout << date_2_Ts(fileLastModifyDate(path)) << delim;
-        cout << nBlooms << delim;
-        cout << recordSize << delim;
-        size_t totalAddrs = 0;
-        size_t totalBits = 0;
-        for (auto bloom : blooms) {
-            totalBits += bloom.nBitsHit();
-            totalAddrs += bloom.nInserted;
-        }
-        cout << totalAddrs << delim;
-        cout << totalBits << delim;
-        cout << double_2_Str((totalBits ? float(totalAddrs) / float(totalBits) : 0), 4) << delim;
-
-        CIndexHeader header;
-        string_q chunkPath = substitute(substitute(path, "blooms", "finalized"), ".bloom", ".bin");
-        readIndexHeader(chunkPath, header);
-
-        cout << fileSize(chunkPath) << delim;
-        cout << date_2_Ts(fileLastModifyDate(chunkPath)) << delim;
-        cout << header.nAddrs << delim;
-        cout << header.nRows << delim;
-        cout << checkSize << delim;
-        cout << ((header.nAddrs == totalAddrs) ? greenCheck : redX) << endl;
+//----------------------------------------------------------------
+bool COptions::handle_extract() {
 #if 0
         static size_t x = 0;
         x++;
@@ -119,15 +52,6 @@ bool bloomVisitFunc(const string_q& path, void* data) {
             }
         }
 #endif
-    }
-
-    return true;
-}
-
-//----------------------------------------------------------------
-bool COptions::handle_extract() {
-    if (blooms)
-        return forEveryFileInFolder(indexFolder_blooms, bloomVisitFunc, nullptr);
     LOG_INFO("Not yet implemented");
     return true;
 }

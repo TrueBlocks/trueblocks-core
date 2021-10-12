@@ -27,7 +27,6 @@ class COptions : public CAbiOptions {
     bool check;
     bool extract;
     bool stats;
-    bool blooms;
     // END_CODE_DECLARE
 
     CPinnedChunkArray pins;
@@ -41,4 +40,5 @@ class COptions : public CAbiOptions {
     bool handle_list(void);
     bool handle_check(void);
     bool handle_extract(void);
+    bool handle_stats(void);
 };
