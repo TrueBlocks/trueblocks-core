@@ -59,9 +59,18 @@ bool COptionsBase::prePrepareArguments(CStringArray& separatedArgs_, int argCoun
         COptionsBase::g_progName = CFilename(argvIn[0]).getFilename();
     if (!getEnvStr("PROG_NAME").empty())
         COptionsBase::g_progName = getEnvStr("PROG_NAME");
-    if (getEnvStr("NO_COLOR") == "true" || (getProgName() != "testRunner" && !isatty(STDOUT_FILENO)))
+
+    bool isTestRunner = getProgName() == "testRunner";
+    bool isTerminal = isatty(STDOUT_FILENO);
+    bool noColor = getEnvStr("NO_COLOR") == "true";
+    if (noColor || (!isTestRunner && !isTerminal))
         colorsOff();
-    if (getEnvStr("REDIR_CERR") == "true")
+    bool fromGo = getEnvStr("FROM_GO") == "true";
+    if (fromGo && !noColor)
+        colorsOn();
+
+    bool redirCerr = getEnvStr("REDIR_CERR") == "true";
+    if (redirCerr)
         cerr.rdbuf(cout.rdbuf());
 
     // We allow users to add 'true' or 'false' to boolean options, but the following code works by the
