@@ -52,15 +52,11 @@ class COptions : public CAbiOptions {
 };
 
 //-------------------------------------------------------------------------
-extern bool countFiles(const string_q& path, void* data);
-extern bool countFilesInCache(const string_q& path, void* data);
-extern bool listFilesInCache(const string_q& path, void* data);
 extern bool noteMonitor_light(const string_q& path, void* data);
 extern bool noteMonitor(const string_q& path, void* data);
 extern bool noteABI(const string_q& path, void* data);
 extern bool notePrice(const string_q& path, void* data);
 extern bool noteIndex(const string_q& path, void* data);
-extern void getIndexMetrics(const string_q& path, uint32_t& nRecords, uint32_t& nAddresses);
 
 //-------------------------------------------------------------------------
 class CItemCounter : public CCache {

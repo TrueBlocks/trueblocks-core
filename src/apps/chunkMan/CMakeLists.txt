@@ -2,7 +2,7 @@
 cmake_minimum_required (VERSION 3.0)
 
 # application project
-project (addrs_indiv)
+project (chunkMan)
 
 # The sources to be used
 file(GLOB SOURCE_FILES "*.cpp")
@@ -11,7 +11,8 @@ file(GLOB SOURCE_FILES "*.cpp")
 set(EXECUTABLE_OUTPUT_PATH "${BIN_CMDS_DIR}")
 
 # Define the executable to be generated
-set(TOOL_NAME "addrs_indiv")
+set(TOOL_NAME "chunkMan")
+set(PROJ_NAME "apps")
 add_executable(${TOOL_NAME} ${SOURCE_FILES})
 
 # Add the project static libs at linking

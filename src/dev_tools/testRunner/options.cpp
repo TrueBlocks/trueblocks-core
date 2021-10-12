@@ -125,6 +125,7 @@ bool COptions::parseArguments(string_q& command) {
                 tests.push_back("apps/acctExport");
                 tests.push_back("apps/blockScrape");
                 tests.push_back("apps/cacheStatus");
+                tests.push_back("apps/chunkMan");
                 tests.push_back("apps/fireStorm");
                 tests.push_back("apps/chifra");
                 tests.push_back("apps/pinMan");
@@ -180,6 +181,7 @@ bool COptions::parseArguments(string_q& command) {
         tests.push_back("apps/acctExport");
         tests.push_back("apps/blockScrape");
         tests.push_back("apps/cacheStatus");
+        tests.push_back("apps/chunkMan");
         tests.push_back("apps/fireStorm");
         tests.push_back("apps/chifra");
         tests.push_back("apps/pinMan");

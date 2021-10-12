@@ -20,7 +20,7 @@
 #include "leaf.h"
 #include "treenode.h"
 #include "apispec.h"
-#include "indexing.h"
+#include "indexarchive.h"
 #include "ethstate.h"
 #include "ens.h"
 #include "traverser.h"

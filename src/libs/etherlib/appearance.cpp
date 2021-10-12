@@ -15,6 +15,7 @@
  * the code inside of 'EXISTING_CODE' tags.
  */
 #include "appearance.h"
+#include "indexedaddress.h"
 
 namespace qblocks {
 

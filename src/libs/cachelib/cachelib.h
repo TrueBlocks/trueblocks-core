@@ -33,4 +33,9 @@
 #include "classes/status.h"
 #include "classes/statusterse.h"
 
+namespace qblocks {
+extern bool countFiles(const string_q& path, void* data);
+extern bool countFilesInCache(const string_q& path, void* data);
+}  // namespace qblocks
+
 using namespace qblocks;  // NOLINT

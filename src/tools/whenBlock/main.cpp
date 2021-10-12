@@ -141,12 +141,12 @@ void COptions::applyFilter() {
     }
 }
 
-#define EST_BLOCK_TIME timestamp_t(13.3)
+#define EST_BLOCK_TIME float(13.3)
 void estTsFromBn(CBlock& block, blknum_t bn) {
     if (block.blockNumber > bn)
         return;
     // incoming block has 'latest' timestamp and blockNumber
-    blknum_t needed = bn - block.blockNumber;
+    float needed = bn - block.blockNumber;
     block.timestamp = block.timestamp + timestamp_t(EST_BLOCK_TIME * needed);
     block.blockNumber = bn;
 }

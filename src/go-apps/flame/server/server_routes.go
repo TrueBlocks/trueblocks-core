@@ -23,6 +23,7 @@ import (
 	"net/http"
 	"time"
 
+	utils "github.com/TrueBlocks/trueblocks-core/src/go-apps/blaze/utils"
 	"github.com/gorilla/mux"
 	"golang.org/x/time/rate"
 )
@@ -68,7 +69,7 @@ func Logger(inner http.Handler, name string) http.Handler {
 		start := time.Now()
 		inner.ServeHTTP(w, r)
 		t := ""
-		if isTestMode(r) {
+		if utils.IsTestMode(r) {
 			t = "-test"
 		}
 		log.Printf(
@@ -188,6 +189,11 @@ func AdminInit(w http.ResponseWriter, r *http.Request) {
 // AdminPins help text todo
 func AdminPins(w http.ResponseWriter, r *http.Request) {
 	CallOne(w, r, "pinMan", "pins")
+}
+
+// AdminChunks help text todo
+func AdminChunks(w http.ResponseWriter, r *http.Request) {
+	CallOne(w, r, "chunkMan", "chunks")
 }
 
 // OtherQuotes help text todo
@@ -344,6 +350,13 @@ var routes = Routes{
 		"GET",
 		"/pins",
 		AdminPins,
+	},
+
+	Route{
+		"AdminChunks",
+		"GET",
+		"/chunks",
+		AdminChunks,
 	},
 
 	Route{
