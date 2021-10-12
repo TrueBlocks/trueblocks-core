@@ -63,7 +63,7 @@ bool bloomVisitFunc(const string_q& path, void* data) {
         os << fileSize(chunkPath) << delim;
         os << double_2_Str(fileSize(path) ? float(fileSize(chunkPath)) / float(fileSize(path)) : 0., 3) << delim;
         os << date_2_Ts(fileLastModifyDate(path)) << delim;
-        os << date_2_Ts(fileLastModifyDate(chunkPath)) << delim;
+        os << date_2_Ts(fileLastModifyDate(chunkPath));
         cout << os.str();
         cout << checkSize << delim;
         cout << ((header.nAddrs == totalAddrs) ? greenCheck : redX);
@@ -92,7 +92,7 @@ bool COptions::handle_stats() {
     cout << "chunkSz" << delim;
     cout << "comp" << delim;
     cout << "bloomTs" << delim;
-    cout << "chunkTs" << delim;
+    cout << "chunkTs";
     cerr << "checkSize" << delim;
     cerr << "checkCount";
     cout << endl;
