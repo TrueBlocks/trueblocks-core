@@ -36,11 +36,11 @@ int main(int argc, const char* argv[]) {
         } else if (options.extract) {
             options.handle_extract();
 
-        } else if (options.stats) {
-            options.handle_stats();
-
         } else {
-            options.handle_list();
+            if (options.stats)
+                options.handle_stats();
+            else
+                options.handle_list();
         }
         once = false;
     }

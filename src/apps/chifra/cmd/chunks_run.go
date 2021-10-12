@@ -24,10 +24,10 @@ func validateChunksArgs(cmd *cobra.Command, args []string) error {
 	stats := ChunksOpts.stats
 
 	if !list && !check && !extract {
-		return validate.Usage("You must choose at least one of {0}.", "--list, --extract, or --check")
+		return validate.Usage("You must choose at least one of {0}.", "--list, --extract, --stats, or --check")
 	}
 
-	if (list && check) || (list && extract) || (check && extract) {
+	if (list && check) || (list && extract) {
 		return validate.Usage("Please choose just one of {0}.", "--list, --extract, or --check")
 	}
 
@@ -53,6 +53,9 @@ func runChunks(cmd *cobra.Command, args []string) {
 	}
 	if ChunksOpts.extract {
 		options += " --extract"
+	}
+	if ChunksOpts.stats {
+		options += " --stats"
 	}
 	arguments := ""
 	for _, arg := range args {
