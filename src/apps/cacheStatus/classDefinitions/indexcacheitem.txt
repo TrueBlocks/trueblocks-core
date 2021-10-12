@@ -1,4 +1,0 @@
-[settings]
-class = CIndexCacheItem
-fields = indexcacheitem.csv
-includes = etherlib.h

@@ -1,5 +1,0 @@
-[settings]
-class = CPriceCacheItem
-base_class = CCacheBase
-fields = pricecacheitem.csv
-includes = etherlib.h|cachebase.h

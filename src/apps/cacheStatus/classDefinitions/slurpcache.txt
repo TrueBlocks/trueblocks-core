@@ -1,5 +1,0 @@
-[settings]
-class = CSlurpCache
-base_class = CCache
-fields = slurpcache.csv
-includes = cache.h|monitorcacheitem.h

@@ -1,9 +1,0 @@
-[settings]
-class = CCache
-fields = cache.csv
-includes = etherlib.h
-cpp_includes = status.h
-doc_group = 04-Admin
-doc_descr = The cache data model carries information about the various local binary caches
-doc_api = 31-cache
-doc_producer = status

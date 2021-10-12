@@ -15,8 +15,7 @@
  * Parts of this file were generated with makeClass --run. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
-#include "etherlib.h"
-#include "cachebase.h"
+#include "cachelib.h"
 
 namespace qblocks {
 

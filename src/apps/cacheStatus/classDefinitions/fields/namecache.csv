@@ -1,3 +1,0 @@
-name  ,type          ,str_default ,object ,array ,nowrite ,omitempty ,minimal ,extra ,noaddfld ,doc ,disp ,example ,description
-addrs ,address       ,            ,true   ,true  ,        ,          ,        ,      ,         ,    ,     ,        ,
-items ,nameCacheItem ,            ,true   ,true  ,        ,          ,        ,      ,         ,    ,     ,        ,

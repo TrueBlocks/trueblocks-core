@@ -11,7 +11,6 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 #include "options.h"
-#include "statusterse.h"
 
 extern const char* STR_TERSE_REPORT;
 extern string_q pathName(const string_q& str, const string_q& path = "");
