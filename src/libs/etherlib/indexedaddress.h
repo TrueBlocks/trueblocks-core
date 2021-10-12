@@ -11,21 +11,13 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-#include "monitor.h"
-#include "monitorcount.h"
-#include "treeroot.h"
-#include "acctlib.h"
-#include "branch.h"
-#include "infix.h"
-#include "leaf.h"
-#include "treenode.h"
-#include "apispec.h"
-#include "indexarchive.h"
-#include "ethstate.h"
-#include "ens.h"
-#include "traverser.h"
+#include "etherlib.h"
 
-extern void acctlib_init(QUITHANDLER qh);
-extern void acctlib_cleanup(void);
-
-using namespace qblocks;  // NOLINT
+namespace qblocks {
+//----------------------------------------------------------------
+struct CIndexedAddress {
+    uint8_t bytes[20];
+    uint32_t offset;
+    uint32_t cnt;
+};
+}  // namespace qblocks
