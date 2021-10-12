@@ -32,12 +32,14 @@ bool bloomVisitFunc(const string_q& path, void* data) {
             cout << "endBlock" << delim;
             cout << "nBlocks" << delim;
             cout << "fileSize" << delim;
+            cout << "fileTs" << delim;
             cout << "nBlooms" << delim;
             cout << "recordSize" << delim;
             cout << "nAddrs" << delim;
             cout << "nBits" << delim;
             cout << "avgBits" << delim;
             cout << "fileSize2" << delim;
+            cout << "fileTs2" << delim;
             cout << "nAddres2" << delim;
             cout << "nApps" << delim;
             cout << "checkSize" << delim;
@@ -56,6 +58,7 @@ bool bloomVisitFunc(const string_q& path, void* data) {
         cout << endBlock << delim;
         cout << nBlocks << delim;
         cout << size << delim;
+        cout << date_2_Ts(fileLastModifyDate(path)) << delim;
         cout << nBlooms << delim;
         cout << recordSize << delim;
         size_t totalAddrs = 0;
@@ -73,6 +76,7 @@ bool bloomVisitFunc(const string_q& path, void* data) {
         readIndexHeader(chunkPath, header);
 
         cout << fileSize(chunkPath) << delim;
+        cout << date_2_Ts(fileLastModifyDate(chunkPath)) << delim;
         cout << header.nAddrs << delim;
         cout << header.nRows << delim;
         cout << checkSize << delim;
