@@ -34,10 +34,14 @@ bool bloomVisitFunc(const string_q& path, void* data) {
             cout << "fileSize" << delim;
             cout << "nBlooms" << delim;
             cout << "recordSize" << delim;
-            cout << "checkSize" << delim;
             cout << "nAddrs" << delim;
             cout << "nBits" << delim;
-            cout << "avtBits" << endl;
+            cout << "avgBits" << delim;
+            cout << "fileSize2" << delim;
+            cout << "nAddres2" << delim;
+            cout << "nApps" << delim;
+            cout << "checkSize" << delim;
+            cout << "checkCount" << endl;
             been_here = true;
         }
 
@@ -62,12 +66,17 @@ bool bloomVisitFunc(const string_q& path, void* data) {
         }
         cout << totalAddrs << delim;
         cout << totalBits << delim;
-        cout << (totalBits ? float(totalAddrs) / float(totalBits) : 0) << endl;
-        cout << checkSize << endl;
+        cout << double_2_Str((totalBits ? float(totalAddrs) / float(totalBits) : 0), 4) << delim;
+
         CIndexHeader header;
         string_q chunkPath = substitute(substitute(path, "blooms", "finalized"), ".bloom", ".bin");
         readIndexHeader(chunkPath, header);
-        cout << delim << fileExists(chunkPath) << delim << chunkPath << endl;
+
+        cout << fileSize(chunkPath) << delim;
+        cout << header.nAddrs << delim;
+        cout << header.nRows << delim;
+        cout << checkSize << delim;
+        cout << ((header.nAddrs == totalAddrs) ? greenCheck : redX) << endl;
 #if 0
         static size_t x = 0;
         x++;
