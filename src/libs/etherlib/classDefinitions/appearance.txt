@@ -1,5 +1,6 @@
 [settings]
 class = CAppearance
 fields = appearance_fields.csv
-includes = etherlib.h|indexarchive.h
+includes = etherlib.h
+cpp_includes = indexedaddress.h
 doc_producer = list, export
