@@ -1,0 +1,5 @@
+[settings]
+class = CNameCache
+base_class = CCache
+fields = namecache.csv
+includes = cache.h|monitorcacheitem.h

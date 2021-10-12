@@ -1,0 +1,5 @@
+[settings]
+class = CCollectionCache
+base_class = CCache
+fields = collectioncache.csv
+includes = cache.h|collectioncacheitem.h
