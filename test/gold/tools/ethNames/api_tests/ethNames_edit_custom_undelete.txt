@@ -6,7 +6,7 @@
       "address": "0x054993ab0f2b1acc0fdc65405ee203b4271bebe6",
       "name": "Name 0x054993ab",
       "symbol": "",
-      "source": "",
+      "source": "EtherScan.io",
       "decimals": 0,
       "description": "",
       "is_custom": true,

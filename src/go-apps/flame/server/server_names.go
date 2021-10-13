@@ -42,7 +42,6 @@ func EditName(w http.ResponseWriter, r *http.Request) {
 	cmd.Env = append(cmd.Env, "TB_NAME_SYMBOL="+newName.Symbol)
 	cmd.Env = append(cmd.Env, "TB_NAME_DECIMALS="+newName.Decimals)
 	cmd.Env = append(cmd.Env, "TB_NAME_DESCR="+newName.Description)
-	// Don't set FROM_GO since we should not show colors in API_MODE
 	out, err := cmd.Output()
 	if err != nil {
 		log.Print("Error from server: ", err)

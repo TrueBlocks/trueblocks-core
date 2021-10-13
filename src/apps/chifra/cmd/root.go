@@ -22,7 +22,6 @@ import (
 	"os/user"
 	"sync"
 
-	"github.com/mattn/go-isatty"
 	"github.com/spf13/cobra"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/utils"
@@ -278,10 +277,6 @@ func PassItOn(path string, flags, arguments string) {
 	cmd := exec.Command(getCommandPath(path), options)
 	if utils.IsTestMode() {
 		cmd.Env = append(os.Environ(), "TEST_MODE=true")
-	}
-	// Preserve colors if we're writing to the terminal
-	if !utils.IsApiMode() && isatty.IsTerminal(os.Stdout.Fd()) {
-		cmd.Env = append(cmd.Env, "FROM_GO=true")
 	}
 
 	stderrPipe, err := cmd.StderrPipe()

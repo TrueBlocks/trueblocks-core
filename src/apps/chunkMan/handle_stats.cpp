@@ -102,6 +102,8 @@ bool COptions::handle_stats() {
     for (auto line : lines) {
         cout << line << endl;
     }
-    blknum_t last = str_2_Uint(lines[lines.size() - 1]);
+    blknum_t last = 0;
+    if (lines.size() > 0)
+        last = str_2_Uint(lines[lines.size() - 1]);
     return forEveryFileInFolder(indexFolder_blooms, bloomVisitFunc, &last);
 }

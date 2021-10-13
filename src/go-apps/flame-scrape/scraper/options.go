@@ -22,7 +22,6 @@ import (
 	"strings"
 
 	utils "github.com/TrueBlocks/trueblocks-core/src/go-apps/flame-scrape/utils"
-	"github.com/mattn/go-isatty"
 	flag "github.com/spf13/pflag"
 )
 
@@ -61,10 +60,6 @@ type ChifraResponse struct {
 func GetChifraResponse() (ChifraResponse, error) {
 	cmd := exec.Command(GetCommandPath("cacheStatus"), "--terse")
 	cmd.Env = append(os.Environ(), "API_MODE=true")
-	// Preserve colors if we're writing to the terminal
-	if !utils.IsApiMode() && isatty.IsTerminal(os.Stdout.Fd()) {
-		cmd.Env = append(cmd.Env, "FROM_GO=true")
-	}
 	out, err := cmd.Output()
 	if err != nil {
 		fmt.Printf("ChifraResponse:cmd.Output() failed: %s", err)

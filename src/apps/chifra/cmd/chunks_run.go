@@ -24,7 +24,7 @@ func validateChunksArgs(cmd *cobra.Command, args []string) error {
 	stats := ChunksOpts.stats
 
 	if !list && !check && !extract {
-		return validate.Usage("You must choose at least one of {0}.", "--list, --extract, --stats, or --check")
+		return validate.Usage("You must choose at least one of {0}.", "--list, --extract, or --check")
 	}
 
 	if (list && check) || (list && extract) {
