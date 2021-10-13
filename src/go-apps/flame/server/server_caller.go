@@ -111,7 +111,6 @@ func CallOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd s
 		}
 	} else {
 		cmd.Env = append(os.Environ(), "API_MODE=true")
-		// Don't set FROM_GO since we should not show colors in API_MODE
 	}
 	cmd.Env = append(cmd.Env, "PROG_NAME=chifra "+apiCmd)
 
