@@ -33,10 +33,10 @@ var chunksCmd = &cobra.Command{
 
 var usageChunks = `chunks [flags]`
 
-var shortChunks = "manage chunks and bloom filters"
+var shortChunks = "manage and investigate chunks and bloom filters"
 
 var longChunks = `Purpose:
-  Manage chunks and bloom filters.`
+  Manage and investigate chunks and bloom filters.`
 
 var notesChunks = ``
 

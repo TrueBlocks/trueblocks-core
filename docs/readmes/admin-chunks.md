@@ -4,7 +4,7 @@ This tool is not yet ready for production use. Please return to this page later.
 
 ```[plaintext]
 Purpose:
-  Manage chunks and bloom filters.
+  Manage and investigate chunks and bloom filters.
 
 Usage:
   chifra chunks [flags]

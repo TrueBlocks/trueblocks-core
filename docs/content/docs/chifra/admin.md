@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2021-10-13T06:32:34
+date: 2021-10-05T22:20:10
 lastmod:
   - :git
   - lastmod
@@ -110,7 +110,7 @@ This tool is not yet ready for production use. Please return to this page later.
 
 ```[plaintext]
 Purpose:
-  Manage chunks and bloom filters.
+  Manage and investigate chunks and bloom filters.
 
 Usage:
   chifra chunks [flags]

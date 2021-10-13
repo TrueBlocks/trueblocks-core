@@ -338,6 +338,7 @@ Use "{{.CommandPath}} [command] --help" for more information about a command.{{e
 	return t + notes
 }
 
+// TODO: This should be generated from data
 var helpText = `  Accounts:
     list          list every appearance of an address anywhere on the chain
     export        export full detail of transactions for one or more addresses
@@ -358,6 +359,7 @@ var helpText = `  Accounts:
     status        report on the status of the TrueBlocks system
     serve         serve the TrueBlocks API using the flame server
     scrape        scan the chain and update the TrueBlocks index of appearances
+    chunks        manage and investigate chunks and bloom filters
     init          initialize the TrueBlocks system by downloading from IPFS
     pins          manage pinned index of appearances and associated blooms
   Other:
