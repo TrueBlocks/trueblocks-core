@@ -61,9 +61,10 @@ bool COptions::handle_readmes(void) {
         }
     }
 
+    // TODO: this should be generated from the data
     CStringArray items = {"Accounts:list,export,monitors,names,abis",
                           "Chain Data:blocks,trans,receipts,logs,traces,when", "Chain State:state,tokens",
-                          "Admin:cacheStatus,serve,scrape,init,pins", "Other:quotes,explore,ethslurp"};
+                          "Admin:cacheStatus,serve,scrape,chunks,init,pins", "Other:quotes,explore,ethslurp"};
     uint32_t weight = 1100;
     for (auto item : items) {
         CStringArray parts;
