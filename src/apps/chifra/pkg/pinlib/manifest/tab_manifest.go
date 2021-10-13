@@ -1,0 +1,77 @@
+package manifest
+
+import (
+	"encoding/csv"
+	"io"
+)
+
+func ReadPinDescriptors(r io.Reader) ([]PinDescriptor, error) {
+	reader := csv.NewReader(r)
+	reader.Comma = '\t'
+	reader.FieldsPerRecord = 3
+
+	// source, err := reader.ReadAll()
+	descriptors := []PinDescriptor{}
+
+	for {
+		record, err := reader.Read()
+		if err == io.EOF {
+			break
+		}
+
+		if err != nil {
+			return nil, err
+		}
+
+		descriptors = append(descriptors, PinDescriptor{
+			FileName:  record[0],
+			BloomHash: record[1],
+			IndexHash: record[2],
+		})
+	}
+
+	return descriptors, nil
+}
+
+func BuildTabRange(descriptors []PinDescriptor) (ManifestRange, error) {
+	firstPinRange, err := ManifestRangeFromString(descriptors[0].FileName)
+	if err != nil {
+		return ManifestRange{}, err
+	}
+
+	lastPinRange, err := ManifestRangeFromString(descriptors[len(descriptors)-1].FileName)
+	if err != nil {
+		return ManifestRange{}, err
+	}
+
+	return ManifestRange{
+		firstPinRange[0],
+		lastPinRange[1],
+	}, nil
+}
+
+func ReadTabManifest(r io.Reader) (*Manifest, error) {
+	descriptors, err := ReadPinDescriptors(r)
+
+	if err != nil {
+		return nil, err
+	}
+
+	newBlockRange, err := BuildTabRange(descriptors)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return &Manifest{
+		FileName:           "",
+		IndexFormat:        "",
+		BloomFormat:        "",
+		CommitHash:         "",
+		PreviousHash:       "",
+		NewBlockRange:      newBlockRange,
+		PreviousBlockRange: ManifestRange{0, 0},
+		NewPins:            descriptors,
+		PreviousPins:       []PinDescriptor{},
+	}, nil
+}
