@@ -25,7 +25,7 @@ static const COption params[] = {
     COption("check", "c", "", OPT_SWITCH, "check the validity of the chunk or bloom"),
     COption("extract", "e", "", OPT_SWITCH, "show the contents of the chunk or bloom filters"),
     COption("stats", "s", "", OPT_SWITCH, "for the --list option only, display statistics about each chunk or bloom"),
-    COption("", "", "", OPT_DESCRIPTION, "Manage chunks and bloom filters."),
+    COption("", "", "", OPT_DESCRIPTION, "Manage and investigate chunks and bloom filters."),
     // clang-format on
     // END_CODE_OPTIONS
 };
