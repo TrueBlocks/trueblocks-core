@@ -14,14 +14,11 @@ package utils
  *-------------------------------------------------------------------------------------------*/
 
 import (
+	"io/ioutil"
+	"log"
 	"net/http"
 	"os"
 )
-
-// IsTestMode return true if we are running from the testing harness
-func IsTestMode(r *http.Request) bool {
-	return r.Header.Get("User-Agent") == "testRunner"
-}
 
 // FileExists help text todo
 func FileExists(filename string) bool {
@@ -41,6 +38,11 @@ func FolderExists(path string) bool {
 	return info.IsDir()
 }
 
+// IsTestMode return true if we are running from the testing harness
+func IsTestMode(r *http.Request) bool {
+	return r.Header.Get("User-Agent") == "testRunner"
+}
+
 // GetParam returns a single the 'key' parameter in the URL
 func GetParam(key string, def string, r *http.Request) (string, bool) {
 	values, exists := r.URL.Query()[key]
@@ -55,3 +57,19 @@ func GetParam(key string, def string, r *http.Request) (string, bool) {
 	}
 	return def, false
 }
+
+func AsciiFileToString(fn string) string {
+	if !FileExists(fn) {
+		return ""
+	}
+
+	contents, err := ioutil.ReadFile(fn)
+	if err != nil {
+		log.Println(err)
+		return ""
+	}
+	return string(contents)
+}
+
+// maximum uint64
+const NOPOS = ^uint64(0)
