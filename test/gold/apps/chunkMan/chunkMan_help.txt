@@ -1,6 +1,6 @@
 chifra chunks   -h
 Purpose:
-  Manage chunks and bloom filters.
+  Manage and investigate chunks and bloom filters.
 
 Usage:
   chifra chunks [flags]
