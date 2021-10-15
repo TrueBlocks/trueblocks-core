@@ -31,20 +31,26 @@ var chunksCmd = &cobra.Command{
 	Args:  validateChunksArgs,
 }
 
-var usageChunks = `chunks [flags]`
+var usageChunks = `chunks [flags] <block> [block...]
+
+Arguments:
+  blocks - an optional list of blocks to process`
 
 var shortChunks = "manage and investigate chunks and bloom filters"
 
 var longChunks = `Purpose:
   Manage and investigate chunks and bloom filters.`
 
-var notesChunks = ``
+var notesChunks = `
+Notes:
+  - Only a single block in a given chunk needs to be supplied.`
 
 type chunksOptionsType struct {
 	list    bool
 	check   bool
-	extract bool
+	extract string
 	stats   bool
+	save    bool
 }
 
 var ChunksOpts chunksOptionsType
@@ -56,8 +62,10 @@ func init() {
 	chunksCmd.PersistentFlags().SortFlags = false
 	chunksCmd.Flags().BoolVarP(&ChunksOpts.list, "list", "l", false, "list the bloom and index hashes from local cache or IPFS")
 	chunksCmd.Flags().BoolVarP(&ChunksOpts.check, "check", "c", false, "check the validity of the chunk or bloom")
-	chunksCmd.Flags().BoolVarP(&ChunksOpts.extract, "extract", "e", false, "show the contents of the chunk or bloom filters")
+	chunksCmd.Flags().StringVarP(&ChunksOpts.extract, "extract", "e", "", `show the some or all of the contents of the chunk or bloom filters
+One of [ header | addr_table | app_table | blooms | all ]`)
 	chunksCmd.Flags().BoolVarP(&ChunksOpts.stats, "stats", "s", false, "for the --list option only, display statistics about each chunk or bloom")
+	chunksCmd.Flags().BoolVarP(&ChunksOpts.save, "save", "a", false, "for the --extract option only, save the entire chunk to a similarly named file as well as display")
 	chunksCmd.Flags().SortFlags = false
 	chunksCmd.PersistentFlags().SortFlags = false
 

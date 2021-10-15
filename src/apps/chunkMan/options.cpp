@@ -21,10 +21,12 @@
 static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
+    COption("blocks", "", "list<blknum>", OPT_POSITIONAL, "an optional list of blocks to process"),
     COption("list", "l", "", OPT_SWITCH, "list the bloom and index hashes from local cache or IPFS"),
     COption("check", "c", "", OPT_SWITCH, "check the validity of the chunk or bloom"),
-    COption("extract", "e", "", OPT_SWITCH, "show the contents of the chunk or bloom filters"),
+    COption("extract", "e", "", OPT_SWITCH, "show the some or all of the contents of the chunk or bloom filters"),
     COption("stats", "s", "", OPT_SWITCH, "for the --list option only, display statistics about each chunk or bloom"),
+    COption("save", "a", "", OPT_SWITCH, "for the --extract option only, save the entire chunk to a similarly named file as well as display"),  // NOLINT
     COption("", "", "", OPT_DESCRIPTION, "Manage and investigate chunks and bloom filters."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -41,6 +43,7 @@ bool COptions::parseArguments(string_q& command) {
     // END_CODE_LOCAL_INIT
 
     Init();
+    blknum_t latest = getBlockProgress(BP_CLIENT).client;
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
         if (false) {
@@ -58,21 +61,30 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-s" || arg == "--stats") {
             stats = true;
 
+        } else if (arg == "-a" || arg == "--save") {
+            save = true;
+
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
                 return invalid_option(arg);
             }
 
+        } else {
+            if (!parseBlockList2(this, blocks, arg, latest))
+                return false;
+
             // END_CODE_AUTO
         }
     }
 
     // BEG_DEBUG_DISPLAY
+    LOG_TEST_LIST("blocks", blocks, blocks.empty());
     LOG_TEST_BOOL("list", list);
     LOG_TEST_BOOL("check", check);
-    LOG_TEST_BOOL("extract", extract);
+    LOG_TEST("extract", extract, (extract == ""));
     LOG_TEST_BOOL("stats", stats);
+    LOG_TEST_BOOL("save", save);
     // END_DEBUG_DISPLAY
 
     if (Mocked(""))
@@ -89,8 +101,9 @@ void COptions::Init(void) {
 
     // BEG_CODE_INIT
     check = false;
-    extract = false;
+    extract = "";
     stats = false;
+    save = false;
     // END_CODE_INIT
 }
 
@@ -100,6 +113,7 @@ COptions::COptions(void) {
 
     // BEG_CODE_NOTES
     // clang-format off
+    notes.push_back("Only a single block in a given chunk needs to be supplied.");
     // clang-format on
     // END_CODE_NOTES
 

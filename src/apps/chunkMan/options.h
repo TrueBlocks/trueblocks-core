@@ -21,12 +21,13 @@
 // END_ERROR_DEFINES
 
 //-------------------------------------------------------------------------
-class COptions : public CAbiOptions {
+class COptions : public CBlockOptions {
   public:
     // BEG_CODE_DECLARE
     bool check;
-    bool extract;
+    string_q extract;
     bool stats;
+    bool save;
     // END_CODE_DECLARE
 
     CPinnedChunkArray pins;
