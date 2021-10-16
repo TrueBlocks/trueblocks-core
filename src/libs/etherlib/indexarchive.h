@@ -21,19 +21,19 @@
 namespace qblocks {
 //---------------------------------------------------------------------------
 class CIndexArchive : public CArchive {
-  public:
+public:
     CIndexHeader* header;
     uint64_t nAddrs;
     CIndexedAddress* addresses;
     uint64_t nApps;
     CIndexedAppearance* appearances;
-
+    
     explicit CIndexArchive(bool mode);
     ~CIndexArchive(void);
     bool ReadIndexFromBinary(const string_q& fn);
     bool ReadIndexHeader(const string_q& fn, CIndexHeader& header);
-
-  private:
+    
+private:
     char* rawData;
     CIndexArchive(void) : CArchive(READING_ARCHIVE) {
     }
@@ -49,7 +49,7 @@ extern bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines,
 typedef bool (*INDEXCHUNKFUNC)(CIndexArchive& chunk, void* data);
 typedef bool (*INDEXBLOOMFUNC)(CBloomArray& blooms, void* data);
 class CChunkVisitor {
-  public:
+public:
     INDEXCHUNKFUNC indexFunc = nullptr;
     ADDRESSFUNC addrFunc = nullptr;
     void* callData = nullptr;

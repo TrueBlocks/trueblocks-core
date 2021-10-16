@@ -62,8 +62,8 @@ func init() {
 	chunksCmd.PersistentFlags().SortFlags = false
 	chunksCmd.Flags().BoolVarP(&ChunksOpts.list, "list", "l", false, "list the bloom and index hashes from local cache or IPFS")
 	chunksCmd.Flags().BoolVarP(&ChunksOpts.check, "check", "c", false, "check the validity of the chunk or bloom")
-	chunksCmd.Flags().StringVarP(&ChunksOpts.extract, "extract", "e", "", `show the some or all of the contents of the chunk or bloom filters
-One of [ header | addr_table | app_table | blooms | all ]`)
+	chunksCmd.Flags().StringVarP(&ChunksOpts.extract, "extract", "e", "", `show some or all of the contents of the chunk or bloom filters
+One of [ header | addr_table | app_table | chunks | blooms ]`)
 	chunksCmd.Flags().BoolVarP(&ChunksOpts.stats, "stats", "s", false, "for the --list option only, display statistics about each chunk or bloom")
 	chunksCmd.Flags().BoolVarP(&ChunksOpts.save, "save", "a", false, "for the --extract option only, save the entire chunk to a similarly named file as well as display")
 	chunksCmd.Flags().SortFlags = false

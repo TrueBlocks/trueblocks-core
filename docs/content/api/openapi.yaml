@@ -1541,7 +1541,7 @@ paths:
           schema:
             type: boolean
         - name: extract
-          description: show the some or all of the contents of the chunk or bloom filters
+          description: show some or all of the contents of the chunk or bloom filters
           required: false
           style: form
           in: query
@@ -1552,8 +1552,8 @@ paths:
               - header
               - addr_table
               - app_table
+              - chunks
               - blooms
-              - all
         - name: stats
           description: for the --list option only, display statistics about each chunk or bloom
           required: false

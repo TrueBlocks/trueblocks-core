@@ -40,6 +40,8 @@ class COptions : public CBlockOptions {
 
     bool handle_list(void);
     bool handle_check(void);
-    bool handle_extract(void);
     bool handle_stats(void);
+
+    bool handle_extract(void);
+    bool handle_extract_blooms(void);
 };

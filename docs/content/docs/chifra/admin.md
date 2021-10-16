@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2021-10-15T17:14:47
+date: 2021-10-15T19:42:19
 lastmod:
   - :git
   - lastmod
@@ -121,8 +121,8 @@ Arguments:
 Flags:
   -l, --list             list the bloom and index hashes from local cache or IPFS
   -c, --check            check the validity of the chunk or bloom
-  -e, --extract string   show the some or all of the contents of the chunk or bloom filters
-                         One of [ header | addr_table | app_table | blooms | all ]
+  -e, --extract string   show some or all of the contents of the chunk or bloom filters
+                         One of [ header | addr_table | app_table | chunks | blooms ]
   -s, --stats            for the --list option only, display statistics about each chunk or bloom
   -a, --save             for the --extract option only, save the entire chunk to a similarly named file as well as display
 

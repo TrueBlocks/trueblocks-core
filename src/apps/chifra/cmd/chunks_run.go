@@ -35,7 +35,7 @@ func validateChunksArgs(cmd *cobra.Command, args []string) error {
 		return validate.Usage("The {0} option is only available with the {1} option.", "--stats", "--list")
 	}
 
-	err := validate.ValidateEnum("--extract", QuotesOpts.period, "[header|addrs|addr_table|app_table|bloom|all]")
+	err := validate.ValidateEnum("--extract", ChunksOpts.extract, "[header|addr_table|app_table|chunks|blooms]")
 	if err != nil {
 		return err
 	}

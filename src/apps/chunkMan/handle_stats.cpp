@@ -14,7 +14,7 @@
 
 static char delim = ',';
 //--------------------------------------------------------------
-bool bloomVisitFunc(const string_q& path, void* data) {
+static bool bloomVisitFunc(const string_q& path, void* data) {
     if (endsWith(path, "/")) {
         return forEveryFileInFolder(path + "*", bloomVisitFunc, data);
 

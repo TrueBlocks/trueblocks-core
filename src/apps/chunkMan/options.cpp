@@ -24,7 +24,7 @@ static const COption params[] = {
     COption("blocks", "", "list<blknum>", OPT_POSITIONAL, "an optional list of blocks to process"),
     COption("list", "l", "", OPT_SWITCH, "list the bloom and index hashes from local cache or IPFS"),
     COption("check", "c", "", OPT_SWITCH, "check the validity of the chunk or bloom"),
-    COption("extract", "e", "", OPT_SWITCH, "show the some or all of the contents of the chunk or bloom filters"),
+    COption("extract", "e", "enum[header|addr_table|app_table|chunks|blooms]", OPT_FLAG, "show some or all of the contents of the chunk or bloom filters"),  // NOLINT
     COption("stats", "s", "", OPT_SWITCH, "for the --list option only, display statistics about each chunk or bloom"),
     COption("save", "a", "", OPT_SWITCH, "for the --extract option only, save the entire chunk to a similarly named file as well as display"),  // NOLINT
     COption("", "", "", OPT_DESCRIPTION, "Manage and investigate chunks and bloom filters."),
@@ -55,8 +55,11 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-c" || arg == "--check") {
             check = true;
 
+        } else if (startsWith(arg, "-e:") || startsWith(arg, "--extract:")) {
+            if (!confirmEnum("extract", extract, arg))
+                return false;
         } else if (arg == "-e" || arg == "--extract") {
-            extract = true;
+            return flag_required("extract");
 
         } else if (arg == "-s" || arg == "--stats") {
             stats = true;
@@ -89,6 +92,12 @@ bool COptions::parseArguments(string_q& command) {
 
     if (Mocked(""))
         return false;
+    
+    if (blocks.empty()) {
+        blocks.start = NOPOS;
+    } else if (blocks.size() > 0) {
+        blocks.start = blocks[0];
+    }
 
     configureDisplay("chunkMan", "CPinnedChunk", STR_DISPLAY_PINNEDCHUNK);
 
