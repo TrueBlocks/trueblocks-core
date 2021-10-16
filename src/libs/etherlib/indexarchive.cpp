@@ -43,7 +43,7 @@ bool CIndexArchive::ReadIndexFromBinary(const string_q& path) {
         return false;
     if (!Lock(path, (m_isReading ? modeReadOnly : modeWriteCreate), (m_isReading ? LOCK_NOWAIT : LOCK_WAIT)))
         return false;
-    
+
     size_t sz = fileSize(path);
     rawData = reinterpret_cast<char*>(malloc(sz + (2 * 59)));
     if (!rawData) {
@@ -51,7 +51,7 @@ bool CIndexArchive::ReadIndexFromBinary(const string_q& path) {
         Release();
         return false;
     }
-    
+
     bzero(rawData, sz + (2 * 59));
     size_t nRead = Read(rawData, sz, sizeof(char));
     if (nRead != sz) {
@@ -59,7 +59,7 @@ bool CIndexArchive::ReadIndexFromBinary(const string_q& path) {
         Release();
         return false;
     }
-    
+
     header = reinterpret_cast<CIndexHeader*>(rawData);
     ASSERT(h->magic == MAGIC_NUMBER);
     ASSERT(bytes_2_Hash(h->hash) == versionHash);
@@ -86,17 +86,17 @@ static const string_q STR_STEP5_A = STR_STEP4 + "ascii file created ";
 //----------------------------------------------------------------
 void writeIndexAsAscii(const string_q& outFn, const CStringArray& lines) {
     ASSERT(!fileExists(outFn));
-    
+
     address_t prev;
     uint32_t offset = 0, nAddrs = 0, cnt = 0;
     CIndexedAppearanceArray blockTable;
-    
+
     LOG_INFO(cYellow, STR_STEP1, cOff, "\r");
-    
+
     // We want to notify 12 times
     uint64_t notifyCnt = lines.size() / 12;
     uint64_t progress = 0;
-    
+
     string_q msg = "";
     ostringstream addrStream;
     for (const auto& line : lines) {
@@ -124,51 +124,51 @@ void writeIndexAsAscii(const string_q& outFn, const CStringArray& lines) {
     addrStream << padNum6(offset) << "\t";
     addrStream << padNum6(cnt) << endl;
     nAddrs++;
-    
+
     LOG_INFO(cYellow, STR_STEP2, cOff, "\r");
     ostringstream blockStream;
     for (auto record : blockTable) {
         blockStream << padNum9(record.blk) << "\t";
         blockStream << padNum5(record.txid) << endl;
     }
-    
+
     LOG_INFO(cYellow, STR_STEP3, cOff, "\r");
     ostringstream headerStream;
     headerStream << padNum7(MAGIC_NUMBER) << "\t";
     headerStream << versionHash << "\t";
     headerStream << padNum7(nAddrs) << "\t";
     headerStream << padNum7((uint32_t)blockTable.size()) << endl;
-    
+
     LOG_INFO(cYellow, STR_STEP4, cOff, "\r");
     lockSection();
     stringToAsciiFile(outFn, headerStream.str() + addrStream.str() + blockStream.str());
     unlockSection();
-    
+
     LOG_INFO(cYellow, STR_STEP5_A, greenCheck, cOff);
 }
 
 //----------------------------------------------------------------
 bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines, FILEVISITOR pinFunc, void* pinFuncData) {
     // ASSUMES THE ARRAY IS SORTED!
-    
+
     ASSERT(!fileExists(outFn));
     string_q tmpFile = substitute(outFn, ".bin", ".tmp");
-    
+
     address_t prev;
     uint32_t offset = 0, nAddrs = 0, cnt = 0;
     CIndexedAppearanceArray blockTable;
-    
+
     hashbytes_t hash = hash_2_Bytes(versionHash);
     LOG8("versionHash: ", versionHash);
-    
+
     CBloomArray blooms;
-    
+
     // We want to notify 12 times
     uint64_t notifyCnt = lines.size() / 12;
     uint64_t progress = 0;
-    
+
     LOG_INFO(cYellow, STR_STEP1, cOff, "\r");
-    
+
     CArchive archive(WRITING_ARCHIVE);
     archive.Lock(tmpFile, modeWriteCreate, LOCK_NOWAIT);
     archive.Seek(0, SEEK_SET);  // write the header even though it's not fully detailed to preserve the space
@@ -201,7 +201,7 @@ bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines, FILEVI
         cnt++;
         prev = parts[0];
     }
-    
+
     // The above algo always misses the last address, so we add it here
     addToSet(blooms, prev);
     addrbytes_t bytes = addr_2_Bytes(prev);
@@ -209,13 +209,13 @@ bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines, FILEVI
     archive.Write(offset);
     archive.Write(cnt);
     nAddrs++;
-    
+
     LOG_INFO(cYellow, STR_STEP2, cOff, "\r");
     for (auto record : blockTable) {
         archive.Write(record.blk);
         archive.Write(record.txid);
     }
-    
+
     LOG_INFO(cYellow, STR_STEP3, cOff, "\r");
     archive.Seek(0, SEEK_SET);  // re-write the header now that we have full data
     archive.Write(MAGIC_NUMBER);
@@ -223,7 +223,7 @@ bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines, FILEVI
     archive.Write(nAddrs);
     archive.Write((uint32_t)blockTable.size());
     archive.Release();
-    
+
     // We've built the data in a temporary file. We do this in case we're interrupted during the building of the
     // data so it's not corrupted. In this way, we only move the data to its final resting place once. It's safer.
     LOG_INFO(cYellow, STR_STEP4, cOff, "\r");
@@ -233,9 +233,9 @@ bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines, FILEVI
     copyFile(tmpFile, outFn);               // move the index file
     ::remove(tmpFile.c_str());              // remove the tmp file
     unlockSection();
-    
+
     LOG_INFO(cYellow, STR_STEP5, greenCheck, cOff);
-    
+
     return (pinFunc ? ((*pinFunc)(outFn, pinFuncData)) : true);
 }
 
@@ -264,7 +264,7 @@ bool readIndexHeader(const string_q& path, CIndexHeader& header) {
     if (contains(path, "blooms")) {
         return false;
     }
-    
+
     if (endsWith(path, ".txt")) {
         header.nRows = (uint32_t)fileSize(path) / (uint32_t)59;
         CStringArray lines;
@@ -275,11 +275,11 @@ bool readIndexHeader(const string_q& path, CIndexHeader& header) {
         header.nAddrs = (uint32_t)addrMap.size();
         return true;
     }
-    
+
     CArchive archive(READING_ARCHIVE);
     if (!archive.Lock(path, modeReadOnly, LOCK_NOWAIT))
         return false;
-    
+
     bzero(&header, sizeof(header));
     // size_t nRead =
     archive.Read(&header, sizeof(header), 1);
