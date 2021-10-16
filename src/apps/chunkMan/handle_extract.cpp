@@ -68,43 +68,21 @@ static bool chunkVisitFunc(const string_q& path, void* data) {
                 CIndexedAddress* aRec = &index.addresses[a];
                 if (opts->save) {
                     output << bytes_2_Addr(aRec->bytes) << "\t" << aRec->offset << "\t" << aRec->cnt << endl;
+                    for (uint32_t b = aRec->offset; b < (aRec->offset + aRec->cnt); b++) {
+                        CIndexedAppearance* bRec = &index.appearances[b];
+                        if (opts->save) {
+                            output << "\t" << bRec->blk << "\t" << bRec->txid << endl;
+                        }
+                    }
                 }
-                if (!(a % 1000)) {
-                    cout << ".";
-                    cout.flush();
-                }
-                if (!(a % 10000)) {
-                    cout << "+";
-                    cout.flush();
-                }
-                // cout << "[" << a << "]: ";
-                // cout << bytes_2_Addr(aRec->bytes) << "\t";
-                // cout << aRec->offset << "\t";
-                // cout << aRec->cnt << endl;
-            }
-
-            for (uint32_t a = 0; a < index.nApps; a++) {
-                CIndexedAppearance* aRec = &index.appearances[a];
-                if (opts->save) {
-                    output << aRec->blk << "\t" << aRec->txid << endl;
-                }
-                if (!(a % 10000)) {
-                    cout << ".";
-                    cout.flush();
-                }
-                if (!(a % 100000)) {
-                    cout << "+";
-                    cout.flush();
-                }
-                // cout << "[" << a << "]: ";
-                // cout << aRec->blk << "\t";
-                // cout << aRec->txid << endl;
+                LOG_INFO(bytes_2_Addr(aRec->bytes) + "\r");
             }
             if (opts->save) {
                 output.close();
                 LOG_INFO("Wrote ", fileSize(outFile), " bytes to ", outFile);
+            } else {
+                LOG_PROG("Processed: " + path);
             }
-            LOG_PROG("Processed: " + path);
         }
     }
     return true;
