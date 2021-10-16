@@ -59,6 +59,9 @@ func runChunks(cmd *cobra.Command, args []string) {
 	if len(ChunksOpts.extract) > 0 {
 		options += " --extract " + ChunksOpts.extract
 	}
+	if ChunksOpts.save {
+		options += " --save"
+	}
 	if ChunksOpts.stats {
 		options += " --stats"
 	}
