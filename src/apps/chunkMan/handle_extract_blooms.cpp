@@ -31,7 +31,7 @@ static bool bloomVisitFunc(const string_q& path, void* data) {
         const CStringArray colors = {
             bGreen, bBlue, bTeal, bMagenta, bYellow, bWhite, cGreen, cBlue, cTeal, cMagenta, cYellow, cWhite,
         };
-        const size_t nColors = 12; //sizeof(colors) / sizeof(string_q);
+        const size_t nColors = 12;  // sizeof(colors) / sizeof(string_q);
 
 #define NN (2048)
         size_t cnt = 0;

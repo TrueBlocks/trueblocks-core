@@ -109,3 +109,31 @@ bool COptions::handle_extract() {
     LOG_PROG("Finished");
     return true;
 }
+
+#if 0
+string_q result;
+queryRawBlockTrace(result, uint_2_Hex(bn));
+cout << results << endl;
+
+CLogQuery logQuery;
+logQuery.fromBlock = bn;
+logQuery.toBlock = bn;
+queryRawLogs(result, logQuery);
+cout << results << endl;
+
+CBlock block;
+getBlock(block);
+for (auto tx : block.transactions) {
+    queryRawReceipt(results, tx.hash);
+    cout << results << endl;
+}
+
+// json.Marshal(RPCPayload{"2.0", "trace_block", RPCParams{fmt.Sprintf("0x%x", blockNum)}, 2})
+// bool queryRawBlockTrace(string_q& blockStr, const string_q& hexNum) {
+
+// payloadBytes, err := json.Marshal(RPCPayload{"2.0", "eth_getLogs", RPCParams{LogFilter{fmt.Sprintf("0x%x", blockNum), fmt.Sprintf("0x%x", blockNum)}}, 2})
+// bool queryRawLogs(string_q& results, const CLogQuery& query) {
+
+// payloadBytes, err := json.Marshal(RPCPayload{"2.0", "eth_getTransactionReceipt", RPCParams{hash}, 2})
+// bool queryRawReceipt(string_q& results, const hash_t& txHash) {
+#endif
