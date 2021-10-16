@@ -75,7 +75,7 @@ static bool chunkVisitFunc(const string_q& path, void* data) {
                         }
                     }
                 }
-                LOG_INFO(bytes_2_Addr(aRec->bytes) + "\r");
+                LOG_INFO(a, " of ", index.nAddrs, " ", bytes_2_Addr(aRec->bytes) + "\r");
             }
             if (opts->save) {
                 output.close();
