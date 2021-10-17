@@ -33,7 +33,7 @@ int main(int argc, const char* argv[]) {
         if (options.check) {
             options.handle_check();
 
-        } else if (options.extract) {
+        } else if (!options.extract.empty()) {
             options.handle_extract();
 
         } else {

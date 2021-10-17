@@ -9,38 +9,6 @@ import (
 	"net/http"
 )
 
-// getBlockHeader Returns the block header for a given block.
-// func getBlockHeader(blockNum int) ([]byte, error) {
-// 	payloadBytes, err := json.Marshal(RPCPayload{"2.0", "parity_getBlockHeaderByNumber", RPCParams{fmt.Sprintf("0x%x", blockNum)}, 2})
-// 	if err != nil {
-// 		fmt.Println(err)
-// 		return nil, err
-// 	}
-// 
-// 	body := bytes.NewReader(payloadBytes)
-// 	req, err := http.NewRequest("POST", Options.rpcProvider, body)
-// 	if err != nil {
-// 		fmt.Println(err)
-// 		return nil, err
-// 	}
-// 
-// 	req.Header.Set("Content-Type", "application/json")
-// 	resp, err := http.DefaultClient.Do(req)
-// 	if err != nil {
-// 		fmt.Println(err)
-// 		return nil, err
-// 	}
-// 
-// 	blockHeaderBody, err := ioutil.ReadAll(resp.Body)
-// 	if err != nil {
-// 		fmt.Println(err)
-// 		return nil, err
-// 	}
-// 
-// 	defer resp.Body.Close()
-// 	return blockHeaderBody, nil
-// }
-
 // getTracesFromBlock Returns all traces for a given block.
 func getTracesFromBlock(blockNum int) ([]byte, error) {
 	payloadBytes, err := json.Marshal(RPCPayload{"2.0", "trace_block", RPCParams{fmt.Sprintf("0x%x", blockNum)}, 2})

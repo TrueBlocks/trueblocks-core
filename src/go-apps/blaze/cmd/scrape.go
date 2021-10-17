@@ -281,22 +281,6 @@ func writeAddresses(blockNum string, addressMap map[string]bool) {
 	toWrite := []byte(strings.Join(addressArray[:], "\n") + "\n")
 
 	bn, _ := strconv.Atoi(blockNum)
-	// This code (disabled) tried to extract timestamp while we're scraping. It didn't work, so
-	// commented out. We were trying to attach timestamp to the ripe block's filename
-	//blockHeaderBytes, err := getBlockHeader(bn)
-	//if err != nil {
-	//	fmt.Println(err)
-	//	os.Exit(1) // caller will start over if this process exits with non-zero value
-	//}
-	//
-	//var header BlockHeader
-	//err = json.Unmarshal(blockHeaderBytes, &header)
-	//if err != nil {
-	//	fmt.Println(err)
-	//	os.Exit(1) // caller will start over if this process exits with non-zero value
-	//}
-	//
-	//fileName := Options.ripePath + blockNum + "_ts" + header.Result.Timestamp + ".txt"
 	fileName := Options.ripePath + blockNum + ".txt"
 	if bn > Options.ripeBlock {
 		fileName = Options.unripePath + blockNum + ".txt"
@@ -361,7 +345,7 @@ type scrapeOptionsT struct {
 	columns2 string
 }
 
-// scanOptions carries local command line options related to the scan command
+// scrapeOptions carries local command line options related to the scan command
 var scrapeOptions scrapeOptionsT
 
 var scrapeCmd = &cobra.Command{
