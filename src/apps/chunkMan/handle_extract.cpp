@@ -13,45 +13,127 @@
 #include "options.h"
 
 //----------------------------------------------------------------
-bool COptions::handle_extract() {
-#if 0
-        static size_t x = 0;
-        x++;
-        if ((x % 50))
+static bool chunkVisitFunc(const string_q& path, void* data) {
+    // LOG_WARN(path);
+    if (endsWith(path, "/")) {
+        return forEveryFileInFolder(path + "*", chunkVisitFunc, data);
+
+    } else {
+        //        LOG_WARN(path);
+        if (!endsWith(path, ".bin"))
             return true;
-        CStringArray colors = {
-            bGreen, bBlue, bTeal, bMagenta, bYellow, bWhite, cGreen, cBlue, cTeal, cMagenta, cYellow, cWhite,
-        };
-#define NN (2048)
-        size_t cnt = 0;
-        for (auto bloom : blooms) {
-            // if (startBlock < 13000000)
-            //     continue;
-            for (size_t i = 0; i < getBloomWidthInBits(); i++) {
-                if (bloom.isBitLit(i))
-                    cout << colors[cnt % 12] << '1' << cOff;
-                else
-                    cout << '.';
-                if (!(i % NN))
-                    cout << " " << startBlock << endl;
-                cout.flush();
-                // usleep(10000);
-            }
-            cout << cRed << string_q(150, '=') << cOff << endl << endl;
-            cnt++;
+
+        blknum_t endBlock = NOPOS;
+        blknum_t startBlock = bnFromPath(path, endBlock);
+
+        COptions* opts = (COptions*)data;
+        //        cerr << opts->blocks.start << ":" << opts->blocks.stop << endl;
+        if (opts->blocks.start != NOPOS && !inRange(opts->blocks.start, startBlock, endBlock)) {
+            LOG_PROG("Skipped: " + path + "\r");
+            return true;
         }
-        if (false) {
-            for (auto bloom : blooms) {
-                cout << delim << cnt++ << delim << bloom.nInserted;
-                cout << delim;
-                for (size_t i = 0; i < getBloomWidthInBytes(); i += NN) {
-                    bloom.showBloom(cout, (i * NN), NN);
-                    cout << endl << delim << delim << delim;
+
+        ostringstream os;
+        os << "./out/" << padNum9(startBlock) << '-' << padNum9(endBlock) << ".txt";
+        string_q outFile = os.str();
+        ofstream output;
+        if (opts->save) {
+            output.open(outFile, ios::out | ios::trunc);
+            if (!output.is_open()) {
+                LOG_ERR("Could not create file ", outFile, ". Quitting...");
+                return false;
+            }
+            LOG_INFO("File opened for writing");
+        }
+
+        CIndexArchive index(READING_ARCHIVE);
+        if (index.ReadIndexFromBinary(path)) {
+            if (opts->save) {
+                output << "start: " << startBlock << endl;
+                output << "end: " << endBlock << endl;
+                output << "fileSize: " << fileSize(path) << endl;
+                output << "bloomSize: "
+                       << fileSize(substitute(substitute(path, "finalized", "blooms"), ".bin", ".bloom")) << endl;
+                output << "nAddrs: " << index.header->nAddrs << endl;
+                output << "nRows: " << index.header->nRows << endl;
+            }
+            cout << "start: " << startBlock << endl;
+            cout << "end: " << endBlock << endl;
+            cout << "fileSize: " << fileSize(path) << endl;
+            cout << "bloomSize: " << fileSize(substitute(substitute(path, "finalized", "blooms"), ".bin", ".bloom"))
+                 << endl;
+            cout << "nAddrs: " << index.header->nAddrs << endl;
+            cout << "nRows: " << index.header->nRows << endl;
+            for (uint32_t a = 0; a < index.nAddrs; a++) {
+                CIndexedAddress* aRec = &index.addresses[a];
+                if (opts->save) {
+                    output << bytes_2_Addr(aRec->bytes) << endl;
+                    for (uint32_t b = aRec->offset; b < (aRec->offset + aRec->cnt); b++) {
+                        CIndexedAppearance* bRec = &index.appearances[b];
+                        if (opts->save) {
+                            output << "\t" << bRec->blk << "\t" << bRec->txid << endl;
+                        }
+                    }
                 }
-                cout << cGreen << string_q(150, '=') << cOff << endl << endl;
+                LOG_INFO(a, " of ", index.nAddrs, " ", bytes_2_Addr(aRec->bytes) + "\r");
+            }
+            if (opts->save) {
+                output.close();
+                LOG_INFO("Wrote ", fileSize(outFile), " bytes to ", outFile);
+            } else {
+                LOG_PROG("Processed: " + path);
             }
         }
-#endif
-    LOG_INFO("Not yet implemented");
+    }
     return true;
 }
+
+//----------------------------------------------------------------
+bool COptions::handle_extract() {
+    if (extract == "blooms") {
+        return handle_extract_blooms();
+    } else {
+        // LOG_WARN("I AM HERE: ", getCWD());
+        // if (!folderExists("./out")) {
+        // LOG_WARN("Create folder called './out' in current working directory? (y/N)");
+        //        int ch = getchar();
+        //        if (ch != 'y' && ch != 'Y')
+        //            return false;
+        //        LOG_WARN("ch", string_q(1, (char)ch));
+        // LOG_WARN("");
+        establishFolder("out");
+        // }
+        // LOG_INFO(folderExists("out"));
+        return forEveryFileInFolder(indexFolder_finalized, chunkVisitFunc, this);
+    }
+    LOG_PROG("Finished");
+    return true;
+}
+
+#if 0
+string_q result;
+queryRawBlockTrace(result, uint_2_Hex(bn));
+cout << results << endl;
+
+CLogQuery logQuery;
+logQuery.fromBlock = bn;
+logQuery.toBlock = bn;
+queryRawLogs(result, logQuery);
+cout << results << endl;
+
+CBlock block;
+getBlock(block);
+for (auto tx : block.transactions) {
+    queryRawReceipt(results, tx.hash);
+    cout << results << endl;
+}
+
+// json.Marshal(RPCPayload{"2.0", "trace_block", RPCParams{fmt.Sprintf("0x%x", blockNum)}, 2})
+// bool queryRawBlockTrace(string_q& blockStr, const string_q& hexNum) {
+
+// payloadBytes, err := json.Marshal(RPCPayload{"2.0", "eth_getLogs", RPCParams{LogFilter{fmt.Sprintf("0x%x", blockNum), fmt.Sprintf("0x%x", blockNum)}}, 2})
+// bool queryRawLogs(string_q& results, const CLogQuery& query) {
+
+// payloadBytes, err := json.Marshal(RPCPayload{"2.0", "eth_getTransactionReceipt", RPCParams{hash}, 2})
+// bool queryRawReceipt(string_q& results, const hash_t& txHash) {
+#endif

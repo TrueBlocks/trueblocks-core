@@ -7,7 +7,7 @@ info:
   license:
     name: GPL 3.0
     url: http://www.gnu.org/licenses/
-  version: 0.14.0-alpha
+  version: 0.15.0-alpha
   description: >
 
     A REST layer over the TrueBlocks application. With `chifra serve`, you can
@@ -1513,6 +1513,17 @@ paths:
       description: Manage and investigate chunks and bloom filters.
       operationId: admin-chunks
       parameters:
+        - name: blocks
+          description: an optional list of blocks to process
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: blknum_t
         - name: list
           description: list the bloom and index hashes from local cache or IPFS
           required: false
@@ -1530,15 +1541,30 @@ paths:
           schema:
             type: boolean
         - name: extract
-          description: show the contents of the chunk or bloom filters
+          description: show some or all of the contents of the chunk or bloom filters
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+            enum:
+              - header
+              - addr_table
+              - app_table
+              - chunks
+              - blooms
+        - name: stats
+          description: for the --list option only, display statistics about each chunk or bloom
           required: false
           style: form
           in: query
           explode: true
           schema:
             type: boolean
-        - name: stats
-          description: for the --list option only, display statistics about each chunk or bloom
+        - name: save
+          description: >
+            for the --extract option only, save the entire chunk to a similarly named file as well as display
           required: false
           style: form
           in: query
