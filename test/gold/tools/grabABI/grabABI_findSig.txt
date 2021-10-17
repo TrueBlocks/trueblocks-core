@@ -1,2 +1,2 @@
-chifra abis  --find 0xa6f9dae1
-{ "encoding": "0xa6f9dae1", "signature": "changeOwner(address)" }
+chifra abis  --find 0x1aa3a008
+{ "encoding": "0x1aa3a008", "signature": "register()" }

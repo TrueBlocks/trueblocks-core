@@ -2,4 +2,4 @@
 class = CConfigFile
 base_class = CBaseNode
 fields = configfile.csv
-includes = etherlib.h|configsection.h
+includes = cachelib.h|configsection.h

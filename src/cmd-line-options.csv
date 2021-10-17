@@ -154,8 +154,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 13987,tools,ChainData,when,whenBlock,ERR_OPENINGTIMESTAMPS,,,false,false,false,false,--,error,,Could not open timestamp file.
 13987,tools,ChainData,when,whenBlock,ERR_INVALIDDATE1,,,false,false,false,false,--,error,,Please supply either a JSON formatted date or a blockNumber.
 13987,tools,ChainData,when,whenBlock,ERR_INVALIDDATE2,,,false,false,false,false,--,error,,Invalid date '[{ARG}]'.
-13987,tools,ChainData,when,whenBlock,ERR_INVALIDDATE3,,,false,false,false,false,--,error,,The date you specified ([{ARG}]) is in the future. No such block.
-13987,tools,ChainData,when,whenBlock,ERR_INVALIDDATE4,,,false,false,false,false,--,error,,The date you specified ([{ARG}]) is before the first block.
+13987,tools,ChainData,when,whenBlock,ERR_INVALIDDATE3,,,false,false,false,false,--,error,,The date you specified ([{ARG}]) is before the first block.
 
 13100,tools,ChainState,state,getState,addrs,,,true,false,true,true,header,positional,list<addr>,one or more addresses (0x...) from which to retrieve balances
 13120,tools,ChainState,state,getState,blocks,,,false,false,true,true,header,positional,list<blknum>,an optional list of one or more blocks at which to report balances&#44; defaults to 'latest'
@@ -224,6 +223,12 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 10820,apps,Admin,status,cacheStatus,test_start,S,0,false,false,false,false,local,flag,<blknum>,first block to process (inclusive -- testing only)
 10840,apps,Admin,status,cacheStatus,test_end,E,NOPOS,false,false,false,false,local,flag,<blknum>,last block to process (inclusive -- testing only)
 10860,apps,Admin,status,cacheStatus,,,,false,false,true,true,--,description,,Report on the status of the TrueBlocks system.
+
+21950,apps,Admin,chunks,chunkMan,list,l,,false,false,true,true,local,switch,<boolean>,list the bloom and index hashes from local cache or IPFS
+21950,apps,Admin,chunks,chunkMan,check,c,,false,false,true,true,header,switch,<boolean>,check the validity of the chunk or bloom
+21950,apps,Admin,chunks,chunkMan,extract,e,,false,false,true,true,header,switch,<boolean>,show the contents of the chunk or bloom filters
+21950,apps,Admin,chunks,chunkMan,stats,s,,false,false,true,true,header,switch,<boolean>,for the --list option only&#44; display statistics about each chunk or bloom
+21966,apps,Admin,chunks,chunkMan,,,,false,false,true,true,--,description,,Manage and investigate chunks and bloom filters.
 
 10950,apps,Admin,pins,pinMan,list,l,,false,false,true,true,local,switch,<boolean>,list the bloom and index hashes from local cache or IPFS
 10952,apps,Admin,pins,pinMan,init,i,,false,false,true,true,header,switch,<boolean>,download the blooms or index chunks from IPFS

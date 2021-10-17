@@ -16,7 +16,6 @@
  * the code inside of 'EXISTING_CODE' tags.
  */
 #include "etherlib.h"
-#include "indexarchive.h"
 
 namespace qblocks {
 

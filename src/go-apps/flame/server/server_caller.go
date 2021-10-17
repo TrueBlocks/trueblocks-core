@@ -26,11 +26,6 @@ import (
 	utils "github.com/TrueBlocks/trueblocks-core/src/go-apps/blaze/utils"
 )
 
-// isTestMode return true if we are running from the testing harness
-func isTestMode(r *http.Request) bool {
-	return r.Header.Get("User-Agent") == "testRunner"
-}
-
 // GetCommandPath returns full path the the given tool
 func GetCommandPath(cmd string) string {
 	usr, _ := user.Current()
@@ -107,7 +102,7 @@ func CallOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd s
 	// testing (the test harness sends a special header) we also set the
 	// TEST_MODE=true environment variable and any other vars for this
 	// particular test
-	if isTestMode(r) {
+	if utils.IsTestMode(r) {
 		cmd.Env = append(append(os.Environ(), "TEST_MODE=true"), "API_MODE=true")
 		vars := strings.Split(r.Header.Get("X-TestRunner-Env"), "|")
 		for _, v := range vars {

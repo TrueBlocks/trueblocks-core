@@ -2,7 +2,7 @@
 title: "Other"
 description: ""
 lead: ""
-date: 2021-10-06T16:08:39
+date: 2021-10-13T07:13:26
 lastmod:
   - :git
   - lastmod
@@ -23,7 +23,7 @@ These commands call some useful miscellaneous tools:
 
 {{< alert icon="👉" title="note about keys"
 text="Note: some of these tools, like `ethslurp`, require an EtherScan key." >}}
-[Follow these instructions to add a key to your config](https://trueblocks.io/docs/install/install-trueblocks/#3-update-the-configs-for-your-rpc-and-api-keys)
+[Follow these instructions to add a key to your config](/docs/install/install-trueblocks/#3-update-the-configs-for-your-rpc-and-api-keys)
 
 ## chifra quotes
 

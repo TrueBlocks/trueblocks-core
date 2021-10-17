@@ -24,6 +24,7 @@ num,group,is_visible,is_visible_docs,api_group,api_route,tool,summary,descriptio
 04,Admin,true,true,apps,scrape,blockScrape,Scrape index,Scan the chain and update (and optionally pin) the TrueBlocks index of appearances.
 04,Admin,true,false,apps,init,pinMan --init,Initialize index,Initialize the TrueBlocks system by downloading from IPFS.
 04,Admin,true,true,apps,pins,pinMan,Manage pins,Manage pinned index of appearances and associated blooms.
+04,Admin,true,true,apps,chunks,chunkMan,Manage chunks,Manage and investigate chunks and bloom filters.
 
 05,Other,false,true,,,,,Access to other and external data
 05,Other,true,true,tools,quotes,getQuotes,Price quotes,Freshen or display Ethereum price data. This tool has been deprecated.

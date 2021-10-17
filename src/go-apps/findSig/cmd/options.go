@@ -5,30 +5,35 @@ import (
 	"bytes"
 	"encoding/hex"
 	"fmt"
+	"log"
 	"os"
 	"runtime"
-	"strings"
 	"sync"
 
 	"github.com/ethereum/go-ethereum/crypto"
-	"github.com/panjf2000/ants/v2"
+	ants "github.com/panjf2000/ants/v2"
 	"github.com/spf13/cobra"
 
 	homedir "github.com/mitchellh/go-homedir"
-	"github.com/spf13/viper"
 )
 
 // OptionsType Structure to carry command line and config file options
 type OptionsType struct {
 	fmt            string
 	signaturesPath string
-	unused         bool
 }
 
 // Options Carries the configuration options (from both command line and config file)
 var Options OptionsType
 
+func IsTestMode() bool {
+	return os.Getenv("TEST_MODE") == "true"
+}
+
 func prettyPrint(encoding string, signature interface{}) {
+	if !IsTestMode() {
+		fmt.Fprintf(os.Stderr, "                                                                        \r")
+	}
 	if Options.fmt == "json" {
 		fmt.Printf("{ \"encoding\": \"0x%s\", \"signature\": \"%s\" }\n", encoding, signature)
 	} else if Options.fmt == "txt" {
@@ -38,82 +43,80 @@ func prettyPrint(encoding string, signature interface{}) {
 	}
 }
 
-func findEncoding() {
-	apimode := (os.Getenv("API_MODE") == "true")
-	testmode := (os.Getenv("TEST_MODE") == "true")
-	if apimode {
+func findEncoding(cmd *cobra.Command, args []string) {
+	testMode := IsTestMode()
+	apiMode := (os.Getenv("API_MODE") == "true")
+	if apiMode {
 		Options.fmt = "json"
 	}
-	// if !apimode {
-	// 	fmt.Printf("API_MODE: %s %s\n", os.Getenv("API_MODE"), apimode)
-	//  fmt.Printf("sigsFolder: %s\n", Options.signaturesPath)
-	//  fmt.Printf("fmt: %s\n", Options.fmt)
-	// }
 
-	var search [][]byte
-	for _, i := range os.Args[1:] {
-		// fmt.Println("A: ", i, i[:2])
-		if i[:2] == "0x" {
-			decoded, err := hex.DecodeString(i[2:])
+	var arguments [][]byte
+	for _, arg := range args {
+		if arg[:2] == "0x" {
+			asBytes, err := hex.DecodeString(arg[2:])
 			if err != nil {
-				fmt.Printf("Couldn't parse argument %s\n", i)
+				fmt.Printf("Couldn't parse argument %s\n", arg)
 			} else {
-				search = append(search, decoded)
+				arguments = append(arguments, asBytes)
 			}
 		}
 	}
 
-	// Create thread pool with number of concurrent threads equal to 'runtime.NumCPU()'
-	var wait sync.WaitGroup
-	checkOne, _ := ants.NewPoolWithFunc(runtime.NumCPU(), func(signature interface{}) {
-		// Calculate 4-byte form
-		res := crypto.Keccak256([]byte(signature.(string)))[:4]
-		// Go through queries and compare
-		for i := 0; i < len(search); i++ {
-			cur := search[i]
-			if bytes.Equal(res, cur) {
-				if !testmode {
-					fmt.Fprintf(os.Stderr, "                                                                        \r")
-				}
-				prettyPrint(hex.EncodeToString(res), signature)
+	var wg sync.WaitGroup
+	checkOne, _ := ants.NewPoolWithFunc(runtime.NumCPU()*2/3, func(input interface{}) {
+		defer wg.Done()
+		str := input.(string)
+		byts := []byte(str)
+		encBytes := crypto.Keccak256(byts)[:4]
+		for _, arg := range arguments {
+			if !testMode {
+				fmt.Fprintf(os.Stderr, "Scanning: %s\r", input)
+			}
+			if bytes.Equal(encBytes, arg) {
+				prettyPrint(hex.EncodeToString(encBytes), input)
+				// wg.Done()
+				// return
 				os.Exit(0)
 			}
-			if !testmode {
-				fmt.Fprintf(os.Stderr, "\033[2KScanning: %s\r", signature)
-			}
 		}
-		wait.Done()
 	})
 
-	// Load files
-	fTemp2, _ := os.Open(Options.signaturesPath + "uniq_funcs.tab")
-	defer fTemp2.Close()
-	sTemp2 := bufio.NewScanner(fTemp2)
-	sTemp2.Split(bufio.ScanLines)
+	funcsFile, _ := os.Open(Options.signaturesPath + "uniq_funcs.tab")
+	sigsFile, _ := os.Open(Options.signaturesPath + "uniq_sigs.tab")
 
-	fTemp1, _ := os.Open(Options.signaturesPath + "uniq_sigs.tab")
-	defer fTemp1.Close()
-	sTemp1 := bufio.NewScanner(fTemp1)
-	sTemp1.Split(bufio.ScanLines)
-
-	temp2s := []string{""}
-	for sTemp2.Scan() {
-		temp2s = append(temp2s, sTemp2.Text())
+	// TODO: The following closeFunc never runs because of the Exit at line 69. If I comment that out
+	// TODO: and return instead, then the speed the tests run 1/2 as fast.
+	closeFunc := func() {
+		log.Println("Closing data files")
+		funcsFile.Close()
+		sigsFile.Close()
 	}
+	defer closeFunc()
 
-	for sTemp1.Scan() {
-		for _, temp2 := range temp2s {
-			wait.Add(1)
-			_ = checkOne.Invoke(string(fmt.Sprintf("%s(%s)", temp2, sTemp1.Text())))
+	funcsScanner := bufio.NewScanner(funcsFile)
+	funcsScanner.Split(bufio.ScanLines)
+
+	sigsScanner := bufio.NewScanner(sigsFile)
+	sigsScanner.Split(bufio.ScanLines)
+
+	for sigsScanner.Scan() {
+		s := sigsScanner.Text()
+		for funcsScanner.Scan() {
+			wg.Add(1)
+			f := funcsScanner.Text()
+			call := f + "(" + s + ")"
+			_ = checkOne.Invoke(call)
 		}
 	}
-	// Wait till all threads finished at the end of program
+
 	defer checkOne.Release()
-	defer wait.Wait()
+	defer wg.Wait()
+
+	fmt.Fprintf(os.Stderr, "                                                                        \r")
 }
 
-// rootCmd represents the base command when called without any subcommands
-var rootCmd = &cobra.Command{
+// abiFindCmd represents the base command when called without any subcommands
+var abiFindCmd = &cobra.Command{
 	Use:   "findSig",
 	Short: "Do a brute force search for 4byte and event topics on cross product of names and signatures",
 	Long: `
@@ -122,57 +125,42 @@ Description:
   function and event names with likely signatures looking to match
   previously unmatched four bytes and event topics.`,
 	Version: "GHC-TrueBlocks, LLC//0.8.1-alpha",
-	Run: func(cmd *cobra.Command, args []string) {
-		findEncoding()
-	},
+	Run:     findEncoding,
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
-// This is called by main.main(). It only needs to happen once to the rootCmd.
+// This is called by main.main(). It only needs to happen once to the abiFindCmd.
 func Execute() {
-	err := rootCmd.Execute()
+	err := abiFindCmd.Execute()
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
 }
 
-// init Initalize options
 func init() {
 	cobra.OnInitialize(initConfig)
-	rootCmd.PersistentFlags().BoolVarP(&Options.unused, "find", "i", true, "find the value")
-	rootCmd.PersistentFlags().StringVarP(&Options.fmt, "fmt", "f", "json", "format of the output (one of 'json', 'txt', or 'csv')")
+	abiFindCmd.PersistentFlags().StringVarP(&Options.fmt, "fmt", "f", "json", "format of the output (one of 'json', 'txt', or 'csv')")
 }
 
-// initConfig reads in config file and ENV variables if set.
 func initConfig() {
-	// Find home directory.
-	home, err := homedir.Dir()
+	homeDir, err := homedir.Dir()
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
 
+	// TODO: We need a better way to do this across mutliple apps. There should be a utility function
+	// TODO: to deliver paths. GetConfigPath, GetCachePath, GetIndexPath, etc.
 	configPath := "<unset>"
 	if runtime.GOOS == "darwin" {
-		configPath = home + "/Library/Application Support/TrueBlocks"
+		configPath = homeDir + "/Library/Application Support/TrueBlocks"
 	} else if runtime.GOOS == "linux" {
-		configPath = home + "/.local/share/trueblocks"
+		configPath = homeDir + "/.local/share/trueblocks"
 	} else {
 		fmt.Println("Windows not supported.")
-	}
-	viper.AddConfigPath(configPath)
-	viper.SetConfigName("trueBlocks")
-	viper.SetConfigType("toml")
-	err = viper.ReadInConfig()
-	if err != nil {
-		fmt.Println(err)
 		os.Exit(1)
 	}
-
-	viper.SetEnvPrefix("TB")
-	viper.SetEnvKeyReplacer(strings.NewReplacer("SETTINGS.", ""))
-	viper.AutomaticEnv()
 
 	Options.signaturesPath = configPath + "/abis/known-000/"
 }

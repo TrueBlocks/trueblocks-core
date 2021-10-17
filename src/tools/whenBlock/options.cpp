@@ -45,7 +45,7 @@ bool COptions::parseArguments(string_q& commandIn) {
     CStringArray blocks;
     // END_CODE_LOCAL_INIT
 
-    latest = getBlockProgress(BP_CLIENT).client;
+    getBlock_light(latest, "latest");
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
@@ -104,19 +104,19 @@ bool COptions::parseArguments(string_q& commandIn) {
             if (!parseRequestTs(this, requests, str_2_Ts(item)))
                 return false;
 
-        } else if (!parseBlockList2(this, CBlockOptions::blocks, item, latest)) {
+        } else if (!parseBlockList2(this, CBlockOptions::blocks, item, latest.blockNumber)) {
             return false;
 
         } else {
             CNameValue spec;
             if (findSpecial(spec, item)) {
                 if (spec.first == "latest")
-                    spec.second = uint_2_Str(latest);
+                    spec.second = uint_2_Str(latest.blockNumber);
                 requests.push_back(CNameValue("block", spec.second + "|" + spec.first));
 
             } else {
                 CBlockOptions::blocks.Init();  // clear out blocks
-                if (!parseBlockList2(this, CBlockOptions::blocks, item, latest))
+                if (!parseBlockList2(this, CBlockOptions::blocks, item, latest.blockNumber))
                     return false;
                 string_q blockList = getBlockNumList();  // get the list from blocks
                 CStringArray blks;
@@ -178,8 +178,7 @@ COptions::COptions(void) {
     usageErrs[ERR_OPENINGTIMESTAMPS] = "Could not open timestamp file.";
     usageErrs[ERR_INVALIDDATE1] = "Please supply either a JSON formatted date or a blockNumber.";
     usageErrs[ERR_INVALIDDATE2] = "Invalid date '[{ARG}]'.";
-    usageErrs[ERR_INVALIDDATE3] = "The date you specified ([{ARG}]) is in the future. No such block.";
-    usageErrs[ERR_INVALIDDATE4] = "The date you specified ([{ARG}]) is before the first block.";
+    usageErrs[ERR_INVALIDDATE3] = "The date you specified ([{ARG}]) is before the first block.";
     // END_ERROR_STRINGS
 
     // Differnt default for this software, but only change it if user hasn't already therefor not in Init
@@ -213,11 +212,8 @@ bool parseRequestDates(COptionsBase* opt, CNameValueArray& requests, const strin
     if (date == earliestDate) {
         return opt->usage(substitute(opt->usageErrs[ERR_INVALIDDATE2], "[{ARG}]", arg));
 
-    } else if (date > Now()) {
-        return opt->usage(substitute(opt->usageErrs[ERR_INVALIDDATE3], "[{ARG}]", arg));
-
     } else if (date < time_q(2015, 7, 30, 15, 25, 00)) {
-        return opt->usage(substitute(opt->usageErrs[ERR_INVALIDDATE4], "[{ARG}]", arg));
+        return opt->usage(substitute(opt->usageErrs[ERR_INVALIDDATE3], "[{ARG}]", arg));
     }
 
     requests.push_back(CNameValue("date", int_2_Str(date_2_Ts(date))));

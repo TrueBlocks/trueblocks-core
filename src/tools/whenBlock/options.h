@@ -22,7 +22,6 @@
 #define ERR_INVALIDDATE1 2
 #define ERR_INVALIDDATE2 3
 #define ERR_INVALIDDATE3 4
-#define ERR_INVALIDDATE4 5
 // END_ERROR_DEFINES
 
 //-----------------------------------------------------------------------------
@@ -45,7 +44,7 @@ class COptions : public CBlockOptions {
     bool count;
     // END_CODE_DECLARE
 
-    blknum_t latest;
+    CBlock latest;
     CTimeStamper checker;
     CNameValueArray requests;
     bool isText;
