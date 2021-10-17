@@ -23,11 +23,11 @@ func validateChunksArgs(cmd *cobra.Command, args []string) error {
 	extract := ChunksOpts.extract
 	stats := ChunksOpts.stats
 
-	if !list && !check && !extract {
+	if !list && !check && len(extract) == 0 {
 		return validate.Usage("You must choose at least one of {0}.", "--list, --extract, or --check")
 	}
 
-	if (list && check) || (list && extract) {
+	if (list && check) || (list && len(extract) > 0) {
 		return validate.Usage("Please choose just one of {0}.", "--list, --extract, or --check")
 	}
 
@@ -35,7 +35,12 @@ func validateChunksArgs(cmd *cobra.Command, args []string) error {
 		return validate.Usage("The {0} option is only available with the {1} option.", "--stats", "--list")
 	}
 
-	err := validateGlobalFlags(cmd, args)
+	err := validate.ValidateEnum("--extract", ChunksOpts.extract, "[header|addr_table|app_table|chunks|blooms]")
+	if err != nil {
+		return err
+	}
+
+	err = validateGlobalFlags(cmd, args)
 	if err != nil {
 		return err
 	}
@@ -51,8 +56,11 @@ func runChunks(cmd *cobra.Command, args []string) {
 	if ChunksOpts.check {
 		options += " --check"
 	}
-	if ChunksOpts.extract {
-		options += " --extract"
+	if len(ChunksOpts.extract) > 0 {
+		options += " --extract " + ChunksOpts.extract
+	}
+	if ChunksOpts.save {
+		options += " --save"
 	}
 	if ChunksOpts.stats {
 		options += " --stats"
