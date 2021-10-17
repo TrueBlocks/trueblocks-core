@@ -26,11 +26,6 @@ import (
 	utils "github.com/TrueBlocks/trueblocks-core/src/go-apps/blaze/utils"
 )
 
-// isTestMode return true if we are running from the testing harness
-func isTestMode(r *http.Request) bool {
-	return r.Header.Get("User-Agent") == "testRunner"
-}
-
 // GetCommandPath returns full path the the given tool
 func GetCommandPath(cmd string) string {
 	usr, _ := user.Current()
@@ -52,7 +47,6 @@ func CallOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd s
 		allDogs = append(allDogs, extra)
 	}
 	hasVerbose := false
-	var scrapeCmd string
 	for key, value := range r.URL.Query() {
 		if len(value) > 0 && value[0] != "false" {
 			// These keys exist only in the API. We strip them here since the command line
@@ -72,27 +66,9 @@ func CallOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd s
 			if key == "verbose" {
 				hasVerbose = true
 			}
-			if apiCmd == "scrape" && key == "terms" {
-				scrapeCmd = value[0]
-			}
 			if len(value) > 1 || value[0] != "true" {
 				allDogs = append(allDogs, value...)
 			}
-		}
-	}
-
-	if apiCmd == "scrape" {
-		// When we're not testing, only 'quit', 'pause', and 'restart' are valid. While
-		// testing, we allow any mode to pass through so we can test options parsing.
-		// The scraper won't run in test mode anyway, so it's okay.
-		hasRun := scrapeCmd != "quit" && scrapeCmd != "pause" && scrapeCmd != "restart"
-		if isTestMode(r) {
-			hasRun = scrapeCmd == "run"
-		}
-		if hasRun {
-			fmt.Fprint(w, "{ \"status\": \"cannot run\" }")
-			log.Println("Use only 'pause', 'restart', or 'quit' options for the scraper through the API.")
-			return
 		}
 	}
 
@@ -118,14 +94,6 @@ func CallOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd s
 				log.Println("failed to kill process: ", err)
 			}
 			log.Println("apiCmd: ", apiCmd)
-			if apiCmd == "scrape" {
-				out, err := exec.Command(GetCommandPath("blockScrape"), "--quit --verbose").Output()
-				if err != nil {
-					fmt.Printf("%s", err)
-				} else {
-					log.Printf(string(out[:]))
-				}
-			}
 			log.Println("The client closed the connection to process id ", pid, ". Cleaning up.")
 		}()
 	}
@@ -134,7 +102,7 @@ func CallOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd s
 	// testing (the test harness sends a special header) we also set the
 	// TEST_MODE=true environment variable and any other vars for this
 	// particular test
-	if isTestMode(r) {
+	if utils.IsTestMode(r) {
 		cmd.Env = append(append(os.Environ(), "TEST_MODE=true"), "API_MODE=true")
 		vars := strings.Split(r.Header.Get("X-TestRunner-Env"), "|")
 		for _, v := range vars {

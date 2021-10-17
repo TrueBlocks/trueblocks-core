@@ -13,12 +13,35 @@
 package cmd
 
 import (
+	"errors"
 	"fmt"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/spf13/cobra"
 )
 
 func validateBlocksArgs(cmd *cobra.Command, args []string) error {
+	validationErr := validate.ValidateBlockIdentifiers(
+		args,
+		validate.ValidArgumentBlockHash|
+			validate.ValidArgumentBlockNumber|
+			validate.ValidArgumentSpecialBlock|
+			validate.ValidArgumentRange,
+		1,
+	)
+
+	if validationErr != nil {
+		if invalidLiteral, ok := validationErr.(*validate.InvalidIdentifierLiteralError); ok {
+			return invalidLiteral
+		}
+
+		if errors.Is(validationErr, validate.ErrTooManyRanges) {
+			return errors.New("Specify only a single block range at a time.")
+		}
+
+		return validationErr
+	}
+
 	err := validateGlobalFlags(cmd, args)
 	if err != nil {
 		return err

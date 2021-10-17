@@ -11,57 +11,14 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-/*
- * Parts of this file were generated with makeClass --run. Edit only those parts of
- *  the code inside of 'EXISTING_CODE' tags.
- */
 #include "etherlib.h"
 #include "appearance.h"
+#include "bloom.h"
+#include "indexheader.h"
+#include "indexedaddress.h"
+#include "indexedappearance.h"
 
 namespace qblocks {
-//----------------------------------------------------------------
-struct CIndexHeader {
-    uint32_t magic;
-    uint8_t hash[32];
-    uint32_t nAddrs;
-    uint32_t nRows;
-};
-
-//----------------------------------------------------------------
-struct CIndexedAddress {
-    uint8_t bytes[20];
-    uint32_t offset;
-    uint32_t cnt;
-};
-
-//----------------------------------------------------------------
-struct CIndexedAppearance {
-    uint32_t blk;
-    uint32_t txid;
-    CIndexedAppearance(void) {
-        blk = txid = 0;
-    }
-    CIndexedAppearance(uint32_t b, uint32_t t) : blk(b), txid(t) {
-    }
-    CIndexedAppearance(const string_q& b, const string_q& t)
-        : blk((uint32_t)str_2_Uint(b)), txid((uint32_t)str_2_Uint(t)) {
-    }
-    CIndexedAppearance(string_q& line) {  // NOLINT
-        replaceAll(line, ".", "\t");
-        if (!contains(line, "\t"))
-            return;
-        blk = (uint32_t)str_2_Uint(nextTokenClear(line, '\t'));
-        txid = (uint32_t)str_2_Uint(nextTokenClear(line, '\t'));
-    }
-};
-typedef vector<CIndexedAppearance> CIndexedAppearanceArray;
-inline bool operator<(const CIndexedAppearance& v1, const CIndexedAppearance& v2) {
-    return ((v1.blk != v2.blk) ? v1.blk < v2.blk : v1.txid < v2.txid);
-}
-inline bool sortIndexedAppearanceReverse(const CIndexedAppearance& v1, const CIndexedAppearance& v2) {
-    return !((v1.blk != v2.blk) ? v1.blk < v2.blk : v1.txid < v2.txid);
-}
-
 //---------------------------------------------------------------------------
 class CIndexArchive : public CArchive {
   public:
@@ -74,10 +31,38 @@ class CIndexArchive : public CArchive {
     explicit CIndexArchive(bool mode);
     ~CIndexArchive(void);
     bool ReadIndexFromBinary(const string_q& fn);
+    bool ReadIndexHeader(const string_q& fn, CIndexHeader& header);
 
   private:
     char* rawData;
     CIndexArchive(void) : CArchive(READING_ARCHIVE) {
     }
 };
+
+//-----------------------------------------------------------------------
+#define MAGIC_NUMBER ((uint32_t)str_2_Uint("0xdeadbeef"))
+extern hash_t versionHash;
+extern void writeIndexAsAscii(const string_q& outFn, const CStringArray& lines);
+extern bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines, FILEVISITOR pinFunc = nullptr,
+                               void* pinFuncData = nullptr);
+//--------------------------------------------------------------
+typedef bool (*INDEXCHUNKFUNC)(CIndexArchive& chunk, void* data);
+typedef bool (*INDEXBLOOMFUNC)(CBloomArray& blooms, void* data);
+class CChunkVisitor {
+  public:
+    INDEXCHUNKFUNC indexFunc = nullptr;
+    ADDRESSFUNC addrFunc = nullptr;
+    void* callData = nullptr;
+    blkrange_t range = make_pair(0, NOPOS);
+};
+extern bool bloomsAreInitalized(void);
+extern bool readIndexHeader(const string_q& inFn, CIndexHeader& header);
 }  // namespace qblocks
+
+#if 0
+// extern size_t readIndexFromBinary(const string_q& inFn, uint64_t& nApps, const CStringArray& lines);
+// extern bool forEveryIndexChunk(INDEXCHUNKFUNC func, void* data);
+// extern bool forEveryAddressInIndex(ADDRESSFUNC func, const blkrange_t& range, void* data);
+// extern bool forEverySmartContractInIndex(ADDRESSFUNC func, void* data);
+// extern bool chunksAreInitalized(void);
+#endif

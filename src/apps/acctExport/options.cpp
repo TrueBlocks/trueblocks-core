@@ -251,6 +251,10 @@ bool COptions::parseArguments(string_q& command) {
     if (Mocked(""))
         return false;
 
+    if (!isApiMode() && max_records == 250) {
+        max_records = NOPOS;
+    }
+
     freshenOnly = freshen;
 
     if (!accounting && !summarize_by.empty())

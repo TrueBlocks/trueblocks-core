@@ -60,7 +60,7 @@ bool COptions::handle_datamodel(void) {
         if (!frontMatterMap[model.doc_group]) {
             frontMatterMap[model.doc_group] = true;
             string_q front = STR_YAML_FRONTMATTER;
-            replace(front, "[{TITLE}]", model.doc_group);
+            replace(front, "[{TITLE}]", firstUpper(toLower(model.doc_group)));
             replace(front, "[{WEIGHT}]", uint_2_Str(model.doc_group == "Admin" ? 1700 : weight));
             replace(front, "[{M1}]", "data:");
             replace(front, "[{M2}]", "parent: \"collections\"");

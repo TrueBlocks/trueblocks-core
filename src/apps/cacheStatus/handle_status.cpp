@@ -11,7 +11,6 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 #include "options.h"
-#include "statusterse.h"
 
 extern const char* STR_TERSE_REPORT;
 extern string_q pathName(const string_q& str, const string_q& path = "");
@@ -253,60 +252,6 @@ bool COptions::handle_status(ostream& os) {
 }
 
 //---------------------------------------------------------------------------
-bool countFilesInCache(const string_q& path, void* data) {
-    CChainCache* counter = reinterpret_cast<CChainCache*>(data);
-    if (endsWith(path, '/')) {
-        if (contains(path, "/0")) {
-            uint64_t d = countOf(path, '/') - 1;
-            uint64_t m = counter->max_depth;
-            if (d == m) {  // TODO(tjayrush) fails after 999,999,999 blocks!
-                if (isTestMode()) {
-                    counter->items.push_back("CachePath/00/00/00");
-                    counter->items.push_back("CachePath/00/01/00");
-                    return false;
-                } else {
-                    counter->items.push_back(substitute(path, counter->path, ""));
-                }
-            }
-            if (!isTestMode()) {
-                counter->noteFolder(path);
-            }
-        }
-        return forEveryFileInFolder(path + "*", countFilesInCache, data);
-
-    } else {
-        if (!isTestMode())
-            counter->noteFile(path);
-        counter->is_valid = true;
-        if (isTestMode()) {
-            counter->items.push_back("CachePath/00/00/00/file1.bin");
-            counter->items.push_back("CachePath/00/01/00/file2.bin");
-            return false;
-
-        } else if (counter->max_depth == countOf(path, '/')) {
-            counter->items.push_back(substitute(path, counter->path, ""));
-        }
-    }
-    return !shouldQuit();
-}
-
-//---------------------------------------------------------------------------
-bool countFiles(const string_q& path, void* data) {
-    CCache* counter = reinterpret_cast<CCache*>(data);
-    if (endsWith(path, '/')) {
-        if (!isTestMode() && !contains(path, "monitors/staging"))
-            counter->noteFolder(path);
-        return forEveryFileInFolder(path + "*", countFiles, data);
-
-    } else if (endsWith(path, ".bin") || endsWith(path, ".json")) {
-        if (!isTestMode())
-            counter->noteFile(path);
-        counter->is_valid = true;
-    }
-    return !shouldQuit();
-}
-
-//---------------------------------------------------------------------------
 bool noteMonitor_light(const string_q& path, void* data) {
     if (contains(path, "/staging"))
         return !shouldQuit();
@@ -471,7 +416,10 @@ bool noteIndex(const string_q& path, void* data) {
         aci.firstTs = getTimestampAt(aci.firstApp);
         aci.latestTs = getTimestampAt(aci.latestApp);
 
-        getIndexMetrics(path, aci.nApps, aci.nAddrs);
+        CIndexHeader header;
+        readIndexHeader(path, header);
+        aci.nApps = header.nRows;
+        aci.nAddrs = header.nAddrs;
         counter->indexArray->push_back(aci);
     }
     return !shouldQuit();
@@ -543,42 +491,6 @@ bool notePrice(const string_q& path, void* data) {
         counter->priceArray->push_back(pri);
     }
     return !shouldQuit();
-}
-
-//---------------------------------------------------------------------------
-void getIndexMetrics(const string_q& path, uint32_t& nAppearences, uint32_t& nAddresses) {
-    nAppearences = nAddresses = (uint32_t)-1;
-    if (contains(path, "blooms")) {
-        return;
-    }
-
-    if (endsWith(path, ".txt")) {
-        nAppearences = (uint32_t)fileSize(path) / (uint32_t)59;
-        CStringArray lines;
-        asciiFileToLines(path, lines);
-        CAddressBoolMap addrMap;
-        for (auto line : lines)
-            addrMap[nextTokenClear(line, '\t')] = true;
-        nAddresses = (uint32_t)addrMap.size();
-        return;
-    }
-
-    CArchive archive(READING_ARCHIVE);
-    if (!archive.Lock(path, modeReadOnly, LOCK_NOWAIT))
-        return;
-
-    CIndexHeader header;
-    bzero(&header, sizeof(header));
-    // size_t nRead =
-    archive.Read(&header, sizeof(header), 1);
-    // if (false) { //nRead != sizeof(header)) {
-    //    cerr << "Could not read file: " << path << endl;
-    //    return;
-    //}
-    ASSERT(header.magic == MAGIC_NUMBER);
-    // ASSERT(bytes_2_Hash(h->hash) == versionHash);
-    nAddresses = header.nAddrs;
-    nAppearences = header.nRows;
 }
 
 //--------------------------------------------------------------------------------

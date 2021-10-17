@@ -40,7 +40,7 @@ int main(int argc, const char* argv[]) {
                     cout << (options.isText ? uint_2_Str(nTimestamps())
                                             : "{ \"nTimestamps\": " + uint_2_Str(nTimestamps()) + "}");
                 } else {
-                    getTimestampAt(options.latest);  // freshens timestamp file but otherwise ignored
+                    getTimestampAt(options.latest.blockNumber);  // freshens timestamp file but otherwise ignored
                     forEveryTimestamp(visitBlock, &options);
                     if (options.corrections.size() > 0) {
                         options.applyCorrections();
@@ -67,6 +67,14 @@ bool visitBlock(CBlock& block, void* data) {
         return checkTimestamp(block, data);
     }
 
+    opt->cnt++;
+    if (isTestMode()) {
+        if (opt->cnt > 100)
+            return false;
+        if (contains(block.name, "(est)"))
+            return true;
+    }
+
     if (opt->isText) {
         cout << block.Format(expContext().fmtMap["format"]) << endl;
 
@@ -79,15 +87,14 @@ bool visitBlock(CBlock& block, void* data) {
         unindent();
     }
     opt->firstOut = false;
-    if (isTestMode() && (++opt->cnt > 100))
-        return false;
 
     return true;
 }
 
+extern void estBnFromTs(CBlock& block, timestamp_t ts);
+extern void estTsFromBn(CBlock& block, blknum_t bn);
 //--------------------------------------------------------------------------------
 void COptions::applyFilter() {
-    //    items.reserve(requests.size() + 10)
     for (auto request : requests) {
         CBlock block;
         if (request.first == "block") {
@@ -99,14 +106,14 @@ void COptions::applyFilter() {
 
             getBlock_light(block, str_2_Uint(bnStr));
 
-            // TODO(tjayrush): this should be in the library so every request for zero block gets a valid
-            // blockNumber
+            // TODO(tjayrush): this should be in the library so every request for zero block
+            // TODO(tjayrush): gets a valid blockNumber
             if (block.blockNumber == 0) {
                 blknum_t bn = str_2_Uint(bnStr);
                 if (bn != 0) {
-                    // We've been asked to find a block that is in the future...estimate 14 blocks
-                    block.timestamp = istanbulTs + timestamp_t(14 * (bn - instanbulBlock));
-                    block.blockNumber = bn;
+                    // We've been asked to find a block that is in the future...estimate 14 second blocks
+                    block = latest;
+                    estTsFromBn(block, bn);
                     request.second += " (est)";
 
                 } else {
@@ -119,13 +126,36 @@ void COptions::applyFilter() {
             }
 
         } else if (request.first == "date") {
-            if (lookupDate(block, (timestamp_t)str_2_Uint(request.second), getBlockProgress(BP_CLIENT).client)) {
-                if (!visitBlock(block, this)) {
-                    return;
-                }
+            timestamp_t ts = (timestamp_t)str_2_Uint(request.second);
+            if (ts > latest.timestamp) {
+                cerr << "Timestamp after latest block " << request.second << endl;
+                block = latest;
+                estBnFromTs(block, ts);
+                request.second += " (est)";
             } else {
-                LOG_WARN("Could not find a block at date " + request.second);
+                lookupDate(block, (timestamp_t)str_2_Uint(request.second), latest.blockNumber);
             }
+            if (!visitBlock(block, this))
+                return;
         }
     }
+}
+
+#define EST_BLOCK_TIME float(13.3)
+void estTsFromBn(CBlock& block, blknum_t bn) {
+    if (block.blockNumber > bn)
+        return;
+    // incoming block has 'latest' timestamp and blockNumber
+    float needed = bn - block.blockNumber;
+    block.timestamp = block.timestamp + timestamp_t(EST_BLOCK_TIME * needed);
+    block.blockNumber = bn;
+}
+
+void estBnFromTs(CBlock& block, timestamp_t ts) {
+    if (block.timestamp > ts)
+        return;
+    // incoming block has 'latest' timestamp and blockNumber
+    timestamp_t needed = ts - block.timestamp;
+    block.blockNumber = block.blockNumber + blknum_t(floor((needed / EST_BLOCK_TIME) + .5));
+    block.timestamp = ts;
 }

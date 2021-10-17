@@ -4,7 +4,7 @@ The `chifra quotes` tool provides USD ($) price data to other tools and to the c
 
 ```[plaintext]
 Purpose:
-  Freshen or display Ethereum price data.
+  Freshen or display Ethereum price data. This tool has been deprecated.
 
 Usage:
   chifra quotes [flags]
@@ -12,10 +12,10 @@ Usage:
 Flags:
   -f, --freshen         Freshen price database
   -p, --period string   increment of display
-                        One of 5, 15, 30, 60, 120, 240, 1440, 10080, hourly, daily, weekly
+                        One of [ 5 | 15 | 30 | 60 | 120 | 240 | 1440 | 10080 | hourly | daily | weekly ]
   -a, --pair string     which price pair to freshen or list (see Poloniex)
   -e, --feed string     the feed for the price data
-                        One of poloniex, maker, tellor
+                        One of [ poloniex | maker | tellor ]
 
 Global Flags:
   -x, --fmt string   export format, one of [none|json*|txt|csv|api]

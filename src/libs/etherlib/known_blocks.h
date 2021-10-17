@@ -17,7 +17,6 @@ namespace qblocks {
 
 // known timestamps
 #define blockZeroTs ((timestamp_t)1438269960)
-#define istanbulTs ((timestamp_t)1575764709)
 
 // known blocks
 #define firstTransactionBlock 46147

@@ -15,25 +15,26 @@ package cmd
 import (
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/utils"
 	"github.com/spf13/cobra"
 )
 
 func validateAbisArgs(cmd *cobra.Command, args []string) error {
 	if AbisOpts.classes {
-		return makeError("the '{0}' option is not implemented", "--classes")
+		return validate.Usage("the '{0}' option is not implemented", "--classes")
 	}
 
 	if len(AbisOpts.sol) > 0 {
 		cleaned := "./" + strings.Replace(AbisOpts.sol, ".sol", "", 1) + ".sol"
 		if !utils.FileExists(cleaned) {
-			return makeError("file not found at {0}", cleaned)
+			return validate.Usage("file not found at {0}", cleaned)
 		}
 		return nil
 	}
 
 	if len(AbisOpts.find) == 0 && !AbisOpts.known {
-		err := validateOneAddr(args)
+		err := validate.ValidateOneAddr(args)
 		if err != nil {
 			return err
 		}

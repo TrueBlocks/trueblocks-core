@@ -15,18 +15,7 @@
  * Parts of this file were generated with makeClass --options. Edit only those parts of
  * the code outside of the BEG_CODE/END_CODE sections
  */
-#include "pinlib.h"
-#include "status.h"
-#include "statusterse.h"
-#include "cachebase.h"
-#include "chaincache.h"
-#include "collectioncache.h"
-#include "pricecache.h"
-#include "monitorcache.h"
-#include "indexcache.h"
-#include "abicache.h"
-#include "slurpcache.h"
-#include "namecache.h"
+#include "cachelib.h"
 #include "configuration.h"
 
 // BEG_ERROR_DEFINES
@@ -63,15 +52,11 @@ class COptions : public CAbiOptions {
 };
 
 //-------------------------------------------------------------------------
-extern bool countFiles(const string_q& path, void* data);
-extern bool countFilesInCache(const string_q& path, void* data);
-extern bool listFilesInCache(const string_q& path, void* data);
 extern bool noteMonitor_light(const string_q& path, void* data);
 extern bool noteMonitor(const string_q& path, void* data);
 extern bool noteABI(const string_q& path, void* data);
 extern bool notePrice(const string_q& path, void* data);
 extern bool noteIndex(const string_q& path, void* data);
-extern void getIndexMetrics(const string_q& path, uint32_t& nRecords, uint32_t& nAddresses);
 
 //-------------------------------------------------------------------------
 class CItemCounter : public CCache {

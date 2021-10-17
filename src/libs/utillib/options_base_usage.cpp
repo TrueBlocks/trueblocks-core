@@ -29,14 +29,12 @@ static ostream& out = cerr;
 //--------------------------------------------------------------------------------
 bool COptionsBase::usage(const string_q& errMsg) const {
     // TODO: remove this if no longer needed
-    if (getEnvStr("OLD_PARSER") == "true") {
+    if (getEnvStr("OLD_PARSER") == "true" || getEnvStr("OLD_PARSER_API") == "true") {
         if (!endsWith(getProgName(), "Test") && getProgName() != "makeClass") {
-            cerr << "I am in the old fashioned usage code" << endl;
-        }
-    }
-    if (getEnvStr("OLD_PARSER_API") == "true") {
-        if (!endsWith(getProgName(), "Test") && getProgName() != "makeClass") {
-            errorMessage("I am in the old fashioned usage code");
+            if (isApiMode())
+                errorMessage("I am in the old fashioned usage code");
+            else
+                cerr << "I am in the old fashioned usage code" << endl;
         }
     }
 
@@ -344,6 +342,7 @@ map<string_q, string_q> pathCmdChifraMap = {
     make_pair("getState", "chifra state"),
     make_pair("getTokens", "chifra tokens"),
     make_pair("cacheStatus", "chifra status"),
+    make_pair("chunkMan", "chifra chunks"),
     make_pair("flame", "chifra serve"),
     make_pair("blockScrape", "chifra scrape"),
     make_pair("pinMan --init", "chifra init"),
@@ -375,6 +374,7 @@ map<string, string> cmdPathChifraMap = {
     {"state", "getState"},
     {"tokens", "getTokens"},
     {"status", "cacheStatus"},
+    {"chunks", "chunkMan"},
     {"serve", "flame"},
     {"scrape", "blockScrape"},
     {"init", "pinMan --init"},

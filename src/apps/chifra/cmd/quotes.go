@@ -33,10 +33,10 @@ var quotesCmd = &cobra.Command{
 
 var usageQuotes = `quotes [flags]`
 
-var shortQuotes = "freshen or display Ethereum price data"
+var shortQuotes = "freshen or display Ethereum price data. This tool has been deprecated"
 
 var longQuotes = `Purpose:
-  Freshen or display Ethereum price data.`
+  Freshen or display Ethereum price data. This tool has been deprecated.`
 
 var notesQuotes = `
 Notes:
@@ -58,10 +58,10 @@ func init() {
 	quotesCmd.PersistentFlags().SortFlags = false
 	quotesCmd.Flags().BoolVarP(&QuotesOpts.freshen, "freshen", "f", false, "Freshen price database")
 	quotesCmd.Flags().StringVarP(&QuotesOpts.period, "period", "p", "", `increment of display
-One of 5, 15, 30, 60, 120, 240, 1440, 10080, hourly, daily, weekly`)
+One of [ 5 | 15 | 30 | 60 | 120 | 240 | 1440 | 10080 | hourly | daily | weekly ]`)
 	quotesCmd.Flags().StringVarP(&QuotesOpts.pair, "pair", "a", "", "which price pair to freshen or list (see Poloniex)")
 	quotesCmd.Flags().StringVarP(&QuotesOpts.feed, "feed", "e", "", `the feed for the price data
-One of poloniex, maker, tellor`)
+One of [ poloniex | maker | tellor ]`)
 	quotesCmd.Flags().SortFlags = false
 	quotesCmd.PersistentFlags().SortFlags = false
 

@@ -7,7 +7,7 @@ info:
   license:
     name: GPL 3.0
     url: http://www.gnu.org/licenses/
-  version: 0.14.0-alpha
+  version: 0.15.0-alpha
   description: >
 
     A REST layer over the TrueBlocks application. With `chifra serve`, you can
@@ -17,13 +17,13 @@ info:
 
     This API's endpoints are exact translations of the commands used by the chifra
     CLI application, and the query parameters mirror the commands' options and
-    flags. If you want details, [the commands have their own documentation page](/docs/chifra/introducing-chifra/).
+    flags. If you want details, [the commands have their own documentation page](/docs/chifra/admin/).
 
-    For detailed descriptions of fields, see [the data model reference](/data-model/intro/intro).
+    For detailed descriptions of fields, see [the data model reference](/data-model/intro/).
 
       ### Before you begin
 
-    1. [Install the trueblocks-core application](/docs/prologue/installing-trueblocks/)
+    1. [Install the trueblocks-core application](/docs/install/install-trueblocks/)
       on your machine, change your configs as needed.
     2. Run `chifra serve`
 
@@ -1308,12 +1308,40 @@ paths:
       tags:
         - Admin
       summary: Scrape index
-      description: Scan the chain and update the TrueBlocks index of appearances.
+      description: Scan the chain and update (and optionally pin) the TrueBlocks index of appearances.
       operationId: admin-scrape
       parameters:
+        - name: modes
+          description: which scraper(s) to control (indexer is default)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - indexer
+                - monitors
+                - both
+        - name: action
+          description: command to apply to the specified scrape
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+            enum:
+              - toggle
+              - run
+              - restart
+              - pause
+              - quit
         - name: pin
           description: >
-            pin new chunks (and blooms) to IPFS (requires Pinata key and running IPFS node)
+            pin chunks (and blooms) to IPFS as they are created (requires pinning service)
           required: false
           style: form
           in: query
@@ -1321,7 +1349,7 @@ paths:
           schema:
             type: boolean
         - name: n_blocks
-          description: maximum number of blocks to process
+          description: maximum number of blocks to process per pass
           required: false
           style: form
           in: query
@@ -1349,11 +1377,11 @@ paths:
       tags:
         - Admin
       summary: Initialize index
-      description: Initialize the index of appearances by downloading Bloom filters.
+      description: Initialize the TrueBlocks system by downloading from IPFS.
       operationId: admin-init
       parameters:
         - name: all
-          description: download full index chunks as well as Bloom filter
+          description: in addition to Bloom filters, download full index chunks
           required: false
           style: form
           in: query
@@ -1381,12 +1409,11 @@ paths:
       tags:
         - Admin
       summary: Manage pins
-      description: Manage pinned index of appearances and associated Bloom filters.
+      description: Manage pinned index of appearances and associated blooms.
       operationId: admin-pins
       parameters:
         - name: list
-          description: >
-            list the index and Bloom filter hashes from local manifest or pinning service
+          description: list the bloom and index hashes from local cache or IPFS
           required: false
           style: form
           in: query
@@ -1394,8 +1421,7 @@ paths:
           schema:
             type: boolean
         - name: init
-          description: >
-            initialize index of appearances by downloading Bloom filters from pinning service
+          description: download the blooms or index chunks from IPFS
           required: false
           style: form
           in: query
@@ -1403,7 +1429,7 @@ paths:
           schema:
             type: boolean
         - name: freshen
-          description: freshen index of appearances using the same mode from most recent --init
+          description: check for new bloom or index chunks and download if available
           required: false
           style: form
           in: query
@@ -1411,8 +1437,7 @@ paths:
           schema:
             type: boolean
         - name: all
-          description: >
-            for --init and --freshen modes only, download full index chunks as well as Bloom filter
+          description: in addition to Bloom filters, download full index chunks
           required: false
           style: form
           in: query
@@ -1421,13 +1446,31 @@ paths:
             type: boolean
         - name: share
           description: >
-            pin downloaded files to your local IPFS store, that is, share them (requires IPFS)
+            share downloaded data by pinning it to IPFS (the IPFS daemon must be running)
           required: false
           style: form
           in: query
           explode: true
           schema:
             type: boolean
+        - name: remote
+          description: >
+            for --list mode only, recover the manifest from IPFS via UnchainedIndex smart contract
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: sleep
+          description: >
+            throttle requests by this many seconds (.25 seconds delay between requests by default)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: number
       responses:
         "200":
           description: returns the requested data
@@ -1462,12 +1505,92 @@ paths:
                   }
         "400":
           description: bad input parameter
+  /chunks:
+    get:
+      tags:
+        - Admin
+      summary: Manage chunks
+      description: Manage and investigate chunks and bloom filters.
+      operationId: admin-chunks
+      parameters:
+        - name: blocks
+          description: an optional list of blocks to process
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: blknum_t
+        - name: list
+          description: list the bloom and index hashes from local cache or IPFS
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: check
+          description: check the validity of the chunk or bloom
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: extract
+          description: show some or all of the contents of the chunk or bloom filters
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
+            enum:
+              - header
+              - addr_table
+              - app_table
+              - chunks
+              - blooms
+        - name: stats
+          description: for the --list option only, display statistics about each chunk or bloom
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: save
+          description: >
+            for the --extract option only, save the entire chunk to a similarly named file as well as display
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: returns the requested data
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    description: 
+                    type: array
+                    items:
+                      
+        "400":
+          description: bad input parameter
   /quotes:
     get:
       tags:
         - Other
       summary: Price quotes
-      description: Freshen or display Ethereum price data.
+      description: Freshen or display Ethereum price data. This tool has been deprecated.
       operationId: other-quotes
       parameters:
         - name: freshen

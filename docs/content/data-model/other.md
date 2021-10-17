@@ -2,7 +2,7 @@
 title: "Other"
 description: ""
 lead: ""
-date: 2021-10-03T21:29:36
+date: 2021-10-03T20:13:02
 lastmod:
   - :git
   - lastmod
@@ -24,7 +24,7 @@ These commands call some useful miscellaneous tools:
 
 {{< alert icon="👉" title="note about keys"
 text="Note: some of these tools, like `ethslurp`, require an EtherScan key." >}}
-[Follow these instructions to add a key to your config](https://docs.trueblocks.io/docs/prologue/installing-trueblocks/#3-update-the-configs-for-your-rpc-and-api-keys)
+[Follow these instructions to add a key to your config](/docs/install/install-trueblocks/#3-update-the-configs-for-your-rpc-and-api-keys)
 
 _Each data structure is created by one or more tools which are detailed below_
 

@@ -1,8 +1,8 @@
 ---
-title: "Chain State"
+title: "Chain state"
 description: ""
 lead: ""
-date: 2021-10-03T19:59:18
+date: 2021-10-05T22:20:10
 lastmod:
   - :git
   - lastmod
@@ -47,7 +47,7 @@ Arguments:
 
 Flags:
   -p, --parts strings   control which state to export
-                        One or more of none, some, all, balance, nonce, code, storage, deployed, accttype
+                        One or more of [ none | some | all | balance | nonce | code | storage | deployed | accttype ]
   -c, --changes         only report a balance when it changes from one block to the next
   -n, --no_zero         suppress the display of zero balance accounts
 
@@ -90,7 +90,7 @@ Arguments:
 
 Flags:
   -p, --parts strings   which parts of the token information to retrieve
-                        One or more of name, symbol, decimals, totalSupply, version, none, all
+                        One or more of [ name | symbol | decimals | totalSupply | version | none | all ]
   -b, --by_acct         consider each address an ERC20 token except the last, whose balance is reported for each token
   -n, --no_zero         suppress the display of zero balance accounts
 

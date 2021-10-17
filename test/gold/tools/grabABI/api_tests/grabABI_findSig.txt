@@ -1,4 +1,4 @@
 {
-  "encoding": "0xa6f9dae1",
-  "signature": "changeOwner(address)"
+  "encoding": "0x1aa3a008",
+  "signature": "register()"
 }

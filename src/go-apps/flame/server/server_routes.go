@@ -23,6 +23,7 @@ import (
 	"net/http"
 	"time"
 
+	utils "github.com/TrueBlocks/trueblocks-core/src/go-apps/blaze/utils"
 	"github.com/gorilla/mux"
 	"golang.org/x/time/rate"
 )
@@ -68,7 +69,7 @@ func Logger(inner http.Handler, name string) http.Handler {
 		start := time.Now()
 		inner.ServeHTTP(w, r)
 		t := ""
-		if isTestMode(r) {
+		if utils.IsTestMode(r) {
 			t = "-test"
 		}
 		log.Printf(
@@ -89,20 +90,20 @@ func Index(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Users Manual")
 }
 
-	// By removing, inserting into, or altering any of the following 10  lines
-	// of code, you are violating the terms of our usage license. Don't do it.
-	// fileName := Options.Status.CachePath + "lics/export.txt"
-	// if false { // !utils.FileExists(fileName)) {
-	//	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-	//	w.Header().Set("Access-Control-Allow-Origin", "*")
-	//	w.Header().Set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
-	//	w.Header().Set("Access-Control-Allow-Methods", "PUT, POST, GET, DELETE, OPTIONS")
-	//	w.WriteHeader(http.StatusOK)
-	//	fmt.Fprint(w, "In order to use the 'export' route, you must license the module. Quitting")
-	//	return
-	// }
-	// By removing, inserting into, or altering any of the above 10 uncommented
-	// lines of code, you are violating the terms of our usage license. Don't do it.
+// By removing, inserting into, or altering any of the following 10  lines
+// of code, you are violating the terms of our usage license. Don't do it.
+// fileName := Options.Status.CachePath + "lics/export.txt"
+// if false { // !utils.FileExists(fileName)) {
+//	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+//	w.Header().Set("Access-Control-Allow-Origin", "*")
+//	w.Header().Set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
+//	w.Header().Set("Access-Control-Allow-Methods", "PUT, POST, GET, DELETE, OPTIONS")
+//	w.WriteHeader(http.StatusOK)
+//	fmt.Fprint(w, "In order to use the 'export' route, you must license the module. Quitting")
+//	return
+// }
+// By removing, inserting into, or altering any of the above 10 uncommented
+// lines of code, you are violating the terms of our usage license. Don't do it.
 // BEG_ROUTE_CODE
 
 // AccountsList help text todo
@@ -190,6 +191,11 @@ func AdminPins(w http.ResponseWriter, r *http.Request) {
 	CallOne(w, r, "pinMan", "pins")
 }
 
+// AdminChunks help text todo
+func AdminChunks(w http.ResponseWriter, r *http.Request) {
+	CallOne(w, r, "chunkMan", "chunks")
+}
+
 // OtherQuotes help text todo
 func OtherQuotes(w http.ResponseWriter, r *http.Request) {
 	CallOne(w, r, "getQuotes", "quotes")
@@ -216,13 +222,6 @@ var routes = Routes{
 		"GET",
 		"/",
 		Index,
-	},
-
-	Route{
-		"ManageScraper",
-		"GET",
-		"/scraper",
-		ManageScraper,
 	},
 
 	Route{
@@ -351,6 +350,13 @@ var routes = Routes{
 		"GET",
 		"/pins",
 		AdminPins,
+	},
+
+	Route{
+		"AdminChunks",
+		"GET",
+		"/chunks",
+		AdminChunks,
 	},
 
 	Route{
