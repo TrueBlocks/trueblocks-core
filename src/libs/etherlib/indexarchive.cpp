@@ -37,11 +37,11 @@ CIndexArchive::~CIndexArchive(void) {
 
 //----------------------------------------------------------------
 bool CIndexArchive::ReadIndexFromBinary(const string_q& path) {
-    if (m_isReading && !fileExists(path))
+    if (!m_isReading)
         return false;
-    if (!m_isReading && fileExists(path))
+    if (!fileExists(path))
         return false;
-    if (!Lock(path, (m_isReading ? modeReadOnly : modeWriteCreate), (m_isReading ? LOCK_NOWAIT : LOCK_WAIT)))
+    if (!Lock(path, modeReadOnly, LOCK_NOWAIT))
         return false;
 
     size_t sz = fileSize(path);
@@ -309,14 +309,6 @@ bool readIndexHeader(const string_q& path, CIndexHeader& header) {
 //         return (*visitor->indexFunc)(archive, visitor->callData);
 //     }
 //     return true;
-// }
-
-//--------------------------------------------------------------
-// bool forEveryIndexChunk(INDEXCHUNKFUNC func, void* data) {
-//     CChunkVisitor visitor;
-//     visitor.indexFunc = func;
-//     visitor.callData = data;
-//     return forEveryFileInFolder(indexFolder_finalized, chunkVisitFunc, &visitor);
 // }
 
 //--------------------------------------------------------------
