@@ -34,7 +34,7 @@ bool visitStagingIndexFiles(const string_q& path, void* data) {
         }
 
         timestamp_t unused;
-        options->fileRange.first = bnFromPath(path, options->fileRange.second, unused);
+        options->fileRange.first = path_2_Bn(path, options->fileRange.second, unused);
         ASSERT(unused != NOPOS && options->fileRange.first != NOPOS && options->fileRange.second != NOPOS);
 
         // Note that `start` and `end` options are ignored when scanning

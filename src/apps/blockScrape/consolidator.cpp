@@ -82,7 +82,7 @@ bool copyRipeToStage(const string_q& path, void* data) {
     } else {
         blknum_t e_unused;
         timestamp_t ts;
-        blknum_t bn = bnFromPath(path, e_unused, ts);
+        blknum_t bn = path_2_Bn(path, e_unused, ts);
 
         // If we're not one behind, we have a problem
         CConsolidator* con = reinterpret_cast<CConsolidator*>(data);

@@ -197,15 +197,15 @@ extern const char* STR_DISPLAY_BLOCK;
 // EXISTING_CODE
 typedef map<blknum_t, CBlock> CBlockMap;
 //---------------------------------------------------------------------------
-extern blknum_t bnFromPath(const string_q& path, blknum_t& endOut, timestamp_t& ts);
-inline blknum_t bnFromPath(const string_q& path, blknum_t& endOut) {
+extern blknum_t path_2_Bn(const string_q& path, blknum_t& endOut, timestamp_t& ts);
+inline blknum_t path_2_Bn(const string_q& path, blknum_t& endOut) {
     timestamp_t unused_ts;
-    return bnFromPath(path, endOut, unused_ts);
+    return path_2_Bn(path, endOut, unused_ts);
 }
-inline blknum_t bnFromPath(const string_q& path) {
+inline blknum_t path_2_Bn(const string_q& path) {
     blknum_t unused = NOPOS;
     timestamp_t unused_ts;
-    return bnFromPath(path, unused, unused_ts);
+    return path_2_Bn(path, unused, unused_ts);
 }
 // EXISTING_CODE
 }  // namespace qblocks

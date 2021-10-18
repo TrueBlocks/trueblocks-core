@@ -24,7 +24,7 @@ bool visitFile(const string_q& path, void* data) {
     } else {
         if (endsWith(path, ".txt.sorted")) {
             blknum_t end;
-            blknum_t start = bnFromPath(path, end);
+            blknum_t start = path_2_Bn(path, end);
             if (end >= 1000000 && start < 6500000) {
                 cerr << path << "\tskip\r";
                 cerr.flush();
@@ -34,7 +34,7 @@ bool visitFile(const string_q& path, void* data) {
             CStringArray lines;
             asciiFileToLines(path, lines);
 
-            blknum_t prev = bnFromPath(path) - 1;
+            blknum_t prev = path_2_Bn(path) - 1;
             for (auto line : lines) {
                 address_t addr = nextTokenClear(line, '\t');
                 blknum_t cur = str_2_Uint(line);
@@ -234,7 +234,7 @@ int main(int argc, const char *argv[]) {
         moveFile(eFn, nFn);
 
         blknum_t last;
-        blknum_t first = bnFromPath(nFn, last);
+        blknum_t first = path_2_Bn(nFn, last);
 
         cout << "Reading records from " << nFn << endl;
         CStringArray lines, output, before, after;

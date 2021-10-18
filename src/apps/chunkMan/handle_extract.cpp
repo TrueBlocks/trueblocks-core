@@ -24,7 +24,7 @@ static bool chunkVisitFunc(const string_q& path, void* data) {
             return true;
 
         blknum_t endBlock = NOPOS;
-        blknum_t startBlock = bnFromPath(path, endBlock);
+        blknum_t startBlock = path_2_Bn(path, endBlock);
 
         COptions* opts = (COptions*)data;
         //        cerr << opts->blocks.start << ":" << opts->blocks.stop << endl;

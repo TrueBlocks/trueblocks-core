@@ -57,7 +57,7 @@ bool visitFile(const string_q& path, void *data) {
 
         timestamp_t ts;
         blknum_t end;
-        blknum_t start = bnFromPath(path, end, ts);
+        blknum_t start = path_2_Bn(path, end, ts);
         if (start < 6000000 || start > 7000000) {
             cerr << "skipping " << start << " " << end << "\n";
             return true;
