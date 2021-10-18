@@ -49,9 +49,6 @@ func validateScrapeArgs(cmd *cobra.Command, args []string) error {
 	if !utils.IsTestMode() && ScrapeOpts.pin {
 		return validate.Usage("the --pin option is current not implemented")
 	}
-	if !utils.IsTestMode() && len(ScrapeOpts.port) > 0 {
-		return validate.Usage("the --publish option is current not implemented")
-	}
 
 	// need api keys and/or IPFS running
 	// bool &ScrapeOpts.pin, "pin", "p", false, "pin chunks (and blooms) to IPFS as they are created (requires pinning service)")

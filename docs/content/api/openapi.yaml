@@ -17,7 +17,7 @@ info:
 
     This API's endpoints are exact translations of the commands used by the chifra
     CLI application, and the query parameters mirror the commands' options and
-    flags. If you want details, [the commands have their own documentation page](/docs/chifra/admin/).
+    flags. If you want details, [the commands have their own documentation page](/docs/using/introducing-chifra/).
 
     For detailed descriptions of fields, see [the data model reference](/data-model/intro/).
 
