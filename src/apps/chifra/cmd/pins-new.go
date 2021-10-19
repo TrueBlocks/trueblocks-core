@@ -23,6 +23,7 @@ import (
 	"runtime/pprof"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib/chunk"
 	"github.com/spf13/cobra"
 )
 
@@ -72,6 +73,28 @@ func runNewPins(cmd *cobra.Command, args []string) {
 	if err != nil {
 		fmt.Printf("Error while saving manifest to %s:\n%s", target, err)
 	}
+
+	progress := make(chan *chunk.ChunkProgress, 10)
+	defer close(progress)
+	go chunk.GetChunksFromRemote(m.NewPins[2300:], chunk.BloomChunk, progress)
+
+	progressToLabel := map[chunk.ProgressEvent]string{
+		chunk.ProgressDownloading: "Downloading",
+		chunk.ProgressUnzipping:   "Unzipping",
+		chunk.ProgressValidating:  "Validating",
+		chunk.ProgressError:       "Error",
+	}
+
+	for event := range progress {
+		if event.Event == chunk.ProgressAllDone {
+			break
+		}
+
+		eventLabel := progressToLabel[event.Event]
+
+		log.Printf("[%s]: %s %s\n", event.FileName, eventLabel, event.Message)
+	}
+
 }
 
 // EXISTING_CODE

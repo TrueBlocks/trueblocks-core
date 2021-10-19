@@ -1,19 +1,19 @@
 package manifest
 
-type ipfsHash = string
+type IpfsHash = string
 
 type PinDescriptor struct {
 	FileName  string   `json:"fileName"`
-	BloomHash ipfsHash `json:"bloomHash"`
-	IndexHash ipfsHash `json:"indexHash"`
+	BloomHash IpfsHash `json:"bloomHash"`
+	IndexHash IpfsHash `json:"indexHash"`
 }
 
 type Manifest struct {
 	FileName           string          `json:"fileName"`
-	IndexFormat        ipfsHash        `json:"indexFormat"`
-	BloomFormat        ipfsHash        `json:"bloomFormat"`
+	IndexFormat        IpfsHash        `json:"indexFormat"`
+	BloomFormat        IpfsHash        `json:"bloomFormat"`
 	CommitHash         string          `json:"commitHash"`
-	PreviousHash       ipfsHash        `json:"prevHash"`
+	PreviousHash       IpfsHash        `json:"prevHash"`
 	NewBlockRange      ManifestRange   `json:"newBlockRange"`
 	PreviousBlockRange ManifestRange   `json:"prevBlockRange"`
 	NewPins            []PinDescriptor `json:"newPins"`
