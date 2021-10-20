@@ -129,7 +129,7 @@ func TestBlockRange_UnmarshalJSON(t *testing.T) {
 	}
 
 	var record SomeRecord
-	source := []byte(`{"blocks":"000000000-010567003"}`)
+	source := []byte(`{"blocks":"000000000-10567003"}`)
 
 	err := json.Unmarshal(source, &record)
 
