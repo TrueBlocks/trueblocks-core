@@ -12,12 +12,14 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"path"
 	"runtime"
 	"strconv"
 	"strings"
 	"sync"
 	"time"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/sigintTrap"
 	"github.com/panjf2000/ants/v2"
@@ -60,8 +62,8 @@ type fetchResult struct {
 	totalSize int64
 }
 
-var gatewayUrl = "https://gateway.pinata.cloud/ipfs/"
-var outputDir = "/tmp/pins/"
+var gatewayUrl = config.ReadBlockScrape().IpfsGateway
+var outputDir = config.ReadGlobal().IndexPath
 
 type outputConfig struct {
 	subdir    string
@@ -81,7 +83,7 @@ func (oc *outputConfig) Build(chunkType ChunkType) {
 }
 
 func (oc *outputConfig) ToPath(fileName string) string {
-	return outputDir + oc.subdir + fileName + oc.extension
+	return path.Join(oc.subdir, fileName, oc.extension)
 }
 
 // Downloads a chunk using HTTP
@@ -164,7 +166,7 @@ func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkType ChunkType, pro
 				}
 			}
 
-			if strings.Contains(gatewayUrl, "pinata") {
+			if gatewayUrl == config.DefaultIpfsGateway {
 				time.Sleep(time.Second * 5) // Align with Pinata rate limit
 			}
 		}

@@ -3,7 +3,8 @@ module github.com/TrueBlocks/trueblocks-core/src/apps/chifra
 go 1.16
 
 require (
-	github.com/alecthomas/participle/v2 v2.0.0-alpha7
+	github.com/BurntSushi/toml v0.4.1 // indirect
+	github.com/alecthomas/participle/v2 v2.0.0-alpha7 // indirect
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/panjf2000/ants/v2 v2.4.6 // indirect
 	github.com/spf13/cobra v1.2.1
