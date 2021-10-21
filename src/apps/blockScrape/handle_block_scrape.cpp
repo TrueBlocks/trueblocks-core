@@ -107,7 +107,8 @@ bool COptions::scrape_blocks(void) {
     LOG_TEST_CALL(os.str());
 
     ostringstream cmd;
-    cmd << "env TB_INDEXPATH=\"" << getIndexPath("") << "\" ";
+    cmd << "env TB_INDEXPATH=\"" << getIndexPath("")
+        << "\" ";  // note--cobra/viper will pick this up even though you won't find it
     cmd << os.str() << " ";
     cmd << "--nBlockProcs " << n_block_procs << " ";
     cmd << "--nAddrProcs " << n_addr_procs << " ";
