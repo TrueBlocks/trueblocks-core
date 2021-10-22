@@ -43,6 +43,9 @@ bool COptions::parseArguments(string_q& command) {
     // END_CODE_LOCAL_INIT
     string_q path;
 
+    CToml config(getConfigPath("makeClass.toml"));
+    bool makeClassOn = config.getConfigBool("enabled", "generate", false);
+
     Init();
     explode(arguments, command, ' ');
     for (auto arg : arguments) {
@@ -97,7 +100,8 @@ bool COptions::parseArguments(string_q& command) {
                 if (been_here)
                     break;
                 been_here = true;
-                tests.push_back("dev_tools/makeClass");
+                if (makeClassOn)
+                    tests.push_back("dev_tools/makeClass");
 
             } else if (arg == "tools" || arg == "tools/") {
                 static bool been_here = false;
@@ -165,7 +169,8 @@ bool COptions::parseArguments(string_q& command) {
         tests.push_back("libs/etherlib");
         tests.push_back("libs/acctlib");
         tests.push_back("libs/pinlib");
-        tests.push_back("dev_tools/makeClass");
+        if (makeClassOn)
+            tests.push_back("dev_tools/makeClass");
         tests.push_back("tools/ethNames");
         tests.push_back("tools/ethslurp");
         tests.push_back("tools/getBlocks");
