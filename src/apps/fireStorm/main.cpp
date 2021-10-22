@@ -21,70 +21,18 @@ int main(int argc, const char* argv[]) {
     if (!options.prepareArguments(argc, argv))
         return 0;
 
-    bool once = true;
     for (auto command : options.commandLines) {
         string_q orig = command;
         if (!options.parseArguments(command))
             return 0;
 
-        if (once)
-            cout << exportPreamble(expContext().fmtMap["header"], "CPinnedChunk");
-
-        string url = "https://etherscan.io/";
-        for (auto term : options.terms) {
-            string_q lower = toLower(term);
-            if (isAddress(lower)) {
-                url += "address/" + lower;
-
-            } else if (isHash(lower)) {
-                CTransaction trans;
-                getTransaction(trans, lower);
-                if (trans.hash == lower) {
-                    url += "tx/" + lower;
-                } else {
-                    url += "block/" + lower;
-                }
-
-            } else if (isFourByte(lower)) {
-                if (options.local)
-                    LOG_WARN("Local fourbyte is not implemented");
-                url = "https://www.4byte.directory/signatures/?bytes4_signature=" + lower;
-
-            } else {
-                if (endsWith(lower, ".eth")) {
-                    url = "https://etherscan.io/enslookup-search?search=" + lower;
-
-                } else if (contains(lower, ".")) {
-                    CUintArray parts;
-                    explode(parts, lower, '.');
-                    CTransaction trans;
-                    getTransaction(trans, parts[0], parts[1]);
-                    url += "tx/" + trans.hash;
-
-                } else {
-                    url += "block/" + lower;
-                }
-            }
+        for (auto u : options.urls) {
+            cerr << "Opening " << u << endl;
+            if (!isTestMode())
+                doCommand("open \"" + u + "\"");
         }
-
-        if (options.local) {
-            string_q base = getGlobalConfig("fireStorm")->getConfigStr("settings", "baseURL", "http://localhost:1234/");
-            if (!endsWith(base, "/"))
-                base += "/";
-            replace(url, "https://etherscan.io/block/", base + "explorer/blocks/");
-            replace(url, "https://etherscan.io/tx/", base + "explorer/transactions/");
-            replace(url, "https://etherscan.io/address/", base + "dashboard/accounts?address=");
-            replace(url, "https://www.4byte.directory/signatures/?bytes4_signature=", base + "/");
-            replace(url, "https://etherscan.io/", base + "explorer/");
-        }
-
-        cerr << "Opening " << url << endl;
-        if (!isTestMode())
-            doCommand("open " + url);
-        once = false;
     }
 
-    cout << exportPostamble(options.errors, expContext().fmtMap["meta"]);
     etherlib_cleanup();
 
     return 0;
