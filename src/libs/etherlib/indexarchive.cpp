@@ -148,7 +148,7 @@ void writeIndexAsAscii(const string_q& outFn, const CStringArray& lines) {
 }
 
 //----------------------------------------------------------------
-bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines, FILEVISITOR pinFunc, void* pinFuncData) {
+bool writeIndexAsBinary(const string_q& outFn, const CStringArray& lines, CONSTAPPLYFUNC pinFunc, void* pinFuncData) {
     // ASSUMES THE ARRAY IS SORTED!
 
     ASSERT(!fileExists(outFn));
