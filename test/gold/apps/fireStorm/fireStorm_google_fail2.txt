@@ -1,9 +1,15 @@
-chifra  explore --help --log_level 2
+chifra explore  1001001.0 --google
+TIME ~ CLOCK - <INFO>  : terms
+TIME ~ CLOCK - <INFO>  :   1001001.0
+TIME ~ CLOCK - <INFO>  : google: true
+
+  Option --google allows only an address term. Quitting...
+
 Purpose:
   Open a local or remote explorer for one or more addresses, blocks, or transactions.
 
 Usage:
-  chifra explore [flags] <term> [term...]
+  fireStorm [flags] [term...]
 
 Arguments:
   terms - one or more address, name, block, or transaction identifier
@@ -13,6 +19,4 @@ Flags:
   -g, --google   search google excluding popular blockchain explorers
 
 Global Flags:
-  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
-  -h, --help         display this help screen
-  -v, --verbose      enable verbose (increase detail with --log_level)
+  -h, --help           display this help screen

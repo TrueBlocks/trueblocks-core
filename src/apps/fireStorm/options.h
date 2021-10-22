@@ -29,11 +29,15 @@ class COptions : public CAbiOptions {
     bool google;
     // END_CODE_DECLARE
 
+    CStringArray urls;
+
     COptions(void);
     ~COptions(void);
 
     bool parseArguments(string_q& command) override;
     void Init(void) override;
 
-    bool forEveryTerm(CONSTAPPLYFUNC func, void* data);
+    string_q getExlusions(void);
 };
+
+extern string_q getBaseUrl(const string_q& type);

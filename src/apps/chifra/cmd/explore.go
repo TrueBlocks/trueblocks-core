@@ -36,10 +36,10 @@ var usageExplore = `explore [flags] <term> [term...]
 Arguments:
   terms - one or more address, name, block, or transaction identifier`
 
-var shortExplore = "open an explorer for one or more addresses, blocks, or transactions"
+var shortExplore = "open a local or remote explorer for one or more addresses, blocks, or transactions"
 
 var longExplore = `Purpose:
-  Open an explorer for one or more addresses, blocks, or transactions.`
+  Open a local or remote explorer for one or more addresses, blocks, or transactions.`
 
 var notesExplore = ``
 

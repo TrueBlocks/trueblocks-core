@@ -21,10 +21,10 @@
 static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
-    COption("terms", "", "list<string>", OPT_POSITIONAL, "one or more address, name, block, or transaction identifier"),  // NOLINT
+    COption("terms", "", "list<string>", OPT_POSITIONAL, "one or more address, name, block, or transaction identifier"),
     COption("local", "l", "", OPT_SWITCH, "open the local TrueBlocks explorer"),
     COption("google", "g", "", OPT_SWITCH, "search google excluding popular blockchain explorers"),
-    COption("", "", "", OPT_DESCRIPTION, "Open an explorer for one or more addresses, blocks, or transactions."),
+    COption("", "", "", OPT_DESCRIPTION, "Open a local or remote explorer for one or more addresses, blocks, or transactions."),  // NOLINT
     // clang-format on
     // END_CODE_OPTIONS
 };
@@ -73,25 +73,64 @@ bool COptions::parseArguments(string_q& command) {
     if (Mocked(""))
         return false;
 
-    //    configureDisplay("fireStorm", "CPinnedChunk", STR_DISPLAY_PINNEDCHUNK);
+    if (isApiMode())
+        return usage("This command is not available under API mode.");
 
-    if (google) {
-        const char* STR_GOOGLE = "https://www.google.com/search?q=";
-        CStringArray exclusions = {
-            "etherscan", "etherchain", "bloxy",     "bitquery", "ethplorer",
-            "tokenview", "blockshain", "anyblocks", "explorer",
-        };
-        ostringstream addendum;
-        for (auto ex : exclusions)
-            addendum << "+-" << ex << " ";
-        for (auto term : terms) {
-            ostringstream query;
-            query << "open " << STR_GOOGLE << term << addendum.str();
-            if (!system(query.str().c_str()))
-                return false;
-        }
-        return false;
+    if (google && local)
+        return usage("Choose either --google or --local, not both.");
+
+    for (auto term : terms) {
+        term = toLower(term);
+        if (google && !isAddress(term))
+            return usage("Option --google allows only an address term.");
     }
+
+    for (auto term : terms) {
+        term = toLower(term);
+        string_q url = getBaseUrl(local ? "local" : google ? "google" : "remote");
+        if (isAddress(term)) {
+            if (google) {
+                term = term + getExlusions();
+            } else {
+                term = "address/" + term;
+            }
+
+        } else if (isHash(term)) {
+            CTransaction trans;
+            getTransaction(trans, term);
+            if (trans.hash == term) {
+                term = "tx/" + term;
+            } else {
+                term = "block/" + term;
+            }
+
+        } else if (isFourByte(term)) {
+            url = getBaseUrl("fourByte");
+            term = "signatures/?bytes4_signature=" + term;
+
+        } else if (endsWith(term, ".eth")) {
+            url = getBaseUrl("remote");
+            term = "enslookup-search?search=" + term;
+
+        } else if (contains(term, ".")) {
+            CUintArray parts;
+            explode(parts, term, '.');
+            CTransaction trans;
+            getTransaction(trans, parts[0], parts[1]);
+            term = "tx/" + trans.hash;
+
+        } else {
+            term = "block/" + term;
+        }
+        if (local) {
+            replace(term, "tx/", "explorer/transactions/");
+            replace(term, "block/", "explorer/blocks/");
+            replace(term, "address/", "dashboard/accounts?address=");
+        }
+        urls.push_back(url + term);
+    }
+    if (urls.empty())
+        urls.push_back(getBaseUrl(local ? "local" : "remote"));
 
     return true;
 }
@@ -126,15 +165,34 @@ COptions::~COptions(void) {
 }
 
 //--------------------------------------------------------------------------------
-bool COptions::forEveryTerm(CONSTAPPLYFUNC func, void* data) {
-    if (!func)
-        return true;
+string_q COptions::getExlusions(void) {
+    if (!google)
+        return "";
 
-    for (auto term : terms) {
-        if (!(*func)(term, data)) {
-            return false;
-        }
+    CStringArray exclusions = {
+        "etherscan", "etherchain", "bloxy", "bitquery", "ethplorer", "tokenview", "anyblocks", "explorer",
+    };
+    ostringstream ret;
+    for (auto ex : exclusions)
+        ret << "+-" << ex;
+
+    return ret.str();
+}
+
+//----------------------------------------------------------------
+string_q getBaseUrl(const string_q& type) {
+    string_q ret;
+    if (type == "remote") {
+        ret = "https://etherscan.io/";
+    } else if (type == "fourByte") {
+        ret = "https://www.4byte.directory/";
+    } else if (type == "google") {
+        ret = "https://www.google.com/search?q=";
+    } else {
+        ASSERT(type == "local");
+        ret = getGlobalConfig("fireStorm")->getConfigStr("settings", "baseURL", "http://localhost:1234/");
     }
-
-    return true;
+    if (!endsWith(ret, "/"))
+        ret += "/";
+    return ret;
 }
