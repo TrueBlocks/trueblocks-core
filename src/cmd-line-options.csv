@@ -259,10 +259,10 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12080,tools,Other,quotes,getQuotes,,,,false,false,true,true,--,description,,Freshen or display Ethereum price data. This tool has been deprecated.
 12082,tools,Other,quotes,getQuotes,n1,,,false,false,false,false,--,note,,Due to restrictions from Poloniex&#44; this tool retrieves only 30 days of data at a time. You must repeatedly run this command until the data is up-to-date.
 
-12001,apps,Other,explore,fireStorm,terms,,,false,false,true,true,header,positional,list<string>,one or more addresses&#44; names&#44; block&#44; or transaction identifiers
+12001,apps,Other,explore,fireStorm,terms,,,false,false,true,true,header,positional,list<string>,one or more address&#44; name&#44; block&#44; or transaction identifier
 12002,apps,Other,explore,fireStorm,local,l,,false,false,true,true,header,switch,<boolean>,open the local TrueBlocks explorer
 12003,apps,Other,explore,fireStorm,google,g,,false,false,true,true,header,switch,<boolean>,search google excluding popular blockchain explorers
-12002,apps,Other,explore,fireStorm,,,,false,false,true,true,--,description,,Open an explorer for one or more addresses&#44; blocks&#44; or transactions.
+12002,apps,Other,explore,fireStorm,,,,false,false,true,true,--,description,,Open a local or remote explorer for one or more address&#44; block&#44; or transaction.
 
 12120,tools,Other,slurp,ethslurp,addrs,,,true,false,true,true,header,positional,list<addr>,one or more addresses to slurp from Etherscan
 12140,tools,Other,slurp,ethslurp,blocks,,,false,false,true,true,header,positional,list<blknum>,an optional range of blocks to slurp

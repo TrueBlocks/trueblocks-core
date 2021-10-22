@@ -10,7 +10,7 @@ Usage:
   chifra explore [flags] <term> [term...]
 
 Arguments:
-  terms - one or more addresses, names, block, or transaction identifiers
+  terms - one or more address, name, block, or transaction identifier
 
 Flags:
   -l, --local    open the local TrueBlocks explorer

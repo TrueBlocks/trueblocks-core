@@ -21,7 +21,7 @@
 static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
-    COption("terms", "", "list<string>", OPT_POSITIONAL, "one or more addresses, names, block, or transaction identifiers"),  // NOLINT
+    COption("terms", "", "list<string>", OPT_POSITIONAL, "one or more address, name, block, or transaction identifier"),  // NOLINT
     COption("local", "l", "", OPT_SWITCH, "open the local TrueBlocks explorer"),
     COption("google", "g", "", OPT_SWITCH, "search google excluding popular blockchain explorers"),
     COption("", "", "", OPT_DESCRIPTION, "Open an explorer for one or more addresses, blocks, or transactions."),
@@ -123,4 +123,18 @@ COptions::COptions(void) {
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
+}
+
+//--------------------------------------------------------------------------------
+bool COptions::forEveryTerm(CONSTAPPLYFUNC func, void* data) {
+    if (!func)
+        return true;
+
+    for (auto term : terms) {
+        if (!(*func)(term, data)) {
+            return false;
+        }
+    }
+
+    return true;
 }

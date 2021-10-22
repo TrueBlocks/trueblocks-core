@@ -34,4 +34,6 @@ class COptions : public CAbiOptions {
 
     bool parseArguments(string_q& command) override;
     void Init(void) override;
+
+    bool forEveryTerm(CONSTAPPLYFUNC func, void* data);
 };

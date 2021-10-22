@@ -12,6 +12,7 @@
  *-------------------------------------------------------------------------------------------*/
 #include "options.h"
 
+bool visitTerm(const string_q& term, void* data);
 //----------------------------------------------------------------
 int main(int argc, const char* argv[]) {
     nodeNotRequired();
@@ -29,6 +30,8 @@ int main(int argc, const char* argv[]) {
 
         if (once)
             cout << exportPreamble(expContext().fmtMap["header"], "CPinnedChunk");
+
+        options.forEveryTerm(visitTerm, nullptr);
 
         string url = "https://etherscan.io/";
         for (auto term : options.terms) {
@@ -88,4 +91,10 @@ int main(int argc, const char* argv[]) {
     etherlib_cleanup();
 
     return 0;
+}
+
+//----------------------------------------------------------------
+bool visitTerm(const string_q& term, void* data) {
+    cerr << term << endl;
+    return true;
 }
