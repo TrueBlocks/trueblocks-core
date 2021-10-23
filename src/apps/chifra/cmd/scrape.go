@@ -89,5 +89,11 @@ One of [ toggle | run | restart | pause | quit ]`)
 	rootCmd.AddCommand(scrapeCmd)
 }
 
+func TestLogScrape(args []string) {
+	if !utils.IsTestMode() {
+		return
+	}
+}
+
 // EXISTING_CODE
 // EXISTING_CODE

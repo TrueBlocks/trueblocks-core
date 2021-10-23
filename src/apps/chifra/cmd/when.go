@@ -79,5 +79,11 @@ func init() {
 	rootCmd.AddCommand(whenCmd)
 }
 
+func TestLogWhen(args []string) {
+	if !utils.IsTestMode() {
+		return
+	}
+}
+
 // EXISTING_CODE
 // EXISTING_CODE

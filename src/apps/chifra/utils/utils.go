@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
@@ -29,6 +30,23 @@ func IsTestMode() bool {
 
 func IsApiMode() bool {
 	return os.Getenv("API_MODE") == "true"
+}
+
+func TestLogArgs(name string, args []string) {
+	if len(args) == 0 {
+		return
+	}
+
+	fmt.Fprintf(os.Stderr, "TIME ~ CLOCK - <INFO>  : %s\n", name)
+	for _, arg := range args {
+		fmt.Fprintf(os.Stderr, "TIME ~ CLOCK - <INFO>  :   %s\n", arg)
+	}
+}
+
+func TestLogBool(name string, val bool) {
+	if val {
+		fmt.Fprintf(os.Stderr, "TIME ~ CLOCK - <INFO>  : %s: %t\n", name, val)
+	}
 }
 
 func AsciiFileToString(fn string) string {

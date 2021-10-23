@@ -94,5 +94,11 @@ One or more of [ test | abi_cache | block_cache | tx_cache | trace_cache | recon
 	rootCmd.AddCommand(statusCmd)
 }
 
+func TestLogStatus(args []string) {
+	if !utils.IsTestMode() {
+		return
+	}
+}
+
 // EXISTING_CODE
 // EXISTING_CODE

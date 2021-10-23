@@ -19,6 +19,7 @@ package cmd
 import (
 	"os"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -62,6 +63,15 @@ func init() {
 
 	exploreCmd.SetUsageTemplate(UsageWithNotes(notesExplore))
 	rootCmd.AddCommand(exploreCmd)
+}
+
+func TestLogExplore(args []string) {
+	if !utils.IsTestMode() {
+		return
+	}
+	utils.TestLogArgs("terms", args)
+	utils.TestLogBool("local", ExploreOpts.local)
+	utils.TestLogBool("google", ExploreOpts.google)
 }
 
 // EXISTING_CODE

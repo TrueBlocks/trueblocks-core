@@ -74,5 +74,11 @@ func init() {
 	rootCmd.AddCommand(listCmd)
 }
 
+func TestLogList(args []string) {
+	if !utils.IsTestMode() {
+		return
+	}
+}
+
 // EXISTING_CODE
 // EXISTING_CODE

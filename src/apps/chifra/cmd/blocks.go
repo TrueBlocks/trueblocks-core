@@ -89,5 +89,11 @@ func init() {
 	rootCmd.AddCommand(blocksCmd)
 }
 
+func TestLogBlocks(args []string) {
+	if !utils.IsTestMode() {
+		return
+	}
+}
+
 // EXISTING_CODE
 // EXISTING_CODE
