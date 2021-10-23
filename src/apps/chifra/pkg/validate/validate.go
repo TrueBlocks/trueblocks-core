@@ -65,7 +65,9 @@ func IsValidFourByte(str string) (bool, error) {
 }
 
 func IsValidAddress(addr string) (bool, error) {
-	if len(addr) != 42 {
+	if strings.Contains(addr, ".eth") {
+		return true, nil
+	} else if len(addr) != 42 {
 		return false, errors.New(FmtError("address (" + addr + ") is not 42 characters long"))
 	} else if !Is0xPrefixed(addr) {
 		return false, errors.New(FmtError("address (" + addr + ") does not start with '0x'"))
