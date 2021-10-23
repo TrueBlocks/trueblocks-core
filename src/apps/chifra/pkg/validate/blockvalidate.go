@@ -110,7 +110,7 @@ func IsRange(str string) (bool, error) {
 // Let's define bitmasks to make it easier to validate multiple block identifiers
 // (which usually are arguments to `chifra` commands). This way we can specify
 // that we want e.g. both block number and a special block as valid arguments
-type ValidArgumentType uint8
+type ValidArgumentType uint16
 
 const (
 	ValidArgumentBlockHash ValidArgumentType = 1 << iota
@@ -120,7 +120,9 @@ const (
 	ValidArgumentSpecialBlock
 )
 
-const ValidArgumentAll = ValidArgumentBlockHash | ValidArgumentBlockNumber | ValidArgumentDate | ValidArgumentRange | ValidArgumentSpecialBlock
+const ValidBlockId = ValidArgumentBlockHash | ValidArgumentBlockNumber | ValidArgumentSpecialBlock
+const ValidBlockIdWithRange = ValidBlockId | ValidArgumentRange
+const ValidBlockIdWithRangeAndDate = ValidBlockIdWithRange | ValidArgumentDate
 
 // Errors returned by ValidateBlockIdentifiers (note: it can also return an
 // error passed from IsRange)
@@ -132,6 +134,12 @@ type InvalidIdentifierLiteralError struct {
 
 func (e *InvalidIdentifierLiteralError) Error() string {
 	return fmt.Sprintf("The given value '%s' is not a numeral or a special named block.", e.Value)
+}
+
+// IsValidBlockId returns true or error given a string and a valid block types
+func IsValidBlockId(blockId string, validTypes ValidArgumentType) (bool, error) {
+	err := ValidateBlockIdentifiers([]string{blockId}, validTypes, 1)
+	return err == nil, err
 }
 
 // Validates multiple identifiers against multiple valid types (specified as bitmasks).
@@ -177,13 +185,11 @@ func ValidateBlockIdentifiers(identifiers []string, validTypes ValidArgumentType
 		}
 
 		_, rangeErr := IsRange(identifier)
-
 		if rangeErr != nil {
 			return rangeErr
 		}
 
 		rangesFound++
-
 		if rangesFound > maxRanges {
 			return ErrTooManyRanges
 		}

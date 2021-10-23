@@ -26,8 +26,7 @@ func validateWhenArgs(cmd *cobra.Command, args []string) error {
 	// 	}
 	// }
 
-	validationErr := validate.ValidateBlockIdentifiers(args, validate.ValidArgumentAll, 1)
-
+	validationErr := validate.ValidateBlockIdentifiers(args, validate.ValidBlockIdWithRangeAndDate, 1)
 	if validationErr != nil {
 		if invalidLiteral, ok := validationErr.(*validate.InvalidIdentifierLiteralError); ok {
 			return invalidLiteral

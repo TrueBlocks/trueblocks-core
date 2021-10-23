@@ -23,10 +23,7 @@ import (
 func validateBlocksArgs(cmd *cobra.Command, args []string) error {
 	validationErr := validate.ValidateBlockIdentifiers(
 		args,
-		validate.ValidArgumentBlockHash|
-			validate.ValidArgumentBlockNumber|
-			validate.ValidArgumentSpecialBlock|
-			validate.ValidArgumentRange,
+		validate.ValidBlockIdWithRange,
 		1,
 	)
 
