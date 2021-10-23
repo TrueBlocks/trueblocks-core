@@ -26,22 +26,6 @@ func IsBlockHash(str string) bool {
 	return true
 }
 
-func IsTransactionHash(str string) bool {
-	if !Is0xPrefixed(str) {
-		return false
-	}
-
-	if len(str) != 66 {
-		return false
-	}
-
-	if !IsHex(str) {
-		return false
-	}
-
-	return true
-}
-
 func IsBlockNumber(str string) bool {
 	base := 10
 	source := str
@@ -133,10 +117,4 @@ type InvalidIdentifierLiteralError struct {
 
 func (e *InvalidIdentifierLiteralError) Error() string {
 	return fmt.Sprintf("The given value '%s' is not a numeral or a special named block.", e.Value)
-}
-
-// IsValidBlockId returns true or error given a string and a valid block types
-func IsValidBlockId(blockId string, validTypes ValidArgumentType) (bool, error) {
-	err := ValidateIdentifiers([]string{blockId}, validTypes, 1)
-	return err == nil, err
 }

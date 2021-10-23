@@ -59,6 +59,18 @@ func ValidateIdentifiers(identifiers []string, validTypes ValidArgumentType, max
 			continue
 		}
 
+		if isBitmaskSet(ValidArgumentTransHash) && IsTransHash(identifier) {
+			continue
+		}
+
+		if isBitmaskSet(ValidArgumentTransBlockNumberAndId) && IsTransBlockNumAndId(identifier) {
+			continue
+		}
+
+		if isBitmaskSet(ValidArgumentTransBlockHashAndId) && IsTransBlockHashAndId(identifier) {
+			continue
+		}
+
 		// If we are at this point and we don't want a range, it means that
 		// an identifier was invalid
 		if !isBitmaskSet(ValidArgumentRange) {
