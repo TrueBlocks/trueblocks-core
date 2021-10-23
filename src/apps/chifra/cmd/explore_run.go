@@ -13,10 +13,39 @@
 package cmd
 
 import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/utils"
 	"github.com/spf13/cobra"
 )
 
 func validateExploreArgs(cmd *cobra.Command, args []string) error {
+	TestLogExplore(args)
+
+	if ExploreOpts.google && ExploreOpts.local {
+		return validate.Usage("Choose either --google or --local, not both.")
+	}
+
+	for _, arg := range args {
+		isAddr, _ := validate.IsValidAddress(arg)
+		utils.TestLogBool("is_addr", isAddr)
+
+		if ExploreOpts.google {
+			if !isAddr {
+				return validate.Usage("Option --google allows only an address term.")
+			}
+
+		} else {
+			isBlock, _ := validate.IsValidBlockId([]string{arg}, validate.ValidBlockId)
+			isTx, _ := validate.IsValidTransId([]string{arg}, validate.ValidTransId)
+			isFourByte, _ := validate.IsValidFourByte(arg)
+			utils.TestLogBool("is_block_or_tx", isBlock || isTx)
+			utils.TestLogBool("is_fourbyte", isFourByte)
+			if !isAddr && !isBlock && !isFourByte && !isTx {
+				return validate.Usage("The argument ({0}) does not appear to be valid.", arg)
+			}
+		}
+	}
+
 	err := validateGlobalFlags(cmd, args)
 	if err != nil {
 		return err

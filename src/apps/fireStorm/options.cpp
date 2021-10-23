@@ -64,26 +64,8 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    // BEG_DEBUG_DISPLAY
-    LOG_TEST_LIST("terms", terms, terms.empty());
-    LOG_TEST_BOOL("local", local);
-    LOG_TEST_BOOL("google", google);
-    // END_DEBUG_DISPLAY
-
     if (Mocked(""))
         return false;
-
-    if (isApiMode())
-        return usage("This command is not available under API mode.");
-
-    if (google && local)
-        return usage("Choose either --google or --local, not both.");
-
-    for (auto term : terms) {
-        term = toLower(term);
-        if (google && !isAddress(term))
-            return usage("Option --google allows only an address term.");
-    }
 
     for (auto term : terms) {
         term = toLower(term);

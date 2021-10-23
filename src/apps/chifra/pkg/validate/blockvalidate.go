@@ -118,3 +118,8 @@ type InvalidIdentifierLiteralError struct {
 func (e *InvalidIdentifierLiteralError) Error() string {
 	return fmt.Sprintf("The given value '%s' is not a numeral or a special named block.", e.Value)
 }
+
+func IsValidBlockId(ids []string, validTypes ValidArgumentType) (bool, error) {
+	err := ValidateIdentifiers(ids, validTypes, 1)
+	return err == nil, err
+}

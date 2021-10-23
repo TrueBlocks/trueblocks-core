@@ -3,14 +3,11 @@ TIME ~ CLOCK - <INFO>  : terms
 TIME ~ CLOCK - <INFO>  :   1001001.0
 TIME ~ CLOCK - <INFO>  : local: true
 TIME ~ CLOCK - <INFO>  : google: true
-
-  Choose either --google or --local, not both. Quitting...
-
-Purpose:
-  Open a local or remote explorer for one or more addresses, blocks, or transactions.
+Error: 
+  Choose either --google or --local, not both.
 
 Usage:
-  fireStorm [flags] [term...]
+  chifra explore [flags] <term> [term...]
 
 Arguments:
   terms - one or more address, name, block, or transaction identifier
@@ -20,4 +17,7 @@ Flags:
   -g, --google   search google excluding popular blockchain explorers
 
 Global Flags:
-  -h, --help           display this help screen
+  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
+  -h, --help         display this help screen
+  -v, --verbose      enable verbose (increase detail with --log_level)
+
