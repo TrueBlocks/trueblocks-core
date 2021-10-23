@@ -53,6 +53,17 @@ func Is0xPrefixed(str string) bool {
 	return str[:2] == "0x"
 }
 
+func IsValidFourByte(str string) (bool, error) {
+	if len(str) != 10 {
+		return false, errors.New(FmtError("value (" + str + ") is not 10 characters long"))
+	} else if !Is0xPrefixed(str) {
+		return false, errors.New(FmtError("value (" + str + ") does not start with '0x'"))
+	} else if !IsHex(str) {
+		return false, errors.New("address (" + str + ") does not appear to be hex")
+	}
+	return true, nil
+}
+
 func IsValidAddress(addr string) (bool, error) {
 	if len(addr) != 42 {
 		return false, errors.New(FmtError("address (" + addr + ") is not 42 characters long"))
