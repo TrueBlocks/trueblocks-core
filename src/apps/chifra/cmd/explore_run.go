@@ -38,7 +38,8 @@ func validateExploreArgs(cmd *cobra.Command, args []string) error {
 			isBlock, _ := validate.IsValidBlockId([]string{arg}, validate.ValidBlockId)
 			isTx, _ := validate.IsValidTransId([]string{arg}, validate.ValidTransId)
 			isFourByte, _ := validate.IsValidFourByte(arg)
-			utils.TestLogBool("is_block_or_tx", isBlock || isTx)
+			utils.TestLogBool("is_block", isBlock)
+			utils.TestLogBool("is__tx", isTx)
 			utils.TestLogBool("is_fourbyte", isFourByte)
 			if !isAddr && !isBlock && !isFourByte && !isTx {
 				return validate.Usage("The argument ({0}) does not appear to be valid.", arg)

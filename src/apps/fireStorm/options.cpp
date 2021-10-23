@@ -104,13 +104,16 @@ bool COptions::parseArguments(string_q& command) {
         } else {
             term = "block/" + term;
         }
+
         if (local) {
             replace(term, "tx/", "explorer/transactions/");
             replace(term, "block/", "explorer/blocks/");
             replace(term, "address/", "dashboard/accounts?address=");
         }
+
         urls.push_back(url + term);
     }
+
     if (urls.empty())
         urls.push_back(getBaseUrl(local ? "local" : "remote"));
 

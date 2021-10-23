@@ -1,5 +1,6 @@
 chifra explore  0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060
 TIME ~ CLOCK - <INFO>  : terms
 TIME ~ CLOCK - <INFO>  :   0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060
-TIME ~ CLOCK - <INFO>  : is_block_or_tx: true
+TIME ~ CLOCK - <INFO>  : is_block: true
+TIME ~ CLOCK - <INFO>  : is__tx: true
 Opening https://etherscan.io/tx/0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060
