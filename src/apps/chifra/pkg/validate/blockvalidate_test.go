@@ -18,7 +18,7 @@ func TestIsBlockHash(t *testing.T) {
 	}
 
 	if !IsBlockHash("0xfe611cbee814a8e84c3339186b6dc973947c2dc058cd41a5e3669f3b7f4c980d") {
-		t.Error("Fails for correct hash")
+		t.Error("Fails for a valid block hash")
 	}
 }
 
