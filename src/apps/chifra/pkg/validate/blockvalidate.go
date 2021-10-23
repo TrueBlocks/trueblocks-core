@@ -26,6 +26,22 @@ func IsBlockHash(str string) bool {
 	return true
 }
 
+func IsTransactionHash(str string) bool {
+	if !Is0xPrefixed(str) {
+		return false
+	}
+
+	if len(str) != 66 {
+		return false
+	}
+
+	if !IsHex(str) {
+		return false
+	}
+
+	return true
+}
+
 func IsBlockNumber(str string) bool {
 	base := 10
 	source := str
@@ -118,8 +134,12 @@ const (
 	ValidArgumentDate
 	ValidArgumentRange
 	ValidArgumentSpecialBlock
+	ValidArgumentTransHash
+	ValidArgumentTransBlockNumberAndId
+	ValidArgumentTransBlockHashAndId
 )
 
+const ValidTransId = ValidArgumentTransHash | ValidArgumentTransBlockNumberAndId | ValidArgumentTransBlockHashAndId
 const ValidBlockId = ValidArgumentBlockHash | ValidArgumentBlockNumber | ValidArgumentSpecialBlock
 const ValidBlockIdWithRange = ValidBlockId | ValidArgumentRange
 const ValidBlockIdWithRangeAndDate = ValidBlockIdWithRange | ValidArgumentDate
