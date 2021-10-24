@@ -178,7 +178,7 @@ map<string, string> chifraCmdMap = {
     {"pins", "pinMan"},
     // -- Other
     {"quotes", "getQuotes"},
-    {"explore", "fireStorm"},
+    {"explore", "fire Storm"},
     {"slurp", "ethslurp"},
     // END_CODE_CHIFRA_CMDMAP
 };

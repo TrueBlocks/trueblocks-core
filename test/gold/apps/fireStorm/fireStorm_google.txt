@@ -3,4 +3,4 @@ TIME ~ CLOCK - <INFO>  : terms
 TIME ~ CLOCK - <INFO>  :   0xf503017D7baF7FBC0fff7492b751025c6A78179b
 TIME ~ CLOCK - <INFO>  : google: true
 TIME ~ CLOCK - <INFO>  : is_addr: true
-Opening https://www.google.com/search?q=/0xf503017d7baf7fbc0fff7492b751025c6a78179b+-etherscan+-etherchain+-bloxy+-bitquery+-ethplorer+-tokenview+-anyblocks+-explorer
+Opening https://www.google.com/search?q=0xf503017d7baf7fbc0fff7492b751025c6a78179b+-etherscan+-etherchain+-bloxy+-bitquery+-ethplorer+-tokenview+-anyblocks+-explorer
