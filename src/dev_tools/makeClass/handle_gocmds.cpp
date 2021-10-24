@@ -63,7 +63,7 @@ bool COptions::handle_gocmds(void) {
         if (contains(source, "fmt."))
             imports += "\t\"fmt\"\n";
         if (contains(source, "utils."))
-            imports += "\t\"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/utils\"\n";
+            imports += "\t\"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils\"\n";
         replaceAll(source, "[{IMPORTS}]", imports);
 
         string_q fn = getSourcePath("apps/chifra/cmd/" + ep.api_route + ".go");
