@@ -2,7 +2,7 @@ chifra explore  0xf503017D7baF7FBC0fff749badha5hfab532aeeecf549be93e358737d0648f
 TIME ~ CLOCK - <INFO>  : terms
 TIME ~ CLOCK - <INFO>  :   0xf503017D7baF7FBC0fff749badha5hfab532aeeecf549be93e358737d0648f50d57083a0
 Error: 
-  The argument (0xf503017D7baF7FBC0fff749badha5hfab532aeeecf549be93e358737d0648f50d57083a0) does not appear to be valid.
+  The argument (0xf503017d7baf7fbc0fff749badha5hfab532aeeecf549be93e358737d0648f50d57083a0) does not appear to be valid.
 
 Usage:
   chifra explore [flags] <term> [term...]
