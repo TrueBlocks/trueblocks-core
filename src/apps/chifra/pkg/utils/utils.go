@@ -35,7 +35,7 @@ func IsApiMode() bool {
 }
 
 func TestLogArgs(name string, args []string) {
-	if len(args) == 0 {
+	if !IsTestMode() || len(args) == 0 {
 		return
 	}
 
@@ -46,9 +46,11 @@ func TestLogArgs(name string, args []string) {
 }
 
 func TestLogBool(name string, val bool) {
-	if val {
-		fmt.Fprintf(os.Stderr, "TIME ~ CLOCK - <INFO>  : %s: %t\n", name, val)
+	if !val || !IsTestMode() {
+		return
 	}
+
+	fmt.Fprintf(os.Stderr, "TIME ~ CLOCK - <INFO>  : %s: %t\n", name, val)
 }
 
 func AsciiFileToString(fn string) string {
