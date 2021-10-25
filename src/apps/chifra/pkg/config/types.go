@@ -1,10 +1,30 @@
 package config
 
+type globalVersion struct {
+	Current string
+}
+
+type globalSettings struct {
+	RpcProvider  string
+	CachePath    string
+	IndexPath    string
+	EtherscanKey string `toml:"etherscan_key"`
+}
+
 type Global struct {
-	IndexPath string
+	Version  globalVersion
+	Settings globalSettings
+}
+
+type blockScrapeRequires struct {
+	Trancing bool
+}
+
+type blockScrapeDev struct {
+	IpfsGateway string `toml:"ipfs_gateway"`
 }
 
 type BlockScrape struct {
-	Tracing     bool
-	IpfsGateway string `toml:"ipfs_gateway"`
+	Requires blockScrapeRequires
+	Dev      blockScrapeDev
 }

@@ -68,7 +68,10 @@ func read(fileName string) *toml.Decoder {
 // have .toml extension (it will be added automatically)
 func ReadTo(target interface{}, configName string) {
 	reader := read(configName)
-	_, err := reader.Decode(&target)
+	md, err := reader.Decode(target)
+
+	log.Println("Unparsed", md.Undecoded())
+
 	if err != nil {
 		log.Fatalf(`Error while reading configuration for "%s": %s`, configName, err)
 	}

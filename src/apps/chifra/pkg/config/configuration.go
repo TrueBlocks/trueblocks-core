@@ -2,7 +2,9 @@ package config
 
 func ReadGlobal() *Global {
 	config := &Global{
-		IndexPath: getConfigPath("unchained"),
+		Settings: globalSettings{
+			IndexPath: getConfigPath("unchained"),
+		},
 	}
 
 	ReadTo(config, "trueBlocks")
@@ -13,7 +15,9 @@ var DefaultIpfsGateway = "http://gateway.ipfs.io/ipfs/"
 
 func ReadBlockScrape() *BlockScrape {
 	config := &BlockScrape{
-		IpfsGateway: DefaultIpfsGateway,
+		Dev: blockScrapeDev{
+			IpfsGateway: DefaultIpfsGateway,
+		},
 	}
 
 	ReadTo(config, "blockScrape")
