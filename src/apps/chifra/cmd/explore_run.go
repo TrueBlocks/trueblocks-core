@@ -13,6 +13,7 @@
 package cmd
 
 import (
+	"errors"
 	"fmt"
 	"strings"
 
@@ -24,7 +25,7 @@ import (
 type ExploreType uint8
 
 const (
-	ExploreNone ExploreType = 1 << iota
+	ExploreNone ExploreType = iota
 	ExploreAddress
 	ExploreName
 	ExploreEnsName
@@ -32,27 +33,6 @@ const (
 	ExploreBlock
 	ExploreFourByte
 )
-
-func (t ExploreType) String() string {
-	switch t {
-	case ExploreNone:
-		return "ExploreNone"
-	case ExploreAddress:
-		return "ExploreAddress"
-	case ExploreName:
-		return "ExploreName"
-	case ExploreEnsName:
-		return "ExploreEnsName"
-	case ExploreTx:
-		return "ExploreTx"
-	case ExploreBlock:
-		return "ExploreBlock"
-	case ExploreFourByte:
-		return "ExploreFourByte"
-	default:
-		return fmt.Sprintf("%d", t)
-	}
-}
 
 type ExploreUrl struct {
 	term     string
@@ -88,22 +68,24 @@ func validateExploreArgs(cmd *cobra.Command, args []string) error {
 
 		valid, _ = validate.IsValidTransId([]string{arg}, validate.ValidTransId)
 		if valid {
-			// TODO: Transactions are block_hash.tx_id, block_num.tx_id or tx_hash
-			// TODO: We need to check to see if this argument is a valid on-chain
-			// TODO: transaction and if not fail in the first two cases and pass
-			// TODO: it on if it's a tx_hash (because it might be a block_hash)
-			utils.TestLogBool("is__tx", true)
-			urls = append(urls, ExploreUrl{arg, ExploreTx})
-			continue
+			txHash, err := id_2_TxHash(arg)
+			if err == nil {
+				utils.TestLogBool("is__tx", true)
+				urls = append(urls, ExploreUrl{txHash, ExploreTx})
+				continue
+			}
 		}
 
 		valid, _ = validate.IsValidBlockId([]string{arg}, validate.ValidBlockId)
 		if valid {
 			// TODO: The block number needs to be resolved (for example from a hash)
 			// TODO: or a special block
-			utils.TestLogBool("is_block", true)
-			urls = append(urls, ExploreUrl{arg, ExploreBlock})
-			continue
+			blockHash, err := id_2_BlockHash(arg)
+			if err == nil {
+				utils.TestLogBool("is_block", true)
+				urls = append(urls, ExploreUrl{blockHash, ExploreBlock})
+				continue
+			}
 		}
 
 		valid, _ = validate.IsValidFourByte(arg)
@@ -113,7 +95,7 @@ func validateExploreArgs(cmd *cobra.Command, args []string) error {
 			continue
 		}
 
-		return validate.Usage("The argument ({0}) does not appear to be valid.", arg)
+		return validate.Usage("The term ({0}) does not appear to be valid.", arg)
 	}
 
 	if len(urls) == 0 {
@@ -127,10 +109,65 @@ func validateExploreArgs(cmd *cobra.Command, args []string) error {
 	return nil
 }
 
+func runExplore(cmd *cobra.Command, args []string) {
+	for _, url := range urls {
+		fmt.Printf("Opening %s\n", url.getUrl())
+		if !utils.IsTestMode() {
+			utils.OpenBrowser(url.getUrl())
+		}
+	}
+}
+
+func id_2_TxHash(arg string) (string, error) {
+	if strings.Contains(arg, ".") {
+		parts := strings.Split(arg, ".")
+		// we've already checked validity so we can assert(len(parts) == 2)
+		if validate.IsBlockHash(parts[0]) {
+			// call eth_getTransactionByBlockHashAndIndex
+			return "0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060", nil
+		}
+		// call eth_getTransactionByBlockNumberAndIndex
+		return "0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060", nil
+	}
+	// call eth_getTransactionByHash
+	if arg == "0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060" {
+		return arg, nil
+	}
+	return "", errors.New("not a transaction")
+}
+
+func id_2_BlockHash(arg string) (string, error) {
+	if arg != "0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060" {
+		return arg, nil
+	}
+	return "", errors.New("not a block hash")
+}
+
+// TODO: Turn off OPT_FMT OPT_VERBOSE
+// TODO: Read base URLs from config file
+func (t ExploreType) String() string {
+	switch t {
+	case ExploreNone:
+		return "ExploreNone"
+	case ExploreAddress:
+		return "ExploreAddress"
+	case ExploreName:
+		return "ExploreName"
+	case ExploreEnsName:
+		return "ExploreEnsName"
+	case ExploreTx:
+		return "ExploreTx"
+	case ExploreBlock:
+		return "ExploreBlock"
+	case ExploreFourByte:
+		return "ExploreFourByte"
+	default:
+		return fmt.Sprintf("%d", t)
+	}
+}
+
 func (u *ExploreUrl) getUrl() string {
 	if ExploreOpts.google {
-		// TODO: How does one do an assertion?
-		// assert(u.termType == ExploreAddress)
 		return "https://www.google.com/search?q=" + u.term + "+-etherscan+-etherchain+-bloxy+-bitquery+-ethplorer+-tokenview+-anyblocks+-explorer"
 	}
 
@@ -169,16 +206,3 @@ func (u *ExploreUrl) getUrl() string {
 
 	return url + query
 }
-
-func runExplore(cmd *cobra.Command, args []string) {
-	for _, url := range urls {
-		fmt.Printf("Opening %s\n", url.getUrl())
-		if !utils.IsTestMode() {
-			utils.OpenBrowser(url.getUrl())
-		}
-	}
-}
-
-// TODO: If isHash determine if it's a tx or a block
-// TODO: Turn off OPT_FMT OPT_VERBOSE
-// TODO: Read base URLs from config file
