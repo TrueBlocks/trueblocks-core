@@ -2,7 +2,7 @@
 title: "Other"
 description: ""
 lead: ""
-date: 2021-10-13T07:13:26
+date: 2021-10-22T12:36:55
 lastmod:
   - :git
   - lastmod
@@ -61,13 +61,13 @@ Notes:
 
 ```[plaintext]
 Purpose:
-  Open an explorer for one or more addresses, blocks, or transactions.
+  Open a local or remote explorer for one or more addresses, blocks, or transactions.
 
 Usage:
   chifra explore [flags] <term> [term...]
 
 Arguments:
-  terms - one or more addresses, names, block, or transaction identifiers
+  terms - one or more address, name, block, or transaction identifier
 
 Flags:
   -l, --local    open the local TrueBlocks explorer

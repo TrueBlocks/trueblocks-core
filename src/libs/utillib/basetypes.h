@@ -82,10 +82,4 @@ typedef vector<CNameValue> CNameValueArray;
 typedef map<string_q, string_q> CNameValueMap;
 typedef map<string_q, uint64_t> CCounterMap;
 
-//-------------------------------------------------------------------------
-typedef bool (*APPLYFUNC)(string_q& line, void* data);
-typedef bool (*CHARPTRFUNC)(const char* str, void* data);
-typedef int (*SEARCHFUNC)(const void* ob1, const void* ob2);
-typedef int (*SORTINGFUNC)(const void* ob1, const void* ob2);
-
 }  // namespace qblocks

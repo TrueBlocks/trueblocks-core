@@ -24,7 +24,7 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/viper"
 )
@@ -76,48 +76,62 @@ func Execute() {
 func init() {
 	rootCmd.SetOut(os.Stderr)
 	rootCmd.SetFlagErrorFunc(ErrFunc)
-	// rootCmd.SetPersistentFlagErrorFunc(ErrFunc)
+
 	rootCmd.Flags().SortFlags = false
-	rootCmd.PersistentFlags().SortFlags = false
+
 	rootCmd.PersistentFlags().BoolVarP(&RootOpts.raw, "raw", "", false, "report JSON data from the node with minimal processing")
+	rootCmd.PersistentFlags().MarkHidden("raw")
+
 	rootCmd.PersistentFlags().BoolVarP(&RootOpts.version, "version", "", false, "display the current version of the tool")
+	rootCmd.PersistentFlags().MarkHidden("version")
+
 	rootCmd.PersistentFlags().BoolVarP(&RootOpts.noop, "noop", "", false, "")
+	rootCmd.PersistentFlags().MarkHidden("noop")
+
 	rootCmd.PersistentFlags().BoolVarP(&RootOpts.create, "create", "", false, "")
+	rootCmd.PersistentFlags().MarkHidden("create")
+
 	rootCmd.PersistentFlags().BoolVarP(&RootOpts.delete, "delete", "", false, "")
+	rootCmd.PersistentFlags().MarkHidden("delete")
+
 	rootCmd.PersistentFlags().BoolVarP(&RootOpts.update, "update", "", false, "")
+	rootCmd.PersistentFlags().MarkHidden("update")
+
 	rootCmd.PersistentFlags().BoolVarP(&RootOpts.remove, "remove", "", false, "")
+	rootCmd.PersistentFlags().MarkHidden("remove")
+
 	rootCmd.PersistentFlags().BoolVarP(&RootOpts.undelete, "undelete", "", false, "")
+	rootCmd.PersistentFlags().MarkHidden("undelete")
+
+	rootCmd.PersistentFlags().UintVarP(&RootOpts.logLevel, "log_level", "", 0, "")
+	rootCmd.PersistentFlags().MarkHidden("log_level")
+
+	rootCmd.PersistentFlags().BoolVarP(&RootOpts.noHeader, "no_header", "", false, "supress export of header row for csv and txt exports")
+	rootCmd.PersistentFlags().MarkHidden("no_header")
+
+	rootCmd.PersistentFlags().BoolVarP(&RootOpts.wei, "wei", "", false, "specify value in wei (the default)")
+	rootCmd.PersistentFlags().MarkHidden("wei")
+
+	rootCmd.PersistentFlags().BoolVarP(&RootOpts.ether, "ether", "", false, "specify value in ether")
+	rootCmd.PersistentFlags().MarkHidden("ether")
+
+	rootCmd.PersistentFlags().BoolVarP(&RootOpts.dollars, "dollars", "", false, "specify value in US dollars")
+	rootCmd.PersistentFlags().MarkHidden("dollars")
+
+	rootCmd.PersistentFlags().BoolVarP(&RootOpts.toFile, "to_file", "", false, "write the results to a temporary file and return the filename")
+	rootCmd.PersistentFlags().MarkHidden("to_file")
+
+	rootCmd.PersistentFlags().StringVarP(&RootOpts.file, "file", "", "", "specify multiple sets of command line options in a file")
+	rootCmd.PersistentFlags().MarkHidden("file")
+
+	rootCmd.PersistentFlags().StringVarP(&RootOpts.outputFile, "output", "", "", "write the results to file 'fn' and return the filename")
+	rootCmd.PersistentFlags().MarkHidden("output")
 
 	rootCmd.PersistentFlags().StringVarP(&RootOpts.fmt, "fmt", "x", "", "export format, one of [none|json*|txt|csv|api]")
 	rootCmd.PersistentFlags().BoolVarP(&RootOpts.verbose, "verbose", "v", false, "enable verbose (increase detail with --log_level)")
-	rootCmd.PersistentFlags().UintVarP(&RootOpts.logLevel, "log_level", "", 0, "")
-	rootCmd.PersistentFlags().BoolVarP(&RootOpts.noHeader, "no_header", "", false, "supress export of header row for csv and txt exports")
-	rootCmd.PersistentFlags().BoolVarP(&RootOpts.wei, "wei", "", false, "specify value in wei (the default)")
-	rootCmd.PersistentFlags().BoolVarP(&RootOpts.ether, "ether", "", false, "specify value in ether")
-	rootCmd.PersistentFlags().BoolVarP(&RootOpts.dollars, "dollars", "", false, "specify value in US dollars")
-	rootCmd.PersistentFlags().BoolVarP(&RootOpts.toFile, "to_file", "", false, "write the results to a temporary file and return the filename")
-	rootCmd.PersistentFlags().StringVarP(&RootOpts.file, "file", "", "", "specify multiple sets of command line options in a file")
-	rootCmd.PersistentFlags().StringVarP(&RootOpts.outputFile, "output", "", "", "write the results to file 'fn' and return the filename")
 	rootCmd.PersistentFlags().BoolVarP(&RootOpts.help, "help", "h", false, "display this help screen")
-	rootCmd.PersistentFlags().MarkHidden("log_level")
-	rootCmd.PersistentFlags().MarkHidden("output")
-	rootCmd.PersistentFlags().MarkHidden("raw")
-	rootCmd.PersistentFlags().MarkHidden("create")
-	rootCmd.PersistentFlags().MarkHidden("delete")
-	rootCmd.PersistentFlags().MarkHidden("update")
-	rootCmd.PersistentFlags().MarkHidden("remove")
-	rootCmd.PersistentFlags().MarkHidden("undelete")
 
-	rootCmd.PersistentFlags().MarkHidden("noop")
-	rootCmd.PersistentFlags().MarkHidden("version")
-	rootCmd.PersistentFlags().MarkHidden("wei")
-	rootCmd.PersistentFlags().MarkHidden("ether")
-	rootCmd.PersistentFlags().MarkHidden("dollars")
-	rootCmd.PersistentFlags().MarkHidden("file")
-	rootCmd.PersistentFlags().MarkHidden("to_file")
-	rootCmd.PersistentFlags().MarkHidden("no_header")
 	rootCmd.Flags().SortFlags = false
-	rootCmd.PersistentFlags().SortFlags = false
 
 	rootCmd.SetUsageTemplate(helpText)
 	cobra.OnInitialize(initConfig)

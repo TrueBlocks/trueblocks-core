@@ -2,4 +2,5 @@ chifra explore  trueblocks.eth --local
 TIME ~ CLOCK - <INFO>  : terms
 TIME ~ CLOCK - <INFO>  :   trueblocks.eth
 TIME ~ CLOCK - <INFO>  : local: true
-Opening http://localhost:1234/explorer/enslookup-search?search=trueblocks.eth
+TIME ~ CLOCK - <INFO>  : is_addr: true
+Opening https://etherscan.io/enslookup-search?search=trueblocks.eth

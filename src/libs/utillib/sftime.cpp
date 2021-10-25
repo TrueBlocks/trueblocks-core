@@ -1064,8 +1064,7 @@ time_q fileLastModifyDate(const string_q& filename) {
 }
 
 //----------------------------------------------------------------------------------
-typedef bool (*FILEVISITOR)(const string_q& path, void* data);
-extern bool forEveryFileInFolder(const string_q& mask, FILEVISITOR func, void* data);
+extern bool forEveryFileInFolder(const string_q& mask, CONSTAPPLYFUNC func, void* data);
 bool getNewestFile(const string_q& path, void* data) {
     if (endsWith(path, '/')) {
         return forEveryFileInFolder(path + "*", getNewestFile, data);

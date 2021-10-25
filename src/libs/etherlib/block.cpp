@@ -776,7 +776,7 @@ bool CTransaction::forEveryUniqueAppearanceInTxPerTx(APPEARANCEFUNC func, TRANSF
 }
 
 //---------------------------------------------------------------------------
-blknum_t bnFromPath(const string_q& path, blknum_t& endOut, timestamp_t& ts) {
+blknum_t path_2_Bn(const string_q& path, blknum_t& endOut, timestamp_t& ts) {
     // comes in of the form first_blk-last_blk.X or blknum.X
     CStringArray parts;
     explode(parts, path, '/');

@@ -33,7 +33,7 @@ TEST_F(CThisTest, GeneralTest1) {
     for (size_t i = 0; i < nFiles; i++) {
         blknum_t first, second;
         timestamp_t ts;
-        first = bnFromPath(files[i], second, ts);
+        first = path_2_Bn(files[i], second, ts);
         ASSERT_EQ(files[i], first, nums[(i * 2)]);
         ASSERT_EQ(files[i], second, nums[(i * 2) + 1]);
     }

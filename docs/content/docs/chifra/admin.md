@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2021-10-05T22:20:10
+date: 2021-10-15T19:42:19
 lastmod:
   - :git
   - lastmod
@@ -16,13 +16,18 @@ menu:
 weight: 1700
 toc: true
 ---
-The Admin component allows you to query the status of the TrueBlocks system. You may query the status; query for information about TrueBlocks caches; control the creation, sharing, and pinning of the TrueBlocks index of appearances; and even serve the data through an API. See our [API documentation](/api) for more information.
+
+The Admin component allows you to query the status of the TrueBlocks system.
+You can query the status; query for information about TrueBlocks caches;
+control the creation, sharing, and pinning of the TrueBlocks index of appearances;
+and even serve the data through an API.
+
+[See the API documentation for all information about using the API](/api).
+
 ## chifra serve
 
-`chifra serve` delivers a JSON API for each of the `chifra` commands along with each of its options. It does this through `flame` server which is written in Go.
-
-[Get help with the API here](https://www.tokenomics.io/api.html
-).
+`chifra serve` delivers a JSON API for each of the `chifra` commands along with each of its options.
+It does this through `flame` server, which is written in Go.
 
 Another way to get help to run `chifra --help` or `chifra <cmd> --help` on your command line. See below for an example of converting command line options to a call to the API. There's a one-to-one correspondence between the command line tools and options and the API routes and their options.
 
@@ -113,18 +118,26 @@ Purpose:
   Manage and investigate chunks and bloom filters.
 
 Usage:
-  chifra chunks [flags]
+  chifra chunks [flags] <block> [block...]
+
+Arguments:
+  blocks - an optional list of blocks to process
 
 Flags:
-  -l, --list      list the bloom and index hashes from local cache or IPFS
-  -c, --check     check the validity of the chunk or bloom
-  -e, --extract   show the contents of the chunk or bloom filters
-  -s, --stats     for the --list option only, display statistics about each chunk or bloom
+  -l, --list             list the bloom and index hashes from local cache or IPFS
+  -c, --check            check the validity of the chunk or bloom
+  -e, --extract string   show some or all of the contents of the chunk or bloom filters
+                         One of [ header | addr_table | app_table | chunks | blooms ]
+  -s, --stats            for the --list option only, display statistics about each chunk or bloom
+  -a, --save             for the --extract option only, save the entire chunk to a similarly named file as well as display
 
 Global Flags:
   -x, --fmt string   export format, one of [none|json*|txt|csv|api]
   -h, --help         display this help screen
   -v, --verbose      enable verbose (increase detail with --log_level)
+
+Notes:
+  - Only a single block in a given chunk needs to be supplied.
 ```
 
 **Source code**: [`apps/chunkMan`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chunkMan)

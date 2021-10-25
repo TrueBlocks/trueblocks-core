@@ -31,6 +31,6 @@ func main() {
 	var wg sync.WaitGroup
 	wg.Add(2)
 	go scraper.RunIndexScraper(wg)
-	go scraper.RunMonitorScraper(wg)
+	// go scraper.RunMonitorScraper(wg)
 	wg.Wait()
 }

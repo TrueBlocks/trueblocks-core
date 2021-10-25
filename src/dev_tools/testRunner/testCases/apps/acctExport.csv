@@ -15,7 +15,7 @@ on,cmd,fast,monitors,apps/acctExport,monitors_help,n,@h
 on,cmd,fast,monitors,apps/acctExport,monitors_long_help,n,help
 on,both,fast,monitors,apps/acctExport,monitors_no_params,y,
 
-on,both,fast,monitors,apps/acctExport,monitors_clean,y,clean
+local,both,fast,monitors,apps/acctExport,monitors_clean,y,clean
 on,both,fast,monitors,apps/acctExport,monitors_delete_1,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & delete
 on,both,fast,monitors,apps/acctExport,monitors_delete_1_fail,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & delete
 on,both,fast,monitors,apps/acctExport,monitors_undelete,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & undelete
@@ -61,18 +61,18 @@ on,both,fast,export,apps/acctExport,export_stage,y,addrs = 0x001d14804b399c6ef80
 on,both,fast,export,apps/acctExport,export_unripe,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & first_block = 100000 & last_block = 2000000 & staging & unripe
 on,both,fast,export,apps/acctExport,export_unripe_fail,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & first_block = 100000 & last_block = 2000000 & unripe
 
-on,both,fast,export,apps/acctExport,export_logs_emit_by,n,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & first_block = 10277780 & last_block = 10279650 & logs & fmt = csv & articulate & source = 0x7d655c57f71464b6f83811c55d84009cd9f5221c
-on,both,fast,export,apps/acctExport,export_notrelevant,n,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & first_block = 10245999 & last_block = 10288980 & logs & fmt = csv & articulate & source = 0x7d655c57f71464b6f83811c55d84009cd9f5221c
-on,both,fast,export,apps/acctExport,export_relevant,n,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & first_block = 10245999 & last_block = 10288980 & logs & fmt = csv & articulate & source = 0x7d655c57f71464b6f83811c55d84009cd9f5221c & relevant
-on,both,fast,export,apps/acctExport,to_file,y,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & first_block = 10277780 & last_block = 10296792 & accounting & ether & fmt = api & to_file & articulate & log_level = 10
+local,both,fast,export,apps/acctExport,export_logs_emit_by,n,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & first_block = 10277780 & last_block = 10279650 & logs & fmt = csv & articulate & source = 0x7d655c57f71464b6f83811c55d84009cd9f5221c
+local,both,fast,export,apps/acctExport,export_notrelevant,n,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & first_block = 10245999 & last_block = 10288980 & logs & fmt = csv & articulate & source = 0x7d655c57f71464b6f83811c55d84009cd9f5221c
+local,both,fast,export,apps/acctExport,export_relevant,n,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & first_block = 10245999 & last_block = 10288980 & logs & fmt = csv & articulate & source = 0x7d655c57f71464b6f83811c55d84009cd9f5221c & relevant
+local,both,fast,export,apps/acctExport,to_file,y,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & first_block = 10277780 & last_block = 10296792 & accounting & ether & fmt = api & to_file & articulate & log_level = 10
 
 on,both,fast,export,apps/acctExport,transfer_fourbytes,y,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & max_records = 10 & fourbytes = 0xa9059cbb & fmt = json
 on,both,fast,export,apps/acctExport,transfer_fourbytes_trace,y,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & max_records = 10 & fourbytes = 0xa9059cbb & traces & fmt = json
 on,both,fast,export,apps/acctExport,transfer_no_topics,y,addrs = 0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3 & max_records = 5 & logs
 on,both,fast,export,apps/acctExport,transfer_topics,y,addrs = 0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3 & max_records = 5 & topics = 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef & logs
 
-on,both,fast,export,apps/acctExport,accounting_ether_1,y,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & first_block = 10277780 & last_block = 10296792 & accounting & ether & fmt = api & articulate & log_level = 10
-on,both,fast,export,apps/acctExport,accounting_tokens_1,y,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & first_block = 10277780 & last_block = 10296792 & accounting & articulate & ether & fmt = api & log_level = 10
+local,both,fast,export,apps/acctExport,accounting_ether_1,y,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & first_block = 10277780 & last_block = 10296792 & accounting & ether & fmt = api & articulate & log_level = 10
+local,both,fast,export,apps/acctExport,accounting_tokens_1,y,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & first_block = 10277780 & last_block = 10296792 & accounting & articulate & ether & fmt = api & log_level = 10
 on,both,fast,export,apps/acctExport,accounting_wei_1,y,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & max_records = 5 & accounting & fmt = api & log_level = 10
 on,both,fast,export,apps/acctExport,accounting_wei_2,y,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & max_records = 15 & accounting & fmt = api & log_level = 10
 on,both,fast,export,apps/acctExport,accounting_invalid1,y,addrs = 0x00a3819199113fc6a6e6ba1298afde7377e2009b & max_records = 30 & fmt = json & summarize_by = tx

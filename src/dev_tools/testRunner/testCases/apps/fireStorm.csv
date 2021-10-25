@@ -16,3 +16,6 @@ on,cmd,fast,explore,apps/fireStorm,tx_hash_local,n,terms = 0x5c504ed432cb51138bc
 on,cmd,fast,explore,apps/fireStorm,tx_id_local,n,terms = 46147.0 & local
 on,cmd,fast,explore,apps/fireStorm,block_hash_local,n,terms = 0xc63f666315fa1eae17e354fab532aeeecf549be93e358737d0648f50d57083a0 & local
 on,cmd,fast,explore,apps/fireStorm,block_id_local,n,terms = 12 & local
+on,cmd,fast,explore,apps/fireStorm,google_fail,n,terms = 1001001.0 & local & google
+on,cmd,fast,explore,apps/fireStorm,google_fail2,n,terms = 1001001.0 & google
+on,cmd,fast,explore,apps/fireStorm,google,n,terms = 0xf503017D7baF7FBC0fff7492b751025c6A78179b & google

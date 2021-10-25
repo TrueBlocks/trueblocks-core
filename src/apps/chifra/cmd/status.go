@@ -19,7 +19,7 @@ package cmd
 import (
 	"os"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -92,6 +92,12 @@ One or more of [ test | abi_cache | block_cache | tx_cache | trace_cache | recon
 
 	statusCmd.SetUsageTemplate(UsageWithNotes(notesStatus))
 	rootCmd.AddCommand(statusCmd)
+}
+
+func TestLogStatus(args []string) {
+	if !utils.IsTestMode() {
+		return
+	}
 }
 
 // EXISTING_CODE

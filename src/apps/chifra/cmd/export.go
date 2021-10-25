@@ -19,7 +19,7 @@ package cmd
 import (
 	"os"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -133,6 +133,12 @@ One of [ yearly | quarterly | monthly | weekly | daily | hourly | blockly | tx ]
 
 	exportCmd.SetUsageTemplate(UsageWithNotes(notesExport))
 	rootCmd.AddCommand(exportCmd)
+}
+
+func TestLogExport(args []string) {
+	if !utils.IsTestMode() {
+		return
+	}
 }
 
 // EXISTING_CODE

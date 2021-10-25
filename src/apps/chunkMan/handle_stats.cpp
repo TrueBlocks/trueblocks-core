@@ -23,7 +23,7 @@ static bool bloomVisitFunc(const string_q& path, void* data) {
             return true;
 
         blknum_t endBlock = NOPOS;
-        blknum_t startBlock = bnFromPath(path, endBlock);
+        blknum_t startBlock = path_2_Bn(path, endBlock);
         blknum_t last = *(blknum_t*)data;
         if (last >= startBlock)
             return true;

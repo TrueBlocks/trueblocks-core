@@ -129,6 +129,13 @@ bool COptions::parseArguments(string_q& command) {
         return usage("Could not find " + optionsFile);
     forEveryLineInAsciiFile(optionsFile, parseOptionsFile, this);
 
+    CToml config(getConfigPath("makeClass.toml"));
+    bool enabled = config.getConfigBool("enabled", "generate", false);
+    if (!enabled) {
+        LOG_WARN("Skipping code generation...");
+        return false;
+    }
+
     verifyDescriptions();
 
     if (tsx)

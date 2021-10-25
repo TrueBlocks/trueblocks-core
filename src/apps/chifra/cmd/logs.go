@@ -19,6 +19,7 @@ package cmd
 import (
 	"os"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -69,6 +70,12 @@ func init() {
 
 	logsCmd.SetUsageTemplate(UsageWithNotes(notesLogs))
 	rootCmd.AddCommand(logsCmd)
+}
+
+func TestLogLogs(args []string) {
+	if !utils.IsTestMode() {
+		return
+	}
 }
 
 // EXISTING_CODE

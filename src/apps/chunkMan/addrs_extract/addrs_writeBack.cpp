@@ -32,7 +32,7 @@ bool visitFile(const string_q& path, void* data) {
             timestamp_t unused;
             blknum_t end;
 //            blknum_t begin =
-            bnFromPath(path, end, unused);
+            path_2_Bn(path, end, unused);
             // if (begin < 5998901 || begin > 7000000) {
 //            if (begin < 800000 || begin > 1000000) {
 //                //                cout << "skipping " << path << endl;

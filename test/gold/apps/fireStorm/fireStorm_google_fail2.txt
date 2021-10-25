@@ -1,6 +1,9 @@
-chifra  explore --help --log_level 2
-Purpose:
-  Open a local or remote explorer for one or more addresses, blocks, or transactions.
+chifra explore  1001001.0 --google
+TIME ~ CLOCK - <INFO>  : terms
+TIME ~ CLOCK - <INFO>  :   1001001.0
+TIME ~ CLOCK - <INFO>  : google: true
+Error: 
+  Option --google allows only an address term.
 
 Usage:
   chifra explore [flags] <term> [term...]
@@ -16,3 +19,4 @@ Global Flags:
   -x, --fmt string   export format, one of [none|json*|txt|csv|api]
   -h, --help         display this help screen
   -v, --verbose      enable verbose (increase detail with --log_level)
+

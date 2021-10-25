@@ -42,7 +42,7 @@ This example show how to use a few of TrueBlocks' `forEvery` functions.
 - against ascii files
   - bool forEveryLineInAsciiFile(const string_q& filenameIn, CHARPTRFUNC func, void* data)
 - against folders
-  - bool forEveryFileInFolder(const string_q& mask, FILEVISITOR func, void* data)
+  - bool forEveryFileInFolder(const string_q& mask, CONSTAPPLYFUNC func, void* data)
 - against pinata pins
   - bool pinlib_forEveryPin(CPinnedChunkArray& pList, PINFUNC func, void* data)
 - on Merkle trees

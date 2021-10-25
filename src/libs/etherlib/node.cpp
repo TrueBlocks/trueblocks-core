@@ -657,7 +657,7 @@ blknum_t getLatestBlock_cache_final(void) {
         // Files in this folder are n-m.bin
         blknum_t last;
         timestamp_t unused;
-        bnFromPath(finLast, last, unused);
+        path_2_Bn(finLast, last, unused);
         return last;
     }
     return 0;
@@ -668,7 +668,7 @@ blknum_t getLatestBlock_cache_staging(void) {
     string_q stageLast = getLastFileInFolder(indexFolder_staging, false);
     // Files in this folder are n.txt, if empty, we fall back on finalized folder
     if (!stageLast.empty())
-        return bnFromPath(stageLast);
+        return path_2_Bn(stageLast);
     return getLatestBlock_cache_final();
 }
 
@@ -677,7 +677,7 @@ blknum_t getLatestBlock_cache_ripe(void) {
     string_q ripeLast = getLastFileInFolder(indexFolder_ripe, false);
     // Files in this folder are n.txt, if empty, we fall back on staging folder
     if (!ripeLast.empty())
-        return bnFromPath(ripeLast);
+        return path_2_Bn(ripeLast);
     return getLatestBlock_cache_staging();
 }
 
@@ -686,7 +686,7 @@ blknum_t getLatestBlock_cache_unripe(void) {
     string_q unripeLast = getLastFileInFolder(indexFolder_unripe, false);
     // Files in this folder are n.txt, if empty, we fall back on ripe folder
     if (!unripeLast.empty())
-        return bnFromPath(unripeLast);
+        return path_2_Bn(unripeLast);
     return getLatestBlock_cache_ripe();
 }
 

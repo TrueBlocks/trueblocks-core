@@ -18,7 +18,7 @@ func TestIsBlockHash(t *testing.T) {
 	}
 
 	if !IsBlockHash("0xfe611cbee814a8e84c3339186b6dc973947c2dc058cd41a5e3669f3b7f4c980d") {
-		t.Error("Fails for correct hash")
+		t.Error("Fails for a valid block hash")
 	}
 }
 
@@ -310,8 +310,8 @@ func TestValidateBlockIdentifiers(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if err := ValidateBlockIdentifiers(tt.args.identifiers, tt.args.validTypes, tt.args.maxRanges); (err != nil) != tt.wantErr {
-				t.Errorf("ValidateBlockIdentifiers() error = %v, wantErr %v", err, tt.wantErr)
+			if err := ValidateIdentifiers(tt.args.identifiers, tt.args.validTypes, tt.args.maxRanges); (err != nil) != tt.wantErr {
+				t.Errorf("ValidateIdentifiers() error = %v, wantErr %v", err, tt.wantErr)
 			}
 		})
 	}

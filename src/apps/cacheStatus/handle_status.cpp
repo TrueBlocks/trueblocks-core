@@ -373,7 +373,7 @@ bool noteIndex(const string_q& path, void* data) {
 
         timestamp_t unused;
         blknum_t last = NOPOS;
-        blknum_t first = bnFromPath(path, last, unused);
+        blknum_t first = path_2_Bn(path, last, unused);
         LOG_PROGRESS("Scanning", ++counter->fileRange.first, counter->fileRange.second, "\r");
 
         if (last < counter->options->scanRange.first)
@@ -392,7 +392,7 @@ bool noteIndex(const string_q& path, void* data) {
         if (isTestMode())
             aci.filename = substitute(aci.filename, indexFolder_finalized, "/--index-path--/");
         uint64_t tmp;
-        aci.firstApp = (uint32_t)bnFromPath(fn, tmp, unused);
+        aci.firstApp = (uint32_t)path_2_Bn(fn, tmp, unused);
         aci.latestApp = (uint32_t)tmp;
         CStringArray parts;
         explode(parts, path, '/');

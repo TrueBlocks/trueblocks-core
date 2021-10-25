@@ -19,7 +19,7 @@ package cmd
 import (
 	"os"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -79,6 +79,12 @@ One or more of [ none | some | all | balance | nonce | code | storage | deployed
 
 	stateCmd.SetUsageTemplate(UsageWithNotes(notesState))
 	rootCmd.AddCommand(stateCmd)
+}
+
+func TestLogState(args []string) {
+	if !utils.IsTestMode() {
+		return
+	}
 }
 
 // EXISTING_CODE

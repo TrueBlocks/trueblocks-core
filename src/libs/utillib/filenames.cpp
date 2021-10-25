@@ -26,7 +26,7 @@ int globErrFunc(const char* epath, int eerrno) {
 }
 
 //----------------------------------------------------------------------------------
-bool forAllFiles(const string_q& mask, FILEVISITOR func, void* data) {
+bool forAllFiles(const string_q& mask, CONSTAPPLYFUNC func, void* data) {
     glob_t globBuf;
     glob(mask.c_str(), GLOB_MARK, globErrFunc, &globBuf);
     bool quitEarly = false;
@@ -38,7 +38,7 @@ bool forAllFiles(const string_q& mask, FILEVISITOR func, void* data) {
 }
 
 //----------------------------------------------------------------------------------
-bool forEveryFileInFolder(const string_q& mask, FILEVISITOR func, void* data) {
+bool forEveryFileInFolder(const string_q& mask, CONSTAPPLYFUNC func, void* data) {
     // if we quit after visiting all files, return true.
     return forAllFiles(mask, func, data);
 }

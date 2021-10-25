@@ -20,7 +20,13 @@ namespace qblocks {
 using string_q = std::string;
 using CStringArray = vector<string_q>;
 using CUintArray = vector<uint64_t>;
+
+//-------------------------------------------------------------------------
 typedef bool (*APPLYFUNC)(string_q& line, void* data);
+typedef bool (*CONSTAPPLYFUNC)(const string_q& path, void* data);
+typedef bool (*CHARPTRFUNC)(const char* str, void* data);
+typedef int (*SEARCHFUNC)(const void* ob1, const void* ob2);
+typedef int (*SORTFUNC)(const void* ob1, const void* ob2);
 
 //---------------------------------------------------------------------------------------
 // We use 'extract' instead of the string class's substr to protect against throws

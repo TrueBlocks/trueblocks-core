@@ -249,7 +249,7 @@ bool pinlib_pinChunk(CPinnedChunkArray& pList, const string_q& fileName, CPinned
     item.indexHash = index.ipfs_pin_hash;
     blknum_t end;
     timestamp_t ts;
-    blknum_t start = bnFromPath(fileName, end, ts);
+    blknum_t start = path_2_Bn(fileName, end, ts);
     LOG_INFO(bBlue, "  Pinned index for blocks ", start, " to ", end, " at ", item.indexHash, cOff);
 
     string_q bloomStr = pinOneChunk(fileName, "blooms");

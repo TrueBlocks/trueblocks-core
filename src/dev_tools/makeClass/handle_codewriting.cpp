@@ -97,7 +97,7 @@ bool writeCodeIn(const codewrite_t& cw) {
 
 //---------------------------------------------------------------------------------------------------
 bool writeCodeOut(COptions* opts, const string_q& fn) {
-    if (contains(fn, "/stub/") || contains(fn, "/chifra/"))
+    if (contains(fn, "/stub/") || contains(fn, "/chifra/") || contains(fn, "fireStorm"))
         return true;
 
     string_q orig = asciiFileToString(fn);

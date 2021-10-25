@@ -56,5 +56,11 @@ func init() {
 	rootCmd.AddCommand([{ROUTE}]Cmd)
 }
 
+func TestLog[{PROPER}](args []string) {
+	if !utils.IsTestMode() {
+		return
+	}
+[{LOG_OPTS}]}
+
 // EXISTING_CODE
 // EXISTING_CODE

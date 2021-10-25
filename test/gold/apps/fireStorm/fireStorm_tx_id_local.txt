@@ -2,4 +2,5 @@ chifra explore  46147.0 --local
 TIME ~ CLOCK - <INFO>  : terms
 TIME ~ CLOCK - <INFO>  :   46147.0
 TIME ~ CLOCK - <INFO>  : local: true
+TIME ~ CLOCK - <INFO>  : is__tx: true
 Opening http://localhost:1234/explorer/transactions/0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060

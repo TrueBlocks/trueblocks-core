@@ -16,6 +16,7 @@ extern string_q get_hidden(const CCommandOption& cmd);
 extern string_q get_hidden2(const CCommandOption& cmd);
 extern string_q get_notes2(const CCommandOption& cmd);
 extern string_q get_optfields(const CCommandOption& cmd);
+extern string_q get_logopts(const CCommandOption& cmd);
 extern string_q get_setopts(const CCommandOption& cmd);
 extern string_q get_copyopts(const CCommandOption& cmd);
 extern string_q get_use(const CCommandOption& cmd);
@@ -43,6 +44,7 @@ bool COptions::handle_gocmds(void) {
         string_q source = asciiFileToString(getTemplatePath("blank.go"));
         replaceAll(source, "[{COPY_OPTS}]", get_copyopts(ep));
         replaceAll(source, "[{SET_OPTS}]", get_setopts(ep));
+        replaceAll(source, "[{LOG_OPTS}]", get_logopts(ep));
         replaceAll(source, "[{HIDDEN}]", get_hidden(ep));
         replaceAll(source, "[{PERPRERUN}]", get_hidden2(ep));
         replaceAll(source, "[{USE}]", get_use(ep));
@@ -61,7 +63,7 @@ bool COptions::handle_gocmds(void) {
         if (contains(source, "fmt."))
             imports += "\t\"fmt\"\n";
         if (contains(source, "utils."))
-            imports += "\t\"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/utils\"\n";
+            imports += "\t\"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils\"\n";
         replaceAll(source, "[{IMPORTS}]", imports);
 
         string_q fn = getSourcePath("apps/chifra/cmd/" + ep.api_route + ".go");
@@ -221,6 +223,16 @@ string_q get_hidden(const CCommandOption& cmd) {
     ret << os.str();
     ret << "\t}" << endl;
     return ret.str();
+}
+
+string_q get_logopts(const CCommandOption& cmd) {
+    if (cmd.api_route != "explore")
+        return "";
+    const char* STR_RET =
+        "	utils.TestLogArgs(\"terms\", args)\n"
+        "	utils.TestLogBool(\"local\", ExploreOpts.local)\n"
+        "	utils.TestLogBool(\"google\", ExploreOpts.google)\n";
+    return STR_RET;
 }
 
 string_q get_setopts(const CCommandOption& cmd) {

@@ -19,6 +19,7 @@ package cmd
 import (
 	"os"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -34,12 +35,12 @@ var exploreCmd = &cobra.Command{
 var usageExplore = `explore [flags] <term> [term...]
 
 Arguments:
-  terms - one or more addresses, names, block, or transaction identifiers`
+  terms - one or more address, name, block, or transaction identifier`
 
-var shortExplore = "open an explorer for one or more addresses, blocks, or transactions"
+var shortExplore = "open a local or remote explorer for one or more addresses, blocks, or transactions"
 
 var longExplore = `Purpose:
-  Open an explorer for one or more addresses, blocks, or transactions.`
+  Open a local or remote explorer for one or more addresses, blocks, or transactions.`
 
 var notesExplore = ``
 
@@ -62,6 +63,15 @@ func init() {
 
 	exploreCmd.SetUsageTemplate(UsageWithNotes(notesExplore))
 	rootCmd.AddCommand(exploreCmd)
+}
+
+func TestLogExplore(args []string) {
+	if !utils.IsTestMode() {
+		return
+	}
+	utils.TestLogArgs("terms", args)
+	utils.TestLogBool("local", ExploreOpts.local)
+	utils.TestLogBool("google", ExploreOpts.google)
 }
 
 // EXISTING_CODE

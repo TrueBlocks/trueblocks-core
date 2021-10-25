@@ -1,6 +1,7 @@
 ## chifra serve
 
-`chifra serve` delivers a JSON API for each of the `chifra` commands along with each of its options. It does this through `flame` server which is written in Go.
+`chifra serve` delivers a JSON API for each of the `chifra` commands along with each of its options.
+It does this through `flame` server, which is written in Go.
 
 [Get help with the API here](https://www.tokenomics.io/api.html
 ).
