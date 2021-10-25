@@ -143,7 +143,6 @@ func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkType ChunkType, pro
 		select {
 		case <-ctx.Done():
 			// Cancel
-			log.Println("--- Cancelled ---")
 			ants.Reboot()
 			return
 		default:
@@ -161,11 +160,13 @@ func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkType ChunkType, pro
 			download, err := fetchChunk(url)
 
 			if ctx.Err() != nil {
-				log.Println("^^^ Was cancelled already, exiting")
+				progressChannel <- &ChunkProgress{
+					Pin:     &pin,
+					Event:   ProgressError,
+					Message: ctx.Err().Error(),
+				}
 				return
 			}
-
-			log.Println("=== Chunk downloaded ===", err)
 
 			if err == nil {
 				writeChannel <- &jobResult{
@@ -208,12 +209,10 @@ func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkType ChunkType, pro
 				Pin:   res.Pin,
 				Event: ProgressUnzipping,
 			}
-			log.Println("Saving file....")
 			err := saveFileContents(res, outConfig)
 
 			if err == sigintTrap.ErrInterrupted {
 				// User pressed Ctrl-C
-				log.Println("Finishing work...")
 				cancel()
 				return
 			}
@@ -234,15 +233,18 @@ func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkType ChunkType, pro
 		panic(err)
 	}
 
+	// Increasing wait group counter to make sure we finished saving all downloaded pins
+	writeWg.Add(1)
 	go func() {
-		log.Println(">>> Goroutine")
 		for result := range writeChannel {
+			// It would be simpler to call Add where we start downloads, but we have no guarantee that
+			// we will be saving the same number of pins (e.g. if download failed)
 			writeWg.Add(1)
-			log.Println(">>> Invoking writePool")
 			writePool.Invoke(result)
 		}
-
-		log.Println(">>>> Goroutine finished")
+		// Range over a channel is blocking, so the following line will be executed only
+		// when we finished saving pins
+		writeWg.Done()
 	}()
 
 	pinsToDownload := FilterDownloadedChunks(pins, outConfig)
@@ -298,7 +300,7 @@ func saveFileContents(res *jobResult, outConfig *outputConfig) error {
 	_, werr := io.Copy(output, archive)
 
 	if werr != nil {
-		return fmt.Errorf("error copying %s: %s", res.fileName, err)
+		return fmt.Errorf("error copying %s: %s", res.fileName, werr)
 	}
 
 	select {
