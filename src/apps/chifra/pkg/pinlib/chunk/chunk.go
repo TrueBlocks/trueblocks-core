@@ -62,8 +62,10 @@ type fetchResult struct {
 	totalSize int64
 }
 
-var gatewayUrl = config.ReadBlockScrape().IpfsGateway
-var outputDir = config.ReadGlobal().IndexPath
+// TODO: this has to be moved to some function, so that it doesn't get called
+// every time chifra is executing
+var gatewayUrl = config.ReadBlockScrape().Dev.IpfsGateway
+var outputDir = "/Users/dawid/Library/Application Support/TrueBlocks/unchained/pins-new" // config.ReadGlobal().Settings.IndexPath
 
 type outputConfig struct {
 	subdir    string
@@ -83,7 +85,7 @@ func (oc *outputConfig) Build(chunkType ChunkType) {
 }
 
 func (oc *outputConfig) ToPath(fileName string) string {
-	return path.Join(oc.subdir, fileName, oc.extension)
+	return path.Join(outputDir, oc.subdir, fileName+oc.extension)
 }
 
 // Downloads a chunk using HTTP
@@ -115,17 +117,21 @@ func fetchChunk(url string) (*fetchResult, error) {
 // Progress is reported to progressChannel.
 func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkType ChunkType, progressChannel chan<- *ChunkProgress) {
 	// Downloaded content will wait for saving in this channel
-	writeChannel := make(chan *jobResult, 20)
+	writeChannel := make(chan *jobResult, poolSize)
 	// Context lets us handle Ctrl-C easily
-	ctx := context.Background()
-	ctx, cancel := context.WithCancel(ctx)
+	ctx, cancel := context.WithCancel(context.Background())
 	outConfig := &outputConfig{}
 	outConfig.Build(chunkType)
 	var wg sync.WaitGroup
+	var writeWg sync.WaitGroup
 
 	defer func() {
 		cancel()
 	}()
+
+	// TODO: remove it
+	log.Println("Using gateway", gatewayUrl)
+	log.Println("Saving chunks to", outConfig.ToPath(""))
 
 	pool, err := ants.NewPoolWithFunc(poolSize, func(param interface{}) {
 		url := gatewayUrl
@@ -136,6 +142,7 @@ func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkType ChunkType, pro
 		select {
 		case <-ctx.Done():
 			// Cancel
+			log.Println("--- Cancelled ---")
 			ants.Reboot()
 			return
 		default:
@@ -151,6 +158,13 @@ func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkType ChunkType, pro
 				Event:    ProgressDownloading,
 			}
 			download, err := fetchChunk(url)
+
+			if ctx.Err() != nil {
+				log.Println("^^^ Was cancelled already, exiting")
+				return
+			}
+
+			log.Println("=== Chunk downloaded ===", err)
 
 			if err == nil {
 				writeChannel <- &jobResult{
@@ -178,20 +192,28 @@ func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkType ChunkType, pro
 		panic(err)
 	}
 
-	go func() {
+	writePool, err := ants.NewPoolWithFunc(poolSize, func(resParam interface{}) {
 		// Take download data from the channel and save it
-		for res := range writeChannel {
+		res := resParam.(*jobResult)
+
+		defer writeWg.Done()
+
+		select {
+		case <-ctx.Done():
+			return
+		default:
 			progressChannel <- &ChunkProgress{
 				FileName: res.fileName,
 				Event:    ProgressUnzipping,
 			}
+			log.Println("Saving file....")
 			err := saveFileContents(res, outConfig)
 
 			if err == sigintTrap.ErrInterrupted {
 				// User pressed Ctrl-C
 				log.Println("Finishing work...")
 				cancel()
-				break
+				return
 			}
 
 			if err != nil && err != sigintTrap.ErrInterrupted {
@@ -202,8 +224,23 @@ func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkType ChunkType, pro
 				}
 			}
 		}
+	})
 
-		close(writeChannel)
+	defer writePool.Release()
+
+	if err != nil {
+		panic(err)
+	}
+
+	go func() {
+		log.Println(">>> Goroutine")
+		for result := range writeChannel {
+			writeWg.Add(1)
+			log.Println(">>> Invoking writePool")
+			writePool.Invoke(result)
+		}
+
+		log.Println(">>>> Goroutine finished")
 	}()
 
 	pinsToDownload := FilterDownloadedChunks(pins, outConfig)
@@ -213,6 +250,9 @@ func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkType ChunkType, pro
 	}
 
 	wg.Wait()
+	close(writeChannel)
+
+	writeWg.Wait()
 	progressChannel <- &ChunkProgress{
 		Event: ProgressAllDone,
 	}
@@ -259,18 +299,19 @@ func saveFileContents(res *jobResult, outConfig *outputConfig) error {
 		return fmt.Errorf("error copying %s: %s", res.fileName, err)
 	}
 
-	if sigint := <-trapChannel; sigint {
+	select {
+	case <-trapChannel:
 		return sigintTrap.ErrInterrupted
+	default:
+		return nil
 	}
-
-	return nil
 }
 
 // Returns new []manifest.PinDescriptor slice with all pins from outputDir removed
 func FilterDownloadedChunks(pins []manifest.PinDescriptor, outConfig *outputConfig) []manifest.PinDescriptor {
 	fileMap := make(map[string]bool)
 
-	files, err := ioutil.ReadDir(outputDir + outConfig.subdir)
+	files, err := ioutil.ReadDir(path.Join(outputDir, outConfig.subdir))
 
 	if err != nil {
 		return pins

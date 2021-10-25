@@ -74,9 +74,9 @@ func runNewPins(cmd *cobra.Command, args []string) {
 		fmt.Printf("Error while saving manifest to %s:\n%s", target, err)
 	}
 
-	progress := make(chan *chunk.ChunkProgress, 10)
+	progress := make(chan *chunk.ChunkProgress, 100)
 	defer close(progress)
-	go chunk.GetChunksFromRemote(m.NewPins[2300:], chunk.BloomChunk, progress)
+	go chunk.GetChunksFromRemote(m.NewPins, chunk.BloomChunk, progress) // [2300:]
 
 	progressToLabel := map[chunk.ProgressEvent]string{
 		chunk.ProgressDownloading: "Downloading",
