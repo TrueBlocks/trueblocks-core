@@ -46,15 +46,16 @@ const (
 )
 
 type ChunkProgress struct {
-	Event    ProgressEvent
-	Message  string
-	FileName string
+	Event   ProgressEvent
+	Message string
+	Pin     *manifest.PinDescriptor
 }
 
 type jobResult struct {
 	fileName string
 	fileSize int64
 	contents io.Reader
+	Pin      *manifest.PinDescriptor
 }
 
 type fetchResult struct {
@@ -154,8 +155,8 @@ func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkType ChunkType, pro
 			}
 
 			progressChannel <- &ChunkProgress{
-				FileName: pin.FileName,
-				Event:    ProgressDownloading,
+				Pin:   &pin,
+				Event: ProgressDownloading,
 			}
 			download, err := fetchChunk(url)
 
@@ -171,12 +172,13 @@ func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkType ChunkType, pro
 					fileName: pin.FileName,
 					fileSize: download.totalSize,
 					contents: download.body,
+					Pin:      &pin,
 				}
 			} else {
 				progressChannel <- &ChunkProgress{
-					FileName: pin.FileName,
-					Event:    ProgressError,
-					Message:  err.Error(),
+					Pin:     &pin,
+					Event:   ProgressError,
+					Message: err.Error(),
 				}
 			}
 
@@ -203,8 +205,8 @@ func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkType ChunkType, pro
 			return
 		default:
 			progressChannel <- &ChunkProgress{
-				FileName: res.fileName,
-				Event:    ProgressUnzipping,
+				Pin:   res.Pin,
+				Event: ProgressUnzipping,
 			}
 			log.Println("Saving file....")
 			err := saveFileContents(res, outConfig)
@@ -218,9 +220,9 @@ func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkType ChunkType, pro
 
 			if err != nil && err != sigintTrap.ErrInterrupted {
 				progressChannel <- &ChunkProgress{
-					FileName: res.fileName,
-					Event:    ProgressError,
-					Message:  err.Error(),
+					Pin:     res.Pin,
+					Event:   ProgressError,
+					Message: err.Error(),
 				}
 			}
 		}

@@ -24,8 +24,11 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib/chunk"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib/manifest"
 	"github.com/spf13/cobra"
 )
+
+type downloadFunc func(pins []manifest.PinDescriptor) (failed []manifest.PinDescriptor)
 
 // pinsCmd represents the pins command
 var pinsNewCmd = &cobra.Command{
@@ -48,6 +51,66 @@ func init() {
 	pinsNewCmd.Flags().StringVar(&pinsNewOptions.target, "target", "", "where")
 
 	rootCmd.AddCommand(pinsNewCmd)
+}
+
+// TODO: change type to []*manifest.PinDescriptor
+func downloadAndReportProgress(pins []manifest.PinDescriptor, chunkType chunk.ChunkType) []manifest.PinDescriptor {
+	failed := []manifest.PinDescriptor{}
+	progress := make(chan *chunk.ChunkProgress, 100)
+	defer close(progress)
+
+	go chunk.GetChunksFromRemote(pins, chunkType, progress)
+
+	progressToLabel := map[chunk.ProgressEvent]string{
+		chunk.ProgressDownloading: "Downloading",
+		chunk.ProgressUnzipping:   "Unzipping",
+		chunk.ProgressValidating:  "Validating",
+		chunk.ProgressError:       "Error",
+	}
+
+	for event := range progress {
+		if event.Event == chunk.ProgressAllDone {
+			break
+		}
+
+		if event.Event == chunk.ProgressError {
+			failed = append(failed, *event.Pin)
+		}
+
+		eventLabel := progressToLabel[event.Event]
+
+		log.Printf("[%s]: %s %s\n", event.Pin.FileName, eventLabel, event.Message)
+	}
+
+	return failed
+}
+
+// Retries downloading `failedPins` for `times` times by calling `downloadChunks` function.
+// Returns number of pins that we were unable to fetch.
+// This function is simple because: 1. it will never get a new failing pin (it only feeds in
+// the list of known, failed pins); 2. The maximum number of failing pins we can get equals
+// the length of `failedPins`.
+func retry(failedPins []manifest.PinDescriptor, times uint, downloadChunks downloadFunc) int {
+	retryCount := uint(0)
+
+	pinsToRetry := failedPins
+
+	for {
+		if len(pinsToRetry) == 0 {
+			break
+		}
+
+		if retryCount >= times {
+			break
+		}
+
+		pinsToRetry = downloadChunks(pinsToRetry)
+		log.Println("[Retry]", "got", len(pinsToRetry), "failing")
+
+		retryCount++
+	}
+
+	return len(pinsToRetry)
 }
 
 func runNewPins(cmd *cobra.Command, args []string) {
@@ -74,27 +137,14 @@ func runNewPins(cmd *cobra.Command, args []string) {
 		fmt.Printf("Error while saving manifest to %s:\n%s", target, err)
 	}
 
-	progress := make(chan *chunk.ChunkProgress, 100)
-	defer close(progress)
-	go chunk.GetChunksFromRemote(m.NewPins, chunk.BloomChunk, progress) // [2300:]
+	failedChunks := downloadAndReportProgress(m.NewPins, chunk.BloomChunk)
 
-	progressToLabel := map[chunk.ProgressEvent]string{
-		chunk.ProgressDownloading: "Downloading",
-		chunk.ProgressUnzipping:   "Unzipping",
-		chunk.ProgressValidating:  "Validating",
-		chunk.ProgressError:       "Error",
+	if len(failedChunks) > 0 {
+		retry(failedChunks, 3, func(pins []manifest.PinDescriptor) []manifest.PinDescriptor {
+			log.Println("Retrying", len(pins), "pin(s)")
+			return downloadAndReportProgress(pins, chunk.BloomChunk)
+		})
 	}
-
-	for event := range progress {
-		if event.Event == chunk.ProgressAllDone {
-			break
-		}
-
-		eventLabel := progressToLabel[event.Event]
-
-		log.Printf("[%s]: %s %s\n", event.FileName, eventLabel, event.Message)
-	}
-
 }
 
 // EXISTING_CODE
