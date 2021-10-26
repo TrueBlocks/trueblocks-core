@@ -105,7 +105,7 @@ bool CUniPair::findPair(void) {
         return false;
     }
 
-    address = uniFactory.getResults();
+    address = uniFactory.getCallResult();
     if (address.empty() || isZeroAddr(address)) {
         notPairs[key] = true;
         return false;
@@ -129,7 +129,7 @@ bool CUniPair::getPrice(blknum_t bn, string_q& priceSource, double& priceOut) {
         return false;
 
     CStringArray results;
-    if (!getResults(results) || results.size() < 2) {
+    if (!getCallResult(results) || results.size() < 2) {
         LOG_WARN("Could not get results from pair: ", address);
         cerr << *this << endl;
         return false;
@@ -218,7 +218,7 @@ double getPriceMaker_UsdPerEth(blknum_t bn, string_q& priceSource) {
     theCall.abi_spec = spec;
     if (doEthCall(theCall)) {
         CStringArray results;
-        theCall.getResults(results);
+        theCall.getCallResult(results);
         if (results.size() > 1 && results[1] == "true") {
             string_q hex = results[0];
             wei_t wei = str_2_Wei(hex) * 100;

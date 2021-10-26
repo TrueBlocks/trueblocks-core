@@ -23,7 +23,7 @@ params.size: 1
     "blockNumber": 10092000,
     "balance": 0,
     "address": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
-    "result": {
+    "callResult": {
       "name": "name",
       "signature": "name()",
       "encoding": "0x06fdde03",

@@ -2393,6 +2393,11 @@ components:
           type: string
           example: "one of 'EOA' or 'Contract'"
           description: "the type of the address at the given block"
+        callResult:
+          type: object
+          items:
+            $ref: "#/components/schemas/function"
+          description: "the result of the call to the contract"
         ether:
           type: number
           format: double

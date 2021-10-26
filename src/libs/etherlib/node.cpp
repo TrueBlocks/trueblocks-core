@@ -553,7 +553,7 @@ string_q getTokenState(const address_t& token, const string_q& what, const CAbi&
     theCall.blockNumber = blockNum;
     theCall.abi_spec = abi_spec;
     if (doEthCall(theCall))
-        return theCall.getResults();
+        return theCall.getCallResult();
     return "";
 }
 

@@ -6,7 +6,7 @@ chifra state  --call 0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f!0xe6a43905!00000
     "blockNumber": 10092000,
     "balance": 0,
     "address": "0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f",
-    "result": {
+    "callResult": {
       "name": "getPair",
       "signature": "getPair(address,address)",
       "encoding": "0xe6a43905",

@@ -5,7 +5,7 @@ chifra state  --call 0xa4f29fc548856180f6b1e319ee4d86715875cce4!0x12065fe0 65239
     "blockNumber": 6523977,
     "balance": 0,
     "address": "0xa4f29fc548856180f6b1e319ee4d86715875cce4",
-    "result": {
+    "callResult": {
       "name": "getBalance",
       "signature": "getBalance()",
       "encoding": "0x12065fe0",
@@ -19,7 +19,7 @@ chifra state  --call 0xa4f29fc548856180f6b1e319ee4d86715875cce4!0x12065fe0 65239
     "blockNumber": 6525977,
     "balance": 0,
     "address": "0xa4f29fc548856180f6b1e319ee4d86715875cce4",
-    "result": {
+    "callResult": {
       "name": "getBalance",
       "signature": "getBalance()",
       "encoding": "0x12065fe0",
@@ -33,7 +33,7 @@ chifra state  --call 0xa4f29fc548856180f6b1e319ee4d86715875cce4!0x12065fe0 65239
     "blockNumber": 6527977,
     "balance": 0,
     "address": "0xa4f29fc548856180f6b1e319ee4d86715875cce4",
-    "result": {
+    "callResult": {
       "name": "getBalance",
       "signature": "getBalance()",
       "encoding": "0x12065fe0",
@@ -47,7 +47,7 @@ chifra state  --call 0xa4f29fc548856180f6b1e319ee4d86715875cce4!0x12065fe0 65239
     "blockNumber": 6529977,
     "balance": 0,
     "address": "0xa4f29fc548856180f6b1e319ee4d86715875cce4",
-    "result": {
+    "callResult": {
       "name": "getBalance",
       "signature": "getBalance()",
       "encoding": "0x12065fe0",
@@ -61,7 +61,7 @@ chifra state  --call 0xa4f29fc548856180f6b1e319ee4d86715875cce4!0x12065fe0 65239
     "blockNumber": 6531977,
     "balance": 0,
     "address": "0xa4f29fc548856180f6b1e319ee4d86715875cce4",
-    "result": {
+    "callResult": {
       "name": "getBalance",
       "signature": "getBalance()",
       "encoding": "0x12065fe0",
@@ -75,7 +75,7 @@ chifra state  --call 0xa4f29fc548856180f6b1e319ee4d86715875cce4!0x12065fe0 65239
     "blockNumber": 6533977,
     "balance": 0,
     "address": "0xa4f29fc548856180f6b1e319ee4d86715875cce4",
-    "result": {
+    "callResult": {
       "name": "getBalance",
       "signature": "getBalance()",
       "encoding": "0x12065fe0",
@@ -89,7 +89,7 @@ chifra state  --call 0xa4f29fc548856180f6b1e319ee4d86715875cce4!0x12065fe0 65239
     "blockNumber": 6535977,
     "balance": 0,
     "address": "0xa4f29fc548856180f6b1e319ee4d86715875cce4",
-    "result": {
+    "callResult": {
       "name": "getBalance",
       "signature": "getBalance()",
       "encoding": "0x12065fe0",
@@ -103,7 +103,7 @@ chifra state  --call 0xa4f29fc548856180f6b1e319ee4d86715875cce4!0x12065fe0 65239
     "blockNumber": 6537977,
     "balance": 0,
     "address": "0xa4f29fc548856180f6b1e319ee4d86715875cce4",
-    "result": {
+    "callResult": {
       "name": "getBalance",
       "signature": "getBalance()",
       "encoding": "0x12065fe0",
@@ -117,7 +117,7 @@ chifra state  --call 0xa4f29fc548856180f6b1e319ee4d86715875cce4!0x12065fe0 65239
     "blockNumber": 6539977,
     "balance": 0,
     "address": "0xa4f29fc548856180f6b1e319ee4d86715875cce4",
-    "result": {
+    "callResult": {
       "name": "getBalance",
       "signature": "getBalance()",
       "encoding": "0x12065fe0",

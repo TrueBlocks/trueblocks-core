@@ -94,6 +94,11 @@ string_q CEthState::getValueByName(const string_q& fieldName) const {
             if (fieldName % "code") {
                 return code;
             }
+            if (fieldName % "callResult") {
+                if (callResult == CFunction())
+                    return "{}";
+                return callResult.Format();
+            }
             break;
         case 'd':
             if (fieldName % "deployed") {
@@ -103,13 +108,6 @@ string_q CEthState::getValueByName(const string_q& fieldName) const {
         case 'n':
             if (fieldName % "nonce") {
                 return uint_2_Str(nonce);
-            }
-            break;
-        case 'r':
-            if (fieldName % "result") {
-                if (result == CFunction())
-                    return "{}";
-                return result.Format();
             }
             break;
         case 's':
@@ -126,9 +124,9 @@ string_q CEthState::getValueByName(const string_q& fieldName) const {
 
     // test for contained object field specifiers
     string_q objSpec;
-    objSpec = toUpper("result") + "::";
+    objSpec = toUpper("callResult") + "::";
     if (contains(fieldName, objSpec))
-        return result.getValueByName(substitute(fieldName, objSpec, ""));
+        return callResult.getValueByName(substitute(fieldName, objSpec, ""));
 
     // Finally, give the parent class a chance
     return CBaseNode::getValueByName(fieldName);
@@ -172,6 +170,9 @@ bool CEthState::setValueByName(const string_q& fieldNameIn, const string_q& fiel
                 code = toLower(fieldValue);
                 return true;
             }
+            if (fieldName % "callResult") {
+                return callResult.parseJson3(fieldValue);
+            }
             break;
         case 'd':
             if (fieldName % "deployed") {
@@ -183,11 +184,6 @@ bool CEthState::setValueByName(const string_q& fieldNameIn, const string_q& fiel
             if (fieldName % "nonce") {
                 nonce = str_2_Uint(fieldValue);
                 return true;
-            }
-            break;
-        case 'r':
-            if (fieldName % "result") {
-                return result.parseJson3(fieldValue);
             }
             break;
         case 's':
@@ -229,7 +225,7 @@ bool CEthState::Serialize(CArchive& archive) {
     // archive >> address;
     // archive >> deployed;
     // archive >> accttype;
-    // archive >> result;
+    // archive >> callResult;
     // EXISTING_CODE
     // EXISTING_CODE
     finishParse();
@@ -251,7 +247,7 @@ bool CEthState::SerializeC(CArchive& archive) const {
     // archive << address;
     // archive << deployed;
     // archive << accttype;
-    // archive << result;
+    // archive << callResult;
     // EXISTING_CODE
     // EXISTING_CODE
     return true;
@@ -315,8 +311,8 @@ void CEthState::registerClass(void) {
     HIDE_FIELD(CEthState, "deployed");
     ADD_FIELD(CEthState, "accttype", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CEthState, "accttype");
-    ADD_OBJECT(CEthState, "result", T_OBJECT | TS_OMITEMPTY, ++fieldNum, GETRUNTIME_CLASS(CFunction));
-    HIDE_FIELD(CEthState, "result");
+    ADD_OBJECT(CEthState, "callResult", T_OBJECT | TS_OMITEMPTY, ++fieldNum, GETRUNTIME_CLASS(CFunction));
+    HIDE_FIELD(CEthState, "callResult");
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CEthState, "schema");
@@ -400,8 +396,8 @@ ostream& operator<<(ostream& os, const CEthState& it) {
 const CBaseNode* CEthState::getObjectAt(const string_q& fieldName, size_t index) const {
     // EXISTING_CODE
     // EXISTING_CODE
-    if (fieldName % "result")
-        return &result;
+    if (fieldName % "callResult")
+        return &callResult;
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -421,6 +417,27 @@ const char* STR_DISPLAY_ETHSTATE =
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
+//-------------------------------------------------------------------------
+string_q CEthState::getCallResult(void) const {
+    return callResult.outputs.size() ? callResult.outputs[0].value : "";
+}
+
+//-------------------------------------------------------------------------
+bool CEthState::getCallResult(string_q& out) const {
+    if (callResult.outputs.size()) {
+        out = callResult.outputs[0].value;
+        return true;
+    }
+    return false;
+}
+
+//-------------------------------------------------------------------------
+bool CEthState::getCallResult(CStringArray& out) const {
+    for (auto output : callResult.outputs)
+        out.push_back(output.value);
+    return out.size();
+}
+
 //-------------------------------------------------------------------------
 wei_t getBalanceAt(const string_q& addr, blknum_t num) {
     if (num == NOPOS)

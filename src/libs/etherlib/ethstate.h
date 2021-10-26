@@ -45,7 +45,7 @@ class CEthState : public CBaseNode {
     address_t address;
     blknum_t deployed;
     string_q accttype;
-    CFunction result;
+    CFunction callResult;
 
   public:
     CEthState(void);
@@ -58,6 +58,9 @@ class CEthState : public CBaseNode {
     const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
+    string_q getCallResult(void) const;
+    bool getCallResult(string_q& out) const;
+    bool getCallResult(CStringArray& out) const;
     // EXISTING_CODE
     bool operator==(const CEthState& it) const;
     bool operator!=(const CEthState& it) const {
@@ -118,7 +121,7 @@ inline void CEthState::initialize(void) {
     address = "";
     deployed = 0;
     accttype = "";
-    result = CFunction();
+    callResult = CFunction();
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -137,7 +140,7 @@ inline void CEthState::duplicate(const CEthState& et) {
     address = et.address;
     deployed = et.deployed;
     accttype = et.accttype;
-    result = et.result;
+    callResult = et.callResult;
 
     // EXISTING_CODE
     // EXISTING_CODE

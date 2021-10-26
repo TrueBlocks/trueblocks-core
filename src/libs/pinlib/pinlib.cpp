@@ -53,7 +53,7 @@ bool pinlib_downloadManifest(void) {
     theCall.abi_spec.loadAbisKnown("unchained");  // unchained index is a known contract
     LOG_INFO("Calling unchained index smart contract...");
     if (doEthCall(theCall)) {
-        ipfshash_t ipfshash = theCall.result.outputs[0].value;
+        ipfshash_t ipfshash = theCall.callResult.outputs[0].value;
         LOG_INFO("Found manifest hash at ", cGreen, ipfshash, cOff);
         LOG_INFO("IPFS gateway ", cGreen, gatewayUrl, cOff);
         string_q remoteData = doCommand("curl -s \"" + gatewayUrl + ipfshash + "\"");

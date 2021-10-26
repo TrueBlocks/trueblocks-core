@@ -7,5 +7,5 @@ storage     ,bytes    ,            ,       ,      ,true    ,          ,        ,
 address     ,address  ,            ,       ,      ,true    ,          ,        ,      ,         ,6   ,2    ,0xa1e4...63b4              ,the address of the state being queried
 deployed    ,blknum   ,            ,       ,      ,true    ,          ,        ,      ,         ,7   ,7    ,8901011                    ,the block number at which this smart contract was deployed (if a smart contact)
 accttype    ,string   ,            ,       ,      ,true    ,          ,        ,      ,         ,8   ,8    ,one of 'EOA' or 'Contract' ,the type of the address at the given block
-result      ,function ,            ,true   ,      ,true    ,          ,        ,      ,         ,    ,     ,                           ,
-ether       ,double   ,            ,       ,      ,true    ,          ,true    ,      ,true     ,9   ,     ,0.25884369                 ,the balance of the address in ethers
+callResult  ,function ,            ,true   ,      ,true    ,          ,        ,      ,         ,9   ,     ,                           ,the result of the call to the contract
+ether       ,double   ,            ,       ,      ,true    ,          ,true    ,      ,true     ,10  ,     ,0.25884369                 ,the balance of the address in ethers

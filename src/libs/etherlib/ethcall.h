@@ -42,9 +42,6 @@ class CEthCall : public CEthState {
 
     // EXISTING_CODE
     bool checkProxy;
-    string_q getResults(void) const;
-    bool getResults(string_q& out) const;
-    bool getResults(CStringArray& out) const;
     // EXISTING_CODE
     bool operator==(const CEthCall& it) const;
     bool operator!=(const CEthCall& it) const {

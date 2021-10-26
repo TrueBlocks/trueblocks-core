@@ -306,8 +306,8 @@ ostream& operator<<(ostream& os, const CEthCall& it) {
 //---------------------------------------------------------------------------
 const CBaseNode* CEthCall::getObjectAt(const string_q& fieldName, size_t index) const {
     // EXISTING_CODE
-    if (fieldName % "result")
-        return &result;
+    if (fieldName % "callResult")
+        return &callResult;
     // EXISTING_CODE
     if (fieldName % "abi_spec")
         return &abi_spec;
@@ -322,27 +322,6 @@ const char* STR_DISPLAY_ETHCALL = "";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-//-------------------------------------------------------------------------
-string_q CEthCall::getResults(void) const {
-    return result.outputs.size() ? result.outputs[0].value : "";
-}
-
-//-------------------------------------------------------------------------
-bool CEthCall::getResults(string_q& out) const {
-    if (result.outputs.size()) {
-        out = result.outputs[0].value;
-        return true;
-    }
-    return false;
-}
-
-//-------------------------------------------------------------------------
-bool CEthCall::getResults(CStringArray& out) const {
-    for (auto output : result.outputs)
-        out.push_back(output.value);
-    return out.size();
-}
-
 //-------------------------------------------------------------------------
 bool doEthCall(CEthCall& theCall) {
     if (theCall.deployed != NOPOS && theCall.deployed > theCall.blockNumber) {
@@ -364,7 +343,7 @@ bool doEthCall(CEthCall& theCall) {
     string_q ret = callRPC("eth_call", cmd.str(), false);
     // Did we get an answer? If so, return it
     if (startsWith(ret, "0x")) {
-        theCall.abi_spec.articulateOutputs(theCall.encoding.substr(0, 10), ret, theCall.result);
+        theCall.abi_spec.articulateOutputs(theCall.encoding.substr(0, 10), ret, theCall.callResult);
         return true;
     }
 
@@ -375,7 +354,7 @@ bool doEthCall(CEthCall& theCall) {
             // This is a proxy with an implementation...let's
             // try again against the proxied-to address.
             theCall.encoding = orig;
-            theCall.address = theCall.getResults();
+            theCall.address = theCall.getCallResult();
             if (isZeroAddr(theCall.address))
                 return false;
             return doEthCall(theCall);

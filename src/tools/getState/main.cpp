@@ -69,7 +69,7 @@ bool visitBlock(uint64_t blockNum, void* data) {
             CTransaction art;
             art.input = opt->theCall.encoding + opt->theCall.bytes;
             opt->abi_spec.articulateTransaction(&art);
-            opt->theCall.result.inputs = art.articulatedTx.inputs;
+            opt->theCall.callResult.inputs = art.articulatedTx.inputs;
             //            opt->theCall.address = opt->opt->callVariables[0];
             if (!opt->firstOut)
                 cout << "," << endl;

@@ -6,7 +6,7 @@
       "blockNumber": 10092000,
       "balance": 0,
       "address": "0xbb2b8038a1640196fbe3e38816f3e67cba72d940",
-      "result": {
+      "callResult": {
         "name": "token1",
         "signature": "token1()",
         "encoding": "0xd21220a7",
