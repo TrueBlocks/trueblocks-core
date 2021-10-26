@@ -1,0 +1,44 @@
+{
+  "data": [],
+  "errors": [
+    "No result from call to 0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B with fourbyte 0x0902f1ac at block 10092000"
+  ],
+  "types": [
+    {
+      "type": "CEthCall",
+      "fields": [
+        {
+          "name": "blockNumber",
+          "type": "blocknum"
+        },
+        {
+          "name": "address",
+          "type": "address"
+        },
+        {
+          "name": "encoding",
+          "type": "text"
+        },
+        {
+          "name": "bytes",
+          "type": "text"
+        },
+        {
+          "name": "callResult",
+          "type": "object"
+        },
+        {
+          "name": "compressedResult",
+          "type": "text"
+        }
+      ]
+    }
+  ],
+  "meta": {
+    "unripe": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "client": "0xdeadbeef"
+  }
+}

@@ -1097,6 +1097,14 @@ paths:
           explode: true
           schema:
             type: string
+        - name: proxy_for
+          description: for the --call option only, redirects calls to this implementation
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
       responses:
         "200":
           description: returns the requested data

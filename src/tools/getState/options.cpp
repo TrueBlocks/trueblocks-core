@@ -26,6 +26,7 @@ static const COption params[] = {
     COption("changes", "c", "", OPT_SWITCH, "only report a balance when it changes from one block to the next"),
     COption("no_zero", "n", "", OPT_SWITCH, "suppress the display of zero balance accounts"),
     COption("call", "a", "<string>", OPT_HIDDEN | OPT_FLAG, "a bang-separated string consisting of address!4-byte!bytes"),  // NOLINT
+    COption("proxy_for", "r", "<address>", OPT_HIDDEN | OPT_FLAG, "for the --call option only, redirects calls to this implementation"),  // NOLINT
     COption("", "", "", OPT_DESCRIPTION, "Retrieve account balance(s) for one or more addresses at given block(s)."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -40,6 +41,7 @@ bool COptions::parseArguments(string_q& command) {
 
     // BEG_CODE_LOCAL_INIT
     CStringArray parts;
+    address_t proxy_for = "";
     // END_CODE_LOCAL_INIT
 
     Init();
@@ -69,6 +71,13 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-a" || arg == "--call") {
             return flag_required("call");
 
+        } else if (startsWith(arg, "-r:") || startsWith(arg, "--proxy_for:")) {
+            proxy_for = substitute(substitute(arg, "-r:", ""), "--proxy_for:", "");
+            if (!isAddress(proxy_for))
+                return usage("The provided value (" + proxy_for + ") is not a properly formatted address.");
+        } else if (arg == "-r" || arg == "--proxy_for") {
+            return flag_required("proxy_for");
+
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
@@ -94,6 +103,7 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("changes", changes);
     LOG_TEST_BOOL("no_zero", no_zero);
     LOG_TEST("call", call, (call == ""));
+    LOG_TEST("proxy_for", proxy_for, (proxy_for == ""));
     // END_DEBUG_DISPLAY
 
     if (Mocked(""))
@@ -105,6 +115,9 @@ bool COptions::parseArguments(string_q& command) {
 
     if (!call.empty() && !parts.empty())
         return usage("The --parts option is not available with the --call option.");
+
+    if (call.empty() && !proxy_for.empty())
+        return usage("The --proxy_for option is only available with the --call option.");
 
     if (!call.empty()) {
         CStringArray callVariables;
@@ -129,7 +142,7 @@ bool COptions::parseArguments(string_q& command) {
             return usage("The four byte signature must be a hex string.");
         }
 
-        theCall.address = callVariables[0];
+        theCall.address = proxy_for.empty() ? callVariables[0] : proxy_for;
         theCall.encoding = callVariables[1];
         theCall.bytes = callVariables.size() > 2 ? callVariables[2] : "";
         theCall.abi_spec.loadAbisFromKnown();

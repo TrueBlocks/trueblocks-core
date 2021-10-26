@@ -53,10 +53,11 @@ Notes:
   - You may specify multiple modes on a single line.`
 
 type stateOptionsType struct {
-	parts   []string
-	changes bool
-	no_zero bool
-	call    string
+	parts     []string
+	changes   bool
+	no_zero   bool
+	call      string
+	proxy_for string
 }
 
 var StateOpts stateOptionsType
@@ -71,8 +72,10 @@ One or more of [ none | some | all | balance | nonce | code | storage | deployed
 	stateCmd.Flags().BoolVarP(&StateOpts.changes, "changes", "c", false, "only report a balance when it changes from one block to the next")
 	stateCmd.Flags().BoolVarP(&StateOpts.no_zero, "no_zero", "n", false, "suppress the display of zero balance accounts")
 	stateCmd.Flags().StringVarP(&StateOpts.call, "call", "a", "", "a bang-separated string consisting of address!4-byte!bytes (hidden)")
+	stateCmd.Flags().StringVarP(&StateOpts.proxy_for, "proxy_for", "r", "", "for the --call option only, redirects calls to this implementation (hidden)")
 	if !utils.IsTestMode() {
 		stateCmd.Flags().MarkHidden("call")
+		stateCmd.Flags().MarkHidden("proxy_for")
 	}
 	stateCmd.Flags().SortFlags = false
 	stateCmd.PersistentFlags().SortFlags = false

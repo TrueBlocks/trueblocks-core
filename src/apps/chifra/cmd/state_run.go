@@ -38,6 +38,9 @@ func runState(cmd *cobra.Command, args []string) {
 	if len(StateOpts.call) > 0 {
 		options += " --call " + StateOpts.call
 	}
+	if len(StateOpts.proxy_for) > 0 {
+		options += " --proxy_for " + StateOpts.proxy_for
+	}
 	arguments := ""
 	for _, arg := range args {
 		arguments += " " + arg

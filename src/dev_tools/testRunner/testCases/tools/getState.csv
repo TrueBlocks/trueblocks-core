@@ -65,6 +65,10 @@ on,both,fast,state,tools/getState,uniswap_token1_name,y,call = 0xc02aaa39b223fe8
 on,both,fast,state,tools/getState,uniswap_name,y,call = 0xbb2b8038a1640196fbe3e38816f3e67cba72d940!0x06fdde03 & blocks = 10092000
 on,both,fast,state,tools/getState,uniswap_reserve,n,call = 0xbb2b8038a1640196fbe3e38816f3e67cba72d940!0x0902f1ac & blocks = 10092000 & fmt = csv
 on,both,fast,state,tools/getState,uniswap_fail,y,call = 0xbb2b8038a1640196fbe3e38816f3e67cba72d940!0x0902f1ad & blocks = 10092000
+on,both,fast,state,tools/getState,proxy_fail,y,call = 0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B!0x0902f1ac & blocks = 10092000
+on,both,fast,state,tools/getState,proxy_call_direct,y,call = 0xbb2b8038a1640196fbe3e38816f3e67cba72d940!0x0902f1ac & blocks = 10092000
+on,both,fast,state,tools/getState,proxy_imp,n,call = 0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B!0xbb82aa5e & blocks = 10092000 & fmt = csv
+on,both,fast,state,tools/getState,proxy_for,y,call = 0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B!0x0902f1ac & proxy_for = 0xbb2b8038a1640196fbe3e38816f3e67cba72d940 & blocks = 10092000
 off,both,fast,state,tools/getState,balance_10,y,addrs = 0xa1e4380a3b1f749673e270229993ee55f35663b4 0x5df9b87991262f6ba471f09758cde1c0fc1de734 & blocks = 46100-46300:10
 off,both,fast,state,tools/getState,balance_annually,y,addrs = 0xa1e4380a3b1f749673e270229993ee55f35663b4 0x5df9b87991262f6ba471f09758cde1c0fc1de734 & blocks = 0-4900000:annually
 off,both,fast,state,tools/getState,balance_quarterly,y,addrs = 0xa1e4380a3b1f749673e270229993ee55f35663b4 0x5df9b87991262f6ba471f09758cde1c0fc1de734 & blocks = 0-2900000:quarterly
