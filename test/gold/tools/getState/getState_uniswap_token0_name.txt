@@ -1,5 +1,5 @@
-chifra state  --call 0x2260fac5e5542a773aa44fbcfedf7c193bc2c599!0x06fdde03 10092000
-{ "data": [
+chifra state  --call 0x2260fac5e5542a773aa44fbcfedf7c193bc2c599!0x06fdde03 10092000 --fmt txt
+blocknumber	address	signature	encoding	bytes	compressedresult
 
 level: 1
 readOffset: 0
@@ -18,18 +18,4 @@ params.size: 1
   0: string _name = Wrapped BTC
 ==================================================
 
-  {
-    "encoding": "0x06fdde03",
-    "blockNumber": 10092000,
-    "balance": 0,
-    "address": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
-    "callResult": {
-      "name": "name",
-      "signature": "name()",
-      "encoding": "0x06fdde03",
-      "outputs": {
-        "_name": "Wrapped BTC"
-      }
-    },
-    "compressedResult": "Wrapped BTC"
-  }] }
+10092000	0x2260fac5e5542a773aa44fbcfedf7c193bc2c599	name()	0x06fdde03		Wrapped BTC
