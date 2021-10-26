@@ -24,11 +24,17 @@ namespace qblocks {
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CEthCall : public CEthState {
+class CEthCall : public CBaseNode {
   public:
+    blknum_t blockNumber;
+    address_t address;
+    string_q signature;
     string_q encoding;
     string_q bytes;
     CAbi abi_spec;
+    CFunction callResult;
+    string_q compressedResult;
+    blknum_t deployed;
 
   public:
     CEthCall(void);
@@ -42,6 +48,9 @@ class CEthCall : public CEthState {
 
     // EXISTING_CODE
     bool checkProxy;
+    string_q getCallResult(void) const;
+    bool getCallResult(string_q& out) const;
+    bool getCallResult(CStringArray& out) const;
     // EXISTING_CODE
     bool operator==(const CEthCall& it) const;
     bool operator!=(const CEthCall& it) const {
@@ -92,11 +101,17 @@ inline void CEthCall::clear(void) {
 
 //--------------------------------------------------------------------------
 inline void CEthCall::initialize(void) {
-    CEthState::initialize();
+    CBaseNode::initialize();
 
+    blockNumber = 0;
+    address = "";
+    signature = "";
     encoding = "";
     bytes = "";
     abi_spec = CAbi();
+    callResult = CFunction();
+    compressedResult = "";
+    deployed = 0;
 
     // EXISTING_CODE
     checkProxy = true;
@@ -106,11 +121,17 @@ inline void CEthCall::initialize(void) {
 //--------------------------------------------------------------------------
 inline void CEthCall::duplicate(const CEthCall& et) {
     clear();
-    CEthState::duplicate(et);
+    CBaseNode::duplicate(et);
 
+    blockNumber = et.blockNumber;
+    address = et.address;
+    signature = et.signature;
     encoding = et.encoding;
     bytes = et.bytes;
     abi_spec = et.abi_spec;
+    callResult = et.callResult;
+    compressedResult = et.compressedResult;
+    deployed = et.deployed;
 
     // EXISTING_CODE
     checkProxy = et.checkProxy;

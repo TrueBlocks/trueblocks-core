@@ -94,14 +94,6 @@ string_q CEthState::getValueByName(const string_q& fieldName) const {
             if (fieldName % "code") {
                 return code;
             }
-            if (fieldName % "callResult") {
-                if (callResult == CFunction())
-                    return "{}";
-                return callResult.Format();
-            }
-            if (fieldName % "compressedResult") {
-                return compressedResult;
-            }
             break;
         case 'd':
             if (fieldName % "deployed") {
@@ -124,12 +116,6 @@ string_q CEthState::getValueByName(const string_q& fieldName) const {
 
     // EXISTING_CODE
     // EXISTING_CODE
-
-    // test for contained object field specifiers
-    string_q objSpec;
-    objSpec = toUpper("callResult") + "::";
-    if (contains(fieldName, objSpec))
-        return callResult.getValueByName(substitute(fieldName, objSpec, ""));
 
     // Finally, give the parent class a chance
     return CBaseNode::getValueByName(fieldName);
@@ -171,13 +157,6 @@ bool CEthState::setValueByName(const string_q& fieldNameIn, const string_q& fiel
         case 'c':
             if (fieldName % "code") {
                 code = toLower(fieldValue);
-                return true;
-            }
-            if (fieldName % "callResult") {
-                return callResult.parseJson3(fieldValue);
-            }
-            if (fieldName % "compressedResult") {
-                compressedResult = fieldValue;
                 return true;
             }
             break;
@@ -232,8 +211,6 @@ bool CEthState::Serialize(CArchive& archive) {
     // archive >> address;
     // archive >> deployed;
     // archive >> accttype;
-    // archive >> callResult;
-    // archive >> compressedResult;
     // EXISTING_CODE
     // EXISTING_CODE
     finishParse();
@@ -255,8 +232,6 @@ bool CEthState::SerializeC(CArchive& archive) const {
     // archive << address;
     // archive << deployed;
     // archive << accttype;
-    // archive << callResult;
-    // archive << compressedResult;
     // EXISTING_CODE
     // EXISTING_CODE
     return true;
@@ -320,10 +295,6 @@ void CEthState::registerClass(void) {
     HIDE_FIELD(CEthState, "deployed");
     ADD_FIELD(CEthState, "accttype", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CEthState, "accttype");
-    ADD_OBJECT(CEthState, "callResult", T_OBJECT | TS_OMITEMPTY, ++fieldNum, GETRUNTIME_CLASS(CFunction));
-    HIDE_FIELD(CEthState, "callResult");
-    ADD_FIELD(CEthState, "compressedResult", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    HIDE_FIELD(CEthState, "compressedResult");
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CEthState, "schema");
@@ -345,19 +316,6 @@ string_q nextEthstateChunk_custom(const string_q& fieldIn, const void* dataPtr) 
     if (eth) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
-            case 'c':
-                if (fieldIn % "compressedResult") {
-                    ostringstream os;
-                    bool first = true;
-                    for (auto result : eth->callResult.outputs) {
-                        if (!first)
-                            os << "|";
-                        os << result.value;
-                        first = false;
-                    }
-                    return os.str();
-                }
-                break;
             case 'd':
                 if (fieldIn % "dollars")
                     return wei_2_Export(eth->blockNumber, eth->balance, 18);
@@ -417,18 +375,6 @@ ostream& operator<<(ostream& os, const CEthState& it) {
 }
 
 //---------------------------------------------------------------------------
-const CBaseNode* CEthState::getObjectAt(const string_q& fieldName, size_t index) const {
-    // EXISTING_CODE
-    // EXISTING_CODE
-    if (fieldName % "callResult")
-        return &callResult;
-    // EXISTING_CODE
-    // EXISTING_CODE
-
-    return NULL;
-}
-
-//---------------------------------------------------------------------------
 const char* STR_DISPLAY_ETHSTATE =
     "[{BLOCKNUMBER}]\t"
     "[{ADDRESS}]\t"
@@ -441,27 +387,6 @@ const char* STR_DISPLAY_ETHSTATE =
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-//-------------------------------------------------------------------------
-string_q CEthState::getCallResult(void) const {
-    return callResult.outputs.size() ? callResult.outputs[0].value : "";
-}
-
-//-------------------------------------------------------------------------
-bool CEthState::getCallResult(string_q& out) const {
-    if (callResult.outputs.size()) {
-        out = callResult.outputs[0].value;
-        return true;
-    }
-    return false;
-}
-
-//-------------------------------------------------------------------------
-bool CEthState::getCallResult(CStringArray& out) const {
-    for (auto output : callResult.outputs)
-        out.push_back(output.value);
-    return out.size();
-}
-
 //-------------------------------------------------------------------------
 wei_t getBalanceAt(const string_q& addr, blknum_t num) {
     if (num == NOPOS)

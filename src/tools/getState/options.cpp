@@ -112,6 +112,7 @@ bool COptions::parseArguments(string_q& command) {
 
         if (callVariables.size() == 0 || !isContractAt(callVariables[0], latestBlock))
             return usage("You must supply the address of a smart contract for the --call option.");
+
         if (callVariables.size() == 1) {
             if (!isTestMode() && !isApiMode()) {
                 cout << doCommand("chifra abis " + callVariables[0]);
@@ -119,9 +120,11 @@ bool COptions::parseArguments(string_q& command) {
             }
             return usage("You must provide a four-byte code for the smart contract you're calling.");
         }
+
         if (!isAddress(callVariables[0])) {
             return usage("The first item in the call data to --call must be an address.");
         }
+
         if (!isHexStr(callVariables[1])) {
             return usage("The four byte signature must be a hex string.");
         }
@@ -132,16 +135,21 @@ bool COptions::parseArguments(string_q& command) {
         theCall.abi_spec.loadAbisFromKnown();
         theCall.abi_spec.loadAbiFromEtherscan(theCall.address);
 
-        expContext().exportFmt = JSON1;
-        configureDisplay("getState", "CEthState", STR_DISPLAY_FUNCTION);
-        // TODO: This is terrible. Can we remove it?
-        manageFields(
-            "CParameter:str_default,indexed,internalType,components,is_pointer,is_array,"
-            "is_object,is_builtin,is_minimal,is_noaddfld,is_nowrite,is_omitempty,is_extra,type",
-            FLD_HIDE);
+        string_q fmt = STR_DISPLAY_ETHCALL;
+        replace(fmt, "[{ENCODING}}", "[{SIGNATURE}]\t[{ENCODING}]");
+        configureDisplay("getState", "CEthState", fmt);
+
+        manageFields("CParameter:*", FLD_HIDE);
+        manageFields("CParameter:name,signature,encoding,outputs", FLD_SHOW);
+
         manageFields("CFunction:stateMutability,type,constant", FLD_HIDE);
-        manageFields("CEthCall:abi_spec", FLD_HIDE);
-        manageFields("CFunction:address|CEthState:address,callResult,compressedResult", FLD_SHOW);
+
+        manageFields("CEthCall:abi_spec,deployed", FLD_HIDE);
+        manageFields("CEthCall:blockNumber,address,signature,compressedResult", FLD_SHOW);
+        if (expContext().exportFmt == JSON1 || expContext().exportFmt == API1) {
+            manageFields("CEthCall:signature", FLD_HIDE);
+            manageFields("CEthCall:callResult", FLD_SHOW);
+        }
 
         return true;
     }

@@ -45,8 +45,6 @@ class CEthState : public CBaseNode {
     address_t address;
     blknum_t deployed;
     string_q accttype;
-    CFunction callResult;
-    string_q compressedResult;
 
   public:
     CEthState(void);
@@ -56,12 +54,7 @@ class CEthState : public CBaseNode {
 
     DECLARE_NODE(CEthState);
 
-    const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
-
     // EXISTING_CODE
-    string_q getCallResult(void) const;
-    bool getCallResult(string_q& out) const;
-    bool getCallResult(CStringArray& out) const;
     // EXISTING_CODE
     bool operator==(const CEthState& it) const;
     bool operator!=(const CEthState& it) const {
@@ -122,8 +115,6 @@ inline void CEthState::initialize(void) {
     address = "";
     deployed = 0;
     accttype = "";
-    callResult = CFunction();
-    compressedResult = "";
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -142,8 +133,6 @@ inline void CEthState::duplicate(const CEthState& et) {
     address = et.address;
     deployed = et.deployed;
     accttype = et.accttype;
-    callResult = et.callResult;
-    compressedResult = et.compressedResult;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -196,5 +185,6 @@ extern string_q getStorageAt(const address_t& addr, uint64_t pos, blknum_t block
 extern uint64_t getNonceAt(const address_t& addr, blknum_t num);
 extern blknum_t getDeployBlock(const address_t& addr);
 extern bool isArchiveNode(void);
+extern const char* STR_DISPLAY_ETHSTATE;
 // EXISTING_CODE
 }  // namespace qblocks
