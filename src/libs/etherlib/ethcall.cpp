@@ -364,7 +364,7 @@ bool doEthCall(CEthCall& theCall) {
     string_q ret = callRPC("eth_call", cmd.str(), false);
     // Did we get an answer? If so, return it
     if (startsWith(ret, "0x")) {
-        theCall.abi_spec.articulateOutputs(theCall.encoding, ret, theCall.result);
+        theCall.abi_spec.articulateOutputs(theCall.encoding.substr(0, 10), ret, theCall.result);
         return true;
     }
 
