@@ -1,5 +1,10 @@
 package config
 
+var DefaultIpfsGateway = "http://gateway.ipfs.io/ipfs/"
+
+// Functions in this package read configuration files,
+// filling in default values
+
 func ReadGlobal() *Global {
 	config := &Global{
 		Settings: globalSettings{
@@ -10,8 +15,6 @@ func ReadGlobal() *Global {
 	ReadTo(config, "trueBlocks")
 	return config
 }
-
-var DefaultIpfsGateway = "http://gateway.ipfs.io/ipfs/"
 
 func ReadBlockScrape() *BlockScrape {
 	config := &BlockScrape{

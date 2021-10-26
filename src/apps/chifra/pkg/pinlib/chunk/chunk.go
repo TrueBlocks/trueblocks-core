@@ -25,6 +25,7 @@ import (
 	"github.com/panjf2000/ants/v2"
 )
 
+// The size of worker pools for downloading and saving data
 var poolSize = runtime.NumCPU() * 2
 
 type ChunkType uint
@@ -51,6 +52,8 @@ type ChunkProgress struct {
 	Pin     *manifest.PinDescriptor
 }
 
+// jobResult type is used to carry both downloaded data and some
+// metadata to decompressing/file writing function through a channel
 type jobResult struct {
 	fileName string
 	fileSize int64
@@ -58,6 +61,8 @@ type jobResult struct {
 	Pin      *manifest.PinDescriptor
 }
 
+// fetchResult type make it easier to return both download content and
+// download size information (for validation purposes)
 type fetchResult struct {
 	body      io.ReadCloser
 	totalSize int64
@@ -65,14 +70,18 @@ type fetchResult struct {
 
 // TODO: this has to be moved to some function, so that it doesn't get called
 // every time chifra is executing
-var gatewayUrl = config.ReadBlockScrape().Dev.IpfsGateway
 var outputDir = "/Users/dawid/Library/Application Support/TrueBlocks/unchained/pins-new" // config.ReadGlobal().Settings.IndexPath
 
+// The subdirectory we will be saving files to and file extension depends on
+// chunk type (e.g. whether we are downloading blooms or indexes). We will store
+// this information in a struct to not have to put if-elses everywhere
 type outputConfig struct {
 	subdir    string
 	extension string
 }
 
+// Sets correct values of subdir and extension properties based on
+// chunkType
 func (oc *outputConfig) Build(chunkType ChunkType) {
 	subdir := "blooms/"
 	extension := ".bloom"
@@ -85,6 +94,8 @@ func (oc *outputConfig) Build(chunkType ChunkType) {
 	oc.extension = extension
 }
 
+// Uses the data stored in outputConfig to build a path and return it
+// as a string
 func (oc *outputConfig) ToPath(fileName string) string {
 	return path.Join(outputDir, oc.subdir, fileName+oc.extension)
 }
@@ -93,17 +104,14 @@ func (oc *outputConfig) ToPath(fileName string) string {
 func fetchChunk(url string) (*fetchResult, error) {
 	response, err := http.Get(url)
 	body := response.Body
-
 	if response.StatusCode != 200 {
 		return nil, fmt.Errorf("wrong status code: %d", response.StatusCode)
 	}
-
 	if err != nil {
 		return nil, err
 	}
 
 	fileSize, err := strconv.ParseInt(response.Header.Get("Content-Length"), 10, 64)
-
 	if err != nil {
 		return nil, err
 	}
@@ -119,16 +127,19 @@ func fetchChunk(url string) (*fetchResult, error) {
 func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkType ChunkType, progressChannel chan<- *ChunkProgress) {
 	// Downloaded content will wait for saving in this channel
 	writeChannel := make(chan *jobResult, poolSize)
+
 	// Context lets us handle Ctrl-C easily
 	ctx, cancel := context.WithCancel(context.Background())
 	outConfig := &outputConfig{}
 	outConfig.Build(chunkType)
-	var wg sync.WaitGroup
+	var downloadWg sync.WaitGroup
 	var writeWg sync.WaitGroup
 
 	defer func() {
 		cancel()
 	}()
+
+	gatewayUrl := config.ReadBlockScrape().Dev.IpfsGateway
 
 	// TODO: remove it
 	log.Println("Using gateway", gatewayUrl)
@@ -138,7 +149,7 @@ func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkType ChunkType, pro
 		url := gatewayUrl
 		pin := param.(manifest.PinDescriptor)
 
-		defer wg.Done()
+		defer downloadWg.Done()
 
 		select {
 		case <-ctx.Done():
@@ -157,8 +168,8 @@ func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkType ChunkType, pro
 				Pin:   &pin,
 				Event: ProgressDownloading,
 			}
-			download, err := fetchChunk(url)
 
+			download, err := fetchChunk(url)
 			if ctx.Err() != nil {
 				progressChannel <- &ChunkProgress{
 					Pin:     &pin,
@@ -167,7 +178,6 @@ func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkType ChunkType, pro
 				}
 				return
 			}
-
 			if err == nil {
 				writeChannel <- &jobResult{
 					fileName: pin.FileName,
@@ -188,9 +198,7 @@ func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkType ChunkType, pro
 			}
 		}
 	})
-
 	defer pool.Release()
-
 	if err != nil {
 		panic(err)
 	}
@@ -226,9 +234,7 @@ func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkType ChunkType, pro
 			}
 		}
 	})
-
 	defer writePool.Release()
-
 	if err != nil {
 		panic(err)
 	}
@@ -249,11 +255,11 @@ func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkType ChunkType, pro
 
 	pinsToDownload := FilterDownloadedChunks(pins, outConfig)
 	for _, pin := range pinsToDownload {
-		wg.Add(1)
+		downloadWg.Add(1)
 		pool.Invoke(pin)
 	}
 
-	wg.Wait()
+	downloadWg.Wait()
 	close(writeChannel)
 
 	writeWg.Wait()
@@ -264,6 +270,7 @@ func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkType ChunkType, pro
 	fmt.Println("pins done:", len(pins))
 }
 
+// Decompresses the downloaded data and saves it to files
 func saveFileContents(res *jobResult, outConfig *outputConfig) error {
 	// Postpone Ctrl-C
 	trapChannel := sigintTrap.Enable()
@@ -272,35 +279,29 @@ func saveFileContents(res *jobResult, outConfig *outputConfig) error {
 	// We load content to the buffer first to check its size
 	buffer := &bytes.Buffer{}
 	read, err := buffer.ReadFrom(res.contents)
-
 	if err != nil {
 		return err
 	}
-
 	if read != res.fileSize {
-		return fmt.Errorf("file corrupted: %s (expected %d but got %d bytes)", res.fileName, res.fileSize, read)
+		return &ErrSavingCorruptedDownload{res.fileName, res.fileSize, read}
 	}
 
 	archive, err := gzip.NewReader(buffer)
-
 	if err != nil {
-		return fmt.Errorf("error unpacking %s: %s", res.fileName, err)
+		return &ErrSavingCannotDecompress{res.fileName, err}
 	}
-
 	defer archive.Close()
 
-	// TODO: should be changed to finalized/file-name.bin for index chunks
 	output, err := os.Create(outConfig.ToPath(res.fileName))
 	if err != nil {
-		return fmt.Errorf("error creating file %s: %s", res.fileName, err)
+		return &ErrSavingCreateFile{res.fileName, err}
 	}
 	defer output.Close()
 
 	// Unzip and save content to a file
 	_, werr := io.Copy(output, archive)
-
 	if werr != nil {
-		return fmt.Errorf("error copying %s: %s", res.fileName, werr)
+		return &ErrSavingCopy{res.fileName, werr}
 	}
 
 	select {
@@ -316,7 +317,6 @@ func FilterDownloadedChunks(pins []manifest.PinDescriptor, outConfig *outputConf
 	fileMap := make(map[string]bool)
 
 	files, err := ioutil.ReadDir(path.Join(outputDir, outConfig.subdir))
-
 	if err != nil {
 		return pins
 	}

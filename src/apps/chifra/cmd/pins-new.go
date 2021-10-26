@@ -53,7 +53,6 @@ func init() {
 	rootCmd.AddCommand(pinsNewCmd)
 }
 
-// TODO: change type to []*manifest.PinDescriptor
 func downloadAndReportProgress(pins []manifest.PinDescriptor, chunkType chunk.ChunkType) []manifest.PinDescriptor {
 	failed := []manifest.PinDescriptor{}
 	progress := make(chan *chunk.ChunkProgress, 100)
@@ -114,8 +113,19 @@ func retry(failedPins []manifest.PinDescriptor, times uint, downloadChunks downl
 }
 
 func runNewPins(cmd *cobra.Command, args []string) {
-	url := args[0]
-	target := args[1]
+	toDownload := args[0]
+	url := args[1]
+	target := args[2]
+
+	var chunkType chunk.ChunkType
+	switch toDownload {
+	case "blooms":
+		chunkType = chunk.BloomChunk
+	case "indexes":
+		chunkType = chunk.IndexChunk
+	default:
+		log.Fatalln("Unsupported chunk type", toDownload)
+	}
 
 	// TODO: profiling code, remove before merging
 	f, err := os.Create("profile.prof")
@@ -137,12 +147,12 @@ func runNewPins(cmd *cobra.Command, args []string) {
 		fmt.Printf("Error while saving manifest to %s:\n%s", target, err)
 	}
 
-	failedChunks := downloadAndReportProgress(m.NewPins, chunk.BloomChunk)
+	failedChunks := downloadAndReportProgress(m.NewPins, chunkType)
 
 	if len(failedChunks) > 0 {
 		retry(failedChunks, 3, func(pins []manifest.PinDescriptor) []manifest.PinDescriptor {
 			log.Println("Retrying", len(pins), "pin(s)")
-			return downloadAndReportProgress(pins, chunk.BloomChunk)
+			return downloadAndReportProgress(pins, chunkType)
 		})
 	}
 }
