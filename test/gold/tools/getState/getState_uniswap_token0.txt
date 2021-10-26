@@ -12,5 +12,6 @@ chifra state  --call 0xbb2b8038a1640196fbe3e38816f3e67cba72d940!0x0dfe1681 10092
       "outputs": {
         "val_0": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599"
       }
-    }
+    },
+    "compressedResult": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599"
   }] }

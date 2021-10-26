@@ -141,7 +141,7 @@ bool COptions::parseArguments(string_q& command) {
             FLD_HIDE);
         manageFields("CFunction:stateMutability,type,constant", FLD_HIDE);
         manageFields("CEthCall:abi_spec", FLD_HIDE);
-        manageFields("CFunction:address|CEthState:callResult,address", FLD_SHOW);
+        manageFields("CFunction:address|CEthState:address,callResult,compressedResult", FLD_SHOW);
 
         return true;
     }

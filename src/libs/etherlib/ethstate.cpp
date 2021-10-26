@@ -99,6 +99,9 @@ string_q CEthState::getValueByName(const string_q& fieldName) const {
                     return "{}";
                 return callResult.Format();
             }
+            if (fieldName % "compressedResult") {
+                return compressedResult;
+            }
             break;
         case 'd':
             if (fieldName % "deployed") {
@@ -173,6 +176,10 @@ bool CEthState::setValueByName(const string_q& fieldNameIn, const string_q& fiel
             if (fieldName % "callResult") {
                 return callResult.parseJson3(fieldValue);
             }
+            if (fieldName % "compressedResult") {
+                compressedResult = fieldValue;
+                return true;
+            }
             break;
         case 'd':
             if (fieldName % "deployed") {
@@ -226,6 +233,7 @@ bool CEthState::Serialize(CArchive& archive) {
     // archive >> deployed;
     // archive >> accttype;
     // archive >> callResult;
+    // archive >> compressedResult;
     // EXISTING_CODE
     // EXISTING_CODE
     finishParse();
@@ -248,6 +256,7 @@ bool CEthState::SerializeC(CArchive& archive) const {
     // archive << deployed;
     // archive << accttype;
     // archive << callResult;
+    // archive << compressedResult;
     // EXISTING_CODE
     // EXISTING_CODE
     return true;
@@ -313,6 +322,8 @@ void CEthState::registerClass(void) {
     HIDE_FIELD(CEthState, "accttype");
     ADD_OBJECT(CEthState, "callResult", T_OBJECT | TS_OMITEMPTY, ++fieldNum, GETRUNTIME_CLASS(CFunction));
     HIDE_FIELD(CEthState, "callResult");
+    ADD_FIELD(CEthState, "compressedResult", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CEthState, "compressedResult");
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CEthState, "schema");
@@ -334,6 +345,19 @@ string_q nextEthstateChunk_custom(const string_q& fieldIn, const void* dataPtr) 
     if (eth) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
+            case 'c':
+                if (fieldIn % "compressedResult") {
+                    ostringstream os;
+                    bool first = true;
+                    for (auto result : eth->callResult.outputs) {
+                        if (!first)
+                            os << "|";
+                        os << result.value;
+                        first = false;
+                    }
+                    return os.str();
+                }
+                break;
             case 'd':
                 if (fieldIn % "dollars")
                     return wei_2_Export(eth->blockNumber, eth->balance, 18);

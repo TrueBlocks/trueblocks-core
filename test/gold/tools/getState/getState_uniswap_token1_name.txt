@@ -30,5 +30,6 @@ params.size: 1
       "outputs": {
         "_name": "Wrapped Ether"
       }
-    }
+    },
+    "compressedResult": "Wrapped Ether"
   }] }

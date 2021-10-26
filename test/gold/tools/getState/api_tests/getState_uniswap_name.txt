@@ -13,7 +13,8 @@
         "outputs": {
           "_name": "Uniswap V2"
         }
-      }
+      },
+      "compressedResult": "Uniswap V2"
     }
   ]
 }

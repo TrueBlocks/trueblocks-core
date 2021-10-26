@@ -13,7 +13,8 @@
         "outputs": {
           "_name": "Wrapped Ether"
         }
-      }
+      },
+      "compressedResult": "Wrapped Ether"
     }
   ]
 }

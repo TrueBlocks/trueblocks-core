@@ -13,7 +13,8 @@
         "outputs": {
           "pair": "0xbb2b8038a1640196fbe3e38816f3e67cba72d940"
         }
-      }
+      },
+      "compressedResult": "0xbb2b8038a1640196fbe3e38816f3e67cba72d940"
     }
   ]
 }

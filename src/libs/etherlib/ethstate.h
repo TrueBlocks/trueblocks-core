@@ -46,6 +46,7 @@ class CEthState : public CBaseNode {
     blknum_t deployed;
     string_q accttype;
     CFunction callResult;
+    string_q compressedResult;
 
   public:
     CEthState(void);
@@ -122,6 +123,7 @@ inline void CEthState::initialize(void) {
     deployed = 0;
     accttype = "";
     callResult = CFunction();
+    compressedResult = "";
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -141,6 +143,7 @@ inline void CEthState::duplicate(const CEthState& et) {
     deployed = et.deployed;
     accttype = et.accttype;
     callResult = et.callResult;
+    compressedResult = et.compressedResult;
 
     // EXISTING_CODE
     // EXISTING_CODE

@@ -13,7 +13,8 @@
         "outputs": {
           "balance": "0"
         }
-      }
+      },
+      "compressedResult": "0"
     },
     {
       "encoding": "0x12065fe0",
@@ -28,7 +29,8 @@
         "outputs": {
           "balance": "0"
         }
-      }
+      },
+      "compressedResult": "0"
     },
     {
       "encoding": "0x12065fe0",
@@ -43,7 +45,8 @@
         "outputs": {
           "balance": "0"
         }
-      }
+      },
+      "compressedResult": "0"
     },
     {
       "encoding": "0x12065fe0",
@@ -58,7 +61,8 @@
         "outputs": {
           "balance": "0"
         }
-      }
+      },
+      "compressedResult": "0"
     },
     {
       "encoding": "0x12065fe0",
@@ -73,7 +77,8 @@
         "outputs": {
           "balance": "0"
         }
-      }
+      },
+      "compressedResult": "0"
     },
     {
       "encoding": "0x12065fe0",
@@ -88,7 +93,8 @@
         "outputs": {
           "balance": "0"
         }
-      }
+      },
+      "compressedResult": "0"
     },
     {
       "encoding": "0x12065fe0",
@@ -103,7 +109,8 @@
         "outputs": {
           "balance": "0"
         }
-      }
+      },
+      "compressedResult": "0"
     },
     {
       "encoding": "0x12065fe0",
@@ -118,7 +125,8 @@
         "outputs": {
           "balance": "0"
         }
-      }
+      },
+      "compressedResult": "0"
     },
     {
       "encoding": "0x12065fe0",
@@ -133,7 +141,8 @@
         "outputs": {
           "balance": "0"
         }
-      }
+      },
+      "compressedResult": "0"
     }
   ]
 }

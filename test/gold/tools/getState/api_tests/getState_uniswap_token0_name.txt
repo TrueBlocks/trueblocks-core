@@ -13,7 +13,8 @@
         "outputs": {
           "_name": "Wrapped BTC"
         }
-      }
+      },
+      "compressedResult": "Wrapped BTC"
     }
   ]
 }

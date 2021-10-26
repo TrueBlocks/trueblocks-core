@@ -2398,6 +2398,9 @@ components:
           items:
             $ref: "#/components/schemas/function"
           description: "the result of the call to the contract"
+        compressedResult:
+          type: string
+          description: "the compressed version of the result of the call to the contract"
         ether:
           type: number
           format: double
