@@ -35,7 +35,7 @@ var logsCmd = &cobra.Command{
 var usageLogs = `logs [flags] <tx_id> [tx_id...]
 
 Arguments:
-  transactions - a space-separated list of one or more transaction identifiers (required)`
+  transactions - a space-separated list of one or more transaction identifiers`
 
 var shortLogs = "retrieve logs for the given transaction(s)"
 
@@ -44,14 +44,14 @@ var longLogs = `Purpose:
 
 var notesLogs = `
 Notes:
-  - The transactions list may be one or more space-separated identifiers which are either a transaction hash, a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.
+  - The transactions list may be one or more transaction hashes, blockNumber.transactionID pairs, or a blockHash.transactionID pairs.
   - This tool checks for valid input syntax, but does not check that the transaction requested actually exists.
   - If the queried node does not store historical state, the results for most older transactions are undefined.
   - If you specify a 32-byte hash, it will be assumed to be a transaction hash, if the transaction is not found, it will be used as a topic.`
 
 type logsOptionsType struct {
 	topic      []string
-	source     []string
+	emitter    []string
 	articulate bool
 }
 
@@ -62,8 +62,8 @@ func init() {
 
 	logsCmd.Flags().SortFlags = false
 	logsCmd.PersistentFlags().SortFlags = false
-	logsCmd.Flags().StringSliceVarP(&LogsOpts.topic, "topic", "t", nil, "filter by one or more log topics (not implemented)")
-	logsCmd.Flags().StringSliceVarP(&LogsOpts.source, "source", "s", nil, "export only if the given address emitted the event (not implemented)")
+	logsCmd.Flags().StringSliceVarP(&LogsOpts.topic, "topic", "t", nil, "filter logs to show only if the log has one or more of these topics")
+	logsCmd.Flags().StringSliceVarP(&LogsOpts.emitter, "emitter", "e", nil, "filter logs to show only if emitted by the given address")
 	logsCmd.Flags().BoolVarP(&LogsOpts.articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
 	logsCmd.Flags().SortFlags = false
 	logsCmd.PersistentFlags().SortFlags = false

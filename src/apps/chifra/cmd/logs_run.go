@@ -30,8 +30,8 @@ func runLogs(cmd *cobra.Command, args []string) {
 	for _, t := range LogsOpts.topic {
 		options += " --topic " + t
 	}
-	for _, t := range LogsOpts.source {
-		options += " --source " + t
+	for _, t := range LogsOpts.emitter {
+		options += " --emitter " + t
 	}
 	if LogsOpts.articulate {
 		options += " --articulate"

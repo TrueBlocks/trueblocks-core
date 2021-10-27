@@ -874,7 +874,7 @@ paths:
       parameters:
         - name: transactions
           description: a space-separated list of one or more transaction identifiers
-          required: true
+          required: false
           style: form
           in: query
           explode: true
@@ -884,7 +884,7 @@ paths:
               type: string
               format: tx_id_t
         - name: topic
-          description: filter by one or more log topics (not implemented)
+          description: filter logs to show only if the log has one or more of these topics
           required: false
           style: form
           in: query
@@ -894,8 +894,8 @@ paths:
             items:
               type: string
               format: topic_t
-        - name: source
-          description: export only if the given address emitted the event (not implemented)
+        - name: emitter
+          description: filter logs to show only if emitted by the given address
           required: false
           style: form
           in: query

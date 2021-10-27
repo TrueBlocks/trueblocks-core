@@ -20,9 +20,9 @@
 static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
-    COption("transactions", "", "list<tx_id>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more transaction identifiers"),  // NOLINT
-    COption("topic", "t", "list<topic>", OPT_FLAG, "filter by one or more log topics (not implemented)"),
-    COption("source", "s", "list<addr>", OPT_FLAG, "export only if the given address emitted the event (not implemented)"),  // NOLINT
+    COption("transactions", "", "list<tx_id>", OPT_POSITIONAL, "a space-separated list of one or more transaction identifiers"),  // NOLINT
+    COption("topic", "t", "list<topic>", OPT_FLAG, "filter logs to show only if the log has one or more of these topics"),  // NOLINT
+    COption("emitter", "e", "list<addr>", OPT_FLAG, "filter logs to show only if emitted by the given address"),
     COption("articulate", "a", "", OPT_SWITCH, "articulate the retrieved data if ABIs can be found"),
     COption("", "", "", OPT_DESCRIPTION, "Retrieve logs for the given transaction(s)."),
     // clang-format on
@@ -50,12 +50,12 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-t" || arg == "--topic") {
             return flag_required("topic");
 
-        } else if (startsWith(arg, "-s:") || startsWith(arg, "--source:")) {
-            arg = substitute(substitute(arg, "-s:", ""), "--source:", "");
-            if (!parseAddressList(this, source, arg))
+        } else if (startsWith(arg, "-e:") || startsWith(arg, "--emitter:")) {
+            arg = substitute(substitute(arg, "-e:", ""), "--emitter:", "");
+            if (!parseAddressList(this, emitter, arg))
                 return false;
-        } else if (arg == "-s" || arg == "--source") {
-            return flag_required("source");
+        } else if (arg == "-e" || arg == "--emitter") {
+            return flag_required("emitter");
 
         } else if (arg == "-a" || arg == "--articulate") {
             articulate = true;
@@ -77,7 +77,7 @@ bool COptions::parseArguments(string_q& command) {
     // BEG_DEBUG_DISPLAY
     LOG_TEST_LIST("transList", transList, transList.empty());
     LOG_TEST_LIST("topic", topic, topic.empty());
-    LOG_TEST_LIST("source", source, source.empty());
+    LOG_TEST_LIST("emitter", emitter, emitter.empty());
     LOG_TEST_BOOL("articulate", articulate);
     // END_DEBUG_DISPLAY
 
@@ -127,7 +127,7 @@ void COptions::Init(void) {
 
     // BEG_CODE_INIT
     topic.clear();
-    source.clear();
+    emitter.clear();
     articulate = false;
     // END_CODE_INIT
 
@@ -141,7 +141,7 @@ COptions::COptions(void) {
 
     // BEG_CODE_NOTES
     // clang-format off
-    notes.push_back("The `transactions` list may be one or more space-separated identifiers which are either a transaction hash, a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.");  // NOLINT
+    notes.push_back("The `transactions` list may be one or more transaction hashes, blockNumber.transactionID pairs, or a blockHash.transactionID pairs.");  // NOLINT
     notes.push_back("This tool checks for valid input syntax, but does not check that the transaction requested actually exists.");  // NOLINT
     notes.push_back("If the queried node does not store historical state, the results for most older transactions are undefined.");  // NOLINT
     notes.push_back("If you specify a 32-byte hash, it will be assumed to be a transaction hash, if the transaction is not found, it will be used as a topic.");  // NOLINT
