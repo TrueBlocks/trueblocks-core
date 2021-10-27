@@ -18,6 +18,13 @@
 #include "etherlib.h"
 
 // BEG_ERROR_DEFINES
+#define ERR_NOCACHEUNCLE 1
+#define ERR_NOCACHEADDRESS 2
+#define ERR_TRACINGREQUIRED 3
+#define ERR_NOTRACEADDRESS 4
+#define ERR_TRACEHASHEXCLUSIVE 5
+#define ERR_ATLEASTONEBLOCK 6
+#define ERR_EMTOPONLYWITHLOG 7
 // END_ERROR_DEFINES
 
 //-----------------------------------------------------------------------------
@@ -51,6 +58,7 @@ class COptions : public CBlockOptions {
     bool isMulti(void) const;
     bool handle_appearances(blknum_t num, void* data);
     bool handle_block_summaries(blknum_t start, blknum_t count);
+    bool handle_logs(void);
 };
 
 //-----------------------------------------------------------------------------

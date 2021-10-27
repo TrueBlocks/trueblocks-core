@@ -312,7 +312,12 @@ void COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
 
             string_q oldFn = test.workPath + test.fileName;
             string_q oldText = asciiFileToString(oldFn);
-            if (contains(oldText, "\"id\":") && contains(oldFn, "/tools/") && !contains(oldFn, "classes")) {
+
+            bool hasId = contains(oldText, "\"id\":");
+            bool isTools = contains(oldFn, "/tools/");
+            bool isClasses = contains(oldFn, "classes");
+            bool isBlocksLogs = contains(oldFn, "getBlocks") && contains(oldFn, "logs");
+            if (hasId && isTools && !isClasses && !isBlocksLogs) {
                 // This crazy shit is because we want to pass tests when running against different nodes (Parity,
                 // Erigon, etc.) so we have to remove some stuff and then sort the data (after deliniating it)
                 // so it matches more easily.
@@ -358,7 +363,7 @@ void COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
                 }
                 stringToAsciiFile(oldFn, os.str());
                 oldText = os.str();
-                // TODO(tjayrush): Once we shift from Parity to Erigon, this can go away.
+                // TODO(tjayrush): Once we shift from Parity to Erigon, the above can go away.
             }
 
             string_q result = greenCheck;

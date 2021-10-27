@@ -29,16 +29,24 @@ int main(int argc, const char* argv[]) {
     for (auto command : options.commandLines) {
         if (!options.parseArguments(command))
             return 0;
-        string_q className =
-            (options.trace ? GETRUNTIME_CLASS(CTrace)->m_ClassName : GETRUNTIME_CLASS(CBlock)->m_ClassName);
+
+        string_q className = (options.trace ? GETRUNTIME_CLASS(CTrace)->m_ClassName
+                                            : (options.logs ? GETRUNTIME_CLASS(CLogEntry)->m_ClassName
+                                                            : GETRUNTIME_CLASS(CBlock)->m_ClassName));
         if (once)
             cout << exportPreamble(expContext().fmtMap["header"], className);
+
         if (options.trace) {
             options.blocks.forEveryBlockNumber(traceBlock, &options);
+
         } else if (options.listOffset != NOPOS) {
             blknum_t client = isTestMode() ? 2000100 : getBlockProgress(BP_CLIENT).client;
             blknum_t start = client - options.listOffset;
             options.handle_block_summaries(start, options.list_count);
+
+        } else if (options.logs) {
+            options.handle_logs();
+
         } else {
             options.blocks.forEveryBlockNumber(visitBlock, &options);
         }

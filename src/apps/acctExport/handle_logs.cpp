@@ -19,6 +19,7 @@ bool logs_Display(CTraverser* trav, void* data) {
 
     for (auto log : trav->trans.receipt.logs) {
         if (logFilter(log, opt)) {
+            log.timestamp = trav->trans.timestamp;
             cout << ((isJson() && !opt->firstOut) ? ", " : "");
             cout << log;
             opt->firstOut = false;

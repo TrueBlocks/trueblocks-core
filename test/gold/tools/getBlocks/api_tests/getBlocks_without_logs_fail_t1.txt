@@ -1,0 +1,5 @@
+{
+  "errors": [
+    "chifra blocks - The --emitter and --topic options are only available with the --log option."
+  ]
+}

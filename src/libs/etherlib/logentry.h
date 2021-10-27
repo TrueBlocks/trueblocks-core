@@ -28,12 +28,17 @@ class CReceipt;
 class CLogEntry : public CBaseNode {
   public:
     address_t address;
+    hash_t blockHash;
+    blknum_t blockNumber;
     blknum_t logIndex;
     CTopicArray topics;
     string_q data;
     CFunction articulatedLog;
     string_q compressedLog;
+    hash_t transactionHash;
+    blknum_t transactionIndex;
     blknum_t transactionLogIndex;
+    timestamp_t timestamp;
     string_q type;
     bool removed;
 
@@ -103,12 +108,17 @@ inline void CLogEntry::initialize(void) {
     CBaseNode::initialize();
 
     address = "";
+    blockHash = "";
+    blockNumber = 0;
     logIndex = 0;
     topics.clear();
     data = "";
     articulatedLog = CFunction();
     compressedLog = "";
+    transactionHash = "";
+    transactionIndex = 0;
     transactionLogIndex = 0;
+    timestamp = 0;
     type = "";
     removed = false;
 
@@ -123,12 +133,17 @@ inline void CLogEntry::duplicate(const CLogEntry& lo) {
     CBaseNode::duplicate(lo);
 
     address = lo.address;
+    blockHash = lo.blockHash;
+    blockNumber = lo.blockNumber;
     logIndex = lo.logIndex;
     topics = lo.topics;
     data = lo.data;
     articulatedLog = lo.articulatedLog;
     compressedLog = lo.compressedLog;
+    transactionHash = lo.transactionHash;
+    transactionIndex = lo.transactionIndex;
     transactionLogIndex = lo.transactionLogIndex;
+    timestamp = lo.timestamp;
     type = lo.type;
     removed = lo.removed;
 

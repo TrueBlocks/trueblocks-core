@@ -12,40 +12,62 @@
  *-------------------------------------------------------------------------------------------*/
 #include "options.h"
 
-// // extern string_q traceOneBlock(blknum_t num, COptions& opt);
-// //---------------------------------------------------------------------------------------------------
-// bool traceBlock(uint64_t num, void* data) {
-//     COptions* opt = (COptions*)data;  // NOLINT
-//     if (opt->isRaw) {
-//         string_q results;
-//         queryRawBlockTrace(results, num);
-//         bool isText = (expContext().exportFmt & (TXT1 | CSV1));
-//         if (!opt->firstOut) {
-//             if (!isText)
-//                 cout << ",";
-//             cout << endl;
-//         }
-//         cout << results;
-//         opt->firstOut = false;
-//         return !shouldQuit();
-//     } else {
-//         CBlock block;
-//         queryBlock(block, uint_2_Str(num), true);
-//         block.forEveryTrace(visitTrace, data);
-//         return !shouldQuit();
-//     }
-// }
+extern bool visitBlockLogs(uint64_t num, void* data);
+extern const char* STR_FMT_BLOCKLOGS;
+//---------------------------------------------------------------------------
+bool COptions::handle_logs(void) {
+    manageFields("CLogEntry:topic0,topic1,topic2,topic3", FLD_HIDE);
+    manageFields(
+        "CLogEntry:blocknumber,blockhash,transactionindex,transactionhash,timestamp,"
+        "logindex,address,data,compressedlog",
+        FLD_SHOW);
+    bool isText = expContext().exportFmt == TXT1 || expContext().exportFmt == CSV1;
+    if (isText) {
+        expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(STR_FMT_BLOCKLOGS);
+    }
+    return blocks.forEveryBlockNumber(visitBlockLogs, this);
+}
 
-// //------------------------------------------------------------
-// bool visitTrace(CTrace& trace, void* data) {
-//     COptions* opt = reinterpret_cast<COptions*>(data);
-//     bool isText = (expContext().exportFmt & (TXT1 | CSV1));
-//     if (!opt->firstOut) {
-//         if (!isText)
-//             cout << ",";
-//         cout << endl;
-//     }
-//     cout << trace.Format(expContext().fmtMap["format"]);
-//     opt->firstOut = false;
-//     return true;
-// }
+//------------------------------------------------------------
+bool visitBlockLogs(uint64_t num, void* data) {
+    COptions* opt = (COptions*)data;  // NOLINT
+    CBlock block;
+    getBlock_light(block, num);
+    // return block.forEveryTransaction(visitTransactionLogs, data);
+    string_q url =
+        "curl -s --data "
+        "'{"
+        "\"method\":\"erigon_getLogsByHash\","
+        "\"params\":[\"" +
+        block.hash +
+        "\"],"
+        "\"id\":1,"
+        "\"jsonrpc\":\"2.0\""
+        "}' "
+        "-H \"Content-Type: application/json\" -X POST localhost:23456 | jq";
+    string_q result = doCommand(url);
+    CRPCResult generic;
+    generic.parseJson3(result);
+    result = generic.result;
+    CLogEntry log;
+    while (log.parseJson3(result)) {
+        log.blockNumber = block.blockNumber;
+        log.blockHash = block.hash;
+        log.timestamp = block.timestamp;
+        bool isText = (expContext().exportFmt & (TXT1 | CSV1));
+        if (!opt->firstOut) {
+            if (!isText)
+                cout << ",";
+            cout << endl;
+        }
+        cout << log.Format(expContext().fmtMap["format"]);
+        opt->firstOut = false;
+        log = CLogEntry();
+    }
+    return !shouldQuit();
+}
+
+const char* STR_FMT_BLOCKLOGS =
+    "[{BLOCKNUMBER}]\t[{BLOCKHASH}]\t[{TRANSACTIONINDEX}]\t[{TRANSACTIONHASH}]\t"
+    "[{TIMESTAMP}]\t[{LOGINDEX}]\t[{ADDRESS}]\t[{TOPIC0}]\t[{TOPIC1}]\t[{TOPIC2}]\t"
+    "[{TOPIC3}]\t[{DATA}]\t[{COMPRESSEDLOG}]";

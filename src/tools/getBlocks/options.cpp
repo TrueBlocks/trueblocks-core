@@ -173,25 +173,26 @@ bool COptions::parseArguments(string_q& command) {
     filterType = (uniq_tx ? "uniq_tx" : (uniq ? "uniq" : (apps ? "apps" : "")));
 
     if (cache && uncles)
-        return usage("The --cache option is not available for uncle blocks.");
+        return usage(usageErrs[ERR_NOCACHEUNCLE]);
 
     if (cache && !filterType.empty())
-        return usage("The --cache option is not available when using one of the address options.");
+        return usage(usageErrs[ERR_NOCACHEADDRESS]);
 
     if (trace && !isTracingNode())
-        return usage("A tracing node is required for the --trace options to work properly.");
+        return usage(usageErrs[ERR_TRACINGREQUIRED]);
 
     if (trace && !filterType.empty())
-        return usage("The --trace option is not available when using one of the address options.");
+        return usage(usageErrs[ERR_NOTRACEADDRESS]);
 
     if (trace && hashes)
-        return usage("The --hashes and --trace options are exclusive.");
+        return usage(usageErrs[ERR_TRACEHASHEXCLUSIVE]);
 
     if (blocks.empty() && listOffset == NOPOS)
-        return usage("You must specify at least one block.");
+        return usage(usageErrs[ERR_ATLEASTONEBLOCK]);
 
-    if ((!emitters.empty() || !topics.empty()) && !logs)
-        return usage("The --emitter and --topic options are only available with the --log option.");
+    if ((!emitters.empty() || !topics.empty()))
+        if (!logs)
+            return usage(usageErrs[ERR_EMTOPONLYWITHLOG]);
 
     secsFinal =
         (timestamp_t)getGlobalConfig("getBlocks")->getConfigInt("settings", "secs_when_final", (uint64_t)secsFinal);
@@ -228,6 +229,9 @@ bool COptions::parseArguments(string_q& command) {
 
     } else if (trace) {
         configureDisplay("getBlocks", "CTrace", STR_DISPLAY_TRACE);
+
+    } else if (logs) {
+        configureDisplay("getBlocks", "CLogEntry", STR_DISPLAY_LOGENTRY);
 
     } else {
         configureDisplay("getBlocks", "CBlock", STR_DISPLAY_BLOCK);
@@ -295,6 +299,13 @@ COptions::COptions(void) {
     // END_CODE_NOTES
 
     // BEG_ERROR_STRINGS
+    usageErrs[ERR_NOCACHEUNCLE] = "The --cache option is not available for uncle blocks.";
+    usageErrs[ERR_NOCACHEADDRESS] = "The --cache option is not available when using one of the address options.";
+    usageErrs[ERR_TRACINGREQUIRED] = "A tracing node is required for the --trace options to work properly.";
+    usageErrs[ERR_NOTRACEADDRESS] = "The --trace option is not available when using one of the address options.";
+    usageErrs[ERR_TRACEHASHEXCLUSIVE] = "The --hashes and --trace options are exclusive.";
+    usageErrs[ERR_ATLEASTONEBLOCK] = "You must specify at least one block.";
+    usageErrs[ERR_EMTOPONLYWITHLOG] = "The --emitter and --topic options are only available with the --log option.";
     // END_ERROR_STRINGS
 }
 

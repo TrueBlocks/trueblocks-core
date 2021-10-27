@@ -1,0 +1,5 @@
+{
+  "errors": [
+    "chifra blocks - Invalid address '0x86fa049857e0209aa7d9e616f7eb3b3b7'. Length (35) is not equal to 40 characters (20 bytes)."
+  ]
+}
