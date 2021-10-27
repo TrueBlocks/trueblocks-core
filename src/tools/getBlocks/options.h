@@ -28,8 +28,6 @@ class COptions : public CBlockOptions {
     bool uncles;
     bool trace;
     bool logs;
-    CTopicArray topic;
-    CAddressArray emitter;
     bool count;
     bool cache;
     blknum_t list_count;
@@ -41,6 +39,8 @@ class COptions : public CBlockOptions {
     string_q filterType;
     timestamp_t secsFinal;
     blknum_t listOffset;
+    CTopicArray topics;
+    CAddressArray emitters;
 
     COptions(void);
     ~COptions(void);

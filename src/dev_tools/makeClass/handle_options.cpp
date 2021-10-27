@@ -25,6 +25,7 @@ extern const char* STR_AUTO_FLAG_ENUM;
 extern const char* STR_AUTO_FLAG_ENUM_LIST;
 extern const char* STR_AUTO_FLAG_STRING_LIST;
 extern const char* STR_AUTO_FLAG_ADDRESS_LIST;
+extern const char* STR_AUTO_FLAG_TOPIC_LIST;
 extern const char* STR_AUTO_FLAG_BLOCKNUM;
 extern const char* STR_AUTO_FLAG_UINT;
 extern const char* STR_AUTO_FLAG_DOUBLE;
@@ -133,8 +134,10 @@ bool COptions::handle_options(void) {
                         string_q str = autoStream.str();
                         if (contains(pos, "Address"))
                             replaceReverse(str, "else {\n",
-                                           "else if (isAddress(arg)) {\n            if (!parseAddressList(this, "
-                                           "addrs, arg))\n                return false;\n\n");
+                                           "else if (isAddress(arg)) {\n"
+                                           "            if (!parseAddressList(this, addrs, arg))\n"
+                                           "                return false;\n"
+                                           "\n");
                         else
                             replaceReverse(pos, "} else if", "if");
                         autoStream.str("");
@@ -146,8 +149,10 @@ bool COptions::handle_options(void) {
                             // adjust the first positional to seperate addresses or dates from blocks
                             string_q str = autoStream.str();
                             replaceReverse(str, "else {\n",
-                                           "else if (isTopic(arg)) {\n            if (!parseTopicList2(this, "
-                                           "topics, arg))\n                return false;\n\n");
+                                           "else if (isTopic(arg)) {\n"
+                                           "            if (!parseTopicList2(this, topics, arg))\n"
+                                           "                return false;\n"
+                                           "\n");
                             autoStream.str("");
                             autoStream.clear();
                             autoStream << str;
@@ -261,7 +266,7 @@ void COptions::generate_flag(const CCommandOption& option) {
         } else if (option.isTopicList) {
             localStream << option.Format("    CStringArray [{LONGNAME}];") << endl;
             if (!option.isConfig)
-                autoStream << option.Format(STR_AUTO_FLAG_STRING_LIST) << endl;
+                autoStream << option.Format(STR_AUTO_FLAG_TOPIC_LIST) << endl;
         } else if (option.isAddressList) {
             localStream << option.Format("    CAddressArray [{LONGNAME}];") << endl;
             if (!option.isConfig)
@@ -301,7 +306,7 @@ void COptions::generate_flag(const CCommandOption& option) {
             initStream << option.Format("    [{LONGNAME}].clear();") << endl;
             headerStream << option.Format("    CTopicArray [{LONGNAME}];") << endl;
             if (!option.isConfig)
-                autoStream << option.Format(STR_AUTO_FLAG_STRING_LIST) << endl;
+                autoStream << option.Format(STR_AUTO_FLAG_TOPIC_LIST) << endl;
         } else if (option.isAddressList) {
             initStream << option.Format("    [{LONGNAME}].clear();") << endl;
             headerStream << option.Format("    CAddressArray [{LONGNAME}];") << endl;
@@ -493,6 +498,15 @@ const char* STR_AUTO_FLAG_ADDRESS_LIST =
     "        } else if ([startsWith(arg, \"-{HOTKEY}:\") || ]startsWith(arg, \"--[{LONGNAME}]:\")) {\n"
     "            arg = substitute(substitute(arg, \"-[{HOTKEY}]:\", \"\"), \"--[{LONGNAME}]:\", \"\");\n"
     "            if (!parseAddressList(this, [{LONGNAME}], arg))\n"
+    "                return false;\n"
+    "        } else if ([arg == \"-{HOTKEY}\" || ]arg == \"--[{LONGNAME}]\") {\n"
+    "            return flag_required(\"[{LONGNAME}]\");\n";
+
+//---------------------------------------------------------------------------------------------------
+const char* STR_AUTO_FLAG_TOPIC_LIST =
+    "        } else if ([startsWith(arg, \"-{HOTKEY}:\") || ]startsWith(arg, \"--[{LONGNAME}]:\")) {\n"
+    "            arg = substitute(substitute(arg, \"-[{HOTKEY}]:\", \"\"), \"--[{LONGNAME}]:\", \"\");\n"
+    "            if (!parseTopicList2(this, [{LONGNAME}], arg))\n"
     "                return false;\n"
     "        } else if ([arg == \"-{HOTKEY}\" || ]arg == \"--[{LONGNAME}]\") {\n"
     "            return flag_required(\"[{LONGNAME}]\");\n";

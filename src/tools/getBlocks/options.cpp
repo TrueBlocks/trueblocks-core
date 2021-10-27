@@ -56,6 +56,8 @@ bool COptions::parseArguments(string_q& command) {
     bool apps = false;
     bool uniq = false;
     bool uniq_tx = false;
+    CStringArray topic;
+    CAddressArray emitter;
     blknum_t list = NOPOS;
     // END_CODE_LOCAL_INIT
 
@@ -92,7 +94,8 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (startsWith(arg, "-p:") || startsWith(arg, "--topic:")) {
             arg = substitute(substitute(arg, "-p:", ""), "--topic:", "");
-            topic.push_back(arg);
+            if (!parseTopicList2(this, topic, arg))
+                return false;
         } else if (arg == "-p" || arg == "--topic") {
             return flag_required("topic");
 
@@ -158,6 +161,14 @@ bool COptions::parseArguments(string_q& command) {
     if (cache)
         etherlib_init(defaultQuitHandler);
 
+    // syntactic sugar so we deal with topics, but the option is called topic
+    for (auto t : topic)
+        topics.push_back(t);
+
+    // syntactic sugar so we deal with emitters, but the option is called emitter
+    for (auto e : emitter)
+        emitters.push_back(e);
+
     listOffset = contains(command, "list") ? list : NOPOS;
     filterType = (uniq_tx ? "uniq_tx" : (uniq ? "uniq" : (apps ? "apps" : "")));
 
@@ -178,6 +189,9 @@ bool COptions::parseArguments(string_q& command) {
 
     if (blocks.empty() && listOffset == NOPOS)
         return usage("You must specify at least one block.");
+
+    if ((!emitters.empty() || !topics.empty()) && !logs)
+        return usage("The --emitter and --topic options are only available with the --log option.");
 
     secsFinal =
         (timestamp_t)getGlobalConfig("getBlocks")->getConfigInt("settings", "secs_when_final", (uint64_t)secsFinal);
@@ -250,8 +264,6 @@ void COptions::Init(void) {
     uncles = false;
     trace = false;
     logs = false;
-    topic.clear();
-    emitter.clear();
     count = false;
     cache = false;
     list_count = 20;
@@ -262,6 +274,8 @@ void COptions::Init(void) {
     addrCounter = 0;
     listOffset = NOPOS;
     blocks.Init();
+    topics.clear();
+    emitters.clear();
     CBlockOptions::Init();
 }
 
@@ -276,6 +290,7 @@ COptions::COptions(void) {
     notes.push_back("`blocks` may be specified as either numbers or hashes.");
     notes.push_back("`special` blocks are detailed under `chifra when --list`.");
     notes.push_back("For the --logs option, you may optionally specify one or more --emmitter, one or more --topics, or both.");  // NOLINT
+    notes.push_back("The --logs option is significantly faster if you provide an --emitter or a --topic.");
     // clang-format on
     // END_CODE_NOTES
 

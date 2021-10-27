@@ -35,6 +35,8 @@ Notes:
   - blocks is a space-separated list of values, a start-end range, a special, or any combination.
   - blocks may be specified as either numbers or hashes.
   - special blocks are detailed under chifra when --list.
+  - For the --logs option, you may optionally specify one or more --emmitter, one or more --topics, or both.
+  - The --logs option is significantly faster if you provide an --emitter or a --topic.
 ```
 
 Other Options

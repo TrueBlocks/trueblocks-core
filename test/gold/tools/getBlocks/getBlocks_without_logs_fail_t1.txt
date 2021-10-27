@@ -1,6 +1,6 @@
-chifra blocks  2769609 2799895 2872831 3076260 --cache --uniq_tx
+chifra blocks  4012000-4012001 --topic 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef
 
-  The --cache option is not available when using one of the address options. Quitting...
+  The --emitter and --topic options are only available with the --log option. Quitting...
 
 Purpose:
   Retrieve one or more blocks from the chain or local cache.

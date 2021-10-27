@@ -88,8 +88,8 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12550,tools,ChainData,blocks,getBlocks,uniq,u,,false,false,true,true,local,switch,<boolean>,display only the list of uniq address appearances in the block
 12560,tools,ChainData,blocks,getBlocks,uniq_tx,n,,false,false,true,true,local,switch,<boolean>,display only the list of uniq address appearances in each transaction
 12572,tools,ChainData,blocks,getBlocks,logs,g,,false,false,false,true,header,switch,<boolean>,display only the logs found in the block(s)
-12974,tools,ChainData,blocks,getBlocks,topic,p,,false,false,false,true,header,flag,list<topic>,for the --logs option only&#44; filter logs to show only those with this topic(s)
-12976,tools,ChainData,blocks,getBlocks,emitter,m,,false,false,false,true,header,flag,list<addr>,for the --logs option only&#44; filter logs to show only those logs emitted by the given address(es)
+12974,tools,ChainData,blocks,getBlocks,topic,p,,false,false,false,true,local,flag,list<topic>,for the --logs option only&#44; filter logs to show only those with this topic(s)
+12976,tools,ChainData,blocks,getBlocks,emitter,m,,false,false,false,true,local,flag,list<addr>,for the --logs option only&#44; filter logs to show only those logs emitted by the given address(es)
 12578,tools,ChainData,blocks,getBlocks,count,c,,false,false,true,true,header,switch,<boolean>,display the number of the lists of appearances for --apps&#44; --uniq&#44; or --uniq_tx
 12580,tools,ChainData,blocks,getBlocks,cache,o,,false,false,true,true,header,switch,<boolean>,force a write of the block to the cache
 12582,tools,ChainData,blocks,getBlocks,list,l,,false,false,false,false,local,flag,<blknum>,summary list of blocks running backwards from latest block minus num
@@ -99,6 +99,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12610,tools,ChainData,blocks,getBlocks,n2,,,false,false,false,false,--,note,,`blocks` may be specified as either numbers or hashes.
 12620,tools,ChainData,blocks,getBlocks,n3,,,false,false,false,false,--,note,,`special` blocks are detailed under `chifra when --list`.
 12622,tools,ChainData,blocks,getBlocks,n4,,,false,false,false,false,--,note,,For the --logs option&#44; you may optionally specify one or more --emmitter&#44; one or more --topics&#44; or both.
+12624,tools,ChainData,blocks,getBlocks,n5,,,false,false,false,false,--,note,,The --logs option is significantly faster if you provide an --emitter or a --topic.
 
 13540,tools,ChainData,transactions,getTrans,transactions,,,true,false,true,true,local,positional,list<tx_id>,a space-separated list of one or more transaction identifiers
 13560,tools,ChainData,transactions,getTrans,articulate,a,,false,false,true,true,header,switch,<boolean>,articulate the retrieved data if ABIs can be found

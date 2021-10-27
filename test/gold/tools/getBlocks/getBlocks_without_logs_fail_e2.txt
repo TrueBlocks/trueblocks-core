@@ -1,6 +1,6 @@
-chifra blocks  2769609 2799895 2872831 3076260 --cache --uniq_tx
+chifra blocks  4012000-4012001 --emitter 0x86fa049857e0209aa7d9e616f7eb3b3b7
 
-  The --cache option is not available when using one of the address options. Quitting...
+  Invalid address '0x86fa049857e0209aa7d9e616f7eb3b3b7'. Length (35) is not equal to 40 characters (20 bytes). Quitting...
 
 Purpose:
   Retrieve one or more blocks from the chain or local cache.

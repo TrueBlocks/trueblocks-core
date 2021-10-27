@@ -2,7 +2,7 @@
 title: "Chain data"
 description: ""
 lead: ""
-date: 2021-10-27T10:28:56
+date: 2021-10-27T11:58:37
 lastmod:
   - :git
   - lastmod
@@ -57,6 +57,8 @@ Notes:
   - blocks is a space-separated list of values, a start-end range, a special, or any combination.
   - blocks may be specified as either numbers or hashes.
   - special blocks are detailed under chifra when --list.
+  - For the --logs option, you may optionally specify one or more --emmitter, one or more --topics, or both.
+  - The --logs option is significantly faster if you provide an --emitter or a --topic.
 ```
 
 **Source code**: [`tools/getBlocks`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/tools/getBlocks)
@@ -88,7 +90,7 @@ Global Flags:
   -v, --verbose      enable verbose (increase detail with --log_level)
 
 Notes:
-  - The transactions list may be one or more space-separated identifiers which are either a transaction hash, a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.
+  - The transactions list may be one or more transaction hashes, blockNumber.transactionID pairs, or a blockHash.transactionID pairs.
   - This tool checks for valid input syntax, but does not check that the transaction requested actually exists.
   - If the queried node does not store historical state, the results for most older transactions are undefined.
 ```
@@ -109,12 +111,10 @@ Usage:
   chifra logs [flags] <tx_id> [tx_id...]
 
 Arguments:
-  transactions - a space-separated list of one or more transaction identifiers (required)
+  transactions - a space-separated list of one or more transaction identifiers
 
 Flags:
-  -t, --topic strings    filter by one or more log topics (not implemented)
-  -s, --source strings   export only if the given address emitted the event (not implemented)
-  -a, --articulate       articulate the retrieved data if ABIs can be found
+  -a, --articulate   articulate the retrieved data if ABIs can be found
 
 Global Flags:
   -x, --fmt string   export format, one of [none|json*|txt|csv|api]
@@ -122,7 +122,7 @@ Global Flags:
   -v, --verbose      enable verbose (increase detail with --log_level)
 
 Notes:
-  - The transactions list may be one or more space-separated identifiers which are either a transaction hash, a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.
+  - The transactions list may be one or more transaction hashes, blockNumber.transactionID pairs, or a blockHash.transactionID pairs.
   - This tool checks for valid input syntax, but does not check that the transaction requested actually exists.
   - If the queried node does not store historical state, the results for most older transactions are undefined.
   - If you specify a 32-byte hash, it will be assumed to be a transaction hash, if the transaction is not found, it will be used as a topic.
@@ -160,7 +160,7 @@ Global Flags:
   -v, --verbose      enable verbose (increase detail with --log_level)
 
 Notes:
-  - The transactions list may be one or more space-separated identifiers which are either a transaction hash, a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.
+  - The transactions list may be one or more transaction hashes, blockNumber.transactionID pairs, or a blockHash.transactionID pairs.
   - This tool checks for valid input syntax, but does not check that the transaction requested actually exists.
   - If the queried node does not store historical state, the results for most older transactions are undefined.
   - A bang separated filter has the following fields (at least one of which is required) and is separated with a bang (!): fromBlk, toBlk, fromAddr, toAddr, after, count.
