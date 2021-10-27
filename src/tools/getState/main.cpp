@@ -64,6 +64,7 @@ bool visitBlock(uint64_t blockNum, void* data) {
         opt->errors.push_back("Request for historical state at block " + uint_2_Str(blockNum) + " not available.");
 
     if (!opt->theCall.address.empty()) {
+        // TODO: Is opt->theCall.address a smart contract at this block?
         opt->theCall.blockNumber = blockNum;
         if (doEthCall(opt->theCall)) {
             CTransaction art;

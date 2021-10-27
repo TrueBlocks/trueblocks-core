@@ -50,6 +50,7 @@ class CAbi : public CBaseNode {
     bool articulateTrace(CTrace* t) const;
     bool articulateOutputs(const string_q& encoding, const string_q& value, CFunction& ret) const;
 
+    void loadAbiAddInterface(const CFunction& func);
     bool loadAbiFromEtherscan(const address_t& addr);
     bool loadAbiFromSolidity(const address_t& addr);
     bool loadAbisFromKnown(bool tokensOnly = false);
@@ -83,7 +84,6 @@ class CAbi : public CBaseNode {
     bool loadAbiFromFile(const string_q& fileName);
     bool loadAbiFromAddress(const address_t& addr, bool recurse);
     bool loadAbiFromJson(const string_q& str);
-    void loadAbiAddInterface(const CFunction& func);
     friend bool loadAbiFile(const string_q& path, void* data);
     friend bool loadAbiJsonString(const string_q& path, CAbi& abi);
     // EXISTING_CODE

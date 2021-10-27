@@ -1,5 +1,5 @@
 {
   "errors": [
-    "chifra state - The four byte signature must be a hex string."
+    "chifra state - You must provide either a four-byte code or a function signature for the smart contract."
   ]
 }

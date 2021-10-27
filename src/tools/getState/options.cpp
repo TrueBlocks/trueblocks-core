@@ -33,15 +33,16 @@ static const COption params[] = {
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
+string_q cleanInput(const string_q& cmd);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
-    replace(command, "*", " --mode:");
+    if (contains(command, "-a:") || contains(command, "--call:"))
+        command = cleanInput(command);
     if (!standardOptions(command))
         return false;
 
     // BEG_CODE_LOCAL_INIT
     CStringArray parts;
-    address_t proxy_for = "";
     // END_CODE_LOCAL_INIT
 
     Init();
@@ -119,53 +120,8 @@ bool COptions::parseArguments(string_q& command) {
     if (call.empty() && !proxy_for.empty())
         return usage("The --proxy_for option is only available with the --call option.");
 
-    if (!call.empty()) {
-        CStringArray callVariables;
-        explode(callVariables, call, '!');
-
-        if (callVariables.size() == 0 || !isContractAt(callVariables[0], latestBlock))
-            return usage("You must supply the address of a smart contract for the --call option.");
-
-        if (callVariables.size() == 1) {
-            if (!isTestMode() && !isApiMode()) {
-                cout << doCommand("chifra abis " + callVariables[0]);
-                return false;
-            }
-            return usage("You must provide a four-byte code for the smart contract you're calling.");
-        }
-
-        if (!isAddress(callVariables[0])) {
-            return usage("The first item in the call data to --call must be an address.");
-        }
-
-        if (!isHexStr(callVariables[1])) {
-            return usage("The four byte signature must be a hex string.");
-        }
-
-        theCall.address = proxy_for.empty() ? callVariables[0] : proxy_for;
-        theCall.encoding = callVariables[1];
-        theCall.bytes = callVariables.size() > 2 ? callVariables[2] : "";
-        theCall.abi_spec.loadAbisFromKnown();
-        theCall.abi_spec.loadAbiFromEtherscan(theCall.address);
-
-        string_q fmt = STR_DISPLAY_ETHCALL;
-        replace(fmt, "[{ENCODING}}", "[{SIGNATURE}]\t[{ENCODING}]");
-        configureDisplay("getState", "CEthState", fmt);
-
-        manageFields("CParameter:*", FLD_HIDE);
-        manageFields("CParameter:name,signature,encoding,outputs", FLD_SHOW);
-
-        manageFields("CFunction:stateMutability,type,constant", FLD_HIDE);
-
-        manageFields("CEthCall:abi_spec,deployed", FLD_HIDE);
-        manageFields("CEthCall:blockNumber,address,signature,compressedResult", FLD_SHOW);
-        if (expContext().exportFmt == JSON1 || expContext().exportFmt == API1) {
-            manageFields("CEthCall:signature", FLD_HIDE);
-            manageFields("CEthCall:callResult", FLD_SHOW);
-        }
-
-        return true;
-    }
+    if (!call.empty())
+        return handle_call();
 
     if (!addrs.size())
         return usage("You must provide at least one Ethereum address.");
@@ -256,6 +212,7 @@ void COptions::Init(void) {
     changes = false;
     no_zero = false;
     call = "";
+    proxy_for = "";
     // END_CODE_INIT
 
     prevBal = 0;

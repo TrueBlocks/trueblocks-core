@@ -2538,7 +2538,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0x3d763f15fe77220fd3d7b356cd1896cd957e6f51	Shih Tzu	SHIH	On chain	18		false	false	false	true	true	false
 30-Contracts:Humanity DAO	0x3d835158ce839720d0dd724a71be063c42179b9d	wang_boguo		https://www.humanitydao.org/humans			false	false	false	false	false	false
 30-Contracts:Humanity DAO	0x3d8488052f7d047e944917a6b2e355943a3bc0d1	Roxysklavos		https://www.humanitydao.org/humans			false	false	false	false	false	false
-30-Contracts:Compound	0x3d9819210a31b4961b30ef54be2aed79b9c9cd3b	Compound: Comptroller		EtherScan.io			false	false	false	true	false	false
+30-Contracts	0x3d9819210a31b4961b30ef54be2aed79b9c9cd3b	Compound Comptroller					false	false	false	true	false	false
 50-Tokens:ERC20	0x3d9b6d44897087607157ae4510f34a2c2a957bb8	Magienoirecoin	MNC	On chain	18		false	false	false	true	true	false
 30-Contracts:Set Protocol	0x3d9da970fa85cb1fa9d405145d4c485224da045e	ERC 20 Wrapper		TrueBlocks.io			false	false	false	true	false	false
 50-Tokens:ERC20	0x3da1313ae46132a397d90d95b1424a9a7e3e0fce	Uniswap V2	UNI-V2	On chain	18		false	false	false	true	true	false
@@ -7625,6 +7625,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0xbae235823d7255d9d48635ced4735227244cd583	Staker	STR	On chain	18	Staker is a service which provides a provably fair and transparent, web based Ethereum dice gambling Dapp.	false	false	false	true	true	false
 30-Contracts:Humanity DAO	0xbaec41382ed87bfc4257c9a92ed7796a7d9506e1	yishuihanxing2		https://www.humanitydao.org/humans			false	false	false	false	false	false
 90-Individuals:Gitcoin Grants	0xbaf6e57a3940898fd21076b139d4ab231dcbbc5f	dekanbro		Gitcoin Website			false	false	false	false	false	false
+30-Contracts	0xbafe01ff935c7305907c33bf824352ee5979b526	Compound Comptroller Implementation					false	false	false	true	false	false
 30-Contracts:Humanity DAO	0xbb08907e853b48c9f0902f6ba9e3f18be88a8d24	travisdmathis		https://www.humanitydao.org/humans			false	false	false	false	false	false
 50-Tokens:ERC20	0xbb0db8c8c1a4899baf15a365ed826d8aa5426098	SHIBASWAP	SHIBASWAP	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0xbb0e17ef65f82ab018d8edd776e8dd940327b28b	Axie Infinity Shard	AXS	On chain	18		false	false	false	true	true	false
