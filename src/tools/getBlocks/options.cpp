@@ -27,6 +27,9 @@ static const COption params[] = {
     COption("apps", "a", "", OPT_SWITCH, "display only the list of address appearances in the block"),
     COption("uniq", "u", "", OPT_SWITCH, "display only the list of uniq address appearances in the block"),
     COption("uniq_tx", "n", "", OPT_SWITCH, "display only the list of uniq address appearances in each transaction"),
+    COption("logs", "g", "", OPT_HIDDEN | OPT_SWITCH, "display only the logs found in the block(s)"),
+    COption("topic", "p", "list<topic>", OPT_HIDDEN | OPT_FLAG, "for the --logs option only, filter logs to show only those with this topic(s)"),  // NOLINT
+    COption("emitter", "m", "list<addr>", OPT_HIDDEN | OPT_FLAG, "for the --logs option only, filter logs to show only those logs emitted by the given address(es)"),  // NOLINT
     COption("count", "c", "", OPT_SWITCH, "display the number of the lists of appearances for --apps, --uniq, or --uniq_tx"),  // NOLINT
     COption("cache", "o", "", OPT_SWITCH, "force a write of the block to the cache"),
     COption("list", "l", "<blknum>", OPT_HIDDEN | OPT_FLAG, "summary list of blocks running backwards from latest block minus num"),  // NOLINT
@@ -84,6 +87,22 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-n" || arg == "--uniq_tx") {
             uniq_tx = true;
 
+        } else if (arg == "-g" || arg == "--logs") {
+            logs = true;
+
+        } else if (startsWith(arg, "-p:") || startsWith(arg, "--topic:")) {
+            arg = substitute(substitute(arg, "-p:", ""), "--topic:", "");
+            topic.push_back(arg);
+        } else if (arg == "-p" || arg == "--topic") {
+            return flag_required("topic");
+
+        } else if (startsWith(arg, "-m:") || startsWith(arg, "--emitter:")) {
+            arg = substitute(substitute(arg, "-m:", ""), "--emitter:", "");
+            if (!parseAddressList(this, emitter, arg))
+                return false;
+        } else if (arg == "-m" || arg == "--emitter") {
+            return flag_required("emitter");
+
         } else if (arg == "-c" || arg == "--count") {
             count = true;
 
@@ -124,6 +143,9 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("apps", apps);
     LOG_TEST_BOOL("uniq", uniq);
     LOG_TEST_BOOL("uniq_tx", uniq_tx);
+    LOG_TEST_BOOL("logs", logs);
+    LOG_TEST_LIST("topic", topic, topic.empty());
+    LOG_TEST_LIST("emitter", emitter, emitter.empty());
     LOG_TEST_BOOL("count", count);
     LOG_TEST_BOOL("cache", cache);
     LOG_TEST("list", list, (list == NOPOS));
@@ -227,6 +249,9 @@ void COptions::Init(void) {
     hashes = false;
     uncles = false;
     trace = false;
+    logs = false;
+    topic.clear();
+    emitter.clear();
     count = false;
     cache = false;
     list_count = 20;
@@ -250,6 +275,7 @@ COptions::COptions(void) {
     notes.push_back("`blocks` is a space-separated list of values, a start-end range, a `special`, or any combination.");  // NOLINT
     notes.push_back("`blocks` may be specified as either numbers or hashes.");
     notes.push_back("`special` blocks are detailed under `chifra when --list`.");
+    notes.push_back("For the --logs option, you may optionally specify one or more --emmitter, one or more --topics, or both.");  // NOLINT
     // clang-format on
     // END_CODE_NOTES
 

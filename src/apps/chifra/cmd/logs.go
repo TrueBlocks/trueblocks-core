@@ -50,8 +50,6 @@ Notes:
   - If you specify a 32-byte hash, it will be assumed to be a transaction hash, if the transaction is not found, it will be used as a topic.`
 
 type logsOptionsType struct {
-	topic      []string
-	emitter    []string
 	articulate bool
 }
 
@@ -62,8 +60,6 @@ func init() {
 
 	logsCmd.Flags().SortFlags = false
 	logsCmd.PersistentFlags().SortFlags = false
-	logsCmd.Flags().StringSliceVarP(&LogsOpts.topic, "topic", "t", nil, "filter logs to show only if the log has one or more of these topics")
-	logsCmd.Flags().StringSliceVarP(&LogsOpts.emitter, "emitter", "e", nil, "filter logs to show only if emitted by the given address")
 	logsCmd.Flags().BoolVarP(&LogsOpts.articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
 	logsCmd.Flags().SortFlags = false
 	logsCmd.PersistentFlags().SortFlags = false

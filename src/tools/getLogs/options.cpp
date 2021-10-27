@@ -21,8 +21,6 @@ static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
     COption("transactions", "", "list<tx_id>", OPT_POSITIONAL, "a space-separated list of one or more transaction identifiers"),  // NOLINT
-    COption("topic", "t", "list<topic>", OPT_FLAG, "filter logs to show only if the log has one or more of these topics"),  // NOLINT
-    COption("emitter", "e", "list<addr>", OPT_FLAG, "filter logs to show only if emitted by the given address"),
     COption("articulate", "a", "", OPT_SWITCH, "articulate the retrieved data if ABIs can be found"),
     COption("", "", "", OPT_DESCRIPTION, "Retrieve logs for the given transaction(s)."),
     // clang-format on
@@ -44,19 +42,6 @@ bool COptions::parseArguments(string_q& command) {
         if (false) {
             // do nothing -- make auto code generation easier
             // BEG_CODE_AUTO
-        } else if (startsWith(arg, "-t:") || startsWith(arg, "--topic:")) {
-            arg = substitute(substitute(arg, "-t:", ""), "--topic:", "");
-            topic.push_back(arg);
-        } else if (arg == "-t" || arg == "--topic") {
-            return flag_required("topic");
-
-        } else if (startsWith(arg, "-e:") || startsWith(arg, "--emitter:")) {
-            arg = substitute(substitute(arg, "-e:", ""), "--emitter:", "");
-            if (!parseAddressList(this, emitter, arg))
-                return false;
-        } else if (arg == "-e" || arg == "--emitter") {
-            return flag_required("emitter");
-
         } else if (arg == "-a" || arg == "--articulate") {
             articulate = true;
 
@@ -76,8 +61,6 @@ bool COptions::parseArguments(string_q& command) {
 
     // BEG_DEBUG_DISPLAY
     LOG_TEST_LIST("transList", transList, transList.empty());
-    LOG_TEST_LIST("topic", topic, topic.empty());
-    LOG_TEST_LIST("emitter", emitter, emitter.empty());
     LOG_TEST_BOOL("articulate", articulate);
     // END_DEBUG_DISPLAY
 
@@ -126,8 +109,6 @@ void COptions::Init(void) {
     registerOptions(nParams, params, OPT_RAW);
 
     // BEG_CODE_INIT
-    topic.clear();
-    emitter.clear();
     articulate = false;
     // END_CODE_INIT
 

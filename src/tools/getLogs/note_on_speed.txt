@@ -1,28 +1,25 @@
-From
-
 http://ethereum.stackexchange.com/questions/2190/is-searching-data-stored-in-event-logs-prohibitively-slow/2195#2195
 
-To summarise, I believe, that 10s response time is caused by sub-optimal imlementation of bloom filters in
-go-ethereum. Here are the results of benchmarks with parity:
+To summarise, I believe, that 10s response time is caused by sub-optimal imlementation of bloom
+filters in go-ethereum. Here are the results of benchmarks with parity:
 
-Find all logs from block 0 to 986082 with address: 0x33990122638b9132ca29c723bdf037f1a891a70c
+> Find all logs from block 0 to 986082 with address: 0x33990122638b9132ca29c723bdf037f1a891a70c
 
-time curl -X POST --data '{"id":8,"jsonrpc":"2.0","method":"eth_getLogs","params":[{"fromBlock":"0x0","toBlock":"0xf0be2", "address": "0x33990122638b9132ca29c723bdf037f1a891a70c"}]}' -H "Content-Type: application/json" http://127.0.0.1:3030 >> /dev/null
+time curl -X POST --data '{"id":8,"jsonrpc":"2.0","method":"eth_getLogs","params":[{"fromBlock":"0x0","toBlock":"0xf0be2","address":"0x33990122638b9132ca29c723bdf037f1a891a70c"}]}' -H "Content-Type: application/json" http://127.0.0.1:3030 >> /dev/null
 
-
-	geth first request:	real    0m17.003s
-	geth second request:	real    0m18.023s	(I assumed, that results should be cached after the first one).
+	geth   first request:	real    0m17.003s
+	geth   second request:	real    0m18.023s	(I assumed, that results should be cached after the first one).
 	parity first request:	real    0m0.770s	(~24x faster then geth)
 	parity second request:	real    0m0.668s	(~30x faster then geth)
 
 The gap between Parity and geth closes dramatically when there are no logs to be found:
 
-Find all logs from block 0 to 986082 with address: 0x33990122638b9132ca29c723bdf037f1a891a70d (address does not exist, 0 logs returned).
+Find all logs from block 0 to 986082 with address: 0x33990122638b9132ca29c723bdf037f1a891a70d
+(address does not exist, 0 logs returned).
 
 time curl -X POST --data '{"id":8,"jsonrpc":"2.0","method":"eth_getLogs","params":[{"fromBlock":"0x0","toBlock":"0xf0be2", "address": "0x33990122638b9132ca29c723bdf037f1a891a70d"}]}' -H "Content-Type: application/json" http://127.0.0.1:3030 >> /dev/null
 
-
-	geth first request:	real    0m0.022s
-	geth second request	real    0m0.021s
+	geth first request:	    real    0m0.022s
+	geth second request	    real    0m0.021s
 	parity first request	real    0m0.080s	(4x slower than geth)
 	parity second request	real    0m0.030s	(1.5x slower than geth)

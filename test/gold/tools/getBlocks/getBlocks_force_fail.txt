@@ -18,6 +18,9 @@ Flags:
   -a, --apps        display only the list of address appearances in the block
   -u, --uniq        display only the list of uniq address appearances in the block
   -n, --uniq_tx     display only the list of uniq address appearances in each transaction
+  -g, --logs        display only the logs found in the block(s) (hidden)
+  -p, --topic stringfor the --logs option only, filter logs to show only those with this topic(s) (hidden)
+  -m, --emitter stringfor the --logs option only, filter logs to show only those logs emitted by the given address(es) (hidden)
   -c, --count       display the number of the lists of appearances for --apps, --uniq, or --uniq_tx
   -o, --cache       force a write of the block to the cache
   -l, --list <num>  summary list of blocks running backwards from latest block minus num (hidden)
@@ -32,4 +35,5 @@ Notes:
   - blocks is a space-separated list of values, a start-end range, a special, or any combination.
   - blocks may be specified as either numbers or hashes.
   - special blocks are detailed under chifra when --list.
+  - For the --logs option, you may optionally specify one or more --emmitter, one or more --topics, or both.
 

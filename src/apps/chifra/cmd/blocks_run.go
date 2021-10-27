@@ -67,6 +67,15 @@ func runBlocks(cmd *cobra.Command, args []string) {
 	if BlocksOpts.uniq_tx {
 		options += " --uniq_tx"
 	}
+	for BlocksOpts.logs {
+		options += " --logs "
+	}
+	for _, t := range BlocksOpts.topic {
+		options += " --topic " + t
+	}
+	for _, e := range BlocksOpts.emitter {
+		options += " --emitter " + e
+	}
 	if BlocksOpts.count {
 		options += " --count"
 	}

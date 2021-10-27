@@ -46,7 +46,8 @@ var notesBlocks = `
 Notes:
   - blocks is a space-separated list of values, a start-end range, a special, or any combination.
   - blocks may be specified as either numbers or hashes.
-  - special blocks are detailed under chifra when --list.`
+  - special blocks are detailed under chifra when --list.
+  - For the --logs option, you may optionally specify one or more --emmitter, one or more --topics, or both.`
 
 type blocksOptionsType struct {
 	hashes     bool
@@ -55,6 +56,9 @@ type blocksOptionsType struct {
 	apps       bool
 	uniq       bool
 	uniq_tx    bool
+	logs       bool
+	topic      []string
+	emitter    []string
 	count      bool
 	cache      bool
 	list       uint64
@@ -74,11 +78,17 @@ func init() {
 	blocksCmd.Flags().BoolVarP(&BlocksOpts.apps, "apps", "a", false, "display only the list of address appearances in the block")
 	blocksCmd.Flags().BoolVarP(&BlocksOpts.uniq, "uniq", "u", false, "display only the list of uniq address appearances in the block")
 	blocksCmd.Flags().BoolVarP(&BlocksOpts.uniq_tx, "uniq_tx", "n", false, "display only the list of uniq address appearances in each transaction")
+	blocksCmd.Flags().BoolVarP(&BlocksOpts.logs, "logs", "g", false, "display only the logs found in the block(s) (hidden)")
+	blocksCmd.Flags().StringSliceVarP(&BlocksOpts.topic, "topic", "p", nil, "for the --logs option only, filter logs to show only those with this topic(s) (hidden)")
+	blocksCmd.Flags().StringSliceVarP(&BlocksOpts.emitter, "emitter", "m", nil, "for the --logs option only, filter logs to show only those logs emitted by the given address(es) (hidden)")
 	blocksCmd.Flags().BoolVarP(&BlocksOpts.count, "count", "c", false, "display the number of the lists of appearances for --apps, --uniq, or --uniq_tx")
 	blocksCmd.Flags().BoolVarP(&BlocksOpts.cache, "cache", "o", false, "force a write of the block to the cache")
 	blocksCmd.Flags().Uint64VarP(&BlocksOpts.list, "list", "l", 0, "summary list of blocks running backwards from latest block minus num (hidden)")
 	blocksCmd.Flags().Uint64VarP(&BlocksOpts.list_count, "list_count", "C", 20, "the number of blocks to report for --list option (hidden)")
 	if !utils.IsTestMode() {
+		blocksCmd.Flags().MarkHidden("logs")
+		blocksCmd.Flags().MarkHidden("topic")
+		blocksCmd.Flags().MarkHidden("emitter")
 		blocksCmd.Flags().MarkHidden("list")
 		blocksCmd.Flags().MarkHidden("list_count")
 	}

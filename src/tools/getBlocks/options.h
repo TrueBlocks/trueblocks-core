@@ -27,6 +27,9 @@ class COptions : public CBlockOptions {
     bool hashes;
     bool uncles;
     bool trace;
+    bool logs;
+    CTopicArray topic;
+    CAddressArray emitter;
     bool count;
     bool cache;
     blknum_t list_count;

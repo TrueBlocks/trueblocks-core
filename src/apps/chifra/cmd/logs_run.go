@@ -27,12 +27,6 @@ func validateLogsArgs(cmd *cobra.Command, args []string) error {
 
 func runLogs(cmd *cobra.Command, args []string) {
 	options := ""
-	for _, t := range LogsOpts.topic {
-		options += " --topic " + t
-	}
-	for _, t := range LogsOpts.emitter {
-		options += " --emitter " + t
-	}
 	if LogsOpts.articulate {
 		options += " --articulate"
 	}

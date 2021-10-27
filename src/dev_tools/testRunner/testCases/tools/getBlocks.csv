@@ -50,3 +50,7 @@ on,cmd,fast,blocks,tools/getBlocks,fmt_junk,y,blocks = 2222222 2332332 & fmt = j
 on,both,fast,blocks,tools/getBlocks,to_file,y,blocks = 2222222 2332332 & fmt = json & to_file
 on,both,fast,blocks,tools/getBlocks,fmt_trace,y,blocks = 2222222 & trace & fmt = json
 on,both,fast,blocks,tools/getBlocks,block_list,y,list = 100
+on,both,fast,blocks,tools/getBlocks,with_logs,y,blocks = 1001001 10012001
+on,both,fast,blocks,tools/getBlocks,with_logs_topic,y,blocks = 1001001 10012001
+on,both,fast,blocks,tools/getBlocks,with_logs_emitter,y,blocks = 1001001 10012001
+on,both,fast,blocks,tools/getBlocks,with_logs_both,y,blocks = 1001001 10012001
