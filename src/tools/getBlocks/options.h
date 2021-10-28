@@ -25,6 +25,7 @@
 #define ERR_TRACEHASHEXCLUSIVE 5
 #define ERR_ATLEASTONEBLOCK 6
 #define ERR_EMTOPONLYWITHLOG 7
+#define ERR_ARTWITHOUTLOGS 8
 // END_ERROR_DEFINES
 
 //-----------------------------------------------------------------------------

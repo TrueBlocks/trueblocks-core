@@ -110,6 +110,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12634,tools,ChainData,blocks,getBlocks,ERR_TRACEHASHEXCLUSIVE,,,false,false,false,false,--,error,,The --hashes and --trace options are exclusive.
 12636,tools,ChainData,blocks,getBlocks,ERR_ATLEASTONEBLOCK,,,false,false,false,false,--,error,,You must specify at least one block.
 12638,tools,ChainData,blocks,getBlocks,ERR_EMTOPONLYWITHLOG,,,false,false,false,false,--,error,,The --emitter and --topic options are only available with the --log option.
+12640,tools,ChainData,blocks,getBlocks,ERR_ARTWITHOUTLOGS,,,false,false,false,false,--,error,,--artcilate option is only available with the --logs option.
 
 13540,tools,ChainData,transactions,getTrans,transactions,,,true,false,true,true,local,positional,list<tx_id>,a space-separated list of one or more transaction identifiers
 13560,tools,ChainData,transactions,getTrans,articulate,a,,false,false,true,true,header,switch,<boolean>,articulate the retrieved data if ABIs can be found

@@ -200,6 +200,9 @@ bool COptions::parseArguments(string_q& command) {
         if (!logs)
             return usage(usageErrs[ERR_EMTOPONLYWITHLOG]);
 
+    if (articulate && !logs)
+        return usage(usageErrs[ERR_ARTWITHOUTLOGS]);
+
     secsFinal =
         (timestamp_t)getGlobalConfig("getBlocks")->getConfigInt("settings", "secs_when_final", (uint64_t)secsFinal);
 
@@ -321,6 +324,7 @@ COptions::COptions(void) {
     usageErrs[ERR_TRACEHASHEXCLUSIVE] = "The --hashes and --trace options are exclusive.";
     usageErrs[ERR_ATLEASTONEBLOCK] = "You must specify at least one block.";
     usageErrs[ERR_EMTOPONLYWITHLOG] = "The --emitter and --topic options are only available with the --log option.";
+    usageErrs[ERR_ARTWITHOUTLOGS] = "--artcilate option is only available with the --logs option.";
     // END_ERROR_STRINGS
 }
 

@@ -45,6 +45,11 @@ bool visitBlockLogs(uint64_t num, void* data) {
     CLogEntry log;
     while (log.parseJson3(result)) {
         if (opt->logFilter.passes(log)) {
+            if (opt->articulate) {
+                opt->abi_spec.loadAbiFromEtherscan(log.address);
+                opt->abi_spec.articulateLog(&log);
+            }
+            manageFields("CFunction:message", !log.articulatedLog.message.empty());
             log.blockNumber = block.blockNumber;
             log.blockHash = block.hash;
             log.timestamp = block.timestamp;
