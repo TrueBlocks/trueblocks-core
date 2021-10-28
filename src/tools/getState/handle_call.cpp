@@ -85,7 +85,7 @@ bool COptions::handle_call(void) {
     replace(fmt, "[{ENCODING}}", "[{SIGNATURE}]\t[{ENCODING}]");
     configureDisplay("getState", "CEthState", fmt);
 
-    manageFields("CParameter:*", FLD_HIDE);
+    manageFields("CParameter:all", FLD_HIDE);
     manageFields("CParameter:name,signature,encoding,outputs", FLD_SHOW);
 
     manageFields("CFunction:stateMutability,type,constant", FLD_HIDE);

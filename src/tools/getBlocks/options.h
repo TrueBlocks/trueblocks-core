@@ -46,8 +46,7 @@ class COptions : public CBlockOptions {
     string_q filterType;
     timestamp_t secsFinal;
     blknum_t listOffset;
-    CTopicArray topics;
-    CAddressArray emitters;
+    CLogFilter filter;
 
     COptions(void);
     ~COptions(void);

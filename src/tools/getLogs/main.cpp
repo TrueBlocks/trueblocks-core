@@ -48,7 +48,7 @@ bool visitTransaction(CTransaction& trans, void* data) {
 
     if (opt->isRaw || opt->isVeryRaw) {
         string_q result;
-        CLogQuery query;
+        CLogFilter query;
         query.blockHash = trans.blockHash;
         queryRawLogs(result, query);
         if (!isText && !opt->firstOut)
@@ -66,6 +66,7 @@ bool visitTransaction(CTransaction& trans, void* data) {
         opt->abi_spec.articulateTransaction(&trans);
     }
     for (auto log : trans.receipt.logs) {
+        log.timestamp = trans.timestamp;
         if (opt->articulate) {
             opt->abi_spec.loadAbiFromEtherscan(log.address);
             opt->abi_spec.articulateLog(&log);

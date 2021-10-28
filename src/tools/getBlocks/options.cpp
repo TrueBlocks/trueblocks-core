@@ -163,11 +163,11 @@ bool COptions::parseArguments(string_q& command) {
 
     // syntactic sugar so we deal with topics, but the option is called topic
     for (auto t : topic)
-        topics.push_back(t);
+        filter.topics.push_back(t);
 
     // syntactic sugar so we deal with emitters, but the option is called emitter
     for (auto e : emitter)
-        emitters.push_back(e);
+        filter.addresses.push_back(e);
 
     listOffset = contains(command, "list") ? list : NOPOS;
     filterType = (uniq_tx ? "uniq_tx" : (uniq ? "uniq" : (apps ? "apps" : "")));
@@ -190,7 +190,7 @@ bool COptions::parseArguments(string_q& command) {
     if (blocks.empty() && listOffset == NOPOS)
         return usage(usageErrs[ERR_ATLEASTONEBLOCK]);
 
-    if ((!emitters.empty() || !topics.empty()))
+    if ((!filter.addresses.empty() || !filter.topics.empty()))
         if (!logs)
             return usage(usageErrs[ERR_EMTOPONLYWITHLOG]);
 
@@ -278,8 +278,7 @@ void COptions::Init(void) {
     addrCounter = 0;
     listOffset = NOPOS;
     blocks.Init();
-    topics.clear();
-    emitters.clear();
+    filter = CLogFilter();
     CBlockOptions::Init();
 }
 

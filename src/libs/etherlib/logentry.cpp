@@ -451,9 +451,6 @@ string_q nextLogentryChunk_custom(const string_q& fieldIn, const void* dataPtr) 
                 if (fieldIn % "type" && contains(log->type, "mined")) {
                     return "";
                 }
-                if (fieldIn % "timestamp" && log->pReceipt) {
-                    return log->pReceipt->getValueByName(fieldIn);
-                }
                 break;
             // EXISTING_CODE
             case 'p':

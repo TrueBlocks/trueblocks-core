@@ -23,7 +23,7 @@ namespace qblocks {
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-class CLogQuery : public CBaseNode {
+class CLogFilter : public CBaseNode {
   public:
     blknum_t fromBlock;
     blknum_t toBlock;
@@ -32,29 +32,29 @@ class CLogQuery : public CBaseNode {
     CTopicArray topics;
 
   public:
-    CLogQuery(void);
-    CLogQuery(const CLogQuery& lo);
-    virtual ~CLogQuery(void);
-    CLogQuery& operator=(const CLogQuery& lo);
+    CLogFilter(void);
+    CLogFilter(const CLogFilter& lo);
+    virtual ~CLogFilter(void);
+    CLogFilter& operator=(const CLogFilter& lo);
 
-    DECLARE_NODE(CLogQuery);
+    DECLARE_NODE(CLogFilter);
 
     const string_q getStringAt(const string_q& fieldName, size_t i) const override;
 
     // EXISTING_CODE
     string_q toRPC(void) const;
     // EXISTING_CODE
-    bool operator==(const CLogQuery& it) const;
-    bool operator!=(const CLogQuery& it) const {
+    bool operator==(const CLogFilter& it) const;
+    bool operator!=(const CLogFilter& it) const {
         return !operator==(it);
     }
-    friend bool operator<(const CLogQuery& v1, const CLogQuery& v2);
-    friend ostream& operator<<(ostream& os, const CLogQuery& it);
+    friend bool operator<(const CLogFilter& v1, const CLogFilter& v2);
+    friend ostream& operator<<(ostream& os, const CLogFilter& it);
 
   protected:
     void clear(void);
     void initialize(void);
-    void duplicate(const CLogQuery& lo);
+    void duplicate(const CLogFilter& lo);
     bool readBackLevel(CArchive& archive) override;
 
     // EXISTING_CODE
@@ -62,14 +62,14 @@ class CLogQuery : public CBaseNode {
 };
 
 //--------------------------------------------------------------------------
-inline CLogQuery::CLogQuery(void) {
+inline CLogFilter::CLogFilter(void) {
     initialize();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline CLogQuery::CLogQuery(const CLogQuery& lo) {
+inline CLogFilter::CLogFilter(const CLogFilter& lo) {
     // EXISTING_CODE
     // EXISTING_CODE
     duplicate(lo);
@@ -79,20 +79,20 @@ inline CLogQuery::CLogQuery(const CLogQuery& lo) {
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------
-inline CLogQuery::~CLogQuery(void) {
+inline CLogFilter::~CLogFilter(void) {
     clear();
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CLogQuery::clear(void) {
+inline void CLogFilter::clear(void) {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //--------------------------------------------------------------------------
-inline void CLogQuery::initialize(void) {
+inline void CLogFilter::initialize(void) {
     CBaseNode::initialize();
 
     fromBlock = 0;
@@ -106,7 +106,7 @@ inline void CLogQuery::initialize(void) {
 }
 
 //--------------------------------------------------------------------------
-inline void CLogQuery::duplicate(const CLogQuery& lo) {
+inline void CLogFilter::duplicate(const CLogFilter& lo) {
     clear();
     CBaseNode::duplicate(lo);
 
@@ -121,7 +121,7 @@ inline void CLogQuery::duplicate(const CLogQuery& lo) {
 }
 
 //--------------------------------------------------------------------------
-inline CLogQuery& CLogQuery::operator=(const CLogQuery& lo) {
+inline CLogFilter& CLogFilter::operator=(const CLogFilter& lo) {
     duplicate(lo);
     // EXISTING_CODE
     // EXISTING_CODE
@@ -129,7 +129,7 @@ inline CLogQuery& CLogQuery::operator=(const CLogQuery& lo) {
 }
 
 //-------------------------------------------------------------------------
-inline bool CLogQuery::operator==(const CLogQuery& it) const {
+inline bool CLogFilter::operator==(const CLogFilter& it) const {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default equal operator in class definition, assume none are equal (so find fails)
@@ -137,7 +137,7 @@ inline bool CLogQuery::operator==(const CLogQuery& it) const {
 }
 
 //-------------------------------------------------------------------------
-inline bool operator<(const CLogQuery& v1, const CLogQuery& v2) {
+inline bool operator<(const CLogFilter& v1, const CLogFilter& v2) {
     // EXISTING_CODE
     // EXISTING_CODE
     // No default sort defined in class definition, assume already sorted, preserve ordering
@@ -145,16 +145,16 @@ inline bool operator<(const CLogQuery& v1, const CLogQuery& v2) {
 }
 
 //---------------------------------------------------------------------------
-typedef vector<CLogQuery> CLogQueryArray;
-extern CArchive& operator>>(CArchive& archive, CLogQueryArray& array);
-extern CArchive& operator<<(CArchive& archive, const CLogQueryArray& array);
+typedef vector<CLogFilter> CLogFilterArray;
+extern CArchive& operator>>(CArchive& archive, CLogFilterArray& array);
+extern CArchive& operator<<(CArchive& archive, const CLogFilterArray& array);
 
 //---------------------------------------------------------------------------
-extern CArchive& operator<<(CArchive& archive, const CLogQuery& log);
-extern CArchive& operator>>(CArchive& archive, CLogQuery& log);
+extern CArchive& operator<<(CArchive& archive, const CLogFilter& log);
+extern CArchive& operator>>(CArchive& archive, CLogFilter& log);
 
 //---------------------------------------------------------------------------
-extern const char* STR_DISPLAY_LOGQUERY;
+extern const char* STR_DISPLAY_LOGFILTER;
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

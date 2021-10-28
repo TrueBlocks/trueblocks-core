@@ -1,4 +1,0 @@
-[settings]
-class = CLogQuery
-fields = logquery.csv
-includes = utillib.h

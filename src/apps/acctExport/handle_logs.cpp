@@ -12,13 +12,13 @@
  *-------------------------------------------------------------------------------------------*/
 #include "options.h"
 
-bool logFilter(const CLogEntry& log, const COptions* opt);
+bool filterLog(const CLogEntry& log, const COptions* opt);
 //-----------------------------------------------------------------------
 bool logs_Display(CTraverser* trav, void* data) {
     COptions* opt = (COptions*)data;
 
     for (auto log : trav->trans.receipt.logs) {
-        if (logFilter(log, opt)) {
+        if (filterLog(log, opt)) {
             log.timestamp = trav->trans.timestamp;
             cout << ((isJson() && !opt->firstOut) ? ", " : "");
             cout << log;
@@ -36,7 +36,7 @@ size_t logs_Count(CTraverser* trav, void* data) {
 }
 
 //-----------------------------------------------------------------------
-bool logFilter(const CLogEntry& log, const COptions* opt) {
+bool filterLog(const CLogEntry& log, const COptions* opt) {
     if (!opt->source.empty()) {
         if (!opt->wasEmittedBy(log.address))
             return false;
