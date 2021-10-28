@@ -16,20 +16,21 @@ extern bool visitBlockLogs(uint64_t num, void* data);
 extern const char* STR_FMT_BLOCKLOGS;
 //---------------------------------------------------------------------------
 bool COptions::handle_logs(void) {
-    if (!processFastPath())
-        return blocks.forEveryBlockNumber(visitBlockLogs, this);
-    return true;
+    // First we process the fast path queries if there are any. A fast path is
+    // a block range query with either a topic or an emitter or both in the
+    // logFilter field. The fast path clears the fast path but leaves any
+    // non-fast-path queries in place, so we always handle both
+    processFastPath();
+
+    // We always non-fast-path queries if there are any
+    return blocks.forEveryBlockNumber(visitBlockLogs, this);
 }
 
 //---------------------------------------------------------------------------
-bool visitBlockLogs(uint64_t num, void* data) {
-    LOG_INFO("Processing block ", num, "\r");
-
+size_t queryLogs(const CLogFilter& filter, void* data) {
     COptions* opt = (COptions*)data;  // NOLINT
-    opt->logFilter.fromBlock = num;
-    opt->logFilter.toBlock = num;
-    CBlock block;
-    getBlock_light(block, num);
+    bool isText = (expContext().exportFmt & (TXT1 | CSV1));
+
     string_q result;
     queryRawLogs(result, opt->logFilter);
     CRPCResult generic;
@@ -42,10 +43,6 @@ bool visitBlockLogs(uint64_t num, void* data) {
             opt->abi_spec.articulateLog(&log);
         }
         manageFields("CFunction:message", !log.articulatedLog.message.empty());
-        log.blockNumber = block.blockNumber;
-        log.blockHash = block.hash;
-        log.timestamp = block.timestamp;
-        bool isText = (expContext().exportFmt & (TXT1 | CSV1));
         if (!opt->firstOut) {
             if (!isText)
                 cout << ",";
@@ -60,10 +57,32 @@ bool visitBlockLogs(uint64_t num, void* data) {
 }
 
 //---------------------------------------------------------------------------
+bool visitBlockLogs(uint64_t num, void* data) {
+    LOG_INFO("Processing log query ", num, "\r");
+
+    COptions* opt = (COptions*)data;  // NOLINT
+    opt->logFilter.fromBlock = num;
+    opt->logFilter.toBlock = num;
+    return queryLogs(opt->logFilter, data) > 0;
+}
+
+//---------------------------------------------------------------------------
 bool COptions::processFastPath(void) {
     if (blocks.start == 0 && blocks.stop == 0)
         return false;  // not a range
     if (!logFilter.isFastPath())
         return false;  // no emitter and no topics
-    return false;
+
+    // We can't ask the node for the entire range if it's really large (say > big_range), so
+    // we break it up into big_range block mini-ranges
+    size_t nRead = 0;
+    for (blknum_t bn = blocks.start; bn < blocks.stop; bn += big_range) {
+        logFilter.fromBlock = bn;
+        logFilter.toBlock = min(blocks.stop, bn + big_range) - 1;
+        LOG_INFO("Processing log query ", logFilter.fromBlock, " to ", logFilter.toBlock, "\r");
+        nRead += queryLogs(logFilter, this);
+    }
+    blocks.start = blocks.stop = 0;  // we've processed this, so remove it
+
+    return nRead > 0;
 }

@@ -31,6 +31,7 @@ static const COption params[] = {
     COption("emitter", "m", "list<addr>", OPT_HIDDEN | OPT_FLAG, "for the --logs option only, filter logs to show only those logs emitted by the given address(es)"),  // NOLINT
     COption("topic", "p", "list<topic>", OPT_HIDDEN | OPT_FLAG, "for the --logs option only, filter logs to show only those with this topic(s)"),  // NOLINT
     COption("articulate", "a", "", OPT_HIDDEN | OPT_SWITCH, "for the --logs option only, articulate the retrieved data if ABIs can be found"),  // NOLINT
+    COption("big_range", "r", "<uint64>", OPT_HIDDEN | OPT_FLAG, "for the --logs option only, allow for block ranges larger than 500"),  // NOLINT
     COption("count", "c", "", OPT_SWITCH, "display the number of the lists of appearances for --apps, --uniq, or --uniq_tx"),  // NOLINT
     COption("cache", "o", "", OPT_SWITCH, "force a write of the block to the cache"),
     COption("list", "l", "<blknum>", OPT_HIDDEN | OPT_FLAG, "summary list of blocks running backwards from latest block minus num"),  // NOLINT
@@ -111,6 +112,12 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-a" || arg == "--articulate") {
             articulate = true;
 
+        } else if (startsWith(arg, "-r:") || startsWith(arg, "--big_range:")) {
+            if (!confirmUint("big_range", big_range, arg))
+                return false;
+        } else if (arg == "-r" || arg == "--big_range") {
+            return flag_required("big_range");
+
         } else if (arg == "-c" || arg == "--count") {
             count = true;
 
@@ -155,6 +162,7 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_LIST("emitter", emitter, emitter.empty());
     LOG_TEST_LIST("topic", topic, topic.empty());
     LOG_TEST_BOOL("articulate", articulate);
+    LOG_TEST("big_range", big_range, (big_range == 500));
     LOG_TEST_BOOL("count", count);
     LOG_TEST_BOOL("cache", cache);
     LOG_TEST("list", list, (list == NOPOS));
@@ -202,6 +210,10 @@ bool COptions::parseArguments(string_q& command) {
 
     if (articulate && !logs)
         return usage(usageErrs[ERR_ARTWITHOUTLOGS]);
+
+    if (big_range != 5000 && !logs)
+        return usage(usageErrs[ERR_RANGENOLOGS]);
+    big_range = max(big_range, uint64_t(50));
 
     secsFinal =
         (timestamp_t)getGlobalConfig("getBlocks")->getConfigInt("settings", "secs_when_final", (uint64_t)secsFinal);
@@ -287,6 +299,7 @@ void COptions::Init(void) {
     trace = false;
     logs = false;
     articulate = false;
+    big_range = 500;
     count = false;
     cache = false;
     list_count = 20;
@@ -311,9 +324,10 @@ COptions::COptions(void) {
     notes.push_back("`blocks` is a space-separated list of values, a start-end range, a `special`, or any combination.");  // NOLINT
     notes.push_back("`blocks` may be specified as either numbers or hashes.");
     notes.push_back("`special` blocks are detailed under `chifra when --list`.");
-    notes.push_back("For the --logs option, you may optionally specify one or more --emmitter, one or more --topics, or both.");  // NOLINT
-    notes.push_back("The --logs option is significantly faster if you provide an --emitter or a --topic.");
-    notes.push_back("Multiple topics match on topic0, topic1 and so on, not on multiple different topic0's.");
+    notes.push_back("With the --logs option, optionally specify one or more --emmitter, one or more --topics, either or both.");  // NOLINT
+    notes.push_back("The --logs option is significantly faster if you provide an --emitter and/or a --topic.");
+    notes.push_back("Multiple topics match on topic0, topic1, and so on, not on different topic0's.");
+    notes.push_back("Large block ranges may crash the node, use --big_range to specify a larger range.");
     // clang-format on
     // END_CODE_NOTES
 
@@ -325,7 +339,8 @@ COptions::COptions(void) {
     usageErrs[ERR_TRACEHASHEXCLUSIVE] = "The --hashes and --trace options are exclusive.";
     usageErrs[ERR_ATLEASTONEBLOCK] = "You must specify at least one block.";
     usageErrs[ERR_EMTOPONLYWITHLOG] = "The --emitter and --topic options are only available with the --log option.";
-    usageErrs[ERR_ARTWITHOUTLOGS] = "--artcilate option is only available with the --logs option.";
+    usageErrs[ERR_ARTWITHOUTLOGS] = "The --artcilate option is only available with the --logs option.";
+    usageErrs[ERR_RANGENOLOGS] = "The --big_range option is only available with the --logs option (min 50).";
     // END_ERROR_STRINGS
 }
 

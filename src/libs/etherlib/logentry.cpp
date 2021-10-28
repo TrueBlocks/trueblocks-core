@@ -275,6 +275,7 @@ bool CLogEntry::setValueByName(const string_q& fieldNameIn, const string_q& fiel
 //---------------------------------------------------------------------------------------------------
 void CLogEntry::finishParse() {
     // EXISTING_CODE
+    timestamp = getTimestampAt(blockNumber);
     // EXISTING_CODE
 }
 
@@ -431,6 +432,13 @@ string_q nextLogentryChunk_custom(const string_q& fieldIn, const void* dataPtr) 
     if (log) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
+            case 'b':
+                if (fieldIn % "blockNumber" && log->blockNumber > 0)
+                    return uint_2_Str(log->blockNumber);
+                break;
+                if (fieldIn % "blockHash" && !log->blockHash.empty())
+                    return log->blockHash;
+                break;
             case 'c':
                 if (fieldIn % "compressedLog")
                     return log->articulatedLog.compressed("");

@@ -47,9 +47,10 @@ Notes:
   - blocks is a space-separated list of values, a start-end range, a special, or any combination.
   - blocks may be specified as either numbers or hashes.
   - special blocks are detailed under chifra when --list.
-  - For the --logs option, you may optionally specify one or more --emmitter, one or more --topics, or both.
-  - The --logs option is significantly faster if you provide an --emitter or a --topic.
-  - Multiple topics match on topic0, topic1 and so on, not on multiple different topic0's.`
+  - With the --logs option, optionally specify one or more --emmitter, one or more --topics, either or both.
+  - The --logs option is significantly faster if you provide an --emitter and/or a --topic.
+  - Multiple topics match on topic0, topic1, and so on, not on different topic0's.
+  - Large block ranges may crash the node, use --big_range to specify a larger range.`
 
 type blocksOptionsType struct {
 	hashes     bool
@@ -62,6 +63,7 @@ type blocksOptionsType struct {
 	emitter    []string
 	topic      []string
 	articulate bool
+	big_range  uint64
 	count      bool
 	cache      bool
 	list       uint64
@@ -85,6 +87,7 @@ func init() {
 	blocksCmd.Flags().StringSliceVarP(&BlocksOpts.emitter, "emitter", "m", nil, "for the --logs option only, filter logs to show only those logs emitted by the given address(es) (hidden)")
 	blocksCmd.Flags().StringSliceVarP(&BlocksOpts.topic, "topic", "p", nil, "for the --logs option only, filter logs to show only those with this topic(s) (hidden)")
 	blocksCmd.Flags().BoolVarP(&BlocksOpts.articulate, "articulate", "a", false, "for the --logs option only, articulate the retrieved data if ABIs can be found (hidden)")
+	blocksCmd.Flags().Uint64VarP(&BlocksOpts.big_range, "big_range", "r", 500, "for the --logs option only, allow for block ranges larger than 500 (hidden)")
 	blocksCmd.Flags().BoolVarP(&BlocksOpts.count, "count", "c", false, "display the number of the lists of appearances for --apps, --uniq, or --uniq_tx")
 	blocksCmd.Flags().BoolVarP(&BlocksOpts.cache, "cache", "o", false, "force a write of the block to the cache")
 	blocksCmd.Flags().Uint64VarP(&BlocksOpts.list, "list", "l", 0, "summary list of blocks running backwards from latest block minus num (hidden)")
@@ -94,6 +97,7 @@ func init() {
 		blocksCmd.Flags().MarkHidden("emitter")
 		blocksCmd.Flags().MarkHidden("topic")
 		blocksCmd.Flags().MarkHidden("articulate")
+		blocksCmd.Flags().MarkHidden("big_range")
 		blocksCmd.Flags().MarkHidden("list")
 		blocksCmd.Flags().MarkHidden("list_count")
 	}

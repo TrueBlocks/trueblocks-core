@@ -26,6 +26,7 @@
 #define ERR_ATLEASTONEBLOCK 6
 #define ERR_EMTOPONLYWITHLOG 7
 #define ERR_ARTWITHOUTLOGS 8
+#define ERR_RANGENOLOGS 9
 // END_ERROR_DEFINES
 
 //-----------------------------------------------------------------------------
@@ -37,6 +38,7 @@ class COptions : public CBlockOptions {
     bool trace;
     bool logs;
     bool articulate;
+    uint64_t big_range;
     bool count;
     bool cache;
     blknum_t list_count;

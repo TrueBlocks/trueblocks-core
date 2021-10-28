@@ -35,9 +35,10 @@ Notes:
   - blocks is a space-separated list of values, a start-end range, a special, or any combination.
   - blocks may be specified as either numbers or hashes.
   - special blocks are detailed under chifra when --list.
-  - For the --logs option, you may optionally specify one or more --emmitter, one or more --topics, or both.
-  - The --logs option is significantly faster if you provide an --emitter or a --topic.
-  - Multiple topics match on topic0, topic1 and so on, not on multiple different topic0's.
+  - With the --logs option, optionally specify one or more --emmitter, one or more --topics, either or both.
+  - The --logs option is significantly faster if you provide an --emitter and/or a --topic.
+  - Multiple topics match on topic0, topic1, and so on, not on different topic0's.
+  - Large block ranges may crash the node, use --big_range to specify a larger range.
 ```
 
 **Source code**: [`tools/getBlocks`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/tools/getBlocks)

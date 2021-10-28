@@ -2,6 +2,7 @@ chifra transactions  5218355.232 --reconcile 0x7fd5c846121bed2e2e46a55f992e35d85
 { "data": [
 TIME ~ CLOCK - : 4-----blockNum.txid5218355232
 TIME ~ CLOCK - : 4-----not from cache
+TIME ~ CLOCK - : 4-----Loaded timestamp file
 TIME ~ CLOCK - : 4-----blockNumber.txid: 5218355	232
 TIME ~ CLOCK - : 4-----blockNumber.txid: 5218355	232
 TIME ~ CLOCK - : 8------Entering loadNames...

@@ -19,6 +19,7 @@ Flags:
   -m, --emitter stringfor the --logs option only, filter logs to show only those logs emitted by the given address(es) (hidden)
   -p, --topic stringfor the --logs option only, filter logs to show only those with this topic(s) (hidden)
   -a, --articulate  for the --logs option only, articulate the retrieved data if ABIs can be found (hidden)
+  -r, --big_range <num>for the --logs option only, allow for block ranges larger than 5000 (hidden)
   -c, --count       display the number of the lists of appearances for --apps, --uniq, or --uniq_tx
   -o, --cache       force a write of the block to the cache
   -l, --list <num>  summary list of blocks running backwards from latest block minus num (hidden)
@@ -33,7 +34,8 @@ Notes:
   - blocks is a space-separated list of values, a start-end range, a special, or any combination.
   - blocks may be specified as either numbers or hashes.
   - special blocks are detailed under chifra when --list.
-  - For the --logs option, you may optionally specify one or more --emmitter, one or more --topics, or both.
-  - The --logs option is significantly faster if you provide an --emitter or a --topic.
-  - Multiple topics match on topic0, topic1 and so on, not on multiple different topic0's.
+  - With the --logs option, optionally specify one or more --emmitter, one or more --topics, either or both.
+  - The --logs option is significantly faster if you provide an --emitter and/or a --topic.
+  - Multiple topics match on topic0, topic1, and so on, not on different topic0's.
+  - Large block ranges may crash the node, use --big_range to specify a larger range.
 

@@ -68,7 +68,7 @@ func runBlocks(cmd *cobra.Command, args []string) {
 		options += " --uniq_tx"
 	}
 	if BlocksOpts.logs {
-		options += " --logs "
+		options += " --logs"
 	}
 	for _, e := range BlocksOpts.emitter {
 		options += " --emitter " + e
@@ -77,7 +77,10 @@ func runBlocks(cmd *cobra.Command, args []string) {
 		options += " --topic " + t
 	}
 	if BlocksOpts.articulate {
-		options += " --articulate "
+		options += " --articulate"
+	}
+	if BlocksOpts.big_range != 5000 {
+		options += " --big_range " + fmt.Sprintf("%d", BlocksOpts.big_range)
 	}
 	if BlocksOpts.count {
 		options += " --count"

@@ -444,7 +444,7 @@ string_q CLogFilter::toRPC(void) const {
     }
 
     string_q ret = "[{" + out.str() + "}]";
-    LOG_INFO("Querying with ", ret);
+    LOG4("Querying with ", ret);
     return ret;
 
     // A valid query for two addresses
