@@ -30,6 +30,9 @@ bool COptions::handle_logs(void) {
 
 //------------------------------------------------------------
 bool visitBlockLogs(uint64_t num, void* data) {
+    cerr << num << "\r";
+    cerr.flush();
+
     COptions* opt = (COptions*)data;  // NOLINT
     CBlock block;
     getBlock_light(block, num);
