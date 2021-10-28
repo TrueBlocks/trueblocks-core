@@ -48,7 +48,8 @@ Notes:
   - blocks may be specified as either numbers or hashes.
   - special blocks are detailed under chifra when --list.
   - For the --logs option, you may optionally specify one or more --emmitter, one or more --topics, or both.
-  - The --logs option is significantly faster if you provide an --emitter or a --topic.`
+  - The --logs option is significantly faster if you provide an --emitter or a --topic.
+  - Multiple topics match on topic0, topic1 and so on, not on multiple different topic0's.`
 
 type blocksOptionsType struct {
 	hashes     bool

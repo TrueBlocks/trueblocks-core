@@ -360,7 +360,7 @@ const char* STR_DISPLAY_LOGFILTER =
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-//-----------------------------------------------------------------------
+//---------------------------------------------------------------------------
 bool CLogFilter::wasEmittedBy(const address_t& test) const {
     for (auto e : emitters)
         if (e == test)
@@ -368,7 +368,7 @@ bool CLogFilter::wasEmittedBy(const address_t& test) const {
     return false;
 }
 
-//-----------------------------------------------------------------------
+//---------------------------------------------------------------------------
 bool CLogFilter::passes(const CLogEntry& log) {
     bool filteringEmitters = emitters.size() > 0;
     bool filteringTopics = topics.size() > 0;
@@ -391,76 +391,88 @@ bool CLogFilter::passes(const CLogEntry& log) {
     return (!filteringEmitters || emittedBy) && (!filteringTopics || hasTopic);
 }
 
+//---------------------------------------------------------------------------
+bool CLogFilter::isFastPath(void) const {
+    if (!blockHash.empty())
+        return false;
+    if (emitters.empty() && topics.empty())
+        return false;
+    return true;
+}
+
+//---------------------------------------------------------------------------
 string_q CLogFilter::toRPC(void) const {
-    ostringstream fmt;
-    if (blockHash.empty()) {
-        if (fromBlock)
-            fmt << "[\"fromBlock\": \"{FROMBLOCK}\",]";
-        if (toBlock)
-            fmt << "[\"toBlock\": \"{TOBLOCK}\",]";
-    } else {
-        fmt << "[\"blockHash\": \"{BLOCKHASH}\",]";
+    ostringstream out;
+
+    if (!blockHash.empty())
+        out << "\"blockHash\": \"" << blockHash << "\"";
+
+    if (fromBlock != 0) {
+        out << (out.str().empty() ? "" : ",");
+        out << "\"fromBlock\":\"" << uint_2_Hex(fromBlock) << "\"";
     }
+
+    if (toBlock != 0) {
+        out << (out.str().empty() ? "" : ",");
+        out << "\"toBlock\":\"" << uint_2_Hex(toBlock) << "\"";
+    }
+
     if (emitters.size()) {
-        fmt << "[";
+        out << (out.str().empty() ? "" : ",");
+        out << "\"address\":[";
         size_t cnt = 0;
         for (auto addr : emitters) {
             if (cnt)
-                fmt << ",";
-            fmt << "\"" << addr << "\"";
+                out << ",";
+            out << "\"" << addr << "\"";
             cnt++;
         }
-        fmt << "],";
+        out << "]";
     }
+
     if (topics.size()) {
-        fmt << "[";
+        out << (out.str().empty() ? "" : ",");
+        out << "\"topics\":[";
         size_t cnt = 0;
         for (auto topic : topics) {
             if (cnt)
-                fmt << ",";
-            fmt << "\"" << topic << "\"";
+                out << ",";
+            out << "\"" << topic << "\"";
             cnt++;
         }
-        fmt << "],";
+        out << "]";
     }
-    string_q f = "[{" + trim(Format(fmt.str()), ',') + "}]";
-    return f;
 
-    //    -//-------------------------------------------------------------------------
-    //    -bool queryRawLogs(string_q& results, hash_t hash, const address_t& addr, const CTopicArray& topics) {
-    //        -    string_q data = "[{\"blockHash\":\"[HASH]\",\"address\":\"[ADDR]\"}]";
-    //        -    replace(data, "[HASH]", hash);
-    //        -    if (addr.empty())
-    //            -        replace(data, ",\"address\":\"[ADDR]\"", "");
-    //        -    else
-    //            -        replace(data, "[ADDR]", addr_2_Str(addr));
-    //        -    results = callRPC("eth_getLogs", data, true);
-    //        -    return true;
-    //        -}
-    //    -
-    //    -//-------------------------------------------------------------------------
-    //    -bool queryRawLogs(string_q& results, uint64_t fromBlock, uint64_t toBlock, const address_t& addr,
-    //                       -                  const CTopicArray& topics) {
-    //        -    string_q data = "[{\"fromBlock\":\"[START]\",\"toBlock\":\"[STOP]\",\"address\":\"[ADDR]\"}]";
-    //        -    replace(data, "[START]", uint_2_Hex(fromBlock));
-    //        -    replace(data, "[STOP]", uint_2_Hex(toBlock));
-    //        -    if (addr.empty())
-    //            -        replace(data, ",\"address\":\"[ADDR]\"", "");
-    //        -    else
-    //            -        replace(data, "[ADDR]", addr_2_Str(addr));
-    //        -    results = callRPC("eth_getLogs", data, true);
-    //        -    return true;
-    //        -}    return "[]";
+    string_q ret = "[{" + out.str() + "}]";
+    LOG_INFO("Querying with ", ret);
+    return ret;
+
+    // A valid query for two addresses
+    //
+    // curl -X POST --data '{
+    //    "id":8,
+    //    "jsonrpc":"2.0",
+    //    "method":"eth_getLogs",
+    //    "params":[{
+    //        "fromBlock":"0x3d37e0",
+    //        "toBlock":"0x3d37e1",
+    //        "address":["0x209c4784ab1e8183cf58ca33cb740efbf3fc18ef","0x8d12a197cb00d4747a1fe03395095ce2a5cc6819"]
+    //        "topics":
+    //        ["0x6effdda786735d5033bfad5f53e5131abcced9e52be6c507b62d639685fbed6d","0x6effdda786735d5033bfad5f53e5131abcced9e52be6c507b62d639685fbed6d"]
+    //     }]
+    //   }' -H "Content-Type: application/json" http://localhost:23456 | jq
+    //
+    //
+    // fromBlock:   QUANTITY|TAG - (optional, default: "latest") Integer block number, or "latest" for the last mined
+    // block or "pending", "earliest" for not yet mined transactions. toBlock:     QUANTITY|TAG - (optional, default:
+    // "latest") Integer block number, or "latest" for the last mined block or "pending", "earliest" for not yet mined
+    // transactions. address:     DATA|Array, 20 Bytes - (optional) Contract address or a list of addresses from which
+    // logs should originate. topics:      Array of DATA, - (optional) Array of 32 Bytes DATA topics. Topics are
+    // order-dependent. Each topic can also be an array of DATA with “or” options. blockhash:   DATA, 32 Bytes -
+    // (optional, future) With the addition of EIP-234, blockHash will be a new filter option which restricts the logs
+    // returned to the single block with the 32-byte hash blockHash. Using blockHash is equivalent to
+    // fromBlock = toBlock = the block number with hash blockHash. If blockHash is present in in the
+    // filter criteria, then neither fromBlock nor toBlock are allowed.
 }
-// fromBlock:   QUANTITY|TAG - (optional, default: "latest") Integer block number, or "latest" for the last mined block
-// or "pending", "earliest" for not yet mined transactions. toBlock:     QUANTITY|TAG - (optional, default: "latest")
-// Integer block number, or "latest" for the last mined block or "pending", "earliest" for not yet mined transactions.
-// address:     DATA|Array, 20 Bytes - (optional) Contract address or a list of addresses from which logs should
-// originate. topics:      Array of DATA, - (optional) Array of 32 Bytes DATA topics. Topics are order-dependent. Each
-// topic can also be an array of DATA with “or” options. blockhash:   DATA, 32 Bytes - (optional, future) With the
-// addition of EIP-234, blockHash will be a new filter option which restricts the logs returned to the single
-//              block with the 32-byte hash blockHash. Using blockHash is equivalent to fromBlock = toBlock = the block
-//              number with hash blockHash. If blockHash is present in in the filter criteria, then neither fromBlock
-//              nor toBlock are allowed.
 // EXISTING_CODE
 }  // namespace qblocks

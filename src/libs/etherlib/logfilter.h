@@ -46,6 +46,7 @@ class CLogFilter : public CBaseNode {
     string_q toRPC(void) const;
     bool wasEmittedBy(const address_t& test) const;
     bool passes(const CLogEntry& log);
+    bool isFastPath(void) const;
     // EXISTING_CODE
     bool operator==(const CLogFilter& it) const;
     bool operator!=(const CLogFilter& it) const {

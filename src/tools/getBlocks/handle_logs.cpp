@@ -16,53 +16,54 @@ extern bool visitBlockLogs(uint64_t num, void* data);
 extern const char* STR_FMT_BLOCKLOGS;
 //---------------------------------------------------------------------------
 bool COptions::handle_logs(void) {
-    return blocks.forEveryBlockNumber(visitBlockLogs, this);
+    if (!processFastPath())
+        return blocks.forEveryBlockNumber(visitBlockLogs, this);
+    return true;
 }
 
-//------------------------------------------------------------
+//---------------------------------------------------------------------------
 bool visitBlockLogs(uint64_t num, void* data) {
     LOG_INFO("Processing block ", num, "\r");
 
     COptions* opt = (COptions*)data;  // NOLINT
+    opt->logFilter.fromBlock = num;
+    opt->logFilter.toBlock = num;
     CBlock block;
     getBlock_light(block, num);
-    // return block.forEveryTransaction(visitTransactionLogs, data);
-    string_q url =
-        "curl -s --data "
-        "'{"
-        "\"method\":\"erigon_getLogsByHash\","
-        "\"params\":[\"" +
-        block.hash +
-        "\"],"
-        "\"id\":1,"
-        "\"jsonrpc\":\"2.0\""
-        "}' "
-        "-H \"Content-Type: application/json\" -X POST localhost:23456 | jq";
-    string_q result = doCommand(url);
+    string_q result;
+    queryRawLogs(result, opt->logFilter);
     CRPCResult generic;
     generic.parseJson3(result);
     result = generic.result;
     CLogEntry log;
     while (log.parseJson3(result)) {
-        if (opt->logFilter.passes(log)) {
-            if (opt->articulate) {
-                opt->abi_spec.loadAbiFromEtherscan(log.address);
-                opt->abi_spec.articulateLog(&log);
-            }
-            manageFields("CFunction:message", !log.articulatedLog.message.empty());
-            log.blockNumber = block.blockNumber;
-            log.blockHash = block.hash;
-            log.timestamp = block.timestamp;
-            bool isText = (expContext().exportFmt & (TXT1 | CSV1));
-            if (!opt->firstOut) {
-                if (!isText)
-                    cout << ",";
-                cout << endl;
-            }
-            cout << log.Format(expContext().fmtMap["format"]);
-            opt->firstOut = false;
+        if (opt->articulate) {
+            opt->abi_spec.loadAbiFromEtherscan(log.address);
+            opt->abi_spec.articulateLog(&log);
         }
+        manageFields("CFunction:message", !log.articulatedLog.message.empty());
+        log.blockNumber = block.blockNumber;
+        log.blockHash = block.hash;
+        log.timestamp = block.timestamp;
+        bool isText = (expContext().exportFmt & (TXT1 | CSV1));
+        if (!opt->firstOut) {
+            if (!isText)
+                cout << ",";
+            cout << endl;
+        }
+        cout << log.Format(expContext().fmtMap["format"]);
+        opt->firstOut = false;
         log = CLogEntry();
     }
+
     return !shouldQuit();
+}
+
+//---------------------------------------------------------------------------
+bool COptions::processFastPath(void) {
+    if (blocks.start == 0 && blocks.stop == 0)
+        return false;  // not a range
+    if (!logFilter.isFastPath())
+        return false;  // no emitter and no topics
+    return false;
 }

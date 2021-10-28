@@ -103,6 +103,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12620,tools,ChainData,blocks,getBlocks,n3,,,false,false,false,false,--,note,,`special` blocks are detailed under `chifra when --list`.
 12622,tools,ChainData,blocks,getBlocks,n4,,,false,false,false,false,--,note,,For the --logs option&#44; you may optionally specify one or more --emmitter&#44; one or more --topics&#44; or both.
 12624,tools,ChainData,blocks,getBlocks,n5,,,false,false,false,false,--,note,,The --logs option is significantly faster if you provide an --emitter or a --topic.
+12625,tools,ChainData,blocks,getBlocks,n6,,,false,false,false,false,--,note,,Multiple topics match on topic0&#44; topic1 and so on&#44; not on multiple different topic0's.
 12626,tools,ChainData,blocks,getBlocks,ERR_NOCACHEUNCLE,,,false,false,false,false,--,error,,The --cache option is not available for uncle blocks.
 12628,tools,ChainData,blocks,getBlocks,ERR_NOCACHEADDRESS,,,false,false,false,false,--,error,,The --cache option is not available when using one of the address options.
 12630,tools,ChainData,blocks,getBlocks,ERR_TRACINGREQUIRED,,,false,false,false,false,--,error,,A tracing node is required for the --trace options to work properly.

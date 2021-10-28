@@ -1,6 +1,7 @@
 chifra blocks  4012000-4012001 --logs --emitter 0x86fa049857e0209aa7d9e616f7eb3b3b78ecfdb0
 { "data": [
-TIME ~ CLOCK - <INFO>  : Processing block 4012000{
+TIME ~ CLOCK - <INFO>  : Processing block 4012000TIME ~ CLOCK - <INFO>  : Querying with [{"fromBlock":"0x3d37e0","toBlock":"0x3d37e0","address":["0x86fa049857e0209aa7d9e616f7eb3b3b78ecfdb0"]}]
+{
   "address": "0x86fa049857e0209aa7d9e616f7eb3b3b78ecfdb0",
   "blockHash": "0xf9f855a933a8e8ab26688b406d1a6308a6f06863895e1cf00fccfb4702fb968c",
   "blockNumber": 4012000,

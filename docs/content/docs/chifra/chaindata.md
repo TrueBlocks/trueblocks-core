@@ -2,7 +2,7 @@
 title: "Chain data"
 description: ""
 lead: ""
-date: 2021-10-28T07:07:32
+date: 2021-10-28T09:15:48
 lastmod:
   - :git
   - lastmod
@@ -59,6 +59,7 @@ Notes:
   - special blocks are detailed under chifra when --list.
   - For the --logs option, you may optionally specify one or more --emmitter, one or more --topics, or both.
   - The --logs option is significantly faster if you provide an --emitter or a --topic.
+  - Multiple topics match on topic0, topic1 and so on, not on multiple different topic0's.
 ```
 
 **Source code**: [`tools/getBlocks`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/tools/getBlocks)
