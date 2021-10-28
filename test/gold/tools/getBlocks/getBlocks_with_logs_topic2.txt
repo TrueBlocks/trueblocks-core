@@ -1,6 +1,6 @@
 chifra blocks  4012000-4012001 --logs --topic 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef --topic 0xe1fffcc4923d04b559f4d29a8bfc6cda04eb5b0d3c460751c2402c5c5cc9109c
 { "data": [
-{
+TIME ~ CLOCK - <INFO>  : Processing block 4012000{
   "address": "0xfca47962d45adfdfd1ab2d972315db4ce7ccf094",
   "blockHash": "0xf9f855a933a8e8ab26688b406d1a6308a6f06863895e1cf00fccfb4702fb968c",
   "blockNumber": 4012000,

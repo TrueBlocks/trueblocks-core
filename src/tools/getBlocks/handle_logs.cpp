@@ -30,8 +30,7 @@ bool COptions::handle_logs(void) {
 
 //------------------------------------------------------------
 bool visitBlockLogs(uint64_t num, void* data) {
-    cerr << num << "\r";
-    cerr.flush();
+    LOG_INFO("Processing block ", num, "\r");
 
     COptions* opt = (COptions*)data;  // NOLINT
     CBlock block;
