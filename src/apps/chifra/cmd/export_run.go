@@ -74,11 +74,11 @@ func runExport(cmd *cobra.Command, args []string) {
 	if ExportOpts.factory {
 		options += " --factory"
 	}
-	if ExportOpts.emitter {
-		options += " --emitter"
+	for _, e := range ExportOpts.emitter {
+		options += " --emitter " + e
 	}
-	for _, t := range ExportOpts.source {
-		options += " --source " + t
+	for _, t := range ExportOpts.topic {
+		options += " --topic " + t
 	}
 	if ExportOpts.relevant {
 		options += " --relevant"

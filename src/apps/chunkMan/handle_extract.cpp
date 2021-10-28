@@ -115,10 +115,10 @@ string_q result;
 queryRawBlockTrace(result, uint_2_Hex(bn));
 cout << results << endl;
 
-CLogQuery logQuery;
-logQuery.fromBlock = bn;
-logQuery.toBlock = bn;
-queryRawLogs(result, logQuery);
+CLog Filter log Filter;
+log Filter.fromBlock = bn;
+log Filter.toBlock = bn;
+queryRawLogs(result, log Filter);
 cout << results << endl;
 
 CBlock block;
@@ -132,7 +132,7 @@ for (auto tx : block.transactions) {
 // bool queryRawBlockTrace(string_q& blockStr, const string_q& hexNum) {
 
 // payloadBytes, err := json.Marshal(RPCPayload{"2.0", "eth_getLogs", RPCParams{LogFilter{fmt.Sprintf("0x%x", blockNum), fmt.Sprintf("0x%x", blockNum)}}, 2})
-// bool queryRawLogs(string_q& results, const CLogQuery& query) {
+// bool queryRawLogs(string_q& results, const CLog Filter& query) {
 
 // payloadBytes, err := json.Marshal(RPCPayload{"2.0", "eth_getTransactionReceipt", RPCParams{hash}, 2})
 // bool queryRawReceipt(string_q& results, const hash_t& txHash) {

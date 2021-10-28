@@ -1,6 +1,6 @@
-chifra export  0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --last_block 10279650 --articulate --source 0x7d655c57f71464b6f83811c55d84009cd9f5221c
+chifra export  0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --last_block 10279650 --articulate --emitter 0x7d655c57f71464b6f83811c55d84009cd9f5221c
 
-  The --source option is only available when exporting logs. Quitting...
+  The --emitter option is only available when exporting logs. Quitting...
 
 Purpose:
   Export full detail of transactions for one or more addresses.
@@ -24,12 +24,12 @@ Flags:
   -i, --cache_txs            write transactions to the cache (see notes)
   -R, --cache_traces         write traces to the cache (see notes)
   -y, --factory              scan for contract creations from the given address(es) and report address of those contracts
-      --emitter              for log export only, export only if one of the given export addresses emitted the event
-      --source string        for log export only, export only one of these addresses emitted the event
-      --relevant             for log and accounting export only, if true export only logs relevant to one of the given export addresses
   -U, --count                only available for --appearances mode, if present, return only the number of records
   -c, --first_record <num>   the first record to process
   -e, --max_records <num>    the maximum number of records to process before reporting
+      --relevant             for log and accounting export only, export only logs relevant to one of the given export addresses
+      --emitter string       for log export only, export only logs if emitted by one of these address(es)
+      --topic string         for log export only, export only logs with this topic(s)
       --clean                clean (i.e. remove duplicate appearances) from all existing monitors
   -f, --freshen              freshen but do not print the exported data (hidden)
   -s, --staging              enable search of staging (not yet finalized) folder (hidden)
@@ -48,4 +48,6 @@ Global Flags:
 
 Notes:
   - An address must start with '0x' and be forty-two characters long.
+  - For the --logs option, you may optionally specify one or more --emmitter, one or more --topics, or both.
+  - The --logs option is significantly faster if you provide an --emitter or a --topic.
 

@@ -84,6 +84,14 @@ string_q CLogEntry::getValueByName(const string_q& fieldName) const {
                 return articulatedLog.Format();
             }
             break;
+        case 'b':
+            if (fieldName % "blockHash") {
+                return hash_2_Str(blockHash);
+            }
+            if (fieldName % "blockNumber") {
+                return uint_2_Str(blockNumber);
+            }
+            break;
         case 'c':
             if (fieldName % "compressedLog") {
                 return compressedLog;
@@ -118,8 +126,17 @@ string_q CLogEntry::getValueByName(const string_q& fieldName) const {
                 }
                 return retS;
             }
+            if (fieldName % "transactionHash") {
+                return hash_2_Str(transactionHash);
+            }
+            if (fieldName % "transactionIndex") {
+                return uint_2_Str(transactionIndex);
+            }
             if (fieldName % "transactionLogIndex") {
                 return uint_2_Str(transactionLogIndex);
+            }
+            if (fieldName % "timestamp") {
+                return ts_2_Str(timestamp);
             }
             if (fieldName % "type") {
                 return type;
@@ -186,6 +203,16 @@ bool CLogEntry::setValueByName(const string_q& fieldNameIn, const string_q& fiel
                 return articulatedLog.parseJson3(fieldValue);
             }
             break;
+        case 'b':
+            if (fieldName % "blockHash") {
+                blockHash = str_2_Hash(fieldValue);
+                return true;
+            }
+            if (fieldName % "blockNumber") {
+                blockNumber = str_2_Uint(fieldValue);
+                return true;
+            }
+            break;
         case 'c':
             if (fieldName % "compressedLog") {
                 compressedLog = fieldValue;
@@ -218,8 +245,20 @@ bool CLogEntry::setValueByName(const string_q& fieldNameIn, const string_q& fiel
                 }
                 return true;
             }
+            if (fieldName % "transactionHash") {
+                transactionHash = str_2_Hash(fieldValue);
+                return true;
+            }
+            if (fieldName % "transactionIndex") {
+                transactionIndex = str_2_Uint(fieldValue);
+                return true;
+            }
             if (fieldName % "transactionLogIndex") {
                 transactionLogIndex = str_2_Uint(fieldValue);
+                return true;
+            }
+            if (fieldName % "timestamp") {
+                timestamp = str_2_Ts(fieldValue);
                 return true;
             }
             if (fieldName % "type") {
@@ -253,12 +292,17 @@ bool CLogEntry::Serialize(CArchive& archive) {
     // EXISTING_CODE
     // EXISTING_CODE
     archive >> address;
+    // archive >> blockHash;
+    // archive >> blockNumber;
     archive >> logIndex;
     archive >> topics;
     archive >> data;
     archive >> articulatedLog;
     // archive >> compressedLog;
+    // archive >> transactionHash;
+    // archive >> transactionIndex;
     // archive >> transactionLogIndex;
+    // archive >> timestamp;
     // archive >> type;
     // archive >> removed;
     // EXISTING_CODE
@@ -275,12 +319,17 @@ bool CLogEntry::SerializeC(CArchive& archive) const {
     // EXISTING_CODE
     // EXISTING_CODE
     archive << address;
+    // archive << blockHash;
+    // archive << blockNumber;
     archive << logIndex;
     archive << topics;
     archive << data;
     archive << articulatedLog;
     // archive << compressedLog;
+    // archive << transactionHash;
+    // archive << transactionIndex;
     // archive << transactionLogIndex;
+    // archive << timestamp;
     // archive << type;
     // archive << removed;
     // EXISTING_CODE
@@ -349,6 +398,8 @@ void CLogEntry::registerClass(void) {
     HIDE_FIELD(CLogEntry, "transactionIndex");
     ADD_FIELD(CLogEntry, "transactionLogIndex", T_BLOCKNUM, ++fieldNum);
     HIDE_FIELD(CLogEntry, "transactionLogIndex");
+    ADD_FIELD(CLogEntry, "timestamp", T_TIMESTAMP, ++fieldNum);
+    HIDE_FIELD(CLogEntry, "timestamp");
     ADD_FIELD(CLogEntry, "type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CLogEntry, "type");
     ADD_FIELD(CLogEntry, "removed", T_BOOL | TS_OMITEMPTY, ++fieldNum);
@@ -496,7 +547,8 @@ const char* STR_DISPLAY_LOGENTRY =
     "[{TOPIC3}]\t"
     "[{DATA}]\t"
     "[{TYPE}]\t"
-    "[{COMPRESSEDLOG}]";
+    "[{COMPRESSEDLOG}]\t"
+    "[{TIMESTAMP}]";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

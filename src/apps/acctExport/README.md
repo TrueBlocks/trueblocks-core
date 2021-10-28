@@ -31,12 +31,12 @@ Flags:
   -i, --cache_txs           write transactions to the cache (see notes)
   -R, --cache_traces        write traces to the cache (see notes)
   -y, --factory             scan for contract creations from the given address(es) and report address of those contracts
-      --emitter             for log export only, export only if one of the given export addresses emitted the event
-      --source strings      for log export only, export only one of these addresses emitted the event
-      --relevant            for log and accounting export only, if true export only logs relevant to one of the given export addresses
   -U, --count               only available for --appearances mode, if present, return only the number of records
   -c, --first_record uint   the first record to process
   -e, --max_records uint    the maximum number of records to process before reporting (default 250)
+      --relevant            for log and accounting export only, export only logs relevant to one of the given export addresses
+      --emitter strings     for log export only, export only logs if emitted by one of these address(es)
+      --topic strings       for log export only, export only logs with this topic(s)
       --clean               clean (i.e. remove duplicate appearances) from all existing monitors
 
 Global Flags:
@@ -46,6 +46,8 @@ Global Flags:
 
 Notes:
   - An address must start with '0x' and be forty-two characters long.
+  - For the --logs option, you may optionally specify one or more --emmitter, one or more --topics, or both.
+  - The --logs option is significantly faster if you provide an --emitter or a --topic.
 ```
 
 Other Options

@@ -263,35 +263,6 @@ paths:
           explode: true
           schema:
             type: boolean
-        - name: emitter
-          description: >
-            for log export only, export only if one of the given export addresses emitted the event
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
-        - name: source
-          description: for log export only, export only one of these addresses emitted the event
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: array
-            items:
-              type: string
-              format: address_t
-        - name: relevant
-          description: >
-            for log and accounting export only, if true export only logs relevant to one of the given export addresses
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
         - name: count
           description: >
             only available for --appearances mode, if present, return only the number of records
@@ -317,6 +288,38 @@ paths:
           explode: true
           schema:
             type: string
+        - name: relevant
+          description: >
+            for log and accounting export only, export only logs relevant to one of the given export addresses
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: emitter
+          description: >
+            for log export only, export only logs if emitted by one of these address(es)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: address_t
+        - name: topic
+          description: for log export only, export only logs with this topic(s)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: topic_t
         - name: clean
           description: clean (i.e. remove duplicate appearances) from all existing monitors
           required: false
@@ -718,18 +721,6 @@ paths:
           explode: true
           schema:
             type: boolean
-        - name: topic
-          description: >
-            for the --logs option only, filter logs to show only those with this topic(s)
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: array
-            items:
-              type: string
-              format: topic_t
         - name: emitter
           description: >
             for the --logs option only, filter logs to show only those logs emitted by the given address(es)
@@ -742,6 +733,18 @@ paths:
             items:
               type: string
               format: address_t
+        - name: topic
+          description: >
+            for the --logs option only, filter logs to show only those with this topic(s)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: topic_t
         - name: count
           description: >
             display the number of the lists of appearances for --apps, --uniq, or --uniq_tx
@@ -2248,6 +2251,10 @@ components:
           type: string
           example: "Transfer(0xcfa...9f54..."
           description: "a truncated, more readable version of the articulation"
+        timestamp:
+          type: number
+          format: timestamp
+          description: "the timestamp of the block this log appears in"
     trace:
       description: "trace data for a given transaction directly from the blockchain"
       type: object

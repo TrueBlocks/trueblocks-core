@@ -14,26 +14,26 @@
  * Parts of this file were generated with makeClass --run. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
-#include "logquery.h"
+#include "logfilter.h"
 
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CLogQuery, CBaseNode);
+IMPLEMENT_NODE(CLogFilter, CBaseNode);
 
 //---------------------------------------------------------------------------
-extern string_q nextLogqueryChunk(const string_q& fieldIn, const void* dataPtr);
-static string_q nextLogqueryChunk_custom(const string_q& fieldIn, const void* dataPtr);
+extern string_q nextLogfilterChunk(const string_q& fieldIn, const void* dataPtr);
+static string_q nextLogfilterChunk_custom(const string_q& fieldIn, const void* dataPtr);
 
 //---------------------------------------------------------------------------
-void CLogQuery::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
+void CLogFilter::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const {
     if (!m_showing)
         return;
 
     // EXISTING_CODE
     // EXISTING_CODE
 
-    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["logquery_fmt"] : fmtIn);
+    string_q fmt = (fmtIn.empty() ? expContext().fmtMap["logfilter_fmt"] : fmtIn);
     if (fmt.empty()) {
         if (expContext().exportFmt == YAML1) {
             toYaml(ctx);
@@ -47,13 +47,13 @@ void CLogQuery::Format(ostream& ctx, const string_q& fmtIn, void* dataPtr) const
     // EXISTING_CODE
 
     while (!fmt.empty())
-        ctx << getNextChunk(fmt, nextLogqueryChunk, this);
+        ctx << getNextChunk(fmt, nextLogfilterChunk, this);
 }
 
 //---------------------------------------------------------------------------
-string_q nextLogqueryChunk(const string_q& fieldIn, const void* dataPtr) {
+string_q nextLogfilterChunk(const string_q& fieldIn, const void* dataPtr) {
     if (dataPtr)
-        return reinterpret_cast<const CLogQuery*>(dataPtr)->getValueByName(fieldIn);
+        return reinterpret_cast<const CLogFilter*>(dataPtr)->getValueByName(fieldIn);
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -62,9 +62,9 @@ string_q nextLogqueryChunk(const string_q& fieldIn, const void* dataPtr) {
 }
 
 //---------------------------------------------------------------------------
-string_q CLogQuery::getValueByName(const string_q& fieldName) const {
+string_q CLogFilter::getValueByName(const string_q& fieldName) const {
     // Give customized code a chance to override first
-    string_q ret = nextLogqueryChunk_custom(fieldName, this);
+    string_q ret = nextLogfilterChunk_custom(fieldName, this);
     if (!ret.empty())
         return ret;
 
@@ -73,24 +73,24 @@ string_q CLogQuery::getValueByName(const string_q& fieldName) const {
 
     // Return field values
     switch (tolower(fieldName[0])) {
-        case 'a':
-            if (fieldName % "addresses" || fieldName % "addressesCnt") {
-                size_t cnt = addresses.size();
+        case 'b':
+            if (fieldName % "blockHash") {
+                return hash_2_Str(blockHash);
+            }
+            break;
+        case 'e':
+            if (fieldName % "emitters" || fieldName % "emittersCnt") {
+                size_t cnt = emitters.size();
                 if (endsWith(toLower(fieldName), "cnt"))
                     return uint_2_Str(cnt);
                 if (!cnt)
                     return "";
                 string_q retS;
                 for (size_t i = 0; i < cnt; i++) {
-                    retS += ("\"" + addresses[i] + "\"");
+                    retS += ("\"" + emitters[i] + "\"");
                     retS += ((i < cnt - 1) ? ",\n" + indentStr() : "\n");
                 }
                 return retS;
-            }
-            break;
-        case 'b':
-            if (fieldName % "blockHash") {
-                return hash_2_Str(blockHash);
             }
             break;
         case 'f':
@@ -128,7 +128,7 @@ string_q CLogQuery::getValueByName(const string_q& fieldName) const {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CLogQuery::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
+bool CLogFilter::setValueByName(const string_q& fieldNameIn, const string_q& fieldValueIn) {
     string_q fieldName = fieldNameIn;
     string_q fieldValue = fieldValueIn;
 
@@ -136,18 +136,18 @@ bool CLogQuery::setValueByName(const string_q& fieldNameIn, const string_q& fiel
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {
-        case 'a':
-            if (fieldName % "addresses") {
-                string_q str = fieldValue;
-                while (!str.empty()) {
-                    addresses.push_back(str_2_Addr(nextTokenClear(str, ',')));
-                }
-                return true;
-            }
-            break;
         case 'b':
             if (fieldName % "blockHash") {
                 blockHash = str_2_Hash(fieldValue);
+                return true;
+            }
+            break;
+        case 'e':
+            if (fieldName % "emitters") {
+                string_q str = fieldValue;
+                while (!str.empty()) {
+                    emitters.push_back(str_2_Addr(nextTokenClear(str, ',')));
+                }
                 return true;
             }
             break;
@@ -177,13 +177,13 @@ bool CLogQuery::setValueByName(const string_q& fieldNameIn, const string_q& fiel
 }
 
 //---------------------------------------------------------------------------------------------------
-void CLogQuery::finishParse() {
+void CLogFilter::finishParse() {
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CLogQuery::Serialize(CArchive& archive) {
+bool CLogFilter::Serialize(CArchive& archive) {
     if (archive.isWriting())
         return SerializeC(archive);
 
@@ -198,7 +198,7 @@ bool CLogQuery::Serialize(CArchive& archive) {
     archive >> fromBlock;
     archive >> toBlock;
     archive >> blockHash;
-    archive >> addresses;
+    archive >> emitters;
     archive >> topics;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -207,7 +207,7 @@ bool CLogQuery::Serialize(CArchive& archive) {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CLogQuery::SerializeC(CArchive& archive) const {
+bool CLogFilter::SerializeC(CArchive& archive) const {
     // Writing always writes the latest version of the data
     CBaseNode::SerializeC(archive);
 
@@ -216,7 +216,7 @@ bool CLogQuery::SerializeC(CArchive& archive) const {
     archive << fromBlock;
     archive << toBlock;
     archive << blockHash;
-    archive << addresses;
+    archive << emitters;
     archive << topics;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -224,10 +224,10 @@ bool CLogQuery::SerializeC(CArchive& archive) const {
 }
 
 //---------------------------------------------------------------------------------------------------
-bool CLogQuery::Migrate(CArchive& archiveIn, CArchive& archiveOut) const {
+bool CLogFilter::Migrate(CArchive& archiveIn, CArchive& archiveOut) const {
     ASSERT(archiveIn.isReading());
     ASSERT(archiveOut.isWriting());
-    CLogQuery copy;
+    CLogFilter copy;
     // EXISTING_CODE
     // EXISTING_CODE
     copy.Serialize(archiveIn);
@@ -236,7 +236,7 @@ bool CLogQuery::Migrate(CArchive& archiveIn, CArchive& archiveOut) const {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CLogQueryArray& array) {
+CArchive& operator>>(CArchive& archive, CLogFilterArray& array) {
     uint64_t count;
     archive >> count;
     array.resize(count);
@@ -248,7 +248,7 @@ CArchive& operator>>(CArchive& archive, CLogQueryArray& array) {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CLogQueryArray& array) {
+CArchive& operator<<(CArchive& archive, const CLogFilterArray& array) {
     uint64_t count = array.size();
     archive << count;
     for (size_t i = 0; i < array.size(); i++)
@@ -257,37 +257,37 @@ CArchive& operator<<(CArchive& archive, const CLogQueryArray& array) {
 }
 
 //---------------------------------------------------------------------------
-void CLogQuery::registerClass(void) {
+void CLogFilter::registerClass(void) {
     // only do this once
-    if (HAS_FIELD(CLogQuery, "schema"))
+    if (HAS_FIELD(CLogFilter, "schema"))
         return;
 
     size_t fieldNum = 1000;
-    ADD_FIELD(CLogQuery, "schema", T_NUMBER, ++fieldNum);
-    ADD_FIELD(CLogQuery, "deleted", T_BOOL, ++fieldNum);
-    ADD_FIELD(CLogQuery, "showing", T_BOOL, ++fieldNum);
-    ADD_FIELD(CLogQuery, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CLogQuery, "fromBlock", T_BLOCKNUM, ++fieldNum);
-    ADD_FIELD(CLogQuery, "toBlock", T_BLOCKNUM, ++fieldNum);
-    ADD_FIELD(CLogQuery, "blockHash", T_HASH | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CLogQuery, "addresses", T_ADDRESS | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CLogQuery, "topics", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CLogFilter, "schema", T_NUMBER, ++fieldNum);
+    ADD_FIELD(CLogFilter, "deleted", T_BOOL, ++fieldNum);
+    ADD_FIELD(CLogFilter, "showing", T_BOOL, ++fieldNum);
+    ADD_FIELD(CLogFilter, "cname", T_TEXT, ++fieldNum);
+    ADD_FIELD(CLogFilter, "fromBlock", T_BLOCKNUM, ++fieldNum);
+    ADD_FIELD(CLogFilter, "toBlock", T_BLOCKNUM, ++fieldNum);
+    ADD_FIELD(CLogFilter, "blockHash", T_HASH | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CLogFilter, "emitters", T_ADDRESS | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CLogFilter, "topics", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
-    HIDE_FIELD(CLogQuery, "schema");
-    HIDE_FIELD(CLogQuery, "deleted");
-    HIDE_FIELD(CLogQuery, "showing");
-    HIDE_FIELD(CLogQuery, "cname");
+    HIDE_FIELD(CLogFilter, "schema");
+    HIDE_FIELD(CLogFilter, "deleted");
+    HIDE_FIELD(CLogFilter, "showing");
+    HIDE_FIELD(CLogFilter, "cname");
 
-    builtIns.push_back(_biCLogQuery);
+    builtIns.push_back(_biCLogFilter);
 
     // EXISTING_CODE
     // EXISTING_CODE
 }
 
 //---------------------------------------------------------------------------
-string_q nextLogqueryChunk_custom(const string_q& fieldIn, const void* dataPtr) {
-    const CLogQuery* log = reinterpret_cast<const CLogQuery*>(dataPtr);
+string_q nextLogfilterChunk_custom(const string_q& fieldIn, const void* dataPtr) {
+    const CLogFilter* log = reinterpret_cast<const CLogFilter*>(dataPtr);
     if (log) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
@@ -312,7 +312,7 @@ string_q nextLogqueryChunk_custom(const string_q& fieldIn, const void* dataPtr) 
 // EXISTING_CODE
 
 //---------------------------------------------------------------------------
-bool CLogQuery::readBackLevel(CArchive& archive) {
+bool CLogFilter::readBackLevel(CArchive& archive) {
     bool done = false;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -320,19 +320,19 @@ bool CLogQuery::readBackLevel(CArchive& archive) {
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator<<(CArchive& archive, const CLogQuery& log) {
+CArchive& operator<<(CArchive& archive, const CLogFilter& log) {
     log.SerializeC(archive);
     return archive;
 }
 
 //---------------------------------------------------------------------------
-CArchive& operator>>(CArchive& archive, CLogQuery& log) {
+CArchive& operator>>(CArchive& archive, CLogFilter& log) {
     log.Serialize(archive);
     return archive;
 }
 
 //-------------------------------------------------------------------------
-ostream& operator<<(ostream& os, const CLogQuery& it) {
+ostream& operator<<(ostream& os, const CLogFilter& it) {
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -342,25 +342,56 @@ ostream& operator<<(ostream& os, const CLogQuery& it) {
 }
 
 //---------------------------------------------------------------------------
-const string_q CLogQuery::getStringAt(const string_q& fieldName, size_t i) const {
-    if (fieldName % "addresses" && i < addresses.size())
-        return (addresses[i]);
+const string_q CLogFilter::getStringAt(const string_q& fieldName, size_t i) const {
+    if (fieldName % "emitters" && i < emitters.size())
+        return (emitters[i]);
     if (fieldName % "topics" && i < topics.size())
         return topic_2_Str(topics[i]);
     return "";
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_LOGQUERY =
+const char* STR_DISPLAY_LOGFILTER =
     "[{FROMBLOCK}]\t"
     "[{TOBLOCK}]\t"
     "[{BLOCKHASH}]\t"
-    "[{ADDRESSES}]\t"
+    "[{EMITTERS}]\t"
     "[{TOPICS}]";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
-string_q CLogQuery::toRPC(void) const {
+//-----------------------------------------------------------------------
+bool CLogFilter::wasEmittedBy(const address_t& test) const {
+    for (auto e : emitters)
+        if (e == test)
+            return true;
+    return false;
+}
+
+//-----------------------------------------------------------------------
+bool CLogFilter::passes(const CLogEntry& log) {
+    bool filteringEmitters = emitters.size() > 0;
+    bool filteringTopics = topics.size() > 0;
+
+    // If we're not filtering, it passes
+    if (!filteringEmitters && !filteringTopics)
+        return true;
+
+    ASSERT(log.topics.size() > 0);
+    bool emittedBy = wasEmittedBy(log.address);
+    bool hasTopic = false;
+    for (auto topic : topics) {
+        if (topic == log.topics[0])
+            hasTopic = true;
+    }
+
+    // If we're not filtering emitters or we are an emitter and, at the same
+    // time, we are not filtering topics or have the topic, we pass, and
+    // if we are both filtering emitters and topics and we have both, we pass
+    return (!filteringEmitters || emittedBy) && (!filteringTopics || hasTopic);
+}
+
+string_q CLogFilter::toRPC(void) const {
     ostringstream fmt;
     if (blockHash.empty()) {
         if (fromBlock)
@@ -370,10 +401,10 @@ string_q CLogQuery::toRPC(void) const {
     } else {
         fmt << "[\"blockHash\": \"{BLOCKHASH}\",]";
     }
-    if (addresses.size()) {
+    if (emitters.size()) {
         fmt << "[";
         size_t cnt = 0;
-        for (auto addr : addresses) {
+        for (auto addr : emitters) {
             if (cnt)
                 fmt << ",";
             fmt << "\"" << addr << "\"";

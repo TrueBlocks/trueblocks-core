@@ -13,7 +13,7 @@
 #include <string>
 #include "node.h"
 #include "filenames.h"
-#include "logquery.h"
+#include "logfilter.h"
 
 namespace qblocks {
 
@@ -500,7 +500,7 @@ bool queryRawStateDiff(string_q& diffs, const string_q& hashIn) {
 }
 
 //-------------------------------------------------------------------------
-bool queryRawLogs(string_q& results, const CLogQuery& query) {
+bool queryRawLogs(string_q& results, const CLogFilter& query) {
     results = callRPC("eth_getLogs", query.toRPC(), true);
     return true;
 }

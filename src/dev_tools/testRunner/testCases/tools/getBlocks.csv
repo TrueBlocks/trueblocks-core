@@ -46,16 +46,17 @@ on,both,fast,blocks,tools/getBlocks,fmt_txt,n,blocks = 2222222 2332332 & fmt = t
 on,both,fast,blocks,tools/getBlocks,fmt_csv,n,blocks = 2222222 2332332 & fmt = csv & no_header
 on,both,fast,blocks,tools/getBlocks,fmt_api,y,blocks = 2222222 2332332 & fmt = api
 on,both,fast,blocks,tools/getBlocks,fmt_json,y,blocks = 2222222 2332332 & fmt = json
-on,cmd,fast,blocks,tools/getBlocks,fmt_junk,y,blocks = 2222222 2332332 & fmt = junk
+on,both,fast,blocks,tools/getBlocks,fmt_junk,y,blocks = 2222222 2332332 & fmt = junk
 on,both,fast,blocks,tools/getBlocks,to_file,y,blocks = 2222222 2332332 & fmt = json & to_file
 on,both,fast,blocks,tools/getBlocks,fmt_trace,y,blocks = 2222222 & trace & fmt = json
 on,both,fast,blocks,tools/getBlocks,block_list,y,list = 100
-on,cmd,fast,blocks,tools/getBlocks,without_logs_fail_e1,y,blocks = 4012000-4012001 & emitter = 0x86fa049857e0209aa7d9e616f7eb3b3b78ecfdb0
-on,cmd,fast,blocks,tools/getBlocks,without_logs_fail_e2,y,blocks = 4012000-4012001 & emitter = 0x86fa049857e0209aa7d9e616f7eb3b3b7
-on,cmd,fast,blocks,tools/getBlocks,without_logs_fail_t1,y,blocks = 4012000-4012001 & topic = 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef
-on,cmd,fast,blocks,tools/getBlocks,without_logs_fail_t2,y,blocks = 4012000-4012001 & topic = 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a
-off,cmd,fast,blocks,tools/getBlocks,with_logs,y,blocks = 4012000-4012001
-off,cmd,fast,blocks,tools/getBlocks,with_logs_topic,y,blocks = 4012000-4012001 & topic = 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef
-off,cmd,fast,blocks,tools/getBlocks,with_logs_topic2,y,blocks = 4012000-4012001 & topic = 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef
-off,cmd,fast,blocks,tools/getBlocks,with_logs_emitter,y,blocks = 4012000-4012001 & emitter = 0x86fa049857e0209aa7d9e616f7eb3b3b78ecfdb0
-off,cmd,fast,blocks,tools/getBlocks,with_logs_both,y,blocks = 4012000-4012001 & topic = 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef & emitter = 0x86fa049857e0209aa7d9e616f7eb3b3b78ecfdb0
+on,both,fast,blocks,tools/getBlocks,without_logs_fail_e1,y,blocks = 4012000-4012001 & emitter = 0x86fa049857e0209aa7d9e616f7eb3b3b78ecfdb0
+on,both,fast,blocks,tools/getBlocks,without_logs_fail_e2,y,blocks = 4012000-4012001 & emitter = 0x86fa049857e0209aa7d9e616f7eb3b3b7
+on,both,fast,blocks,tools/getBlocks,without_logs_fail_t1,y,blocks = 4012000-4012001 & topic = 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef
+on,both,fast,blocks,tools/getBlocks,without_logs_fail_t2,y,blocks = 4012000-4012001 & topic = 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a
+on,both,fast,blocks,tools/getBlocks,with_logs,y,blocks = 4012000-4012001 & logs
+on,both,fast,blocks,tools/getBlocks,with_logs_csv,n,blocks = 4012000-4012001 & logs & fmt = csv
+on,both,fast,blocks,tools/getBlocks,with_logs_topic,y,blocks = 4012000-4012001 & logs & topic = 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef
+on,both,fast,blocks,tools/getBlocks,with_logs_topic2,y,blocks = 4012000-4012001 & logs & topic = 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef & topic = 0xe1fffcc4923d04b559f4d29a8bfc6cda04eb5b0d3c460751c2402c5c5cc9109c
+on,both,fast,blocks,tools/getBlocks,with_logs_emitter,y,blocks = 4012000-4012001 & logs & emitter = 0x86fa049857e0209aa7d9e616f7eb3b3b78ecfdb0
+on,both,fast,blocks,tools/getBlocks,with_logs_both,y,blocks = 4012000-4012001 & logs & topic = 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef & emitter = 0x86fa049857e0209aa7d9e616f7eb3b3b78ecfdb0
