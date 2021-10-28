@@ -16,15 +16,6 @@ extern bool visitBlockLogs(uint64_t num, void* data);
 extern const char* STR_FMT_BLOCKLOGS;
 //---------------------------------------------------------------------------
 bool COptions::handle_logs(void) {
-    manageFields("CLogEntry:topic0,topic1,topic2,topic3", FLD_HIDE);
-    manageFields(
-        "CLogEntry:blocknumber,blockhash,transactionindex,transactionhash,timestamp,"
-        "logindex,address,data,compressedlog",
-        FLD_SHOW);
-    bool isText = expContext().exportFmt == TXT1 || expContext().exportFmt == CSV1;
-    if (isText) {
-        expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(STR_FMT_BLOCKLOGS);
-    }
     return blocks.forEveryBlockNumber(visitBlockLogs, this);
 }
 
@@ -70,8 +61,3 @@ bool visitBlockLogs(uint64_t num, void* data) {
     }
     return !shouldQuit();
 }
-
-const char* STR_FMT_BLOCKLOGS =
-    "[{BLOCKNUMBER}]\t[{BLOCKHASH}]\t[{TRANSACTIONINDEX}]\t[{TRANSACTIONHASH}]\t"
-    "[{TIMESTAMP}]\t[{LOGINDEX}]\t[{ADDRESS}]\t[{TOPIC0}]\t[{TOPIC1}]\t[{TOPIC2}]\t"
-    "[{TOPIC3}]\t[{DATA}]\t[{COMPRESSEDLOG}]";

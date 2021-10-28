@@ -47,6 +47,7 @@ extern const char* STR_FORMAT_FILTER_JSON;
 extern const char* STR_FORMAT_FILTER_TXT;
 extern const char* STR_FORMAT_LIST_JSON;
 extern const char* STR_FORMAT_LIST;
+extern const char* STR_FMT_BLOCKLOGS;
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
@@ -232,6 +233,15 @@ bool COptions::parseArguments(string_q& command) {
 
     } else if (logs) {
         configureDisplay("getBlocks", "CLogEntry", STR_DISPLAY_LOGENTRY);
+        manageFields("CLogEntry:topic0,topic1,topic2,topic3", FLD_HIDE);
+        manageFields(
+            "CLogEntry:blocknumber,blockhash,transactionindex,transactionhash,timestamp,"
+            "logindex,address,data,compressedlog",
+            FLD_SHOW);
+        bool isText = expContext().exportFmt == TXT1 || expContext().exportFmt == CSV1;
+        if (isText) {
+            expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(STR_FMT_BLOCKLOGS);
+        }
 
     } else {
         configureDisplay("getBlocks", "CBlock", STR_DISPLAY_BLOCK);
@@ -374,3 +384,9 @@ const char* STR_FORMAT_LIST =
     "[{UNCLE_COUNT}]\t"
     "[{GASLIMIT}]\t"
     "[{GASUSED}]";
+
+//--------------------------------------------------------------------------------
+const char* STR_FMT_BLOCKLOGS =
+    "[{BLOCKNUMBER}]\t[{BLOCKHASH}]\t[{TRANSACTIONINDEX}]\t[{TRANSACTIONHASH}]\t"
+    "[{TIMESTAMP}]\t[{LOGINDEX}]\t[{ADDRESS}]\t[{TOPIC0}]\t[{TOPIC1}]\t[{TOPIC2}]\t"
+    "[{TOPIC3}]\t[{DATA}]\t[{COMPRESSEDLOG}]";
