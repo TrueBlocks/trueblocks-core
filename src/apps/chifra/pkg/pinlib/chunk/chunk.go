@@ -68,21 +68,18 @@ type fetchResult struct {
 	totalSize int64
 }
 
-// TODO: this has to be moved to some function, so that it doesn't get called
-// every time chifra is executing
-var outputDir = "/Users/dawid/Library/Application Support/TrueBlocks/unchained/pins-new" // config.ReadGlobal().Settings.IndexPath
-
 // The subdirectory we will be saving files to and file extension depends on
 // chunk type (e.g. whether we are downloading blooms or indexes). We will store
 // this information in a struct to not have to put if-elses everywhere
 type outputConfig struct {
+	outputDir string
 	subdir    string
 	extension string
 }
 
 // Sets correct values of subdir and extension properties based on
 // chunkType
-func (oc *outputConfig) Build(chunkType ChunkType) {
+func (oc *outputConfig) Build(outputDir string, chunkType ChunkType) {
 	subdir := "blooms/"
 	extension := ".bloom"
 	if chunkType == IndexChunk {
@@ -90,6 +87,7 @@ func (oc *outputConfig) Build(chunkType ChunkType) {
 		extension = ".bin"
 	}
 
+	oc.outputDir = outputDir
 	oc.subdir = subdir
 	oc.extension = extension
 }
@@ -97,7 +95,7 @@ func (oc *outputConfig) Build(chunkType ChunkType) {
 // Uses the data stored in outputConfig to build a path and return it
 // as a string
 func (oc *outputConfig) ToPath(fileName string) string {
-	return path.Join(outputDir, oc.subdir, fileName+oc.extension)
+	return path.Join(oc.outputDir, oc.subdir, fileName+oc.extension)
 }
 
 // Downloads a chunk using HTTP
@@ -127,11 +125,11 @@ func fetchChunk(url string) (*fetchResult, error) {
 func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkType ChunkType, progressChannel chan<- *ChunkProgress) {
 	// Downloaded content will wait for saving in this channel
 	writeChannel := make(chan *jobResult, poolSize)
-
 	// Context lets us handle Ctrl-C easily
 	ctx, cancel := context.WithCancel(context.Background())
+	outputDir := config.ReadGlobal().Settings.IndexPath
 	outConfig := &outputConfig{}
-	outConfig.Build(chunkType)
+	outConfig.Build(outputDir, chunkType)
 	var downloadWg sync.WaitGroup
 	var writeWg sync.WaitGroup
 
@@ -316,7 +314,7 @@ func saveFileContents(res *jobResult, outConfig *outputConfig) error {
 func FilterDownloadedChunks(pins []manifest.PinDescriptor, outConfig *outputConfig) []manifest.PinDescriptor {
 	fileMap := make(map[string]bool)
 
-	files, err := ioutil.ReadDir(path.Join(outputDir, outConfig.subdir))
+	files, err := ioutil.ReadDir(path.Join(outConfig.outputDir, outConfig.subdir))
 	if err != nil {
 		return pins
 	}

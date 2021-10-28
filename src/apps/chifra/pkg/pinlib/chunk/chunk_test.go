@@ -49,7 +49,7 @@ func Test_exclude(t *testing.T) {
 
 func Test_outputConfig_BuildIndex(t *testing.T) {
 	indexConfig := &outputConfig{}
-	indexConfig.Build(IndexChunk)
+	indexConfig.Build("/tmp/pins", IndexChunk)
 
 	if indexConfig.extension != ".bin" {
 		t.Error("Wrong extension", indexConfig.extension)
@@ -68,7 +68,7 @@ func Test_outputConfig_BuildIndex(t *testing.T) {
 
 func Test_outputConfig_BuildBloom(t *testing.T) {
 	indexConfig := &outputConfig{}
-	indexConfig.Build(BloomChunk)
+	indexConfig.Build("/tmp/pins", BloomChunk)
 
 	if indexConfig.extension != ".bloom" {
 		t.Error("Wrong extension", indexConfig.extension)
