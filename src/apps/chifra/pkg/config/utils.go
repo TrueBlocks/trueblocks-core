@@ -24,7 +24,7 @@ var osToPath = map[string]string{
 }
 
 // Returns the path to the directory where the configuration files are
-func getConfigPath(fileName string) string {
+func GetConfigPath(fileName string) string {
 	userOs := runtime.GOOS
 	if userOs == "windows" {
 		log.Fatalln("Windows is not supported")
@@ -53,7 +53,7 @@ func getConfigPath(fileName string) string {
 
 // Opens the file and returns new TOML Decoder
 func read(fileName string) *toml.Decoder {
-	filePath := getConfigPath(fileName + ".toml")
+	filePath := GetConfigPath(fileName + ".toml")
 
 	file, err := os.Open(filePath)
 	if err != nil {

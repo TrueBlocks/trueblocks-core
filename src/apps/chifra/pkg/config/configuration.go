@@ -8,7 +8,7 @@ var DefaultIpfsGateway = "http://gateway.ipfs.io/ipfs/"
 func ReadGlobal() *Global {
 	config := &Global{
 		Settings: globalSettings{
-			IndexPath: getConfigPath("unchained"),
+			IndexPath: GetConfigPath("unchained"),
 		},
 	}
 

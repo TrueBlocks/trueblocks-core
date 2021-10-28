@@ -16,7 +16,7 @@ func Test_getConfigPath(t *testing.T) {
 		expectedDir = "Library/Application Support/TrueBlocks"
 	}
 
-	result := getConfigPath("some_file.toml")
+	result := GetConfigPath("some_file.toml")
 
 	if !strings.Contains(result, expectedDir) {
 		t.Error("Expected directory not present", result)
