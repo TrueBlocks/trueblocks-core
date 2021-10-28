@@ -51,17 +51,19 @@ bool visitBlockLogs(uint64_t num, void* data) {
     result = generic.result;
     CLogEntry log;
     while (log.parseJson3(result)) {
-        log.blockNumber = block.blockNumber;
-        log.blockHash = block.hash;
-        log.timestamp = block.timestamp;
-        bool isText = (expContext().exportFmt & (TXT1 | CSV1));
-        if (!opt->firstOut) {
-            if (!isText)
-                cout << ",";
-            cout << endl;
+        if (opt->logFilter.passes(log)) {
+            log.blockNumber = block.blockNumber;
+            log.blockHash = block.hash;
+            log.timestamp = block.timestamp;
+            bool isText = (expContext().exportFmt & (TXT1 | CSV1));
+            if (!opt->firstOut) {
+                if (!isText)
+                    cout << ",";
+                cout << endl;
+            }
+            cout << log.Format(expContext().fmtMap["format"]);
+            opt->firstOut = false;
         }
-        cout << log.Format(expContext().fmtMap["format"]);
-        opt->firstOut = false;
         log = CLogEntry();
     }
     return !shouldQuit();

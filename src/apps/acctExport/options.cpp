@@ -62,6 +62,7 @@ bool COptions::parseArguments(string_q& command) {
 
     // BEG_CODE_LOCAL_INIT
     CAddressArray addrs;
+    CTopicArray topics;
     CAddressArray emitter;
     CStringArray topic;
     bool freshen = false;
@@ -256,6 +257,9 @@ bool COptions::parseArguments(string_q& command) {
 
     if (Mocked(""))
         return false;
+
+    for (auto topic : topics)
+        logFilter.topics.push_back(topic);
 
     if (!isApiMode() && max_records == 250) {
         max_records = NOPOS;
@@ -749,14 +753,6 @@ bool COptions::setDisplayFormatting(void) {
 bool COptions::isEmitter(const address_t& test) const {
     for (auto monitor : allMonitors)
         if (monitor.address == test)
-            return true;
-    return false;
-}
-
-//-----------------------------------------------------------------------
-bool COptions::wasEmittedBy(const address_t& test) const {
-    for (auto e : logFilter.emitters)
-        if (e == test)
             return true;
     return false;
 }

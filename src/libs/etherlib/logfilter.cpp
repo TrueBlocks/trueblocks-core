@@ -360,6 +360,37 @@ const char* STR_DISPLAY_LOGFILTER =
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
+//-----------------------------------------------------------------------
+bool CLogFilter::wasEmittedBy(const address_t& test) const {
+    for (auto e : emitters)
+        if (e == test)
+            return true;
+    return false;
+}
+
+//-----------------------------------------------------------------------
+bool CLogFilter::passes(const CLogEntry& log) {
+    bool filteringEmitters = emitters.size() > 0;
+    bool filteringTopics = topics.size() > 0;
+
+    // If we're not filtering, it passes
+    if (!filteringEmitters && !filteringTopics)
+        return true;
+
+    ASSERT(log.topics.size() > 0);
+    bool emittedBy = wasEmittedBy(log.address);
+    bool hasTopic = false;
+    for (auto topic : topics) {
+        if (topic == log.topics[0])
+            hasTopic = true;
+    }
+
+    // If we're not filtering emitters or we are an emitter and, at the same
+    // time, we are not filtering topics or have the topic, we pass, and
+    // if we are both filtering emitters and topics and we have both, we pass
+    return (!filteringEmitters || emittedBy) && (!filteringTopics || hasTopic);
+}
+
 string_q CLogFilter::toRPC(void) const {
     ostringstream fmt;
     if (blockHash.empty()) {

@@ -16,6 +16,7 @@
  * the code inside of 'EXISTING_CODE' tags.
  */
 #include "utillib.h"
+#include "logentry.h"
 
 namespace qblocks {
 
@@ -43,6 +44,8 @@ class CLogFilter : public CBaseNode {
 
     // EXISTING_CODE
     string_q toRPC(void) const;
+    bool wasEmittedBy(const address_t& test) const;
+    bool passes(const CLogEntry& log);
     // EXISTING_CODE
     bool operator==(const CLogFilter& it) const;
     bool operator!=(const CLogFilter& it) const {

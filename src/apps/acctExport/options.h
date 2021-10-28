@@ -26,7 +26,6 @@
 class COptions : public CAbiOptions {
   public:
     // BEG_CODE_DECLARE
-    CTopicArray topics;
     CFourbyteArray fourbytes;
     bool appearances;
     bool receipts;
