@@ -75,7 +75,7 @@ class CCommandOption : public CBaseNode {
     void* notes{nullptr};
     explicit CCommandOption(const string_q& line);
     void verifyOptions(CStringArray& warnings);
-    void verifyHotkey(CStringArray& warnings, map<string, string> existing);
+    void verifyHotkey(CStringArray& warnings, map<string, string>& existing);
     string_q debugCode(void) const;
     string_q swagger_descr;
     string_q route_list;

@@ -24,12 +24,13 @@ static const COption params[] = {
     COption("hashes", "e", "", OPT_SWITCH, "display only transaction hashes, default is to display full transaction detail"),  // NOLINT
     COption("uncles", "U", "", OPT_SWITCH, "display uncle blocks (if any) instead of the requested block"),
     COption("trace", "t", "", OPT_SWITCH, "export the traces from the block as opposed to the block data"),
-    COption("apps", "a", "", OPT_SWITCH, "display only the list of address appearances in the block"),
+    COption("apps", "s", "", OPT_SWITCH, "display only the list of address appearances in the block"),
     COption("uniq", "u", "", OPT_SWITCH, "display only the list of uniq address appearances in the block"),
     COption("uniq_tx", "n", "", OPT_SWITCH, "display only the list of uniq address appearances in each transaction"),
     COption("logs", "g", "", OPT_HIDDEN | OPT_SWITCH, "display only the logs found in the block(s)"),
     COption("emitter", "m", "list<addr>", OPT_HIDDEN | OPT_FLAG, "for the --logs option only, filter logs to show only those logs emitted by the given address(es)"),  // NOLINT
     COption("topic", "p", "list<topic>", OPT_HIDDEN | OPT_FLAG, "for the --logs option only, filter logs to show only those with this topic(s)"),  // NOLINT
+    COption("articulate", "a", "", OPT_HIDDEN | OPT_SWITCH, "for the --logs option only, articulate the retrieved data if ABIs can be found"),  // NOLINT
     COption("count", "c", "", OPT_SWITCH, "display the number of the lists of appearances for --apps, --uniq, or --uniq_tx"),  // NOLINT
     COption("cache", "o", "", OPT_SWITCH, "force a write of the block to the cache"),
     COption("list", "l", "<blknum>", OPT_HIDDEN | OPT_FLAG, "summary list of blocks running backwards from latest block minus num"),  // NOLINT
@@ -81,7 +82,7 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-t" || arg == "--trace") {
             trace = true;
 
-        } else if (arg == "-a" || arg == "--apps") {
+        } else if (arg == "-s" || arg == "--apps") {
             apps = true;
 
         } else if (arg == "-u" || arg == "--uniq") {
@@ -106,6 +107,9 @@ bool COptions::parseArguments(string_q& command) {
                 return false;
         } else if (arg == "-p" || arg == "--topic") {
             return flag_required("topic");
+
+        } else if (arg == "-a" || arg == "--articulate") {
+            articulate = true;
 
         } else if (arg == "-c" || arg == "--count") {
             count = true;
@@ -150,6 +154,7 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("logs", logs);
     LOG_TEST_LIST("emitter", emitter, emitter.empty());
     LOG_TEST_LIST("topic", topic, topic.empty());
+    LOG_TEST_BOOL("articulate", articulate);
     LOG_TEST_BOOL("count", count);
     LOG_TEST_BOOL("cache", cache);
     LOG_TEST("list", list, (list == NOPOS));
@@ -278,6 +283,7 @@ void COptions::Init(void) {
     uncles = false;
     trace = false;
     logs = false;
+    articulate = false;
     count = false;
     cache = false;
     list_count = 20;

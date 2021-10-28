@@ -60,6 +60,7 @@ type blocksOptionsType struct {
 	logs       bool
 	emitter    []string
 	topic      []string
+	articulate bool
 	count      bool
 	cache      bool
 	list       uint64
@@ -76,12 +77,13 @@ func init() {
 	blocksCmd.Flags().BoolVarP(&BlocksOpts.hashes, "hashes", "e", false, "display only transaction hashes, default is to display full transaction detail")
 	blocksCmd.Flags().BoolVarP(&BlocksOpts.uncles, "uncles", "U", false, "display uncle blocks (if any) instead of the requested block")
 	blocksCmd.Flags().BoolVarP(&BlocksOpts.trace, "trace", "t", false, "export the traces from the block as opposed to the block data")
-	blocksCmd.Flags().BoolVarP(&BlocksOpts.apps, "apps", "a", false, "display only the list of address appearances in the block")
+	blocksCmd.Flags().BoolVarP(&BlocksOpts.apps, "apps", "s", false, "display only the list of address appearances in the block")
 	blocksCmd.Flags().BoolVarP(&BlocksOpts.uniq, "uniq", "u", false, "display only the list of uniq address appearances in the block")
 	blocksCmd.Flags().BoolVarP(&BlocksOpts.uniq_tx, "uniq_tx", "n", false, "display only the list of uniq address appearances in each transaction")
 	blocksCmd.Flags().BoolVarP(&BlocksOpts.logs, "logs", "g", false, "display only the logs found in the block(s) (hidden)")
 	blocksCmd.Flags().StringSliceVarP(&BlocksOpts.emitter, "emitter", "m", nil, "for the --logs option only, filter logs to show only those logs emitted by the given address(es) (hidden)")
 	blocksCmd.Flags().StringSliceVarP(&BlocksOpts.topic, "topic", "p", nil, "for the --logs option only, filter logs to show only those with this topic(s) (hidden)")
+	blocksCmd.Flags().BoolVarP(&BlocksOpts.articulate, "articulate", "a", false, "for the --logs option only, articulate the retrieved data if ABIs can be found (hidden)")
 	blocksCmd.Flags().BoolVarP(&BlocksOpts.count, "count", "c", false, "display the number of the lists of appearances for --apps, --uniq, or --uniq_tx")
 	blocksCmd.Flags().BoolVarP(&BlocksOpts.cache, "cache", "o", false, "force a write of the block to the cache")
 	blocksCmd.Flags().Uint64VarP(&BlocksOpts.list, "list", "l", 0, "summary list of blocks running backwards from latest block minus num (hidden)")
@@ -90,6 +92,7 @@ func init() {
 		blocksCmd.Flags().MarkHidden("logs")
 		blocksCmd.Flags().MarkHidden("emitter")
 		blocksCmd.Flags().MarkHidden("topic")
+		blocksCmd.Flags().MarkHidden("articulate")
 		blocksCmd.Flags().MarkHidden("list")
 		blocksCmd.Flags().MarkHidden("list_count")
 	}

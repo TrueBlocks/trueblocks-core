@@ -689,7 +689,7 @@ void CCommandOption::verifyOptions(CStringArray& warnings) {
 }
 
 //---------------------------------------------------------------------------------------------------
-void CCommandOption::verifyHotkey(CStringArray& warnings, map<string, string> existing) {
+void CCommandOption::verifyHotkey(CStringArray& warnings, map<string, string>& existing) {
     if (hotKey.empty() || contains(option_type, "positional") || contains(option_type, "description") ||
         contains(option_type, "note") || contains(option_type, "error")) {
         return;

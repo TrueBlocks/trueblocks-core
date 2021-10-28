@@ -76,6 +76,9 @@ func runBlocks(cmd *cobra.Command, args []string) {
 	for _, t := range BlocksOpts.topic {
 		options += " --topic " + t
 	}
+	if BlocksOpts.articulate {
+		options += " --articulate "
+	}
 	if BlocksOpts.count {
 		options += " --count"
 	}

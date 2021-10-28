@@ -35,6 +35,7 @@ class COptions : public CBlockOptions {
     bool uncles;
     bool trace;
     bool logs;
+    bool articulate;
     bool count;
     bool cache;
     blknum_t list_count;

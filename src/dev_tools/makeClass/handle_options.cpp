@@ -176,6 +176,8 @@ bool COptions::handle_options(void) {
         if (warnings.size() > 0) {
             for (auto warning : warnings)
                 LOG_WARN(warning);
+            clearStreams();
+            return false;
 
         } else {
             string_q fn = getSourcePath(tool.first + "/options.cpp");
