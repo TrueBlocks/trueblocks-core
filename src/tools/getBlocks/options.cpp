@@ -167,7 +167,7 @@ bool COptions::parseArguments(string_q& command) {
 
     // syntactic sugar so we deal with emitters, but the option is called emitter
     for (auto e : emitter)
-        logFilter.addresses.push_back(e);
+        logFilter.emitters.push_back(e);
 
     listOffset = contains(command, "list") ? list : NOPOS;
     filterType = (uniq_tx ? "uniq_tx" : (uniq ? "uniq" : (apps ? "apps" : "")));
@@ -190,7 +190,7 @@ bool COptions::parseArguments(string_q& command) {
     if (blocks.empty() && listOffset == NOPOS)
         return usage(usageErrs[ERR_ATLEASTONEBLOCK]);
 
-    if ((!logFilter.addresses.empty() || !logFilter.topics.empty()))
+    if ((!logFilter.emitters.empty() || !logFilter.topics.empty()))
         if (!logs)
             return usage(usageErrs[ERR_EMTOPONLYWITHLOG]);
 

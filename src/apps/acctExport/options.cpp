@@ -317,7 +317,7 @@ bool COptions::parseArguments(string_q& command) {
         return usage("Do not use the --freshen option with other options.");
 
     for (auto e : emitter)
-        logFilter.addresses.push_back(e);
+        logFilter.emitters.push_back(e);
 
     for (auto t : topic)
         logFilter.topics.push_back(t);
@@ -755,7 +755,7 @@ bool COptions::isEmitter(const address_t& test) const {
 
 //-----------------------------------------------------------------------
 bool COptions::wasEmittedBy(const address_t& test) const {
-    for (auto e : logFilter.addresses)
+    for (auto e : logFilter.emitters)
         if (e == test)
             return true;
     return false;

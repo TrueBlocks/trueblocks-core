@@ -37,7 +37,7 @@ size_t logs_Count(CTraverser* trav, void* data) {
 
 //-----------------------------------------------------------------------
 bool filterLog(const CLogEntry& log, const COptions* opt) {
-    if (!opt->logFilter.addresses.empty()) {
+    if (!opt->logFilter.emitters.empty()) {
         if (!opt->wasEmittedBy(log.address))
             return false;
         return !opt->relevant || opt->isRelevant(log);

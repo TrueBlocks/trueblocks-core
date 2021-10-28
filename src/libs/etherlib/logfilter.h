@@ -28,7 +28,7 @@ class CLogFilter : public CBaseNode {
     blknum_t fromBlock;
     blknum_t toBlock;
     hash_t blockHash;
-    CAddressArray addresses;
+    CAddressArray emitters;
     CTopicArray topics;
 
   public:
@@ -98,7 +98,7 @@ inline void CLogFilter::initialize(void) {
     fromBlock = 0;
     toBlock = 0;
     blockHash = "";
-    addresses.clear();
+    emitters.clear();
     topics.clear();
 
     // EXISTING_CODE
@@ -113,7 +113,7 @@ inline void CLogFilter::duplicate(const CLogFilter& lo) {
     fromBlock = lo.fromBlock;
     toBlock = lo.toBlock;
     blockHash = lo.blockHash;
-    addresses = lo.addresses;
+    emitters = lo.emitters;
     topics = lo.topics;
 
     // EXISTING_CODE

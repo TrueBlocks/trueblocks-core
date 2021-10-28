@@ -73,24 +73,24 @@ string_q CLogFilter::getValueByName(const string_q& fieldName) const {
 
     // Return field values
     switch (tolower(fieldName[0])) {
-        case 'a':
-            if (fieldName % "addresses" || fieldName % "addressesCnt") {
-                size_t cnt = addresses.size();
+        case 'b':
+            if (fieldName % "blockHash") {
+                return hash_2_Str(blockHash);
+            }
+            break;
+        case 'e':
+            if (fieldName % "emitters" || fieldName % "emittersCnt") {
+                size_t cnt = emitters.size();
                 if (endsWith(toLower(fieldName), "cnt"))
                     return uint_2_Str(cnt);
                 if (!cnt)
                     return "";
                 string_q retS;
                 for (size_t i = 0; i < cnt; i++) {
-                    retS += ("\"" + addresses[i] + "\"");
+                    retS += ("\"" + emitters[i] + "\"");
                     retS += ((i < cnt - 1) ? ",\n" + indentStr() : "\n");
                 }
                 return retS;
-            }
-            break;
-        case 'b':
-            if (fieldName % "blockHash") {
-                return hash_2_Str(blockHash);
             }
             break;
         case 'f':
@@ -136,18 +136,18 @@ bool CLogFilter::setValueByName(const string_q& fieldNameIn, const string_q& fie
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {
-        case 'a':
-            if (fieldName % "addresses") {
-                string_q str = fieldValue;
-                while (!str.empty()) {
-                    addresses.push_back(str_2_Addr(nextTokenClear(str, ',')));
-                }
-                return true;
-            }
-            break;
         case 'b':
             if (fieldName % "blockHash") {
                 blockHash = str_2_Hash(fieldValue);
+                return true;
+            }
+            break;
+        case 'e':
+            if (fieldName % "emitters") {
+                string_q str = fieldValue;
+                while (!str.empty()) {
+                    emitters.push_back(str_2_Addr(nextTokenClear(str, ',')));
+                }
                 return true;
             }
             break;
@@ -198,7 +198,7 @@ bool CLogFilter::Serialize(CArchive& archive) {
     archive >> fromBlock;
     archive >> toBlock;
     archive >> blockHash;
-    archive >> addresses;
+    archive >> emitters;
     archive >> topics;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -216,7 +216,7 @@ bool CLogFilter::SerializeC(CArchive& archive) const {
     archive << fromBlock;
     archive << toBlock;
     archive << blockHash;
-    archive << addresses;
+    archive << emitters;
     archive << topics;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -270,7 +270,7 @@ void CLogFilter::registerClass(void) {
     ADD_FIELD(CLogFilter, "fromBlock", T_BLOCKNUM, ++fieldNum);
     ADD_FIELD(CLogFilter, "toBlock", T_BLOCKNUM, ++fieldNum);
     ADD_FIELD(CLogFilter, "blockHash", T_HASH | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CLogFilter, "addresses", T_ADDRESS | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CLogFilter, "emitters", T_ADDRESS | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CLogFilter, "topics", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
@@ -343,8 +343,8 @@ ostream& operator<<(ostream& os, const CLogFilter& it) {
 
 //---------------------------------------------------------------------------
 const string_q CLogFilter::getStringAt(const string_q& fieldName, size_t i) const {
-    if (fieldName % "addresses" && i < addresses.size())
-        return (addresses[i]);
+    if (fieldName % "emitters" && i < emitters.size())
+        return (emitters[i]);
     if (fieldName % "topics" && i < topics.size())
         return topic_2_Str(topics[i]);
     return "";
@@ -355,7 +355,7 @@ const char* STR_DISPLAY_LOGFILTER =
     "[{FROMBLOCK}]\t"
     "[{TOBLOCK}]\t"
     "[{BLOCKHASH}]\t"
-    "[{ADDRESSES}]\t"
+    "[{EMITTERS}]\t"
     "[{TOPICS}]";
 
 //---------------------------------------------------------------------------
@@ -370,10 +370,10 @@ string_q CLogFilter::toRPC(void) const {
     } else {
         fmt << "[\"blockHash\": \"{BLOCKHASH}\",]";
     }
-    if (addresses.size()) {
+    if (emitters.size()) {
         fmt << "[";
         size_t cnt = 0;
-        for (auto addr : addresses) {
+        for (auto addr : emitters) {
             if (cnt)
                 fmt << ",";
             fmt << "\"" << addr << "\"";
