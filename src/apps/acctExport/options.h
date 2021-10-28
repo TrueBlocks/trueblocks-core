@@ -38,12 +38,10 @@ class COptions : public CAbiOptions {
     bool cache_txs;
     bool cache_traces;
     bool factory;
-    bool emitter;
-    CAddressArray source;
-    bool relevant;
     bool count;
     blknum_t first_record;
     blknum_t max_records;
+    bool relevant;
     bool clean;
     bool staging;
     bool unripe;
@@ -77,6 +75,8 @@ class COptions : public CAbiOptions {
 
     // abiMap allows fast access to abis
     CAddressUintMap abiMap;
+
+    CLogFilter logFilter;
 
     CScrapeStatistics stats;
 

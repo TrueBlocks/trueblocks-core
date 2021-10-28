@@ -12,13 +12,13 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 10310,apps,Accounts,export,acctExport,articulate,a,,false,false,true,true,header,switch,<boolean>,articulate transactions&#44; traces&#44; logs&#44; and outputs
 10320,apps,Accounts,export,acctExport,cache_txs,i,false,false,true,true,true,header,switch,<boolean>,write transactions to the cache (see notes)
 10330,apps,Accounts,export,acctExport,cache_traces,R,false,false,true,true,true,header,switch,<boolean>,write traces to the cache (see notes)
-10395,apps,Accounts,export,acctExport,factory,y,false,false,false,true,false,header,switch,<boolean>,scan for contract creations from the given address(es) and report address of those contracts
-10430,apps,Accounts,export,acctExport,emitter,,,false,false,true,true,header,switch,<boolean>,for log export only&#44; export only if one of the given export addresses emitted the event
-10431,apps,Accounts,export,acctExport,source,,,false,false,true,true,header,flag,list<addr>,for log export only&#44; export only one of these addresses emitted the event
-10433,apps,Accounts,export,acctExport,relevant,,,false,false,true,true,header,switch,<boolean>,for log and accounting export only&#44; if true export only logs relevant to one of the given export addresses
-10439,apps,Accounts,export,acctExport,count,U,,false,false,true,true,header,switch,<boolean>,only available for --appearances mode&#44; if present&#44; return only the number of records
-10453,apps,Accounts,export,acctExport,first_record,c,0,false,false,true,true,header,flag,<blknum>,the first record to process
-10457,apps,Accounts,export,acctExport,max_records,e,250,false,false,true,true,header,flag,<blknum>,the maximum number of records to process before reporting
+10332,apps,Accounts,export,acctExport,factory,y,false,false,false,true,false,header,switch,<boolean>,scan for contract creations from the given address(es) and report address of those contracts
+10334,apps,Accounts,export,acctExport,count,U,,false,false,true,true,header,switch,<boolean>,only available for --appearances mode&#44; if present&#44; return only the number of records
+10336,apps,Accounts,export,acctExport,first_record,c,0,false,false,true,true,header,flag,<blknum>,the first record to process
+10338,apps,Accounts,export,acctExport,max_records,e,250,false,false,true,true,header,flag,<blknum>,the maximum number of records to process before reporting
+10340,apps,Accounts,export,acctExport,relevant,,,false,false,true,true,header,switch,<boolean>,for log and accounting export only&#44; export only logs relevant to one of the given export addresses
+10342,apps,Accounts,export,acctExport,emitter,,,false,false,true,true,local,flag,list<addr>,for log export only&#44; export only logs if emitted by one of these address(es)
+10344,apps,Accounts,export,acctExport,topic,,,false,false,true,true,local,flag,list<topic>,for log export only&#44; export only logs with this topic(s)
 10085,apps,Accounts,export,acctExport,clean,,false,false,false,true,true,header,switch,<boolean>,clean (i.e. remove duplicate appearances) from all existing monitors
 10380,apps,Accounts,export,acctExport,freshen,f,,false,false,false,false,local,switch,<boolean>,freshen but do not print the exported data
 10060,apps,Accounts,export,acctExport,staging,s,,false,false,false,false,header,switch,<boolean>,enable search of staging (not yet finalized) folder
@@ -33,6 +33,8 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 10450,apps,Accounts,export,acctExport,last_block,L,NOPOS,false,false,false,false,local,flag,<blknum>,last block to process (inclusive)
 10460,apps,Accounts,export,acctExport,,,,false,false,true,true,--,description,,Export full detail of transactions for one or more addresses.
 10470,apps,Accounts,export,acctExport,n1,,,false,false,false,false,--,note,,An `address` must start with '0x' and be forty-two characters long.
+10472,apps,Accounts,export,acctExport,n2,,,false,false,false,false,--,note,,For the --logs option&#44; you may optionally specify one or more --emmitter&#44; one or more --topics&#44; or both.
+10474,apps,Accounts,export,acctExport,n3,,,false,false,false,false,--,note,,The --logs option is significantly faster if you provide an --emitter or a --topic.
 
 11200,apps,Accounts,monitors,acctExport,addrs,,,true,false,true,true,local,positional,list<addr>,one or more addresses (0x...) to process
 11210,apps,Accounts,monitors,acctExport,appearances,p,,false,false,true,true,header,switch,<boolean>,export a list of appearances
@@ -88,8 +90,8 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12550,tools,ChainData,blocks,getBlocks,uniq,u,,false,false,true,true,local,switch,<boolean>,display only the list of uniq address appearances in the block
 12560,tools,ChainData,blocks,getBlocks,uniq_tx,n,,false,false,true,true,local,switch,<boolean>,display only the list of uniq address appearances in each transaction
 12572,tools,ChainData,blocks,getBlocks,logs,g,,false,false,false,true,header,switch,<boolean>,display only the logs found in the block(s)
-12974,tools,ChainData,blocks,getBlocks,topic,p,,false,false,false,true,local,flag,list<topic>,for the --logs option only&#44; filter logs to show only those with this topic(s)
 12976,tools,ChainData,blocks,getBlocks,emitter,m,,false,false,false,true,local,flag,list<addr>,for the --logs option only&#44; filter logs to show only those logs emitted by the given address(es)
+12974,tools,ChainData,blocks,getBlocks,topic,p,,false,false,false,true,local,flag,list<topic>,for the --logs option only&#44; filter logs to show only those with this topic(s)
 12578,tools,ChainData,blocks,getBlocks,count,c,,false,false,true,true,header,switch,<boolean>,display the number of the lists of appearances for --apps&#44; --uniq&#44; or --uniq_tx
 12580,tools,ChainData,blocks,getBlocks,cache,o,,false,false,true,true,header,switch,<boolean>,force a write of the block to the cache
 12582,tools,ChainData,blocks,getBlocks,list,l,,false,false,false,false,local,flag,<blknum>,summary list of blocks running backwards from latest block minus num

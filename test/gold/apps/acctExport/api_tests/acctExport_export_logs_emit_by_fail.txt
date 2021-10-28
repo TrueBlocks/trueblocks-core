@@ -1,5 +1,5 @@
 {
   "errors": [
-    "chifra export - The --source option is only available when exporting logs."
+    "chifra export - The --emitter option is only available when exporting logs."
   ]
 }

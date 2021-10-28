@@ -33,12 +33,12 @@ static const COption params[] = {
     COption("cache_txs", "i", "", OPT_SWITCH, "write transactions to the cache (see notes)"),
     COption("cache_traces", "R", "", OPT_SWITCH, "write traces to the cache (see notes)"),
     COption("factory", "y", "", OPT_SWITCH, "scan for contract creations from the given address(es) and report address of those contracts"),  // NOLINT
-    COption("emitter", "", "", OPT_SWITCH, "for log export only, export only if one of the given export addresses emitted the event"),  // NOLINT
-    COption("source", "", "list<addr>", OPT_FLAG, "for log export only, export only one of these addresses emitted the event"),  // NOLINT
-    COption("relevant", "", "", OPT_SWITCH, "for log and accounting export only, if true export only logs relevant to one of the given export addresses"),  // NOLINT
     COption("count", "U", "", OPT_SWITCH, "only available for --appearances mode, if present, return only the number of records"),  // NOLINT
     COption("first_record", "c", "<blknum>", OPT_FLAG, "the first record to process"),
     COption("max_records", "e", "<blknum>", OPT_FLAG, "the maximum number of records to process before reporting"),
+    COption("relevant", "", "", OPT_SWITCH, "for log and accounting export only, export only logs relevant to one of the given export addresses"),  // NOLINT
+    COption("emitter", "", "list<addr>", OPT_FLAG, "for log export only, export only logs if emitted by one of these address(es)"),  // NOLINT
+    COption("topic", "", "list<topic>", OPT_FLAG, "for log export only, export only logs with this topic(s)"),
     COption("clean", "", "", OPT_SWITCH, "clean (i.e. remove duplicate appearances) from all existing monitors"),
     COption("freshen", "f", "", OPT_HIDDEN | OPT_SWITCH, "freshen but do not print the exported data"),
     COption("staging", "s", "", OPT_HIDDEN | OPT_SWITCH, "enable search of staging (not yet finalized) folder"),
@@ -62,6 +62,8 @@ bool COptions::parseArguments(string_q& command) {
 
     // BEG_CODE_LOCAL_INIT
     CAddressArray addrs;
+    CAddressArray emitter;
+    CStringArray topic;
     bool freshen = false;
     blknum_t first_block = 0;
     blknum_t last_block = NOPOS;
@@ -123,19 +125,6 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-y" || arg == "--factory") {
             factory = true;
 
-        } else if (arg == "--emitter") {
-            emitter = true;
-
-        } else if (startsWith(arg, "--source:")) {
-            arg = substitute(substitute(arg, "-:", ""), "--source:", "");
-            if (!parseAddressList(this, source, arg))
-                return false;
-        } else if (arg == "--source") {
-            return flag_required("source");
-
-        } else if (arg == "--relevant") {
-            relevant = true;
-
         } else if (arg == "-U" || arg == "--count") {
             count = true;
 
@@ -150,6 +139,23 @@ bool COptions::parseArguments(string_q& command) {
                 return false;
         } else if (arg == "-e" || arg == "--max_records") {
             return flag_required("max_records");
+
+        } else if (arg == "--relevant") {
+            relevant = true;
+
+        } else if (startsWith(arg, "--emitter:")) {
+            arg = substitute(substitute(arg, "-:", ""), "--emitter:", "");
+            if (!parseAddressList(this, emitter, arg))
+                return false;
+        } else if (arg == "--emitter") {
+            return flag_required("emitter");
+
+        } else if (startsWith(arg, "--topic:")) {
+            arg = substitute(substitute(arg, "-:", ""), "--topic:", "");
+            if (!parseTopicList2(this, topic, arg))
+                return false;
+        } else if (arg == "--topic") {
+            return flag_required("topic");
 
         } else if (arg == "--clean") {
             clean = true;
@@ -228,12 +234,12 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("cache_txs", cache_txs);
     LOG_TEST_BOOL("cache_traces", cache_traces);
     LOG_TEST_BOOL("factory", factory);
-    LOG_TEST_BOOL("emitter", emitter);
-    LOG_TEST_LIST("source", source, source.empty());
-    LOG_TEST_BOOL("relevant", relevant);
     LOG_TEST_BOOL("count", count);
     LOG_TEST("first_record", first_record, (first_record == 0));
     LOG_TEST("max_records", max_records, (max_records == 250));
+    LOG_TEST_BOOL("relevant", relevant);
+    LOG_TEST_LIST("emitter", emitter, emitter.empty());
+    LOG_TEST_LIST("topic", topic, topic.empty());
     LOG_TEST_BOOL("clean", clean);
     LOG_TEST_BOOL("freshen", freshen);
     LOG_TEST_BOOL("staging", staging);
@@ -286,16 +292,16 @@ bool COptions::parseArguments(string_q& command) {
     if ((appearances + receipts + statements + logs + traces) > 1)
         return usage("Please export only one of list, receipts, statements, logs, or traces.");
 
-    if (emitter && !logs)
+    if (emitter.size() > 0 && !logs)
         return usage("The --emitter option is only available when exporting logs.");
 
-    if (!source.empty() && !logs)
-        return usage("The --source option is only available when exporting logs.");
+    if (!topics.empty() && !logs)
+        return usage("The --topic option is only available when exporting logs.");
 
     if (factory && !traces)
         return usage("The --factory option is only available when exporting traces.");
 
-    if (count && (receipts || statements || logs || traces || emitter || factory))
+    if (count && (receipts || statements || logs || traces || factory))
         return usage("--count option is only available with --appearances option.");
 
     if (accounting && (addrs.size() != 1))
@@ -309,6 +315,12 @@ bool COptions::parseArguments(string_q& command) {
 
     if (freshenOnly && (logs || traces || receipts || statements))
         return usage("Do not use the --freshen option with other options.");
+
+    for (auto e : emitter)
+        logFilter.addresses.push_back(e);
+
+    for (auto t : topic)
+        logFilter.topics.push_back(t);
 
     // Where will we start?
     blknum_t nextBlockToVisit = NOPOS;
@@ -453,12 +465,10 @@ void COptions::Init(void) {
     cache_traces = getGlobalConfig("acctExport")->getConfigBool("settings", "cache_traces", false);
     // clang-format on
     factory = false;
-    emitter = false;
-    source.clear();
-    relevant = false;
     count = false;
     first_record = 0;
     max_records = 250;
+    relevant = false;
     clean = false;
     staging = false;
     unripe = false;
@@ -514,6 +524,8 @@ COptions::COptions(void) {
     // BEG_CODE_NOTES
     // clang-format off
     notes.push_back("An `address` must start with '0x' and be forty-two characters long.");
+    notes.push_back("For the --logs option, you may optionally specify one or more --emmitter, one or more --topics, or both.");  // NOLINT
+    notes.push_back("The --logs option is significantly faster if you provide an --emitter or a --topic.");
     // clang-format on
     // END_CODE_NOTES
 
@@ -743,7 +755,7 @@ bool COptions::isEmitter(const address_t& test) const {
 
 //-----------------------------------------------------------------------
 bool COptions::wasEmittedBy(const address_t& test) const {
-    for (auto e : source)
+    for (auto e : logFilter.addresses)
         if (e == test)
             return true;
     return false;

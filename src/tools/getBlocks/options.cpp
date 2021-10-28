@@ -28,8 +28,8 @@ static const COption params[] = {
     COption("uniq", "u", "", OPT_SWITCH, "display only the list of uniq address appearances in the block"),
     COption("uniq_tx", "n", "", OPT_SWITCH, "display only the list of uniq address appearances in each transaction"),
     COption("logs", "g", "", OPT_HIDDEN | OPT_SWITCH, "display only the logs found in the block(s)"),
-    COption("topic", "p", "list<topic>", OPT_HIDDEN | OPT_FLAG, "for the --logs option only, filter logs to show only those with this topic(s)"),  // NOLINT
     COption("emitter", "m", "list<addr>", OPT_HIDDEN | OPT_FLAG, "for the --logs option only, filter logs to show only those logs emitted by the given address(es)"),  // NOLINT
+    COption("topic", "p", "list<topic>", OPT_HIDDEN | OPT_FLAG, "for the --logs option only, filter logs to show only those with this topic(s)"),  // NOLINT
     COption("count", "c", "", OPT_SWITCH, "display the number of the lists of appearances for --apps, --uniq, or --uniq_tx"),  // NOLINT
     COption("cache", "o", "", OPT_SWITCH, "force a write of the block to the cache"),
     COption("list", "l", "<blknum>", OPT_HIDDEN | OPT_FLAG, "summary list of blocks running backwards from latest block minus num"),  // NOLINT
@@ -56,8 +56,8 @@ bool COptions::parseArguments(string_q& command) {
     bool apps = false;
     bool uniq = false;
     bool uniq_tx = false;
-    CStringArray topic;
     CAddressArray emitter;
+    CStringArray topic;
     blknum_t list = NOPOS;
     // END_CODE_LOCAL_INIT
 
@@ -92,19 +92,19 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-g" || arg == "--logs") {
             logs = true;
 
-        } else if (startsWith(arg, "-p:") || startsWith(arg, "--topic:")) {
-            arg = substitute(substitute(arg, "-p:", ""), "--topic:", "");
-            if (!parseTopicList2(this, topic, arg))
-                return false;
-        } else if (arg == "-p" || arg == "--topic") {
-            return flag_required("topic");
-
         } else if (startsWith(arg, "-m:") || startsWith(arg, "--emitter:")) {
             arg = substitute(substitute(arg, "-m:", ""), "--emitter:", "");
             if (!parseAddressList(this, emitter, arg))
                 return false;
         } else if (arg == "-m" || arg == "--emitter") {
             return flag_required("emitter");
+
+        } else if (startsWith(arg, "-p:") || startsWith(arg, "--topic:")) {
+            arg = substitute(substitute(arg, "-p:", ""), "--topic:", "");
+            if (!parseTopicList2(this, topic, arg))
+                return false;
+        } else if (arg == "-p" || arg == "--topic") {
+            return flag_required("topic");
 
         } else if (arg == "-c" || arg == "--count") {
             count = true;
@@ -147,8 +147,8 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("uniq", uniq);
     LOG_TEST_BOOL("uniq_tx", uniq_tx);
     LOG_TEST_BOOL("logs", logs);
-    LOG_TEST_LIST("topic", topic, topic.empty());
     LOG_TEST_LIST("emitter", emitter, emitter.empty());
+    LOG_TEST_LIST("topic", topic, topic.empty());
     LOG_TEST_BOOL("count", count);
     LOG_TEST_BOOL("cache", cache);
     LOG_TEST("list", list, (list == NOPOS));
@@ -163,11 +163,11 @@ bool COptions::parseArguments(string_q& command) {
 
     // syntactic sugar so we deal with topics, but the option is called topic
     for (auto t : topic)
-        filter.topics.push_back(t);
+        logFilter.topics.push_back(t);
 
     // syntactic sugar so we deal with emitters, but the option is called emitter
     for (auto e : emitter)
-        filter.addresses.push_back(e);
+        logFilter.addresses.push_back(e);
 
     listOffset = contains(command, "list") ? list : NOPOS;
     filterType = (uniq_tx ? "uniq_tx" : (uniq ? "uniq" : (apps ? "apps" : "")));
@@ -190,7 +190,7 @@ bool COptions::parseArguments(string_q& command) {
     if (blocks.empty() && listOffset == NOPOS)
         return usage(usageErrs[ERR_ATLEASTONEBLOCK]);
 
-    if ((!filter.addresses.empty() || !filter.topics.empty()))
+    if ((!logFilter.addresses.empty() || !logFilter.topics.empty()))
         if (!logs)
             return usage(usageErrs[ERR_EMTOPONLYWITHLOG]);
 
@@ -278,7 +278,7 @@ void COptions::Init(void) {
     addrCounter = 0;
     listOffset = NOPOS;
     blocks.Init();
-    filter = CLogFilter();
+    logFilter = CLogFilter();
     CBlockOptions::Init();
 }
 

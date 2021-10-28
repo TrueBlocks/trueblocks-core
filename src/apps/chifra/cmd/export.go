@@ -46,7 +46,9 @@ var longExport = `Purpose:
 
 var notesExport = `
 Notes:
-  - An address must start with '0x' and be forty-two characters long.`
+  - An address must start with '0x' and be forty-two characters long.
+  - For the --logs option, you may optionally specify one or more --emmitter, one or more --topics, or both.
+  - The --logs option is significantly faster if you provide an --emitter or a --topic.`
 
 type exportOptionsType struct {
 	appearances  bool
@@ -59,12 +61,12 @@ type exportOptionsType struct {
 	cache_txs    bool
 	cache_traces bool
 	factory      bool
-	emitter      bool
-	source       []string
-	relevant     bool
 	count        bool
 	first_record uint64
 	max_records  uint64
+	relevant     bool
+	emitter      []string
+	topic        []string
 	clean        bool
 	freshen      bool
 	staging      bool
@@ -96,12 +98,12 @@ func init() {
 	exportCmd.Flags().BoolVarP(&ExportOpts.cache_txs, "cache_txs", "i", false, "write transactions to the cache (see notes)")
 	exportCmd.Flags().BoolVarP(&ExportOpts.cache_traces, "cache_traces", "R", false, "write traces to the cache (see notes)")
 	exportCmd.Flags().BoolVarP(&ExportOpts.factory, "factory", "y", false, "scan for contract creations from the given address(es) and report address of those contracts")
-	exportCmd.Flags().BoolVarP(&ExportOpts.emitter, "emitter", "", false, "for log export only, export only if one of the given export addresses emitted the event")
-	exportCmd.Flags().StringSliceVarP(&ExportOpts.source, "source", "", nil, "for log export only, export only one of these addresses emitted the event")
-	exportCmd.Flags().BoolVarP(&ExportOpts.relevant, "relevant", "", false, "for log and accounting export only, if true export only logs relevant to one of the given export addresses")
 	exportCmd.Flags().BoolVarP(&ExportOpts.count, "count", "U", false, "only available for --appearances mode, if present, return only the number of records")
 	exportCmd.Flags().Uint64VarP(&ExportOpts.first_record, "first_record", "c", 0, "the first record to process")
 	exportCmd.Flags().Uint64VarP(&ExportOpts.max_records, "max_records", "e", 250, "the maximum number of records to process before reporting")
+	exportCmd.Flags().BoolVarP(&ExportOpts.relevant, "relevant", "", false, "for log and accounting export only, export only logs relevant to one of the given export addresses")
+	exportCmd.Flags().StringSliceVarP(&ExportOpts.emitter, "emitter", "", nil, "for log export only, export only logs if emitted by one of these address(es)")
+	exportCmd.Flags().StringSliceVarP(&ExportOpts.topic, "topic", "", nil, "for log export only, export only logs with this topic(s)")
 	exportCmd.Flags().BoolVarP(&ExportOpts.clean, "clean", "", false, "clean (i.e. remove duplicate appearances) from all existing monitors")
 	exportCmd.Flags().BoolVarP(&ExportOpts.freshen, "freshen", "f", false, "freshen but do not print the exported data (hidden)")
 	exportCmd.Flags().BoolVarP(&ExportOpts.staging, "staging", "s", false, "enable search of staging (not yet finalized) folder (hidden)")

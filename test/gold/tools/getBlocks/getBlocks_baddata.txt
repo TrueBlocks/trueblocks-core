@@ -14,8 +14,8 @@ Flags:
   -u, --uniq              display only the list of uniq address appearances in the block
   -n, --uniq_tx           display only the list of uniq address appearances in each transaction
   -g, --logs              display only the logs found in the block(s) (hidden)
-  -p, --topic strings     for the --logs option only, filter logs to show only those with this topic(s) (hidden)
   -m, --emitter strings   for the --logs option only, filter logs to show only those logs emitted by the given address(es) (hidden)
+  -p, --topic strings     for the --logs option only, filter logs to show only those with this topic(s) (hidden)
   -c, --count             display the number of the lists of appearances for --apps, --uniq, or --uniq_tx
   -o, --cache             force a write of the block to the cache
   -l, --list uint         summary list of blocks running backwards from latest block minus num (hidden)

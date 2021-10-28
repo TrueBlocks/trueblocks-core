@@ -1,4 +1,4 @@
-chifra export  0xbb9bc244d798123fde783fcc1c72d3bb8c189413 --first_block 1429283 --last_block 1429468 --logs --fmt csv --emitter
+chifra export  0xbb9bc244d798123fde783fcc1c72d3bb8c189413 --first_block 1429283 --last_block 1429468 --logs --fmt csv --emitter 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
 "blocknumber","transactionindex","logindex","address","topic0","topic1","topic2","topic3","data","type","compressedlog","timestamp"
 "1429283","0","0","0xbb9bc244d798123fde783fcc1c72d3bb8c189413","0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925","0x000000000000000000000000ac039da3add6efb42d47b6ea21f7feca82091236","0x000000000000000000000000fbb1b73c4f0bda4f67dca266ce6ef42f520fbb98","","0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff","","","1461988055"
 "1429283","2","1","0xbb9bc244d798123fde783fcc1c72d3bb8c189413","0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925","0x0000000000000000000000000faf56cad156ac317ff5c3f352e83999e4e30f12","0x000000000000000000000000fbb1b73c4f0bda4f67dca266ce6ef42f520fbb98","","0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff","","","1461988055"
