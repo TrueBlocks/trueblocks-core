@@ -6,6 +6,7 @@ import (
 	"bytes"
 	"compress/gzip"
 	"context"
+	"errors"
 	"fmt"
 	"io"
 	"io/ioutil"
@@ -134,6 +135,9 @@ func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkType ChunkType, pro
 			}
 
 			download, err := fetchChunk(url)
+			if errors.Is(ctx.Err(), context.Canceled) {
+				return
+			}
 			if ctx.Err() != nil {
 				progressChannel <- &ChunkProgress{
 					Pin:     &pin,
@@ -181,20 +185,24 @@ func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkType ChunkType, pro
 				Pin:   res.Pin,
 				Event: ProgressUnzipping,
 			}
+
 			err := saveFileContents(res, cacheLayout)
-
-			if err == sigintTrap.ErrInterrupted {
-				// User pressed Ctrl-C
-				cancel()
-				return
-			}
-
 			if err != nil && err != sigintTrap.ErrInterrupted {
 				progressChannel <- &ChunkProgress{
 					Pin:     res.Pin,
 					Event:   ProgressError,
 					Message: err.Error(),
 				}
+				return
+			}
+			if err == sigintTrap.ErrInterrupted {
+				// User pressed Ctrl-C
+				cancel()
+			}
+
+			progressChannel <- &ChunkProgress{
+				Pin:   res.Pin,
+				Event: ProgressDone,
 			}
 		}
 	})
@@ -228,8 +236,7 @@ func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkType ChunkType, pro
 
 	writeWg.Wait()
 	progressChannel <- &ChunkProgress{
-		Event:   ProgressAllDone,
-		Message: fmt.Sprint(len(pins)),
+		Event: ProgressAllDone,
 	}
 }
 
@@ -238,7 +245,6 @@ func saveFileContents(res *jobResult, cacheLayout *CacheLayout) error {
 	// Postpone Ctrl-C
 	trapChannel := sigintTrap.Enable()
 	defer sigintTrap.Disable(trapChannel)
-
 	// We load content to the buffer first to check its size
 	buffer := &bytes.Buffer{}
 	read, err := buffer.ReadFrom(res.contents)

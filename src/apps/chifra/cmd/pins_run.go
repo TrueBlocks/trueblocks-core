@@ -150,9 +150,11 @@ func downloadAndReportProgress(pins []manifest.PinDescriptor, chunkType chunk.Ch
 		chunk.ProgressError:       "Error",
 	}
 
+	var pinsDone uint
+
 	for event := range progress {
 		if event.Event == chunk.ProgressAllDone {
-			logger.Log(logger.Info, event.Message, "pin(s) were (re)initialized")
+			logger.Log(logger.Info, pinsDone, "pin(s) were (re)initialized")
 			break
 		}
 
@@ -162,6 +164,11 @@ func downloadAndReportProgress(pins []manifest.PinDescriptor, chunkType chunk.Ch
 
 		if event.Event == chunk.ProgressDownloading {
 			logger.Log(logger.Info, "Unchaining", chunkTypeToDescription[chunkType], event.Message, "to", event.Pin.FileName)
+			continue
+		}
+
+		if event.Event == chunk.ProgressDone {
+			pinsDone++
 			continue
 		}
 
