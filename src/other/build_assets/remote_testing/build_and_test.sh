@@ -24,7 +24,7 @@ export PATH=$(pwd)/../bin:$(pwd)/../bin/test:$PATH
 if $RUN_SERVER
 then
 
-    if [ -n "$(pgrep -u $USER flame)" ]
+    if [ -n "$(pgrep flame)" ]
     then
         echo "Error: Chifra serve is already running"
         exit 1
