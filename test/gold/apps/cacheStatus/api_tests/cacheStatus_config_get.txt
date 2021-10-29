@@ -201,7 +201,7 @@
           "name": "settings",
           "keys": [
             {
-              "name": "cache_txs",
+              "name": "cache",
               "value": "--write Txs--",
               "type": "bool",
               "tip": "write transactions to the TrueBlocks binary cache",

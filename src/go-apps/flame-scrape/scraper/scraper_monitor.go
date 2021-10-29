@@ -99,7 +99,7 @@ func RunMonitorScraper(wg sync.WaitGroup) {
 /*
 	ostringstream os;
     os << "acctExport ";
-    os << (opt->cache_txs ? "--cache_txs " : "");
+    os << (opt->cache ? "--cache " : "");
     os << (opt->cache_traces ? "--cache_traces " : "");
     os << (opt->staging ? "--staging " : "");
     os << (opt->unripe ? "--unripe " : "");

@@ -30,7 +30,7 @@ static const COption params[] = {
     COption("traces", "t", "", OPT_SWITCH, "export traces instead of transaction list"),
     COption("accounting", "C", "", OPT_SWITCH, "export accounting records instead of transaction list"),
     COption("articulate", "a", "", OPT_SWITCH, "articulate transactions, traces, logs, and outputs"),
-    COption("cache_txs", "i", "", OPT_SWITCH, "write transactions to the cache (see notes)"),
+    COption("cache", "i", "", OPT_SWITCH, "write transactions to the cache (see notes)"),
     COption("cache_traces", "R", "", OPT_SWITCH, "write traces to the cache (see notes)"),
     COption("factory", "y", "", OPT_SWITCH, "scan for contract creations from the given address(es) and report address of those contracts"),  // NOLINT
     COption("count", "U", "", OPT_SWITCH, "only available for --appearances mode, if present, return only the number of records"),  // NOLINT
@@ -103,6 +103,8 @@ bool COptions::parseArguments(string_q& command) {
     for (auto arg : arguments) {
         if (false) {
             // do nothing -- make auto code generation easier
+        } else if (arg == "--cache_tx") {
+            cache = true;
             // BEG_CODE_AUTO
         } else if (arg == "-p" || arg == "--appearances") {
             appearances = true;
@@ -125,8 +127,8 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-a" || arg == "--articulate") {
             articulate = true;
 
-        } else if (arg == "-i" || arg == "--cache_txs") {
-            cache_txs = true;
+        } else if (arg == "-i" || arg == "--cache") {
+            cache = true;
 
         } else if (arg == "-R" || arg == "--cache_traces") {
             cache_traces = true;
@@ -249,7 +251,7 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("traces", traces);
     LOG_TEST_BOOL("accounting", accounting);
     LOG_TEST_BOOL("articulate", articulate);
-    LOG_TEST_BOOL("cache_txs", cache_txs);
+    LOG_TEST_BOOL("cache", cache);
     LOG_TEST_BOOL("cache_traces", cache_traces);
     LOG_TEST_BOOL("factory", factory);
     LOG_TEST_BOOL("count", count);
@@ -417,8 +419,8 @@ bool COptions::parseArguments(string_q& command) {
     if (isTestMode() && (staging || unripe))
         return usage("--staging and --unripe are disabled for testing.");
 
-    if (unripe && (cache_txs || cache_traces)) {
-        cache_txs = cache_traces = false;
+    if (unripe && (cache || cache_traces)) {
+        cache = cache_traces = false;
         LOG_INFO("Turning off caching for unripe blocks.");
     }
 
@@ -494,7 +496,7 @@ void COptions::Init(void) {
     accounting = false;
     articulate = false;
     // clang-format off
-    cache_txs = getGlobalConfig("acctExport")->getConfigBool("settings", "cache_txs", false);
+    cache = getGlobalConfig("acctExport")->getConfigBool("settings", "cache", false);
     cache_traces = getGlobalConfig("acctExport")->getConfigBool("settings", "cache_traces", false);
     // clang-format on
     factory = false;
@@ -514,6 +516,9 @@ void COptions::Init(void) {
     max_traces = getGlobalConfig("acctExport")->getConfigInt("settings", "max_traces", 250);
     // clang-format on
     // END_CODE_INIT
+
+    if (!cache && getGlobalConfig("acctExport")->getConfigBool("settings", "cache_txs", false))
+        cache = true;  // backwards compat
 
     bp = getBlockProgress(BP_ALL);
     listRange = make_pair(0, NOPOS);
@@ -563,7 +568,7 @@ COptions::COptions(void) {
     // END_CODE_NOTES
 
     // clang-format off
-    configs.push_back("`cache_txs`: write transactions to the cache (see notes).");
+    configs.push_back("`cache`: write transactions to the cache (see notes).");
     configs.push_back("`cache_traces`: write traces to the cache (see notes).");
     configs.push_back("`skip_ddos`: toggle skipping over 2016 dDos transactions ('on' by default).");
     configs.push_back("`max_traces`: if --skip_ddos is on, this many traces defines what a ddos transaction | is (default = 250).");  // NOLINT

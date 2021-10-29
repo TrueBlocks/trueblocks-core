@@ -21,7 +21,7 @@ Flags:
   -t, --traces               export traces instead of transaction list
   -C, --accounting           export accounting records instead of transaction list
   -a, --articulate           articulate transactions, traces, logs, and outputs
-  -i, --cache_txs            write transactions to the cache (see notes)
+  -i, --cache                write transactions to the cache (see notes)
   -R, --cache_traces         write traces to the cache (see notes)
   -y, --factory              scan for contract creations from the given address(es) and report address of those contracts
   -U, --count                only available for --appearances mode, if present, return only the number of records

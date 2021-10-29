@@ -58,7 +58,7 @@ type exportOptionsType struct {
 	traces       bool
 	accounting   bool
 	articulate   bool
-	cache_txs    bool
+	cache        bool
 	cache_traces bool
 	factory      bool
 	count        bool
@@ -95,7 +95,7 @@ func init() {
 	exportCmd.Flags().BoolVarP(&ExportOpts.traces, "traces", "t", false, "export traces instead of transaction list")
 	exportCmd.Flags().BoolVarP(&ExportOpts.accounting, "accounting", "C", false, "export accounting records instead of transaction list")
 	exportCmd.Flags().BoolVarP(&ExportOpts.articulate, "articulate", "a", false, "articulate transactions, traces, logs, and outputs")
-	exportCmd.Flags().BoolVarP(&ExportOpts.cache_txs, "cache_txs", "i", false, "write transactions to the cache (see notes)")
+	exportCmd.Flags().BoolVarP(&ExportOpts.cache, "cache", "i", false, "write transactions to the cache (see notes)")
 	exportCmd.Flags().BoolVarP(&ExportOpts.cache_traces, "cache_traces", "R", false, "write traces to the cache (see notes)")
 	exportCmd.Flags().BoolVarP(&ExportOpts.factory, "factory", "y", false, "scan for contract creations from the given address(es) and report address of those contracts")
 	exportCmd.Flags().BoolVarP(&ExportOpts.count, "count", "U", false, "only available for --appearances mode, if present, return only the number of records")

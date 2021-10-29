@@ -34,7 +34,7 @@ class COptions : public CAbiOptions {
     bool traces;
     bool accounting;
     bool articulate;
-    bool cache_txs;
+    bool cache;
     bool cache_traces;
     bool factory;
     bool count;

@@ -10,7 +10,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 10240,apps,Accounts,export,acctExport,traces,t,,false,false,true,true,header,switch,<boolean>,export traces instead of transaction list
 10280,apps,Accounts,export,acctExport,accounting,C,,false,false,true,true,header,switch,<boolean>,export accounting records instead of transaction list
 10310,apps,Accounts,export,acctExport,articulate,a,,false,false,true,true,header,switch,<boolean>,articulate transactions&#44; traces&#44; logs&#44; and outputs
-10320,apps,Accounts,export,acctExport,cache_txs,i,false,false,true,true,true,header,switch,<boolean>,write transactions to the cache (see notes)
+10320,apps,Accounts,export,acctExport,cache,i,false,false,true,true,true,header,switch,<boolean>,write transactions to the cache (see notes)
 10330,apps,Accounts,export,acctExport,cache_traces,R,false,false,true,true,true,header,switch,<boolean>,write traces to the cache (see notes)
 10332,apps,Accounts,export,acctExport,factory,y,false,false,false,true,false,header,switch,<boolean>,scan for contract creations from the given address(es) and report address of those contracts
 10334,apps,Accounts,export,acctExport,count,U,,false,false,true,true,header,switch,<boolean>,only available for --appearances mode&#44; if present&#44; return only the number of records

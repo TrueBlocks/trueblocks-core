@@ -65,8 +65,8 @@ func runExport(cmd *cobra.Command, args []string) {
 	if ExportOpts.articulate {
 		options += " --articulate"
 	}
-	if ExportOpts.cache_txs {
-		options += " --cache_txs"
+	if ExportOpts.cache {
+		options += " --cache"
 	}
 	if ExportOpts.cache_traces {
 		options += " --cache_traces"

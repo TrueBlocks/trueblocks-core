@@ -247,7 +247,7 @@ paths:
           explode: true
           schema:
             type: boolean
-        - name: cache_txs
+        - name: cache
           description: write transactions to the cache (see notes)
           required: false
           style: form

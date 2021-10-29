@@ -243,7 +243,7 @@ bool loadTx_Func(CTraverser* trav, void* data) {
     dirty |= opt->articulateAll(trav->trans);
 
     // TODO(tjayrush): This could be in post_Func so that other functions can also make it dirty
-    if (opt->cache_txs && dirty) {
+    if (opt->cache && dirty) {
         opt->stats.nCacheWrites++;
         // if the node is behind the index, this will sometimes happen - don't write in that case
         if (!trav->trans.hash.empty()) {
