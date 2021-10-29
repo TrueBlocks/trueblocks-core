@@ -211,7 +211,7 @@ bool COptions::parseArguments(string_q& command) {
     if (articulate && !logs)
         return usage(usageErrs[ERR_ARTWITHOUTLOGS]);
 
-    if (big_range != 5000 && !logs)
+    if (big_range != 500 && !logs)
         return usage(usageErrs[ERR_RANGENOLOGS]);
     big_range = max(big_range, uint64_t(50));
 

@@ -79,7 +79,7 @@ func runBlocks(cmd *cobra.Command, args []string) {
 	if BlocksOpts.articulate {
 		options += " --articulate"
 	}
-	if BlocksOpts.big_range != 5000 {
+	if BlocksOpts.big_range != 500 {
 		options += " --big_range " + fmt.Sprintf("%d", BlocksOpts.big_range)
 	}
 	if BlocksOpts.count {
