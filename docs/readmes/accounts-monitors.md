@@ -19,7 +19,7 @@ Arguments:
 Flags:
   -p, --appearances   export a list of appearances
   -U, --count         present only the number of records
-      --clean         clean (i.e. remove duplicate appearances) from all existing monitors
+      --clean         clean (i.e. remove duplicate appearances) from monitors
 
 Global Flags:
   -x, --fmt string   export format, one of [none|json*|txt|csv|api]
@@ -28,6 +28,7 @@ Global Flags:
 
 Notes:
   - An address must start with '0x' and be forty-two characters long.
+  - If no address is presented to the --clean command, all monitors will be cleaned.
 ```
 
 **Source code**: [`apps/acctExport`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/acctExport)

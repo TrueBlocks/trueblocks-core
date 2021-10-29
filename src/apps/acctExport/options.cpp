@@ -50,6 +50,9 @@ static const COption params[] = {
     COption("first_block", "F", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive)"),
     COption("last_block", "L", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive)"),
     COption("", "", "", OPT_DESCRIPTION, "Export full detail of transactions for one or more addresses."),
+    COption("delete", "", "", OPT_HIDDEN | OPT_SWITCH, "delete a monitor, but do not remove it"),
+    COption("remove", "", "", OPT_HIDDEN | OPT_SWITCH, "remove a previously deleted monitor"),
+    COption("undelete", "", "", OPT_HIDDEN | OPT_SWITCH, "undelete a previously deleted monitor"),
     // clang-format on
     // END_CODE_OPTIONS
 };
@@ -60,6 +63,8 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
+    replaceAll(command, "--delete", "--deleteMe");
+
     // BEG_CODE_LOCAL_INIT
     CAddressArray addrs;
     CTopicArray topics;
@@ -68,6 +73,9 @@ bool COptions::parseArguments(string_q& command) {
     bool freshen = false;
     blknum_t first_block = 0;
     blknum_t last_block = NOPOS;
+    bool deleteMe = false;
+    bool remove = false;
+    bool undelete = false;
     // END_CODE_LOCAL_INIT
 
     blknum_t latest = bp.client;
@@ -199,6 +207,15 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-L" || arg == "--last_block") {
             return flag_required("last_block");
 
+        } else if (arg == "--deleteMe") {
+            deleteMe = true;
+
+        } else if (arg == "--remove") {
+            remove = true;
+
+        } else if (arg == "--undelete") {
+            undelete = true;
+
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
@@ -253,7 +270,19 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST("max_traces", max_traces, (max_traces == 250));
     LOG_TEST("first_block", first_block, (first_block == 0));
     LOG_TEST("last_block", last_block, (last_block == NOPOS));
+    LOG_TEST_BOOL("deleteMe", deleteMe);
+    LOG_TEST_BOOL("remove", remove);
+    LOG_TEST_BOOL("undelete", undelete);
     // END_DEBUG_DISPLAY
+
+    if (deleteMe)
+        crudCommands.push_back("delete");
+
+    if (undelete)
+        crudCommands.push_back("undelete");
+
+    if (remove)
+        crudCommands.push_back("remove");
 
     if (Mocked(""))
         return false;
@@ -452,7 +481,7 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
-    registerOptions(nParams, params, OPT_PREFUND | OPT_CRUD);
+    registerOptions(nParams, params, OPT_PREFUND);
     // Since we need prefunds, let's load the names library here
     loadNames();
 

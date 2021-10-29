@@ -47,11 +47,6 @@ type rootOptTypes struct {
 	file       string
 	version    bool
 	noop       bool
-	create     bool
-	delete     bool
-	update     bool
-	remove     bool
-	undelete   bool
 }
 
 var RootOpts rootOptTypes
@@ -87,21 +82,6 @@ func init() {
 
 	rootCmd.PersistentFlags().BoolVarP(&RootOpts.noop, "noop", "", false, "")
 	rootCmd.PersistentFlags().MarkHidden("noop")
-
-	rootCmd.PersistentFlags().BoolVarP(&RootOpts.create, "create", "", false, "")
-	rootCmd.PersistentFlags().MarkHidden("create")
-
-	rootCmd.PersistentFlags().BoolVarP(&RootOpts.delete, "delete", "", false, "")
-	rootCmd.PersistentFlags().MarkHidden("delete")
-
-	rootCmd.PersistentFlags().BoolVarP(&RootOpts.update, "update", "", false, "")
-	rootCmd.PersistentFlags().MarkHidden("update")
-
-	rootCmd.PersistentFlags().BoolVarP(&RootOpts.remove, "remove", "", false, "")
-	rootCmd.PersistentFlags().MarkHidden("remove")
-
-	rootCmd.PersistentFlags().BoolVarP(&RootOpts.undelete, "undelete", "", false, "")
-	rootCmd.PersistentFlags().MarkHidden("undelete")
 
 	rootCmd.PersistentFlags().UintVarP(&RootOpts.logLevel, "log_level", "", 0, "")
 	rootCmd.PersistentFlags().MarkHidden("log_level")
@@ -223,21 +203,6 @@ func PassItOn(path string, flags, arguments string) {
 	options := flags
 	if RootOpts.raw {
 		options += " --raw"
-	}
-	if RootOpts.create {
-		options += " --create"
-	}
-	if RootOpts.delete {
-		options += " --delete"
-	}
-	if RootOpts.update {
-		options += " --update"
-	}
-	if RootOpts.remove {
-		options += " --remove"
-	}
-	if RootOpts.undelete {
-		options += " --undelete"
 	}
 	// if RootOpts.noop {
 	// 	options += " --noop"

@@ -47,14 +47,20 @@ func runMonitors(cmd *cobra.Command, args []string) {
 	if MonitorsOpts.clean {
 		options += " --clean"
 	}
-	if MonitorsOpts.freshen {
-		options += " --freshen"
-	}
 	if MonitorsOpts.first_block > 0 {
 		options += " --first_block " + fmt.Sprintf("%d", MonitorsOpts.first_block)
 	}
 	if MonitorsOpts.last_block > 0 {
 		options += " --last_block " + fmt.Sprintf("%d", MonitorsOpts.last_block)
+	}
+	if MonitorsOpts.delete {
+		options += " --delete"
+	}
+	if MonitorsOpts.remove {
+		options += " --remove"
+	}
+	if MonitorsOpts.undelete {
+		options += " --undelete"
 	}
 	arguments := ""
 	for _, arg := range args {

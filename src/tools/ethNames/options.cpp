@@ -33,6 +33,11 @@ static const COption params[] = {
     COption("to_custom", "u", "", OPT_HIDDEN | OPT_SWITCH, "for editCmd only, is the edited name a custom name or not"),
     COption("clean", "C", "", OPT_HIDDEN | OPT_SWITCH, "clean the data (addrs to lower case, sort by addr)"),
     COption("autoname", "A", "<string>", OPT_HIDDEN | OPT_FLAG, "an address assumed to be a token, added automatically to names database if true"),  // NOLINT
+    COption("create", "", "", OPT_HIDDEN | OPT_SWITCH, "create a new name record"),
+    COption("delete", "", "", OPT_HIDDEN | OPT_SWITCH, "delete a name, but do not remove it"),
+    COption("update", "", "", OPT_HIDDEN | OPT_SWITCH, "edit an existing name"),
+    COption("remove", "", "", OPT_HIDDEN | OPT_SWITCH, "remove a previously deleted name"),
+    COption("undelete", "", "", OPT_HIDDEN | OPT_SWITCH, "undelete a previously deleted name"),
     COption("", "", "", OPT_DESCRIPTION, "Query addresses or names of well known accounts."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -46,6 +51,8 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
+    replaceAll(command, "--delete", "--deleteMe");
+
     // BEG_CODE_LOCAL_INIT
     CStringArray terms;
     bool expand = false;
@@ -57,6 +64,11 @@ bool COptions::parseArguments(string_q& command) {
     bool to_custom = false;
     bool clean = false;
     string_q autoname = "";
+    bool create = false;
+    bool deleteMe = false;
+    bool update = false;
+    bool remove = false;
+    bool undelete = false;
     // END_CODE_LOCAL_INIT
 
     string_q format;
@@ -109,6 +121,21 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-A" || arg == "--autoname") {
             return flag_required("autoname");
 
+        } else if (arg == "--create") {
+            create = true;
+
+        } else if (arg == "--deleteMe") {
+            deleteMe = true;
+
+        } else if (arg == "--update") {
+            update = true;
+
+        } else if (arg == "--remove") {
+            remove = true;
+
+        } else if (arg == "--undelete") {
+            undelete = true;
+
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
@@ -137,46 +164,66 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("to_custom", to_custom);
     LOG_TEST_BOOL("clean", clean);
     LOG_TEST("autoname", autoname, (autoname == ""));
+    LOG_TEST_BOOL("create", create);
+    LOG_TEST_BOOL("deleteMe", deleteMe);
+    LOG_TEST_BOOL("update", update);
+    LOG_TEST_BOOL("remove", remove);
+    LOG_TEST_BOOL("undelete", undelete);
     // END_DEBUG_DISPLAY
+
+    if (create)
+        crudCommands.push_back("create");
+
+    if (update)
+        crudCommands.push_back("update");
+
+    if (deleteMe)
+        crudCommands.push_back("delete");
+
+    if (undelete)
+        crudCommands.push_back("undelete");
+
+    if (remove)
+        crudCommands.push_back("remove");
 
     if (Mocked((tags ? "tags" : collections ? "collections" : "names")))
         return false;
+
+    if (!autoname.empty() && (!isAddress(autoname) || isZeroAddr(autoname)))
+        return usage("You must provide an address to the --autoname option.");
 
     // for (auto& term : terms)
     //     if (endsWith(term, ".eth"))
     //         term = addressFromENSName(term);
 
-    if (clean || isCrudCommand() || !autoname.empty()) {
+    if (clean) {
         abi_spec.loadAbisFromKnown(true);
-        if (clean) {
-            return handle_clean();
-        } else if (!autoname.empty()) {
-            if (!isAddress(autoname) || isZeroAddr(autoname))
-                return usage("You must provide an address to the --autoname option.");
-            crudCommands.push_back("create");
-            terms.push_back(autoname);
-            ::setenv("TB_NAME_NAME", autoname.c_str(), true);
-            ::setenv("TB_NAME_TAG", "50-Tokens:ERC20", true);
-            ::setenv("TB_NAME_SOURCE", "TrueBlocks.io", true);
-            ::setenv("TB_NAME_SYMBOL", "", true);
-            ::setenv("TB_NAME_DECIMALS", "18", true);
-            ::setenv("TB_NAME_DESCR", "", true);
-            ::setenv("TB_NAME_CUSTOM", "false", true);
-            if (!handle_editcmds(terms, false /* to_custom */, true /* autoname */))  // returns true on success
-                return false;
+        return handle_clean();
+    }
 
-        } else if (isCrudCommand()) {
-            address_t address = toLower(trim(getEnvStr("TB_NAME_ADDRESS"), '\"'));
-            if (address.empty() && !terms.empty())
-                address = terms[0];
-            if (!isAddress(address) || isZeroAddr(address))
-                return usage("You must provide an address to crud commands.");
-            if (!handle_editcmds(terms, to_custom /* to_custom */, false /* autoname */))  // returns true on success
-                return false;
+    if (isCrudCommand()) {
+        abi_spec.loadAbisFromKnown(true);
+        address_t address = toLower(trim(getEnvStr("TB_NAME_ADDRESS"), '\"'));
+        if (address.empty() && !terms.empty())
+            address = terms[0];
+        if (!isAddress(address) || isZeroAddr(address))
+            return usage("You must provide an address to crud commands.");
+        if (!handle_editcmds(terms, to_custom, false))  // returns true on success
+            return false;
 
-        } else {
-            return usage("Invalid crud command.");
-        }
+    } else if (!autoname.empty()) {
+        abi_spec.loadAbisFromKnown(true);
+        crudCommands.push_back("create");
+        terms.push_back(autoname);
+        ::setenv("TB_NAME_NAME", autoname.c_str(), true);
+        ::setenv("TB_NAME_TAG", "50-Tokens:ERC20", true);
+        ::setenv("TB_NAME_SOURCE", "TrueBlocks.io", true);
+        ::setenv("TB_NAME_SYMBOL", "", true);
+        ::setenv("TB_NAME_DECIMALS", "18", true);
+        ::setenv("TB_NAME_DESCR", "", true);
+        ::setenv("TB_NAME_CUSTOM", "false", true);
+        if (!handle_editcmds(terms, false, true))  // returns true on success
+            return false;
     }
 
     for (auto term : terms)
@@ -287,7 +334,7 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
-    registerOptions(nParams, params, OPT_PREFUND | OPT_CRUD);
+    registerOptions(nParams, params, OPT_PREFUND);
 
     // BEG_CODE_INIT
     match_case = false;

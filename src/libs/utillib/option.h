@@ -33,7 +33,6 @@ namespace qblocks {
 #define OPT_RAW (1 << 11)
 #define OPT_PREFUND (1 << 12)
 #define OPT_OUTPUT (1 << 13)
-#define OPT_CRUD (1 << 14)
 #define OPT_MOCKDATA (1 << 21)
 #define OPT_CHECKLATEST (1 << 21)
 #define OPT_DENOM (OPT_DOLLARS | OPT_WEI | OPT_ETHER)

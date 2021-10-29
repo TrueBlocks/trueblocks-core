@@ -93,6 +93,7 @@ bool visitEnumItem2(string_q& item, void* data) {
 string_q get_use(const CCommandOption& cmd) {
     ostringstream arguments;
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
+        replace(p.longName, "deleteMe", "delete");
         if (p.option_type == "positional") {
             if (arguments.str().empty())
                 arguments << endl << "Arguments:" << endl;
@@ -143,11 +144,14 @@ string_q get_notes2(const CCommandOption& cmd) {
 string_q get_optfields(const CCommandOption& cmd) {
     size_t wid = 0;
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
-        if (p.option_type != "positional")
+        replace(p.longName, "deleteMe", "delete");
+        if (p.option_type != "positional") {
             wid = max(p.longName.length(), wid);
+        }
     }
     ostringstream os;
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
+        replace(p.longName, "deleteMe", "delete");
         if (p.option_type != "positional")
             os << "\t" << padRight(p.longName, wid) << " " << p.go_type << endl;
     }
@@ -209,6 +213,7 @@ string_q get_hidden2(const CCommandOption& cmd) {
 string_q get_hidden(const CCommandOption& cmd) {
     ostringstream os;
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
+        replace(p.longName, "deleteMe", "delete");
         if (!p.is_visible) {
             os << "\t\t[{ROUTE}]Cmd.Flags().MarkHidden(\"" + p.Format("[{LONGNAME}]") + "\")" << endl;
         }
@@ -242,6 +247,7 @@ string_q get_setopts(const CCommandOption& cmd) {
             os << "\t[{ROUTE}]Cmd.Flags().";
             os << p.go_flagtype;
             os << "(&[{PROPER}]Opts.";
+            replace(p.longName, "deleteMe", "delete");
             os << p.Format("[{LONGNAME}], ");
             os << p.Format("\"[{LONGNAME}]\", ");
             os << p.Format("\"[{HOTKEY}]\", ");
@@ -256,6 +262,7 @@ string_q get_setopts(const CCommandOption& cmd) {
 string_q get_copyopts(const CCommandOption& cmd) {
     ostringstream os;
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
+        replace(p.longName, "deleteMe", "delete");
         if (p.option_type != "positional" && !p.isDeprecated) {
             if (p.go_type == "[]string") {
                 os << "\tfor _, t := range [{PROPER}]Opts." << p.longName << " {" << endl;

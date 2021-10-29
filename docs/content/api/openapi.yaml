@@ -418,7 +418,31 @@ paths:
           schema:
             type: boolean
         - name: clean
-          description: clean (i.e. remove duplicate appearances) from all existing monitors
+          description: clean (i.e. remove duplicate appearances) from monitors
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: delete
+          description: delete a monitor, but do not remove it
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: remove
+          description: remove a previously deleted monitor
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: undelete
+          description: undelete a previously deleted monitor
           required: false
           style: form
           in: query
@@ -525,6 +549,46 @@ paths:
             type: boolean
         - name: tags
           description: export the list of tags and subtags only
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: create
+          description: create a new name record
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: delete
+          description: delete a name, but do not remove it
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: update
+          description: edit an existing name
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: remove
+          description: remove a previously deleted name
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: undelete
+          description: undelete a previously deleted name
           required: false
           style: form
           in: query

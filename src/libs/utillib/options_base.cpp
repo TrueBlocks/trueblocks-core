@@ -368,21 +368,6 @@ bool COptionsBase::standardOptions(string_q& cmdLine) {
         isRaw = true;
     }
 
-    if (isEnabled(OPT_CRUD)) {
-        CStringArray validCruds;
-        validCruds.push_back("--create ");
-        validCruds.push_back("--update ");
-        validCruds.push_back("--delete ");
-        validCruds.push_back("--undelete ");
-        validCruds.push_back("--remove ");
-        for (const string_q& cmd : validCruds) {
-            if (contains(cmdLine, cmd)) {
-                replaceAll(cmdLine, cmd, "");
-                crudCommands.push_back(trim(substitute(cmd, "--", "")));
-            }
-        }
-    }
-
     if (isEnabled(OPT_MOCKDATA) && contains(cmdLine, "--mocked ")) {
         replaceAll(cmdLine, "--mocked ", "");
         mocked = true;

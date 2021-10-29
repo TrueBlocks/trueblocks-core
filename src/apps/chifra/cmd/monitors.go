@@ -44,15 +44,18 @@ var longMonitors = `Purpose:
 
 var notesMonitors = `
 Notes:
-  - An address must start with '0x' and be forty-two characters long.`
+  - An address must start with '0x' and be forty-two characters long.
+  - If no address is presented to the --clean command, all monitors will be cleaned.`
 
 type monitorsOptionsType struct {
 	appearances bool
 	count       bool
 	clean       bool
-	freshen     bool
 	first_block uint64
 	last_block  uint64
+	delete      bool
+	remove      bool
+	undelete    bool
 }
 
 var MonitorsOpts monitorsOptionsType
@@ -64,14 +67,18 @@ func init() {
 	monitorsCmd.PersistentFlags().SortFlags = false
 	monitorsCmd.Flags().BoolVarP(&MonitorsOpts.appearances, "appearances", "p", false, "export a list of appearances")
 	monitorsCmd.Flags().BoolVarP(&MonitorsOpts.count, "count", "U", false, "present only the number of records")
-	monitorsCmd.Flags().BoolVarP(&MonitorsOpts.clean, "clean", "", false, "clean (i.e. remove duplicate appearances) from all existing monitors")
-	monitorsCmd.Flags().BoolVarP(&MonitorsOpts.freshen, "freshen", "f", false, "freshen but do not print the monitored data (hidden)")
+	monitorsCmd.Flags().BoolVarP(&MonitorsOpts.clean, "clean", "", false, "clean (i.e. remove duplicate appearances) from monitors")
 	monitorsCmd.Flags().Uint64VarP(&MonitorsOpts.first_block, "first_block", "F", 0, "first block to process (inclusive) (hidden)")
 	monitorsCmd.Flags().Uint64VarP(&MonitorsOpts.last_block, "last_block", "L", 0, "last block to process (inclusive) (hidden)")
+	monitorsCmd.Flags().BoolVarP(&MonitorsOpts.delete, "delete", "", false, "delete a monitor, but do not remove it (hidden)")
+	monitorsCmd.Flags().BoolVarP(&MonitorsOpts.remove, "remove", "", false, "remove a previously deleted monitor (hidden)")
+	monitorsCmd.Flags().BoolVarP(&MonitorsOpts.undelete, "undelete", "", false, "undelete a previously deleted monitor (hidden)")
 	if !utils.IsTestMode() {
-		monitorsCmd.Flags().MarkHidden("freshen")
 		monitorsCmd.Flags().MarkHidden("first_block")
 		monitorsCmd.Flags().MarkHidden("last_block")
+		monitorsCmd.Flags().MarkHidden("delete")
+		monitorsCmd.Flags().MarkHidden("remove")
+		monitorsCmd.Flags().MarkHidden("undelete")
 	}
 	monitorsCmd.Flags().SortFlags = false
 	monitorsCmd.PersistentFlags().SortFlags = false

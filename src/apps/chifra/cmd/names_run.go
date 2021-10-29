@@ -81,6 +81,21 @@ func runNames(cmd *cobra.Command, args []string) {
 	if NamesOpts.clean {
 		options += " --clean"
 	}
+	if NamesOpts.create {
+		options += " --create"
+	}
+	if NamesOpts.delete {
+		options += " --delete"
+	}
+	if NamesOpts.update {
+		options += " --update"
+	}
+	if NamesOpts.remove {
+		options += " --remove"
+	}
+	if NamesOpts.undelete {
+		options += " --undelete"
+	}
 	if len(NamesOpts.autoname) > 0 {
 		options += " --autoname " + NamesOpts.autoname
 	}

@@ -92,6 +92,7 @@ bool COptions::handle_options(void) {
                         configStream << config << endl;
                     }
                     string_q opt = option.Format(STR_OPTION_STR);
+                    replaceAll(opt, "deleteMe", "delete");
                     if (opt.length() > 120)
                         opt += "  // NOLINT";
                     optionStream << opt << endl;
