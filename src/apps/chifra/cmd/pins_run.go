@@ -109,7 +109,7 @@ func handleList(format string) {
 	})
 
 	// dszlachta: I think we should move printing in the given format to a package
-	if format == "api" {
+	if format == "json" {
 		response := map[string][]manifest.PinDescriptor{
 			"data": manifestData.NewPins,
 		}
