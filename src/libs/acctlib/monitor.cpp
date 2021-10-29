@@ -609,5 +609,14 @@ void cleanMonitorStage(void) {
     CMonitor m;
     cleanFolder(m.getMonitorPath("", true));
 }
+
+//----------------------------------------------------------------
+address_t path_2_Addr(const string_q& path) {
+    if (!endsWith(path, ".acct.bin"))
+        return "";
+    CStringArray parts;
+    explode(parts, path, '/');
+    return substitute(parts[parts.size() - 1], ".acct.bin", "");
+}
 // EXISTING_CODE
 }  // namespace qblocks
