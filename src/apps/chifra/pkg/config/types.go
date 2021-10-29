@@ -1,5 +1,7 @@
 package config
 
+// Global config
+
 type globalVersion struct {
 	Current string
 }
@@ -15,6 +17,8 @@ type Global struct {
 	Version  globalVersion
 	Settings globalSettings
 }
+
+// BlockScrape config
 
 type blockScrapeRequires struct {
 	Trancing bool
