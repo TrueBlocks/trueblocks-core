@@ -14,6 +14,14 @@ import (
 var unchainedIndexAddr = "0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd"
 var manifestHashEncoding = "0x337f3f32"
 
+func GetUnchainedIndexAddress() string {
+	return unchainedIndexAddr
+}
+
+func GetManifestHashEncoding() string {
+	return manifestHashEncoding
+}
+
 func GetManifestCidFromContract() (string, error) {
 	ethClient := rpcClient.Get()
 	defer ethClient.Close()

@@ -13,11 +13,26 @@
 package cmd
 
 import (
+	"encoding/json"
 	"fmt"
+	"net/url"
+	"os"
+	"path"
+	"sort"
+	"strconv"
+	"strings"
+	"text/tabwriter"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib/chunk"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/spf13/cobra"
 )
+
+type downloadFunc func(pins []manifest.PinDescriptor) (failed []manifest.PinDescriptor)
 
 func validatePinsArgs(cmd *cobra.Command, args []string) error {
 	list := PinsOpts.list
@@ -66,32 +81,219 @@ func validatePinsArgs(cmd *cobra.Command, args []string) error {
 	return nil
 }
 
+func handleList(format string) {
+	// Load manifest
+	manifestData, err := manifest.FromLocalFile()
+	if err != nil {
+		logger.Fatal("Cannot open manifest file:", err)
+	}
+
+	// Sort pins
+	sort.Slice(manifestData.NewPins, func(i, j int) bool {
+		iPin := manifestData.NewPins[i]
+		jPin := manifestData.NewPins[j]
+		iKey := strings.Split(iPin.FileName, "-")[0]
+		jKey := strings.Split(jPin.FileName, "-")[0]
+
+		iNumber, err := strconv.ParseInt(iKey, 10, 64)
+		if err != nil {
+			return false
+		}
+
+		jNumber, err := strconv.ParseInt(jKey, 10, 64)
+		if err != nil {
+			return false
+		}
+
+		return iNumber < jNumber
+	})
+
+	// dszlachta: I think we should move printing in the given format to a package
+	if format == "api" {
+		response := map[string][]manifest.PinDescriptor{
+			"data": manifestData.NewPins,
+		}
+		marshalled, err := json.MarshalIndent(response, "", "    ")
+		if err != nil {
+			logger.Fatal(err)
+		}
+
+		fmt.Println(string(marshalled))
+
+		return
+	}
+
+	writer := tabwriter.NewWriter(os.Stdout, 0, 0, 1, ' ', 0)
+	fmt.Fprintf(writer, "filename\tbloomhash\tindexhash\n")
+	for _, pin := range manifestData.NewPins {
+		fmt.Fprintf(writer, "%s\t%s\t%s\n", pin.FileName, pin.BloomHash, pin.IndexHash)
+	}
+	writer.Flush()
+}
+
+// Downloads chunks and report progress
+func downloadAndReportProgress(pins []manifest.PinDescriptor, chunkType chunk.ChunkType) []manifest.PinDescriptor {
+	chunkTypeToDescription := map[chunk.ChunkType]string{
+		chunk.BloomChunk: "bloom",
+		chunk.IndexChunk: "index",
+	}
+	failed := []manifest.PinDescriptor{}
+	progress := make(chan *chunk.ChunkProgress, 100)
+	defer close(progress)
+
+	go chunk.GetChunksFromRemote(pins, chunkType, progress)
+
+	progressToLabel := map[chunk.ProgressEvent]string{
+		chunk.ProgressDownloading: "Unchaining",
+		chunk.ProgressUnzipping:   "Unzipping",
+		chunk.ProgressValidating:  "Validating",
+		chunk.ProgressError:       "Error",
+	}
+
+	for event := range progress {
+		if event.Event == chunk.ProgressAllDone {
+			logger.Log(logger.Info, event.Message, "pin(s) were (re)initialized")
+			break
+		}
+
+		if event.Event == chunk.ProgressError {
+			failed = append(failed, *event.Pin)
+		}
+
+		if event.Event == chunk.ProgressDownloading {
+			logger.Log(logger.Info, "Unchaining", chunkTypeToDescription[chunkType], event.Message, "to", event.Pin.FileName)
+			continue
+		}
+
+		eventLabel := progressToLabel[event.Event]
+
+		logger.Log(logger.Info, eventLabel, event.Pin.FileName, event.Message)
+	}
+
+	return failed
+}
+
+// Retries downloading `failedPins` for `times` times by calling `downloadChunks` function.
+// Returns number of pins that we were unable to fetch.
+// This function is simple because: 1. it will never get a new failing pin (it only feeds in
+// the list of known, failed pins); 2. The maximum number of failing pins we can get equals
+// the length of `failedPins`.
+func retry(failedPins []manifest.PinDescriptor, times uint, downloadChunks downloadFunc) int {
+	retryCount := uint(0)
+
+	pinsToRetry := failedPins
+
+	for {
+		if len(pinsToRetry) == 0 {
+			break
+		}
+
+		if retryCount >= times {
+			break
+		}
+
+		pinsToRetry = downloadChunks(pinsToRetry)
+
+		retryCount++
+	}
+
+	return len(pinsToRetry)
+}
+
+func printManifestHeader() {
+	// The following two values should be read from manifest.txt, however right now only TSV format
+	// is available for download and it lacks this information
+	logger.Log(logger.Info, "hashToIndexFormatFile:", "Qmart6XP9XjL43p72PGR93QKytbK8jWWcMguhFgxATTya2")
+	logger.Log(logger.Info, "hashToBloomFormatFile:", "QmNhPk39DUFoEdhUmtGARqiFECUHeghyeryxZM9kyRxzHD")
+	logger.Log(logger.Info, "unchainedIndexAddr:", pinlib.GetUnchainedIndexAddress())
+	logger.Log(logger.Info, "manifestHashEncoding:", pinlib.GetManifestHashEncoding())
+}
+
+func handleInit() {
+	logger.Log(logger.Info, "Calling unchained index smart contract...")
+
+	// Fetch manifest's CID
+	cid, err := pinlib.GetManifestCidFromContract()
+	if err != nil {
+		logger.Fatal(err)
+	}
+	logger.Log(logger.Info, "Found manifest hash at", cid)
+
+	// Download the manifest
+	gatewayUrl := config.ReadBlockScrape().Dev.IpfsGateway
+	logger.Log(logger.Info, "IPFS gateway", gatewayUrl)
+
+	url, err := url.Parse(gatewayUrl)
+	if err != nil {
+		logger.Fatal(err)
+	}
+	url.Path = path.Join(url.Path, cid)
+	downloadedManifest, err := pinlib.DownloadManifest(url.String())
+
+	if err != nil {
+		fmt.Printf("Error while downloading manifest:\n%s", err)
+	}
+
+	// Save manifest
+	err = pinlib.SaveManifest(config.GetConfigPath("manifest/manifest.txt"), downloadedManifest)
+	if err != nil {
+		fmt.Println("Error while saving manifest", err)
+	}
+	logger.Log(logger.Info, "Freshened manifest")
+
+	// Fetch chunks
+	bloomsDoneChannel := make(chan bool)
+	defer close(bloomsDoneChannel)
+	indexDoneChannel := make(chan bool)
+	defer close(indexDoneChannel)
+
+	getChunks := func(chunkType chunk.ChunkType) {
+		failedChunks := downloadAndReportProgress(downloadedManifest.NewPins, chunkType)
+
+		if len(failedChunks) > 0 {
+			retry(failedChunks, 3, func(pins []manifest.PinDescriptor) []manifest.PinDescriptor {
+				logger.Log(logger.Info, "Retrying", len(pins), "bloom(s)")
+				return downloadAndReportProgress(pins, chunkType)
+			})
+		}
+	}
+
+	go func() {
+		getChunks(chunk.BloomChunk)
+
+		bloomsDoneChannel <- true
+	}()
+
+	if PinsOpts.all {
+		go func() {
+			getChunks(chunk.IndexChunk)
+
+			indexDoneChannel <- true
+		}()
+		<-indexDoneChannel
+	}
+
+	<-bloomsDoneChannel
+}
+
 func runPins(cmd *cobra.Command, args []string) {
-	options := ""
 	if PinsOpts.list {
-		options += " --list"
+		printManifestHeader()
+		handleList(RootOpts.fmt)
+		return
 	}
-	if PinsOpts.init {
-		options += " --init"
-	}
-	if PinsOpts.freshen {
-		options += " --freshen"
+	if PinsOpts.init || PinsOpts.freshen {
+		printManifestHeader()
+		handleInit()
+		return
 	}
 	if PinsOpts.remote {
-		options += " --remote"
-	}
-	if PinsOpts.all {
-		options += " --all"
+		logger.Fatal("Not implemented")
 	}
 	if PinsOpts.sleep != .25 {
-		options += " --sleep " + fmt.Sprintf("%.1f", PinsOpts.sleep)
+		logger.Fatal("Not implemented")
 	}
 	if PinsOpts.share {
-		options += " --share"
+		logger.Fatal("Not implemented")
 	}
-	arguments := ""
-	for _, arg := range args {
-		arguments += " " + arg
-	}
-	PassItOn("pinMan", options, arguments)
 }
