@@ -10,9 +10,9 @@ Arguments:
 
 Flags:
   -U, --count              present only the number of records
+  -p, --appearances        export a list of appearances (hidden)
   -F, --first_block uint   first block to process (inclusive) (hidden)
   -L, --last_block uint    last block to process (inclusive) (hidden)
-  -p, --appearances        export a list of appearances (hidden)
 
 Global Flags:
   -x, --fmt string   export format, one of [none|json*|txt|csv|api]

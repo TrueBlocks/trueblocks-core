@@ -51,11 +51,11 @@ type monitorsOptionsType struct {
 	appearances bool
 	count       bool
 	clean       bool
+	delete      bool
+	undelete    bool
+	remove      bool
 	first_block uint64
 	last_block  uint64
-	delete      bool
-	remove      bool
-	undelete    bool
 }
 
 var MonitorsOpts monitorsOptionsType
@@ -68,17 +68,14 @@ func init() {
 	monitorsCmd.Flags().BoolVarP(&MonitorsOpts.appearances, "appearances", "p", false, "export a list of appearances")
 	monitorsCmd.Flags().BoolVarP(&MonitorsOpts.count, "count", "U", false, "present only the number of records")
 	monitorsCmd.Flags().BoolVarP(&MonitorsOpts.clean, "clean", "", false, "clean (i.e. remove duplicate appearances) from monitors")
+	monitorsCmd.Flags().BoolVarP(&MonitorsOpts.delete, "delete", "", false, "delete a monitor, but do not remove it")
+	monitorsCmd.Flags().BoolVarP(&MonitorsOpts.undelete, "undelete", "", false, "undelete a previously deleted monitor")
+	monitorsCmd.Flags().BoolVarP(&MonitorsOpts.remove, "remove", "", false, "remove a previously deleted monitor")
 	monitorsCmd.Flags().Uint64VarP(&MonitorsOpts.first_block, "first_block", "F", 0, "first block to process (inclusive) (hidden)")
 	monitorsCmd.Flags().Uint64VarP(&MonitorsOpts.last_block, "last_block", "L", 0, "last block to process (inclusive) (hidden)")
-	monitorsCmd.Flags().BoolVarP(&MonitorsOpts.delete, "delete", "", false, "delete a monitor, but do not remove it (hidden)")
-	monitorsCmd.Flags().BoolVarP(&MonitorsOpts.remove, "remove", "", false, "remove a previously deleted monitor (hidden)")
-	monitorsCmd.Flags().BoolVarP(&MonitorsOpts.undelete, "undelete", "", false, "undelete a previously deleted monitor (hidden)")
 	if !utils.IsTestMode() {
 		monitorsCmd.Flags().MarkHidden("first_block")
 		monitorsCmd.Flags().MarkHidden("last_block")
-		monitorsCmd.Flags().MarkHidden("delete")
-		monitorsCmd.Flags().MarkHidden("remove")
-		monitorsCmd.Flags().MarkHidden("undelete")
 	}
 	monitorsCmd.Flags().SortFlags = false
 	monitorsCmd.PersistentFlags().SortFlags = false

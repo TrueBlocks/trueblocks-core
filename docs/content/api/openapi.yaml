@@ -433,16 +433,16 @@ paths:
           explode: true
           schema:
             type: boolean
-        - name: remove
-          description: remove a previously deleted monitor
+        - name: undelete
+          description: undelete a previously deleted monitor
           required: false
           style: form
           in: query
           explode: true
           schema:
             type: boolean
-        - name: undelete
-          description: undelete a previously deleted monitor
+        - name: remove
+          description: remove a previously deleted monitor
           required: false
           style: form
           in: query

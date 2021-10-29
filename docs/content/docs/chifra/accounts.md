@@ -2,7 +2,7 @@
 title: "Accounts"
 description: ""
 lead: ""
-date: 2021-10-28T22:21:38
+date: 2021-10-29T07:20:42
 lastmod:
   - :git
   - lastmod
@@ -125,6 +125,9 @@ Flags:
   -p, --appearances   export a list of appearances
   -U, --count         present only the number of records
       --clean         clean (i.e. remove duplicate appearances) from monitors
+      --delete        delete a monitor, but do not remove it
+      --undelete      undelete a previously deleted monitor
+      --remove        remove a previously deleted monitor
 
 Global Flags:
   -x, --fmt string   export format, one of [none|json*|txt|csv|api]
