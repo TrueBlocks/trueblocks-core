@@ -1,11 +1,10 @@
 package config
 
-var DefaultIpfsGateway = "http://gateway.ipfs.io/ipfs/"
-
 // Functions in this package read and cache configuration files,
 // filling in default values
 
 var cachedGlobal Global
+var DefaultIndexPath = GetConfigPath("unchained")
 
 func ReadGlobal() *Global {
 	if cachedGlobal.Version.Current != "" {
@@ -14,7 +13,7 @@ func ReadGlobal() *Global {
 
 	config := &Global{
 		Settings: globalSettings{
-			IndexPath: GetConfigPath("unchained"),
+			IndexPath: DefaultIndexPath,
 		},
 	}
 
@@ -24,6 +23,7 @@ func ReadGlobal() *Global {
 }
 
 var cachedBlockScrape BlockScrape
+var DefaultIpfsGateway = "http://gateway.ipfs.io/ipfs/"
 
 func ReadBlockScrape() *BlockScrape {
 	if cachedBlockScrape.Dev.IpfsGateway != "" {

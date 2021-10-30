@@ -291,6 +291,18 @@ func runPins(cmd *cobra.Command, args []string) {
 	}
 	if PinsOpts.init || PinsOpts.freshen {
 		printManifestHeader()
+		err := pinlib.EstablishDirectories()
+		if err != nil {
+			if err, ok := err.(*pinlib.ErrCustomizedPath); ok {
+				fmt.Printf(
+					"Attempt to create customized indexPath (%s) failed.\nPlease create the folder or adjust the setting by editing $CONFIG/trueBlocks.toml.\n",
+					err.GetIndexPath(),
+				)
+				return
+			}
+			logger.Fatal(err)
+		}
+
 		handleInit()
 		return
 	}
