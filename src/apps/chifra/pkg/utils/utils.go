@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"net/http"
 	"os"
 	"os/exec"
 	"runtime"
@@ -24,6 +25,11 @@ func FolderExists(path string) bool {
 		return false
 	}
 	return info.IsDir()
+}
+
+// IsTestModeServer return true if we are running from the testing harness
+func IsTestModeServer(r *http.Request) bool {
+	return r.Header.Get("User-Agent") == "testRunner"
 }
 
 func IsTestMode() bool {
