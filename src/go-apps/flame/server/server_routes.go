@@ -69,7 +69,7 @@ func Logger(inner http.Handler, name string) http.Handler {
 		start := time.Now()
 		inner.ServeHTTP(w, r)
 		t := ""
-		if utils.IsTestMode(r) {
+		if utils.IsTestModeServer(r) {
 			t = "-test"
 		}
 		log.Printf(
@@ -205,6 +205,7 @@ func OtherQuotes(w http.ResponseWriter, r *http.Request) {
 func OtherSlurp(w http.ResponseWriter, r *http.Request) {
 	CallOne(w, r, "ethslurp", "slurp")
 }
+
 // END_ROUTE_CODE
 
 var routes = Routes{
