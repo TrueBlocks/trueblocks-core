@@ -7,6 +7,7 @@ import (
 	"os/user"
 	"path"
 	"runtime"
+	"strings"
 
 	"github.com/BurntSushi/toml"
 )
@@ -51,9 +52,14 @@ func GetConfigPath(fileName string) string {
 	return path.Join(homeDir, confDir, fileName)
 }
 
-// read opens the file and returns new TOML Decoder
-func read(fileName string) *toml.Decoder {
-	filePath := GetConfigPath(fileName + ".toml")
+// readToml opens the file and returns new TOML Decoder
+func readToml(fileName string) *toml.Decoder {
+	fileNameWithExt := fileName
+	if !strings.Contains(fileNameWithExt, ".toml") {
+		fileNameWithExt += ".toml"
+	}
+
+	filePath := GetConfigPath(fileNameWithExt)
 
 	file, err := os.Open(filePath)
 	if err != nil {
@@ -64,10 +70,9 @@ func read(fileName string) *toml.Decoder {
 }
 
 // ReadTo reads {configName}.toml from the config directory, parses it
-// and loads the values into target. Warning: configName should NOT
-// have .toml extension (it will be added automatically)
+// and loads the values into target.
 func ReadTo(target interface{}, configName string) {
-	reader := read(configName)
+	reader := readToml(configName)
 	_, err := reader.Decode(target)
 	if err != nil {
 		log.Fatalf(`Error while reading configuration for "%s": %s`, configName, err)
