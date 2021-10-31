@@ -12,7 +12,6 @@ import (
 // SaveManifest saves the given manifest to the given file
 func SaveManifest(filepath string, manifest *manifest.Manifest) error {
 	targetFile, err := os.Create(filepath)
-
 	if err != nil {
 		return fmt.Errorf("creating file: %s", err)
 	}

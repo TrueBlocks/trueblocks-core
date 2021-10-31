@@ -37,12 +37,12 @@ func ReadPinDescriptors(r io.Reader) ([]PinDescriptor, error) {
 // ManifestRange. We need this function, because TSV formatted manifest
 // does not carry this information explicitly
 func BuildTabRange(descriptors []PinDescriptor) (ManifestRange, error) {
-	firstPinRange, err := ManifestRangeFromString(descriptors[0].FileName)
+	firstPinRange, err := StringToManifestRange(descriptors[0].FileName)
 	if err != nil {
 		return ManifestRange{}, err
 	}
 
-	lastPinRange, err := ManifestRangeFromString(descriptors[len(descriptors)-1].FileName)
+	lastPinRange, err := StringToManifestRange(descriptors[len(descriptors)-1].FileName)
 	if err != nil {
 		return ManifestRange{}, err
 	}

@@ -13,7 +13,7 @@ func (mr *ManifestRange) UnmarshalJSON(data []byte) error {
 		return err
 	}
 
-	newManifestRange, err := ManifestRangeFromString(unquoted)
+	newManifestRange, err := StringToManifestRange(unquoted)
 	if err != nil {
 		return err
 	}
@@ -23,9 +23,9 @@ func (mr *ManifestRange) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// ManifestRangeFromString parses a string found in JSON manifest
+// StringToManifestRange parses a string found in JSON manifest
 // and returns ManifestRange
-func ManifestRangeFromString(source string) (ManifestRange, error) {
+func StringToManifestRange(source string) (ManifestRange, error) {
 	mr := [2]uint64{0, 0}
 
 	if len(source) == 0 {
