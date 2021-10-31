@@ -2,7 +2,11 @@ package manifest
 
 import (
 	"encoding/csv"
+	"errors"
 	"io"
+	"os"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 )
 
 // ReadPinDescriptors parses pin information and returns a slice of
@@ -37,6 +41,10 @@ func ReadPinDescriptors(r io.Reader) ([]PinDescriptor, error) {
 // ManifestRange. We need this function, because TSV formatted manifest
 // does not carry this information explicitly
 func BuildTabRange(descriptors []PinDescriptor) (ManifestRange, error) {
+	if len(descriptors) == 0 {
+		return ManifestRange{}, errors.New("invalid input: no pins")
+	}
+
 	firstPinRange, err := StringToManifestRange(descriptors[0].FileName)
 	if err != nil {
 		return ManifestRange{}, err
@@ -76,4 +84,14 @@ func ReadTabManifest(r io.Reader) (*Manifest, error) {
 		NewPins:            descriptors,
 		PreviousPins:       []PinDescriptor{},
 	}, nil
+}
+
+// FromLocalFile loads the manifest saved in ConfigPath
+func FromLocalFile() (*Manifest, error) {
+	file, err := os.Open(config.GetConfigPath("manifest/manifest.txt"))
+	if err != nil {
+		return nil, err
+	}
+
+	return ReadTabManifest(file)
 }

@@ -2,6 +2,7 @@ package pinlib
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"os"
 
@@ -61,6 +62,10 @@ func GetManifestCidFromContract() (string, error) {
 	unpacked, err := contractAbi.Unpack("manifestHash", response)
 	if err != nil {
 		return "", fmt.Errorf("while unpacking value: %w", err)
+	}
+
+	if len(unpacked) == 0 {
+		return "", errors.New("contract returned empty data")
 	}
 
 	return unpacked[0].(string), nil
