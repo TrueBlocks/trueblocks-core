@@ -15,9 +15,7 @@ func SaveManifest(filepath string, manifest *manifest.Manifest) error {
 	if err != nil {
 		return fmt.Errorf("creating file: %s", err)
 	}
-
 	defer targetFile.Close()
-
 	err = file.Lock(targetFile)
 	if err != nil {
 		return fmt.Errorf("locking file: %s", err)
