@@ -102,7 +102,7 @@ func CallOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd s
 	// testing (the test harness sends a special header) we also set the
 	// TEST_MODE=true environment variable and any other vars for this
 	// particular test
-	if utils.IsTestMode(r) {
+	if utils.IsTestModeServer(r) {
 		cmd.Env = append(append(os.Environ(), "TEST_MODE=true"), "API_MODE=true")
 		vars := strings.Split(r.Header.Get("X-TestRunner-Env"), "|")
 		for _, v := range vars {

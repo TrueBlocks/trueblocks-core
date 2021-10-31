@@ -38,8 +38,8 @@ func FolderExists(path string) bool {
 	return info.IsDir()
 }
 
-// IsTestMode return true if we are running from the testing harness
-func IsTestMode(r *http.Request) bool {
+// IsTestModeServer return true if we are running from the testing harness
+func IsTestModeServer(r *http.Request) bool {
 	return r.Header.Get("User-Agent") == "testRunner"
 }
 
