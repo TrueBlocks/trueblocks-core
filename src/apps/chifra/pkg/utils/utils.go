@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"os"
 	"os/exec"
+	"os/user"
 	"runtime"
 )
 
@@ -25,6 +26,13 @@ func FolderExists(path string) bool {
 		return false
 	}
 	return info.IsDir()
+}
+
+// GetCommandPath returns full path the the given tool
+func GetCommandPath(cmd string) string {
+	usr, _ := user.Current()
+	dir := usr.HomeDir
+	return dir + "/.local/bin/chifra/" + cmd
 }
 
 // IsTestModeServer return true if we are running from the testing harness

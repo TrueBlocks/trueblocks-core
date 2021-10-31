@@ -292,13 +292,13 @@ func writeAddresses(blockNum string, addressMap map[string]bool) {
 		os.Exit(1) // caller will start over if this process exits with non-zero value
 	}
 	// Show fifty dots no matter how many blocks we're scraping
-	skip := 31 // Options.nBlocks / 100
+	skip := 31 // Options.block_cnt / 100
 	if skip < 1 {
 		skip = 1
 	}
 	counter++
 	if counter%skip == 0 {
-		log.Print("- <PROG> : Scraping ", counter, " of ", Options.nBlocks)
+		log.Print("- <PROG> : Scraping ", counter, " of ", Options.block_cnt)
 	}
 }
 
@@ -308,18 +308,18 @@ func scrapeBlocks() {
 	addressChannel := make(chan tracesAndLogs)
 
 	var blockWG sync.WaitGroup
-	blockWG.Add(Options.nBlockProcs)
-	for i := 0; i < Options.nBlockProcs; i++ {
+	blockWG.Add(Options.block_chan_cnt)
+	for i := 0; i < Options.block_chan_cnt; i++ {
 		go getTracesAndLogs(blockChannel, addressChannel, &blockWG)
 	}
 
 	var addressWG sync.WaitGroup
-	addressWG.Add(Options.nAddrProcs)
-	for i := 0; i < Options.nAddrProcs; i++ {
+	addressWG.Add(Options.addr_chan_cnt)
+	for i := 0; i < Options.addr_chan_cnt; i++ {
 		go extractAddresses(addressChannel, &addressWG)
 	}
 
-	for block := Options.startBlock; block < Options.startBlock+Options.nBlocks; block++ {
+	for block := Options.startBlock; block < Options.startBlock+Options.block_cnt; block++ {
 		blockChannel <- block
 	}
 
@@ -357,8 +357,8 @@ Description:
   left off. 'Scrape' visits every block, queries that block's traces and logs
   looking for addresses, and writes an index of those addresses per transaction.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		//fmt.Printf("\t  options:\t %d/%d/%d/%d\n", Options.startBlock, Options.nBlocks, Options.ripeBlock, (Options.startBlock + Options.nBlocks))
-		//fmt.Printf("\t  processes:\t %d/%d\n", Options.nBlockProcs, Options.nAddrProcs)
+		//fmt.Printf("\t  options:\t %d/%d/%d/%d\n", Options.startBlock, Options.block_cnt, Options.ripeBlock, (Options.startBlock + Options.block_cnt))
+		//fmt.Printf("\t  processes:\t %d/%d\n", Options.block_chan_cnt, Options.addr_chan_cnt)
 		//fmt.Printf("\t  rpcProvider:\t %s\n", Options.rpcProvider)
 		//fmt.Printf("\t  indexPath:\t %s\n", Options.indexPath)
 		//fmt.Printf("\t  ripePath:\t %s\n", Options.ripePath)

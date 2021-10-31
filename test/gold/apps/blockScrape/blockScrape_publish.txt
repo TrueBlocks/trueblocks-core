@@ -1,9 +1,25 @@
-chifra scrape  --publish
-flame-scrape  --scrape --publish --port :8081
+chifra scrape  both --publish
+<INFO> : hasIndexFlag Action:  both
 {
-  "message": "Testing only",
-  "n_blocks": 2000,
-  "n_block_procs": 10,
-  "n_addr_procs": 20,
-  "pin": 1,
+  "message": "Testing in scrape_run.go",
+  "action": run,
+  "block_cnt": 2000,
+  "block_chan_cnt": 10,
+  "addr_chan_cnt": 20,
+  "sleep": 14,
+  "pin": false,
+  "publish": true,
 }
+%s {0 true false 14 [33m IndexScraper 0} [0m
+<INFO> : [33m IndexScraper : [ paused  -->  running ] [0m
+<INFO> : [33m IndexScraper : [ sleep  -->  wake ] [0m
+TIME ~ CLOCK - <INFO>  : publish: true
+{
+  "message": "Testing in blockScrape/options.cpp",
+  "block_cnt": 2000,
+  "block_chan_cnt": 10,
+  "addr_chan_cnt": 20,
+  "pin": 0,
+  "publish": 1,
+}
+<INFO> : [33m IndexScraper : [ wake  -->  sleep ] [0m

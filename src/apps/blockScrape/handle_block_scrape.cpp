@@ -35,7 +35,7 @@ bool COptions::scrape_blocks(void) {
     cons.blazeStart = max(cons.ripe, max(cons.staging, cons.finalized)) + 1;
 
     // We need to know how many blocks to scrape. The user has told us...
-    cons.blazeCnt = n_blocks;
+    cons.blazeCnt = block_cnt;
 
     // ...but we may make some adjustments to speed things up. When not running in docker mode,
     // we can do more blocks. In docker mode, we stick with the defaults otherwise, docker
@@ -101,7 +101,7 @@ bool COptions::scrape_blocks(void) {
     os.str("");
     os << getCommandPath("blaze") + " scrape ";
     os << "--startBlock " << cons.blazeStart << " ";
-    os << "--nBlocks " << cons.blazeCnt << " ";
+    os << "--block_cnt " << cons.blazeCnt << " ";
     os << "--ripeBlock " << cons.blazeRipe << " ";
     os << (verbose ? ("--verbose " + uint_2_Str(verbose)) : "");
     LOG_TEST_CALL(os.str());
@@ -110,8 +110,8 @@ bool COptions::scrape_blocks(void) {
     cmd << "env TB_INDEXPATH=\"" << getIndexPath("")
         << "\" ";  // note--cobra/viper will pick this up even though you won't find it
     cmd << os.str() << " ";
-    cmd << "--nBlockProcs " << n_block_procs << " ";
-    cmd << "--nAddrProcs " << n_addr_procs << " ";
+    cmd << "--block_chan_cnt " << block_chan_cnt << " ";
+    cmd << "--addr_chan_cnt " << addr_chan_cnt << " ";
     if (system(cmd.str().c_str()) != 0) {
         // Blaze returns non-zero if it fails. In this case, we need to remove files in the 'ripe'
         // folder because they're inconsistent (blaze's runs in parallel, so the block sequence
@@ -138,7 +138,7 @@ bool COptions::scrape_blocks(void) {
     }
 
     // Blaze has sucessfullly created an individual file for each block between 'blazeStart' and
-    // 'blazeStart + n_blocks'. Each file is a fixed-width list of addresses that appear in that block.
+    // 'blazeStart + block_cnt'. Each file is a fixed-width list of addresses that appear in that block.
     // The unripe folder holds blocks that are less than 28 blocks old. We do nothing further with them,
     // although acctExport may use them if it wishes to.
 

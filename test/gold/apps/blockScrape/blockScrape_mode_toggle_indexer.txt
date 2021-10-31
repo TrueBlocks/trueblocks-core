@@ -17,9 +17,9 @@ Flags:
   -p, --pin                  pin chunks (and blooms) to IPFS as they are created (requires pinning service)
   -u, --publish              after pinning the chunk, publish it to UnchainedIndex (hidden)
   -o, --port string          specify the server's port (:8081 default) (hidden) (default ":8081")
-  -n, --n_blocks uint        maximum number of blocks to process per pass (default 2000)
-  -b, --n_block_procs uint   number of concurrent block processing channels (hidden) (default 10)
-  -d, --n_addr_procs uint    number of concurrent address processing channels (hidden) (default 20)
+  -n, --block_cnt uint        maximum number of blocks to process per pass (default 2000)
+  -b, --block_chan_cnt uint   number of concurrent block processing channels (hidden) (default 10)
+  -d, --addr_chan_cnt uint    number of concurrent address processing channels (hidden) (default 20)
 
 Global Flags:
   -x, --fmt string   export format, one of [none|json*|txt|csv|api]
