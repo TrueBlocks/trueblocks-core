@@ -30,18 +30,15 @@ func EstablishDirectories() error {
 	}
 
 	_, err := os.Stat(indexPath)
-
 	if err != nil && !os.IsNotExist(err) {
 		return err
 	}
-
 	// directory doesn't exist and is custom: abort
 	if os.IsNotExist(err) && indexPath != config.DefaultIndexPath {
 		return &ErrCustomizedPath{
 			indexPath: indexPath,
 		}
 	}
-
 	// directory doesn't exists, but it is the default one: create it
 	if os.IsNotExist(err) {
 		err = os.Mkdir(indexPath, 0755)
@@ -56,7 +53,6 @@ func EstablishDirectories() error {
 	for _, subdirectory := range subdirectories {
 		subdirPath := path.Join(indexPath, subdirectory)
 		_, err = os.Stat(subdirPath)
-
 		if err != nil && !os.IsNotExist(err) {
 			return err
 		}

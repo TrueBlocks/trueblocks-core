@@ -47,7 +47,6 @@ var manifestSource = `
 
 func TestReadManifest(t *testing.T) {
 	m, err := ReadJSONManifest(strings.NewReader(manifestSource))
-
 	if err != nil {
 		t.Error(err)
 	}

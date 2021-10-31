@@ -9,7 +9,7 @@ import (
 	"github.com/ethereum/go-ethereum/ethclient"
 )
 
-// Setups a client instance and returns it
+// Get sets up a client instance and returns it
 func Get() ethclient.Client {
 	client, err := ethclient.Dial(config.ReadGlobal().Settings.RpcProvider)
 	if err != nil {

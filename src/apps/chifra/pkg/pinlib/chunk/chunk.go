@@ -67,7 +67,7 @@ type fetchResult struct {
 	totalSize int64
 }
 
-// Downloads a chunk using HTTP
+// fetchChunk downloads a chunk using HTTP
 func fetchChunk(url string) (*fetchResult, error) {
 	response, err := http.Get(url)
 	body := response.Body
@@ -89,8 +89,8 @@ func fetchChunk(url string) (*fetchResult, error) {
 	}, nil
 }
 
-// For each pin in pins, downloads, unzips and saves the chunk of type indicated by chunkType.
-// Progress is reported to progressChannel.
+// GetChunksFromRemote downloads, unzips and saves the chunk of type indicated by chunkType
+// for each pin in pins. Progress is reported to progressChannel.
 func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkType ChunkType, progressChannel chan<- *ChunkProgress) {
 	// Downloaded content will wait for saving in this channel
 	writeChannel := make(chan *jobResult, poolSize)
@@ -240,7 +240,7 @@ func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkType ChunkType, pro
 	}
 }
 
-// Decompresses the downloaded data and saves it to files
+// saveFileContents decompresses the downloaded data and saves it to files
 func saveFileContents(res *jobResult, cacheLayout *CacheLayout) error {
 	// Postpone Ctrl-C
 	trapChannel := sigintTrap.Enable()
@@ -281,7 +281,7 @@ func saveFileContents(res *jobResult, cacheLayout *CacheLayout) error {
 	}
 }
 
-// Returns new []manifest.PinDescriptor slice with all pins from outputDir removed
+// FilterDownloadedChunks returns new []manifest.PinDescriptor slice with all pins from outputDir removed
 func FilterDownloadedChunks(pins []manifest.PinDescriptor, cacheLayout *CacheLayout) []manifest.PinDescriptor {
 	fileMap := make(map[string]bool)
 

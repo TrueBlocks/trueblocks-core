@@ -19,7 +19,6 @@ func SaveManifest(filepath string, manifest *manifest.Manifest) error {
 	defer targetFile.Close()
 
 	err = file.Lock(targetFile)
-
 	if err != nil {
 		return fmt.Errorf("locking file: %s", err)
 	}
@@ -37,7 +36,6 @@ func SaveManifest(filepath string, manifest *manifest.Manifest) error {
 	w := csv.NewWriter(targetFile)
 	w.Comma = '\t'
 	w.WriteAll(records)
-
 	if err := w.Error(); err != nil {
 		return err
 	}

@@ -52,7 +52,6 @@ func TestModifierToModifierTypePeriod(t *testing.T) {
 
 func TestNewBlocks(t *testing.T) {
 	blockRange, err := New("10-1000:10")
-
 	if err != nil {
 		t.Error(err)
 	}
@@ -132,7 +131,6 @@ func TestBlockRange_UnmarshalJSON(t *testing.T) {
 	source := []byte(`{"blocks":"000000000-10567003"}`)
 
 	err := json.Unmarshal(source, &record)
-
 	if err != nil {
 		t.Error(err)
 	}

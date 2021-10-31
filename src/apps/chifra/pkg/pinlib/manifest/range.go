@@ -9,13 +9,11 @@ type ManifestRange [2]uint64
 
 func (mr *ManifestRange) UnmarshalJSON(data []byte) error {
 	unquoted, err := strconv.Unquote(string(data))
-
 	if err != nil {
 		return err
 	}
 
 	newManifestRange, err := ManifestRangeFromString(unquoted)
-
 	if err != nil {
 		return err
 	}

@@ -9,7 +9,6 @@ import (
 
 func DownloadManifest(gatewayUrl string) (*manifest.Manifest, error) {
 	response, err := http.Get(gatewayUrl)
-
 	if err != nil {
 		return nil, err
 	}

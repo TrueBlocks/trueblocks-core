@@ -15,7 +15,7 @@ type CacheLayout struct {
 	extension string
 }
 
-// Sets correct values of subdir and extension properties based on
+// New sets correct values of subdir and extension properties based on
 // chunkType
 func (cl *CacheLayout) New(chunkType ChunkType) {
 	subdir := "blooms/"
@@ -30,7 +30,7 @@ func (cl *CacheLayout) New(chunkType ChunkType) {
 	cl.extension = extension
 }
 
-// Uses the data stored in outputConfig to build a path and return it
+// GetPathTo uses the data stored in outputConfig to build a path and return it
 // as a string
 func (cl *CacheLayout) GetPathTo(fileName string) string {
 	return path.Join(cl.outputDir, cl.subdir, fileName+cl.extension)

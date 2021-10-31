@@ -51,7 +51,6 @@ func TestDownloadJSON(t *testing.T) {
 	defer ts.Close()
 
 	manifest, err := DownloadManifest(ts.URL)
-
 	if err != nil {
 		t.Error(err)
 	}
@@ -70,7 +69,6 @@ func TestDownloadTab(t *testing.T) {
 	defer ts.Close()
 
 	manifest, err := DownloadManifest(ts.URL)
-
 	if err != nil {
 		t.Error(err)
 	}

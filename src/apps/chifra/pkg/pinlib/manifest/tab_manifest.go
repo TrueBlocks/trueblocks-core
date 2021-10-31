@@ -10,7 +10,6 @@ func ReadPinDescriptors(r io.Reader) ([]PinDescriptor, error) {
 	reader.Comma = '\t'
 	reader.FieldsPerRecord = 3
 
-	// source, err := reader.ReadAll()
 	descriptors := []PinDescriptor{}
 
 	for {
@@ -18,7 +17,6 @@ func ReadPinDescriptors(r io.Reader) ([]PinDescriptor, error) {
 		if err == io.EOF {
 			break
 		}
-
 		if err != nil {
 			return nil, err
 		}
@@ -52,13 +50,11 @@ func BuildTabRange(descriptors []PinDescriptor) (ManifestRange, error) {
 
 func ReadTabManifest(r io.Reader) (*Manifest, error) {
 	descriptors, err := ReadPinDescriptors(r)
-
 	if err != nil {
 		return nil, err
 	}
 
 	newBlockRange, err := BuildTabRange(descriptors)
-
 	if err != nil {
 		return nil, err
 	}

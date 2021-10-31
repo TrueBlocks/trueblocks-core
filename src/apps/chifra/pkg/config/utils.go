@@ -23,7 +23,7 @@ var osToPath = map[string]string{
 	"darwin": "Library/Application Support/TrueBlocks",
 }
 
-// Returns the path to the directory where the configuration files are
+// GetConfigPath returns the path to the directory where the configuration files are
 func GetConfigPath(fileName string) string {
 	userOs := runtime.GOOS
 	if userOs == "windows" {
@@ -51,7 +51,7 @@ func GetConfigPath(fileName string) string {
 	return path.Join(homeDir, confDir, fileName)
 }
 
-// Opens the file and returns new TOML Decoder
+// read opens the file and returns new TOML Decoder
 func read(fileName string) *toml.Decoder {
 	filePath := GetConfigPath(fileName + ".toml")
 
@@ -63,13 +63,12 @@ func read(fileName string) *toml.Decoder {
 	return toml.NewDecoder(file)
 }
 
-// Reads {configName}.toml from the config directory, parses it
+// ReadTo reads {configName}.toml from the config directory, parses it
 // and loads the values into target. Warning: configName should NOT
 // have .toml extension (it will be added automatically)
 func ReadTo(target interface{}, configName string) {
 	reader := read(configName)
 	_, err := reader.Decode(target)
-
 	if err != nil {
 		log.Fatalf(`Error while reading configuration for "%s": %s`, configName, err)
 	}
