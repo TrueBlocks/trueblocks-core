@@ -3,6 +3,9 @@ package logger
 import (
 	"fmt"
 	"os"
+	"time"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 type severity int
@@ -26,7 +29,13 @@ var severityToLabel = map[severity]string{
 // Log prints `a` to stderr with a label corresponding to the severity level
 // prepended (e.g. <INFO>, <ERROR>, etc.)
 func Log(sev severity, a ...interface{}) {
-	fmt.Fprintf(os.Stderr, "<%s> : ", severityToLabel[sev])
+	timeDatePart := "DATE|TIME"
+	if !utils.IsTestMode() {
+		now := time.Now()
+		timeDatePart = now.Format("02-01|15:04:05.000")
+	}
+
+	fmt.Fprintf(os.Stderr, "%s[%s] ", severityToLabel[sev], timeDatePart)
 	fmt.Fprintln(os.Stderr, a...)
 }
 
