@@ -36,10 +36,13 @@ func (cl *CacheLayout) GetPathTo(fileName string) string {
 	return path.Join(cl.outputDir, cl.subdir, fileName+cl.extension)
 }
 
+// RemoveExtension removes extension (".bloom" or ".bin") from fileName
 func (cl *CacheLayout) RemoveExtension(fileName string) string {
 	return strings.Replace(fileName, cl.extension, "", 1)
 }
 
+// String turns cacheLayout data (outputDir and subdir) into a path
+// and returns it as a string
 func (cl *CacheLayout) String() string {
 	return path.Join(cl.outputDir, cl.subdir)
 }

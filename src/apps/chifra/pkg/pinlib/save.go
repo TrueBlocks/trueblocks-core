@@ -9,6 +9,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib/manifest"
 )
 
+// SaveManifest saves the given manifest to the given file
 func SaveManifest(filepath string, manifest *manifest.Manifest) error {
 	targetFile, err := os.Create(filepath)
 

@@ -6,6 +6,7 @@ package config
 var cachedGlobal Global
 var DefaultIndexPath = GetConfigPath("unchained")
 
+// ReadGlobal reads and caches the configuration located in trueBlocks.toml file
 func ReadGlobal() *Global {
 	if cachedGlobal.Version.Current != "" {
 		return &cachedGlobal
@@ -25,6 +26,7 @@ func ReadGlobal() *Global {
 var cachedBlockScrape BlockScrape
 var DefaultIpfsGateway = "http://gateway.ipfs.io/ipfs/"
 
+// ReadBlockScrape reads and caches the configuration located in blockScrape.toml file
 func ReadBlockScrape() *BlockScrape {
 	if cachedBlockScrape.Dev.IpfsGateway != "" {
 		return &cachedBlockScrape

@@ -23,6 +23,8 @@ func (mr *ManifestRange) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// ManifestRangeFromString parses a string found in JSON manifest
+// and returns ManifestRange
 func ManifestRangeFromString(source string) (ManifestRange, error) {
 	mr := [2]uint64{0, 0}
 

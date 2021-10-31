@@ -5,6 +5,7 @@ import (
 	"io"
 )
 
+// ReadJSONManifest reads manifest in JSON format
 func ReadJSONManifest(reader io.Reader) (*Manifest, error) {
 	decoder := json.NewDecoder(reader)
 	manifest := &Manifest{}

@@ -6,6 +6,7 @@ import (
 	"syscall"
 )
 
+// Lock asks the OS to lock a file for the current process
 func Lock(file *os.File) error {
 	// Lock configuration. We want both read (F_RDLCK) and
 	// write (F_WRLCK) locks, and by Start to be interpreted
@@ -22,6 +23,7 @@ func Lock(file *os.File) error {
 	return changeLock(file, lockConfig)
 }
 
+// Unlock removes OS-level file lock
 func Unlock(file *os.File) error {
 	lockConfig := &syscall.Flock_t{
 		Type:   syscall.F_UNLCK,
@@ -33,6 +35,8 @@ func Unlock(file *os.File) error {
 	return changeLock(file, lockConfig)
 }
 
+// changeLock is a helper function that sends the syscall to either lock or
+// unlock a file
 func changeLock(file *os.File, lockConfig *syscall.Flock_t) error {
 	// We use fcntl lock, which locks a file to a specific process
 	//

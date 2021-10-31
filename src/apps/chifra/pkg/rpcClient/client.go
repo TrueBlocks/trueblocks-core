@@ -19,10 +19,12 @@ func Get() ethclient.Client {
 	return *client
 }
 
+// HexToAddress converts a string with hex to go-ethereum's common.Address
 func HexToAddress(hex string) common.Address {
 	return common.HexToAddress(hex)
 }
 
+// DecodeHex decodes a string with hex into a slice of bytes
 func DecodeHex(hex string) []byte {
 	return hexutil.MustDecode(hex)
 }

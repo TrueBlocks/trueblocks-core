@@ -298,6 +298,8 @@ func FilterDownloadedChunks(pins []manifest.PinDescriptor, cacheLayout *CacheLay
 	return exclude(fileMap, pins)
 }
 
+// exclude returns a copy of `from` slice with every pin with a file name present
+// in `what` map removed
 func exclude(what map[string]bool, from []manifest.PinDescriptor) []manifest.PinDescriptor {
 	result := make([]manifest.PinDescriptor, 0, len(from))
 

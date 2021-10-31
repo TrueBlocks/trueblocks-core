@@ -5,6 +5,8 @@ import (
 	"io"
 )
 
+// ReadPinDescriptors parses pin information and returns a slice of
+// PinDescriptor or error
 func ReadPinDescriptors(r io.Reader) ([]PinDescriptor, error) {
 	reader := csv.NewReader(r)
 	reader.Comma = '\t'
@@ -31,6 +33,9 @@ func ReadPinDescriptors(r io.Reader) ([]PinDescriptor, error) {
 	return descriptors, nil
 }
 
+// BuildTabRange finds the first and last pin descriptor and returns
+// ManifestRange. We need this function, because TSV formatted manifest
+// does not carry this information explicitly
 func BuildTabRange(descriptors []PinDescriptor) (ManifestRange, error) {
 	firstPinRange, err := ManifestRangeFromString(descriptors[0].FileName)
 	if err != nil {
@@ -48,6 +53,7 @@ func BuildTabRange(descriptors []PinDescriptor) (ManifestRange, error) {
 	}, nil
 }
 
+// ReadTabManifest parses TSV formatted manifest
 func ReadTabManifest(r io.Reader) (*Manifest, error) {
 	descriptors, err := ReadPinDescriptors(r)
 	if err != nil {

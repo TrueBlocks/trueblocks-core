@@ -14,14 +14,19 @@ import (
 var unchainedIndexAddr = "0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd"
 var manifestHashEncoding = "0x337f3f32"
 
+// GetUnchainedIndexAddress returns UnchainedIndex smart contract address
 func GetUnchainedIndexAddress() string {
 	return unchainedIndexAddr
 }
 
+// GetManifestHashEncoding returns encoding of manifestHash getter of
+// UnchainedIndex smart contract
 func GetManifestHashEncoding() string {
 	return manifestHashEncoding
 }
 
+// GetManifestCidFromContract calls UnchainedIndex smart contract to get
+// the current manifest IPFS CID
 func GetManifestCidFromContract() (string, error) {
 	ethClient := rpcClient.Get()
 	defer ethClient.Close()
