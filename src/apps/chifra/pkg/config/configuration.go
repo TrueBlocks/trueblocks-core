@@ -34,6 +34,11 @@ func ReadBlockScrape() *BlockScrape {
 		Dev: blockScrapeDev{
 			IpfsGateway: DefaultIpfsGateway,
 		},
+		Requires: blockScrapeRequires{
+			Tracing:  true,
+			Parity:   true,
+			Balances: false,
+		},
 	}
 
 	ReadTo(config, "blockScrape")

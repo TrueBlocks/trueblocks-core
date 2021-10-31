@@ -21,10 +21,10 @@ type Global struct {
 // BlockScrape config
 
 type blockScrapeRequires struct {
-	Tracing bool
-	Parity  bool
-	Balance bool
-	Archive bool
+	Tracing  bool
+	Parity   bool
+	Balances bool
+	Archive  bool
 }
 
 type blockScrapeDev struct {
