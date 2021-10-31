@@ -93,17 +93,7 @@ bool COptions::handle_extract() {
     if (extract == "blooms") {
         return handle_extract_blooms();
     } else {
-        // LOG_WARN("I AM HERE: ", getCWD());
-        // if (!folderExists("./out")) {
-        // LOG_WARN("Create folder called './out' in current working directory? (y/N)");
-        //        int ch = getchar();
-        //        if (ch != 'y' && ch != 'Y')
-        //            return false;
-        //        LOG_WARN("ch", string_q(1, (char)ch));
-        // LOG_WARN("");
         establishFolder("out");
-        // }
-        // LOG_INFO(folderExists("out"));
         return forEveryFileInFolder(indexFolder_finalized, chunkVisitFunc, this);
     }
     LOG_PROG("Finished");

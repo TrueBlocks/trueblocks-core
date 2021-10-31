@@ -56,8 +56,8 @@ string_q CBlockOptions::getBlockNumList(void) {
 
 //--------------------------------------------------------------------------------
 bool CHistoryOptions::requestsHistory(void) const {
-    blknum_t n_blocks = getGlobalConfig()->getConfigInt("dev", "history_cnt", 250);
-    return ((newestBlock - oldestBlock) >= n_blocks);
+    blknum_t history_cnt = getGlobalConfig()->getConfigInt("dev", "history_cnt", 250);
+    return ((newestBlock - oldestBlock) >= history_cnt);
 }
 
 //--------------------------------------------------------------------------------

@@ -23,9 +23,9 @@ static const COption params[] = {
     // clang-format off
     COption("action", "a", "enum[toggle|run|restart|pause|quit]", OPT_FLAG, "command to apply to the specified scrape"),
     COption("pin", "p", "", OPT_SWITCH, "pin chunks (and blooms) to IPFS as they are created (requires pinning service)"),  // NOLINT
-    COption("publish", "u", "", OPT_HIDDEN | OPT_SWITCH, "after pinning the chunk, publish it to UnchainedIndex"),
+    COption("publish", "u", "", OPT_SWITCH, "after pinning the chunk, publish it to UnchainedIndex"),
     COption("sleep", "s", "<double>", OPT_FLAG, "seconds to sleep between scraper passes"),
-    COption("port", "o", "", OPT_HIDDEN | OPT_SWITCH, "specify the server's port (:8081 default)"),
+    COption("block_cnt", "n", "<uint64>", OPT_FLAG, "maximum number of blocks to process per pass"),
     COption("", "", "", OPT_DESCRIPTION, "Scan the chain and update (and optionally pin) the TrueBlocks index of appearances."),  // NOLINT
     // clang-format on
     // END_CODE_OPTIONS
@@ -72,8 +72,11 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-s" || arg == "--sleep") {
             return flag_required("sleep");
 
-        } else if (arg == "-o" || arg == "--port") {
-            port = true;
+        } else if (startsWith(arg, "-n:") || startsWith(arg, "--block_cnt:")) {
+            if (!confirmUint("block_cnt", block_cnt, arg))
+                return false;
+        } else if (arg == "-n" || arg == "--block_cnt") {
+            return flag_required("block_cnt");
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -90,10 +93,9 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("pin", pin);
     LOG_TEST_BOOL("publish", publish);
     LOG_TEST("sleep", sleep, (sleep == 14));
-    LOG_TEST("port", port, (port == ":8081"));
-    LOG_TEST("n_blocks", n_blocks, (n_blocks == 2000));
-    LOG_TEST("n_block_procs", n_block_procs, (n_block_procs == 10));
-    LOG_TEST("n_addr_procs", n_addr_procs, (n_addr_procs == 20));
+    LOG_TEST("block_cnt", block_cnt, (block_cnt == 2000));
+    LOG_TEST("block_chan_cnt", block_chan_cnt, (block_chan_cnt == 10));
+    LOG_TEST("addr_chan_cnt", addr_chan_cnt, (addr_chan_cnt == 20));
     // END_DEBUG_DISPLAY
 
     if (Mocked(""))
@@ -121,11 +123,12 @@ bool COptions::parseArguments(string_q& command) {
     if (isTestMode()) {
         ostringstream os;
         os << "{" << endl;
-        os << "  \"message\": \"Testing only\"," << endl;
-        os << "  \"n_blocks\": " << n_blocks << "," << endl;
-        os << "  \"n_block_procs\": " << n_block_procs << "," << endl;
-        os << "  \"n_addr_procs\": " << n_addr_procs << "," << endl;
+        os << "  \"message\": \"Testing in blockScrape/options.cpp\"," << endl;
+        os << "  \"block_cnt\": " << block_cnt << "," << endl;
+        os << "  \"block_chan_cnt\": " << block_chan_cnt << "," << endl;
+        os << "  \"addr_chan_cnt\": " << addr_chan_cnt << "," << endl;
         os << "  \"pin\": " << pin << "," << endl;
+        os << "  \"publish\": " << publish << "," << endl;
         os << "}" << endl;
         cout << os.str();
         return false;
@@ -210,11 +213,10 @@ void COptions::Init(void) {
     pin = false;
     publish = false;
     sleep = 14;
-    port = ":8081";
     // clang-format off
-    n_blocks = getGlobalConfig("blockScrape")->getConfigInt("settings", "n_blocks", 2000);
-    n_block_procs = getGlobalConfig("blockScrape")->getConfigInt("settings", "n_block_procs", 10);
-    n_addr_procs = getGlobalConfig("blockScrape")->getConfigInt("settings", "n_addr_procs", 20);
+    block_cnt = getGlobalConfig("blockScrape")->getConfigInt("settings", "block_cnt", 2000);
+    block_chan_cnt = getGlobalConfig("blockScrape")->getConfigInt("settings", "block_chan_cnt", 10);
+    addr_chan_cnt = getGlobalConfig("blockScrape")->getConfigInt("settings", "addr_chan_cnt", 20);
     // clang-format on
     // END_CODE_INIT
 
@@ -231,9 +233,9 @@ COptions::COptions(void) {
     // END_CODE_NOTES
 
     // clang-format off
-    configs.push_back("`n_blocks`: maximum number of blocks to process (defaults to 5000).");
-    configs.push_back("`n_block_procs`: number of concurrent block channels for blaze.");
-    configs.push_back("`n_addr_procs`: number of concurrent address channels for blaze.");
+    configs.push_back("`block_cnt`: maximum number of blocks to process (defaults to 5000).");
+    configs.push_back("`block_chan_cnt`: number of concurrent block channels for blaze.");
+    configs.push_back("`addr_chan_cnt`: number of concurrent address channels for blaze.");
     // clang-format on
 
     // BEG_ERROR_STRINGS

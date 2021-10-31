@@ -141,6 +141,7 @@ string_q get_notes2(const CCommandOption& cmd) {
     return trim(substitute(os.str(), "|", "\n    "));
 }
 
+#define upperCaseGoOpts (p.api_route == "scrape")
 string_q get_optfields(const CCommandOption& cmd) {
     size_t wid = 0;
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
@@ -152,8 +153,13 @@ string_q get_optfields(const CCommandOption& cmd) {
     ostringstream os;
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
         replace(p.longName, "deleteMe", "delete");
-        if (p.option_type != "positional")
-            os << "\t" << padRight(p.longName, wid) << " " << p.go_type << endl;
+        if (p.option_type != "positional") {
+            if (upperCaseGoOpts) {
+                os << "\t" << padRight(toProper(p.longName), wid) << " " << p.go_type << endl;
+            } else {
+                os << "\t" << padRight(p.longName, wid) << " " << p.go_type << endl;
+            }
+        }
     }
     return os.str();
 }
@@ -248,7 +254,11 @@ string_q get_setopts(const CCommandOption& cmd) {
             os << p.go_flagtype;
             os << "(&[{PROPER}]Opts.";
             replace(p.longName, "deleteMe", "delete");
-            os << p.Format("[{LONGNAME}], ");
+            if (upperCaseGoOpts) {
+                os << toProper(p.longName) << ", ";
+            } else {
+                os << p.Format("[{LONGNAME}], ");
+            }
             os << p.Format("\"[{LONGNAME}]\", ");
             os << p.Format("\"[{HOTKEY}]\", ");
             os << get_goDefault(p) << ", ";

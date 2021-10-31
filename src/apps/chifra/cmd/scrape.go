@@ -50,14 +50,13 @@ Notes:
   - the --n_* related options allow you to tune the scrapers.`
 
 type scrapeOptionsType struct {
-	action        string
-	sleep         float64
-	pin           bool
-	publish       bool
-	port          string
-	n_blocks      uint64
-	n_block_procs uint64
-	n_addr_procs  uint64
+	Action         string
+	Sleep          float64
+	Pin            bool
+	Publish        bool
+	Block_Cnt      uint64
+	Block_Chan_Cnt uint64
+	Addr_Chan_Cnt  uint64
 }
 
 var ScrapeOpts scrapeOptionsType
@@ -67,20 +66,17 @@ func init() {
 
 	scrapeCmd.Flags().SortFlags = false
 	scrapeCmd.PersistentFlags().SortFlags = false
-	scrapeCmd.Flags().StringVarP(&ScrapeOpts.action, "action", "a", "", `command to apply to the specified scrape
+	scrapeCmd.Flags().StringVarP(&ScrapeOpts.Action, "action", "a", "", `command to apply to the specified scrape
 One of [ toggle | run | restart | pause | quit ]`)
-	scrapeCmd.Flags().Float64VarP(&ScrapeOpts.sleep, "sleep", "s", 14, "seconds to sleep between scraper passes")
-	scrapeCmd.Flags().BoolVarP(&ScrapeOpts.pin, "pin", "p", false, "pin chunks (and blooms) to IPFS as they are created (requires pinning service)")
-	scrapeCmd.Flags().BoolVarP(&ScrapeOpts.publish, "publish", "u", false, "after pinning the chunk, publish it to UnchainedIndex (hidden)")
-	scrapeCmd.Flags().StringVarP(&ScrapeOpts.port, "port", "o", ":8081", "specify the server's port (:8081 default) (hidden)")
-	scrapeCmd.Flags().Uint64VarP(&ScrapeOpts.n_blocks, "n_blocks", "n", 2000, "maximum number of blocks to process per pass")
-	scrapeCmd.Flags().Uint64VarP(&ScrapeOpts.n_block_procs, "n_block_procs", "b", 10, "number of concurrent block processing channels (hidden)")
-	scrapeCmd.Flags().Uint64VarP(&ScrapeOpts.n_addr_procs, "n_addr_procs", "d", 20, "number of concurrent address processing channels (hidden)")
+	scrapeCmd.Flags().Float64VarP(&ScrapeOpts.Sleep, "sleep", "s", 14, "seconds to sleep between scraper passes")
+	scrapeCmd.Flags().BoolVarP(&ScrapeOpts.Pin, "pin", "p", false, "pin chunks (and blooms) to IPFS as they are created (requires pinning service)")
+	scrapeCmd.Flags().BoolVarP(&ScrapeOpts.Publish, "publish", "u", false, "after pinning the chunk, publish it to UnchainedIndex")
+	scrapeCmd.Flags().Uint64VarP(&ScrapeOpts.Block_Cnt, "block_cnt", "n", 2000, "maximum number of blocks to process per pass")
+	scrapeCmd.Flags().Uint64VarP(&ScrapeOpts.Block_Chan_Cnt, "block_chan_cnt", "b", 10, "number of concurrent block processing channels (hidden)")
+	scrapeCmd.Flags().Uint64VarP(&ScrapeOpts.Addr_Chan_Cnt, "addr_chan_cnt", "d", 20, "number of concurrent address processing channels (hidden)")
 	if !utils.IsTestMode() {
-		scrapeCmd.Flags().MarkHidden("publish")
-		scrapeCmd.Flags().MarkHidden("port")
-		scrapeCmd.Flags().MarkHidden("n_block_procs")
-		scrapeCmd.Flags().MarkHidden("n_addr_procs")
+		scrapeCmd.Flags().MarkHidden("block_chan_cnt")
+		scrapeCmd.Flags().MarkHidden("addr_chan_cnt")
 	}
 	scrapeCmd.Flags().SortFlags = false
 	scrapeCmd.PersistentFlags().SortFlags = false
