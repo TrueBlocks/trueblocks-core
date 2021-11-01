@@ -103,7 +103,7 @@ func RunIndexScraper(wg sync.WaitGroup) {
 	IndexScraper.Running = true
 	defer wg.Done()
 	for {
-		fmt.Printf("%s\n", IndexScraper.ToJson())
+		// fmt.Printf("%s\n", IndexScraper.ToJson())
 		if !IndexScraper.Running {
 			if IndexScraper.WasRunning {
 				IndexScraper.ShowStateChange("running", "paused")
