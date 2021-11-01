@@ -10,10 +10,6 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-/*
- * Parts of this file were generated with makeClass --gocmds. Edit only those parts of
- * the code inside of 'EXISTING_CODE' tags.
- */
 package pinman
 
 import (
