@@ -75,25 +75,23 @@ func validateScrapeArgs(cmd *cobra.Command, args []string) error {
 
 func runScrape(cmd *cobra.Command, args []string) {
 	IndexScraper = NewScraper(colors.Yellow, "IndexScraper", ScrapeOpts.Sleep, 0) // ScrapeOpts.Verbose)
-	scraperOn := ScrapeOpts.Action == "indexer" || ScrapeOpts.Action == "both"
-	if scraperOn {
-		log.Print(colors.Green, "scraping:    ", colors.Off, scraperOn, "\n")
-		if ScrapeOpts.Sleep != 14. {
-			log.Print(colors.Green, "sleep:    ", colors.Off, ScrapeOpts.Sleep, "\n")
-		}
+
+	MonitorScraper = NewScraper(colors.Purple, "MonitorScraper", ScrapeOpts.Sleep, 0) // ScrapeOpts.Verbose)
+
+	var wg sync.WaitGroup
+
+	wg.Add(1)
+	go RunIndexScraper(wg)
+	if hasIndexerFlag(args[0]) {
 		IndexScraper.ChangeState(true)
 	}
 
-	MonitorScraper = NewScraper(colors.Purple, "MonitorScraper", ScrapeOpts.Sleep, 0) // ScrapeOpts.Verbose)
-	monitorsOn := ScrapeOpts.Action == "monitors" || ScrapeOpts.Action == "both"
-	if monitorsOn {
-		log.Print(colors.Green, "monitoring:  ", colors.Off, monitorsOn, "\n")
+	wg.Add(1)
+	go RunMonitorScraper(wg)
+	if hasMonitorsFlag(args[0]) {
 		MonitorScraper.ChangeState(true)
 	}
 
-	var wg sync.WaitGroup
-	wg.Add(1)
-	go RunIndexScraper(wg)
 	wg.Wait()
 }
 
@@ -452,11 +450,9 @@ func (scraper *Scraper) Pause() {
 // }
 
 func hasIndexerFlag(mode string) bool {
-	logger.Log(logger.Info, "hasIndexFlag Action: ", mode)
 	return mode == "indexer" || mode == "both"
 }
 
 func hasMonitorsFlag(mode string) bool {
-	logger.Log(logger.Info, "hasMonitorsFlag Action: ", mode)
 	return mode == "monitors" || mode == "both"
 }
