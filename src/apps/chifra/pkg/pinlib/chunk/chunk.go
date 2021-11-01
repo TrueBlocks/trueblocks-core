@@ -20,6 +20,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib/manifest"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/progress"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/sigintTrap"
 	"github.com/panjf2000/ants/v2"
 )
@@ -33,23 +34,6 @@ const (
 	BloomChunk ChunkType = iota
 	IndexChunk
 )
-
-type ProgressEvent uint
-
-const (
-	ProgressDownloading ProgressEvent = iota
-	ProgressUnzipping
-	ProgressValidating
-	ProgressDone
-	ProgressError
-	ProgressAllDone
-)
-
-type ChunkProgress struct {
-	Event   ProgressEvent
-	Message string
-	Pin     *manifest.PinDescriptor
-}
 
 // jobResult type is used to carry both downloaded data and some
 // metadata to decompressing/file writing function through a channel
@@ -91,7 +75,7 @@ func fetchChunk(url string) (*fetchResult, error) {
 
 // GetChunksFromRemote downloads, unzips and saves the chunk of type indicated by chunkType
 // for each pin in pins. Progress is reported to progressChannel.
-func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkType ChunkType, progressChannel chan<- *ChunkProgress) {
+func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkType ChunkType, progressChannel chan<- *progress.Progress) {
 	// Downloaded content will wait for saving in this channel
 	writeChannel := make(chan *jobResult, poolSize)
 	// Context lets us handle Ctrl-C easily
@@ -128,9 +112,9 @@ func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkType ChunkType, pro
 
 			url += hash
 
-			progressChannel <- &ChunkProgress{
-				Pin:     &pin,
-				Event:   ProgressDownloading,
+			progressChannel <- &progress.Progress{
+				Payload: &pin,
+				Event:   progress.Start,
 				Message: hash,
 			}
 
@@ -139,9 +123,9 @@ func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkType ChunkType, pro
 				return
 			}
 			if ctx.Err() != nil {
-				progressChannel <- &ChunkProgress{
-					Pin:     &pin,
-					Event:   ProgressError,
+				progressChannel <- &progress.Progress{
+					Payload: &pin,
+					Event:   progress.Error,
 					Message: ctx.Err().Error(),
 				}
 				return
@@ -154,9 +138,9 @@ func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkType ChunkType, pro
 					Pin:      &pin,
 				}
 			} else {
-				progressChannel <- &ChunkProgress{
-					Pin:     &pin,
-					Event:   ProgressError,
+				progressChannel <- &progress.Progress{
+					Payload: &pin,
+					Event:   progress.Error,
 					Message: err.Error(),
 				}
 			}
@@ -181,16 +165,17 @@ func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkType ChunkType, pro
 		case <-ctx.Done():
 			return
 		default:
-			progressChannel <- &ChunkProgress{
-				Pin:   res.Pin,
-				Event: ProgressUnzipping,
+			progressChannel <- &progress.Progress{
+				Payload: res.Pin,
+				Event:   progress.Update,
+				Message: "Unzipping",
 			}
 
 			err := saveFileContents(res, cacheLayout)
 			if err != nil && err != sigintTrap.ErrInterrupted {
-				progressChannel <- &ChunkProgress{
-					Pin:     res.Pin,
-					Event:   ProgressError,
+				progressChannel <- &progress.Progress{
+					Payload: res.Pin,
+					Event:   progress.Error,
 					Message: err.Error(),
 				}
 				return
@@ -200,9 +185,9 @@ func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkType ChunkType, pro
 				cancel()
 			}
 
-			progressChannel <- &ChunkProgress{
-				Pin:   res.Pin,
-				Event: ProgressDone,
+			progressChannel <- &progress.Progress{
+				Payload: res.Pin,
+				Event:   progress.Done,
 			}
 		}
 	})
@@ -235,8 +220,8 @@ func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkType ChunkType, pro
 	close(writeChannel)
 
 	writeWg.Wait()
-	progressChannel <- &ChunkProgress{
-		Event: ProgressAllDone,
+	progressChannel <- &progress.Progress{
+		Event: progress.AllDone,
 	}
 }
 

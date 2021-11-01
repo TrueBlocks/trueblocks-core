@@ -28,6 +28,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib/chunk"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib/manifest"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/progress"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/spf13/cobra"
 )
@@ -138,43 +139,39 @@ func downloadAndReportProgress(pins []manifest.PinDescriptor, chunkType chunk.Ch
 		chunk.IndexChunk: "index",
 	}
 	failed := []manifest.PinDescriptor{}
-	progress := make(chan *chunk.ChunkProgress, 100)
-	defer close(progress)
+	progressChannel := progress.MakeChan()
+	defer close(progressChannel)
 
-	go chunk.GetChunksFromRemote(pins, chunkType, progress)
-
-	progressToLabel := map[chunk.ProgressEvent]string{
-		chunk.ProgressDownloading: "Unchaining",
-		chunk.ProgressUnzipping:   "Unzipping",
-		chunk.ProgressValidating:  "Validating",
-		chunk.ProgressError:       "Error",
-	}
+	go chunk.GetChunksFromRemote(pins, chunkType, progressChannel)
 
 	var pinsDone uint
 
-	for event := range progress {
-		if event.Event == chunk.ProgressAllDone {
+	for event := range progressChannel {
+		pin, ok := event.Payload.(*manifest.PinDescriptor)
+		var fileName string
+		if ok {
+			fileName = pin.FileName
+		}
+
+		if event.Event == progress.AllDone {
 			logger.Log(logger.Info, pinsDone, "pin(s) were (re)initialized")
 			break
 		}
 
-		if event.Event == chunk.ProgressError {
-			failed = append(failed, *event.Pin)
-		}
-
-		if event.Event == chunk.ProgressDownloading {
-			logger.Log(logger.Info, "Unchaining", chunkTypeToDescription[chunkType], event.Message, "to", event.Pin.FileName)
-			continue
-		}
-
-		if event.Event == chunk.ProgressDone {
+		switch event.Event {
+		case progress.Error:
+			if ok {
+				failed = append(failed, *pin)
+			}
+		case progress.Start:
+			logger.Log(logger.Info, "Unchaining", chunkTypeToDescription[chunkType], event.Message, "to", fileName)
+		case progress.Update:
+			logger.Log(logger.Info, event.Message, fileName)
+		case progress.Done:
 			pinsDone++
-			continue
+		default:
+			logger.Log(logger.Info, event.Message, fileName)
 		}
-
-		eventLabel := progressToLabel[event.Event]
-
-		logger.Log(logger.Info, eventLabel, event.Pin.FileName, event.Message)
 	}
 
 	return failed
