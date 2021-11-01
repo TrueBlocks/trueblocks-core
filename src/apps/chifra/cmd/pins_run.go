@@ -13,18 +13,14 @@
 package cmd
 
 import (
-	"encoding/json"
 	"fmt"
 	"net/url"
-	"os"
 	"path"
 	"sort"
-	"strconv"
-	"strings"
-	"text/tabwriter"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib/chunk"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib/manifest"
@@ -86,50 +82,38 @@ func handleList(format string) {
 	// Load manifest
 	manifestData, err := manifest.FromLocalFile()
 	if err != nil {
-		logger.Fatal("Cannot open manifest file:", err)
+		logger.Fatal("Cannot open local manifest file", err)
 	}
 
 	// Sort pins
 	sort.Slice(manifestData.NewPins, func(i, j int) bool {
 		iPin := manifestData.NewPins[i]
 		jPin := manifestData.NewPins[j]
-		iKey := strings.Split(iPin.FileName, "-")[0]
-		jKey := strings.Split(jPin.FileName, "-")[0]
 
-		iNumber, err := strconv.ParseInt(iKey, 10, 64)
-		if err != nil {
-			return false
-		}
-
-		jNumber, err := strconv.ParseInt(jKey, 10, 64)
-		if err != nil {
-			return false
-		}
-
-		return iNumber < jNumber
+		return iPin.FileName < jPin.FileName
 	})
 
-	// dszlachta: I think we should move printing in the given format to a package
 	if format == "json" {
-		response := map[string][]manifest.PinDescriptor{
-			"data": manifestData.NewPins,
-		}
-		marshalled, err := json.MarshalIndent(response, "", "    ")
+		err := output.PrintJson(manifestData.NewPins)
 		if err != nil {
 			logger.Fatal(err)
 		}
 
-		fmt.Println(string(marshalled))
-
 		return
 	}
 
-	writer := tabwriter.NewWriter(os.Stdout, 0, 0, 1, ' ', 0)
-	fmt.Fprintf(writer, "filename\tbloomhash\tindexhash\n")
+	table := &output.Table{}
+	table.New()
+	table.Header([]string{
+		"filename",
+		"bloomhash",
+		"indexhash",
+	})
+
 	for _, pin := range manifestData.NewPins {
-		fmt.Fprintf(writer, "%s\t%s\t%s\n", pin.FileName, pin.BloomHash, pin.IndexHash)
+		table.Row([]string{pin.FileName, pin.BloomHash, pin.IndexHash})
 	}
-	writer.Flush()
+	table.Print()
 }
 
 // Downloads chunks and report progress
