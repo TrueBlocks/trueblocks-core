@@ -17,7 +17,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
-	"os/exec"
 	"sync"
 	"time"
 
@@ -25,7 +24,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/spf13/cobra"
 )
@@ -75,47 +73,52 @@ func validateScrapeArgs(cmd *cobra.Command, args []string) error {
 }
 
 func runScrape(cmd *cobra.Command, args []string) {
-	IndexScraper = NewScraper(colors.Yellow, "IndexScraper", ScrapeOpts.Sleep, 0) // ScrapeOpts.Verbose)
-
-	MonitorScraper = NewScraper(colors.Purple, "MonitorScraper", ScrapeOpts.Sleep, 0) // ScrapeOpts.Verbose)
-
 	var wg sync.WaitGroup
 
 	wg.Add(1)
-	go RunIndexScraper(wg)
-	if hasIndexerFlag(args[0]) {
-		IndexScraper.ChangeState(true)
-	}
+	IndexScraper = NewScraper(colors.Yellow, "IndexScraper", ScrapeOpts.Sleep)
+	go RunIndexScraper(wg, hasIndexerFlag(args[0]))
 
 	wg.Add(1)
-	go RunMonitorScraper(wg)
-	if hasMonitorsFlag(args[0]) {
-		MonitorScraper.ChangeState(true)
-	}
+	MonitorScraper = NewScraper(colors.Purple, "MonitorScraper", ScrapeOpts.Sleep)
+	go RunMonitorScraper(wg, hasMonitorsFlag(args[0]))
 
 	wg.Wait()
 }
 
-var IndexScraper Scraper
+func hasIndexerFlag(mode string) bool {
+	return mode == "indexer" || mode == "both"
+}
 
-func RunIndexScraper(wg sync.WaitGroup) {
-	IndexScraper.Running = true
+func hasMonitorsFlag(mode string) bool {
+	return mode == "monitors" || mode == "both"
+}
+
+var IndexScraper Scraper
+var MonitorScraper Scraper
+
+func RunIndexScraper(wg sync.WaitGroup, initialState bool) {
+	var s *Scraper = &IndexScraper
+
 	defer wg.Done()
+
+	s.ChangeState(initialState)
 	for {
-		if !IndexScraper.Running {
-			if IndexScraper.WasRunning {
-				IndexScraper.ShowStateChange("running", "paused")
+		if !s.Running {
+			if s.WasRunning {
+				s.ShowStateChange("running", "paused")
 			}
-			IndexScraper.WasRunning = false
-			IndexScraper.Pause()
+			s.WasRunning = false
+			s.Pause()
 		} else {
-			if !IndexScraper.WasRunning {
-				IndexScraper.ShowStateChange("paused", "running")
+			if !s.WasRunning {
+				s.ShowStateChange("paused", "running")
 			}
-			IndexScraper.WasRunning = true
-			IndexScraper.Counter++
-			IndexScraper.ShowStateChange("sleep", "wake")
-			/*-----------*/
+			s.WasRunning = true
+			s.Counter++
+			s.ShowStateChange("sleep", "wake")
+
+			/* -------------- */
 			options := ""
 			if ScrapeOpts.Pin {
 				options += " --pin "
@@ -128,12 +131,129 @@ func RunIndexScraper(wg sync.WaitGroup) {
 			}
 			options += (" --block_cnt " + fmt.Sprintf("%d", ScrapeOpts.Block_Cnt))
 			PassItOn("blockScrape", options, "")
-			/*-----------*/
-			IndexScraper.ShowStateChange("wake", "sleep")
-			if IndexScraper.Running {
-				IndexScraper.Pause()
+			/* -------------- */
+
+			s.ShowStateChange("wake", "sleep")
+			if s.Running {
+				s.Pause()
 			}
 		}
+	}
+}
+
+func RunMonitorScraper(wg sync.WaitGroup, initialState bool) {
+	var s *Scraper = &MonitorScraper
+
+	defer wg.Done()
+
+	s.ChangeState(initialState)
+	for {
+		if !s.Running {
+			if s.WasRunning {
+				s.ShowStateChange("running", "paused")
+			}
+			s.WasRunning = false
+			s.Pause()
+		} else {
+			if !s.WasRunning {
+				s.ShowStateChange("paused", "running")
+			}
+			s.WasRunning = true
+			s.Counter++
+			s.ShowStateChange("sleep", "wake")
+
+			/* -------------- */
+			var addresses []string
+			// root := ScrapeOpts.Status.CachePath + "monitors/"
+			// err := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
+			// 	if strings.Contains(path, ".acct.bin") {
+			// 		path = strings.Replace(path, ".acct.bin", "", -1)
+			// 		parts := strings.Split(path, "/")
+			// 		addresses = append(addresses, parts[len(parts)-1])
+			// 	}
+			// 	return nil
+			// })
+			// if err != nil {
+			// 	panic(err)
+			// }
+
+			// TODO: Could easily be groups of 5 (or 10 or 20) addresses at a time instead. Way faster
+			for _, addr := range addresses {
+				if !MonitorScraper.Running {
+					break
+				}
+				options := " --freshen"
+				options += " " + addr
+				PassItOn("acctExport", options, "")
+			}
+			/* -------------- */
+
+			s.ShowStateChange("wake", "sleep")
+			if s.Running {
+				s.Pause()
+			}
+		}
+	}
+}
+
+var cachePath string = "/tmp/"
+
+type Scraper struct {
+	Counter    uint64 `json:"Counter"`
+	Running    bool   `json:"Running"`
+	WasRunning bool   `json:""`
+	SleepSecs  int64  `json:"SleepSecs"`
+	Color      string `json:"Color"`
+	Name       string `json:"Name"`
+	Verbose    int64  `json:"Verbose"`
+}
+
+func NewScraper(color, name string, secs float64) Scraper {
+	scraper := new(Scraper)
+	scraper.Color = color
+	scraper.Name = name
+	scraper.SleepSecs = int64(secs)
+	scraper.Running = false
+	scraper.Verbose = int64(RootOpts.logLevel)
+	return *scraper
+}
+
+func (scraper *Scraper) ShowStateChange(from, to string) {
+	logger.Log(logger.Info, scraper.Color, scraper.Name, ": [", from, " --> ", to, "]", colors.Off)
+}
+
+func (scraper *Scraper) ToJson() string {
+	e, err := json.Marshal(scraper)
+	if err != nil {
+		fmt.Printf("%s", err)
+		return ""
+	}
+	return string(e)
+}
+
+func (scraper *Scraper) ChangeState(onOff bool) bool {
+	prev := scraper.Running
+	scraper.Running = onOff
+	str := "false"
+	if onOff {
+		str = "true"
+	}
+	fileName := cachePath + scraper.Name + ".txt"
+	err := ioutil.WriteFile(fileName, []byte(str), 0644)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return prev
+}
+
+func (scraper *Scraper) Pause() {
+	halfSecs := scraper.SleepSecs * 2
+	state := scraper.Running
+	for i := 0; i < int(halfSecs); i++ {
+		if state != scraper.Running {
+			break
+		}
+		time.Sleep(time.Duration(500) * time.Millisecond)
 	}
 }
 
@@ -226,23 +346,8 @@ func RunIndexScraper(wg sync.WaitGroup) {
 
 // 		flag.Parse()
 
-// 		// ScrapeOpts.Status, _ = GetChifraData()
-// 		// ScrapeOpts.Meta, _ = GetChifraMeta()
-
-// 	IndexScraper = NewScraper(Yellow, "IndexScraper", ScrapeOpts.Sleep, 0) // ScrapeOpts.Verbose)
-// 	if ScrapeOpts.Scrape {
-// 		log.Print(colors.Green, "scraping:    ", colors.Off, ScrapeOpts.Scrape, "\n")
-// 		if ScrapeOpts.Sleep != 14. {
-// 			log.Print(colors.Green, "sleep:    ", colors.Off, ScrapeOpts.Sleep, "\n")
-// 		}
-// 		IndexScraper.ChangeState(true)
-// 	}
-
-// 	MonitorScraper = NewScraper(Purple, "MonitorScraper", ScrapeOpts.Sleep, 0) // ScrapeOpts.Verbose)
-// 	if ScrapeOpts.Monitor {
-// 		log.Print(colors.Green, "monitoring:  ", colors.Off, ScrapeOpts.Monitor, "\n")
-// 		MonitorScraper.ChangeState(true)
-// 	}
+// ScrapeOpts.Status, _ = GetChifraData()
+// ScrapeOpts.Meta, _ = GetChifraMeta()
 
 // 	if ScrapeOpts.Verbose > 0 {
 // 		log.Print(colors.Green, "verbose:     ", colors.Off, ScrapeOpts.Verbose, "\n")
@@ -259,148 +364,6 @@ func RunIndexScraper(wg sync.WaitGroup) {
 // 	return nil
 // }
 
-var MonitorScraper Scraper
-
-func RunMonitorScraper(wg sync.WaitGroup) {
-	defer wg.Done()
-	for {
-		if !MonitorScraper.Running {
-			if MonitorScraper.WasRunning {
-				MonitorScraper.ShowStateChange("running", "paused")
-			}
-			MonitorScraper.WasRunning = false
-			MonitorScraper.Pause()
-		} else {
-			if !MonitorScraper.WasRunning {
-				MonitorScraper.ShowStateChange("paused", "running")
-			}
-			MonitorScraper.WasRunning = true
-			MonitorScraper.Counter++
-			MonitorScraper.ShowStateChange("sleep", "wake")
-			var addresses []string
-			// root := ScrapeOpts.Status.CachePath + "monitors/"
-			// err := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
-			// 	if strings.Contains(path, ".acct.bin") {
-			// 		path = strings.Replace(path, ".acct.bin", "", -1)
-			// 		parts := strings.Split(path, "/")
-			// 		addresses = append(addresses, parts[len(parts)-1])
-			// 	}
-			// 	return nil
-			// })
-			// if err != nil {
-			// 	panic(err)
-			// }
-
-			for index, addr := range addresses {
-				if !MonitorScraper.Running {
-					break
-				}
-				options := " --freshen"
-				// if MonitorScraper.Verbose > 0 {
-				//	options += " --verbose " + strconv.Itoa(int(MonitorScraper.Verbose))
-				// }
-				options += " " + addr
-				log.Print("<PROG> : ", MonitorScraper.Color, "Freshening ", index, " of ", len(addresses), " acctExport", options, colors.Off, "\n")
-				cmd := exec.Command(utils.GetCommandPath("acctExport"), options)
-				stderrPipe, err := cmd.StderrPipe()
-				if err != nil {
-					log.Printf("%s", err)
-				} else {
-					go func() {
-						ScanForProgress(stderrPipe, func(msg string) {
-							if len(msg) > 0 {
-								log.Printf("%s", msg)
-							}
-						})
-					}()
-				}
-				_, err = cmd.Output()
-				if err != nil {
-					fmt.Printf("%s", err)
-				}
-			}
-
-			MonitorScraper.ShowStateChange("wake", "sleep")
-			if MonitorScraper.Running {
-				MonitorScraper.Pause()
-			}
-		}
-	}
-}
-
-type Scraper struct {
-	Counter    uint64 `json:"Counter"`
-	Running    bool   `json:"Running"`
-	WasRunning bool   `json:""`
-	SleepSecs  int64  `json:"SleepSecs"`
-	Color      string `json:"Color"`
-	Name       string `json:"Name"`
-	Verbose    int64  `json:"Verbose"`
-}
-
-func NewScraper(color, name string, secs float64, verbose int) Scraper {
-	scraper := new(Scraper)
-	scraper.Color = color
-	scraper.Name = name
-	scraper.SleepSecs = int64(secs)
-	scraper.Running = scraper.LoadStateFromCache()
-	scraper.Verbose = int64(verbose)
-	return *scraper
-}
-
-func (scraper *Scraper) ShowStateChange(from, to string) {
-	logger.Log(logger.Info, scraper.Color, scraper.Name, ": [", from, " --> ", to, "]", colors.Off)
-}
-
-func (scraper *Scraper) ToJson() string {
-	e, err := json.Marshal(scraper)
-	if err != nil {
-		fmt.Printf("%s", err)
-		return ""
-	}
-	return string(e)
-}
-
-var cachePath string = "/tmp/"
-
-func (scraper *Scraper) ChangeState(onOff bool) bool {
-	prev := scraper.Running
-	scraper.Running = onOff
-	str := "false"
-	if onOff {
-		str = "true"
-	}
-	fileName := cachePath + scraper.Name + ".txt"
-	err := ioutil.WriteFile(fileName, []byte(str), 0644)
-	if err != nil {
-		log.Fatal(err)
-	}
-	return prev
-}
-
-func (scraper *Scraper) LoadStateFromCache() bool {
-	fileName := cachePath + scraper.Name + ".txt"
-	if !utils.FileExists(fileName) {
-		return false
-	}
-	content, err := ioutil.ReadFile(fileName)
-	if err != nil {
-		log.Fatal(err)
-	}
-	return string(content) == "true"
-}
-
-func (scraper *Scraper) Pause() {
-	halfSecs := scraper.SleepSecs * 2
-	state := scraper.Running
-	for i := 0; i < int(halfSecs); i++ {
-		if state != scraper.Running {
-			break
-		}
-		time.Sleep(time.Duration(500) * time.Millisecond)
-	}
-}
-
 // // ManageScraper handles scraper commands
 // func ManageScraper(w http.ResponseWriter, r *http.Request) {
 // 	status, exists := utils.GetParam("status", "both", r)
@@ -415,15 +378,13 @@ func (scraper *Scraper) Pause() {
 // 			log.Println("'mode' param is missing")
 // 			return
 // 		}
-
-// 		if toggle == "indexer" || toggle == "both" {
+// 		if hasIndexerFlag(toggle) {
 // 			IndexScraper.ChangeState(mode == "true")
 // 		}
-// 		if toggle == "monitors" || toggle == "both" {
+// 		if hasMonitorsFlag(toggle) {
 // 			MonitorScraper.ChangeState(mode == "true")
 // 		}
 // 		scraperStatus("toggle", w, r)
-
 // 	} else {
 // 		log.Println("status: ", status)
 // 		scraperStatus("status", w, r)
@@ -448,11 +409,3 @@ func (scraper *Scraper) Pause() {
 // 	fmt.Fprint(w, MonitorScraper.ToJson())
 // 	fmt.Fprint(w, " }")
 // }
-
-func hasIndexerFlag(mode string) bool {
-	return mode == "indexer" || mode == "both"
-}
-
-func hasMonitorsFlag(mode string) bool {
-	return mode == "monitors" || mode == "both"
-}
