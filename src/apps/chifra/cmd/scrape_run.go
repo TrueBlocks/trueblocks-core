@@ -19,6 +19,7 @@ import (
 	"log"
 	"os/exec"
 	"sync"
+	"time"
 
 	// "time"
 
@@ -101,7 +102,6 @@ func RunIndexScraper(wg sync.WaitGroup) {
 	IndexScraper.Running = true
 	defer wg.Done()
 	for {
-		// fmt.Printf("%s\n", IndexScraper.ToJson())
 		if !IndexScraper.Running {
 			if IndexScraper.WasRunning {
 				IndexScraper.ShowStateChange("running", "paused")
@@ -391,14 +391,14 @@ func (scraper *Scraper) LoadStateFromCache() bool {
 }
 
 func (scraper *Scraper) Pause() {
-	// halfSecs := scraper.SleepSecs * 2
-	// state := scraper.Running
-	// for i := 0; i < int(halfSecs); i++ {
-	// 	if state != scraper.Running {
-	// 		break
-	// 	}
-	// 	time.Sleep(time.Duration(500) * time.Millisecond)
-	// }
+	halfSecs := scraper.SleepSecs * 2
+	state := scraper.Running
+	for i := 0; i < int(halfSecs); i++ {
+		if state != scraper.Running {
+			break
+		}
+		time.Sleep(time.Duration(500) * time.Millisecond)
+	}
 }
 
 // // ManageScraper handles scraper commands
