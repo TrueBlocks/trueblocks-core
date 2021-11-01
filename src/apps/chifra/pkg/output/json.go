@@ -6,8 +6,8 @@ import (
 	"os"
 )
 
-var apiWriter = os.Stdout
-
+// PrintJson marshals its arguments and prints JSON in a standardized
+// format
 func PrintJson(serializable interface{}) error {
 	response := map[string]interface{}{
 		"data": serializable,
@@ -16,7 +16,7 @@ func PrintJson(serializable interface{}) error {
 	if err != nil {
 		return err
 	}
-	fmt.Fprintln(apiWriter, string(marshalled))
+	fmt.Fprintln(os.Stdout, string(marshalled))
 
 	return nil
 }
