@@ -18,7 +18,6 @@ import (
 	"io/ioutil"
 	"log"
 	"os/exec"
-	"strconv"
 	"sync"
 
 	// "time"
@@ -30,22 +29,12 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func hasIndexerFlag(mode string) bool {
-	logger.Log(logger.Info, "hasIndexFlag Action: ", mode)
-	return mode == "indexer" || mode == "both"
-}
-
-func hasMonitorsFlag(mode string) bool {
-	logger.Log(logger.Info, "hasMonitorsFlag Action: ", mode)
-	return mode == "monitors" || mode == "both"
-}
-
 // TODO: this is a much more elegant way to do error strings:
 // TODO: https://github.com/storj/uplink/blob/v1.7.0/bucket.go#L19
 
 func validateScrapeArgs(cmd *cobra.Command, args []string) error {
 	if len(args) == 0 {
-		return validate.Usage("Please choose a single one of [indexer|monitors|both]")
+		return validate.Usage("Please choose one of [indexer|monitors|both]")
 
 	} else {
 		for _, arg := range args {
@@ -85,19 +74,6 @@ func validateScrapeArgs(cmd *cobra.Command, args []string) error {
 }
 
 func runScrape(cmd *cobra.Command, args []string) {
-	fmt.Printf("%s\n", "{")
-	if utils.IsTestMode() {
-		fmt.Printf("  %s\n", "\"message\": \"Testing in scrape_run.go\",")
-	}
-	fmt.Printf("  %s%s%s\n", "\"action\": ", ScrapeOpts.Action, ",")
-	fmt.Printf("  %s%d%s\n", "\"block_cnt\": ", ScrapeOpts.Block_Cnt, ",")
-	fmt.Printf("  %s%d%s\n", "\"block_chan_cnt\": ", ScrapeOpts.Block_Chan_Cnt, ",")
-	fmt.Printf("  %s%d%s\n", "\"addr_chan_cnt\": ", ScrapeOpts.Addr_Chan_Cnt, ",")
-	fmt.Printf("  %s%g%s\n", "\"sleep\": ", ScrapeOpts.Sleep, ",")
-	fmt.Printf("  %s%t%s\n", "\"pin\": ", ScrapeOpts.Pin, ",")
-	fmt.Printf("  %s%t%s\n", "\"publish\": ", ScrapeOpts.Publish, ",")
-	fmt.Printf("%s\n", "}")
-
 	IndexScraper = NewScraper(colors.Yellow, "IndexScraper", ScrapeOpts.Sleep, 0) // ScrapeOpts.Verbose)
 	scraperOn := ScrapeOpts.Action == "indexer" || ScrapeOpts.Action == "both"
 	if scraperOn {
@@ -114,18 +90,20 @@ func runScrape(cmd *cobra.Command, args []string) {
 		log.Print(colors.Green, "monitoring:  ", colors.Off, monitorsOn, "\n")
 		MonitorScraper.ChangeState(true)
 	}
+
 	var wg sync.WaitGroup
-	RunIndexScraper(wg)
+	wg.Add(1)
+	go RunIndexScraper(wg)
+	wg.Wait()
 }
 
 var IndexScraper Scraper
 
 func RunIndexScraper(wg sync.WaitGroup) {
 	IndexScraper.Running = true
-	// defer wg.Done()
-	// for
-	{
-		fmt.Println("%s", IndexScraper, colors.Off)
+	defer wg.Done()
+	for {
+		fmt.Printf("%s\n", IndexScraper.ToJson())
 		if !IndexScraper.Running {
 			if IndexScraper.WasRunning {
 				IndexScraper.ShowStateChange("running", "paused")
@@ -141,9 +119,6 @@ func RunIndexScraper(wg sync.WaitGroup) {
 			IndexScraper.ShowStateChange("sleep", "wake")
 			/*-----------*/
 			options := ""
-			//if IndexScraper.Verbose > 0 {
-			//	options += " --verbose " + strconv.Itoa(int(IndexScraper.Verbose))
-			//}
 			if ScrapeOpts.Pin {
 				options += " --pin "
 			}
@@ -153,7 +128,7 @@ func RunIndexScraper(wg sync.WaitGroup) {
 			if ScrapeOpts.Sleep != 14. {
 				options += " --sleep " + fmt.Sprintf("%g", ScrapeOpts.Sleep)
 			}
-			options += (" --block_cnt " + strconv.Itoa(int(ScrapeOpts.Block_Cnt)))
+			options += (" --block_cnt " + fmt.Sprintf("%d", ScrapeOpts.Block_Cnt))
 			PassItOn("blockScrape", options, "")
 			/*-----------*/
 			IndexScraper.ShowStateChange("wake", "sleep")
@@ -476,3 +451,13 @@ func (scraper *Scraper) Pause() {
 // 	fmt.Fprint(w, MonitorScraper.ToJson())
 // 	fmt.Fprint(w, " }")
 // }
+
+func hasIndexerFlag(mode string) bool {
+	logger.Log(logger.Info, "hasIndexFlag Action: ", mode)
+	return mode == "indexer" || mode == "both"
+}
+
+func hasMonitorsFlag(mode string) bool {
+	logger.Log(logger.Info, "hasMonitorsFlag Action: ", mode)
+	return mode == "monitors" || mode == "both"
+}

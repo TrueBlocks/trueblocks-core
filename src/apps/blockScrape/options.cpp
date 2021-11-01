@@ -133,7 +133,6 @@ bool COptions::parseArguments(string_q& command) {
         cout << os.str();
         return false;
     }
-    return false;
 
     // Debugging data...
     LOG_DIR8(indexFolder);
