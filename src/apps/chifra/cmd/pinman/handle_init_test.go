@@ -14,7 +14,7 @@
  * Parts of this file were generated with makeClass --gocmds. Edit only those parts of
  * the code inside of 'EXISTING_CODE' tags.
  */
-package cmd
+package pinman
 
 import (
 	"testing"
