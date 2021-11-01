@@ -17,7 +17,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
-	"os/exec"
 	"sync"
 	"time"
 
@@ -96,6 +95,7 @@ func hasMonitorsFlag(mode string) bool {
 }
 
 var IndexScraper Scraper
+var MonitorScraper Scraper
 
 func RunIndexScraper(wg sync.WaitGroup, initialState bool) {
 	var s *Scraper = &IndexScraper
@@ -140,8 +140,6 @@ func RunIndexScraper(wg sync.WaitGroup, initialState bool) {
 		}
 	}
 }
-
-var MonitorScraper Scraper
 
 func RunMonitorScraper(wg sync.WaitGroup, initialState bool) {
 	var s *Scraper = &MonitorScraper
@@ -365,44 +363,6 @@ func (scraper *Scraper) Pause() {
 
 // 	return nil
 // }
-
-func (scraper *Scraper) ChangeState(onOff bool) bool {
-	prev := scraper.Running
-	scraper.Running = onOff
-	str := "false"
-	if onOff {
-		str = "true"
-	}
-	fileName := cachePath + scraper.Name + ".txt"
-	err := ioutil.WriteFile(fileName, []byte(str), 0644)
-	if err != nil {
-		log.Fatal(err)
-	}
-	return prev
-}
-
-func (scraper *Scraper) LoadStateFromCache() bool {
-	fileName := cachePath + scraper.Name + ".txt"
-	if !utils.FileExists(fileName) {
-		return false
-	}
-	content, err := ioutil.ReadFile(fileName)
-	if err != nil {
-		log.Fatal(err)
-	}
-	return string(content) == "true"
-}
-
-func (scraper *Scraper) Pause() {
-	halfSecs := scraper.SleepSecs * 2
-	state := scraper.Running
-	for i := 0; i < int(halfSecs); i++ {
-		if state != scraper.Running {
-			break
-		}
-		time.Sleep(time.Duration(500) * time.Millisecond)
-	}
-}
 
 // // ManageScraper handles scraper commands
 // func ManageScraper(w http.ResponseWriter, r *http.Request) {
