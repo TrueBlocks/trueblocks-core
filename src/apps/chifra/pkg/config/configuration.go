@@ -12,6 +12,8 @@
  *-------------------------------------------------------------------------------------------*/
 package config
 
+import "runtime"
+
 // Functions in this package read and cache configuration files,
 // filling in default values
 
@@ -46,6 +48,11 @@ func ReadBlockScrape() *BlockScrape {
 	config := &BlockScrape{
 		Dev: blockScrapeDev{
 			IpfsGateway: "https://ipfs.unchainedindex.io/ipfs",
+			MaxPoolSize: runtime.NumCPU() * 2,
+		},
+		UnchainedIndex: blockScrapeUnchainedIndex{
+			Address:  "0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd",
+			Encoding: "0x337f3f32",
 		},
 		Requires: blockScrapeRequires{
 			Tracing:  true,

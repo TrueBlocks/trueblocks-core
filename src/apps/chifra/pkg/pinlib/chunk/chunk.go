@@ -24,7 +24,6 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
-	"runtime"
 	"strconv"
 	"strings"
 	"sync"
@@ -35,9 +34,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/sigintTrap"
 	"github.com/panjf2000/ants/v2"
 )
-
-// The size of worker pools for downloading and saving data
-var poolSize = runtime.NumCPU() * 2
 
 type ChunkType uint
 
@@ -87,6 +83,7 @@ func fetchChunk(url string) (*fetchResult, error) {
 // GetChunksFromRemote downloads, unzips and saves the chunk of type indicated by chunkType
 // for each pin in pins. Progress is reported to progressChannel.
 func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkType ChunkType, progressChannel chan<- *progress.Progress) {
+	poolSize := config.ReadBlockScrape().Dev.MaxPoolSize
 	// Downloaded content will wait for saving in this channel
 	writeChannel := make(chan *jobResult, poolSize)
 	// Context lets us handle Ctrl-C easily

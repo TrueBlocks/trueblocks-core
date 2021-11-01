@@ -24,18 +24,15 @@ import (
 	"github.com/ethereum/go-ethereum/accounts/abi"
 )
 
-var unchainedIndexAddr = "0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd"
-var manifestHashEncoding = "0x337f3f32"
-
 // GetUnchainedIndexAddress returns UnchainedIndex smart contract address
 func GetUnchainedIndexAddress() string {
-	return unchainedIndexAddr
+	return config.ReadBlockScrape().UnchainedIndex.Address
 }
 
 // GetManifestHashEncoding returns encoding of manifestHash getter of
 // UnchainedIndex smart contract
 func GetManifestHashEncoding() string {
-	return manifestHashEncoding
+	return config.ReadBlockScrape().UnchainedIndex.Encoding
 }
 
 // GetManifestCidFromContract calls UnchainedIndex smart contract to get
@@ -44,8 +41,8 @@ func GetManifestCidFromContract() (string, error) {
 	ethClient := rpcClient.Get()
 	defer ethClient.Close()
 
-	address := rpcClient.HexToAddress(unchainedIndexAddr)
-	data := rpcClient.DecodeHex(manifestHashEncoding)
+	address := rpcClient.HexToAddress(GetUnchainedIndexAddress())
+	data := rpcClient.DecodeHex(GetManifestHashEncoding())
 
 	response, err := ethClient.CallContract(
 		context.Background(),

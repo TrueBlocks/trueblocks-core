@@ -41,9 +41,16 @@ type blockScrapeRequires struct {
 
 type blockScrapeDev struct {
 	IpfsGateway string `toml:"ipfs_gateway"`
+	MaxPoolSize int
+}
+
+type blockScrapeUnchainedIndex struct {
+	Address  string
+	Encoding string
 }
 
 type BlockScrape struct {
-	Requires blockScrapeRequires
-	Dev      blockScrapeDev
+	Requires       blockScrapeRequires
+	Dev            blockScrapeDev
+	UnchainedIndex blockScrapeUnchainedIndex
 }
