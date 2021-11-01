@@ -28,7 +28,6 @@ import (
 	"strconv"
 	"strings"
 	"sync"
-	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib/manifest"
@@ -155,10 +154,6 @@ func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkType ChunkType, pro
 					Event:   progress.Error,
 					Message: err.Error(),
 				}
-			}
-
-			if gatewayUrl == config.DefaultIpfsGateway {
-				time.Sleep(time.Second * 5) // Align with Pinata rate limit
 			}
 		}
 	})

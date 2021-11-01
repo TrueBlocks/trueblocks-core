@@ -36,7 +36,6 @@ func ReadGlobal() *Global {
 }
 
 var cachedBlockScrape BlockScrape
-var DefaultIpfsGateway = "http://gateway.ipfs.io/ipfs/"
 
 // ReadBlockScrape reads and caches the configuration located in blockScrape.toml file
 func ReadBlockScrape() *BlockScrape {
@@ -46,7 +45,7 @@ func ReadBlockScrape() *BlockScrape {
 
 	config := &BlockScrape{
 		Dev: blockScrapeDev{
-			IpfsGateway: DefaultIpfsGateway,
+			IpfsGateway: "https://ipfs.unchainedindex.io/ipfs",
 		},
 		Requires: blockScrapeRequires{
 			Tracing:  true,
