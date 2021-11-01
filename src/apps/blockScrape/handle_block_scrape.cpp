@@ -75,7 +75,9 @@ bool COptions::scrape_blocks(void) {
 
     cerr << endl;
     ostringstream os;
-    os << string_q(5, '-') << " Scraping " << cons.blazeStart << " of " << cons.client;
+    os << string_q(5, '-');
+    os << " Scraping " << cons.blazeStart << " to " << min(cons.client, (cons.blazeStart + cons.blazeCnt));
+    os << " of " << cons.client;
     os << " (" << (cons.distFromHead) << " from head) " << string_q(30, '-');
     LOG_INFO(os.str());
 
