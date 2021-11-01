@@ -13,9 +13,14 @@
 package manifest
 
 import (
+	"errors"
 	"strconv"
 	"strings"
 )
+
+var ErrMalformedManifest = errors.New("malformed manifest")
+var rangePartLength = 9
+var rangeLength = (rangePartLength * 2) + 1 // 1 for separator
 
 type ManifestRange [2]uint64
 
@@ -42,6 +47,9 @@ func StringToManifestRange(source string) (ManifestRange, error) {
 
 	if len(source) == 0 {
 		return mr, nil
+	}
+	if !(len(source) == rangeLength && source[rangePartLength] == '-') {
+		return mr, ErrMalformedManifest
 	}
 
 	parts := strings.Split(source, "-")
