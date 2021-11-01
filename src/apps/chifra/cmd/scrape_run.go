@@ -198,7 +198,6 @@ func RunMonitorScraper(wg sync.WaitGroup, initialState bool) {
 	}
 }
 
-xxx
 var cachePath string = "/tmp/"
 
 type Scraper struct {
