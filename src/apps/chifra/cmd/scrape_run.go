@@ -266,7 +266,6 @@ var MonitorScraper Scraper
 func RunMonitorScraper(wg sync.WaitGroup) {
 	defer wg.Done()
 	for {
-		fmt.Println("%v", MonitorScraper, colors.Off)
 		if !MonitorScraper.Running {
 			if MonitorScraper.WasRunning {
 				MonitorScraper.ShowStateChange("running", "paused")
