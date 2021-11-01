@@ -91,7 +91,7 @@ func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkType ChunkType, pro
 
 	gatewayUrl := config.ReadBlockScrape().Dev.IpfsGateway
 
-	pool, err := ants.NewPoolWithFunc(poolSize, func(param interface{}) {
+	downloadPool, err := ants.NewPoolWithFunc(poolSize, func(param interface{}) {
 		url := gatewayUrl
 		pin := param.(manifest.PinDescriptor)
 
@@ -150,7 +150,7 @@ func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkType ChunkType, pro
 			}
 		}
 	})
-	defer pool.Release()
+	defer downloadPool.Release()
 	if err != nil {
 		panic(err)
 	}
@@ -213,7 +213,7 @@ func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkType ChunkType, pro
 	pinsToDownload := FilterDownloadedChunks(pins, cacheLayout)
 	for _, pin := range pinsToDownload {
 		downloadWg.Add(1)
-		pool.Invoke(pin)
+		downloadPool.Invoke(pin)
 	}
 
 	downloadWg.Wait()
