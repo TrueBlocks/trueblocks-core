@@ -361,7 +361,7 @@ func (scraper *Scraper) ToJson() string {
 	return string(e)
 }
 
-var cachePath string = "/Users/jrush/Library/Application Support/Trueblocks/cache/"
+var cachePath string = "/tmp/"
 
 func (scraper *Scraper) ChangeState(onOff bool) bool {
 	prev := scraper.Running
@@ -370,7 +370,7 @@ func (scraper *Scraper) ChangeState(onOff bool) bool {
 	if onOff {
 		str = "true"
 	}
-	fileName := cachePath + "tmp/" + scraper.Name + ".txt"
+	fileName := cachePath + scraper.Name + ".txt"
 	err := ioutil.WriteFile(fileName, []byte(str), 0644)
 	if err != nil {
 		log.Fatal(err)
@@ -379,7 +379,7 @@ func (scraper *Scraper) ChangeState(onOff bool) bool {
 }
 
 func (scraper *Scraper) LoadStateFromCache() bool {
-	fileName := cachePath + "tmp/" + scraper.Name + ".txt"
+	fileName := cachePath + scraper.Name + ".txt"
 	if !utils.FileExists(fileName) {
 		return false
 	}
