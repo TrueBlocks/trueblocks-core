@@ -13,11 +13,13 @@
 package pinman
 
 import (
+	"fmt"
 	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib/manifest"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // HandleList loads manifest, sorts pins and prints them out
@@ -32,29 +34,43 @@ func HandleList(format string) {
 	sort.Slice(manifestData.NewPins, func(i, j int) bool {
 		iPin := manifestData.NewPins[i]
 		jPin := manifestData.NewPins[j]
-
 		return iPin.FileName < jPin.FileName
 	})
 
-	if format == "json" {
+	// Shorten the array for testing
+	if utils.IsTestMode() {
+		manifestData.NewPins = manifestData.NewPins[:100]
+	}
+
+	// TODO: if Root.to_file == true, write the output to a filename
+	// TODO: if Root.output == <fn>, write the output to a <fn>
+
+	if format == "" || format == "none" {
+		if utils.IsApiMode() {
+			format = "api"
+		} else {
+			format = "txt"
+		}
+	}
+
+	outFmt := "%s\t%s\t%s\n"
+	switch format {
+	case "txt":
+		// do nothing
+	case "csv":
+		outFmt = "\"%s\",\"%s\",\"%s\"\n"
+	case "json":
+		fallthrough
+	case "api":
 		err := output.PrintJson(manifestData.NewPins)
 		if err != nil {
 			logger.Fatal(err)
 		}
-
 		return
 	}
 
-	table := &output.Table{}
-	table.New()
-	table.Header([]string{
-		"filename",
-		"bloomhash",
-		"indexhash",
-	})
-
+	fmt.Printf(outFmt, "filename", "bloomhash", "indexhash")
 	for _, pin := range manifestData.NewPins {
-		table.Row([]string{pin.FileName, pin.BloomHash, pin.IndexHash})
+		fmt.Printf(outFmt, pin.FileName, pin.BloomHash, pin.IndexHash)
 	}
-	table.Print()
 }
