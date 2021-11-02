@@ -12,7 +12,14 @@
  *-------------------------------------------------------------------------------------------*/
 package config
 
-// Global config
+import (
+	"github.com/spf13/viper"
+)
+
+var globalConfigViper = viper.New()
+var globalConfigRead = false
+var cachedGlobalConfig Global
+var DefaultIndexPath = GetConfigPath("unchained")
 
 type globalVersion struct {
 	Current string
@@ -30,27 +37,19 @@ type Global struct {
 	Settings globalSettings
 }
 
-// BlockScrape config
+// init sets up default values for the given configuration
+func init() {
+	globalConfigViper.SetConfigName("trueBlocks")
 
-type blockScrapeRequires struct {
-	Tracing  bool
-	Parity   bool
-	Balances bool
-	Archive  bool
+	globalConfigViper.SetDefault("Settings.IndexPath", DefaultIndexPath)
 }
 
-type blockScrapeDev struct {
-	IpfsGateway string `toml:"ipfs_gateway"`
-	MaxPoolSize int
-}
+// ReadGlobal reads and the configuration located in trueBlocks.toml file
+func ReadGlobal() *Global {
+	if !globalConfigRead {
+		MustReadConfig(globalConfigViper, &cachedGlobalConfig)
+		globalConfigRead = true
+	}
 
-type blockScrapeUnchainedIndex struct {
-	Address  string
-	Encoding string
-}
-
-type BlockScrape struct {
-	Requires       blockScrapeRequires
-	Dev            blockScrapeDev
-	UnchainedIndex blockScrapeUnchainedIndex
+	return &cachedGlobalConfig
 }

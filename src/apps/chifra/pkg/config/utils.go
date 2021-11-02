@@ -21,7 +21,8 @@ import (
 	"runtime"
 	"strings"
 
-	"github.com/BurntSushi/toml"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/spf13/viper"
 )
 
 var ErrOldFolder = errors.New(`
@@ -64,29 +65,20 @@ func GetConfigPath(fileName string) string {
 	return path.Join(homeDir, confDir, fileName)
 }
 
-// readToml opens the file and returns new TOML Decoder
-func readToml(fileName string) *toml.Decoder {
-	fileNameWithExt := fileName
-	if !strings.Contains(fileNameWithExt, ".toml") {
-		fileNameWithExt += ".toml"
+// MustReadConfig calls v's ReadInConfig and fills values in the
+// given targetStruct. Any error will result in a call to logger.Fatal
+func MustReadConfig(v *viper.Viper, targetStruct interface{}) {
+	v.AddConfigPath(GetConfigPath(""))
+	v.AutomaticEnv()
+	v.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
+
+	err := v.ReadInConfig()
+	if err != nil {
+		logger.Fatal(err)
 	}
 
-	filePath := GetConfigPath(fileNameWithExt)
-
-	file, err := os.Open(filePath)
+	err = v.Unmarshal(targetStruct)
 	if err != nil {
-		log.Fatalln("Could not read configuration file:", filePath)
-	}
-
-	return toml.NewDecoder(file)
-}
-
-// ReadTo reads {configName}.toml from the config directory, parses it
-// and loads the values into target.
-func ReadTo(target interface{}, configName string) {
-	reader := readToml(configName)
-	_, err := reader.Decode(target)
-	if err != nil {
-		log.Fatalf(`Error while reading configuration for "%s": %s`, configName, err)
+		logger.Fatal(err)
 	}
 }

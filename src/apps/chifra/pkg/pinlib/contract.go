@@ -32,7 +32,7 @@ func GetUnchainedIndexAddress() string {
 // GetManifestHashEncoding returns encoding of manifestHash getter of
 // UnchainedIndex smart contract
 func GetManifestHashEncoding() string {
-	return config.ReadBlockScrape().UnchainedIndex.Encoding
+	return config.ReadBlockScrape().UnchainedIndex.ManifestHashEncoding
 }
 
 // GetManifestCidFromContract calls UnchainedIndex smart contract to get
