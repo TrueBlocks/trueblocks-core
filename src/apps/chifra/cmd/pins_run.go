@@ -18,6 +18,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/pinman"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/spf13/cobra"
 )
@@ -29,6 +30,7 @@ func validatePinsArgs(cmd *cobra.Command, args []string) error {
 	remote := PinsOpts.remote
 	all := PinsOpts.all
 	init_all := PinsOpts.init_all
+	share := PinsOpts.share
 
 	if list && (init || freshen) {
 		return validate.Usage("Please choose only a single option.")
@@ -66,8 +68,20 @@ func validatePinsArgs(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
+	utils.TestLogBool("list", list)
+	utils.TestLogBool("init", init)
+	utils.TestLogBool("freshen", freshen)
+	utils.TestLogBool("all", all)
+	utils.TestLogBool("share", share)
+	utils.TestLogBool("remote", remote)
+	// LOG_TEST("sleep", sleep, (sleep == .25))
+
 	return nil
 }
+
+var errCustomFolderMissing = `Attempt to create customized indexPath (%s) failed.
+Please create the folder or adjust the setting by editing $CONFIG/trueBlocks.toml.
+`
 
 func runPins(cmd *cobra.Command, args []string) {
 	if PinsOpts.list {
@@ -75,15 +89,13 @@ func runPins(cmd *cobra.Command, args []string) {
 		pinman.HandleList(RootOpts.fmt)
 		return
 	}
+
 	if PinsOpts.init || PinsOpts.freshen {
 		pinman.PrintManifestHeader()
 		err := pinlib.EstablishDirectories()
 		if err != nil {
 			if err, ok := err.(*pinlib.ErrCustomizedPath); ok {
-				fmt.Printf(
-					"Attempt to create customized indexPath (%s) failed.\nPlease create the folder or adjust the setting by editing $CONFIG/trueBlocks.toml.\n",
-					err.GetIndexPath(),
-				)
+				fmt.Printf(errCustomFolderMissing, err.GetIndexPath())
 				return
 			}
 			logger.Fatal(err)
@@ -92,12 +104,15 @@ func runPins(cmd *cobra.Command, args []string) {
 		pinman.HandleInit(PinsOpts.all)
 		return
 	}
+
 	if PinsOpts.remote {
 		logger.Fatal("Not implemented")
 	}
+
 	if PinsOpts.sleep != .25 {
 		logger.Fatal("Not implemented")
 	}
+
 	if PinsOpts.share {
 		logger.Fatal("Not implemented")
 	}
