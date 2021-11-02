@@ -1,6 +1,6 @@
 chifra pins  
 Error: 
-  You must choose at least one of --list, --init, or --freshen.
+  You must choose at least one of --list or --init.
 
 Usage:
   chifra pins [flags]
@@ -8,11 +8,11 @@ Usage:
 Flags:
   -l, --list          list the bloom and index hashes from local cache or IPFS
   -i, --init          download the blooms or index chunks from IPFS
-  -f, --freshen       check for new bloom or index chunks and download if available
   -a, --all           in addition to Bloom filters, download full index chunks
   -S, --share         share downloaded data by pinning it to IPFS (the IPFS daemon must be running)
-  -r, --remote        for --list mode only, recover the manifest from IPFS via UnchainedIndex smart contract
-  -s, --sleep float   throttle requests by this many seconds (.25 seconds delay between requests by default) (default 0.25)
+  -s, --sleep float   throttle requests by this many seconds (default 0.25)
+  -f, --freshen       check for new bloom or index chunks and download if available (hidden)
+  -r, --remote        for --list mode only, recover the manifest from IPFS via UnchainedIndex smart contract (hidden)
   -n, --init_all      use --init --all instead (hidden)
 
 Global Flags:
@@ -21,7 +21,6 @@ Global Flags:
   -v, --verbose      enable verbose (increase detail with --log_level)
 
 Notes:
-  - The --freshen option is similar to --init, but checks UnchainedIndex first.
-  - One of --list, --init, or --freshen is required.
-  - The --share option only works if the IPFS daemon is running.
-  - Re-run chifra init as you wish. It will repair or freshen the index.
+  - One of --list or --init is required.
+  - Re-run chifra init as often as you wish. It will repair or freshen the index.
+  - The --share option works only if an IPFS daemon is running.

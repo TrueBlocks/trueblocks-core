@@ -21,15 +21,13 @@ namespace qblocks {
 extern void pinlib_init(QUITHANDLER qh);
 extern void pinlib_cleanup(void);
 
-extern bool pinlib_downloadManifest(void);
 extern bool pinlib_readManifest(CPinnedChunkArray& pList);
 extern bool pinlib_updateManifest(CPinnedChunkArray& pList);
 
 extern bool pinlib_pinChunk(CPinnedChunkArray& pList, const string_q& fn, CPinnedChunk& item);
 extern bool pinlib_unpinChunk(CPinnedChunkArray& pList, const string_q& fn, CPinnedChunk& item);
 
-typedef enum { NO_TYPE = 0, BLOOM_TYPE = 1, CHUNK_TYPE = 2 } ipfsdown_t;
-extern bool pinlib_getChunkFromRemote(CPinnedChunk& pin, ipfsdown_t which, double sleep);
+extern bool pinlib_getChunkFromRemote(CPinnedChunk& pin, double sleep);
 extern bool pinlib_getChunkByHash(CPinnedChunkArray& pList, const string_q& fn, CPinnedChunk& item);
 extern bool pinlib_findChunk(CPinnedChunkArray& pList, const string_q& fn, CPinnedChunk& item);
 
@@ -37,11 +35,5 @@ typedef bool (*PINFUNC)(CPinnedChunk& pin, void* data);
 extern bool pinlib_forEveryPin(CPinnedChunkArray& pList, PINFUNC func, void* data);
 
 }  // namespace qblocks
-
-//-------------------------------------------------------------------------
-#define hashToIndexFormatFile string_q("Qmart6XP9XjL43p72PGR93QKytbK8jWWcMguhFgxATTya2")
-#define hashToBloomFormatFile string_q("QmNhPk39DUFoEdhUmtGARqiFECUHeghyeryxZM9kyRxzHD")
-#define unchainedIndexAddr string_q("0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd")
-#define manifestHashEncoding string_q("0x337f3f32")
 
 using namespace qblocks;  // NOLINT

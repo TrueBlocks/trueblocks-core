@@ -23,7 +23,7 @@ import (
 )
 
 // HandleList loads manifest, sorts pins and prints them out
-func HandleList(format string) {
+func HandleList() {
 	// Load manifest
 	manifestData, err := manifest.FromLocalFile()
 	if err != nil {
@@ -45,16 +45,18 @@ func HandleList(format string) {
 	// TODO: if Root.to_file == true, write the output to a filename
 	// TODO: if Root.output == <fn>, write the output to a <fn>
 
-	if format == "" || format == "none" {
+	if output.Format == "" || output.Format == "none" {
 		if utils.IsApiMode() {
-			format = "api"
+			output.Format = "api"
 		} else {
-			format = "txt"
+			output.Format = "txt"
 		}
 	}
 
+	var errors []string
+
 	outFmt := "%s\t%s\t%s\n"
-	switch format {
+	switch output.Format {
 	case "txt":
 		// do nothing
 	case "csv":
@@ -62,14 +64,14 @@ func HandleList(format string) {
 	case "json":
 		fallthrough
 	case "api":
-		err := output.PrintJson(manifestData.NewPins)
+		err := output.PrintJson(manifestData.NewPins, errors)
 		if err != nil {
 			logger.Fatal(err)
 		}
 		return
 	}
 
-	if utils.IsTerminal() {
+	if output.Format == "txt" && utils.IsTerminal() {
 		table := &output.Table{}
 		table.New()
 		table.Header([]string{"filename", "bloomhash", "indexhash"})

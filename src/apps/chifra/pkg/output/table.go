@@ -27,7 +27,7 @@ type Table struct {
 
 // New sets up the default writer and target for a table
 func (t *Table) New() {
-	t.writer = tabwriter.NewWriter(os.Stdout, 0, 0, 1, ' ', 0)
+	t.writer = tabwriter.NewWriter(os.Stdout, 0, 0, 2, ' ', 0)
 	t.target = os.Stdout
 }
 

@@ -35,6 +35,14 @@ func Usage(msg string, values ...string) error {
 	return usageEx("", msg, values)
 }
 
+func Deprecated(cmd string, rep string) error {
+	msg := "The {0} flag has been deprecated."
+	if len(rep) > 0 {
+		msg += " Use {1} instead."
+	}
+	return Usage(msg, cmd, rep)
+}
+
 func FmtError(msg string) string {
 	return "\n  " + msg + "\n"
 }

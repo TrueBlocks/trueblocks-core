@@ -1515,14 +1515,6 @@ paths:
           explode: true
           schema:
             type: boolean
-        - name: freshen
-          description: check for new bloom or index chunks and download if available
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
         - name: all
           description: in addition to Bloom filters, download full index chunks
           required: false
@@ -1540,18 +1532,8 @@ paths:
           explode: true
           schema:
             type: boolean
-        - name: remote
-          description: >
-            for --list mode only, recover the manifest from IPFS via UnchainedIndex smart contract
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
         - name: sleep
-          description: >
-            throttle requests by this many seconds (.25 seconds delay between requests by default)
+          description: throttle requests by this many seconds
           required: false
           style: form
           in: query

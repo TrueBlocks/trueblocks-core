@@ -10,26 +10,39 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-#include "options.h"
+package output
 
-//----------------------------------------------------------------
-bool COptions::handle_list(void) {
-    if (remote) {
-        cerr << "remote not implemented" << endl;
+import (
+	"encoding/json"
 
-    } else {
-        ASSERT(pins.size());  // local pins have already been loaded
-        for (auto pin : pins) {
-            if (!isJson()) {
-                cout << trim(pin.Format(expContext().fmtMap["format"]), '\t') << endl;
-            } else {
-                cout << ((isJson() && !firstOut) ? ", " : "");
-                indent();
-                pin.toJson(cout);
-                unindent();
-            }
-            firstOut = false;
-        }
-    }
-    return false;
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+)
+
+var OutputFn string
+var Format string
+
+type Meta struct {
+	Unripe    string `json:"unripe"`
+	Ripe      string `json:"ripe"`
+	Staging   string `json:"staging"`
+	Finalized string `json:"finalized"`
+	Client    string `json:"client"`
+}
+
+func (m Meta) String() string {
+	ret, _ := json.MarshalIndent(m, "", "  ")
+	return string(ret)
+}
+
+func GetMeta() *Meta {
+	if utils.IsTestMode() {
+		return &Meta{
+			Unripe:    "0xdeadbeef",
+			Ripe:      "0xdeadbeef",
+			Staging:   "0xdeadbeef",
+			Finalized: "0xdeadbeef",
+			Client:    "0xdeadbeef",
+		}
+	}
+	return &Meta{Client: "12"}
 }

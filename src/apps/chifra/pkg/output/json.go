@@ -20,9 +20,15 @@ import (
 
 // PrintJson marshals its arguments and prints JSON in a standardized
 // format
-func PrintJson(serializable interface{}) error {
+func PrintJson(serializable interface{}, errors []string) error {
 	response := map[string]interface{}{
 		"data": serializable,
+		"meta": GetMeta(),
+	}
+	if Format != "api" {
+		response = map[string]interface{}{
+			"data": serializable,
+		}
 	}
 	marshalled, err := json.MarshalIndent(response, "", "  ")
 	if err != nil {

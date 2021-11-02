@@ -21,9 +21,6 @@ bool COptions::handle_check() {
         return true;
     }
 
-    if (!pinlib_downloadManifest())
-        return usage("Could not freshen manifest from smart contract");
-
     if (!folderExists(getIndexPath("")))
         return false;
 
@@ -59,39 +56,6 @@ bool COptions::handle_check() {
             cerr << "\tpin: " << pin.bloomHash << endl;
             cerr << endl;
         }
-        //     if (!pinlib_getChunkFromRemote(pin, BLOOM_TYPE, sleep) || shouldQuit())
-        //         break;
-        //     string_q bloomFn = pin.Format(getIndexPath("blooms/[{FILENAME}].bloom.gz"));
-        //     if (share) {
-        //         ostringstream os;
-        //         os << "ipfs add -Q --pin \"" << bloomFn + "\"";
-        //         string_q newHash = doCommand(os.str());
-        //         LOG_INFO(cGreen, "Re-pinning ", pin.fileName, cOff, " ==> ", newHash, " ",
-        //                  (pin.bloomHash == newHash ? greenCheck : redX));
-        //     }
-        //     if (fileExists(bloomFn)) {
-        //         ::remove(bloomFn.c_str());
-        //         LOG4(cGreen, "Removed zip file ", bloomFn, cOff);
-        //     }
-
-        //     if (all) {
-        //         if (!pinlib_getChunkFromRemote(pin, CHUNK_TYPE, sleep) || shouldQuit())
-        //             break;
-        //         string_q binFn = pin.Format(getIndexPath("finalized/[{FILENAME}].bin.gz"));
-        //         if (share) {
-        //             ostringstream os;
-        //             os << "ipfs add -Q --pin \"" << binFn + "\"";
-        //             string_q newHash = doCommand(os.str());
-        //             LOG_INFO(cGreen, "Re-pinning ", pin.fileName, cOff, " ==> ", newHash, " ",
-        //                      (pin.indexHash == newHash ? greenCheck : redX));
-        //             usleep(500000);
-        //         }
-        //         if (fileExists(binFn)) {
-        //             ::remove(binFn.c_str());
-        //             LOG4(cGreen, "Removed zip file ", binFn, cOff);
-        //         }
-        //     }
-        //     // pinlib_pinLocally(pin, share /* pinBloom */, (share && init_all) /* pinChunk */);
     }
 
     LOG_INFO(bBlue, "Pins were checked.                                           ", cOff);
