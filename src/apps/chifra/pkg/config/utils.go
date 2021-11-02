@@ -27,7 +27,6 @@ import (
 var ErrOldFolder = errors.New(`
       You must complete the migration process before proceeding:
 
-
           https://github.com/TrueBlocks/trueblocks-core/tree/master/src/other/migrations
 `)
 

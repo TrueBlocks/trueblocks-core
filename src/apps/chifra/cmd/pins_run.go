@@ -15,42 +15,37 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/pinman"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/pins"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/spf13/cobra"
 )
 
 func validatePinsArgs(cmd *cobra.Command, args []string) error {
-	list := PinsOpts.list
-	init := PinsOpts.init
-	freshen := PinsOpts.freshen
-	remote := PinsOpts.remote
-	all := PinsOpts.all
-	init_all := PinsOpts.init_all
 
-	if list && (init || freshen) {
+	if PinsOpts.list && (PinsOpts.init || PinsOpts.freshen) {
 		return validate.Usage("Please choose only a single option.")
 	}
 
-	if !list && !init && !freshen {
+	if !PinsOpts.list && !PinsOpts.init && !PinsOpts.freshen {
 		return validate.Usage("You must choose at least one of --list, --init, or --freshen.")
 	}
 
-	if remote && !list {
+	if PinsOpts.remote && !PinsOpts.list {
 		return validate.Usage("The --remote option is only available with the --list option")
 	}
 
-	if remote {
+	if PinsOpts.remote {
 		return validate.Usage("The --remote option is not yet implemented")
 	}
 
-	if all && !init {
+	if PinsOpts.all && !PinsOpts.init {
 		return validate.Usage("Use the --all option only with the --init or --freshen options.")
 	}
 
-	if init_all {
+	if PinsOpts.init_all {
 		return validate.Usage("Flag --init_all has been deprecated, use --init --all instead")
 	}
 
@@ -66,38 +61,51 @@ func validatePinsArgs(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
+	utils.TestLogBool("list", PinsOpts.list)
+	utils.TestLogBool("init", PinsOpts.init)
+	utils.TestLogBool("freshen", PinsOpts.freshen)
+	utils.TestLogBool("all", PinsOpts.all)
+	utils.TestLogBool("share", PinsOpts.share)
+	utils.TestLogBool("remote", PinsOpts.remote)
+	// LOG_TEST("sleep", sleep, (sleep == .25))
+
 	return nil
 }
 
+var errCustomFolderMissing = `Attempt to create customized indexPath (%s) failed.
+Please create the folder or adjust the setting by editing $CONFIG/trueBlocks.toml.
+`
+
 func runPins(cmd *cobra.Command, args []string) {
 	if PinsOpts.list {
-		pinman.PrintManifestHeader()
-		pinman.HandleList(RootOpts.fmt)
+		pins.PrintManifestHeader()
+		pins.HandleList(RootOpts.fmt)
 		return
 	}
+
 	if PinsOpts.init || PinsOpts.freshen {
-		pinman.PrintManifestHeader()
+		pins.PrintManifestHeader()
 		err := pinlib.EstablishDirectories()
 		if err != nil {
 			if err, ok := err.(*pinlib.ErrCustomizedPath); ok {
-				fmt.Printf(
-					"Attempt to create customized indexPath (%s) failed.\nPlease create the folder or adjust the setting by editing $CONFIG/trueBlocks.toml.\n",
-					err.GetIndexPath(),
-				)
+				fmt.Printf(errCustomFolderMissing, err.GetIndexPath())
 				return
 			}
 			logger.Fatal(err)
 		}
 
-		pinman.HandleInit(PinsOpts.all)
+		pins.HandleInit(PinsOpts.all)
 		return
 	}
+
 	if PinsOpts.remote {
 		logger.Fatal("Not implemented")
 	}
+
 	if PinsOpts.sleep != .25 {
 		logger.Fatal("Not implemented")
 	}
+
 	if PinsOpts.share {
 		logger.Fatal("Not implemented")
 	}

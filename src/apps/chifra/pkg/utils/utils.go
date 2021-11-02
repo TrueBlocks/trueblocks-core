@@ -20,6 +20,9 @@ import (
 	"os"
 	"os/exec"
 	"runtime"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"golang.org/x/crypto/ssh/terminal"
 )
 
 func FileExists(filename string) bool {
@@ -57,18 +60,22 @@ func TestLogArgs(name string, args []string) {
 		return
 	}
 
-	fmt.Fprintf(os.Stderr, "TIME ~ CLOCK - <INFO>  : %s\n", name)
+	logger.Log(logger.Info, name)
 	for _, arg := range args {
-		fmt.Fprintf(os.Stderr, "TIME ~ CLOCK - <INFO>  :   %s\n", arg)
+		logger.Log(logger.Info, " ", arg)
 	}
 }
 
 func TestLogBool(name string, val bool) {
-	if !val || !IsTestMode() {
+	if !IsTestMode() || !val {
 		return
 	}
 
-	fmt.Fprintf(os.Stderr, "TIME ~ CLOCK - <INFO>  : %s: %t\n", name, val)
+	logger.Log(logger.Info, name+":", val)
+}
+
+func IsTerminal() bool {
+	return terminal.IsTerminal(int(os.Stdout.Fd()))
 }
 
 func AsciiFileToString(fn string) string {

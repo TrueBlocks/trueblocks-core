@@ -24,6 +24,7 @@ var rangeLength = (rangePartLength * 2) + 1 // 1 for separator
 
 type ManifestRange [2]uint64
 
+// UnmarshalJSON populates a ManifestRange from a []byte
 func (mr *ManifestRange) UnmarshalJSON(data []byte) error {
 	unquoted, err := strconv.Unquote(string(data))
 	if err != nil {

@@ -95,7 +95,7 @@ type modifiedAppearanceRecord struct {
 	Txid    uint32 `json:"transactionIndex"`
 }
 
-func writeTextTabbedCSV(data [][]string) {
+func writeTabbedText(data [][]string) {
 	w := csv.NewWriter(os.Stdout)
 	w.Comma = 0x9
 	w.WriteAll(data)
@@ -256,7 +256,7 @@ func streamOut(format string, r []appearanceRecord) {
 			notFirst = true
 		}
 	case "txt":
-		writeTextTabbedCSV(convertTo2DStringArray(r))
+		writeTabbedText(convertTo2DStringArray(r))
 	case "csv":
 		writeQuotedCSV(convertTo2DStringArray(r))
 	default:

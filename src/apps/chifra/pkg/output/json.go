@@ -24,7 +24,7 @@ func PrintJson(serializable interface{}) error {
 	response := map[string]interface{}{
 		"data": serializable,
 	}
-	marshalled, err := json.MarshalIndent(response, "", "    ")
+	marshalled, err := json.MarshalIndent(response, "", "  ")
 	if err != nil {
 		return err
 	}
