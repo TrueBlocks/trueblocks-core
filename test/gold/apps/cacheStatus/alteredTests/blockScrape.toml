@@ -2,9 +2,9 @@
 current = "0.6.7-alpha"
 
 [settings]
-# nBlocks = 2000
-# nBlockProcs = 20
-# nAddrProcs = 60
-n_blocks = "--new n Blocks--"
-n_addr_procs = "--new n Addr Procs--"
-n_block_procs = "--new n Block Procs--"
+# block_cnt = 2000
+# block_chan_cnt = 20
+# addr_chan_cnt = 60
+addr_chan_cnt = "--new n Addr Procs--"
+block_chan_cnt = "--new n Block Procs--"
+block_cnt = "--new n Blocks--"
