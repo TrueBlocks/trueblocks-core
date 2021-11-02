@@ -38,11 +38,6 @@ func FolderExists(path string) bool {
 	return info.IsDir()
 }
 
-// IsApiMode return true if we are running in api mode
-func IsApiMode() bool {
-	return os.Getenv("API_MODE") == "true"
-}
-
 // GetParam returns a single the 'key' parameter in the URL
 func GetParam(key string, def string, r *http.Request) (string, bool) {
 	values, exists := r.URL.Query()[key]
