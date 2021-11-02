@@ -69,8 +69,18 @@ func HandleList(format string) {
 		return
 	}
 
-	fmt.Printf(outFmt, "filename", "bloomhash", "indexhash")
-	for _, pin := range manifestData.NewPins {
-		fmt.Printf(outFmt, pin.FileName, pin.BloomHash, pin.IndexHash)
+	if utils.IsTerminal() {
+		table := &output.Table{}
+		table.New()
+		table.Header([]string{"filename", "bloomhash", "indexhash"})
+		for _, pin := range manifestData.NewPins {
+			table.Row([]string{pin.FileName, pin.BloomHash, pin.IndexHash})
+		}
+		table.Print()
+	} else {
+		fmt.Printf(outFmt, "filename", "bloomhash", "indexhash")
+		for _, pin := range manifestData.NewPins {
+			fmt.Printf(outFmt, pin.FileName, pin.BloomHash, pin.IndexHash)
+		}
 	}
 }

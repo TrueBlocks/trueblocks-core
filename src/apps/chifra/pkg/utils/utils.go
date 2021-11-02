@@ -22,6 +22,7 @@ import (
 	"runtime"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"golang.org/x/crypto/ssh/terminal"
 )
 
 func FileExists(filename string) bool {
@@ -71,6 +72,10 @@ func TestLogBool(name string, val bool) {
 	}
 
 	logger.Log(logger.Info, name+":", val)
+}
+
+func IsTerminal() bool {
+	return terminal.IsTerminal(int(os.Stdout.Fd()))
 }
 
 func AsciiFileToString(fn string) string {
