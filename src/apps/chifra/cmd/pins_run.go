@@ -15,7 +15,7 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/pinman"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/pins"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -84,7 +84,7 @@ func runPins(cmd *cobra.Command, args []string) {
 	}
 
 	if PinsOpts.init || PinsOpts.freshen {
-		pinman.PrintManifestHeader()
+		pins.PrintManifestHeader()
 		err := pinlib.EstablishDirectories()
 		if err != nil {
 			if err, ok := err.(*pinlib.ErrCustomizedPath); ok {
