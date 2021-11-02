@@ -16,8 +16,6 @@ import (
 	"fmt"
 	"os"
 	"time"
-
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 type severity int
@@ -38,11 +36,15 @@ var severityToLabel = map[severity]string{
 	ErrorFatal: "FATAL",
 }
 
+// I don't love this, but we can't call into the os every time we Log
+// We can't use utils. because it creates a cyclical import
+var testMode bool = os.Getenv("TEST_MODE") == "true"
+
 // Log prints `a` to stderr with a label corresponding to the severity level
 // prepended (e.g. <INFO>, <ERROR>, etc.)
 func Log(sev severity, a ...interface{}) {
 	timeDatePart := "DATE|TIME"
-	if !utils.IsTestMode() {
+	if !testMode {
 		now := time.Now()
 		timeDatePart = now.Format("02-01|15:04:05.000")
 	}

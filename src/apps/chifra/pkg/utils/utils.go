@@ -20,6 +20,8 @@ import (
 	"os"
 	"os/exec"
 	"runtime"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
 func FileExists(filename string) bool {
@@ -57,18 +59,18 @@ func TestLogArgs(name string, args []string) {
 		return
 	}
 
-	fmt.Fprintf(os.Stderr, "INFO[DATE|TIME] %s\n", name)
+	logger.Log(logger.Info, name)
 	for _, arg := range args {
-		fmt.Fprintf(os.Stderr, "INFO[DATE|TIME]   %s\n", arg)
+		logger.Log(logger.Info, " ", arg)
 	}
 }
 
 func TestLogBool(name string, val bool) {
-	if !val || !IsTestMode() {
+	if !IsTestMode() || !val {
 		return
 	}
 
-	fmt.Fprintf(os.Stderr, "INFO[DATE|TIME] %s: %t\n", name, val)
+	logger.Log(logger.Info, name+":", val)
 }
 
 func AsciiFileToString(fn string) string {
