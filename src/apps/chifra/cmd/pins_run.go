@@ -15,6 +15,9 @@ package cmd
 import (
 	"fmt"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/pinman"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/spf13/cobra"
 )
@@ -67,31 +70,35 @@ func validatePinsArgs(cmd *cobra.Command, args []string) error {
 }
 
 func runPins(cmd *cobra.Command, args []string) {
-	options := ""
 	if PinsOpts.list {
-		options += " --list"
+		pinman.PrintManifestHeader()
+		pinman.HandleList(RootOpts.fmt)
+		return
 	}
-	if PinsOpts.init {
-		options += " --init"
-	}
-	if PinsOpts.freshen {
-		options += " --freshen"
+	if PinsOpts.init || PinsOpts.freshen {
+		pinman.PrintManifestHeader()
+		err := pinlib.EstablishDirectories()
+		if err != nil {
+			if err, ok := err.(*pinlib.ErrCustomizedPath); ok {
+				fmt.Printf(
+					"Attempt to create customized indexPath (%s) failed.\nPlease create the folder or adjust the setting by editing $CONFIG/trueBlocks.toml.\n",
+					err.GetIndexPath(),
+				)
+				return
+			}
+			logger.Fatal(err)
+		}
+
+		pinman.HandleInit(PinsOpts.all)
+		return
 	}
 	if PinsOpts.remote {
-		options += " --remote"
-	}
-	if PinsOpts.all {
-		options += " --all"
+		logger.Fatal("Not implemented")
 	}
 	if PinsOpts.sleep != .25 {
-		options += " --sleep " + fmt.Sprintf("%.1f", PinsOpts.sleep)
+		logger.Fatal("Not implemented")
 	}
 	if PinsOpts.share {
-		options += " --share"
+		logger.Fatal("Not implemented")
 	}
-	arguments := ""
-	for _, arg := range args {
-		arguments += " " + arg
-	}
-	PassItOn("pinMan", options, arguments)
 }

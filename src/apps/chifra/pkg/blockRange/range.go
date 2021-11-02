@@ -16,6 +16,7 @@ import (
 	"errors"
 	"fmt"
 	"regexp"
+	"strconv"
 )
 
 // Parses a string containing block range and returns a struct
@@ -28,7 +29,6 @@ import (
 func New(rangeStr string) (*BlockRange, error) {
 	parsed, err := Parse(rangeStr)
 	newBlockRange := &BlockRange{}
-
 	if err != nil {
 		return nil, handleParserErrors(err)
 	}
@@ -73,6 +73,22 @@ type BlockRange struct {
 	Modifier     Modifier
 }
 
+func (br *BlockRange) UnmarshalJSON(data []byte) error {
+	str, err := strconv.Unquote(string(data))
+	if err != nil {
+		return err
+	}
+
+	newBlock, err := New(str)
+	if err != nil {
+		return err
+	}
+
+	*br = *newBlock
+
+	return nil
+}
+
 func getPointType(p *Point) BlockRangeValue {
 	if p == nil {
 		return BlockRangeNotDefined
@@ -111,7 +127,6 @@ func (e *WrongModifierError) Error() string {
 
 func handleParserErrors(parseError error) error {
 	modifierMatch, err := regexp.MatchString("expected Modifier", parseError.Error())
-
 	if err != nil || !modifierMatch {
 		return parseError
 	}
