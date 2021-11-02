@@ -57,9 +57,9 @@ func TestLogArgs(name string, args []string) {
 		return
 	}
 
-	fmt.Fprintf(os.Stderr, "TIME ~ CLOCK - <INFO>  : %s\n", name)
+	fmt.Fprintf(os.Stderr, "INFO[DATE|TIME] %s\n", name)
 	for _, arg := range args {
-		fmt.Fprintf(os.Stderr, "TIME ~ CLOCK - <INFO>  :   %s\n", arg)
+		fmt.Fprintf(os.Stderr, "INFO[DATE|TIME]   %s\n", arg)
 	}
 }
 
@@ -68,7 +68,7 @@ func TestLogBool(name string, val bool) {
 		return
 	}
 
-	fmt.Fprintf(os.Stderr, "TIME ~ CLOCK - <INFO>  : %s: %t\n", name, val)
+	fmt.Fprintf(os.Stderr, "INFO[DATE|TIME] %s: %t\n", name, val)
 }
 
 func AsciiFileToString(fn string) string {

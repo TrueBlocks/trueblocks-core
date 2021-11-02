@@ -1,5 +1,5 @@
 chifra explore  12
-TIME ~ CLOCK - <INFO>  : terms
-TIME ~ CLOCK - <INFO>  :   12
-TIME ~ CLOCK - <INFO>  : is_block: true
+INFO[DATE|TIME] terms
+INFO[DATE|TIME]   12
+INFO[DATE|TIME] is_block: true
 Opening https://etherscan.io/block/12

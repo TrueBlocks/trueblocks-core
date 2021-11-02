@@ -1,5 +1,5 @@
 chifra explore  trueblocks.eth
-TIME ~ CLOCK - <INFO>  : terms
-TIME ~ CLOCK - <INFO>  :   trueblocks.eth
-TIME ~ CLOCK - <INFO>  : is_addr: true
+INFO[DATE|TIME] terms
+INFO[DATE|TIME]   trueblocks.eth
+INFO[DATE|TIME] is_addr: true
 Opening https://etherscan.io/enslookup-search?search=trueblocks.eth
