@@ -17,6 +17,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/pins"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
@@ -87,6 +88,11 @@ func validatePinsArgs(cmd *cobra.Command, args []string) error {
 }
 
 func runPins(cmd *cobra.Command, args []string) {
+	if len(validate.Errors) > 0 {
+		output.PrintJson([]string{})
+		return
+	}
+
 	err := pinlib.EstablishDirectories()
 	if err != nil {
 		if err, ok := err.(*pinlib.ErrCustomizedPath); ok {

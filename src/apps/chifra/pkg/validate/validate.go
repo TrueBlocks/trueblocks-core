@@ -16,7 +16,11 @@ import (
 	"errors"
 	"strconv"
 	"strings"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
+
+var Errors []string
 
 func usageEx(function, msg string, values []string) error {
 	var ret string
@@ -27,6 +31,10 @@ func usageEx(function, msg string, values []string) error {
 	for index, val := range values {
 		rep := "{" + strconv.FormatInt(int64(index), 10) + "}"
 		ret = strings.Replace(ret, rep, val, -1)
+	}
+	if utils.IsApiMode() {
+		Errors = append(Errors, ret)
+		return nil
 	}
 	return errors.New(FmtError(ret))
 }
@@ -44,6 +52,10 @@ func Deprecated(cmd string, rep string) error {
 }
 
 func FmtError(msg string) string {
+	if utils.IsApiMode() {
+		Errors = append(Errors, msg)
+		return ""
+	}
 	return "\n  " + msg + "\n"
 }
 
@@ -117,7 +129,7 @@ func ValidateEnum(field, value, valid string) error {
 	msg := "The " + field + " option ("
 	msg += value
 	msg += ") must be one of [ " + list + " ]"
-	return errors.New(FmtError(msg))
+	return Usage(msg)
 }
 
 func ValidateEnumSlice(field string, values []string, valid string) error {

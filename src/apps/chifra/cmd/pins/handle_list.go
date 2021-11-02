@@ -53,8 +53,6 @@ func HandleList() {
 		}
 	}
 
-	var errors []string
-
 	outFmt := "%s\t%s\t%s\n"
 	switch output.Format {
 	case "txt":
@@ -64,7 +62,7 @@ func HandleList() {
 	case "json":
 		fallthrough
 	case "api":
-		err := output.PrintJson(manifestData.NewPins, errors)
+		err := output.PrintJson(manifestData.NewPins)
 		if err != nil {
 			logger.Fatal(err)
 		}

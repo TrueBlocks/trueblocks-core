@@ -16,20 +16,32 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
-// PrintJson marshals its arguments and prints JSON in a standardized
-// format
-func PrintJson(serializable interface{}, errors []string) error {
-	response := map[string]interface{}{
-		"data": serializable,
-		"meta": GetMeta(),
-	}
-	if Format != "api" {
+// PrintJson marshals its arguments and prints JSON in a standardized format
+func PrintJson(serializable interface{}) error {
+	var response map[string]interface{}
+
+	if Format == "json" {
 		response = map[string]interface{}{
 			"data": serializable,
 		}
+
+	} else {
+		if len(validate.Errors) > 0 {
+			response = map[string]interface{}{
+				"errors": validate.Errors,
+			}
+		} else {
+			response = map[string]interface{}{
+				"data": serializable,
+				"meta": GetMeta(),
+			}
+		}
 	}
+
 	marshalled, err := json.MarshalIndent(response, "", "  ")
 	if err != nil {
 		return err
