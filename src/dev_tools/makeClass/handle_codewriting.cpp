@@ -97,7 +97,8 @@ bool writeCodeIn(const codewrite_t& cw) {
 
 //---------------------------------------------------------------------------------------------------
 bool writeCodeOut(COptions* opts, const string_q& fn) {
-    if (contains(fn, "/stub/") || contains(fn, "/chifra/") || contains(fn, "fireStorm"))
+    bool is_goported = contains(fn, "fireStorm") || contains(fn, "pinMan");
+    if (contains(fn, "/stub/") || contains(fn, "/chifra/") || is_goported)
         return true;
 
     string_q orig = asciiFileToString(fn);
