@@ -36,37 +36,6 @@ void pinlib_cleanup(void) {
     acctlib_cleanup();
 }
 
-//----------------------------------------------------------------
-bool pinlib_downloadManifest(void) {
-    static string_q gatewayUrl;
-    if (gatewayUrl.empty()) {
-        gatewayUrl =
-            getGlobalConfig("blockScrape")->getConfigStr("dev", "ipfs_gateway", "http://gateway.ipfs.io/ipfs/");
-        if (!endsWith(gatewayUrl, "/"))
-            gatewayUrl += "/";
-    }
-
-    CEthCall theCall;
-    theCall.address = unchainedIndexAddr;
-    theCall.encoding = manifestHashEncoding;
-    theCall.blockNumber = getBlockProgress(BP_CLIENT).client;
-    theCall.abi_spec.loadAbisKnown("unchained");  // unchained index is a known contract
-    LOG_INFO("Calling unchained index smart contract...");
-    if (doEthCall(theCall)) {
-        ipfshash_t ipfshash = theCall.callResult.outputs[0].value;
-        LOG_INFO("Found manifest hash at ", cGreen, ipfshash, cOff);
-        LOG_INFO("IPFS gateway ", cGreen, gatewayUrl, cOff);
-        string_q remoteData = doCommand("curl -s \"" + gatewayUrl + ipfshash + "\"");
-        string fn = getConfigPath("manifest/manifest.txt");
-        stringToAsciiFile(fn, remoteData);
-        LOG_INFO("Freshened manifest with ", fileSize(fn), " bytes");
-        return fileExists(fn);
-    } else {
-        LOG_ERR("Call to unchained index smart contract failed. Could not freshen.");
-    }
-    return false;
-}
-
 //---------------------------------------------------------------------------
 bool pinlib_readManifest(CPinnedChunkArray& pinArray) {
     if (!pinArray.empty())
@@ -306,13 +275,9 @@ bool pinlib_unpinChunk(CPinnedChunkArray& pList, const string_q& fileName, CPinn
 }
 
 //---------------------------------------------------------------------------
-bool pinlib_getChunkFromRemote(CPinnedChunk& pin, ipfsdown_t which, double sleep) {
-    string_q outFile = "blooms/" + pin.fileName + ".bloom";
-    ipfshash_t ipfshash = pin.bloomHash;
-    if (which != BLOOM_TYPE) {
-        outFile = "finalized/" + pin.fileName + ".bin";
-        ipfshash = pin.indexHash;
-    }
+bool pinlib_getChunkFromRemote(CPinnedChunk& pin, double sleep) {
+    string_q outFile = "finalized/" + pin.fileName + ".bin";
+    string_q ipfshash = pin.indexHash;
 
     if (!fileExists(getIndexPath(outFile))) {
         string_q zipFile = outFile + ".gz";

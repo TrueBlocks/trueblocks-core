@@ -14,10 +14,6 @@
 
 //----------------------------------------------------------------
 bool COptions::handle_list(void) {
-    // if (remote) {
-    //     cerr << "remote not implemented" << endl;
-
-    // } else {
     ASSERT(pins.size());  // local pins have already been loaded
     for (auto pin : pins) {
         if (!isJson()) {
@@ -30,6 +26,5 @@ bool COptions::handle_list(void) {
         }
         firstOut = false;
     }
-    // }
     return false;
 }

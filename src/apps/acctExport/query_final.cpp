@@ -219,7 +219,7 @@ bool COptions::establishIndexChunk(const string_q& fullPathToChunk) {
     CPinnedChunk pin;
     if (pinlib_findChunk(pins, fileName, pin)) {
         LOG_PROGRESS(cGreen + "Unchaining-index", fileRange.first, listRange.second, " from IPFS" + cOff);
-        if (!pinlib_getChunkFromRemote(pin, CHUNK_TYPE, .25))
+        if (!pinlib_getChunkFromRemote(pin, .25))
             LOG_ERR("Could not retrieve file from IPFS: ", fullPathToChunk);
     } else {
         LOG_ERR("Could not find file in manifest: ", fullPathToChunk);
