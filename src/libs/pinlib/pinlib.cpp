@@ -277,7 +277,7 @@ bool pinlib_unpinChunk(CPinnedChunkArray& pList, const string_q& fileName, CPinn
 //---------------------------------------------------------------------------
 bool pinlib_getChunkFromRemote(CPinnedChunk& pin, double sleep) {
     string_q outFile = "finalized/" + pin.fileName + ".bin";
-    string_q ipfshash = pin.indexHash;
+    ipfshash_t ipfshash = pin.indexHash;
 
     if (!fileExists(getIndexPath(outFile))) {
         string_q zipFile = outFile + ".gz";

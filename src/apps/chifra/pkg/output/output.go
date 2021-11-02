@@ -10,23 +10,39 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-package cmd
+package output
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"encoding/json"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
-	"github.com/spf13/cobra"
 )
 
-func validateGlobalFlags(cmd *cobra.Command, args []string) error {
-	if len(RootOpts.file) > 0 && !utils.FileExists(RootOpts.file) {
-		return validate.Usage("file {0} not found", RootOpts.file)
-	}
+var OutputFn string
+var Format string
 
-	err := validate.ValidateEnum("--fmt", output.Format, "[json|txt|csv|api]")
-	if err != nil {
-		return err
+type Meta struct {
+	Unripe    string `json:"unripe"`
+	Ripe      string `json:"ripe"`
+	Staging   string `json:"staging"`
+	Finalized string `json:"finalized"`
+	Client    string `json:"client"`
+}
+
+func (m Meta) String() string {
+	ret, _ := json.MarshalIndent(m, "", "  ")
+	return string(ret)
+}
+
+func GetMeta() *Meta {
+	if utils.IsTestMode() {
+		return &Meta{
+			Unripe:    "0xdeadbeef",
+			Ripe:      "0xdeadbeef",
+			Staging:   "0xdeadbeef",
+			Finalized: "0xdeadbeef",
+			Client:    "0xdeadbeef",
+		}
 	}
-	return nil
+	return &Meta{Client: "12"}
 }

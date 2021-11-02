@@ -102,6 +102,7 @@ func retry(failedPins []manifest.PinDescriptor, times uint, downloadChunks downl
 func PrintManifestHeader() {
 	// The following two values should be read from manifest.txt, however right now only TSV format
 	// is available for download and it lacks this information
+	// TODO: These values should be in a config file
 	logger.Log(logger.Info, "hashToIndexFormatFile:", "Qmart6XP9XjL43p72PGR93QKytbK8jWWcMguhFgxATTya2")
 	logger.Log(logger.Info, "hashToBloomFormatFile:", "QmNhPk39DUFoEdhUmtGARqiFECUHeghyeryxZM9kyRxzHD")
 	logger.Log(logger.Info, "unchainedIndexAddr:", pinlib.GetUnchainedIndexAddress())

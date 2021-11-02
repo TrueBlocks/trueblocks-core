@@ -24,6 +24,7 @@ import (
 
 	"github.com/spf13/cobra"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/viper"
@@ -33,20 +34,18 @@ var cfgFile string
 
 // rootOptionsType Structure to carry command line and config file options
 type rootOptTypes struct {
-	fmt        string
-	verbose    bool
-	logLevel   uint
-	noHeader   bool
-	wei        bool
-	ether      bool
-	dollars    bool
-	help       bool
-	raw        bool
-	outputFile string
-	toFile     bool
-	file       string
-	version    bool
-	noop       bool
+	verbose  bool
+	logLevel uint
+	noHeader bool
+	wei      bool
+	ether    bool
+	dollars  bool
+	help     bool
+	raw      bool
+	toFile   bool
+	file     string
+	version  bool
+	noop     bool
 }
 
 var RootOpts rootOptTypes
@@ -104,10 +103,10 @@ func init() {
 	rootCmd.PersistentFlags().StringVarP(&RootOpts.file, "file", "", "", "specify multiple sets of command line options in a file")
 	rootCmd.PersistentFlags().MarkHidden("file")
 
-	rootCmd.PersistentFlags().StringVarP(&RootOpts.outputFile, "output", "", "", "write the results to file 'fn' and return the filename")
+	rootCmd.PersistentFlags().StringVarP(&output.OutputFn, "output", "", "", "write the results to file 'fn' and return the filename")
 	rootCmd.PersistentFlags().MarkHidden("output")
 
-	rootCmd.PersistentFlags().StringVarP(&RootOpts.fmt, "fmt", "x", "", "export format, one of [none|json*|txt|csv|api]")
+	rootCmd.PersistentFlags().StringVarP(&output.Format, "fmt", "x", "", "export format, one of [none|json*|txt|csv|api]")
 	rootCmd.PersistentFlags().BoolVarP(&RootOpts.verbose, "verbose", "v", false, "enable verbose (increase detail with --log_level)")
 	rootCmd.PersistentFlags().BoolVarP(&RootOpts.help, "help", "h", false, "display this help screen")
 
@@ -210,8 +209,8 @@ func PassItOn(path string, flags, arguments string) {
 	if RootOpts.version {
 		options += " --version"
 	}
-	if len(RootOpts.fmt) > 0 {
-		options += " --fmt " + RootOpts.fmt
+	if len(output.Format) > 0 {
+		options += " --fmt " + output.Format
 	}
 	if RootOpts.verbose || RootOpts.logLevel > 0 {
 		level := RootOpts.logLevel
@@ -220,8 +219,8 @@ func PassItOn(path string, flags, arguments string) {
 		}
 		options += " --verbose " + fmt.Sprintf("%d", level)
 	}
-	if len(RootOpts.outputFile) > 0 {
-		options += " --output " + RootOpts.outputFile
+	if len(output.OutputFn) > 0 {
+		options += " --output " + output.OutputFn
 	}
 	if RootOpts.noHeader {
 		options += " --no_header"
