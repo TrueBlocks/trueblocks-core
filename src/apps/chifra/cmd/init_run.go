@@ -26,13 +26,6 @@ func validateInitArgs(cmd *cobra.Command, args []string) error {
 }
 
 func runInit(cmd *cobra.Command, args []string) {
-	options := "--init "
-	if InitOpts.all {
-		options += " --all"
-	}
-	arguments := ""
-	for _, arg := range args {
-		arguments += " " + arg
-	}
-	PassItOn("pinMan", options, arguments)
+	PinsOpts.init = true
+	runPins(cmd, args)
 }
