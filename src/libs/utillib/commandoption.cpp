@@ -821,7 +821,7 @@ string_q CCommandOption::toGoCall(void) const {
     out << endl;
     out << "// " << goFunc << " help text todo" << endl;
     out << "func " << goFunc << "(w http.ResponseWriter, r *http.Request) {" << endl;
-    if (!tool.empty() && !contains(tool, " ")) {
+    if (!tool.empty() && !contains(tool, " ") && api_route != "pins") {
         out << "\tCallOne(w, r, \"" << tool << "\", \"" << api_route << "\")" << endl;
     } else if (goFunc == "AccountsTags" || goFunc == "AccountsCollections") {
         out << "\tCallOne(w, r, \"ethNames\", \"" << api_route << "\")" << endl;

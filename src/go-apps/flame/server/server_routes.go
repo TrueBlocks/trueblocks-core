@@ -188,7 +188,7 @@ func AdminInit(w http.ResponseWriter, r *http.Request) {
 
 // AdminPins help text todo
 func AdminPins(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "pinMan", "pins")
+	CallOneExtra(w, r, "chifra", "pins", "pins")
 }
 
 // AdminChunks help text todo
