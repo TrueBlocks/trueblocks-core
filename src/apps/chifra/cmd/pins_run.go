@@ -24,35 +24,28 @@ import (
 )
 
 func validatePinsArgs(cmd *cobra.Command, args []string) error {
-	list := PinsOpts.list
-	init := PinsOpts.init
-	freshen := PinsOpts.freshen
-	remote := PinsOpts.remote
-	all := PinsOpts.all
-	init_all := PinsOpts.init_all
-	share := PinsOpts.share
 
-	if list && (init || freshen) {
+	if PinsOpts.list && (PinsOpts.init || PinsOpts.freshen) {
 		return validate.Usage("Please choose only a single option.")
 	}
 
-	if !list && !init && !freshen {
+	if !PinsOpts.list && !PinsOpts.init && !PinsOpts.freshen {
 		return validate.Usage("You must choose at least one of --list, --init, or --freshen.")
 	}
 
-	if remote && !list {
+	if PinsOpts.remote && !PinsOpts.list {
 		return validate.Usage("The --remote option is only available with the --list option")
 	}
 
-	if remote {
+	if PinsOpts.remote {
 		return validate.Usage("The --remote option is not yet implemented")
 	}
 
-	if all && !init {
+	if PinsOpts.all && !PinsOpts.init {
 		return validate.Usage("Use the --all option only with the --init or --freshen options.")
 	}
 
-	if init_all {
+	if PinsOpts.init_all {
 		return validate.Usage("Flag --init_all has been deprecated, use --init --all instead")
 	}
 
@@ -68,12 +61,12 @@ func validatePinsArgs(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	utils.TestLogBool("list", list)
-	utils.TestLogBool("init", init)
-	utils.TestLogBool("freshen", freshen)
-	utils.TestLogBool("all", all)
-	utils.TestLogBool("share", share)
-	utils.TestLogBool("remote", remote)
+	utils.TestLogBool("list", PinsOpts.list)
+	utils.TestLogBool("init", PinsOpts.init)
+	utils.TestLogBool("freshen", PinsOpts.freshen)
+	utils.TestLogBool("all", PinsOpts.all)
+	utils.TestLogBool("share", PinsOpts.share)
+	utils.TestLogBool("remote", PinsOpts.remote)
 	// LOG_TEST("sleep", sleep, (sleep == .25))
 
 	return nil
@@ -85,8 +78,8 @@ Please create the folder or adjust the setting by editing $CONFIG/trueBlocks.tom
 
 func runPins(cmd *cobra.Command, args []string) {
 	if PinsOpts.list {
-		pinman.PrintManifestHeader()
-		pinman.HandleList(RootOpts.fmt)
+		pins.PrintManifestHeader()
+		pins.HandleList(RootOpts.fmt)
 		return
 	}
 
@@ -101,7 +94,7 @@ func runPins(cmd *cobra.Command, args []string) {
 			logger.Fatal(err)
 		}
 
-		pinman.HandleInit(PinsOpts.all)
+		pins.HandleInit(PinsOpts.all)
 		return
 	}
 
