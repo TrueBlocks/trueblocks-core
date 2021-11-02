@@ -25,10 +25,8 @@ class COptions : public CAbiOptions {
   public:
     // BEG_CODE_DECLARE
     bool init;
-    bool freshen;
     bool all;
     bool share;
-    bool remote;
     double sleep;
     // END_CODE_DECLARE
 
