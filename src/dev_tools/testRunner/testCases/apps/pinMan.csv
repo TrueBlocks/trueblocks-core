@@ -2,7 +2,7 @@ enabled ,mode ,speed ,route ,path/tool   ,filename        ,post ,options        
 #
 # TODO: A number of these tests were turned off for three reasons:
 #        1) --output and --to_file do not work
-#        2) error strings in API_MODE are not sent on stdout as they are in C++ compare_mocked
+#        2) error strings in API_MODE are not sent on stdout as they are in C++
 #        3) the `meta` data is not sent during API mode
 #
 on      ,cmd  ,fast  ,pins  ,apps/pinMan ,help            ,n    ,@h
