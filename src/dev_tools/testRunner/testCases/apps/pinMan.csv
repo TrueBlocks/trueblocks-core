@@ -10,8 +10,6 @@ on      ,cmd  ,fast  ,pins  ,apps/pinMan ,help_long       ,n    ,help
 on      ,cmd  ,fast  ,pins  ,apps/pinMan ,no_params       ,y    ,
 on      ,cmd  ,fast  ,pins  ,apps/pinMan ,invalid_param_1 ,y    ,junk
 on      ,cmd  ,fast  ,pins  ,apps/pinMan ,list_local      ,y    ,list
-local   ,both ,fast  ,pins  ,apps/pinMan ,freshen_mocked  ,y    ,freshen
-local   ,both ,fast  ,pins  ,apps/pinMan ,compare_mocked  ,y    ,compare
 on      ,cmd  ,fast  ,pins  ,apps/pinMan ,fmt_default     ,y    ,list
 on      ,both ,slow  ,pins  ,apps/pinMan ,fmt_txt         ,n    ,list & fmt = txt
 on      ,both ,fast  ,pins  ,apps/pinMan ,fmt_csv         ,n    ,list & fmt = csv
