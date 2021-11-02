@@ -21,6 +21,7 @@ type PinDescriptor struct {
 }
 
 type Manifest struct {
+	// TODO: This structure will be updated with better data shortly
 	FileName           string          `json:"fileName"`
 	IndexFormat        IpfsHash        `json:"indexFormat"`
 	BloomFormat        IpfsHash        `json:"bloomFormat"`
