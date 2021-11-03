@@ -2,9 +2,9 @@
 
 make every
 
-./rublock_cnt 10000
-./rublock_cnt 100000
-./rublock_cnt 1000000
+./run_blocks 10000
+./run_blocks 100000
+./run_blocks 1000000
 
 ./run_dates day
 ./run_dates week
