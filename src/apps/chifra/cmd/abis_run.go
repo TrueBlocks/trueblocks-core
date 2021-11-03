@@ -48,6 +48,10 @@ func validateAbisArgs(cmd *cobra.Command, args []string) error {
 }
 
 func runAbis(cmd *cobra.Command, args []string) {
+	// if len(AbisOpts.find) {
+	// 	return abis.HandleFind(AbisOpts.find)
+	// }
+
 	options := ""
 	if AbisOpts.known {
 		options += " --known"
