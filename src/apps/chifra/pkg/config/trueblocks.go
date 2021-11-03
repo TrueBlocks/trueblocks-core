@@ -12,45 +12,44 @@
  *-------------------------------------------------------------------------------------------*/
 package config
 
-// Global config
+import (
+	"github.com/spf13/viper"
+)
 
-type globalVersion struct {
+var trueBlocksViper = viper.New()
+var trueBlocksRead = false
+var cachedTrueBlocksConfig TrueBlocksConfig
+var DefaultIndexPath = GetConfigPath("unchained")
+
+type trueBlocksVersion struct {
 	Current string
 }
 
-type globalSettings struct {
+type trueBlocksSettings struct {
 	RpcProvider  string
 	CachePath    string
 	IndexPath    string
 	EtherscanKey string `toml:"etherscan_key"`
 }
 
-type Global struct {
-	Version  globalVersion
-	Settings globalSettings
+type TrueBlocksConfig struct {
+	Version  trueBlocksVersion
+	Settings trueBlocksSettings
 }
 
-// BlockScrape config
+// init sets up default values for the given configuration
+func init() {
+	trueBlocksViper.SetConfigName("trueBlocks")
 
-type blockScrapeRequires struct {
-	Tracing  bool
-	Parity   bool
-	Balances bool
-	Archive  bool
+	trueBlocksViper.SetDefault("Settings.IndexPath", DefaultIndexPath)
 }
 
-type blockScrapeDev struct {
-	IpfsGateway string `toml:"ipfs_gateway"`
-	MaxPoolSize int
-}
+// ReadGlobal reads and the configuration located in trueBlocks.toml file
+func ReadGlobal() *TrueBlocksConfig {
+	if !trueBlocksRead {
+		MustReadConfig(trueBlocksViper, &cachedTrueBlocksConfig)
+		trueBlocksRead = true
+	}
 
-type blockScrapeUnchainedIndex struct {
-	Address  string
-	Encoding string
-}
-
-type BlockScrape struct {
-	Requires       blockScrapeRequires
-	Dev            blockScrapeDev
-	UnchainedIndex blockScrapeUnchainedIndex
+	return &cachedTrueBlocksConfig
 }
