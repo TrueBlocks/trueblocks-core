@@ -141,6 +141,7 @@ string_q get_notes2(const CCommandOption& cmd) {
     return trim(substitute(os.str(), "|", "\n    "));
 }
 
+// TODO: search for go-port
 #define upperCaseGoOpts (p.api_route == "scrape")
 string_q get_optfields(const CCommandOption& cmd) {
     size_t wid = 0;
