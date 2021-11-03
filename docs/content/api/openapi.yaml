@@ -1426,6 +1426,14 @@ paths:
               - restart
               - pause
               - quit
+        - name: sleep
+          description: seconds to sleep between scraper passes
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: number
         - name: pin
           description: >
             pin chunks (and blooms) to IPFS as they are created (requires pinning service)
@@ -1435,7 +1443,15 @@ paths:
           explode: true
           schema:
             type: boolean
-        - name: n_blocks
+        - name: publish
+          description: after pinning the chunk, publish it to UnchainedIndex
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: block_cnt
           description: maximum number of blocks to process per pass
           required: false
           style: form

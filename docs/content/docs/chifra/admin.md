@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2021-11-02T13:35:48
+date: 2021-11-03T15:07:21
 lastmod:
   - :git
   - lastmod
@@ -59,7 +59,7 @@ The `chifra scrape` application creates TrueBlocks' index of address appearances
 
 `chifra scrape` is a long running process, therefore we advise you run it as a service or in terminal multiplexer such as `tmux`. It is possible to start and stop `chifra scrape` as needed, but doing so means the scraper needs to catch up to the front of the chain, a process that may take some time depending on how frequently the scraper is run. See below for a more in depth explanation of how the scraping process works and prerequisites for it proper operation.
 
-The scraper can scrape either the index only, previously created monitors only, both, or neither. If you specify `none`, timestamps will be scraped but nothing else. If you're scraping monitors, you may tell the system to cache traces and transactions. This will speed up access, but take addition hard drive space. You may also adjust the speed of operation on different machines with the `--sleep` and `--n_blocks` options. Finally, you may choose to optionally `--pin` each new chunk to IPFS.
+The scraper can scrape either the index only, previously created monitors only, both, or neither. If you specify `none`, timestamps will be scraped but nothing else. If you're scraping monitors, you may tell the system to cache traces and transactions. This will speed up access, but take addition hard drive space. You may also adjust the speed of operation on different machines with the `--sleep` and `--block_cnt` options. Finally, you may choose to optionally `--pin` each new chunk to IPFS.
 
 ```[plaintext]
 Purpose:
@@ -73,11 +73,12 @@ Arguments:
 	One or more of [ indexer | monitors | both ]
 
 Flags:
-  -a, --action string   command to apply to the specified scrape
-                        One of [ toggle | run | restart | pause | quit ]
-  -s, --sleep float     seconds to sleep between scraper passes (default 14)
-  -p, --pin             pin chunks (and blooms) to IPFS as they are created (requires pinning service)
-  -n, --n_blocks uint   maximum number of blocks to process per pass (default 2000)
+  -a, --action string    command to apply to the specified scrape
+                         One of [ toggle | run | restart | pause | quit ]
+  -s, --sleep float      seconds to sleep between scraper passes (default 14)
+  -p, --pin              pin chunks (and blooms) to IPFS as they are created (requires pinning service)
+  -u, --publish          after pinning the chunk, publish it to UnchainedIndex
+  -n, --block_cnt uint   maximum number of blocks to process per pass (default 2000)
 
 Global Flags:
   -x, --fmt string   export format, one of [none|json*|txt|csv|api]

@@ -1,7 +1,8 @@
 {
-  "message": "Testing only",
-  "n_blocks": 2000,
-  "n_block_procs": 10,
-  "n_addr_procs": 20,
+  "message": "Testing in blockScrape/options.cpp",
+  "block_cnt": 2000,
+  "block_chan_cnt": 10,
+  "addr_chan_cnt": 20,
   "pin": 1,
+  "publish": 1,
 }
