@@ -6,12 +6,12 @@ on,both,fast,scrape,apps/blockScrape,invalid,n,junk
 on,both,fast,scrape,apps/blockScrape,nBlocks_invalid,n,block_cnt = -12
 on,both,fast,scrape,apps/blockScrape,nBProcs_invalid,n,block_chan_cnt = -12
 on,both,fast,scrape,apps/blockScrape,nAProcs_invalid,n,addr_chan_cnt = -12
-on,both,fast,scrape,apps/blockScrape,nBlocks,n,modes = both & block_cnt = 12
-on,both,fast,scrape,apps/blockScrape,listpins,n,modes = both & listpins
-on,both,fast,scrape,apps/blockScrape,pin,n,modes = both & pin
-on,both,fast,scrape,apps/blockScrape,publish,n,modes = both & publish
-on,both,fast,scrape,apps/blockScrape,pin_publish,n,modes = both & publish & pin
-on,both,fast,scrape,apps/blockScrape,pin_publish_list,n,modes = both & publish & pin
+off,both,fast,scrape,apps/blockScrape,nBlocks,n,modes = both & block_cnt = 12
+off,both,fast,scrape,apps/blockScrape,listpins,n,modes = both & listpins
+off,both,fast,scrape,apps/blockScrape,pin,n,modes = both & pin
+off,both,fast,scrape,apps/blockScrape,publish,n,modes = both & publish
+off,both,fast,scrape,apps/blockScrape,pin_publish,n,modes = both & publish & pin
+off,both,fast,scrape,apps/blockScrape,pin_publish_list,n,modes = both & publish & pin
 off,both,fast,scrape,apps/blockScrape,mode_01_fail,n,modes = both & action = badmode
 off,both,fast,scrape,apps/blockScrape,mode_02_fail2,n,modes = both & action = run & action = quit
 off,both,fast,scrape,apps/blockScrape,mode_11_stopped_quit_fail,n,modes = both & action = quit
@@ -31,6 +31,6 @@ off,both,fast,scrape,apps/blockScrape,mode_35_paused_quit_okay,n,modes = both & 
 off,both,fast,scrape,apps/blockScrape,mode_toggle_indexer,n,modes = indexer & action = toggle
 off,both,fast,scrape,apps/blockScrape,mode_toggle_monitors,n,modes = monitors & action = toggle
 off,both,fast,scrape,apps/blockScrape,mode_toggle_both,n,modes = both & action = toggle
-on,both,fast,export,apps/blockScrape,RESET2,n,RESET
-on,both,fast,scrape,apps/blockScrape,real_run,n,modes = both & sleep = .5 & pin & log_level = 8
-on,both,fast,scrape,apps/blockScrape,real_run2,n,modes = both & sleep = .5
+off,both,fast,export,apps/blockScrape,RESET2,n,RESET
+off,both,fast,scrape,apps/blockScrape,real_run,n,modes = both & sleep = .5 & pin & log_level = 8
+off,both,fast,scrape,apps/blockScrape,real_run2,n,modes = both & sleep = .5
