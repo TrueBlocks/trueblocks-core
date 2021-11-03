@@ -16,40 +16,40 @@ import (
 	"github.com/spf13/viper"
 )
 
-var globalConfigViper = viper.New()
-var globalConfigRead = false
-var cachedGlobalConfig Global
+var trueBlocksViper = viper.New()
+var trueBlocksRead = false
+var cachedTrueBlocksConfig TrueBlocksConfig
 var DefaultIndexPath = GetConfigPath("unchained")
 
-type globalVersion struct {
+type trueBlocksVersion struct {
 	Current string
 }
 
-type globalSettings struct {
+type trueBlocksSettings struct {
 	RpcProvider  string
 	CachePath    string
 	IndexPath    string
 	EtherscanKey string `toml:"etherscan_key"`
 }
 
-type Global struct {
-	Version  globalVersion
-	Settings globalSettings
+type TrueBlocksConfig struct {
+	Version  trueBlocksVersion
+	Settings trueBlocksSettings
 }
 
 // init sets up default values for the given configuration
 func init() {
-	globalConfigViper.SetConfigName("trueBlocks")
+	trueBlocksViper.SetConfigName("trueBlocks")
 
-	globalConfigViper.SetDefault("Settings.IndexPath", DefaultIndexPath)
+	trueBlocksViper.SetDefault("Settings.IndexPath", DefaultIndexPath)
 }
 
 // ReadGlobal reads and the configuration located in trueBlocks.toml file
-func ReadGlobal() *Global {
-	if !globalConfigRead {
-		MustReadConfig(globalConfigViper, &cachedGlobalConfig)
-		globalConfigRead = true
+func ReadGlobal() *TrueBlocksConfig {
+	if !trueBlocksRead {
+		MustReadConfig(trueBlocksViper, &cachedTrueBlocksConfig)
+		trueBlocksRead = true
 	}
 
-	return &cachedGlobalConfig
+	return &cachedTrueBlocksConfig
 }
