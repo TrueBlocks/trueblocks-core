@@ -69,6 +69,7 @@ func GetConfigPath(fileName string) string {
 // given targetStruct. Any error will result in a call to logger.Fatal
 func MustReadConfig(v *viper.Viper, targetStruct interface{}) {
 	v.AddConfigPath(GetConfigPath(""))
+	v.SetEnvPrefix("TB")
 	v.AutomaticEnv()
 	v.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
 
