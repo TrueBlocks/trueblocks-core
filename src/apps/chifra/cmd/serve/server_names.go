@@ -1,4 +1,4 @@
-package server
+package serve
 
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
@@ -21,8 +21,6 @@ import (
 	"os"
 	"os/exec"
 	"strings"
-
-	utils "github.com/TrueBlocks/trueblocks-core/src/go-apps/blaze/utils"
 )
 
 func EditName(w http.ResponseWriter, r *http.Request) {
@@ -31,7 +29,7 @@ func EditName(w http.ResponseWriter, r *http.Request) {
 	for k, _ := range r.Form {
 		json.Unmarshal([]byte(k), &newName)
 	}
-	log.Print(utils.Yellow, "Adding name: ", newName.ToJson(), utils.Off)
+	log.Print( /* utils.Yellow, */ "Adding name: ", newName.ToJson() /* , utils.Off */)
 
 	// Do the actual call
 	cmd := exec.Command(GetCommandPath("ethNames"), "--create")
@@ -47,7 +45,7 @@ func EditName(w http.ResponseWriter, r *http.Request) {
 		log.Print("Error from server: ", err)
 	}
 	output := string(out[:])
-	log.Print(utils.Yellow, string(output), utils.Off)
+	log.Print( /* utils.Yellow,  */ string(output) /*, utils.Off */)
 
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "*")

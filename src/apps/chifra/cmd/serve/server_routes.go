@@ -1,4 +1,4 @@
-package server
+package serve
 
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
@@ -23,7 +23,7 @@ import (
 	"net/http"
 	"time"
 
-	utils "github.com/TrueBlocks/trueblocks-core/src/go-apps/blaze/utils"
+	utils "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/gorilla/mux"
 	"golang.org/x/time/rate"
 )
@@ -205,6 +205,7 @@ func OtherQuotes(w http.ResponseWriter, r *http.Request) {
 func OtherSlurp(w http.ResponseWriter, r *http.Request) {
 	CallOne(w, r, "ethslurp", "slurp")
 }
+
 // END_ROUTE_CODE
 
 var routes = Routes{

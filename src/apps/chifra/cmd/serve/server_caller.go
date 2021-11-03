@@ -1,4 +1,4 @@
-package server
+package serve
 
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
@@ -23,7 +23,7 @@ import (
 	"strconv"
 	"strings"
 
-	utils "github.com/TrueBlocks/trueblocks-core/src/go-apps/blaze/utils"
+	utils "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // GetCommandPath returns full path the the given tool
@@ -81,7 +81,7 @@ func CallOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd s
 	// Do the actual call
 	cmd := exec.Command(tbCmd, allDogs...)
 	if Options.Verbose > 0 {
-		log.Print(utils.Yellow, "Calling: ", cmd, utils.Off)
+		log.Print( /*utils.Yellow,*/ "Calling: ", cmd /* , utils.Off */)
 	}
 
 	if cmd.Process != nil {
