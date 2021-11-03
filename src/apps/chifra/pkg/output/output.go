@@ -13,8 +13,11 @@
 package output
 
 import (
+	"context"
 	"encoding/json"
+	"fmt"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
@@ -44,5 +47,7 @@ func GetMeta() *Meta {
 			Client:    "0xdeadbeef",
 		}
 	}
-	return &Meta{Client: "12"}
+	client := rpcClient.Get()
+	bn, _ := client.BlockNumber(context.Background())
+	return &Meta{Client: fmt.Sprintf("%d", bn)}
 }
