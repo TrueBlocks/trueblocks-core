@@ -80,8 +80,8 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 
 13660,tools,Accounts,abis,grabABI,addrs,,,true,false,true,true,header,positional,list<addr>,a list of one or more smart contracts whose ABIs to display
 13850,tools,Accounts,abis,grabABI,known,k,,false,false,true,false,local,switch,<boolean>,load common 'known' ABIs from cache
-13860,tools,Accounts,abis,grabABI,sol,s,,false,false,true,true,local,flag,<string>,file name of .sol file from which to create a new known abi (without .sol)
-13865,tools,Accounts,abis,grabABI,find,f,,false,false,true,true,local,flag,list<string>,try to search for a function declaration given a four byte code
+13860,tools,Accounts,abis,grabABI,sol,s,,false,false,true,true,local,flag,list<string>,extract the abi definition from the provided .sol file(s)
+13865,tools,Accounts,abis,grabABI,find,f,,false,false,true,true,local,flag,list<string>,search for function or event declarations given a four- or 32-byte code(s)
 13865,tools,Accounts,abis,grabABI,source,o,,false,false,false,false,local,switch,<boolean>,show the source of the ABI information
 13867,tools,Accounts,abis,grabABI,classes,c,,false,false,false,false,local,switch,<boolean>,generate classDefinitions folder and class definitions
 13880,tools,Accounts,abis,grabABI,,,,false,false,true,true,--,description,,Fetches the ABI for a smart contract.

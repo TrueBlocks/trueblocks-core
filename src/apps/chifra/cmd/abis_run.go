@@ -15,6 +15,7 @@ package cmd
 import (
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/abis"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/spf13/cobra"
@@ -25,8 +26,8 @@ func validateAbisArgs(cmd *cobra.Command, args []string) error {
 		return validate.Usage("the '{0}' option is not implemented", "--classes")
 	}
 
-	if len(AbisOpts.sol) > 0 {
-		cleaned := "./" + strings.Replace(AbisOpts.sol, ".sol", "", 1) + ".sol"
+	for _, sol := range AbisOpts.sol {
+		cleaned := "./" + strings.Replace(sol, ".sol", "", 1) + ".sol"
 		if !utils.FileExists(cleaned) {
 			return validate.Usage("file not found at {0}", cleaned)
 		}
@@ -48,16 +49,17 @@ func validateAbisArgs(cmd *cobra.Command, args []string) error {
 }
 
 func runAbis(cmd *cobra.Command, args []string) {
-	// if len(AbisOpts.find) {
-	// 	return abis.HandleFind(AbisOpts.find)
-	// }
+	if len(AbisOpts.find) > 0 {
+		abis.HandleFind(AbisOpts.find)
+		return
+	}
 
 	options := ""
 	if AbisOpts.known {
 		options += " --known"
 	}
-	if len(AbisOpts.sol) > 0 {
-		options += " --sol " + AbisOpts.sol
+	for _, sol := range AbisOpts.sol {
+		options += " --sol " + sol
 	}
 	for _, t := range AbisOpts.find {
 		options += " --find " + t
