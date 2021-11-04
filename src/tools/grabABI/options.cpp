@@ -22,8 +22,8 @@ static const COption params[] = {
     // clang-format off
     COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "a list of one or more smart contracts whose ABIs to display"),  // NOLINT
     COption("known", "k", "", OPT_SWITCH, "load common 'known' ABIs from cache"),
-    COption("sol", "s", "<string>", OPT_FLAG, "file name of .sol file from which to create a new known abi (without .sol)"),  // NOLINT
-    COption("find", "f", "list<string>", OPT_FLAG, "try to search for a function declaration given a four byte code"),
+    COption("sol", "s", "list<string>", OPT_FLAG, "extract the abi definition from the provided .sol file(s)"),
+    COption("find", "f", "list<string>", OPT_FLAG, "search for function or event declarations given a four- or 32-byte code(s)"),  // NOLINT
     COption("source", "o", "", OPT_HIDDEN | OPT_SWITCH, "show the source of the ABI information"),
     COption("classes", "c", "", OPT_HIDDEN | OPT_SWITCH, "generate classDefinitions folder and class definitions"),
     COption("", "", "", OPT_DESCRIPTION, "Fetches the ABI for a smart contract."),
@@ -40,7 +40,7 @@ bool COptions::parseArguments(string_q& command) {
 
     // BEG_CODE_LOCAL_INIT
     bool known = false;
-    string_q sol = "";
+    CStringArray sol;
     CStringArray find;
     bool source = false;
     bool classes = false;
@@ -61,7 +61,8 @@ bool COptions::parseArguments(string_q& command) {
             known = true;
 
         } else if (startsWith(arg, "-s:") || startsWith(arg, "--sol:")) {
-            sol = substitute(substitute(arg, "-s:", ""), "--sol:", "");
+            arg = substitute(substitute(arg, "-s:", ""), "--sol:", "");
+            sol.push_back(arg);
         } else if (arg == "-s" || arg == "--sol") {
             return flag_required("sol");
 
@@ -94,7 +95,7 @@ bool COptions::parseArguments(string_q& command) {
     // BEG_DEBUG_DISPLAY
     LOG_TEST_LIST("addrs", addrs, addrs.empty());
     LOG_TEST_BOOL("known", known);
-    LOG_TEST("sol", sol, (sol == ""));
+    LOG_TEST_LIST("sol", sol, sol.empty());
     LOG_TEST_LIST("find", find, find.empty());
     LOG_TEST_BOOL("source", source);
     LOG_TEST_BOOL("classes", classes);
@@ -116,10 +117,12 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     if (!sol.empty()) {
-        if (!fileExists(sol + ".sol") && !fileExists(sol))
-            return usage(substitute(usageErrs[ERR_CANNOTFINDSOL], "[{SOL}]", sol));
-        convertFromSol(substitute(sol, ".sol", ""));
-        cerr << sol << " coverted in current folder." << endl;
+        for (auto s : sol) {
+            if (!fileExists(s + ".sol") && !fileExists(s))
+                return usage(substitute(usageErrs[ERR_CANNOTFINDSOL], "[{SOL}]", s));
+            convertFromSol(substitute(s, ".sol", ""));
+            cerr << s << " coverted in current folder." << endl;
+        }
         return false;
     }
 
