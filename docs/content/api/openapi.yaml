@@ -641,15 +641,18 @@ paths:
               type: string
               format: address_t
         - name: sol
-          description: file name of .sol file from which to create a new known abi (without .sol)
+          description: extract the abi definition from the provided .sol file(s)
           required: false
           style: form
           in: query
           explode: true
           schema:
-            type: string
+            type: array
+            items:
+              type: string
+              format: string_t
         - name: find
-          description: try to search for a function declaration given a four byte code
+          description: search for function or event declarations given a four- or 32-byte code(s)
           required: false
           style: form
           in: query

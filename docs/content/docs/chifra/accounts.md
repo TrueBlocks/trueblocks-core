@@ -2,7 +2,7 @@
 title: "Accounts"
 description: ""
 lead: ""
-date: 2021-10-29T07:20:42
+date: 2021-11-03T20:40:00
 lastmod:
   - :git
   - lastmod
@@ -208,8 +208,8 @@ Arguments:
 
 Flags:
   -k, --known          load common 'known' ABIs from cache
-  -s, --sol string     file name of .sol file from which to create a new known abi (without .sol)
-  -f, --find strings   try to search for a function declaration given a four byte code
+  -s, --sol strings    extract the abi definition from the provided .sol file(s)
+  -f, --find strings   search for function or event declarations given a four- or 32-byte code(s)
 
 Global Flags:
   -x, --fmt string   export format, one of [none|json*|txt|csv|api]

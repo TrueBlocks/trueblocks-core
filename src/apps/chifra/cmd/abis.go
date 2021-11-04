@@ -48,7 +48,7 @@ Notes:
 
 type abisOptionsType struct {
 	known   bool
-	sol     string
+	sol     []string
 	find    []string
 	source  bool
 	classes bool
@@ -62,8 +62,8 @@ func init() {
 	abisCmd.Flags().SortFlags = false
 	abisCmd.PersistentFlags().SortFlags = false
 	abisCmd.Flags().BoolVarP(&AbisOpts.known, "known", "k", false, "load common 'known' ABIs from cache")
-	abisCmd.Flags().StringVarP(&AbisOpts.sol, "sol", "s", "", "file name of .sol file from which to create a new known abi (without .sol)")
-	abisCmd.Flags().StringSliceVarP(&AbisOpts.find, "find", "f", nil, "try to search for a function declaration given a four byte code")
+	abisCmd.Flags().StringSliceVarP(&AbisOpts.sol, "sol", "s", nil, "extract the abi definition from the provided .sol file(s)")
+	abisCmd.Flags().StringSliceVarP(&AbisOpts.find, "find", "f", nil, "search for function or event declarations given a four- or 32-byte code(s)")
 	abisCmd.Flags().BoolVarP(&AbisOpts.source, "source", "o", false, "show the source of the ABI information (hidden)")
 	abisCmd.Flags().BoolVarP(&AbisOpts.classes, "classes", "c", false, "generate classDefinitions folder and class definitions (hidden)")
 	if !utils.IsTestMode() {
