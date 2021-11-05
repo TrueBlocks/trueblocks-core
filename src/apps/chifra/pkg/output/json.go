@@ -24,21 +24,20 @@ import (
 func PrintJson(serializable interface{}) error {
 	var response map[string]interface{}
 
-	if Format == "json" {
+	if len(validate.Errors) > 0 {
+		response = map[string]interface{}{
+			"errors": validate.Errors,
+		}
+
+	} else if Format == "json" {
 		response = map[string]interface{}{
 			"data": serializable,
 		}
 
 	} else {
-		if len(validate.Errors) > 0 {
-			response = map[string]interface{}{
-				"errors": validate.Errors,
-			}
-		} else {
-			response = map[string]interface{}{
-				"data": serializable,
-				"meta": GetMeta(),
-			}
+		response = map[string]interface{}{
+			"data": serializable,
+			"meta": GetMeta(),
 		}
 	}
 

@@ -1,0 +1,20 @@
+chifra abis  --find 0x1aa3a008 --find 0x3ccfd60b --find 0xad7a672f
+PROG[DATE|TIME] Found:  0x1aa3a008 register()
+PROG[DATE|TIME] Found:  0xad7a672f totalBalance()
+PROG[DATE|TIME] Found:  0x3ccfd60b withdraw()
+{
+  "data": [
+    {
+      "encoding": "0x1aa3a008",
+      "signature": "register()"
+    },
+    {
+      "encoding": "0xad7a672f",
+      "signature": "totalBalance()"
+    },
+    {
+      "encoding": "0x3ccfd60b",
+      "signature": "withdraw()"
+    }
+  ]
+}

@@ -218,7 +218,8 @@ COptions::COptions(void) {
 
     // BEG_CODE_NOTES
     // clang-format off
-    notes.push_back("Solidity files found in the local folder with the name '<address>.sol' are converted to an ABI prior to processing (and then removed).");  // NOLINT
+    notes.push_back("For the --sol option, place the solidity files in the current working folder.");
+    notes.push_back("Search for either four byte signatures or event signatures with the --find option.");
     // clang-format on
     // END_CODE_NOTES
 

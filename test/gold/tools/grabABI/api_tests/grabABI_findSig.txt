@@ -1,4 +1,0 @@
-{
-  "encoding": "0x1aa3a008",
-  "signature": "register()"
-}

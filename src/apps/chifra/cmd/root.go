@@ -110,6 +110,10 @@ func init() {
 	rootCmd.PersistentFlags().BoolVarP(&RootOpts.verbose, "verbose", "v", false, "enable verbose (increase detail with --log_level)")
 	rootCmd.PersistentFlags().BoolVarP(&RootOpts.help, "help", "h", false, "display this help screen")
 
+	if (output.Format == "" || output.Format == "none") && utils.IsApiMode() {
+		output.Format = "api"
+	}
+
 	rootCmd.Flags().SortFlags = false
 
 	rootCmd.SetUsageTemplate(helpText)

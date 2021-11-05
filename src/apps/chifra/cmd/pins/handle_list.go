@@ -14,7 +14,10 @@ package pins
 
 import (
 	"fmt"
+	"os"
+	"reflect"
 	"sort"
+	"text/tabwriter"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -42,26 +45,21 @@ func HandleList() {
 		manifestData.NewPins = manifestData.NewPins[:100]
 	}
 
-	// TODO: if Root.to_file == true, write the output to a filename
-	// TODO: if Root.output == <fn>, write the output to a <fn>
-
-	if output.Format == "" || output.Format == "none" {
-		if utils.IsApiMode() {
-			output.Format = "api"
-		} else {
-			output.Format = "txt"
-		}
+	// won't happen, but can't hurt to check
+	if output.Format != "json" &&
+		output.Format != "api" &&
+		output.Format != "txt" &&
+		output.Format != "csv" &&
+		output.Format != "" {
+		logger.Fatal("Unknown output format: " + output.Format)
 	}
 
-	outFmt := "%s\t%s\t%s\n"
-	switch output.Format {
-	case "txt":
-		// do nothing
-	case "csv":
-		outFmt = "\"%s\",\"%s\",\"%s\"\n"
-	case "json":
-		fallthrough
-	case "api":
+	// TODO: if Root.to_file == true, write the output to a filename
+	// TODO: if Root.output == <fn>, write the output to a <fn>
+	out := os.Stdout
+	out1 := tabwriter.NewWriter(out, 0, 0, 2, ' ', 0)
+
+	if output.Format == "json" || output.Format == "api" {
 		err := output.PrintJson(manifestData.NewPins)
 		if err != nil {
 			logger.Fatal(err)
@@ -69,18 +67,16 @@ func HandleList() {
 		return
 	}
 
-	if output.Format == "txt" && utils.IsTerminal() {
-		table := &output.Table{}
-		table.New()
-		table.Header([]string{"filename", "bloomhash", "indexhash"})
-		for _, pin := range manifestData.NewPins {
-			table.Row([]string{pin.FileName, pin.BloomHash, pin.IndexHash})
-		}
-		table.Print()
-	} else {
-		fmt.Printf(outFmt, "filename", "bloomhash", "indexhash")
-		for _, pin := range manifestData.NewPins {
-			fmt.Printf(outFmt, pin.FileName, pin.BloomHash, pin.IndexHash)
+	structType := reflect.TypeOf(manifest.PinDescriptor{})
+	rowTemplate, _ := output.GetRowTemplate(&structType)
+
+	fmt.Fprintln(out, output.GetHeader(&structType))
+	for _, pin := range manifestData.NewPins {
+		if output.Format == "" && utils.IsTerminal() {
+			rowTemplate.Execute(out1, pin)
+		} else {
+			rowTemplate.Execute(out, pin)
 		}
 	}
+	out1.Flush()
 }

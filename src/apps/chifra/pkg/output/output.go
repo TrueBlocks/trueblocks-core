@@ -13,10 +13,15 @@
 package output
 
 import (
+	"bytes"
 	"context"
 	"encoding/json"
 	"fmt"
+	"html/template"
+	"reflect"
+	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
@@ -50,4 +55,67 @@ func GetMeta() *Meta {
 	client := rpcClient.Get()
 	bn, _ := client.BlockNumber(context.Background())
 	return &Meta{Client: fmt.Sprintf("%d", bn)}
+}
+
+func MakeFirstLowerCase(s string) string {
+	if len(s) < 2 {
+		return strings.ToLower(s)
+	}
+	bts := []byte(s)
+	lc := bytes.ToLower([]byte{bts[0]})
+	rest := bts[1:]
+	return string(bytes.Join([][]byte{lc, rest}, nil))
+}
+
+func MakeFirstUpperCase(s string) string {
+	if len(s) < 2 {
+		return strings.ToLower(s)
+	}
+	bts := []byte(s)
+	lc := bytes.ToUpper([]byte{bts[0]})
+	rest := bts[1:]
+	return string(bytes.Join([][]byte{lc, rest}, nil))
+}
+
+func GetFields(t *reflect.Type) (fields []string, sep string, quote string) {
+	for i := 0; i < (*t).NumField(); i++ {
+		fields = append(fields, MakeFirstLowerCase((*t).Field(i).Name))
+	}
+	sep = "\t"
+	quote = ""
+	if Format == "csv" {
+		sep = ","
+		quote = "\""
+	}
+	return fields, sep, quote
+}
+
+func GetHeader(t *reflect.Type) string {
+	if (*t).Kind() != reflect.Struct {
+		logger.Fatal((*t).Name() + " is not a structure")
+	}
+
+	fields, sep, quote := GetFields(t)
+	var sb strings.Builder
+	for i, field := range fields {
+		if i > 0 {
+			sb.WriteString(sep)
+		}
+		sb.WriteString(quote + field + quote)
+	}
+	return sb.String()
+}
+
+func GetRowTemplate(t *reflect.Type) (*template.Template, error) {
+	fields, sep, quote := GetFields(t)
+	var sb strings.Builder
+	for i, field := range fields {
+		if i > 0 {
+			sb.WriteString(sep)
+		}
+		sb.WriteString(quote + "{{." + MakeFirstUpperCase(field) + "}}" + quote)
+	}
+	// fmt.Println(sb.String() + "\n")
+	tt, err := template.New("").Parse(sb.String() + "\n")
+	return tt, err
 }
