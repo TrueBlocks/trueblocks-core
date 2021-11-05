@@ -55,6 +55,7 @@ func downloadAndReportProgress(pins []manifest.PinDescriptor, chunkType chunk.Ch
 
 		switch event.Event {
 		case progress.Error:
+			logger.Log(logger.Error, event.Message)
 			if ok {
 				failed = append(failed, *pin)
 			}
