@@ -1,0 +1,25 @@
+chifra abis  --find 0x1aa3a0
+Error: 
+  fourbyte (0x1aa3a0) is not 4 bytes long
+
+Usage:
+  chifra abis [flags] <address> [address...]
+
+Arguments:
+  addrs - a list of one or more smart contracts whose ABIs to display (required)
+
+Flags:
+  -k, --known          load common 'known' ABIs from cache
+  -s, --sol            extract the abi definition from the provided .sol file(s)
+  -f, --find strings   search for function or event declarations given a four- or 32-byte code(s)
+  -o, --source         show the source of the ABI information (hidden)
+  -c, --classes        generate classDefinitions folder and class definitions (hidden)
+
+Global Flags:
+  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
+  -h, --help         display this help screen
+  -v, --verbose      enable verbose (increase detail with --log_level)
+
+Notes:
+  - For the --sol option, place the solidity files in the current working folder.
+  - Search for either four byte signatures or event signatures with the --find option.

@@ -22,7 +22,7 @@ import (
 
 func validateListArgs(cmd *cobra.Command, args []string) error {
 	if !utils.IsApiMode() {
-		err := validate.ValidateOneAddr(args)
+		err := validate.ValidateAtLeastOneAddr(args)
 		if err != nil {
 			return err
 		}

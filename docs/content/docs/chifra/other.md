@@ -2,7 +2,7 @@
 title: "Other"
 description: ""
 lead: ""
-date: 2021-10-22T12:36:55
+date: 2021-11-07T22:22:20
 lastmod:
   - :git
   - lastmod
@@ -79,5 +79,5 @@ Global Flags:
   -v, --verbose      enable verbose (increase detail with --log_level)
 ```
 
-**Source code**: [`apps/fireStorm`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/fireStorm)
+**Source code**: [`explore.go`](https://github.com/TrueBlocks/trueblocks-core/tree/develop/src/apps/chifra/cmd/explore.go)
 

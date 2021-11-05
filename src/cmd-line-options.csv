@@ -80,15 +80,13 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 
 13660,tools,Accounts,abis,grabABI,addrs,,,true,false,true,true,header,positional,list<addr>,a list of one or more smart contracts whose ABIs to display
 13850,tools,Accounts,abis,grabABI,known,k,,false,false,true,false,local,switch,<boolean>,load common 'known' ABIs from cache
-13860,tools,Accounts,abis,grabABI,sol,s,,false,false,true,true,local,flag,list<string>,extract the abi definition from the provided .sol file(s)
+13860,tools,Accounts,abis,grabABI,sol,s,,false,false,true,true,local,switch,<boolean>,extract the abi definition from the provided .sol file(s)
 13865,tools,Accounts,abis,grabABI,find,f,,false,false,true,true,local,flag,list<string>,search for function or event declarations given a four- or 32-byte code(s)
 13865,tools,Accounts,abis,grabABI,source,o,,false,false,false,false,local,switch,<boolean>,show the source of the ABI information
 13867,tools,Accounts,abis,grabABI,classes,c,,false,false,false,false,local,switch,<boolean>,generate classDefinitions folder and class definitions
 13880,tools,Accounts,abis,grabABI,,,,false,false,true,true,--,description,,Fetches the ABI for a smart contract.
-13885,tools,Accounts,abis,grabABI,n1,,,false,false,false,false,--,note,,Solidity files found in the local folder with the name '<address>.sol' are converted to an ABI prior to processing (and then removed).
-13885,tools,Accounts,abis,grabABI,ERR_CANNOTFINDSOL,,,false,false,false,false,--,error,,Cannot find .sol file at '[{SOL}]'.
-13885,tools,Accounts,abis,grabABI,ERR_SUPPLYONEADDR,,,false,false,false,false,--,error,,Please supply at least one Ethereum address.
-13885,tools,Accounts,abis,grabABI,ERR_OPTIONNOTIMPL,,,false,false,false,false,--,error,,--classes option is not implemented.
+13885,tools,Accounts,abis,grabABI,n1,,,false,false,false,false,--,note,,For the --sol option&#44; place the solidity files in the current working folder.
+13885,tools,Accounts,abis,grabABI,n2,,,false,false,false,false,--,note,,Search for either four byte signatures or event signatures with the --find option.
 
 12500,tools,ChainData,blocks,getBlocks,blocks,,,true,false,true,true,local,positional,list<blknum>,a space-separated list of one or more block identifiers
 12510,tools,ChainData,blocks,getBlocks,hashes,e,,false,false,true,true,header,switch,<boolean>,display only transaction hashes&#44; default is to display full transaction detail

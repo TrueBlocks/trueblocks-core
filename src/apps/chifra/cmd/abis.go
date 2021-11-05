@@ -44,11 +44,12 @@ var longAbis = `Purpose:
 
 var notesAbis = `
 Notes:
-  - Solidity files found in the local folder with the name '<address>.sol' are converted to an ABI prior to processing (and then removed).`
+  - For the --sol option, place the solidity files in the current working folder.
+  - Search for either four byte signatures or event signatures with the --find option.`
 
 type abisOptionsType struct {
 	known   bool
-	sol     []string
+	sol     bool
 	find    []string
 	source  bool
 	classes bool
@@ -62,7 +63,7 @@ func init() {
 	abisCmd.Flags().SortFlags = false
 	abisCmd.PersistentFlags().SortFlags = false
 	abisCmd.Flags().BoolVarP(&AbisOpts.known, "known", "k", false, "load common 'known' ABIs from cache")
-	abisCmd.Flags().StringSliceVarP(&AbisOpts.sol, "sol", "s", nil, "extract the abi definition from the provided .sol file(s)")
+	abisCmd.Flags().BoolVarP(&AbisOpts.sol, "sol", "s", false, "extract the abi definition from the provided .sol file(s)")
 	abisCmd.Flags().StringSliceVarP(&AbisOpts.find, "find", "f", nil, "search for function or event declarations given a four- or 32-byte code(s)")
 	abisCmd.Flags().BoolVarP(&AbisOpts.source, "source", "o", false, "show the source of the ABI information (hidden)")
 	abisCmd.Flags().BoolVarP(&AbisOpts.classes, "classes", "c", false, "generate classDefinitions folder and class definitions (hidden)")

@@ -14,7 +14,10 @@ package pins
 
 import (
 	"fmt"
+	"os"
+	"reflect"
 	"sort"
+	"text/tabwriter"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -54,6 +57,8 @@ func HandleList() {
 
 	// TODO: if Root.to_file == true, write the output to a filename
 	// TODO: if Root.output == <fn>, write the output to a <fn>
+	out := os.Stdout
+	out1 := tabwriter.NewWriter(out, 0, 0, 2, ' ', 0)
 
 	if output.Format == "" || output.Format == "none" {
 		if utils.IsApiMode() {
@@ -75,6 +80,7 @@ func HandleList() {
 		err := output.PrintJson(&output.JsonFormatted{
 			Data: pins,
 		})
+
 		if err != nil {
 			logger.Fatal(err)
 		}
@@ -95,4 +101,5 @@ func HandleList() {
 			fmt.Printf(outFmt, pin.FileName, pin.BloomHash, pin.IndexHash)
 		}
 	}
+	out1.Flush()
 }

@@ -17,102 +17,149 @@ import (
 	"bytes"
 	"encoding/hex"
 	"fmt"
-	"log"
+	"io"
 	"os"
-	"runtime"
+	"reflect"
 	"sync"
+	"text/tabwriter"
 
 	"github.com/ethereum/go-ethereum/crypto"
 	ants "github.com/panjf2000/ants/v2"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-// HandleFind loads manifest, sorts pins and prints them out
-func HandleFind(args []string) {
-	testMode := utils.IsTestMode()
-	apiMode := utils.IsApiMode()
-	if apiMode || output.Format == "" || output.Format == "none" {
-		output.Format = "json"
-	}
+/*
+   string_q name;
+   string_q type;
+   string_q abi_source;
+   bool anonymous;
+   bool constant;
+   string_q stateMutability;
+   string_q signature;
+   string_q encoding;
+   string_q message;
+   CParameterArray inputs;
+   CParameterArray outputs;
+   Value inputs_dict;
+   Value outputs_dict;
+*/
+type Function struct {
+	Encoding  string `json:"encoding,omitempty"`
+	Signature string `json:"signature,omitempty"`
+}
 
-	var arguments [][]byte
-	for _, arg := range args {
-		if arg[:2] == "0x" {
-			asBytes, err := hex.DecodeString(arg[2:])
-			if err != nil {
-				fmt.Printf("Couldn't parse argument %s\n", arg)
-			} else {
-				arguments = append(arguments, asBytes)
-			}
-		}
+type ScanCounter struct {
+	Visited uint64
+	Found   uint64
+	Wanted  uint64
+	Max     uint64
+	Freq    uint64
+}
+
+func (v *ScanCounter) Satisfied() bool {
+	return v.Visited > v.Max || v.Found == v.Wanted
+}
+
+func (v *ScanCounter) Report(target *os.File, action, msg string) {
+	v.Visited++
+	if v.Visited%v.Freq != 0 {
+		return
 	}
+	fmt.Fprintf(target, "%s[%d-%d-%d] %s                                            \r", action, v.Visited, v.Max, (v.Max - v.Visited), msg)
+}
+
+// HandleFind loads manifest, sorts pins and prints them out
+func HandleFind(arguments []string) {
+	visits := ScanCounter{}
+	visits.Wanted = uint64(len(arguments))
+	visits.Freq = 139419
+	visits.Max = 50000000
+
+	var results []Function
+
+	testMode := utils.IsTestMode()
 
 	var wg sync.WaitGroup
-	checkOne, _ := ants.NewPoolWithFunc(runtime.NumCPU()*2/3, func(input interface{}) {
+	checkOne, _ := ants.NewPoolWithFunc(config.ReadBlockScrape().Dev.MaxPoolSize, func(testSig interface{}) {
 		defer wg.Done()
-		str := input.(string)
-		byts := []byte(str)
-		encBytes := crypto.Keccak256(byts)[:4]
+		byts := []byte(testSig.(string))
+		sigBytes := crypto.Keccak256(byts)
 		for _, arg := range arguments {
 			if !testMode {
-				fmt.Fprintf(os.Stderr, "Scanning: %s\r", input)
+				visits.Report(os.Stderr, "Scanning", testSig.(string))
 			}
-			if bytes.Equal(encBytes, arg) {
-				prettyPrint(hex.EncodeToString(encBytes), input)
-				// TODO: see issue #1873
-				// wg.Done()
-				// return
-				os.Exit(0)
+			str, _ := hex.DecodeString(arg[2:])
+			if bytes.Equal(sigBytes[:len(str)], str) {
+				visits.Found++
+				logger.Log(logger.Progress, "Found ", visits.Found, " of ", visits.Wanted, arg, testSig)
+				results = append(results, Function{Encoding: arg, Signature: testSig.(string)})
+				return
 			}
 		}
 	})
+	defer checkOne.Release()
 
-	funcsFile, _ := os.Open(config.GetConfigPath("abis/known-000/uniq_funcs.tab"))
 	sigsFile, _ := os.Open(config.GetConfigPath("abis/known-000/uniq_sigs.tab"))
-
-	// TODO: The following closeFunc never runs because of the Exit at line 69. If I comment that out
-	// TODO: and return instead, then the speed the tests run 1/2 as fast.
-	closeFunc := func() {
-		log.Println("Closing data files")
-		funcsFile.Close()
+	defer func() {
 		sigsFile.Close()
-	}
-	defer closeFunc()
-
-	funcsScanner := bufio.NewScanner(funcsFile)
-	funcsScanner.Split(bufio.ScanLines)
-
+	}()
+	sigsFile.Seek(0, io.SeekStart)
 	sigsScanner := bufio.NewScanner(sigsFile)
 	sigsScanner.Split(bufio.ScanLines)
 
+	funcsFile, _ := os.Open(config.GetConfigPath("abis/known-000/uniq_funcs.tab"))
+	defer func() {
+		funcsFile.Close()
+	}()
+
 	for sigsScanner.Scan() {
 		s := sigsScanner.Text()
+
+		funcsFile.Seek(0, io.SeekStart)
+		funcsScanner := bufio.NewScanner(funcsFile)
+		funcsScanner.Split(bufio.ScanLines)
+
 		for funcsScanner.Scan() {
 			wg.Add(1)
 			f := funcsScanner.Text()
 			call := f + "(" + s + ")"
 			_ = checkOne.Invoke(call)
 		}
+
+		if visits.Satisfied() {
+			break
+		}
 	}
 
-	defer checkOne.Release()
 	defer wg.Wait()
 
-	fmt.Fprintf(os.Stderr, "                                                                        \r")
-}
+	// TODO: if Root.to_file == true, write the output to a filename
+	// TODO: if Root.output == <fn>, write the output to a <fn>
+	out := os.Stdout
+	out1 := tabwriter.NewWriter(out, 0, 0, 2, ' ', 0)
 
-func prettyPrint(encoding string, signature interface{}) {
-	if !utils.IsTestMode() {
-		fmt.Fprintf(os.Stderr, "                                                                        \r")
+	if output.Format == "json" || output.Format == "api" {
+		err := output.PrintJson(results)
+		if err != nil {
+			logger.Fatal(err)
+		}
+		return
 	}
-	if output.Format == "json" {
-		fmt.Printf("{ \"encoding\": \"0x%s\", \"signature\": \"%s\" }\n", encoding, signature)
-	} else if output.Format == "txt" {
-		fmt.Printf("0x%s\t%s\n", encoding, signature)
-	} else {
-		fmt.Printf("\"0x%s\",\"%s\"\n", encoding, signature)
+
+	structType := reflect.TypeOf(Function{})
+	rowTemplate, _ := output.GetRowTemplate(&structType)
+
+	fmt.Fprintln(out, output.GetHeader(&structType))
+	for _, item := range results {
+		if output.Format == "" && utils.IsTerminal() {
+			rowTemplate.Execute(out1, item)
+		} else {
+			rowTemplate.Execute(out, item)
+		}
 	}
+	out1.Flush()
 }

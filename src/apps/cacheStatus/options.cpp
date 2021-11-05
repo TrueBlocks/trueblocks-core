@@ -247,9 +247,9 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
+    // BEG_CODE_GLOBALOPTS
     registerOptions(nParams, params, OPT_PREFUND);
-    // Since we need prefunds, let's load the names library here
-    loadNames();
+    // END_CODE_GLOBALOPTS
 
     // BEG_CODE_INIT
     details = false;

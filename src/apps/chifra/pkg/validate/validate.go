@@ -14,13 +14,14 @@ package validate
 
 import (
 	"errors"
+	"fmt"
 	"strconv"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-var Errors []string
+var Errors []string = nil
 
 func usageEx(function, msg string, values []string) error {
 	var ret string
@@ -36,7 +37,7 @@ func usageEx(function, msg string, values []string) error {
 		Errors = append(Errors, ret)
 		return nil
 	}
-	return errors.New(FmtError(ret))
+	return errors.New("\n  " + ret + "\n")
 }
 
 func Usage(msg string, values ...string) error {
@@ -49,14 +50,6 @@ func Deprecated(cmd string, rep string) error {
 		msg += " Use {1} instead."
 	}
 	return Usage(msg, cmd, rep)
-}
-
-func FmtError(msg string) string {
-	if utils.IsApiMode() {
-		Errors = append(Errors, msg)
-		return ""
-	}
-	return "\n  " + msg + "\n"
 }
 
 /* Expects str to be in 0xNNNNNNN...NNNN format */
@@ -73,38 +66,43 @@ func Is0xPrefixed(str string) bool {
 	return str[:2] == "0x"
 }
 
-func IsValidFourByte(str string) (bool, error) {
-	if len(str) != 10 {
-		return false, errors.New(FmtError("value (" + str + ") is not 10 characters long"))
-	} else if !Is0xPrefixed(str) {
-		return false, errors.New(FmtError("value (" + str + ") does not start with '0x'"))
-	} else if !IsHex(str) {
-		return false, errors.New("address (" + str + ") does not appear to be hex")
+func IsValidHex(typ string, val string, nBytes int) (bool, error) {
+	if !Is0xPrefixed(val) {
+		return false, Usage("{0} ({1}) does not start with '0x'", typ, val)
+	} else if len(val) != (2 + nBytes*2) {
+		return false, Usage("{0} ({1}) is not {2} bytes long", typ, val, fmt.Sprintf("%d", nBytes))
+	} else if !IsHex(val) {
+		return false, Usage("{0} ({1}) does not appear to be hex", typ, val)
 	}
 	return true, nil
 }
 
-func IsValidAddress(addr string) (bool, error) {
-	if strings.Contains(addr, ".eth") {
+func IsValidFourByte(val string) (bool, error) {
+	return IsValidHex("fourbyte", val, 4)
+}
+
+func IsValidTopic(val string) (bool, error) {
+	return IsValidHex("topic", val, 32)
+}
+
+func IsValidAddress(val string) (bool, error) {
+	if strings.Contains(val, ".eth") {
 		return true, nil
-	} else if len(addr) != 42 {
-		return false, errors.New(FmtError("address (" + addr + ") is not 42 characters long"))
-	} else if !Is0xPrefixed(addr) {
-		return false, errors.New(FmtError("address (" + addr + ") does not start with '0x'"))
-	} else if !IsHex(addr) {
-		return false, errors.New("address (" + addr + ") does not appear to be hex")
 	}
-	return true, nil
+	return IsValidHex("address", val, 20)
 }
 
-func ValidateOneAddr(args []string) error {
+func ValidateAtLeastOneAddr(args []string) error {
+	hasOne := false
 	for _, arg := range args {
-		val, _ := IsValidAddress(arg)
-		if val {
-			return nil
-			// } else {
-			// 	fmt.Println("%v", err)
+		if hasOne {
+			break
 		}
+		hasOne, _ = IsValidAddress(arg)
+	}
+	if hasOne {
+		Errors = nil // calling code will report the error
+		return nil
 	}
 	return Usage("At least one valid Ethereum address is required")
 }
