@@ -51,6 +51,8 @@ func validateAbisArgs(cmd *cobra.Command, args []string) error {
 				return err2
 			}
 			return err1
+		} else {
+			validate.Errors = nil
 		}
 	}
 
