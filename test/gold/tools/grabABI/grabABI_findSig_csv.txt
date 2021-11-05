@@ -1,4 +1,4 @@
 chifra abis  --find 0x1aa3a008 --fmt csv
-PROG[DATE|TIME] Found:  0x1aa3a008 register()
+PROG[DATE|TIME] Found  1  of  1 0x1aa3a008 register()
 "encoding","signature"
 "0x1aa3a008","register()"
