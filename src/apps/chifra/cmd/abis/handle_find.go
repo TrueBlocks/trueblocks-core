@@ -58,7 +58,7 @@ func HandleFind(arguments []string) {
 	found := 0
 	var results []Function
 
-	testMode := utils.IsTestMode()
+	// testMode := utils.IsTestMode()
 	apiMode := utils.IsApiMode()
 	if apiMode || output.Format == "" || output.Format == "none" {
 		output.Format = "json"
@@ -66,17 +66,18 @@ func HandleFind(arguments []string) {
 
 	var wg sync.WaitGroup
 	checkOne, _ := ants.NewPoolWithFunc(config.ReadBlockScrape().Dev.MaxPoolSize, func(testSig interface{}) {
+		// logger.Log(logger.Progress, "Scan for: ", testSig)
 		defer wg.Done()
 		byts := []byte(testSig.(string))
 		sigBytes := crypto.Keccak256(byts)
 		for _, arg := range arguments {
-			if !testMode {
-				fmt.Fprintf(os.Stderr, "Scanning: %s                     \r", testSig)
-			}
+			// if !testMode {
+			// 	logger.Log(logger.Progress, "Scan for: ", testSig)
+			// }
 			str, _ := hex.DecodeString(arg[2:])
 			if bytes.Equal(sigBytes[:len(str)], str) {
 				found++
-				logger.Log(logger.Progress, "Found: ", arg, testSig)
+				logger.Log(logger.Progress, "Found ", found, " of ", wanted, arg, testSig)
 				results = append(results, Function{Encoding: arg, Signature: testSig.(string)})
 				return
 			}
@@ -111,7 +112,7 @@ func HandleFind(arguments []string) {
 			_ = checkOne.Invoke(call)
 		}
 
-		if found == wanted {
+		if found > 20 { //}== wanted {
 			break
 		}
 	}
