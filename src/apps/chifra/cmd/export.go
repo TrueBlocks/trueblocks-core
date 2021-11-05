@@ -47,15 +47,20 @@ var longExport = `Purpose:
 var notesExport = `
 Notes:
   - An address must start with '0x' and be forty-two characters long.
+  - Articulating the export means turn the EVM's byte data into human-readable text (if possible).
   - For the --logs option, you may optionally specify one or more --emmitter, one or more --topics, or both.
-  - The --logs option is significantly faster if you provide an --emitter or a --topic.`
+  - The --logs option is significantly faster if you provide an --emitter or a --topic.
+  - A neighbor of an address is either a direct to or from neighbor, a participant in an event with the address, or
+    (for smart contracts) any similarly defined trace neighbor.`
 
 type exportOptionsType struct {
 	appearances  bool
+	transactions bool
 	receipts     bool
-	statements   bool
 	logs         bool
 	traces       bool
+	statements   bool
+	neighbors    bool
 	accounting   bool
 	articulate   bool
 	cache        bool
@@ -89,11 +94,13 @@ func init() {
 	exportCmd.Flags().SortFlags = false
 	exportCmd.PersistentFlags().SortFlags = false
 	exportCmd.Flags().BoolVarP(&ExportOpts.appearances, "appearances", "p", false, "export a list of appearances")
-	exportCmd.Flags().BoolVarP(&ExportOpts.receipts, "receipts", "r", false, "export receipts instead of transaction list")
-	exportCmd.Flags().BoolVarP(&ExportOpts.statements, "statements", "A", false, "for use with --accounting option only, export only reconciliation statements")
-	exportCmd.Flags().BoolVarP(&ExportOpts.logs, "logs", "l", false, "export logs instead of transaction list")
-	exportCmd.Flags().BoolVarP(&ExportOpts.traces, "traces", "t", false, "export traces instead of transaction list")
-	exportCmd.Flags().BoolVarP(&ExportOpts.accounting, "accounting", "C", false, "export accounting records instead of transaction list")
+	exportCmd.Flags().BoolVarP(&ExportOpts.transactions, "transactions", "T", false, "export the actual transactional data (the default)")
+	exportCmd.Flags().BoolVarP(&ExportOpts.receipts, "receipts", "r", false, "export receipts instead of transactional data")
+	exportCmd.Flags().BoolVarP(&ExportOpts.logs, "logs", "l", false, "export logs instead of transactional data")
+	exportCmd.Flags().BoolVarP(&ExportOpts.traces, "traces", "t", false, "export traces instead of transactional data")
+	exportCmd.Flags().BoolVarP(&ExportOpts.statements, "statements", "A", false, "export reconciliations instead of transactional data (requires --accounting option)")
+	exportCmd.Flags().BoolVarP(&ExportOpts.neighbors, "neighbors", "n", false, "export the neighbors of the given address")
+	exportCmd.Flags().BoolVarP(&ExportOpts.accounting, "accounting", "C", false, "attach accounting records to the exported data (applies to transactions export only)")
 	exportCmd.Flags().BoolVarP(&ExportOpts.articulate, "articulate", "a", false, "articulate transactions, traces, logs, and outputs")
 	exportCmd.Flags().BoolVarP(&ExportOpts.cache, "cache", "i", false, "write transactions to the cache (see notes)")
 	exportCmd.Flags().BoolVarP(&ExportOpts.cache_traces, "cache_traces", "R", false, "write traces to the cache (see notes)")

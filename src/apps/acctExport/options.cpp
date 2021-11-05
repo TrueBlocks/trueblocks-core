@@ -24,11 +24,13 @@ static const COption params[] = {
     COption("topics", "", "list<topic>", OPT_POSITIONAL, "filter by one or more log topics (only for --logs option)"),
     COption("fourbytes", "", "list<fourbyte>", OPT_POSITIONAL, "filter by one or more fourbytes (only for transactions and trace options)"),  // NOLINT
     COption("appearances", "p", "", OPT_SWITCH, "export a list of appearances"),
-    COption("receipts", "r", "", OPT_SWITCH, "export receipts instead of transaction list"),
-    COption("statements", "A", "", OPT_SWITCH, "for use with --accounting option only, export only reconciliation statements"),  // NOLINT
-    COption("logs", "l", "", OPT_SWITCH, "export logs instead of transaction list"),
-    COption("traces", "t", "", OPT_SWITCH, "export traces instead of transaction list"),
-    COption("accounting", "C", "", OPT_SWITCH, "export accounting records instead of transaction list"),
+    COption("transactions", "T", "", OPT_SWITCH, "export the actual transactional data (the default)"),
+    COption("receipts", "r", "", OPT_SWITCH, "export receipts instead of transactional data"),
+    COption("logs", "l", "", OPT_SWITCH, "export logs instead of transactional data"),
+    COption("traces", "t", "", OPT_SWITCH, "export traces instead of transactional data"),
+    COption("statements", "A", "", OPT_SWITCH, "export reconciliations instead of transactional data (requires --accounting option)"),  // NOLINT
+    COption("neighbors", "n", "", OPT_SWITCH, "export the neighbors of the given address"),
+    COption("accounting", "C", "", OPT_SWITCH, "attach accounting records to the exported data (applies to transactions export only)"),  // NOLINT
     COption("articulate", "a", "", OPT_SWITCH, "articulate transactions, traces, logs, and outputs"),
     COption("cache", "i", "", OPT_SWITCH, "write transactions to the cache (see notes)"),
     COption("cache_traces", "R", "", OPT_SWITCH, "write traces to the cache (see notes)"),
@@ -68,6 +70,8 @@ bool COptions::parseArguments(string_q& command) {
     // BEG_CODE_LOCAL_INIT
     CAddressArray addrs;
     CTopicArray topics;
+    bool transactions = false;
+    bool neighbors = false;
     CAddressArray emitter;
     CStringArray topic;
     bool freshen = false;
@@ -109,17 +113,23 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-p" || arg == "--appearances") {
             appearances = true;
 
+        } else if (arg == "-T" || arg == "--transactions") {
+            transactions = true;
+
         } else if (arg == "-r" || arg == "--receipts") {
             receipts = true;
-
-        } else if (arg == "-A" || arg == "--statements") {
-            statements = true;
 
         } else if (arg == "-l" || arg == "--logs") {
             logs = true;
 
         } else if (arg == "-t" || arg == "--traces") {
             traces = true;
+
+        } else if (arg == "-A" || arg == "--statements") {
+            statements = true;
+
+        } else if (arg == "-n" || arg == "--neighbors") {
+            neighbors = true;
 
         } else if (arg == "-C" || arg == "--accounting") {
             accounting = true;
@@ -245,10 +255,12 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_LIST("topics", topics, topics.empty());
     LOG_TEST_LIST("fourbytes", fourbytes, fourbytes.empty());
     LOG_TEST_BOOL("appearances", appearances);
+    LOG_TEST_BOOL("transList", transList);
     LOG_TEST_BOOL("receipts", receipts);
-    LOG_TEST_BOOL("statements", statements);
     LOG_TEST_BOOL("logs", logs);
     LOG_TEST_BOOL("traces", traces);
+    LOG_TEST_BOOL("statements", statements);
+    LOG_TEST_BOOL("neighbors", neighbors);
     LOG_TEST_BOOL("accounting", accounting);
     LOG_TEST_BOOL("articulate", articulate);
     LOG_TEST_BOOL("cache", cache);
@@ -490,9 +502,9 @@ void COptions::Init(void) {
     // BEG_CODE_INIT
     appearances = false;
     receipts = false;
-    statements = false;
     logs = false;
     traces = false;
+    statements = false;
     accounting = false;
     articulate = false;
     // clang-format off
@@ -562,8 +574,10 @@ COptions::COptions(void) {
     // BEG_CODE_NOTES
     // clang-format off
     notes.push_back("An `address` must start with '0x' and be forty-two characters long.");
+    notes.push_back("Articulating the export means turn the EVM's byte data into human-readable text (if possible).");
     notes.push_back("For the --logs option, you may optionally specify one or more --emmitter, one or more --topics, or both.");  // NOLINT
     notes.push_back("The --logs option is significantly faster if you provide an --emitter or a --topic.");
+    notes.push_back("A neighbor of an address is either a direct to or from neighbor, a participant in an event with the address, or | (for smart contracts) any similarly defined trace neighbor.");  // NOLINT
     // clang-format on
     // END_CODE_NOTES
 

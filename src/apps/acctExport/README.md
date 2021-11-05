@@ -22,11 +22,13 @@ Arguments:
 
 Flags:
   -p, --appearances         export a list of appearances
-  -r, --receipts            export receipts instead of transaction list
-  -A, --statements          for use with --accounting option only, export only reconciliation statements
-  -l, --logs                export logs instead of transaction list
-  -t, --traces              export traces instead of transaction list
-  -C, --accounting          export accounting records instead of transaction list
+  -T, --transactions        export the actual transactional data (the default)
+  -r, --receipts            export receipts instead of transactional data
+  -l, --logs                export logs instead of transactional data
+  -t, --traces              export traces instead of transactional data
+  -A, --statements          export reconciliations instead of transactional data (requires --accounting option)
+  -n, --neighbors           export the neighbors of the given address
+  -C, --accounting          attach accounting records to the exported data (applies to transactions export only)
   -a, --articulate          articulate transactions, traces, logs, and outputs
   -i, --cache               write transactions to the cache (see notes)
   -R, --cache_traces        write traces to the cache (see notes)
@@ -46,8 +48,11 @@ Global Flags:
 
 Notes:
   - An address must start with '0x' and be forty-two characters long.
+  - Articulating the export means turn the EVM's byte data into human-readable text (if possible).
   - For the --logs option, you may optionally specify one or more --emmitter, one or more --topics, or both.
   - The --logs option is significantly faster if you provide an --emitter or a --topic.
+  - A neighbor of an address is either a direct to or from neighbor, a participant in an event with the address, or
+    (for smart contracts) any similarly defined trace neighbor.
 ```
 
 Other Options

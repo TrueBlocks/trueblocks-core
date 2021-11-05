@@ -29,9 +29,9 @@ class COptions : public CAbiOptions {
     CFourbyteArray fourbytes;
     bool appearances;
     bool receipts;
-    bool statements;
     bool logs;
     bool traces;
+    bool statements;
     bool accounting;
     bool articulate;
     bool cache;
