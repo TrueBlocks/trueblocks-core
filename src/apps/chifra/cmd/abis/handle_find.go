@@ -89,7 +89,6 @@ func HandleFind(arguments []string) {
 
 	var wg sync.WaitGroup
 	checkOne, _ := ants.NewPoolWithFunc(config.ReadBlockScrape().Dev.MaxPoolSize, func(testSig interface{}) {
-		// logger.Log(logger.Progress, "Scan for: ", testSig)
 		defer wg.Done()
 		byts := []byte(testSig.(string))
 		sigBytes := crypto.Keccak256(byts)
