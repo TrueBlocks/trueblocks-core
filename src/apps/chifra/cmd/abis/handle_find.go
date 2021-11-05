@@ -52,13 +52,36 @@ type Function struct {
 	Signature string `json:"signature,omitempty"`
 }
 
+type ScanCounter struct {
+	Visited uint64
+	Found   uint64
+	Wanted  uint64
+	Max     uint64
+	Freq    uint64
+}
+
+func (v *ScanCounter) Satisfied() bool {
+	return v.Visited > v.Max || v.Found == v.Wanted
+}
+
+func (v *ScanCounter) Report(target *os.File, action, msg string) {
+	v.Visited++
+	if v.Visited%v.Freq != 0 {
+		return
+	}
+	fmt.Fprintf(target, "%s[%d-%d-%d] %s                                            \r", action, v.Visited, v.Max, (v.Max - v.Visited), msg)
+}
+
 // HandleFind loads manifest, sorts pins and prints them out
 func HandleFind(arguments []string) {
-	wanted := len(arguments)
-	found := 0
+	visits := ScanCounter{}
+	visits.Wanted = uint64(len(arguments))
+	visits.Freq = 139419
+	visits.Max = 50000000
+
 	var results []Function
 
-	// testMode := utils.IsTestMode()
+	testMode := utils.IsTestMode()
 	apiMode := utils.IsApiMode()
 	if apiMode || output.Format == "" || output.Format == "none" {
 		output.Format = "json"
@@ -71,13 +94,13 @@ func HandleFind(arguments []string) {
 		byts := []byte(testSig.(string))
 		sigBytes := crypto.Keccak256(byts)
 		for _, arg := range arguments {
-			// if !testMode {
-			// 	logger.Log(logger.Progress, "Scan for: ", testSig)
-			// }
+			if !testMode {
+				visits.Report(os.Stderr, "Scanning", testSig.(string))
+			}
 			str, _ := hex.DecodeString(arg[2:])
 			if bytes.Equal(sigBytes[:len(str)], str) {
-				found++
-				logger.Log(logger.Progress, "Found ", found, " of ", wanted, arg, testSig)
+				visits.Found++
+				logger.Log(logger.Progress, "Found ", visits.Found, " of ", visits.Wanted, arg, testSig)
 				results = append(results, Function{Encoding: arg, Signature: testSig.(string)})
 				return
 			}
@@ -112,7 +135,7 @@ func HandleFind(arguments []string) {
 			_ = checkOne.Invoke(call)
 		}
 
-		if found > 20 { //}== wanted {
+		if visits.Satisfied() {
 			break
 		}
 	}

@@ -22,3 +22,4 @@ Global Flags:
 
 Notes:
   - For the --sol option, place the solidity files in the current working folder.
+  - Search for either four byte signatures or event signatures with the --find option.
