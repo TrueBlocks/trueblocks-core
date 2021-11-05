@@ -23,6 +23,7 @@ import (
 	"net/http"
 	"time"
 
+	exec "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/serve/exec"
 	utils "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/gorilla/mux"
 	"golang.org/x/time/rate"
@@ -186,9 +187,14 @@ func AdminInit(w http.ResponseWriter, r *http.Request) {
 	CallOneExtra(w, r, "chifra", "init", "init")
 }
 
-// AdminPins help text todo
+// AdminPins handles /pins route
 func AdminPins(w http.ResponseWriter, r *http.Request) {
-	CallOneExtra(w, r, "chifra", "pins", "pins")
+	result, err := exec.AdminPins(r)
+	if err != nil {
+		RespondWithError(w, err)
+	}
+
+	RespondWithJson(w, result)
 }
 
 // AdminChunks help text todo

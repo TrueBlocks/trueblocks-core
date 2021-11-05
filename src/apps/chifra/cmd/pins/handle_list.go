@@ -22,12 +22,12 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-// HandleList loads manifest, sorts pins and prints them out
-func HandleList() {
+// List loads manifest, sorts pins and prints them out
+func List() ([]manifest.PinDescriptor, error) {
 	// Load manifest
 	manifestData, err := manifest.FromLocalFile()
 	if err != nil {
-		logger.Fatal("Cannot open local manifest file", err)
+		return nil, err
 	}
 
 	// Sort pins
@@ -40,6 +40,16 @@ func HandleList() {
 	// Shorten the array for testing
 	if utils.IsTestMode() {
 		manifestData.NewPins = manifestData.NewPins[:100]
+	}
+
+	return manifestData.NewPins, nil
+}
+
+// HandleList calls List and outputs data to the console
+func HandleList() {
+	pins, err := List()
+	if err != nil {
+		logger.Fatal("Cannot open local manifest file", err)
 	}
 
 	// TODO: if Root.to_file == true, write the output to a filename
@@ -62,7 +72,7 @@ func HandleList() {
 	case "json":
 		fallthrough
 	case "api":
-		err := output.PrintJson(manifestData.NewPins)
+		err := output.PrintJson(pins)
 		if err != nil {
 			logger.Fatal(err)
 		}
@@ -73,13 +83,13 @@ func HandleList() {
 		table := &output.Table{}
 		table.New()
 		table.Header([]string{"filename", "bloomhash", "indexhash"})
-		for _, pin := range manifestData.NewPins {
+		for _, pin := range pins {
 			table.Row([]string{pin.FileName, pin.BloomHash, pin.IndexHash})
 		}
 		table.Print()
 	} else {
 		fmt.Printf(outFmt, "filename", "bloomhash", "indexhash")
-		for _, pin := range manifestData.NewPins {
+		for _, pin := range pins {
 			fmt.Printf(outFmt, pin.FileName, pin.BloomHash, pin.IndexHash)
 		}
 	}

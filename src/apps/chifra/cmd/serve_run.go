@@ -14,7 +14,6 @@ package cmd
 
 import (
 	"log"
-	"net/http"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/serve"
@@ -30,27 +29,7 @@ func validateServeArgs(cmd *cobra.Command, args []string) error {
 	return nil
 }
 
+// runServe runs serve command and sends any errors to log.Fatal
 func runServe(cmd *cobra.Command, args []string) {
-	// options := ":8080"
-	// if len(ServeOpts.port) > 0 {
-	// 	options = " --port " + ServeOpts.port
-	// }
-	arguments := ""
-	for _, arg := range args {
-		arguments += " " + arg
-	}
-	// PassItOn("flame", options, arguments)
-
-	// Handle command line options
-	err := serve.ParseOptions()
-	if err != nil {
-		log.Println("Could not parse command line.")
-		return
-	}
-
-	// Start listening on web sockets
-	serve.RunWebsocketPool()
-
-	// Start listening for requests
-	log.Fatal(http.ListenAndServe(serve.Options.Port, serve.NewRouter()))
+	log.Fatal(serve.Run(ServeOpts.port))
 }
