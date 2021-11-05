@@ -22,7 +22,7 @@ import (
 
 func validateMonitorsArgs(cmd *cobra.Command, args []string) error {
 	if !utils.IsApiMode() && !MonitorsOpts.clean {
-		err := validate.ValidateOneAddr(args)
+		err := validate.ValidateAtLeastOneAddr(args)
 		if err != nil {
 			return err
 		}

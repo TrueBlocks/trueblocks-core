@@ -1,6 +1,6 @@
-chifra abis  truebit --classes --fmt json
+chifra abis  --find 0x1aa3a00800
 Error: 
-  the '--classes' option is not implemented
+  fourbyte (0x1aa3a00800) is not 4 bytes long
 
 Usage:
   chifra abis [flags] <address> [address...]

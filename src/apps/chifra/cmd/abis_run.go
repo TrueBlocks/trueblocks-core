@@ -16,6 +16,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/abis"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/spf13/cobra"
@@ -35,9 +36,21 @@ func validateAbisArgs(cmd *cobra.Command, args []string) error {
 	}
 
 	if len(AbisOpts.find) == 0 && !AbisOpts.known {
-		err := validate.ValidateOneAddr(args)
+		err := validate.ValidateAtLeastOneAddr(args)
 		if err != nil {
 			return err
+		}
+	}
+
+	for _, term := range AbisOpts.find {
+		ok1, err1 := validate.IsValidFourByte(term)
+		ok2, err2 := validate.IsValidTopic(term)
+		if !ok1 && !ok2 {
+			if len(term) > 16 {
+				// A longer term was most likely trying to be a topic...
+				return err2
+			}
+			return err1
 		}
 	}
 
@@ -49,7 +62,14 @@ func validateAbisArgs(cmd *cobra.Command, args []string) error {
 }
 
 func runAbis(cmd *cobra.Command, args []string) {
+	// This only happens in API mode when there's been an error. Here, we print the error
+	if len(validate.Errors) > 0 {
+		output.PrintJson([]string{})
+		return
+	}
+
 	if len(AbisOpts.find) > 0 {
+		// These have already been validated
 		abis.HandleFind(AbisOpts.find)
 		return
 	}

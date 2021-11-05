@@ -1,2 +1,10 @@
 chifra abis  --find 0x1aa3a008
-{ "encoding": "0x1aa3a008", "signature": "register()" }
+PROG[DATE|TIME] Found:  0x1aa3a008 register()
+{
+  "data": [
+    {
+      "encoding": "0x1aa3a008",
+      "signature": "register()"
+    }
+  ]
+}

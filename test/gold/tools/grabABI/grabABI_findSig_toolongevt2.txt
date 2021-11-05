@@ -1,6 +1,6 @@
-chifra abis  truebit --classes --fmt json
+chifra abis  --find 0x1aa3a0081aa3a0081aa3a0081aa3a0081aa3a0081aa3a0081aa3a0081aa3a008000
 Error: 
-  the '--classes' option is not implemented
+  topic (0x1aa3a0081aa3a0081aa3a0081aa3a0081aa3a0081aa3a0081aa3a0081aa3a008000) is not 32 bytes long
 
 Usage:
   chifra abis [flags] <address> [address...]

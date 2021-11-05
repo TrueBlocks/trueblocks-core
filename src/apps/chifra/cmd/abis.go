@@ -44,7 +44,8 @@ var longAbis = `Purpose:
 
 var notesAbis = `
 Notes:
-  - Solidity files found in the local folder with the name '<address>.sol' are converted to an ABI prior to processing (and then removed).`
+  - For the --sol option, place the solidity files in the current working folder.
+  - Search for either four byte signatures or event signatures with the --find option.`
 
 type abisOptionsType struct {
 	known   bool

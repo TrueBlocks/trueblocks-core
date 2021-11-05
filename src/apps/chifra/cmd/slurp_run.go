@@ -18,7 +18,7 @@ import (
 )
 
 func validateSlurpArgs(cmd *cobra.Command, args []string) error {
-	err := validate.ValidateOneAddr(args)
+	err := validate.ValidateAtLeastOneAddr(args)
 	if err != nil {
 		return err
 	}
