@@ -192,6 +192,7 @@ func AdminPins(w http.ResponseWriter, r *http.Request) {
 	result, err := exec.AdminPins(r)
 	if err != nil {
 		RespondWithError(w, err)
+		return
 	}
 
 	RespondWithJson(w, result)

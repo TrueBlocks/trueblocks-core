@@ -15,7 +15,6 @@ package serve
 
 import (
 	"fmt"
-	"log"
 )
 
 // ChifraStatus
@@ -109,41 +108,3 @@ type OptionsType struct {
 
 // Options carries command line options
 var Options OptionsType
-
-func ParseOptions() error {
-	// Establish and parse the command line input...
-	// flag.StringVar(&Options.Port, "port", ":8080", "specify the server's port")
-	// if !strings.HasPrefix(Options.Port, ":") {
-	// 	Options.Port = ":" + Options.Port
-	// }
-
-	// flag.IntVar(&Options.Verbose, "verbose", 0, "verbose level (between 0 and 10 inclusive)")
-	// flag.BoolVar(&Options.Pin, "pin", false, "pins Bloom filters and chunks to pinning service (requires API key)")
-	// flag.IntVar(&Options.Sleep, "sleep", 14, "specifies sleep interval between scrapes")
-
-	// flag.Parse()
-
-	Options.Status, _ = GetChifraData()
-	Options.Meta, _ = GetChifraMeta()
-
-	if Options.Port != ":8080" {
-		log.Print( /*utils.Green, */ "port:        " /*utils.Off,*/, Options.Port, "\n")
-	} else {
-		Options.Port = "127.0.0.1:8080"
-	}
-
-	// if Options.Verbose > 0 {
-	// 	log.Print(utils.Green, "verbose:     ", utils.Off, Options.Verbose, "\n")
-	// }
-
-	// log.Print("\n")
-	// log.Print(utils.Green, "Starting API server on port "+Options.Port, utils.Off, "\n")
-	// log.Print(utils.Green, "Client:       ", utils.Off, Options.Status.Client)
-	// log.Print(utils.Green, "TrueBlocks:   ", utils.Off, Options.Status.TrueBlocks)
-	// log.Print(utils.Green, "Cache Path:   ", utils.Off, Options.Status.CachePath)
-	// log.Print(utils.Green, "Index Path:   ", utils.Off, Options.Status.IndexPath)
-	// log.Print(utils.Green, "Rpc Provider: ", utils.Off, Options.Status.RPC)
-	// log.Print(utils.Green, "Progress:     ", utils.Off, Options.Meta.Client, ", ", Options.Meta.Finalized, ", ", Options.Meta.Staging, ", ", Options.Meta.Unripe)
-
-	return nil
-}

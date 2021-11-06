@@ -36,7 +36,10 @@ func AdminPins(request *http.Request) (ResponseBody, error) {
 	}
 
 	// Make sure all required directories exist
-	pinlib.EstablishDirectories()
+	err := pinlib.EstablishDirectories()
+	if err != nil {
+		return nil, err
+	}
 	responseBody := make(ResponseBody)
 	var responseError error
 
@@ -46,7 +49,8 @@ func AdminPins(request *http.Request) (ResponseBody, error) {
 		responseBody["data"] = pins
 		responseError = err
 	case "init":
-		pins.HandleInit(all)
+		err := pins.Init(all)
+		responseError = err
 	default:
 		responseError = ErrNoMode
 	}
