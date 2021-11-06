@@ -32,6 +32,7 @@ class COptions : public CAbiOptions {
     bool logs;
     bool traces;
     bool statements;
+    bool neighbors;
     bool accounting;
     bool articulate;
     bool cache;
