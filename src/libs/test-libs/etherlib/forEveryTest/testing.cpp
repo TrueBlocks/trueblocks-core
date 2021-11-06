@@ -18,9 +18,7 @@
 
 //--------------------------------------------------------------
 extern void everyAddress(CBlock& block);
-extern void everyUniqueAddress(CBlock& block);
 extern void everyUniqueAddressPerTx(CBlock& block);
-extern void everySortedUniqueAddress(CBlock& block);
 extern void everySortedUniqueAddressPerTx(CBlock& block);
 extern void testFormatting(CBlock& block);
 static const string_q sep(120, '-');
@@ -47,11 +45,9 @@ int main(int argc, const char* argv[]) {
                 everyAddress(block);
                 break;
             case 1:
-                everyUniqueAddress(block);
                 everyUniqueAddressPerTx(block);
                 break;
             case 2:
-                everySortedUniqueAddress(block);
                 everySortedUniqueAddressPerTx(block);
                 break;
             default:
@@ -105,32 +101,16 @@ void everyAddress(CBlock& block) {
 }
 
 //--------------------------------------------------------------
-void everyUniqueAddress(CBlock& block) {
-    cout << "Every unique addresses in block 4312145\n";
-    block.forEveryUniqueAppearanceInBlock(visitAddrs, transFilter, NULL);
-}
-
-//--------------------------------------------------------------
-void everySortedUniqueAddress(CBlock& block) {
-    cout << "Every unique addresses in block 4312145 (sorted)\n";
-    CAppearanceArray array;
-    block.forEveryUniqueAppearanceInBlock(accumAddrs, transFilter, &array);
-    sort(array.begin(), array.end(), sortAddressArray);
-    for (auto elem : array)
-        cout << elem.Format(STR_DISPLAY_APPEARANCE) << "\n";
-}
-
-//--------------------------------------------------------------
 void everyUniqueAddressPerTx(CBlock& block) {
     cout << "Every unique addresses per tx in block 4312145\n";
-    block.forEveryUniqueAppearanceInBlockPerTx(visitAddrs, transFilter, NULL);
+    block.forEveryUniqueAppearanceInTxs(visitAddrs, transFilter, NULL);
 }
 
 //--------------------------------------------------------------
 void everySortedUniqueAddressPerTx(CBlock& block) {
     cout << "Every unique addresses per tx in block 4312145 (sorted)\n";
     CAppearanceArray array;
-    block.forEveryUniqueAppearanceInBlockPerTx(accumAddrs, transFilter, &array);
+    block.forEveryUniqueAppearanceInTxs(accumAddrs, transFilter, &array);
     sort(array.begin(), array.end(), sortAddressArray);
     for (auto elem : array)
         cout << elem.Format(STR_DISPLAY_APPEARANCE) << "\n";

@@ -60,8 +60,7 @@ int main(int argc, const char* argv[]) {
     for (blknum_t bl = startBlock; bl < getBlockProgress(BP_CLIENT).client; bl++) {
         CBlock block;
         getBlock(block, bl);
-        if (!block.forEveryUniqueAppearanceInBlock(visitAddress /* func */, NULL /* filterFunc */,
-                                                   &theDaoAddr /* data */))
+        if (!block.forEveryUniqueAppearanceInTx(visitAddress /* func */, NULL /* filterFunc */, &theDaoAddr /* data */))
             return 0;
     }
 

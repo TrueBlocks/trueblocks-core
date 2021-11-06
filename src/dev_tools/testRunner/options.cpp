@@ -261,7 +261,7 @@ void establishTestData(void) {
     // TODO(tjayrush): and re-run. You will see the tests that fail.
 
     // Forces a few blocks into the cache
-    doCommand("chifra blocks --uniq_tx 0");
+    doCommand("chifra blocks --uniq 0");
     doCommand("chifra blocks --cache 4369999");
     doCommand("chifra transactions --cache 47055.0");
     doCommand("chifra transactions --cache 46147.0");

@@ -366,15 +366,7 @@ bool accumulateAddresses(const CAppearance& item, void* data) {
 }
 
 //---------------------------------------------------------------------------
-bool CBlock::forEveryUniqueAppearanceInBlock(APPEARANCEFUNC func, TRANSFUNC traceFilter, void* data) {
-    if (!func)
-        return false;
-    CUniqueState state(func, data, false);
-    return forEveryAppearanceInBlock(accumulateAddresses, traceFilter, &state);
-}
-
-//---------------------------------------------------------------------------
-bool CBlock::forEveryUniqueAppearanceInBlockPerTx(APPEARANCEFUNC func, TRANSFUNC traceFilter, void* data) {
+bool CBlock::forEveryUniqueAppearanceInTxs(APPEARANCEFUNC func, TRANSFUNC traceFilter, void* data) {
     if (!func)
         return false;
     CUniqueState state(func, data, true);

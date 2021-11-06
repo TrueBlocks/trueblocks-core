@@ -1,3 +1,3 @@
-chifra blocks  32279 --uniq_tx
+chifra blocks  32279 --uniq
 bn	tx	tc	addr	reason
 32279	99999		0x0000000000000000000000000000000000000000	miner

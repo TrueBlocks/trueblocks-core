@@ -299,10 +299,10 @@ bool COptions::parseArguments(string_q& command) {
 
     if (Mocked(""))
         return false;
-    
+
     for (auto t : topics)
         logFilter.topics.push_back(t);
-    
+
     if (!isApiMode() && max_records == 250) {
         max_records = NOPOS;
     }
@@ -562,6 +562,7 @@ void COptions::Init(void) {
     establishFolder(indexFolder_unripe);
     establishFolder(indexFolder_ripe);
     establishFolder(getCachePath("tmp/"));
+    establishFolder(getCachePath("apps/"));
 }
 
 //---------------------------------------------------------------------------------------------------

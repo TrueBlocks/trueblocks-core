@@ -1,4 +1,4 @@
-chifra blocks  3982128 --uniq_tx
+chifra blocks  3982128 --uniq
 bn	tx	tc	addr	reason
 3982128	99999		0x1e9939daaad6924ad004c2560e90804164900341	miner
 3982128	0		0x8c34adf55edf3d3eabb2414dd3f7152536246c86	from

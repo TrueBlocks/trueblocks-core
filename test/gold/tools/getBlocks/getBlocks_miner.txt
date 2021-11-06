@@ -1,4 +1,4 @@
-chifra blocks  1 --uniq_tx --fmt json
+chifra blocks  1 --uniq --fmt json
 { "data": [
   {
     "bn": 1,

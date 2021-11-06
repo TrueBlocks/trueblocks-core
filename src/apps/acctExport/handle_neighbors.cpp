@@ -13,16 +13,9 @@
 #include "options.h"
 
 //----------------------------------------------------------------
-bool visitAddrs(const CAppearance& item, void* data) {
-    if (item.tc == 10 || isZeroAddr(item.addr))
-        return !shouldQuit();
-
+bool showApp(const CAppearance& item, void* data) {
     COptions* opt = reinterpret_cast<COptions*>(data);
-    if (item.reason == "input" && item.addr != opt->accountedFor.address)
-        return !shouldQuit();
-    if (contains(item.reason, "topic") && item.addr != opt->accountedFor.address)
-        return !shouldQuit();
-    
+
     static blknum_t last = NOPOS;
     if (item.bn != last) {
         cout << endl;
@@ -41,8 +34,32 @@ bool visitAddrs(const CAppearance& item, void* data) {
         unindent();
         opt->firstOut = false;
     }
-    
+
     return !shouldQuit();
+}
+
+//----------------------------------------------------------------
+bool visitApp(const CAppearance& item, void* data) {
+    COptions* opt = reinterpret_cast<COptions*>(data);
+    if (item.tc == 10 || isZeroAddr(item.addr))
+        return !shouldQuit();
+
+    if (item.reason == "input" && item.addr != opt->accountedFor.address)
+        return !shouldQuit();
+    if (contains(item.reason, "topic") && item.addr != opt->accountedFor.address)
+        return !shouldQuit();
+
+    // if (opt->cache) {
+    //     string_q path = getBinaryCacheFilename(CT_APPS, item.bn, item.tx);
+    //     string_q csvPath = substitute(path, ".bin", ".csv");
+    //     ostringstream os;
+    //     os << item.Format(STR_DISPLAY_APPEARANCE) << endl;
+    //     cout << "Writing: " << item.Format(STR_DISPLAY_APPEARANCE) << endl;
+    //     getchar();
+    //     appendToAsciiFile(path, os.str());
+    // }
+
+    return showApp(item, data);
 }
 
 //----------------------------------------------------------------
@@ -55,8 +72,49 @@ bool transFilter(const CTransaction* trans, void* data) {
 
 //-----------------------------------------------------------------------
 bool neighbors_Display(CTraverser* trav, void* data) {
-    COptions* opt = (COptions*)data;
-    trav->trans.forEveryUniqueAppearanceInTxPerTx(visitAddrs, transFilter, opt);
+    string_q path = getBinaryCacheFilename(CT_APPS, trav->trans.blockNumber, trav->trans.transactionIndex);
+    establishFolder(path);
+
+    CAppearanceArray apps;
+    if (!isTestMode() && fileExists(path)) {
+        // CArchive archive(READING_ARCHIVE);
+        // if (archive.Lock(path, modeReadOnly, LOCK_NOWAIT)) {
+        //     // archive >> apps;
+        //     archive.Release();
+        //     for (auto app : apps) {
+        //         showApp(app, data);
+        //     }
+        //     return true;
+        // }
+    }
+
+    string_q csvPath = substitute(path, ".bin", ".csv");
+    // ::remove(csvPath.c_str());  // we don't have a cache, so clear out the temp file
+    trav->trans.forEveryUniqueAppearanceInTxPerTx(visitApp, transFilter, data);
+
+    // COptions* opt = (COptions*)data;
+    // if (opt->cache) {
+    //     cout << csvPath << endl;
+    //     getchar();
+    //     if (fileExists(csvPath)) {
+    //         CStringArray lines, fields;
+    //         asciiFileToLines(csvPath, lines);
+    //         for (auto line : lines) {
+    //             if (fields.empty()) {
+    //                 fields = CStringArray{"bn", "tx", "tc", "addr", "reason"};
+    //             } else {
+    //                 CAppearance app;
+    //                 app.parseCSV(fields, line);
+    //                 apps.push_back(app);
+    //             }
+    //         }
+    //         CArchive archive(WRITING_ARCHIVE);
+    //         if (archive.Lock(path, modeWriteCreate, LOCK_WAIT)) {
+    //             archive << apps;
+    //             archive.Release();
+    //         }
+    //     }
+    // }
     prog_Log(trav, data);
     return !shouldQuit();
 }

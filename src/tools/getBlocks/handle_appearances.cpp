@@ -19,9 +19,7 @@ bool COptions::handle_appearances(blknum_t num, void* data) {
 
     addrCounter = 0;
     if (filterType == "uniq")
-        block.forEveryUniqueAppearanceInBlock(visitAddrs, transFilter, this);
-    else if (filterType == "uniq_tx")
-        block.forEveryUniqueAppearanceInBlockPerTx(visitAddrs, transFilter, this);
+        block.forEveryUniqueAppearanceInTxs(visitAddrs, transFilter, this);
     else
         block.forEveryAppearanceInBlock(visitAddrs, transFilter, this);
 

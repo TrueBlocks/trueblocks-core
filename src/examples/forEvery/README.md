@@ -27,9 +27,8 @@ This example show how to use a few of TrueBlocks' `forEvery` functions.
   - bool `forEveryTransaction`(TRANSVISITFUNC func, void* data)
   - bool `forEveryLog`(LOGVISITFUNC func, void* data)
   - bool `forEveryTrace`(TRACEVISITFUNC func, void* data)
-  - bool `forEveryUniqueAppearanceInBlock`(APPEARANCEFUNC func, TRANSFUNC filter, void* data);
-  - bool `forEveryUniqueAppearanceInBlockPerTx`(APPEARANCEFUNC func, TRANSFUNC filter, void* data);
   - bool `forEveryAppearanceInBlock`(APPEARANCEFUNC func, TRANSFUNC filter, void* data);
+  - bool `forEveryUniqueAppearanceInTxs`(APPEARANCEFUNC func, TRANSFUNC filter, void* data);
 - CTransaction
   - bool `forEveryLog`(LOGVISITFUNC func, void* data)
   - bool `forEveryTrace`(TRACEVISITFUNC func, void* data)
