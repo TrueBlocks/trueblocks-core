@@ -57,6 +57,7 @@ bool transFilter(const CTransaction* trans, void* data) {
 bool neighbors_Display(CTraverser* trav, void* data) {
     COptions* opt = (COptions*)data;
     trav->trans.forEveryUniqueAppearanceInTxPerTx(visitAddrs, transFilter, opt);
+    prog_Log(trav, data);
     return !shouldQuit();
 }
 
