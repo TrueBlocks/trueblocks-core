@@ -299,10 +299,10 @@ bool COptions::parseArguments(string_q& command) {
 
     if (Mocked(""))
         return false;
-
-    for (auto topic : topics)
-        logFilter.topics.push_back(topic);
-
+    
+    for (auto t : topics)
+        logFilter.topics.push_back(t);
+    
     if (!isApiMode() && max_records == 250) {
         max_records = NOPOS;
     }

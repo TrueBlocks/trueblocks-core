@@ -13,12 +13,21 @@
 #include "options.h"
 
 //----------------------------------------------------------------
-bool showAddrs(const CAppearance& item, void* data) {
+bool visitAddrs(const CAppearance& item, void* data) {
+    if (item.tc == 10 || isZeroAddr(item.addr))
+        return !shouldQuit();
+
     COptions* opt = reinterpret_cast<COptions*>(data);
     if (item.reason == "input" && item.addr != opt->accountedFor.address)
         return !shouldQuit();
     if (contains(item.reason, "topic") && item.addr != opt->accountedFor.address)
         return !shouldQuit();
+    
+    static blknum_t last = NOPOS;
+    if (item.bn != last) {
+        cout << endl;
+        last = item.bn;
+    }
 
     bool isText = (expContext().exportFmt & (TXT1 | CSV1));
     if (isText) {
@@ -32,31 +41,8 @@ bool showAddrs(const CAppearance& item, void* data) {
         unindent();
         opt->firstOut = false;
     }
-
-    static blknum_t last = NOPOS;
-    if (item.bn != last) {
-        cout << endl;
-        last = item.bn;
-    }
-
+    
     return !shouldQuit();
-}
-//----------------------------------------------------------------
-bool visitAddrs(const CAppearance& item, void* data) {
-    if (item.tc == 10 || isZeroAddr(item.addr))
-        return !shouldQuit();
-    if (!isTestMode()) {
-        lockSection();
-        CArchive archive(WRITING_ARCHIVE);
-        string_q path = getBinaryCachePath(CT_APPS, item.bn, item.tx, item.reason);
-        if (archive.Lock(path, modeWriteCreate, LOCK_WAIT)) {
-            LOG4("Writing to cache for ", path);
-            archive << item;
-            archive.Release();
-        }
-        unlockSection();
-    }
-    return showAddrs(item, data);
 }
 
 //----------------------------------------------------------------
@@ -69,21 +55,6 @@ bool transFilter(const CTransaction* trans, void* data) {
 
 //-----------------------------------------------------------------------
 bool neighbors_Display(CTraverser* trav, void* data) {
-    string_q path = getBinaryCachePath(CT_APPS, trav->trans.blockNumber, trav->trans.transactionIndex);
-    establishFolder(path);
-
-    if (!isTestMode() && fileExists(path)) {
-        CArchive archive(READING_ARCHIVE);
-        if (archive.Lock(path, modeReadOnly, LOCK_NOWAIT)) {
-            CAppearance item;
-            // archive >> item;
-            archive.Release();
-            bool ret = showAddrs(item, data);
-            prog_Log(trav, data);
-            return ret;
-        }
-    }
-
     COptions* opt = (COptions*)data;
     trav->trans.forEveryUniqueAppearanceInTxPerTx(visitAddrs, transFilter, opt);
     return !shouldQuit();
