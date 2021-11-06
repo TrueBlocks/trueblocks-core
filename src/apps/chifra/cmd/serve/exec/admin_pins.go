@@ -6,15 +6,14 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/pins"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib/manifest"
 )
-
-type ResponseBody map[string]interface{}
 
 var ErrMultipleModes = errors.New("only one of ?list or ?init is supported")
 var ErrNoMode = errors.New("you must choose one of ?list or ?init")
 
 // AdminPins runs pin-operating functions depending on query parameters
-func AdminPins(request *http.Request) (ResponseBody, error) {
+func AdminPins(request *http.Request) ([]manifest.PinDescriptor, error) {
 	query := request.URL.Query()
 	mode := ""
 	all := false
@@ -40,13 +39,13 @@ func AdminPins(request *http.Request) (ResponseBody, error) {
 	if err != nil {
 		return nil, err
 	}
-	responseBody := make(ResponseBody)
+	var responseBody []manifest.PinDescriptor
 	var responseError error
 
 	switch mode {
 	case "list":
 		pins, err := pins.List()
-		responseBody["data"] = pins
+		responseBody = pins
 		responseError = err
 	case "init":
 		err := pins.Init(all)
