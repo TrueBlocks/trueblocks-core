@@ -69,9 +69,9 @@ bool transFilter(const CTransaction* trans, void* data) {
 
 //-----------------------------------------------------------------------
 bool neighbors_Display(CTraverser* trav, void* data) {
-    string_q path = getBinaryCacheFolder(CT_APPS, trav->trans.blockNumber, trav->trans.transactionIndex);
+    string_q path = getBinaryCachePath(CT_APPS, trav->trans.blockNumber, trav->trans.transactionIndex);
     establishFolder(path);
-#error
+
     if (!isTestMode() && fileExists(path)) {
         CArchive archive(READING_ARCHIVE);
         if (archive.Lock(path, modeReadOnly, LOCK_NOWAIT)) {
