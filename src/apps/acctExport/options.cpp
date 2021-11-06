@@ -577,7 +577,7 @@ COptions::COptions(void) {
     notes.push_back("Articulating the export means turn the EVM's byte data into human-readable text (if possible).");
     notes.push_back("For the --logs option, you may optionally specify one or more --emmitter, one or more --topics, or both.");  // NOLINT
     notes.push_back("The --logs option is significantly faster if you provide an --emitter or a --topic.");
-    notes.push_back("A neighbor of an address is either a direct to or from neighbor, a participant in an event with the address, or | (for smart contracts) any similarly defined trace neighbor.");  // NOLINT
+    notes.push_back("Neighbors include every address that appears in any transaction in which the export address also appears.");  // NOLINT
     // clang-format on
     // END_CODE_NOTES
 

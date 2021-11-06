@@ -62,6 +62,9 @@ func runExport(cmd *cobra.Command, args []string) {
 	if ExportOpts.accounting {
 		options += " --accounting"
 	}
+	if ExportOpts.neighbors {
+		options += " --neighbors"
+	}
 	if ExportOpts.articulate {
 		options += " --articulate"
 	}

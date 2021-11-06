@@ -102,3 +102,16 @@ class CTransactionTraverser : public CTraverser {
     ~CTransactionTraverser(void) {
     }
 };
+
+extern bool neighbors_Display(CTraverser* trav, void* data);
+extern size_t neighbors_Count(CTraverser* trav, void* data);
+class CNeighborTraverser : public CTraverser {
+  public:
+    CNeighborTraverser(void) : CTraverser("neighbors") {
+        filterFunc = tsRangeFunc;
+        postFunc = post_Func;
+        dataFunc = loadTx_Func;
+        displayFunc = neighbors_Display;
+        counterFunc = neighbors_Count;
+    }
+};

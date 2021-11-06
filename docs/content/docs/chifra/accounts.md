@@ -2,7 +2,7 @@
 title: "Accounts"
 description: ""
 lead: ""
-date: 2021-11-05T19:34:54
+date: 2021-11-05T19:59:29
 lastmod:
   - :git
   - lastmod
@@ -102,8 +102,7 @@ Notes:
   - Articulating the export means turn the EVM's byte data into human-readable text (if possible).
   - For the --logs option, you may optionally specify one or more --emmitter, one or more --topics, or both.
   - The --logs option is significantly faster if you provide an --emitter or a --topic.
-  - A neighbor of an address is either a direct to or from neighbor, a participant in an event with the address, or
-    (for smart contracts) any similarly defined trace neighbor.
+  - Neighbors include every address that appears in any transaction in which the export address also appears.
 ```
 
 **Source code**: [`apps/acctExport`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/acctExport)
