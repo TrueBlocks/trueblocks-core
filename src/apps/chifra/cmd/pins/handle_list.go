@@ -72,7 +72,9 @@ func HandleList() {
 	case "json":
 		fallthrough
 	case "api":
-		err := output.PrintJson(pins)
+		err := output.PrintJson(&output.JsonFormatted{
+			Data: pins,
+		})
 		if err != nil {
 			logger.Fatal(err)
 		}

@@ -178,6 +178,7 @@ func Init(all bool) error {
 	return nil
 }
 
+// HandleInit calls Init() and prints error, if any
 func HandleInit(all bool) {
 	err := Init(all)
 	if err != nil {

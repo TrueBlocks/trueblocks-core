@@ -191,11 +191,11 @@ func AdminInit(w http.ResponseWriter, r *http.Request) {
 func AdminPins(w http.ResponseWriter, r *http.Request) {
 	result, err := exec.AdminPins(r)
 	if err != nil {
-		RespondWithError(w, err)
+		RespondWithJsonError(w, http.StatusInternalServerError, err)
 		return
 	}
 
-	RespondWithJson(w, result)
+	RespondWithJsonSuccess(w, result)
 }
 
 // AdminChunks help text todo
