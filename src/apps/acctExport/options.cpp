@@ -71,7 +71,6 @@ bool COptions::parseArguments(string_q& command) {
     CAddressArray addrs;
     CTopicArray topics;
     bool transactions = false;
-    bool neighbors = false;
     CAddressArray emitter;
     CStringArray topic;
     bool freshen = false;
@@ -505,6 +504,7 @@ void COptions::Init(void) {
     logs = false;
     traces = false;
     statements = false;
+    neighbors = false;
     accounting = false;
     articulate = false;
     // clang-format off
@@ -638,6 +638,12 @@ bool COptions::setDisplayFormatting(void) {
             if (statements)
                 expContext().fmtMap["header"] = noHeader ? "" : cleanFmt(format);
 
+            format = getGlobalConfig("acctExport")->getConfigStr("display", "neighbor", STR_DISPLAY_APPEARANCE);
+            expContext().fmtMap["appearance_fmt"] = cleanFmt(format);
+            manageFields("CAppearance:" + format);
+            if (neighbors)
+                expContext().fmtMap["header"] = noHeader ? "" : cleanFmt(format);
+
             format = getGlobalConfig("acctExport")->getConfigStr("display", "trace", STR_DISPLAY_TRACE);
             expContext().fmtMap["trace_fmt"] = cleanFmt(format);
             manageFields("CTrace:" + format);
@@ -683,6 +689,8 @@ bool COptions::setDisplayFormatting(void) {
                 expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["receipt_fmt"]);
             } else if (statements) {
                 expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["reconciliation_fmt"]);
+            } else if (neighbors) {
+                expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["appearance_fmt"]);
             } else if (logs) {
                 expContext().fmtMap["header"] = cleanFmt(expContext().fmtMap["logentry_fmt"]);
             } else if (appearances) {
