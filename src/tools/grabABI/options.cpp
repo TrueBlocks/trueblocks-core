@@ -104,18 +104,6 @@ bool COptions::parseArguments(string_q& command) {
     if (Mocked(""))
         return false;
 
-    if (!find.empty()) {
-        for (auto f : find) {
-            ostringstream os;
-            os << getCommandPath("findSig") << " " << f;
-            LOG_TEST_CALL(os.str());
-            // clang-format off
-            if (system(os.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
-            // clang-format on
-        }
-        return false;
-    }
-
     if (!sol.empty()) {
         for (auto s : sol) {
             if (!fileExists(s + ".sol") && !fileExists(s))

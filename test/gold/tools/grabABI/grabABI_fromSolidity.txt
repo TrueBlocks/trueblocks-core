@@ -10,7 +10,7 @@ Arguments:
 
 Flags:
   -k, --known          load common 'known' ABIs from cache
-  -s, --sol string     extract the abi definition from the provided .sol file(s)
+  -s, --sol strings    extract the abi definition from the provided .sol file(s)
   -f, --find strings   search for function or event declarations given a four- or 32-byte code(s)
   -o, --source         show the source of the ABI information (hidden)
   -c, --classes        generate classDefinitions folder and class definitions (hidden)
@@ -22,3 +22,4 @@ Global Flags:
 
 Notes:
   - For the --sol option, place the solidity files in the current working folder.
+  - Search for either four byte signatures or event signatures with the --find option.
