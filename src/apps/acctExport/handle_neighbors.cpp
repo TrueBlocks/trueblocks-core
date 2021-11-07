@@ -115,8 +115,6 @@ bool neighbors_Display(CTraverser* trav, void* data) {
     //         }
     //     }
     // }
-
-    COptions* opt = (COptions*)data;
     prog_Log(trav, data);
     return !shouldQuit();
 }
