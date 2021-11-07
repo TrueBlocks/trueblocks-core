@@ -5,6 +5,24 @@ COMMIT_SHA=$2
 BRANCH=$3
 TEST_TARGET=$4
 
+echo
+echo "REPO---------------------------------------------------"
+echo $REPO
+
+echo
+echo "COMMIT_SHA---------------------------------------------------"
+echo $COMMIT_SHA
+
+echo
+echo "BRANCH---------------------------------------------------"
+echo $BRANCH
+
+echo
+echo "TEST_TARGET---------------------------------------------------"
+echo $TEST_TARGET
+
+return 0
+
 if [ -z "$CONFIG_FILE" ]
 then
     echo "This script requires CONFIG_FILE env variable to be defined."
