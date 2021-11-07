@@ -17,12 +17,11 @@ on,both,fast,abis,tools/grabABI,known_bug2_raw,y,addrs = 0xef638b4305b8a1620f4e0
 on,both,fast,abis,tools/grabABI,fmt_newfields,y,addrs = 0xffa93aacf49297d51e211817452839052fdfb961
 on,both,fast,abis,tools/grabABI,fmt_default,y,addrs = 0xe94327d07fc17907b4db788e5adf2ed424addff6
 on,both,fast,abis,tools/grabABI,fmt_txt,n,addrs = 0xe94327d07fc17907b4db788e5adf2ed424addff6 & fmt = txt
-on,both,fast,abis,tools/grabABI,fmt_csv,n,addrs = 0xe94327d07fc17907b4db788e5adf2ed424addff6 & fmt = csv & no_header
 on,both,fast,abis,tools/grabABI,fmt_api,y,addrs = 0xe94327d07fc17907b4db788e5adf2ed424addff6 & fmt = api
 on,both,fast,abis,tools/grabABI,fmt_json,y,addrs = 0xe94327d07fc17907b4db788e5adf2ed424addff6 & fmt = json
 on,both,fast,abis,tools/grabABI,fmt_junk,y,addrs = 0xe94327d07fc17907b4db788e5adf2ed424addff6 & fmt = junk
 on,both,fast,abis,tools/grabABI,to_file,y,addrs = 0xe94327d07fc17907b4db788e5adf2ed424addff6 & fmt = json & to_file
-on,both,fast,abis,tools/grabABI,known_trueclasses,y,addrs = truebit & classes & fmt json
+on,both,fast,abis,tools/grabABI,fmt_csv,n,addrs = 0xe94327d07fc17907b4db788e5adf2ed424addff6 & fmt = csv & no_header
 
 on,cmd,fast,abis,tools/grabABI,findSig_tooshort,y,find = 0x1aa3a0
 on,cmd,fast,abis,tools/grabABI,findSig_toolong,y,find = 0x1aa3a00800
@@ -40,3 +39,4 @@ local,both,fast,abis,tools/grabABI,fromSolidity,y,sol & addrs = 0x22345678123456
 local,both,fast,abis,tools/grabABI,fromSolidity2,y,sol & addrs = 0x7d655c57f71464b6f83811c55d84009cd9f5221c & fmt = json
 local,both,fast,abis,tools/grabABI,known_trueara,y,addrs = truebit aragon & fmt json
 local,both,fast,abis,tools/grabABI,findSig_event,y,find = 0x1aa3a0081aa3a0081aa3a0081aa3a0081aa3a0081aa3a0081aa3a0081aa3a008
+local,both,fast,abis,tools/grabABI,known_trueclasses,y,addrs = truebit & classes & fmt json

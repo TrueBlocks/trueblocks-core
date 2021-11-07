@@ -1,25 +1,29 @@
 chifra abis  0x00001
-Error: 
-  At least one valid Ethereum address is required
+
+  Invalid address '0x00001'. Length (7) is not equal to 40 characters (20 bytes). Quitting...
+
+Purpose:
+  Fetches the ABI for a smart contract.
 
 Usage:
-  chifra abis [flags] <address> [address...]
+  grabABI [flags] <address> [address...]
 
 Arguments:
   addrs - a list of one or more smart contracts whose ABIs to display (required)
 
 Flags:
-  -k, --known          load common 'known' ABIs from cache
-  -s, --sol strings    extract the abi definition from the provided .sol file(s)
-  -f, --find strings   search for function or event declarations given a four- or 32-byte code(s)
-  -o, --source         show the source of the ABI information (hidden)
-  -c, --classes        generate classDefinitions folder and class definitions (hidden)
+  -k, --known            load common 'known' ABIs from cache
+  -s, --sol list<str>    extract the abi definition from the provided .sol file(s)
+  -f, --find list<str>   search for function or event declarations given a four- or 32-byte code(s)
+  -o, --source           show the source of the ABI information (hidden)
+  -c, --classes          generate classDefinitions folder and class definitions (hidden)
 
 Global Flags:
-  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
-  -h, --help         display this help screen
-  -v, --verbose      enable verbose (increase detail with --log_level)
+  -x, --fmt string     export format, one of [none|json*|txt|csv|api]
+  -v, --verbose uint   set verbose level (optional level defaults to 1)
+  -h, --help           display this help screen
 
 Notes:
   - For the --sol option, place the solidity files in the current working folder.
   - Search for either four byte signatures or event signatures with the --find option.
+

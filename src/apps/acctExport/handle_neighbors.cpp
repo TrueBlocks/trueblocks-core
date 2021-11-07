@@ -22,18 +22,9 @@ bool showApp(const CAppearance& item, void* data) {
         last = item.bn;
     }
 
-    bool isText = (expContext().exportFmt & (TXT1 | CSV1));
-    if (isText) {
-        cout << trim(item.Format(expContext().fmtMap["format"]), '\t') << endl;
-    } else {
-        if (!opt->firstOut)
-            cout << ",";
-        cout << "  ";
-        indent();
-        item.toJson(cout);
-        unindent();
-        opt->firstOut = false;
-    }
+    cout << ((isJson() && !opt->firstOut) ? ", " : "");
+    cout << item;
+    opt->firstOut = false;
 
     return !shouldQuit();
 }

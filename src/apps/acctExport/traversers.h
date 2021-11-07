@@ -107,7 +107,7 @@ extern bool neighbors_Display(CTraverser* trav, void* data);
 extern size_t neighbors_Count(CTraverser* trav, void* data);
 class CNeighborTraverser : public CTraverser {
   public:
-    CNeighborTraverser(void) : CTraverser("neighbors") {
+    CNeighborTraverser(void) : CTraverser("appearances") {
         filterFunc = tsRangeFunc;
         postFunc = post_Func;
         dataFunc = loadTx_Func;
