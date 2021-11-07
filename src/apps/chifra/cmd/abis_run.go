@@ -27,14 +27,6 @@ func validateAbisArgs(cmd *cobra.Command, args []string) error {
 		return validate.Usage("the '{0}' option is not implemented", "--classes")
 	}
 
-	for _, sol := range AbisOpts.sol {
-		cleaned := "./" + strings.Replace(sol, ".sol", "", 1) + ".sol"
-		if !utils.FileExists(cleaned) {
-			return validate.Usage("file not found at {0}", cleaned)
-		}
-		return nil
-	}
-
 	if len(AbisOpts.find) == 0 && !AbisOpts.known {
 		err := validate.ValidateAtLeastOneAddr(args)
 		if err != nil {
@@ -42,30 +34,48 @@ func validateAbisArgs(cmd *cobra.Command, args []string) error {
 		}
 	}
 
-	for _, term := range AbisOpts.find {
-		ok1, err1 := validate.IsValidFourByte(term)
-		if !ok1 && len(term) < 10 {
-			return err1
+	if AbisOpts.sol && len(AbisOpts.find) > 0 {
+		return validate.Usage("Please choose only one of --sol or --find.")
+	}
+
+	if AbisOpts.sol {
+		for _, sol := range args {
+			if sol == "" {
+				continue
+			}
+			cleaned := "./" + strings.Replace(sol, ".sol", "", 1) + ".sol"
+			if !utils.FileExists(cleaned) {
+				return validate.Usage("Solidity file not found at {0}", cleaned)
+			}
 		}
-		ok2, err2 := validate.IsValidTopic(term)
-		if !ok2 && len(term) > 66 {
-			return err2
-		}
-		if !ok1 && !ok2 {
-			if len(term) > 43 {
-				// more than halfway reports topic
+	} else {
+		for _, term := range AbisOpts.find {
+			ok1, err1 := validate.IsValidFourByte(term)
+			if !ok1 && len(term) < 10 {
+				return err1
+			}
+			ok2, err2 := validate.IsValidTopic(term)
+			if !ok2 && len(term) > 66 {
 				return err2
 			}
-			return err1
-		} else {
-			validate.Errors = nil
+			if !ok1 && !ok2 {
+				if len(term) > 43 {
+					// more than halfway reports topic
+					return err2
+				}
+				return err1
+			} else {
+				validate.Errors = nil
+			}
 		}
+
 	}
 
 	err := validateGlobalFlags(cmd, args)
 	if err != nil {
 		return err
 	}
+
 	return nil
 }
 
@@ -86,8 +96,8 @@ func runAbis(cmd *cobra.Command, args []string) {
 	if AbisOpts.known {
 		options += " --known"
 	}
-	for _, sol := range AbisOpts.sol {
-		options += " --sol " + sol
+	if AbisOpts.sol {
+		options += " --sol"
 	}
 	for _, t := range AbisOpts.find {
 		options += " --find " + t

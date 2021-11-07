@@ -1,5 +1,5 @@
 {
   "errors": [
-    "chifra abis - --classes option is not implemented."
+    "the '--classes' option is not implemented"
   ]
 }
