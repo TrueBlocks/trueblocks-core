@@ -6,6 +6,22 @@ BRANCH=$3
 TEST_TARGET=$4
 
 echo
+echo "running---------------------------------------------------"
+echo "./src/other/build_assets/remote_testing/test_with_docker.sh"
+
+echo
+echo "hostname---------------------------------------------------"
+hostname
+
+echo
+echo "whoami---------------------------------------------------"
+whoami
+
+echo
+echo "pwd---------------------------------------------------"
+pwd
+
+echo
 echo "REPO---------------------------------------------------"
 echo $REPO
 
