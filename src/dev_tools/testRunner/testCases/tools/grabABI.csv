@@ -32,18 +32,18 @@ on      ,both  ,fast  ,abis  ,tools/grabABI ,findSig_txt         ,n    ,find = 0
 on      ,both  ,fast  ,abis  ,tools/grabABI ,findSig_junk        ,y    ,find = 0x1aa3a008 & fmt = junk
 on      ,bot h ,fast  ,abis  ,tools/grabABI ,findSig1            ,y    ,find = 0x1aa3a008 & find = 0x3ccfd60b & find = 0xad7a672f
 
-off     ,both  ,fast  ,abis  ,tools/grabABI ,known_alone         ,y    ,known
-off     ,both  ,fast  ,abis  ,tools/grabABI ,known_with          ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & known
+on      ,both  ,fast  ,abis  ,tools/grabABI ,known_alone         ,y    ,known
+on      ,both  ,fast  ,abis  ,tools/grabABI ,known_with          ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & known
 on      ,both  ,fast  ,abis  ,tools/grabABI ,fromSolidity        ,y    ,sol & addrs = 0x2234567812345678123456781234567812345678
 on      ,both  ,fast  ,abis  ,tools/grabABI ,fromSolidity2       ,y    ,sol & addrs = 0x7d655c57f71464b6f83811c55d84009cd9f5221c & fmt = json
 on      ,both  ,fast  ,abis  ,tools/grabABI ,fromSolidity3_fail  ,y    ,sol & find = 0x1aa3a008 & addrs = 0x7d655c57f71464b6f83811c55d84009cd9f5221c & fmt = json
 on      ,both  ,fast  ,abis  ,tools/grabABI ,known_trueclasses   ,y    ,addrs = truebit & classes & fmt = json
 
-#       ,      ,      ,      ,              ,                    ,     ,This fails because cobra doesn't give us a chance to report invalid flags under the API
+#       ,      ,      ,      ,              ,                    ,     ,This fails under the API because cobra doesn't give us a chance to report invalid flags
 local   ,both  ,fast  ,abis  ,tools/grabABI ,known_trueara       ,y    ,addrs = truebit aragon & fmt = json
 
-#       ,      ,      ,      ,              ,                    ,     ,This fails because the GoLang code does not support the --output flag
+#       ,      ,      ,      ,              ,                    ,     ,This fails because the GoLang code does not yet support the --output flag
 local   ,both  ,fast  ,abis  ,tools/grabABI ,to_file             ,y    ,addrs = 0xe94327d07fc17907b4db788e5adf2ed424addff6 & fmt = json & to_file
 
-#       ,      ,      ,      ,              ,                    ,     ,This fails because the we never supported searching signatures for events
+#       ,      ,      ,      ,              ,                    ,     ,This fails because we never supported searching for event signatures
 local   ,both  ,fast  ,abis  ,tools/grabABI ,findSig_event       ,y    ,find = 0x1aa3a0081aa3a0081aa3a0081aa3a0081aa3a0081aa3a0081aa3a0081aa3a008
