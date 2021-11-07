@@ -21,7 +21,9 @@ echo
 echo "TEST_TARGET---------------------------------------------------"
 echo $TEST_TARGET
 
-return 0
+echo
+echo "CONFIG_FILE---------------------------------------------------"
+echo $CONFIG_FILE
 
 if [ -z "$CONFIG_FILE" ]
 then
@@ -29,6 +31,8 @@ then
     echo "It should point out to the location of the default trueblocks.toml file"
     exit 1
 fi
+
+exit 0
 
 echo "Building image..."
 
