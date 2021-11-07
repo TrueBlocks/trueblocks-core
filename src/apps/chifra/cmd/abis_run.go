@@ -44,10 +44,16 @@ func validateAbisArgs(cmd *cobra.Command, args []string) error {
 
 	for _, term := range AbisOpts.find {
 		ok1, err1 := validate.IsValidFourByte(term)
+		if !ok1 && len(term) < 10 {
+			return err1
+		}
 		ok2, err2 := validate.IsValidTopic(term)
+		if !ok2 && len(term) > 66 {
+			return err2
+		}
 		if !ok1 && !ok2 {
-			if len(term) > 16 {
-				// A longer term was most likely trying to be a topic...
+			if len(term) > 43 {
+				// more than halfway reports topic
 				return err2
 			}
 			return err1

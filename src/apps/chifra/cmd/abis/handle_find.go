@@ -82,10 +82,6 @@ func HandleFind(arguments []string) {
 	var results []Function
 
 	testMode := utils.IsTestMode()
-	apiMode := utils.IsApiMode()
-	if apiMode || output.Format == "" || output.Format == "none" {
-		output.Format = "json"
-	}
 
 	var wg sync.WaitGroup
 	checkOne, _ := ants.NewPoolWithFunc(config.ReadBlockScrape().Dev.MaxPoolSize, func(testSig interface{}) {

@@ -128,7 +128,7 @@ func AccountsNames(w http.ResponseWriter, r *http.Request) {
 
 // AccountsAbis help text todo
 func AccountsAbis(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "grabABI", "abis")
+	CallOneExtra(w, r, "chifra", "abis", "abis")
 }
 
 // ChainDataBlocks help text todo
