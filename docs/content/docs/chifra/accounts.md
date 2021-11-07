@@ -2,7 +2,7 @@
 title: "Accounts"
 description: ""
 lead: ""
-date: 2021-11-06T17:52:53
+date: 2021-11-07T12:45:23
 lastmod:
   - :git
   - lastmod
@@ -208,7 +208,7 @@ Arguments:
 
 Flags:
   -k, --known          load common 'known' ABIs from cache
-  -s, --sol strings    extract the abi definition from the provided .sol file(s)
+  -s, --sol            extract the abi definition from the provided .sol file(s)
   -f, --find strings   search for function or event declarations given a four- or 32-byte code(s)
 
 Global Flags:

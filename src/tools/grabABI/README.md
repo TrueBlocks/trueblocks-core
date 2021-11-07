@@ -22,7 +22,7 @@ Arguments:
 
 Flags:
   -k, --known          load common 'known' ABIs from cache
-  -s, --sol strings    extract the abi definition from the provided .sol file(s)
+  -s, --sol            extract the abi definition from the provided .sol file(s)
   -f, --find strings   search for function or event declarations given a four- or 32-byte code(s)
 
 Global Flags:

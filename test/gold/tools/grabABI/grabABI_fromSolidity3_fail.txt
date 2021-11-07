@@ -1,6 +1,6 @@
-chifra abis  --sol 0x2234567812345678123456781234567812345678
+chifra abis  --sol --find 0x1aa3a008 0x7d655c57f71464b6f83811c55d84009cd9f5221c --fmt json
 Error: 
-  Solidity file not found at ./0x2234567812345678123456781234567812345678.sol
+  Please choose only one of --sol or --find.
 
 Usage:
   chifra abis [flags] <address> [address...]
