@@ -248,8 +248,6 @@ bool COptions::parseArguments(string_q& command) {
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
     registerOptions(nParams, params, OPT_PREFUND);
-    // Since we need prefunds, let's load the names library here
-    loadNames();
 
     // BEG_CODE_INIT
     details = false;
