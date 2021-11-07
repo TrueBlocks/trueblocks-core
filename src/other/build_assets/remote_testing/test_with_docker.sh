@@ -37,25 +37,35 @@ echo
 echo "TEST_TARGET---------------------------------------------------"
 echo $TEST_TARGET
 
-echo
-echo "CONFIG_FILE---------------------------------------------------"
-echo $CONFIG_FILE
-
 if [ -z "$CONFIG_FILE" ]
+    echo
+    echo "CONFIG_FILE---------------------------------------------------"
+    echo $CONFIG_FILE
 then
     echo "This script requires CONFIG_FILE env variable to be defined."
     echo "It should point out to the location of the default trueblocks.toml file"
     exit 1
 fi
 
-exit 0
-
-echo "Building image..."
+echo
+echo "------------------------------------------------------------"
+echo "Building docker image with --quiet option..."
 
 # Build image and save its ID
 IMAGE_ID=`docker build -q --build-arg repo=$REPO --build-arg commit_sha=$COMMIT_SHA --build-arg branch=$BRANCH --build-arg test_target=$TEST_TARGET .`
 
-echo "Done. Running Docker image and tests"
+echo
+echo "-----------------------------------------------------------"
+echo "Done building docker image."
+
+echo
+echo "IMAGE_ID---------------------------------------------------"
+echo $IMAGE_ID
+
+echo
+echo "-----------------------------------------------------------"
+echo "Running Docker image and tests"
+
 # Note: we are using --rm flag, which will cause removal of the container after `docker run` exits
 docker run \
     --rm \
@@ -70,6 +80,7 @@ RESULT=$?
 # Remove code repository
 echo "Cleaning up"
 cd
+
 rm -rf testing/$COMMIT_SHA
 # If we don't want to use --rm flag with docker run, the command below will remove the container
 # docker container rm `docker ps -af ancestor=$IMAGE_ID --format "{{.ID}}"`
