@@ -15,12 +15,9 @@ package serve
 
 // OptionsType makes command line options available to the package
 type OptionsType struct {
-	Scrape  bool
-	Monitor bool
 	Port    string
 	Verbose int
 	Sleep   int
-	Pin     bool
 }
 
 // Options carries command line options

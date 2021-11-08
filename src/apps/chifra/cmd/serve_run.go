@@ -53,7 +53,9 @@ func PrintServeSettings() {
 // runServe runs serve command and sends any errors to log.Fatal
 func runServe(cmd *cobra.Command, args []string) {
 	serve.Options.Port = ServeOpts.port
-	// serve.Options.Verbose = RootOpts.verbose
+	if RootOpts.verbose {
+		serve.Options.Verbose = 1
+	}
 	PrintServeSettings()
 	log.Fatal(serve.Run(ServeOpts.port))
 }

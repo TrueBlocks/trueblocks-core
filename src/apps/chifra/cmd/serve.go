@@ -55,7 +55,7 @@ func init() {
 
 	serveCmd.Flags().SortFlags = false
 	serveCmd.PersistentFlags().SortFlags = false
-	serveCmd.Flags().StringVarP(&ServeOpts.port, "port", "p", "", "specify the server's port (:8080 default)")
+	serveCmd.Flags().StringVarP(&ServeOpts.port, "port", "p", ":8080", "specify the server's port (:8080 default)")
 	serveCmd.Flags().SortFlags = false
 	serveCmd.PersistentFlags().SortFlags = false
 
