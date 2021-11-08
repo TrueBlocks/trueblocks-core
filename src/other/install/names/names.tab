@@ -7890,6 +7890,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 31-Gitcoin:Grants	0xc172542e7f4f625bb0301f0bafc423092d9cac71	Grant 1424 Pandemic Pods & Distance Learning		https://gitcoin.co/grants/1424/pandemic-pods-distance-learning			false	false	false	false	false	false
 50-Tokens:ERC20	0xc17a2a22066323ef8bf8c6ec69bccd9dbad1d227	OXSHIB INU	OXSHIB	On chain	18		false	false	false	true	true	false
 55-Defi	0xc17adf949f524213a540609c386035d7d685b16f	Yearn: StrategyProxy		EtherScan.io			false	false	false	true	false	false
+50-Tokens:ERC20	0xc18360217d8f7ab5e7c516566761ea12ce7f9d72	Ethereum Name Service	ENS	On chain	18		false	false	false	true	true	false
 30-Contracts	0xc186e6f0163e21be057e95aa135edd52508d14d3	TrueBit Purchase Implementation		Truebit			false	false	false	true	false	false
 91-Early:Addresses	0xc18a451d4ef2a85e7bf8404131c5f994a98bdb15	SafeInvestments_id52_cnt4_5mo		Ether Camp			false	false	false	true	false	false
 50-Tokens:ERC20	0xc18e7a03f8986798323658dd8645f93aa79ac5c9	American Akita	USKITA	On chain	9		false	false	false	true	true	false
