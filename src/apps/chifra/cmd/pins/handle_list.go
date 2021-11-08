@@ -15,7 +15,6 @@ package pins
 import (
 	"fmt"
 	"os"
-	"reflect"
 	"sort"
 	"text/tabwriter"
 

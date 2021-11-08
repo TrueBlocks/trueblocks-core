@@ -82,7 +82,7 @@ func validateAbisArgs(cmd *cobra.Command, args []string) error {
 func runAbis(cmd *cobra.Command, args []string) {
 	// This only happens in API mode when there's been an error. Here, we print the error
 	if len(validate.Errors) > 0 {
-		output.PrintJson([]string{})
+		output.PrintJson(&output.JsonFormatted{})
 		return
 	}
 

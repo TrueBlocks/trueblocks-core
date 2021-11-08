@@ -143,7 +143,9 @@ func HandleFind(arguments []string) {
 	out1 := tabwriter.NewWriter(out, 0, 0, 2, ' ', 0)
 
 	if output.Format == "json" || output.Format == "api" {
-		err := output.PrintJson(results)
+		err := output.PrintJson(&output.JsonFormatted{
+			Data: results,
+		})
 		if err != nil {
 			logger.Fatal(err)
 		}
