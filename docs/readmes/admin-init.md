@@ -28,5 +28,5 @@ Notes:
   - See chifra pins --help for more information.
 ```
 
-**Source code**: [`apps/pinMan`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/pinMan)
+**Source code**: [`init.go`](https://github.com/TrueBlocks/trueblocks-core/tree/develop/src/apps/chifra/cmd/init.go)
 
