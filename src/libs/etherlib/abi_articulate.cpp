@@ -115,7 +115,7 @@ extern string_q parse_str(const string_q& input, const void* data);
 extern string_q parse_by32(const string_q& input, const void* data = NULL);
 //-----------------------------------------------------------------------
 bool CAbi::articulateLog(CLogEntry* p) const {
-    if (!p)
+    if (!p || p->topics.size() == 0)
         return false;
 
     // Hacky shortcuts are way faster since these three events are about 90% of all events

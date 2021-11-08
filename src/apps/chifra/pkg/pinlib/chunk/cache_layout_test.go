@@ -20,7 +20,7 @@ import (
 )
 
 func TestCacheLayout_NewIndex(t *testing.T) {
-	indexPath := config.ReadGlobal().Settings.IndexPath
+	indexPath := config.ReadTrueBlocks().Settings.IndexPath
 	indexConfig := &CacheLayout{}
 	indexConfig.New(IndexChunk)
 
@@ -40,7 +40,7 @@ func TestCacheLayout_NewIndex(t *testing.T) {
 }
 
 func TestCacheLayout_NewBloom(t *testing.T) {
-	indexPath := config.ReadGlobal().Settings.IndexPath
+	indexPath := config.ReadTrueBlocks().Settings.IndexPath
 	indexConfig := &CacheLayout{}
 	indexConfig.New(BloomChunk)
 

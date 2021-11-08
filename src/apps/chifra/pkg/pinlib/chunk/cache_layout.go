@@ -37,7 +37,7 @@ func (cl *CacheLayout) New(chunkType ChunkType) {
 		extension = ".bin"
 	}
 
-	cl.outputDir = config.ReadGlobal().Settings.IndexPath
+	cl.outputDir = config.ReadTrueBlocks().Settings.IndexPath
 	cl.subdir = subdir
 	cl.extension = extension
 }
