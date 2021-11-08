@@ -132,5 +132,5 @@ extern bool visitFinalIndexFiles(const string_q& path, void* data);
 extern bool visitStagingIndexFiles(const string_q& path, void* data);
 extern bool visitUnripeIndexFiles(const string_q& path, void* data);
 extern bool isTokenFunc(const string_q& input);
-extern bool isTokenTopic(const topic_t& topic);
+extern bool isTokenTopic(const CLogEntry* log);
 extern bool fourByteFilter(const string_q& input, const COptions* opt);
