@@ -89,13 +89,13 @@ func HandleList() {
 	if output.Format == "txt" && utils.IsTerminal() {
 		table := &output.Table{}
 		table.New()
-		table.Header([]string{"filename", "bloomhash", "indexhash"})
+		table.Header([]string{"fileName", "bloomHash", "indexHash"})
 		for _, pin := range pins {
 			table.Row([]string{pin.FileName, pin.BloomHash, pin.IndexHash})
 		}
 		table.Print()
 	} else {
-		fmt.Printf(outFmt, "filename", "bloomhash", "indexhash")
+		fmt.Printf(outFmt, "fileName", "bloomHash", "indexHash")
 		for _, pin := range pins {
 			fmt.Printf(outFmt, pin.FileName, pin.BloomHash, pin.IndexHash)
 		}
