@@ -1,4 +1,4 @@
-package server
+package serve
 
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains

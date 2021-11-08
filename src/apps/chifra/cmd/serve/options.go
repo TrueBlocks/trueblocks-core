@@ -1,4 +1,4 @@
-package utils
+package serve
 
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
@@ -13,12 +13,12 @@ package utils
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 
-var Off string = "\033[0m"
-var Red string = "\033[31m"
-var Green string = "\033[32m"
-var Yellow string = "\033[33m"
-var Blue string = "\033[34m"
-var Purple string = "\033[35m"
-var Cyan string = "\033[36m"
-var White string = "\033[37m"
-var Black string = "\033[30m"
+// OptionsType makes command line options available to the package
+type OptionsType struct {
+	Port    string
+	Verbose int
+	Sleep   int
+}
+
+// Options carries command line options
+var Options OptionsType

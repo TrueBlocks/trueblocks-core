@@ -1,4 +1,4 @@
-package server
+package serve
 
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
@@ -23,7 +23,8 @@ import (
 	"net/http"
 	"time"
 
-	utils "github.com/TrueBlocks/trueblocks-core/src/go-apps/blaze/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/serve/exec"
+	utils "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/gorilla/mux"
 	"golang.org/x/time/rate"
 )
@@ -62,8 +63,8 @@ var nProcessed int
 func Logger(inner http.Handler, name string) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		var limiter = rate.NewLimiter(1, 3)
-		if limiter.Allow() == false {
-			http.Error(w, http.StatusText(429), http.StatusTooManyRequests)
+		if !limiter.Allow() {
+			http.Error(w, http.StatusText(http.StatusTooManyRequests), http.StatusTooManyRequests)
 			return
 		}
 		start := time.Now()
@@ -186,9 +187,15 @@ func AdminInit(w http.ResponseWriter, r *http.Request) {
 	CallOneExtra(w, r, "chifra", "init", "init")
 }
 
-// AdminPins help text todo
+// AdminPins handles /pins route
 func AdminPins(w http.ResponseWriter, r *http.Request) {
-	CallOneExtra(w, r, "chifra", "pins", "pins")
+	result, err := exec.AdminPins(r)
+	if err != nil {
+		RespondWithJsonError(w, http.StatusInternalServerError, err)
+		return
+	}
+
+	RespondWithJsonSuccess(w, result)
 }
 
 // AdminChunks help text todo
@@ -205,6 +212,7 @@ func OtherQuotes(w http.ResponseWriter, r *http.Request) {
 func OtherSlurp(w http.ResponseWriter, r *http.Request) {
 	CallOne(w, r, "ethslurp", "slurp")
 }
+
 // END_ROUTE_CODE
 
 var routes = Routes{

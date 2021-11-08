@@ -89,7 +89,7 @@ func validatePinsArgs(cmd *cobra.Command, args []string) error {
 
 func runPins(cmd *cobra.Command, args []string) {
 	if len(validate.Errors) > 0 {
-		output.PrintJson([]string{})
+		output.PrintJson(&output.JsonFormatted{})
 		return
 	}
 
