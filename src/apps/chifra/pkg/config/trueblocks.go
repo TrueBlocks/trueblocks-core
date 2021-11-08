@@ -45,7 +45,7 @@ func init() {
 }
 
 // ReadGlobal reads and the configuration located in trueBlocks.toml file
-func ReadGlobal() *TrueBlocksConfig {
+func ReadTrueBlocks() *TrueBlocksConfig {
 	if !trueBlocksRead {
 		MustReadConfig(trueBlocksViper, &cachedTrueBlocksConfig)
 		trueBlocksRead = true

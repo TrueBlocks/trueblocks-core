@@ -36,7 +36,7 @@ func (err *ErrCustomizedPath) GetIndexPath() string {
 // If the parent directory is a custom one and missing, an error will be reported.
 // If the parent directory exists, any missing subdirectory will be created.
 func EstablishDirectories() error {
-	indexPath := config.ReadGlobal().Settings.IndexPath
+	indexPath := config.ReadTrueBlocks().Settings.IndexPath
 	subdirectories := []string{
 		"blooms",
 		"finalized",
