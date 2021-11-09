@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2021-11-07T22:22:20
+date: 2021-11-08T22:38:48
 lastmod:
   - :git
   - lastmod
@@ -39,7 +39,7 @@ Usage:
   chifra serve [flags]
 
 Flags:
-  -p, --port string   specify the server's port (:8080 default)
+  -p, --port string   specify the server's port (:8080 default) (default ":8080")
 
 Global Flags:
   -x, --fmt string   export format, one of [none|json*|txt|csv|api]
