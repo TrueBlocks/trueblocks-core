@@ -13,7 +13,7 @@ var ErrMultipleModes = errors.New("only one of ?list or ?init is supported")
 var ErrNoMode = errors.New("you must choose one of ?list or ?init")
 
 // AdminPins runs pin-operating functions depending on query parameters
-func AdminPins(request *http.Request) ([]manifest.PinDescriptor, error) {
+func AdminPins(request *http.Request) (*manifest.PinsList, error) {
 	query := request.URL.Query()
 	mode := ""
 	all := false
@@ -39,13 +39,13 @@ func AdminPins(request *http.Request) ([]manifest.PinDescriptor, error) {
 	if err != nil {
 		return nil, err
 	}
-	var responseBody []manifest.PinDescriptor
+	var responseBody *manifest.PinsList
 	var responseError error
 
 	switch mode {
 	case "list":
 		pins, err := pins.List()
-		responseBody = pins
+		responseBody = &pins
 		responseError = err
 	case "init":
 		err := pins.Init(all)
