@@ -24,19 +24,19 @@ export PATH=$(pwd)/../bin:$(pwd)/../bin/test:$PATH
 if $RUN_SERVER
 then
 
-    if [ -n "$(pgrep flame)" ]
+    if [ -n "$(pgrep chifra)" ]
     then
         echo "Error: Chifra serve is already running"
         exit 1
     fi
 
-    chifra serve > /dev/null 2>&1 &
+    chifra serve #> /dev/null 2>&1 &
 
     echo "Waiting for chifra to start up..."
-    sleep 10
+    sleep 20
 
     echo "Checking if chifra is running..."
-    pgrep flame
+    pgrep chifra
     if [ $? -gt 0 ]
     then
         echo "Error: Chifra is not running"
@@ -53,7 +53,7 @@ RESULT=$?
 
 if $RUN_SERVER
 then
-    pkill flame
+    pkill chifra
 fi
 
 echo "Compressing and saving test/working"

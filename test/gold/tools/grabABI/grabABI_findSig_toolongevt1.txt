@@ -1,6 +1,6 @@
 chifra abis  --find 0x1aa3a00800000000000000000
 Error: 
-  topic (0x1aa3a00800000000000000000) is not 32 bytes long
+  fourbyte (0x1aa3a00800000000000000000) is not 4 bytes long
 
 Usage:
   chifra abis [flags] <address> [address...]
@@ -10,7 +10,7 @@ Arguments:
 
 Flags:
   -k, --known          load common 'known' ABIs from cache
-  -s, --sol strings    extract the abi definition from the provided .sol file(s)
+  -s, --sol            extract the abi definition from the provided .sol file(s)
   -f, --find strings   search for function or event declarations given a four- or 32-byte code(s)
   -o, --source         show the source of the ABI information (hidden)
   -c, --classes        generate classDefinitions folder and class definitions (hidden)

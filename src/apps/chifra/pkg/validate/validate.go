@@ -21,7 +21,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-var Errors []string
+var Errors []string = nil
 
 func usageEx(function, msg string, values []string) error {
 	var ret string
@@ -37,7 +37,7 @@ func usageEx(function, msg string, values []string) error {
 		Errors = append(Errors, ret)
 		return nil
 	}
-	return errors.New(FmtError(ret))
+	return errors.New("\n  " + ret + "\n")
 }
 
 func Usage(msg string, values ...string) error {
@@ -50,14 +50,6 @@ func Deprecated(cmd string, rep string) error {
 		msg += " Use {1} instead."
 	}
 	return Usage(msg, cmd, rep)
-}
-
-func FmtError(msg string) string {
-	if utils.IsApiMode() {
-		Errors = append(Errors, msg)
-		return ""
-	}
-	return "\n  " + msg + "\n"
 }
 
 /* Expects str to be in 0xNNNNNNN...NNNN format */
@@ -101,11 +93,16 @@ func IsValidAddress(val string) (bool, error) {
 }
 
 func ValidateAtLeastOneAddr(args []string) error {
+	hasOne := false
 	for _, arg := range args {
-		val, _ := IsValidAddress(arg)
-		if val {
-			return nil
+		if hasOne {
+			break
 		}
+		hasOne, _ = IsValidAddress(arg)
+	}
+	if hasOne {
+		Errors = nil // calling code will report the error
+		return nil
 	}
 	return Usage("At least one valid Ethereum address is required")
 }

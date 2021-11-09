@@ -27,5 +27,5 @@ Notes:
   - The --share option works only if an IPFS daemon is running.
 ```
 
-**Source code**: [`apps/pinMan`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/pinMan)
+**Source code**: [`pins.go`](https://github.com/TrueBlocks/trueblocks-core/tree/develop/src/apps/chifra/cmd/pins.go)
 

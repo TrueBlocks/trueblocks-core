@@ -1,4 +1,4 @@
-package server
+package serve
 
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
@@ -23,7 +23,7 @@ import (
 	"strconv"
 	"strings"
 
-	utils "github.com/TrueBlocks/trueblocks-core/src/go-apps/blaze/utils"
+	utils "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // GetCommandPath returns full path the the given tool
@@ -81,14 +81,13 @@ func CallOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd s
 	// Do the actual call
 	cmd := exec.Command(tbCmd, allDogs...)
 	if Options.Verbose > 0 {
-		log.Print(utils.Yellow, "Calling: ", cmd, utils.Off)
+		log.Print(Yellow, "Calling: ", cmd, Off)
 	}
 
 	if cmd.Process != nil {
 		// Listen if the call gets canceled
-		notify := w.(http.CloseNotifier).CloseNotify()
 		go func() {
-			<-notify
+			<-r.Context().Done()
 			pid := cmd.Process.Pid
 			if err := cmd.Process.Kill(); err != nil {
 				log.Println("failed to kill process: ", err)
@@ -105,10 +104,7 @@ func CallOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd s
 	if utils.IsTestModeServer(r) {
 		cmd.Env = append(append(os.Environ(), "TEST_MODE=true"), "API_MODE=true")
 		vars := strings.Split(r.Header.Get("X-TestRunner-Env"), "|")
-		for _, v := range vars {
-			cmd.Env = append(cmd.Env, v)
-			// log.Printf(v)
-		}
+		cmd.Env = append(cmd.Env, vars...)
 	} else {
 		cmd.Env = append(os.Environ(), "API_MODE=true")
 	}

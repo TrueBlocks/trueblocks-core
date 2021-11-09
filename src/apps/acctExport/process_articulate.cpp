@@ -41,7 +41,10 @@ bool isTokenFunc(const string_q& input) {
 
 //-----------------------------------------------------------------------
 #define CTopicBoolMap CStringBoolMap
-bool isTokenTopic(const topic_t& topic) {
+bool isTokenTopic(const CLogEntry* log) {
+    if (!log || log->topics.size() == 0)
+        return false;
+
     static CTopicBoolMap topics = {
         make_pair("0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef",
                   true),  // Transfer(address from, address to, uint256 value)
@@ -52,7 +55,8 @@ bool isTokenTopic(const topic_t& topic) {
         make_pair("0x30385c845b448a36257a6a1716e6ad2e1bc2cbe333cde1e69fe849ad6511adfe",
                   true),  // Minted(address,uint256)
     };
-    return topics[topic];
+
+    return topics[log->topics[0]];
 }
 
 //-----------------------------------------------------------------------
@@ -72,7 +76,7 @@ bool COptions::articulateAll(CTransaction& trans) {
         string_q bytesOnly = substitute(accountedFor.address, "0x", "");
         for (size_t j = 0; j < trans.receipt.logs.size(); j++) {
             CLogEntry* log = (CLogEntry*)&trans.receipt.logs[j];  // NOLINT
-            trans.hasToken |= isTokenTopic(log->topics[0]);
+            trans.hasToken |= isTokenTopic(log);
             string_q str = log->Format();
             if (contains(str, bytesOnly)) {
                 abiMap[log->address]++;
@@ -97,7 +101,7 @@ bool COptions::articulateAll(CTransaction& trans) {
         trans.hasToken |= isTokenFunc(trans.input);
         for (size_t j = 0; j < trans.receipt.logs.size(); j++) {
             CLogEntry* log = (CLogEntry*)&trans.receipt.logs[j];  // NOLINT
-            trans.hasToken |= isTokenTopic(log->topics[0]);
+            trans.hasToken |= isTokenTopic(log);
         }
     }
     return true;

@@ -13,7 +13,6 @@
 package pins
 
 import (
-	"fmt"
 	"net/url"
 	"path"
 
@@ -55,6 +54,7 @@ func downloadAndReportProgress(pins []manifest.PinDescriptor, chunkType chunk.Ch
 
 		switch event.Event {
 		case progress.Error:
+			logger.Log(logger.Error, event.Message)
 			if ok {
 				failed = append(failed, *pin)
 			}
@@ -110,13 +110,13 @@ func PrintManifestHeader() {
 }
 
 // HandleInit initializes local copy of UnchainedIndex by downloading manifests and chunks
-func HandleInit(all bool) {
+func Init(all bool) error {
 	logger.Log(logger.Info, "Calling unchained index smart contract...")
 
 	// Fetch manifest's CID
 	cid, err := pinlib.GetManifestCidFromContract()
 	if err != nil {
-		logger.Fatal(err)
+		return err
 	}
 	logger.Log(logger.Info, "Found manifest hash at", cid)
 
@@ -126,19 +126,19 @@ func HandleInit(all bool) {
 
 	url, err := url.Parse(gatewayUrl)
 	if err != nil {
-		logger.Fatal(err)
+		return err
 	}
 	url.Path = path.Join(url.Path, cid)
 	downloadedManifest, err := pinlib.DownloadManifest(url.String())
 
 	if err != nil {
-		fmt.Printf("Error while downloading manifest:\n%s", err)
+		return err
 	}
 
 	// Save manifest
 	err = pinlib.SaveManifest(config.GetConfigPath("manifest/manifest.txt"), downloadedManifest)
 	if err != nil {
-		fmt.Println("Error while saving manifest", err)
+		return err
 	}
 	logger.Log(logger.Info, "Freshened manifest")
 
@@ -175,4 +175,13 @@ func HandleInit(all bool) {
 	}
 
 	<-bloomsDoneChannel
+	return nil
+}
+
+// HandleInit calls Init() and prints error, if any
+func HandleInit(all bool) {
+	err := Init(all)
+	if err != nil {
+		logger.Fatal(err)
+	}
 }

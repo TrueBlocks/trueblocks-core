@@ -20,28 +20,44 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
-// PrintJson marshals its arguments and prints JSON in a standardized format
-func PrintJson(serializable interface{}) error {
-	var response map[string]interface{}
+type JsonFormatted struct {
+	Data   interface{} `json:"data,omitempty"`
+	Errors []string    `json:"errors,omitempty"`
+	Meta   *Meta       `json:"meta,omitempty"`
+}
 
-	if len(validate.Errors) > 0 {
-		response = map[string]interface{}{
-			"errors": validate.Errors,
-		}
+// AsJsonBytes marshals JsonFormatted struct, populating Meta field if
+// needed
+func AsJsonBytes(j *JsonFormatted) ([]byte, error) {
+	var result JsonFormatted
 
-	} else if Format == "json" {
-		response = map[string]interface{}{
-			"data": serializable,
-		}
-
+	if Format == "json" {
+		result = *j
 	} else {
-		response = map[string]interface{}{
-			"data": serializable,
-			"meta": GetMeta(),
+		// TODO: global validate.Errors is not server-safe
+		if len(validate.Errors) > 0 {
+			result.Errors = validate.Errors
+		} else {
+			if len(j.Errors) > 0 {
+				result.Errors = j.Errors
+			} else {
+				result.Data = j.Data
+				result.Meta = GetMeta()
+			}
 		}
 	}
 
-	marshalled, err := json.MarshalIndent(response, "", "  ")
+	marshalled, err := json.MarshalIndent(result, "", "  ")
+	if err != nil {
+		return nil, err
+	}
+
+	return marshalled, err
+}
+
+// PrintJson marshals its arguments and prints JSON in a standardized format
+func PrintJson(j *JsonFormatted) error {
+	marshalled, err := AsJsonBytes(j)
 	if err != nil {
 		return err
 	}

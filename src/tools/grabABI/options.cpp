@@ -22,7 +22,7 @@ static const COption params[] = {
     // clang-format off
     COption("addrs", "", "list<addr>", OPT_REQUIRED | OPT_POSITIONAL, "a list of one or more smart contracts whose ABIs to display"),  // NOLINT
     COption("known", "k", "", OPT_SWITCH, "load common 'known' ABIs from cache"),
-    COption("sol", "s", "list<string>", OPT_FLAG, "extract the abi definition from the provided .sol file(s)"),
+    COption("sol", "s", "", OPT_SWITCH, "extract the abi definition from the provided .sol file(s)"),
     COption("find", "f", "list<string>", OPT_FLAG, "search for function or event declarations given a four- or 32-byte code(s)"),  // NOLINT
     COption("source", "o", "", OPT_HIDDEN | OPT_SWITCH, "show the source of the ABI information"),
     COption("classes", "c", "", OPT_HIDDEN | OPT_SWITCH, "generate classDefinitions folder and class definitions"),
@@ -40,7 +40,7 @@ bool COptions::parseArguments(string_q& command) {
 
     // BEG_CODE_LOCAL_INIT
     bool known = false;
-    CStringArray sol;
+    bool sol = false;
     CStringArray find;
     bool source = false;
     bool classes = false;
@@ -60,11 +60,8 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-k" || arg == "--known") {
             known = true;
 
-        } else if (startsWith(arg, "-s:") || startsWith(arg, "--sol:")) {
-            arg = substitute(substitute(arg, "-s:", ""), "--sol:", "");
-            sol.push_back(arg);
         } else if (arg == "-s" || arg == "--sol") {
-            return flag_required("sol");
+            sol = true;
 
         } else if (startsWith(arg, "-f:") || startsWith(arg, "--find:")) {
             arg = substitute(substitute(arg, "-f:", ""), "--find:", "");
@@ -95,7 +92,7 @@ bool COptions::parseArguments(string_q& command) {
     // BEG_DEBUG_DISPLAY
     LOG_TEST_LIST("addrs", addrs, addrs.empty());
     LOG_TEST_BOOL("known", known);
-    LOG_TEST_LIST("sol", sol, sol.empty());
+    LOG_TEST_BOOL("sol", sol);
     LOG_TEST_LIST("find", find, find.empty());
     LOG_TEST_BOOL("source", source);
     LOG_TEST_BOOL("classes", classes);
@@ -104,36 +101,14 @@ bool COptions::parseArguments(string_q& command) {
     if (Mocked(""))
         return false;
 
-    if (!find.empty()) {
-        for (auto f : find) {
-            ostringstream os;
-            os << getCommandPath("findSig") << " " << f;
-            LOG_TEST_CALL(os.str());
-            // clang-format off
-            if (system(os.str().c_str())) {}  // Don't remove cruft. Silences compiler warnings
-            // clang-format on
-        }
-        return false;
-    }
-
-    if (!sol.empty()) {
-        for (auto s : sol) {
-            if (!fileExists(s + ".sol") && !fileExists(s))
-                return usage(substitute(usageErrs[ERR_CANNOTFINDSOL], "[{SOL}]", s));
-            convertFromSol(substitute(s, ".sol", ""));
+    if (sol) {
+        for (auto s : addrs) {
+            // We've already check that the file exists
+            handle_convertsol(substitute(s, ".sol", ""));
             cerr << s << " coverted in current folder." << endl;
         }
         return false;
     }
-
-    if (!addrs.size() && !known)
-        return usage(usageErrs[ERR_SUPPLYONEADDR]);
-
-    if (parts == 0)
-        parts = SIG_DEFAULT;
-
-    if (parts != SIG_CANONICAL && verbose)
-        parts |= SIG_DETAILS;
 
     if (known)
         abi_spec.loadAbisFromKnown();
@@ -150,28 +125,7 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     if (classes) {
-        return usage(usageErrs[ERR_OPTIONNOTIMPL]);
-#if 0
-        for (auto item : abi_spec.interfaceMap) {
-            CFunction func = item.second;
-            establishFolder("./classes/classDefinitions/");
-            ostringstream os;
-            os << "[settings]" << endl;
-            os << "base_class = CTransaction" << endl;
-            os << "class = C" << toUpper(string_q(1, func.name[0])) << func.name.substr(1,1000) << endl;
-            os << "fields =";
-            bool first = true;
-            for (auto field : func.inputs) {
-                if (!first) os << " |\\" << endl;
-                os << "  " << field.type << " " << field.name;
-                first = false;
-            }
-            cerr << "Writing to ./classes/classDefinitions/" << toLower(func.name) << ".txt" << endl;
-            cerr << substitute(os.str(), "\t", "  ");
-            stringToAsciiFile("./classes/classDefinitions/" + toLower(func.name) + ".txt", os.str());
-        }
-        return false;
-#endif
+        return handle_classes();
     }
 
     // Display formatting
@@ -203,7 +157,9 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
+    // BEG_CODE_GLOBALOPTS
     registerOptions(nParams, params, OPT_RAW, OPT_DENOM);
+    // END_CODE_GLOBALOPTS
 
     // BEG_CODE_INIT
     // END_CODE_INIT
@@ -224,41 +180,9 @@ COptions::COptions(void) {
     // END_CODE_NOTES
 
     // BEG_ERROR_STRINGS
-    usageErrs[ERR_CANNOTFINDSOL] = "Cannot find .sol file at '[{SOL}]'.";
-    usageErrs[ERR_SUPPLYONEADDR] = "Please supply at least one Ethereum address.";
-    usageErrs[ERR_OPTIONNOTIMPL] = "--classes option is not implemented.";
     // END_ERROR_STRINGS
 }
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
-}
-
-//-----------------------------------------------------------------------
-void COptions::convertFromSol(const address_t& addr) {
-    abi_spec.loadAbiFromSolidity(addr);
-    GETRUNTIME_CLASS(CFunction)->sortFieldList();
-    GETRUNTIME_CLASS(CParameter)->sortFieldList();
-    // TODO: This is terrible. Can we remove it?
-    if (isTestMode()) {
-        HIDE_FIELD(CParameter, "value");
-        HIDE_FIELD(CParameter, "str_default");
-        HIDE_FIELD(CParameter, "is_array");
-        HIDE_FIELD(CParameter, "is_builtin");
-        HIDE_FIELD(CParameter, "is_object");
-        HIDE_FIELD(CParameter, "is_pointer");
-        HIDE_FIELD(CParameter, "is_minimal");
-        HIDE_FIELD(CParameter, "is_noaddfld");
-        HIDE_FIELD(CParameter, "is_nowrite");
-        HIDE_FIELD(CParameter, "is_omitempty");
-        HIDE_FIELD(CParameter, "is_extra");
-    }
-    expContext().spcs = 2;
-
-    ostringstream os;
-    os << abi_spec;
-
-    string_q fileName = addr + ".json";
-    ::remove(fileName.c_str());
-    stringToAsciiFile(fileName, os.str());
 }

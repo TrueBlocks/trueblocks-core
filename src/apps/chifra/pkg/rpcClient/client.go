@@ -23,7 +23,7 @@ import (
 
 // Get sets up a client instance and returns it
 func Get() ethclient.Client {
-	client, err := ethclient.Dial(config.ReadGlobal().Settings.RpcProvider)
+	client, err := ethclient.Dial(config.ReadTrueBlocks().Settings.RpcProvider)
 	if err != nil {
 		log.Fatalln(err)
 	}

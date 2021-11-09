@@ -12,6 +12,5 @@ include_directories(${BASE_INCLUDE})
 
 # Compilation order of the src subdirectories
 add_subdirectory(blaze)
-add_subdirectory(flame)
 add_subdirectory(acctScrape2)
 # add_subdirectory(unchained)

@@ -377,11 +377,10 @@ bool CLogFilter::passes(const CLogEntry& log) {
     if (!filteringEmitters && !filteringTopics)
         return true;
 
-    ASSERT(log.topics.size() > 0);
     bool emittedBy = wasEmittedBy(log.address);
-    bool hasTopic = false;
+    bool hasTopic = false;  // fails if there are no topics matching
     for (auto topic : topics) {
-        if (topic == log.topics[0])
+        if (log.topics.size() > 0 && topic == log.topics[0])
             hasTopic = true;
     }
 

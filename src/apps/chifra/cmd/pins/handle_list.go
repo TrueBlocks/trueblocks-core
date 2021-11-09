@@ -15,7 +15,6 @@ package pins
 import (
 	"fmt"
 	"os"
-	"reflect"
 	"sort"
 	"text/tabwriter"
 
@@ -25,12 +24,12 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-// HandleList loads manifest, sorts pins and prints them out
-func HandleList() {
+// List loads manifest, sorts pins and prints them out
+func List() ([]manifest.PinDescriptor, error) {
 	// Load manifest
 	manifestData, err := manifest.FromLocalFile()
 	if err != nil {
-		logger.Fatal("Cannot open local manifest file", err)
+		return nil, err
 	}
 
 	// Sort pins
@@ -45,13 +44,14 @@ func HandleList() {
 		manifestData.NewPins = manifestData.NewPins[:100]
 	}
 
-	// won't happen, but can't hurt to check
-	if output.Format != "json" &&
-		output.Format != "api" &&
-		output.Format != "txt" &&
-		output.Format != "csv" &&
-		output.Format != "" {
-		logger.Fatal("Unknown output format: " + output.Format)
+	return manifestData.NewPins, nil
+}
+
+// HandleList calls List and outputs data to the console
+func HandleList() {
+	pins, err := List()
+	if err != nil {
+		logger.Fatal("Cannot open local manifest file", err)
 	}
 
 	// TODO: if Root.to_file == true, write the output to a filename
@@ -59,23 +59,45 @@ func HandleList() {
 	out := os.Stdout
 	out1 := tabwriter.NewWriter(out, 0, 0, 2, ' ', 0)
 
-	if output.Format == "json" || output.Format == "api" {
-		err := output.PrintJson(manifestData.NewPins)
+	if output.Format == "" || output.Format == "none" {
+		if utils.IsApiMode() {
+			output.Format = "api"
+		} else {
+			output.Format = "txt"
+		}
+	}
+
+	outFmt := "%s\t%s\t%s\n"
+	switch output.Format {
+	case "txt":
+		// do nothing
+	case "csv":
+		outFmt = "\"%s\",\"%s\",\"%s\"\n"
+	case "json":
+		fallthrough
+	case "api":
+		err := output.PrintJson(&output.JsonFormatted{
+			Data: pins,
+		})
+
 		if err != nil {
 			logger.Fatal(err)
 		}
 		return
 	}
 
-	structType := reflect.TypeOf(manifest.PinDescriptor{})
-	rowTemplate, _ := output.GetRowTemplate(&structType)
-
-	fmt.Fprintln(out, output.GetHeader(&structType))
-	for _, pin := range manifestData.NewPins {
-		if output.Format == "" && utils.IsTerminal() {
-			rowTemplate.Execute(out1, pin)
-		} else {
-			rowTemplate.Execute(out, pin)
+	if output.Format == "txt" && utils.IsTerminal() {
+		table := &output.Table{}
+		table.New()
+		table.Header([]string{"fileName", "bloomHash", "indexHash"})
+		for _, pin := range pins {
+			table.Row([]string{pin.FileName, pin.BloomHash, pin.IndexHash})
+		}
+		table.Print()
+	} else {
+		fmt.Printf(outFmt, "fileName", "bloomHash", "indexHash")
+		for _, pin := range pins {
+			fmt.Printf(outFmt, pin.FileName, pin.BloomHash, pin.IndexHash)
 		}
 	}
 	out1.Flush()

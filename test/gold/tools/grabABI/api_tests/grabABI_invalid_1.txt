@@ -1,5 +1,6 @@
 {
   "errors": [
-    "chifra abis - Invalid address '0x00001'. Length (7) is not equal to 40 characters (20 bytes)."
+    "address (0x00001) is not 20 bytes long",
+    "At least one valid Ethereum address is required"
   ]
 }
