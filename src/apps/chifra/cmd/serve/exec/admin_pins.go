@@ -7,7 +7,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/pins"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib/manifest"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 var ErrMultipleModes = errors.New("only one of ?list or ?init is supported")
@@ -46,9 +45,6 @@ func AdminPins(request *http.Request) ([]manifest.PinDescriptor, error) {
 	switch mode {
 	case "list":
 		pins, err := pins.List()
-		if utils.IsTestModeServer(request) {
-			pins = pins[:100]
-		}
 		responseBody = pins
 		responseError = err
 	case "init":
