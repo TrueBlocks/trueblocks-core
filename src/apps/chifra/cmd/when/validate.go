@@ -1,3 +1,5 @@
+package when
+
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -10,22 +12,33 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-package cmd
 
 import (
+	"errors"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/spf13/cobra"
 )
 
-func validateReceiptsArgs(cmd *cobra.Command, args []string) error {
-	// if len(args) == 0 {
-	// 	return errors.New(fmtError("You must provide at least one valid transaction identifier"))
-	// }
-	// for _, arg := range args {
-	// 	valid, err := validateTxIdentifier(arg)
-	// 	if !valid || err != nil {
-	// 		return err
+func Validate(cmd *cobra.Command, args []string) error {
+	// if !WhenOpts.list {
+	// 	if len(args) == 0 {
+	// 		return errors.New(fmtError("You must provide either a date or a block number"))
 	// 	}
 	// }
+
+	validationErr := validate.ValidateIdentifiers(args, validate.ValidBlockIdWithRangeAndDate, 1)
+	if validationErr != nil {
+		if invalidLiteral, ok := validationErr.(*validate.InvalidIdentifierLiteralError); ok {
+			return invalidLiteral
+		}
+
+		if errors.Is(validationErr, validate.ErrTooManyRanges) {
+			return errors.New("Specify only a single block range at a time.")
+		}
+
+		return validationErr
+	}
 
 	err := validateGlobalFlags(cmd, args)
 	if err != nil {
@@ -33,16 +46,4 @@ func validateReceiptsArgs(cmd *cobra.Command, args []string) error {
 	}
 
 	return nil
-}
-
-func runReceipts(cmd *cobra.Command, args []string) {
-	options := ""
-	if ReceiptsOpts.Articulate {
-		options += " --articulate"
-	}
-	arguments := ""
-	for _, arg := range args {
-		arguments += " " + arg
-	}
-	PassItOn("getReceipts", options, arguments)
 }

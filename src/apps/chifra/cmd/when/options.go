@@ -1,3 +1,5 @@
+package when
+
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -10,39 +12,13 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-package cmd
 
-import (
-	"github.com/spf13/cobra"
-)
-
-func validateReceiptsArgs(cmd *cobra.Command, args []string) error {
-	// if len(args) == 0 {
-	// 	return errors.New(fmtError("You must provide at least one valid transaction identifier"))
-	// }
-	// for _, arg := range args {
-	// 	valid, err := validateTxIdentifier(arg)
-	// 	if !valid || err != nil {
-	// 		return err
-	// 	}
-	// }
-
-	err := validateGlobalFlags(cmd, args)
-	if err != nil {
-		return err
-	}
-
-	return nil
+type WhenOptionsType struct {
+	List       bool
+	Timestamps bool
+	Check      bool
+	Fix        bool
+	Count      bool
 }
 
-func runReceipts(cmd *cobra.Command, args []string) {
-	options := ""
-	if ReceiptsOpts.Articulate {
-		options += " --articulate"
-	}
-	arguments := ""
-	for _, arg := range args {
-		arguments += " " + arg
-	}
-	PassItOn("getReceipts", options, arguments)
-}
+var Options WhenOptionsType

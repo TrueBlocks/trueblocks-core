@@ -19,6 +19,7 @@ package cmd
 import (
 	"os"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/when"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
 )
@@ -28,8 +29,8 @@ var whenCmd = &cobra.Command{
 	Use:   usageWhen,
 	Short: shortWhen,
 	Long:  longWhen,
-	Run:   runWhen,
-	Args:  validateWhenArgs,
+	Run:   when.Run,
+	Args:  when.Validate,
 }
 
 var usageWhen = `when [flags] < block | date > [ block... | date... ]
@@ -47,26 +48,16 @@ Notes:
   - The block list may contain any combination of number, hash, date, special named blocks.
   - Dates must be formatted in JSON format: YYYY-MM-DD[THH[:MM[:SS]]].`
 
-type whenOptionsType struct {
-	list       bool
-	timestamps bool
-	check      bool
-	fix        bool
-	count      bool
-}
-
-var WhenOpts whenOptionsType
-
 func init() {
 	whenCmd.SetOut(os.Stderr)
 
 	whenCmd.Flags().SortFlags = false
 	whenCmd.PersistentFlags().SortFlags = false
-	whenCmd.Flags().BoolVarP(&WhenOpts.list, "list", "l", false, "export a list of the 'special' blocks")
-	whenCmd.Flags().BoolVarP(&WhenOpts.timestamps, "timestamps", "t", false, "ignore other options and generate timestamps only")
-	whenCmd.Flags().BoolVarP(&WhenOpts.check, "check", "c", false, "available only with --timestamps, checks the validity of the timestamp data (hidden)")
-	whenCmd.Flags().BoolVarP(&WhenOpts.fix, "fix", "f", false, "available only with --timestamps, fixes incorrect timestamps if any (hidden)")
-	whenCmd.Flags().BoolVarP(&WhenOpts.count, "count", "u", false, "available only with --timestamps, returns the number of timestamps in the cache (hidden)")
+	whenCmd.Flags().BoolVarP(&when.Options.List, "list", "l", false, "export a list of the 'special' blocks")
+	whenCmd.Flags().BoolVarP(&when.Options.Timestamps, "timestamps", "t", false, "ignore other options and generate timestamps only")
+	whenCmd.Flags().BoolVarP(&when.Options.Check, "check", "c", false, "available only with --timestamps, checks the validity of the timestamp data (hidden)")
+	whenCmd.Flags().BoolVarP(&when.Options.Fix, "fix", "f", false, "available only with --timestamps, fixes incorrect timestamps if any (hidden)")
+	whenCmd.Flags().BoolVarP(&when.Options.Count, "count", "u", false, "available only with --timestamps, returns the number of timestamps in the cache (hidden)")
 	if !utils.IsTestMode() {
 		whenCmd.Flags().MarkHidden("check")
 		whenCmd.Flags().MarkHidden("fix")

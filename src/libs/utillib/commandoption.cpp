@@ -1072,10 +1072,19 @@ const char* STR_PARAM_YAML =
 
 // TODO: search for go-port
 bool goPortNewCode(const string_q& a) {
-    bool inRoute = (a == "explore" || a == "pins" || a == "serve" || a == "scrape" || a == "abis");
-    bool inTool = (contains(a, "fireStorm") || contains(a, "pinMan") || contains(a, "flame"));
-    // contains(a, "blockScrape")
-    return inRoute || inTool;
+    CStringArray routes = {"explore", "pins", "serve", "scrape", "abis", "when", "receipts"};
+    for (auto route : routes) {
+        if (a == route)
+            return true;
+    }
+
+    CStringArray tools = {"fireStorm", "pinMan", "flame"};
+    for (auto tool : tools) {
+        if (contains(a, tool))
+            return true;
+    }
+
+    return false;
 }
 // EXISTING_CODE
 }  // namespace qblocks
