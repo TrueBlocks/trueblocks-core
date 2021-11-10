@@ -32,7 +32,15 @@ func AsJsonBytes(j *JsonFormatted) ([]byte, error) {
 	var result JsonFormatted
 
 	if Format == "json" {
-		result = *j
+		if len(validate.Errors) > 0 {
+			result.Errors = validate.Errors
+		} else {
+			if len(j.Errors) > 0 {
+				result.Errors = j.Errors
+			} else {
+				result.Data = j.Data
+			}
+		}
 	} else {
 		// TODO: global validate.Errors is not server-safe
 		if len(validate.Errors) > 0 {
