@@ -20,40 +20,48 @@ extern string_q get_logopts(const CCommandOption& cmd);
 extern string_q get_setopts(const CCommandOption& cmd);
 extern string_q get_copyopts(const CCommandOption& cmd);
 extern string_q get_use(const CCommandOption& cmd);
+extern const char* STR_REPLACE_OPTS;
 
 //---------------------------------------------------------------------------------------------------
 bool COptions::handle_gocmds(void) {
     LOG_INFO(cYellow, "handling go commands...", string_q(50, ' '), cOff);
     counter = CCounter();  // reset
 
-    for (auto ep : endpointArray) {
-        if (!ep.is_visible)
+    for (auto p : endpointArray) {
+        if (!p.is_visible)
             continue;
         CCommandOptionArray params;
         CCommandOptionArray notes;
         for (auto option : routeOptionArray) {
-            bool isOne = option.api_route == ep.api_route && option.isChifraRoute(true);
+            bool isOne = option.api_route == p.api_route && option.isChifraRoute(true);
             if (isOne) {
                 params.push_back(option);
             }
-            if (option.api_route == ep.api_route && option.option_type == "note")
+            if (option.api_route == p.api_route && option.option_type == "note")
                 notes.push_back(option);
         }
-        ep.params = &params;
-        ep.notes = &notes;
+
+        p.params = &params;
+        p.notes = &notes;
         string_q source = asciiFileToString(getTemplatePath("blank.go"));
-        replaceAll(source, "[{COPY_OPTS}]", get_copyopts(ep));
-        replaceAll(source, "[{SET_OPTS}]", get_setopts(ep));
-        replaceAll(source, "[{LOG_OPTS}]", get_logopts(ep));
-        replaceAll(source, "[{HIDDEN}]", get_hidden(ep));
-        replaceAll(source, "[{PERPRERUN}]", get_hidden2(ep));
-        replaceAll(source, "[{USE}]", get_use(ep));
-        replaceAll(source, "[{ROUTE}]", toLower(ep.api_route));
-        replaceAll(source, "[{PROPER}]", toProper(ep.api_route));
-        replaceAll(source, "[{OPT_FIELDS}]", get_optfields(ep));
-        replaceAll(source, "[{LONG}]", "Purpose:\n  " + ep.description);
-        replaceAll(source, "[{POSTNOTES}]", get_notes2(ep));
-        string_q descr = firstLower(ep.description);
+        replaceAll(source, "[{LONG}]", "Purpose:\n  " + p.description);
+        if ((goPortNewCode(p.api_route))) {
+            replaceAll(source, "[{IMPORTS}]",
+                       "\t\"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/[{ROUTE}]\"\n[{IMPORTS}]");
+            replaceAll(source, STR_REPLACE_OPTS, "var [{PROPER}]Opts [{ROUTE}].[{PROPER}]OptionsType\n\n");
+        } else {
+            replaceAll(source, "[{OPT_FIELDS}]", get_optfields(p));
+        }
+        replaceAll(source, "[{COPY_OPTS}]", get_copyopts(p));
+        replaceAll(source, "[{SET_OPTS}]", get_setopts(p));
+        replaceAll(source, "[{LOG_OPTS}]", get_logopts(p));
+        replaceAll(source, "[{HIDDEN}]", get_hidden(p));
+        replaceAll(source, "[{PERPRERUN}]", get_hidden2(p));
+        replaceAll(source, "[{USE}]", get_use(p));
+        replaceAll(source, "[{ROUTE}]", toLower(p.api_route));
+        replaceAll(source, "[{PROPER}]", toProper(p.api_route));
+        replaceAll(source, "[{POSTNOTES}]", get_notes2(p));
+        string_q descr = firstLower(p.description);
         if (endsWith(descr, "."))
             replaceReverse(descr, ".", "");
         replaceAll(source, "[{SHORT}]", descr);
@@ -66,7 +74,7 @@ bool COptions::handle_gocmds(void) {
             imports += "\t\"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils\"\n";
         replaceAll(source, "[{IMPORTS}]", imports);
 
-        string_q fn = getSourcePath("apps/chifra/cmd/" + ep.api_route + ".go");
+        string_q fn = getSourcePath("apps/chifra/cmd/" + p.api_route + ".go");
         codewrite_t cw(fn, source);
         cw.nSpaces = 0;
         cw.stripEOFNL = false;
@@ -141,8 +149,6 @@ string_q get_notes2(const CCommandOption& cmd) {
     return trim(substitute(os.str(), "|", "\n    "));
 }
 
-// TODO: search for go-port
-#define upperCaseGoOpts (p.api_route == "scrape")
 string_q get_optfields(const CCommandOption& cmd) {
     size_t wid = 0;
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
@@ -155,7 +161,7 @@ string_q get_optfields(const CCommandOption& cmd) {
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
         replace(p.longName, "deleteMe", "delete");
         if (p.option_type != "positional") {
-            if (upperCaseGoOpts) {
+            if (goPortNewCode(p.api_route)) {
                 os << "\t" << padRight(toProper(p.longName), wid) << " " << p.go_type << endl;
             } else {
                 os << "\t" << padRight(p.longName, wid) << " " << p.go_type << endl;
@@ -238,12 +244,13 @@ string_q get_hidden(const CCommandOption& cmd) {
 }
 
 string_q get_logopts(const CCommandOption& cmd) {
+    // TODO: search for go-port
     if (cmd.api_route != "explore")
         return "";
     const char* STR_RET =
         "	utils.TestLogArgs(\"terms\", args)\n"
-        "	utils.TestLogBool(\"local\", ExploreOpts.local)\n"
-        "	utils.TestLogBool(\"google\", ExploreOpts.google)\n";
+        "	utils.TestLogBool(\"local\", ExploreOpts.Local)\n"
+        "	utils.TestLogBool(\"google\", ExploreOpts.Google)\n";
     return STR_RET;
 }
 
@@ -255,8 +262,11 @@ string_q get_setopts(const CCommandOption& cmd) {
             os << p.go_flagtype;
             os << "(&[{PROPER}]Opts.";
             replace(p.longName, "deleteMe", "delete");
-            if (upperCaseGoOpts) {
-                os << toProper(p.longName) << ", ";
+            if (goPortNewCode(p.api_route)) {
+                string_q val = toProper(p.longName);
+                if (goPortNewCode(p.api_route))
+                    replace(val, "Init_All", "Init_all");
+                os << val << ", ";
             } else {
                 os << p.Format("[{LONGNAME}], ");
             }
@@ -302,3 +312,10 @@ string_q get_copyopts(const CCommandOption& cmd) {
     }
     return os.str();
 }
+
+const char* STR_REPLACE_OPTS =
+    "type [{ROUTE}]OptionsType struct {\n"
+    "[{OPT_FIELDS}]}\n"
+    "\n"
+    "var [{PROPER}]Opts [{ROUTE}]OptionsType\n"
+    "\n";

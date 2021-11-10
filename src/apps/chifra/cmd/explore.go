@@ -19,6 +19,7 @@ package cmd
 import (
 	"os"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/explore"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
 )
@@ -44,20 +45,15 @@ var longExplore = `Purpose:
 
 var notesExplore = ``
 
-type exploreOptionsType struct {
-	local  bool
-	google bool
-}
-
-var ExploreOpts exploreOptionsType
+var ExploreOpts explore.ExploreOptionsType
 
 func init() {
 	exploreCmd.SetOut(os.Stderr)
 
 	exploreCmd.Flags().SortFlags = false
 	exploreCmd.PersistentFlags().SortFlags = false
-	exploreCmd.Flags().BoolVarP(&ExploreOpts.local, "local", "l", false, "open the local TrueBlocks explorer")
-	exploreCmd.Flags().BoolVarP(&ExploreOpts.google, "google", "g", false, "search google excluding popular blockchain explorers")
+	exploreCmd.Flags().BoolVarP(&ExploreOpts.Local, "local", "l", false, "open the local TrueBlocks explorer")
+	exploreCmd.Flags().BoolVarP(&ExploreOpts.Google, "google", "g", false, "search google excluding popular blockchain explorers")
 	exploreCmd.Flags().SortFlags = false
 	exploreCmd.PersistentFlags().SortFlags = false
 
@@ -70,8 +66,8 @@ func TestLogExplore(args []string) {
 		return
 	}
 	utils.TestLogArgs("terms", args)
-	utils.TestLogBool("local", ExploreOpts.local)
-	utils.TestLogBool("google", ExploreOpts.google)
+	utils.TestLogBool("local", ExploreOpts.Local)
+	utils.TestLogBool("google", ExploreOpts.Google)
 }
 
 // EXISTING_CODE

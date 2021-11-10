@@ -44,7 +44,7 @@ var urls []ExploreUrl
 func validateExploreArgs(cmd *cobra.Command, args []string) error {
 	TestLogExplore(args)
 
-	if ExploreOpts.google && ExploreOpts.local {
+	if ExploreOpts.Google && ExploreOpts.Local {
 		return validate.Usage("Choose either --google or --local, not both.")
 	}
 
@@ -62,7 +62,7 @@ func validateExploreArgs(cmd *cobra.Command, args []string) error {
 			continue
 		}
 
-		if ExploreOpts.google {
+		if ExploreOpts.Google {
 			return validate.Usage("Option --google allows only an address term.")
 		}
 
@@ -167,7 +167,7 @@ func (t ExploreType) String() string {
 }
 
 func (u *ExploreUrl) getUrl() string {
-	if ExploreOpts.google {
+	if ExploreOpts.Google {
 		return "https://www.google.com/search?q=" + u.term + "+-etherscan+-etherchain+-bloxy+-bitquery+-ethplorer+-tokenview+-anyblocks+-explorer"
 	}
 
@@ -197,7 +197,7 @@ func (u *ExploreUrl) getUrl() string {
 		query = "address/" + u.term
 	}
 
-	if ExploreOpts.local {
+	if ExploreOpts.Local {
 		url = "http://localhost:1234/"
 		query = strings.Replace(query, "tx/", "explorer/transactions/", -1)
 		query = strings.Replace(query, "block/", "explorer/blocks/", -1)

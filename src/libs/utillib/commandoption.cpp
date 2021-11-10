@@ -821,9 +821,7 @@ string_q CCommandOption::toGoCall(void) const {
     out << endl;
     out << "// " << goFunc << " help text todo" << endl;
     out << "func " << goFunc << "(w http.ResponseWriter, r *http.Request) {" << endl;
-    // TODO: search for go-port
-    bool go_port = api_route == "pins" || api_route == "abis";
-    if (!tool.empty() && !contains(tool, " ") && !go_port) {
+    if (!tool.empty() && !contains(tool, " ") && !goPortNewCode(api_route)) {
         out << "\tCallOne(w, r, \"" << tool << "\", \"" << api_route << "\")" << endl;
     } else if (goFunc == "AccountsTags" || goFunc == "AccountsCollections") {
         out << "\tCallOne(w, r, \"ethNames\", \"" << api_route << "\")" << endl;
@@ -1071,5 +1069,13 @@ const char* STR_PARAM_YAML =
     "          explode: true\n"
     "          schema:\n"
     "[{SCHEMA}]";
+
+// TODO: search for go-port
+bool goPortNewCode(const string_q& a) {
+    bool inRoute = (a == "explore" || a == "pins" || a == "serve" || a == "scrape" || a == "abis");
+    bool inTool = (contains(a, "fireStorm") || contains(a, "pinMan") || contains(a, "flame"));
+    // contains(a, "blockScrape")
+    return inRoute || inTool;
+}
 // EXISTING_CODE
 }  // namespace qblocks

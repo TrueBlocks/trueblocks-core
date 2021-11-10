@@ -13,6 +13,10 @@ package serve
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 
+type ServeOptionsType struct {
+	Port string
+}
+
 // OptionsType makes command line options available to the package
 type OptionsType struct {
 	Port    string

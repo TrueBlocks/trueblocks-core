@@ -10,22 +10,16 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-package cmd
+package pins
 
-import (
-	"github.com/spf13/cobra"
-)
-
-func validateInitArgs(cmd *cobra.Command, args []string) error {
-	err := validateGlobalFlags(cmd, args)
-	if err != nil {
-		return err
-	}
-
-	return nil
+type PinsOptionsType struct {
+    List     bool
+    Init     bool
+    All      bool
+    Share    bool
+    Sleep    float64
+    Freshen  bool
+    Remote   bool
+    Init_all bool
 }
 
-func runInit(cmd *cobra.Command, args []string) {
-	PinsOpts.Init = true
-	runPins(cmd, args)
-}

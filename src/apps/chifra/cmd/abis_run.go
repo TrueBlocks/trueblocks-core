@@ -23,22 +23,22 @@ import (
 )
 
 func validateAbisArgs(cmd *cobra.Command, args []string) error {
-	if AbisOpts.classes {
+	if AbisOpts.Classes {
 		return validate.Usage("the '{0}' option is not implemented", "--classes")
 	}
 
-	if len(AbisOpts.find) == 0 && !AbisOpts.known {
+	if len(AbisOpts.Find) == 0 && !AbisOpts.Known {
 		err := validate.ValidateAtLeastOneAddr(args)
 		if err != nil {
 			return err
 		}
 	}
 
-	if AbisOpts.sol && len(AbisOpts.find) > 0 {
+	if AbisOpts.Sol && len(AbisOpts.Find) > 0 {
 		return validate.Usage("Please choose only one of --sol or --find.")
 	}
 
-	if AbisOpts.sol {
+	if AbisOpts.Sol {
 		for _, sol := range args {
 			if sol == "" {
 				continue
@@ -49,7 +49,7 @@ func validateAbisArgs(cmd *cobra.Command, args []string) error {
 			}
 		}
 	} else {
-		for _, term := range AbisOpts.find {
+		for _, term := range AbisOpts.Find {
 			ok1, err1 := validate.IsValidFourByte(term)
 			if !ok1 && len(term) < 10 {
 				return err1
@@ -86,26 +86,26 @@ func runAbis(cmd *cobra.Command, args []string) {
 		return
 	}
 
-	if len(AbisOpts.find) > 0 {
+	if len(AbisOpts.Find) > 0 {
 		// These have already been validated
-		abis.HandleFind(AbisOpts.find)
+		abis.HandleFind(AbisOpts.Find)
 		return
 	}
 
 	options := ""
-	if AbisOpts.known {
+	if AbisOpts.Known {
 		options += " --known"
 	}
-	if AbisOpts.sol {
+	if AbisOpts.Sol {
 		options += " --sol"
 	}
-	for _, t := range AbisOpts.find {
+	for _, t := range AbisOpts.Find {
 		options += " --find " + t
 	}
-	if AbisOpts.source {
+	if AbisOpts.Source {
 		options += " --source"
 	}
-	if AbisOpts.classes {
+	if AbisOpts.Classes {
 		options += " --classes"
 	}
 	arguments := ""

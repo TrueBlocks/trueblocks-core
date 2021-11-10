@@ -28,7 +28,7 @@ var Off string = "\033[0m"
 var Green string = "\033[32m"
 
 func validateServeArgs(cmd *cobra.Command, args []string) error {
-	if len(ServeOpts.port) > 0 && !strings.Contains(ServeOpts.port, ":") {
+	if len(ServeOpts.Port) > 0 && !strings.Contains(ServeOpts.Port, ":") {
 		return validate.Usage("The --port option must start with a ':'")
 	}
 
@@ -36,13 +36,13 @@ func validateServeArgs(cmd *cobra.Command, args []string) error {
 }
 
 func PrintServeSettings() {
-	if ServeOpts.port != ":8080" {
-		log.Println(Green, "port:        ", Off, ServeOpts.port)
+	if ServeOpts.Port != ":8080" {
+		log.Println(Green, "port:        ", Off, ServeOpts.Port)
 	}
 
 	meta := output.GetMeta()
 	log.Print("\n")
-	log.Println(Green, "Starting API server on port "+ServeOpts.port, Off)
+	log.Println(Green, "Starting API server on port "+ServeOpts.Port, Off)
 	log.Println(Green, "Cache Path:   ", Off, config.ReadTrueBlocks().Settings.CachePath)
 	log.Println(Green, "Index Path:   ", Off, config.ReadTrueBlocks().Settings.CachePath)
 	log.Println(Green, "Rpc Provider: ", Off, config.ReadTrueBlocks().Settings.RpcProvider)
@@ -52,10 +52,10 @@ func PrintServeSettings() {
 
 // runServe runs serve command and sends any errors to log.Fatal
 func runServe(cmd *cobra.Command, args []string) {
-	serve.Options.Port = ServeOpts.port
+	serve.Options.Port = ServeOpts.Port
 	if RootOpts.verbose {
 		serve.Options.Verbose = 1
 	}
 	PrintServeSettings()
-	log.Fatal(serve.Run(ServeOpts.port))
+	log.Fatal(serve.Run(ServeOpts.Port))
 }

@@ -19,6 +19,7 @@ package cmd
 import (
 	"os"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/scrape"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
 )
@@ -49,17 +50,7 @@ Notes:
   - the --pin and --publish options require an API to the pinning service.
   - the --n_* related options allow you to tune the scrapers.`
 
-type scrapeOptionsType struct {
-	Action         string
-	Sleep          float64
-	Pin            bool
-	Publish        bool
-	Block_Cnt      uint64
-	Block_Chan_Cnt uint64
-	Addr_Chan_Cnt  uint64
-}
-
-var ScrapeOpts scrapeOptionsType
+var ScrapeOpts scrape.ScrapeOptionsType
 
 func init() {
 	scrapeCmd.SetOut(os.Stderr)

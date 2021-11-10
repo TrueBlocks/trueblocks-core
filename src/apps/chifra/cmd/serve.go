@@ -19,6 +19,7 @@ package cmd
 import (
 	"os"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/serve"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
 )
@@ -44,18 +45,14 @@ Notes:
   - To start API open terminal window and run chifra serve.
   - See the API documentation for more information.`
 
-type serveOptionsType struct {
-	port string
-}
-
-var ServeOpts serveOptionsType
+var ServeOpts serve.ServeOptionsType
 
 func init() {
 	serveCmd.SetOut(os.Stderr)
 
 	serveCmd.Flags().SortFlags = false
 	serveCmd.PersistentFlags().SortFlags = false
-	serveCmd.Flags().StringVarP(&ServeOpts.port, "port", "p", ":8080", "specify the server's port (:8080 default)")
+	serveCmd.Flags().StringVarP(&ServeOpts.Port, "port", "p", ":8080", "specify the server's port")
 	serveCmd.Flags().SortFlags = false
 	serveCmd.PersistentFlags().SortFlags = false
 
