@@ -1,3 +1,5 @@
+package [{ROUTE}]
+
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -13,45 +15,8 @@
 /*
  * The file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
-package cmd
 
-import (
-	"os"
+type [{PROPER}]OptionsType struct {
+[{OPT_FIELDS}]}
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/serve"
-	"github.com/spf13/cobra"
-)
-
-// serveCmd represents the serve command
-var serveCmd = &cobra.Command{
-	Use:   usageServe,
-	Short: shortServe,
-	Long:  longServe,
-	Run:   serve.Run,
-	Args:  serve.Validate,
-}
-
-var usageServe = `serve [flags]`
-
-var shortServe = "serve the TrueBlocks API using the flame server"
-
-var longServe = `Purpose:
-  Serve the TrueBlocks API using the flame server.`
-
-var notesServe = `
-Notes:
-  - To start API open terminal window and run chifra serve.
-  - See the API documentation for more information.`
-
-func init() {
-	serveCmd.SetOut(os.Stderr)
-
-	serveCmd.Flags().SortFlags = false
-	serveCmd.PersistentFlags().SortFlags = false
-	serveCmd.Flags().StringVarP(&serve.Options.Port, "port", "p", ":8080", "specify the server's port")
-	serveCmd.Flags().SortFlags = false
-	serveCmd.PersistentFlags().SortFlags = false
-
-	serveCmd.SetUsageTemplate(UsageWithNotes(notesServe))
-	rootCmd.AddCommand(serveCmd)
-}
+var Options [{PROPER}]OptionsType

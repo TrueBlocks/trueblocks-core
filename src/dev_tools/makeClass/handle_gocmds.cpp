@@ -23,6 +23,70 @@ extern string_q get_use(const CCommandOption& cmd);
 extern const char* STR_REPLACE_OPTS;
 
 //---------------------------------------------------------------------------------------------------
+bool COptions::handle_gocmds_cmd(const CCommandOption& p) {
+    string_q source = asciiFileToString(getTemplatePath("blank.go"));
+    replaceAll(source, "[{LONG}]", "Purpose:\n  " + p.description);
+    if ((goPortNewCode(p.api_route))) {
+        replaceAll(source, "[{OPT_DEF}]", "");
+        replaceAll(source, "[{IMPORTS}]",
+                   "\t\"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/[{ROUTE}]\"\n[{IMPORTS}]");
+        replaceAll(source, STR_REPLACE_OPTS, "");
+        replaceAll(source, "run[{PROPER}]", "[{ROUTE}].Run");
+        replaceAll(source, "validate[{PROPER}]Args", "[{ROUTE}].Validate");
+    } else {
+        replaceAll(source, "[{OPT_DEF}]", "var [{PROPER}]Opts [{ROUTE}]OptionsType\n\n");
+        replaceAll(source, "[{OPT_FIELDS}]", get_optfields(p));
+    }
+    replaceAll(source, "[{COPY_OPTS}]", get_copyopts(p));
+    replaceAll(source, "[{SET_OPTS}]", get_setopts(p));
+    replaceAll(source, "[{LOG_OPTS}]", get_logopts(p));
+    replaceAll(source, "[{HIDDEN}]", get_hidden(p));
+    replaceAll(source, "[{PERPRERUN}]", get_hidden2(p));
+    replaceAll(source, "[{USE}]", get_use(p));
+    replaceAll(source, "[{ROUTE}]", toLower(p.api_route));
+    replaceAll(source, "[{PROPER}]", toProper(p.api_route));
+    replaceAll(source, "[{POSTNOTES}]", get_notes2(p));
+    string_q descr = firstLower(p.description);
+    if (endsWith(descr, "."))
+        replaceReverse(descr, ".", "");
+    replaceAll(source, "[{SHORT}]", descr);
+    string_q imports;
+    if (contains(source, "errors."))
+        imports += "\t\"errors\"\n";
+    if (contains(source, "fmt."))
+        imports += "\t\"fmt\"\n";
+    if (contains(source, "utils."))
+        imports += "\t\"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils\"\n";
+    replaceAll(source, "[{IMPORTS}]", imports);
+
+    string_q fn = getSourcePath("apps/chifra/cmd/" + p.api_route + ".go");
+    codewrite_t cw(fn, source);
+    cw.nSpaces = 0;
+    cw.stripEOFNL = false;
+    counter.nProcessed += writeCodeIn(cw);
+    counter.nVisited++;
+    return true;
+}
+
+//---------------------------------------------------------------------------------------------------
+bool COptions::handle_gocmds_options(const CCommandOption& p) {
+    string_q source = asciiFileToString(getTemplatePath("blank_options.go"));
+    replaceAll(source, "[{ROUTE}]", p.api_route);
+    replaceAll(source, "[{PROPER}]", toProper(p.longName));
+    replaceAll(source, "[{OPT_FIELDS}]", get_optfields(p));
+
+    string_q fn = getSourcePath("apps/chifra/cmd/" + p.api_route + "/options.go");
+    establishFolder(fn);
+    codewrite_t cw(fn, source);
+    cw.nSpaces = 0;
+    cw.stripEOFNL = false;
+    counter.nProcessed += writeCodeIn(cw);
+    counter.nVisited++;
+
+    return true;
+}
+
+//---------------------------------------------------------------------------------------------------
 bool COptions::handle_gocmds(void) {
     LOG_INFO(cYellow, "handling go commands...", string_q(50, ' '), cOff);
     counter = CCounter();  // reset
@@ -40,50 +104,11 @@ bool COptions::handle_gocmds(void) {
             if (option.api_route == p.api_route && option.option_type == "note")
                 notes.push_back(option);
         }
-
         p.params = &params;
         p.notes = &notes;
-        string_q source = asciiFileToString(getTemplatePath("blank.go"));
-        replaceAll(source, "[{LONG}]", "Purpose:\n  " + p.description);
-        if ((goPortNewCode(p.api_route))) {
-            replaceAll(source, "[{OPT_DEF}]", "");
-            replaceAll(source, "[{IMPORTS}]",
-                       "\t\"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/[{ROUTE}]\"\n[{IMPORTS}]");
-            replaceAll(source, STR_REPLACE_OPTS, "");
-            replaceAll(source, "run[{PROPER}]", "[{ROUTE}].Run");
-            replaceAll(source, "validate[{PROPER}]Args", "[{ROUTE}].Validate");
-        } else {
-            replaceAll(source, "[{OPT_DEF}]", "var [{PROPER}]Opts [{ROUTE}]OptionsType\n\n");
-            replaceAll(source, "[{OPT_FIELDS}]", get_optfields(p));
-        }
-        replaceAll(source, "[{COPY_OPTS}]", get_copyopts(p));
-        replaceAll(source, "[{SET_OPTS}]", get_setopts(p));
-        replaceAll(source, "[{LOG_OPTS}]", get_logopts(p));
-        replaceAll(source, "[{HIDDEN}]", get_hidden(p));
-        replaceAll(source, "[{PERPRERUN}]", get_hidden2(p));
-        replaceAll(source, "[{USE}]", get_use(p));
-        replaceAll(source, "[{ROUTE}]", toLower(p.api_route));
-        replaceAll(source, "[{PROPER}]", toProper(p.api_route));
-        replaceAll(source, "[{POSTNOTES}]", get_notes2(p));
-        string_q descr = firstLower(p.description);
-        if (endsWith(descr, "."))
-            replaceReverse(descr, ".", "");
-        replaceAll(source, "[{SHORT}]", descr);
-        string_q imports;
-        if (contains(source, "errors."))
-            imports += "\t\"errors\"\n";
-        if (contains(source, "fmt."))
-            imports += "\t\"fmt\"\n";
-        if (contains(source, "utils."))
-            imports += "\t\"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils\"\n";
-        replaceAll(source, "[{IMPORTS}]", imports);
 
-        string_q fn = getSourcePath("apps/chifra/cmd/" + p.api_route + ".go");
-        codewrite_t cw(fn, source);
-        cw.nSpaces = 0;
-        cw.stripEOFNL = false;
-        counter.nProcessed += writeCodeIn(cw);
-        counter.nVisited++;
+        handle_gocmds_cmd(p);
+        handle_gocmds_options(p);
     }
 
     LOG_INFO(cYellow, "makeClass --gocmds", cOff, " processed ", counter.nVisited, " files (changed ",

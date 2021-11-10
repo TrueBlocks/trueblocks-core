@@ -1608,6 +1608,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 90-Individuals:Gitcoin Grants	0x259d5b4128a57a406808a23cfdf56091e20dbfcf	joenash		Gitcoin Website			false	false	false	false	false	false
 91-Early:Miners	0x25a0be9f6fcbde4f61024b86a33dd80f7cbb3cec	Miner_0085_64		OnChain			false	false	false	false	false	false
 90-Individuals:Gitcoin Grants	0x25a36a27201e5ac7e208be53233da29dbd2db775	lpchapy		Gitcoin Website			false	false	false	false	false	false
+37-Bridges	0x25ace71c97b33cc4729cf772ae268934f7ab5fa1	Optimism: Proxy OVM L1 Cross Domain Messenger					false	false	false	true	false	false
 50-Tokens:ERC20	0x25af8d824b3b078a589e47418a95b4388d1552f4	Microdao		On chain	1		false	false	false	true	true	true
 50-Tokens:ERC20	0x25b6325f5bb1c1e03cfbc3e53f470e1f1ca022e3	LML	LML	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x25bb62074bf30adc623b5f5d8b835519ad65f9e0	Inu Finance	INUFI	On chain	18		false	false	false	true	true	false
@@ -6269,6 +6270,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 55-Defi	0x99b0d6641a63ce173e6eb063b3d3aed9a35cf9bf	Harvest.Finance: Uniswap Pool		EtherScan.io			false	false	false	true	false	false
 50-Tokens:ERC20	0x99b9791d1580bf504a1709d310923a46237c8f2c	Million Dollar Rat	MDRAT	On chain	18		false	false	false	true	true	true
 55-Defi	0x99bc02c239025e431d5741cc1dba8ce77fc51ce3	Yearn: Signer Daryllautk		EtherScan.io			false	false	false	false	false	false
+37-Bridges	0x99c9fc46f92e8a1c0dec1b1747d010903e884be1	Optimism: Gateway					false	false	false	true	false	false
 90-Individuals:Gitcoin Grants	0x99d130ab8307a6e0a5e75d13623da08292cbcaf4	feczo		Gitcoin Website			false	false	false	false	false	false
 50-Tokens:ERC20	0x99d5236aade74f992ba1a23bea0e30d4c45bd457	myfirstshiba.com	FIRSTSHIBA	On chain	9		false	false	false	true	true	false
 91-Early:Addresses	0x99d982e49bcb5465a6b4c1e0ec4341c912d9ba42	Ethventures		EtherScan.io			false	false	false	true	false	false
