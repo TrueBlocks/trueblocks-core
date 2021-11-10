@@ -294,7 +294,7 @@ string_q get_setopts(const CCommandOption& cmd) {
             os << p.go_flagtype;
             if (isNewCode) {
                 os << "(&[{ROUTE}].Options.";
-                os << substitute(toProper(p.longName), "Init_All", "Init_all") << ", ";
+                os << toProper(p.longName) << ", ";
             } else {
                 os << "(&[{PROPER}]Opts.";
                 os << p.Format("[{LONGNAME}], ");

@@ -34,7 +34,7 @@ func Validate(cmd *cobra.Command, args []string) error {
 		return validate.Usage("Use the --all option only with the --init options.")
 	}
 
-	if Options.Init_all {
+	if Options.Init_All {
 		return validate.Deprecated("--init_all", "--init --all")
 	}
 

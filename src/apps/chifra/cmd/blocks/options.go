@@ -1,4 +1,4 @@
-package pins
+package blocks
 
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
@@ -17,14 +17,21 @@ package pins
  */
 
 type OptionsType struct {
-	List     bool
-	Init     bool
-	All      bool
-	Share    bool
-	Sleep    float64
-	Freshen  bool
-	Remote   bool
-	Init_All bool
+	hashes     bool
+	uncles     bool
+	trace      bool
+	apps       bool
+	uniq       bool
+	uniq_tx    bool
+	logs       bool
+	emitter    []string
+	topic      []string
+	articulate bool
+	big_range  uint64
+	count      bool
+	cache      bool
+	list       uint64
+	list_count uint64
 }
 
 var Options OptionsType

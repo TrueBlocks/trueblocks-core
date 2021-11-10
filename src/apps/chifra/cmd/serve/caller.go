@@ -20,10 +20,10 @@ import (
 	"os"
 	"os/exec"
 	"os/user"
-	"strconv"
 	"strings"
 
-	utils "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // GetCommandPath returns full path the the given tool
@@ -73,14 +73,13 @@ func CallOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd s
 	}
 
 	// If the server was started with --verbose and the command does not have --verbose...
-	if Options.Verbose > 0 && !hasVerbose {
+	if root.Options.Verbose && !hasVerbose {
 		allDogs = append(allDogs, "--verbose")
-		allDogs = append(allDogs, strconv.Itoa(Options.Verbose))
 	}
 
 	// Do the actual call
 	cmd := exec.Command(tbCmd, allDogs...)
-	if Options.Verbose > 0 {
+	if root.Options.Verbose {
 		log.Print(Yellow, "Calling: ", cmd, Off)
 	}
 
