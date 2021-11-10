@@ -16,10 +16,10 @@ package tokens
  * The file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
 
-type OptionsType struct {
+type TokensOptionsType struct {
 	parts   []string
 	by_acct bool
 	no_zero bool
 }
 
-var Options OptionsType
+var Options TokensOptionsType

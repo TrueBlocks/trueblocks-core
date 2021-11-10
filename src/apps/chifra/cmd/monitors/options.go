@@ -16,7 +16,7 @@ package monitors
  * The file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
 
-type OptionsType struct {
+type MonitorsOptionsType struct {
 	appearances bool
 	count       bool
 	clean       bool
@@ -27,4 +27,4 @@ type OptionsType struct {
 	last_block  uint64
 }
 
-var Options OptionsType
+var Options MonitorsOptionsType

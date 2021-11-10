@@ -16,9 +16,9 @@ package slurp
  * The file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
 
-type OptionsType struct {
+type SlurpOptionsType struct {
 	types       []string
 	appearances bool
 }
 
-var Options OptionsType
+var Options SlurpOptionsType

@@ -16,7 +16,7 @@ package abis
  * The file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
 
-type OptionsType struct {
+type AbisOptionsType struct {
 	Known   bool
 	Sol     bool
 	Find    []string
@@ -24,4 +24,4 @@ type OptionsType struct {
 	Classes bool
 }
 
-var Options OptionsType
+var Options AbisOptionsType

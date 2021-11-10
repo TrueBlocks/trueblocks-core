@@ -16,7 +16,7 @@ package chunks
  * The file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
 
-type OptionsType struct {
+type ChunksOptionsType struct {
 	list    bool
 	check   bool
 	extract string
@@ -24,4 +24,4 @@ type OptionsType struct {
 	save    bool
 }
 
-var Options OptionsType
+var Options ChunksOptionsType

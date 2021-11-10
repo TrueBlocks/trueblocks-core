@@ -16,7 +16,7 @@ package export
  * The file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
 
-type OptionsType struct {
+type ExportOptionsType struct {
 	appearances  bool
 	receipts     bool
 	statements   bool
@@ -47,4 +47,4 @@ type OptionsType struct {
 	last_block   uint64
 }
 
-var Options OptionsType
+var Options ExportOptionsType

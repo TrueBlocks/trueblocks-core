@@ -16,11 +16,11 @@ package list
  * The file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
 
-type OptionsType struct {
+type ListOptionsType struct {
 	count       bool
 	appearances bool
 	first_block uint64
 	last_block  uint64
 }
 
-var Options OptionsType
+var Options ListOptionsType

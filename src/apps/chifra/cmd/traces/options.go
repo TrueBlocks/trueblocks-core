@@ -16,7 +16,7 @@ package traces
  * The file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
 
-type OptionsType struct {
+type TracesOptionsType struct {
 	articulate bool
 	filter     string
 	statediff  bool
@@ -25,4 +25,4 @@ type OptionsType struct {
 	max        uint64
 }
 
-var Options OptionsType
+var Options TracesOptionsType

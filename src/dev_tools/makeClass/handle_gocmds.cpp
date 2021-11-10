@@ -72,7 +72,7 @@ bool COptions::handle_gocmds_cmd(const CCommandOption& p) {
 bool COptions::handle_gocmds_options(const CCommandOption& p) {
     string_q source = asciiFileToString(getTemplatePath("blank_options.go"));
     replaceAll(source, "[{ROUTE}]", p.api_route);
-    replaceAll(source, "[{PROPER}]", toProper(p.longName));
+    replaceAll(source, "[{PROPER}]", toProper(p.api_route));
     replaceAll(source, "[{OPT_FIELDS}]", get_optfields(p));
 
     string_q fn = getSourcePath("apps/chifra/cmd/" + p.api_route + "/options.go");

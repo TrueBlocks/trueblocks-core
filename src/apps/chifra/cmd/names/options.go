@@ -16,7 +16,7 @@ package names
  * The file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
 
-type OptionsType struct {
+type NamesOptionsType struct {
 	expand      bool
 	match_case  bool
 	all         bool
@@ -36,4 +36,4 @@ type OptionsType struct {
 	undelete    bool
 }
 
-var Options OptionsType
+var Options NamesOptionsType

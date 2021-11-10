@@ -16,7 +16,7 @@ package state
  * The file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
 
-type OptionsType struct {
+type StateOptionsType struct {
 	parts     []string
 	changes   bool
 	no_zero   bool
@@ -24,4 +24,4 @@ type OptionsType struct {
 	proxy_for string
 }
 
-var Options OptionsType
+var Options StateOptionsType

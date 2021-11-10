@@ -16,8 +16,8 @@ package serve
  * The file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
 
-type OptionsType struct {
+type ServeOptionsType struct {
 	Port string
 }
 
-var Options OptionsType
+var Options ServeOptionsType

@@ -16,7 +16,7 @@ package blocks
  * The file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
 
-type OptionsType struct {
+type BlocksOptionsType struct {
 	hashes     bool
 	uncles     bool
 	trace      bool
@@ -34,4 +34,4 @@ type OptionsType struct {
 	list_count uint64
 }
 
-var Options OptionsType
+var Options BlocksOptionsType

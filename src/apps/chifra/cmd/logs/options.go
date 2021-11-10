@@ -16,8 +16,8 @@ package logs
  * The file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
 
-type OptionsType struct {
+type LogsOptionsType struct {
 	articulate bool
 }
 
-var Options OptionsType
+var Options LogsOptionsType

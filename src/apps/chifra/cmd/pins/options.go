@@ -16,7 +16,7 @@ package pins
  * The file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
 
-type OptionsType struct {
+type PinsOptionsType struct {
 	List     bool
 	Init     bool
 	All      bool
@@ -27,4 +27,4 @@ type OptionsType struct {
 	Init_All bool
 }
 
-var Options OptionsType
+var Options PinsOptionsType

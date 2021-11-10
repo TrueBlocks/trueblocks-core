@@ -16,7 +16,7 @@ package scrape
  * The file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
 
-type OptionsType struct {
+type ScrapeOptionsType struct {
 	Action         string
 	Sleep          float64
 	Pin            bool
@@ -26,4 +26,4 @@ type OptionsType struct {
 	Addr_Chan_Cnt  uint64
 }
 
-var Options OptionsType
+var Options ScrapeOptionsType

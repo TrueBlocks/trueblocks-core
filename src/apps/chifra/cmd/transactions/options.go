@@ -16,7 +16,7 @@ package transactions
  * The file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
 
-type OptionsType struct {
+type TransactionsOptionsType struct {
 	articulate bool
 	trace      bool
 	uniq       bool
@@ -24,4 +24,4 @@ type OptionsType struct {
 	cache      bool
 }
 
-var Options OptionsType
+var Options TransactionsOptionsType

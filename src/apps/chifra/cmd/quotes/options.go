@@ -16,11 +16,11 @@ package quotes
  * The file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
 
-type OptionsType struct {
+type QuotesOptionsType struct {
 	freshen bool
 	period  string
 	pair    string
 	feed    string
 }
 
-var Options OptionsType
+var Options QuotesOptionsType

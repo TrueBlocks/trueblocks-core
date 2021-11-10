@@ -16,7 +16,7 @@ package status
  * The file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
 
-type OptionsType struct {
+type StatusOptionsType struct {
 	details    bool
 	types      []string
 	depth      uint64
@@ -29,4 +29,4 @@ type OptionsType struct {
 	test_end   uint64
 }
 
-var Options OptionsType
+var Options StatusOptionsType

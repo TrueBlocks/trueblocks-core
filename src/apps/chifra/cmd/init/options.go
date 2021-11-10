@@ -16,8 +16,8 @@ package init
  * The file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
 
-type OptionsType struct {
+type InitOptionsType struct {
 	all bool
 }
 
-var Options OptionsType
+var Options InitOptionsType
