@@ -13,19 +13,15 @@ package serve
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 
+// ServeOptionsType makes command line options available to the package
 type ServeOptionsType struct {
-	Port string
-}
-
-// OptionsType makes command line options available to the package
-type OptionsType struct {
 	Port    string
 	Verbose int
 	Sleep   int
 }
 
 // Options carries command line options
-var Options OptionsType
+var Options ServeOptionsType
 
 // func ParseOptions() error {
 // 	// Establish and parse the command line input...

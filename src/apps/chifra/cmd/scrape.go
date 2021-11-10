@@ -29,8 +29,8 @@ var scrapeCmd = &cobra.Command{
 	Use:   usageScrape,
 	Short: shortScrape,
 	Long:  longScrape,
-	Run:   runScrape,
-	Args:  validateScrapeArgs,
+	Run:   scrape.Run,
+	Args:  scrape.Validate,
 }
 
 var usageScrape = `scrape [flags] [mode...]
@@ -50,21 +50,19 @@ Notes:
   - the --pin and --publish options require an API to the pinning service.
   - the --n_* related options allow you to tune the scrapers.`
 
-var ScrapeOpts scrape.ScrapeOptionsType
-
 func init() {
 	scrapeCmd.SetOut(os.Stderr)
 
 	scrapeCmd.Flags().SortFlags = false
 	scrapeCmd.PersistentFlags().SortFlags = false
-	scrapeCmd.Flags().StringVarP(&ScrapeOpts.Action, "action", "a", "", `command to apply to the specified scrape
+	scrapeCmd.Flags().StringVarP(&scrape.Options.Action, "action", "a", "", `command to apply to the specified scrape
 One of [ toggle | run | restart | pause | quit ]`)
-	scrapeCmd.Flags().Float64VarP(&ScrapeOpts.Sleep, "sleep", "s", 14, "seconds to sleep between scraper passes")
-	scrapeCmd.Flags().BoolVarP(&ScrapeOpts.Pin, "pin", "p", false, "pin chunks (and blooms) to IPFS as they are created (requires pinning service)")
-	scrapeCmd.Flags().BoolVarP(&ScrapeOpts.Publish, "publish", "u", false, "after pinning the chunk, publish it to UnchainedIndex")
-	scrapeCmd.Flags().Uint64VarP(&ScrapeOpts.Block_Cnt, "block_cnt", "n", 2000, "maximum number of blocks to process per pass")
-	scrapeCmd.Flags().Uint64VarP(&ScrapeOpts.Block_Chan_Cnt, "block_chan_cnt", "b", 10, "number of concurrent block processing channels (hidden)")
-	scrapeCmd.Flags().Uint64VarP(&ScrapeOpts.Addr_Chan_Cnt, "addr_chan_cnt", "d", 20, "number of concurrent address processing channels (hidden)")
+	scrapeCmd.Flags().Float64VarP(&scrape.Options.Sleep, "sleep", "s", 14, "seconds to sleep between scraper passes")
+	scrapeCmd.Flags().BoolVarP(&scrape.Options.Pin, "pin", "p", false, "pin chunks (and blooms) to IPFS as they are created (requires pinning service)")
+	scrapeCmd.Flags().BoolVarP(&scrape.Options.Publish, "publish", "u", false, "after pinning the chunk, publish it to UnchainedIndex")
+	scrapeCmd.Flags().Uint64VarP(&scrape.Options.Block_Cnt, "block_cnt", "n", 2000, "maximum number of blocks to process per pass")
+	scrapeCmd.Flags().Uint64VarP(&scrape.Options.Block_Chan_Cnt, "block_chan_cnt", "b", 10, "number of concurrent block processing channels (hidden)")
+	scrapeCmd.Flags().Uint64VarP(&scrape.Options.Addr_Chan_Cnt, "addr_chan_cnt", "d", 20, "number of concurrent address processing channels (hidden)")
 	if !utils.IsTestMode() {
 		scrapeCmd.Flags().MarkHidden("block_chan_cnt")
 		scrapeCmd.Flags().MarkHidden("addr_chan_cnt")
@@ -75,12 +73,3 @@ One of [ toggle | run | restart | pause | quit ]`)
 	scrapeCmd.SetUsageTemplate(UsageWithNotes(notesScrape))
 	rootCmd.AddCommand(scrapeCmd)
 }
-
-func TestLogScrape(args []string) {
-	if !utils.IsTestMode() {
-		return
-	}
-}
-
-// EXISTING_CODE
-// EXISTING_CODE

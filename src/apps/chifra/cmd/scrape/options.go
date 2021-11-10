@@ -9,3 +9,5 @@ type ScrapeOptionsType struct {
 	Block_Chan_Cnt uint64
 	Addr_Chan_Cnt  uint64
 }
+
+var Options ScrapeOptionsType

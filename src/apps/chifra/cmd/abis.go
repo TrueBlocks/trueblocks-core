@@ -29,8 +29,8 @@ var abisCmd = &cobra.Command{
 	Use:   usageAbis,
 	Short: shortAbis,
 	Long:  longAbis,
-	Run:   runAbis,
-	Args:  validateAbisArgs,
+	Run:   abis.Run,
+	Args:  abis.Validate,
 }
 
 var usageAbis = `abis [flags] <address> [address...]
@@ -48,18 +48,16 @@ Notes:
   - For the --sol option, place the solidity files in the current working folder.
   - Search for either four byte signatures or event signatures with the --find option.`
 
-var AbisOpts abis.AbisOptionsType
-
 func init() {
 	abisCmd.SetOut(os.Stderr)
 
 	abisCmd.Flags().SortFlags = false
 	abisCmd.PersistentFlags().SortFlags = false
-	abisCmd.Flags().BoolVarP(&AbisOpts.Known, "known", "k", false, "load common 'known' ABIs from cache")
-	abisCmd.Flags().BoolVarP(&AbisOpts.Sol, "sol", "s", false, "extract the abi definition from the provided .sol file(s)")
-	abisCmd.Flags().StringSliceVarP(&AbisOpts.Find, "find", "f", nil, "search for function or event declarations given a four- or 32-byte code(s)")
-	abisCmd.Flags().BoolVarP(&AbisOpts.Source, "source", "o", false, "show the source of the ABI information (hidden)")
-	abisCmd.Flags().BoolVarP(&AbisOpts.Classes, "classes", "c", false, "generate classDefinitions folder and class definitions (hidden)")
+	abisCmd.Flags().BoolVarP(&abis.Options.Known, "known", "k", false, "load common 'known' ABIs from cache")
+	abisCmd.Flags().BoolVarP(&abis.Options.Sol, "sol", "s", false, "extract the abi definition from the provided .sol file(s)")
+	abisCmd.Flags().StringSliceVarP(&abis.Options.Find, "find", "f", nil, "search for function or event declarations given a four- or 32-byte code(s)")
+	abisCmd.Flags().BoolVarP(&abis.Options.Source, "source", "o", false, "show the source of the ABI information (hidden)")
+	abisCmd.Flags().BoolVarP(&abis.Options.Classes, "classes", "c", false, "generate classDefinitions folder and class definitions (hidden)")
 	if !utils.IsTestMode() {
 		abisCmd.Flags().MarkHidden("source")
 		abisCmd.Flags().MarkHidden("classes")
@@ -70,12 +68,3 @@ func init() {
 	abisCmd.SetUsageTemplate(UsageWithNotes(notesAbis))
 	rootCmd.AddCommand(abisCmd)
 }
-
-func TestLogAbis(args []string) {
-	if !utils.IsTestMode() {
-		return
-	}
-}
-
-// EXISTING_CODE
-// EXISTING_CODE

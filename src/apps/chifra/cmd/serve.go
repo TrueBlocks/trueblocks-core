@@ -20,7 +20,6 @@ import (
 	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/serve"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -29,8 +28,8 @@ var serveCmd = &cobra.Command{
 	Use:   usageServe,
 	Short: shortServe,
 	Long:  longServe,
-	Run:   runServe,
-	Args:  validateServeArgs,
+	Run:   serve.Run,
+	Args:  serve.Validate,
 }
 
 var usageServe = `serve [flags]`
@@ -45,26 +44,15 @@ Notes:
   - To start API open terminal window and run chifra serve.
   - See the API documentation for more information.`
 
-var ServeOpts serve.ServeOptionsType
-
 func init() {
 	serveCmd.SetOut(os.Stderr)
 
 	serveCmd.Flags().SortFlags = false
 	serveCmd.PersistentFlags().SortFlags = false
-	serveCmd.Flags().StringVarP(&ServeOpts.Port, "port", "p", ":8080", "specify the server's port")
+	serveCmd.Flags().StringVarP(&serve.Options.Port, "port", "p", ":8080", "specify the server's port")
 	serveCmd.Flags().SortFlags = false
 	serveCmd.PersistentFlags().SortFlags = false
 
 	serveCmd.SetUsageTemplate(UsageWithNotes(notesServe))
 	rootCmd.AddCommand(serveCmd)
 }
-
-func TestLogServe(args []string) {
-	if !utils.IsTestMode() {
-		return
-	}
-}
-
-// EXISTING_CODE
-// EXISTING_CODE

@@ -15,11 +15,12 @@ package cmd
 import (
 	"fmt"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
 	"github.com/spf13/cobra"
 )
 
 func validateTracesArgs(cmd *cobra.Command, args []string) error {
-	err := validateGlobalFlags(cmd, args)
+	err := root.ValidateGlobals(cmd, args)
 	if err != nil {
 		return err
 	}

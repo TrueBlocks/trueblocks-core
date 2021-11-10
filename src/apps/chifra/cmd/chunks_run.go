@@ -13,6 +13,7 @@
 package cmd
 
 import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/spf13/cobra"
 )
@@ -40,7 +41,7 @@ func validateChunksArgs(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	err = validateGlobalFlags(cmd, args)
+	err = root.ValidateGlobals(cmd, args)
 	if err != nil {
 		return err
 	}

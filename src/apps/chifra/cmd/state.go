@@ -83,12 +83,3 @@ One or more of [ none | some | all | balance | nonce | code | storage | deployed
 	stateCmd.SetUsageTemplate(UsageWithNotes(notesState))
 	rootCmd.AddCommand(stateCmd)
 }
-
-func TestLogState(args []string) {
-	if !utils.IsTestMode() {
-		return
-	}
-}
-
-// EXISTING_CODE
-// EXISTING_CODE

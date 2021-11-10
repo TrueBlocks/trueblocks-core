@@ -13,16 +13,17 @@
 package cmd
 
 import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/spf13/cobra"
 )
 
 func validateTokensArgs(cmd *cobra.Command, args []string) error {
 	// special case for tokens which don't allow --dollars display
-	if RootOpts.dollars {
+	if root.Options.Dollars {
 		return validate.Usage("The --dollars option does not work with chifra token.")
 	}
-	err := validateGlobalFlags(cmd, args)
+	err := root.ValidateGlobals(cmd, args)
 	if err != nil {
 		return err
 	}

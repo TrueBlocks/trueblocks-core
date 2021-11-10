@@ -13,13 +13,14 @@
 package cmd
 
 import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/spf13/cobra"
 )
 
 func validateQuotesArgs(cmd *cobra.Command, args []string) error {
-	if len(RootOpts.file) == 0 &&
+	if len(root.Options.File) == 0 &&
 		!QuotesOpts.freshen &&
 		len(QuotesOpts.period) == 0 &&
 		len(QuotesOpts.pair) == 0 &&
@@ -38,7 +39,7 @@ func validateQuotesArgs(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	err = validateGlobalFlags(cmd, args)
+	err = root.ValidateGlobals(cmd, args)
 	if err != nil {
 		return err
 	}

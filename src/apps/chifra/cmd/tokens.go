@@ -19,7 +19,6 @@ package cmd
 import (
 	"os"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -74,12 +73,3 @@ One or more of [ name | symbol | decimals | totalSupply | version | none | all ]
 	tokensCmd.SetUsageTemplate(UsageWithNotes(notesTokens))
 	rootCmd.AddCommand(tokensCmd)
 }
-
-func TestLogTokens(args []string) {
-	if !utils.IsTestMode() {
-		return
-	}
-}
-
-// EXISTING_CODE
-// EXISTING_CODE

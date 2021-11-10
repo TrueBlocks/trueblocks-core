@@ -19,7 +19,6 @@ package cmd
 import (
 	"os"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -69,12 +68,3 @@ One of [ poloniex | maker | tellor ]`)
 	quotesCmd.SetUsageTemplate(UsageWithNotes(notesQuotes))
 	rootCmd.AddCommand(quotesCmd)
 }
-
-func TestLogQuotes(args []string) {
-	if !utils.IsTestMode() {
-		return
-	}
-}
-
-// EXISTING_CODE
-// EXISTING_CODE

@@ -16,6 +16,7 @@ package when
 import (
 	"errors"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/spf13/cobra"
 )
@@ -40,7 +41,7 @@ func Validate(cmd *cobra.Command, args []string) error {
 		return validationErr
 	}
 
-	err := validateGlobalFlags(cmd, args)
+	err := root.ValidateGlobals(cmd, args)
 	if err != nil {
 		return err
 	}

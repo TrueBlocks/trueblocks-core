@@ -107,12 +107,3 @@ func init() {
 	namesCmd.SetUsageTemplate(UsageWithNotes(notesNames))
 	rootCmd.AddCommand(namesCmd)
 }
-
-func TestLogNames(args []string) {
-	if !utils.IsTestMode() {
-		return
-	}
-}
-
-// EXISTING_CODE
-// EXISTING_CODE

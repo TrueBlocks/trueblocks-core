@@ -20,7 +20,6 @@ import (
 	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/explore"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -29,8 +28,8 @@ var exploreCmd = &cobra.Command{
 	Use:   usageExplore,
 	Short: shortExplore,
 	Long:  longExplore,
-	Run:   runExplore,
-	Args:  validateExploreArgs,
+	Run:   explore.Run,
+	Args:  explore.Validate,
 }
 
 var usageExplore = `explore [flags] <term> [term...]
@@ -45,30 +44,16 @@ var longExplore = `Purpose:
 
 var notesExplore = ``
 
-var ExploreOpts explore.ExploreOptionsType
-
 func init() {
 	exploreCmd.SetOut(os.Stderr)
 
 	exploreCmd.Flags().SortFlags = false
 	exploreCmd.PersistentFlags().SortFlags = false
-	exploreCmd.Flags().BoolVarP(&ExploreOpts.Local, "local", "l", false, "open the local TrueBlocks explorer")
-	exploreCmd.Flags().BoolVarP(&ExploreOpts.Google, "google", "g", false, "search google excluding popular blockchain explorers")
+	exploreCmd.Flags().BoolVarP(&explore.Options.Local, "local", "l", false, "open the local TrueBlocks explorer")
+	exploreCmd.Flags().BoolVarP(&explore.Options.Google, "google", "g", false, "search google excluding popular blockchain explorers")
 	exploreCmd.Flags().SortFlags = false
 	exploreCmd.PersistentFlags().SortFlags = false
 
 	exploreCmd.SetUsageTemplate(UsageWithNotes(notesExplore))
 	rootCmd.AddCommand(exploreCmd)
 }
-
-func TestLogExplore(args []string) {
-	if !utils.IsTestMode() {
-		return
-	}
-	utils.TestLogArgs("terms", args)
-	utils.TestLogBool("local", ExploreOpts.Local)
-	utils.TestLogBool("google", ExploreOpts.Google)
-}
-
-// EXISTING_CODE
-// EXISTING_CODE

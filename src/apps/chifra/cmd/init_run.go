@@ -13,11 +13,13 @@
 package cmd
 
 import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/pins"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
 	"github.com/spf13/cobra"
 )
 
 func validateInitArgs(cmd *cobra.Command, args []string) error {
-	err := validateGlobalFlags(cmd, args)
+	err := root.ValidateGlobals(cmd, args)
 	if err != nil {
 		return err
 	}
@@ -26,6 +28,6 @@ func validateInitArgs(cmd *cobra.Command, args []string) error {
 }
 
 func runInit(cmd *cobra.Command, args []string) {
-	PinsOpts.Init = true
-	runPins(cmd, args)
+	pins.Options.Init = true
+	pins.Run(cmd, args)
 }

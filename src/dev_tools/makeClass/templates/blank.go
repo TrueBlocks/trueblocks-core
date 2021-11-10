@@ -42,9 +42,7 @@ var notes[{PROPER}] = `[{POSTNOTES}]`
 type [{ROUTE}]OptionsType struct {
 [{OPT_FIELDS}]}
 
-var [{PROPER}]Opts [{ROUTE}]OptionsType
-
-func init() {
+[{OPT_DEF}]func init() {
 	[{ROUTE}]Cmd.SetOut(os.Stderr)
 
 	[{ROUTE}]Cmd.Flags().SortFlags = false
@@ -55,12 +53,3 @@ func init() {
 	[{ROUTE}]Cmd.SetUsageTemplate(UsageWithNotes(notes[{PROPER}]))
 	rootCmd.AddCommand([{ROUTE}]Cmd)
 }
-
-func TestLog[{PROPER}](args []string) {
-	if !utils.IsTestMode() {
-		return
-	}
-[{LOG_OPTS}]}
-
-// EXISTING_CODE
-// EXISTING_CODE

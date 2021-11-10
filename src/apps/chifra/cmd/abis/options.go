@@ -7,3 +7,5 @@ type AbisOptionsType struct {
 	Source  bool
 	Classes bool
 }
+
+var Options AbisOptionsType

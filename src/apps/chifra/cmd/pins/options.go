@@ -13,13 +13,14 @@
 package pins
 
 type PinsOptionsType struct {
-    List     bool
-    Init     bool
-    All      bool
-    Share    bool
-    Sleep    float64
-    Freshen  bool
-    Remote   bool
-    Init_all bool
+	List     bool
+	Init     bool
+	All      bool
+	Share    bool
+	Sleep    float64
+	Freshen  bool
+	Remote   bool
+	Init_all bool
 }
 
+var Options PinsOptionsType

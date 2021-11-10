@@ -20,7 +20,6 @@ import (
 	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/receipts"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -29,8 +28,8 @@ var receiptsCmd = &cobra.Command{
 	Use:   usageReceipts,
 	Short: shortReceipts,
 	Long:  longReceipts,
-	Run:   runReceipts,
-	Args:  validateReceiptsArgs,
+	Run:   receipts.Run,
+	Args:  receipts.Validate,
 }
 
 var usageReceipts = `receipts [flags] <tx_id> [tx_id...]
@@ -49,26 +48,15 @@ Notes:
   - This tool checks for valid input syntax, but does not check that the transaction requested actually exists.
   - If the queried node does not store historical state, the results for most older transactions are undefined.`
 
-var ReceiptsOpts receipts.ReceiptsOptionsType
-
 func init() {
 	receiptsCmd.SetOut(os.Stderr)
 
 	receiptsCmd.Flags().SortFlags = false
 	receiptsCmd.PersistentFlags().SortFlags = false
-	receiptsCmd.Flags().BoolVarP(&ReceiptsOpts.Articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
+	receiptsCmd.Flags().BoolVarP(&receipts.Options.Articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
 	receiptsCmd.Flags().SortFlags = false
 	receiptsCmd.PersistentFlags().SortFlags = false
 
 	receiptsCmd.SetUsageTemplate(UsageWithNotes(notesReceipts))
 	rootCmd.AddCommand(receiptsCmd)
 }
-
-func TestLogReceipts(args []string) {
-	if !utils.IsTestMode() {
-		return
-	}
-}
-
-// EXISTING_CODE
-// EXISTING_CODE

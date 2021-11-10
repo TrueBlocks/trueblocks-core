@@ -18,6 +18,7 @@ import (
 	"os"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/spf13/cobra"
@@ -30,7 +31,7 @@ func validateGendocArgs(cmd *cobra.Command, args []string) error {
 		return validate.Usage("Cannot find local ./docs folder in {0}", cwd)
 	}
 
-	err := validateGlobalFlags(cmd, args)
+	err := root.ValidateGlobals(cmd, args)
 	if err != nil {
 		return err
 	}

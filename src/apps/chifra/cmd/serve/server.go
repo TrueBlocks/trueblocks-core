@@ -3,11 +3,11 @@ package serve
 import "net/http"
 
 // TODO: this should be soon part of pkg/utils
-var Off string = "\033[0m"
+// var Off string = "\033[0m"
 var Yellow string = "\033[33m"
 
 // Runs initiates websocket pool and starts the server
-func Run(port string) error {
+func RunInternal(port string) error {
 	// Start listening for web sockets
 	RunWebsocketPool()
 

@@ -14,6 +14,7 @@ package when
  *-------------------------------------------------------------------------------------------*/
 
 import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
 	"github.com/spf13/cobra"
 )
 
@@ -38,5 +39,5 @@ func Run(cmd *cobra.Command, args []string) {
 	for _, arg := range args {
 		arguments += " " + arg
 	}
-	PassItOn("whenBlock", options, arguments)
+	root.PassItOn("whenBlock", options, arguments)
 }

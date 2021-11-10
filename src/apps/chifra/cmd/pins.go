@@ -29,8 +29,8 @@ var pinsCmd = &cobra.Command{
 	Use:   usagePins,
 	Short: shortPins,
 	Long:  longPins,
-	Run:   runPins,
-	Args:  validatePinsArgs,
+	Run:   pins.Run,
+	Args:  pins.Validate,
 }
 
 var usagePins = `pins [flags]`
@@ -46,21 +46,19 @@ Notes:
   - Re-run chifra init as often as you wish. It will repair or freshen the index.
   - The --share option works only if an IPFS daemon is running.`
 
-var PinsOpts pins.PinsOptionsType
-
 func init() {
 	pinsCmd.SetOut(os.Stderr)
 
 	pinsCmd.Flags().SortFlags = false
 	pinsCmd.PersistentFlags().SortFlags = false
-	pinsCmd.Flags().BoolVarP(&PinsOpts.List, "list", "l", false, "list the bloom and index hashes from local cache or IPFS")
-	pinsCmd.Flags().BoolVarP(&PinsOpts.Init, "init", "i", false, "download the blooms or index chunks from IPFS")
-	pinsCmd.Flags().BoolVarP(&PinsOpts.All, "all", "a", false, "in addition to Bloom filters, download full index chunks")
-	pinsCmd.Flags().BoolVarP(&PinsOpts.Share, "share", "S", false, "share downloaded data by pinning it to IPFS (the IPFS daemon must be running)")
-	pinsCmd.Flags().Float64VarP(&PinsOpts.Sleep, "sleep", "s", .25, "throttle requests by this many seconds")
-	pinsCmd.Flags().BoolVarP(&PinsOpts.Freshen, "freshen", "f", false, "check for new bloom or index chunks and download if available (hidden)")
-	pinsCmd.Flags().BoolVarP(&PinsOpts.Remote, "remote", "r", false, "for --list mode only, recover the manifest from IPFS via UnchainedIndex smart contract (hidden)")
-	pinsCmd.Flags().BoolVarP(&PinsOpts.Init_all, "init_all", "n", false, "use --init --all instead (hidden)")
+	pinsCmd.Flags().BoolVarP(&pins.Options.List, "list", "l", false, "list the bloom and index hashes from local cache or IPFS")
+	pinsCmd.Flags().BoolVarP(&pins.Options.Init, "init", "i", false, "download the blooms or index chunks from IPFS")
+	pinsCmd.Flags().BoolVarP(&pins.Options.All, "all", "a", false, "in addition to Bloom filters, download full index chunks")
+	pinsCmd.Flags().BoolVarP(&pins.Options.Share, "share", "S", false, "share downloaded data by pinning it to IPFS (the IPFS daemon must be running)")
+	pinsCmd.Flags().Float64VarP(&pins.Options.Sleep, "sleep", "s", .25, "throttle requests by this many seconds")
+	pinsCmd.Flags().BoolVarP(&pins.Options.Freshen, "freshen", "f", false, "check for new bloom or index chunks and download if available (hidden)")
+	pinsCmd.Flags().BoolVarP(&pins.Options.Remote, "remote", "r", false, "for --list mode only, recover the manifest from IPFS via UnchainedIndex smart contract (hidden)")
+	pinsCmd.Flags().BoolVarP(&pins.Options.Init_all, "init_all", "n", false, "use --init --all instead (hidden)")
 	if !utils.IsTestMode() {
 		pinsCmd.Flags().MarkHidden("freshen")
 		pinsCmd.Flags().MarkHidden("remote")
@@ -72,12 +70,3 @@ func init() {
 	pinsCmd.SetUsageTemplate(UsageWithNotes(notesPins))
 	rootCmd.AddCommand(pinsCmd)
 }
-
-func TestLogPins(args []string) {
-	if !utils.IsTestMode() {
-		return
-	}
-}
-
-// EXISTING_CODE
-// EXISTING_CODE

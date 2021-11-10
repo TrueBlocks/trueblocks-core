@@ -83,12 +83,3 @@ func init() {
 	monitorsCmd.SetUsageTemplate(UsageWithNotes(notesMonitors))
 	rootCmd.AddCommand(monitorsCmd)
 }
-
-func TestLogMonitors(args []string) {
-	if !utils.IsTestMode() {
-		return
-	}
-}
-
-// EXISTING_CODE
-// EXISTING_CODE
