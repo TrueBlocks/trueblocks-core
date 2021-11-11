@@ -34,7 +34,7 @@ func Run(cmd *cobra.Command, args []string) error {
 		return nil
 	}
 
-	err := pinlib.EstablishDirectories()
+	err := pinlib.EstablishIndexFolders()
 	if err != nil {
 		if err, ok := err.(*pinlib.ErrCustomizedPath); ok {
 			fmt.Printf(errCustomFolderMissing, err.GetIndexPath())

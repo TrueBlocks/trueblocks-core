@@ -49,7 +49,7 @@ func AdminPins(request *http.Request) (*manifest.PinsList, error) {
 	}
 
 	// Make sure all required directories exist
-	err = pinlib.EstablishDirectories()
+	err = pinlib.EstablishIndexFolders()
 	if err != nil {
 		return nil, err
 	}
