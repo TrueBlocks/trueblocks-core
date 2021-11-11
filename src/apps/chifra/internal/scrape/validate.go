@@ -14,6 +14,8 @@ package scrape
  *-------------------------------------------------------------------------------------------*/
 
 import (
+	"fmt"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/spf13/cobra"
@@ -24,7 +26,7 @@ import (
 
 func Validate(cmd *cobra.Command, args []string) error {
 	if len(args) == 0 {
-		return validate.Usage("Please choose one of [indexer|monitors|both]")
+		return validate.Usage("Please choose at least one of {0}.", "[indexer|monitors|both]")
 
 	} else {
 		for _, arg := range args {
@@ -44,15 +46,15 @@ func Validate(cmd *cobra.Command, args []string) error {
 	}
 
 	if Options.Sleep < .5 {
-		return validate.Usage("Values less that .5 seconds for --sleep are not allowed.")
+		return validate.Usage("The {0} option ({1}) must {2}.", "--sleep", fmt.Sprintf("%f", Options.Sleep), "be greater than .5")
 	}
 
 	if Options.Pin && !hasIndexerFlag(args[0]) {
-		return validate.Usage("The --pin option is only available with the indexer.")
+		return validate.Usage("The {0} option is available only with {1}.", "--pin", "the indexer")
 	}
 
 	if Options.Publish && !hasIndexerFlag(args[0]) {
-		return validate.Usage("The --publish option only works with the indexer.")
+		return validate.Usage("The {0} option is available only with {1}.", "--publish", "the indexer")
 	}
 
 	err = root.ValidateGlobals(cmd, args)

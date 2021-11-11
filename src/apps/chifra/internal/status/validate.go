@@ -23,7 +23,7 @@ import (
 
 func Validate(cmd *cobra.Command, args []string) error {
 	if Options.Depth > 3 {
-		return validate.Usage("--depth parameter ({0}) must be less than four (4)", strconv.FormatUint(Options.Depth, 10))
+		return validate.Usage("The {0} option ({1}) must {2}.", "--depth", strconv.FormatUint(Options.Depth, 10), "be less than four (4)")
 	}
 
 	err := validate.ValidateEnumSlice("--types", Options.Types, "[blocks|txs|traces|slurps|prices|all]")

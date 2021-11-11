@@ -22,7 +22,7 @@ import (
 func Validate(cmd *cobra.Command, args []string) error {
 	// special case for tokens which don't allow --dollars display
 	if root.Options.Dollars {
-		return validate.Usage("The --dollars option does not work with chifra token.")
+		return validate.Usage("The {0} option is not available{1}.", "--dollars", "with this tool")
 	}
 
 	err := root.ValidateGlobals(cmd, args)

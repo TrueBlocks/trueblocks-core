@@ -32,15 +32,15 @@ func Validate(cmd *cobra.Command, args []string) error {
 func ValidateOptions(opts *PinsOptionsType) error {
 
 	if opts.List && opts.Init {
-		return validate.Usage("Please choose only a single option.")
+		return validate.Usage("Please choose only one of {0}.", "--list or --init")
 	}
 
 	if !opts.List && !opts.Init {
-		return validate.Usage("You must choose at least one of --list or --init.")
+		return validate.Usage("Please choose at least one of {0}.", "--list or --init")
 	}
 
 	if opts.All && !opts.Init {
-		return validate.Usage("Use the --all option only with the --init options.")
+		return validate.Usage("The {0} option is available only with {1}.", "--all", "--init")
 	}
 
 	if opts.InitAll {
@@ -56,7 +56,7 @@ func ValidateOptions(opts *PinsOptionsType) error {
 	}
 
 	if opts.Share {
-		return validate.Usage("The --share option is not yet implemented")
+		return validate.Usage("The {0} option is not available{1}.", "--share", " (not implemented)")
 	}
 
 	// if (share) {

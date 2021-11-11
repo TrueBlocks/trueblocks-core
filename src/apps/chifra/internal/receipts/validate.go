@@ -20,7 +20,7 @@ import (
 
 func Validate(cmd *cobra.Command, args []string) error {
 	// if len(args) == 0 {
-	// 	return errors.New(fmtError("You must provide at least one valid transaction identifier"))
+	// 	return Usage("Please specify at least one {0}.", "valid transaction identifier")
 	// }
 	// for _, arg := range args {
 	// 	valid, err := validateTxIdentifier(arg)

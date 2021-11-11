@@ -24,7 +24,7 @@ import (
 
 func Validate(cmd *cobra.Command, args []string) error {
 	if Options.Classes {
-		return validate.Usage("the '{0}' option is not implemented", "--classes")
+		return validate.Usage("The {0} option is not available{1}.", "--classes", " (not implemented)")
 	}
 
 	if len(Options.Find) == 0 && !Options.Known {
@@ -35,7 +35,7 @@ func Validate(cmd *cobra.Command, args []string) error {
 	}
 
 	if Options.Sol && len(Options.Find) > 0 {
-		return validate.Usage("Please choose only one of --sol or --find.")
+		return validate.Usage("Please choose only one of {0}.", "--sol or --find")
 	}
 
 	if Options.Sol {
@@ -45,7 +45,7 @@ func Validate(cmd *cobra.Command, args []string) error {
 			}
 			cleaned := "./" + strings.Replace(sol, ".sol", "", 1) + ".sol"
 			if !utils.FileExists(cleaned) {
-				return validate.Usage("Solidity file not found at {0}", cleaned)
+				return validate.Usage("The {0} option ({1}) must {2}", "file", cleaned, "exist")
 			}
 		}
 	} else {

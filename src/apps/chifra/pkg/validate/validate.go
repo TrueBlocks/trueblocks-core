@@ -71,11 +71,11 @@ func Is0xPrefixed(str string) bool {
 
 func IsValidHex(typ string, val string, nBytes int) (bool, error) {
 	if !Is0xPrefixed(val) {
-		return false, Usage("{0} ({1}) does not start with '0x'", typ, val)
+		return false, Usage("The {0} option ({1}) must {2}.", typ, val, "start with '0x'")
 	} else if len(val) != (2 + nBytes*2) {
-		return false, Usage("{0} ({1}) is not {2} bytes long", typ, val, fmt.Sprintf("%d", nBytes))
+		return false, Usage("The {0} option ({1}) must {2}.", typ, val, fmt.Sprintf("be %d bytes long", nBytes))
 	} else if !IsHex(val) {
-		return false, Usage("{0} ({1}) does not appear to be hex", typ, val)
+		return false, Usage("The {0} option ({1}) must {2}.", typ, val, "be hex")
 	}
 	return true, nil
 }
@@ -107,7 +107,7 @@ func ValidateAtLeastOneAddr(args []string) error {
 		Errors = nil // calling code will report the error
 		return nil
 	}
-	return Usage("At least one valid Ethereum address is required")
+	return Usage("Please specify at least one {0}.", "valid transaction identifier")
 }
 
 func ValidateEnum(field, value, valid string) error {

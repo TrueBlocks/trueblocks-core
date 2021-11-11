@@ -22,7 +22,7 @@ import (
 
 func ValidateGlobals(cmd *cobra.Command, args []string) error {
 	if len(Options.File) > 0 && !utils.FileExists(Options.File) {
-		return validate.Usage("file {0} not found", Options.File)
+		return validate.Usage("The {0} option ({1}) must {2}", "file", Options.File, "exist")
 	}
 
 	err := validate.ValidateEnum("--fmt", output.Format, "[json|txt|csv|api]")

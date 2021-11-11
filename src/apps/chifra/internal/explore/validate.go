@@ -56,7 +56,7 @@ func Validate(cmd *cobra.Command, args []string) error {
 	TestLogExplore(args)
 
 	if Options.Google && Options.Local {
-		return validate.Usage("Choose either --google or --local, not both.")
+		return validate.Usage("The {0} option is not available{1}.", "--local", "with the --google option")
 	}
 
 	for _, arg := range args {
@@ -74,7 +74,7 @@ func Validate(cmd *cobra.Command, args []string) error {
 		}
 
 		if Options.Google {
-			return validate.Usage("Option --google allows only an address term.")
+			return validate.Usage("The {0} option requires {1}.", "--google", "an address term")
 		}
 
 		valid, _ = validate.IsValidTransId([]string{arg}, validate.ValidTransId)
@@ -106,7 +106,7 @@ func Validate(cmd *cobra.Command, args []string) error {
 			continue
 		}
 
-		return validate.Usage("The term ({0}) does not appear to be valid.", arg)
+		return validate.Usage("The {0} option ({1}) must {2}.", "term", arg, "be a valid term")
 	}
 
 	if len(urls) == 0 {

@@ -31,7 +31,7 @@ func Validate(cmd *cobra.Command, args []string) error {
 	}
 
 	if len(Options.SummarizeBy) > 0 && !Options.Accounting {
-		return validate.Usage("You may use --summarized_by only with the --accounting option.")
+		return validate.Usage("The {0} option is available only with {1}.", "--summarized_by", "--accounting")
 	}
 
 	err = root.ValidateGlobals(cmd, args)

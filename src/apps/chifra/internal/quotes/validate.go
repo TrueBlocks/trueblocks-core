@@ -27,7 +27,7 @@ func Validate(cmd *cobra.Command, args []string) error {
 		len(Options.Pair) == 0 &&
 		len(Options.Feed) == 0 &&
 		len(output.Format) == 0 {
-		return validate.Usage("You must provide at least one command line option")
+		return validate.Usage("Please specify at least one {0}.", "command line option")
 	}
 
 	err := validate.ValidateEnum("--period", Options.Period, "[5|15|30|60|120|240|1440|10080|hourly|daily|weekly]")

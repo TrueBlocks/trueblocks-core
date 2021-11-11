@@ -21,15 +21,15 @@ import (
 
 func Validate(cmd *cobra.Command, args []string) error {
 	if !Options.List && !Options.Check && len(Options.Extract) == 0 {
-		return validate.Usage("You must choose at least one of {0}.", "--list, --extract, or --check")
+		return validate.Usage("Please choose at least one of {0}.", "--list, --extract, or --check")
 	}
 
 	if (Options.List && Options.Check) || (Options.List && len(Options.Extract) > 0) {
-		return validate.Usage("Please choose just one of {0}.", "--list, --extract, or --check")
+		return validate.Usage("Please choose only one of {0}.", "--list, --extract, or --check")
 	}
 
 	if Options.Stats && !Options.List {
-		return validate.Usage("The {0} option is only available with the {1} option.", "--stats", "--list")
+		return validate.Usage("The {0} option is available only with {1}.", "--stats", "--list")
 	}
 
 	err := validate.ValidateEnum("--extract", Options.Extract, "[header|addr_table|app_table|chunks|blooms]")
