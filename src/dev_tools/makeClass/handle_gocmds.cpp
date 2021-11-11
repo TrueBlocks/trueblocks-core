@@ -30,6 +30,9 @@ bool COptions::handle_gocmds_cmd(const CCommandOption& p) {
     replaceAll(
         source, "[{IMPORTS}]",
         "\t[{ROUTE}]Pkg \"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/[{ROUTE}]\"\n[{IMPORTS}]");
+    if (p.api_route == "serve") {
+        replaceAll(source, "/internal/[{ROUTE}]", "/server");
+    }
     replaceAll(source, STR_REPLACE_OPTS, "");
     replaceAll(source, "run[{PROPER}]", "[{ROUTE}]Pkg.Run");
     replaceAll(source, "validate[{PROPER}]Args", "[{ROUTE}]Pkg.Validate");
@@ -55,7 +58,7 @@ bool COptions::handle_gocmds_cmd(const CCommandOption& p) {
         imports += "\t\"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils\"\n";
     replaceAll(source, "[{IMPORTS}]", imports);
 
-    string_q fn = getSourcePath("apps/chifra/internal/" + p.api_route + ".go");
+    string_q fn = getSourcePath("apps/chifra/cmd/" + p.api_route + ".go");
     codewrite_t cw(fn, source);
     cw.nSpaces = 0;
     cw.stripEOFNL = false;
@@ -72,6 +75,7 @@ bool COptions::handle_gocmds_options(const CCommandOption& p) {
     replaceAll(source, "[{OPT_FIELDS}]", get_optfields(p));
 
     string_q fn = getSourcePath("apps/chifra/internal/" + p.api_route + "/options.go");
+    replaceAll(fn, "/internal/serve", "/server");
     establishFolder(fn);
     codewrite_t cw(fn, source);
     cw.nSpaces = 0;
