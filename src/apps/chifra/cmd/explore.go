@@ -27,7 +27,7 @@ var exploreCmd = &cobra.Command{
 	Use:   usageExplore,
 	Short: shortExplore,
 	Long:  longExplore,
-	Run:   explorePkg.Run,
+	RunE:  explorePkg.Run,
 	Args:  explorePkg.Validate,
 }
 

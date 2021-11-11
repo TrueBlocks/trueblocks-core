@@ -27,7 +27,7 @@ var quotesCmd = &cobra.Command{
 	Use:   usageQuotes,
 	Short: shortQuotes,
 	Long:  longQuotes,
-	Run:   quotesPkg.Run,
+	RunE:  quotesPkg.Run,
 	Args:  quotesPkg.Validate,
 }
 

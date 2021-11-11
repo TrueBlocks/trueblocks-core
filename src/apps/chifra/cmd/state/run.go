@@ -18,7 +18,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func Run(cmd *cobra.Command, args []string) {
+func Run(cmd *cobra.Command, args []string) error {
 	options := ""
 	for _, t := range Options.Parts {
 		options += " --parts " + t
@@ -40,4 +40,5 @@ func Run(cmd *cobra.Command, args []string) {
 		arguments += " " + arg
 	}
 	root.PassItOn("getState", options, arguments)
+	return nil
 }

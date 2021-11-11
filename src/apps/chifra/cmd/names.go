@@ -28,7 +28,7 @@ var namesCmd = &cobra.Command{
 	Use:   usageNames,
 	Short: shortNames,
 	Long:  longNames,
-	Run:   namesPkg.Run,
+	RunE:  namesPkg.Run,
 	Args:  namesPkg.Validate,
 }
 

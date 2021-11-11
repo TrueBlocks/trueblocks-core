@@ -18,7 +18,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func Run(cmd *cobra.Command, args []string) {
+func Run(cmd *cobra.Command, args []string) error {
 	options := ""
 	if Options.Articulate {
 		options += " --articulate"
@@ -28,4 +28,5 @@ func Run(cmd *cobra.Command, args []string) {
 		arguments += " " + arg
 	}
 	root.PassItOn("getReceipts", options, arguments)
+	return nil
 }

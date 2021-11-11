@@ -18,7 +18,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func Run(cmd *cobra.Command, args []string) {
+func Run(cmd *cobra.Command, args []string) error {
 	options := ""
 	if Options.Expand {
 		options += " --expand"
@@ -76,4 +76,5 @@ func Run(cmd *cobra.Command, args []string) {
 		arguments += " " + arg
 	}
 	root.PassItOn("ethNames", options, arguments)
+	return nil
 }

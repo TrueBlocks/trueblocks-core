@@ -28,7 +28,7 @@ var scrapeCmd = &cobra.Command{
 	Use:   usageScrape,
 	Short: shortScrape,
 	Long:  longScrape,
-	Run:   scrapePkg.Run,
+	RunE:  scrapePkg.Run,
 	Args:  scrapePkg.Validate,
 }
 

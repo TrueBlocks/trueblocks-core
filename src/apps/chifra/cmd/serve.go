@@ -27,7 +27,7 @@ var serveCmd = &cobra.Command{
 	Use:   usageServe,
 	Short: shortServe,
 	Long:  longServe,
-	Run:   servePkg.Run,
+	RunE:  servePkg.Run,
 	Args:  servePkg.Validate,
 }
 

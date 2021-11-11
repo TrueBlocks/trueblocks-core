@@ -26,7 +26,7 @@ var [{ROUTE}]Cmd = &cobra.Command{
 	Use:   usage[{PROPER}],
 	Short: short[{PROPER}],
 	Long:  long[{PROPER}],
-	Run:   run[{PROPER}],
+	RunE:  run[{PROPER}],
 	Args:  validate[{PROPER}]Args,
 [{PERPRERUN}]}
 

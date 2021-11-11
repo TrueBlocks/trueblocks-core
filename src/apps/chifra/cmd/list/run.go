@@ -20,7 +20,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func Run(cmd *cobra.Command, args []string) {
+func Run(cmd *cobra.Command, args []string) error {
 	options := " --appearances"
 	if Options.Count {
 		options += " --count"
@@ -36,4 +36,5 @@ func Run(cmd *cobra.Command, args []string) {
 		arguments += " " + arg
 	}
 	root.PassItOn("acctExport", options, arguments)
+	return nil
 }

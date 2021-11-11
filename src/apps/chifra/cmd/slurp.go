@@ -27,7 +27,7 @@ var slurpCmd = &cobra.Command{
 	Use:   usageSlurp,
 	Short: shortSlurp,
 	Long:  longSlurp,
-	Run:   slurpPkg.Run,
+	RunE:  slurpPkg.Run,
 	Args:  slurpPkg.Validate,
 }
 

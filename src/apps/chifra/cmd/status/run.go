@@ -20,7 +20,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func Run(cmd *cobra.Command, args []string) {
+func Run(cmd *cobra.Command, args []string) error {
 	options := ""
 	if Options.Details {
 		options += " --details"
@@ -58,4 +58,5 @@ func Run(cmd *cobra.Command, args []string) {
 		arguments += " " + arg
 	}
 	root.PassItOn("cacheStatus", options, arguments)
+	return nil
 }

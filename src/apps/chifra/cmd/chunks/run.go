@@ -18,7 +18,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func Run(cmd *cobra.Command, args []string) {
+func Run(cmd *cobra.Command, args []string) error {
 	options := ""
 	if Options.List {
 		options += " --list"
@@ -40,4 +40,5 @@ func Run(cmd *cobra.Command, args []string) {
 		arguments += " " + arg
 	}
 	root.PassItOn("chunkMan", options, arguments)
+	return nil
 }

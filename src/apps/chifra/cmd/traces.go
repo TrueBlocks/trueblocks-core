@@ -28,7 +28,7 @@ var tracesCmd = &cobra.Command{
 	Use:   usageTraces,
 	Short: shortTraces,
 	Long:  longTraces,
-	Run:   tracesPkg.Run,
+	RunE:  tracesPkg.Run,
 	Args:  tracesPkg.Validate,
 }
 

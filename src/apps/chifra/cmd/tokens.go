@@ -27,7 +27,7 @@ var tokensCmd = &cobra.Command{
 	Use:   usageTokens,
 	Short: shortTokens,
 	Long:  longTokens,
-	Run:   tokensPkg.Run,
+	RunE:  tokensPkg.Run,
 	Args:  tokensPkg.Validate,
 }
 

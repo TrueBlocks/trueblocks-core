@@ -28,7 +28,7 @@ var stateCmd = &cobra.Command{
 	Use:   usageState,
 	Short: shortState,
 	Long:  longState,
-	Run:   statePkg.Run,
+	RunE:  statePkg.Run,
 	Args:  statePkg.Validate,
 }
 

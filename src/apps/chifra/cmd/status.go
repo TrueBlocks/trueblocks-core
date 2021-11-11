@@ -28,7 +28,7 @@ var statusCmd = &cobra.Command{
 	Use:   usageStatus,
 	Short: shortStatus,
 	Long:  longStatus,
-	Run:   statusPkg.Run,
+	RunE:  statusPkg.Run,
 	Args:  statusPkg.Validate,
 }
 

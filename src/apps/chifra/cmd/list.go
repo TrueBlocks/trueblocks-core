@@ -28,7 +28,7 @@ var listCmd = &cobra.Command{
 	Use:   usageList,
 	Short: shortList,
 	Long:  longList,
-	Run:   listPkg.Run,
+	RunE:  listPkg.Run,
 	Args:  listPkg.Validate,
 }
 

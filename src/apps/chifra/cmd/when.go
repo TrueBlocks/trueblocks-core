@@ -28,7 +28,7 @@ var whenCmd = &cobra.Command{
 	Use:   usageWhen,
 	Short: shortWhen,
 	Long:  longWhen,
-	Run:   whenPkg.Run,
+	RunE:  whenPkg.Run,
 	Args:  whenPkg.Validate,
 }
 

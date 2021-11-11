@@ -27,7 +27,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func Run(cmd *cobra.Command, args []string) {
+func Run(cmd *cobra.Command, args []string) error {
 	var wg sync.WaitGroup
 
 	wg.Add(1)
@@ -39,6 +39,7 @@ func Run(cmd *cobra.Command, args []string) {
 	go RunMonitorScraper(wg, hasMonitorsFlag(args[0]))
 
 	wg.Wait()
+	return nil
 }
 
 func hasIndexerFlag(mode string) bool {

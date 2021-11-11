@@ -28,7 +28,7 @@ var exportCmd = &cobra.Command{
 	Use:   usageExport,
 	Short: shortExport,
 	Long:  longExport,
-	Run:   exportPkg.Run,
+	RunE:  exportPkg.Run,
 	Args:  exportPkg.Validate,
 }
 

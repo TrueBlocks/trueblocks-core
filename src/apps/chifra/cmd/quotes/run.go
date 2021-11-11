@@ -18,7 +18,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func Run(cmd *cobra.Command, args []string) {
+func Run(cmd *cobra.Command, args []string) error {
 	options := ""
 	if Options.Freshen {
 		options += " --freshen"
@@ -37,4 +37,5 @@ func Run(cmd *cobra.Command, args []string) {
 		arguments += " " + arg
 	}
 	root.PassItOn("getQuotes", options, arguments)
+	return nil
 }

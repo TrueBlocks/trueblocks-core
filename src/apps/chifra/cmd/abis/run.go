@@ -20,17 +20,17 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func Run(cmd *cobra.Command, args []string) {
+func Run(cmd *cobra.Command, args []string) error {
 	// This only happens in API mode when there's been an error. Here, we print the error
 	if len(validate.Errors) > 0 {
 		output.PrintJson(&output.JsonFormatted{})
-		return
+		return nil
 	}
 
 	if len(Options.Find) > 0 {
 		// These have already been validated
 		HandleFind(Options.Find)
-		return
+		return nil
 	}
 
 	options := ""
@@ -54,4 +54,5 @@ func Run(cmd *cobra.Command, args []string) {
 		arguments += " " + arg
 	}
 	root.PassItOn("grabABI", options, arguments)
+	return nil
 }

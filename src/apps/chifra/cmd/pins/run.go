@@ -27,18 +27,18 @@ var errCustomFolderMissing = `Attempt to create customized indexPath (%s) failed
 Please create the folder or adjust the setting by editing $CONFIG/trueBlocks.toml.
 `
 
-func Run(cmd *cobra.Command, args []string) {
+func Run(cmd *cobra.Command, args []string) error {
 	// This only happens in API mode when there's been an error. Here, we print the error
 	if len(validate.Errors) > 0 {
 		output.PrintJson(&output.JsonFormatted{})
-		return
+		return nil
 	}
 
 	err := pinlib.EstablishDirectories()
 	if err != nil {
 		if err, ok := err.(*pinlib.ErrCustomizedPath); ok {
 			fmt.Printf(errCustomFolderMissing, err.GetIndexPath())
-			return
+			return nil
 		}
 		logger.Fatal(err)
 	}
@@ -46,13 +46,13 @@ func Run(cmd *cobra.Command, args []string) {
 	if Options.List {
 		PrintManifestHeader()
 		HandleList()
-		return
+		return nil
 	}
 
 	if Options.Init {
 		PrintManifestHeader()
 		HandleInit(Options.All)
-		return
+		return nil
 	}
 
 	if Options.Sleep != .25 {
@@ -62,4 +62,5 @@ func Run(cmd *cobra.Command, args []string) {
 	if Options.Share {
 		logger.Fatal("Not implemented")
 	}
+	return nil
 }

@@ -28,7 +28,7 @@ var monitorsCmd = &cobra.Command{
 	Use:   usageMonitors,
 	Short: shortMonitors,
 	Long:  longMonitors,
-	Run:   monitorsPkg.Run,
+	RunE:  monitorsPkg.Run,
 	Args:  monitorsPkg.Validate,
 }
 

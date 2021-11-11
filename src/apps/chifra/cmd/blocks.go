@@ -28,7 +28,7 @@ var blocksCmd = &cobra.Command{
 	Use:   usageBlocks,
 	Short: shortBlocks,
 	Long:  longBlocks,
-	Run:   blocksPkg.Run,
+	RunE:  blocksPkg.Run,
 	Args:  blocksPkg.Validate,
 }
 

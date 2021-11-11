@@ -18,7 +18,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func Run(cmd *cobra.Command, args []string) {
+func Run(cmd *cobra.Command, args []string) error {
 	pins.Options.Init = true
 	pins.Run(cmd, args)
+	return nil
 }

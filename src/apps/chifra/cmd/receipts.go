@@ -27,7 +27,7 @@ var receiptsCmd = &cobra.Command{
 	Use:   usageReceipts,
 	Short: shortReceipts,
 	Long:  longReceipts,
-	Run:   receiptsPkg.Run,
+	RunE:  receiptsPkg.Run,
 	Args:  receiptsPkg.Validate,
 }
 

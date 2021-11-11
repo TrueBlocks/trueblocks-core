@@ -27,7 +27,7 @@ var logsCmd = &cobra.Command{
 	Use:   usageLogs,
 	Short: shortLogs,
 	Long:  longLogs,
-	Run:   logsPkg.Run,
+	RunE:  logsPkg.Run,
 	Args:  logsPkg.Validate,
 }
 

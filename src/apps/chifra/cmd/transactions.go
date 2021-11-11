@@ -27,7 +27,7 @@ var transactionsCmd = &cobra.Command{
 	Use:   usageTransactions,
 	Short: shortTransactions,
 	Long:  longTransactions,
-	Run:   transactionsPkg.Run,
+	RunE:  transactionsPkg.Run,
 	Args:  transactionsPkg.Validate,
 }
 

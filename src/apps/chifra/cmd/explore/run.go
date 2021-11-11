@@ -20,11 +20,12 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func Run(cmd *cobra.Command, args []string) {
+func Run(cmd *cobra.Command, args []string) error {
 	for _, url := range urls {
 		fmt.Printf("Opening %s\n", url.getUrl())
 		if !utils.IsTestMode() {
 			utils.OpenBrowser(url.getUrl())
 		}
 	}
+	return nil
 }

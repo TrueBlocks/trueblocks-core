@@ -27,7 +27,7 @@ var initCmd = &cobra.Command{
 	Use:   usageInit,
 	Short: shortInit,
 	Long:  longInit,
-	Run:   initPkg.Run,
+	RunE:  initPkg.Run,
 	Args:  initPkg.Validate,
 }
 

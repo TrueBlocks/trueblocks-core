@@ -27,7 +27,7 @@ var chunksCmd = &cobra.Command{
 	Use:   usageChunks,
 	Short: shortChunks,
 	Long:  longChunks,
-	Run:   chunksPkg.Run,
+	RunE:  chunksPkg.Run,
 	Args:  chunksPkg.Validate,
 }
 

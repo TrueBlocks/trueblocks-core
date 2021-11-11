@@ -22,10 +22,11 @@ import (
 )
 
 // Run runs serve command and sends any errors to log.Fatal
-func Run(cmd *cobra.Command, args []string) {
+func Run(cmd *cobra.Command, args []string) error {
 	Options.Port = Options.Port
 	PrintServeSettings()
 	log.Fatal(RunInternal(Options.Port))
+    return nil
 }
 
 func PrintServeSettings() {

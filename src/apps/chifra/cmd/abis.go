@@ -28,7 +28,7 @@ var abisCmd = &cobra.Command{
 	Use:   usageAbis,
 	Short: shortAbis,
 	Long:  longAbis,
-	Run:   abisPkg.Run,
+	RunE:  abisPkg.Run,
 	Args:  abisPkg.Validate,
 }
 

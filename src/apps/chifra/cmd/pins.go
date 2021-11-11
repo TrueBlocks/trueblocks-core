@@ -28,7 +28,7 @@ var pinsCmd = &cobra.Command{
 	Use:   usagePins,
 	Short: shortPins,
 	Long:  longPins,
-	Run:   pinsPkg.Run,
+	RunE:  pinsPkg.Run,
 	Args:  pinsPkg.Validate,
 }
 
