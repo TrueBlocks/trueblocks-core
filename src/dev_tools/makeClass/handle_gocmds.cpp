@@ -27,8 +27,9 @@ bool COptions::handle_gocmds_cmd(const CCommandOption& p) {
     string_q source = asciiFileToString(getTemplatePath("blank.go"));
     replaceAll(source, "[{LONG}]", "Purpose:\n  " + p.description);
     replaceAll(source, "[{OPT_DEF}]", "");
-    replaceAll(source, "[{IMPORTS}]",
-               "\t[{ROUTE}]Pkg \"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/[{ROUTE}]\"\n[{IMPORTS}]");
+    replaceAll(
+        source, "[{IMPORTS}]",
+        "\t[{ROUTE}]Pkg \"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/[{ROUTE}]\"\n[{IMPORTS}]");
     replaceAll(source, STR_REPLACE_OPTS, "");
     replaceAll(source, "run[{PROPER}]", "[{ROUTE}]Pkg.Run");
     replaceAll(source, "validate[{PROPER}]Args", "[{ROUTE}]Pkg.Validate");
@@ -54,7 +55,7 @@ bool COptions::handle_gocmds_cmd(const CCommandOption& p) {
         imports += "\t\"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils\"\n";
     replaceAll(source, "[{IMPORTS}]", imports);
 
-    string_q fn = getSourcePath("apps/chifra/cmd/" + p.api_route + ".go");
+    string_q fn = getSourcePath("apps/chifra/internal/" + p.api_route + ".go");
     codewrite_t cw(fn, source);
     cw.nSpaces = 0;
     cw.stripEOFNL = false;
@@ -70,7 +71,7 @@ bool COptions::handle_gocmds_options(const CCommandOption& p) {
     replaceAll(source, "[{PROPER}]", toProper(p.api_route));
     replaceAll(source, "[{OPT_FIELDS}]", get_optfields(p));
 
-    string_q fn = getSourcePath("apps/chifra/cmd/" + p.api_route + "/options.go");
+    string_q fn = getSourcePath("apps/chifra/internal/" + p.api_route + "/options.go");
     establishFolder(fn);
     codewrite_t cw(fn, source);
     cw.nSpaces = 0;

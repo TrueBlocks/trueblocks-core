@@ -79,5 +79,5 @@ Global Flags:
   -v, --verbose      enable verbose (increase detail with --log_level)
 ```
 
-**Source code**: [`explore.go`](https://github.com/TrueBlocks/trueblocks-core/tree/develop/src/apps/chifra/cmd/explore.go)
+**Source code**: [`explore.go`](https://github.com/TrueBlocks/trueblocks-core/tree/develop/src/apps/chifra/internal/explore.go)
 

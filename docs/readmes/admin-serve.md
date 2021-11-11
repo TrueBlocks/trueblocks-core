@@ -25,5 +25,5 @@ Notes:
   - See the API documentation for more information.
 ```
 
-**Source code**: [`serve.go`](https://github.com/TrueBlocks/trueblocks-core/tree/develop/src/apps/chifra/cmd/serve.go)
+**Source code**: [`serve.go`](https://github.com/TrueBlocks/trueblocks-core/tree/develop/src/apps/chifra/server/serve.go)
 

@@ -18,7 +18,7 @@ package cmd
 import (
 	"os"
 
-	tracesPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/traces"
+	tracesPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/traces"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
 )

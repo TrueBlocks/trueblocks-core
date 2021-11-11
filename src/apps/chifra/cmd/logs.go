@@ -18,7 +18,7 @@ package cmd
 import (
 	"os"
 
-	logsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/logs"
+	logsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/logs"
 	"github.com/spf13/cobra"
 )
 

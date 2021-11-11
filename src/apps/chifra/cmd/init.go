@@ -18,7 +18,7 @@ package cmd
 import (
 	"os"
 
-	initPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/init"
+	initPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/init"
 	"github.com/spf13/cobra"
 )
 

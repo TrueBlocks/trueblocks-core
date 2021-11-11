@@ -18,7 +18,7 @@ package cmd
 import (
 	"os"
 
-	chunksPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/chunks"
+	chunksPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/chunks"
 	"github.com/spf13/cobra"
 )
 

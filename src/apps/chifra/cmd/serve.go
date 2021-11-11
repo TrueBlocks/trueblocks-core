@@ -18,7 +18,7 @@ package cmd
 import (
 	"os"
 
-	servePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/serve"
+	servePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/server"
 	"github.com/spf13/cobra"
 )
 

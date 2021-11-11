@@ -18,7 +18,7 @@ package cmd
 import (
 	"os"
 
-	scrapePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/scrape"
+	scrapePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/scrape"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
 )

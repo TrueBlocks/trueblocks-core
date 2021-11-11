@@ -18,7 +18,7 @@ package cmd
 import (
 	"os"
 
-	quotesPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/quotes"
+	quotesPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/quotes"
 	"github.com/spf13/cobra"
 )
 

@@ -51,7 +51,7 @@ bool COptions::handle_readmes(void) {
                 replaceAll(dFooter, "[{LOCATION}]", "https://github.com/TrueBlocks/trueblocks-core/tree/master/src/");
                 sFooter = "\n" + trim(asciiFileToString(getDocsPathTemplates("readme-intros/README.footer.md")), '\n');
             } else {
-                dFooter = "\n**Source code**: [`[{FILE}]`]([{LOCATION}]apps/chifra/cmd/[{FILE}])\n";
+                dFooter = "\n**Source code**: [`[{FILE}]`]([{LOCATION}]apps/chifra/internal/[{FILE}])\n";
                 replaceAll(dFooter, "[{FILE}]", ep.api_route + ".go");
                 replaceAll(dFooter, "[{LOCATION}]", "https://github.com/TrueBlocks/trueblocks-core/tree/develop/src/");
             }

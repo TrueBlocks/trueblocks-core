@@ -18,7 +18,7 @@ package cmd
 import (
 	"os"
 
-	monitorsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/monitors"
+	monitorsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/monitors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
 )

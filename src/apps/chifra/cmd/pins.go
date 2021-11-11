@@ -18,7 +18,7 @@ package cmd
 import (
 	"os"
 
-	pinsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/pins"
+	pinsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/pins"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
 )

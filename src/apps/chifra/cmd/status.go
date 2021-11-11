@@ -18,7 +18,7 @@ package cmd
 import (
 	"os"
 
-	statusPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/status"
+	statusPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/status"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
 )

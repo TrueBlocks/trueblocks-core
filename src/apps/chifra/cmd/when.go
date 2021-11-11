@@ -18,7 +18,7 @@ package cmd
 import (
 	"os"
 
-	whenPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/when"
+	whenPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/when"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
 )

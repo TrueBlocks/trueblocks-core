@@ -18,7 +18,7 @@ package cmd
 import (
 	"os"
 
-	abisPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/abis"
+	abisPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/abis"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
 )

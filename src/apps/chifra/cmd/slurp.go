@@ -18,7 +18,7 @@ package cmd
 import (
 	"os"
 
-	slurpPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/slurp"
+	slurpPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/slurp"
 	"github.com/spf13/cobra"
 )
 

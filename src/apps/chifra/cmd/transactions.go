@@ -18,7 +18,7 @@ package cmd
 import (
 	"os"
 
-	transactionsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/transactions"
+	transactionsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/transactions"
 	"github.com/spf13/cobra"
 )
 

@@ -18,7 +18,7 @@ package cmd
 import (
 	"os"
 
-	explorePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/explore"
+	explorePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/explore"
 	"github.com/spf13/cobra"
 )
 

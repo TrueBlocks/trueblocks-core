@@ -18,7 +18,7 @@ package cmd
 import (
 	"os"
 
-	tokensPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/tokens"
+	tokensPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/tokens"
 	"github.com/spf13/cobra"
 )
 

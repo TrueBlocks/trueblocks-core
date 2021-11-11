@@ -23,7 +23,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/serve/exec"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/server/exec"
 	utils "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/gorilla/mux"
 	"golang.org/x/time/rate"
