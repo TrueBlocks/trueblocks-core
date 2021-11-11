@@ -179,6 +179,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 13987,tools,ChainData,when,whenBlock,ERR_INVALIDDATE1,,,false,false,false,false,--,error,,Please supply either a JSON formatted date or a blockNumber.
 13987,tools,ChainData,when,whenBlock,ERR_INVALIDDATE2,,,false,false,false,false,--,error,,Invalid date '[{ARG}]'.
 13987,tools,ChainData,when,whenBlock,ERR_INVALIDDATE3,,,false,false,false,false,--,error,,The date you specified ([{ARG}]) is before the first block.
+13988,tools,ChainData,when,whenBlock,ERR_ONLYTIMESTAMP,,,false,false,false,false,--,error,,The --check&#44; --fix&#44; and --count options are only available with the --timestamps option.
 
 13100,tools,ChainState,state,getState,addrs,,,true,false,true,true,header,positional,list<addr>,one or more addresses (0x...) from which to retrieve balances
 13120,tools,ChainState,state,getState,blocks,,,false,false,true,true,header,positional,list<blknum>,an optional list of one or more blocks at which to report balances&#44; defaults to 'latest'

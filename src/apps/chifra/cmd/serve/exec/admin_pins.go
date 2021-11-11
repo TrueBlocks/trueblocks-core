@@ -40,7 +40,7 @@ func AdminPins(request *http.Request) (*manifest.PinsList, error) {
 		case "remote":
 			opts.Remote = true
 		case "init_all":
-			opts.Init_all = true
+			opts.InitAll = true
 		}
 	}
 
@@ -67,7 +67,7 @@ func AdminPins(request *http.Request) (*manifest.PinsList, error) {
 	}
 
 	if opts.Init {
-		err := pins.Init(opts.Init_all)
+		err := pins.Init(opts.InitAll)
 		responseError = err
 	}
 
