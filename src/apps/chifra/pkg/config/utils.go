@@ -66,7 +66,7 @@ func GetConfigPath(fileName string) string {
 
 // MustReadConfig calls v's ReadInConfig and fills values in the
 // given targetStruct. Any error will result in a call to logger.Fatal
-func MustReadConfig(v *viper.Viper, targetStruct interface{}) {
+func MustReadConfig(v *viper.Viper, targetStruct interface{}, fileRequired bool) {
 	v.AddConfigPath(GetConfigPath(""))
 	v.SetEnvPrefix("TB")
 	v.AutomaticEnv()
@@ -74,7 +74,11 @@ func MustReadConfig(v *viper.Viper, targetStruct interface{}) {
 
 	err := v.ReadInConfig()
 	if err != nil {
-		logger.Fatal(err)
+		_, ok := err.(viper.ConfigFileNotFoundError)
+		// We only require some files to be present
+		if !ok || (ok && fileRequired) {
+			logger.Fatal(err)
+		}
 	}
 
 	err = v.Unmarshal(targetStruct)
