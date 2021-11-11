@@ -24,7 +24,7 @@ type PinsOptionsType struct {
 	Sleep    float64
 	Freshen  bool
 	Remote   bool
-	Init_All bool
+	InitAll  bool
 }
 
 var Options PinsOptionsType

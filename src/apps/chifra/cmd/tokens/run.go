@@ -23,10 +23,10 @@ func Run(cmd *cobra.Command, args []string) {
 	for _, t := range Options.Parts {
 		options += " --parts " + t
 	}
-	if Options.By_Acct {
+	if Options.ByAcct {
 		options += " --by_acct"
 	}
-	if Options.No_Zero {
+	if Options.NoZero {
 		options += " --no_zero"
 	}
 	arguments := ""

@@ -22,16 +22,16 @@ type BlocksOptionsType struct {
 	Trace      bool
 	Apps       bool
 	Uniq       bool
-	Uniq_Tx    bool
+	UniqTx     bool
 	Logs       bool
 	Emitter    []string
 	Topic      []string
 	Articulate bool
-	Big_Range  uint64
+	BigRange   uint64
 	Count      bool
 	Cache      bool
 	List       uint64
-	List_Count uint64
+	ListCount  uint64
 }
 
 var Options BlocksOptionsType

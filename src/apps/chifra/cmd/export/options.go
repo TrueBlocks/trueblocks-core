@@ -25,11 +25,11 @@ type ExportOptionsType struct {
 	Accounting   bool
 	Articulate   bool
 	Cache        bool
-	Cache_Traces bool
+	CacheTraces  bool
 	Factory      bool
 	Count        bool
-	First_Record uint64
-	Max_Records  uint64
+	FirstRecord  uint64
+	MaxRecords   uint64
 	Relevant     bool
 	Emitter      []string
 	Topic        []string
@@ -39,12 +39,12 @@ type ExportOptionsType struct {
 	Unripe       bool
 	Load         string
 	Reversed     bool
-	By_Date      bool
-	Summarize_By string
-	Skip_Ddos    bool
-	Max_Traces   uint64
-	First_Block  uint64
-	Last_Block   uint64
+	ByDate       bool
+	SummarizeBy  string
+	SkipDdos     bool
+	MaxTraces    uint64
+	FirstBlock   uint64
+	LastBlock    uint64
 }
 
 var Options ExportOptionsType

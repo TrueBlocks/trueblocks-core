@@ -51,8 +51,8 @@ func init() {
 	listCmd.PersistentFlags().SortFlags = false
 	listCmd.Flags().BoolVarP(&listPkg.Options.Count, "count", "U", false, "present only the number of records")
 	listCmd.Flags().BoolVarP(&listPkg.Options.Appearances, "appearances", "p", false, "export a list of appearances (hidden)")
-	listCmd.Flags().Uint64VarP(&listPkg.Options.First_Block, "first_block", "F", 0, "first block to process (inclusive) (hidden)")
-	listCmd.Flags().Uint64VarP(&listPkg.Options.Last_Block, "last_block", "L", 0, "last block to process (inclusive) (hidden)")
+	listCmd.Flags().Uint64VarP(&listPkg.Options.FirstBlock, "first_block", "F", 0, "first block to process (inclusive) (hidden)")
+	listCmd.Flags().Uint64VarP(&listPkg.Options.LastBlock, "last_block", "L", 0, "last block to process (inclusive) (hidden)")
 	if !utils.IsTestMode() {
 		listCmd.Flags().MarkHidden("appearances")
 		listCmd.Flags().MarkHidden("first_block")

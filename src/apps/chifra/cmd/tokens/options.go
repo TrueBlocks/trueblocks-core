@@ -18,8 +18,8 @@ package tokens
 
 type TokensOptionsType struct {
 	Parts   []string
-	By_Acct bool
-	No_Zero bool
+	ByAcct  bool
+	NoZero  bool
 }
 
 var Options TokensOptionsType

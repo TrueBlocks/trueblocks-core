@@ -25,12 +25,12 @@ func Validate(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	err = validate.ValidateEnum("--summarize_by", Options.Summarize_By, "[yearly|quarterly|monthly|weekly|daily|hourly|blockly|tx]")
+	err = validate.ValidateEnum("--summarize_by", Options.SummarizeBy, "[yearly|quarterly|monthly|weekly|daily|hourly|blockly|tx]")
 	if err != nil {
 		return err
 	}
 
-	if len(Options.Summarize_By) > 0 && !Options.Accounting {
+	if len(Options.SummarizeBy) > 0 && !Options.Accounting {
 		return validate.Usage("You may use --summarized_by only with the --accounting option.")
 	}
 

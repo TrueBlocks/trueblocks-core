@@ -37,7 +37,7 @@ func Run(cmd *cobra.Command, args []string) {
 	if Options.Uniq {
 		options += " --uniq"
 	}
-	if Options.Uniq_Tx {
+	if Options.UniqTx {
 		options += " --uniq_tx"
 	}
 	if Options.Logs {
@@ -52,8 +52,8 @@ func Run(cmd *cobra.Command, args []string) {
 	if Options.Articulate {
 		options += " --articulate"
 	}
-	if Options.Big_Range != 500 {
-		options += " --big_range " + fmt.Sprintf("%d", Options.Big_Range)
+	if Options.BigRange != 500 {
+		options += " --big_range " + fmt.Sprintf("%d", Options.BigRange)
 	}
 	if Options.Count {
 		options += " --count"
@@ -64,8 +64,8 @@ func Run(cmd *cobra.Command, args []string) {
 	if Options.List > 0 {
 		options += " --list " + fmt.Sprintf("%d", Options.List)
 	}
-	if Options.List_Count != 20 {
-		options += " --list_count " + fmt.Sprintf("%d", Options.List_Count)
+	if Options.ListCount != 20 {
+		options += " --list_count " + fmt.Sprintf("%d", Options.ListCount)
 	}
 	arguments := ""
 	for _, arg := range args {

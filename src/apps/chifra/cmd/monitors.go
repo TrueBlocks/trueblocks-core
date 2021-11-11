@@ -58,8 +58,8 @@ func init() {
 	monitorsCmd.Flags().BoolVarP(&monitorsPkg.Options.Delete, "delete", "", false, "delete a monitor, but do not remove it")
 	monitorsCmd.Flags().BoolVarP(&monitorsPkg.Options.Undelete, "undelete", "", false, "undelete a previously deleted monitor")
 	monitorsCmd.Flags().BoolVarP(&monitorsPkg.Options.Remove, "remove", "", false, "remove a previously deleted monitor")
-	monitorsCmd.Flags().Uint64VarP(&monitorsPkg.Options.First_Block, "first_block", "F", 0, "first block to process (inclusive) (hidden)")
-	monitorsCmd.Flags().Uint64VarP(&monitorsPkg.Options.Last_Block, "last_block", "L", 0, "last block to process (inclusive) (hidden)")
+	monitorsCmd.Flags().Uint64VarP(&monitorsPkg.Options.FirstBlock, "first_block", "F", 0, "first block to process (inclusive) (hidden)")
+	monitorsCmd.Flags().Uint64VarP(&monitorsPkg.Options.LastBlock, "last_block", "L", 0, "last block to process (inclusive) (hidden)")
 	if !utils.IsTestMode() {
 		monitorsCmd.Flags().MarkHidden("first_block")
 		monitorsCmd.Flags().MarkHidden("last_block")

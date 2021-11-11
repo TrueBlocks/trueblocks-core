@@ -53,7 +53,7 @@ func init() {
 	namesCmd.Flags().SortFlags = false
 	namesCmd.PersistentFlags().SortFlags = false
 	namesCmd.Flags().BoolVarP(&namesPkg.Options.Expand, "expand", "e", false, "expand search to include all fields (search name, address, and symbol otherwise)")
-	namesCmd.Flags().BoolVarP(&namesPkg.Options.Match_Case, "match_case", "m", false, "do case-sensitive search")
+	namesCmd.Flags().BoolVarP(&namesPkg.Options.MatchCase, "match_case", "m", false, "do case-sensitive search")
 	namesCmd.Flags().BoolVarP(&namesPkg.Options.All, "all", "l", false, "include all accounts in the search")
 	namesCmd.Flags().BoolVarP(&namesPkg.Options.Custom, "custom", "c", false, "include your custom named accounts")
 	namesCmd.Flags().BoolVarP(&namesPkg.Options.Prefund, "prefund", "p", false, "include prefund accounts")
@@ -61,7 +61,7 @@ func init() {
 	namesCmd.Flags().BoolVarP(&namesPkg.Options.Addr, "addr", "a", false, "display only addresses in the results (useful for scripting)")
 	namesCmd.Flags().BoolVarP(&namesPkg.Options.Collections, "collections", "s", false, "display collections data")
 	namesCmd.Flags().BoolVarP(&namesPkg.Options.Tags, "tags", "g", false, "export the list of tags and subtags only")
-	namesCmd.Flags().BoolVarP(&namesPkg.Options.To_Custom, "to_custom", "u", false, "for editCmd only, is the edited name a custom name or not (hidden)")
+	namesCmd.Flags().BoolVarP(&namesPkg.Options.ToCustom, "to_custom", "u", false, "for editCmd only, is the edited name a custom name or not (hidden)")
 	namesCmd.Flags().BoolVarP(&namesPkg.Options.Clean, "clean", "C", false, "clean the data (addrs to lower case, sort by addr) (hidden)")
 	namesCmd.Flags().StringVarP(&namesPkg.Options.Autoname, "autoname", "A", "", "an address assumed to be a token, added automatically to names database if true (hidden)")
 	namesCmd.Flags().BoolVarP(&namesPkg.Options.Create, "create", "", false, "create a new name record (hidden)")

@@ -37,20 +37,20 @@ func Run(cmd *cobra.Command, args []string) {
 	for _, t := range Options.Migrate {
 		options += " --migrate " + t
 	}
-	if Options.Get_Config {
+	if Options.GetConfig {
 		options += " --get_config"
 	}
-	if Options.Set_Config {
+	if Options.SetConfig {
 		options += " --set_config"
 	}
-	if Options.Test_Start > 0 {
+	if Options.TestStart > 0 {
 		if utils.IsTestMode() {
-			options += " --test_start " + fmt.Sprintf("%d", Options.Test_Start)
+			options += " --test_start " + fmt.Sprintf("%d", Options.TestStart)
 		}
 	}
-	if Options.Test_End != utils.NOPOS {
+	if Options.TestEnd != utils.NOPOS {
 		if utils.IsTestMode() {
-			options += " --test_end " + fmt.Sprintf("%d", Options.Test_End)
+			options += " --test_end " + fmt.Sprintf("%d", Options.TestEnd)
 		}
 	}
 	arguments := ""

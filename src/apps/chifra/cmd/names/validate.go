@@ -38,12 +38,12 @@ func Validate(cmd *cobra.Command, args []string) error {
 
 func anyBase() bool {
 	return Options.Expand ||
-		Options.Match_Case ||
+		Options.MatchCase ||
 		Options.All ||
 		Options.Custom ||
 		Options.Prefund ||
 		Options.Named ||
 		Options.Addr ||
-		Options.To_Custom ||
+		Options.ToCustom ||
 		Options.Clean
 }

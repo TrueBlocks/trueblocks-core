@@ -81,7 +81,7 @@ func Validate(cmd *cobra.Command, args []string) error {
 		if valid {
 			txHash, err := id_2_TxHash(arg)
 			if err == nil {
-				utils.TestLogBool("is__tx", true)
+				utils.TestLogBool("is_tx", true)
 				urls = append(urls, ExploreUrl{txHash, ExploreTx})
 				continue
 			}

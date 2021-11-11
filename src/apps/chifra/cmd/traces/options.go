@@ -21,7 +21,7 @@ type TracesOptionsType struct {
 	Filter     string
 	Statediff  bool
 	Count      bool
-	Skip_Ddos  bool
+	SkipDdos   bool
 	Max        uint64
 }
 

@@ -21,9 +21,9 @@ type ScrapeOptionsType struct {
 	Sleep          float64
 	Pin            bool
 	Publish        bool
-	Block_Cnt      uint64
-	Block_Chan_Cnt uint64
-	Addr_Chan_Cnt  uint64
+	BlockCnt       uint64
+	BlockChanCnt   uint64
+	AddrChanCnt    uint64
 }
 
 var Options ScrapeOptionsType

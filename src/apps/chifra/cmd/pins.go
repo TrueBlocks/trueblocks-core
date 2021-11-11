@@ -57,7 +57,7 @@ func init() {
 	pinsCmd.Flags().Float64VarP(&pinsPkg.Options.Sleep, "sleep", "s", .25, "throttle requests by this many seconds")
 	pinsCmd.Flags().BoolVarP(&pinsPkg.Options.Freshen, "freshen", "f", false, "check for new bloom or index chunks and download if available (hidden)")
 	pinsCmd.Flags().BoolVarP(&pinsPkg.Options.Remote, "remote", "r", false, "for --list mode only, recover the manifest from IPFS via UnchainedIndex smart contract (hidden)")
-	pinsCmd.Flags().BoolVarP(&pinsPkg.Options.Init_All, "init_all", "n", false, "use --init --all instead (hidden)")
+	pinsCmd.Flags().BoolVarP(&pinsPkg.Options.InitAll, "init_all", "n", false, "use --init --all instead (hidden)")
 	if !utils.IsTestMode() {
 		pinsCmd.Flags().MarkHidden("freshen")
 		pinsCmd.Flags().MarkHidden("remote")

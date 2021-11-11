@@ -23,10 +23,10 @@ type StatusOptionsType struct {
 	Report     bool
 	Terse      bool
 	Migrate    []string
-	Get_Config bool
-	Set_Config bool
-	Test_Start uint64
-	Test_End   uint64
+	GetConfig  bool
+	SetConfig  bool
+	TestStart  uint64
+	TestEnd    uint64
 }
 
 var Options StatusOptionsType

@@ -45,7 +45,7 @@ func Run(cmd *cobra.Command, args []string) {
 	if Options.Cache {
 		options += " --cache"
 	}
-	if Options.Cache_Traces {
+	if Options.CacheTraces {
 		options += " --cache_traces"
 	}
 	if Options.Factory {
@@ -63,11 +63,11 @@ func Run(cmd *cobra.Command, args []string) {
 	if Options.Count {
 		options += " --count"
 	}
-	if Options.First_Record > 0 {
-		options += " --first_record " + fmt.Sprintf("%d", Options.First_Record)
+	if Options.FirstRecord > 0 {
+		options += " --first_record " + fmt.Sprintf("%d", Options.FirstRecord)
 	}
-	if Options.Max_Records > 0 && Options.Max_Records != 250 {
-		options += " --max_records " + fmt.Sprintf("%d", Options.Max_Records)
+	if Options.MaxRecords > 0 && Options.MaxRecords != 250 {
+		options += " --max_records " + fmt.Sprintf("%d", Options.MaxRecords)
 	}
 	if Options.Clean {
 		options += " --clean"
@@ -87,23 +87,23 @@ func Run(cmd *cobra.Command, args []string) {
 	if Options.Reversed {
 		options += " --reversed"
 	}
-	if Options.By_Date {
+	if Options.ByDate {
 		options += " --by_date"
 	}
-	if len(Options.Summarize_By) > 0 {
-		options += " --summarize_by " + Options.Summarize_By
+	if len(Options.SummarizeBy) > 0 {
+		options += " --summarize_by " + Options.SummarizeBy
 	}
-	if Options.Skip_Ddos {
+	if Options.SkipDdos {
 		options += " --skip_ddos"
 	}
-	if Options.Max_Traces != 250 {
-		options += " --max_traces " + fmt.Sprintf("%d", Options.Max_Traces)
+	if Options.MaxTraces != 250 {
+		options += " --max_traces " + fmt.Sprintf("%d", Options.MaxTraces)
 	}
-	if Options.First_Block > 0 {
-		options += " --first_block " + fmt.Sprintf("%d", Options.First_Block)
+	if Options.FirstBlock > 0 {
+		options += " --first_block " + fmt.Sprintf("%d", Options.FirstBlock)
 	}
-	if Options.Last_Block > 0 {
-		options += " --last_block " + fmt.Sprintf("%d", Options.Last_Block)
+	if Options.LastBlock > 0 {
+		options += " --last_block " + fmt.Sprintf("%d", Options.LastBlock)
 	}
 	arguments := ""
 	for _, arg := range args {

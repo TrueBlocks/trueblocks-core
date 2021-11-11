@@ -173,6 +173,10 @@ string_q get_notes2(const CCommandOption& cmd) {
     return trim(substitute(os.str(), "|", "\n    "));
 }
 
+string_q goOptsField(const string_q& in) {
+    return substitute(toProper(in), "_", "");
+}
+
 string_q get_optfields(const CCommandOption& cmd) {
     size_t wid = 0;
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
@@ -185,11 +189,7 @@ string_q get_optfields(const CCommandOption& cmd) {
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
         replace(p.longName, "deleteMe", "delete");
         if (p.option_type != "positional") {
-            if (goPortNewCode(p.api_route)) {
-                os << "\t" << padRight(toProper(p.longName), wid) << " " << p.go_type << endl;
-            } else {
-                os << "\t" << padRight(p.longName, wid) << " " << p.go_type << endl;
-            }
+            os << "\t" << padRight(goOptsField(p.longName), wid) << " " << p.go_type << endl;
         }
     }
     return os.str();
@@ -287,7 +287,7 @@ string_q get_setopts(const CCommandOption& cmd) {
             os << "\t[{ROUTE}]Cmd.Flags().";
             os << p.go_flagtype;
             os << "(&[{ROUTE}]Pkg.Options.";
-            os << toProper(p.longName) << ", ";
+            os << goOptsField(p.longName) << ", ";
             os << p.Format("\"[{LONGNAME}]\", ");
             os << p.Format("\"[{HOTKEY}]\", ");
             os << get_goDefault(p) << ", ";

@@ -59,7 +59,7 @@ func init() {
 	tracesCmd.Flags().StringVarP(&tracesPkg.Options.Filter, "filter", "f", "", "call the node's trace_filter routine with bang-separated filter")
 	tracesCmd.Flags().BoolVarP(&tracesPkg.Options.Statediff, "statediff", "d", false, "export state diff traces (not implemented)")
 	tracesCmd.Flags().BoolVarP(&tracesPkg.Options.Count, "count", "c", false, "show the number of traces for the transaction only (fast)")
-	tracesCmd.Flags().BoolVarP(&tracesPkg.Options.Skip_Ddos, "skip_ddos", "s", false, "skip over the 2016 ddos during export ('on' by default) (hidden)")
+	tracesCmd.Flags().BoolVarP(&tracesPkg.Options.SkipDdos, "skip_ddos", "s", false, "skip over the 2016 ddos during export ('on' by default) (hidden)")
 	tracesCmd.Flags().Uint64VarP(&tracesPkg.Options.Max, "max", "m", 250, "if --skip_ddos is on, this many traces defines what a ddos transaction is (hidden)")
 	if !utils.IsTestMode() {
 		tracesCmd.Flags().MarkHidden("skip_ddos")

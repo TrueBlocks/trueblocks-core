@@ -34,7 +34,7 @@ func Run(cmd *cobra.Command, args []string) {
 	if Options.Count {
 		options += " --count"
 	}
-	if Options.Skip_Ddos {
+	if Options.SkipDdos {
 		options += " --skip_ddos"
 	}
 	if Options.Max != 250 {

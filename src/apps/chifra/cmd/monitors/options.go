@@ -23,8 +23,8 @@ type MonitorsOptionsType struct {
 	Delete      bool
 	Undelete    bool
 	Remove      bool
-	First_Block uint64
-	Last_Block  uint64
+	FirstBlock  uint64
+	LastBlock   uint64
 }
 
 var Options MonitorsOptionsType

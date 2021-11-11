@@ -23,7 +23,7 @@ func Run(cmd *cobra.Command, args []string) {
 	if Options.Expand {
 		options += " --expand"
 	}
-	if Options.Match_Case {
+	if Options.MatchCase {
 		options += " --match_case"
 	}
 	if Options.All {
@@ -47,7 +47,7 @@ func Run(cmd *cobra.Command, args []string) {
 	if Options.Tags {
 		options += " --tags"
 	}
-	if Options.To_Custom {
+	if Options.ToCustom {
 		options += " --to_custom"
 	}
 	if Options.Clean {

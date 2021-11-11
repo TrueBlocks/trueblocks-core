@@ -25,11 +25,11 @@ func Run(cmd *cobra.Command, args []string) {
 	if Options.Count {
 		options += " --count"
 	}
-	if Options.First_Block > 0 {
-		options += " --first_block " + fmt.Sprintf("%d", Options.First_Block)
+	if Options.FirstBlock > 0 {
+		options += " --first_block " + fmt.Sprintf("%d", Options.FirstBlock)
 	}
-	if Options.Last_Block > 0 {
-		options += " --last_block " + fmt.Sprintf("%d", Options.Last_Block)
+	if Options.LastBlock > 0 {
+		options += " --last_block " + fmt.Sprintf("%d", Options.LastBlock)
 	}
 	arguments := ""
 	for _, arg := range args {

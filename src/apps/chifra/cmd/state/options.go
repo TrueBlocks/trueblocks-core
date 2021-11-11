@@ -19,9 +19,9 @@ package state
 type StateOptionsType struct {
 	Parts     []string
 	Changes   bool
-	No_Zero   bool
+	NoZero    bool
 	Call      string
-	Proxy_For string
+	ProxyFor  string
 }
 
 var Options StateOptionsType

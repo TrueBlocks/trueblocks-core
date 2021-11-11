@@ -19,8 +19,8 @@ package list
 type ListOptionsType struct {
 	Count       bool
 	Appearances bool
-	First_Block uint64
-	Last_Block  uint64
+	FirstBlock  uint64
+	LastBlock   uint64
 }
 
 var Options ListOptionsType

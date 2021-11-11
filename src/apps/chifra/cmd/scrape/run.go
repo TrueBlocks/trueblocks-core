@@ -84,7 +84,7 @@ func RunIndexScraper(wg sync.WaitGroup, initialState bool) {
 			if Options.Sleep != 14. {
 				options += " --sleep " + fmt.Sprintf("%g", Options.Sleep)
 			}
-			options += (" --block_cnt " + fmt.Sprintf("%d", Options.Block_Cnt))
+			options += (" --block_cnt " + fmt.Sprintf("%d", Options.BlockCnt))
 			root.PassItOn("blockScrape", options, "")
 			/* -------------- */
 

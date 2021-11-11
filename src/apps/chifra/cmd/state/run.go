@@ -26,14 +26,14 @@ func Run(cmd *cobra.Command, args []string) {
 	if Options.Changes {
 		options += " --changes"
 	}
-	if Options.No_Zero {
+	if Options.NoZero {
 		options += " --no_zero"
 	}
 	if len(Options.Call) > 0 {
 		options += " --call " + Options.Call
 	}
-	if len(Options.Proxy_For) > 0 {
-		options += " --proxy_for " + Options.Proxy_For
+	if len(Options.ProxyFor) > 0 {
+		options += " --proxy_for " + Options.ProxyFor
 	}
 	arguments := ""
 	for _, arg := range args {

@@ -18,7 +18,7 @@ package names
 
 type NamesOptionsType struct {
 	Expand      bool
-	Match_Case  bool
+	MatchCase   bool
 	All         bool
 	Custom      bool
 	Prefund     bool
@@ -26,7 +26,7 @@ type NamesOptionsType struct {
 	Addr        bool
 	Collections bool
 	Tags        bool
-	To_Custom   bool
+	ToCustom    bool
 	Clean       bool
 	Autoname    string
 	Create      bool
