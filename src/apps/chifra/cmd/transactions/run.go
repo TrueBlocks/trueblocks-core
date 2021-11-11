@@ -1,4 +1,4 @@
-package traces
+package transactions
 
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
@@ -12,17 +12,32 @@ package traces
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-/*
- * The file was auto generated with makeClass --gocmds. DO NOT EDIT.
- */
 
-type TracesOptionsType struct {
-	Articulate bool
-	Filter     string
-	Statediff  bool
-	Count      bool
-	Skip_Ddos  bool
-	Max        uint64
+import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
+	"github.com/spf13/cobra"
+)
+
+func Run(cmd *cobra.Command, args []string) {
+	options := ""
+	if Options.Articulate {
+		options += " --articulate"
+	}
+	if Options.Trace {
+		options += " --trace"
+	}
+	if Options.Uniq {
+		options += " --uniq"
+	}
+	if len(Options.Reconcile) > 0 {
+		options += " --reconcile " + Options.Reconcile
+	}
+	if Options.Cache {
+		options += " --cache"
+	}
+	arguments := ""
+	for _, arg := range args {
+		arguments += " " + arg
+	}
+	root.PassItOn("getTrans", options, arguments)
 }
-
-var Options TracesOptionsType

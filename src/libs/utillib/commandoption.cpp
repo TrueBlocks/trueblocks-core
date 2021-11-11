@@ -1072,7 +1072,8 @@ const char* STR_PARAM_YAML =
 
 // TODO: search for go-port
 bool goPortNewCode(const string_q& a) {
-    CStringArray routes = {"explore", "pins", "serve", "scrape", "abis", "when", "receipts"};
+    CStringArray routes = {"explore", "pins",         "serve", "scrape",   "abis",  "when",
+                           "blocks",  "transactions", "logs",  "receipts", "traces"};
     for (auto route : routes) {
         if (a == route)
             return true;

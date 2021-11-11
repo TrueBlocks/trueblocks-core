@@ -17,11 +17,11 @@ package transactions
  */
 
 type TransactionsOptionsType struct {
-	articulate bool
-	trace      bool
-	uniq       bool
-	reconcile  string
-	cache      bool
+	Articulate bool
+	Trace      bool
+	Uniq       bool
+	Reconcile  string
+	Cache      bool
 }
 
 var Options TransactionsOptionsType

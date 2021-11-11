@@ -18,6 +18,7 @@ package cmd
 import (
 	"os"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/logs"
 	"github.com/spf13/cobra"
 )
 
@@ -26,8 +27,8 @@ var logsCmd = &cobra.Command{
 	Use:   usageLogs,
 	Short: shortLogs,
 	Long:  longLogs,
-	Run:   runLogs,
-	Args:  validateLogsArgs,
+	Run:   logs.Run,
+	Args:  logs.Validate,
 }
 
 var usageLogs = `logs [flags] <tx_id> [tx_id...]
@@ -47,18 +48,12 @@ Notes:
   - If the queried node does not store historical state, the results for most older transactions are undefined.
   - If you specify a 32-byte hash, it will be assumed to be a transaction hash, if the transaction is not found, it will be used as a topic.`
 
-type logsOptionsType struct {
-	articulate bool
-}
-
-var LogsOpts logsOptionsType
-
 func init() {
 	logsCmd.SetOut(os.Stderr)
 
 	logsCmd.Flags().SortFlags = false
 	logsCmd.PersistentFlags().SortFlags = false
-	logsCmd.Flags().BoolVarP(&LogsOpts.articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
+	logsCmd.Flags().BoolVarP(&logs.Options.Articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
 	logsCmd.Flags().SortFlags = false
 	logsCmd.PersistentFlags().SortFlags = false
 

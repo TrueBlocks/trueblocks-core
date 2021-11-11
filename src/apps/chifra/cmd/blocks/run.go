@@ -1,3 +1,5 @@
+package blocks
+
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -10,30 +12,64 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-package cmd
 
 import (
+	"fmt"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
 	"github.com/spf13/cobra"
 )
 
-func validateLogsArgs(cmd *cobra.Command, args []string) error {
-	err := root.ValidateGlobals(cmd, args)
-	if err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func runLogs(cmd *cobra.Command, args []string) {
+func Run(cmd *cobra.Command, args []string) {
 	options := ""
-	if LogsOpts.articulate {
+	if Options.Hashes {
+		options += " --hashes"
+	}
+	if Options.Uncles {
+		options += " --uncles"
+	}
+	if Options.Trace {
+		options += " --trace"
+	}
+	if Options.Apps {
+		options += " --apps"
+	}
+	if Options.Uniq {
+		options += " --uniq"
+	}
+	if Options.Uniq_Tx {
+		options += " --uniq_tx"
+	}
+	if Options.Logs {
+		options += " --logs"
+	}
+	for _, e := range Options.Emitter {
+		options += " --emitter " + e
+	}
+	for _, t := range Options.Topic {
+		options += " --topic " + t
+	}
+	if Options.Articulate {
 		options += " --articulate"
+	}
+	if Options.Big_Range != 500 {
+		options += " --big_range " + fmt.Sprintf("%d", Options.Big_Range)
+	}
+	if Options.Count {
+		options += " --count"
+	}
+	if Options.Cache {
+		options += " --cache"
+	}
+	if Options.List > 0 {
+		options += " --list " + fmt.Sprintf("%d", Options.List)
+	}
+	if Options.List_Count != 20 {
+		options += " --list_count " + fmt.Sprintf("%d", Options.List_Count)
 	}
 	arguments := ""
 	for _, arg := range args {
 		arguments += " " + arg
 	}
-	PassItOn("getLogs", options, arguments)
+	root.PassItOn("getBlocks", options, arguments)
 }

@@ -1,3 +1,5 @@
+package logs
+
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -10,46 +12,20 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-package cmd
 
 import (
-	"fmt"
-
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
 	"github.com/spf13/cobra"
 )
 
-func validateTracesArgs(cmd *cobra.Command, args []string) error {
-	err := root.ValidateGlobals(cmd, args)
-	if err != nil {
-		return err
-	}
-	return nil
-}
-
-func runTraces(cmd *cobra.Command, args []string) {
+func Run(cmd *cobra.Command, args []string) {
 	options := ""
-	if TracesOpts.articulate {
+	if Options.Articulate {
 		options += " --articulate"
-	}
-	if len(TracesOpts.filter) > 0 {
-		options += " --filter " + TracesOpts.filter
-	}
-	if TracesOpts.statediff {
-		options += " --statediff"
-	}
-	if TracesOpts.count {
-		options += " --count"
-	}
-	if TracesOpts.skip_ddos {
-		options += " --skip_ddos"
-	}
-	if TracesOpts.max != 250 {
-		options += " --max " + fmt.Sprintf("%d", TracesOpts.max)
 	}
 	arguments := ""
 	for _, arg := range args {
 		arguments += " " + arg
 	}
-	PassItOn("getTraces", options, arguments)
+	root.PassItOn("getLogs", options, arguments)
 }

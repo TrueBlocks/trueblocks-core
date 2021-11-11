@@ -12,17 +12,16 @@ package traces
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-/*
- * The file was auto generated with makeClass --gocmds. DO NOT EDIT.
- */
 
-type TracesOptionsType struct {
-	Articulate bool
-	Filter     string
-	Statediff  bool
-	Count      bool
-	Skip_Ddos  bool
-	Max        uint64
+import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
+	"github.com/spf13/cobra"
+)
+
+func Validate(cmd *cobra.Command, args []string) error {
+	err := root.ValidateGlobals(cmd, args)
+	if err != nil {
+		return err
+	}
+	return nil
 }
-
-var Options TracesOptionsType

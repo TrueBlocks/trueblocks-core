@@ -1,3 +1,5 @@
+package logs
+
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -10,41 +12,17 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-package cmd
 
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
 	"github.com/spf13/cobra"
 )
 
-func validateTransactionsArgs(cmd *cobra.Command, args []string) error {
+func Validate(cmd *cobra.Command, args []string) error {
 	err := root.ValidateGlobals(cmd, args)
 	if err != nil {
 		return err
 	}
-	return nil
-}
 
-func runTransactions(cmd *cobra.Command, args []string) {
-	options := ""
-	if TransactionsOpts.articulate {
-		options += " --articulate"
-	}
-	if TransactionsOpts.trace {
-		options += " --trace"
-	}
-	if TransactionsOpts.uniq {
-		options += " --uniq"
-	}
-	if len(TransactionsOpts.reconcile) > 0 {
-		options += " --reconcile " + TransactionsOpts.reconcile
-	}
-	if TransactionsOpts.cache {
-		options += " --cache"
-	}
-	arguments := ""
-	for _, arg := range args {
-		arguments += " " + arg
-	}
-	PassItOn("getTrans", options, arguments)
+	return nil
 }

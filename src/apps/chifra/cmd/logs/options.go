@@ -17,7 +17,7 @@ package logs
  */
 
 type LogsOptionsType struct {
-	articulate bool
+	Articulate bool
 }
 
 var Options LogsOptionsType

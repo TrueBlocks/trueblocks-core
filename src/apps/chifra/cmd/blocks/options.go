@@ -17,21 +17,21 @@ package blocks
  */
 
 type BlocksOptionsType struct {
-	hashes     bool
-	uncles     bool
-	trace      bool
-	apps       bool
-	uniq       bool
-	uniq_tx    bool
-	logs       bool
-	emitter    []string
-	topic      []string
-	articulate bool
-	big_range  uint64
-	count      bool
-	cache      bool
-	list       uint64
-	list_count uint64
+	Hashes     bool
+	Uncles     bool
+	Trace      bool
+	Apps       bool
+	Uniq       bool
+	Uniq_Tx    bool
+	Logs       bool
+	Emitter    []string
+	Topic      []string
+	Articulate bool
+	Big_Range  uint64
+	Count      bool
+	Cache      bool
+	List       uint64
+	List_Count uint64
 }
 
 var Options BlocksOptionsType
