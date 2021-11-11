@@ -50,7 +50,7 @@ type BlockScrape struct {
 // init sets up default values for the given configuration
 func init() {
 	blockScrapeViper.SetConfigName("blockScrape")
-	blockScrapeViper.SetDefault("Dev.IpfsGateway", "https://ipfs.unchainedindex.io/ipfs")
+	blockScrapeViper.SetDefault("Dev.Ipfs_Gateway", "https://ipfs.unchainedindex.io/ipfs")
 	blockScrapeViper.SetDefault("Dev.MaxPoolSize", runtime.NumCPU()*2)
 	blockScrapeViper.SetDefault("UnchainedIndex.Address", "0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd")
 	blockScrapeViper.SetDefault("UnchainedIndex.ManifestHashEncoding", "0x337f3f32")
@@ -62,7 +62,7 @@ func init() {
 // ReadBlockScrape reads the configuration located in blockScrape.toml file
 func ReadBlockScrape() *BlockScrape {
 	if !blockScrapeRead {
-		MustReadConfig(blockScrapeViper, &cachedBlockScrape)
+		MustReadConfig(blockScrapeViper, &cachedBlockScrape, false)
 
 		// Validate the URL to ensure we have it in the correct format, so that ethClient.Dial
 		// will not panic
