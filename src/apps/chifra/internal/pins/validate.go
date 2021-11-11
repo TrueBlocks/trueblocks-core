@@ -21,32 +21,41 @@ import (
 )
 
 func Validate(cmd *cobra.Command, args []string) error {
+	err := ValidateOptions(&Options)
+	if err != nil {
+		return err
+	}
 
-	if Options.List && Options.Init {
+	return root.ValidateGlobals(cmd, args)
+}
+
+func ValidateOptions(opts *PinsOptionsType) error {
+
+	if opts.List && opts.Init {
 		return validate.Usage("Please choose only a single option.")
 	}
 
-	if !Options.List && !Options.Init {
+	if !opts.List && !opts.Init {
 		return validate.Usage("You must choose at least one of --list or --init.")
 	}
 
-	if Options.All && !Options.Init {
+	if opts.All && !opts.Init {
 		return validate.Usage("Use the --all option only with the --init options.")
 	}
 
-	if Options.InitAll {
+	if opts.InitAll {
 		return validate.Deprecated("--init_all", "--init --all")
 	}
 
-	if Options.Freshen {
+	if opts.Freshen {
 		return validate.Deprecated("--freshen", "--init")
 	}
 
-	if Options.Remote {
+	if opts.Remote {
 		return validate.Deprecated("--remote", "")
 	}
 
-	if Options.Share {
+	if opts.Share {
 		return validate.Usage("The --share option is not yet implemented")
 	}
 
@@ -64,16 +73,11 @@ func Validate(cmd *cobra.Command, args []string) error {
 	//          (pin.bloomHash == newHash ? greenCheck : redX));
 	// }
 
-	err := root.ValidateGlobals(cmd, args)
-	if err != nil {
-		return err
-	}
-
-	utils.TestLogBool("list", Options.List)
-	utils.TestLogBool("init", Options.Init)
-	utils.TestLogBool("all", Options.All)
-	utils.TestLogBool("share", Options.Share)
-	utils.TestLogBool("remote", Options.Remote)
+	utils.TestLogBool("list", opts.List)
+	utils.TestLogBool("init", opts.Init)
+	utils.TestLogBool("all", opts.All)
+	utils.TestLogBool("share", opts.Share)
+	utils.TestLogBool("remote", opts.Remote)
 	// LOG_TEST("sleep", sleep, (sleep == .25))
 
 	return nil

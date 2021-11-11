@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2021-11-09T23:10:04
+date: 2021-11-11T14:37:58
 lastmod:
   - :git
   - lastmod
@@ -51,7 +51,7 @@ Notes:
   - See the API documentation for more information.
 ```
 
-**Source code**: [`serve.go`](https://github.com/TrueBlocks/trueblocks-core/tree/develop/src/apps/chifra/server/serve.go)
+**Source code**: [`serve.go`](https://github.com/TrueBlocks/trueblocks-core/tree/develop/src/apps/chifra/internal/serve.go)
 
 ## chifra scrape
 

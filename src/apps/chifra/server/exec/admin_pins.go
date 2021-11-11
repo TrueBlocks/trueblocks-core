@@ -4,7 +4,6 @@ import (
 	"errors"
 	"net/http"
 	"strconv"
-	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/pins"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib"
@@ -44,12 +43,9 @@ func AdminPins(request *http.Request) (*manifest.PinsList, error) {
 		}
 	}
 
-	err := pins.Validate(nil, []string{}) // pins.ValidateOptions(opts)
+	err := pins.ValidateOptions(opts)
 	if err != nil {
-		// Usage() adds newlines, which are not needed in API mode
-		formattedErr := strings.TrimLeft(err.Error(), "\n ")
-		formattedErr = strings.TrimRight(formattedErr, "\n")
-		return nil, errors.New(formattedErr)
+		return nil, err
 	}
 
 	// Make sure all required directories exist
@@ -67,7 +63,7 @@ func AdminPins(request *http.Request) (*manifest.PinsList, error) {
 	}
 
 	if opts.Init {
-		err := pins.Init(opts.InitAll)
+		err := pins.Init(opts.All)
 		responseError = err
 	}
 
