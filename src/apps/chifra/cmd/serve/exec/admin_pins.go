@@ -44,7 +44,7 @@ func AdminPins(request *http.Request) (*manifest.PinsList, error) {
 		}
 	}
 
-	err := pins.ValidateOptions(opts)
+	err := pins.Validate(nil, []string{}) // pins.ValidateOptions(opts)
 	if err != nil {
 		// Usage() adds newlines, which are not needed in API mode
 		formattedErr := strings.TrimLeft(err.Error(), "\n ")
