@@ -18,7 +18,7 @@ package cmd
 import (
 	"os"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/transactions"
+	transactionsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/transactions"
 	"github.com/spf13/cobra"
 )
 
@@ -27,8 +27,8 @@ var transactionsCmd = &cobra.Command{
 	Use:   usageTransactions,
 	Short: shortTransactions,
 	Long:  longTransactions,
-	Run:   transactions.Run,
-	Args:  transactions.Validate,
+	Run:   transactionsPkg.Run,
+	Args:  transactionsPkg.Validate,
 }
 
 var usageTransactions = `transactions [flags] <tx_id> [tx_id...]
@@ -52,11 +52,11 @@ func init() {
 
 	transactionsCmd.Flags().SortFlags = false
 	transactionsCmd.PersistentFlags().SortFlags = false
-	transactionsCmd.Flags().BoolVarP(&transactions.Options.Articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
-	transactionsCmd.Flags().BoolVarP(&transactions.Options.Trace, "trace", "t", false, "include the transaction's traces in the results")
-	transactionsCmd.Flags().BoolVarP(&transactions.Options.Uniq, "uniq", "u", false, "display a list of uniq addresses found in the transaction instead of the underlying data")
-	transactionsCmd.Flags().StringVarP(&transactions.Options.Reconcile, "reconcile", "r", "", "reconcile the transaction as per the provided address")
-	transactionsCmd.Flags().BoolVarP(&transactions.Options.Cache, "cache", "o", false, "force the results of the query into the tx cache (and the trace cache if applicable)")
+	transactionsCmd.Flags().BoolVarP(&transactionsPkg.Options.Articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
+	transactionsCmd.Flags().BoolVarP(&transactionsPkg.Options.Trace, "trace", "t", false, "include the transaction's traces in the results")
+	transactionsCmd.Flags().BoolVarP(&transactionsPkg.Options.Uniq, "uniq", "u", false, "display a list of uniq addresses found in the transaction instead of the underlying data")
+	transactionsCmd.Flags().StringVarP(&transactionsPkg.Options.Reconcile, "reconcile", "r", "", "reconcile the transaction as per the provided address")
+	transactionsCmd.Flags().BoolVarP(&transactionsPkg.Options.Cache, "cache", "o", false, "force the results of the query into the tx cache (and the trace cache if applicable)")
 	transactionsCmd.Flags().SortFlags = false
 	transactionsCmd.PersistentFlags().SortFlags = false
 

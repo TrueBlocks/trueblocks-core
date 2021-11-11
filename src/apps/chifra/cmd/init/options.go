@@ -17,7 +17,7 @@ package init
  */
 
 type InitOptionsType struct {
-	all bool
+	All bool
 }
 
 var Options InitOptionsType

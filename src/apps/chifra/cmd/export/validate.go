@@ -1,3 +1,5 @@
+package export
+
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -10,7 +12,6 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-package cmd
 
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
@@ -18,27 +19,19 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func validateChunksArgs(cmd *cobra.Command, args []string) error {
-	list := ChunksOpts.list
-	check := ChunksOpts.check
-	extract := ChunksOpts.extract
-	stats := ChunksOpts.stats
-
-	if !list && !check && len(extract) == 0 {
-		return validate.Usage("You must choose at least one of {0}.", "--list, --extract, or --check")
-	}
-
-	if (list && check) || (list && len(extract) > 0) {
-		return validate.Usage("Please choose just one of {0}.", "--list, --extract, or --check")
-	}
-
-	if stats && !list {
-		return validate.Usage("The {0} option is only available with the {1} option.", "--stats", "--list")
-	}
-
-	err := validate.ValidateEnum("--extract", ChunksOpts.extract, "[header|addr_table|app_table|chunks|blooms]")
+func Validate(cmd *cobra.Command, args []string) error {
+	err := validate.ValidateAtLeastOneAddr(args)
 	if err != nil {
 		return err
+	}
+
+	err = validate.ValidateEnum("--summarize_by", Options.Summarize_By, "[yearly|quarterly|monthly|weekly|daily|hourly|blockly|tx]")
+	if err != nil {
+		return err
+	}
+
+	if len(Options.Summarize_By) > 0 && !Options.Accounting {
+		return validate.Usage("You may use --summarized_by only with the --accounting option.")
 	}
 
 	err = root.ValidateGlobals(cmd, args)
@@ -47,28 +40,4 @@ func validateChunksArgs(cmd *cobra.Command, args []string) error {
 	}
 
 	return nil
-}
-
-func runChunks(cmd *cobra.Command, args []string) {
-	options := ""
-	if ChunksOpts.list {
-		options += " --list"
-	}
-	if ChunksOpts.check {
-		options += " --check"
-	}
-	if len(ChunksOpts.extract) > 0 {
-		options += " --extract " + ChunksOpts.extract
-	}
-	if ChunksOpts.save {
-		options += " --save"
-	}
-	if ChunksOpts.stats {
-		options += " --stats"
-	}
-	arguments := ""
-	for _, arg := range args {
-		arguments += " " + arg
-	}
-	PassItOn("chunkMan", options, arguments)
 }

@@ -18,6 +18,7 @@ package cmd
 import (
 	"os"
 
+	chunksPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/chunks"
 	"github.com/spf13/cobra"
 )
 
@@ -26,8 +27,8 @@ var chunksCmd = &cobra.Command{
 	Use:   usageChunks,
 	Short: shortChunks,
 	Long:  longChunks,
-	Run:   runChunks,
-	Args:  validateChunksArgs,
+	Run:   chunksPkg.Run,
+	Args:  chunksPkg.Validate,
 }
 
 var usageChunks = `chunks [flags] <block> [block...]
@@ -44,27 +45,17 @@ var notesChunks = `
 Notes:
   - Only a single block in a given chunk needs to be supplied.`
 
-type chunksOptionsType struct {
-	list    bool
-	check   bool
-	extract string
-	stats   bool
-	save    bool
-}
-
-var ChunksOpts chunksOptionsType
-
 func init() {
 	chunksCmd.SetOut(os.Stderr)
 
 	chunksCmd.Flags().SortFlags = false
 	chunksCmd.PersistentFlags().SortFlags = false
-	chunksCmd.Flags().BoolVarP(&ChunksOpts.list, "list", "l", false, "list the bloom and index hashes from local cache or IPFS")
-	chunksCmd.Flags().BoolVarP(&ChunksOpts.check, "check", "c", false, "check the validity of the chunk or bloom")
-	chunksCmd.Flags().StringVarP(&ChunksOpts.extract, "extract", "e", "", `show some or all of the contents of the chunk or bloom filters
+	chunksCmd.Flags().BoolVarP(&chunksPkg.Options.List, "list", "l", false, "list the bloom and index hashes from local cache or IPFS")
+	chunksCmd.Flags().BoolVarP(&chunksPkg.Options.Check, "check", "c", false, "check the validity of the chunk or bloom")
+	chunksCmd.Flags().StringVarP(&chunksPkg.Options.Extract, "extract", "e", "", `show some or all of the contents of the chunk or bloom filters
 One of [ header | addr_table | app_table | chunks | blooms ]`)
-	chunksCmd.Flags().BoolVarP(&ChunksOpts.stats, "stats", "s", false, "for the --list option only, display statistics about each chunk or bloom")
-	chunksCmd.Flags().BoolVarP(&ChunksOpts.save, "save", "a", false, "for the --extract option only, save the entire chunk to a similarly named file as well as display")
+	chunksCmd.Flags().BoolVarP(&chunksPkg.Options.Stats, "stats", "s", false, "for the --list option only, display statistics about each chunk or bloom")
+	chunksCmd.Flags().BoolVarP(&chunksPkg.Options.Save, "save", "a", false, "for the --extract option only, save the entire chunk to a similarly named file as well as display")
 	chunksCmd.Flags().SortFlags = false
 	chunksCmd.PersistentFlags().SortFlags = false
 

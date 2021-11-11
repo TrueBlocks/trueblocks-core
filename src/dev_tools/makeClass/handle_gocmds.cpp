@@ -26,17 +26,12 @@ extern const char* STR_REPLACE_OPTS;
 bool COptions::handle_gocmds_cmd(const CCommandOption& p) {
     string_q source = asciiFileToString(getTemplatePath("blank.go"));
     replaceAll(source, "[{LONG}]", "Purpose:\n  " + p.description);
-    if ((goPortNewCode(p.api_route))) {
-        replaceAll(source, "[{OPT_DEF}]", "");
-        replaceAll(source, "[{IMPORTS}]",
-                   "\t\"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/[{ROUTE}]\"\n[{IMPORTS}]");
-        replaceAll(source, STR_REPLACE_OPTS, "");
-        replaceAll(source, "run[{PROPER}]", "[{ROUTE}].Run");
-        replaceAll(source, "validate[{PROPER}]Args", "[{ROUTE}].Validate");
-    } else {
-        replaceAll(source, "[{OPT_DEF}]", "var [{PROPER}]Opts [{ROUTE}]OptionsType\n\n");
-        replaceAll(source, "[{OPT_FIELDS}]", get_optfields(p));
-    }
+    replaceAll(source, "[{OPT_DEF}]", "");
+    replaceAll(source, "[{IMPORTS}]",
+               "\t[{ROUTE}]Pkg \"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/[{ROUTE}]\"\n[{IMPORTS}]");
+    replaceAll(source, STR_REPLACE_OPTS, "");
+    replaceAll(source, "run[{PROPER}]", "[{ROUTE}]Pkg.Run");
+    replaceAll(source, "validate[{PROPER}]Args", "[{ROUTE}]Pkg.Validate");
     replaceAll(source, "[{COPY_OPTS}]", get_copyopts(p));
     replaceAll(source, "[{SET_OPTS}]", get_setopts(p));
     replaceAll(source, "[{LOG_OPTS}]", get_logopts(p));
@@ -289,16 +284,10 @@ string_q get_setopts(const CCommandOption& cmd) {
         if (p.option_type != "positional") {
             replace(p.longName, "deleteMe", "delete");
 
-            bool isNewCode = goPortNewCode(p.api_route);
             os << "\t[{ROUTE}]Cmd.Flags().";
             os << p.go_flagtype;
-            if (isNewCode) {
-                os << "(&[{ROUTE}].Options.";
-                os << toProper(p.longName) << ", ";
-            } else {
-                os << "(&[{PROPER}]Opts.";
-                os << p.Format("[{LONGNAME}], ");
-            }
+            os << "(&[{ROUTE}]Pkg.Options.";
+            os << toProper(p.longName) << ", ";
             os << p.Format("\"[{LONGNAME}]\", ");
             os << p.Format("\"[{HOTKEY}]\", ");
             os << get_goDefault(p) << ", ";

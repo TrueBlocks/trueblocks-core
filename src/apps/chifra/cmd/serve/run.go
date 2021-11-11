@@ -21,6 +21,13 @@ import (
 	"github.com/spf13/cobra"
 )
 
+// Run runs serve command and sends any errors to log.Fatal
+func Run(cmd *cobra.Command, args []string) {
+	Options.Port = Options.Port
+	PrintServeSettings()
+	log.Fatal(RunInternal(Options.Port))
+}
+
 func PrintServeSettings() {
 	if Options.Port != ":8080" {
 		log.Println(Green, "port:        ", Off, Options.Port)
@@ -30,17 +37,10 @@ func PrintServeSettings() {
 	log.Print("\n")
 	log.Println(Green, "Starting API server on port "+Options.Port, Off)
 	log.Println(Green, "Cache Path:   ", Off, config.ReadTrueBlocks().Settings.CachePath)
-	log.Println(Green, "Index Path:   ", Off, config.ReadTrueBlocks().Settings.CachePath)
+	log.Println(Green, "Index Path:   ", Off, config.ReadTrueBlocks().Settings.IndexPath)
 	log.Println(Green, "Rpc Provider: ", Off, config.ReadTrueBlocks().Settings.RpcProvider)
 	log.Println(Green, "Progress:     ", Off, meta.Client, ", ", meta.Finalized, ", ", meta.Staging, ", ", meta.Unripe)
 
-}
-
-// Run runs serve command and sends any errors to log.Fatal
-func Run(cmd *cobra.Command, args []string) {
-	Options.Port = Options.Port
-	PrintServeSettings()
-	log.Fatal(RunInternal(Options.Port))
 }
 
 // func ParseOptions() error {

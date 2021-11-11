@@ -1,3 +1,5 @@
+package quotes
+
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -10,21 +12,30 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-package cmd
 
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/spf13/cobra"
 )
 
-func validateSlurpArgs(cmd *cobra.Command, args []string) error {
-	err := validate.ValidateAtLeastOneAddr(args)
+func Validate(cmd *cobra.Command, args []string) error {
+	if len(root.Options.File) == 0 &&
+		!Options.Freshen &&
+		len(Options.Period) == 0 &&
+		len(Options.Pair) == 0 &&
+		len(Options.Feed) == 0 &&
+		len(output.Format) == 0 {
+		return validate.Usage("You must provide at least one command line option")
+	}
+
+	err := validate.ValidateEnum("--period", Options.Period, "[5|15|30|60|120|240|1440|10080|hourly|daily|weekly]")
 	if err != nil {
 		return err
 	}
 
-	err = validate.ValidateEnumSlice("--types", SlurpOpts.types, "[ext|int|token|nfts|miner|uncles|all]")
+	err = validate.ValidateEnum("--types", Options.Feed, "[poloniex|maker|tellor]")
 	if err != nil {
 		return err
 	}
@@ -35,19 +46,4 @@ func validateSlurpArgs(cmd *cobra.Command, args []string) error {
 	}
 
 	return nil
-}
-
-func runSlurp(cmd *cobra.Command, args []string) {
-	options := ""
-	for _, t := range SlurpOpts.types {
-		options += " --types " + t
-	}
-	if SlurpOpts.appearances {
-		options += " --appearances"
-	}
-	arguments := ""
-	for _, arg := range args {
-		arguments += " " + arg
-	}
-	PassItOn("ethslurp", options, arguments)
 }

@@ -18,6 +18,7 @@ package cmd
 import (
 	"os"
 
+	initPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/init"
 	"github.com/spf13/cobra"
 )
 
@@ -26,8 +27,8 @@ var initCmd = &cobra.Command{
 	Use:   usageInit,
 	Short: shortInit,
 	Long:  longInit,
-	Run:   runInit,
-	Args:  validateInitArgs,
+	Run:   initPkg.Run,
+	Args:  initPkg.Validate,
 }
 
 var usageInit = `init [flags]`
@@ -42,18 +43,12 @@ Notes:
   - chifra init is an alias for the chifra pins --init command.
   - See chifra pins --help for more information.`
 
-type initOptionsType struct {
-	all bool
-}
-
-var InitOpts initOptionsType
-
 func init() {
 	initCmd.SetOut(os.Stderr)
 
 	initCmd.Flags().SortFlags = false
 	initCmd.PersistentFlags().SortFlags = false
-	initCmd.Flags().BoolVarP(&InitOpts.all, "all", "a", false, "in addition to Bloom filters, download full index chunks")
+	initCmd.Flags().BoolVarP(&initPkg.Options.All, "all", "a", false, "in addition to Bloom filters, download full index chunks")
 	initCmd.Flags().SortFlags = false
 	initCmd.PersistentFlags().SortFlags = false
 

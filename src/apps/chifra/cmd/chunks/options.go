@@ -17,11 +17,11 @@ package chunks
  */
 
 type ChunksOptionsType struct {
-	list    bool
-	check   bool
-	extract string
-	stats   bool
-	save    bool
+	List    bool
+	Check   bool
+	Extract string
+	Stats   bool
+	Save    bool
 }
 
 var Options ChunksOptionsType

@@ -18,7 +18,7 @@ package cmd
 import (
 	"os"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/abis"
+	abisPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/abis"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
 )
@@ -28,8 +28,8 @@ var abisCmd = &cobra.Command{
 	Use:   usageAbis,
 	Short: shortAbis,
 	Long:  longAbis,
-	Run:   abis.Run,
-	Args:  abis.Validate,
+	Run:   abisPkg.Run,
+	Args:  abisPkg.Validate,
 }
 
 var usageAbis = `abis [flags] <address> [address...]
@@ -52,11 +52,11 @@ func init() {
 
 	abisCmd.Flags().SortFlags = false
 	abisCmd.PersistentFlags().SortFlags = false
-	abisCmd.Flags().BoolVarP(&abis.Options.Known, "known", "k", false, "load common 'known' ABIs from cache")
-	abisCmd.Flags().BoolVarP(&abis.Options.Sol, "sol", "s", false, "extract the abi definition from the provided .sol file(s)")
-	abisCmd.Flags().StringSliceVarP(&abis.Options.Find, "find", "f", nil, "search for function or event declarations given a four- or 32-byte code(s)")
-	abisCmd.Flags().BoolVarP(&abis.Options.Source, "source", "o", false, "show the source of the ABI information (hidden)")
-	abisCmd.Flags().BoolVarP(&abis.Options.Classes, "classes", "c", false, "generate classDefinitions folder and class definitions (hidden)")
+	abisCmd.Flags().BoolVarP(&abisPkg.Options.Known, "known", "k", false, "load common 'known' ABIs from cache")
+	abisCmd.Flags().BoolVarP(&abisPkg.Options.Sol, "sol", "s", false, "extract the abi definition from the provided .sol file(s)")
+	abisCmd.Flags().StringSliceVarP(&abisPkg.Options.Find, "find", "f", nil, "search for function or event declarations given a four- or 32-byte code(s)")
+	abisCmd.Flags().BoolVarP(&abisPkg.Options.Source, "source", "o", false, "show the source of the ABI information (hidden)")
+	abisCmd.Flags().BoolVarP(&abisPkg.Options.Classes, "classes", "c", false, "generate classDefinitions folder and class definitions (hidden)")
 	if !utils.IsTestMode() {
 		abisCmd.Flags().MarkHidden("source")
 		abisCmd.Flags().MarkHidden("classes")

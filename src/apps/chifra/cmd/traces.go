@@ -18,7 +18,7 @@ package cmd
 import (
 	"os"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/traces"
+	tracesPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/traces"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
 )
@@ -28,8 +28,8 @@ var tracesCmd = &cobra.Command{
 	Use:   usageTraces,
 	Short: shortTraces,
 	Long:  longTraces,
-	Run:   traces.Run,
-	Args:  traces.Validate,
+	Run:   tracesPkg.Run,
+	Args:  tracesPkg.Validate,
 }
 
 var usageTraces = `traces [flags] <tx_id> [tx_id...]
@@ -55,12 +55,12 @@ func init() {
 
 	tracesCmd.Flags().SortFlags = false
 	tracesCmd.PersistentFlags().SortFlags = false
-	tracesCmd.Flags().BoolVarP(&traces.Options.Articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
-	tracesCmd.Flags().StringVarP(&traces.Options.Filter, "filter", "f", "", "call the node's trace_filter routine with bang-separated filter")
-	tracesCmd.Flags().BoolVarP(&traces.Options.Statediff, "statediff", "d", false, "export state diff traces (not implemented)")
-	tracesCmd.Flags().BoolVarP(&traces.Options.Count, "count", "c", false, "show the number of traces for the transaction only (fast)")
-	tracesCmd.Flags().BoolVarP(&traces.Options.Skip_Ddos, "skip_ddos", "s", false, "skip over the 2016 ddos during export ('on' by default) (hidden)")
-	tracesCmd.Flags().Uint64VarP(&traces.Options.Max, "max", "m", 250, "if --skip_ddos is on, this many traces defines what a ddos transaction is (hidden)")
+	tracesCmd.Flags().BoolVarP(&tracesPkg.Options.Articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
+	tracesCmd.Flags().StringVarP(&tracesPkg.Options.Filter, "filter", "f", "", "call the node's trace_filter routine with bang-separated filter")
+	tracesCmd.Flags().BoolVarP(&tracesPkg.Options.Statediff, "statediff", "d", false, "export state diff traces (not implemented)")
+	tracesCmd.Flags().BoolVarP(&tracesPkg.Options.Count, "count", "c", false, "show the number of traces for the transaction only (fast)")
+	tracesCmd.Flags().BoolVarP(&tracesPkg.Options.Skip_Ddos, "skip_ddos", "s", false, "skip over the 2016 ddos during export ('on' by default) (hidden)")
+	tracesCmd.Flags().Uint64VarP(&tracesPkg.Options.Max, "max", "m", 250, "if --skip_ddos is on, this many traces defines what a ddos transaction is (hidden)")
 	if !utils.IsTestMode() {
 		tracesCmd.Flags().MarkHidden("skip_ddos")
 		tracesCmd.Flags().MarkHidden("max")

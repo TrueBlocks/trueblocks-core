@@ -1,3 +1,5 @@
+package chunks
+
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -10,34 +12,32 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-package cmd
 
 import (
-	"os"
-
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
 	"github.com/spf13/cobra"
 )
 
-type gendocOptionsType struct {
-	readmes     bool
-	completions bool
-	manpages    bool
-}
-
-var GendocOpts gendocOptionsType
-
-var gendocCmd = &cobra.Command{
-	Use:   "gendoc",
-	Short: "Generate docs",
-	Run:   runGendoc,
-	Args:  validateGendocArgs,
-}
-
-func init() {
-	listCmd.SetOut(os.Stderr)
-	gendocCmd.Flags().BoolVarP(&GendocOpts.readmes, "reamdes", "r", true, "generate readme docs")
-	gendocCmd.Flags().BoolVarP(&GendocOpts.completions, "completions", "c", true, "generate completions")
-	gendocCmd.Flags().BoolVarP(&GendocOpts.manpages, "manpages", "m", true, "generate man pages")
-	gendocCmd.SetUsageTemplate(UsageWithNotes(""))
-	rootCmd.AddCommand(gendocCmd)
+func Run(cmd *cobra.Command, args []string) {
+	options := ""
+	if Options.List {
+		options += " --list"
+	}
+	if Options.Check {
+		options += " --check"
+	}
+	if len(Options.Extract) > 0 {
+		options += " --extract " + Options.Extract
+	}
+	if Options.Save {
+		options += " --save"
+	}
+	if Options.Stats {
+		options += " --stats"
+	}
+	arguments := ""
+	for _, arg := range args {
+		arguments += " " + arg
+	}
+	root.PassItOn("chunkMan", options, arguments)
 }

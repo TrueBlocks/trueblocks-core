@@ -18,7 +18,7 @@ package cmd
 import (
 	"os"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/pins"
+	pinsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/pins"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
 )
@@ -28,8 +28,8 @@ var pinsCmd = &cobra.Command{
 	Use:   usagePins,
 	Short: shortPins,
 	Long:  longPins,
-	Run:   pins.Run,
-	Args:  pins.Validate,
+	Run:   pinsPkg.Run,
+	Args:  pinsPkg.Validate,
 }
 
 var usagePins = `pins [flags]`
@@ -50,14 +50,14 @@ func init() {
 
 	pinsCmd.Flags().SortFlags = false
 	pinsCmd.PersistentFlags().SortFlags = false
-	pinsCmd.Flags().BoolVarP(&pins.Options.List, "list", "l", false, "list the bloom and index hashes from local cache or IPFS")
-	pinsCmd.Flags().BoolVarP(&pins.Options.Init, "init", "i", false, "download the blooms or index chunks from IPFS")
-	pinsCmd.Flags().BoolVarP(&pins.Options.All, "all", "a", false, "in addition to Bloom filters, download full index chunks")
-	pinsCmd.Flags().BoolVarP(&pins.Options.Share, "share", "S", false, "share downloaded data by pinning it to IPFS (the IPFS daemon must be running)")
-	pinsCmd.Flags().Float64VarP(&pins.Options.Sleep, "sleep", "s", .25, "throttle requests by this many seconds")
-	pinsCmd.Flags().BoolVarP(&pins.Options.Freshen, "freshen", "f", false, "check for new bloom or index chunks and download if available (hidden)")
-	pinsCmd.Flags().BoolVarP(&pins.Options.Remote, "remote", "r", false, "for --list mode only, recover the manifest from IPFS via UnchainedIndex smart contract (hidden)")
-	pinsCmd.Flags().BoolVarP(&pins.Options.Init_All, "init_all", "n", false, "use --init --all instead (hidden)")
+	pinsCmd.Flags().BoolVarP(&pinsPkg.Options.List, "list", "l", false, "list the bloom and index hashes from local cache or IPFS")
+	pinsCmd.Flags().BoolVarP(&pinsPkg.Options.Init, "init", "i", false, "download the blooms or index chunks from IPFS")
+	pinsCmd.Flags().BoolVarP(&pinsPkg.Options.All, "all", "a", false, "in addition to Bloom filters, download full index chunks")
+	pinsCmd.Flags().BoolVarP(&pinsPkg.Options.Share, "share", "S", false, "share downloaded data by pinning it to IPFS (the IPFS daemon must be running)")
+	pinsCmd.Flags().Float64VarP(&pinsPkg.Options.Sleep, "sleep", "s", .25, "throttle requests by this many seconds")
+	pinsCmd.Flags().BoolVarP(&pinsPkg.Options.Freshen, "freshen", "f", false, "check for new bloom or index chunks and download if available (hidden)")
+	pinsCmd.Flags().BoolVarP(&pinsPkg.Options.Remote, "remote", "r", false, "for --list mode only, recover the manifest from IPFS via UnchainedIndex smart contract (hidden)")
+	pinsCmd.Flags().BoolVarP(&pinsPkg.Options.Init_All, "init_all", "n", false, "use --init --all instead (hidden)")
 	if !utils.IsTestMode() {
 		pinsCmd.Flags().MarkHidden("freshen")
 		pinsCmd.Flags().MarkHidden("remote")

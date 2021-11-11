@@ -18,7 +18,7 @@ package cmd
 import (
 	"os"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/blocks"
+	blocksPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/blocks"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
 )
@@ -28,8 +28,8 @@ var blocksCmd = &cobra.Command{
 	Use:   usageBlocks,
 	Short: shortBlocks,
 	Long:  longBlocks,
-	Run:   blocks.Run,
-	Args:  blocks.Validate,
+	Run:   blocksPkg.Run,
+	Args:  blocksPkg.Validate,
 }
 
 var usageBlocks = `blocks [flags] <block> [block...]
@@ -57,21 +57,21 @@ func init() {
 
 	blocksCmd.Flags().SortFlags = false
 	blocksCmd.PersistentFlags().SortFlags = false
-	blocksCmd.Flags().BoolVarP(&blocks.Options.Hashes, "hashes", "e", false, "display only transaction hashes, default is to display full transaction detail")
-	blocksCmd.Flags().BoolVarP(&blocks.Options.Uncles, "uncles", "U", false, "display uncle blocks (if any) instead of the requested block")
-	blocksCmd.Flags().BoolVarP(&blocks.Options.Trace, "trace", "t", false, "export the traces from the block as opposed to the block data")
-	blocksCmd.Flags().BoolVarP(&blocks.Options.Apps, "apps", "s", false, "display only the list of address appearances in the block")
-	blocksCmd.Flags().BoolVarP(&blocks.Options.Uniq, "uniq", "u", false, "display only the list of uniq address appearances in the block")
-	blocksCmd.Flags().BoolVarP(&blocks.Options.Uniq_Tx, "uniq_tx", "n", false, "display only the list of uniq address appearances in each transaction")
-	blocksCmd.Flags().BoolVarP(&blocks.Options.Logs, "logs", "g", false, "display only the logs found in the block(s) (hidden)")
-	blocksCmd.Flags().StringSliceVarP(&blocks.Options.Emitter, "emitter", "m", nil, "for the --logs option only, filter logs to show only those logs emitted by the given address(es) (hidden)")
-	blocksCmd.Flags().StringSliceVarP(&blocks.Options.Topic, "topic", "p", nil, "for the --logs option only, filter logs to show only those with this topic(s) (hidden)")
-	blocksCmd.Flags().BoolVarP(&blocks.Options.Articulate, "articulate", "a", false, "for the --logs option only, articulate the retrieved data if ABIs can be found (hidden)")
-	blocksCmd.Flags().Uint64VarP(&blocks.Options.Big_Range, "big_range", "r", 500, "for the --logs option only, allow for block ranges larger than 500 (hidden)")
-	blocksCmd.Flags().BoolVarP(&blocks.Options.Count, "count", "c", false, "display the number of the lists of appearances for --apps, --uniq, or --uniq_tx")
-	blocksCmd.Flags().BoolVarP(&blocks.Options.Cache, "cache", "o", false, "force a write of the block to the cache")
-	blocksCmd.Flags().Uint64VarP(&blocks.Options.List, "list", "l", 0, "summary list of blocks running backwards from latest block minus num (hidden)")
-	blocksCmd.Flags().Uint64VarP(&blocks.Options.List_Count, "list_count", "C", 20, "the number of blocks to report for --list option (hidden)")
+	blocksCmd.Flags().BoolVarP(&blocksPkg.Options.Hashes, "hashes", "e", false, "display only transaction hashes, default is to display full transaction detail")
+	blocksCmd.Flags().BoolVarP(&blocksPkg.Options.Uncles, "uncles", "U", false, "display uncle blocks (if any) instead of the requested block")
+	blocksCmd.Flags().BoolVarP(&blocksPkg.Options.Trace, "trace", "t", false, "export the traces from the block as opposed to the block data")
+	blocksCmd.Flags().BoolVarP(&blocksPkg.Options.Apps, "apps", "s", false, "display only the list of address appearances in the block")
+	blocksCmd.Flags().BoolVarP(&blocksPkg.Options.Uniq, "uniq", "u", false, "display only the list of uniq address appearances in the block")
+	blocksCmd.Flags().BoolVarP(&blocksPkg.Options.Uniq_Tx, "uniq_tx", "n", false, "display only the list of uniq address appearances in each transaction")
+	blocksCmd.Flags().BoolVarP(&blocksPkg.Options.Logs, "logs", "g", false, "display only the logs found in the block(s) (hidden)")
+	blocksCmd.Flags().StringSliceVarP(&blocksPkg.Options.Emitter, "emitter", "m", nil, "for the --logs option only, filter logs to show only those logs emitted by the given address(es) (hidden)")
+	blocksCmd.Flags().StringSliceVarP(&blocksPkg.Options.Topic, "topic", "p", nil, "for the --logs option only, filter logs to show only those with this topic(s) (hidden)")
+	blocksCmd.Flags().BoolVarP(&blocksPkg.Options.Articulate, "articulate", "a", false, "for the --logs option only, articulate the retrieved data if ABIs can be found (hidden)")
+	blocksCmd.Flags().Uint64VarP(&blocksPkg.Options.Big_Range, "big_range", "r", 500, "for the --logs option only, allow for block ranges larger than 500 (hidden)")
+	blocksCmd.Flags().BoolVarP(&blocksPkg.Options.Count, "count", "c", false, "display the number of the lists of appearances for --apps, --uniq, or --uniq_tx")
+	blocksCmd.Flags().BoolVarP(&blocksPkg.Options.Cache, "cache", "o", false, "force a write of the block to the cache")
+	blocksCmd.Flags().Uint64VarP(&blocksPkg.Options.List, "list", "l", 0, "summary list of blocks running backwards from latest block minus num (hidden)")
+	blocksCmd.Flags().Uint64VarP(&blocksPkg.Options.List_Count, "list_count", "C", 20, "the number of blocks to report for --list option (hidden)")
 	if !utils.IsTestMode() {
 		blocksCmd.Flags().MarkHidden("logs")
 		blocksCmd.Flags().MarkHidden("emitter")

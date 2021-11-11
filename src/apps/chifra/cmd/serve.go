@@ -18,7 +18,7 @@ package cmd
 import (
 	"os"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/serve"
+	servePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/serve"
 	"github.com/spf13/cobra"
 )
 
@@ -27,8 +27,8 @@ var serveCmd = &cobra.Command{
 	Use:   usageServe,
 	Short: shortServe,
 	Long:  longServe,
-	Run:   serve.Run,
-	Args:  serve.Validate,
+	Run:   servePkg.Run,
+	Args:  servePkg.Validate,
 }
 
 var usageServe = `serve [flags]`
@@ -48,7 +48,7 @@ func init() {
 
 	serveCmd.Flags().SortFlags = false
 	serveCmd.PersistentFlags().SortFlags = false
-	serveCmd.Flags().StringVarP(&serve.Options.Port, "port", "p", ":8080", "specify the server's port")
+	serveCmd.Flags().StringVarP(&servePkg.Options.Port, "port", "p", ":8080", "specify the server's port")
 	serveCmd.Flags().SortFlags = false
 	serveCmd.PersistentFlags().SortFlags = false
 

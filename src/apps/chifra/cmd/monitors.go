@@ -18,6 +18,7 @@ package cmd
 import (
 	"os"
 
+	monitorsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/monitors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
 )
@@ -27,8 +28,8 @@ var monitorsCmd = &cobra.Command{
 	Use:   usageMonitors,
 	Short: shortMonitors,
 	Long:  longMonitors,
-	Run:   runMonitors,
-	Args:  validateMonitorsArgs,
+	Run:   monitorsPkg.Run,
+	Args:  monitorsPkg.Validate,
 }
 
 var usageMonitors = `monitors [flags] <address> [address...]
@@ -46,32 +47,19 @@ Notes:
   - An address must start with '0x' and be forty-two characters long.
   - If no address is presented to the --clean command, all monitors will be cleaned.`
 
-type monitorsOptionsType struct {
-	appearances bool
-	count       bool
-	clean       bool
-	delete      bool
-	undelete    bool
-	remove      bool
-	first_block uint64
-	last_block  uint64
-}
-
-var MonitorsOpts monitorsOptionsType
-
 func init() {
 	monitorsCmd.SetOut(os.Stderr)
 
 	monitorsCmd.Flags().SortFlags = false
 	monitorsCmd.PersistentFlags().SortFlags = false
-	monitorsCmd.Flags().BoolVarP(&MonitorsOpts.appearances, "appearances", "p", false, "export a list of appearances")
-	monitorsCmd.Flags().BoolVarP(&MonitorsOpts.count, "count", "U", false, "present only the number of records")
-	monitorsCmd.Flags().BoolVarP(&MonitorsOpts.clean, "clean", "", false, "clean (i.e. remove duplicate appearances) from monitors")
-	monitorsCmd.Flags().BoolVarP(&MonitorsOpts.delete, "delete", "", false, "delete a monitor, but do not remove it")
-	monitorsCmd.Flags().BoolVarP(&MonitorsOpts.undelete, "undelete", "", false, "undelete a previously deleted monitor")
-	monitorsCmd.Flags().BoolVarP(&MonitorsOpts.remove, "remove", "", false, "remove a previously deleted monitor")
-	monitorsCmd.Flags().Uint64VarP(&MonitorsOpts.first_block, "first_block", "F", 0, "first block to process (inclusive) (hidden)")
-	monitorsCmd.Flags().Uint64VarP(&MonitorsOpts.last_block, "last_block", "L", 0, "last block to process (inclusive) (hidden)")
+	monitorsCmd.Flags().BoolVarP(&monitorsPkg.Options.Appearances, "appearances", "p", false, "export a list of appearances")
+	monitorsCmd.Flags().BoolVarP(&monitorsPkg.Options.Count, "count", "U", false, "present only the number of records")
+	monitorsCmd.Flags().BoolVarP(&monitorsPkg.Options.Clean, "clean", "", false, "clean (i.e. remove duplicate appearances) from monitors")
+	monitorsCmd.Flags().BoolVarP(&monitorsPkg.Options.Delete, "delete", "", false, "delete a monitor, but do not remove it")
+	monitorsCmd.Flags().BoolVarP(&monitorsPkg.Options.Undelete, "undelete", "", false, "undelete a previously deleted monitor")
+	monitorsCmd.Flags().BoolVarP(&monitorsPkg.Options.Remove, "remove", "", false, "remove a previously deleted monitor")
+	monitorsCmd.Flags().Uint64VarP(&monitorsPkg.Options.First_Block, "first_block", "F", 0, "first block to process (inclusive) (hidden)")
+	monitorsCmd.Flags().Uint64VarP(&monitorsPkg.Options.Last_Block, "last_block", "L", 0, "last block to process (inclusive) (hidden)")
 	if !utils.IsTestMode() {
 		monitorsCmd.Flags().MarkHidden("first_block")
 		monitorsCmd.Flags().MarkHidden("last_block")

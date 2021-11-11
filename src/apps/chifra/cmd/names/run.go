@@ -1,3 +1,5 @@
+package names
+
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -10,99 +12,68 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-package cmd
 
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/spf13/cobra"
 )
 
-func anyBase() bool {
-	return NamesOpts.expand ||
-		NamesOpts.match_case ||
-		NamesOpts.all ||
-		NamesOpts.custom ||
-		NamesOpts.prefund ||
-		NamesOpts.named ||
-		NamesOpts.addr ||
-		NamesOpts.to_custom ||
-		NamesOpts.clean
-}
-
-func validateNamesArgs(cmd *cobra.Command, args []string) error {
-	if NamesOpts.tags && anyBase() {
-		return validate.Usage("Do not use the --tags option with any other option.")
-	}
-
-	if NamesOpts.collections && anyBase() {
-		return validate.Usage("Do not use the --collection option with any other option.")
-	}
-
-	err := root.ValidateGlobals(cmd, args)
-	if err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func runNames(cmd *cobra.Command, args []string) {
+func Run(cmd *cobra.Command, args []string) {
 	options := ""
-	if NamesOpts.expand {
+	if Options.Expand {
 		options += " --expand"
 	}
-	if NamesOpts.match_case {
+	if Options.Match_Case {
 		options += " --match_case"
 	}
-	if NamesOpts.all {
+	if Options.All {
 		options += " --all"
 	}
-	if NamesOpts.custom {
+	if Options.Custom {
 		options += " --custom"
 	}
-	if NamesOpts.prefund {
+	if Options.Prefund {
 		options += " --prefund"
 	}
-	if NamesOpts.named {
+	if Options.Named {
 		options += " --named"
 	}
-	if NamesOpts.addr {
+	if Options.Addr {
 		options += " --addr"
 	}
-	if NamesOpts.collections {
+	if Options.Collections {
 		options += " --collections"
 	}
-	if NamesOpts.tags {
+	if Options.Tags {
 		options += " --tags"
 	}
-	if NamesOpts.to_custom {
+	if Options.To_Custom {
 		options += " --to_custom"
 	}
-	if NamesOpts.clean {
+	if Options.Clean {
 		options += " --clean"
 	}
-	if NamesOpts.create {
+	if Options.Create {
 		options += " --create"
 	}
-	if NamesOpts.delete {
+	if Options.Delete {
 		options += " --delete"
 	}
-	if NamesOpts.update {
+	if Options.Update {
 		options += " --update"
 	}
-	if NamesOpts.remove {
+	if Options.Remove {
 		options += " --remove"
 	}
-	if NamesOpts.undelete {
+	if Options.Undelete {
 		options += " --undelete"
 	}
-	if len(NamesOpts.autoname) > 0 {
-		options += " --autoname " + NamesOpts.autoname
+	if len(Options.Autoname) > 0 {
+		options += " --autoname " + Options.Autoname
 	}
 	arguments := ""
 	for _, arg := range args {
 		arguments += " " + arg
 	}
-	PassItOn("ethNames", options, arguments)
+	root.PassItOn("ethNames", options, arguments)
 }

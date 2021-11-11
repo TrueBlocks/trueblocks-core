@@ -18,7 +18,7 @@ package cmd
 import (
 	"os"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/scrape"
+	scrapePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/scrape"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
 )
@@ -28,8 +28,8 @@ var scrapeCmd = &cobra.Command{
 	Use:   usageScrape,
 	Short: shortScrape,
 	Long:  longScrape,
-	Run:   scrape.Run,
-	Args:  scrape.Validate,
+	Run:   scrapePkg.Run,
+	Args:  scrapePkg.Validate,
 }
 
 var usageScrape = `scrape [flags] [mode...]
@@ -54,14 +54,14 @@ func init() {
 
 	scrapeCmd.Flags().SortFlags = false
 	scrapeCmd.PersistentFlags().SortFlags = false
-	scrapeCmd.Flags().StringVarP(&scrape.Options.Action, "action", "a", "", `command to apply to the specified scrape
+	scrapeCmd.Flags().StringVarP(&scrapePkg.Options.Action, "action", "a", "", `command to apply to the specified scrape
 One of [ toggle | run | restart | pause | quit ]`)
-	scrapeCmd.Flags().Float64VarP(&scrape.Options.Sleep, "sleep", "s", 14, "seconds to sleep between scraper passes")
-	scrapeCmd.Flags().BoolVarP(&scrape.Options.Pin, "pin", "p", false, "pin chunks (and blooms) to IPFS as they are created (requires pinning service)")
-	scrapeCmd.Flags().BoolVarP(&scrape.Options.Publish, "publish", "u", false, "after pinning the chunk, publish it to UnchainedIndex")
-	scrapeCmd.Flags().Uint64VarP(&scrape.Options.Block_Cnt, "block_cnt", "n", 2000, "maximum number of blocks to process per pass")
-	scrapeCmd.Flags().Uint64VarP(&scrape.Options.Block_Chan_Cnt, "block_chan_cnt", "b", 10, "number of concurrent block processing channels (hidden)")
-	scrapeCmd.Flags().Uint64VarP(&scrape.Options.Addr_Chan_Cnt, "addr_chan_cnt", "d", 20, "number of concurrent address processing channels (hidden)")
+	scrapeCmd.Flags().Float64VarP(&scrapePkg.Options.Sleep, "sleep", "s", 14, "seconds to sleep between scraper passes")
+	scrapeCmd.Flags().BoolVarP(&scrapePkg.Options.Pin, "pin", "p", false, "pin chunks (and blooms) to IPFS as they are created (requires pinning service)")
+	scrapeCmd.Flags().BoolVarP(&scrapePkg.Options.Publish, "publish", "u", false, "after pinning the chunk, publish it to UnchainedIndex")
+	scrapeCmd.Flags().Uint64VarP(&scrapePkg.Options.Block_Cnt, "block_cnt", "n", 2000, "maximum number of blocks to process per pass")
+	scrapeCmd.Flags().Uint64VarP(&scrapePkg.Options.Block_Chan_Cnt, "block_chan_cnt", "b", 10, "number of concurrent block processing channels (hidden)")
+	scrapeCmd.Flags().Uint64VarP(&scrapePkg.Options.Addr_Chan_Cnt, "addr_chan_cnt", "d", 20, "number of concurrent address processing channels (hidden)")
 	if !utils.IsTestMode() {
 		scrapeCmd.Flags().MarkHidden("block_chan_cnt")
 		scrapeCmd.Flags().MarkHidden("addr_chan_cnt")

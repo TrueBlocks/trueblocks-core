@@ -18,6 +18,7 @@ package cmd
 import (
 	"os"
 
+	listPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/list"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
 )
@@ -27,8 +28,8 @@ var listCmd = &cobra.Command{
 	Use:   usageList,
 	Short: shortList,
 	Long:  longList,
-	Run:   runList,
-	Args:  validateListArgs,
+	Run:   listPkg.Run,
+	Args:  listPkg.Validate,
 }
 
 var usageList = `list [flags] <address> [address...]
@@ -43,24 +44,15 @@ var longList = `Purpose:
 
 var notesList = ``
 
-type listOptionsType struct {
-	count       bool
-	appearances bool
-	first_block uint64
-	last_block  uint64
-}
-
-var ListOpts listOptionsType
-
 func init() {
 	listCmd.SetOut(os.Stderr)
 
 	listCmd.Flags().SortFlags = false
 	listCmd.PersistentFlags().SortFlags = false
-	listCmd.Flags().BoolVarP(&ListOpts.count, "count", "U", false, "present only the number of records")
-	listCmd.Flags().BoolVarP(&ListOpts.appearances, "appearances", "p", false, "export a list of appearances (hidden)")
-	listCmd.Flags().Uint64VarP(&ListOpts.first_block, "first_block", "F", 0, "first block to process (inclusive) (hidden)")
-	listCmd.Flags().Uint64VarP(&ListOpts.last_block, "last_block", "L", 0, "last block to process (inclusive) (hidden)")
+	listCmd.Flags().BoolVarP(&listPkg.Options.Count, "count", "U", false, "present only the number of records")
+	listCmd.Flags().BoolVarP(&listPkg.Options.Appearances, "appearances", "p", false, "export a list of appearances (hidden)")
+	listCmd.Flags().Uint64VarP(&listPkg.Options.First_Block, "first_block", "F", 0, "first block to process (inclusive) (hidden)")
+	listCmd.Flags().Uint64VarP(&listPkg.Options.Last_Block, "last_block", "L", 0, "last block to process (inclusive) (hidden)")
 	if !utils.IsTestMode() {
 		listCmd.Flags().MarkHidden("appearances")
 		listCmd.Flags().MarkHidden("first_block")

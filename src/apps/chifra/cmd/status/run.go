@@ -1,3 +1,5 @@
+package status
+
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -10,82 +12,50 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-package cmd
-
 import (
 	"fmt"
-	"strconv"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/spf13/cobra"
 )
 
-func validateStatusArgs(cmd *cobra.Command, args []string) error {
-	if StatusOpts.depth > 3 {
-		return validate.Usage("--depth parameter ({0}) must be less than four (4)", strconv.FormatUint(StatusOpts.depth, 10))
-	}
-
-	err := validate.ValidateEnumSlice("--types", StatusOpts.types, "[blocks|txs|traces|slurps|prices|all]")
-	if err != nil {
-		return err
-	}
-
-	err = validate.ValidateEnumSlice("--migrate", StatusOpts.migrate, "[test|abi_cache|block_cache|tx_cache|trace_cache|recon_cache|name_cache|slurp_cache|all]")
-	if err != nil {
-		return err
-	}
-
-	err = validate.ValidateEnumSlice("modes", args, "[index|monitors|collections|names|abis|caches|some|all]")
-	if err != nil {
-		return err
-	}
-
-	err = root.ValidateGlobals(cmd, args)
-	if err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func runStatus(cmd *cobra.Command, args []string) {
+func Run(cmd *cobra.Command, args []string) {
 	options := ""
-	if StatusOpts.details {
+	if Options.Details {
 		options += " --details"
 	}
-	for _, t := range StatusOpts.types {
+	for _, t := range Options.Types {
 		options += " --types " + t
 	}
-	if StatusOpts.depth != utils.NOPOS {
-		options += " --depth " + fmt.Sprintf("%d", StatusOpts.depth)
+	if Options.Depth != utils.NOPOS {
+		options += " --depth " + fmt.Sprintf("%d", Options.Depth)
 	}
-	if StatusOpts.terse {
+	if Options.Terse {
 		options += " --terse"
 	}
-	for _, t := range StatusOpts.migrate {
+	for _, t := range Options.Migrate {
 		options += " --migrate " + t
 	}
-	if StatusOpts.get_config {
+	if Options.Get_Config {
 		options += " --get_config"
 	}
-	if StatusOpts.set_config {
+	if Options.Set_Config {
 		options += " --set_config"
 	}
-	if StatusOpts.test_start > 0 {
+	if Options.Test_Start > 0 {
 		if utils.IsTestMode() {
-			options += " --test_start " + fmt.Sprintf("%d", StatusOpts.test_start)
+			options += " --test_start " + fmt.Sprintf("%d", Options.Test_Start)
 		}
 	}
-	if StatusOpts.test_end != utils.NOPOS {
+	if Options.Test_End != utils.NOPOS {
 		if utils.IsTestMode() {
-			options += " --test_end " + fmt.Sprintf("%d", StatusOpts.test_end)
+			options += " --test_end " + fmt.Sprintf("%d", Options.Test_End)
 		}
 	}
 	arguments := ""
 	for _, arg := range args {
 		arguments += " " + arg
 	}
-	PassItOn("cacheStatus", options, arguments)
+	root.PassItOn("cacheStatus", options, arguments)
 }

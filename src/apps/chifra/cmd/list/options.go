@@ -17,10 +17,10 @@ package list
  */
 
 type ListOptionsType struct {
-	count       bool
-	appearances bool
-	first_block uint64
-	last_block  uint64
+	Count       bool
+	Appearances bool
+	First_Block uint64
+	Last_Block  uint64
 }
 
 var Options ListOptionsType

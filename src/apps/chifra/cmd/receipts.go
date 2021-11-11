@@ -18,7 +18,7 @@ package cmd
 import (
 	"os"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/receipts"
+	receiptsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/receipts"
 	"github.com/spf13/cobra"
 )
 
@@ -27,8 +27,8 @@ var receiptsCmd = &cobra.Command{
 	Use:   usageReceipts,
 	Short: shortReceipts,
 	Long:  longReceipts,
-	Run:   receipts.Run,
-	Args:  receipts.Validate,
+	Run:   receiptsPkg.Run,
+	Args:  receiptsPkg.Validate,
 }
 
 var usageReceipts = `receipts [flags] <tx_id> [tx_id...]
@@ -52,7 +52,7 @@ func init() {
 
 	receiptsCmd.Flags().SortFlags = false
 	receiptsCmd.PersistentFlags().SortFlags = false
-	receiptsCmd.Flags().BoolVarP(&receipts.Options.Articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
+	receiptsCmd.Flags().BoolVarP(&receiptsPkg.Options.Articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
 	receiptsCmd.Flags().SortFlags = false
 	receiptsCmd.PersistentFlags().SortFlags = false
 

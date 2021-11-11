@@ -17,16 +17,16 @@ package status
  */
 
 type StatusOptionsType struct {
-	details    bool
-	types      []string
-	depth      uint64
-	report     bool
-	terse      bool
-	migrate    []string
-	get_config bool
-	set_config bool
-	test_start uint64
-	test_end   uint64
+	Details    bool
+	Types      []string
+	Depth      uint64
+	Report     bool
+	Terse      bool
+	Migrate    []string
+	Get_Config bool
+	Set_Config bool
+	Test_Start uint64
+	Test_End   uint64
 }
 
 var Options StatusOptionsType

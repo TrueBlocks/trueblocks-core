@@ -17,8 +17,8 @@ package slurp
  */
 
 type SlurpOptionsType struct {
-	types       []string
-	appearances bool
+	Types       []string
+	Appearances bool
 }
 
 var Options SlurpOptionsType

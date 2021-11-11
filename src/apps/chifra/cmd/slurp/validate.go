@@ -1,3 +1,5 @@
+package slurp
+
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -10,62 +12,28 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-package cmd
 
 import (
-	"fmt"
-
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/spf13/cobra"
 )
 
-func validateMonitorsArgs(cmd *cobra.Command, args []string) error {
-	if !utils.IsApiMode() && !MonitorsOpts.clean {
-		err := validate.ValidateAtLeastOneAddr(args)
-		if err != nil {
-			return err
-		}
+func Validate(cmd *cobra.Command, args []string) error {
+	err := validate.ValidateAtLeastOneAddr(args)
+	if err != nil {
+		return err
 	}
 
-	err := root.ValidateGlobals(cmd, args)
+	err = validate.ValidateEnumSlice("--types", Options.Types, "[ext|int|token|nfts|miner|uncles|all]")
+	if err != nil {
+		return err
+	}
+
+	err = root.ValidateGlobals(cmd, args)
 	if err != nil {
 		return err
 	}
 
 	return nil
-}
-
-func runMonitors(cmd *cobra.Command, args []string) {
-	options := ""
-	if MonitorsOpts.appearances {
-		options += " --appearances"
-	}
-	if MonitorsOpts.count {
-		options += " --count"
-	}
-	if MonitorsOpts.clean {
-		options += " --clean"
-	}
-	if MonitorsOpts.first_block > 0 {
-		options += " --first_block " + fmt.Sprintf("%d", MonitorsOpts.first_block)
-	}
-	if MonitorsOpts.last_block > 0 {
-		options += " --last_block " + fmt.Sprintf("%d", MonitorsOpts.last_block)
-	}
-	if MonitorsOpts.delete {
-		options += " --delete"
-	}
-	if MonitorsOpts.remove {
-		options += " --remove"
-	}
-	if MonitorsOpts.undelete {
-		options += " --undelete"
-	}
-	arguments := ""
-	for _, arg := range args {
-		arguments += " " + arg
-	}
-	PassItOn("acctExport", options, arguments)
 }

@@ -18,6 +18,7 @@ package cmd
 import (
 	"os"
 
+	statusPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/status"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
 )
@@ -27,8 +28,8 @@ var statusCmd = &cobra.Command{
 	Use:   usageStatus,
 	Short: shortStatus,
 	Long:  longStatus,
-	Run:   runStatus,
-	Args:  validateStatusArgs,
+	Run:   statusPkg.Run,
+	Args:  statusPkg.Validate,
 }
 
 var usageStatus = `status [flags] [mode...]
@@ -44,38 +45,23 @@ var longStatus = `Purpose:
 
 var notesStatus = ``
 
-type statusOptionsType struct {
-	details    bool
-	types      []string
-	depth      uint64
-	report     bool
-	terse      bool
-	migrate    []string
-	get_config bool
-	set_config bool
-	test_start uint64
-	test_end   uint64
-}
-
-var StatusOpts statusOptionsType
-
 func init() {
 	statusCmd.SetOut(os.Stderr)
 
 	statusCmd.Flags().SortFlags = false
 	statusCmd.PersistentFlags().SortFlags = false
-	statusCmd.Flags().BoolVarP(&StatusOpts.details, "details", "d", false, "include details about items found in monitors, slurps, abis, or price caches")
-	statusCmd.Flags().StringSliceVarP(&StatusOpts.types, "types", "t", nil, `for caches mode only, which type(s) of cache to report
+	statusCmd.Flags().BoolVarP(&statusPkg.Options.Details, "details", "d", false, "include details about items found in monitors, slurps, abis, or price caches")
+	statusCmd.Flags().StringSliceVarP(&statusPkg.Options.Types, "types", "t", nil, `for caches mode only, which type(s) of cache to report
 One or more of [ blocks | txs | traces | slurps | prices | all ]`)
-	statusCmd.Flags().Uint64VarP(&StatusOpts.depth, "depth", "p", 0, "for cache mode only, number of levels deep to report (hidden)")
-	statusCmd.Flags().BoolVarP(&StatusOpts.report, "report", "r", false, "run the command with no options for the same result (hidden)")
-	statusCmd.Flags().BoolVarP(&StatusOpts.terse, "terse", "e", false, "show a terse summary report (hidden)")
-	statusCmd.Flags().StringSliceVarP(&StatusOpts.migrate, "migrate", "m", nil, `either effectuate or test to see if a migration is necessary (hidden)
+	statusCmd.Flags().Uint64VarP(&statusPkg.Options.Depth, "depth", "p", 0, "for cache mode only, number of levels deep to report (hidden)")
+	statusCmd.Flags().BoolVarP(&statusPkg.Options.Report, "report", "r", false, "run the command with no options for the same result (hidden)")
+	statusCmd.Flags().BoolVarP(&statusPkg.Options.Terse, "terse", "e", false, "show a terse summary report (hidden)")
+	statusCmd.Flags().StringSliceVarP(&statusPkg.Options.Migrate, "migrate", "m", nil, `either effectuate or test to see if a migration is necessary (hidden)
 One or more of [ test | abi_cache | block_cache | tx_cache | trace_cache | recon_cache | name_cache | slurp_cache | all ]`)
-	statusCmd.Flags().BoolVarP(&StatusOpts.get_config, "get_config", "g", false, "returns JSON data of the editable configuration file items (hidden)")
-	statusCmd.Flags().BoolVarP(&StatusOpts.set_config, "set_config", "s", false, "accepts JSON in an env variable and writes it to configuration files (hidden)")
-	statusCmd.Flags().Uint64VarP(&StatusOpts.test_start, "test_start", "S", 0, "first block to process (inclusive -- testing only) (hidden)")
-	statusCmd.Flags().Uint64VarP(&StatusOpts.test_end, "test_end", "E", 0, "last block to process (inclusive -- testing only) (hidden)")
+	statusCmd.Flags().BoolVarP(&statusPkg.Options.Get_Config, "get_config", "g", false, "returns JSON data of the editable configuration file items (hidden)")
+	statusCmd.Flags().BoolVarP(&statusPkg.Options.Set_Config, "set_config", "s", false, "accepts JSON in an env variable and writes it to configuration files (hidden)")
+	statusCmd.Flags().Uint64VarP(&statusPkg.Options.Test_Start, "test_start", "S", 0, "first block to process (inclusive -- testing only) (hidden)")
+	statusCmd.Flags().Uint64VarP(&statusPkg.Options.Test_End, "test_end", "E", 0, "last block to process (inclusive -- testing only) (hidden)")
 	if !utils.IsTestMode() {
 		statusCmd.Flags().MarkHidden("depth")
 		statusCmd.Flags().MarkHidden("report")

@@ -1,4 +1,4 @@
-package export
+package state
 
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
@@ -12,39 +12,32 @@ package export
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-/*
- * The file was auto generated with makeClass --gocmds. DO NOT EDIT.
- */
 
-type ExportOptionsType struct {
-	Appearances  bool
-	Receipts     bool
-	Statements   bool
-	Logs         bool
-	Traces       bool
-	Accounting   bool
-	Articulate   bool
-	Cache        bool
-	Cache_Traces bool
-	Factory      bool
-	Count        bool
-	First_Record uint64
-	Max_Records  uint64
-	Relevant     bool
-	Emitter      []string
-	Topic        []string
-	Clean        bool
-	Freshen      bool
-	Staging      bool
-	Unripe       bool
-	Load         string
-	Reversed     bool
-	By_Date      bool
-	Summarize_By string
-	Skip_Ddos    bool
-	Max_Traces   uint64
-	First_Block  uint64
-	Last_Block   uint64
+import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
+	"github.com/spf13/cobra"
+)
+
+func Run(cmd *cobra.Command, args []string) {
+	options := ""
+	for _, t := range Options.Parts {
+		options += " --parts " + t
+	}
+	if Options.Changes {
+		options += " --changes"
+	}
+	if Options.No_Zero {
+		options += " --no_zero"
+	}
+	if len(Options.Call) > 0 {
+		options += " --call " + Options.Call
+	}
+	if len(Options.Proxy_For) > 0 {
+		options += " --proxy_for " + Options.Proxy_For
+	}
+	arguments := ""
+	for _, arg := range args {
+		arguments += " " + arg
+	}
+	root.PassItOn("getState", options, arguments)
 }
-
-var Options ExportOptionsType

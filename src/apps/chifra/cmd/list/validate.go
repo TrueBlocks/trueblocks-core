@@ -1,3 +1,5 @@
+package list
+
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -10,41 +12,20 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-package cmd
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/spf13/cobra"
 )
 
-func validateStateArgs(cmd *cobra.Command, args []string) error {
-	err := root.ValidateGlobals(cmd, args)
-	if err != nil {
-		return err
+func Validate(cmd *cobra.Command, args []string) error {
+	if !utils.IsApiMode() {
+		err := validate.ValidateAtLeastOneAddr(args)
+		if err != nil {
+			return err
+		}
 	}
-	return nil
-}
 
-func runState(cmd *cobra.Command, args []string) {
-	options := ""
-	for _, t := range StateOpts.parts {
-		options += " --parts " + t
-	}
-	if StateOpts.changes {
-		options += " --changes"
-	}
-	if StateOpts.no_zero {
-		options += " --no_zero"
-	}
-	if len(StateOpts.call) > 0 {
-		options += " --call " + StateOpts.call
-	}
-	if len(StateOpts.proxy_for) > 0 {
-		options += " --proxy_for " + StateOpts.proxy_for
-	}
-	arguments := ""
-	for _, arg := range args {
-		arguments += " " + arg
-	}
-	PassItOn("getState", options, arguments)
+	return nil
 }

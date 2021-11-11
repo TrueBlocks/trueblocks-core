@@ -17,10 +17,10 @@ package quotes
  */
 
 type QuotesOptionsType struct {
-	freshen bool
-	period  string
-	pair    string
-	feed    string
+	Freshen bool
+	Period  string
+	Pair    string
+	Feed    string
 }
 
 var Options QuotesOptionsType

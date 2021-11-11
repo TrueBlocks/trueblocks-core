@@ -1,4 +1,4 @@
-package export
+package state
 
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
@@ -12,39 +12,16 @@ package export
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-/*
- * The file was auto generated with makeClass --gocmds. DO NOT EDIT.
- */
 
-type ExportOptionsType struct {
-	Appearances  bool
-	Receipts     bool
-	Statements   bool
-	Logs         bool
-	Traces       bool
-	Accounting   bool
-	Articulate   bool
-	Cache        bool
-	Cache_Traces bool
-	Factory      bool
-	Count        bool
-	First_Record uint64
-	Max_Records  uint64
-	Relevant     bool
-	Emitter      []string
-	Topic        []string
-	Clean        bool
-	Freshen      bool
-	Staging      bool
-	Unripe       bool
-	Load         string
-	Reversed     bool
-	By_Date      bool
-	Summarize_By string
-	Skip_Ddos    bool
-	Max_Traces   uint64
-	First_Block  uint64
-	Last_Block   uint64
+import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
+	"github.com/spf13/cobra"
+)
+
+func Validate(cmd *cobra.Command, args []string) error {
+	err := root.ValidateGlobals(cmd, args)
+	if err != nil {
+		return err
+	}
+	return nil
 }
-
-var Options ExportOptionsType

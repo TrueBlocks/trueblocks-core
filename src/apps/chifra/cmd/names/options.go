@@ -17,23 +17,23 @@ package names
  */
 
 type NamesOptionsType struct {
-	expand      bool
-	match_case  bool
-	all         bool
-	custom      bool
-	prefund     bool
-	named       bool
-	addr        bool
-	collections bool
-	tags        bool
-	to_custom   bool
-	clean       bool
-	autoname    string
-	create      bool
-	delete      bool
-	update      bool
-	remove      bool
-	undelete    bool
+	Expand      bool
+	Match_Case  bool
+	All         bool
+	Custom      bool
+	Prefund     bool
+	Named       bool
+	Addr        bool
+	Collections bool
+	Tags        bool
+	To_Custom   bool
+	Clean       bool
+	Autoname    string
+	Create      bool
+	Delete      bool
+	Update      bool
+	Remove      bool
+	Undelete    bool
 }
 
 var Options NamesOptionsType

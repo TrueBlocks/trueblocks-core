@@ -18,6 +18,7 @@ package cmd
 import (
 	"os"
 
+	tokensPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/tokens"
 	"github.com/spf13/cobra"
 )
 
@@ -26,8 +27,8 @@ var tokensCmd = &cobra.Command{
 	Use:   usageTokens,
 	Short: shortTokens,
 	Long:  longTokens,
-	Run:   runTokens,
-	Args:  validateTokensArgs,
+	Run:   tokensPkg.Run,
+	Args:  tokensPkg.Validate,
 }
 
 var usageTokens = `tokens [flags] <address> <address> [address...] [block...]
@@ -49,23 +50,15 @@ Notes:
   - If the queried node does not store historical state, the results are undefined.
   - special blocks are detailed under chifra when --list.`
 
-type tokensOptionsType struct {
-	parts   []string
-	by_acct bool
-	no_zero bool
-}
-
-var TokensOpts tokensOptionsType
-
 func init() {
 	tokensCmd.SetOut(os.Stderr)
 
 	tokensCmd.Flags().SortFlags = false
 	tokensCmd.PersistentFlags().SortFlags = false
-	tokensCmd.Flags().StringSliceVarP(&TokensOpts.parts, "parts", "p", nil, `which parts of the token information to retrieve
+	tokensCmd.Flags().StringSliceVarP(&tokensPkg.Options.Parts, "parts", "p", nil, `which parts of the token information to retrieve
 One or more of [ name | symbol | decimals | totalSupply | version | none | all ]`)
-	tokensCmd.Flags().BoolVarP(&TokensOpts.by_acct, "by_acct", "b", false, "consider each address an ERC20 token except the last, whose balance is reported for each token")
-	tokensCmd.Flags().BoolVarP(&TokensOpts.no_zero, "no_zero", "n", false, "suppress the display of zero balance accounts")
+	tokensCmd.Flags().BoolVarP(&tokensPkg.Options.By_Acct, "by_acct", "b", false, "consider each address an ERC20 token except the last, whose balance is reported for each token")
+	tokensCmd.Flags().BoolVarP(&tokensPkg.Options.No_Zero, "no_zero", "n", false, "suppress the display of zero balance accounts")
 	tokensCmd.Flags().SortFlags = false
 	tokensCmd.PersistentFlags().SortFlags = false
 

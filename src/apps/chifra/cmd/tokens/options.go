@@ -17,9 +17,9 @@ package tokens
  */
 
 type TokensOptionsType struct {
-	parts   []string
-	by_acct bool
-	no_zero bool
+	Parts   []string
+	By_Acct bool
+	No_Zero bool
 }
 
 var Options TokensOptionsType

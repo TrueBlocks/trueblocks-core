@@ -18,6 +18,7 @@ package cmd
 import (
 	"os"
 
+	statePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/state"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
 )
@@ -27,8 +28,8 @@ var stateCmd = &cobra.Command{
 	Use:   usageState,
 	Short: shortState,
 	Long:  longState,
-	Run:   runState,
-	Args:  validateStateArgs,
+	Run:   statePkg.Run,
+	Args:  statePkg.Validate,
 }
 
 var usageState = `state [flags] <address> [address...] [block...]
@@ -51,27 +52,17 @@ Notes:
   - balance is the default mode. To select a single mode use none first, followed by that mode.
   - You may specify multiple modes on a single line.`
 
-type stateOptionsType struct {
-	parts     []string
-	changes   bool
-	no_zero   bool
-	call      string
-	proxy_for string
-}
-
-var StateOpts stateOptionsType
-
 func init() {
 	stateCmd.SetOut(os.Stderr)
 
 	stateCmd.Flags().SortFlags = false
 	stateCmd.PersistentFlags().SortFlags = false
-	stateCmd.Flags().StringSliceVarP(&StateOpts.parts, "parts", "p", nil, `control which state to export
+	stateCmd.Flags().StringSliceVarP(&statePkg.Options.Parts, "parts", "p", nil, `control which state to export
 One or more of [ none | some | all | balance | nonce | code | storage | deployed | accttype ]`)
-	stateCmd.Flags().BoolVarP(&StateOpts.changes, "changes", "c", false, "only report a balance when it changes from one block to the next")
-	stateCmd.Flags().BoolVarP(&StateOpts.no_zero, "no_zero", "n", false, "suppress the display of zero balance accounts")
-	stateCmd.Flags().StringVarP(&StateOpts.call, "call", "a", "", "a bang-separated string consisting of address!4-byte!bytes (hidden)")
-	stateCmd.Flags().StringVarP(&StateOpts.proxy_for, "proxy_for", "r", "", "for the --call option only, redirects calls to this implementation (hidden)")
+	stateCmd.Flags().BoolVarP(&statePkg.Options.Changes, "changes", "c", false, "only report a balance when it changes from one block to the next")
+	stateCmd.Flags().BoolVarP(&statePkg.Options.No_Zero, "no_zero", "n", false, "suppress the display of zero balance accounts")
+	stateCmd.Flags().StringVarP(&statePkg.Options.Call, "call", "a", "", "a bang-separated string consisting of address!4-byte!bytes (hidden)")
+	stateCmd.Flags().StringVarP(&statePkg.Options.Proxy_For, "proxy_for", "r", "", "for the --call option only, redirects calls to this implementation (hidden)")
 	if !utils.IsTestMode() {
 		stateCmd.Flags().MarkHidden("call")
 		stateCmd.Flags().MarkHidden("proxy_for")

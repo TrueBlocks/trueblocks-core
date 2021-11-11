@@ -18,6 +18,7 @@ package cmd
 import (
 	"os"
 
+	quotesPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/quotes"
 	"github.com/spf13/cobra"
 )
 
@@ -26,8 +27,8 @@ var quotesCmd = &cobra.Command{
 	Use:   usageQuotes,
 	Short: shortQuotes,
 	Long:  longQuotes,
-	Run:   runQuotes,
-	Args:  validateQuotesArgs,
+	Run:   quotesPkg.Run,
+	Args:  quotesPkg.Validate,
 }
 
 var usageQuotes = `quotes [flags]`
@@ -41,25 +42,16 @@ var notesQuotes = `
 Notes:
   - Due to restrictions from Poloniex, this tool retrieves only 30 days of data at a time. You must repeatedly run this command until the data is up-to-date.`
 
-type quotesOptionsType struct {
-	freshen bool
-	period  string
-	pair    string
-	feed    string
-}
-
-var QuotesOpts quotesOptionsType
-
 func init() {
 	quotesCmd.SetOut(os.Stderr)
 
 	quotesCmd.Flags().SortFlags = false
 	quotesCmd.PersistentFlags().SortFlags = false
-	quotesCmd.Flags().BoolVarP(&QuotesOpts.freshen, "freshen", "f", false, "Freshen price database")
-	quotesCmd.Flags().StringVarP(&QuotesOpts.period, "period", "p", "", `increment of display
+	quotesCmd.Flags().BoolVarP(&quotesPkg.Options.Freshen, "freshen", "f", false, "Freshen price database")
+	quotesCmd.Flags().StringVarP(&quotesPkg.Options.Period, "period", "p", "", `increment of display
 One of [ 5 | 15 | 30 | 60 | 120 | 240 | 1440 | 10080 | hourly | daily | weekly ]`)
-	quotesCmd.Flags().StringVarP(&QuotesOpts.pair, "pair", "a", "", "which price pair to freshen or list (see Poloniex)")
-	quotesCmd.Flags().StringVarP(&QuotesOpts.feed, "feed", "e", "", `the feed for the price data
+	quotesCmd.Flags().StringVarP(&quotesPkg.Options.Pair, "pair", "a", "", "which price pair to freshen or list (see Poloniex)")
+	quotesCmd.Flags().StringVarP(&quotesPkg.Options.Feed, "feed", "e", "", `the feed for the price data
 One of [ poloniex | maker | tellor ]`)
 	quotesCmd.Flags().SortFlags = false
 	quotesCmd.PersistentFlags().SortFlags = false

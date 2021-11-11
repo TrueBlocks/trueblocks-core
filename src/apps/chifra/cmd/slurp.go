@@ -18,6 +18,7 @@ package cmd
 import (
 	"os"
 
+	slurpPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/slurp"
 	"github.com/spf13/cobra"
 )
 
@@ -26,8 +27,8 @@ var slurpCmd = &cobra.Command{
 	Use:   usageSlurp,
 	Short: shortSlurp,
 	Long:  longSlurp,
-	Run:   runSlurp,
-	Args:  validateSlurpArgs,
+	Run:   slurpPkg.Run,
+	Args:  slurpPkg.Validate,
 }
 
 var usageSlurp = `slurp [flags] <address> [address...] [block...]
@@ -45,21 +46,14 @@ var notesSlurp = `
 Notes:
   - Portions of this software are Powered by Etherscan.io APIs.`
 
-type slurpOptionsType struct {
-	types       []string
-	appearances bool
-}
-
-var SlurpOpts slurpOptionsType
-
 func init() {
 	slurpCmd.SetOut(os.Stderr)
 
 	slurpCmd.Flags().SortFlags = false
 	slurpCmd.PersistentFlags().SortFlags = false
-	slurpCmd.Flags().StringSliceVarP(&SlurpOpts.types, "types", "t", nil, `which types of transactions to request
+	slurpCmd.Flags().StringSliceVarP(&slurpPkg.Options.Types, "types", "t", nil, `which types of transactions to request
 One or more of [ ext | int | token | nfts | miner | uncles | all ]`)
-	slurpCmd.Flags().BoolVarP(&SlurpOpts.appearances, "appearances", "p", false, "show only the blocknumer.tx_id appearances of the exported transactions")
+	slurpCmd.Flags().BoolVarP(&slurpPkg.Options.Appearances, "appearances", "p", false, "show only the blocknumer.tx_id appearances of the exported transactions")
 	slurpCmd.Flags().SortFlags = false
 	slurpCmd.PersistentFlags().SortFlags = false
 

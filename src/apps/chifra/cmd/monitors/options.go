@@ -17,14 +17,14 @@ package monitors
  */
 
 type MonitorsOptionsType struct {
-	appearances bool
-	count       bool
-	clean       bool
-	delete      bool
-	undelete    bool
-	remove      bool
-	first_block uint64
-	last_block  uint64
+	Appearances bool
+	Count       bool
+	Clean       bool
+	Delete      bool
+	Undelete    bool
+	Remove      bool
+	First_Block uint64
+	Last_Block  uint64
 }
 
 var Options MonitorsOptionsType

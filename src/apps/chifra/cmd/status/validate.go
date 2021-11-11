@@ -1,3 +1,5 @@
+package status
+
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -10,41 +12,39 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-package cmd
 
 import (
-	"fmt"
+	"strconv"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/spf13/cobra"
 )
 
-func validateListArgs(cmd *cobra.Command, args []string) error {
-	if !utils.IsApiMode() {
-		err := validate.ValidateAtLeastOneAddr(args)
-		if err != nil {
-			return err
-		}
+func Validate(cmd *cobra.Command, args []string) error {
+	if Options.Depth > 3 {
+		return validate.Usage("--depth parameter ({0}) must be less than four (4)", strconv.FormatUint(Options.Depth, 10))
+	}
+
+	err := validate.ValidateEnumSlice("--types", Options.Types, "[blocks|txs|traces|slurps|prices|all]")
+	if err != nil {
+		return err
+	}
+
+	err = validate.ValidateEnumSlice("--migrate", Options.Migrate, "[test|abi_cache|block_cache|tx_cache|trace_cache|recon_cache|name_cache|slurp_cache|all]")
+	if err != nil {
+		return err
+	}
+
+	err = validate.ValidateEnumSlice("modes", args, "[index|monitors|collections|names|abis|caches|some|all]")
+	if err != nil {
+		return err
+	}
+
+	err = root.ValidateGlobals(cmd, args)
+	if err != nil {
+		return err
 	}
 
 	return nil
-}
-
-func runList(cmd *cobra.Command, args []string) {
-	options := " --appearances"
-	if ListOpts.count {
-		options += " --count"
-	}
-	if ListOpts.first_block > 0 {
-		options += " --first_block " + fmt.Sprintf("%d", ListOpts.first_block)
-	}
-	if ListOpts.last_block > 0 {
-		options += " --last_block " + fmt.Sprintf("%d", ListOpts.last_block)
-	}
-	arguments := ""
-	for _, arg := range args {
-		arguments += " " + arg
-	}
-	PassItOn("acctExport", options, arguments)
 }

@@ -1,3 +1,5 @@
+package quotes
+
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -10,24 +12,29 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-package cmd
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/pins"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
 	"github.com/spf13/cobra"
 )
 
-func validateInitArgs(cmd *cobra.Command, args []string) error {
-	err := root.ValidateGlobals(cmd, args)
-	if err != nil {
-		return err
+func Run(cmd *cobra.Command, args []string) {
+	options := ""
+	if Options.Freshen {
+		options += " --freshen"
 	}
-
-	return nil
-}
-
-func runInit(cmd *cobra.Command, args []string) {
-	pins.Options.Init = true
-	pins.Run(cmd, args)
+	if len(Options.Period) > 0 {
+		options += " --period " + Options.Period
+	}
+	if len(Options.Pair) > 0 {
+		options += " --pair " + Options.Pair
+	}
+	if len(Options.Feed) > 0 {
+		options += " --feed " + Options.Feed
+	}
+	arguments := ""
+	for _, arg := range args {
+		arguments += " " + arg
+	}
+	root.PassItOn("getQuotes", options, arguments)
 }

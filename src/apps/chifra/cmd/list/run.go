@@ -1,3 +1,5 @@
+package list
+
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -10,40 +12,28 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-package cmd
 
 import (
+	"fmt"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/spf13/cobra"
 )
 
-func validateTokensArgs(cmd *cobra.Command, args []string) error {
-	// special case for tokens which don't allow --dollars display
-	if root.Options.Dollars {
-		return validate.Usage("The --dollars option does not work with chifra token.")
+func Run(cmd *cobra.Command, args []string) {
+	options := " --appearances"
+	if Options.Count {
+		options += " --count"
 	}
-	err := root.ValidateGlobals(cmd, args)
-	if err != nil {
-		return err
+	if Options.First_Block > 0 {
+		options += " --first_block " + fmt.Sprintf("%d", Options.First_Block)
 	}
-	return nil
-}
-
-func runTokens(cmd *cobra.Command, args []string) {
-	options := ""
-	for _, t := range TokensOpts.parts {
-		options += " --parts " + t
-	}
-	if TokensOpts.by_acct {
-		options += " --by_acct"
-	}
-	if TokensOpts.no_zero {
-		options += " --no_zero"
+	if Options.Last_Block > 0 {
+		options += " --last_block " + fmt.Sprintf("%d", Options.Last_Block)
 	}
 	arguments := ""
 	for _, arg := range args {
 		arguments += " " + arg
 	}
-	PassItOn("getTokens", options, arguments)
+	root.PassItOn("acctExport", options, arguments)
 }

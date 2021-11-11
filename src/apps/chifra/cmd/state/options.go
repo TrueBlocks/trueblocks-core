@@ -17,11 +17,11 @@ package state
  */
 
 type StateOptionsType struct {
-	parts     []string
-	changes   bool
-	no_zero   bool
-	call      string
-	proxy_for string
+	Parts     []string
+	Changes   bool
+	No_Zero   bool
+	Call      string
+	Proxy_For string
 }
 
 var Options StateOptionsType

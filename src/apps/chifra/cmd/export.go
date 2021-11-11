@@ -18,6 +18,7 @@ package cmd
 import (
 	"os"
 
+	exportPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/export"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
 )
@@ -27,8 +28,8 @@ var exportCmd = &cobra.Command{
 	Use:   usageExport,
 	Short: shortExport,
 	Long:  longExport,
-	Run:   runExport,
-	Args:  validateExportArgs,
+	Run:   exportPkg.Run,
+	Args:  exportPkg.Validate,
 }
 
 var usageExport = `export [flags] <address> [address...] [topics...] [fourbytes...]
@@ -49,73 +50,40 @@ Notes:
   - For the --logs option, you may optionally specify one or more --emmitter, one or more --topics, or both.
   - The --logs option is significantly faster if you provide an --emitter or a --topic.`
 
-type exportOptionsType struct {
-	appearances  bool
-	receipts     bool
-	statements   bool
-	logs         bool
-	traces       bool
-	accounting   bool
-	articulate   bool
-	cache        bool
-	cache_traces bool
-	factory      bool
-	count        bool
-	first_record uint64
-	max_records  uint64
-	relevant     bool
-	emitter      []string
-	topic        []string
-	clean        bool
-	freshen      bool
-	staging      bool
-	unripe       bool
-	load         string
-	reversed     bool
-	by_date      bool
-	summarize_by string
-	skip_ddos    bool
-	max_traces   uint64
-	first_block  uint64
-	last_block   uint64
-}
-
-var ExportOpts exportOptionsType
-
 func init() {
 	exportCmd.SetOut(os.Stderr)
 
 	exportCmd.Flags().SortFlags = false
 	exportCmd.PersistentFlags().SortFlags = false
-	exportCmd.Flags().BoolVarP(&ExportOpts.appearances, "appearances", "p", false, "export a list of appearances")
-	exportCmd.Flags().BoolVarP(&ExportOpts.receipts, "receipts", "r", false, "export receipts instead of transaction list")
-	exportCmd.Flags().BoolVarP(&ExportOpts.statements, "statements", "A", false, "for use with --accounting option only, export only reconciliation statements")
-	exportCmd.Flags().BoolVarP(&ExportOpts.logs, "logs", "l", false, "export logs instead of transaction list")
-	exportCmd.Flags().BoolVarP(&ExportOpts.traces, "traces", "t", false, "export traces instead of transaction list")
-	exportCmd.Flags().BoolVarP(&ExportOpts.accounting, "accounting", "C", false, "export accounting records instead of transaction list")
-	exportCmd.Flags().BoolVarP(&ExportOpts.articulate, "articulate", "a", false, "articulate transactions, traces, logs, and outputs")
-	exportCmd.Flags().BoolVarP(&ExportOpts.cache, "cache", "i", false, "write transactions to the cache (see notes)")
-	exportCmd.Flags().BoolVarP(&ExportOpts.cache_traces, "cache_traces", "R", false, "write traces to the cache (see notes)")
-	exportCmd.Flags().BoolVarP(&ExportOpts.factory, "factory", "y", false, "scan for contract creations from the given address(es) and report address of those contracts")
-	exportCmd.Flags().BoolVarP(&ExportOpts.count, "count", "U", false, "only available for --appearances mode, if present, return only the number of records")
-	exportCmd.Flags().Uint64VarP(&ExportOpts.first_record, "first_record", "c", 0, "the first record to process")
-	exportCmd.Flags().Uint64VarP(&ExportOpts.max_records, "max_records", "e", 250, "the maximum number of records to process before reporting")
-	exportCmd.Flags().BoolVarP(&ExportOpts.relevant, "relevant", "", false, "for log and accounting export only, export only logs relevant to one of the given export addresses")
-	exportCmd.Flags().StringSliceVarP(&ExportOpts.emitter, "emitter", "", nil, "for log export only, export only logs if emitted by one of these address(es)")
-	exportCmd.Flags().StringSliceVarP(&ExportOpts.topic, "topic", "", nil, "for log export only, export only logs with this topic(s)")
-	exportCmd.Flags().BoolVarP(&ExportOpts.clean, "clean", "", false, "clean (i.e. remove duplicate appearances) from all existing monitors")
-	exportCmd.Flags().BoolVarP(&ExportOpts.freshen, "freshen", "f", false, "freshen but do not print the exported data (hidden)")
-	exportCmd.Flags().BoolVarP(&ExportOpts.staging, "staging", "s", false, "enable search of staging (not yet finalized) folder (hidden)")
-	exportCmd.Flags().BoolVarP(&ExportOpts.unripe, "unripe", "u", false, "enable search of unripe (neither staged nor finalized) folder (assumes --staging) (hidden)")
-	exportCmd.Flags().StringVarP(&ExportOpts.load, "load", "", "", "a comma separated list of dynamic traversers to load (hidden)")
-	exportCmd.Flags().BoolVarP(&ExportOpts.reversed, "reversed", "", false, "produce results in reverse chronological order (hidden)")
-	exportCmd.Flags().BoolVarP(&ExportOpts.by_date, "by_date", "b", false, "produce results sorted by date (report by address otherwise) (hidden)")
-	exportCmd.Flags().StringVarP(&ExportOpts.summarize_by, "summarize_by", "z", "", `for --accounting only, summarize reconciliations by this time period (hidden)
+	exportCmd.Flags().BoolVarP(&exportPkg.Options.Appearances, "appearances", "p", false, "export a list of appearances")
+	exportCmd.Flags().BoolVarP(&exportPkg.Options.Receipts, "receipts", "r", false, "export receipts instead of transaction list")
+	exportCmd.Flags().BoolVarP(&exportPkg.Options.Statements, "statements", "A", false, "for use with --accounting option only, export only reconciliation statements")
+	exportCmd.Flags().BoolVarP(&exportPkg.Options.Logs, "logs", "l", false, "export logs instead of transaction list")
+	exportCmd.Flags().BoolVarP(&exportPkg.Options.Traces, "traces", "t", false, "export traces instead of transaction list")
+	exportCmd.Flags().BoolVarP(&exportPkg.Options.Accounting, "accounting", "C", false, "export accounting records instead of transaction list")
+	exportCmd.Flags().BoolVarP(&exportPkg.Options.Articulate, "articulate", "a", false, "articulate transactions, traces, logs, and outputs")
+	exportCmd.Flags().BoolVarP(&exportPkg.Options.Cache, "cache", "i", false, "write transactions to the cache (see notes)")
+	exportCmd.Flags().BoolVarP(&exportPkg.Options.Cache_Traces, "cache_traces", "R", false, "write traces to the cache (see notes)")
+	exportCmd.Flags().BoolVarP(&exportPkg.Options.Factory, "factory", "y", false, "scan for contract creations from the given address(es) and report address of those contracts")
+	exportCmd.Flags().BoolVarP(&exportPkg.Options.Count, "count", "U", false, "only available for --appearances mode, if present, return only the number of records")
+	exportCmd.Flags().Uint64VarP(&exportPkg.Options.First_Record, "first_record", "c", 0, "the first record to process")
+	exportCmd.Flags().Uint64VarP(&exportPkg.Options.Max_Records, "max_records", "e", 250, "the maximum number of records to process before reporting")
+	exportCmd.Flags().BoolVarP(&exportPkg.Options.Relevant, "relevant", "", false, "for log and accounting export only, export only logs relevant to one of the given export addresses")
+	exportCmd.Flags().StringSliceVarP(&exportPkg.Options.Emitter, "emitter", "", nil, "for log export only, export only logs if emitted by one of these address(es)")
+	exportCmd.Flags().StringSliceVarP(&exportPkg.Options.Topic, "topic", "", nil, "for log export only, export only logs with this topic(s)")
+	exportCmd.Flags().BoolVarP(&exportPkg.Options.Clean, "clean", "", false, "clean (i.e. remove duplicate appearances) from all existing monitors")
+	exportCmd.Flags().BoolVarP(&exportPkg.Options.Freshen, "freshen", "f", false, "freshen but do not print the exported data (hidden)")
+	exportCmd.Flags().BoolVarP(&exportPkg.Options.Staging, "staging", "s", false, "enable search of staging (not yet finalized) folder (hidden)")
+	exportCmd.Flags().BoolVarP(&exportPkg.Options.Unripe, "unripe", "u", false, "enable search of unripe (neither staged nor finalized) folder (assumes --staging) (hidden)")
+	exportCmd.Flags().StringVarP(&exportPkg.Options.Load, "load", "", "", "a comma separated list of dynamic traversers to load (hidden)")
+	exportCmd.Flags().BoolVarP(&exportPkg.Options.Reversed, "reversed", "", false, "produce results in reverse chronological order (hidden)")
+	exportCmd.Flags().BoolVarP(&exportPkg.Options.By_Date, "by_date", "b", false, "produce results sorted by date (report by address otherwise) (hidden)")
+	exportCmd.Flags().StringVarP(&exportPkg.Options.Summarize_By, "summarize_by", "z", "", `for --accounting only, summarize reconciliations by this time period (hidden)
 One of [ yearly | quarterly | monthly | weekly | daily | hourly | blockly | tx ]`)
-	exportCmd.Flags().BoolVarP(&ExportOpts.skip_ddos, "skip_ddos", "d", false, "toggle skipping over 2016 dDos transactions ('on' by default) (hidden)")
-	exportCmd.Flags().Uint64VarP(&ExportOpts.max_traces, "max_traces", "m", 250, "if --skip_ddos is on, this many traces defines what a ddos transaction is (hidden)")
-	exportCmd.Flags().Uint64VarP(&ExportOpts.first_block, "first_block", "F", 0, "first block to process (inclusive) (hidden)")
-	exportCmd.Flags().Uint64VarP(&ExportOpts.last_block, "last_block", "L", 0, "last block to process (inclusive) (hidden)")
+	exportCmd.Flags().BoolVarP(&exportPkg.Options.Skip_Ddos, "skip_ddos", "d", false, "toggle skipping over 2016 dDos transactions ('on' by default) (hidden)")
+	exportCmd.Flags().Uint64VarP(&exportPkg.Options.Max_Traces, "max_traces", "m", 250, "if --skip_ddos is on, this many traces defines what a ddos transaction is (hidden)")
+	exportCmd.Flags().Uint64VarP(&exportPkg.Options.First_Block, "first_block", "F", 0, "first block to process (inclusive) (hidden)")
+	exportCmd.Flags().Uint64VarP(&exportPkg.Options.Last_Block, "last_block", "L", 0, "last block to process (inclusive) (hidden)")
 	if !utils.IsTestMode() {
 		exportCmd.Flags().MarkHidden("freshen")
 		exportCmd.Flags().MarkHidden("staging")

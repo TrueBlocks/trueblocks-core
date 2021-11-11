@@ -18,7 +18,7 @@ package cmd
 import (
 	"os"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/explore"
+	explorePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/explore"
 	"github.com/spf13/cobra"
 )
 
@@ -27,8 +27,8 @@ var exploreCmd = &cobra.Command{
 	Use:   usageExplore,
 	Short: shortExplore,
 	Long:  longExplore,
-	Run:   explore.Run,
-	Args:  explore.Validate,
+	Run:   explorePkg.Run,
+	Args:  explorePkg.Validate,
 }
 
 var usageExplore = `explore [flags] <term> [term...]
@@ -48,8 +48,8 @@ func init() {
 
 	exploreCmd.Flags().SortFlags = false
 	exploreCmd.PersistentFlags().SortFlags = false
-	exploreCmd.Flags().BoolVarP(&explore.Options.Local, "local", "l", false, "open the local TrueBlocks explorer")
-	exploreCmd.Flags().BoolVarP(&explore.Options.Google, "google", "g", false, "search google excluding popular blockchain explorers")
+	exploreCmd.Flags().BoolVarP(&explorePkg.Options.Local, "local", "l", false, "open the local TrueBlocks explorer")
+	exploreCmd.Flags().BoolVarP(&explorePkg.Options.Google, "google", "g", false, "search google excluding popular blockchain explorers")
 	exploreCmd.Flags().SortFlags = false
 	exploreCmd.PersistentFlags().SortFlags = false
 
