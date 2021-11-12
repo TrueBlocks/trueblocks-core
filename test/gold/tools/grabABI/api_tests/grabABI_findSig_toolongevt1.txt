@@ -1,6 +1,5 @@
 {
   "errors": [
-    "fourbyte (0x1aa3a00800000000000000000) is not 4 bytes long",
-    "topic (0x1aa3a00800000000000000000) is not 32 bytes long"
+    "fourbyte (0x1aa3a00800000000000000000) is not 4 bytes long"
   ]
 }

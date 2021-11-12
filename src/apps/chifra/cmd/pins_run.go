@@ -30,32 +30,9 @@ Please create the folder or adjust the setting by editing $CONFIG/trueBlocks.tom
 
 func validatePinsArgs(cmd *cobra.Command, args []string) error {
 
-	if PinsOpts.list && PinsOpts.init {
-		return validate.Usage("Please choose only a single option.")
-	}
-
-	if !PinsOpts.list && !PinsOpts.init {
-		return validate.Usage("You must choose at least one of --list or --init.")
-	}
-
-	if PinsOpts.all && !PinsOpts.init {
-		return validate.Usage("Use the --all option only with the --init options.")
-	}
-
-	if PinsOpts.init_all {
-		return validate.Deprecated("--init_all", "--init --all")
-	}
-
-	if PinsOpts.freshen {
-		return validate.Deprecated("--freshen", "--init")
-	}
-
-	if PinsOpts.remote {
-		return validate.Deprecated("--remote", "")
-	}
-
-	if PinsOpts.share {
-		return validate.Usage("The --share option is not yet implemented")
+	err := pins.ValidateOptions(&PinsOpts)
+	if err != nil {
+		return err
 	}
 
 	// if (share) {
@@ -72,16 +49,16 @@ func validatePinsArgs(cmd *cobra.Command, args []string) error {
 	//          (pin.bloomHash == newHash ? greenCheck : redX));
 	// }
 
-	err := validateGlobalFlags(cmd, args)
+	err = validateGlobalFlags(cmd, args)
 	if err != nil {
 		return err
 	}
 
-	utils.TestLogBool("list", PinsOpts.list)
-	utils.TestLogBool("init", PinsOpts.init)
-	utils.TestLogBool("all", PinsOpts.all)
-	utils.TestLogBool("share", PinsOpts.share)
-	utils.TestLogBool("remote", PinsOpts.remote)
+	utils.TestLogBool("list", PinsOpts.List)
+	utils.TestLogBool("init", PinsOpts.Init)
+	utils.TestLogBool("all", PinsOpts.All)
+	utils.TestLogBool("share", PinsOpts.Share)
+	utils.TestLogBool("remote", PinsOpts.Remote)
 	// LOG_TEST("sleep", sleep, (sleep == .25))
 
 	return nil
@@ -103,23 +80,23 @@ func runPins(cmd *cobra.Command, args []string) {
 		logger.Fatal(err)
 	}
 
-	if PinsOpts.list {
+	if PinsOpts.List {
 		pins.PrintManifestHeader()
 		pins.HandleList()
 		return
 	}
 
-	if PinsOpts.init {
+	if PinsOpts.Init {
 		pins.PrintManifestHeader()
-		pins.HandleInit(PinsOpts.all)
+		pins.HandleInit(PinsOpts.All)
 		return
 	}
 
-	if PinsOpts.sleep != .25 {
+	if PinsOpts.Sleep != .25 {
 		logger.Fatal("Not implemented")
 	}
 
-	if PinsOpts.share {
+	if PinsOpts.Share {
 		logger.Fatal("Not implemented")
 	}
 }

@@ -19,6 +19,7 @@ package cmd
 import (
 	"os"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/abis"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
 )
@@ -47,26 +48,23 @@ Notes:
   - For the --sol option, place the solidity files in the current working folder.
   - Search for either four byte signatures or event signatures with the --find option.`
 
-type abisOptionsType struct {
-	known   bool
-	sol     bool
-	find    []string
-	source  bool
-	classes bool
-}
-
-var AbisOpts abisOptionsType
+var AbisOpts abis.AbisOptionsType
 
 func init() {
-	abisCmd.SetOut(os.Stderr)
+	if utils.IsApiMode() {
+		abisCmd.SetOut(os.Stderr)
+		abisCmd.SetErr(os.Stdout)
+	} else {
+		abisCmd.SetOut(os.Stderr)
+	}
 
 	abisCmd.Flags().SortFlags = false
 	abisCmd.PersistentFlags().SortFlags = false
-	abisCmd.Flags().BoolVarP(&AbisOpts.known, "known", "k", false, "load common 'known' ABIs from cache")
-	abisCmd.Flags().BoolVarP(&AbisOpts.sol, "sol", "s", false, "extract the abi definition from the provided .sol file(s)")
-	abisCmd.Flags().StringSliceVarP(&AbisOpts.find, "find", "f", nil, "search for function or event declarations given a four- or 32-byte code(s)")
-	abisCmd.Flags().BoolVarP(&AbisOpts.source, "source", "o", false, "show the source of the ABI information (hidden)")
-	abisCmd.Flags().BoolVarP(&AbisOpts.classes, "classes", "c", false, "generate classDefinitions folder and class definitions (hidden)")
+	abisCmd.Flags().BoolVarP(&AbisOpts.Known, "known", "k", false, "load common 'known' ABIs from cache")
+	abisCmd.Flags().BoolVarP(&AbisOpts.Sol, "sol", "s", false, "extract the abi definition from the provided .sol file(s)")
+	abisCmd.Flags().StringSliceVarP(&AbisOpts.Find, "find", "f", nil, "search for function or event declarations given a four- or 32-byte code(s)")
+	abisCmd.Flags().BoolVarP(&AbisOpts.Source, "source", "o", false, "show the source of the ABI information (hidden)")
+	abisCmd.Flags().BoolVarP(&AbisOpts.Classes, "classes", "c", false, "generate classDefinitions folder and class definitions (hidden)")
 	if !utils.IsTestMode() {
 		abisCmd.Flags().MarkHidden("source")
 		abisCmd.Flags().MarkHidden("classes")

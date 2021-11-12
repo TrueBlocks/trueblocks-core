@@ -16,8 +16,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
-
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
 type JsonFormatted struct {
@@ -34,16 +32,11 @@ func AsJsonBytes(j *JsonFormatted) ([]byte, error) {
 	if Format == "json" {
 		result = *j
 	} else {
-		// TODO: global validate.Errors is not server-safe
-		if len(validate.Errors) > 0 {
-			result.Errors = validate.Errors
+		if len(j.Errors) > 0 {
+			result.Errors = j.Errors
 		} else {
-			if len(j.Errors) > 0 {
-				result.Errors = j.Errors
-			} else {
-				result.Data = j.Data
-				result.Meta = GetMeta()
-			}
+			result.Data = j.Data
+			result.Meta = GetMeta()
 		}
 	}
 

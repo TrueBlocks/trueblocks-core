@@ -26,11 +26,11 @@ on      ,both ,fast  ,abis  ,tools/grabABI ,findSig_tooshort    ,y    ,find = 0x
 on      ,both ,fast  ,abis  ,tools/grabABI ,findSig_toolong     ,y    ,find = 0x1aa3a00800
 on      ,both ,fast  ,abis  ,tools/grabABI ,findSig_toolongevt1 ,y    ,find = 0x1aa3a00800000000000000000
 on      ,both ,fast  ,abis  ,tools/grabABI ,findSig_toolongevt2 ,y    ,find = 0x1aa3a0081aa3a0081aa3a0081aa3a0081aa3a0081aa3a0081aa3a0081aa3a008000
-on      ,both ,fast  ,abis  ,tools/grabABI ,findSig             ,y    ,find = 0x1aa3a008
+local   ,both ,fast  ,abis  ,tools/grabABI ,findSig             ,y    ,find = 0x1aa3a008
 on      ,both ,fast  ,abis  ,tools/grabABI ,findSig_csv         ,n    ,find = 0x1aa3a008 & fmt = csv
 on      ,both ,fast  ,abis  ,tools/grabABI ,findSig_txt         ,n    ,find = 0x1aa3a008 & fmt = txt
 on      ,both ,fast  ,abis  ,tools/grabABI ,findSig_junk        ,y    ,find = 0x1aa3a008 & fmt = junk
-on      ,both ,fast  ,abis  ,tools/grabABI ,findSig1            ,y    ,find = 0x1aa3a008 & find = 0x3ccfd60b & find = 0xad7a672f
+local   ,both ,fast  ,abis  ,tools/grabABI ,findSig1            ,y    ,find = 0x1aa3a008 & find = 0x3ccfd60b & find = 0xad7a672f
 
 on      ,both ,fast  ,abis  ,tools/grabABI ,known_alone         ,y    ,known
 on      ,both ,fast  ,abis  ,tools/grabABI ,known_with          ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 & known
