@@ -1,5 +1,7 @@
 chifra blocks  1590000 4000001-4000002 1001001-1001100 1234567
-Error: Specify only a single block range at a time.
+Error: 
+  Specify only a single block range at a time.
+
 Usage:
   chifra blocks [flags] <block> [block...]
 

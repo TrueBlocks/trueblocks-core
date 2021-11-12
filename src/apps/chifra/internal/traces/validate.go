@@ -19,9 +19,5 @@ import (
 )
 
 func Validate(cmd *cobra.Command, args []string) error {
-	err := root.ValidateGlobals(cmd, args)
-	if err != nil {
-		return err
-	}
-	return nil
+	return root.ValidateGlobals(cmd, args)
 }

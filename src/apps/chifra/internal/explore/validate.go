@@ -112,12 +112,8 @@ func Validate(cmd *cobra.Command, args []string) error {
 	if len(urls) == 0 {
 		urls = append(urls, ExploreUrl{"", ExploreNone})
 	}
-	err := root.ValidateGlobals(cmd, args)
-	if err != nil {
-		return err
-	}
 
-	return nil
+	return root.ValidateGlobals(cmd, args)
 }
 
 func id_2_TxHash(arg string) (string, error) {

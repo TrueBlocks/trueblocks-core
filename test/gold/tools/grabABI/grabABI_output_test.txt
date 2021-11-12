@@ -1,2 +1,7 @@
 chifra abis  0xdac17f958d2ee523a2206206994597c13d831ec7 --output testing_file
+TEST[DATE|TIME] Known:  false
+TEST[DATE|TIME] Sol:  false
+TEST[DATE|TIME] Find:  []
+TEST[DATE|TIME] Source:  false
+TEST[DATE|TIME] Classes:  false
 --output_filename--

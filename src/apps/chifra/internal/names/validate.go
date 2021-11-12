@@ -28,12 +28,7 @@ func Validate(cmd *cobra.Command, args []string) error {
 		return validate.Usage("The {0} option is not available{1}.", "--collection", " with any other option")
 	}
 
-	err := root.ValidateGlobals(cmd, args)
-	if err != nil {
-		return err
-	}
-
-	return nil
+	return root.ValidateGlobals(cmd, args)
 }
 
 func anyBase() bool {

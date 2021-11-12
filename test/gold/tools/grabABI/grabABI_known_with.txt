@@ -1,4 +1,9 @@
 chifra abis  0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 --known
+TEST[DATE|TIME] Known:  true
+TEST[DATE|TIME] Sol:  false
+TEST[DATE|TIME] Find:  []
+TEST[DATE|TIME] Source:  false
+TEST[DATE|TIME] Classes:  false
 encoding	type	name	signature	input_names	output_names
 0x000a094ae8a9b5dfda733d953ccb49a019296de5996153c514d292f3255621b2	event	SubdomainCreated	SubdomainCreated(address,address,string,string)	creator,owner,subdomain,domain,	,
 0x0023de29	function	tokensReceived	tokensReceived(address,address,address,uint256,bytes,bytes)	operator,from,to,amount,userData,operatorData,	,

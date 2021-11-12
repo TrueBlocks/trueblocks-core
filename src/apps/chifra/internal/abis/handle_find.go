@@ -122,7 +122,9 @@ func HandleFind(arguments []string, no_header bool) {
 	}
 
 	defer wg.Wait()
-	fmt.Printf("\r                                                   \r")
+	if !utils.IsTestMode() {
+		fmt.Printf("\r                                                   \r")
+	}
 
 	// TODO: if Root.to_file == true, write the output to a filename
 	// TODO: if Root.output == <fn>, write the output to a <fn>

@@ -1,4 +1,9 @@
 chifra abis  0xe94327d07fc17907b4db788e5adf2ed424addff6 --fmt json
+TEST[DATE|TIME] Known:  false
+TEST[DATE|TIME] Sol:  false
+TEST[DATE|TIME] Find:  []
+TEST[DATE|TIME] Source:  false
+TEST[DATE|TIME] Classes:  false
 { "data": [
 {
   "name": "name",
