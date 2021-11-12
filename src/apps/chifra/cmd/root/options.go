@@ -13,7 +13,7 @@ package root
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 
-type rootOptTypes struct {
+type RootOptTypes struct {
 	Verbose  bool
 	LogLevel uint
 	NoHeader bool
@@ -28,4 +28,4 @@ type rootOptTypes struct {
 	Noop     bool
 }
 
-var Options rootOptTypes
+var Options RootOptTypes

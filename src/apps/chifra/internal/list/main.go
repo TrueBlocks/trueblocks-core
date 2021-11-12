@@ -14,27 +14,20 @@ package list
  *-------------------------------------------------------------------------------------------*/
 
 import (
-	"fmt"
-
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/export"
 	"github.com/spf13/cobra"
 )
 
 func Run(cmd *cobra.Command, args []string) error {
-	options := " --appearances"
+	export.Options.Appearances = true
 	if Options.Count {
-		options += " --count"
+		export.Options.Count = true
 	}
 	if Options.FirstBlock > 0 {
-		options += " --first_block " + fmt.Sprintf("%d", Options.FirstBlock)
+		export.Options.FirstBlock = Options.FirstBlock
 	}
 	if Options.LastBlock > 0 {
-		options += " --last_block " + fmt.Sprintf("%d", Options.LastBlock)
+		export.Options.LastBlock = Options.LastBlock
 	}
-	arguments := ""
-	for _, arg := range args {
-		arguments += " " + arg
-	}
-	root.PassItOn("acctExport", options, arguments)
-	return nil
+	return export.Run(cmd, args)
 }

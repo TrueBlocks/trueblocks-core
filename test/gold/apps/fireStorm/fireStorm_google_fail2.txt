@@ -3,7 +3,7 @@ INFO[DATE|TIME] terms
 INFO[DATE|TIME]   1001001.0
 INFO[DATE|TIME] google: true
 Error: 
-  Option --google allows only an address term.
+  The --google option requires an address term.
 
 Usage:
   chifra explore [flags] <term> [term...]

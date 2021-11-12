@@ -23,6 +23,7 @@ type severity int
 const (
 	Progress severity = iota
 	Info
+	Test
 	Warning
 	Error
 	ErrorFatal
@@ -31,6 +32,7 @@ const (
 var severityToLabel = map[severity]string{
 	Progress:   "PROG",
 	Info:       "INFO",
+	Test:       "TEST",
 	Warning:    "WARNG",
 	Error:      "ERROR",
 	ErrorFatal: "FATAL",
@@ -39,10 +41,15 @@ var severityToLabel = map[severity]string{
 // I don't love this, but we can't call into the os every time we Log
 // We can't use utils. because it creates a cyclical import
 var testMode bool = os.Getenv("TEST_MODE") == "true"
+var apiMode bool = os.Getenv("API_MODE") == "true"
 
 // Log prints `a` to stderr with a label corresponding to the severity level
 // prepended (e.g. <INFO>, <ERROR>, etc.)
 func Log(sev severity, a ...interface{}) {
+	if sev == Test && (apiMode || !testMode) {
+		return
+	}
+
 	timeDatePart := "DATE|TIME"
 	if !testMode {
 		now := time.Now()

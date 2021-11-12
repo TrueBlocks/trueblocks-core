@@ -1,6 +1,6 @@
 chifra pins  
 Error: 
-  You must choose at least one of --list or --init.
+  Please choose at least one of --list or --init.
 
 Usage:
   chifra pins [flags]

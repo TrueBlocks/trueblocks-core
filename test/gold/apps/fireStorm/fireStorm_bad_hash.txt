@@ -2,7 +2,7 @@ chifra explore  0xf503017D7baF7FBC0fff749badha5hfab532aeeecf549be93e358737d0648f
 INFO[DATE|TIME] terms
 INFO[DATE|TIME]   0xf503017D7baF7FBC0fff749badha5hfab532aeeecf549be93e358737d0648f50d57083a0
 Error: 
-  The term (0xf503017d7baf7fbc0fff749badha5hfab532aeeecf549be93e358737d0648f50d57083a0) does not appear to be valid.
+  The term option (0xf503017d7baf7fbc0fff749badha5hfab532aeeecf549be93e358737d0648f50d57083a0) must be a valid term.
 
 Usage:
   chifra explore [flags] <term> [term...]

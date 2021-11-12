@@ -1,5 +1,9 @@
 chifra pins  --list --fmt json
-INFO[DATE|TIME] list: true
+TEST[DATE|TIME] List:  true
+TEST[DATE|TIME] Init:  false
+TEST[DATE|TIME] All:  false
+TEST[DATE|TIME] Sleep:  0.25
+TEST[DATE|TIME] Share:  false
 INFO[DATE|TIME] hashToIndexFormatFile: Qmart6XP9XjL43p72PGR93QKytbK8jWWcMguhFgxATTya2
 INFO[DATE|TIME] hashToBloomFormatFile: QmNhPk39DUFoEdhUmtGARqiFECUHeghyeryxZM9kyRxzHD
 INFO[DATE|TIME] unchainedIndexAddr: 0xcfd7f3b24f3551741f922fd8c4381aa4e00fc8fd

@@ -1,6 +1,6 @@
 chifra names  --tags --addr
 Error: 
-  Do not use the --tags option with any other option.
+  The --tags option is not available with any other option.
 
 Usage:
   chifra names [flags] <term> [term...]

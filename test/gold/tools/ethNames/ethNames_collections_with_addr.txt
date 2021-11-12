@@ -1,6 +1,6 @@
 chifra names  --collections --addr
 Error: 
-  Do not use the --collection option with any other option.
+  The --collection option is not available with any other option.
 
 Usage:
   chifra names [flags] <term> [term...]

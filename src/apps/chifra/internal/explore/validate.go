@@ -56,7 +56,7 @@ func Validate(cmd *cobra.Command, args []string) error {
 	TestLogExplore(args)
 
 	if Options.Google && Options.Local {
-		return validate.Usage("The {0} option is not available{1}.", "--local", "with the --google option")
+		return validate.Usage("The {0} option is not available{1}.", "--local", " with the --google option")
 	}
 
 	for _, arg := range args {

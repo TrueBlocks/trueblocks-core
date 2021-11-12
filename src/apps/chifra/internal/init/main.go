@@ -20,6 +20,5 @@ import (
 
 func Run(cmd *cobra.Command, args []string) error {
 	pins.Options.Init = true
-	pins.Run(cmd, args)
-	return nil
+	return pins.Run(cmd, args)
 }

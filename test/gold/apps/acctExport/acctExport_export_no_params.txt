@@ -1,6 +1,6 @@
 chifra export  
 Error: 
-  At least one valid Ethereum address is required
+  Please specify at least one valid Ethereum address.
 
 Usage:
   chifra export [flags] <address> [address...] [topics...] [fourbytes...]

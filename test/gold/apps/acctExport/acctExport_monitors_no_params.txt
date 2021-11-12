@@ -1,6 +1,6 @@
 chifra monitors  
 Error: 
-  At least one valid Ethereum address is required
+  Please specify at least one valid Ethereum address.
 
 Usage:
   chifra monitors [flags] <address> [address...]

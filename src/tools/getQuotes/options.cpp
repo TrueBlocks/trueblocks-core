@@ -107,9 +107,6 @@ bool COptions::parseArguments(string_q& command) {
         freq = isNumeral(period) ? str_2_Uint(period) : theMap[period];
     }
 
-    string_q unused;
-    establishFolder(source.getDatabasePath(unused));
-
     // Display formatting
     configureDisplay("getQuotes", "CPriceQuote", STR_DISPLAY_PRICEQUOTE);
 

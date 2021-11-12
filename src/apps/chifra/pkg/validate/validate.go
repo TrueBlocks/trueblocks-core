@@ -107,7 +107,7 @@ func ValidateAtLeastOneAddr(args []string) error {
 		Errors = nil // calling code will report the error
 		return nil
 	}
-	return Usage("Please specify at least one {0}.", "valid transaction identifier")
+	return Usage("Please specify at least one {0}.", "valid Ethereum address")
 }
 
 func ValidateEnum(field, value, valid string) error {

@@ -1,6 +1,6 @@
 chifra abis  --find 0x1aa3a00800000000000000000
 Error: 
-  fourbyte (0x1aa3a00800000000000000000) is not 4 bytes long
+  The fourbyte option (0x1aa3a00800000000000000000) must be 4 bytes long.
 
 Usage:
   chifra abis [flags] <address> [address...]

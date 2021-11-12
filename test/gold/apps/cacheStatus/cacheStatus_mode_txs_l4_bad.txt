@@ -1,6 +1,6 @@
 chifra status  caches --types txs --details  --depth 4
 Error: 
-  --depth parameter (4) must be less than four (4)
+  The --depth option (4) must be less than four (4).
 
 Usage:
   chifra status [flags] [mode...]

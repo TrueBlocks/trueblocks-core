@@ -1,4 +1,9 @@
 chifra pins  --list --fmt junk
+TEST[DATE|TIME] List:  true
+TEST[DATE|TIME] Init:  false
+TEST[DATE|TIME] All:  false
+TEST[DATE|TIME] Sleep:  0.25
+TEST[DATE|TIME] Share:  false
 Error: 
   The --fmt option (junk) must be one of [ json | txt | csv | api ]
 

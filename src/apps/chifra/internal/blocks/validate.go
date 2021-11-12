@@ -34,16 +34,11 @@ func Validate(cmd *cobra.Command, args []string) error {
 		}
 
 		if errors.Is(validationErr, validate.ErrTooManyRanges) {
-			return errors.New("Specify only a single block range at a time.")
+			return validate.Usage("Specify only a single block range at a time.")
 		}
 
 		return validationErr
 	}
 
-	err := root.ValidateGlobals(cmd, args)
-	if err != nil {
-		return err
-	}
-
-	return nil
+	return root.ValidateGlobals(cmd, args)
 }

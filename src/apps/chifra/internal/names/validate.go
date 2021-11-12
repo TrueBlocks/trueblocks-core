@@ -21,11 +21,11 @@ import (
 
 func Validate(cmd *cobra.Command, args []string) error {
 	if Options.Tags && anyBase() {
-		return validate.Usage("The {0} option is not available{2}.", "--tags", " with any other option")
+		return validate.Usage("The {0} option is not available{1}.", "--tags", " with any other option")
 	}
 
 	if Options.Collections && anyBase() {
-		return validate.Usage("The {0} option is not available{2}.", "--collection", " with any other option")
+		return validate.Usage("The {0} option is not available{1}.", "--collection", " with any other option")
 	}
 
 	err := root.ValidateGlobals(cmd, args)

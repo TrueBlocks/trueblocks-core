@@ -33,21 +33,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-/*
-   string_q name;
-   string_q type;
-   string_q abi_source;
-   bool anonymous;
-   bool constant;
-   string_q stateMutability;
-   string_q signature;
-   string_q encoding;
-   string_q message;
-   CParameterArray inputs;
-   CParameterArray outputs;
-   Value inputs_dict;
-   Value outputs_dict;
-*/
 type Function struct {
 	Encoding  string `json:"encoding,omitempty"`
 	Signature string `json:"signature,omitempty"`
@@ -74,7 +59,7 @@ func (v *ScanCounter) Report(target *os.File, action, msg string) {
 }
 
 // HandleFind loads manifest, sorts pins and prints them out
-func HandleFind(arguments []string) {
+func HandleFind(arguments []string, no_header bool) {
 	visits := ScanCounter{}
 	visits.Wanted = uint64(len(arguments))
 	visits.Freq = 139419
@@ -137,6 +122,7 @@ func HandleFind(arguments []string) {
 	}
 
 	defer wg.Wait()
+	fmt.Printf("\r                                                   \r")
 
 	// TODO: if Root.to_file == true, write the output to a filename
 	// TODO: if Root.output == <fn>, write the output to a <fn>
@@ -156,7 +142,9 @@ func HandleFind(arguments []string) {
 	structType := reflect.TypeOf(Function{})
 	rowTemplate, _ := output.GetRowTemplate(&structType)
 
-	fmt.Fprintln(out, output.GetHeader(&structType))
+	if !no_header {
+		fmt.Fprintln(out, output.GetHeader(&structType))
+	}
 	for _, item := range results {
 		if output.Format == "" && utils.IsTerminal() {
 			rowTemplate.Execute(out1, item)

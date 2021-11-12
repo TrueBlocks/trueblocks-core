@@ -1,4 +1,9 @@
 chifra abis  0xffa93aacf49297d51e211817452839052fdfb961
+TEST[DATE|TIME] Known:  false
+TEST[DATE|TIME] Sol:  false
+TEST[DATE|TIME] Find:  []
+TEST[DATE|TIME] Source:  false
+TEST[DATE|TIME] Classes:  false
 encoding	type	name	signature	input_names	output_names
 0x05d2035b	function	mintingFinished	mintingFinished()		val_0,,
 0x05f9bb6b	function	transfersEnabledFlag	transfersEnabledFlag()		val_0,,

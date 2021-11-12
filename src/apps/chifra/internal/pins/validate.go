@@ -15,13 +15,13 @@ package pins
 
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/spf13/cobra"
 )
 
 func Validate(cmd *cobra.Command, args []string) error {
-	err := ValidateOptions(&Options)
+	err := Options.ValidateOptions()
 	if err != nil {
 		return err
 	}
@@ -29,7 +29,15 @@ func Validate(cmd *cobra.Command, args []string) error {
 	return root.ValidateGlobals(cmd, args)
 }
 
-func ValidateOptions(opts *PinsOptionsType) error {
+func (opts *PinsOptionsType) TestLog() {
+	logger.Log(logger.Test, "List: ", opts.List)
+	logger.Log(logger.Test, "Init: ", opts.Init)
+	logger.Log(logger.Test, "All: ", opts.All)
+	logger.Log(logger.Test, "Sleep: ", opts.Sleep)
+	logger.Log(logger.Test, "Share: ", opts.Share)
+}
+
+func (opts *PinsOptionsType) ValidateOptions() error {
 
 	if opts.List && opts.Init {
 		return validate.Usage("Please choose only one of {0}.", "--list or --init")
@@ -59,6 +67,8 @@ func ValidateOptions(opts *PinsOptionsType) error {
 		return validate.Usage("The {0} option is not available{1}.", "--share", " (not implemented)")
 	}
 
+	opts.TestLog()
+
 	// if (share) {
 	//     string_q res := doCommand("which ipfs");
 	//     if (res.empty()) {
@@ -72,13 +82,6 @@ func ValidateOptions(opts *PinsOptionsType) error {
 	//     LOG_INFO(cGreen, "Re-pinning ", pin.fileName, cOff, " ==> ", newHash, " ",
 	//          (pin.bloomHash == newHash ? greenCheck : redX));
 	// }
-
-	utils.TestLogBool("list", opts.List)
-	utils.TestLogBool("init", opts.Init)
-	utils.TestLogBool("all", opts.All)
-	utils.TestLogBool("share", opts.Share)
-	utils.TestLogBool("remote", opts.Remote)
-	// LOG_TEST("sleep", sleep, (sleep == .25))
 
 	return nil
 }

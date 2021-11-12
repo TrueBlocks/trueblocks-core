@@ -1,7 +1,6 @@
 package exec
 
 import (
-	"errors"
 	"net/http"
 	"strconv"
 
@@ -9,9 +8,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib/manifest"
 )
-
-var ErrMultipleModes = errors.New("only one of ?list or ?init is supported")
-var ErrNoMode = errors.New("you must choose one of ?list or ?init")
 
 // AdminPins runs pin-operating functions depending on query parameters
 func AdminPins(request *http.Request) (*manifest.PinsList, error) {
@@ -43,7 +39,7 @@ func AdminPins(request *http.Request) (*manifest.PinsList, error) {
 		}
 	}
 
-	err := pins.ValidateOptions(opts)
+	err := opts.ValidateOptions()
 	if err != nil {
 		return nil, err
 	}
