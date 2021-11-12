@@ -19,9 +19,7 @@ import (
 	"fmt"
 	"io"
 	"os"
-	"reflect"
 	"sync"
-	"text/tabwriter"
 
 	"github.com/ethereum/go-ethereum/crypto"
 	ants "github.com/panjf2000/ants/v2"
@@ -144,29 +142,8 @@ func HandleFind(arguments []string) {
 
 	// TODO: if Root.to_file == true, write the output to a filename
 	// TODO: if Root.output == <fn>, write the output to a <fn>
-	out := os.Stdout
-	out1 := tabwriter.NewWriter(out, 0, 0, 2, ' ', 0)
-
-	if output.Format == "json" || output.Format == "api" {
-		err := output.PrintJson(&output.JsonFormatted{
-			Data: results,
-		})
-		if err != nil {
-			logger.Fatal(err)
-		}
-		return
+	err := output.Output(os.Stdout, output.Format, results)
+	if err != nil {
+		logger.Log(logger.Error, err)
 	}
-
-	structType := reflect.TypeOf(Function{})
-	rowTemplate, _ := output.GetRowTemplate(&structType)
-
-	fmt.Fprintln(out, output.GetHeader(&structType))
-	for _, item := range results {
-		if output.Format == "" && utils.IsTerminal() {
-			rowTemplate.Execute(out1, item)
-		} else {
-			rowTemplate.Execute(out, item)
-		}
-	}
-	out1.Flush()
 }

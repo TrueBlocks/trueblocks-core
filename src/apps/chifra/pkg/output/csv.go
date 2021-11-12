@@ -13,10 +13,10 @@ type CsvFormatted struct {
 // AsCsv turns a type into CSV string. It uses custom code instead of
 // Go's encoding/csv to maintain compatibility with C++ output, which
 // quotes each item. encoding/csv would double-quote a quoted string...
-func AsCsv(i interface{}) (string, error) {
+func AsCsv(i interface{}) ([]byte, error) {
 	records, err := ToStringRecords(i, true)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 	result := []string{}
 	// We have to join records in one row with a ","
@@ -27,5 +27,7 @@ func AsCsv(i interface{}) (string, error) {
 	// Now we need to join all rows with a newline. We also add one
 	// final newline to be concise with both Go's encoding/csv and C++
 	// version
-	return strings.Join(result, "\n") + "\n", nil
+	return []byte(
+		strings.Join(result, "\n") + "\n",
+	), nil
 }

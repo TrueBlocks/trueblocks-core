@@ -27,7 +27,7 @@ func TestAsCsv(t *testing.T) {
 		`"second first","second second"`,
 	}, "\n")
 
-	if result != expected {
+	if string(result) != expected {
 		t.Error("Wrong result", result)
 	}
 }
