@@ -1,5 +1,4 @@
 chifra monitors  0x001d14804b399c6ef80e64576f657660804fec0b --undelete
 TEST[DATE|TIME] Undelete:  true
-TEST[DATE|TIME] FirstBlock:  0
 TEST[DATE|TIME] LastBlock:  0
 TIME ~ CLOCK - <INFO>  : Monitor 0x001d14804b399c6ef80e64576f657660804fec0b must be deleted first

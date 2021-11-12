@@ -1,7 +1,4 @@
 chifra quotes  --fmt junk
-TEST[DATE|TIME] Period:  
-TEST[DATE|TIME] Pair:  
-TEST[DATE|TIME] Feed:  
 Error: 
   The --fmt option (junk) must be one of [ json | txt | csv | api ]
 

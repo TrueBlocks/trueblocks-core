@@ -1,6 +1,5 @@
 chifra status  --report --fmt json
 TEST[DATE|TIME] Depth:  0
-TEST[DATE|TIME] TestStart:  0
 TEST[DATE|TIME] TestEnd:  0
 { "data": [
 {

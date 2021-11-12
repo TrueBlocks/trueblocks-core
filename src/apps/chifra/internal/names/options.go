@@ -76,7 +76,9 @@ func (opts *NamesOptionsType) TestLog() {
 	if opts.Clean {
 		logger.Log(logger.Test, "Clean: ", opts.Clean)
 	}
-	logger.Log(logger.Test, "Autoname: ", opts.Autoname)
+	if len(opts.Autoname) > 0 {
+		logger.Log(logger.Test, "Autoname: ", opts.Autoname)
+	}
 	if opts.Create {
 		logger.Log(logger.Test, "Create: ", opts.Create)
 	}

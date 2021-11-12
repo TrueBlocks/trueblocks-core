@@ -1,7 +1,4 @@
 chifra blocks  2222222 2332332 --fmt api
-TEST[DATE|TIME] BigRange:  500
-TEST[DATE|TIME] List:  0
-TEST[DATE|TIME] ListCount:  20
 {"data": [
 {
   "gasLimit": 4704588,

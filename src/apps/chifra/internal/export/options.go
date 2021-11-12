@@ -18,6 +18,7 @@ package export
 
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 type ExportOptionsType struct {
@@ -87,8 +88,12 @@ func (opts *ExportOptionsType) TestLog() {
 	if opts.Count {
 		logger.Log(logger.Test, "Count: ", opts.Count)
 	}
-	logger.Log(logger.Test, "FirstRecord: ", opts.FirstRecord)
-	logger.Log(logger.Test, "MaxRecords: ", opts.MaxRecords)
+	if opts.FirstRecord != 0 {
+		logger.Log(logger.Test, "FirstRecord: ", opts.FirstRecord)
+	}
+	if opts.MaxRecords != 250 {
+		logger.Log(logger.Test, "MaxRecords: ", opts.MaxRecords)
+	}
 	if opts.Relevant {
 		logger.Log(logger.Test, "Relevant: ", opts.Relevant)
 	}
@@ -110,18 +115,28 @@ func (opts *ExportOptionsType) TestLog() {
 	if opts.Unripe {
 		logger.Log(logger.Test, "Unripe: ", opts.Unripe)
 	}
-	logger.Log(logger.Test, "Load: ", opts.Load)
+	if len(opts.Load) > 0 {
+		logger.Log(logger.Test, "Load: ", opts.Load)
+	}
 	if opts.Reversed {
 		logger.Log(logger.Test, "Reversed: ", opts.Reversed)
 	}
 	if opts.ByDate {
 		logger.Log(logger.Test, "ByDate: ", opts.ByDate)
 	}
-	logger.Log(logger.Test, "SummarizeBy: ", opts.SummarizeBy)
+	if len(opts.SummarizeBy) > 0 {
+		logger.Log(logger.Test, "SummarizeBy: ", opts.SummarizeBy)
+	}
 	if opts.SkipDdos {
 		logger.Log(logger.Test, "SkipDdos: ", opts.SkipDdos)
 	}
-	logger.Log(logger.Test, "MaxTraces: ", opts.MaxTraces)
-	logger.Log(logger.Test, "FirstBlock: ", opts.FirstBlock)
-	logger.Log(logger.Test, "LastBlock: ", opts.LastBlock)
+	if opts.MaxTraces != 250 {
+		logger.Log(logger.Test, "MaxTraces: ", opts.MaxTraces)
+	}
+	if opts.FirstBlock != 0 {
+		logger.Log(logger.Test, "FirstBlock: ", opts.FirstBlock)
+	}
+	if opts.LastBlock != utils.NOPOS {
+		logger.Log(logger.Test, "LastBlock: ", opts.LastBlock)
+	}
 }

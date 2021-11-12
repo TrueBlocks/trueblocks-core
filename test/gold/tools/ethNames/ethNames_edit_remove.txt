@@ -1,6 +1,5 @@
 chifra names  --remove 0x0000000000000000000000000000000010101010 --log_level 10 --fmt api --expand
 TEST[DATE|TIME] Expand:  true
-TEST[DATE|TIME] Autoname:  
 TEST[DATE|TIME] Remove:  true
 TIME ~ CLOCK - <INFO>  : Cleaning 0x0000000000000000000000000000000010101010                                  TIME ~ CLOCK - <INFO>  : ---------------------------------------------
 TIME ~ CLOCK - <INFO>  : {

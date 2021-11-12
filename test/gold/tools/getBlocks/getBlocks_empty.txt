@@ -1,7 +1,4 @@
 chifra blocks  1001001
-TEST[DATE|TIME] BigRange:  500
-TEST[DATE|TIME] List:  0
-TEST[DATE|TIME] ListCount:  20
 { "data": [
 {
   "gasLimit": 3141592,

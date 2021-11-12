@@ -1,10 +1,5 @@
 chifra export  0x001d14804b399c6ef80e64576f657660804fec0b --first_block 100000 --last_block 2000000 --unripe
-TEST[DATE|TIME] FirstRecord:  0
-TEST[DATE|TIME] MaxRecords:  250
 TEST[DATE|TIME] Unripe:  true
-TEST[DATE|TIME] Load:  
-TEST[DATE|TIME] SummarizeBy:  
-TEST[DATE|TIME] MaxTraces:  250
 TEST[DATE|TIME] FirstBlock:  100000
 TEST[DATE|TIME] LastBlock:  2000000
 

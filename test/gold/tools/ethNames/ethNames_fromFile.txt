@@ -1,5 +1,4 @@
 chifra names  --file names.txt
-TEST[DATE|TIME] Autoname:  
 Cmd: LockTrip 
 Cmd: UCASH 
 Cmd: XES 

@@ -1,7 +1,4 @@
 chifra blocks  32279 --uniq_tx
 TEST[DATE|TIME] UniqTx:  true
-TEST[DATE|TIME] BigRange:  500
-TEST[DATE|TIME] List:  0
-TEST[DATE|TIME] ListCount:  20
 bn	tx	tc	addr	reason
 32279	99999		0x0000000000000000000000000000000000000000	miner

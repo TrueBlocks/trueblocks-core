@@ -18,6 +18,7 @@ package status
 
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 type StatusOptionsType struct {
@@ -42,7 +43,9 @@ func (opts *StatusOptionsType) TestLog() {
 	if len(opts.Types) > 0 {
 		logger.Log(logger.Test, "Types: ", opts.Types)
 	}
-	logger.Log(logger.Test, "Depth: ", opts.Depth)
+	if opts.Depth != utils.NOPOS {
+		logger.Log(logger.Test, "Depth: ", opts.Depth)
+	}
 	if opts.Terse {
 		logger.Log(logger.Test, "Terse: ", opts.Terse)
 	}
@@ -55,6 +58,10 @@ func (opts *StatusOptionsType) TestLog() {
 	if opts.SetConfig {
 		logger.Log(logger.Test, "SetConfig: ", opts.SetConfig)
 	}
-	logger.Log(logger.Test, "TestStart: ", opts.TestStart)
-	logger.Log(logger.Test, "TestEnd: ", opts.TestEnd)
+	if opts.TestStart != 0 {
+		logger.Log(logger.Test, "TestStart: ", opts.TestStart)
+	}
+	if opts.TestEnd != utils.NOPOS {
+		logger.Log(logger.Test, "TestEnd: ", opts.TestEnd)
+	}
 }

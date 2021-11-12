@@ -1,8 +1,5 @@
 chifra blocks  0x3d6122660cc824376f11ee842f83addc3525e2dd6756b9bcf0affa6aa88cf741 0x753bd45eb11dfe6bd3dcec5147b2365b046c2f02bfdff595c0b091c3f91e7627 --uncles
 TEST[DATE|TIME] Uncles:  true
-TEST[DATE|TIME] BigRange:  500
-TEST[DATE|TIME] List:  0
-TEST[DATE|TIME] ListCount:  20
 { "data": [
 {
   "gasLimit": 5000,

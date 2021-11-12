@@ -1,8 +1,5 @@
 chifra blocks  4012000-4012001 --logs
 TEST[DATE|TIME] Logs:  true
-TEST[DATE|TIME] BigRange:  500
-TEST[DATE|TIME] List:  0
-TEST[DATE|TIME] ListCount:  20
 { "data": [
 TIME ~ CLOCK - <INFO>  : Processing log query 4012000{
   "address": "0xfca47962d45adfdfd1ab2d972315db4ce7ccf094",

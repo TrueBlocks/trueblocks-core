@@ -1,6 +1,4 @@
 chifra traces  0x17104ac9d3312d8c136b7f44d4b8b47852618065ebfa534bd2d3b5ef218ca1f3 --fmt json
-TEST[DATE|TIME] Filter:  
-TEST[DATE|TIME] Max:  250
 { "data": [
   {
     "blockHash": "0x7eb25504e4c202cf3d62fd585d3e238f592c780cca82dacb2ed3cb5b38883add",

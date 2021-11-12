@@ -1,6 +1,4 @@
 chifra traces  .whatever
-TEST[DATE|TIME] Filter:  
-TEST[DATE|TIME] Max:  250
 
   .whatever does not appear to be a valid transaction index. Quitting...
 

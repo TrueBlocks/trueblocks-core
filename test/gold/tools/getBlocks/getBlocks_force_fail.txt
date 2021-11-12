@@ -1,9 +1,6 @@
 chifra blocks  2769609 2799895 2872831 3076260 --cache --uniq_tx
 TEST[DATE|TIME] UniqTx:  true
-TEST[DATE|TIME] BigRange:  500
 TEST[DATE|TIME] Cache:  true
-TEST[DATE|TIME] List:  0
-TEST[DATE|TIME] ListCount:  20
 
   The --cache option is not available when using one of the address options. Quitting...
 

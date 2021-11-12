@@ -1,6 +1,4 @@
 chifra state  0xbb9bc244d798123fde783fcc1c72d3bb8c189413 1428000-1438000:200
-TEST[DATE|TIME] Call:  
-TEST[DATE|TIME] ProxyFor:  
 blocknumber	address	balance
 1428000	0xbb9bc244d798123fde783fcc1c72d3bb8c189413	0
 1428200	0xbb9bc244d798123fde783fcc1c72d3bb8c189413	0

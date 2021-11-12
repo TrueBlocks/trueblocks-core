@@ -33,7 +33,9 @@ type ScrapeOptionsType struct {
 var Options ScrapeOptionsType
 
 func (opts *ScrapeOptionsType) TestLog() {
-	logger.Log(logger.Test, "Action: ", opts.Action)
+	if len(opts.Action) > 0 {
+		logger.Log(logger.Test, "Action: ", opts.Action)
+	}
 	logger.Log(logger.Test, "Sleep: ", opts.Sleep)
 	if opts.Pin {
 		logger.Log(logger.Test, "Pin: ", opts.Pin)
@@ -41,7 +43,13 @@ func (opts *ScrapeOptionsType) TestLog() {
 	if opts.Publish {
 		logger.Log(logger.Test, "Publish: ", opts.Publish)
 	}
-	logger.Log(logger.Test, "BlockCnt: ", opts.BlockCnt)
-	logger.Log(logger.Test, "BlockChanCnt: ", opts.BlockChanCnt)
-	logger.Log(logger.Test, "AddrChanCnt: ", opts.AddrChanCnt)
+	if opts.BlockCnt != 2000 {
+		logger.Log(logger.Test, "BlockCnt: ", opts.BlockCnt)
+	}
+	if opts.BlockChanCnt != 10 {
+		logger.Log(logger.Test, "BlockChanCnt: ", opts.BlockChanCnt)
+	}
+	if opts.AddrChanCnt != 20 {
+		logger.Log(logger.Test, "AddrChanCnt: ", opts.AddrChanCnt)
+	}
 }

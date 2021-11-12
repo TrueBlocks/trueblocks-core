@@ -102,7 +102,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12976,tools,ChainData,blocks,getBlocks,big_range,r,500,false,false,false,false,header,flag,<uint64>,for the --logs option only&#44; allow for block ranges larger than 500
 12578,tools,ChainData,blocks,getBlocks,count,c,,false,false,true,true,header,switch,<boolean>,display the number of the lists of appearances for --apps&#44; --uniq&#44; or --uniq_tx
 12580,tools,ChainData,blocks,getBlocks,cache,o,,false,false,true,true,header,switch,<boolean>,force a write of the block to the cache
-12582,tools,ChainData,blocks,getBlocks,list,l,,false,false,false,false,local,flag,<blknum>,summary list of blocks running backwards from latest block minus num
+12582,tools,ChainData,blocks,getBlocks,list,l,0,false,false,false,false,local,flag,<blknum>,summary list of blocks running backwards from latest block minus num
 12584,tools,ChainData,blocks,getBlocks,list_count,C,20,false,false,false,false,header,flag,<blknum>,the number of blocks to report for --list option
 12590,tools,ChainData,blocks,getBlocks,,,,false,false,true,true,--,description,,Retrieve one or more blocks from the chain or local cache.
 12600,tools,ChainData,blocks,getBlocks,n1,,,false,false,false,false,--,note,,`blocks` is a space-separated list of values&#44; a start-end range&#44; a `special`&#44; or any combination.
@@ -230,7 +230,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12133,apps,Admin,scrape,flame-scrape,n2,,,false,false,false,false,--,note,,the --pin and --publish options require an API to the pinning service.
 12135,apps,Admin,scrape,flame-scrape,n3,,,false,false,false,false,--,note,,the --n_* related options allow you to tune the scrapers.
 
-13111,apps,Admin,serve,flame,port,p,:8080,false,false,true,true,header,switch,<string>,specify the server's port
+13111,apps,Admin,serve,flame,port,p,:8080,false,false,true,true,header,flag,<string>,specify the server's port
 13112,apps,Admin,serve,flame,,,,false,false,true,true,--,description,,Serve the TrueBlocks API using the flame server.
 13113,apps,Admin,serve,flame,n1,,,false,false,false,false,--,note,,To start API open terminal window and run chifra serve.
 13114,apps,Admin,serve,flame,n2,,,false,false,false,false,--,note,,See the API documentation for more information.

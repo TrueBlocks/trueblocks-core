@@ -18,6 +18,7 @@ package monitors
 
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 type MonitorsOptionsType struct {
@@ -52,6 +53,10 @@ func (opts *MonitorsOptionsType) TestLog() {
 	if opts.Remove {
 		logger.Log(logger.Test, "Remove: ", opts.Remove)
 	}
-	logger.Log(logger.Test, "FirstBlock: ", opts.FirstBlock)
-	logger.Log(logger.Test, "LastBlock: ", opts.LastBlock)
+	if opts.FirstBlock != 0 {
+		logger.Log(logger.Test, "FirstBlock: ", opts.FirstBlock)
+	}
+	if opts.LastBlock != utils.NOPOS {
+		logger.Log(logger.Test, "LastBlock: ", opts.LastBlock)
+	}
 }

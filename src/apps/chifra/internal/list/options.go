@@ -18,6 +18,7 @@ package list
 
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 type ListOptionsType struct {
@@ -36,6 +37,10 @@ func (opts *ListOptionsType) TestLog() {
 	if opts.Appearances {
 		logger.Log(logger.Test, "Appearances: ", opts.Appearances)
 	}
-	logger.Log(logger.Test, "FirstBlock: ", opts.FirstBlock)
-	logger.Log(logger.Test, "LastBlock: ", opts.LastBlock)
+	if opts.FirstBlock != 0 {
+		logger.Log(logger.Test, "FirstBlock: ", opts.FirstBlock)
+	}
+	if opts.LastBlock != utils.NOPOS {
+		logger.Log(logger.Test, "LastBlock: ", opts.LastBlock)
+	}
 }

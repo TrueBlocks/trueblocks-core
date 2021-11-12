@@ -40,6 +40,10 @@ func (opts *StateOptionsType) TestLog() {
 	if opts.NoZero {
 		logger.Log(logger.Test, "NoZero: ", opts.NoZero)
 	}
-	logger.Log(logger.Test, "Call: ", opts.Call)
-	logger.Log(logger.Test, "ProxyFor: ", opts.ProxyFor)
+	if len(opts.Call) > 0 {
+		logger.Log(logger.Test, "Call: ", opts.Call)
+	}
+	if len(opts.ProxyFor) > 0 {
+		logger.Log(logger.Test, "ProxyFor: ", opts.ProxyFor)
+	}
 }

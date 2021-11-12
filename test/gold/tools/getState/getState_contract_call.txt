@@ -1,6 +1,5 @@
 chifra state  --call 0xa4f29fc548856180f6b1e319ee4d86715875cce4!0x12065fe0 6523977-6540000:2000
 TEST[DATE|TIME] Call:  0xa4f29fc548856180f6b1e319ee4d86715875cce4!0x12065fe0
-TEST[DATE|TIME] ProxyFor:  
 blocknumber	address	signature	encoding	bytes	compressedresult
 6523977	0xa4f29fc548856180f6b1e319ee4d86715875cce4	getBalance()	0x12065fe0		0
 6525977	0xa4f29fc548856180f6b1e319ee4d86715875cce4	getBalance()	0x12065fe0		0

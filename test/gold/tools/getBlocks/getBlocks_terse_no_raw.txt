@@ -1,8 +1,5 @@
 chifra blocks  4001001-4001003 --hashes
 TEST[DATE|TIME] Hashes:  true
-TEST[DATE|TIME] BigRange:  500
-TEST[DATE|TIME] List:  0
-TEST[DATE|TIME] ListCount:  20
 { "data": [
 {
   "hash": "0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f",

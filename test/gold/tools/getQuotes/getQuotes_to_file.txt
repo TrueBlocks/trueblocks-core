@@ -1,5 +1,2 @@
 chifra quotes  --fmt json --to_file
-TEST[DATE|TIME] Period:  
-TEST[DATE|TIME] Pair:  
-TEST[DATE|TIME] Feed:  
 { "outputFilename": "--output_filename--" }

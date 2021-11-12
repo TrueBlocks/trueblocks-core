@@ -1,8 +1,5 @@
 chifra blocks  4012000-4012001 --emitter 0x86fa049857e0209aa7d9e616f7eb3b3b7
 TEST[DATE|TIME] Emitter:  [0x86fa049857e0209aa7d9e616f7eb3b3b7]
-TEST[DATE|TIME] BigRange:  500
-TEST[DATE|TIME] List:  0
-TEST[DATE|TIME] ListCount:  20
 
   Invalid address '0x86fa049857e0209aa7d9e616f7eb3b3b7'. Length (35) is not equal to 40 characters (20 bytes). Quitting...
 

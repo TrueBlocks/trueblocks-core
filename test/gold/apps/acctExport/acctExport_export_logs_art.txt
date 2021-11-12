@@ -1,11 +1,6 @@
 chifra export  0xbb9bc244d798123fde783fcc1c72d3bb8c189413 --first_block 1429283 --last_block 1429468 --logs --fmt json --articulate
 TEST[DATE|TIME] Logs:  true
 TEST[DATE|TIME] Articulate:  true
-TEST[DATE|TIME] FirstRecord:  0
-TEST[DATE|TIME] MaxRecords:  250
-TEST[DATE|TIME] Load:  
-TEST[DATE|TIME] SummarizeBy:  
-TEST[DATE|TIME] MaxTraces:  250
 TEST[DATE|TIME] FirstBlock:  1429283
 TEST[DATE|TIME] LastBlock:  1429468
 { "data": [

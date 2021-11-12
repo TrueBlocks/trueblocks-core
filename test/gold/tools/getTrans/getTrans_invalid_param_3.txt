@@ -1,5 +1,4 @@
 chifra transactions  1233123
-TEST[DATE|TIME] Reconcile:  
 
   1233123 does not appear to be a valid transaction index. Quitting...
 

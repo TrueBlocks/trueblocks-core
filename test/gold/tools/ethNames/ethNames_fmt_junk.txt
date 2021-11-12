@@ -1,5 +1,4 @@
 chifra names  tip --fmt junk
-TEST[DATE|TIME] Autoname:  
 Error: 
   The --fmt option (junk) must be one of [ json | txt | csv | api ]
 

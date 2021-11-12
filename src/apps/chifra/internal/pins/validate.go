@@ -61,8 +61,6 @@ func (opts *PinsOptionsType) ValidateOptions() error {
 		return validate.Usage("The {0} option is not available{1}.", "--share", " (not implemented)")
 	}
 
-	opts.TestLog()
-
 	// if (share) {
 	//     string_q res := doCommand("which ipfs");
 	//     if (res.empty()) {

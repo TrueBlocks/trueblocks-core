@@ -1,7 +1,4 @@
 chifra quotes  --fmt txt
-TEST[DATE|TIME] Period:  
-TEST[DATE|TIME] Pair:  
-TEST[DATE|TIME] Feed:  
 timestamp	date	close
 1439078400	2015-08-09 00:00:00 UTC	1.40000
 1439085600	2015-08-09 02:00:00 UTC	1.40000

@@ -35,7 +35,9 @@ func (opts *TracesOptionsType) TestLog() {
 	if opts.Articulate {
 		logger.Log(logger.Test, "Articulate: ", opts.Articulate)
 	}
-	logger.Log(logger.Test, "Filter: ", opts.Filter)
+	if len(opts.Filter) > 0 {
+		logger.Log(logger.Test, "Filter: ", opts.Filter)
+	}
 	if opts.Statediff {
 		logger.Log(logger.Test, "Statediff: ", opts.Statediff)
 	}
@@ -45,5 +47,7 @@ func (opts *TracesOptionsType) TestLog() {
 	if opts.SkipDdos {
 		logger.Log(logger.Test, "SkipDdos: ", opts.SkipDdos)
 	}
-	logger.Log(logger.Test, "Max: ", opts.Max)
+	if opts.Max != 250 {
+		logger.Log(logger.Test, "Max: ", opts.Max)
+	}
 }

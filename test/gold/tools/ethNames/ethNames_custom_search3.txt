@@ -1,5 +1,4 @@
 chifra names  --custom account_1 --match_case
 TEST[DATE|TIME] MatchCase:  true
 TEST[DATE|TIME] Custom:  true
-TEST[DATE|TIME] Autoname:  
 No results for --match_case --custom account_1

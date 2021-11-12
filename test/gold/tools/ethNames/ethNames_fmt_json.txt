@@ -1,5 +1,4 @@
 chifra names  tip --fmt json
-TEST[DATE|TIME] Autoname:  
 { "data": [
   {
     "tags": "31-Gitcoin:Grants",

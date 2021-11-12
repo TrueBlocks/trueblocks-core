@@ -37,7 +37,9 @@ func (opts *ChunksOptionsType) TestLog() {
 	if opts.Check {
 		logger.Log(logger.Test, "Check: ", opts.Check)
 	}
-	logger.Log(logger.Test, "Extract: ", opts.Extract)
+	if len(opts.Extract) > 0 {
+		logger.Log(logger.Test, "Extract: ", opts.Extract)
+	}
 	if opts.Stats {
 		logger.Log(logger.Test, "Stats: ", opts.Stats)
 	}

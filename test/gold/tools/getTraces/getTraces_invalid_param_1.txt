@@ -1,6 +1,4 @@
 chifra traces  .clink
-TEST[DATE|TIME] Filter:  
-TEST[DATE|TIME] Max:  250
 
   .clink does not appear to be a valid transaction index. Quitting...
 

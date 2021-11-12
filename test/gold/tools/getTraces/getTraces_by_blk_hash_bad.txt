@@ -1,5 +1,3 @@
 chifra traces  0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.155 --verbose
-TEST[DATE|TIME] Filter:  
-TEST[DATE|TIME] Max:  250
 blocknumber	transactionindex	traceaddress	action::calltype	error	action::from	action::to	action::value	action::ether	action::gas	result::gasused	action::input	compressedtrace	result::output
 "Transaction 0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.155 not found."

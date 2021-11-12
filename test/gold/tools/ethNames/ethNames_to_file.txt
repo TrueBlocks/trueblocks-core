@@ -1,5 +1,4 @@
 chifra names  --named --custom --fmt json --to_file
 TEST[DATE|TIME] Custom:  true
 TEST[DATE|TIME] Named:  true
-TEST[DATE|TIME] Autoname:  
 { "outputFilename": "--output_filename--" }

@@ -1,5 +1,4 @@
 chifra transactions  .whatever
-TEST[DATE|TIME] Reconcile:  
 
   .whatever does not appear to be a valid transaction index. Quitting...
 

@@ -1,7 +1,4 @@
 chifra quotes  --fmt json
-TEST[DATE|TIME] Period:  
-TEST[DATE|TIME] Pair:  
-TEST[DATE|TIME] Feed:  
 { "data": [
   {
     "timestamp": 1439078400,

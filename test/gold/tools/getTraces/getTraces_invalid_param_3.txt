@@ -1,6 +1,4 @@
 chifra traces  1233123
-TEST[DATE|TIME] Filter:  
-TEST[DATE|TIME] Max:  250
 
   1233123 does not appear to be a valid transaction index. Quitting...
 

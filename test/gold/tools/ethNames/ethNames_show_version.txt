@@ -1,3 +1,2 @@
 chifra names  --version
-TEST[DATE|TIME] Autoname:  
 ethNames GHC-TrueBlocks//vers-alpha--git-hash---git-ts-

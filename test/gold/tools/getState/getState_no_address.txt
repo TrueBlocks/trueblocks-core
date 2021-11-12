@@ -1,6 +1,4 @@
 chifra state  12
-TEST[DATE|TIME] Call:  
-TEST[DATE|TIME] ProxyFor:  
 
   You must provide at least one Ethereum address. Quitting...
 

@@ -1,6 +1,4 @@
 chifra traces  
-TEST[DATE|TIME] Filter:  
-TEST[DATE|TIME] Max:  250
 Purpose:
   Retrieve traces for the given transaction(s).
 

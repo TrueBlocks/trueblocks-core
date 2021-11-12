@@ -1,7 +1,4 @@
 chifra blocks  3982128 --count
-TEST[DATE|TIME] BigRange:  500
 TEST[DATE|TIME] Count:  true
-TEST[DATE|TIME] List:  0
-TEST[DATE|TIME] ListCount:  20
 { "data": [
 { "blockNumber": 3982128, "transactionsCnt": 91}] }

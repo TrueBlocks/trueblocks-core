@@ -1,11 +1,6 @@
 chifra export  0xf503017d7baf7fbc0fff7492b751025c6a78179b --first_block 10277780 --last_block 10279650 --articulate --emitter 0x7d655c57f71464b6f83811c55d84009cd9f5221c
 TEST[DATE|TIME] Articulate:  true
-TEST[DATE|TIME] FirstRecord:  0
-TEST[DATE|TIME] MaxRecords:  250
 TEST[DATE|TIME] Emitter:  [0x7d655c57f71464b6f83811c55d84009cd9f5221c]
-TEST[DATE|TIME] Load:  
-TEST[DATE|TIME] SummarizeBy:  
-TEST[DATE|TIME] MaxTraces:  250
 TEST[DATE|TIME] FirstBlock:  10277780
 TEST[DATE|TIME] LastBlock:  10279650
 

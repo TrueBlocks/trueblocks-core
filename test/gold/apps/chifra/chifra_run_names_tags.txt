@@ -1,6 +1,5 @@
 chifra  names --tags
 TEST[DATE|TIME] Tags:  true
-TEST[DATE|TIME] Autoname:  
 tags
 30-Contracts
 30-Contracts:Balancer

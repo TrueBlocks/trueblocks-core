@@ -1,10 +1,5 @@
 chifra export  0x001d14804b399c6ef80e64576f657660804fec0b --max_records 2 --fmt txt
-TEST[DATE|TIME] FirstRecord:  0
 TEST[DATE|TIME] MaxRecords:  2
-TEST[DATE|TIME] Load:  
-TEST[DATE|TIME] SummarizeBy:  
-TEST[DATE|TIME] MaxTraces:  250
-TEST[DATE|TIME] FirstBlock:  0
 TEST[DATE|TIME] LastBlock:  0
 blocknumber	transactionindex	date	timestamp	from	to	ether	ethergasprice	gasused	hash	iserror	encoding	compressedtx
 0	2	2015-07-30 15:26:00 UTC	1438269960	0xPrefund	0x001d14804b399c6ef80e64576f657660804fec0b	4200.000000000000000000	0.000000000000000000	0	0x0	0		

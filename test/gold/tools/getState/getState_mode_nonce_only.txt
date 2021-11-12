@@ -1,6 +1,4 @@
 chifra state  0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 --parts none --parts nonce 2500000
 TEST[DATE|TIME] Parts:  [none nonce]
-TEST[DATE|TIME] Call:  
-TEST[DATE|TIME] ProxyFor:  
 blocknumber	address	nonce
 2500000	0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359	0

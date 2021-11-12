@@ -1,6 +1,5 @@
 chifra names  0xb6 --addr
 TEST[DATE|TIME] Addr:  true
-TEST[DATE|TIME] Autoname:  
 0xb60ae39769664fe60444d5e4513d42c30b6100b9
 0xb618f903ad1d00d6f7b92f5b0954dcdc056fc533
 0xb61a98a0e542dcea1da7c44c2e8017373b95d350

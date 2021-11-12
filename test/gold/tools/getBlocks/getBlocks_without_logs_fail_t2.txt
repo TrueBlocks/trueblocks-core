@@ -1,8 +1,5 @@
 chifra blocks  4012000-4012001 --topic 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a
 TEST[DATE|TIME] Topic:  [0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a]
-TEST[DATE|TIME] BigRange:  500
-TEST[DATE|TIME] List:  0
-TEST[DATE|TIME] ListCount:  20
 
   Invalid topic '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a'. Length (56) is not equal to 64 characters (32 bytes). Quitting...
 

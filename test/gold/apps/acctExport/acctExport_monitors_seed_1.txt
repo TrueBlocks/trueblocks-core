@@ -1,5 +1,4 @@
 chifra monitors  0xf503017d7baf7fbc0fff7492b751025c6a78179b --last_block 9000000 --fmt json
-TEST[DATE|TIME] FirstBlock:  0
 TEST[DATE|TIME] LastBlock:  9000000
 { "data": [
 {

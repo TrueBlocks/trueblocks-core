@@ -1,8 +1,5 @@
 chifra blocks  --file cmd_file1 --cache
-TEST[DATE|TIME] BigRange:  500
 TEST[DATE|TIME] Cache:  true
-TEST[DATE|TIME] List:  0
-TEST[DATE|TIME] ListCount:  20
 Cmd: 1152642 -v:1 --cache 
 Cmd: 1166008 -v:1 --cache 
 Cmd: 1289438 -v:1 --cache 

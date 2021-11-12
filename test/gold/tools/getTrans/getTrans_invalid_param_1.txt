@@ -1,5 +1,4 @@
 chifra transactions  .clink
-TEST[DATE|TIME] Reconcile:  
 
   .clink does not appear to be a valid transaction index. Quitting...
 

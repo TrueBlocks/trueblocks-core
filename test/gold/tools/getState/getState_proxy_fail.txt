@@ -1,5 +1,4 @@
 chifra state  --call 0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B!0x0902f1ac 10092000
 TEST[DATE|TIME] Call:  0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B!0x0902f1ac
-TEST[DATE|TIME] ProxyFor:  
 blocknumber	address	signature	encoding	bytes	compressedresult
 "No result from call to 0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B with fourbyte 0x0902f1ac at block 10092000"

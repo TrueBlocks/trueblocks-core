@@ -33,7 +33,13 @@ func (opts *QuotesOptionsType) TestLog() {
 	if opts.Freshen {
 		logger.Log(logger.Test, "Freshen: ", opts.Freshen)
 	}
-	logger.Log(logger.Test, "Period: ", opts.Period)
-	logger.Log(logger.Test, "Pair: ", opts.Pair)
-	logger.Log(logger.Test, "Feed: ", opts.Feed)
+	if len(opts.Period) > 0 {
+		logger.Log(logger.Test, "Period: ", opts.Period)
+	}
+	if len(opts.Pair) > 0 {
+		logger.Log(logger.Test, "Pair: ", opts.Pair)
+	}
+	if len(opts.Feed) > 0 {
+		logger.Log(logger.Test, "Feed: ", opts.Feed)
+	}
 }

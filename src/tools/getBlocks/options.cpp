@@ -61,7 +61,7 @@ bool COptions::parseArguments(string_q& command) {
     bool uniq_tx = false;
     CAddressArray emitter;
     CStringArray topic;
-    blknum_t list = NOPOS;
+    blknum_t list = 0;
     // END_CODE_LOCAL_INIT
 
     Init();
@@ -165,7 +165,7 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST("big_range", big_range, (big_range == 500));
     LOG_TEST_BOOL("count", count);
     LOG_TEST_BOOL("cache", cache);
-    LOG_TEST("list", list, (list == NOPOS));
+    LOG_TEST("list", list, (list == 0));
     LOG_TEST("list_count", list_count, (list_count == 20));
     // END_DEBUG_DISPLAY
 

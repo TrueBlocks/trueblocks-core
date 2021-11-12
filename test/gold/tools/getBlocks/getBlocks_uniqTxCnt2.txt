@@ -1,9 +1,6 @@
 chifra blocks  1301011-1312011:313 --uniq_tx --count --fmt json
 TEST[DATE|TIME] UniqTx:  true
-TEST[DATE|TIME] BigRange:  500
 TEST[DATE|TIME] Count:  true
-TEST[DATE|TIME] List:  0
-TEST[DATE|TIME] ListCount:  20
 { "data": [
 { "blockNumber": 1301011, "transactionsCnt": 1, "uniq_tx": 4},
 { "blockNumber": 1301324, "transactionsCnt": 0, "uniq_tx": 1},

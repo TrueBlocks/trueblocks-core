@@ -1,7 +1,4 @@
 chifra blocks  2222222 2332332 --fmt junk
-TEST[DATE|TIME] BigRange:  500
-TEST[DATE|TIME] List:  0
-TEST[DATE|TIME] ListCount:  20
 Error: 
   The --fmt option (junk) must be one of [ json | txt | csv | api ]
 

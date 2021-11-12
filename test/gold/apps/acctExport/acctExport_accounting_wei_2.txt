@@ -1,11 +1,6 @@
 chifra export  0x05a56e2d52c817161883f50c441c3228cfe54d9f --max_records 15 --accounting --fmt api --log_level 10
 TEST[DATE|TIME] Accounting:  true
-TEST[DATE|TIME] FirstRecord:  0
 TEST[DATE|TIME] MaxRecords:  15
-TEST[DATE|TIME] Load:  
-TEST[DATE|TIME] SummarizeBy:  
-TEST[DATE|TIME] MaxTraces:  250
-TEST[DATE|TIME] FirstBlock:  0
 TEST[DATE|TIME] LastBlock:  0
 TIME ~ CLOCK - : 8------Entering loadNames...
 TIME ~ CLOCK - : 8------Reading names from binary cache

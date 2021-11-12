@@ -1,6 +1,4 @@
 chifra state  
-TEST[DATE|TIME] Call:  
-TEST[DATE|TIME] ProxyFor:  
 Purpose:
   Retrieve account balance(s) for one or more addresses at given block(s).
 

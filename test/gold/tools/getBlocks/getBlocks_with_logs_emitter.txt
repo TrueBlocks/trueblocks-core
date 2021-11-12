@@ -1,9 +1,6 @@
 chifra blocks  4012000-4012001 --logs --emitter 0x86fa049857e0209aa7d9e616f7eb3b3b78ecfdb0
 TEST[DATE|TIME] Logs:  true
 TEST[DATE|TIME] Emitter:  [0x86fa049857e0209aa7d9e616f7eb3b3b78ecfdb0]
-TEST[DATE|TIME] BigRange:  500
-TEST[DATE|TIME] List:  0
-TEST[DATE|TIME] ListCount:  20
 { "data": [
 TIME ~ CLOCK - <INFO>  : Processing log query 4012000 to 4012000{
   "address": "0x86fa049857e0209aa7d9e616f7eb3b3b78ecfdb0",

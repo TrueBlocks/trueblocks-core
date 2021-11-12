@@ -1,5 +1,3 @@
 chifra state  0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 stateclear
-TEST[DATE|TIME] Call:  
-TEST[DATE|TIME] ProxyFor:  
 blocknumber	address	balance
 2717576	0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359	3928489490687974756789

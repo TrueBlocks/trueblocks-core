@@ -1,5 +1,4 @@
 chifra names  --fmt json
-TEST[DATE|TIME] Autoname:  
 { "data": [
   {
     "tags": "55-Defi",

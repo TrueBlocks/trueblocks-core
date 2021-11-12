@@ -1,7 +1,6 @@
 chifra names  --prefund --custom 0001 --verbose
 TEST[DATE|TIME] Custom:  true
 TEST[DATE|TIME] Prefund:  true
-TEST[DATE|TIME] Autoname:  
 tags	address	name	symbol	decimals	source
 81-Custom	0x0000000000000000000000000000000000000001	Account_1				Testing
 80-Prefund	0x001762430ea9c3a26e5749afdb70da5f78ddbb8c	Prefund_0001				Genesis

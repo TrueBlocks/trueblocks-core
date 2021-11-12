@@ -1,8 +1,5 @@
 chifra blocks  1590000 4000001-4000002 1001001 1234567 --cache
-TEST[DATE|TIME] BigRange:  500
 TEST[DATE|TIME] Cache:  true
-TEST[DATE|TIME] List:  0
-TEST[DATE|TIME] ListCount:  20
 { "data": [
 {
   "gasLimit": 6712392,

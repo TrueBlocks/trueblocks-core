@@ -1,5 +1,4 @@
 chifra names  --custom Account_1
 TEST[DATE|TIME] Custom:  true
-TEST[DATE|TIME] Autoname:  
 tags	address	name	symbol	decimals
 81-Custom	0x0000000000000000000000000000000000000001	Account_1

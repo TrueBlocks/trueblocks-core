@@ -40,7 +40,9 @@ func (opts *TransactionsOptionsType) TestLog() {
 	if opts.Uniq {
 		logger.Log(logger.Test, "Uniq: ", opts.Uniq)
 	}
-	logger.Log(logger.Test, "Reconcile: ", opts.Reconcile)
+	if len(opts.Reconcile) > 0 {
+		logger.Log(logger.Test, "Reconcile: ", opts.Reconcile)
+	}
 	if opts.Cache {
 		logger.Log(logger.Test, "Cache: ", opts.Cache)
 	}

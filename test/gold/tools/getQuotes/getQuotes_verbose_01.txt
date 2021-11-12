@@ -1,7 +1,4 @@
 chifra quotes  --log_level 1 --fmt api
-TEST[DATE|TIME] Period:  
-TEST[DATE|TIME] Pair:  
-TEST[DATE|TIME] Feed:  
 Read cnt existing price quotes (lastRead: Now)
 {"data": [
   {

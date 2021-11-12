@@ -18,7 +18,7 @@ package [{ROUTE}]
 
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-)
+[{IMPORTS}])
 
 type [{PROPER}]OptionsType struct {
 [{OPT_FIELDS}]}

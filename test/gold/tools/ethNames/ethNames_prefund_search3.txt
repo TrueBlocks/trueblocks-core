@@ -1,4 +1,3 @@
 chifra names  --prefund etwork
 TEST[DATE|TIME] Prefund:  true
-TEST[DATE|TIME] Autoname:  
 No results for --prefund etwork

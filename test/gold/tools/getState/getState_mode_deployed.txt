@@ -1,6 +1,4 @@
 chifra state  0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 --parts deployed 2500000
 TEST[DATE|TIME] Parts:  [deployed]
-TEST[DATE|TIME] Call:  
-TEST[DATE|TIME] ProxyFor:  
 blocknumber	address	balance	deployed
 2500000	0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359	3905662906205094119236	988725

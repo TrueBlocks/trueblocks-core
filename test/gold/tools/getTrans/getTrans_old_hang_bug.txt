@@ -1,6 +1,5 @@
 chifra transactions  6409270.108 --articulate --fmt json
 TEST[DATE|TIME] Articulate:  true
-TEST[DATE|TIME] Reconcile:  
 { "data": [
 
 level: 1

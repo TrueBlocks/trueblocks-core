@@ -1,7 +1,6 @@
 chifra status  caches --types blocks
 TEST[DATE|TIME] Types:  [blocks]
 TEST[DATE|TIME] Depth:  0
-TEST[DATE|TIME] TestStart:  0
 TEST[DATE|TIME] TestEnd:  0
 {
   "client_version": "Client version",

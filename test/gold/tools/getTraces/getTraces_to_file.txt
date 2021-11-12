@@ -1,4 +1,2 @@
 chifra traces  2222222.0 2332332.0 --fmt json --to_file
-TEST[DATE|TIME] Filter:  
-TEST[DATE|TIME] Max:  250
 { "outputFilename": "--output_filename--" }

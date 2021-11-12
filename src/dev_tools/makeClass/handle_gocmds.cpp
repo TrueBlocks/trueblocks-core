@@ -21,6 +21,7 @@ extern string_q get_setopts(const CCommandOption& cmd);
 extern string_q get_testlogs(const CCommandOption& cmd);
 extern string_q get_copyopts(const CCommandOption& cmd);
 extern string_q get_use(const CCommandOption& cmd);
+extern string_q get_imports(const string_q& source);
 extern const char* STR_REPLACE_OPTS;
 
 //---------------------------------------------------------------------------------------------------
@@ -50,14 +51,7 @@ bool COptions::handle_gocmds_cmd(const CCommandOption& p) {
     if (endsWith(descr, "."))
         replaceReverse(descr, ".", "");
     replaceAll(source, "[{SHORT}]", descr);
-    string_q imports;
-    if (contains(source, "errors."))
-        imports += "\t\"errors\"\n";
-    if (contains(source, "fmt."))
-        imports += "\t\"fmt\"\n";
-    if (contains(source, "utils."))
-        imports += "\t\"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils\"\n";
-    replaceAll(source, "[{IMPORTS}]", imports);
+    replaceAll(source, "[{IMPORTS}]", get_imports(source));
 
     string_q fn = getSourcePath("apps/chifra/cmd/" + p.api_route + ".go");
     codewrite_t cw(fn, source);
@@ -69,12 +63,25 @@ bool COptions::handle_gocmds_cmd(const CCommandOption& p) {
 }
 
 //---------------------------------------------------------------------------------------------------
+string_q get_imports(const string_q& source) {
+    string_q imports;
+    if (contains(source, "errors."))
+        imports += "\t\"errors\"\n";
+    if (contains(source, "fmt."))
+        imports += "\t\"fmt\"\n";
+    if (contains(source, "utils."))
+        imports += "\t\"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils\"\n";
+    return imports;
+}
+
+//---------------------------------------------------------------------------------------------------
 bool COptions::handle_gocmds_options(const CCommandOption& p) {
     string_q source = asciiFileToString(getTemplatePath("blank_options.go"));
     replaceAll(source, "[{ROUTE}]", p.api_route);
     replaceAll(source, "[{PROPER}]", toProper(p.api_route));
     replaceAll(source, "[{OPT_FIELDS}]", get_optfields(p));
     replaceAll(source, "[{TEST_LOGS}]", get_testlogs(p));
+    replaceAll(source, "[{IMPORTS}]", get_imports(source));
 
     string_q fn = getSourcePath("apps/chifra/internal/" + p.api_route + "/options.go");
     replaceAll(fn, "/internal/serve", "/server");
@@ -195,10 +202,21 @@ string_q get_testlogs(const CCommandOption& cmd) {
                 os << "\tif opts." << p.Format("[{LONGNAME}]") << " {" << endl;
                 os << "\t" << p.Format(STR_TESTLOG_LINE) << endl;
                 os << "\t}" << endl;
-            } else if (startsWith(p.data_type, "list<")) {
+            } else if (p.data_type == "<string>" || p.data_type == "<address>" || startsWith(p.data_type, "list<") ||
+                       contains(p.data_type, "enum")) {
                 os << "\tif len(opts." << p.Format("[{LONGNAME}]") << ") > 0 {" << endl;
                 os << "\t" << p.Format(STR_TESTLOG_LINE) << endl;
                 os << "\t}" << endl;
+            } else if (p.data_type == "<blknum>" || p.data_type == "<uint64>") {
+                if (p.def_val == "NOPOS") {
+                    os << "\tif opts." << p.Format("[{LONGNAME}]") << " != utils.NOPOS {" << endl;
+                    os << "\t" << p.Format(STR_TESTLOG_LINE) << endl;
+                    os << "\t}" << endl;
+                } else {
+                    os << "\tif opts." << p.Format("[{LONGNAME}]") << " != " << p.def_val << " {" << endl;
+                    os << "\t" << p.Format(STR_TESTLOG_LINE) << endl;
+                    os << "\t}" << endl;
+                }
             } else {
                 cerr << padRight(p.data_type, 30) << p.def_val << endl;
                 os << p.Format(STR_TESTLOG_LINE) << endl;

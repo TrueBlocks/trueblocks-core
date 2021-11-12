@@ -1,7 +1,4 @@
 chifra blocks  
-TEST[DATE|TIME] BigRange:  500
-TEST[DATE|TIME] List:  0
-TEST[DATE|TIME] ListCount:  20
 Purpose:
   Retrieve one or more blocks from the chain or local cache.
 

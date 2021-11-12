@@ -1,6 +1,5 @@
 chifra monitors  0x001d14804b399c6ef80e64576f657660804fec0b --count
 TEST[DATE|TIME] Count:  true
-TEST[DATE|TIME] FirstBlock:  0
 TEST[DATE|TIME] LastBlock:  0
 address	nrecords	filesize
 0x001d14804b399c6ef80e64576f657660804fec0b	3	24

@@ -1,7 +1,4 @@
 chifra blocks  0x79990fd526c4751139a7a3afc7420cde1a1141b1920d2afd411858ecb4926a39
-TEST[DATE|TIME] BigRange:  500
-TEST[DATE|TIME] List:  0
-TEST[DATE|TIME] ListCount:  20
 { "data": [
 {
   "gasLimit": 6712392,

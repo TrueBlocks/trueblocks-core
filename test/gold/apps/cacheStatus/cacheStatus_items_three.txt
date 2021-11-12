@@ -2,7 +2,6 @@ chifra status  --details abis caches monitors --types slurps
 TEST[DATE|TIME] Details:  true
 TEST[DATE|TIME] Types:  [slurps]
 TEST[DATE|TIME] Depth:  0
-TEST[DATE|TIME] TestStart:  0
 TEST[DATE|TIME] TestEnd:  0
 {
   "client_version": "Client version",

@@ -71,13 +71,19 @@ func (opts *BlocksOptionsType) TestLog() {
 	if opts.Articulate {
 		logger.Log(logger.Test, "Articulate: ", opts.Articulate)
 	}
-	logger.Log(logger.Test, "BigRange: ", opts.BigRange)
+	if opts.BigRange != 500 {
+		logger.Log(logger.Test, "BigRange: ", opts.BigRange)
+	}
 	if opts.Count {
 		logger.Log(logger.Test, "Count: ", opts.Count)
 	}
 	if opts.Cache {
 		logger.Log(logger.Test, "Cache: ", opts.Cache)
 	}
-	logger.Log(logger.Test, "List: ", opts.List)
-	logger.Log(logger.Test, "ListCount: ", opts.ListCount)
+	if opts.List != 0 {
+		logger.Log(logger.Test, "List: ", opts.List)
+	}
+	if opts.ListCount != 20 {
+		logger.Log(logger.Test, "ListCount: ", opts.ListCount)
+	}
 }

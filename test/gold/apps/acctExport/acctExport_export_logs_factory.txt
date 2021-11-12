@@ -1,12 +1,6 @@
 chifra export  0x8b3b3b624c3c0397d3da8fd861512393d51dcbac --factory --traces --last_block 1603174
 TEST[DATE|TIME] Traces:  true
 TEST[DATE|TIME] Factory:  true
-TEST[DATE|TIME] FirstRecord:  0
-TEST[DATE|TIME] MaxRecords:  250
-TEST[DATE|TIME] Load:  
-TEST[DATE|TIME] SummarizeBy:  
-TEST[DATE|TIME] MaxTraces:  250
-TEST[DATE|TIME] FirstBlock:  0
 TEST[DATE|TIME] LastBlock:  1603174
 blocknumber	transactionindex	traceaddress	action::calltype	error	action::from	action::to	action::value	action::ether	action::gas	result::gasused	action::input	compressedtrace	result::output
 1600495	9	null-s	creation		0x0	0x8b3b3b624c3c0397d3da8fd861512393d51dcbac	0	0.000000000000000000	2192168	823600			
