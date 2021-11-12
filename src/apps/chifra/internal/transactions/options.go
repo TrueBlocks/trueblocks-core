@@ -16,6 +16,10 @@ package transactions
  * The file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
 
+import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+)
+
 type TransactionsOptionsType struct {
 	Articulate bool
 	Trace      bool
@@ -25,3 +29,11 @@ type TransactionsOptionsType struct {
 }
 
 var Options TransactionsOptionsType
+
+func (opts *TransactionsOptionsType) TestLog() {
+	logger.Log(logger.Test, "Articulate: ", opts.Articulate)
+	logger.Log(logger.Test, "Trace: ", opts.Trace)
+	logger.Log(logger.Test, "Uniq: ", opts.Uniq)
+	logger.Log(logger.Test, "Reconcile: ", opts.Reconcile)
+	logger.Log(logger.Test, "Cache: ", opts.Cache)
+}

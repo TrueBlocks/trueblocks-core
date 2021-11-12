@@ -16,12 +16,24 @@ package state
  * The file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
 
+import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+)
+
 type StateOptionsType struct {
-	Parts     []string
-	Changes   bool
-	NoZero    bool
-	Call      string
-	ProxyFor  string
+	Parts    []string
+	Changes  bool
+	NoZero   bool
+	Call     string
+	ProxyFor string
 }
 
 var Options StateOptionsType
+
+func (opts *StateOptionsType) TestLog() {
+	logger.Log(logger.Test, "Parts: ", opts.Parts)
+	logger.Log(logger.Test, "Changes: ", opts.Changes)
+	logger.Log(logger.Test, "NoZero: ", opts.NoZero)
+	logger.Log(logger.Test, "Call: ", opts.Call)
+	logger.Log(logger.Test, "ProxyFor: ", opts.ProxyFor)
+}

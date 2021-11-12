@@ -16,6 +16,10 @@ package list
  * The file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
 
+import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+)
+
 type ListOptionsType struct {
 	Count       bool
 	Appearances bool
@@ -24,3 +28,10 @@ type ListOptionsType struct {
 }
 
 var Options ListOptionsType
+
+func (opts *ListOptionsType) TestLog() {
+	logger.Log(logger.Test, "Count: ", opts.Count)
+	logger.Log(logger.Test, "Appearances: ", opts.Appearances)
+	logger.Log(logger.Test, "FirstBlock: ", opts.FirstBlock)
+	logger.Log(logger.Test, "LastBlock: ", opts.LastBlock)
+}

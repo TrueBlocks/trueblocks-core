@@ -16,8 +16,16 @@ package serve
  * The file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
 
+import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+)
+
 type ServeOptionsType struct {
 	Port string
 }
 
 var Options ServeOptionsType
+
+func (opts *ServeOptionsType) TestLog() {
+	logger.Log(logger.Test, "Port: ", opts.Port)
+}

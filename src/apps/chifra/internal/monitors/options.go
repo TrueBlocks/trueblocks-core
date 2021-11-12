@@ -16,6 +16,10 @@ package monitors
  * The file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
 
+import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+)
+
 type MonitorsOptionsType struct {
 	Appearances bool
 	Count       bool
@@ -28,3 +32,14 @@ type MonitorsOptionsType struct {
 }
 
 var Options MonitorsOptionsType
+
+func (opts *MonitorsOptionsType) TestLog() {
+	logger.Log(logger.Test, "Appearances: ", opts.Appearances)
+	logger.Log(logger.Test, "Count: ", opts.Count)
+	logger.Log(logger.Test, "Clean: ", opts.Clean)
+	logger.Log(logger.Test, "Delete: ", opts.Delete)
+	logger.Log(logger.Test, "Undelete: ", opts.Undelete)
+	logger.Log(logger.Test, "Remove: ", opts.Remove)
+	logger.Log(logger.Test, "FirstBlock: ", opts.FirstBlock)
+	logger.Log(logger.Test, "LastBlock: ", opts.LastBlock)
+}

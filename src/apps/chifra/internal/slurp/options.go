@@ -16,9 +16,18 @@ package slurp
  * The file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
 
+import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+)
+
 type SlurpOptionsType struct {
 	Types       []string
 	Appearances bool
 }
 
 var Options SlurpOptionsType
+
+func (opts *SlurpOptionsType) TestLog() {
+	logger.Log(logger.Test, "Types: ", opts.Types)
+	logger.Log(logger.Test, "Appearances: ", opts.Appearances)
+}

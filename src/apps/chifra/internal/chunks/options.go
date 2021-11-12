@@ -16,6 +16,10 @@ package chunks
  * The file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
 
+import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+)
+
 type ChunksOptionsType struct {
 	List    bool
 	Check   bool
@@ -25,3 +29,11 @@ type ChunksOptionsType struct {
 }
 
 var Options ChunksOptionsType
+
+func (opts *ChunksOptionsType) TestLog() {
+	logger.Log(logger.Test, "List: ", opts.List)
+	logger.Log(logger.Test, "Check: ", opts.Check)
+	logger.Log(logger.Test, "Extract: ", opts.Extract)
+	logger.Log(logger.Test, "Stats: ", opts.Stats)
+	logger.Log(logger.Test, "Save: ", opts.Save)
+}

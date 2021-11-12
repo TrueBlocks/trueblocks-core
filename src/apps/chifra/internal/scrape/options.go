@@ -16,14 +16,28 @@ package scrape
  * The file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
 
+import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+)
+
 type ScrapeOptionsType struct {
-	Action         string
-	Sleep          float64
-	Pin            bool
-	Publish        bool
-	BlockCnt       uint64
-	BlockChanCnt   uint64
-	AddrChanCnt    uint64
+	Action       string
+	Sleep        float64
+	Pin          bool
+	Publish      bool
+	BlockCnt     uint64
+	BlockChanCnt uint64
+	AddrChanCnt  uint64
 }
 
 var Options ScrapeOptionsType
+
+func (opts *ScrapeOptionsType) TestLog() {
+	logger.Log(logger.Test, "Action: ", opts.Action)
+	logger.Log(logger.Test, "Sleep: ", opts.Sleep)
+	logger.Log(logger.Test, "Pin: ", opts.Pin)
+	logger.Log(logger.Test, "Publish: ", opts.Publish)
+	logger.Log(logger.Test, "BlockCnt: ", opts.BlockCnt)
+	logger.Log(logger.Test, "BlockChanCnt: ", opts.BlockChanCnt)
+	logger.Log(logger.Test, "AddrChanCnt: ", opts.AddrChanCnt)
+}

@@ -16,8 +16,16 @@ package init
  * The file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
 
+import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+)
+
 type InitOptionsType struct {
 	All bool
 }
 
 var Options InitOptionsType
+
+func (opts *InitOptionsType) TestLog() {
+	logger.Log(logger.Test, "All: ", opts.All)
+}

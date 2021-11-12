@@ -16,8 +16,16 @@ package logs
  * The file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
 
+import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+)
+
 type LogsOptionsType struct {
 	Articulate bool
 }
 
 var Options LogsOptionsType
+
+func (opts *LogsOptionsType) TestLog() {
+	logger.Log(logger.Test, "Articulate: ", opts.Articulate)
+}

@@ -16,6 +16,10 @@ package names
  * The file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
 
+import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+)
+
 type NamesOptionsType struct {
 	Expand      bool
 	MatchCase   bool
@@ -37,3 +41,23 @@ type NamesOptionsType struct {
 }
 
 var Options NamesOptionsType
+
+func (opts *NamesOptionsType) TestLog() {
+	logger.Log(logger.Test, "Expand: ", opts.Expand)
+	logger.Log(logger.Test, "MatchCase: ", opts.MatchCase)
+	logger.Log(logger.Test, "All: ", opts.All)
+	logger.Log(logger.Test, "Custom: ", opts.Custom)
+	logger.Log(logger.Test, "Prefund: ", opts.Prefund)
+	logger.Log(logger.Test, "Named: ", opts.Named)
+	logger.Log(logger.Test, "Addr: ", opts.Addr)
+	logger.Log(logger.Test, "Collections: ", opts.Collections)
+	logger.Log(logger.Test, "Tags: ", opts.Tags)
+	logger.Log(logger.Test, "ToCustom: ", opts.ToCustom)
+	logger.Log(logger.Test, "Clean: ", opts.Clean)
+	logger.Log(logger.Test, "Autoname: ", opts.Autoname)
+	logger.Log(logger.Test, "Create: ", opts.Create)
+	logger.Log(logger.Test, "Delete: ", opts.Delete)
+	logger.Log(logger.Test, "Update: ", opts.Update)
+	logger.Log(logger.Test, "Remove: ", opts.Remove)
+	logger.Log(logger.Test, "Undelete: ", opts.Undelete)
+}

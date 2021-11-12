@@ -17,19 +17,10 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/spf13/cobra"
 )
-
-func (opts *AbisOptionsType) TestLog() {
-	logger.Log(logger.Test, "Known: ", opts.Known)
-	logger.Log(logger.Test, "Sol: ", opts.Sol)
-	logger.Log(logger.Test, "Find: ", opts.Find)
-	logger.Log(logger.Test, "Source: ", opts.Source)
-	logger.Log(logger.Test, "Classes: ", opts.Classes)
-}
 
 func Validate(cmd *cobra.Command, args []string) error {
 	if Options.Classes {

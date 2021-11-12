@@ -16,17 +16,33 @@ package status
  * The file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
 
+import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+)
+
 type StatusOptionsType struct {
-	Details    bool
-	Types      []string
-	Depth      uint64
-	Report     bool
-	Terse      bool
-	Migrate    []string
-	GetConfig  bool
-	SetConfig  bool
-	TestStart  uint64
-	TestEnd    uint64
+	Details   bool
+	Types     []string
+	Depth     uint64
+	Report    bool
+	Terse     bool
+	Migrate   []string
+	GetConfig bool
+	SetConfig bool
+	TestStart uint64
+	TestEnd   uint64
 }
 
 var Options StatusOptionsType
+
+func (opts *StatusOptionsType) TestLog() {
+	logger.Log(logger.Test, "Details: ", opts.Details)
+	logger.Log(logger.Test, "Types: ", opts.Types)
+	logger.Log(logger.Test, "Depth: ", opts.Depth)
+	logger.Log(logger.Test, "Terse: ", opts.Terse)
+	logger.Log(logger.Test, "Migrate: ", opts.Migrate)
+	logger.Log(logger.Test, "GetConfig: ", opts.GetConfig)
+	logger.Log(logger.Test, "SetConfig: ", opts.SetConfig)
+	logger.Log(logger.Test, "TestStart: ", opts.TestStart)
+	logger.Log(logger.Test, "TestEnd: ", opts.TestEnd)
+}

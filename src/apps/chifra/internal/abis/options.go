@@ -16,6 +16,10 @@ package abis
  * The file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
 
+import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+)
+
 type AbisOptionsType struct {
 	Known   bool
 	Sol     bool
@@ -25,3 +29,11 @@ type AbisOptionsType struct {
 }
 
 var Options AbisOptionsType
+
+func (opts *AbisOptionsType) TestLog() {
+	logger.Log(logger.Test, "Known: ", opts.Known)
+	logger.Log(logger.Test, "Sol: ", opts.Sol)
+	logger.Log(logger.Test, "Find: ", opts.Find)
+	logger.Log(logger.Test, "Source: ", opts.Source)
+	logger.Log(logger.Test, "Classes: ", opts.Classes)
+}

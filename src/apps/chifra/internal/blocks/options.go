@@ -16,6 +16,10 @@ package blocks
  * The file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
 
+import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+)
+
 type BlocksOptionsType struct {
 	Hashes     bool
 	Uncles     bool
@@ -35,3 +39,21 @@ type BlocksOptionsType struct {
 }
 
 var Options BlocksOptionsType
+
+func (opts *BlocksOptionsType) TestLog() {
+	logger.Log(logger.Test, "Hashes: ", opts.Hashes)
+	logger.Log(logger.Test, "Uncles: ", opts.Uncles)
+	logger.Log(logger.Test, "Trace: ", opts.Trace)
+	logger.Log(logger.Test, "Apps: ", opts.Apps)
+	logger.Log(logger.Test, "Uniq: ", opts.Uniq)
+	logger.Log(logger.Test, "UniqTx: ", opts.UniqTx)
+	logger.Log(logger.Test, "Logs: ", opts.Logs)
+	logger.Log(logger.Test, "Emitter: ", opts.Emitter)
+	logger.Log(logger.Test, "Topic: ", opts.Topic)
+	logger.Log(logger.Test, "Articulate: ", opts.Articulate)
+	logger.Log(logger.Test, "BigRange: ", opts.BigRange)
+	logger.Log(logger.Test, "Count: ", opts.Count)
+	logger.Log(logger.Test, "Cache: ", opts.Cache)
+	logger.Log(logger.Test, "List: ", opts.List)
+	logger.Log(logger.Test, "ListCount: ", opts.ListCount)
+}

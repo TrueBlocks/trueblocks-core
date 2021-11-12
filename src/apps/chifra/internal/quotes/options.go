@@ -16,6 +16,10 @@ package quotes
  * The file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
 
+import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+)
+
 type QuotesOptionsType struct {
 	Freshen bool
 	Period  string
@@ -24,3 +28,10 @@ type QuotesOptionsType struct {
 }
 
 var Options QuotesOptionsType
+
+func (opts *QuotesOptionsType) TestLog() {
+	logger.Log(logger.Test, "Freshen: ", opts.Freshen)
+	logger.Log(logger.Test, "Period: ", opts.Period)
+	logger.Log(logger.Test, "Pair: ", opts.Pair)
+	logger.Log(logger.Test, "Feed: ", opts.Feed)
+}

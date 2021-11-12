@@ -16,9 +16,18 @@ package explore
  * The file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
 
+import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+)
+
 type ExploreOptionsType struct {
 	Local  bool
 	Google bool
 }
 
 var Options ExploreOptionsType
+
+func (opts *ExploreOptionsType) TestLog() {
+	logger.Log(logger.Test, "Local: ", opts.Local)
+	logger.Log(logger.Test, "Google: ", opts.Google)
+}

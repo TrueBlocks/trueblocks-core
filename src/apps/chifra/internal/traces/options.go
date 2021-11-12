@@ -16,6 +16,10 @@ package traces
  * The file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
 
+import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+)
+
 type TracesOptionsType struct {
 	Articulate bool
 	Filter     string
@@ -26,3 +30,12 @@ type TracesOptionsType struct {
 }
 
 var Options TracesOptionsType
+
+func (opts *TracesOptionsType) TestLog() {
+	logger.Log(logger.Test, "Articulate: ", opts.Articulate)
+	logger.Log(logger.Test, "Filter: ", opts.Filter)
+	logger.Log(logger.Test, "Statediff: ", opts.Statediff)
+	logger.Log(logger.Test, "Count: ", opts.Count)
+	logger.Log(logger.Test, "SkipDdos: ", opts.SkipDdos)
+	logger.Log(logger.Test, "Max: ", opts.Max)
+}

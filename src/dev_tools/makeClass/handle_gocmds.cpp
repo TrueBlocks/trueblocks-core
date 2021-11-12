@@ -18,6 +18,7 @@ extern string_q get_notes2(const CCommandOption& cmd);
 extern string_q get_optfields(const CCommandOption& cmd);
 extern string_q get_logopts(const CCommandOption& cmd);
 extern string_q get_setopts(const CCommandOption& cmd);
+extern string_q get_testlogs(const CCommandOption& cmd);
 extern string_q get_copyopts(const CCommandOption& cmd);
 extern string_q get_use(const CCommandOption& cmd);
 extern const char* STR_REPLACE_OPTS;
@@ -73,6 +74,7 @@ bool COptions::handle_gocmds_options(const CCommandOption& p) {
     replaceAll(source, "[{ROUTE}]", p.api_route);
     replaceAll(source, "[{PROPER}]", toProper(p.api_route));
     replaceAll(source, "[{OPT_FIELDS}]", get_optfields(p));
+    replaceAll(source, "[{TEST_LOGS}]", get_testlogs(p));
 
     string_q fn = getSourcePath("apps/chifra/internal/" + p.api_route + "/options.go");
     replaceAll(fn, "/internal/serve", "/server");
@@ -178,14 +180,27 @@ string_q get_notes2(const CCommandOption& cmd) {
     return trim(substitute(os.str(), "|", "\n    "));
 }
 
-string_q goOptsField(const string_q& in) {
+string_q noUnderbars(const string_q& in) {
     return substitute(toProper(in), "_", "");
+}
+
+string_q get_testlogs(const CCommandOption& cmd) {
+    const char* STR_TESTLOG_LINE = "\tlogger.Log(logger.Test, \"[{LONGNAME}]: \", opts.[{LONGNAME}])";
+    ostringstream os;
+    for (auto p : *((CCommandOptionArray*)cmd.params)) {
+        replace(p.longName, "deleteMe", "delete");
+        p.longName = noUnderbars(p.longName);
+        if (p.option_type != "positional" && !p.isDeprecated)
+            os << p.Format(STR_TESTLOG_LINE) << endl;
+    }
+    return os.str();
 }
 
 string_q get_optfields(const CCommandOption& cmd) {
     size_t wid = 0;
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
         replace(p.longName, "deleteMe", "delete");
+        p.longName = noUnderbars(p.longName);
         if (p.option_type != "positional") {
             wid = max(p.longName.length(), wid);
         }
@@ -193,8 +208,9 @@ string_q get_optfields(const CCommandOption& cmd) {
     ostringstream os;
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
         replace(p.longName, "deleteMe", "delete");
+        p.longName = noUnderbars(p.longName);
         if (p.option_type != "positional") {
-            os << "\t" << padRight(goOptsField(p.longName), wid) << " " << p.go_type << endl;
+            os << "\t" << padRight(p.longName, wid) << " " << p.go_type << endl;
         }
     }
     return os.str();
@@ -292,7 +308,7 @@ string_q get_setopts(const CCommandOption& cmd) {
             os << "\t[{ROUTE}]Cmd.Flags().";
             os << p.go_flagtype;
             os << "(&[{ROUTE}]Pkg.Options.";
-            os << goOptsField(p.longName) << ", ";
+            os << noUnderbars(p.longName) << ", ";
             os << p.Format("\"[{LONGNAME}]\", ");
             os << p.Format("\"[{HOTKEY}]\", ");
             os << get_goDefault(p) << ", ";

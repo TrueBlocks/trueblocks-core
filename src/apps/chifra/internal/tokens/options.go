@@ -16,10 +16,20 @@ package tokens
  * The file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
 
+import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+)
+
 type TokensOptionsType struct {
-	Parts   []string
-	ByAcct  bool
-	NoZero  bool
+	Parts  []string
+	ByAcct bool
+	NoZero bool
 }
 
 var Options TokensOptionsType
+
+func (opts *TokensOptionsType) TestLog() {
+	logger.Log(logger.Test, "Parts: ", opts.Parts)
+	logger.Log(logger.Test, "ByAcct: ", opts.ByAcct)
+	logger.Log(logger.Test, "NoZero: ", opts.NoZero)
+}

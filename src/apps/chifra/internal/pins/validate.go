@@ -15,8 +15,8 @@ package pins
 
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
+
 	"github.com/spf13/cobra"
 )
 
@@ -27,14 +27,6 @@ func Validate(cmd *cobra.Command, args []string) error {
 	}
 
 	return root.ValidateGlobals(cmd, args)
-}
-
-func (opts *PinsOptionsType) TestLog() {
-	logger.Log(logger.Test, "List: ", opts.List)
-	logger.Log(logger.Test, "Init: ", opts.Init)
-	logger.Log(logger.Test, "All: ", opts.All)
-	logger.Log(logger.Test, "Sleep: ", opts.Sleep)
-	logger.Log(logger.Test, "Share: ", opts.Share)
 }
 
 func (opts *PinsOptionsType) ValidateOptions() error {

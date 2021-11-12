@@ -16,6 +16,10 @@ package when
  * The file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
 
+import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+)
+
 type WhenOptionsType struct {
 	List       bool
 	Timestamps bool
@@ -25,3 +29,11 @@ type WhenOptionsType struct {
 }
 
 var Options WhenOptionsType
+
+func (opts *WhenOptionsType) TestLog() {
+	logger.Log(logger.Test, "List: ", opts.List)
+	logger.Log(logger.Test, "Timestamps: ", opts.Timestamps)
+	logger.Log(logger.Test, "Check: ", opts.Check)
+	logger.Log(logger.Test, "Fix: ", opts.Fix)
+	logger.Log(logger.Test, "Count: ", opts.Count)
+}

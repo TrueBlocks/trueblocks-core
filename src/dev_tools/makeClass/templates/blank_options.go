@@ -16,7 +16,14 @@ package [{ROUTE}]
  * The file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
 
+import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+)
+
 type [{PROPER}]OptionsType struct {
 [{OPT_FIELDS}]}
 
 var Options [{PROPER}]OptionsType
+
+func (opts *[{PROPER}]OptionsType) TestLog() {
+[{TEST_LOGS}]}

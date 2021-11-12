@@ -16,15 +16,27 @@ package pins
  * The file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
 
+import (
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+)
+
 type PinsOptionsType struct {
-	List     bool
-	Init     bool
-	All      bool
-	Share    bool
-	Sleep    float64
-	Freshen  bool
-	Remote   bool
-	InitAll  bool
+	List    bool
+	Init    bool
+	All     bool
+	Share   bool
+	Sleep   float64
+	Freshen bool
+	Remote  bool
+	InitAll bool
 }
 
 var Options PinsOptionsType
+
+func (opts *PinsOptionsType) TestLog() {
+	logger.Log(logger.Test, "List: ", opts.List)
+	logger.Log(logger.Test, "Init: ", opts.Init)
+	logger.Log(logger.Test, "All: ", opts.All)
+	logger.Log(logger.Test, "Share: ", opts.Share)
+	logger.Log(logger.Test, "Sleep: ", opts.Sleep)
+}
