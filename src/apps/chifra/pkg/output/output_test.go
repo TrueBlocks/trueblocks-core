@@ -10,22 +10,36 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-package cmd
+package output
 
 import (
-	"github.com/spf13/cobra"
+	"reflect"
+	"testing"
 )
 
-func validateInitArgs(cmd *cobra.Command, args []string) error {
-	err := validateGlobalFlags(cmd, args)
-	if err != nil {
-		return err
+func TestToStringRecords(t *testing.T) {
+	type TestType struct {
+		First  string
+		Second string
 	}
 
-	return nil
-}
+	input := []TestType{
+		{"first first", "first second"},
+		{"second first", "second second"},
+	}
 
-func runInit(cmd *cobra.Command, args []string) {
-	PinsOpts.Init = true
-	runPins(cmd, args)
+	result, err := ToStringRecords(input, false)
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	expected := [][]string{
+		{"first", "second"},
+		{"first first", "first second"},
+		{"second first", "second second"},
+	}
+
+	if !reflect.DeepEqual(result, expected) {
+		t.Error("Wrong result", result)
+	}
 }

@@ -23,6 +23,8 @@ export PATH=$(pwd)/../bin:$(pwd)/../bin/test:$PATH
 # Run server if needed
 if $RUN_SERVER
 then
+    pkill flame
+    sleep 5
 
     if [ -n "$(pgrep chifra)" ]
     then

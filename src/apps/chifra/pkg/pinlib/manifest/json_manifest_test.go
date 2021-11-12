@@ -19,7 +19,6 @@ import (
 
 var manifestSource = `
 {
-  // TODO: This data strcuture will be cleaned up shortly
   "fileName": "pin-manifest.json",
   "indexFormat": "Qmart6XP9XjL43p72PGR93QKytbK8jWWcMguhFgxATTya2",
   "bloomFormat": "QmNhPk39DUFoEdhUmtGARqiFECUHeghyeryxZM9kyRxzHD",
