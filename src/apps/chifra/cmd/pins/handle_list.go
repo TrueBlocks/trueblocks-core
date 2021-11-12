@@ -25,7 +25,7 @@ import (
 )
 
 // List loads manifest, sorts pins and prints them out
-func List() (manifest.PinsList, error) {
+func List() ([]manifest.PinDescriptor, error) {
 	// Load manifest
 	manifestData, err := manifest.FromLocalFile()
 	if err != nil {

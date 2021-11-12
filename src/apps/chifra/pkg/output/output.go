@@ -29,13 +29,6 @@ import (
 var OutputFn string
 var Format string
 
-// WithFormat interface makes it possible to query data from a type
-// depending on the format
-type WithFormat interface {
-	GetCsvOutput() interface{}
-	GetJsonOutput() interface{}
-}
-
 type Meta struct {
 	Unripe    string `json:"unripe"`
 	Ripe      string `json:"ripe"`

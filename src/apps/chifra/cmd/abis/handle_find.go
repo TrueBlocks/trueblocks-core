@@ -52,16 +52,6 @@ type Function struct {
 	Signature string `json:"signature,omitempty"`
 }
 
-type FunctionList []Function
-
-func (fl *FunctionList) GetJsonOutput() interface{} {
-	return *fl
-}
-
-func (fl *FunctionList) GetCsvOutput() interface{} {
-	return *fl
-}
-
 type ScanCounter struct {
 	Visited uint64
 	Found   uint64
@@ -83,7 +73,7 @@ func (v *ScanCounter) Report(target *os.File, action, msg string) {
 }
 
 // Find tries to find matching ABIs
-func Find(arguments []string) FunctionList {
+func Find(arguments []string) []Function {
 	visits := ScanCounter{}
 	visits.Wanted = uint64(len(arguments))
 	visits.Freq = 139419

@@ -9,7 +9,7 @@ import (
 )
 
 // AccountsAbis runs abi querying functions depending on query parameters
-func AccountsAbis(request *http.Request) (*abis.FunctionList, error) {
+func AccountsAbis(request *http.Request) ([]abis.Function, error) {
 	query := request.URL.Query()
 	opts := &abis.AbisOptionsType{}
 	var args []string
@@ -40,5 +40,5 @@ func AccountsAbis(request *http.Request) (*abis.FunctionList, error) {
 	}
 
 	results := abis.Find(opts.Find)
-	return &results, nil
+	return results, nil
 }

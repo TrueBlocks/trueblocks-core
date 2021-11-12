@@ -22,26 +22,13 @@ type PinDescriptor struct {
 
 type Manifest struct {
 	// TODO: This structure will be updated with better data shortly
-	FileName           string        `json:"fileName"`
-	IndexFormat        IpfsHash      `json:"indexFormat"`
-	BloomFormat        IpfsHash      `json:"bloomFormat"`
-	CommitHash         string        `json:"commitHash"`
-	PreviousHash       IpfsHash      `json:"prevHash"`
-	NewBlockRange      ManifestRange `json:"newBlockRange"`
-	PreviousBlockRange ManifestRange `json:"prevBlockRange"`
-	NewPins            PinsList      `json:"newPins"`
-	PreviousPins       PinsList      `json:"prevPins"`
-}
-
-type PinsList []PinDescriptor
-
-// GetCsvOutput returns data for CSV and TSV formats
-func (pl *PinsList) GetCsvOutput() interface{} {
-	return *pl
-}
-
-// GetJsonOutput returns data for JSON format. In this case
-// we just return the whole slice of PinDescriptor
-func (pl *PinsList) GetJsonOutput() interface{} {
-	return *pl
+	FileName           string          `json:"fileName"`
+	IndexFormat        IpfsHash        `json:"indexFormat"`
+	BloomFormat        IpfsHash        `json:"bloomFormat"`
+	CommitHash         string          `json:"commitHash"`
+	PreviousHash       IpfsHash        `json:"prevHash"`
+	NewBlockRange      ManifestRange   `json:"newBlockRange"`
+	PreviousBlockRange ManifestRange   `json:"prevBlockRange"`
+	NewPins            []PinDescriptor `json:"newPins"`
+	PreviousPins       []PinDescriptor `json:"prevPins"`
 }

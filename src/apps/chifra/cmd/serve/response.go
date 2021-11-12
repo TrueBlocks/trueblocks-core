@@ -7,7 +7,7 @@ import (
 )
 
 // Repsonder type represents a function that can be used to respond with a given format
-type Responder func(w http.ResponseWriter, httpStatus int, responseData output.WithFormat)
+type Responder func(w http.ResponseWriter, httpStatus int, responseData interface{})
 
 // The map below maps format string to Responder
 var formatToResponder = map[string]Responder{
@@ -33,9 +33,9 @@ func RespondWithError(w http.ResponseWriter, httpStatus int, err error) {
 
 // RespondWithJson marshals data into JSON that can be returned
 // to the client and sets the given HTTP status code
-func RespondWithJson(w http.ResponseWriter, httpStatus int, responseData output.WithFormat) {
+func RespondWithJson(w http.ResponseWriter, httpStatus int, responseData interface{}) {
 	marshalled, err := output.AsJsonBytes(&output.JsonFormatted{
-		Data: responseData.GetJsonOutput(),
+		Data: responseData,
 	})
 	if err != nil {
 		panic(err)
@@ -47,10 +47,9 @@ func RespondWithJson(w http.ResponseWriter, httpStatus int, responseData output.
 
 // RespondWithCsv turns data into CSV, sets the given HTTP status code, MIME type and writes
 // a response
-func RespondWithCsv(w http.ResponseWriter, httpStatus int, responseData output.WithFormat) {
+func RespondWithCsv(w http.ResponseWriter, httpStatus int, responseData interface{}) {
 	w.Header().Set("Content-Type", "text/csv")
-	data := responseData.GetCsvOutput()
-	result, err := output.AsCsv(data)
+	result, err := output.AsCsv(responseData)
 	if err != nil {
 		RespondWithError(w, http.StatusInternalServerError, err)
 		return
@@ -61,10 +60,9 @@ func RespondWithCsv(w http.ResponseWriter, httpStatus int, responseData output.W
 
 // RespondWithTsv turns data into TSV, sets the given HTTP status code, MIME type and writes
 // a response
-func RespondWithTsv(w http.ResponseWriter, httpStatus int, responseData output.WithFormat) {
+func RespondWithTsv(w http.ResponseWriter, httpStatus int, responseData interface{}) {
 	w.Header().Set("Content-Type", "text/tab-separated-values")
-	data := responseData.GetCsvOutput()
-	result, err := output.AsTsv(data)
+	result, err := output.AsTsv(responseData)
 	if err != nil {
 		RespondWithError(w, http.StatusInternalServerError, err)
 		return
@@ -75,7 +73,7 @@ func RespondWithTsv(w http.ResponseWriter, httpStatus int, responseData output.W
 
 // Respond decides which format should be used, calls the right Responder, sets HTTP status code
 // and writes a response
-func Respond(format string, w http.ResponseWriter, httpStatus int, responseData output.WithFormat) {
+func Respond(format string, w http.ResponseWriter, httpStatus int, responseData interface{}) {
 	formatNotEmpty := format
 	if formatNotEmpty == "" {
 		formatNotEmpty = "api"
