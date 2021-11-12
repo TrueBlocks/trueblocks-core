@@ -50,7 +50,11 @@ func RespondWithJson(w http.ResponseWriter, httpStatus int, responseData output.
 func RespondWithCsv(w http.ResponseWriter, httpStatus int, responseData output.WithFormat) {
 	w.Header().Set("Content-Type", "text/csv")
 	data := responseData.GetCsvOutput()
-	result := output.AsCsv(data)
+	result, err := output.AsCsv(data)
+	if err != nil {
+		RespondWithError(w, http.StatusInternalServerError, err)
+		return
+	}
 
 	w.Write([]byte(result))
 }

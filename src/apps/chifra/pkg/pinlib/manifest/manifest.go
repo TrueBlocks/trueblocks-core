@@ -12,10 +12,6 @@
  *-------------------------------------------------------------------------------------------*/
 package manifest
 
-import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-)
-
 type IpfsHash = string
 
 type PinDescriptor struct {
@@ -40,20 +36,8 @@ type Manifest struct {
 type PinsList []PinDescriptor
 
 // GetCsvOutput returns data for CSV and TSV formats
-func (pl *PinsList) GetCsvOutput() *output.CsvFormatted {
-	data := &output.CsvFormatted{
-		Header: []string{
-			"fileName", "bloomHash", "indexHash",
-		},
-	}
-
-	for _, pin := range *pl {
-		data.Content = append(data.Content, []string{
-			pin.FileName, pin.BloomHash, pin.IndexHash,
-		})
-	}
-
-	return data
+func (pl *PinsList) GetCsvOutput() interface{} {
+	return *pl
 }
 
 // GetJsonOutput returns data for JSON format. In this case

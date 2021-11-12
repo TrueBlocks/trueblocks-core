@@ -58,20 +58,8 @@ func (fl *FunctionList) GetJsonOutput() interface{} {
 	return *fl
 }
 
-func (fl *FunctionList) GetCsvOutput() *output.CsvFormatted {
-	// structType := reflect.TypeOf(Function{})
-
-	data := &output.CsvFormatted{
-		// Header: strings.Fields(output.GetHeader(&structType)),
-		Header: []string{"encoding", "signature"},
-	}
-	for _, item := range *fl {
-		data.Content = append(data.Content, []string{
-			item.Encoding, item.Signature,
-		})
-	}
-
-	return data
+func (fl *FunctionList) GetCsvOutput() interface{} {
+	return *fl
 }
 
 type ScanCounter struct {
