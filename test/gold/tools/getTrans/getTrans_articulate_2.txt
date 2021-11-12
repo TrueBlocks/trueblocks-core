@@ -1,9 +1,7 @@
 chifra transactions  3648669.24 --articulate --verbose --trace --fmt json
 TEST[DATE|TIME] Articulate:  true
 TEST[DATE|TIME] Trace:  true
-TEST[DATE|TIME] Uniq:  false
 TEST[DATE|TIME] Reconcile:  
-TEST[DATE|TIME] Cache:  false
 { "data": [
 
 level: 1

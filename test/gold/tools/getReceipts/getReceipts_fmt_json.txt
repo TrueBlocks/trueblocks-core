@@ -1,5 +1,4 @@
 chifra receipts  2222222.0 2332332.0 --fmt json
-TEST[DATE|TIME] Articulate:  false
 { "data": [
   {
     "contractAddress": "0x0",

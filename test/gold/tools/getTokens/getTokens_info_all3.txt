@@ -1,7 +1,5 @@
 chifra tokens  0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 --parts all 4001001-4001002 --fmt json
 TEST[DATE|TIME] Parts:  [all]
-TEST[DATE|TIME] ByAcct:  false
-TEST[DATE|TIME] NoZero:  false
 { "data": [
 
 level: 1

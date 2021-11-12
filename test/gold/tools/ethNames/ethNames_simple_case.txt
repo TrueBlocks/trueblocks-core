@@ -1,21 +1,6 @@
 chifra names  network --match_case
-TEST[DATE|TIME] Expand:  false
 TEST[DATE|TIME] MatchCase:  true
-TEST[DATE|TIME] All:  false
-TEST[DATE|TIME] Custom:  false
-TEST[DATE|TIME] Prefund:  false
-TEST[DATE|TIME] Named:  false
-TEST[DATE|TIME] Addr:  false
-TEST[DATE|TIME] Collections:  false
-TEST[DATE|TIME] Tags:  false
-TEST[DATE|TIME] ToCustom:  false
-TEST[DATE|TIME] Clean:  false
 TEST[DATE|TIME] Autoname:  
-TEST[DATE|TIME] Create:  false
-TEST[DATE|TIME] Delete:  false
-TEST[DATE|TIME] Update:  false
-TEST[DATE|TIME] Remove:  false
-TEST[DATE|TIME] Undelete:  false
 tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x069d653038db2f9d84e9620be140b3d404a40258	Jarvis network Smart Relay Token	JRTBNT		18
 50-Tokens:ERC20	0x4bbbc57af270138ef2ff2c50dbfad684e9e0e604	WABnetwork	WAB		18

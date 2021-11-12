@@ -1,9 +1,4 @@
 chifra abis  0xef638b4305b8a1620f4e0e562e127f1181ae16d2 --fmt json
-TEST[DATE|TIME] Known:  false
-TEST[DATE|TIME] Sol:  false
-TEST[DATE|TIME] Find:  []
-TEST[DATE|TIME] Source:  false
-TEST[DATE|TIME] Classes:  false
 { "data": [
 {
   "name": "ConfirmationNeeded",

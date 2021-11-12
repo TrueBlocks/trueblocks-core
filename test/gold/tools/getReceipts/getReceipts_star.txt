@@ -1,5 +1,4 @@
 chifra receipts  1428993.* --fmt api
-TEST[DATE|TIME] Articulate:  false
 {"data": [
   {
     "contractAddress": "0x0",

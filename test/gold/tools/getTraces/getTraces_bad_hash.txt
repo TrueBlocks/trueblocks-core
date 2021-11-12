@@ -1,9 +1,5 @@
 chifra traces  0x0012
-TEST[DATE|TIME] Articulate:  false
 TEST[DATE|TIME] Filter:  
-TEST[DATE|TIME] Statediff:  false
-TEST[DATE|TIME] Count:  false
-TEST[DATE|TIME] SkipDdos:  false
 TEST[DATE|TIME] Max:  250
 
   The argument '0x0012' is not properly formatted. Is it the right length? Quitting...

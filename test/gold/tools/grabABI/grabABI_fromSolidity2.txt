@@ -1,9 +1,5 @@
 chifra abis  --sol 0x7d655c57f71464b6f83811c55d84009cd9f5221c --fmt json
-TEST[DATE|TIME] Known:  false
 TEST[DATE|TIME] Sol:  true
-TEST[DATE|TIME] Find:  []
-TEST[DATE|TIME] Source:  false
-TEST[DATE|TIME] Classes:  false
 contract ReentrancyGuard {
 contract Context {
 function _msgSender() view returns (address payable) {}

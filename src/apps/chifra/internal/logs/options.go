@@ -27,5 +27,7 @@ type LogsOptionsType struct {
 var Options LogsOptionsType
 
 func (opts *LogsOptionsType) TestLog() {
-	logger.Log(logger.Test, "Articulate: ", opts.Articulate)
+	if opts.Articulate {
+		logger.Log(logger.Test, "Articulate: ", opts.Articulate)
+	}
 }

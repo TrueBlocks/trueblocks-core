@@ -1,8 +1,3 @@
 chifra abis  0x1728039ce0d18a799c081c5c7fa2090dd365a8d0
-TEST[DATE|TIME] Known:  false
-TEST[DATE|TIME] Sol:  false
-TEST[DATE|TIME] Find:  []
-TEST[DATE|TIME] Source:  false
-TEST[DATE|TIME] Classes:  false
 Address 0x1728039ce0d18a799c081c5c7fa2090dd365a8d0 is not a smart contract. Skipping...
 encoding	type	name	signature	input_names	output_names

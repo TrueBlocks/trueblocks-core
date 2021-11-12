@@ -27,5 +27,7 @@ type InitOptionsType struct {
 var Options InitOptionsType
 
 func (opts *InitOptionsType) TestLog() {
-	logger.Log(logger.Test, "All: ", opts.All)
+	if opts.All {
+		logger.Log(logger.Test, "All: ", opts.All)
+	}
 }

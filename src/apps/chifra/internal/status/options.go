@@ -36,13 +36,25 @@ type StatusOptionsType struct {
 var Options StatusOptionsType
 
 func (opts *StatusOptionsType) TestLog() {
-	logger.Log(logger.Test, "Details: ", opts.Details)
-	logger.Log(logger.Test, "Types: ", opts.Types)
+	if opts.Details {
+		logger.Log(logger.Test, "Details: ", opts.Details)
+	}
+	if len(opts.Types) > 0 {
+		logger.Log(logger.Test, "Types: ", opts.Types)
+	}
 	logger.Log(logger.Test, "Depth: ", opts.Depth)
-	logger.Log(logger.Test, "Terse: ", opts.Terse)
-	logger.Log(logger.Test, "Migrate: ", opts.Migrate)
-	logger.Log(logger.Test, "GetConfig: ", opts.GetConfig)
-	logger.Log(logger.Test, "SetConfig: ", opts.SetConfig)
+	if opts.Terse {
+		logger.Log(logger.Test, "Terse: ", opts.Terse)
+	}
+	if len(opts.Migrate) > 0 {
+		logger.Log(logger.Test, "Migrate: ", opts.Migrate)
+	}
+	if opts.GetConfig {
+		logger.Log(logger.Test, "GetConfig: ", opts.GetConfig)
+	}
+	if opts.SetConfig {
+		logger.Log(logger.Test, "SetConfig: ", opts.SetConfig)
+	}
 	logger.Log(logger.Test, "TestStart: ", opts.TestStart)
 	logger.Log(logger.Test, "TestEnd: ", opts.TestEnd)
 }

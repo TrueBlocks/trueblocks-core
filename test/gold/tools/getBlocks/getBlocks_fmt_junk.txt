@@ -1,17 +1,5 @@
 chifra blocks  2222222 2332332 --fmt junk
-TEST[DATE|TIME] Hashes:  false
-TEST[DATE|TIME] Uncles:  false
-TEST[DATE|TIME] Trace:  false
-TEST[DATE|TIME] Apps:  false
-TEST[DATE|TIME] Uniq:  false
-TEST[DATE|TIME] UniqTx:  false
-TEST[DATE|TIME] Logs:  false
-TEST[DATE|TIME] Emitter:  []
-TEST[DATE|TIME] Topic:  []
-TEST[DATE|TIME] Articulate:  false
 TEST[DATE|TIME] BigRange:  500
-TEST[DATE|TIME] Count:  false
-TEST[DATE|TIME] Cache:  false
 TEST[DATE|TIME] List:  0
 TEST[DATE|TIME] ListCount:  20
 Error: 

@@ -1,4 +1,3 @@
 chifra logs  0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521 0x0766ec95bf12f9600afc6c33c287f9d2356d85f15f0d7eeeb6647f5d4ddfbc11 0x060e4cf9fa8d34a8b423b5b3691b2541255ff7974ff16699e104edcfb63bd521
-TEST[DATE|TIME] Articulate:  false
 blocknumber	transactionindex	logindex	address	topic0	topic1	topic2	topic3	data	type	compressedlog	timestamp
 "Transaction 0x0766ec95bf12f9600afc6c33c287f9d2356d85f15f0d7eeeb6647f5d4ddfbc11 not found."

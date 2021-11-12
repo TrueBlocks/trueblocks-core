@@ -4,5 +4,4 @@ INFO[DATE|TIME]   0xc63f666315fa1eae17e354fab532aeeecf549be93e358737d0648f50d570
 INFO[DATE|TIME] local: true
 INFO[DATE|TIME] is_block: true
 TEST[DATE|TIME] Local:  true
-TEST[DATE|TIME] Google:  false
 Opening http://localhost:1234/explorer/blocks/0xc63f666315fa1eae17e354fab532aeeecf549be93e358737d0648f50d57083a0

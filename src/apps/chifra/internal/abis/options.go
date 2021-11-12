@@ -31,9 +31,19 @@ type AbisOptionsType struct {
 var Options AbisOptionsType
 
 func (opts *AbisOptionsType) TestLog() {
-	logger.Log(logger.Test, "Known: ", opts.Known)
-	logger.Log(logger.Test, "Sol: ", opts.Sol)
-	logger.Log(logger.Test, "Find: ", opts.Find)
-	logger.Log(logger.Test, "Source: ", opts.Source)
-	logger.Log(logger.Test, "Classes: ", opts.Classes)
+	if opts.Known {
+		logger.Log(logger.Test, "Known: ", opts.Known)
+	}
+	if opts.Sol {
+		logger.Log(logger.Test, "Sol: ", opts.Sol)
+	}
+	if len(opts.Find) > 0 {
+		logger.Log(logger.Test, "Find: ", opts.Find)
+	}
+	if opts.Source {
+		logger.Log(logger.Test, "Source: ", opts.Source)
+	}
+	if opts.Classes {
+		logger.Log(logger.Test, "Classes: ", opts.Classes)
+	}
 }

@@ -30,8 +30,12 @@ type ListOptionsType struct {
 var Options ListOptionsType
 
 func (opts *ListOptionsType) TestLog() {
-	logger.Log(logger.Test, "Count: ", opts.Count)
-	logger.Log(logger.Test, "Appearances: ", opts.Appearances)
+	if opts.Count {
+		logger.Log(logger.Test, "Count: ", opts.Count)
+	}
+	if opts.Appearances {
+		logger.Log(logger.Test, "Appearances: ", opts.Appearances)
+	}
 	logger.Log(logger.Test, "FirstBlock: ", opts.FirstBlock)
 	logger.Log(logger.Test, "LastBlock: ", opts.LastBlock)
 }

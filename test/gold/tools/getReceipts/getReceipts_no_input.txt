@@ -1,5 +1,4 @@
 chifra receipts  
-TEST[DATE|TIME] Articulate:  false
 Purpose:
   Retrieve receipts for the given transaction(s).
 

@@ -1,5 +1,4 @@
 chifra logs  .clink
-TEST[DATE|TIME] Articulate:  false
 
   .clink does not appear to be a valid transaction index. Quitting...
 

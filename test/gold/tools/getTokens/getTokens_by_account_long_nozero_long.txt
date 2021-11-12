@@ -1,5 +1,4 @@
 chifra tokens  0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 0xa25d04fa348f107428708ba19c95d1c79b3744bf --by_acct --no_zero 4000000
-TEST[DATE|TIME] Parts:  []
 TEST[DATE|TIME] ByAcct:  true
 TEST[DATE|TIME] NoZero:  true
 blocknumber	holder	address	name	symbol	decimals	balance

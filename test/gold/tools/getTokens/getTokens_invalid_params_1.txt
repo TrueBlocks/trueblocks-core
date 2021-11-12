@@ -1,7 +1,4 @@
 chifra tokens  a b c
-TEST[DATE|TIME] Parts:  []
-TEST[DATE|TIME] ByAcct:  false
-TEST[DATE|TIME] NoZero:  false
 
   Input argument appears to be invalid. No such skip marker: a:b Quitting...
 

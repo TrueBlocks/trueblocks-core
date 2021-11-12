@@ -1,8 +1,3 @@
 chifra when  daohack -v
-TEST[DATE|TIME] List:  false
-TEST[DATE|TIME] Timestamps:  false
-TEST[DATE|TIME] Check:  false
-TEST[DATE|TIME] Fix:  false
-TEST[DATE|TIME] Count:  false
 blocknumber	timestamp	date	name
 1718497	1466134488	2016-06-17 03:34:48 UTC	daohack

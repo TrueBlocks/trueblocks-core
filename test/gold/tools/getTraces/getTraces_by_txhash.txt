@@ -1,9 +1,5 @@
 chifra traces  0x66e49e99a984cd88e097782a001afaac8c6ff786c936651895475dd88ec360f6 --fmt api
-TEST[DATE|TIME] Articulate:  false
 TEST[DATE|TIME] Filter:  
-TEST[DATE|TIME] Statediff:  false
-TEST[DATE|TIME] Count:  false
-TEST[DATE|TIME] SkipDdos:  false
 TEST[DATE|TIME] Max:  250
 {"data": [
   {

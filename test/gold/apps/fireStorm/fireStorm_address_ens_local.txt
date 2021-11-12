@@ -4,5 +4,4 @@ INFO[DATE|TIME]   trueblocks.eth
 INFO[DATE|TIME] local: true
 INFO[DATE|TIME] is_addr: true
 TEST[DATE|TIME] Local:  true
-TEST[DATE|TIME] Google:  false
 Opening https://etherscan.io/enslookup-search?search=trueblocks.eth

@@ -2,6 +2,4 @@ chifra explore  0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b220
 INFO[DATE|TIME] terms
 INFO[DATE|TIME]   0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060
 INFO[DATE|TIME] is_tx: true
-TEST[DATE|TIME] Local:  false
-TEST[DATE|TIME] Google:  false
 Opening https://etherscan.io/tx/0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060

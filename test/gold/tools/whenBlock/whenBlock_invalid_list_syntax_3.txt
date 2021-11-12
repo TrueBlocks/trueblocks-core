@@ -1,9 +1,5 @@
 chifra when  2015-03-02 --list
 TEST[DATE|TIME] List:  true
-TEST[DATE|TIME] Timestamps:  false
-TEST[DATE|TIME] Check:  false
-TEST[DATE|TIME] Fix:  false
-TEST[DATE|TIME] Count:  false
 
   The date you specified (2015-03-02) is before the first block. Quitting...
 

@@ -1,9 +1,4 @@
 chifra abis  0xbb9bc244d798123fde783fcc1c72d3bb8c189413
-TEST[DATE|TIME] Known:  false
-TEST[DATE|TIME] Sol:  false
-TEST[DATE|TIME] Find:  []
-TEST[DATE|TIME] Source:  false
-TEST[DATE|TIME] Classes:  false
 encoding	type	name	signature	input_names	output_names
 0x013cf08b	function	proposals	proposals(uint256)	val_0,	recipient,amount,description,votingDeadline,open,proposalPassed,proposalHash,proposalDeposit,newCurator,yea,nay,creator,,
 0x095ea7b3	function	approve	approve(address,uint256)	_spender,_amount,	success,,

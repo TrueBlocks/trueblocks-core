@@ -1,9 +1,4 @@
 chifra when  homestead --verbose --fmt json
-TEST[DATE|TIME] List:  false
-TEST[DATE|TIME] Timestamps:  false
-TEST[DATE|TIME] Check:  false
-TEST[DATE|TIME] Fix:  false
-TEST[DATE|TIME] Count:  false
 { "data": [
   {
     "blockNumber": 1150000,

@@ -1,5 +1,4 @@
 chifra quotes  --period 60 --fmt json
-TEST[DATE|TIME] Freshen:  false
 TEST[DATE|TIME] Period:  60
 TEST[DATE|TIME] Pair:  
 TEST[DATE|TIME] Feed:  

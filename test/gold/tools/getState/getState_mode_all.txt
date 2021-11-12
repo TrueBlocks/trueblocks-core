@@ -1,7 +1,5 @@
 chifra state  0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 --parts all 2500000
 TEST[DATE|TIME] Parts:  [all]
-TEST[DATE|TIME] Changes:  false
-TEST[DATE|TIME] NoZero:  false
 TEST[DATE|TIME] Call:  
 TEST[DATE|TIME] ProxyFor:  
 blocknumber	address	balance	nonce	code	storage	deployed	accttype

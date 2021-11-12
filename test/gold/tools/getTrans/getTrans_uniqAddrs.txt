@@ -1,9 +1,6 @@
 chifra transactions  1301011.0 1301672.0 1301324.0 --uniq --fmt json
-TEST[DATE|TIME] Articulate:  false
-TEST[DATE|TIME] Trace:  false
 TEST[DATE|TIME] Uniq:  true
 TEST[DATE|TIME] Reconcile:  
-TEST[DATE|TIME] Cache:  false
 { "data": [
   {
     "bn": 1301011,

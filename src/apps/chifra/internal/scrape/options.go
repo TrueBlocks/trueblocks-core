@@ -35,8 +35,12 @@ var Options ScrapeOptionsType
 func (opts *ScrapeOptionsType) TestLog() {
 	logger.Log(logger.Test, "Action: ", opts.Action)
 	logger.Log(logger.Test, "Sleep: ", opts.Sleep)
-	logger.Log(logger.Test, "Pin: ", opts.Pin)
-	logger.Log(logger.Test, "Publish: ", opts.Publish)
+	if opts.Pin {
+		logger.Log(logger.Test, "Pin: ", opts.Pin)
+	}
+	if opts.Publish {
+		logger.Log(logger.Test, "Publish: ", opts.Publish)
+	}
 	logger.Log(logger.Test, "BlockCnt: ", opts.BlockCnt)
 	logger.Log(logger.Test, "BlockChanCnt: ", opts.BlockChanCnt)
 	logger.Log(logger.Test, "AddrChanCnt: ", opts.AddrChanCnt)

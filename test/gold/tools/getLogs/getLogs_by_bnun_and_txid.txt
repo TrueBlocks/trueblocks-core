@@ -1,5 +1,4 @@
 chifra logs  4000000.5 --fmt api
-TEST[DATE|TIME] Articulate:  false
 {"data": [
   {
     "address": "0x1a95b271b0535d15fa49932daba31ba612b52946",

@@ -32,10 +32,18 @@ type TracesOptionsType struct {
 var Options TracesOptionsType
 
 func (opts *TracesOptionsType) TestLog() {
-	logger.Log(logger.Test, "Articulate: ", opts.Articulate)
+	if opts.Articulate {
+		logger.Log(logger.Test, "Articulate: ", opts.Articulate)
+	}
 	logger.Log(logger.Test, "Filter: ", opts.Filter)
-	logger.Log(logger.Test, "Statediff: ", opts.Statediff)
-	logger.Log(logger.Test, "Count: ", opts.Count)
-	logger.Log(logger.Test, "SkipDdos: ", opts.SkipDdos)
+	if opts.Statediff {
+		logger.Log(logger.Test, "Statediff: ", opts.Statediff)
+	}
+	if opts.Count {
+		logger.Log(logger.Test, "Count: ", opts.Count)
+	}
+	if opts.SkipDdos {
+		logger.Log(logger.Test, "SkipDdos: ", opts.SkipDdos)
+	}
 	logger.Log(logger.Test, "Max: ", opts.Max)
 }

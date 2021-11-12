@@ -1,21 +1,6 @@
 chifra names  --prefund 004
-TEST[DATE|TIME] Expand:  false
-TEST[DATE|TIME] MatchCase:  false
-TEST[DATE|TIME] All:  false
-TEST[DATE|TIME] Custom:  false
 TEST[DATE|TIME] Prefund:  true
-TEST[DATE|TIME] Named:  false
-TEST[DATE|TIME] Addr:  false
-TEST[DATE|TIME] Collections:  false
-TEST[DATE|TIME] Tags:  false
-TEST[DATE|TIME] ToCustom:  false
-TEST[DATE|TIME] Clean:  false
 TEST[DATE|TIME] Autoname:  
-TEST[DATE|TIME] Create:  false
-TEST[DATE|TIME] Delete:  false
-TEST[DATE|TIME] Update:  false
-TEST[DATE|TIME] Remove:  false
-TEST[DATE|TIME] Undelete:  false
 tags	address	name	symbol	decimals
 80-Prefund	0x00497e92cdc0e0b963d752b2296acb87da828b24	Prefund_0004
 80-Prefund	0x004bfbe1546bc6c65b5c7eaa55304b38bbfec6d3	Prefund_0005

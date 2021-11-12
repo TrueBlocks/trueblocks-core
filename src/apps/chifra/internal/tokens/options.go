@@ -29,7 +29,13 @@ type TokensOptionsType struct {
 var Options TokensOptionsType
 
 func (opts *TokensOptionsType) TestLog() {
-	logger.Log(logger.Test, "Parts: ", opts.Parts)
-	logger.Log(logger.Test, "ByAcct: ", opts.ByAcct)
-	logger.Log(logger.Test, "NoZero: ", opts.NoZero)
+	if len(opts.Parts) > 0 {
+		logger.Log(logger.Test, "Parts: ", opts.Parts)
+	}
+	if opts.ByAcct {
+		logger.Log(logger.Test, "ByAcct: ", opts.ByAcct)
+	}
+	if opts.NoZero {
+		logger.Log(logger.Test, "NoZero: ", opts.NoZero)
+	}
 }

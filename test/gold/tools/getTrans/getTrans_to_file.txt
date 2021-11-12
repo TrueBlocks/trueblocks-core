@@ -1,7 +1,3 @@
 chifra transactions  2222222.0 2332332.0 --fmt json --to_file
-TEST[DATE|TIME] Articulate:  false
-TEST[DATE|TIME] Trace:  false
-TEST[DATE|TIME] Uniq:  false
 TEST[DATE|TIME] Reconcile:  
-TEST[DATE|TIME] Cache:  false
 { "outputFilename": "--output_filename--" }

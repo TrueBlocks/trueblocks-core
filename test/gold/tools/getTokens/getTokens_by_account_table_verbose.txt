@@ -1,6 +1,4 @@
 chifra tokens  0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 0xa25d04fa348f107428708ba19c95d1c79b3744bf --by_acct 4000000 --verbose
-TEST[DATE|TIME] Parts:  []
 TEST[DATE|TIME] ByAcct:  true
-TEST[DATE|TIME] NoZero:  false
 blocknumber	holder	address	name	symbol	decimals	balance
 4000000	0xa25d04fa348f107428708ba19c95d1c79b3744bf	0xb9e7f8568e08d5659f5d29c4997173d84cdf2607	Swarm City Token	SWT	18	"435000"

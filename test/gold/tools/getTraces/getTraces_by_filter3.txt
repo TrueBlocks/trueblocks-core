@@ -1,9 +1,5 @@
 chifra traces  --fmt json --filter 0x2ed0c4!0x2ed128!!0x8bbb73bcb5d553b5a556358d27625323fd781d37!!1
-TEST[DATE|TIME] Articulate:  false
 TEST[DATE|TIME] Filter:  0x2ed0c4!0x2ed128!!0x8bbb73bcb5d553b5a556358d27625323fd781d37!!1
-TEST[DATE|TIME] Statediff:  false
-TEST[DATE|TIME] Count:  false
-TEST[DATE|TIME] SkipDdos:  false
 TEST[DATE|TIME] Max:  250
 TIME ~ CLOCK - <INFO>  : {
   "fromBlock": 3068100,

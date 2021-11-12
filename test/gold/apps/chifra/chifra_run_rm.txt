@@ -1,9 +1,4 @@
 chifra  monitors 0x807640a13483f8ac783c557fcdf27be11ea4ac7a --remove
-TEST[DATE|TIME] Appearances:  false
-TEST[DATE|TIME] Count:  false
-TEST[DATE|TIME] Clean:  false
-TEST[DATE|TIME] Delete:  false
-TEST[DATE|TIME] Undelete:  false
 TEST[DATE|TIME] Remove:  true
 TEST[DATE|TIME] FirstBlock:  0
 TEST[DATE|TIME] LastBlock:  0

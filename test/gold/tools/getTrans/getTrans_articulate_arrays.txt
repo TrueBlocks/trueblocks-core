@@ -1,9 +1,7 @@
 chifra transactions  0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f --trace --articulate --fmt api
 TEST[DATE|TIME] Articulate:  true
 TEST[DATE|TIME] Trace:  true
-TEST[DATE|TIME] Uniq:  false
 TEST[DATE|TIME] Reconcile:  
-TEST[DATE|TIME] Cache:  false
 {"data": [
 
 level: 1

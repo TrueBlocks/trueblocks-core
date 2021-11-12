@@ -1,6 +1,4 @@
 chifra list  
-TEST[DATE|TIME] Count:  false
-TEST[DATE|TIME] Appearances:  false
 TEST[DATE|TIME] FirstBlock:  0
 TEST[DATE|TIME] LastBlock:  0
 Error: 

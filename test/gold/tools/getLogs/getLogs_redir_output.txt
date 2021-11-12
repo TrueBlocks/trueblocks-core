@@ -1,3 +1,2 @@
 chifra logs  3657480.79 --output testing_file
-TEST[DATE|TIME] Articulate:  false
 --output_filename--

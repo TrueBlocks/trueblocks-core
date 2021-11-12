@@ -1,5 +1,4 @@
 chifra quotes  --period 240 --log_level 2 --fmt csv
-TEST[DATE|TIME] Freshen:  false
 TEST[DATE|TIME] Period:  240
 TEST[DATE|TIME] Pair:  
 TEST[DATE|TIME] Feed:  

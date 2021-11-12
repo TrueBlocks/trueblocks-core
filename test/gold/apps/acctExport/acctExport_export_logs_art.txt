@@ -1,29 +1,10 @@
 chifra export  0xbb9bc244d798123fde783fcc1c72d3bb8c189413 --first_block 1429283 --last_block 1429468 --logs --fmt json --articulate
-TEST[DATE|TIME] Appearances:  false
-TEST[DATE|TIME] Receipts:  false
-TEST[DATE|TIME] Statements:  false
 TEST[DATE|TIME] Logs:  true
-TEST[DATE|TIME] Traces:  false
-TEST[DATE|TIME] Accounting:  false
 TEST[DATE|TIME] Articulate:  true
-TEST[DATE|TIME] Cache:  false
-TEST[DATE|TIME] CacheTraces:  false
-TEST[DATE|TIME] Factory:  false
-TEST[DATE|TIME] Count:  false
 TEST[DATE|TIME] FirstRecord:  0
 TEST[DATE|TIME] MaxRecords:  250
-TEST[DATE|TIME] Relevant:  false
-TEST[DATE|TIME] Emitter:  []
-TEST[DATE|TIME] Topic:  []
-TEST[DATE|TIME] Clean:  false
-TEST[DATE|TIME] Freshen:  false
-TEST[DATE|TIME] Staging:  false
-TEST[DATE|TIME] Unripe:  false
 TEST[DATE|TIME] Load:  
-TEST[DATE|TIME] Reversed:  false
-TEST[DATE|TIME] ByDate:  false
 TEST[DATE|TIME] SummarizeBy:  
-TEST[DATE|TIME] SkipDdos:  false
 TEST[DATE|TIME] MaxTraces:  250
 TEST[DATE|TIME] FirstBlock:  1429283
 TEST[DATE|TIME] LastBlock:  1429468

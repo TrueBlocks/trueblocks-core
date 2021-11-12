@@ -54,31 +54,73 @@ type ExportOptionsType struct {
 var Options ExportOptionsType
 
 func (opts *ExportOptionsType) TestLog() {
-	logger.Log(logger.Test, "Appearances: ", opts.Appearances)
-	logger.Log(logger.Test, "Receipts: ", opts.Receipts)
-	logger.Log(logger.Test, "Statements: ", opts.Statements)
-	logger.Log(logger.Test, "Logs: ", opts.Logs)
-	logger.Log(logger.Test, "Traces: ", opts.Traces)
-	logger.Log(logger.Test, "Accounting: ", opts.Accounting)
-	logger.Log(logger.Test, "Articulate: ", opts.Articulate)
-	logger.Log(logger.Test, "Cache: ", opts.Cache)
-	logger.Log(logger.Test, "CacheTraces: ", opts.CacheTraces)
-	logger.Log(logger.Test, "Factory: ", opts.Factory)
-	logger.Log(logger.Test, "Count: ", opts.Count)
+	if opts.Appearances {
+		logger.Log(logger.Test, "Appearances: ", opts.Appearances)
+	}
+	if opts.Receipts {
+		logger.Log(logger.Test, "Receipts: ", opts.Receipts)
+	}
+	if opts.Statements {
+		logger.Log(logger.Test, "Statements: ", opts.Statements)
+	}
+	if opts.Logs {
+		logger.Log(logger.Test, "Logs: ", opts.Logs)
+	}
+	if opts.Traces {
+		logger.Log(logger.Test, "Traces: ", opts.Traces)
+	}
+	if opts.Accounting {
+		logger.Log(logger.Test, "Accounting: ", opts.Accounting)
+	}
+	if opts.Articulate {
+		logger.Log(logger.Test, "Articulate: ", opts.Articulate)
+	}
+	if opts.Cache {
+		logger.Log(logger.Test, "Cache: ", opts.Cache)
+	}
+	if opts.CacheTraces {
+		logger.Log(logger.Test, "CacheTraces: ", opts.CacheTraces)
+	}
+	if opts.Factory {
+		logger.Log(logger.Test, "Factory: ", opts.Factory)
+	}
+	if opts.Count {
+		logger.Log(logger.Test, "Count: ", opts.Count)
+	}
 	logger.Log(logger.Test, "FirstRecord: ", opts.FirstRecord)
 	logger.Log(logger.Test, "MaxRecords: ", opts.MaxRecords)
-	logger.Log(logger.Test, "Relevant: ", opts.Relevant)
-	logger.Log(logger.Test, "Emitter: ", opts.Emitter)
-	logger.Log(logger.Test, "Topic: ", opts.Topic)
-	logger.Log(logger.Test, "Clean: ", opts.Clean)
-	logger.Log(logger.Test, "Freshen: ", opts.Freshen)
-	logger.Log(logger.Test, "Staging: ", opts.Staging)
-	logger.Log(logger.Test, "Unripe: ", opts.Unripe)
+	if opts.Relevant {
+		logger.Log(logger.Test, "Relevant: ", opts.Relevant)
+	}
+	if len(opts.Emitter) > 0 {
+		logger.Log(logger.Test, "Emitter: ", opts.Emitter)
+	}
+	if len(opts.Topic) > 0 {
+		logger.Log(logger.Test, "Topic: ", opts.Topic)
+	}
+	if opts.Clean {
+		logger.Log(logger.Test, "Clean: ", opts.Clean)
+	}
+	if opts.Freshen {
+		logger.Log(logger.Test, "Freshen: ", opts.Freshen)
+	}
+	if opts.Staging {
+		logger.Log(logger.Test, "Staging: ", opts.Staging)
+	}
+	if opts.Unripe {
+		logger.Log(logger.Test, "Unripe: ", opts.Unripe)
+	}
 	logger.Log(logger.Test, "Load: ", opts.Load)
-	logger.Log(logger.Test, "Reversed: ", opts.Reversed)
-	logger.Log(logger.Test, "ByDate: ", opts.ByDate)
+	if opts.Reversed {
+		logger.Log(logger.Test, "Reversed: ", opts.Reversed)
+	}
+	if opts.ByDate {
+		logger.Log(logger.Test, "ByDate: ", opts.ByDate)
+	}
 	logger.Log(logger.Test, "SummarizeBy: ", opts.SummarizeBy)
-	logger.Log(logger.Test, "SkipDdos: ", opts.SkipDdos)
+	if opts.SkipDdos {
+		logger.Log(logger.Test, "SkipDdos: ", opts.SkipDdos)
+	}
 	logger.Log(logger.Test, "MaxTraces: ", opts.MaxTraces)
 	logger.Log(logger.Test, "FirstBlock: ", opts.FirstBlock)
 	logger.Log(logger.Test, "LastBlock: ", opts.LastBlock)

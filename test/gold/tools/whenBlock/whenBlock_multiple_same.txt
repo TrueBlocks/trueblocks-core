@@ -1,9 +1,4 @@
 chifra when  12345 54321 2016-12-01 2016-12-01-01
-TEST[DATE|TIME] List:  false
-TEST[DATE|TIME] Timestamps:  false
-TEST[DATE|TIME] Check:  false
-TEST[DATE|TIME] Fix:  false
-TEST[DATE|TIME] Count:  false
 blocknumber	timestamp	date	name
 12345	1438367030	2015-07-31 18:23:50 UTC
 54321	1439052185	2015-08-08 16:43:05 UTC

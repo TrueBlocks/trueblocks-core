@@ -34,12 +34,24 @@ type MonitorsOptionsType struct {
 var Options MonitorsOptionsType
 
 func (opts *MonitorsOptionsType) TestLog() {
-	logger.Log(logger.Test, "Appearances: ", opts.Appearances)
-	logger.Log(logger.Test, "Count: ", opts.Count)
-	logger.Log(logger.Test, "Clean: ", opts.Clean)
-	logger.Log(logger.Test, "Delete: ", opts.Delete)
-	logger.Log(logger.Test, "Undelete: ", opts.Undelete)
-	logger.Log(logger.Test, "Remove: ", opts.Remove)
+	if opts.Appearances {
+		logger.Log(logger.Test, "Appearances: ", opts.Appearances)
+	}
+	if opts.Count {
+		logger.Log(logger.Test, "Count: ", opts.Count)
+	}
+	if opts.Clean {
+		logger.Log(logger.Test, "Clean: ", opts.Clean)
+	}
+	if opts.Delete {
+		logger.Log(logger.Test, "Delete: ", opts.Delete)
+	}
+	if opts.Undelete {
+		logger.Log(logger.Test, "Undelete: ", opts.Undelete)
+	}
+	if opts.Remove {
+		logger.Log(logger.Test, "Remove: ", opts.Remove)
+	}
 	logger.Log(logger.Test, "FirstBlock: ", opts.FirstBlock)
 	logger.Log(logger.Test, "LastBlock: ", opts.LastBlock)
 }

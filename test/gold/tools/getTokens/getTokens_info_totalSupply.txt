@@ -1,6 +1,4 @@
 chifra tokens  0xd26114cd6ee289accf82350c8d8487fedb8a0c07 --parts totalSupply
 TEST[DATE|TIME] Parts:  [totalSupply]
-TEST[DATE|TIME] ByAcct:  false
-TEST[DATE|TIME] NoZero:  false
 address	totalsupply
 0xd26114cd6ee289accf82350c8d8487fedb8a0c07	"140245398.245132780789239631"

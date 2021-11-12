@@ -1,5 +1,4 @@
 chifra receipts  0x0012
-TEST[DATE|TIME] Articulate:  false
 
   The argument '0x0012' is not properly formatted. Is it the right length? Quitting...
 

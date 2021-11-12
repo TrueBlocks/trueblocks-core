@@ -1,8 +1,3 @@
 chifra when  daofork --verbose
-TEST[DATE|TIME] List:  false
-TEST[DATE|TIME] Timestamps:  false
-TEST[DATE|TIME] Check:  false
-TEST[DATE|TIME] Fix:  false
-TEST[DATE|TIME] Count:  false
 blocknumber	timestamp	date	name
 1920000	1469020840	2016-07-20 13:20:40 UTC	daofork

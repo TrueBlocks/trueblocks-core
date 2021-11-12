@@ -1,21 +1,6 @@
 chifra  names 50-Tokens --expand
 TEST[DATE|TIME] Expand:  true
-TEST[DATE|TIME] MatchCase:  false
-TEST[DATE|TIME] All:  false
-TEST[DATE|TIME] Custom:  false
-TEST[DATE|TIME] Prefund:  false
-TEST[DATE|TIME] Named:  false
-TEST[DATE|TIME] Addr:  false
-TEST[DATE|TIME] Collections:  false
-TEST[DATE|TIME] Tags:  false
-TEST[DATE|TIME] ToCustom:  false
-TEST[DATE|TIME] Clean:  false
 TEST[DATE|TIME] Autoname:  
-TEST[DATE|TIME] Create:  false
-TEST[DATE|TIME] Delete:  false
-TEST[DATE|TIME] Update:  false
-TEST[DATE|TIME] Remove:  false
-TEST[DATE|TIME] Undelete:  false
 tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefund	is_contract	is_erc20	is_erc721
 50-Tokens:ERC20	0x0000000000001b84b1cb32787b0d64758d019317	HomeWork 🏠🛠️	HWK	On chain	18		false	false	false	true	true	true
 50-Tokens:ERC20	0x0000000000004946c0e9f43f4dee607b0ef1fa1c	1inch.exchange v2	CHI	On chain	18		false	false	false	true	true	false

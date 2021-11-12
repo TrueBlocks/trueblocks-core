@@ -1,9 +1,5 @@
 chifra transactions  .clink
-TEST[DATE|TIME] Articulate:  false
-TEST[DATE|TIME] Trace:  false
-TEST[DATE|TIME] Uniq:  false
 TEST[DATE|TIME] Reconcile:  
-TEST[DATE|TIME] Cache:  false
 
   .clink does not appear to be a valid transaction index. Quitting...
 

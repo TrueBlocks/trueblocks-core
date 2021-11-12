@@ -1,9 +1,5 @@
 chifra transactions  0xeec4ccd13fe05907f9d732a8ad245bcb7f918217157b89baaa23895c12eb329a --fmt api
-TEST[DATE|TIME] Articulate:  false
-TEST[DATE|TIME] Trace:  false
-TEST[DATE|TIME] Uniq:  false
 TEST[DATE|TIME] Reconcile:  
-TEST[DATE|TIME] Cache:  false
 {"data": [
   {
     "hash": "0xeec4ccd13fe05907f9d732a8ad245bcb7f918217157b89baaa23895c12eb329a",

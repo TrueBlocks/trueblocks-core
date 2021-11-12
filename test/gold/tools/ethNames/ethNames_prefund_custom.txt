@@ -1,21 +1,7 @@
 chifra names  --prefund --custom
-TEST[DATE|TIME] Expand:  false
-TEST[DATE|TIME] MatchCase:  false
-TEST[DATE|TIME] All:  false
 TEST[DATE|TIME] Custom:  true
 TEST[DATE|TIME] Prefund:  true
-TEST[DATE|TIME] Named:  false
-TEST[DATE|TIME] Addr:  false
-TEST[DATE|TIME] Collections:  false
-TEST[DATE|TIME] Tags:  false
-TEST[DATE|TIME] ToCustom:  false
-TEST[DATE|TIME] Clean:  false
 TEST[DATE|TIME] Autoname:  
-TEST[DATE|TIME] Create:  false
-TEST[DATE|TIME] Delete:  false
-TEST[DATE|TIME] Update:  false
-TEST[DATE|TIME] Remove:  false
-TEST[DATE|TIME] Undelete:  false
 tags	address	name	symbol	decimals
 81-Custom	0x0000000000000000000000000000000000000001	Account_1
 81-Custom	0x0000000000000000000000000000000000000002	Account_2	AC_2		2

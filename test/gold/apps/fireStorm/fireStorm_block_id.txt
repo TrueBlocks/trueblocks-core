@@ -2,6 +2,4 @@ chifra explore  12
 INFO[DATE|TIME] terms
 INFO[DATE|TIME]   12
 INFO[DATE|TIME] is_block: true
-TEST[DATE|TIME] Local:  false
-TEST[DATE|TIME] Google:  false
 Opening https://etherscan.io/block/12

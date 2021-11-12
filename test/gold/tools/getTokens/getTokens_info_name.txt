@@ -1,6 +1,4 @@
 chifra tokens  0xd26114cd6ee289accf82350c8d8487fedb8a0c07 --parts name
 TEST[DATE|TIME] Parts:  [name]
-TEST[DATE|TIME] ByAcct:  false
-TEST[DATE|TIME] NoZero:  false
 address	name
 0xd26114cd6ee289accf82350c8d8487fedb8a0c07	OMGToken Airdrop

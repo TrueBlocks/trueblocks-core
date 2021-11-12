@@ -1,9 +1,5 @@
 chifra traces  --fmt json --filter 4370000!4370002!!!!1
-TEST[DATE|TIME] Articulate:  false
 TEST[DATE|TIME] Filter:  4370000!4370002!!!!1
-TEST[DATE|TIME] Statediff:  false
-TEST[DATE|TIME] Count:  false
-TEST[DATE|TIME] SkipDdos:  false
 TEST[DATE|TIME] Max:  250
 TIME ~ CLOCK - <INFO>  : {
   "fromBlock": 4370000,

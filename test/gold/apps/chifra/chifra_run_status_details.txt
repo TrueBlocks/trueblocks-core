@@ -1,11 +1,6 @@
 chifra  status all --details --test_start 1400000 --test_end 2000000
 TEST[DATE|TIME] Details:  true
-TEST[DATE|TIME] Types:  []
 TEST[DATE|TIME] Depth:  0
-TEST[DATE|TIME] Terse:  false
-TEST[DATE|TIME] Migrate:  []
-TEST[DATE|TIME] GetConfig:  false
-TEST[DATE|TIME] SetConfig:  false
 TEST[DATE|TIME] TestStart:  1400000
 TEST[DATE|TIME] TestEnd:  2000000
 {

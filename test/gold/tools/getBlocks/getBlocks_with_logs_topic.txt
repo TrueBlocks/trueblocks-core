@@ -1,17 +1,7 @@
 chifra blocks  4012000-4012001 --logs --topic 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef
-TEST[DATE|TIME] Hashes:  false
-TEST[DATE|TIME] Uncles:  false
-TEST[DATE|TIME] Trace:  false
-TEST[DATE|TIME] Apps:  false
-TEST[DATE|TIME] Uniq:  false
-TEST[DATE|TIME] UniqTx:  false
 TEST[DATE|TIME] Logs:  true
-TEST[DATE|TIME] Emitter:  []
 TEST[DATE|TIME] Topic:  [0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef]
-TEST[DATE|TIME] Articulate:  false
 TEST[DATE|TIME] BigRange:  500
-TEST[DATE|TIME] Count:  false
-TEST[DATE|TIME] Cache:  false
 TEST[DATE|TIME] List:  0
 TEST[DATE|TIME] ListCount:  20
 { "data": [

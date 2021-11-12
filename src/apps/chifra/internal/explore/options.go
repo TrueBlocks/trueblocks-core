@@ -28,6 +28,10 @@ type ExploreOptionsType struct {
 var Options ExploreOptionsType
 
 func (opts *ExploreOptionsType) TestLog() {
-	logger.Log(logger.Test, "Local: ", opts.Local)
-	logger.Log(logger.Test, "Google: ", opts.Google)
+	if opts.Local {
+		logger.Log(logger.Test, "Local: ", opts.Local)
+	}
+	if opts.Google {
+		logger.Log(logger.Test, "Google: ", opts.Google)
+	}
 }

@@ -43,21 +43,53 @@ type NamesOptionsType struct {
 var Options NamesOptionsType
 
 func (opts *NamesOptionsType) TestLog() {
-	logger.Log(logger.Test, "Expand: ", opts.Expand)
-	logger.Log(logger.Test, "MatchCase: ", opts.MatchCase)
-	logger.Log(logger.Test, "All: ", opts.All)
-	logger.Log(logger.Test, "Custom: ", opts.Custom)
-	logger.Log(logger.Test, "Prefund: ", opts.Prefund)
-	logger.Log(logger.Test, "Named: ", opts.Named)
-	logger.Log(logger.Test, "Addr: ", opts.Addr)
-	logger.Log(logger.Test, "Collections: ", opts.Collections)
-	logger.Log(logger.Test, "Tags: ", opts.Tags)
-	logger.Log(logger.Test, "ToCustom: ", opts.ToCustom)
-	logger.Log(logger.Test, "Clean: ", opts.Clean)
+	if opts.Expand {
+		logger.Log(logger.Test, "Expand: ", opts.Expand)
+	}
+	if opts.MatchCase {
+		logger.Log(logger.Test, "MatchCase: ", opts.MatchCase)
+	}
+	if opts.All {
+		logger.Log(logger.Test, "All: ", opts.All)
+	}
+	if opts.Custom {
+		logger.Log(logger.Test, "Custom: ", opts.Custom)
+	}
+	if opts.Prefund {
+		logger.Log(logger.Test, "Prefund: ", opts.Prefund)
+	}
+	if opts.Named {
+		logger.Log(logger.Test, "Named: ", opts.Named)
+	}
+	if opts.Addr {
+		logger.Log(logger.Test, "Addr: ", opts.Addr)
+	}
+	if opts.Collections {
+		logger.Log(logger.Test, "Collections: ", opts.Collections)
+	}
+	if opts.Tags {
+		logger.Log(logger.Test, "Tags: ", opts.Tags)
+	}
+	if opts.ToCustom {
+		logger.Log(logger.Test, "ToCustom: ", opts.ToCustom)
+	}
+	if opts.Clean {
+		logger.Log(logger.Test, "Clean: ", opts.Clean)
+	}
 	logger.Log(logger.Test, "Autoname: ", opts.Autoname)
-	logger.Log(logger.Test, "Create: ", opts.Create)
-	logger.Log(logger.Test, "Delete: ", opts.Delete)
-	logger.Log(logger.Test, "Update: ", opts.Update)
-	logger.Log(logger.Test, "Remove: ", opts.Remove)
-	logger.Log(logger.Test, "Undelete: ", opts.Undelete)
+	if opts.Create {
+		logger.Log(logger.Test, "Create: ", opts.Create)
+	}
+	if opts.Delete {
+		logger.Log(logger.Test, "Delete: ", opts.Delete)
+	}
+	if opts.Update {
+		logger.Log(logger.Test, "Update: ", opts.Update)
+	}
+	if opts.Remove {
+		logger.Log(logger.Test, "Remove: ", opts.Remove)
+	}
+	if opts.Undelete {
+		logger.Log(logger.Test, "Undelete: ", opts.Undelete)
+	}
 }

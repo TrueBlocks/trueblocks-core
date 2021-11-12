@@ -31,9 +31,15 @@ type StateOptionsType struct {
 var Options StateOptionsType
 
 func (opts *StateOptionsType) TestLog() {
-	logger.Log(logger.Test, "Parts: ", opts.Parts)
-	logger.Log(logger.Test, "Changes: ", opts.Changes)
-	logger.Log(logger.Test, "NoZero: ", opts.NoZero)
+	if len(opts.Parts) > 0 {
+		logger.Log(logger.Test, "Parts: ", opts.Parts)
+	}
+	if opts.Changes {
+		logger.Log(logger.Test, "Changes: ", opts.Changes)
+	}
+	if opts.NoZero {
+		logger.Log(logger.Test, "NoZero: ", opts.NoZero)
+	}
 	logger.Log(logger.Test, "Call: ", opts.Call)
 	logger.Log(logger.Test, "ProxyFor: ", opts.ProxyFor)
 }

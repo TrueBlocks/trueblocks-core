@@ -2,10 +2,6 @@ chifra status  caches --types txs --details  --depth 1
 TEST[DATE|TIME] Details:  true
 TEST[DATE|TIME] Types:  [txs]
 TEST[DATE|TIME] Depth:  1
-TEST[DATE|TIME] Terse:  false
-TEST[DATE|TIME] Migrate:  []
-TEST[DATE|TIME] GetConfig:  false
-TEST[DATE|TIME] SetConfig:  false
 TEST[DATE|TIME] TestStart:  0
 TEST[DATE|TIME] TestEnd:  0
 {
