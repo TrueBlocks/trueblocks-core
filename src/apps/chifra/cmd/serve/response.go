@@ -1,7 +1,6 @@
 package serve
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -82,11 +81,5 @@ func Respond(format string, w http.ResponseWriter, httpStatus int, responseData 
 	output.Format = formatNotEmpty
 
 	responder := formatToResponder[formatNotEmpty]
-	if responder == nil {
-		// TODO: this error message is copied from a test
-		RespondWithError(w, http.StatusBadRequest, fmt.Errorf("The --fmt option (%s) must be one of [ json | txt | csv | api ]", formatNotEmpty))
-		return
-	}
-
 	responder(w, httpStatus, responseData)
 }

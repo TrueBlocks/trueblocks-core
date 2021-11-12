@@ -52,6 +52,28 @@ type Function struct {
 	Signature string `json:"signature,omitempty"`
 }
 
+type FunctionList []Function
+
+func (fl *FunctionList) GetJsonOutput() interface{} {
+	return *fl
+}
+
+func (fl *FunctionList) GetCsvOutput() *output.CsvFormatted {
+	// structType := reflect.TypeOf(Function{})
+
+	data := &output.CsvFormatted{
+		// Header: strings.Fields(output.GetHeader(&structType)),
+		Header: []string{"encoding", "signature"},
+	}
+	for _, item := range *fl {
+		data.Content = append(data.Content, []string{
+			item.Encoding, item.Signature,
+		})
+	}
+
+	return data
+}
+
 type ScanCounter struct {
 	Visited uint64
 	Found   uint64
@@ -72,8 +94,8 @@ func (v *ScanCounter) Report(target *os.File, action, msg string) {
 	fmt.Fprintf(target, "%s[%d-%d-%d] %s                                            \r", action, v.Visited, v.Max, (v.Max - v.Visited), msg)
 }
 
-// HandleFind loads manifest, sorts pins and prints them out
-func HandleFind(arguments []string) {
+// Find tries to find matching ABIs
+func Find(arguments []string) FunctionList {
 	visits := ScanCounter{}
 	visits.Wanted = uint64(len(arguments))
 	visits.Freq = 139419
@@ -136,6 +158,11 @@ func HandleFind(arguments []string) {
 	}
 
 	defer wg.Wait()
+	return results
+}
+
+func HandleFind(arguments []string) {
+	results := Find(arguments)
 
 	// TODO: if Root.to_file == true, write the output to a filename
 	// TODO: if Root.output == <fn>, write the output to a <fn>
