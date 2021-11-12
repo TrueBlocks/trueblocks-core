@@ -22,8 +22,8 @@ Arguments:
 
 Flags:
   -k, --known          load common 'known' ABIs from cache
-  -s, --sol string     file name of .sol file from which to create a new known abi (without .sol)
-  -f, --find strings   try to search for a function declaration given a four byte code
+  -s, --sol            extract the abi definition from the provided .sol file(s)
+  -f, --find strings   search for function or event declarations given a four- or 32-byte code(s)
 
 Global Flags:
   -x, --fmt string   export format, one of [none|json*|txt|csv|api]
@@ -31,7 +31,8 @@ Global Flags:
   -v, --verbose      enable verbose (increase detail with --log_level)
 
 Notes:
-  - Solidity files found in the local folder with the name '<address>.sol' are converted to an ABI prior to processing (and then removed).
+  - For the --sol option, place the solidity files in the current working folder.
+  - Search for either four byte signatures or event signatures with the --find option.
 ```
 
 Other Options

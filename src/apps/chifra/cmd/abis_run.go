@@ -13,59 +13,52 @@
 package cmd
 
 import (
-	"strings"
-
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/abis"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/spf13/cobra"
 )
 
 func validateAbisArgs(cmd *cobra.Command, args []string) error {
-	if AbisOpts.classes {
-		return validate.Usage("the '{0}' option is not implemented", "--classes")
-	}
-
-	if len(AbisOpts.sol) > 0 {
-		cleaned := "./" + strings.Replace(AbisOpts.sol, ".sol", "", 1) + ".sol"
-		if !utils.FileExists(cleaned) {
-			return validate.Usage("file not found at {0}", cleaned)
-		}
-		return nil
-	}
-
-	if len(AbisOpts.find) == 0 && !AbisOpts.known {
-		err := validate.ValidateOneAddr(args)
-		if err != nil {
-			return err
-		}
-	}
-
-	err := validateGlobalFlags(cmd, args)
+	err := abis.ValidateOptions(&AbisOpts, args)
 	if err != nil {
 		return err
 	}
+	err = validateGlobalFlags(cmd, args)
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
 
 func runAbis(cmd *cobra.Command, args []string) {
-	// if len(AbisOpts.find) {
-	// 	return abis.HandleFind(AbisOpts.find)
-	// }
+	// This only happens in API mode when there's been an error. Here, we print the error
+	if len(validate.Errors) > 0 {
+		output.PrintJson(&output.JsonFormatted{})
+		return
+	}
+
+	if len(AbisOpts.Find) > 0 {
+		// These have already been validated
+		abis.HandleFind(AbisOpts.Find)
+		return
+	}
 
 	options := ""
-	if AbisOpts.known {
+	if AbisOpts.Known {
 		options += " --known"
 	}
-	if len(AbisOpts.sol) > 0 {
-		options += " --sol " + AbisOpts.sol
+	if AbisOpts.Sol {
+		options += " --sol"
 	}
-	for _, t := range AbisOpts.find {
+	for _, t := range AbisOpts.Find {
 		options += " --find " + t
 	}
-	if AbisOpts.source {
+	if AbisOpts.Source {
 		options += " --source"
 	}
-	if AbisOpts.classes {
+	if AbisOpts.Classes {
 		options += " --classes"
 	}
 	arguments := ""

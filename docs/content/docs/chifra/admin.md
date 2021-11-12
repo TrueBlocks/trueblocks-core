@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2021-11-03T15:07:21
+date: 2021-11-07T22:22:20
 lastmod:
   - :git
   - lastmod
@@ -51,7 +51,7 @@ Notes:
   - See the API documentation for more information.
 ```
 
-**Source code**: [`go-apps/flame`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/go-apps/flame)
+**Source code**: [`serve.go`](https://github.com/TrueBlocks/trueblocks-core/tree/develop/src/apps/chifra/cmd/serve.go)
 
 ## chifra scrape
 
@@ -173,7 +173,7 @@ Notes:
   - See chifra pins --help for more information.
 ```
 
-**Source code**: [`apps/pinMan`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/pinMan)
+**Source code**: [`init.go`](https://github.com/TrueBlocks/trueblocks-core/tree/develop/src/apps/chifra/cmd/init.go)
 
 ## chifra pins
 
@@ -204,5 +204,5 @@ Notes:
   - The --share option works only if an IPFS daemon is running.
 ```
 
-**Source code**: [`apps/pinMan`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/pinMan)
+**Source code**: [`pins.go`](https://github.com/TrueBlocks/trueblocks-core/tree/develop/src/apps/chifra/cmd/pins.go)
 

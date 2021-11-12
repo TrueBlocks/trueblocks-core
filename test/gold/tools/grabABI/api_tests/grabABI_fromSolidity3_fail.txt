@@ -1,0 +1,5 @@
+{
+  "errors": [
+    "Please choose only one of --sol or --find."
+  ]
+}

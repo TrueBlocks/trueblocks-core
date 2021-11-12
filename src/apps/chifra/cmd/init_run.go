@@ -26,6 +26,6 @@ func validateInitArgs(cmd *cobra.Command, args []string) error {
 }
 
 func runInit(cmd *cobra.Command, args []string) {
-	PinsOpts.init = true
+	PinsOpts.Init = true
 	runPins(cmd, args)
 }

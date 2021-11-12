@@ -68,7 +68,13 @@ func Execute() {
 }
 
 func init() {
-	rootCmd.SetOut(os.Stderr)
+	if utils.IsApiMode() {
+		rootCmd.SetOut(os.Stderr)
+		rootCmd.SetErr(os.Stdout)
+	} else {
+		rootCmd.SetOut(os.Stderr)
+	}
+
 	rootCmd.SetFlagErrorFunc(ErrFunc)
 
 	rootCmd.Flags().SortFlags = false
@@ -109,6 +115,10 @@ func init() {
 	rootCmd.PersistentFlags().StringVarP(&output.Format, "fmt", "x", "", "export format, one of [none|json*|txt|csv|api]")
 	rootCmd.PersistentFlags().BoolVarP(&RootOpts.verbose, "verbose", "v", false, "enable verbose (increase detail with --log_level)")
 	rootCmd.PersistentFlags().BoolVarP(&RootOpts.help, "help", "h", false, "display this help screen")
+
+	if (output.Format == "" || output.Format == "none") && utils.IsApiMode() {
+		output.Format = "api"
+	}
 
 	rootCmd.Flags().SortFlags = false
 

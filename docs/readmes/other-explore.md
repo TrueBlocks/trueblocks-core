@@ -22,5 +22,5 @@ Global Flags:
   -v, --verbose      enable verbose (increase detail with --log_level)
 ```
 
-**Source code**: [`apps/fireStorm`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/fireStorm)
+**Source code**: [`explore.go`](https://github.com/TrueBlocks/trueblocks-core/tree/develop/src/apps/chifra/cmd/explore.go)
 

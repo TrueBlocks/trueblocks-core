@@ -21,30 +21,30 @@ import (
 
 // Table makes it easier to output tabular data to the console
 type Table struct {
-	writer *tabwriter.Writer
+	Writer *tabwriter.Writer
 	target *os.File
 }
 
 // New sets up the default writer and target for a table
 func (t *Table) New() {
-	t.writer = tabwriter.NewWriter(os.Stdout, 0, 0, 2, ' ', 0)
+	t.Writer = tabwriter.NewWriter(os.Stdout, 0, 0, 2, ' ', 0)
 	t.target = os.Stdout
 }
 
 // Header prints table header to the writer
 func (t *Table) Header(header []string) {
-	fmt.Fprintln(t.writer, strings.Join(header, "\t"))
+	fmt.Fprintln(t.Writer, strings.Join(header, "\t"))
 }
 
 // Row prints data as table cells in one row
 func (t *Table) Row(cells []string) {
 	for _, cell := range cells {
-		fmt.Fprint(t.writer, cell, "\t")
+		fmt.Fprint(t.Writer, cell, "\t")
 	}
-	fmt.Fprint(t.writer, "\n")
+	fmt.Fprint(t.Writer, "\n")
 }
 
-// Print flushes the writer, which will print the table
+// Print flushes the Writer, which will print the table
 func (t *Table) Print() error {
-	return t.writer.Flush()
+	return t.Writer.Flush()
 }

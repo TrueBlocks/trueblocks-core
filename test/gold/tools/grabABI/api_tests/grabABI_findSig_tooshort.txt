@@ -1,0 +1,5 @@
+{
+  "errors": [
+    "fourbyte (0x1aa3a0) is not 4 bytes long"
+  ]
+}

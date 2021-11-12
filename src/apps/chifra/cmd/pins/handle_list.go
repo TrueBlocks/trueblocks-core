@@ -13,7 +13,7 @@
 package pins
 
 import (
-	"fmt"
+	"os"
 	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -52,47 +52,8 @@ func HandleList() {
 		logger.Fatal("Cannot open local manifest file", err)
 	}
 
-	// TODO: if Root.to_file == true, write the output to a filename
-	// TODO: if Root.output == <fn>, write the output to a <fn>
-
-	if output.Format == "" || output.Format == "none" {
-		if utils.IsApiMode() {
-			output.Format = "api"
-		} else {
-			output.Format = "txt"
-		}
-	}
-
-	outFmt := "%s\t%s\t%s\n"
-	switch output.Format {
-	case "txt":
-		// do nothing
-	case "csv":
-		outFmt = "\"%s\",\"%s\",\"%s\"\n"
-	case "json":
-		fallthrough
-	case "api":
-		err := output.PrintJson(&output.JsonFormatted{
-			Data: pins,
-		})
-		if err != nil {
-			logger.Fatal(err)
-		}
-		return
-	}
-
-	if output.Format == "txt" && utils.IsTerminal() {
-		table := &output.Table{}
-		table.New()
-		table.Header([]string{"filename", "bloomhash", "indexhash"})
-		for _, pin := range pins {
-			table.Row([]string{pin.FileName, pin.BloomHash, pin.IndexHash})
-		}
-		table.Print()
-	} else {
-		fmt.Printf(outFmt, "filename", "bloomhash", "indexhash")
-		for _, pin := range pins {
-			fmt.Printf(outFmt, pin.FileName, pin.BloomHash, pin.IndexHash)
-		}
+	err = output.Output(os.Stdout, output.Format, pins)
+	if err != nil {
+		logger.Log(logger.Error, err)
 	}
 }

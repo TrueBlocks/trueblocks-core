@@ -10,15 +10,36 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-package main
+package output
 
 import (
-	"os"
-
-	"github.com/TrueBlocks/trueblocks-core/src/go-apps/findSig/cmd"
+	"reflect"
+	"testing"
 )
 
-func main() {
-	cmd.Execute()
-	os.Exit(0)
+func TestToStringRecords(t *testing.T) {
+	type TestType struct {
+		First  string
+		Second string
+	}
+
+	input := []TestType{
+		{"first first", "first second"},
+		{"second first", "second second"},
+	}
+
+	result, err := ToStringRecords(input, false)
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	expected := [][]string{
+		{"first", "second"},
+		{"first first", "first second"},
+		{"second first", "second second"},
+	}
+
+	if !reflect.DeepEqual(result, expected) {
+		t.Error("Wrong result", result)
+	}
 }

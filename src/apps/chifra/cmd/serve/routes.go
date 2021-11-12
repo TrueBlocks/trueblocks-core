@@ -53,6 +53,7 @@ func NewRouter() *mux.Router {
 			Name(route.Name).
 			Handler(handler)
 	}
+	router.Use(FormatValidator)
 
 	return router
 }
@@ -91,6 +92,36 @@ func Index(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Users Manual")
 }
 
+// FormatValidator checks if the client wants a supported format
+func FormatValidator(inner http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		fmtQuery := r.URL.Query()["fmt"]
+		valid := false
+		fmtValue := ""
+		if len(fmtQuery) == 0 {
+			valid = true
+		} else {
+			fmtValue = fmtQuery[0]
+			valid = fmtValue == "" ||
+				fmtValue == "json" ||
+				fmtValue == "txt" ||
+				fmtValue == "csv" ||
+				fmtValue == "api"
+		}
+
+		if valid {
+			inner.ServeHTTP(w, r)
+			return
+		}
+
+		RespondWithError(
+			w,
+			http.StatusBadRequest,
+			fmt.Errorf("The --fmt option (%s) must be one of [ json | txt | csv | api ]", fmtValue),
+		)
+	})
+}
+
 // By removing, inserting into, or altering any of the following 10  lines
 // of code, you are violating the terms of our usage license. Don't do it.
 // fileName := Options.Status.CachePath + "lics/export.txt"
@@ -127,9 +158,24 @@ func AccountsNames(w http.ResponseWriter, r *http.Request) {
 	CallOne(w, r, "ethNames", "names")
 }
 
-// AccountsAbis help text todo
+// AccountsAbis processes ABI queries
 func AccountsAbis(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "grabABI", "abis")
+	// This is temporary. Currently only --find is supported by
+	// golang version and all other flags trigger the old C++ version
+	// of grabABI to be called.
+	if len(r.URL.Query()["find"]) == 0 {
+		CallOneExtra(w, r, "chifra", "abis", "abis")
+		return
+	}
+
+	result, err := exec.AccountsAbis(r)
+	if err != nil {
+		RespondWithError(w, http.StatusInternalServerError, err)
+		return
+	}
+
+	format := r.URL.Query().Get("fmt")
+	Respond(format, w, http.StatusOK, result)
 }
 
 // ChainDataBlocks help text todo
@@ -191,11 +237,12 @@ func AdminInit(w http.ResponseWriter, r *http.Request) {
 func AdminPins(w http.ResponseWriter, r *http.Request) {
 	result, err := exec.AdminPins(r)
 	if err != nil {
-		RespondWithJsonError(w, http.StatusInternalServerError, err)
+		RespondWithError(w, http.StatusInternalServerError, err)
 		return
 	}
 
-	RespondWithJsonSuccess(w, result)
+	format := r.URL.Query().Get("fmt")
+	Respond(format, w, http.StatusOK, result)
 }
 
 // AdminChunks help text todo
