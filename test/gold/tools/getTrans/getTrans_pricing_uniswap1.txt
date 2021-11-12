@@ -1,4 +1,9 @@
 chifra transactions  10681057.170 10607241.278 --reconcile 0x65eab68cdb0dab6b3aad6fb4d915216a5fd002b3 --fmt json --log_level 10
+TEST[DATE|TIME] Articulate:  false
+TEST[DATE|TIME] Trace:  false
+TEST[DATE|TIME] Uniq:  false
+TEST[DATE|TIME] Reconcile:  0x65eab68cdb0dab6b3aad6fb4d915216a5fd002b3
+TEST[DATE|TIME] Cache:  false
 { "data": [
 TIME ~ CLOCK - : 4-----blockNum.txid10681057170
 TIME ~ CLOCK - : 4-----not from cache

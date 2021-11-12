@@ -28,6 +28,8 @@ func Validate(cmd *cobra.Command, args []string) error {
 		return validate.Usage("The {0} option is not available{1}.", "--collection", " with any other option")
 	}
 
+	Options.TestLog()
+
 	return root.ValidateGlobals(cmd, args)
 }
 

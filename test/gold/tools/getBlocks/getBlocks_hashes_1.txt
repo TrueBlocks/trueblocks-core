@@ -1,4 +1,19 @@
 chifra blocks  4001001 --hashes
+TEST[DATE|TIME] Hashes:  true
+TEST[DATE|TIME] Uncles:  false
+TEST[DATE|TIME] Trace:  false
+TEST[DATE|TIME] Apps:  false
+TEST[DATE|TIME] Uniq:  false
+TEST[DATE|TIME] UniqTx:  false
+TEST[DATE|TIME] Logs:  false
+TEST[DATE|TIME] Emitter:  []
+TEST[DATE|TIME] Topic:  []
+TEST[DATE|TIME] Articulate:  false
+TEST[DATE|TIME] BigRange:  500
+TEST[DATE|TIME] Count:  false
+TEST[DATE|TIME] Cache:  false
+TEST[DATE|TIME] List:  0
+TEST[DATE|TIME] ListCount:  20
 { "data": [
 {
   "hash": "0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f",

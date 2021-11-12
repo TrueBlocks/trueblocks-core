@@ -1,3 +1,8 @@
 chifra when  spurious
+TEST[DATE|TIME] List:  false
+TEST[DATE|TIME] Timestamps:  false
+TEST[DATE|TIME] Check:  false
+TEST[DATE|TIME] Fix:  false
+TEST[DATE|TIME] Count:  false
 blocknumber	timestamp	date	name
 2675000	1479831344	2016-11-22 16:15:44 UTC	spurious

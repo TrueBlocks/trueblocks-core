@@ -1,3 +1,8 @@
 chifra state  0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 4000000 --verbose
+TEST[DATE|TIME] Parts:  []
+TEST[DATE|TIME] Changes:  false
+TEST[DATE|TIME] NoZero:  false
+TEST[DATE|TIME] Call:  
+TEST[DATE|TIME] ProxyFor:  
 blocknumber	address	balance
 4000000	0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359	4098334073083150747787

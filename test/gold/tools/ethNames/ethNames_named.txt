@@ -1,4 +1,21 @@
 chifra names  
+TEST[DATE|TIME] Expand:  false
+TEST[DATE|TIME] MatchCase:  false
+TEST[DATE|TIME] All:  false
+TEST[DATE|TIME] Custom:  false
+TEST[DATE|TIME] Prefund:  false
+TEST[DATE|TIME] Named:  false
+TEST[DATE|TIME] Addr:  false
+TEST[DATE|TIME] Collections:  false
+TEST[DATE|TIME] Tags:  false
+TEST[DATE|TIME] ToCustom:  false
+TEST[DATE|TIME] Clean:  false
+TEST[DATE|TIME] Autoname:  
+TEST[DATE|TIME] Create:  false
+TEST[DATE|TIME] Delete:  false
+TEST[DATE|TIME] Update:  false
+TEST[DATE|TIME] Remove:  false
+TEST[DATE|TIME] Undelete:  false
 tags	address	name	symbol	decimals
 55-Defi	0x000000000000000000000000000000000000dead	ENS: Burn Address
 50-Tokens:ERC20	0x0000000000001b84b1cb32787b0d64758d019317	HomeWork 🏠🛠️	HWK		18

@@ -1,4 +1,10 @@
 chifra traces  0x343ba476313771d4431018d7d2e935eba2bfe26d5be3e6cb84af6817fd0e4309 --fmt txt
+TEST[DATE|TIME] Articulate:  false
+TEST[DATE|TIME] Filter:  
+TEST[DATE|TIME] Statediff:  false
+TEST[DATE|TIME] Count:  false
+TEST[DATE|TIME] SkipDdos:  false
+TEST[DATE|TIME] Max:  250
 blocknumber	transactionindex	traceaddress	action::calltype	error	action::from	action::to	action::value	action::ether	action::gas	result::gasused	action::input	compressedtrace	result::output
 2608034	5	null			0x42c8fcbc73d625f1d258a32915b6a573095de93d	0x0	490372688211999273	0.490372688211999273	5021	5021
 2608034	5	null-s	creation		0x0	0x9bd20e68b22f63c651a30f2cdbf6d539e465f83c	490372688211999273	0.490372688211999273	5021	5021

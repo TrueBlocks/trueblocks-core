@@ -1,4 +1,19 @@
 chifra blocks  3 --uniq
+TEST[DATE|TIME] Hashes:  false
+TEST[DATE|TIME] Uncles:  false
+TEST[DATE|TIME] Trace:  false
+TEST[DATE|TIME] Apps:  false
+TEST[DATE|TIME] Uniq:  true
+TEST[DATE|TIME] UniqTx:  false
+TEST[DATE|TIME] Logs:  false
+TEST[DATE|TIME] Emitter:  []
+TEST[DATE|TIME] Topic:  []
+TEST[DATE|TIME] Articulate:  false
+TEST[DATE|TIME] BigRange:  500
+TEST[DATE|TIME] Count:  false
+TEST[DATE|TIME] Cache:  false
+TEST[DATE|TIME] List:  0
+TEST[DATE|TIME] ListCount:  20
 bn	tx	tc	addr	reason
 3	99999		0x5088d623ba0fcf0131e0897a91734a4d83596aa0	miner
 3	99998		0xc8ebccc5f5689fa8659d83713341e5ad19349448	uncle

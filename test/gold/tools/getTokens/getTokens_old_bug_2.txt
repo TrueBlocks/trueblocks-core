@@ -1,4 +1,7 @@
 chifra tokens  0xa9fe4601811213c340e850ea305481aff02f5b28 --parts all 12000000
+TEST[DATE|TIME] Parts:  [all]
+TEST[DATE|TIME] ByAcct:  false
+TEST[DATE|TIME] NoZero:  false
 blocknumber	address	name	symbol	decimals	totalsupply
 
 level: 1

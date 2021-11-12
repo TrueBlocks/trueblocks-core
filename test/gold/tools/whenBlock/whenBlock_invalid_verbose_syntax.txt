@@ -1,4 +1,9 @@
 chifra when  --verbose
+TEST[DATE|TIME] List:  false
+TEST[DATE|TIME] Timestamps:  false
+TEST[DATE|TIME] Check:  false
+TEST[DATE|TIME] Fix:  false
+TEST[DATE|TIME] Count:  false
 
   Please supply either a JSON formatted date or a blockNumber. Quitting...
 

@@ -2,4 +2,6 @@ chifra explore  trueblocks.eth
 INFO[DATE|TIME] terms
 INFO[DATE|TIME]   trueblocks.eth
 INFO[DATE|TIME] is_addr: true
+TEST[DATE|TIME] Local:  false
+TEST[DATE|TIME] Google:  false
 Opening https://etherscan.io/enslookup-search?search=trueblocks.eth

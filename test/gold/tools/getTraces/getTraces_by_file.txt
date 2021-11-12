@@ -1,4 +1,10 @@
 chifra traces  --file cmd_file
+TEST[DATE|TIME] Articulate:  false
+TEST[DATE|TIME] Filter:  
+TEST[DATE|TIME] Statediff:  false
+TEST[DATE|TIME] Count:  false
+TEST[DATE|TIME] SkipDdos:  false
+TEST[DATE|TIME] Max:  250
 Cmd: 0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.78 -v:1 
 Cmd: 3657480.78 
 Cmd: 0xda2f27fffb36c90c74fc53bd8b721074e87203c727640c95c4c802296e3bf8ad 

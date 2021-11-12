@@ -1,4 +1,13 @@
 chifra status  index --test_start 1000000 --test_end 2500000
+TEST[DATE|TIME] Details:  false
+TEST[DATE|TIME] Types:  []
+TEST[DATE|TIME] Depth:  0
+TEST[DATE|TIME] Terse:  false
+TEST[DATE|TIME] Migrate:  []
+TEST[DATE|TIME] GetConfig:  false
+TEST[DATE|TIME] SetConfig:  false
+TEST[DATE|TIME] TestStart:  1000000
+TEST[DATE|TIME] TestEnd:  2500000
 {
   "client_version": "Client version",
   "client_ids": "chainId: 1 networkId: 1",

@@ -1,4 +1,10 @@
 chifra traces  4348290.92 --fmt api
+TEST[DATE|TIME] Articulate:  false
+TEST[DATE|TIME] Filter:  
+TEST[DATE|TIME] Statediff:  false
+TEST[DATE|TIME] Count:  false
+TEST[DATE|TIME] SkipDdos:  false
+TEST[DATE|TIME] Max:  250
 {"data": [
   {
     "blockHash": "0x96a09b25c3748974bb7e08780074482a164ab5a21e2ffc6c7115ec73c84e7f73",

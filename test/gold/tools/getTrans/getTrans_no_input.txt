@@ -1,4 +1,9 @@
 chifra transactions  
+TEST[DATE|TIME] Articulate:  false
+TEST[DATE|TIME] Trace:  false
+TEST[DATE|TIME] Uniq:  false
+TEST[DATE|TIME] Reconcile:  
+TEST[DATE|TIME] Cache:  false
 Purpose:
   Retrieve one or more transactions from the chain or local cache.
 

@@ -113,6 +113,8 @@ func Validate(cmd *cobra.Command, args []string) error {
 		urls = append(urls, ExploreUrl{"", ExploreNone})
 	}
 
+	Options.TestLog()
+
 	return root.ValidateGlobals(cmd, args)
 }
 

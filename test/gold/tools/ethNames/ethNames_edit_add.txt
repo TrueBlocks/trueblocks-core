@@ -1,4 +1,21 @@
 chifra names  --create --log_level 10 --fmt api --expand
+TEST[DATE|TIME] Expand:  true
+TEST[DATE|TIME] MatchCase:  false
+TEST[DATE|TIME] All:  false
+TEST[DATE|TIME] Custom:  false
+TEST[DATE|TIME] Prefund:  false
+TEST[DATE|TIME] Named:  false
+TEST[DATE|TIME] Addr:  false
+TEST[DATE|TIME] Collections:  false
+TEST[DATE|TIME] Tags:  false
+TEST[DATE|TIME] ToCustom:  false
+TEST[DATE|TIME] Clean:  false
+TEST[DATE|TIME] Autoname:  
+TEST[DATE|TIME] Create:  true
+TEST[DATE|TIME] Delete:  false
+TEST[DATE|TIME] Update:  false
+TEST[DATE|TIME] Remove:  false
+TEST[DATE|TIME] Undelete:  false
 TIME ~ CLOCK - <INFO>  : Cleaning 0x0000000000000000000000000000000010101010                                  TIME ~ CLOCK - <INFO>  : ---------------------------------------------
 TIME ~ CLOCK - <INFO>  : {
   "tags": "TAGS",

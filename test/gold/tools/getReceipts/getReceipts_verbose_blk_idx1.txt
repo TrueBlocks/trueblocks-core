@@ -1,4 +1,5 @@
 chifra receipts  0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3 --fmt json --verbose
+TEST[DATE|TIME] Articulate:  false
 { "data": [
   {
     "contractAddress": "0x0",

@@ -1,4 +1,9 @@
 chifra state  --call 0x2260fac5e5542a773aa44fbcfedf7c193bc2c599!0x06fdde03 10092000 --fmt txt
+TEST[DATE|TIME] Parts:  []
+TEST[DATE|TIME] Changes:  false
+TEST[DATE|TIME] NoZero:  false
+TEST[DATE|TIME] Call:  0x2260fac5e5542a773aa44fbcfedf7c193bc2c599!0x06fdde03
+TEST[DATE|TIME] ProxyFor:  
 blocknumber	address	signature	encoding	bytes	compressedresult
 
 level: 1

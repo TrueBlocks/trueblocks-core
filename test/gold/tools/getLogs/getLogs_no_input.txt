@@ -1,4 +1,5 @@
 chifra logs  
+TEST[DATE|TIME] Articulate:  false
 Purpose:
   Retrieve logs for the given transaction(s).
 

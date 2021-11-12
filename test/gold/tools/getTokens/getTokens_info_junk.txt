@@ -1,4 +1,7 @@
 chifra tokens  0xd26114cd6ee289accf82350c8d8487fedb8a0c07 --parts junk
+TEST[DATE|TIME] Parts:  [junk]
+TEST[DATE|TIME] ByAcct:  false
+TEST[DATE|TIME] NoZero:  false
 
   Invalid option 'junk' for 'parts'. One or more of [name|symbol|decimals|totalSupply|version|none|all] required. Quitting...
 

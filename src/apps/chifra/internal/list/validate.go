@@ -20,6 +20,8 @@ import (
 )
 
 func Validate(cmd *cobra.Command, args []string) error {
+	Options.TestLog()
+
 	if !utils.IsApiMode() {
 		err := validate.ValidateAtLeastOneAddr(args)
 		if err != nil {

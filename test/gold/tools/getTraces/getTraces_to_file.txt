@@ -1,2 +1,8 @@
 chifra traces  2222222.0 2332332.0 --fmt json --to_file
+TEST[DATE|TIME] Articulate:  false
+TEST[DATE|TIME] Filter:  
+TEST[DATE|TIME] Statediff:  false
+TEST[DATE|TIME] Count:  false
+TEST[DATE|TIME] SkipDdos:  false
+TEST[DATE|TIME] Max:  250
 { "outputFilename": "--output_filename--" }

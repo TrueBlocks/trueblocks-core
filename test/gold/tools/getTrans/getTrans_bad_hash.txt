@@ -1,4 +1,9 @@
 chifra transactions  0x0012
+TEST[DATE|TIME] Articulate:  false
+TEST[DATE|TIME] Trace:  false
+TEST[DATE|TIME] Uniq:  false
+TEST[DATE|TIME] Reconcile:  
+TEST[DATE|TIME] Cache:  false
 
   The argument '0x0012' is not properly formatted. Is it the right length? Quitting...
 

@@ -1,3 +1,8 @@
 chifra when  tangerine --verbose
+TEST[DATE|TIME] List:  false
+TEST[DATE|TIME] Timestamps:  false
+TEST[DATE|TIME] Check:  false
+TEST[DATE|TIME] Fix:  false
+TEST[DATE|TIME] Count:  false
 blocknumber	timestamp	date	name
 2463000	1476796771	2016-10-18 13:19:31 UTC	tangerine

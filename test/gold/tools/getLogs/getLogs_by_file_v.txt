@@ -1,4 +1,5 @@
 chifra logs  --file cmd_file --verbose --fmt json
+TEST[DATE|TIME] Articulate:  false
 Cmd: 0x96c58614708ee5b51961a9903af7e0661e88d77f929842d05e29be4d37a004dc -a -v:1 
 Cmd: 3327450.0 -a -v:1 
 { "data": [

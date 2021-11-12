@@ -1,2 +1,8 @@
 chifra traces  3657480.79 --verbose --output test_file
+TEST[DATE|TIME] Articulate:  false
+TEST[DATE|TIME] Filter:  
+TEST[DATE|TIME] Statediff:  false
+TEST[DATE|TIME] Count:  false
+TEST[DATE|TIME] SkipDdos:  false
+TEST[DATE|TIME] Max:  250
 --output_filename--

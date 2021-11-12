@@ -1,2 +1,4 @@
 chifra explore  
+TEST[DATE|TIME] Local:  false
+TEST[DATE|TIME] Google:  false
 Opening https://etherscan.io/

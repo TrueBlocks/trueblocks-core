@@ -1,4 +1,9 @@
 chifra transactions  2222221.* --fmt api
+TEST[DATE|TIME] Articulate:  false
+TEST[DATE|TIME] Trace:  false
+TEST[DATE|TIME] Uniq:  false
+TEST[DATE|TIME] Reconcile:  
+TEST[DATE|TIME] Cache:  false
 {"data": [
   {
     "hash": "0x01a5ac40a13d6d041247c2796281f73b19c208190565561104528637f61683ac",

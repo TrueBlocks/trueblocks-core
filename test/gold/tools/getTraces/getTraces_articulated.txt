@@ -1,4 +1,10 @@
 chifra traces  0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33 --fmt json --articulate
+TEST[DATE|TIME] Articulate:  true
+TEST[DATE|TIME] Filter:  
+TEST[DATE|TIME] Statediff:  false
+TEST[DATE|TIME] Count:  false
+TEST[DATE|TIME] SkipDdos:  false
+TEST[DATE|TIME] Max:  250
 { "data": [
 params.size: 0
 ==================================================

@@ -1,4 +1,32 @@
 chifra export  0x8b3b3b624c3c0397d3da8fd861512393d51dcbac --factory --traces --last_block 1603174
+TEST[DATE|TIME] Appearances:  false
+TEST[DATE|TIME] Receipts:  false
+TEST[DATE|TIME] Statements:  false
+TEST[DATE|TIME] Logs:  false
+TEST[DATE|TIME] Traces:  true
+TEST[DATE|TIME] Accounting:  false
+TEST[DATE|TIME] Articulate:  false
+TEST[DATE|TIME] Cache:  false
+TEST[DATE|TIME] CacheTraces:  false
+TEST[DATE|TIME] Factory:  true
+TEST[DATE|TIME] Count:  false
+TEST[DATE|TIME] FirstRecord:  0
+TEST[DATE|TIME] MaxRecords:  250
+TEST[DATE|TIME] Relevant:  false
+TEST[DATE|TIME] Emitter:  []
+TEST[DATE|TIME] Topic:  []
+TEST[DATE|TIME] Clean:  false
+TEST[DATE|TIME] Freshen:  false
+TEST[DATE|TIME] Staging:  false
+TEST[DATE|TIME] Unripe:  false
+TEST[DATE|TIME] Load:  
+TEST[DATE|TIME] Reversed:  false
+TEST[DATE|TIME] ByDate:  false
+TEST[DATE|TIME] SummarizeBy:  
+TEST[DATE|TIME] SkipDdos:  false
+TEST[DATE|TIME] MaxTraces:  250
+TEST[DATE|TIME] FirstBlock:  0
+TEST[DATE|TIME] LastBlock:  1603174
 blocknumber	transactionindex	traceaddress	action::calltype	error	action::from	action::to	action::value	action::ether	action::gas	result::gasused	action::input	compressedtrace	result::output
 1600495	9	null-s	creation		0x0	0x8b3b3b624c3c0397d3da8fd861512393d51dcbac	0	0.000000000000000000	2192168	823600			
 1600546	15	0-s	creation		0x0	0xa8eced73b863886478a81b411868fbac8ffbd334	0	0.000000000000000000	195789	155966			

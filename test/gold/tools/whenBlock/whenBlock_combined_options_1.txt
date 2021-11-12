@@ -1,3 +1,8 @@
 chifra when  10000 --verbose
+TEST[DATE|TIME] List:  false
+TEST[DATE|TIME] Timestamps:  false
+TEST[DATE|TIME] Check:  false
+TEST[DATE|TIME] Fix:  false
+TEST[DATE|TIME] Count:  false
 blocknumber	timestamp	date	name
 10000	1438334627	2015-07-31 09:23:47 UTC

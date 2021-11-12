@@ -1,4 +1,8 @@
 chifra quotes  --period 240 --log_level 2 --fmt csv
+TEST[DATE|TIME] Freshen:  false
+TEST[DATE|TIME] Period:  240
+TEST[DATE|TIME] Pair:  
+TEST[DATE|TIME] Feed:  
 Read cnt existing price quotes (lastRead: Now)
 "timestamp","date","close"
 "1439078400","2015-08-09 00:00:00 UTC","1.40000"

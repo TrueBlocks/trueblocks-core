@@ -1,4 +1,5 @@
 chifra receipts  1233123
+TEST[DATE|TIME] Articulate:  false
 
   1233123 does not appear to be a valid transaction index. Quitting...
 

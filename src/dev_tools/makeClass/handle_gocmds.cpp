@@ -190,8 +190,15 @@ string_q get_testlogs(const CCommandOption& cmd) {
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
         replace(p.longName, "deleteMe", "delete");
         p.longName = noUnderbars(p.longName);
-        if (p.option_type != "positional" && !p.isDeprecated)
-            os << p.Format(STR_TESTLOG_LINE) << endl;
+        if (p.option_type != "positional" && !p.isDeprecated) {
+            if (p.option_type == "boolean") {
+                os << "if opts." << p.Format("[{LONGNAME}]") << " {" << endl;
+                os << "\t" << p.Format(STR_TESTLOG_LINE) << endl;
+                os << "}" << endl;
+            } else {
+                os << p.Format(STR_TESTLOG_LINE) << endl;
+            }
+        }
     }
     return os.str();
 }

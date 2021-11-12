@@ -1,4 +1,19 @@
 chifra blocks  3982128 --apps --fmt csv
+TEST[DATE|TIME] Hashes:  false
+TEST[DATE|TIME] Uncles:  false
+TEST[DATE|TIME] Trace:  false
+TEST[DATE|TIME] Apps:  true
+TEST[DATE|TIME] Uniq:  false
+TEST[DATE|TIME] UniqTx:  false
+TEST[DATE|TIME] Logs:  false
+TEST[DATE|TIME] Emitter:  []
+TEST[DATE|TIME] Topic:  []
+TEST[DATE|TIME] Articulate:  false
+TEST[DATE|TIME] BigRange:  500
+TEST[DATE|TIME] Count:  false
+TEST[DATE|TIME] Cache:  false
+TEST[DATE|TIME] List:  0
+TEST[DATE|TIME] ListCount:  20
 "bn","tx","tc","addr","reason"
 "3982128","99999","","0x1e9939daaad6924ad004c2560e90804164900341","miner"
 "3982128","0","","0x8c34adf55edf3d3eabb2414dd3f7152536246c86","from"

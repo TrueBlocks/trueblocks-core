@@ -1,4 +1,9 @@
 chifra transactions  2222222.0 2332332.0 --fmt junk
+TEST[DATE|TIME] Articulate:  false
+TEST[DATE|TIME] Trace:  false
+TEST[DATE|TIME] Uniq:  false
+TEST[DATE|TIME] Reconcile:  
+TEST[DATE|TIME] Cache:  false
 Error: 
   The --fmt option (junk) must be one of [ json | txt | csv | api ]
 

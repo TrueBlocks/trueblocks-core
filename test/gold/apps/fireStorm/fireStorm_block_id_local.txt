@@ -3,4 +3,6 @@ INFO[DATE|TIME] terms
 INFO[DATE|TIME]   12
 INFO[DATE|TIME] local: true
 INFO[DATE|TIME] is_block: true
+TEST[DATE|TIME] Local:  true
+TEST[DATE|TIME] Google:  false
 Opening http://localhost:1234/explorer/blocks/12

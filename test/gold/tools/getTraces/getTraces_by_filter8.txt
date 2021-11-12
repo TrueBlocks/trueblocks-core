@@ -1,4 +1,10 @@
 chifra traces  --fmt json --filter 4370000!0x42ae53!0x8c3064d32441f0190e8b3fa1ef9fc81fccb06111!0xc42209accc14029c1012fb5680d95fbd6036e2a0
+TEST[DATE|TIME] Articulate:  false
+TEST[DATE|TIME] Filter:  4370000!0x42ae53!0x8c3064d32441f0190e8b3fa1ef9fc81fccb06111!0xc42209accc14029c1012fb5680d95fbd6036e2a0
+TEST[DATE|TIME] Statediff:  false
+TEST[DATE|TIME] Count:  false
+TEST[DATE|TIME] SkipDdos:  false
+TEST[DATE|TIME] Max:  250
 TIME ~ CLOCK - <INFO>  : {
   "fromBlock": 4370000,
   "toBlock": 4370003,

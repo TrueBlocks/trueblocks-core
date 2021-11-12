@@ -1,2 +1,10 @@
 chifra monitors  0x001d14804b399c6ef80e64576f657660804fec0b --undelete
+TEST[DATE|TIME] Appearances:  false
+TEST[DATE|TIME] Count:  false
+TEST[DATE|TIME] Clean:  false
+TEST[DATE|TIME] Delete:  false
+TEST[DATE|TIME] Undelete:  true
+TEST[DATE|TIME] Remove:  false
+TEST[DATE|TIME] FirstBlock:  0
+TEST[DATE|TIME] LastBlock:  0
 TIME ~ CLOCK - <INFO>  : Monitor 0x001d14804b399c6ef80e64576f657660804fec0b was undeleted

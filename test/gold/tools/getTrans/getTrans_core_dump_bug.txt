@@ -1,4 +1,9 @@
 chifra transactions  0xa5c9c1a65f998be86dc2131d57d0de0c418bb534d8d2b37b46c99888ccef8d10 -avt --fmt api
+TEST[DATE|TIME] Articulate:  true
+TEST[DATE|TIME] Trace:  true
+TEST[DATE|TIME] Uniq:  false
+TEST[DATE|TIME] Reconcile:  
+TEST[DATE|TIME] Cache:  false
 {"data": [
 
 level: 1

@@ -1,3 +1,8 @@
 chifra when  0x0a
+TEST[DATE|TIME] List:  false
+TEST[DATE|TIME] Timestamps:  false
+TEST[DATE|TIME] Check:  false
+TEST[DATE|TIME] Fix:  false
+TEST[DATE|TIME] Count:  false
 blocknumber	timestamp	date	name
 10	1438270128	2015-07-30 15:28:48 UTC

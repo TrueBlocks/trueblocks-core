@@ -1,3 +1,11 @@
 chifra monitors  0x05a56e2d52c817161883f50c441c3228cfe54d9f --first_block 0 --last_block 1
+TEST[DATE|TIME] Appearances:  false
+TEST[DATE|TIME] Count:  false
+TEST[DATE|TIME] Clean:  false
+TEST[DATE|TIME] Delete:  false
+TEST[DATE|TIME] Undelete:  false
+TEST[DATE|TIME] Remove:  false
+TEST[DATE|TIME] FirstBlock:  0
+TEST[DATE|TIME] LastBlock:  1
 blocknumber	transactionindex	date	timestamp	from	to	ether	ethergasprice	gasused	hash	iserror	encoding	compressedtx
 1	99999	2015-07-30 15:26:28 UTC	1438269988	0xBlockReward	0x05a56e2d52c817161883f50c441c3228cfe54d9f	5.000000000000000000	0.000000000000000000	0	0x0	0		

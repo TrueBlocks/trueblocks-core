@@ -1,4 +1,19 @@
 chifra blocks  4012000-4012001 --emitter 0x86fa049857e0209aa7d9e616f7eb3b3b78ecfdb0
+TEST[DATE|TIME] Hashes:  false
+TEST[DATE|TIME] Uncles:  false
+TEST[DATE|TIME] Trace:  false
+TEST[DATE|TIME] Apps:  false
+TEST[DATE|TIME] Uniq:  false
+TEST[DATE|TIME] UniqTx:  false
+TEST[DATE|TIME] Logs:  false
+TEST[DATE|TIME] Emitter:  [0x86fa049857e0209aa7d9e616f7eb3b3b78ecfdb0]
+TEST[DATE|TIME] Topic:  []
+TEST[DATE|TIME] Articulate:  false
+TEST[DATE|TIME] BigRange:  500
+TEST[DATE|TIME] Count:  false
+TEST[DATE|TIME] Cache:  false
+TEST[DATE|TIME] List:  0
+TEST[DATE|TIME] ListCount:  20
 
   The --emitter and --topic options are only available with the --log option. Quitting...
 

@@ -1,4 +1,19 @@
 chifra blocks  2222222 --trace --fmt json
+TEST[DATE|TIME] Hashes:  false
+TEST[DATE|TIME] Uncles:  false
+TEST[DATE|TIME] Trace:  true
+TEST[DATE|TIME] Apps:  false
+TEST[DATE|TIME] Uniq:  false
+TEST[DATE|TIME] UniqTx:  false
+TEST[DATE|TIME] Logs:  false
+TEST[DATE|TIME] Emitter:  []
+TEST[DATE|TIME] Topic:  []
+TEST[DATE|TIME] Articulate:  false
+TEST[DATE|TIME] BigRange:  500
+TEST[DATE|TIME] Count:  false
+TEST[DATE|TIME] Cache:  false
+TEST[DATE|TIME] List:  0
+TEST[DATE|TIME] ListCount:  20
 { "data": [
 {
   "blockHash": "0xc65ac7164218ff90ca8101c360f717c465da10bd63007b071c26dd7dedd41324",

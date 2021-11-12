@@ -26,6 +26,8 @@ func Validate(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
+	Options.TestLog()
+
 	return root.ValidateGlobals(cmd, args)
 }
 

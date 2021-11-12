@@ -1,3 +1,8 @@
 chifra when  daofund --verbose
+TEST[DATE|TIME] List:  false
+TEST[DATE|TIME] Timestamps:  false
+TEST[DATE|TIME] Check:  false
+TEST[DATE|TIME] Fix:  false
+TEST[DATE|TIME] Count:  false
 blocknumber	timestamp	date	name
 1428756	1461980573	2016-04-30 01:42:53 UTC	daofund

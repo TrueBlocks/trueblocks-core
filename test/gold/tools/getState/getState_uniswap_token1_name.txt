@@ -1,4 +1,9 @@
 chifra state  --call 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2!0x06fdde03 10092000
+TEST[DATE|TIME] Parts:  []
+TEST[DATE|TIME] Changes:  false
+TEST[DATE|TIME] NoZero:  false
+TEST[DATE|TIME] Call:  0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2!0x06fdde03
+TEST[DATE|TIME] ProxyFor:  
 blocknumber	address	signature	encoding	bytes	compressedresult
 
 level: 1

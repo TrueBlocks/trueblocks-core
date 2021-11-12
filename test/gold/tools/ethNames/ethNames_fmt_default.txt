@@ -1,4 +1,21 @@
 chifra names  tip
+TEST[DATE|TIME] Expand:  false
+TEST[DATE|TIME] MatchCase:  false
+TEST[DATE|TIME] All:  false
+TEST[DATE|TIME] Custom:  false
+TEST[DATE|TIME] Prefund:  false
+TEST[DATE|TIME] Named:  false
+TEST[DATE|TIME] Addr:  false
+TEST[DATE|TIME] Collections:  false
+TEST[DATE|TIME] Tags:  false
+TEST[DATE|TIME] ToCustom:  false
+TEST[DATE|TIME] Clean:  false
+TEST[DATE|TIME] Autoname:  
+TEST[DATE|TIME] Create:  false
+TEST[DATE|TIME] Delete:  false
+TEST[DATE|TIME] Update:  false
+TEST[DATE|TIME] Remove:  false
+TEST[DATE|TIME] Undelete:  false
 tags	address	name	symbol	decimals
 31-Gitcoin:Grants	0x133d705a9696882228f6bb7fe008745aef7cdc93	Grant 0160 @antiprosynth | Antiprosynthesis.eth ⟠ Twitter Account Activity
 30-Contracts:Giveth	0x1a88c052fc7a8401e00b2f76f96ac62a19427731	EtherIDTipJar

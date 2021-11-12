@@ -1,3 +1,6 @@
 chifra tokens  0xa9fe4601811213c340e850ea305481aff02f5b28 0x99c961738786e8f5f3fee109f4d49f5901826b8c 11963059
+TEST[DATE|TIME] Parts:  []
+TEST[DATE|TIME] ByAcct:  false
+TEST[DATE|TIME] NoZero:  false
 blocknumber	holder	address	name	symbol	decimals	balance
 11963059	0x99c961738786e8f5f3fee109f4d49f5901826b8c	0xa9fe4601811213c340e850ea305481aff02f5b28	WETH yVault	yvWETH	18	"0.219996879142647489"

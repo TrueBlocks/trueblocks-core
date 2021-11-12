@@ -1,3 +1,9 @@
 chifra traces  1001001.3.next
+TEST[DATE|TIME] Articulate:  false
+TEST[DATE|TIME] Filter:  
+TEST[DATE|TIME] Statediff:  false
+TEST[DATE|TIME] Count:  false
+TEST[DATE|TIME] SkipDdos:  false
+TEST[DATE|TIME] Max:  250
 blocknumber	transactionindex	traceaddress	action::calltype	error	action::from	action::to	action::value	action::ether	action::gas	result::gasused	action::input	compressedtrace	result::output
 1001002	0	null	call		0x2a65aca4d5fc5b5c859090a6c34d164135398226	0xfc8bc4ed86df73001ce6082f3db914d7c7a9a6cc	2139205320000000000	2.139205320000000000	69000	0	0x		0x

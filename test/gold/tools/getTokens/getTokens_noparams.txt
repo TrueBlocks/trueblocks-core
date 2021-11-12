@@ -1,4 +1,7 @@
 chifra tokens  
+TEST[DATE|TIME] Parts:  []
+TEST[DATE|TIME] ByAcct:  false
+TEST[DATE|TIME] NoZero:  false
 Purpose:
   Retrieve token balance(s) for one or more addresses at given block(s).
 

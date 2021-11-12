@@ -1,4 +1,9 @@
 chifra when  --fmt txt 1301000-1301250:73
+TEST[DATE|TIME] List:  false
+TEST[DATE|TIME] Timestamps:  false
+TEST[DATE|TIME] Check:  false
+TEST[DATE|TIME] Fix:  false
+TEST[DATE|TIME] Count:  false
 blocknumber	timestamp	date	name
 1301000	1460146274	2016-04-08 20:11:14 UTC
 1301073	1460147500	2016-04-08 20:31:40 UTC

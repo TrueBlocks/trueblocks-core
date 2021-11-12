@@ -57,5 +57,7 @@ func Validate(cmd *cobra.Command, args []string) error {
 		return validate.Usage("The {0} option is available only with {1}.", "--publish", "the indexer")
 	}
 
+	Options.TestLog()
+
 	return root.ValidateGlobals(cmd, args)
 }

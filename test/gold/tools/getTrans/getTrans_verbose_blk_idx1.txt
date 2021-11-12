@@ -1,4 +1,9 @@
 chifra transactions  0x0f1217b92276cd17608d4212879739e6a5ec388bd7a03bef9798655234afd2b9.3 --fmt json
+TEST[DATE|TIME] Articulate:  false
+TEST[DATE|TIME] Trace:  false
+TEST[DATE|TIME] Uniq:  false
+TEST[DATE|TIME] Reconcile:  
+TEST[DATE|TIME] Cache:  false
 { "data": [
   {
     "hash": "0xc62d9410b73b18d767fe32df91e6336c5d563eceee49c55c56df65bfeb4b966d",

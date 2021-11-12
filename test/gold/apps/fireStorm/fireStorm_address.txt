@@ -2,4 +2,6 @@ chifra explore  0xf503017D7baF7FBC0fff7492b751025c6A78179b
 INFO[DATE|TIME] terms
 INFO[DATE|TIME]   0xf503017D7baF7FBC0fff7492b751025c6A78179b
 INFO[DATE|TIME] is_addr: true
+TEST[DATE|TIME] Local:  false
+TEST[DATE|TIME] Google:  false
 Opening https://etherscan.io/address/0xf503017d7baf7fbc0fff7492b751025c6a78179b
