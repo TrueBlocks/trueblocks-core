@@ -34,17 +34,9 @@ type PinsOptionsType struct {
 var Options PinsOptionsType
 
 func (opts *PinsOptionsType) TestLog() {
-	if opts.List {
-		logger.Log(logger.Test, "List: ", opts.List)
-	}
-	if opts.Init {
-		logger.Log(logger.Test, "Init: ", opts.Init)
-	}
-	if opts.All {
-		logger.Log(logger.Test, "All: ", opts.All)
-	}
-	if opts.Share {
-		logger.Log(logger.Test, "Share: ", opts.Share)
-	}
-	logger.Log(logger.Test, "Sleep: ", opts.Sleep)
+	logger.TestLog(opts.List, "List: ", opts.List)
+	logger.TestLog(opts.Init, "Init: ", opts.Init)
+	logger.TestLog(opts.All, "All: ", opts.All)
+	logger.TestLog(opts.Share, "Share: ", opts.Share)
+	logger.TestLog(opts.Sleep != .25, "Sleep: ", opts.Sleep)
 }

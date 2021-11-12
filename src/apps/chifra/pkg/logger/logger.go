@@ -43,12 +43,17 @@ var severityToLabel = map[severity]string{
 var testMode bool = os.Getenv("TEST_MODE") == "true"
 var apiMode bool = os.Getenv("API_MODE") == "true"
 
+// TestLog is used for testing and prints it's single input but only if it's true when in testMode
+func TestLog(isDefault bool, a ...interface{}) {
+	if !isDefault || !testMode || apiMode {
+		return
+	}
+	Log(Test, a...)
+}
+
 // Log prints `a` to stderr with a label corresponding to the severity level
 // prepended (e.g. <INFO>, <ERROR>, etc.)
 func Log(sev severity, a ...interface{}) {
-	if sev == Test && (apiMode || !testMode) {
-		return
-	}
 
 	timeDatePart := "DATE|TIME"
 	if !testMode {

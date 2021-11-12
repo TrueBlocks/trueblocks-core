@@ -1,7 +1,3 @@
 chifra explore  0xf503017D7baF7FBC0fff7492b751025c6A78179b --google
-INFO[DATE|TIME] terms
-INFO[DATE|TIME]   0xf503017D7baF7FBC0fff7492b751025c6A78179b
-INFO[DATE|TIME] google: true
-INFO[DATE|TIME] is_addr: true
 TEST[DATE|TIME] Google:  true
 Opening https://www.google.com/search?q=0xf503017d7baf7fbc0fff7492b751025c6a78179b+-etherscan+-etherchain+-bloxy+-bitquery+-ethplorer+-tokenview+-anyblocks+-explorer

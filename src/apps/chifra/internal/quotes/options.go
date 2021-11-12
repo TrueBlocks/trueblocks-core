@@ -30,16 +30,8 @@ type QuotesOptionsType struct {
 var Options QuotesOptionsType
 
 func (opts *QuotesOptionsType) TestLog() {
-	if opts.Freshen {
-		logger.Log(logger.Test, "Freshen: ", opts.Freshen)
-	}
-	if len(opts.Period) > 0 {
-		logger.Log(logger.Test, "Period: ", opts.Period)
-	}
-	if len(opts.Pair) > 0 {
-		logger.Log(logger.Test, "Pair: ", opts.Pair)
-	}
-	if len(opts.Feed) > 0 {
-		logger.Log(logger.Test, "Feed: ", opts.Feed)
-	}
+	logger.TestLog(opts.Freshen, "Freshen: ", opts.Freshen)
+	logger.TestLog(len(opts.Period) > 0, "Period: ", opts.Period)
+	logger.TestLog(len(opts.Pair) > 0, "Pair: ", opts.Pair)
+	logger.TestLog(len(opts.Feed) > 0, "Feed: ", opts.Feed)
 }

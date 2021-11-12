@@ -22,7 +22,6 @@ import (
 	"os/user"
 	"runtime"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"golang.org/x/crypto/ssh/terminal"
 )
 
@@ -61,25 +60,6 @@ func IsTestMode() bool {
 
 func IsApiMode() bool {
 	return os.Getenv("API_MODE") == "true"
-}
-
-func TestLogArgs(name string, args []string) {
-	if !IsTestMode() || len(args) == 0 {
-		return
-	}
-
-	logger.Log(logger.Info, name)
-	for _, arg := range args {
-		logger.Log(logger.Info, " ", arg)
-	}
-}
-
-func TestLogBool(name string, val bool) {
-	if !IsTestMode() || !val {
-		return
-	}
-
-	logger.Log(logger.Info, name+":", val)
 }
 
 func IsTerminal() bool {

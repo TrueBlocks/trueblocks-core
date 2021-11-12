@@ -27,7 +27,5 @@ type ReceiptsOptionsType struct {
 var Options ReceiptsOptionsType
 
 func (opts *ReceiptsOptionsType) TestLog() {
-	if opts.Articulate {
-		logger.Log(logger.Test, "Articulate: ", opts.Articulate)
-	}
+	logger.TestLog(opts.Articulate, "Articulate: ", opts.Articulate)
 }

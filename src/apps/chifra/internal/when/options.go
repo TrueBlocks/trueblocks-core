@@ -31,19 +31,9 @@ type WhenOptionsType struct {
 var Options WhenOptionsType
 
 func (opts *WhenOptionsType) TestLog() {
-	if opts.List {
-		logger.Log(logger.Test, "List: ", opts.List)
-	}
-	if opts.Timestamps {
-		logger.Log(logger.Test, "Timestamps: ", opts.Timestamps)
-	}
-	if opts.Check {
-		logger.Log(logger.Test, "Check: ", opts.Check)
-	}
-	if opts.Fix {
-		logger.Log(logger.Test, "Fix: ", opts.Fix)
-	}
-	if opts.Count {
-		logger.Log(logger.Test, "Count: ", opts.Count)
-	}
+	logger.TestLog(opts.List, "List: ", opts.List)
+	logger.TestLog(opts.Timestamps, "Timestamps: ", opts.Timestamps)
+	logger.TestLog(opts.Check, "Check: ", opts.Check)
+	logger.TestLog(opts.Fix, "Fix: ", opts.Fix)
+	logger.TestLog(opts.Count, "Count: ", opts.Count)
 }

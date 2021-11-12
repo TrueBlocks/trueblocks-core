@@ -55,88 +55,32 @@ type ExportOptionsType struct {
 var Options ExportOptionsType
 
 func (opts *ExportOptionsType) TestLog() {
-	if opts.Appearances {
-		logger.Log(logger.Test, "Appearances: ", opts.Appearances)
-	}
-	if opts.Receipts {
-		logger.Log(logger.Test, "Receipts: ", opts.Receipts)
-	}
-	if opts.Statements {
-		logger.Log(logger.Test, "Statements: ", opts.Statements)
-	}
-	if opts.Logs {
-		logger.Log(logger.Test, "Logs: ", opts.Logs)
-	}
-	if opts.Traces {
-		logger.Log(logger.Test, "Traces: ", opts.Traces)
-	}
-	if opts.Accounting {
-		logger.Log(logger.Test, "Accounting: ", opts.Accounting)
-	}
-	if opts.Articulate {
-		logger.Log(logger.Test, "Articulate: ", opts.Articulate)
-	}
-	if opts.Cache {
-		logger.Log(logger.Test, "Cache: ", opts.Cache)
-	}
-	if opts.CacheTraces {
-		logger.Log(logger.Test, "CacheTraces: ", opts.CacheTraces)
-	}
-	if opts.Factory {
-		logger.Log(logger.Test, "Factory: ", opts.Factory)
-	}
-	if opts.Count {
-		logger.Log(logger.Test, "Count: ", opts.Count)
-	}
-	if opts.FirstRecord != 0 {
-		logger.Log(logger.Test, "FirstRecord: ", opts.FirstRecord)
-	}
-	if opts.MaxRecords != 250 {
-		logger.Log(logger.Test, "MaxRecords: ", opts.MaxRecords)
-	}
-	if opts.Relevant {
-		logger.Log(logger.Test, "Relevant: ", opts.Relevant)
-	}
-	if len(opts.Emitter) > 0 {
-		logger.Log(logger.Test, "Emitter: ", opts.Emitter)
-	}
-	if len(opts.Topic) > 0 {
-		logger.Log(logger.Test, "Topic: ", opts.Topic)
-	}
-	if opts.Clean {
-		logger.Log(logger.Test, "Clean: ", opts.Clean)
-	}
-	if opts.Freshen {
-		logger.Log(logger.Test, "Freshen: ", opts.Freshen)
-	}
-	if opts.Staging {
-		logger.Log(logger.Test, "Staging: ", opts.Staging)
-	}
-	if opts.Unripe {
-		logger.Log(logger.Test, "Unripe: ", opts.Unripe)
-	}
-	if len(opts.Load) > 0 {
-		logger.Log(logger.Test, "Load: ", opts.Load)
-	}
-	if opts.Reversed {
-		logger.Log(logger.Test, "Reversed: ", opts.Reversed)
-	}
-	if opts.ByDate {
-		logger.Log(logger.Test, "ByDate: ", opts.ByDate)
-	}
-	if len(opts.SummarizeBy) > 0 {
-		logger.Log(logger.Test, "SummarizeBy: ", opts.SummarizeBy)
-	}
-	if opts.SkipDdos {
-		logger.Log(logger.Test, "SkipDdos: ", opts.SkipDdos)
-	}
-	if opts.MaxTraces != 250 {
-		logger.Log(logger.Test, "MaxTraces: ", opts.MaxTraces)
-	}
-	if opts.FirstBlock != 0 {
-		logger.Log(logger.Test, "FirstBlock: ", opts.FirstBlock)
-	}
-	if opts.LastBlock != utils.NOPOS {
-		logger.Log(logger.Test, "LastBlock: ", opts.LastBlock)
-	}
+	logger.TestLog(opts.Appearances, "Appearances: ", opts.Appearances)
+	logger.TestLog(opts.Receipts, "Receipts: ", opts.Receipts)
+	logger.TestLog(opts.Statements, "Statements: ", opts.Statements)
+	logger.TestLog(opts.Logs, "Logs: ", opts.Logs)
+	logger.TestLog(opts.Traces, "Traces: ", opts.Traces)
+	logger.TestLog(opts.Accounting, "Accounting: ", opts.Accounting)
+	logger.TestLog(opts.Articulate, "Articulate: ", opts.Articulate)
+	logger.TestLog(opts.Cache, "Cache: ", opts.Cache)
+	logger.TestLog(opts.CacheTraces, "CacheTraces: ", opts.CacheTraces)
+	logger.TestLog(opts.Factory, "Factory: ", opts.Factory)
+	logger.TestLog(opts.Count, "Count: ", opts.Count)
+	logger.TestLog(opts.FirstRecord != 0, "FirstRecord: ", opts.FirstRecord)
+	logger.TestLog(opts.MaxRecords != 250, "MaxRecords: ", opts.MaxRecords)
+	logger.TestLog(opts.Relevant, "Relevant: ", opts.Relevant)
+	logger.TestLog(len(opts.Emitter) > 0, "Emitter: ", opts.Emitter)
+	logger.TestLog(len(opts.Topic) > 0, "Topic: ", opts.Topic)
+	logger.TestLog(opts.Clean, "Clean: ", opts.Clean)
+	logger.TestLog(opts.Freshen, "Freshen: ", opts.Freshen)
+	logger.TestLog(opts.Staging, "Staging: ", opts.Staging)
+	logger.TestLog(opts.Unripe, "Unripe: ", opts.Unripe)
+	logger.TestLog(len(opts.Load) > 0, "Load: ", opts.Load)
+	logger.TestLog(opts.Reversed, "Reversed: ", opts.Reversed)
+	logger.TestLog(opts.ByDate, "ByDate: ", opts.ByDate)
+	logger.TestLog(len(opts.SummarizeBy) > 0, "SummarizeBy: ", opts.SummarizeBy)
+	logger.TestLog(opts.SkipDdos, "SkipDdos: ", opts.SkipDdos)
+	logger.TestLog(opts.MaxTraces != 250, "MaxTraces: ", opts.MaxTraces)
+	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
+	logger.TestLog(opts.LastBlock != utils.NOPOS, "LastBlock: ", opts.LastBlock)
 }

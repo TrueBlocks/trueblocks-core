@@ -31,19 +31,9 @@ type TransactionsOptionsType struct {
 var Options TransactionsOptionsType
 
 func (opts *TransactionsOptionsType) TestLog() {
-	if opts.Articulate {
-		logger.Log(logger.Test, "Articulate: ", opts.Articulate)
-	}
-	if opts.Trace {
-		logger.Log(logger.Test, "Trace: ", opts.Trace)
-	}
-	if opts.Uniq {
-		logger.Log(logger.Test, "Uniq: ", opts.Uniq)
-	}
-	if len(opts.Reconcile) > 0 {
-		logger.Log(logger.Test, "Reconcile: ", opts.Reconcile)
-	}
-	if opts.Cache {
-		logger.Log(logger.Test, "Cache: ", opts.Cache)
-	}
+	logger.TestLog(opts.Articulate, "Articulate: ", opts.Articulate)
+	logger.TestLog(opts.Trace, "Trace: ", opts.Trace)
+	logger.TestLog(opts.Uniq, "Uniq: ", opts.Uniq)
+	logger.TestLog(len(opts.Reconcile) > 0, "Reconcile: ", opts.Reconcile)
+	logger.TestLog(opts.Cache, "Cache: ", opts.Cache)
 }

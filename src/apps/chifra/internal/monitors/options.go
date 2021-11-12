@@ -35,28 +35,12 @@ type MonitorsOptionsType struct {
 var Options MonitorsOptionsType
 
 func (opts *MonitorsOptionsType) TestLog() {
-	if opts.Appearances {
-		logger.Log(logger.Test, "Appearances: ", opts.Appearances)
-	}
-	if opts.Count {
-		logger.Log(logger.Test, "Count: ", opts.Count)
-	}
-	if opts.Clean {
-		logger.Log(logger.Test, "Clean: ", opts.Clean)
-	}
-	if opts.Delete {
-		logger.Log(logger.Test, "Delete: ", opts.Delete)
-	}
-	if opts.Undelete {
-		logger.Log(logger.Test, "Undelete: ", opts.Undelete)
-	}
-	if opts.Remove {
-		logger.Log(logger.Test, "Remove: ", opts.Remove)
-	}
-	if opts.FirstBlock != 0 {
-		logger.Log(logger.Test, "FirstBlock: ", opts.FirstBlock)
-	}
-	if opts.LastBlock != utils.NOPOS {
-		logger.Log(logger.Test, "LastBlock: ", opts.LastBlock)
-	}
+	logger.TestLog(opts.Appearances, "Appearances: ", opts.Appearances)
+	logger.TestLog(opts.Count, "Count: ", opts.Count)
+	logger.TestLog(opts.Clean, "Clean: ", opts.Clean)
+	logger.TestLog(opts.Delete, "Delete: ", opts.Delete)
+	logger.TestLog(opts.Undelete, "Undelete: ", opts.Undelete)
+	logger.TestLog(opts.Remove, "Remove: ", opts.Remove)
+	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
+	logger.TestLog(opts.LastBlock != utils.NOPOS, "LastBlock: ", opts.LastBlock)
 }

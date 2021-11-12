@@ -1,7 +1,3 @@
 chifra explore  0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060 --local
-INFO[DATE|TIME] terms
-INFO[DATE|TIME]   0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060
-INFO[DATE|TIME] local: true
-INFO[DATE|TIME] is_tx: true
 TEST[DATE|TIME] Local:  true
 Opening http://localhost:1234/explorer/transactions/0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060

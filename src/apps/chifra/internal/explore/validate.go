@@ -19,7 +19,6 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/spf13/cobra"
 )
@@ -43,18 +42,7 @@ type ExploreUrl struct {
 
 var urls []ExploreUrl
 
-func TestLogExplore(args []string) {
-	if !utils.IsTestMode() {
-		return
-	}
-	utils.TestLogArgs("terms", args)
-	utils.TestLogBool("local", Options.Local)
-	utils.TestLogBool("google", Options.Google)
-}
-
 func Validate(cmd *cobra.Command, args []string) error {
-	TestLogExplore(args)
-
 	if Options.Google && Options.Local {
 		return validate.Usage("The {0} option is not available{1}.", "--local", " with the --google option")
 	}
@@ -64,7 +52,6 @@ func Validate(cmd *cobra.Command, args []string) error {
 
 		valid, _ := validate.IsValidAddress(arg)
 		if valid {
-			utils.TestLogBool("is_addr", true)
 			if strings.Contains(arg, ".eth") {
 				urls = append(urls, ExploreUrl{arg, ExploreEnsName})
 			} else {
@@ -81,7 +68,6 @@ func Validate(cmd *cobra.Command, args []string) error {
 		if valid {
 			txHash, err := id_2_TxHash(arg)
 			if err == nil {
-				utils.TestLogBool("is_tx", true)
 				urls = append(urls, ExploreUrl{txHash, ExploreTx})
 				continue
 			}
@@ -93,7 +79,6 @@ func Validate(cmd *cobra.Command, args []string) error {
 			// TODO: or a special block
 			blockHash, err := id_2_BlockHash(arg)
 			if err == nil {
-				utils.TestLogBool("is_block", true)
 				urls = append(urls, ExploreUrl{blockHash, ExploreBlock})
 				continue
 			}
@@ -101,7 +86,6 @@ func Validate(cmd *cobra.Command, args []string) error {
 
 		valid, _ = validate.IsValidFourByte(arg)
 		if valid {
-			utils.TestLogBool("is_fourbyte", true)
 			urls = append(urls, ExploreUrl{arg, ExploreFourByte})
 			continue
 		}

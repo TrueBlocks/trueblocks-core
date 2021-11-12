@@ -41,49 +41,19 @@ type BlocksOptionsType struct {
 var Options BlocksOptionsType
 
 func (opts *BlocksOptionsType) TestLog() {
-	if opts.Hashes {
-		logger.Log(logger.Test, "Hashes: ", opts.Hashes)
-	}
-	if opts.Uncles {
-		logger.Log(logger.Test, "Uncles: ", opts.Uncles)
-	}
-	if opts.Trace {
-		logger.Log(logger.Test, "Trace: ", opts.Trace)
-	}
-	if opts.Apps {
-		logger.Log(logger.Test, "Apps: ", opts.Apps)
-	}
-	if opts.Uniq {
-		logger.Log(logger.Test, "Uniq: ", opts.Uniq)
-	}
-	if opts.UniqTx {
-		logger.Log(logger.Test, "UniqTx: ", opts.UniqTx)
-	}
-	if opts.Logs {
-		logger.Log(logger.Test, "Logs: ", opts.Logs)
-	}
-	if len(opts.Emitter) > 0 {
-		logger.Log(logger.Test, "Emitter: ", opts.Emitter)
-	}
-	if len(opts.Topic) > 0 {
-		logger.Log(logger.Test, "Topic: ", opts.Topic)
-	}
-	if opts.Articulate {
-		logger.Log(logger.Test, "Articulate: ", opts.Articulate)
-	}
-	if opts.BigRange != 500 {
-		logger.Log(logger.Test, "BigRange: ", opts.BigRange)
-	}
-	if opts.Count {
-		logger.Log(logger.Test, "Count: ", opts.Count)
-	}
-	if opts.Cache {
-		logger.Log(logger.Test, "Cache: ", opts.Cache)
-	}
-	if opts.List != 0 {
-		logger.Log(logger.Test, "List: ", opts.List)
-	}
-	if opts.ListCount != 20 {
-		logger.Log(logger.Test, "ListCount: ", opts.ListCount)
-	}
+	logger.TestLog(opts.Hashes, "Hashes: ", opts.Hashes)
+	logger.TestLog(opts.Uncles, "Uncles: ", opts.Uncles)
+	logger.TestLog(opts.Trace, "Trace: ", opts.Trace)
+	logger.TestLog(opts.Apps, "Apps: ", opts.Apps)
+	logger.TestLog(opts.Uniq, "Uniq: ", opts.Uniq)
+	logger.TestLog(opts.UniqTx, "UniqTx: ", opts.UniqTx)
+	logger.TestLog(opts.Logs, "Logs: ", opts.Logs)
+	logger.TestLog(len(opts.Emitter) > 0, "Emitter: ", opts.Emitter)
+	logger.TestLog(len(opts.Topic) > 0, "Topic: ", opts.Topic)
+	logger.TestLog(opts.Articulate, "Articulate: ", opts.Articulate)
+	logger.TestLog(opts.BigRange != 500, "BigRange: ", opts.BigRange)
+	logger.TestLog(opts.Count, "Count: ", opts.Count)
+	logger.TestLog(opts.Cache, "Cache: ", opts.Cache)
+	logger.TestLog(opts.List != 0, "List: ", opts.List)
+	logger.TestLog(opts.ListCount != 20, "ListCount: ", opts.ListCount)
 }

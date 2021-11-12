@@ -37,31 +37,13 @@ type StatusOptionsType struct {
 var Options StatusOptionsType
 
 func (opts *StatusOptionsType) TestLog() {
-	if opts.Details {
-		logger.Log(logger.Test, "Details: ", opts.Details)
-	}
-	if len(opts.Types) > 0 {
-		logger.Log(logger.Test, "Types: ", opts.Types)
-	}
-	if opts.Depth != utils.NOPOS {
-		logger.Log(logger.Test, "Depth: ", opts.Depth)
-	}
-	if opts.Terse {
-		logger.Log(logger.Test, "Terse: ", opts.Terse)
-	}
-	if len(opts.Migrate) > 0 {
-		logger.Log(logger.Test, "Migrate: ", opts.Migrate)
-	}
-	if opts.GetConfig {
-		logger.Log(logger.Test, "GetConfig: ", opts.GetConfig)
-	}
-	if opts.SetConfig {
-		logger.Log(logger.Test, "SetConfig: ", opts.SetConfig)
-	}
-	if opts.TestStart != 0 {
-		logger.Log(logger.Test, "TestStart: ", opts.TestStart)
-	}
-	if opts.TestEnd != utils.NOPOS {
-		logger.Log(logger.Test, "TestEnd: ", opts.TestEnd)
-	}
+	logger.TestLog(opts.Details, "Details: ", opts.Details)
+	logger.TestLog(len(opts.Types) > 0, "Types: ", opts.Types)
+	logger.TestLog(opts.Depth != utils.NOPOS, "Depth: ", opts.Depth)
+	logger.TestLog(opts.Terse, "Terse: ", opts.Terse)
+	logger.TestLog(len(opts.Migrate) > 0, "Migrate: ", opts.Migrate)
+	logger.TestLog(opts.GetConfig, "GetConfig: ", opts.GetConfig)
+	logger.TestLog(opts.SetConfig, "SetConfig: ", opts.SetConfig)
+	logger.TestLog(opts.TestStart != 0, "TestStart: ", opts.TestStart)
+	logger.TestLog(opts.TestEnd != utils.NOPOS, "TestEnd: ", opts.TestEnd)
 }

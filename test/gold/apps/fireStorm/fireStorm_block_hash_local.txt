@@ -1,7 +1,3 @@
 chifra explore  0xc63f666315fa1eae17e354fab532aeeecf549be93e358737d0648f50d57083a0 --local
-INFO[DATE|TIME] terms
-INFO[DATE|TIME]   0xc63f666315fa1eae17e354fab532aeeecf549be93e358737d0648f50d57083a0
-INFO[DATE|TIME] local: true
-INFO[DATE|TIME] is_block: true
 TEST[DATE|TIME] Local:  true
 Opening http://localhost:1234/explorer/blocks/0xc63f666315fa1eae17e354fab532aeeecf549be93e358737d0648f50d57083a0

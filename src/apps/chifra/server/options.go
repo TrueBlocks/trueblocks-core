@@ -27,7 +27,5 @@ type ServeOptionsType struct {
 var Options ServeOptionsType
 
 func (opts *ServeOptionsType) TestLog() {
-	if len(opts.Port) > 0 {
-		logger.Log(logger.Test, "Port: ", opts.Port)
-	}
+	logger.TestLog(len(opts.Port) > 0, "Port: ", opts.Port)
 }

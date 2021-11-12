@@ -16,7 +16,6 @@ extern string_q get_hidden(const CCommandOption& cmd);
 extern string_q get_hidden2(const CCommandOption& cmd);
 extern string_q get_notes2(const CCommandOption& cmd);
 extern string_q get_optfields(const CCommandOption& cmd);
-extern string_q get_logopts(const CCommandOption& cmd);
 extern string_q get_setopts(const CCommandOption& cmd);
 extern string_q get_testlogs(const CCommandOption& cmd);
 extern string_q get_copyopts(const CCommandOption& cmd);
@@ -40,7 +39,6 @@ bool COptions::handle_gocmds_cmd(const CCommandOption& p) {
     replaceAll(source, "validate[{PROPER}]Args", "[{ROUTE}]Pkg.Validate");
     replaceAll(source, "[{COPY_OPTS}]", get_copyopts(p));
     replaceAll(source, "[{SET_OPTS}]", get_setopts(p));
-    replaceAll(source, "[{LOG_OPTS}]", get_logopts(p));
     replaceAll(source, "[{HIDDEN}]", get_hidden(p));
     replaceAll(source, "[{PERPRERUN}]", get_hidden2(p));
     replaceAll(source, "[{USE}]", get_use(p));
@@ -192,34 +190,27 @@ string_q noUnderbars(const string_q& in) {
 }
 
 string_q get_testlogs(const CCommandOption& cmd) {
-    const char* STR_TESTLOG_LINE = "\tlogger.Log(logger.Test, \"[{LONGNAME}]: \", opts.[{LONGNAME}])";
+    const char* STR_TESTLOG_STRING =
+        "\tlogger.TestLog(len(opts.[{LONGNAME}]) > 0, \"[{LONGNAME}]: \", opts.[{LONGNAME}])";
+    const char* STR_TESTLOG_UINT =
+        "\tlogger.TestLog(opts.[{LONGNAME}] != [{DEF_VAL}], \"[{LONGNAME}]: \", opts.[{LONGNAME}])";
+    const char* STR_TESTLOG_BOOL = "\tlogger.TestLog(opts.[{LONGNAME}], \"[{LONGNAME}]: \", opts.[{LONGNAME}])";
     ostringstream os;
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
         replace(p.longName, "deleteMe", "delete");
         p.longName = noUnderbars(p.longName);
+        p.def_val = substitute(p.def_val, "NOPOS", "utils.NOPOS");
         if (p.option_type != "positional" && !p.isDeprecated) {
             if (p.data_type == "<boolean>") {
-                os << "\tif opts." << p.Format("[{LONGNAME}]") << " {" << endl;
-                os << "\t" << p.Format(STR_TESTLOG_LINE) << endl;
-                os << "\t}" << endl;
-            } else if (p.data_type == "<string>" || p.data_type == "<address>" || startsWith(p.data_type, "list<") ||
+                os << p.Format(STR_TESTLOG_BOOL) << endl;
+            } else if (startsWith(p.data_type, "list<") || p.data_type == "<string>" || p.data_type == "<address>" ||
                        contains(p.data_type, "enum")) {
-                os << "\tif len(opts." << p.Format("[{LONGNAME}]") << ") > 0 {" << endl;
-                os << "\t" << p.Format(STR_TESTLOG_LINE) << endl;
-                os << "\t}" << endl;
-            } else if (p.data_type == "<blknum>" || p.data_type == "<uint64>") {
-                if (p.def_val == "NOPOS") {
-                    os << "\tif opts." << p.Format("[{LONGNAME}]") << " != utils.NOPOS {" << endl;
-                    os << "\t" << p.Format(STR_TESTLOG_LINE) << endl;
-                    os << "\t}" << endl;
-                } else {
-                    os << "\tif opts." << p.Format("[{LONGNAME}]") << " != " << p.def_val << " {" << endl;
-                    os << "\t" << p.Format(STR_TESTLOG_LINE) << endl;
-                    os << "\t}" << endl;
-                }
+                os << p.Format(STR_TESTLOG_STRING) << endl;
+            } else if (p.data_type == "<blknum>" || p.data_type == "<uint64>" || p.data_type == "<double>") {
+                os << p.Format(STR_TESTLOG_UINT) << endl;
             } else {
-                cerr << padRight(p.data_type, 30) << p.def_val << endl;
-                os << p.Format(STR_TESTLOG_LINE) << endl;
+                cerr << "Unknown type: " << padRight(p.data_type, 30) << p.def_val << endl;
+                exit(0);
             }
         }
     }
@@ -316,17 +307,6 @@ string_q get_hidden(const CCommandOption& cmd) {
     ret << os.str();
     ret << "\t}" << endl;
     return ret.str();
-}
-
-string_q get_logopts(const CCommandOption& cmd) {
-    // TODO: search for go-port
-    if (cmd.api_route != "explore")
-        return "";
-    const char* STR_RET =
-        "	utils.TestLogArgs(\"terms\", args)\n"
-        "	utils.TestLogBool(\"local\", ExploreOpts.Local)\n"
-        "	utils.TestLogBool(\"google\", ExploreOpts.Google)\n";
-    return STR_RET;
 }
 
 string_q get_setopts(const CCommandOption& cmd) {

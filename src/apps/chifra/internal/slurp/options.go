@@ -28,10 +28,6 @@ type SlurpOptionsType struct {
 var Options SlurpOptionsType
 
 func (opts *SlurpOptionsType) TestLog() {
-	if len(opts.Types) > 0 {
-		logger.Log(logger.Test, "Types: ", opts.Types)
-	}
-	if opts.Appearances {
-		logger.Log(logger.Test, "Appearances: ", opts.Appearances)
-	}
+	logger.TestLog(len(opts.Types) > 0, "Types: ", opts.Types)
+	logger.TestLog(opts.Appearances, "Appearances: ", opts.Appearances)
 }

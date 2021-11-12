@@ -31,19 +31,9 @@ type ChunksOptionsType struct {
 var Options ChunksOptionsType
 
 func (opts *ChunksOptionsType) TestLog() {
-	if opts.List {
-		logger.Log(logger.Test, "List: ", opts.List)
-	}
-	if opts.Check {
-		logger.Log(logger.Test, "Check: ", opts.Check)
-	}
-	if len(opts.Extract) > 0 {
-		logger.Log(logger.Test, "Extract: ", opts.Extract)
-	}
-	if opts.Stats {
-		logger.Log(logger.Test, "Stats: ", opts.Stats)
-	}
-	if opts.Save {
-		logger.Log(logger.Test, "Save: ", opts.Save)
-	}
+	logger.TestLog(opts.List, "List: ", opts.List)
+	logger.TestLog(opts.Check, "Check: ", opts.Check)
+	logger.TestLog(len(opts.Extract) > 0, "Extract: ", opts.Extract)
+	logger.TestLog(opts.Stats, "Stats: ", opts.Stats)
+	logger.TestLog(opts.Save, "Save: ", opts.Save)
 }
