@@ -64,7 +64,7 @@ func FromRequest(r *http.Request) *TracesOptionsType {
 		case "skipddos":
 			opts.SkipDdos = true
 		case "max":
-			opts.Max = root.ToUint(value[0])
+			opts.Max = root.ToUint64(value[0])
 		}
 	}
 	opts.Globals = *root.FromRequest(r)

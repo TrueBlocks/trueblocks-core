@@ -88,15 +88,15 @@ func FromRequest(r *http.Request) *BlocksOptionsType {
 		case "articulate":
 			opts.Articulate = true
 		case "bigrange":
-			opts.BigRange = root.ToUint(value[0])
+			opts.BigRange = root.ToUint64(value[0])
 		case "count":
 			opts.Count = true
 		case "cache":
 			opts.Cache = true
 		case "list":
-			opts.List = root.ToUint(value[0])
+			opts.List = root.ToUint64(value[0])
 		case "listcount":
-			opts.ListCount = root.ToUint(value[0])
+			opts.ListCount = root.ToUint64(value[0])
 		}
 	}
 	opts.Globals = *root.FromRequest(r)

@@ -71,9 +71,9 @@ func FromRequest(r *http.Request) *MonitorsOptionsType {
 		case "remove":
 			opts.Remove = true
 		case "firstblock":
-			opts.FirstBlock = root.ToUint(value[0])
+			opts.FirstBlock = root.ToUint64(value[0])
 		case "lastblock":
-			opts.LastBlock = root.ToUint(value[0])
+			opts.LastBlock = root.ToUint64(value[0])
 		}
 	}
 	opts.Globals = *root.FromRequest(r)

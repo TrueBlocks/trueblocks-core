@@ -34,5 +34,5 @@ func Run(cmd *cobra.Command, args []string) error {
 		arguments += " " + arg
 	}
 
-	return root.PassItOn2("getTokens", &Options.Globals, options, arguments)
+	return root.PassItOn("getTokens", &Options.Globals, options, arguments)
 }

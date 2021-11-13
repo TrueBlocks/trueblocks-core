@@ -69,5 +69,5 @@ func Run(cmd *cobra.Command, args []string) error {
 		arguments += " " + arg
 	}
 
-	return root.PassItOn2("getBlocks", &Options.Globals, options, arguments)
+	return root.PassItOn("getBlocks", &Options.Globals, options, arguments)
 }

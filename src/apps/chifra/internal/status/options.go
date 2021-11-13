@@ -66,7 +66,7 @@ func FromRequest(r *http.Request) *StatusOptionsType {
 		case "types":
 			opts.Types = append(opts.Types, value...)
 		case "depth":
-			opts.Depth = root.ToUint(value[0])
+			opts.Depth = root.ToUint64(value[0])
 		case "report":
 			opts.Report = true
 		case "terse":
@@ -78,9 +78,9 @@ func FromRequest(r *http.Request) *StatusOptionsType {
 		case "setconfig":
 			opts.SetConfig = true
 		case "teststart":
-			opts.TestStart = root.ToUint(value[0])
+			opts.TestStart = root.ToUint64(value[0])
 		case "testend":
-			opts.TestEnd = root.ToUint(value[0])
+			opts.TestEnd = root.ToUint64(value[0])
 		}
 	}
 	opts.Globals = *root.FromRequest(r)

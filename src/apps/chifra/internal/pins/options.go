@@ -59,7 +59,7 @@ func FromRequest(r *http.Request) *PinsOptionsType {
 		case "share":
 			opts.Share = true
 		case "sleep":
-			opts.Sleep = root.ToFloat(value[0])
+			opts.Sleep = root.ToFloat64(value[0])
 		case "freshen":
 			opts.Freshen = true
 		case "remote":

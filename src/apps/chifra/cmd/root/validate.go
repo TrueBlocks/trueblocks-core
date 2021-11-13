@@ -46,12 +46,12 @@ func ValidateGlobals2(opts *RootOptionsType, args []string) error {
 	return nil
 }
 
-func ToFloat(val string) float64 {
+func ToFloat64(val string) float64 {
 	f, _ := strconv.ParseFloat(val, 64)
 	return f
 }
 
-func ToUint(val string) uint64 {
+func ToUint64(val string) uint64 {
 	f, _ := strconv.ParseUint(val, 10, 64)
 	return f
 }
