@@ -39,7 +39,7 @@ Usage:
   chifra serve [flags]
 
 Flags:
-  -p, --port string   specify the server's port (:8080 default) (default ":8080")
+  -p, --port string   specify the server's port (:8080 default)
 
 Global Flags:
   -x, --fmt string   export format, one of [none|json*|txt|csv|api]
