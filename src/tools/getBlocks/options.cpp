@@ -24,15 +24,14 @@ static const COption params[] = {
     COption("hashes", "e", "", OPT_SWITCH, "display only transaction hashes, default is to display full transaction detail"),  // NOLINT
     COption("uncles", "U", "", OPT_SWITCH, "display uncle blocks (if any) instead of the requested block"),
     COption("trace", "t", "", OPT_SWITCH, "export the traces from the block as opposed to the block data"),
-    COption("apps", "s", "", OPT_SWITCH, "display only the list of address appearances in the block"),
-    COption("uniq", "u", "", OPT_SWITCH, "display only the list of uniq address appearances in the block"),
-    COption("uniq_tx", "n", "", OPT_SWITCH, "display only the list of uniq address appearances in each transaction"),
+    COption("apps", "s", "", OPT_SWITCH, "display a list of uniq address appearances in the block"),
+    COption("uniq", "u", "", OPT_SWITCH, "display a list of uniq address appearances per transaction"),
     COption("logs", "g", "", OPT_HIDDEN | OPT_SWITCH, "display only the logs found in the block(s)"),
     COption("emitter", "m", "list<addr>", OPT_HIDDEN | OPT_FLAG, "for the --logs option only, filter logs to show only those logs emitted by the given address(es)"),  // NOLINT
     COption("topic", "p", "list<topic>", OPT_HIDDEN | OPT_FLAG, "for the --logs option only, filter logs to show only those with this topic(s)"),  // NOLINT
     COption("articulate", "a", "", OPT_HIDDEN | OPT_SWITCH, "for the --logs option only, articulate the retrieved data if ABIs can be found"),  // NOLINT
     COption("big_range", "r", "<uint64>", OPT_HIDDEN | OPT_FLAG, "for the --logs option only, allow for block ranges larger than 500"),  // NOLINT
-    COption("count", "c", "", OPT_SWITCH, "display the number of the lists of appearances for --apps, --uniq, or --uniq_tx"),  // NOLINT
+    COption("count", "c", "", OPT_SWITCH, "display the number of the lists of appearances for --addrs or --uniq"),
     COption("cache", "o", "", OPT_SWITCH, "force a write of the block to the cache"),
     COption("list", "l", "<blknum>", OPT_HIDDEN | OPT_FLAG, "summary list of blocks running backwards from latest block minus num"),  // NOLINT
     COption("list_count", "C", "<blknum>", OPT_HIDDEN | OPT_FLAG, "the number of blocks to report for --list option"),
@@ -58,7 +57,6 @@ bool COptions::parseArguments(string_q& command) {
     // BEG_CODE_LOCAL_INIT
     bool apps = false;
     bool uniq = false;
-    bool uniq_tx = false;
     CAddressArray emitter;
     CStringArray topic;
     blknum_t list = NOPOS;
@@ -88,9 +86,6 @@ bool COptions::parseArguments(string_q& command) {
 
         } else if (arg == "-u" || arg == "--uniq") {
             uniq = true;
-
-        } else if (arg == "-n" || arg == "--uniq_tx") {
-            uniq_tx = true;
 
         } else if (arg == "-g" || arg == "--logs") {
             logs = true;
@@ -157,7 +152,6 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("trace", trace);
     LOG_TEST_BOOL("apps", apps);
     LOG_TEST_BOOL("uniq", uniq);
-    LOG_TEST_BOOL("uniq_tx", uniq_tx);
     LOG_TEST_BOOL("logs", logs);
     LOG_TEST_LIST("emitter", emitter, emitter.empty());
     LOG_TEST_LIST("topic", topic, topic.empty());
@@ -184,7 +178,7 @@ bool COptions::parseArguments(string_q& command) {
         logFilter.emitters.push_back(e);
 
     listOffset = contains(command, "list") ? list : NOPOS;
-    filterType = (uniq_tx ? "uniq_tx" : (uniq ? "uniq" : (apps ? "apps" : "")));
+    filterType = (uniq ? "uniq" : (apps ? "apps" : ""));
 
     if (cache && uncles)
         return usage(usageErrs[ERR_NOCACHEUNCLE]);
@@ -348,11 +342,6 @@ COptions::COptions(void) {
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
-}
-
-//--------------------------------------------------------------------------------
-bool COptions::isMulti(void) const {
-    return isApiMode() || ((blocks.stop - blocks.start) > 1 || blocks.hashList.size() > 1 || blocks.numList.size() > 1);
 }
 
 //--------------------------------------------------------------------------------

@@ -34,7 +34,7 @@ on,cmd,medi,transactions,tools/getTrans,core_dump_bug,y,transactions = 0xa5c9c1a
 on,cmd,fast,transactions,tools/getTrans,mulit_line_mulit_txs,n,file = cmd_file_1 & fmt = json
 off,both,fast,transactions,tools/getTrans,multi_articulate,y,transactions = 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f & articulate & fmt = json
 off,both,fast,transactions,tools/getTrans,multi_articulate_tra,y,transactions = 0x5ca444001d797c50d46e077a245e563593cf313f960619b3deff022c8694b04f & articulate & fmt = json & trace
-on,both,fast,transactions,tools/getTrans,uniqAddrs_fail,y,transactions = 1301011.0 1301672.0 1301324.0 & uniq_tx & fmt json
+on,both,fast,transactions,tools/getTrans,uniqAddrs_fail,y,transactions = 1301011.0 1301672.0 1301324.0 & broken & fmt json
 on,both,fast,transactions,tools/getTrans,uniqAddrs,y,transactions = 1301011.0 1301672.0 1301324.0 & uniq & fmt json
 on,both,fast,transactions,tools/getTrans,first,n,transactions = 40500.0.next & fmt = txt
 on,both,fast,transactions,tools/getTrans,first2,n,transactions = first & fmt = txt

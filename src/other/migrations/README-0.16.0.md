@@ -10,3 +10,6 @@ From pinMan each of these is deprecated
 	init_all bool
 changed --cache_txs to --cache in export
 
+
+
+--uniq_txs to --uniq -- removed the old --uniq option which was redundant

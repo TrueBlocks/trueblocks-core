@@ -31,6 +31,7 @@ typedef uint32_t cache_t;
 #define CT_MONITORS uint32_t(1 << 5)
 #define CT_INDEX uint32_t(1 << 6)
 #define CT_RECONS uint32_t(1 << 7)
+#define CT_APPS uint32_t(1 << 8)
 // EXISTING_CODE
 
 //--------------------------------------------------------------------------

@@ -435,7 +435,6 @@ string_q nextLogentryChunk_custom(const string_q& fieldIn, const void* dataPtr) 
             case 'b':
                 if (fieldIn % "blockNumber" && log->blockNumber > 0)
                     return uint_2_Str(log->blockNumber);
-                break;
                 if (fieldIn % "blockHash" && !log->blockHash.empty())
                     return log->blockHash;
                 break;

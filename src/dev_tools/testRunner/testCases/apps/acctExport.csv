@@ -91,3 +91,6 @@ local,cmd,fast,export,apps/acctExport,accounting_by_annually,y,addrs = 0x00a3819
 
 local,cmd,fast,export,apps/acctExport,reversed_reversed,y,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & fmt = json & accounting & ether & reversed & first_block = 8854723 & last_block = 8856511 & max_records = 10000 & log_level = 10
 local,cmd,fast,export,apps/acctExport,reversed_not_reversed,y,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & fmt = json & accounting & ether & first_block = 8854723 & last_block = 8856511 & log_level = 10
+
+on,both,fast,export,apps/acctExport,neighbor1,y,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & max_records = 3 & neighbors
+on,both,fast,export,apps/acctExport,neighbor1_csv,n,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & max_records = 3 & neighbors & fmt = csv

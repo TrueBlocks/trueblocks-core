@@ -39,14 +39,13 @@ Arguments:
   blocks - a space-separated list of one or more block identifiers (required)
 
 Flags:
-  -e, --hashes    display only transaction hashes, default is to display full transaction detail
-  -U, --uncles    display uncle blocks (if any) instead of the requested block
-  -t, --trace     export the traces from the block as opposed to the block data
-  -s, --apps      display only the list of address appearances in the block
-  -u, --uniq      display only the list of uniq address appearances in the block
-  -n, --uniq_tx   display only the list of uniq address appearances in each transaction
-  -c, --count     display the number of the lists of appearances for --apps, --uniq, or --uniq_tx
-  -o, --cache     force a write of the block to the cache
+  -e, --hashes   display only transaction hashes, default is to display full transaction detail
+  -U, --uncles   display uncle blocks (if any) instead of the requested block
+  -t, --trace    export the traces from the block as opposed to the block data
+  -s, --apps     display a list of uniq address appearances in the block
+  -u, --uniq     display a list of uniq address appearances per transaction
+  -c, --count    display the number of the lists of appearances for --addrs or --uniq
+  -o, --cache    force a write of the block to the cache
 
 Global Flags:
   -x, --fmt string   export format, one of [none|json*|txt|csv|api]

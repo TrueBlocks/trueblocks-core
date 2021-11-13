@@ -59,8 +59,7 @@ class CBlock : public CBaseNode {
     bool forEveryLog(LOGVISITFUNC func, void* data) const;
     bool forEveryTrace(TRACEVISITFUNC func, void* data) const;
     bool forEveryAppearanceInBlock(APPEARANCEFUNC func, TRANSFUNC filt = NULL, void* data = NULL);
-    bool forEveryUniqueAppearanceInBlock(APPEARANCEFUNC func, TRANSFUNC filt = NULL, void* data = NULL);
-    bool forEveryUniqueAppearanceInBlockPerTx(APPEARANCEFUNC func, TRANSFUNC filt = NULL, void* data = NULL);
+    bool forEveryUniqueAppearanceInTxs(APPEARANCEFUNC func, TRANSFUNC filt = NULL, void* data = NULL);
     // EXISTING_CODE
     bool operator==(const CBlock& it) const;
     bool operator!=(const CBlock& it) const {
