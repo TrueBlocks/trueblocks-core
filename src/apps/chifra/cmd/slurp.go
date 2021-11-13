@@ -19,6 +19,7 @@ import (
 	"os"
 
 	slurpPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/slurp"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -47,8 +48,6 @@ Notes:
   - Portions of this software are Powered by Etherscan.io APIs.`
 
 func init() {
-	slurpCmd.SetOut(os.Stderr)
-
 	slurpCmd.Flags().SortFlags = false
 	slurpCmd.PersistentFlags().SortFlags = false
 	slurpCmd.Flags().StringSliceVarP(&slurpPkg.Options.Types, "types", "t", nil, `which types of transactions to request
@@ -58,5 +57,9 @@ One or more of [ ext | int | token | nfts | miner | uncles | all ]`)
 	slurpCmd.PersistentFlags().SortFlags = false
 
 	slurpCmd.SetUsageTemplate(UsageWithNotes(notesSlurp))
+	slurpCmd.SetOut(os.Stderr)
+	if utils.IsApiMode() {
+		slurpCmd.SetErr(os.Stdout)
+	}
 	rootCmd.AddCommand(slurpCmd)
 }

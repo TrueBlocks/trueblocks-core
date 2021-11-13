@@ -19,6 +19,7 @@ import (
 	"os"
 
 	logsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/logs"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -49,8 +50,6 @@ Notes:
   - If you specify a 32-byte hash, it will be assumed to be a transaction hash, if the transaction is not found, it will be used as a topic.`
 
 func init() {
-	logsCmd.SetOut(os.Stderr)
-
 	logsCmd.Flags().SortFlags = false
 	logsCmd.PersistentFlags().SortFlags = false
 	logsCmd.Flags().BoolVarP(&logsPkg.Options.Articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
@@ -58,5 +57,9 @@ func init() {
 	logsCmd.PersistentFlags().SortFlags = false
 
 	logsCmd.SetUsageTemplate(UsageWithNotes(notesLogs))
+	logsCmd.SetOut(os.Stderr)
+	if utils.IsApiMode() {
+		logsCmd.SetErr(os.Stdout)
+	}
 	rootCmd.AddCommand(logsCmd)
 }

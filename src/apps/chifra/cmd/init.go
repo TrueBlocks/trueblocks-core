@@ -19,6 +19,7 @@ import (
 	"os"
 
 	initPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/init"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -44,8 +45,6 @@ Notes:
   - See chifra pins --help for more information.`
 
 func init() {
-	initCmd.SetOut(os.Stderr)
-
 	initCmd.Flags().SortFlags = false
 	initCmd.PersistentFlags().SortFlags = false
 	initCmd.Flags().BoolVarP(&initPkg.Options.All, "all", "a", false, "in addition to Bloom filters, download full index chunks")
@@ -53,5 +52,9 @@ func init() {
 	initCmd.PersistentFlags().SortFlags = false
 
 	initCmd.SetUsageTemplate(UsageWithNotes(notesInit))
+	initCmd.SetOut(os.Stderr)
+	if utils.IsApiMode() {
+		initCmd.SetErr(os.Stdout)
+	}
 	rootCmd.AddCommand(initCmd)
 }

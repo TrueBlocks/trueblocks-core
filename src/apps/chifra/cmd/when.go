@@ -48,8 +48,6 @@ Notes:
   - Dates must be formatted in JSON format: YYYY-MM-DD[THH[:MM[:SS]]].`
 
 func init() {
-	whenCmd.SetOut(os.Stderr)
-
 	whenCmd.Flags().SortFlags = false
 	whenCmd.PersistentFlags().SortFlags = false
 	whenCmd.Flags().BoolVarP(&whenPkg.Options.List, "list", "l", false, "export a list of the 'special' blocks")
@@ -66,5 +64,9 @@ func init() {
 	whenCmd.PersistentFlags().SortFlags = false
 
 	whenCmd.SetUsageTemplate(UsageWithNotes(notesWhen))
+	whenCmd.SetOut(os.Stderr)
+	if utils.IsApiMode() {
+		whenCmd.SetErr(os.Stdout)
+	}
 	rootCmd.AddCommand(whenCmd)
 }

@@ -46,8 +46,6 @@ Notes:
   - The --share option works only if an IPFS daemon is running.`
 
 func init() {
-	pinsCmd.SetOut(os.Stderr)
-
 	pinsCmd.Flags().SortFlags = false
 	pinsCmd.PersistentFlags().SortFlags = false
 	pinsCmd.Flags().BoolVarP(&pinsPkg.Options.List, "list", "l", false, "list the bloom and index hashes from local cache or IPFS")
@@ -67,5 +65,9 @@ func init() {
 	pinsCmd.PersistentFlags().SortFlags = false
 
 	pinsCmd.SetUsageTemplate(UsageWithNotes(notesPins))
+	pinsCmd.SetOut(os.Stderr)
+	if utils.IsApiMode() {
+		pinsCmd.SetErr(os.Stdout)
+	}
 	rootCmd.AddCommand(pinsCmd)
 }

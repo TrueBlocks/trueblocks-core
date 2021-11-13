@@ -50,8 +50,6 @@ Notes:
   - the --n_* related options allow you to tune the scrapers.`
 
 func init() {
-	scrapeCmd.SetOut(os.Stderr)
-
 	scrapeCmd.Flags().SortFlags = false
 	scrapeCmd.PersistentFlags().SortFlags = false
 	scrapeCmd.Flags().StringVarP(&scrapePkg.Options.Action, "action", "a", "", `command to apply to the specified scrape
@@ -70,5 +68,9 @@ One of [ toggle | run | restart | pause | quit ]`)
 	scrapeCmd.PersistentFlags().SortFlags = false
 
 	scrapeCmd.SetUsageTemplate(UsageWithNotes(notesScrape))
+	scrapeCmd.SetOut(os.Stderr)
+	if utils.IsApiMode() {
+		scrapeCmd.SetErr(os.Stdout)
+	}
 	rootCmd.AddCommand(scrapeCmd)
 }

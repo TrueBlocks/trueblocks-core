@@ -19,6 +19,7 @@ import (
 	"os"
 
 	explorePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/explore"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -44,8 +45,6 @@ var longExplore = `Purpose:
 var notesExplore = ``
 
 func init() {
-	exploreCmd.SetOut(os.Stderr)
-
 	exploreCmd.Flags().SortFlags = false
 	exploreCmd.PersistentFlags().SortFlags = false
 	exploreCmd.Flags().BoolVarP(&explorePkg.Options.Local, "local", "l", false, "open the local TrueBlocks explorer")
@@ -54,5 +53,9 @@ func init() {
 	exploreCmd.PersistentFlags().SortFlags = false
 
 	exploreCmd.SetUsageTemplate(UsageWithNotes(notesExplore))
+	exploreCmd.SetOut(os.Stderr)
+	if utils.IsApiMode() {
+		exploreCmd.SetErr(os.Stdout)
+	}
 	rootCmd.AddCommand(exploreCmd)
 }

@@ -19,6 +19,7 @@ import (
 	"os"
 
 	chunksPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/chunks"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -46,8 +47,6 @@ Notes:
   - Only a single block in a given chunk needs to be supplied.`
 
 func init() {
-	chunksCmd.SetOut(os.Stderr)
-
 	chunksCmd.Flags().SortFlags = false
 	chunksCmd.PersistentFlags().SortFlags = false
 	chunksCmd.Flags().BoolVarP(&chunksPkg.Options.List, "list", "l", false, "list the bloom and index hashes from local cache or IPFS")
@@ -60,5 +59,9 @@ One of [ header | addr_table | app_table | chunks | blooms ]`)
 	chunksCmd.PersistentFlags().SortFlags = false
 
 	chunksCmd.SetUsageTemplate(UsageWithNotes(notesChunks))
+	chunksCmd.SetOut(os.Stderr)
+	if utils.IsApiMode() {
+		chunksCmd.SetErr(os.Stdout)
+	}
 	rootCmd.AddCommand(chunksCmd)
 }

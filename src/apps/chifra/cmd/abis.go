@@ -48,13 +48,6 @@ Notes:
   - Search for either four byte signatures or event signatures with the --find option.`
 
 func init() {
-	if utils.IsApiMode() {
-		abisCmd.SetOut(os.Stderr)
-		abisCmd.SetErr(os.Stdout)
-	} else {
-		abisCmd.SetOut(os.Stderr)
-	}
-
 	abisCmd.Flags().SortFlags = false
 	abisCmd.PersistentFlags().SortFlags = false
 	abisCmd.Flags().BoolVarP(&abisPkg.Options.Known, "known", "k", false, "load common 'known' ABIs from cache")
@@ -70,5 +63,9 @@ func init() {
 	abisCmd.PersistentFlags().SortFlags = false
 
 	abisCmd.SetUsageTemplate(UsageWithNotes(notesAbis))
+	abisCmd.SetOut(os.Stderr)
+	if utils.IsApiMode() {
+		abisCmd.SetErr(os.Stdout)
+	}
 	rootCmd.AddCommand(abisCmd)
 }

@@ -22,44 +22,48 @@ import (
 )
 
 type ExportOptionsType struct {
-	Appearances bool
-	Receipts    bool
-	Statements  bool
-	Logs        bool
-	Traces      bool
-	Accounting  bool
-	Articulate  bool
-	Cache       bool
-	CacheTraces bool
-	Factory     bool
-	Count       bool
-	FirstRecord uint64
-	MaxRecords  uint64
-	Relevant    bool
-	Emitter     []string
-	Topic       []string
-	Clean       bool
-	Freshen     bool
-	Staging     bool
-	Unripe      bool
-	Load        string
-	Reversed    bool
-	ByDate      bool
-	SummarizeBy string
-	SkipDdos    bool
-	MaxTraces   uint64
-	FirstBlock  uint64
-	LastBlock   uint64
+	Appearances  bool
+	Transactions bool
+	Receipts     bool
+	Logs         bool
+	Traces       bool
+	Statements   bool
+	Neighbors    bool
+	Accounting   bool
+	Articulate   bool
+	Cache        bool
+	CacheTraces  bool
+	Factory      bool
+	Count        bool
+	FirstRecord  uint64
+	MaxRecords   uint64
+	Relevant     bool
+	Emitter      []string
+	Topic        []string
+	Clean        bool
+	Freshen      bool
+	Staging      bool
+	Unripe       bool
+	Load         string
+	Reversed     bool
+	ByDate       bool
+	SummarizeBy  string
+	SkipDdos     bool
+	MaxTraces    uint64
+	FirstBlock   uint64
+	LastBlock    uint64
 }
 
 var Options ExportOptionsType
 
 func (opts *ExportOptionsType) TestLog() {
 	logger.TestLog(opts.Appearances, "Appearances: ", opts.Appearances)
+	logger.TestLog(opts.Transactions, "Transactions: ", opts.Transactions)
 	logger.TestLog(opts.Receipts, "Receipts: ", opts.Receipts)
-	logger.TestLog(opts.Statements, "Statements: ", opts.Statements)
 	logger.TestLog(opts.Logs, "Logs: ", opts.Logs)
 	logger.TestLog(opts.Traces, "Traces: ", opts.Traces)
+	logger.TestLog(opts.Statements, "Statements: ", opts.Statements)
+	logger.TestLog(opts.Neighbors, "Neighbors: ", opts.Neighbors)
 	logger.TestLog(opts.Accounting, "Accounting: ", opts.Accounting)
 	logger.TestLog(opts.Articulate, "Articulate: ", opts.Articulate)
 	logger.TestLog(opts.Cache, "Cache: ", opts.Cache)

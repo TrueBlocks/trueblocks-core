@@ -53,22 +53,19 @@ Notes:
   - Large block ranges may crash the node, use --big_range to specify a larger range.`
 
 func init() {
-	blocksCmd.SetOut(os.Stderr)
-
 	blocksCmd.Flags().SortFlags = false
 	blocksCmd.PersistentFlags().SortFlags = false
 	blocksCmd.Flags().BoolVarP(&blocksPkg.Options.Hashes, "hashes", "e", false, "display only transaction hashes, default is to display full transaction detail")
 	blocksCmd.Flags().BoolVarP(&blocksPkg.Options.Uncles, "uncles", "U", false, "display uncle blocks (if any) instead of the requested block")
 	blocksCmd.Flags().BoolVarP(&blocksPkg.Options.Trace, "trace", "t", false, "export the traces from the block as opposed to the block data")
-	blocksCmd.Flags().BoolVarP(&blocksPkg.Options.Apps, "apps", "s", false, "display only the list of address appearances in the block")
-	blocksCmd.Flags().BoolVarP(&blocksPkg.Options.Uniq, "uniq", "u", false, "display only the list of uniq address appearances in the block")
-	blocksCmd.Flags().BoolVarP(&blocksPkg.Options.UniqTx, "uniq_tx", "n", false, "display only the list of uniq address appearances in each transaction")
+	blocksCmd.Flags().BoolVarP(&blocksPkg.Options.Apps, "apps", "s", false, "display a list of uniq address appearances in the block")
+	blocksCmd.Flags().BoolVarP(&blocksPkg.Options.Uniq, "uniq", "u", false, "display a list of uniq address appearances per transaction")
 	blocksCmd.Flags().BoolVarP(&blocksPkg.Options.Logs, "logs", "g", false, "display only the logs found in the block(s) (hidden)")
 	blocksCmd.Flags().StringSliceVarP(&blocksPkg.Options.Emitter, "emitter", "m", nil, "for the --logs option only, filter logs to show only those logs emitted by the given address(es) (hidden)")
 	blocksCmd.Flags().StringSliceVarP(&blocksPkg.Options.Topic, "topic", "p", nil, "for the --logs option only, filter logs to show only those with this topic(s) (hidden)")
 	blocksCmd.Flags().BoolVarP(&blocksPkg.Options.Articulate, "articulate", "a", false, "for the --logs option only, articulate the retrieved data if ABIs can be found (hidden)")
 	blocksCmd.Flags().Uint64VarP(&blocksPkg.Options.BigRange, "big_range", "r", 500, "for the --logs option only, allow for block ranges larger than 500 (hidden)")
-	blocksCmd.Flags().BoolVarP(&blocksPkg.Options.Count, "count", "c", false, "display the number of the lists of appearances for --apps, --uniq, or --uniq_tx")
+	blocksCmd.Flags().BoolVarP(&blocksPkg.Options.Count, "count", "c", false, "display the number of the lists of appearances for --addrs or --uniq")
 	blocksCmd.Flags().BoolVarP(&blocksPkg.Options.Cache, "cache", "o", false, "force a write of the block to the cache")
 	blocksCmd.Flags().Uint64VarP(&blocksPkg.Options.List, "list", "l", 0, "summary list of blocks running backwards from latest block minus num (hidden)")
 	blocksCmd.Flags().Uint64VarP(&blocksPkg.Options.ListCount, "list_count", "C", 20, "the number of blocks to report for --list option (hidden)")
@@ -85,5 +82,9 @@ func init() {
 	blocksCmd.PersistentFlags().SortFlags = false
 
 	blocksCmd.SetUsageTemplate(UsageWithNotes(notesBlocks))
+	blocksCmd.SetOut(os.Stderr)
+	if utils.IsApiMode() {
+		blocksCmd.SetErr(os.Stdout)
+	}
 	rootCmd.AddCommand(blocksCmd)
 }

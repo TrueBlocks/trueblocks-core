@@ -48,8 +48,6 @@ Notes:
   - The --match_case option enables case sensitive matching.`
 
 func init() {
-	namesCmd.SetOut(os.Stderr)
-
 	namesCmd.Flags().SortFlags = false
 	namesCmd.PersistentFlags().SortFlags = false
 	namesCmd.Flags().BoolVarP(&namesPkg.Options.Expand, "expand", "e", false, "expand search to include all fields (search name, address, and symbol otherwise)")
@@ -83,5 +81,9 @@ func init() {
 	namesCmd.PersistentFlags().SortFlags = false
 
 	namesCmd.SetUsageTemplate(UsageWithNotes(notesNames))
+	namesCmd.SetOut(os.Stderr)
+	if utils.IsApiMode() {
+		namesCmd.SetErr(os.Stdout)
+	}
 	rootCmd.AddCommand(namesCmd)
 }

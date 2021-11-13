@@ -19,6 +19,7 @@ import (
 	"os"
 
 	receiptsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/receipts"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -48,8 +49,6 @@ Notes:
   - If the queried node does not store historical state, the results for most older transactions are undefined.`
 
 func init() {
-	receiptsCmd.SetOut(os.Stderr)
-
 	receiptsCmd.Flags().SortFlags = false
 	receiptsCmd.PersistentFlags().SortFlags = false
 	receiptsCmd.Flags().BoolVarP(&receiptsPkg.Options.Articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
@@ -57,5 +56,9 @@ func init() {
 	receiptsCmd.PersistentFlags().SortFlags = false
 
 	receiptsCmd.SetUsageTemplate(UsageWithNotes(notesReceipts))
+	receiptsCmd.SetOut(os.Stderr)
+	if utils.IsApiMode() {
+		receiptsCmd.SetErr(os.Stdout)
+	}
 	rootCmd.AddCommand(receiptsCmd)
 }

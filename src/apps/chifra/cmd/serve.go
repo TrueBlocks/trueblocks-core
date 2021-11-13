@@ -19,6 +19,7 @@ import (
 	"os"
 
 	servePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/server"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -44,8 +45,6 @@ Notes:
   - See the API documentation for more information.`
 
 func init() {
-	serveCmd.SetOut(os.Stderr)
-
 	serveCmd.Flags().SortFlags = false
 	serveCmd.PersistentFlags().SortFlags = false
 	serveCmd.Flags().StringVarP(&servePkg.Options.Port, "port", "p", ":8080", "specify the server's port")
@@ -53,5 +52,9 @@ func init() {
 	serveCmd.PersistentFlags().SortFlags = false
 
 	serveCmd.SetUsageTemplate(UsageWithNotes(notesServe))
+	serveCmd.SetOut(os.Stderr)
+	if utils.IsApiMode() {
+		serveCmd.SetErr(os.Stdout)
+	}
 	rootCmd.AddCommand(serveCmd)
 }

@@ -53,16 +53,16 @@ Notes:
   - Neighbors include every address that appears in any transaction in which the export address also appears.`
 
 func init() {
-	exportCmd.SetOut(os.Stderr)
-
 	exportCmd.Flags().SortFlags = false
 	exportCmd.PersistentFlags().SortFlags = false
 	exportCmd.Flags().BoolVarP(&exportPkg.Options.Appearances, "appearances", "p", false, "export a list of appearances")
-	exportCmd.Flags().BoolVarP(&exportPkg.Options.Receipts, "receipts", "r", false, "export receipts instead of transaction list")
-	exportCmd.Flags().BoolVarP(&exportPkg.Options.Statements, "statements", "A", false, "for use with --accounting option only, export only reconciliation statements")
-	exportCmd.Flags().BoolVarP(&exportPkg.Options.Logs, "logs", "l", false, "export logs instead of transaction list")
-	exportCmd.Flags().BoolVarP(&exportPkg.Options.Traces, "traces", "t", false, "export traces instead of transaction list")
-	exportCmd.Flags().BoolVarP(&exportPkg.Options.Accounting, "accounting", "C", false, "export accounting records instead of transaction list")
+	exportCmd.Flags().BoolVarP(&exportPkg.Options.Transactions, "transactions", "T", false, "export the actual transactional data (the default)")
+	exportCmd.Flags().BoolVarP(&exportPkg.Options.Receipts, "receipts", "r", false, "export receipts instead of transactional data")
+	exportCmd.Flags().BoolVarP(&exportPkg.Options.Logs, "logs", "l", false, "export logs instead of transactional data")
+	exportCmd.Flags().BoolVarP(&exportPkg.Options.Traces, "traces", "t", false, "export traces instead of transactional data")
+	exportCmd.Flags().BoolVarP(&exportPkg.Options.Statements, "statements", "A", false, "export reconciliations instead of transactional data (requires --accounting option)")
+	exportCmd.Flags().BoolVarP(&exportPkg.Options.Neighbors, "neighbors", "n", false, "export the neighbors of the given address")
+	exportCmd.Flags().BoolVarP(&exportPkg.Options.Accounting, "accounting", "C", false, "attach accounting records to the exported data (applies to transactions export only)")
 	exportCmd.Flags().BoolVarP(&exportPkg.Options.Articulate, "articulate", "a", false, "articulate transactions, traces, logs, and outputs")
 	exportCmd.Flags().BoolVarP(&exportPkg.Options.Cache, "cache", "i", false, "write transactions to the cache (see notes)")
 	exportCmd.Flags().BoolVarP(&exportPkg.Options.CacheTraces, "cache_traces", "R", false, "write traces to the cache (see notes)")
@@ -103,5 +103,9 @@ One of [ yearly | quarterly | monthly | weekly | daily | hourly | blockly | tx ]
 	exportCmd.PersistentFlags().SortFlags = false
 
 	exportCmd.SetUsageTemplate(UsageWithNotes(notesExport))
+	exportCmd.SetOut(os.Stderr)
+	if utils.IsApiMode() {
+		exportCmd.SetErr(os.Stdout)
+	}
 	rootCmd.AddCommand(exportCmd)
 }

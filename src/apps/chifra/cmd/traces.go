@@ -51,8 +51,6 @@ Notes:
   - A state diff trace describes, for each modified address, what changed during that trace.`
 
 func init() {
-	tracesCmd.SetOut(os.Stderr)
-
 	tracesCmd.Flags().SortFlags = false
 	tracesCmd.PersistentFlags().SortFlags = false
 	tracesCmd.Flags().BoolVarP(&tracesPkg.Options.Articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
@@ -69,5 +67,9 @@ func init() {
 	tracesCmd.PersistentFlags().SortFlags = false
 
 	tracesCmd.SetUsageTemplate(UsageWithNotes(notesTraces))
+	tracesCmd.SetOut(os.Stderr)
+	if utils.IsApiMode() {
+		tracesCmd.SetErr(os.Stdout)
+	}
 	rootCmd.AddCommand(tracesCmd)
 }

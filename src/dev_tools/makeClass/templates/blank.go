@@ -42,18 +42,15 @@ type [{ROUTE}]OptionsType struct {
 [{OPT_FIELDS}]}
 
 [{OPT_DEF}]func init() {
-	if utils.IsApiMode() {
-		[{ROUTE}]Cmd.SetOut(os.Stderr)
-		[{ROUTE}]Cmd.SetErr(os.Stdout)
-	} else {
-		[{ROUTE}]Cmd.SetOut(os.Stderr)
-	}
-
 	[{ROUTE}]Cmd.Flags().SortFlags = false
 	[{ROUTE}]Cmd.PersistentFlags().SortFlags = false
 [{SET_OPTS}][{HIDDEN}]	[{ROUTE}]Cmd.Flags().SortFlags = false
 	[{ROUTE}]Cmd.PersistentFlags().SortFlags = false
 
 	[{ROUTE}]Cmd.SetUsageTemplate(UsageWithNotes(notes[{PROPER}]))
+	[{ROUTE}]Cmd.SetOut(os.Stderr)
+	if utils.IsApiMode() {
+		[{ROUTE}]Cmd.SetErr(os.Stdout)
+	}
 	rootCmd.AddCommand([{ROUTE}]Cmd)
 }

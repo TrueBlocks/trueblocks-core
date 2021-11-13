@@ -53,8 +53,6 @@ Notes:
   - You may specify multiple modes on a single line.`
 
 func init() {
-	stateCmd.SetOut(os.Stderr)
-
 	stateCmd.Flags().SortFlags = false
 	stateCmd.PersistentFlags().SortFlags = false
 	stateCmd.Flags().StringSliceVarP(&statePkg.Options.Parts, "parts", "p", nil, `control which state to export
@@ -71,5 +69,9 @@ One or more of [ none | some | all | balance | nonce | code | storage | deployed
 	stateCmd.PersistentFlags().SortFlags = false
 
 	stateCmd.SetUsageTemplate(UsageWithNotes(notesState))
+	stateCmd.SetOut(os.Stderr)
+	if utils.IsApiMode() {
+		stateCmd.SetErr(os.Stdout)
+	}
 	rootCmd.AddCommand(stateCmd)
 }

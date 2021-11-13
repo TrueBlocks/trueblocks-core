@@ -45,8 +45,6 @@ var longList = `Purpose:
 var notesList = ``
 
 func init() {
-	listCmd.SetOut(os.Stderr)
-
 	listCmd.Flags().SortFlags = false
 	listCmd.PersistentFlags().SortFlags = false
 	listCmd.Flags().BoolVarP(&listPkg.Options.Count, "count", "U", false, "present only the number of records")
@@ -62,5 +60,9 @@ func init() {
 	listCmd.PersistentFlags().SortFlags = false
 
 	listCmd.SetUsageTemplate(UsageWithNotes(notesList))
+	listCmd.SetOut(os.Stderr)
+	if utils.IsApiMode() {
+		listCmd.SetErr(os.Stdout)
+	}
 	rootCmd.AddCommand(listCmd)
 }

@@ -19,6 +19,7 @@ import (
 	"os"
 
 	tokensPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/tokens"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -51,8 +52,6 @@ Notes:
   - special blocks are detailed under chifra when --list.`
 
 func init() {
-	tokensCmd.SetOut(os.Stderr)
-
 	tokensCmd.Flags().SortFlags = false
 	tokensCmd.PersistentFlags().SortFlags = false
 	tokensCmd.Flags().StringSliceVarP(&tokensPkg.Options.Parts, "parts", "p", nil, `which parts of the token information to retrieve
@@ -63,5 +62,9 @@ One or more of [ name | symbol | decimals | totalSupply | version | none | all ]
 	tokensCmd.PersistentFlags().SortFlags = false
 
 	tokensCmd.SetUsageTemplate(UsageWithNotes(notesTokens))
+	tokensCmd.SetOut(os.Stderr)
+	if utils.IsApiMode() {
+		tokensCmd.SetErr(os.Stdout)
+	}
 	rootCmd.AddCommand(tokensCmd)
 }

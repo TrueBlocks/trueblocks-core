@@ -19,6 +19,7 @@ import (
 	"os"
 
 	quotesPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/quotes"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -43,8 +44,6 @@ Notes:
   - Due to restrictions from Poloniex, this tool retrieves only 30 days of data at a time. You must repeatedly run this command until the data is up-to-date.`
 
 func init() {
-	quotesCmd.SetOut(os.Stderr)
-
 	quotesCmd.Flags().SortFlags = false
 	quotesCmd.PersistentFlags().SortFlags = false
 	quotesCmd.Flags().BoolVarP(&quotesPkg.Options.Freshen, "freshen", "f", false, "Freshen price database")
@@ -57,5 +56,9 @@ One of [ poloniex | maker | tellor ]`)
 	quotesCmd.PersistentFlags().SortFlags = false
 
 	quotesCmd.SetUsageTemplate(UsageWithNotes(notesQuotes))
+	quotesCmd.SetOut(os.Stderr)
+	if utils.IsApiMode() {
+		quotesCmd.SetErr(os.Stdout)
+	}
 	rootCmd.AddCommand(quotesCmd)
 }

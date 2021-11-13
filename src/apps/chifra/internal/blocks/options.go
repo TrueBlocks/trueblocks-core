@@ -26,7 +26,6 @@ type BlocksOptionsType struct {
 	Trace      bool
 	Apps       bool
 	Uniq       bool
-	UniqTx     bool
 	Logs       bool
 	Emitter    []string
 	Topic      []string
@@ -46,7 +45,6 @@ func (opts *BlocksOptionsType) TestLog() {
 	logger.TestLog(opts.Trace, "Trace: ", opts.Trace)
 	logger.TestLog(opts.Apps, "Apps: ", opts.Apps)
 	logger.TestLog(opts.Uniq, "Uniq: ", opts.Uniq)
-	logger.TestLog(opts.UniqTx, "UniqTx: ", opts.UniqTx)
 	logger.TestLog(opts.Logs, "Logs: ", opts.Logs)
 	logger.TestLog(len(opts.Emitter) > 0, "Emitter: ", opts.Emitter)
 	logger.TestLog(len(opts.Topic) > 0, "Topic: ", opts.Topic)

@@ -46,8 +46,6 @@ var longStatus = `Purpose:
 var notesStatus = ``
 
 func init() {
-	statusCmd.SetOut(os.Stderr)
-
 	statusCmd.Flags().SortFlags = false
 	statusCmd.PersistentFlags().SortFlags = false
 	statusCmd.Flags().BoolVarP(&statusPkg.Options.Details, "details", "d", false, "include details about items found in monitors, slurps, abis, or price caches")
@@ -76,5 +74,9 @@ One or more of [ test | abi_cache | block_cache | tx_cache | trace_cache | recon
 	statusCmd.PersistentFlags().SortFlags = false
 
 	statusCmd.SetUsageTemplate(UsageWithNotes(notesStatus))
+	statusCmd.SetOut(os.Stderr)
+	if utils.IsApiMode() {
+		statusCmd.SetErr(os.Stdout)
+	}
 	rootCmd.AddCommand(statusCmd)
 }

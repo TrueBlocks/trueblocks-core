@@ -48,8 +48,6 @@ Notes:
   - If no address is presented to the --clean command, all monitors will be cleaned.`
 
 func init() {
-	monitorsCmd.SetOut(os.Stderr)
-
 	monitorsCmd.Flags().SortFlags = false
 	monitorsCmd.PersistentFlags().SortFlags = false
 	monitorsCmd.Flags().BoolVarP(&monitorsPkg.Options.Appearances, "appearances", "p", false, "export a list of appearances")
@@ -68,5 +66,9 @@ func init() {
 	monitorsCmd.PersistentFlags().SortFlags = false
 
 	monitorsCmd.SetUsageTemplate(UsageWithNotes(notesMonitors))
+	monitorsCmd.SetOut(os.Stderr)
+	if utils.IsApiMode() {
+		monitorsCmd.SetErr(os.Stdout)
+	}
 	rootCmd.AddCommand(monitorsCmd)
 }
