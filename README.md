@@ -152,9 +152,10 @@ We love contributors. Please see information about our [work flow](./docs/BRANCH
 Thanks to the following people who have contributed to this project:
 
 * [@tjayrush](https://github.com/tjayrush)
-* [@crodnun](https://github.com/crodnun)
-* [@wildmolasses](https://github.com/wildmolasses)
+* [@dszlachta](https://github.com/dszlachta)
 * [@MattDodsonEnglish](https://github.com/MattDodsonEnglish)
+* [@wildmolasses](https://github.com/wildmolasses)
+* [@crodnun](https://github.com/crodnun)
 
 ## Contact
 
