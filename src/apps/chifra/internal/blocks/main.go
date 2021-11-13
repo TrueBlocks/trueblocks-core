@@ -37,9 +37,6 @@ func Run(cmd *cobra.Command, args []string) error {
 	if Options.Uniq {
 		options += " --uniq"
 	}
-	if Options.UniqTx {
-		options += " --uniq_tx"
-	}
 	if Options.Logs {
 		options += " --logs"
 	}

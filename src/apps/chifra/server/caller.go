@@ -14,6 +14,7 @@ package serve
  *-------------------------------------------------------------------------------------------*/
 
 import (
+	"errors"
 	"fmt"
 	"log"
 	"net/http"
@@ -146,6 +147,13 @@ func CallOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd s
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
 	w.Header().Set("Access-Control-Allow-Methods", "PUT, POST, GET, DELETE, OPTIONS")
+	if strings.Contains(output, "Error:") {
+		// Remove Cobra's "Error:\n" decorator
+		parsed := strings.Replace(output, "Error:", "", 1)
+		parsed = strings.Trim(parsed, " \n")
+		RespondWithError(w, http.StatusBadRequest, errors.New(parsed))
+		return
+	}
 	if strings.Contains(output, "\"errors\":") {
 		w.WriteHeader(http.StatusBadRequest)
 	} else {

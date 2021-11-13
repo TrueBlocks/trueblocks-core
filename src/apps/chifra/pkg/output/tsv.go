@@ -6,16 +6,17 @@ import (
 )
 
 // AsTsv turns a type into tab-separated values
-func AsTsv(data *CsvFormatted) ([]byte, error) {
+func AsTsv(data interface{}) ([]byte, error) {
+	records, err := ToStringRecords(data, false)
+	if err != nil {
+		return nil, err
+	}
+
 	buf := &bytes.Buffer{}
 	writer := csv.NewWriter(buf)
 	writer.Comma = '\t'
 
-	err := writer.Write(data.Header)
-	if err != nil {
-		return nil, err
-	}
-	err = writer.WriteAll(data.Content)
+	err = writer.WriteAll(records)
 	if err != nil {
 		return nil, err
 	}

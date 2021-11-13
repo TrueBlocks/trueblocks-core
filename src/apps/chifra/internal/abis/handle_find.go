@@ -20,9 +20,7 @@ import (
 	"fmt"
 	"io"
 	"os"
-	"reflect"
 	"sync"
-	"text/tabwriter"
 
 	"github.com/ethereum/go-ethereum/crypto"
 	ants "github.com/panjf2000/ants/v2"
@@ -58,8 +56,8 @@ func (v *ScanCounter) Report(target *os.File, action, msg string) {
 	fmt.Fprintf(target, "%s[%d-%d-%d] %s                                            \r", action, v.Visited, v.Max, (v.Max - v.Visited), msg)
 }
 
-// HandleFind loads manifest, sorts pins and prints them out
-func HandleFind(arguments []string, no_header bool) {
+// Find tries to find matching ABIs
+func Find(arguments []string) []Function {
 	visits := ScanCounter{}
 	visits.Wanted = uint64(len(arguments))
 	visits.Freq = 139419
@@ -122,37 +120,16 @@ func HandleFind(arguments []string, no_header bool) {
 	}
 
 	defer wg.Wait()
-	if !utils.IsTestMode() {
-		fmt.Printf("\r                                                   \r")
-	}
+	return results
+}
+
+func HandleFind(arguments []string) {
+	results := Find(arguments)
 
 	// TODO: if Root.to_file == true, write the output to a filename
 	// TODO: if Root.output == <fn>, write the output to a <fn>
-	out := os.Stdout
-	out1 := tabwriter.NewWriter(out, 0, 0, 2, ' ', 0)
-
-	if output.Format == "json" || output.Format == "api" {
-		err := output.PrintJson(&output.JsonFormatted{
-			Data: results,
-		})
-		if err != nil {
-			logger.Fatal(err)
-		}
-		return
+	err := output.Output(os.Stdout, output.Format, results)
+	if err != nil {
+		logger.Log(logger.Error, err)
 	}
-
-	structType := reflect.TypeOf(Function{})
-	rowTemplate, _ := output.GetRowTemplate(&structType)
-
-	if !no_header {
-		fmt.Fprintln(out, output.GetHeader(&structType))
-	}
-	for _, item := range results {
-		if output.Format == "" && utils.IsTerminal() {
-			rowTemplate.Execute(out1, item)
-		} else {
-			rowTemplate.Execute(out, item)
-		}
-	}
-	out1.Flush()
 }

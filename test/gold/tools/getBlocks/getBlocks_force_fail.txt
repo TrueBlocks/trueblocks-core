@@ -17,15 +17,14 @@ Flags:
   -e, --hashes      display only transaction hashes, default is to display full transaction detail
   -U, --uncles      display uncle blocks (if any) instead of the requested block
   -t, --trace       export the traces from the block as opposed to the block data
-  -s, --apps        display only the list of address appearances in the block
-  -u, --uniq        display only the list of uniq address appearances in the block
-  -n, --uniq_tx     display only the list of uniq address appearances in each transaction
+  -s, --apps        display a list of uniq address appearances in the block
+  -u, --uniq        display a list of uniq address appearances per transaction
   -g, --logs        display only the logs found in the block(s) (hidden)
   -m, --emitter stringfor the --logs option only, filter logs to show only those logs emitted by the given address(es) (hidden)
   -p, --topic stringfor the --logs option only, filter logs to show only those with this topic(s) (hidden)
   -a, --articulate  for the --logs option only, articulate the retrieved data if ABIs can be found (hidden)
   -r, --big_range <num>for the --logs option only, allow for block ranges larger than 500 (hidden)
-  -c, --count       display the number of the lists of appearances for --apps, --uniq, or --uniq_tx
+  -c, --count       display the number of the lists of appearances for --addrs or --uniq
   -o, --cache       force a write of the block to the cache
   -l, --list <num>  summary list of blocks running backwards from latest block minus num (hidden)
   -C, --list_count <num>the number of blocks to report for --list option (hidden)

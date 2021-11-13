@@ -1,6 +1,6 @@
-chifra transactions  1301011.0 1301672.0 1301324.0 --uniq_tx --fmt json
+chifra transactions  1301011.0 1301672.0 1301324.0 --broken --fmt json
 Error: 
-  unknown flag: --uniq_tx
+  unknown flag: --broken
 
 Usage:
   chifra transactions [flags] <tx_id> [tx_id...]
@@ -11,7 +11,7 @@ Arguments:
 Flags:
   -a, --articulate         articulate the retrieved data if ABIs can be found
   -t, --trace              include the transaction's traces in the results
-  -u, --uniq               display a list of uniq addresses found in the transaction instead of the underlying data
+  -u, --uniq               display a list of uniq addresses found in the transaction
   -r, --reconcile string   reconcile the transaction as per the provided address
   -o, --cache              force the results of the query into the tx cache (and the trace cache if applicable)
 

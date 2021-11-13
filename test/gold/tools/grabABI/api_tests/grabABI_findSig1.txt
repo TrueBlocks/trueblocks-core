@@ -3,6 +3,14 @@
     {
       "encoding": "0x1aa3a008",
       "signature": "register()"
+    },
+    {
+      "encoding": "0xad7a672f",
+      "signature": "totalBalance()"
+    },
+    {
+      "encoding": "0x3ccfd60b",
+      "signature": "withdraw()"
     }
   ],
   "meta": {

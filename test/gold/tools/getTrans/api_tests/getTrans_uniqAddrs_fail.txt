@@ -1,5 +1,5 @@
 {
   "errors": [
-    "chifra transactions - Invalid option: --uniq_tx"
+    "chifra transactions - Invalid option: --broken"
   ]
 }

@@ -48,7 +48,12 @@ Notes:
   - Search for either four byte signatures or event signatures with the --find option.`
 
 func init() {
-	abisCmd.SetOut(os.Stderr)
+	if utils.IsApiMode() {
+		abisCmd.SetOut(os.Stderr)
+		abisCmd.SetErr(os.Stdout)
+	} else {
+		abisCmd.SetOut(os.Stderr)
+	}
 
 	abisCmd.Flags().SortFlags = false
 	abisCmd.PersistentFlags().SortFlags = false

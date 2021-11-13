@@ -4,11 +4,13 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 10205,apps,Accounts,export,acctExport,topics,,,false,false,true,true,local,positional,list<topic>,filter by one or more log topics (only for --logs option)
 10207,apps,Accounts,export,acctExport,fourbytes,,,false,false,true,true,header,positional,list<fourbyte>,|filter by one or more fourbytes (only for transactions and trace options)
 10210,apps,Accounts,export,acctExport,appearances,p,,false,false,true,true,header,switch,<boolean>,export a list of appearances
-10220,apps,Accounts,export,acctExport,receipts,r,,false,false,true,true,header,switch,<boolean>,export receipts instead of transaction list
-10282,apps,Accounts,export,acctExport,statements,A,,false,false,true,true,header,switch,<boolean>,for use with --accounting option only&#44; export only reconciliation statements
-10230,apps,Accounts,export,acctExport,logs,l,,false,false,true,true,header,switch,<boolean>,export logs instead of transaction list
-10240,apps,Accounts,export,acctExport,traces,t,,false,false,true,true,header,switch,<boolean>,export traces instead of transaction list
-10280,apps,Accounts,export,acctExport,accounting,C,,false,false,true,true,header,switch,<boolean>,export accounting records instead of transaction list
+10215,apps,Accounts,export,acctExport,transactions,T,,false,false,true,true,local,switch,<boolean>,export the actual transactional data (the default)
+10220,apps,Accounts,export,acctExport,receipts,r,,false,false,true,true,header,switch,<boolean>,export receipts instead of transactional data
+10230,apps,Accounts,export,acctExport,logs,l,,false,false,true,true,header,switch,<boolean>,export logs instead of transactional data
+10240,apps,Accounts,export,acctExport,traces,t,,false,false,true,true,header,switch,<boolean>,export traces instead of transactional data
+10282,apps,Accounts,export,acctExport,statements,A,,false,false,true,true,header,switch,<boolean>,export reconciliations instead of transactional data (requires --accounting option)
+10215,apps,Accounts,export,acctExport,neighbors,n,,false,false,true,true,header,switch,<boolean>,export the neighbors of the given address
+10280,apps,Accounts,export,acctExport,accounting,C,,false,false,true,true,header,switch,<boolean>,attach accounting records to the exported data (applies to transactions export only)
 10310,apps,Accounts,export,acctExport,articulate,a,,false,false,true,true,header,switch,<boolean>,articulate transactions&#44; traces&#44; logs&#44; and outputs
 10320,apps,Accounts,export,acctExport,cache,i,false,false,true,true,true,header,switch,<boolean>,write transactions to the cache (see notes)
 10330,apps,Accounts,export,acctExport,cache_traces,R,false,false,true,true,true,header,switch,<boolean>,write traces to the cache (see notes)
@@ -33,8 +35,10 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 10450,apps,Accounts,export,acctExport,last_block,L,NOPOS,false,false,false,false,local,flag,<blknum>,last block to process (inclusive)
 10460,apps,Accounts,export,acctExport,,,,false,false,true,true,--,description,,Export full detail of transactions for one or more addresses.
 10470,apps,Accounts,export,acctExport,n1,,,false,false,false,false,--,note,,An `address` must start with '0x' and be forty-two characters long.
-10472,apps,Accounts,export,acctExport,n2,,,false,false,false,false,--,note,,For the --logs option&#44; you may optionally specify one or more --emmitter&#44; one or more --topics&#44; or both.
-10474,apps,Accounts,export,acctExport,n3,,,false,false,false,false,--,note,,The --logs option is significantly faster if you provide an --emitter or a --topic.
+10470,apps,Accounts,export,acctExport,n2,,,false,false,false,false,--,note,,Articulating the export means turn the EVM's byte data into human-readable text (if possible).
+10472,apps,Accounts,export,acctExport,n3,,,false,false,false,false,--,note,,For the --logs option&#44; you may optionally specify one or more --emmitter&#44; one or more --topics&#44; or both.
+10474,apps,Accounts,export,acctExport,n4,,,false,false,false,false,--,note,,The --logs option is significantly faster if you provide an --emitter or a --topic.
+10476,apps,Accounts,export,acctExport,n5,,,false,false,false,false,--,note,,Neighbors include every address that appears in any transaction in which the export address also appears.
 
 11200,apps,Accounts,monitors,acctExport,addrs,,,true,false,true,true,local,positional,list<addr>,one or more addresses (0x...) to process
 11210,apps,Accounts,monitors,acctExport,appearances,p,,false,false,true,true,header,switch,<boolean>,export a list of appearances
@@ -92,15 +96,14 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12510,tools,ChainData,blocks,getBlocks,hashes,e,,false,false,true,true,header,switch,<boolean>,display only transaction hashes&#44; default is to display full transaction detail
 12520,tools,ChainData,blocks,getBlocks,uncles,U,,false,false,true,true,header,switch,<boolean>,display uncle blocks (if any) instead of the requested block
 12530,tools,ChainData,blocks,getBlocks,trace,t,,false,false,true,true,header,switch,<boolean>,export the traces from the block as opposed to the block data
-12540,tools,ChainData,blocks,getBlocks,apps,s,,false,false,true,true,local,switch,<boolean>,display only the list of address appearances in the block
-12550,tools,ChainData,blocks,getBlocks,uniq,u,,false,false,true,true,local,switch,<boolean>,display only the list of uniq address appearances in the block
-12560,tools,ChainData,blocks,getBlocks,uniq_tx,n,,false,false,true,true,local,switch,<boolean>,display only the list of uniq address appearances in each transaction
+12540,tools,ChainData,blocks,getBlocks,apps,s,,false,false,true,true,local,switch,<boolean>,display a list of uniq address appearances in the block
+12560,tools,ChainData,blocks,getBlocks,uniq,u,,false,false,true,true,local,switch,<boolean>,display a list of uniq address appearances per transaction
 12570,tools,ChainData,blocks,getBlocks,logs,g,,false,false,false,true,header,switch,<boolean>,display only the logs found in the block(s)
 12972,tools,ChainData,blocks,getBlocks,emitter,m,,false,false,false,true,local,flag,list<addr>,for the --logs option only&#44; filter logs to show only those logs emitted by the given address(es)
 12974,tools,ChainData,blocks,getBlocks,topic,p,,false,false,false,true,local,flag,list<topic>,for the --logs option only&#44; filter logs to show only those with this topic(s)
 12975,tools,ChainData,blocks,getBlocks,articulate,a,,false,false,false,false,header,switch,<boolean>,for the --logs option only&#44; articulate the retrieved data if ABIs can be found
 12976,tools,ChainData,blocks,getBlocks,big_range,r,500,false,false,false,false,header,flag,<uint64>,for the --logs option only&#44; allow for block ranges larger than 500
-12578,tools,ChainData,blocks,getBlocks,count,c,,false,false,true,true,header,switch,<boolean>,display the number of the lists of appearances for --apps&#44; --uniq&#44; or --uniq_tx
+12578,tools,ChainData,blocks,getBlocks,count,c,,false,false,true,true,header,switch,<boolean>,display the number of the lists of appearances for --addrs or --uniq
 12580,tools,ChainData,blocks,getBlocks,cache,o,,false,false,true,true,header,switch,<boolean>,force a write of the block to the cache
 12582,tools,ChainData,blocks,getBlocks,list,l,0,false,false,false,false,local,flag,<blknum>,summary list of blocks running backwards from latest block minus num
 12584,tools,ChainData,blocks,getBlocks,list_count,C,20,false,false,false,false,header,flag,<blknum>,the number of blocks to report for --list option
@@ -125,7 +128,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 13540,tools,ChainData,transactions,getTrans,transactions,,,true,false,true,true,local,positional,list<tx_id>,a space-separated list of one or more transaction identifiers
 13560,tools,ChainData,transactions,getTrans,articulate,a,,false,false,true,true,header,switch,<boolean>,articulate the retrieved data if ABIs can be found
 13580,tools,ChainData,transactions,getTrans,trace,t,,false,false,true,true,header,switch,<boolean>,include the transaction's traces in the results
-13605,tools,ChainData,transactions,getTrans,uniq,u,,false,false,true,true,header,switch,<boolean>,display a list of uniq addresses found in the transaction instead of the underlying data
+13605,tools,ChainData,transactions,getTrans,uniq,u,,false,false,true,true,header,switch,<boolean>,display a list of uniq addresses found in the transaction
 13605,tools,ChainData,transactions,getTrans,reconcile,r,,false,false,true,true,header,flag,<address>,reconcile the transaction as per the provided address
 13600,tools,ChainData,transactions,getTrans,cache,o,,false,false,true,true,header,switch,<boolean>,force the results of the query into the tx cache (and the trace cache if applicable)
 13620,tools,ChainData,transactions,getTrans,,,,false,false,true,true,--,description,,Retrieve one or more transactions from the chain or local cache.
@@ -317,18 +320,3 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 11930,dev_tools,,,testRunner,skip,s,1,false,false,false,false,header,flag,<uint64>,run only every 'skip' test (faster)
 11960,dev_tools,,,testRunner,report,r,,false,false,true,false,header,switch,<boolean>,display performance report to screen
 11980,dev_tools,,,testRunner,,,,false,false,true,false,--,description,,Run TrueBlocks' test cases with options.
-
-14400,all,,all,all,version,,,false,false,true,false,--,switch,<boolean>,display the current version of the tool
-14420,all,,all,all,nocolor,,,false,false,true,false,--,switch,<boolean>,turn off colored display
-14430,all,,all,all,mocked,,,false,false,true,false,--,switch,<boolean>,useful for testing&#44; instead of generating real data simulate the data
-14440,all,,all,all,wei,,,false,false,true,false,--,switch,<boolean>,specify value in wei (the default)
-14460,all,,all,all,ether,,,false,false,true,false,--,switch,<boolean>,specify value in ether
-14480,all,,all,all,dollars,,,false,false,true,false,--,switch,<boolean>,specify value in US dollars
-14500,all,,all,all,raw,,,false,false,true,false,--,switch,<boolean>,report JSON data from the node with minimal processing
-14540,all,,all,all,fmt,,,false,false,true,true,--,flag,enum[none|json*|txt|csv|api],export format (where appropriate)
-14560,all,,all,all,api_mode,,,false,false,true,false,--,switch,<boolean>,simulate api_mode for testing
-14580,all,,all,all,to_file,,,false,false,true,false,--,switch,<boolean>,write the results to a temporary file and return the filename
-14600,all,,all,all,output,,,false,false,true,false,--,flag,<path>,write the results to file 'fn' and return the filename. (If the file exists&#44; it will be overwritten. If 'fn' ends with .gz&#44; the resulting file will be zipped )
-14620,all,,all,all,file,,,false,false,true,false,--,flag,<path>,specify multiple sets of command line options in a file.
-14640,all,,all,all,noop,,,false,false,true,false,--,switch,<boolean>,non operation (for testing for example)
-14660,all,,all,all,help,h,,false,false,true,true,--,switch,<boolean>,get help on this command

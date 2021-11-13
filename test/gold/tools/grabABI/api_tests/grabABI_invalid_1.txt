@@ -1,6 +1,5 @@
 {
   "errors": [
-    "The address option (0x00001) must be 20 bytes long.",
-    "Please specify at least one valid Ethereum address."
+    "At least one valid Ethereum address is required"
   ]
 }

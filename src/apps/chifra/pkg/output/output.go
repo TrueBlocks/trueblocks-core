@@ -29,13 +29,6 @@ import (
 var OutputFn string
 var Format string
 
-// WithFormat interface makes it possible to query data from a type
-// depending on the format
-type WithFormat interface {
-	GetCsvOutput() *CsvFormatted
-	GetJsonOutput() interface{}
-}
-
 type Meta struct {
 	Unripe    string `json:"unripe"`
 	Ripe      string `json:"ripe"`
@@ -125,4 +118,53 @@ func GetRowTemplate(t *reflect.Type) (*template.Template, error) {
 	// fmt.Println(sb.String() + "\n")
 	tt, err := template.New("").Parse(sb.String() + "\n")
 	return tt, err
+}
+
+// ToStringRecords uses Reflect API to read data from the provided slice of structs and
+// turns it into a slice of string slices that can be later passed to encoding package
+// writers to convert between different output formats
+func ToStringRecords(data interface{}, quote bool) ([][]string, error) {
+	var records [][]string
+	// We can quote the data now, so that we don't have to loop over it again
+	// later.
+	format := "%v"
+	if quote {
+		format = `"%v"`
+	}
+	header := []string{}
+	// We only support slice of structs
+	slice := reflect.ValueOf(data)
+	if slice.Kind() != reflect.Slice {
+		return nil, fmt.Errorf("%s is not a structure", slice.Type().Name())
+	}
+	insideType := reflect.TypeOf(slice.Index(0).Interface())
+	if insideType.Kind() != reflect.Struct {
+		return nil, fmt.Errorf("%s is not a struct", insideType.Name())
+	}
+
+	for i := 0; i < slice.Len(); i++ {
+		var record []string
+		// Read the struct
+		content := slice.Index(i).Interface()
+		strct := reflect.ValueOf(content)
+
+		for j := 0; j < strct.NumField(); j++ {
+			// Now read each field from it and put into record
+			field := strct.Field(j).Interface()
+			record = append(record, fmt.Sprintf(format, field))
+
+			// If it's our first iteration, we save the struct's key names
+			// to use them as headers
+			if i == 0 {
+				header = append(header, fmt.Sprintf(format, MakeFirstLowerCase(insideType.Field(j).Name)))
+			}
+		}
+		records = append(records, record)
+	}
+
+	result := [][]string{
+		header,
+	}
+	result = append(result, records...)
+	return result, nil
 }

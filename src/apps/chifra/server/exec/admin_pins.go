@@ -10,7 +10,7 @@ import (
 )
 
 // AdminPins runs pin-operating functions depending on query parameters
-func AdminPins(request *http.Request) (*manifest.PinsList, error) {
+func AdminPins(request *http.Request) ([]manifest.PinDescriptor, error) {
 	query := request.URL.Query()
 	opts := &pins.PinsOptionsType{}
 
@@ -49,12 +49,12 @@ func AdminPins(request *http.Request) (*manifest.PinsList, error) {
 	if err != nil {
 		return nil, err
 	}
-	var responseBody *manifest.PinsList
+	var responseBody []manifest.PinDescriptor
 	var responseError error
 
 	if opts.List {
 		pins, err := pins.List()
-		responseBody = &pins
+		responseBody = pins
 		responseError = err
 	}
 
