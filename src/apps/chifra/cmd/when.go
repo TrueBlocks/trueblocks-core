@@ -18,6 +18,7 @@ package cmd
 import (
 	"os"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
 	whenPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/when"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
@@ -49,19 +50,18 @@ Notes:
 
 func init() {
 	whenCmd.Flags().SortFlags = false
-	whenCmd.PersistentFlags().SortFlags = false
 	whenCmd.Flags().BoolVarP(&whenPkg.Options.List, "list", "l", false, "export a list of the 'special' blocks")
 	whenCmd.Flags().BoolVarP(&whenPkg.Options.Timestamps, "timestamps", "t", false, "ignore other options and generate timestamps only")
 	whenCmd.Flags().BoolVarP(&whenPkg.Options.Check, "check", "c", false, "available only with --timestamps, checks the validity of the timestamp data (hidden)")
 	whenCmd.Flags().BoolVarP(&whenPkg.Options.Fix, "fix", "f", false, "available only with --timestamps, fixes incorrect timestamps if any (hidden)")
 	whenCmd.Flags().BoolVarP(&whenPkg.Options.Count, "count", "u", false, "available only with --timestamps, returns the number of timestamps in the cache (hidden)")
-	if !utils.IsTestMode() {
+	if os.Getenv("TEST_MODE") != "true" {
 		whenCmd.Flags().MarkHidden("check")
 		whenCmd.Flags().MarkHidden("fix")
 		whenCmd.Flags().MarkHidden("count")
 	}
 	whenCmd.Flags().SortFlags = false
-	whenCmd.PersistentFlags().SortFlags = false
+	root.GlobalOptions(whenCmd, &whenPkg.Options.Globals)
 
 	whenCmd.SetUsageTemplate(UsageWithNotes(notesWhen))
 	whenCmd.SetOut(os.Stderr)

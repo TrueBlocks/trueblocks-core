@@ -9,11 +9,11 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib/manifest"
 )
 
-// AdminPins runs pin-operating functions depending on query parameters
-func AdminPins(request *http.Request) ([]manifest.PinDescriptor, error) {
-	query := request.URL.Query()
+func ServePins(r *http.Request) ([]manifest.PinDescriptor, error) {
+	query := r.URL.Query()
 	opts := &pins.PinsOptionsType{}
 
+	var err error
 	for key, value := range query {
 		switch key {
 		case "init":
@@ -25,11 +25,10 @@ func AdminPins(request *http.Request) ([]manifest.PinDescriptor, error) {
 		case "share":
 			opts.Share = true
 		case "sleep":
-			num, err := strconv.ParseFloat(value[0], 64)
+			opts.Sleep, err = strconv.ParseFloat(value[0], 64)
 			if err != nil {
 				return nil, err
 			}
-			opts.Sleep = num
 		case "freshen":
 			opts.Freshen = true
 		case "remote":
@@ -39,28 +38,26 @@ func AdminPins(request *http.Request) ([]manifest.PinDescriptor, error) {
 		}
 	}
 
-	err := opts.ValidateOptions()
-	if err != nil {
-		return nil, err
-	}
-
 	// Make sure all required directories exist
 	err = pinlib.EstablishIndexFolders()
 	if err != nil {
 		return nil, err
 	}
+
+	err = opts.ValidateOptionsPins()
+	if err != nil {
+		return nil, err
+	}
+
 	var responseBody []manifest.PinDescriptor
 	var responseError error
 
 	if opts.List {
-		pins, err := pins.List()
-		responseBody = pins
-		responseError = err
+		responseBody, responseError = pins.ListInternal(opts)
 	}
 
 	if opts.Init {
-		err := pins.Init(opts.All)
-		responseError = err
+		responseError = pins.InitInternal(opts)
 	}
 
 	if responseError != nil {

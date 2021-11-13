@@ -23,8 +23,8 @@ import (
 	"os/user"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	execPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/server/exec"
 )
 
 // GetCommandPath returns full path the the given tool
@@ -74,13 +74,13 @@ func CallOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd s
 	}
 
 	// If the server was started with --verbose and the command does not have --verbose...
-	if root.Options.Verbose && !hasVerbose {
+	if Options.Globals.Verbose && !hasVerbose {
 		allDogs = append(allDogs, "--verbose")
 	}
 
 	// Do the actual call
 	cmd := exec.Command(tbCmd, allDogs...)
-	if root.Options.Verbose {
+	if Options.Globals.Verbose {
 		log.Print(Yellow, "Calling: ", cmd, Off)
 	}
 
@@ -151,7 +151,7 @@ func CallOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd s
 		// Remove Cobra's "Error:\n" decorator
 		parsed := strings.Replace(output, "Error:", "", 1)
 		parsed = strings.Trim(parsed, " \n")
-		RespondWithError(w, http.StatusBadRequest, errors.New(parsed))
+		execPkg.RespondWithError(w, http.StatusBadRequest, os.Getenv("TEST_MODE") == "true", errors.New(parsed))
 		return
 	}
 	if strings.Contains(output, "\"errors\":") {

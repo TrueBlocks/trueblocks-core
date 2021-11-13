@@ -17,11 +17,17 @@ package export
  */
 
 import (
+	"net/http"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 type ExportOptionsType struct {
+	Addrs        []string
+	Topics       []string
+	Fourbytes    []string
 	Appearances  bool
 	Transactions bool
 	Receipts     bool
@@ -52,11 +58,15 @@ type ExportOptionsType struct {
 	MaxTraces    uint64
 	FirstBlock   uint64
 	LastBlock    uint64
+	Globals      root.RootOptionsType
 }
 
 var Options ExportOptionsType
 
 func (opts *ExportOptionsType) TestLog() {
+	logger.TestLog(len(opts.Addrs) > 0, "Addrs: ", opts.Addrs)
+	logger.TestLog(len(opts.Topics) > 0, "Topics: ", opts.Topics)
+	logger.TestLog(len(opts.Fourbytes) > 0, "Fourbytes: ", opts.Fourbytes)
 	logger.TestLog(opts.Appearances, "Appearances: ", opts.Appearances)
 	logger.TestLog(opts.Transactions, "Transactions: ", opts.Transactions)
 	logger.TestLog(opts.Receipts, "Receipts: ", opts.Receipts)
@@ -87,4 +97,82 @@ func (opts *ExportOptionsType) TestLog() {
 	logger.TestLog(opts.MaxTraces != 250, "MaxTraces: ", opts.MaxTraces)
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
 	logger.TestLog(opts.LastBlock != utils.NOPOS, "LastBlock: ", opts.LastBlock)
+	opts.Globals.TestLog()
+}
+
+func FromRequest(r *http.Request) *ExportOptionsType {
+	opts := &ExportOptionsType{}
+	for key, value := range r.URL.Query() {
+		switch key {
+		case "addrs":
+			opts.Addrs = append(opts.Addrs, value...)
+		case "topics":
+			opts.Topics = append(opts.Topics, value...)
+		case "fourbytes":
+			opts.Fourbytes = append(opts.Fourbytes, value...)
+		case "appearances":
+			opts.Appearances = true
+		case "transactions":
+			opts.Transactions = true
+		case "receipts":
+			opts.Receipts = true
+		case "logs":
+			opts.Logs = true
+		case "traces":
+			opts.Traces = true
+		case "statements":
+			opts.Statements = true
+		case "neighbors":
+			opts.Neighbors = true
+		case "accounting":
+			opts.Accounting = true
+		case "articulate":
+			opts.Articulate = true
+		case "cache":
+			opts.Cache = true
+		case "cachetraces":
+			opts.CacheTraces = true
+		case "factory":
+			opts.Factory = true
+		case "count":
+			opts.Count = true
+		case "firstrecord":
+			opts.FirstRecord = root.ToUint(value[0])
+		case "maxrecords":
+			opts.MaxRecords = root.ToUint(value[0])
+		case "relevant":
+			opts.Relevant = true
+		case "emitter":
+			opts.Emitter = append(opts.Emitter, value...)
+		case "topic":
+			opts.Topic = append(opts.Topic, value...)
+		case "clean":
+			opts.Clean = true
+		case "freshen":
+			opts.Freshen = true
+		case "staging":
+			opts.Staging = true
+		case "unripe":
+			opts.Unripe = true
+		case "load":
+			opts.Load = value[0]
+		case "reversed":
+			opts.Reversed = true
+		case "bydate":
+			opts.ByDate = true
+		case "summarizeby":
+			opts.SummarizeBy = value[0]
+		case "skipddos":
+			opts.SkipDdos = true
+		case "maxtraces":
+			opts.MaxTraces = root.ToUint(value[0])
+		case "firstblock":
+			opts.FirstBlock = root.ToUint(value[0])
+		case "lastblock":
+			opts.LastBlock = root.ToUint(value[0])
+		}
+	}
+	opts.Globals = *root.FromRequest(r)
+
+	return opts
 }

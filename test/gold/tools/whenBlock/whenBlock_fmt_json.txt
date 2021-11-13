@@ -1,4 +1,5 @@
 chifra when  1001001 --fmt json
+TEST[DATE|TIME] Format:  json
 { "data": [
   {
     "blockNumber": 1001001,

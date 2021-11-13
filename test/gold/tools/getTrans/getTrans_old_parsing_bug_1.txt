@@ -1,5 +1,6 @@
 chifra transactions  0xfa62ab036f36b4755bfa0d6e3e641d08daa7e41e95b0c1f2246485702319efb8 --fmt json --articulate
 TEST[DATE|TIME] Articulate:  true
+TEST[DATE|TIME] Format:  json
 { "data": [
 
 level: 1

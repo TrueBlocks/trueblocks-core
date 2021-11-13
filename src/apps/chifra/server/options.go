@@ -17,15 +17,33 @@ package serve
  */
 
 import (
+	"net/http"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
 type ServeOptionsType struct {
-	Port string
+	Port    string
+	Globals root.RootOptionsType
 }
 
 var Options ServeOptionsType
 
 func (opts *ServeOptionsType) TestLog() {
 	logger.TestLog(len(opts.Port) > 0, "Port: ", opts.Port)
+	opts.Globals.TestLog()
+}
+
+func FromRequest(r *http.Request) *ServeOptionsType {
+	opts := &ServeOptionsType{}
+	for key, value := range r.URL.Query() {
+		switch key {
+		case "port":
+			opts.Port = value[0]
+		}
+	}
+	opts.Globals = *root.FromRequest(r)
+
+	return opts
 }

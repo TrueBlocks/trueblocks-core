@@ -1,4 +1,6 @@
 chifra abis  0xef638b4305b8a1620f4e0e562e127f1181ae16d2 --fmt json
+TEST[DATE|TIME] Addrs:  [0xef638b4305b8a1620f4e0e562e127f1181ae16d2]
+TEST[DATE|TIME] Format:  json
 { "data": [
 {
   "name": "ConfirmationNeeded",

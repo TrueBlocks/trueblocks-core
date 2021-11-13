@@ -19,11 +19,9 @@ Arguments:
 Flags:
   -l, --list         export a list of the 'special' blocks
   -t, --timestamps   ignore other options and generate timestamps only
-
-Global Flags:
   -x, --fmt string   export format, one of [none|json*|txt|csv|api]
-  -h, --help         display this help screen
   -v, --verbose      enable verbose (increase detail with --log_level)
+  -h, --help         display this help screen
 
 Notes:
   - The block list may contain any combination of number, hash, date, special named blocks.

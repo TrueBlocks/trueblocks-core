@@ -18,6 +18,7 @@ package cmd
 import (
 	"os"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
 	exportPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/export"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
@@ -54,7 +55,6 @@ Notes:
 
 func init() {
 	exportCmd.Flags().SortFlags = false
-	exportCmd.PersistentFlags().SortFlags = false
 	exportCmd.Flags().BoolVarP(&exportPkg.Options.Appearances, "appearances", "p", false, "export a list of appearances")
 	exportCmd.Flags().BoolVarP(&exportPkg.Options.Transactions, "transactions", "T", false, "export the actual transactional data (the default)")
 	exportCmd.Flags().BoolVarP(&exportPkg.Options.Receipts, "receipts", "r", false, "export receipts instead of transactional data")
@@ -86,7 +86,7 @@ One of [ yearly | quarterly | monthly | weekly | daily | hourly | blockly | tx ]
 	exportCmd.Flags().Uint64VarP(&exportPkg.Options.MaxTraces, "max_traces", "m", 250, "if --skip_ddos is on, this many traces defines what a ddos transaction is (hidden)")
 	exportCmd.Flags().Uint64VarP(&exportPkg.Options.FirstBlock, "first_block", "F", 0, "first block to process (inclusive) (hidden)")
 	exportCmd.Flags().Uint64VarP(&exportPkg.Options.LastBlock, "last_block", "L", 0, "last block to process (inclusive) (hidden)")
-	if !utils.IsTestMode() {
+	if os.Getenv("TEST_MODE") != "true" {
 		exportCmd.Flags().MarkHidden("freshen")
 		exportCmd.Flags().MarkHidden("staging")
 		exportCmd.Flags().MarkHidden("unripe")
@@ -100,7 +100,7 @@ One of [ yearly | quarterly | monthly | weekly | daily | hourly | blockly | tx ]
 		exportCmd.Flags().MarkHidden("last_block")
 	}
 	exportCmd.Flags().SortFlags = false
-	exportCmd.PersistentFlags().SortFlags = false
+	root.GlobalOptions(exportCmd, &exportPkg.Options.Globals)
 
 	exportCmd.SetUsageTemplate(UsageWithNotes(notesExport))
 	exportCmd.SetOut(os.Stderr)

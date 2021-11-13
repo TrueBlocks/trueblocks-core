@@ -18,6 +18,7 @@ package cmd
 import (
 	"os"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
 	initPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/init"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
@@ -46,10 +47,9 @@ Notes:
 
 func init() {
 	initCmd.Flags().SortFlags = false
-	initCmd.PersistentFlags().SortFlags = false
 	initCmd.Flags().BoolVarP(&initPkg.Options.All, "all", "a", false, "in addition to Bloom filters, download full index chunks")
 	initCmd.Flags().SortFlags = false
-	initCmd.PersistentFlags().SortFlags = false
+	root.GlobalOptions(initCmd, &initPkg.Options.Globals)
 
 	initCmd.SetUsageTemplate(UsageWithNotes(notesInit))
 	initCmd.SetOut(os.Stderr)

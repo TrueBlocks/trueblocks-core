@@ -18,6 +18,7 @@ package cmd
 import (
 	"os"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
 	quotesPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/quotes"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
@@ -45,7 +46,6 @@ Notes:
 
 func init() {
 	quotesCmd.Flags().SortFlags = false
-	quotesCmd.PersistentFlags().SortFlags = false
 	quotesCmd.Flags().BoolVarP(&quotesPkg.Options.Freshen, "freshen", "f", false, "Freshen price database")
 	quotesCmd.Flags().StringVarP(&quotesPkg.Options.Period, "period", "p", "", `increment of display
 One of [ 5 | 15 | 30 | 60 | 120 | 240 | 1440 | 10080 | hourly | daily | weekly ]`)
@@ -53,7 +53,7 @@ One of [ 5 | 15 | 30 | 60 | 120 | 240 | 1440 | 10080 | hourly | daily | weekly ]
 	quotesCmd.Flags().StringVarP(&quotesPkg.Options.Feed, "feed", "e", "", `the feed for the price data
 One of [ poloniex | maker | tellor ]`)
 	quotesCmd.Flags().SortFlags = false
-	quotesCmd.PersistentFlags().SortFlags = false
+	root.GlobalOptions(quotesCmd, &quotesPkg.Options.Globals)
 
 	quotesCmd.SetUsageTemplate(UsageWithNotes(notesQuotes))
 	quotesCmd.SetOut(os.Stderr)

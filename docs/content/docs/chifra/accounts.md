@@ -2,7 +2,7 @@
 title: "Accounts"
 description: ""
 lead: ""
-date: 2021-11-12T20:43:57
+date: 2021-11-13T14:28:14
 lastmod:
   - :git
   - lastmod
@@ -39,12 +39,10 @@ Arguments:
   addrs - one or more addresses (0x...) to list (required)
 
 Flags:
-  -U, --count   present only the number of records
-
-Global Flags:
+  -U, --count        present only the number of records
   -x, --fmt string   export format, one of [none|json*|txt|csv|api]
-  -h, --help         display this help screen
   -v, --verbose      enable verbose (increase detail with --log_level)
+  -h, --help         display this help screen
 ```
 
 **Source code**: [`apps/acctExport`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/acctExport)
@@ -91,11 +89,9 @@ Flags:
       --emitter strings     for log export only, export only logs if emitted by one of these address(es)
       --topic strings       for log export only, export only logs with this topic(s)
       --clean               clean (i.e. remove duplicate appearances) from all existing monitors
-
-Global Flags:
-  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
-  -h, --help         display this help screen
-  -v, --verbose      enable verbose (increase detail with --log_level)
+  -x, --fmt string          export format, one of [none|json*|txt|csv|api]
+  -v, --verbose             enable verbose (increase detail with --log_level)
+  -h, --help                display this help screen
 
 Notes:
   - An address must start with '0x' and be forty-two characters long.
@@ -132,11 +128,9 @@ Flags:
       --delete        delete a monitor, but do not remove it
       --undelete      undelete a previously deleted monitor
       --remove        remove a previously deleted monitor
-
-Global Flags:
-  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
-  -h, --help         display this help screen
-  -v, --verbose      enable verbose (increase detail with --log_level)
+  -x, --fmt string    export format, one of [none|json*|txt|csv|api]
+  -v, --verbose       enable verbose (increase detail with --log_level)
+  -h, --help          display this help screen
 
 Notes:
   - An address must start with '0x' and be forty-two characters long.
@@ -175,11 +169,9 @@ Flags:
   -a, --addr          display only addresses in the results (useful for scripting)
   -s, --collections   display collections data
   -g, --tags          export the list of tags and subtags only
-
-Global Flags:
-  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
-  -h, --help         display this help screen
-  -v, --verbose      enable verbose (increase detail with --log_level)
+  -x, --fmt string    export format, one of [none|json*|txt|csv|api]
+  -v, --verbose       enable verbose (increase detail with --log_level)
+  -h, --help          display this help screen
 
 Notes:
   - The tool will accept up to three terms, each of which must match against any field in the database.
@@ -214,11 +206,9 @@ Flags:
   -k, --known          load common 'known' ABIs from cache
   -s, --sol            extract the abi definition from the provided .sol file(s)
   -f, --find strings   search for function or event declarations given a four- or 32-byte code(s)
-
-Global Flags:
-  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
-  -h, --help         display this help screen
-  -v, --verbose      enable verbose (increase detail with --log_level)
+  -x, --fmt string     export format, one of [none|json*|txt|csv|api]
+  -v, --verbose        enable verbose (increase detail with --log_level)
+  -h, --help           display this help screen
 
 Notes:
   - For the --sol option, place the solidity files in the current working folder.

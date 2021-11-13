@@ -17,23 +17,53 @@ package abis
  */
 
 import (
+	"net/http"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
 type AbisOptionsType struct {
+	Addrs   []string
 	Known   bool
 	Sol     bool
 	Find    []string
 	Source  bool
 	Classes bool
+	Globals root.RootOptionsType
 }
 
 var Options AbisOptionsType
 
 func (opts *AbisOptionsType) TestLog() {
+	logger.TestLog(len(opts.Addrs) > 0, "Addrs: ", opts.Addrs)
 	logger.TestLog(opts.Known, "Known: ", opts.Known)
 	logger.TestLog(opts.Sol, "Sol: ", opts.Sol)
 	logger.TestLog(len(opts.Find) > 0, "Find: ", opts.Find)
 	logger.TestLog(opts.Source, "Source: ", opts.Source)
 	logger.TestLog(opts.Classes, "Classes: ", opts.Classes)
+	opts.Globals.TestLog()
+}
+
+func FromRequest(r *http.Request) *AbisOptionsType {
+	opts := &AbisOptionsType{}
+	for key, value := range r.URL.Query() {
+		switch key {
+		case "addrs":
+			opts.Addrs = append(opts.Addrs, value...)
+		case "known":
+			opts.Known = true
+		case "sol":
+			opts.Sol = true
+		case "find":
+			opts.Find = append(opts.Find, value...)
+		case "source":
+			opts.Source = true
+		case "classes":
+			opts.Classes = true
+		}
+	}
+	opts.Globals = *root.FromRequest(r)
+
+	return opts
 }

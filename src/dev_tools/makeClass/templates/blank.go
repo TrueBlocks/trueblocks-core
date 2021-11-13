@@ -18,6 +18,7 @@ package cmd
 import (
 	"os"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
 [{IMPORTS}]	"github.com/spf13/cobra"
 )
 
@@ -38,14 +39,10 @@ var long[{PROPER}] = `[{LONG}]`
 
 var notes[{PROPER}] = `[{POSTNOTES}]`
 
-type [{ROUTE}]OptionsType struct {
-[{OPT_FIELDS}]}
-
 [{OPT_DEF}]func init() {
 	[{ROUTE}]Cmd.Flags().SortFlags = false
-	[{ROUTE}]Cmd.PersistentFlags().SortFlags = false
 [{SET_OPTS}][{HIDDEN}]	[{ROUTE}]Cmd.Flags().SortFlags = false
-	[{ROUTE}]Cmd.PersistentFlags().SortFlags = false
+	root.GlobalOptions([{ROUTE}]Cmd, &[{ROUTE}]Pkg.Options.Globals)
 
 	[{ROUTE}]Cmd.SetUsageTemplate(UsageWithNotes(notes[{PROPER}]))
 	[{ROUTE}]Cmd.SetOut(os.Stderr)

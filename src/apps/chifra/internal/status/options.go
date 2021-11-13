@@ -17,11 +17,15 @@ package status
  */
 
 import (
+	"net/http"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 type StatusOptionsType struct {
+	Modes     []string
 	Details   bool
 	Types     []string
 	Depth     uint64
@@ -32,11 +36,13 @@ type StatusOptionsType struct {
 	SetConfig bool
 	TestStart uint64
 	TestEnd   uint64
+	Globals   root.RootOptionsType
 }
 
 var Options StatusOptionsType
 
 func (opts *StatusOptionsType) TestLog() {
+	logger.TestLog(len(opts.Modes) > 0, "Modes: ", opts.Modes)
 	logger.TestLog(opts.Details, "Details: ", opts.Details)
 	logger.TestLog(len(opts.Types) > 0, "Types: ", opts.Types)
 	logger.TestLog(opts.Depth != utils.NOPOS, "Depth: ", opts.Depth)
@@ -46,4 +52,38 @@ func (opts *StatusOptionsType) TestLog() {
 	logger.TestLog(opts.SetConfig, "SetConfig: ", opts.SetConfig)
 	logger.TestLog(opts.TestStart != 0, "TestStart: ", opts.TestStart)
 	logger.TestLog(opts.TestEnd != utils.NOPOS, "TestEnd: ", opts.TestEnd)
+	opts.Globals.TestLog()
+}
+
+func FromRequest(r *http.Request) *StatusOptionsType {
+	opts := &StatusOptionsType{}
+	for key, value := range r.URL.Query() {
+		switch key {
+		case "modes":
+			opts.Modes = append(opts.Modes, value...)
+		case "details":
+			opts.Details = true
+		case "types":
+			opts.Types = append(opts.Types, value...)
+		case "depth":
+			opts.Depth = root.ToUint(value[0])
+		case "report":
+			opts.Report = true
+		case "terse":
+			opts.Terse = true
+		case "migrate":
+			opts.Migrate = append(opts.Migrate, value...)
+		case "getconfig":
+			opts.GetConfig = true
+		case "setconfig":
+			opts.SetConfig = true
+		case "teststart":
+			opts.TestStart = root.ToUint(value[0])
+		case "testend":
+			opts.TestEnd = root.ToUint(value[0])
+		}
+	}
+	opts.Globals = *root.FromRequest(r)
+
+	return opts
 }

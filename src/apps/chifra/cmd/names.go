@@ -18,6 +18,7 @@ package cmd
 import (
 	"os"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
 	namesPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/names"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
@@ -49,7 +50,6 @@ Notes:
 
 func init() {
 	namesCmd.Flags().SortFlags = false
-	namesCmd.PersistentFlags().SortFlags = false
 	namesCmd.Flags().BoolVarP(&namesPkg.Options.Expand, "expand", "e", false, "expand search to include all fields (search name, address, and symbol otherwise)")
 	namesCmd.Flags().BoolVarP(&namesPkg.Options.MatchCase, "match_case", "m", false, "do case-sensitive search")
 	namesCmd.Flags().BoolVarP(&namesPkg.Options.All, "all", "l", false, "include all accounts in the search")
@@ -67,7 +67,7 @@ func init() {
 	namesCmd.Flags().BoolVarP(&namesPkg.Options.Update, "update", "", false, "edit an existing name (hidden)")
 	namesCmd.Flags().BoolVarP(&namesPkg.Options.Remove, "remove", "", false, "remove a previously deleted name (hidden)")
 	namesCmd.Flags().BoolVarP(&namesPkg.Options.Undelete, "undelete", "", false, "undelete a previously deleted name (hidden)")
-	if !utils.IsTestMode() {
+	if os.Getenv("TEST_MODE") != "true" {
 		namesCmd.Flags().MarkHidden("to_custom")
 		namesCmd.Flags().MarkHidden("clean")
 		namesCmd.Flags().MarkHidden("autoname")
@@ -78,7 +78,7 @@ func init() {
 		namesCmd.Flags().MarkHidden("undelete")
 	}
 	namesCmd.Flags().SortFlags = false
-	namesCmd.PersistentFlags().SortFlags = false
+	root.GlobalOptions(namesCmd, &namesPkg.Options.Globals)
 
 	namesCmd.SetUsageTemplate(UsageWithNotes(notesNames))
 	namesCmd.SetOut(os.Stderr)

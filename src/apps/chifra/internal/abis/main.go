@@ -28,7 +28,7 @@ func Run(cmd *cobra.Command, args []string) error {
 	}
 
 	if len(Options.Find) > 0 {
-		HandleFind(Options.Find) // , root.Options.NoHeader)
+		HandleFind(&Options) // , root.Options.NoHeader)
 		return nil
 	}
 
@@ -38,9 +38,6 @@ func Run(cmd *cobra.Command, args []string) error {
 	}
 	if Options.Sol {
 		options += " --sol"
-	}
-	for _, t := range Options.Find {
-		options += " --find " + t
 	}
 	if Options.Source {
 		options += " --source"
@@ -52,6 +49,6 @@ func Run(cmd *cobra.Command, args []string) error {
 	for _, arg := range args {
 		arguments += " " + arg
 	}
-	root.PassItOn("grabABI", options, arguments)
-	return nil
+
+	return root.PassItOn2("grabABI", &Options.Globals, options, arguments)
 }

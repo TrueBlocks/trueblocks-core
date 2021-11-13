@@ -16,22 +16,33 @@ package abis
 import (
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/spf13/cobra"
 )
 
 func Validate(cmd *cobra.Command, args []string) error {
-	return ValidateOptions(&Options, args)
+	output.Format = Options.Globals.Format
+	Options.Addrs = args
+	return Options.ValidateOptionsAbis()
 }
 
-func ValidateOptions(opts *AbisOptionsType, args []string) error {
+func (opts *AbisOptionsType) ValidateOptionsAbis() error {
 	if opts.Classes {
 		return validate.Usage("The {0} option is not available{1}.", "--classes", " (not implemented)")
 	}
 
 	if len(opts.Find) == 0 && !opts.Known {
-		err := validate.ValidateAtLeastOneAddr(args)
+		err := validate.ValidateAtLeastOneAddr(opts.Addrs)
+		if err != nil {
+			return err
+		}
+	}
+
+	if len(opts.Find) == 0 && !opts.Known {
+		err := validate.ValidateAtLeastOneAddr(opts.Addrs)
 		if err != nil {
 			return err
 		}
@@ -42,7 +53,7 @@ func ValidateOptions(opts *AbisOptionsType, args []string) error {
 	}
 
 	if opts.Sol {
-		for _, sol := range args {
+		for _, sol := range opts.Addrs {
 			if sol == "" {
 				continue
 			}
@@ -76,5 +87,5 @@ func ValidateOptions(opts *AbisOptionsType, args []string) error {
 
 	opts.TestLog()
 
-	return nil // root.ValidateGlobals(cmd, args)
+	return root.ValidateGlobals2(&opts.Globals, opts.Addrs)
 }

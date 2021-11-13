@@ -14,6 +14,8 @@ package root
  *-------------------------------------------------------------------------------------------*/
 
 import (
+	"strconv"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
@@ -30,4 +32,26 @@ func ValidateGlobals(cmd *cobra.Command, args []string) error {
 		return err
 	}
 	return nil
+}
+
+func ValidateGlobals2(opts *RootOptionsType, args []string) error {
+	if len(opts.File) > 0 && !utils.FileExists(opts.File) {
+		return validate.Usage("The {0} option ({1}) must {2}", "file", opts.File, "exist")
+	}
+
+	err := validate.ValidateEnum("--fmt", opts.Format, "[json|txt|csv|api]")
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func ToFloat(val string) float64 {
+	f, _ := strconv.ParseFloat(val, 64)
+	return f
+}
+
+func ToUint(val string) uint64 {
+	f, _ := strconv.ParseUint(val, 10, 64)
+	return f
 }

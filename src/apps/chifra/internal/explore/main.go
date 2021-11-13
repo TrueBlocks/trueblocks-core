@@ -15,6 +15,7 @@ package explore
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
@@ -23,7 +24,7 @@ import (
 func Run(cmd *cobra.Command, args []string) error {
 	for _, url := range urls {
 		fmt.Printf("Opening %s\n", url.getUrl())
-		if !utils.IsTestMode() {
+		if os.Getenv("TEST_MODE") != "true" {
 			utils.OpenBrowser(url.getUrl())
 		}
 	}

@@ -18,6 +18,7 @@ package cmd
 import (
 	"os"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
 	statePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/state"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
@@ -54,19 +55,18 @@ Notes:
 
 func init() {
 	stateCmd.Flags().SortFlags = false
-	stateCmd.PersistentFlags().SortFlags = false
 	stateCmd.Flags().StringSliceVarP(&statePkg.Options.Parts, "parts", "p", nil, `control which state to export
 One or more of [ none | some | all | balance | nonce | code | storage | deployed | accttype ]`)
 	stateCmd.Flags().BoolVarP(&statePkg.Options.Changes, "changes", "c", false, "only report a balance when it changes from one block to the next")
 	stateCmd.Flags().BoolVarP(&statePkg.Options.NoZero, "no_zero", "n", false, "suppress the display of zero balance accounts")
 	stateCmd.Flags().StringVarP(&statePkg.Options.Call, "call", "a", "", "a bang-separated string consisting of address!4-byte!bytes (hidden)")
 	stateCmd.Flags().StringVarP(&statePkg.Options.ProxyFor, "proxy_for", "r", "", "for the --call option only, redirects calls to this implementation (hidden)")
-	if !utils.IsTestMode() {
+	if os.Getenv("TEST_MODE") != "true" {
 		stateCmd.Flags().MarkHidden("call")
 		stateCmd.Flags().MarkHidden("proxy_for")
 	}
 	stateCmd.Flags().SortFlags = false
-	stateCmd.PersistentFlags().SortFlags = false
+	root.GlobalOptions(stateCmd, &statePkg.Options.Globals)
 
 	stateCmd.SetUsageTemplate(UsageWithNotes(notesState))
 	stateCmd.SetOut(os.Stderr)

@@ -28,51 +28,36 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-type Function struct {
-	Encoding  string `json:"encoding,omitempty"`
-	Signature string `json:"signature,omitempty"`
-}
-
-type ScanCounter struct {
-	Visited uint64
-	Found   uint64
-	Wanted  uint64
-	Max     uint64
-	Freq    uint64
-}
-
-func (v *ScanCounter) Satisfied() bool {
-	return v.Visited > v.Max || v.Found == v.Wanted
-}
-
-func (v *ScanCounter) Report(target *os.File, action, msg string) {
-	v.Visited++
-	if v.Visited%v.Freq != 0 {
-		return
+func HandleFind(opts *AbisOptionsType) {
+	results, err := FindInternal(opts)
+	if err != nil {
+		logger.Log(logger.Error, err)
 	}
-	fmt.Fprintf(target, "%s[%d-%d-%d] %s                                            \r", action, v.Visited, v.Max, (v.Max - v.Visited), msg)
+
+	err = output.Output(os.Stdout, opts.Globals.Format, results)
+	if err != nil {
+		logger.Log(logger.Error, err)
+	}
 }
 
-// Find tries to find matching ABIs
-func Find(arguments []string) []Function {
+func FindInternal(opts *AbisOptionsType) ([]Function, error) {
 	visits := ScanCounter{}
-	visits.Wanted = uint64(len(arguments))
+	visits.Wanted = uint64(len(opts.Find))
 	visits.Freq = 139419
 	visits.Max = 50000000
 
 	var results []Function
 
-	testMode := utils.IsTestMode()
+	testMode := os.Getenv("TEST_MODE") == "true"
 
 	var wg sync.WaitGroup
 	checkOne, _ := ants.NewPoolWithFunc(config.ReadBlockScrape().Dev.MaxPoolSize, func(testSig interface{}) {
 		defer wg.Done()
 		byts := []byte(testSig.(string))
 		sigBytes := crypto.Keccak256(byts)
-		for _, arg := range arguments {
+		for _, arg := range opts.Find {
 			if !testMode {
 				visits.Report(os.Stderr, "Scanning", testSig.(string))
 			}
@@ -87,7 +72,10 @@ func Find(arguments []string) []Function {
 	})
 	defer checkOne.Release()
 
-	sigsFile, _ := os.Open(config.GetConfigPath("abis/known-000/uniq_sigs.tab"))
+	sigsFile, err := os.Open(config.GetConfigPath("abis/known-000/uniq_sigs.tab"))
+	if err != nil {
+		return nil, err
+	}
 	defer func() {
 		sigsFile.Close()
 	}()
@@ -120,16 +108,34 @@ func Find(arguments []string) []Function {
 	}
 
 	defer wg.Wait()
-	return results
+	return results, nil
 }
 
-func HandleFind(arguments []string) {
-	results := Find(arguments)
+// TODO: These are not implemented
+// TODO: if Root.to_file == true, write the output to a filename
+// TODO: if Root.output == <fn>, write the output to a <fn>
 
-	// TODO: if Root.to_file == true, write the output to a filename
-	// TODO: if Root.output == <fn>, write the output to a <fn>
-	err := output.Output(os.Stdout, output.Format, results)
-	if err != nil {
-		logger.Log(logger.Error, err)
+type Function struct {
+	Encoding  string `json:"encoding,omitempty"`
+	Signature string `json:"signature,omitempty"`
+}
+
+type ScanCounter struct {
+	Visited uint64
+	Found   uint64
+	Wanted  uint64
+	Max     uint64
+	Freq    uint64
+}
+
+func (v *ScanCounter) Satisfied() bool {
+	return v.Visited > v.Max || v.Found == v.Wanted
+}
+
+func (v *ScanCounter) Report(target *os.File, action, msg string) {
+	v.Visited++
+	if v.Visited%v.Freq != 0 {
+		return
 	}
+	fmt.Fprintf(target, "%s[%d-%d-%d] %s                                            \r", action, v.Visited, v.Max, (v.Max - v.Visited), msg)
 }

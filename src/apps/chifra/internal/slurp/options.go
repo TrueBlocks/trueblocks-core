@@ -17,17 +17,45 @@ package slurp
  */
 
 import (
+	"net/http"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
 type SlurpOptionsType struct {
+	Addrs       []string
+	Blocks      []string
 	Types       []string
 	Appearances bool
+	Globals     root.RootOptionsType
 }
 
 var Options SlurpOptionsType
 
 func (opts *SlurpOptionsType) TestLog() {
+	logger.TestLog(len(opts.Addrs) > 0, "Addrs: ", opts.Addrs)
+	logger.TestLog(len(opts.Blocks) > 0, "Blocks: ", opts.Blocks)
 	logger.TestLog(len(opts.Types) > 0, "Types: ", opts.Types)
 	logger.TestLog(opts.Appearances, "Appearances: ", opts.Appearances)
+	opts.Globals.TestLog()
+}
+
+func FromRequest(r *http.Request) *SlurpOptionsType {
+	opts := &SlurpOptionsType{}
+	for key, value := range r.URL.Query() {
+		switch key {
+		case "addrs":
+			opts.Addrs = append(opts.Addrs, value...)
+		case "blocks":
+			opts.Blocks = append(opts.Blocks, value...)
+		case "types":
+			opts.Types = append(opts.Types, value...)
+		case "appearances":
+			opts.Appearances = true
+		}
+	}
+	opts.Globals = *root.FromRequest(r)
+
+	return opts
 }

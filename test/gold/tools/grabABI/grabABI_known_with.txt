@@ -1,4 +1,5 @@
 chifra abis  0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 --known
+TEST[DATE|TIME] Addrs:  [0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359]
 TEST[DATE|TIME] Known:  true
 encoding	type	name	signature	input_names	output_names
 0x000a094ae8a9b5dfda733d953ccb49a019296de5996153c514d292f3255621b2	event	SubdomainCreated	SubdomainCreated(address,address,string,string)	creator,owner,subdomain,domain,	,

@@ -1,5 +1,6 @@
 chifra blocks  2222222 --trace --fmt json
 TEST[DATE|TIME] Trace:  true
+TEST[DATE|TIME] Format:  json
 { "data": [
 {
   "blockHash": "0xc65ac7164218ff90ca8101c360f717c465da10bd63007b071c26dd7dedd41324",

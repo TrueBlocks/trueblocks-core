@@ -1,4 +1,6 @@
 chifra when  homestead --verbose --fmt json
+TEST[DATE|TIME] Verbose:  true
+TEST[DATE|TIME] Format:  json
 { "data": [
   {
     "blockNumber": 1150000,

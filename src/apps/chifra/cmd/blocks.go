@@ -18,6 +18,7 @@ package cmd
 import (
 	"os"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
 	blocksPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/blocks"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
@@ -54,7 +55,6 @@ Notes:
 
 func init() {
 	blocksCmd.Flags().SortFlags = false
-	blocksCmd.PersistentFlags().SortFlags = false
 	blocksCmd.Flags().BoolVarP(&blocksPkg.Options.Hashes, "hashes", "e", false, "display only transaction hashes, default is to display full transaction detail")
 	blocksCmd.Flags().BoolVarP(&blocksPkg.Options.Uncles, "uncles", "U", false, "display uncle blocks (if any) instead of the requested block")
 	blocksCmd.Flags().BoolVarP(&blocksPkg.Options.Trace, "trace", "t", false, "export the traces from the block as opposed to the block data")
@@ -69,7 +69,7 @@ func init() {
 	blocksCmd.Flags().BoolVarP(&blocksPkg.Options.Cache, "cache", "o", false, "force a write of the block to the cache")
 	blocksCmd.Flags().Uint64VarP(&blocksPkg.Options.List, "list", "l", 0, "summary list of blocks running backwards from latest block minus num (hidden)")
 	blocksCmd.Flags().Uint64VarP(&blocksPkg.Options.ListCount, "list_count", "C", 20, "the number of blocks to report for --list option (hidden)")
-	if !utils.IsTestMode() {
+	if os.Getenv("TEST_MODE") != "true" {
 		blocksCmd.Flags().MarkHidden("logs")
 		blocksCmd.Flags().MarkHidden("emitter")
 		blocksCmd.Flags().MarkHidden("topic")
@@ -79,7 +79,7 @@ func init() {
 		blocksCmd.Flags().MarkHidden("list_count")
 	}
 	blocksCmd.Flags().SortFlags = false
-	blocksCmd.PersistentFlags().SortFlags = false
+	root.GlobalOptions(blocksCmd, &blocksPkg.Options.Globals)
 
 	blocksCmd.SetUsageTemplate(UsageWithNotes(notesBlocks))
 	blocksCmd.SetOut(os.Stderr)

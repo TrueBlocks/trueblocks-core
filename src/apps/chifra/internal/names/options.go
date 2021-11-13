@@ -17,10 +17,14 @@ package names
  */
 
 import (
+	"net/http"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
 type NamesOptionsType struct {
+	Terms       []string
 	Expand      bool
 	MatchCase   bool
 	All         bool
@@ -38,11 +42,13 @@ type NamesOptionsType struct {
 	Update      bool
 	Remove      bool
 	Undelete    bool
+	Globals     root.RootOptionsType
 }
 
 var Options NamesOptionsType
 
 func (opts *NamesOptionsType) TestLog() {
+	logger.TestLog(len(opts.Terms) > 0, "Terms: ", opts.Terms)
 	logger.TestLog(opts.Expand, "Expand: ", opts.Expand)
 	logger.TestLog(opts.MatchCase, "MatchCase: ", opts.MatchCase)
 	logger.TestLog(opts.All, "All: ", opts.All)
@@ -60,4 +66,52 @@ func (opts *NamesOptionsType) TestLog() {
 	logger.TestLog(opts.Update, "Update: ", opts.Update)
 	logger.TestLog(opts.Remove, "Remove: ", opts.Remove)
 	logger.TestLog(opts.Undelete, "Undelete: ", opts.Undelete)
+	opts.Globals.TestLog()
+}
+
+func FromRequest(r *http.Request) *NamesOptionsType {
+	opts := &NamesOptionsType{}
+	for key, value := range r.URL.Query() {
+		switch key {
+		case "terms":
+			opts.Terms = append(opts.Terms, value...)
+		case "expand":
+			opts.Expand = true
+		case "matchcase":
+			opts.MatchCase = true
+		case "all":
+			opts.All = true
+		case "custom":
+			opts.Custom = true
+		case "prefund":
+			opts.Prefund = true
+		case "named":
+			opts.Named = true
+		case "addr":
+			opts.Addr = true
+		case "collections":
+			opts.Collections = true
+		case "tags":
+			opts.Tags = true
+		case "tocustom":
+			opts.ToCustom = true
+		case "clean":
+			opts.Clean = true
+		case "autoname":
+			opts.Autoname = value[0]
+		case "create":
+			opts.Create = true
+		case "delete":
+			opts.Delete = true
+		case "update":
+			opts.Update = true
+		case "remove":
+			opts.Remove = true
+		case "undelete":
+			opts.Undelete = true
+		}
+	}
+	opts.Globals = *root.FromRequest(r)
+
+	return opts
 }

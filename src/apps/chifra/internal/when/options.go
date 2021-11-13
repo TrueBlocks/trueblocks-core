@@ -17,23 +17,53 @@ package when
  */
 
 import (
+	"net/http"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
 type WhenOptionsType struct {
+	Blocks     []string
 	List       bool
 	Timestamps bool
 	Check      bool
 	Fix        bool
 	Count      bool
+	Globals    root.RootOptionsType
 }
 
 var Options WhenOptionsType
 
 func (opts *WhenOptionsType) TestLog() {
+	logger.TestLog(len(opts.Blocks) > 0, "Blocks: ", opts.Blocks)
 	logger.TestLog(opts.List, "List: ", opts.List)
 	logger.TestLog(opts.Timestamps, "Timestamps: ", opts.Timestamps)
 	logger.TestLog(opts.Check, "Check: ", opts.Check)
 	logger.TestLog(opts.Fix, "Fix: ", opts.Fix)
 	logger.TestLog(opts.Count, "Count: ", opts.Count)
+	opts.Globals.TestLog()
+}
+
+func FromRequest(r *http.Request) *WhenOptionsType {
+	opts := &WhenOptionsType{}
+	for key, value := range r.URL.Query() {
+		switch key {
+		case "blocks":
+			opts.Blocks = append(opts.Blocks, value...)
+		case "list":
+			opts.List = true
+		case "timestamps":
+			opts.Timestamps = true
+		case "check":
+			opts.Check = true
+		case "fix":
+			opts.Fix = true
+		case "count":
+			opts.Count = true
+		}
+	}
+	opts.Globals = *root.FromRequest(r)
+
+	return opts
 }

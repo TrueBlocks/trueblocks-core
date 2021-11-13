@@ -17,25 +17,57 @@ package traces
  */
 
 import (
+	"net/http"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
 type TracesOptionsType struct {
-	Articulate bool
-	Filter     string
-	Statediff  bool
-	Count      bool
-	SkipDdos   bool
-	Max        uint64
+	Transactions []string
+	Articulate   bool
+	Filter       string
+	Statediff    bool
+	Count        bool
+	SkipDdos     bool
+	Max          uint64
+	Globals      root.RootOptionsType
 }
 
 var Options TracesOptionsType
 
 func (opts *TracesOptionsType) TestLog() {
+	logger.TestLog(len(opts.Transactions) > 0, "Transactions: ", opts.Transactions)
 	logger.TestLog(opts.Articulate, "Articulate: ", opts.Articulate)
 	logger.TestLog(len(opts.Filter) > 0, "Filter: ", opts.Filter)
 	logger.TestLog(opts.Statediff, "Statediff: ", opts.Statediff)
 	logger.TestLog(opts.Count, "Count: ", opts.Count)
 	logger.TestLog(opts.SkipDdos, "SkipDdos: ", opts.SkipDdos)
 	logger.TestLog(opts.Max != 250, "Max: ", opts.Max)
+	opts.Globals.TestLog()
+}
+
+func FromRequest(r *http.Request) *TracesOptionsType {
+	opts := &TracesOptionsType{}
+	for key, value := range r.URL.Query() {
+		switch key {
+		case "transactions":
+			opts.Transactions = append(opts.Transactions, value...)
+		case "articulate":
+			opts.Articulate = true
+		case "filter":
+			opts.Filter = value[0]
+		case "statediff":
+			opts.Statediff = true
+		case "count":
+			opts.Count = true
+		case "skipddos":
+			opts.SkipDdos = true
+		case "max":
+			opts.Max = root.ToUint(value[0])
+		}
+	}
+	opts.Globals = *root.FromRequest(r)
+
+	return opts
 }

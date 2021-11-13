@@ -18,6 +18,7 @@ package cmd
 import (
 	"os"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
 	abisPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/abis"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
@@ -49,18 +50,17 @@ Notes:
 
 func init() {
 	abisCmd.Flags().SortFlags = false
-	abisCmd.PersistentFlags().SortFlags = false
 	abisCmd.Flags().BoolVarP(&abisPkg.Options.Known, "known", "k", false, "load common 'known' ABIs from cache")
 	abisCmd.Flags().BoolVarP(&abisPkg.Options.Sol, "sol", "s", false, "extract the abi definition from the provided .sol file(s)")
 	abisCmd.Flags().StringSliceVarP(&abisPkg.Options.Find, "find", "f", nil, "search for function or event declarations given a four- or 32-byte code(s)")
 	abisCmd.Flags().BoolVarP(&abisPkg.Options.Source, "source", "o", false, "show the source of the ABI information (hidden)")
 	abisCmd.Flags().BoolVarP(&abisPkg.Options.Classes, "classes", "c", false, "generate classDefinitions folder and class definitions (hidden)")
-	if !utils.IsTestMode() {
+	if os.Getenv("TEST_MODE") != "true" {
 		abisCmd.Flags().MarkHidden("source")
 		abisCmd.Flags().MarkHidden("classes")
 	}
 	abisCmd.Flags().SortFlags = false
-	abisCmd.PersistentFlags().SortFlags = false
+	root.GlobalOptions(abisCmd, &abisPkg.Options.Globals)
 
 	abisCmd.SetUsageTemplate(UsageWithNotes(notesAbis))
 	abisCmd.SetOut(os.Stderr)

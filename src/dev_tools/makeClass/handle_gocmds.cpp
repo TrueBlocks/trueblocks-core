@@ -16,16 +16,22 @@ extern string_q get_hidden(const CCommandOption& cmd);
 extern string_q get_hidden2(const CCommandOption& cmd);
 extern string_q get_notes2(const CCommandOption& cmd);
 extern string_q get_optfields(const CCommandOption& cmd);
+extern string_q get_requestopts(const CCommandOption& cmd);
 extern string_q get_setopts(const CCommandOption& cmd);
 extern string_q get_testlogs(const CCommandOption& cmd);
 extern string_q get_copyopts(const CCommandOption& cmd);
 extern string_q get_use(const CCommandOption& cmd);
 extern string_q get_imports(const string_q& source);
-extern const char* STR_REPLACE_OPTS;
 
+extern const char* STR_REQUEST_STATE;
 //---------------------------------------------------------------------------------------------------
 bool COptions::handle_gocmds_cmd(const CCommandOption& p) {
     string_q source = asciiFileToString(getTemplatePath("blank.go"));
+    if (p.api_route == "abis" || p.api_route == "pins") {
+        replace(source, "\t[{ROUTE}]Cmd.PersistentFlags().SortFlags = false", "");
+        replace(source, "\t[{ROUTE}]Cmd.PersistentFlags().SortFlags = false",
+                "\troot.GlobalOptions([{ROUTE}]Cmd, &[{ROUTE}]Pkg.Options.Globals)");
+    }
     replaceAll(source, "[{LONG}]", "Purpose:\n  " + p.description);
     replaceAll(source, "[{OPT_DEF}]", "");
     replaceAll(
@@ -34,7 +40,6 @@ bool COptions::handle_gocmds_cmd(const CCommandOption& p) {
     if (p.api_route == "serve") {
         replaceAll(source, "/internal/[{ROUTE}]", "/server");
     }
-    replaceAll(source, STR_REPLACE_OPTS, "");
     replaceAll(source, "run[{PROPER}]", "[{ROUTE}]Pkg.Run");
     replaceAll(source, "validate[{PROPER}]Args", "[{ROUTE}]Pkg.Validate");
     replaceAll(source, "[{COPY_OPTS}]", get_copyopts(p));
@@ -78,6 +83,11 @@ bool COptions::handle_gocmds_options(const CCommandOption& p) {
     replaceAll(source, "[{ROUTE}]", p.api_route);
     replaceAll(source, "[{PROPER}]", toProper(p.api_route));
     replaceAll(source, "[{OPT_FIELDS}]", get_optfields(p));
+    string_q req = get_requestopts(p);
+    replaceAll(source, "[{REQUEST_OPTS}]", get_requestopts(p));
+    if (!contains(substitute(req, "for key, value := range r.URL.Query() {", ""), "value")) {
+        replaceAll(source, "for key, value := range r.URL.Query() {", "for key, _ := range r.URL.Query() {");
+    }
     replaceAll(source, "[{TEST_LOGS}]", get_testlogs(p));
     replaceAll(source, "[{IMPORTS}]", get_imports(source));
 
@@ -200,7 +210,7 @@ string_q get_testlogs(const CCommandOption& cmd) {
         replace(p.longName, "deleteMe", "delete");
         p.longName = noUnderbars(p.longName);
         p.def_val = substitute(p.def_val, "NOPOS", "utils.NOPOS");
-        if (p.option_type != "positional" && !p.isDeprecated) {
+        if (!p.isDeprecated) {
             if (p.data_type == "<boolean>") {
                 os << p.Format(STR_TESTLOG_BOOL) << endl;
             } else if (startsWith(p.data_type, "list<") || p.data_type == "<string>" || p.data_type == "<address>" ||
@@ -222,17 +232,32 @@ string_q get_optfields(const CCommandOption& cmd) {
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
         replace(p.longName, "deleteMe", "delete");
         p.longName = noUnderbars(p.longName);
-        if (p.option_type != "positional") {
-            wid = max(p.longName.length(), wid);
-        }
+        wid = max(p.longName.length(), wid);
     }
+    wid = max(string_q("Globals").length(), wid);
+
     ostringstream os;
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
         replace(p.longName, "deleteMe", "delete");
         p.longName = noUnderbars(p.longName);
-        if (p.option_type != "positional") {
-            os << "\t" << padRight(p.longName, wid) << " " << p.go_type << endl;
-        }
+        os << "\t" << padRight(p.longName, wid) << " " << p.go_type << endl;
+    }
+    os << "\t" << padRight("Globals", wid) << " root.RootOptionsType" << endl;
+
+    return os.str();
+}
+
+string_q get_requestopts(const CCommandOption& cmd) {
+    ostringstream os;
+    for (auto p : *((CCommandOptionArray*)cmd.params)) {
+        replace(p.longName, "deleteMe", "delete");
+        p.longName = noUnderbars(p.longName);
+        /*
+        const char* STR_REQUEST_STATE =
+            "\t\tcase \"[{LOWER}]\":\n"
+            "\t\t\topts.[{NAME}] = [{VALUE}]";
+        */
+        os << p.Format(STR_REQUEST_STATE) << endl;
     }
     return os.str();
 }
@@ -303,7 +328,7 @@ string_q get_hidden(const CCommandOption& cmd) {
     }
 
     ostringstream ret;
-    ret << "\tif !utils.IsTestMode() {" << endl;
+    ret << "\tif os.Getenv(\"TEST_MODE\") != \"true\" {" << endl;
     ret << os.str();
     ret << "\t}" << endl;
     return ret.str();
@@ -362,7 +387,6 @@ string_q get_copyopts(const CCommandOption& cmd) {
     return os.str();
 }
 
-const char* STR_REPLACE_OPTS =
-    "type [{ROUTE}]OptionsType struct {\n"
-    "[{OPT_FIELDS}]}\n"
-    "\n";
+const char* STR_REQUEST_STATE =
+    "\t\tcase \"[{LOWER}]\":\n"
+    "\t\t\topts.[{LONGNAME}] = [{ASS}]";

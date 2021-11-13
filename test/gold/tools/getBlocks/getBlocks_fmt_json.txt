@@ -1,4 +1,5 @@
 chifra blocks  2222222 2332332 --fmt json
+TEST[DATE|TIME] Format:  json
 { "data": [
 {
   "gasLimit": 4704588,

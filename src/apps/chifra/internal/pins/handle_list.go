@@ -1,3 +1,5 @@
+package pins
+
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -10,7 +12,6 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-package pins
 
 import (
 	"os"
@@ -19,12 +20,21 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib/manifest"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-// List loads manifest, sorts pins and prints them out
-func List() ([]manifest.PinDescriptor, error) {
-	// Load manifest
+func HandleList(opts *PinsOptionsType) {
+	pins, err := ListInternal(opts)
+	if err != nil {
+		logger.Fatal("Cannot open local manifest file", err)
+	}
+
+	err = output.Output(os.Stdout, opts.Globals.Format, pins)
+	if err != nil {
+		logger.Log(logger.Error, err)
+	}
+}
+
+func ListInternal(opts *PinsOptionsType) ([]manifest.PinDescriptor, error) {
 	manifestData, err := manifest.FromLocalFile()
 	if err != nil {
 		return nil, err
@@ -38,22 +48,9 @@ func List() ([]manifest.PinDescriptor, error) {
 	})
 
 	// Shorten the array for testing
-	if utils.IsTestMode() {
+	if os.Getenv("TEST_MODE") == "true" {
 		manifestData.NewPins = manifestData.NewPins[:100]
 	}
 
 	return manifestData.NewPins, nil
-}
-
-// HandleList calls List and outputs data to the console
-func HandleList() {
-	pins, err := List()
-	if err != nil {
-		logger.Fatal("Cannot open local manifest file", err)
-	}
-
-	err = output.Output(os.Stdout, output.Format, pins)
-	if err != nil {
-		logger.Log(logger.Error, err)
-	}
 }

@@ -1,5 +1,6 @@
 chifra names  etwork --expand --no_header
 TEST[DATE|TIME] Expand:  true
+TEST[DATE|TIME] NoHeader:  true
 50-Tokens:ERC20	0x00c4b398500645eb5da00a1a379a88b11683ba01	Eximchain Token	EXC	On chain	18	Eximchain‚Äö√Ñ√¥s public blockchain network enables privacy, scalability and security for the supply chain.	false	false	false	true	true	false
 31-Gitcoin:Grants	0x03c2bc72a3e007179e54ffb4563cc235bec8151a	Grant 0600 Synthereum: Synthetic Assets with Liquidity Pools to Bridge Traditional and Digital Finance		https://gitcoin.co/grants/600/synthereum-synthetic-assets-with-liquidity-pools-t		https://jarvis.network	false	false	false	false	false	false
 50-Tokens:ERC20	0x04c62019ab478bff5874e7b7d9bc84fcf7e30025	POA Network: MultiSig		EtherScan.io			false	false	false	true	false	false

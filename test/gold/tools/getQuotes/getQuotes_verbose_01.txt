@@ -1,4 +1,6 @@
 chifra quotes  --log_level 1 --fmt api
+TEST[DATE|TIME] LogLevel:  1
+TEST[DATE|TIME] Format:  api
 Read cnt existing price quotes (lastRead: Now)
 {"data": [
   {

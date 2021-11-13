@@ -1,4 +1,5 @@
 chifra when  1001001 --fmt api
+TEST[DATE|TIME] Format:  api
 {"data": [
   {
     "blockNumber": 1001001,

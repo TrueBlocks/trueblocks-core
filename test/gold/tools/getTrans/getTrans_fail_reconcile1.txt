@@ -1,5 +1,6 @@
 chifra transactions  0x8699f14af8aca02073f3008099526a6e77f724bee280e5e3c2fa64b589be9a63 --reconcile 0x12 --fmt json
 TEST[DATE|TIME] Reconcile:  0x12
+TEST[DATE|TIME] Format:  json
 
   The provided value (0x12) is not a properly formatted address. Quitting...
 

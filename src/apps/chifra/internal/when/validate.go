@@ -17,11 +17,14 @@ import (
 	"errors"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/spf13/cobra"
 )
 
 func Validate(cmd *cobra.Command, args []string) error {
+	// TODO: Remove the global Format and all appearances of it
+	output.Format = Options.Globals.Format
 	// if !WhenOpts.list {
 	// 	if len(args) == 0 {
 	// 		return errors.New(fmtError("You must provide either a date or a block number"))

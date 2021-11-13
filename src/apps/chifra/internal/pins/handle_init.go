@@ -24,6 +24,83 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/progress"
 )
 
+// HandleInit calls Init() and prints error, if any
+func HandleInit(opts *PinsOptionsType) {
+	err := InitInternal(opts)
+	if err != nil {
+		logger.Fatal(err)
+	}
+}
+
+// InitInternal initializes local copy of UnchainedIndex by downloading manifests and chunks
+func InitInternal(opts *PinsOptionsType) error {
+	logger.Log(logger.Info, "Calling unchained index smart contract...")
+
+	// Fetch manifest's CID
+	cid, err := pinlib.GetManifestCidFromContract()
+	if err != nil {
+		return err
+	}
+	logger.Log(logger.Info, "Found manifest hash at", cid)
+
+	// Download the manifest
+	gatewayUrl := config.ReadBlockScrape().Dev.IpfsGateway
+	logger.Log(logger.Info, "IPFS gateway", gatewayUrl)
+
+	url, err := url.Parse(gatewayUrl)
+	if err != nil {
+		return err
+	}
+	url.Path = path.Join(url.Path, cid)
+	downloadedManifest, err := pinlib.DownloadManifest(url.String())
+
+	if err != nil {
+		return err
+	}
+
+	// Save manifest
+	err = pinlib.SaveManifest(config.GetConfigPath("manifest/manifest.txt"), downloadedManifest)
+	if err != nil {
+		return err
+	}
+	logger.Log(logger.Info, "Freshened manifest")
+
+	// Fetch chunks
+	bloomsDoneChannel := make(chan bool)
+	defer close(bloomsDoneChannel)
+	indexDoneChannel := make(chan bool)
+	defer close(indexDoneChannel)
+
+	getChunks := func(chunkType chunk.ChunkType) {
+		failedChunks := downloadAndReportProgress(downloadedManifest.NewPins, chunkType)
+
+		if len(failedChunks) > 0 {
+			retry(failedChunks, 3, func(pins []manifest.PinDescriptor) []manifest.PinDescriptor {
+				logger.Log(logger.Info, "Retrying", len(pins), "bloom(s)")
+				return downloadAndReportProgress(pins, chunkType)
+			})
+		}
+	}
+
+	go func() {
+		getChunks(chunk.BloomChunk)
+
+		bloomsDoneChannel <- true
+	}()
+
+	if opts.All {
+		go func() {
+			getChunks(chunk.IndexChunk)
+
+			indexDoneChannel <- true
+		}()
+		<-indexDoneChannel
+	}
+
+	<-bloomsDoneChannel
+	return nil
+}
+
 type downloadFunc func(pins []manifest.PinDescriptor) (failed []manifest.PinDescriptor)
 
 // Downloads chunks and report progress
@@ -107,81 +184,4 @@ func PrintManifestHeader() {
 	logger.Log(logger.Info, "hashToBloomFormatFile:", "QmNhPk39DUFoEdhUmtGARqiFECUHeghyeryxZM9kyRxzHD")
 	logger.Log(logger.Info, "unchainedIndexAddr:", pinlib.GetUnchainedIndexAddress())
 	logger.Log(logger.Info, "manifestHashEncoding:", pinlib.GetManifestHashEncoding())
-}
-
-// HandleInit initializes local copy of UnchainedIndex by downloading manifests and chunks
-func Init(all bool) error {
-	logger.Log(logger.Info, "Calling unchained index smart contract...")
-
-	// Fetch manifest's CID
-	cid, err := pinlib.GetManifestCidFromContract()
-	if err != nil {
-		return err
-	}
-	logger.Log(logger.Info, "Found manifest hash at", cid)
-
-	// Download the manifest
-	gatewayUrl := config.ReadBlockScrape().Dev.IpfsGateway
-	logger.Log(logger.Info, "IPFS gateway", gatewayUrl)
-
-	url, err := url.Parse(gatewayUrl)
-	if err != nil {
-		return err
-	}
-	url.Path = path.Join(url.Path, cid)
-	downloadedManifest, err := pinlib.DownloadManifest(url.String())
-
-	if err != nil {
-		return err
-	}
-
-	// Save manifest
-	err = pinlib.SaveManifest(config.GetConfigPath("manifest/manifest.txt"), downloadedManifest)
-	if err != nil {
-		return err
-	}
-	logger.Log(logger.Info, "Freshened manifest")
-
-	// Fetch chunks
-	bloomsDoneChannel := make(chan bool)
-	defer close(bloomsDoneChannel)
-	indexDoneChannel := make(chan bool)
-	defer close(indexDoneChannel)
-
-	getChunks := func(chunkType chunk.ChunkType) {
-		failedChunks := downloadAndReportProgress(downloadedManifest.NewPins, chunkType)
-
-		if len(failedChunks) > 0 {
-			retry(failedChunks, 3, func(pins []manifest.PinDescriptor) []manifest.PinDescriptor {
-				logger.Log(logger.Info, "Retrying", len(pins), "bloom(s)")
-				return downloadAndReportProgress(pins, chunkType)
-			})
-		}
-	}
-
-	go func() {
-		getChunks(chunk.BloomChunk)
-
-		bloomsDoneChannel <- true
-	}()
-
-	if all {
-		go func() {
-			getChunks(chunk.IndexChunk)
-
-			indexDoneChannel <- true
-		}()
-		<-indexDoneChannel
-	}
-
-	<-bloomsDoneChannel
-	return nil
-}
-
-// HandleInit calls Init() and prints error, if any
-func HandleInit(all bool) {
-	err := Init(all)
-	if err != nil {
-		logger.Fatal(err)
-	}
 }

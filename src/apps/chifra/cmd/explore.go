@@ -18,6 +18,7 @@ package cmd
 import (
 	"os"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
 	explorePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/explore"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
@@ -46,11 +47,10 @@ var notesExplore = ``
 
 func init() {
 	exploreCmd.Flags().SortFlags = false
-	exploreCmd.PersistentFlags().SortFlags = false
 	exploreCmd.Flags().BoolVarP(&explorePkg.Options.Local, "local", "l", false, "open the local TrueBlocks explorer")
 	exploreCmd.Flags().BoolVarP(&explorePkg.Options.Google, "google", "g", false, "search google excluding popular blockchain explorers")
 	exploreCmd.Flags().SortFlags = false
-	exploreCmd.PersistentFlags().SortFlags = false
+	root.GlobalOptions(exploreCmd, &explorePkg.Options.Globals)
 
 	exploreCmd.SetUsageTemplate(UsageWithNotes(notesExplore))
 	exploreCmd.SetOut(os.Stderr)

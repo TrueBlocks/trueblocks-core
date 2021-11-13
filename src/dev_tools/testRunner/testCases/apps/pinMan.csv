@@ -1,22 +1,22 @@
-enabled ,mode ,speed ,route ,path/tool   ,filename         ,post ,options                     ,opt_cmd ,has_env
+enabled ,mode ,speed ,route ,path/tool   ,filename         ,post ,options                                                            ,opt_cmd ,has_env
 on      ,cmd  ,fast  ,pins  ,apps/pinMan ,help             ,n    ,@h
 on      ,cmd  ,fast  ,pins  ,apps/pinMan ,help_long        ,n    ,help
-on   ,both ,fast  ,pins  ,apps/pinMan ,no_params        ,y    ,
+on      ,both ,fast  ,pins  ,apps/pinMan ,no_params        ,y    ,
 on      ,cmd  ,fast  ,pins  ,apps/pinMan ,invalid_param_1  ,y    ,junk
-on,both ,fast  ,pins  ,apps/pinMan ,list_local       ,y    ,list
-on,both ,fast  ,pins  ,apps/pinMan ,fmt_default      ,y    ,list
-on,both ,slow  ,pins  ,apps/pinMan ,fmt_txt          ,n    ,list & fmt = txt
-on,both ,fast  ,pins  ,apps/pinMan ,fmt_csv          ,n    ,list & fmt = csv
-on,both ,fast  ,pins  ,apps/pinMan ,fmt_json         ,y    ,list & fmt = json
-on,both ,fast  ,pins  ,apps/pinMan ,fmt_api          ,y    ,list & fmt = api
-on   ,both ,fast  ,pins  ,apps/pinMan ,fmt_junk         ,y    ,list & fmt = junk
-on   ,both ,fast  ,pins  ,apps/pinMan ,remote_fail      ,y    ,list & remote
-on   ,both ,fast  ,pins  ,apps/pinMan ,freshen_fail     ,y    ,list & freshen
-on   ,both ,fast  ,pins  ,apps/pinMan ,initall_fail     ,y    ,list & init_all
-on   ,both ,fast  ,pins  ,apps/pinMan ,remote_fail_json ,y    ,list & remote & fmt = json
-on   ,both ,fast  ,pins  ,apps/pinMan ,remote_fail_api  ,y    ,list & remote & fmt = api
-on   ,both ,fast  ,pins  ,apps/pinMan ,remote_fail_txt  ,y    ,list & remote & fmt = txt
-on   ,both ,fast  ,pins  ,apps/pinMan ,remote_fail_csv  ,y    ,list & remote & fmt = csv
+local   ,both ,fast  ,pins  ,apps/pinMan ,list_local       ,y    ,list
+local   ,both ,fast  ,pins  ,apps/pinMan ,fmt_default      ,y    ,list
+local   ,both ,slow  ,pins  ,apps/pinMan ,fmt_txt          ,n    ,list & fmt = txt
+local   ,both ,fast  ,pins  ,apps/pinMan ,fmt_csv          ,n    ,list & fmt = csv
+local   ,both ,fast  ,pins  ,apps/pinMan ,fmt_json         ,y    ,list & fmt = json
+local   ,both ,fast  ,pins  ,apps/pinMan ,fmt_api          ,y    ,list & fmt = api
+on      ,both ,fast  ,pins  ,apps/pinMan ,fmt_junk         ,y    ,list & fmt = junk
+on      ,both ,fast  ,pins  ,apps/pinMan ,remote_fail      ,y    ,list & remote
+on      ,both ,fast  ,pins  ,apps/pinMan ,freshen_fail     ,y    ,list & freshen
+on      ,both ,fast  ,pins  ,apps/pinMan ,initall_fail     ,y    ,list & init_all
+on      ,both ,fast  ,pins  ,apps/pinMan ,remote_fail_json ,y    ,list & remote & fmt = json
+on      ,both ,fast  ,pins  ,apps/pinMan ,remote_fail_api  ,y    ,list & remote & fmt = api
+on      ,both ,fast  ,pins  ,apps/pinMan ,remote_fail_txt  ,y    ,list & remote & fmt = txt
+on      ,both ,fast  ,pins  ,apps/pinMan ,remote_fail_csv  ,y    ,list & remote & fmt = csv
 
 #       ,     ,      ,      ,            ,                 ,     ,This test fails because golang code does not support --file option
 local   ,both ,fast  ,pins  ,apps/pinMan ,to_file          ,y    ,list & fmt = json & to_file

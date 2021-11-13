@@ -446,11 +446,33 @@ string_q nextCommandoptionChunk_custom(const string_q& fieldIn, const void* data
     if (com) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
+            case 'a':
+                if (fieldIn % "ass") {
+                    if (startsWith(com->data_type, "list<")) {
+                        return com->Format("append(opts.[{LONGNAME}], value...)");
+                    } else if (startsWith(com->data_type, "enum[") || com->data_type == "<string>" ||
+                               com->data_type == "<address>") {
+                        return "value[0]";
+                    } else if (com->data_type == "<uint64>" || com->data_type == "<blknum>") {
+                        return "root.ToUint(value[0])";
+                    } else if (com->data_type == "<double>") {
+                        return "root.ToFloat(value[0])";
+                    } else if (com->data_type == "<boolean>") {
+                        return "true";
+                    }
+                    return "unknown type: " + com->data_type;
+                }
+                break;
             case 'd':
                 if (fieldIn % "datatype") {
                     if (com->option_type == "switch" || com->option_type == "toggle")
                         return "";
                     return (startsWith(com->data_type, "opt_") ? "\"+" + com->data_type + "+\"" : com->data_type);
+                }
+                break;
+            case 'l':
+                if (fieldIn % "lower") {
+                    return toLower(com->longName);
                 }
                 break;
             case 'o':

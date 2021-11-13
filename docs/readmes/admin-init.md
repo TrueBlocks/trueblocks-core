@@ -16,12 +16,10 @@ Usage:
   chifra init [flags]
 
 Flags:
-  -a, --all   in addition to Bloom filters, download full index chunks
-
-Global Flags:
+  -a, --all          in addition to Bloom filters, download full index chunks
   -x, --fmt string   export format, one of [none|json*|txt|csv|api]
-  -h, --help         display this help screen
   -v, --verbose      enable verbose (increase detail with --log_level)
+  -h, --help         display this help screen
 
 Notes:
   - chifra init is an alias for the chifra pins --init command.

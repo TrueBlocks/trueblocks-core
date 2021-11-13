@@ -15,6 +15,7 @@ package serve
 
 import (
 	"log"
+	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
@@ -23,18 +24,13 @@ import (
 
 // Run runs serve command and sends any errors to log.Fatal
 func Run(cmd *cobra.Command, args []string) error {
-	Options.Port = Options.Port
-	PrintServeSettings()
+	PrintServeSettings(os.Getenv("TEST_MODE") == "true")
 	log.Fatal(RunInternal(Options.Port))
-    return nil
+	return nil
 }
 
-func PrintServeSettings() {
-	if Options.Port != ":8080" {
-		log.Println(Green, "port:        ", Off, Options.Port)
-	}
-
-	meta := output.GetMeta()
+func PrintServeSettings(testMode bool) {
+	meta := output.GetMeta(testMode)
 	log.Print("\n")
 	log.Println(Green, "Starting API server on port "+Options.Port, Off)
 	log.Println(Green, "Cache Path:   ", Off, config.ReadTrueBlocks().Settings.CachePath)

@@ -39,6 +39,6 @@ func Run(cmd *cobra.Command, args []string) error {
 	for _, arg := range args {
 		arguments += " " + arg
 	}
-	root.PassItOn("getState", options, arguments)
-	return nil
+
+	return root.PassItOn2("getState", &Options.Globals, options, arguments)
 }

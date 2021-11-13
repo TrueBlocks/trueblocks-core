@@ -17,13 +17,29 @@ package [{ROUTE}]
  */
 
 import (
+	"net/http"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 [{IMPORTS}])
 
 type [{PROPER}]OptionsType struct {
-[{OPT_FIELDS}]}
+[{OPT_FIELDS}]
+}
 
 var Options [{PROPER}]OptionsType
 
 func (opts *[{PROPER}]OptionsType) TestLog() {
-[{TEST_LOGS}]}
+[{TEST_LOGS}]	opts.Globals.TestLog()
+}
+
+func FromRequest(r *http.Request) *[{PROPER}]OptionsType {
+	opts := &[{PROPER}]OptionsType{}
+	for key, value := range r.URL.Query() {
+		switch key {
+[{REQUEST_OPTS}]		}
+	}
+	opts.Globals = *root.FromRequest(r)
+
+	return opts
+}

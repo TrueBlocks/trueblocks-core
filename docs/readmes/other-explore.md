@@ -13,13 +13,11 @@ Arguments:
   terms - one or more address, name, block, or transaction identifier
 
 Flags:
-  -l, --local    open the local TrueBlocks explorer
-  -g, --google   search google excluding popular blockchain explorers
-
-Global Flags:
+  -l, --local        open the local TrueBlocks explorer
+  -g, --google       search google excluding popular blockchain explorers
   -x, --fmt string   export format, one of [none|json*|txt|csv|api]
-  -h, --help         display this help screen
   -v, --verbose      enable verbose (increase detail with --log_level)
+  -h, --help         display this help screen
 ```
 
 **Source code**: [`explore.go`](https://github.com/TrueBlocks/trueblocks-core/tree/develop/src/apps/chifra/internal/explore.go)

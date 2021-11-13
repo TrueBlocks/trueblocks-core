@@ -1,9 +1,6 @@
 chifra pins  --list --fmt junk
 TEST[DATE|TIME] List:  true
-TEST[DATE|TIME] Init:  false
-TEST[DATE|TIME] All:  false
-TEST[DATE|TIME] Sleep:  0.25
-TEST[DATE|TIME] Share:  false
+TEST[DATE|TIME] Format:  junk
 Error: 
   The --fmt option (junk) must be one of [ json | txt | csv | api ]
 
@@ -19,11 +16,9 @@ Flags:
   -f, --freshen       check for new bloom or index chunks and download if available (hidden)
   -r, --remote        for --list mode only, recover the manifest from IPFS via UnchainedIndex smart contract (hidden)
   -n, --init_all      use --init --all instead (hidden)
-
-Global Flags:
-  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
-  -h, --help         display this help screen
-  -v, --verbose      enable verbose (increase detail with --log_level)
+  -x, --fmt string    export format, one of [none|json*|txt|csv|api]
+  -v, --verbose       enable verbose (increase detail with --log_level)
+  -h, --help          display this help screen
 
 Notes:
   - One of --list or --init is required.

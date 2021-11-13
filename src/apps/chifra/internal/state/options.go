@@ -17,23 +17,57 @@ package state
  */
 
 import (
+	"net/http"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
 type StateOptionsType struct {
+	Addrs    []string
+	Blocks   []string
 	Parts    []string
 	Changes  bool
 	NoZero   bool
 	Call     string
 	ProxyFor string
+	Globals  root.RootOptionsType
 }
 
 var Options StateOptionsType
 
 func (opts *StateOptionsType) TestLog() {
+	logger.TestLog(len(opts.Addrs) > 0, "Addrs: ", opts.Addrs)
+	logger.TestLog(len(opts.Blocks) > 0, "Blocks: ", opts.Blocks)
 	logger.TestLog(len(opts.Parts) > 0, "Parts: ", opts.Parts)
 	logger.TestLog(opts.Changes, "Changes: ", opts.Changes)
 	logger.TestLog(opts.NoZero, "NoZero: ", opts.NoZero)
 	logger.TestLog(len(opts.Call) > 0, "Call: ", opts.Call)
 	logger.TestLog(len(opts.ProxyFor) > 0, "ProxyFor: ", opts.ProxyFor)
+	opts.Globals.TestLog()
+}
+
+func FromRequest(r *http.Request) *StateOptionsType {
+	opts := &StateOptionsType{}
+	for key, value := range r.URL.Query() {
+		switch key {
+		case "addrs":
+			opts.Addrs = append(opts.Addrs, value...)
+		case "blocks":
+			opts.Blocks = append(opts.Blocks, value...)
+		case "parts":
+			opts.Parts = append(opts.Parts, value...)
+		case "changes":
+			opts.Changes = true
+		case "nozero":
+			opts.NoZero = true
+		case "call":
+			opts.Call = value[0]
+		case "proxyfor":
+			opts.ProxyFor = value[0]
+		}
+	}
+	opts.Globals = *root.FromRequest(r)
+
+	return opts
 }

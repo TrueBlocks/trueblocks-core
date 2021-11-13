@@ -1,0 +1,17 @@
+Is 'version' part of the token interface?
+chifra tokens  0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 --parts version 4001001-4001002 --fmt json
+TEST[DATE|TIME] Parts:  [version]
+TEST[DATE|TIME] Format:  json
+{ "data": [
+  {
+    "blockNumber": 4001001,
+    "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
+    "is_contract": true,
+    "is_erc20": true
+  },
+  {
+    "blockNumber": 4001001,
+    "address": "0xb9e7f8568e08d5659f5d29c4997173d84cdf2607",
+    "is_contract": true,
+    "is_erc20": true
+  }] }

@@ -17,10 +17,14 @@ package blocks
  */
 
 import (
+	"net/http"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
 type BlocksOptionsType struct {
+	Blocks     []string
 	Hashes     bool
 	Uncles     bool
 	Trace      bool
@@ -35,11 +39,13 @@ type BlocksOptionsType struct {
 	Cache      bool
 	List       uint64
 	ListCount  uint64
+	Globals    root.RootOptionsType
 }
 
 var Options BlocksOptionsType
 
 func (opts *BlocksOptionsType) TestLog() {
+	logger.TestLog(len(opts.Blocks) > 0, "Blocks: ", opts.Blocks)
 	logger.TestLog(opts.Hashes, "Hashes: ", opts.Hashes)
 	logger.TestLog(opts.Uncles, "Uncles: ", opts.Uncles)
 	logger.TestLog(opts.Trace, "Trace: ", opts.Trace)
@@ -54,4 +60,46 @@ func (opts *BlocksOptionsType) TestLog() {
 	logger.TestLog(opts.Cache, "Cache: ", opts.Cache)
 	logger.TestLog(opts.List != 0, "List: ", opts.List)
 	logger.TestLog(opts.ListCount != 20, "ListCount: ", opts.ListCount)
+	opts.Globals.TestLog()
+}
+
+func FromRequest(r *http.Request) *BlocksOptionsType {
+	opts := &BlocksOptionsType{}
+	for key, value := range r.URL.Query() {
+		switch key {
+		case "blocks":
+			opts.Blocks = append(opts.Blocks, value...)
+		case "hashes":
+			opts.Hashes = true
+		case "uncles":
+			opts.Uncles = true
+		case "trace":
+			opts.Trace = true
+		case "apps":
+			opts.Apps = true
+		case "uniq":
+			opts.Uniq = true
+		case "logs":
+			opts.Logs = true
+		case "emitter":
+			opts.Emitter = append(opts.Emitter, value...)
+		case "topic":
+			opts.Topic = append(opts.Topic, value...)
+		case "articulate":
+			opts.Articulate = true
+		case "bigrange":
+			opts.BigRange = root.ToUint(value[0])
+		case "count":
+			opts.Count = true
+		case "cache":
+			opts.Cache = true
+		case "list":
+			opts.List = root.ToUint(value[0])
+		case "listcount":
+			opts.ListCount = root.ToUint(value[0])
+		}
+	}
+	opts.Globals = *root.FromRequest(r)
+
+	return opts
 }

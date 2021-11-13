@@ -18,6 +18,7 @@ package cmd
 import (
 	"os"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
 	listPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/list"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
@@ -46,18 +47,17 @@ var notesList = ``
 
 func init() {
 	listCmd.Flags().SortFlags = false
-	listCmd.PersistentFlags().SortFlags = false
 	listCmd.Flags().BoolVarP(&listPkg.Options.Count, "count", "U", false, "present only the number of records")
 	listCmd.Flags().BoolVarP(&listPkg.Options.Appearances, "appearances", "p", false, "export a list of appearances (hidden)")
 	listCmd.Flags().Uint64VarP(&listPkg.Options.FirstBlock, "first_block", "F", 0, "first block to process (inclusive) (hidden)")
 	listCmd.Flags().Uint64VarP(&listPkg.Options.LastBlock, "last_block", "L", 0, "last block to process (inclusive) (hidden)")
-	if !utils.IsTestMode() {
+	if os.Getenv("TEST_MODE") != "true" {
 		listCmd.Flags().MarkHidden("appearances")
 		listCmd.Flags().MarkHidden("first_block")
 		listCmd.Flags().MarkHidden("last_block")
 	}
 	listCmd.Flags().SortFlags = false
-	listCmd.PersistentFlags().SortFlags = false
+	root.GlobalOptions(listCmd, &listPkg.Options.Globals)
 
 	listCmd.SetUsageTemplate(UsageWithNotes(notesList))
 	listCmd.SetOut(os.Stderr)

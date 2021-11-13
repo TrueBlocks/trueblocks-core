@@ -1,4 +1,5 @@
 chifra names  tip --fmt api
+TEST[DATE|TIME] Format:  api
 {"data": [
   {
     "tags": "31-Gitcoin:Grants",

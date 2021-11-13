@@ -45,13 +45,13 @@ func Run(cmd *cobra.Command, args []string) error {
 
 	if Options.List {
 		PrintManifestHeader()
-		HandleList()
+		HandleList(&Options)
 		return nil
 	}
 
 	if Options.Init {
 		PrintManifestHeader()
-		HandleInit(Options.All)
+		HandleInit(&Options)
 		return nil
 	}
 

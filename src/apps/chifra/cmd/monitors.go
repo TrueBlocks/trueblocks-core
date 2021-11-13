@@ -18,6 +18,7 @@ package cmd
 import (
 	"os"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
 	monitorsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/monitors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
@@ -49,7 +50,6 @@ Notes:
 
 func init() {
 	monitorsCmd.Flags().SortFlags = false
-	monitorsCmd.PersistentFlags().SortFlags = false
 	monitorsCmd.Flags().BoolVarP(&monitorsPkg.Options.Appearances, "appearances", "p", false, "export a list of appearances")
 	monitorsCmd.Flags().BoolVarP(&monitorsPkg.Options.Count, "count", "U", false, "present only the number of records")
 	monitorsCmd.Flags().BoolVarP(&monitorsPkg.Options.Clean, "clean", "", false, "clean (i.e. remove duplicate appearances) from monitors")
@@ -58,12 +58,12 @@ func init() {
 	monitorsCmd.Flags().BoolVarP(&monitorsPkg.Options.Remove, "remove", "", false, "remove a previously deleted monitor")
 	monitorsCmd.Flags().Uint64VarP(&monitorsPkg.Options.FirstBlock, "first_block", "F", 0, "first block to process (inclusive) (hidden)")
 	monitorsCmd.Flags().Uint64VarP(&monitorsPkg.Options.LastBlock, "last_block", "L", 0, "last block to process (inclusive) (hidden)")
-	if !utils.IsTestMode() {
+	if os.Getenv("TEST_MODE") != "true" {
 		monitorsCmd.Flags().MarkHidden("first_block")
 		monitorsCmd.Flags().MarkHidden("last_block")
 	}
 	monitorsCmd.Flags().SortFlags = false
-	monitorsCmd.PersistentFlags().SortFlags = false
+	root.GlobalOptions(monitorsCmd, &monitorsPkg.Options.Globals)
 
 	monitorsCmd.SetUsageTemplate(UsageWithNotes(notesMonitors))
 	monitorsCmd.SetOut(os.Stderr)

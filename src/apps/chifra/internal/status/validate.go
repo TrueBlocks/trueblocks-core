@@ -17,11 +17,13 @@ import (
 	"strconv"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/spf13/cobra"
 )
 
 func Validate(cmd *cobra.Command, args []string) error {
+	output.Format = Options.Globals.Format
 	if Options.Depth > 3 {
 		return validate.Usage("The {0} option ({1}) must {2}.", "--depth", strconv.FormatUint(Options.Depth, 10), "be less than four (4)")
 	}

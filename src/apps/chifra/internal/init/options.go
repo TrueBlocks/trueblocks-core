@@ -17,15 +17,33 @@ package init
  */
 
 import (
+	"net/http"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
 type InitOptionsType struct {
-	All bool
+	All     bool
+	Globals root.RootOptionsType
 }
 
 var Options InitOptionsType
 
 func (opts *InitOptionsType) TestLog() {
 	logger.TestLog(opts.All, "All: ", opts.All)
+	opts.Globals.TestLog()
+}
+
+func FromRequest(r *http.Request) *InitOptionsType {
+	opts := &InitOptionsType{}
+	for key, _ := range r.URL.Query() {
+		switch key {
+		case "all":
+			opts.All = true
+		}
+	}
+	opts.Globals = *root.FromRequest(r)
+
+	return opts
 }

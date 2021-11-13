@@ -17,6 +17,9 @@ package pins
  */
 
 import (
+	"net/http"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
@@ -29,6 +32,7 @@ type PinsOptionsType struct {
 	Freshen bool
 	Remote  bool
 	InitAll bool
+	Globals root.RootOptionsType
 }
 
 var Options PinsOptionsType
@@ -39,4 +43,32 @@ func (opts *PinsOptionsType) TestLog() {
 	logger.TestLog(opts.All, "All: ", opts.All)
 	logger.TestLog(opts.Share, "Share: ", opts.Share)
 	logger.TestLog(opts.Sleep != .25, "Sleep: ", opts.Sleep)
+	opts.Globals.TestLog()
+}
+
+func FromRequest(r *http.Request) *PinsOptionsType {
+	opts := &PinsOptionsType{}
+	for key, value := range r.URL.Query() {
+		switch key {
+		case "list":
+			opts.List = true
+		case "init":
+			opts.Init = true
+		case "all":
+			opts.All = true
+		case "share":
+			opts.Share = true
+		case "sleep":
+			opts.Sleep = root.ToFloat(value[0])
+		case "freshen":
+			opts.Freshen = true
+		case "remote":
+			opts.Remote = true
+		case "initall":
+			opts.InitAll = true
+		}
+	}
+	opts.Globals = *root.FromRequest(r)
+
+	return opts
 }

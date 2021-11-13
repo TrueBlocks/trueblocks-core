@@ -18,6 +18,7 @@ package cmd
 import (
 	"os"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
 	pinsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/pins"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
@@ -47,7 +48,6 @@ Notes:
 
 func init() {
 	pinsCmd.Flags().SortFlags = false
-	pinsCmd.PersistentFlags().SortFlags = false
 	pinsCmd.Flags().BoolVarP(&pinsPkg.Options.List, "list", "l", false, "list the bloom and index hashes from local cache or IPFS")
 	pinsCmd.Flags().BoolVarP(&pinsPkg.Options.Init, "init", "i", false, "download the blooms or index chunks from IPFS")
 	pinsCmd.Flags().BoolVarP(&pinsPkg.Options.All, "all", "a", false, "in addition to Bloom filters, download full index chunks")
@@ -56,13 +56,13 @@ func init() {
 	pinsCmd.Flags().BoolVarP(&pinsPkg.Options.Freshen, "freshen", "f", false, "check for new bloom or index chunks and download if available (hidden)")
 	pinsCmd.Flags().BoolVarP(&pinsPkg.Options.Remote, "remote", "r", false, "for --list mode only, recover the manifest from IPFS via UnchainedIndex smart contract (hidden)")
 	pinsCmd.Flags().BoolVarP(&pinsPkg.Options.InitAll, "init_all", "n", false, "use --init --all instead (hidden)")
-	if !utils.IsTestMode() {
+	if os.Getenv("TEST_MODE") != "true" {
 		pinsCmd.Flags().MarkHidden("freshen")
 		pinsCmd.Flags().MarkHidden("remote")
 		pinsCmd.Flags().MarkHidden("init_all")
 	}
 	pinsCmd.Flags().SortFlags = false
-	pinsCmd.PersistentFlags().SortFlags = false
+	root.GlobalOptions(pinsCmd, &pinsPkg.Options.Globals)
 
 	pinsCmd.SetUsageTemplate(UsageWithNotes(notesPins))
 	pinsCmd.SetOut(os.Stderr)

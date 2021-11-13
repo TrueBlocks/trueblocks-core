@@ -17,6 +17,9 @@ package quotes
  */
 
 import (
+	"net/http"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
@@ -25,6 +28,7 @@ type QuotesOptionsType struct {
 	Period  string
 	Pair    string
 	Feed    string
+	Globals root.RootOptionsType
 }
 
 var Options QuotesOptionsType
@@ -34,4 +38,24 @@ func (opts *QuotesOptionsType) TestLog() {
 	logger.TestLog(len(opts.Period) > 0, "Period: ", opts.Period)
 	logger.TestLog(len(opts.Pair) > 0, "Pair: ", opts.Pair)
 	logger.TestLog(len(opts.Feed) > 0, "Feed: ", opts.Feed)
+	opts.Globals.TestLog()
+}
+
+func FromRequest(r *http.Request) *QuotesOptionsType {
+	opts := &QuotesOptionsType{}
+	for key, value := range r.URL.Query() {
+		switch key {
+		case "freshen":
+			opts.Freshen = true
+		case "period":
+			opts.Period = value[0]
+		case "pair":
+			opts.Pair = value[0]
+		case "feed":
+			opts.Feed = value[0]
+		}
+	}
+	opts.Globals = *root.FromRequest(r)
+
+	return opts
 }

@@ -18,6 +18,7 @@ package cmd
 import (
 	"os"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
 	tokensPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/tokens"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
@@ -53,13 +54,12 @@ Notes:
 
 func init() {
 	tokensCmd.Flags().SortFlags = false
-	tokensCmd.PersistentFlags().SortFlags = false
 	tokensCmd.Flags().StringSliceVarP(&tokensPkg.Options.Parts, "parts", "p", nil, `which parts of the token information to retrieve
 One or more of [ name | symbol | decimals | totalSupply | version | none | all ]`)
 	tokensCmd.Flags().BoolVarP(&tokensPkg.Options.ByAcct, "by_acct", "b", false, "consider each address an ERC20 token except the last, whose balance is reported for each token")
 	tokensCmd.Flags().BoolVarP(&tokensPkg.Options.NoZero, "no_zero", "n", false, "suppress the display of zero balance accounts")
 	tokensCmd.Flags().SortFlags = false
-	tokensCmd.PersistentFlags().SortFlags = false
+	root.GlobalOptions(tokensCmd, &tokensPkg.Options.Globals)
 
 	tokensCmd.SetUsageTemplate(UsageWithNotes(notesTokens))
 	tokensCmd.SetOut(os.Stderr)

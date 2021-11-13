@@ -18,6 +18,7 @@ package cmd
 import (
 	"os"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
 	statusPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/status"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
@@ -47,7 +48,6 @@ var notesStatus = ``
 
 func init() {
 	statusCmd.Flags().SortFlags = false
-	statusCmd.PersistentFlags().SortFlags = false
 	statusCmd.Flags().BoolVarP(&statusPkg.Options.Details, "details", "d", false, "include details about items found in monitors, slurps, abis, or price caches")
 	statusCmd.Flags().StringSliceVarP(&statusPkg.Options.Types, "types", "t", nil, `for caches mode only, which type(s) of cache to report
 One or more of [ blocks | txs | traces | slurps | prices | all ]`)
@@ -60,7 +60,7 @@ One or more of [ test | abi_cache | block_cache | tx_cache | trace_cache | recon
 	statusCmd.Flags().BoolVarP(&statusPkg.Options.SetConfig, "set_config", "s", false, "accepts JSON in an env variable and writes it to configuration files (hidden)")
 	statusCmd.Flags().Uint64VarP(&statusPkg.Options.TestStart, "test_start", "S", 0, "first block to process (inclusive -- testing only) (hidden)")
 	statusCmd.Flags().Uint64VarP(&statusPkg.Options.TestEnd, "test_end", "E", 0, "last block to process (inclusive -- testing only) (hidden)")
-	if !utils.IsTestMode() {
+	if os.Getenv("TEST_MODE") != "true" {
 		statusCmd.Flags().MarkHidden("depth")
 		statusCmd.Flags().MarkHidden("report")
 		statusCmd.Flags().MarkHidden("terse")
@@ -71,7 +71,7 @@ One or more of [ test | abi_cache | block_cache | tx_cache | trace_cache | recon
 		statusCmd.Flags().MarkHidden("test_end")
 	}
 	statusCmd.Flags().SortFlags = false
-	statusCmd.PersistentFlags().SortFlags = false
+	root.GlobalOptions(statusCmd, &statusPkg.Options.Globals)
 
 	statusCmd.SetUsageTemplate(UsageWithNotes(notesStatus))
 	statusCmd.SetOut(os.Stderr)

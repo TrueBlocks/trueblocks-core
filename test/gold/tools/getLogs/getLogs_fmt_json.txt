@@ -1,4 +1,5 @@
 chifra logs  2222222.0 2332332.0 --fmt json
+TEST[DATE|TIME] Format:  json
 { "data": [
   {
     "address": "0x37a9679c41e99db270bda88de8ff50c0cd23f326",

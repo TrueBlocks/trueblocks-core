@@ -17,22 +17,50 @@ package list
  */
 
 import (
+	"net/http"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 type ListOptionsType struct {
+	Addrs       []string
 	Count       bool
 	Appearances bool
 	FirstBlock  uint64
 	LastBlock   uint64
+	Globals     root.RootOptionsType
 }
 
 var Options ListOptionsType
 
 func (opts *ListOptionsType) TestLog() {
+	logger.TestLog(len(opts.Addrs) > 0, "Addrs: ", opts.Addrs)
 	logger.TestLog(opts.Count, "Count: ", opts.Count)
 	logger.TestLog(opts.Appearances, "Appearances: ", opts.Appearances)
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
 	logger.TestLog(opts.LastBlock != utils.NOPOS, "LastBlock: ", opts.LastBlock)
+	opts.Globals.TestLog()
+}
+
+func FromRequest(r *http.Request) *ListOptionsType {
+	opts := &ListOptionsType{}
+	for key, value := range r.URL.Query() {
+		switch key {
+		case "addrs":
+			opts.Addrs = append(opts.Addrs, value...)
+		case "count":
+			opts.Count = true
+		case "appearances":
+			opts.Appearances = true
+		case "firstblock":
+			opts.FirstBlock = root.ToUint(value[0])
+		case "lastblock":
+			opts.LastBlock = root.ToUint(value[0])
+		}
+	}
+	opts.Globals = *root.FromRequest(r)
+
+	return opts
 }

@@ -1,5 +1,5 @@
 {
   "errors": [
-    "You must choose at least one of --list or --init."
+    "Please choose at least one of --list or --init."
   ]
 }

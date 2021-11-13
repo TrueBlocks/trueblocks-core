@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"os"
 	"text/tabwriter"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -34,7 +35,7 @@ func JsonFormatter(data interface{}) ([]byte, error) {
 		formatted.Data = data
 	}
 
-	return AsJsonBytes(formatted)
+	return AsJsonBytes(formatted, os.Getenv("TEST_MODE") == "true")
 }
 
 // TxtFormatter turns data into TSV string

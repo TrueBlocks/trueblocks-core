@@ -17,11 +17,13 @@ import (
 	"errors"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/spf13/cobra"
 )
 
 func Validate(cmd *cobra.Command, args []string) error {
+	output.Format = Options.Globals.Format
 	validationErr := validate.ValidateIdentifiers(
 		args,
 		validate.ValidBlockIdWithRange,

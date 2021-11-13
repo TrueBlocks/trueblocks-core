@@ -1,4 +1,5 @@
 chifra when  1001001 --fmt junk
+TEST[DATE|TIME] Format:  junk
 Error: 
   The --fmt option (junk) must be one of [ json | txt | csv | api ]
 
@@ -14,11 +15,9 @@ Flags:
   -c, --check        available only with --timestamps, checks the validity of the timestamp data (hidden)
   -f, --fix          available only with --timestamps, fixes incorrect timestamps if any (hidden)
   -u, --count        available only with --timestamps, returns the number of timestamps in the cache (hidden)
-
-Global Flags:
   -x, --fmt string   export format, one of [none|json*|txt|csv|api]
-  -h, --help         display this help screen
   -v, --verbose      enable verbose (increase detail with --log_level)
+  -h, --help         display this help screen
 
 Notes:
   - The block list may contain any combination of number, hash, date, special named blocks.

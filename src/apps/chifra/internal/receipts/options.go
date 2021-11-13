@@ -17,15 +17,37 @@ package receipts
  */
 
 import (
+	"net/http"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
 type ReceiptsOptionsType struct {
-	Articulate bool
+	Transactions []string
+	Articulate   bool
+	Globals      root.RootOptionsType
 }
 
 var Options ReceiptsOptionsType
 
 func (opts *ReceiptsOptionsType) TestLog() {
+	logger.TestLog(len(opts.Transactions) > 0, "Transactions: ", opts.Transactions)
 	logger.TestLog(opts.Articulate, "Articulate: ", opts.Articulate)
+	opts.Globals.TestLog()
+}
+
+func FromRequest(r *http.Request) *ReceiptsOptionsType {
+	opts := &ReceiptsOptionsType{}
+	for key, value := range r.URL.Query() {
+		switch key {
+		case "transactions":
+			opts.Transactions = append(opts.Transactions, value...)
+		case "articulate":
+			opts.Articulate = true
+		}
+	}
+	opts.Globals = *root.FromRequest(r)
+
+	return opts
 }

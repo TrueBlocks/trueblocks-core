@@ -21,7 +21,8 @@ import (
 )
 
 func Validate(cmd *cobra.Command, args []string) error {
-	if len(root.Options.File) == 0 &&
+	output.Format = Options.Globals.Format
+	if len(Options.Globals.File) == 0 &&
 		!Options.Freshen &&
 		len(Options.Period) == 0 &&
 		len(Options.Pair) == 0 &&

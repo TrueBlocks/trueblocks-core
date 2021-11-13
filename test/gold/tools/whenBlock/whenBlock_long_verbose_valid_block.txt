@@ -1,3 +1,4 @@
 chifra when  --verbose 1000
+TEST[DATE|TIME] Verbose:  true
 blocknumber	timestamp	date	name
 1000	1438272138	2015-07-30 16:02:18 UTC

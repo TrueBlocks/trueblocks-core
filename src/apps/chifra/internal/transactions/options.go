@@ -17,23 +17,53 @@ package transactions
  */
 
 import (
+	"net/http"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
 type TransactionsOptionsType struct {
-	Articulate bool
-	Trace      bool
-	Uniq       bool
-	Reconcile  string
-	Cache      bool
+	Transactions []string
+	Articulate   bool
+	Trace        bool
+	Uniq         bool
+	Reconcile    string
+	Cache        bool
+	Globals      root.RootOptionsType
 }
 
 var Options TransactionsOptionsType
 
 func (opts *TransactionsOptionsType) TestLog() {
+	logger.TestLog(len(opts.Transactions) > 0, "Transactions: ", opts.Transactions)
 	logger.TestLog(opts.Articulate, "Articulate: ", opts.Articulate)
 	logger.TestLog(opts.Trace, "Trace: ", opts.Trace)
 	logger.TestLog(opts.Uniq, "Uniq: ", opts.Uniq)
 	logger.TestLog(len(opts.Reconcile) > 0, "Reconcile: ", opts.Reconcile)
 	logger.TestLog(opts.Cache, "Cache: ", opts.Cache)
+	opts.Globals.TestLog()
+}
+
+func FromRequest(r *http.Request) *TransactionsOptionsType {
+	opts := &TransactionsOptionsType{}
+	for key, value := range r.URL.Query() {
+		switch key {
+		case "transactions":
+			opts.Transactions = append(opts.Transactions, value...)
+		case "articulate":
+			opts.Articulate = true
+		case "trace":
+			opts.Trace = true
+		case "uniq":
+			opts.Uniq = true
+		case "reconcile":
+			opts.Reconcile = value[0]
+		case "cache":
+			opts.Cache = true
+		}
+	}
+	opts.Globals = *root.FromRequest(r)
+
+	return opts
 }

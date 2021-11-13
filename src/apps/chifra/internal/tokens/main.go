@@ -33,6 +33,6 @@ func Run(cmd *cobra.Command, args []string) error {
 	for _, arg := range args {
 		arguments += " " + arg
 	}
-	root.PassItOn("getTokens", options, arguments)
-	return nil
+
+	return root.PassItOn2("getTokens", &Options.Globals, options, arguments)
 }

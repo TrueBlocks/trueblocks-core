@@ -21,10 +21,11 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"time"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/server/exec"
 	utils "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/server/exec"
 	"github.com/gorilla/mux"
 	"golang.org/x/time/rate"
 )
@@ -114,9 +115,10 @@ func FormatValidator(inner http.Handler) http.Handler {
 			return
 		}
 
-		RespondWithError(
+		exec.RespondWithError(
 			w,
 			http.StatusBadRequest,
+			os.Getenv("TEST_MODE") == "true",
 			fmt.Errorf("The --fmt option (%s) must be one of [ json | txt | csv | api ]", fmtValue),
 		)
 	})
@@ -160,22 +162,12 @@ func AccountsNames(w http.ResponseWriter, r *http.Request) {
 
 // AccountsAbis processes ABI queries
 func AccountsAbis(w http.ResponseWriter, r *http.Request) {
-	// This is temporary. Currently only --find is supported by
-	// golang version and all other flags trigger the old C++ version
-	// of grabABI to be called.
 	if len(r.URL.Query()["find"]) == 0 {
 		CallOneExtra(w, r, "chifra", "abis", "abis")
 		return
 	}
 
-	result, err := exec.AccountsAbis(r)
-	if err != nil {
-		RespondWithError(w, http.StatusInternalServerError, err)
-		return
-	}
-
-	format := r.URL.Query().Get("fmt")
-	Respond(format, w, http.StatusOK, result)
+	exec.ServeAbis(w, r)
 }
 
 // ChainDataBlocks help text todo
@@ -235,14 +227,14 @@ func AdminInit(w http.ResponseWriter, r *http.Request) {
 
 // AdminPins handles /pins route
 func AdminPins(w http.ResponseWriter, r *http.Request) {
-	result, err := exec.AdminPins(r)
+	result, err := exec.ServePins(r)
 	if err != nil {
-		RespondWithError(w, http.StatusInternalServerError, err)
+		exec.RespondWithError(w, http.StatusInternalServerError, os.Getenv("TEST_MODE") == "true", err)
 		return
 	}
 
 	format := r.URL.Query().Get("fmt")
-	Respond(format, w, http.StatusOK, result)
+	exec.Respond(w, http.StatusOK, format, result)
 }
 
 // AdminChunks help text todo

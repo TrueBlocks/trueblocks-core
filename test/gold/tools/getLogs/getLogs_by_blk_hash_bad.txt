@@ -1,3 +1,4 @@
 chifra logs  0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.155 --verbose
+TEST[DATE|TIME] Verbose:  true
 blocknumber	transactionindex	logindex	address	topic0	topic1	topic2	topic3	data	type	compressedlog	timestamp
 "Transaction 0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.155 not found."

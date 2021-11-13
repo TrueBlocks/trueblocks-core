@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2021-11-11T15:11:30
+date: 2021-11-13T14:28:14
 lastmod:
   - :git
   - lastmod
@@ -40,11 +40,9 @@ Usage:
 
 Flags:
   -p, --port string   specify the server's port (default ":8080")
-
-Global Flags:
-  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
-  -h, --help         display this help screen
-  -v, --verbose      enable verbose (increase detail with --log_level)
+  -x, --fmt string    export format, one of [none|json*|txt|csv|api]
+  -v, --verbose       enable verbose (increase detail with --log_level)
+  -h, --help          display this help screen
 
 Notes:
   - To start API open terminal window and run chifra serve.
@@ -79,11 +77,9 @@ Flags:
   -p, --pin              pin chunks (and blooms) to IPFS as they are created (requires pinning service)
   -u, --publish          after pinning the chunk, publish it to UnchainedIndex
   -n, --block_cnt uint   maximum number of blocks to process per pass (default 2000)
-
-Global Flags:
-  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
-  -h, --help         display this help screen
-  -v, --verbose      enable verbose (increase detail with --log_level)
+  -x, --fmt string       export format, one of [none|json*|txt|csv|api]
+  -v, --verbose          enable verbose (increase detail with --log_level)
+  -h, --help             display this help screen
 
 Notes:
   - if no mode is presented, chifra scrape indexer --action run is assumed.
@@ -131,11 +127,9 @@ Flags:
                          One of [ header | addr_table | app_table | chunks | blooms ]
   -s, --stats            for the --list option only, display statistics about each chunk or bloom
   -a, --save             for the --extract option only, save the entire chunk to a similarly named file as well as display
-
-Global Flags:
-  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
-  -h, --help         display this help screen
-  -v, --verbose      enable verbose (increase detail with --log_level)
+  -x, --fmt string       export format, one of [none|json*|txt|csv|api]
+  -v, --verbose          enable verbose (increase detail with --log_level)
+  -h, --help             display this help screen
 
 Notes:
   - Only a single block in a given chunk needs to be supplied.
@@ -161,12 +155,10 @@ Usage:
   chifra init [flags]
 
 Flags:
-  -a, --all   in addition to Bloom filters, download full index chunks
-
-Global Flags:
+  -a, --all          in addition to Bloom filters, download full index chunks
   -x, --fmt string   export format, one of [none|json*|txt|csv|api]
-  -h, --help         display this help screen
   -v, --verbose      enable verbose (increase detail with --log_level)
+  -h, --help         display this help screen
 
 Notes:
   - chifra init is an alias for the chifra pins --init command.
@@ -192,11 +184,9 @@ Flags:
   -a, --all           in addition to Bloom filters, download full index chunks
   -S, --share         share downloaded data by pinning it to IPFS (the IPFS daemon must be running)
   -s, --sleep float   throttle requests by this many seconds (default 0.25)
-
-Global Flags:
-  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
-  -h, --help         display this help screen
-  -v, --verbose      enable verbose (increase detail with --log_level)
+  -x, --fmt string    export format, one of [none|json*|txt|csv|api]
+  -v, --verbose       enable verbose (increase detail with --log_level)
+  -h, --help          display this help screen
 
 Notes:
   - One of --list or --init is required.

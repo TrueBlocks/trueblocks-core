@@ -1,4 +1,5 @@
 chifra tokens  0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 --fmt api 2000000
+TEST[DATE|TIME] Format:  api
 {"data": [
   {
     "blockNumber": 2000000,

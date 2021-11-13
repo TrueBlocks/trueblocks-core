@@ -1,44 +1,26 @@
 package exec
 
 import (
-	"errors"
 	"net/http"
-	"strings"
+	"os"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/abis"
+	abiPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/abis"
 )
 
-// AccountsAbis runs abi querying functions depending on query parameters
-func AccountsAbis(request *http.Request) ([]abis.Function, error) {
-	query := request.URL.Query()
-	opts := &abis.AbisOptionsType{}
-	var args []string
+func ServeAbis(w http.ResponseWriter, r *http.Request) {
+	opts := abiPkg.FromRequest(r)
 
-	for key, value := range query {
-		switch key {
-		case "addrs":
-			args = value
-		case "known":
-			opts.Known = true
-		case "sol":
-			opts.Sol = true
-		case "find":
-			opts.Find = value
-		case "source":
-			opts.Source = true
-		case "classes":
-			opts.Classes = true
-		}
-	}
-
-	err := abis.ValidateOptions(opts, args)
+	err := opts.ValidateOptionsAbis()
 	if err != nil {
-		// Usage() adds newlines, which are not needed in API mode
-		formattedErr := strings.TrimLeft(err.Error(), "\n ")
-		formattedErr = strings.TrimRight(formattedErr, "\n")
-		return nil, errors.New(formattedErr)
+		RespondWithError(w, http.StatusInternalServerError, os.Getenv("TEST_MODE") == "true", err)
+		return
 	}
 
-	results := abis.Find(opts.Find)
-	return results, nil
+	results, err := abiPkg.FindInternal(opts)
+	if err != nil {
+		RespondWithError(w, http.StatusInternalServerError, os.Getenv("TEST_MODE") == "true", err)
+		return
+	}
+
+	Respond(w, http.StatusOK, r.URL.Query().Get("fmt"), results)
 }

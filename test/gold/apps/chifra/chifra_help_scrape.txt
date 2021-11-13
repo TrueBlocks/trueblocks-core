@@ -18,11 +18,9 @@ Flags:
   -n, --block_cnt uint        maximum number of blocks to process per pass (default 2000)
   -b, --block_chan_cnt uint   number of concurrent block processing channels (hidden) (default 10)
   -d, --addr_chan_cnt uint    number of concurrent address processing channels (hidden) (default 20)
-
-Global Flags:
-  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
-  -h, --help         display this help screen
-  -v, --verbose      enable verbose (increase detail with --log_level)
+  -x, --fmt string            export format, one of [none|json*|txt|csv|api]
+  -v, --verbose               enable verbose (increase detail with --log_level)
+  -h, --help                  display this help screen
 
 Notes:
   - if no mode is presented, chifra scrape indexer --action run is assumed.

@@ -24,7 +24,6 @@ import (
 	"sync"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // dropNL2 drops new line characters (\n) from the progress stream
@@ -71,52 +70,57 @@ func getCommandPath2(cmd string) string {
 }
 
 func PassItOn(path string, flags, arguments string) {
+	Options.Format = output.Format
+	PassItOn2(path, &Options, flags, arguments)
+}
+
+func PassItOn2(path string, opts *RootOptionsType, flags, arguments string) error {
 	options := flags
-	if Options.Raw {
+	if opts.Raw {
 		options += " --raw"
 	}
-	// if Options.Noop {
+	// if opts.Noop {
 	// 	options += " --noop"
 	// }
-	if Options.Version {
+	if opts.Version {
 		options += " --version"
 	}
-	if len(output.Format) > 0 {
-		options += " --fmt " + output.Format
+	if len(opts.Format) > 0 {
+		options += " --fmt " + opts.Format
 	}
-	if Options.Verbose || Options.LogLevel > 0 {
-		level := Options.LogLevel
+	if opts.Verbose || opts.LogLevel > 0 {
+		level := opts.LogLevel
 		if level == 0 {
 			level = 1
 		}
 		options += " --verbose " + fmt.Sprintf("%d", level)
 	}
-	if len(output.OutputFn) > 0 {
-		options += " --output " + output.OutputFn
+	if len(opts.OutputFn) > 0 {
+		options += " --output " + opts.OutputFn
 	}
-	if Options.NoHeader {
+	if opts.NoHeader {
 		options += " --no_header"
 	}
-	if Options.Wei {
+	if opts.Wei {
 		options += " --wei"
 	}
-	if Options.Ether {
+	if opts.Ether {
 		options += " --ether"
 	}
-	if Options.Dollars {
+	if opts.Dollars {
 		options += " --dollars"
 	}
-	if Options.ToFile {
+	if opts.ToFile {
 		options += " --to_file"
 	}
-	if len(Options.File) > 0 {
+	if len(opts.File) > 0 {
 		// TODO: one of the problems with this is that if the file contains invalid commands,
 		// TODO: because we don't see those commands until we're doing into the tool, we
 		// TODO: can't report on the 'bad command' in Cobra format. This will require us to
 		// TODO: keep validation code down in the tools which we want to avoid. To fix this
 		// TODO: the code below should open the file, read each command, and recursively call
 		// TODO: into chifra here.
-		options += " --file:" + Options.File
+		options += " --file:" + opts.File
 	}
 	options += arguments
 
@@ -125,7 +129,7 @@ func PassItOn(path string, flags, arguments string) {
 
 	// fmt.Fprintf(os.Stderr, "Calling: %s %s\n", path, options)
 	cmd := exec.Command(getCommandPath2(path), options)
-	if utils.IsTestMode() {
+	if os.Getenv("TEST_MODE") == "true" {
 		cmd.Env = append(os.Environ(), "TEST_MODE=true")
 	}
 
@@ -158,4 +162,5 @@ func PassItOn(path string, flags, arguments string) {
 	}
 	wg.Wait()
 	cmd.Wait()
+	return nil
 }

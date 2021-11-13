@@ -1,3 +1,4 @@
 chifra when  1001001 --fmt txt
+TEST[DATE|TIME] Format:  txt
 blocknumber	timestamp	date	name
 1001001	1455421883	2016-02-14 03:51:23 UTC

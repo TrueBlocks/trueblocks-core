@@ -15,10 +15,12 @@ package receipts
 
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/spf13/cobra"
 )
 
 func Validate(cmd *cobra.Command, args []string) error {
+	output.Format = Options.Globals.Format
 	// if len(args) == 0 {
 	// 	return Usage("Please specify at least one {0}.", "valid transaction identifier")
 	// }

@@ -17,16 +17,12 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"html/template"
 	"reflect"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-var OutputFn string
 var Format string
 
 type Meta struct {
@@ -42,8 +38,8 @@ func (m Meta) String() string {
 	return string(ret)
 }
 
-func GetMeta() *Meta {
-	if utils.IsTestMode() {
+func GetMeta(testMode bool) *Meta {
+	if testMode {
 		return &Meta{
 			Unripe:    "0xdeadbeef",
 			Ripe:      "0xdeadbeef",
@@ -77,48 +73,49 @@ func MakeFirstUpperCase(s string) string {
 	return string(bytes.Join([][]byte{lc, rest}, nil))
 }
 
-func GetFields(t *reflect.Type) (fields []string, sep string, quote string) {
-	for i := 0; i < (*t).NumField(); i++ {
-		fields = append(fields, MakeFirstLowerCase((*t).Field(i).Name))
-	}
-	sep = "\t"
-	quote = ""
-	if Format == "csv" {
-		sep = ","
-		quote = "\""
-	}
-	return fields, sep, quote
-}
+// TODO: Can we use golang templates for speed?
+// func getFields(t *reflect.Type) (fields []string, sep string, quote string) {
+// 	for i := 0; i < (*t).NumField(); i++ {
+// 		fields = append(fields, MakeFirstLowerCase((*t).Field(i).Name))
+// 	}
+// 	sep = "\t"
+// 	quote = ""
+// 	if Format == "csv" {
+// 		sep = ","
+// 		quote = "\""
+// 	}
+// 	return fields, sep, quote
+// }
 
-func GetHeader(t *reflect.Type) string {
-	if (*t).Kind() != reflect.Struct {
-		logger.Fatal((*t).Name() + " is not a structure")
-	}
+// func GetHeader(t *reflect.Type) string {
+// 	if (*t).Kind() != reflect.Struct {
+// 		logger.Fatal((*t).Name() + " is not a structure")
+// 	}
 
-	fields, sep, quote := GetFields(t)
-	var sb strings.Builder
-	for i, field := range fields {
-		if i > 0 {
-			sb.WriteString(sep)
-		}
-		sb.WriteString(quote + field + quote)
-	}
-	return sb.String()
-}
+// 	fields, sep, quote := getFields(t)
+// 	var sb strings.Builder
+// 	for i, field := range fields {
+// 		if i > 0 {
+// 			sb.WriteString(sep)
+// 		}
+// 		sb.WriteString(quote + field + quote)
+// 	}
+// 	return sb.String()
+// }
 
-func GetRowTemplate(t *reflect.Type) (*template.Template, error) {
-	fields, sep, quote := GetFields(t)
-	var sb strings.Builder
-	for i, field := range fields {
-		if i > 0 {
-			sb.WriteString(sep)
-		}
-		sb.WriteString(quote + "{{." + MakeFirstUpperCase(field) + "}}" + quote)
-	}
-	// fmt.Println(sb.String() + "\n")
-	tt, err := template.New("").Parse(sb.String() + "\n")
-	return tt, err
-}
+// func GetRowTemplate(t *reflect.Type) (*template.Template, error) {
+// 	fields, sep, quote := getFields(t)
+// 	var sb strings.Builder
+// 	for i, field := range fields {
+// 		if i > 0 {
+// 			sb.WriteString(sep)
+// 		}
+// 		sb.WriteString(quote + "{{." + MakeFirstUpperCase(field) + "}}" + quote)
+// 	}
+// 	// fmt.Println(sb.String() + "\n")
+// 	tt, err := template.New("").Parse(sb.String() + "\n")
+// 	return tt, err
+// }
 
 // ToStringRecords uses Reflect API to read data from the provided slice of structs and
 // turns it into a slice of string slices that can be later passed to encoding package

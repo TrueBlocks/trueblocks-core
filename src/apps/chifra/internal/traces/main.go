@@ -44,6 +44,6 @@ func Run(cmd *cobra.Command, args []string) error {
 	for _, arg := range args {
 		arguments += " " + arg
 	}
-	root.PassItOn("getTraces", options, arguments)
-	return nil
+
+	return root.PassItOn2("getTraces", &Options.Globals, options, arguments)
 }

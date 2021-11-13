@@ -2,7 +2,7 @@
 title: "Other"
 description: ""
 lead: ""
-date: 2021-11-11T15:11:30
+date: 2021-11-13T14:28:14
 lastmod:
   - :git
   - lastmod
@@ -43,11 +43,9 @@ Flags:
   -a, --pair string     which price pair to freshen or list (see Poloniex)
   -e, --feed string     the feed for the price data
                         One of [ poloniex | maker | tellor ]
-
-Global Flags:
-  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
-  -h, --help         display this help screen
-  -v, --verbose      enable verbose (increase detail with --log_level)
+  -x, --fmt string      export format, one of [none|json*|txt|csv|api]
+  -v, --verbose         enable verbose (increase detail with --log_level)
+  -h, --help            display this help screen
 
 Notes:
   - Due to restrictions from Poloniex, this tool retrieves only 30 days of data at a time. You must repeatedly run this command until the data is up-to-date.
@@ -70,13 +68,11 @@ Arguments:
   terms - one or more address, name, block, or transaction identifier
 
 Flags:
-  -l, --local    open the local TrueBlocks explorer
-  -g, --google   search google excluding popular blockchain explorers
-
-Global Flags:
+  -l, --local        open the local TrueBlocks explorer
+  -g, --google       search google excluding popular blockchain explorers
   -x, --fmt string   export format, one of [none|json*|txt|csv|api]
-  -h, --help         display this help screen
   -v, --verbose      enable verbose (increase detail with --log_level)
+  -h, --help         display this help screen
 ```
 
 **Source code**: [`explore.go`](https://github.com/TrueBlocks/trueblocks-core/tree/develop/src/apps/chifra/internal/explore.go)

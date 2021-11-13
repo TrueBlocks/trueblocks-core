@@ -1,3 +1,4 @@
 chifra when  daohack -v
+TEST[DATE|TIME] Verbose:  true
 blocknumber	timestamp	date	name
 1718497	1466134488	2016-06-17 03:34:48 UTC	daohack

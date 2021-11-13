@@ -54,10 +54,6 @@ func IsTestModeServer(r *http.Request) bool {
 	return r.Header.Get("User-Agent") == "testRunner"
 }
 
-func IsTestMode() bool {
-	return os.Getenv("TEST_MODE") == "true"
-}
-
 func IsApiMode() bool {
 	return os.Getenv("API_MODE") == "true"
 }

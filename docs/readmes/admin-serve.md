@@ -14,11 +14,9 @@ Usage:
 
 Flags:
   -p, --port string   specify the server's port (default ":8080")
-
-Global Flags:
-  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
-  -h, --help         display this help screen
-  -v, --verbose      enable verbose (increase detail with --log_level)
+  -x, --fmt string    export format, one of [none|json*|txt|csv|api]
+  -v, --verbose       enable verbose (increase detail with --log_level)
+  -h, --help          display this help screen
 
 Notes:
   - To start API open terminal window and run chifra serve.

@@ -18,6 +18,7 @@ package cmd
 import (
 	"os"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
 	scrapePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/scrape"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
@@ -51,7 +52,6 @@ Notes:
 
 func init() {
 	scrapeCmd.Flags().SortFlags = false
-	scrapeCmd.PersistentFlags().SortFlags = false
 	scrapeCmd.Flags().StringVarP(&scrapePkg.Options.Action, "action", "a", "", `command to apply to the specified scrape
 One of [ toggle | run | restart | pause | quit ]`)
 	scrapeCmd.Flags().Float64VarP(&scrapePkg.Options.Sleep, "sleep", "s", 14, "seconds to sleep between scraper passes")
@@ -60,12 +60,12 @@ One of [ toggle | run | restart | pause | quit ]`)
 	scrapeCmd.Flags().Uint64VarP(&scrapePkg.Options.BlockCnt, "block_cnt", "n", 2000, "maximum number of blocks to process per pass")
 	scrapeCmd.Flags().Uint64VarP(&scrapePkg.Options.BlockChanCnt, "block_chan_cnt", "b", 10, "number of concurrent block processing channels (hidden)")
 	scrapeCmd.Flags().Uint64VarP(&scrapePkg.Options.AddrChanCnt, "addr_chan_cnt", "d", 20, "number of concurrent address processing channels (hidden)")
-	if !utils.IsTestMode() {
+	if os.Getenv("TEST_MODE") != "true" {
 		scrapeCmd.Flags().MarkHidden("block_chan_cnt")
 		scrapeCmd.Flags().MarkHidden("addr_chan_cnt")
 	}
 	scrapeCmd.Flags().SortFlags = false
-	scrapeCmd.PersistentFlags().SortFlags = false
+	root.GlobalOptions(scrapeCmd, &scrapePkg.Options.Globals)
 
 	scrapeCmd.SetUsageTemplate(UsageWithNotes(notesScrape))
 	scrapeCmd.SetOut(os.Stderr)

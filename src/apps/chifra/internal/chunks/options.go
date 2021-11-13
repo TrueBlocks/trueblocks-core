@@ -17,23 +17,53 @@ package chunks
  */
 
 import (
+	"net/http"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
 type ChunksOptionsType struct {
+	Blocks  []string
 	List    bool
 	Check   bool
 	Extract string
 	Stats   bool
 	Save    bool
+	Globals root.RootOptionsType
 }
 
 var Options ChunksOptionsType
 
 func (opts *ChunksOptionsType) TestLog() {
+	logger.TestLog(len(opts.Blocks) > 0, "Blocks: ", opts.Blocks)
 	logger.TestLog(opts.List, "List: ", opts.List)
 	logger.TestLog(opts.Check, "Check: ", opts.Check)
 	logger.TestLog(len(opts.Extract) > 0, "Extract: ", opts.Extract)
 	logger.TestLog(opts.Stats, "Stats: ", opts.Stats)
 	logger.TestLog(opts.Save, "Save: ", opts.Save)
+	opts.Globals.TestLog()
+}
+
+func FromRequest(r *http.Request) *ChunksOptionsType {
+	opts := &ChunksOptionsType{}
+	for key, value := range r.URL.Query() {
+		switch key {
+		case "blocks":
+			opts.Blocks = append(opts.Blocks, value...)
+		case "list":
+			opts.List = true
+		case "check":
+			opts.Check = true
+		case "extract":
+			opts.Extract = value[0]
+		case "stats":
+			opts.Stats = true
+		case "save":
+			opts.Save = true
+		}
+	}
+	opts.Globals = *root.FromRequest(r)
+
+	return opts
 }

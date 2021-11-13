@@ -28,7 +28,7 @@ type JsonFormatted struct {
 
 // AsJsonBytes marshals JsonFormatted struct, populating Meta field if
 // needed
-func AsJsonBytes(j *JsonFormatted) ([]byte, error) {
+func AsJsonBytes(j *JsonFormatted, testMode bool) ([]byte, error) {
 	var result JsonFormatted
 
 	if Format == "json" {
@@ -46,7 +46,7 @@ func AsJsonBytes(j *JsonFormatted) ([]byte, error) {
 			result.Errors = j.Errors
 		} else {
 			result.Data = j.Data
-			result.Meta = GetMeta()
+			result.Meta = GetMeta(testMode)
 		}
 	}
 
@@ -60,7 +60,7 @@ func AsJsonBytes(j *JsonFormatted) ([]byte, error) {
 
 // PrintJson marshals its arguments and prints JSON in a standardized format
 func PrintJson(j *JsonFormatted) error {
-	marshalled, err := AsJsonBytes(j)
+	marshalled, err := AsJsonBytes(j, os.Getenv("TEST_MODE") == "true")
 	if err != nil {
 		return err
 	}

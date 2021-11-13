@@ -14,6 +14,7 @@ package status
  *-------------------------------------------------------------------------------------------*/
 import (
 	"fmt"
+	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -43,13 +44,11 @@ func Run(cmd *cobra.Command, args []string) error {
 	if Options.SetConfig {
 		options += " --set_config"
 	}
-	if Options.TestStart > 0 {
-		if utils.IsTestMode() {
+	if os.Getenv("TEST_MODE") == "true" {
+		if Options.TestStart > 0 {
 			options += " --test_start " + fmt.Sprintf("%d", Options.TestStart)
 		}
-	}
-	if Options.TestEnd != utils.NOPOS {
-		if utils.IsTestMode() {
+		if Options.TestEnd != utils.NOPOS {
 			options += " --test_end " + fmt.Sprintf("%d", Options.TestEnd)
 		}
 	}
@@ -57,6 +56,6 @@ func Run(cmd *cobra.Command, args []string) error {
 	for _, arg := range args {
 		arguments += " " + arg
 	}
-	root.PassItOn("cacheStatus", options, arguments)
-	return nil
+
+	return root.PassItOn2("cacheStatus", &Options.Globals, options, arguments)
 }

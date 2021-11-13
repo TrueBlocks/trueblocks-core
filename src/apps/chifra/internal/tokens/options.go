@@ -17,19 +17,49 @@ package tokens
  */
 
 import (
+	"net/http"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
 type TokensOptionsType struct {
-	Parts  []string
-	ByAcct bool
-	NoZero bool
+	Addrs2  []string
+	Blocks  []string
+	Parts   []string
+	ByAcct  bool
+	NoZero  bool
+	Globals root.RootOptionsType
 }
 
 var Options TokensOptionsType
 
 func (opts *TokensOptionsType) TestLog() {
+	logger.TestLog(len(opts.Addrs2) > 0, "Addrs2: ", opts.Addrs2)
+	logger.TestLog(len(opts.Blocks) > 0, "Blocks: ", opts.Blocks)
 	logger.TestLog(len(opts.Parts) > 0, "Parts: ", opts.Parts)
 	logger.TestLog(opts.ByAcct, "ByAcct: ", opts.ByAcct)
 	logger.TestLog(opts.NoZero, "NoZero: ", opts.NoZero)
+	opts.Globals.TestLog()
+}
+
+func FromRequest(r *http.Request) *TokensOptionsType {
+	opts := &TokensOptionsType{}
+	for key, value := range r.URL.Query() {
+		switch key {
+		case "addrs2":
+			opts.Addrs2 = append(opts.Addrs2, value...)
+		case "blocks":
+			opts.Blocks = append(opts.Blocks, value...)
+		case "parts":
+			opts.Parts = append(opts.Parts, value...)
+		case "byacct":
+			opts.ByAcct = true
+		case "nozero":
+			opts.NoZero = true
+		}
+	}
+	opts.Globals = *root.FromRequest(r)
+
+	return opts
 }

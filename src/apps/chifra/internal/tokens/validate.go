@@ -15,14 +15,16 @@ package tokens
 
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/spf13/cobra"
 )
 
 func Validate(cmd *cobra.Command, args []string) error {
+	output.Format = Options.Globals.Format
 	// special case for tokens which don't allow --dollars display
-	if root.Options.Dollars {
-		return validate.Usage("The {0} option is not available{1}.", "--dollars", "with this tool")
+	if Options.Globals.Dollars {
+		return validate.Usage("The {0} option is not available{1}.", "--dollars", " with this tool")
 	}
 
 	Options.TestLog()

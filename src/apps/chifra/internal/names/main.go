@@ -75,6 +75,6 @@ func Run(cmd *cobra.Command, args []string) error {
 	for _, arg := range args {
 		arguments += " " + arg
 	}
-	root.PassItOn("ethNames", options, arguments)
-	return nil
+
+	return root.PassItOn2("ethNames", &Options.Globals, options, arguments)
 }

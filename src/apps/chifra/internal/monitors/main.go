@@ -50,6 +50,6 @@ func Run(cmd *cobra.Command, args []string) error {
 	for _, arg := range args {
 		arguments += " " + arg
 	}
-	root.PassItOn("acctExport", options, arguments)
-	return nil
+
+	return root.PassItOn2("acctExport", &Options.Globals, options, arguments)
 }

@@ -36,9 +36,6 @@ func usageEx(function, msg string, values []string) error {
 	if utils.IsApiMode() {
 		return errors.New(ret)
 	}
-	if utils.IsApiMode() {
-		return errors.New(ret)
-	}
 	return errors.New("\n  " + ret + "\n")
 }
 

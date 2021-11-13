@@ -170,7 +170,7 @@ func NewScraper(color, name string, secs float64) Scraper {
 	scraper.Name = name
 	scraper.SleepSecs = int64(secs)
 	scraper.Running = false
-	scraper.Verbose = int64(root.Options.LogLevel)
+	scraper.Verbose = int64(Options.Globals.LogLevel)
 	return *scraper
 }
 

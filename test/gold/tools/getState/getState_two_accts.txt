@@ -1,4 +1,5 @@
 chifra state  0xbb9bc244d798123fde783fcc1c72d3bb8c189413 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 1500000 --fmt api
+TEST[DATE|TIME] Format:  api
 {"data": [
   {
     "blockNumber": 1500000,

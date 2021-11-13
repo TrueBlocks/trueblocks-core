@@ -17,17 +17,41 @@ package explore
  */
 
 import (
+	"net/http"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
 type ExploreOptionsType struct {
-	Local  bool
-	Google bool
+	Terms   []string
+	Local   bool
+	Google  bool
+	Globals root.RootOptionsType
 }
 
 var Options ExploreOptionsType
 
 func (opts *ExploreOptionsType) TestLog() {
+	logger.TestLog(len(opts.Terms) > 0, "Terms: ", opts.Terms)
 	logger.TestLog(opts.Local, "Local: ", opts.Local)
 	logger.TestLog(opts.Google, "Google: ", opts.Google)
+	opts.Globals.TestLog()
+}
+
+func FromRequest(r *http.Request) *ExploreOptionsType {
+	opts := &ExploreOptionsType{}
+	for key, value := range r.URL.Query() {
+		switch key {
+		case "terms":
+			opts.Terms = append(opts.Terms, value...)
+		case "local":
+			opts.Local = true
+		case "google":
+			opts.Google = true
+		}
+	}
+	opts.Globals = *root.FromRequest(r)
+
+	return opts
 }
