@@ -106,7 +106,7 @@ func FromRequest(r *http.Request) *RootOptionsType {
 		case "noop":
 			// do nothing
 		case "log_level":
-			opts.LogLevel = ToUint(value[0])
+			opts.LogLevel = ToUint64(value[0])
 		case "no_header":
 			opts.NoHeader = true
 		case "wei":

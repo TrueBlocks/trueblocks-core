@@ -50,5 +50,5 @@ func Run(cmd *cobra.Command, args []string) error {
 		arguments += " " + arg
 	}
 
-	return root.PassItOn2("grabABI", &Options.Globals, options, arguments)
+	return root.PassItOn("grabABI", &Options.Globals, options, arguments)
 }

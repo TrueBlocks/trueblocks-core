@@ -137,9 +137,9 @@ func FromRequest(r *http.Request) *ExportOptionsType {
 		case "count":
 			opts.Count = true
 		case "firstrecord":
-			opts.FirstRecord = root.ToUint(value[0])
+			opts.FirstRecord = root.ToUint64(value[0])
 		case "maxrecords":
-			opts.MaxRecords = root.ToUint(value[0])
+			opts.MaxRecords = root.ToUint64(value[0])
 		case "relevant":
 			opts.Relevant = true
 		case "emitter":
@@ -165,11 +165,11 @@ func FromRequest(r *http.Request) *ExportOptionsType {
 		case "skipddos":
 			opts.SkipDdos = true
 		case "maxtraces":
-			opts.MaxTraces = root.ToUint(value[0])
+			opts.MaxTraces = root.ToUint64(value[0])
 		case "firstblock":
-			opts.FirstBlock = root.ToUint(value[0])
+			opts.FirstBlock = root.ToUint64(value[0])
 		case "lastblock":
-			opts.LastBlock = root.ToUint(value[0])
+			opts.LastBlock = root.ToUint64(value[0])
 		}
 	}
 	opts.Globals = *root.FromRequest(r)

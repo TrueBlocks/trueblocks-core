@@ -86,7 +86,7 @@ func RunIndexScraper(wg sync.WaitGroup, initialState bool) {
 				options += " --sleep " + fmt.Sprintf("%g", Options.Sleep)
 			}
 			options += (" --block_cnt " + fmt.Sprintf("%d", Options.BlockCnt))
-			root.PassItOn("blockScrape", options, "")
+			root.PassItOn("blockScrape", &Options.Globals, options, "")
 			/* -------------- */
 
 			s.ShowStateChange("wake", "sleep")
@@ -140,7 +140,7 @@ func RunMonitorScraper(wg sync.WaitGroup, initialState bool) {
 				}
 				options := " --freshen"
 				options += " " + addr
-				root.PassItOn("acctExport", options, "")
+				root.PassItOn("acctExport", &Options.Globals, options, "")
 			}
 			/* -------------- */
 

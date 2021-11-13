@@ -58,17 +58,17 @@ func FromRequest(r *http.Request) *ScrapeOptionsType {
 		case "action":
 			opts.Action = value[0]
 		case "sleep":
-			opts.Sleep = root.ToFloat(value[0])
+			opts.Sleep = root.ToFloat64(value[0])
 		case "pin":
 			opts.Pin = true
 		case "publish":
 			opts.Publish = true
 		case "blockcnt":
-			opts.BlockCnt = root.ToUint(value[0])
+			opts.BlockCnt = root.ToUint64(value[0])
 		case "blockchancnt":
-			opts.BlockChanCnt = root.ToUint(value[0])
+			opts.BlockChanCnt = root.ToUint64(value[0])
 		case "addrchancnt":
-			opts.AddrChanCnt = root.ToUint(value[0])
+			opts.AddrChanCnt = root.ToUint64(value[0])
 		}
 	}
 	opts.Globals = *root.FromRequest(r)

@@ -55,9 +55,9 @@ func FromRequest(r *http.Request) *ListOptionsType {
 		case "appearances":
 			opts.Appearances = true
 		case "firstblock":
-			opts.FirstBlock = root.ToUint(value[0])
+			opts.FirstBlock = root.ToUint64(value[0])
 		case "lastblock":
-			opts.LastBlock = root.ToUint(value[0])
+			opts.LastBlock = root.ToUint64(value[0])
 		}
 	}
 	opts.Globals = *root.FromRequest(r)

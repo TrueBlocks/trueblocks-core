@@ -22,8 +22,6 @@ import (
 	"os/exec"
 	"os/user"
 	"sync"
-
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 )
 
 // dropNL2 drops new line characters (\n) from the progress stream
@@ -69,12 +67,7 @@ func getCommandPath2(cmd string) string {
 	return dir + "/.local/bin/chifra/" + cmd
 }
 
-func PassItOn(path string, flags, arguments string) {
-	Options.Format = output.Format
-	PassItOn2(path, &Options, flags, arguments)
-}
-
-func PassItOn2(path string, opts *RootOptionsType, flags, arguments string) error {
+func PassItOn(path string, opts *RootOptionsType, flags, arguments string) error {
 	options := flags
 	if opts.Raw {
 		options += " --raw"
