@@ -16,6 +16,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
 type JsonFormatted struct {

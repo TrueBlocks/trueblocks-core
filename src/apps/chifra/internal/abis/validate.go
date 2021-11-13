@@ -16,29 +16,32 @@ package abis
 import (
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/spf13/cobra"
 )
 
 func Validate(cmd *cobra.Command, args []string) error {
-	if Options.Classes {
+	return ValidateOptions(&Options, args)
+}
+
+func ValidateOptions(opts *AbisOptionsType, args []string) error {
+	if opts.Classes {
 		return validate.Usage("The {0} option is not available{1}.", "--classes", " (not implemented)")
 	}
 
-	if len(Options.Find) == 0 && !Options.Known {
+	if len(opts.Find) == 0 && !opts.Known {
 		err := validate.ValidateAtLeastOneAddr(args)
 		if err != nil {
 			return err
 		}
 	}
 
-	if Options.Sol && len(Options.Find) > 0 {
+	if opts.Sol && len(opts.Find) > 0 {
 		return validate.Usage("Please choose only one of {0}.", "--sol or --find")
 	}
 
-	if Options.Sol {
+	if opts.Sol {
 		for _, sol := range args {
 			if sol == "" {
 				continue
@@ -49,7 +52,7 @@ func Validate(cmd *cobra.Command, args []string) error {
 			}
 		}
 	} else {
-		for _, term := range Options.Find {
+		for _, term := range opts.Find {
 			ok1, err1 := validate.IsValidFourByte(term)
 			if !ok1 && len(term) < 10 {
 				return err1
@@ -71,7 +74,7 @@ func Validate(cmd *cobra.Command, args []string) error {
 
 	}
 
-	Options.TestLog()
+	opts.TestLog()
 
-	return root.ValidateGlobals(cmd, args)
+	return nil // root.ValidateGlobals(cmd, args)
 }

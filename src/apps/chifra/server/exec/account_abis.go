@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/abis"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/abis"
 )
 
 // AccountsAbis runs abi querying functions depending on query parameters

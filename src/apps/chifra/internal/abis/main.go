@@ -28,7 +28,7 @@ func Run(cmd *cobra.Command, args []string) error {
 	}
 
 	if len(Options.Find) > 0 {
-		HandleFind(Options.Find, root.Options.NoHeader)
+		HandleFind(Options.Find) // , root.Options.NoHeader)
 		return nil
 	}
 
