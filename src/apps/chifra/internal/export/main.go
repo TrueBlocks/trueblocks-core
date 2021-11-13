@@ -48,6 +48,9 @@ func Run(cmd *cobra.Command, args []string) error {
 	if Options.CacheTraces {
 		options += " --cache_traces"
 	}
+	if Options.Neighbors {
+		options += " --neighbors"
+	}
 	if Options.Factory {
 		options += " --factory"
 	}
