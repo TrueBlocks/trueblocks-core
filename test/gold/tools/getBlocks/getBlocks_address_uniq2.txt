@@ -1,5 +1,0 @@
-chifra blocks  3 --uniq
-TEST[DATE|TIME] Uniq:  true
-bn	tx	tc	addr	reason
-3	99999		0x5088d623ba0fcf0131e0897a91734a4d83596aa0	miner
-3	99998		0xc8ebccc5f5689fa8659d83713341e5ad19349448	uncle

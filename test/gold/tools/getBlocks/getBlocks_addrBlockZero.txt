@@ -1,5 +1,5 @@
-chifra blocks  0 --uniq_tx
-TEST[DATE|TIME] UniqTx:  true
+chifra blocks  0 --uniq
+TEST[DATE|TIME] Uniq:  true
 bn	tx	tc	addr	reason
 0	0		0x000d836201318ec6899a67540690382780743280	genesis
 0	1		0x001762430ea9c3a26e5749afdb70da5f78ddbb8c	genesis

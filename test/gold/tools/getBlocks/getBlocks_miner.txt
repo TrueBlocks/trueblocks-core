@@ -1,5 +1,5 @@
-chifra blocks  1 --uniq_tx --fmt json
-TEST[DATE|TIME] UniqTx:  true
+chifra blocks  1 --uniq --fmt json
+TEST[DATE|TIME] Uniq:  true
 { "data": [
   {
     "bn": 1,

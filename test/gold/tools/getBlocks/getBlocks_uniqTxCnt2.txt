@@ -1,5 +1,5 @@
-chifra blocks  1301011-1312011:313 --uniq_tx --count --fmt json
-TEST[DATE|TIME] UniqTx:  true
+chifra blocks  1301011-1312011:313 --uniq --count --fmt json
+TEST[DATE|TIME] Uniq:  true
 TEST[DATE|TIME] Count:  true
 { "data": [
 { "blockNumber": 1301011, "transactionsCnt": 1, "uniq": 4},

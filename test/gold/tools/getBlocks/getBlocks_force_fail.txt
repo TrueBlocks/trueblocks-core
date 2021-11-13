@@ -1,5 +1,5 @@
-chifra blocks  2769609 2799895 2872831 3076260 --cache --uniq_tx
-TEST[DATE|TIME] UniqTx:  true
+chifra blocks  2769609 2799895 2872831 3076260 --cache --uniq
+TEST[DATE|TIME] Uniq:  true
 TEST[DATE|TIME] Cache:  true
 
   The --cache option is not available when using one of the address options. Quitting...

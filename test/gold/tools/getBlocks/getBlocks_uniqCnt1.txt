@@ -1,5 +1,0 @@
-chifra blocks  3982128 --uniq --count --fmt txt
-TEST[DATE|TIME] Uniq:  true
-TEST[DATE|TIME] Count:  true
-blocknumber	transactionscnt	addr_count
-3982128	91	164

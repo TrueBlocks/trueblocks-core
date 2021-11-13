@@ -1,4 +1,4 @@
-chifra blocks  32279 --uniq_tx
-TEST[DATE|TIME] UniqTx:  true
+chifra blocks  32279 --uniq
+TEST[DATE|TIME] Uniq:  true
 bn	tx	tc	addr	reason
 32279	99999		0x0000000000000000000000000000000000000000	miner
