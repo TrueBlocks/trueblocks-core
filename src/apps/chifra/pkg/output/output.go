@@ -1,27 +1,244 @@
-/*-------------------------------------------------------------------------------------------
- * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
- * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
- *
- * This program is free software: you may redistribute it and/or modify it under the terms
- * of the GNU General Public License as published by the Free Software Foundation, either
- * version 3 of the License, or (at your option) any later version. This program is
- * distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
- * the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * General Public License for more details. You should have received a copy of the GNU General
- * Public License along with this program. If not, see http://www.gnu.org/licenses/.
- *-------------------------------------------------------------------------------------------*/
 package output
 
 import (
 	"bytes"
 	"context"
+	"encoding/csv"
 	"encoding/json"
 	"fmt"
+	"io"
+	"net/http"
+	"os"
 	"reflect"
 	"strings"
+	"text/tabwriter"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
+
+// Formatter type represents a function that can be used to format data
+type Formatter func(data interface{}, opts *globals.GlobalOptionsType) ([]byte, error)
+
+// The map below maps format string to Formatter
+var formatStringToFormatter = map[string]Formatter{
+	"api":  JsonFormatter,
+	"json": JsonFormatter,
+	"csv":  CsvFormatter,
+	"txt":  TxtFormatter,
+	"tab":  TabFormatter,
+}
+
+// JsonFormatter turns data into JSON
+func JsonFormatter(data interface{}, opts *globals.GlobalOptionsType) ([]byte, error) {
+	formatted := &JsonFormatted{}
+	err, ok := data.(error)
+	if ok {
+		formatted.Errors = []string{
+			err.Error(),
+		}
+	} else {
+		formatted.Data = data
+	}
+
+	return AsJsonBytes(formatted, opts)
+}
+
+// TxtFormatter turns data into TSV string
+func TxtFormatter(data interface{}, opts *globals.GlobalOptionsType) ([]byte, error) {
+	out := bytes.Buffer{}
+	tsv, err := AsTsv(data)
+	if err != nil {
+		return nil, err
+	}
+	_, err = out.Write(tsv)
+	if err != nil {
+		return nil, err
+	}
+	return out.Bytes(), nil
+}
+
+// TabFormatter turns data into a table (string)
+func TabFormatter(data interface{}, opts *globals.GlobalOptionsType) ([]byte, error) {
+	tabOutput := &bytes.Buffer{}
+	tab := tabwriter.NewWriter(tabOutput, 0, 0, 2, ' ', 0)
+	tsv, err := AsTsv(data)
+	if err != nil {
+		return nil, err
+	}
+	tab.Write(tsv)
+	err = tab.Flush()
+
+	return tabOutput.Bytes(), err
+}
+
+// This type is used to carry CSV layout information
+type CsvFormatted struct {
+	Header  []string
+	Content [][]string
+}
+
+// CsvFormatter turns a type into CSV string. It uses custom code instead of
+// Go's encoding/csv to maintain compatibility with C++ output, which
+// quotes each item. encoding/csv would double-quote a quoted string...
+func CsvFormatter(i interface{}, opts *globals.GlobalOptionsType) ([]byte, error) {
+	records, err := ToStringRecords(i, true)
+	if err != nil {
+		return nil, err
+	}
+	result := []string{}
+	// We have to join records in one row with a ","
+	for _, row := range records {
+		result = append(result, strings.Join(row, ","))
+	}
+
+	// Now we need to join all rows with a newline. We also add one
+	// final newline to be concise with both Go's encoding/csv and C++
+	// version
+	return []byte(
+		strings.Join(result, "\n") + "\n",
+	), nil
+}
+
+// Output converts data into the given format and writes to where writer
+func Output(opts *globals.GlobalOptionsType, where io.Writer, format string, data interface{}) error {
+	nonEmptyFormat := format
+	if format == "" || format == "none" {
+		if utils.IsApiMode() {
+			nonEmptyFormat = "api"
+		} else {
+			nonEmptyFormat = "txt"
+		}
+	}
+	if nonEmptyFormat == "txt" {
+		_, ok := where.(http.ResponseWriter)
+		// We would never want to use tab format in server environment
+		if utils.IsTerminal() && !ok {
+			nonEmptyFormat = "tab"
+		}
+	}
+	formatter, ok := formatStringToFormatter[nonEmptyFormat]
+	if !ok {
+		return fmt.Errorf("unsupported format %s", format)
+	}
+
+	output, err := formatter(data, opts)
+	if err != nil {
+		return err
+	}
+
+	where.Write(output)
+	// Maintain newline compatibility with C++ version
+	if nonEmptyFormat == "json" || nonEmptyFormat == "api" {
+		where.Write([]byte{'\n'})
+	}
+	return nil
+}
+
+type JsonFormatted struct {
+	Data   interface{} `json:"data,omitempty"`
+	Errors []string    `json:"errors,omitempty"`
+	Meta   *Meta       `json:"meta,omitempty"`
+}
+
+// AsJsonBytes marshals JsonFormatted struct, populating Meta field if
+// needed
+func AsJsonBytes(j *JsonFormatted, opts *globals.GlobalOptionsType) ([]byte, error) {
+	var result JsonFormatted
+
+	if opts.Format == "json" {
+		if len(validate.Errors) > 0 {
+			result.Errors = validate.Errors
+		} else {
+			if len(j.Errors) > 0 {
+				result.Errors = j.Errors
+			} else {
+				result.Data = j.Data
+			}
+		}
+	} else {
+		if len(j.Errors) > 0 {
+			result.Errors = j.Errors
+		} else {
+			result.Data = j.Data
+			result.Meta = GetMeta(opts.TestMode)
+		}
+	}
+
+	marshalled, err := json.MarshalIndent(result, "", "  ")
+	if err != nil {
+		return nil, err
+	}
+
+	return marshalled, err
+}
+
+// PrintJson marshals its arguments and prints JSON in a standardized format
+func PrintJson(j *JsonFormatted, opts *globals.GlobalOptionsType) error {
+	marshalled, err := AsJsonBytes(j, opts)
+	if err != nil {
+		return err
+	}
+	fmt.Fprintln(os.Stdout, string(marshalled))
+
+	return nil
+}
+
+// Table makes it easier to output tabular data to the console
+type Table struct {
+	Writer *tabwriter.Writer
+	target *os.File
+}
+
+// New sets up the default writer and target for a table
+func (t *Table) New() {
+	t.Writer = tabwriter.NewWriter(os.Stdout, 0, 0, 2, ' ', 0)
+	t.target = os.Stdout
+}
+
+// Header prints table header to the writer
+func (t *Table) Header(header []string) {
+	fmt.Fprintln(t.Writer, strings.Join(header, "\t"))
+}
+
+// Row prints data as table cells in one row
+func (t *Table) Row(cells []string) {
+	for _, cell := range cells {
+		fmt.Fprint(t.Writer, cell, "\t")
+	}
+	fmt.Fprint(t.Writer, "\n")
+}
+
+// Print flushes the Writer, which will print the table
+func (t *Table) Print() error {
+	return t.Writer.Flush()
+}
+
+// AsTsv turns a type into tab-separated values
+func AsTsv(data interface{}) ([]byte, error) {
+	records, err := ToStringRecords(data, false)
+	if err != nil {
+		return nil, err
+	}
+
+	buf := &bytes.Buffer{}
+	writer := csv.NewWriter(buf)
+	writer.Comma = '\t'
+
+	err = writer.WriteAll(records)
+	if err != nil {
+		return nil, err
+	}
+
+	err = writer.Error()
+	if err != nil {
+		return nil, err
+	}
+
+	return buf.Bytes(), nil
+}
 
 type Meta struct {
 	Unripe    string `json:"unripe"`

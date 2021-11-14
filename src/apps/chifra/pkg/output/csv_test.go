@@ -1,8 +1,12 @@
 package output
 
 import (
+	"fmt"
+	"log"
 	"strings"
 	"testing"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 )
 
 func TestAsCsv(t *testing.T) {
@@ -16,18 +20,25 @@ func TestAsCsv(t *testing.T) {
 		{"second first", "second second"},
 	}
 
-	result, err := CsvFormatter(input)
+	var opts globals.GlobalOptionsType
+	opts.Format = "csv"
+	result, err := CsvFormatter(input, &opts)
 	if err != nil {
 		t.Error(err)
 		return
 	}
+	str := strings.Trim(string(result), "\n")
 	expected := strings.Join([]string{
 		`"first","second"`,
 		`"first first","first second"`,
 		`"second first","second second"`,
 	}, "\n")
+	log.Println(str)
+	log.Println(expected)
 
-	if string(result) != expected {
-		t.Error("Wrong result", result)
+	if str != expected {
+		fmt.Printf("*** %s ****\n", strings.Replace(str, "\n", "AAAA", -1))
+		str := strings.Replace(string(result), expected, "++++", -1)
+		t.Error("Wrong result: ", str, ":")
 	}
 }
