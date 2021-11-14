@@ -37,7 +37,7 @@ func (opts *ReceiptsOptionsType) TestLog() {
 	opts.Globals.TestLog()
 }
 
-func FromRequest(r *http.Request) *ReceiptsOptionsType {
+func FromRequest(w http.ResponseWriter, r *http.Request) *ReceiptsOptionsType {
 	opts := &ReceiptsOptionsType{}
 	for key, value := range r.URL.Query() {
 		switch key {
@@ -47,7 +47,7 @@ func FromRequest(r *http.Request) *ReceiptsOptionsType {
 			opts.Articulate = true
 		}
 	}
-	opts.Globals = *globals.FromRequest(r)
+	opts.Globals = *globals.FromRequest(w, r)
 
 	return opts
 }

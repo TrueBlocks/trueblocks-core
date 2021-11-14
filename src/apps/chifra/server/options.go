@@ -35,7 +35,7 @@ func (opts *ServeOptionsType) TestLog() {
 	opts.Globals.TestLog()
 }
 
-func FromRequest(r *http.Request) *ServeOptionsType {
+func FromRequest(w http.ResponseWriter, r *http.Request) *ServeOptionsType {
 	opts := &ServeOptionsType{}
 	for key, value := range r.URL.Query() {
 		switch key {
@@ -43,7 +43,7 @@ func FromRequest(r *http.Request) *ServeOptionsType {
 			opts.Port = value[0]
 		}
 	}
-	opts.Globals = *globals.FromRequest(r)
+	opts.Globals = *globals.FromRequest(w, r)
 
 	return opts
 }

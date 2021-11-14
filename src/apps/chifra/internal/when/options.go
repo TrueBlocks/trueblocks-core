@@ -45,7 +45,7 @@ func (opts *WhenOptionsType) TestLog() {
 	opts.Globals.TestLog()
 }
 
-func FromRequest(r *http.Request) *WhenOptionsType {
+func FromRequest(w http.ResponseWriter, r *http.Request) *WhenOptionsType {
 	opts := &WhenOptionsType{}
 	for key, value := range r.URL.Query() {
 		switch key {
@@ -63,7 +63,7 @@ func FromRequest(r *http.Request) *WhenOptionsType {
 			opts.Count = true
 		}
 	}
-	opts.Globals = *globals.FromRequest(r)
+	opts.Globals = *globals.FromRequest(w, r)
 
 	return opts
 }

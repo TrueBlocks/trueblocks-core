@@ -24,7 +24,8 @@ import (
 	"os"
 	"time"
 
-	utils "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	abisPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/abis"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/server/exec"
 	"github.com/gorilla/mux"
 	"golang.org/x/time/rate"
@@ -167,7 +168,7 @@ func AccountsAbis(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	exec.ServeAbis(w, r)
+	abisPkg.ServeAbis(w, r)
 }
 
 // ChainDataBlocks help text todo

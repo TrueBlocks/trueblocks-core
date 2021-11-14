@@ -45,7 +45,7 @@ func (opts *ChunksOptionsType) TestLog() {
 	opts.Globals.TestLog()
 }
 
-func FromRequest(r *http.Request) *ChunksOptionsType {
+func FromRequest(w http.ResponseWriter, r *http.Request) *ChunksOptionsType {
 	opts := &ChunksOptionsType{}
 	for key, value := range r.URL.Query() {
 		switch key {
@@ -63,7 +63,7 @@ func FromRequest(r *http.Request) *ChunksOptionsType {
 			opts.Save = true
 		}
 	}
-	opts.Globals = *globals.FromRequest(r)
+	opts.Globals = *globals.FromRequest(w, r)
 
 	return opts
 }

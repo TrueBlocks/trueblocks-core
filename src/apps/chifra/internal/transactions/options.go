@@ -45,7 +45,7 @@ func (opts *TransactionsOptionsType) TestLog() {
 	opts.Globals.TestLog()
 }
 
-func FromRequest(r *http.Request) *TransactionsOptionsType {
+func FromRequest(w http.ResponseWriter, r *http.Request) *TransactionsOptionsType {
 	opts := &TransactionsOptionsType{}
 	for key, value := range r.URL.Query() {
 		switch key {
@@ -63,7 +63,7 @@ func FromRequest(r *http.Request) *TransactionsOptionsType {
 			opts.Cache = true
 		}
 	}
-	opts.Globals = *globals.FromRequest(r)
+	opts.Globals = *globals.FromRequest(w, r)
 
 	return opts
 }

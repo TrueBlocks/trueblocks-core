@@ -46,7 +46,7 @@ func (opts *PinsOptionsType) TestLog() {
 	opts.Globals.TestLog()
 }
 
-func FromRequest(r *http.Request) *PinsOptionsType {
+func FromRequest(w http.ResponseWriter, r *http.Request) *PinsOptionsType {
 	opts := &PinsOptionsType{}
 	for key, value := range r.URL.Query() {
 		switch key {
@@ -68,7 +68,7 @@ func FromRequest(r *http.Request) *PinsOptionsType {
 			opts.InitAll = true
 		}
 	}
-	opts.Globals = *globals.FromRequest(r)
+	opts.Globals = *globals.FromRequest(w, r)
 
 	return opts
 }

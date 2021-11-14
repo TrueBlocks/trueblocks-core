@@ -63,7 +63,7 @@ func (opts *BlocksOptionsType) TestLog() {
 	opts.Globals.TestLog()
 }
 
-func FromRequest(r *http.Request) *BlocksOptionsType {
+func FromRequest(w http.ResponseWriter, r *http.Request) *BlocksOptionsType {
 	opts := &BlocksOptionsType{}
 	for key, value := range r.URL.Query() {
 		switch key {
@@ -99,7 +99,7 @@ func FromRequest(r *http.Request) *BlocksOptionsType {
 			opts.ListCount = globals.ToUint64(value[0])
 		}
 	}
-	opts.Globals = *globals.FromRequest(r)
+	opts.Globals = *globals.FromRequest(w, r)
 
 	return opts
 }

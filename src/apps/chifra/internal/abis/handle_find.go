@@ -19,6 +19,7 @@ import (
 	"encoding/hex"
 	"fmt"
 	"io"
+	"net/http"
 	"os"
 	"sync"
 
@@ -28,21 +29,17 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/server/exec"
 )
 
-func HandleFind(opts *AbisOptionsType) {
-	results, err := FindInternal(opts)
-	if err != nil {
-		logger.Log(logger.Error, err)
-	}
-
-	err = output.Output(os.Stdout, opts.Globals.Format, results)
+func (opts *AbisOptionsType) HandleFind() {
+	err := opts.FindInternal()
 	if err != nil {
 		logger.Log(logger.Error, err)
 	}
 }
 
-func FindInternal(opts *AbisOptionsType) ([]Function, error) {
+func (opts *AbisOptionsType) FindInternal() error {
 	visits := ScanCounter{}
 	visits.Wanted = uint64(len(opts.Find))
 	visits.Freq = 139419
@@ -74,7 +71,7 @@ func FindInternal(opts *AbisOptionsType) ([]Function, error) {
 
 	sigsFile, err := os.Open(config.GetConfigPath("abis/known-000/uniq_sigs.tab"))
 	if err != nil {
-		return nil, err
+		return err
 	}
 	defer func() {
 		sigsFile.Close()
@@ -108,7 +105,17 @@ func FindInternal(opts *AbisOptionsType) ([]Function, error) {
 	}
 
 	defer wg.Wait()
-	return results, nil
+
+	if opts.Globals.ApiMode {
+		exec.Respond(opts.Globals.Writer, http.StatusOK, opts.Globals.Format, results)
+
+	} else {
+		err = output.Output(os.Stdout, opts.Globals.Format, results)
+		if err != nil {
+			logger.Log(logger.Error, err)
+		}
+	}
+	return nil
 }
 
 // TODO: These are not implemented

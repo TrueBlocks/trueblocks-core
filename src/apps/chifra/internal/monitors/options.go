@@ -52,7 +52,7 @@ func (opts *MonitorsOptionsType) TestLog() {
 	opts.Globals.TestLog()
 }
 
-func FromRequest(r *http.Request) *MonitorsOptionsType {
+func FromRequest(w http.ResponseWriter, r *http.Request) *MonitorsOptionsType {
 	opts := &MonitorsOptionsType{}
 	for key, value := range r.URL.Query() {
 		switch key {
@@ -76,7 +76,7 @@ func FromRequest(r *http.Request) *MonitorsOptionsType {
 			opts.LastBlock = globals.ToUint64(value[0])
 		}
 	}
-	opts.Globals = *globals.FromRequest(r)
+	opts.Globals = *globals.FromRequest(w, r)
 
 	return opts
 }

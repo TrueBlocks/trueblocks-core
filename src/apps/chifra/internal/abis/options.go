@@ -45,7 +45,7 @@ func (opts *AbisOptionsType) TestLog() {
 	opts.Globals.TestLog()
 }
 
-func FromRequest(r *http.Request) *AbisOptionsType {
+func FromRequest(w http.ResponseWriter, r *http.Request) *AbisOptionsType {
 	opts := &AbisOptionsType{}
 	for key, value := range r.URL.Query() {
 		switch key {
@@ -63,7 +63,7 @@ func FromRequest(r *http.Request) *AbisOptionsType {
 			opts.Classes = true
 		}
 	}
-	opts.Globals = *globals.FromRequest(r)
+	opts.Globals = *globals.FromRequest(w, r)
 
 	return opts
 }

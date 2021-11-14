@@ -43,7 +43,7 @@ func (opts *TokensOptionsType) TestLog() {
 	opts.Globals.TestLog()
 }
 
-func FromRequest(r *http.Request) *TokensOptionsType {
+func FromRequest(w http.ResponseWriter, r *http.Request) *TokensOptionsType {
 	opts := &TokensOptionsType{}
 	for key, value := range r.URL.Query() {
 		switch key {
@@ -59,7 +59,7 @@ func FromRequest(r *http.Request) *TokensOptionsType {
 			opts.NoZero = true
 		}
 	}
-	opts.Globals = *globals.FromRequest(r)
+	opts.Globals = *globals.FromRequest(w, r)
 
 	return opts
 }

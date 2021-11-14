@@ -38,6 +38,7 @@ type GlobalOptionsType struct {
 	Format   string
 	TestMode bool
 	ApiMode  bool
+	Writer   http.ResponseWriter
 }
 
 func (opts *GlobalOptionsType) TestLog() {
@@ -92,8 +93,9 @@ func GlobalOptions(cmd *cobra.Command, opts *GlobalOptionsType) {
 	cmd.Flags().MarkHidden("output")
 }
 
-func FromRequest(r *http.Request) *GlobalOptionsType {
+func FromRequest(w http.ResponseWriter, r *http.Request) *GlobalOptionsType {
 	opts := &GlobalOptionsType{}
+	opts.Writer = w
 
 	opts.TestMode = r.Header.Get("User-Agent") == "testRunner"
 	opts.ApiMode = true

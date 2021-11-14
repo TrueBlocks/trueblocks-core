@@ -33,13 +33,13 @@ func (opts *[{PROPER}]OptionsType) TestLog() {
 [{TEST_LOGS}]	opts.Globals.TestLog()
 }
 
-func FromRequest(r *http.Request) *[{PROPER}]OptionsType {
+func FromRequest(w http.ResponseWriter, r *http.Request) *[{PROPER}]OptionsType {
 	opts := &[{PROPER}]OptionsType{}
 	for key, value := range r.URL.Query() {
 		switch key {
 [{REQUEST_OPTS}]		}
 	}
-	opts.Globals = *globals.FromRequest(r)
+	opts.Globals = *globals.FromRequest(w, r)
 
 	return opts
 }
