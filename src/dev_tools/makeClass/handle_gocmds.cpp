@@ -30,12 +30,13 @@ bool COptions::handle_gocmds_cmd(const CCommandOption& p) {
     if (p.api_route == "abis" || p.api_route == "pins") {
         replace(source, "\t[{ROUTE}]Cmd.PersistentFlags().SortFlags = false", "");
         replace(source, "\t[{ROUTE}]Cmd.PersistentFlags().SortFlags = false",
-                "\troot.GlobalOptions([{ROUTE}]Cmd, &[{ROUTE}]Pkg.Options.Globals)");
+                "\t/globals.GlobalOptions([{ROUTE}]Cmd, &[{ROUTE}]Pkg.Options.Globals)");
     }
     replaceAll(source, "[{LONG}]", "Purpose:\n  " + p.description);
     replaceAll(source, "[{OPT_DEF}]", "");
-    replaceAll(source, "[{IMPORTS}]",
-               "\t\"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/[{ROUTE}]\"\n[{IMPORTS}]");
+    replaceAll(
+        source, "[{IMPORTS}]",
+        "\t[{ROUTE}]Pkg \"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/[{ROUTE}]\"\n[{IMPORTS}]");
     if (p.api_route == "serve") {
         replaceAll(source, "/internal/[{ROUTE}]", "/server");
     }
@@ -241,7 +242,7 @@ string_q get_optfields(const CCommandOption& cmd) {
         p.longName = noUnderbars(p.longName);
         os << "\t" << padRight(p.longName, wid) << " " << p.go_type << endl;
     }
-    os << "\t" << padRight("Globals", wid) << " root.GlobalOptionsType" << endl;
+    os << "\t" << padRight("Globals", wid) << " globals.GlobalOptionsType" << endl;
 
     return os.str();
 }
@@ -308,7 +309,7 @@ string_q get_hidden2(const CCommandOption& cmd) {
     return "";
     // ostringstream os;
     // os << "\tPersistentPreRun: func(cmd *cobra.Command, args []string) {" << endl;
-    // os << "\t\trootCmd.PersistentFlags().MarkHidden(\"fmt\")" << endl;
+    // os << "\t\t/globalsCmd.PersistentFlags().MarkHidden(\"fmt\")" << endl;
     // os << "\t}," << endl;
     // return os.str();
 }

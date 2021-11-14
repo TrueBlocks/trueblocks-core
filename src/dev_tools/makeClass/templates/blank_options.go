@@ -19,7 +19,7 @@ package [{ROUTE}]Pkg
 import (
 	"net/http"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 [{IMPORTS}])
 
@@ -39,7 +39,7 @@ func FromRequest(r *http.Request) *[{PROPER}]OptionsType {
 		switch key {
 [{REQUEST_OPTS}]		}
 	}
-	opts.Globals = *root.FromRequest(r)
+	opts.Globals = *globals.FromRequest(r)
 
 	return opts
 }

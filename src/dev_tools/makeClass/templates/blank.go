@@ -18,7 +18,7 @@ package cmd
 import (
 	"os"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 [{IMPORTS}]	"github.com/spf13/cobra"
 )
 
@@ -42,11 +42,11 @@ var notes[{PROPER}] = `[{POSTNOTES}]`
 [{OPT_DEF}]func init() {
 	[{ROUTE}]Cmd.Flags().SortFlags = false
 [{SET_OPTS}][{HIDDEN}]	[{ROUTE}]Cmd.Flags().SortFlags = false
-	root.GlobalOptions([{ROUTE}]Cmd, &[{ROUTE}]Pkg.Options.Globals)
+	globals.GlobalOptions([{ROUTE}]Cmd, &[{ROUTE}]Pkg.Options.Globals)
 
 	[{ROUTE}]Cmd.SetUsageTemplate(UsageWithNotes(notes[{PROPER}]))
 	[{ROUTE}]Cmd.SetOut(os.Stderr)
-	if utils.IsApiMode() {
+	if [{ROUTE}]Pkg.Options.Globals.ApiMode {
 		[{ROUTE}]Cmd.SetErr(os.Stdout)
 	}
 	chifraCmd.AddCommand([{ROUTE}]Cmd)

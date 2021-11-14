@@ -454,9 +454,9 @@ string_q nextCommandoptionChunk_custom(const string_q& fieldIn, const void* data
                                com->data_type == "<address>") {
                         return "value[0]";
                     } else if (com->data_type == "<uint64>" || com->data_type == "<blknum>") {
-                        return "root.ToUint64(value[0])";
+                        return "globals.ToUint64(value[0])";
                     } else if (com->data_type == "<double>") {
-                        return "root.ToFloat64(value[0])";
+                        return "globals.ToFloat64(value[0])";
                     } else if (com->data_type == "<boolean>") {
                         return "true";
                     }

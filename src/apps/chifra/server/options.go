@@ -19,13 +19,13 @@ package servePkg
 import (
 	"net/http"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
 type ServeOptionsType struct {
 	Port    string
-	Globals root.GlobalOptionsType
+	Globals globals.GlobalOptionsType
 }
 
 var Options ServeOptionsType
@@ -43,7 +43,7 @@ func FromRequest(r *http.Request) *ServeOptionsType {
 			opts.Port = value[0]
 		}
 	}
-	opts.Globals = *root.FromRequest(r)
+	opts.Globals = *globals.FromRequest(r)
 
 	return opts
 }
