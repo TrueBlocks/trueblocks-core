@@ -28,7 +28,6 @@ var [{ROUTE}]Cmd = &cobra.Command{
 	Short: short[{PROPER}],
 	Long:  long[{PROPER}],
 	RunE:  run[{PROPER}],
-	Args:  validate[{PROPER}]Args,
 [{PERPRERUN}]}
 
 var usage[{PROPER}] = `[{USE}]`
@@ -41,13 +40,15 @@ var notes[{PROPER}] = `[{POSTNOTES}]`
 
 [{OPT_DEF}]func init() {
 	[{ROUTE}]Cmd.Flags().SortFlags = false
-[{SET_OPTS}][{HIDDEN}]	[{ROUTE}]Cmd.Flags().SortFlags = false
-	globals.GlobalOptions([{ROUTE}]Cmd, &[{ROUTE}]Pkg.Options.Globals)
+
+[{SET_OPTS}][{HIDDEN}]	globals.GlobalOptions([{ROUTE}]Cmd, &[{ROUTE}]Pkg.Options.Globals)
 
 	[{ROUTE}]Cmd.SetUsageTemplate(UsageWithNotes(notes[{PROPER}]))
+
 	[{ROUTE}]Cmd.SetOut(os.Stderr)
 	if [{ROUTE}]Pkg.Options.Globals.ApiMode {
 		[{ROUTE}]Cmd.SetErr(os.Stdout)
 	}
+
 	chifraCmd.AddCommand([{ROUTE}]Cmd)
 }

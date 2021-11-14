@@ -23,18 +23,18 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 [{IMPORTS}])
 
-type [{PROPER}]OptionsType struct {
+type [{PROPER}]Options struct {
 [{OPT_FIELDS}]
 }
 
-var Options [{PROPER}]OptionsType
+var Options [{PROPER}]Options
 
-func (opts *[{PROPER}]OptionsType) TestLog() {
+func (opts *[{PROPER}]Options) TestLog() {
 [{TEST_LOGS}]	opts.Globals.TestLog()
 }
 
-func FromRequest(w http.ResponseWriter, r *http.Request) *[{PROPER}]OptionsType {
-	opts := &[{PROPER}]OptionsType{}
+func FromRequest(w http.ResponseWriter, r *http.Request) *[{PROPER}]Options {
+	opts := &[{PROPER}]Options{}
 	for key, value := range r.URL.Query() {
 		switch key {
 [{REQUEST_OPTS}]		}
