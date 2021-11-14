@@ -115,7 +115,7 @@ func PassItOn(path string, opts *GlobalOptionsType, flags, arguments string) err
 		// TODO: into chifra here.
 		options += " --file:" + opts.File
 	}
-	options += arguments
+	options += " " + arguments
 
 	var wg sync.WaitGroup
 	wg.Add(2)

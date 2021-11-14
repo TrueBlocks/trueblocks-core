@@ -43,6 +43,26 @@ func (opts *AbisOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
+func (opts *AbisOptions) String() string {
+	ret := ""
+	if Options.Known {
+		ret += " --known"
+	}
+
+	if Options.Sol {
+		ret += " --sol"
+	}
+
+	if Options.Source {
+		ret += " --source"
+	}
+
+	if Options.Classes {
+		ret += " --classes"
+	}
+	return ret
+}
+
 func FromRequest(w http.ResponseWriter, r *http.Request) *AbisOptions {
 	opts := &AbisOptions{}
 	for key, value := range r.URL.Query() {

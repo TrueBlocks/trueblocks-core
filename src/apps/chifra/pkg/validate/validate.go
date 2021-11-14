@@ -21,8 +21,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-var Errors []string = nil
-
 func usageEx(function, msg string, values []string) error {
 	var ret string
 	if len(function) > 0 {
@@ -100,7 +98,6 @@ func ValidateAtLeastOneAddr(args []string) error {
 		hasOne, _ = IsValidAddress(arg)
 	}
 	if hasOne {
-		Errors = nil // calling code will report the error
 		return nil
 	}
 	return Usage("Please specify at least one {0}.", "valid Ethereum address")

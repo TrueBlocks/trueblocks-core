@@ -14,8 +14,9 @@ package abisPkg
  *-------------------------------------------------------------------------------------------*/
 
 import (
+	"strings"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
-	// "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 
 	"github.com/spf13/cobra"
 )
@@ -33,36 +34,7 @@ func RunAbis(cmd *cobra.Command, args []string) error {
 
 	if len(Options.Find) > 0 {
 		return Options.FindInternal()
-		// err := Options.FindInternal()
-		// if err != nil {
-		//	logger.Log(logger.Error, err)
-		// }
-		// Options.HandleFind() // , globals.Options.NoHeader)
-		// return nil
 	}
 
-	// TODO: this will be removed when we fully implement abis command
-	options := ""
-	if Options.Known {
-		options += " --known"
-	}
-
-	if Options.Sol {
-		options += " --sol"
-	}
-
-	if Options.Source {
-		options += " --source"
-	}
-
-	if Options.Classes {
-		options += " --classes"
-	}
-
-	arguments := ""
-	for _, arg := range args {
-		arguments += " " + arg
-	}
-
-	return globals.PassItOn("grabABI", &Options.Globals, options, arguments)
+	return globals.PassItOn("grabABI", &Options.Globals, Options.String(), strings.Join(Options.Addrs, " "))
 }

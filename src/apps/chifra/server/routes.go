@@ -99,11 +99,6 @@ func AdminPins(w http.ResponseWriter, r *http.Request) {
 
 // AccountsAbis processes ABI queries
 func AccountsAbis(w http.ResponseWriter, r *http.Request) {
-	if len(r.URL.Query()["find"]) == 0 {
-		CallOneExtra(w, r, "chifra", "abis", "abis")
-		return
-	}
-
 	abisPkg.ServeAbis(w, r)
 }
 

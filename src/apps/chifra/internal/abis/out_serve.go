@@ -2,6 +2,9 @@ package abisPkg
 
 import (
 	"net/http"
+	"strings"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 )
 
 func ServeAbis(w http.ResponseWriter, r *http.Request) {
@@ -21,4 +24,6 @@ func ServeAbis(w http.ResponseWriter, r *http.Request) {
 		}
 		return
 	}
+
+	globals.PassItOn("grabABI", &opts.Globals, opts.String(), strings.Join(opts.Addrs, " "))
 }

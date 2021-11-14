@@ -70,8 +70,6 @@ func (opts *AbisOptions) ValidateAbis() error {
 					return err2
 				}
 				return err1
-			} else {
-				validate.Errors = nil
 			}
 		}
 

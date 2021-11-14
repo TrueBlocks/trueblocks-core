@@ -28,7 +28,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
 // Output converts data into the given format and writes to where writer
@@ -61,6 +60,7 @@ func Output(opts *GlobalOptionsType, where io.Writer, format string, data interf
 		output, err = opts.CsvFormatter(data)
 	case "txt":
 		output, err = opts.TxtFormatter(data)
+	// TODO: There is no such case -- this is 'txt' in non-API mode with a terminal
 	case "tab":
 		output, err = opts.TabFormatter(data)
 	default:
@@ -143,9 +143,10 @@ func (opts *GlobalOptionsType) CsvFormatter(i interface{}) ([]byte, error) {
 		result = append(result, strings.Join(row, ","))
 	}
 
-	// Now we need to join all rows with a newline.
+	// Now we need to join all rows with a newline and add an ending newline
+	// top match the .txt output
 	return []byte(
-		strings.Join(result, "\n"),
+		strings.Join(result, "\n") + "\n",
 	), nil
 }
 
@@ -161,14 +162,10 @@ func AsJsonBytes(j *JsonFormatted, opts *GlobalOptionsType) ([]byte, error) {
 	var result JsonFormatted
 
 	if opts.Format == "json" {
-		if len(validate.Errors) > 0 {
-			result.Errors = validate.Errors
+		if len(j.Errors) > 0 {
+			result.Errors = j.Errors
 		} else {
-			if len(j.Errors) > 0 {
-				result.Errors = j.Errors
-			} else {
-				result.Data = j.Data
-			}
+			result.Data = j.Data
 		}
 	} else {
 		if len(j.Errors) > 0 {

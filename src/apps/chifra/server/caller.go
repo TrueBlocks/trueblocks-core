@@ -155,6 +155,7 @@ func CallOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd s
 		// TODO: Need this to build. Probably not right
 		var unused globals.GlobalOptionsType
 		unused.TestMode = utils.IsTestModeServer(r)
+		unused.Writer = w
 		unused.RespondWithError(w, http.StatusBadRequest, errors.New(parsed))
 		return
 	}
