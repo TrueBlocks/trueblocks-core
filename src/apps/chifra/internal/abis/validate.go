@@ -16,7 +16,7 @@ package abisPkg
 import (
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
@@ -87,5 +87,5 @@ func (opts *AbisOptionsType) ValidateOptionsAbis() error {
 
 	opts.TestLog()
 
-	return root.ValidateGlobals(&opts.Globals, opts.Addrs)
+	return globals.ValidateGlobals(&opts.Globals, opts.Addrs)
 }

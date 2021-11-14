@@ -14,7 +14,7 @@ package pinsPkg
  *-------------------------------------------------------------------------------------------*/
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 
@@ -76,5 +76,5 @@ func (opts *PinsOptionsType) ValidateOptionsPins() error {
 
 	Options.TestLog()
 
-	return root.ValidateGlobals(&opts.Globals, []string{})
+	return globals.ValidateGlobals(&opts.Globals, []string{})
 }
