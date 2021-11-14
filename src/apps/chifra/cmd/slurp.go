@@ -49,16 +49,18 @@ Notes:
 
 func init() {
 	slurpCmd.Flags().SortFlags = false
+
 	slurpCmd.Flags().StringSliceVarP(&slurpPkg.Options.Types, "types", "t", nil, `which types of transactions to request
 One or more of [ ext | int | token | nfts | miner | uncles | all ]`)
 	slurpCmd.Flags().BoolVarP(&slurpPkg.Options.Appearances, "appearances", "p", false, "show only the blocknumer.tx_id appearances of the exported transactions")
-	slurpCmd.Flags().SortFlags = false
 	globals.GlobalOptions(slurpCmd, &slurpPkg.Options.Globals)
 
 	slurpCmd.SetUsageTemplate(UsageWithNotes(notesSlurp))
+
 	slurpCmd.SetOut(os.Stderr)
 	if slurpPkg.Options.Globals.ApiMode {
 		slurpCmd.SetErr(os.Stdout)
 	}
+
 	chifraCmd.AddCommand(slurpCmd)
 }

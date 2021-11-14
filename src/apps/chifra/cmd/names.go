@@ -49,6 +49,7 @@ Notes:
 
 func init() {
 	namesCmd.Flags().SortFlags = false
+
 	namesCmd.Flags().BoolVarP(&namesPkg.Options.Expand, "expand", "e", false, "expand search to include all fields (search name, address, and symbol otherwise)")
 	namesCmd.Flags().BoolVarP(&namesPkg.Options.MatchCase, "match_case", "m", false, "do case-sensitive search")
 	namesCmd.Flags().BoolVarP(&namesPkg.Options.All, "all", "l", false, "include all accounts in the search")
@@ -76,13 +77,14 @@ func init() {
 		namesCmd.Flags().MarkHidden("remove")
 		namesCmd.Flags().MarkHidden("undelete")
 	}
-	namesCmd.Flags().SortFlags = false
 	globals.GlobalOptions(namesCmd, &namesPkg.Options.Globals)
 
 	namesCmd.SetUsageTemplate(UsageWithNotes(notesNames))
+
 	namesCmd.SetOut(os.Stderr)
 	if namesPkg.Options.Globals.ApiMode {
 		namesCmd.SetErr(os.Stdout)
 	}
+
 	chifraCmd.AddCommand(namesCmd)
 }

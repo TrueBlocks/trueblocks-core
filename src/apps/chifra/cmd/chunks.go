@@ -48,19 +48,21 @@ Notes:
 
 func init() {
 	chunksCmd.Flags().SortFlags = false
+
 	chunksCmd.Flags().BoolVarP(&chunksPkg.Options.List, "list", "l", false, "list the bloom and index hashes from local cache or IPFS")
 	chunksCmd.Flags().BoolVarP(&chunksPkg.Options.Check, "check", "c", false, "check the validity of the chunk or bloom")
 	chunksCmd.Flags().StringVarP(&chunksPkg.Options.Extract, "extract", "e", "", `show some or all of the contents of the chunk or bloom filters
 One of [ header | addr_table | app_table | chunks | blooms ]`)
 	chunksCmd.Flags().BoolVarP(&chunksPkg.Options.Stats, "stats", "s", false, "for the --list option only, display statistics about each chunk or bloom")
 	chunksCmd.Flags().BoolVarP(&chunksPkg.Options.Save, "save", "a", false, "for the --extract option only, save the entire chunk to a similarly named file as well as display")
-	chunksCmd.Flags().SortFlags = false
 	globals.GlobalOptions(chunksCmd, &chunksPkg.Options.Globals)
 
 	chunksCmd.SetUsageTemplate(UsageWithNotes(notesChunks))
+
 	chunksCmd.SetOut(os.Stderr)
 	if chunksPkg.Options.Globals.ApiMode {
 		chunksCmd.SetErr(os.Stdout)
 	}
+
 	chifraCmd.AddCommand(chunksCmd)
 }

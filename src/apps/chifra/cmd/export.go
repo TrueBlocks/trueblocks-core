@@ -54,6 +54,7 @@ Notes:
 
 func init() {
 	exportCmd.Flags().SortFlags = false
+
 	exportCmd.Flags().BoolVarP(&exportPkg.Options.Appearances, "appearances", "p", false, "export a list of appearances")
 	exportCmd.Flags().BoolVarP(&exportPkg.Options.Transactions, "transactions", "T", false, "export the actual transactional data (the default)")
 	exportCmd.Flags().BoolVarP(&exportPkg.Options.Receipts, "receipts", "r", false, "export receipts instead of transactional data")
@@ -98,13 +99,14 @@ One of [ yearly | quarterly | monthly | weekly | daily | hourly | blockly | tx ]
 		exportCmd.Flags().MarkHidden("first_block")
 		exportCmd.Flags().MarkHidden("last_block")
 	}
-	exportCmd.Flags().SortFlags = false
 	globals.GlobalOptions(exportCmd, &exportPkg.Options.Globals)
 
 	exportCmd.SetUsageTemplate(UsageWithNotes(notesExport))
+
 	exportCmd.SetOut(os.Stderr)
 	if exportPkg.Options.Globals.ApiMode {
 		exportCmd.SetErr(os.Stdout)
 	}
+
 	chifraCmd.AddCommand(exportCmd)
 }

@@ -51,6 +51,7 @@ Notes:
 
 func init() {
 	scrapeCmd.Flags().SortFlags = false
+
 	scrapeCmd.Flags().StringVarP(&scrapePkg.Options.Action, "action", "a", "", `command to apply to the specified scrape
 One of [ toggle | run | restart | pause | quit ]`)
 	scrapeCmd.Flags().Float64VarP(&scrapePkg.Options.Sleep, "sleep", "s", 14, "seconds to sleep between scraper passes")
@@ -63,13 +64,14 @@ One of [ toggle | run | restart | pause | quit ]`)
 		scrapeCmd.Flags().MarkHidden("block_chan_cnt")
 		scrapeCmd.Flags().MarkHidden("addr_chan_cnt")
 	}
-	scrapeCmd.Flags().SortFlags = false
 	globals.GlobalOptions(scrapeCmd, &scrapePkg.Options.Globals)
 
 	scrapeCmd.SetUsageTemplate(UsageWithNotes(notesScrape))
+
 	scrapeCmd.SetOut(os.Stderr)
 	if scrapePkg.Options.Globals.ApiMode {
 		scrapeCmd.SetErr(os.Stdout)
 	}
+
 	chifraCmd.AddCommand(scrapeCmd)
 }

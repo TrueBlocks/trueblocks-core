@@ -46,6 +46,7 @@ var notesList = ``
 
 func init() {
 	listCmd.Flags().SortFlags = false
+
 	listCmd.Flags().BoolVarP(&listPkg.Options.Count, "count", "U", false, "present only the number of records")
 	listCmd.Flags().BoolVarP(&listPkg.Options.Appearances, "appearances", "p", false, "export a list of appearances (hidden)")
 	listCmd.Flags().Uint64VarP(&listPkg.Options.FirstBlock, "first_block", "F", 0, "first block to process (inclusive) (hidden)")
@@ -55,13 +56,14 @@ func init() {
 		listCmd.Flags().MarkHidden("first_block")
 		listCmd.Flags().MarkHidden("last_block")
 	}
-	listCmd.Flags().SortFlags = false
 	globals.GlobalOptions(listCmd, &listPkg.Options.Globals)
 
 	listCmd.SetUsageTemplate(UsageWithNotes(notesList))
+
 	listCmd.SetOut(os.Stderr)
 	if listPkg.Options.Globals.ApiMode {
 		listCmd.SetErr(os.Stdout)
 	}
+
 	chifraCmd.AddCommand(listCmd)
 }

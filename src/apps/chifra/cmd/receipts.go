@@ -50,14 +50,16 @@ Notes:
 
 func init() {
 	receiptsCmd.Flags().SortFlags = false
+
 	receiptsCmd.Flags().BoolVarP(&receiptsPkg.Options.Articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
-	receiptsCmd.Flags().SortFlags = false
 	globals.GlobalOptions(receiptsCmd, &receiptsPkg.Options.Globals)
 
 	receiptsCmd.SetUsageTemplate(UsageWithNotes(notesReceipts))
+
 	receiptsCmd.SetOut(os.Stderr)
 	if receiptsPkg.Options.Globals.ApiMode {
 		receiptsCmd.SetErr(os.Stdout)
 	}
+
 	chifraCmd.AddCommand(receiptsCmd)
 }

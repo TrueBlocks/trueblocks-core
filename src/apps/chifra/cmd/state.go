@@ -54,6 +54,7 @@ Notes:
 
 func init() {
 	stateCmd.Flags().SortFlags = false
+
 	stateCmd.Flags().StringSliceVarP(&statePkg.Options.Parts, "parts", "p", nil, `control which state to export
 One or more of [ none | some | all | balance | nonce | code | storage | deployed | accttype ]`)
 	stateCmd.Flags().BoolVarP(&statePkg.Options.Changes, "changes", "c", false, "only report a balance when it changes from one block to the next")
@@ -64,13 +65,14 @@ One or more of [ none | some | all | balance | nonce | code | storage | deployed
 		stateCmd.Flags().MarkHidden("call")
 		stateCmd.Flags().MarkHidden("proxy_for")
 	}
-	stateCmd.Flags().SortFlags = false
 	globals.GlobalOptions(stateCmd, &statePkg.Options.Globals)
 
 	stateCmd.SetUsageTemplate(UsageWithNotes(notesState))
+
 	stateCmd.SetOut(os.Stderr)
 	if statePkg.Options.Globals.ApiMode {
 		stateCmd.SetErr(os.Stdout)
 	}
+
 	chifraCmd.AddCommand(stateCmd)
 }

@@ -52,6 +52,7 @@ Notes:
 
 func init() {
 	tracesCmd.Flags().SortFlags = false
+
 	tracesCmd.Flags().BoolVarP(&tracesPkg.Options.Articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
 	tracesCmd.Flags().StringVarP(&tracesPkg.Options.Filter, "filter", "f", "", "call the node's trace_filter routine with bang-separated filter")
 	tracesCmd.Flags().BoolVarP(&tracesPkg.Options.Statediff, "statediff", "d", false, "export state diff traces (not implemented)")
@@ -62,13 +63,14 @@ func init() {
 		tracesCmd.Flags().MarkHidden("skip_ddos")
 		tracesCmd.Flags().MarkHidden("max")
 	}
-	tracesCmd.Flags().SortFlags = false
 	globals.GlobalOptions(tracesCmd, &tracesPkg.Options.Globals)
 
 	tracesCmd.SetUsageTemplate(UsageWithNotes(notesTraces))
+
 	tracesCmd.SetOut(os.Stderr)
 	if tracesPkg.Options.Globals.ApiMode {
 		tracesCmd.SetErr(os.Stdout)
 	}
+
 	chifraCmd.AddCommand(tracesCmd)
 }

@@ -47,6 +47,7 @@ var notesStatus = ``
 
 func init() {
 	statusCmd.Flags().SortFlags = false
+
 	statusCmd.Flags().BoolVarP(&statusPkg.Options.Details, "details", "d", false, "include details about items found in monitors, slurps, abis, or price caches")
 	statusCmd.Flags().StringSliceVarP(&statusPkg.Options.Types, "types", "t", nil, `for caches mode only, which type(s) of cache to report
 One or more of [ blocks | txs | traces | slurps | prices | all ]`)
@@ -69,13 +70,14 @@ One or more of [ test | abi_cache | block_cache | tx_cache | trace_cache | recon
 		statusCmd.Flags().MarkHidden("test_start")
 		statusCmd.Flags().MarkHidden("test_end")
 	}
-	statusCmd.Flags().SortFlags = false
 	globals.GlobalOptions(statusCmd, &statusPkg.Options.Globals)
 
 	statusCmd.SetUsageTemplate(UsageWithNotes(notesStatus))
+
 	statusCmd.SetOut(os.Stderr)
 	if statusPkg.Options.Globals.ApiMode {
 		statusCmd.SetErr(os.Stdout)
 	}
+
 	chifraCmd.AddCommand(statusCmd)
 }

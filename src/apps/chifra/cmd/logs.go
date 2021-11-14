@@ -51,14 +51,16 @@ Notes:
 
 func init() {
 	logsCmd.Flags().SortFlags = false
+
 	logsCmd.Flags().BoolVarP(&logsPkg.Options.Articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
-	logsCmd.Flags().SortFlags = false
 	globals.GlobalOptions(logsCmd, &logsPkg.Options.Globals)
 
 	logsCmd.SetUsageTemplate(UsageWithNotes(notesLogs))
+
 	logsCmd.SetOut(os.Stderr)
 	if logsPkg.Options.Globals.ApiMode {
 		logsCmd.SetErr(os.Stdout)
 	}
+
 	chifraCmd.AddCommand(logsCmd)
 }

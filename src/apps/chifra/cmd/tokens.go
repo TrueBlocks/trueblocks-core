@@ -53,17 +53,19 @@ Notes:
 
 func init() {
 	tokensCmd.Flags().SortFlags = false
+
 	tokensCmd.Flags().StringSliceVarP(&tokensPkg.Options.Parts, "parts", "p", nil, `which parts of the token information to retrieve
 One or more of [ name | symbol | decimals | totalSupply | version | none | all ]`)
 	tokensCmd.Flags().BoolVarP(&tokensPkg.Options.ByAcct, "by_acct", "b", false, "consider each address an ERC20 token except the last, whose balance is reported for each token")
 	tokensCmd.Flags().BoolVarP(&tokensPkg.Options.NoZero, "no_zero", "n", false, "suppress the display of zero balance accounts")
-	tokensCmd.Flags().SortFlags = false
 	globals.GlobalOptions(tokensCmd, &tokensPkg.Options.Globals)
 
 	tokensCmd.SetUsageTemplate(UsageWithNotes(notesTokens))
+
 	tokensCmd.SetOut(os.Stderr)
 	if tokensPkg.Options.Globals.ApiMode {
 		tokensCmd.SetErr(os.Stdout)
 	}
+
 	chifraCmd.AddCommand(tokensCmd)
 }
