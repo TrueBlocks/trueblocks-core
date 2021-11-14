@@ -19,7 +19,7 @@ package abisPkg
 import (
 	"net/http"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
@@ -30,7 +30,7 @@ type AbisOptionsType struct {
 	Find    []string
 	Source  bool
 	Classes bool
-	Globals root.GlobalOptionsType
+	Globals globals.GlobalOptionsType
 }
 
 var Options AbisOptionsType
@@ -63,7 +63,7 @@ func FromRequest(r *http.Request) *AbisOptionsType {
 			opts.Classes = true
 		}
 	}
-	opts.Globals = *root.FromRequest(r)
+	opts.Globals = *globals.FromRequest(r)
 
 	return opts
 }

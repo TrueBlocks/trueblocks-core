@@ -19,7 +19,7 @@ package exportPkg
 import (
 	"net/http"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
@@ -58,7 +58,7 @@ type ExportOptionsType struct {
 	MaxTraces    uint64
 	FirstBlock   uint64
 	LastBlock    uint64
-	Globals      root.GlobalOptionsType
+	Globals      globals.GlobalOptionsType
 }
 
 var Options ExportOptionsType
@@ -137,9 +137,9 @@ func FromRequest(r *http.Request) *ExportOptionsType {
 		case "count":
 			opts.Count = true
 		case "firstrecord":
-			opts.FirstRecord = root.ToUint64(value[0])
+			opts.FirstRecord = globals.ToUint64(value[0])
 		case "maxrecords":
-			opts.MaxRecords = root.ToUint64(value[0])
+			opts.MaxRecords = globals.ToUint64(value[0])
 		case "relevant":
 			opts.Relevant = true
 		case "emitter":
@@ -165,14 +165,14 @@ func FromRequest(r *http.Request) *ExportOptionsType {
 		case "skipddos":
 			opts.SkipDdos = true
 		case "maxtraces":
-			opts.MaxTraces = root.ToUint64(value[0])
+			opts.MaxTraces = globals.ToUint64(value[0])
 		case "firstblock":
-			opts.FirstBlock = root.ToUint64(value[0])
+			opts.FirstBlock = globals.ToUint64(value[0])
 		case "lastblock":
-			opts.LastBlock = root.ToUint64(value[0])
+			opts.LastBlock = globals.ToUint64(value[0])
 		}
 	}
-	opts.Globals = *root.FromRequest(r)
+	opts.Globals = *globals.FromRequest(r)
 
 	return opts
 }

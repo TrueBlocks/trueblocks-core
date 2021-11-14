@@ -19,7 +19,7 @@ package monitorsPkg
 import (
 	"net/http"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
@@ -34,7 +34,7 @@ type MonitorsOptionsType struct {
 	Remove      bool
 	FirstBlock  uint64
 	LastBlock   uint64
-	Globals     root.GlobalOptionsType
+	Globals     globals.GlobalOptionsType
 }
 
 var Options MonitorsOptionsType
@@ -71,12 +71,12 @@ func FromRequest(r *http.Request) *MonitorsOptionsType {
 		case "remove":
 			opts.Remove = true
 		case "firstblock":
-			opts.FirstBlock = root.ToUint64(value[0])
+			opts.FirstBlock = globals.ToUint64(value[0])
 		case "lastblock":
-			opts.LastBlock = root.ToUint64(value[0])
+			opts.LastBlock = globals.ToUint64(value[0])
 		}
 	}
-	opts.Globals = *root.FromRequest(r)
+	opts.Globals = *globals.FromRequest(r)
 
 	return opts
 }

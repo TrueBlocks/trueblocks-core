@@ -19,7 +19,7 @@ package chunksPkg
 import (
 	"net/http"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
@@ -30,7 +30,7 @@ type ChunksOptionsType struct {
 	Extract string
 	Stats   bool
 	Save    bool
-	Globals root.GlobalOptionsType
+	Globals globals.GlobalOptionsType
 }
 
 var Options ChunksOptionsType
@@ -63,7 +63,7 @@ func FromRequest(r *http.Request) *ChunksOptionsType {
 			opts.Save = true
 		}
 	}
-	opts.Globals = *root.FromRequest(r)
+	opts.Globals = *globals.FromRequest(r)
 
 	return opts
 }

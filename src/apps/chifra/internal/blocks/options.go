@@ -19,7 +19,7 @@ package blocksPkg
 import (
 	"net/http"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
@@ -39,7 +39,7 @@ type BlocksOptionsType struct {
 	Cache      bool
 	List       uint64
 	ListCount  uint64
-	Globals    root.GlobalOptionsType
+	Globals    globals.GlobalOptionsType
 }
 
 var Options BlocksOptionsType
@@ -88,18 +88,18 @@ func FromRequest(r *http.Request) *BlocksOptionsType {
 		case "articulate":
 			opts.Articulate = true
 		case "bigrange":
-			opts.BigRange = root.ToUint64(value[0])
+			opts.BigRange = globals.ToUint64(value[0])
 		case "count":
 			opts.Count = true
 		case "cache":
 			opts.Cache = true
 		case "list":
-			opts.List = root.ToUint64(value[0])
+			opts.List = globals.ToUint64(value[0])
 		case "listcount":
-			opts.ListCount = root.ToUint64(value[0])
+			opts.ListCount = globals.ToUint64(value[0])
 		}
 	}
-	opts.Globals = *root.FromRequest(r)
+	opts.Globals = *globals.FromRequest(r)
 
 	return opts
 }

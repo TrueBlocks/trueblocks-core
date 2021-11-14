@@ -19,7 +19,7 @@ package explorePkg
 import (
 	"net/http"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
@@ -27,7 +27,7 @@ type ExploreOptionsType struct {
 	Terms   []string
 	Local   bool
 	Google  bool
-	Globals root.GlobalOptionsType
+	Globals globals.GlobalOptionsType
 }
 
 var Options ExploreOptionsType
@@ -51,7 +51,7 @@ func FromRequest(r *http.Request) *ExploreOptionsType {
 			opts.Google = true
 		}
 	}
-	opts.Globals = *root.FromRequest(r)
+	opts.Globals = *globals.FromRequest(r)
 
 	return opts
 }

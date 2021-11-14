@@ -19,7 +19,7 @@ package pinsPkg
 import (
 	"net/http"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
@@ -32,7 +32,7 @@ type PinsOptionsType struct {
 	Freshen bool
 	Remote  bool
 	InitAll bool
-	Globals root.GlobalOptionsType
+	Globals globals.GlobalOptionsType
 }
 
 var Options PinsOptionsType
@@ -59,7 +59,7 @@ func FromRequest(r *http.Request) *PinsOptionsType {
 		case "share":
 			opts.Share = true
 		case "sleep":
-			opts.Sleep = root.ToFloat64(value[0])
+			opts.Sleep = globals.ToFloat64(value[0])
 		case "freshen":
 			opts.Freshen = true
 		case "remote":
@@ -68,7 +68,7 @@ func FromRequest(r *http.Request) *PinsOptionsType {
 			opts.InitAll = true
 		}
 	}
-	opts.Globals = *root.FromRequest(r)
+	opts.Globals = *globals.FromRequest(r)
 
 	return opts
 }

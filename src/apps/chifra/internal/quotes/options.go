@@ -19,7 +19,7 @@ package quotesPkg
 import (
 	"net/http"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
@@ -28,7 +28,7 @@ type QuotesOptionsType struct {
 	Period  string
 	Pair    string
 	Feed    string
-	Globals root.GlobalOptionsType
+	Globals globals.GlobalOptionsType
 }
 
 var Options QuotesOptionsType
@@ -55,7 +55,7 @@ func FromRequest(r *http.Request) *QuotesOptionsType {
 			opts.Feed = value[0]
 		}
 	}
-	opts.Globals = *root.FromRequest(r)
+	opts.Globals = *globals.FromRequest(r)
 
 	return opts
 }

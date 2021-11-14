@@ -19,7 +19,7 @@ package namesPkg
 import (
 	"net/http"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
@@ -42,7 +42,7 @@ type NamesOptionsType struct {
 	Update      bool
 	Remove      bool
 	Undelete    bool
-	Globals     root.GlobalOptionsType
+	Globals     globals.GlobalOptionsType
 }
 
 var Options NamesOptionsType
@@ -111,7 +111,7 @@ func FromRequest(r *http.Request) *NamesOptionsType {
 			opts.Undelete = true
 		}
 	}
-	opts.Globals = *root.FromRequest(r)
+	opts.Globals = *globals.FromRequest(r)
 
 	return opts
 }
