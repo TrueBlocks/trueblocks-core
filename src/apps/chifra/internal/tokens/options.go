@@ -32,8 +32,6 @@ type TokensOptions struct {
 	Globals globals.GlobalOptionsType
 }
 
-var Options TokensOptions
-
 func (opts *TokensOptions) TestLog() {
 	logger.TestLog(len(opts.Addrs2) > 0, "Addrs2: ", opts.Addrs2)
 	logger.TestLog(len(opts.Blocks) > 0, "Blocks: ", opts.Blocks)
@@ -53,9 +51,9 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *TokensOptions {
 			opts.Blocks = append(opts.Blocks, value...)
 		case "parts":
 			opts.Parts = append(opts.Parts, value...)
-		case "byacct":
+		case "by_acct":
 			opts.ByAcct = true
-		case "nozero":
+		case "no_zero":
 			opts.NoZero = true
 		}
 	}

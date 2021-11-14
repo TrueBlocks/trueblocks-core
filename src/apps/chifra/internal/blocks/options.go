@@ -42,8 +42,6 @@ type BlocksOptions struct {
 	Globals    globals.GlobalOptionsType
 }
 
-var Options BlocksOptions
-
 func (opts *BlocksOptions) TestLog() {
 	logger.TestLog(len(opts.Blocks) > 0, "Blocks: ", opts.Blocks)
 	logger.TestLog(opts.Hashes, "Hashes: ", opts.Hashes)
@@ -87,7 +85,7 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *BlocksOptions {
 			opts.Topic = append(opts.Topic, value...)
 		case "articulate":
 			opts.Articulate = true
-		case "bigrange":
+		case "big_range":
 			opts.BigRange = globals.ToUint64(value[0])
 		case "count":
 			opts.Count = true
@@ -95,7 +93,7 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *BlocksOptions {
 			opts.Cache = true
 		case "list":
 			opts.List = globals.ToUint64(value[0])
-		case "listcount":
+		case "list_count":
 			opts.ListCount = globals.ToUint64(value[0])
 		}
 	}

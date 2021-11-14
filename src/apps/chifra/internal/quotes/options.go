@@ -31,8 +31,6 @@ type QuotesOptions struct {
 	Globals globals.GlobalOptionsType
 }
 
-var Options QuotesOptions
-
 func (opts *QuotesOptions) TestLog() {
 	logger.TestLog(opts.Freshen, "Freshen: ", opts.Freshen)
 	logger.TestLog(len(opts.Period) > 0, "Period: ", opts.Period)

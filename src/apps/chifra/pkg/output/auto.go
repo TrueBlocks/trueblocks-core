@@ -5,26 +5,27 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"os"
+	"strings"
 	"text/tabwriter"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 // Formatter type represents a function that can be used to format data
-type Formatter func(data interface{}) ([]byte, error)
+type Formatter func(data interface{}, opts *globals.GlobalOptionsType) ([]byte, error)
 
 // The map below maps format string to Formatter
 var formatStringToFormatter = map[string]Formatter{
 	"api":  JsonFormatter,
 	"json": JsonFormatter,
-	"csv":  AsCsv,
+	"csv":  CsvFormatter,
 	"txt":  TxtFormatter,
 	"tab":  TabFormatter,
 }
 
 // JsonFormatter turns data into JSON
-func JsonFormatter(data interface{}) ([]byte, error) {
+func JsonFormatter(data interface{}, opts *globals.GlobalOptionsType) ([]byte, error) {
 	formatted := &JsonFormatted{}
 	err, ok := data.(error)
 	if ok {
@@ -35,11 +36,11 @@ func JsonFormatter(data interface{}) ([]byte, error) {
 		formatted.Data = data
 	}
 
-	return AsJsonBytes(formatted, os.Getenv("TEST_MODE") == "true")
+	return AsJsonBytes(formatted, opts)
 }
 
 // TxtFormatter turns data into TSV string
-func TxtFormatter(data interface{}) ([]byte, error) {
+func TxtFormatter(data interface{}, opts *globals.GlobalOptionsType) ([]byte, error) {
 	out := bytes.Buffer{}
 	tsv, err := AsTsv(data)
 	if err != nil {
@@ -53,7 +54,7 @@ func TxtFormatter(data interface{}) ([]byte, error) {
 }
 
 // TabFormatter turns data into a table (string)
-func TabFormatter(data interface{}) ([]byte, error) {
+func TabFormatter(data interface{}, opts *globals.GlobalOptionsType) ([]byte, error) {
 	tabOutput := &bytes.Buffer{}
 	tab := tabwriter.NewWriter(tabOutput, 0, 0, 2, ' ', 0)
 	tsv, err := AsTsv(data)
@@ -66,8 +67,36 @@ func TabFormatter(data interface{}) ([]byte, error) {
 	return tabOutput.Bytes(), err
 }
 
+// This type is used to carry CSV layout information
+type CsvFormatted struct {
+	Header  []string
+	Content [][]string
+}
+
+// CsvFormatter turns a type into CSV string. It uses custom code instead of
+// Go's encoding/csv to maintain compatibility with C++ output, which
+// quotes each item. encoding/csv would double-quote a quoted string...
+func CsvFormatter(i interface{}, opts *globals.GlobalOptionsType) ([]byte, error) {
+	records, err := ToStringRecords(i, true)
+	if err != nil {
+		return nil, err
+	}
+	result := []string{}
+	// We have to join records in one row with a ","
+	for _, row := range records {
+		result = append(result, strings.Join(row, ","))
+	}
+
+	// Now we need to join all rows with a newline. We also add one
+	// final newline to be concise with both Go's encoding/csv and C++
+	// version
+	return []byte(
+		strings.Join(result, "\n") + "\n",
+	), nil
+}
+
 // Output converts data into the given format and writes to where writer
-func Output(where io.Writer, format string, data interface{}) error {
+func Output(opts *globals.GlobalOptionsType, where io.Writer, format string, data interface{}) error {
 	nonEmptyFormat := format
 	if format == "" || format == "none" {
 		if utils.IsApiMode() {
@@ -88,7 +117,7 @@ func Output(where io.Writer, format string, data interface{}) error {
 		return fmt.Errorf("unsupported format %s", format)
 	}
 
-	output, err := formatter(data)
+	output, err := formatter(data, opts)
 	if err != nil {
 		return err
 	}

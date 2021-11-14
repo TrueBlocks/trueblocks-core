@@ -34,8 +34,6 @@ type TracesOptions struct {
 	Globals      globals.GlobalOptionsType
 }
 
-var Options TracesOptions
-
 func (opts *TracesOptions) TestLog() {
 	logger.TestLog(len(opts.Transactions) > 0, "Transactions: ", opts.Transactions)
 	logger.TestLog(opts.Articulate, "Articulate: ", opts.Articulate)
@@ -61,7 +59,7 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *TracesOptions {
 			opts.Statediff = true
 		case "count":
 			opts.Count = true
-		case "skipddos":
+		case "skip_ddos":
 			opts.SkipDdos = true
 		case "max":
 			opts.Max = globals.ToUint64(value[0])

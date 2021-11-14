@@ -100,10 +100,10 @@ func (opts *AbisOptions) FindInternal() error {
 	defer wg.Wait()
 
 	if opts.Globals.ApiMode {
-		exec.Respond(opts.Globals.Writer, http.StatusOK, opts.Globals.Format, results)
+		exec.Respond(opts.Globals.Writer, http.StatusOK, &opts.Globals, results)
 
 	} else {
-		err = output.Output(os.Stdout, opts.Globals.Format, results)
+		err = output.Output(&opts.Globals, os.Stdout, opts.Globals.Format, results)
 		if err != nil {
 			logger.Log(logger.Error, err)
 		}

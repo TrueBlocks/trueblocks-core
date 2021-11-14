@@ -45,8 +45,6 @@ type NamesOptions struct {
 	Globals     globals.GlobalOptionsType
 }
 
-var Options NamesOptions
-
 func (opts *NamesOptions) TestLog() {
 	logger.TestLog(len(opts.Terms) > 0, "Terms: ", opts.Terms)
 	logger.TestLog(opts.Expand, "Expand: ", opts.Expand)
@@ -77,7 +75,7 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *NamesOptions {
 			opts.Terms = append(opts.Terms, value...)
 		case "expand":
 			opts.Expand = true
-		case "matchcase":
+		case "match_case":
 			opts.MatchCase = true
 		case "all":
 			opts.All = true
@@ -93,7 +91,7 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *NamesOptions {
 			opts.Collections = true
 		case "tags":
 			opts.Tags = true
-		case "tocustom":
+		case "to_custom":
 			opts.ToCustom = true
 		case "clean":
 			opts.Clean = true

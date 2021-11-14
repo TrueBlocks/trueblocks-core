@@ -16,7 +16,7 @@ func TestAsCsv(t *testing.T) {
 		{"second first", "second second"},
 	}
 
-	result, err := AsCsv(input)
+	result, err := CsvFormatter(input)
 	if err != nil {
 		t.Error(err)
 		return

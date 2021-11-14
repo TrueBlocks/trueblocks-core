@@ -15,19 +15,17 @@ package quotesPkg
 
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/spf13/cobra"
 )
 
 func Validate(cmd *cobra.Command, args []string) error {
-	output.Format = Options.Globals.Format
 	if len(Options.Globals.File) == 0 &&
 		!Options.Freshen &&
 		len(Options.Period) == 0 &&
 		len(Options.Pair) == 0 &&
 		len(Options.Feed) == 0 &&
-		len(output.Format) == 0 {
+		len(Options.Globals.Format) == 0 {
 		return validate.Usage("Please specify at least one {0}.", "command line option")
 	}
 

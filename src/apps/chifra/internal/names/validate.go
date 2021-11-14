@@ -15,13 +15,11 @@ package namesPkg
 
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/spf13/cobra"
 )
 
 func Validate(cmd *cobra.Command, args []string) error {
-	output.Format = Options.Globals.Format
 	if Options.Tags && anyBase() {
 		return validate.Usage("The {0} option is not available{1}.", "--tags", " with any other option")
 	}

@@ -33,8 +33,6 @@ type ChunksOptions struct {
 	Globals globals.GlobalOptionsType
 }
 
-var Options ChunksOptions
-
 func (opts *ChunksOptions) TestLog() {
 	logger.TestLog(len(opts.Blocks) > 0, "Blocks: ", opts.Blocks)
 	logger.TestLog(opts.List, "List: ", opts.List)

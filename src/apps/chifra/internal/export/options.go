@@ -61,8 +61,6 @@ type ExportOptions struct {
 	Globals      globals.GlobalOptionsType
 }
 
-var Options ExportOptions
-
 func (opts *ExportOptions) TestLog() {
 	logger.TestLog(len(opts.Addrs) > 0, "Addrs: ", opts.Addrs)
 	logger.TestLog(len(opts.Topics) > 0, "Topics: ", opts.Topics)
@@ -130,15 +128,15 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ExportOptions {
 			opts.Articulate = true
 		case "cache":
 			opts.Cache = true
-		case "cachetraces":
+		case "cache_traces":
 			opts.CacheTraces = true
 		case "factory":
 			opts.Factory = true
 		case "count":
 			opts.Count = true
-		case "firstrecord":
+		case "first_record":
 			opts.FirstRecord = globals.ToUint64(value[0])
-		case "maxrecords":
+		case "max_records":
 			opts.MaxRecords = globals.ToUint64(value[0])
 		case "relevant":
 			opts.Relevant = true
@@ -158,17 +156,17 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ExportOptions {
 			opts.Load = value[0]
 		case "reversed":
 			opts.Reversed = true
-		case "bydate":
+		case "by_date":
 			opts.ByDate = true
-		case "summarizeby":
+		case "summarize_by":
 			opts.SummarizeBy = value[0]
-		case "skipddos":
+		case "skip_ddos":
 			opts.SkipDdos = true
-		case "maxtraces":
+		case "max_traces":
 			opts.MaxTraces = globals.ToUint64(value[0])
-		case "firstblock":
+		case "first_block":
 			opts.FirstBlock = globals.ToUint64(value[0])
-		case "lastblock":
+		case "last_block":
 			opts.LastBlock = globals.ToUint64(value[0])
 		}
 	}

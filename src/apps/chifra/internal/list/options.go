@@ -33,8 +33,6 @@ type ListOptions struct {
 	Globals     globals.GlobalOptionsType
 }
 
-var Options ListOptions
-
 func (opts *ListOptions) TestLog() {
 	logger.TestLog(len(opts.Addrs) > 0, "Addrs: ", opts.Addrs)
 	logger.TestLog(opts.Count, "Count: ", opts.Count)
@@ -54,9 +52,9 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ListOptions {
 			opts.Count = true
 		case "appearances":
 			opts.Appearances = true
-		case "firstblock":
+		case "first_block":
 			opts.FirstBlock = globals.ToUint64(value[0])
-		case "lastblock":
+		case "last_block":
 			opts.LastBlock = globals.ToUint64(value[0])
 		}
 	}

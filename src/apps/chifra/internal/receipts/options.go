@@ -29,8 +29,6 @@ type ReceiptsOptions struct {
 	Globals      globals.GlobalOptionsType
 }
 
-var Options ReceiptsOptions
-
 func (opts *ReceiptsOptions) TestLog() {
 	logger.TestLog(len(opts.Transactions) > 0, "Transactions: ", opts.Transactions)
 	logger.TestLog(opts.Articulate, "Articulate: ", opts.Articulate)

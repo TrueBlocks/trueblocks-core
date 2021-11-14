@@ -18,7 +18,14 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func Run(cmd *cobra.Command, args []string) error {
+var Options StateOptions
+
+func RunState(cmd *cobra.Command, args []string) error {
+	err := Validate(cmd, args)
+	if err != nil {
+		return err
+	}
+
 	options := ""
 	for _, t := range Options.Parts {
 		options += " --parts " + t

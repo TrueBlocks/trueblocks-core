@@ -39,8 +39,6 @@ type StatusOptions struct {
 	Globals   globals.GlobalOptionsType
 }
 
-var Options StatusOptions
-
 func (opts *StatusOptions) TestLog() {
 	logger.TestLog(len(opts.Modes) > 0, "Modes: ", opts.Modes)
 	logger.TestLog(opts.Details, "Details: ", opts.Details)
@@ -73,13 +71,13 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *StatusOptions {
 			opts.Terse = true
 		case "migrate":
 			opts.Migrate = append(opts.Migrate, value...)
-		case "getconfig":
+		case "get_config":
 			opts.GetConfig = true
-		case "setconfig":
+		case "set_config":
 			opts.SetConfig = true
-		case "teststart":
+		case "test_start":
 			opts.TestStart = globals.ToUint64(value[0])
-		case "testend":
+		case "test_end":
 			opts.TestEnd = globals.ToUint64(value[0])
 		}
 	}

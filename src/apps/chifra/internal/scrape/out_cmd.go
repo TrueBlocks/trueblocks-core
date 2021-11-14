@@ -27,7 +27,14 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func Run(cmd *cobra.Command, args []string) error {
+var Options ScrapeOptions
+
+func RunScrape(cmd *cobra.Command, args []string) error {
+	err := Validate(cmd, args)
+	if err != nil {
+		return err
+	}
+
 	var wg sync.WaitGroup
 
 	wg.Add(1)

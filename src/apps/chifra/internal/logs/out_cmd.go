@@ -18,7 +18,14 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func Run(cmd *cobra.Command, args []string) error {
+var Options LogsOptions
+
+func RunLogs(cmd *cobra.Command, args []string) error {
+	err := Validate(cmd, args)
+	if err != nil {
+		return err
+	}
+
 	options := ""
 	if Options.Articulate {
 		options += " --articulate"

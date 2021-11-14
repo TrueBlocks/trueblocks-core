@@ -43,10 +43,10 @@ func (opts *PinsOptions) ListInternal() error {
 
 	opts.PrintManifestHeader()
 	if opts.Globals.ApiMode {
-		exec.Respond(opts.Globals.Writer, http.StatusOK, opts.Globals.Format, manifestData.NewPins)
+		exec.Respond(opts.Globals.Writer, http.StatusOK, &opts.Globals, manifestData.NewPins)
 
 	} else {
-		err = output.Output(os.Stdout, opts.Globals.Format, manifestData.NewPins)
+		err = output.Output(&opts.Globals, os.Stdout, opts.Globals.Format, manifestData.NewPins)
 		if err != nil {
 			logger.Log(logger.Error, err)
 		}

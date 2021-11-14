@@ -35,8 +35,6 @@ type ScrapeOptions struct {
 	Globals      globals.GlobalOptionsType
 }
 
-var Options ScrapeOptions
-
 func (opts *ScrapeOptions) TestLog() {
 	logger.TestLog(len(opts.Modes) > 0, "Modes: ", opts.Modes)
 	logger.TestLog(len(opts.Action) > 0, "Action: ", opts.Action)
@@ -63,11 +61,11 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ScrapeOptions {
 			opts.Pin = true
 		case "publish":
 			opts.Publish = true
-		case "blockcnt":
+		case "block_cnt":
 			opts.BlockCnt = globals.ToUint64(value[0])
-		case "blockchancnt":
+		case "block_chan_cnt":
 			opts.BlockChanCnt = globals.ToUint64(value[0])
-		case "addrchancnt":
+		case "addr_chan_cnt":
 			opts.AddrChanCnt = globals.ToUint64(value[0])
 		}
 	}

@@ -31,8 +31,6 @@ type SlurpOptions struct {
 	Globals     globals.GlobalOptionsType
 }
 
-var Options SlurpOptions
-
 func (opts *SlurpOptions) TestLog() {
 	logger.TestLog(len(opts.Addrs) > 0, "Addrs: ", opts.Addrs)
 	logger.TestLog(len(opts.Blocks) > 0, "Blocks: ", opts.Blocks)

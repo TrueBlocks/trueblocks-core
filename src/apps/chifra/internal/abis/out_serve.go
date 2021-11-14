@@ -11,14 +11,14 @@ func ServeAbis(w http.ResponseWriter, r *http.Request) {
 
 	err := opts.ValidateAbis()
 	if err != nil {
-		exec.RespondWithError(w, http.StatusInternalServerError, opts.Globals.TestMode, err)
+		exec.RespondWithError(w, http.StatusInternalServerError, &opts.Globals, err)
 		return
 	}
 
 	if len(opts.Find) > 0 {
 		err = opts.FindInternal()
 		if err != nil {
-			exec.RespondWithError(w, http.StatusInternalServerError, opts.Globals.TestMode, err)
+			exec.RespondWithError(w, http.StatusInternalServerError, &opts.Globals, err)
 			return
 		}
 		return

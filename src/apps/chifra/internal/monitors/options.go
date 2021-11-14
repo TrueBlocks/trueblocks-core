@@ -37,8 +37,6 @@ type MonitorsOptions struct {
 	Globals     globals.GlobalOptionsType
 }
 
-var Options MonitorsOptions
-
 func (opts *MonitorsOptions) TestLog() {
 	logger.TestLog(len(opts.Addrs) > 0, "Addrs: ", opts.Addrs)
 	logger.TestLog(opts.Appearances, "Appearances: ", opts.Appearances)
@@ -70,9 +68,9 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *MonitorsOptions {
 			opts.Undelete = true
 		case "remove":
 			opts.Remove = true
-		case "firstblock":
+		case "first_block":
 			opts.FirstBlock = globals.ToUint64(value[0])
-		case "lastblock":
+		case "last_block":
 			opts.LastBlock = globals.ToUint64(value[0])
 		}
 	}

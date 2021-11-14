@@ -21,7 +21,14 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func Run(cmd *cobra.Command, args []string) error {
+var Options ExploreOptions
+
+func RunExplore(cmd *cobra.Command, args []string) error {
+	err := Validate(cmd, args)
+	if err != nil {
+		return err
+	}
+
 	for _, url := range urls {
 		fmt.Printf("Opening %s\n", url.getUrl())
 		if os.Getenv("TEST_MODE") != "true" {

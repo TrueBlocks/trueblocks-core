@@ -23,8 +23,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 )
 
-var Format string
-
 type Meta struct {
 	Unripe    string `json:"unripe"`
 	Ripe      string `json:"ripe"`

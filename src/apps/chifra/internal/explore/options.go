@@ -30,8 +30,6 @@ type ExploreOptions struct {
 	Globals globals.GlobalOptionsType
 }
 
-var Options ExploreOptions
-
 func (opts *ExploreOptions) TestLog() {
 	logger.TestLog(len(opts.Terms) > 0, "Terms: ", opts.Terms)
 	logger.TestLog(opts.Local, "Local: ", opts.Local)

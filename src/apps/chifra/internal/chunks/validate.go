@@ -15,13 +15,11 @@ package chunksPkg
 
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/spf13/cobra"
 )
 
 func Validate(cmd *cobra.Command, args []string) error {
-	output.Format = Options.Globals.Format
 	if !Options.List && !Options.Check && len(Options.Extract) == 0 {
 		return validate.Usage("Please choose at least one of {0}.", "--list, --extract, or --check")
 	}

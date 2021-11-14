@@ -21,7 +21,14 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func Run(cmd *cobra.Command, args []string) error {
+var Options StatusOptions
+
+func RunStatus(cmd *cobra.Command, args []string) error {
+	err := Validate(cmd, args)
+	if err != nil {
+		return err
+	}
+
 	options := ""
 	if Options.Details {
 		options += " --details"

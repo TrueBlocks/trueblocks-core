@@ -16,14 +16,13 @@ package abisPkg
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	// "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+
 	"github.com/spf13/cobra"
 )
 
 var Options AbisOptions
 
 func RunAbis(cmd *cobra.Command, args []string) error {
-	output.Format = Options.Globals.Format
 	Options.Addrs = args
 
 	err := Options.ValidateAbis()

@@ -17,14 +17,14 @@ func ServePins(w http.ResponseWriter, r *http.Request) {
 
 	err = opts.ValidatePins()
 	if err != nil {
-		exec.RespondWithError(w, http.StatusInternalServerError, opts.Globals.TestMode, err)
+		exec.RespondWithError(w, http.StatusInternalServerError, &opts.Globals, err)
 		return
 	}
 
 	if opts.List {
 		err := opts.ListInternal()
 		if err != nil {
-			exec.RespondWithError(w, http.StatusInternalServerError, opts.Globals.TestMode, err)
+			exec.RespondWithError(w, http.StatusInternalServerError, &opts.Globals, err)
 			return
 		}
 	}
@@ -32,7 +32,7 @@ func ServePins(w http.ResponseWriter, r *http.Request) {
 	if opts.Init {
 		err := opts.InitInternal()
 		if err != nil {
-			exec.RespondWithError(w, http.StatusInternalServerError, opts.Globals.TestMode, err)
+			exec.RespondWithError(w, http.StatusInternalServerError, &opts.Globals, err)
 		}
 	}
 }

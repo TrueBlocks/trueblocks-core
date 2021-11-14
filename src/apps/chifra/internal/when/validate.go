@@ -17,13 +17,11 @@ import (
 	"errors"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
 func (opts *WhenOptions) ValidateWhen() error {
 	// TODO: Remove the global Format and all appearances of it
-	output.Format = opts.Globals.Format
 	// if !WhenOpts.list {
 	// 	if len(args) == 0 {
 	// 		return errors.New(fmtError("You must provide either a date or a block number"))

@@ -18,6 +18,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -29,10 +30,10 @@ type JsonFormatted struct {
 
 // AsJsonBytes marshals JsonFormatted struct, populating Meta field if
 // needed
-func AsJsonBytes(j *JsonFormatted, testMode bool) ([]byte, error) {
+func AsJsonBytes(j *JsonFormatted, opts *globals.GlobalOptionsType) ([]byte, error) {
 	var result JsonFormatted
 
-	if Format == "json" {
+	if opts.Format == "json" {
 		if len(validate.Errors) > 0 {
 			result.Errors = validate.Errors
 		} else {
@@ -47,7 +48,7 @@ func AsJsonBytes(j *JsonFormatted, testMode bool) ([]byte, error) {
 			result.Errors = j.Errors
 		} else {
 			result.Data = j.Data
-			result.Meta = GetMeta(testMode)
+			result.Meta = GetMeta(opts.TestMode)
 		}
 	}
 
@@ -60,8 +61,8 @@ func AsJsonBytes(j *JsonFormatted, testMode bool) ([]byte, error) {
 }
 
 // PrintJson marshals its arguments and prints JSON in a standardized format
-func PrintJson(j *JsonFormatted) error {
-	marshalled, err := AsJsonBytes(j, os.Getenv("TEST_MODE") == "true")
+func PrintJson(j *JsonFormatted, opts *globals.GlobalOptionsType) error {
+	marshalled, err := AsJsonBytes(j, opts)
 	if err != nil {
 		return err
 	}

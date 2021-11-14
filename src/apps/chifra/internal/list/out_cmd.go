@@ -14,11 +14,13 @@ package listPkg
  *-------------------------------------------------------------------------------------------*/
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/export"
+	exportPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/export"
 	"github.com/spf13/cobra"
 )
 
-func Run(cmd *cobra.Command, args []string) error {
+var Options ListOptions
+
+func RunList(cmd *cobra.Command, args []string) error {
 	exportPkg.Options.Appearances = true
 	if Options.Count {
 		exportPkg.Options.Count = true
@@ -29,5 +31,5 @@ func Run(cmd *cobra.Command, args []string) error {
 	if Options.LastBlock > 0 {
 		exportPkg.Options.LastBlock = Options.LastBlock
 	}
-	return exportPkg.Run(cmd, args)
+	return exportPkg.RunExport(cmd, args)
 }

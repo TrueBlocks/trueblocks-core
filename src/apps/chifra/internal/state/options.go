@@ -34,8 +34,6 @@ type StateOptions struct {
 	Globals  globals.GlobalOptionsType
 }
 
-var Options StateOptions
-
 func (opts *StateOptions) TestLog() {
 	logger.TestLog(len(opts.Addrs) > 0, "Addrs: ", opts.Addrs)
 	logger.TestLog(len(opts.Blocks) > 0, "Blocks: ", opts.Blocks)
@@ -59,11 +57,11 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *StateOptions {
 			opts.Parts = append(opts.Parts, value...)
 		case "changes":
 			opts.Changes = true
-		case "nozero":
+		case "no_zero":
 			opts.NoZero = true
 		case "call":
 			opts.Call = value[0]
-		case "proxyfor":
+		case "proxy_for":
 			opts.ProxyFor = value[0]
 		}
 	}

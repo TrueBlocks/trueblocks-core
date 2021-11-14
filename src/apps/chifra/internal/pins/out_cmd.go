@@ -17,7 +17,6 @@ import (
 	"fmt"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib"
 	"github.com/spf13/cobra"
 )
@@ -29,7 +28,6 @@ Please create the folder or adjust the setting by editing $CONFIG/trueBlocks.tom
 var Options PinsOptions
 
 func RunPins(cmd *cobra.Command, args []string) error {
-	output.Format = Options.Globals.Format
 	err := Options.ValidatePins()
 	if err != nil {
 		return err
