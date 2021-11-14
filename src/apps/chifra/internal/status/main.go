@@ -1,4 +1,4 @@
-package status
+package statusPkg
 
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains

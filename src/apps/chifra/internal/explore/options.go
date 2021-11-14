@@ -1,4 +1,4 @@
-package explore
+package explorePkg
 
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
@@ -27,7 +27,7 @@ type ExploreOptionsType struct {
 	Terms   []string
 	Local   bool
 	Google  bool
-	Globals root.RootOptionsType
+	Globals root.GlobalOptionsType
 }
 
 var Options ExploreOptionsType

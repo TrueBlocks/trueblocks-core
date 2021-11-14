@@ -1,4 +1,4 @@
-package init
+package initPkg
 
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
@@ -25,7 +25,7 @@ import (
 
 type InitOptionsType struct {
 	All     bool
-	Globals root.RootOptionsType
+	Globals root.GlobalOptionsType
 }
 
 var Options InitOptionsType

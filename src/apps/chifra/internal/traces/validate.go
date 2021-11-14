@@ -1,4 +1,4 @@
-package traces
+package tracesPkg
 
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
@@ -22,5 +22,5 @@ import (
 func Validate(cmd *cobra.Command, args []string) error {
 	output.Format = Options.Globals.Format
 	Options.TestLog()
-	return root.ValidateGlobals(cmd, args)
+	return root.ValidateGlobals(&Options.Globals, args)
 }

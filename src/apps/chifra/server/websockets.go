@@ -1,4 +1,4 @@
-package serve
+package servePkg
 
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains

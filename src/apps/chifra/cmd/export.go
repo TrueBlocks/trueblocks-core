@@ -19,7 +19,7 @@ import (
 	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
-	exportPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/export"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/export"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
 )
@@ -107,5 +107,5 @@ One of [ yearly | quarterly | monthly | weekly | daily | hourly | blockly | tx ]
 	if utils.IsApiMode() {
 		exportCmd.SetErr(os.Stdout)
 	}
-	rootCmd.AddCommand(exportCmd)
+	chifraCmd.AddCommand(exportCmd)
 }

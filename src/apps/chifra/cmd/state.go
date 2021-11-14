@@ -19,7 +19,7 @@ import (
 	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
-	statePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/state"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/state"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
 )
@@ -73,5 +73,5 @@ One or more of [ none | some | all | balance | nonce | code | storage | deployed
 	if utils.IsApiMode() {
 		stateCmd.SetErr(os.Stdout)
 	}
-	rootCmd.AddCommand(stateCmd)
+	chifraCmd.AddCommand(stateCmd)
 }

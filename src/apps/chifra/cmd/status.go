@@ -19,7 +19,7 @@ import (
 	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
-	statusPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/status"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/status"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
 )
@@ -78,5 +78,5 @@ One or more of [ test | abi_cache | block_cache | tx_cache | trace_cache | recon
 	if utils.IsApiMode() {
 		statusCmd.SetErr(os.Stdout)
 	}
-	rootCmd.AddCommand(statusCmd)
+	chifraCmd.AddCommand(statusCmd)
 }

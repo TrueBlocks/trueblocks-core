@@ -19,7 +19,7 @@ import (
 	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
-	abisPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/abis"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/abis"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
 )
@@ -67,5 +67,5 @@ func init() {
 	if utils.IsApiMode() {
 		abisCmd.SetErr(os.Stdout)
 	}
-	rootCmd.AddCommand(abisCmd)
+	chifraCmd.AddCommand(abisCmd)
 }

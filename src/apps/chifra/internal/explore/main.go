@@ -1,4 +1,4 @@
-package explore
+package explorePkg
 
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains

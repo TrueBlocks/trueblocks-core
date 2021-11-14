@@ -1,4 +1,4 @@
-package status
+package statusPkg
 
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
@@ -36,7 +36,7 @@ type StatusOptionsType struct {
 	SetConfig bool
 	TestStart uint64
 	TestEnd   uint64
-	Globals   root.RootOptionsType
+	Globals   root.GlobalOptionsType
 }
 
 var Options StatusOptionsType

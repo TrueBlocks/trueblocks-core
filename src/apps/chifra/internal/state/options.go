@@ -1,4 +1,4 @@
-package state
+package statePkg
 
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
@@ -31,7 +31,7 @@ type StateOptionsType struct {
 	NoZero   bool
 	Call     string
 	ProxyFor string
-	Globals  root.RootOptionsType
+	Globals  root.GlobalOptionsType
 }
 
 var Options StateOptionsType

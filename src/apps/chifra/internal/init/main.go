@@ -1,4 +1,4 @@
-package init
+package initPkg
 
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
@@ -19,6 +19,6 @@ import (
 )
 
 func Run(cmd *cobra.Command, args []string) error {
-	pins.Options.Init = true
-	return pins.Run(cmd, args)
+	pinsPkg.Options.Init = true
+	return pinsPkg.Run(cmd, args)
 }

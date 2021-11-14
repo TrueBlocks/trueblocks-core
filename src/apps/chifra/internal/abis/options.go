@@ -1,4 +1,4 @@
-package abis
+package abisPkg
 
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
@@ -30,7 +30,7 @@ type AbisOptionsType struct {
 	Find    []string
 	Source  bool
 	Classes bool
-	Globals root.RootOptionsType
+	Globals root.GlobalOptionsType
 }
 
 var Options AbisOptionsType

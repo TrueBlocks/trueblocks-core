@@ -1,4 +1,4 @@
-package list
+package listPkg
 
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
@@ -30,7 +30,7 @@ type ListOptionsType struct {
 	Appearances bool
 	FirstBlock  uint64
 	LastBlock   uint64
-	Globals     root.RootOptionsType
+	Globals     root.GlobalOptionsType
 }
 
 var Options ListOptionsType

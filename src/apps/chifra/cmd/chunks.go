@@ -19,7 +19,7 @@ import (
 	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
-	chunksPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/chunks"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/chunks"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
 )
@@ -63,5 +63,5 @@ One of [ header | addr_table | app_table | chunks | blooms ]`)
 	if utils.IsApiMode() {
 		chunksCmd.SetErr(os.Stdout)
 	}
-	rootCmd.AddCommand(chunksCmd)
+	chifraCmd.AddCommand(chunksCmd)
 }

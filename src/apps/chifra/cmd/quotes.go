@@ -19,7 +19,7 @@ import (
 	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
-	quotesPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/quotes"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/quotes"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
 )
@@ -60,5 +60,5 @@ One of [ poloniex | maker | tellor ]`)
 	if utils.IsApiMode() {
 		quotesCmd.SetErr(os.Stdout)
 	}
-	rootCmd.AddCommand(quotesCmd)
+	chifraCmd.AddCommand(quotesCmd)
 }

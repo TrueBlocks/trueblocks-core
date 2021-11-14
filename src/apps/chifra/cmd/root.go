@@ -29,8 +29,8 @@ import (
 
 var cfgFile string
 
-// rootCmd represents the base command when called without any subcommands
-var rootCmd = &cobra.Command{
+// chifraCmd represents the base command when called without any subcommands
+var chifraCmd = &cobra.Command{
 	Use:   "chifra [flags] commands",
 	Short: "access to all TrueBlocks tools (chifra <cmd> --help for more)",
 	Long: `Purpose:
@@ -40,7 +40,7 @@ var rootCmd = &cobra.Command{
 
 // Execute adds all child commands to the root command and sets flags appropriately.
 func Execute() {
-	if err := rootCmd.Execute(); err != nil {
+	if err := chifraCmd.Execute(); err != nil {
 		// fmt.Fprintf(os.Stderr, "%s", err)
 		os.Exit(1)
 	}
@@ -48,15 +48,15 @@ func Execute() {
 
 func init() {
 	if utils.IsApiMode() {
-		rootCmd.SetOut(os.Stderr)
-		rootCmd.SetErr(os.Stdout)
+		chifraCmd.SetOut(os.Stderr)
+		chifraCmd.SetErr(os.Stdout)
 	} else {
-		rootCmd.SetOut(os.Stderr)
+		chifraCmd.SetOut(os.Stderr)
 	}
-	rootCmd.SetFlagErrorFunc(ErrFunc)
-	rootCmd.Flags().SortFlags = false
+	chifraCmd.SetFlagErrorFunc(ErrFunc)
+	chifraCmd.Flags().SortFlags = false
 
-	rootCmd.SetUsageTemplate(helpText)
+	chifraCmd.SetUsageTemplate(helpText)
 	cobra.OnInitialize(initConfig)
 }
 

@@ -1,4 +1,4 @@
-package scrape
+package scrapePkg
 
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains

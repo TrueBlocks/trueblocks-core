@@ -49,5 +49,5 @@ var notes[{PROPER}] = `[{POSTNOTES}]`
 	if utils.IsApiMode() {
 		[{ROUTE}]Cmd.SetErr(os.Stdout)
 	}
-	rootCmd.AddCommand([{ROUTE}]Cmd)
+	chifraCmd.AddCommand([{ROUTE}]Cmd)
 }

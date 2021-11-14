@@ -19,7 +19,7 @@ import (
 	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
-	explorePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/explore"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/explore"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
 )
@@ -57,5 +57,5 @@ func init() {
 	if utils.IsApiMode() {
 		exploreCmd.SetErr(os.Stdout)
 	}
-	rootCmd.AddCommand(exploreCmd)
+	chifraCmd.AddCommand(exploreCmd)
 }

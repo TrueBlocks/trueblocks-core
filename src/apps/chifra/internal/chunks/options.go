@@ -1,4 +1,4 @@
-package chunks
+package chunksPkg
 
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
@@ -30,7 +30,7 @@ type ChunksOptionsType struct {
 	Extract string
 	Stats   bool
 	Save    bool
-	Globals root.RootOptionsType
+	Globals root.GlobalOptionsType
 }
 
 var Options ChunksOptionsType

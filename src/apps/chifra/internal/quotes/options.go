@@ -1,4 +1,4 @@
-package quotes
+package quotesPkg
 
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
@@ -28,7 +28,7 @@ type QuotesOptionsType struct {
 	Period  string
 	Pair    string
 	Feed    string
-	Globals root.RootOptionsType
+	Globals root.GlobalOptionsType
 }
 
 var Options QuotesOptionsType

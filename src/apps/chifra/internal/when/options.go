@@ -1,4 +1,4 @@
-package when
+package whenPkg
 
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
@@ -30,7 +30,7 @@ type WhenOptionsType struct {
 	Check      bool
 	Fix        bool
 	Count      bool
-	Globals    root.RootOptionsType
+	Globals    root.GlobalOptionsType
 }
 
 var Options WhenOptionsType

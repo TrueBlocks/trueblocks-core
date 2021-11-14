@@ -1,4 +1,4 @@
-package pins
+package pinsPkg
 
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
@@ -76,5 +76,5 @@ func (opts *PinsOptionsType) ValidateOptionsPins() error {
 
 	Options.TestLog()
 
-	return root.ValidateGlobals2(&opts.Globals, []string{})
+	return root.ValidateGlobals(&opts.Globals, []string{})
 }

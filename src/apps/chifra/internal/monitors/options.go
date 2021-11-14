@@ -1,4 +1,4 @@
-package monitors
+package monitorsPkg
 
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
@@ -34,7 +34,7 @@ type MonitorsOptionsType struct {
 	Remove      bool
 	FirstBlock  uint64
 	LastBlock   uint64
-	Globals     root.RootOptionsType
+	Globals     root.GlobalOptionsType
 }
 
 var Options MonitorsOptionsType

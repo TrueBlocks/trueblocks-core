@@ -19,7 +19,7 @@ import (
 	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
-	transactionsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/transactions"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/transactions"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
 )
@@ -64,5 +64,5 @@ func init() {
 	if utils.IsApiMode() {
 		transactionsCmd.SetErr(os.Stdout)
 	}
-	rootCmd.AddCommand(transactionsCmd)
+	chifraCmd.AddCommand(transactionsCmd)
 }

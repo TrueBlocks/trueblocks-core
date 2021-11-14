@@ -1,4 +1,4 @@
-package [{ROUTE}]
+package [{ROUTE}]Pkg
 
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains

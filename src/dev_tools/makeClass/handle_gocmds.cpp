@@ -34,9 +34,8 @@ bool COptions::handle_gocmds_cmd(const CCommandOption& p) {
     }
     replaceAll(source, "[{LONG}]", "Purpose:\n  " + p.description);
     replaceAll(source, "[{OPT_DEF}]", "");
-    replaceAll(
-        source, "[{IMPORTS}]",
-        "\t[{ROUTE}]Pkg \"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/[{ROUTE}]\"\n[{IMPORTS}]");
+    replaceAll(source, "[{IMPORTS}]",
+               "\t\"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/[{ROUTE}]\"\n[{IMPORTS}]");
     if (p.api_route == "serve") {
         replaceAll(source, "/internal/[{ROUTE}]", "/server");
     }
@@ -242,7 +241,7 @@ string_q get_optfields(const CCommandOption& cmd) {
         p.longName = noUnderbars(p.longName);
         os << "\t" << padRight(p.longName, wid) << " " << p.go_type << endl;
     }
-    os << "\t" << padRight("Globals", wid) << " root.RootOptionsType" << endl;
+    os << "\t" << padRight("Globals", wid) << " root.GlobalOptionsType" << endl;
 
     return os.str();
 }

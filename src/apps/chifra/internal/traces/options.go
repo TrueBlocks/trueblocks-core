@@ -1,4 +1,4 @@
-package traces
+package tracesPkg
 
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
@@ -31,7 +31,7 @@ type TracesOptionsType struct {
 	Count        bool
 	SkipDdos     bool
 	Max          uint64
-	Globals      root.RootOptionsType
+	Globals      root.GlobalOptionsType
 }
 
 var Options TracesOptionsType

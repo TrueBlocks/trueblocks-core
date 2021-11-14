@@ -1,4 +1,4 @@
-package serve
+package servePkg
 
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
@@ -25,7 +25,7 @@ import (
 
 type ServeOptionsType struct {
 	Port    string
-	Globals root.RootOptionsType
+	Globals root.GlobalOptionsType
 }
 
 var Options ServeOptionsType

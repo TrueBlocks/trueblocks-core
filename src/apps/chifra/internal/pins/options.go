@@ -1,4 +1,4 @@
-package pins
+package pinsPkg
 
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
@@ -32,7 +32,7 @@ type PinsOptionsType struct {
 	Freshen bool
 	Remote  bool
 	InitAll bool
-	Globals root.RootOptionsType
+	Globals root.GlobalOptionsType
 }
 
 var Options PinsOptionsType

@@ -16,25 +16,11 @@ package root
 import (
 	"strconv"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
-	"github.com/spf13/cobra"
 )
 
-func ValidateGlobals(cmd *cobra.Command, args []string) error {
-	if len(Options.File) > 0 && !utils.FileExists(Options.File) {
-		return validate.Usage("The {0} option ({1}) must {2}", "file", Options.File, "exist")
-	}
-
-	err := validate.ValidateEnum("--fmt", output.Format, "[json|txt|csv|api]")
-	if err != nil {
-		return err
-	}
-	return nil
-}
-
-func ValidateGlobals2(opts *RootOptionsType, args []string) error {
+func ValidateGlobals(opts *GlobalOptionsType, args []string) error {
 	if len(opts.File) > 0 && !utils.FileExists(opts.File) {
 		return validate.Usage("The {0} option ({1}) must {2}", "file", opts.File, "exist")
 	}

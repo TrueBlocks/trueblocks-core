@@ -1,4 +1,4 @@
-package transactions
+package transactionsPkg
 
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
@@ -30,7 +30,7 @@ type TransactionsOptionsType struct {
 	Uniq         bool
 	Reconcile    string
 	Cache        bool
-	Globals      root.RootOptionsType
+	Globals      root.GlobalOptionsType
 }
 
 var Options TransactionsOptionsType

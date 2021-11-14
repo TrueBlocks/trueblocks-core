@@ -1,4 +1,4 @@
-package tokens
+package tokensPkg
 
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
@@ -29,7 +29,7 @@ type TokensOptionsType struct {
 	Parts   []string
 	ByAcct  bool
 	NoZero  bool
-	Globals root.RootOptionsType
+	Globals root.GlobalOptionsType
 }
 
 var Options TokensOptionsType

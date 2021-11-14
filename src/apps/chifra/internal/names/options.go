@@ -1,4 +1,4 @@
-package names
+package namesPkg
 
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
@@ -42,7 +42,7 @@ type NamesOptionsType struct {
 	Update      bool
 	Remove      bool
 	Undelete    bool
-	Globals     root.RootOptionsType
+	Globals     root.GlobalOptionsType
 }
 
 var Options NamesOptionsType

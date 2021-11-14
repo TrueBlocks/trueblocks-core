@@ -1,4 +1,4 @@
-package scrape
+package scrapePkg
 
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
@@ -32,7 +32,7 @@ type ScrapeOptionsType struct {
 	BlockCnt     uint64
 	BlockChanCnt uint64
 	AddrChanCnt  uint64
-	Globals      root.RootOptionsType
+	Globals      root.GlobalOptionsType
 }
 
 var Options ScrapeOptionsType

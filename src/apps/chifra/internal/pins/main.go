@@ -1,4 +1,4 @@
-package pins
+package pinsPkg
 
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains

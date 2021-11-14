@@ -1,4 +1,4 @@
-package export
+package exportPkg
 
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
@@ -58,7 +58,7 @@ type ExportOptionsType struct {
 	MaxTraces    uint64
 	FirstBlock   uint64
 	LastBlock    uint64
-	Globals      root.RootOptionsType
+	Globals      root.GlobalOptionsType
 }
 
 var Options ExportOptionsType

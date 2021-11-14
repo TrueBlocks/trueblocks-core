@@ -1,4 +1,4 @@
-package receipts
+package receiptsPkg
 
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains

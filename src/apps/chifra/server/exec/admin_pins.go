@@ -11,7 +11,7 @@ import (
 
 func ServePins(r *http.Request) ([]manifest.PinDescriptor, error) {
 	query := r.URL.Query()
-	opts := &pins.PinsOptionsType{}
+	opts := &pinsPkg.PinsOptionsType{}
 
 	var err error
 	for key, value := range query {
@@ -53,11 +53,11 @@ func ServePins(r *http.Request) ([]manifest.PinDescriptor, error) {
 	var responseError error
 
 	if opts.List {
-		responseBody, responseError = pins.ListInternal(opts)
+		responseBody, responseError = pinsPkg.ListInternal(opts)
 	}
 
 	if opts.Init {
-		responseError = pins.InitInternal(opts)
+		responseError = pinsPkg.InitInternal(opts)
 	}
 
 	if responseError != nil {

@@ -1,4 +1,4 @@
-package logs
+package logsPkg
 
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
@@ -26,7 +26,7 @@ import (
 type LogsOptionsType struct {
 	Transactions []string
 	Articulate   bool
-	Globals      root.RootOptionsType
+	Globals      root.GlobalOptionsType
 }
 
 var Options LogsOptionsType

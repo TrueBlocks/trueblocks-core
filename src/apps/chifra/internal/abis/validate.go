@@ -1,4 +1,4 @@
-package abis
+package abisPkg
 
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
@@ -87,5 +87,5 @@ func (opts *AbisOptionsType) ValidateOptionsAbis() error {
 
 	opts.TestLog()
 
-	return root.ValidateGlobals2(&opts.Globals, opts.Addrs)
+	return root.ValidateGlobals(&opts.Globals, opts.Addrs)
 }

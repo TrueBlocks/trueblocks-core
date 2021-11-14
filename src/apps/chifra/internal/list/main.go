@@ -1,4 +1,4 @@
-package list
+package listPkg
 
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
@@ -19,15 +19,15 @@ import (
 )
 
 func Run(cmd *cobra.Command, args []string) error {
-	export.Options.Appearances = true
+	exportPkg.Options.Appearances = true
 	if Options.Count {
-		export.Options.Count = true
+		exportPkg.Options.Count = true
 	}
 	if Options.FirstBlock > 0 {
-		export.Options.FirstBlock = Options.FirstBlock
+		exportPkg.Options.FirstBlock = Options.FirstBlock
 	}
 	if Options.LastBlock > 0 {
-		export.Options.LastBlock = Options.LastBlock
+		exportPkg.Options.LastBlock = Options.LastBlock
 	}
-	return export.Run(cmd, args)
+	return exportPkg.Run(cmd, args)
 }

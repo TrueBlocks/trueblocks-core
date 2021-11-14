@@ -19,7 +19,7 @@ import (
 	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
-	tokensPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/tokens"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/tokens"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
 )
@@ -66,5 +66,5 @@ One or more of [ name | symbol | decimals | totalSupply | version | none | all ]
 	if utils.IsApiMode() {
 		tokensCmd.SetErr(os.Stdout)
 	}
-	rootCmd.AddCommand(tokensCmd)
+	chifraCmd.AddCommand(tokensCmd)
 }

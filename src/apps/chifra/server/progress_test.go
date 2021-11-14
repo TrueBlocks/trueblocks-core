@@ -1,3 +1,5 @@
+package servePkg
+
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -10,7 +12,6 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-package serve
 
 // const output = "07807300 (  12097)- <PROG>  : Scanning 11403087 of 11854826 bloom hit false positive"
 

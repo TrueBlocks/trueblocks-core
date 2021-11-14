@@ -20,7 +20,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-type RootOptionsType struct {
+type GlobalOptionsType struct {
 	Verbose  bool
 	LogLevel uint64
 	NoHeader bool
@@ -39,9 +39,7 @@ type RootOptionsType struct {
 	ApiMode  bool
 }
 
-var Options RootOptionsType
-
-func (opts *RootOptionsType) TestLog() {
+func (opts *GlobalOptionsType) TestLog() {
 	logger.TestLog(opts.Verbose, "Verbose: ", opts.Verbose)
 	logger.TestLog(opts.LogLevel > 0, "LogLevel: ", opts.LogLevel)
 	logger.TestLog(opts.NoHeader, "NoHeader: ", opts.NoHeader)
@@ -60,7 +58,7 @@ func (opts *RootOptionsType) TestLog() {
 	logger.TestLog(opts.ApiMode, "ApiMode: ", opts.ApiMode)
 }
 
-func GlobalOptions(cmd *cobra.Command, opts *RootOptionsType) {
+func GlobalOptions(cmd *cobra.Command, opts *GlobalOptionsType) {
 	cmd.Flags().StringVarP(&opts.Format, "fmt", "x", "", "export format, one of [none|json*|txt|csv|api]")
 	cmd.Flags().BoolVarP(&opts.Verbose, "verbose", "v", false, "enable verbose (increase detail with --log_level)")
 	cmd.Flags().BoolVarP(&opts.Help, "help", "h", false, "display this help screen")
@@ -90,15 +88,14 @@ func GlobalOptions(cmd *cobra.Command, opts *RootOptionsType) {
 	cmd.Flags().MarkHidden("output")
 }
 
-func FromRequest(r *http.Request) *RootOptionsType {
-	opts := &RootOptionsType{}
+func FromRequest(r *http.Request) *GlobalOptionsType {
+	opts := &GlobalOptionsType{}
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "fmt":
 			opts.Format = value[0]
-			// cmd.Flags().BoolVarP(&opts.Verbose, "verbose", "v", false, "enable verbose (increase detail with --log_level)")
-			// cmd.Flags().BoolVarP(&opts.Help, "help", "h", false, "display this help screen")
-
+		case "verbose":
+			opts.Verbose = true
 		case "raw":
 			opts.Raw = true
 		case "version":
@@ -124,4 +121,7 @@ func FromRequest(r *http.Request) *RootOptionsType {
 		}
 	}
 	return opts
+
+	// The 'help' command is a special case for cobra, so doens't need to be handled
+	// cmd.Flags().BoolVarP(&opts.Help, "help", "h", false, "display this help screen")
 }

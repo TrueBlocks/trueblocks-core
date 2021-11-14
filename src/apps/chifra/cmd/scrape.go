@@ -19,7 +19,7 @@ import (
 	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
-	scrapePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/scrape"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/scrape"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
 )
@@ -72,5 +72,5 @@ One of [ toggle | run | restart | pause | quit ]`)
 	if utils.IsApiMode() {
 		scrapeCmd.SetErr(os.Stdout)
 	}
-	rootCmd.AddCommand(scrapeCmd)
+	chifraCmd.AddCommand(scrapeCmd)
 }

@@ -19,7 +19,7 @@ import (
 	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
-	logsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/logs"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/logs"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
 )
@@ -61,5 +61,5 @@ func init() {
 	if utils.IsApiMode() {
 		logsCmd.SetErr(os.Stdout)
 	}
-	rootCmd.AddCommand(logsCmd)
+	chifraCmd.AddCommand(logsCmd)
 }

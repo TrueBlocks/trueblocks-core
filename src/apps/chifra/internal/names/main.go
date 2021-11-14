@@ -1,4 +1,4 @@
-package names
+package namesPkg
 
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains

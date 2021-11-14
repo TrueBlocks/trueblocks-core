@@ -1,4 +1,4 @@
-package tokens
+package tokensPkg
 
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains

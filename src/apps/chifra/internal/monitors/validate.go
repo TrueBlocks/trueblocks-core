@@ -1,4 +1,4 @@
-package monitors
+package monitorsPkg
 
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
@@ -32,5 +32,5 @@ func Validate(cmd *cobra.Command, args []string) error {
 
 	Options.TestLog()
 
-	return root.ValidateGlobals(cmd, args)
+	return root.ValidateGlobals(&Options.Globals, args)
 }

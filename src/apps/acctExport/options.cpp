@@ -288,7 +288,7 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("remove", remove);
     // END_DEBUG_DISPLAY
 
-    cerr << (transactions == true ? "" : ""); // squelch warning for unused variable
+    cerr << (transactions == true ? "" : "");  // squelch warning for unused variable
 
     if (deleteMe)
         crudCommands.push_back("delete");
