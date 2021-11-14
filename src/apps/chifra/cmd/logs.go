@@ -18,9 +18,8 @@ package cmd
 import (
 	"os"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/logs"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
+	logsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/logs"
 	"github.com/spf13/cobra"
 )
 
@@ -54,11 +53,11 @@ func init() {
 	logsCmd.Flags().SortFlags = false
 	logsCmd.Flags().BoolVarP(&logsPkg.Options.Articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
 	logsCmd.Flags().SortFlags = false
-	root.GlobalOptions(logsCmd, &logsPkg.Options.Globals)
+	globals.GlobalOptions(logsCmd, &logsPkg.Options.Globals)
 
 	logsCmd.SetUsageTemplate(UsageWithNotes(notesLogs))
 	logsCmd.SetOut(os.Stderr)
-	if utils.IsApiMode() {
+	if logsPkg.Options.Globals.ApiMode {
 		logsCmd.SetErr(os.Stdout)
 	}
 	chifraCmd.AddCommand(logsCmd)

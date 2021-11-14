@@ -18,9 +18,8 @@ package cmd
 import (
 	"os"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/traces"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
+	tracesPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/traces"
 	"github.com/spf13/cobra"
 )
 
@@ -64,11 +63,11 @@ func init() {
 		tracesCmd.Flags().MarkHidden("max")
 	}
 	tracesCmd.Flags().SortFlags = false
-	root.GlobalOptions(tracesCmd, &tracesPkg.Options.Globals)
+	globals.GlobalOptions(tracesCmd, &tracesPkg.Options.Globals)
 
 	tracesCmd.SetUsageTemplate(UsageWithNotes(notesTraces))
 	tracesCmd.SetOut(os.Stderr)
-	if utils.IsApiMode() {
+	if tracesPkg.Options.Globals.ApiMode {
 		tracesCmd.SetErr(os.Stdout)
 	}
 	chifraCmd.AddCommand(tracesCmd)

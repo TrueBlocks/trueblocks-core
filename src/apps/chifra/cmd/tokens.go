@@ -18,9 +18,8 @@ package cmd
 import (
 	"os"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/tokens"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
+	tokensPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/tokens"
 	"github.com/spf13/cobra"
 )
 
@@ -59,11 +58,11 @@ One or more of [ name | symbol | decimals | totalSupply | version | none | all ]
 	tokensCmd.Flags().BoolVarP(&tokensPkg.Options.ByAcct, "by_acct", "b", false, "consider each address an ERC20 token except the last, whose balance is reported for each token")
 	tokensCmd.Flags().BoolVarP(&tokensPkg.Options.NoZero, "no_zero", "n", false, "suppress the display of zero balance accounts")
 	tokensCmd.Flags().SortFlags = false
-	root.GlobalOptions(tokensCmd, &tokensPkg.Options.Globals)
+	globals.GlobalOptions(tokensCmd, &tokensPkg.Options.Globals)
 
 	tokensCmd.SetUsageTemplate(UsageWithNotes(notesTokens))
 	tokensCmd.SetOut(os.Stderr)
-	if utils.IsApiMode() {
+	if tokensPkg.Options.Globals.ApiMode {
 		tokensCmd.SetErr(os.Stdout)
 	}
 	chifraCmd.AddCommand(tokensCmd)

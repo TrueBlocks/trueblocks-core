@@ -18,9 +18,8 @@ package cmd
 import (
 	"os"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/slurp"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
+	slurpPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/slurp"
 	"github.com/spf13/cobra"
 )
 
@@ -54,11 +53,11 @@ func init() {
 One or more of [ ext | int | token | nfts | miner | uncles | all ]`)
 	slurpCmd.Flags().BoolVarP(&slurpPkg.Options.Appearances, "appearances", "p", false, "show only the blocknumer.tx_id appearances of the exported transactions")
 	slurpCmd.Flags().SortFlags = false
-	root.GlobalOptions(slurpCmd, &slurpPkg.Options.Globals)
+	globals.GlobalOptions(slurpCmd, &slurpPkg.Options.Globals)
 
 	slurpCmd.SetUsageTemplate(UsageWithNotes(notesSlurp))
 	slurpCmd.SetOut(os.Stderr)
-	if utils.IsApiMode() {
+	if slurpPkg.Options.Globals.ApiMode {
 		slurpCmd.SetErr(os.Stdout)
 	}
 	chifraCmd.AddCommand(slurpCmd)

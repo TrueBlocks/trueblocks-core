@@ -18,9 +18,8 @@ package cmd
 import (
 	"os"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/status"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
+	statusPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/status"
 	"github.com/spf13/cobra"
 )
 
@@ -71,11 +70,11 @@ One or more of [ test | abi_cache | block_cache | tx_cache | trace_cache | recon
 		statusCmd.Flags().MarkHidden("test_end")
 	}
 	statusCmd.Flags().SortFlags = false
-	root.GlobalOptions(statusCmd, &statusPkg.Options.Globals)
+	globals.GlobalOptions(statusCmd, &statusPkg.Options.Globals)
 
 	statusCmd.SetUsageTemplate(UsageWithNotes(notesStatus))
 	statusCmd.SetOut(os.Stderr)
-	if utils.IsApiMode() {
+	if statusPkg.Options.Globals.ApiMode {
 		statusCmd.SetErr(os.Stdout)
 	}
 	chifraCmd.AddCommand(statusCmd)

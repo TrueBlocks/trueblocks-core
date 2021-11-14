@@ -18,9 +18,8 @@ package cmd
 import (
 	"os"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/names"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
+	namesPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/names"
 	"github.com/spf13/cobra"
 )
 
@@ -78,11 +77,11 @@ func init() {
 		namesCmd.Flags().MarkHidden("undelete")
 	}
 	namesCmd.Flags().SortFlags = false
-	root.GlobalOptions(namesCmd, &namesPkg.Options.Globals)
+	globals.GlobalOptions(namesCmd, &namesPkg.Options.Globals)
 
 	namesCmd.SetUsageTemplate(UsageWithNotes(notesNames))
 	namesCmd.SetOut(os.Stderr)
-	if utils.IsApiMode() {
+	if namesPkg.Options.Globals.ApiMode {
 		namesCmd.SetErr(os.Stdout)
 	}
 	chifraCmd.AddCommand(namesCmd)

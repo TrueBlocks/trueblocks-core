@@ -18,9 +18,8 @@ package cmd
 import (
 	"os"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/scrape"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
+	scrapePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/scrape"
 	"github.com/spf13/cobra"
 )
 
@@ -65,11 +64,11 @@ One of [ toggle | run | restart | pause | quit ]`)
 		scrapeCmd.Flags().MarkHidden("addr_chan_cnt")
 	}
 	scrapeCmd.Flags().SortFlags = false
-	root.GlobalOptions(scrapeCmd, &scrapePkg.Options.Globals)
+	globals.GlobalOptions(scrapeCmd, &scrapePkg.Options.Globals)
 
 	scrapeCmd.SetUsageTemplate(UsageWithNotes(notesScrape))
 	scrapeCmd.SetOut(os.Stderr)
-	if utils.IsApiMode() {
+	if scrapePkg.Options.Globals.ApiMode {
 		scrapeCmd.SetErr(os.Stdout)
 	}
 	chifraCmd.AddCommand(scrapeCmd)

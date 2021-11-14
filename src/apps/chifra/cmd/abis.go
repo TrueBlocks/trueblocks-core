@@ -18,9 +18,8 @@ package cmd
 import (
 	"os"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/abis"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
+	abisPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/abis"
 	"github.com/spf13/cobra"
 )
 
@@ -60,11 +59,11 @@ func init() {
 		abisCmd.Flags().MarkHidden("classes")
 	}
 	abisCmd.Flags().SortFlags = false
-	root.GlobalOptions(abisCmd, &abisPkg.Options.Globals)
+	globals.GlobalOptions(abisCmd, &abisPkg.Options.Globals)
 
 	abisCmd.SetUsageTemplate(UsageWithNotes(notesAbis))
 	abisCmd.SetOut(os.Stderr)
-	if utils.IsApiMode() {
+	if abisPkg.Options.Globals.ApiMode {
 		abisCmd.SetErr(os.Stdout)
 	}
 	chifraCmd.AddCommand(abisCmd)

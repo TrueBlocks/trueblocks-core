@@ -18,9 +18,8 @@ package cmd
 import (
 	"os"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/server"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
+	servePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/server"
 	"github.com/spf13/cobra"
 )
 
@@ -49,11 +48,11 @@ func init() {
 	serveCmd.Flags().SortFlags = false
 	serveCmd.Flags().StringVarP(&servePkg.Options.Port, "port", "p", ":8080", "specify the server's port")
 	serveCmd.Flags().SortFlags = false
-	root.GlobalOptions(serveCmd, &servePkg.Options.Globals)
+	globals.GlobalOptions(serveCmd, &servePkg.Options.Globals)
 
 	serveCmd.SetUsageTemplate(UsageWithNotes(notesServe))
 	serveCmd.SetOut(os.Stderr)
-	if utils.IsApiMode() {
+	if servePkg.Options.Globals.ApiMode {
 		serveCmd.SetErr(os.Stdout)
 	}
 	chifraCmd.AddCommand(serveCmd)

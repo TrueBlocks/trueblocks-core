@@ -18,9 +18,8 @@ package cmd
 import (
 	"os"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/blocks"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
+	blocksPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/blocks"
 	"github.com/spf13/cobra"
 )
 
@@ -79,11 +78,11 @@ func init() {
 		blocksCmd.Flags().MarkHidden("list_count")
 	}
 	blocksCmd.Flags().SortFlags = false
-	root.GlobalOptions(blocksCmd, &blocksPkg.Options.Globals)
+	globals.GlobalOptions(blocksCmd, &blocksPkg.Options.Globals)
 
 	blocksCmd.SetUsageTemplate(UsageWithNotes(notesBlocks))
 	blocksCmd.SetOut(os.Stderr)
-	if utils.IsApiMode() {
+	if blocksPkg.Options.Globals.ApiMode {
 		blocksCmd.SetErr(os.Stdout)
 	}
 	chifraCmd.AddCommand(blocksCmd)

@@ -18,9 +18,8 @@ package cmd
 import (
 	"os"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/transactions"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
+	transactionsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/transactions"
 	"github.com/spf13/cobra"
 )
 
@@ -57,11 +56,11 @@ func init() {
 	transactionsCmd.Flags().StringVarP(&transactionsPkg.Options.Reconcile, "reconcile", "r", "", "reconcile the transaction as per the provided address")
 	transactionsCmd.Flags().BoolVarP(&transactionsPkg.Options.Cache, "cache", "o", false, "force the results of the query into the tx cache (and the trace cache if applicable)")
 	transactionsCmd.Flags().SortFlags = false
-	root.GlobalOptions(transactionsCmd, &transactionsPkg.Options.Globals)
+	globals.GlobalOptions(transactionsCmd, &transactionsPkg.Options.Globals)
 
 	transactionsCmd.SetUsageTemplate(UsageWithNotes(notesTransactions))
 	transactionsCmd.SetOut(os.Stderr)
-	if utils.IsApiMode() {
+	if transactionsPkg.Options.Globals.ApiMode {
 		transactionsCmd.SetErr(os.Stdout)
 	}
 	chifraCmd.AddCommand(transactionsCmd)

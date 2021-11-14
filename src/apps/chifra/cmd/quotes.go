@@ -18,9 +18,8 @@ package cmd
 import (
 	"os"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/quotes"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
+	quotesPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/quotes"
 	"github.com/spf13/cobra"
 )
 
@@ -53,11 +52,11 @@ One of [ 5 | 15 | 30 | 60 | 120 | 240 | 1440 | 10080 | hourly | daily | weekly ]
 	quotesCmd.Flags().StringVarP(&quotesPkg.Options.Feed, "feed", "e", "", `the feed for the price data
 One of [ poloniex | maker | tellor ]`)
 	quotesCmd.Flags().SortFlags = false
-	root.GlobalOptions(quotesCmd, &quotesPkg.Options.Globals)
+	globals.GlobalOptions(quotesCmd, &quotesPkg.Options.Globals)
 
 	quotesCmd.SetUsageTemplate(UsageWithNotes(notesQuotes))
 	quotesCmd.SetOut(os.Stderr)
-	if utils.IsApiMode() {
+	if quotesPkg.Options.Globals.ApiMode {
 		quotesCmd.SetErr(os.Stdout)
 	}
 	chifraCmd.AddCommand(quotesCmd)

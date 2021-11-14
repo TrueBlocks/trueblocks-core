@@ -18,9 +18,8 @@ package cmd
 import (
 	"os"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/pins"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
+	pinsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/pins"
 	"github.com/spf13/cobra"
 )
 
@@ -62,11 +61,11 @@ func init() {
 		pinsCmd.Flags().MarkHidden("init_all")
 	}
 	pinsCmd.Flags().SortFlags = false
-	root.GlobalOptions(pinsCmd, &pinsPkg.Options.Globals)
+	globals.GlobalOptions(pinsCmd, &pinsPkg.Options.Globals)
 
 	pinsCmd.SetUsageTemplate(UsageWithNotes(notesPins))
 	pinsCmd.SetOut(os.Stderr)
-	if utils.IsApiMode() {
+	if pinsPkg.Options.Globals.ApiMode {
 		pinsCmd.SetErr(os.Stdout)
 	}
 	chifraCmd.AddCommand(pinsCmd)

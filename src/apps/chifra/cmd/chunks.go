@@ -18,9 +18,8 @@ package cmd
 import (
 	"os"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/chunks"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
+	chunksPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/chunks"
 	"github.com/spf13/cobra"
 )
 
@@ -56,11 +55,11 @@ One of [ header | addr_table | app_table | chunks | blooms ]`)
 	chunksCmd.Flags().BoolVarP(&chunksPkg.Options.Stats, "stats", "s", false, "for the --list option only, display statistics about each chunk or bloom")
 	chunksCmd.Flags().BoolVarP(&chunksPkg.Options.Save, "save", "a", false, "for the --extract option only, save the entire chunk to a similarly named file as well as display")
 	chunksCmd.Flags().SortFlags = false
-	root.GlobalOptions(chunksCmd, &chunksPkg.Options.Globals)
+	globals.GlobalOptions(chunksCmd, &chunksPkg.Options.Globals)
 
 	chunksCmd.SetUsageTemplate(UsageWithNotes(notesChunks))
 	chunksCmd.SetOut(os.Stderr)
-	if utils.IsApiMode() {
+	if chunksPkg.Options.Globals.ApiMode {
 		chunksCmd.SetErr(os.Stdout)
 	}
 	chifraCmd.AddCommand(chunksCmd)

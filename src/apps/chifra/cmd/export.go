@@ -18,9 +18,8 @@ package cmd
 import (
 	"os"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/export"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
+	exportPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/export"
 	"github.com/spf13/cobra"
 )
 
@@ -100,11 +99,11 @@ One of [ yearly | quarterly | monthly | weekly | daily | hourly | blockly | tx ]
 		exportCmd.Flags().MarkHidden("last_block")
 	}
 	exportCmd.Flags().SortFlags = false
-	root.GlobalOptions(exportCmd, &exportPkg.Options.Globals)
+	globals.GlobalOptions(exportCmd, &exportPkg.Options.Globals)
 
 	exportCmd.SetUsageTemplate(UsageWithNotes(notesExport))
 	exportCmd.SetOut(os.Stderr)
-	if utils.IsApiMode() {
+	if exportPkg.Options.Globals.ApiMode {
 		exportCmd.SetErr(os.Stdout)
 	}
 	chifraCmd.AddCommand(exportCmd)

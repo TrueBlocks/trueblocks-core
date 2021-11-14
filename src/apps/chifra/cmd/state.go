@@ -18,9 +18,8 @@ package cmd
 import (
 	"os"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/state"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
+	statePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/state"
 	"github.com/spf13/cobra"
 )
 
@@ -66,11 +65,11 @@ One or more of [ none | some | all | balance | nonce | code | storage | deployed
 		stateCmd.Flags().MarkHidden("proxy_for")
 	}
 	stateCmd.Flags().SortFlags = false
-	root.GlobalOptions(stateCmd, &statePkg.Options.Globals)
+	globals.GlobalOptions(stateCmd, &statePkg.Options.Globals)
 
 	stateCmd.SetUsageTemplate(UsageWithNotes(notesState))
 	stateCmd.SetOut(os.Stderr)
-	if utils.IsApiMode() {
+	if statePkg.Options.Globals.ApiMode {
 		stateCmd.SetErr(os.Stdout)
 	}
 	chifraCmd.AddCommand(stateCmd)
