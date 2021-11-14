@@ -23,7 +23,6 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	abisPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/abis"
 	pinsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/pins"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -55,7 +54,6 @@ func NewRouter() *mux.Router {
 			Name(route.Name).
 			Handler(handler)
 	}
-	router.Use(FormatValidator)
 
 	return router
 }
@@ -92,38 +90,6 @@ func Logger(inner http.Handler, name string) http.Handler {
 // Index shows the home page
 func Index(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Users Manual")
-}
-
-// FormatValidator checks if the client wants a supported format
-func FormatValidator(inner http.Handler) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		fmtQuery := r.URL.Query()["fmt"]
-		valid := false
-		fmtValue := ""
-		if len(fmtQuery) == 0 {
-			valid = true
-		} else {
-			fmtValue = fmtQuery[0]
-			valid = fmtValue == "" ||
-				fmtValue == "json" ||
-				fmtValue == "txt" ||
-				fmtValue == "csv" ||
-				fmtValue == "api"
-		}
-
-		if valid {
-			inner.ServeHTTP(w, r)
-			return
-		}
-
-		// TODO: Need this to build -- probably not right
-		var unused globals.GlobalOptionsType
-		unused.RespondWithError(
-			w,
-			http.StatusBadRequest,
-			fmt.Errorf("The --fmt option (%s) must be one of [ json | txt | csv | api ]", fmtValue),
-		)
-	})
 }
 
 // AdminPins handles /pins route
