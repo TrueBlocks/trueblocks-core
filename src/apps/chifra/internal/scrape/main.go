@@ -21,7 +21,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/spf13/cobra"
@@ -86,7 +86,7 @@ func RunIndexScraper(wg sync.WaitGroup, initialState bool) {
 				options += " --sleep " + fmt.Sprintf("%g", Options.Sleep)
 			}
 			options += (" --block_cnt " + fmt.Sprintf("%d", Options.BlockCnt))
-			root.PassItOn("blockScrape", &Options.Globals, options, "")
+			globals.PassItOn("blockScrape", &Options.Globals, options, "")
 			/* -------------- */
 
 			s.ShowStateChange("wake", "sleep")
@@ -140,7 +140,7 @@ func RunMonitorScraper(wg sync.WaitGroup, initialState bool) {
 				}
 				options := " --freshen"
 				options += " " + addr
-				root.PassItOn("acctExport", &Options.Globals, options, "")
+				globals.PassItOn("acctExport", &Options.Globals, options, "")
 			}
 			/* -------------- */
 

@@ -16,7 +16,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
 )
@@ -57,5 +57,5 @@ func Run(cmd *cobra.Command, args []string) error {
 		arguments += " " + arg
 	}
 
-	return root.PassItOn("cacheStatus", &Options.Globals, options, arguments)
+	return globals.PassItOn("cacheStatus", &Options.Globals, options, arguments)
 }

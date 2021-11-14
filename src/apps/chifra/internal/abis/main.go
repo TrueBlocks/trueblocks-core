@@ -14,7 +14,7 @@ package abisPkg
  *-------------------------------------------------------------------------------------------*/
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/spf13/cobra"
@@ -28,7 +28,7 @@ func Run(cmd *cobra.Command, args []string) error {
 	}
 
 	if len(Options.Find) > 0 {
-		HandleFind(&Options) // , root.Options.NoHeader)
+		HandleFind(&Options) // , globals.Options.NoHeader)
 		return nil
 	}
 
@@ -50,5 +50,5 @@ func Run(cmd *cobra.Command, args []string) error {
 		arguments += " " + arg
 	}
 
-	return root.PassItOn("grabABI", &Options.Globals, options, arguments)
+	return globals.PassItOn("grabABI", &Options.Globals, options, arguments)
 }

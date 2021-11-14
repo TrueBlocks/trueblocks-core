@@ -14,7 +14,7 @@ package namesPkg
  *-------------------------------------------------------------------------------------------*/
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/spf13/cobra"
 )
 
@@ -76,5 +76,5 @@ func Run(cmd *cobra.Command, args []string) error {
 		arguments += " " + arg
 	}
 
-	return root.PassItOn("ethNames", &Options.Globals, options, arguments)
+	return globals.PassItOn("ethNames", &Options.Globals, options, arguments)
 }

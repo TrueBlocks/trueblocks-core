@@ -1,4 +1,4 @@
-package root
+package globals
 
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
@@ -15,6 +15,7 @@ package root
 
 import (
 	"net/http"
+	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/spf13/cobra"
@@ -54,11 +55,14 @@ func (opts *GlobalOptionsType) TestLog() {
 	logger.TestLog(opts.Noop, "Noop: ", opts.Noop)
 	logger.TestLog(len(opts.OutputFn) > 0, "OutputFn: ", opts.OutputFn)
 	logger.TestLog(len(opts.Format) > 0, "Format: ", opts.Format)
-	logger.TestLog(opts.TestMode, "TestMode: ", opts.TestMode)
+	// logger.TestLog(opts.TestMode, "TestMode: ", opts.TestMode)
 	logger.TestLog(opts.ApiMode, "ApiMode: ", opts.ApiMode)
 }
 
 func GlobalOptions(cmd *cobra.Command, opts *GlobalOptionsType) {
+	opts.TestMode = os.Getenv("TEST_MODE") == "true"
+	opts.ApiMode = os.Getenv("API_MODE") == "true"
+
 	cmd.Flags().StringVarP(&opts.Format, "fmt", "x", "", "export format, one of [none|json*|txt|csv|api]")
 	cmd.Flags().BoolVarP(&opts.Verbose, "verbose", "v", false, "enable verbose (increase detail with --log_level)")
 	cmd.Flags().BoolVarP(&opts.Help, "help", "h", false, "display this help screen")
@@ -90,6 +94,10 @@ func GlobalOptions(cmd *cobra.Command, opts *GlobalOptionsType) {
 
 func FromRequest(r *http.Request) *GlobalOptionsType {
 	opts := &GlobalOptionsType{}
+
+	opts.TestMode = r.Header.Get("User-Agent") == "testRunner"
+	opts.ApiMode = true
+
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "fmt":
