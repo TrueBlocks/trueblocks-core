@@ -15,10 +15,21 @@ package whenPkg
 
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/spf13/cobra"
 )
 
-func Run(cmd *cobra.Command, args []string) error {
+var Options WhenOptions
+
+func RunWhen(cmd *cobra.Command, args []string) error {
+	output.Format = Options.Globals.Format
+	Options.Blocks = args
+	err := Options.ValidateWhen()
+	if err != nil {
+		return validate.Usage(err.Error())
+	}
+
 	options := ""
 	if Options.List {
 		options += " --list"

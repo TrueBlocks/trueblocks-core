@@ -23,7 +23,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
-type WhenOptionsType struct {
+type WhenOptions struct {
 	Blocks     []string
 	List       bool
 	Timestamps bool
@@ -33,9 +33,7 @@ type WhenOptionsType struct {
 	Globals    globals.GlobalOptionsType
 }
 
-var Options WhenOptionsType
-
-func (opts *WhenOptionsType) TestLog() {
+func (opts *WhenOptions) TestLog() {
 	logger.TestLog(len(opts.Blocks) > 0, "Blocks: ", opts.Blocks)
 	logger.TestLog(opts.List, "List: ", opts.List)
 	logger.TestLog(opts.Timestamps, "Timestamps: ", opts.Timestamps)
@@ -45,8 +43,8 @@ func (opts *WhenOptionsType) TestLog() {
 	opts.Globals.TestLog()
 }
 
-func FromRequest(w http.ResponseWriter, r *http.Request) *WhenOptionsType {
-	opts := &WhenOptionsType{}
+func FromRequest(w http.ResponseWriter, r *http.Request) *WhenOptions {
+	opts := &WhenOptions{}
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "blocks":

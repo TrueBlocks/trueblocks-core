@@ -1,5 +1,7 @@
 chifra when  0pppppp
-Error: The given value '0pppppp' is not a numeral or a special named block.
+Error: 
+  The given value '0pppppp' is not a numeral or a special named block.
+
 Usage:
   chifra when [flags] < block | date > [ block... | date... ]
 

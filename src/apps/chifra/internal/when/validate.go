@@ -19,19 +19,18 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
-	"github.com/spf13/cobra"
 )
 
-func Validate(cmd *cobra.Command, args []string) error {
+func (opts *WhenOptions) ValidateWhen() error {
 	// TODO: Remove the global Format and all appearances of it
-	output.Format = Options.Globals.Format
+	output.Format = opts.Globals.Format
 	// if !WhenOpts.list {
 	// 	if len(args) == 0 {
 	// 		return errors.New(fmtError("You must provide either a date or a block number"))
 	// 	}
 	// }
 
-	validationErr := validate.ValidateIdentifiers(args, validate.ValidBlockIdWithRangeAndDate, 1)
+	validationErr := validate.ValidateIdentifiers(opts.Blocks, validate.ValidBlockIdWithRangeAndDate, 1)
 	if validationErr != nil {
 		if invalidLiteral, ok := validationErr.(*validate.InvalidIdentifierLiteralError); ok {
 			return invalidLiteral
@@ -46,5 +45,5 @@ func Validate(cmd *cobra.Command, args []string) error {
 
 	Options.TestLog()
 
-	return globals.ValidateGlobals(&Options.Globals, args)
+	return globals.ValidateGlobals(&Options.Globals, opts.Blocks)
 }

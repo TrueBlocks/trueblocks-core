@@ -1,4 +1,5 @@
 chifra when  213123213 --list
+TEST[DATE|TIME] Blocks:  [213123213]
 TEST[DATE|TIME] List:  true
 blocknumber	timestamp	date	name
 0	1438269960	2015-07-30 15:26:00 UTC	first
