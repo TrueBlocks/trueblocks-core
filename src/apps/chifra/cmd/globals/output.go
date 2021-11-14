@@ -1,5 +1,18 @@
 package globals
 
+/*-------------------------------------------------------------------------------------------
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
+ *
+ * This program is free software: you may redistribute it and/or modify it under the terms
+ * of the GNU General Public License as published by the Free Software Foundation, either
+ * version 3 of the License, or (at your option) any later version. This program is
+ * distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+ * the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details. You should have received a copy of the GNU General
+ * Public License along with this program. If not, see http://www.gnu.org/licenses/.
+ *-------------------------------------------------------------------------------------------*/
+
 import (
 	"bytes"
 	"context"
@@ -130,11 +143,9 @@ func (opts *GlobalOptionsType) CsvFormatter(i interface{}) ([]byte, error) {
 		result = append(result, strings.Join(row, ","))
 	}
 
-	// Now we need to join all rows with a newline. We also add one
-	// final newline to be concise with both Go's encoding/csv and C++
-	// version
+	// Now we need to join all rows with a newline.
 	return []byte(
-		strings.Join(result, "\n") + "\n",
+		strings.Join(result, "\n"),
 	), nil
 }
 
@@ -380,4 +391,40 @@ func ToStringRecords(data interface{}, quote bool) ([][]string, error) {
 	}
 	result = append(result, records...)
 	return result, nil
+}
+
+var formatToMimeType = map[string]string{
+	"api":  "application/json",
+	"json": "application/json",
+	"csv":  "text/csv",
+	"txt":  "text/tab-separated-values",
+}
+
+// RespondWithError marshals the given error err into JSON
+// that can be returned to the client and sets httpStatus HTTP error status code
+func (opts *GlobalOptionsType) RespondWithError(w http.ResponseWriter, httpStatus int, err error) {
+	marshalled, err := AsJsonBytes(&JsonFormatted{
+		Errors: []string{err.Error()},
+	}, opts)
+	if err != nil {
+		panic(err)
+	}
+
+	w.WriteHeader(httpStatus)
+	w.Write(marshalled)
+}
+
+// Respond decides which format should be used, calls the right Responder, sets HTTP status code
+// and writes a response
+func (opts *GlobalOptionsType) Respond(w http.ResponseWriter, httpStatus int, responseData interface{}) {
+	formatNotEmpty := opts.Format
+	if formatNotEmpty == "" {
+		formatNotEmpty = "api"
+	}
+
+	w.Header().Set("Content-Type", formatToMimeType[formatNotEmpty])
+	err := Output(opts, w, formatNotEmpty, responseData)
+	if err != nil {
+		opts.RespondWithError(w, http.StatusInternalServerError, err)
+	}
 }

@@ -26,7 +26,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
-	execPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/server/exec"
 )
 
 // GetCommandPath returns full path the the given tool
@@ -156,7 +155,7 @@ func CallOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd s
 		// TODO: Need this to build. Probably not right
 		var unused globals.GlobalOptionsType
 		unused.TestMode = utils.IsTestModeServer(r)
-		execPkg.RespondWithError(w, http.StatusBadRequest, &unused, errors.New(parsed))
+		unused.RespondWithError(w, http.StatusBadRequest, errors.New(parsed))
 		return
 	}
 	if strings.Contains(output, "\"errors\":") {

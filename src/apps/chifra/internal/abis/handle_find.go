@@ -29,7 +29,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/server/exec"
 )
 
 func (opts *AbisOptions) FindInternal() error {
@@ -100,7 +99,7 @@ func (opts *AbisOptions) FindInternal() error {
 	defer wg.Wait()
 
 	if opts.Globals.ApiMode {
-		exec.Respond(opts.Globals.Writer, http.StatusOK, &opts.Globals, results)
+		opts.Globals.Respond(opts.Globals.Writer, http.StatusOK, results)
 
 	} else {
 		err = globals.Output(&opts.Globals, os.Stdout, opts.Globals.Format, results)

@@ -4,7 +4,6 @@ import (
 	"net/http"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/server/exec"
 )
 
 func ServePins(w http.ResponseWriter, r *http.Request) {
@@ -17,14 +16,14 @@ func ServePins(w http.ResponseWriter, r *http.Request) {
 
 	err = opts.ValidatePins()
 	if err != nil {
-		exec.RespondWithError(w, http.StatusInternalServerError, &opts.Globals, err)
+		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
 		return
 	}
 
 	if opts.List {
 		err := opts.ListInternal()
 		if err != nil {
-			exec.RespondWithError(w, http.StatusInternalServerError, &opts.Globals, err)
+			opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
 			return
 		}
 	}
@@ -32,7 +31,7 @@ func ServePins(w http.ResponseWriter, r *http.Request) {
 	if opts.Init {
 		err := opts.InitInternal()
 		if err != nil {
-			exec.RespondWithError(w, http.StatusInternalServerError, &opts.Globals, err)
+			opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
 		}
 	}
 }

@@ -13,8 +13,6 @@ package globals
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 import (
-	"fmt"
-	"log"
 	"reflect"
 	"strings"
 	"testing"
@@ -65,18 +63,13 @@ func TestAsCsv(t *testing.T) {
 		t.Error(err)
 		return
 	}
-	str := strings.Trim(string(result), "\n")
 	expected := strings.Join([]string{
 		`"first","second"`,
 		`"first first","first second"`,
 		`"second first","second second"`,
 	}, "\n")
-	log.Println(str)
-	log.Println(expected)
 
-	if str != expected {
-		fmt.Printf("*** %s ****\n", strings.Replace(str, "\n", "AAAA", -1))
-		str := strings.Replace(string(result), expected, "++++", -1)
-		t.Error("Wrong result: ", str, ":")
+	if string(result) != expected {
+		t.Error("Wrong result", result)
 	}
 }

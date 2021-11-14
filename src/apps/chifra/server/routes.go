@@ -27,7 +27,6 @@ import (
 	abisPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/abis"
 	pinsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/pins"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/server/exec"
 	"github.com/gorilla/mux"
 	"golang.org/x/time/rate"
 )
@@ -119,10 +118,9 @@ func FormatValidator(inner http.Handler) http.Handler {
 
 		// TODO: Need this to build -- probably not right
 		var unused globals.GlobalOptionsType
-		exec.RespondWithError(
+		unused.RespondWithError(
 			w,
 			http.StatusBadRequest,
-			&unused,
 			fmt.Errorf("The --fmt option (%s) must be one of [ json | txt | csv | api ]", fmtValue),
 		)
 	})
