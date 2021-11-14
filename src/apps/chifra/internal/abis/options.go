@@ -23,7 +23,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
-type AbisOptionsType struct {
+type AbisOptions struct {
 	Addrs   []string
 	Known   bool
 	Sol     bool
@@ -33,9 +33,7 @@ type AbisOptionsType struct {
 	Globals globals.GlobalOptionsType
 }
 
-var Options AbisOptionsType
-
-func (opts *AbisOptionsType) TestLog() {
+func (opts *AbisOptions) TestLog() {
 	logger.TestLog(len(opts.Addrs) > 0, "Addrs: ", opts.Addrs)
 	logger.TestLog(opts.Known, "Known: ", opts.Known)
 	logger.TestLog(opts.Sol, "Sol: ", opts.Sol)
@@ -45,8 +43,8 @@ func (opts *AbisOptionsType) TestLog() {
 	opts.Globals.TestLog()
 }
 
-func FromRequest(w http.ResponseWriter, r *http.Request) *AbisOptionsType {
-	opts := &AbisOptionsType{}
+func FromRequest(w http.ResponseWriter, r *http.Request) *AbisOptions {
+	opts := &AbisOptions{}
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "addrs":

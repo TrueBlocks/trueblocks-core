@@ -23,7 +23,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
-type QuotesOptionsType struct {
+type QuotesOptions struct {
 	Freshen bool
 	Period  string
 	Pair    string
@@ -31,9 +31,9 @@ type QuotesOptionsType struct {
 	Globals globals.GlobalOptionsType
 }
 
-var Options QuotesOptionsType
+var Options QuotesOptions
 
-func (opts *QuotesOptionsType) TestLog() {
+func (opts *QuotesOptions) TestLog() {
 	logger.TestLog(opts.Freshen, "Freshen: ", opts.Freshen)
 	logger.TestLog(len(opts.Period) > 0, "Period: ", opts.Period)
 	logger.TestLog(len(opts.Pair) > 0, "Pair: ", opts.Pair)
@@ -41,8 +41,8 @@ func (opts *QuotesOptionsType) TestLog() {
 	opts.Globals.TestLog()
 }
 
-func FromRequest(w http.ResponseWriter, r *http.Request) *QuotesOptionsType {
-	opts := &QuotesOptionsType{}
+func FromRequest(w http.ResponseWriter, r *http.Request) *QuotesOptions {
+	opts := &QuotesOptions{}
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "freshen":

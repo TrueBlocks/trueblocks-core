@@ -23,7 +23,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
-type NamesOptionsType struct {
+type NamesOptions struct {
 	Terms       []string
 	Expand      bool
 	MatchCase   bool
@@ -45,9 +45,9 @@ type NamesOptionsType struct {
 	Globals     globals.GlobalOptionsType
 }
 
-var Options NamesOptionsType
+var Options NamesOptions
 
-func (opts *NamesOptionsType) TestLog() {
+func (opts *NamesOptions) TestLog() {
 	logger.TestLog(len(opts.Terms) > 0, "Terms: ", opts.Terms)
 	logger.TestLog(opts.Expand, "Expand: ", opts.Expand)
 	logger.TestLog(opts.MatchCase, "MatchCase: ", opts.MatchCase)
@@ -69,8 +69,8 @@ func (opts *NamesOptionsType) TestLog() {
 	opts.Globals.TestLog()
 }
 
-func FromRequest(w http.ResponseWriter, r *http.Request) *NamesOptionsType {
-	opts := &NamesOptionsType{}
+func FromRequest(w http.ResponseWriter, r *http.Request) *NamesOptions {
+	opts := &NamesOptions{}
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "terms":

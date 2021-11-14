@@ -24,7 +24,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-type StatusOptionsType struct {
+type StatusOptions struct {
 	Modes     []string
 	Details   bool
 	Types     []string
@@ -39,9 +39,9 @@ type StatusOptionsType struct {
 	Globals   globals.GlobalOptionsType
 }
 
-var Options StatusOptionsType
+var Options StatusOptions
 
-func (opts *StatusOptionsType) TestLog() {
+func (opts *StatusOptions) TestLog() {
 	logger.TestLog(len(opts.Modes) > 0, "Modes: ", opts.Modes)
 	logger.TestLog(opts.Details, "Details: ", opts.Details)
 	logger.TestLog(len(opts.Types) > 0, "Types: ", opts.Types)
@@ -55,8 +55,8 @@ func (opts *StatusOptionsType) TestLog() {
 	opts.Globals.TestLog()
 }
 
-func FromRequest(w http.ResponseWriter, r *http.Request) *StatusOptionsType {
-	opts := &StatusOptionsType{}
+func FromRequest(w http.ResponseWriter, r *http.Request) *StatusOptions {
+	opts := &StatusOptions{}
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "modes":

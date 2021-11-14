@@ -23,7 +23,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
-type ScrapeOptionsType struct {
+type ScrapeOptions struct {
 	Modes        []string
 	Action       string
 	Sleep        float64
@@ -35,9 +35,9 @@ type ScrapeOptionsType struct {
 	Globals      globals.GlobalOptionsType
 }
 
-var Options ScrapeOptionsType
+var Options ScrapeOptions
 
-func (opts *ScrapeOptionsType) TestLog() {
+func (opts *ScrapeOptions) TestLog() {
 	logger.TestLog(len(opts.Modes) > 0, "Modes: ", opts.Modes)
 	logger.TestLog(len(opts.Action) > 0, "Action: ", opts.Action)
 	logger.TestLog(opts.Sleep != 14, "Sleep: ", opts.Sleep)
@@ -49,8 +49,8 @@ func (opts *ScrapeOptionsType) TestLog() {
 	opts.Globals.TestLog()
 }
 
-func FromRequest(w http.ResponseWriter, r *http.Request) *ScrapeOptionsType {
-	opts := &ScrapeOptionsType{}
+func FromRequest(w http.ResponseWriter, r *http.Request) *ScrapeOptions {
+	opts := &ScrapeOptions{}
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "modes":

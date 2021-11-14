@@ -23,7 +23,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
-type TokensOptionsType struct {
+type TokensOptions struct {
 	Addrs2  []string
 	Blocks  []string
 	Parts   []string
@@ -32,9 +32,9 @@ type TokensOptionsType struct {
 	Globals globals.GlobalOptionsType
 }
 
-var Options TokensOptionsType
+var Options TokensOptions
 
-func (opts *TokensOptionsType) TestLog() {
+func (opts *TokensOptions) TestLog() {
 	logger.TestLog(len(opts.Addrs2) > 0, "Addrs2: ", opts.Addrs2)
 	logger.TestLog(len(opts.Blocks) > 0, "Blocks: ", opts.Blocks)
 	logger.TestLog(len(opts.Parts) > 0, "Parts: ", opts.Parts)
@@ -43,8 +43,8 @@ func (opts *TokensOptionsType) TestLog() {
 	opts.Globals.TestLog()
 }
 
-func FromRequest(w http.ResponseWriter, r *http.Request) *TokensOptionsType {
-	opts := &TokensOptionsType{}
+func FromRequest(w http.ResponseWriter, r *http.Request) *TokensOptions {
+	opts := &TokensOptions{}
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "addrs2":

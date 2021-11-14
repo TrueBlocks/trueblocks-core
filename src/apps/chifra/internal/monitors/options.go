@@ -24,7 +24,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-type MonitorsOptionsType struct {
+type MonitorsOptions struct {
 	Addrs       []string
 	Appearances bool
 	Count       bool
@@ -37,9 +37,9 @@ type MonitorsOptionsType struct {
 	Globals     globals.GlobalOptionsType
 }
 
-var Options MonitorsOptionsType
+var Options MonitorsOptions
 
-func (opts *MonitorsOptionsType) TestLog() {
+func (opts *MonitorsOptions) TestLog() {
 	logger.TestLog(len(opts.Addrs) > 0, "Addrs: ", opts.Addrs)
 	logger.TestLog(opts.Appearances, "Appearances: ", opts.Appearances)
 	logger.TestLog(opts.Count, "Count: ", opts.Count)
@@ -52,8 +52,8 @@ func (opts *MonitorsOptionsType) TestLog() {
 	opts.Globals.TestLog()
 }
 
-func FromRequest(w http.ResponseWriter, r *http.Request) *MonitorsOptionsType {
-	opts := &MonitorsOptionsType{}
+func FromRequest(w http.ResponseWriter, r *http.Request) *MonitorsOptions {
+	opts := &MonitorsOptions{}
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "addrs":

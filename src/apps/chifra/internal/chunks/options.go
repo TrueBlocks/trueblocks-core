@@ -23,7 +23,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
-type ChunksOptionsType struct {
+type ChunksOptions struct {
 	Blocks  []string
 	List    bool
 	Check   bool
@@ -33,9 +33,9 @@ type ChunksOptionsType struct {
 	Globals globals.GlobalOptionsType
 }
 
-var Options ChunksOptionsType
+var Options ChunksOptions
 
-func (opts *ChunksOptionsType) TestLog() {
+func (opts *ChunksOptions) TestLog() {
 	logger.TestLog(len(opts.Blocks) > 0, "Blocks: ", opts.Blocks)
 	logger.TestLog(opts.List, "List: ", opts.List)
 	logger.TestLog(opts.Check, "Check: ", opts.Check)
@@ -45,8 +45,8 @@ func (opts *ChunksOptionsType) TestLog() {
 	opts.Globals.TestLog()
 }
 
-func FromRequest(w http.ResponseWriter, r *http.Request) *ChunksOptionsType {
-	opts := &ChunksOptionsType{}
+func FromRequest(w http.ResponseWriter, r *http.Request) *ChunksOptions {
+	opts := &ChunksOptions{}
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "blocks":

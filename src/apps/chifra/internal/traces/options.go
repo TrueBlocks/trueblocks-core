@@ -23,7 +23,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
-type TracesOptionsType struct {
+type TracesOptions struct {
 	Transactions []string
 	Articulate   bool
 	Filter       string
@@ -34,9 +34,9 @@ type TracesOptionsType struct {
 	Globals      globals.GlobalOptionsType
 }
 
-var Options TracesOptionsType
+var Options TracesOptions
 
-func (opts *TracesOptionsType) TestLog() {
+func (opts *TracesOptions) TestLog() {
 	logger.TestLog(len(opts.Transactions) > 0, "Transactions: ", opts.Transactions)
 	logger.TestLog(opts.Articulate, "Articulate: ", opts.Articulate)
 	logger.TestLog(len(opts.Filter) > 0, "Filter: ", opts.Filter)
@@ -47,8 +47,8 @@ func (opts *TracesOptionsType) TestLog() {
 	opts.Globals.TestLog()
 }
 
-func FromRequest(w http.ResponseWriter, r *http.Request) *TracesOptionsType {
-	opts := &TracesOptionsType{}
+func FromRequest(w http.ResponseWriter, r *http.Request) *TracesOptions {
+	opts := &TracesOptions{}
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "transactions":

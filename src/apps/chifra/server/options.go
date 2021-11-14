@@ -23,20 +23,20 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
-type ServeOptionsType struct {
+type ServeOptions struct {
 	Port    string
 	Globals globals.GlobalOptionsType
 }
 
-var Options ServeOptionsType
+var Options ServeOptions
 
-func (opts *ServeOptionsType) TestLog() {
+func (opts *ServeOptions) TestLog() {
 	logger.TestLog(len(opts.Port) > 0, "Port: ", opts.Port)
 	opts.Globals.TestLog()
 }
 
-func FromRequest(w http.ResponseWriter, r *http.Request) *ServeOptionsType {
-	opts := &ServeOptionsType{}
+func FromRequest(w http.ResponseWriter, r *http.Request) *ServeOptions {
+	opts := &ServeOptions{}
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "port":

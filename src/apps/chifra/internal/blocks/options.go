@@ -23,7 +23,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
-type BlocksOptionsType struct {
+type BlocksOptions struct {
 	Blocks     []string
 	Hashes     bool
 	Uncles     bool
@@ -42,9 +42,9 @@ type BlocksOptionsType struct {
 	Globals    globals.GlobalOptionsType
 }
 
-var Options BlocksOptionsType
+var Options BlocksOptions
 
-func (opts *BlocksOptionsType) TestLog() {
+func (opts *BlocksOptions) TestLog() {
 	logger.TestLog(len(opts.Blocks) > 0, "Blocks: ", opts.Blocks)
 	logger.TestLog(opts.Hashes, "Hashes: ", opts.Hashes)
 	logger.TestLog(opts.Uncles, "Uncles: ", opts.Uncles)
@@ -63,8 +63,8 @@ func (opts *BlocksOptionsType) TestLog() {
 	opts.Globals.TestLog()
 }
 
-func FromRequest(w http.ResponseWriter, r *http.Request) *BlocksOptionsType {
-	opts := &BlocksOptionsType{}
+func FromRequest(w http.ResponseWriter, r *http.Request) *BlocksOptions {
+	opts := &BlocksOptions{}
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "blocks":

@@ -23,7 +23,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
-type SlurpOptionsType struct {
+type SlurpOptions struct {
 	Addrs       []string
 	Blocks      []string
 	Types       []string
@@ -31,9 +31,9 @@ type SlurpOptionsType struct {
 	Globals     globals.GlobalOptionsType
 }
 
-var Options SlurpOptionsType
+var Options SlurpOptions
 
-func (opts *SlurpOptionsType) TestLog() {
+func (opts *SlurpOptions) TestLog() {
 	logger.TestLog(len(opts.Addrs) > 0, "Addrs: ", opts.Addrs)
 	logger.TestLog(len(opts.Blocks) > 0, "Blocks: ", opts.Blocks)
 	logger.TestLog(len(opts.Types) > 0, "Types: ", opts.Types)
@@ -41,8 +41,8 @@ func (opts *SlurpOptionsType) TestLog() {
 	opts.Globals.TestLog()
 }
 
-func FromRequest(w http.ResponseWriter, r *http.Request) *SlurpOptionsType {
-	opts := &SlurpOptionsType{}
+func FromRequest(w http.ResponseWriter, r *http.Request) *SlurpOptions {
+	opts := &SlurpOptions{}
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "addrs":

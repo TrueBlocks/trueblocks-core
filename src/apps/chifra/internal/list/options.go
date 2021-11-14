@@ -24,7 +24,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-type ListOptionsType struct {
+type ListOptions struct {
 	Addrs       []string
 	Count       bool
 	Appearances bool
@@ -33,9 +33,9 @@ type ListOptionsType struct {
 	Globals     globals.GlobalOptionsType
 }
 
-var Options ListOptionsType
+var Options ListOptions
 
-func (opts *ListOptionsType) TestLog() {
+func (opts *ListOptions) TestLog() {
 	logger.TestLog(len(opts.Addrs) > 0, "Addrs: ", opts.Addrs)
 	logger.TestLog(opts.Count, "Count: ", opts.Count)
 	logger.TestLog(opts.Appearances, "Appearances: ", opts.Appearances)
@@ -44,8 +44,8 @@ func (opts *ListOptionsType) TestLog() {
 	opts.Globals.TestLog()
 }
 
-func FromRequest(w http.ResponseWriter, r *http.Request) *ListOptionsType {
-	opts := &ListOptionsType{}
+func FromRequest(w http.ResponseWriter, r *http.Request) *ListOptions {
+	opts := &ListOptions{}
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "addrs":

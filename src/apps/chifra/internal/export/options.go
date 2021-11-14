@@ -24,7 +24,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-type ExportOptionsType struct {
+type ExportOptions struct {
 	Addrs        []string
 	Topics       []string
 	Fourbytes    []string
@@ -61,9 +61,9 @@ type ExportOptionsType struct {
 	Globals      globals.GlobalOptionsType
 }
 
-var Options ExportOptionsType
+var Options ExportOptions
 
-func (opts *ExportOptionsType) TestLog() {
+func (opts *ExportOptions) TestLog() {
 	logger.TestLog(len(opts.Addrs) > 0, "Addrs: ", opts.Addrs)
 	logger.TestLog(len(opts.Topics) > 0, "Topics: ", opts.Topics)
 	logger.TestLog(len(opts.Fourbytes) > 0, "Fourbytes: ", opts.Fourbytes)
@@ -100,8 +100,8 @@ func (opts *ExportOptionsType) TestLog() {
 	opts.Globals.TestLog()
 }
 
-func FromRequest(w http.ResponseWriter, r *http.Request) *ExportOptionsType {
-	opts := &ExportOptionsType{}
+func FromRequest(w http.ResponseWriter, r *http.Request) *ExportOptions {
+	opts := &ExportOptions{}
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "addrs":

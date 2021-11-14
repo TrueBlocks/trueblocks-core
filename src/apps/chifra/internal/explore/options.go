@@ -23,24 +23,24 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
-type ExploreOptionsType struct {
+type ExploreOptions struct {
 	Terms   []string
 	Local   bool
 	Google  bool
 	Globals globals.GlobalOptionsType
 }
 
-var Options ExploreOptionsType
+var Options ExploreOptions
 
-func (opts *ExploreOptionsType) TestLog() {
+func (opts *ExploreOptions) TestLog() {
 	logger.TestLog(len(opts.Terms) > 0, "Terms: ", opts.Terms)
 	logger.TestLog(opts.Local, "Local: ", opts.Local)
 	logger.TestLog(opts.Google, "Google: ", opts.Google)
 	opts.Globals.TestLog()
 }
 
-func FromRequest(w http.ResponseWriter, r *http.Request) *ExploreOptionsType {
-	opts := &ExploreOptionsType{}
+func FromRequest(w http.ResponseWriter, r *http.Request) *ExploreOptions {
+	opts := &ExploreOptions{}
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "terms":

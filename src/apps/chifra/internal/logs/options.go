@@ -23,22 +23,22 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
-type LogsOptionsType struct {
+type LogsOptions struct {
 	Transactions []string
 	Articulate   bool
 	Globals      globals.GlobalOptionsType
 }
 
-var Options LogsOptionsType
+var Options LogsOptions
 
-func (opts *LogsOptionsType) TestLog() {
+func (opts *LogsOptions) TestLog() {
 	logger.TestLog(len(opts.Transactions) > 0, "Transactions: ", opts.Transactions)
 	logger.TestLog(opts.Articulate, "Articulate: ", opts.Articulate)
 	opts.Globals.TestLog()
 }
 
-func FromRequest(w http.ResponseWriter, r *http.Request) *LogsOptionsType {
-	opts := &LogsOptionsType{}
+func FromRequest(w http.ResponseWriter, r *http.Request) *LogsOptions {
+	opts := &LogsOptions{}
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "transactions":
