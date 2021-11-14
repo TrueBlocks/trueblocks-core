@@ -14,43 +14,43 @@ package pinsPkg
  *-------------------------------------------------------------------------------------------*/
 
 import (
+	"net/http"
 	"os"
 	"sort"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib/manifest"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/server/exec"
 )
 
-func HandleList(opts *PinsOptionsType) {
-	pins, err := ListInternal(opts)
-	if err != nil {
-		logger.Fatal("Cannot open local manifest file", err)
-	}
-
-	err = output.Output(os.Stdout, opts.Globals.Format, pins)
-	if err != nil {
-		logger.Log(logger.Error, err)
-	}
-}
-
-func ListInternal(opts *PinsOptionsType) ([]manifest.PinDescriptor, error) {
+func (opts *PinsOptions) ListInternal() error {
 	manifestData, err := manifest.FromLocalFile()
 	if err != nil {
-		return nil, err
+		return err
 	}
 
-	// Sort pins
 	sort.Slice(manifestData.NewPins, func(i, j int) bool {
 		iPin := manifestData.NewPins[i]
 		jPin := manifestData.NewPins[j]
 		return iPin.FileName < jPin.FileName
 	})
 
-	// Shorten the array for testing
-	if os.Getenv("TEST_MODE") == "true" {
+	if opts.Globals.TestMode {
+		// Shorten the array for testing
 		manifestData.NewPins = manifestData.NewPins[:100]
 	}
 
-	return manifestData.NewPins, nil
+	opts.PrintManifestHeader()
+	if opts.Globals.ApiMode {
+		exec.Respond(opts.Globals.Writer, http.StatusOK, opts.Globals.Format, manifestData.NewPins)
+
+	} else {
+		err = output.Output(os.Stdout, opts.Globals.Format, manifestData.NewPins)
+		if err != nil {
+			logger.Log(logger.Error, err)
+		}
+	}
+
+	return nil
 }

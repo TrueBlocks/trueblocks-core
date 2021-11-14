@@ -28,8 +28,7 @@ var pinsCmd = &cobra.Command{
 	Use:   usagePins,
 	Short: shortPins,
 	Long:  longPins,
-	RunE:  pinsPkg.Run,
-	Args:  pinsPkg.Validate,
+	RunE:  pinsPkg.RunPins,
 }
 
 var usagePins = `pins [flags]`
@@ -47,6 +46,7 @@ Notes:
 
 func init() {
 	pinsCmd.Flags().SortFlags = false
+
 	pinsCmd.Flags().BoolVarP(&pinsPkg.Options.List, "list", "l", false, "list the bloom and index hashes from local cache or IPFS")
 	pinsCmd.Flags().BoolVarP(&pinsPkg.Options.Init, "init", "i", false, "download the blooms or index chunks from IPFS")
 	pinsCmd.Flags().BoolVarP(&pinsPkg.Options.All, "all", "a", false, "in addition to Bloom filters, download full index chunks")
@@ -60,13 +60,14 @@ func init() {
 		pinsCmd.Flags().MarkHidden("remote")
 		pinsCmd.Flags().MarkHidden("init_all")
 	}
-	pinsCmd.Flags().SortFlags = false
 	globals.GlobalOptions(pinsCmd, &pinsPkg.Options.Globals)
 
 	pinsCmd.SetUsageTemplate(UsageWithNotes(notesPins))
+
 	pinsCmd.SetOut(os.Stderr)
 	if pinsPkg.Options.Globals.ApiMode {
 		pinsCmd.SetErr(os.Stdout)
 	}
+
 	chifraCmd.AddCommand(pinsCmd)
 }

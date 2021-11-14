@@ -25,16 +25,10 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/progress"
 )
 
-// HandleInit calls Init() and prints error, if any
-func HandleInit(opts *PinsOptionsType) {
-	err := InitInternal(opts)
-	if err != nil {
-		logger.Fatal(err)
-	}
-}
-
 // InitInternal initializes local copy of UnchainedIndex by downloading manifests and chunks
-func InitInternal(opts *PinsOptionsType) error {
+func (opts *PinsOptions) InitInternal() error {
+	opts.PrintManifestHeader()
+
 	logger.Log(logger.Info, "Calling unchained index smart contract...")
 
 	// Fetch manifest's CID
@@ -177,10 +171,11 @@ func retry(failedPins []manifest.PinDescriptor, times uint, downloadChunks downl
 	return len(pinsToRetry)
 }
 
-func PrintManifestHeader() {
+func (opts *PinsOptions) PrintManifestHeader() {
 	// The following two values should be read from manifest.txt, however right now only TSV format
 	// is available for download and it lacks this information
 	// TODO: These values should be in a config file
+	// TODO: We can add the "loaded" configuration file to Options
 	logger.Log(logger.Info, "hashToIndexFormatFile:", "Qmart6XP9XjL43p72PGR93QKytbK8jWWcMguhFgxATTya2")
 	logger.Log(logger.Info, "hashToBloomFormatFile:", "QmNhPk39DUFoEdhUmtGARqiFECUHeghyeryxZM9kyRxzHD")
 	logger.Log(logger.Info, "unchainedIndexAddr:", pinlib.GetUnchainedIndexAddress())

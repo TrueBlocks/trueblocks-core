@@ -15,23 +15,10 @@ package pinsPkg
 
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
-
-	"github.com/spf13/cobra"
 )
 
-func Validate(cmd *cobra.Command, args []string) error {
-	output.Format = Options.Globals.Format
-	err := Options.ValidateOptionsPins()
-	if err != nil {
-		return err
-	}
-	return nil
-}
-
-func (opts *PinsOptionsType) ValidateOptionsPins() error {
-
+func (opts *PinsOptions) ValidatePins() error {
 	if opts.List && opts.Init {
 		return validate.Usage("Please choose only one of {0}.", "--list or --init")
 	}

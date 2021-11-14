@@ -19,7 +19,6 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/spf13/cobra"
 )
 
@@ -27,14 +26,16 @@ var errCustomFolderMissing = `Attempt to create customized indexPath (%s) failed
 Please create the folder or adjust the setting by editing $CONFIG/trueBlocks.toml.
 `
 
-func Run(cmd *cobra.Command, args []string) error {
-	// This only happens in API mode when there's been an error. Here, we print the error
-	if len(validate.Errors) > 0 {
-		output.PrintJson(&output.JsonFormatted{})
-		return nil
+var Options PinsOptions
+
+func RunPins(cmd *cobra.Command, args []string) error {
+	output.Format = Options.Globals.Format
+	err := Options.ValidatePins()
+	if err != nil {
+		return err
 	}
 
-	err := pinlib.EstablishIndexFolders()
+	err = pinlib.EstablishIndexFolders()
 	if err != nil {
 		if err, ok := err.(*pinlib.ErrCustomizedPath); ok {
 			fmt.Printf(errCustomFolderMissing, err.GetIndexPath())
@@ -44,14 +45,18 @@ func Run(cmd *cobra.Command, args []string) error {
 	}
 
 	if Options.List {
-		PrintManifestHeader()
-		HandleList(&Options)
+		err := Options.ListInternal()
+		if err != nil {
+			logger.Fatal("Cannot open local manifest file", err)
+		}
 		return nil
 	}
 
 	if Options.Init {
-		PrintManifestHeader()
-		HandleInit(&Options)
+		err := Options.InitInternal()
+		if err != nil {
+			logger.Fatal(err)
+		}
 		return nil
 	}
 
@@ -62,5 +67,6 @@ func Run(cmd *cobra.Command, args []string) error {
 	if Options.Share {
 		logger.Fatal("Not implemented")
 	}
+
 	return nil
 }

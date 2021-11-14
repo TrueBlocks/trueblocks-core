@@ -23,7 +23,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
-type PinsOptionsType struct {
+type PinsOptions struct {
 	List    bool
 	Init    bool
 	All     bool
@@ -35,9 +35,7 @@ type PinsOptionsType struct {
 	Globals globals.GlobalOptionsType
 }
 
-var Options PinsOptionsType
-
-func (opts *PinsOptionsType) TestLog() {
+func (opts *PinsOptions) TestLog() {
 	logger.TestLog(opts.List, "List: ", opts.List)
 	logger.TestLog(opts.Init, "Init: ", opts.Init)
 	logger.TestLog(opts.All, "All: ", opts.All)
@@ -46,8 +44,8 @@ func (opts *PinsOptionsType) TestLog() {
 	opts.Globals.TestLog()
 }
 
-func FromRequest(w http.ResponseWriter, r *http.Request) *PinsOptionsType {
-	opts := &PinsOptionsType{}
+func FromRequest(w http.ResponseWriter, r *http.Request) *PinsOptions {
+	opts := &PinsOptions{}
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "list":
@@ -64,7 +62,7 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *PinsOptionsType {
 			opts.Freshen = true
 		case "remote":
 			opts.Remote = true
-		case "initall":
+		case "init_all":
 			opts.InitAll = true
 		}
 	}
