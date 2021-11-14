@@ -19,7 +19,7 @@ package tracesPkg
 import (
 	"net/http"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
@@ -31,7 +31,7 @@ type TracesOptionsType struct {
 	Count        bool
 	SkipDdos     bool
 	Max          uint64
-	Globals      root.GlobalOptionsType
+	Globals      globals.GlobalOptionsType
 }
 
 var Options TracesOptionsType
@@ -64,10 +64,10 @@ func FromRequest(r *http.Request) *TracesOptionsType {
 		case "skipddos":
 			opts.SkipDdos = true
 		case "max":
-			opts.Max = root.ToUint64(value[0])
+			opts.Max = globals.ToUint64(value[0])
 		}
 	}
-	opts.Globals = *root.FromRequest(r)
+	opts.Globals = *globals.FromRequest(r)
 
 	return opts
 }

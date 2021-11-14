@@ -19,7 +19,7 @@ package slurpPkg
 import (
 	"net/http"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
@@ -28,7 +28,7 @@ type SlurpOptionsType struct {
 	Blocks      []string
 	Types       []string
 	Appearances bool
-	Globals     root.GlobalOptionsType
+	Globals     globals.GlobalOptionsType
 }
 
 var Options SlurpOptionsType
@@ -55,7 +55,7 @@ func FromRequest(r *http.Request) *SlurpOptionsType {
 			opts.Appearances = true
 		}
 	}
-	opts.Globals = *root.FromRequest(r)
+	opts.Globals = *globals.FromRequest(r)
 
 	return opts
 }

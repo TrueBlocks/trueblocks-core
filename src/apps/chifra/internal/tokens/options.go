@@ -19,7 +19,7 @@ package tokensPkg
 import (
 	"net/http"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
@@ -29,7 +29,7 @@ type TokensOptionsType struct {
 	Parts   []string
 	ByAcct  bool
 	NoZero  bool
-	Globals root.GlobalOptionsType
+	Globals globals.GlobalOptionsType
 }
 
 var Options TokensOptionsType
@@ -59,7 +59,7 @@ func FromRequest(r *http.Request) *TokensOptionsType {
 			opts.NoZero = true
 		}
 	}
-	opts.Globals = *root.FromRequest(r)
+	opts.Globals = *globals.FromRequest(r)
 
 	return opts
 }

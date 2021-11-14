@@ -14,7 +14,7 @@ package tracesPkg
  *-------------------------------------------------------------------------------------------*/
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/spf13/cobra"
 )
@@ -22,5 +22,5 @@ import (
 func Validate(cmd *cobra.Command, args []string) error {
 	output.Format = Options.Globals.Format
 	Options.TestLog()
-	return root.ValidateGlobals(&Options.Globals, args)
+	return globals.ValidateGlobals(&Options.Globals, args)
 }

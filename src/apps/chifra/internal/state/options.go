@@ -19,7 +19,7 @@ package statePkg
 import (
 	"net/http"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
@@ -31,7 +31,7 @@ type StateOptionsType struct {
 	NoZero   bool
 	Call     string
 	ProxyFor string
-	Globals  root.GlobalOptionsType
+	Globals  globals.GlobalOptionsType
 }
 
 var Options StateOptionsType
@@ -67,7 +67,7 @@ func FromRequest(r *http.Request) *StateOptionsType {
 			opts.ProxyFor = value[0]
 		}
 	}
-	opts.Globals = *root.FromRequest(r)
+	opts.Globals = *globals.FromRequest(r)
 
 	return opts
 }

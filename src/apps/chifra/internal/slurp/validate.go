@@ -14,7 +14,7 @@ package slurpPkg
  *-------------------------------------------------------------------------------------------*/
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/spf13/cobra"
@@ -34,5 +34,5 @@ func Validate(cmd *cobra.Command, args []string) error {
 
 	Options.TestLog()
 
-	return root.ValidateGlobals(&Options.Globals, args)
+	return globals.ValidateGlobals(&Options.Globals, args)
 }

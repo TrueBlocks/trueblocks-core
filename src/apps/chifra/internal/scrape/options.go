@@ -19,7 +19,7 @@ package scrapePkg
 import (
 	"net/http"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
@@ -32,7 +32,7 @@ type ScrapeOptionsType struct {
 	BlockCnt     uint64
 	BlockChanCnt uint64
 	AddrChanCnt  uint64
-	Globals      root.GlobalOptionsType
+	Globals      globals.GlobalOptionsType
 }
 
 var Options ScrapeOptionsType
@@ -58,20 +58,20 @@ func FromRequest(r *http.Request) *ScrapeOptionsType {
 		case "action":
 			opts.Action = value[0]
 		case "sleep":
-			opts.Sleep = root.ToFloat64(value[0])
+			opts.Sleep = globals.ToFloat64(value[0])
 		case "pin":
 			opts.Pin = true
 		case "publish":
 			opts.Publish = true
 		case "blockcnt":
-			opts.BlockCnt = root.ToUint64(value[0])
+			opts.BlockCnt = globals.ToUint64(value[0])
 		case "blockchancnt":
-			opts.BlockChanCnt = root.ToUint64(value[0])
+			opts.BlockChanCnt = globals.ToUint64(value[0])
 		case "addrchancnt":
-			opts.AddrChanCnt = root.ToUint64(value[0])
+			opts.AddrChanCnt = globals.ToUint64(value[0])
 		}
 	}
-	opts.Globals = *root.FromRequest(r)
+	opts.Globals = *globals.FromRequest(r)
 
 	return opts
 }

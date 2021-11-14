@@ -19,7 +19,7 @@ package statusPkg
 import (
 	"net/http"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/root"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
@@ -36,7 +36,7 @@ type StatusOptionsType struct {
 	SetConfig bool
 	TestStart uint64
 	TestEnd   uint64
-	Globals   root.GlobalOptionsType
+	Globals   globals.GlobalOptionsType
 }
 
 var Options StatusOptionsType
@@ -66,7 +66,7 @@ func FromRequest(r *http.Request) *StatusOptionsType {
 		case "types":
 			opts.Types = append(opts.Types, value...)
 		case "depth":
-			opts.Depth = root.ToUint64(value[0])
+			opts.Depth = globals.ToUint64(value[0])
 		case "report":
 			opts.Report = true
 		case "terse":
@@ -78,12 +78,12 @@ func FromRequest(r *http.Request) *StatusOptionsType {
 		case "setconfig":
 			opts.SetConfig = true
 		case "teststart":
-			opts.TestStart = root.ToUint64(value[0])
+			opts.TestStart = globals.ToUint64(value[0])
 		case "testend":
-			opts.TestEnd = root.ToUint64(value[0])
+			opts.TestEnd = globals.ToUint64(value[0])
 		}
 	}
-	opts.Globals = *root.FromRequest(r)
+	opts.Globals = *globals.FromRequest(r)
 
 	return opts
 }
