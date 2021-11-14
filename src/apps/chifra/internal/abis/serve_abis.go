@@ -12,12 +12,10 @@ func ServeAbis(w http.ResponseWriter, r *http.Request) {
 	err := opts.ValidateOptionsAbis()
 	if err != nil {
 		exec.RespondWithError(w, http.StatusInternalServerError, opts.Globals.TestMode, err)
-		return
-	}
-
-	err = opts.FindInternal()
-	if err != nil {
-		exec.RespondWithError(w, http.StatusInternalServerError, opts.Globals.TestMode, err)
-		return
+	} else {
+		err = opts.FindInternal()
+		if err != nil {
+			exec.RespondWithError(w, http.StatusInternalServerError, opts.Globals.TestMode, err)
+		}
 	}
 }

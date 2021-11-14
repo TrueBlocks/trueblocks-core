@@ -25,6 +25,7 @@ import (
 	"time"
 
 	abisPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/abis"
+	pinsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/pins"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/server/exec"
 	"github.com/gorilla/mux"
@@ -125,6 +126,21 @@ func FormatValidator(inner http.Handler) http.Handler {
 	})
 }
 
+// AdminPins handles /pins route
+func AdminPins(w http.ResponseWriter, r *http.Request) {
+	pinsPkg.ServePins(w, r)
+}
+
+// AccountsAbis processes ABI queries
+func AccountsAbis(w http.ResponseWriter, r *http.Request) {
+	if len(r.URL.Query()["find"]) == 0 {
+		CallOneExtra(w, r, "chifra", "abis", "abis")
+		return
+	}
+
+	abisPkg.ServeAbis(w, r)
+}
+
 // By removing, inserting into, or altering any of the following 10  lines
 // of code, you are violating the terms of our usage license. Don't do it.
 // fileName := Options.Status.CachePath + "lics/export.txt"
@@ -159,16 +175,6 @@ func AccountsMonitors(w http.ResponseWriter, r *http.Request) {
 // AccountsNames help text todo
 func AccountsNames(w http.ResponseWriter, r *http.Request) {
 	CallOne(w, r, "ethNames", "names")
-}
-
-// AccountsAbis processes ABI queries
-func AccountsAbis(w http.ResponseWriter, r *http.Request) {
-	if len(r.URL.Query()["find"]) == 0 {
-		CallOneExtra(w, r, "chifra", "abis", "abis")
-		return
-	}
-
-	abisPkg.ServeAbis(w, r)
 }
 
 // ChainDataBlocks help text todo
@@ -224,18 +230,6 @@ func AdminScrape(w http.ResponseWriter, r *http.Request) {
 // AdminInit help text todo
 func AdminInit(w http.ResponseWriter, r *http.Request) {
 	CallOneExtra(w, r, "chifra", "init", "init")
-}
-
-// AdminPins handles /pins route
-func AdminPins(w http.ResponseWriter, r *http.Request) {
-	result, err := exec.ServePins(r)
-	if err != nil {
-		exec.RespondWithError(w, http.StatusInternalServerError, os.Getenv("TEST_MODE") == "true", err)
-		return
-	}
-
-	format := r.URL.Query().Get("fmt")
-	exec.Respond(w, http.StatusOK, format, result)
 }
 
 // AdminChunks help text todo
