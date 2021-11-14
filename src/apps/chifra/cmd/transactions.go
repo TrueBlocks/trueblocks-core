@@ -28,8 +28,7 @@ var transactionsCmd = &cobra.Command{
 	Use:   usageTransactions,
 	Short: shortTransactions,
 	Long:  longTransactions,
-	RunE:  transactionsPkg.Run,
-	Args:  transactionsPkg.Validate,
+	RunE:  transactionsPkg.RunTransactions,
 }
 
 var usageTransactions = `transactions [flags] <tx_id> [tx_id...]
@@ -56,7 +55,7 @@ func init() {
 	transactionsCmd.Flags().BoolVarP(&transactionsPkg.Options.Uniq, "uniq", "u", false, "display a list of uniq addresses found in the transaction")
 	transactionsCmd.Flags().StringVarP(&transactionsPkg.Options.Reconcile, "reconcile", "r", "", "reconcile the transaction as per the provided address")
 	transactionsCmd.Flags().BoolVarP(&transactionsPkg.Options.Cache, "cache", "o", false, "force the results of the query into the tx cache (and the trace cache if applicable)")
-	globals.GlobalOptions(transactionsCmd, &transactionsPkg.Options.Globals)
+	globals.InitGlobals(transactionsCmd, &transactionsPkg.Options.Globals)
 
 	transactionsCmd.SetUsageTemplate(UsageWithNotes(notesTransactions))
 

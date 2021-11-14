@@ -28,8 +28,7 @@ var monitorsCmd = &cobra.Command{
 	Use:   usageMonitors,
 	Short: shortMonitors,
 	Long:  longMonitors,
-	RunE:  monitorsPkg.Run,
-	Args:  monitorsPkg.Validate,
+	RunE:  monitorsPkg.RunMonitors,
 }
 
 var usageMonitors = `monitors [flags] <address> [address...]
@@ -62,7 +61,7 @@ func init() {
 		monitorsCmd.Flags().MarkHidden("first_block")
 		monitorsCmd.Flags().MarkHidden("last_block")
 	}
-	globals.GlobalOptions(monitorsCmd, &monitorsPkg.Options.Globals)
+	globals.InitGlobals(monitorsCmd, &monitorsPkg.Options.Globals)
 
 	monitorsCmd.SetUsageTemplate(UsageWithNotes(notesMonitors))
 

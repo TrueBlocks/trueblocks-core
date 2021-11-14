@@ -28,8 +28,7 @@ var tracesCmd = &cobra.Command{
 	Use:   usageTraces,
 	Short: shortTraces,
 	Long:  longTraces,
-	RunE:  tracesPkg.Run,
-	Args:  tracesPkg.Validate,
+	RunE:  tracesPkg.RunTraces,
 }
 
 var usageTraces = `traces [flags] <tx_id> [tx_id...]
@@ -63,7 +62,7 @@ func init() {
 		tracesCmd.Flags().MarkHidden("skip_ddos")
 		tracesCmd.Flags().MarkHidden("max")
 	}
-	globals.GlobalOptions(tracesCmd, &tracesPkg.Options.Globals)
+	globals.InitGlobals(tracesCmd, &tracesPkg.Options.Globals)
 
 	tracesCmd.SetUsageTemplate(UsageWithNotes(notesTraces))
 

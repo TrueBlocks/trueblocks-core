@@ -28,8 +28,6 @@ type ServeOptions struct {
 	Globals globals.GlobalOptionsType
 }
 
-var Options ServeOptions
-
 func (opts *ServeOptions) TestLog() {
 	logger.TestLog(len(opts.Port) > 0, "Port: ", opts.Port)
 	opts.Globals.TestLog()

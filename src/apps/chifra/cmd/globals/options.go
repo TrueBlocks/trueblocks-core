@@ -60,7 +60,7 @@ func (opts *GlobalOptionsType) TestLog() {
 	logger.TestLog(opts.ApiMode, "ApiMode: ", opts.ApiMode)
 }
 
-func GlobalOptions(cmd *cobra.Command, opts *GlobalOptionsType) {
+func InitGlobals(cmd *cobra.Command, opts *GlobalOptionsType) {
 	opts.TestMode = os.Getenv("TEST_MODE") == "true"
 	opts.ApiMode = os.Getenv("API_MODE") == "true"
 

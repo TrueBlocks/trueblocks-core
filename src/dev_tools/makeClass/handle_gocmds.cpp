@@ -27,11 +27,6 @@ extern const char* STR_REQUEST_STATE;
 //---------------------------------------------------------------------------------------------------
 bool COptions::handle_gocmds_cmd(const CCommandOption& p) {
     string_q source = asciiFileToString(getTemplatePath("blank.go"));
-    if (p.api_route == "abis" || p.api_route == "pins") {
-        replace(source, "\t[{ROUTE}]Cmd.PersistentFlags().SortFlags = false", "");
-        replace(source, "\t[{ROUTE}]Cmd.PersistentFlags().SortFlags = false",
-                "\t/globals.GlobalOptions([{ROUTE}]Cmd, &[{ROUTE}]Pkg.Options.Globals)");
-    }
     replaceAll(source, "[{LONG}]", "Purpose:\n  " + p.description);
     replaceAll(source, "[{OPT_DEF}]", "");
     replaceAll(
@@ -40,7 +35,6 @@ bool COptions::handle_gocmds_cmd(const CCommandOption& p) {
     if (p.api_route == "serve") {
         replaceAll(source, "/internal/[{ROUTE}]", "/server");
     }
-    replaceAll(source, "run[{PROPER}]", "[{ROUTE}]Pkg.Run");
     replaceAll(source, "validate[{PROPER}]Args", "[{ROUTE}]Pkg.Validate");
     replaceAll(source, "[{COPY_OPTS}]", get_copyopts(p));
     replaceAll(source, "[{SET_OPTS}]", get_setopts(p));
@@ -84,7 +78,7 @@ bool COptions::handle_gocmds_options(const CCommandOption& p) {
     replaceAll(source, "[{PROPER}]", toProper(p.api_route));
     replaceAll(source, "[{OPT_FIELDS}]", get_optfields(p));
     string_q req = get_requestopts(p);
-    replaceAll(source, "[{REQUEST_OPTS}]", get_requestopts(p));
+    replaceAll(source, "[{REQUEST_OPTS}]", req);
     if (!contains(substitute(req, "for key, value := range r.URL.Query() {", ""), "value")) {
         replaceAll(source, "for key, value := range r.URL.Query() {", "for key, _ := range r.URL.Query() {");
     }
@@ -251,13 +245,9 @@ string_q get_requestopts(const CCommandOption& cmd) {
     ostringstream os;
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
         replace(p.longName, "deleteMe", "delete");
+        string_q low = p.Format("[{LOWER}]");
         p.longName = noUnderbars(p.longName);
-        /*
-        const char* STR_REQUEST_STATE =
-            "\t\tcase \"[{LOWER}]\":\n"
-            "\t\t\topts.[{NAME}] = [{VALUE}]";
-        */
-        os << p.Format(STR_REQUEST_STATE) << endl;
+        os << p.Format(substitute(STR_REQUEST_STATE, "++LOWER++", low)) << endl;
     }
     return os.str();
 }
@@ -388,5 +378,5 @@ string_q get_copyopts(const CCommandOption& cmd) {
 }
 
 const char* STR_REQUEST_STATE =
-    "\t\tcase \"[{LOWER}]\":\n"
+    "\t\tcase \"++LOWER++\":\n"
     "\t\t\topts.[{LONGNAME}] = [{ASS}]";

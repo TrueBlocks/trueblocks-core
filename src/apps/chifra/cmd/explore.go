@@ -28,8 +28,7 @@ var exploreCmd = &cobra.Command{
 	Use:   usageExplore,
 	Short: shortExplore,
 	Long:  longExplore,
-	RunE:  explorePkg.Run,
-	Args:  explorePkg.Validate,
+	RunE:  explorePkg.RunExplore,
 }
 
 var usageExplore = `explore [flags] <term> [term...]
@@ -49,7 +48,7 @@ func init() {
 
 	exploreCmd.Flags().BoolVarP(&explorePkg.Options.Local, "local", "l", false, "open the local TrueBlocks explorer")
 	exploreCmd.Flags().BoolVarP(&explorePkg.Options.Google, "google", "g", false, "search google excluding popular blockchain explorers")
-	globals.GlobalOptions(exploreCmd, &explorePkg.Options.Globals)
+	globals.InitGlobals(exploreCmd, &explorePkg.Options.Globals)
 
 	exploreCmd.SetUsageTemplate(UsageWithNotes(notesExplore))
 

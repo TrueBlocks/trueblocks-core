@@ -28,8 +28,7 @@ var listCmd = &cobra.Command{
 	Use:   usageList,
 	Short: shortList,
 	Long:  longList,
-	RunE:  listPkg.Run,
-	Args:  listPkg.Validate,
+	RunE:  listPkg.RunList,
 }
 
 var usageList = `list [flags] <address> [address...]
@@ -56,7 +55,7 @@ func init() {
 		listCmd.Flags().MarkHidden("first_block")
 		listCmd.Flags().MarkHidden("last_block")
 	}
-	globals.GlobalOptions(listCmd, &listPkg.Options.Globals)
+	globals.InitGlobals(listCmd, &listPkg.Options.Globals)
 
 	listCmd.SetUsageTemplate(UsageWithNotes(notesList))
 

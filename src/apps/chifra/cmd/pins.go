@@ -60,7 +60,7 @@ func init() {
 		pinsCmd.Flags().MarkHidden("remote")
 		pinsCmd.Flags().MarkHidden("init_all")
 	}
-	globals.GlobalOptions(pinsCmd, &pinsPkg.Options.Globals)
+	globals.InitGlobals(pinsCmd, &pinsPkg.Options.Globals)
 
 	pinsCmd.SetUsageTemplate(UsageWithNotes(notesPins))
 

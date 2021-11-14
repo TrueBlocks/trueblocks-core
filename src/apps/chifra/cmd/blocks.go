@@ -28,8 +28,7 @@ var blocksCmd = &cobra.Command{
 	Use:   usageBlocks,
 	Short: shortBlocks,
 	Long:  longBlocks,
-	RunE:  blocksPkg.Run,
-	Args:  blocksPkg.Validate,
+	RunE:  blocksPkg.RunBlocks,
 }
 
 var usageBlocks = `blocks [flags] <block> [block...]
@@ -78,7 +77,7 @@ func init() {
 		blocksCmd.Flags().MarkHidden("list")
 		blocksCmd.Flags().MarkHidden("list_count")
 	}
-	globals.GlobalOptions(blocksCmd, &blocksPkg.Options.Globals)
+	globals.InitGlobals(blocksCmd, &blocksPkg.Options.Globals)
 
 	blocksCmd.SetUsageTemplate(UsageWithNotes(notesBlocks))
 

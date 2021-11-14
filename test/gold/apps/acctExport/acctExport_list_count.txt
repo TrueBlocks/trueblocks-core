@@ -1,4 +1,5 @@
 chifra list  0x001d14804b399c6ef80e64576f657660804fec0b --count
+TEST[DATE|TIME] Appearances:  true
 TEST[DATE|TIME] Count:  true
 TEST[DATE|TIME] LastBlock:  0
 address	nrecords	filesize

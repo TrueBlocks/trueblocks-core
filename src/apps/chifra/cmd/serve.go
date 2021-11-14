@@ -28,8 +28,7 @@ var serveCmd = &cobra.Command{
 	Use:   usageServe,
 	Short: shortServe,
 	Long:  longServe,
-	RunE:  servePkg.Run,
-	Args:  servePkg.Validate,
+	RunE:  servePkg.RunServe,
 }
 
 var usageServe = `serve [flags]`
@@ -48,7 +47,7 @@ func init() {
 	serveCmd.Flags().SortFlags = false
 
 	serveCmd.Flags().StringVarP(&servePkg.Options.Port, "port", "p", ":8080", "specify the server's port")
-	globals.GlobalOptions(serveCmd, &servePkg.Options.Globals)
+	globals.InitGlobals(serveCmd, &servePkg.Options.Globals)
 
 	serveCmd.SetUsageTemplate(UsageWithNotes(notesServe))
 

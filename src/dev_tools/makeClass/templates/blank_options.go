@@ -27,8 +27,6 @@ type [{PROPER}]Options struct {
 [{OPT_FIELDS}]
 }
 
-var Options [{PROPER}]Options
-
 func (opts *[{PROPER}]Options) TestLog() {
 [{TEST_LOGS}]	opts.Globals.TestLog()
 }

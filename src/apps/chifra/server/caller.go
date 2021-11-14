@@ -23,6 +23,7 @@ import (
 	"os/user"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	execPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/server/exec"
 )
@@ -151,7 +152,10 @@ func CallOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd s
 		// Remove Cobra's "Error:\n" decorator
 		parsed := strings.Replace(output, "Error:", "", 1)
 		parsed = strings.Trim(parsed, " \n")
-		execPkg.RespondWithError(w, http.StatusBadRequest, os.Getenv("TEST_MODE") == "true", errors.New(parsed))
+		// TODO: Need this to build. Probably not right
+		var unused globals.GlobalOptionsType
+		unused.TestMode = utils.IsTestModeServer(r)
+		execPkg.RespondWithError(w, http.StatusBadRequest, &unused, errors.New(parsed))
 		return
 	}
 	if strings.Contains(output, "\"errors\":") {

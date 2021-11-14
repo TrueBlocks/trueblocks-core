@@ -28,8 +28,7 @@ var chunksCmd = &cobra.Command{
 	Use:   usageChunks,
 	Short: shortChunks,
 	Long:  longChunks,
-	RunE:  chunksPkg.Run,
-	Args:  chunksPkg.Validate,
+	RunE:  chunksPkg.RunChunks,
 }
 
 var usageChunks = `chunks [flags] <block> [block...]
@@ -55,7 +54,7 @@ func init() {
 One of [ header | addr_table | app_table | chunks | blooms ]`)
 	chunksCmd.Flags().BoolVarP(&chunksPkg.Options.Stats, "stats", "s", false, "for the --list option only, display statistics about each chunk or bloom")
 	chunksCmd.Flags().BoolVarP(&chunksPkg.Options.Save, "save", "a", false, "for the --extract option only, save the entire chunk to a similarly named file as well as display")
-	globals.GlobalOptions(chunksCmd, &chunksPkg.Options.Globals)
+	globals.InitGlobals(chunksCmd, &chunksPkg.Options.Globals)
 
 	chunksCmd.SetUsageTemplate(UsageWithNotes(notesChunks))
 

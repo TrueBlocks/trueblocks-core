@@ -28,8 +28,7 @@ var slurpCmd = &cobra.Command{
 	Use:   usageSlurp,
 	Short: shortSlurp,
 	Long:  longSlurp,
-	RunE:  slurpPkg.Run,
-	Args:  slurpPkg.Validate,
+	RunE:  slurpPkg.RunSlurp,
 }
 
 var usageSlurp = `slurp [flags] <address> [address...] [block...]
@@ -53,7 +52,7 @@ func init() {
 	slurpCmd.Flags().StringSliceVarP(&slurpPkg.Options.Types, "types", "t", nil, `which types of transactions to request
 One or more of [ ext | int | token | nfts | miner | uncles | all ]`)
 	slurpCmd.Flags().BoolVarP(&slurpPkg.Options.Appearances, "appearances", "p", false, "show only the blocknumer.tx_id appearances of the exported transactions")
-	globals.GlobalOptions(slurpCmd, &slurpPkg.Options.Globals)
+	globals.InitGlobals(slurpCmd, &slurpPkg.Options.Globals)
 
 	slurpCmd.SetUsageTemplate(UsageWithNotes(notesSlurp))
 

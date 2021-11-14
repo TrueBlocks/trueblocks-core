@@ -27,7 +27,7 @@ var [{ROUTE}]Cmd = &cobra.Command{
 	Use:   usage[{PROPER}],
 	Short: short[{PROPER}],
 	Long:  long[{PROPER}],
-	RunE:  run[{PROPER}],
+	RunE:  [{ROUTE}]Pkg.Run[{PROPER}],
 [{PERPRERUN}]}
 
 var usage[{PROPER}] = `[{USE}]`
@@ -41,7 +41,7 @@ var notes[{PROPER}] = `[{POSTNOTES}]`
 [{OPT_DEF}]func init() {
 	[{ROUTE}]Cmd.Flags().SortFlags = false
 
-[{SET_OPTS}][{HIDDEN}]	globals.GlobalOptions([{ROUTE}]Cmd, &[{ROUTE}]Pkg.Options.Globals)
+[{SET_OPTS}][{HIDDEN}]	globals.InitGlobals([{ROUTE}]Cmd, &[{ROUTE}]Pkg.Options.Globals)
 
 	[{ROUTE}]Cmd.SetUsageTemplate(UsageWithNotes(notes[{PROPER}]))
 

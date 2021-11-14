@@ -28,8 +28,7 @@ var exportCmd = &cobra.Command{
 	Use:   usageExport,
 	Short: shortExport,
 	Long:  longExport,
-	RunE:  exportPkg.Run,
-	Args:  exportPkg.Validate,
+	RunE:  exportPkg.RunExport,
 }
 
 var usageExport = `export [flags] <address> [address...] [topics...] [fourbytes...]
@@ -99,7 +98,7 @@ One of [ yearly | quarterly | monthly | weekly | daily | hourly | blockly | tx ]
 		exportCmd.Flags().MarkHidden("first_block")
 		exportCmd.Flags().MarkHidden("last_block")
 	}
-	globals.GlobalOptions(exportCmd, &exportPkg.Options.Globals)
+	globals.InitGlobals(exportCmd, &exportPkg.Options.Globals)
 
 	exportCmd.SetUsageTemplate(UsageWithNotes(notesExport))
 

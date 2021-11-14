@@ -28,8 +28,7 @@ var stateCmd = &cobra.Command{
 	Use:   usageState,
 	Short: shortState,
 	Long:  longState,
-	RunE:  statePkg.Run,
-	Args:  statePkg.Validate,
+	RunE:  statePkg.RunState,
 }
 
 var usageState = `state [flags] <address> [address...] [block...]
@@ -65,7 +64,7 @@ One or more of [ none | some | all | balance | nonce | code | storage | deployed
 		stateCmd.Flags().MarkHidden("call")
 		stateCmd.Flags().MarkHidden("proxy_for")
 	}
-	globals.GlobalOptions(stateCmd, &statePkg.Options.Globals)
+	globals.InitGlobals(stateCmd, &statePkg.Options.Globals)
 
 	stateCmd.SetUsageTemplate(UsageWithNotes(notesState))
 

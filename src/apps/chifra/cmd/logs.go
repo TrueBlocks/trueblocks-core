@@ -28,8 +28,7 @@ var logsCmd = &cobra.Command{
 	Use:   usageLogs,
 	Short: shortLogs,
 	Long:  longLogs,
-	RunE:  logsPkg.Run,
-	Args:  logsPkg.Validate,
+	RunE:  logsPkg.RunLogs,
 }
 
 var usageLogs = `logs [flags] <tx_id> [tx_id...]
@@ -53,7 +52,7 @@ func init() {
 	logsCmd.Flags().SortFlags = false
 
 	logsCmd.Flags().BoolVarP(&logsPkg.Options.Articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
-	globals.GlobalOptions(logsCmd, &logsPkg.Options.Globals)
+	globals.InitGlobals(logsCmd, &logsPkg.Options.Globals)
 
 	logsCmd.SetUsageTemplate(UsageWithNotes(notesLogs))
 

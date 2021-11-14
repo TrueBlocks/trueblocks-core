@@ -23,11 +23,19 @@ import (
 )
 
 // Run runs serve command and sends any errors to log.Fatal
-func Run(cmd *cobra.Command, args []string) error {
+func RunServe(cmd *cobra.Command, args []string) error {
+	err := Validate(cmd, args)
+	if err != nil {
+		return err
+	}
+
 	PrintServeSettings(os.Getenv("TEST_MODE") == "true")
 	log.Fatal(RunInternal(Options.Port))
+
 	return nil
 }
+
+var Options ServeOptions
 
 func PrintServeSettings(testMode bool) {
 	meta := output.GetMeta(testMode)

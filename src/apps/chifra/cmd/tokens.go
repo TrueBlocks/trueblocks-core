@@ -28,8 +28,7 @@ var tokensCmd = &cobra.Command{
 	Use:   usageTokens,
 	Short: shortTokens,
 	Long:  longTokens,
-	RunE:  tokensPkg.Run,
-	Args:  tokensPkg.Validate,
+	RunE:  tokensPkg.RunTokens,
 }
 
 var usageTokens = `tokens [flags] <address> <address> [address...] [block...]
@@ -58,7 +57,7 @@ func init() {
 One or more of [ name | symbol | decimals | totalSupply | version | none | all ]`)
 	tokensCmd.Flags().BoolVarP(&tokensPkg.Options.ByAcct, "by_acct", "b", false, "consider each address an ERC20 token except the last, whose balance is reported for each token")
 	tokensCmd.Flags().BoolVarP(&tokensPkg.Options.NoZero, "no_zero", "n", false, "suppress the display of zero balance accounts")
-	globals.GlobalOptions(tokensCmd, &tokensPkg.Options.Globals)
+	globals.InitGlobals(tokensCmd, &tokensPkg.Options.Globals)
 
 	tokensCmd.SetUsageTemplate(UsageWithNotes(notesTokens))
 

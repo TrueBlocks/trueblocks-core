@@ -28,8 +28,7 @@ var receiptsCmd = &cobra.Command{
 	Use:   usageReceipts,
 	Short: shortReceipts,
 	Long:  longReceipts,
-	RunE:  receiptsPkg.Run,
-	Args:  receiptsPkg.Validate,
+	RunE:  receiptsPkg.RunReceipts,
 }
 
 var usageReceipts = `receipts [flags] <tx_id> [tx_id...]
@@ -52,7 +51,7 @@ func init() {
 	receiptsCmd.Flags().SortFlags = false
 
 	receiptsCmd.Flags().BoolVarP(&receiptsPkg.Options.Articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
-	globals.GlobalOptions(receiptsCmd, &receiptsPkg.Options.Globals)
+	globals.InitGlobals(receiptsCmd, &receiptsPkg.Options.Globals)
 
 	receiptsCmd.SetUsageTemplate(UsageWithNotes(notesReceipts))
 

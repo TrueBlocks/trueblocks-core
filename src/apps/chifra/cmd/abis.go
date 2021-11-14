@@ -58,7 +58,7 @@ func init() {
 		abisCmd.Flags().MarkHidden("source")
 		abisCmd.Flags().MarkHidden("classes")
 	}
-	globals.GlobalOptions(abisCmd, &abisPkg.Options.Globals)
+	globals.InitGlobals(abisCmd, &abisPkg.Options.Globals)
 
 	abisCmd.SetUsageTemplate(UsageWithNotes(notesAbis))
 

@@ -28,8 +28,7 @@ var scrapeCmd = &cobra.Command{
 	Use:   usageScrape,
 	Short: shortScrape,
 	Long:  longScrape,
-	RunE:  scrapePkg.Run,
-	Args:  scrapePkg.Validate,
+	RunE:  scrapePkg.RunScrape,
 }
 
 var usageScrape = `scrape [flags] [mode...]
@@ -64,7 +63,7 @@ One of [ toggle | run | restart | pause | quit ]`)
 		scrapeCmd.Flags().MarkHidden("block_chan_cnt")
 		scrapeCmd.Flags().MarkHidden("addr_chan_cnt")
 	}
-	globals.GlobalOptions(scrapeCmd, &scrapePkg.Options.Globals)
+	globals.InitGlobals(scrapeCmd, &scrapePkg.Options.Globals)
 
 	scrapeCmd.SetUsageTemplate(UsageWithNotes(notesScrape))
 

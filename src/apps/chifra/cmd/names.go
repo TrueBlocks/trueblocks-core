@@ -28,8 +28,7 @@ var namesCmd = &cobra.Command{
 	Use:   usageNames,
 	Short: shortNames,
 	Long:  longNames,
-	RunE:  namesPkg.Run,
-	Args:  namesPkg.Validate,
+	RunE:  namesPkg.RunNames,
 }
 
 var usageNames = `names [flags] <term> [term...]
@@ -77,7 +76,7 @@ func init() {
 		namesCmd.Flags().MarkHidden("remove")
 		namesCmd.Flags().MarkHidden("undelete")
 	}
-	globals.GlobalOptions(namesCmd, &namesPkg.Options.Globals)
+	globals.InitGlobals(namesCmd, &namesPkg.Options.Globals)
 
 	namesCmd.SetUsageTemplate(UsageWithNotes(notesNames))
 

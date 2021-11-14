@@ -28,8 +28,7 @@ var quotesCmd = &cobra.Command{
 	Use:   usageQuotes,
 	Short: shortQuotes,
 	Long:  longQuotes,
-	RunE:  quotesPkg.Run,
-	Args:  quotesPkg.Validate,
+	RunE:  quotesPkg.RunQuotes,
 }
 
 var usageQuotes = `quotes [flags]`
@@ -52,7 +51,7 @@ One of [ 5 | 15 | 30 | 60 | 120 | 240 | 1440 | 10080 | hourly | daily | weekly ]
 	quotesCmd.Flags().StringVarP(&quotesPkg.Options.Pair, "pair", "a", "", "which price pair to freshen or list (see Poloniex)")
 	quotesCmd.Flags().StringVarP(&quotesPkg.Options.Feed, "feed", "e", "", `the feed for the price data
 One of [ poloniex | maker | tellor ]`)
-	globals.GlobalOptions(quotesCmd, &quotesPkg.Options.Globals)
+	globals.InitGlobals(quotesCmd, &quotesPkg.Options.Globals)
 
 	quotesCmd.SetUsageTemplate(UsageWithNotes(notesQuotes))
 

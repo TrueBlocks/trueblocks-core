@@ -21,9 +21,9 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"os"
 	"time"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	abisPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/abis"
 	pinsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/pins"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
@@ -117,10 +117,12 @@ func FormatValidator(inner http.Handler) http.Handler {
 			return
 		}
 
+		// TODO: Need this to build -- probably not right
+		var unused globals.GlobalOptionsType
 		exec.RespondWithError(
 			w,
 			http.StatusBadRequest,
-			os.Getenv("TEST_MODE") == "true",
+			&unused,
 			fmt.Errorf("The --fmt option (%s) must be one of [ json | txt | csv | api ]", fmtValue),
 		)
 	})

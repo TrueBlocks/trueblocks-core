@@ -28,8 +28,7 @@ var statusCmd = &cobra.Command{
 	Use:   usageStatus,
 	Short: shortStatus,
 	Long:  longStatus,
-	RunE:  statusPkg.Run,
-	Args:  statusPkg.Validate,
+	RunE:  statusPkg.RunStatus,
 }
 
 var usageStatus = `status [flags] [mode...]
@@ -70,7 +69,7 @@ One or more of [ test | abi_cache | block_cache | tx_cache | trace_cache | recon
 		statusCmd.Flags().MarkHidden("test_start")
 		statusCmd.Flags().MarkHidden("test_end")
 	}
-	globals.GlobalOptions(statusCmd, &statusPkg.Options.Globals)
+	globals.InitGlobals(statusCmd, &statusPkg.Options.Globals)
 
 	statusCmd.SetUsageTemplate(UsageWithNotes(notesStatus))
 

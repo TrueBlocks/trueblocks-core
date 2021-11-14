@@ -59,7 +59,7 @@ func init() {
 		whenCmd.Flags().MarkHidden("fix")
 		whenCmd.Flags().MarkHidden("count")
 	}
-	globals.GlobalOptions(whenCmd, &whenPkg.Options.Globals)
+	globals.InitGlobals(whenCmd, &whenPkg.Options.Globals)
 
 	whenCmd.SetUsageTemplate(UsageWithNotes(notesWhen))
 
