@@ -23,20 +23,18 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
 
-type InitOptionsType struct {
+type InitOptions struct {
 	All     bool
 	Globals globals.GlobalOptionsType
 }
 
-var Options InitOptionsType
-
-func (opts *InitOptionsType) TestLog() {
+func (opts *InitOptions) TestLog() {
 	logger.TestLog(opts.All, "All: ", opts.All)
 	opts.Globals.TestLog()
 }
 
-func FromRequest(w http.ResponseWriter, r *http.Request) *InitOptionsType {
-	opts := &InitOptionsType{}
+func FromRequest(w http.ResponseWriter, r *http.Request) *InitOptions {
+	opts := &InitOptions{}
 	for key, _ := range r.URL.Query() {
 		switch key {
 		case "all":

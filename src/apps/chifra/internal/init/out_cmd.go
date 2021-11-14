@@ -14,11 +14,14 @@ package initPkg
  *-------------------------------------------------------------------------------------------*/
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/pins"
+	pinsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/pins"
 	"github.com/spf13/cobra"
 )
 
-func Run(cmd *cobra.Command, args []string) error {
+var Options InitOptions
+
+func RunInit(cmd *cobra.Command, args []string) error {
 	pinsPkg.Options.Init = true
-	return pinsPkg.Run(cmd, args)
+	pinsPkg.Options.All = Options.All
+	return pinsPkg.RunPins(cmd, args)
 }

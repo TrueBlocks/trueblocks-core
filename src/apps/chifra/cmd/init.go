@@ -28,8 +28,7 @@ var initCmd = &cobra.Command{
 	Use:   usageInit,
 	Short: shortInit,
 	Long:  longInit,
-	RunE:  initPkg.Run,
-	Args:  initPkg.Validate,
+	RunE:  initPkg.RunInit,
 }
 
 var usageInit = `init [flags]`
@@ -46,14 +45,16 @@ Notes:
 
 func init() {
 	initCmd.Flags().SortFlags = false
+
 	initCmd.Flags().BoolVarP(&initPkg.Options.All, "all", "a", false, "in addition to Bloom filters, download full index chunks")
-	initCmd.Flags().SortFlags = false
 	globals.GlobalOptions(initCmd, &initPkg.Options.Globals)
 
 	initCmd.SetUsageTemplate(UsageWithNotes(notesInit))
+
 	initCmd.SetOut(os.Stderr)
 	if initPkg.Options.Globals.ApiMode {
 		initCmd.SetErr(os.Stdout)
 	}
+
 	chifraCmd.AddCommand(initCmd)
 }
