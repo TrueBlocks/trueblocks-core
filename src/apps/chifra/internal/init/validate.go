@@ -14,13 +14,9 @@ package initPkg
  *-------------------------------------------------------------------------------------------*/
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/spf13/cobra"
 )
 
 func Validate(cmd *cobra.Command, args []string) error {
-	output.Format = Options.Globals.Format
-	Options.TestLog()
-	return globals.ValidateGlobals(&Options.Globals, args)
+	return nil // will get validated by RunPins
 }
