@@ -32,14 +32,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/server/exec"
 )
 
-func (opts *AbisOptionsType) HandleFind() {
-	err := opts.FindInternal()
-	if err != nil {
-		logger.Log(logger.Error, err)
-	}
-}
-
-func (opts *AbisOptionsType) FindInternal() error {
+func (opts *AbisOptions) FindInternal() error {
 	visits := ScanCounter{}
 	visits.Wanted = uint64(len(opts.Find))
 	visits.Freq = 139419

@@ -17,19 +17,11 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
-	"github.com/spf13/cobra"
 )
 
-func Validate(cmd *cobra.Command, args []string) error {
-	output.Format = Options.Globals.Format
-	Options.Addrs = args
-	return Options.ValidateOptionsAbis()
-}
-
-func (opts *AbisOptionsType) ValidateOptionsAbis() error {
+func (opts *AbisOptions) ValidateAbis() error {
 	if opts.Classes {
 		return validate.Usage("The {0} option is not available{1}.", "--classes", " (not implemented)")
 	}

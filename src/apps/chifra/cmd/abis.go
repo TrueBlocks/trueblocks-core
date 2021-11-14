@@ -28,8 +28,7 @@ var abisCmd = &cobra.Command{
 	Use:   usageAbis,
 	Short: shortAbis,
 	Long:  longAbis,
-	RunE:  abisPkg.Run,
-	Args:  abisPkg.Validate,
+	RunE:  abisPkg.RunAbis,
 }
 
 var usageAbis = `abis [flags] <address> [address...]
@@ -49,6 +48,7 @@ Notes:
 
 func init() {
 	abisCmd.Flags().SortFlags = false
+
 	abisCmd.Flags().BoolVarP(&abisPkg.Options.Known, "known", "k", false, "load common 'known' ABIs from cache")
 	abisCmd.Flags().BoolVarP(&abisPkg.Options.Sol, "sol", "s", false, "extract the abi definition from the provided .sol file(s)")
 	abisCmd.Flags().StringSliceVarP(&abisPkg.Options.Find, "find", "f", nil, "search for function or event declarations given a four- or 32-byte code(s)")
@@ -58,13 +58,14 @@ func init() {
 		abisCmd.Flags().MarkHidden("source")
 		abisCmd.Flags().MarkHidden("classes")
 	}
-	abisCmd.Flags().SortFlags = false
 	globals.GlobalOptions(abisCmd, &abisPkg.Options.Globals)
 
 	abisCmd.SetUsageTemplate(UsageWithNotes(notesAbis))
+
 	abisCmd.SetOut(os.Stderr)
 	if abisPkg.Options.Globals.ApiMode {
 		abisCmd.SetErr(os.Stdout)
 	}
+
 	chifraCmd.AddCommand(abisCmd)
 }

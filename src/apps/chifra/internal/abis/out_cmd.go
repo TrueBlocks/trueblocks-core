@@ -15,36 +15,51 @@ package abisPkg
 
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
+	// "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/spf13/cobra"
 )
 
-func Run(cmd *cobra.Command, args []string) error {
-	// This only happens in API mode when there's been an error. Here, we print the error
-	if len(validate.Errors) > 0 {
-		output.PrintJson(&output.JsonFormatted{})
-		return nil
+var Options AbisOptions
+
+func RunAbis(cmd *cobra.Command, args []string) error {
+	output.Format = Options.Globals.Format
+	Options.Addrs = args
+
+	err := Options.ValidateAbis()
+	if err != nil {
+		// cobra reports the error
+		return err
 	}
 
 	if len(Options.Find) > 0 {
-		Options.HandleFind() // , globals.Options.NoHeader)
-		return nil
+		return Options.FindInternal()
+		// err := Options.FindInternal()
+		// if err != nil {
+		//	logger.Log(logger.Error, err)
+		// }
+		// Options.HandleFind() // , globals.Options.NoHeader)
+		// return nil
 	}
 
+	// TODO: this will be removed when we fully implement abis command
 	options := ""
 	if Options.Known {
 		options += " --known"
 	}
+
 	if Options.Sol {
 		options += " --sol"
 	}
+
 	if Options.Source {
 		options += " --source"
 	}
+
 	if Options.Classes {
 		options += " --classes"
 	}
+
 	arguments := ""
 	for _, arg := range args {
 		arguments += " " + arg

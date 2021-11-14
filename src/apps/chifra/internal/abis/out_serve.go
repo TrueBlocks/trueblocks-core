@@ -9,13 +9,18 @@ import (
 func ServeAbis(w http.ResponseWriter, r *http.Request) {
 	opts := FromRequest(w, r)
 
-	err := opts.ValidateOptionsAbis()
+	err := opts.ValidateAbis()
 	if err != nil {
 		exec.RespondWithError(w, http.StatusInternalServerError, opts.Globals.TestMode, err)
-	} else {
+		return
+	}
+
+	if len(opts.Find) > 0 {
 		err = opts.FindInternal()
 		if err != nil {
 			exec.RespondWithError(w, http.StatusInternalServerError, opts.Globals.TestMode, err)
+			return
 		}
+		return
 	}
 }
