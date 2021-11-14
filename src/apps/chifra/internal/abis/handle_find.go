@@ -26,9 +26,9 @@ import (
 	"github.com/ethereum/go-ethereum/crypto"
 	ants "github.com/panjf2000/ants/v2"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/server/exec"
 )
 
@@ -103,7 +103,7 @@ func (opts *AbisOptions) FindInternal() error {
 		exec.Respond(opts.Globals.Writer, http.StatusOK, &opts.Globals, results)
 
 	} else {
-		err = output.Output(&opts.Globals, os.Stdout, opts.Globals.Format, results)
+		err = globals.Output(&opts.Globals, os.Stdout, opts.Globals.Format, results)
 		if err != nil {
 			logger.Log(logger.Error, err)
 		}

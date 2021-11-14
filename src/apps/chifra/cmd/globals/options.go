@@ -132,6 +132,6 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *GlobalOptionsType {
 	}
 	return opts
 
-	// The 'help' command is a special case for cobra, so doens't need to be handled
+	// The 'help' command is a special case for cobra, so doesn't need to be handled here
 	// cmd.Flags().BoolVarP(&opts.Help, "help", "h", false, "display this help screen")
 }

@@ -4,7 +4,6 @@ import (
 	"net/http"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 )
 
 var formatToMimeType = map[string]string{
@@ -17,7 +16,7 @@ var formatToMimeType = map[string]string{
 // RespondWithError marshals the given error err into JSON
 // that can be returned to the client and sets httpStatus HTTP error status code
 func RespondWithError(w http.ResponseWriter, httpStatus int, opts *globals.GlobalOptionsType, err error) {
-	marshalled, err := output.AsJsonBytes(&output.JsonFormatted{
+	marshalled, err := globals.AsJsonBytes(&globals.JsonFormatted{
 		Errors: []string{err.Error()},
 	}, opts)
 	if err != nil {
@@ -37,7 +36,7 @@ func Respond(w http.ResponseWriter, httpStatus int, opts *globals.GlobalOptionsT
 	}
 
 	w.Header().Set("Content-Type", formatToMimeType[formatNotEmpty])
-	err := output.Output(opts, w, formatNotEmpty, responseData)
+	err := globals.Output(opts, w, formatNotEmpty, responseData)
 	if err != nil {
 		RespondWithError(w, http.StatusInternalServerError, opts, err)
 	}

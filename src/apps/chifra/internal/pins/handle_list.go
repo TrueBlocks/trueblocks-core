@@ -18,8 +18,8 @@ import (
 	"os"
 	"sort"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/server/exec"
 )
@@ -46,7 +46,7 @@ func (opts *PinsOptions) ListInternal() error {
 		exec.Respond(opts.Globals.Writer, http.StatusOK, &opts.Globals, manifestData.NewPins)
 
 	} else {
-		err = output.Output(&opts.Globals, os.Stdout, opts.Globals.Format, manifestData.NewPins)
+		err = globals.Output(&opts.Globals, os.Stdout, opts.Globals.Format, manifestData.NewPins)
 		if err != nil {
 			logger.Log(logger.Error, err)
 		}

@@ -1,4 +1,4 @@
-package output
+package globals
 
 import (
 	"bytes"
@@ -13,26 +13,62 @@ import (
 	"strings"
 	"text/tabwriter"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
-// Formatter type represents a function that can be used to format data
-type Formatter func(data interface{}, opts *globals.GlobalOptionsType) ([]byte, error)
+// Output converts data into the given format and writes to where writer
+func Output(opts *GlobalOptionsType, where io.Writer, format string, data interface{}) error {
+	nonEmptyFormat := format
+	if format == "" || format == "none" {
+		if utils.IsApiMode() {
+			nonEmptyFormat = "api"
+		} else {
+			nonEmptyFormat = "txt"
+		}
+	}
+	if nonEmptyFormat == "txt" {
+		_, ok := where.(http.ResponseWriter)
+		// We would never want to use tab format in server environment
+		if utils.IsTerminal() && !ok {
+			nonEmptyFormat = "tab"
+		}
+	}
 
-// The map below maps format string to Formatter
-var formatStringToFormatter = map[string]Formatter{
-	"api":  JsonFormatter,
-	"json": JsonFormatter,
-	"csv":  CsvFormatter,
-	"txt":  TxtFormatter,
-	"tab":  TabFormatter,
+	var output []byte
+	var err error
+
+	switch nonEmptyFormat {
+	case "api":
+		fallthrough
+	case "json":
+		output, err = opts.JsonFormatter(data)
+	case "csv":
+		output, err = opts.CsvFormatter(data)
+	case "txt":
+		output, err = opts.TxtFormatter(data)
+	case "tab":
+		output, err = opts.TabFormatter(data)
+	default:
+		return fmt.Errorf("unsupported format %s", format)
+	}
+
+	if err != nil {
+		return err
+	}
+
+	where.Write(output)
+	// Maintain newline compatibility with C++ version
+	if nonEmptyFormat == "json" || nonEmptyFormat == "api" {
+		where.Write([]byte{'\n'})
+	}
+
+	return nil
 }
 
 // JsonFormatter turns data into JSON
-func JsonFormatter(data interface{}, opts *globals.GlobalOptionsType) ([]byte, error) {
+func (opts *GlobalOptionsType) JsonFormatter(data interface{}) ([]byte, error) {
 	formatted := &JsonFormatted{}
 	err, ok := data.(error)
 	if ok {
@@ -47,9 +83,9 @@ func JsonFormatter(data interface{}, opts *globals.GlobalOptionsType) ([]byte, e
 }
 
 // TxtFormatter turns data into TSV string
-func TxtFormatter(data interface{}, opts *globals.GlobalOptionsType) ([]byte, error) {
+func (opts *GlobalOptionsType) TxtFormatter(data interface{}) ([]byte, error) {
 	out := bytes.Buffer{}
-	tsv, err := AsTsv(data)
+	tsv, err := opts.AsTsv(data)
 	if err != nil {
 		return nil, err
 	}
@@ -61,10 +97,10 @@ func TxtFormatter(data interface{}, opts *globals.GlobalOptionsType) ([]byte, er
 }
 
 // TabFormatter turns data into a table (string)
-func TabFormatter(data interface{}, opts *globals.GlobalOptionsType) ([]byte, error) {
+func (opts *GlobalOptionsType) TabFormatter(data interface{}) ([]byte, error) {
 	tabOutput := &bytes.Buffer{}
 	tab := tabwriter.NewWriter(tabOutput, 0, 0, 2, ' ', 0)
-	tsv, err := AsTsv(data)
+	tsv, err := opts.AsTsv(data)
 	if err != nil {
 		return nil, err
 	}
@@ -83,7 +119,7 @@ type CsvFormatted struct {
 // CsvFormatter turns a type into CSV string. It uses custom code instead of
 // Go's encoding/csv to maintain compatibility with C++ output, which
 // quotes each item. encoding/csv would double-quote a quoted string...
-func CsvFormatter(i interface{}, opts *globals.GlobalOptionsType) ([]byte, error) {
+func (opts *GlobalOptionsType) CsvFormatter(i interface{}) ([]byte, error) {
 	records, err := ToStringRecords(i, true)
 	if err != nil {
 		return nil, err
@@ -102,41 +138,6 @@ func CsvFormatter(i interface{}, opts *globals.GlobalOptionsType) ([]byte, error
 	), nil
 }
 
-// Output converts data into the given format and writes to where writer
-func Output(opts *globals.GlobalOptionsType, where io.Writer, format string, data interface{}) error {
-	nonEmptyFormat := format
-	if format == "" || format == "none" {
-		if utils.IsApiMode() {
-			nonEmptyFormat = "api"
-		} else {
-			nonEmptyFormat = "txt"
-		}
-	}
-	if nonEmptyFormat == "txt" {
-		_, ok := where.(http.ResponseWriter)
-		// We would never want to use tab format in server environment
-		if utils.IsTerminal() && !ok {
-			nonEmptyFormat = "tab"
-		}
-	}
-	formatter, ok := formatStringToFormatter[nonEmptyFormat]
-	if !ok {
-		return fmt.Errorf("unsupported format %s", format)
-	}
-
-	output, err := formatter(data, opts)
-	if err != nil {
-		return err
-	}
-
-	where.Write(output)
-	// Maintain newline compatibility with C++ version
-	if nonEmptyFormat == "json" || nonEmptyFormat == "api" {
-		where.Write([]byte{'\n'})
-	}
-	return nil
-}
-
 type JsonFormatted struct {
 	Data   interface{} `json:"data,omitempty"`
 	Errors []string    `json:"errors,omitempty"`
@@ -145,7 +146,7 @@ type JsonFormatted struct {
 
 // AsJsonBytes marshals JsonFormatted struct, populating Meta field if
 // needed
-func AsJsonBytes(j *JsonFormatted, opts *globals.GlobalOptionsType) ([]byte, error) {
+func AsJsonBytes(j *JsonFormatted, opts *GlobalOptionsType) ([]byte, error) {
 	var result JsonFormatted
 
 	if opts.Format == "json" {
@@ -176,7 +177,7 @@ func AsJsonBytes(j *JsonFormatted, opts *globals.GlobalOptionsType) ([]byte, err
 }
 
 // PrintJson marshals its arguments and prints JSON in a standardized format
-func PrintJson(j *JsonFormatted, opts *globals.GlobalOptionsType) error {
+func PrintJson(j *JsonFormatted, opts *GlobalOptionsType) error {
 	marshalled, err := AsJsonBytes(j, opts)
 	if err != nil {
 		return err
@@ -217,7 +218,7 @@ func (t *Table) Print() error {
 }
 
 // AsTsv turns a type into tab-separated values
-func AsTsv(data interface{}) ([]byte, error) {
+func (opts *GlobalOptionsType) AsTsv(data interface{}) ([]byte, error) {
 	records, err := ToStringRecords(data, false)
 	if err != nil {
 		return nil, err

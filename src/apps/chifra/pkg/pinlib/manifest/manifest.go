@@ -13,7 +13,7 @@
 package manifest
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 )
 
 type IpfsHash = string
@@ -40,8 +40,8 @@ type Manifest struct {
 type PinsList []PinDescriptor
 
 // GetCsvOutput returns data for CSV and TSV formats
-func (pl *PinsList) GetCsvOutput() *output.CsvFormatted {
-	data := &output.CsvFormatted{
+func (pl *PinsList) GetCsvOutput() *globals.CsvFormatted {
+	data := &globals.CsvFormatted{
 		Header: []string{
 			"fileName", "bloomHash", "indexHash",
 		},
