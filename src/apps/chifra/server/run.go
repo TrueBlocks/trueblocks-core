@@ -17,8 +17,9 @@ import (
 	"log"
 	"os"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/output"
 	"github.com/spf13/cobra"
 )
 
@@ -38,13 +39,13 @@ func RunServe(cmd *cobra.Command, args []string) error {
 var Options ServeOptions
 
 func PrintServeSettings(testMode bool) {
-	meta := output.GetMeta(testMode)
+	meta := globals.GetMeta(testMode)
 	log.Print("\n")
-	log.Println(Green, "Starting API server on port "+Options.Port, Off)
-	log.Println(Green, "Cache Path:   ", Off, config.ReadTrueBlocks().Settings.CachePath)
-	log.Println(Green, "Index Path:   ", Off, config.ReadTrueBlocks().Settings.IndexPath)
-	log.Println(Green, "Rpc Provider: ", Off, config.ReadTrueBlocks().Settings.RpcProvider)
-	log.Println(Green, "Progress:     ", Off, meta.Client, ", ", meta.Finalized, ", ", meta.Staging, ", ", meta.Unripe)
+	log.Println(colors.Green, "Starting API server on port "+Options.Port, colors.Off)
+	log.Println(colors.Green, "Cache Path:   ", colors.Off, config.ReadTrueBlocks().Settings.CachePath)
+	log.Println(colors.Green, "Index Path:   ", colors.Off, config.ReadTrueBlocks().Settings.IndexPath)
+	log.Println(colors.Green, "Rpc Provider: ", colors.Off, config.ReadTrueBlocks().Settings.RpcProvider)
+	log.Println(colors.Green, "Progress:     ", colors.Off, meta.Client, ", ", meta.Finalized, ", ", meta.Staging, ", ", meta.Unripe)
 
 }
 

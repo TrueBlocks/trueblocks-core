@@ -20,10 +20,6 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// TODO: this should be soon part of pkg/utils
-var Off string = "\033[0m"
-var Green string = "\033[32m"
-
 func Validate(cmd *cobra.Command, args []string) error {
 	if len(Options.Port) > 0 && !strings.Contains(Options.Port, ":") {
 		return validate.Usage("The {0} option ({1}) must {2}.", "--port", Options.Port, "start with ':'")

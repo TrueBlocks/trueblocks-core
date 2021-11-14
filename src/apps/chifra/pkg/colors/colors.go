@@ -13,12 +13,12 @@ package colors
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 
-var Off string = "\033[0m"
-var Red string = "\033[31m"
-var Green string = "\033[32m"
-var Yellow string = "\033[33m"
-var Blue string = "\033[34m"
-var Purple string = "\033[35m"
-var Cyan string = "\033[36m"
-var White string = "\033[37m"
-var Black string = "\033[30m"
+const Off = "\033[0m"
+const Red = "\033[31m"
+const Green = "\033[32m"
+const Yellow = "\033[33m"
+const Blue = "\033[34m"
+const Purple = "\033[35m"
+const Cyan = "\033[36m"
+const White = "\033[37m"
+const Black = "\033[30m"

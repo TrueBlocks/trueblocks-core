@@ -24,6 +24,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	execPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/server/exec"
 )
@@ -82,7 +83,7 @@ func CallOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd s
 	// Do the actual call
 	cmd := exec.Command(tbCmd, allDogs...)
 	if Options.Globals.Verbose {
-		log.Print(Yellow, "Calling: ", cmd, Off)
+		log.Print(colors.Yellow, "Calling: ", cmd, colors.Off)
 	}
 
 	if cmd.Process != nil {

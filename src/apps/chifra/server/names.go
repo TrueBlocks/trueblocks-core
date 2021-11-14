@@ -21,6 +21,8 @@ import (
 	"os"
 	"os/exec"
 	"strings"
+
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 )
 
 func EditName(w http.ResponseWriter, r *http.Request) {
@@ -29,7 +31,7 @@ func EditName(w http.ResponseWriter, r *http.Request) {
 	for k := range r.Form {
 		json.Unmarshal([]byte(k), &newName)
 	}
-	log.Print(Yellow, "Adding name: ", newName.ToJson(), Off)
+	log.Print(colors.Yellow, "Adding name: ", newName.ToJson(), colors.Off)
 
 	// Do the actual call
 	cmd := exec.Command(GetCommandPath("ethNames"), "--create")
@@ -45,7 +47,7 @@ func EditName(w http.ResponseWriter, r *http.Request) {
 		log.Print("Error from server: ", err)
 	}
 	output := string(out[:])
-	log.Print(Yellow, string(output), Off)
+	log.Print(colors.Yellow, string(output), colors.Off)
 
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
