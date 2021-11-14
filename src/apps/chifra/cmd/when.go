@@ -28,8 +28,7 @@ var whenCmd = &cobra.Command{
 	Use:   usageWhen,
 	Short: shortWhen,
 	Long:  longWhen,
-	RunE:  whenPkg.Run,
-	Args:  whenPkg.Validate,
+	RunE:  whenPkg.RunWhen,
 }
 
 var usageWhen = `when [flags] < block | date > [ block... | date... ]
@@ -49,6 +48,7 @@ Notes:
 
 func init() {
 	whenCmd.Flags().SortFlags = false
+
 	whenCmd.Flags().BoolVarP(&whenPkg.Options.List, "list", "l", false, "export a list of the 'special' blocks")
 	whenCmd.Flags().BoolVarP(&whenPkg.Options.Timestamps, "timestamps", "t", false, "ignore other options and generate timestamps only")
 	whenCmd.Flags().BoolVarP(&whenPkg.Options.Check, "check", "c", false, "available only with --timestamps, checks the validity of the timestamp data (hidden)")
@@ -59,13 +59,14 @@ func init() {
 		whenCmd.Flags().MarkHidden("fix")
 		whenCmd.Flags().MarkHidden("count")
 	}
-	whenCmd.Flags().SortFlags = false
 	globals.GlobalOptions(whenCmd, &whenPkg.Options.Globals)
 
 	whenCmd.SetUsageTemplate(UsageWithNotes(notesWhen))
+
 	whenCmd.SetOut(os.Stderr)
 	if whenPkg.Options.Globals.ApiMode {
 		whenCmd.SetErr(os.Stdout)
 	}
+
 	chifraCmd.AddCommand(whenCmd)
 }
