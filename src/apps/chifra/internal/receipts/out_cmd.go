@@ -14,7 +14,6 @@ package receiptsPkg
  *-------------------------------------------------------------------------------------------*/
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/spf13/cobra"
 )
 
@@ -35,5 +34,5 @@ func RunReceipts(cmd *cobra.Command, args []string) error {
 		arguments += " " + arg
 	}
 
-	return globals.PassItOn("getReceipts", &Options.Globals, options, arguments)
+	return Options.Globals.PassItOn("getReceipts", options, arguments)
 }

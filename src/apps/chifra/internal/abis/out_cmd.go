@@ -16,8 +16,6 @@ package abisPkg
 import (
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
-
 	"github.com/spf13/cobra"
 )
 
@@ -36,5 +34,5 @@ func RunAbis(cmd *cobra.Command, args []string) error {
 		return Options.FindInternal()
 	}
 
-	return globals.PassItOn("grabABI", &Options.Globals, Options.String(), strings.Join(Options.Addrs, " "))
+	return Options.Globals.PassItOn("grabABI", Options.ToDashStr(), strings.Join(Options.Addrs, " "))
 }

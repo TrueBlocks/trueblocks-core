@@ -67,7 +67,7 @@ func getCommandPath2(cmd string) string {
 	return dir + "/.local/bin/chifra/" + cmd
 }
 
-func PassItOn(path string, opts *GlobalOptionsType, flags, arguments string) error {
+func (opts *GlobalOptionsType) PassItOn(path string, flags, arguments string) error {
 	options := flags
 	if opts.Raw {
 		options += " --raw"

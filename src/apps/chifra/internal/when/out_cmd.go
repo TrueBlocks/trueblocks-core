@@ -14,7 +14,6 @@ package whenPkg
  *-------------------------------------------------------------------------------------------*/
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 	"github.com/spf13/cobra"
 )
@@ -49,5 +48,5 @@ func RunWhen(cmd *cobra.Command, args []string) error {
 		arguments += " " + arg
 	}
 
-	return globals.PassItOn("whenBlock", &Options.Globals, options, arguments)
+	return Options.Globals.PassItOn("whenBlock", options, arguments)
 }

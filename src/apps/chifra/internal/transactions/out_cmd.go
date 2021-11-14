@@ -14,7 +14,6 @@ package transactionsPkg
  *-------------------------------------------------------------------------------------------*/
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/spf13/cobra"
 )
 
@@ -47,5 +46,5 @@ func RunTransactions(cmd *cobra.Command, args []string) error {
 		arguments += " " + arg
 	}
 
-	return globals.PassItOn("getTrans", &Options.Globals, options, arguments)
+	return Options.Globals.PassItOn("getTrans", options, arguments)
 }

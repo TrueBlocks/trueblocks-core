@@ -43,7 +43,7 @@ func (opts *AbisOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
-func (opts *AbisOptions) String() string {
+func (opts *AbisOptions) ToDashStr() string {
 	ret := ""
 	if Options.Known {
 		ret += " --known"
