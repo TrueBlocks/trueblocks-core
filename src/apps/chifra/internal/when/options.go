@@ -13,10 +13,11 @@ package whenPkg
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * The file was auto generated with makeClass --gocmds. DO NOT EDIT.
+ * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
 
 import (
+	"fmt"
 	"net/http"
 	"strings"
 
@@ -62,6 +63,7 @@ func (opts *WhenOptions) ToDashStr() string {
 		options += " --count"
 	}
 	options += " " + strings.Join(opts.Blocks, " ")
+	options += fmt.Sprintf("%s", "") // auto gen only
 	return options
 }
 

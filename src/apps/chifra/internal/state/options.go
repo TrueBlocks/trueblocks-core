@@ -13,10 +13,11 @@ package statePkg
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * The file was auto generated with makeClass --gocmds. DO NOT EDIT.
+ * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
 
 import (
+	"fmt"
 	"net/http"
 	"strings"
 
@@ -48,8 +49,8 @@ func (opts *StateOptions) TestLog() {
 
 func (opts *StateOptions) ToDashStr() string {
 	options := ""
-	for _, t := range opts.Parts {
-		options += " --parts " + t
+	for _, part := range opts.Parts {
+		options += " --parts " + part
 	}
 	if opts.Changes {
 		options += " --changes"
@@ -64,6 +65,7 @@ func (opts *StateOptions) ToDashStr() string {
 		options += " --proxy_for " + opts.ProxyFor
 	}
 	options += " " + strings.Join(opts.Addrs, " ")
+	options += fmt.Sprintf("%s", "") // auto gen only
 	return options
 }
 

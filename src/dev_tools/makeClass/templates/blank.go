@@ -1,3 +1,5 @@
+package cmd
+
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -11,14 +13,14 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * The file was auto generated with makeClass --gocmds. DO NOT EDIT.
+ * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
-package cmd
 
 import (
 	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
+	[{ROUTE}]Pkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/[{ROUTE}]"
 [{IMPORTS}]	"github.com/spf13/cobra"
 )
 

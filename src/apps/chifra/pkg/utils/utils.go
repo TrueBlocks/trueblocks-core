@@ -75,9 +75,6 @@ func AsciiFileToString(fn string) string {
 	return string(contents)
 }
 
-// maximum uint64
-const NOPOS = ^uint64(0)
-
 func OpenBrowser(url string) {
 	var err error
 	switch runtime.GOOS {

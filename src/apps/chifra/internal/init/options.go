@@ -13,11 +13,13 @@ package initPkg
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * The file was auto generated with makeClass --gocmds. DO NOT EDIT.
+ * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
 
 import (
+	"fmt"
 	"net/http"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -38,6 +40,8 @@ func (opts *InitOptions) ToDashStr() string {
 	if opts.All {
 		options += " --all"
 	}
+	options += " " + strings.Join([]string{}, " ")
+	options += fmt.Sprintf("%s", "") // auto gen only
 	return options
 }
 

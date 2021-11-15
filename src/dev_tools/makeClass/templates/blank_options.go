@@ -13,10 +13,11 @@ package [{ROUTE}]Pkg
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * The file was auto generated with makeClass --gocmds. DO NOT EDIT.
+ * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
 
 import (
+	"fmt"
 	"net/http"
 	"strings"
 
@@ -34,7 +35,9 @@ func (opts *[{PROPER}]Options) TestLog() {
 
 func (opts *[{PROPER}]Options) ToDashStr() string {
 	options := ""
-[{DASH_STR}]	return options
+[{DASH_STR}]	options += " " + strings.Join(++POSITIONAL0++, " ")
+	options += fmt.Sprintf("%s", "") // auto gen only
+	return options
 }
 
 func FromRequest(w http.ResponseWriter, r *http.Request) *[{PROPER}]Options {

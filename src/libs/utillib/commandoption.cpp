@@ -447,9 +447,9 @@ string_q nextCommandoptionChunk_custom(const string_q& fieldIn, const void* data
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
             case 'a':
-                if (fieldIn % "ass") {
+                if (fieldIn % "assign") {
                     if (startsWith(com->data_type, "list<")) {
-                        return com->Format("append(opts.[{LONGNAME}], value...)");
+                        return com->Format("append(opts.[{VARIABLE}], value...)");
                     } else if (startsWith(com->data_type, "enum[") || com->data_type == "<string>" ||
                                com->data_type == "<address>") {
                         return "value[0]";
@@ -507,6 +507,19 @@ string_q nextCommandoptionChunk_custom(const string_q& fieldIn, const void* data
                     return substitute(trim(ret, '|'), "|", " | ");
                 }
                 break;
+            case 's':
+                if (fieldIn % "singular") {
+                    if (com->longName == "types")
+                        return com->longName;
+                    auto len = com->longName.length();
+                    if (len > 1)
+                        len -= 1;
+                    return endsWith(com->longName, "s") ? com->longName.substr(0, len) : com->longName;
+                }
+            case 'v':
+                if (fieldIn % "variable") {
+                    return substitute(toProper(com->longName), "_", "");
+                }
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type

@@ -1,4 +1,4 @@
-package abisPkg
+package [{ROUTE}]Pkg
 
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
@@ -12,26 +12,56 @@ package abisPkg
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+/*
+ * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
+ */
 
 import (
+	"net/http"
+
 	"github.com/spf13/cobra"
 )
 
-var Options AbisOptions
+var Options [{PROPER}]Options
 
-func RunAbis(cmd *cobra.Command, args []string) error {
+func Run[{PROPER}](cmd *cobra.Command, args []string) error {
 	Options.Addrs = args
 	opts := Options
 
-	err := opts.ValidateAbis()
+	err := opts.Validate[{PROPER}]()
 	if err != nil {
 		// cobra reports the error
 		return err
 	}
 
+	// EXISTING_CODE
 	if len(opts.Find) > 0 {
 		return opts.FindInternal()
 	}
+	// EXISTING_CODE
 
-	return opts.Globals.PassItOn("grabABI", opts.ToDashStr())
+	return opts.Globals.PassItOn("[{TOOL}]", opts.ToDashStr())
+}
+
+func Serve[{PROPER}](w http.ResponseWriter, r *http.Request) {
+	opts := FromRequest(w, r)
+
+	err := opts.Validate[{PROPER}]()
+	if err != nil {
+		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
+		return
+	}
+
+	// EXISTING_CODE
+	if len(opts.Find) > 0 {
+		err = opts.FindInternal()
+		if err != nil {
+			opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
+			return
+		}
+		return
+	}
+	// EXISTING_CODE
+
+	opts.Globals.PassItOn("[{TOOL}]", opts.ToDashStr())
 }

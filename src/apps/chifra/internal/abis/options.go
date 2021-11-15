@@ -13,10 +13,11 @@ package abisPkg
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * The file was auto generated with makeClass --gocmds. DO NOT EDIT.
+ * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
 
 import (
+	"fmt"
 	"net/http"
 	"strings"
 
@@ -52,8 +53,8 @@ func (opts *AbisOptions) ToDashStr() string {
 	if opts.Sol {
 		options += " --sol"
 	}
-	for _, t := range opts.Find {
-		options += " --find " + t
+	for _, find := range opts.Find {
+		options += " --find " + find
 	}
 	if opts.Source {
 		options += " --source"
@@ -62,6 +63,7 @@ func (opts *AbisOptions) ToDashStr() string {
 		options += " --classes"
 	}
 	options += " " + strings.Join(opts.Addrs, " ")
+	options += fmt.Sprintf("%s", "") // auto gen only
 	return options
 }
 

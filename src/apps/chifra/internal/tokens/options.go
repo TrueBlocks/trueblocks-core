@@ -13,10 +13,11 @@ package tokensPkg
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * The file was auto generated with makeClass --gocmds. DO NOT EDIT.
+ * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
 
 import (
+	"fmt"
 	"net/http"
 	"strings"
 
@@ -44,8 +45,8 @@ func (opts *TokensOptions) TestLog() {
 
 func (opts *TokensOptions) ToDashStr() string {
 	options := ""
-	for _, t := range opts.Parts {
-		options += " --parts " + t
+	for _, part := range opts.Parts {
+		options += " --parts " + part
 	}
 	if opts.ByAcct {
 		options += " --by_acct"
@@ -54,6 +55,7 @@ func (opts *TokensOptions) ToDashStr() string {
 		options += " --no_zero"
 	}
 	options += " " + strings.Join(opts.Addrs2, " ")
+	options += fmt.Sprintf("%s", "") // auto gen only
 	return options
 }
 

@@ -13,10 +13,11 @@ package slurpPkg
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * The file was auto generated with makeClass --gocmds. DO NOT EDIT.
+ * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
 
 import (
+	"fmt"
 	"net/http"
 	"strings"
 
@@ -42,13 +43,14 @@ func (opts *SlurpOptions) TestLog() {
 
 func (opts *SlurpOptions) ToDashStr() string {
 	options := ""
-	for _, t := range opts.Types {
-		options += " --types " + t
+	for _, types := range opts.Types {
+		options += " --types " + types
 	}
 	if opts.Appearances {
 		options += " --appearances"
 	}
 	options += " " + strings.Join(opts.Addrs, " ")
+	options += fmt.Sprintf("%s", "") // auto gen only
 	return options
 }
 

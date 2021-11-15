@@ -13,10 +13,11 @@ package namesPkg
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * The file was auto generated with makeClass --gocmds. DO NOT EDIT.
+ * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
 
 import (
+	"fmt"
 	"net/http"
 	"strings"
 
@@ -122,6 +123,7 @@ func (opts *NamesOptions) ToDashStr() string {
 		options += " --undelete"
 	}
 	options += " " + strings.Join(opts.Terms, " ")
+	options += fmt.Sprintf("%s", "") // auto gen only
 	return options
 }
 

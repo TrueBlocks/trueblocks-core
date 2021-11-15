@@ -135,3 +135,6 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *GlobalOptionsType {
 	// The 'help' command is a special case for cobra, so doesn't need to be handled here
 	// cmd.Flags().BoolVarP(&opts.Help, "help", "h", false, "display this help screen")
 }
+
+// maximum uint64
+const NOPOS = ^uint64(0)

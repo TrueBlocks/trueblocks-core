@@ -29,13 +29,8 @@ bool COptions::handle_gocmds_cmd(const CCommandOption& p) {
     string_q source = asciiFileToString(getTemplatePath("blank.go"));
     replaceAll(source, "[{LONG}]", "Purpose:\n  " + p.description);
     replaceAll(source, "[{OPT_DEF}]", "");
-    replaceAll(
-        source, "[{IMPORTS}]",
-        "\t[{ROUTE}]Pkg \"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/[{ROUTE}]\"\n[{IMPORTS}]");
-    if (p.api_route == "serve") {
-        replaceAll(source, "/internal/[{ROUTE}]", "/server");
-    }
     replaceAll(source, "validate[{PROPER}]Args", "[{ROUTE}]Pkg.Validate");
+    replaceAll(source, "/internal/[{ROUTE}]", (p.api_route == "serve" ? "/server" : "/internal/[{ROUTE}]"));
     replaceAll(source, "[{SET_OPTS}]", get_setopts(p));
     replaceAll(source, "[{HIDDEN}]", get_hidden(p));
     replaceAll(source, "[{PERPRERUN}]", get_hidden2(p));
@@ -48,6 +43,7 @@ bool COptions::handle_gocmds_cmd(const CCommandOption& p) {
         replaceReverse(descr, ".", "");
     replaceAll(source, "[{SHORT}]", descr);
     replaceAll(source, "[{IMPORTS}]", get_imports(source));
+    // replaceAll(source, "LastBlock, \"last_block\", \"L\", 0,", "LastBlock, \"last_block\", \"L\", globals.NOPOS,");
 
     string_q fn = getSourcePath("apps/chifra/cmd/" + p.api_route + ".go");
     codewrite_t cw(fn, source);
@@ -59,15 +55,13 @@ bool COptions::handle_gocmds_cmd(const CCommandOption& p) {
 }
 
 //---------------------------------------------------------------------------------------------------
-string_q get_imports(const string_q& source) {
-    string_q imports;
-    if (contains(source, "errors."))
-        imports += "\t\"errors\"\n";
-    if (contains(source, "fmt."))
-        imports += "\t\"fmt\"\n";
-    if (contains(source, "utils."))
-        imports += "\t\"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils\"\n";
-    return imports;
+string_q get_positional0(const CCommandOption& cmd) {
+    for (auto p : *((CCommandOptionArray*)cmd.params)) {
+        if (p.option_type == "positional") {
+            return p.Format("opts.[{VARIABLE}]");
+        }
+    }
+    return "[]string{}";
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -84,6 +78,7 @@ bool COptions::handle_gocmds_options(const CCommandOption& p) {
     replaceAll(source, "[{TEST_LOGS}]", get_testlogs(p));
     replaceAll(source, "[{DASH_STR}]", get_copyopts(p));
     replaceAll(source, "[{IMPORTS}]", get_imports(source));
+    replaceAll(source, "++POSITIONAL0++", get_positional0(p));
 
     string_q fn = getSourcePath("apps/chifra/internal/" + p.api_route + "/options.go");
     replaceAll(fn, "/internal/serve", "/server");
@@ -95,6 +90,14 @@ bool COptions::handle_gocmds_options(const CCommandOption& p) {
     counter.nVisited++;
 
     return true;
+}
+
+//---------------------------------------------------------------------------------------------------
+string_q get_imports(const string_q& source) {
+    string_q imports;
+    // if (contains(source, "utils."))
+    //     imports += "\t\"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils\"\n";
+    return imports;
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -194,24 +197,28 @@ string_q noUnderbars(const string_q& in) {
 }
 
 string_q get_testlogs(const CCommandOption& cmd) {
-    const char* STR_TESTLOG_STRING =
-        "\tlogger.TestLog(len(opts.[{LONGNAME}]) > 0, \"[{LONGNAME}]: \", opts.[{LONGNAME}])";
-    const char* STR_TESTLOG_UINT =
-        "\tlogger.TestLog(opts.[{LONGNAME}] != [{DEF_VAL}], \"[{LONGNAME}]: \", opts.[{LONGNAME}])";
-    const char* STR_TESTLOG_BOOL = "\tlogger.TestLog(opts.[{LONGNAME}], \"[{LONGNAME}]: \", opts.[{LONGNAME}])";
     ostringstream os;
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
         replace(p.longName, "deleteMe", "delete");
-        p.longName = noUnderbars(p.longName);
-        p.def_val = substitute(p.def_val, "NOPOS", "utils.NOPOS");
+        p.def_val = substitute(p.def_val, "NOPOS", "globals.NOPOS");
+
         if (!p.isDeprecated) {
             if (p.data_type == "<boolean>") {
+                const char* STR_TESTLOG_BOOL =
+                    "\tlogger.TestLog(opts.[{VARIABLE}], \"[{VARIABLE}]: \", opts.[{VARIABLE}])";
                 os << p.Format(STR_TESTLOG_BOOL) << endl;
+
             } else if (startsWith(p.data_type, "list<") || p.data_type == "<string>" || p.data_type == "<address>" ||
                        contains(p.data_type, "enum")) {
+                const char* STR_TESTLOG_STRING =
+                    "\tlogger.TestLog(len(opts.[{VARIABLE}]) > 0, \"[{VARIABLE}]: \", opts.[{VARIABLE}])";
                 os << p.Format(STR_TESTLOG_STRING) << endl;
+
             } else if (p.data_type == "<blknum>" || p.data_type == "<uint64>" || p.data_type == "<double>") {
+                const char* STR_TESTLOG_UINT =
+                    "\tlogger.TestLog(opts.[{VARIABLE}] != [{DEF_VAL}], \"[{VARIABLE}]: \", opts.[{VARIABLE}])";
                 os << p.Format(STR_TESTLOG_UINT) << endl;
+
             } else {
                 cerr << "Unknown type: " << padRight(p.data_type, 30) << p.def_val << endl;
                 exit(0);
@@ -225,16 +232,14 @@ string_q get_optfields(const CCommandOption& cmd) {
     size_t wid = 0;
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
         replace(p.longName, "deleteMe", "delete");
-        p.longName = noUnderbars(p.longName);
-        wid = max(p.longName.length(), wid);
+        wid = max(p.Format("[{VARIABLE}]").length(), wid);
     }
     wid = max(string_q("Globals").length(), wid);
 
     ostringstream os;
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
         replace(p.longName, "deleteMe", "delete");
-        p.longName = noUnderbars(p.longName);
-        os << "\t" << padRight(p.longName, wid) << " " << p.go_type << endl;
+        os << "\t" << padRight(p.Format("[{VARIABLE}]"), wid) << " " << p.go_type << endl;
     }
     os << "\t" << padRight("Globals", wid) << " globals.GlobalOptionsType" << endl;
 
@@ -246,7 +251,6 @@ string_q get_requestopts(const CCommandOption& cmd) {
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
         replace(p.longName, "deleteMe", "delete");
         string_q low = p.Format("[{LOWER}]");
-        p.longName = noUnderbars(p.longName);
         os << p.Format(substitute(STR_REQUEST_STATE, "++LOWER++", low)) << endl;
     }
     return os.str();
@@ -333,7 +337,7 @@ string_q get_setopts(const CCommandOption& cmd) {
             os << "\t[{ROUTE}]Cmd.Flags().";
             os << p.go_flagtype;
             os << "(&[{ROUTE}]Pkg.Options.";
-            os << noUnderbars(p.longName) << ", ";
+            os << p.Format("[{VARIABLE}]") << ", ";
             os << p.Format("\"[{LONGNAME}]\", ");
             os << p.Format("\"[{HOTKEY}]\", ");
             os << get_goDefault(p) << ", ";
@@ -347,31 +351,39 @@ string_q get_setopts(const CCommandOption& cmd) {
 string_q get_copyopts(const CCommandOption& cmd) {
     ostringstream os;
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
+        if (p.isDeprecated)
+            continue;
+
         replace(p.longName, "deleteMe", "delete");
-        if (p.option_type != "positional" && !p.isDeprecated) {
+        if (p.option_type != "positional") {
+            string_q format;
             if (p.go_type == "[]string") {
-                os << "\tfor _, t := range opts." << noUnderbars(p.longName) << " {" << endl;
-                os << "\t\toptions += \" --" << p.longName << " \" + t" << endl;
-                os << "\t}" << endl;
+                format =
+                    "\tfor _, [{SINGULAR}] := range opts.[{VARIABLE}] {\n"
+                    "\t\toptions += \" --[{LONGNAME}] \" + [{SINGULAR}]\n"
+                    "\t}";
             } else if (p.go_type == "string") {
-                os << "\tif len(opts." << noUnderbars(p.longName) << ") > 0 {" << endl;
-                os << "\t\toptions += \" --" << p.longName << " \" + opts." << noUnderbars(p.longName) << endl;
-                os << "\t}" << endl;
+                format =
+                    "\tif len(opts.[{VARIABLE}]) > 0 {\n"
+                    "\t\toptions += \" --[{LONGNAME}] \" + opts.[{VARIABLE}]\n"
+                    "\t}";
             } else if (p.go_type == "uint64" || p.go_type == "uint32") {
-                os << "\tif opts." << noUnderbars(p.longName) << " > 0 {" << endl;
-                os << "\t\toptions += \" --" << p.longName << " \" + ";
-                os << "fmt.Sprintf(\"%d\", opts." << noUnderbars(p.longName) << ")" << endl;
-                os << "\t}" << endl;
+                format =
+                    "\tif opts.[{VARIABLE}] != [{DEF_VAL}] {\n"
+                    "\t\toptions += (\" --[{LONGNAME}] \" + fmt.Sprintf(\"%d\", opts.[{VARIABLE}]))\n"
+                    "\t}";
             } else if (p.go_type == "float64") {
-                os << "\tif opts." << noUnderbars(p.longName) << " > 0.0 {" << endl;
-                os << "\t\toptions += \" --" << p.longName << " \" + ";
-                os << "fmt.Sprintf(\"%.1f\", opts." << noUnderbars(p.longName) << ")" << endl;
-                os << "\t}" << endl;
+                format =
+                    "\tif opts.[{VARIABLE}] != [{DEF_VAL}] {\n"
+                    "\t\toptions += (\" --[{LONGNAME}] \" + fmt.Sprintf(\"%.1f\", opts.[{VARIABLE}]))\n"
+                    "\t}";
             } else {
-                os << "\tif opts." << noUnderbars(p.longName) << " {" << endl;
-                os << "\t\toptions += \" --" << p.longName << "\"" << endl;
-                os << "\t}" << endl;
+                format =
+                    "\tif opts.[{VARIABLE}] {\n"
+                    "\t\toptions += \" --[{LONGNAME}]\"\n"
+                    "\t}";
             }
+            os << substitute(p.Format(format), "NOPOS", "globals.NOPOS") << endl;
         }
     }
     return os.str();
@@ -379,4 +391,4 @@ string_q get_copyopts(const CCommandOption& cmd) {
 
 const char* STR_REQUEST_STATE =
     "\t\tcase \"++LOWER++\":\n"
-    "\t\t\topts.[{LONGNAME}] = [{ASS}]";
+    "\t\t\topts.[{VARIABLE}] = [{ASSIGN}]";

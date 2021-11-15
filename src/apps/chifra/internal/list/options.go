@@ -13,17 +13,16 @@ package listPkg
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * The file was auto generated with makeClass --gocmds. DO NOT EDIT.
+ * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
 
 import (
+	"fmt"
 	"net/http"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"fmt"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 type ListOptions struct {
@@ -40,7 +39,7 @@ func (opts *ListOptions) TestLog() {
 	logger.TestLog(opts.Count, "Count: ", opts.Count)
 	logger.TestLog(opts.Appearances, "Appearances: ", opts.Appearances)
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
-	logger.TestLog(opts.LastBlock != utils.NOPOS, "LastBlock: ", opts.LastBlock)
+	logger.TestLog(opts.LastBlock != globals.NOPOS, "LastBlock: ", opts.LastBlock)
 	opts.Globals.TestLog()
 }
 
@@ -52,13 +51,14 @@ func (opts *ListOptions) ToDashStr() string {
 	if opts.Appearances {
 		options += " --appearances"
 	}
-	if opts.FirstBlock > 0 {
-		options += " --first_block " + fmt.Sprintf("%d", opts.FirstBlock)
+	if opts.FirstBlock != 0 {
+		options += (" --first_block " + fmt.Sprintf("%d", opts.FirstBlock))
 	}
-	if opts.LastBlock > 0 {
-		options += " --last_block " + fmt.Sprintf("%d", opts.LastBlock)
+	if opts.LastBlock != globals.NOPOS {
+		options += (" --last_block " + fmt.Sprintf("%d", opts.LastBlock))
 	}
 	options += " " + strings.Join(opts.Addrs, " ")
+	options += fmt.Sprintf("%s", "") // auto gen only
 	return options
 }
 

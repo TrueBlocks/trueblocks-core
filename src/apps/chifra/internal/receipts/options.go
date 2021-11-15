@@ -13,10 +13,11 @@ package receiptsPkg
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * The file was auto generated with makeClass --gocmds. DO NOT EDIT.
+ * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
 
 import (
+	"fmt"
 	"net/http"
 	"strings"
 
@@ -42,6 +43,7 @@ func (opts *ReceiptsOptions) ToDashStr() string {
 		options += " --articulate"
 	}
 	options += " " + strings.Join(opts.Transactions, " ")
+	options += fmt.Sprintf("%s", "") // auto gen only
 	return options
 }
 

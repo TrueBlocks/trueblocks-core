@@ -13,17 +13,16 @@ package statusPkg
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * The file was auto generated with makeClass --gocmds. DO NOT EDIT.
+ * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
 
 import (
+	"fmt"
 	"net/http"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"fmt"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
 type StatusOptions struct {
@@ -45,13 +44,13 @@ func (opts *StatusOptions) TestLog() {
 	logger.TestLog(len(opts.Modes) > 0, "Modes: ", opts.Modes)
 	logger.TestLog(opts.Details, "Details: ", opts.Details)
 	logger.TestLog(len(opts.Types) > 0, "Types: ", opts.Types)
-	logger.TestLog(opts.Depth != utils.NOPOS, "Depth: ", opts.Depth)
+	logger.TestLog(opts.Depth != globals.NOPOS, "Depth: ", opts.Depth)
 	logger.TestLog(opts.Terse, "Terse: ", opts.Terse)
 	logger.TestLog(len(opts.Migrate) > 0, "Migrate: ", opts.Migrate)
 	logger.TestLog(opts.GetConfig, "GetConfig: ", opts.GetConfig)
 	logger.TestLog(opts.SetConfig, "SetConfig: ", opts.SetConfig)
 	logger.TestLog(opts.TestStart != 0, "TestStart: ", opts.TestStart)
-	logger.TestLog(opts.TestEnd != utils.NOPOS, "TestEnd: ", opts.TestEnd)
+	logger.TestLog(opts.TestEnd != globals.NOPOS, "TestEnd: ", opts.TestEnd)
 	opts.Globals.TestLog()
 }
 
@@ -60,17 +59,17 @@ func (opts *StatusOptions) ToDashStr() string {
 	if opts.Details {
 		options += " --details"
 	}
-	for _, t := range opts.Types {
-		options += " --types " + t
+	for _, types := range opts.Types {
+		options += " --types " + types
 	}
-	if opts.Depth != utils.NOPOS {
-		options += " --depth " + fmt.Sprintf("%d", opts.Depth)
+	if opts.Depth != globals.NOPOS {
+		options += (" --depth " + fmt.Sprintf("%d", opts.Depth))
 	}
 	if opts.Terse {
 		options += " --terse"
 	}
-	for _, t := range opts.Migrate {
-		options += " --migrate " + t
+	for _, migrate := range opts.Migrate {
+		options += " --migrate " + migrate
 	}
 	if opts.GetConfig {
 		options += " --get_config"
@@ -78,15 +77,14 @@ func (opts *StatusOptions) ToDashStr() string {
 	if opts.SetConfig {
 		options += " --set_config"
 	}
-	if opts.Globals.TestMode {
-		if opts.TestStart > 0 {
-			options += " --test_start " + fmt.Sprintf("%d", opts.TestStart)
-		}
-		if opts.TestEnd != utils.NOPOS {
-			options += " --test_end " + fmt.Sprintf("%d", opts.TestEnd)
-		}
+	if opts.TestStart != 0 {
+		options += (" --test_start " + fmt.Sprintf("%d", opts.TestStart))
+	}
+	if opts.TestEnd != globals.NOPOS {
+		options += (" --test_end " + fmt.Sprintf("%d", opts.TestEnd))
 	}
 	options += " " + strings.Join(opts.Modes, " ")
+	options += fmt.Sprintf("%s", "") // auto gen only
 	return options
 }
 

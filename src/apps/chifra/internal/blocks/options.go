@@ -13,16 +13,16 @@ package blocksPkg
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * The file was auto generated with makeClass --gocmds. DO NOT EDIT.
+ * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
 
 import (
+	"fmt"
 	"net/http"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"fmt"
 )
 
 type BlocksOptions struct {
@@ -83,17 +83,17 @@ func (opts *BlocksOptions) ToDashStr() string {
 	if opts.Logs {
 		options += " --logs"
 	}
-	for _, e := range opts.Emitter {
-		options += " --emitter " + e
+	for _, emitter := range opts.Emitter {
+		options += " --emitter " + emitter
 	}
-	for _, t := range opts.Topic {
-		options += " --topic " + t
+	for _, topic := range opts.Topic {
+		options += " --topic " + topic
 	}
 	if opts.Articulate {
 		options += " --articulate"
 	}
 	if opts.BigRange != 500 {
-		options += " --big_range " + fmt.Sprintf("%d", opts.BigRange)
+		options += (" --big_range " + fmt.Sprintf("%d", opts.BigRange))
 	}
 	if opts.Count {
 		options += " --count"
@@ -101,13 +101,14 @@ func (opts *BlocksOptions) ToDashStr() string {
 	if opts.Cache {
 		options += " --cache"
 	}
-	if opts.List > 0 {
-		options += " --list " + fmt.Sprintf("%d", opts.List)
+	if opts.List != 0 {
+		options += (" --list " + fmt.Sprintf("%d", opts.List))
 	}
 	if opts.ListCount != 20 {
-		options += " --list_count " + fmt.Sprintf("%d", opts.ListCount)
+		options += (" --list_count " + fmt.Sprintf("%d", opts.ListCount))
 	}
 	options += " " + strings.Join(opts.Blocks, " ")
+	options += fmt.Sprintf("%s", "") // auto gen only
 	return options
 }
 

@@ -13,13 +13,13 @@ package pinsPkg
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * The file was auto generated with makeClass --gocmds. DO NOT EDIT.
+ * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
 
 import (
-	"net/http"
-
 	"fmt"
+	"net/http"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -60,9 +60,11 @@ func (opts *PinsOptions) ToDashStr() string {
 	if opts.Share {
 		options += " --share"
 	}
-	if opts.Sleep > 0.0 {
-		options += " --sleep " + fmt.Sprintf("%.1f", opts.Sleep)
+	if opts.Sleep != .25 {
+		options += (" --sleep " + fmt.Sprintf("%.1f", opts.Sleep))
 	}
+	options += " " + strings.Join([]string{}, " ")
+	options += fmt.Sprintf("%s", "") // auto gen only
 	return options
 }
 

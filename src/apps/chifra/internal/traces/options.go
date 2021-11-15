@@ -13,16 +13,16 @@ package tracesPkg
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * The file was auto generated with makeClass --gocmds. DO NOT EDIT.
+ * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
 
 import (
+	"fmt"
 	"net/http"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"fmt"
 )
 
 type TracesOptions struct {
@@ -65,9 +65,10 @@ func (opts *TracesOptions) ToDashStr() string {
 		options += " --skip_ddos"
 	}
 	if opts.Max != 250 {
-		options += " --max " + fmt.Sprintf("%d", opts.Max)
+		options += (" --max " + fmt.Sprintf("%d", opts.Max))
 	}
 	options += " " + strings.Join(opts.Transactions, " ")
+	options += fmt.Sprintf("%s", "") // auto gen only
 	return options
 }
 
