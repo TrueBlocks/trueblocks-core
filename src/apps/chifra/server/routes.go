@@ -30,12 +30,6 @@ import (
 	"golang.org/x/time/rate"
 )
 
-// AccountsAbis processes ABI queries
-func AccountsAbis(w http.ResponseWriter, r *http.Request) {
-	CallOneExtra(w, r, "chifra", "abis", "abis")
-	// abisPkg.ServeAbis(w, r)
-}
-
 // Route A structure to hold the API's routes
 type Route struct {
 	Name        string
@@ -135,10 +129,10 @@ func AdminPins(w http.ResponseWriter, r *http.Request) {
 	pinsPkg.ServePins(w, r)
 }
 
-// ChainDataBlocks help text todo
-func ChainDataBlocks(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "getBlocks", "blocks")
-	// blocksPkg.ServeBlocks(w, r)
+// AccountsAbis processes ABI queries
+func AccountsAbis(w http.ResponseWriter, r *http.Request) {
+	CallOneExtra(w, r, "chifra", "abis", "abis")
+	// abisPkg.ServeAbis(w, r)
 }
 
 // BEG_ROUTE_CODE
@@ -161,6 +155,12 @@ func AccountsMonitors(w http.ResponseWriter, r *http.Request) {
 // AccountsNames help text todo
 func AccountsNames(w http.ResponseWriter, r *http.Request) {
 	CallOne(w, r, "ethNames", "names")
+}
+
+// ChainDataBlocks help text todo
+func ChainDataBlocks(w http.ResponseWriter, r *http.Request) {
+	CallOne(w, r, "getBlocks", "blocks")
+	// blocksPkg.ServeBlocks(w, r)
 }
 
 // ChainDataTransactions help text todo

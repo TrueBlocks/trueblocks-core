@@ -52,9 +52,6 @@ func init() {
 	initCmd.SetUsageTemplate(UsageWithNotes(notesInit))
 
 	initCmd.SetOut(os.Stderr)
-	// if initPkg.Options.Globals.ApiMode {
-	// 	initCmd.SetErr(os.Stdout)
-	// }
 
 	chifraCmd.AddCommand(initCmd)
 }

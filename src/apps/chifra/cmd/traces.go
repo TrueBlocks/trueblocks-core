@@ -67,9 +67,6 @@ func init() {
 	tracesCmd.SetUsageTemplate(UsageWithNotes(notesTraces))
 
 	tracesCmd.SetOut(os.Stderr)
-	// if tracesPkg.Options.Globals.ApiMode {
-	// 	tracesCmd.SetErr(os.Stdout)
-	// }
 
 	chifraCmd.AddCommand(tracesCmd)
 }

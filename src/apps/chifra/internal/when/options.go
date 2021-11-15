@@ -46,19 +46,19 @@ func (opts *WhenOptions) TestLog() {
 
 func (opts *WhenOptions) ToDashStr() string {
 	options := ""
-	if Options.List {
+	if opts.List {
 		options += " --list"
 	}
-	if Options.Timestamps {
+	if opts.Timestamps {
 		options += " --timestamps"
 	}
-	if Options.Check {
+	if opts.Check {
 		options += " --check"
 	}
-	if Options.Fix {
+	if opts.Fix {
 		options += " --fix"
 	}
-	if Options.Count {
+	if opts.Count {
 		options += " --count"
 	}
 	options += " " + strings.Join(opts.Blocks, " ")

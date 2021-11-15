@@ -102,92 +102,92 @@ func (opts *ExportOptions) TestLog() {
 
 func (opts *ExportOptions) ToDashStr() string {
 	options := ""
-	if Options.Appearances {
+	if opts.Appearances {
 		options += " --appearances"
 	}
-	if Options.Receipts {
+	if opts.Receipts {
 		options += " --receipts"
 	}
-	if Options.Statements {
+	if opts.Statements {
 		options += " --statements"
 	}
-	if Options.Logs {
+	if opts.Logs {
 		options += " --logs"
 	}
-	if Options.Traces {
+	if opts.Traces {
 		options += " --traces"
 	}
-	if Options.Accounting {
+	if opts.Accounting {
 		options += " --accounting"
 	}
-	if Options.Articulate {
+	if opts.Articulate {
 		options += " --articulate"
 	}
-	if Options.Cache {
+	if opts.Cache {
 		options += " --cache"
 	}
-	if Options.CacheTraces {
+	if opts.CacheTraces {
 		options += " --cache_traces"
 	}
-	if Options.Neighbors {
+	if opts.Neighbors {
 		options += " --neighbors"
 	}
-	if Options.Factory {
+	if opts.Factory {
 		options += " --factory"
 	}
-	for _, e := range Options.Emitter {
+	for _, e := range opts.Emitter {
 		options += " --emitter " + e
 	}
-	for _, t := range Options.Topic {
+	for _, t := range opts.Topic {
 		options += " --topic " + t
 	}
-	if Options.Relevant {
+	if opts.Relevant {
 		options += " --relevant"
 	}
-	if Options.Count {
+	if opts.Count {
 		options += " --count"
 	}
-	if Options.FirstRecord > 0 {
-		options += " --first_record " + fmt.Sprintf("%d", Options.FirstRecord)
+	if opts.FirstRecord > 0 {
+		options += " --first_record " + fmt.Sprintf("%d", opts.FirstRecord)
 	}
-	if Options.MaxRecords > 0 && Options.MaxRecords != 250 {
-		options += " --max_records " + fmt.Sprintf("%d", Options.MaxRecords)
+	if opts.MaxRecords > 0 && opts.MaxRecords != 250 {
+		options += " --max_records " + fmt.Sprintf("%d", opts.MaxRecords)
 	}
-	if Options.Clean {
+	if opts.Clean {
 		options += " --clean"
 	}
-	if Options.Freshen {
+	if opts.Freshen {
 		options += " --freshen"
 	}
-	if Options.Staging {
+	if opts.Staging {
 		options += " --staging"
 	}
-	if Options.Unripe {
+	if opts.Unripe {
 		options += " --unripe"
 	}
-	if len(Options.Load) > 0 {
-		options += " --load " + Options.Load
+	if len(opts.Load) > 0 {
+		options += " --load " + opts.Load
 	}
-	if Options.Reversed {
+	if opts.Reversed {
 		options += " --reversed"
 	}
-	if Options.ByDate {
+	if opts.ByDate {
 		options += " --by_date"
 	}
-	if len(Options.SummarizeBy) > 0 {
-		options += " --summarize_by " + Options.SummarizeBy
+	if len(opts.SummarizeBy) > 0 {
+		options += " --summarize_by " + opts.SummarizeBy
 	}
-	if Options.SkipDdos {
+	if opts.SkipDdos {
 		options += " --skip_ddos"
 	}
-	if Options.MaxTraces != 250 {
-		options += " --max_traces " + fmt.Sprintf("%d", Options.MaxTraces)
+	if opts.MaxTraces != 250 {
+		options += " --max_traces " + fmt.Sprintf("%d", opts.MaxTraces)
 	}
-	if Options.FirstBlock > 0 {
-		options += " --first_block " + fmt.Sprintf("%d", Options.FirstBlock)
+	if opts.FirstBlock > 0 {
+		options += " --first_block " + fmt.Sprintf("%d", opts.FirstBlock)
 	}
-	if Options.LastBlock > 0 {
-		options += " --last_block " + fmt.Sprintf("%d", Options.LastBlock)
+	if opts.LastBlock > 0 {
+		options += " --last_block " + fmt.Sprintf("%d", opts.LastBlock)
 	}
 	options += " " + strings.Join(opts.Addrs, " ")
 	return options

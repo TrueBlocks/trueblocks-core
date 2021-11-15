@@ -64,9 +64,6 @@ func init() {
 	whenCmd.SetUsageTemplate(UsageWithNotes(notesWhen))
 
 	whenCmd.SetOut(os.Stderr)
-	// if whenPkg.Options.Globals.ApiMode {
-	// 	whenCmd.SetErr(os.Stdout)
-	// }
 
 	chifraCmd.AddCommand(whenCmd)
 }

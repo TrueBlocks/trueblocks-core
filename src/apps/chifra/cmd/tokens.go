@@ -62,9 +62,6 @@ One or more of [ name | symbol | decimals | totalSupply | version | none | all ]
 	tokensCmd.SetUsageTemplate(UsageWithNotes(notesTokens))
 
 	tokensCmd.SetOut(os.Stderr)
-	// if tokensPkg.Options.Globals.ApiMode {
-	// 	tokensCmd.SetErr(os.Stdout)
-	// }
 
 	chifraCmd.AddCommand(tokensCmd)
 }

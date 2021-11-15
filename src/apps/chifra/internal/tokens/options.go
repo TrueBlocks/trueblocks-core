@@ -44,13 +44,13 @@ func (opts *TokensOptions) TestLog() {
 
 func (opts *TokensOptions) ToDashStr() string {
 	options := ""
-	for _, t := range Options.Parts {
+	for _, t := range opts.Parts {
 		options += " --parts " + t
 	}
-	if Options.ByAcct {
+	if opts.ByAcct {
 		options += " --by_acct"
 	}
-	if Options.NoZero {
+	if opts.NoZero {
 		options += " --no_zero"
 	}
 	options += " " + strings.Join(opts.Addrs2, " ")

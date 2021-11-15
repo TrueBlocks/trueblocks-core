@@ -59,9 +59,6 @@ One of [ header | addr_table | app_table | chunks | blooms ]`)
 	chunksCmd.SetUsageTemplate(UsageWithNotes(notesChunks))
 
 	chunksCmd.SetOut(os.Stderr)
-	// if chunksPkg.Options.Globals.ApiMode {
-	// 	chunksCmd.SetErr(os.Stdout)
-	// }
 
 	chifraCmd.AddCommand(chunksCmd)
 }

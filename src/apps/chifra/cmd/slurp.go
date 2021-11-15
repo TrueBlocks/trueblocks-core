@@ -57,9 +57,6 @@ One or more of [ ext | int | token | nfts | miner | uncles | all ]`)
 	slurpCmd.SetUsageTemplate(UsageWithNotes(notesSlurp))
 
 	slurpCmd.SetOut(os.Stderr)
-	// if slurpPkg.Options.Globals.ApiMode {
-	// 	slurpCmd.SetErr(os.Stdout)
-	// }
 
 	chifraCmd.AddCommand(slurpCmd)
 }

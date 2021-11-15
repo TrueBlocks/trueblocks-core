@@ -98,7 +98,6 @@ func (opts *AbisOptions) FindInternal() error {
 
 	if opts.Globals.ApiMode {
 		opts.Globals.Respond(opts.Globals.Writer, http.StatusOK, results)
-		// fmt.Println("{ \"name\": \"jay\" }")
 
 	} else {
 		err = globals.Output(&opts.Globals, os.Stdout, opts.Globals.Format, results)
