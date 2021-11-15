@@ -54,7 +54,6 @@ One of [ poloniex | maker | tellor ]`)
 	globals.InitGlobals(quotesCmd, &quotesPkg.Options.Globals)
 
 	quotesCmd.SetUsageTemplate(UsageWithNotes(notesQuotes))
-
 	quotesCmd.SetOut(os.Stderr)
 
 	chifraCmd.AddCommand(quotesCmd)

@@ -17,12 +17,12 @@ package scrapePkg
  */
 
 import (
-	"fmt"
 	"net/http"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"fmt"
 )
 
 type ScrapeOptions struct {
@@ -51,16 +51,27 @@ func (opts *ScrapeOptions) TestLog() {
 
 func (opts *ScrapeOptions) ToDashStr() string {
 	options := ""
-	if Options.Pin {
-		options += " --pin "
+	if len(opts.Action) > 0 {
+		options += " --action " + opts.Action
 	}
-	if Options.Publish {
-		options += " --publish "
+	if opts.Sleep != 14. {
+		options += " --sleep " + fmt.Sprintf("%.1f", opts.Sleep)
 	}
-	if Options.Sleep != 14. {
-		options += " --sleep " + fmt.Sprintf("%g", Options.Sleep)
+	if opts.Pin {
+		options += " --pin"
 	}
-	options += (" --block_cnt " + fmt.Sprintf("%d", Options.BlockCnt))
+	if opts.Publish {
+		options += " --publish"
+	}
+	if opts.BlockCnt > 0 {
+		options += (" --block_cnt " + fmt.Sprintf("%d", opts.BlockCnt))
+	}
+	if opts.BlockChanCnt > 0 {
+		options += (" --block_chan_cnt " + fmt.Sprintf("%d", opts.BlockChanCnt))
+	}
+	if opts.AddrChanCnt > 0 {
+		options += (" --addr_chan_cnt " + fmt.Sprintf("%d", opts.AddrChanCnt))
+	}
 	options += " " + strings.Join(opts.Modes, " ")
 	return options
 }

@@ -60,7 +60,6 @@ One or more of [ name | symbol | decimals | totalSupply | version | none | all ]
 	globals.InitGlobals(tokensCmd, &tokensPkg.Options.Globals)
 
 	tokensCmd.SetUsageTemplate(UsageWithNotes(notesTokens))
-
 	tokensCmd.SetOut(os.Stderr)
 
 	chifraCmd.AddCommand(tokensCmd)

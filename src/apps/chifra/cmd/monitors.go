@@ -64,7 +64,6 @@ func init() {
 	globals.InitGlobals(monitorsCmd, &monitorsPkg.Options.Globals)
 
 	monitorsCmd.SetUsageTemplate(UsageWithNotes(notesMonitors))
-
 	monitorsCmd.SetOut(os.Stderr)
 
 	chifraCmd.AddCommand(monitorsCmd)

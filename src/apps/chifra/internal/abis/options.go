@@ -49,15 +49,15 @@ func (opts *AbisOptions) ToDashStr() string {
 	if opts.Known {
 		options += " --known"
 	}
-
 	if opts.Sol {
 		options += " --sol"
 	}
-
+	for _, t := range opts.Find {
+		options += " --find " + t
+	}
 	if opts.Source {
 		options += " --source"
 	}
-
 	if opts.Classes {
 		options += " --classes"
 	}

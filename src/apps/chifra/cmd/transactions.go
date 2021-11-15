@@ -58,7 +58,6 @@ func init() {
 	globals.InitGlobals(transactionsCmd, &transactionsPkg.Options.Globals)
 
 	transactionsCmd.SetUsageTemplate(UsageWithNotes(notesTransactions))
-
 	transactionsCmd.SetOut(os.Stderr)
 
 	chifraCmd.AddCommand(transactionsCmd)

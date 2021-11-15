@@ -57,7 +57,6 @@ One of [ header | addr_table | app_table | chunks | blooms ]`)
 	globals.InitGlobals(chunksCmd, &chunksPkg.Options.Globals)
 
 	chunksCmd.SetUsageTemplate(UsageWithNotes(notesChunks))
-
 	chunksCmd.SetOut(os.Stderr)
 
 	chifraCmd.AddCommand(chunksCmd)

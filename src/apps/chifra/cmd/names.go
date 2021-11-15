@@ -79,7 +79,6 @@ func init() {
 	globals.InitGlobals(namesCmd, &namesPkg.Options.Globals)
 
 	namesCmd.SetUsageTemplate(UsageWithNotes(notesNames))
-
 	namesCmd.SetOut(os.Stderr)
 
 	chifraCmd.AddCommand(namesCmd)

@@ -44,11 +44,7 @@ var notes[{PROPER}] = `[{POSTNOTES}]`
 [{SET_OPTS}][{HIDDEN}]	globals.InitGlobals([{ROUTE}]Cmd, &[{ROUTE}]Pkg.Options.Globals)
 
 	[{ROUTE}]Cmd.SetUsageTemplate(UsageWithNotes(notes[{PROPER}]))
-
 	[{ROUTE}]Cmd.SetOut(os.Stderr)
-	if [{ROUTE}]Pkg.Options.Globals.ApiMode {
-		[{ROUTE}]Cmd.SetErr(os.Stdout)
-	}
 
 	chifraCmd.AddCommand([{ROUTE}]Cmd)
 }

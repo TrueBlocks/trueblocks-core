@@ -17,12 +17,12 @@ package monitorsPkg
  */
 
 import (
-	"fmt"
 	"net/http"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"fmt"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
@@ -63,20 +63,20 @@ func (opts *MonitorsOptions) ToDashStr() string {
 	if opts.Clean {
 		options += " --clean"
 	}
+	if opts.Delete {
+		options += " --delete"
+	}
+	if opts.Undelete {
+		options += " --undelete"
+	}
+	if opts.Remove {
+		options += " --remove"
+	}
 	if opts.FirstBlock > 0 {
 		options += " --first_block " + fmt.Sprintf("%d", opts.FirstBlock)
 	}
 	if opts.LastBlock > 0 {
 		options += " --last_block " + fmt.Sprintf("%d", opts.LastBlock)
-	}
-	if opts.Delete {
-		options += " --delete"
-	}
-	if opts.Remove {
-		options += " --remove"
-	}
-	if opts.Undelete {
-		options += " --undelete"
 	}
 	options += " " + strings.Join(opts.Addrs, " ")
 	return options

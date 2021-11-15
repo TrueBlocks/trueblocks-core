@@ -17,12 +17,12 @@ package exportPkg
  */
 
 import (
-	"fmt"
 	"net/http"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"fmt"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
@@ -105,17 +105,23 @@ func (opts *ExportOptions) ToDashStr() string {
 	if opts.Appearances {
 		options += " --appearances"
 	}
+	if opts.Transactions {
+		options += " --transactions"
+	}
 	if opts.Receipts {
 		options += " --receipts"
-	}
-	if opts.Statements {
-		options += " --statements"
 	}
 	if opts.Logs {
 		options += " --logs"
 	}
 	if opts.Traces {
 		options += " --traces"
+	}
+	if opts.Statements {
+		options += " --statements"
+	}
+	if opts.Neighbors {
+		options += " --neighbors"
 	}
 	if opts.Accounting {
 		options += " --accounting"
@@ -129,20 +135,8 @@ func (opts *ExportOptions) ToDashStr() string {
 	if opts.CacheTraces {
 		options += " --cache_traces"
 	}
-	if opts.Neighbors {
-		options += " --neighbors"
-	}
 	if opts.Factory {
 		options += " --factory"
-	}
-	for _, e := range opts.Emitter {
-		options += " --emitter " + e
-	}
-	for _, t := range opts.Topic {
-		options += " --topic " + t
-	}
-	if opts.Relevant {
-		options += " --relevant"
 	}
 	if opts.Count {
 		options += " --count"
@@ -152,6 +146,15 @@ func (opts *ExportOptions) ToDashStr() string {
 	}
 	if opts.MaxRecords > 0 && opts.MaxRecords != 250 {
 		options += " --max_records " + fmt.Sprintf("%d", opts.MaxRecords)
+	}
+	if opts.Relevant {
+		options += " --relevant"
+	}
+	for _, e := range opts.Emitter {
+		options += " --emitter " + e
+	}
+	for _, t := range opts.Topic {
+		options += " --topic " + t
 	}
 	if opts.Clean {
 		options += " --clean"

@@ -17,12 +17,12 @@ package tracesPkg
  */
 
 import (
-	"fmt"
 	"net/http"
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"fmt"
 )
 
 type TracesOptions struct {

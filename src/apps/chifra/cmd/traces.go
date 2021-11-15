@@ -65,7 +65,6 @@ func init() {
 	globals.InitGlobals(tracesCmd, &tracesPkg.Options.Globals)
 
 	tracesCmd.SetUsageTemplate(UsageWithNotes(notesTraces))
-
 	tracesCmd.SetOut(os.Stderr)
 
 	chifraCmd.AddCommand(tracesCmd)

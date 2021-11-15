@@ -61,7 +61,6 @@ func init() {
 	globals.InitGlobals(abisCmd, &abisPkg.Options.Globals)
 
 	abisCmd.SetUsageTemplate(UsageWithNotes(notesAbis))
-
 	abisCmd.SetOut(os.Stderr)
 
 	chifraCmd.AddCommand(abisCmd)

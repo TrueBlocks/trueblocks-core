@@ -101,7 +101,6 @@ One of [ yearly | quarterly | monthly | weekly | daily | hourly | blockly | tx ]
 	globals.InitGlobals(exportCmd, &exportPkg.Options.Globals)
 
 	exportCmd.SetUsageTemplate(UsageWithNotes(notesExport))
-
 	exportCmd.SetOut(os.Stderr)
 
 	chifraCmd.AddCommand(exportCmd)

@@ -51,7 +51,6 @@ func init() {
 	globals.InitGlobals(exploreCmd, &explorePkg.Options.Globals)
 
 	exploreCmd.SetUsageTemplate(UsageWithNotes(notesExplore))
-
 	exploreCmd.SetOut(os.Stderr)
 
 	chifraCmd.AddCommand(exploreCmd)

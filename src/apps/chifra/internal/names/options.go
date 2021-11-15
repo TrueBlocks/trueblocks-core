@@ -103,6 +103,9 @@ func (opts *NamesOptions) ToDashStr() string {
 	if opts.Clean {
 		options += " --clean"
 	}
+	if len(opts.Autoname) > 0 {
+		options += " --autoname " + opts.Autoname
+	}
 	if opts.Create {
 		options += " --create"
 	}
@@ -117,9 +120,6 @@ func (opts *NamesOptions) ToDashStr() string {
 	}
 	if opts.Undelete {
 		options += " --undelete"
-	}
-	if len(opts.Autoname) > 0 {
-		options += " --autoname " + opts.Autoname
 	}
 	options += " " + strings.Join(opts.Terms, " ")
 	return options

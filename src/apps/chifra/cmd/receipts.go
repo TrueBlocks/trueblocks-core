@@ -54,7 +54,6 @@ func init() {
 	globals.InitGlobals(receiptsCmd, &receiptsPkg.Options.Globals)
 
 	receiptsCmd.SetUsageTemplate(UsageWithNotes(notesReceipts))
-
 	receiptsCmd.SetOut(os.Stderr)
 
 	chifraCmd.AddCommand(receiptsCmd)

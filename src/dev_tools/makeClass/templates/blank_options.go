@@ -18,6 +18,7 @@ package [{ROUTE}]Pkg
 
 import (
 	"net/http"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -29,6 +30,11 @@ type [{PROPER}]Options struct {
 
 func (opts *[{PROPER}]Options) TestLog() {
 [{TEST_LOGS}]	opts.Globals.TestLog()
+}
+
+func (opts *[{PROPER}]Options) ToDashStr() string {
+	options := ""
+[{DASH_STR}]	return options
 }
 
 func FromRequest(w http.ResponseWriter, r *http.Request) *[{PROPER}]Options {

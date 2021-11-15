@@ -22,6 +22,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"fmt"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
@@ -45,6 +46,18 @@ func (opts *ListOptions) TestLog() {
 
 func (opts *ListOptions) ToDashStr() string {
 	options := ""
+	if opts.Count {
+		options += " --count"
+	}
+	if opts.Appearances {
+		options += " --appearances"
+	}
+	if opts.FirstBlock > 0 {
+		options += " --first_block " + fmt.Sprintf("%d", opts.FirstBlock)
+	}
+	if opts.LastBlock > 0 {
+		options += " --last_block " + fmt.Sprintf("%d", opts.LastBlock)
+	}
 	options += " " + strings.Join(opts.Addrs, " ")
 	return options
 }

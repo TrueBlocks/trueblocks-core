@@ -72,7 +72,6 @@ One or more of [ test | abi_cache | block_cache | tx_cache | trace_cache | recon
 	globals.InitGlobals(statusCmd, &statusPkg.Options.Globals)
 
 	statusCmd.SetUsageTemplate(UsageWithNotes(notesStatus))
-
 	statusCmd.SetOut(os.Stderr)
 
 	chifraCmd.AddCommand(statusCmd)

@@ -55,11 +55,11 @@ func (opts *ChunksOptions) ToDashStr() string {
 	if len(opts.Extract) > 0 {
 		options += " --extract " + opts.Extract
 	}
-	if opts.Save {
-		options += " --save"
-	}
 	if opts.Stats {
 		options += " --stats"
+	}
+	if opts.Save {
+		options += " --save"
 	}
 	options += " " + strings.Join(opts.Blocks, " ")
 	return options

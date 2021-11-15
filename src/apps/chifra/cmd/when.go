@@ -62,7 +62,6 @@ func init() {
 	globals.InitGlobals(whenCmd, &whenPkg.Options.Globals)
 
 	whenCmd.SetUsageTemplate(UsageWithNotes(notesWhen))
-
 	whenCmd.SetOut(os.Stderr)
 
 	chifraCmd.AddCommand(whenCmd)

@@ -36,7 +36,6 @@ bool COptions::handle_gocmds_cmd(const CCommandOption& p) {
         replaceAll(source, "/internal/[{ROUTE}]", "/server");
     }
     replaceAll(source, "validate[{PROPER}]Args", "[{ROUTE}]Pkg.Validate");
-    replaceAll(source, "[{COPY_OPTS}]", get_copyopts(p));
     replaceAll(source, "[{SET_OPTS}]", get_setopts(p));
     replaceAll(source, "[{HIDDEN}]", get_hidden(p));
     replaceAll(source, "[{PERPRERUN}]", get_hidden2(p));
@@ -83,6 +82,7 @@ bool COptions::handle_gocmds_options(const CCommandOption& p) {
         replaceAll(source, "for key, value := range r.URL.Query() {", "for key, _ := range r.URL.Query() {");
     }
     replaceAll(source, "[{TEST_LOGS}]", get_testlogs(p));
+    replaceAll(source, "[{DASH_STR}]", get_copyopts(p));
     replaceAll(source, "[{IMPORTS}]", get_imports(source));
 
     string_q fn = getSourcePath("apps/chifra/internal/" + p.api_route + "/options.go");
@@ -350,25 +350,25 @@ string_q get_copyopts(const CCommandOption& cmd) {
         replace(p.longName, "deleteMe", "delete");
         if (p.option_type != "positional" && !p.isDeprecated) {
             if (p.go_type == "[]string") {
-                os << "\tfor _, t := range [{PROPER}]Opts." << p.longName << " {" << endl;
+                os << "\tfor _, t := range opts." << noUnderbars(p.longName) << " {" << endl;
                 os << "\t\toptions += \" --" << p.longName << " \" + t" << endl;
                 os << "\t}" << endl;
             } else if (p.go_type == "string") {
-                os << "\tif len([{PROPER}]Opts." << p.longName << ") > 0 {" << endl;
-                os << "\t\toptions += \" --" << p.longName << " \" + [{PROPER}]Opts." << p.longName << endl;
+                os << "\tif len(opts." << noUnderbars(p.longName) << ") > 0 {" << endl;
+                os << "\t\toptions += \" --" << p.longName << " \" + opts." << noUnderbars(p.longName) << endl;
                 os << "\t}" << endl;
             } else if (p.go_type == "uint64" || p.go_type == "uint32") {
-                os << "\tif [{PROPER}]Opts." << p.longName << " > 0 {" << endl;
+                os << "\tif opts." << noUnderbars(p.longName) << " > 0 {" << endl;
                 os << "\t\toptions += \" --" << p.longName << " \" + ";
-                os << "fmt.Sprintf(\"%d\", [{PROPER}]Opts." << p.longName << ")" << endl;
+                os << "fmt.Sprintf(\"%d\", opts." << noUnderbars(p.longName) << ")" << endl;
                 os << "\t}" << endl;
             } else if (p.go_type == "float64") {
-                os << "\tif [{PROPER}]Opts." << p.longName << " > 0.0 {" << endl;
+                os << "\tif opts." << noUnderbars(p.longName) << " > 0.0 {" << endl;
                 os << "\t\toptions += \" --" << p.longName << " \" + ";
-                os << "fmt.Sprintf(\"%.1f\", [{PROPER}]Opts." << p.longName << ")" << endl;
+                os << "fmt.Sprintf(\"%.1f\", opts." << noUnderbars(p.longName) << ")" << endl;
                 os << "\t}" << endl;
             } else {
-                os << "\tif [{PROPER}]Opts." << p.longName << " {" << endl;
+                os << "\tif opts." << noUnderbars(p.longName) << " {" << endl;
                 os << "\t\toptions += \" --" << p.longName << "\"" << endl;
                 os << "\t}" << endl;
             }

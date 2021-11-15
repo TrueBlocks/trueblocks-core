@@ -50,7 +50,6 @@ func init() {
 	globals.InitGlobals(serveCmd, &servePkg.Options.Globals)
 
 	serveCmd.SetUsageTemplate(UsageWithNotes(notesServe))
-
 	serveCmd.SetOut(os.Stderr)
 
 	chifraCmd.AddCommand(serveCmd)

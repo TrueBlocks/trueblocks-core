@@ -66,7 +66,6 @@ One of [ toggle | run | restart | pause | quit ]`)
 	globals.InitGlobals(scrapeCmd, &scrapePkg.Options.Globals)
 
 	scrapeCmd.SetUsageTemplate(UsageWithNotes(notesScrape))
-
 	scrapeCmd.SetOut(os.Stderr)
 
 	chifraCmd.AddCommand(scrapeCmd)

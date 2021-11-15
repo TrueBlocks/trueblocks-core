@@ -33,6 +33,14 @@ func (opts *ServeOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
+func (opts *ServeOptions) ToDashStr() string {
+	options := ""
+	if len(opts.Port) > 0 {
+		options += " --port " + opts.Port
+	}
+	return options
+}
+
 func FromRequest(w http.ResponseWriter, r *http.Request) *ServeOptions {
 	opts := &ServeOptions{}
 	for key, value := range r.URL.Query() {

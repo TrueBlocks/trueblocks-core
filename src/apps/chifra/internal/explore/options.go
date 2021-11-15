@@ -39,6 +39,12 @@ func (opts *ExploreOptions) TestLog() {
 
 func (opts *ExploreOptions) ToDashStr() string {
 	options := ""
+	if opts.Local {
+		options += " --local"
+	}
+	if opts.Google {
+		options += " --google"
+	}
 	return options
 }
 

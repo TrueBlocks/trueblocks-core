@@ -19,6 +19,8 @@ package pinsPkg
 import (
 	"net/http"
 
+	"fmt"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 )
@@ -46,6 +48,21 @@ func (opts *PinsOptions) TestLog() {
 
 func (opts *PinsOptions) ToDashStr() string {
 	options := ""
+	if opts.List {
+		options += " --list"
+	}
+	if opts.Init {
+		options += " --init"
+	}
+	if opts.All {
+		options += " --all"
+	}
+	if opts.Share {
+		options += " --share"
+	}
+	if opts.Sleep > 0.0 {
+		options += " --sleep " + fmt.Sprintf("%.1f", opts.Sleep)
+	}
 	return options
 }
 

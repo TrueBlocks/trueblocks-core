@@ -80,7 +80,6 @@ func init() {
 	globals.InitGlobals(blocksCmd, &blocksPkg.Options.Globals)
 
 	blocksCmd.SetUsageTemplate(UsageWithNotes(notesBlocks))
-
 	blocksCmd.SetOut(os.Stderr)
 
 	chifraCmd.AddCommand(blocksCmd)

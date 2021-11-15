@@ -63,7 +63,6 @@ func init() {
 	globals.InitGlobals(pinsCmd, &pinsPkg.Options.Globals)
 
 	pinsCmd.SetUsageTemplate(UsageWithNotes(notesPins))
-
 	pinsCmd.SetOut(os.Stderr)
 
 	chifraCmd.AddCommand(pinsCmd)

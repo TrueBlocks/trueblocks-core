@@ -67,7 +67,6 @@ One or more of [ none | some | all | balance | nonce | code | storage | deployed
 	globals.InitGlobals(stateCmd, &statePkg.Options.Globals)
 
 	stateCmd.SetUsageTemplate(UsageWithNotes(notesState))
-
 	stateCmd.SetOut(os.Stderr)
 
 	chifraCmd.AddCommand(stateCmd)

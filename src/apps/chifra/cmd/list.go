@@ -58,7 +58,6 @@ func init() {
 	globals.InitGlobals(listCmd, &listPkg.Options.Globals)
 
 	listCmd.SetUsageTemplate(UsageWithNotes(notesList))
-
 	listCmd.SetOut(os.Stderr)
 
 	chifraCmd.AddCommand(listCmd)

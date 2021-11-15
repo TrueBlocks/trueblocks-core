@@ -38,7 +38,7 @@ func (opts *LogsOptions) TestLog() {
 
 func (opts *LogsOptions) ToDashStr() string {
 	options := ""
-	if Options.Articulate {
+	if opts.Articulate {
 		options += " --articulate"
 	}
 	options += " " + strings.Join(opts.Transactions, " ")

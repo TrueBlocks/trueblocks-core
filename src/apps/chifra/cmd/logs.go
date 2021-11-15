@@ -55,7 +55,6 @@ func init() {
 	globals.InitGlobals(logsCmd, &logsPkg.Options.Globals)
 
 	logsCmd.SetUsageTemplate(UsageWithNotes(notesLogs))
-
 	logsCmd.SetOut(os.Stderr)
 
 	chifraCmd.AddCommand(logsCmd)
