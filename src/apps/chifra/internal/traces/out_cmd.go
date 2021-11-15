@@ -14,42 +14,19 @@ package tracesPkg
  *-------------------------------------------------------------------------------------------*/
 
 import (
-	"fmt"
-
 	"github.com/spf13/cobra"
 )
 
 var Options TracesOptions
 
 func RunTraces(cmd *cobra.Command, args []string) error {
-	err := Validate(cmd, args)
+	Options.Transactions = args
+	opts := Options
+
+	err := opts.ValidateTraces()
 	if err != nil {
 		return err
 	}
 
-	options := ""
-	if Options.Articulate {
-		options += " --articulate"
-	}
-	if len(Options.Filter) > 0 {
-		options += " --filter " + Options.Filter
-	}
-	if Options.Statediff {
-		options += " --statediff"
-	}
-	if Options.Count {
-		options += " --count"
-	}
-	if Options.SkipDdos {
-		options += " --skip_ddos"
-	}
-	if Options.Max != 250 {
-		options += " --max " + fmt.Sprintf("%d", Options.Max)
-	}
-	arguments := ""
-	for _, arg := range args {
-		arguments += " " + arg
-	}
-
-	return Options.Globals.PassItOn("getTraces", options, arguments)
+	return Options.Globals.PassItOn("getTraces", opts.ToDashStr())
 }

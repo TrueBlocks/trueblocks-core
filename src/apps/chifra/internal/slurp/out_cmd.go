@@ -20,22 +20,13 @@ import (
 var Options SlurpOptions
 
 func RunSlurp(cmd *cobra.Command, args []string) error {
-	err := Validate(cmd, args)
+	Options.Addrs = args // note this is also Blocks and Types
+	opts := Options
+
+	err := opts.ValidateSlurp()
 	if err != nil {
 		return err
 	}
 
-	options := ""
-	for _, t := range Options.Types {
-		options += " --types " + t
-	}
-	if Options.Appearances {
-		options += " --appearances"
-	}
-	arguments := ""
-	for _, arg := range args {
-		arguments += " " + arg
-	}
-
-	return Options.Globals.PassItOn("ethslurp", options, arguments)
+	return opts.Globals.PassItOn("ethslurp", opts.ToDashStr())
 }

@@ -1,4 +1,5 @@
 chifra status  index --test_start 1000000 --test_end 2500000
+TEST[DATE|TIME] Modes:  [index]
 TEST[DATE|TIME] Depth:  0
 TEST[DATE|TIME] TestStart:  1000000
 TEST[DATE|TIME] TestEnd:  2500000

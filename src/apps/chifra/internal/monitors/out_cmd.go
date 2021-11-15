@@ -14,48 +14,19 @@ package monitorsPkg
  *-------------------------------------------------------------------------------------------*/
 
 import (
-	"fmt"
-
 	"github.com/spf13/cobra"
 )
 
 var Options MonitorsOptions
 
 func RunMonitors(cmd *cobra.Command, args []string) error {
-	err := Validate(cmd, args)
+	Options.Addrs = args
+	opts := Options
+
+	err := opts.ValidateMonitors()
 	if err != nil {
 		return err
 	}
 
-	options := ""
-	if Options.Appearances {
-		options += " --appearances"
-	}
-	if Options.Count {
-		options += " --count"
-	}
-	if Options.Clean {
-		options += " --clean"
-	}
-	if Options.FirstBlock > 0 {
-		options += " --first_block " + fmt.Sprintf("%d", Options.FirstBlock)
-	}
-	if Options.LastBlock > 0 {
-		options += " --last_block " + fmt.Sprintf("%d", Options.LastBlock)
-	}
-	if Options.Delete {
-		options += " --delete"
-	}
-	if Options.Remove {
-		options += " --remove"
-	}
-	if Options.Undelete {
-		options += " --undelete"
-	}
-	arguments := ""
-	for _, arg := range args {
-		arguments += " " + arg
-	}
-
-	return Options.Globals.PassItOn("acctExport", options, arguments)
+	return Options.Globals.PassItOn("acctExport", opts.ToDashStr())
 }

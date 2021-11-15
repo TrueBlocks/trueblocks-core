@@ -1,4 +1,5 @@
 chifra  names 50-Tokens --expand
+TEST[DATE|TIME] Terms:  [50-Tokens]
 TEST[DATE|TIME] Expand:  true
 tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefund	is_contract	is_erc20	is_erc721
 50-Tokens:ERC20	0x0000000000001b84b1cb32787b0d64758d019317	HomeWork 🏠🛠️	HWK	On chain	18		false	false	false	true	true	true

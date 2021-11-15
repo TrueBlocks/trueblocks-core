@@ -20,19 +20,13 @@ import (
 var Options ReceiptsOptions
 
 func RunReceipts(cmd *cobra.Command, args []string) error {
-	err := Validate(cmd, args)
+	Options.Transactions = args
+	opts := Options
+
+	err := opts.ValidateReceipts()
 	if err != nil {
 		return err
 	}
 
-	options := ""
-	if Options.Articulate {
-		options += " --articulate"
-	}
-	arguments := ""
-	for _, arg := range args {
-		arguments += " " + arg
-	}
-
-	return Options.Globals.PassItOn("getReceipts", options, arguments)
+	return opts.Globals.PassItOn("getReceipts", opts.ToDashStr())
 }

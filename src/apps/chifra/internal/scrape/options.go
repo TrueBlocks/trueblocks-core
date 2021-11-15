@@ -17,7 +17,9 @@ package scrapePkg
  */
 
 import (
+	"fmt"
 	"net/http"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -45,6 +47,22 @@ func (opts *ScrapeOptions) TestLog() {
 	logger.TestLog(opts.BlockChanCnt != 10, "BlockChanCnt: ", opts.BlockChanCnt)
 	logger.TestLog(opts.AddrChanCnt != 20, "AddrChanCnt: ", opts.AddrChanCnt)
 	opts.Globals.TestLog()
+}
+
+func (opts *ScrapeOptions) ToDashStr() string {
+	options := ""
+	if Options.Pin {
+		options += " --pin "
+	}
+	if Options.Publish {
+		options += " --publish "
+	}
+	if Options.Sleep != 14. {
+		options += " --sleep " + fmt.Sprintf("%g", Options.Sleep)
+	}
+	options += (" --block_cnt " + fmt.Sprintf("%d", Options.BlockCnt))
+	options += " " + strings.Join(opts.Modes, " ")
+	return options
 }
 
 func FromRequest(w http.ResponseWriter, r *http.Request) *ScrapeOptions {

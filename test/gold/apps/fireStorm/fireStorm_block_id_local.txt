@@ -1,3 +1,4 @@
 chifra explore  12 --local
+TEST[DATE|TIME] Terms:  [12]
 TEST[DATE|TIME] Local:  true
 Opening http://localhost:1234/explorer/blocks/12

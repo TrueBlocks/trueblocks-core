@@ -81,9 +81,9 @@ func init() {
 	namesCmd.SetUsageTemplate(UsageWithNotes(notesNames))
 
 	namesCmd.SetOut(os.Stderr)
-	if namesPkg.Options.Globals.ApiMode {
-		namesCmd.SetErr(os.Stdout)
-	}
+	// if namesPkg.Options.Globals.ApiMode {
+	// 	namesCmd.SetErr(os.Stdout)
+	// }
 
 	chifraCmd.AddCommand(namesCmd)
 }

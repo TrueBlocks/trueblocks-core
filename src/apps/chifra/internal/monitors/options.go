@@ -17,7 +17,9 @@ package monitorsPkg
  */
 
 import (
+	"fmt"
 	"net/http"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -48,6 +50,36 @@ func (opts *MonitorsOptions) TestLog() {
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
 	logger.TestLog(opts.LastBlock != utils.NOPOS, "LastBlock: ", opts.LastBlock)
 	opts.Globals.TestLog()
+}
+
+func (opts *MonitorsOptions) ToDashStr() string {
+	options := ""
+	if opts.Appearances {
+		options += " --appearances"
+	}
+	if opts.Count {
+		options += " --count"
+	}
+	if opts.Clean {
+		options += " --clean"
+	}
+	if opts.FirstBlock > 0 {
+		options += " --first_block " + fmt.Sprintf("%d", opts.FirstBlock)
+	}
+	if opts.LastBlock > 0 {
+		options += " --last_block " + fmt.Sprintf("%d", opts.LastBlock)
+	}
+	if opts.Delete {
+		options += " --delete"
+	}
+	if opts.Remove {
+		options += " --remove"
+	}
+	if opts.Undelete {
+		options += " --undelete"
+	}
+	options += " " + strings.Join(opts.Addrs, " ")
+	return options
 }
 
 func FromRequest(w http.ResponseWriter, r *http.Request) *MonitorsOptions {

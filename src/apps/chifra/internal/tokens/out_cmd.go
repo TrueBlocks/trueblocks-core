@@ -20,25 +20,13 @@ import (
 var Options TokensOptions
 
 func RunTokens(cmd *cobra.Command, args []string) error {
-	err := Validate(cmd, args)
+	Options.Addrs2 = args
+	opts := Options
+
+	err := opts.ValidateTokens()
 	if err != nil {
 		return err
 	}
 
-	options := ""
-	for _, t := range Options.Parts {
-		options += " --parts " + t
-	}
-	if Options.ByAcct {
-		options += " --by_acct"
-	}
-	if Options.NoZero {
-		options += " --no_zero"
-	}
-	arguments := ""
-	for _, arg := range args {
-		arguments += " " + arg
-	}
-
-	return Options.Globals.PassItOn("getTokens", options, arguments)
+	return opts.Globals.PassItOn("getTokens", opts.ToDashStr())
 }

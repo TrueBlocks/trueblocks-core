@@ -20,19 +20,13 @@ import (
 var Options LogsOptions
 
 func RunLogs(cmd *cobra.Command, args []string) error {
-	err := Validate(cmd, args)
+	Options.Transactions = args
+	opts := Options
+
+	err := opts.ValidateLogs()
 	if err != nil {
 		return err
 	}
 
-	options := ""
-	if Options.Articulate {
-		options += " --articulate"
-	}
-	arguments := ""
-	for _, arg := range args {
-		arguments += " " + arg
-	}
-
-	return Options.Globals.PassItOn("getLogs", options, arguments)
+	return opts.Globals.PassItOn("getLogs", opts.ToDashStr())
 }

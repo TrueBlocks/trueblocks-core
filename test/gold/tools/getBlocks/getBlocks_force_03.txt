@@ -1,4 +1,5 @@
 chifra blocks  4369999 --cache
+TEST[DATE|TIME] Blocks:  [4369999]
 TEST[DATE|TIME] Cache:  true
 { "data": [
 {

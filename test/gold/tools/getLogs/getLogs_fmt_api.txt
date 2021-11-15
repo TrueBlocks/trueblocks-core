@@ -1,4 +1,5 @@
 chifra logs  2222222.0 2332332.0 --fmt api
+TEST[DATE|TIME] Transactions:  [2222222.0 2332332.0]
 TEST[DATE|TIME] Format:  api
 {"data": [
   {

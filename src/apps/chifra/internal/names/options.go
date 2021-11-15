@@ -18,6 +18,7 @@ package namesPkg
 
 import (
 	"net/http"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -65,6 +66,63 @@ func (opts *NamesOptions) TestLog() {
 	logger.TestLog(opts.Remove, "Remove: ", opts.Remove)
 	logger.TestLog(opts.Undelete, "Undelete: ", opts.Undelete)
 	opts.Globals.TestLog()
+}
+
+func (opts *NamesOptions) ToDashStr() string {
+	options := ""
+	if opts.Expand {
+		options += " --expand"
+	}
+	if opts.MatchCase {
+		options += " --match_case"
+	}
+	if opts.All {
+		options += " --all"
+	}
+	if opts.Custom {
+		options += " --custom"
+	}
+	if opts.Prefund {
+		options += " --prefund"
+	}
+	if opts.Named {
+		options += " --named"
+	}
+	if opts.Addr {
+		options += " --addr"
+	}
+	if opts.Collections {
+		options += " --collections"
+	}
+	if opts.Tags {
+		options += " --tags"
+	}
+	if opts.ToCustom {
+		options += " --to_custom"
+	}
+	if opts.Clean {
+		options += " --clean"
+	}
+	if opts.Create {
+		options += " --create"
+	}
+	if opts.Delete {
+		options += " --delete"
+	}
+	if opts.Update {
+		options += " --update"
+	}
+	if opts.Remove {
+		options += " --remove"
+	}
+	if opts.Undelete {
+		options += " --undelete"
+	}
+	if len(opts.Autoname) > 0 {
+		options += " --autoname " + opts.Autoname
+	}
+	options += " " + strings.Join(opts.Terms, " ")
+	return options
 }
 
 func FromRequest(w http.ResponseWriter, r *http.Request) *NamesOptions {

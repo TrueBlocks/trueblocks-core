@@ -20,31 +20,13 @@ import (
 var Options StateOptions
 
 func RunState(cmd *cobra.Command, args []string) error {
-	err := Validate(cmd, args)
+	Options.Addrs = args
+	opts := Options
+
+	err := opts.ValidateState()
 	if err != nil {
 		return err
 	}
 
-	options := ""
-	for _, t := range Options.Parts {
-		options += " --parts " + t
-	}
-	if Options.Changes {
-		options += " --changes"
-	}
-	if Options.NoZero {
-		options += " --no_zero"
-	}
-	if len(Options.Call) > 0 {
-		options += " --call " + Options.Call
-	}
-	if len(Options.ProxyFor) > 0 {
-		options += " --proxy_for " + Options.ProxyFor
-	}
-	arguments := ""
-	for _, arg := range args {
-		arguments += " " + arg
-	}
-
-	return Options.Globals.PassItOn("getState", options, arguments)
+	return opts.Globals.PassItOn("getState", opts.ToDashStr())
 }

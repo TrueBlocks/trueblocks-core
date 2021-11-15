@@ -20,31 +20,13 @@ import (
 var Options ChunksOptions
 
 func RunChunks(cmd *cobra.Command, args []string) error {
-	err := Validate(cmd, args)
+	Options.Blocks = args
+	opts := Options
+
+	err := opts.ValidateChunks()
 	if err != nil {
 		return err
 	}
 
-	options := ""
-	if Options.List {
-		options += " --list"
-	}
-	if Options.Check {
-		options += " --check"
-	}
-	if len(Options.Extract) > 0 {
-		options += " --extract " + Options.Extract
-	}
-	if Options.Save {
-		options += " --save"
-	}
-	if Options.Stats {
-		options += " --stats"
-	}
-	arguments := ""
-	for _, arg := range args {
-		arguments += " " + arg
-	}
-
-	return Options.Globals.PassItOn("chunkMan", options, arguments)
+	return opts.Globals.PassItOn("chunkMan", opts.ToDashStr())
 }

@@ -37,6 +37,11 @@ func (opts *ExploreOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
+func (opts *ExploreOptions) ToDashStr() string {
+	options := ""
+	return options
+}
+
 func FromRequest(w http.ResponseWriter, r *http.Request) *ExploreOptions {
 	opts := &ExploreOptions{}
 	for key, value := range r.URL.Query() {

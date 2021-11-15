@@ -17,7 +17,9 @@ package blocksPkg
  */
 
 import (
+	"fmt"
 	"net/http"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -59,6 +61,54 @@ func (opts *BlocksOptions) TestLog() {
 	logger.TestLog(opts.List != 0, "List: ", opts.List)
 	logger.TestLog(opts.ListCount != 20, "ListCount: ", opts.ListCount)
 	opts.Globals.TestLog()
+}
+
+func (opts *BlocksOptions) ToDashStr() string {
+	options := ""
+	if opts.Hashes {
+		options += " --hashes"
+	}
+	if opts.Uncles {
+		options += " --uncles"
+	}
+	if opts.Trace {
+		options += " --trace"
+	}
+	if opts.Apps {
+		options += " --apps"
+	}
+	if opts.Uniq {
+		options += " --uniq"
+	}
+	if opts.Logs {
+		options += " --logs"
+	}
+	for _, e := range opts.Emitter {
+		options += " --emitter " + e
+	}
+	for _, t := range opts.Topic {
+		options += " --topic " + t
+	}
+	if opts.Articulate {
+		options += " --articulate"
+	}
+	if opts.BigRange != 500 {
+		options += " --big_range " + fmt.Sprintf("%d", opts.BigRange)
+	}
+	if opts.Count {
+		options += " --count"
+	}
+	if opts.Cache {
+		options += " --cache"
+	}
+	if opts.List > 0 {
+		options += " --list " + fmt.Sprintf("%d", opts.List)
+	}
+	if opts.ListCount != 20 {
+		options += " --list_count " + fmt.Sprintf("%d", opts.ListCount)
+	}
+	options += " " + strings.Join(opts.Blocks, " ")
+	return options
 }
 
 func FromRequest(w http.ResponseWriter, r *http.Request) *BlocksOptions {

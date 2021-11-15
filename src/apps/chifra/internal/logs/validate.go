@@ -15,10 +15,9 @@ package logsPkg
 
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
-	"github.com/spf13/cobra"
 )
 
-func Validate(cmd *cobra.Command, args []string) error {
+func (opts *LogsOptions) ValidateLogs() error {
 	Options.TestLog()
-	return globals.ValidateGlobals(&Options.Globals, args)
+	return globals.ValidateGlobals(&Options.Globals)
 }

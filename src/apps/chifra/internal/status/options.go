@@ -17,7 +17,9 @@ package statusPkg
  */
 
 import (
+	"fmt"
 	"net/http"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -51,6 +53,41 @@ func (opts *StatusOptions) TestLog() {
 	logger.TestLog(opts.TestStart != 0, "TestStart: ", opts.TestStart)
 	logger.TestLog(opts.TestEnd != utils.NOPOS, "TestEnd: ", opts.TestEnd)
 	opts.Globals.TestLog()
+}
+
+func (opts *StatusOptions) ToDashStr() string {
+	options := ""
+	if opts.Details {
+		options += " --details"
+	}
+	for _, t := range opts.Types {
+		options += " --types " + t
+	}
+	if opts.Depth != utils.NOPOS {
+		options += " --depth " + fmt.Sprintf("%d", opts.Depth)
+	}
+	if opts.Terse {
+		options += " --terse"
+	}
+	for _, t := range opts.Migrate {
+		options += " --migrate " + t
+	}
+	if opts.GetConfig {
+		options += " --get_config"
+	}
+	if opts.SetConfig {
+		options += " --set_config"
+	}
+	if opts.Globals.TestMode {
+		if opts.TestStart > 0 {
+			options += " --test_start " + fmt.Sprintf("%d", opts.TestStart)
+		}
+		if opts.TestEnd != utils.NOPOS {
+			options += " --test_end " + fmt.Sprintf("%d", opts.TestEnd)
+		}
+	}
+	options += " " + strings.Join(opts.Modes, " ")
+	return options
 }
 
 func FromRequest(w http.ResponseWriter, r *http.Request) *StatusOptions {

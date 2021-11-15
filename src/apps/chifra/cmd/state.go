@@ -69,9 +69,9 @@ One or more of [ none | some | all | balance | nonce | code | storage | deployed
 	stateCmd.SetUsageTemplate(UsageWithNotes(notesState))
 
 	stateCmd.SetOut(os.Stderr)
-	if statePkg.Options.Globals.ApiMode {
-		stateCmd.SetErr(os.Stdout)
-	}
+	// if statePkg.Options.Globals.ApiMode {
+	// 	stateCmd.SetErr(os.Stdout)
+	// }
 
 	chifraCmd.AddCommand(stateCmd)
 }

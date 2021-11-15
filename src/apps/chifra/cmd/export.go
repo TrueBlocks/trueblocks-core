@@ -103,9 +103,9 @@ One of [ yearly | quarterly | monthly | weekly | daily | hourly | blockly | tx ]
 	exportCmd.SetUsageTemplate(UsageWithNotes(notesExport))
 
 	exportCmd.SetOut(os.Stderr)
-	if exportPkg.Options.Globals.ApiMode {
-		exportCmd.SetErr(os.Stdout)
-	}
+	// if exportPkg.Options.Globals.ApiMode {
+	// 	exportCmd.SetErr(os.Stdout)
+	// }
 
 	chifraCmd.AddCommand(exportCmd)
 }

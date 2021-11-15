@@ -63,5 +63,5 @@ func (opts *PinsOptions) ValidatePins() error {
 
 	Options.TestLog()
 
-	return globals.ValidateGlobals(&opts.Globals, []string{})
+	return globals.ValidateGlobals(&opts.Globals)
 }

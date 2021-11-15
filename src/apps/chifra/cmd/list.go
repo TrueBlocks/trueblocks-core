@@ -60,9 +60,9 @@ func init() {
 	listCmd.SetUsageTemplate(UsageWithNotes(notesList))
 
 	listCmd.SetOut(os.Stderr)
-	if listPkg.Options.Globals.ApiMode {
-		listCmd.SetErr(os.Stdout)
-	}
+	// if listPkg.Options.Globals.ApiMode {
+	// 	listCmd.SetErr(os.Stdout)
+	// }
 
 	chifraCmd.AddCommand(listCmd)
 }

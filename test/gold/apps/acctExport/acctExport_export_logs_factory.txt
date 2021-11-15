@@ -1,4 +1,5 @@
 chifra export  0x8b3b3b624c3c0397d3da8fd861512393d51dcbac --factory --traces --last_block 1603174
+TEST[DATE|TIME] Addrs:  [0x8b3b3b624c3c0397d3da8fd861512393d51dcbac]
 TEST[DATE|TIME] Traces:  true
 TEST[DATE|TIME] Factory:  true
 TEST[DATE|TIME] LastBlock:  1603174

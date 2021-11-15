@@ -1,4 +1,5 @@
 chifra status  caches --types txs
+TEST[DATE|TIME] Modes:  [caches]
 TEST[DATE|TIME] Types:  [txs]
 TEST[DATE|TIME] Depth:  0
 TEST[DATE|TIME] TestEnd:  0

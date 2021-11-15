@@ -1,4 +1,5 @@
 chifra names  --prefund --custom 0001 Genesis --expand
+TEST[DATE|TIME] Terms:  [0001 Genesis]
 TEST[DATE|TIME] Expand:  true
 TEST[DATE|TIME] Custom:  true
 TEST[DATE|TIME] Prefund:  true

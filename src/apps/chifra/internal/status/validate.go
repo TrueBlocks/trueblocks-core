@@ -18,10 +18,9 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
-	"github.com/spf13/cobra"
 )
 
-func Validate(cmd *cobra.Command, args []string) error {
+func (opts *StatusOptions) ValidateStatus() error {
 	if Options.Depth > 3 {
 		return validate.Usage("The {0} option ({1}) must {2}.", "--depth", strconv.FormatUint(Options.Depth, 10), "be less than four (4)")
 	}
@@ -36,12 +35,12 @@ func Validate(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	err = validate.ValidateEnumSlice("modes", args, "[index|monitors|collections|names|abis|caches|some|all]")
+	err = validate.ValidateEnumSlice("modes", opts.Modes, "[index|monitors|collections|names|abis|caches|some|all]")
 	if err != nil {
 		return err
 	}
 
 	Options.TestLog()
 
-	return globals.ValidateGlobals(&Options.Globals, args)
+	return globals.ValidateGlobals(&Options.Globals)
 }

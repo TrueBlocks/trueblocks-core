@@ -18,6 +18,7 @@ package whenPkg
 
 import (
 	"net/http"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -41,6 +42,27 @@ func (opts *WhenOptions) TestLog() {
 	logger.TestLog(opts.Fix, "Fix: ", opts.Fix)
 	logger.TestLog(opts.Count, "Count: ", opts.Count)
 	opts.Globals.TestLog()
+}
+
+func (opts *WhenOptions) ToDashStr() string {
+	options := ""
+	if Options.List {
+		options += " --list"
+	}
+	if Options.Timestamps {
+		options += " --timestamps"
+	}
+	if Options.Check {
+		options += " --check"
+	}
+	if Options.Fix {
+		options += " --fix"
+	}
+	if Options.Count {
+		options += " --count"
+	}
+	options += " " + strings.Join(opts.Blocks, " ")
+	return options
 }
 
 func FromRequest(w http.ResponseWriter, r *http.Request) *WhenOptions {

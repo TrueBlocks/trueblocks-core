@@ -20,7 +20,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
-	"github.com/spf13/cobra"
 )
 
 type ExploreType uint8
@@ -42,12 +41,12 @@ type ExploreUrl struct {
 
 var urls []ExploreUrl
 
-func Validate(cmd *cobra.Command, args []string) error {
+func (opts *ExploreOptions) ValidateExplore() error {
 	if Options.Google && Options.Local {
 		return validate.Usage("The {0} option is not available{1}.", "--local", " with the --google option")
 	}
 
-	for _, arg := range args {
+	for _, arg := range opts.Terms {
 		arg = strings.ToLower(arg)
 
 		valid, _ := validate.IsValidAddress(arg)
@@ -99,7 +98,7 @@ func Validate(cmd *cobra.Command, args []string) error {
 
 	Options.TestLog()
 
-	return globals.ValidateGlobals(&Options.Globals, args)
+	return globals.ValidateGlobals(&Options.Globals)
 }
 
 func id_2_TxHash(arg string) (string, error) {

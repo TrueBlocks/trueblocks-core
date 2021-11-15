@@ -56,9 +56,9 @@ func init() {
 	receiptsCmd.SetUsageTemplate(UsageWithNotes(notesReceipts))
 
 	receiptsCmd.SetOut(os.Stderr)
-	if receiptsPkg.Options.Globals.ApiMode {
-		receiptsCmd.SetErr(os.Stdout)
-	}
+	// if receiptsPkg.Options.Globals.ApiMode {
+	// 	receiptsCmd.SetErr(os.Stdout)
+	// }
 
 	chifraCmd.AddCommand(receiptsCmd)
 }

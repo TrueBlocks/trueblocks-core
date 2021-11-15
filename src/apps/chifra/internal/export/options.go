@@ -17,7 +17,9 @@ package exportPkg
  */
 
 import (
+	"fmt"
 	"net/http"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -96,6 +98,99 @@ func (opts *ExportOptions) TestLog() {
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
 	logger.TestLog(opts.LastBlock != utils.NOPOS, "LastBlock: ", opts.LastBlock)
 	opts.Globals.TestLog()
+}
+
+func (opts *ExportOptions) ToDashStr() string {
+	options := ""
+	if Options.Appearances {
+		options += " --appearances"
+	}
+	if Options.Receipts {
+		options += " --receipts"
+	}
+	if Options.Statements {
+		options += " --statements"
+	}
+	if Options.Logs {
+		options += " --logs"
+	}
+	if Options.Traces {
+		options += " --traces"
+	}
+	if Options.Accounting {
+		options += " --accounting"
+	}
+	if Options.Articulate {
+		options += " --articulate"
+	}
+	if Options.Cache {
+		options += " --cache"
+	}
+	if Options.CacheTraces {
+		options += " --cache_traces"
+	}
+	if Options.Neighbors {
+		options += " --neighbors"
+	}
+	if Options.Factory {
+		options += " --factory"
+	}
+	for _, e := range Options.Emitter {
+		options += " --emitter " + e
+	}
+	for _, t := range Options.Topic {
+		options += " --topic " + t
+	}
+	if Options.Relevant {
+		options += " --relevant"
+	}
+	if Options.Count {
+		options += " --count"
+	}
+	if Options.FirstRecord > 0 {
+		options += " --first_record " + fmt.Sprintf("%d", Options.FirstRecord)
+	}
+	if Options.MaxRecords > 0 && Options.MaxRecords != 250 {
+		options += " --max_records " + fmt.Sprintf("%d", Options.MaxRecords)
+	}
+	if Options.Clean {
+		options += " --clean"
+	}
+	if Options.Freshen {
+		options += " --freshen"
+	}
+	if Options.Staging {
+		options += " --staging"
+	}
+	if Options.Unripe {
+		options += " --unripe"
+	}
+	if len(Options.Load) > 0 {
+		options += " --load " + Options.Load
+	}
+	if Options.Reversed {
+		options += " --reversed"
+	}
+	if Options.ByDate {
+		options += " --by_date"
+	}
+	if len(Options.SummarizeBy) > 0 {
+		options += " --summarize_by " + Options.SummarizeBy
+	}
+	if Options.SkipDdos {
+		options += " --skip_ddos"
+	}
+	if Options.MaxTraces != 250 {
+		options += " --max_traces " + fmt.Sprintf("%d", Options.MaxTraces)
+	}
+	if Options.FirstBlock > 0 {
+		options += " --first_block " + fmt.Sprintf("%d", Options.FirstBlock)
+	}
+	if Options.LastBlock > 0 {
+		options += " --last_block " + fmt.Sprintf("%d", Options.LastBlock)
+	}
+	options += " " + strings.Join(opts.Addrs, " ")
+	return options
 }
 
 func FromRequest(w http.ResponseWriter, r *http.Request) *ExportOptions {

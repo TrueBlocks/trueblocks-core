@@ -1,4 +1,5 @@
 chifra status  --details some --test_start 3000000 --test_end 3100000
+TEST[DATE|TIME] Modes:  [some]
 TEST[DATE|TIME] Details:  true
 TEST[DATE|TIME] Depth:  0
 TEST[DATE|TIME] TestStart:  3000000

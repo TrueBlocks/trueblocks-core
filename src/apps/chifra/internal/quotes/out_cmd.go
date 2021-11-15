@@ -20,28 +20,12 @@ import (
 var Options QuotesOptions
 
 func RunQuotes(cmd *cobra.Command, args []string) error {
-	err := Validate(cmd, args)
+	opts := Options
+
+	err := opts.ValidateQuotes()
 	if err != nil {
 		return err
 	}
 
-	options := ""
-	if Options.Freshen {
-		options += " --freshen"
-	}
-	if len(Options.Period) > 0 {
-		options += " --period " + Options.Period
-	}
-	if len(Options.Pair) > 0 {
-		options += " --pair " + Options.Pair
-	}
-	if len(Options.Feed) > 0 {
-		options += " --feed " + Options.Feed
-	}
-	arguments := ""
-	for _, arg := range args {
-		arguments += " " + arg
-	}
-
-	return Options.Globals.PassItOn("getQuotes", options, arguments)
+	return opts.Globals.PassItOn("getQuotes", opts.ToDashStr())
 }

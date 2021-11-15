@@ -13,10 +13,6 @@ package initPkg
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 
-import (
-	"github.com/spf13/cobra"
-)
-
-func Validate(cmd *cobra.Command, args []string) error {
+func (opts *InitOptions) ValidateInit() error {
 	return nil // will get validated by RunPins
 }

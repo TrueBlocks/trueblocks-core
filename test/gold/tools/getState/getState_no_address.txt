@@ -1,4 +1,5 @@
 chifra state  12
+TEST[DATE|TIME] Addrs:  [12]
 
   You must provide at least one Ethereum address. Quitting...
 

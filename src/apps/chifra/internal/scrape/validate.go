@@ -18,18 +18,17 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
-	"github.com/spf13/cobra"
 )
 
 // TODO: this is a much more elegant way to do error strings:
 // TODO: https://github.com/storj/uplink/blob/v1.7.0/bucket.go#L19
 
-func Validate(cmd *cobra.Command, args []string) error {
-	if len(args) == 0 {
+func (opts *ScrapeOptions) ValidateScrape() error {
+	if len(opts.Modes) == 0 {
 		return validate.Usage("Please choose at least one of {0}.", "[indexer|monitors|both]")
 
 	} else {
-		for _, arg := range args {
+		for _, arg := range opts.Modes {
 			err := validate.ValidateEnum("mode", arg, "[indexer|monitors|both]")
 			if err != nil {
 				return err
@@ -49,15 +48,15 @@ func Validate(cmd *cobra.Command, args []string) error {
 		return validate.Usage("The {0} option ({1}) must {2}.", "--sleep", fmt.Sprintf("%f", Options.Sleep), "be greater than .5")
 	}
 
-	if Options.Pin && !hasIndexerFlag(args[0]) {
+	if Options.Pin && !hasIndexerFlag(opts.Modes[0]) {
 		return validate.Usage("The {0} option is available only with {1}.", "--pin", "the indexer")
 	}
 
-	if Options.Publish && !hasIndexerFlag(args[0]) {
+	if Options.Publish && !hasIndexerFlag(opts.Modes[0]) {
 		return validate.Usage("The {0} option is available only with {1}.", "--publish", "the indexer")
 	}
 
 	Options.TestLog()
 
-	return globals.ValidateGlobals(&Options.Globals, args)
+	return globals.ValidateGlobals(&Options.Globals)
 }

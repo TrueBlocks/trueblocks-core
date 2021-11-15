@@ -56,9 +56,9 @@ One of [ poloniex | maker | tellor ]`)
 	quotesCmd.SetUsageTemplate(UsageWithNotes(notesQuotes))
 
 	quotesCmd.SetOut(os.Stderr)
-	if quotesPkg.Options.Globals.ApiMode {
-		quotesCmd.SetErr(os.Stdout)
-	}
+	// if quotesPkg.Options.Globals.ApiMode {
+	// 	quotesCmd.SetErr(os.Stdout)
+	// }
 
 	chifraCmd.AddCommand(quotesCmd)
 }

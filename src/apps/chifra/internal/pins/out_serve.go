@@ -11,6 +11,7 @@ func ServePins(w http.ResponseWriter, r *http.Request) {
 
 	err := pinlib.EstablishIndexFolders()
 	if err != nil {
+		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
 		return
 	}
 

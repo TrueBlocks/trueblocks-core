@@ -14,8 +14,6 @@ package abisPkg
  *-------------------------------------------------------------------------------------------*/
 
 import (
-	"strings"
-
 	"github.com/spf13/cobra"
 )
 
@@ -23,16 +21,17 @@ var Options AbisOptions
 
 func RunAbis(cmd *cobra.Command, args []string) error {
 	Options.Addrs = args
+	opts := Options
 
-	err := Options.ValidateAbis()
+	err := opts.ValidateAbis()
 	if err != nil {
 		// cobra reports the error
 		return err
 	}
 
-	if len(Options.Find) > 0 {
-		return Options.FindInternal()
+	if len(opts.Find) > 0 {
+		return opts.FindInternal()
 	}
 
-	return Options.Globals.PassItOn("grabABI", Options.ToDashStr(), strings.Join(Options.Addrs, " "))
+	return opts.Globals.PassItOn("grabABI", opts.ToDashStr())
 }

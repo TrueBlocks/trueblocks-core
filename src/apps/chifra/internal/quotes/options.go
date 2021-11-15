@@ -39,6 +39,23 @@ func (opts *QuotesOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
+func (opts *QuotesOptions) ToDashStr() string {
+	options := ""
+	if opts.Freshen {
+		options += " --freshen"
+	}
+	if len(opts.Period) > 0 {
+		options += " --period " + opts.Period
+	}
+	if len(opts.Pair) > 0 {
+		options += " --pair " + opts.Pair
+	}
+	if len(opts.Feed) > 0 {
+		options += " --feed " + opts.Feed
+	}
+	return options
+}
+
 func FromRequest(w http.ResponseWriter, r *http.Request) *QuotesOptions {
 	opts := &QuotesOptions{}
 	for key, value := range r.URL.Query() {

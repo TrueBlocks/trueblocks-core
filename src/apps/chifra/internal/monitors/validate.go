@@ -17,12 +17,11 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
-	"github.com/spf13/cobra"
 )
 
-func Validate(cmd *cobra.Command, args []string) error {
+func (opts *MonitorsOptions) ValidateMonitors() error {
 	if !utils.IsApiMode() && !Options.Clean {
-		err := validate.ValidateAtLeastOneAddr(args)
+		err := validate.ValidateAtLeastOneAddr(opts.Addrs)
 		if err != nil {
 			return err
 		}
@@ -30,5 +29,5 @@ func Validate(cmd *cobra.Command, args []string) error {
 
 	Options.TestLog()
 
-	return globals.ValidateGlobals(&Options.Globals, args)
+	return globals.ValidateGlobals(&Options.Globals)
 }

@@ -20,31 +20,13 @@ import (
 var Options TransactionsOptions
 
 func RunTransactions(cmd *cobra.Command, args []string) error {
-	err := Validate(cmd, args)
+	Options.Transactions = args
+	opts := Options
+
+	err := opts.ValidateTransactions()
 	if err != nil {
 		return err
 	}
 
-	options := ""
-	if Options.Articulate {
-		options += " --articulate"
-	}
-	if Options.Trace {
-		options += " --trace"
-	}
-	if Options.Uniq {
-		options += " --uniq"
-	}
-	if len(Options.Reconcile) > 0 {
-		options += " --reconcile " + Options.Reconcile
-	}
-	if Options.Cache {
-		options += " --cache"
-	}
-	arguments := ""
-	for _, arg := range args {
-		arguments += " " + arg
-	}
-
-	return Options.Globals.PassItOn("getTrans", options, arguments)
+	return opts.Globals.PassItOn("getTrans", opts.ToDashStr())
 }

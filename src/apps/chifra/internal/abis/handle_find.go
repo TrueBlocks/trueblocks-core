@@ -39,15 +39,13 @@ func (opts *AbisOptions) FindInternal() error {
 
 	var results []Function
 
-	testMode := os.Getenv("TEST_MODE") == "true"
-
 	var wg sync.WaitGroup
 	checkOne, _ := ants.NewPoolWithFunc(config.ReadBlockScrape().Dev.MaxPoolSize, func(testSig interface{}) {
 		defer wg.Done()
 		byts := []byte(testSig.(string))
 		sigBytes := crypto.Keccak256(byts)
 		for _, arg := range opts.Find {
-			if !testMode {
+			if !opts.Globals.TestMode {
 				visits.Report(os.Stderr, "Scanning", testSig.(string))
 			}
 			str, _ := hex.DecodeString(arg[2:])
@@ -100,6 +98,7 @@ func (opts *AbisOptions) FindInternal() error {
 
 	if opts.Globals.ApiMode {
 		opts.Globals.Respond(opts.Globals.Writer, http.StatusOK, results)
+		// fmt.Println("{ \"name\": \"jay\" }")
 
 	} else {
 		err = globals.Output(&opts.Globals, os.Stdout, opts.Globals.Format, results)

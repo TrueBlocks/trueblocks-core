@@ -17,7 +17,9 @@ package tracesPkg
  */
 
 import (
+	"fmt"
 	"net/http"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -43,6 +45,30 @@ func (opts *TracesOptions) TestLog() {
 	logger.TestLog(opts.SkipDdos, "SkipDdos: ", opts.SkipDdos)
 	logger.TestLog(opts.Max != 250, "Max: ", opts.Max)
 	opts.Globals.TestLog()
+}
+
+func (opts *TracesOptions) ToDashStr() string {
+	options := ""
+	if opts.Articulate {
+		options += " --articulate"
+	}
+	if len(opts.Filter) > 0 {
+		options += " --filter " + opts.Filter
+	}
+	if opts.Statediff {
+		options += " --statediff"
+	}
+	if opts.Count {
+		options += " --count"
+	}
+	if opts.SkipDdos {
+		options += " --skip_ddos"
+	}
+	if opts.Max != 250 {
+		options += " --max " + fmt.Sprintf("%d", opts.Max)
+	}
+	options += " " + strings.Join(opts.Transactions, " ")
+	return options
 }
 
 func FromRequest(w http.ResponseWriter, r *http.Request) *TracesOptions {

@@ -74,9 +74,9 @@ One or more of [ test | abi_cache | block_cache | tx_cache | trace_cache | recon
 	statusCmd.SetUsageTemplate(UsageWithNotes(notesStatus))
 
 	statusCmd.SetOut(os.Stderr)
-	if statusPkg.Options.Globals.ApiMode {
-		statusCmd.SetErr(os.Stdout)
-	}
+	// if statusPkg.Options.Globals.ApiMode {
+	// 	statusCmd.SetErr(os.Stdout)
+	// }
 
 	chifraCmd.AddCommand(statusCmd)
 }

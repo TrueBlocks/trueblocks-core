@@ -18,6 +18,7 @@ package slurpPkg
 
 import (
 	"net/http"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -37,6 +38,18 @@ func (opts *SlurpOptions) TestLog() {
 	logger.TestLog(len(opts.Types) > 0, "Types: ", opts.Types)
 	logger.TestLog(opts.Appearances, "Appearances: ", opts.Appearances)
 	opts.Globals.TestLog()
+}
+
+func (opts *SlurpOptions) ToDashStr() string {
+	options := ""
+	for _, t := range opts.Types {
+		options += " --types " + t
+	}
+	if opts.Appearances {
+		options += " --appearances"
+	}
+	options += " " + strings.Join(opts.Addrs, " ")
+	return options
 }
 
 func FromRequest(w http.ResponseWriter, r *http.Request) *SlurpOptions {

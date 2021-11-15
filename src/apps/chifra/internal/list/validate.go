@@ -15,13 +15,12 @@ package listPkg
 
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
-	"github.com/spf13/cobra"
 )
 
-func Validate(cmd *cobra.Command, args []string) error {
+func (opts *ListOptions) ValidateList() error {
 	Options.TestLog()
 
-	err := validate.ValidateAtLeastOneAddr(args)
+	err := validate.ValidateAtLeastOneAddr(opts.Addrs)
 	if err != nil {
 		return err
 	}

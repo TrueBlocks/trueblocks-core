@@ -1,4 +1,5 @@
 chifra names  tip --fmt csv
+TEST[DATE|TIME] Terms:  [tip]
 TEST[DATE|TIME] Format:  csv
 "tags","address","name","symbol","decimals"
 "31-Gitcoin:Grants","0x133d705a9696882228f6bb7fe008745aef7cdc93","Grant 0160 @antiprosynth | Antiprosynthesis.eth ⟠ Twitter Account Activity","","",""

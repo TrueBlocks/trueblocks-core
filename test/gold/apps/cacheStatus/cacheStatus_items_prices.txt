@@ -1,4 +1,5 @@
 chifra status  --details caches --types prices
+TEST[DATE|TIME] Modes:  [caches]
 TEST[DATE|TIME] Details:  true
 TEST[DATE|TIME] Types:  [prices]
 TEST[DATE|TIME] Depth:  0

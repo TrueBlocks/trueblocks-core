@@ -1,4 +1,5 @@
 chifra export  0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3 --max_records 5 --logs
+TEST[DATE|TIME] Addrs:  [0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3]
 TEST[DATE|TIME] Logs:  true
 TEST[DATE|TIME] MaxRecords:  5
 TEST[DATE|TIME] LastBlock:  0

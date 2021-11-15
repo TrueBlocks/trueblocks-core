@@ -1,4 +1,5 @@
 chifra tokens  a b c
+TEST[DATE|TIME] Addrs2:  [a b c]
 
   Input argument appears to be invalid. No such skip marker: a:b Quitting...
 

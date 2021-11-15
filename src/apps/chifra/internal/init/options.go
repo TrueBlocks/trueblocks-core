@@ -33,6 +33,14 @@ func (opts *InitOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
+func (opts *InitOptions) ToDashStr() string {
+	options := ""
+	if opts.All {
+		options += " --all"
+	}
+	return options
+}
+
 func FromRequest(w http.ResponseWriter, r *http.Request) *InitOptions {
 	opts := &InitOptions{}
 	for key, _ := range r.URL.Query() {

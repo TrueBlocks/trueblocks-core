@@ -18,6 +18,7 @@ package statePkg
 
 import (
 	"net/http"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -43,6 +44,27 @@ func (opts *StateOptions) TestLog() {
 	logger.TestLog(len(opts.Call) > 0, "Call: ", opts.Call)
 	logger.TestLog(len(opts.ProxyFor) > 0, "ProxyFor: ", opts.ProxyFor)
 	opts.Globals.TestLog()
+}
+
+func (opts *StateOptions) ToDashStr() string {
+	options := ""
+	for _, t := range opts.Parts {
+		options += " --parts " + t
+	}
+	if opts.Changes {
+		options += " --changes"
+	}
+	if opts.NoZero {
+		options += " --no_zero"
+	}
+	if len(opts.Call) > 0 {
+		options += " --call " + opts.Call
+	}
+	if len(opts.ProxyFor) > 0 {
+		options += " --proxy_for " + opts.ProxyFor
+	}
+	options += " " + strings.Join(opts.Addrs, " ")
+	return options
 }
 
 func FromRequest(w http.ResponseWriter, r *http.Request) *StateOptions {

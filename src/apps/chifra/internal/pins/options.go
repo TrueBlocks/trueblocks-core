@@ -44,6 +44,11 @@ func (opts *PinsOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
+func (opts *PinsOptions) ToDashStr() string {
+	options := ""
+	return options
+}
+
 func FromRequest(w http.ResponseWriter, r *http.Request) *PinsOptions {
 	opts := &PinsOptions{}
 	for key, value := range r.URL.Query() {

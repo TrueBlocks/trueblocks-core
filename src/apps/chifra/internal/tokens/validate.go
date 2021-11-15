@@ -16,10 +16,9 @@ package tokensPkg
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
-	"github.com/spf13/cobra"
 )
 
-func Validate(cmd *cobra.Command, args []string) error {
+func (opts *TokensOptions) ValidateTokens() error {
 	// special case for tokens which don't allow --dollars display
 	if Options.Globals.Dollars {
 		return validate.Usage("The {0} option is not available{1}.", "--dollars", " with this tool")
@@ -27,5 +26,5 @@ func Validate(cmd *cobra.Command, args []string) error {
 
 	Options.TestLog()
 
-	return globals.ValidateGlobals(&Options.Globals, args)
+	return globals.ValidateGlobals(&Options.Globals)
 }

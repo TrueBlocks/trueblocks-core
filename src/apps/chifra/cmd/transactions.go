@@ -60,9 +60,9 @@ func init() {
 	transactionsCmd.SetUsageTemplate(UsageWithNotes(notesTransactions))
 
 	transactionsCmd.SetOut(os.Stderr)
-	if transactionsPkg.Options.Globals.ApiMode {
-		transactionsCmd.SetErr(os.Stdout)
-	}
+	// if transactionsPkg.Options.Globals.ApiMode {
+	// 	transactionsCmd.SetErr(os.Stdout)
+	// }
 
 	chifraCmd.AddCommand(transactionsCmd)
 }

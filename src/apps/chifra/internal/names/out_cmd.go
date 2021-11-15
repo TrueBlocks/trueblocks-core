@@ -20,67 +20,13 @@ import (
 var Options NamesOptions
 
 func RunNames(cmd *cobra.Command, args []string) error {
-	err := Validate(cmd, args)
+	Options.Terms = args
+	opts := Options
+
+	err := opts.ValidateNames()
 	if err != nil {
 		return err
 	}
 
-	options := ""
-	if Options.Expand {
-		options += " --expand"
-	}
-	if Options.MatchCase {
-		options += " --match_case"
-	}
-	if Options.All {
-		options += " --all"
-	}
-	if Options.Custom {
-		options += " --custom"
-	}
-	if Options.Prefund {
-		options += " --prefund"
-	}
-	if Options.Named {
-		options += " --named"
-	}
-	if Options.Addr {
-		options += " --addr"
-	}
-	if Options.Collections {
-		options += " --collections"
-	}
-	if Options.Tags {
-		options += " --tags"
-	}
-	if Options.ToCustom {
-		options += " --to_custom"
-	}
-	if Options.Clean {
-		options += " --clean"
-	}
-	if Options.Create {
-		options += " --create"
-	}
-	if Options.Delete {
-		options += " --delete"
-	}
-	if Options.Update {
-		options += " --update"
-	}
-	if Options.Remove {
-		options += " --remove"
-	}
-	if Options.Undelete {
-		options += " --undelete"
-	}
-	if len(Options.Autoname) > 0 {
-		options += " --autoname " + Options.Autoname
-	}
-	arguments := ""
-	for _, arg := range args {
-		arguments += " " + arg
-	}
-
-	return Options.Globals.PassItOn("ethNames", options, arguments)
+	return Options.Globals.PassItOn("ethNames", opts.ToDashStr())
 }

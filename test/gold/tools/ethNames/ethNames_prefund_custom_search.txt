@@ -1,4 +1,5 @@
 chifra names  --prefund --custom 0001 --verbose
+TEST[DATE|TIME] Terms:  [0001]
 TEST[DATE|TIME] Custom:  true
 TEST[DATE|TIME] Prefund:  true
 TEST[DATE|TIME] Verbose:  true

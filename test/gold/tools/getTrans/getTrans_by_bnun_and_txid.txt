@@ -1,4 +1,5 @@
 chifra transactions  4000002.5 --trace --fmt txt
+TEST[DATE|TIME] Transactions:  [4000002.5]
 TEST[DATE|TIME] Trace:  true
 TEST[DATE|TIME] Format:  txt
 blocknumber	transactionindex	date	timestamp	from	to	ether	ethergasprice	gasused	hash	iserror	encoding	compressedtx	tracescnt

@@ -28,8 +28,12 @@ import (
 
 var Options ScrapeOptions
 
+// TODO: Most of the options for this command are probably missing
 func RunScrape(cmd *cobra.Command, args []string) error {
-	err := Validate(cmd, args)
+	Options.Modes = args
+	opts := Options
+
+	err := opts.ValidateScrape()
 	if err != nil {
 		return err
 	}
@@ -81,18 +85,7 @@ func RunIndexScraper(wg sync.WaitGroup, initialState bool) {
 			s.ShowStateChange("sleep", "wake")
 
 			/* -------------- */
-			options := ""
-			if Options.Pin {
-				options += " --pin "
-			}
-			if Options.Publish {
-				options += " --publish "
-			}
-			if Options.Sleep != 14. {
-				options += " --sleep " + fmt.Sprintf("%g", Options.Sleep)
-			}
-			options += (" --block_cnt " + fmt.Sprintf("%d", Options.BlockCnt))
-			Options.Globals.PassItOn("blockScrape", options, "")
+			Options.Globals.PassItOn("blockScrape", Options.ToDashStr())
 			/* -------------- */
 
 			s.ShowStateChange("wake", "sleep")
@@ -146,7 +139,7 @@ func RunMonitorScraper(wg sync.WaitGroup, initialState bool) {
 				}
 				options := " --freshen"
 				options += " " + addr
-				Options.Globals.PassItOn("acctExport", options, "")
+				Options.Globals.PassItOn("acctExport", options)
 			}
 			/* -------------- */
 

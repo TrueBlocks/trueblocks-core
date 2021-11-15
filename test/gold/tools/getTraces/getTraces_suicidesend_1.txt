@@ -1,4 +1,5 @@
 chifra traces  0x343ba476313771d4431018d7d2e935eba2bfe26d5be3e6cb84af6817fd0e4309 --fmt txt
+TEST[DATE|TIME] Transactions:  [0x343ba476313771d4431018d7d2e935eba2bfe26d5be3e6cb84af6817fd0e4309]
 TEST[DATE|TIME] Format:  txt
 blocknumber	transactionindex	traceaddress	action::calltype	error	action::from	action::to	action::value	action::ether	action::gas	result::gasused	action::input	compressedtrace	result::output
 2608034	5	null			0x42c8fcbc73d625f1d258a32915b6a573095de93d	0x0	490372688211999273	0.490372688211999273	5021	5021

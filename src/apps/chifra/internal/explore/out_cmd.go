@@ -24,7 +24,10 @@ import (
 var Options ExploreOptions
 
 func RunExplore(cmd *cobra.Command, args []string) error {
-	err := Validate(cmd, args)
+	Options.Terms = args
+	opts := Options
+
+	err := opts.ValidateExplore()
 	if err != nil {
 		return err
 	}
@@ -35,5 +38,6 @@ func RunExplore(cmd *cobra.Command, args []string) error {
 			utils.OpenBrowser(url.getUrl())
 		}
 	}
+
 	return nil
 }

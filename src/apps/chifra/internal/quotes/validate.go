@@ -16,10 +16,9 @@ package quotesPkg
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
-	"github.com/spf13/cobra"
 )
 
-func Validate(cmd *cobra.Command, args []string) error {
+func (opts *QuotesOptions) ValidateQuotes() error {
 	if len(Options.Globals.File) == 0 &&
 		!Options.Freshen &&
 		len(Options.Period) == 0 &&
@@ -41,5 +40,5 @@ func Validate(cmd *cobra.Command, args []string) error {
 
 	Options.TestLog()
 
-	return globals.ValidateGlobals(&Options.Globals, args)
+	return globals.ValidateGlobals(&Options.Globals)
 }

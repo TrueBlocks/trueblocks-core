@@ -1,4 +1,5 @@
 chifra status  names
+TEST[DATE|TIME] Modes:  [names]
 TEST[DATE|TIME] Depth:  0
 TEST[DATE|TIME] TestEnd:  0
 {

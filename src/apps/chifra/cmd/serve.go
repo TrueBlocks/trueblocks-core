@@ -52,9 +52,9 @@ func init() {
 	serveCmd.SetUsageTemplate(UsageWithNotes(notesServe))
 
 	serveCmd.SetOut(os.Stderr)
-	if servePkg.Options.Globals.ApiMode {
-		serveCmd.SetErr(os.Stdout)
-	}
+	// if servePkg.Options.Globals.ApiMode {
+	// 	serveCmd.SetErr(os.Stdout)
+	// }
 
 	chifraCmd.AddCommand(serveCmd)
 }

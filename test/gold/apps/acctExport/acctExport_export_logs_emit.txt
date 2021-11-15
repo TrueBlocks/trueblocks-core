@@ -1,4 +1,5 @@
 chifra export  0xbb9bc244d798123fde783fcc1c72d3bb8c189413 --first_block 1429283 --last_block 1429468 --logs --fmt csv --emitter 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
+TEST[DATE|TIME] Addrs:  [0xbb9bc244d798123fde783fcc1c72d3bb8c189413]
 TEST[DATE|TIME] Logs:  true
 TEST[DATE|TIME] Emitter:  [0xbb9bc244d798123fde783fcc1c72d3bb8c189413]
 TEST[DATE|TIME] FirstBlock:  1429283

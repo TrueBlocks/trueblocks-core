@@ -57,9 +57,9 @@ func init() {
 	logsCmd.SetUsageTemplate(UsageWithNotes(notesLogs))
 
 	logsCmd.SetOut(os.Stderr)
-	if logsPkg.Options.Globals.ApiMode {
-		logsCmd.SetErr(os.Stdout)
-	}
+	// if logsPkg.Options.Globals.ApiMode {
+	// 	logsCmd.SetErr(os.Stdout)
+	// }
 
 	chifraCmd.AddCommand(logsCmd)
 }

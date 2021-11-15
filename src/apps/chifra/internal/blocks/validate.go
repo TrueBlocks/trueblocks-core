@@ -18,12 +18,11 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
-	"github.com/spf13/cobra"
 )
 
-func Validate(cmd *cobra.Command, args []string) error {
+func (opts *BlocksOptions) ValidateBlocks() error {
 	validationErr := validate.ValidateIdentifiers(
-		args,
+		opts.Blocks,
 		validate.ValidBlockIdWithRange,
 		1,
 	)
@@ -40,7 +39,7 @@ func Validate(cmd *cobra.Command, args []string) error {
 		return validationErr
 	}
 
-	Options.TestLog()
+	opts.TestLog()
 
-	return globals.ValidateGlobals(&Options.Globals, args)
+	return globals.ValidateGlobals(&opts.Globals)
 }

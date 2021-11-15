@@ -1,4 +1,5 @@
 chifra slurp  0x1324e7b922b30B49Ab8EA81086341cc41C249346 --types int 0-7000000 --fmt csv --no_header
+TEST[DATE|TIME] Addrs:  [0x1324e7b922b30B49Ab8EA81086341cc41C249346 0-7000000]
 TEST[DATE|TIME] Types:  [int]
 TEST[DATE|TIME] NoHeader:  true
 TEST[DATE|TIME] Format:  csv

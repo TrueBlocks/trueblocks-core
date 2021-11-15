@@ -82,9 +82,9 @@ func init() {
 	blocksCmd.SetUsageTemplate(UsageWithNotes(notesBlocks))
 
 	blocksCmd.SetOut(os.Stderr)
-	if blocksPkg.Options.Globals.ApiMode {
-		blocksCmd.SetErr(os.Stdout)
-	}
+	// if blocksPkg.Options.Globals.ApiMode {
+	// 	blocksCmd.SetErr(os.Stdout)
+	// }
 
 	chifraCmd.AddCommand(blocksCmd)
 }

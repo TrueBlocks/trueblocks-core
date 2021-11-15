@@ -43,5 +43,5 @@ func (opts *WhenOptions) ValidateWhen() error {
 
 	Options.TestLog()
 
-	return globals.ValidateGlobals(&Options.Globals, opts.Blocks)
+	return globals.ValidateGlobals(&Options.Globals)
 }

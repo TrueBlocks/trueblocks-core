@@ -1,4 +1,5 @@
 chifra traces  3657480.79 --verbose --output test_file
+TEST[DATE|TIME] Transactions:  [3657480.79]
 TEST[DATE|TIME] Verbose:  true
 TEST[DATE|TIME] OutputFn:  test_file
 --output_filename--

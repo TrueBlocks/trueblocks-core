@@ -63,9 +63,9 @@ func init() {
 	abisCmd.SetUsageTemplate(UsageWithNotes(notesAbis))
 
 	abisCmd.SetOut(os.Stderr)
-	if abisPkg.Options.Globals.ApiMode {
-		abisCmd.SetErr(os.Stdout)
-	}
+	// if abisPkg.Options.Globals.ApiMode {
+	// 	abisCmd.SetErr(os.Stdout)
+	// }
 
 	chifraCmd.AddCommand(abisCmd)
 }

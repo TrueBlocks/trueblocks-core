@@ -1,4 +1,5 @@
 chifra export  0xf503017d7baf7fbc0fff7492b751025c6a78179b --max_records 10 0xa9059cbb --traces --fmt json
+TEST[DATE|TIME] Addrs:  [0xf503017d7baf7fbc0fff7492b751025c6a78179b 0xa9059cbb]
 TEST[DATE|TIME] Traces:  true
 TEST[DATE|TIME] MaxRecords:  10
 TEST[DATE|TIME] LastBlock:  0

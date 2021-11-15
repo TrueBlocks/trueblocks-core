@@ -23,12 +23,18 @@ import (
 	"net/http"
 	"time"
 
-	abisPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/abis"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	pinsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/pins"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/gorilla/mux"
 	"golang.org/x/time/rate"
 )
+
+// AccountsAbis processes ABI queries
+func AccountsAbis(w http.ResponseWriter, r *http.Request) {
+	CallOneExtra(w, r, "chifra", "abis", "abis")
+	// abisPkg.ServeAbis(w, r)
+}
 
 // Route A structure to hold the API's routes
 type Route struct {
@@ -54,8 +60,40 @@ func NewRouter() *mux.Router {
 			Name(route.Name).
 			Handler(handler)
 	}
+	router.Use(FormatValidator)
 
 	return router
+}
+
+// FormatValidator checks if the client wants a supported format
+func FormatValidator(inner http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		fmtQuery := r.URL.Query()["fmt"]
+		valid := false
+		fmtValue := ""
+		if len(fmtQuery) == 0 {
+			valid = true
+		} else {
+			fmtValue = fmtQuery[0]
+			valid = fmtValue == "" ||
+				fmtValue == "json" ||
+				fmtValue == "txt" ||
+				fmtValue == "csv" ||
+				fmtValue == "api"
+		}
+
+		if valid {
+			inner.ServeHTTP(w, r)
+			return
+		}
+
+		var unused globals.GlobalOptionsType
+		unused.RespondWithError(
+			w,
+			http.StatusBadRequest,
+			fmt.Errorf("The --fmt option (%s) must be one of [ json | txt | csv | api ]", fmtValue),
+		)
+	})
 }
 
 var nProcessed int
@@ -97,9 +135,10 @@ func AdminPins(w http.ResponseWriter, r *http.Request) {
 	pinsPkg.ServePins(w, r)
 }
 
-// AccountsAbis processes ABI queries
-func AccountsAbis(w http.ResponseWriter, r *http.Request) {
-	abisPkg.ServeAbis(w, r)
+// ChainDataBlocks help text todo
+func ChainDataBlocks(w http.ResponseWriter, r *http.Request) {
+	CallOne(w, r, "getBlocks", "blocks")
+	// blocksPkg.ServeBlocks(w, r)
 }
 
 // BEG_ROUTE_CODE
@@ -122,11 +161,6 @@ func AccountsMonitors(w http.ResponseWriter, r *http.Request) {
 // AccountsNames help text todo
 func AccountsNames(w http.ResponseWriter, r *http.Request) {
 	CallOne(w, r, "ethNames", "names")
-}
-
-// ChainDataBlocks help text todo
-func ChainDataBlocks(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "getBlocks", "blocks")
 }
 
 // ChainDataTransactions help text todo

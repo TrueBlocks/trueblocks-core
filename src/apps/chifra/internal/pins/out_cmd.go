@@ -28,18 +28,18 @@ Please create the folder or adjust the setting by editing $CONFIG/trueBlocks.tom
 var Options PinsOptions
 
 func RunPins(cmd *cobra.Command, args []string) error {
-	err := Options.ValidatePins()
-	if err != nil {
-		return err
-	}
-
-	err = pinlib.EstablishIndexFolders()
+	err := pinlib.EstablishIndexFolders()
 	if err != nil {
 		if err, ok := err.(*pinlib.ErrCustomizedPath); ok {
 			fmt.Printf(errCustomFolderMissing, err.GetIndexPath())
 			return nil
 		}
 		logger.Fatal(err)
+	}
+
+	err = Options.ValidatePins()
+	if err != nil {
+		return err
 	}
 
 	if Options.List {

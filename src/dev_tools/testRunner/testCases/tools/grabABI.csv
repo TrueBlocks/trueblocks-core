@@ -16,8 +16,8 @@ on      ,both ,fast  ,abis  ,tools/grabABI ,known_bug2          ,y    ,addrs = 0
 on      ,both ,fast  ,abis  ,tools/grabABI ,known_bug2_raw      ,y    ,addrs = 0xef638b4305b8a1620f4e0e562e127f1181ae16d2 & fmt = json
 on      ,both ,fast  ,abis  ,tools/grabABI ,fmt_newfields       ,y    ,addrs = 0xffa93aacf49297d51e211817452839052fdfb961
 on      ,both ,fast  ,abis  ,tools/grabABI ,fmt_default         ,y    ,addrs = 0xe94327d07fc17907b4db788e5adf2ed424addff6
-on      ,both ,fast  ,abis  ,tools/grabABI ,fmt_txt             ,n    ,addrs = 0xe94327d07fc17907b4db788e5adf2ed424addff6 & fmt = txt
-on      ,both ,fast  ,abis  ,tools/grabABI ,fmt_csv             ,n    ,addrs = 0xe94327d07fc17907b4db788e5adf2ed424addff6 & fmt = csv & no_header
+local   ,both ,fast  ,abis  ,tools/grabABI ,fmt_txt             ,n    ,addrs = 0xe94327d07fc17907b4db788e5adf2ed424addff6 & fmt = txt
+local   ,both ,fast  ,abis  ,tools/grabABI ,fmt_csv             ,n    ,addrs = 0xe94327d07fc17907b4db788e5adf2ed424addff6 & fmt = csv & no_header
 on      ,both ,fast  ,abis  ,tools/grabABI ,fmt_api             ,y    ,addrs = 0xe94327d07fc17907b4db788e5adf2ed424addff6 & fmt = api
 on      ,both ,fast  ,abis  ,tools/grabABI ,fmt_json            ,y    ,addrs = 0xe94327d07fc17907b4db788e5adf2ed424addff6 & fmt = json
 on      ,both ,fast  ,abis  ,tools/grabABI ,fmt_junk            ,y    ,addrs = 0xe94327d07fc17907b4db788e5adf2ed424addff6 & fmt = junk
@@ -26,8 +26,9 @@ on      ,both ,fast  ,abis  ,tools/grabABI ,findSig_tooshort    ,y    ,find = 0x
 on      ,both ,fast  ,abis  ,tools/grabABI ,findSig_toolong     ,y    ,find = 0x1aa3a00800
 on      ,both ,fast  ,abis  ,tools/grabABI ,findSig_toolongevt1 ,y    ,find = 0x1aa3a00800000000000000000
 on      ,both ,fast  ,abis  ,tools/grabABI ,findSig_toolongevt2 ,y    ,find = 0x1aa3a0081aa3a0081aa3a0081aa3a0081aa3a0081aa3a0081aa3a0081aa3a008000
-on      ,both ,fast  ,abis  ,tools/grabABI ,findSig_csv         ,n    ,find = 0x1aa3a008 & fmt = csv
-on      ,both ,fast  ,abis  ,tools/grabABI ,findSig_txt         ,n    ,find = 0x1aa3a008 & fmt = txt
+local   ,both ,fast  ,abis  ,tools/grabABI ,findSig_json        ,y    ,find = 0x1aa3a008
+local   ,both ,fast  ,abis  ,tools/grabABI ,findSig_csv         ,n    ,find = 0x1aa3a008 & fmt = csv
+local   ,both ,fast  ,abis  ,tools/grabABI ,findSig_txt         ,n    ,find = 0x1aa3a008 & fmt = txt
 on      ,both ,fast  ,abis  ,tools/grabABI ,findSig_junk        ,y    ,find = 0x1aa3a008 & fmt = junk
 
 on      ,both ,fast  ,abis  ,tools/grabABI ,known_alone         ,y    ,known

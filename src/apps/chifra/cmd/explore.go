@@ -53,9 +53,9 @@ func init() {
 	exploreCmd.SetUsageTemplate(UsageWithNotes(notesExplore))
 
 	exploreCmd.SetOut(os.Stderr)
-	if explorePkg.Options.Globals.ApiMode {
-		exploreCmd.SetErr(os.Stdout)
-	}
+	// if explorePkg.Options.Globals.ApiMode {
+	// 	exploreCmd.SetErr(os.Stdout)
+	// }
 
 	chifraCmd.AddCommand(exploreCmd)
 }

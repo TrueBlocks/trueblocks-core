@@ -1,3 +1,4 @@
 chifra explore  0xf503017D7baF7FBC0fff7492b751025c6A78179b --local
+TEST[DATE|TIME] Terms:  [0xf503017D7baF7FBC0fff7492b751025c6A78179b]
 TEST[DATE|TIME] Local:  true
 Opening http://localhost:1234/dashboard/accounts?address=0xf503017d7baf7fbc0fff7492b751025c6a78179b

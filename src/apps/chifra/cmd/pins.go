@@ -65,9 +65,9 @@ func init() {
 	pinsCmd.SetUsageTemplate(UsageWithNotes(notesPins))
 
 	pinsCmd.SetOut(os.Stderr)
-	if pinsPkg.Options.Globals.ApiMode {
-		pinsCmd.SetErr(os.Stdout)
-	}
+	// if pinsPkg.Options.Globals.ApiMode {
+	// 	pinsCmd.SetErr(os.Stdout)
+	// }
 
 	chifraCmd.AddCommand(pinsCmd)
 }

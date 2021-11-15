@@ -66,9 +66,9 @@ func init() {
 	monitorsCmd.SetUsageTemplate(UsageWithNotes(notesMonitors))
 
 	monitorsCmd.SetOut(os.Stderr)
-	if monitorsPkg.Options.Globals.ApiMode {
-		monitorsCmd.SetErr(os.Stdout)
-	}
+	// if monitorsPkg.Options.Globals.ApiMode {
+	// 	monitorsCmd.SetErr(os.Stdout)
+	// }
 
 	chifraCmd.AddCommand(monitorsCmd)
 }

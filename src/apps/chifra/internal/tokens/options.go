@@ -18,6 +18,7 @@ package tokensPkg
 
 import (
 	"net/http"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -39,6 +40,21 @@ func (opts *TokensOptions) TestLog() {
 	logger.TestLog(opts.ByAcct, "ByAcct: ", opts.ByAcct)
 	logger.TestLog(opts.NoZero, "NoZero: ", opts.NoZero)
 	opts.Globals.TestLog()
+}
+
+func (opts *TokensOptions) ToDashStr() string {
+	options := ""
+	for _, t := range Options.Parts {
+		options += " --parts " + t
+	}
+	if Options.ByAcct {
+		options += " --by_acct"
+	}
+	if Options.NoZero {
+		options += " --no_zero"
+	}
+	options += " " + strings.Join(opts.Addrs2, " ")
+	return options
 }
 
 func FromRequest(w http.ResponseWriter, r *http.Request) *TokensOptions {

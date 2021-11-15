@@ -15,10 +15,9 @@ package receiptsPkg
 
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
-	"github.com/spf13/cobra"
 )
 
-func Validate(cmd *cobra.Command, args []string) error {
+func (opts *ReceiptsOptions) ValidateReceipts() error {
 	// if len(args) == 0 {
 	// 	return Usage("Please specify at least one {0}.", "valid transaction identifier")
 	// }
@@ -31,5 +30,5 @@ func Validate(cmd *cobra.Command, args []string) error {
 
 	Options.TestLog()
 
-	return globals.ValidateGlobals(&Options.Globals, args)
+	return globals.ValidateGlobals(&Options.Globals)
 }

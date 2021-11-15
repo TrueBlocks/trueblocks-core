@@ -77,5 +77,5 @@ func (opts *AbisOptions) ValidateAbis() error {
 
 	opts.TestLog()
 
-	return globals.ValidateGlobals(&opts.Globals, opts.Addrs)
+	return globals.ValidateGlobals(&opts.Globals)
 }

@@ -67,7 +67,7 @@ func getCommandPath2(cmd string) string {
 	return dir + "/.local/bin/chifra/" + cmd
 }
 
-func (opts *GlobalOptionsType) PassItOn(path string, flags, arguments string) error {
+func (opts *GlobalOptionsType) PassItOn(path string, flags string) error {
 	options := flags
 	if opts.Raw {
 		options += " --raw"
@@ -115,7 +115,6 @@ func (opts *GlobalOptionsType) PassItOn(path string, flags, arguments string) er
 		// TODO: into chifra here.
 		options += " --file:" + opts.File
 	}
-	options += " " + arguments
 
 	var wg sync.WaitGroup
 	wg.Add(2)

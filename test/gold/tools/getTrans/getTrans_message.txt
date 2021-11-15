@@ -1,4 +1,5 @@
 chifra transactions  0xa152016a73c308e2ecdf9ff31d6a36f717604472a589f21e998e96c3e9500344 --articulate
+TEST[DATE|TIME] Transactions:  [0xa152016a73c308e2ecdf9ff31d6a36f717604472a589f21e998e96c3e9500344]
 TEST[DATE|TIME] Articulate:  true
 blocknumber	transactionindex	date	timestamp	from	to	ether	ethergasprice	gasused	hash	iserror	encoding	compressedtx
 1867564	4	2016-07-11 20:58:05 UTC	1468270685	0x9519afbc60719a83c470ceec41e32d3e4b8b262e	0xcb1547417575261c4d84cab3e989acfd9f9ee35c	0.001000000000000000	0.000000020000000000	53300	0xa152016a73c308e2ecdf9ff31d6a36f717604472a589f21e998e96c3e9500344	0	0x6f6e204a	message:on July 11, 2016 this contract (0xb656b2a9c3b2416437a811e07466ca712f5a5b5a) which is the DAO creator contract sent a transaction to the DarkDOA (0x304a554a310c7e546dfe434669c62820b7d83490) that added the DAO s curator to the DarkDAO s whitelist. Here s the transaction ID: 0x9257c2e0a11de7b7427d4607f5908d6448278070bb73500139387930826fedc0. I m writing this to the blockchain before anything happens to demonstrate the power of http://ethslurp.com software by Great Hill.

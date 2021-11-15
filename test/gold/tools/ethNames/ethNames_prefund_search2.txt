@@ -1,4 +1,5 @@
 chifra names  --prefund _004
+TEST[DATE|TIME] Terms:  [_004]
 TEST[DATE|TIME] Prefund:  true
 tags	address	name	symbol	decimals
 80-Prefund	0x012f396a2b5eb83559bac515e5210df2c8c362ba	Prefund_0040

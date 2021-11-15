@@ -1,4 +1,5 @@
 chifra transactions  5218355.232 --reconcile 0x7fd5c846121bed2e2e46a55f992e35d85da7ffad --fmt json --log_level 10
+TEST[DATE|TIME] Transactions:  [5218355.232]
 TEST[DATE|TIME] Reconcile:  0x7fd5c846121bed2e2e46a55f992e35d85da7ffad
 TEST[DATE|TIME] LogLevel:  10
 TEST[DATE|TIME] Format:  json

@@ -18,6 +18,7 @@ package transactionsPkg
 
 import (
 	"net/http"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -41,6 +42,27 @@ func (opts *TransactionsOptions) TestLog() {
 	logger.TestLog(len(opts.Reconcile) > 0, "Reconcile: ", opts.Reconcile)
 	logger.TestLog(opts.Cache, "Cache: ", opts.Cache)
 	opts.Globals.TestLog()
+}
+
+func (opts *TransactionsOptions) ToDashStr() string {
+	options := ""
+	if opts.Articulate {
+		options += " --articulate"
+	}
+	if opts.Trace {
+		options += " --trace"
+	}
+	if opts.Uniq {
+		options += " --uniq"
+	}
+	if len(opts.Reconcile) > 0 {
+		options += " --reconcile " + opts.Reconcile
+	}
+	if opts.Cache {
+		options += " --cache"
+	}
+	options += " " + strings.Join(opts.Transactions, " ")
+	return options
 }
 
 func FromRequest(w http.ResponseWriter, r *http.Request) *TransactionsOptions {

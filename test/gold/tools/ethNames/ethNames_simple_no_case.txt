@@ -1,4 +1,5 @@
 chifra names  network
+TEST[DATE|TIME] Terms:  [network]
 tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x04c62019ab478bff5874e7b7d9bc84fcf7e30025	POA Network: MultiSig
 31-Gitcoin:Grants	0x067f2bef6a1f929544253b9fb95f99bae77b2518	Grant 1753 Resetdao ― Web 3.0 Programmable Social Network

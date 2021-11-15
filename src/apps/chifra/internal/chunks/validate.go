@@ -16,10 +16,9 @@ package chunksPkg
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
-	"github.com/spf13/cobra"
 )
 
-func Validate(cmd *cobra.Command, args []string) error {
+func (opts *ChunksOptions) ValidateChunks() error {
 	if !Options.List && !Options.Check && len(Options.Extract) == 0 {
 		return validate.Usage("Please choose at least one of {0}.", "--list, --extract, or --check")
 	}
@@ -39,5 +38,5 @@ func Validate(cmd *cobra.Command, args []string) error {
 
 	Options.TestLog()
 
-	return globals.ValidateGlobals(&Options.Globals, args)
+	return globals.ValidateGlobals(&Options.Globals)
 }

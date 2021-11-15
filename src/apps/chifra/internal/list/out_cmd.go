@@ -21,15 +21,18 @@ import (
 var Options ListOptions
 
 func RunList(cmd *cobra.Command, args []string) error {
+	opts := Options
+
 	exportPkg.Options.Appearances = true
-	if Options.Count {
+	if opts.Count {
 		exportPkg.Options.Count = true
 	}
-	if Options.FirstBlock > 0 {
-		exportPkg.Options.FirstBlock = Options.FirstBlock
+	if opts.FirstBlock > 0 {
+		exportPkg.Options.FirstBlock = opts.FirstBlock
 	}
-	if Options.LastBlock > 0 {
-		exportPkg.Options.LastBlock = Options.LastBlock
+	if opts.LastBlock > 0 {
+		exportPkg.Options.LastBlock = opts.LastBlock
 	}
+
 	return exportPkg.RunExport(cmd, args)
 }

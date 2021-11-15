@@ -22,31 +22,12 @@ var Options WhenOptions
 
 func RunWhen(cmd *cobra.Command, args []string) error {
 	Options.Blocks = args
-	err := Options.ValidateWhen()
+	opts := Options
+
+	err := opts.ValidateWhen()
 	if err != nil {
 		return validate.Usage(err.Error())
 	}
 
-	options := ""
-	if Options.List {
-		options += " --list"
-	}
-	if Options.Timestamps {
-		options += " --timestamps"
-	}
-	if Options.Check {
-		options += " --check"
-	}
-	if Options.Fix {
-		options += " --fix"
-	}
-	if Options.Count {
-		options += " --count"
-	}
-	arguments := ""
-	for _, arg := range args {
-		arguments += " " + arg
-	}
-
-	return Options.Globals.PassItOn("whenBlock", options, arguments)
+	return Options.Globals.PassItOn("whenBlock", opts.ToDashStr())
 }

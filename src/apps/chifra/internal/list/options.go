@@ -18,6 +18,7 @@ package listPkg
 
 import (
 	"net/http"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -40,6 +41,12 @@ func (opts *ListOptions) TestLog() {
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
 	logger.TestLog(opts.LastBlock != utils.NOPOS, "LastBlock: ", opts.LastBlock)
 	opts.Globals.TestLog()
+}
+
+func (opts *ListOptions) ToDashStr() string {
+	options := ""
+	options += " " + strings.Join(opts.Addrs, " ")
+	return options
 }
 
 func FromRequest(w http.ResponseWriter, r *http.Request) *ListOptions {

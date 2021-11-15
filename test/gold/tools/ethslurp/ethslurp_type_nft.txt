@@ -1,4 +1,5 @@
 chifra slurp  0x00a3819199113fc6a6e6ba1298afde7377e2009b --types nfts 0-8500000
+TEST[DATE|TIME] Addrs:  [0x00a3819199113fc6a6e6ba1298afde7377e2009b 0-8500000]
 TEST[DATE|TIME] Types:  [nfts]
 Processing: --types:nfts 0x00a3819199113fc6a6e6ba1298afde7377e2009b 0-8500000
 	Slurping 0x00a3819199113fc6a6e6ba1298afde7377e2009b

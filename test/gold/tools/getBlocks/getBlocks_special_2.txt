@@ -1,4 +1,5 @@
 chifra blocks  daofork --cache
+TEST[DATE|TIME] Blocks:  [daofork]
 TEST[DATE|TIME] Cache:  true
 { "data": [
 {

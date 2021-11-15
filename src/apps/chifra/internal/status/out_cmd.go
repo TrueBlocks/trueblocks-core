@@ -13,55 +13,19 @@ package statusPkg
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 import (
-	"fmt"
-	"os"
-
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/spf13/cobra"
 )
 
 var Options StatusOptions
 
 func RunStatus(cmd *cobra.Command, args []string) error {
-	err := Validate(cmd, args)
+	Options.Modes = args
+	opts := Options
+
+	err := opts.ValidateStatus()
 	if err != nil {
 		return err
 	}
 
-	options := ""
-	if Options.Details {
-		options += " --details"
-	}
-	for _, t := range Options.Types {
-		options += " --types " + t
-	}
-	if Options.Depth != utils.NOPOS {
-		options += " --depth " + fmt.Sprintf("%d", Options.Depth)
-	}
-	if Options.Terse {
-		options += " --terse"
-	}
-	for _, t := range Options.Migrate {
-		options += " --migrate " + t
-	}
-	if Options.GetConfig {
-		options += " --get_config"
-	}
-	if Options.SetConfig {
-		options += " --set_config"
-	}
-	if os.Getenv("TEST_MODE") == "true" {
-		if Options.TestStart > 0 {
-			options += " --test_start " + fmt.Sprintf("%d", Options.TestStart)
-		}
-		if Options.TestEnd != utils.NOPOS {
-			options += " --test_end " + fmt.Sprintf("%d", Options.TestEnd)
-		}
-	}
-	arguments := ""
-	for _, arg := range args {
-		arguments += " " + arg
-	}
-
-	return Options.Globals.PassItOn("cacheStatus", options, arguments)
+	return Options.Globals.PassItOn("cacheStatus", opts.ToDashStr())
 }

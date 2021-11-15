@@ -18,6 +18,7 @@ package receiptsPkg
 
 import (
 	"net/http"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -33,6 +34,15 @@ func (opts *ReceiptsOptions) TestLog() {
 	logger.TestLog(len(opts.Transactions) > 0, "Transactions: ", opts.Transactions)
 	logger.TestLog(opts.Articulate, "Articulate: ", opts.Articulate)
 	opts.Globals.TestLog()
+}
+
+func (opts *ReceiptsOptions) ToDashStr() string {
+	options := ""
+	if opts.Articulate {
+		options += " --articulate"
+	}
+	options += " " + strings.Join(opts.Transactions, " ")
+	return options
 }
 
 func FromRequest(w http.ResponseWriter, r *http.Request) *ReceiptsOptions {

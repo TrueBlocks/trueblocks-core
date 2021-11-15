@@ -1,4 +1,5 @@
 chifra logs  4000000.5 --fmt api
+TEST[DATE|TIME] Transactions:  [4000000.5]
 TEST[DATE|TIME] Format:  api
 {"data": [
   {

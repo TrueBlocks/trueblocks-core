@@ -18,6 +18,7 @@ package abisPkg
 
 import (
 	"net/http"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -44,23 +45,24 @@ func (opts *AbisOptions) TestLog() {
 }
 
 func (opts *AbisOptions) ToDashStr() string {
-	ret := ""
-	if Options.Known {
-		ret += " --known"
+	options := ""
+	if opts.Known {
+		options += " --known"
 	}
 
-	if Options.Sol {
-		ret += " --sol"
+	if opts.Sol {
+		options += " --sol"
 	}
 
-	if Options.Source {
-		ret += " --source"
+	if opts.Source {
+		options += " --source"
 	}
 
-	if Options.Classes {
-		ret += " --classes"
+	if opts.Classes {
+		options += " --classes"
 	}
-	return ret
+	options += " " + strings.Join(opts.Addrs, " ")
+	return options
 }
 
 func FromRequest(w http.ResponseWriter, r *http.Request) *AbisOptions {

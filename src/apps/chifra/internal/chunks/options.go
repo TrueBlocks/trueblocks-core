@@ -18,6 +18,7 @@ package chunksPkg
 
 import (
 	"net/http"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
@@ -41,6 +42,27 @@ func (opts *ChunksOptions) TestLog() {
 	logger.TestLog(opts.Stats, "Stats: ", opts.Stats)
 	logger.TestLog(opts.Save, "Save: ", opts.Save)
 	opts.Globals.TestLog()
+}
+
+func (opts *ChunksOptions) ToDashStr() string {
+	options := ""
+	if opts.List {
+		options += " --list"
+	}
+	if opts.Check {
+		options += " --check"
+	}
+	if len(opts.Extract) > 0 {
+		options += " --extract " + opts.Extract
+	}
+	if opts.Save {
+		options += " --save"
+	}
+	if opts.Stats {
+		options += " --stats"
+	}
+	options += " " + strings.Join(opts.Blocks, " ")
+	return options
 }
 
 func FromRequest(w http.ResponseWriter, r *http.Request) *ChunksOptions {

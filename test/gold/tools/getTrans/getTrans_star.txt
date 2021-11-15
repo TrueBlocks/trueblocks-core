@@ -1,4 +1,5 @@
 chifra transactions  2222221.* --fmt api
+TEST[DATE|TIME] Transactions:  [2222221.*]
 TEST[DATE|TIME] Format:  api
 {"data": [
   {
