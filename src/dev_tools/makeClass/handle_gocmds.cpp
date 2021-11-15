@@ -22,6 +22,7 @@ extern string_q get_testlogs(const CCommandOption& cmd);
 extern string_q get_copyopts(const CCommandOption& cmd);
 extern string_q get_use(const CCommandOption& cmd);
 extern string_q get_imports(const string_q& source);
+extern string_q get_positional0(const CCommandOption& cmd);
 
 extern const char* STR_REQUEST_STATE;
 //---------------------------------------------------------------------------------------------------
@@ -43,7 +44,6 @@ bool COptions::handle_gocmds_cmd(const CCommandOption& p) {
         replaceReverse(descr, ".", "");
     replaceAll(source, "[{SHORT}]", descr);
     replaceAll(source, "[{IMPORTS}]", get_imports(source));
-    // replaceAll(source, "LastBlock, \"last_block\", \"L\", 0,", "LastBlock, \"last_block\", \"L\", globals.NOPOS,");
 
     string_q fn = getSourcePath("apps/chifra/cmd/" + p.api_route + ".go");
     codewrite_t cw(fn, source);
@@ -52,16 +52,6 @@ bool COptions::handle_gocmds_cmd(const CCommandOption& p) {
     counter.nProcessed += writeCodeIn(cw);
     counter.nVisited++;
     return true;
-}
-
-//---------------------------------------------------------------------------------------------------
-string_q get_positional0(const CCommandOption& cmd) {
-    for (auto p : *((CCommandOptionArray*)cmd.params)) {
-        if (p.option_type == "positional") {
-            return p.Format("opts.[{VARIABLE}]");
-        }
-    }
-    return "[]string{}";
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -79,6 +69,7 @@ bool COptions::handle_gocmds_options(const CCommandOption& p) {
     replaceAll(source, "[{DASH_STR}]", get_copyopts(p));
     replaceAll(source, "[{IMPORTS}]", get_imports(source));
     replaceAll(source, "++POSITIONAL0++", get_positional0(p));
+    replaceAll(source, "opts.LastBlock != globals.NOPOS", "opts.LastBlock != 0 && opts.LastBlock != globals.NOPOS");
 
     string_q fn = getSourcePath("apps/chifra/internal/" + p.api_route + "/options.go");
     replaceAll(fn, "/internal/serve", "/server");
@@ -306,6 +297,16 @@ string_q get_hidden2(const CCommandOption& cmd) {
     // os << "\t\t/globalsCmd.PersistentFlags().MarkHidden(\"fmt\")" << endl;
     // os << "\t}," << endl;
     // return os.str();
+}
+
+//---------------------------------------------------------------------------------------------------
+string_q get_positional0(const CCommandOption& cmd) {
+    for (auto p : *((CCommandOptionArray*)cmd.params)) {
+        if (p.option_type == "positional") {
+            return p.Format("opts.[{VARIABLE}]");
+        }
+    }
+    return "[]string{}";
 }
 
 string_q get_hidden(const CCommandOption& cmd) {
