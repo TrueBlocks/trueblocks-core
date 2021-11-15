@@ -12,6 +12,11 @@ package statusPkg
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+/*
+ * Parts of this file were auto generated with makeClass --gocmds. Be careful when editing
+ * it to only edit those parts of the code inside of // EXISTING_CODE blocks
+ */
+
 import (
 	"net/http"
 
