@@ -2,7 +2,6 @@ chifra export  0xbb9bc244d798123fde783fcc1c72d3bb8c189413 --max_records 3 --neig
 TEST[DATE|TIME] Addrs:  [0xbb9bc244d798123fde783fcc1c72d3bb8c189413]
 TEST[DATE|TIME] Neighbors:  true
 TEST[DATE|TIME] MaxRecords:  3
-TEST[DATE|TIME] LastBlock:  0
 TEST[DATE|TIME] Format:  csv
 "bn","tx","tc","addr","reason"
 
