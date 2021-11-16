@@ -12,6 +12,12 @@ echo "Will perform $MAKE_TARGET"
 if [ "$MAKE_TARGET" == "test-all" ]
 then
     RUN_SERVER=true
+    # generate a random port number between 8091 and 10_000
+    SRV_PORT=`shuf -n 1 -i 8091-10000`
+    echo "Serve required. Will use port $SRV_PORT"
+    echo "[settings]
+    apiProvider=\"http://localhost:$SRV_PORT\"
+    " > $HOME/.local/share/trueblocks/testRunner.toml
 fi
 
 cd /root/trueblocks-core/build
