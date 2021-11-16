@@ -20,7 +20,7 @@ on      ,both ,fast  ,blocks ,tools/getBlocks ,combo_one_range      ,y    ,block
 on      ,both ,fast  ,blocks ,tools/getBlocks ,combo_two_range      ,y    ,blocks = 1590000 4000001-4000002 1001001-1001100 1234567
 on      ,both ,fast  ,blocks ,tools/getBlocks ,raw_01               ,n    ,blocks = 2768801 1995314 1958017 & raw
 on      ,both ,fast  ,blocks ,tools/getBlocks ,force_02             ,y    ,blocks = 2769609 2799895 2872831 3076260 & cache
-on      ,both ,fast  ,blocks ,tools/getBlocks ,force_fail           ,y    ,blocks = 2769609 2799895 2872831 3076260 & cache & uniq
+on      ,both ,fast  ,blocks ,tools/getBlocks ,force_fail           ,y    ,blocks = 2769609 2799895 2872831 3076260 & cache & apps
 on      ,both ,slow  ,blocks ,tools/getBlocks ,terse_no_raw         ,y    ,blocks = 4001001-4001003 & hashes
 on      ,both ,fast  ,blocks ,tools/getBlocks ,terse_yes_raw        ,y    ,blocks = 4001001 & hashes & raw
 on      ,both ,medi  ,blocks ,tools/getBlocks ,hashes_1             ,y    ,blocks = 4001001 & hashes
@@ -58,5 +58,13 @@ on      ,both ,fast  ,blocks ,tools/getBlocks ,with_logs_emitter    ,y    ,block
 on      ,both ,fast  ,blocks ,tools/getBlocks ,with_logs_both       ,y    ,blocks = 4012000-4012001 & logs & topic = 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef & emitter = 0x86fa049857e0209aa7d9e616f7eb3b3b78ecfdb0
 on      ,both ,fast  ,blocks ,tools/getBlocks ,with_logs_art        ,y    ,blocks = 4012000-4012001 & logs & articulate
 on      ,both ,fast  ,blocks ,tools/getBlocks ,with_logs_csv_art    ,n    ,blocks = 4012000-4012001 & logs & fmt = csv & articulate
+on      ,both ,fast  ,blocks ,tools/getBlocks ,no_cache_uncles      ,y    ,blocks = 4012000-4012001 & cache & uncles
+on      ,both ,fast  ,blocks ,tools/getBlocks ,no_cache_apps        ,y    ,blocks = 4012000-4012001 & cache & apps
+on      ,both ,fast  ,blocks ,tools/getBlocks ,no_cache_uniq        ,y    ,blocks = 4012000-4012001 & cache & uniq
+on      ,both ,fast  ,blocks ,tools/getBlocks ,no_trace_hashes      ,y    ,blocks = 4012000-4012001 & trace & hashes
+on      ,both ,fast  ,blocks ,tools/getBlocks ,no_trace_apps        ,y    ,blocks = 4012000-4012001 & trace & apps
+on      ,both ,fast  ,blocks ,tools/getBlocks ,no_trace_uniq        ,y    ,blocks = 4012000-4012001 & trace & uniq
+on      ,both ,fast  ,blocks ,tools/getBlocks ,artic_not_logs       ,y    ,blocks = 4012000-4012001 & articulate
+on      ,both ,fast  ,blocks ,tools/getBlocks ,bigrange_not_logs    ,y    ,blocks = 4012000-4012001 & big_range = 100
 
 local   ,both ,fast  ,blocks ,tools/getBlocks ,to_file              ,y    ,blocks = 2222222 2332332 & fmt = json & to_file

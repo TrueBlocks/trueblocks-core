@@ -1,8 +1,8 @@
-chifra blocks  2769609 2799895 2872831 3076260 --cache --apps
-TEST[DATE|TIME] Blocks:  [2769609 2799895 2872831 3076260]
-TEST[DATE|TIME] Apps:  true
+chifra blocks  4012000-4012001 --cache --uniq
+TEST[DATE|TIME] Blocks:  [4012000-4012001]
+TEST[DATE|TIME] Uniq:  true
 TEST[DATE|TIME] Cache:  true
-Error: The --cache option is not available with the --apps option.
+Error: The --cache option is not available with the --uniq option.
 Usage:
   chifra blocks [flags] <block> [block...]
 

@@ -1,8 +1,8 @@
-chifra blocks  2769609 2799895 2872831 3076260 --cache --apps
-TEST[DATE|TIME] Blocks:  [2769609 2799895 2872831 3076260]
-TEST[DATE|TIME] Apps:  true
-TEST[DATE|TIME] Cache:  true
-Error: The --cache option is not available with the --apps option.
+chifra blocks  4012000-4012001 --trace --hashes
+TEST[DATE|TIME] Blocks:  [4012000-4012001]
+TEST[DATE|TIME] Hashes:  true
+TEST[DATE|TIME] Trace:  true
+Error: The --trace option is not available with the --hashes option.
 Usage:
   chifra blocks [flags] <block> [block...]
 

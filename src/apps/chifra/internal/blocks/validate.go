@@ -68,11 +68,33 @@ func (opts *BlocksOptions) ValidateBlocks() error {
 			if len(opts.Blocks) == 0 {
 				return validate.Usage("Please supply one or more block identifiers.")
 			}
-			if opts.Cache && opts.Uniq {
-				return validate.Usage("The {0} option is not available{1}.", "--cache", " with the --uniq option")
-			}
 			if !opts.Logs && (len(opts.Emitter) > 0 || len(opts.Topic) > 0) {
 				return validate.Usage("The {0} option are only available with the {1} option.", "--emitter and --topic", "--log")
+			}
+			if opts.Cache && opts.Uncles {
+				return validate.Usage("The {0} option is not available{1}.", "--cache", " with the --uncles option")
+			}
+			if opts.Trace && opts.Hashes {
+				return validate.Usage("The {0} option is not available{1}.", "--trace", " with the --hashes option")
+			}
+			if opts.Articulate && !opts.Logs {
+				return validate.Usage("The {0} option is available only with {1}.", "--articulate", "the --logs option")
+			}
+			if opts.Uniq {
+				if opts.Trace {
+					return validate.Usage("The {0} option is not available{1}.", "--trace", " with the --uniq option")
+				}
+				if opts.Cache {
+					return validate.Usage("The {0} option is not available{1}.", "--cache", " with the --uniq option")
+				}
+			}
+			if opts.Apps {
+				if opts.Trace {
+					return validate.Usage("The {0} option is not available{1}.", "--trace", " with the --apps option")
+				}
+				if opts.Cache {
+					return validate.Usage("The {0} option is not available{1}.", "--cache", " with the --apps option")
+				}
 			}
 		}
 	}

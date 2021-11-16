@@ -1,0 +1,5 @@
+{
+  "errors": [
+    "chifra blocks - The --hashes and --trace options are exclusive."
+  ]
+}

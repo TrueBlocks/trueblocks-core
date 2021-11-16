@@ -180,34 +180,12 @@ bool COptions::parseArguments(string_q& command) {
     listOffset = contains(command, "list") ? list : NOPOS;
     filterType = (uniq ? "uniq" : (apps ? "apps" : ""));
 
-    if (cache && uncles)
-        return usage(usageErrs[ERR_NOCACHEUNCLE]);
-
-    if (cache && !filterType.empty())
-        return usage(usageErrs[ERR_NOCACHEADDRESS]);
-
-    if (trace && !isTracingNode())
-        return usage(usageErrs[ERR_TRACINGREQUIRED]);
-
-    if (trace && !filterType.empty())
-        return usage(usageErrs[ERR_NOTRACEADDRESS]);
-
-    if (trace && hashes)
-        return usage(usageErrs[ERR_TRACEHASHEXCLUSIVE]);
-
-    if (blocks.empty() && listOffset == NOPOS)
-        return usage(usageErrs[ERR_ATLEASTONEBLOCK]);
-
-    if ((!logFilter.emitters.empty() || !logFilter.topics.empty()))
-        if (!logs)
-            return usage(usageErrs[ERR_EMTOPONLYWITHLOG]);
-
-    if (articulate && !logs)
-        return usage(usageErrs[ERR_ARTWITHOUTLOGS]);
-
     if (big_range != 500 && !logs)
         return usage(usageErrs[ERR_RANGENOLOGS]);
     big_range = max(big_range, uint64_t(50));
+
+    if (trace && !isTracingNode())
+        return usage(usageErrs[ERR_TRACINGREQUIRED]);
 
     secsFinal =
         (timestamp_t)getGlobalConfig("getBlocks")->getConfigInt("settings", "secs_when_final", (uint64_t)secsFinal);

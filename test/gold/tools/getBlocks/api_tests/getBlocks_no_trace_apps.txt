@@ -1,0 +1,5 @@
+{
+  "errors": [
+    "The --trace option is not available with the --apps option."
+  ]
+}
