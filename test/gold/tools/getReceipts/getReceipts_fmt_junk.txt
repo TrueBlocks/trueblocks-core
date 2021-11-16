@@ -1,9 +1,7 @@
 chifra receipts  2222222.0 2332332.0 --fmt junk
 TEST[DATE|TIME] Transactions:  [2222222.0 2332332.0]
 TEST[DATE|TIME] Format:  junk
-Error: 
-  The --fmt option (junk) must be one of [ json | txt | csv | api ]
-
+Error: The --fmt option (junk) must be one of [ json | txt | csv | api ]
 Usage:
   chifra receipts [flags] <tx_id> [tx_id...]
 

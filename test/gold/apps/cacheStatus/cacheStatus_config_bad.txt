@@ -1,7 +1,5 @@
 chifra status  config
-Error: 
-  The modes option (config) must be one of [ index | monitors | collections | names | abis | caches | some | all ]
-
+Error: The modes option (config) must be one of [ index | monitors | collections | names | abis | caches | some | all ]
 Usage:
   chifra status [flags] [mode...]
 

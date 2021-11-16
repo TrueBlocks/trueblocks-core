@@ -1,7 +1,5 @@
 chifra pins  
-Error: 
-  Please choose at least one of --list or --init.
-
+Error: Please choose at least one of --list or --init.
 Usage:
   chifra pins [flags]
 

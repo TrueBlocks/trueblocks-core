@@ -1,7 +1,5 @@
 chifra explore  1001001.0 --google
-Error: 
-  The --google option requires an address term.
-
+Error: The --google option requires an address term.
 Usage:
   chifra explore [flags] <term> [term...]
 

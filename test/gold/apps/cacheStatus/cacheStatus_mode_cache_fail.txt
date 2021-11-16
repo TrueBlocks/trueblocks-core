@@ -1,7 +1,5 @@
 chifra status  caches --types junk
-Error: 
-  The --types option (junk) must be one of [ blocks | txs | traces | slurps | prices | all ]
-
+Error: The --types option (junk) must be one of [ blocks | txs | traces | slurps | prices | all ]
 Usage:
   chifra status [flags] [mode...]
 

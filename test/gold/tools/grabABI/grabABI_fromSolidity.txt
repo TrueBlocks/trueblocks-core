@@ -1,7 +1,5 @@
 chifra abis  --sol 0x2234567812345678123456781234567812345678
-Error: 
-  The file option (./0x2234567812345678123456781234567812345678.sol) must exist
-
+Error: The file option (./0x2234567812345678123456781234567812345678.sol) must exist
 Usage:
   chifra abis [flags] <address> [address...]
 

@@ -1,7 +1,5 @@
 chifra quotes  --noop
-Error: 
-  Please specify at least one command line option.
-
+Error: Please specify at least one command line option.
 Usage:
   chifra quotes [flags]
 

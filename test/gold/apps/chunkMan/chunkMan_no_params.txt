@@ -1,7 +1,5 @@
 chifra chunks  
-Error: 
-  Please choose at least one of --list, --extract, or --check.
-
+Error: Please choose at least one of --list, --extract, or --check.
 Usage:
   chifra chunks [flags] <block> [block...]
 

@@ -1,7 +1,5 @@
 chifra slurp  0x63c8c29af409bd31ec7ddeea58f
-Error: 
-  Please specify at least one valid Ethereum address.
-
+Error: Please specify at least one valid Ethereum address.
 Usage:
   chifra slurp [flags] <address> [address...] [block...]
 

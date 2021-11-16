@@ -1,7 +1,5 @@
 chifra export  0x00a3819199113fc6a6e6ba1298afde7377e2009b --max_records 30 --fmt json --summarize_by jimp
-Error: 
-  The --summarize_by option (jimp) must be one of [ yearly | quarterly | monthly | weekly | daily | hourly | blockly | tx ]
-
+Error: The --summarize_by option (jimp) must be one of [ yearly | quarterly | monthly | weekly | daily | hourly | blockly | tx ]
 Usage:
   chifra export [flags] <address> [address...] [topics...] [fourbytes...]
 

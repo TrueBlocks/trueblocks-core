@@ -1,8 +1,6 @@
 chifra quotes  --fmt junk
 TEST[DATE|TIME] Format:  junk
-Error: 
-  The --fmt option (junk) must be one of [ json | txt | csv | api ]
-
+Error: The --fmt option (junk) must be one of [ json | txt | csv | api ]
 Usage:
   chifra quotes [flags]
 

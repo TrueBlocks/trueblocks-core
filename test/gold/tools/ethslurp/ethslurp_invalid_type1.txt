@@ -1,7 +1,5 @@
 chifra slurp  0x1324e7b922b30B49Ab8EA81086341cc41C249346 --types junk
-Error: 
-  The --types option (junk) must be one of [ ext | int | token | nfts | miner | uncles | all ]
-
+Error: The --types option (junk) must be one of [ ext | int | token | nfts | miner | uncles | all ]
 Usage:
   chifra slurp [flags] <address> [address...] [block...]
 

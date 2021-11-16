@@ -1,9 +1,7 @@
 chifra abis  0xe94327d07fc17907b4db788e5adf2ed424addff6 --fmt junk
 TEST[DATE|TIME] Addrs:  [0xe94327d07fc17907b4db788e5adf2ed424addff6]
 TEST[DATE|TIME] Format:  junk
-Error: 
-  The --fmt option (junk) must be one of [ json | txt | csv | api ]
-
+Error: The --fmt option (junk) must be one of [ json | txt | csv | api ]
 Usage:
   chifra abis [flags] <address> [address...]
 

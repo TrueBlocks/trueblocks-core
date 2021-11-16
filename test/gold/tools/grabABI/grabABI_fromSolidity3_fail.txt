@@ -1,7 +1,5 @@
 chifra abis  --sol --find 0x1aa3a008 0x7d655c57f71464b6f83811c55d84009cd9f5221c --fmt json
-Error: 
-  Please choose only one of --sol or --find.
-
+Error: Please choose only one of --sol or --find.
 Usage:
   chifra abis [flags] <address> [address...]
 

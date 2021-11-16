@@ -1,7 +1,5 @@
 chifra names  --collections --addr
-Error: 
-  The --collection option is not available with any other option.
-
+Error: The --collection option is not available with any other option.
 Usage:
   chifra names [flags] <term> [term...]
 

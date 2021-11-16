@@ -1,7 +1,5 @@
 chifra explore  1001001.0 --local --google
-Error: 
-  The --local option is not available with the --google option.
-
+Error: The --local option is not available with the --google option.
 Usage:
   chifra explore [flags] <term> [term...]
 

@@ -1,7 +1,5 @@
 chifra pins  --list --init_all
-Error: 
-  The --init_all flag has been deprecated. Use --init --all instead.
-
+Error: The --init_all flag has been deprecated. Use --init --all instead.
 Usage:
   chifra pins [flags]
 

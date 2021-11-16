@@ -1,7 +1,5 @@
 chifra abis  truebit --classes --fmt json
-Error: 
-  The --classes option is not available (not implemented).
-
+Error: The --classes option is not available (not implemented).
 Usage:
   chifra abis [flags] <address> [address...]
 
