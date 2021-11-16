@@ -23,7 +23,9 @@ import (
 	"io"
 	"io/ioutil"
 	"net/http"
+	"net/url"
 	"os"
+	"path"
 	"strconv"
 	"strings"
 	"sync"
@@ -100,7 +102,7 @@ func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkType ChunkType, pro
 	gatewayUrl := config.ReadBlockScrape().Dev.IpfsGateway
 
 	downloadPool, err := ants.NewPoolWithFunc(poolSize, func(param interface{}) {
-		url := gatewayUrl
+		url, _ := url.Parse(gatewayUrl)
 		pin := param.(manifest.PinDescriptor)
 
 		defer downloadWg.Done()
@@ -118,7 +120,7 @@ func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkType ChunkType, pro
 				hash = pin.IndexHash
 			}
 
-			url += hash
+			url.Path = path.Join(url.Path, hash)
 
 			progressChannel <- &progress.Progress{
 				Payload: &pin,
@@ -126,7 +128,7 @@ func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkType ChunkType, pro
 				Message: hash,
 			}
 
-			download, err := fetchChunk(url)
+			download, err := fetchChunk(url.String())
 			if errors.Is(ctx.Err(), context.Canceled) {
 				return
 			}
