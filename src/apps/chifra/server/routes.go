@@ -19,62 +19,28 @@ package servePkg
 
 import (
 	"fmt"
-	"log"
 	"net/http"
-	"time"
 
 	blocksPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/blocks"
 	namesPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/names"
 	pinsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/pins"
 	receiptsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/receipts"
 	tokensPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/tokens"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
-	"github.com/gorilla/mux"
-	"golang.org/x/time/rate"
 )
 
-// Route A structure to hold the API's routes
-type Route struct {
-	Name        string
-	Method      string
-	Pattern     string
-	HandlerFunc http.HandlerFunc
-}
-
-// Routes An array of Route structures
-type Routes []Route
-
-// NewRouter Creates a new router given the routes array
-func NewRouter() *mux.Router {
-	router := mux.NewRouter().StrictSlash(true)
-	for _, route := range routes {
-		var handler http.Handler
-		handler = route.HandlerFunc
-		handler = Logger(handler, route.Name)
-		router.
-			Methods(route.Method).
-			Path(route.Pattern).
-			Name(route.Name).
-			Handler(handler)
-	}
-
-	return router
-}
-
-// Index shows the home page
 func Index(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Users Manual")
 }
 
 // BEG_ROUTE_CODE
 
-func AccountsAbis(w http.ResponseWriter, r *http.Request) {
+func RouteAbis(w http.ResponseWriter, r *http.Request) {
 	CallOneExtra(w, r, "chifra", "abis", "abis")
 	// abisPkg.ServeAbis(w, r)
 }
 
-func ChainDataBlocks(w http.ResponseWriter, r *http.Request) {
-	// TODO: Use this instead
+func RouteBlocks(w http.ResponseWriter, r *http.Request) {
+	// TODO: Use the blocksPkg instead
 	// blocksPkg.ServeBlocks(w, r)
 	opts := blocksPkg.FromRequest(w, r)
 	err := opts.ValidateBlocks()
@@ -85,32 +51,32 @@ func ChainDataBlocks(w http.ResponseWriter, r *http.Request) {
 	CallOne(w, r, "getBlocks", "blocks")
 }
 
-func AdminChunks(w http.ResponseWriter, r *http.Request) {
+func RouteChunks(w http.ResponseWriter, r *http.Request) {
 	CallOne(w, r, "chunkMan", "chunks")
 }
 
-func AccountsExport(w http.ResponseWriter, r *http.Request) {
+func RouteExport(w http.ResponseWriter, r *http.Request) {
 	CallOne(w, r, "acctExport", "export")
 }
 
-func AdminInit(w http.ResponseWriter, r *http.Request) {
+func RouteInit(w http.ResponseWriter, r *http.Request) {
 	CallOneExtra(w, r, "chifra", "init", "init")
 }
 
-func AccountsList(w http.ResponseWriter, r *http.Request) {
+func RouteList(w http.ResponseWriter, r *http.Request) {
 	CallOneExtra(w, r, "chifra", "list", "list")
 }
 
-func ChainDataLogs(w http.ResponseWriter, r *http.Request) {
+func RouteLogs(w http.ResponseWriter, r *http.Request) {
 	CallOne(w, r, "getLogs", "logs")
 }
 
-func AccountsMonitors(w http.ResponseWriter, r *http.Request) {
+func RouteMonitors(w http.ResponseWriter, r *http.Request) {
 	CallOneExtra(w, r, "chifra", "monitors", "monitors")
 }
 
-func AccountsNames(w http.ResponseWriter, r *http.Request) {
-	// TODO: Use this instead
+func RouteNames(w http.ResponseWriter, r *http.Request) {
+	// TODO: Use the namesPkg instead
 	// namesPkg.ServeNames(w, r)
 	opts := namesPkg.FromRequest(w, r)
 	err := opts.ValidateNames()
@@ -121,20 +87,20 @@ func AccountsNames(w http.ResponseWriter, r *http.Request) {
 	CallOne(w, r, "ethNames", "names")
 }
 
-func AdminPins(w http.ResponseWriter, r *http.Request) {
+func RoutePins(w http.ResponseWriter, r *http.Request) {
 	pinsPkg.ServePins(w, r)
 }
 
-func OtherQuotes(w http.ResponseWriter, r *http.Request) {
+func RouteQuotes(w http.ResponseWriter, r *http.Request) {
 	CallOne(w, r, "getQuotes", "quotes")
 }
 
-func ChainDataTransactions(w http.ResponseWriter, r *http.Request) {
+func RouteTransactions(w http.ResponseWriter, r *http.Request) {
 	CallOne(w, r, "getTrans", "transactions")
 }
 
-func ChainDataReceipts(w http.ResponseWriter, r *http.Request) {
-	// TODO: Use this instead
+func RouteReceipts(w http.ResponseWriter, r *http.Request) {
+	// TODO: Use the receiptsPkg instead
 	// receiptPkg.ServeReceipts(w, r)
 	opts := receiptsPkg.FromRequest(w, r)
 	err := opts.ValidateReceipts()
@@ -145,24 +111,24 @@ func ChainDataReceipts(w http.ResponseWriter, r *http.Request) {
 	CallOne(w, r, "getReceipts", "receipts")
 }
 
-func AdminScrape(w http.ResponseWriter, r *http.Request) {
+func RouteScrape(w http.ResponseWriter, r *http.Request) {
 	CallOne(w, r, "blockScrape", "scrape")
 }
 
-func OtherSlurp(w http.ResponseWriter, r *http.Request) {
+func RouteSlurp(w http.ResponseWriter, r *http.Request) {
 	CallOne(w, r, "ethslurp", "slurp")
 }
 
-func ChainStateState(w http.ResponseWriter, r *http.Request) {
+func RouteState(w http.ResponseWriter, r *http.Request) {
 	CallOne(w, r, "getState", "state")
 }
 
-func AdminStatus(w http.ResponseWriter, r *http.Request) {
+func RouteStatus(w http.ResponseWriter, r *http.Request) {
 	CallOne(w, r, "cacheStatus", "status")
 }
 
-func ChainStateTokens(w http.ResponseWriter, r *http.Request) {
-	// TODO: Use this instead
+func RouteTokens(w http.ResponseWriter, r *http.Request) {
+	// TODO: Use the tokensPkg instead
 	// tokensPkg.ServeTokens(w, r)
 	opts := tokensPkg.FromRequest(w, r)
 	err := opts.ValidateTokens()
@@ -173,11 +139,11 @@ func ChainStateTokens(w http.ResponseWriter, r *http.Request) {
 	CallOne(w, r, "getTokens", "tokens")
 }
 
-func ChainDataTraces(w http.ResponseWriter, r *http.Request) {
+func RouteTraces(w http.ResponseWriter, r *http.Request) {
 	CallOne(w, r, "getTraces", "traces")
 }
 
-func ChainDataWhen(w http.ResponseWriter, r *http.Request) {
+func RouteWhen(w http.ResponseWriter, r *http.Request) {
 	CallOne(w, r, "whenBlock", "when")
 }
 
@@ -210,174 +176,145 @@ var routes = Routes{
 	// BEG_ROUTE_ITEMS
 
 	Route{
-		"AccountsList",
+		"RouteList",
 		"GET",
 		"/list",
-		AccountsList,
+		RouteList,
 	},
 
 	Route{
-		"AccountsExport",
+		"RouteExport",
 		"GET",
 		"/export",
-		AccountsExport,
+		RouteExport,
 	},
 
 	Route{
-		"AccountsMonitors",
+		"RouteMonitors",
 		"GET",
 		"/monitors",
-		AccountsMonitors,
+		RouteMonitors,
 	},
 
 	Route{
-		"AccountsNames",
+		"RouteNames",
 		"GET",
 		"/names",
-		AccountsNames,
+		RouteNames,
 	},
 
 	Route{
-		"AccountsAbis",
+		"RouteAbis",
 		"GET",
 		"/abis",
-		AccountsAbis,
+		RouteAbis,
 	},
 
 	Route{
-		"ChainDataBlocks",
+		"RouteBlocks",
 		"GET",
 		"/blocks",
-		ChainDataBlocks,
+		RouteBlocks,
 	},
 
 	Route{
-		"ChainDataTransactions",
+		"RouteTransactions",
 		"GET",
 		"/transactions",
-		ChainDataTransactions,
+		RouteTransactions,
 	},
 
 	Route{
-		"ChainDataReceipts",
+		"RouteReceipts",
 		"GET",
 		"/receipts",
-		ChainDataReceipts,
+		RouteReceipts,
 	},
 
 	Route{
-		"ChainDataLogs",
+		"RouteLogs",
 		"GET",
 		"/logs",
-		ChainDataLogs,
+		RouteLogs,
 	},
 
 	Route{
-		"ChainDataTraces",
+		"RouteTraces",
 		"GET",
 		"/traces",
-		ChainDataTraces,
+		RouteTraces,
 	},
 
 	Route{
-		"ChainDataWhen",
+		"RouteWhen",
 		"GET",
 		"/when",
-		ChainDataWhen,
+		RouteWhen,
 	},
 
 	Route{
-		"ChainStateState",
+		"RouteState",
 		"GET",
 		"/state",
-		ChainStateState,
+		RouteState,
 	},
 
 	Route{
-		"ChainStateTokens",
+		"RouteTokens",
 		"GET",
 		"/tokens",
-		ChainStateTokens,
+		RouteTokens,
 	},
 
 	Route{
-		"AdminStatus",
+		"RouteStatus",
 		"GET",
 		"/status",
-		AdminStatus,
+		RouteStatus,
 	},
 
 	Route{
-		"AdminScrape",
+		"RouteScrape",
 		"GET",
 		"/scrape",
-		AdminScrape,
+		RouteScrape,
 	},
 
 	Route{
-		"AdminInit",
+		"RouteInit",
 		"GET",
 		"/init",
-		AdminInit,
+		RouteInit,
 	},
 
 	Route{
-		"AdminPins",
+		"RoutePins",
 		"GET",
 		"/pins",
-		AdminPins,
+		RoutePins,
 	},
 
 	Route{
-		"AdminChunks",
+		"RouteChunks",
 		"GET",
 		"/chunks",
-		AdminChunks,
+		RouteChunks,
 	},
 
 	Route{
-		"OtherQuotes",
+		"RouteQuotes",
 		"GET",
 		"/quotes",
-		OtherQuotes,
+		RouteQuotes,
 	},
 
 	Route{
-		"OtherSlurp",
+		"RouteSlurp",
 		"GET",
 		"/slurp",
-		OtherSlurp,
+		RouteSlurp,
 	},
 	// END_ROUTE_ITEMS
-}
-
-var nProcessed int
-
-// Logger sends information to the server's console
-func Logger(inner http.Handler, name string) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		var limiter = rate.NewLimiter(1, 3)
-		if !limiter.Allow() {
-			http.Error(w, http.StatusText(http.StatusTooManyRequests), http.StatusTooManyRequests)
-			return
-		}
-		start := time.Now()
-		inner.ServeHTTP(w, r)
-		t := ""
-		if utils.IsTestModeServer(r) {
-			t = "-test"
-		}
-		log.Printf(
-			"%d %s%s %s %s %s",
-			nProcessed,
-			r.Method,
-			t,
-			r.RequestURI,
-			name,
-			time.Since(start),
-		)
-		nProcessed++
-	})
 }
 
 // By removing, inserting into, or altering any of the following 10  lines
