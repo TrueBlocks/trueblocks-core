@@ -13,15 +13,18 @@ package abisPkg
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * Parts of this file were auto generated with makeClass --gocmds. Be careful when editing
- * it to only edit those parts of the code inside of // EXISTING_CODE blocks
+ * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 
+// EXISTING_CODE
 import (
 	"net/http"
 
 	"github.com/spf13/cobra"
 )
+
+// EXISTING_CODE
 
 var Options AbisOptions
 
@@ -29,21 +32,28 @@ func RunAbis(cmd *cobra.Command, args []string) error {
 	Options.Addrs = args
 	opts := Options
 
+	// EXISTING_CODE
+	// EXISTING_CODE
+
 	err := opts.ValidateAbis()
 	if err != nil {
-		// cobra reports the error
 		return err
 	}
 
+	// EXISTING_CODE
 	if len(opts.Find) > 0 {
 		return opts.FindInternal()
 	}
 
 	return opts.Globals.PassItOn("grabABI", opts.ToDashStr())
+	// EXISTING_CODE
 }
 
 func ServeAbis(w http.ResponseWriter, r *http.Request) {
 	opts := FromRequest(w, r)
+
+	// EXISTING_CODE
+	// EXISTING_CODE
 
 	err := opts.ValidateAbis()
 	if err != nil {
@@ -51,6 +61,7 @@ func ServeAbis(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// EXISTING_CODE
 	if len(opts.Find) > 0 {
 		err = opts.FindInternal()
 		if err != nil {
@@ -61,4 +72,8 @@ func ServeAbis(w http.ResponseWriter, r *http.Request) {
 	}
 
 	opts.Globals.PassItOn("grabABI", opts.ToDashStr())
+	// EXISTING_CODE
 }
+
+// EXISTING_CODE
+// EXISTING_CODE

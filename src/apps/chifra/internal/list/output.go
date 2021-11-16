@@ -13,10 +13,11 @@ package listPkg
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * Parts of this file were auto generated with makeClass --gocmds. Be careful when editing
- * it to only edit those parts of the code inside of // EXISTING_CODE blocks
+ * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 
+// EXISTING_CODE
 import (
 	"net/http"
 
@@ -24,11 +25,23 @@ import (
 	"github.com/spf13/cobra"
 )
 
+// EXISTING_CODE
+
 var Options ListOptions
 
 func RunList(cmd *cobra.Command, args []string) error {
+	Options.Addrs = args
 	opts := Options
 
+	// EXISTING_CODE
+	// EXISTING_CODE
+
+	err := opts.ValidateList()
+	if err != nil {
+		return err
+	}
+
+	// EXISTING_CODE
 	exportPkg.Options.Appearances = true
 	if opts.Count {
 		exportPkg.Options.Count = true
@@ -41,10 +54,14 @@ func RunList(cmd *cobra.Command, args []string) error {
 	}
 
 	return exportPkg.RunExport(cmd, args)
+	// EXISTING_CODE
 }
 
 func ServeList(w http.ResponseWriter, r *http.Request) {
 	opts := FromRequest(w, r)
+
+	// EXISTING_CODE
+	// EXISTING_CODE
 
 	err := opts.ValidateList()
 	if err != nil {
@@ -52,5 +69,9 @@ func ServeList(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	opts.Globals.PassItOn("acctExport", opts.ToDashStr())
+	// EXISTING_CODE
+	// EXISTING_CODE
 }
+
+// EXISTING_CODE
+// EXISTING_CODE

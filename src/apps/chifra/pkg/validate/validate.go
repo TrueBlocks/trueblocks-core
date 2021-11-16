@@ -59,7 +59,6 @@ func Is0xPrefixed(str string) bool {
 	if len(str) < 3 {
 		return false
 	}
-
 	return str[:2] == "0x"
 }
 
@@ -120,16 +119,10 @@ func ValidateEnum(field, value, valid string) error {
 		}
 		list += part
 	}
-	msg := "The " + field + " option ("
-	msg += value
-	msg += ") must be one of [ " + list + " ]"
-	return Usage(msg)
+	return Usage("The {0} option ({%1}) must be one of [ {%2} ]", field, value, list)
 }
 
 func ValidateEnumSlice(field string, values []string, valid string) error {
-	if len(values) == 0 {
-		return nil
-	}
 	for _, value := range values {
 		err := ValidateEnum(field, value, valid)
 		if err != nil {

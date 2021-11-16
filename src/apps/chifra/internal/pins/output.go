@@ -13,10 +13,11 @@ package pinsPkg
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * Parts of this file were auto generated with makeClass --gocmds. Be careful when editing
- * it to only edit those parts of the code inside of // EXISTING_CODE blocks
+ * Parts of this file were generated with makeClass --run. Edit only those parts of
+ * the code inside of 'EXISTING_CODE' tags.
  */
 
+// EXISTING_CODE
 import (
 	"fmt"
 	"net/http"
@@ -30,65 +31,77 @@ var errCustomFolderMissing = `Attempt to create customized indexPath (%s) failed
 Please create the folder or adjust the setting by editing $CONFIG/trueBlocks.toml.
 `
 
+// EXISTING_CODE
+
 var Options PinsOptions
 
 func RunPins(cmd *cobra.Command, args []string) error {
-	err := pinlib.EstablishIndexFolders()
-	if err != nil {
-		if err, ok := err.(*pinlib.ErrCustomizedPath); ok {
-			fmt.Printf(errCustomFolderMissing, err.GetIndexPath())
+	opts := Options
+
+	// EXISTING_CODE
+	err1 := pinlib.EstablishIndexFolders()
+	if err1 != nil {
+		if err1, ok := err1.(*pinlib.ErrCustomizedPath); ok {
+			fmt.Printf(errCustomFolderMissing, err1.GetIndexPath())
 			return nil
 		}
-		logger.Fatal(err)
+		logger.Fatal(err1)
 	}
+	// EXISTING_CODE
 
-	err = Options.ValidatePins()
+	err := opts.ValidatePins()
 	if err != nil {
 		return err
 	}
 
-	if Options.List {
-		err := Options.ListInternal()
+	// EXISTING_CODE
+	if opts.List {
+		err := opts.ListInternal()
 		if err != nil {
 			logger.Fatal("Cannot open local manifest file", err)
 		}
 		return nil
 	}
 
-	if Options.Init {
-		err := Options.InitInternal()
+	if opts.Init {
+		err := opts.InitInternal()
 		if err != nil {
 			logger.Fatal(err)
 		}
 		return nil
 	}
 
-	if Options.Sleep != .25 {
+	if opts.Sleep != .25 {
 		logger.Fatal("Not implemented")
 	}
 
-	if Options.Share {
+	if opts.Share {
 		logger.Fatal("Not implemented")
 	}
 
 	return nil
+	// EXISTING_CODE
 }
 
 func ServePins(w http.ResponseWriter, r *http.Request) {
 	opts := FromRequest(w, r)
 
-	err := pinlib.EstablishIndexFolders()
+	// EXISTING_CODE
+	err1 := pinlib.EstablishIndexFolders()
+	if err1 != nil {
+		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err1)
+		return
+	}
+
+	// EXISTING_CODE
+
+	err := opts.ValidatePins()
 	if err != nil {
 		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
 		return
 	}
 
-	err = opts.ValidatePins()
-	if err != nil {
-		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-		return
-	}
-
+	// EXISTING_CODE
 	if opts.List {
 		err := opts.ListInternal()
 		if err != nil {
@@ -103,4 +116,10 @@ func ServePins(w http.ResponseWriter, r *http.Request) {
 			opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
 		}
 	}
+
+	return
+	// EXISTING_CODE
 }
+
+// EXISTING_CODE
+// EXISTING_CODE
