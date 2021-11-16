@@ -17,28 +17,15 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
-
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-func usageEx(function, msg string, values []string) error {
-	var ret string
-	if len(function) > 0 {
-		ret = function + ": "
-	}
-	ret += msg
+func Usage(msg string, values ...string) error {
+	ret := msg
 	for index, val := range values {
 		rep := "{" + strconv.FormatInt(int64(index), 10) + "}"
 		ret = strings.Replace(ret, rep, val, -1)
 	}
-	if utils.IsApiMode() {
-		return errors.New(ret)
-	}
-	return errors.New("\n  " + ret + "\n")
-}
-
-func Usage(msg string, values ...string) error {
-	return usageEx("", msg, values)
+	return errors.New(ret)
 }
 
 func Deprecated(cmd string, rep string) error {
@@ -49,8 +36,9 @@ func Deprecated(cmd string, rep string) error {
 	return Usage(msg, cmd, rep)
 }
 
-/* Expects str to be in 0xNNNNNNN...NNNN format */
 // TODO: check if ParseUint has better performance
+// TODO: TJR - I did the test - ParseUint is slower and
+// TODO: TJR - does not handle hashes that are too long
 func IsHex(str string) bool {
 	return len(strings.Trim(str[2:], "0123456789abcdefABCDEF")) == 0
 }

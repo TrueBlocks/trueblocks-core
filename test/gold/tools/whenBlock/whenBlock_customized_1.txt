@@ -1,7 +1,5 @@
 chifra when  myblock
-Error: 
-  The given value 'myblock' is not a numeral or a special named block.
-
+Error: The given value 'myblock' is not a numeral or a special named block.
 Usage:
   chifra when [flags] < block | date > [ block... | date... ]
 

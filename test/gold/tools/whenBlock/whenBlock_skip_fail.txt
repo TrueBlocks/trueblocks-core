@@ -1,7 +1,5 @@
 chifra when  --fmt txt 1301000-1301250:junk
-Error: 
-  Input argument appears to be invalid. No such skip marker: junk
-
+Error: Input argument appears to be invalid. No such skip marker: junk
 Usage:
   chifra when [flags] < block | date > [ block... | date... ]
 
