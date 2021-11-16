@@ -24,49 +24,6 @@ import (
 	"sync"
 )
 
-// dropNL2 drops new line characters (\n) from the progress stream
-func dropNL2(data []byte) []byte {
-	if len(data) > 0 && data[len(data)-1] == '\n' {
-		return data[0 : len(data)-1]
-	}
-	return data
-}
-
-// ScanProgressLine2 looks for "lines" that end with `\r` not `\n` like usual
-func ScanProgressLine2(data []byte, atEOF bool) (advance int, token []byte, err error) {
-	if atEOF && len(data) == 0 {
-		return 0, nil, nil
-	}
-	if i := bytes.IndexByte(data, '\n'); i >= 0 {
-		fmt.Fprintf(os.Stderr, "%s\n", string(data[0:i]))
-		return i + 1, data[0:i], nil
-	}
-	if i := bytes.IndexByte(data, '\r'); i >= 0 {
-		fmt.Fprintf(os.Stderr, "%s\r", string(data[0:i]))
-		return i + 1, dropNL2(data[0:i]), nil
-	}
-	return bufio.ScanLines(data, atEOF)
-}
-
-// ScanForProgress2 watches stderr and picks of progress messages
-func ScanForProgress2(stderrPipe io.Reader, fn func(string)) {
-	scanner := bufio.NewScanner(stderrPipe)
-	scanner.Split(ScanProgressLine2)
-	for scanner.Scan() {
-		// we've already printed the token
-	}
-	if err := scanner.Err(); err != nil {
-		fmt.Println("TB: Error while reading stderr -- ", err)
-	}
-}
-
-// getCommandPath2 returns full path the the given tool
-func getCommandPath2(cmd string) string {
-	usr, _ := user.Current()
-	dir := usr.HomeDir
-	return dir + "/.local/bin/chifra/" + cmd
-}
-
 func (opts *GlobalOptionsType) PassItOn(path string, flags string) error {
 	options := flags
 	if opts.Raw {
@@ -155,4 +112,47 @@ func (opts *GlobalOptionsType) PassItOn(path string, flags string) error {
 	wg.Wait()
 	cmd.Wait()
 	return nil
+}
+
+// dropNL2 drops new line characters (\n) from the progress stream
+func dropNL2(data []byte) []byte {
+	if len(data) > 0 && data[len(data)-1] == '\n' {
+		return data[0 : len(data)-1]
+	}
+	return data
+}
+
+// ScanProgressLine2 looks for "lines" that end with `\r` not `\n` like usual
+func ScanProgressLine2(data []byte, atEOF bool) (advance int, token []byte, err error) {
+	if atEOF && len(data) == 0 {
+		return 0, nil, nil
+	}
+	if i := bytes.IndexByte(data, '\n'); i >= 0 {
+		fmt.Fprintf(os.Stderr, "%s\n", string(data[0:i]))
+		return i + 1, data[0:i], nil
+	}
+	if i := bytes.IndexByte(data, '\r'); i >= 0 {
+		fmt.Fprintf(os.Stderr, "%s\r", string(data[0:i]))
+		return i + 1, dropNL2(data[0:i]), nil
+	}
+	return bufio.ScanLines(data, atEOF)
+}
+
+// ScanForProgress2 watches stderr and picks of progress messages
+func ScanForProgress2(stderrPipe io.Reader, fn func(string)) {
+	scanner := bufio.NewScanner(stderrPipe)
+	scanner.Split(ScanProgressLine2)
+	for scanner.Scan() {
+		// we've already printed the token
+	}
+	if err := scanner.Err(); err != nil {
+		fmt.Println("TB: Error while reading stderr -- ", err)
+	}
+}
+
+// getCommandPath2 returns full path the the given tool
+func getCommandPath2(cmd string) string {
+	usr, _ := user.Current()
+	dir := usr.HomeDir
+	return dir + "/.local/bin/chifra/" + cmd
 }
