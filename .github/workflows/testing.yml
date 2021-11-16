@@ -1,7 +1,7 @@
 name: Tests
 on: [pull_request, workflow_dispatch]
 jobs:
-  Explore-GitHub-Actions:
+  RemoteTests:
     runs-on: ubuntu-latest
     steps:
       - name: Run tests remotely
@@ -22,6 +22,7 @@ jobs:
             git checkout ${{ github.head_ref }}
             cd src/other/build_assets/remote_testing
             CONFIG_FILE=$HOME/trueBlocks.toml bash test_with_docker.sh ${{ github.repository }} ${{ github.sha }} ${{ github.head_ref }} test-all
+            docker system prune -af --filter "until=1h"
       - name: Finish
         run: |
           echo "🍏 This job's status is ${{ job.status }}"
