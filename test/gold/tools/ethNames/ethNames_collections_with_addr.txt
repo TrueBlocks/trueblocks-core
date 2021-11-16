@@ -1,4 +1,6 @@
 chifra names  --collections --addr
+TEST[DATE|TIME] Addr:  true
+TEST[DATE|TIME] Collections:  true
 Error: The --collection option is not available with any other option.
 Usage:
   chifra names [flags] <term> [term...]

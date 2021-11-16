@@ -24,9 +24,10 @@ import (
 	"time"
 
 	blocksPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/blocks"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	namesPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/names"
 	pinsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/pins"
 	receiptsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/receipts"
+	tokensPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/tokens"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/gorilla/mux"
 	"golang.org/x/time/rate"
@@ -56,69 +57,8 @@ func NewRouter() *mux.Router {
 			Name(route.Name).
 			Handler(handler)
 	}
-	router.Use(FormatValidator)
 
 	return router
-}
-
-// FormatValidator checks if the client wants a supported format
-func FormatValidator(inner http.Handler) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		fmtQuery := r.URL.Query()["fmt"]
-		valid := false
-		fmtValue := ""
-		if len(fmtQuery) == 0 {
-			valid = true
-		} else {
-			fmtValue = fmtQuery[0]
-			valid = fmtValue == "" ||
-				fmtValue == "json" ||
-				fmtValue == "txt" ||
-				fmtValue == "csv" ||
-				fmtValue == "api"
-		}
-
-		if valid {
-			inner.ServeHTTP(w, r)
-			return
-		}
-
-		var unused globals.GlobalOptionsType
-		unused.RespondWithError(
-			w,
-			http.StatusBadRequest,
-			fmt.Errorf("The --fmt option (%s) must be one of [ json | txt | csv | api ]", fmtValue),
-		)
-	})
-}
-
-var nProcessed int
-
-// Logger sends information to the server's console
-func Logger(inner http.Handler, name string) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		var limiter = rate.NewLimiter(1, 3)
-		if !limiter.Allow() {
-			http.Error(w, http.StatusText(http.StatusTooManyRequests), http.StatusTooManyRequests)
-			return
-		}
-		start := time.Now()
-		inner.ServeHTTP(w, r)
-		t := ""
-		if utils.IsTestModeServer(r) {
-			t = "-test"
-		}
-		log.Printf(
-			"%d %s%s %s %s %s",
-			nProcessed,
-			r.Method,
-			t,
-			r.RequestURI,
-			name,
-			time.Since(start),
-		)
-		nProcessed++
-	})
 }
 
 // Index shows the home page
@@ -126,41 +66,16 @@ func Index(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Users Manual")
 }
 
-// AdminPins handles /pins route
-func AdminPins(w http.ResponseWriter, r *http.Request) {
-	pinsPkg.ServePins(w, r)
-}
+// BEG_ROUTE_CODE
 
-// AccountsAbis processes ABI queries
 func AccountsAbis(w http.ResponseWriter, r *http.Request) {
 	CallOneExtra(w, r, "chifra", "abis", "abis")
 	// abisPkg.ServeAbis(w, r)
 }
 
-// BEG_ROUTE_CODE
-
-// AccountsList help text todo
-func AccountsList(w http.ResponseWriter, r *http.Request) {
-	CallOneExtra(w, r, "chifra", "list", "list")
-}
-
-// AccountsExport help text todo
-func AccountsExport(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "acctExport", "export")
-}
-
-// AccountsMonitors help text todo
-func AccountsMonitors(w http.ResponseWriter, r *http.Request) {
-	CallOneExtra(w, r, "chifra", "monitors", "monitors")
-}
-
-// AccountsNames help text todo
-func AccountsNames(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "ethNames", "names")
-}
-
-// ChainDataBlocks help text todo
 func ChainDataBlocks(w http.ResponseWriter, r *http.Request) {
+	// TODO: Use this instead
+	// blocksPkg.ServeBlocks(w, r)
 	opts := blocksPkg.FromRequest(w, r)
 	err := opts.ValidateBlocks()
 	if err != nil {
@@ -168,16 +83,59 @@ func ChainDataBlocks(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	CallOne(w, r, "getBlocks", "blocks")
-	// blocksPkg.ServeBlocks(w, r)
 }
 
-// ChainDataTransactions help text todo
+func AdminChunks(w http.ResponseWriter, r *http.Request) {
+	CallOne(w, r, "chunkMan", "chunks")
+}
+
+func AccountsExport(w http.ResponseWriter, r *http.Request) {
+	CallOne(w, r, "acctExport", "export")
+}
+
+func AdminInit(w http.ResponseWriter, r *http.Request) {
+	CallOneExtra(w, r, "chifra", "init", "init")
+}
+
+func AccountsList(w http.ResponseWriter, r *http.Request) {
+	CallOneExtra(w, r, "chifra", "list", "list")
+}
+
+func ChainDataLogs(w http.ResponseWriter, r *http.Request) {
+	CallOne(w, r, "getLogs", "logs")
+}
+
+func AccountsMonitors(w http.ResponseWriter, r *http.Request) {
+	CallOneExtra(w, r, "chifra", "monitors", "monitors")
+}
+
+func AccountsNames(w http.ResponseWriter, r *http.Request) {
+	// TODO: Use this instead
+	// namesPkg.ServeNames(w, r)
+	opts := namesPkg.FromRequest(w, r)
+	err := opts.ValidateNames()
+	if err != nil {
+		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
+		return
+	}
+	CallOne(w, r, "ethNames", "names")
+}
+
+func AdminPins(w http.ResponseWriter, r *http.Request) {
+	pinsPkg.ServePins(w, r)
+}
+
+func OtherQuotes(w http.ResponseWriter, r *http.Request) {
+	CallOne(w, r, "getQuotes", "quotes")
+}
+
 func ChainDataTransactions(w http.ResponseWriter, r *http.Request) {
 	CallOne(w, r, "getTrans", "transactions")
 }
 
-// ChainDataReceipts help text todo
 func ChainDataReceipts(w http.ResponseWriter, r *http.Request) {
+	// TODO: Use this instead
+	// receiptPkg.ServeReceipts(w, r)
 	opts := receiptsPkg.FromRequest(w, r)
 	err := opts.ValidateReceipts()
 	if err != nil {
@@ -187,59 +145,40 @@ func ChainDataReceipts(w http.ResponseWriter, r *http.Request) {
 	CallOne(w, r, "getReceipts", "receipts")
 }
 
-// ChainDataLogs help text todo
-func ChainDataLogs(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "getLogs", "logs")
-}
-
-// ChainDataTraces help text todo
-func ChainDataTraces(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "getTraces", "traces")
-}
-
-// ChainDataWhen help text todo
-func ChainDataWhen(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "whenBlock", "when")
-}
-
-// ChainStateState help text todo
-func ChainStateState(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "getState", "state")
-}
-
-// ChainStateTokens help text todo
-func ChainStateTokens(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "getTokens", "tokens")
-}
-
-// AdminStatus help text todo
-func AdminStatus(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "cacheStatus", "status")
-}
-
-// AdminScrape help text todo
 func AdminScrape(w http.ResponseWriter, r *http.Request) {
 	CallOne(w, r, "blockScrape", "scrape")
 }
 
-// AdminInit help text todo
-func AdminInit(w http.ResponseWriter, r *http.Request) {
-	CallOneExtra(w, r, "chifra", "init", "init")
-}
-
-// AdminChunks help text todo
-func AdminChunks(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "chunkMan", "chunks")
-}
-
-// OtherQuotes help text todo
-func OtherQuotes(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "getQuotes", "quotes")
-}
-
-// OtherSlurp help text todo
 func OtherSlurp(w http.ResponseWriter, r *http.Request) {
 	CallOne(w, r, "ethslurp", "slurp")
+}
+
+func ChainStateState(w http.ResponseWriter, r *http.Request) {
+	CallOne(w, r, "getState", "state")
+}
+
+func AdminStatus(w http.ResponseWriter, r *http.Request) {
+	CallOne(w, r, "cacheStatus", "status")
+}
+
+func ChainStateTokens(w http.ResponseWriter, r *http.Request) {
+	// TODO: Use this instead
+	// tokensPkg.ServeTokens(w, r)
+	opts := tokensPkg.FromRequest(w, r)
+	err := opts.ValidateTokens()
+	if err != nil {
+		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
+		return
+	}
+	CallOne(w, r, "getTokens", "tokens")
+}
+
+func ChainDataTraces(w http.ResponseWriter, r *http.Request) {
+	CallOne(w, r, "getTraces", "traces")
+}
+
+func ChainDataWhen(w http.ResponseWriter, r *http.Request) {
+	CallOne(w, r, "whenBlock", "when")
 }
 
 // END_ROUTE_CODE
@@ -410,6 +349,35 @@ var routes = Routes{
 		OtherSlurp,
 	},
 	// END_ROUTE_ITEMS
+}
+
+var nProcessed int
+
+// Logger sends information to the server's console
+func Logger(inner http.Handler, name string) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		var limiter = rate.NewLimiter(1, 3)
+		if !limiter.Allow() {
+			http.Error(w, http.StatusText(http.StatusTooManyRequests), http.StatusTooManyRequests)
+			return
+		}
+		start := time.Now()
+		inner.ServeHTTP(w, r)
+		t := ""
+		if utils.IsTestModeServer(r) {
+			t = "-test"
+		}
+		log.Printf(
+			"%d %s%s %s %s %s",
+			nProcessed,
+			r.Method,
+			t,
+			r.RequestURI,
+			name,
+			time.Since(start),
+		)
+		nProcessed++
+	})
 }
 
 // By removing, inserting into, or altering any of the following 10  lines

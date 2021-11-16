@@ -54,7 +54,7 @@ on      ,both ,slow  ,tokens ,tools/getTokens ,fmt_txt                       ,n 
 on      ,both ,slow  ,tokens ,tools/getTokens ,fmt_csv                       ,n    ,addrs2 = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 & fmt = csv & blocks = 2000000 & no_header
 on      ,both ,slow  ,tokens ,tools/getTokens ,fmt_json                      ,y    ,addrs2 = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 & fmt = json & blocks = 2000000
 on      ,both ,slow  ,tokens ,tools/getTokens ,fmt_api                       ,y    ,addrs2 = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 & fmt = api & blocks = 2000000
-on      ,both ,slow  ,tokens ,tools/getTokens ,fmt_junk                      ,y    ,addrs2 = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 & fmt = junk & blocks = 2000000
+local   ,both ,slow  ,tokens ,tools/getTokens ,fmt_junk                      ,y    ,addrs2 = 0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 & fmt = junk & blocks = 2000000
 on      ,both ,slow  ,tokens ,tools/getTokens ,proxy_no                      ,y    ,addrs2 = 0x00000000441378008ea67f4284a57932b1c000a5 & fmt = json & blocks = 7442048 & parts = all
 on      ,both ,slow  ,tokens ,tools/getTokens ,proxy_yes                     ,y    ,addrs2 = 0x00000000441378008ea67f4284a57932b1c000a5 & fmt = json & blocks = 8000000 & parts = all
 on      ,both ,slow  ,tokens ,tools/getTokens ,old_bug_1                     ,y    ,addrs2 = 0xa9fe4601811213c340e850ea305481aff02f5b28 0x99c961738786e8f5f3fee109f4d49f5901826b8c & blocks = 11963059

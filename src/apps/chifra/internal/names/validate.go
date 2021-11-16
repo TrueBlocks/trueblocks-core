@@ -19,6 +19,12 @@ import (
 )
 
 func (opts *NamesOptions) ValidateNames() error {
+	opts.TestLog()
+
+	if opts.BadFlag != nil {
+		return opts.BadFlag
+	}
+
 	if Options.Tags && anyBase() {
 		return validate.Usage("The {0} option is not available{1}.", "--tags", " with any other option")
 	}
@@ -26,8 +32,6 @@ func (opts *NamesOptions) ValidateNames() error {
 	if Options.Collections && anyBase() {
 		return validate.Usage("The {0} option is not available{1}.", "--collection", " with any other option")
 	}
-
-	Options.TestLog()
 
 	return globals.ValidateGlobals(&Options.Globals)
 }

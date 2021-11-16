@@ -19,12 +19,16 @@ import (
 )
 
 func (opts *TokensOptions) ValidateTokens() error {
+	opts.TestLog()
+
+	if opts.BadFlag != nil {
+		return opts.BadFlag
+	}
+
 	// special case for tokens which don't allow --dollars display
 	if Options.Globals.Dollars {
 		return validate.Usage("The {0} option is not available{1}.", "--dollars", " with this tool")
 	}
-
-	Options.TestLog()
 
 	return globals.ValidateGlobals(&Options.Globals)
 }

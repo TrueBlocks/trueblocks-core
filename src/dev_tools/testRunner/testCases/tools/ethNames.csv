@@ -9,7 +9,7 @@ on      ,both ,medi  ,names ,tools/ethNames ,fmt_txt                ,n    ,terms
 on      ,both ,medi  ,names ,tools/ethNames ,fmt_csv                ,n    ,terms = tip & fmt = csv
 on      ,both ,medi  ,names ,tools/ethNames ,fmt_api                ,y    ,terms = tip & fmt = api
 on      ,both ,medi  ,names ,tools/ethNames ,fmt_json               ,y    ,terms = tip & fmt = json
-on      ,both ,fast  ,names ,tools/ethNames ,fmt_junk               ,y    ,terms = tip & fmt = junk
+local   ,both ,fast  ,names ,tools/ethNames ,fmt_junk               ,y    ,terms = tip & fmt = junk
 on      ,both ,fast  ,names ,tools/ethNames ,tags                   ,y    ,tags
 on      ,both ,fast  ,names ,tools/ethNames ,tags_with_addr         ,y    ,tags & addr
 on      ,both ,fast  ,names ,tools/ethNames ,collections            ,y    ,collections
