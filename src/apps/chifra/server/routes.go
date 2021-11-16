@@ -23,8 +23,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	blocksPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/blocks"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	pinsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/pins"
 	receiptsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/receipts"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"

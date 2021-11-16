@@ -16,13 +16,8 @@ package cmd
  * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
 
-import (
-	"os"
-
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
-	[{ROUTE}]Pkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/[{ROUTE}]"
-	"github.com/spf13/cobra"
-)
+// EXISTING_CODE
+// EXISTING_CODE
 
 // [{ROUTE}]Cmd represents the [{ROUTE}] command
 var [{ROUTE}]Cmd = &cobra.Command{

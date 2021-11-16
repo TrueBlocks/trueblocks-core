@@ -13,7 +13,7 @@
 package manifest
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 )
 
 type IpfsHash = string

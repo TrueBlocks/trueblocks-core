@@ -14,7 +14,7 @@ package tracesPkg
  *-------------------------------------------------------------------------------------------*/
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 )
 
 func (opts *TracesOptions) ValidateTraces() error {

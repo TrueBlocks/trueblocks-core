@@ -16,13 +16,16 @@ package cmd
  * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
 
+// EXISTING_CODE
 import (
 	"os"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	servePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/server"
 	"github.com/spf13/cobra"
 )
+
+// EXISTING_CODE
 
 // serveCmd represents the serve command
 var serveCmd = &cobra.Command{

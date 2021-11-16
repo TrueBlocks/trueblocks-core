@@ -16,13 +16,16 @@ package cmd
  * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
 
+// EXISTING_CODE
 import (
 	"os"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	quotesPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/quotes"
 	"github.com/spf13/cobra"
 )
+
+// EXISTING_CODE
 
 // quotesCmd represents the quotes command
 var quotesCmd = &cobra.Command{

@@ -16,13 +16,16 @@ package cmd
  * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
 
+// EXISTING_CODE
 import (
 	"os"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	pinsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/pins"
 	"github.com/spf13/cobra"
 )
+
+// EXISTING_CODE
 
 // pinsCmd represents the pins command
 var pinsCmd = &cobra.Command{
