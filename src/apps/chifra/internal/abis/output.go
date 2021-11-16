@@ -32,9 +32,6 @@ func RunAbis(cmd *cobra.Command, args []string) error {
 	Options.Addrs = args
 	opts := Options
 
-	// EXISTING_CODE
-	// EXISTING_CODE
-
 	err := opts.ValidateAbis()
 	if err != nil {
 		return err
@@ -51,9 +48,6 @@ func RunAbis(cmd *cobra.Command, args []string) error {
 
 func ServeAbis(w http.ResponseWriter, r *http.Request) {
 	opts := FromRequest(w, r)
-
-	// EXISTING_CODE
-	// EXISTING_CODE
 
 	err := opts.ValidateAbis()
 	if err != nil {

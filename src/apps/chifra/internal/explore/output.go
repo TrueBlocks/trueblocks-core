@@ -35,9 +35,6 @@ func RunExplore(cmd *cobra.Command, args []string) error {
 	Options.Terms = args
 	opts := Options
 
-	// EXISTING_CODE
-	// EXISTING_CODE
-
 	err := opts.ValidateExplore()
 	if err != nil {
 		return err
@@ -57,9 +54,6 @@ func RunExplore(cmd *cobra.Command, args []string) error {
 
 func ServeExplore(w http.ResponseWriter, r *http.Request) {
 	opts := FromRequest(w, r)
-
-	// EXISTING_CODE
-	// EXISTING_CODE
 
 	err := opts.ValidateExplore()
 	if err != nil {

@@ -32,9 +32,6 @@ var Options InitOptions
 func RunInit(cmd *cobra.Command, args []string) error {
 	opts := Options
 
-	// EXISTING_CODE
-	// EXISTING_CODE
-
 	err := opts.ValidateInit()
 	if err != nil {
 		return err
@@ -51,9 +48,6 @@ func RunInit(cmd *cobra.Command, args []string) error {
 
 func ServeInit(w http.ResponseWriter, r *http.Request) {
 	opts := FromRequest(w, r)
-
-	// EXISTING_CODE
-	// EXISTING_CODE
 
 	err := opts.ValidateInit()
 	if err != nil {

@@ -32,9 +32,6 @@ func RunTraces(cmd *cobra.Command, args []string) error {
 	Options.Transactions = args
 	opts := Options
 
-	// EXISTING_CODE
-	// EXISTING_CODE
-
 	err := opts.ValidateTraces()
 	if err != nil {
 		return err
@@ -47,9 +44,6 @@ func RunTraces(cmd *cobra.Command, args []string) error {
 
 func ServeTraces(w http.ResponseWriter, r *http.Request) {
 	opts := FromRequest(w, r)
-
-	// EXISTING_CODE
-	// EXISTING_CODE
 
 	err := opts.ValidateTraces()
 	if err != nil {

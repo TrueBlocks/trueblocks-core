@@ -32,9 +32,6 @@ func RunWhen(cmd *cobra.Command, args []string) error {
 	Options.Blocks = args
 	opts := Options
 
-	// EXISTING_CODE
-	// EXISTING_CODE
-
 	err := opts.ValidateWhen()
 	if err != nil {
 		return err
@@ -47,9 +44,6 @@ func RunWhen(cmd *cobra.Command, args []string) error {
 
 func ServeWhen(w http.ResponseWriter, r *http.Request) {
 	opts := FromRequest(w, r)
-
-	// EXISTING_CODE
-	// EXISTING_CODE
 
 	err := opts.ValidateWhen()
 	if err != nil {

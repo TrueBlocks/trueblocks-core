@@ -32,9 +32,6 @@ func RunStatus(cmd *cobra.Command, args []string) error {
 	Options.Modes = args
 	opts := Options
 
-	// EXISTING_CODE
-	// EXISTING_CODE
-
 	err := opts.ValidateStatus()
 	if err != nil {
 		return err
@@ -47,9 +44,6 @@ func RunStatus(cmd *cobra.Command, args []string) error {
 
 func ServeStatus(w http.ResponseWriter, r *http.Request) {
 	opts := FromRequest(w, r)
-
-	// EXISTING_CODE
-	// EXISTING_CODE
 
 	err := opts.ValidateStatus()
 	if err != nil {

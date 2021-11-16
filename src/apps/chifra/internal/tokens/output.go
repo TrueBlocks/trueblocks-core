@@ -32,9 +32,6 @@ func RunTokens(cmd *cobra.Command, args []string) error {
 	Options.Addrs2 = args
 	opts := Options
 
-	// EXISTING_CODE
-	// EXISTING_CODE
-
 	err := opts.ValidateTokens()
 	if err != nil {
 		return err
@@ -47,9 +44,6 @@ func RunTokens(cmd *cobra.Command, args []string) error {
 
 func ServeTokens(w http.ResponseWriter, r *http.Request) {
 	opts := FromRequest(w, r)
-
-	// EXISTING_CODE
-	// EXISTING_CODE
 
 	err := opts.ValidateTokens()
 	if err != nil {

@@ -26,9 +26,6 @@ func Run[{PROPER}](cmd *cobra.Command, args []string) error {
 	++POSITIONAL0++ = args
 	opts := Options
 
-	// EXISTING_CODE
-	// EXISTING_CODE
-
 	err := opts.Validate[{PROPER}]()
 	if err != nil {
 		return err
@@ -40,9 +37,6 @@ func Run[{PROPER}](cmd *cobra.Command, args []string) error {
 
 func Serve[{PROPER}](w http.ResponseWriter, r *http.Request) {
 	opts := FromRequest(w, r)
-
-	// EXISTING_CODE
-	// EXISTING_CODE
 
 	err := opts.Validate[{PROPER}]()
 	if err != nil {

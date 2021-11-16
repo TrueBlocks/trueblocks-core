@@ -32,9 +32,6 @@ func RunSlurp(cmd *cobra.Command, args []string) error {
 	Options.Addrs = args
 	opts := Options
 
-	// EXISTING_CODE
-	// EXISTING_CODE
-
 	err := opts.ValidateSlurp()
 	if err != nil {
 		return err
@@ -47,9 +44,6 @@ func RunSlurp(cmd *cobra.Command, args []string) error {
 
 func ServeSlurp(w http.ResponseWriter, r *http.Request) {
 	opts := FromRequest(w, r)
-
-	// EXISTING_CODE
-	// EXISTING_CODE
 
 	err := opts.ValidateSlurp()
 	if err != nil {

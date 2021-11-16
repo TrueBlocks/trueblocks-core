@@ -38,23 +38,21 @@ var Options PinsOptions
 func RunPins(cmd *cobra.Command, args []string) error {
 	opts := Options
 
-	// EXISTING_CODE
-	err1 := pinlib.EstablishIndexFolders()
-	if err1 != nil {
-		if err1, ok := err1.(*pinlib.ErrCustomizedPath); ok {
-			fmt.Printf(errCustomFolderMissing, err1.GetIndexPath())
-			return nil
-		}
-		logger.Fatal(err1)
-	}
-	// EXISTING_CODE
-
 	err := opts.ValidatePins()
 	if err != nil {
 		return err
 	}
 
 	// EXISTING_CODE
+	err = pinlib.EstablishIndexFolders()
+	if err != nil {
+		if err1, ok := err.(*pinlib.ErrCustomizedPath); ok {
+			fmt.Printf(errCustomFolderMissing, err1.GetIndexPath())
+			return nil
+		}
+		logger.Fatal(err)
+	}
+
 	if opts.List {
 		err := opts.ListInternal()
 		if err != nil {
@@ -86,15 +84,6 @@ func RunPins(cmd *cobra.Command, args []string) error {
 func ServePins(w http.ResponseWriter, r *http.Request) {
 	opts := FromRequest(w, r)
 
-	// EXISTING_CODE
-	err1 := pinlib.EstablishIndexFolders()
-	if err1 != nil {
-		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err1)
-		return
-	}
-
-	// EXISTING_CODE
-
 	err := opts.ValidatePins()
 	if err != nil {
 		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
@@ -102,6 +91,12 @@ func ServePins(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// EXISTING_CODE
+	err = pinlib.EstablishIndexFolders()
+	if err != nil {
+		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
+		return
+	}
+
 	if opts.List {
 		err := opts.ListInternal()
 		if err != nil {
@@ -116,8 +111,6 @@ func ServePins(w http.ResponseWriter, r *http.Request) {
 			opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
 		}
 	}
-
-	return
 	// EXISTING_CODE
 }
 

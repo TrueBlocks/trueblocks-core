@@ -32,9 +32,6 @@ func RunNames(cmd *cobra.Command, args []string) error {
 	Options.Terms = args
 	opts := Options
 
-	// EXISTING_CODE
-	// EXISTING_CODE
-
 	err := opts.ValidateNames()
 	if err != nil {
 		return err
@@ -47,9 +44,6 @@ func RunNames(cmd *cobra.Command, args []string) error {
 
 func ServeNames(w http.ResponseWriter, r *http.Request) {
 	opts := FromRequest(w, r)
-
-	// EXISTING_CODE
-	// EXISTING_CODE
 
 	err := opts.ValidateNames()
 	if err != nil {

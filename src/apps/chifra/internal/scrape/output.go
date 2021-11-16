@@ -40,9 +40,6 @@ func RunScrape(cmd *cobra.Command, args []string) error {
 	Options.Modes = args
 	opts := Options
 
-	// EXISTING_CODE
-	// EXISTING_CODE
-
 	err := opts.ValidateScrape()
 	if err != nil {
 		return err
@@ -67,9 +64,6 @@ func RunScrape(cmd *cobra.Command, args []string) error {
 
 func ServeScrape(w http.ResponseWriter, r *http.Request) {
 	opts := FromRequest(w, r)
-
-	// EXISTING_CODE
-	// EXISTING_CODE
 
 	err := opts.ValidateScrape()
 	if err != nil {

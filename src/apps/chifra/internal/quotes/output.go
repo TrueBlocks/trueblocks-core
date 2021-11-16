@@ -31,9 +31,6 @@ var Options QuotesOptions
 func RunQuotes(cmd *cobra.Command, args []string) error {
 	opts := Options
 
-	// EXISTING_CODE
-	// EXISTING_CODE
-
 	err := opts.ValidateQuotes()
 	if err != nil {
 		return err
@@ -46,9 +43,6 @@ func RunQuotes(cmd *cobra.Command, args []string) error {
 
 func ServeQuotes(w http.ResponseWriter, r *http.Request) {
 	opts := FromRequest(w, r)
-
-	// EXISTING_CODE
-	// EXISTING_CODE
 
 	err := opts.ValidateQuotes()
 	if err != nil {

@@ -32,9 +32,6 @@ func RunBlocks(cmd *cobra.Command, args []string) error {
 	Options.Blocks = args
 	opts := Options
 
-	// EXISTING_CODE
-	// EXISTING_CODE
-
 	err := opts.ValidateBlocks()
 	if err != nil {
 		return err
@@ -47,9 +44,6 @@ func RunBlocks(cmd *cobra.Command, args []string) error {
 
 func ServeBlocks(w http.ResponseWriter, r *http.Request) {
 	opts := FromRequest(w, r)
-
-	// EXISTING_CODE
-	// EXISTING_CODE
 
 	err := opts.ValidateBlocks()
 	if err != nil {
