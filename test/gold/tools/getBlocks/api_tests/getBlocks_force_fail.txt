@@ -1,5 +1,5 @@
 {
   "errors": [
-    "chifra blocks - The --cache option is not available when using one of the address options."
+    "The --cache option is not available with the --uniq option."
   ]
 }

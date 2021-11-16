@@ -136,5 +136,29 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *GlobalOptionsType {
 	// cmd.Flags().BoolVarP(&opts.Help, "help", "h", false, "display this help screen")
 }
 
+func IsGlobalOption(key string) bool {
+	permitted := []string{
+		"fmt",
+		"verbose",
+		"raw",
+		"version",
+		"noop",
+		"log_level",
+		"no_header",
+		"wei",
+		"ether",
+		"dollars",
+		"to_file",
+		"file",
+		"output",
+	}
+	for _, per := range permitted {
+		if per == key {
+			return true
+		}
+	}
+	return false
+}
+
 // maximum uint64
 const NOPOS = ^uint64(0)

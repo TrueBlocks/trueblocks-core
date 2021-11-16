@@ -1,7 +1,7 @@
 chifra blocks  4012000-4012001 --topic 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a
 TEST[DATE|TIME] Blocks:  [4012000-4012001]
 TEST[DATE|TIME] Topic:  [0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a]
-Error: The --emitter and --topic option are only available with the --log option.
+Error: The topic option (0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a) must be 32 bytes long.
 Usage:
   chifra blocks [flags] <block> [block...]
 

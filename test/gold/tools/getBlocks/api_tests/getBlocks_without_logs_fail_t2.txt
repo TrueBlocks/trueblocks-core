@@ -1,5 +1,5 @@
 {
   "errors": [
-    "chifra blocks - Invalid topic '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a'. Length (56) is not equal to 64 characters (32 bytes)."
+    "The topic option (0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a) must be 32 bytes long."
   ]
 }

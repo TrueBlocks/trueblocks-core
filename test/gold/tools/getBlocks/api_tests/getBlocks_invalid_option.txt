@@ -1,5 +1,5 @@
 {
   "errors": [
-    "chifra blocks - Invalid option: --junk"
+    "Invalid key (junk) in blocks route."
   ]
 }

@@ -24,6 +24,7 @@ import (
 	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
+	blocksPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/blocks"
 	pinsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/pins"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/gorilla/mux"
@@ -159,6 +160,12 @@ func AccountsNames(w http.ResponseWriter, r *http.Request) {
 
 // ChainDataBlocks help text todo
 func ChainDataBlocks(w http.ResponseWriter, r *http.Request) {
+	opts := blocksPkg.FromRequest(w, r)
+	err := opts.ValidateBlocks()
+	if err != nil {
+		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
+		return
+	}
 	CallOne(w, r, "getBlocks", "blocks")
 	// blocksPkg.ServeBlocks(w, r)
 }

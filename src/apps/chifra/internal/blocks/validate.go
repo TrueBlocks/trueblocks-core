@@ -23,22 +23,40 @@ import (
 func (opts *BlocksOptions) ValidateBlocks() error {
 	opts.TestLog()
 
-	validationErr := validate.ValidateIdentifiers(
+	if opts.BadFlag != nil {
+		return opts.BadFlag
+	}
+
+	for _, emitter := range opts.Emitter {
+		valid, err := validate.IsValidAddress(emitter)
+		if !valid {
+			return err
+		}
+	}
+
+	for _, topic := range opts.Topic {
+		valid, err := validate.IsValidTopic(topic)
+		if !valid {
+			return err
+		}
+	}
+
+	err := validate.ValidateIdentifiers(
 		opts.Blocks,
 		validate.ValidBlockIdWithRange,
 		1,
 	)
 
-	if validationErr != nil {
-		if invalidLiteral, ok := validationErr.(*validate.InvalidIdentifierLiteralError); ok {
+	if err != nil {
+		if invalidLiteral, ok := err.(*validate.InvalidIdentifierLiteralError); ok {
 			return invalidLiteral
 		}
 
-		if errors.Is(validationErr, validate.ErrTooManyRanges) {
+		if errors.Is(err, validate.ErrTooManyRanges) {
 			return validate.Usage("Specify only a single block range at a time.")
 		}
 
-		return validationErr
+		return err
 	}
 
 	if len(opts.Globals.File) > 0 {

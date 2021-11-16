@@ -23,6 +23,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
 type BlocksOptions struct {
@@ -42,6 +43,7 @@ type BlocksOptions struct {
 	List       uint64
 	ListCount  uint64
 	Globals    globals.GlobalOptionsType
+	BadFlag    error
 }
 
 func (opts *BlocksOptions) TestLog() {
@@ -117,7 +119,10 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *BlocksOptions {
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "blocks":
-			opts.Blocks = append(opts.Blocks, value...)
+			for _, val := range value {
+				s := strings.Split(val, " ") // may contain space separated items
+				opts.Blocks = append(opts.Blocks, s...)
+			}
 		case "hashes":
 			opts.Hashes = true
 		case "uncles":
@@ -146,6 +151,11 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *BlocksOptions {
 			opts.List = globals.ToUint64(value[0])
 		case "list_count":
 			opts.ListCount = globals.ToUint64(value[0])
+		default:
+			if !globals.IsGlobalOption(key) {
+				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "blocks")
+				return opts
+			}
 		}
 	}
 	opts.Globals = *globals.FromRequest(w, r)
