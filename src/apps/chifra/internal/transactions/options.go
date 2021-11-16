@@ -23,6 +23,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
 type TransactionsOptions struct {
@@ -33,6 +34,7 @@ type TransactionsOptions struct {
 	Reconcile    string
 	Cache        bool
 	Globals      globals.GlobalOptionsType
+	BadFlag      error
 }
 
 func (opts *TransactionsOptions) TestLog() {
@@ -72,7 +74,10 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *TransactionsOptions {
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "transactions":
-			opts.Transactions = append(opts.Transactions, value...)
+			for _, val := range value {
+				s := strings.Split(val, " ") // may contain space separated items
+				opts.Transactions = append(opts.Transactions, s...)
+			}
 		case "articulate":
 			opts.Articulate = true
 		case "trace":
@@ -83,6 +88,11 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *TransactionsOptions {
 			opts.Reconcile = value[0]
 		case "cache":
 			opts.Cache = true
+		default:
+			if !globals.IsGlobalOption(key) {
+				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "transactions")
+				return opts
+			}
 		}
 	}
 	opts.Globals = *globals.FromRequest(w, r)

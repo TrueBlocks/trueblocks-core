@@ -23,6 +23,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
 type QuotesOptions struct {
@@ -31,6 +32,7 @@ type QuotesOptions struct {
 	Pair    string
 	Feed    string
 	Globals globals.GlobalOptionsType
+	BadFlag error
 }
 
 func (opts *QuotesOptions) TestLog() {
@@ -72,6 +74,11 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *QuotesOptions {
 			opts.Pair = value[0]
 		case "feed":
 			opts.Feed = value[0]
+		default:
+			if !globals.IsGlobalOption(key) {
+				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "quotes")
+				return opts
+			}
 		}
 	}
 	opts.Globals = *globals.FromRequest(w, r)

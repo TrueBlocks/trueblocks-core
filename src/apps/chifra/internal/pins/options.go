@@ -23,6 +23,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
 type PinsOptions struct {
@@ -35,6 +36,7 @@ type PinsOptions struct {
 	Remote  bool
 	InitAll bool
 	Globals globals.GlobalOptionsType
+	BadFlag error
 }
 
 func (opts *PinsOptions) TestLog() {
@@ -88,6 +90,11 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *PinsOptions {
 			opts.Remote = true
 		case "init_all":
 			opts.InitAll = true
+		default:
+			if !globals.IsGlobalOption(key) {
+				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "pins")
+				return opts
+			}
 		}
 	}
 	opts.Globals = *globals.FromRequest(w, r)

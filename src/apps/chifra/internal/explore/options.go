@@ -23,6 +23,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
 type ExploreOptions struct {
@@ -30,6 +31,7 @@ type ExploreOptions struct {
 	Local   bool
 	Google  bool
 	Globals globals.GlobalOptionsType
+	BadFlag error
 }
 
 func (opts *ExploreOptions) TestLog() {
@@ -57,11 +59,19 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ExploreOptions {
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "terms":
-			opts.Terms = append(opts.Terms, value...)
+			for _, val := range value {
+				s := strings.Split(val, " ") // may contain space separated items
+				opts.Terms = append(opts.Terms, s...)
+			}
 		case "local":
 			opts.Local = true
 		case "google":
 			opts.Google = true
+		default:
+			if !globals.IsGlobalOption(key) {
+				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "explore")
+				return opts
+			}
 		}
 	}
 	opts.Globals = *globals.FromRequest(w, r)

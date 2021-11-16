@@ -21,7 +21,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	[{ROUTE}]Pkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/[{ROUTE}]"
-[{IMPORTS}]	"github.com/spf13/cobra"
+	"github.com/spf13/cobra"
 )
 
 // [{ROUTE}]Cmd represents the [{ROUTE}] command

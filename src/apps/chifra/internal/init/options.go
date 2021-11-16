@@ -23,11 +23,13 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
 type InitOptions struct {
 	All     bool
 	Globals globals.GlobalOptionsType
+	BadFlag error
 }
 
 func (opts *InitOptions) TestLog() {
@@ -51,6 +53,11 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *InitOptions {
 		switch key {
 		case "all":
 			opts.All = true
+		default:
+			if !globals.IsGlobalOption(key) {
+				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "init")
+				return opts
+			}
 		}
 	}
 	opts.Globals = *globals.FromRequest(w, r)

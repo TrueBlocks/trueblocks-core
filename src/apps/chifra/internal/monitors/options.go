@@ -23,6 +23,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
 type MonitorsOptions struct {
@@ -36,6 +37,7 @@ type MonitorsOptions struct {
 	FirstBlock  uint64
 	LastBlock   uint64
 	Globals     globals.GlobalOptionsType
+	BadFlag     error
 }
 
 func (opts *MonitorsOptions) TestLog() {
@@ -87,7 +89,10 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *MonitorsOptions {
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "addrs":
-			opts.Addrs = append(opts.Addrs, value...)
+			for _, val := range value {
+				s := strings.Split(val, " ") // may contain space separated items
+				opts.Addrs = append(opts.Addrs, s...)
+			}
 		case "appearances":
 			opts.Appearances = true
 		case "count":
@@ -104,6 +109,11 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *MonitorsOptions {
 			opts.FirstBlock = globals.ToUint64(value[0])
 		case "last_block":
 			opts.LastBlock = globals.ToUint64(value[0])
+		default:
+			if !globals.IsGlobalOption(key) {
+				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "monitors")
+				return opts
+			}
 		}
 	}
 	opts.Globals = *globals.FromRequest(w, r)

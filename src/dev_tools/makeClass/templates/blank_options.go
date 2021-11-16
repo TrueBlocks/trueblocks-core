@@ -23,7 +23,8 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-[{IMPORTS}])
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
+)
 
 type [{PROPER}]Options struct {
 [{OPT_FIELDS}]
@@ -44,7 +45,12 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *[{PROPER}]Options {
 	opts := &[{PROPER}]Options{}
 	for key, value := range r.URL.Query() {
 		switch key {
-[{REQUEST_OPTS}]		}
+[{REQUEST_OPTS}]		default:
+			if !globals.IsGlobalOption(key) {
+				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "[{ROUTE}]")
+				return opts
+			}
+		}
 	}
 	opts.Globals = *globals.FromRequest(w, r)
 

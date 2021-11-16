@@ -23,6 +23,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
 type ChunksOptions struct {
@@ -33,6 +34,7 @@ type ChunksOptions struct {
 	Stats   bool
 	Save    bool
 	Globals globals.GlobalOptionsType
+	BadFlag error
 }
 
 func (opts *ChunksOptions) TestLog() {
@@ -72,7 +74,10 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ChunksOptions {
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "blocks":
-			opts.Blocks = append(opts.Blocks, value...)
+			for _, val := range value {
+				s := strings.Split(val, " ") // may contain space separated items
+				opts.Blocks = append(opts.Blocks, s...)
+			}
 		case "list":
 			opts.List = true
 		case "check":
@@ -83,6 +88,11 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ChunksOptions {
 			opts.Stats = true
 		case "save":
 			opts.Save = true
+		default:
+			if !globals.IsGlobalOption(key) {
+				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "chunks")
+				return opts
+			}
 		}
 	}
 	opts.Globals = *globals.FromRequest(w, r)

@@ -23,6 +23,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
 type StatusOptions struct {
@@ -38,6 +39,7 @@ type StatusOptions struct {
 	TestStart uint64
 	TestEnd   uint64
 	Globals   globals.GlobalOptionsType
+	BadFlag   error
 }
 
 func (opts *StatusOptions) TestLog() {
@@ -93,11 +95,17 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *StatusOptions {
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "modes":
-			opts.Modes = append(opts.Modes, value...)
+			for _, val := range value {
+				s := strings.Split(val, " ") // may contain space separated items
+				opts.Modes = append(opts.Modes, s...)
+			}
 		case "details":
 			opts.Details = true
 		case "types":
-			opts.Types = append(opts.Types, value...)
+			for _, val := range value {
+				s := strings.Split(val, " ") // may contain space separated items
+				opts.Types = append(opts.Types, s...)
+			}
 		case "depth":
 			opts.Depth = globals.ToUint64(value[0])
 		case "report":
@@ -105,7 +113,10 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *StatusOptions {
 		case "terse":
 			opts.Terse = true
 		case "migrate":
-			opts.Migrate = append(opts.Migrate, value...)
+			for _, val := range value {
+				s := strings.Split(val, " ") // may contain space separated items
+				opts.Migrate = append(opts.Migrate, s...)
+			}
 		case "get_config":
 			opts.GetConfig = true
 		case "set_config":
@@ -114,6 +125,11 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *StatusOptions {
 			opts.TestStart = globals.ToUint64(value[0])
 		case "test_end":
 			opts.TestEnd = globals.ToUint64(value[0])
+		default:
+			if !globals.IsGlobalOption(key) {
+				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "status")
+				return opts
+			}
 		}
 	}
 	opts.Globals = *globals.FromRequest(w, r)

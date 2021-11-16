@@ -23,6 +23,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
 type StateOptions struct {
@@ -34,6 +35,7 @@ type StateOptions struct {
 	Call     string
 	ProxyFor string
 	Globals  globals.GlobalOptionsType
+	BadFlag  error
 }
 
 func (opts *StateOptions) TestLog() {
@@ -74,11 +76,20 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *StateOptions {
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "addrs":
-			opts.Addrs = append(opts.Addrs, value...)
+			for _, val := range value {
+				s := strings.Split(val, " ") // may contain space separated items
+				opts.Addrs = append(opts.Addrs, s...)
+			}
 		case "blocks":
-			opts.Blocks = append(opts.Blocks, value...)
+			for _, val := range value {
+				s := strings.Split(val, " ") // may contain space separated items
+				opts.Blocks = append(opts.Blocks, s...)
+			}
 		case "parts":
-			opts.Parts = append(opts.Parts, value...)
+			for _, val := range value {
+				s := strings.Split(val, " ") // may contain space separated items
+				opts.Parts = append(opts.Parts, s...)
+			}
 		case "changes":
 			opts.Changes = true
 		case "no_zero":
@@ -87,6 +98,11 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *StateOptions {
 			opts.Call = value[0]
 		case "proxy_for":
 			opts.ProxyFor = value[0]
+		default:
+			if !globals.IsGlobalOption(key) {
+				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "state")
+				return opts
+			}
 		}
 	}
 	opts.Globals = *globals.FromRequest(w, r)

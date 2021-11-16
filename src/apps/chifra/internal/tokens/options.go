@@ -23,6 +23,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
 type TokensOptions struct {
@@ -32,6 +33,7 @@ type TokensOptions struct {
 	ByAcct  bool
 	NoZero  bool
 	Globals globals.GlobalOptionsType
+	BadFlag error
 }
 
 func (opts *TokensOptions) TestLog() {
@@ -64,15 +66,29 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *TokensOptions {
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "addrs2":
-			opts.Addrs2 = append(opts.Addrs2, value...)
+			for _, val := range value {
+				s := strings.Split(val, " ") // may contain space separated items
+				opts.Addrs2 = append(opts.Addrs2, s...)
+			}
 		case "blocks":
-			opts.Blocks = append(opts.Blocks, value...)
+			for _, val := range value {
+				s := strings.Split(val, " ") // may contain space separated items
+				opts.Blocks = append(opts.Blocks, s...)
+			}
 		case "parts":
-			opts.Parts = append(opts.Parts, value...)
+			for _, val := range value {
+				s := strings.Split(val, " ") // may contain space separated items
+				opts.Parts = append(opts.Parts, s...)
+			}
 		case "by_acct":
 			opts.ByAcct = true
 		case "no_zero":
 			opts.NoZero = true
+		default:
+			if !globals.IsGlobalOption(key) {
+				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "tokens")
+				return opts
+			}
 		}
 	}
 	opts.Globals = *globals.FromRequest(w, r)

@@ -23,6 +23,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
 type SlurpOptions struct {
@@ -31,6 +32,7 @@ type SlurpOptions struct {
 	Types       []string
 	Appearances bool
 	Globals     globals.GlobalOptionsType
+	BadFlag     error
 }
 
 func (opts *SlurpOptions) TestLog() {
@@ -59,13 +61,27 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *SlurpOptions {
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "addrs":
-			opts.Addrs = append(opts.Addrs, value...)
+			for _, val := range value {
+				s := strings.Split(val, " ") // may contain space separated items
+				opts.Addrs = append(opts.Addrs, s...)
+			}
 		case "blocks":
-			opts.Blocks = append(opts.Blocks, value...)
+			for _, val := range value {
+				s := strings.Split(val, " ") // may contain space separated items
+				opts.Blocks = append(opts.Blocks, s...)
+			}
 		case "types":
-			opts.Types = append(opts.Types, value...)
+			for _, val := range value {
+				s := strings.Split(val, " ") // may contain space separated items
+				opts.Types = append(opts.Types, s...)
+			}
 		case "appearances":
 			opts.Appearances = true
+		default:
+			if !globals.IsGlobalOption(key) {
+				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "slurp")
+				return opts
+			}
 		}
 	}
 	opts.Globals = *globals.FromRequest(w, r)

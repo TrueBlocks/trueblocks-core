@@ -23,11 +23,13 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
 type ServeOptions struct {
 	Port    string
 	Globals globals.GlobalOptionsType
+	BadFlag error
 }
 
 func (opts *ServeOptions) TestLog() {
@@ -51,6 +53,11 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ServeOptions {
 		switch key {
 		case "port":
 			opts.Port = value[0]
+		default:
+			if !globals.IsGlobalOption(key) {
+				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "serve")
+				return opts
+			}
 		}
 	}
 	opts.Globals = *globals.FromRequest(w, r)

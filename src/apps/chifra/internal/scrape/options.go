@@ -23,6 +23,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
 type ScrapeOptions struct {
@@ -35,6 +36,7 @@ type ScrapeOptions struct {
 	BlockChanCnt uint64
 	AddrChanCnt  uint64
 	Globals      globals.GlobalOptionsType
+	BadFlag      error
 }
 
 func (opts *ScrapeOptions) TestLog() {
@@ -82,7 +84,10 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ScrapeOptions {
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "modes":
-			opts.Modes = append(opts.Modes, value...)
+			for _, val := range value {
+				s := strings.Split(val, " ") // may contain space separated items
+				opts.Modes = append(opts.Modes, s...)
+			}
 		case "action":
 			opts.Action = value[0]
 		case "sleep":
@@ -97,6 +102,11 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ScrapeOptions {
 			opts.BlockChanCnt = globals.ToUint64(value[0])
 		case "addr_chan_cnt":
 			opts.AddrChanCnt = globals.ToUint64(value[0])
+		default:
+			if !globals.IsGlobalOption(key) {
+				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "scrape")
+				return opts
+			}
 		}
 	}
 	opts.Globals = *globals.FromRequest(w, r)

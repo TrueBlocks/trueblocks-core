@@ -136,9 +136,15 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *BlocksOptions {
 		case "logs":
 			opts.Logs = true
 		case "emitter":
-			opts.Emitter = append(opts.Emitter, value...)
+			for _, val := range value {
+				s := strings.Split(val, " ") // may contain space separated items
+				opts.Emitter = append(opts.Emitter, s...)
+			}
 		case "topic":
-			opts.Topic = append(opts.Topic, value...)
+			for _, val := range value {
+				s := strings.Split(val, " ") // may contain space separated items
+				opts.Topic = append(opts.Topic, s...)
+			}
 		case "articulate":
 			opts.Articulate = true
 		case "big_range":

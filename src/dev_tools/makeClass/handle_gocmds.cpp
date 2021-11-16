@@ -21,10 +21,10 @@ extern string_q get_setopts(const CCommandOption& cmd);
 extern string_q get_testlogs(const CCommandOption& cmd);
 extern string_q get_copyopts(const CCommandOption& cmd);
 extern string_q get_use(const CCommandOption& cmd);
-extern string_q get_imports(const string_q& source);
 extern string_q get_positional0(const CCommandOption& cmd, const string_q& pre);
 
-extern const char* STR_REQUEST_STATE;
+extern const char* STR_REQUEST_CASE1;
+extern const char* STR_REQUEST_CASE2;
 //---------------------------------------------------------------------------------------------------
 bool COptions::handle_gocmds_cmd(const CCommandOption& p) {
     string_q source = asciiFileToString(getTemplatePath("blank.go"));
@@ -43,7 +43,6 @@ bool COptions::handle_gocmds_cmd(const CCommandOption& p) {
     if (endsWith(descr, "."))
         replaceReverse(descr, ".", "");
     replaceAll(source, "[{SHORT}]", descr);
-    replaceAll(source, "[{IMPORTS}]", get_imports(source));
 
     string_q fn = getSourcePath("apps/chifra/cmd/" + p.api_route + ".go");
     codewrite_t cw(fn, source);
@@ -67,7 +66,6 @@ bool COptions::handle_gocmds_options(const CCommandOption& p) {
     }
     replaceAll(source, "[{TEST_LOGS}]", get_testlogs(p));
     replaceAll(source, "[{DASH_STR}]", get_copyopts(p));
-    replaceAll(source, "[{IMPORTS}]", get_imports(source));
     replaceAll(source, "++POSITIONAL0++", get_positional0(p, "opts."));
     replaceAll(source, "opts.LastBlock != globals.NOPOS", "opts.LastBlock != 0 && opts.LastBlock != globals.NOPOS");
 
@@ -110,14 +108,6 @@ bool COptions::handle_gocmds_output(const CCommandOption& p) {
     counter.nVisited++;
 
     return true;
-}
-
-//---------------------------------------------------------------------------------------------------
-string_q get_imports(const string_q& source) {
-    string_q imports;
-    // if (contains(source, "utils."))
-    //     imports += "\t\"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils\"\n";
-    return imports;
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -256,6 +246,7 @@ string_q get_optfields(const CCommandOption& cmd) {
         wid = max(p.Format("[{VARIABLE}]").length(), wid);
     }
     wid = max(string_q("Globals").length(), wid);
+    wid = max(string_q("BadFlag").length(), wid);
 
     ostringstream os;
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
@@ -263,6 +254,7 @@ string_q get_optfields(const CCommandOption& cmd) {
         os << "\t" << padRight(p.Format("[{VARIABLE}]"), wid) << " " << p.go_type << endl;
     }
     os << "\t" << padRight("Globals", wid) << " globals.GlobalOptionsType" << endl;
+    os << "\t" << padRight("BadFlag", wid) << " error" << endl;
 
     return os.str();
 }
@@ -272,7 +264,11 @@ string_q get_requestopts(const CCommandOption& cmd) {
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
         replace(p.longName, "deleteMe", "delete");
         string_q low = p.Format("[{LOWER}]");
-        os << p.Format(substitute(STR_REQUEST_STATE, "++LOWER++", low)) << endl;
+        if (startsWith(p.data_type, "list<")) {
+            os << p.Format(substitute(STR_REQUEST_CASE2, "++LOWER++", low)) << endl;
+        } else {
+            os << p.Format(substitute(STR_REQUEST_CASE1, "++LOWER++", low)) << endl;
+        }
     }
     return os.str();
 }
@@ -420,6 +416,13 @@ string_q get_copyopts(const CCommandOption& cmd) {
     return os.str();
 }
 
-const char* STR_REQUEST_STATE =
+const char* STR_REQUEST_CASE1 =
     "\t\tcase \"++LOWER++\":\n"
     "\t\t\topts.[{VARIABLE}] = [{ASSIGN}]";
+
+const char* STR_REQUEST_CASE2 =
+    "\t\tcase \"++LOWER++\":\n"
+    "\t\t\tfor _, val := range value {\n"
+    "\t\t\t\ts := strings.Split(val, \" \") // may contain space separated items\n"
+    "\t\t\t\topts.[{VARIABLE}] = append(opts.[{VARIABLE}], s...)\n"
+    "\t\t\t}";

@@ -23,6 +23,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
 type NamesOptions struct {
@@ -45,6 +46,7 @@ type NamesOptions struct {
 	Remove      bool
 	Undelete    bool
 	Globals     globals.GlobalOptionsType
+	BadFlag     error
 }
 
 func (opts *NamesOptions) TestLog() {
@@ -132,7 +134,10 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *NamesOptions {
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "terms":
-			opts.Terms = append(opts.Terms, value...)
+			for _, val := range value {
+				s := strings.Split(val, " ") // may contain space separated items
+				opts.Terms = append(opts.Terms, s...)
+			}
 		case "expand":
 			opts.Expand = true
 		case "match_case":
@@ -167,6 +172,11 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *NamesOptions {
 			opts.Remove = true
 		case "undelete":
 			opts.Undelete = true
+		default:
+			if !globals.IsGlobalOption(key) {
+				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "names")
+				return opts
+			}
 		}
 	}
 	opts.Globals = *globals.FromRequest(w, r)

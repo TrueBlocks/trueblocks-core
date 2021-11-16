@@ -23,6 +23,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
 type ExportOptions struct {
@@ -60,6 +61,7 @@ type ExportOptions struct {
 	FirstBlock   uint64
 	LastBlock    uint64
 	Globals      globals.GlobalOptionsType
+	BadFlag      error
 }
 
 func (opts *ExportOptions) TestLog() {
@@ -201,11 +203,20 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ExportOptions {
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "addrs":
-			opts.Addrs = append(opts.Addrs, value...)
+			for _, val := range value {
+				s := strings.Split(val, " ") // may contain space separated items
+				opts.Addrs = append(opts.Addrs, s...)
+			}
 		case "topics":
-			opts.Topics = append(opts.Topics, value...)
+			for _, val := range value {
+				s := strings.Split(val, " ") // may contain space separated items
+				opts.Topics = append(opts.Topics, s...)
+			}
 		case "fourbytes":
-			opts.Fourbytes = append(opts.Fourbytes, value...)
+			for _, val := range value {
+				s := strings.Split(val, " ") // may contain space separated items
+				opts.Fourbytes = append(opts.Fourbytes, s...)
+			}
 		case "appearances":
 			opts.Appearances = true
 		case "transactions":
@@ -239,9 +250,15 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ExportOptions {
 		case "relevant":
 			opts.Relevant = true
 		case "emitter":
-			opts.Emitter = append(opts.Emitter, value...)
+			for _, val := range value {
+				s := strings.Split(val, " ") // may contain space separated items
+				opts.Emitter = append(opts.Emitter, s...)
+			}
 		case "topic":
-			opts.Topic = append(opts.Topic, value...)
+			for _, val := range value {
+				s := strings.Split(val, " ") // may contain space separated items
+				opts.Topic = append(opts.Topic, s...)
+			}
 		case "clean":
 			opts.Clean = true
 		case "freshen":
@@ -266,6 +283,11 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ExportOptions {
 			opts.FirstBlock = globals.ToUint64(value[0])
 		case "last_block":
 			opts.LastBlock = globals.ToUint64(value[0])
+		default:
+			if !globals.IsGlobalOption(key) {
+				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "export")
+				return opts
+			}
 		}
 	}
 	opts.Globals = *globals.FromRequest(w, r)

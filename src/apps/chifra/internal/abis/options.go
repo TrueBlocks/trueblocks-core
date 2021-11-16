@@ -23,6 +23,7 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
 type AbisOptions struct {
@@ -33,6 +34,7 @@ type AbisOptions struct {
 	Source  bool
 	Classes bool
 	Globals globals.GlobalOptionsType
+	BadFlag error
 }
 
 func (opts *AbisOptions) TestLog() {
@@ -72,17 +74,28 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *AbisOptions {
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "addrs":
-			opts.Addrs = append(opts.Addrs, value...)
+			for _, val := range value {
+				s := strings.Split(val, " ") // may contain space separated items
+				opts.Addrs = append(opts.Addrs, s...)
+			}
 		case "known":
 			opts.Known = true
 		case "sol":
 			opts.Sol = true
 		case "find":
-			opts.Find = append(opts.Find, value...)
+			for _, val := range value {
+				s := strings.Split(val, " ") // may contain space separated items
+				opts.Find = append(opts.Find, s...)
+			}
 		case "source":
 			opts.Source = true
 		case "classes":
 			opts.Classes = true
+		default:
+			if !globals.IsGlobalOption(key) {
+				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "abis")
+				return opts
+			}
 		}
 	}
 	opts.Globals = *globals.FromRequest(w, r)
