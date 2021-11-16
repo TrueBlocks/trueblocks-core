@@ -65,11 +65,11 @@ func (opts *BlocksOptions) ValidateBlocks() error {
 		if opts.List > 0 {
 			// Do nothing
 		} else {
-			if opts.Cache && opts.Uniq {
-				return validate.Usage("The {0} option is not available{1}.", "--cache", " with the --uniq option")
-			}
 			if len(opts.Blocks) == 0 {
 				return validate.Usage("Please supply one or more block identifiers.")
+			}
+			if opts.Cache && opts.Uniq {
+				return validate.Usage("The {0} option is not available{1}.", "--cache", " with the --uniq option")
 			}
 			if !opts.Logs && (len(opts.Emitter) > 0 || len(opts.Topic) > 0) {
 				return validate.Usage("The {0} option are only available with the {1} option.", "--emitter and --topic", "--log")

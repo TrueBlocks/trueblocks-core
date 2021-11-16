@@ -26,6 +26,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
 	blocksPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/blocks"
 	pinsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/pins"
+	receiptsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/receipts"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/gorilla/mux"
 	"golang.org/x/time/rate"
@@ -177,6 +178,12 @@ func ChainDataTransactions(w http.ResponseWriter, r *http.Request) {
 
 // ChainDataReceipts help text todo
 func ChainDataReceipts(w http.ResponseWriter, r *http.Request) {
+	opts := receiptsPkg.FromRequest(w, r)
+	err := opts.ValidateReceipts()
+	if err != nil {
+		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
+		return
+	}
 	CallOne(w, r, "getReceipts", "receipts")
 }
 

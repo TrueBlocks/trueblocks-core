@@ -28,17 +28,17 @@ func (opts *WhenOptions) ValidateWhen() error {
 	// 	}
 	// }
 
-	validationErr := validate.ValidateIdentifiers(opts.Blocks, validate.ValidBlockIdWithRangeAndDate, 1)
-	if validationErr != nil {
-		if invalidLiteral, ok := validationErr.(*validate.InvalidIdentifierLiteralError); ok {
+	err := validate.ValidateIdentifiers(opts.Blocks, validate.ValidBlockIdWithRangeAndDate, 1)
+	if err != nil {
+		if invalidLiteral, ok := err.(*validate.InvalidIdentifierLiteralError); ok {
 			return invalidLiteral
 		}
 
-		if errors.Is(validationErr, validate.ErrTooManyRanges) {
+		if errors.Is(err, validate.ErrTooManyRanges) {
 			return validate.Usage("Specify only a single block range at a time.")
 		}
 
-		return validationErr
+		return err
 	}
 
 	Options.TestLog()

@@ -15,12 +15,32 @@ package receiptsPkg
 
 import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd/globals"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
 func (opts *ReceiptsOptions) ValidateReceipts() error {
-	// if len(args) == 0 {
-	// 	return Usage("Please specify at least one {0}.", "valid transaction identifier")
+	opts.TestLog()
+
+	if opts.BadFlag != nil {
+		return opts.BadFlag
+	}
+
+	// err := validate.ValidateIdentifiers(opts.Transactions, validate.ValidTransId, -1)
+	// if err != nil {
+	// 	if invalidLiteral, ok := err.(*validate.InvalidIdentifierLiteralError); ok {
+	// 		return invalidLiteral
+	// 	}
+	// 	return err
 	// }
+
+	if len(opts.Globals.File) > 0 {
+		// Do nothing
+	} else {
+		if len(opts.Transactions) == 0 {
+			return validate.Usage("Please supply one or more transaction identifiers.")
+		}
+	}
+
 	// for _, arg := range args {
 	// 	valid, err := validateTxIdentifier(arg)
 	// 	if !valid || err != nil {
@@ -28,7 +48,5 @@ func (opts *ReceiptsOptions) ValidateReceipts() error {
 	// 	}
 	// }
 
-	Options.TestLog()
-
-	return globals.ValidateGlobals(&Options.Globals)
+	return globals.ValidateGlobals(&opts.Globals)
 }

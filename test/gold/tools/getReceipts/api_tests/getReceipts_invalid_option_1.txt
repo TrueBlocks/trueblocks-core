@@ -1,5 +1,5 @@
 {
   "errors": [
-    "chifra receipts - Invalid option: --pink"
+    "Invalid key (pink) in receipts route."
   ]
 }
