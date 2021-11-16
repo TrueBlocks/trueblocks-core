@@ -33,11 +33,11 @@ on,both,fast,status,apps/cacheStatus,config_bad,y,modes = config
 on,both,fast,status,apps/cacheStatus,three,y,modes = abis caches monitors --types slurps
 on,both,fast,status,apps/cacheStatus,items_monitors,y,details & modes = monitors
 on,both,fast,status,apps/cacheStatus,items_abis,y,details & modes = abis
-on,both,fast,status,apps/cacheStatus,items_slurps,y,details & modes = caches & types = slurps
+local,both,fast,status,apps/cacheStatus,items_slurps,y,details & modes = caches & types = slurps
 on,both,fast,status,apps/cacheStatus,items_prices,y,details & modes = caches & types = prices
-on,both,fast,status,apps/cacheStatus,items_some,y,details & modes = some & test_start = 3000000 & test_end = 3100000
+local,both,fast,status,apps/cacheStatus,items_some,y,details & modes = some & test_start = 3000000 & test_end = 3100000
 on,both,fast,status,apps/cacheStatus,items_scrap_mon,y,details & modes = index & test_start = 1000000 & test_end = 2200000
-on,both,fast,status,apps/cacheStatus,items_three,y,details & modes = abis caches monitors & types = slurps
+local,both,fast,status,apps/cacheStatus,items_three,y,details & modes = abis caches monitors & types = slurps
 on,both,fast,status,apps/cacheStatus,config_get,n,get_config
 on,both,fast,status,apps/cacheStatus,report,n,report & fmt = txt
 on,both,fast,status,apps/cacheStatus,report_json,y,report & fmt = json
