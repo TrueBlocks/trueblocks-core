@@ -24,7 +24,6 @@ static const COption params[] = {
     COption("topics", "", "list<topic>", OPT_POSITIONAL, "filter by one or more log topics (only for --logs option)"),
     COption("fourbytes", "", "list<fourbyte>", OPT_POSITIONAL, "filter by one or more fourbytes (only for transactions and trace options)"),  // NOLINT
     COption("appearances", "p", "", OPT_SWITCH, "export a list of appearances"),
-    COption("transactions", "T", "", OPT_SWITCH, "export the actual transactional data (the default)"),
     COption("receipts", "r", "", OPT_SWITCH, "export receipts instead of transactional data"),
     COption("logs", "l", "", OPT_SWITCH, "export logs instead of transactional data"),
     COption("traces", "t", "", OPT_SWITCH, "export traces instead of transactional data"),
@@ -70,7 +69,6 @@ bool COptions::parseArguments(string_q& command) {
     // BEG_CODE_LOCAL_INIT
     CAddressArray addrs;
     CTopicArray topics;
-    bool transactions = false;
     CAddressArray emitter;
     CStringArray topic;
     bool freshen = false;
@@ -111,9 +109,6 @@ bool COptions::parseArguments(string_q& command) {
             // BEG_CODE_AUTO
         } else if (arg == "-p" || arg == "--appearances") {
             appearances = true;
-
-        } else if (arg == "-T" || arg == "--transactions") {
-            transactions = true;
 
         } else if (arg == "-r" || arg == "--receipts") {
             receipts = true;
@@ -254,7 +249,6 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_LIST("topics", topics, topics.empty());
     LOG_TEST_LIST("fourbytes", fourbytes, fourbytes.empty());
     LOG_TEST_BOOL("appearances", appearances);
-    LOG_TEST_BOOL("transList", transList);
     LOG_TEST_BOOL("receipts", receipts);
     LOG_TEST_BOOL("logs", logs);
     LOG_TEST_BOOL("traces", traces);

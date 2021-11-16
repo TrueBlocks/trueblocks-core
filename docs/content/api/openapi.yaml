@@ -198,14 +198,6 @@ paths:
           explode: true
           schema:
             type: boolean
-        - name: transactions
-          description: export the actual transactional data (the default)
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
         - name: receipts
           description: export receipts instead of transactional data
           required: false
