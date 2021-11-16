@@ -32,7 +32,7 @@ then
         exit 1
     fi
 
-    chifra serve& #> /dev/null 2>&1 &
+    chifra serve > /dev/null 2>&1 &
 
     echo "Waiting for chifra to start up..."
     sleep 20
