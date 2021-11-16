@@ -22,7 +22,7 @@ extern string_q get_testlogs(const CCommandOption& cmd);
 extern string_q get_copyopts(const CCommandOption& cmd);
 extern string_q get_use(const CCommandOption& cmd);
 extern string_q get_imports(const string_q& source);
-extern string_q get_positional0(const CCommandOption& cmd);
+extern string_q get_positional0(const CCommandOption& cmd, const string_q& pre);
 
 extern const char* STR_REQUEST_STATE;
 //---------------------------------------------------------------------------------------------------
@@ -68,11 +68,40 @@ bool COptions::handle_gocmds_options(const CCommandOption& p) {
     replaceAll(source, "[{TEST_LOGS}]", get_testlogs(p));
     replaceAll(source, "[{DASH_STR}]", get_copyopts(p));
     replaceAll(source, "[{IMPORTS}]", get_imports(source));
-    replaceAll(source, "++POSITIONAL0++", get_positional0(p));
+    replaceAll(source, "++POSITIONAL0++", get_positional0(p, "opts."));
     replaceAll(source, "opts.LastBlock != globals.NOPOS", "opts.LastBlock != 0 && opts.LastBlock != globals.NOPOS");
 
     string_q fn = getSourcePath("apps/chifra/internal/" + p.api_route + "/options.go");
     replaceAll(fn, "/internal/serve", "/server");
+    establishFolder(fn);
+    codewrite_t cw(fn, source);
+    cw.nSpaces = 0;
+    cw.stripEOFNL = false;
+    counter.nProcessed += writeCodeIn(cw);
+    counter.nVisited++;
+
+    return true;
+}
+
+//---------------------------------------------------------------------------------------------------
+bool COptions::handle_gocmds_output(const CCommandOption& p) {
+    string_q source = asciiFileToString(getTemplatePath("blank_output.go"));
+    source = substitute(source, "[]string", "++SAVED++");
+    source = p.Format(source);
+    replaceAll(source, "++POSITIONAL0++", get_positional0(p, "Options."));
+    replaceAll(source, "\t[]string{} = args\n", "");
+    replaceAll(source, "++SAVED++", "[]string");
+    if (contains(source, "\t// return nil\n\t// EXISTING_CODE\n")) {
+        replaceAll(source,
+                   "\n"
+                   "\treturn opts.Globals.PassItOn(\"[{TOOL}]\", opts.ToDashStr())\n",
+                   "");
+    }
+
+    string_q fn = getSourcePath("apps/chifra/internal/" + p.api_route + "/output.go");
+    if (contains(fn, "/serve"))
+        return true;
+
     establishFolder(fn);
     codewrite_t cw(fn, source);
     cw.nSpaces = 0;
@@ -114,6 +143,7 @@ bool COptions::handle_gocmds(void) {
 
         handle_gocmds_cmd(p);
         handle_gocmds_options(p);
+        handle_gocmds_output(p);
     }
 
     LOG_INFO(cYellow, "makeClass --gocmds", cOff, " processed ", counter.nVisited, " files (changed ",
@@ -300,10 +330,10 @@ string_q get_hidden2(const CCommandOption& cmd) {
 }
 
 //---------------------------------------------------------------------------------------------------
-string_q get_positional0(const CCommandOption& cmd) {
+string_q get_positional0(const CCommandOption& cmd, const string_q& pre) {
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
         if (p.option_type == "positional") {
-            return p.Format("opts.[{VARIABLE}]");
+            return p.Format(pre + "[{VARIABLE}]");
         }
     }
     return "[]string{}";

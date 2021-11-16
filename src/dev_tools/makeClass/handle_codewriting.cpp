@@ -28,8 +28,14 @@ bool writeCodeIn(const codewrite_t& cw) {
         replace(checkCode, "// EXISTING_CODE", "");
         cnt++;
     }
-    if ((cnt % 2))
-        codeOut = "#error \"Uneven number of EXISTING_CODE blocks in the file.\"\n" + codeOut;
+    if ((cnt % 2)) {
+        ostringstream os;
+        os << "Uneven number of EXISTING_CODE blocks in the file." << endl;
+        os << "file: " << cw.fileName << endl;
+        os << "replaced: " << cnt << " instances of // EXISTING_CODE" << endl;
+        os << "Original: " << orig << endl;
+        codeOut = os.str() + codeOut;
+    }
     if (cw.nSpaces) {
         replaceAll(existingCode, string_q(cw.nSpaces, ' '), "\t");
         replaceAll(codeOut, string_q(cw.nSpaces, ' '), "\t");

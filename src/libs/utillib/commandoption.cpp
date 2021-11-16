@@ -526,6 +526,9 @@ string_q nextCommandoptionChunk_custom(const string_q& fieldIn, const void* data
                 if (fieldIn % "parsed")
                     return nextBasenodeChunk(fieldIn, com);
                 // EXISTING_CODE
+                if (fieldIn % "proper") {
+                    return toProper(com->api_route);
+                }
                 // EXISTING_CODE
                 break;
 

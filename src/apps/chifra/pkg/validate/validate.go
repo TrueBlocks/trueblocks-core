@@ -119,7 +119,7 @@ func ValidateEnum(field, value, valid string) error {
 		}
 		list += part
 	}
-	return Usage("The {0} option ({%1}) must be one of [ {%2} ]", field, value, list)
+	return Usage("The {0} option ({1}) must be one of [ {2} ]", field, value, list)
 }
 
 func ValidateEnumSlice(field string, values []string, valid string) error {
