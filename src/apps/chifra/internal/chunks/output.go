@@ -41,7 +41,7 @@ func RunChunks(cmd *cobra.Command, args []string) error {
 	}
 
 	// EXISTING_CODE
-	return opts.Globals.PassItOn("chunkMan", opts.ToDashStr())
+	return opts.Globals.PassItOn("chunkMan", opts.ToCmdLine())
 	// EXISTING_CODE
 }
 
@@ -58,7 +58,7 @@ func ServeChunks(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// EXISTING_CODE
-	opts.Globals.PassItOn("chunkMan", opts.ToDashStr())
+	opts.Globals.PassItOn("chunkMan", opts.ToCmdLine())
 	// EXISTING_CODE
 }
 

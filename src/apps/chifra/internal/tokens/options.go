@@ -45,7 +45,7 @@ func (opts *TokensOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
-func (opts *TokensOptions) ToDashStr() string {
+func (opts *TokensOptions) ToCmdLine() string {
 	options := ""
 	for _, part := range opts.Parts {
 		options += " --parts " + part
@@ -57,7 +57,7 @@ func (opts *TokensOptions) ToDashStr() string {
 		options += " --no_zero"
 	}
 	options += " " + strings.Join(opts.Addrs2, " ")
-	options += fmt.Sprintf("%s", "") // auto gen only
+	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
 	return options
 }
 

@@ -45,7 +45,7 @@ func RunAbis(cmd *cobra.Command, args []string) error {
 		return opts.FindInternal()
 	}
 
-	return opts.Globals.PassItOn("grabABI", opts.ToDashStr())
+	return opts.Globals.PassItOn("grabABI", opts.ToCmdLine())
 	// EXISTING_CODE
 }
 
@@ -71,7 +71,7 @@ func ServeAbis(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	opts.Globals.PassItOn("grabABI", opts.ToDashStr())
+	opts.Globals.PassItOn("grabABI", opts.ToCmdLine())
 	// EXISTING_CODE
 }
 

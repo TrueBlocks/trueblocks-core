@@ -37,13 +37,13 @@ func (opts *ServeOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
-func (opts *ServeOptions) ToDashStr() string {
+func (opts *ServeOptions) ToCmdLine() string {
 	options := ""
 	if len(opts.Port) > 0 {
 		options += " --port " + opts.Port
 	}
 	options += " " + strings.Join([]string{}, " ")
-	options += fmt.Sprintf("%s", "") // auto gen only
+	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
 	return options
 }
 

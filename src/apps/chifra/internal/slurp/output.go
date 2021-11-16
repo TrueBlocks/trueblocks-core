@@ -41,7 +41,7 @@ func RunSlurp(cmd *cobra.Command, args []string) error {
 	}
 
 	// EXISTING_CODE
-	return opts.Globals.PassItOn("ethslurp", opts.ToDashStr())
+	return opts.Globals.PassItOn("ethslurp", opts.ToCmdLine())
 	// EXISTING_CODE
 }
 
@@ -58,7 +58,7 @@ func ServeSlurp(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// EXISTING_CODE
-	opts.Globals.PassItOn("ethslurp", opts.ToDashStr())
+	opts.Globals.PassItOn("ethslurp", opts.ToCmdLine())
 	// EXISTING_CODE
 }
 

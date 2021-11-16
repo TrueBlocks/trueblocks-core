@@ -34,10 +34,10 @@ func (opts *[{PROPER}]Options) TestLog() {
 [{TEST_LOGS}]	opts.Globals.TestLog()
 }
 
-func (opts *[{PROPER}]Options) ToDashStr() string {
+func (opts *[{PROPER}]Options) ToCmdLine() string {
 	options := ""
 [{DASH_STR}]	options += " " + strings.Join(++POSITIONAL0++, " ")
-	options += fmt.Sprintf("%s", "") // auto gen only
+	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
 	return options
 }
 

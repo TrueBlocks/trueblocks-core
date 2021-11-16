@@ -47,7 +47,7 @@ func (opts *TransactionsOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
-func (opts *TransactionsOptions) ToDashStr() string {
+func (opts *TransactionsOptions) ToCmdLine() string {
 	options := ""
 	if opts.Articulate {
 		options += " --articulate"
@@ -65,7 +65,7 @@ func (opts *TransactionsOptions) ToDashStr() string {
 		options += " --cache"
 	}
 	options += " " + strings.Join(opts.Transactions, " ")
-	options += fmt.Sprintf("%s", "") // auto gen only
+	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
 	return options
 }
 

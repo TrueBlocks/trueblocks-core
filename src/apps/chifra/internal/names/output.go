@@ -41,7 +41,7 @@ func RunNames(cmd *cobra.Command, args []string) error {
 	}
 
 	// EXISTING_CODE
-	return opts.Globals.PassItOn("ethNames", opts.ToDashStr())
+	return opts.Globals.PassItOn("ethNames", opts.ToCmdLine())
 	// EXISTING_CODE
 }
 
@@ -58,7 +58,7 @@ func ServeNames(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// EXISTING_CODE
-	opts.Globals.PassItOn("ethNames", opts.ToDashStr())
+	opts.Globals.PassItOn("ethNames", opts.ToCmdLine())
 	// EXISTING_CODE
 }
 

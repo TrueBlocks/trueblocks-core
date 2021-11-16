@@ -101,7 +101,7 @@ func (opts *ExportOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
-func (opts *ExportOptions) ToDashStr() string {
+func (opts *ExportOptions) ToCmdLine() string {
 	options := ""
 	if opts.Appearances {
 		options += " --appearances"
@@ -194,7 +194,7 @@ func (opts *ExportOptions) ToDashStr() string {
 		options += (" --last_block " + fmt.Sprintf("%d", opts.LastBlock))
 	}
 	options += " " + strings.Join(opts.Addrs, " ")
-	options += fmt.Sprintf("%s", "") // auto gen only
+	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
 	return options
 }
 

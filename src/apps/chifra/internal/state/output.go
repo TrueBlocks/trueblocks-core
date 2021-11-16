@@ -41,7 +41,7 @@ func RunState(cmd *cobra.Command, args []string) error {
 	}
 
 	// EXISTING_CODE
-	return opts.Globals.PassItOn("getState", opts.ToDashStr())
+	return opts.Globals.PassItOn("getState", opts.ToCmdLine())
 	// EXISTING_CODE
 }
 
@@ -58,7 +58,7 @@ func ServeState(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// EXISTING_CODE
-	opts.Globals.PassItOn("getState", opts.ToDashStr())
+	opts.Globals.PassItOn("getState", opts.ToCmdLine())
 	// EXISTING_CODE
 }
 

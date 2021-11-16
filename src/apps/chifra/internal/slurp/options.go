@@ -43,7 +43,7 @@ func (opts *SlurpOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
-func (opts *SlurpOptions) ToDashStr() string {
+func (opts *SlurpOptions) ToCmdLine() string {
 	options := ""
 	for _, types := range opts.Types {
 		options += " --types " + types
@@ -52,7 +52,7 @@ func (opts *SlurpOptions) ToDashStr() string {
 		options += " --appearances"
 	}
 	options += " " + strings.Join(opts.Addrs, " ")
-	options += fmt.Sprintf("%s", "") // auto gen only
+	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
 	return options
 }
 

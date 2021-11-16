@@ -41,7 +41,7 @@ func RunStatus(cmd *cobra.Command, args []string) error {
 	}
 
 	// EXISTING_CODE
-	return opts.Globals.PassItOn("cacheStatus", opts.ToDashStr())
+	return opts.Globals.PassItOn("cacheStatus", opts.ToCmdLine())
 	// EXISTING_CODE
 }
 
@@ -58,7 +58,7 @@ func ServeStatus(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// EXISTING_CODE
-	opts.Globals.PassItOn("cacheStatus", opts.ToDashStr())
+	opts.Globals.PassItOn("cacheStatus", opts.ToCmdLine())
 	// EXISTING_CODE
 }
 

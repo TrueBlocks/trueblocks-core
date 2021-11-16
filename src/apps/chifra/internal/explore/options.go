@@ -41,7 +41,7 @@ func (opts *ExploreOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
-func (opts *ExploreOptions) ToDashStr() string {
+func (opts *ExploreOptions) ToCmdLine() string {
 	options := ""
 	if opts.Local {
 		options += " --local"
@@ -50,7 +50,7 @@ func (opts *ExploreOptions) ToDashStr() string {
 		options += " --google"
 	}
 	options += " " + strings.Join(opts.Terms, " ")
-	options += fmt.Sprintf("%s", "") // auto gen only
+	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
 	return options
 }
 

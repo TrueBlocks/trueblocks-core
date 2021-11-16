@@ -41,7 +41,7 @@ func RunTransactions(cmd *cobra.Command, args []string) error {
 	}
 
 	// EXISTING_CODE
-	return opts.Globals.PassItOn("getTrans", opts.ToDashStr())
+	return opts.Globals.PassItOn("getTrans", opts.ToCmdLine())
 	// EXISTING_CODE
 }
 
@@ -58,7 +58,7 @@ func ServeTransactions(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// EXISTING_CODE
-	opts.Globals.PassItOn("getTrans", opts.ToDashStr())
+	opts.Globals.PassItOn("getTrans", opts.ToCmdLine())
 	// EXISTING_CODE
 }
 

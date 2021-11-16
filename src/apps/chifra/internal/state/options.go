@@ -49,7 +49,7 @@ func (opts *StateOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
-func (opts *StateOptions) ToDashStr() string {
+func (opts *StateOptions) ToCmdLine() string {
 	options := ""
 	for _, part := range opts.Parts {
 		options += " --parts " + part
@@ -67,7 +67,7 @@ func (opts *StateOptions) ToDashStr() string {
 		options += " --proxy_for " + opts.ProxyFor
 	}
 	options += " " + strings.Join(opts.Addrs, " ")
-	options += fmt.Sprintf("%s", "") // auto gen only
+	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
 	return options
 }
 

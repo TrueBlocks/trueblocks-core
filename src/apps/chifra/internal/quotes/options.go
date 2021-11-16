@@ -43,7 +43,7 @@ func (opts *QuotesOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
-func (opts *QuotesOptions) ToDashStr() string {
+func (opts *QuotesOptions) ToCmdLine() string {
 	options := ""
 	if opts.Freshen {
 		options += " --freshen"
@@ -58,7 +58,7 @@ func (opts *QuotesOptions) ToDashStr() string {
 		options += " --feed " + opts.Feed
 	}
 	options += " " + strings.Join([]string{}, " ")
-	options += fmt.Sprintf("%s", "") // auto gen only
+	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
 	return options
 }
 

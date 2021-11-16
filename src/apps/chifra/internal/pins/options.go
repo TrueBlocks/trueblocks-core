@@ -48,7 +48,7 @@ func (opts *PinsOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
-func (opts *PinsOptions) ToDashStr() string {
+func (opts *PinsOptions) ToCmdLine() string {
 	options := ""
 	if opts.List {
 		options += " --list"
@@ -66,7 +66,7 @@ func (opts *PinsOptions) ToDashStr() string {
 		options += (" --sleep " + fmt.Sprintf("%.1f", opts.Sleep))
 	}
 	options += " " + strings.Join([]string{}, " ")
-	options += fmt.Sprintf("%s", "") // auto gen only
+	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
 	return options
 }
 

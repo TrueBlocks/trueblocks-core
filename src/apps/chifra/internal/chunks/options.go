@@ -47,7 +47,7 @@ func (opts *ChunksOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
-func (opts *ChunksOptions) ToDashStr() string {
+func (opts *ChunksOptions) ToCmdLine() string {
 	options := ""
 	if opts.List {
 		options += " --list"
@@ -65,7 +65,7 @@ func (opts *ChunksOptions) ToDashStr() string {
 		options += " --save"
 	}
 	options += " " + strings.Join(opts.Blocks, " ")
-	options += fmt.Sprintf("%s", "") // auto gen only
+	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
 	return options
 }
 

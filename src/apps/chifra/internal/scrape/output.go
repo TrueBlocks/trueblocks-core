@@ -115,7 +115,7 @@ func RunIndexScraper(wg sync.WaitGroup, initialState bool) {
 			s.ShowStateChange("sleep", "wake")
 
 			/* -------------- */
-			Options.Globals.PassItOn("blockScrape", Options.ToDashStr())
+			Options.Globals.PassItOn("blockScrape", Options.ToCmdLine())
 			/* -------------- */
 
 			s.ShowStateChange("wake", "sleep")

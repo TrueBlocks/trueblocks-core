@@ -47,7 +47,7 @@ func (opts *AbisOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
-func (opts *AbisOptions) ToDashStr() string {
+func (opts *AbisOptions) ToCmdLine() string {
 	options := ""
 	if opts.Known {
 		options += " --known"
@@ -65,7 +65,7 @@ func (opts *AbisOptions) ToDashStr() string {
 		options += " --classes"
 	}
 	options += " " + strings.Join(opts.Addrs, " ")
-	options += fmt.Sprintf("%s", "") // auto gen only
+	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
 	return options
 }
 

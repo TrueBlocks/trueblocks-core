@@ -41,7 +41,7 @@ func RunReceipts(cmd *cobra.Command, args []string) error {
 	}
 
 	// EXISTING_CODE
-	return opts.Globals.PassItOn("getReceipts", opts.ToDashStr())
+	return opts.Globals.PassItOn("getReceipts", opts.ToCmdLine())
 	// EXISTING_CODE
 }
 
@@ -58,7 +58,7 @@ func ServeReceipts(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// EXISTING_CODE
-	opts.Globals.PassItOn("getReceipts", opts.ToDashStr())
+	opts.Globals.PassItOn("getReceipts", opts.ToCmdLine())
 	// EXISTING_CODE
 }
 

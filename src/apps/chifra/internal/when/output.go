@@ -41,7 +41,7 @@ func RunWhen(cmd *cobra.Command, args []string) error {
 	}
 
 	// EXISTING_CODE
-	return opts.Globals.PassItOn("whenBlock", opts.ToDashStr())
+	return opts.Globals.PassItOn("whenBlock", opts.ToCmdLine())
 	// EXISTING_CODE
 }
 
@@ -58,7 +58,7 @@ func ServeWhen(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// EXISTING_CODE
-	opts.Globals.PassItOn("whenBlock", opts.ToDashStr())
+	opts.Globals.PassItOn("whenBlock", opts.ToCmdLine())
 	// EXISTING_CODE
 }
 

@@ -37,13 +37,13 @@ func (opts *InitOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
-func (opts *InitOptions) ToDashStr() string {
+func (opts *InitOptions) ToCmdLine() string {
 	options := ""
 	if opts.All {
 		options += " --all"
 	}
 	options += " " + strings.Join([]string{}, " ")
-	options += fmt.Sprintf("%s", "") // auto gen only
+	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
 	return options
 }
 

@@ -71,7 +71,7 @@ func (opts *NamesOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
-func (opts *NamesOptions) ToDashStr() string {
+func (opts *NamesOptions) ToCmdLine() string {
 	options := ""
 	if opts.Expand {
 		options += " --expand"
@@ -125,7 +125,7 @@ func (opts *NamesOptions) ToDashStr() string {
 		options += " --undelete"
 	}
 	options += " " + strings.Join(opts.Terms, " ")
-	options += fmt.Sprintf("%s", "") // auto gen only
+	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
 	return options
 }
 

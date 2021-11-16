@@ -40,7 +40,7 @@ func RunQuotes(cmd *cobra.Command, args []string) error {
 	}
 
 	// EXISTING_CODE
-	return opts.Globals.PassItOn("getQuotes", opts.ToDashStr())
+	return opts.Globals.PassItOn("getQuotes", opts.ToCmdLine())
 	// EXISTING_CODE
 }
 
@@ -57,7 +57,7 @@ func ServeQuotes(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// EXISTING_CODE
-	opts.Globals.PassItOn("getQuotes", opts.ToDashStr())
+	opts.Globals.PassItOn("getQuotes", opts.ToCmdLine())
 	// EXISTING_CODE
 }
 

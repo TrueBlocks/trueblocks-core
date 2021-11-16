@@ -56,7 +56,7 @@ func (opts *StatusOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
-func (opts *StatusOptions) ToDashStr() string {
+func (opts *StatusOptions) ToCmdLine() string {
 	options := ""
 	if opts.Details {
 		options += " --details"
@@ -86,7 +86,7 @@ func (opts *StatusOptions) ToDashStr() string {
 		options += (" --test_end " + fmt.Sprintf("%d", opts.TestEnd))
 	}
 	options += " " + strings.Join(opts.Modes, " ")
-	options += fmt.Sprintf("%s", "") // auto gen only
+	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
 	return options
 }
 

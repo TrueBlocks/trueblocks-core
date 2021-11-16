@@ -92,7 +92,7 @@ bool COptions::handle_gocmds_output(const CCommandOption& p) {
     if (contains(source, "\t// return nil\n\t// EXISTING_CODE\n")) {
         replaceAll(source,
                    "\n"
-                   "\treturn opts.Globals.PassItOn(\"[{TOOL}]\", opts.ToDashStr())\n",
+                   "\treturn opts.Globals.PassItOn(\"[{TOOL}]\", opts.ToCmdLine())\n",
                    "");
     }
 

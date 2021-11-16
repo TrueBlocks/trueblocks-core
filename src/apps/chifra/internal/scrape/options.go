@@ -51,7 +51,7 @@ func (opts *ScrapeOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
-func (opts *ScrapeOptions) ToDashStr() string {
+func (opts *ScrapeOptions) ToCmdLine() string {
 	options := ""
 	if len(opts.Action) > 0 {
 		options += " --action " + opts.Action
@@ -75,7 +75,7 @@ func (opts *ScrapeOptions) ToDashStr() string {
 		options += (" --addr_chan_cnt " + fmt.Sprintf("%d", opts.AddrChanCnt))
 	}
 	options += " " + strings.Join(opts.Modes, " ")
-	options += fmt.Sprintf("%s", "") // auto gen only
+	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
 	return options
 }
 

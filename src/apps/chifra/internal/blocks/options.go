@@ -65,7 +65,7 @@ func (opts *BlocksOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
-func (opts *BlocksOptions) ToDashStr() string {
+func (opts *BlocksOptions) ToCmdLine() string {
 	options := ""
 	if opts.Hashes {
 		options += " --hashes"
@@ -110,7 +110,7 @@ func (opts *BlocksOptions) ToDashStr() string {
 		options += (" --list_count " + fmt.Sprintf("%d", opts.ListCount))
 	}
 	options += " " + strings.Join(opts.Blocks, " ")
-	options += fmt.Sprintf("%s", "") // auto gen only
+	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
 	return options
 }
 

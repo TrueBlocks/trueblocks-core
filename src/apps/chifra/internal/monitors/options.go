@@ -53,7 +53,7 @@ func (opts *MonitorsOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
-func (opts *MonitorsOptions) ToDashStr() string {
+func (opts *MonitorsOptions) ToCmdLine() string {
 	options := ""
 	if opts.Appearances {
 		options += " --appearances"
@@ -80,7 +80,7 @@ func (opts *MonitorsOptions) ToDashStr() string {
 		options += (" --last_block " + fmt.Sprintf("%d", opts.LastBlock))
 	}
 	options += " " + strings.Join(opts.Addrs, " ")
-	options += fmt.Sprintf("%s", "") // auto gen only
+	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
 	return options
 }
 

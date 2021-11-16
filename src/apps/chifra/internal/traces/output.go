@@ -41,7 +41,7 @@ func RunTraces(cmd *cobra.Command, args []string) error {
 	}
 
 	// EXISTING_CODE
-	return opts.Globals.PassItOn("getTraces", opts.ToDashStr())
+	return opts.Globals.PassItOn("getTraces", opts.ToCmdLine())
 	// EXISTING_CODE
 }
 
@@ -58,7 +58,7 @@ func ServeTraces(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// EXISTING_CODE
-	opts.Globals.PassItOn("getTraces", opts.ToDashStr())
+	opts.Globals.PassItOn("getTraces", opts.ToCmdLine())
 	// EXISTING_CODE
 }
 

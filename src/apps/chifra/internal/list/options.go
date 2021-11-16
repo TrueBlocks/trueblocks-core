@@ -45,7 +45,7 @@ func (opts *ListOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
-func (opts *ListOptions) ToDashStr() string {
+func (opts *ListOptions) ToCmdLine() string {
 	options := ""
 	if opts.Count {
 		options += " --count"
@@ -60,7 +60,7 @@ func (opts *ListOptions) ToDashStr() string {
 		options += (" --last_block " + fmt.Sprintf("%d", opts.LastBlock))
 	}
 	options += " " + strings.Join(opts.Addrs, " ")
-	options += fmt.Sprintf("%s", "") // auto gen only
+	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
 	return options
 }
 

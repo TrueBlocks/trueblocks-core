@@ -41,7 +41,7 @@ func RunTokens(cmd *cobra.Command, args []string) error {
 	}
 
 	// EXISTING_CODE
-	return opts.Globals.PassItOn("getTokens", opts.ToDashStr())
+	return opts.Globals.PassItOn("getTokens", opts.ToCmdLine())
 	// EXISTING_CODE
 }
 
@@ -58,7 +58,7 @@ func ServeTokens(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// EXISTING_CODE
-	opts.Globals.PassItOn("getTokens", opts.ToDashStr())
+	opts.Globals.PassItOn("getTokens", opts.ToCmdLine())
 	// EXISTING_CODE
 }
 

@@ -39,13 +39,13 @@ func (opts *ReceiptsOptions) TestLog() {
 	opts.Globals.TestLog()
 }
 
-func (opts *ReceiptsOptions) ToDashStr() string {
+func (opts *ReceiptsOptions) ToCmdLine() string {
 	options := ""
 	if opts.Articulate {
 		options += " --articulate"
 	}
 	options += " " + strings.Join(opts.Transactions, " ")
-	options += fmt.Sprintf("%s", "") // auto gen only
+	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
 	return options
 }
 
