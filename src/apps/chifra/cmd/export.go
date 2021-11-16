@@ -59,7 +59,6 @@ func init() {
 	exportCmd.Flags().SortFlags = false
 
 	exportCmd.Flags().BoolVarP(&exportPkg.Options.Appearances, "appearances", "p", false, "export a list of appearances")
-	exportCmd.Flags().BoolVarP(&exportPkg.Options.Transactions, "transactions", "T", false, "export the actual transactional data (the default)")
 	exportCmd.Flags().BoolVarP(&exportPkg.Options.Receipts, "receipts", "r", false, "export receipts instead of transactional data")
 	exportCmd.Flags().BoolVarP(&exportPkg.Options.Logs, "logs", "l", false, "export logs instead of transactional data")
 	exportCmd.Flags().BoolVarP(&exportPkg.Options.Traces, "traces", "t", false, "export traces instead of transactional data")

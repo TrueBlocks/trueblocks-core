@@ -27,41 +27,40 @@ import (
 )
 
 type ExportOptions struct {
-	Addrs        []string
-	Topics       []string
-	Fourbytes    []string
-	Appearances  bool
-	Transactions bool
-	Receipts     bool
-	Logs         bool
-	Traces       bool
-	Statements   bool
-	Neighbors    bool
-	Accounting   bool
-	Articulate   bool
-	Cache        bool
-	CacheTraces  bool
-	Factory      bool
-	Count        bool
-	FirstRecord  uint64
-	MaxRecords   uint64
-	Relevant     bool
-	Emitter      []string
-	Topic        []string
-	Clean        bool
-	Freshen      bool
-	Staging      bool
-	Unripe       bool
-	Load         string
-	Reversed     bool
-	ByDate       bool
-	SummarizeBy  string
-	SkipDdos     bool
-	MaxTraces    uint64
-	FirstBlock   uint64
-	LastBlock    uint64
-	Globals      globals.GlobalOptionsType
-	BadFlag      error
+	Addrs       []string
+	Topics      []string
+	Fourbytes   []string
+	Appearances bool
+	Receipts    bool
+	Logs        bool
+	Traces      bool
+	Statements  bool
+	Neighbors   bool
+	Accounting  bool
+	Articulate  bool
+	Cache       bool
+	CacheTraces bool
+	Factory     bool
+	Count       bool
+	FirstRecord uint64
+	MaxRecords  uint64
+	Relevant    bool
+	Emitter     []string
+	Topic       []string
+	Clean       bool
+	Freshen     bool
+	Staging     bool
+	Unripe      bool
+	Load        string
+	Reversed    bool
+	ByDate      bool
+	SummarizeBy string
+	SkipDdos    bool
+	MaxTraces   uint64
+	FirstBlock  uint64
+	LastBlock   uint64
+	Globals     globals.GlobalOptionsType
+	BadFlag     error
 }
 
 func (opts *ExportOptions) TestLog() {
@@ -69,7 +68,6 @@ func (opts *ExportOptions) TestLog() {
 	logger.TestLog(len(opts.Topics) > 0, "Topics: ", opts.Topics)
 	logger.TestLog(len(opts.Fourbytes) > 0, "Fourbytes: ", opts.Fourbytes)
 	logger.TestLog(opts.Appearances, "Appearances: ", opts.Appearances)
-	logger.TestLog(opts.Transactions, "Transactions: ", opts.Transactions)
 	logger.TestLog(opts.Receipts, "Receipts: ", opts.Receipts)
 	logger.TestLog(opts.Logs, "Logs: ", opts.Logs)
 	logger.TestLog(opts.Traces, "Traces: ", opts.Traces)
@@ -105,9 +103,6 @@ func (opts *ExportOptions) ToCmdLine() string {
 	options := ""
 	if opts.Appearances {
 		options += " --appearances"
-	}
-	if opts.Transactions {
-		options += " --transactions"
 	}
 	if opts.Receipts {
 		options += " --receipts"
@@ -219,8 +214,6 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ExportOptions {
 			}
 		case "appearances":
 			opts.Appearances = true
-		case "transactions":
-			opts.Transactions = true
 		case "receipts":
 			opts.Receipts = true
 		case "logs":

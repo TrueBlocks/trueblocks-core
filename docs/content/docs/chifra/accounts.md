@@ -2,7 +2,7 @@
 title: "Accounts"
 description: ""
 lead: ""
-date: 2021-11-13T14:28:14
+date: 2021-11-16T08:12:54
 lastmod:
   - :git
   - lastmod
@@ -71,7 +71,6 @@ Arguments:
 
 Flags:
   -p, --appearances         export a list of appearances
-  -T, --transactions        export the actual transactional data (the default)
   -r, --receipts            export receipts instead of transactional data
   -l, --logs                export logs instead of transactional data
   -t, --traces              export traces instead of transactional data
