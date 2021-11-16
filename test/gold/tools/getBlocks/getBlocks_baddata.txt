@@ -1,7 +1,6 @@
 chifra blocks  1590000 4000001-4000002 x400x001
-Error: 
-  The given value 'x400x001' is not a numeral or a special named block.
-
+TEST[DATE|TIME] Blocks:  [1590000 4000001-4000002 x400x001]
+Error: The given value 'x400x001' is not a numeral or a special named block.
 Usage:
   chifra blocks [flags] <block> [block...]
 

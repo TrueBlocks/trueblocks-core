@@ -1,9 +1,7 @@
 chifra blocks  2222222 2332332 --fmt junk
 TEST[DATE|TIME] Blocks:  [2222222 2332332]
 TEST[DATE|TIME] Format:  junk
-Error: 
-  The --fmt option (junk) must be one of [ json | txt | csv | api ]
-
+Error: The --fmt option (junk) must be one of [ json | txt | csv | api ]
 Usage:
   chifra blocks [flags] <block> [block...]
 
