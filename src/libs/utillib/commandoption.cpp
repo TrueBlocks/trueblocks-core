@@ -854,6 +854,16 @@ string_q CCommandOption::toApiTag(void) const {
     return Format(STR_TAG_YAML);
 }
 
+const char* STR_NEW_CHIFRA =
+    "\t// TODO: Use the [{API_ROUTE}]Pkg instead\n"
+    "\t// [{API_ROUTE}]Pkg.Serve[{PROPER}](w, r)\n"
+    "\topts := [{API_ROUTE}]Pkg.FromRequest(w, r)\n"
+    "\terr := opts.Validate[{PROPER}]()\n"
+    "\tif err != nil {\n"
+    "\t\topts.Globals.RespondWithError(w, http.StatusInternalServerError, err)\n"
+    "\t\treturn\n"
+    "\t}";
+
 //---------------------------------------------------------------------------------------------------
 const char* STR_NEW_CHIFRA_ROUTE =
     "\t[{API_ROUTE}]Pkg \"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/[{API_ROUTE}]\"";
@@ -872,17 +882,6 @@ string_q CCommandOption::toGoPackage(void) const {
     }
     return os.str();
 }
-
-//---------------------------------------------------------------------------------------------------
-const char* STR_NEW_CHIFRA =
-    "\t// TODO: Use the [{API_ROUTE}]Pkg instead\n"
-    "\t// [{API_ROUTE}]Pkg.Serve[{PROPER}](w, r)\n"
-    "\topts := [{API_ROUTE}]Pkg.FromRequest(w, r)\n"
-    "\terr := opts.Validate[{PROPER}]()\n"
-    "\tif err != nil {\n"
-    "\t\topts.Globals.RespondWithError(w, http.StatusInternalServerError, err)\n"
-    "\t\treturn\n"
-    "\t}";
 
 //---------------------------------------------------------------------------------------------------
 string_q CCommandOption::toGoCall(void) const {
