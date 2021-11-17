@@ -266,7 +266,7 @@ void COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
                 cmd << "\"";
                 cmd << (has_post ? (" | " + test.post + " ") : "");
                 cmd << " >" << test.workPath + test.fileName;
-                prepender << test.route << " " << test.options << endl;
+                prepender << test.route << "?" << test.options << endl;
             }
 
             // To run the test, we cd into the gold path (so we find the test files), but we send results to working

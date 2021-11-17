@@ -1,6 +1,6 @@
 transactions other
 {
   "errors": [
-    "chifra transactions - Invalid option: --other"
+    "Invalid key (other) in transactions route."
   ]
 }

@@ -1,6 +1,6 @@
 logs oink
 {
   "errors": [
-    "chifra logs - Invalid option: --oink"
+    "Invalid key (oink) in logs route."
   ]
 }

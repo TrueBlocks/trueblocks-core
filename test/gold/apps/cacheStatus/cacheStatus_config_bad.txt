@@ -1,4 +1,7 @@
 chifra status  config
+TEST[DATE|TIME] Modes:  [config]
+TEST[DATE|TIME] Depth:  0
+TEST[DATE|TIME] TestEnd:  0
 Error: The modes option (config) must be one of [ index | monitors | collections | names | abis | caches | some | all ]
 Usage:
   chifra status [flags] [mode...]

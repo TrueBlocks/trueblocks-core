@@ -1,6 +1,6 @@
 when blocks=2016-03-02&list&k
 {
   "errors": [
-    "chifra when - Invalid option: --k"
+    "Invalid key (k) in when route."
   ]
 }

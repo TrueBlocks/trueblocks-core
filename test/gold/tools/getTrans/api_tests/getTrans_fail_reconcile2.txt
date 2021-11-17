@@ -1,4 +1,4 @@
-transactions transactions=0x8699f14af8aca02073f3008099526a6e77f724bee280e5e3c2fa64b589be9a63&reconcile%200xf503017d7baf7fbc0fff7492b751025c6a78179b&fmt=json&cache
+transactions transactions=0x8699f14af8aca02073f3008099526a6e77f724bee280e5e3c2fa64b589be9a63&reconcile=0xf503017d7baf7fbc0fff7492b751025c6a78179b&fmt=json&cache
 {
   "errors": [
     "chifra transactions - Do not use other options with the --reconcile option."

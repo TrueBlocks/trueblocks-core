@@ -1,4 +1,5 @@
 chifra pins  --list --freshen
+TEST[DATE|TIME] List:  true
 Error: The --freshen flag has been deprecated. Use --init instead.
 Usage:
   chifra pins [flags]

@@ -1,6 +1,6 @@
 traces pink
 {
   "errors": [
-    "chifra traces - Invalid option: --pink"
+    "Invalid key (pink) in traces route."
   ]
 }

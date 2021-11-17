@@ -1,6 +1,6 @@
 scrape junk
 {
   "errors": [
-    "Please choose at least one of [indexer|monitors|both]."
+    "Invalid key (junk) in scrape route."
   ]
 }

@@ -1,6 +1,6 @@
 when blocks=0&invalid
 {
   "errors": [
-    "chifra when - Invalid option: --invalid"
+    "Invalid key (invalid) in when route."
   ]
 }

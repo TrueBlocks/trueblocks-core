@@ -1,6 +1,6 @@
 traces other
 {
   "errors": [
-    "chifra traces - Invalid option: --other"
+    "Invalid key (other) in traces route."
   ]
 }

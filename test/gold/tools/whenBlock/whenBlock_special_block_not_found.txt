@@ -1,4 +1,5 @@
 chifra when  idonotexist
+TEST[DATE|TIME] Blocks:  [idonotexist]
 Error: The given value 'idonotexist' is not a numeral or a special named block.
 Usage:
   chifra when [flags] < block | date > [ block... | date... ]

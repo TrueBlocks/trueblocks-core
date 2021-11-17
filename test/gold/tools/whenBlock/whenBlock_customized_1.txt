@@ -1,4 +1,5 @@
 chifra when  myblock
+TEST[DATE|TIME] Blocks:  [myblock]
 Error: The given value 'myblock' is not a numeral or a special named block.
 Usage:
   chifra when [flags] < block | date > [ block... | date... ]

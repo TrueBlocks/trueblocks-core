@@ -34,6 +34,8 @@ type GlobalOptionsType struct {
 	File     string
 	Version  bool
 	Noop     bool
+	Mocked   bool
+	NoColor  bool
 	OutputFn string
 	Format   string
 	TestMode bool
@@ -54,6 +56,8 @@ func (opts *GlobalOptionsType) TestLog() {
 	logger.TestLog(len(opts.File) > 0, "File: ", opts.File)
 	logger.TestLog(opts.Version, "Version: ", opts.Version)
 	logger.TestLog(opts.Noop, "Noop: ", opts.Noop)
+	logger.TestLog(opts.Mocked, "Mocked: ", opts.Mocked)
+	logger.TestLog(opts.NoColor, "NoColor: ", opts.NoColor)
 	logger.TestLog(len(opts.OutputFn) > 0, "OutputFn: ", opts.OutputFn)
 	logger.TestLog(len(opts.Format) > 0, "Format: ", opts.Format)
 	// logger.TestLog(opts.TestMode, "TestMode: ", opts.TestMode)
@@ -71,6 +75,8 @@ func InitGlobals(cmd *cobra.Command, opts *GlobalOptionsType) {
 	cmd.Flags().BoolVarP(&opts.Raw, "raw", "", false, "report JSON data from the node with minimal processing")
 	cmd.Flags().BoolVarP(&opts.Version, "version", "", false, "display the current version of the tool")
 	cmd.Flags().BoolVarP(&opts.Noop, "noop", "", false, "")
+	cmd.Flags().BoolVarP(&opts.Mocked, "mocked", "", false, "")
+	cmd.Flags().BoolVarP(&opts.NoColor, "nocolor", "", false, "")
 	cmd.Flags().Uint64VarP(&opts.LogLevel, "log_level", "", 0, "")
 	cmd.Flags().BoolVarP(&opts.NoHeader, "no_header", "", false, "supress export of header row for csv and txt exports")
 	cmd.Flags().BoolVarP(&opts.Wei, "wei", "", false, "specify value in wei (the default)")
@@ -83,6 +89,8 @@ func InitGlobals(cmd *cobra.Command, opts *GlobalOptionsType) {
 	cmd.Flags().MarkHidden("raw")
 	cmd.Flags().MarkHidden("version")
 	cmd.Flags().MarkHidden("noop")
+	cmd.Flags().MarkHidden("mocked")
+	cmd.Flags().MarkHidden("nocolor")
 	cmd.Flags().MarkHidden("log_level")
 	cmd.Flags().MarkHidden("no_header")
 	cmd.Flags().MarkHidden("wei")
@@ -112,6 +120,10 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *GlobalOptionsType {
 			opts.Version = true
 		case "noop":
 			// do nothing
+		case "mocked":
+			opts.Mocked = true
+		case "nocolor":
+			opts.NoColor = true
 		case "log_level":
 			opts.LogLevel = ToUint64(value[0])
 		case "no_header":
@@ -143,6 +155,8 @@ func IsGlobalOption(key string) bool {
 		"raw",
 		"version",
 		"noop",
+		"mocked",
+		"nocolor",
 		"log_level",
 		"no_header",
 		"wei",

@@ -1,6 +1,6 @@
 slurp pank
 {
   "errors": [
-    "Please specify at least one valid Ethereum address."
+    "Invalid key (pank) in slurp route."
   ]
 }

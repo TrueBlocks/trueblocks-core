@@ -1,6 +1,6 @@
 when x
 {
   "errors": [
-    "chifra when - Invalid option: --x"
+    "Invalid key (x) in when route."
   ]
 }

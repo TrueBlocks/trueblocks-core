@@ -1,4 +1,4 @@
-chifra status  caches --types txs --details  --depth 2
+chifra status  caches --types txs --details --depth 2
 TEST[DATE|TIME] Modes:  [caches]
 TEST[DATE|TIME] Details:  true
 TEST[DATE|TIME] Types:  [txs]

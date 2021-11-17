@@ -1,6 +1,6 @@
 slurp pink
 {
   "errors": [
-    "Please specify at least one valid Ethereum address."
+    "Invalid key (pink) in slurp route."
   ]
 }
