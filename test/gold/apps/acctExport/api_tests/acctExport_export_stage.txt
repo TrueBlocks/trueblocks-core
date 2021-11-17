@@ -1,3 +1,4 @@
+export addrs=0x001d14804b399c6ef80e64576f657660804fec0b&first_block=100000&last_block=2000000&staging
 {
   "errors": [
     "chifra export - --staging and --unripe are disabled for testing."

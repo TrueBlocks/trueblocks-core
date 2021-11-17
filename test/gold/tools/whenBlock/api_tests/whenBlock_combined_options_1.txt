@@ -1,3 +1,4 @@
+when blocks=10000&verbose
 {
   "data": [
     {

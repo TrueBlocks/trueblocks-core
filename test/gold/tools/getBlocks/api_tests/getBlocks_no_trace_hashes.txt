@@ -1,3 +1,4 @@
+blocks blocks=4012000-4012001&trace&hashes
 {
   "errors": [
     "The --trace option is not available with the --hashes option."

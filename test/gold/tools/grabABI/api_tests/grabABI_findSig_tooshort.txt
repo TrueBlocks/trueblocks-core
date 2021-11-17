@@ -1,3 +1,4 @@
+abis find=0x1aa3a0
 {
   "errors": [
     "The fourbyte option (0x1aa3a0) must be 4 bytes long."

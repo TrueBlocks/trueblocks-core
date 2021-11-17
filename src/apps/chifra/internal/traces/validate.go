@@ -14,6 +14,11 @@ package tracesPkg
  *-------------------------------------------------------------------------------------------*/
 
 func (opts *TracesOptions) ValidateTraces() error {
-	Options.TestLog()
+	opts.TestLog()
+
+	if opts.BadFlag != nil {
+		return opts.BadFlag
+	}
+
 	return opts.Globals.ValidateGlobals()
 }

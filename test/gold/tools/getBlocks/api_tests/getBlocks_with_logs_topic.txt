@@ -1,3 +1,4 @@
+blocks blocks=4012000-4012001&logs&topic=0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef
 {
   "data": [
     {

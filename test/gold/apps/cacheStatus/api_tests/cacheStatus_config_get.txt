@@ -1,3 +1,4 @@
+status get_config
 {"data": [
 {
   "files": [

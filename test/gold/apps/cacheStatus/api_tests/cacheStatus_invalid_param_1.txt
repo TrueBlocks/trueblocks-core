@@ -1,3 +1,4 @@
+status junk
 {
   "errors": [
     "chifra status - Invalid option: --junk"

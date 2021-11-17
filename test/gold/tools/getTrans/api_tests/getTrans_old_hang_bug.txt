@@ -1,3 +1,4 @@
+transactions transactions=6409270.108&articulate&fmt=json
 {
   "data": [
     {

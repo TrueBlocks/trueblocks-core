@@ -41,6 +41,12 @@ type ExploreUrl struct {
 var urls []ExploreUrl
 
 func (opts *ExploreOptions) ValidateExplore() error {
+	opts.TestLog()
+
+	if opts.BadFlag != nil {
+		return opts.BadFlag
+	}
+
 	if Options.Google && Options.Local {
 		return validate.Usage("The {0} option is not available{1}.", "--local", " with the --google option")
 	}
@@ -94,8 +100,6 @@ func (opts *ExploreOptions) ValidateExplore() error {
 	if len(urls) == 0 {
 		urls = append(urls, ExploreUrl{"", ExploreNone})
 	}
-
-	Options.TestLog()
 
 	return opts.Globals.ValidateGlobals()
 }

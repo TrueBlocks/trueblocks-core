@@ -1,3 +1,4 @@
+when blocks=tangerine&verbose
 {
   "data": [
     {

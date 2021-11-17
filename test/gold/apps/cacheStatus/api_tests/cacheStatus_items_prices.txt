@@ -1,3 +1,4 @@
+status details&modes=caches&types=prices
 {
   "data": [
     {

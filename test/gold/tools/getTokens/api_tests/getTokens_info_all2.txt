@@ -1,3 +1,4 @@
+tokens addrs2=0xd26114cd6ee289accf82350c8d8487fedb8a0c07%200xb9e7f8568e08d5659f5d29c4997173d84cdf2607&parts=all&fmt=csv
 "address","name","symbol","decimals","totalsupply"
 "0xd26114cd6ee289accf82350c8d8487fedb8a0c07","OMGToken","OMG","18",""140245398.245132780789239631""
 "0xb9e7f8568e08d5659f5d29c4997173d84cdf2607","Swarm City Token","SWT","18",""8536072.883587160871653166""

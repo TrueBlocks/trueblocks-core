@@ -1,3 +1,4 @@
+pins list&fmt=csv
 "fileName","bloomHash","indexHash"
 "000000000-000000000","QmbCQaYmfTR3sGNAvASoVjPynaY9UD31Hfxv7dGtzsptkb","QmPmfSrYT5HDpfjj4uYSycaFECo9EqPSuADQ3YPbVp3yu4"
 "000000001-000590501","QmSGuSQHgK4S9yiZQ3dKrykQVpLTmdFettY9sAwa537gPL","QmSaoxc3XA9DEaA3inhLW5ZKsk5C5LWvowSXpHwVHsMjQp"

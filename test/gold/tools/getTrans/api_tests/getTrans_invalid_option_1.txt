@@ -1,3 +1,4 @@
+transactions prot
 {
   "errors": [
     "chifra transactions - Invalid option: --prot"

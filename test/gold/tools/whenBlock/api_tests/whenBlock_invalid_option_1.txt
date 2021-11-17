@@ -1,3 +1,4 @@
+when x
 {
   "errors": [
     "chifra when - Invalid option: --x"

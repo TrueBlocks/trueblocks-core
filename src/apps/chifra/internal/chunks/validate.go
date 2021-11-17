@@ -18,6 +18,12 @@ import (
 )
 
 func (opts *ChunksOptions) ValidateChunks() error {
+	opts.TestLog()
+
+	if opts.BadFlag != nil {
+		return opts.BadFlag
+	}
+
 	if !Options.List && !Options.Check && len(Options.Extract) == 0 {
 		return validate.Usage("Please choose at least one of {0}.", "--list, --extract, or --check")
 	}
@@ -34,8 +40,6 @@ func (opts *ChunksOptions) ValidateChunks() error {
 	if err != nil {
 		return err
 	}
-
-	Options.TestLog()
 
 	return opts.Globals.ValidateGlobals()
 }

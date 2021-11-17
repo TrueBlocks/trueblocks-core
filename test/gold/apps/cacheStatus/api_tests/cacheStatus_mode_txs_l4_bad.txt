@@ -1,3 +1,4 @@
+status modes=caches&types=txs&details%20&depth=4
 {
   "errors": [
     "chifra status - --depth parameter must be less than 4."

@@ -1,3 +1,4 @@
+state addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&parts=none&parts=nonce&blocks=2500000
 {
   "errors": [
     "chifra state - The given value 'nonce' is not a numeral or a special named block."

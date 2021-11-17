@@ -1,3 +1,4 @@
+when blocks=40000000000000000000000000000
 {
   "errors": [
     "The given value '40000000000000000000000000000' is not a numeral or a special named block."

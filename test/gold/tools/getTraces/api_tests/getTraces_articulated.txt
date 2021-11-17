@@ -1,3 +1,4 @@
+traces transactions=0xbd5d20e6920eef711db55bf36995a3ee538926318e3d33bfb8c45c4d47300f33&fmt=json&articulate
 {
   "data": [
     {

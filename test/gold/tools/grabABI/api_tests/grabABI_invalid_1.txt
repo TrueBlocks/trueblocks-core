@@ -1,3 +1,4 @@
+abis addrs=0x00001
 {
   "errors": [
     "Please specify at least one valid Ethereum address."

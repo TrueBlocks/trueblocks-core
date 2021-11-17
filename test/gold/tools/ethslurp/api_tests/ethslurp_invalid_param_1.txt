@@ -1,5 +1,6 @@
+slurp pink
 {
   "errors": [
-    "chifra slurp - Invalid option: --pink"
+    "Please specify at least one valid Ethereum address."
   ]
 }

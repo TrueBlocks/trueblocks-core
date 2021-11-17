@@ -1,3 +1,4 @@
+state addrs=$doa&0x12
 {
   "errors": [
     "chifra state - Invalid option: --0x12"

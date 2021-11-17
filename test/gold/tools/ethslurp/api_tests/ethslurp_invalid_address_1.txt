@@ -1,5 +1,6 @@
+slurp addrs=invalid
 {
   "errors": [
-    "chifra slurp - The given value 'invalid' is not a numeral or a special named block."
+    "Please specify at least one valid Ethereum address."
   ]
 }

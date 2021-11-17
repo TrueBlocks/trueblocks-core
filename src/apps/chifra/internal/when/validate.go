@@ -20,6 +20,12 @@ import (
 )
 
 func (opts *WhenOptions) ValidateWhen() error {
+	opts.TestLog()
+
+	if opts.BadFlag != nil {
+		return opts.BadFlag
+	}
+
 	// TODO: Remove the global Format and all appearances of it
 	// if !WhenOpts.list {
 	// 	if len(args) == 0 {
@@ -39,8 +45,6 @@ func (opts *WhenOptions) ValidateWhen() error {
 
 		return err
 	}
-
-	Options.TestLog()
 
 	return opts.Globals.ValidateGlobals()
 }

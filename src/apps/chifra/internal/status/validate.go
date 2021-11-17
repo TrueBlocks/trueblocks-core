@@ -20,6 +20,12 @@ import (
 )
 
 func (opts *StatusOptions) ValidateStatus() error {
+	opts.TestLog()
+
+	if opts.BadFlag != nil {
+		return opts.BadFlag
+	}
+
 	if Options.Depth > 3 {
 		return validate.Usage("The {0} option ({1}) must {2}.", "--depth", strconv.FormatUint(Options.Depth, 10), "be less than four (4)")
 	}
@@ -38,8 +44,6 @@ func (opts *StatusOptions) ValidateStatus() error {
 	if err != nil {
 		return err
 	}
-
-	Options.TestLog()
 
 	return opts.Globals.ValidateGlobals()
 }

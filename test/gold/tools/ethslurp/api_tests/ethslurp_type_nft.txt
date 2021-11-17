@@ -1,3 +1,4 @@
+slurp addrs=0x00a3819199113fc6a6e6ba1298afde7377e2009b&types=nfts&blocks=0-8500000
 [
   {
     "hash": "0x6a5b97eaab251f4ced6858004f701b70a6a8244cca0eb5b7899f9d3ad3539b70",

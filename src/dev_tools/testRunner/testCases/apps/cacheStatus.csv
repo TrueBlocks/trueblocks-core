@@ -30,7 +30,7 @@ on      ,both ,fast  ,status ,apps/cacheStatus ,mode_prices      ,y    ,modes = 
 on      ,both ,fast  ,status ,apps/cacheStatus ,mode_some        ,y    ,modes = some
 on      ,both ,fast  ,status ,apps/cacheStatus ,mode_all         ,y    ,modes = all
 on      ,both ,fast  ,status ,apps/cacheStatus ,config_bad       ,y    ,modes = config
-on      ,both ,fast  ,status ,apps/cacheStatus ,three            ,y    ,modes = abis caches monitors --types slurps
+on      ,both ,fast  ,status ,apps/cacheStatus ,three            ,y    ,modes = abis caches monitors & types = slurps
 on      ,both ,fast  ,status ,apps/cacheStatus ,items_monitors   ,y    ,details & modes = monitors
 on      ,both ,fast  ,status ,apps/cacheStatus ,items_abis       ,y    ,details & modes = abis
 on      ,both ,fast  ,status ,apps/cacheStatus ,items_slurps     ,y    ,details & modes = caches & types = slurps

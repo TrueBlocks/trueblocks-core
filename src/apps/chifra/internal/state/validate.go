@@ -14,6 +14,11 @@ package statePkg
  *-------------------------------------------------------------------------------------------*/
 
 func (opts *StateOptions) ValidateState() error {
-	Options.TestLog()
+	opts.TestLog()
+
+	if opts.BadFlag != nil {
+		return opts.BadFlag
+	}
+
 	return opts.Globals.ValidateGlobals()
 }

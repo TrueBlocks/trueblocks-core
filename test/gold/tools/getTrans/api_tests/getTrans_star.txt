@@ -1,3 +1,4 @@
+transactions transactions=2222221.*&fmt=api
 {
   "data": [
     {

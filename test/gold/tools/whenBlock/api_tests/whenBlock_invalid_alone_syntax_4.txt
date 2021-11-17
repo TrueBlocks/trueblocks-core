@@ -1,3 +1,4 @@
+when blocks=0pppppp
 {
   "errors": [
     "The given value '0pppppp' is not a numeral or a special named block."

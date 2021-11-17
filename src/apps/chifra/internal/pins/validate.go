@@ -18,6 +18,12 @@ import (
 )
 
 func (opts *PinsOptions) ValidatePins() error {
+	opts.TestLog()
+
+	if opts.BadFlag != nil {
+		return opts.BadFlag
+	}
+
 	if opts.List && opts.Init {
 		return validate.Usage("Please choose only one of {0}.", "--list or --init")
 	}
@@ -59,8 +65,6 @@ func (opts *PinsOptions) ValidatePins() error {
 	//     LOG_INFO(cGreen, "Re-pinning ", pin.fileName, cOff, " ==> ", newHash, " ",
 	//          (pin.bloomHash == newHash ? greenCheck : redX));
 	// }
-
-	Options.TestLog()
 
 	return opts.Globals.ValidateGlobals()
 }

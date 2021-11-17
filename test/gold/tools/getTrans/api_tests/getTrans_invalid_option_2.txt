@@ -1,3 +1,4 @@
+transactions other
 {
   "errors": [
     "chifra transactions - Invalid option: --other"

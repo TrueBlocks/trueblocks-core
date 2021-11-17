@@ -18,6 +18,12 @@ import (
 )
 
 func (opts *SlurpOptions) ValidateSlurp() error {
+	opts.TestLog()
+
+	if opts.BadFlag != nil {
+		return opts.BadFlag
+	}
+
 	err := validate.ValidateAtLeastOneAddr(opts.Addrs)
 	if err != nil {
 		return err
@@ -27,8 +33,6 @@ func (opts *SlurpOptions) ValidateSlurp() error {
 	if err != nil {
 		return err
 	}
-
-	Options.TestLog()
 
 	return opts.Globals.ValidateGlobals()
 }

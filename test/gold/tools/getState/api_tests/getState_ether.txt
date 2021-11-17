@@ -1,2 +1,3 @@
+state addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&blocks=4000000&ether&fmt=txt
 blocknumber	address	ether
 4000000	0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359	4098.334073083150747787

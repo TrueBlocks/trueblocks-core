@@ -1,1 +1,2 @@
+tokens addrs2=0xd26114cd6ee289accf82350c8d8487fedb8a0c07%200xb9e7f8568e08d5659f5d29c4997173d84cdf2607&fmt=csv&blocks=2000000&no_header
 "2000000","0xb9e7f8568e08d5659f5d29c4997173d84cdf2607","0xd26114cd6ee289accf82350c8d8487fedb8a0c07","OMGToken Airdrop","OMG","18",""""

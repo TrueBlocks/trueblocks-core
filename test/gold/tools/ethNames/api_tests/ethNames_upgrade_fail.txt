@@ -1,3 +1,4 @@
+names fmt=json
 {
   "data": [
     {

@@ -1,5 +1,6 @@
+chunks remote
 {
   "errors": [
-    "chifra chunks - Invalid option: --remote"
+    "Please choose at least one of --list, --extract, or --check."
   ]
 }

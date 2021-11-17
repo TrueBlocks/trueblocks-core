@@ -1,4 +1,5 @@
 chifra quotes  --noop
+TEST[DATE|TIME] Noop:  true
 Error: Please specify at least one command line option.
 Usage:
   chifra quotes [flags]

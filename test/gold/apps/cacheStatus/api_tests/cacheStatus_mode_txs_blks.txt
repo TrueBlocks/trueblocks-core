@@ -1,3 +1,4 @@
+status modes=caches&types=txs&types=blocks
 {
   "errors": [
     "chifra status - Invalid option 'blocks' for 'modes'. One or more of [index|monitors|collections|names|abis|caches|some|all] required."

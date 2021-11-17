@@ -1,5 +1,6 @@
+status modes=config
 {
   "errors": [
-    "chifra status - Invalid option 'config' for 'modes'. One or more of [index|monitors|collections|names|abis|caches|some|all] required."
+    "The modes option (config) must be one of [ index | monitors | collections | names | abis | caches | some | all ]"
   ]
 }

@@ -14,6 +14,11 @@ package logsPkg
  *-------------------------------------------------------------------------------------------*/
 
 func (opts *LogsOptions) ValidateLogs() error {
-	Options.TestLog()
+	opts.TestLog()
+
+	if opts.BadFlag != nil {
+		return opts.BadFlag
+	}
+
 	return opts.Globals.ValidateGlobals()
 }

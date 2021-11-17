@@ -1,3 +1,4 @@
+abis addrs=truebit&classes&fmt=json
 {
   "errors": [
     "The --classes option is not available (not implemented)."

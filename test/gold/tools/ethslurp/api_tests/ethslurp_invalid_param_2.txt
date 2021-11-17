@@ -1,5 +1,6 @@
+slurp pank
 {
   "errors": [
-    "chifra slurp - Invalid option: --pank"
+    "Please specify at least one valid Ethereum address."
   ]
 }

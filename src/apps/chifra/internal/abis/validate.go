@@ -21,6 +21,12 @@ import (
 )
 
 func (opts *AbisOptions) ValidateAbis() error {
+	opts.TestLog()
+
+	if opts.BadFlag != nil {
+		return opts.BadFlag
+	}
+
 	if opts.Classes {
 		return validate.Usage("The {0} option is not available{1}.", "--classes", " (not implemented)")
 	}
@@ -73,8 +79,6 @@ func (opts *AbisOptions) ValidateAbis() error {
 		}
 
 	}
-
-	opts.TestLog()
 
 	return opts.Globals.ValidateGlobals()
 }

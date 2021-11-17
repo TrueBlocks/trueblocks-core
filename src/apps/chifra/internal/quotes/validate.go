@@ -13,31 +13,33 @@ package quotesPkg
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 
-import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
-)
-
 func (opts *QuotesOptions) ValidateQuotes() error {
-	if len(Options.Globals.File) == 0 &&
-		!Options.Freshen &&
-		len(Options.Period) == 0 &&
-		len(Options.Pair) == 0 &&
-		len(Options.Feed) == 0 &&
-		len(Options.Globals.Format) == 0 {
-		return validate.Usage("Please specify at least one {0}.", "command line option")
-	}
+	// opts.TestLog()
 
-	err := validate.ValidateEnum("--period", Options.Period, "[5|15|30|60|120|240|1440|10080|hourly|daily|weekly]")
-	if err != nil {
-		return err
-	}
+	// if opts.BadFlag != nil {
+	// 	return opts.BadFlag
+	// }
 
-	err = validate.ValidateEnum("--types", Options.Feed, "[poloniex|maker|tellor]")
-	if err != nil {
-		return err
-	}
+	// err := validate.ValidateEnum("--period", opts.Period, "[5|15|30|60|120|240|1440|10080|hourly|daily|weekly]")
+	// if err != nil {
+	// 	return err
+	// }
 
-	Options.TestLog()
+	// err = validate.ValidateEnum("--types", opts.Feed, "[poloniex|maker|tellor]")
+	// if err != nil {
+	// 	return err
+	// }
 
-	return opts.Globals.ValidateGlobals()
+	// if !opts.Globals.ApiMode {
+	// 	if len(opts.Globals.File) == 0 &&
+	// 		!opts.Freshen &&
+	// 		len(opts.Period) == 0 &&
+	// 		len(opts.Pair) == 0 &&
+	// 		len(opts.Feed) == 0 &&
+	// 		len(opts.Globals.Format) == 0 {
+	// 		return validate.Usage("Please specify at least one {0}.", "command line option")
+	// 	}
+	// }
+
+	return nil // opts.Globals.ValidateGlobals()
 }
