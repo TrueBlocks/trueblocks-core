@@ -854,6 +854,26 @@ string_q CCommandOption::toApiTag(void) const {
     return Format(STR_TAG_YAML);
 }
 
+//---------------------------------------------------------------------------------------------------
+const char* STR_NEW_CHIFRA_ROUTE =
+    "\t[{API_ROUTE}]Pkg \"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/[{API_ROUTE}]\"";
+
+string_q newChifra1 = "list|export|monitors|names|blocks|transactions|receipts|logs|traces|when|tokens|abis|";
+string_q newChifra2 = "pins|";
+
+//---------------------------------------------------------------------------------------------------
+string_q CCommandOption::toGoPackage(void) const {
+    if (!isApiRoute(api_route))
+        return "";
+
+    ostringstream os;
+    if (contains(newChifra1, api_route) || contains(newChifra2, api_route)) {
+        os << Format(STR_NEW_CHIFRA_ROUTE) << endl;
+    }
+    return os.str();
+}
+
+//---------------------------------------------------------------------------------------------------
 const char* STR_NEW_CHIFRA =
     "\t// TODO: Use the [{API_ROUTE}]Pkg instead\n"
     "\t// [{API_ROUTE}]Pkg.Serve[{PROPER}](w, r)\n"
@@ -876,12 +896,13 @@ string_q CCommandOption::toGoCall(void) const {
     os << Format("// [{GOROUTEFUNC}] [{DESCRIPTION}]") << endl;
     os << Format("func [{GOROUTEFUNC}](w http.ResponseWriter, r *http.Request) {") << endl;
 
-    if (contains("names|blocks|receipts|tokens", api_route)) {
+    if (contains(newChifra1, api_route)) {
         os << Format(STR_NEW_CHIFRA) << endl;
     }
 
-    if (contains("pins|", api_route)) {
+    if (contains(newChifra2, api_route)) {
         os << Format("\t[{API_ROUTE}]Pkg.Serve[{PROPER}](w, r)") << endl;
+
     } else {
         if ((!tool.empty() && !contains(tool, " ") && !goPortNewCode(api_route)) && api_route != "abis") {
             os << "\tCallOne(w, r, \"" << tool << "\", \"" << api_route << "\")" << endl;
@@ -904,7 +925,7 @@ string_q CCommandOption::toGoRoute(void) const {
         return "";
 
     ostringstream out;
-    out << Format("\tRoute{ \"[{GOROUTEFUNC}]\", \"GET\", \"/[{API_ROUTE}]\", [{GOROUTEFUNC}] },") << endl;
+    out << Format("\tRoute{\"[{GOROUTEFUNC}]\", \"GET\", \"/[{API_ROUTE}]\", [{GOROUTEFUNC}]},") << endl;
     return out.str();
 }
 

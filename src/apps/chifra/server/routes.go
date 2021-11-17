@@ -21,27 +21,61 @@ import (
 	"fmt"
 	"net/http"
 
-	blocksPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/blocks"
+	// BEG_ROUTE_PKGS
+	listPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/list"
+	exportPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/export"
+	monitorsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/monitors"
 	namesPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/names"
-	pinsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/pins"
+	abisPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/abis"
+	blocksPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/blocks"
+	transactionsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/transactions"
 	receiptsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/receipts"
+	logsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/logs"
+	tracesPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/traces"
+	whenPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/when"
 	tokensPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/tokens"
+	pinsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/pins"
+	// END_ROUTE_PKGS
 )
 
 // BEG_ROUTE_CODE
 
 // RouteList List every appearance of an address anywhere on the chain.
 func RouteList(w http.ResponseWriter, r *http.Request) {
+	// TODO: Use the listPkg instead
+	// listPkg.ServeList(w, r)
+	opts := listPkg.FromRequest(w, r)
+	err := opts.ValidateList()
+	if err != nil {
+		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
+		return
+	}
 	CallOneExtra(w, r, "chifra", "list", "list")
 }
 
 // RouteExport Export full detail of transactions for one or more addresses.
 func RouteExport(w http.ResponseWriter, r *http.Request) {
+	// TODO: Use the exportPkg instead
+	// exportPkg.ServeExport(w, r)
+	opts := exportPkg.FromRequest(w, r)
+	err := opts.ValidateExport()
+	if err != nil {
+		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
+		return
+	}
 	CallOne(w, r, "acctExport", "export")
 }
 
 // RouteMonitors Add, remove, clean, and list address monitors.
 func RouteMonitors(w http.ResponseWriter, r *http.Request) {
+	// TODO: Use the monitorsPkg instead
+	// monitorsPkg.ServeMonitors(w, r)
+	opts := monitorsPkg.FromRequest(w, r)
+	err := opts.ValidateMonitors()
+	if err != nil {
+		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
+		return
+	}
 	CallOneExtra(w, r, "chifra", "monitors", "monitors")
 }
 
@@ -60,6 +94,14 @@ func RouteNames(w http.ResponseWriter, r *http.Request) {
 
 // RouteAbis Fetches the ABI for a smart contract.
 func RouteAbis(w http.ResponseWriter, r *http.Request) {
+	// TODO: Use the abisPkg instead
+	// abisPkg.ServeAbis(w, r)
+	opts := abisPkg.FromRequest(w, r)
+	err := opts.ValidateAbis()
+	if err != nil {
+		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
+		return
+	}
 	CallOneExtra(w, r, "chifra", "abis", "abis")
 }
 
@@ -78,6 +120,14 @@ func RouteBlocks(w http.ResponseWriter, r *http.Request) {
 
 // RouteTransactions Retrieve one or more transactions from the chain or local cache.
 func RouteTransactions(w http.ResponseWriter, r *http.Request) {
+	// TODO: Use the transactionsPkg instead
+	// transactionsPkg.ServeTransactions(w, r)
+	opts := transactionsPkg.FromRequest(w, r)
+	err := opts.ValidateTransactions()
+	if err != nil {
+		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
+		return
+	}
 	CallOne(w, r, "getTrans", "transactions")
 }
 
@@ -96,16 +146,40 @@ func RouteReceipts(w http.ResponseWriter, r *http.Request) {
 
 // RouteLogs Retrieve logs for the given transaction(s).
 func RouteLogs(w http.ResponseWriter, r *http.Request) {
+	// TODO: Use the logsPkg instead
+	// logsPkg.ServeLogs(w, r)
+	opts := logsPkg.FromRequest(w, r)
+	err := opts.ValidateLogs()
+	if err != nil {
+		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
+		return
+	}
 	CallOne(w, r, "getLogs", "logs")
 }
 
 // RouteTraces Retrieve traces for the given transaction(s).
 func RouteTraces(w http.ResponseWriter, r *http.Request) {
+	// TODO: Use the tracesPkg instead
+	// tracesPkg.ServeTraces(w, r)
+	opts := tracesPkg.FromRequest(w, r)
+	err := opts.ValidateTraces()
+	if err != nil {
+		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
+		return
+	}
 	CallOne(w, r, "getTraces", "traces")
 }
 
 // RouteWhen Find block(s) based on date, blockNum, timestamp, or 'special'.
 func RouteWhen(w http.ResponseWriter, r *http.Request) {
+	// TODO: Use the whenPkg instead
+	// whenPkg.ServeWhen(w, r)
+	opts := whenPkg.FromRequest(w, r)
+	err := opts.ValidateWhen()
+	if err != nil {
+		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
+		return
+	}
 	CallOne(w, r, "whenBlock", "when")
 }
 
@@ -175,26 +249,26 @@ var routes = Routes{
 	Route{"EditName", "POST", "/names", EditName},
 
 	// BEG_ROUTE_ITEMS
-	Route{ "RouteList", "GET", "/list", RouteList },
-	Route{ "RouteExport", "GET", "/export", RouteExport },
-	Route{ "RouteMonitors", "GET", "/monitors", RouteMonitors },
-	Route{ "RouteNames", "GET", "/names", RouteNames },
-	Route{ "RouteAbis", "GET", "/abis", RouteAbis },
-	Route{ "RouteBlocks", "GET", "/blocks", RouteBlocks },
-	Route{ "RouteTransactions", "GET", "/transactions", RouteTransactions },
-	Route{ "RouteReceipts", "GET", "/receipts", RouteReceipts },
-	Route{ "RouteLogs", "GET", "/logs", RouteLogs },
-	Route{ "RouteTraces", "GET", "/traces", RouteTraces },
-	Route{ "RouteWhen", "GET", "/when", RouteWhen },
-	Route{ "RouteState", "GET", "/state", RouteState },
-	Route{ "RouteTokens", "GET", "/tokens", RouteTokens },
-	Route{ "RouteStatus", "GET", "/status", RouteStatus },
-	Route{ "RouteScrape", "GET", "/scrape", RouteScrape },
-	Route{ "RouteInit", "GET", "/init", RouteInit },
-	Route{ "RoutePins", "GET", "/pins", RoutePins },
-	Route{ "RouteChunks", "GET", "/chunks", RouteChunks },
-	Route{ "RouteQuotes", "GET", "/quotes", RouteQuotes },
-	Route{ "RouteSlurp", "GET", "/slurp", RouteSlurp },
+	Route{"RouteList", "GET", "/list", RouteList},
+	Route{"RouteExport", "GET", "/export", RouteExport},
+	Route{"RouteMonitors", "GET", "/monitors", RouteMonitors},
+	Route{"RouteNames", "GET", "/names", RouteNames},
+	Route{"RouteAbis", "GET", "/abis", RouteAbis},
+	Route{"RouteBlocks", "GET", "/blocks", RouteBlocks},
+	Route{"RouteTransactions", "GET", "/transactions", RouteTransactions},
+	Route{"RouteReceipts", "GET", "/receipts", RouteReceipts},
+	Route{"RouteLogs", "GET", "/logs", RouteLogs},
+	Route{"RouteTraces", "GET", "/traces", RouteTraces},
+	Route{"RouteWhen", "GET", "/when", RouteWhen},
+	Route{"RouteState", "GET", "/state", RouteState},
+	Route{"RouteTokens", "GET", "/tokens", RouteTokens},
+	Route{"RouteStatus", "GET", "/status", RouteStatus},
+	Route{"RouteScrape", "GET", "/scrape", RouteScrape},
+	Route{"RouteInit", "GET", "/init", RouteInit},
+	Route{"RoutePins", "GET", "/pins", RoutePins},
+	Route{"RouteChunks", "GET", "/chunks", RouteChunks},
+	Route{"RouteQuotes", "GET", "/quotes", RouteQuotes},
+	Route{"RouteSlurp", "GET", "/slurp", RouteSlurp},
 	// END_ROUTE_ITEMS
 }
 

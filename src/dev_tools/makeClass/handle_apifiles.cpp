@@ -39,6 +39,7 @@ bool COptions::writeOpenApiFile(void) {
         pairMapStream << ep.toPairMap() << endl;
         apiTagStream << ep.toApiTag();
         goCallStream << ep.toGoCall();
+        goPkgStream << ep.toGoPackage();
         goRouteStream << ep.toGoRoute();
         apiPathStream << ep.toApiPath(productions, exampleFn);
 

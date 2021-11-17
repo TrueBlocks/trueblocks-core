@@ -129,6 +129,7 @@ bool writeCodeOut(COptions* opts, const string_q& fn) {
         replaceAll(converted, "    // clang-format on\n    // clang-format off\n", "");
 
     } else if (endsWith(fn, ".go")) {
+        converted = replaceCode(converted, "ROUTE_PKGS", opts->goPkgStream.str());
         converted = replaceCode(converted, "ROUTE_CODE", opts->goCallStream.str());
         converted = replaceCode(converted, "ROUTE_ITEMS", opts->goRouteStream.str());
 
