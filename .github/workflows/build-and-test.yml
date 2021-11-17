@@ -14,8 +14,17 @@ jobs:
           mkdir -p build && cd build
           cmake ../src
           make -j 4
-  RemoteTests:
+  GoUnitTests:
+    runs-on: ubuntu-latest
     needs: Build
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-go@v2
+        with:
+          go-version: '^1.16' # The Go version to download (if necessary) and use.
+      - run: cd src/apps/chifra && go test ./...
+  RemoteTests:
+    needs: GoUnitTests
     runs-on: ubuntu-latest
     steps:
       - name: Run tests remotely
