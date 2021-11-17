@@ -20,9 +20,7 @@
 static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
-    COption("transactions", "", "list<tx_id>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more transaction identifiers"),  // NOLINT
-    COption("topic", "t", "list<topic>", OPT_FLAG, "filter by one or more log topics (not implemented)"),
-    COption("source", "s", "list<addr>", OPT_FLAG, "export only if the given address emitted the event (not implemented)"),  // NOLINT
+    COption("transactions", "", "list<tx_id>", OPT_POSITIONAL, "a space-separated list of one or more transaction identifiers"),  // NOLINT
     COption("articulate", "a", "", OPT_SWITCH, "articulate the retrieved data if ABIs can be found"),
     COption("", "", "", OPT_DESCRIPTION, "Retrieve logs for the given transaction(s)."),
     // clang-format on
@@ -44,19 +42,6 @@ bool COptions::parseArguments(string_q& command) {
         if (false) {
             // do nothing -- make auto code generation easier
             // BEG_CODE_AUTO
-        } else if (startsWith(arg, "-t:") || startsWith(arg, "--topic:")) {
-            arg = substitute(substitute(arg, "-t:", ""), "--topic:", "");
-            topic.push_back(arg);
-        } else if (arg == "-t" || arg == "--topic") {
-            return flag_required("topic");
-
-        } else if (startsWith(arg, "-s:") || startsWith(arg, "--source:")) {
-            arg = substitute(substitute(arg, "-s:", ""), "--source:", "");
-            if (!parseAddressList(this, source, arg))
-                return false;
-        } else if (arg == "-s" || arg == "--source") {
-            return flag_required("source");
-
         } else if (arg == "-a" || arg == "--articulate") {
             articulate = true;
 
@@ -76,8 +61,6 @@ bool COptions::parseArguments(string_q& command) {
 
     // BEG_DEBUG_DISPLAY
     LOG_TEST_LIST("transList", transList, transList.empty());
-    LOG_TEST_LIST("topic", topic, topic.empty());
-    LOG_TEST_LIST("source", source, source.empty());
     LOG_TEST_BOOL("articulate", articulate);
     // END_DEBUG_DISPLAY
 
@@ -106,13 +89,13 @@ bool COptions::parseArguments(string_q& command) {
 
     // Not sure why this is here to be honest, perhaps only to make test cases pass. The test cases could be fixed...
     if (isApiMode() || expContext().exportFmt == API1) {
-        manageFields("CLogEntry:all", false);
-        manageFields("CLogEntry:address,logIndex,type,compressedLog,topics,data", true);
+        manageFields("CLogEntry:all", FLD_HIDE);
+        manageFields("CLogEntry:address,logIndex,type,compressedLog,topics,data", FLD_SHOW);
     }
     // Not sure why this is here to be honest, perhaps only to make test cases pass. The test cases could be fixed...
     if (expContext().exportFmt == JSON1) {
-        manageFields(defHide, false);
-        manageFields(defShow + "|CLogEntry:data,topics", true);
+        manageFields(defHide, FLD_HIDE);
+        manageFields(defShow + "|CLogEntry:data,topics", FLD_SHOW);
     }
 
     // Display formatting
@@ -123,11 +106,11 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
+    // BEG_CODE_GLOBALOPTS
     registerOptions(nParams, params, OPT_RAW);
+    // END_CODE_GLOBALOPTS
 
     // BEG_CODE_INIT
-    topic.clear();
-    source.clear();
     articulate = false;
     // END_CODE_INIT
 
@@ -141,7 +124,7 @@ COptions::COptions(void) {
 
     // BEG_CODE_NOTES
     // clang-format off
-    notes.push_back("The `transactions` list may be one or more space-separated identifiers which are either a transaction hash, a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.");  // NOLINT
+    notes.push_back("The `transactions` list may be one or more transaction hashes, blockNumber.transactionID pairs, or a blockHash.transactionID pairs.");  // NOLINT
     notes.push_back("This tool checks for valid input syntax, but does not check that the transaction requested actually exists.");  // NOLINT
     notes.push_back("If the queried node does not store historical state, the results for most older transactions are undefined.");  // NOLINT
     notes.push_back("If you specify a 32-byte hash, it will be assumed to be a transaction hash, if the transaction is not found, it will be used as a topic.");  // NOLINT

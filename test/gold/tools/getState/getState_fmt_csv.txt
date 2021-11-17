@@ -1,3 +1,5 @@
 chifra state  0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98 --fmt csv 2000000
+TEST[DATE|TIME] Addrs:  [0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98 2000000]
+TEST[DATE|TIME] Format:  csv
 "blocknumber","address","balance"
 "2000000","0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98","97380000000000"

@@ -22,30 +22,33 @@ Arguments:
 
 Flags:
   -p, --appearances         export a list of appearances
-  -r, --receipts            export receipts instead of transaction list
-  -A, --statements          for use with --accounting option only, export only reconciliation statements
-  -l, --logs                export logs instead of transaction list
-  -t, --traces              export traces instead of transaction list
-  -C, --accounting          export accounting records instead of transaction list
+  -r, --receipts            export receipts instead of transactional data
+  -l, --logs                export logs instead of transactional data
+  -t, --traces              export traces instead of transactional data
+  -A, --statements          export reconciliations instead of transactional data (requires --accounting option)
+  -n, --neighbors           export the neighbors of the given address
+  -C, --accounting          attach accounting records to the exported data (applies to transactions export only)
   -a, --articulate          articulate transactions, traces, logs, and outputs
-  -i, --cache_txs           write transactions to the cache (see notes)
+  -i, --cache               write transactions to the cache (see notes)
   -R, --cache_traces        write traces to the cache (see notes)
   -y, --factory             scan for contract creations from the given address(es) and report address of those contracts
-      --emitter             for log export only, export only if one of the given export addresses emitted the event
-      --source strings      for log export only, export only one of these addresses emitted the event
-      --relevant            for log and accounting export only, if true export only logs relevant to one of the given export addresses
   -U, --count               only available for --appearances mode, if present, return only the number of records
   -c, --first_record uint   the first record to process
   -e, --max_records uint    the maximum number of records to process before reporting (default 250)
+      --relevant            for log and accounting export only, export only logs relevant to one of the given export addresses
+      --emitter strings     for log export only, export only logs if emitted by one of these address(es)
+      --topic strings       for log export only, export only logs with this topic(s)
       --clean               clean (i.e. remove duplicate appearances) from all existing monitors
-
-Global Flags:
-  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
-  -h, --help         display this help screen
-  -v, --verbose      enable verbose (increase detail with --log_level)
+  -x, --fmt string          export format, one of [none|json*|txt|csv|api]
+  -v, --verbose             enable verbose (increase detail with --log_level)
+  -h, --help                display this help screen
 
 Notes:
   - An address must start with '0x' and be forty-two characters long.
+  - Articulating the export means turn the EVM's byte data into human-readable text (if possible).
+  - For the --logs option, you may optionally specify one or more --emmitter, one or more --topics, or both.
+  - The --logs option is significantly faster if you provide an --emitter or a --topic.
+  - Neighbors include every address that appears in any transaction in which the export address also appears.
 ```
 
 **Source code**: [`apps/acctExport`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/acctExport)

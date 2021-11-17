@@ -1,12 +1,28 @@
+/*-------------------------------------------------------------------------------------------
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
+ *
+ * This program is free software: you may redistribute it and/or modify it under the terms
+ * of the GNU General Public License as published by the Free Software Foundation, either
+ * version 3 of the License, or (at your option) any later version. This program is
+ * distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+ * the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details. You should have received a copy of the GNU General
+ * Public License along with this program. If not, see http://www.gnu.org/licenses/.
+ *-------------------------------------------------------------------------------------------*/
 package utils
 
 import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"net/http"
 	"os"
 	"os/exec"
+	"os/user"
 	"runtime"
+
+	"golang.org/x/crypto/ssh/terminal"
 )
 
 func FileExists(filename string) bool {
@@ -26,31 +42,24 @@ func FolderExists(path string) bool {
 	return info.IsDir()
 }
 
-func IsTestMode() bool {
-	return os.Getenv("TEST_MODE") == "true"
+// GetCommandPath returns full path the the given tool
+func GetCommandPath(cmd string) string {
+	usr, _ := user.Current()
+	dir := usr.HomeDir
+	return dir + "/.local/bin/chifra/" + cmd
+}
+
+// IsTestModeServer return true if we are running from the testing harness
+func IsTestModeServer(r *http.Request) bool {
+	return r.Header.Get("User-Agent") == "testRunner"
 }
 
 func IsApiMode() bool {
 	return os.Getenv("API_MODE") == "true"
 }
 
-func TestLogArgs(name string, args []string) {
-	if !IsTestMode() || len(args) == 0 {
-		return
-	}
-
-	fmt.Fprintf(os.Stderr, "TIME ~ CLOCK - <INFO>  : %s\n", name)
-	for _, arg := range args {
-		fmt.Fprintf(os.Stderr, "TIME ~ CLOCK - <INFO>  :   %s\n", arg)
-	}
-}
-
-func TestLogBool(name string, val bool) {
-	if !val || !IsTestMode() {
-		return
-	}
-
-	fmt.Fprintf(os.Stderr, "TIME ~ CLOCK - <INFO>  : %s: %t\n", name, val)
+func IsTerminal() bool {
+	return terminal.IsTerminal(int(os.Stdout.Fd()))
 }
 
 func AsciiFileToString(fn string) string {
@@ -65,9 +74,6 @@ func AsciiFileToString(fn string) string {
 	}
 	return string(contents)
 }
-
-// maximum uint64
-const NOPOS = ^uint64(0)
 
 func OpenBrowser(url string) {
 	var err error

@@ -106,7 +106,9 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
+    // BEG_CODE_GLOBALOPTS
     registerOptions(nParams, params);
+    // END_CODE_GLOBALOPTS
 
     // BEG_CODE_INIT
     check = false;

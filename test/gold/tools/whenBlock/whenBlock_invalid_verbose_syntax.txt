@@ -1,4 +1,5 @@
 chifra when  --verbose
+TEST[DATE|TIME] Verbose:  true
 
   Please supply either a JSON formatted date or a blockNumber. Quitting...
 

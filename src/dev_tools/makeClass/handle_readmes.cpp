@@ -38,24 +38,30 @@ bool COptions::handle_readmes(void) {
             string_q docFn = grp + "-" + ep.api_route + ".md";
 
             string_q dSource = getDocsPathTemplates("readme-intros/" + docFn);
-            string_q dReadme = getDocsPathReadmes(docFn);
-            string_q tReadme = substitute(getSourcePath(ep.api_group + "/" + justTool + "/README.md"), "//", "/");
 
             string_q contents = asciiFileToString(dSource);
             replaceAll(contents, "[{NAME}]", "chifra " + ep.api_route);
             replaceAll(contents, "[{USAGE}]", get_usage(ep.api_route));
 
-            string_q dFooter = "\n**Source code**: [`[{GROUP}]/[{TOOL}]`]([{LOCATION}][{GROUP}]/[{TOOL}])\n";
-            replaceAll(dFooter, "[{GROUP}]", ep.api_group);
-            replaceAll(dFooter, "[{TOOL}]", justTool);
-            replaceAll(dFooter, "[{LOCATION}]", "https://github.com/TrueBlocks/trueblocks-core/tree/master/src/");
-            string_q dContents = substitute(contents, "[{FOOTER}]", dFooter);
-            writeIfDifferent(dReadme, dContents);
+            string_q dFooter, sFooter;
+            if (!goPortNewCode(justTool)) {
+                dFooter = "\n**Source code**: [`[{GROUP}]/[{TOOL}]`]([{LOCATION}][{GROUP}]/[{TOOL}])\n";
+                replaceAll(dFooter, "[{GROUP}]", ep.api_group);
+                replaceAll(dFooter, "[{TOOL}]", justTool);
+                replaceAll(dFooter, "[{LOCATION}]", "https://github.com/TrueBlocks/trueblocks-core/tree/master/src/");
+                sFooter = "\n" + trim(asciiFileToString(getDocsPathTemplates("readme-intros/README.footer.md")), '\n');
+            } else {
+                dFooter = "\n**Source code**: [`[{FILE}]`]([{LOCATION}]apps/chifra/internal/[{FILE}])\n";
+                replaceAll(dFooter, "[{FILE}]", ep.api_route + ".go");
+                replaceAll(dFooter, "[{LOCATION}]", "https://github.com/TrueBlocks/trueblocks-core/tree/develop/src/");
+            }
 
-            if (ep.is_visible_docs) {
-                string_q sFooter =
-                    "\n" + trim(asciiFileToString(getDocsPathTemplates("readme-intros/README.footer.md")), '\n');
+            string_q dContents = substitute(contents, "[{FOOTER}]", dFooter);
+            string_q dReadme = getDocsPathReadmes(docFn);
+            writeIfDifferent(dReadme, dContents);
+            if (ep.is_visible_docs && !goPortNewCode(justTool)) {
                 string_q sContents = substitute(contents, "[{FOOTER}]", sFooter);
+                string_q tReadme = substitute(getSourcePath(ep.api_group + "/" + justTool + "/README.md"), "//", "/");
                 writeIfDifferent(tReadme, sContents);
             }
         }
@@ -63,7 +69,7 @@ bool COptions::handle_readmes(void) {
 
     // TODO: this should be generated from the data
     CStringArray items = {"Accounts:list,export,monitors,names,abis",
-                          "Chain Data:blocks,trans,receipts,logs,traces,when", "Chain State:state,tokens",
+                          "Chain Data:blocks,trans,receipts,logs,traces,when", "Chain State:state,result,tokens",
                           "Admin:cacheStatus,serve,scrape,chunks,init,pins", "Other:quotes,explore,ethslurp"};
     uint32_t weight = 1100;
     for (auto item : items) {

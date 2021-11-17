@@ -18,6 +18,15 @@
 #include "etherlib.h"
 
 // BEG_ERROR_DEFINES
+#define ERR_NOCACHEUNCLE 1
+#define ERR_NOCACHEADDRESS 2
+#define ERR_TRACINGREQUIRED 3
+#define ERR_NOTRACEADDRESS 4
+#define ERR_TRACEHASHEXCLUSIVE 5
+#define ERR_ATLEASTONEBLOCK 6
+#define ERR_EMTOPONLYWITHLOG 7
+#define ERR_ARTWITHOUTLOGS 8
+#define ERR_RANGENOLOGS 9
 // END_ERROR_DEFINES
 
 //-----------------------------------------------------------------------------
@@ -27,6 +36,9 @@ class COptions : public CBlockOptions {
     bool hashes;
     bool uncles;
     bool trace;
+    bool logs;
+    bool articulate;
+    uint64_t big_range;
     bool count;
     bool cache;
     blknum_t list_count;
@@ -38,6 +50,7 @@ class COptions : public CBlockOptions {
     string_q filterType;
     timestamp_t secsFinal;
     blknum_t listOffset;
+    CLogFilter logFilter;
 
     COptions(void);
     ~COptions(void);
@@ -45,9 +58,10 @@ class COptions : public CBlockOptions {
     bool parseArguments(string_q& command) override;
     void Init(void) override;
 
-    bool isMulti(void) const;
     bool handle_appearances(blknum_t num, void* data);
     bool handle_block_summaries(blknum_t start, blknum_t count);
+    bool handle_logs(void);
+    bool processFastPath(void);
 };
 
 //-----------------------------------------------------------------------------

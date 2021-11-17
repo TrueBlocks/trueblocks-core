@@ -1,3 +1,15 @@
+/*-------------------------------------------------------------------------------------------
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
+ *
+ * This program is free software: you may redistribute it and/or modify it under the terms
+ * of the GNU General Public License as published by the Free Software Foundation, either
+ * version 3 of the License, or (at your option) any later version. This program is
+ * distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+ * the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details. You should have received a copy of the GNU General
+ * Public License along with this program. If not, see http://www.gnu.org/licenses/.
+ *-------------------------------------------------------------------------------------------*/
 package cmd
 
 //----------------------------------------------------------------------------
@@ -5,7 +17,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"log"
 	"os"
 
 	"sort"
@@ -292,13 +303,13 @@ func writeAddresses(blockNum string, addressMap map[string]bool) {
 		os.Exit(1) // caller will start over if this process exits with non-zero value
 	}
 	// Show fifty dots no matter how many blocks we're scraping
-	skip := 31 // Options.nBlocks / 100
+	skip := 13 // Options.block_cnt / 100
 	if skip < 1 {
 		skip = 1
 	}
 	counter++
 	if counter%skip == 0 {
-		log.Print("- <PROG> : Scraping ", counter, " of ", Options.nBlocks)
+		fmt.Fprintf(os.Stderr, "- <PROG> : Scraping %d of %d at block %s\r", counter, Options.block_cnt, blockNum)
 	}
 }
 
@@ -308,18 +319,18 @@ func scrapeBlocks() {
 	addressChannel := make(chan tracesAndLogs)
 
 	var blockWG sync.WaitGroup
-	blockWG.Add(Options.nBlockProcs)
-	for i := 0; i < Options.nBlockProcs; i++ {
+	blockWG.Add(Options.block_chan_cnt)
+	for i := 0; i < Options.block_chan_cnt; i++ {
 		go getTracesAndLogs(blockChannel, addressChannel, &blockWG)
 	}
 
 	var addressWG sync.WaitGroup
-	addressWG.Add(Options.nAddrProcs)
-	for i := 0; i < Options.nAddrProcs; i++ {
+	addressWG.Add(Options.addr_chan_cnt)
+	for i := 0; i < Options.addr_chan_cnt; i++ {
 		go extractAddresses(addressChannel, &addressWG)
 	}
 
-	for block := Options.startBlock; block < Options.startBlock+Options.nBlocks; block++ {
+	for block := Options.startBlock; block < Options.startBlock+Options.block_cnt; block++ {
 		blockChannel <- block
 	}
 
@@ -357,8 +368,8 @@ Description:
   left off. 'Scrape' visits every block, queries that block's traces and logs
   looking for addresses, and writes an index of those addresses per transaction.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		//fmt.Printf("\t  options:\t %d/%d/%d/%d\n", Options.startBlock, Options.nBlocks, Options.ripeBlock, (Options.startBlock + Options.nBlocks))
-		//fmt.Printf("\t  processes:\t %d/%d\n", Options.nBlockProcs, Options.nAddrProcs)
+		//fmt.Printf("\t  options:\t %d/%d/%d/%d\n", Options.startBlock, Options.block_cnt, Options.ripeBlock, (Options.startBlock + Options.block_cnt))
+		//fmt.Printf("\t  processes:\t %d/%d\n", Options.block_chan_cnt, Options.addr_chan_cnt)
 		//fmt.Printf("\t  rpcProvider:\t %s\n", Options.rpcProvider)
 		//fmt.Printf("\t  indexPath:\t %s\n", Options.indexPath)
 		//fmt.Printf("\t  ripePath:\t %s\n", Options.ripePath)
@@ -372,5 +383,5 @@ Description:
 
 func init() {
 	scrapeCmd.PersistentFlags().StringVarP(&scrapeOptions.columns2, "columns", "l", "block.timestamp", "retrieve the timestamp of the block's data")
-	rootCmd.AddCommand(scrapeCmd)
+	blazeCmd.AddCommand(scrapeCmd)
 }

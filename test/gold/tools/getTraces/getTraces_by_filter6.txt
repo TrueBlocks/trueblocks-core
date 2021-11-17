@@ -1,4 +1,6 @@
 chifra traces  --fmt json --filter 0x42ae50!0x42ae52!0x8c3064d32441f0190e8b3fa1ef9fc81fccb06111
+TEST[DATE|TIME] Filter:  0x42ae50!0x42ae52!0x8c3064d32441f0190e8b3fa1ef9fc81fccb06111
+TEST[DATE|TIME] Format:  json
 TIME ~ CLOCK - <INFO>  : {
   "fromBlock": 4370000,
   "toBlock": 4370002,

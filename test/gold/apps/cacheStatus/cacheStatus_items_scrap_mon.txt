@@ -1,4 +1,9 @@
 chifra status  --details index --test_start 1000000 --test_end 2200000
+TEST[DATE|TIME] Modes:  [index]
+TEST[DATE|TIME] Details:  true
+TEST[DATE|TIME] Depth:  0
+TEST[DATE|TIME] TestStart:  1000000
+TEST[DATE|TIME] TestEnd:  2200000
 {
   "client_version": "Client version",
   "client_ids": "chainId: 1 networkId: 1",

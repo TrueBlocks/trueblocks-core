@@ -1,3 +1,7 @@
-chifra blocks  3982128 --uniq_tx --count --fmt json
+chifra blocks  3982128 --uniq --count --fmt json
+TEST[DATE|TIME] Blocks:  [3982128]
+TEST[DATE|TIME] Uniq:  true
+TEST[DATE|TIME] Count:  true
+TEST[DATE|TIME] Format:  json
 { "data": [
-{ "blockNumber": 3982128, "transactionsCnt": 91, "uniq_tx": 253}] }
+{ "blockNumber": 3982128, "transactionsCnt": 91, "uniq": 253}] }

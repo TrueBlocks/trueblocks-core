@@ -1,4 +1,6 @@
 chifra traces  --fmt json --filter 4370000!4370002!!!1!2
+TEST[DATE|TIME] Filter:  4370000!4370002!!!1!2
+TEST[DATE|TIME] Format:  json
 TIME ~ CLOCK - <INFO>  : {
   "fromBlock": 4370000,
   "toBlock": 4370002,

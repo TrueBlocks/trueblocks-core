@@ -7,7 +7,7 @@ info:
   license:
     name: GPL 3.0
     url: http://www.gnu.org/licenses/
-  version: 0.15.0-alpha
+  version: 0.16.0-alpha
   description: >
 
     A REST layer over the TrueBlocks application. With `chifra serve`, you can
@@ -199,7 +199,23 @@ paths:
           schema:
             type: boolean
         - name: receipts
-          description: export receipts instead of transaction list
+          description: export receipts instead of transactional data
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: logs
+          description: export logs instead of transactional data
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: traces
+          description: export traces instead of transactional data
           required: false
           style: form
           in: query
@@ -208,23 +224,15 @@ paths:
             type: boolean
         - name: statements
           description: >
-            for use with --accounting option only, export only reconciliation statements
+            export reconciliations instead of transactional data (requires --accounting option)
           required: false
           style: form
           in: query
           explode: true
           schema:
             type: boolean
-        - name: logs
-          description: export logs instead of transaction list
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
-        - name: traces
-          description: export traces instead of transaction list
+        - name: neighbors
+          description: export the neighbors of the given address
           required: false
           style: form
           in: query
@@ -232,7 +240,8 @@ paths:
           schema:
             type: boolean
         - name: accounting
-          description: export accounting records instead of transaction list
+          description: >
+            attach accounting records to the exported data (applies to transactions export only)
           required: false
           style: form
           in: query
@@ -247,7 +256,7 @@ paths:
           explode: true
           schema:
             type: boolean
-        - name: cache_txs
+        - name: cache
           description: write transactions to the cache (see notes)
           required: false
           style: form
@@ -257,35 +266,6 @@ paths:
             type: boolean
         - name: cache_traces
           description: write traces to the cache (see notes)
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
-        - name: emitter
-          description: >
-            for log export only, export only if one of the given export addresses emitted the event
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
-        - name: source
-          description: for log export only, export only one of these addresses emitted the event
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: array
-            items:
-              type: string
-              format: address_t
-        - name: relevant
-          description: >
-            for log and accounting export only, if true export only logs relevant to one of the given export addresses
           required: false
           style: form
           in: query
@@ -317,6 +297,38 @@ paths:
           explode: true
           schema:
             type: string
+        - name: relevant
+          description: >
+            for log and accounting export only, export only logs relevant to one of the given export addresses
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: emitter
+          description: >
+            for log export only, export only logs if emitted by one of these address(es)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: address_t
+        - name: topic
+          description: for log export only, export only logs with this topic(s)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: topic_t
         - name: clean
           description: clean (i.e. remove duplicate appearances) from all existing monitors
           required: false
@@ -415,7 +427,31 @@ paths:
           schema:
             type: boolean
         - name: clean
-          description: clean (i.e. remove duplicate appearances) from all existing monitors
+          description: clean (i.e. remove duplicate appearances) from monitors
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: delete
+          description: delete a monitor, but do not remove it
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: undelete
+          description: undelete a previously deleted monitor
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: remove
+          description: remove a previously deleted monitor
           required: false
           style: form
           in: query
@@ -528,6 +564,46 @@ paths:
           explode: true
           schema:
             type: boolean
+        - name: create
+          description: create a new name record
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: delete
+          description: delete a name, but do not remove it
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: update
+          description: edit an existing name
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: remove
+          description: remove a previously deleted name
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: undelete
+          description: undelete a previously deleted name
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
       responses:
         "200":
           description: returns the requested data
@@ -574,15 +650,15 @@ paths:
               type: string
               format: address_t
         - name: sol
-          description: file name of .sol file from which to create a new known abi (without .sol)
+          description: extract the abi definition from the provided .sol file(s)
           required: false
           style: form
           in: query
           explode: true
           schema:
-            type: string
+            type: boolean
         - name: find
-          description: try to search for a function declaration given a four byte code
+          description: search for function or event declarations given a four- or 32-byte code(s)
           required: false
           style: form
           in: query
@@ -687,7 +763,7 @@ paths:
           schema:
             type: boolean
         - name: apps
-          description: display only the list of address appearances in the block
+          description: display a list of uniq address appearances in the block
           required: false
           style: form
           in: query
@@ -695,24 +771,47 @@ paths:
           schema:
             type: boolean
         - name: uniq
-          description: display only the list of uniq address appearances in the block
+          description: display a list of uniq address appearances per transaction
           required: false
           style: form
           in: query
           explode: true
           schema:
             type: boolean
-        - name: uniq_tx
-          description: display only the list of uniq address appearances in each transaction
+        - name: logs
+          description: display only the logs found in the block(s)
           required: false
           style: form
           in: query
           explode: true
           schema:
             type: boolean
-        - name: count
+        - name: emitter
           description: >
-            display the number of the lists of appearances for --apps, --uniq, or --uniq_tx
+            for the --logs option only, filter logs to show only those logs emitted by the given address(es)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: address_t
+        - name: topic
+          description: >
+            for the --logs option only, filter logs to show only those with this topic(s)
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              format: topic_t
+        - name: count
+          description: display the number of the lists of appearances for --addrs or --uniq
           required: false
           style: form
           in: query
@@ -784,8 +883,7 @@ paths:
           schema:
             type: boolean
         - name: uniq
-          description: >
-            display a list of uniq addresses found in the transaction instead of the underlying data
+          description: display a list of uniq addresses found in the transaction
           required: false
           style: form
           in: query
@@ -874,7 +972,7 @@ paths:
       parameters:
         - name: transactions
           description: a space-separated list of one or more transaction identifiers
-          required: true
+          required: false
           style: form
           in: query
           explode: true
@@ -883,28 +981,6 @@ paths:
             items:
               type: string
               format: tx_id_t
-        - name: topic
-          description: filter by one or more log topics (not implemented)
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: array
-            items:
-              type: string
-              format: topic_t
-        - name: source
-          description: export only if the given address emitted the event (not implemented)
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: array
-            items:
-              type: string
-              format: address_t
         - name: articulate
           description: articulate the retrieved data if ABIs can be found
           required: false
@@ -1097,6 +1173,14 @@ paths:
           explode: true
           schema:
             type: string
+        - name: proxy_for
+          description: for the --call option only, redirects calls to this implementation
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: string
       responses:
         "200":
           description: returns the requested data
@@ -1108,7 +1192,9 @@ paths:
                     description: the on-chain state of a given address
                     type: array
                     items:
-                      $ref: "#/components/schemas/state"
+                      oneOf:
+                        - $ref: "#/components/schemas/state"
+                        - $ref: "#/components/schemas/result"
                 example:
                   {
                     "data": [
@@ -1339,6 +1425,14 @@ paths:
               - restart
               - pause
               - quit
+        - name: sleep
+          description: seconds to sleep between scraper passes
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: number
         - name: pin
           description: >
             pin chunks (and blooms) to IPFS as they are created (requires pinning service)
@@ -1348,7 +1442,15 @@ paths:
           explode: true
           schema:
             type: boolean
-        - name: n_blocks
+        - name: publish
+          description: after pinning the chunk, publish it to UnchainedIndex
+          required: false
+          style: form
+          in: query
+          explode: true
+          schema:
+            type: boolean
+        - name: block_cnt
           description: maximum number of blocks to process per pass
           required: false
           style: form
@@ -1428,14 +1530,6 @@ paths:
           explode: true
           schema:
             type: boolean
-        - name: freshen
-          description: check for new bloom or index chunks and download if available
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
         - name: all
           description: in addition to Bloom filters, download full index chunks
           required: false
@@ -1453,18 +1547,8 @@ paths:
           explode: true
           schema:
             type: boolean
-        - name: remote
-          description: >
-            for --list mode only, recover the manifest from IPFS via UnchainedIndex smart contract
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
         - name: sleep
-          description: >
-            throttle requests by this many seconds (.25 seconds delay between requests by default)
+          description: throttle requests by this many seconds
           required: false
           style: form
           in: query
@@ -2228,6 +2312,10 @@ components:
           type: string
           example: "Transfer(0xcfa...9f54..."
           description: "a truncated, more readable version of the articulation"
+        timestamp:
+          type: number
+          format: timestamp
+          description: "the timestamp of the block this log appears in"
     trace:
       description: "trace data for a given transaction directly from the blockchain"
       type: object
@@ -2398,6 +2486,42 @@ components:
           format: double
           example: 0.25884369
           description: "the balance of the address in ethers"
+    result:
+      description: "the result of a call to a smart contract"
+      type: object
+      properties:
+        blockNumber:
+          type: number
+          format: blknum
+          example: 10021
+          description: "the block number at which this call was made"
+        address:
+          type: string
+          format: address
+          example: "0xa1e4...63b4"
+          description: "the address of contract being called"
+        signature:
+          type: string
+          description: "the canonical signature of the interface"
+        encoding:
+          type: string
+          description: "the encoding for the function call"
+        bytes:
+          type: string
+          description: "the bytes data following the encoding of the call"
+        callResult:
+          type: object
+          items:
+            $ref: "#/components/schemas/function"
+          description: "the result of the call to the contract"
+        compressedResult:
+          type: string
+          description: "the compressed version of the result of the call to the contract"
+        deployed:
+          type: number
+          format: blknum
+          example: 8901011
+          description: "the block number at which this smart contract was deployed (if a smart contact)"
     token:
       description: "on-chain token related data for a give address at a given block height"
       type: object

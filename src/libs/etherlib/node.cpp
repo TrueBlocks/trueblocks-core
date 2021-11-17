@@ -13,7 +13,7 @@
 #include <string>
 #include "node.h"
 #include "filenames.h"
-#include "logquery.h"
+#include "logfilter.h"
 
 namespace qblocks {
 
@@ -500,7 +500,7 @@ bool queryRawStateDiff(string_q& diffs, const string_q& hashIn) {
 }
 
 //-------------------------------------------------------------------------
-bool queryRawLogs(string_q& results, const CLogQuery& query) {
+bool queryRawLogs(string_q& results, const CLogFilter& query) {
     results = callRPC("eth_getLogs", query.toRPC(), true);
     return true;
 }
@@ -553,7 +553,7 @@ string_q getTokenState(const address_t& token, const string_q& what, const CAbi&
     theCall.blockNumber = blockNum;
     theCall.abi_spec = abi_spec;
     if (doEthCall(theCall))
-        return theCall.getResults();
+        return theCall.getCallResult();
     return "";
 }
 
@@ -895,6 +895,9 @@ static string_q getFilename_local(cache_t type, const string_q& item1, const str
         case CT_RECONS:
             os << "recons/";
             break;
+        case CT_APPS:
+            os << "apps/";
+            break;
         default:
             ASSERT(0);  // should not happen
     }
@@ -918,7 +921,7 @@ static string_q getFilename_local(cache_t type, const string_q& item1, const str
         os << extract(item1, 0, 2) << "/" << extract(item1, 2, 2) << "/" << extract(item1, 4, 2) << "/";
         if (!asPath) {
             os << item1;
-            os << ((type == CT_TRACES || type == CT_TXS) ? "-" + item2 : "");
+            os << ((type == CT_TRACES || type == CT_TXS || type == CT_APPS) ? "-" + item2 : "");
             os << (type == CT_TRACES && !item3.empty() ? "-" + item3 : "");
             os << ".bin";
         }

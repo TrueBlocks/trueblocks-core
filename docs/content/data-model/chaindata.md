@@ -2,7 +2,7 @@
 title: "Chain data"
 description: ""
 lead: ""
-date: 2021-10-05T21:53:25
+date: 2021-10-27T17:52:58
 lastmod:
   - :git
   - lastmod
@@ -131,6 +131,7 @@ Log data is made of the following data fields:
 | data             | any remaining un-indexed parameters to the event                                                  | bytes       |
 | articulatedLog   | a human-readable version of the topic and data fields                                             | CFunction   |
 | compressedLog    | a truncated, more readable version of the articulation                                            | string      |
+| timestamp        | the timestamp of the block this log appears in                                                    | timestamp   |
 
 
 ## Trace

@@ -18,9 +18,7 @@ import (
 	"fmt"
 	"io"
 	"os"
-	"os/exec"
 	"os/user"
-	"sync"
 
 	"github.com/spf13/cobra"
 
@@ -31,109 +29,34 @@ import (
 
 var cfgFile string
 
-// rootOptionsType Structure to carry command line and config file options
-type rootOptTypes struct {
-	fmt        string
-	verbose    bool
-	logLevel   uint
-	noHeader   bool
-	wei        bool
-	ether      bool
-	dollars    bool
-	help       bool
-	raw        bool
-	outputFile string
-	toFile     bool
-	file       string
-	version    bool
-	noop       bool
-	create     bool
-	delete     bool
-	update     bool
-	remove     bool
-	undelete   bool
-}
-
-var RootOpts rootOptTypes
-
-// rootCmd represents the base command when called without any subcommands
-var rootCmd = &cobra.Command{
+// chifraCmd represents the base command when called without any subcommands
+var chifraCmd = &cobra.Command{
 	Use:   "chifra [flags] commands",
 	Short: "access to all TrueBlocks tools (chifra <cmd> --help for more)",
 	Long: `Purpose:
   Access to all TrueBlocks tools (chifra <cmd> --help for more).`,
-	Version: "Powered by TrueBlocks (GHC-TrueBlocks//0.15.0-alpha-44042b8cf-20211025)",
+	Version: "Powered by TrueBlocks (GHC-TrueBlocks//0.16.0-alpha-1b9b51603-20211117)",
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
 func Execute() {
-	if err := rootCmd.Execute(); err != nil {
+	if err := chifraCmd.Execute(); err != nil {
 		// fmt.Fprintf(os.Stderr, "%s", err)
 		os.Exit(1)
 	}
 }
 
 func init() {
-	rootCmd.SetOut(os.Stderr)
-	rootCmd.SetFlagErrorFunc(ErrFunc)
+	if utils.IsApiMode() {
+		chifraCmd.SetOut(os.Stderr)
+		chifraCmd.SetErr(os.Stdout)
+	} else {
+		chifraCmd.SetOut(os.Stderr)
+	}
+	chifraCmd.SetFlagErrorFunc(ErrFunc)
+	chifraCmd.Flags().SortFlags = false
 
-	rootCmd.Flags().SortFlags = false
-
-	rootCmd.PersistentFlags().BoolVarP(&RootOpts.raw, "raw", "", false, "report JSON data from the node with minimal processing")
-	rootCmd.PersistentFlags().MarkHidden("raw")
-
-	rootCmd.PersistentFlags().BoolVarP(&RootOpts.version, "version", "", false, "display the current version of the tool")
-	rootCmd.PersistentFlags().MarkHidden("version")
-
-	rootCmd.PersistentFlags().BoolVarP(&RootOpts.noop, "noop", "", false, "")
-	rootCmd.PersistentFlags().MarkHidden("noop")
-
-	rootCmd.PersistentFlags().BoolVarP(&RootOpts.create, "create", "", false, "")
-	rootCmd.PersistentFlags().MarkHidden("create")
-
-	rootCmd.PersistentFlags().BoolVarP(&RootOpts.delete, "delete", "", false, "")
-	rootCmd.PersistentFlags().MarkHidden("delete")
-
-	rootCmd.PersistentFlags().BoolVarP(&RootOpts.update, "update", "", false, "")
-	rootCmd.PersistentFlags().MarkHidden("update")
-
-	rootCmd.PersistentFlags().BoolVarP(&RootOpts.remove, "remove", "", false, "")
-	rootCmd.PersistentFlags().MarkHidden("remove")
-
-	rootCmd.PersistentFlags().BoolVarP(&RootOpts.undelete, "undelete", "", false, "")
-	rootCmd.PersistentFlags().MarkHidden("undelete")
-
-	rootCmd.PersistentFlags().UintVarP(&RootOpts.logLevel, "log_level", "", 0, "")
-	rootCmd.PersistentFlags().MarkHidden("log_level")
-
-	rootCmd.PersistentFlags().BoolVarP(&RootOpts.noHeader, "no_header", "", false, "supress export of header row for csv and txt exports")
-	rootCmd.PersistentFlags().MarkHidden("no_header")
-
-	rootCmd.PersistentFlags().BoolVarP(&RootOpts.wei, "wei", "", false, "specify value in wei (the default)")
-	rootCmd.PersistentFlags().MarkHidden("wei")
-
-	rootCmd.PersistentFlags().BoolVarP(&RootOpts.ether, "ether", "", false, "specify value in ether")
-	rootCmd.PersistentFlags().MarkHidden("ether")
-
-	rootCmd.PersistentFlags().BoolVarP(&RootOpts.dollars, "dollars", "", false, "specify value in US dollars")
-	rootCmd.PersistentFlags().MarkHidden("dollars")
-
-	rootCmd.PersistentFlags().BoolVarP(&RootOpts.toFile, "to_file", "", false, "write the results to a temporary file and return the filename")
-	rootCmd.PersistentFlags().MarkHidden("to_file")
-
-	rootCmd.PersistentFlags().StringVarP(&RootOpts.file, "file", "", "", "specify multiple sets of command line options in a file")
-	rootCmd.PersistentFlags().MarkHidden("file")
-
-	rootCmd.PersistentFlags().StringVarP(&RootOpts.outputFile, "output", "", "", "write the results to file 'fn' and return the filename")
-	rootCmd.PersistentFlags().MarkHidden("output")
-
-	rootCmd.PersistentFlags().StringVarP(&RootOpts.fmt, "fmt", "x", "", "export format, one of [none|json*|txt|csv|api]")
-	rootCmd.PersistentFlags().BoolVarP(&RootOpts.verbose, "verbose", "v", false, "enable verbose (increase detail with --log_level)")
-	rootCmd.PersistentFlags().BoolVarP(&RootOpts.help, "help", "h", false, "display this help screen")
-
-	rootCmd.Flags().SortFlags = false
-
-	rootCmd.SetUsageTemplate(helpText)
+	chifraCmd.SetUsageTemplate(helpText)
 	cobra.OnInitialize(initConfig)
 }
 
@@ -165,7 +88,7 @@ func initConfig() {
 
 func ErrFunc(cmd *cobra.Command, errMsg error) error {
 	msg := fmt.Sprintf("%s", errMsg)
-	if utils.IsTestMode() {
+	if os.Getenv("TEST_MODE") == "true" {
 		msg = "\n  " + msg + "\n"
 	} else {
 		msg = "\n  \033[31m" + msg + "\033[0m\n"
@@ -217,111 +140,6 @@ func getCommandPath(cmd string) string {
 	usr, _ := user.Current()
 	dir := usr.HomeDir
 	return dir + "/.local/bin/chifra/" + cmd
-}
-
-func PassItOn(path string, flags, arguments string) {
-	options := flags
-	if RootOpts.raw {
-		options += " --raw"
-	}
-	if RootOpts.create {
-		options += " --create"
-	}
-	if RootOpts.delete {
-		options += " --delete"
-	}
-	if RootOpts.update {
-		options += " --update"
-	}
-	if RootOpts.remove {
-		options += " --remove"
-	}
-	if RootOpts.undelete {
-		options += " --undelete"
-	}
-	// if RootOpts.noop {
-	// 	options += " --noop"
-	// }
-	if RootOpts.version {
-		options += " --version"
-	}
-	if len(RootOpts.fmt) > 0 {
-		options += " --fmt " + RootOpts.fmt
-	}
-	if RootOpts.verbose || RootOpts.logLevel > 0 {
-		level := RootOpts.logLevel
-		if level == 0 {
-			level = 1
-		}
-		options += " --verbose " + fmt.Sprintf("%d", level)
-	}
-	if len(RootOpts.outputFile) > 0 {
-		options += " --output " + RootOpts.outputFile
-	}
-	if RootOpts.noHeader {
-		options += " --no_header"
-	}
-	if RootOpts.wei {
-		options += " --wei"
-	}
-	if RootOpts.ether {
-		options += " --ether"
-	}
-	if RootOpts.dollars {
-		options += " --dollars"
-	}
-	if RootOpts.toFile {
-		options += " --to_file"
-	}
-	if len(RootOpts.file) > 0 {
-		// TODO: one of the problems with this is that if the file contains invalid commands,
-		// TODO: because we don't see those commands until we're doing into the tool, we
-		// TODO: can't report on the 'bad command' in Cobra format. This will require us to
-		// TODO: keep validation code down in the tools which we want to avoid. To fix this
-		// TODO: the code below should open the file, read each command, and recursively call
-		// TODO: into chifra here.
-		options += " --file:" + RootOpts.file
-	}
-	options += arguments
-
-	var wg sync.WaitGroup
-	wg.Add(2)
-
-	// fmt.Fprintf(os.Stderr, "Calling: %s %s\n", path, options)
-	cmd := exec.Command(getCommandPath(path), options)
-	if utils.IsTestMode() {
-		cmd.Env = append(os.Environ(), "TEST_MODE=true")
-	}
-
-	stderrPipe, err := cmd.StderrPipe()
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "%s", err)
-	} else {
-		go func() {
-			ScanForProgress(stderrPipe, func(msg string) {
-			})
-			wg.Done()
-		}()
-	}
-
-	stdout, err := cmd.StdoutPipe()
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "%s", err)
-	} else {
-		go func() {
-			cmd.Start()
-			scanner := bufio.NewScanner(stdout)
-			buf := make([]byte, 1024*1024)
-			scanner.Buffer(buf, 1024*1024)
-			for scanner.Scan() {
-				m := scanner.Text()
-				fmt.Println(m)
-			}
-			wg.Done()
-		}()
-	}
-	wg.Wait()
-	cmd.Wait()
 }
 
 func UsageWithNotes(notes string) string {

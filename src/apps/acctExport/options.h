@@ -26,24 +26,22 @@
 class COptions : public CAbiOptions {
   public:
     // BEG_CODE_DECLARE
-    CTopicArray topics;
     CFourbyteArray fourbytes;
     bool appearances;
     bool receipts;
-    bool statements;
     bool logs;
     bool traces;
+    bool statements;
+    bool neighbors;
     bool accounting;
     bool articulate;
-    bool cache_txs;
+    bool cache;
     bool cache_traces;
     bool factory;
-    bool emitter;
-    CAddressArray source;
-    bool relevant;
     bool count;
     blknum_t first_record;
     blknum_t max_records;
+    bool relevant;
     bool clean;
     bool staging;
     bool unripe;
@@ -77,6 +75,8 @@ class COptions : public CAbiOptions {
 
     // abiMap allows fast access to abis
     CAddressUintMap abiMap;
+
+    CLogFilter logFilter;
 
     CScrapeStatistics stats;
 
@@ -133,5 +133,5 @@ extern bool visitFinalIndexFiles(const string_q& path, void* data);
 extern bool visitStagingIndexFiles(const string_q& path, void* data);
 extern bool visitUnripeIndexFiles(const string_q& path, void* data);
 extern bool isTokenFunc(const string_q& input);
-extern bool isTokenTopic(const topic_t& topic);
+extern bool isTokenTopic(const CLogEntry* log);
 extern bool fourByteFilter(const string_q& input, const COptions* opt);

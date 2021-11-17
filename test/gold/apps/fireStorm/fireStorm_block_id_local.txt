@@ -1,6 +1,4 @@
 chifra explore  12 --local
-TIME ~ CLOCK - <INFO>  : terms
-TIME ~ CLOCK - <INFO>  :   12
-TIME ~ CLOCK - <INFO>  : local: true
-TIME ~ CLOCK - <INFO>  : is_block: true
+TEST[DATE|TIME] Terms:  [12]
+TEST[DATE|TIME] Local:  true
 Opening http://localhost:1234/explorer/blocks/12

@@ -1,19 +1,2 @@
-{
-  "data": [
-    {
-      "encoding": "0x06fdde03",
-      "bytes": "",
-      "blockNumber": 10092000,
-      "balance": 0,
-      "address": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
-      "result": {
-        "name": "name",
-        "signature": "name()",
-        "encoding": "0x06fdde03",
-        "outputs": {
-          "_name": "Wrapped BTC"
-        }
-      }
-    }
-  ]
-}
+blocknumber	address	signature	encoding	bytes	compressedresult
+10092000	0x2260fac5e5542a773aa44fbcfedf7c193bc2c599	name()	0x06fdde03		Wrapped BTC

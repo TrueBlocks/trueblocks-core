@@ -25,8 +25,6 @@
 class COptions : public CAbiOptions {
   public:
     // BEG_CODE_DECLARE
-    CTopicArray topic;
-    CAddressArray source;
     bool articulate;
     // END_CODE_DECLARE
 

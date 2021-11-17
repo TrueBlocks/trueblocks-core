@@ -24,10 +24,14 @@ static const COption params[] = {
     COption("hashes", "e", "", OPT_SWITCH, "display only transaction hashes, default is to display full transaction detail"),  // NOLINT
     COption("uncles", "U", "", OPT_SWITCH, "display uncle blocks (if any) instead of the requested block"),
     COption("trace", "t", "", OPT_SWITCH, "export the traces from the block as opposed to the block data"),
-    COption("apps", "a", "", OPT_SWITCH, "display only the list of address appearances in the block"),
-    COption("uniq", "u", "", OPT_SWITCH, "display only the list of uniq address appearances in the block"),
-    COption("uniq_tx", "n", "", OPT_SWITCH, "display only the list of uniq address appearances in each transaction"),
-    COption("count", "c", "", OPT_SWITCH, "display the number of the lists of appearances for --apps, --uniq, or --uniq_tx"),  // NOLINT
+    COption("apps", "s", "", OPT_SWITCH, "display a list of uniq address appearances in the block"),
+    COption("uniq", "u", "", OPT_SWITCH, "display a list of uniq address appearances per transaction"),
+    COption("logs", "g", "", OPT_HIDDEN | OPT_SWITCH, "display only the logs found in the block(s)"),
+    COption("emitter", "m", "list<addr>", OPT_HIDDEN | OPT_FLAG, "for the --logs option only, filter logs to show only those logs emitted by the given address(es)"),  // NOLINT
+    COption("topic", "p", "list<topic>", OPT_HIDDEN | OPT_FLAG, "for the --logs option only, filter logs to show only those with this topic(s)"),  // NOLINT
+    COption("articulate", "a", "", OPT_HIDDEN | OPT_SWITCH, "for the --logs option only, articulate the retrieved data if ABIs can be found"),  // NOLINT
+    COption("big_range", "r", "<uint64>", OPT_HIDDEN | OPT_FLAG, "for the --logs option only, allow for block ranges larger than 500"),  // NOLINT
+    COption("count", "c", "", OPT_SWITCH, "display the number of the lists of appearances for --addrs or --uniq"),
     COption("cache", "o", "", OPT_SWITCH, "force a write of the block to the cache"),
     COption("list", "l", "<blknum>", OPT_HIDDEN | OPT_FLAG, "summary list of blocks running backwards from latest block minus num"),  // NOLINT
     COption("list_count", "C", "<blknum>", OPT_HIDDEN | OPT_FLAG, "the number of blocks to report for --list option"),
@@ -44,6 +48,7 @@ extern const char* STR_FORMAT_FILTER_JSON;
 extern const char* STR_FORMAT_FILTER_TXT;
 extern const char* STR_FORMAT_LIST_JSON;
 extern const char* STR_FORMAT_LIST;
+extern const char* STR_FMT_BLOCKLOGS;
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
@@ -52,8 +57,9 @@ bool COptions::parseArguments(string_q& command) {
     // BEG_CODE_LOCAL_INIT
     bool apps = false;
     bool uniq = false;
-    bool uniq_tx = false;
-    blknum_t list = NOPOS;
+    CAddressArray emitter;
+    CStringArray topic;
+    blknum_t list = 0;
     // END_CODE_LOCAL_INIT
 
     Init();
@@ -75,14 +81,37 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-t" || arg == "--trace") {
             trace = true;
 
-        } else if (arg == "-a" || arg == "--apps") {
+        } else if (arg == "-s" || arg == "--apps") {
             apps = true;
 
         } else if (arg == "-u" || arg == "--uniq") {
             uniq = true;
 
-        } else if (arg == "-n" || arg == "--uniq_tx") {
-            uniq_tx = true;
+        } else if (arg == "-g" || arg == "--logs") {
+            logs = true;
+
+        } else if (startsWith(arg, "-m:") || startsWith(arg, "--emitter:")) {
+            arg = substitute(substitute(arg, "-m:", ""), "--emitter:", "");
+            if (!parseAddressList(this, emitter, arg))
+                return false;
+        } else if (arg == "-m" || arg == "--emitter") {
+            return flag_required("emitter");
+
+        } else if (startsWith(arg, "-p:") || startsWith(arg, "--topic:")) {
+            arg = substitute(substitute(arg, "-p:", ""), "--topic:", "");
+            if (!parseTopicList2(this, topic, arg))
+                return false;
+        } else if (arg == "-p" || arg == "--topic") {
+            return flag_required("topic");
+
+        } else if (arg == "-a" || arg == "--articulate") {
+            articulate = true;
+
+        } else if (startsWith(arg, "-r:") || startsWith(arg, "--big_range:")) {
+            if (!confirmUint("big_range", big_range, arg))
+                return false;
+        } else if (arg == "-r" || arg == "--big_range") {
+            return flag_required("big_range");
 
         } else if (arg == "-c" || arg == "--count") {
             count = true;
@@ -123,10 +152,14 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("trace", trace);
     LOG_TEST_BOOL("apps", apps);
     LOG_TEST_BOOL("uniq", uniq);
-    LOG_TEST_BOOL("uniq_tx", uniq_tx);
+    LOG_TEST_BOOL("logs", logs);
+    LOG_TEST_LIST("emitter", emitter, emitter.empty());
+    LOG_TEST_LIST("topic", topic, topic.empty());
+    LOG_TEST_BOOL("articulate", articulate);
+    LOG_TEST("big_range", big_range, (big_range == 500));
     LOG_TEST_BOOL("count", count);
     LOG_TEST_BOOL("cache", cache);
-    LOG_TEST("list", list, (list == NOPOS));
+    LOG_TEST("list", list, (list == 0));
     LOG_TEST("list_count", list_count, (list_count == 20));
     // END_DEBUG_DISPLAY
 
@@ -136,26 +169,23 @@ bool COptions::parseArguments(string_q& command) {
     if (cache)
         etherlib_init(defaultQuitHandler);
 
+    // syntactic sugar so we deal with topics, but the option is called topic
+    for (auto t : topic)
+        logFilter.topics.push_back(t);
+
+    // syntactic sugar so we deal with emitters, but the option is called emitter
+    for (auto e : emitter)
+        logFilter.emitters.push_back(e);
+
     listOffset = contains(command, "list") ? list : NOPOS;
-    filterType = (uniq_tx ? "uniq_tx" : (uniq ? "uniq" : (apps ? "apps" : "")));
+    filterType = (uniq ? "uniq" : (apps ? "apps" : ""));
 
-    if (cache && uncles)
-        return usage("The --cache option is not available for uncle blocks.");
-
-    if (cache && !filterType.empty())
-        return usage("The --cache option is not available when using one of the address options.");
+    if (big_range != 500 && !logs)
+        return usage(usageErrs[ERR_RANGENOLOGS]);
+    big_range = max(big_range, uint64_t(50));
 
     if (trace && !isTracingNode())
-        return usage("A tracing node is required for the --trace options to work properly.");
-
-    if (trace && !filterType.empty())
-        return usage("The --trace option is not available when using one of the address options.");
-
-    if (trace && hashes)
-        return usage("The --hashes and --trace options are exclusive.");
-
-    if (blocks.empty() && listOffset == NOPOS)
-        return usage("You must specify at least one block.");
+        return usage(usageErrs[ERR_TRACINGREQUIRED]);
 
     secsFinal =
         (timestamp_t)getGlobalConfig("getBlocks")->getConfigInt("settings", "secs_when_final", (uint64_t)secsFinal);
@@ -193,6 +223,18 @@ bool COptions::parseArguments(string_q& command) {
     } else if (trace) {
         configureDisplay("getBlocks", "CTrace", STR_DISPLAY_TRACE);
 
+    } else if (logs) {
+        configureDisplay("getBlocks", "CLogEntry", STR_DISPLAY_LOGENTRY);
+        manageFields("CLogEntry:topic0,topic1,topic2,topic3", FLD_HIDE);
+        manageFields(
+            "CLogEntry:blocknumber,blockhash,transactionindex,transactionhash,timestamp,"
+            "logindex,address,data,compressedlog",
+            FLD_SHOW);
+        bool isText = expContext().exportFmt == TXT1 || expContext().exportFmt == CSV1;
+        if (isText) {
+            expContext().fmtMap["format"] = expContext().fmtMap["header"] = cleanFmt(STR_FMT_BLOCKLOGS);
+        }
+
     } else {
         configureDisplay("getBlocks", "CBlock", STR_DISPLAY_BLOCK);
     }
@@ -221,12 +263,17 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
+    // BEG_CODE_GLOBALOPTS
     registerOptions(nParams, params, OPT_RAW);
+    // END_CODE_GLOBALOPTS
 
     // BEG_CODE_INIT
     hashes = false;
     uncles = false;
     trace = false;
+    logs = false;
+    articulate = false;
+    big_range = 500;
     count = false;
     cache = false;
     list_count = 20;
@@ -237,6 +284,7 @@ void COptions::Init(void) {
     addrCounter = 0;
     listOffset = NOPOS;
     blocks.Init();
+    logFilter = CLogFilter();
     CBlockOptions::Init();
 }
 
@@ -250,20 +298,28 @@ COptions::COptions(void) {
     notes.push_back("`blocks` is a space-separated list of values, a start-end range, a `special`, or any combination.");  // NOLINT
     notes.push_back("`blocks` may be specified as either numbers or hashes.");
     notes.push_back("`special` blocks are detailed under `chifra when --list`.");
+    notes.push_back("With the --logs option, optionally specify one or more --emmitter, one or more --topics, either or both.");  // NOLINT
+    notes.push_back("The --logs option is significantly faster if you provide an --emitter and/or a --topic.");
+    notes.push_back("Multiple topics match on topic0, topic1, and so on, not on different topic0's.");
+    notes.push_back("Large block ranges may crash the node, use --big_range to specify a larger range.");
     // clang-format on
     // END_CODE_NOTES
 
     // BEG_ERROR_STRINGS
+    usageErrs[ERR_NOCACHEUNCLE] = "The --cache option is not available for uncle blocks.";
+    usageErrs[ERR_NOCACHEADDRESS] = "The --cache option is not available when using one of the address options.";
+    usageErrs[ERR_TRACINGREQUIRED] = "A tracing node is required for the --trace options to work properly.";
+    usageErrs[ERR_NOTRACEADDRESS] = "The --trace option is not available when using one of the address options.";
+    usageErrs[ERR_TRACEHASHEXCLUSIVE] = "The --hashes and --trace options are exclusive.";
+    usageErrs[ERR_ATLEASTONEBLOCK] = "You must specify at least one block.";
+    usageErrs[ERR_EMTOPONLYWITHLOG] = "The --emitter and --topic options are only available with the --log option.";
+    usageErrs[ERR_ARTWITHOUTLOGS] = "The --artcilate option is only available with the --logs option.";
+    usageErrs[ERR_RANGENOLOGS] = "The --big_range option is only available with the --logs option (min 50).";
     // END_ERROR_STRINGS
 }
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
-}
-
-//--------------------------------------------------------------------------------
-bool COptions::isMulti(void) const {
-    return isApiMode() || ((blocks.stop - blocks.start) > 1 || blocks.hashList.size() > 1 || blocks.numList.size() > 1);
 }
 
 //--------------------------------------------------------------------------------
@@ -323,3 +379,9 @@ const char* STR_FORMAT_LIST =
     "[{UNCLE_COUNT}]\t"
     "[{GASLIMIT}]\t"
     "[{GASUSED}]";
+
+//--------------------------------------------------------------------------------
+const char* STR_FMT_BLOCKLOGS =
+    "[{BLOCKNUMBER}]\t[{BLOCKHASH}]\t[{TRANSACTIONINDEX}]\t[{TRANSACTIONHASH}]\t"
+    "[{TIMESTAMP}]\t[{LOGINDEX}]\t[{ADDRESS}]\t[{TOPIC0}]\t[{TOPIC1}]\t[{TOPIC2}]\t"
+    "[{TOPIC3}]\t[{DATA}]\t[{COMPRESSEDLOG}]";

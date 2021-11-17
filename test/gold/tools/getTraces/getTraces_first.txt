@@ -1,3 +1,4 @@
 chifra traces  40500.0.next
+TEST[DATE|TIME] Transactions:  [40500.0.next]
 blocknumber	transactionindex	traceaddress	action::calltype	error	action::from	action::to	action::value	action::ether	action::gas	result::gasused	action::input	compressedtrace	result::output
 46147	0	null	call		0xa1e4380a3b1f749673e270229993ee55f35663b4	0x5df9b87991262f6ba471f09758cde1c0fc1de734	31337	0.000000000000031337	0	0	0x		0x

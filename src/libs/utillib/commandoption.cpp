@@ -446,11 +446,33 @@ string_q nextCommandoptionChunk_custom(const string_q& fieldIn, const void* data
     if (com) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
+            case 'a':
+                if (fieldIn % "assign") {
+                    if (startsWith(com->data_type, "list<")) {
+                        return com->Format("append(opts.[{VARIABLE}], value...)");
+                    } else if (startsWith(com->data_type, "enum[") || com->data_type == "<string>" ||
+                               com->data_type == "<address>") {
+                        return "value[0]";
+                    } else if (com->data_type == "<uint64>" || com->data_type == "<blknum>") {
+                        return "globals.ToUint64(value[0])";
+                    } else if (com->data_type == "<double>") {
+                        return "globals.ToFloat64(value[0])";
+                    } else if (com->data_type == "<boolean>") {
+                        return "true";
+                    }
+                    return "unknown type: " + com->data_type;
+                }
+                break;
             case 'd':
                 if (fieldIn % "datatype") {
                     if (com->option_type == "switch" || com->option_type == "toggle")
                         return "";
                     return (startsWith(com->data_type, "opt_") ? "\"+" + com->data_type + "+\"" : com->data_type);
+                }
+                break;
+            case 'l':
+                if (fieldIn % "lower") {
+                    return toLower(com->longName);
                 }
                 break;
             case 'o':
@@ -485,12 +507,28 @@ string_q nextCommandoptionChunk_custom(const string_q& fieldIn, const void* data
                     return substitute(trim(ret, '|'), "|", " | ");
                 }
                 break;
+            case 's':
+                if (fieldIn % "singular") {
+                    if (com->longName == "types")
+                        return com->longName;
+                    auto len = com->longName.length();
+                    if (len > 1)
+                        len -= 1;
+                    return endsWith(com->longName, "s") ? com->longName.substr(0, len) : com->longName;
+                }
+            case 'v':
+                if (fieldIn % "variable") {
+                    return substitute(toProper(com->longName), "_", "");
+                }
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
                 if (fieldIn % "parsed")
                     return nextBasenodeChunk(fieldIn, com);
                 // EXISTING_CODE
+                if (fieldIn % "proper") {
+                    return toProper(com->api_route);
+                }
                 // EXISTING_CODE
                 break;
 
@@ -689,7 +727,7 @@ void CCommandOption::verifyOptions(CStringArray& warnings) {
 }
 
 //---------------------------------------------------------------------------------------------------
-void CCommandOption::verifyHotkey(CStringArray& warnings, map<string, string> existing) {
+void CCommandOption::verifyHotkey(CStringArray& warnings, map<string, string>& existing) {
     if (hotKey.empty() || contains(option_type, "positional") || contains(option_type, "description") ||
         contains(option_type, "note") || contains(option_type, "error")) {
         return;
@@ -821,7 +859,7 @@ string_q CCommandOption::toGoCall(void) const {
     out << endl;
     out << "// " << goFunc << " help text todo" << endl;
     out << "func " << goFunc << "(w http.ResponseWriter, r *http.Request) {" << endl;
-    if (!tool.empty() && !contains(tool, " ")) {
+    if (!tool.empty() && !contains(tool, " ") && !goPortNewCode(api_route)) {
         out << "\tCallOne(w, r, \"" << tool << "\", \"" << api_route << "\")" << endl;
     } else if (goFunc == "AccountsTags" || goFunc == "AccountsCollections") {
         out << "\tCallOne(w, r, \"ethNames\", \"" << api_route << "\")" << endl;
@@ -905,6 +943,7 @@ string_q CCommandOption::toApiPath(const string_q& inStr, const string_q& exampl
 
     ostringstream paramStream;
     for (auto param : *(CCommandOptionArray*)params) {
+        replace(param.longName, "deleteMe", "delete");
         if (param.longName.empty() || !param.is_visible_docs)
             continue;
         string_q yp = STR_PARAM_YAML;
@@ -1068,5 +1107,15 @@ const char* STR_PARAM_YAML =
     "          explode: true\n"
     "          schema:\n"
     "[{SCHEMA}]";
+
+// TODO: search for go-port
+bool goPortNewCode(const string_q& a) {
+    CStringArray tools = {"fireStorm", "pinMan", "flame"};
+    for (auto tool : tools) {
+        if (contains(a, tool))
+            return true;
+    }
+    return false;
+}
 // EXISTING_CODE
 }  // namespace qblocks

@@ -1,7 +1,7 @@
 chifra tokens  0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98 0x6b65353ac052f6c3a0c9688911b078bd025d6ab3 0xa25d04fa348f107428708ba19c95d1c79b3744bf 4285364 3510999 2510010 --dollars
-Error: 
-  The --dollars option does not work with chifra token.
-
+TEST[DATE|TIME] Addrs2:  [0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98 0x6b65353ac052f6c3a0c9688911b078bd025d6ab3 0xa25d04fa348f107428708ba19c95d1c79b3744bf 4285364 3510999 2510010]
+TEST[DATE|TIME] Dollars:  true
+Error: The --dollars option is not available with this tool.
 Usage:
   chifra tokens [flags] <address> <address> [address...] [block...]
 
@@ -14,11 +14,9 @@ Flags:
                         One or more of [ name | symbol | decimals | totalSupply | version | none | all ]
   -b, --by_acct         consider each address an ERC20 token except the last, whose balance is reported for each token
   -n, --no_zero         suppress the display of zero balance accounts
-
-Global Flags:
-  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
-  -h, --help         display this help screen
-  -v, --verbose      enable verbose (increase detail with --log_level)
+  -x, --fmt string      export format, one of [none|json*|txt|csv|api]
+  -v, --verbose         enable verbose (increase detail with --log_level)
+  -h, --help            display this help screen
 
 Notes:
   - An address must start with '0x' and be forty-two characters long.

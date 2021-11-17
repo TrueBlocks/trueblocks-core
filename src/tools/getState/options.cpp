@@ -26,15 +26,18 @@ static const COption params[] = {
     COption("changes", "c", "", OPT_SWITCH, "only report a balance when it changes from one block to the next"),
     COption("no_zero", "n", "", OPT_SWITCH, "suppress the display of zero balance accounts"),
     COption("call", "a", "<string>", OPT_HIDDEN | OPT_FLAG, "a bang-separated string consisting of address!4-byte!bytes"),  // NOLINT
+    COption("proxy_for", "r", "<address>", OPT_HIDDEN | OPT_FLAG, "for the --call option only, redirects calls to this implementation"),  // NOLINT
     COption("", "", "", OPT_DESCRIPTION, "Retrieve account balance(s) for one or more addresses at given block(s)."),
     // clang-format on
     // END_CODE_OPTIONS
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
+string_q cleanInput(const string_q& cmd);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
-    replace(command, "*", " --mode:");
+    if (contains(command, "-a:") || contains(command, "--call:"))
+        command = cleanInput(command);
     if (!standardOptions(command))
         return false;
 
@@ -69,6 +72,13 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-a" || arg == "--call") {
             return flag_required("call");
 
+        } else if (startsWith(arg, "-r:") || startsWith(arg, "--proxy_for:")) {
+            proxy_for = substitute(substitute(arg, "-r:", ""), "--proxy_for:", "");
+            if (!isAddress(proxy_for))
+                return usage("The provided value (" + proxy_for + ") is not a properly formatted address.");
+        } else if (arg == "-r" || arg == "--proxy_for") {
+            return flag_required("proxy_for");
+
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
@@ -94,6 +104,7 @@ bool COptions::parseArguments(string_q& command) {
     LOG_TEST_BOOL("changes", changes);
     LOG_TEST_BOOL("no_zero", no_zero);
     LOG_TEST("call", call, (call == ""));
+    LOG_TEST("proxy_for", proxy_for, (proxy_for == ""));
     // END_DEBUG_DISPLAY
 
     if (Mocked(""))
@@ -106,45 +117,11 @@ bool COptions::parseArguments(string_q& command) {
     if (!call.empty() && !parts.empty())
         return usage("The --parts option is not available with the --call option.");
 
-    if (!call.empty()) {
-        CStringArray callVariables;
-        explode(callVariables, call, '!');
+    if (call.empty() && !proxy_for.empty())
+        return usage("The --proxy_for option is only available with the --call option.");
 
-        if (callVariables.size() == 0 || !isContractAt(callVariables[0], latestBlock))
-            return usage("You must supply the address of a smart contract for the --call option.");
-        if (callVariables.size() == 1) {
-            if (!isTestMode() && !isApiMode()) {
-                cout << doCommand("chifra abis " + callVariables[0]);
-                return false;
-            }
-            return usage("You must provide a four-byte code for the smart contract you're calling.");
-        }
-        if (!isAddress(callVariables[0])) {
-            return usage("The first item in the call data to --call must be an address.");
-        }
-        if (!isHexStr(callVariables[1])) {
-            return usage("The four byte signature must be a hex string.");
-        }
-
-        theCall.address = callVariables[0];
-        theCall.encoding = callVariables[1];
-        theCall.bytes = callVariables.size() > 2 ? callVariables[2] : "";
-        theCall.abi_spec.loadAbisFromKnown();
-        theCall.abi_spec.loadAbiFromEtherscan(theCall.address);
-
-        expContext().exportFmt = JSON1;
-        configureDisplay("getState", "CEthState", STR_DISPLAY_FUNCTION);
-        // TODO: This is terrible. Can we remove it?
-        manageFields(
-            "CParameter:str_default,indexed,internalType,components,is_pointer,is_array,"
-            "is_object,is_builtin,is_minimal,is_noaddfld,is_nowrite,is_omitempty,is_extra,type",
-            FLD_HIDE);
-        manageFields("CFunction:stateMutability,type,constant", FLD_HIDE);
-        manageFields("CEthCall:abi_spec", FLD_HIDE);
-        manageFields("CFunction:address|CEthState:result,address", FLD_SHOW);
-
-        return true;
-    }
+    if (!call.empty())
+        return handle_call();
 
     if (!addrs.size())
         return usage("You must provide at least one Ethereum address.");
@@ -229,12 +206,15 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
+    // BEG_CODE_GLOBALOPTS
     registerOptions(nParams, params, OPT_RAW);
+    // END_CODE_GLOBALOPTS
 
     // BEG_CODE_INIT
     changes = false;
     no_zero = false;
     call = "";
+    proxy_for = "";
     // END_CODE_INIT
 
     prevBal = 0;

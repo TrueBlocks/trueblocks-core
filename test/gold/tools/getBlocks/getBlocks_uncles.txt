@@ -1,4 +1,6 @@
 chifra blocks  3 469 --uncles
+TEST[DATE|TIME] Blocks:  [3 469]
+TEST[DATE|TIME] Uncles:  true
 { "data": [
 {
   "gasLimit": 5000,

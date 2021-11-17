@@ -24,7 +24,7 @@ void COptions::markNeighbors(const CTransaction& trans) {
     addNeighbor(fromAddrMap, trans.from);
     addNeighbor(toAddrMap, trans.to);
     for (auto log : trans.receipt.logs) {
-        if (emitter)
+        if (logFilter.emitters.size())
             emitterAddrMap[log.address]++;
     }
     for (auto trace : trans.traces) {
@@ -139,7 +139,7 @@ bool doOne(COptions* options, const CAddressUintMap& theMap, const string_q& typ
 bool COptions::reportNeighbors(void) {
     doOne(this, fromAddrMap, "From");
     doOne(this, toAddrMap, "To");
-    if (emitter)
+    if (logFilter.emitters.size() > 0)
         doOne(this, emitterAddrMap, "Emitters");
     if (factory)
         doOne(this, creationMap, "Creations");

@@ -205,7 +205,9 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
+    // BEG_CODE_GLOBALOPTS
     registerOptions(nParams, params, 0);
+    // END_CODE_GLOBALOPTS
 
     // BEG_CODE_INIT
     filter = "";
@@ -261,7 +263,7 @@ void establishTestData(void) {
     // TODO(tjayrush): and re-run. You will see the tests that fail.
 
     // Forces a few blocks into the cache
-    doCommand("chifra blocks --uniq_tx 0");
+    doCommand("chifra blocks --uniq 0");
     doCommand("chifra blocks --cache 4369999");
     doCommand("chifra transactions --cache 47055.0");
     doCommand("chifra transactions --cache 46147.0");

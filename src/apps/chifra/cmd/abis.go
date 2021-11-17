@@ -1,3 +1,5 @@
+package cmd
+
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -11,25 +13,26 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * Parts of this file were generated with makeClass --gocmds. Edit only those parts of
- * the code inside of 'EXISTING_CODE' tags.
+ * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
-package cmd
 
+// EXISTING_CODE
 import (
 	"os"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	abisPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/abis"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/spf13/cobra"
 )
+
+// EXISTING_CODE
 
 // abisCmd represents the abis command
 var abisCmd = &cobra.Command{
 	Use:   usageAbis,
 	Short: shortAbis,
 	Long:  longAbis,
-	Run:   runAbis,
-	Args:  validateAbisArgs,
+	RunE:  abisPkg.RunAbis,
 }
 
 var usageAbis = `abis [flags] <address> [address...]
@@ -44,44 +47,25 @@ var longAbis = `Purpose:
 
 var notesAbis = `
 Notes:
-  - Solidity files found in the local folder with the name '<address>.sol' are converted to an ABI prior to processing (and then removed).`
-
-type abisOptionsType struct {
-	known   bool
-	sol     string
-	find    []string
-	source  bool
-	classes bool
-}
-
-var AbisOpts abisOptionsType
+  - For the --sol option, place the solidity files in the current working folder.
+  - Search for either four byte signatures or event signatures with the --find option.`
 
 func init() {
-	abisCmd.SetOut(os.Stderr)
-
 	abisCmd.Flags().SortFlags = false
-	abisCmd.PersistentFlags().SortFlags = false
-	abisCmd.Flags().BoolVarP(&AbisOpts.known, "known", "k", false, "load common 'known' ABIs from cache")
-	abisCmd.Flags().StringVarP(&AbisOpts.sol, "sol", "s", "", "file name of .sol file from which to create a new known abi (without .sol)")
-	abisCmd.Flags().StringSliceVarP(&AbisOpts.find, "find", "f", nil, "try to search for a function declaration given a four byte code")
-	abisCmd.Flags().BoolVarP(&AbisOpts.source, "source", "o", false, "show the source of the ABI information (hidden)")
-	abisCmd.Flags().BoolVarP(&AbisOpts.classes, "classes", "c", false, "generate classDefinitions folder and class definitions (hidden)")
-	if !utils.IsTestMode() {
+
+	abisCmd.Flags().BoolVarP(&abisPkg.Options.Known, "known", "k", false, "load common 'known' ABIs from cache")
+	abisCmd.Flags().BoolVarP(&abisPkg.Options.Sol, "sol", "s", false, "extract the abi definition from the provided .sol file(s)")
+	abisCmd.Flags().StringSliceVarP(&abisPkg.Options.Find, "find", "f", nil, "search for function or event declarations given a four- or 32-byte code(s)")
+	abisCmd.Flags().BoolVarP(&abisPkg.Options.Source, "source", "o", false, "show the source of the ABI information (hidden)")
+	abisCmd.Flags().BoolVarP(&abisPkg.Options.Classes, "classes", "c", false, "generate classDefinitions folder and class definitions (hidden)")
+	if os.Getenv("TEST_MODE") != "true" {
 		abisCmd.Flags().MarkHidden("source")
 		abisCmd.Flags().MarkHidden("classes")
 	}
-	abisCmd.Flags().SortFlags = false
-	abisCmd.PersistentFlags().SortFlags = false
+	globals.InitGlobals(abisCmd, &abisPkg.Options.Globals)
 
 	abisCmd.SetUsageTemplate(UsageWithNotes(notesAbis))
-	rootCmd.AddCommand(abisCmd)
-}
+	abisCmd.SetOut(os.Stderr)
 
-func TestLogAbis(args []string) {
-	if !utils.IsTestMode() {
-		return
-	}
+	chifraCmd.AddCommand(abisCmd)
 }
-
-// EXISTING_CODE
-// EXISTING_CODE

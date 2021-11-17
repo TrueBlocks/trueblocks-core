@@ -1,2 +1,5 @@
 chifra  blocks 12 --fmt csv --no_header
+TEST[DATE|TIME] Blocks:  [12]
+TEST[DATE|TIME] NoHeader:  true
+TEST[DATE|TIME] Format:  csv
 "12","1438270144","17179844608","0","5000","0","0x0193d941b50d91be6567c7ee1c0fe7af498b4137","0xc63f666315fa1eae17e354fab532aeeecf549be93e358737d0648f50d57083a0","0x3f5e756c3efcb93099361b7ddd0dabfeaa592439437c1c836e443ccb81e93242","0","true"

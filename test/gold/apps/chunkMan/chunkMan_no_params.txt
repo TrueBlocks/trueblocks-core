@@ -1,7 +1,5 @@
 chifra chunks  
-Error: 
-  You must choose at least one of --list, --extract, or --check.
-
+Error: Please choose at least one of --list, --extract, or --check.
 Usage:
   chifra chunks [flags] <block> [block...]
 
@@ -15,11 +13,9 @@ Flags:
                          One of [ header | addr_table | app_table | chunks | blooms ]
   -s, --stats            for the --list option only, display statistics about each chunk or bloom
   -a, --save             for the --extract option only, save the entire chunk to a similarly named file as well as display
-
-Global Flags:
-  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
-  -h, --help         display this help screen
-  -v, --verbose      enable verbose (increase detail with --log_level)
+  -x, --fmt string       export format, one of [none|json*|txt|csv|api]
+  -v, --verbose          enable verbose (increase detail with --log_level)
+  -h, --help             display this help screen
 
 Notes:
   - Only a single block in a given chunk needs to be supplied.

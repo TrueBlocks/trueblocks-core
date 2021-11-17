@@ -1,17 +1,17 @@
-enabled,mode,speed,route,path/tool,filename,post,options,opt_cmd,has_env
-on,cmd,fast,null,dev_tools/makeClass,help,n,@h
-on,cmd,fast,null,dev_tools/makeClass,help_long,n,@help
-on,cmd,fast,null,dev_tools/makeClass,noparams1,n,
-on,cmd,fast,null,dev_tools/makeClass,noparams2,n,x
-on,cmd,fast,null,dev_tools/makeClass,nonexist,n,@ e & x
-on,cmd,fast,null,dev_tools/makeClass,conflict1,n,@ e & all
-on,cmd,fast,null,dev_tools/makeClass,conflict2,n,@ d & all
-on,cmd,fast,null,dev_tools/makeClass,conflict3,n,@ a & edit
-on,cmd,fast,null,dev_tools/makeClass,list,n,dump & files = function
-on,cmd,fast,null,dev_tools/makeClass,list_v,n,dump & files = function & verbose
-on,cmd,fast,null,dev_tools/makeClass,edit,n,edit @ a & filter = function
-on,cmd,fast,null,dev_tools/makeClass,edit_f,n,dump @ a
-on,cmd,fast,null,dev_tools/makeClass,dump_stat,n,dump @ a @ i = CStatus & verbose
-on,cmd,fast,null,dev_tools/makeClass,run,n,all & files = block
-on,cmd,fast,null,dev_tools/makeClass,run_ns,n,@n = qblocks & all & files = function
-on,cmd,fast,null,dev_tools/makeClass,tsx,n,tsx & files = CBlock
+enabled ,mode ,speed ,route ,path/tool           ,filename  ,post ,options                               ,opt_cmd ,has_env
+on      ,cmd  ,fast  ,null  ,dev_tools/makeClass ,help      ,n    ,@h
+on      ,cmd  ,fast  ,null  ,dev_tools/makeClass ,help_long ,n    ,@help
+on      ,cmd  ,fast  ,null  ,dev_tools/makeClass ,noparams1 ,n    ,
+on      ,cmd  ,fast  ,null  ,dev_tools/makeClass ,noparams2 ,n    ,x
+on      ,cmd  ,fast  ,null  ,dev_tools/makeClass ,nonexist  ,n    ,@ e & x
+on      ,cmd  ,fast  ,null  ,dev_tools/makeClass ,conflict1 ,n    ,@ e & all
+on      ,cmd  ,fast  ,null  ,dev_tools/makeClass ,conflict2 ,n    ,@ d & all
+on      ,cmd  ,fast  ,null  ,dev_tools/makeClass ,conflict3 ,n    ,@ a & edit
+on      ,cmd  ,fast  ,null  ,dev_tools/makeClass ,list      ,n    ,dump & files = function
+on      ,cmd  ,fast  ,null  ,dev_tools/makeClass ,list_v    ,n    ,dump & files = function & verbose
+on      ,cmd  ,fast  ,null  ,dev_tools/makeClass ,edit      ,n    ,edit @ a & filter = function
+on      ,cmd  ,fast  ,null  ,dev_tools/makeClass ,edit_f    ,n    ,dump @ a
+on      ,cmd  ,fast  ,null  ,dev_tools/makeClass ,dump_stat ,n    ,dump @ a @ i = CStatus & verbose
+on      ,cmd  ,fast  ,null  ,dev_tools/makeClass ,run       ,n    ,all & files = block
+on      ,cmd  ,fast  ,null  ,dev_tools/makeClass ,run_ns    ,n    ,@n = qblocks & all & files = function
+on      ,cmd  ,fast  ,null  ,dev_tools/makeClass ,tsx       ,n    ,tsx & files = CBlock

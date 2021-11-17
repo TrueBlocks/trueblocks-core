@@ -1,4 +1,6 @@
 chifra blocks  stateclear --cache
+TEST[DATE|TIME] Blocks:  [stateclear]
+TEST[DATE|TIME] Cache:  true
 { "data": [
 {
   "gasLimit": 3296773,

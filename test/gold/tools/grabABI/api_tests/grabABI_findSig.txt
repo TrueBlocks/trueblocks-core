@@ -1,4 +1,15 @@
 {
-  "encoding": "0x1aa3a008",
-  "signature": "register()"
+  "data": [
+    {
+      "encoding": "0x1aa3a008",
+      "signature": "register()"
+    }
+  ],
+  "meta": {
+    "unripe": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "client": "0xdeadbeef"
+  }
 }

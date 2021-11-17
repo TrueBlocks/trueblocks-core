@@ -1,6 +1,8 @@
 chifra state  --call 0xa4f29fc548856180f6b1e319ee4d86715875cce4!12065fe0 6523977-6540000:2000
+TEST[DATE|TIME] Addrs:  [6523977-6540000:2000]
+TEST[DATE|TIME] Call:  0xa4f29fc548856180f6b1e319ee4d86715875cce4!12065fe0
 
-  The four byte signature must be a hex string. Quitting...
+  You must provide either a four-byte code or a function signature for the smart contract. Quitting...
 
 Purpose:
   Retrieve account balance(s) for one or more addresses at given block(s).
@@ -17,6 +19,7 @@ Flags:
   -c, --changes       only report a balance when it changes from one block to the next
   -n, --no_zero       suppress the display of zero balance accounts
   -a, --call string   a bang-separated string consisting of address!4-byte!bytes (hidden)
+  -r, --proxy_for <address>for the --call option only, redirects calls to this implementation (hidden)
 
 Global Flags:
   -x, --fmt string     export format, one of [none|json*|txt|csv|api]

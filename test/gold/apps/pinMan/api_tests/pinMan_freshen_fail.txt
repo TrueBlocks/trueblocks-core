@@ -1,0 +1,5 @@
+{
+  "errors": [
+    "The --freshen flag has been deprecated. Use --init instead."
+  ]
+}

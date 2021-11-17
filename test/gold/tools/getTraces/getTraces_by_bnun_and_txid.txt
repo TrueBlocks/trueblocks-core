@@ -1,4 +1,6 @@
 chifra traces  4348290.92 --fmt api
+TEST[DATE|TIME] Transactions:  [4348290.92]
+TEST[DATE|TIME] Format:  api
 {"data": [
   {
     "blockHash": "0x96a09b25c3748974bb7e08780074482a164ab5a21e2ffc6c7115ec73c84e7f73",

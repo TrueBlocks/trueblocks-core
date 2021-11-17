@@ -1,3 +1,4 @@
 chifra traces  1001001.1.prev
+TEST[DATE|TIME] Transactions:  [1001001.1.prev]
 blocknumber	transactionindex	traceaddress	action::calltype	error	action::from	action::to	action::value	action::ether	action::gas	result::gasused	action::input	compressedtrace	result::output
 1001001	0	null	call		0x68795c4aa09d6f4ed3e5deddf8c2ad3049a601da	0x789f40d61bb6436254d5b5f9cbb8cefb76916d46	1174501130000000000	1.174501130000000000	69000	0	0x		0x

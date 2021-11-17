@@ -17,24 +17,25 @@ Arguments:
   blocks - a space-separated list of one or more block identifiers (required)
 
 Flags:
-  -e, --hashes    display only transaction hashes, default is to display full transaction detail
-  -U, --uncles    display uncle blocks (if any) instead of the requested block
-  -t, --trace     export the traces from the block as opposed to the block data
-  -a, --apps      display only the list of address appearances in the block
-  -u, --uniq      display only the list of uniq address appearances in the block
-  -n, --uniq_tx   display only the list of uniq address appearances in each transaction
-  -c, --count     display the number of the lists of appearances for --apps, --uniq, or --uniq_tx
-  -o, --cache     force a write of the block to the cache
-
-Global Flags:
+  -e, --hashes       display only transaction hashes, default is to display full transaction detail
+  -U, --uncles       display uncle blocks (if any) instead of the requested block
+  -t, --trace        export the traces from the block as opposed to the block data
+  -s, --apps         display a list of uniq address appearances in the block
+  -u, --uniq         display a list of uniq address appearances per transaction
+  -c, --count        display the number of the lists of appearances for --addrs or --uniq
+  -o, --cache        force a write of the block to the cache
   -x, --fmt string   export format, one of [none|json*|txt|csv|api]
-  -h, --help         display this help screen
   -v, --verbose      enable verbose (increase detail with --log_level)
+  -h, --help         display this help screen
 
 Notes:
   - blocks is a space-separated list of values, a start-end range, a special, or any combination.
   - blocks may be specified as either numbers or hashes.
   - special blocks are detailed under chifra when --list.
+  - With the --logs option, optionally specify one or more --emmitter, one or more --topics, either or both.
+  - The --logs option is significantly faster if you provide an --emitter and/or a --topic.
+  - Multiple topics match on topic0, topic1, and so on, not on different topic0's.
+  - Large block ranges may crash the node, use --big_range to specify a larger range.
 ```
 
 **Source code**: [`tools/getBlocks`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/tools/getBlocks)

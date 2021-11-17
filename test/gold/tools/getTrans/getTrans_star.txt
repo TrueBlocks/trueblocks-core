@@ -1,4 +1,6 @@
 chifra transactions  2222221.* --fmt api
+TEST[DATE|TIME] Transactions:  [2222221.*]
+TEST[DATE|TIME] Format:  api
 {"data": [
   {
     "hash": "0x01a5ac40a13d6d041247c2796281f73b19c208190565561104528637f61683ac",

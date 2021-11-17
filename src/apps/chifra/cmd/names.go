@@ -1,3 +1,5 @@
+package cmd
+
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -11,25 +13,26 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * Parts of this file were generated with makeClass --gocmds. Edit only those parts of
- * the code inside of 'EXISTING_CODE' tags.
+ * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
-package cmd
 
+// EXISTING_CODE
 import (
 	"os"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	namesPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/names"
 	"github.com/spf13/cobra"
 )
+
+// EXISTING_CODE
 
 // namesCmd represents the names command
 var namesCmd = &cobra.Command{
 	Use:   usageNames,
 	Short: shortNames,
 	Long:  longNames,
-	Run:   runNames,
-	Args:  validateNamesArgs,
+	RunE:  namesPkg.RunNames,
 }
 
 var usageNames = `names [flags] <term> [term...]
@@ -47,57 +50,40 @@ Notes:
   - The tool will accept up to three terms, each of which must match against any field in the database.
   - The --match_case option enables case sensitive matching.`
 
-type namesOptionsType struct {
-	expand      bool
-	match_case  bool
-	all         bool
-	custom      bool
-	prefund     bool
-	named       bool
-	addr        bool
-	collections bool
-	tags        bool
-	to_custom   bool
-	clean       bool
-	autoname    string
-}
-
-var NamesOpts namesOptionsType
-
 func init() {
-	namesCmd.SetOut(os.Stderr)
-
 	namesCmd.Flags().SortFlags = false
-	namesCmd.PersistentFlags().SortFlags = false
-	namesCmd.Flags().BoolVarP(&NamesOpts.expand, "expand", "e", false, "expand search to include all fields (search name, address, and symbol otherwise)")
-	namesCmd.Flags().BoolVarP(&NamesOpts.match_case, "match_case", "m", false, "do case-sensitive search")
-	namesCmd.Flags().BoolVarP(&NamesOpts.all, "all", "l", false, "include all accounts in the search")
-	namesCmd.Flags().BoolVarP(&NamesOpts.custom, "custom", "c", false, "include your custom named accounts")
-	namesCmd.Flags().BoolVarP(&NamesOpts.prefund, "prefund", "p", false, "include prefund accounts")
-	namesCmd.Flags().BoolVarP(&NamesOpts.named, "named", "n", false, "include well know token and airdrop addresses in the search")
-	namesCmd.Flags().BoolVarP(&NamesOpts.addr, "addr", "a", false, "display only addresses in the results (useful for scripting)")
-	namesCmd.Flags().BoolVarP(&NamesOpts.collections, "collections", "s", false, "display collections data")
-	namesCmd.Flags().BoolVarP(&NamesOpts.tags, "tags", "g", false, "export the list of tags and subtags only")
-	namesCmd.Flags().BoolVarP(&NamesOpts.to_custom, "to_custom", "u", false, "for editCmd only, is the edited name a custom name or not (hidden)")
-	namesCmd.Flags().BoolVarP(&NamesOpts.clean, "clean", "C", false, "clean the data (addrs to lower case, sort by addr) (hidden)")
-	namesCmd.Flags().StringVarP(&NamesOpts.autoname, "autoname", "A", "", "an address assumed to be a token, added automatically to names database if true (hidden)")
-	if !utils.IsTestMode() {
+
+	namesCmd.Flags().BoolVarP(&namesPkg.Options.Expand, "expand", "e", false, "expand search to include all fields (search name, address, and symbol otherwise)")
+	namesCmd.Flags().BoolVarP(&namesPkg.Options.MatchCase, "match_case", "m", false, "do case-sensitive search")
+	namesCmd.Flags().BoolVarP(&namesPkg.Options.All, "all", "l", false, "include all accounts in the search")
+	namesCmd.Flags().BoolVarP(&namesPkg.Options.Custom, "custom", "c", false, "include your custom named accounts")
+	namesCmd.Flags().BoolVarP(&namesPkg.Options.Prefund, "prefund", "p", false, "include prefund accounts")
+	namesCmd.Flags().BoolVarP(&namesPkg.Options.Named, "named", "n", false, "include well know token and airdrop addresses in the search")
+	namesCmd.Flags().BoolVarP(&namesPkg.Options.Addr, "addr", "a", false, "display only addresses in the results (useful for scripting)")
+	namesCmd.Flags().BoolVarP(&namesPkg.Options.Collections, "collections", "s", false, "display collections data")
+	namesCmd.Flags().BoolVarP(&namesPkg.Options.Tags, "tags", "g", false, "export the list of tags and subtags only")
+	namesCmd.Flags().BoolVarP(&namesPkg.Options.ToCustom, "to_custom", "u", false, "for editCmd only, is the edited name a custom name or not (hidden)")
+	namesCmd.Flags().BoolVarP(&namesPkg.Options.Clean, "clean", "C", false, "clean the data (addrs to lower case, sort by addr) (hidden)")
+	namesCmd.Flags().StringVarP(&namesPkg.Options.Autoname, "autoname", "A", "", "an address assumed to be a token, added automatically to names database if true (hidden)")
+	namesCmd.Flags().BoolVarP(&namesPkg.Options.Create, "create", "", false, "create a new name record (hidden)")
+	namesCmd.Flags().BoolVarP(&namesPkg.Options.Delete, "delete", "", false, "delete a name, but do not remove it (hidden)")
+	namesCmd.Flags().BoolVarP(&namesPkg.Options.Update, "update", "", false, "edit an existing name (hidden)")
+	namesCmd.Flags().BoolVarP(&namesPkg.Options.Remove, "remove", "", false, "remove a previously deleted name (hidden)")
+	namesCmd.Flags().BoolVarP(&namesPkg.Options.Undelete, "undelete", "", false, "undelete a previously deleted name (hidden)")
+	if os.Getenv("TEST_MODE") != "true" {
 		namesCmd.Flags().MarkHidden("to_custom")
 		namesCmd.Flags().MarkHidden("clean")
 		namesCmd.Flags().MarkHidden("autoname")
+		namesCmd.Flags().MarkHidden("create")
+		namesCmd.Flags().MarkHidden("delete")
+		namesCmd.Flags().MarkHidden("update")
+		namesCmd.Flags().MarkHidden("remove")
+		namesCmd.Flags().MarkHidden("undelete")
 	}
-	namesCmd.Flags().SortFlags = false
-	namesCmd.PersistentFlags().SortFlags = false
+	globals.InitGlobals(namesCmd, &namesPkg.Options.Globals)
 
 	namesCmd.SetUsageTemplate(UsageWithNotes(notesNames))
-	rootCmd.AddCommand(namesCmd)
-}
+	namesCmd.SetOut(os.Stderr)
 
-func TestLogNames(args []string) {
-	if !utils.IsTestMode() {
-		return
-	}
+	chifraCmd.AddCommand(namesCmd)
 }
-
-// EXISTING_CODE
-// EXISTING_CODE

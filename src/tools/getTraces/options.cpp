@@ -189,7 +189,9 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
+    // BEG_CODE_GLOBALOPTS
     registerOptions(nParams, params, OPT_RAW);
+    // END_CODE_GLOBALOPTS
 
     // BEG_CODE_INIT
     articulate = false;
@@ -211,7 +213,7 @@ COptions::COptions(void) {
 
     // BEG_CODE_NOTES
     // clang-format off
-    notes.push_back("The `transactions` list may be one or more space-separated identifiers which are either a transaction hash, a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.");  // NOLINT
+    notes.push_back("The `transactions` list may be one or more transaction hashes, blockNumber.transactionID pairs, or a blockHash.transactionID pairs.");  // NOLINT
     notes.push_back("This tool checks for valid input syntax, but does not check that the transaction requested actually exists.");  // NOLINT
     notes.push_back("If the queried node does not store historical state, the results for most older transactions are undefined.");  // NOLINT
     notes.push_back("A bang separated filter has the following fields (at least one of which is required) and is separated with a bang (!): fromBlk, toBlk, fromAddr, toAddr, after, count.");  // NOLINT

@@ -1,3 +1,0 @@
-chifra blocks  3982128 --uniq --count --fmt txt
-blocknumber	transactionscnt	addr_count
-3982128	91	164

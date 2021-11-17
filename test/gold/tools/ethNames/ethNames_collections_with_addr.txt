@@ -1,7 +1,7 @@
 chifra names  --collections --addr
-Error: 
-  Do not use the --collection option with any other option.
-
+TEST[DATE|TIME] Addr:  true
+TEST[DATE|TIME] Collections:  true
+Error: The --collection option is not available with any other option.
 Usage:
   chifra names [flags] <term> [term...]
 
@@ -21,11 +21,14 @@ Flags:
   -u, --to_custom         for editCmd only, is the edited name a custom name or not (hidden)
   -C, --clean             clean the data (addrs to lower case, sort by addr) (hidden)
   -A, --autoname string   an address assumed to be a token, added automatically to names database if true (hidden)
-
-Global Flags:
-  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
-  -h, --help         display this help screen
-  -v, --verbose      enable verbose (increase detail with --log_level)
+      --create            create a new name record (hidden)
+      --delete            delete a name, but do not remove it (hidden)
+      --update            edit an existing name (hidden)
+      --remove            remove a previously deleted name (hidden)
+      --undelete          undelete a previously deleted name (hidden)
+  -x, --fmt string        export format, one of [none|json*|txt|csv|api]
+  -v, --verbose           enable verbose (increase detail with --log_level)
+  -h, --help              display this help screen
 
 Notes:
   - The tool will accept up to three terms, each of which must match against any field in the database.

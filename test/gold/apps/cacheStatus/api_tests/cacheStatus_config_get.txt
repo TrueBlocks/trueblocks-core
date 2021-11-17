@@ -166,7 +166,7 @@
           "name": "settings",
           "keys": [
             {
-              "name": "n_blocks",
+              "name": "block_cnt",
               "value": "--n Blocks--",
               "type": "uint",
               "tip": "number of blocks to process per invocation of blaze (> 50)",
@@ -174,7 +174,7 @@
               "read_only": false
             },
             {
-              "name": "n_addr_procs",
+              "name": "addr_chan_cnt",
               "value": "--n Addr Procs--",
               "type": "uint",
               "tip": "number of parallel go processes to use to process addresses (> 0)",
@@ -182,7 +182,7 @@
               "read_only": false
             },
             {
-              "name": "n_block_procs",
+              "name": "block_chan_cnt",
               "value": "--n Block Procs--",
               "type": "uint",
               "tip": "number of parallel go processes to use to process blocks (> 0)",
@@ -201,7 +201,7 @@
           "name": "settings",
           "keys": [
             {
-              "name": "cache_txs",
+              "name": "cache",
               "value": "--write Txs--",
               "type": "bool",
               "tip": "write transactions to the TrueBlocks binary cache",

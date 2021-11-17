@@ -13,17 +13,15 @@ Usage:
   chifra serve [flags]
 
 Flags:
-  -p, --port string   specify the server's port (:8080 default)
-
-Global Flags:
-  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
-  -h, --help         display this help screen
-  -v, --verbose      enable verbose (increase detail with --log_level)
+  -p, --port string   specify the server's port (default ":8080")
+  -x, --fmt string    export format, one of [none|json*|txt|csv|api]
+  -v, --verbose       enable verbose (increase detail with --log_level)
+  -h, --help          display this help screen
 
 Notes:
   - To start API open terminal window and run chifra serve.
   - See the API documentation for more information.
 ```
 
-**Source code**: [`go-apps/flame`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/go-apps/flame)
+**Source code**: [`serve.go`](https://github.com/TrueBlocks/trueblocks-core/tree/develop/src/apps/chifra/internal/serve.go)
 

@@ -64,20 +64,26 @@ bool visitBlock(uint64_t blockNum, void* data) {
         opt->errors.push_back("Request for historical state at block " + uint_2_Str(blockNum) + " not available.");
 
     if (!opt->theCall.address.empty()) {
+        // TODO: Is opt->theCall.address a smart contract at this block?
         opt->theCall.blockNumber = blockNum;
         if (doEthCall(opt->theCall)) {
             CTransaction art;
             art.input = opt->theCall.encoding + opt->theCall.bytes;
             opt->abi_spec.articulateTransaction(&art);
-            opt->theCall.result.inputs = art.articulatedTx.inputs;
+            opt->theCall.callResult.inputs = art.articulatedTx.inputs;
             //            opt->theCall.address = opt->opt->callVariables[0];
-            if (!opt->firstOut)
-                cout << "," << endl;
-            cout << "  ";
-            indent();
-            opt->theCall.toJson(cout);
-            unindent();
-            opt->firstOut = false;
+            if (isText) {
+                cout << opt->theCall.Format(expContext().fmtMap["format"]) << endl;
+
+            } else {
+                if (!opt->firstOut)
+                    cout << "," << endl;
+                cout << "  ";
+                indent();
+                opt->theCall.toJson(cout);
+                unindent();
+                opt->firstOut = false;
+            }
 
         } else {
             ostringstream os;

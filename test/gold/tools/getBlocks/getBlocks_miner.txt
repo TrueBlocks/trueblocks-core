@@ -1,4 +1,7 @@
-chifra blocks  1 --uniq_tx --fmt json
+chifra blocks  1 --uniq --fmt json
+TEST[DATE|TIME] Blocks:  [1]
+TEST[DATE|TIME] Uniq:  true
+TEST[DATE|TIME] Format:  json
 { "data": [
   {
     "bn": 1,

@@ -1,3 +1,5 @@
+package cmd
+
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -11,25 +13,26 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * Parts of this file were generated with makeClass --gocmds. Edit only those parts of
- * the code inside of 'EXISTING_CODE' tags.
+ * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
-package cmd
 
+// EXISTING_CODE
 import (
 	"os"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	servePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/server"
 	"github.com/spf13/cobra"
 )
+
+// EXISTING_CODE
 
 // serveCmd represents the serve command
 var serveCmd = &cobra.Command{
 	Use:   usageServe,
 	Short: shortServe,
 	Long:  longServe,
-	Run:   runServe,
-	Args:  validateServeArgs,
+	RunE:  servePkg.RunServe,
 }
 
 var usageServe = `serve [flags]`
@@ -44,30 +47,14 @@ Notes:
   - To start API open terminal window and run chifra serve.
   - See the API documentation for more information.`
 
-type serveOptionsType struct {
-	port string
-}
-
-var ServeOpts serveOptionsType
-
 func init() {
-	serveCmd.SetOut(os.Stderr)
+	serveCmd.Flags().SortFlags = false
 
-	serveCmd.Flags().SortFlags = false
-	serveCmd.PersistentFlags().SortFlags = false
-	serveCmd.Flags().StringVarP(&ServeOpts.port, "port", "p", "", "specify the server's port (:8080 default)")
-	serveCmd.Flags().SortFlags = false
-	serveCmd.PersistentFlags().SortFlags = false
+	serveCmd.Flags().StringVarP(&servePkg.Options.Port, "port", "p", ":8080", "specify the server's port")
+	globals.InitGlobals(serveCmd, &servePkg.Options.Globals)
 
 	serveCmd.SetUsageTemplate(UsageWithNotes(notesServe))
-	rootCmd.AddCommand(serveCmd)
-}
+	serveCmd.SetOut(os.Stderr)
 
-func TestLogServe(args []string) {
-	if !utils.IsTestMode() {
-		return
-	}
+	chifraCmd.AddCommand(serveCmd)
 }
-
-// EXISTING_CODE
-// EXISTING_CODE

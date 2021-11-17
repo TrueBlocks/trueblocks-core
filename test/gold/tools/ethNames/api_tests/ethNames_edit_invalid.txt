@@ -1,5 +1,5 @@
 {
   "errors": [
-    "chifra names - Invalid option: --invalid"
+    "Invalid key (invalid) in names route."
   ]
 }

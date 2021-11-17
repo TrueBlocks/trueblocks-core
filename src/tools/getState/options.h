@@ -28,6 +28,7 @@ class COptions : public CHistoryOptions {
     bool changes;
     bool no_zero;
     string_q call;
+    address_t proxy_for;
     // END_CODE_DECLARE
 
     address_t current;

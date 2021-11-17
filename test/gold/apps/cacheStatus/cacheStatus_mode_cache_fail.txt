@@ -1,7 +1,5 @@
 chifra status  caches --types junk
-Error: 
-  The --types option (junk) must be one of [ blocks | txs | traces | slurps | prices | all ]
-
+Error: The --types option (junk) must be one of [ blocks | txs | traces | slurps | prices | all ]
 Usage:
   chifra status [flags] [mode...]
 
@@ -22,9 +20,7 @@ Flags:
   -s, --set_config        accepts JSON in an env variable and writes it to configuration files (hidden)
   -S, --test_start uint   first block to process (inclusive -- testing only) (hidden)
   -E, --test_end uint     last block to process (inclusive -- testing only) (hidden)
-
-Global Flags:
-  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
-  -h, --help         display this help screen
-  -v, --verbose      enable verbose (increase detail with --log_level)
+  -x, --fmt string        export format, one of [none|json*|txt|csv|api]
+  -v, --verbose           enable verbose (increase detail with --log_level)
+  -h, --help              display this help screen
 

@@ -1,6 +1,21 @@
+/*-------------------------------------------------------------------------------------------
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
+ *
+ * This program is free software: you may redistribute it and/or modify it under the terms
+ * of the GNU General Public License as published by the Free Software Foundation, either
+ * version 3 of the License, or (at your option) any later version. This program is
+ * distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+ * the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details. You should have received a copy of the GNU General
+ * Public License along with this program. If not, see http://www.gnu.org/licenses/.
+ *-------------------------------------------------------------------------------------------*/
 package blockRange
 
-import "testing"
+import (
+	"encoding/json"
+	"testing"
+)
 
 func TestPointToPointTypeBlock(t *testing.T) {
 	point := &Point{Block: 100}
@@ -49,7 +64,6 @@ func TestModifierToModifierTypePeriod(t *testing.T) {
 
 func TestNewBlocks(t *testing.T) {
 	blockRange, err := New("10-1000:10")
-
 	if err != nil {
 		t.Error(err)
 	}
@@ -117,5 +131,35 @@ func TestHandleParserErrors(t *testing.T) {
 	} else {
 		t.Error("Returned error is not WrongModifier")
 		t.Error(modifierErr)
+	}
+}
+
+func TestBlockRange_UnmarshalJSON(t *testing.T) {
+	type SomeRecord struct {
+		Blocks BlockRange `json:"blocks"`
+	}
+
+	var record SomeRecord
+	source := []byte(`{"blocks":"000000000-10567003"}`)
+
+	err := json.Unmarshal(source, &record)
+	if err != nil {
+		t.Error(err)
+	}
+
+	if record.Blocks.StartType != BlockRangeBlockNumber {
+		t.Errorf("Wrong StartType %d", record.Blocks.StartType)
+	}
+
+	if record.Blocks.EndType != BlockRangeBlockNumber {
+		t.Errorf("Wrong EndType %d", record.Blocks.EndType)
+	}
+
+	if record.Blocks.Start.Block != uint(0) {
+		t.Error("Wrong start value")
+	}
+
+	if record.Blocks.End.Block != uint(10567003) {
+		t.Errorf("Wrong end value %d", record.Blocks.End.Block)
 	}
 }

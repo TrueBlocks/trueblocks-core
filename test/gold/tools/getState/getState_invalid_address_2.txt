@@ -1,4 +1,5 @@
 chifra state  0xfb6916095ca1df60bb79ce92ce3ea74c37c5d3592
+TEST[DATE|TIME] Addrs:  [0xfb6916095ca1df60bb79ce92ce3ea74c37c5d3592]
 
   Block 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d3592 is later than the last valid block --.
 

@@ -1,3 +1,5 @@
+package cmd
+
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -11,24 +13,18 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * Parts of this file were generated with makeClass --gocmds. Edit only those parts of
- * the code inside of 'EXISTING_CODE' tags.
+ * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
-package cmd
 
-import (
-	"os"
-
-[{IMPORTS}]	"github.com/spf13/cobra"
-)
+// EXISTING_CODE
+// EXISTING_CODE
 
 // [{ROUTE}]Cmd represents the [{ROUTE}] command
 var [{ROUTE}]Cmd = &cobra.Command{
 	Use:   usage[{PROPER}],
 	Short: short[{PROPER}],
 	Long:  long[{PROPER}],
-	Run:   run[{PROPER}],
-	Args:  validate[{PROPER}]Args,
+	RunE:  [{ROUTE}]Pkg.Run[{PROPER}],
 [{PERPRERUN}]}
 
 var usage[{PROPER}] = `[{USE}]`
@@ -39,28 +35,13 @@ var long[{PROPER}] = `[{LONG}]`
 
 var notes[{PROPER}] = `[{POSTNOTES}]`
 
-type [{ROUTE}]OptionsType struct {
-[{OPT_FIELDS}]}
-
-var [{PROPER}]Opts [{ROUTE}]OptionsType
-
-func init() {
-	[{ROUTE}]Cmd.SetOut(os.Stderr)
-
+[{OPT_DEF}]func init() {
 	[{ROUTE}]Cmd.Flags().SortFlags = false
-	[{ROUTE}]Cmd.PersistentFlags().SortFlags = false
-[{SET_OPTS}][{HIDDEN}]	[{ROUTE}]Cmd.Flags().SortFlags = false
-	[{ROUTE}]Cmd.PersistentFlags().SortFlags = false
+
+[{SET_OPTS}][{HIDDEN}]	globals.InitGlobals([{ROUTE}]Cmd, &[{ROUTE}]Pkg.Options.Globals)
 
 	[{ROUTE}]Cmd.SetUsageTemplate(UsageWithNotes(notes[{PROPER}]))
-	rootCmd.AddCommand([{ROUTE}]Cmd)
+	[{ROUTE}]Cmd.SetOut(os.Stderr)
+
+	chifraCmd.AddCommand([{ROUTE}]Cmd)
 }
-
-func TestLog[{PROPER}](args []string) {
-	if !utils.IsTestMode() {
-		return
-	}
-[{LOG_OPTS}]}
-
-// EXISTING_CODE
-// EXISTING_CODE

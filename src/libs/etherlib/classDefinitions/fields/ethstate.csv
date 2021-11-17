@@ -1,11 +1,10 @@
-name        ,type     ,str_default ,object ,array ,nowrite ,omitempty ,minimal ,extra ,noaddfld ,doc ,disp ,example                    ,description
-blockNumber ,blknum   ,            ,       ,      ,        ,          ,        ,      ,         ,1   ,1    ,10021                      ,the block number at which this state was taken
-balance     ,wei      ,            ,       ,      ,        ,          ,        ,      ,         ,2   ,3    ,258843698360318500         ,the balance at the address at the given block height
-nonce       ,uint64   ,            ,       ,      ,true    ,          ,        ,      ,         ,3   ,4    ,115                        ,the nonce of the address at the given block height
-code        ,bytes    ,            ,       ,      ,true    ,          ,        ,      ,         ,4   ,5    ,0x                         ,the byte code at the address (if this is a smart contract)
-storage     ,bytes    ,            ,       ,      ,true    ,          ,        ,      ,         ,5   ,6    ,0x0000...0000              ,this field is un-implemented and current returns the first storage location in a smart contract
-address     ,address  ,            ,       ,      ,true    ,          ,        ,      ,         ,6   ,2    ,0xa1e4...63b4              ,the address of the state being queried
-deployed    ,blknum   ,            ,       ,      ,true    ,          ,        ,      ,         ,7   ,7    ,8901011                    ,the block number at which this smart contract was deployed (if a smart contact)
-accttype    ,string   ,            ,       ,      ,true    ,          ,        ,      ,         ,8   ,8    ,one of 'EOA' or 'Contract' ,the type of the address at the given block
-result      ,function ,            ,true   ,      ,true    ,          ,        ,      ,         ,    ,     ,                           ,
-ether       ,double   ,            ,       ,      ,true    ,          ,true    ,      ,true     ,9   ,     ,0.25884369                 ,the balance of the address in ethers
+name             ,type     ,str_default ,object ,array ,nowrite ,omitempty ,minimal ,extra ,noaddfld ,doc ,disp ,example                    ,description
+blockNumber      ,blknum   ,            ,       ,      ,        ,          ,        ,      ,         ,1   ,1    ,10021                      ,the block number at which this state was taken
+balance          ,wei      ,            ,       ,      ,        ,          ,        ,      ,         ,2   ,3    ,258843698360318500         ,the balance at the address at the given block height
+nonce            ,uint64   ,            ,       ,      ,true    ,          ,        ,      ,         ,3   ,4    ,115                        ,the nonce of the address at the given block height
+code             ,bytes    ,            ,       ,      ,true    ,          ,        ,      ,         ,4   ,5    ,0x                         ,the byte code at the address (if this is a smart contract)
+storage          ,bytes    ,            ,       ,      ,true    ,          ,        ,      ,         ,5   ,6    ,0x0000...0000              ,this field is un-implemented and current returns the first storage location in a smart contract
+address          ,address  ,            ,       ,      ,true    ,          ,        ,      ,         ,6   ,2    ,0xa1e4...63b4              ,the address of the state being queried
+deployed         ,blknum   ,            ,       ,      ,true    ,          ,        ,      ,         ,7   ,7    ,8901011                    ,the block number at which this smart contract was deployed (if a smart contact)
+accttype         ,string   ,            ,       ,      ,true    ,          ,        ,      ,         ,8   ,8    ,one of 'EOA' or 'Contract' ,the type of the address at the given block
+ether            ,double   ,            ,       ,      ,true    ,          ,true    ,      ,true     ,9   ,     ,0.25884369                 ,the balance of the address in ethers

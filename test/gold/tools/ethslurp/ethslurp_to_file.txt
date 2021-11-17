@@ -1,4 +1,7 @@
-chifra slurp  0x1324e7b922b30B49Ab8EA81086341cc41C249346 3750000-4000000 --fmt json --to_file
-Processing: --output:--output_filename-- 0x1324e7b922b30B49Ab8EA81086341cc41C249346 3750000-4000000
+chifra slurp  0x1324e7b922b30B49Ab8EA81086341cc41C249346 --types int 0-7000000 --fmt json --to_file
+TEST[DATE|TIME] Types:  [int]
+TEST[DATE|TIME] ToFile:  true
+TEST[DATE|TIME] Format:  json
+Processing: --types:int 0x1324e7b922b30B49Ab8EA81086341cc41C249346 0-7000000
 	Slurping 0x1324e7b922b30b49ab8ea81086341cc41c249346
                                                                                                                         { "outputFilename": "--output_filename--" }

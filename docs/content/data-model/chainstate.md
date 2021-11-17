@@ -2,7 +2,7 @@
 title: "Chain state"
 description: ""
 lead: ""
-date: 2021-10-05T21:53:25
+date: 2021-10-26T05:37:39
 lastmod:
   - :git
   - lastmod
@@ -47,6 +47,20 @@ State data is made of the following data fields:
 | accttype    | the type of the address at the given block                                                      | string  |
 | ether       | the balance of the address in ethers                                                            | double  |
 
+
+## Result
+
+
+| Field            | Description                                                                     | Type      |
+| ---------------- | ------------------------------------------------------------------------------- | --------- |
+| blockNumber      | the block number at which this call was made                                    | blknum    |
+| address          | the address of contract being called                                            | address   |
+| signature        | the canonical signature of the interface                                        | string    |
+| encoding         | the encoding for the function call                                              | string    |
+| bytes            | the bytes data following the encoding of the call                               | string    |
+| callResult       | the result of the call to the contract                                          | CFunction |
+| compressedResult | the compressed version of the result of the call to the contract                | string    |
+| deployed         | the block number at which this smart contract was deployed (if a smart contact) | blknum    |
 
 ## Token
 

@@ -1,9 +1,22 @@
+/*-------------------------------------------------------------------------------------------
+ * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
+ * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
+ *
+ * This program is free software: you may redistribute it and/or modify it under the terms
+ * of the GNU General Public License as published by the Free Software Foundation, either
+ * version 3 of the License, or (at your option) any later version. This program is
+ * distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+ * the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details. You should have received a copy of the GNU General
+ * Public License along with this program. If not, see http://www.gnu.org/licenses/.
+ *-------------------------------------------------------------------------------------------*/
 package blockRange
 
 import (
 	"errors"
 	"fmt"
 	"regexp"
+	"strconv"
 )
 
 // Parses a string containing block range and returns a struct
@@ -16,7 +29,6 @@ import (
 func New(rangeStr string) (*BlockRange, error) {
 	parsed, err := Parse(rangeStr)
 	newBlockRange := &BlockRange{}
-
 	if err != nil {
 		return nil, handleParserErrors(err)
 	}
@@ -61,6 +73,22 @@ type BlockRange struct {
 	Modifier     Modifier
 }
 
+func (br *BlockRange) UnmarshalJSON(data []byte) error {
+	str, err := strconv.Unquote(string(data))
+	if err != nil {
+		return err
+	}
+
+	newBlock, err := New(str)
+	if err != nil {
+		return err
+	}
+
+	*br = *newBlock
+
+	return nil
+}
+
 func getPointType(p *Point) BlockRangeValue {
 	if p == nil {
 		return BlockRangeNotDefined
@@ -99,7 +127,6 @@ func (e *WrongModifierError) Error() string {
 
 func handleParserErrors(parseError error) error {
 	modifierMatch, err := regexp.MatchString("expected Modifier", parseError.Error())
-
 	if err != nil || !modifierMatch {
 		return parseError
 	}

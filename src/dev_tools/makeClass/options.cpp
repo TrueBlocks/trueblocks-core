@@ -225,7 +225,7 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     // We need the template files
-    CStringArray templs = {"", "blank.yaml", "blank.cpp", "blank.h", "blank.go"};
+    CStringArray templs = {"", "blank.yaml", "blank.cpp", "blank.h", "blank.go", "blank_options.go"};
     for (auto temp : templs) {
         if (!fileExists(getTemplatePath(temp))) {
             return makeError(ERR_CONFIGMISSING, getTemplatePath(temp));
@@ -237,7 +237,9 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
+    // BEG_CODE_GLOBALOPTS
     registerOptions(nParams, params);
+    // END_CODE_GLOBALOPTS
 
     // BEG_CODE_INIT
     all = false;

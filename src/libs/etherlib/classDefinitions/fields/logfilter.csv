@@ -1,0 +1,6 @@
+name      ,type    ,str_default ,object ,array ,nowrite ,omitempty ,minimal ,extra ,noaddfld ,doc ,disp ,example ,description
+fromBlock ,blknum  ,            ,       ,      ,        ,          ,        ,      ,         ,    ,1    ,        ,the first block in the block range to query with eth_getLogs
+toBlock   ,blknum  ,            ,       ,      ,        ,          ,        ,      ,         ,    ,2    ,        ,the last block in the range to query with eth_getLogs
+blockHash ,hash    ,            ,       ,      ,        ,          ,        ,      ,         ,    ,3    ,        ,an alternative to blocks specification&#44; the hash of the block to query
+emitters  ,address ,            ,       ,true  ,        ,          ,        ,      ,         ,    ,4    ,        ,one or more emitting addresses from which logs were emitted
+topics    ,topic   ,            ,       ,true  ,        ,          ,        ,      ,         ,    ,5    ,        ,one or more topics which logs represent

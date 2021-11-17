@@ -23,7 +23,7 @@ static const COption params[] = {
     COption("transactions", "", "list<tx_id>", OPT_REQUIRED | OPT_POSITIONAL, "a space-separated list of one or more transaction identifiers"),  // NOLINT
     COption("articulate", "a", "", OPT_SWITCH, "articulate the retrieved data if ABIs can be found"),
     COption("trace", "t", "", OPT_SWITCH, "include the transaction's traces in the results"),
-    COption("uniq", "u", "", OPT_SWITCH, "display a list of uniq addresses found in the transaction instead of the underlying data"),  // NOLINT
+    COption("uniq", "u", "", OPT_SWITCH, "display a list of uniq addresses found in the transaction"),
     COption("reconcile", "r", "<address>", OPT_FLAG, "reconcile the transaction as per the provided address"),
     COption("cache", "o", "", OPT_SWITCH, "force the results of the query into the tx cache (and the trace cache if applicable)"),  // NOLINT
     COption("", "", "", OPT_DESCRIPTION, "Retrieve one or more transactions from the chain or local cache."),
@@ -139,7 +139,9 @@ bool COptions::parseArguments(string_q& command) {
 
 //---------------------------------------------------------------------------------------------------
 void COptions::Init(void) {
+    // BEG_CODE_GLOBALOPTS
     registerOptions(nParams, params, OPT_RAW);
+    // END_CODE_GLOBALOPTS
 
     // BEG_CODE_INIT
     articulate = false;
@@ -158,7 +160,7 @@ COptions::COptions(void) {
 
     // BEG_CODE_NOTES
     // clang-format off
-    notes.push_back("The `transactions` list may be one or more space-separated identifiers which are either a transaction hash, a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.");  // NOLINT
+    notes.push_back("The `transactions` list may be one or more transaction hashes, blockNumber.transactionID pairs, or a blockHash.transactionID pairs.");  // NOLINT
     notes.push_back("This tool checks for valid input syntax, but does not check that the transaction requested actually exists.");  // NOLINT
     notes.push_back("If the queried node does not store historical state, the results for most older transactions are undefined.");  // NOLINT
     // clang-format on

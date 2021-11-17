@@ -1,4 +1,6 @@
 chifra quotes  --verbose --fmt json
+TEST[DATE|TIME] Verbose:  true
+TEST[DATE|TIME] Format:  json
 Read cnt existing price quotes (lastRead: Now)
 { "data": [
   {

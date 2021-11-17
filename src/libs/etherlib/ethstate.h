@@ -45,7 +45,6 @@ class CEthState : public CBaseNode {
     address_t address;
     blknum_t deployed;
     string_q accttype;
-    CFunction result;
 
   public:
     CEthState(void);
@@ -54,8 +53,6 @@ class CEthState : public CBaseNode {
     CEthState& operator=(const CEthState& et);
 
     DECLARE_NODE(CEthState);
-
-    const CBaseNode* getObjectAt(const string_q& fieldName, size_t index) const override;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -118,7 +115,6 @@ inline void CEthState::initialize(void) {
     address = "";
     deployed = 0;
     accttype = "";
-    result = CFunction();
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -137,7 +133,6 @@ inline void CEthState::duplicate(const CEthState& et) {
     address = et.address;
     deployed = et.deployed;
     accttype = et.accttype;
-    result = et.result;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -190,5 +185,6 @@ extern string_q getStorageAt(const address_t& addr, uint64_t pos, blknum_t block
 extern uint64_t getNonceAt(const address_t& addr, blknum_t num);
 extern blknum_t getDeployBlock(const address_t& addr);
 extern bool isArchiveNode(void);
+extern const char* STR_DISPLAY_ETHSTATE;
 // EXISTING_CODE
 }  // namespace qblocks

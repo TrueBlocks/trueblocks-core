@@ -13,9 +13,9 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------
-bool COptions::handle_block_summaries(blknum_t start, blknum_t n_blocks) {
+bool COptions::handle_block_summaries(blknum_t start, blknum_t nBlocks) {
     bool isText = (expContext().exportFmt & (TXT1 | CSV1));
-    blknum_t end = (start < n_blocks ? 0 : start - n_blocks);
+    blknum_t end = (start < nBlocks ? 0 : start - nBlocks);
     for (blknum_t b = start; b > end; b--) {
         CBlock block;
         getBlock_light(block, b);

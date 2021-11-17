@@ -15,7 +15,7 @@
 #include "node_curl.h"
 #include "cacheentry.h"
 #include "rewards.h"
-#include "logquery.h"
+#include "logfilter.h"
 #include "ethcall.h"
 
 namespace qblocks {
@@ -62,7 +62,7 @@ extern bool queryRawTransaction(string_q& results, const hash_t& txHash);
 extern bool queryRawReceipt(string_q& results, const hash_t& txHash);
 extern bool queryRawTrace(string_q& results, const hash_t& hashIn);
 extern bool queryRawStateDiff(string_q& results, const hash_t& hashIn);
-extern bool queryRawLogs(string_q& results, const CLogQuery& query);
+extern bool queryRawLogs(string_q& results, const CLogFilter& query);
 
 //-----------------------------------------------------------------------
 extern string_q getTokenBalanceOf(const address_t& token, const address_t& holder, blknum_t blockNum);

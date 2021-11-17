@@ -19,15 +19,17 @@ Arguments:
 Flags:
   -p, --appearances   export a list of appearances
   -U, --count         present only the number of records
-      --clean         clean (i.e. remove duplicate appearances) from all existing monitors
-
-Global Flags:
-  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
-  -h, --help         display this help screen
-  -v, --verbose      enable verbose (increase detail with --log_level)
+      --clean         clean (i.e. remove duplicate appearances) from monitors
+      --delete        delete a monitor, but do not remove it
+      --undelete      undelete a previously deleted monitor
+      --remove        remove a previously deleted monitor
+  -x, --fmt string    export format, one of [none|json*|txt|csv|api]
+  -v, --verbose       enable verbose (increase detail with --log_level)
+  -h, --help          display this help screen
 
 Notes:
   - An address must start with '0x' and be forty-two characters long.
+  - If no address is presented to the --clean command, all monitors will be cleaned.
 ```
 
 **Source code**: [`apps/acctExport`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/acctExport)

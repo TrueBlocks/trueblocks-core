@@ -56,8 +56,8 @@ string_q CBlockOptions::getBlockNumList(void) {
 
 //--------------------------------------------------------------------------------
 bool CHistoryOptions::requestsHistory(void) const {
-    blknum_t n_blocks = getGlobalConfig()->getConfigInt("dev", "history_cnt", 250);
-    return ((newestBlock - oldestBlock) >= n_blocks);
+    blknum_t history_cnt = getGlobalConfig()->getConfigInt("dev", "history_cnt", 250);
+    return ((newestBlock - oldestBlock) >= history_cnt);
 }
 
 //--------------------------------------------------------------------------------
@@ -304,6 +304,8 @@ bool parseTopicList2(COptionsBase* opt, CTopicArray& topics, const string_q& arg
 
 //--------------------------------------------------------------------------------
 bool parseFourbyteList(COptionsBase* opt, CFourbyteArray& fourbytes, const string_q& argIn) {
+    if (!isHexStr(argIn))
+        return opt->usage("Invalid value '" + argIn + "'.");
     if (!isFourbyte(argIn))
         return opt->usage("Invalid fourbyte '" + argIn + "'. Length (" + uint_2_Str(argIn.length()) +
                           ") is not equal to 8 characters (4 bytes).");

@@ -213,5 +213,6 @@ extern const char* STR_DISPLAY_MONITOR;
 typedef map<address_t, CMonitor> CMonitorMap;  // NOLINT
 extern void establishMonitorFolders(void);
 extern void cleanMonitorStage(void);
+extern address_t path_2_Addr(const string_q& path);
 // EXISTING_CODE
 }  // namespace qblocks

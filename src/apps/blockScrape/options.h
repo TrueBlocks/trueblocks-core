@@ -29,10 +29,9 @@ class COptions : public COptionsBase {
     bool pin;
     bool publish;
     double sleep;
-    string_q port;
-    uint64_t n_blocks;
-    uint64_t n_block_procs;
-    uint64_t n_addr_procs;
+    uint64_t block_cnt;
+    uint64_t block_chan_cnt;
+    uint64_t addr_chan_cnt;
     // END_CODE_DECLARE
 
     timestamp_t latestBlockTs;

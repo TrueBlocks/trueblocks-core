@@ -1,3 +1,5 @@
+package cmd
+
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -11,25 +13,26 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * Parts of this file were generated with makeClass --gocmds. Edit only those parts of
- * the code inside of 'EXISTING_CODE' tags.
+ * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
-package cmd
 
+// EXISTING_CODE
 import (
 	"os"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	receiptsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/receipts"
 	"github.com/spf13/cobra"
 )
+
+// EXISTING_CODE
 
 // receiptsCmd represents the receipts command
 var receiptsCmd = &cobra.Command{
 	Use:   usageReceipts,
 	Short: shortReceipts,
 	Long:  longReceipts,
-	Run:   runReceipts,
-	Args:  validateReceiptsArgs,
+	RunE:  receiptsPkg.RunReceipts,
 }
 
 var usageReceipts = `receipts [flags] <tx_id> [tx_id...]
@@ -44,34 +47,18 @@ var longReceipts = `Purpose:
 
 var notesReceipts = `
 Notes:
-  - The transactions list may be one or more space-separated identifiers which are either a transaction hash, a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.
+  - The transactions list may be one or more transaction hashes, blockNumber.transactionID pairs, or a blockHash.transactionID pairs.
   - This tool checks for valid input syntax, but does not check that the transaction requested actually exists.
   - If the queried node does not store historical state, the results for most older transactions are undefined.`
 
-type receiptsOptionsType struct {
-	articulate bool
-}
-
-var ReceiptsOpts receiptsOptionsType
-
 func init() {
-	receiptsCmd.SetOut(os.Stderr)
+	receiptsCmd.Flags().SortFlags = false
 
-	receiptsCmd.Flags().SortFlags = false
-	receiptsCmd.PersistentFlags().SortFlags = false
-	receiptsCmd.Flags().BoolVarP(&ReceiptsOpts.articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
-	receiptsCmd.Flags().SortFlags = false
-	receiptsCmd.PersistentFlags().SortFlags = false
+	receiptsCmd.Flags().BoolVarP(&receiptsPkg.Options.Articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
+	globals.InitGlobals(receiptsCmd, &receiptsPkg.Options.Globals)
 
 	receiptsCmd.SetUsageTemplate(UsageWithNotes(notesReceipts))
-	rootCmd.AddCommand(receiptsCmd)
-}
+	receiptsCmd.SetOut(os.Stderr)
 
-func TestLogReceipts(args []string) {
-	if !utils.IsTestMode() {
-		return
-	}
+	chifraCmd.AddCommand(receiptsCmd)
 }
-
-// EXISTING_CODE
-// EXISTING_CODE

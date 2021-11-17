@@ -1,3 +1,4 @@
 chifra logs  0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.1 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.5
-blocknumber	transactionindex	logindex	address	topic0	topic1	topic2	topic3	data	type	compressedlog
+TEST[DATE|TIME] Transactions:  [0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.1 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.5]
+blocknumber	transactionindex	logindex	address	topic0	topic1	topic2	topic3	data	type	compressedlog	timestamp
 "Transaction 0x0b4c6fb75ded4b90218cf0346b0885e442878f104e1b60bf75d5b6860eeacd53.5 not found."

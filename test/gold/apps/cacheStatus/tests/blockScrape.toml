@@ -1,4 +1,4 @@
 [settings]
-# nBlocks = 2000
-# nBlockProcs = 20
-# nAddrProcs = 60
+# block_cnt = 2000
+# block_chan_cnt = 20
+# addr_chan_cnt = 60

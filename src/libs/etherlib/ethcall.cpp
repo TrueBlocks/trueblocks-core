@@ -20,7 +20,7 @@
 namespace qblocks {
 
 //---------------------------------------------------------------------------
-IMPLEMENT_NODE(CEthCall, CEthState);
+IMPLEMENT_NODE(CEthCall, CBaseNode);
 
 //---------------------------------------------------------------------------
 extern string_q nextEthcallChunk(const string_q& fieldIn, const void* dataPtr);
@@ -75,6 +75,9 @@ string_q CEthCall::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'a':
+            if (fieldName % "address") {
+                return addr_2_Str(address);
+            }
             if (fieldName % "abi_spec") {
                 if (abi_spec == CAbi())
                     return "{}";
@@ -82,13 +85,36 @@ string_q CEthCall::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 'b':
+            if (fieldName % "blockNumber") {
+                return uint_2_Str(blockNumber);
+            }
             if (fieldName % "bytes") {
                 return bytes;
+            }
+            break;
+        case 'c':
+            if (fieldName % "callResult") {
+                if (callResult == CFunction())
+                    return "{}";
+                return callResult.Format();
+            }
+            if (fieldName % "compressedResult") {
+                return compressedResult;
+            }
+            break;
+        case 'd':
+            if (fieldName % "deployed") {
+                return uint_2_Str(deployed);
             }
             break;
         case 'e':
             if (fieldName % "encoding") {
                 return encoding;
+            }
+            break;
+        case 's':
+            if (fieldName % "signature") {
+                return signature;
             }
             break;
         default:
@@ -104,8 +130,12 @@ string_q CEthCall::getValueByName(const string_q& fieldName) const {
     if (contains(fieldName, objSpec))
         return abi_spec.getValueByName(substitute(fieldName, objSpec, ""));
 
+    objSpec = toUpper("callResult") + "::";
+    if (contains(fieldName, objSpec))
+        return callResult.getValueByName(substitute(fieldName, objSpec, ""));
+
     // Finally, give the parent class a chance
-    return CEthState::getValueByName(fieldName);
+    return CBaseNode::getValueByName(fieldName);
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -116,23 +146,50 @@ bool CEthCall::setValueByName(const string_q& fieldNameIn, const string_q& field
     // EXISTING_CODE
     // EXISTING_CODE
 
-    if (CEthState::setValueByName(fieldName, fieldValue))
-        return true;
     switch (tolower(fieldName[0])) {
         case 'a':
+            if (fieldName % "address") {
+                address = str_2_Addr(fieldValue);
+                return true;
+            }
             if (fieldName % "abi_spec") {
                 return abi_spec.parseJson3(fieldValue);
             }
             break;
         case 'b':
+            if (fieldName % "blockNumber") {
+                blockNumber = str_2_Uint(fieldValue);
+                return true;
+            }
             if (fieldName % "bytes") {
                 bytes = fieldValue;
+                return true;
+            }
+            break;
+        case 'c':
+            if (fieldName % "callResult") {
+                return callResult.parseJson3(fieldValue);
+            }
+            if (fieldName % "compressedResult") {
+                compressedResult = fieldValue;
+                return true;
+            }
+            break;
+        case 'd':
+            if (fieldName % "deployed") {
+                deployed = str_2_Uint(fieldValue);
                 return true;
             }
             break;
         case 'e':
             if (fieldName % "encoding") {
                 encoding = fieldValue;
+                return true;
+            }
+            break;
+        case 's':
+            if (fieldName % "signature") {
+                signature = fieldValue;
                 return true;
             }
             break;
@@ -155,15 +212,21 @@ bool CEthCall::Serialize(CArchive& archive) {
 
     // Always read the base class (it will handle its own backLevels if any, then
     // read this object's back level (if any) or the current version.
-    CEthState::Serialize(archive);
+    CBaseNode::Serialize(archive);
     if (readBackLevel(archive))
         return true;
 
     // EXISTING_CODE
     // EXISTING_CODE
+    // archive >> blockNumber;
+    // archive >> address;
+    // archive >> signature;
     archive >> encoding;
     archive >> bytes;
     archive >> abi_spec;
+    // archive >> callResult;
+    // archive >> compressedResult;
+    // archive >> deployed;
     // EXISTING_CODE
     // EXISTING_CODE
     finishParse();
@@ -173,13 +236,19 @@ bool CEthCall::Serialize(CArchive& archive) {
 //---------------------------------------------------------------------------------------------------
 bool CEthCall::SerializeC(CArchive& archive) const {
     // Writing always writes the latest version of the data
-    CEthState::SerializeC(archive);
+    CBaseNode::SerializeC(archive);
 
     // EXISTING_CODE
     // EXISTING_CODE
+    // archive << blockNumber;
+    // archive << address;
+    // archive << signature;
     archive << encoding;
     archive << bytes;
     archive << abi_spec;
+    // archive << callResult;
+    // archive << compressedResult;
+    // archive << deployed;
     // EXISTING_CODE
     // EXISTING_CODE
     return true;
@@ -224,16 +293,26 @@ void CEthCall::registerClass(void) {
     if (HAS_FIELD(CEthCall, "schema"))
         return;
 
-    CEthState::registerClass();
-
     size_t fieldNum = 1000;
     ADD_FIELD(CEthCall, "schema", T_NUMBER, ++fieldNum);
     ADD_FIELD(CEthCall, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CEthCall, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CEthCall, "cname", T_TEXT, ++fieldNum);
+    ADD_FIELD(CEthCall, "blockNumber", T_BLOCKNUM, ++fieldNum);
+    HIDE_FIELD(CEthCall, "blockNumber");
+    ADD_FIELD(CEthCall, "address", T_ADDRESS | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CEthCall, "address");
+    ADD_FIELD(CEthCall, "signature", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CEthCall, "signature");
     ADD_FIELD(CEthCall, "encoding", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CEthCall, "bytes", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_OBJECT(CEthCall, "abi_spec", T_OBJECT | TS_OMITEMPTY, ++fieldNum, GETRUNTIME_CLASS(CAbi));
+    ADD_OBJECT(CEthCall, "callResult", T_OBJECT | TS_OMITEMPTY, ++fieldNum, GETRUNTIME_CLASS(CFunction));
+    HIDE_FIELD(CEthCall, "callResult");
+    ADD_FIELD(CEthCall, "compressedResult", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CEthCall, "compressedResult");
+    ADD_FIELD(CEthCall, "deployed", T_BLOCKNUM, ++fieldNum);
+    HIDE_FIELD(CEthCall, "deployed");
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CEthCall, "schema");
@@ -253,6 +332,23 @@ string_q nextEthcallChunk_custom(const string_q& fieldIn, const void* dataPtr) {
     if (eth) {
         switch (tolower(fieldIn[0])) {
             // EXISTING_CODE
+            case 'c':
+                if (fieldIn % "compressedResult") {
+                    ostringstream os;
+                    bool first = true;
+                    for (auto result : eth->callResult.outputs) {
+                        if (!first)
+                            os << "|";
+                        os << result.value;
+                        first = false;
+                    }
+                    return os.str();
+                }
+                break;
+            case 's':
+                if (fieldIn % "signature") {
+                    return eth->callResult.signature;
+                }
             // EXISTING_CODE
             case 'p':
                 // Display only the fields of this node, not it's parent type
@@ -306,11 +402,11 @@ ostream& operator<<(ostream& os, const CEthCall& it) {
 //---------------------------------------------------------------------------
 const CBaseNode* CEthCall::getObjectAt(const string_q& fieldName, size_t index) const {
     // EXISTING_CODE
-    if (fieldName % "result")
-        return &result;
     // EXISTING_CODE
     if (fieldName % "abi_spec")
         return &abi_spec;
+    if (fieldName % "callResult")
+        return &callResult;
     // EXISTING_CODE
     // EXISTING_CODE
 
@@ -318,27 +414,33 @@ const CBaseNode* CEthCall::getObjectAt(const string_q& fieldName, size_t index) 
 }
 
 //---------------------------------------------------------------------------
-const char* STR_DISPLAY_ETHCALL = "";
+const char* STR_DISPLAY_ETHCALL =
+    "[{BLOCKNUMBER}]\t"
+    "[{ADDRESS}]\t"
+    "[{SIGNATURE}]\t"
+    "[{ENCODING}]\t"
+    "[{BYTES}]\t"
+    "[{COMPRESSEDRESULT}]";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 //-------------------------------------------------------------------------
-string_q CEthCall::getResults(void) const {
-    return result.outputs.size() ? result.outputs[0].value : "";
+string_q CEthCall::getCallResult(void) const {
+    return callResult.outputs.size() ? callResult.outputs[0].value : "";
 }
 
 //-------------------------------------------------------------------------
-bool CEthCall::getResults(string_q& out) const {
-    if (result.outputs.size()) {
-        out = result.outputs[0].value;
+bool CEthCall::getCallResult(string_q& out) const {
+    if (callResult.outputs.size()) {
+        out = callResult.outputs[0].value;
         return true;
     }
     return false;
 }
 
 //-------------------------------------------------------------------------
-bool CEthCall::getResults(CStringArray& out) const {
-    for (auto output : result.outputs)
+bool CEthCall::getCallResult(CStringArray& out) const {
+    for (auto output : callResult.outputs)
         out.push_back(output.value);
     return out.size();
 }
@@ -364,7 +466,7 @@ bool doEthCall(CEthCall& theCall) {
     string_q ret = callRPC("eth_call", cmd.str(), false);
     // Did we get an answer? If so, return it
     if (startsWith(ret, "0x")) {
-        theCall.abi_spec.articulateOutputs(theCall.encoding, ret, theCall.result);
+        theCall.abi_spec.articulateOutputs(theCall.encoding.substr(0, 10), ret, theCall.callResult);
         return true;
     }
 
@@ -375,7 +477,7 @@ bool doEthCall(CEthCall& theCall) {
             // This is a proxy with an implementation...let's
             // try again against the proxied-to address.
             theCall.encoding = orig;
-            theCall.address = theCall.getResults();
+            theCall.address = theCall.getCallResult();
             if (isZeroAddr(theCall.address))
                 return false;
             return doEthCall(theCall);

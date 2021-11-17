@@ -1,4 +1,6 @@
 chifra abis  0xe94327d07fc17907b4db788e5adf2ed424addff6 --fmt json
+TEST[DATE|TIME] Addrs:  [0xe94327d07fc17907b4db788e5adf2ed424addff6]
+TEST[DATE|TIME] Format:  json
 { "data": [
 {
   "name": "name",

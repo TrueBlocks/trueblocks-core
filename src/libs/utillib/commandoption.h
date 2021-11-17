@@ -75,7 +75,7 @@ class CCommandOption : public CBaseNode {
     void* notes{nullptr};
     explicit CCommandOption(const string_q& line);
     void verifyOptions(CStringArray& warnings);
-    void verifyHotkey(CStringArray& warnings, map<string, string> existing);
+    void verifyHotkey(CStringArray& warnings, map<string, string>& existing);
     string_q debugCode(void) const;
     string_q swagger_descr;
     string_q route_list;
@@ -276,5 +276,7 @@ extern const char* STR_DISPLAY_COMMANDOPTION;
 //---------------------------------------------------------------------------------------------------
 extern string_q clean_positionals(const string& progName, const string_q& strIn);
 extern bool forEveryEnum(APPLYFUNC func, const string_q& enumStr, void* data);
+// TODO: search for go-port
+extern bool goPortNewCode(const string_q& a);
 // EXISTING_CODE
 }  // namespace qblocks

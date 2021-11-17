@@ -1,4 +1,6 @@
 chifra receipts  2222222.0 2332332.0 --fmt json
+TEST[DATE|TIME] Transactions:  [2222222.0 2332332.0]
+TEST[DATE|TIME] Format:  json
 { "data": [
   {
     "contractAddress": "0x0",

@@ -1,3 +1,5 @@
+package cmd
+
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -11,25 +13,26 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * Parts of this file were generated with makeClass --gocmds. Edit only those parts of
- * the code inside of 'EXISTING_CODE' tags.
+ * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
-package cmd
 
+// EXISTING_CODE
 import (
 	"os"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	tokensPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/tokens"
 	"github.com/spf13/cobra"
 )
+
+// EXISTING_CODE
 
 // tokensCmd represents the tokens command
 var tokensCmd = &cobra.Command{
 	Use:   usageTokens,
 	Short: shortTokens,
 	Long:  longTokens,
-	Run:   runTokens,
-	Args:  validateTokensArgs,
+	RunE:  tokensPkg.RunTokens,
 }
 
 var usageTokens = `tokens [flags] <address> <address> [address...] [block...]
@@ -51,35 +54,17 @@ Notes:
   - If the queried node does not store historical state, the results are undefined.
   - special blocks are detailed under chifra when --list.`
 
-type tokensOptionsType struct {
-	parts   []string
-	by_acct bool
-	no_zero bool
-}
-
-var TokensOpts tokensOptionsType
-
 func init() {
-	tokensCmd.SetOut(os.Stderr)
+	tokensCmd.Flags().SortFlags = false
 
-	tokensCmd.Flags().SortFlags = false
-	tokensCmd.PersistentFlags().SortFlags = false
-	tokensCmd.Flags().StringSliceVarP(&TokensOpts.parts, "parts", "p", nil, `which parts of the token information to retrieve
+	tokensCmd.Flags().StringSliceVarP(&tokensPkg.Options.Parts, "parts", "p", nil, `which parts of the token information to retrieve
 One or more of [ name | symbol | decimals | totalSupply | version | none | all ]`)
-	tokensCmd.Flags().BoolVarP(&TokensOpts.by_acct, "by_acct", "b", false, "consider each address an ERC20 token except the last, whose balance is reported for each token")
-	tokensCmd.Flags().BoolVarP(&TokensOpts.no_zero, "no_zero", "n", false, "suppress the display of zero balance accounts")
-	tokensCmd.Flags().SortFlags = false
-	tokensCmd.PersistentFlags().SortFlags = false
+	tokensCmd.Flags().BoolVarP(&tokensPkg.Options.ByAcct, "by_acct", "b", false, "consider each address an ERC20 token except the last, whose balance is reported for each token")
+	tokensCmd.Flags().BoolVarP(&tokensPkg.Options.NoZero, "no_zero", "n", false, "suppress the display of zero balance accounts")
+	globals.InitGlobals(tokensCmd, &tokensPkg.Options.Globals)
 
 	tokensCmd.SetUsageTemplate(UsageWithNotes(notesTokens))
-	rootCmd.AddCommand(tokensCmd)
-}
+	tokensCmd.SetOut(os.Stderr)
 
-func TestLogTokens(args []string) {
-	if !utils.IsTestMode() {
-		return
-	}
+	chifraCmd.AddCommand(tokensCmd)
 }
-
-// EXISTING_CODE
-// EXISTING_CODE

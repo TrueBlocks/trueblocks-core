@@ -1,3 +1,5 @@
+package cmd
+
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -11,31 +13,32 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * Parts of this file were generated with makeClass --gocmds. Edit only those parts of
- * the code inside of 'EXISTING_CODE' tags.
+ * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
-package cmd
 
+// EXISTING_CODE
 import (
 	"os"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	logsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/logs"
 	"github.com/spf13/cobra"
 )
+
+// EXISTING_CODE
 
 // logsCmd represents the logs command
 var logsCmd = &cobra.Command{
 	Use:   usageLogs,
 	Short: shortLogs,
 	Long:  longLogs,
-	Run:   runLogs,
-	Args:  validateLogsArgs,
+	RunE:  logsPkg.RunLogs,
 }
 
 var usageLogs = `logs [flags] <tx_id> [tx_id...]
 
 Arguments:
-  transactions - a space-separated list of one or more transaction identifiers (required)`
+  transactions - a space-separated list of one or more transaction identifiers`
 
 var shortLogs = "retrieve logs for the given transaction(s)"
 
@@ -44,39 +47,19 @@ var longLogs = `Purpose:
 
 var notesLogs = `
 Notes:
-  - The transactions list may be one or more space-separated identifiers which are either a transaction hash, a blockNumber.transactionID pair, or a blockHash.transactionID pair, or any combination.
+  - The transactions list may be one or more transaction hashes, blockNumber.transactionID pairs, or a blockHash.transactionID pairs.
   - This tool checks for valid input syntax, but does not check that the transaction requested actually exists.
   - If the queried node does not store historical state, the results for most older transactions are undefined.
   - If you specify a 32-byte hash, it will be assumed to be a transaction hash, if the transaction is not found, it will be used as a topic.`
 
-type logsOptionsType struct {
-	topic      []string
-	source     []string
-	articulate bool
-}
-
-var LogsOpts logsOptionsType
-
 func init() {
-	logsCmd.SetOut(os.Stderr)
+	logsCmd.Flags().SortFlags = false
 
-	logsCmd.Flags().SortFlags = false
-	logsCmd.PersistentFlags().SortFlags = false
-	logsCmd.Flags().StringSliceVarP(&LogsOpts.topic, "topic", "t", nil, "filter by one or more log topics (not implemented)")
-	logsCmd.Flags().StringSliceVarP(&LogsOpts.source, "source", "s", nil, "export only if the given address emitted the event (not implemented)")
-	logsCmd.Flags().BoolVarP(&LogsOpts.articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
-	logsCmd.Flags().SortFlags = false
-	logsCmd.PersistentFlags().SortFlags = false
+	logsCmd.Flags().BoolVarP(&logsPkg.Options.Articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
+	globals.InitGlobals(logsCmd, &logsPkg.Options.Globals)
 
 	logsCmd.SetUsageTemplate(UsageWithNotes(notesLogs))
-	rootCmd.AddCommand(logsCmd)
-}
+	logsCmd.SetOut(os.Stderr)
 
-func TestLogLogs(args []string) {
-	if !utils.IsTestMode() {
-		return
-	}
+	chifraCmd.AddCommand(logsCmd)
 }
-
-// EXISTING_CODE
-// EXISTING_CODE

@@ -38,9 +38,11 @@ int main(int argc, const char* argv[]) {
                 ? GETRUNTIME_CLASS(CReceipt)->m_ClassName
                   : (options.statements
                   ? GETRUNTIME_CLASS(CReconciliation)->m_ClassName
-                    : (options.logs
-                    ? GETRUNTIME_CLASS(CLogEntry)->m_ClassName
-                      : GETRUNTIME_CLASS(CTransaction)->m_ClassName)))));
+                    : (options.neighbors
+                    ? GETRUNTIME_CLASS(CAppearanceDisplay)->m_ClassName
+                      : (options.logs
+                      ? GETRUNTIME_CLASS(CLogEntry)->m_ClassName
+                        : GETRUNTIME_CLASS(CTransaction)->m_ClassName))))));
             // clang-format on
 
             once = once && !options.freshenOnly;
@@ -63,6 +65,12 @@ int main(int argc, const char* argv[]) {
                 CStatementTraverser st;
                 st.exportRange = options.exportRange;
                 traversers.push_back(st);
+            }
+
+            if (options.neighbors) {
+                CNeighborTraverser nt;
+                nt.exportRange = options.exportRange;
+                traversers.push_back(nt);
             }
 
             if (options.logs) {
@@ -243,7 +251,7 @@ bool loadTx_Func(CTraverser* trav, void* data) {
     dirty |= opt->articulateAll(trav->trans);
 
     // TODO(tjayrush): This could be in post_Func so that other functions can also make it dirty
-    if (opt->cache_txs && dirty) {
+    if (opt->cache && dirty) {
         opt->stats.nCacheWrites++;
         // if the node is behind the index, this will sometimes happen - don't write in that case
         if (!trav->trans.hash.empty()) {

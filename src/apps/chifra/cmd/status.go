@@ -1,3 +1,5 @@
+package cmd
+
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -11,25 +13,26 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * Parts of this file were generated with makeClass --gocmds. Edit only those parts of
- * the code inside of 'EXISTING_CODE' tags.
+ * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
-package cmd
 
+// EXISTING_CODE
 import (
 	"os"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	statusPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/status"
 	"github.com/spf13/cobra"
 )
+
+// EXISTING_CODE
 
 // statusCmd represents the status command
 var statusCmd = &cobra.Command{
 	Use:   usageStatus,
 	Short: shortStatus,
 	Long:  longStatus,
-	Run:   runStatus,
-	Args:  validateStatusArgs,
+	RunE:  statusPkg.RunStatus,
 }
 
 var usageStatus = `status [flags] [mode...]
@@ -45,39 +48,22 @@ var longStatus = `Purpose:
 
 var notesStatus = ``
 
-type statusOptionsType struct {
-	details    bool
-	types      []string
-	depth      uint64
-	report     bool
-	terse      bool
-	migrate    []string
-	get_config bool
-	set_config bool
-	test_start uint64
-	test_end   uint64
-}
-
-var StatusOpts statusOptionsType
-
 func init() {
-	statusCmd.SetOut(os.Stderr)
-
 	statusCmd.Flags().SortFlags = false
-	statusCmd.PersistentFlags().SortFlags = false
-	statusCmd.Flags().BoolVarP(&StatusOpts.details, "details", "d", false, "include details about items found in monitors, slurps, abis, or price caches")
-	statusCmd.Flags().StringSliceVarP(&StatusOpts.types, "types", "t", nil, `for caches mode only, which type(s) of cache to report
+
+	statusCmd.Flags().BoolVarP(&statusPkg.Options.Details, "details", "d", false, "include details about items found in monitors, slurps, abis, or price caches")
+	statusCmd.Flags().StringSliceVarP(&statusPkg.Options.Types, "types", "t", nil, `for caches mode only, which type(s) of cache to report
 One or more of [ blocks | txs | traces | slurps | prices | all ]`)
-	statusCmd.Flags().Uint64VarP(&StatusOpts.depth, "depth", "p", 0, "for cache mode only, number of levels deep to report (hidden)")
-	statusCmd.Flags().BoolVarP(&StatusOpts.report, "report", "r", false, "run the command with no options for the same result (hidden)")
-	statusCmd.Flags().BoolVarP(&StatusOpts.terse, "terse", "e", false, "show a terse summary report (hidden)")
-	statusCmd.Flags().StringSliceVarP(&StatusOpts.migrate, "migrate", "m", nil, `either effectuate or test to see if a migration is necessary (hidden)
+	statusCmd.Flags().Uint64VarP(&statusPkg.Options.Depth, "depth", "p", 0, "for cache mode only, number of levels deep to report (hidden)")
+	statusCmd.Flags().BoolVarP(&statusPkg.Options.Report, "report", "r", false, "run the command with no options for the same result (hidden)")
+	statusCmd.Flags().BoolVarP(&statusPkg.Options.Terse, "terse", "e", false, "show a terse summary report (hidden)")
+	statusCmd.Flags().StringSliceVarP(&statusPkg.Options.Migrate, "migrate", "m", nil, `either effectuate or test to see if a migration is necessary (hidden)
 One or more of [ test | abi_cache | block_cache | tx_cache | trace_cache | recon_cache | name_cache | slurp_cache | all ]`)
-	statusCmd.Flags().BoolVarP(&StatusOpts.get_config, "get_config", "g", false, "returns JSON data of the editable configuration file items (hidden)")
-	statusCmd.Flags().BoolVarP(&StatusOpts.set_config, "set_config", "s", false, "accepts JSON in an env variable and writes it to configuration files (hidden)")
-	statusCmd.Flags().Uint64VarP(&StatusOpts.test_start, "test_start", "S", 0, "first block to process (inclusive -- testing only) (hidden)")
-	statusCmd.Flags().Uint64VarP(&StatusOpts.test_end, "test_end", "E", 0, "last block to process (inclusive -- testing only) (hidden)")
-	if !utils.IsTestMode() {
+	statusCmd.Flags().BoolVarP(&statusPkg.Options.GetConfig, "get_config", "g", false, "returns JSON data of the editable configuration file items (hidden)")
+	statusCmd.Flags().BoolVarP(&statusPkg.Options.SetConfig, "set_config", "s", false, "accepts JSON in an env variable and writes it to configuration files (hidden)")
+	statusCmd.Flags().Uint64VarP(&statusPkg.Options.TestStart, "test_start", "S", 0, "first block to process (inclusive -- testing only) (hidden)")
+	statusCmd.Flags().Uint64VarP(&statusPkg.Options.TestEnd, "test_end", "E", 0, "last block to process (inclusive -- testing only) (hidden)")
+	if os.Getenv("TEST_MODE") != "true" {
 		statusCmd.Flags().MarkHidden("depth")
 		statusCmd.Flags().MarkHidden("report")
 		statusCmd.Flags().MarkHidden("terse")
@@ -87,18 +73,10 @@ One or more of [ test | abi_cache | block_cache | tx_cache | trace_cache | recon
 		statusCmd.Flags().MarkHidden("test_start")
 		statusCmd.Flags().MarkHidden("test_end")
 	}
-	statusCmd.Flags().SortFlags = false
-	statusCmd.PersistentFlags().SortFlags = false
+	globals.InitGlobals(statusCmd, &statusPkg.Options.Globals)
 
 	statusCmd.SetUsageTemplate(UsageWithNotes(notesStatus))
-	rootCmd.AddCommand(statusCmd)
-}
+	statusCmd.SetOut(os.Stderr)
 
-func TestLogStatus(args []string) {
-	if !utils.IsTestMode() {
-		return
-	}
+	chifraCmd.AddCommand(statusCmd)
 }
-
-// EXISTING_CODE
-// EXISTING_CODE
