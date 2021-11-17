@@ -28,10 +28,6 @@ import (
 	tokensPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/tokens"
 )
 
-func Index(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Users Manual")
-}
-
 // BEG_ROUTE_CODE
 
 func RouteAbis(w http.ResponseWriter, r *http.Request) {
@@ -149,171 +145,40 @@ func RouteWhen(w http.ResponseWriter, r *http.Request) {
 
 // END_ROUTE_CODE
 
+func Index(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "Users Manual")
+}
+
 var routes = Routes{
-	Route{
-		"Websockets",
-		"GET",
-		"/websocket",
-		func(w http.ResponseWriter, r *http.Request) {
-			HandleWebsockets(connectionPool, w, r)
-		},
-	},
-
-	Route{
-		"Index",
-		"GET",
-		"/",
-		Index,
-	},
-
-	Route{
-		"EditName",
-		"POST",
-		"/names",
-		EditName,
-	},
+	Route{"Websockets", "GET", "/websocket", func(w http.ResponseWriter, r *http.Request) {
+		HandleWebsockets(connectionPool, w, r)
+	}},
+	Route{"Index", "GET", "/", Index},
+	Route{"EditName", "POST", "/names", EditName},
 
 	// BEG_ROUTE_ITEMS
-
-	Route{
-		"RouteList",
-		"GET",
-		"/list",
-		RouteList,
-	},
-
-	Route{
-		"RouteExport",
-		"GET",
-		"/export",
-		RouteExport,
-	},
-
-	Route{
-		"RouteMonitors",
-		"GET",
-		"/monitors",
-		RouteMonitors,
-	},
-
-	Route{
-		"RouteNames",
-		"GET",
-		"/names",
-		RouteNames,
-	},
-
-	Route{
-		"RouteAbis",
-		"GET",
-		"/abis",
-		RouteAbis,
-	},
-
-	Route{
-		"RouteBlocks",
-		"GET",
-		"/blocks",
-		RouteBlocks,
-	},
-
-	Route{
-		"RouteTransactions",
-		"GET",
-		"/transactions",
-		RouteTransactions,
-	},
-
-	Route{
-		"RouteReceipts",
-		"GET",
-		"/receipts",
-		RouteReceipts,
-	},
-
-	Route{
-		"RouteLogs",
-		"GET",
-		"/logs",
-		RouteLogs,
-	},
-
-	Route{
-		"RouteTraces",
-		"GET",
-		"/traces",
-		RouteTraces,
-	},
-
-	Route{
-		"RouteWhen",
-		"GET",
-		"/when",
-		RouteWhen,
-	},
-
-	Route{
-		"RouteState",
-		"GET",
-		"/state",
-		RouteState,
-	},
-
-	Route{
-		"RouteTokens",
-		"GET",
-		"/tokens",
-		RouteTokens,
-	},
-
-	Route{
-		"RouteStatus",
-		"GET",
-		"/status",
-		RouteStatus,
-	},
-
-	Route{
-		"RouteScrape",
-		"GET",
-		"/scrape",
-		RouteScrape,
-	},
-
-	Route{
-		"RouteInit",
-		"GET",
-		"/init",
-		RouteInit,
-	},
-
-	Route{
-		"RoutePins",
-		"GET",
-		"/pins",
-		RoutePins,
-	},
-
-	Route{
-		"RouteChunks",
-		"GET",
-		"/chunks",
-		RouteChunks,
-	},
-
-	Route{
-		"RouteQuotes",
-		"GET",
-		"/quotes",
-		RouteQuotes,
-	},
-
-	Route{
-		"RouteSlurp",
-		"GET",
-		"/slurp",
-		RouteSlurp,
-	},
+	Route{"RouteAbis", "GET", "/abis", RouteAbis},
+	Route{"RouteBlocks", "GET", "/blocks", RouteBlocks},
+	Route{"RouteChunks", "GET", "/chunks", RouteChunks},
+	// not a route
+	// Route{"RouteExplore", "GET", "/explore", RouteExplore},
+	Route{"RouteExport", "GET", "/export", RouteExport},
+	Route{"RouteInit", "GET", "/init", RouteInit},
+	Route{"RouteList", "GET", "/list", RouteList},
+	Route{"RouteLogs", "GET", "/logs", RouteLogs},
+	Route{"RouteMonitors", "GET", "/monitors", RouteMonitors},
+	Route{"RouteNames", "GET", "/names", RouteNames},
+	Route{"RoutePins", "GET", "/pins", RoutePins},
+	Route{"RouteQuotes", "GET", "/quotes", RouteQuotes},
+	Route{"RouteReceipts", "GET", "/receipts", RouteReceipts},
+	Route{"RouteScrape,", "GET", "/scrape", RouteScrape},
+	Route{"RouteSlurp", "GET", "/slurp", RouteSlurp},
+	Route{"RouteState", "GET", "/state", RouteState},
+	Route{"RouteStatus", "GET", "/status", RouteStatus},
+	Route{"RouteTokens", "GET", "/tokens", RouteTokens},
+	Route{"RouteTraces", "GET", "/traces", RouteTraces},
+	Route{"RouteTransactions", "GET", "/transactions", RouteTransactions},
+	Route{"RouteWhen", "GET", "/when", RouteWhen},
 	// END_ROUTE_ITEMS
 }
 
