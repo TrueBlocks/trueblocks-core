@@ -16,7 +16,6 @@ package scrapePkg
 import (
 	"fmt"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -58,5 +57,5 @@ func (opts *ScrapeOptions) ValidateScrape() error {
 
 	Options.TestLog()
 
-	return globals.ValidateGlobals(&Options.Globals)
+	return opts.Globals.ValidateGlobals()
 }

@@ -14,11 +14,16 @@ package exportPkg
  *-------------------------------------------------------------------------------------------*/
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
 func (opts *ExportOptions) ValidateExport() error {
+	opts.TestLog()
+
+	if opts.BadFlag != nil {
+		return opts.BadFlag
+	}
+
 	err := validate.ValidateAtLeastOneAddr(opts.Addrs)
 	if err != nil {
 		return err
@@ -33,7 +38,5 @@ func (opts *ExportOptions) ValidateExport() error {
 		return validate.Usage("The {0} option is available only with {1}.", "--summarized_by", "--accounting")
 	}
 
-	Options.TestLog()
-
-	return globals.ValidateGlobals(&Options.Globals)
+	return opts.Globals.ValidateGlobals()
 }

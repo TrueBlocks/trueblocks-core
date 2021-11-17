@@ -1,5 +1,5 @@
 {
   "errors": [
-    "chifra export - Invalid option: --tox"
+    "Please specify at least one valid Ethereum address."
   ]
 }

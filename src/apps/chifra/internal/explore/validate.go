@@ -18,7 +18,6 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -98,7 +97,7 @@ func (opts *ExploreOptions) ValidateExplore() error {
 
 	Options.TestLog()
 
-	return globals.ValidateGlobals(&Options.Globals)
+	return opts.Globals.ValidateGlobals()
 }
 
 func id_2_TxHash(arg string) (string, error) {

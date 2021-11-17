@@ -14,20 +14,22 @@ package monitorsPkg
  *-------------------------------------------------------------------------------------------*/
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
 func (opts *MonitorsOptions) ValidateMonitors() error {
-	if !utils.IsApiMode() && !Options.Clean {
+	opts.TestLog()
+
+	if opts.BadFlag != nil {
+		return opts.BadFlag
+	}
+
+	if !opts.Globals.ApiMode && !Options.Clean {
 		err := validate.ValidateAtLeastOneAddr(opts.Addrs)
 		if err != nil {
 			return err
 		}
 	}
 
-	Options.TestLog()
-
-	return globals.ValidateGlobals(&Options.Globals)
+	return opts.Globals.ValidateGlobals()
 }

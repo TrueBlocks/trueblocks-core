@@ -34,6 +34,7 @@ import (
 	tracesPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/traces"
 	whenPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/when"
 	tokensPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/tokens"
+	statusPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/status"
 	pinsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/pins"
 	// END_ROUTE_PKGS
 )
@@ -203,6 +204,14 @@ func RouteTokens(w http.ResponseWriter, r *http.Request) {
 
 // RouteStatus Report on the status of the TrueBlocks system.
 func RouteStatus(w http.ResponseWriter, r *http.Request) {
+	// TODO: Use the statusPkg instead
+	// statusPkg.ServeStatus(w, r)
+	opts := statusPkg.FromRequest(w, r)
+	err := opts.ValidateStatus()
+	if err != nil {
+		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
+		return
+	}
 	CallOne(w, r, "cacheStatus", "status")
 }
 

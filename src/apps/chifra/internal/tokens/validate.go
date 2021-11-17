@@ -14,7 +14,6 @@ package tokensPkg
  *-------------------------------------------------------------------------------------------*/
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -30,5 +29,5 @@ func (opts *TokensOptions) ValidateTokens() error {
 		return validate.Usage("The {0} option is not available{1}.", "--dollars", " with this tool")
 	}
 
-	return globals.ValidateGlobals(&Options.Globals)
+	return opts.Globals.ValidateGlobals()
 }

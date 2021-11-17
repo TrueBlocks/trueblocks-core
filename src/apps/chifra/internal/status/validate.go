@@ -16,7 +16,6 @@ package statusPkg
 import (
 	"strconv"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -42,5 +41,5 @@ func (opts *StatusOptions) ValidateStatus() error {
 
 	Options.TestLog()
 
-	return globals.ValidateGlobals(&Options.Globals)
+	return opts.Globals.ValidateGlobals()
 }

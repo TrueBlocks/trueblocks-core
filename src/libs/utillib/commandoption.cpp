@@ -868,7 +868,7 @@ const char* STR_NEW_CHIFRA =
 const char* STR_NEW_CHIFRA_ROUTE =
     "\t[{API_ROUTE}]Pkg \"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/[{API_ROUTE}]\"";
 
-string_q newChifra1 = "list|export|monitors|names|blocks|transactions|receipts|logs|traces|when|tokens|abis|";
+string_q newChifra1 = "list|export|monitors|names|blocks|transactions|receipts|logs|traces|when|tokens|abis|status|";
 string_q newChifra2 = "pins|";
 
 //---------------------------------------------------------------------------------------------------

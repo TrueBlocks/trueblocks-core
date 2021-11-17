@@ -14,7 +14,6 @@ package quotesPkg
  *-------------------------------------------------------------------------------------------*/
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -40,5 +39,5 @@ func (opts *QuotesOptions) ValidateQuotes() error {
 
 	Options.TestLog()
 
-	return globals.ValidateGlobals(&Options.Globals)
+	return opts.Globals.ValidateGlobals()
 }
