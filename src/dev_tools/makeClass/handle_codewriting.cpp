@@ -103,7 +103,7 @@ bool writeCodeIn(const codewrite_t& cw) {
 
 //---------------------------------------------------------------------------------------------------
 bool writeCodeOut(COptions* opts, const string_q& fn) {
-    if (contains(fn, "/stub/") || contains(fn, "/chifra/") || goPortNewCode(fn))
+    if (contains(fn, "/stub/") || contains(fn, "/chifra/options.cpp") || goPortNewCode(fn))
         return true;
 
     string_q orig = asciiFileToString(fn);

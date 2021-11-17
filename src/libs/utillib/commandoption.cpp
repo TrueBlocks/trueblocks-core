@@ -470,6 +470,11 @@ string_q nextCommandoptionChunk_custom(const string_q& fieldIn, const void* data
                     return (startsWith(com->data_type, "opt_") ? "\"+" + com->data_type + "+\"" : com->data_type);
                 }
                 break;
+            case 'g':
+                if (fieldIn % "goroutefunc") {
+                    return "Route" + toProper(com->api_route);
+                }
+                break;
             case 'l':
                 if (fieldIn % "lower") {
                     return toLower(com->longName);
@@ -849,25 +854,48 @@ string_q CCommandOption::toApiTag(void) const {
     return Format(STR_TAG_YAML);
 }
 
+const char* STR_NEW_CHIFRA =
+    "\t// TODO: Use the [{API_ROUTE}]Pkg instead\n"
+    "\t// [{API_ROUTE}]Pkg.Serve[{PROPER}](w, r)\n"
+    "\topts := [{API_ROUTE}]Pkg.FromRequest(w, r)\n"
+    "\terr := opts.Validate[{PROPER}]()\n"
+    "\tif err != nil {\n"
+    "\t\topts.Globals.RespondWithError(w, http.StatusInternalServerError, err)\n"
+    "\t\treturn\n"
+    "\t}";
+
 //---------------------------------------------------------------------------------------------------
 string_q CCommandOption::toGoCall(void) const {
     if (!isApiRoute(api_route))
         return "";
 
-    string_q goFunc = substitute(group, " ", "") + toProper(api_route);
-    ostringstream out;
-    out << endl;
-    out << "// " << goFunc << " help text todo" << endl;
-    out << "func " << goFunc << "(w http.ResponseWriter, r *http.Request) {" << endl;
-    if (!tool.empty() && !contains(tool, " ") && !goPortNewCode(api_route)) {
-        out << "\tCallOne(w, r, \"" << tool << "\", \"" << api_route << "\")" << endl;
-    } else if (goFunc == "AccountsTags" || goFunc == "AccountsCollections") {
-        out << "\tCallOne(w, r, \"ethNames\", \"" << api_route << "\")" << endl;
-    } else {
-        out << "\tCallOneExtra(w, r, \"chifra\", \"" << api_route << "\", \"" << api_route << "\")" << endl;
+    string_q goRouteFunc = Format("[{GOROUTEFUNC}]");
+
+    ostringstream os;
+    os << endl;
+    os << Format("// [{GOROUTEFUNC}] [{DESCRIPTION}]") << endl;
+    os << Format("func [{GOROUTEFUNC}](w http.ResponseWriter, r *http.Request) {") << endl;
+
+    if (contains("names|blocks|receipts|tokens", api_route)) {
+        os << Format(STR_NEW_CHIFRA) << endl;
     }
-    out << "}" << endl;
-    return out.str();
+
+    if (contains("pins|", api_route)) {
+        os << Format("\t[{API_ROUTE}]Pkg.Serve[{PROPER}](w, r)") << endl;
+    } else {
+        if ((!tool.empty() && !contains(tool, " ") && !goPortNewCode(api_route)) && api_route != "abis") {
+            os << "\tCallOne(w, r, \"" << tool << "\", \"" << api_route << "\")" << endl;
+
+        } else if ((goRouteFunc == "RouteTags" || goRouteFunc == "RouteCollections") && api_route != "abis") {
+            os << "\tCallOne(w, r, \"ethNames\", \"" << api_route << "\")" << endl;
+
+        } else {
+            os << "\tCallOneExtra(w, r, \"chifra\", \"" << api_route << "\", \"" << api_route << "\")" << endl;
+        }
+    }
+    os << "}" << endl;
+
+    return os.str();
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -875,15 +903,8 @@ string_q CCommandOption::toGoRoute(void) const {
     if (!isApiRoute(api_route))
         return "";
 
-    string_q goFunc = substitute(group, " ", "") + toProper(api_route);
     ostringstream out;
-    out << endl;
-    out << "\tRoute{" << endl;
-    out << "\t\t\"" << goFunc << "\"," << endl;
-    out << "\t\t\"GET\"," << endl;
-    out << "\t\t\"/" << api_route << "\"," << endl;
-    out << "\t\t" << goFunc << "," << endl;
-    out << "\t}," << endl;
+    out << Format("\tRoute{ \"[{GOROUTEFUNC}]\", \"GET\", \"/[{API_ROUTE}]\", [{GOROUTEFUNC}] },") << endl;
     return out.str();
 }
 

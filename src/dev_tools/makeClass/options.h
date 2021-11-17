@@ -139,7 +139,7 @@ class COptions : public COptionsBase {
     bool handle_gocmds_options(const CCommandOption& cmd);
     bool handle_gocmds_output(const CCommandOption& cmd);
 
-    void writeOpenApiFile(void);
+    bool writeOpenApiFile(void);
 
     string_q getProductions(const CCommandOption& ep);
     void verifyDescriptions(void);

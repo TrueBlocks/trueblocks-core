@@ -30,47 +30,22 @@ import (
 
 // BEG_ROUTE_CODE
 
-func RouteAbis(w http.ResponseWriter, r *http.Request) {
-	CallOneExtra(w, r, "chifra", "abis", "abis")
-	// abisPkg.ServeAbis(w, r)
-}
-
-func RouteBlocks(w http.ResponseWriter, r *http.Request) {
-	// TODO: Use the blocksPkg instead
-	// blocksPkg.ServeBlocks(w, r)
-	opts := blocksPkg.FromRequest(w, r)
-	err := opts.ValidateBlocks()
-	if err != nil {
-		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-		return
-	}
-	CallOne(w, r, "getBlocks", "blocks")
-}
-
-func RouteChunks(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "chunkMan", "chunks")
-}
-
-func RouteExport(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "acctExport", "export")
-}
-
-func RouteInit(w http.ResponseWriter, r *http.Request) {
-	CallOneExtra(w, r, "chifra", "init", "init")
-}
-
+// RouteList List every appearance of an address anywhere on the chain.
 func RouteList(w http.ResponseWriter, r *http.Request) {
 	CallOneExtra(w, r, "chifra", "list", "list")
 }
 
-func RouteLogs(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "getLogs", "logs")
+// RouteExport Export full detail of transactions for one or more addresses.
+func RouteExport(w http.ResponseWriter, r *http.Request) {
+	CallOne(w, r, "acctExport", "export")
 }
 
+// RouteMonitors Add, remove, clean, and list address monitors.
 func RouteMonitors(w http.ResponseWriter, r *http.Request) {
 	CallOneExtra(w, r, "chifra", "monitors", "monitors")
 }
 
+// RouteNames Query addresses or names of well known accounts.
 func RouteNames(w http.ResponseWriter, r *http.Request) {
 	// TODO: Use the namesPkg instead
 	// namesPkg.ServeNames(w, r)
@@ -83,21 +58,33 @@ func RouteNames(w http.ResponseWriter, r *http.Request) {
 	CallOne(w, r, "ethNames", "names")
 }
 
-func RoutePins(w http.ResponseWriter, r *http.Request) {
-	pinsPkg.ServePins(w, r)
+// RouteAbis Fetches the ABI for a smart contract.
+func RouteAbis(w http.ResponseWriter, r *http.Request) {
+	CallOneExtra(w, r, "chifra", "abis", "abis")
 }
 
-func RouteQuotes(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "getQuotes", "quotes")
+// RouteBlocks Retrieve one or more blocks from the chain or local cache.
+func RouteBlocks(w http.ResponseWriter, r *http.Request) {
+	// TODO: Use the blocksPkg instead
+	// blocksPkg.ServeBlocks(w, r)
+	opts := blocksPkg.FromRequest(w, r)
+	err := opts.ValidateBlocks()
+	if err != nil {
+		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
+		return
+	}
+	CallOne(w, r, "getBlocks", "blocks")
 }
 
+// RouteTransactions Retrieve one or more transactions from the chain or local cache.
 func RouteTransactions(w http.ResponseWriter, r *http.Request) {
 	CallOne(w, r, "getTrans", "transactions")
 }
 
+// RouteReceipts Retrieve receipts for the given transaction(s).
 func RouteReceipts(w http.ResponseWriter, r *http.Request) {
 	// TODO: Use the receiptsPkg instead
-	// receiptPkg.ServeReceipts(w, r)
+	// receiptsPkg.ServeReceipts(w, r)
 	opts := receiptsPkg.FromRequest(w, r)
 	err := opts.ValidateReceipts()
 	if err != nil {
@@ -107,22 +94,27 @@ func RouteReceipts(w http.ResponseWriter, r *http.Request) {
 	CallOne(w, r, "getReceipts", "receipts")
 }
 
-func RouteScrape(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "blockScrape", "scrape")
+// RouteLogs Retrieve logs for the given transaction(s).
+func RouteLogs(w http.ResponseWriter, r *http.Request) {
+	CallOne(w, r, "getLogs", "logs")
 }
 
-func RouteSlurp(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "ethslurp", "slurp")
+// RouteTraces Retrieve traces for the given transaction(s).
+func RouteTraces(w http.ResponseWriter, r *http.Request) {
+	CallOne(w, r, "getTraces", "traces")
 }
 
+// RouteWhen Find block(s) based on date, blockNum, timestamp, or 'special'.
+func RouteWhen(w http.ResponseWriter, r *http.Request) {
+	CallOne(w, r, "whenBlock", "when")
+}
+
+// RouteState Retrieve account balance(s) for one or more addresses at given block(s).
 func RouteState(w http.ResponseWriter, r *http.Request) {
 	CallOne(w, r, "getState", "state")
 }
 
-func RouteStatus(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "cacheStatus", "status")
-}
-
+// RouteTokens Retrieve token balance(s) for one or more addresses at given block(s).
 func RouteTokens(w http.ResponseWriter, r *http.Request) {
 	// TODO: Use the tokensPkg instead
 	// tokensPkg.ServeTokens(w, r)
@@ -135,14 +127,40 @@ func RouteTokens(w http.ResponseWriter, r *http.Request) {
 	CallOne(w, r, "getTokens", "tokens")
 }
 
-func RouteTraces(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "getTraces", "traces")
+// RouteStatus Report on the status of the TrueBlocks system.
+func RouteStatus(w http.ResponseWriter, r *http.Request) {
+	CallOne(w, r, "cacheStatus", "status")
 }
 
-func RouteWhen(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "whenBlock", "when")
+// RouteScrape Scan the chain and update (and optionally pin) the TrueBlocks index of appearances.
+func RouteScrape(w http.ResponseWriter, r *http.Request) {
+	CallOne(w, r, "blockScrape", "scrape")
 }
 
+// RouteInit Initialize the TrueBlocks system by downloading from IPFS.
+func RouteInit(w http.ResponseWriter, r *http.Request) {
+	CallOneExtra(w, r, "chifra", "init", "init")
+}
+
+// RoutePins Manage pinned index of appearances and associated blooms.
+func RoutePins(w http.ResponseWriter, r *http.Request) {
+	pinsPkg.ServePins(w, r)
+}
+
+// RouteChunks Manage and investigate chunks and bloom filters.
+func RouteChunks(w http.ResponseWriter, r *http.Request) {
+	CallOne(w, r, "chunkMan", "chunks")
+}
+
+// RouteQuotes Freshen or display Ethereum price data. This tool has been deprecated.
+func RouteQuotes(w http.ResponseWriter, r *http.Request) {
+	CallOne(w, r, "getQuotes", "quotes")
+}
+
+// RouteSlurp Fetch data from EtherScan for any address.
+func RouteSlurp(w http.ResponseWriter, r *http.Request) {
+	CallOne(w, r, "ethslurp", "slurp")
+}
 // END_ROUTE_CODE
 
 func Index(w http.ResponseWriter, r *http.Request) {
@@ -157,28 +175,26 @@ var routes = Routes{
 	Route{"EditName", "POST", "/names", EditName},
 
 	// BEG_ROUTE_ITEMS
-	Route{"RouteAbis", "GET", "/abis", RouteAbis},
-	Route{"RouteBlocks", "GET", "/blocks", RouteBlocks},
-	Route{"RouteChunks", "GET", "/chunks", RouteChunks},
-	// not a route
-	// Route{"RouteExplore", "GET", "/explore", RouteExplore},
-	Route{"RouteExport", "GET", "/export", RouteExport},
-	Route{"RouteInit", "GET", "/init", RouteInit},
-	Route{"RouteList", "GET", "/list", RouteList},
-	Route{"RouteLogs", "GET", "/logs", RouteLogs},
-	Route{"RouteMonitors", "GET", "/monitors", RouteMonitors},
-	Route{"RouteNames", "GET", "/names", RouteNames},
-	Route{"RoutePins", "GET", "/pins", RoutePins},
-	Route{"RouteQuotes", "GET", "/quotes", RouteQuotes},
-	Route{"RouteReceipts", "GET", "/receipts", RouteReceipts},
-	Route{"RouteScrape,", "GET", "/scrape", RouteScrape},
-	Route{"RouteSlurp", "GET", "/slurp", RouteSlurp},
-	Route{"RouteState", "GET", "/state", RouteState},
-	Route{"RouteStatus", "GET", "/status", RouteStatus},
-	Route{"RouteTokens", "GET", "/tokens", RouteTokens},
-	Route{"RouteTraces", "GET", "/traces", RouteTraces},
-	Route{"RouteTransactions", "GET", "/transactions", RouteTransactions},
-	Route{"RouteWhen", "GET", "/when", RouteWhen},
+	Route{ "RouteList", "GET", "/list", RouteList },
+	Route{ "RouteExport", "GET", "/export", RouteExport },
+	Route{ "RouteMonitors", "GET", "/monitors", RouteMonitors },
+	Route{ "RouteNames", "GET", "/names", RouteNames },
+	Route{ "RouteAbis", "GET", "/abis", RouteAbis },
+	Route{ "RouteBlocks", "GET", "/blocks", RouteBlocks },
+	Route{ "RouteTransactions", "GET", "/transactions", RouteTransactions },
+	Route{ "RouteReceipts", "GET", "/receipts", RouteReceipts },
+	Route{ "RouteLogs", "GET", "/logs", RouteLogs },
+	Route{ "RouteTraces", "GET", "/traces", RouteTraces },
+	Route{ "RouteWhen", "GET", "/when", RouteWhen },
+	Route{ "RouteState", "GET", "/state", RouteState },
+	Route{ "RouteTokens", "GET", "/tokens", RouteTokens },
+	Route{ "RouteStatus", "GET", "/status", RouteStatus },
+	Route{ "RouteScrape", "GET", "/scrape", RouteScrape },
+	Route{ "RouteInit", "GET", "/init", RouteInit },
+	Route{ "RoutePins", "GET", "/pins", RoutePins },
+	Route{ "RouteChunks", "GET", "/chunks", RouteChunks },
+	Route{ "RouteQuotes", "GET", "/quotes", RouteQuotes },
+	Route{ "RouteSlurp", "GET", "/slurp", RouteSlurp },
 	// END_ROUTE_ITEMS
 }
 
