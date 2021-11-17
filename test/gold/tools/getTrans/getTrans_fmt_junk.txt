@@ -1,7 +1,7 @@
 chifra transactions  2222222.0 2332332.0 --fmt junk
-Error: 
-  The --fmt option (junk) must be one of [ json | txt | csv | api ]
-
+TEST[DATE|TIME] Transactions:  [2222222.0 2332332.0]
+TEST[DATE|TIME] Format:  junk
+Error: The --fmt option (junk) must be one of [ json | txt | csv | api ]
 Usage:
   chifra transactions [flags] <tx_id> [tx_id...]
 
@@ -14,11 +14,9 @@ Flags:
   -u, --uniq               display a list of uniq addresses found in the transaction
   -r, --reconcile string   reconcile the transaction as per the provided address
   -o, --cache              force the results of the query into the tx cache (and the trace cache if applicable)
-
-Global Flags:
-  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
-  -h, --help         display this help screen
-  -v, --verbose      enable verbose (increase detail with --log_level)
+  -x, --fmt string         export format, one of [none|json*|txt|csv|api]
+  -v, --verbose            enable verbose (increase detail with --log_level)
+  -h, --help               display this help screen
 
 Notes:
   - The transactions list may be one or more transaction hashes, blockNumber.transactionID pairs, or a blockHash.transactionID pairs.

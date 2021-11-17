@@ -1,5 +1,5 @@
 {
   "errors": [
-    "the '--classes' option is not implemented"
+    "The --classes option is not available (not implemented)."
   ]
 }

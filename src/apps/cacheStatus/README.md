@@ -19,11 +19,9 @@ Flags:
   -d, --details         include details about items found in monitors, slurps, abis, or price caches
   -t, --types strings   for caches mode only, which type(s) of cache to report
                         One or more of [ blocks | txs | traces | slurps | prices | all ]
-
-Global Flags:
-  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
-  -h, --help         display this help screen
-  -v, --verbose      enable verbose (increase detail with --log_level)
+  -x, --fmt string      export format, one of [none|json*|txt|csv|api]
+  -v, --verbose         enable verbose (increase detail with --log_level)
+  -h, --help            display this help screen
 ```
 
 Other Options

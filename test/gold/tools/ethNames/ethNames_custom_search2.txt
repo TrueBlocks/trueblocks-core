@@ -1,3 +1,6 @@
 chifra names  --custom Account_1 --match_case
+TEST[DATE|TIME] Terms:  [Account_1]
+TEST[DATE|TIME] MatchCase:  true
+TEST[DATE|TIME] Custom:  true
 tags	address	name	symbol	decimals
 81-Custom	0x0000000000000000000000000000000000000001	Account_1

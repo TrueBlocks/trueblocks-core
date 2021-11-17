@@ -1,4 +1,5 @@
 chifra abis  --find 0x1aa3a008 --find 0x3ccfd60b --find 0xad7a672f
+TEST[DATE|TIME] Find:  [0x1aa3a008 0x3ccfd60b 0xad7a672f]
 PROG[DATE|TIME] Found  1  of  3 0x1aa3a008 register()
 PROG[DATE|TIME] Found  2  of  3 0xad7a672f totalBalance()
 PROG[DATE|TIME] Found  3  of  3 0x3ccfd60b withdraw()

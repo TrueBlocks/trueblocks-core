@@ -1,4 +1,5 @@
 chifra abis  --find 0x1aa3a008
+TEST[DATE|TIME] Find:  [0x1aa3a008]
 PROG[DATE|TIME] Found  1  of  1 0x1aa3a008 register()
 encoding	signature
 0x1aa3a008	register()

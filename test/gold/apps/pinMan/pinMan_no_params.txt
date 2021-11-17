@@ -1,7 +1,5 @@
 chifra pins  
-Error: 
-  You must choose at least one of --list or --init.
-
+Error: Please choose at least one of --list or --init.
 Usage:
   chifra pins [flags]
 
@@ -14,11 +12,9 @@ Flags:
   -f, --freshen       check for new bloom or index chunks and download if available (hidden)
   -r, --remote        for --list mode only, recover the manifest from IPFS via UnchainedIndex smart contract (hidden)
   -n, --init_all      use --init --all instead (hidden)
-
-Global Flags:
-  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
-  -h, --help         display this help screen
-  -v, --verbose      enable verbose (increase detail with --log_level)
+  -x, --fmt string    export format, one of [none|json*|txt|csv|api]
+  -v, --verbose       enable verbose (increase detail with --log_level)
+  -h, --help          display this help screen
 
 Notes:
   - One of --list or --init is required.

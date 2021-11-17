@@ -38,6 +38,7 @@ bytes1
 address[3]
 uint96
 uint32,bytes32
+uint32,bytes
 bytes32,bytes
 bytes,uint256
 uint8[],uint8[]

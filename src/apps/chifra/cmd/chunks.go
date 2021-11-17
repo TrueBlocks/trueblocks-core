@@ -1,3 +1,5 @@
+package cmd
+
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -11,25 +13,26 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * Parts of this file were generated with makeClass --gocmds. Edit only those parts of
- * the code inside of 'EXISTING_CODE' tags.
+ * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
-package cmd
 
+// EXISTING_CODE
 import (
 	"os"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	chunksPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/chunks"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/spf13/cobra"
 )
+
+// EXISTING_CODE
 
 // chunksCmd represents the chunks command
 var chunksCmd = &cobra.Command{
 	Use:   usageChunks,
 	Short: shortChunks,
 	Long:  longChunks,
-	Run:   runChunks,
-	Args:  validateChunksArgs,
+	RunE:  chunksPkg.RunChunks,
 }
 
 var usageChunks = `chunks [flags] <block> [block...]
@@ -46,39 +49,19 @@ var notesChunks = `
 Notes:
   - Only a single block in a given chunk needs to be supplied.`
 
-type chunksOptionsType struct {
-	list    bool
-	check   bool
-	extract string
-	stats   bool
-	save    bool
-}
-
-var ChunksOpts chunksOptionsType
-
 func init() {
-	chunksCmd.SetOut(os.Stderr)
+	chunksCmd.Flags().SortFlags = false
 
-	chunksCmd.Flags().SortFlags = false
-	chunksCmd.PersistentFlags().SortFlags = false
-	chunksCmd.Flags().BoolVarP(&ChunksOpts.list, "list", "l", false, "list the bloom and index hashes from local cache or IPFS")
-	chunksCmd.Flags().BoolVarP(&ChunksOpts.check, "check", "c", false, "check the validity of the chunk or bloom")
-	chunksCmd.Flags().StringVarP(&ChunksOpts.extract, "extract", "e", "", `show some or all of the contents of the chunk or bloom filters
+	chunksCmd.Flags().BoolVarP(&chunksPkg.Options.List, "list", "l", false, "list the bloom and index hashes from local cache or IPFS")
+	chunksCmd.Flags().BoolVarP(&chunksPkg.Options.Check, "check", "c", false, "check the validity of the chunk or bloom")
+	chunksCmd.Flags().StringVarP(&chunksPkg.Options.Extract, "extract", "e", "", `show some or all of the contents of the chunk or bloom filters
 One of [ header | addr_table | app_table | chunks | blooms ]`)
-	chunksCmd.Flags().BoolVarP(&ChunksOpts.stats, "stats", "s", false, "for the --list option only, display statistics about each chunk or bloom")
-	chunksCmd.Flags().BoolVarP(&ChunksOpts.save, "save", "a", false, "for the --extract option only, save the entire chunk to a similarly named file as well as display")
-	chunksCmd.Flags().SortFlags = false
-	chunksCmd.PersistentFlags().SortFlags = false
+	chunksCmd.Flags().BoolVarP(&chunksPkg.Options.Stats, "stats", "s", false, "for the --list option only, display statistics about each chunk or bloom")
+	chunksCmd.Flags().BoolVarP(&chunksPkg.Options.Save, "save", "a", false, "for the --extract option only, save the entire chunk to a similarly named file as well as display")
+	globals.InitGlobals(chunksCmd, &chunksPkg.Options.Globals)
 
 	chunksCmd.SetUsageTemplate(UsageWithNotes(notesChunks))
-	rootCmd.AddCommand(chunksCmd)
-}
+	chunksCmd.SetOut(os.Stderr)
 
-func TestLogChunks(args []string) {
-	if !utils.IsTestMode() {
-		return
-	}
+	chifraCmd.AddCommand(chunksCmd)
 }
-
-// EXISTING_CODE
-// EXISTING_CODE

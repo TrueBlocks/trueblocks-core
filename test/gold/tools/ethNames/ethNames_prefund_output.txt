@@ -1,2 +1,4 @@
 chifra names  --output test_file --prefund
+TEST[DATE|TIME] Prefund:  true
+TEST[DATE|TIME] OutputFn:  test_file
 --output_filename--

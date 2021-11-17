@@ -1,7 +1,5 @@
 chifra abis  --sol --find 0x1aa3a008 0x7d655c57f71464b6f83811c55d84009cd9f5221c --fmt json
-Error: 
-  Please choose only one of --sol or --find.
-
+Error: Please choose only one of --sol or --find.
 Usage:
   chifra abis [flags] <address> [address...]
 
@@ -14,11 +12,9 @@ Flags:
   -f, --find strings   search for function or event declarations given a four- or 32-byte code(s)
   -o, --source         show the source of the ABI information (hidden)
   -c, --classes        generate classDefinitions folder and class definitions (hidden)
-
-Global Flags:
-  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
-  -h, --help         display this help screen
-  -v, --verbose      enable verbose (increase detail with --log_level)
+  -x, --fmt string     export format, one of [none|json*|txt|csv|api]
+  -v, --verbose        enable verbose (increase detail with --log_level)
+  -h, --help           display this help screen
 
 Notes:
   - For the --sol option, place the solidity files in the current working folder.

@@ -1,4 +1,7 @@
 chifra when  23123 --list --fmt txt
+TEST[DATE|TIME] Blocks:  [23123]
+TEST[DATE|TIME] List:  true
+TEST[DATE|TIME] Format:  txt
 blocknumber	timestamp	date	name
 23123	1438539649	2015-08-02 18:20:49 UTC
 0	1438269960	2015-07-30 15:26:00 UTC	first

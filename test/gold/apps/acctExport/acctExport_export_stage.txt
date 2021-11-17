@@ -1,4 +1,8 @@
 chifra export  0x001d14804b399c6ef80e64576f657660804fec0b --first_block 100000 --last_block 2000000 --staging
+TEST[DATE|TIME] Addrs:  [0x001d14804b399c6ef80e64576f657660804fec0b]
+TEST[DATE|TIME] Staging:  true
+TEST[DATE|TIME] FirstBlock:  100000
+TEST[DATE|TIME] LastBlock:  2000000
 
   --staging and --unripe are disabled for testing. Quitting...
 
@@ -15,7 +19,6 @@ Arguments:
 
 Flags:
   -p, --appearances          export a list of appearances
-  -T, --transactions         export the actual transactional data (the default)
   -r, --receipts             export receipts instead of transactional data
   -l, --logs                 export logs instead of transactional data
   -t, --traces               export traces instead of transactional data

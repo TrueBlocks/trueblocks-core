@@ -1,4 +1,7 @@
 chifra status  --get_config
+TEST[DATE|TIME] Depth:  0
+TEST[DATE|TIME] GetConfig:  true
+TEST[DATE|TIME] TestEnd:  0
 {
   "files": [
     {

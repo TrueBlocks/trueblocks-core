@@ -1,4 +1,7 @@
 chifra blocks  4012000-4012001 --logs --topic 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef
+TEST[DATE|TIME] Blocks:  [4012000-4012001]
+TEST[DATE|TIME] Logs:  true
+TEST[DATE|TIME] Topic:  [0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef]
 { "data": [
 TIME ~ CLOCK - <INFO>  : Processing log query 4012000 to 4012000{
   "address": "0xfca47962d45adfdfd1ab2d972315db4ce7ccf094",

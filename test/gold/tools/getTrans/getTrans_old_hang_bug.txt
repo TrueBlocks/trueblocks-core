@@ -1,4 +1,7 @@
 chifra transactions  6409270.108 --articulate --fmt json
+TEST[DATE|TIME] Transactions:  [6409270.108]
+TEST[DATE|TIME] Articulate:  true
+TEST[DATE|TIME] Format:  json
 { "data": [
 
 level: 1

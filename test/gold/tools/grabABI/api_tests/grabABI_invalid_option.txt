@@ -1,5 +1,5 @@
 {
   "errors": [
-    "At least one valid Ethereum address is required"
+    "Please specify at least one valid Ethereum address."
   ]
 }

@@ -1,4 +1,6 @@
 chifra traces  2222221.* --fmt json
+TEST[DATE|TIME] Transactions:  [2222221.*]
+TEST[DATE|TIME] Format:  json
 { "data": [
   {
     "blockHash": "0xe4c2b8cb9ddd1acb41043afb3bd0149c281eca23f1bc563af5899bac748ec372",

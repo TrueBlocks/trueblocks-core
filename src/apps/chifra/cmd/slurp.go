@@ -1,3 +1,5 @@
+package cmd
+
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -11,25 +13,26 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * Parts of this file were generated with makeClass --gocmds. Edit only those parts of
- * the code inside of 'EXISTING_CODE' tags.
+ * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
-package cmd
 
+// EXISTING_CODE
 import (
 	"os"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	slurpPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/slurp"
 	"github.com/spf13/cobra"
 )
+
+// EXISTING_CODE
 
 // slurpCmd represents the slurp command
 var slurpCmd = &cobra.Command{
 	Use:   usageSlurp,
 	Short: shortSlurp,
 	Long:  longSlurp,
-	Run:   runSlurp,
-	Args:  validateSlurpArgs,
+	RunE:  slurpPkg.RunSlurp,
 }
 
 var usageSlurp = `slurp [flags] <address> [address...] [block...]
@@ -47,33 +50,16 @@ var notesSlurp = `
 Notes:
   - Portions of this software are Powered by Etherscan.io APIs.`
 
-type slurpOptionsType struct {
-	types       []string
-	appearances bool
-}
-
-var SlurpOpts slurpOptionsType
-
 func init() {
-	slurpCmd.SetOut(os.Stderr)
+	slurpCmd.Flags().SortFlags = false
 
-	slurpCmd.Flags().SortFlags = false
-	slurpCmd.PersistentFlags().SortFlags = false
-	slurpCmd.Flags().StringSliceVarP(&SlurpOpts.types, "types", "t", nil, `which types of transactions to request
+	slurpCmd.Flags().StringSliceVarP(&slurpPkg.Options.Types, "types", "t", nil, `which types of transactions to request
 One or more of [ ext | int | token | nfts | miner | uncles | all ]`)
-	slurpCmd.Flags().BoolVarP(&SlurpOpts.appearances, "appearances", "p", false, "show only the blocknumer.tx_id appearances of the exported transactions")
-	slurpCmd.Flags().SortFlags = false
-	slurpCmd.PersistentFlags().SortFlags = false
+	slurpCmd.Flags().BoolVarP(&slurpPkg.Options.Appearances, "appearances", "p", false, "show only the blocknumer.tx_id appearances of the exported transactions")
+	globals.InitGlobals(slurpCmd, &slurpPkg.Options.Globals)
 
 	slurpCmd.SetUsageTemplate(UsageWithNotes(notesSlurp))
-	rootCmd.AddCommand(slurpCmd)
-}
+	slurpCmd.SetOut(os.Stderr)
 
-func TestLogSlurp(args []string) {
-	if !utils.IsTestMode() {
-		return
-	}
+	chifraCmd.AddCommand(slurpCmd)
 }
-
-// EXISTING_CODE
-// EXISTING_CODE

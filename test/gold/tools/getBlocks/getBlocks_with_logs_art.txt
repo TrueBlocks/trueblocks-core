@@ -1,4 +1,7 @@
 chifra blocks  4012000-4012001 --logs --articulate
+TEST[DATE|TIME] Blocks:  [4012000-4012001]
+TEST[DATE|TIME] Logs:  true
+TEST[DATE|TIME] Articulate:  true
 { "data": [
 TIME ~ CLOCK - <INFO>  : Processing log query 4012000{
   "address": "0xfca47962d45adfdfd1ab2d972315db4ce7ccf094",

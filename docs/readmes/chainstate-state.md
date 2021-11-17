@@ -20,11 +20,9 @@ Flags:
                         One or more of [ none | some | all | balance | nonce | code | storage | deployed | accttype ]
   -c, --changes         only report a balance when it changes from one block to the next
   -n, --no_zero         suppress the display of zero balance accounts
-
-Global Flags:
-  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
-  -h, --help         display this help screen
-  -v, --verbose      enable verbose (increase detail with --log_level)
+  -x, --fmt string      export format, one of [none|json*|txt|csv|api]
+  -v, --verbose         enable verbose (increase detail with --log_level)
+  -h, --help            display this help screen
 
 Notes:
   - An address must start with '0x' and be forty-two characters long.

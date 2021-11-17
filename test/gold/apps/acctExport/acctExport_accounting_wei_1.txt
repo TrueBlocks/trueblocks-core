@@ -1,4 +1,9 @@
 chifra export  0x001d14804b399c6ef80e64576f657660804fec0b --max_records 5 --accounting --fmt api --log_level 10
+TEST[DATE|TIME] Addrs:  [0x001d14804b399c6ef80e64576f657660804fec0b]
+TEST[DATE|TIME] Accounting:  true
+TEST[DATE|TIME] MaxRecords:  5
+TEST[DATE|TIME] LogLevel:  10
+TEST[DATE|TIME] Format:  api
 TIME ~ CLOCK - : 8------Entering loadNames...
 TIME ~ CLOCK - : 8------Reading names from binary cache
 TIME ~ CLOCK - : 4-----0x001d14804b399c6ef80e64576f657660804fec0b freshened to 11854827

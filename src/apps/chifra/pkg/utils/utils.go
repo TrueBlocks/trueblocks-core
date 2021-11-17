@@ -22,7 +22,6 @@ import (
 	"os/user"
 	"runtime"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"golang.org/x/crypto/ssh/terminal"
 )
 
@@ -55,31 +54,8 @@ func IsTestModeServer(r *http.Request) bool {
 	return r.Header.Get("User-Agent") == "testRunner"
 }
 
-func IsTestMode() bool {
-	return os.Getenv("TEST_MODE") == "true"
-}
-
 func IsApiMode() bool {
 	return os.Getenv("API_MODE") == "true"
-}
-
-func TestLogArgs(name string, args []string) {
-	if !IsTestMode() || len(args) == 0 {
-		return
-	}
-
-	logger.Log(logger.Info, name)
-	for _, arg := range args {
-		logger.Log(logger.Info, " ", arg)
-	}
-}
-
-func TestLogBool(name string, val bool) {
-	if !IsTestMode() || !val {
-		return
-	}
-
-	logger.Log(logger.Info, name+":", val)
 }
 
 func IsTerminal() bool {
@@ -98,9 +74,6 @@ func AsciiFileToString(fn string) string {
 	}
 	return string(contents)
 }
-
-// maximum uint64
-const NOPOS = ^uint64(0)
 
 func OpenBrowser(url string) {
 	var err error

@@ -1,3 +1,5 @@
 chifra state  0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 --parts deployed 2500000
+TEST[DATE|TIME] Addrs:  [0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 2500000]
+TEST[DATE|TIME] Parts:  [deployed]
 blocknumber	address	balance	deployed
 2500000	0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359	3905662906205094119236	988725

@@ -15,11 +15,9 @@ Flags:
   -a, --all           in addition to Bloom filters, download full index chunks
   -S, --share         share downloaded data by pinning it to IPFS (the IPFS daemon must be running)
   -s, --sleep float   throttle requests by this many seconds (default 0.25)
-
-Global Flags:
-  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
-  -h, --help         display this help screen
-  -v, --verbose      enable verbose (increase detail with --log_level)
+  -x, --fmt string    export format, one of [none|json*|txt|csv|api]
+  -v, --verbose       enable verbose (increase detail with --log_level)
+  -h, --help          display this help screen
 
 Notes:
   - One of --list or --init is required.
@@ -27,5 +25,5 @@ Notes:
   - The --share option works only if an IPFS daemon is running.
 ```
 
-**Source code**: [`pins.go`](https://github.com/TrueBlocks/trueblocks-core/tree/develop/src/apps/chifra/cmd/pins.go)
+**Source code**: [`pins.go`](https://github.com/TrueBlocks/trueblocks-core/tree/develop/src/apps/chifra/internal/pins.go)
 

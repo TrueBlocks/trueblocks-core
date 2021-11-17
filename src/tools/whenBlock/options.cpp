@@ -131,7 +131,7 @@ bool COptions::parseArguments(string_q& commandIn) {
         forEverySpecialBlock(showSpecials, &requests);
 
     if ((fix || check || count) && !timestamps)
-        return usage("The --check, --fix and --count options are only available with the --timestamps option.");
+        return usage(usageErrs[ERR_ONLYTS]);
 
     if (requests.size() == 0 && !timestamps)
         return usage(usageErrs[ERR_INVALIDDATE1]);
@@ -181,6 +181,7 @@ COptions::COptions(void) {
     usageErrs[ERR_INVALIDDATE1] = "Please supply either a JSON formatted date or a blockNumber.";
     usageErrs[ERR_INVALIDDATE2] = "Invalid date '[{ARG}]'.";
     usageErrs[ERR_INVALIDDATE3] = "The date you specified ([{ARG}]) is before the first block.";
+    usageErrs[ERR_ONLYTS] = "The --check, --fix, and --count options are only available with the --timestamps option.";
     // END_ERROR_STRINGS
 
     // Differnt default for this software, but only change it if user hasn't already therefor not in Init

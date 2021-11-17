@@ -1,4 +1,6 @@
 chifra traces  0x66e49e99a984cd88e097782a001afaac8c6ff786c936651895475dd88ec360f6 --fmt api
+TEST[DATE|TIME] Transactions:  [0x66e49e99a984cd88e097782a001afaac8c6ff786c936651895475dd88ec360f6]
+TEST[DATE|TIME] Format:  api
 {"data": [
   {
     "blockHash": "0x96a09b25c3748974bb7e08780074482a164ab5a21e2ffc6c7115ec73c84e7f73",

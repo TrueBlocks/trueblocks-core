@@ -1,3 +1,7 @@
 chifra blocks  3982128 --apps --count --fmt csv
+TEST[DATE|TIME] Blocks:  [3982128]
+TEST[DATE|TIME] Apps:  true
+TEST[DATE|TIME] Count:  true
+TEST[DATE|TIME] Format:  csv
 "blocknumber","transactionscnt","addr_count"
 "3982128","91","509"

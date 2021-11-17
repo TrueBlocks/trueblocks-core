@@ -1,6 +1,4 @@
 chifra explore  46147.0 --local
-INFO[DATE|TIME] terms
-INFO[DATE|TIME]   46147.0
-INFO[DATE|TIME] local: true
-INFO[DATE|TIME] is__tx: true
+TEST[DATE|TIME] Terms:  [46147.0]
+TEST[DATE|TIME] Local:  true
 Opening http://localhost:1234/explorer/transactions/0x5c504ed432cb51138bcf09aa5e8a410dd4a1e204ef84bfed1be16dfba1b22060

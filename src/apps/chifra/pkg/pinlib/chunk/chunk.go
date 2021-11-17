@@ -252,14 +252,14 @@ func saveFileContents(res *jobResult, cacheLayout *CacheLayout) error {
 	}
 	defer archive.Close()
 
-	output, err := os.Create(cacheLayout.GetPathTo(res.fileName))
+	outputFile, err := os.Create(cacheLayout.GetPathTo(res.fileName))
 	if err != nil {
 		return &ErrSavingCreateFile{res.fileName, err}
 	}
-	defer output.Close()
+	defer outputFile.Close()
 
 	// Unzip and save content to a file
-	_, werr := io.Copy(output, archive)
+	_, werr := io.Copy(outputFile, archive)
 	if werr != nil {
 		return &ErrSavingCopy{res.fileName, werr}
 	}

@@ -1,4 +1,6 @@
 chifra traces  0x8324490c68e6268db9eadcb4ce8303ee1d256e480f7637853bb13a3ae1fe1328 --fmt csv
+TEST[DATE|TIME] Transactions:  [0x8324490c68e6268db9eadcb4ce8303ee1d256e480f7637853bb13a3ae1fe1328]
+TEST[DATE|TIME] Format:  csv
 "blocknumber","transactionindex","traceaddress","action::calltype","error","action::from","action::to","action::value","action::ether","action::gas","result::gasused","action::input","compressedtrace","result::output"
 "3189962","7","null","call","","0xb97073b754660bb356dfe12f78ae366d77dbc80f","0xd450aafdb8a225c901d5379a3d0ff8fea1344bfa","0","0.000000000000000000","11035","5437","0xd8963b9100000000000000000000000000a3819199113fc6a6e6ba1298afde7377e2009b","","0x"
 "3189962","7","0-s","suicide","","0xd450aafdb8a225c901d5379a3d0ff8fea1344bfa","0x00a3819199113fc6a6e6ba1298afde7377e2009b","100000000000000000","0.100000000000000000","0","0","0x","",""

@@ -1,4 +1,5 @@
 chifra traces  .whatever
+TEST[DATE|TIME] Transactions:  [.whatever]
 
   .whatever does not appear to be a valid transaction index. Quitting...
 

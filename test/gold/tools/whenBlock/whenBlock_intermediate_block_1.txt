@@ -1,3 +1,4 @@
 chifra when  1000000
+TEST[DATE|TIME] Blocks:  [1000000]
 blocknumber	timestamp	date	name
 1000000	1455404053	2016-02-13 22:54:13 UTC

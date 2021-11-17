@@ -24,11 +24,9 @@ Flags:
   -k, --known          load common 'known' ABIs from cache
   -s, --sol            extract the abi definition from the provided .sol file(s)
   -f, --find strings   search for function or event declarations given a four- or 32-byte code(s)
-
-Global Flags:
-  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
-  -h, --help         display this help screen
-  -v, --verbose      enable verbose (increase detail with --log_level)
+  -x, --fmt string     export format, one of [none|json*|txt|csv|api]
+  -v, --verbose        enable verbose (increase detail with --log_level)
+  -h, --help           display this help screen
 
 Notes:
   - For the --sol option, place the solidity files in the current working folder.

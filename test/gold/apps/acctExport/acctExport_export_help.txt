@@ -12,7 +12,6 @@ Arguments:
 
 Flags:
   -p, --appearances           export a list of appearances
-  -T, --transactions          export the actual transactional data (the default)
   -r, --receipts              export receipts instead of transactional data
   -l, --logs                  export logs instead of transactional data
   -t, --traces                export traces instead of transactional data
@@ -42,11 +41,9 @@ Flags:
   -m, --max_traces uint       if --skip_ddos is on, this many traces defines what a ddos transaction is (hidden) (default 250)
   -F, --first_block uint      first block to process (inclusive) (hidden)
   -L, --last_block uint       last block to process (inclusive) (hidden)
-
-Global Flags:
-  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
-  -h, --help         display this help screen
-  -v, --verbose      enable verbose (increase detail with --log_level)
+  -x, --fmt string            export format, one of [none|json*|txt|csv|api]
+  -v, --verbose               enable verbose (increase detail with --log_level)
+  -h, --help                  display this help screen
 
 Notes:
   - An address must start with '0x' and be forty-two characters long.

@@ -1,3 +1,5 @@
+package cmd
+
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -11,25 +13,26 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * Parts of this file were generated with makeClass --gocmds. Edit only those parts of
- * the code inside of 'EXISTING_CODE' tags.
+ * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
-package cmd
 
+// EXISTING_CODE
 import (
 	"os"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	transactionsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/transactions"
 	"github.com/spf13/cobra"
 )
+
+// EXISTING_CODE
 
 // transactionsCmd represents the transactions command
 var transactionsCmd = &cobra.Command{
 	Use:   usageTransactions,
 	Short: shortTransactions,
 	Long:  longTransactions,
-	Run:   runTransactions,
-	Args:  validateTransactionsArgs,
+	RunE:  transactionsPkg.RunTransactions,
 }
 
 var usageTransactions = `transactions [flags] <tx_id> [tx_id...]
@@ -48,38 +51,18 @@ Notes:
   - This tool checks for valid input syntax, but does not check that the transaction requested actually exists.
   - If the queried node does not store historical state, the results for most older transactions are undefined.`
 
-type transactionsOptionsType struct {
-	articulate bool
-	trace      bool
-	uniq       bool
-	reconcile  string
-	cache      bool
-}
-
-var TransactionsOpts transactionsOptionsType
-
 func init() {
-	transactionsCmd.SetOut(os.Stderr)
+	transactionsCmd.Flags().SortFlags = false
 
-	transactionsCmd.Flags().SortFlags = false
-	transactionsCmd.PersistentFlags().SortFlags = false
-	transactionsCmd.Flags().BoolVarP(&TransactionsOpts.articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
-	transactionsCmd.Flags().BoolVarP(&TransactionsOpts.trace, "trace", "t", false, "include the transaction's traces in the results")
-	transactionsCmd.Flags().BoolVarP(&TransactionsOpts.uniq, "uniq", "u", false, "display a list of uniq addresses found in the transaction")
-	transactionsCmd.Flags().StringVarP(&TransactionsOpts.reconcile, "reconcile", "r", "", "reconcile the transaction as per the provided address")
-	transactionsCmd.Flags().BoolVarP(&TransactionsOpts.cache, "cache", "o", false, "force the results of the query into the tx cache (and the trace cache if applicable)")
-	transactionsCmd.Flags().SortFlags = false
-	transactionsCmd.PersistentFlags().SortFlags = false
+	transactionsCmd.Flags().BoolVarP(&transactionsPkg.Options.Articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
+	transactionsCmd.Flags().BoolVarP(&transactionsPkg.Options.Trace, "trace", "t", false, "include the transaction's traces in the results")
+	transactionsCmd.Flags().BoolVarP(&transactionsPkg.Options.Uniq, "uniq", "u", false, "display a list of uniq addresses found in the transaction")
+	transactionsCmd.Flags().StringVarP(&transactionsPkg.Options.Reconcile, "reconcile", "r", "", "reconcile the transaction as per the provided address")
+	transactionsCmd.Flags().BoolVarP(&transactionsPkg.Options.Cache, "cache", "o", false, "force the results of the query into the tx cache (and the trace cache if applicable)")
+	globals.InitGlobals(transactionsCmd, &transactionsPkg.Options.Globals)
 
 	transactionsCmd.SetUsageTemplate(UsageWithNotes(notesTransactions))
-	rootCmd.AddCommand(transactionsCmd)
-}
+	transactionsCmd.SetOut(os.Stderr)
 
-func TestLogTransactions(args []string) {
-	if !utils.IsTestMode() {
-		return
-	}
+	chifraCmd.AddCommand(transactionsCmd)
 }
-
-// EXISTING_CODE
-// EXISTING_CODE
