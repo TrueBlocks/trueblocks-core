@@ -1,4 +1,5 @@
 chifra when  --timestamps
+TEST[DATE|TIME] Timestamps:  true
 blocknumber	timestamp	date	name
 0	1438269960	2015-07-30 15:26:00 UTC
 1	1438269988	2015-07-30 15:26:28 UTC

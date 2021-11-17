@@ -1,4 +1,8 @@
 chifra traces  0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f --articulate --fmt api --verbose
+TEST[DATE|TIME] Transactions:  [0xcf57ae0204729b4230034888a8508146c13ad75e8c9b584120b87cb20456650f]
+TEST[DATE|TIME] Articulate:  true
+TEST[DATE|TIME] Verbose:  true
+TEST[DATE|TIME] Format:  api
 {"data": [
 
 level: 1

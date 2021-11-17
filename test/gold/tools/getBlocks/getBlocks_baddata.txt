@@ -1,4 +1,5 @@
 chifra blocks  1590000 4000001-4000002 x400x001
+TEST[DATE|TIME] Blocks:  [1590000 4000001-4000002 x400x001]
 Error: The given value 'x400x001' is not a numeral or a special named block.
 Usage:
   chifra blocks [flags] <block> [block...]
@@ -21,11 +22,9 @@ Flags:
   -o, --cache             force a write of the block to the cache
   -l, --list uint         summary list of blocks running backwards from latest block minus num (hidden)
   -C, --list_count uint   the number of blocks to report for --list option (hidden) (default 20)
-
-Global Flags:
-  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
-  -h, --help         display this help screen
-  -v, --verbose      enable verbose (increase detail with --log_level)
+  -x, --fmt string        export format, one of [none|json*|txt|csv|api]
+  -v, --verbose           enable verbose (increase detail with --log_level)
+  -h, --help              display this help screen
 
 Notes:
   - blocks is a space-separated list of values, a start-end range, a special, or any combination.

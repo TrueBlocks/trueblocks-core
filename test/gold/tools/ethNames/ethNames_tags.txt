@@ -1,4 +1,5 @@
 chifra names  --tags
+TEST[DATE|TIME] Tags:  true
 tags
 30-Contracts
 30-Contracts:Balancer
@@ -18,8 +19,10 @@ tags
 31-Gitcoin:Contracts
 31-Gitcoin:Core
 31-Gitcoin:Grants
+31-Gitcoin:Team
 31-Gitcoin:Workstreams
 34-ENS
+37-Bridges
 39-Yearn
 40-Exchanges
 50-Tokens:ERC20

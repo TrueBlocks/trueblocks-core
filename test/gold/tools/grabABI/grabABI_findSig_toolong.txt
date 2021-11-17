@@ -1,7 +1,5 @@
 chifra abis  --find 0x1aa3a00800
-Error: 
-  fourbyte (0x1aa3a00800) is not 4 bytes long
-
+Error: The fourbyte option (0x1aa3a00800) must be 4 bytes long.
 Usage:
   chifra abis [flags] <address> [address...]
 
@@ -14,11 +12,9 @@ Flags:
   -f, --find strings   search for function or event declarations given a four- or 32-byte code(s)
   -o, --source         show the source of the ABI information (hidden)
   -c, --classes        generate classDefinitions folder and class definitions (hidden)
-
-Global Flags:
-  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
-  -h, --help         display this help screen
-  -v, --verbose      enable verbose (increase detail with --log_level)
+  -x, --fmt string     export format, one of [none|json*|txt|csv|api]
+  -v, --verbose        enable verbose (increase detail with --log_level)
+  -h, --help           display this help screen
 
 Notes:
   - For the --sol option, place the solidity files in the current working folder.

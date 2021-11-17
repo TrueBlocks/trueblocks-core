@@ -1,3 +1,5 @@
+package cmd
+
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -11,25 +13,26 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * Parts of this file were generated with makeClass --gocmds. Edit only those parts of
- * the code inside of 'EXISTING_CODE' tags.
+ * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
-package cmd
 
+// EXISTING_CODE
 import (
 	"os"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	statePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/state"
 	"github.com/spf13/cobra"
 )
+
+// EXISTING_CODE
 
 // stateCmd represents the state command
 var stateCmd = &cobra.Command{
 	Use:   usageState,
 	Short: shortState,
 	Long:  longState,
-	Run:   runState,
-	Args:  validateStateArgs,
+	RunE:  statePkg.RunState,
 }
 
 var usageState = `state [flags] <address> [address...] [block...]
@@ -52,43 +55,23 @@ Notes:
   - balance is the default mode. To select a single mode use none first, followed by that mode.
   - You may specify multiple modes on a single line.`
 
-type stateOptionsType struct {
-	parts     []string
-	changes   bool
-	no_zero   bool
-	call      string
-	proxy_for string
-}
-
-var StateOpts stateOptionsType
-
 func init() {
-	stateCmd.SetOut(os.Stderr)
-
 	stateCmd.Flags().SortFlags = false
-	stateCmd.PersistentFlags().SortFlags = false
-	stateCmd.Flags().StringSliceVarP(&StateOpts.parts, "parts", "p", nil, `control which state to export
+
+	stateCmd.Flags().StringSliceVarP(&statePkg.Options.Parts, "parts", "p", nil, `control which state to export
 One or more of [ none | some | all | balance | nonce | code | storage | deployed | accttype ]`)
-	stateCmd.Flags().BoolVarP(&StateOpts.changes, "changes", "c", false, "only report a balance when it changes from one block to the next")
-	stateCmd.Flags().BoolVarP(&StateOpts.no_zero, "no_zero", "n", false, "suppress the display of zero balance accounts")
-	stateCmd.Flags().StringVarP(&StateOpts.call, "call", "a", "", "a bang-separated string consisting of address!4-byte!bytes (hidden)")
-	stateCmd.Flags().StringVarP(&StateOpts.proxy_for, "proxy_for", "r", "", "for the --call option only, redirects calls to this implementation (hidden)")
-	if !utils.IsTestMode() {
+	stateCmd.Flags().BoolVarP(&statePkg.Options.Changes, "changes", "c", false, "only report a balance when it changes from one block to the next")
+	stateCmd.Flags().BoolVarP(&statePkg.Options.NoZero, "no_zero", "n", false, "suppress the display of zero balance accounts")
+	stateCmd.Flags().StringVarP(&statePkg.Options.Call, "call", "a", "", "a bang-separated string consisting of address!4-byte!bytes (hidden)")
+	stateCmd.Flags().StringVarP(&statePkg.Options.ProxyFor, "proxy_for", "r", "", "for the --call option only, redirects calls to this implementation (hidden)")
+	if os.Getenv("TEST_MODE") != "true" {
 		stateCmd.Flags().MarkHidden("call")
 		stateCmd.Flags().MarkHidden("proxy_for")
 	}
-	stateCmd.Flags().SortFlags = false
-	stateCmd.PersistentFlags().SortFlags = false
+	globals.InitGlobals(stateCmd, &statePkg.Options.Globals)
 
 	stateCmd.SetUsageTemplate(UsageWithNotes(notesState))
-	rootCmd.AddCommand(stateCmd)
-}
+	stateCmd.SetOut(os.Stderr)
 
-func TestLogState(args []string) {
-	if !utils.IsTestMode() {
-		return
-	}
+	chifraCmd.AddCommand(stateCmd)
 }
-
-// EXISTING_CODE
-// EXISTING_CODE

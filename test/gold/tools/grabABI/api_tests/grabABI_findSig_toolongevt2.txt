@@ -1,5 +1,5 @@
 {
   "errors": [
-    "topic (0x1aa3a0081aa3a0081aa3a0081aa3a0081aa3a0081aa3a0081aa3a0081aa3a008000) is not 32 bytes long"
+    "The topic option (0x1aa3a0081aa3a0081aa3a0081aa3a0081aa3a0081aa3a0081aa3a0081aa3a008000) must be 32 bytes long."
   ]
 }

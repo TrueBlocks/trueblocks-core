@@ -1,4 +1,6 @@
 chifra when  2015-03-02 --list
+TEST[DATE|TIME] Blocks:  [2015-03-02]
+TEST[DATE|TIME] List:  true
 
   The date you specified (2015-03-02) is before the first block. Quitting...
 

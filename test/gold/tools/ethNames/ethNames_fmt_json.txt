@@ -1,4 +1,6 @@
 chifra names  tip --fmt json
+TEST[DATE|TIME] Terms:  [tip]
+TEST[DATE|TIME] Format:  json
 { "data": [
   {
     "tags": "31-Gitcoin:Grants",

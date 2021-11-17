@@ -1,2 +1,4 @@
 chifra names  --prefund etwork
+TEST[DATE|TIME] Terms:  [etwork]
+TEST[DATE|TIME] Prefund:  true
 No results for --prefund etwork

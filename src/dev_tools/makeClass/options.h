@@ -135,6 +135,10 @@ class COptions : public COptionsBase {
     void generate_positional(const CCommandOption& option);
     void generate_deprecated(const CCommandOption& option);
 
+    bool handle_gocmds_cmd(const CCommandOption& cmd);
+    bool handle_gocmds_options(const CCommandOption& cmd);
+    bool handle_gocmds_output(const CCommandOption& cmd);
+
     void writeOpenApiFile(void);
 
     string_q getProductions(const CCommandOption& ep);

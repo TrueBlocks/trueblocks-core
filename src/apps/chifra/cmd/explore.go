@@ -1,3 +1,5 @@
+package cmd
+
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -11,25 +13,26 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * Parts of this file were generated with makeClass --gocmds. Edit only those parts of
- * the code inside of 'EXISTING_CODE' tags.
+ * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
-package cmd
 
+// EXISTING_CODE
 import (
 	"os"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	explorePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/explore"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/spf13/cobra"
 )
+
+// EXISTING_CODE
 
 // exploreCmd represents the explore command
 var exploreCmd = &cobra.Command{
 	Use:   usageExplore,
 	Short: shortExplore,
 	Long:  longExplore,
-	Run:   runExplore,
-	Args:  validateExploreArgs,
+	RunE:  explorePkg.RunExplore,
 }
 
 var usageExplore = `explore [flags] <term> [term...]
@@ -44,35 +47,15 @@ var longExplore = `Purpose:
 
 var notesExplore = ``
 
-type exploreOptionsType struct {
-	local  bool
-	google bool
-}
-
-var ExploreOpts exploreOptionsType
-
 func init() {
-	exploreCmd.SetOut(os.Stderr)
+	exploreCmd.Flags().SortFlags = false
 
-	exploreCmd.Flags().SortFlags = false
-	exploreCmd.PersistentFlags().SortFlags = false
-	exploreCmd.Flags().BoolVarP(&ExploreOpts.local, "local", "l", false, "open the local TrueBlocks explorer")
-	exploreCmd.Flags().BoolVarP(&ExploreOpts.google, "google", "g", false, "search google excluding popular blockchain explorers")
-	exploreCmd.Flags().SortFlags = false
-	exploreCmd.PersistentFlags().SortFlags = false
+	exploreCmd.Flags().BoolVarP(&explorePkg.Options.Local, "local", "l", false, "open the local TrueBlocks explorer")
+	exploreCmd.Flags().BoolVarP(&explorePkg.Options.Google, "google", "g", false, "search google excluding popular blockchain explorers")
+	globals.InitGlobals(exploreCmd, &explorePkg.Options.Globals)
 
 	exploreCmd.SetUsageTemplate(UsageWithNotes(notesExplore))
-	rootCmd.AddCommand(exploreCmd)
-}
+	exploreCmd.SetOut(os.Stderr)
 
-func TestLogExplore(args []string) {
-	if !utils.IsTestMode() {
-		return
-	}
-	utils.TestLogArgs("terms", args)
-	utils.TestLogBool("local", ExploreOpts.local)
-	utils.TestLogBool("google", ExploreOpts.google)
+	chifraCmd.AddCommand(exploreCmd)
 }
-
-// EXISTING_CODE
-// EXISTING_CODE

@@ -1,4 +1,5 @@
 chifra when  0-0
+TEST[DATE|TIME] Blocks:  [0-0]
 
   'stop' must be strictly larger than 'start' Quitting...
 

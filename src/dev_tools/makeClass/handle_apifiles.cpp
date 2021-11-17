@@ -47,7 +47,7 @@ void COptions::writeOpenApiFile(void) {
     }
 
     writeCodeOut(this, getDocsPathContent("api/openapi.yaml"));
-    writeCodeOut(this, getSourcePath("go-apps/flame/server/server_routes.go"));
+    writeCodeOut(this, getSourcePath("apps/chifra/server/routes.go"));
     writeCodeOut(this, getSourcePath("apps/chifra/options.cpp"));
     // writeCodeOut(this, getSourcePath("libs/utillib/options_base.cpp"));
 

@@ -1,3 +1,4 @@
 chifra receipts  0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.155
+TEST[DATE|TIME] Transactions:  [0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.155]
 blocknumber	transactionindex	hash	gasused	status	iserror
 "Transaction 0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.155 not found."

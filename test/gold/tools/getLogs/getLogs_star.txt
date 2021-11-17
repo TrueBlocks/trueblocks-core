@@ -1,4 +1,6 @@
 chifra logs  1428993.* --fmt api
+TEST[DATE|TIME] Transactions:  [1428993.*]
+TEST[DATE|TIME] Format:  api
 {"data": [
   {
     "address": "0x2bad3aa54d79b43cea3e859609d2de84e544ee74",

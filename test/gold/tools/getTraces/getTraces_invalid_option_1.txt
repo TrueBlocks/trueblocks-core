@@ -15,11 +15,9 @@ Flags:
   -c, --count           show the number of traces for the transaction only (fast)
   -s, --skip_ddos       skip over the 2016 ddos during export ('on' by default) (hidden)
   -m, --max uint        if --skip_ddos is on, this many traces defines what a ddos transaction is (hidden) (default 250)
-
-Global Flags:
-  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
-  -h, --help         display this help screen
-  -v, --verbose      enable verbose (increase detail with --log_level)
+  -x, --fmt string      export format, one of [none|json*|txt|csv|api]
+  -v, --verbose         enable verbose (increase detail with --log_level)
+  -h, --help            display this help screen
 
 Notes:
   - The transactions list may be one or more transaction hashes, blockNumber.transactionID pairs, or a blockHash.transactionID pairs.

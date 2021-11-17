@@ -1,3 +1,5 @@
+package cmd
+
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -11,25 +13,26 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * Parts of this file were generated with makeClass --gocmds. Edit only those parts of
- * the code inside of 'EXISTING_CODE' tags.
+ * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
-package cmd
 
+// EXISTING_CODE
 import (
 	"os"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	scrapePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/scrape"
 	"github.com/spf13/cobra"
 )
+
+// EXISTING_CODE
 
 // scrapeCmd represents the scrape command
 var scrapeCmd = &cobra.Command{
 	Use:   usageScrape,
 	Short: shortScrape,
 	Long:  longScrape,
-	Run:   runScrape,
-	Args:  validateScrapeArgs,
+	RunE:  scrapePkg.RunScrape,
 }
 
 var usageScrape = `scrape [flags] [mode...]
@@ -49,47 +52,25 @@ Notes:
   - the --pin and --publish options require an API to the pinning service.
   - the --n_* related options allow you to tune the scrapers.`
 
-type scrapeOptionsType struct {
-	Action         string
-	Sleep          float64
-	Pin            bool
-	Publish        bool
-	Block_Cnt      uint64
-	Block_Chan_Cnt uint64
-	Addr_Chan_Cnt  uint64
-}
-
-var ScrapeOpts scrapeOptionsType
-
 func init() {
-	scrapeCmd.SetOut(os.Stderr)
-
 	scrapeCmd.Flags().SortFlags = false
-	scrapeCmd.PersistentFlags().SortFlags = false
-	scrapeCmd.Flags().StringVarP(&ScrapeOpts.Action, "action", "a", "", `command to apply to the specified scrape
+
+	scrapeCmd.Flags().StringVarP(&scrapePkg.Options.Action, "action", "a", "", `command to apply to the specified scrape
 One of [ toggle | run | restart | pause | quit ]`)
-	scrapeCmd.Flags().Float64VarP(&ScrapeOpts.Sleep, "sleep", "s", 14, "seconds to sleep between scraper passes")
-	scrapeCmd.Flags().BoolVarP(&ScrapeOpts.Pin, "pin", "p", false, "pin chunks (and blooms) to IPFS as they are created (requires pinning service)")
-	scrapeCmd.Flags().BoolVarP(&ScrapeOpts.Publish, "publish", "u", false, "after pinning the chunk, publish it to UnchainedIndex")
-	scrapeCmd.Flags().Uint64VarP(&ScrapeOpts.Block_Cnt, "block_cnt", "n", 2000, "maximum number of blocks to process per pass")
-	scrapeCmd.Flags().Uint64VarP(&ScrapeOpts.Block_Chan_Cnt, "block_chan_cnt", "b", 10, "number of concurrent block processing channels (hidden)")
-	scrapeCmd.Flags().Uint64VarP(&ScrapeOpts.Addr_Chan_Cnt, "addr_chan_cnt", "d", 20, "number of concurrent address processing channels (hidden)")
-	if !utils.IsTestMode() {
+	scrapeCmd.Flags().Float64VarP(&scrapePkg.Options.Sleep, "sleep", "s", 14, "seconds to sleep between scraper passes")
+	scrapeCmd.Flags().BoolVarP(&scrapePkg.Options.Pin, "pin", "p", false, "pin chunks (and blooms) to IPFS as they are created (requires pinning service)")
+	scrapeCmd.Flags().BoolVarP(&scrapePkg.Options.Publish, "publish", "u", false, "after pinning the chunk, publish it to UnchainedIndex")
+	scrapeCmd.Flags().Uint64VarP(&scrapePkg.Options.BlockCnt, "block_cnt", "n", 2000, "maximum number of blocks to process per pass")
+	scrapeCmd.Flags().Uint64VarP(&scrapePkg.Options.BlockChanCnt, "block_chan_cnt", "b", 10, "number of concurrent block processing channels (hidden)")
+	scrapeCmd.Flags().Uint64VarP(&scrapePkg.Options.AddrChanCnt, "addr_chan_cnt", "d", 20, "number of concurrent address processing channels (hidden)")
+	if os.Getenv("TEST_MODE") != "true" {
 		scrapeCmd.Flags().MarkHidden("block_chan_cnt")
 		scrapeCmd.Flags().MarkHidden("addr_chan_cnt")
 	}
-	scrapeCmd.Flags().SortFlags = false
-	scrapeCmd.PersistentFlags().SortFlags = false
+	globals.InitGlobals(scrapeCmd, &scrapePkg.Options.Globals)
 
 	scrapeCmd.SetUsageTemplate(UsageWithNotes(notesScrape))
-	rootCmd.AddCommand(scrapeCmd)
-}
+	scrapeCmd.SetOut(os.Stderr)
 
-func TestLogScrape(args []string) {
-	if !utils.IsTestMode() {
-		return
-	}
+	chifraCmd.AddCommand(scrapeCmd)
 }
-
-// EXISTING_CODE
-// EXISTING_CODE

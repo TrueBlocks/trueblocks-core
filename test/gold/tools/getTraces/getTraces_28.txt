@@ -1,4 +1,6 @@
 chifra traces  0xf9d426284bd20415a53991a004122b3a3a619b295ea98d1d88a5fd3a4125408b --fmt txt
+TEST[DATE|TIME] Transactions:  [0xf9d426284bd20415a53991a004122b3a3a619b295ea98d1d88a5fd3a4125408b]
+TEST[DATE|TIME] Format:  txt
 blocknumber	transactionindex	traceaddress	action::calltype	error	action::from	action::to	action::value	action::ether	action::gas	result::gasused	action::input	compressedtrace	result::output
 3191290	11	null	call		0x00a3819199113fc6a6e6ba1298afde7377e2009b	0x204882bcba3e6d804e5f7d6e483bb18dd2b3d678	0	0.000000000000000000	12716	6838	0xd8963b9100000000000000000000000000a3819199113fc6a6e6ba1298afde7377e2009b		0x
 3191290	11	0-s	suicide		0x204882bcba3e6d804e5f7d6e483bb18dd2b3d678	0x00a3819199113fc6a6e6ba1298afde7377e2009b	200000000000000000	0.200000000000000000	0	0	0x

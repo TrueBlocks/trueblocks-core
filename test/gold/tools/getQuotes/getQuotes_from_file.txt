@@ -1,4 +1,5 @@
 chifra quotes  --file cmd_file
+TEST[DATE|TIME] File:  cmd_file
 Cmd: --period:240 
 Cmd: -p:1440 
 timestamp	date	close

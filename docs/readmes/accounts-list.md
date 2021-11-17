@@ -17,12 +17,10 @@ Arguments:
   addrs - one or more addresses (0x...) to list (required)
 
 Flags:
-  -U, --count   present only the number of records
-
-Global Flags:
+  -U, --count        present only the number of records
   -x, --fmt string   export format, one of [none|json*|txt|csv|api]
-  -h, --help         display this help screen
   -v, --verbose      enable verbose (increase detail with --log_level)
+  -h, --help         display this help screen
 ```
 
 **Source code**: [`apps/acctExport`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/acctExport)

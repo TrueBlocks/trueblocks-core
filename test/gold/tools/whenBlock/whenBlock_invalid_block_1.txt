@@ -1,3 +1,4 @@
 chifra when  0x0a
+TEST[DATE|TIME] Blocks:  [0x0a]
 blocknumber	timestamp	date	name
 10	1438270128	2015-07-30 15:28:48 UTC

@@ -24,11 +24,9 @@ Flags:
   -p, --pin              pin chunks (and blooms) to IPFS as they are created (requires pinning service)
   -u, --publish          after pinning the chunk, publish it to UnchainedIndex
   -n, --block_cnt uint   maximum number of blocks to process per pass (default 2000)
-
-Global Flags:
-  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
-  -h, --help         display this help screen
-  -v, --verbose      enable verbose (increase detail with --log_level)
+  -x, --fmt string       export format, one of [none|json*|txt|csv|api]
+  -v, --verbose          enable verbose (increase detail with --log_level)
+  -h, --help             display this help screen
 
 Notes:
   - if no mode is presented, chifra scrape indexer --action run is assumed.

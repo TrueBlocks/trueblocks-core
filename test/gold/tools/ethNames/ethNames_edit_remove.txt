@@ -1,4 +1,9 @@
 chifra names  --remove 0x0000000000000000000000000000000010101010 --log_level 10 --fmt api --expand
+TEST[DATE|TIME] Terms:  [0x0000000000000000000000000000000010101010]
+TEST[DATE|TIME] Expand:  true
+TEST[DATE|TIME] Remove:  true
+TEST[DATE|TIME] LogLevel:  10
+TEST[DATE|TIME] Format:  api
 TIME ~ CLOCK - <INFO>  : Cleaning 0x0000000000000000000000000000000010101010                                  TIME ~ CLOCK - <INFO>  : ---------------------------------------------
 TIME ~ CLOCK - <INFO>  : {
   "address": "0x0000000000000000000000000000000010101010"

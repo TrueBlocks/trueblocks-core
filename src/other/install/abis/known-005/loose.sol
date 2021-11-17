@@ -1,4 +1,5 @@
 contract A {
+  function depositETH(uint32,bytes) { }
   function storeBlockWithFeeAndRecipient(bytes,int256,int256) { }
   function donate((address,uint256,address)[] dontations) { }
   function mint(address recipient, uint256 amount) { }

@@ -22,7 +22,6 @@ Arguments:
 
 Flags:
   -p, --appearances         export a list of appearances
-  -T, --transactions        export the actual transactional data (the default)
   -r, --receipts            export receipts instead of transactional data
   -l, --logs                export logs instead of transactional data
   -t, --traces              export traces instead of transactional data
@@ -40,11 +39,9 @@ Flags:
       --emitter strings     for log export only, export only logs if emitted by one of these address(es)
       --topic strings       for log export only, export only logs with this topic(s)
       --clean               clean (i.e. remove duplicate appearances) from all existing monitors
-
-Global Flags:
-  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
-  -h, --help         display this help screen
-  -v, --verbose      enable verbose (increase detail with --log_level)
+  -x, --fmt string          export format, one of [none|json*|txt|csv|api]
+  -v, --verbose             enable verbose (increase detail with --log_level)
+  -h, --help                display this help screen
 
 Notes:
   - An address must start with '0x' and be forty-two characters long.

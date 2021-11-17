@@ -1,3 +1,5 @@
+package cmd
+
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -11,25 +13,26 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * Parts of this file were generated with makeClass --gocmds. Edit only those parts of
- * the code inside of 'EXISTING_CODE' tags.
+ * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
-package cmd
 
+// EXISTING_CODE
 import (
 	"os"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	initPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/init"
 	"github.com/spf13/cobra"
 )
+
+// EXISTING_CODE
 
 // initCmd represents the init command
 var initCmd = &cobra.Command{
 	Use:   usageInit,
 	Short: shortInit,
 	Long:  longInit,
-	Run:   runInit,
-	Args:  validateInitArgs,
+	RunE:  initPkg.RunInit,
 }
 
 var usageInit = `init [flags]`
@@ -44,30 +47,14 @@ Notes:
   - chifra init is an alias for the chifra pins --init command.
   - See chifra pins --help for more information.`
 
-type initOptionsType struct {
-	all bool
-}
-
-var InitOpts initOptionsType
-
 func init() {
-	initCmd.SetOut(os.Stderr)
+	initCmd.Flags().SortFlags = false
 
-	initCmd.Flags().SortFlags = false
-	initCmd.PersistentFlags().SortFlags = false
-	initCmd.Flags().BoolVarP(&InitOpts.all, "all", "a", false, "in addition to Bloom filters, download full index chunks")
-	initCmd.Flags().SortFlags = false
-	initCmd.PersistentFlags().SortFlags = false
+	initCmd.Flags().BoolVarP(&initPkg.Options.All, "all", "a", false, "in addition to Bloom filters, download full index chunks")
+	globals.InitGlobals(initCmd, &initPkg.Options.Globals)
 
 	initCmd.SetUsageTemplate(UsageWithNotes(notesInit))
-	rootCmd.AddCommand(initCmd)
-}
+	initCmd.SetOut(os.Stderr)
 
-func TestLogInit(args []string) {
-	if !utils.IsTestMode() {
-		return
-	}
+	chifraCmd.AddCommand(initCmd)
 }
-
-// EXISTING_CODE
-// EXISTING_CODE

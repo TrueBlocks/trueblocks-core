@@ -1,4 +1,8 @@
 chifra blocks  1301011-1312011:313 --uniq --count --fmt json
+TEST[DATE|TIME] Blocks:  [1301011-1312011:313]
+TEST[DATE|TIME] Uniq:  true
+TEST[DATE|TIME] Count:  true
+TEST[DATE|TIME] Format:  json
 { "data": [
 { "blockNumber": 1301011, "transactionsCnt": 1, "uniq": 4},
 { "blockNumber": 1301324, "transactionsCnt": 0, "uniq": 1},

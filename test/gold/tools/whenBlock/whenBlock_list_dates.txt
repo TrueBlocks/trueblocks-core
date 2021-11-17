@@ -1,4 +1,6 @@
 chifra when  --list --fmt txt
+TEST[DATE|TIME] List:  true
+TEST[DATE|TIME] Format:  txt
 blocknumber	timestamp	date	name
 0	1438269960	2015-07-30 15:26:00 UTC	first
 46147	1438918233	2015-08-07 03:30:33 UTC	firstTrans

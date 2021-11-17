@@ -1,3 +1,5 @@
 chifra state  --call 0xbb2b8038a1640196fbe3e38816f3e67cba72d940!0x0902f1ad 10092000
+TEST[DATE|TIME] Addrs:  [10092000]
+TEST[DATE|TIME] Call:  0xbb2b8038a1640196fbe3e38816f3e67cba72d940!0x0902f1ad
 blocknumber	address	signature	encoding	bytes	compressedresult
 "No result from call to 0xbb2b8038a1640196fbe3e38816f3e67cba72d940 with fourbyte 0x0902f1ad at block 10092000"

@@ -1,64 +1,66 @@
-enabled,mode,speed,route,path/tool,filename,post,options,opt_cmd,has_env
-on,cmd,fast,names,tools/ethNames,help,n,@h
-on,cmd,fast,names,tools/ethNames,help_long,n,help
-on,both,medi,names,tools/ethNames,no_params,y,
-on,both,fast,names,tools/ethNames,invalid_param_2,n,pink & fmt = txt
-on,both,fast,names,tools/ethNames,invalid_param_3,n,terms = 0xbf4ed7b27f1d666546e30d74d50d173d20bca754 & pink & fmt = txt
-on,both,medi,names,tools/ethNames,fmt_default,y,terms = tip
-on,both,medi,names,tools/ethNames,fmt_txt,n,terms = tip & fmt = txt
-on,both,medi,names,tools/ethNames,fmt_csv,n,terms = tip & fmt = csv
-on,both,medi,names,tools/ethNames,fmt_api,y,terms = tip & fmt = api
-on,both,medi,names,tools/ethNames,fmt_json,y,terms = tip & fmt = json
-on,both,fast,names,tools/ethNames,fmt_junk,y,terms = tip & fmt = junk
-on,both,fast,names,tools/ethNames,tags,y,tags
-on,both,fast,names,tools/ethNames,tags_with_addr,y,tags & addr
-on,both,fast,names,tools/ethNames,collections,y,collections
-on,both,fast,names,tools/ethNames,collections_with_addr,y,collections & addr
-on,both,fast,names,tools/ethNames,simple,y,terms = etwork
-on,both,fast,names,tools/ethNames,simple_no_case,y,terms = network
-on,both,fast,names,tools/ethNames,simple_case,y,terms = network & match_case
-on,both,fast,names,tools/ethNames,simple_expanded,y,terms = etwork & expand & no_header
-on,both,fast,names,tools/ethNames,simple_verbose,y,terms = etwork & verbose
-on,both,fast,names,tools/ethNames,simple_two_terms,y,terms = etwork & terms = one
-on,both,fast,names,tools/ethNames,simple_four_terms,y,terms = etwork & terms = one & terms = 88897 & terms = torj
-on,both,fast,names,tools/ethNames,simple_addr_only,y,terms = 0xb6 & addr
-on,both,fast,names,tools/ethNames,prefund,y,prefund
-on,both,fast,names,tools/ethNames,prefund_search1,y,prefund & terms = 004
-on,both,fast,names,tools/ethNames,prefund_search2,y,prefund & terms = _004
-on,both,fast,names,tools/ethNames,prefund_search3,y,prefund & terms = etwork
-on,both,fast,names,tools/ethNames,custom,n,custom & fmt = txt
-on,both,fast,names,tools/ethNames,custom_search1,y,custom & terms = Account_1
-on,both,fast,names,tools/ethNames,custom_search2,y,custom & terms = Account_1 & match_case
-on,both,fast,names,tools/ethNames,custom_search3,y,custom & terms = account_1 & match_case
-on,both,fast,names,tools/ethNames,prefund_custom,y,prefund & custom
-on,both,fast,names,tools/ethNames,prefund_custom_search,y,prefund & custom & terms = 0001 & verbose
-on,both,fast,names,tools/ethNames,prefund_custom_search2,y,prefund & custom & terms = 0001 & terms = Genesis & expand
-on,both,fast,names,tools/ethNames,named,y,
-on,both,fast,names,tools/ethNames,prefund_custom_named,y,prefund & custom & named
-on,both,fast,names,tools/ethNames,all,y,all
-on,both,medi,names,tools/ethNames,upgrade_fail,y,fmt = json
-on,both,medi,names,tools/ethNames,duplicated_option_1,n,terms = 0xb6 & terms = torj & addr & addr & addr & addr
-on,both,medi,names,tools/ethNames,name_match,n,noop & terms = torj & fmt = csv
-on,cmd,fast,names,tools/ethNames,show_version,n,version
-on,both,medi,names,tools/ethNames,to_file,n,named & custom & fmt = json & to_file
-on,cmd,slow,names,tools/ethNames,fromFile,n,file = names.txt
-on,cmd,fast,names,tools/ethNames,prefund_output,n,output = test_file & prefund
-on,both,fast,names,tools/ethNames,edit_invalid,y,invalid & log_level = 10 & fmt = api & expand
-on,both,fast,names,tools/ethNames,edit_add,y,create & log_level = 10 & fmt = api & expand
-on,both,fast,names,tools/ethNames,show_add,y,terms = 0x0000000000000000000000000000000010101010 & log_level = 10 & fmt = api & expand
-on,both,fast,names,tools/ethNames,edit_edit,y,update & log_level = 10 & fmt = api & expand
-on,both,fast,names,tools/ethNames,show_edit,y,terms = 0x0000000000000000000000000000000010101010 & log_level = 10 & fmt = api & expand
-on,both,fast,names,tools/ethNames,edit_delete,y,delete & terms = 0x0000000000000000000000000000000010101010 & log_level = 10 & fmt = api & expand
-on,both,fast,names,tools/ethNames,show_delete,y,terms = 0x0000000000000000000000000000000010101010 & log_level = 10 & fmt = api & expand
-on,both,fast,names,tools/ethNames,edit_undelete,y,undelete & terms = 0x0000000000000000000000000000000010101010 & log_level = 10 & fmt = api & expand
-on,both,fast,names,tools/ethNames,show_undelete,y,terms = 0x0000000000000000000000000000000010101010 & log_level = 10 & fmt = api & expand
-on,both,fast,names,tools/ethNames,edit_remove,y,remove & terms = 0x0000000000000000000000000000000010101010 & log_level = 10 & fmt = api & expand
-on,both,fast,names,tools/ethNames,show_remove,y,terms = 0x0000000000000000000000000000000010101010 & log_level = 10 & fmt = api & expand
-local,both,fast,names,tools/ethNames,edit_custom_delete,y,delete & terms = 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 & log_level = 10 & to_custom & all & expand
-local,both,fast,names,tools/ethNames,edit_custom_undelete,y,undelete & terms = 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 & log_level = 10 & to_custom & all & expand
-off,cmd,fast,null,tools/ethNames,nosave_backup,n,MOVEFILE -f $CONFIG/names/names.bin ./testing_data/backup/
-off,cmd,fast,null,tools/ethNames,nosave_copy,n,COPYFILE -f ./testing_data/ethNames_upgrade_to_067/names.bin $CONFIG/names/
-off,cmd,fast,null,tools/ethNames,nosave_touch,n,TOUCHFILE $CONFIG/names/names.bin
-off,both,medi,names,tools/ethNames,upgrade_to_067,y,fmt = json
-off,cmd,fast,null,tools/ethNames,nosave_remove,n,RMFILE -f $CONFIG/names/names.bin
-off,cmd,fast,null,tools/ethNames,nosave_restore,n,MOVEFILE -f ./testing_data/backup/names.bin $CONFIG/names/
+enabled ,mode ,speed ,route ,path/tool      ,filename               ,post ,options                                                                                                   ,opt_cmd ,has_env
+on      ,cmd  ,fast  ,names ,tools/ethNames ,help                   ,n    ,@h
+on      ,cmd  ,fast  ,names ,tools/ethNames ,help_long              ,n    ,help
+on      ,both ,medi  ,names ,tools/ethNames ,no_params              ,y    ,
+on      ,both ,fast  ,names ,tools/ethNames ,invalid_param_2        ,n    ,pink & fmt = txt
+on      ,both ,fast  ,names ,tools/ethNames ,invalid_param_3        ,n    ,terms = 0xbf4ed7b27f1d666546e30d74d50d173d20bca754 & pink & fmt = txt
+on      ,both ,medi  ,names ,tools/ethNames ,fmt_default            ,y    ,terms = tip
+on      ,both ,medi  ,names ,tools/ethNames ,fmt_txt                ,n    ,terms = tip & fmt = txt
+on      ,both ,medi  ,names ,tools/ethNames ,fmt_csv                ,n    ,terms = tip & fmt = csv
+on      ,both ,medi  ,names ,tools/ethNames ,fmt_api                ,y    ,terms = tip & fmt = api
+on      ,both ,medi  ,names ,tools/ethNames ,fmt_json               ,y    ,terms = tip & fmt = json
+local   ,both ,fast  ,names ,tools/ethNames ,fmt_junk               ,y    ,terms = tip & fmt = junk
+on      ,both ,fast  ,names ,tools/ethNames ,tags                   ,y    ,tags
+on      ,both ,fast  ,names ,tools/ethNames ,tags_with_addr         ,y    ,tags & addr
+on      ,both ,fast  ,names ,tools/ethNames ,collections            ,y    ,collections
+on      ,both ,fast  ,names ,tools/ethNames ,collections_with_addr  ,y    ,collections & addr
+on      ,both ,fast  ,names ,tools/ethNames ,simple                 ,y    ,terms = etwork
+on      ,both ,fast  ,names ,tools/ethNames ,simple_no_case         ,y    ,terms = network
+on      ,both ,fast  ,names ,tools/ethNames ,simple_case            ,y    ,terms = network & match_case
+on      ,both ,fast  ,names ,tools/ethNames ,simple_expanded        ,y    ,terms = etwork & expand & no_header
+on      ,both ,fast  ,names ,tools/ethNames ,simple_verbose         ,y    ,terms = etwork & verbose
+on      ,both ,fast  ,names ,tools/ethNames ,simple_two_terms       ,y    ,terms = etwork & terms = one
+on      ,both ,fast  ,names ,tools/ethNames ,simple_four_terms      ,y    ,terms = etwork & terms = one & terms = 88897 & terms = torj
+on      ,both ,fast  ,names ,tools/ethNames ,simple_addr_only       ,y    ,terms = 0xb6 & addr
+on      ,both ,fast  ,names ,tools/ethNames ,prefund                ,y    ,prefund
+on      ,both ,fast  ,names ,tools/ethNames ,prefund_search1        ,y    ,prefund & terms = 004
+on      ,both ,fast  ,names ,tools/ethNames ,prefund_search2        ,y    ,prefund & terms = _004
+on      ,both ,fast  ,names ,tools/ethNames ,prefund_search3        ,y    ,prefund & terms = etwork
+on      ,both ,fast  ,names ,tools/ethNames ,custom                 ,n    ,custom & fmt = txt
+on      ,both ,fast  ,names ,tools/ethNames ,custom_search1         ,y    ,custom & terms = Account_1
+on      ,both ,fast  ,names ,tools/ethNames ,custom_search2         ,y    ,custom & terms = Account_1 & match_case
+on      ,both ,fast  ,names ,tools/ethNames ,custom_search3         ,y    ,custom & terms = account_1 & match_case
+on      ,both ,fast  ,names ,tools/ethNames ,prefund_custom         ,y    ,prefund & custom
+on      ,both ,fast  ,names ,tools/ethNames ,prefund_custom_search  ,y    ,prefund & custom & terms = 0001 & verbose
+on      ,both ,fast  ,names ,tools/ethNames ,prefund_custom_search2 ,y    ,prefund & custom & terms = 0001 & terms = Genesis & expand
+on      ,both ,fast  ,names ,tools/ethNames ,named                  ,y    ,
+on      ,both ,fast  ,names ,tools/ethNames ,prefund_custom_named   ,y    ,prefund & custom & named
+on      ,both ,fast  ,names ,tools/ethNames ,all                    ,y    ,all
+on      ,both ,medi  ,names ,tools/ethNames ,upgrade_fail           ,y    ,fmt = json
+on      ,both ,medi  ,names ,tools/ethNames ,duplicated_option_1    ,n    ,terms = 0xb6 & terms = torj & addr & addr & addr & addr
+on      ,both ,medi  ,names ,tools/ethNames ,name_match             ,n    ,noop & terms = torj & fmt = csv
+on      ,cmd  ,fast  ,names ,tools/ethNames ,show_version           ,n    ,version
+on      ,cmd  ,slow  ,names ,tools/ethNames ,fromFile               ,n    ,file = names.txt
+on      ,cmd  ,fast  ,names ,tools/ethNames ,prefund_output         ,n    ,output = test_file & prefund
+on      ,both ,fast  ,names ,tools/ethNames ,edit_invalid           ,y    ,invalid & log_level = 10 & fmt = api & expand
+on      ,both ,fast  ,names ,tools/ethNames ,edit_add               ,y    ,create & log_level = 10 & fmt = api & expand
+on      ,both ,fast  ,names ,tools/ethNames ,show_add               ,y    ,terms = 0x0000000000000000000000000000000010101010 & log_level = 10 & fmt = api & expand
+on      ,both ,fast  ,names ,tools/ethNames ,edit_edit              ,y    ,update & log_level = 10 & fmt = api & expand
+on      ,both ,fast  ,names ,tools/ethNames ,show_edit              ,y    ,terms = 0x0000000000000000000000000000000010101010 & log_level = 10 & fmt = api & expand
+on      ,both ,fast  ,names ,tools/ethNames ,edit_delete            ,y    ,delete & terms = 0x0000000000000000000000000000000010101010 & log_level = 10 & fmt = api & expand
+on      ,both ,fast  ,names ,tools/ethNames ,show_delete            ,y    ,terms = 0x0000000000000000000000000000000010101010 & log_level = 10 & fmt = api & expand
+on      ,both ,fast  ,names ,tools/ethNames ,edit_undelete          ,y    ,undelete & terms = 0x0000000000000000000000000000000010101010 & log_level = 10 & fmt = api & expand
+on      ,both ,fast  ,names ,tools/ethNames ,show_undelete          ,y    ,terms = 0x0000000000000000000000000000000010101010 & log_level = 10 & fmt = api & expand
+on      ,both ,fast  ,names ,tools/ethNames ,edit_remove            ,y    ,remove & terms = 0x0000000000000000000000000000000010101010 & log_level = 10 & fmt = api & expand
+on      ,both ,fast  ,names ,tools/ethNames ,show_remove            ,y    ,terms = 0x0000000000000000000000000000000010101010 & log_level = 10 & fmt = api & expand
+
+off     ,cmd  ,fast  ,null  ,tools/ethNames ,nosave_backup          ,n    ,MOVEFILE -f $CONFIG/names/names.bin ./testing_data/backup/
+off     ,cmd  ,fast  ,null  ,tools/ethNames ,nosave_copy            ,n    ,COPYFILE -f ./testing_data/ethNames_upgrade_to_067/names.bin $CONFIG/names/
+off     ,cmd  ,fast  ,null  ,tools/ethNames ,nosave_touch           ,n    ,TOUCHFILE $CONFIG/names/names.bin
+off     ,both ,medi  ,names ,tools/ethNames ,upgrade_to_067         ,y    ,fmt = json
+off     ,cmd  ,fast  ,null  ,tools/ethNames ,nosave_remove          ,n    ,RMFILE -f $CONFIG/names/names.bin
+off     ,cmd  ,fast  ,null  ,tools/ethNames ,nosave_restore         ,n    ,MOVEFILE -f ./testing_data/backup/names.bin $CONFIG/names/
+
+local   ,both ,medi  ,names ,tools/ethNames ,to_file                ,n    ,named & custom & fmt = json & to_file
+local   ,both ,fast  ,names ,tools/ethNames ,edit_custom_delete     ,y    ,delete & terms = 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 & log_level = 10 & to_custom & all & expand
+local   ,both ,fast  ,names ,tools/ethNames ,edit_custom_undelete   ,y    ,undelete & terms = 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 & log_level = 10 & to_custom & all & expand

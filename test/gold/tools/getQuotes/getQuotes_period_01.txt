@@ -1,4 +1,6 @@
 chifra quotes  --period 60 --fmt json
+TEST[DATE|TIME] Period:  60
+TEST[DATE|TIME] Format:  json
 { "data": [
   {
     "timestamp": 1439078400,

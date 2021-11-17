@@ -1,5 +1,5 @@
 {
   "errors": [
-    "chifra list - You must provide at least one Ethereum address."
+    "Please specify at least one valid Ethereum address."
   ]
 }

@@ -383,5 +383,5 @@ Description:
 
 func init() {
 	scrapeCmd.PersistentFlags().StringVarP(&scrapeOptions.columns2, "columns", "l", "block.timestamp", "retrieve the timestamp of the block's data")
-	rootCmd.AddCommand(scrapeCmd)
+	blazeCmd.AddCommand(scrapeCmd)
 }

@@ -22,6 +22,7 @@
 #define ERR_INVALIDDATE1 2
 #define ERR_INVALIDDATE2 3
 #define ERR_INVALIDDATE3 4
+#define ERR_ONLYTS 5
 // END_ERROR_DEFINES
 
 //-----------------------------------------------------------------------------

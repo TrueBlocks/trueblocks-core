@@ -1,19 +1,22 @@
-enabled,mode,speed,route,path/tool,filename,post,options,opt_cmd,has_env
-on,cmd,fast,chunks,apps/chunkMan,help,n,@h
-on,cmd,fast,chunks,apps/chunkMan,help_long,n,help
-on,both,fast,chunks,apps/chunkMan,no_params,y,
-off,both,fast,chunks,apps/chunkMan,invalid_param_1,y,junk
-off,both,fast,chunks,apps/chunkMan,list_local,y,list
-off,both,fast,chunks,apps/chunkMan,list_check_invalid,y,list & check
-off,both,fast,chunks,apps/chunkMan,list_check,y,check
-off,both,fast,chunks,apps/chunkMan,freshen_mocked,y,freshen
-off,both,fast,chunks,apps/chunkMan,compare_mocked,y,compare
-off,both,fast,chunks,apps/chunkMan,fmt_default,y,list
-off,both,slow,chunks,apps/chunkMan,fmt_txt,n,list & fmt = txt
-off,both,fast,chunks,apps/chunkMan,fmt_csv,n,list & fmt = csv
-off,both,fast,chunks,apps/chunkMan,fmt_json,y,list & fmt = json
-off,both,fast,chunks,apps/chunkMan,fmt_api,y,list & fmt = api
-off,both,fast,chunks,apps/chunkMan,fmt_junk,y,list & fmt = junk
-off,both,fast,chunks,apps/chunkMan,to_file,y,list & fmt = json & to_file
-#off,both,fast,chunks,apps/chunkMan,remote_fail,y,remote
-#off,both,fast,chunks,apps/chunkMan,remote,y,list & remote
+enabled ,mode ,speed ,route  ,path/tool     ,filename           ,post ,options                     ,opt_cmd ,has_env
+on      ,cmd  ,fast  ,chunks ,apps/chunkMan ,help               ,n    ,@h
+on      ,cmd  ,fast  ,chunks ,apps/chunkMan ,help_long          ,n    ,help
+on      ,both ,fast  ,chunks ,apps/chunkMan ,no_params          ,y    ,
+
+off     ,both ,fast  ,chunks ,apps/chunkMan ,invalid_param_1    ,y    ,junk
+off     ,both ,fast  ,chunks ,apps/chunkMan ,list_local         ,y    ,list
+off     ,both ,fast  ,chunks ,apps/chunkMan ,list_check_invalid ,y    ,list & check
+off     ,both ,fast  ,chunks ,apps/chunkMan ,fmt_default        ,y    ,list
+off     ,both ,slow  ,chunks ,apps/chunkMan ,fmt_txt            ,n    ,list & fmt = txt
+off     ,both ,fast  ,chunks ,apps/chunkMan ,fmt_csv            ,n    ,list & fmt = csv
+off     ,both ,fast  ,chunks ,apps/chunkMan ,fmt_json           ,y    ,list & fmt = json
+off     ,both ,fast  ,chunks ,apps/chunkMan ,fmt_api            ,y    ,list & fmt = api
+off     ,both ,fast  ,chunks ,apps/chunkMan ,fmt_junk           ,y    ,list & fmt = junk
+off     ,both ,fast  ,chunks ,apps/chunkMan ,to_file            ,y    ,list & fmt = json & to_file
+off     ,both ,fast  ,chunks ,apps/chunkMan ,remote             ,y    ,list & remote
+
+on      ,both ,fast  ,chunks ,apps/chunkMan ,remote_fail        ,y    ,remote
+
+off     ,both ,fast  ,chunks ,apps/chunkMan ,list_check         ,y    ,check
+off     ,both ,fast  ,chunks ,apps/chunkMan ,freshen_mocked     ,y    ,freshen
+off     ,both ,fast  ,chunks ,apps/chunkMan ,compare_mocked     ,y    ,compare

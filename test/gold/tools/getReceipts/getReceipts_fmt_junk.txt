@@ -1,7 +1,7 @@
 chifra receipts  2222222.0 2332332.0 --fmt junk
-Error: 
-  The --fmt option (junk) must be one of [ json | txt | csv | api ]
-
+TEST[DATE|TIME] Transactions:  [2222222.0 2332332.0]
+TEST[DATE|TIME] Format:  junk
+Error: The --fmt option (junk) must be one of [ json | txt | csv | api ]
 Usage:
   chifra receipts [flags] <tx_id> [tx_id...]
 
@@ -10,11 +10,9 @@ Arguments:
 
 Flags:
   -a, --articulate   articulate the retrieved data if ABIs can be found
-
-Global Flags:
   -x, --fmt string   export format, one of [none|json*|txt|csv|api]
-  -h, --help         display this help screen
   -v, --verbose      enable verbose (increase detail with --log_level)
+  -h, --help         display this help screen
 
 Notes:
   - The transactions list may be one or more transaction hashes, blockNumber.transactionID pairs, or a blockHash.transactionID pairs.

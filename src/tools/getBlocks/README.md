@@ -17,18 +17,16 @@ Arguments:
   blocks - a space-separated list of one or more block identifiers (required)
 
 Flags:
-  -e, --hashes   display only transaction hashes, default is to display full transaction detail
-  -U, --uncles   display uncle blocks (if any) instead of the requested block
-  -t, --trace    export the traces from the block as opposed to the block data
-  -s, --apps     display a list of uniq address appearances in the block
-  -u, --uniq     display a list of uniq address appearances per transaction
-  -c, --count    display the number of the lists of appearances for --addrs or --uniq
-  -o, --cache    force a write of the block to the cache
-
-Global Flags:
+  -e, --hashes       display only transaction hashes, default is to display full transaction detail
+  -U, --uncles       display uncle blocks (if any) instead of the requested block
+  -t, --trace        export the traces from the block as opposed to the block data
+  -s, --apps         display a list of uniq address appearances in the block
+  -u, --uniq         display a list of uniq address appearances per transaction
+  -c, --count        display the number of the lists of appearances for --addrs or --uniq
+  -o, --cache        force a write of the block to the cache
   -x, --fmt string   export format, one of [none|json*|txt|csv|api]
-  -h, --help         display this help screen
   -v, --verbose      enable verbose (increase detail with --log_level)
+  -h, --help         display this help screen
 
 Notes:
   - blocks is a space-separated list of values, a start-end range, a special, or any combination.

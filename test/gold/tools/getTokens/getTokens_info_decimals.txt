@@ -1,3 +1,5 @@
 chifra tokens  0xd26114cd6ee289accf82350c8d8487fedb8a0c07 --parts decimals
+TEST[DATE|TIME] Addrs2:  [0xd26114cd6ee289accf82350c8d8487fedb8a0c07]
+TEST[DATE|TIME] Parts:  [decimals]
 address	decimals
 0xd26114cd6ee289accf82350c8d8487fedb8a0c07	18

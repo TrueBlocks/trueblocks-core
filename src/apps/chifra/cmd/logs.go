@@ -1,3 +1,5 @@
+package cmd
+
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -11,25 +13,26 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 /*
- * Parts of this file were generated with makeClass --gocmds. Edit only those parts of
- * the code inside of 'EXISTING_CODE' tags.
+ * This file was auto generated with makeClass --gocmds. DO NOT EDIT.
  */
-package cmd
 
+// EXISTING_CODE
 import (
 	"os"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
+	logsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/logs"
 	"github.com/spf13/cobra"
 )
+
+// EXISTING_CODE
 
 // logsCmd represents the logs command
 var logsCmd = &cobra.Command{
 	Use:   usageLogs,
 	Short: shortLogs,
 	Long:  longLogs,
-	Run:   runLogs,
-	Args:  validateLogsArgs,
+	RunE:  logsPkg.RunLogs,
 }
 
 var usageLogs = `logs [flags] <tx_id> [tx_id...]
@@ -49,30 +52,14 @@ Notes:
   - If the queried node does not store historical state, the results for most older transactions are undefined.
   - If you specify a 32-byte hash, it will be assumed to be a transaction hash, if the transaction is not found, it will be used as a topic.`
 
-type logsOptionsType struct {
-	articulate bool
-}
-
-var LogsOpts logsOptionsType
-
 func init() {
-	logsCmd.SetOut(os.Stderr)
+	logsCmd.Flags().SortFlags = false
 
-	logsCmd.Flags().SortFlags = false
-	logsCmd.PersistentFlags().SortFlags = false
-	logsCmd.Flags().BoolVarP(&LogsOpts.articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
-	logsCmd.Flags().SortFlags = false
-	logsCmd.PersistentFlags().SortFlags = false
+	logsCmd.Flags().BoolVarP(&logsPkg.Options.Articulate, "articulate", "a", false, "articulate the retrieved data if ABIs can be found")
+	globals.InitGlobals(logsCmd, &logsPkg.Options.Globals)
 
 	logsCmd.SetUsageTemplate(UsageWithNotes(notesLogs))
-	rootCmd.AddCommand(logsCmd)
-}
+	logsCmd.SetOut(os.Stderr)
 
-func TestLogLogs(args []string) {
-	if !utils.IsTestMode() {
-		return
-	}
+	chifraCmd.AddCommand(logsCmd)
 }
-
-// EXISTING_CODE
-// EXISTING_CODE

@@ -1,4 +1,5 @@
 chifra quotes  --fmt api
+TEST[DATE|TIME] Format:  api
 {"data": [
   {
     "timestamp": 1439078400,

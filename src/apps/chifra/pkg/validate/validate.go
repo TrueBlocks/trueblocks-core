@@ -17,30 +17,15 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
-
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 )
 
-var Errors []string = nil
-
-func usageEx(function, msg string, values []string) error {
-	var ret string
-	if len(function) > 0 {
-		ret = function + ": "
-	}
-	ret += msg
+func Usage(msg string, values ...string) error {
+	ret := msg
 	for index, val := range values {
 		rep := "{" + strconv.FormatInt(int64(index), 10) + "}"
 		ret = strings.Replace(ret, rep, val, -1)
 	}
-	if utils.IsApiMode() {
-		return errors.New(ret)
-	}
-	return errors.New("\n  " + ret + "\n")
-}
-
-func Usage(msg string, values ...string) error {
-	return usageEx("", msg, values)
+	return errors.New(ret)
 }
 
 func Deprecated(cmd string, rep string) error {
@@ -51,8 +36,9 @@ func Deprecated(cmd string, rep string) error {
 	return Usage(msg, cmd, rep)
 }
 
-/* Expects str to be in 0xNNNNNNN...NNNN format */
 // TODO: check if ParseUint has better performance
+// TODO: TJR - I did the test - ParseUint is slower and
+// TODO: TJR - does not handle hashes that are too long
 func IsHex(str string) bool {
 	return len(strings.Trim(str[2:], "0123456789abcdefABCDEF")) == 0
 }
@@ -61,17 +47,16 @@ func Is0xPrefixed(str string) bool {
 	if len(str) < 3 {
 		return false
 	}
-
 	return str[:2] == "0x"
 }
 
 func IsValidHex(typ string, val string, nBytes int) (bool, error) {
 	if !Is0xPrefixed(val) {
-		return false, Usage("{0} ({1}) does not start with '0x'", typ, val)
+		return false, Usage("The {0} option ({1}) must {2}.", typ, val, "start with '0x'")
 	} else if len(val) != (2 + nBytes*2) {
-		return false, Usage("{0} ({1}) is not {2} bytes long", typ, val, fmt.Sprintf("%d", nBytes))
+		return false, Usage("The {0} option ({1}) must {2}.", typ, val, fmt.Sprintf("be %d bytes long", nBytes))
 	} else if !IsHex(val) {
-		return false, Usage("{0} ({1}) does not appear to be hex", typ, val)
+		return false, Usage("The {0} option ({1}) must {2}.", typ, val, "be hex")
 	}
 	return true, nil
 }
@@ -100,10 +85,9 @@ func ValidateAtLeastOneAddr(args []string) error {
 		hasOne, _ = IsValidAddress(arg)
 	}
 	if hasOne {
-		Errors = nil // calling code will report the error
 		return nil
 	}
-	return Usage("At least one valid Ethereum address is required")
+	return Usage("Please specify at least one {0}.", "valid Ethereum address")
 }
 
 func ValidateEnum(field, value, valid string) error {
@@ -123,16 +107,10 @@ func ValidateEnum(field, value, valid string) error {
 		}
 		list += part
 	}
-	msg := "The " + field + " option ("
-	msg += value
-	msg += ") must be one of [ " + list + " ]"
-	return Usage(msg)
+	return Usage("The {0} option ({1}) must be one of [ {2} ]", field, value, list)
 }
 
 func ValidateEnumSlice(field string, values []string, valid string) error {
-	if len(values) == 0 {
-		return nil
-	}
 	for _, value := range values {
 		err := ValidateEnum(field, value, valid)
 		if err != nil {

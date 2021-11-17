@@ -1,4 +1,7 @@
 chifra export  0x001d14804b399c6ef80e64576f657660804fec0b --count --logs
+TEST[DATE|TIME] Addrs:  [0x001d14804b399c6ef80e64576f657660804fec0b]
+TEST[DATE|TIME] Logs:  true
+TEST[DATE|TIME] Count:  true
 
   --count option is only available with --appearances option. Quitting...
 
@@ -15,7 +18,6 @@ Arguments:
 
 Flags:
   -p, --appearances          export a list of appearances
-  -T, --transactions         export the actual transactional data (the default)
   -r, --receipts             export receipts instead of transactional data
   -l, --logs                 export logs instead of transactional data
   -t, --traces               export traces instead of transactional data

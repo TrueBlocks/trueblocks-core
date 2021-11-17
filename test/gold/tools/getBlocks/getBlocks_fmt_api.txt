@@ -1,4 +1,6 @@
 chifra blocks  2222222 2332332 --fmt api
+TEST[DATE|TIME] Blocks:  [2222222 2332332]
+TEST[DATE|TIME] Format:  api
 {"data": [
 {
   "gasLimit": 4704588,
