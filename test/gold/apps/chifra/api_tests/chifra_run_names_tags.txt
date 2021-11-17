@@ -55,6 +55,9 @@
       "tags": "31-Gitcoin:Grants"
     },
     {
+      "tags": "31-Gitcoin:Team"
+    },
+    {
       "tags": "31-Gitcoin:Workstreams"
     },
     {
