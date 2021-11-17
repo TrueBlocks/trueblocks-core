@@ -33,9 +33,15 @@ import (
 	logsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/logs"
 	tracesPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/traces"
 	whenPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/when"
+	statePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/state"
 	tokensPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/tokens"
 	statusPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/status"
+	scrapePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/scrape"
+	initPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/init"
 	pinsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/pins"
+	chunksPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/chunks"
+	quotesPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/quotes"
+	slurpPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/slurp"
 	// END_ROUTE_PKGS
 )
 
@@ -186,6 +192,14 @@ func RouteWhen(w http.ResponseWriter, r *http.Request) {
 
 // RouteState Retrieve account balance(s) for one or more addresses at given block(s).
 func RouteState(w http.ResponseWriter, r *http.Request) {
+	// TODO: Use the statePkg instead
+	// statePkg.ServeState(w, r)
+	opts := statePkg.FromRequest(w, r)
+	err := opts.ValidateState()
+	if err != nil {
+		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
+		return
+	}
 	CallOne(w, r, "getState", "state")
 }
 
@@ -217,11 +231,27 @@ func RouteStatus(w http.ResponseWriter, r *http.Request) {
 
 // RouteScrape Scan the chain and update (and optionally pin) the TrueBlocks index of appearances.
 func RouteScrape(w http.ResponseWriter, r *http.Request) {
+	// TODO: Use the scrapePkg instead
+	// scrapePkg.ServeScrape(w, r)
+	opts := scrapePkg.FromRequest(w, r)
+	err := opts.ValidateScrape()
+	if err != nil {
+		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
+		return
+	}
 	CallOne(w, r, "blockScrape", "scrape")
 }
 
 // RouteInit Initialize the TrueBlocks system by downloading from IPFS.
 func RouteInit(w http.ResponseWriter, r *http.Request) {
+	// TODO: Use the initPkg instead
+	// initPkg.ServeInit(w, r)
+	opts := initPkg.FromRequest(w, r)
+	err := opts.ValidateInit()
+	if err != nil {
+		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
+		return
+	}
 	CallOneExtra(w, r, "chifra", "init", "init")
 }
 
@@ -232,16 +262,40 @@ func RoutePins(w http.ResponseWriter, r *http.Request) {
 
 // RouteChunks Manage and investigate chunks and bloom filters.
 func RouteChunks(w http.ResponseWriter, r *http.Request) {
+	// TODO: Use the chunksPkg instead
+	// chunksPkg.ServeChunks(w, r)
+	opts := chunksPkg.FromRequest(w, r)
+	err := opts.ValidateChunks()
+	if err != nil {
+		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
+		return
+	}
 	CallOne(w, r, "chunkMan", "chunks")
 }
 
 // RouteQuotes Freshen or display Ethereum price data. This tool has been deprecated.
 func RouteQuotes(w http.ResponseWriter, r *http.Request) {
+	// TODO: Use the quotesPkg instead
+	// quotesPkg.ServeQuotes(w, r)
+	opts := quotesPkg.FromRequest(w, r)
+	err := opts.ValidateQuotes()
+	if err != nil {
+		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
+		return
+	}
 	CallOne(w, r, "getQuotes", "quotes")
 }
 
 // RouteSlurp Fetch data from EtherScan for any address.
 func RouteSlurp(w http.ResponseWriter, r *http.Request) {
+	// TODO: Use the slurpPkg instead
+	// slurpPkg.ServeSlurp(w, r)
+	opts := slurpPkg.FromRequest(w, r)
+	err := opts.ValidateSlurp()
+	if err != nil {
+		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
+		return
+	}
 	CallOne(w, r, "ethslurp", "slurp")
 }
 // END_ROUTE_CODE
