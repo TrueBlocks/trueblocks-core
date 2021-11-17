@@ -6,12 +6,18 @@
 # Set MAKE_TARGET to the first argument or "tests":
 MAKE_TARGET="${1:-tests}"
 RUN_SERVER=false
+# generate a random port number between 8091 and 10_000
+SRV_PORT=`shuf -n 1 -i 8091-10000`
 
 echo "Will perform $MAKE_TARGET"
 
 if [ "$MAKE_TARGET" == "test-all" ]
 then
     RUN_SERVER=true
+    echo "Serve required. Will use port $SRV_PORT"
+    echo "[settings]
+    apiProvider=\"http://localhost:$SRV_PORT\"
+    " > $HOME/.local/share/trueblocks/testRunner.toml
 fi
 
 cd /root/trueblocks-core/build
@@ -23,19 +29,16 @@ export PATH=$(pwd)/../bin:$(pwd)/../bin/test:$PATH
 # Run server if needed
 if $RUN_SERVER
 then
-    pkill flame
-    sleep 5
-
     if [ -n "$(pgrep chifra)" ]
     then
         echo "Error: Chifra serve is already running"
         exit 1
     fi
 
-    chifra serve #> /dev/null 2>&1 &
+    chifra serve -p ":$SRV_PORT"> /dev/null 2>&1 &
 
     echo "Waiting for chifra to start up..."
-    sleep 20
+    sleep 15
 
     echo "Checking if chifra is running..."
     pgrep chifra

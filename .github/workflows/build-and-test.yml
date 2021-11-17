@@ -1,7 +1,21 @@
-name: Tests
+name: BuildAndTest
 on: [pull_request, workflow_dispatch]
 jobs:
-  Explore-GitHub-Actions:
+  Build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout TrueBlocks repo
+        uses: actions/checkout@v2
+      - name: Install prerequistes
+        run: |
+          sudo apt-get install build-essential git cmake python python-dev libcurl3-dev clang-format jq tree
+      - name: Build TrueBlocks
+        run: |
+          mkdir -p build && cd build
+          cmake ../src
+          make -j 4
+  RemoteTests:
+    needs: Build
     runs-on: ubuntu-latest
     steps:
       - name: Run tests remotely
@@ -22,6 +36,4 @@ jobs:
             git checkout ${{ github.head_ref }}
             cd src/other/build_assets/remote_testing
             CONFIG_FILE=$HOME/trueBlocks.toml bash test_with_docker.sh ${{ github.repository }} ${{ github.sha }} ${{ github.head_ref }} test-all
-      - name: Finish
-        run: |
-          echo "🍏 This job's status is ${{ job.status }}"
+            docker system prune -af --filter "until=1h"
