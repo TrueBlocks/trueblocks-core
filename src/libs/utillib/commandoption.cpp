@@ -868,18 +868,13 @@ const char* STR_NEW_CHIFRA =
 const char* STR_NEW_CHIFRA_ROUTE =
     "\t[{API_ROUTE}]Pkg \"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/[{API_ROUTE}]\"";
 
-string_q newChifra1 = "list|export|monitors|names|blocks|transactions|receipts|logs|traces|when|tokens|abis|status|";
-string_q newChifra2 = "pins|";
-
 //---------------------------------------------------------------------------------------------------
 string_q CCommandOption::toGoPackage(void) const {
     if (!isApiRoute(api_route))
         return "";
 
     ostringstream os;
-    if (contains(newChifra1, api_route) || contains(newChifra2, api_route)) {
-        os << Format(STR_NEW_CHIFRA_ROUTE) << endl;
-    }
+    os << Format(STR_NEW_CHIFRA_ROUTE) << endl;
     return os.str();
 }
 
@@ -895,14 +890,12 @@ string_q CCommandOption::toGoCall(void) const {
     os << Format("// [{GOROUTEFUNC}] [{DESCRIPTION}]") << endl;
     os << Format("func [{GOROUTEFUNC}](w http.ResponseWriter, r *http.Request) {") << endl;
 
-    if (contains(newChifra1, api_route)) {
-        os << Format(STR_NEW_CHIFRA) << endl;
-    }
-
+    string_q newChifra2 = "pins|";
     if (contains(newChifra2, api_route)) {
         os << Format("\t[{API_ROUTE}]Pkg.Serve[{PROPER}](w, r)") << endl;
 
     } else {
+        os << Format(STR_NEW_CHIFRA) << endl;
         if ((!tool.empty() && !contains(tool, " ") && !goPortNewCode(api_route)) && api_route != "abis") {
             os << "\tCallOne(w, r, \"" << tool << "\", \"" << api_route << "\")" << endl;
 
