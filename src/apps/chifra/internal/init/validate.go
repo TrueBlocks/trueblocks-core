@@ -14,5 +14,11 @@ package initPkg
  *-------------------------------------------------------------------------------------------*/
 
 func (opts *InitOptions) ValidateInit() error {
+	opts.TestLog()
+
+	if opts.BadFlag != nil {
+		return opts.BadFlag
+	}
+
 	return nil // will get validated by RunPins
 }

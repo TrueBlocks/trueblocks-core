@@ -14,7 +14,6 @@ package namesPkg
  *-------------------------------------------------------------------------------------------*/
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -33,7 +32,7 @@ func (opts *NamesOptions) ValidateNames() error {
 		return validate.Usage("The {0} option is not available{1}.", "--collection", " with any other option")
 	}
 
-	return globals.ValidateGlobals(&Options.Globals)
+	return opts.Globals.ValidateGlobals()
 }
 
 func anyBase() bool {

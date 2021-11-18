@@ -1,3 +1,4 @@
+when?blocks=daofork&verbose
 {
   "data": [
     {

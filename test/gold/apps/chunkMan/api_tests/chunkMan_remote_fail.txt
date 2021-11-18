@@ -1,5 +1,6 @@
+chunks?remote
 {
   "errors": [
-    "chifra chunks - Invalid option: --remote"
+    "Invalid key (remote) in chunks route."
   ]
 }

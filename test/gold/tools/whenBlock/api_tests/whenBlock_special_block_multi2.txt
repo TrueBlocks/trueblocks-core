@@ -1,5 +1,6 @@
+when?blocks=stateclear%20iceage%204001001%20junk&verbose
 {
   "errors": [
-    "chifra when - The given value 'junk' is not a numeral or a special named block."
+    "The given value 'junk' is not a numeral or a special named block."
   ]
 }

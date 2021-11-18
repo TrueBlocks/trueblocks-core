@@ -1,5 +1,6 @@
+status?junk
 {
   "errors": [
-    "chifra status - Invalid option: --junk"
+    "Invalid key (junk) in status route."
   ]
 }

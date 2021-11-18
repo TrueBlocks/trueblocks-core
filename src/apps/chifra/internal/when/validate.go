@@ -16,11 +16,16 @@ package whenPkg
 import (
 	"errors"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
 func (opts *WhenOptions) ValidateWhen() error {
+	opts.TestLog()
+
+	if opts.BadFlag != nil {
+		return opts.BadFlag
+	}
+
 	// TODO: Remove the global Format and all appearances of it
 	// if !WhenOpts.list {
 	// 	if len(args) == 0 {
@@ -41,7 +46,5 @@ func (opts *WhenOptions) ValidateWhen() error {
 		return err
 	}
 
-	Options.TestLog()
-
-	return globals.ValidateGlobals(&Options.Globals)
+	return opts.Globals.ValidateGlobals()
 }

@@ -227,6 +227,7 @@ void COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
                 if (!startsWith(f, "#"))
                     envLines.push_back(f);
 
+            ostringstream prepender;
             if (cmdTests) {
                 string_q envs = substitute(substitute(linesToString(envLines, '|'), " ", ""), "|", " ");
                 string_q env = "env " + envs + " TEST_MODE=true NO_COLOR=true REDIR_CERR=true ";
@@ -265,6 +266,7 @@ void COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
                 cmd << "\"";
                 cmd << (has_post ? (" | " + test.post + " ") : "");
                 cmd << " >" << test.workPath + test.fileName;
+                prepender << test.route << "?" << test.options << endl;
             }
 
             // To run the test, we cd into the gold path (so we find the test files), but we send results to working
@@ -287,6 +289,11 @@ void COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
             // clang-format on
             if (folderExists(customized))
                 forEveryFileInFolder(customized + "/*", replaceFile, NULL);
+
+            if (!prepender.str().empty()) {
+                string_q contents = prepender.str() + asciiFileToString(test.workPath + test.fileName);
+                stringToAsciiFile(test.workPath + test.fileName, contents);
+            }
 
             if (test.builtin) {
                 if (test.mode == "both" || contains(test.tool, "lib"))

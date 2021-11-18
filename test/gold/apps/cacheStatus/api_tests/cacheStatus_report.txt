@@ -1,1 +1,2 @@
+status?report&fmt=txt
 { "errors": [ "chifra status - the --report option is deprecated, run the command with no options for the same result" ] }

@@ -1,3 +1,4 @@
+pins?list&remote&fmt=json
 {
   "errors": [
     "The --remote flag has been deprecated."

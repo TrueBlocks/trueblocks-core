@@ -1,3 +1,4 @@
+status?modes=collections
 {
   "data": [
     {

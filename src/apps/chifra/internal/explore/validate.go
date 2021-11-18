@@ -18,7 +18,6 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -42,6 +41,12 @@ type ExploreUrl struct {
 var urls []ExploreUrl
 
 func (opts *ExploreOptions) ValidateExplore() error {
+	opts.TestLog()
+
+	if opts.BadFlag != nil {
+		return opts.BadFlag
+	}
+
 	if Options.Google && Options.Local {
 		return validate.Usage("The {0} option is not available{1}.", "--local", " with the --google option")
 	}
@@ -96,9 +101,7 @@ func (opts *ExploreOptions) ValidateExplore() error {
 		urls = append(urls, ExploreUrl{"", ExploreNone})
 	}
 
-	Options.TestLog()
-
-	return globals.ValidateGlobals(&Options.Globals)
+	return opts.Globals.ValidateGlobals()
 }
 
 func id_2_TxHash(arg string) (string, error) {

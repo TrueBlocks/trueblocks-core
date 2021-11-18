@@ -1,3 +1,4 @@
+pins?list&fmt=junk
 {
   "errors": [
     "The --fmt option (junk) must be one of [ json | txt | csv | api ]"

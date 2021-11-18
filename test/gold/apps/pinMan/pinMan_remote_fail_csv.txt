@@ -1,4 +1,6 @@
 chifra pins  --list --remote --fmt csv
+TEST[DATE|TIME] List:  true
+TEST[DATE|TIME] Format:  csv
 Error: The --remote flag has been deprecated.
 Usage:
   chifra pins [flags]

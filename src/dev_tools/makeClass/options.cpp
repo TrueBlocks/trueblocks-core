@@ -183,6 +183,8 @@ bool COptions::parseArguments(string_q& command) {
         return false;
     if (options && !handle_options())
         return false;
+    if (openapi && !writeOpenApiFile())
+        return false;
     if (gocmds && !handle_gocmds())
         return false;
     if (readmes && !handle_readmes())

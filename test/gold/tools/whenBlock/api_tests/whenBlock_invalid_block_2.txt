@@ -1,5 +1,6 @@
+when?blocks=1ppppppp
 {
   "errors": [
-    "chifra when - The given value '1ppppppp' is not a numeral or a special named block."
+    "The given value '1ppppppp' is not a numeral or a special named block."
   ]
 }

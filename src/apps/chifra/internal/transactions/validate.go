@@ -13,11 +13,12 @@ package transactionsPkg
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 
-import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
-)
-
 func (opts *TransactionsOptions) ValidateTransactions() error {
-	Options.TestLog()
-	return globals.ValidateGlobals(&Options.Globals)
+	opts.TestLog()
+
+	if opts.BadFlag != nil {
+		return opts.BadFlag
+	}
+
+	return opts.Globals.ValidateGlobals()
 }

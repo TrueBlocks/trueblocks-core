@@ -1,1 +1,6 @@
-{ "errors": [ "chifra scrape - Invalid option: -2" ] }
+scrape?block_cnt=-12
+{
+  "errors": [
+    "Please choose at least one of [indexer|monitors|both]."
+  ]
+}

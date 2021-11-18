@@ -1,1 +1,6 @@
-{ "errors": [ "chifra scrape - Invalid option: --junk" ] }
+scrape?junk
+{
+  "errors": [
+    "Invalid key (junk) in scrape route."
+  ]
+}

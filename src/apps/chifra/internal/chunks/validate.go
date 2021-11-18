@@ -14,11 +14,16 @@ package chunksPkg
  *-------------------------------------------------------------------------------------------*/
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
 func (opts *ChunksOptions) ValidateChunks() error {
+	opts.TestLog()
+
+	if opts.BadFlag != nil {
+		return opts.BadFlag
+	}
+
 	if !Options.List && !Options.Check && len(Options.Extract) == 0 {
 		return validate.Usage("Please choose at least one of {0}.", "--list, --extract, or --check")
 	}
@@ -36,7 +41,5 @@ func (opts *ChunksOptions) ValidateChunks() error {
 		return err
 	}
 
-	Options.TestLog()
-
-	return globals.ValidateGlobals(&Options.Globals)
+	return opts.Globals.ValidateGlobals()
 }

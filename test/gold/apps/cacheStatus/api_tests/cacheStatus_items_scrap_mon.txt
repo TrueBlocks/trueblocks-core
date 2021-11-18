@@ -1,3 +1,4 @@
+status?details&modes=index&test_start=1000000&test_end=2200000
 {
   "data": [
     {

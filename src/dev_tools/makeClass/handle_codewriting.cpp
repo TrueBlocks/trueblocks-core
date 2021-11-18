@@ -103,7 +103,7 @@ bool writeCodeIn(const codewrite_t& cw) {
 
 //---------------------------------------------------------------------------------------------------
 bool writeCodeOut(COptions* opts, const string_q& fn) {
-    if (contains(fn, "/stub/") || contains(fn, "/chifra/") || goPortNewCode(fn))
+    if (contains(fn, "/stub/") || contains(fn, "/chifra/options.cpp") || goPortNewCode(fn))
         return true;
 
     string_q orig = asciiFileToString(fn);
@@ -129,6 +129,7 @@ bool writeCodeOut(COptions* opts, const string_q& fn) {
         replaceAll(converted, "    // clang-format on\n    // clang-format off\n", "");
 
     } else if (endsWith(fn, ".go")) {
+        converted = replaceCode(converted, "ROUTE_PKGS", opts->goPkgStream.str());
         converted = replaceCode(converted, "ROUTE_CODE", opts->goCallStream.str());
         converted = replaceCode(converted, "ROUTE_ITEMS", opts->goRouteStream.str());
 

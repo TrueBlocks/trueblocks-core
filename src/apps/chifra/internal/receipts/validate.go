@@ -14,7 +14,6 @@ package receiptsPkg
  *-------------------------------------------------------------------------------------------*/
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -48,5 +47,5 @@ func (opts *ReceiptsOptions) ValidateReceipts() error {
 	// 	}
 	// }
 
-	return globals.ValidateGlobals(&opts.Globals)
+	return opts.Globals.ValidateGlobals()
 }

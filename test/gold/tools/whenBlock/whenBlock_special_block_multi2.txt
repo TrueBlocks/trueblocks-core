@@ -1,4 +1,6 @@
 chifra when  stateclear iceage 4001001 junk --verbose
+TEST[DATE|TIME] Blocks:  [stateclear iceage 4001001 junk]
+TEST[DATE|TIME] Verbose:  true
 Error: The given value 'junk' is not a numeral or a special named block.
 Usage:
   chifra when [flags] < block | date > [ block... | date... ]

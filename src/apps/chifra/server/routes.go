@@ -21,56 +21,72 @@ import (
 	"fmt"
 	"net/http"
 
-	blocksPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/blocks"
+	// BEG_ROUTE_PKGS
+	listPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/list"
+	exportPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/export"
+	monitorsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/monitors"
 	namesPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/names"
-	pinsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/pins"
+	abisPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/abis"
+	blocksPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/blocks"
+	transactionsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/transactions"
 	receiptsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/receipts"
+	logsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/logs"
+	tracesPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/traces"
+	whenPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/when"
+	statePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/state"
 	tokensPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/tokens"
+	statusPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/status"
+	scrapePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/scrape"
+	initPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/init"
+	pinsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/pins"
+	chunksPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/chunks"
+	quotesPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/quotes"
+	slurpPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/slurp"
+	// END_ROUTE_PKGS
 )
 
 // BEG_ROUTE_CODE
 
-func RouteAbis(w http.ResponseWriter, r *http.Request) {
-	CallOneExtra(w, r, "chifra", "abis", "abis")
-	// abisPkg.ServeAbis(w, r)
-}
-
-func RouteBlocks(w http.ResponseWriter, r *http.Request) {
-	// TODO: Use the blocksPkg instead
-	// blocksPkg.ServeBlocks(w, r)
-	opts := blocksPkg.FromRequest(w, r)
-	err := opts.ValidateBlocks()
+// RouteList List every appearance of an address anywhere on the chain.
+func RouteList(w http.ResponseWriter, r *http.Request) {
+	// TODO: Use the listPkg instead
+	// listPkg.ServeList(w, r)
+	opts := listPkg.FromRequest(w, r)
+	err := opts.ValidateList()
 	if err != nil {
 		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
 		return
 	}
-	CallOne(w, r, "getBlocks", "blocks")
-}
-
-func RouteChunks(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "chunkMan", "chunks")
-}
-
-func RouteExport(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "acctExport", "export")
-}
-
-func RouteInit(w http.ResponseWriter, r *http.Request) {
-	CallOneExtra(w, r, "chifra", "init", "init")
-}
-
-func RouteList(w http.ResponseWriter, r *http.Request) {
 	CallOneExtra(w, r, "chifra", "list", "list")
 }
 
-func RouteLogs(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "getLogs", "logs")
+// RouteExport Export full detail of transactions for one or more addresses.
+func RouteExport(w http.ResponseWriter, r *http.Request) {
+	// TODO: Use the exportPkg instead
+	// exportPkg.ServeExport(w, r)
+	opts := exportPkg.FromRequest(w, r)
+	err := opts.ValidateExport()
+	if err != nil {
+		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
+		return
+	}
+	CallOne(w, r, "acctExport", "export")
 }
 
+// RouteMonitors Add, remove, clean, and list address monitors.
 func RouteMonitors(w http.ResponseWriter, r *http.Request) {
+	// TODO: Use the monitorsPkg instead
+	// monitorsPkg.ServeMonitors(w, r)
+	opts := monitorsPkg.FromRequest(w, r)
+	err := opts.ValidateMonitors()
+	if err != nil {
+		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
+		return
+	}
 	CallOneExtra(w, r, "chifra", "monitors", "monitors")
 }
 
+// RouteNames Query addresses or names of well known accounts.
 func RouteNames(w http.ResponseWriter, r *http.Request) {
 	// TODO: Use the namesPkg instead
 	// namesPkg.ServeNames(w, r)
@@ -83,21 +99,49 @@ func RouteNames(w http.ResponseWriter, r *http.Request) {
 	CallOne(w, r, "ethNames", "names")
 }
 
-func RoutePins(w http.ResponseWriter, r *http.Request) {
-	pinsPkg.ServePins(w, r)
+// RouteAbis Fetches the ABI for a smart contract.
+func RouteAbis(w http.ResponseWriter, r *http.Request) {
+	// TODO: Use the abisPkg instead
+	// abisPkg.ServeAbis(w, r)
+	opts := abisPkg.FromRequest(w, r)
+	err := opts.ValidateAbis()
+	if err != nil {
+		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
+		return
+	}
+	CallOneExtra(w, r, "chifra", "abis", "abis")
 }
 
-func RouteQuotes(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "getQuotes", "quotes")
+// RouteBlocks Retrieve one or more blocks from the chain or local cache.
+func RouteBlocks(w http.ResponseWriter, r *http.Request) {
+	// TODO: Use the blocksPkg instead
+	// blocksPkg.ServeBlocks(w, r)
+	opts := blocksPkg.FromRequest(w, r)
+	err := opts.ValidateBlocks()
+	if err != nil {
+		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
+		return
+	}
+	CallOne(w, r, "getBlocks", "blocks")
 }
 
+// RouteTransactions Retrieve one or more transactions from the chain or local cache.
 func RouteTransactions(w http.ResponseWriter, r *http.Request) {
+	// TODO: Use the transactionsPkg instead
+	// transactionsPkg.ServeTransactions(w, r)
+	opts := transactionsPkg.FromRequest(w, r)
+	err := opts.ValidateTransactions()
+	if err != nil {
+		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
+		return
+	}
 	CallOne(w, r, "getTrans", "transactions")
 }
 
+// RouteReceipts Retrieve receipts for the given transaction(s).
 func RouteReceipts(w http.ResponseWriter, r *http.Request) {
 	// TODO: Use the receiptsPkg instead
-	// receiptPkg.ServeReceipts(w, r)
+	// receiptsPkg.ServeReceipts(w, r)
 	opts := receiptsPkg.FromRequest(w, r)
 	err := opts.ValidateReceipts()
 	if err != nil {
@@ -107,22 +151,59 @@ func RouteReceipts(w http.ResponseWriter, r *http.Request) {
 	CallOne(w, r, "getReceipts", "receipts")
 }
 
-func RouteScrape(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "blockScrape", "scrape")
+// RouteLogs Retrieve logs for the given transaction(s).
+func RouteLogs(w http.ResponseWriter, r *http.Request) {
+	// TODO: Use the logsPkg instead
+	// logsPkg.ServeLogs(w, r)
+	opts := logsPkg.FromRequest(w, r)
+	err := opts.ValidateLogs()
+	if err != nil {
+		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
+		return
+	}
+	CallOne(w, r, "getLogs", "logs")
 }
 
-func RouteSlurp(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "ethslurp", "slurp")
+// RouteTraces Retrieve traces for the given transaction(s).
+func RouteTraces(w http.ResponseWriter, r *http.Request) {
+	// TODO: Use the tracesPkg instead
+	// tracesPkg.ServeTraces(w, r)
+	opts := tracesPkg.FromRequest(w, r)
+	err := opts.ValidateTraces()
+	if err != nil {
+		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
+		return
+	}
+	CallOne(w, r, "getTraces", "traces")
 }
 
+// RouteWhen Find block(s) based on date, blockNum, timestamp, or 'special'.
+func RouteWhen(w http.ResponseWriter, r *http.Request) {
+	// TODO: Use the whenPkg instead
+	// whenPkg.ServeWhen(w, r)
+	opts := whenPkg.FromRequest(w, r)
+	err := opts.ValidateWhen()
+	if err != nil {
+		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
+		return
+	}
+	CallOne(w, r, "whenBlock", "when")
+}
+
+// RouteState Retrieve account balance(s) for one or more addresses at given block(s).
 func RouteState(w http.ResponseWriter, r *http.Request) {
+	// TODO: Use the statePkg instead
+	// statePkg.ServeState(w, r)
+	opts := statePkg.FromRequest(w, r)
+	err := opts.ValidateState()
+	if err != nil {
+		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
+		return
+	}
 	CallOne(w, r, "getState", "state")
 }
 
-func RouteStatus(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "cacheStatus", "status")
-}
-
+// RouteTokens Retrieve token balance(s) for one or more addresses at given block(s).
 func RouteTokens(w http.ResponseWriter, r *http.Request) {
 	// TODO: Use the tokensPkg instead
 	// tokensPkg.ServeTokens(w, r)
@@ -135,14 +216,88 @@ func RouteTokens(w http.ResponseWriter, r *http.Request) {
 	CallOne(w, r, "getTokens", "tokens")
 }
 
-func RouteTraces(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "getTraces", "traces")
+// RouteStatus Report on the status of the TrueBlocks system.
+func RouteStatus(w http.ResponseWriter, r *http.Request) {
+	// TODO: Use the statusPkg instead
+	// statusPkg.ServeStatus(w, r)
+	opts := statusPkg.FromRequest(w, r)
+	err := opts.ValidateStatus()
+	if err != nil {
+		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
+		return
+	}
+	CallOne(w, r, "cacheStatus", "status")
 }
 
-func RouteWhen(w http.ResponseWriter, r *http.Request) {
-	CallOne(w, r, "whenBlock", "when")
+// RouteScrape Scan the chain and update (and optionally pin) the TrueBlocks index of appearances.
+func RouteScrape(w http.ResponseWriter, r *http.Request) {
+	// TODO: Use the scrapePkg instead
+	// scrapePkg.ServeScrape(w, r)
+	opts := scrapePkg.FromRequest(w, r)
+	err := opts.ValidateScrape()
+	if err != nil {
+		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
+		return
+	}
+	CallOne(w, r, "blockScrape", "scrape")
 }
 
+// RouteInit Initialize the TrueBlocks system by downloading from IPFS.
+func RouteInit(w http.ResponseWriter, r *http.Request) {
+	// TODO: Use the initPkg instead
+	// initPkg.ServeInit(w, r)
+	opts := initPkg.FromRequest(w, r)
+	err := opts.ValidateInit()
+	if err != nil {
+		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
+		return
+	}
+	CallOneExtra(w, r, "chifra", "init", "init")
+}
+
+// RoutePins Manage pinned index of appearances and associated blooms.
+func RoutePins(w http.ResponseWriter, r *http.Request) {
+	pinsPkg.ServePins(w, r)
+}
+
+// RouteChunks Manage and investigate chunks and bloom filters.
+func RouteChunks(w http.ResponseWriter, r *http.Request) {
+	// TODO: Use the chunksPkg instead
+	// chunksPkg.ServeChunks(w, r)
+	opts := chunksPkg.FromRequest(w, r)
+	err := opts.ValidateChunks()
+	if err != nil {
+		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
+		return
+	}
+	CallOne(w, r, "chunkMan", "chunks")
+}
+
+// RouteQuotes Freshen or display Ethereum price data. This tool has been deprecated.
+func RouteQuotes(w http.ResponseWriter, r *http.Request) {
+	// TODO: Use the quotesPkg instead
+	// quotesPkg.ServeQuotes(w, r)
+	opts := quotesPkg.FromRequest(w, r)
+	err := opts.ValidateQuotes()
+	if err != nil {
+		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
+		return
+	}
+	CallOne(w, r, "getQuotes", "quotes")
+}
+
+// RouteSlurp Fetch data from EtherScan for any address.
+func RouteSlurp(w http.ResponseWriter, r *http.Request) {
+	// TODO: Use the slurpPkg instead
+	// slurpPkg.ServeSlurp(w, r)
+	opts := slurpPkg.FromRequest(w, r)
+	err := opts.ValidateSlurp()
+	if err != nil {
+		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
+		return
+	}
+	CallOne(w, r, "ethslurp", "slurp")
+}
 // END_ROUTE_CODE
 
 func Index(w http.ResponseWriter, r *http.Request) {
@@ -157,28 +312,26 @@ var routes = Routes{
 	Route{"EditName", "POST", "/names", EditName},
 
 	// BEG_ROUTE_ITEMS
-	Route{"RouteAbis", "GET", "/abis", RouteAbis},
-	Route{"RouteBlocks", "GET", "/blocks", RouteBlocks},
-	Route{"RouteChunks", "GET", "/chunks", RouteChunks},
-	// not a route
-	// Route{"RouteExplore", "GET", "/explore", RouteExplore},
-	Route{"RouteExport", "GET", "/export", RouteExport},
-	Route{"RouteInit", "GET", "/init", RouteInit},
 	Route{"RouteList", "GET", "/list", RouteList},
-	Route{"RouteLogs", "GET", "/logs", RouteLogs},
+	Route{"RouteExport", "GET", "/export", RouteExport},
 	Route{"RouteMonitors", "GET", "/monitors", RouteMonitors},
 	Route{"RouteNames", "GET", "/names", RouteNames},
-	Route{"RoutePins", "GET", "/pins", RoutePins},
-	Route{"RouteQuotes", "GET", "/quotes", RouteQuotes},
-	Route{"RouteReceipts", "GET", "/receipts", RouteReceipts},
-	Route{"RouteScrape,", "GET", "/scrape", RouteScrape},
-	Route{"RouteSlurp", "GET", "/slurp", RouteSlurp},
-	Route{"RouteState", "GET", "/state", RouteState},
-	Route{"RouteStatus", "GET", "/status", RouteStatus},
-	Route{"RouteTokens", "GET", "/tokens", RouteTokens},
-	Route{"RouteTraces", "GET", "/traces", RouteTraces},
+	Route{"RouteAbis", "GET", "/abis", RouteAbis},
+	Route{"RouteBlocks", "GET", "/blocks", RouteBlocks},
 	Route{"RouteTransactions", "GET", "/transactions", RouteTransactions},
+	Route{"RouteReceipts", "GET", "/receipts", RouteReceipts},
+	Route{"RouteLogs", "GET", "/logs", RouteLogs},
+	Route{"RouteTraces", "GET", "/traces", RouteTraces},
 	Route{"RouteWhen", "GET", "/when", RouteWhen},
+	Route{"RouteState", "GET", "/state", RouteState},
+	Route{"RouteTokens", "GET", "/tokens", RouteTokens},
+	Route{"RouteStatus", "GET", "/status", RouteStatus},
+	Route{"RouteScrape", "GET", "/scrape", RouteScrape},
+	Route{"RouteInit", "GET", "/init", RouteInit},
+	Route{"RoutePins", "GET", "/pins", RoutePins},
+	Route{"RouteChunks", "GET", "/chunks", RouteChunks},
+	Route{"RouteQuotes", "GET", "/quotes", RouteQuotes},
+	Route{"RouteSlurp", "GET", "/slurp", RouteSlurp},
 	// END_ROUTE_ITEMS
 }
 

@@ -1,3 +1,4 @@
+state?call=0xa4f29fc548856180f6b1e319ee4d86715875cce4!12065fe0&blocks=6523977-6540000:2000
 {
   "errors": [
     "chifra state - You must provide either a four-byte code or a function signature for the smart contract."

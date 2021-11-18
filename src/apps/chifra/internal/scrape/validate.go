@@ -16,7 +16,6 @@ package scrapePkg
 import (
 	"fmt"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -24,6 +23,12 @@ import (
 // TODO: https://github.com/storj/uplink/blob/v1.7.0/bucket.go#L19
 
 func (opts *ScrapeOptions) ValidateScrape() error {
+	opts.TestLog()
+
+	if opts.BadFlag != nil {
+		return opts.BadFlag
+	}
+
 	if len(opts.Modes) == 0 {
 		return validate.Usage("Please choose at least one of {0}.", "[indexer|monitors|both]")
 
@@ -56,7 +61,5 @@ func (opts *ScrapeOptions) ValidateScrape() error {
 		return validate.Usage("The {0} option is available only with {1}.", "--publish", "the indexer")
 	}
 
-	Options.TestLog()
-
-	return globals.ValidateGlobals(&Options.Globals)
+	return opts.Globals.ValidateGlobals()
 }

@@ -16,7 +16,6 @@ package blocksPkg
 import (
 	"errors"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -99,5 +98,5 @@ func (opts *BlocksOptions) ValidateBlocks() error {
 		}
 	}
 
-	return globals.ValidateGlobals(&opts.Globals)
+	return opts.Globals.ValidateGlobals()
 }

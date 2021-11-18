@@ -1,5 +1,6 @@
+logs?other
 {
   "errors": [
-    "chifra logs - Invalid option: --other"
+    "Invalid key (other) in logs route."
   ]
 }
