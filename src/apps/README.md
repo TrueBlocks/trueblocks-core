@@ -1,3 +1,7 @@
+## NOTICE
+
+This document is out of date. Please see our [website](http://trueblocks.io).
+
 ## Apps
 
 The `apps` folder contains the primary applications built on the TrueBlocks libraries. This includes the decentralized blockchain scrapers `blockScrape`; `chifra`, an automated way to create smart contract monitors; `getQuotes` which pulls US dollar price data from remote sources; `ethslurp` which is a down-and-dirty centralized command line scraper utilizing http://etherscan.io.

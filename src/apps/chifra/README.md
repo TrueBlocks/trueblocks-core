@@ -1,3 +1,7 @@
+## NOTICE
+
+This document is out of date. Please see our [website](http://trueblocks.io).
+
 ## chifra
 
 `chifra` is an command line tool that builds [TrueBlocks account monitors](../../monitors/README.md) through a series of interactive questions.
