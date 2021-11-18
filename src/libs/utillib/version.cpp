@@ -19,7 +19,7 @@ namespace qblocks {
 // ALSO CHANGE IN ROOT.GO
 #define MINOR 16
 // ALSO CHANGE IN ROOT.GO
-#define BUILD 0
+#define BUILD 1
 #define SUBVERS "alpha"
 #define PRODUCT_NAME "GHC-TrueBlocks//"
 //--------------------------------------------------------------------------------

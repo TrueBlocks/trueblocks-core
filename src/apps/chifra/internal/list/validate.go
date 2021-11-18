@@ -18,7 +18,11 @@ import (
 )
 
 func (opts *ListOptions) ValidateList() error {
-	Options.TestLog()
+	opts.TestLog()
+
+	if opts.BadFlag != nil {
+		return opts.BadFlag
+	}
 
 	err := validate.ValidateAtLeastOneAddr(opts.Addrs)
 	if err != nil {

@@ -1,1 +1,6 @@
-{ "errors": [ "chifra scrape - Invalid option: --block_chan_cnt" ] }
+scrape?block_chan_cnt=-12
+{
+  "errors": [
+    "Please choose at least one of [indexer|monitors|both]."
+  ]
+}

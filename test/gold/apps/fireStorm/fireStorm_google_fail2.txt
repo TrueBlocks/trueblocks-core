@@ -1,4 +1,6 @@
 chifra explore  1001001.0 --google
+TEST[DATE|TIME] Terms:  [1001001.0]
+TEST[DATE|TIME] Google:  true
 Error: The --google option requires an address term.
 Usage:
   chifra explore [flags] <term> [term...]

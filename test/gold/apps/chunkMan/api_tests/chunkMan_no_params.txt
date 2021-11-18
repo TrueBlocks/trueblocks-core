@@ -1,5 +1,6 @@
+chunks?
 {
   "errors": [
-    "chifra chunks - Not enough arguments presented."
+    "Please choose at least one of --list, --extract, or --check."
   ]
 }

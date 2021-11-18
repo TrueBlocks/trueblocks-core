@@ -194,8 +194,6 @@ bool COptions::handle_options(void) {
     LOG_INFO(cYellow, "makeClass --options", cOff, " processed ", counter.nVisited, " files (changed ",
              counter.nProcessed, ").", string_q(40, ' '));
 
-    writeOpenApiFile();
-
     return true;
 }
 

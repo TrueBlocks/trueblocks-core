@@ -1,3 +1,4 @@
+receipts?transactions=1428993.*&fmt=api
 {
   "data": [
     {

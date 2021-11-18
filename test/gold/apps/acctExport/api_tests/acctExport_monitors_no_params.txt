@@ -1,3 +1,4 @@
+monitors?
 {
   "errors": [
     "chifra monitors - You must provide at least one Ethereum address."

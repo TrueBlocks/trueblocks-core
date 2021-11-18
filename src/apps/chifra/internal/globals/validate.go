@@ -20,7 +20,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
-func ValidateGlobals(opts *GlobalOptionsType) error {
+func (opts *GlobalOptionsType) ValidateGlobals() error {
 	if len(opts.File) > 0 && !utils.FileExists(opts.File) {
 		return validate.Usage("The {0} option ({1}) must {2}", "file", opts.File, "exist")
 	}

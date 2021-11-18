@@ -1,5 +1,6 @@
+slurp?pank
 {
   "errors": [
-    "chifra slurp - Invalid option: --pank"
+    "Invalid key (pank) in slurp route."
   ]
 }

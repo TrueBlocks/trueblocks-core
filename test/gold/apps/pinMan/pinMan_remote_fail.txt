@@ -1,4 +1,5 @@
 chifra pins  --list --remote
+TEST[DATE|TIME] List:  true
 Error: The --remote flag has been deprecated.
 Usage:
   chifra pins [flags]

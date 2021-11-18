@@ -56,8 +56,8 @@ on      ,both ,fast  ,blocks ,tools/getBlocks ,with_logs_topic      ,y    ,block
 on      ,both ,fast  ,blocks ,tools/getBlocks ,with_logs_topic2     ,y    ,blocks = 4012000-4012001 & logs & topic = 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef & topic = 0x0000000000000000000000008d71cd37bc1c715f6d4e9b5d68aa17a8b42cac87
 on      ,both ,fast  ,blocks ,tools/getBlocks ,with_logs_emitter    ,y    ,blocks = 4012000-4012001 & logs & emitter = 0x86fa049857e0209aa7d9e616f7eb3b3b78ecfdb0
 on      ,both ,fast  ,blocks ,tools/getBlocks ,with_logs_both       ,y    ,blocks = 4012000-4012001 & logs & topic = 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef & emitter = 0x86fa049857e0209aa7d9e616f7eb3b3b78ecfdb0
-on      ,both ,fast  ,blocks ,tools/getBlocks ,with_logs_art        ,y    ,blocks = 4012000-4012001 & logs & articulate
-on      ,both ,fast  ,blocks ,tools/getBlocks ,with_logs_csv_art    ,n    ,blocks = 4012000-4012001 & logs & fmt = csv & articulate
+local   ,both ,fast  ,blocks ,tools/getBlocks ,with_logs_art        ,y    ,blocks = 4012000-4012001 & logs & articulate
+local   ,both ,fast  ,blocks ,tools/getBlocks ,with_logs_csv_art    ,n    ,blocks = 4012000-4012001 & logs & fmt = csv & articulate
 on      ,both ,fast  ,blocks ,tools/getBlocks ,no_cache_uncles      ,y    ,blocks = 4012000-4012001 & cache & uncles
 on      ,both ,fast  ,blocks ,tools/getBlocks ,no_cache_apps        ,y    ,blocks = 4012000-4012001 & cache & apps
 on      ,both ,fast  ,blocks ,tools/getBlocks ,no_cache_uniq        ,y    ,blocks = 4012000-4012001 & cache & uniq

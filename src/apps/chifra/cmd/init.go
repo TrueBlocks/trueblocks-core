@@ -32,6 +32,7 @@ var initCmd = &cobra.Command{
 	Use:   usageInit,
 	Short: shortInit,
 	Long:  longInit,
+	Version: "GHC-TrueBlocks//0.16.1-alpha",
 	RunE:  initPkg.RunInit,
 }
 

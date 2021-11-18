@@ -1,3 +1,4 @@
+status?details&modes=abis%20caches%20monitors&types=slurps
 {
   "data": [
     {

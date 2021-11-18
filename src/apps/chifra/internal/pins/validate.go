@@ -14,11 +14,16 @@ package pinsPkg
  *-------------------------------------------------------------------------------------------*/
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
 func (opts *PinsOptions) ValidatePins() error {
+	opts.TestLog()
+
+	if opts.BadFlag != nil {
+		return opts.BadFlag
+	}
+
 	if opts.List && opts.Init {
 		return validate.Usage("Please choose only one of {0}.", "--list or --init")
 	}
@@ -61,7 +66,5 @@ func (opts *PinsOptions) ValidatePins() error {
 	//          (pin.bloomHash == newHash ? greenCheck : redX));
 	// }
 
-	Options.TestLog()
-
-	return globals.ValidateGlobals(&opts.Globals)
+	return opts.Globals.ValidateGlobals()
 }

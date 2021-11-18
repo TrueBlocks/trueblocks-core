@@ -1,5 +1,6 @@
+slurp?
 {
   "errors": [
-    "chifra slurp - Not enough arguments presented."
+    "Please specify at least one valid Ethereum address."
   ]
 }

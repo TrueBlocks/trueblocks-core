@@ -32,6 +32,7 @@ var quotesCmd = &cobra.Command{
 	Use:   usageQuotes,
 	Short: shortQuotes,
 	Long:  longQuotes,
+	Version: "GHC-TrueBlocks//0.16.1-alpha",
 	RunE:  quotesPkg.RunQuotes,
 }
 

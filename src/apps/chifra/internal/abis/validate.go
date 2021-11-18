@@ -16,12 +16,17 @@ package abisPkg
 import (
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
 func (opts *AbisOptions) ValidateAbis() error {
+	opts.TestLog()
+
+	if opts.BadFlag != nil {
+		return opts.BadFlag
+	}
+
 	if opts.Classes {
 		return validate.Usage("The {0} option is not available{1}.", "--classes", " (not implemented)")
 	}
@@ -75,7 +80,5 @@ func (opts *AbisOptions) ValidateAbis() error {
 
 	}
 
-	opts.TestLog()
-
-	return globals.ValidateGlobals(&opts.Globals)
+	return opts.Globals.ValidateGlobals()
 }

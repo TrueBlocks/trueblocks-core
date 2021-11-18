@@ -8668,6 +8668,7 @@ tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefun
 50-Tokens:ERC20	0xd55cc696eab7f309cfc6bcc9e16cd32f066c64f9	Chris Blec | iLeverage Demo	UDT	On chain	18		false	false	false	true	true	true
 90-Individuals:Gitcoin Grants	0xd55da2bf21a2131ece7c50fbf979644eb7df1c21	carolinwend		Gitcoin Website			false	false	false	false	false	false
 50-Tokens:ERC20	0xd56521ec7c82216176d7427cb46dbc1b1ac0544c	Cuddly Iun Bear	CUDDLY	On chain	18		false	false	false	true	true	false
+30-Contracts	0xd569d3cce55b71a8a3f3c418c329a66e5f714431	Constitution DAO		EtherScan.io			false	false	false	true	false	false
 50-Tokens:ERC20	0xd56dac73a4d6766464b38ec6d91eb45ce7457c44	Panvala pan	PAN	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0xd5745a490f14cda24bed11156d91eb7a77c8cb1b	Mina Protocol Token	MINA	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0xd58834528ba950ed2911feab3b8027e297baef9f	Yangue v2	YANG	On chain	18		false	false	false	true	true	false

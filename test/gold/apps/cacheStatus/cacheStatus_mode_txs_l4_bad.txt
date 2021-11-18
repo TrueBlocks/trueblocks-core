@@ -1,4 +1,9 @@
-chifra status  caches --types txs --details  --depth 4
+chifra status  caches --types txs --details --depth 4
+TEST[DATE|TIME] Modes:  [caches]
+TEST[DATE|TIME] Details:  true
+TEST[DATE|TIME] Types:  [txs]
+TEST[DATE|TIME] Depth:  4
+TEST[DATE|TIME] TestEnd:  0
 Error: The --depth option (4) must be less than four (4).
 Usage:
   chifra status [flags] [mode...]

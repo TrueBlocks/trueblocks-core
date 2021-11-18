@@ -1,3 +1,4 @@
+when?blocks=12345&blocks=54321&blocks=2016-12-01&blocks=2016-12-01-01
 {
   "data": [
     {

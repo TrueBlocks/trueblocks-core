@@ -1,4 +1,7 @@
 chifra abis  truebit --classes --fmt json
+TEST[DATE|TIME] Addrs:  [truebit]
+TEST[DATE|TIME] Classes:  true
+TEST[DATE|TIME] Format:  json
 Error: The --classes option is not available (not implemented).
 Usage:
   chifra abis [flags] <address> [address...]

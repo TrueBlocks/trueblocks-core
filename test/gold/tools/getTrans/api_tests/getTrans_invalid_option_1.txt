@@ -1,5 +1,6 @@
+transactions?prot
 {
   "errors": [
-    "chifra transactions - Invalid option: --prot"
+    "Invalid key (prot) in transactions route."
   ]
 }

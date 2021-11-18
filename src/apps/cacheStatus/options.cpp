@@ -189,8 +189,9 @@ bool COptions::parseArguments(string_q& command) {
     for (auto m : modes)
         mode += (m + "|");
 
-    if (!isTestMode() && (test_start != 0 || test_end != NOPOS))
-        return usage("--test_start and --test_end are only available during testing.");
+    if (!isTestMode() && (test_start != 0 || (test_end != NOPOS && test_end != 0)))
+        return usage("--test_start (" + uint_2_Str(test_start) + ") and --test_end (" + uint_2_Str(test_end) +
+                     ") are only available during testing.");
     scanRange = make_pair(test_start, test_end);
 
     if (get_config && set_config)

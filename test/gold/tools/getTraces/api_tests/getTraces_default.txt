@@ -1,5 +1,6 @@
+traces?address=0xbb9bc244d798123fde783fcc1c72d3bb8c189413
 {
   "errors": [
-    "chifra traces - Invalid option: --address"
+    "Invalid key (address) in traces route."
   ]
 }

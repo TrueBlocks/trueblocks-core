@@ -1,5 +1,6 @@
+quotes?junk
 {
   "errors": [
-    "chifra quotes - Invalid option: --junk"
+    "Invalid key (junk) in quotes route."
   ]
 }

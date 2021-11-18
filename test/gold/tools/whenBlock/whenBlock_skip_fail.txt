@@ -1,4 +1,6 @@
 chifra when  --fmt txt 1301000-1301250:junk
+TEST[DATE|TIME] Blocks:  [1301000-1301250:junk]
+TEST[DATE|TIME] Format:  txt
 Error: Input argument appears to be invalid. No such skip marker: junk
 Usage:
   chifra when [flags] < block | date > [ block... | date... ]

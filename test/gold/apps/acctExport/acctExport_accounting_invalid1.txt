@@ -1,4 +1,8 @@
 chifra export  0x00a3819199113fc6a6e6ba1298afde7377e2009b --max_records 30 --fmt json --summarize_by tx
+TEST[DATE|TIME] Addrs:  [0x00a3819199113fc6a6e6ba1298afde7377e2009b]
+TEST[DATE|TIME] MaxRecords:  30
+TEST[DATE|TIME] SummarizeBy:  tx
+TEST[DATE|TIME] Format:  json
 Error: The --summarized_by option is available only with --accounting.
 Usage:
   chifra export [flags] <address> [address...] [topics...] [fourbytes...]

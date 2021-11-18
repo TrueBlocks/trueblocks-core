@@ -16,11 +16,16 @@ package statusPkg
 import (
 	"strconv"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
 func (opts *StatusOptions) ValidateStatus() error {
+	opts.TestLog()
+
+	if opts.BadFlag != nil {
+		return opts.BadFlag
+	}
+
 	if Options.Depth > 3 {
 		return validate.Usage("The {0} option ({1}) must {2}.", "--depth", strconv.FormatUint(Options.Depth, 10), "be less than four (4)")
 	}
@@ -40,7 +45,5 @@ func (opts *StatusOptions) ValidateStatus() error {
 		return err
 	}
 
-	Options.TestLog()
-
-	return globals.ValidateGlobals(&Options.Globals)
+	return opts.Globals.ValidateGlobals()
 }

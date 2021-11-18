@@ -1,3 +1,4 @@
+state?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d3592
 {
   "errors": [
     "chifra state - Block 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d3592 is later than the last valid block --."

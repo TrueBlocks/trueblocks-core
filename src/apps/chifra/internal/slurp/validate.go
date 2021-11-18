@@ -14,11 +14,16 @@ package slurpPkg
  *-------------------------------------------------------------------------------------------*/
 
 import (
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
 func (opts *SlurpOptions) ValidateSlurp() error {
+	opts.TestLog()
+
+	if opts.BadFlag != nil {
+		return opts.BadFlag
+	}
+
 	err := validate.ValidateAtLeastOneAddr(opts.Addrs)
 	if err != nil {
 		return err
@@ -29,7 +34,5 @@ func (opts *SlurpOptions) ValidateSlurp() error {
 		return err
 	}
 
-	Options.TestLog()
-
-	return globals.ValidateGlobals(&Options.Globals)
+	return opts.Globals.ValidateGlobals()
 }

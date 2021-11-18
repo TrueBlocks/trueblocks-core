@@ -17,9 +17,9 @@
 #include "options.h"
 
 //---------------------------------------------------------------------------------------------------
-void COptions::writeOpenApiFile(void) {
+bool COptions::writeOpenApiFile(void) {
     if (!openapi)
-        return;
+        return true;
 
     LOG_INFO(cYellow, "handling openapi file...", cOff);
     counter = CCounter();  // reset
@@ -39,6 +39,7 @@ void COptions::writeOpenApiFile(void) {
         pairMapStream << ep.toPairMap() << endl;
         apiTagStream << ep.toApiTag();
         goCallStream << ep.toGoCall();
+        goPkgStream << ep.toGoPackage();
         goRouteStream << ep.toGoRoute();
         apiPathStream << ep.toApiPath(productions, exampleFn);
 
@@ -48,11 +49,13 @@ void COptions::writeOpenApiFile(void) {
 
     writeCodeOut(this, getDocsPathContent("api/openapi.yaml"));
     writeCodeOut(this, getSourcePath("apps/chifra/server/routes.go"));
-    writeCodeOut(this, getSourcePath("apps/chifra/options.cpp"));
+    // writeCodeOut(this, getSourcePath("apps/chifra/options.cpp"));
     // writeCodeOut(this, getSourcePath("libs/utillib/options_base.cpp"));
 
     LOG_INFO(cYellow, "makeClass --openapi", cOff, " processed ", counter.routeCount, "/", counter.cmdCount,
              " routes/cmds ", " (changed ", counter.nProcessed, ").", string_q(40, ' '));
+
+    return true;
 }
 
 namespace qblocks {
