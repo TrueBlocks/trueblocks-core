@@ -151,7 +151,7 @@ func Execute() {
 	case "csv":
 		fmt.Println(`"address","blockNumber","transactionIndex"`)
 	default:
-		usage("What")
+		Usage("What")
 		if *logging {
 			log.Println("invalid flag : fmt = ", format)
 		}
@@ -159,7 +159,7 @@ func Execute() {
 	}
 	args := flag.Args()
 	if len(args) != 1 {
-		usage("What")
+		Usage("What")
 		if *logging {
 			log.Println("wrong number of arguments (should be 1) ", len(args))
 		}
@@ -226,7 +226,7 @@ func colr(c, s string) string {
 	}
 	return s
 }
-func usage(s string) {
+func Usage(s string) {
 	fmt.Println("")
 	fmt.Println(" ", colr("yellow", "Usage:"), "    acctScrape [-v|-h] <address> [address...]")
 	fmt.Println(" ", colr("yellow", "Purpose:"), "  Add or remove monitors for a given Ethereum address (or collection of addresses).")
