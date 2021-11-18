@@ -24,11 +24,9 @@ void pushToOutput(CAccountNameArray& out, const CAccountName& name, bool to_cust
 
 //-----------------------------------------------------------------------
 bool COptions::handle_editcmds(CStringArray& terms, bool to_custom, bool autoname) {
-    ENTER("handle_editcmds");
-
     string_q crud = crudCommands[0];
     if (!contains("create|update|delete|undelete|remove", crud))
-        EXIT_USAGE("Invalid edit command '" + crud + "'.");
+        return usage("Invalid edit command '" + crud + "'.");
 
     CAccountName target;
     target.address = toLower(trim(getEnvStr("TB_NAME_ADDRESS"), '\"'));
@@ -123,5 +121,5 @@ bool COptions::handle_editcmds(CStringArray& terms, bool to_custom, bool autonam
         }
     }
 
-    EXIT_NOMSG(true);
+    return true;
 }

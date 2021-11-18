@@ -55,7 +55,7 @@ func (opts *PinsOptions) ValidatePins() error {
 	// if (share) {
 	//     string_q res := doCommand("which ipfs");
 	//     if (res.empty()) {
-	//         return usage("Could not find ipfs in your $PATH. You must install ipfs for the --share command to work.");
+	//         return usa ge("Could not find ipfs in your $PATH. You must install ipfs for the --share command to work.");
 	// 	}
 	// }
 	// if (share) {
