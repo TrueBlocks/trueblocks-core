@@ -120,3 +120,12 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *MonitorsOptions {
 
 	return opts
 }
+
+var Options MonitorsOptions
+
+func MonitorsFinishParse(args []string) *MonitorsOptions {
+	Options.Addrs = args
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return &Options
+}

@@ -27,11 +27,8 @@ import (
 
 // EXISTING_CODE
 
-var Options ListOptions
-
 func RunList(cmd *cobra.Command, args []string) error {
-	Options.Addrs = args
-	opts := Options
+	opts := ListFinishParse(args)
 
 	err := opts.ValidateList()
 	if err != nil {

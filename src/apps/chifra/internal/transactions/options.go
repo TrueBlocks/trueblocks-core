@@ -99,3 +99,12 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *TransactionsOptions {
 
 	return opts
 }
+
+var Options TransactionsOptions
+
+func TransactionsFinishParse(args []string) *TransactionsOptions {
+	Options.Transactions = args
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return &Options
+}

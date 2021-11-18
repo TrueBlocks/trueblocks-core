@@ -29,11 +29,8 @@ import (
 
 // EXISTING_CODE
 
-var Options ExploreOptions
-
 func RunExplore(cmd *cobra.Command, args []string) error {
-	Options.Terms = args
-	opts := Options
+	opts := ExploreFinishParse(args)
 
 	err := opts.ValidateExplore()
 	if err != nil {

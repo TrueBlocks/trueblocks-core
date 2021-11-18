@@ -183,3 +183,12 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *NamesOptions {
 
 	return opts
 }
+
+var Options NamesOptions
+
+func NamesFinishParse(args []string) *NamesOptions {
+	Options.Terms = args
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return &Options
+}

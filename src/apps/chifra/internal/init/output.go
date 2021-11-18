@@ -27,10 +27,8 @@ import (
 
 // EXISTING_CODE
 
-var Options InitOptions
-
 func RunInit(cmd *cobra.Command, args []string) error {
-	opts := Options
+	opts := InitFinishParse(args)
 
 	err := opts.ValidateInit()
 	if err != nil {

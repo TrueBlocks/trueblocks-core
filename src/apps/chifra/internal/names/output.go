@@ -26,11 +26,8 @@ import (
 
 // EXISTING_CODE
 
-var Options NamesOptions
-
 func RunNames(cmd *cobra.Command, args []string) error {
-	Options.Terms = args
-	opts := Options
+	opts := NamesFinishParse(args)
 
 	err := opts.ValidateNames()
 	if err != nil {

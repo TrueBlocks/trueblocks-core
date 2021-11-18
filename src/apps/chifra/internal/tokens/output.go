@@ -26,11 +26,8 @@ import (
 
 // EXISTING_CODE
 
-var Options TokensOptions
-
 func RunTokens(cmd *cobra.Command, args []string) error {
-	Options.Addrs2 = args
-	opts := Options
+	opts := TokensFinishParse(args)
 
 	err := opts.ValidateTokens()
 	if err != nil {

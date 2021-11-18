@@ -287,3 +287,12 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ExportOptions {
 
 	return opts
 }
+
+var Options ExportOptions
+
+func ExportFinishParse(args []string) *ExportOptions {
+	Options.Addrs = args
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return &Options
+}

@@ -26,11 +26,8 @@ import (
 
 // EXISTING_CODE
 
-var Options AbisOptions
-
 func RunAbis(cmd *cobra.Command, args []string) error {
-	Options.Addrs = args
-	opts := Options
+	opts := AbisFinishParse(args)
 
 	err := opts.ValidateAbis()
 	if err != nil {

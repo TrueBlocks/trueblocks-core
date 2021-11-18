@@ -168,3 +168,12 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *BlocksOptions {
 
 	return opts
 }
+
+var Options BlocksOptions
+
+func BlocksFinishParse(args []string) *BlocksOptions {
+	Options.Blocks = args
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return &Options
+}
