@@ -218,7 +218,6 @@ void COptions::generate_toggle(const CCommandOption& option) {
         if (!option.isConfig)
             autoStream << option.Format(STR_AUTO_TOGGLE) << endl;
     }
-    debugStream << option.debugCode() << endl;
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -242,7 +241,6 @@ void COptions::generate_switch(const CCommandOption& option) {
         if (!option.isConfig)
             autoStream << option.Format(STR_AUTO_SWITCH) << endl;
     }
-    debugStream << option.debugCode() << endl;
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -334,7 +332,6 @@ void COptions::generate_flag(const CCommandOption& option) {
             }
         }
     }
-    debugStream << option.debugCode() << endl;
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -423,8 +420,6 @@ void COptions::generate_positional(const CCommandOption& option) {
     }
     if (!posStream.str().empty())
         positionals.push_back(posStream.str());
-
-    debugStream << option.debugCode() << endl;
 }
 
 //---------------------------------------------------------------------------------------------------

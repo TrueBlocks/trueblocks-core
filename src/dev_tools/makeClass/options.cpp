@@ -99,19 +99,6 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    // BEG_DEBUG_DISPLAY
-    LOG_TEST_LIST("files", files, files.empty());
-    LOG_TEST_BOOL("all", all);
-    LOG_TEST_BOOL("options", options);
-    LOG_TEST_BOOL("gocmds", gocmds);
-    LOG_TEST_BOOL("readmes", readmes);
-    LOG_TEST_BOOL("format", format);
-    LOG_TEST_BOOL("lint", lint);
-    LOG_TEST_BOOL("tsx", tsx);
-    LOG_TEST_BOOL("dump", dump);
-    LOG_TEST_BOOL("openapi", openapi);
-    // END_DEBUG_DISPLAY
-
     establishFolder(getDocsPathContent(""));
     establishFolder(getDocsPathContent("api/"));
     establishFolder(getDocsPathContent("data-model/"));

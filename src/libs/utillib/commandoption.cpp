@@ -771,25 +771,6 @@ void CCommandOption::verifyHotkey(CStringArray& warnings, map<string, string>& e
 }
 
 //---------------------------------------------------------------------------------------------------
-extern const char* STR_DEBUG_DISPLAY;
-extern const char* STR_DEBUG_DISPLAY_BOOL;
-extern const char* STR_DEBUG_DISPLAY_LIST;
-//---------------------------------------------------------------------------------------------------
-string_q CCommandOption::debugCode(void) const {
-    string_q fmt = isBool ? STR_DEBUG_DISPLAY_BOOL : isList ? STR_DEBUG_DISPLAY_LIST : STR_DEBUG_DISPLAY;
-    if (longName == "addrs2")
-        replaceAll(fmt, "[{LONGNAME}]", "addrs");
-    if (longName == "transactions")
-        replaceAll(fmt, "[{LONGNAME}]", "transList");
-    return Format(fmt);
-}
-
-//---------------------------------------------------------------------------------------------------
-const char* STR_DEBUG_DISPLAY = "    LOG_TEST(\"[{LONGNAME}]\", [{LONGNAME}], ([{LONGNAME}] == [{DEF_VAL}]));";
-const char* STR_DEBUG_DISPLAY_BOOL = "    LOG_TEST_BOOL(\"[{LONGNAME}]\", [{LONGNAME}]);";
-const char* STR_DEBUG_DISPLAY_LIST = "    LOG_TEST_LIST(\"[{LONGNAME}]\", [{LONGNAME}], [{LONGNAME}].empty());";
-
-//---------------------------------------------------------------------------------------------------
 extern const char* STR_PATH_YAML;
 extern const char* STR_PARAM_YAML;
 

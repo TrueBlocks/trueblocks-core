@@ -79,15 +79,6 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    // BEG_DEBUG_DISPLAY
-    LOG_TEST_LIST("transList", transList, transList.empty());
-    LOG_TEST_BOOL("articulate", articulate);
-    LOG_TEST_BOOL("trace", trace);
-    LOG_TEST_BOOL("uniq", uniq);
-    LOG_TEST("reconcile", reconcile, (reconcile == ""));
-    LOG_TEST_BOOL("cache", cache);
-    // END_DEBUG_DISPLAY
-
     if (Mocked("transactions"))
         return false;
 
