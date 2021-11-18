@@ -1,0 +1,6 @@
+state?addrs=0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98&proxy_for=0xbb2b8038a1640196fbe3e38816f3e67cba72d940
+{
+  "errors": [
+    "The --proxy_for option is only available with the --call option."
+  ]
+}

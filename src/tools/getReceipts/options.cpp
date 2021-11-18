@@ -67,10 +67,6 @@ bool COptions::parseArguments(string_q& command) {
     if (Mocked("receipts"))
         return false;
 
-    // Data wrangling
-    if (transList.empty())
-        return usage(usageErrs[ERR_PROVIDEONETXID]);
-
     SHOW_FIELD(CReceipt, "logs");
     if (isRaw)
         expContext().exportFmt = JSON1;

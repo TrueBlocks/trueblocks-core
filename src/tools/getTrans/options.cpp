@@ -95,10 +95,6 @@ bool COptions::parseArguments(string_q& command) {
     if (isReconcile && (cache || trace || articulate))
         return usage("Do not use other options with the --reconcile option.");
 
-    // Data wrangling
-    if (transList.empty())
-        return usage(usageErrs[ERR_PROVIDEONETXID]);
-
     if (isRaw)
         expContext().exportFmt = JSON1;
 

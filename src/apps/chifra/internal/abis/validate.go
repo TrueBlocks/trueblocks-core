@@ -32,13 +32,7 @@ func (opts *AbisOptions) ValidateAbis() error {
 	}
 
 	if len(opts.Find) == 0 && !opts.Known {
-		err := validate.ValidateAtLeastOneAddr(opts.Addrs)
-		if err != nil {
-			return err
-		}
-	}
-
-	if len(opts.Find) == 0 && !opts.Known {
+		// If we're not find and not known we better have at least one address
 		err := validate.ValidateAtLeastOneAddr(opts.Addrs)
 		if err != nil {
 			return err
