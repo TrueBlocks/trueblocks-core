@@ -110,21 +110,11 @@ bool COptions::parseArguments(string_q& command) {
     if (Mocked(""))
         return false;
 
-    // Data wrangling
     if (blocks.empty())
-        blocks.numList.push_back(newestBlock);  // use 'latest'
-
-    if (!call.empty() && !parts.empty())
-        return usage("The --parts option is not available with the --call option.");
-
-    if (call.empty() && !proxy_for.empty())
-        return usage("The --proxy_for option is only available with the --call option.");
+        blocks.numList.push_back(isTestMode() ? byzantiumBlock : newestBlock);  // use 'latest'
 
     if (!call.empty())
         return handle_call();
-
-    if (!addrs.size())
-        return usage("You must provide at least one Ethereum address.");
 
     for (auto part : parts) {
         if (part == "none")

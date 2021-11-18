@@ -1,7 +1,7 @@
-chifra state  0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 --parts junk 2500000
-TEST[DATE|TIME] Addrs:  [0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 2500000]
-TEST[DATE|TIME] Parts:  [junk]
-Error: The --parts option (junk) must be one of [ none | some | all | balance | nonce | code | storage | deployed | accttype ]
+chifra state  --call 0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B!0x0902f1ac --parts some
+TEST[DATE|TIME] Parts:  [some]
+TEST[DATE|TIME] Call:  0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B!0x0902f1ac
+Error: The --parts option is not available with the --call option.
 Usage:
   chifra state [flags] <address> [address...] [block...]
 
