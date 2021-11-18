@@ -143,14 +143,6 @@ bool COptions::parseArguments(string_q& command) {
     if (getGlobalConfig()->getConfigBool("dev", "debug_curl", false))
         return usage("[dev]debug_curl is set in config file. All tests will fail.");
 
-    // BEG_DEBUG_DISPLAY
-    LOG_TEST("mode", mode, (mode == ""));
-    LOG_TEST("filter", filter, (filter == ""));
-    LOG_TEST_BOOL("clean", clean);
-    LOG_TEST("skip", skip, (skip == 1));
-    LOG_TEST_BOOL("report", report);
-    // END_DEBUG_DISPLAY
-
     modes = (mode == "both" ? BOTH : (mode == "api" ? API : CMD));
     if (!isNodeRunning())
         return usage("Ethereum at " + getCurlContext()->baseURL + " was not found. All tests will fail.");

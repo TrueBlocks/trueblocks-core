@@ -145,24 +145,6 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    // BEG_DEBUG_DISPLAY
-    LOG_TEST_LIST("blocks", blocks, blocks.empty());
-    LOG_TEST_BOOL("hashes", hashes);
-    LOG_TEST_BOOL("uncles", uncles);
-    LOG_TEST_BOOL("trace", trace);
-    LOG_TEST_BOOL("apps", apps);
-    LOG_TEST_BOOL("uniq", uniq);
-    LOG_TEST_BOOL("logs", logs);
-    LOG_TEST_LIST("emitter", emitter, emitter.empty());
-    LOG_TEST_LIST("topic", topic, topic.empty());
-    LOG_TEST_BOOL("articulate", articulate);
-    LOG_TEST("big_range", big_range, (big_range == 500));
-    LOG_TEST_BOOL("count", count);
-    LOG_TEST_BOOL("cache", cache);
-    LOG_TEST("list", list, (list == 0));
-    LOG_TEST("list_count", list_count, (list_count == 20));
-    // END_DEBUG_DISPLAY
-
     if (Mocked("blocks"))
         return false;
 

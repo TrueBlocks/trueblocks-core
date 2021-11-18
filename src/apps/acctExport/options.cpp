@@ -244,44 +244,6 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    // BEG_DEBUG_DISPLAY
-    LOG_TEST_LIST("addrs", addrs, addrs.empty());
-    LOG_TEST_LIST("topics", topics, topics.empty());
-    LOG_TEST_LIST("fourbytes", fourbytes, fourbytes.empty());
-    LOG_TEST_BOOL("appearances", appearances);
-    LOG_TEST_BOOL("receipts", receipts);
-    LOG_TEST_BOOL("logs", logs);
-    LOG_TEST_BOOL("traces", traces);
-    LOG_TEST_BOOL("statements", statements);
-    LOG_TEST_BOOL("neighbors", neighbors);
-    LOG_TEST_BOOL("accounting", accounting);
-    LOG_TEST_BOOL("articulate", articulate);
-    LOG_TEST_BOOL("cache", cache);
-    LOG_TEST_BOOL("cache_traces", cache_traces);
-    LOG_TEST_BOOL("factory", factory);
-    LOG_TEST_BOOL("count", count);
-    LOG_TEST("first_record", first_record, (first_record == 0));
-    LOG_TEST("max_records", max_records, (max_records == 250));
-    LOG_TEST_BOOL("relevant", relevant);
-    LOG_TEST_LIST("emitter", emitter, emitter.empty());
-    LOG_TEST_LIST("topic", topic, topic.empty());
-    LOG_TEST_BOOL("clean", clean);
-    LOG_TEST_BOOL("freshen", freshen);
-    LOG_TEST_BOOL("staging", staging);
-    LOG_TEST_BOOL("unripe", unripe);
-    LOG_TEST("load", load, (load == ""));
-    LOG_TEST_BOOL("reversed", reversed);
-    LOG_TEST_BOOL("by_date", by_date);
-    LOG_TEST("summarize_by", summarize_by, (summarize_by == ""));
-    LOG_TEST_BOOL("skip_ddos", skip_ddos);
-    LOG_TEST("max_traces", max_traces, (max_traces == 250));
-    LOG_TEST("first_block", first_block, (first_block == 0));
-    LOG_TEST("last_block", last_block, (last_block == NOPOS));
-    LOG_TEST_BOOL("deleteMe", deleteMe);
-    LOG_TEST_BOOL("undelete", undelete);
-    LOG_TEST_BOOL("remove", remove);
-    // END_DEBUG_DISPLAY
-
     if (deleteMe)
         crudCommands.push_back("delete");
 

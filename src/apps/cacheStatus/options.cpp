@@ -129,19 +129,6 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    // BEG_DEBUG_DISPLAY
-    LOG_TEST_LIST("modes", modes, modes.empty());
-    LOG_TEST_BOOL("details", details);
-    LOG_TEST_LIST("types", types, types.empty());
-    LOG_TEST("depth", depth, (depth == NOPOS));
-    LOG_TEST_BOOL("terse", terse);
-    LOG_TEST_LIST("migrate", migrate, migrate.empty());
-    LOG_TEST_BOOL("get_config", get_config);
-    LOG_TEST_BOOL("set_config", set_config);
-    LOG_TEST("test_start", test_start, (test_start == 0));
-    LOG_TEST("test_end", test_end, (test_end == NOPOS));
-    // END_DEBUG_DISPLAY
-
     if (!migrate.empty()) {
         bool hasAll = false;
         bool hasTest = false;

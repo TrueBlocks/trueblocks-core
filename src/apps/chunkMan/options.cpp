@@ -81,15 +81,6 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    // BEG_DEBUG_DISPLAY
-    LOG_TEST_LIST("blocks", blocks, blocks.empty());
-    LOG_TEST_BOOL("list", list);
-    LOG_TEST_BOOL("check", check);
-    LOG_TEST("extract", extract, (extract == ""));
-    LOG_TEST_BOOL("stats", stats);
-    LOG_TEST_BOOL("save", save);
-    // END_DEBUG_DISPLAY
-
     if (Mocked(""))
         return false;
 

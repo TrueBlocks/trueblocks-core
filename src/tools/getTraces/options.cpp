@@ -84,16 +84,6 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    // BEG_DEBUG_DISPLAY
-    LOG_TEST_LIST("transList", transList, transList.empty());
-    LOG_TEST_BOOL("articulate", articulate);
-    LOG_TEST("filter", filter, (filter == ""));
-    LOG_TEST_BOOL("statediff", statediff);
-    LOG_TEST_BOOL("count", count);
-    LOG_TEST_BOOL("skip_ddos", skip_ddos);
-    LOG_TEST("max", max, (max == 250));
-    // END_DEBUG_DISPLAY
-
     if (Mocked("traces"))
         return false;
 
