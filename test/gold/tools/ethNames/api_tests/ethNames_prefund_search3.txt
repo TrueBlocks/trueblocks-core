@@ -1,4 +1,4 @@
-names prefund&terms=etwork
+names?prefund&terms=etwork
 {
   "data": [],
   "meta": {

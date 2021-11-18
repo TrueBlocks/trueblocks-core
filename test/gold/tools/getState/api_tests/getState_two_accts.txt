@@ -1,4 +1,4 @@
-state addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413%200xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&blocks=1500000&fmt=api
+state?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413%200xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&blocks=1500000&fmt=api
 {
   "data": [
     {

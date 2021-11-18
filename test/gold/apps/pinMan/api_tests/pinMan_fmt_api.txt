@@ -1,4 +1,4 @@
-pins list&fmt=api
+pins?list&fmt=api
 {
   "data": [
     {

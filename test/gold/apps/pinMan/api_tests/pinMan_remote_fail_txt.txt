@@ -1,4 +1,4 @@
-pins list&remote&fmt=txt
+pins?list&remote&fmt=txt
 {
   "errors": [
     "The --remote flag has been deprecated."

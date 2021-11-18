@@ -1,4 +1,4 @@
-export addrs=0x807640a13483f8ac783c557fcdf27be11ea4ac7a&remove
+export?addrs=0x807640a13483f8ac783c557fcdf27be11ea4ac7a&remove
 {
   "errors": [
     "Invalid key (remove) in export route."

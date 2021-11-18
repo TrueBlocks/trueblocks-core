@@ -1,4 +1,4 @@
-blocks blocks=3%20469&uncles
+blocks?blocks=3%20469&uncles
 {
   "data": [
     {

@@ -1,4 +1,4 @@
-when blocks=homestead&verbose&fmt=json
+when?blocks=homestead&verbose&fmt=json
 {
   "data": [
     {

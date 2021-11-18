@@ -1,4 +1,4 @@
-names prefund&custom&terms=0001&verbose
+names?prefund&custom&terms=0001&verbose
 {
   "data": [
     {

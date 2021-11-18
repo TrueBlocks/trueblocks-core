@@ -1,4 +1,4 @@
-when blocks=10000&verbose
+when?blocks=10000&verbose
 {
   "data": [
     {

@@ -1,4 +1,4 @@
-blocks blocks=4001001&hashes
+blocks?blocks=4001001&hashes
 {
   "data": [
     {

@@ -1,4 +1,4 @@
-blocks blocks=daofork&cache
+blocks?blocks=daofork&cache
 {
   "data": [
     {

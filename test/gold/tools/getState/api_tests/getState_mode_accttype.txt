@@ -1,4 +1,4 @@
-state addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&parts=accttype&blocks=2500000
+state?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&parts=accttype&blocks=2500000
 {
   "data": [
     {

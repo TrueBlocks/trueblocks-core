@@ -1,4 +1,4 @@
-when blocks=0
+when?blocks=0
 {
   "data": [
     {

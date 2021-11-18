@@ -1,4 +1,4 @@
-quotes fmt=json
+quotes?fmt=json
 {
   "data": [
     {

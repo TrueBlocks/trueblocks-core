@@ -1,4 +1,4 @@
-blocks blocks=12
+blocks?blocks=12
 {
   "data": [
     {

@@ -1,4 +1,4 @@
-quotes fmt=api
+quotes?fmt=api
 {
   "data": [
     {

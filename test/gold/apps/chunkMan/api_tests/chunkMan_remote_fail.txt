@@ -1,4 +1,4 @@
-chunks remote
+chunks?remote
 {
   "errors": [
     "Invalid key (remote) in chunks route."

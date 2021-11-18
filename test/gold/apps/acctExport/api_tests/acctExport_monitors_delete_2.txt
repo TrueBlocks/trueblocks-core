@@ -1,4 +1,4 @@
-monitors addrs=0x001d14804b399c6ef80e64576f657660804fec0b&delete
+monitors?addrs=0x001d14804b399c6ef80e64576f657660804fec0b&delete
 {
   "data": [
     "Monitor 0x001d14804b399c6ef80e64576f657660804fec0b was deleted but not removed"

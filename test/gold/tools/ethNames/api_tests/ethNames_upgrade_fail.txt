@@ -1,4 +1,4 @@
-names fmt=json
+names?fmt=json
 {
   "data": [
     {

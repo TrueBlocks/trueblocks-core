@@ -1,4 +1,4 @@
-quotes period=12
+quotes?period=12
 {
   "errors": [
     "The --period option (12) must be one of [ 5 | 15 | 30 | 60 | 120 | 240 | 1440 | 10080 | hourly | daily | weekly ]"

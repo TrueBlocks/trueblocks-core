@@ -1,4 +1,4 @@
-state call=0xa4f29fc548856180f6b1e319ee4d86715875!0x12065fe0&blocks=6523977-6540000:2000
+state?call=0xa4f29fc548856180f6b1e319ee4d86715875!0x12065fe0&blocks=6523977-6540000:2000
 {
   "errors": [
     "chifra state - The first argument for the --call option must be a smart contract."

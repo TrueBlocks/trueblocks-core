@@ -1,4 +1,4 @@
-when blocks=idonotexist
+when?blocks=idonotexist
 {
   "errors": [
     "The given value 'idonotexist' is not a numeral or a special named block."

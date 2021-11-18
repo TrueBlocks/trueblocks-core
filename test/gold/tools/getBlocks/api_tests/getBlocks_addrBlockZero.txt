@@ -1,4 +1,4 @@
-blocks blocks=0&uniq
+blocks?blocks=0&uniq
 {
   "data": [
     {

@@ -1,4 +1,4 @@
-when blocks=1001001&fmt=api
+when?blocks=1001001&fmt=api
 {
   "data": [
     {

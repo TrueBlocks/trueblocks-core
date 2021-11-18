@@ -1,4 +1,4 @@
-status details&modes=monitors
+status?details&modes=monitors
 {
   "data": [
     {

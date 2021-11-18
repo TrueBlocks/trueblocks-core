@@ -1,4 +1,4 @@
-blocks blocks=stateclear&cache
+blocks?blocks=stateclear&cache
 {
   "data": [
     {

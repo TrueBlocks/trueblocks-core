@@ -1,4 +1,4 @@
-blocks blocks=3982128&uniq
+blocks?blocks=3982128&uniq
 {"data": [
   {
     "bn": 3982128,

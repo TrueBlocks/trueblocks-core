@@ -1,4 +1,4 @@
-status modes=some
+status?modes=some
 {
   "data": [
     {

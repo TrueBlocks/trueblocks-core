@@ -1,4 +1,4 @@
-names prefund&terms=004
+names?prefund&terms=004
 {
   "data": [
     {

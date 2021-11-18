@@ -1,4 +1,4 @@
-names terms=etwork&terms=one
+names?terms=etwork&terms=one
 {
   "data": [
     {

@@ -1,4 +1,4 @@
-receipts transactions=.clink
+receipts?transactions=.clink
 {
   "errors": [
     "chifra receipts - .clink does not appear to be a valid transaction index."

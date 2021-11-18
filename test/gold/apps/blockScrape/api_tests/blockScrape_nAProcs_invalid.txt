@@ -1,4 +1,4 @@
-scrape addr_chan_cnt=-12
+scrape?addr_chan_cnt=-12
 {
   "errors": [
     "Please choose at least one of [indexer|monitors|both]."

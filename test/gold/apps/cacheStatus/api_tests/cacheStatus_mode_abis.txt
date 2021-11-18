@@ -1,4 +1,4 @@
-status modes=abis
+status?modes=abis
 {
   "data": [
     {

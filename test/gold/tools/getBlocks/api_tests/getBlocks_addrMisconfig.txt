@@ -1,4 +1,4 @@
-blocks blocks=32279&uniq
+blocks?blocks=32279&uniq
 {
   "data": [
     {

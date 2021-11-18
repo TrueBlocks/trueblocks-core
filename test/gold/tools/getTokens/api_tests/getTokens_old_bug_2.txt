@@ -1,4 +1,4 @@
-tokens addrs2=0xa9fe4601811213c340e850ea305481aff02f5b28&parts=all&blocks=12000000
+tokens?addrs2=0xa9fe4601811213c340e850ea305481aff02f5b28&parts=all&blocks=12000000
 {
   "data": [
     {

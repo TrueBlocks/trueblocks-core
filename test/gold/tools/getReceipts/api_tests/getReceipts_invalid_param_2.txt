@@ -1,4 +1,4 @@
-receipts transactions=1233123
+receipts?transactions=1233123
 {
   "errors": [
     "chifra receipts - 1233123 does not appear to be a valid transaction index."

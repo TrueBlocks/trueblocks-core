@@ -1,4 +1,4 @@
-traces transactions=4348290.92&fmt=api&count
+traces?transactions=4348290.92&fmt=api&count
 {
   "data": [
     {

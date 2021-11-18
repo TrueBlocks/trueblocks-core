@@ -1,4 +1,4 @@
-when blocks=213123213&list
+when?blocks=213123213&list
 {
   "data": [
     {

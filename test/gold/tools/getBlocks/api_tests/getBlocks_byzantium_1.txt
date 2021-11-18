@@ -1,4 +1,4 @@
-blocks blocks=4369999%204370000%204380101&cache
+blocks?blocks=4369999%204370000%204380101&cache
 {
   "data": [
     {

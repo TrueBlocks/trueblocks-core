@@ -1,4 +1,4 @@
-blocks blocks=4000001-4000003&cache
+blocks?blocks=4000001-4000003&cache
 {
   "data": [
     {

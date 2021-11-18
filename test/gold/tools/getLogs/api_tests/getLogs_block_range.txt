@@ -1,4 +1,4 @@
-logs transactions=1718400-1718420
+logs?transactions=1718400-1718420
 {
   "errors": [
     "chifra logs - 1718400-1718420 does not appear to be a valid transaction index."

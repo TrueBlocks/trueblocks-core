@@ -1,4 +1,4 @@
-blocks blocks=3982128&count
+blocks?blocks=3982128&count
 {
   "data": [
     {

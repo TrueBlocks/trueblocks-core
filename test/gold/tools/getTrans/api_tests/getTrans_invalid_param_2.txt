@@ -1,4 +1,4 @@
-transactions transactions=.whatever
+transactions?transactions=.whatever
 {
   "errors": [
     "chifra transactions - .whatever does not appear to be a valid transaction index."

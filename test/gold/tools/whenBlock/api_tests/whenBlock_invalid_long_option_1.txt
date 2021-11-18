@@ -1,4 +1,4 @@
-when blocks=0&invalid
+when?blocks=0&invalid
 {
   "errors": [
     "Invalid key (invalid) in when route."

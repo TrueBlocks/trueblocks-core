@@ -1,4 +1,4 @@
-blocks blocks=2222222%202332332&fmt=junk
+blocks?blocks=2222222%202332332&fmt=junk
 {
   "errors": [
     "The --fmt option (junk) must be one of [ json | txt | csv | api ]"

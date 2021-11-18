@@ -1,4 +1,4 @@
-names terms=etwork&terms=one&terms=88897&terms=torj
+names?terms=etwork&terms=one&terms=88897&terms=torj
 {
   "data": [],
   "meta": {

@@ -1,4 +1,4 @@
-state call=0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B!0x0902f1ac&proxy_for=0xbb2b8038a1640196fbe3e38816f3e67cba72d940&blocks=10092000
+state?call=0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B!0x0902f1ac&proxy_for=0xbb2b8038a1640196fbe3e38816f3e67cba72d940&blocks=10092000
 {
   "data": [
     {

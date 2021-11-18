@@ -1,4 +1,4 @@
-when verbose
+when?verbose
 {
   "errors": [
     "chifra when - Please supply either a JSON formatted date or a blockNumber."

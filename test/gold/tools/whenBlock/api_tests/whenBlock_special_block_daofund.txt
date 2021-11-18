@@ -1,4 +1,4 @@
-when blocks=daofund&verbose
+when?blocks=daofund&verbose
 {
   "data": [
     {

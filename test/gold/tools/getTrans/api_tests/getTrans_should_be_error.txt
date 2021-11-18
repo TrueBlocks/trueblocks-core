@@ -1,4 +1,4 @@
-transactions transactions=0xeec4ccd13fe05907f9d732a8ad245bcb7f918217157b89baaa23895c12eb329a&fmt=api
+transactions?transactions=0xeec4ccd13fe05907f9d732a8ad245bcb7f918217157b89baaa23895c12eb329a&fmt=api
 {
   "data": [
     {

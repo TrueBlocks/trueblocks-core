@@ -1,4 +1,4 @@
-status modes=index&test_start=100
+status?modes=index&test_start=100
 {
   "data": [
     {

@@ -1,4 +1,4 @@
-state addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&blocks=1428000-1438000:200
+state?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&blocks=1428000-1438000:200
 {
   "data": [
     {

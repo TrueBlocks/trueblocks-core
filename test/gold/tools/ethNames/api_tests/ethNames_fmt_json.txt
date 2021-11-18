@@ -1,4 +1,4 @@
-names terms=tip&fmt=json
+names?terms=tip&fmt=json
 {
   "data": [
     {

@@ -1,4 +1,4 @@
-transactions transactions=5218355.232&reconcile=0x7fd5c846121bed2e2e46a55f992e35d85da7ffad&fmt=json&log_level=10
+transactions?transactions=5218355.232&reconcile=0x7fd5c846121bed2e2e46a55f992e35d85da7ffad&fmt=json&log_level=10
 {
   "data": [
     {

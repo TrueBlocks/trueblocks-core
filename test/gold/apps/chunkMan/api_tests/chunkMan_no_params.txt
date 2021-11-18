@@ -1,4 +1,4 @@
-chunks 
+chunks?
 {
   "errors": [
     "Please choose at least one of --list, --extract, or --check."

@@ -1,4 +1,4 @@
-transactions transactions=2222221.*&fmt=api
+transactions?transactions=2222221.*&fmt=api
 {
   "data": [
     {

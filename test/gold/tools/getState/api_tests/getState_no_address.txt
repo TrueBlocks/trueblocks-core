@@ -1,4 +1,4 @@
-state addrs=12
+state?addrs=12
 {
   "errors": [
     "chifra state - You must provide at least one Ethereum address."

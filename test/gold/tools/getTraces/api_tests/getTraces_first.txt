@@ -1,4 +1,4 @@
-traces transactions=40500.0.next
+traces?transactions=40500.0.next
 {
   "data": [
     {

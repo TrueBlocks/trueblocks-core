@@ -1,4 +1,4 @@
-quotes period=60&fmt=json
+quotes?period=60&fmt=json
 {
   "data": [
     {

@@ -1,4 +1,4 @@
-transactions other
+transactions?other
 {
   "errors": [
     "Invalid key (other) in transactions route."

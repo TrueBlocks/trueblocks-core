@@ -1,4 +1,4 @@
-slurp 
+slurp?
 {
   "errors": [
     "Please specify at least one valid Ethereum address."

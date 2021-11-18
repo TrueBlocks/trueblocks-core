@@ -1,4 +1,4 @@
-when blocks=pppppp1
+when?blocks=pppppp1
 {
   "errors": [
     "The given value 'pppppp1' is not a numeral or a special named block."

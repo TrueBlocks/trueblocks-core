@@ -1,4 +1,4 @@
-transactions transactions=6409270.108&articulate&fmt=json
+transactions?transactions=6409270.108&articulate&fmt=json
 {
   "data": [
     {

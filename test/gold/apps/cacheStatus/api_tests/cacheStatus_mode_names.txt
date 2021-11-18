@@ -1,4 +1,4 @@
-status modes=names
+status?modes=names
 {
   "data": [
     {

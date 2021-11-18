@@ -1,4 +1,4 @@
-when blocks=first&verbose
+when?blocks=first&verbose
 {
   "data": [
     {

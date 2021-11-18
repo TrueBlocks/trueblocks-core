@@ -1,4 +1,4 @@
-pins list&remote
+pins?list&remote
 {
   "errors": [
     "The --remote flag has been deprecated."

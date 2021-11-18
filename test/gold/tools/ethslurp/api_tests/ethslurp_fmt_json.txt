@@ -1,4 +1,4 @@
-slurp addrs=0x1324e7b922b30B49Ab8EA81086341cc41C249346&types=int&blocks=0-7000000&fmt=json
+slurp?addrs=0x1324e7b922b30B49Ab8EA81086341cc41C249346&types=int&blocks=0-7000000&fmt=json
 [
   {
     "hash": "0xaa5fb607bbb979c6eaebd2b4c5901ef015d12060e14b31ea66978dfd92bbcf08",

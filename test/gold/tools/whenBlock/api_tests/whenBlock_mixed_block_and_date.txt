@@ -1,4 +1,4 @@
-when blocks=2017-03-02&blocks=123123
+when?blocks=2017-03-02&blocks=123123
 {
   "data": [
     {

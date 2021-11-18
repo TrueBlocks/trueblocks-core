@@ -1,4 +1,4 @@
-blocks blocks=3982128&uniq&count&fmt=json
+blocks?blocks=3982128&uniq&count&fmt=json
 {
   "data": [
     {

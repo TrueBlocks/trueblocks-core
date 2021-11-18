@@ -1,4 +1,4 @@
-names terms=tip
+names?terms=tip
 {
   "data": [
     {

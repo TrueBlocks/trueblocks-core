@@ -1,4 +1,4 @@
-when blocks=1000&log_level=3
+when?blocks=1000&log_level=3
 {
   "data": [
     {

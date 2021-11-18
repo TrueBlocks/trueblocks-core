@@ -1,4 +1,4 @@
-traces transactions=0x66e49e99a984cd88e097782a001afaac8c6ff786c936651895475dd88ec360f6&fmt=api
+traces?transactions=0x66e49e99a984cd88e097782a001afaac8c6ff786c936651895475dd88ec360f6&fmt=api
 {
   "data": [
     {

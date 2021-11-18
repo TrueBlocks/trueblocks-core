@@ -1,4 +1,4 @@
-logs transactions=4000000.5&fmt=api
+logs?transactions=4000000.5&fmt=api
 {
   "data": [
     {

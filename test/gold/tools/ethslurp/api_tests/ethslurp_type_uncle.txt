@@ -1,4 +1,4 @@
-slurp addrs=0xc8ebccc5f5689fa8659d83713341e5ad19349448&types=uncles&blocks=1-10
+slurp?addrs=0xc8ebccc5f5689fa8659d83713341e5ad19349448&types=uncles&blocks=1-10
 [
   {
     "hash": "0x0",

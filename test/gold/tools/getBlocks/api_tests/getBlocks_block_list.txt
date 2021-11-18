@@ -1,4 +1,4 @@
-blocks list=100
+blocks?list=100
 {
   "data": [
     {

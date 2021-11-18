@@ -1,4 +1,4 @@
-when blocks=spurious
+when?blocks=spurious
 {
   "data": [
     {

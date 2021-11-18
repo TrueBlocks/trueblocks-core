@@ -1,4 +1,4 @@
-status modes=config
+status?modes=config
 {
   "errors": [
     "The modes option (config) must be one of [ index | monitors | collections | names | abis | caches | some | all ]"

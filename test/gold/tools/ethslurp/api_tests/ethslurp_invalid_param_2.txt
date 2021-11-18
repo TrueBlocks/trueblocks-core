@@ -1,4 +1,4 @@
-slurp pank
+slurp?pank
 {
   "errors": [
     "Invalid key (pank) in slurp route."

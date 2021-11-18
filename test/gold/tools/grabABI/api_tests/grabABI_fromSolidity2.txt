@@ -1,4 +1,4 @@
-abis sol&addrs=0x7d655c57f71464b6f83811c55d84009cd9f5221c&fmt=json
+abis?sol&addrs=0x7d655c57f71464b6f83811c55d84009cd9f5221c&fmt=json
 {
   "errors": [
     "The file option (./0x7d655c57f71464b6f83811c55d84009cd9f5221c.sol) must exist"

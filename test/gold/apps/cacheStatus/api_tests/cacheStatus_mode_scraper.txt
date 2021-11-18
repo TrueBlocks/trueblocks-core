@@ -1,4 +1,4 @@
-status modes=index
+status?modes=index
 {
   "data": [
     {

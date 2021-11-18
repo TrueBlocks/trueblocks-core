@@ -1,4 +1,4 @@
-names create&log_level=10&fmt=api&expand
+names?create&log_level=10&fmt=api&expand
 {
   "data": [
     {

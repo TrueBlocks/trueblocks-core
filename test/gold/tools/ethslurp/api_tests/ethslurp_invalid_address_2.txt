@@ -1,4 +1,4 @@
-slurp addrs=0x63c8c29af409bd31ec7ddeea58f
+slurp?addrs=0x63c8c29af409bd31ec7ddeea58f
 {
   "errors": [
     "Please specify at least one valid Ethereum address."

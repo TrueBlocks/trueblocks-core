@@ -1,4 +1,4 @@
-blocks blocks=2769609%202799895%202872831%203076260&cache&apps
+blocks?blocks=2769609%202799895%202872831%203076260&cache&apps
 {
   "errors": [
     "The --cache option is not available with the --apps option."

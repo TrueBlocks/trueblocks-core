@@ -1,4 +1,4 @@
-transactions transactions=2222222.0%202332332.0
+transactions?transactions=2222222.0%202332332.0
 {
   "data": [
     {

@@ -1,4 +1,4 @@
-when 
+when?
 {
   "errors": [
     "chifra when - Not enough arguments presented."

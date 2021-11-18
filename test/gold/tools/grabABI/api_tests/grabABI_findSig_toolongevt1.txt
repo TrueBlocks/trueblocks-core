@@ -1,4 +1,4 @@
-abis find=0x1aa3a00800000000000000000
+abis?find=0x1aa3a00800000000000000000
 {
   "errors": [
     "The fourbyte option (0x1aa3a00800000000000000000) must be 4 bytes long."

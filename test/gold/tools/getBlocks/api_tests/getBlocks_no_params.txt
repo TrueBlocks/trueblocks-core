@@ -1,4 +1,4 @@
-blocks 
+blocks?
 {
   "errors": [
     "Please supply one or more block identifiers."

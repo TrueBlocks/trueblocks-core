@@ -1,4 +1,4 @@
-quotes log_level=1&fmt=api
+quotes?log_level=1&fmt=api
 {
   "data": [
     {

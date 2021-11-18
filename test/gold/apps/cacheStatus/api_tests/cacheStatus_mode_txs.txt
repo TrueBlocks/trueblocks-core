@@ -1,4 +1,4 @@
-status modes=caches&types=txs
+status?modes=caches&types=txs
 {
   "data": [
     {

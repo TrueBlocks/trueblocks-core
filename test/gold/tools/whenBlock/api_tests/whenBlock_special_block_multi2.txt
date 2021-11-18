@@ -1,4 +1,4 @@
-when blocks=stateclear%20iceage%204001001%20junk&verbose
+when?blocks=stateclear%20iceage%204001001%20junk&verbose
 {
   "errors": [
     "The given value 'junk' is not a numeral or a special named block."

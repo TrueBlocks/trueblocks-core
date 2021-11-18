@@ -1,4 +1,4 @@
-transactions transactions=3648669.24&articulate&verbose&trace&fmt=json
+transactions?transactions=3648669.24&articulate&verbose&trace&fmt=json
 {
   "data": [
     {

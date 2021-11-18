@@ -1,4 +1,4 @@
-traces fmt=json&filter=0x2ed0c4!0x2ed128!!0x8bbb73bcb5d553b5a556358d27625323fd781d37!!1
+traces?fmt=json&filter=0x2ed0c4!0x2ed128!!0x8bbb73bcb5d553b5a556358d27625323fd781d37!!1
 {
   "data": [
     {

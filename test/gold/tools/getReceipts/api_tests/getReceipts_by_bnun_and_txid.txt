@@ -1,4 +1,4 @@
-receipts transactions=4000000.5&logs&fmt=txt&no_header
+receipts?transactions=4000000.5&logs&fmt=txt&no_header
 {
   "errors": [
     "Invalid key (logs) in receipts route."

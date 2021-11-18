@@ -1,4 +1,4 @@
-slurp addrs=0x9519afbc60719a83c470ceec41e32d3e4b8b262e&types=token&blocks=0-1500000
+slurp?addrs=0x9519afbc60719a83c470ceec41e32d3e4b8b262e&types=token&blocks=0-1500000
 [
   {
     "hash": "0x13646e04bdc9bbb743963e8e660c58ec1b0f3b457428bcceed786317842d32d4",

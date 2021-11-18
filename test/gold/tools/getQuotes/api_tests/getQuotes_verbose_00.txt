@@ -1,4 +1,4 @@
-quotes verbose&fmt=json
+quotes?verbose&fmt=json
 {
   "data": [
     {

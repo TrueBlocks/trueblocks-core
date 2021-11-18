@@ -1,4 +1,4 @@
-names terms=0x0000000000000000000000000000000010101010&log_level=10&fmt=api&expand
+names?terms=0x0000000000000000000000000000000010101010&log_level=10&fmt=api&expand
 {
   "data": [
     {

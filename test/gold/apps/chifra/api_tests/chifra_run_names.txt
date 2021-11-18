@@ -1,4 +1,4 @@
-names terms=50-Tokens&expand
+names?terms=50-Tokens&expand
 {
   "data": [
     {
