@@ -32,6 +32,7 @@ var transactionsCmd = &cobra.Command{
 	Use:   usageTransactions,
 	Short: shortTransactions,
 	Long:  longTransactions,
+	Version: "GHC-TrueBlocks//0.16.1-alpha",
 	RunE:  transactionsPkg.RunTransactions,
 }
 

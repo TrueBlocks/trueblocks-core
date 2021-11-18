@@ -32,6 +32,7 @@ var blocksCmd = &cobra.Command{
 	Use:   usageBlocks,
 	Short: shortBlocks,
 	Long:  longBlocks,
+	Version: "GHC-TrueBlocks//0.16.1-alpha",
 	RunE:  blocksPkg.RunBlocks,
 }
 

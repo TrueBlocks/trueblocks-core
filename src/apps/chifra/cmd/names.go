@@ -32,6 +32,7 @@ var namesCmd = &cobra.Command{
 	Use:   usageNames,
 	Short: shortNames,
 	Long:  longNames,
+	Version: "GHC-TrueBlocks//0.16.1-alpha",
 	RunE:  namesPkg.RunNames,
 }
 

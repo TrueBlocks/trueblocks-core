@@ -35,6 +35,7 @@ bool COptions::handle_gocmds_cmd(const CCommandOption& p) {
     replaceAll(source, "[{SET_OPTS}]", get_setopts(p));
     replaceAll(source, "[{HIDDEN}]", get_hidden(p));
     replaceAll(source, "[{PERPRERUN}]", get_hidden2(p));
+    replaceAll(source, "[{VERSION}]", getVersionStr(true, false));
     replaceAll(source, "[{USE}]", get_use(p));
     replaceAll(source, "[{ROUTE}]", toLower(p.api_route));
     replaceAll(source, "[{PROPER}]", toProper(p.api_route));

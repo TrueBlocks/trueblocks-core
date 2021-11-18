@@ -34,7 +34,7 @@ cname               	1004	0	16777266	T_TEXT TS_STRING
 address             	1005	0	20971575	T_ADDRESS TS_STRING TS_OMITEMPTY
 interfaceMap        	1006	0	205520971	T_OBJECT|TS_ARRAY TS_ARRAY TS_OBJECT TS_OMITEMPTY
 {
-  "schema": 16000,
+  "schema": 16001,
   "deleted": false,
   "showing": true,
   "cname": "Abi",
