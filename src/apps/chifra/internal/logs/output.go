@@ -26,11 +26,8 @@ import (
 
 // EXISTING_CODE
 
-var Options LogsOptions
-
 func RunLogs(cmd *cobra.Command, args []string) error {
-	Options.Transactions = args
-	opts := Options
+	opts := LogsFinishParse(args)
 
 	err := opts.ValidateLogs()
 	if err != nil {

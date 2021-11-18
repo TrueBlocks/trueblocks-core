@@ -85,3 +85,11 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *QuotesOptions {
 
 	return opts
 }
+
+var Options QuotesOptions
+
+func QuotesFinishParse(args []string) *QuotesOptions {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return &Options
+}

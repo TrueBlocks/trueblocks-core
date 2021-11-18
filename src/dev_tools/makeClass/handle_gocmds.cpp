@@ -68,6 +68,8 @@ bool COptions::handle_gocmds_options(const CCommandOption& p) {
     replaceAll(source, "[{TEST_LOGS}]", get_testlogs(p));
     replaceAll(source, "[{DASH_STR}]", get_copyopts(p));
     replaceAll(source, "++POSITIONAL0++", get_positional0(p, "opts."));
+    replaceAll(source, "++POSITIONAL2++", get_positional0(p, "Options."));
+    replaceAll(source, "\t[]string{} = args\n", "");
     replaceAll(source, "opts.LastBlock != globals.NOPOS", "opts.LastBlock != 0 && opts.LastBlock != globals.NOPOS");
 
     string_q fn = getSourcePath("apps/chifra/internal/" + p.api_route + "/options.go");
@@ -87,8 +89,6 @@ bool COptions::handle_gocmds_output(const CCommandOption& p) {
     string_q source = asciiFileToString(getTemplatePath("blank_output.go"));
     source = substitute(source, "[]string", "++SAVED++");
     source = p.Format(source);
-    replaceAll(source, "++POSITIONAL0++", get_positional0(p, "Options."));
-    replaceAll(source, "\t[]string{} = args\n", "");
     replaceAll(source, "++SAVED++", "[]string");
     if (contains(source, "\t// return nil\n\t// EXISTING_CODE\n")) {
         replaceAll(source,

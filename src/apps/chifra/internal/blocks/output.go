@@ -26,11 +26,8 @@ import (
 
 // EXISTING_CODE
 
-var Options BlocksOptions
-
 func RunBlocks(cmd *cobra.Command, args []string) error {
-	Options.Blocks = args
-	opts := Options
+	opts := BlocksFinishParse(args)
 
 	err := opts.ValidateBlocks()
 	if err != nil {

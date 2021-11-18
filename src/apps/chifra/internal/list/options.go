@@ -92,3 +92,12 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ListOptions {
 
 	return opts
 }
+
+var Options ListOptions
+
+func ListFinishParse(args []string) *ListOptions {
+	Options.Addrs = args
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return &Options
+}

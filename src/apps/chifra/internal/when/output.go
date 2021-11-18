@@ -26,11 +26,8 @@ import (
 
 // EXISTING_CODE
 
-var Options WhenOptions
-
 func RunWhen(cmd *cobra.Command, args []string) error {
-	Options.Blocks = args
-	opts := Options
+	opts := WhenFinishParse(args)
 
 	err := opts.ValidateWhen()
 	if err != nil {

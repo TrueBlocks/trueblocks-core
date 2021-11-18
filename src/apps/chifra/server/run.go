@@ -36,8 +36,6 @@ func RunServe(cmd *cobra.Command, args []string) error {
 	return nil
 }
 
-var Options ServeOptions
-
 func PrintServeSettings(testMode bool) {
 	meta := globals.GetMeta(testMode)
 	log.Print("\n")

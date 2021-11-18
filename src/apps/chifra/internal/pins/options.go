@@ -101,3 +101,11 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *PinsOptions {
 
 	return opts
 }
+
+var Options PinsOptions
+
+func PinsFinishParse(args []string) *PinsOptions {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return &Options
+}

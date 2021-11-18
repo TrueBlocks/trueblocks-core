@@ -26,11 +26,8 @@ import (
 
 // EXISTING_CODE
 
-var Options MonitorsOptions
-
 func RunMonitors(cmd *cobra.Command, args []string) error {
-	Options.Addrs = args
-	opts := Options
+	opts := MonitorsFinishParse(args)
 
 	err := opts.ValidateMonitors()
 	if err != nil {

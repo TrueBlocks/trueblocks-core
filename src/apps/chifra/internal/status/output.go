@@ -26,11 +26,8 @@ import (
 
 // EXISTING_CODE
 
-var Options StatusOptions
-
 func RunStatus(cmd *cobra.Command, args []string) error {
-	Options.Modes = args
-	opts := Options
+	opts := StatusFinishParse(args)
 
 	err := opts.ValidateStatus()
 	if err != nil {

@@ -20,11 +20,8 @@ package [{API_ROUTE}]Pkg
 // EXISTING_CODE
 // EXISTING_CODE
 
-var Options [{PROPER}]Options
-
 func Run[{PROPER}](cmd *cobra.Command, args []string) error {
-	++POSITIONAL0++ = args
-	opts := Options
+	opts := [{PROPER}]FinishParse(args)
 
 	err := opts.Validate[{PROPER}]()
 	if err != nil {

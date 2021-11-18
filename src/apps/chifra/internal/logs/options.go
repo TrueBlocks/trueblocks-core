@@ -71,3 +71,12 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *LogsOptions {
 
 	return opts
 }
+
+var Options LogsOptions
+
+func LogsFinishParse(args []string) *LogsOptions {
+	Options.Transactions = args
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return &Options
+}

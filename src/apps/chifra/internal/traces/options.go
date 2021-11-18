@@ -106,3 +106,12 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *TracesOptions {
 
 	return opts
 }
+
+var Options TracesOptions
+
+func TracesFinishParse(args []string) *TracesOptions {
+	Options.Transactions = args
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return &Options
+}
