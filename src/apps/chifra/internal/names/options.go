@@ -187,8 +187,8 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *NamesOptions {
 var Options NamesOptions
 
 func NamesFinishParse(args []string) *NamesOptions {
-	Options.Terms = args
 	// EXISTING_CODE
+	Options.Terms = args
 	// EXISTING_CODE
 	return &Options
 }

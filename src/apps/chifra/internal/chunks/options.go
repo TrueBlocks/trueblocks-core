@@ -103,8 +103,8 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ChunksOptions {
 var Options ChunksOptions
 
 func ChunksFinishParse(args []string) *ChunksOptions {
-	Options.Blocks = args
 	// EXISTING_CODE
+	Options.Blocks = args
 	// EXISTING_CODE
 	return &Options
 }

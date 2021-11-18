@@ -82,8 +82,8 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ExploreOptions {
 var Options ExploreOptions
 
 func ExploreFinishParse(args []string) *ExploreOptions {
-	Options.Terms = args
 	// EXISTING_CODE
+	Options.Terms = args
 	// EXISTING_CODE
 	return &Options
 }

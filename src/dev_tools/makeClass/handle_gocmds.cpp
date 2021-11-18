@@ -22,6 +22,7 @@ extern string_q get_testlogs(const CCommandOption& cmd);
 extern string_q get_copyopts(const CCommandOption& cmd);
 extern string_q get_use(const CCommandOption& cmd);
 extern string_q get_positional0(const CCommandOption& cmd, const string_q& pre);
+extern string_q clean_positionals(const string_q& in);
 
 extern const char* STR_REQUEST_CASE1;
 extern const char* STR_REQUEST_CASE2;
@@ -68,9 +69,8 @@ bool COptions::handle_gocmds_options(const CCommandOption& p) {
     replaceAll(source, "[{TEST_LOGS}]", get_testlogs(p));
     replaceAll(source, "[{DASH_STR}]", get_copyopts(p));
     replaceAll(source, "++POSITIONAL0++", get_positional0(p, "opts."));
-    replaceAll(source, "++POSITIONAL2++", get_positional0(p, "Options."));
-    replaceAll(source, "\t[]string{} = args\n", "");
     replaceAll(source, "opts.LastBlock != globals.NOPOS", "opts.LastBlock != 0 && opts.LastBlock != globals.NOPOS");
+    source = clean_positionals(source);
 
     string_q fn = getSourcePath("apps/chifra/internal/" + p.api_route + "/options.go");
     replaceAll(fn, "/internal/serve", "/server");
@@ -324,6 +324,13 @@ string_q get_hidden2(const CCommandOption& cmd) {
     // os << "\t\t/globalsCmd.PersistentFlags().MarkHidden(\"fmt\")" << endl;
     // os << "\t}," << endl;
     // return os.str();
+}
+
+//---------------------------------------------------------------------------------------------------
+string_q clean_positionals(const string_q& in) {
+    string_q ret = in;
+    replaceAll(ret, "\t[]string{} = args\n", "");
+    return ret;
 }
 
 //---------------------------------------------------------------------------------------------------

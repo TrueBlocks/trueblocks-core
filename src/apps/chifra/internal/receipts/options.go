@@ -75,8 +75,8 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ReceiptsOptions {
 var Options ReceiptsOptions
 
 func ReceiptsFinishParse(args []string) *ReceiptsOptions {
-	Options.Transactions = args
 	// EXISTING_CODE
+	Options.Transactions = args
 	// EXISTING_CODE
 	return &Options
 }

@@ -110,8 +110,8 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *TracesOptions {
 var Options TracesOptions
 
 func TracesFinishParse(args []string) *TracesOptions {
-	Options.Transactions = args
 	// EXISTING_CODE
+	Options.Transactions = args
 	// EXISTING_CODE
 	return &Options
 }

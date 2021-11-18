@@ -124,8 +124,8 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *MonitorsOptions {
 var Options MonitorsOptions
 
 func MonitorsFinishParse(args []string) *MonitorsOptions {
-	Options.Addrs = args
 	// EXISTING_CODE
+	Options.Addrs = args
 	// EXISTING_CODE
 	return &Options
 }
