@@ -43,6 +43,7 @@ var blocks = map[string]int{
 	"muirglacier":    9200000,
 	"berlin":         12244000,
 	"london":         12965000,
+	"arrowglacier":   13773000,
 	"latest":         -1,
 }
 

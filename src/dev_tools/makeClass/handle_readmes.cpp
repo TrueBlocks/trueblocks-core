@@ -61,7 +61,10 @@ bool COptions::handle_readmes(void) {
             writeIfDifferent(dReadme, dContents);
             if (ep.is_visible_docs && !goPortNewCode(justTool)) {
                 string_q sContents = substitute(contents, "[{FOOTER}]", sFooter);
-                string_q tReadme = substitute(getSourcePath(ep.api_group + "/" + justTool + "/README.md"), "//", "/");
+                string_q tReadme =
+                    substitute(getSourcePath("apps/chifra/internal/" + ep.api_route + "/README.md"), "//", "/");
+                if (ep.api_route == "serve")
+                    string_q tReadme = substitute(getSourcePath("apps/chifra/server/README.md"), "//", "/");
                 writeIfDifferent(tReadme, sContents);
             }
         }
