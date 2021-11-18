@@ -96,8 +96,8 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ListOptions {
 var Options ListOptions
 
 func ListFinishParse(args []string) *ListOptions {
-	Options.Addrs = args
 	// EXISTING_CODE
+	Options.Addrs = args
 	// EXISTING_CODE
 	return &Options
 }

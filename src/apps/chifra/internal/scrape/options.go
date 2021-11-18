@@ -117,8 +117,8 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ScrapeOptions {
 var Options ScrapeOptions
 
 func ScrapeFinishParse(args []string) *ScrapeOptions {
-	Options.Modes = args
 	// EXISTING_CODE
+	Options.Modes = args
 	// EXISTING_CODE
 	return &Options
 }

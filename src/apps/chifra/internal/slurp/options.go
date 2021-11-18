@@ -92,8 +92,8 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *SlurpOptions {
 var Options SlurpOptions
 
 func SlurpFinishParse(args []string) *SlurpOptions {
-	Options.Addrs = args
 	// EXISTING_CODE
+	Options.Addrs = args
 	// EXISTING_CODE
 	return &Options
 }

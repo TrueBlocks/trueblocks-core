@@ -99,8 +99,8 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *TokensOptions {
 var Options TokensOptions
 
 func TokensFinishParse(args []string) *TokensOptions {
-	Options.Addrs2 = args
 	// EXISTING_CODE
+	Options.Addrs2 = args
 	// EXISTING_CODE
 	return &Options
 }

@@ -106,8 +106,8 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *AbisOptions {
 var Options AbisOptions
 
 func AbisFinishParse(args []string) *AbisOptions {
-	Options.Addrs = args
 	// EXISTING_CODE
+	Options.Addrs = args
 	// EXISTING_CODE
 	return &Options
 }
