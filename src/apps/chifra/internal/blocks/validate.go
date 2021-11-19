@@ -64,9 +64,7 @@ func (opts *BlocksOptions) ValidateBlocks() error {
 		if opts.List > 0 {
 			// Do nothing
 		} else {
-			// We check ListCount for the default value here, but what we really want is to know
-			// if it was supplied as a parameter
-			if len(opts.Blocks) == 0 && opts.ListCount == 20 {
+			if len(opts.Blocks) == 0 {
 				return validate.Usage("Please supply one or more block identifiers.")
 			}
 			if !opts.Logs && (len(opts.Emitter) > 0 || len(opts.Topic) > 0) {
