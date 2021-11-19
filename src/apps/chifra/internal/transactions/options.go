@@ -33,7 +33,7 @@ type TransactionsOptions struct {
 	Uniq         bool
 	Reconcile    string
 	Cache        bool
-	Globals      globals.GlobalOptionsType
+	Globals      globals.GlobalOptions
 	BadFlag      error
 }
 

@@ -38,7 +38,7 @@ type StatusOptions struct {
 	SetConfig bool
 	TestStart uint64
 	TestEnd   uint64
-	Globals   globals.GlobalOptionsType
+	Globals   globals.GlobalOptions
 	BadFlag   error
 }
 

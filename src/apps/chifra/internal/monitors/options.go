@@ -36,7 +36,7 @@ type MonitorsOptions struct {
 	Remove      bool
 	FirstBlock  uint64
 	LastBlock   uint64
-	Globals     globals.GlobalOptionsType
+	Globals     globals.GlobalOptions
 	BadFlag     error
 }
 

@@ -33,7 +33,7 @@ type WhenOptions struct {
 	Check      bool
 	Fix        bool
 	Count      bool
-	Globals    globals.GlobalOptionsType
+	Globals    globals.GlobalOptions
 	BadFlag    error
 }
 

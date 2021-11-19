@@ -34,7 +34,7 @@ type StateOptions struct {
 	NoZero   bool
 	Call     string
 	ProxyFor string
-	Globals  globals.GlobalOptionsType
+	Globals  globals.GlobalOptions
 	BadFlag  error
 }
 

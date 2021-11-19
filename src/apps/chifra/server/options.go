@@ -28,7 +28,7 @@ import (
 
 type ServeOptions struct {
 	Port    string
-	Globals globals.GlobalOptionsType
+	Globals globals.GlobalOptions
 	BadFlag error
 }
 
