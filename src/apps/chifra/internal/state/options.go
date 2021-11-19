@@ -114,7 +114,13 @@ var Options StateOptions
 
 func StateFinishParse(args []string) *StateOptions {
 	// EXISTING_CODE
-	Options.Addrs = args
+	for _, arg := range args {
+		if validate.IsValidAddress(arg) {
+			Options.Addrs = append(Options.Addrs, arg)
+		} else {
+			Options.Blocks = append(Options.Blocks, arg)
+		}
+	}
 	// EXISTING_CODE
 	return &Options
 }

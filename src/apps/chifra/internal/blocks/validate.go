@@ -27,7 +27,7 @@ func (opts *BlocksOptions) ValidateBlocks() error {
 	}
 
 	for _, emitter := range opts.Emitter {
-		valid, err := validate.IsValidAddress(emitter)
+		valid, err := validate.IsValidAddressE(emitter)
 		if !valid {
 			return err
 		}
