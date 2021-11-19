@@ -28,7 +28,6 @@ import (
 
 type ChunksOptions struct {
 	Blocks  []string
-	List    bool
 	Check   bool
 	Extract string
 	Stats   bool
@@ -39,7 +38,6 @@ type ChunksOptions struct {
 
 func (opts *ChunksOptions) TestLog() {
 	logger.TestLog(len(opts.Blocks) > 0, "Blocks: ", opts.Blocks)
-	logger.TestLog(opts.List, "List: ", opts.List)
 	logger.TestLog(opts.Check, "Check: ", opts.Check)
 	logger.TestLog(len(opts.Extract) > 0, "Extract: ", opts.Extract)
 	logger.TestLog(opts.Stats, "Stats: ", opts.Stats)
@@ -49,9 +47,6 @@ func (opts *ChunksOptions) TestLog() {
 
 func (opts *ChunksOptions) ToCmdLine() string {
 	options := ""
-	if opts.List {
-		options += " --list"
-	}
 	if opts.Check {
 		options += " --check"
 	}
@@ -78,8 +73,6 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ChunksOptions {
 				s := strings.Split(val, " ") // may contain space separated items
 				opts.Blocks = append(opts.Blocks, s...)
 			}
-		case "list":
-			opts.List = true
 		case "check":
 			opts.Check = true
 		case "extract":
