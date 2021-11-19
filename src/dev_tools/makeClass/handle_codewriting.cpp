@@ -103,14 +103,14 @@ bool writeCodeIn(const codewrite_t& cw) {
 
 //---------------------------------------------------------------------------------------------------
 bool writeCodeOut(COptions* opts, const string_q& fn) {
-    if (contains(fn, "/stub/") || contains(fn, "/chifra/options.cpp") || goPortNewCode(fn))
+    if (contains(fn, "/stub/") || goPortNewCode(fn))
         return true;
 
     string_q orig = asciiFileToString(fn);
     string_q converted = orig;
     if (endsWith(fn, ".cpp")) {
-        CStringArray tokens = {"_CODE_AUTO",  "_CODE_OPTIONS", "_CODE_LOCAL_INIT", "_CODE_INIT",
-                               "_CODE_NOTES", "ERROR_STRINGS", "_DEBUG_DISPLAY"};
+        CStringArray tokens = {"_CODE_AUTO", "_CODE_OPTIONS", "_CODE_LOCAL_INIT",
+                               "_CODE_INIT", "_CODE_NOTES",   "ERROR_STRINGS"};
 
         for (auto tok : tokens)
             if (!contains(orig, tok) && !contains(orig, "_CHIFRA") && !contains(fn, "flame"))
@@ -122,7 +122,6 @@ bool writeCodeOut(COptions* opts, const string_q& fn) {
         converted = replaceCode(converted, "CODE_INIT", opts->initStream.str());
         converted = replaceCode(converted, "CODE_NOTES", opts->notesStream.str());
         converted = replaceCode(converted, "ERROR_STRINGS", opts->errorStrStream.str());
-        converted = replaceCode(converted, "DEBUG_DISPLAY", opts->debugStream.str());
         converted = replaceCode(converted, "CODE_CHIFRA_CMDMAP", opts->chifraCmdStream.str());
         converted = replaceCode(converted, "CODE_CHIFRA_HELP", opts->chifraHelpStream.str());
         converted = replaceCode(converted, "CODE_CHIFRA_PAIRMAP", opts->pairMapStream.str());

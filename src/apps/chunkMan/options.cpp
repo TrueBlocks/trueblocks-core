@@ -22,7 +22,6 @@ static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
     COption("blocks", "", "list<blknum>", OPT_POSITIONAL, "an optional list of blocks to process"),
-    COption("list", "l", "", OPT_SWITCH, "list the bloom and index hashes from local cache or IPFS"),
     COption("check", "c", "", OPT_SWITCH, "check the validity of the chunk or bloom"),
     COption("extract", "e", "enum[header|addr_table|app_table|chunks|blooms]", OPT_FLAG, "show some or all of the contents of the chunk or bloom filters"),  // NOLINT
     COption("stats", "s", "", OPT_SWITCH, "for the --list option only, display statistics about each chunk or bloom"),
@@ -39,7 +38,6 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     // BEG_CODE_LOCAL_INIT
-    bool list = false;
     // END_CODE_LOCAL_INIT
 
     Init();
@@ -49,9 +47,6 @@ bool COptions::parseArguments(string_q& command) {
         if (false) {
             // do nothing -- make auto code generation easier
             // BEG_CODE_AUTO
-        } else if (arg == "-l" || arg == "--list") {
-            list = true;
-
         } else if (arg == "-c" || arg == "--check") {
             check = true;
 
@@ -80,15 +75,6 @@ bool COptions::parseArguments(string_q& command) {
             // END_CODE_AUTO
         }
     }
-
-    // BEG_DEBUG_DISPLAY
-    LOG_TEST_LIST("blocks", blocks, blocks.empty());
-    LOG_TEST_BOOL("list", list);
-    LOG_TEST_BOOL("check", check);
-    LOG_TEST("extract", extract, (extract == ""));
-    LOG_TEST_BOOL("stats", stats);
-    LOG_TEST_BOOL("save", save);
-    // END_DEBUG_DISPLAY
 
     if (Mocked(""))
         return false;

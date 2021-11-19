@@ -26,11 +26,8 @@ import (
 
 // EXISTING_CODE
 
-var Options ReceiptsOptions
-
 func RunReceipts(cmd *cobra.Command, args []string) error {
-	Options.Transactions = args
-	opts := Options
+	opts := ReceiptsFinishParse(args)
 
 	err := opts.ValidateReceipts()
 	if err != nil {

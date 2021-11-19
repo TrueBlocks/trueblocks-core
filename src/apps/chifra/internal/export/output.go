@@ -26,11 +26,8 @@ import (
 
 // EXISTING_CODE
 
-var Options ExportOptions
-
 func RunExport(cmd *cobra.Command, args []string) error {
-	Options.Addrs = args
-	opts := Options
+	opts := ExportFinishParse(args)
 
 	err := opts.ValidateExport()
 	if err != nil {

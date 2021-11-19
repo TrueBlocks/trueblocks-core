@@ -1,29 +1,23 @@
 chifra state  0x12
 TEST[DATE|TIME] Addrs:  [0x12]
-
-  You must provide at least one Ethereum address. Quitting...
-
-Purpose:
-  Retrieve account balance(s) for one or more addresses at given block(s).
-
+Error: Please specify at least one valid Ethereum address.
 Usage:
-  getState [flags] <address> [address...] [block...]
+  chifra state [flags] <address> [address...] [block...]
 
 Arguments:
   addrs - one or more addresses (0x...) from which to retrieve balances (required)
   blocks - an optional list of one or more blocks at which to report balances, defaults to 'latest'
 
 Flags:
-  -p, --parts <val>   control which state to export, one or more of [none|some*|all|balance|nonce|code|storage|deployed|accttype]
-  -c, --changes       only report a balance when it changes from one block to the next
-  -n, --no_zero       suppress the display of zero balance accounts
-  -a, --call string   a bang-separated string consisting of address!4-byte!bytes (hidden)
-  -r, --proxy_for <address>for the --call option only, redirects calls to this implementation (hidden)
-
-Global Flags:
-  -x, --fmt string     export format, one of [none|json*|txt|csv|api]
-  -v, --verbose uint   set verbose level (optional level defaults to 1)
-  -h, --help           display this help screen
+  -p, --parts strings      control which state to export
+                           One or more of [ none | some | all | balance | nonce | code | storage | deployed | accttype ]
+  -c, --changes            only report a balance when it changes from one block to the next
+  -n, --no_zero            suppress the display of zero balance accounts
+  -a, --call string        a bang-separated string consisting of address!4-byte!bytes (hidden)
+  -r, --proxy_for string   for the --call option only, redirects calls to this implementation (hidden)
+  -x, --fmt string         export format, one of [none|json*|txt|csv|api]
+  -v, --verbose            enable verbose (increase detail with --log_level)
+  -h, --help               display this help screen
 
 Notes:
   - An address must start with '0x' and be forty-two characters long.
@@ -32,4 +26,3 @@ Notes:
   - special blocks are detailed under chifra when --list.
   - balance is the default mode. To select a single mode use none first, followed by that mode.
   - You may specify multiple modes on a single line.
-

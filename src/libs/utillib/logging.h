@@ -306,12 +306,6 @@ extern bool silenceExit;
     }                                                                                                                  \
     string_q l_funcName = (a);
 
-#define EXIT_USAGE(a)                                                                                                  \
-    {                                                                                                                  \
-        LOG_ERR(_logExit(l_funcName));                                                                                 \
-        return usage((a));                                                                                             \
-    }
-
 #define EXIT_FAIL(a)                                                                                                   \
     {                                                                                                                  \
         LOG_WARN(_logExit(l_funcName));                                                                                \

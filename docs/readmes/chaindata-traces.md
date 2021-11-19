@@ -33,5 +33,5 @@ Notes:
   - A state diff trace describes, for each modified address, what changed during that trace.
 ```
 
-**Source code**: [`tools/getTraces`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/tools/getTraces)
+**Source code**: [`internal/traces`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/traces)
 

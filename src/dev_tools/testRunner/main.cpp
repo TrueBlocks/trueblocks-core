@@ -87,24 +87,28 @@ int main(int argc, const char* argv[]) {
                     }
                 }
 
+                const char* STR_TEST_SOURCE = "/test/gold/dev_tools/testRunner/";
+                const char* STR_TEST_DEST = "/test/working/[{PATH}]/[{TOOL}]/++API++[{FILENAME}]";
                 if (line.empty() || ignore1 || ignore2 || ignore3 || ignore4) {
                     if (ignore2 && !options.ignoreOff) {
                         cerr << iBlue << "   # " << line.substr(0, 120) << cOff << endl;
                         CTestCase test(line, 0);
-                        test.goldPath = substitute(getCWD(), "/test/gold/dev_tools/testRunner/",
-                                                   "/test/gold/" + test.path + "/" + test.tool + "/" + test.fileName);
+
                         // if the gold file exists, copy the test case back to working (it may have been removed)
+                        test.goldPath = substitute(getCWD(), STR_TEST_SOURCE, STR_TEST_DEST);
+                        test.goldPath = substitute(test.goldPath, "++API++", "");
                         if (fileExists(test.goldPath)) {
-                            test.workPath =
-                                substitute(getCWD(), "/test/gold/dev_tools/testRunner/",
-                                           "/test/working/" + test.path + "/" + test.tool + "/" + test.fileName);
+                            test.workPath = substitute(getCWD(), STR_TEST_SOURCE, test.Format(STR_TEST_DEST));
+                            test.workPath = substitute(test.workPath, "++API++", "");
                             copyFile(test.goldPath, test.workPath);
                         }
-                        replace(test.goldPath, "/" + test.tool + "/", "/" + test.tool + "/api_tests/");
+
+                        // now for the api_tests do the same
+                        test.goldPath = substitute(getCWD(), STR_TEST_SOURCE, STR_TEST_DEST);
+                        test.goldPath = substitute(test.goldPath, "++API++", "api_tests/");
                         if (fileExists(test.goldPath)) {
-                            test.workPath = substitute(
-                                getCWD(), "/test/gold/dev_tools/testRunner/",
-                                "/test/working/" + test.path + "/" + test.tool + "/api_tests/" + test.fileName);
+                            test.workPath = substitute(getCWD(), STR_TEST_SOURCE, test.Format(STR_TEST_DEST));
+                            test.workPath = substitute(test.workPath, "++API++", "api_tests/");
                             copyFile(test.goldPath, test.workPath);
                         }
                     }

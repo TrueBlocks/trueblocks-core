@@ -113,3 +113,12 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ScrapeOptions {
 
 	return opts
 }
+
+var Options ScrapeOptions
+
+func ScrapeFinishParse(args []string) *ScrapeOptions {
+	// EXISTING_CODE
+	Options.Modes = args
+	// EXISTING_CODE
+	return &Options
+}

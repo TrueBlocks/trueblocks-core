@@ -1608,14 +1608,6 @@ paths:
             items:
               type: string
               format: blknum_t
-        - name: list
-          description: list the bloom and index hashes from local cache or IPFS
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
         - name: check
           description: check the validity of the chunk or bloom
           required: false

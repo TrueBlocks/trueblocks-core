@@ -26,10 +26,8 @@ import (
 
 // EXISTING_CODE
 
-var Options QuotesOptions
-
 func RunQuotes(cmd *cobra.Command, args []string) error {
-	opts := Options
+	opts := QuotesFinishParse(args)
 
 	err := opts.ValidateQuotes()
 	if err != nil {

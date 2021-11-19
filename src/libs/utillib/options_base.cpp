@@ -1019,6 +1019,7 @@ const char* STR_DEFAULT_WHENBLOCKS =
     "{ name: \"muirglacier\", value: 9200000 },"
     "{ name: \"berlin\", value: 12244000 },"
     "{ name: \"london\", value: 12965000 },"
+    "{ name: \"arrowglacier\", value: 13773000 },"
     "{ name: \"latest\", value:\"\" }"
     "]";
 

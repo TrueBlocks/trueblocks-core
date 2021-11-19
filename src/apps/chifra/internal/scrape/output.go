@@ -34,11 +34,8 @@ import (
 
 // EXISTING_CODE
 
-var Options ScrapeOptions
-
 func RunScrape(cmd *cobra.Command, args []string) error {
-	Options.Modes = args
-	opts := Options
+	opts := ScrapeFinishParse(args)
 
 	err := opts.ValidateScrape()
 	if err != nil {

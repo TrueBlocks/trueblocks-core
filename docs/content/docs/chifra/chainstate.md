@@ -2,7 +2,7 @@
 title: "Chain state"
 description: ""
 lead: ""
-date: 2021-11-13T14:28:14
+date: 2021-11-18T22:52:20
 lastmod:
   - :git
   - lastmod
@@ -63,7 +63,7 @@ Notes:
   - You may specify multiple modes on a single line.
 ```
 
-**Source code**: [`tools/getState`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/tools/getState)
+**Source code**: [`internal/state`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/state)
 
 ## chifra tokens
 
@@ -103,5 +103,5 @@ Notes:
   - special blocks are detailed under chifra when --list.
 ```
 
-**Source code**: [`tools/getTokens`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/tools/getTokens)
+**Source code**: [`internal/tokens`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/tokens)
 

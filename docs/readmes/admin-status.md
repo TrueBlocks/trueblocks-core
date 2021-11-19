@@ -24,5 +24,5 @@ Flags:
   -h, --help            display this help screen
 ```
 
-**Source code**: [`apps/cacheStatus`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/cacheStatus)
+**Source code**: [`internal/status`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/status)
 

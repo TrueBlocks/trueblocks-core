@@ -34,34 +34,31 @@ bool COptions::handle_readmes(void) {
             string_q justTool = ep.tool;
             justTool = nextTokenClear(justTool, ' ');
 
-            string_q grp = substitute(toLower(ep.group), " ", "");
-            string_q docFn = grp + "-" + ep.api_route + ".md";
-
+            string_q docFn = substitute(toLower(ep.group), " ", "") + "-" + ep.api_route + ".md";
             string_q dSource = getDocsPathTemplates("readme-intros/" + docFn);
-
             string_q contents = asciiFileToString(dSource);
+
             replaceAll(contents, "[{NAME}]", "chifra " + ep.api_route);
             replaceAll(contents, "[{USAGE}]", get_usage(ep.api_route));
 
-            string_q dFooter, sFooter;
-            if (!goPortNewCode(justTool)) {
-                dFooter = "\n**Source code**: [`[{GROUP}]/[{TOOL}]`]([{LOCATION}][{GROUP}]/[{TOOL}])\n";
-                replaceAll(dFooter, "[{GROUP}]", ep.api_group);
-                replaceAll(dFooter, "[{TOOL}]", justTool);
-                replaceAll(dFooter, "[{LOCATION}]", "https://github.com/TrueBlocks/trueblocks-core/tree/master/src/");
-                sFooter = "\n" + trim(asciiFileToString(getDocsPathTemplates("readme-intros/README.footer.md")), '\n');
-            } else {
-                dFooter = "\n**Source code**: [`[{FILE}]`]([{LOCATION}]apps/chifra/internal/[{FILE}])\n";
-                replaceAll(dFooter, "[{FILE}]", ep.api_route + ".go");
-                replaceAll(dFooter, "[{LOCATION}]", "https://github.com/TrueBlocks/trueblocks-core/tree/develop/src/");
-            }
-
-            string_q dContents = substitute(contents, "[{FOOTER}]", dFooter);
+            string_q dFooter;
+            dFooter =
+                "\n**Source code**: "
+                "[`[{FILE}]`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/"
+                "[{FILE}])\n";
+            replaceAll(dFooter, "[{FILE}]", "internal/" + ep.api_route);
+            replaceAll(dFooter, "internal/serve", "server");
             string_q dReadme = getDocsPathReadmes(docFn);
+            string_q dContents = substitute(contents, "[{FOOTER}]", dFooter);
             writeIfDifferent(dReadme, dContents);
-            if (ep.is_visible_docs && !goPortNewCode(justTool)) {
+
+            string_q sFooter;
+            sFooter = "\n" + trim(asciiFileToString(getDocsPathTemplates("readme-intros/README.footer.md")), '\n');
+            if (ep.is_visible_docs) {
                 string_q sContents = substitute(contents, "[{FOOTER}]", sFooter);
-                string_q tReadme = substitute(getSourcePath(ep.api_group + "/" + justTool + "/README.md"), "//", "/");
+                string_q tReadme = getSourcePath("apps/chifra/internal/" + ep.api_route + "/README.md");
+                replaceAll(tReadme, "//", "/");
+                replaceAll(tReadme, "internal/serve", "server");
                 writeIfDifferent(tReadme, sContents);
             }
         }

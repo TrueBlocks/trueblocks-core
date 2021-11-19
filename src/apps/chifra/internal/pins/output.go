@@ -33,10 +33,8 @@ Please create the folder or adjust the setting by editing $CONFIG/trueBlocks.tom
 
 // EXISTING_CODE
 
-var Options PinsOptions
-
 func RunPins(cmd *cobra.Command, args []string) error {
-	opts := Options
+	opts := PinsFinishParse(args)
 
 	err := opts.ValidatePins()
 	if err != nil {

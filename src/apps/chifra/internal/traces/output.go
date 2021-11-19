@@ -26,11 +26,8 @@ import (
 
 // EXISTING_CODE
 
-var Options TracesOptions
-
 func RunTraces(cmd *cobra.Command, args []string) error {
-	Options.Transactions = args
-	opts := Options
+	opts := TracesFinishParse(args)
 
 	err := opts.ValidateTraces()
 	if err != nil {

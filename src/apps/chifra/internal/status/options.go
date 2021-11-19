@@ -136,3 +136,12 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *StatusOptions {
 
 	return opts
 }
+
+var Options StatusOptions
+
+func StatusFinishParse(args []string) *StatusOptions {
+	// EXISTING_CODE
+	Options.Modes = args
+	// EXISTING_CODE
+	return &Options
+}

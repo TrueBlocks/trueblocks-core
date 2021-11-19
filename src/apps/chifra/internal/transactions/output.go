@@ -26,11 +26,8 @@ import (
 
 // EXISTING_CODE
 
-var Options TransactionsOptions
-
 func RunTransactions(cmd *cobra.Command, args []string) error {
-	Options.Transactions = args
-	opts := Options
+	opts := TransactionsFinishParse(args)
 
 	err := opts.ValidateTransactions()
 	if err != nil {
