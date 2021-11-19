@@ -33,5 +33,5 @@ Notes:
   - You may specify multiple modes on a single line.
 ```
 
-**Source code**: [`tools/getState`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/tools/getState)
+**Source code**: [`internal/state`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/state)
 

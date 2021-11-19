@@ -2,7 +2,7 @@
 title: "Other"
 description: ""
 lead: ""
-date: 2021-11-13T14:28:14
+date: 2021-11-18T22:52:20
 lastmod:
   - :git
   - lastmod
@@ -51,7 +51,7 @@ Notes:
   - Due to restrictions from Poloniex, this tool retrieves only 30 days of data at a time. You must repeatedly run this command until the data is up-to-date.
 ```
 
-**Source code**: [`tools/getQuotes`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/tools/getQuotes)
+**Source code**: [`internal/quotes`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/quotes)
 
 ## chifra explore
 
@@ -75,5 +75,5 @@ Flags:
   -h, --help         display this help screen
 ```
 
-**Source code**: [`explore.go`](https://github.com/TrueBlocks/trueblocks-core/tree/develop/src/apps/chifra/internal/explore.go)
+**Source code**: [`internal/explore`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/explore)
 
