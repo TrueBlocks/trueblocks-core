@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2021-11-18T23:00:55
+date: 2021-11-18T23:43:46
 lastmod:
   - :git
   - lastmod
@@ -121,7 +121,6 @@ Arguments:
   blocks - an optional list of blocks to process
 
 Flags:
-  -l, --list             list the bloom and index hashes from local cache or IPFS
   -c, --check            check the validity of the chunk or bloom
   -e, --extract string   show some or all of the contents of the chunk or bloom filters
                          One of [ header | addr_table | app_table | chunks | blooms ]
