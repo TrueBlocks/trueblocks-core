@@ -33,5 +33,5 @@ Notes:
   - Search for either four byte signatures or event signatures with the --find option.
 ```
 
-**Source code**: [`tools/grabABI`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/tools/grabABI)
+**Source code**: [`internal/abis`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/abis)
 

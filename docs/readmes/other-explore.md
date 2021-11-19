@@ -20,5 +20,5 @@ Flags:
   -h, --help         display this help screen
 ```
 
-**Source code**: [`explore.go`](https://github.com/TrueBlocks/trueblocks-core/tree/develop/src/apps/chifra/internal/explore.go)
+**Source code**: [`internal/explore`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/explore)
 

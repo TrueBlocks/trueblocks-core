@@ -29,5 +29,5 @@ Notes:
   - Portions of this software are Powered by Etherscan.io APIs.
 ```
 
-**Source code**: [`tools/ethslurp`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/tools/ethslurp)
+**Source code**: [`internal/slurp`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/slurp)
 

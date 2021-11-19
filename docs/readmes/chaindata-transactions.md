@@ -32,5 +32,5 @@ Notes:
   - If the queried node does not store historical state, the results for most older transactions are undefined.
 ```
 
-**Source code**: [`tools/getTrans`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/tools/getTrans)
+**Source code**: [`internal/transactions`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/transactions)
 

@@ -27,5 +27,5 @@ Notes:
   - Only a single block in a given chunk needs to be supplied.
 ```
 
-**Source code**: [`apps/chunkMan`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chunkMan)
+**Source code**: [`internal/chunks`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/chunks)
 

@@ -51,5 +51,5 @@ Notes:
   - Neighbors include every address that appears in any transaction in which the export address also appears.
 ```
 
-**Source code**: [`apps/acctExport`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/acctExport)
+**Source code**: [`internal/export`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/export)
 

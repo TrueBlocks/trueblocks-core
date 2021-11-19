@@ -32,5 +32,5 @@ Notes:
   - If no address is presented to the --clean command, all monitors will be cleaned.
 ```
 
-**Source code**: [`apps/acctExport`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/acctExport)
+**Source code**: [`internal/monitors`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/monitors)
 

@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2021-11-13T14:28:14
+date: 2021-11-18T23:00:55
 lastmod:
   - :git
   - lastmod
@@ -49,7 +49,7 @@ Notes:
   - See the API documentation for more information.
 ```
 
-**Source code**: [`serve.go`](https://github.com/TrueBlocks/trueblocks-core/tree/develop/src/apps/chifra/internal/serve.go)
+**Source code**: [`server`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/server)
 
 ## chifra scrape
 
@@ -104,7 +104,7 @@ In future versions of the software, we will pin these shared chunks and blooms o
 Please see [this article](.) for more information about running the scraper and building and sharing the index of appearances.
 
 
-**Source code**: [`apps/blockScrape`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/blockScrape)
+**Source code**: [`internal/scrape`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/scrape)
 
 ## chifra chunks
 
@@ -135,7 +135,7 @@ Notes:
   - Only a single block in a given chunk needs to be supplied.
 ```
 
-**Source code**: [`apps/chunkMan`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chunkMan)
+**Source code**: [`internal/chunks`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/chunks)
 
 ## chifra init
 
@@ -165,7 +165,7 @@ Notes:
   - See chifra pins --help for more information.
 ```
 
-**Source code**: [`init.go`](https://github.com/TrueBlocks/trueblocks-core/tree/develop/src/apps/chifra/internal/init.go)
+**Source code**: [`internal/init`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/init)
 
 ## chifra pins
 
@@ -194,5 +194,5 @@ Notes:
   - The --share option works only if an IPFS daemon is running.
 ```
 
-**Source code**: [`pins.go`](https://github.com/TrueBlocks/trueblocks-core/tree/develop/src/apps/chifra/internal/pins.go)
+**Source code**: [`internal/pins`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/pins)
 
