@@ -69,7 +69,15 @@ func IsValidTopic(val string) (bool, error) {
 	return IsValidHex("topic", val, 32)
 }
 
-func IsValidAddress(val string) (bool, error) {
+func IsValidAddress(val string) bool {
+	if strings.Contains(val, ".eth") {
+		return true
+	}
+	ok, _ := IsValidHex("address", val, 20)
+	return ok
+}
+
+func IsValidAddressE(val string) (bool, error) {
 	if strings.Contains(val, ".eth") {
 		return true, nil
 	}
@@ -82,7 +90,7 @@ func ValidateAtLeastOneAddr(args []string) error {
 		if hasOne {
 			break
 		}
-		hasOne, _ = IsValidAddress(arg)
+		hasOne = IsValidAddress(arg)
 	}
 	if hasOne {
 		return nil
