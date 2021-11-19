@@ -150,27 +150,6 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    // BEG_DEBUG_DISPLAY
-    LOG_TEST_LIST("terms", terms, terms.empty());
-    LOG_TEST_BOOL("expand", expand);
-    LOG_TEST_BOOL("match_case", match_case);
-    LOG_TEST_BOOL("all", all);
-    LOG_TEST_BOOL("custom", custom);
-    LOG_TEST_BOOL("prefund", prefund);
-    LOG_TEST_BOOL("named", named);
-    LOG_TEST_BOOL("addr", addr);
-    LOG_TEST_BOOL("collections", collections);
-    LOG_TEST_BOOL("tags", tags);
-    LOG_TEST_BOOL("to_custom", to_custom);
-    LOG_TEST_BOOL("clean", clean);
-    LOG_TEST("autoname", autoname, (autoname == ""));
-    LOG_TEST_BOOL("create", create);
-    LOG_TEST_BOOL("deleteMe", deleteMe);
-    LOG_TEST_BOOL("update", update);
-    LOG_TEST_BOOL("remove", remove);
-    LOG_TEST_BOOL("undelete", undelete);
-    // END_DEBUG_DISPLAY
-
     if (create)
         crudCommands.push_back("create");
 

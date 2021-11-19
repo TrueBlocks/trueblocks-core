@@ -59,17 +59,8 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    // BEG_DEBUG_DISPLAY
-    LOG_TEST_LIST("transList", transList, transList.empty());
-    LOG_TEST_BOOL("articulate", articulate);
-    // END_DEBUG_DISPLAY
-
     if (Mocked("logs"))
         return false;
-
-    // Data wrangling
-    if (transList.empty())
-        return usage(usageErrs[ERR_PROVIDEONETXID]);
 
     if (isRaw)
         expContext().exportFmt = JSON1;

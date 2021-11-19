@@ -64,3 +64,11 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *InitOptions {
 
 	return opts
 }
+
+var Options InitOptions
+
+func InitFinishParse(args []string) *InitOptions {
+	// EXISTING_CODE
+	// EXISTING_CODE
+	return &Options
+}

@@ -26,11 +26,8 @@ import (
 
 // EXISTING_CODE
 
-var Options StateOptions
-
 func RunState(cmd *cobra.Command, args []string) error {
-	Options.Addrs = args
-	opts := Options
+	opts := StateFinishParse(args)
 
 	err := opts.ValidateState()
 	if err != nil {

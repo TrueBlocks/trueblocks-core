@@ -97,34 +97,14 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    // BEG_DEBUG_DISPLAY
-    LOG_TEST_LIST("addrs", addrs, addrs.empty());
-    LOG_TEST_LIST("blocks", blocks, blocks.empty());
-    LOG_TEST_LIST("parts", parts, parts.empty());
-    LOG_TEST_BOOL("changes", changes);
-    LOG_TEST_BOOL("no_zero", no_zero);
-    LOG_TEST("call", call, (call == ""));
-    LOG_TEST("proxy_for", proxy_for, (proxy_for == ""));
-    // END_DEBUG_DISPLAY
-
     if (Mocked(""))
         return false;
 
-    // Data wrangling
     if (blocks.empty())
-        blocks.numList.push_back(newestBlock);  // use 'latest'
-
-    if (!call.empty() && !parts.empty())
-        return usage("The --parts option is not available with the --call option.");
-
-    if (call.empty() && !proxy_for.empty())
-        return usage("The --proxy_for option is only available with the --call option.");
+        blocks.numList.push_back(isTestMode() ? byzantiumBlock : newestBlock);  // use 'latest'
 
     if (!call.empty())
         return handle_call();
-
-    if (!addrs.size())
-        return usage("You must provide at least one Ethereum address.");
 
     for (auto part : parts) {
         if (part == "none")

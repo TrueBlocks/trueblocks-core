@@ -38,5 +38,5 @@ Notes:
   - Large block ranges may crash the node, use --big_range to specify a larger range.
 ```
 
-**Source code**: [`tools/getBlocks`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/tools/getBlocks)
+**Source code**: [`internal/blocks`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/blocks)
 

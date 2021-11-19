@@ -36,5 +36,5 @@ Notes:
   - special blocks are detailed under chifra when --list.
 ```
 
-**Source code**: [`tools/getTokens`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/tools/getTokens)
+**Source code**: [`internal/tokens`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/tokens)
 

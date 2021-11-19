@@ -24,5 +24,5 @@ Notes:
   - Due to restrictions from Poloniex, this tool retrieves only 30 days of data at a time. You must repeatedly run this command until the data is up-to-date.
 ```
 
-**Source code**: [`tools/getQuotes`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/tools/getQuotes)
+**Source code**: [`internal/quotes`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/quotes)
 

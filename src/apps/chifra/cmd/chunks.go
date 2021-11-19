@@ -53,7 +53,6 @@ Notes:
 func init() {
 	chunksCmd.Flags().SortFlags = false
 
-	chunksCmd.Flags().BoolVarP(&chunksPkg.Options.List, "list", "l", false, "list the bloom and index hashes from local cache or IPFS")
 	chunksCmd.Flags().BoolVarP(&chunksPkg.Options.Check, "check", "c", false, "check the validity of the chunk or bloom")
 	chunksCmd.Flags().StringVarP(&chunksPkg.Options.Extract, "extract", "e", "", `show some or all of the contents of the chunk or bloom filters
 One of [ header | addr_table | app_table | chunks | blooms ]`)

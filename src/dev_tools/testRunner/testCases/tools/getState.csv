@@ -53,6 +53,7 @@ on      ,both ,fast  ,state ,tools/getState ,fmt_json                       ,y  
 on      ,cmd  ,fast  ,state ,tools/getState ,fmt_junk                       ,y    ,addrs = 0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98 & fmt = junk & blocks = 2000000
 on      ,cmd  ,fast  ,state ,tools/getState ,from_file                      ,y    ,file = cmd_file
 on      ,both ,fast  ,state ,tools/getState ,get_range                      ,y    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & blocks = 1428000-1438000:200
+
 on      ,both ,fast  ,state ,tools/getState ,contract_call_fail1            ,y    ,call = 0xa4f29fc548856180f6b1e319ee4d86715875!0x12065fe0 & blocks = 6523977-6540000:2000
 on      ,both ,fast  ,state ,tools/getState ,contract_call_fail2            ,y    ,call = 0xa4f29fc548856180f6b1e319ee4d86715875cce4!12065fe0 & blocks = 6523977-6540000:2000
 on      ,both ,fast  ,state ,tools/getState ,contract_call                  ,y    ,call = 0xa4f29fc548856180f6b1e319ee4d86715875cce4!0x12065fe0 & blocks = 6523977-6540000:2000
@@ -68,6 +69,17 @@ on      ,both ,fast  ,state ,tools/getState ,proxy_fail                     ,y  
 on      ,both ,fast  ,state ,tools/getState ,proxy_call_direct              ,y    ,call = 0xbb2b8038a1640196fbe3e38816f3e67cba72d940!0x0902f1ac & blocks = 10092000
 on      ,both ,fast  ,state ,tools/getState ,proxy_imp                      ,n    ,call = 0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B!0xbb82aa5e & blocks = 10092000 & fmt = csv
 on      ,both ,fast  ,state ,tools/getState ,proxy_for                      ,y    ,call = 0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B!0x0902f1ac & proxy_for = 0xbb2b8038a1640196fbe3e38816f3e67cba72d940 & blocks = 10092000
+
+on      ,both ,fast  ,state ,tools/getState ,not_call_and_parts             ,y    ,call = 0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B!0x0902f1ac & parts = some
+on      ,both ,fast  ,state ,tools/getState ,not_call_and_changes           ,y    ,call = 0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B!0x0902f1ac & changes
+on      ,both ,fast  ,state ,tools/getState ,not_call_and_nozero            ,y    ,call = 0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B!0x0902f1ac & no_zero
+on      ,both ,fast  ,state ,tools/getState ,not_call_and_addrs             ,y    ,call = 0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B!0x0902f1ac & addrs = 0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98
+on      ,both ,fast  ,state ,tools/getState ,with_no_block                  ,y    ,addrs = 0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359
+
+on      ,both ,fast  ,state ,tools/getState ,not_not_call_and_proxy         ,y    ,addrs = 0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98 & proxy_for = 0xbb2b8038a1640196fbe3e38816f3e67cba72d940
+on      ,both ,fast  ,state ,tools/getState ,no_addrs                       ,y    ,proxy_for = 0xbb2b8038a1640196fbe3e38816f3e67cba72d940
+on      ,both ,fast  ,state ,tools/getState ,bad_addrs                      ,y    ,addrs = 0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb9
+on      ,both ,fast  ,state ,tools/getState ,bad_block_range                ,y    ,addrs = 0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98 & 1000-orange:10
 
 local   ,both ,fast  ,state ,tools/getState ,to_file                        ,y    ,addrs = 0xf6f1cd99578ea87b67ae2bf7e9ca3e7e99d0fb98 & fmt = json & blocks = 2000000 & dollars & to_file
 

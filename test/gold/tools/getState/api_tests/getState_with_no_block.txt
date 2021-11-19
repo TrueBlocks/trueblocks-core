@@ -1,0 +1,41 @@
+state?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359
+{
+  "data": [
+    {
+      "blockNumber": 4370000,
+      "balance": 2910685340015980000000,
+      "address": "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359",
+      "ether": 2910.6853400159803
+    }
+  ],
+  "types": [
+    {
+      "type": "CEthState",
+      "fields": [
+        {
+          "name": "blockNumber",
+          "type": "blocknum"
+        },
+        {
+          "name": "balance",
+          "type": "wei"
+        },
+        {
+          "name": "address",
+          "type": "address"
+        },
+        {
+          "name": "ether",
+          "type": "number"
+        }
+      ]
+    }
+  ],
+  "meta": {
+    "unripe": "0xdeadbeef",
+    "ripe": "0xdeadbeef",
+    "staging": "0xdeadbeef",
+    "finalized": "0xdeadbeef",
+    "client": "0xdeadbeef"
+  }
+}

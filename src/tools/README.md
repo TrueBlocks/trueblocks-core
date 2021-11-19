@@ -1,3 +1,7 @@
+## NOTICE
+
+This document is out of date. Please see our [website](http://trueblocks.io).
+
 ## Tools
 
 The `tools` folder contains command-line programs that serve primarily as examples of using the TrueBlocks [libraries](../libs). You will find that the source code for each of the individual tools is quite simple. In a certain sense, each tool give you access to a different part of the Ethereum data structure.

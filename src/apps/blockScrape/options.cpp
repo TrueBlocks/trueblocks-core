@@ -88,16 +88,6 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    // BEG_DEBUG_DISPLAY
-    LOG_TEST("action", action, (action == ""));
-    LOG_TEST_BOOL("pin", pin);
-    LOG_TEST_BOOL("publish", publish);
-    LOG_TEST("sleep", sleep, (sleep == 14));
-    LOG_TEST("block_cnt", block_cnt, (block_cnt == 2000));
-    LOG_TEST("block_chan_cnt", block_chan_cnt, (block_chan_cnt == 10));
-    LOG_TEST("addr_chan_cnt", addr_chan_cnt, (addr_chan_cnt == 20));
-    // END_DEBUG_DISPLAY
-
     if (Mocked(""))
         return false;
 

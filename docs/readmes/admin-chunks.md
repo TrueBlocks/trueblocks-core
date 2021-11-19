@@ -13,7 +13,6 @@ Arguments:
   blocks - an optional list of blocks to process
 
 Flags:
-  -l, --list             list the bloom and index hashes from local cache or IPFS
   -c, --check            check the validity of the chunk or bloom
   -e, --extract string   show some or all of the contents of the chunk or bloom filters
                          One of [ header | addr_table | app_table | chunks | blooms ]
@@ -27,5 +26,5 @@ Notes:
   - Only a single block in a given chunk needs to be supplied.
 ```
 
-**Source code**: [`apps/chunkMan`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chunkMan)
+**Source code**: [`internal/chunks`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/chunks)
 

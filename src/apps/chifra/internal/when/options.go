@@ -99,3 +99,12 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *WhenOptions {
 
 	return opts
 }
+
+var Options WhenOptions
+
+func WhenFinishParse(args []string) *WhenOptions {
+	// EXISTING_CODE
+	Options.Blocks = args
+	// EXISTING_CODE
+	return &Options
+}

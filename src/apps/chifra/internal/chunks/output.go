@@ -26,11 +26,8 @@ import (
 
 // EXISTING_CODE
 
-var Options ChunksOptions
-
 func RunChunks(cmd *cobra.Command, args []string) error {
-	Options.Blocks = args
-	opts := Options
+	opts := ChunksFinishParse(args)
 
 	err := opts.ValidateChunks()
 	if err != nil {

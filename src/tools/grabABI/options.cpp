@@ -89,15 +89,6 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    // BEG_DEBUG_DISPLAY
-    LOG_TEST_LIST("addrs", addrs, addrs.empty());
-    LOG_TEST_BOOL("known", known);
-    LOG_TEST_BOOL("sol", sol);
-    LOG_TEST_LIST("find", find, find.empty());
-    LOG_TEST_BOOL("source", source);
-    LOG_TEST_BOOL("classes", classes);
-    // END_DEBUG_DISPLAY
-
     if (Mocked(""))
         return false;
 

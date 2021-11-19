@@ -79,25 +79,12 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    // BEG_DEBUG_DISPLAY
-    LOG_TEST_LIST("transList", transList, transList.empty());
-    LOG_TEST_BOOL("articulate", articulate);
-    LOG_TEST_BOOL("trace", trace);
-    LOG_TEST_BOOL("uniq", uniq);
-    LOG_TEST("reconcile", reconcile, (reconcile == ""));
-    LOG_TEST_BOOL("cache", cache);
-    // END_DEBUG_DISPLAY
-
     if (Mocked("transactions"))
         return false;
 
     bool isReconcile = !reconcile.empty();
     if (isReconcile && (cache || trace || articulate))
         return usage("Do not use other options with the --reconcile option.");
-
-    // Data wrangling
-    if (transList.empty())
-        return usage(usageErrs[ERR_PROVIDEONETXID]);
 
     if (isRaw)
         expContext().exportFmt = JSON1;

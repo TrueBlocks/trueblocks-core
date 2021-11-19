@@ -26,5 +26,5 @@ Notes:
   - See chifra pins --help for more information.
 ```
 
-**Source code**: [`init.go`](https://github.com/TrueBlocks/trueblocks-core/tree/develop/src/apps/chifra/internal/init.go)
+**Source code**: [`internal/init`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/init)
 

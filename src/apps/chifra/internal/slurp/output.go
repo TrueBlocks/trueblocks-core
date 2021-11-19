@@ -26,11 +26,8 @@ import (
 
 // EXISTING_CODE
 
-var Options SlurpOptions
-
 func RunSlurp(cmd *cobra.Command, args []string) error {
-	Options.Addrs = args
-	opts := Options
+	opts := SlurpFinishParse(args)
 
 	err := opts.ValidateSlurp()
 	if err != nil {

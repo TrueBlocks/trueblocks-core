@@ -51,5 +51,5 @@ In future versions of the software, we will pin these shared chunks and blooms o
 Please see [this article](.) for more information about running the scraper and building and sharing the index of appearances.
 
 
-**Source code**: [`apps/blockScrape`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/blockScrape)
+**Source code**: [`internal/scrape`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/scrape)
 

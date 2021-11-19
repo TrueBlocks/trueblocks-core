@@ -102,3 +102,12 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *AbisOptions {
 
 	return opts
 }
+
+var Options AbisOptions
+
+func AbisFinishParse(args []string) *AbisOptions {
+	// EXISTING_CODE
+	Options.Addrs = args
+	// EXISTING_CODE
+	return &Options
+}

@@ -28,5 +28,5 @@ Notes:
   - If the queried node does not store historical state, the results for most older transactions are undefined.
 ```
 
-**Source code**: [`tools/getReceipts`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/tools/getReceipts)
+**Source code**: [`internal/receipts`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/receipts)
 

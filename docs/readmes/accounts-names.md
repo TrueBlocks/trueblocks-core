@@ -37,5 +37,5 @@ Notes:
   - The --match_case option enables case sensitive matching.
 ```
 
-**Source code**: [`tools/ethNames`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/tools/ethNames)
+**Source code**: [`internal/names`](https://github.com/TrueBlocks/trueblocks-core/tree/master/src/apps/chifra/internal/names)
 
