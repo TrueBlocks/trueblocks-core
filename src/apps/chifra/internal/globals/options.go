@@ -21,7 +21,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-type GlobalOptionsType struct {
+type GlobalOptions struct {
 	Verbose  bool
 	LogLevel uint64
 	NoHeader bool
@@ -43,7 +43,7 @@ type GlobalOptionsType struct {
 	Writer   http.ResponseWriter
 }
 
-func (opts *GlobalOptionsType) TestLog() {
+func (opts *GlobalOptions) TestLog() {
 	logger.TestLog(opts.Verbose, "Verbose: ", opts.Verbose)
 	logger.TestLog(opts.LogLevel > 0, "LogLevel: ", opts.LogLevel)
 	logger.TestLog(opts.NoHeader, "NoHeader: ", opts.NoHeader)
@@ -64,7 +64,7 @@ func (opts *GlobalOptionsType) TestLog() {
 	logger.TestLog(opts.ApiMode, "ApiMode: ", opts.ApiMode)
 }
 
-func InitGlobals(cmd *cobra.Command, opts *GlobalOptionsType) {
+func InitGlobals(cmd *cobra.Command, opts *GlobalOptions) {
 	opts.TestMode = os.Getenv("TEST_MODE") == "true"
 	opts.ApiMode = os.Getenv("API_MODE") == "true"
 
@@ -101,8 +101,8 @@ func InitGlobals(cmd *cobra.Command, opts *GlobalOptionsType) {
 	cmd.Flags().MarkHidden("output")
 }
 
-func FromRequest(w http.ResponseWriter, r *http.Request) *GlobalOptionsType {
-	opts := &GlobalOptionsType{}
+func FromRequest(w http.ResponseWriter, r *http.Request) *GlobalOptions {
+	opts := &GlobalOptions{}
 	opts.Writer = w
 
 	opts.TestMode = r.Header.Get("User-Agent") == "testRunner"

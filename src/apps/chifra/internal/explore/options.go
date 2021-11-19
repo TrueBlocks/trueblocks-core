@@ -30,7 +30,7 @@ type ExploreOptions struct {
 	Terms   []string
 	Local   bool
 	Google  bool
-	Globals globals.GlobalOptionsType
+	Globals globals.GlobalOptions
 	BadFlag error
 }
 

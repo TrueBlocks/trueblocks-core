@@ -29,7 +29,7 @@ import (
 type LogsOptions struct {
 	Transactions []string
 	Articulate   bool
-	Globals      globals.GlobalOptionsType
+	Globals      globals.GlobalOptions
 	BadFlag      error
 }
 

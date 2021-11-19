@@ -34,7 +34,7 @@ type TracesOptions struct {
 	Count        bool
 	SkipDdos     bool
 	Max          uint64
-	Globals      globals.GlobalOptionsType
+	Globals      globals.GlobalOptions
 	BadFlag      error
 }
 

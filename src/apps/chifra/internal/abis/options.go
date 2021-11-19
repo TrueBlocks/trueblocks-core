@@ -33,7 +33,7 @@ type AbisOptions struct {
 	Find    []string
 	Source  bool
 	Classes bool
-	Globals globals.GlobalOptionsType
+	Globals globals.GlobalOptions
 	BadFlag error
 }
 

@@ -45,7 +45,7 @@ type NamesOptions struct {
 	Update      bool
 	Remove      bool
 	Undelete    bool
-	Globals     globals.GlobalOptionsType
+	Globals     globals.GlobalOptions
 	BadFlag     error
 }
 

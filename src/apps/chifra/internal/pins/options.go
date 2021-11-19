@@ -35,7 +35,7 @@ type PinsOptions struct {
 	Freshen bool
 	Remote  bool
 	InitAll bool
-	Globals globals.GlobalOptionsType
+	Globals globals.GlobalOptions
 	BadFlag error
 }
 

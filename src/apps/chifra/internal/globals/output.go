@@ -31,7 +31,7 @@ import (
 )
 
 // Output converts data into the given format and writes to where writer
-func Output(opts *GlobalOptionsType, where io.Writer, format string, data interface{}) error {
+func Output(opts *GlobalOptions, where io.Writer, format string, data interface{}) error {
 	nonEmptyFormat := format
 	if format == "" || format == "none" {
 		if utils.IsApiMode() {
@@ -81,7 +81,7 @@ func Output(opts *GlobalOptionsType, where io.Writer, format string, data interf
 }
 
 // JsonFormatter turns data into JSON
-func (opts *GlobalOptionsType) JsonFormatter(data interface{}) ([]byte, error) {
+func (opts *GlobalOptions) JsonFormatter(data interface{}) ([]byte, error) {
 	formatted := &JsonFormatted{}
 	err, ok := data.(error)
 	if ok {
@@ -96,7 +96,7 @@ func (opts *GlobalOptionsType) JsonFormatter(data interface{}) ([]byte, error) {
 }
 
 // TxtFormatter turns data into TSV string
-func (opts *GlobalOptionsType) TxtFormatter(data interface{}) ([]byte, error) {
+func (opts *GlobalOptions) TxtFormatter(data interface{}) ([]byte, error) {
 	out := bytes.Buffer{}
 	tsv, err := opts.AsTsv(data)
 	if err != nil {
@@ -110,7 +110,7 @@ func (opts *GlobalOptionsType) TxtFormatter(data interface{}) ([]byte, error) {
 }
 
 // TabFormatter turns data into a table (string)
-func (opts *GlobalOptionsType) TabFormatter(data interface{}) ([]byte, error) {
+func (opts *GlobalOptions) TabFormatter(data interface{}) ([]byte, error) {
 	tabOutput := &bytes.Buffer{}
 	tab := tabwriter.NewWriter(tabOutput, 0, 0, 2, ' ', 0)
 	tsv, err := opts.AsTsv(data)
@@ -132,7 +132,7 @@ type CsvFormatted struct {
 // CsvFormatter turns a type into CSV string. It uses custom code instead of
 // Go's encoding/csv to maintain compatibility with C++ output, which
 // quotes each item. encoding/csv would double-quote a quoted string...
-func (opts *GlobalOptionsType) CsvFormatter(i interface{}) ([]byte, error) {
+func (opts *GlobalOptions) CsvFormatter(i interface{}) ([]byte, error) {
 	records, err := ToStringRecords(i, true)
 	if err != nil {
 		return nil, err
@@ -158,7 +158,7 @@ type JsonFormatted struct {
 
 // AsJsonBytes marshals JsonFormatted struct, populating Meta field if
 // needed
-func AsJsonBytes(j *JsonFormatted, opts *GlobalOptionsType) ([]byte, error) {
+func AsJsonBytes(j *JsonFormatted, opts *GlobalOptions) ([]byte, error) {
 	var result JsonFormatted
 
 	if opts.Format == "json" {
@@ -185,7 +185,7 @@ func AsJsonBytes(j *JsonFormatted, opts *GlobalOptionsType) ([]byte, error) {
 }
 
 // PrintJson marshals its arguments and prints JSON in a standardized format
-func PrintJson(j *JsonFormatted, opts *GlobalOptionsType) error {
+func PrintJson(j *JsonFormatted, opts *GlobalOptions) error {
 	marshalled, err := AsJsonBytes(j, opts)
 	if err != nil {
 		return err
@@ -226,7 +226,7 @@ func (t *Table) Print() error {
 }
 
 // AsTsv turns a type into tab-separated values
-func (opts *GlobalOptionsType) AsTsv(data interface{}) ([]byte, error) {
+func (opts *GlobalOptions) AsTsv(data interface{}) ([]byte, error) {
 	records, err := ToStringRecords(data, false)
 	if err != nil {
 		return nil, err
@@ -399,7 +399,7 @@ var formatToMimeType = map[string]string{
 
 // RespondWithError marshals the given error err into JSON
 // that can be returned to the client and sets httpStatus HTTP error status code
-func (opts *GlobalOptionsType) RespondWithError(w http.ResponseWriter, httpStatus int, err error) {
+func (opts *GlobalOptions) RespondWithError(w http.ResponseWriter, httpStatus int, err error) {
 	marshalled, err := AsJsonBytes(&JsonFormatted{
 		Errors: []string{err.Error()},
 	}, opts)
@@ -413,7 +413,7 @@ func (opts *GlobalOptionsType) RespondWithError(w http.ResponseWriter, httpStatu
 
 // Respond decides which format should be used, calls the right Responder, sets HTTP status code
 // and writes a response
-func (opts *GlobalOptionsType) Respond(w http.ResponseWriter, httpStatus int, responseData interface{}) {
+func (opts *GlobalOptions) Respond(w http.ResponseWriter, httpStatus int, responseData interface{}) {
 	formatNotEmpty := opts.Format
 	if formatNotEmpty == "" {
 		formatNotEmpty = "api"

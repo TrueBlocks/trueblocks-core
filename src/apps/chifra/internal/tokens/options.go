@@ -32,7 +32,7 @@ type TokensOptions struct {
 	Parts   []string
 	ByAcct  bool
 	NoZero  bool
-	Globals globals.GlobalOptionsType
+	Globals globals.GlobalOptions
 	BadFlag error
 }
 

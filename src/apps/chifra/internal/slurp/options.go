@@ -31,7 +31,7 @@ type SlurpOptions struct {
 	Blocks      []string
 	Types       []string
 	Appearances bool
-	Globals     globals.GlobalOptionsType
+	Globals     globals.GlobalOptions
 	BadFlag     error
 }
 

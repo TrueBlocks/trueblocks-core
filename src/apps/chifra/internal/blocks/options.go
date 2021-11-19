@@ -42,7 +42,7 @@ type BlocksOptions struct {
 	Cache      bool
 	List       uint64
 	ListCount  uint64
-	Globals    globals.GlobalOptionsType
+	Globals    globals.GlobalOptions
 	BadFlag    error
 }
 

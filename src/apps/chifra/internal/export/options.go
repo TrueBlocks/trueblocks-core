@@ -59,7 +59,7 @@ type ExportOptions struct {
 	MaxTraces   uint64
 	FirstBlock  uint64
 	LastBlock   uint64
-	Globals     globals.GlobalOptionsType
+	Globals     globals.GlobalOptions
 	BadFlag     error
 }
 

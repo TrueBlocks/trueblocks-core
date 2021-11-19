@@ -31,7 +31,7 @@ type QuotesOptions struct {
 	Period  string
 	Pair    string
 	Feed    string
-	Globals globals.GlobalOptionsType
+	Globals globals.GlobalOptions
 	BadFlag error
 }
 
