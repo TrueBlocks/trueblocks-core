@@ -173,6 +173,3 @@ func IsGlobalOption(key string) bool {
 	}
 	return false
 }
-
-// maximum uint64
-const NOPOS = ^uint64(0)
