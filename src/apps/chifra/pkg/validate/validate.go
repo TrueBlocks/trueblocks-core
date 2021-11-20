@@ -61,15 +61,33 @@ func IsValidHex(typ string, val string, nBytes int) (bool, error) {
 	return true, nil
 }
 
-func IsValidFourByte(val string) (bool, error) {
+func IsValidFourByteE(val string) (bool, error) {
 	return IsValidHex("fourbyte", val, 4)
 }
 
-func IsValidTopic(val string) (bool, error) {
+func IsValidFourByte(val string) bool {
+	ok, _ := IsValidHex("fourbyte", val, 4)
+	return ok
+}
+
+func IsValidTopicE(val string) (bool, error) {
 	return IsValidHex("topic", val, 32)
 }
 
-func IsValidAddress(val string) (bool, error) {
+func IsValidTopic(val string) bool {
+	ok, _ := IsValidHex("topic", val, 32)
+	return ok
+}
+
+func IsValidAddress(val string) bool {
+	if strings.Contains(val, ".eth") {
+		return true
+	}
+	ok, _ := IsValidHex("address", val, 20)
+	return ok
+}
+
+func IsValidAddressE(val string) (bool, error) {
 	if strings.Contains(val, ".eth") {
 		return true, nil
 	}
@@ -82,7 +100,7 @@ func ValidateAtLeastOneAddr(args []string) error {
 		if hasOne {
 			break
 		}
-		hasOne, _ = IsValidAddress(arg)
+		hasOne = IsValidAddress(arg)
 	}
 	if hasOne {
 		return nil

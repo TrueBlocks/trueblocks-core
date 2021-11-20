@@ -29,11 +29,11 @@ import (
 
 // whenCmd represents the when command
 var whenCmd = &cobra.Command{
-	Use:   usageWhen,
-	Short: shortWhen,
-	Long:  longWhen,
+	Use:     usageWhen,
+	Short:   shortWhen,
+	Long:    longWhen,
 	Version: "GHC-TrueBlocks//0.16.1-alpha",
-	RunE:  whenPkg.RunWhen,
+	RunE:    whenPkg.RunWhen,
 }
 
 var usageWhen = `when [flags] < block | date > [ block... | date... ]

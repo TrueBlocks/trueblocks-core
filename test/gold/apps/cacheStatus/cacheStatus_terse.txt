@@ -1,7 +1,6 @@
 chifra status  --terse
 TEST[DATE|TIME] Depth:  0
 TEST[DATE|TIME] Terse:  true
-TEST[DATE|TIME] TestEnd:  0
 client: Client version (testing, archive, tracing)
 --TIME-- trueblocks: GHC-TrueBlocks//vers-alpha--git-hash---git-ts- (eskey, no pinkey)
 --TIME-- configPath: --paths--

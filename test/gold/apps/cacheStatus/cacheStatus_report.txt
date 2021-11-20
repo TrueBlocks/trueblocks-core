@@ -1,6 +1,5 @@
 chifra status  --report --fmt txt
 TEST[DATE|TIME] Depth:  0
-TEST[DATE|TIME] TestEnd:  0
 TEST[DATE|TIME] Format:  txt
 {
   "client_version": "Client version",

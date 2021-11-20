@@ -28,8 +28,8 @@ static const COption params[] = {
     COption("migrate", "m", "list<enum[test|abi_cache|block_cache|tx_cache|trace_cache|recon_cache|name_cache|slurp_cache|all]>", OPT_HIDDEN | OPT_FLAG, "either effectuate or test to see if a migration is necessary"),  // NOLINT
     COption("get_config", "g", "", OPT_HIDDEN | OPT_SWITCH, "returns JSON data of the editable configuration file items"),  // NOLINT
     COption("set_config", "s", "", OPT_HIDDEN | OPT_SWITCH, "accepts JSON in an env variable and writes it to configuration files"),  // NOLINT
-    COption("test_start", "S", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive -- testing only)"),
-    COption("test_end", "E", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive -- testing only)"),
+    COption("first_block", "F", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive -- testing only)"),  // NOLINT
+    COption("last_block", "L", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive -- testing only)"),
     COption("", "", "", OPT_DESCRIPTION, "Report on the status of the TrueBlocks system."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -50,8 +50,8 @@ bool COptions::parseArguments(string_q& command) {
     CStringArray migrate;
     bool get_config = false;
     bool set_config = false;
-    blknum_t test_start = 0;
-    blknum_t test_end = NOPOS;
+    blknum_t first_block = 0;
+    blknum_t last_block = NOPOS;
     // END_CODE_LOCAL_INIT
 
     blknum_t latest = NOPOS;  // getBlockProgress(BP_CLIENT).client;
@@ -101,17 +101,17 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-s" || arg == "--set_config") {
             set_config = true;
 
-        } else if (startsWith(arg, "-S:") || startsWith(arg, "--test_start:")) {
-            if (!confirmBlockNum("test_start", test_start, arg, latest))
+        } else if (startsWith(arg, "-F:") || startsWith(arg, "--first_block:")) {
+            if (!confirmBlockNum("first_block", first_block, arg, latest))
                 return false;
-        } else if (arg == "-S" || arg == "--test_start") {
-            return flag_required("test_start");
+        } else if (arg == "-F" || arg == "--first_block") {
+            return flag_required("first_block");
 
-        } else if (startsWith(arg, "-E:") || startsWith(arg, "--test_end:")) {
-            if (!confirmBlockNum("test_end", test_end, arg, latest))
+        } else if (startsWith(arg, "-L:") || startsWith(arg, "--last_block:")) {
+            if (!confirmBlockNum("last_block", last_block, arg, latest))
                 return false;
-        } else if (arg == "-E" || arg == "--test_end") {
-            return flag_required("test_end");
+        } else if (arg == "-L" || arg == "--last_block") {
+            return flag_required("last_block");
 
         } else if (startsWith(arg, '-')) {  // do not collapse
 
@@ -176,10 +176,10 @@ bool COptions::parseArguments(string_q& command) {
     for (auto m : modes)
         mode += (m + "|");
 
-    if (!isTestMode() && (test_start != 0 || (test_end != NOPOS && test_end != 0)))
-        return usage("--test_start (" + uint_2_Str(test_start) + ") and --test_end (" + uint_2_Str(test_end) +
+    if (!isTestMode() && (first_block != 0 || (last_block != NOPOS && last_block != 0)))
+        return usage("--first_block (" + uint_2_Str(first_block) + ") and --last_block (" + uint_2_Str(last_block) +
                      ") are only available during testing.");
-    scanRange = make_pair(test_start, test_end);
+    scanRange = make_pair(first_block, last_block);
 
     if (get_config && set_config)
         return usage("Please chose only one of --set_config and --get_config.");

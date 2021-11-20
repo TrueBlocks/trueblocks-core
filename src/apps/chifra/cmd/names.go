@@ -29,11 +29,11 @@ import (
 
 // namesCmd represents the names command
 var namesCmd = &cobra.Command{
-	Use:   usageNames,
-	Short: shortNames,
-	Long:  longNames,
+	Use:     usageNames,
+	Short:   shortNames,
+	Long:    longNames,
 	Version: "GHC-TrueBlocks//0.16.1-alpha",
-	RunE:  namesPkg.RunNames,
+	RunE:    namesPkg.RunNames,
 }
 
 var usageNames = `names [flags] <term> [term...]

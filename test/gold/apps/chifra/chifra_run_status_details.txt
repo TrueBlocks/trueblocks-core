@@ -1,9 +1,9 @@
-chifra  status all --details --test_start 1400000 --test_end 2000000
+chifra  status all --details --first_block 1400000 --last_block 2000000
 TEST[DATE|TIME] Modes:  [all]
 TEST[DATE|TIME] Details:  true
 TEST[DATE|TIME] Depth:  0
-TEST[DATE|TIME] TestStart:  1400000
-TEST[DATE|TIME] TestEnd:  2000000
+TEST[DATE|TIME] FirstBlock:  1400000
+TEST[DATE|TIME] LastBlock:  2000000
 {
   "client_version": "Client version",
   "client_ids": "chainId: 1 networkId: 1",

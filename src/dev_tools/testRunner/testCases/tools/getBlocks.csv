@@ -67,4 +67,10 @@ on      ,both ,fast  ,blocks ,tools/getBlocks ,no_trace_uniq        ,y    ,block
 on      ,both ,fast  ,blocks ,tools/getBlocks ,artic_not_logs       ,y    ,blocks = 4012000-4012001 & articulate
 on      ,both ,fast  ,blocks ,tools/getBlocks ,bigrange_not_logs    ,y    ,blocks = 4012000-4012001 & big_range = 100
 
+on      ,both ,fast  ,blocks ,tools/getBlocks ,list_fail            ,y    ,list = 0 & list_count = 12
+on      ,both ,fast  ,blocks ,tools/getBlocks ,list_list_count      ,y    ,list = 1000 & list_count = 10
+on      ,both ,fast  ,blocks ,tools/getBlocks ,list_count_block_fail,y    ,list_count = 10 & blocks = 1000
+on      ,both ,fast  ,blocks ,tools/getBlocks ,list_block_fail      ,y    ,list = 1000 & blocks = 1000
+on      ,both ,fast  ,blocks ,tools/getBlocks ,list_all             ,y    ,list_count = 2 & list = 1030000 & blocks = 10010
+
 local   ,both ,fast  ,blocks ,tools/getBlocks ,to_file              ,y    ,blocks = 2222222 2332332 & fmt = json & to_file

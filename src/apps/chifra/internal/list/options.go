@@ -32,7 +32,7 @@ type ListOptions struct {
 	Appearances bool
 	FirstBlock  uint64
 	LastBlock   uint64
-	Globals     globals.GlobalOptionsType
+	Globals     globals.GlobalOptions
 	BadFlag     error
 }
 
@@ -66,6 +66,8 @@ func (opts *ListOptions) ToCmdLine() string {
 
 func FromRequest(w http.ResponseWriter, r *http.Request) *ListOptions {
 	opts := &ListOptions{}
+	opts.FirstBlock = 0
+	opts.LastBlock = globals.NOPOS
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "addrs":

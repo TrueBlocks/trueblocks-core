@@ -2,7 +2,6 @@ chifra status  caches --types prices
 TEST[DATE|TIME] Modes:  [caches]
 TEST[DATE|TIME] Types:  [prices]
 TEST[DATE|TIME] Depth:  0
-TEST[DATE|TIME] TestEnd:  0
 {
   "client_version": "Client version",
   "client_ids": "chainId: 1 networkId: 1",

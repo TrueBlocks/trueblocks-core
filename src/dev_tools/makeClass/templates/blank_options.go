@@ -36,14 +36,13 @@ func (opts *[{PROPER}]Options) TestLog() {
 
 func (opts *[{PROPER}]Options) ToCmdLine() string {
 	options := ""
-[{DASH_STR}]	options += " " + strings.Join(++POSITIONAL0++, " ")
-	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
+[{DASH_STR}][{POSITIONALS}]	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
 	return options
 }
 
 func FromRequest(w http.ResponseWriter, r *http.Request) *[{PROPER}]Options {
 	opts := &[{PROPER}]Options{}
-	for key, value := range r.URL.Query() {
+[{DEFAULTS_API}]	for key, value := range r.URL.Query() {
 		switch key {
 [{REQUEST_OPTS}]		default:
 			if !globals.IsGlobalOption(key) {

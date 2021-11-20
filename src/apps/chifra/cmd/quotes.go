@@ -29,11 +29,11 @@ import (
 
 // quotesCmd represents the quotes command
 var quotesCmd = &cobra.Command{
-	Use:   usageQuotes,
-	Short: shortQuotes,
-	Long:  longQuotes,
+	Use:     usageQuotes,
+	Short:   shortQuotes,
+	Long:    longQuotes,
 	Version: "GHC-TrueBlocks//0.16.1-alpha",
-	RunE:  quotesPkg.RunQuotes,
+	RunE:    quotesPkg.RunQuotes,
 }
 
 var usageQuotes = `quotes [flags]`

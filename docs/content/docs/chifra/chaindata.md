@@ -2,7 +2,7 @@
 title: "Chain data"
 description: ""
 lead: ""
-date: 2021-11-18T22:52:20
+date: 2021-11-19T20:08:15
 lastmod:
   - :git
   - lastmod
@@ -108,7 +108,7 @@ Usage:
   chifra logs [flags] <tx_id> [tx_id...]
 
 Arguments:
-  transactions - a space-separated list of one or more transaction identifiers
+  transactions - a space-separated list of one or more transaction identifiers (required)
 
 Flags:
   -a, --articulate   articulate the retrieved data if ABIs can be found

@@ -34,7 +34,7 @@ type TracesOptions struct {
 	Count        bool
 	SkipDdos     bool
 	Max          uint64
-	Globals      globals.GlobalOptionsType
+	Globals      globals.GlobalOptions
 	BadFlag      error
 }
 
@@ -76,6 +76,7 @@ func (opts *TracesOptions) ToCmdLine() string {
 
 func FromRequest(w http.ResponseWriter, r *http.Request) *TracesOptions {
 	opts := &TracesOptions{}
+	opts.Max = 250
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "transactions":

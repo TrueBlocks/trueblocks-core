@@ -29,11 +29,11 @@ import (
 
 // stateCmd represents the state command
 var stateCmd = &cobra.Command{
-	Use:   usageState,
-	Short: shortState,
-	Long:  longState,
+	Use:     usageState,
+	Short:   shortState,
+	Long:    longState,
 	Version: "GHC-TrueBlocks//0.16.1-alpha",
-	RunE:  statePkg.RunState,
+	RunE:    statePkg.RunState,
 }
 
 var usageState = `state [flags] <address> [address...] [block...]

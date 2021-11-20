@@ -27,19 +27,19 @@ import (
 )
 
 type StatusOptions struct {
-	Modes     []string
-	Details   bool
-	Types     []string
-	Depth     uint64
-	Report    bool
-	Terse     bool
-	Migrate   []string
-	GetConfig bool
-	SetConfig bool
-	TestStart uint64
-	TestEnd   uint64
-	Globals   globals.GlobalOptionsType
-	BadFlag   error
+	Modes      []string
+	Details    bool
+	Types      []string
+	Depth      uint64
+	Report     bool
+	Terse      bool
+	Migrate    []string
+	GetConfig  bool
+	SetConfig  bool
+	FirstBlock uint64
+	LastBlock  uint64
+	Globals    globals.GlobalOptions
+	BadFlag    error
 }
 
 func (opts *StatusOptions) TestLog() {
@@ -51,8 +51,8 @@ func (opts *StatusOptions) TestLog() {
 	logger.TestLog(len(opts.Migrate) > 0, "Migrate: ", opts.Migrate)
 	logger.TestLog(opts.GetConfig, "GetConfig: ", opts.GetConfig)
 	logger.TestLog(opts.SetConfig, "SetConfig: ", opts.SetConfig)
-	logger.TestLog(opts.TestStart != 0, "TestStart: ", opts.TestStart)
-	logger.TestLog(opts.TestEnd != globals.NOPOS, "TestEnd: ", opts.TestEnd)
+	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
+	logger.TestLog(opts.LastBlock != 0 && opts.LastBlock != globals.NOPOS, "LastBlock: ", opts.LastBlock)
 	opts.Globals.TestLog()
 }
 
@@ -79,11 +79,11 @@ func (opts *StatusOptions) ToCmdLine() string {
 	if opts.SetConfig {
 		options += " --set_config"
 	}
-	if opts.TestStart != 0 {
-		options += (" --test_start " + fmt.Sprintf("%d", opts.TestStart))
+	if opts.FirstBlock != 0 {
+		options += (" --first_block " + fmt.Sprintf("%d", opts.FirstBlock))
 	}
-	if opts.TestEnd != globals.NOPOS {
-		options += (" --test_end " + fmt.Sprintf("%d", opts.TestEnd))
+	if opts.LastBlock != 0 && opts.LastBlock != globals.NOPOS {
+		options += (" --last_block " + fmt.Sprintf("%d", opts.LastBlock))
 	}
 	options += " " + strings.Join(opts.Modes, " ")
 	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
@@ -92,6 +92,9 @@ func (opts *StatusOptions) ToCmdLine() string {
 
 func FromRequest(w http.ResponseWriter, r *http.Request) *StatusOptions {
 	opts := &StatusOptions{}
+	opts.Depth = globals.NOPOS
+	opts.FirstBlock = 0
+	opts.LastBlock = globals.NOPOS
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "modes":
@@ -121,10 +124,10 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *StatusOptions {
 			opts.GetConfig = true
 		case "set_config":
 			opts.SetConfig = true
-		case "test_start":
-			opts.TestStart = globals.ToUint64(value[0])
-		case "test_end":
-			opts.TestEnd = globals.ToUint64(value[0])
+		case "first_block":
+			opts.FirstBlock = globals.ToUint64(value[0])
+		case "last_block":
+			opts.LastBlock = globals.ToUint64(value[0])
 		default:
 			if !globals.IsGlobalOption(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "status")

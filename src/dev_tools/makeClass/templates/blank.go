@@ -21,12 +21,12 @@ package cmd
 
 // [{ROUTE}]Cmd represents the [{ROUTE}] command
 var [{ROUTE}]Cmd = &cobra.Command{
-	Use:   usage[{PROPER}],
-	Short: short[{PROPER}],
-	Long:  long[{PROPER}],
+	Use:     usage[{PROPER}],
+	Short:   short[{PROPER}],
+	Long:    long[{PROPER}],
 	Version: "[{VERSION}]",
-	RunE:  [{ROUTE}]Pkg.Run[{PROPER}],
-[{PERPRERUN}]}
+	RunE:    [{ROUTE}]Pkg.Run[{PROPER}],
+}
 
 var usage[{PROPER}] = `[{USE}]`
 

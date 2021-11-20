@@ -153,7 +153,7 @@ func CallOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd s
 		parsed := strings.Replace(output, "Error:", "", 1)
 		parsed = strings.Trim(parsed, " \n")
 		// TODO: Need this to build. Probably not right
-		var unused globals.GlobalOptionsType
+		var unused globals.GlobalOptions
 		unused.TestMode = utils.IsTestModeServer(r)
 		unused.Writer = w
 		unused.RespondWithError(w, http.StatusBadRequest, errors.New(parsed))

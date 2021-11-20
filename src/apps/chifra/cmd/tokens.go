@@ -29,11 +29,11 @@ import (
 
 // tokensCmd represents the tokens command
 var tokensCmd = &cobra.Command{
-	Use:   usageTokens,
-	Short: shortTokens,
-	Long:  longTokens,
+	Use:     usageTokens,
+	Short:   shortTokens,
+	Long:    longTokens,
 	Version: "GHC-TrueBlocks//0.16.1-alpha",
-	RunE:  tokensPkg.RunTokens,
+	RunE:    tokensPkg.RunTokens,
 }
 
 var usageTokens = `tokens [flags] <address> <address> [address...] [block...]

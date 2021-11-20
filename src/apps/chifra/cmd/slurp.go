@@ -29,11 +29,11 @@ import (
 
 // slurpCmd represents the slurp command
 var slurpCmd = &cobra.Command{
-	Use:   usageSlurp,
-	Short: shortSlurp,
-	Long:  longSlurp,
+	Use:     usageSlurp,
+	Short:   shortSlurp,
+	Long:    longSlurp,
 	Version: "GHC-TrueBlocks//0.16.1-alpha",
-	RunE:  slurpPkg.RunSlurp,
+	RunE:    slurpPkg.RunSlurp,
 }
 
 var usageSlurp = `slurp [flags] <address> [address...] [block...]

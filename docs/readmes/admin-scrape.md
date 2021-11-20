@@ -14,7 +14,7 @@ Usage:
   chifra scrape [flags] [mode...]
 
 Arguments:
-  modes - which scraper(s) to control (indexer is default)
+  modes - which scraper(s) to control (required)
 	One or more of [ indexer | monitors | both ]
 
 Flags:

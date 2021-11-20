@@ -32,7 +32,7 @@ type ChunksOptions struct {
 	Extract string
 	Stats   bool
 	Save    bool
-	Globals globals.GlobalOptionsType
+	Globals globals.GlobalOptions
 	BadFlag error
 }
 

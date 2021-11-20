@@ -35,7 +35,7 @@ type PinsOptions struct {
 	Freshen bool
 	Remote  bool
 	InitAll bool
-	Globals globals.GlobalOptionsType
+	Globals globals.GlobalOptions
 	BadFlag error
 }
 
@@ -72,6 +72,7 @@ func (opts *PinsOptions) ToCmdLine() string {
 
 func FromRequest(w http.ResponseWriter, r *http.Request) *PinsOptions {
 	opts := &PinsOptions{}
+	opts.Sleep = .25
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "list":
