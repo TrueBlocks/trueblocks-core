@@ -254,7 +254,7 @@ string_q get_optfields(const CCommandOption& cmd) {
         replace(p.longName, "deleteMe", "delete");
         os << "\t" << padRight(p.Format("[{VARIABLE}]"), wid) << " " << p.go_type << endl;
     }
-    os << "\t" << padRight("Globals", wid) << " globals.GlobalOptionsType" << endl;
+    os << "\t" << padRight("Globals", wid) << " globals.GlobalOptions" << endl;
     os << "\t" << padRight("BadFlag", wid) << " error" << endl;
 
     return os.str();

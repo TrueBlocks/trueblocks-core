@@ -293,6 +293,7 @@ var Options ExportOptions
 func ExportFinishParse(args []string) *ExportOptions {
 	// EXISTING_CODE
 	Options.Addrs = args
+	// xxx and Topics and FourBytes
 	// EXISTING_CODE
 	return &Options
 }

@@ -94,6 +94,7 @@ var Options SlurpOptions
 func SlurpFinishParse(args []string) *SlurpOptions {
 	// EXISTING_CODE
 	Options.Addrs = args
+	// xxx -- And Blocks
 	// EXISTING_CODE
 	return &Options
 }

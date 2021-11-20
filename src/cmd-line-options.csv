@@ -240,14 +240,14 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 10700,apps,Admin,status,cacheStatus,modes,,,false,false,true,true,local,positional,list<enum[index|monitors|collections|names|abis|caches|some*|all]>,the type of status info to retrieve
 10720,apps,Admin,status,cacheStatus,details,d,,false,false,true,true,header,switch,<boolean>,include details about items found in monitors&#44; slurps&#44; abis&#44; or price caches
 10730,apps,Admin,status,cacheStatus,types,t,,false,false,true,false,local,flag,list<enum[blocks|txs|traces|slurps|prices|all*]>,for caches mode only&#44; which type(s) of cache to report
-10735,apps,Admin,status,cacheStatus,depth,p,,false,false,false,false,header,flag,<uint64>,for cache mode only&#44; number of levels deep to report
+10735,apps,Admin,status,cacheStatus,depth,p,0,false,false,false,false,header,flag,<uint64>,for cache mode only&#44; number of levels deep to report
 10760,apps,Admin,status,cacheStatus,report,r,,false,false,false,true,local,deprecated,<boolean>,run the command with no options for the same result
 10770,apps,Admin,status,cacheStatus,terse,e,,false,false,false,true,header,switch,<boolean>,show a terse summary report
 10782,apps,Admin,status,cacheStatus,migrate,m,,false,false,false,false,local,flag,list<enum[test|abi_cache|block_cache|tx_cache|trace_cache|recon_cache|name_cache|slurp_cache|all]>,either effectuate or test to see if a migration is necessary
 10780,apps,Admin,status,cacheStatus,get_config,g,,false,false,false,false,local,switch,<boolean>,returns JSON data of the editable configuration file items
 10800,apps,Admin,status,cacheStatus,set_config,s,,false,false,false,false,local,switch,<boolean>,accepts JSON in an env variable and writes it to configuration files
-10820,apps,Admin,status,cacheStatus,test_start,S,0,false,false,false,false,local,flag,<blknum>,first block to process (inclusive -- testing only)
-10840,apps,Admin,status,cacheStatus,test_end,E,NOPOS,false,false,false,false,local,flag,<blknum>,last block to process (inclusive -- testing only)
+10820,apps,Admin,status,cacheStatus,first_block,F,0,false,false,false,false,local,flag,<blknum>,first block to process (inclusive -- testing only)
+10840,apps,Admin,status,cacheStatus,last_block,L,NOPOS,false,false,false,false,local,flag,<blknum>,last block to process (inclusive -- testing only)
 10860,apps,Admin,status,cacheStatus,,,,false,false,true,true,--,description,,Report on the status of the TrueBlocks system.
 
 21950,apps,Admin,chunks,chunkMan,blocks,,,false,false,true,true,header,positional,list<blknum>,an optional list of blocks to process

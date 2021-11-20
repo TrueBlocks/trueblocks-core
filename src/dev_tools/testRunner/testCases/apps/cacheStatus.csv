@@ -7,8 +7,8 @@ on      ,both ,fast  ,status ,apps/cacheStatus ,invalid_param_1  ,y    ,junk
 on      ,cmd  ,fast  ,status ,apps/cacheStatus ,invalid_param_2  ,y    ,@l & junk
 on      ,both ,fast  ,status ,apps/cacheStatus ,mode_none        ,y    ,
 on      ,both ,fast  ,status ,apps/cacheStatus ,mode_scraper     ,y    ,modes = index
-on      ,both ,fast  ,status ,apps/cacheStatus ,index_start      ,y    ,modes = index & test_start = 100
-on      ,both ,fast  ,status ,apps/cacheStatus ,index_start_bad  ,y    ,modes = index & test_start = 1000000 & test_end = 2500000
+on      ,both ,fast  ,status ,apps/cacheStatus ,index_start      ,y    ,modes = index & first_block = 100
+on      ,both ,fast  ,status ,apps/cacheStatus ,index_start_bad  ,y    ,modes = index & first_block = 1000000 & last_block = 2500000
 on      ,both ,slow  ,status ,apps/cacheStatus ,mode_monitors    ,y    ,modes = monitors
 on      ,both ,slow  ,status ,apps/cacheStatus ,mode_collections ,y    ,modes = collections
 on      ,both ,slow  ,status ,apps/cacheStatus ,mode_names       ,y    ,modes = names
@@ -35,8 +35,8 @@ on      ,both ,fast  ,status ,apps/cacheStatus ,items_monitors   ,y    ,details 
 on      ,both ,fast  ,status ,apps/cacheStatus ,items_abis       ,y    ,details & modes = abis
 on      ,both ,fast  ,status ,apps/cacheStatus ,items_slurps     ,y    ,details & modes = caches & types = slurps
 on      ,both ,fast  ,status ,apps/cacheStatus ,items_prices     ,y    ,details & modes = caches & types = prices
-on      ,both ,fast  ,status ,apps/cacheStatus ,items_some       ,y    ,details & modes = some & test_start = 3000000 & test_end = 3100000
-on      ,both ,fast  ,status ,apps/cacheStatus ,items_scrap_mon  ,y    ,details & modes = index & test_start = 1000000 & test_end = 2200000
+on      ,both ,fast  ,status ,apps/cacheStatus ,items_some       ,y    ,details & modes = some & first_block = 3000000 & last_block = 3100000
+on      ,both ,fast  ,status ,apps/cacheStatus ,items_scrap_mon  ,y    ,details & modes = index & first_block = 1000000 & last_block = 2200000
 on      ,both ,fast  ,status ,apps/cacheStatus ,items_three      ,y    ,details & modes = abis caches monitors & types = slurps
 on      ,both ,fast  ,status ,apps/cacheStatus ,config_get       ,n    ,get_config
 on      ,both ,fast  ,status ,apps/cacheStatus ,report           ,n    ,report & fmt = txt
