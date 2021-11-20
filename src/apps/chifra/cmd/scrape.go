@@ -36,11 +36,11 @@ var scrapeCmd = &cobra.Command{
 	RunE:    scrapePkg.RunScrape,
 }
 
-var usageScrape = `scrape [flags] <mode> [mode...]
+var usageScrape = `scrape [flags] [mode...]
 
 Arguments:
   modes - which scraper(s) to control (required)
-          One or more of [ indexer | monitors | both ]`
+	One or more of [ indexer | monitors | both ]`
 
 var shortScrape = "scan the chain and update (and optionally pin) the TrueBlocks index of appearances"
 

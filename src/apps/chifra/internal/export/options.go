@@ -189,12 +189,19 @@ func (opts *ExportOptions) ToCmdLine() string {
 		options += (" --last_block " + fmt.Sprintf("%d", opts.LastBlock))
 	}
 	options += " " + strings.Join(opts.Addrs, " ")
+	options += " " + strings.Join(opts.Topics, " ")
+	options += " " + strings.Join(opts.Fourbytes, " ")
 	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
 	return options
 }
 
 func FromRequest(w http.ResponseWriter, r *http.Request) *ExportOptions {
 	opts := &ExportOptions{}
+	opts.FirstRecord = 0
+	opts.MaxRecords = 250
+	opts.MaxTraces = 250
+	opts.FirstBlock = 0
+	opts.LastBlock = globals.NOPOS
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "addrs":
@@ -292,8 +299,15 @@ var Options ExportOptions
 
 func ExportFinishParse(args []string) *ExportOptions {
 	// EXISTING_CODE
-	Options.Addrs = args
-	// xxx and Topics and FourBytes
+	for _, arg := range args {
+		if validate.IsValidTopic(arg) {
+			Options.Topics = append(Options.Topics, arg)
+		} else if validate.IsValidFourByte(arg) {
+			Options.Fourbytes = append(Options.Fourbytes, arg)
+		} else {
+			Options.Addrs = append(Options.Addrs, arg)
+		}
+	}
 	// EXISTING_CODE
 	return &Options
 }

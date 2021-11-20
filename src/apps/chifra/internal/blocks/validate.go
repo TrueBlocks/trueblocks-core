@@ -34,7 +34,7 @@ func (opts *BlocksOptions) ValidateBlocks() error {
 	}
 
 	for _, topic := range opts.Topic {
-		valid, err := validate.IsValidTopic(topic)
+		valid, err := validate.IsValidTopicE(topic)
 		if !valid {
 			return err
 		}

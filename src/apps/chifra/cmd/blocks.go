@@ -29,11 +29,11 @@ import (
 
 // blocksCmd represents the blocks command
 var blocksCmd = &cobra.Command{
-	Use:   usageBlocks,
-	Short: shortBlocks,
-	Long:  longBlocks,
+	Use:     usageBlocks,
+	Short:   shortBlocks,
+	Long:    longBlocks,
 	Version: "GHC-TrueBlocks//0.16.1-alpha",
-	RunE:  blocksPkg.RunBlocks,
+	RunE:    blocksPkg.RunBlocks,
 }
 
 var usageBlocks = `blocks [flags] <block> [block...]

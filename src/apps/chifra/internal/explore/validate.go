@@ -87,8 +87,7 @@ func (opts *ExploreOptions) ValidateExplore() error {
 			}
 		}
 
-		valid, _ = validate.IsValidFourByte(arg)
-		if valid {
+		if validate.IsValidFourByte(arg) {
 			urls = append(urls, ExploreUrl{arg, ExploreFourByte})
 			continue
 		}

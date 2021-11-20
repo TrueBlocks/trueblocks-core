@@ -28,7 +28,7 @@ static const COption params[] = {
     COption("migrate", "m", "list<enum[test|abi_cache|block_cache|tx_cache|trace_cache|recon_cache|name_cache|slurp_cache|all]>", OPT_HIDDEN | OPT_FLAG, "either effectuate or test to see if a migration is necessary"),  // NOLINT
     COption("get_config", "g", "", OPT_HIDDEN | OPT_SWITCH, "returns JSON data of the editable configuration file items"),  // NOLINT
     COption("set_config", "s", "", OPT_HIDDEN | OPT_SWITCH, "accepts JSON in an env variable and writes it to configuration files"),  // NOLINT
-    COption("first_block", "F", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive -- testing only)"),
+    COption("first_block", "F", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive -- testing only)"),  // NOLINT
     COption("last_block", "L", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive -- testing only)"),
     COption("", "", "", OPT_DESCRIPTION, "Report on the status of the TrueBlocks system."),
     // clang-format on
@@ -101,16 +101,16 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-s" || arg == "--set_config") {
             set_config = true;
 
-        } else if (startsWith(arg, "-S:") || startsWith(arg, "--first_block:")) {
+        } else if (startsWith(arg, "-F:") || startsWith(arg, "--first_block:")) {
             if (!confirmBlockNum("first_block", first_block, arg, latest))
                 return false;
-        } else if (arg == "-S" || arg == "--first_block") {
+        } else if (arg == "-F" || arg == "--first_block") {
             return flag_required("first_block");
 
-        } else if (startsWith(arg, "-E:") || startsWith(arg, "--last_block:")) {
+        } else if (startsWith(arg, "-L:") || startsWith(arg, "--last_block:")) {
             if (!confirmBlockNum("last_block", last_block, arg, latest))
                 return false;
-        } else if (arg == "-E" || arg == "--last_block") {
+        } else if (arg == "-L" || arg == "--last_block") {
             return flag_required("last_block");
 
         } else if (startsWith(arg, '-')) {  // do not collapse

@@ -29,11 +29,11 @@ import (
 
 // initCmd represents the init command
 var initCmd = &cobra.Command{
-	Use:   usageInit,
-	Short: shortInit,
-	Long:  longInit,
+	Use:     usageInit,
+	Short:   shortInit,
+	Long:    longInit,
 	Version: "GHC-TrueBlocks//0.16.1-alpha",
-	RunE:  initPkg.RunInit,
+	RunE:    initPkg.RunInit,
 }
 
 var usageInit = `init [flags]`

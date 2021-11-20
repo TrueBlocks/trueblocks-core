@@ -29,11 +29,11 @@ import (
 
 // tracesCmd represents the traces command
 var tracesCmd = &cobra.Command{
-	Use:   usageTraces,
-	Short: shortTraces,
-	Long:  longTraces,
+	Use:     usageTraces,
+	Short:   shortTraces,
+	Long:    longTraces,
 	Version: "GHC-TrueBlocks//0.16.1-alpha",
-	RunE:  tracesPkg.RunTraces,
+	RunE:    tracesPkg.RunTraces,
 }
 
 var usageTraces = `traces [flags] <tx_id> [tx_id...]

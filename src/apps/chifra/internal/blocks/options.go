@@ -116,6 +116,9 @@ func (opts *BlocksOptions) ToCmdLine() string {
 
 func FromRequest(w http.ResponseWriter, r *http.Request) *BlocksOptions {
 	opts := &BlocksOptions{}
+	opts.BigRange = 500
+	opts.List = 0
+	opts.ListCount = 20
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "blocks":

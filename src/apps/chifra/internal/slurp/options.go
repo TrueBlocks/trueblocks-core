@@ -52,6 +52,7 @@ func (opts *SlurpOptions) ToCmdLine() string {
 		options += " --appearances"
 	}
 	options += " " + strings.Join(opts.Addrs, " ")
+	options += " " + strings.Join(opts.Blocks, " ")
 	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
 	return options
 }
@@ -93,8 +94,13 @@ var Options SlurpOptions
 
 func SlurpFinishParse(args []string) *SlurpOptions {
 	// EXISTING_CODE
-	Options.Addrs = args
-	// xxx -- And Blocks
+	for _, arg := range args {
+		if validate.IsValidAddress(arg) {
+			Options.Addrs = append(Options.Addrs, arg)
+		} else {
+			Options.Blocks = append(Options.Blocks, arg)
+		}
+	}
 	// EXISTING_CODE
 	return &Options
 }

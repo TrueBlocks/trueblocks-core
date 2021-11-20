@@ -13,15 +13,15 @@
 #include "options.h"
 
 extern string_q get_hidden(const CCommandOption& cmd);
-extern string_q get_hidden2(const CCommandOption& cmd);
 extern string_q get_notes2(const CCommandOption& cmd);
 extern string_q get_optfields(const CCommandOption& cmd);
 extern string_q get_requestopts(const CCommandOption& cmd);
+extern string_q get_defaults_apis(const CCommandOption& cmd);
 extern string_q get_setopts(const CCommandOption& cmd);
 extern string_q get_testlogs(const CCommandOption& cmd);
 extern string_q get_copyopts(const CCommandOption& cmd);
+extern string_q get_positionals2(const CCommandOption& cmd);
 extern string_q get_use(const CCommandOption& cmd);
-extern string_q get_positional0(const CCommandOption& cmd, const string_q& pre);
 extern string_q clean_positionals(const string_q& in);
 
 extern const char* STR_REQUEST_CASE1;
@@ -35,7 +35,6 @@ bool COptions::handle_gocmds_cmd(const CCommandOption& p) {
     replaceAll(source, "/internal/[{ROUTE}]", (p.api_route == "serve" ? "/server" : "/internal/[{ROUTE}]"));
     replaceAll(source, "[{SET_OPTS}]", get_setopts(p));
     replaceAll(source, "[{HIDDEN}]", get_hidden(p));
-    replaceAll(source, "[{PERPRERUN}]", get_hidden2(p));
     replaceAll(source, "[{VERSION}]", getVersionStr(true, false));
     replaceAll(source, "[{USE}]", get_use(p));
     replaceAll(source, "[{ROUTE}]", toLower(p.api_route));
@@ -61,6 +60,7 @@ bool COptions::handle_gocmds_options(const CCommandOption& p) {
     replaceAll(source, "[{ROUTE}]", p.api_route);
     replaceAll(source, "[{PROPER}]", toProper(p.api_route));
     replaceAll(source, "[{OPT_FIELDS}]", get_optfields(p));
+    replaceAll(source, "[{DEFAULTS_API}]", get_defaults_apis(p));
     string_q req = get_requestopts(p);
     replaceAll(source, "[{REQUEST_OPTS}]", req);
     if (!contains(substitute(req, "for key, value := range r.URL.Query() {", ""), "value")) {
@@ -68,7 +68,7 @@ bool COptions::handle_gocmds_options(const CCommandOption& p) {
     }
     replaceAll(source, "[{TEST_LOGS}]", get_testlogs(p));
     replaceAll(source, "[{DASH_STR}]", get_copyopts(p));
-    replaceAll(source, "++POSITIONAL0++", get_positional0(p, "opts."));
+    replaceAll(source, "[{POSITIONALS}]", get_positionals2(p));
     replaceAll(source, "opts.LastBlock != globals.NOPOS", "opts.LastBlock != 0 && opts.LastBlock != globals.NOPOS");
     source = clean_positionals(source);
 
@@ -260,6 +260,17 @@ string_q get_optfields(const CCommandOption& cmd) {
     return os.str();
 }
 
+string_q get_defaults_apis(const CCommandOption& cmd) {
+    ostringstream os;
+    for (auto p : *((CCommandOptionArray*)cmd.params)) {
+        p.def_val = substitute(p.def_val, "NOPOS", "globals.NOPOS");
+        if (!p.isDeprecated && (p.data_type == "<blknum>" || p.data_type == "<uint64>" || p.data_type == "<double>")) {
+            os << p.Format("\topts.[{VARIABLE}] = [{DEF_VAL}]") << endl;
+        }
+    }
+    return os.str();
+}
+
 string_q get_requestopts(const CCommandOption& cmd) {
     ostringstream os;
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
@@ -316,31 +327,24 @@ string_q get_goDescription(const CCommandOption& cmd) {
     return ret;
 }
 
-string_q get_hidden2(const CCommandOption& cmd) {
-    // if (cmd.api_route != "scrape")
-    return "";
-    // ostringstream os;
-    // os << "\tPersistentPreRun: func(cmd *cobra.Command, args []string) {" << endl;
-    // os << "\t\t/globalsCmd.PersistentFlags().MarkHidden(\"fmt\")" << endl;
-    // os << "\t}," << endl;
-    // return os.str();
-}
-
 //---------------------------------------------------------------------------------------------------
 string_q clean_positionals(const string_q& in) {
     string_q ret = in;
     replaceAll(ret, "\t[]string{} = args\n", "");
+    replaceAll(ret, "opts.[]string{}", "[]string{}");
     return ret;
 }
 
+const char* STR_POSITIONALS1 = "\toptions += \" \" + strings.Join(opts.[{VARIABLE}], \" \")";
 //---------------------------------------------------------------------------------------------------
-string_q get_positional0(const CCommandOption& cmd, const string_q& pre) {
-    for (auto p : *((CCommandOptionArray*)cmd.params)) {
-        if (p.option_type == "positional") {
-            return p.Format(pre + "[{VARIABLE}]");
-        }
-    }
-    return "[]string{}";
+string_q get_positionals2(const CCommandOption& cmd) {
+    ostringstream os;
+    for (auto p : *((CCommandOptionArray*)cmd.params))
+        if (p.option_type == "positional")
+            os << p.Format(STR_POSITIONALS1) << endl;
+    if (os.str().empty())
+        os << substitute(STR_POSITIONALS1, "[{VARIABLE}]", "[]string{}") << endl;
+    return os.str();
 }
 
 string_q get_hidden(const CCommandOption& cmd) {

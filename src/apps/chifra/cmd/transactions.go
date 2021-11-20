@@ -29,11 +29,11 @@ import (
 
 // transactionsCmd represents the transactions command
 var transactionsCmd = &cobra.Command{
-	Use:   usageTransactions,
-	Short: shortTransactions,
-	Long:  longTransactions,
+	Use:     usageTransactions,
+	Short:   shortTransactions,
+	Long:    longTransactions,
 	Version: "GHC-TrueBlocks//0.16.1-alpha",
-	RunE:  transactionsPkg.RunTransactions,
+	RunE:    transactionsPkg.RunTransactions,
 }
 
 var usageTransactions = `transactions [flags] <tx_id> [tx_id...]

@@ -67,6 +67,7 @@ func (opts *StateOptions) ToCmdLine() string {
 		options += " --proxy_for " + opts.ProxyFor
 	}
 	options += " " + strings.Join(opts.Addrs, " ")
+	options += " " + strings.Join(opts.Blocks, " ")
 	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
 	return options
 }

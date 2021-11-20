@@ -57,6 +57,7 @@ func (opts *TokensOptions) ToCmdLine() string {
 		options += " --no_zero"
 	}
 	options += " " + strings.Join(opts.Addrs2, " ")
+	options += " " + strings.Join(opts.Blocks, " ")
 	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
 	return options
 }
@@ -100,7 +101,13 @@ var Options TokensOptions
 
 func TokensFinishParse(args []string) *TokensOptions {
 	// EXISTING_CODE
-	Options.Addrs2 = args
+	for _, arg := range args {
+		if validate.IsValidAddress(arg) {
+			Options.Addrs2 = append(Options.Addrs2, arg)
+		} else {
+			Options.Blocks = append(Options.Blocks, arg)
+		}
+	}
 	// EXISTING_CODE
 	return &Options
 }

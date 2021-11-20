@@ -61,12 +61,22 @@ func IsValidHex(typ string, val string, nBytes int) (bool, error) {
 	return true, nil
 }
 
-func IsValidFourByte(val string) (bool, error) {
+func IsValidFourByteE(val string) (bool, error) {
 	return IsValidHex("fourbyte", val, 4)
 }
 
-func IsValidTopic(val string) (bool, error) {
+func IsValidFourByte(val string) bool {
+	ok, _ := IsValidHex("fourbyte", val, 4)
+	return ok
+}
+
+func IsValidTopicE(val string) (bool, error) {
 	return IsValidHex("topic", val, 32)
+}
+
+func IsValidTopic(val string) bool {
+	ok, _ := IsValidHex("topic", val, 32)
+	return ok
 }
 
 func IsValidAddress(val string) bool {

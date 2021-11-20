@@ -29,11 +29,11 @@ import (
 
 // receiptsCmd represents the receipts command
 var receiptsCmd = &cobra.Command{
-	Use:   usageReceipts,
-	Short: shortReceipts,
-	Long:  longReceipts,
+	Use:     usageReceipts,
+	Short:   shortReceipts,
+	Long:    longReceipts,
 	Version: "GHC-TrueBlocks//0.16.1-alpha",
-	RunE:  receiptsPkg.RunReceipts,
+	RunE:    receiptsPkg.RunReceipts,
 }
 
 var usageReceipts = `receipts [flags] <tx_id> [tx_id...]

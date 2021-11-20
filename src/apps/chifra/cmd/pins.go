@@ -29,11 +29,11 @@ import (
 
 // pinsCmd represents the pins command
 var pinsCmd = &cobra.Command{
-	Use:   usagePins,
-	Short: shortPins,
-	Long:  longPins,
+	Use:     usagePins,
+	Short:   shortPins,
+	Long:    longPins,
 	Version: "GHC-TrueBlocks//0.16.1-alpha",
-	RunE:  pinsPkg.RunPins,
+	RunE:    pinsPkg.RunPins,
 }
 
 var usagePins = `pins [flags]`

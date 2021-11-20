@@ -29,11 +29,11 @@ import (
 
 // exportCmd represents the export command
 var exportCmd = &cobra.Command{
-	Use:   usageExport,
-	Short: shortExport,
-	Long:  longExport,
+	Use:     usageExport,
+	Short:   shortExport,
+	Long:    longExport,
 	Version: "GHC-TrueBlocks//0.16.1-alpha",
-	RunE:  exportPkg.RunExport,
+	RunE:    exportPkg.RunExport,
 }
 
 var usageExport = `export [flags] <address> [address...] [topics...] [fourbytes...]

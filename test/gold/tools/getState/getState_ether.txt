@@ -1,5 +1,6 @@
 chifra state  0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 4000000 --ether --fmt txt
-TEST[DATE|TIME] Addrs:  [0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359 4000000]
+TEST[DATE|TIME] Addrs:  [0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359]
+TEST[DATE|TIME] Blocks:  [4000000]
 TEST[DATE|TIME] Ether:  true
 TEST[DATE|TIME] Format:  txt
 blocknumber	address	ether

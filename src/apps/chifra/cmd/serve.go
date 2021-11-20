@@ -29,11 +29,11 @@ import (
 
 // serveCmd represents the serve command
 var serveCmd = &cobra.Command{
-	Use:   usageServe,
-	Short: shortServe,
-	Long:  longServe,
+	Use:     usageServe,
+	Short:   shortServe,
+	Long:    longServe,
 	Version: "GHC-TrueBlocks//0.16.1-alpha",
-	RunE:  servePkg.RunServe,
+	RunE:    servePkg.RunServe,
 }
 
 var usageServe = `serve [flags]`

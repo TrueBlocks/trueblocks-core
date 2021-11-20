@@ -29,11 +29,11 @@ import (
 
 // abisCmd represents the abis command
 var abisCmd = &cobra.Command{
-	Use:   usageAbis,
-	Short: shortAbis,
-	Long:  longAbis,
+	Use:     usageAbis,
+	Short:   shortAbis,
+	Long:    longAbis,
 	Version: "GHC-TrueBlocks//0.16.1-alpha",
-	RunE:  abisPkg.RunAbis,
+	RunE:    abisPkg.RunAbis,
 }
 
 var usageAbis = `abis [flags] <address> [address...]

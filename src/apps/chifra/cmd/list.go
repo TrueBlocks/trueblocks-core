@@ -29,11 +29,11 @@ import (
 
 // listCmd represents the list command
 var listCmd = &cobra.Command{
-	Use:   usageList,
-	Short: shortList,
-	Long:  longList,
+	Use:     usageList,
+	Short:   shortList,
+	Long:    longList,
 	Version: "GHC-TrueBlocks//0.16.1-alpha",
-	RunE:  listPkg.RunList,
+	RunE:    listPkg.RunList,
 }
 
 var usageList = `list [flags] <address> [address...]

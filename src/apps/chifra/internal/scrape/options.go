@@ -81,6 +81,10 @@ func (opts *ScrapeOptions) ToCmdLine() string {
 
 func FromRequest(w http.ResponseWriter, r *http.Request) *ScrapeOptions {
 	opts := &ScrapeOptions{}
+	opts.Sleep = 14
+	opts.BlockCnt = 2000
+	opts.BlockChanCnt = 10
+	opts.AddrChanCnt = 20
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "modes":

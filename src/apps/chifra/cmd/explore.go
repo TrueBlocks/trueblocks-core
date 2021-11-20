@@ -29,11 +29,11 @@ import (
 
 // exploreCmd represents the explore command
 var exploreCmd = &cobra.Command{
-	Use:   usageExplore,
-	Short: shortExplore,
-	Long:  longExplore,
+	Use:     usageExplore,
+	Short:   shortExplore,
+	Long:    longExplore,
 	Version: "GHC-TrueBlocks//0.16.1-alpha",
-	RunE:  explorePkg.RunExplore,
+	RunE:    explorePkg.RunExplore,
 }
 
 var usageExplore = `explore [flags] <term> [term...]
