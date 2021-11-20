@@ -1,4 +1,4 @@
-blocks?list=0&list_count=12
+blocks?list_count=10&blocks=1000
 {
   "data": [
     {
@@ -110,28 +110,6 @@ blocks?list=0&list_count=12
       "unclesCnt": 0,
       "gasLimit": 4700000,
       "gasUsed": 152561
-    },
-    {
-      "hash": "0xb3fb9829da4ac407aeaccb1e3650aea864d60b392dfc67d0f8bbc81ccf462fd0",
-      "blockNumber": 2000090,
-      "timestamp": 1470174883,
-      "difficulty": "49799534854423",
-      "miner": "0x2a65aca4d5fc5b5c859090a6c34d164135398226",
-      "transactionsCnt": 2,
-      "unclesCnt": 0,
-      "gasLimit": 4700000,
-      "gasUsed": 52561
-    },
-    {
-      "hash": "0x2015a45b71e77457b1e5fc16d794e200804b3f4b472d508f9ad5219cefec11e3",
-      "blockNumber": 2000089,
-      "timestamp": 1470174872,
-      "difficulty": "49799534592279",
-      "miner": "0x2a65aca4d5fc5b5c859090a6c34d164135398226",
-      "transactionsCnt": 1,
-      "unclesCnt": 0,
-      "gasLimit": 4704584,
-      "gasUsed": 31561
     }
   ],
   "types": [

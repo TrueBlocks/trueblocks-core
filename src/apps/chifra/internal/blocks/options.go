@@ -61,7 +61,7 @@ func (opts *BlocksOptions) TestLog() {
 	logger.TestLog(opts.Count, "Count: ", opts.Count)
 	logger.TestLog(opts.Cache, "Cache: ", opts.Cache)
 	logger.TestLog(opts.List != 0, "List: ", opts.List)
-	logger.TestLog(opts.ListCount != 20, "ListCount: ", opts.ListCount)
+	logger.TestLog(opts.ListCount != 0, "ListCount: ", opts.ListCount)
 	opts.Globals.TestLog()
 }
 
@@ -106,7 +106,7 @@ func (opts *BlocksOptions) ToCmdLine() string {
 	if opts.List != 0 {
 		options += (" --list " + fmt.Sprintf("%d", opts.List))
 	}
-	if opts.ListCount != 20 {
+	if opts.ListCount != 0 {
 		options += (" --list_count " + fmt.Sprintf("%d", opts.ListCount))
 	}
 	options += " " + strings.Join(opts.Blocks, " ")
@@ -118,7 +118,7 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *BlocksOptions {
 	opts := &BlocksOptions{}
 	opts.BigRange = 500
 	opts.List = 0
-	opts.ListCount = 20
+	opts.ListCount = 0
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "blocks":

@@ -1,6 +1,7 @@
-chifra blocks  1590000 4000001-4000002 1001001-1001100 1234567
-TEST[DATE|TIME] Blocks:  [1590000 4000001-4000002 1001001-1001100 1234567]
-Error: Specify only a single block range at a time.
+chifra blocks  --list 1000 1000
+TEST[DATE|TIME] Blocks:  [1000]
+TEST[DATE|TIME] List:  1000
+Error: You must supply a non-zero value for the --list_count option with --list.
 Usage:
   chifra blocks [flags] <block> [block...]
 

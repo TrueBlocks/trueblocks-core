@@ -61,11 +61,17 @@ func (opts *BlocksOptions) ValidateBlocks() error {
 	if len(opts.Globals.File) > 0 {
 		// Do nothing
 	} else {
-		if opts.List > 0 {
-			// Do nothing
+		if opts.ListCount != 0 && len(opts.Blocks) != 0 {
+			return validate.Usage("Supply either the --list_count option or block identifiers, not both.")
+
+		} else if opts.List > 0 {
+			if opts.ListCount == 0 {
+				return validate.Usage("You must supply a non-zero value for the --list_count option with --list.")
+			}
+
 		} else {
-			if len(opts.Blocks) == 0 {
-				return validate.Usage("Please supply one or more block identifiers.")
+			if len(opts.Blocks) == 0 && opts.ListCount == 0 {
+				return validate.Usage("Please supply one or more block identifiers or the --list_count option.")
 			}
 			if !opts.Logs && (len(opts.Emitter) > 0 || len(opts.Topic) > 0) {
 				return validate.Usage("The {0} option are only available with the {1} option.", "--emitter and --topic", "--log")

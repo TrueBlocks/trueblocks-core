@@ -258,7 +258,7 @@ void COptions::Init(void) {
     big_range = 500;
     count = false;
     cache = false;
-    list_count = 20;
+    list_count = 0;
     // END_CODE_INIT
 
     filterType = "";
