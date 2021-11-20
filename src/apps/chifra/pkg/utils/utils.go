@@ -91,3 +91,6 @@ func OpenBrowser(url string) {
 		log.Fatal(err)
 	}
 }
+
+// maximum uint64
+const NOPOS = ^uint64(0)
