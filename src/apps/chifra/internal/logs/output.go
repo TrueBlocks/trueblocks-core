@@ -45,12 +45,12 @@ func ServeLogs(w http.ResponseWriter, r *http.Request) bool {
 	err := opts.ValidateLogs()
 	if err != nil {
 		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-		return false
+		return true
 	}
 
 	// EXISTING_CODE
 	// opts.Globals.PassItOn("getLogs", opts.ToCmdLine())
-	return true
+	return false
 	// EXISTING_CODE
 }
 

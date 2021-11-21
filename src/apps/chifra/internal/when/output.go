@@ -52,7 +52,7 @@ func ServeWhen(w http.ResponseWriter, r *http.Request) bool {
 	err := opts.ValidateWhen()
 	if err != nil {
 		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-		return false
+		return true
 	}
 
 	// EXISTING_CODE
@@ -66,7 +66,7 @@ func ServeWhen(w http.ResponseWriter, r *http.Request) bool {
 	// 	}
 	// }
 	// opts.Globals.PassItOn("whenBlock", opts.ToCmdLine())
-	return true
+	return false
 	// EXISTING_CODE
 }
 
