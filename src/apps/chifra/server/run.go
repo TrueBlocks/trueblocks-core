@@ -17,9 +17,9 @@ import (
 	"log"
 	"os"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/spf13/cobra"
 )
 
@@ -37,7 +37,7 @@ func RunServe(cmd *cobra.Command, args []string) error {
 }
 
 func PrintServeSettings(testMode bool) {
-	meta := globals.GetMeta(testMode)
+	meta := rpcClient.GetMeta(testMode)
 	log.Print("\n")
 	log.Println(colors.Green, "Starting API server on port "+Options.Port, colors.Off)
 	log.Println(colors.Green, "Cache Path:   ", colors.Off, config.ReadTrueBlocks().Settings.CachePath)

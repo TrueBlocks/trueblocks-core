@@ -290,10 +290,12 @@ void COptions::doTests(CTestCaseArray& testArray, const string_q& testPath, cons
             if (folderExists(customized))
                 forEveryFileInFolder(customized + "/*", replaceFile, NULL);
 
+            string_q contents = asciiFileToString(test.workPath + test.fileName);
             if (!prepender.str().empty()) {
-                string_q contents = prepender.str() + asciiFileToString(test.workPath + test.fileName);
-                stringToAsciiFile(test.workPath + test.fileName, contents);
+                contents = prepender.str() + contents;
             }
+            replaceAll(contents, "3735928559", "\"0xdeadbeef\"");
+            stringToAsciiFile(test.workPath + test.fileName, contents);
 
             if (test.builtin) {
                 if (test.mode == "both" || contains(test.tool, "lib"))

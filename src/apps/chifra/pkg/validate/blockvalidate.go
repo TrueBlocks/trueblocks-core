@@ -19,7 +19,7 @@ import (
 	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/blockRange"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/specialBlock"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/specials"
 )
 
 func IsBlockHash(str string) bool {
@@ -60,7 +60,7 @@ func IsSpecialBlock(str string) bool {
 		return false
 	}
 
-	return specialBlock.IsStringSpecialBlock(str)
+	return specials.IsStringSpecialBlock(str)
 }
 
 func IsDateTimeString(str string) bool {
@@ -89,14 +89,14 @@ func IsRange(str string) (bool, error) {
 		}
 
 		if bRange.StartType == blockRange.BlockRangeSpecial &&
-			!specialBlock.IsStringSpecialBlock(bRange.Start.Special) {
+			!specials.IsStringSpecialBlock(bRange.Start.Special) {
 			return false, &InvalidIdentifierLiteralError{
 				Value: bRange.Start.Special,
 			}
 		}
 
 		if bRange.EndType == blockRange.BlockRangeSpecial &&
-			!specialBlock.IsStringSpecialBlock(bRange.End.Special) {
+			!specials.IsStringSpecialBlock(bRange.End.Special) {
 			return false, &InvalidIdentifierLiteralError{
 				Value: bRange.End.Special,
 			}
