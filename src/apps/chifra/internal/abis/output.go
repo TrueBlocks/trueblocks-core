@@ -49,7 +49,7 @@ func ServeAbis(w http.ResponseWriter, r *http.Request) bool {
 	err := opts.ValidateAbis()
 	if err != nil {
 		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-		return false
+		return true
 	}
 
 	// EXISTING_CODE
@@ -57,13 +57,13 @@ func ServeAbis(w http.ResponseWriter, r *http.Request) bool {
 		err = opts.FindInternal()
 		if err != nil {
 			opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-			return false
+			return true
 		}
-		return false
+		return true
 	}
 
 	// opts.Globals.PassItOn("grabABI", opts.ToCmdLine())
-	return true
+	return false
 	// EXISTING_CODE
 }
 

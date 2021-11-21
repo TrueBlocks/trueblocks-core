@@ -57,11 +57,11 @@ func ServeList(w http.ResponseWriter, r *http.Request) bool {
 	err := opts.ValidateList()
 	if err != nil {
 		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-		return false
+		return true
 	}
 
 	// EXISTING_CODE
-	return true
+	return false
 	// EXISTING_CODE
 }
 

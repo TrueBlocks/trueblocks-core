@@ -85,21 +85,21 @@ func ServePins(w http.ResponseWriter, r *http.Request) bool {
 	err := opts.ValidatePins()
 	if err != nil {
 		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-		return false
+		return true
 	}
 
 	// EXISTING_CODE
 	err = pinlib.EstablishIndexFolders()
 	if err != nil {
 		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-		return false
+		return true
 	}
 
 	if opts.List {
 		err := opts.ListInternal()
 		if err != nil {
 			opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-			return false
+			return true
 		}
 	}
 
@@ -107,11 +107,11 @@ func ServePins(w http.ResponseWriter, r *http.Request) bool {
 		err := opts.InitInternal()
 		if err != nil {
 			opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-			return false
+			return true
 		}
 	}
 
-	return false
+	return true
 	// EXISTING_CODE
 }
 
