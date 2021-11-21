@@ -26,12 +26,18 @@ func (opts *WhenOptions) ValidateWhen() error {
 		return opts.BadFlag
 	}
 
-	// TODO: Remove the global Format and all appearances of it
-	// if !WhenOpts.list {
-	// 	if len(args) == 0 {
-	// 		return errors.New(fmtError("You must provide either a date or a block number"))
-	// 	}
-	// }
+	if len(opts.Blocks) == 0 && (!opts.List && !opts.Timestamps) {
+		return validate.Usage("Please supply one or more block identifiers or one or more dates.")
+	}
+
+	if !opts.Timestamps {
+		if opts.Fix || opts.Check || opts.Count {
+			return validate.Usage("The {0} option are only available with the {1} option.", "--check, --fix, and --count", "--timestamps")
+		}
+	}
+
+	// if ((fix || check || count))
+	//     return usage(usageErrs[ERR_ONLYTS]);
 
 	err := validate.ValidateIdentifiers(opts.Blocks, validate.ValidBlockIdWithRangeAndDate, 1)
 	if err != nil {

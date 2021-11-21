@@ -1,5 +1,7 @@
-chifra when  
-Error: Please supply one or more block identifiers or one or more dates.
+chifra when  1301000 --count
+TEST[DATE|TIME] Blocks:  [1301000]
+TEST[DATE|TIME] Count:  true
+Error: The --check, --fix, and --count option are only available with the --timestamps option.
 Usage:
   chifra when [flags] < block | date > [ block... | date... ]
 
