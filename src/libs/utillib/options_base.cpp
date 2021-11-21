@@ -364,7 +364,6 @@ bool COptionsBase::standardOptions(string_q& cmdLine) {
 
     if (isEnabled(OPT_RAW) && contains(cmdLine, "--raw ")) {
         replaceAll(cmdLine, "--raw ", "");
-        setenv("NO_SCHEMAS", "true", true);
         isRaw = true;
     }
 
