@@ -26,29 +26,6 @@ when?blocks=12345&blocks=54321&blocks=2016-12-01&blocks=2016-12-01-01&timestamps
       "date": "2016-12-01 00:59:50 UTC"
     }
   ],
-  "types": [
-    {
-      "type": "CBlock",
-      "fields": [
-        {
-          "name": "blockNumber",
-          "type": "blocknum"
-        },
-        {
-          "name": "timestamp",
-          "type": "timestamp"
-        },
-        {
-          "name": "name",
-          "type": "text"
-        },
-        {
-          "name": "date",
-          "type": "date"
-        }
-      ]
-    }
-  ],
   "meta": {
     "unripe": "0xdeadbeef",
     "ripe": "0xdeadbeef",

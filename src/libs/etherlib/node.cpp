@@ -1121,8 +1121,6 @@ string_q exportPreamble(const string_q& format, const string_q& className) {
                 cerr << "Unknown class '" << className << "'. Is it registered?" << endl;
             else if (pClass->fieldList.size() == 0)
                 cerr << "Class '" << className << "' has no fields. Is it registered?" << endl;
-            else
-                expContext().types[className] = pClass;
             delete obj;
         }
     }
@@ -1211,38 +1209,7 @@ string_q exportPostamble(const CStringArray& errorsIn, const string_q& extra) {
         return os.str() + " }";
     ASSERT(fmt == API1);
 
-    bool showSchemas = getEnvStr("NO_SCHEMAS") != "true";
     bool showProgress = getEnvStr("NO_PROGRESS") != "true";
-    if (showSchemas) {
-        if (!isText && expContext().types.size() > 0) {
-            ostringstream typeStrs;
-            first = true;
-            for (auto type : expContext().types) {
-                if (!first)
-                    typeStrs << ", ";
-                typeStrs << "{ \"type\": \"" << type.first << "\", \"fields\": [";
-                const CRuntimeClass* pClass = type.second;
-                bool fy = true;
-                while (pClass) {
-                    for (auto field : pClass->fieldList) {
-                        if (!field.isHidden()) {
-                            if (!fy)
-                                typeStrs << ", ";
-                            string_q t = toLower(fieldTypeName(field.getType()));
-                            t = trim(substitute(substitute(substitute(t, "\t", " "), "t_", ""), "  ", " "));
-                            typeStrs << "{ \"name\": \"" << field.getName() << "\", \"type\": \"" << t << "\" }";
-                            fy = false;
-                        }
-                    }
-                    string_q parent = pClass->m_BaseClass ? pClass->m_BaseClass->m_ClassName : "";
-                    pClass = (parent == "CBaseClass" ? NULL : pClass->m_BaseClass);
-                }
-                typeStrs << "] }";
-                first = false;
-            }
-            os << ", \"types\": [\n" << typeStrs.str() << "\n]";
-        }
-    }
 
     CBlockProgress progress = getBlockProgress();
     blknum_t unripe = progress.unripe;
@@ -1261,9 +1228,7 @@ string_q exportPostamble(const CStringArray& errorsIn, const string_q& extra) {
     } else {
         os << "\"progress\": \"not reported\"";
     }
-    if (showSchemas)
-        os << ","
-           << "\"client\": " << dispNumOrHex(client);
+    os << ",\"client\": " << dispNumOrHex(client);
     if (!extra.empty())
         os << extra;
     os << " }";

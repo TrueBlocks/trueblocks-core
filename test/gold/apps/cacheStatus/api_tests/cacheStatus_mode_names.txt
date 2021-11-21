@@ -34,45 +34,6 @@ status?modes=names
       "date": "--date--"
     }
   ],
-  "types": [
-    {
-      "type": "CNameCache",
-      "fields": [
-        {
-          "name": "addrs",
-          "type": "address|ts_array"
-        },
-        {
-          "name": "items",
-          "type": "object|ts_array"
-        },
-        {
-          "name": "type",
-          "type": "text"
-        },
-        {
-          "name": "path",
-          "type": "text"
-        },
-        {
-          "name": "nFiles",
-          "type": "unumber"
-        },
-        {
-          "name": "nFolders",
-          "type": "unumber"
-        },
-        {
-          "name": "sizeInBytes",
-          "type": "unumber"
-        },
-        {
-          "name": "is_valid",
-          "type": "bool"
-        }
-      ]
-    }
-  ],
   "meta": {
     "unripe": "0xdeadbeef",
     "ripe": "0xdeadbeef",

@@ -51,7 +51,6 @@ bool COptions::handle_status(ostream& os) {
             string_q thePath = getIndexPath("");
             LOG8("Regenerating cache");
             index.type = index.getRuntimeClass()->m_ClassName;
-            expContext().types[index.type] = index.getRuntimeClass();
             index.path = pathName("index", thePath);
             forEveryFileInFolder(thePath, countFiles, &index);
             LOG8("Counted files");
@@ -81,7 +80,6 @@ bool COptions::handle_status(ostream& os) {
             CMonitor m;
             string_q thePath = m.getMonitorPath("", false);
             monitors.type = monitors.getRuntimeClass()->m_ClassName;
-            expContext().types[monitors.type] = monitors.getRuntimeClass();
             monitors.path = pathName("monitors");
             LOG4("counting monitors");
             forEveryFileInFolder(thePath, countFiles, &monitors);
@@ -110,7 +108,6 @@ bool COptions::handle_status(ostream& os) {
         if (!names.readBinaryCache("names", details)) {
             string_q thePath = getCachePath("names/");
             names.type = names.getRuntimeClass()->m_ClassName;
-            expContext().types[names.type] = names.getRuntimeClass();
             names.path = pathName("names");
             forEveryFileInFolder(thePath, countFiles, &names);
             CItemCounter counter(this);
@@ -134,7 +131,6 @@ bool COptions::handle_status(ostream& os) {
         if (!abi_cache.readBinaryCache("abis", details)) {
             string_q thePath = getCachePath("abis/");
             abi_cache.type = abi_cache.getRuntimeClass()->m_ClassName;
-            expContext().types[abi_cache.type] = abi_cache.getRuntimeClass();
             abi_cache.path = pathName("abis");
             forEveryFileInFolder(thePath, countFiles, &abi_cache);
             if (details) {
@@ -155,7 +151,6 @@ bool COptions::handle_status(ostream& os) {
         if (!blocks.readBinaryCache("blocks", details)) {
             string_q thePath = getCachePath("blocks/");
             blocks.type = blocks.getRuntimeClass()->m_ClassName;
-            expContext().types[blocks.type] = blocks.getRuntimeClass();
             blocks.path = pathName("blocks");
             blocks.max_depth = countOf(thePath, '/') + depth;
             forEveryFileInFolder(thePath, countFilesInCache, &blocks);
@@ -172,7 +167,6 @@ bool COptions::handle_status(ostream& os) {
         if (!txs.readBinaryCache("txs", details)) {
             string_q thePath = getCachePath("txs/");
             txs.type = txs.getRuntimeClass()->m_ClassName;
-            expContext().types[txs.type] = txs.getRuntimeClass();
             txs.path = pathName("txs");
             txs.max_depth = countOf(thePath, '/') + depth;
             forEveryFileInFolder(thePath, countFilesInCache, &txs);
@@ -189,7 +183,6 @@ bool COptions::handle_status(ostream& os) {
         if (!traces.readBinaryCache("traces", details)) {
             string_q thePath = getCachePath("traces/");
             traces.type = traces.getRuntimeClass()->m_ClassName;
-            expContext().types[traces.type] = traces.getRuntimeClass();
             traces.path = pathName("traces");
             traces.max_depth = countOf(thePath, '/') + depth;
             forEveryFileInFolder(thePath, countFilesInCache, &traces);
@@ -206,7 +199,6 @@ bool COptions::handle_status(ostream& os) {
         if (!slurps.readBinaryCache("slurps", details)) {
             string_q thePath = getCachePath("slurps/");
             slurps.type = slurps.getRuntimeClass()->m_ClassName;
-            expContext().types[slurps.type] = slurps.getRuntimeClass();
             slurps.path = pathName("slurps");
             forEveryFileInFolder(thePath, countFiles, &slurps);
             CItemCounter counter(this);
@@ -231,7 +223,6 @@ bool COptions::handle_status(ostream& os) {
         if (!prices.readBinaryCache("prices", details)) {
             string_q thePath = getCachePath("prices/");
             prices.type = prices.getRuntimeClass()->m_ClassName;
-            expContext().types[prices.type] = prices.getRuntimeClass();
             prices.path = pathName("prices");
             forEveryFileInFolder(thePath, countFiles, &prices);
             if (details) {
@@ -286,7 +277,6 @@ bool noteCollection(const string_q& path, void* data) {
 
         CCollectionCacheItem coi;
         coi.type = coi.getRuntimeClass()->m_ClassName;
-        expContext().types[coi.type] = coi.getRuntimeClass();
         if (isTestMode()) {
             coi.name = "---name---";
             coi.sizeInBytes = 1010202;
@@ -314,7 +304,6 @@ bool noteMonitor(const string_q& path, void* data) {
         ASSERT(counter->options);
         CMonitorCacheItem mdi;
         mdi.type = mdi.getRuntimeClass()->m_ClassName;
-        expContext().types[mdi.type] = mdi.getRuntimeClass();
         string_q addr = substitute(path, "/0x", "|");
         nextTokenClear(addr, '|');
         mdi.address = "0x" + nextTokenClear(addr, '.');
@@ -386,7 +375,6 @@ bool noteIndex(const string_q& path, void* data) {
         ASSERT(counter->options);
         CIndexCacheItem aci;
         aci.type = aci.getRuntimeClass()->m_ClassName;
-        expContext().types[aci.type] = aci.getRuntimeClass();
         aci.filename = substitute(path, counter->cachePtr->path, "");
         string_q fn = aci.filename;
         if (isTestMode())
@@ -439,7 +427,6 @@ bool noteABI(const string_q& path, void* data) {
 
         CAbiCacheItem abii;
         abii.type = abii.getRuntimeClass()->m_ClassName;
-        expContext().types[abii.type] = abii.getRuntimeClass();
         string_q addr = substitute(path, "/0x", "|");
         nextTokenClear(addr, '|');
         abii.address = "0x" + nextTokenClear(addr, '.');
@@ -476,7 +463,6 @@ bool notePrice(const string_q& path, void* data) {
 
         CPriceCacheItem pri;
         pri.type = pri.getRuntimeClass()->m_ClassName;
-        expContext().types[pri.type] = pri.getRuntimeClass();
         if (isTestMode()) {
             pri.pair = "---pair---";
             pri.sizeInBytes = 1010202;

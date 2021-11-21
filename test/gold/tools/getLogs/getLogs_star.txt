@@ -18,6 +18,4 @@ TEST[DATE|TIME] Format:  api
       "0x0000000000000000000000000000000000000000000000000000000000000058"
     ],
     "data": "0x0000000000000000000000000000000000000000000000001462698eade5e400"
-  }], "types": [
-{ "type": "CLogEntry", "fields": [{ "name": "address", "type": "address" }, { "name": "logIndex", "type": "blocknum" }, { "name": "topics", "type": "object|ts_array" }, { "name": "data", "type": "text" }, { "name": "compressedLog", "type": "text" }, { "name": "type", "type": "text" }] }
-], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }
+  }], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }

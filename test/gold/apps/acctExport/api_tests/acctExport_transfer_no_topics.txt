@@ -477,45 +477,6 @@ export?addrs=0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3&max_records=5&logs
       "transactionIndex": 4
     }
   ],
-  "types": [
-    {
-      "type": "CLogEntry",
-      "fields": [
-        {
-          "name": "address",
-          "type": "address"
-        },
-        {
-          "name": "blockNumber",
-          "type": "blocknum"
-        },
-        {
-          "name": "logIndex",
-          "type": "blocknum"
-        },
-        {
-          "name": "topics",
-          "type": "object|ts_array"
-        },
-        {
-          "name": "data",
-          "type": "text"
-        },
-        {
-          "name": "articulatedLog",
-          "type": "object"
-        },
-        {
-          "name": "compressedLog",
-          "type": "text"
-        },
-        {
-          "name": "transactionIndex",
-          "type": "blocknum"
-        }
-      ]
-    }
-  ],
   "meta": {
     "unripe": "0xdeadbeef",
     "ripe": "0xdeadbeef",

@@ -134,17 +134,6 @@ names?tags
       "tags": "91-Early:Miners"
     }
   ],
-  "types": [
-    {
-      "type": "CAccountName",
-      "fields": [
-        {
-          "name": "tags",
-          "type": "text"
-        }
-      ]
-    }
-  ],
   "meta": {
     "unripe": "0xdeadbeef",
     "ripe": "0xdeadbeef",

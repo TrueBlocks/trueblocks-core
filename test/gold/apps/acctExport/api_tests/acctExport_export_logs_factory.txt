@@ -393,45 +393,6 @@ export?addrs=0x8b3b3b624c3c0397d3da8fd861512393d51dcbac&factory&traces&last_bloc
       "compressedTrace": ""
     }
   ],
-  "types": [
-    {
-      "type": "CTrace",
-      "fields": [
-        {
-          "name": "subtraces",
-          "type": "unumber"
-        },
-        {
-          "name": "traceAddress",
-          "type": "text"
-        },
-        {
-          "name": "type",
-          "type": "text"
-        },
-        {
-          "name": "error",
-          "type": "text"
-        },
-        {
-          "name": "action",
-          "type": "object"
-        },
-        {
-          "name": "result",
-          "type": "object"
-        },
-        {
-          "name": "articulatedTrace",
-          "type": "object"
-        },
-        {
-          "name": "compressedTrace",
-          "type": "text"
-        }
-      ]
-    }
-  ],
   "meta": {
     "unripe": "0xdeadbeef",
     "ripe": "0xdeadbeef",

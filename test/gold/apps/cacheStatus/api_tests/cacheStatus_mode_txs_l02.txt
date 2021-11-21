@@ -36,41 +36,6 @@ status?modes=caches&types=txs&details&depth=0
       "date": "--date--"
     }
   ],
-  "types": [
-    {
-      "type": "CChainCache",
-      "fields": [
-        {
-          "name": "items",
-          "type": "text|ts_array"
-        },
-        {
-          "name": "type",
-          "type": "text"
-        },
-        {
-          "name": "path",
-          "type": "text"
-        },
-        {
-          "name": "nFiles",
-          "type": "unumber"
-        },
-        {
-          "name": "nFolders",
-          "type": "unumber"
-        },
-        {
-          "name": "sizeInBytes",
-          "type": "unumber"
-        },
-        {
-          "name": "is_valid",
-          "type": "bool"
-        }
-      ]
-    }
-  ],
   "meta": {
     "unripe": "0xdeadbeef",
     "ripe": "0xdeadbeef",

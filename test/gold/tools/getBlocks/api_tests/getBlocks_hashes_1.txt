@@ -103,33 +103,6 @@ blocks?blocks=4001001&hashes
       ]
     }
   ],
-  "types": [
-    {
-      "type": "CBlock",
-      "fields": [
-        {
-          "name": "hash",
-          "type": "hash"
-        },
-        {
-          "name": "blockNumber",
-          "type": "blocknum"
-        },
-        {
-          "name": "parentHash",
-          "type": "hash"
-        },
-        {
-          "name": "timestamp",
-          "type": "timestamp"
-        },
-        {
-          "name": "tx_hashes",
-          "type": "text|ts_array"
-        }
-      ]
-    }
-  ],
   "meta": {
     "unripe": "0xdeadbeef",
     "ripe": "0xdeadbeef",

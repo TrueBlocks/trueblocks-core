@@ -17,37 +17,6 @@ state?call=0xbb2b8038a1640196fbe3e38816f3e67cba72d940!0x0dfe1681&blocks=10092000
       "compressedResult": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599"
     }
   ],
-  "types": [
-    {
-      "type": "CEthCall",
-      "fields": [
-        {
-          "name": "blockNumber",
-          "type": "blocknum"
-        },
-        {
-          "name": "address",
-          "type": "address"
-        },
-        {
-          "name": "encoding",
-          "type": "text"
-        },
-        {
-          "name": "bytes",
-          "type": "text"
-        },
-        {
-          "name": "callResult",
-          "type": "object"
-        },
-        {
-          "name": "compressedResult",
-          "type": "text"
-        }
-      ]
-    }
-  ],
   "meta": {
     "unripe": "0xdeadbeef",
     "ripe": "0xdeadbeef",

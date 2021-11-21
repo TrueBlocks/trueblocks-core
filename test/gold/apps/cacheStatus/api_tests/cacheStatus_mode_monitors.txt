@@ -36,41 +36,6 @@ status?modes=monitors
       "date": "--date--"
     }
   ],
-  "types": [
-    {
-      "type": "CMonitorCache",
-      "fields": [
-        {
-          "name": "addrs",
-          "type": "address|ts_array"
-        },
-        {
-          "name": "type",
-          "type": "text"
-        },
-        {
-          "name": "path",
-          "type": "text"
-        },
-        {
-          "name": "nFiles",
-          "type": "unumber"
-        },
-        {
-          "name": "nFolders",
-          "type": "unumber"
-        },
-        {
-          "name": "sizeInBytes",
-          "type": "unumber"
-        },
-        {
-          "name": "is_valid",
-          "type": "bool"
-        }
-      ]
-    }
-  ],
   "meta": {
     "unripe": "0xdeadbeef",
     "ripe": "0xdeadbeef",
