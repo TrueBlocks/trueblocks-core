@@ -1,14 +1,9 @@
 chifra when  2015-03-02 --list
 TEST[DATE|TIME] Blocks:  [2015-03-02]
 TEST[DATE|TIME] List:  true
-
-  The date you specified (2015-03-02) is before the first block. Quitting...
-
-Purpose:
-  Find block(s) based on date, blockNum, timestamp, or 'special'.
-
+Error: Please use the --list or --timestamp option or supply block identifiers, not both.
 Usage:
-  whenBlock [flags] < block | date > [ block... | date... ]
+  chifra when [flags] < block | date > [ block... | date... ]
 
 Arguments:
   blocks - one or more dates, block numbers, hashes, or special named blocks (see notes) (required)
@@ -19,13 +14,10 @@ Flags:
   -c, --check        available only with --timestamps, checks the validity of the timestamp data (hidden)
   -f, --fix          available only with --timestamps, fixes incorrect timestamps if any (hidden)
   -u, --count        available only with --timestamps, returns the number of timestamps in the cache (hidden)
-
-Global Flags:
-  -x, --fmt string     export format, one of [none|json*|txt|csv|api]
-  -v, --verbose uint   set verbose level (optional level defaults to 1)
-  -h, --help           display this help screen
+  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
+  -v, --verbose      enable verbose (increase detail with --log_level)
+  -h, --help         display this help screen
 
 Notes:
   - The block list may contain any combination of number, hash, date, special named blocks.
   - Dates must be formatted in JSON format: YYYY-MM-DD[THH[:MM[:SS]]].
-

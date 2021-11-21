@@ -14,8 +14,11 @@ package specials
  *-------------------------------------------------------------------------------------------*/
 
 import (
+	"time"
+
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/araddon/dateparse"
 )
 
 type NamedBlock struct {
@@ -251,6 +254,18 @@ func GetValueByName(needle string) (uint64, bool) {
 		}
 	}
 	return uint64(utils.NOPOS), false
+}
+
+func GetDateByName(needle string) time.Time {
+	for _, value := range specials {
+		if value.Name == needle {
+			dt, _ := dateparse.ParseLocal(value.Date)
+			return dt
+		}
+	}
+	// default to first
+	dt, _ := dateparse.ParseLocal(specials[0].Date)
+	return dt
 }
 
 // Useful: https://www.golangprograms.com/go-language/struct.html

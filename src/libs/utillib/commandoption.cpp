@@ -861,15 +861,31 @@ string_q CCommandOption::toGoCall(void) const {
     os << endl;
     os << Format("// [{GOROUTEFUNC}] [{DESCRIPTION}]") << endl;
     os << Format("func [{GOROUTEFUNC}](w http.ResponseWriter, r *http.Request) {") << endl;
-    os << Format("\tif [{API_ROUTE}]Pkg.Serve[{PROPER}](w, r) {") << endl;
-    if ((!tool.empty() && !contains(tool, " ") && !goPortNewCode(api_route)) && api_route != "abis") {
-        os << "\t\tCallOne(w, r, \"" << tool << "\", \"" << api_route << "\")" << endl;
-    } else if ((goRouteFunc == "RouteTags" || goRouteFunc == "RouteCollections") && api_route != "abis") {
-        os << "\t\tCallOne(w, r, \"ethNames\", \"" << api_route << "\")" << endl;
+    if (api_route == "pins") {
+        os << Format("\t[{API_ROUTE}]Pkg.Serve[{PROPER}](w, r)") << endl;
     } else {
-        os << "\t\tCallOneExtra(w, r, \"chifra\", \"" << api_route << "\", \"" << api_route << "\")" << endl;
+        os << Format("\tif ![{API_ROUTE}]Pkg.Serve[{PROPER}](w, r) {") << endl;
+        if (api_route == "when" || api_route == "pins" || api_route == "abis") {
+            os << "\t\tos.Setenv(\"NO_SCHEMAS\", \"true\") // temporary while porting to go" << endl;
+            os << "\t\tos.Setenv(\"GO_PORT\", \"true\")    // temporary while porting to go" << endl;
+        }
+        bool redirect = tool.empty() || contains(tool, " ");
+        if ((!redirect && !goPortNewCode(api_route)) && api_route != "abis") {
+            const char* STR_CALLONE = "\t\tCallOne(w, r, GetCommandPath(\"[{TOOL}]\"), \"\", \"[{API_ROUTE}]\")";
+            os << Format(STR_CALLONE) << endl;
+        } else if ((api_route == "tags" || api_route == "collections")) {
+            const char* STR_CALLONE = "\t\tCallOne(w, r, GetCommandPath(\"ethNames\"), \"\", \"[{API_ROUTE}]\")";
+            os << Format(STR_CALLONE) << endl;
+        } else {
+            const char* STR_CALLONEEXTRA = "\t\tCallOne(w, r, \"chifra\", \"[{API_ROUTE}]\", \"[{API_ROUTE}]\")";
+            os << Format(STR_CALLONEEXTRA) << endl;
+        }
+        if (api_route == "when" || api_route == "pins" || api_route == "abis") {
+            os << "\t\tos.Setenv(\"NO_SCHEMAS\", \"\") // temporary while porting to go" << endl;
+            os << "\t\tos.Setenv(\"GO_PORT\", \"\")    // temporary while porting to go" << endl;
+        }
+        os << Format("\t}") << endl;
     }
-    os << Format("\t}") << endl;
     os << "}" << endl;
 
     return os.str();

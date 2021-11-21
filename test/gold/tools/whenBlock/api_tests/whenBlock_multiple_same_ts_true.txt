@@ -1,36 +1,6 @@
 when?blocks=12345&blocks=54321&blocks=2016-12-01&blocks=2016-12-01-01&timestamps
 {
-  "data": [
-    {
-      "blockNumber": 12345,
-      "timestamp": 1438367030,
-      "name": "",
-      "date": "2015-07-31 18:23:50 UTC"
-    },
-    {
-      "blockNumber": 54321,
-      "timestamp": 1439052185,
-      "name": "",
-      "date": "2015-08-08 16:43:05 UTC"
-    },
-    {
-      "blockNumber": 2724708,
-      "timestamp": 1480550392,
-      "name": "",
-      "date": "2016-11-30 23:59:52 UTC"
-    },
-    {
-      "blockNumber": 2724970,
-      "timestamp": 1480553990,
-      "name": "",
-      "date": "2016-12-01 00:59:50 UTC"
-    }
-  ],
-  "meta": {
-    "unripe": "0xdeadbeef",
-    "ripe": "0xdeadbeef",
-    "staging": "0xdeadbeef",
-    "finalized": "0xdeadbeef",
-    "client": "0xdeadbeef"
-  }
+  "errors": [
+    "Please use the --list or --timestamp option or supply block identifiers, not both."
+  ]
 }

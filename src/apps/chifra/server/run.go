@@ -120,9 +120,9 @@ func PrintServeSettings(testMode bool) {
 // func GetChifraResponse() (ChifraResponse, error) {
 // 	cmd := exec.Command(GetCommandPath("cacheStatus"), "--terse")
 // 	cmd.Env = append(os.Environ(), "API_MODE=true")
-// 	out, err := cmd.Output()
+// 	out, err := cmd.Out put()
 // 	if err != nil {
-// 		fmt.Printf("ChifraResponse:cmd.Output() failed: %s", err)
+// 		fmt.Printf("ChifraResponse:cmd.Out put() failed: %s", err)
 // 		var junk ChifraResponse
 // 		return junk, err
 // 	}

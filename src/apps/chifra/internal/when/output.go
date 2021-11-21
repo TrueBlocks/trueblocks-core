@@ -20,7 +20,9 @@ package whenPkg
 // EXISTING_CODE
 import (
 	"net/http"
+	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/spf13/cobra"
 )
 
@@ -35,12 +37,18 @@ func RunWhen(cmd *cobra.Command, args []string) error {
 	}
 
 	// EXISTING_CODE
-	// if opts.List {
-	// 	err := opts.ListInternal()
-	// 	if err != nil || len(opts.Blocks) == 0 {
-	// 		return err
-	// 	}
-	// }
+	if opts.List {
+		err := opts.ListInternal()
+		if err != nil {
+			return err
+		}
+		if len(opts.Blocks) == 0 {
+			return nil
+		}
+		// continue but don't show headers
+		opts.List = false
+		opts.Globals.NoHeader = true
+	}
 
 	return opts.Globals.PassItOn("whenBlock", opts.ToCmdLine())
 	// EXISTING_CODE
@@ -56,16 +64,20 @@ func ServeWhen(w http.ResponseWriter, r *http.Request) bool {
 	}
 
 	// EXISTING_CODE
-	// if opts.List {
-	// 	err := opts.ListInternal()
-	// 	if err != nil {
-	// 		logger.Fatal("Cannot open local manifest file", err)
-	// 	}
-	// 	if len(opts.Blocks) == 0 {
-	// 		return
-	// 	}
-	// }
-	// opts.Globals.PassItOn("whenBlock", opts.ToCmdLine())
+	if opts.List {
+		err := opts.ListInternal()
+		if err != nil {
+			logger.Fatal("Cannot open local manifest file", err)
+			return false
+		}
+		if len(opts.Blocks) == 0 {
+			return true
+		}
+		// continue but don't show headers
+		r.URL.RawQuery = strings.Replace(r.URL.RawQuery, "list", "", -1)
+		r.URL.RawQuery = strings.Replace(r.URL.RawQuery, "&&", "&", -1)
+		r.URL.RawQuery += "&no_header"
+	}
 	return false
 	// EXISTING_CODE
 }

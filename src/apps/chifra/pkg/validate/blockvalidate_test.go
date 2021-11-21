@@ -104,6 +104,14 @@ func TestIsDateTimeString(t *testing.T) {
 		t.Error("Fails for date with time and timezone")
 	}
 
+	if IsBeforeFirstBlock("2015-07-30T15:26:00") {
+		t.Error("Fails for exact first block date")
+	}
+
+	if !IsBeforeFirstBlock("2015-07-30T15:25:59") {
+		t.Error("Passes for too early date (before first block)")
+	}
+
 	if IsDateTimeString("hello") {
 		t.Error("Passes for invalid date #1")
 	}
@@ -247,17 +255,17 @@ func TestValidateBlockIdentifiers(t *testing.T) {
 			},
 			wantErr: false,
 		},
-		// {
-		// 	name: "too early",
-		// 	args: args{
-		// 		identifiers: []string{
-		// 			"2014-01-01",
-		// 		},
-		// 		validTypes: ValidArgumentDate,
-		// 		maxRanges:  1,
-		// 	},
-		// 	wantErr: true,
-		// },
+		{
+			name: "too early",
+			args: args{
+				identifiers: []string{
+					"2014-01-01",
+				},
+				validTypes: ValidArgumentDate,
+				maxRanges:  1,
+			},
+			wantErr: true,
+		},
 		{
 			name: "correct special",
 			args: args{
