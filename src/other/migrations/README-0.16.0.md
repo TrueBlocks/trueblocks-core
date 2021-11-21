@@ -22,3 +22,5 @@ chifra when
 		blockNumber	timeStamp	date	name
 	camel case from lower case
 
+
+Removed the `types` field from API export
