@@ -51,70 +51,70 @@ import (
 // RouteList List every appearance of an address anywhere on the chain.
 func RouteList(w http.ResponseWriter, r *http.Request) {
 	if !listPkg.ServeList(w, r) {
-		CallOneExtra(w, r, "chifra", "list", "list")
+		CallOne(w, r, "chifra", "list", "list")
 	}
 }
 
 // RouteExport Export full detail of transactions for one or more addresses.
 func RouteExport(w http.ResponseWriter, r *http.Request) {
 	if !exportPkg.ServeExport(w, r) {
-		CallOne(w, r, "acctExport", "export")
+		CallOne(w, r, GetCommandPath("acctExport"), "", "export")
 	}
 }
 
 // RouteMonitors Add, remove, clean, and list address monitors.
 func RouteMonitors(w http.ResponseWriter, r *http.Request) {
 	if !monitorsPkg.ServeMonitors(w, r) {
-		CallOneExtra(w, r, "chifra", "monitors", "monitors")
+		CallOne(w, r, "chifra", "monitors", "monitors")
 	}
 }
 
 // RouteNames Query addresses or names of well known accounts.
 func RouteNames(w http.ResponseWriter, r *http.Request) {
 	if !namesPkg.ServeNames(w, r) {
-		CallOne(w, r, "ethNames", "names")
+		CallOne(w, r, GetCommandPath("ethNames"), "", "names")
 	}
 }
 
 // RouteAbis Fetches the ABI for a smart contract.
 func RouteAbis(w http.ResponseWriter, r *http.Request) {
 	if !abisPkg.ServeAbis(w, r) {
-		CallOneExtra(w, r, "chifra", "abis", "abis")
+		CallOne(w, r, "chifra", "abis", "abis")
 	}
 }
 
 // RouteBlocks Retrieve one or more blocks from the chain or local cache.
 func RouteBlocks(w http.ResponseWriter, r *http.Request) {
 	if !blocksPkg.ServeBlocks(w, r) {
-		CallOne(w, r, "getBlocks", "blocks")
+		CallOne(w, r, GetCommandPath("getBlocks"), "", "blocks")
 	}
 }
 
 // RouteTransactions Retrieve one or more transactions from the chain or local cache.
 func RouteTransactions(w http.ResponseWriter, r *http.Request) {
 	if !transactionsPkg.ServeTransactions(w, r) {
-		CallOne(w, r, "getTrans", "transactions")
+		CallOne(w, r, GetCommandPath("getTrans"), "", "transactions")
 	}
 }
 
 // RouteReceipts Retrieve receipts for the given transaction(s).
 func RouteReceipts(w http.ResponseWriter, r *http.Request) {
 	if !receiptsPkg.ServeReceipts(w, r) {
-		CallOne(w, r, "getReceipts", "receipts")
+		CallOne(w, r, GetCommandPath("getReceipts"), "", "receipts")
 	}
 }
 
 // RouteLogs Retrieve logs for the given transaction(s).
 func RouteLogs(w http.ResponseWriter, r *http.Request) {
 	if !logsPkg.ServeLogs(w, r) {
-		CallOne(w, r, "getLogs", "logs")
+		CallOne(w, r, GetCommandPath("getLogs"), "", "logs")
 	}
 }
 
 // RouteTraces Retrieve traces for the given transaction(s).
 func RouteTraces(w http.ResponseWriter, r *http.Request) {
 	if !tracesPkg.ServeTraces(w, r) {
-		CallOne(w, r, "getTraces", "traces")
+		CallOne(w, r, GetCommandPath("getTraces"), "", "traces")
 	}
 }
 
@@ -123,7 +123,7 @@ func RouteWhen(w http.ResponseWriter, r *http.Request) {
 	if !whenPkg.ServeWhen(w, r) {
 		os.Setenv("NO_SCHEMAS", "true") // temporary while porting to go
 		os.Setenv("GO_PORT", "true")    // temporary while porting to go
-		CallOne(w, r, "whenBlock", "when")
+		CallOne(w, r, GetCommandPath("whenBlock"), "", "when")
 		os.Setenv("NO_SCHEMAS", "") // temporary while porting to go
 		os.Setenv("GO_PORT", "")    // temporary while porting to go
 	}
@@ -132,35 +132,35 @@ func RouteWhen(w http.ResponseWriter, r *http.Request) {
 // RouteState Retrieve account balance(s) for one or more addresses at given block(s).
 func RouteState(w http.ResponseWriter, r *http.Request) {
 	if !statePkg.ServeState(w, r) {
-		CallOne(w, r, "getState", "state")
+		CallOne(w, r, GetCommandPath("getState"), "", "state")
 	}
 }
 
 // RouteTokens Retrieve token balance(s) for one or more addresses at given block(s).
 func RouteTokens(w http.ResponseWriter, r *http.Request) {
 	if !tokensPkg.ServeTokens(w, r) {
-		CallOne(w, r, "getTokens", "tokens")
+		CallOne(w, r, GetCommandPath("getTokens"), "", "tokens")
 	}
 }
 
 // RouteStatus Report on the status of the TrueBlocks system.
 func RouteStatus(w http.ResponseWriter, r *http.Request) {
 	if !statusPkg.ServeStatus(w, r) {
-		CallOne(w, r, "cacheStatus", "status")
+		CallOne(w, r, GetCommandPath("cacheStatus"), "", "status")
 	}
 }
 
 // RouteScrape Scan the chain and update (and optionally pin) the TrueBlocks index of appearances.
 func RouteScrape(w http.ResponseWriter, r *http.Request) {
 	if !scrapePkg.ServeScrape(w, r) {
-		CallOne(w, r, "blockScrape", "scrape")
+		CallOne(w, r, GetCommandPath("blockScrape"), "", "scrape")
 	}
 }
 
 // RouteInit Initialize the TrueBlocks system by downloading from IPFS.
 func RouteInit(w http.ResponseWriter, r *http.Request) {
 	if !initPkg.ServeInit(w, r) {
-		CallOneExtra(w, r, "chifra", "init", "init")
+		CallOne(w, r, "chifra", "init", "init")
 	}
 }
 
@@ -172,21 +172,21 @@ func RoutePins(w http.ResponseWriter, r *http.Request) {
 // RouteChunks Manage and investigate chunks and bloom filters.
 func RouteChunks(w http.ResponseWriter, r *http.Request) {
 	if !chunksPkg.ServeChunks(w, r) {
-		CallOne(w, r, "chunkMan", "chunks")
+		CallOne(w, r, GetCommandPath("chunkMan"), "", "chunks")
 	}
 }
 
 // RouteQuotes Freshen or display Ethereum price data. This tool has been deprecated.
 func RouteQuotes(w http.ResponseWriter, r *http.Request) {
 	if !quotesPkg.ServeQuotes(w, r) {
-		CallOne(w, r, "getQuotes", "quotes")
+		CallOne(w, r, GetCommandPath("getQuotes"), "", "quotes")
 	}
 }
 
 // RouteSlurp Fetch data from EtherScan for any address.
 func RouteSlurp(w http.ResponseWriter, r *http.Request) {
 	if !slurpPkg.ServeSlurp(w, r) {
-		CallOne(w, r, "ethslurp", "slurp")
+		CallOne(w, r, GetCommandPath("ethslurp"), "", "slurp")
 	}
 }
 
