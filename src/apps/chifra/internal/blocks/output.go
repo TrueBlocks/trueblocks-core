@@ -39,17 +39,18 @@ func RunBlocks(cmd *cobra.Command, args []string) error {
 	// EXISTING_CODE
 }
 
-func ServeBlocks(w http.ResponseWriter, r *http.Request) {
+func ServeBlocks(w http.ResponseWriter, r *http.Request) bool {
 	opts := FromRequest(w, r)
 
 	err := opts.ValidateBlocks()
 	if err != nil {
 		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-		return
+		return false
 	}
 
 	// EXISTING_CODE
-	opts.Globals.PassItOn("getBlocks", opts.ToCmdLine())
+	// opts.Globals.PassItOn("getBlocks", opts.ToCmdLine())
+	return true
 	// EXISTING_CODE
 }
 
