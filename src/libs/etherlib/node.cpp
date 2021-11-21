@@ -1261,7 +1261,9 @@ string_q exportPostamble(const CStringArray& errorsIn, const string_q& extra) {
     } else {
         os << "\"progress\": \"not reported\"";
     }
-    if (showSchemas)
+
+    // TODO: search for go-port
+    if (showSchemas || getEnvStr("GO_PORT") == "true")
         os << ","
            << "\"client\": " << dispNumOrHex(client);
     if (!extra.empty())
