@@ -36,9 +36,6 @@ func (opts *WhenOptions) ValidateWhen() error {
 		}
 	}
 
-	// if ((fix || check || count))
-	//     return usage(usageErrs[ERR_ONLYTS]);
-
 	err := validate.ValidateIdentifiers(opts.Blocks, validate.ValidBlockIdWithRangeAndDate, 1)
 	if err != nil {
 		if invalidLiteral, ok := err.(*validate.InvalidIdentifierLiteralError); ok {
