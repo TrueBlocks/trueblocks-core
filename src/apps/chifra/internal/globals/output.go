@@ -30,7 +30,7 @@ import (
 )
 
 // Output converts data into the given format and writes to where writer
-func Output(opts *GlobalOptions, where io.Writer, format string, data interface{}) error {
+func (opts *GlobalOptions) Output(where io.Writer, format string, data interface{}) error {
 	nonEmptyFormat := format
 	if format == "" || format == "none" {
 		if utils.IsApiMode() {
@@ -391,7 +391,8 @@ func (opts *GlobalOptions) Respond(w http.ResponseWriter, httpStatus int, respon
 	}
 
 	w.Header().Set("Content-Type", formatToMimeType[formatNotEmpty])
-	err := Output(opts, w, formatNotEmpty, responseData)
+	opts.Format = formatNotEmpty
+	err := opts.Output(w, opts.Format, responseData)
 	if err != nil {
 		opts.RespondWithError(w, http.StatusInternalServerError, err)
 	}

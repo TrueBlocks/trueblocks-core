@@ -64,6 +64,12 @@ func ValidateIdentifiers(identifiers []string, validTypes ValidArgumentType, max
 		}
 
 		if isBitmaskSet(ValidArgumentDate) && IsDateTimeString(identifier) {
+			if IsBeforeFirstBlock(identifier) {
+				return &InvalidIdentifierLiteralError{
+					Value: identifier,
+					Msg:   "is before the first block.",
+				}
+			}
 			continue
 		}
 

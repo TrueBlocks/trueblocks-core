@@ -1,4 +1,4 @@
-package pinsPkg
+package whenPkg
 
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
@@ -14,41 +14,14 @@ package pinsPkg
  *-------------------------------------------------------------------------------------------*/
 
 import (
-	"net/http"
-	"os"
-	"sort"
-
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib/manifest"
+	"testing"
 )
 
-func (opts *PinsOptions) ListInternal() error {
-	manifestData, err := manifest.FromLocalFile()
-	if err != nil {
-		return err
+func Test_Validate(t *testing.T) {
+	var opts = WhenOptions{}
+	opts.Blocks = append(opts.Blocks, "2014-01-01")
+	err := opts.ValidateWhen()
+	if err == nil {
+		t.Error("Parsed an date too early", err)
 	}
-
-	sort.Slice(manifestData.NewPins, func(i, j int) bool {
-		iPin := manifestData.NewPins[i]
-		jPin := manifestData.NewPins[j]
-		return iPin.FileName < jPin.FileName
-	})
-
-	if opts.Globals.TestMode {
-		// Shorten the array for testing
-		manifestData.NewPins = manifestData.NewPins[:100]
-	}
-
-	opts.PrintManifestHeader()
-	if opts.Globals.ApiMode {
-		opts.Globals.Respond(opts.Globals.Writer, http.StatusOK, manifestData.NewPins)
-
-	} else {
-		err = opts.Globals.Output(os.Stdout, opts.Globals.Format, manifestData.NewPins)
-		if err != nil {
-			logger.Log(logger.Error, err)
-		}
-	}
-
-	return nil
 }

@@ -17,7 +17,6 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/specials"
 )
@@ -29,7 +28,7 @@ func (opts *WhenOptions) ListInternal() error {
 		opts.Globals.Respond(opts.Globals.Writer, http.StatusOK, result)
 
 	} else {
-		err := globals.Output(&opts.Globals, os.Stdout, opts.Globals.Format, result)
+		err := opts.Globals.Output(os.Stdout, opts.Globals.Format, result)
 		if err != nil {
 			logger.Log(logger.Error, err)
 		}
