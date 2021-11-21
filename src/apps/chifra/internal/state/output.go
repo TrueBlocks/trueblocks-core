@@ -39,17 +39,18 @@ func RunState(cmd *cobra.Command, args []string) error {
 	// EXISTING_CODE
 }
 
-func ServeState(w http.ResponseWriter, r *http.Request) {
+func ServeState(w http.ResponseWriter, r *http.Request) bool {
 	opts := FromRequest(w, r)
 
 	err := opts.ValidateState()
 	if err != nil {
 		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-		return
+		return false
 	}
 
 	// EXISTING_CODE
-	opts.Globals.PassItOn("getState", opts.ToCmdLine())
+	// opts.Globals.PassItOn("getState", opts.ToCmdLine())
+	return true
 	// EXISTING_CODE
 }
 

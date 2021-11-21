@@ -39,17 +39,18 @@ func RunTraces(cmd *cobra.Command, args []string) error {
 	// EXISTING_CODE
 }
 
-func ServeTraces(w http.ResponseWriter, r *http.Request) {
+func ServeTraces(w http.ResponseWriter, r *http.Request) bool {
 	opts := FromRequest(w, r)
 
 	err := opts.ValidateTraces()
 	if err != nil {
 		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-		return
+		return false
 	}
 
 	// EXISTING_CODE
-	opts.Globals.PassItOn("getTraces", opts.ToCmdLine())
+	// opts.Globals.PassItOn("getTraces", opts.ToCmdLine())
+	return true
 	// EXISTING_CODE
 }
 

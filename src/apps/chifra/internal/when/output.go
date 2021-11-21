@@ -46,13 +46,13 @@ func RunWhen(cmd *cobra.Command, args []string) error {
 	// EXISTING_CODE
 }
 
-func ServeWhen(w http.ResponseWriter, r *http.Request) {
+func ServeWhen(w http.ResponseWriter, r *http.Request) bool {
 	opts := FromRequest(w, r)
 
 	err := opts.ValidateWhen()
 	if err != nil {
 		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-		return
+		return false
 	}
 
 	// EXISTING_CODE
@@ -65,7 +65,8 @@ func ServeWhen(w http.ResponseWriter, r *http.Request) {
 	// 		return
 	// 	}
 	// }
-	opts.Globals.PassItOn("whenBlock", opts.ToCmdLine())
+	// opts.Globals.PassItOn("whenBlock", opts.ToCmdLine())
+	return true
 	// EXISTING_CODE
 }
 
