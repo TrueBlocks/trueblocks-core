@@ -29,11 +29,11 @@ import (
 
 // blocksCmd represents the blocks command
 var blocksCmd = &cobra.Command{
-	Use:   usageBlocks,
-	Short: shortBlocks,
-	Long:  longBlocks,
+	Use:     usageBlocks,
+	Short:   shortBlocks,
+	Long:    longBlocks,
 	Version: "GHC-TrueBlocks//0.16.1-alpha",
-	RunE:  blocksPkg.RunBlocks,
+	RunE:    blocksPkg.RunBlocks,
 }
 
 var usageBlocks = `blocks [flags] <block> [block...]
@@ -72,7 +72,7 @@ func init() {
 	blocksCmd.Flags().BoolVarP(&blocksPkg.Options.Count, "count", "c", false, "display the number of the lists of appearances for --addrs or --uniq")
 	blocksCmd.Flags().BoolVarP(&blocksPkg.Options.Cache, "cache", "o", false, "force a write of the block to the cache")
 	blocksCmd.Flags().Uint64VarP(&blocksPkg.Options.List, "list", "l", 0, "summary list of blocks running backwards from latest block minus num (hidden)")
-	blocksCmd.Flags().Uint64VarP(&blocksPkg.Options.ListCount, "list_count", "C", 20, "the number of blocks to report for --list option (hidden)")
+	blocksCmd.Flags().Uint64VarP(&blocksPkg.Options.ListCount, "list_count", "C", 0, "the number of blocks to report for --list option (hidden)")
 	if os.Getenv("TEST_MODE") != "true" {
 		blocksCmd.Flags().MarkHidden("logs")
 		blocksCmd.Flags().MarkHidden("emitter")

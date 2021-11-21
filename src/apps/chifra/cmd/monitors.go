@@ -29,11 +29,11 @@ import (
 
 // monitorsCmd represents the monitors command
 var monitorsCmd = &cobra.Command{
-	Use:   usageMonitors,
-	Short: shortMonitors,
-	Long:  longMonitors,
+	Use:     usageMonitors,
+	Short:   shortMonitors,
+	Long:    longMonitors,
 	Version: "GHC-TrueBlocks//0.16.1-alpha",
-	RunE:  monitorsPkg.RunMonitors,
+	RunE:    monitorsPkg.RunMonitors,
 }
 
 var usageMonitors = `monitors [flags] <address> [address...]

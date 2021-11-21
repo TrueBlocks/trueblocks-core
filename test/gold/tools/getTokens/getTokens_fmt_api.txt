@@ -1,5 +1,6 @@
 chifra tokens  0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 --fmt api 2000000
-TEST[DATE|TIME] Addrs2:  [0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607 2000000]
+TEST[DATE|TIME] Addrs2:  [0xd26114cd6ee289accf82350c8d8487fedb8a0c07 0xb9e7f8568e08d5659f5d29c4997173d84cdf2607]
+TEST[DATE|TIME] Blocks:  [2000000]
 TEST[DATE|TIME] Format:  api
 {"data": [
   {
@@ -12,6 +13,4 @@ TEST[DATE|TIME] Format:  api
     "decimals": 18,
     "is_contract": true,
     "is_erc20": true
-  }], "types": [
-{ "type": "CTokenBalanceRecord", "fields": [{ "name": "blockNumber", "type": "blocknum" }, { "name": "holder", "type": "address" }, { "name": "balance", "type": "wei" }, { "name": "address", "type": "address" }, { "name": "name", "type": "text" }, { "name": "symbol", "type": "text" }, { "name": "decimals", "type": "unumber" }, { "name": "is_contract", "type": "bool" }, { "name": "is_erc20", "type": "bool" }, { "name": "is_erc721", "type": "bool" }] }
-], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }
+  }], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }

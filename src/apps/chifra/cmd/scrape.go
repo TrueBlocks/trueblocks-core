@@ -29,17 +29,17 @@ import (
 
 // scrapeCmd represents the scrape command
 var scrapeCmd = &cobra.Command{
-	Use:   usageScrape,
-	Short: shortScrape,
-	Long:  longScrape,
+	Use:     usageScrape,
+	Short:   shortScrape,
+	Long:    longScrape,
 	Version: "GHC-TrueBlocks//0.16.1-alpha",
-	RunE:  scrapePkg.RunScrape,
+	RunE:    scrapePkg.RunScrape,
 }
 
 var usageScrape = `scrape [flags] [mode...]
 
 Arguments:
-  modes - which scraper(s) to control (indexer is default)
+  modes - which scraper(s) to control (required)
 	One or more of [ indexer | monitors | both ]`
 
 var shortScrape = "scan the chain and update (and optionally pin) the TrueBlocks index of appearances"

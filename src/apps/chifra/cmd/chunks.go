@@ -29,11 +29,11 @@ import (
 
 // chunksCmd represents the chunks command
 var chunksCmd = &cobra.Command{
-	Use:   usageChunks,
-	Short: shortChunks,
-	Long:  longChunks,
+	Use:     usageChunks,
+	Short:   shortChunks,
+	Long:    longChunks,
 	Version: "GHC-TrueBlocks//0.16.1-alpha",
-	RunE:  chunksPkg.RunChunks,
+	RunE:    chunksPkg.RunChunks,
 }
 
 var usageChunks = `chunks [flags] <block> [block...]

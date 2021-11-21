@@ -56,7 +56,7 @@ func TestAsCsv(t *testing.T) {
 		{"second first", "second second"},
 	}
 
-	var opts GlobalOptionsType
+	var opts GlobalOptions
 	opts.Format = "csv"
 	result, err := opts.CsvFormatter(input)
 	if err != nil {

@@ -1,3 +1,4 @@
+"client":"0xdeadbeef"
 "data":
 "difficulty":"0x4270d231be9d1"
 "extraData":"0x6e616e6f706f6f6c2e6f7267"

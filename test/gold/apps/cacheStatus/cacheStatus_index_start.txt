@@ -1,8 +1,7 @@
-chifra status  index --test_start 100
+chifra status  index --first_block 100
 TEST[DATE|TIME] Modes:  [index]
 TEST[DATE|TIME] Depth:  0
-TEST[DATE|TIME] TestStart:  100
-TEST[DATE|TIME] TestEnd:  0
+TEST[DATE|TIME] FirstBlock:  100
 {
   "client_version": "Client version",
   "client_ids": "chainId: 1 networkId: 1",

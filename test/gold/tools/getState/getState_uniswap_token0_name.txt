@@ -1,5 +1,5 @@
 chifra state  --call 0x2260fac5e5542a773aa44fbcfedf7c193bc2c599!0x06fdde03 10092000 --fmt txt
-TEST[DATE|TIME] Addrs:  [10092000]
+TEST[DATE|TIME] Blocks:  [10092000]
 TEST[DATE|TIME] Call:  0x2260fac5e5542a773aa44fbcfedf7c193bc2c599!0x06fdde03
 TEST[DATE|TIME] Format:  txt
 blocknumber	address	signature	encoding	bytes	compressedresult

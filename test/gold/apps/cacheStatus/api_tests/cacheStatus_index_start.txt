@@ -1,4 +1,4 @@
-status?modes=index&test_start=100
+status?modes=index&first_block=100
 {
   "data": [
     {
@@ -31,65 +31,6 @@ status?modes=index&test_start=100
         }
       ],
       "date": "--date--"
-    }
-  ],
-  "types": [
-    {
-      "type": "CIndexCache",
-      "fields": [
-        {
-          "name": "items",
-          "type": "object|ts_array"
-        },
-        {
-          "name": "type",
-          "type": "text"
-        },
-        {
-          "name": "path",
-          "type": "text"
-        },
-        {
-          "name": "nFiles",
-          "type": "number"
-        },
-        {
-          "name": "nFolders",
-          "type": "number"
-        },
-        {
-          "name": "sizeInBytes",
-          "type": "number"
-        },
-        {
-          "name": "is_valid",
-          "type": "bool"
-        },
-        {
-          "name": "type",
-          "type": "text"
-        },
-        {
-          "name": "path",
-          "type": "text"
-        },
-        {
-          "name": "nFiles",
-          "type": "unumber"
-        },
-        {
-          "name": "nFolders",
-          "type": "unumber"
-        },
-        {
-          "name": "sizeInBytes",
-          "type": "unumber"
-        },
-        {
-          "name": "is_valid",
-          "type": "bool"
-        }
-      ]
     }
   ],
   "meta": {

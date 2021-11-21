@@ -7,25 +7,6 @@ list?addrs=0x001d14804b399c6ef80e64576f657660804fec0b&count
       "fileSize": 24
     }
   ],
-  "types": [
-    {
-      "type": "CMonitorCount",
-      "fields": [
-        {
-          "name": "address",
-          "type": "address"
-        },
-        {
-          "name": "nRecords",
-          "type": "unumber"
-        },
-        {
-          "name": "fileSize",
-          "type": "unumber"
-        }
-      ]
-    }
-  ],
   "meta": {
     "unripe": "0xdeadbeef",
     "ripe": "0xdeadbeef",

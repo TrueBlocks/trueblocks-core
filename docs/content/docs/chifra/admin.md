@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2021-11-18T23:43:46
+date: 2021-11-19T20:58:27
 lastmod:
   - :git
   - lastmod
@@ -67,7 +67,7 @@ Usage:
   chifra scrape [flags] [mode...]
 
 Arguments:
-  modes - which scraper(s) to control (indexer is default)
+  modes - which scraper(s) to control (required)
 	One or more of [ indexer | monitors | both ]
 
 Flags:

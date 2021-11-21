@@ -29,17 +29,17 @@ import (
 
 // logsCmd represents the logs command
 var logsCmd = &cobra.Command{
-	Use:   usageLogs,
-	Short: shortLogs,
-	Long:  longLogs,
+	Use:     usageLogs,
+	Short:   shortLogs,
+	Long:    longLogs,
 	Version: "GHC-TrueBlocks//0.16.1-alpha",
-	RunE:  logsPkg.RunLogs,
+	RunE:    logsPkg.RunLogs,
 }
 
 var usageLogs = `logs [flags] <tx_id> [tx_id...]
 
 Arguments:
-  transactions - a space-separated list of one or more transaction identifiers`
+  transactions - a space-separated list of one or more transaction identifiers (required)`
 
 var shortLogs = "retrieve logs for the given transaction(s)"
 

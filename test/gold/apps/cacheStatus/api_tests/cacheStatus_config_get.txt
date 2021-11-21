@@ -242,6 +242,4 @@ status?get_config
     }
   ]
 }
-], "types": [
-{ "type": "CConfiguration", "fields": [{ "name": "files", "type": "object|ts_array" }] }
 ], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }

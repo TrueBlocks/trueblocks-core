@@ -1,4 +1,4 @@
-status?details&modes=index&test_start=1000000&test_end=2200000
+status?details&modes=index&first_block=1000000&last_block=2200000
 {
   "data": [
     {
@@ -31,65 +31,6 @@ status?details&modes=index&test_start=1000000&test_end=2200000
         }
       ],
       "date": "--date--"
-    }
-  ],
-  "types": [
-    {
-      "type": "CIndexCache",
-      "fields": [
-        {
-          "name": "items",
-          "type": "object|ts_array"
-        },
-        {
-          "name": "type",
-          "type": "text"
-        },
-        {
-          "name": "path",
-          "type": "text"
-        },
-        {
-          "name": "nFiles",
-          "type": "number"
-        },
-        {
-          "name": "nFolders",
-          "type": "number"
-        },
-        {
-          "name": "sizeInBytes",
-          "type": "number"
-        },
-        {
-          "name": "is_valid",
-          "type": "bool"
-        },
-        {
-          "name": "type",
-          "type": "text"
-        },
-        {
-          "name": "path",
-          "type": "text"
-        },
-        {
-          "name": "nFiles",
-          "type": "unumber"
-        },
-        {
-          "name": "nFolders",
-          "type": "unumber"
-        },
-        {
-          "name": "sizeInBytes",
-          "type": "unumber"
-        },
-        {
-          "name": "is_valid",
-          "type": "bool"
-        }
-      ]
     }
   ],
   "meta": {

@@ -51,8 +51,7 @@ func (opts *StateOptions) ValidateState() error {
 			}
 
 			for _, addr := range opts.Addrs {
-				ok, _ := validate.IsValidAddress(addr)
-				if ok {
+				if validate.IsValidAddress(addr) {
 					return validate.Usage("The {0} option is not available{1}.", "--call", " when an address is present")
 				}
 			}

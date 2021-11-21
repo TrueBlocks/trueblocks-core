@@ -972,7 +972,7 @@ paths:
       parameters:
         - name: transactions
           description: a space-separated list of one or more transaction identifiers
-          required: false
+          required: true
           style: form
           in: query
           explode: true
@@ -1398,8 +1398,8 @@ paths:
       operationId: admin-scrape
       parameters:
         - name: modes
-          description: which scraper(s) to control (indexer is default)
-          required: false
+          description: which scraper(s) to control
+          required: true
           style: form
           in: query
           explode: true

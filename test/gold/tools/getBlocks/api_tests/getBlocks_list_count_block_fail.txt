@@ -1,0 +1,6 @@
+blocks?list_count=10&blocks=1000
+{
+  "errors": [
+    "Supply either the --list_count option or block identifiers, not both."
+  ]
+}

@@ -47,15 +47,14 @@ func (opts *ExploreOptions) ValidateExplore() error {
 		return opts.BadFlag
 	}
 
-	if Options.Google && Options.Local {
+	if opts.Google && opts.Local {
 		return validate.Usage("The {0} option is not available{1}.", "--local", " with the --google option")
 	}
 
 	for _, arg := range opts.Terms {
 		arg = strings.ToLower(arg)
 
-		valid, _ := validate.IsValidAddress(arg)
-		if valid {
+		if validate.IsValidAddress(arg) {
 			if strings.Contains(arg, ".eth") {
 				urls = append(urls, ExploreUrl{arg, ExploreEnsName})
 			} else {
@@ -64,11 +63,11 @@ func (opts *ExploreOptions) ValidateExplore() error {
 			continue
 		}
 
-		if Options.Google {
+		if opts.Google {
 			return validate.Usage("The {0} option requires {1}.", "--google", "an address term")
 		}
 
-		valid, _ = validate.IsValidTransId([]string{arg}, validate.ValidTransId)
+		valid, _ := validate.IsValidTransId([]string{arg}, validate.ValidTransId)
 		if valid {
 			txHash, err := id_2_TxHash(arg)
 			if err == nil {
@@ -88,8 +87,7 @@ func (opts *ExploreOptions) ValidateExplore() error {
 			}
 		}
 
-		valid, _ = validate.IsValidFourByte(arg)
-		if valid {
+		if validate.IsValidFourByte(arg) {
 			urls = append(urls, ExploreUrl{arg, ExploreFourByte})
 			continue
 		}

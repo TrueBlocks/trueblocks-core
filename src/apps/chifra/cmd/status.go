@@ -29,11 +29,11 @@ import (
 
 // statusCmd represents the status command
 var statusCmd = &cobra.Command{
-	Use:   usageStatus,
-	Short: shortStatus,
-	Long:  longStatus,
+	Use:     usageStatus,
+	Short:   shortStatus,
+	Long:    longStatus,
 	Version: "GHC-TrueBlocks//0.16.1-alpha",
-	RunE:  statusPkg.RunStatus,
+	RunE:    statusPkg.RunStatus,
 }
 
 var usageStatus = `status [flags] [mode...]
@@ -62,8 +62,8 @@ One or more of [ blocks | txs | traces | slurps | prices | all ]`)
 One or more of [ test | abi_cache | block_cache | tx_cache | trace_cache | recon_cache | name_cache | slurp_cache | all ]`)
 	statusCmd.Flags().BoolVarP(&statusPkg.Options.GetConfig, "get_config", "g", false, "returns JSON data of the editable configuration file items (hidden)")
 	statusCmd.Flags().BoolVarP(&statusPkg.Options.SetConfig, "set_config", "s", false, "accepts JSON in an env variable and writes it to configuration files (hidden)")
-	statusCmd.Flags().Uint64VarP(&statusPkg.Options.TestStart, "test_start", "S", 0, "first block to process (inclusive -- testing only) (hidden)")
-	statusCmd.Flags().Uint64VarP(&statusPkg.Options.TestEnd, "test_end", "E", 0, "last block to process (inclusive -- testing only) (hidden)")
+	statusCmd.Flags().Uint64VarP(&statusPkg.Options.FirstBlock, "first_block", "F", 0, "first block to process (inclusive -- testing only) (hidden)")
+	statusCmd.Flags().Uint64VarP(&statusPkg.Options.LastBlock, "last_block", "L", 0, "last block to process (inclusive -- testing only) (hidden)")
 	if os.Getenv("TEST_MODE") != "true" {
 		statusCmd.Flags().MarkHidden("depth")
 		statusCmd.Flags().MarkHidden("report")
@@ -71,8 +71,8 @@ One or more of [ test | abi_cache | block_cache | tx_cache | trace_cache | recon
 		statusCmd.Flags().MarkHidden("migrate")
 		statusCmd.Flags().MarkHidden("get_config")
 		statusCmd.Flags().MarkHidden("set_config")
-		statusCmd.Flags().MarkHidden("test_start")
-		statusCmd.Flags().MarkHidden("test_end")
+		statusCmd.Flags().MarkHidden("first_block")
+		statusCmd.Flags().MarkHidden("last_block")
 	}
 	globals.InitGlobals(statusCmd, &statusPkg.Options.Globals)
 

@@ -35,7 +35,7 @@ type ScrapeOptions struct {
 	BlockCnt     uint64
 	BlockChanCnt uint64
 	AddrChanCnt  uint64
-	Globals      globals.GlobalOptionsType
+	Globals      globals.GlobalOptions
 	BadFlag      error
 }
 
@@ -81,6 +81,10 @@ func (opts *ScrapeOptions) ToCmdLine() string {
 
 func FromRequest(w http.ResponseWriter, r *http.Request) *ScrapeOptions {
 	opts := &ScrapeOptions{}
+	opts.Sleep = 14
+	opts.BlockCnt = 2000
+	opts.BlockChanCnt = 10
+	opts.AddrChanCnt = 20
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "modes":

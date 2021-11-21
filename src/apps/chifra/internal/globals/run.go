@@ -24,7 +24,7 @@ import (
 	"sync"
 )
 
-func (opts *GlobalOptionsType) PassItOn(path string, flags string) error {
+func (opts *GlobalOptions) PassItOn(path string, flags string) error {
 	options := flags
 	if opts.Raw {
 		options += " --raw"

@@ -28,7 +28,7 @@ import (
 
 type InitOptions struct {
 	All     bool
-	Globals globals.GlobalOptionsType
+	Globals globals.GlobalOptions
 	BadFlag error
 }
 

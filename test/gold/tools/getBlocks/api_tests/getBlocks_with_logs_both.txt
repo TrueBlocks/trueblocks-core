@@ -34,57 +34,6 @@ blocks?blocks=4012000-4012001&logs&topic=0xddf252ad1be2c89b69c2b068fc378daa952ba
       "timestamp": 1499861689
     }
   ],
-  "types": [
-    {
-      "type": "CLogEntry",
-      "fields": [
-        {
-          "name": "address",
-          "type": "address"
-        },
-        {
-          "name": "blockHash",
-          "type": "hash"
-        },
-        {
-          "name": "blockNumber",
-          "type": "blocknum"
-        },
-        {
-          "name": "logIndex",
-          "type": "blocknum"
-        },
-        {
-          "name": "topics",
-          "type": "object|ts_array"
-        },
-        {
-          "name": "data",
-          "type": "text"
-        },
-        {
-          "name": "articulatedLog",
-          "type": "object"
-        },
-        {
-          "name": "compressedLog",
-          "type": "text"
-        },
-        {
-          "name": "transactionHash",
-          "type": "hash"
-        },
-        {
-          "name": "transactionIndex",
-          "type": "blocknum"
-        },
-        {
-          "name": "timestamp",
-          "type": "timestamp"
-        }
-      ]
-    }
-  ],
   "meta": {
     "unripe": "0xdeadbeef",
     "ripe": "0xdeadbeef",

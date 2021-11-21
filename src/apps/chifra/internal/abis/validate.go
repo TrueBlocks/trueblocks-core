@@ -55,11 +55,11 @@ func (opts *AbisOptions) ValidateAbis() error {
 		}
 	} else {
 		for _, term := range opts.Find {
-			ok1, err1 := validate.IsValidFourByte(term)
+			ok1, err1 := validate.IsValidFourByteE(term)
 			if !ok1 && len(term) < 10 {
 				return err1
 			}
-			ok2, err2 := validate.IsValidTopic(term)
+			ok2, err2 := validate.IsValidTopicE(term)
 			if !ok2 && len(term) > 66 {
 				return err2
 			}
