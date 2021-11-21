@@ -35,6 +35,13 @@ func RunWhen(cmd *cobra.Command, args []string) error {
 	}
 
 	// EXISTING_CODE
+	// if opts.List {
+	// 	err := opts.ListInternal()
+	// 	if err != nil || len(opts.Blocks) == 0 {
+	// 		return err
+	// 	}
+	// }
+
 	return opts.Globals.PassItOn("whenBlock", opts.ToCmdLine())
 	// EXISTING_CODE
 }
@@ -49,6 +56,15 @@ func ServeWhen(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// EXISTING_CODE
+	// if opts.List {
+	// 	err := opts.ListInternal()
+	// 	if err != nil {
+	// 		logger.Fatal("Cannot open local manifest file", err)
+	// 	}
+	// 	if len(opts.Blocks) == 0 {
+	// 		return
+	// 	}
+	// }
 	opts.Globals.PassItOn("whenBlock", opts.ToCmdLine())
 	// EXISTING_CODE
 }
