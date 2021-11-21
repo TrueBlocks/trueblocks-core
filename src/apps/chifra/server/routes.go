@@ -23,26 +23,26 @@ import (
 	"os"
 
 	// BEG_ROUTE_PKGS
-	abisPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/abis"
-	blocksPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/blocks"
-	chunksPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/chunks"
-	exportPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/export"
-	initPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/init"
 	listPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/list"
-	logsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/logs"
+	exportPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/export"
 	monitorsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/monitors"
 	namesPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/names"
-	pinsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/pins"
-	quotesPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/quotes"
-	receiptsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/receipts"
-	scrapePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/scrape"
-	slurpPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/slurp"
-	statePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/state"
-	statusPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/status"
-	tokensPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/tokens"
-	tracesPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/traces"
+	abisPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/abis"
+	blocksPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/blocks"
 	transactionsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/transactions"
+	receiptsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/receipts"
+	logsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/logs"
+	tracesPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/traces"
 	whenPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/when"
+	statePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/state"
+	tokensPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/tokens"
+	statusPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/status"
+	scrapePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/scrape"
+	initPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/init"
+	pinsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/pins"
+	chunksPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/chunks"
+	quotesPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/quotes"
+	slurpPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/slurp"
 	// END_ROUTE_PKGS
 )
 
@@ -189,7 +189,6 @@ func RouteSlurp(w http.ResponseWriter, r *http.Request) {
 		CallOne(w, r, GetCommandPath("ethslurp"), "", "slurp")
 	}
 }
-
 // END_ROUTE_CODE
 
 func Index(w http.ResponseWriter, r *http.Request) {
