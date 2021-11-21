@@ -1037,41 +1037,6 @@ names?terms=network
       "description": ""
     }
   ],
-  "types": [
-    {
-      "type": "CAccountName",
-      "fields": [
-        {
-          "name": "tags",
-          "type": "text"
-        },
-        {
-          "name": "address",
-          "type": "address"
-        },
-        {
-          "name": "name",
-          "type": "text"
-        },
-        {
-          "name": "symbol",
-          "type": "text"
-        },
-        {
-          "name": "source",
-          "type": "text"
-        },
-        {
-          "name": "decimals",
-          "type": "unumber"
-        },
-        {
-          "name": "description",
-          "type": "text"
-        }
-      ]
-    }
-  ],
   "meta": {
     "unripe": "0xdeadbeef",
     "ripe": "0xdeadbeef",

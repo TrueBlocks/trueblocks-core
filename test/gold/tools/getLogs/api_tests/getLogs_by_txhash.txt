@@ -22,37 +22,6 @@ logs?transactions=0x6afbe0f0ea3613edd6b84b71260836c03bddce81604f05c81a070cd671d3
       "type": ""
     }
   ],
-  "types": [
-    {
-      "type": "CLogEntry",
-      "fields": [
-        {
-          "name": "address",
-          "type": "address"
-        },
-        {
-          "name": "logIndex",
-          "type": "blocknum"
-        },
-        {
-          "name": "topics",
-          "type": "object|ts_array"
-        },
-        {
-          "name": "data",
-          "type": "text"
-        },
-        {
-          "name": "compressedLog",
-          "type": "text"
-        },
-        {
-          "name": "type",
-          "type": "text"
-        }
-      ]
-    }
-  ],
   "meta": {
     "unripe": "0xdeadbeef",
     "ripe": "0xdeadbeef",

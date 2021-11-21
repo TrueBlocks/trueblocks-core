@@ -4,37 +4,6 @@ logs?transactions=0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc
   "errors": [
     "Transaction 0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.155 not found."
   ],
-  "types": [
-    {
-      "type": "CLogEntry",
-      "fields": [
-        {
-          "name": "address",
-          "type": "address"
-        },
-        {
-          "name": "logIndex",
-          "type": "blocknum"
-        },
-        {
-          "name": "topics",
-          "type": "object|ts_array"
-        },
-        {
-          "name": "data",
-          "type": "text"
-        },
-        {
-          "name": "compressedLog",
-          "type": "text"
-        },
-        {
-          "name": "type",
-          "type": "text"
-        }
-      ]
-    }
-  ],
   "meta": {
     "unripe": "0xdeadbeef",
     "ripe": "0xdeadbeef",

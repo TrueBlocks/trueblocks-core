@@ -4,6 +4,7 @@
 "blockNumber":"0x1de081"
 "blockNumber":"0x1e7232"
 "blockNumber":"0x2a3fa1"
+"client":"0xdeadbeef"
 "data":
 "difficulty":"0x2fb8651f992b"
 "difficulty":"0x301f53282378"

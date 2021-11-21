@@ -14,29 +14,6 @@ state?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413%200xfb6916095ca1df60bb79c
       "ether": 2647.815343985768
     }
   ],
-  "types": [
-    {
-      "type": "CEthState",
-      "fields": [
-        {
-          "name": "blockNumber",
-          "type": "blocknum"
-        },
-        {
-          "name": "balance",
-          "type": "wei"
-        },
-        {
-          "name": "address",
-          "type": "address"
-        },
-        {
-          "name": "ether",
-          "type": "number"
-        }
-      ]
-    }
-  ],
   "meta": {
     "unripe": "0xdeadbeef",
     "ripe": "0xdeadbeef",

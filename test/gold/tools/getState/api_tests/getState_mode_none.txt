@@ -7,25 +7,6 @@ state?addrs=0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359&parts=none&blocks=2500000
       "address": "0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359"
     }
   ],
-  "types": [
-    {
-      "type": "CEthState",
-      "fields": [
-        {
-          "name": "blockNumber",
-          "type": "blocknum"
-        },
-        {
-          "name": "balance",
-          "type": "wei"
-        },
-        {
-          "name": "address",
-          "type": "address"
-        }
-      ]
-    }
-  ],
   "meta": {
     "unripe": "0xdeadbeef",
     "ripe": "0xdeadbeef",

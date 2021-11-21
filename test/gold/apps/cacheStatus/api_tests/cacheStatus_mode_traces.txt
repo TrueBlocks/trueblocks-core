@@ -32,37 +32,6 @@ status?modes=caches&types=traces
       "date": "--date--"
     }
   ],
-  "types": [
-    {
-      "type": "CChainCache",
-      "fields": [
-        {
-          "name": "type",
-          "type": "text"
-        },
-        {
-          "name": "path",
-          "type": "text"
-        },
-        {
-          "name": "nFiles",
-          "type": "unumber"
-        },
-        {
-          "name": "nFolders",
-          "type": "unumber"
-        },
-        {
-          "name": "sizeInBytes",
-          "type": "unumber"
-        },
-        {
-          "name": "is_valid",
-          "type": "bool"
-        }
-      ]
-    }
-  ],
   "meta": {
     "unripe": "0xdeadbeef",
     "ripe": "0xdeadbeef",

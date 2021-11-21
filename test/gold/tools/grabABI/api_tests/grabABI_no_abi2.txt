@@ -1,41 +1,6 @@
 abis?addrs=0x1728039ce0d18a799c081c5c7fa2090dd365a8d0
 {
   "data": [],
-  "types": [
-    {
-      "type": "CFunction",
-      "fields": [
-        {
-          "name": "name",
-          "type": "text"
-        },
-        {
-          "name": "type",
-          "type": "text"
-        },
-        {
-          "name": "stateMutability",
-          "type": "text"
-        },
-        {
-          "name": "signature",
-          "type": "text"
-        },
-        {
-          "name": "encoding",
-          "type": "text"
-        },
-        {
-          "name": "input_names",
-          "type": "text"
-        },
-        {
-          "name": "output_names",
-          "type": "text"
-        }
-      ]
-    }
-  ],
   "meta": {
     "unripe": "0xdeadbeef",
     "ripe": "0xdeadbeef",

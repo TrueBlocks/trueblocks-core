@@ -182,29 +182,6 @@ when?list
       "date": "2021-08-05 12:33:42 UTC"
     }
   ],
-  "types": [
-    {
-      "type": "CBlock",
-      "fields": [
-        {
-          "name": "blockNumber",
-          "type": "blocknum"
-        },
-        {
-          "name": "timestamp",
-          "type": "timestamp"
-        },
-        {
-          "name": "name",
-          "type": "text"
-        },
-        {
-          "name": "date",
-          "type": "date"
-        }
-      ]
-    }
-  ],
   "meta": {
     "unripe": "0xdeadbeef",
     "ripe": "0xdeadbeef",

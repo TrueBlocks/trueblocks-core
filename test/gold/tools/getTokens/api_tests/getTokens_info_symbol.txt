@@ -9,33 +9,6 @@ tokens?addrs2=0xd26114cd6ee289accf82350c8d8487fedb8a0c07&parts=symbol
       "is_erc721": false
     }
   ],
-  "types": [
-    {
-      "type": "CTokenBalanceRecord",
-      "fields": [
-        {
-          "name": "address",
-          "type": "address"
-        },
-        {
-          "name": "symbol",
-          "type": "text"
-        },
-        {
-          "name": "is_contract",
-          "type": "bool"
-        },
-        {
-          "name": "is_erc20",
-          "type": "bool"
-        },
-        {
-          "name": "is_erc721",
-          "type": "bool"
-        }
-      ]
-    }
-  ],
   "meta": {
     "unripe": "0xdeadbeef",
     "ripe": "0xdeadbeef",
