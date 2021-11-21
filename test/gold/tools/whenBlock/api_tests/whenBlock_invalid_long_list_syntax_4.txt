@@ -1,6 +1,6 @@
 when?blocks=2015-03-02&list
 {
   "errors": [
-    "The given value '2015-03-02' is before the first block."
+    "Please use the --list or --timestamp option or supply block identifiers, not both."
   ]
 }

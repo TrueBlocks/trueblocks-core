@@ -20,6 +20,7 @@ package whenPkg
 // EXISTING_CODE
 import (
 	"net/http"
+	"strings"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
 	"github.com/spf13/cobra"
@@ -73,8 +74,9 @@ func ServeWhen(w http.ResponseWriter, r *http.Request) bool {
 			return true
 		}
 		// continue but don't show headers
-		opts.List = false
-		opts.Globals.NoHeader = true
+		r.URL.RawQuery = strings.Replace(r.URL.RawQuery, "list", "", -1)
+		r.URL.RawQuery = strings.Replace(r.URL.RawQuery, "&&", "&", -1)
+		r.URL.RawQuery += "&no_header"
 	}
 	return false
 	// EXISTING_CODE

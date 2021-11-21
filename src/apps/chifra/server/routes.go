@@ -20,6 +20,7 @@ package servePkg
 import (
 	"fmt"
 	"net/http"
+	"os"
 
 	// BEG_ROUTE_PKGS
 	abisPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/abis"
@@ -120,7 +121,11 @@ func RouteTraces(w http.ResponseWriter, r *http.Request) {
 // RouteWhen Find block(s) based on date, blockNum, timestamp, or 'special'.
 func RouteWhen(w http.ResponseWriter, r *http.Request) {
 	if !whenPkg.ServeWhen(w, r) {
+		os.Setenv("NO_SCHEMAS", "true") // temporary while porting to go
+		os.Setenv("GO_PORT", "true")    // temporary while porting to go
 		CallOne(w, r, "whenBlock", "when")
+		os.Setenv("NO_SCHEMAS", "") // temporary while porting to go
+		os.Setenv("GO_PORT", "")    // temporary while porting to go
 	}
 }
 

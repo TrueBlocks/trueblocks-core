@@ -1,7 +1,7 @@
 chifra when  2015-03-02 --list
 TEST[DATE|TIME] Blocks:  [2015-03-02]
 TEST[DATE|TIME] List:  true
-Error: The given value '2015-03-02' is before the first block.
+Error: Please use the --list or --timestamp option or supply block identifiers, not both.
 Usage:
   chifra when [flags] < block | date > [ block... | date... ]
 
