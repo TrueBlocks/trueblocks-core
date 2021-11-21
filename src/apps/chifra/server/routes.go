@@ -79,7 +79,11 @@ func RouteNames(w http.ResponseWriter, r *http.Request) {
 // RouteAbis Fetches the ABI for a smart contract.
 func RouteAbis(w http.ResponseWriter, r *http.Request) {
 	if !abisPkg.ServeAbis(w, r) {
+		os.Setenv("NO_SCHEMAS", "true") // temporary while porting to go
+		os.Setenv("GO_PORT", "true")    // temporary while porting to go
 		CallOne(w, r, "chifra", "abis", "abis")
+		os.Setenv("NO_SCHEMAS", "") // temporary while porting to go
+		os.Setenv("GO_PORT", "")    // temporary while porting to go
 	}
 }
 
