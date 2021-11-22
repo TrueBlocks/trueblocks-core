@@ -20,6 +20,7 @@ package servePkg
 import (
 	"fmt"
 	"net/http"
+	"os"
 
 	// BEG_ROUTE_PKGS
 	listPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/list"
@@ -49,210 +50,122 @@ import (
 
 // RouteList List every appearance of an address anywhere on the chain.
 func RouteList(w http.ResponseWriter, r *http.Request) {
-	// TODO: Use the listPkg instead
-	// listPkg.ServeList(w, r)
-	opts := listPkg.FromRequest(w, r)
-	err := opts.ValidateList()
-	if err != nil {
-		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-		return
+	if !listPkg.ServeList(w, r) {
+		CallOne(w, r, "chifra", "list", "list")
 	}
-	CallOneExtra(w, r, "chifra", "list", "list")
 }
 
 // RouteExport Export full detail of transactions for one or more addresses.
 func RouteExport(w http.ResponseWriter, r *http.Request) {
-	// TODO: Use the exportPkg instead
-	// exportPkg.ServeExport(w, r)
-	opts := exportPkg.FromRequest(w, r)
-	err := opts.ValidateExport()
-	if err != nil {
-		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-		return
+	if !exportPkg.ServeExport(w, r) {
+		CallOne(w, r, GetCommandPath("acctExport"), "", "export")
 	}
-	CallOne(w, r, "acctExport", "export")
 }
 
 // RouteMonitors Add, remove, clean, and list address monitors.
 func RouteMonitors(w http.ResponseWriter, r *http.Request) {
-	// TODO: Use the monitorsPkg instead
-	// monitorsPkg.ServeMonitors(w, r)
-	opts := monitorsPkg.FromRequest(w, r)
-	err := opts.ValidateMonitors()
-	if err != nil {
-		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-		return
+	if !monitorsPkg.ServeMonitors(w, r) {
+		CallOne(w, r, "chifra", "monitors", "monitors")
 	}
-	CallOneExtra(w, r, "chifra", "monitors", "monitors")
 }
 
 // RouteNames Query addresses or names of well known accounts.
 func RouteNames(w http.ResponseWriter, r *http.Request) {
-	// TODO: Use the namesPkg instead
-	// namesPkg.ServeNames(w, r)
-	opts := namesPkg.FromRequest(w, r)
-	err := opts.ValidateNames()
-	if err != nil {
-		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-		return
+	if !namesPkg.ServeNames(w, r) {
+		CallOne(w, r, GetCommandPath("ethNames"), "", "names")
 	}
-	CallOne(w, r, "ethNames", "names")
 }
 
 // RouteAbis Fetches the ABI for a smart contract.
 func RouteAbis(w http.ResponseWriter, r *http.Request) {
-	// TODO: Use the abisPkg instead
-	// abisPkg.ServeAbis(w, r)
-	opts := abisPkg.FromRequest(w, r)
-	err := opts.ValidateAbis()
-	if err != nil {
-		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-		return
+	if !abisPkg.ServeAbis(w, r) {
+		os.Setenv("NO_SCHEMAS", "true") // temporary while porting to go
+		os.Setenv("GO_PORT", "true")    // temporary while porting to go
+		CallOne(w, r, "chifra", "abis", "abis")
+		os.Setenv("NO_SCHEMAS", "") // temporary while porting to go
+		os.Setenv("GO_PORT", "")    // temporary while porting to go
 	}
-	CallOneExtra(w, r, "chifra", "abis", "abis")
 }
 
 // RouteBlocks Retrieve one or more blocks from the chain or local cache.
 func RouteBlocks(w http.ResponseWriter, r *http.Request) {
-	// TODO: Use the blocksPkg instead
-	// blocksPkg.ServeBlocks(w, r)
-	opts := blocksPkg.FromRequest(w, r)
-	err := opts.ValidateBlocks()
-	if err != nil {
-		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-		return
+	if !blocksPkg.ServeBlocks(w, r) {
+		CallOne(w, r, GetCommandPath("getBlocks"), "", "blocks")
 	}
-	CallOne(w, r, "getBlocks", "blocks")
 }
 
 // RouteTransactions Retrieve one or more transactions from the chain or local cache.
 func RouteTransactions(w http.ResponseWriter, r *http.Request) {
-	// TODO: Use the transactionsPkg instead
-	// transactionsPkg.ServeTransactions(w, r)
-	opts := transactionsPkg.FromRequest(w, r)
-	err := opts.ValidateTransactions()
-	if err != nil {
-		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-		return
+	if !transactionsPkg.ServeTransactions(w, r) {
+		CallOne(w, r, GetCommandPath("getTrans"), "", "transactions")
 	}
-	CallOne(w, r, "getTrans", "transactions")
 }
 
 // RouteReceipts Retrieve receipts for the given transaction(s).
 func RouteReceipts(w http.ResponseWriter, r *http.Request) {
-	// TODO: Use the receiptsPkg instead
-	// receiptsPkg.ServeReceipts(w, r)
-	opts := receiptsPkg.FromRequest(w, r)
-	err := opts.ValidateReceipts()
-	if err != nil {
-		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-		return
+	if !receiptsPkg.ServeReceipts(w, r) {
+		CallOne(w, r, GetCommandPath("getReceipts"), "", "receipts")
 	}
-	CallOne(w, r, "getReceipts", "receipts")
 }
 
 // RouteLogs Retrieve logs for the given transaction(s).
 func RouteLogs(w http.ResponseWriter, r *http.Request) {
-	// TODO: Use the logsPkg instead
-	// logsPkg.ServeLogs(w, r)
-	opts := logsPkg.FromRequest(w, r)
-	err := opts.ValidateLogs()
-	if err != nil {
-		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-		return
+	if !logsPkg.ServeLogs(w, r) {
+		CallOne(w, r, GetCommandPath("getLogs"), "", "logs")
 	}
-	CallOne(w, r, "getLogs", "logs")
 }
 
 // RouteTraces Retrieve traces for the given transaction(s).
 func RouteTraces(w http.ResponseWriter, r *http.Request) {
-	// TODO: Use the tracesPkg instead
-	// tracesPkg.ServeTraces(w, r)
-	opts := tracesPkg.FromRequest(w, r)
-	err := opts.ValidateTraces()
-	if err != nil {
-		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-		return
+	if !tracesPkg.ServeTraces(w, r) {
+		CallOne(w, r, GetCommandPath("getTraces"), "", "traces")
 	}
-	CallOne(w, r, "getTraces", "traces")
 }
 
 // RouteWhen Find block(s) based on date, blockNum, timestamp, or 'special'.
 func RouteWhen(w http.ResponseWriter, r *http.Request) {
-	// TODO: Use the whenPkg instead
-	// whenPkg.ServeWhen(w, r)
-	opts := whenPkg.FromRequest(w, r)
-	err := opts.ValidateWhen()
-	if err != nil {
-		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-		return
+	if !whenPkg.ServeWhen(w, r) {
+		os.Setenv("NO_SCHEMAS", "true") // temporary while porting to go
+		os.Setenv("GO_PORT", "true")    // temporary while porting to go
+		CallOne(w, r, GetCommandPath("whenBlock"), "", "when")
+		os.Setenv("NO_SCHEMAS", "") // temporary while porting to go
+		os.Setenv("GO_PORT", "")    // temporary while porting to go
 	}
-	CallOne(w, r, "whenBlock", "when")
 }
 
 // RouteState Retrieve account balance(s) for one or more addresses at given block(s).
 func RouteState(w http.ResponseWriter, r *http.Request) {
-	// TODO: Use the statePkg instead
-	// statePkg.ServeState(w, r)
-	opts := statePkg.FromRequest(w, r)
-	err := opts.ValidateState()
-	if err != nil {
-		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-		return
+	if !statePkg.ServeState(w, r) {
+		CallOne(w, r, GetCommandPath("getState"), "", "state")
 	}
-	CallOne(w, r, "getState", "state")
 }
 
 // RouteTokens Retrieve token balance(s) for one or more addresses at given block(s).
 func RouteTokens(w http.ResponseWriter, r *http.Request) {
-	// TODO: Use the tokensPkg instead
-	// tokensPkg.ServeTokens(w, r)
-	opts := tokensPkg.FromRequest(w, r)
-	err := opts.ValidateTokens()
-	if err != nil {
-		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-		return
+	if !tokensPkg.ServeTokens(w, r) {
+		CallOne(w, r, GetCommandPath("getTokens"), "", "tokens")
 	}
-	CallOne(w, r, "getTokens", "tokens")
 }
 
 // RouteStatus Report on the status of the TrueBlocks system.
 func RouteStatus(w http.ResponseWriter, r *http.Request) {
-	// TODO: Use the statusPkg instead
-	// statusPkg.ServeStatus(w, r)
-	opts := statusPkg.FromRequest(w, r)
-	err := opts.ValidateStatus()
-	if err != nil {
-		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-		return
+	if !statusPkg.ServeStatus(w, r) {
+		CallOne(w, r, GetCommandPath("cacheStatus"), "", "status")
 	}
-	CallOne(w, r, "cacheStatus", "status")
 }
 
 // RouteScrape Scan the chain and update (and optionally pin) the TrueBlocks index of appearances.
 func RouteScrape(w http.ResponseWriter, r *http.Request) {
-	// TODO: Use the scrapePkg instead
-	// scrapePkg.ServeScrape(w, r)
-	opts := scrapePkg.FromRequest(w, r)
-	err := opts.ValidateScrape()
-	if err != nil {
-		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-		return
+	if !scrapePkg.ServeScrape(w, r) {
+		CallOne(w, r, GetCommandPath("blockScrape"), "", "scrape")
 	}
-	CallOne(w, r, "blockScrape", "scrape")
 }
 
 // RouteInit Initialize the TrueBlocks system by downloading from IPFS.
 func RouteInit(w http.ResponseWriter, r *http.Request) {
-	// TODO: Use the initPkg instead
-	// initPkg.ServeInit(w, r)
-	opts := initPkg.FromRequest(w, r)
-	err := opts.ValidateInit()
-	if err != nil {
-		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-		return
+	if !initPkg.ServeInit(w, r) {
+		CallOne(w, r, "chifra", "init", "init")
 	}
-	CallOneExtra(w, r, "chifra", "init", "init")
 }
 
 // RoutePins Manage pinned index of appearances and associated blooms.
@@ -262,41 +175,23 @@ func RoutePins(w http.ResponseWriter, r *http.Request) {
 
 // RouteChunks Manage and investigate chunks and bloom filters.
 func RouteChunks(w http.ResponseWriter, r *http.Request) {
-	// TODO: Use the chunksPkg instead
-	// chunksPkg.ServeChunks(w, r)
-	opts := chunksPkg.FromRequest(w, r)
-	err := opts.ValidateChunks()
-	if err != nil {
-		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-		return
+	if !chunksPkg.ServeChunks(w, r) {
+		CallOne(w, r, GetCommandPath("chunkMan"), "", "chunks")
 	}
-	CallOne(w, r, "chunkMan", "chunks")
 }
 
 // RouteQuotes Freshen or display Ethereum price data. This tool has been deprecated.
 func RouteQuotes(w http.ResponseWriter, r *http.Request) {
-	// TODO: Use the quotesPkg instead
-	// quotesPkg.ServeQuotes(w, r)
-	opts := quotesPkg.FromRequest(w, r)
-	err := opts.ValidateQuotes()
-	if err != nil {
-		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-		return
+	if !quotesPkg.ServeQuotes(w, r) {
+		CallOne(w, r, GetCommandPath("getQuotes"), "", "quotes")
 	}
-	CallOne(w, r, "getQuotes", "quotes")
 }
 
 // RouteSlurp Fetch data from EtherScan for any address.
 func RouteSlurp(w http.ResponseWriter, r *http.Request) {
-	// TODO: Use the slurpPkg instead
-	// slurpPkg.ServeSlurp(w, r)
-	opts := slurpPkg.FromRequest(w, r)
-	err := opts.ValidateSlurp()
-	if err != nil {
-		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-		return
+	if !slurpPkg.ServeSlurp(w, r) {
+		CallOne(w, r, GetCommandPath("ethslurp"), "", "slurp")
 	}
-	CallOne(w, r, "ethslurp", "slurp")
 }
 // END_ROUTE_CODE
 

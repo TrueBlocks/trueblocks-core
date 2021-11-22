@@ -39,17 +39,18 @@ func RunChunks(cmd *cobra.Command, args []string) error {
 	// EXISTING_CODE
 }
 
-func ServeChunks(w http.ResponseWriter, r *http.Request) {
+func ServeChunks(w http.ResponseWriter, r *http.Request) bool {
 	opts := FromRequest(w, r)
 
 	err := opts.ValidateChunks()
 	if err != nil {
 		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-		return
+		return true
 	}
 
 	// EXISTING_CODE
-	opts.Globals.PassItOn("chunkMan", opts.ToCmdLine())
+	// opts.Globals.PassItOn("chunkMan", opts.ToCmdLine())
+	return false
 	// EXISTING_CODE
 }
 

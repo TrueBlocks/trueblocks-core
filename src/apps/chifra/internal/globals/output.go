@@ -15,7 +15,6 @@ package globals
 
 import (
 	"bytes"
-	"context"
 	"encoding/csv"
 	"encoding/json"
 	"fmt"
@@ -31,9 +30,9 @@ import (
 )
 
 // Output converts data into the given format and writes to where writer
-func Output(opts *GlobalOptions, where io.Writer, format string, data interface{}) error {
-	nonEmptyFormat := format
-	if format == "" || format == "none" {
+func (opts *GlobalOptions) Output(where io.Writer, data interface{}) error {
+	nonEmptyFormat := opts.Format
+	if opts.Format == "" || opts.Format == "none" {
 		if utils.IsApiMode() {
 			nonEmptyFormat = "api"
 		} else {
@@ -64,7 +63,7 @@ func Output(opts *GlobalOptions, where io.Writer, format string, data interface{
 	case "tab":
 		output, err = opts.TabFormatter(data)
 	default:
-		return fmt.Errorf("unsupported format %s", format)
+		return fmt.Errorf("unsupported format %s", opts.Format)
 	}
 
 	if err != nil {
@@ -151,9 +150,9 @@ func (opts *GlobalOptions) CsvFormatter(i interface{}) ([]byte, error) {
 }
 
 type JsonFormatted struct {
-	Data   interface{} `json:"data,omitempty"`
-	Errors []string    `json:"errors,omitempty"`
-	Meta   *Meta       `json:"meta,omitempty"`
+	Data   interface{}     `json:"data,omitempty"`
+	Errors []string        `json:"errors,omitempty"`
+	Meta   *rpcClient.Meta `json:"meta,omitempty"`
 }
 
 // AsJsonBytes marshals JsonFormatted struct, populating Meta field if
@@ -172,7 +171,7 @@ func AsJsonBytes(j *JsonFormatted, opts *GlobalOptions) ([]byte, error) {
 			result.Errors = j.Errors
 		} else {
 			result.Data = j.Data
-			result.Meta = GetMeta(opts.TestMode)
+			result.Meta = rpcClient.GetMeta(opts.TestMode)
 		}
 	}
 
@@ -247,34 +246,6 @@ func (opts *GlobalOptions) AsTsv(data interface{}) ([]byte, error) {
 	}
 
 	return buf.Bytes(), nil
-}
-
-type Meta struct {
-	Unripe    string `json:"unripe"`
-	Ripe      string `json:"ripe"`
-	Staging   string `json:"staging"`
-	Finalized string `json:"finalized"`
-	Client    string `json:"client"`
-}
-
-func (m Meta) String() string {
-	ret, _ := json.MarshalIndent(m, "", "  ")
-	return string(ret)
-}
-
-func GetMeta(testMode bool) *Meta {
-	if testMode {
-		return &Meta{
-			Unripe:    "0xdeadbeef",
-			Ripe:      "0xdeadbeef",
-			Staging:   "0xdeadbeef",
-			Finalized: "0xdeadbeef",
-			Client:    "0xdeadbeef",
-		}
-	}
-	client := rpcClient.Get()
-	bn, _ := client.BlockNumber(context.Background())
-	return &Meta{Client: fmt.Sprintf("%d", bn)}
 }
 
 func MakeFirstLowerCase(s string) string {
@@ -420,7 +391,8 @@ func (opts *GlobalOptions) Respond(w http.ResponseWriter, httpStatus int, respon
 	}
 
 	w.Header().Set("Content-Type", formatToMimeType[formatNotEmpty])
-	err := Output(opts, w, formatNotEmpty, responseData)
+	opts.Format = formatNotEmpty
+	err := opts.Output(w, responseData)
 	if err != nil {
 		opts.RespondWithError(w, http.StatusInternalServerError, err)
 	}

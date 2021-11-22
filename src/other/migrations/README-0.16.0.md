@@ -13,3 +13,14 @@ changed --cache_txs to --cache in export
 
 
 --uniq_txs to --uniq -- removed the old --uniq option which was redundant
+
+
+chifra when
+	field headers changed from
+		blocknumber	timestamp	date	name
+	to
+		blockNumber	timeStamp	date	name
+	camel case from lower case
+
+
+Removed the `types` field from API export

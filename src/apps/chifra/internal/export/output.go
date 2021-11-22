@@ -39,17 +39,18 @@ func RunExport(cmd *cobra.Command, args []string) error {
 	// EXISTING_CODE
 }
 
-func ServeExport(w http.ResponseWriter, r *http.Request) {
+func ServeExport(w http.ResponseWriter, r *http.Request) bool {
 	opts := FromRequest(w, r)
 
 	err := opts.ValidateExport()
 	if err != nil {
 		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-		return
+		return true
 	}
 
 	// EXISTING_CODE
-	opts.Globals.PassItOn("acctExport", opts.ToCmdLine())
+	// opts.Globals.PassItOn("acctExport", opts.ToCmdLine())
+	return false
 	// EXISTING_CODE
 }
 

@@ -121,12 +121,6 @@ bool COptions::parseArguments(string_q& commandIn) {
     if (list)
         forEverySpecialBlock(showSpecials, &requests);
 
-    if ((fix || check || count) && !timestamps)
-        return usage(usageErrs[ERR_ONLYTS]);
-
-    if (requests.size() == 0 && !timestamps)
-        return usage(usageErrs[ERR_INVALIDDATE1]);
-
     string_q format = getGlobalConfig("whenBlock")->getConfigStr("display", "format", STR_DISPLAY_WHEN);
     if (count)
         format = "[{nTimestamps}]";
