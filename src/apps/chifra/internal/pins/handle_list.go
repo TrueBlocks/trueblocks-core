@@ -44,7 +44,7 @@ func (opts *PinsOptions) ListInternal() error {
 		opts.Globals.Respond(opts.Globals.Writer, http.StatusOK, manifestData.NewPins)
 
 	} else {
-		err = opts.Globals.Output(os.Stdout, opts.Globals.Format, manifestData.NewPins)
+		err = opts.Globals.Output(os.Stdout, manifestData.NewPins)
 		if err != nil {
 			logger.Log(logger.Error, err)
 		}

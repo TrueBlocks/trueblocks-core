@@ -30,9 +30,9 @@ import (
 )
 
 // Output converts data into the given format and writes to where writer
-func (opts *GlobalOptions) Output(where io.Writer, format string, data interface{}) error {
-	nonEmptyFormat := format
-	if format == "" || format == "none" {
+func (opts *GlobalOptions) Output(where io.Writer, data interface{}) error {
+	nonEmptyFormat := opts.Format
+	if opts.Format == "" || opts.Format == "none" {
 		if utils.IsApiMode() {
 			nonEmptyFormat = "api"
 		} else {
@@ -63,7 +63,7 @@ func (opts *GlobalOptions) Output(where io.Writer, format string, data interface
 	case "tab":
 		output, err = opts.TabFormatter(data)
 	default:
-		return fmt.Errorf("unsupported format %s", format)
+		return fmt.Errorf("unsupported format %s", opts.Format)
 	}
 
 	if err != nil {
@@ -392,7 +392,7 @@ func (opts *GlobalOptions) Respond(w http.ResponseWriter, httpStatus int, respon
 
 	w.Header().Set("Content-Type", formatToMimeType[formatNotEmpty])
 	opts.Format = formatNotEmpty
-	err := opts.Output(w, opts.Format, responseData)
+	err := opts.Output(w, responseData)
 	if err != nil {
 		opts.RespondWithError(w, http.StatusInternalServerError, err)
 	}

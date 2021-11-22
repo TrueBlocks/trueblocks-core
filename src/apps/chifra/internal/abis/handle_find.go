@@ -96,7 +96,7 @@ func (opts *AbisOptions) FindInternal() error {
 		opts.Globals.Respond(opts.Globals.Writer, http.StatusOK, results)
 
 	} else {
-		err = opts.Globals.Output(os.Stdout, opts.Globals.Format, results)
+		err = opts.Globals.Output(os.Stdout, results)
 		if err != nil {
 			logger.Log(logger.Error, err)
 		}

@@ -28,7 +28,7 @@ func (opts *WhenOptions) ListInternal() error {
 		opts.Globals.Respond(opts.Globals.Writer, http.StatusOK, result)
 
 	} else {
-		err := opts.Globals.Output(os.Stdout, opts.Globals.Format, result)
+		err := opts.Globals.Output(os.Stdout, result)
 		if err != nil {
 			logger.Log(logger.Error, err)
 		}
