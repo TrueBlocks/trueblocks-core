@@ -1,5 +1,3 @@
-package whenPkg
-
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -12,16 +10,46 @@ package whenPkg
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+package specialBlock
 
 import (
 	"testing"
 )
 
-func Test_Validate(t *testing.T) {
-	var opts = WhenOptions{}
-	opts.Blocks = append(opts.Blocks, "2014-01-01")
-	err := opts.ValidateWhen()
-	if err == nil {
-		t.Error("Parsed an date too early", err)
+func TestIsStringSpecialBlock(t *testing.T) {
+	result := IsStringSpecialBlock("devcon1")
+
+	if !result {
+		t.Error("Fails for valid block name")
+	}
+
+	shouldBeFalse := IsStringSpecialBlock("nosuchblock")
+
+	if shouldBeFalse {
+		t.Error("Passes for invalid block name")
+	}
+}
+
+func TestGetNameByValue(t *testing.T) {
+	name, found := GetNameByValue(2463000)
+
+	if !found {
+		t.Error("Block name not found")
+	}
+
+	if name != "tangerine" {
+		t.Errorf("Wrong name: %s", name)
+	}
+}
+
+func TestGetValueByName(t *testing.T) {
+	value, found := GetValueByName("tangerine")
+
+	if !found {
+		t.Error("Block not found by name")
+	}
+
+	if value != 2463000 {
+		t.Errorf("Wrong value: %d", value)
 	}
 }

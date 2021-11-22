@@ -51,17 +51,16 @@ func RunList(cmd *cobra.Command, args []string) error {
 	// EXISTING_CODE
 }
 
-func ServeList(w http.ResponseWriter, r *http.Request) bool {
+func ServeList(w http.ResponseWriter, r *http.Request) {
 	opts := FromRequest(w, r)
 
 	err := opts.ValidateList()
 	if err != nil {
 		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-		return true
+		return
 	}
 
 	// EXISTING_CODE
-	return false
 	// EXISTING_CODE
 }
 

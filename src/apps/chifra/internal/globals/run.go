@@ -26,7 +26,52 @@ import (
 
 func (opts *GlobalOptions) PassItOn(path string, flags string) error {
 	options := flags
-	options += opts.ToCmdLine()
+	if opts.Raw {
+		options += " --raw"
+	}
+	// if opts.Noop {
+	// 	options += " --noop"
+	// }
+	if opts.Version {
+		options += " --version"
+	}
+	if len(opts.Format) > 0 {
+		options += " --fmt " + opts.Format
+	}
+	if opts.Verbose || opts.LogLevel > 0 {
+		level := opts.LogLevel
+		if level == 0 {
+			level = 1
+		}
+		options += " --verbose " + fmt.Sprintf("%d", level)
+	}
+	if len(opts.OutputFn) > 0 {
+		options += " --output " + opts.OutputFn
+	}
+	if opts.NoHeader {
+		options += " --no_header"
+	}
+	if opts.Wei {
+		options += " --wei"
+	}
+	if opts.Ether {
+		options += " --ether"
+	}
+	if opts.Dollars {
+		options += " --dollars"
+	}
+	if opts.ToFile {
+		options += " --to_file"
+	}
+	if len(opts.File) > 0 {
+		// TODO: one of the problems with this is that if the file contains invalid commands,
+		// TODO: because we don't see those commands until we're doing into the tool, we
+		// TODO: can't report on the 'bad command' in Cobra format. This will require us to
+		// TODO: keep validation code down in the tools which we want to avoid. To fix this
+		// TODO: the code below should open the file, read each command, and recursively call
+		// TODO: into chifra here.
+		options += " --file:" + opts.File
+	}
 
 	var wg sync.WaitGroup
 	wg.Add(2)

@@ -4,7 +4,6 @@ go 1.16
 
 require (
 	github.com/alecthomas/participle/v2 v2.0.0-alpha7
-	github.com/araddon/dateparse v0.0.0-20210429162001-6b43995a97de
 	github.com/ethereum/go-ethereum v1.10.11
 	github.com/gorilla/mux v1.8.0
 	github.com/gorilla/websocket v1.4.2

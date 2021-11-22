@@ -43,13 +43,13 @@ func RunAbis(cmd *cobra.Command, args []string) error {
 	// EXISTING_CODE
 }
 
-func ServeAbis(w http.ResponseWriter, r *http.Request) bool {
+func ServeAbis(w http.ResponseWriter, r *http.Request) {
 	opts := FromRequest(w, r)
 
 	err := opts.ValidateAbis()
 	if err != nil {
 		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-		return true
+		return
 	}
 
 	// EXISTING_CODE
@@ -57,13 +57,12 @@ func ServeAbis(w http.ResponseWriter, r *http.Request) bool {
 		err = opts.FindInternal()
 		if err != nil {
 			opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-			return true
+			return
 		}
-		return true
+		return
 	}
 
-	// opts.Globals.PassItOn("grabABI", opts.ToCmdLine())
-	return false
+	opts.Globals.PassItOn("grabABI", opts.ToCmdLine())
 	// EXISTING_CODE
 }
 

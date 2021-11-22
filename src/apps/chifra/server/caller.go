@@ -35,8 +35,13 @@ func GetCommandPath(cmd string) string {
 	return dir + "/.local/bin/chifra/" + cmd
 }
 
-// CallOne handles a route by calling into chifra
-func CallOne(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string) {
+// CallOne handles a route that calls the underlying TrueBlocks tool directly
+func CallOne(w http.ResponseWriter, r *http.Request, tbCmd, apiCmd string) {
+	CallOneExtra(w, r, GetCommandPath(tbCmd), "", apiCmd)
+}
+
+// CallOneExtra handles a route by calling into chifra
+func CallOneExtra(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string) {
 
 	// We build an array of options that we send along with the call...
 	allDogs := []string{}

@@ -79,27 +79,27 @@ func RunPins(cmd *cobra.Command, args []string) error {
 	// EXISTING_CODE
 }
 
-func ServePins(w http.ResponseWriter, r *http.Request) bool {
+func ServePins(w http.ResponseWriter, r *http.Request) {
 	opts := FromRequest(w, r)
 
 	err := opts.ValidatePins()
 	if err != nil {
 		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-		return true
+		return
 	}
 
 	// EXISTING_CODE
 	err = pinlib.EstablishIndexFolders()
 	if err != nil {
 		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-		return true
+		return
 	}
 
 	if opts.List {
 		err := opts.ListInternal()
 		if err != nil {
 			opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-			return true
+			return
 		}
 	}
 
@@ -107,11 +107,8 @@ func ServePins(w http.ResponseWriter, r *http.Request) bool {
 		err := opts.InitInternal()
 		if err != nil {
 			opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-			return true
 		}
 	}
-
-	return true
 	// EXISTING_CODE
 }
 

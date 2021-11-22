@@ -39,18 +39,17 @@ func RunMonitors(cmd *cobra.Command, args []string) error {
 	// EXISTING_CODE
 }
 
-func ServeMonitors(w http.ResponseWriter, r *http.Request) bool {
+func ServeMonitors(w http.ResponseWriter, r *http.Request) {
 	opts := FromRequest(w, r)
 
 	err := opts.ValidateMonitors()
 	if err != nil {
 		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-		return true
+		return
 	}
 
 	// EXISTING_CODE
-	// opts.Globals.PassItOn("acctExport --appearances", opts.ToCmdLine())
-	return false
+	opts.Globals.PassItOn("acctExport --appearances", opts.ToCmdLine())
 	// EXISTING_CODE
 }
 

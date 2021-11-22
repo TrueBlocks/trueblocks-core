@@ -1,6 +1,6 @@
 when?blocks=2015-03-02&list
 {
   "errors": [
-    "Please use the --list or --timestamp option or supply block identifiers, not both."
+    "chifra when - The date you specified (2015-03-02) is before the first block."
   ]
 }

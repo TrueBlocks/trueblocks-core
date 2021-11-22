@@ -39,18 +39,17 @@ func RunLogs(cmd *cobra.Command, args []string) error {
 	// EXISTING_CODE
 }
 
-func ServeLogs(w http.ResponseWriter, r *http.Request) bool {
+func ServeLogs(w http.ResponseWriter, r *http.Request) {
 	opts := FromRequest(w, r)
 
 	err := opts.ValidateLogs()
 	if err != nil {
 		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-		return true
+		return
 	}
 
 	// EXISTING_CODE
-	// opts.Globals.PassItOn("getLogs", opts.ToCmdLine())
-	return false
+	opts.Globals.PassItOn("getLogs", opts.ToCmdLine())
 	// EXISTING_CODE
 }
 

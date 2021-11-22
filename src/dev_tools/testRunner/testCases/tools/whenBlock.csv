@@ -65,10 +65,6 @@ on      ,both ,fast  ,when  ,tools/whenBlock ,fmt_timestamps              ,y    
 on      ,cmd  ,medi  ,when  ,tools/whenBlock ,skip_fail                   ,n    ,fmt = txt & blocks = 1301000-1301250:junk
 on      ,cmd  ,medi  ,when  ,tools/whenBlock ,skip_413                    ,n    ,fmt = txt & blocks = 1301000-1301250:73
 
-on      ,both ,fast  ,when  ,tools/whenBlock ,fix_not_timestamps          ,y    ,blocks = 1301000 & fix
-on      ,both ,fast  ,when  ,tools/whenBlock ,check_not_timestamps        ,y    ,blocks = 1301000 & check
-on      ,both ,fast  ,when  ,tools/whenBlock ,count_not_timestamps        ,y    ,blocks = 1301000 & count
-
 local   ,both ,fast  ,when  ,tools/whenBlock ,to_file                     ,y    ,blocks = 1001001 & fmt = json & to_file
 local   ,cmd  ,medi  ,when  ,tools/whenBlock ,skip_hourly                 ,n    ,fmt = txt & blocks = 1125561-1130516:hourly
 local   ,cmd  ,medi  ,when  ,tools/whenBlock ,skip_daily                  ,n    ,fmt = txt & blocks = 1065497-1125561:daily
