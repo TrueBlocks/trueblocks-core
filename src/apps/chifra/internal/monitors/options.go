@@ -23,7 +23,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -50,7 +49,7 @@ func (opts *MonitorsOptions) TestLog() {
 	logger.TestLog(opts.Undelete, "Undelete: ", opts.Undelete)
 	logger.TestLog(opts.Remove, "Remove: ", opts.Remove)
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
-	logger.TestLog(opts.LastBlock != 0 && opts.LastBlock != utils.NOPOS, "LastBlock: ", opts.LastBlock)
+	logger.TestLog(opts.LastBlock != 0 && opts.LastBlock != globals.NOPOS, "LastBlock: ", opts.LastBlock)
 	opts.Globals.TestLog()
 }
 
@@ -77,7 +76,7 @@ func (opts *MonitorsOptions) ToCmdLine() string {
 	if opts.FirstBlock != 0 {
 		options += (" --first_block " + fmt.Sprintf("%d", opts.FirstBlock))
 	}
-	if opts.LastBlock != 0 && opts.LastBlock != utils.NOPOS {
+	if opts.LastBlock != 0 && opts.LastBlock != globals.NOPOS {
 		options += (" --last_block " + fmt.Sprintf("%d", opts.LastBlock))
 	}
 	options += " " + strings.Join(opts.Addrs, " ")
@@ -88,7 +87,7 @@ func (opts *MonitorsOptions) ToCmdLine() string {
 func FromRequest(w http.ResponseWriter, r *http.Request) *MonitorsOptions {
 	opts := &MonitorsOptions{}
 	opts.FirstBlock = 0
-	opts.LastBlock = utils.NOPOS
+	opts.LastBlock = globals.NOPOS
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "addrs":

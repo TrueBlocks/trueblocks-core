@@ -39,18 +39,17 @@ func RunStatus(cmd *cobra.Command, args []string) error {
 	// EXISTING_CODE
 }
 
-func ServeStatus(w http.ResponseWriter, r *http.Request) bool {
+func ServeStatus(w http.ResponseWriter, r *http.Request) {
 	opts := FromRequest(w, r)
 
 	err := opts.ValidateStatus()
 	if err != nil {
 		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-		return true
+		return
 	}
 
 	// EXISTING_CODE
-	// opts.Globals.PassItOn("cacheStatus", opts.ToCmdLine())
-	return false
+	opts.Globals.PassItOn("cacheStatus", opts.ToCmdLine())
 	// EXISTING_CODE
 }
 

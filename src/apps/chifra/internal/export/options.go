@@ -23,7 +23,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -96,7 +95,7 @@ func (opts *ExportOptions) TestLog() {
 	logger.TestLog(opts.SkipDdos, "SkipDdos: ", opts.SkipDdos)
 	logger.TestLog(opts.MaxTraces != 250, "MaxTraces: ", opts.MaxTraces)
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
-	logger.TestLog(opts.LastBlock != 0 && opts.LastBlock != utils.NOPOS, "LastBlock: ", opts.LastBlock)
+	logger.TestLog(opts.LastBlock != 0 && opts.LastBlock != globals.NOPOS, "LastBlock: ", opts.LastBlock)
 	opts.Globals.TestLog()
 }
 
@@ -186,7 +185,7 @@ func (opts *ExportOptions) ToCmdLine() string {
 	if opts.FirstBlock != 0 {
 		options += (" --first_block " + fmt.Sprintf("%d", opts.FirstBlock))
 	}
-	if opts.LastBlock != 0 && opts.LastBlock != utils.NOPOS {
+	if opts.LastBlock != 0 && opts.LastBlock != globals.NOPOS {
 		options += (" --last_block " + fmt.Sprintf("%d", opts.LastBlock))
 	}
 	options += " " + strings.Join(opts.Addrs, " ")
@@ -202,7 +201,7 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ExportOptions {
 	opts.MaxRecords = 250
 	opts.MaxTraces = 250
 	opts.FirstBlock = 0
-	opts.LastBlock = utils.NOPOS
+	opts.LastBlock = globals.NOPOS
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "addrs":

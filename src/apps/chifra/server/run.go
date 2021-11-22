@@ -17,9 +17,9 @@ import (
 	"log"
 	"os"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/colors"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/spf13/cobra"
 )
 
@@ -37,7 +37,7 @@ func RunServe(cmd *cobra.Command, args []string) error {
 }
 
 func PrintServeSettings(testMode bool) {
-	meta := rpcClient.GetMeta(testMode)
+	meta := globals.GetMeta(testMode)
 	log.Print("\n")
 	log.Println(colors.Green, "Starting API server on port "+Options.Port, colors.Off)
 	log.Println(colors.Green, "Cache Path:   ", colors.Off, config.ReadTrueBlocks().Settings.CachePath)
@@ -120,9 +120,9 @@ func PrintServeSettings(testMode bool) {
 // func GetChifraResponse() (ChifraResponse, error) {
 // 	cmd := exec.Command(GetCommandPath("cacheStatus"), "--terse")
 // 	cmd.Env = append(os.Environ(), "API_MODE=true")
-// 	out, err := cmd.Out put()
+// 	out, err := cmd.Output()
 // 	if err != nil {
-// 		fmt.Printf("ChifraResponse:cmd.Out put() failed: %s", err)
+// 		fmt.Printf("ChifraResponse:cmd.Output() failed: %s", err)
 // 		var junk ChifraResponse
 // 		return junk, err
 // 	}

@@ -1,23 +1,8 @@
 chifra when  12345 54321 2016-12-01 2016-12-01-01 --timestamps
 TEST[DATE|TIME] Blocks:  [12345 54321 2016-12-01 2016-12-01-01]
 TEST[DATE|TIME] Timestamps:  true
-Error: Please use the --list or --timestamp option or supply block identifiers, not both.
-Usage:
-  chifra when [flags] < block | date > [ block... | date... ]
-
-Arguments:
-  blocks - one or more dates, block numbers, hashes, or special named blocks (see notes) (required)
-
-Flags:
-  -l, --list         export a list of the 'special' blocks
-  -t, --timestamps   ignore other options and generate timestamps only
-  -c, --check        available only with --timestamps, checks the validity of the timestamp data (hidden)
-  -f, --fix          available only with --timestamps, fixes incorrect timestamps if any (hidden)
-  -u, --count        available only with --timestamps, returns the number of timestamps in the cache (hidden)
-  -x, --fmt string   export format, one of [none|json*|txt|csv|api]
-  -v, --verbose      enable verbose (increase detail with --log_level)
-  -h, --help         display this help screen
-
-Notes:
-  - The block list may contain any combination of number, hash, date, special named blocks.
-  - Dates must be formatted in JSON format: YYYY-MM-DD[THH[:MM[:SS]]].
+blocknumber	timestamp	date	name
+12345	1438367030	2015-07-31 18:23:50 UTC
+54321	1439052185	2015-08-08 16:43:05 UTC
+2724708	1480550392	2016-11-30 23:59:52 UTC
+2724970	1480553990	2016-12-01 00:59:50 UTC

@@ -59,17 +59,16 @@ func RunScrape(cmd *cobra.Command, args []string) error {
 	// EXISTING_CODE
 }
 
-func ServeScrape(w http.ResponseWriter, r *http.Request) bool {
+func ServeScrape(w http.ResponseWriter, r *http.Request) {
 	opts := FromRequest(w, r)
 
 	err := opts.ValidateScrape()
 	if err != nil {
 		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-		return true
+		return
 	}
 
 	// EXISTING_CODE
-	return false
 	// EXISTING_CODE
 }
 
@@ -269,9 +268,9 @@ func (scraper *Scraper) Pause() {
 // func GetChifraResponse() (ChifraResponse, error) {
 // 	cmd := exec.Command(utils.GetCommandPath("cacheStatus"), "--terse")
 // 	cmd.Env = append(os.Environ(), "API_MODE=true")
-// 	out, err := cmd.Out put()
+// 	out, err := cmd.Output()
 // 	if err != nil {
-// 		fmt.Printf("ChifraResponse:cmd.Out put() failed: %s", err)
+// 		fmt.Printf("ChifraResponse:cmd.Output() failed: %s", err)
 // 		var junk ChifraResponse
 // 		return junk, err
 // 	}

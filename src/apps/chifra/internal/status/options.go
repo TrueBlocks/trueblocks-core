@@ -23,7 +23,6 @@ import (
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -47,13 +46,13 @@ func (opts *StatusOptions) TestLog() {
 	logger.TestLog(len(opts.Modes) > 0, "Modes: ", opts.Modes)
 	logger.TestLog(opts.Details, "Details: ", opts.Details)
 	logger.TestLog(len(opts.Types) > 0, "Types: ", opts.Types)
-	logger.TestLog(opts.Depth != utils.NOPOS, "Depth: ", opts.Depth)
+	logger.TestLog(opts.Depth != globals.NOPOS, "Depth: ", opts.Depth)
 	logger.TestLog(opts.Terse, "Terse: ", opts.Terse)
 	logger.TestLog(len(opts.Migrate) > 0, "Migrate: ", opts.Migrate)
 	logger.TestLog(opts.GetConfig, "GetConfig: ", opts.GetConfig)
 	logger.TestLog(opts.SetConfig, "SetConfig: ", opts.SetConfig)
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
-	logger.TestLog(opts.LastBlock != 0 && opts.LastBlock != utils.NOPOS, "LastBlock: ", opts.LastBlock)
+	logger.TestLog(opts.LastBlock != 0 && opts.LastBlock != globals.NOPOS, "LastBlock: ", opts.LastBlock)
 	opts.Globals.TestLog()
 }
 
@@ -65,7 +64,7 @@ func (opts *StatusOptions) ToCmdLine() string {
 	for _, types := range opts.Types {
 		options += " --types " + types
 	}
-	if opts.Depth != utils.NOPOS {
+	if opts.Depth != globals.NOPOS {
 		options += (" --depth " + fmt.Sprintf("%d", opts.Depth))
 	}
 	if opts.Terse {
@@ -83,7 +82,7 @@ func (opts *StatusOptions) ToCmdLine() string {
 	if opts.FirstBlock != 0 {
 		options += (" --first_block " + fmt.Sprintf("%d", opts.FirstBlock))
 	}
-	if opts.LastBlock != 0 && opts.LastBlock != utils.NOPOS {
+	if opts.LastBlock != 0 && opts.LastBlock != globals.NOPOS {
 		options += (" --last_block " + fmt.Sprintf("%d", opts.LastBlock))
 	}
 	options += " " + strings.Join(opts.Modes, " ")
@@ -93,9 +92,9 @@ func (opts *StatusOptions) ToCmdLine() string {
 
 func FromRequest(w http.ResponseWriter, r *http.Request) *StatusOptions {
 	opts := &StatusOptions{}
-	opts.Depth = utils.NOPOS
+	opts.Depth = globals.NOPOS
 	opts.FirstBlock = 0
-	opts.LastBlock = utils.NOPOS
+	opts.LastBlock = globals.NOPOS
 	for key, value := range r.URL.Query() {
 		switch key {
 		case "modes":

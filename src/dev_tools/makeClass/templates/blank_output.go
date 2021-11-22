@@ -32,13 +32,13 @@ func Run[{PROPER}](cmd *cobra.Command, args []string) error {
 	// EXISTING_CODE
 }
 
-func Serve[{PROPER}](w http.ResponseWriter, r *http.Request) bool {
+func Serve[{PROPER}](w http.ResponseWriter, r *http.Request) {
 	opts := FromRequest(w, r)
 
 	err := opts.Validate[{PROPER}]()
 	if err != nil {
 		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-		return true
+		return
 	}
 
 	// EXISTING_CODE

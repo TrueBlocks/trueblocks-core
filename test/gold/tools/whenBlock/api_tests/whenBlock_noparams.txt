@@ -1,6 +1,6 @@
 when?
 {
   "errors": [
-    "Please supply one or more block identifiers or one or more dates."
+    "chifra when - Not enough arguments presented."
   ]
 }

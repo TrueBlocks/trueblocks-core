@@ -1,5 +1,3 @@
-package validate
-
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -12,6 +10,8 @@ package validate
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+package validate
+
 import (
 	"testing"
 )
@@ -102,14 +102,6 @@ func TestIsDateTimeString(t *testing.T) {
 
 	if !IsDateTimeString("2021-09-28T16:42:15UTC") {
 		t.Error("Fails for date with time and timezone")
-	}
-
-	if IsBeforeFirstBlock("2015-07-30T15:26:00") {
-		t.Error("Fails for exact first block date")
-	}
-
-	if !IsBeforeFirstBlock("2015-07-30T15:25:59") {
-		t.Error("Passes for too early date (before first block)")
 	}
 
 	if IsDateTimeString("hello") {
@@ -216,7 +208,6 @@ func TestValidateBlockIdentifiers(t *testing.T) {
 		validTypes  ValidArgumentType
 		maxRanges   int
 	}
-
 	tests := []struct {
 		name    string
 		args    args
@@ -254,17 +245,6 @@ func TestValidateBlockIdentifiers(t *testing.T) {
 				maxRanges:  1,
 			},
 			wantErr: false,
-		},
-		{
-			name: "too early",
-			args: args{
-				identifiers: []string{
-					"2014-01-01",
-				},
-				validTypes: ValidArgumentDate,
-				maxRanges:  1,
-			},
-			wantErr: true,
 		},
 		{
 			name: "correct special",

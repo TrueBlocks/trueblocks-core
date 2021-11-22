@@ -17,11 +17,9 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
-	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/blockRange"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/specials"
-	"github.com/araddon/dateparse"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/specialBlock"
 )
 
 func IsBlockHash(str string) bool {
@@ -56,31 +54,23 @@ func IsBlockNumber(str string) bool {
 
 func IsSpecialBlock(str string) bool {
 	_, err := strconv.Atoi(str)
+
 	if err == nil {
 		// numbers not allowed
 		return false
 	}
 
-	return specials.IsStringSpecialBlock(str)
+	return specialBlock.IsStringSpecialBlock(str)
 }
 
 func IsDateTimeString(str string) bool {
 	bRange, err := blockRange.New(str)
+
 	if err != nil {
 		return false
 	}
+
 	return bRange.StartType == blockRange.BlockRangeDate
-}
-
-func IsBeforeFirstBlock(str string) bool {
-	if !IsDateTimeString(str) {
-		return false
-	}
-
-	// From https://github.com/araddon/dateparse
-	time.Local, _ = time.LoadLocation("UTC")
-	dt, _ := dateparse.ParseLocal(str) // already validated as a date
-	return dt.Before(specials.GetDateByName("first"))
 }
 
 func IsRange(str string) (bool, error) {
@@ -99,14 +89,14 @@ func IsRange(str string) (bool, error) {
 		}
 
 		if bRange.StartType == blockRange.BlockRangeSpecial &&
-			!specials.IsStringSpecialBlock(bRange.Start.Special) {
+			!specialBlock.IsStringSpecialBlock(bRange.Start.Special) {
 			return false, &InvalidIdentifierLiteralError{
 				Value: bRange.Start.Special,
 			}
 		}
 
 		if bRange.EndType == blockRange.BlockRangeSpecial &&
-			!specials.IsStringSpecialBlock(bRange.End.Special) {
+			!specialBlock.IsStringSpecialBlock(bRange.End.Special) {
 			return false, &InvalidIdentifierLiteralError{
 				Value: bRange.End.Special,
 			}
@@ -135,14 +125,10 @@ var ErrTooManyRanges = errors.New("too many ranges")
 
 type InvalidIdentifierLiteralError struct {
 	Value string
-	Msg   string
 }
 
 func (e *InvalidIdentifierLiteralError) Error() string {
-	if len(e.Msg) == 0 {
-		e.Msg = "is not a numeral or a special named block."
-	}
-	return fmt.Sprintf("The given value '%s' %s", e.Value, e.Msg)
+	return fmt.Sprintf("The given value '%s' is not a numeral or a special named block.", e.Value)
 }
 
 func IsValidBlockId(ids []string, validTypes ValidArgumentType) (bool, error) {

@@ -835,6 +835,16 @@ string_q CCommandOption::toApiTag(void) const {
     return Format(STR_TAG_YAML);
 }
 
+const char* STR_NEW_CHIFRA =
+    "\t// TODO: Use the [{API_ROUTE}]Pkg instead\n"
+    "\t// [{API_ROUTE}]Pkg.Serve[{PROPER}](w, r)\n"
+    "\topts := [{API_ROUTE}]Pkg.FromRequest(w, r)\n"
+    "\terr := opts.Validate[{PROPER}]()\n"
+    "\tif err != nil {\n"
+    "\t\topts.Globals.RespondWithError(w, http.StatusInternalServerError, err)\n"
+    "\t\treturn\n"
+    "\t}";
+
 //---------------------------------------------------------------------------------------------------
 const char* STR_NEW_CHIFRA_ROUTE =
     "\t[{API_ROUTE}]Pkg \"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/[{API_ROUTE}]\"";
@@ -857,34 +867,25 @@ string_q CCommandOption::toGoCall(void) const {
     string_q goRouteFunc = Format("[{GOROUTEFUNC}]");
 
     ostringstream os;
-
     os << endl;
     os << Format("// [{GOROUTEFUNC}] [{DESCRIPTION}]") << endl;
     os << Format("func [{GOROUTEFUNC}](w http.ResponseWriter, r *http.Request) {") << endl;
-    if (api_route == "pins") {
+
+    string_q newChifra2 = "pins|";
+    if (contains(newChifra2, api_route)) {
         os << Format("\t[{API_ROUTE}]Pkg.Serve[{PROPER}](w, r)") << endl;
+
     } else {
-        os << Format("\tif ![{API_ROUTE}]Pkg.Serve[{PROPER}](w, r) {") << endl;
-        if (api_route == "when" || api_route == "pins" || api_route == "abis") {
-            os << "\t\tos.Setenv(\"NO_SCHEMAS\", \"true\") // temporary while porting to go" << endl;
-            os << "\t\tos.Setenv(\"GO_PORT\", \"true\")    // temporary while porting to go" << endl;
-        }
-        bool redirect = tool.empty() || contains(tool, " ");
-        if ((!redirect && !goPortNewCode(api_route)) && api_route != "abis") {
-            const char* STR_CALLONE = "\t\tCallOne(w, r, GetCommandPath(\"[{TOOL}]\"), \"\", \"[{API_ROUTE}]\")";
-            os << Format(STR_CALLONE) << endl;
-        } else if ((api_route == "tags" || api_route == "collections")) {
-            const char* STR_CALLONE = "\t\tCallOne(w, r, GetCommandPath(\"ethNames\"), \"\", \"[{API_ROUTE}]\")";
-            os << Format(STR_CALLONE) << endl;
+        os << Format(STR_NEW_CHIFRA) << endl;
+        if ((!tool.empty() && !contains(tool, " ") && !goPortNewCode(api_route)) && api_route != "abis") {
+            os << "\tCallOne(w, r, \"" << tool << "\", \"" << api_route << "\")" << endl;
+
+        } else if ((goRouteFunc == "RouteTags" || goRouteFunc == "RouteCollections") && api_route != "abis") {
+            os << "\tCallOne(w, r, \"ethNames\", \"" << api_route << "\")" << endl;
+
         } else {
-            const char* STR_CALLONEEXTRA = "\t\tCallOne(w, r, \"chifra\", \"[{API_ROUTE}]\", \"[{API_ROUTE}]\")";
-            os << Format(STR_CALLONEEXTRA) << endl;
+            os << "\tCallOneExtra(w, r, \"chifra\", \"" << api_route << "\", \"" << api_route << "\")" << endl;
         }
-        if (api_route == "when" || api_route == "pins" || api_route == "abis") {
-            os << "\t\tos.Setenv(\"NO_SCHEMAS\", \"\") // temporary while porting to go" << endl;
-            os << "\t\tos.Setenv(\"GO_PORT\", \"\")    // temporary while porting to go" << endl;
-        }
-        os << Format("\t}") << endl;
     }
     os << "}" << endl;
 

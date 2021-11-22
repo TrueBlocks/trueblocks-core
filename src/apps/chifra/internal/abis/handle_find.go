@@ -17,6 +17,7 @@ import (
 	"bufio"
 	"bytes"
 	"encoding/hex"
+	"fmt"
 	"io"
 	"net/http"
 	"os"
@@ -25,13 +26,16 @@ import (
 	"github.com/ethereum/go-ethereum/crypto"
 	ants "github.com/panjf2000/ants/v2"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/globals"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/progress"
 )
 
 func (opts *AbisOptions) FindInternal() error {
-	scanBar := progress.NewScanBar(uint64(len(opts.Find)) /* wanted */, 139419 /* freq */, 50000000 /* max */)
+	visits := ScanCounter{}
+	visits.Wanted = uint64(len(opts.Find))
+	visits.Freq = 139419
+	visits.Max = 50000000
 
 	var results []Function
 
@@ -42,12 +46,12 @@ func (opts *AbisOptions) FindInternal() error {
 		sigBytes := crypto.Keccak256(byts)
 		for _, arg := range opts.Find {
 			if !opts.Globals.TestMode {
-				scanBar.Report(os.Stderr, "Scanning", testSig.(string))
+				visits.Report(os.Stderr, "Scanning", testSig.(string))
 			}
 			str, _ := hex.DecodeString(arg[2:])
 			if bytes.Equal(sigBytes[:len(str)], str) {
-				scanBar.Found++
-				logger.Log(logger.Progress, "Found ", scanBar.Found, " of ", scanBar.Wanted, arg, testSig)
+				visits.Found++
+				logger.Log(logger.Progress, "Found ", visits.Found, " of ", visits.Wanted, arg, testSig)
 				results = append(results, Function{Encoding: arg, Signature: testSig.(string)})
 				return
 			}
@@ -85,7 +89,7 @@ func (opts *AbisOptions) FindInternal() error {
 			_ = checkOne.Invoke(call)
 		}
 
-		if scanBar.Satisfied() {
+		if visits.Satisfied() {
 			break
 		}
 	}
@@ -96,7 +100,7 @@ func (opts *AbisOptions) FindInternal() error {
 		opts.Globals.Respond(opts.Globals.Writer, http.StatusOK, results)
 
 	} else {
-		err = opts.Globals.Output(os.Stdout, results)
+		err = globals.Output(&opts.Globals, os.Stdout, opts.Globals.Format, results)
 		if err != nil {
 			logger.Log(logger.Error, err)
 		}
@@ -111,4 +115,24 @@ func (opts *AbisOptions) FindInternal() error {
 type Function struct {
 	Encoding  string `json:"encoding,omitempty"`
 	Signature string `json:"signature,omitempty"`
+}
+
+type ScanCounter struct {
+	Visited uint64
+	Found   uint64
+	Wanted  uint64
+	Max     uint64
+	Freq    uint64
+}
+
+func (v *ScanCounter) Satisfied() bool {
+	return v.Visited > v.Max || v.Found == v.Wanted
+}
+
+func (v *ScanCounter) Report(target *os.File, action, msg string) {
+	v.Visited++
+	if v.Visited%v.Freq != 0 {
+		return
+	}
+	fmt.Fprintf(target, "%s[%d-%d-%d] %s                                            \r", action, v.Visited, v.Max, (v.Max - v.Visited), msg)
 }
