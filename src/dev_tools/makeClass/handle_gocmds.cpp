@@ -69,7 +69,7 @@ bool COptions::handle_gocmds_options(const CCommandOption& p) {
     replaceAll(source, "[{TEST_LOGS}]", get_testlogs(p));
     replaceAll(source, "[{DASH_STR}]", get_copyopts(p));
     replaceAll(source, "[{POSITIONALS}]", get_positionals2(p));
-    replaceAll(source, "opts.LastBlock != globals.NOPOS", "opts.LastBlock != 0 && opts.LastBlock != globals.NOPOS");
+    replaceAll(source, "opts.LastBlock != utils.NOPOS", "opts.LastBlock != 0 && opts.LastBlock != utils.NOPOS");
     source = clean_positionals(source);
 
     string_q fn = getSourcePath("apps/chifra/internal/" + p.api_route + "/options.go");
@@ -212,7 +212,7 @@ string_q get_testlogs(const CCommandOption& cmd) {
     ostringstream os;
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
         replace(p.longName, "deleteMe", "delete");
-        p.def_val = substitute(p.def_val, "NOPOS", "globals.NOPOS");
+        p.def_val = substitute(p.def_val, "NOPOS", "utils.NOPOS");
 
         if (!p.isDeprecated) {
             if (p.data_type == "<boolean>") {
@@ -263,7 +263,7 @@ string_q get_optfields(const CCommandOption& cmd) {
 string_q get_defaults_apis(const CCommandOption& cmd) {
     ostringstream os;
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
-        p.def_val = substitute(p.def_val, "NOPOS", "globals.NOPOS");
+        p.def_val = substitute(p.def_val, "NOPOS", "utils.NOPOS");
         if (!p.isDeprecated && (p.data_type == "<blknum>" || p.data_type == "<uint64>" || p.data_type == "<double>")) {
             os << p.Format("\topts.[{VARIABLE}] = [{DEF_VAL}]") << endl;
         }
@@ -332,6 +332,8 @@ string_q clean_positionals(const string_q& in) {
     string_q ret = in;
     replaceAll(ret, "\t[]string{} = args\n", "");
     replaceAll(ret, "opts.[]string{}", "[]string{}");
+    if (!contains(ret, "utils."))
+        replaceAll(ret, "\t\"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils\"\n", "");
     return ret;
 }
 
@@ -422,7 +424,7 @@ string_q get_copyopts(const CCommandOption& cmd) {
                     "\t\toptions += \" --[{LONGNAME}]\"\n"
                     "\t}";
             }
-            os << substitute(p.Format(format), "NOPOS", "globals.NOPOS") << endl;
+            os << substitute(p.Format(format), "NOPOS", "utils.NOPOS") << endl;
         }
     }
     return os.str();

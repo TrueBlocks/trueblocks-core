@@ -1,0 +1,6 @@
+when?blocks=1301000&fix
+{
+  "errors": [
+    "The --check, --fix, and --count option are only available with the --timestamps option."
+  ]
+}

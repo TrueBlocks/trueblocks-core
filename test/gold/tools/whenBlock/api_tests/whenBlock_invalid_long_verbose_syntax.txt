@@ -1,6 +1,6 @@
 when?verbose
 {
   "errors": [
-    "chifra when - Please supply either a JSON formatted date or a blockNumber."
+    "Please supply one or more block identifiers or one or more dates."
   ]
 }
