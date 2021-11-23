@@ -39,17 +39,18 @@ func RunNames(cmd *cobra.Command, args []string) error {
 	// EXISTING_CODE
 }
 
-func ServeNames(w http.ResponseWriter, r *http.Request) {
+func ServeNames(w http.ResponseWriter, r *http.Request) bool {
 	opts := FromRequest(w, r)
 
 	err := opts.ValidateNames()
 	if err != nil {
 		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-		return
+		return true
 	}
 
 	// EXISTING_CODE
-	opts.Globals.PassItOn("ethNames", opts.ToCmdLine())
+	// opts.Globals.PassItOn("ethNames", opts.ToCmdLine())
+	return false
 	// EXISTING_CODE
 }
 

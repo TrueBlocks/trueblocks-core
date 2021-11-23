@@ -39,17 +39,18 @@ func RunTokens(cmd *cobra.Command, args []string) error {
 	// EXISTING_CODE
 }
 
-func ServeTokens(w http.ResponseWriter, r *http.Request) {
+func ServeTokens(w http.ResponseWriter, r *http.Request) bool {
 	opts := FromRequest(w, r)
 
 	err := opts.ValidateTokens()
 	if err != nil {
 		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-		return
+		return true
 	}
 
 	// EXISTING_CODE
-	opts.Globals.PassItOn("getTokens", opts.ToCmdLine())
+	// opts.Globals.PassItOn("getTokens", opts.ToCmdLine())
+	return false
 	// EXISTING_CODE
 }
 

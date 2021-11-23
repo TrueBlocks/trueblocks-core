@@ -44,16 +44,17 @@ func RunInit(cmd *cobra.Command, args []string) error {
 	// EXISTING_CODE
 }
 
-func ServeInit(w http.ResponseWriter, r *http.Request) {
+func ServeInit(w http.ResponseWriter, r *http.Request) bool {
 	opts := FromRequest(w, r)
 
 	err := opts.ValidateInit()
 	if err != nil {
 		opts.Globals.RespondWithError(w, http.StatusInternalServerError, err)
-		return
+		return true
 	}
 
 	// EXISTING_CODE
+	return false
 	// EXISTING_CODE
 }
 
