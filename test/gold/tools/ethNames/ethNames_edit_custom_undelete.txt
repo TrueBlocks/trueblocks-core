@@ -1,9 +1,11 @@
 chifra names  --undelete 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6 --log_level 10 --to_custom --all --expand
-TIME ~ CLOCK - <INFO>  : Cleaning 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6                                  TIME ~ CLOCK - <INFO>  : ---------------------------------------------
+TIME ~ CLOCK - <INFO>  : Cleaning 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6                                  
+
+TIME ~ CLOCK - <INFO>  : ---------------------------------------------
 TIME ~ CLOCK - <INFO>  : {
   "address": "0x054993ab0f2b1acc0fdc65405ee203b4271bebe6",
   "name": "Name 0x054993ab",
-  "is_custom": true
+  "isCustom": true
 }
 TIME ~ CLOCK - <INFO>  : ---------------------------------------------
 TIME ~ CLOCK - : 4-----Undeleting 0x054993ab0f2b1acc0fdc65405ee203b4271bebe6
@@ -11,5 +13,5 @@ TIME ~ CLOCK - : 4-----Finished sorting...
 TIME ~ CLOCK - : 4-----Finished writing...
 TIME ~ CLOCK - : 8------Entering loadNames...
 TIME ~ CLOCK - : 4-----Reading prefund names from binary cache
-tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefund	is_contract	is_erc20	is_erc721
+tags	address	name	symbol	source	decimals	description	deleted	isCustom	isPrefund	isContract	isErc20	isErc721
 00-Active	0x054993ab0f2b1acc0fdc65405ee203b4271bebe6	Name 0x054993ab					false	true	false	false	false	false

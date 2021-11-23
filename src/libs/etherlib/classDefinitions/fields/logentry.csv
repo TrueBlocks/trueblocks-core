@@ -1,19 +1,19 @@
-name                ,type      ,str_default ,object ,array ,nowrite ,omitempty ,minimal ,extra ,noaddfld ,doc ,disp ,example                  ,description
-address             ,address   ,            ,       ,      ,        ,          ,        ,      ,         ,3   ,4    ,0xf503...179b            ,the smart contract that emitted this log
-blockHash           ,hash      ,            ,       ,      ,true    ,          ,        ,      ,         ,    ,     ,                         ,
-blockNumber         ,blknum    ,            ,       ,      ,true    ,          ,        ,      ,         ,1   ,1    ,10021                    ,the number of the block
-logIndex            ,blknum    ,            ,       ,      ,        ,          ,        ,      ,         ,4   ,3    ,354                      ,the zero-indexed position of this log relative to the block
-topics              ,topic     ,            ,       ,true  ,        ,          ,        ,      ,         ,5   ,     ,                         ,The first topic hashes event signature of the log&#44; up to 3 additional index parameters may appear
-data                ,bytes     ,            ,       ,      ,        ,          ,        ,      ,         ,6   ,9    ,0x0000...3ff6            ,any remaining un-indexed parameters to the event
-articulatedLog      ,function  ,            ,true   ,      ,        ,          ,        ,      ,         ,7   ,     ,                         ,a human-readable version of the topic and data fields
-compressedLog       ,string    ,            ,       ,      ,true    ,          ,        ,      ,         ,8   ,11   ,Transfer(0xcfa...9f54... ,a truncated&#44; more readable version of the articulation
-transactionHash     ,hash      ,            ,       ,      ,true    ,          ,        ,      ,         ,    ,     ,                         ,
-transactionIndex    ,blknum    ,            ,       ,      ,true    ,          ,        ,      ,         ,2   ,2    ,305                      ,the zero-indexed position of the transaction in the block
-transactionLogIndex ,blknum    ,            ,       ,      ,true    ,          ,        ,      ,         ,    ,     ,                         ,
-timestamp           ,timestamp ,            ,       ,      ,true    ,          ,        ,      ,         ,9   ,12   ,                         ,the timestamp of the block this log appears in
-type                ,string    ,            ,       ,      ,true    ,          ,        ,      ,         ,    ,10   ,                         ,
-removed             ,bool      ,            ,       ,      ,true    ,true      ,        ,      ,         ,    ,     ,                         ,
-topic0              ,topic     ,            ,       ,      ,true    ,          ,true    ,      ,true     ,    ,5    ,                         ,
-topic1              ,topic     ,            ,       ,      ,true    ,          ,true    ,      ,true     ,    ,6    ,                         ,
-topic2              ,topic     ,            ,       ,      ,true    ,          ,true    ,      ,true     ,    ,7    ,                         ,
-topic3              ,topic     ,            ,       ,      ,true    ,          ,true    ,      ,true     ,    ,8    ,                         ,
+name                ,type      ,strDefault ,object ,array ,nowrite ,omitempty ,minimal ,extra ,noaddfld ,doc ,disp ,example                  ,description
+address             ,address   ,           ,       ,      ,        ,          ,        ,      ,         ,3   ,4    ,0xf503...179b            ,the smart contract that emitted this log
+blockHash           ,hash      ,           ,       ,      ,true    ,          ,        ,      ,         ,    ,     ,                         ,
+blockNumber         ,blknum    ,           ,       ,      ,true    ,          ,        ,      ,         ,1   ,1    ,10021                    ,the number of the block
+logIndex            ,blknum    ,           ,       ,      ,        ,          ,        ,      ,         ,4   ,3    ,354                      ,the zero-indexed position of this log relative to the block
+topics              ,topic     ,           ,       ,true  ,        ,          ,        ,      ,         ,5   ,     ,                         ,The first topic hashes event signature of the log&#44; up to 3 additional index parameters may appear
+data                ,bytes     ,           ,       ,      ,        ,          ,        ,      ,         ,6   ,9    ,0x0000...3ff6            ,any remaining un-indexed parameters to the event
+articulatedLog      ,function  ,           ,true   ,      ,        ,          ,        ,      ,         ,7   ,     ,                         ,a human-readable version of the topic and data fields
+compressedLog       ,string    ,           ,       ,      ,true    ,          ,        ,      ,         ,8   ,11   ,Transfer(0xcfa...9f54... ,a truncated&#44; more readable version of the articulation
+transactionHash     ,hash      ,           ,       ,      ,true    ,          ,        ,      ,         ,    ,     ,                         ,
+transactionIndex    ,blknum    ,           ,       ,      ,true    ,          ,        ,      ,         ,2   ,2    ,305                      ,the zero-indexed position of the transaction in the block
+transactionLogIndex ,blknum    ,           ,       ,      ,true    ,          ,        ,      ,         ,    ,     ,                         ,
+timestamp           ,timestamp ,           ,       ,      ,true    ,          ,        ,      ,         ,9   ,12   ,                         ,the timestamp of the block this log appears in
+type                ,string    ,           ,       ,      ,true    ,          ,        ,      ,         ,    ,10   ,                         ,
+removed             ,bool      ,           ,       ,      ,true    ,true      ,        ,      ,         ,    ,     ,                         ,
+topic0              ,topic     ,           ,       ,      ,true    ,          ,true    ,      ,true     ,    ,5    ,                         ,
+topic1              ,topic     ,           ,       ,      ,true    ,          ,true    ,      ,true     ,    ,6    ,                         ,
+topic2              ,topic     ,           ,       ,      ,true    ,          ,true    ,      ,true     ,    ,7    ,                         ,
+topic3              ,topic     ,           ,       ,      ,true    ,          ,true    ,      ,true     ,    ,8    ,                         ,

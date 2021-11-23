@@ -47,5 +47,5 @@ params.size: 1
     "name": "TrueGBP",
     "symbol": "TGBP",
     "decimals": 18,
-    "is_erc20": true
+    "isErc20": true
   }] }

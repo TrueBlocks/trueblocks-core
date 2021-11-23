@@ -263,37 +263,37 @@ void COptions::Init(void) {
 
     if (isTestMode()) {
         status.host = "--hostname-- (--username--)";
-        status.rpc_provider = status.balance_provider = "--providers--";
-        status.config_path = status.cache_path = status.index_path = "--paths--";
+        status.rpcProvider = status.balanceProvider = "--providers--";
+        status.configPath = status.cachePath = status.indexPath = "--paths--";
     } else {
         status.host = string_q(hostname) + " (" + username + ")";
-        status.rpc_provider = getGlobalConfig()->getConfigStr("settings", "rpcProvider", "http://localhost:8545");
-        status.balance_provider = getGlobalConfig()->getConfigStr("settings", "balanceProvider", status.rpc_provider);
-        status.config_path = getConfigPath("");
-        status.cache_path = getGlobalConfig()->getConfigStr("settings", "cachePath", getCachePath(""));
-        status.index_path = getGlobalConfig()->getConfigStr("settings", "indexPath", getIndexPath(""));
+        status.rpcProvider = getGlobalConfig()->getConfigStr("settings", "rpcProvider", "http://localhost:8545");
+        status.balanceProvider = getGlobalConfig()->getConfigStr("settings", "balanceProvider", status.rpcProvider);
+        status.configPath = getConfigPath("");
+        status.cachePath = getGlobalConfig()->getConfigStr("settings", "cachePath", getCachePath(""));
+        status.indexPath = getGlobalConfig()->getConfigStr("settings", "indexPath", getIndexPath(""));
     }
     if (!isNodeRunning()) {
-        status.client_version = "Not running";
-        status.client_ids = "Not running";
+        status.clientVersion = "Not running";
+        status.clientIds = "Not running";
     } else {
-        status.client_version = (isTestMode() ? "Client version" : getVersionFromClient());
+        status.clientVersion = (isTestMode() ? "Client version" : getVersionFromClient());
         uint64_t ids[2];
         getNodeIds(ids[0], ids[1]);
-        status.client_ids = "chainId: " + uint_2_Str(ids[0]) + " networkId: " + uint_2_Str(ids[1]);
+        status.clientIds = "chainId: " + uint_2_Str(ids[0]) + " networkId: " + uint_2_Str(ids[1]);
     }
-    status.trueblocks_version = getVersionStr();
-    status.is_scraping = isTestMode() ? false : (isRunning("chifra scrape") || isRunning("blockScrape"));
-    status.is_testing = isTestMode();
-    status.is_api = isApiMode();
-    status.is_docker = isDockerMode();
-    status.is_archive = isArchiveNode();
-    status.is_tracing = isTracingNode();
-    status.has_eskey = getGlobalConfig("")->getConfigStr("settings", "etherscan_key", "<not_set>") != "<not_set>";
-    status.has_pinkey =
+    status.trueblocksVersion = getVersionStr();
+    status.isScraping = isTestMode() ? false : (isRunning("chifra scrape") || isRunning("blockScrape"));
+    status.isTesting = isTestMode();
+    status.isApi = isApiMode();
+    status.isDocker = isDockerMode();
+    status.isArchive = isArchiveNode();
+    status.isTracing = isTracingNode();
+    status.hasEskey = getGlobalConfig("")->getConfigStr("settings", "etherscan_key", "<not_set>") != "<not_set>";
+    status.hasPinkey =
         getGlobalConfig("blockScrape")->getConfigStr("settings", "pinata_api_key", "<not_set>") != "<not_set>";
     if (isTestMode())
-        status.has_pinkey = false;
+        status.hasPinkey = false;
 }
 
 //---------------------------------------------------------------------------------------------------

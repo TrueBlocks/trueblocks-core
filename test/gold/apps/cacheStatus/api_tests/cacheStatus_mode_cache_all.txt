@@ -2,23 +2,23 @@ status?modes=caches&types=all
 {
   "data": [
     {
-      "client_version": "Client version",
-      "client_ids": "chainId: 1 networkId: 1",
-      "trueblocks_version": "GHC-TrueBlocks//vers-alpha--git-hash---git-ts-",
-      "rpc_provider": "--providers--",
-      "balance_provider": "--providers--",
-      "config_path": "--paths--",
-      "cache_path": "--paths--",
-      "index_path": "--paths--",
+      "clientVersion": "Client version",
+      "clientIds": "chainId: 1 networkId: 1",
+      "trueblocksVersion": "GHC-TrueBlocks//vers-alpha--git-hash---git-ts-",
+      "rpcProvider": "--providers--",
+      "balanceProvider": "--providers--",
+      "configPath": "--paths--",
+      "cachePath": "--paths--",
+      "indexPath": "--paths--",
       "host": "--hostname-- (--username--)",
-      "is_testing": true,
-      "is_api": true,
-      "is_docker": false,
-      "is_scraping": false,
-      "is_archive": true,
-      "is_tracing": true,
-      "has_eskey": true,
-      "has_pinkey": false,
+      "isTesting": true,
+      "isApi": true,
+      "isDocker": false,
+      "isScraping": false,
+      "isArchive": true,
+      "isTracing": true,
+      "hasEskey": true,
+      "hasPinkey": false,
       "caches": [
         {
           "type": "CChainCache",
@@ -26,7 +26,7 @@ status?modes=caches&types=all
           "nFiles": 0,
           "nFolders": 0,
           "sizeInBytes": 0,
-          "is_valid": true
+          "isValid": true
         },
         {
           "type": "CChainCache",
@@ -34,7 +34,7 @@ status?modes=caches&types=all
           "nFiles": 0,
           "nFolders": 0,
           "sizeInBytes": 0,
-          "is_valid": true
+          "isValid": true
         },
         {
           "type": "CChainCache",
@@ -42,7 +42,7 @@ status?modes=caches&types=all
           "nFiles": 0,
           "nFolders": 0,
           "sizeInBytes": 0,
-          "is_valid": true
+          "isValid": true
         },
         {
           "type": "CSlurpCache",
@@ -50,7 +50,7 @@ status?modes=caches&types=all
           "nFiles": 0,
           "nFolders": 0,
           "sizeInBytes": 0,
-          "is_valid": true
+          "isValid": true
         },
         {
           "type": "CPriceCache",
@@ -58,7 +58,7 @@ status?modes=caches&types=all
           "nFiles": 0,
           "nFolders": 0,
           "sizeInBytes": 0,
-          "is_valid": true
+          "isValid": true
         }
       ],
       "date": "--date--"

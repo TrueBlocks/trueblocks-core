@@ -419,11 +419,11 @@ export?addrs=0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3&max_records=5&topics=0xd
       "source": "https://kickback.events/",
       "decimals": 0,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": false,
-      "is_erc20": false,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": false,
+      "isErc20": false,
+      "isErc721": false
     }
   }
 }

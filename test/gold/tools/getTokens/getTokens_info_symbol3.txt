@@ -8,13 +8,13 @@ TEST[DATE|TIME] Format:  json
     "blockNumber": 4001001,
     "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
     "symbol": "OMG",
-    "is_contract": true,
-    "is_erc20": true
+    "isContract": true,
+    "isErc20": true
   },
   {
     "blockNumber": 4001001,
     "address": "0xb9e7f8568e08d5659f5d29c4997173d84cdf2607",
     "symbol": "SWT",
-    "is_contract": true,
-    "is_erc20": true
+    "isContract": true,
+    "isErc20": true
   }] }

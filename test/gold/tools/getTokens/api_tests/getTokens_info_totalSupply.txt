@@ -4,9 +4,9 @@ tokens?addrs2=0xd26114cd6ee289accf82350c8d8487fedb8a0c07&parts=totalSupply
     {
       "totalSupply": "140245398.245132780789239631",
       "address": "0xd26114cd6ee289accf82350c8d8487fedb8a0c07",
-      "is_contract": false,
-      "is_erc20": false,
-      "is_erc721": false
+      "isContract": false,
+      "isErc20": false,
+      "isErc721": false
     }
   ],
   "meta": {

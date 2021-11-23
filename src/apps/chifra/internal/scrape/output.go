@@ -236,18 +236,18 @@ func (scraper *Scraper) Pause() {
 
 // // ChifraStatus
 // type ChifraStatus struct {
-// 	Client     string `json:"client_version"`
-// 	TrueBlocks string `json:"trueblocks_version"`
-// 	RPC        string `json:"rpc_provider"`
-// 	ConfigPath string `json:"config_path"`
-// 	CachePath  string `json:"cache_path"`
-// 	IndexPath  string `json:"index_path"`
-// 	IsTesting  bool   `json:"is_testing"`
-// 	IsDocker   bool   `json:"is_docker"`
-// 	IsArchive  bool   `json:"is_archive"`
-// 	IsTracing  bool   `json:"is_tracing"`
-// 	HasEsKey   bool   `json:"has_eskey"`
-// 	HasPinKey  bool   `json:"has_pinkey"`
+// 	Client     string `json:"clientVersion"`
+// 	TrueBlocks string `json:"trueblocksVersion"`
+// 	RPC        string `json:"rpcProvider"`
+// 	ConfigPath string `json:"configPath"`
+// 	CachePath  string `json:"cachePath"`
+// 	IndexPath  string `json:"indexPath"`
+// 	IsTesting  bool   `json:"isTesting"`
+// 	IsDocker   bool   `json:"isDocker"`
+// 	IsArchive  bool   `json:"isArchive"`
+// 	IsTracing  bool   `json:"isTracing"`
+// 	HasEsKey   bool   `json:"hasEskey"`
+// 	HasPinKey  bool   `json:"hasPinkey"`
 // 	Date       string `json:"date"`
 // }
 

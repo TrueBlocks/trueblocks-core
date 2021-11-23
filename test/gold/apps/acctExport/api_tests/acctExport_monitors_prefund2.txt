@@ -17,11 +17,11 @@ monitors?addrs=0x05a56e2d52c817161883f50c441c3228cfe54d9f&first_block=2&last_blo
       "source": "",
       "decimals": 0,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": false,
-      "is_erc20": false,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": false,
+      "isErc20": false,
+      "isErc721": false
     }
   }
 }

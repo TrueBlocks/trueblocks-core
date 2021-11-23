@@ -2,18 +2,18 @@ status?terse
 {
   "data": [
     {
-      "client_version": "Client version",
-      "trueblocks_version": "GHC-TrueBlocks//vers-alpha--git-hash---git-ts-",
-      "rpc_provider": "--providers--",
-      "config_path": "--paths--",
-      "cache_path": "--paths--",
-      "index_path": "--paths--",
-      "is_testing": true,
-      "is_docker": false,
-      "is_archive": true,
-      "is_tracing": true,
-      "has_eskey": true,
-      "has_pinkey": false,
+      "clientVersion": "Client version",
+      "trueblocksVersion": "GHC-TrueBlocks//vers-alpha--git-hash---git-ts-",
+      "rpcProvider": "--providers--",
+      "configPath": "--paths--",
+      "cachePath": "--paths--",
+      "indexPath": "--paths--",
+      "isTesting": true,
+      "isDocker": false,
+      "isArchive": true,
+      "isTracing": true,
+      "hasEskey": true,
+      "hasPinkey": false,
       "date": "--date--"
     }
   ],

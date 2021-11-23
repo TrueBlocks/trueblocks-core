@@ -8,9 +8,9 @@ tokens?addrs2=0xa9fe4601811213c340e850ea305481aff02f5b28&parts=all&blocks=120000
       "name": "WETH yVault",
       "symbol": "yvWETH",
       "decimals": 0,
-      "is_contract": false,
-      "is_erc20": true,
-      "is_erc721": false
+      "isContract": false,
+      "isErc20": true,
+      "isErc721": false
     }
   ],
   "meta": {

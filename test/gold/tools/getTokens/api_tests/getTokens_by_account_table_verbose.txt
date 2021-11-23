@@ -9,9 +9,9 @@ tokens?addrs2=0xb9e7f8568e08d5659f5d29c4997173d84cdf2607%200xa25d04fa348f1074287
       "name": "Swarm City Token",
       "symbol": "SWT",
       "decimals": 18,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     }
   ],
   "meta": {

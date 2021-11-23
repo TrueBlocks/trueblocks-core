@@ -27,12 +27,12 @@ typedef vector<CCache*> CCachePtrArray;
 //--------------------------------------------------------------------------
 class CStatus : public CBaseNode {
   public:
-    string_q client_version;
-    string_q trueblocks_version;
-    string_q rpc_provider;
-    string_q balance_provider;
+    string_q clientVersion;
+    string_q trueblocksVersion;
+    string_q rpcProvider;
+    string_q balanceProvider;
     string_q host;
-    bool is_scraping;
+    bool isScraping;
     CCachePtrArray caches;
 
   public:
@@ -98,12 +98,12 @@ inline void CStatus::clear(void) {
 inline void CStatus::initialize(void) {
     CBaseNode::initialize();
 
-    client_version = "";
-    trueblocks_version = "";
-    rpc_provider = "";
-    balance_provider = "";
+    clientVersion = "";
+    trueblocksVersion = "";
+    rpcProvider = "";
+    balanceProvider = "";
     host = "";
-    is_scraping = false;
+    isScraping = false;
     caches.clear();
 
     // EXISTING_CODE
@@ -115,12 +115,12 @@ inline void CStatus::duplicate(const CStatus& st) {
     clear();
     CBaseNode::duplicate(st);
 
-    client_version = st.client_version;
-    trueblocks_version = st.trueblocks_version;
-    rpc_provider = st.rpc_provider;
-    balance_provider = st.balance_provider;
+    clientVersion = st.clientVersion;
+    trueblocksVersion = st.trueblocksVersion;
+    rpcProvider = st.rpcProvider;
+    balanceProvider = st.balanceProvider;
     host = st.host;
-    is_scraping = st.is_scraping;
+    isScraping = st.isScraping;
     caches = st.caches;
 
     // EXISTING_CODE

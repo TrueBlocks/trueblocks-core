@@ -1,10 +1,10 @@
-name             ,type     ,str_default ,object ,array ,nowrite ,omitempty ,minimal ,extra ,noaddfld ,doc ,disp ,example       ,description
-blockNumber      ,blknum   ,            ,       ,      ,true    ,          ,        ,      ,         ,1   ,1    ,10021         ,the block number at which this call was made
-address          ,address  ,            ,       ,      ,true    ,          ,        ,      ,         ,2   ,2    ,0xa1e4...63b4 ,the address of contract being called
-signature        ,string   ,            ,       ,      ,true    ,          ,        ,      ,         ,3   ,3    ,              ,the canonical signature of the interface
-encoding         ,string   ,            ,       ,      ,        ,          ,        ,      ,         ,4   ,4    ,              ,the encoding for the function call
-bytes            ,string   ,            ,       ,      ,        ,          ,        ,      ,         ,5   ,5    ,              ,the bytes data following the encoding of the call
-abi_spec         ,abi      ,            ,true   ,      ,        ,          ,        ,      ,         ,    ,     ,              ,
-callResult       ,function ,            ,true   ,      ,true    ,          ,        ,      ,         ,6   ,     ,              ,the result of the call to the contract
-compressedResult ,string   ,            ,       ,      ,true    ,          ,        ,      ,         ,7   ,6    ,              ,the compressed version of the result of the call to the contract
-deployed         ,blknum   ,            ,       ,      ,true    ,          ,        ,      ,         ,8   ,     ,8901011       ,the block number at which this smart contract was deployed (if a smart contact)
+name             ,type     ,strDefault ,object ,array ,nowrite ,omitempty ,minimal ,extra ,noaddfld ,doc ,disp ,example       ,description
+blockNumber      ,blknum   ,           ,       ,      ,true    ,          ,        ,      ,         ,1   ,1    ,10021         ,the block number at which this call was made
+address          ,address  ,           ,       ,      ,true    ,          ,        ,      ,         ,2   ,2    ,0xa1e4...63b4 ,the address of contract being called
+signature        ,string   ,           ,       ,      ,true    ,          ,        ,      ,         ,3   ,3    ,              ,the canonical signature of the interface
+encoding         ,string   ,           ,       ,      ,        ,          ,        ,      ,         ,4   ,4    ,              ,the encoding for the function call
+bytes            ,string   ,           ,       ,      ,        ,          ,        ,      ,         ,5   ,5    ,              ,the bytes data following the encoding of the call
+abi_spec         ,abi      ,           ,true   ,      ,        ,          ,        ,      ,         ,    ,     ,              ,
+callResult       ,function ,           ,true   ,      ,true    ,          ,        ,      ,         ,6   ,     ,              ,the result of the call to the contract
+compressedResult ,string   ,           ,       ,      ,true    ,          ,        ,      ,         ,7   ,6    ,              ,the compressed version of the result of the call to the contract
+deployed         ,blknum   ,           ,       ,      ,true    ,          ,        ,      ,         ,8   ,     ,8901011       ,the block number at which this smart contract was deployed (if a smart contact)

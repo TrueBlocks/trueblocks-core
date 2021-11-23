@@ -42,18 +42,18 @@ class CNameStats {
     string_q tags;
     string_q name;
     uint64_t count;
-    bool is_custom;
-    bool is_contract;
-    bool is_erc20;
-    bool is_erc721;
+    bool isCustom;
+    bool isContract;
+    bool isErc20;
+    bool isErc721;
     explicit CNameStats(const CAccountName& acct, uint64_t c = 0) {
         address = acct.address;
         tags = acct.tags;
         name = acct.name;
-        is_custom = acct.is_custom;
-        is_contract = acct.is_contract;
-        is_erc20 = acct.is_erc20;
-        is_erc721 = acct.is_erc721;
+        isCustom = acct.isCustom;
+        isContract = acct.isContract;
+        isErc20 = acct.isErc20;
+        isErc721 = acct.isErc721;
         count = c;
     }
 
@@ -98,19 +98,19 @@ bool doOne(COptions* options, const CAddressUintMap& theMap, const string_q& typ
         bool frst = true;
         os << ", \"named" << type << "\": {";
         for (auto stats : named) {
-            if (testMode && (stats.is_custom || contains(stats.tags, "Individuals")))
+            if (testMode && (stats.isCustom || contains(stats.tags, "Individuals")))
                 stats.name = "Name " + stats.address.substr(0, 10);
             if (!frst)
                 os << ",";
             os << "\"" << stats.address << "\": { ";
             os << "\"tags\": \"" << stats.tags << "\", ";
             os << "\"name\": \"" << stats.name << "\", ";
-            if (stats.is_contract)
-                os << "\"is_contract\": true, ";
-            if (stats.is_erc20)
-                os << "\"is_erc20\": true, ";
-            if (stats.is_erc721)
-                os << "\"is_erc721\": true, ";
+            if (stats.isContract)
+                os << "\"isContract\": true, ";
+            if (stats.isErc20)
+                os << "\"isErc20\": true, ";
+            if (stats.isErc721)
+                os << "\"isErc721\": true, ";
             os << "\"count\": " << stats.count << " }";
             frst = false;
         }

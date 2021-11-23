@@ -9,11 +9,11 @@
       "source": "",
       "decimals": 0,
       "description": "",
-      "is_custom": true,
-      "is_prefund": false,
-      "is_contract": false,
-      "is_erc20": false,
-      "is_erc721": false
+      "isCustom": true,
+      "isPrefund": false,
+      "isContract": false,
+      "isErc20": false,
+      "isErc721": false
     }
   ],
   "types": [
@@ -53,23 +53,23 @@
           "type": "text"
         },
         {
-          "name": "is_custom",
+          "name": "isCustom",
           "type": "bool"
         },
         {
-          "name": "is_prefund",
+          "name": "isPrefund",
           "type": "bool"
         },
         {
-          "name": "is_contract",
+          "name": "isContract",
           "type": "bool"
         },
         {
-          "name": "is_erc20",
+          "name": "isErc20",
           "type": "bool"
         },
         {
-          "name": "is_erc721",
+          "name": "isErc721",
           "type": "bool"
         }
       ]

@@ -126,8 +126,8 @@ string_q CParameter::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 's':
-            if (fieldName % "str_default") {
-                return str_default;
+            if (fieldName % "strDefault") {
+                return strDefault;
             }
             break;
         case 't':
@@ -236,8 +236,8 @@ bool CParameter::setValueByName(const string_q& fieldNameIn, const string_q& fie
             }
             break;
         case 's':
-            if (fieldName % "str_default") {
-                str_default = fieldValue;
+            if (fieldName % "strDefault") {
+                strDefault = fieldValue;
                 return true;
             }
             break;
@@ -288,7 +288,7 @@ bool CParameter::Serialize(CArchive& archive) {
     // EXISTING_CODE
     archive >> type;
     archive >> name;
-    archive >> str_default;
+    archive >> strDefault;
     archive >> value;
     archive >> indexed;
     archive >> internalType;
@@ -315,7 +315,7 @@ bool CParameter::SerializeC(CArchive& archive) const {
     // EXISTING_CODE
     archive << type;
     archive << name;
-    archive << str_default;
+    archive << strDefault;
     archive << value;
     archive << indexed;
     archive << internalType;
@@ -378,7 +378,7 @@ void CParameter::registerClass(void) {
     ADD_FIELD(CParameter, "cname", T_TEXT, ++fieldNum);
     ADD_FIELD(CParameter, "type", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CParameter, "name", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CParameter, "str_default", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CParameter, "strDefault", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CParameter, "value", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CParameter, "indexed", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CParameter, "internalType", T_TEXT | TS_OMITEMPTY, ++fieldNum);
@@ -474,7 +474,7 @@ bool CParameter::readBackLevel(CArchive& archive) {
     if (m_schema < getVersionNum(0, 8, 3)) {
         archive >> type;
         archive >> name;
-        archive >> str_default;
+        archive >> strDefault;
         archive >> value;
         archive >> indexed;
         archive >> internalType;
@@ -535,7 +535,7 @@ const CBaseNode* CParameter::getObjectAt(const string_q& fieldName, size_t index
 const char* STR_DISPLAY_PARAMETER =
     "[{TYPE}]\t"
     "[{NAME}]\t"
-    "[{STR_DEFAULT}]\t"
+    "[{STRDEFAULT}]\t"
     "[{VALUE}]\t"
     "[{INTERNALTYPE}]\t"
     "[{INDEXED}]\t"
@@ -581,9 +581,9 @@ CParameter::CParameter(string_q& textIn) {
     }
 
     if (contains(textIn, "=")) {
-        str_default = textIn;
-        textIn = nextTokenClear(str_default, '=');
-        str_default = trim(str_default);
+        strDefault = textIn;
+        textIn = nextTokenClear(strDefault, '=');
+        strDefault = trim(strDefault);
     }
 
     type = nextTokenClear(textIn, ' ');

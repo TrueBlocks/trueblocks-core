@@ -2,7 +2,7 @@
 title: "Admin"
 description: ""
 lead: ""
-date: 2021-10-05T21:49:46
+date: 2021-11-22T23:00:40
 lastmod:
   - :git
   - lastmod
@@ -31,26 +31,26 @@ The following commands produce and manage status:
 
 Status data is made of the following data fields:
 
-| Field              | Description                                                         | Type      |
-| ------------------ | ------------------------------------------------------------------- | --------- |
-| client_version     | the version string as reported by the rpcProvider                   | string    |
-| client_ids         | netword_id and chain_id from the rpcProvider                        | string    |
-| trueblocks_version | the TrueBlocks version string                                       | string    |
-| rpc_provider       | the current rpcProvider                                             | string    |
-| balance_provider   | the current archive node balance provider (defaults to rpcProvider) | string    |
-| config_path        | the path to config files                                            | string    |
-| cache_path         | the path to the local binary caches                                 | string    |
-| index_path         | the path to the local binary indexes                                | string    |
-| host               | the host portion of the local API server                            | string    |
-| is_testing         | `true` if the server is running in test mode                        | bool      |
-| is_api             | `true` if the server is running in API mode                         | bool      |
-| is_docker          | `true` if running under a docker image                              | bool      |
-| is_scraping        | `true` if the index scraper is running                              | bool      |
-| is_archive         | `true` if the rpcProvider is an archive node                        | bool      |
-| is_tracing         | `true` if the rpcProvider provides Parity traces                    | bool      |
-| has_eskey          | `true` if an EtherScan key is present                               | bool      |
-| has_pinkey         | `true` if a Pinata API key is present                               | bool      |
-| ts                 | the timestamp when this status data was produced                    | timestamp |
+| Field             | Description                                                         | Type      |
+| ----------------- | ------------------------------------------------------------------- | --------- |
+| clientVersion     | the version string as reported by the rpcProvider                   | string    |
+| clientIds         | netword_id and chain_id from the rpcProvider                        | string    |
+| trueblocksVersion | the TrueBlocks version string                                       | string    |
+| rpcProvider       | the current rpcProvider                                             | string    |
+| balanceProvider   | the current archive node balance provider (defaults to rpcProvider) | string    |
+| configPath        | the path to config files                                            | string    |
+| cachePath         | the path to the local binary caches                                 | string    |
+| indexPath         | the path to the local binary indexes                                | string    |
+| host              | the host portion of the local API server                            | string    |
+| isTesting         | `true` if the server is running in test mode                        | bool      |
+| isApi             | `true` if the server is running in API mode                         | bool      |
+| isDocker          | `true` if running under a docker image                              | bool      |
+| isScraping        | `true` if the index scraper is running                              | bool      |
+| isArchive         | `true` if the rpcProvider is an archive node                        | bool      |
+| isTracing         | `true` if the rpcProvider provides Parity traces                    | bool      |
+| hasEskey          | `true` if an EtherScan key is present                               | bool      |
+| hasPinkey         | `true` if a Pinata API key is present                               | bool      |
+| ts                | the timestamp when this status data was produced                    | timestamp |
 
 
 ## Cache

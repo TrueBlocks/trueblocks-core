@@ -1,4 +1,4 @@
-tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefund	is_contract	is_erc20	is_erc721
+tags	address	name	symbol	source	decimals	description	deleted	isCustom	isPrefund	isContract	isErc20	isErc721
 00-Active	0xf503017d7baf7fbc0fff7492b751025c6a78179b	TrueBlocks Wallet 0xf503					false	true	false	false	false	false
 00-Active	0x054993ab0f2b1acc0fdc65405ee203b4271bebe6	M-Wallet 0x5499		EtherScan.io			false	true	false	false	false	false
 91-Friends	0x5ed8cee6b63b1c6afce3ad7c92f4fd7e1b8fad9f	Vitalik		WhaleWatch.io			false	true	false	false	false	false

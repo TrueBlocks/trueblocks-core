@@ -34,11 +34,11 @@ class CAccountName : public CBaseNode {
     string_q source;
     uint64_t decimals;
     string_q description;
-    bool is_custom;
-    bool is_prefund;
-    bool is_contract;
-    bool is_erc20;
-    bool is_erc721;
+    bool isCustom;
+    bool isPrefund;
+    bool isContract;
+    bool isErc20;
+    bool isErc721;
 
   public:
     CAccountName(void);
@@ -108,11 +108,11 @@ inline void CAccountName::initialize(void) {
     source = "";
     decimals = 0;
     description = "";
-    is_custom = false;
-    is_prefund = false;
-    is_contract = false;
-    is_erc20 = false;
-    is_erc721 = false;
+    isCustom = false;
+    isPrefund = false;
+    isContract = false;
+    isErc20 = false;
+    isErc721 = false;
 
     // EXISTING_CODE
     // EXISTING_CODE
@@ -130,11 +130,11 @@ inline void CAccountName::duplicate(const CAccountName& ac) {
     source = ac.source;
     decimals = ac.decimals;
     description = ac.description;
-    is_custom = ac.is_custom;
-    is_prefund = ac.is_prefund;
-    is_contract = ac.is_contract;
-    is_erc20 = ac.is_erc20;
-    is_erc721 = ac.is_erc721;
+    isCustom = ac.isCustom;
+    isPrefund = ac.isPrefund;
+    isContract = ac.isContract;
+    isErc20 = ac.isErc20;
+    isErc721 = ac.isErc721;
 
     // EXISTING_CODE
     // EXISTING_CODE

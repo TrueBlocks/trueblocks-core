@@ -8,9 +8,9 @@ tokens?addrs2=0xd26114cd6ee289accf82350c8d8487fedb8a0c07%200x5e44c3e467a49c9ca02
     "name": "OMGToken Airdrop",
     "symbol": "OMG",
     "decimals": 18,
-    "is_contract": true,
-    "is_erc20": true,
-    "is_erc721": false
+    "isContract": true,
+    "isErc20": true,
+    "isErc721": false
   },
   {
     "blockNumber": 4151000,
@@ -20,9 +20,9 @@ tokens?addrs2=0xd26114cd6ee289accf82350c8d8487fedb8a0c07%200x5e44c3e467a49c9ca02
     "name": "OMGToken Airdrop",
     "symbol": "OMG",
     "decimals": 18,
-    "is_contract": true,
-    "is_erc20": true,
-    "is_erc721": false
+    "isContract": true,
+    "isErc20": true,
+    "isErc721": false
   },
   {
     "blockNumber": 4141000,
@@ -32,9 +32,9 @@ tokens?addrs2=0xd26114cd6ee289accf82350c8d8487fedb8a0c07%200x5e44c3e467a49c9ca02
     "name": "OMGToken Airdrop",
     "symbol": "OMG",
     "decimals": 18,
-    "is_contract": true,
-    "is_erc20": true,
-    "is_erc721": false
+    "isContract": true,
+    "isErc20": true,
+    "isErc721": false
   },
   {
     "blockNumber": 4151000,
@@ -44,7 +44,7 @@ tokens?addrs2=0xd26114cd6ee289accf82350c8d8487fedb8a0c07%200x5e44c3e467a49c9ca02
     "name": "OMGToken Airdrop",
     "symbol": "OMG",
     "decimals": 18,
-    "is_contract": true,
-    "is_erc20": true,
-    "is_erc721": false
+    "isContract": true,
+    "isErc20": true,
+    "isErc721": false
   }], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }

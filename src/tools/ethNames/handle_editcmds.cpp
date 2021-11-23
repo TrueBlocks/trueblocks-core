@@ -15,9 +15,9 @@
 
 //-----------------------------------------------------------------------
 void pushToOutput(CAccountNameArray& out, const CAccountName& name, bool to_custom) {
-    if (to_custom && !name.is_custom)
+    if (to_custom && !name.isCustom)
         return;
-    if (!to_custom && name.is_custom)
+    if (!to_custom && name.isCustom)
         return;
     out.push_back(name);
 }
@@ -39,7 +39,7 @@ bool COptions::handle_editcmds(CStringArray& terms, bool to_custom, bool autonam
     target.symbol = trim(getEnvStr("TB_NAME_SYMBOL"), '\"');
     target.decimals = str_2_Uint(trim(getEnvStr("TB_NAME_DECIMALS"), '\"'));
     target.description = trim(getEnvStr("TB_NAME_DESCR"), '\"');
-    target.is_custom = str_2_Bool(trim(getEnvStr("TB_NAME_CUSTOM"), '\"')) || to_custom;
+    target.isCustom = str_2_Bool(trim(getEnvStr("TB_NAME_CUSTOM"), '\"')) || to_custom;
     finishClean(target);
 
     LOG_TEST_STR(string_q(45, '-'));
@@ -47,8 +47,8 @@ bool COptions::handle_editcmds(CStringArray& terms, bool to_custom, bool autonam
     LOG_TEST_STR(string_q(45, '-'));
 
     bool isEdit = crud == "create" || crud == "update";
-    string_q fmt = isEdit ? "tags\taddress\tname\tsymbol\tsource\tdescription\tdecimals\tdeleted\tis_custom"
-                            "\tis_prefund\tis_contract\tis_erc20\tis_erc721"
+    string_q fmt = isEdit ? "tags\taddress\tname\tsymbol\tsource\tdescription\tdecimals\tdeleted\tisCustom"
+                            "\tisPrefund\tisContract\tisErc20\tisErc721"
                           : "address";
     CStringArray fields;
     explode(fields, fmt, '\t');
@@ -101,7 +101,7 @@ bool COptions::handle_editcmds(CStringArray& terms, bool to_custom, bool autonam
     setenv("TEST_MODE", "false", true);
     dataStream2 << fieldStr << endl;
     for (auto name : outArray) {
-        if (!isZeroAddr(name.address) && !name.is_prefund)
+        if (!isZeroAddr(name.address) && !name.isPrefund)
             dataStream2 << name.Format(fmt) << endl;
     }
     setenv("TEST_MODE", testMode.c_str(), true);

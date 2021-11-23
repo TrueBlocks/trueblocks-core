@@ -950,6 +950,12 @@ string_q prepareDescr(const string_q& in) {
     return ">\n            " + substitute(in, "\n         ", "");
 }
 
+string_q toCamelCase(const string_q& in) {
+    string_q ret = substitute(toProper(in), "_", "");
+    ret[0] = toLower(ret)[0];
+    return ret;
+}
+
 //---------------------------------------------------------------------------------------------------
 string_q CCommandOption::toApiPath(const string_q& inStr, const string_q& exampleFn) const {
     if (!isApiRoute(api_route))
@@ -961,7 +967,7 @@ string_q CCommandOption::toApiPath(const string_q& inStr, const string_q& exampl
         if (param.longName.empty() || !param.is_visible_docs)
             continue;
         string_q yp = STR_PARAM_YAML;
-        replace(yp, "[{NAME}]", param.longName);
+        replace(yp, "[{NAME}]", toCamelCase(param.longName));
         replace(yp, "[{DESCR}]", prepareDescr(param.swagger_descr));
         replace(yp, "[{REQ}]", param.is_required ? "true" : "false");
         replace(yp, "[{SCHEMA}]", param.getSchema());
@@ -1056,7 +1062,10 @@ string_q CCommandOption::getSchema(void) const {
         replace(type, "addr", "address_t");
         if (!endsWith(type, "_t"))
             type += "_t";
-        ret += lead + "  format: " + type;
+        string t = type;
+        if (endsWith(t, "_t"))
+            replaceReverse(t, "_t", "");
+        ret += lead + "  format: " + t;
         return ret;
     }
 

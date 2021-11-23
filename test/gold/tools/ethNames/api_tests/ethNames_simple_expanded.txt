@@ -10,11 +10,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "Eximchain‚Äö√Ñ√¥s public blockchain network enables privacy, scalability and security for the supply chain.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -25,11 +25,11 @@ names?terms=etwork&expand&no_header
       "source": "https://gitcoin.co/grants/600/synthereum-synthetic-assets-with-liquidity-pools-t",
       "decimals": 0,
       "description": "https://jarvis.network",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": false,
-      "is_erc20": false,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": false,
+      "isErc20": false,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -40,11 +40,11 @@ names?terms=etwork&expand&no_header
       "source": "EtherScan.io",
       "decimals": 0,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": false,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": false,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -55,11 +55,11 @@ names?terms=etwork&expand&no_header
       "source": "https://gitcoin.co/grants/1753/resetdao-web-30-programmable-social-network",
       "decimals": 0,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": false,
-      "is_erc20": false,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": false,
+      "isErc20": false,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -70,11 +70,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -85,11 +85,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "FNKOS is a fog computing-based blockchain operating system designed to make the best use of the edge computing resources such as idle hardware network and storage resources.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -100,11 +100,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -115,11 +115,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 8,
       "description": "Tierion creates software to reduce the cost and complexity of trust. Anchoring data to the blockchain and generating a timestamp proof.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -130,11 +130,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -145,11 +145,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "A network of decentralized markets and communities. Create, operate, and govern. Powered by Ethereum, Aragon, and IPFS.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -160,11 +160,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "Connecting the Financial World Coinsuper Ecosystem Network",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -175,11 +175,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "Streamr is building the world‚Äö√Ñ√¥s leading Marketplace and decentralised Network for real-time data.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -190,11 +190,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 8,
       "description": "Wal-e is social media project behind of WaleTokeN, we developing Live video streaming social network application, this application will allowed you connect with people through live videos and messaging.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -205,11 +205,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -220,11 +220,11 @@ names?terms=etwork&expand&no_header
       "source": "https://gitcoin.co/grants/83/poa-network-community-management-grant-for-adj",
       "decimals": 0,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": false,
-      "is_erc20": false,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": false,
+      "isErc20": false,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -235,11 +235,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -250,11 +250,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "MIB coin is a Mobile Mining based Blockchain that has constructed an ecosystem that minimizes the maintenance of Blockchain Network.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -265,11 +265,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 8,
       "description": "TTC Protocol is a decentralized and token-incentivized protocol for social network services and online communities",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -280,11 +280,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "nDEX Network is a next generation decentralized ethereum token exchange. Our primary goal is to provide a clean, fast and secure trading environment with lowest service charge.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -295,11 +295,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "Augur combines the magic of prediction markets with the power of a decentralized network to create a stunningly accurate forecasting tool",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -310,11 +310,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "AI-Based Decentralized Bioinformatic Network",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -325,11 +325,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "A computer vision surveillance technology powered by fog network of miners.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -340,11 +340,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "Bancor Protocol is a standard for a new generation of cryptocurrencies called Smart Tokens",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -355,11 +355,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 6,
       "description": "Sapien is a decentralized social news platform.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -370,11 +370,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -385,11 +385,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "Network Learning is an e-learning platform where users who are new to cryptocurrency can come visit to learn the basics.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -400,11 +400,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "The Raiden Network is an off-chain scaling solution, enabling near-instant, low-fee and scalable payments. It‚Äö√Ñ√¥s complementary to the Ethereum blockchain and works with any ERC20 compatible token.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -415,11 +415,11 @@ names?terms=etwork&expand&no_header
       "source": "EtherScan.io",
       "decimals": 0,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": false,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": false,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -430,11 +430,11 @@ names?terms=etwork&expand&no_header
       "source": "https://gitcoin.co/grants/1875/garuda-network-dmrd",
       "decimals": 0,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": false,
-      "is_erc20": false,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": false,
+      "isErc20": false,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -445,11 +445,11 @@ names?terms=etwork&expand&no_header
       "source": "https://gitcoin.co/grants/26/peepeth-social-network-for-a-better-world",
       "decimals": 0,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": false,
-      "is_erc20": false,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": false,
+      "isErc20": false,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -460,11 +460,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "The Trident Group Cryptographic Token TRDT is the lifeblood of the Trident Blockchain Platform, allowing the instant secure transmission of information worldwide while securing the Trident Network.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -475,11 +475,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "A Decentralized Protocol for Publishing and Valuing Online Content",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -490,11 +490,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "Banyan Network is a fusion of big data network based on blockchain technology called Data Fusion Value Chain Network DVN.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -505,11 +505,11 @@ names?terms=etwork&expand&no_header
       "source": "TrueBlocks.io",
       "decimals": 0,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": false,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": false,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -520,11 +520,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "A decentralized peer-to-peer network that aims to offer improved video delivery at lower costs.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -535,11 +535,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "Mindexcoin MIC is a token that enables data operations in the Ethereum Decentralized Network.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -550,11 +550,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 8,
       "description": "Internet Broadband Marketplace powered by P2P VPN Network on Blockchain.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -565,11 +565,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -580,11 +580,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "BaaSid is 100% decentralized and stores your personal information on a network without a central database.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -595,11 +595,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "A Decentralized Payment Network Powered by Communities",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -610,11 +610,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "Adshares Network is a decentralized, peer-to-peer market for programmatic advertising. Adshares gives advertisers and publishers ability to trade directly without the need for centralized ad exchanges.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -625,11 +625,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "A cryptoeconomic powered adult entertainment ecosystem built on the Ethereum network.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -640,11 +640,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 4,
       "description": "Decentralized Ad Network",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -655,11 +655,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -670,11 +670,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "Data Intelligent Collaboration Network",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -685,11 +685,11 @@ names?terms=etwork&expand&no_header
       "source": "https://gitcoin.co/grants/1949/network-state-genesis",
       "decimals": 0,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": false,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": false,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -700,11 +700,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "The FOAM Proof of Location protocol empowers a permissionless and autonomous network of radio beacons that can offer secure location services independent of external centralized sources such as GPS through time synchronization.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -715,11 +715,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "Blockchain operating system that connects the world‚Äö√Ñ√¥s networks and facilitates the development of multi-chain applications.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -730,11 +730,11 @@ names?terms=etwork&expand&no_header
       "source": "EtherScan.io",
       "decimals": 0,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": false,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": false,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -745,11 +745,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "WAB network is a 5.0 Blockchain with outstanding features, a completed decentralization blockchain with remarkable transaction speed of millions per second.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -760,11 +760,11 @@ names?terms=etwork&expand&no_header
       "source": "https://gitcoin.co/grants/653/gas-stations-network",
       "decimals": 0,
       "description": "https://gitcoin.co/grants/121/gas-stations-network,https://github.com/opengsn/gsn",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": false,
-      "is_erc20": false,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": false,
+      "isErc20": false,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -775,11 +775,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "NPER is a project that implements a global IP platform on blockchain main network",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -790,11 +790,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 8,
       "description": "A multi-tier blockchain system designed to address unsolved questions of scalability, privacy, and interoperability in blockchain networks",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -805,11 +805,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 2,
       "description": "Mithril Ore is a Casper Ethereum Staking Pool. Participation in Casper may be limited due to complexity, network-congestion, and/or lack of funds. This token allows participation by resolving these variables.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -820,11 +820,11 @@ names?terms=etwork&expand&no_header
       "source": "TrueBlocks.io",
       "decimals": 0,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": false,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": false,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -835,11 +835,11 @@ names?terms=etwork&expand&no_header
       "source": "EtherScan.io",
       "decimals": 0,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": false,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": false,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -850,11 +850,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -865,11 +865,11 @@ names?terms=etwork&expand&no_header
       "source": "EtherScan.io",
       "decimals": 0,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": false,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": false,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -880,11 +880,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "Blockchain's crypto-location oracle network",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -895,11 +895,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "sUSD is part of the Synethix network.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": false,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": false,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -910,11 +910,11 @@ names?terms=etwork&expand&no_header
       "source": "TrueBlocks.io",
       "decimals": 0,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": false,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": false,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -925,11 +925,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 8,
       "description": "A decentralized peer-to-peer project learning network for teaching people how to build complete products.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -940,11 +940,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "NKN is the new kind of P2P network connectivity protocol ecosystem powered by a novel public blockchain.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -955,11 +955,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -970,11 +970,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 9,
       "description": "Blockchain Based distributed cloud computing",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -985,11 +985,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -1000,11 +1000,11 @@ names?terms=etwork&expand&no_header
       "source": "0xTracker",
       "decimals": 0,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": false,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": false,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -1015,11 +1015,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "Collection of the systems which facilitate the inter-transaction between Linker Coin and various economic networks built on crypto-currency market, financial market, e-commerce market, etc.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -1030,11 +1030,11 @@ names?terms=etwork&expand&no_header
       "source": "EtherScan.io",
       "decimals": 0,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": false,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": false,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -1045,11 +1045,11 @@ names?terms=etwork&expand&no_header
       "source": "EtherScan.io",
       "decimals": 0,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": false,
-      "is_erc20": false,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": false,
+      "isErc20": false,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -1060,11 +1060,11 @@ names?terms=etwork&expand&no_header
       "source": "https://gitcoin.co/grants/49/blockchain-education-network-ben",
       "decimals": 0,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": false,
-      "is_erc20": false,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": false,
+      "isErc20": false,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -1075,11 +1075,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "POA Network is an Ethereum-based platform that offers an open-source framework for smart contracts.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -1090,11 +1090,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -1105,11 +1105,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -1120,11 +1120,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "Crowd Sourced Wisdom - the next generation blockchain network. Speculate on anything with an easy-to-use prediction market",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -1135,11 +1135,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -1150,11 +1150,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "Posscoin is an innovative payment network and a new kind of money.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -1165,11 +1165,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 8,
       "description": "crypto ATM network",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -1180,11 +1180,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 9,
       "description": "The Genaro Network is the first Turing-complete public blockchain combining peer-to-peer storage with a sustainable consensus mechanism. Genaro's mixed consensus uses SPoR and PoS, ensuring stronger performance and security.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -1195,11 +1195,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "IoTeX is the next generation of the IoT-oriented blockchain platform with vast scalability, privacy, isolatability, and developability. IoTeX connects the physical world, block by block.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -1210,11 +1210,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "Aims to be a disruptive ad network of creative minds who speak out against the powers that be.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -1225,11 +1225,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -1240,11 +1240,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 6,
       "description": "Skychain is an open infrastructure, based on blockchain, which provides the possibility to create, train and use high-quality medical neural networks.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -1255,11 +1255,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 8,
       "description": "DDoS protection network and DCN.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -1270,11 +1270,11 @@ names?terms=etwork&expand&no_header
       "source": "https://gitcoin.co/grants/822/lukso-the-blockchain-for-new-digital-lifestyle",
       "decimals": 0,
       "description": "https://www.lukso.network/",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": false,
-      "is_erc20": false,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": false,
+      "isErc20": false,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -1285,11 +1285,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "Status is an open source messaging platform and mobile browser to interact with decentralized applications that run on the Ethereum Network.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -1300,11 +1300,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "We are building the world's first NEXT-GEN CRYPTOCURRENCY SOCIAL NETWORK.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -1315,11 +1315,11 @@ names?terms=etwork&expand&no_header
       "source": "TrueBlocks.io",
       "decimals": 0,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": false,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": false,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -1330,11 +1330,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 4,
       "description": "Morpheus.Network was designed with some of the world's largest shipping, customs banking firms to create a full-service, global, automated, supply chain platform with an integrated cryptocurrency payment system",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -1345,11 +1345,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 8,
       "description": "Archetypal Network is an Ethereum based cloudmining smart contract miner to support real-time mining and high transaction throughput.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -1360,11 +1360,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "A Better Way to Trade Crypto-Markets - Market Datafeeds, Newswires, and Crowd Sentiment Insights for the Blockchain World",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -1375,11 +1375,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -1390,11 +1390,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -1405,11 +1405,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "SpaceChain is a community-based space platform that combines space and blockchain technologies to build the world‚Äö√Ñ√¥s first open-source blockchain-based satellite network.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -1420,11 +1420,11 @@ names?terms=etwork&expand&no_header
       "source": "https://github.com/SetProtocol/set-protocol-contracts",
       "decimals": 0,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": false,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": false,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -1435,11 +1435,11 @@ names?terms=etwork&expand&no_header
       "source": "https://gitcoin.co/grants/762/community-based-audit",
       "decimals": 0,
       "description": "https://github.com/SmartAuditNetwork",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": false,
-      "is_erc20": false,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": false,
+      "isErc20": false,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -1450,11 +1450,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "HeartBout is a social network based on the blockchain technology with a decentralized system to encourage user activity.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -1465,11 +1465,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "Aditus is a revolutionary new platform bringing the world of luxury to crypto-affluents, through a privacy-centric decentralised network utilising smart contracts and blockchain technology.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -1480,11 +1480,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "Open Trading Network OTN ‚Äö√Ñ√¨ a platform that offers cross-chain technology to unite all blockchain networks and market participants, and ensure their best interests.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -1495,11 +1495,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "The distributed storage network blockchain system that provides genetic data and individual health data integrated interface.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -1510,11 +1510,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "An unprecedented prediction market of based decentralization network. High centralization hinders social progress. Therefore, we hope to establish a completely decentralized Consensus Prediction System, and everyone's weight is equal.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -1525,11 +1525,11 @@ names?terms=etwork&expand&no_header
       "source": "https://gitcoin.co/grants/101/geon-app-augmented-reality-app-leveraging-poa-cor",
       "decimals": 0,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": false,
-      "is_erc20": false,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": false,
+      "isErc20": false,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -1540,11 +1540,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "Substratum is an open-source network that allows anyone to allocate spare computing resources to make the internet a free and fair place for the entire world.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -1555,11 +1555,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "A decentralized network built on top of Ethereum, which allows anyone, anywhere to request a payment.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -1570,11 +1570,11 @@ names?terms=etwork&expand&no_header
       "source": "https://gitcoin.co/grants/681/flowstake-activity-staking-blockchain-network",
       "decimals": 0,
       "description": "https://flowstake.webflow.io",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": false,
-      "is_erc20": false,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": false,
+      "isErc20": false,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -1585,11 +1585,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 8,
       "description": "Aims to build a global network of retail and individual converters providing cash to digital conversions to and from our ecosystem, helping people worldwide to unbank.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -1600,11 +1600,11 @@ names?terms=etwork&expand&no_header
       "source": "defipulse.com",
       "decimals": 18,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -1615,11 +1615,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -1630,11 +1630,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "Create and manage unstoppable organizations. Aragon lets you manage entire organizations using the blockchain. This makes Aragon organizations more efficient than their traditional counterparties.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -1645,11 +1645,11 @@ names?terms=etwork&expand&no_header
       "source": "0xTracker",
       "decimals": 0,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": false,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": false,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -1660,11 +1660,11 @@ names?terms=etwork&expand&no_header
       "source": "https://gitcoin.co/grants/565/our-network-community-driven-analytics",
       "decimals": 0,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": false,
-      "is_erc20": false,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": false,
+      "isErc20": false,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -1675,11 +1675,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": true
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": true
     },
     {
       "deleted": false,
@@ -1690,11 +1690,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -1705,11 +1705,11 @@ names?terms=etwork&expand&no_header
       "source": "https://gitcoin.co/grants/334/interstate-network-evm-generic-optimistic-rollups",
       "decimals": 0,
       "description": "https://www.interstate.network",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": false,
-      "is_erc20": false,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": false,
+      "isErc20": false,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -1720,11 +1720,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "Ivy is a blockchain-based technology for FIAT cryptocurrency business transactions. the Ivy network utilizes IVY tokens which carry KYC KYT data points critical for Financial Institution validation.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -1735,11 +1735,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "The Jibrel Network provides currencies, equities, commodities and other financial assets and instruments as standard ERC-20 tokens on the Ethereum blockchain.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -1750,11 +1750,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "Golem is going to create the first decentralized global market for computing power",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -1765,11 +1765,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "A TEE powered BFT-DAG network that connects all existing blockchains",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -1780,11 +1780,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "The Next Generation Distributed Smart Network Blockchain for the Sharing Economy",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -1795,11 +1795,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "RIDESHARING - Arcade City is peer-to-peer everything ‚Äö√Ñ√Æ with networks built by local communities, not corporations.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -1810,11 +1810,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "TRXC is a token that serves as a social digital currency with all major social network to make the process of sending and receiving money rewarding for everyone.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -1825,11 +1825,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -1840,11 +1840,11 @@ names?terms=etwork&expand&no_header
       "source": "TrueBlocks.io",
       "decimals": 0,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": false,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": false,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -1855,11 +1855,11 @@ names?terms=etwork&expand&no_header
       "source": "https://gitcoin.co/grants/1096/pareto-network-financial-content-marketplace",
       "decimals": 0,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": false,
-      "is_erc20": false,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": false,
+      "isErc20": false,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -1870,11 +1870,11 @@ names?terms=etwork&expand&no_header
       "source": "https://gitcoin.co/grants/73/poa-network-community-management-grant-for-aly",
       "decimals": 0,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": false,
-      "is_erc20": false,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": false,
+      "isErc20": false,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -1885,11 +1885,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 9,
       "description": "Marketplace of data science powered signals for trading cryptocurrencies",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -1900,11 +1900,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -1915,11 +1915,11 @@ names?terms=etwork&expand&no_header
       "source": "https://gitcoin.co/grants/338/2key-network-labs",
       "decimals": 0,
       "description": "https://2key.network",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": false,
-      "is_erc20": false,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": false,
+      "isErc20": false,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -1930,11 +1930,11 @@ names?terms=etwork&expand&no_header
       "source": "EtherScan.io",
       "decimals": 0,
       "description": "The ICON Network is comprised of various institutions ranging from: financial institutions, insurance companies, hospitals, universities and more.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": false,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": false,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -1945,11 +1945,11 @@ names?terms=etwork&expand&no_header
       "source": "https://gitcoin.co/grants/72/poa-network-community-management-grant-for-khizer",
       "decimals": 0,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": false,
-      "is_erc20": false,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": false,
+      "isErc20": false,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -1960,11 +1960,11 @@ names?terms=etwork&expand&no_header
       "source": "https://gitcoin.co/grants/742/crypto-community-ventures-network",
       "decimals": 0,
       "description": "https://www.bitfwd.com",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": false,
-      "is_erc20": false,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": false,
+      "isErc20": false,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -1975,11 +1975,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "Incentive Social Network Service",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -1990,11 +1990,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "Decentralized Fundraising Platform Advanced Distributed Edge Network",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -2005,11 +2005,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "elf is a decentralized self-evolving cloud computing blockchain network that aims to provide a high performance platform for commercial adoption of blockchain.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -2020,11 +2020,11 @@ names?terms=etwork&expand&no_header
       "source": "EtherScan.io",
       "decimals": 0,
       "description": "Synthetix is a cryptoasset-backed network that enables the creation of on-chain synthetic assets.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": false,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": false,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -2035,11 +2035,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -2050,11 +2050,11 @@ names?terms=etwork&expand&no_header
       "source": "TrueBlocks.io",
       "decimals": 0,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": false,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": false,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -2065,11 +2065,11 @@ names?terms=etwork&expand&no_header
       "source": "https://gitcoin.co/grants/37/connext-network",
       "decimals": 0,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": false,
-      "is_erc20": false,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": false,
+      "isErc20": false,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -2080,11 +2080,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 8,
       "description": "Sphere Social Network is a next-generation decentralized social network powered by Social Activity Token",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -2095,11 +2095,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "The Insights Network‚Äö√Ñ√¥s unique combination of blockchain technology, smart contracts, and secure multiparty computation enables the individual to securely own, manage, and monetize their data.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -2110,11 +2110,11 @@ names?terms=etwork&expand&no_header
       "source": "https://gitcoin.co/grants/1796/crypton-network",
       "decimals": 0,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": false,
-      "is_erc20": false,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": false,
+      "isErc20": false,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -2125,11 +2125,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "A blockchain based content rewards network",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -2140,11 +2140,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -2155,11 +2155,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -2170,11 +2170,11 @@ names?terms=etwork&expand&no_header
       "source": "https://gitcoin.co/grants/1323/resource-network",
       "decimals": 0,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": false,
-      "is_erc20": false,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": false,
+      "isErc20": false,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -2185,11 +2185,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "A Browser-based Blockchain Ecosystem",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -2200,11 +2200,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -2215,11 +2215,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "A protocol for building decentralized marketplaces using the Ethereum blockchain",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -2230,11 +2230,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "SoMee allows you to connect and build a community on a social network where you have the control of private data, information and monetization of your social media channels.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -2245,11 +2245,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -2260,11 +2260,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "The Global P2P Lending Ecosystem Powered by Ethereum and No-Code Development.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -2275,11 +2275,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 8,
       "description": "secure and private decentralised social network",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -2290,11 +2290,11 @@ names?terms=etwork&expand&no_header
       "source": "https://gitcoin.co/grants/1971/elixio-decentralized-social-network-with-social-c",
       "decimals": 0,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": false,
-      "is_erc20": false,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": false,
+      "isErc20": false,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -2305,11 +2305,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "Blockchain-based transportation protocol enabling a decentralized, peer to peer, global transportation network",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -2320,11 +2320,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "Skrumble Network is a completely new, innovative blockchain and application that centers on creating the most secure connections for communication possible.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -2335,11 +2335,11 @@ names?terms=etwork&expand&no_header
       "source": "https://gitcoin.co/grants/1229/pulp-network",
       "decimals": 0,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": false,
-      "is_erc20": false,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": false,
+      "isErc20": false,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -2350,11 +2350,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 8,
       "description": "BrokerNeko Network provides rational, quick and easy solutions for individual and institutional transactions with its own unique system.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -2365,11 +2365,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "Bitcoin Token BTK is a digital currency. It uses peer-to-peer technology to operate with no central authority or banks managing transactions are carried out collectively by the network.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -2380,11 +2380,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "Aims to allow anyone to send transactions through P2P network",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -2395,11 +2395,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "KyberNetwork is a new system which allows the exchange and conversion of digital assets.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -2410,11 +2410,11 @@ names?terms=etwork&expand&no_header
       "source": "https://gitcoin.co/grants/1505/moip-network-send-ethereum-or-erc20-tokens-throug",
       "decimals": 0,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": false,
-      "is_erc20": false,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": false,
+      "isErc20": false,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -2425,11 +2425,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "A decentralized network for censorship-resistant message routing.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -2440,11 +2440,11 @@ names?terms=etwork&expand&no_header
       "source": "TrueBlocks.io",
       "decimals": 0,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": false,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": false,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -2455,11 +2455,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -2470,11 +2470,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "Aims to be an open source public intelligent blockchain platform",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -2485,11 +2485,11 @@ names?terms=etwork&expand&no_header
       "source": "https://gitcoin.co/grants/1827/fission-network",
       "decimals": 0,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": false,
-      "is_erc20": false,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": false,
+      "isErc20": false,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -2500,11 +2500,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "HBZ is a cryptocurrency and blockchain based transportation ecosystem to seamlessly offer transportation globally from scooters and cars to tolls and international flights through a partner network with ease, full transparency while users maintain full ownership of their personal data.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -2515,11 +2515,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "Connecting the blockchains using crosschain gateway built with smart contracts.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -2530,11 +2530,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 4,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -2545,11 +2545,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "Cryptocurrency that allows people to raise crypto for events to challenging circumstances like accidents and illnesses or real world emergencies. 'The GoFundMe of Crypto'",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -2560,11 +2560,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "Augur combines the magic of prediction markets with the power of a decentralized network",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -2575,11 +2575,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "Zenswap Network offers a new and practical cryptosphere for cryptocurrency and token swap, integrated with user-friendly value-added services to deliver the best crypto experience.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -2590,11 +2590,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "The Pareto Network is a peer to peer financial content marketplace.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -2605,11 +2605,11 @@ names?terms=etwork&expand&no_header
       "source": "https://gitcoin.co/grants/1487/memorialnetwork",
       "decimals": 0,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": false,
-      "is_erc20": false,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": false,
+      "isErc20": false,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -2620,11 +2620,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "ADS IN BLOCKCHAIN ADVERTISING NETWORK. Online advertising enhanced by blockchain and AI technologies.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -2635,11 +2635,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -2650,11 +2650,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 4,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -2665,11 +2665,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -2680,11 +2680,11 @@ names?terms=etwork&expand&no_header
       "source": "https://gitcoin.co/grants/1595/bloom-network-panvala-league",
       "decimals": 0,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": false,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": false,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -2695,11 +2695,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "Decentralized Professional Network powered by blockchain technology",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -2710,11 +2710,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "Ripio Credit Network is a global credit network based on cosigned smart contracts and blockchain technology that connects lenders and borrowers located anywhere in the world and on any currency",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -2725,11 +2725,11 @@ names?terms=etwork&expand&no_header
       "source": "EtherScan.io",
       "decimals": 0,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": false,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": false,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -2740,11 +2740,11 @@ names?terms=etwork&expand&no_header
       "source": "https://gitcoin.co/grants/44/chainid-network",
       "decimals": 0,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": false,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": false,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -2755,11 +2755,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "Decentralized lending infrastructure facilitating open access to credit networks on Ethereum.",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -2770,11 +2770,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "Dual-Layered Protocol for Financial Assets",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -2785,11 +2785,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 8,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -2800,11 +2800,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 16,
       "description": "Kora is a digital banking solution powered by the Kora Network",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -2815,11 +2815,11 @@ names?terms=etwork&expand&no_header
       "source": "On chain",
       "decimals": 18,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     }
   ],
   "meta": {

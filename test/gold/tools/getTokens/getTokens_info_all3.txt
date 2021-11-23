@@ -47,7 +47,7 @@ params.size: 1
     "name": "OMGToken",
     "symbol": "OMG",
     "decimals": 18,
-    "is_erc20": true
+    "isErc20": true
   }
 level: 1
 readOffset: 0
@@ -92,5 +92,5 @@ params.size: 1
     "name": "Swarm City Token",
     "symbol": "SWT",
     "decimals": 18,
-    "is_erc20": true
+    "isErc20": true
   }] }

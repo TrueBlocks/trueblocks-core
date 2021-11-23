@@ -56,7 +56,7 @@ class CParameter : public CBaseNode {
   public:
     string_q type;
     string_q name;
-    string_q str_default;
+    string_q strDefault;
     string_q value;
     bool indexed;
     string_q internalType;
@@ -146,7 +146,7 @@ inline void CParameter::initialize(void) {
 
     type = "";
     name = "";
-    str_default = "";
+    strDefault = "";
     value = "";
     indexed = false;
     internalType = "";
@@ -170,7 +170,7 @@ inline void CParameter::duplicate(const CParameter& pa) {
 
     type = pa.type;
     name = pa.name;
-    str_default = pa.str_default;
+    strDefault = pa.strDefault;
     value = pa.value;
     indexed = pa.indexed;
     internalType = pa.internalType;

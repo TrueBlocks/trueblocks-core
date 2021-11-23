@@ -93,7 +93,7 @@ export?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&max_records=3&neighbors
       "0x33990122638b9132ca29c723bdf037f1a891a70c": {
         "tags": "91-Early:Addresses",
         "name": "GlobalRegistrarAddr_frontier",
-        "is_contract": true,
+        "isContract": true,
         "count": 1
       }
     },
@@ -108,11 +108,11 @@ export?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&max_records=3&neighbors
       "source": "On chain",
       "decimals": 1,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": true
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": true
     }
   }
 }

@@ -74,13 +74,13 @@ string_q CStatus::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'b':
-            if (fieldName % "balance_provider") {
-                return balance_provider;
+            if (fieldName % "balanceProvider") {
+                return balanceProvider;
             }
             break;
         case 'c':
-            if (fieldName % "client_version") {
-                return client_version;
+            if (fieldName % "clientVersion") {
+                return clientVersion;
             }
             if (fieldName % "caches" || fieldName % "cachesCnt") {
                 size_t cnt = caches.size();
@@ -102,18 +102,18 @@ string_q CStatus::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 'i':
-            if (fieldName % "is_scraping") {
-                return bool_2_Str_t(is_scraping);
+            if (fieldName % "isScraping") {
+                return bool_2_Str_t(isScraping);
             }
             break;
         case 'r':
-            if (fieldName % "rpc_provider") {
-                return rpc_provider;
+            if (fieldName % "rpcProvider") {
+                return rpcProvider;
             }
             break;
         case 't':
-            if (fieldName % "trueblocks_version") {
-                return trueblocks_version;
+            if (fieldName % "trueblocksVersion") {
+                return trueblocksVersion;
             }
             break;
         default:
@@ -137,14 +137,14 @@ bool CStatus::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
 
     switch (tolower(fieldName[0])) {
         case 'b':
-            if (fieldName % "balance_provider") {
-                balance_provider = fieldValue;
+            if (fieldName % "balanceProvider") {
+                balanceProvider = fieldValue;
                 return true;
             }
             break;
         case 'c':
-            if (fieldName % "client_version") {
-                client_version = fieldValue;
+            if (fieldName % "clientVersion") {
+                clientVersion = fieldValue;
                 return true;
             }
             if (fieldName % "caches") {
@@ -165,20 +165,20 @@ bool CStatus::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
             }
             break;
         case 'i':
-            if (fieldName % "is_scraping") {
-                is_scraping = str_2_Bool(fieldValue);
+            if (fieldName % "isScraping") {
+                isScraping = str_2_Bool(fieldValue);
                 return true;
             }
             break;
         case 'r':
-            if (fieldName % "rpc_provider") {
-                rpc_provider = fieldValue;
+            if (fieldName % "rpcProvider") {
+                rpcProvider = fieldValue;
                 return true;
             }
             break;
         case 't':
-            if (fieldName % "trueblocks_version") {
-                trueblocks_version = fieldValue;
+            if (fieldName % "trueblocksVersion") {
+                trueblocksVersion = fieldValue;
                 return true;
             }
             break;
@@ -207,12 +207,12 @@ bool CStatus::Serialize(CArchive& archive) {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive >> client_version;
-    archive >> trueblocks_version;
-    archive >> rpc_provider;
-    archive >> balance_provider;
+    archive >> clientVersion;
+    archive >> trueblocksVersion;
+    archive >> rpcProvider;
+    archive >> balanceProvider;
     archive >> host;
-    archive >> is_scraping;
+    archive >> isScraping;
     // archive >> caches;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -227,12 +227,12 @@ bool CStatus::SerializeC(CArchive& archive) const {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive << client_version;
-    archive << trueblocks_version;
-    archive << rpc_provider;
-    archive << balance_provider;
+    archive << clientVersion;
+    archive << trueblocksVersion;
+    archive << rpcProvider;
+    archive << balanceProvider;
     archive << host;
-    archive << is_scraping;
+    archive << isScraping;
     // archive << caches;
     // EXISTING_CODE
     // EXISTING_CODE
@@ -283,12 +283,12 @@ void CStatus::registerClass(void) {
     ADD_FIELD(CStatus, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CStatus, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CStatus, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CStatus, "client_version", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CStatus, "trueblocks_version", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CStatus, "rpc_provider", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CStatus, "balance_provider", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CStatus, "clientVersion", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CStatus, "trueblocksVersion", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CStatus, "rpcProvider", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CStatus, "balanceProvider", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CStatus, "host", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CStatus, "is_scraping", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CStatus, "isScraping", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CStatus, "caches", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CStatus, "caches");
 
