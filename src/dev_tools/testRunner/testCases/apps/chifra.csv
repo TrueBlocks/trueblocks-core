@@ -9,7 +9,7 @@ on      ,cmd  ,fast  ,null    ,apps/chifra ,help_list             ,n    ,modes =
 on      ,cmd  ,fast  ,null    ,apps/chifra ,help_export           ,n    ,modes = export & help & log_level = 2
 on      ,cmd  ,fast  ,null    ,apps/chifra ,help_explore          ,n    ,modes = explore & help & log_level = 2
 on      ,cmd  ,fast  ,null    ,apps/chifra ,help_slurp            ,n    ,modes = slurp & help & log_level = 2
-on      ,cmd  ,fast  ,null    ,apps/chifra ,help_rm               ,n    ,modes = monitors & delete & help & log_level = 2
+local   ,cmd  ,fast  ,null    ,apps/chifra ,help_rm               ,n    ,modes = monitors & delete & help & log_level = 2
 on      ,cmd  ,fast  ,null    ,apps/chifra ,help_names            ,n    ,modes = names & help & log_level = 2
 on      ,cmd  ,fast  ,null    ,apps/chifra ,help_abis             ,n    ,modes = abis & help & log_level = 2
 on      ,cmd  ,fast  ,null    ,apps/chifra ,help_blocks           ,n    ,modes = blocks & help & log_level = 2
@@ -23,7 +23,7 @@ on      ,cmd  ,fast  ,null    ,apps/chifra ,help_scrape           ,n    ,modes =
 on      ,cmd  ,fast  ,null    ,apps/chifra ,help_status           ,n    ,modes = status & help & log_level = 2
 on      ,cmd  ,fast  ,null    ,apps/chifra ,help_quotes           ,n    ,modes = quotes & help & log_level = 2
 on      ,cmd  ,fast  ,null    ,apps/chifra ,help_when             ,n    ,modes = when & help & log_level = 2
-on      ,both ,fast  ,export  ,apps/chifra ,run_rm                ,y    ,modes = monitors & addrs = 0x807640a13483f8ac783c557fcdf27be11ea4ac7a & remove
+local   ,both ,fast  ,export  ,apps/chifra ,run_rm                ,y    ,modes = monitors & addrs = 0x807640a13483f8ac783c557fcdf27be11ea4ac7a & remove
 on      ,both ,fast  ,names   ,apps/chifra ,run_names             ,y    ,modes = names & terms = 50-Tokens & expand
 on      ,both ,fast  ,names   ,apps/chifra ,run_names_tags        ,y    ,modes = names & tags
 on      ,both ,fast  ,names   ,apps/chifra ,run_names_collections ,y    ,modes = names & collections

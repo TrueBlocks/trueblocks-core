@@ -33,11 +33,6 @@ static const COption params[] = {
     COption("to_custom", "u", "", OPT_HIDDEN | OPT_SWITCH, "for editCmd only, is the edited name a custom name or not"),
     COption("clean", "C", "", OPT_HIDDEN | OPT_SWITCH, "clean the data (addrs to lower case, sort by addr)"),
     COption("autoname", "A", "<string>", OPT_HIDDEN | OPT_FLAG, "an address assumed to be a token, added automatically to names database if true"),  // NOLINT
-    COption("create", "", "", OPT_HIDDEN | OPT_SWITCH, "create a new name record"),
-    COption("delete", "", "", OPT_HIDDEN | OPT_SWITCH, "delete a name, but do not remove it"),
-    COption("update", "", "", OPT_HIDDEN | OPT_SWITCH, "edit an existing name"),
-    COption("remove", "", "", OPT_HIDDEN | OPT_SWITCH, "remove a previously deleted name"),
-    COption("undelete", "", "", OPT_HIDDEN | OPT_SWITCH, "undelete a previously deleted name"),
     COption("", "", "", OPT_DESCRIPTION, "Query addresses or names of well known accounts."),
     // clang-format on
     // END_CODE_OPTIONS
@@ -64,11 +59,6 @@ bool COptions::parseArguments(string_q& command) {
     bool to_custom = false;
     bool clean = false;
     string_q autoname = "";
-    bool create = false;
-    bool deleteMe = false;
-    bool update = false;
-    bool remove = false;
-    bool undelete = false;
     // END_CODE_LOCAL_INIT
 
     string_q format;
@@ -121,21 +111,6 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "-A" || arg == "--autoname") {
             return flag_required("autoname");
 
-        } else if (arg == "--create") {
-            create = true;
-
-        } else if (arg == "--deleteMe") {
-            deleteMe = true;
-
-        } else if (arg == "--update") {
-            update = true;
-
-        } else if (arg == "--remove") {
-            remove = true;
-
-        } else if (arg == "--undelete") {
-            undelete = true;
-
         } else if (startsWith(arg, '-')) {  // do not collapse
 
             if (!builtInCmd(arg)) {
@@ -150,20 +125,20 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    if (create)
-        crudCommands.push_back("create");
+    // if (create)
+    //     crudCommands.push_back("create");
 
-    if (update)
-        crudCommands.push_back("update");
+    // if (update)
+    //     crudCommands.push_back("update");
 
-    if (deleteMe)
-        crudCommands.push_back("delete");
+    // if (deleteMe)
+    //     crudCommands.push_back("delete");
 
-    if (undelete)
-        crudCommands.push_back("undelete");
+    // if (undelete)
+    //     crudCommands.push_back("undelete");
 
-    if (remove)
-        crudCommands.push_back("remove");
+    // if (remove)
+    //     crudCommands.push_back("remove");
 
     if (Mocked((tags ? "tags" : collections ? "collections" : "names")))
         return false;

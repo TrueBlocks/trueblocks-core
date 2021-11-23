@@ -73,9 +73,8 @@ func ServeWhen(w http.ResponseWriter, r *http.Request) bool {
 		if len(opts.Blocks) == 0 {
 			return true
 		}
-		// continue but don't show headers
-		r.URL.RawQuery = strings.Replace(r.URL.RawQuery, "list", "", -1)
-		r.URL.RawQuery = strings.Replace(r.URL.RawQuery, "&&", "&", -1)
+		// continue but don't show headers or --list
+		r.URL.RawQuery = strings.Replace(r.URL.RawQuery, "list", "noop", -1)
 		r.URL.RawQuery += "&no_header"
 	}
 	return false

@@ -15,14 +15,14 @@ on      ,cmd  ,fast  ,monitors ,apps/acctExport ,monitors_help            ,n    
 on      ,cmd  ,fast  ,monitors ,apps/acctExport ,monitors_long_help       ,n    ,help
 on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_no_params       ,y    ,
 
-on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_delete_1        ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & delete
-on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_delete_1_fail   ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & delete
-on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_undelete        ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & undelete
-on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_undelete_fail   ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & undelete
-on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_remove_fail     ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & remove
-on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_delete_2        ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & delete
-on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_remove          ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & remove
-on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_undelete2       ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & undelete
+local   ,both ,fast  ,monitors ,apps/acctExport ,monitors_delete_1        ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & delete
+local   ,both ,fast  ,monitors ,apps/acctExport ,monitors_delete_1_fail   ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & delete
+local   ,both ,fast  ,monitors ,apps/acctExport ,monitors_undelete        ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & undelete
+local   ,both ,fast  ,monitors ,apps/acctExport ,monitors_undelete_fail   ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & undelete
+local   ,both ,fast  ,monitors ,apps/acctExport ,monitors_remove_fail     ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & remove
+local   ,both ,fast  ,monitors ,apps/acctExport ,monitors_delete_2        ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & delete
+local   ,both ,fast  ,monitors ,apps/acctExport ,monitors_remove          ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & remove
+local   ,both ,fast  ,monitors ,apps/acctExport ,monitors_undelete2       ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & undelete
 
 on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_count           ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & count
 on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_appearances     ,n    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & first_block = 0 & last_block = 3375495 & fmt = csv & appearances

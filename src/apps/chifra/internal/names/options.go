@@ -40,11 +40,6 @@ type NamesOptions struct {
 	ToCustom    bool
 	Clean       bool
 	Autoname    string
-	Create      bool
-	Delete      bool
-	Update      bool
-	Remove      bool
-	Undelete    bool
 	Globals     globals.GlobalOptions
 	BadFlag     error
 }
@@ -63,11 +58,6 @@ func (opts *NamesOptions) TestLog() {
 	logger.TestLog(opts.ToCustom, "ToCustom: ", opts.ToCustom)
 	logger.TestLog(opts.Clean, "Clean: ", opts.Clean)
 	logger.TestLog(len(opts.Autoname) > 0, "Autoname: ", opts.Autoname)
-	logger.TestLog(opts.Create, "Create: ", opts.Create)
-	logger.TestLog(opts.Delete, "Delete: ", opts.Delete)
-	logger.TestLog(opts.Update, "Update: ", opts.Update)
-	logger.TestLog(opts.Remove, "Remove: ", opts.Remove)
-	logger.TestLog(opts.Undelete, "Undelete: ", opts.Undelete)
 	opts.Globals.TestLog()
 }
 
@@ -109,21 +99,6 @@ func (opts *NamesOptions) ToCmdLine() string {
 	if len(opts.Autoname) > 0 {
 		options += " --autoname " + opts.Autoname
 	}
-	if opts.Create {
-		options += " --create"
-	}
-	if opts.Delete {
-		options += " --delete"
-	}
-	if opts.Update {
-		options += " --update"
-	}
-	if opts.Remove {
-		options += " --remove"
-	}
-	if opts.Undelete {
-		options += " --undelete"
-	}
 	options += " " + strings.Join(opts.Terms, " ")
 	options += fmt.Sprintf("%s", "") // silence go compiler for auto gen
 	return options
@@ -162,16 +137,6 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *NamesOptions {
 			opts.Clean = true
 		case "autoname":
 			opts.Autoname = value[0]
-		case "create":
-			opts.Create = true
-		case "delete":
-			opts.Delete = true
-		case "update":
-			opts.Update = true
-		case "remove":
-			opts.Remove = true
-		case "undelete":
-			opts.Undelete = true
 		default:
 			if !globals.IsGlobalOption(key) {
 				opts.BadFlag = validate.Usage("Invalid key ({0}) in {1} route.", key, "names")
