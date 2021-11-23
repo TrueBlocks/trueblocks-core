@@ -32,6 +32,9 @@ type MonitorsOptions struct {
 	Appearances bool
 	Count       bool
 	Clean       bool
+	Delete      bool
+	Undelete    bool
+	Remove      bool
 	FirstBlock  uint64
 	LastBlock   uint64
 	Globals     globals.GlobalOptions
@@ -43,6 +46,9 @@ func (opts *MonitorsOptions) TestLog() {
 	logger.TestLog(opts.Appearances, "Appearances: ", opts.Appearances)
 	logger.TestLog(opts.Count, "Count: ", opts.Count)
 	logger.TestLog(opts.Clean, "Clean: ", opts.Clean)
+	logger.TestLog(opts.Delete, "Delete: ", opts.Delete)
+	logger.TestLog(opts.Undelete, "Undelete: ", opts.Undelete)
+	logger.TestLog(opts.Remove, "Remove: ", opts.Remove)
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
 	logger.TestLog(opts.LastBlock != 0 && opts.LastBlock != utils.NOPOS, "LastBlock: ", opts.LastBlock)
 	opts.Globals.TestLog()
@@ -58,6 +64,15 @@ func (opts *MonitorsOptions) ToCmdLine() string {
 	}
 	if opts.Clean {
 		options += " --clean"
+	}
+	if opts.Delete {
+		options += " --delete"
+	}
+	if opts.Undelete {
+		options += " --undelete"
+	}
+	if opts.Remove {
+		options += " --remove"
 	}
 	if opts.FirstBlock != 0 {
 		options += (" --first_block " + fmt.Sprintf("%d", opts.FirstBlock))
@@ -87,6 +102,12 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *MonitorsOptions {
 			opts.Count = true
 		case "clean":
 			opts.Clean = true
+		case "delete":
+			opts.Delete = true
+		case "undelete":
+			opts.Undelete = true
+		case "remove":
+			opts.Remove = true
 		case "first_block":
 			opts.FirstBlock = globals.ToUint64(value[0])
 		case "last_block":

@@ -957,23 +957,30 @@ string_q toCamelCase(const string_q& in) {
 }
 
 //---------------------------------------------------------------------------------------------------
+bool isCrud(const string_q& cmd) {
+    return cmd == "create" || cmd == "delete" || cmd == "update" || cmd == "remove" || cmd == "undelete";
+}
+
+//---------------------------------------------------------------------------------------------------
 string_q CCommandOption::toApiPath(const string_q& inStr, const string_q& exampleFn) const {
     if (!isApiRoute(api_route))
         return "";
 
     ostringstream paramStream;
     for (auto param : *(CCommandOptionArray*)params) {
-        // replace(param.longName, "deleteMe", "delete");
+        replace(param.longName, "deleteMe", "delete");
         if (param.longName.empty() || !param.is_visible_docs)
             continue;
-        string_q yp = STR_PARAM_YAML;
-        replace(yp, "[{NAME}]", toCamelCase(param.longName));
-        replace(yp, "[{DESCR}]", prepareDescr(param.swagger_descr));
-        replace(yp, "[{REQ}]", param.is_required ? "true" : "false");
-        replace(yp, "[{SCHEMA}]", param.getSchema());
-        if (paramStream.str().empty())
-            paramStream << "      parameters:\n";
-        paramStream << yp << endl;
+        if (!isCrud(param.longName)) {
+            string_q yp = STR_PARAM_YAML;
+            replace(yp, "[{NAME}]", toCamelCase(param.longName));
+            replace(yp, "[{DESCR}]", prepareDescr(param.swagger_descr));
+            replace(yp, "[{REQ}]", param.is_required ? "true" : "false");
+            replace(yp, "[{SCHEMA}]", param.getSchema());
+            if (paramStream.str().empty())
+                paramStream << "      parameters:\n";
+            paramStream << yp << endl;
+        }
     }
 
     ostringstream example;

@@ -124,6 +124,9 @@ Flags:
   -p, --appearances   export a list of appearances
   -U, --count         present only the number of records
       --clean         clean (i.e. remove duplicate appearances) from monitors
+      --delete        delete a monitor, but do not remove it
+      --undelete      undelete a previously deleted monitor
+      --remove        remove a previously deleted monitor
   -x, --fmt string    export format, one of [none|json*|txt|csv|api]
   -v, --verbose       enable verbose (increase detail with --log_level)
   -h, --help          display this help screen

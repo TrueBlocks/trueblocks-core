@@ -45,6 +45,9 @@ Flags:
   -z, --summarize_by <val>   for --accounting only, summarize reconciliations by this time period, one of [yearly|quarterly|monthly|weekly|daily|hourly|blockly|tx] (hidden)
   -F, --first_block <num>    first block to process (inclusive) (hidden)
   -L, --last_block <num>     last block to process (inclusive) (hidden)
+      --delete               delete a monitor, but do not remove it
+      --undelete             undelete a previously deleted monitor
+      --remove               remove a previously deleted monitor
 
 Global Flags:
   -x, --fmt string     export format, one of [none|json*|txt|csv|api]

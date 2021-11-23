@@ -57,6 +57,9 @@ func init() {
 	monitorsCmd.Flags().BoolVarP(&monitorsPkg.Options.Appearances, "appearances", "p", false, "export a list of appearances")
 	monitorsCmd.Flags().BoolVarP(&monitorsPkg.Options.Count, "count", "U", false, "present only the number of records")
 	monitorsCmd.Flags().BoolVarP(&monitorsPkg.Options.Clean, "clean", "", false, "clean (i.e. remove duplicate appearances) from monitors")
+	monitorsCmd.Flags().BoolVarP(&monitorsPkg.Options.Delete, "delete", "", false, "delete a monitor, but do not remove it")
+	monitorsCmd.Flags().BoolVarP(&monitorsPkg.Options.Undelete, "undelete", "", false, "undelete a previously deleted monitor")
+	monitorsCmd.Flags().BoolVarP(&monitorsPkg.Options.Remove, "remove", "", false, "remove a previously deleted monitor")
 	monitorsCmd.Flags().Uint64VarP(&monitorsPkg.Options.FirstBlock, "first_block", "F", 0, "first block to process (inclusive) (hidden)")
 	monitorsCmd.Flags().Uint64VarP(&monitorsPkg.Options.LastBlock, "last_block", "L", 0, "last block to process (inclusive) (hidden)")
 	if os.Getenv("TEST_MODE") != "true" {

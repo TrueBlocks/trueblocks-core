@@ -21,6 +21,11 @@ Flags:
   -u, --to_custom         for editCmd only, is the edited name a custom name or not (hidden)
   -C, --clean             clean the data (addrs to lower case, sort by addr) (hidden)
   -A, --autoname string   an address assumed to be a token, added automatically to names database if true (hidden)
+      --create            create a new name record (hidden)
+      --delete            delete a name, but do not remove it (hidden)
+      --update            edit an existing name (hidden)
+      --remove            remove a previously deleted name (hidden)
+      --undelete          undelete a previously deleted name (hidden)
   -x, --fmt string        export format, one of [none|json*|txt|csv|api]
   -v, --verbose           enable verbose (increase detail with --log_level)
   -h, --help              display this help screen
