@@ -156,7 +156,7 @@ bool visitEnumItem2(string_q& item, void* data) {
 string_q get_use(const CCommandOption& cmd) {
     ostringstream arguments;
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
-        replace(p.longName, "deleteMe", "delete");
+        // replace(p.longName, "deleteMe", "delete");
         if (p.option_type == "positional") {
             if (arguments.str().empty())
                 arguments << endl << "Arguments:" << endl;
@@ -211,7 +211,7 @@ string_q noUnderbars(const string_q& in) {
 string_q get_testlogs(const CCommandOption& cmd) {
     ostringstream os;
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
-        replace(p.longName, "deleteMe", "delete");
+        // replace(p.longName, "deleteMe", "delete");
         p.def_val = substitute(p.def_val, "NOPOS", "utils.NOPOS");
 
         if (!p.isDeprecated) {
@@ -243,7 +243,7 @@ string_q get_testlogs(const CCommandOption& cmd) {
 string_q get_optfields(const CCommandOption& cmd) {
     size_t wid = 0;
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
-        replace(p.longName, "deleteMe", "delete");
+        // replace(p.longName, "deleteMe", "delete");
         wid = max(p.Format("[{VARIABLE}]").length(), wid);
     }
     wid = max(string_q("Globals").length(), wid);
@@ -251,7 +251,7 @@ string_q get_optfields(const CCommandOption& cmd) {
 
     ostringstream os;
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
-        replace(p.longName, "deleteMe", "delete");
+        // replace(p.longName, "deleteMe", "delete");
         os << "\t" << padRight(p.Format("[{VARIABLE}]"), wid) << " " << p.go_type << endl;
     }
     os << "\t" << padRight("Globals", wid) << " globals.GlobalOptions" << endl;
@@ -274,7 +274,7 @@ string_q get_defaults_apis(const CCommandOption& cmd) {
 string_q get_requestopts(const CCommandOption& cmd) {
     ostringstream os;
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
-        replace(p.longName, "deleteMe", "delete");
+        // replace(p.longName, "deleteMe", "delete");
         string_q low = p.Format("[{LOWER}]");
         if (startsWith(p.data_type, "list<")) {
             os << p.Format(substitute(STR_REQUEST_CASE2, "++LOWER++", low)) << endl;
@@ -352,7 +352,7 @@ string_q get_positionals2(const CCommandOption& cmd) {
 string_q get_hidden(const CCommandOption& cmd) {
     ostringstream os;
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
-        replace(p.longName, "deleteMe", "delete");
+        // replace(p.longName, "deleteMe", "delete");
         if (!p.is_visible) {
             os << "\t\t[{ROUTE}]Cmd.Flags().MarkHidden(\"" + p.Format("[{LONGNAME}]") + "\")" << endl;
         }
@@ -373,7 +373,7 @@ string_q get_setopts(const CCommandOption& cmd) {
     ostringstream os;
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
         if (p.option_type != "positional") {
-            replace(p.longName, "deleteMe", "delete");
+            // replace(p.longName, "deleteMe", "delete");
 
             os << "\t[{ROUTE}]Cmd.Flags().";
             os << p.go_flagtype;
@@ -395,7 +395,7 @@ string_q get_copyopts(const CCommandOption& cmd) {
         if (p.isDeprecated)
             continue;
 
-        replace(p.longName, "deleteMe", "delete");
+        // replace(p.longName, "deleteMe", "delete");
         if (p.option_type != "positional") {
             string_q format;
             if (p.go_type == "[]string") {

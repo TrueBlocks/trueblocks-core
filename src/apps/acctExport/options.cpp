@@ -61,7 +61,7 @@ bool COptions::parseArguments(string_q& command) {
     if (!standardOptions(command))
         return false;
 
-    replaceAll(command, "--delete", "--deleteMe");
+    // replaceAll(command, "--delete", "--deleteMe");
 
     // BEG_CODE_LOCAL_INIT
     CAddressArray addrs;

@@ -957,7 +957,7 @@ string_q CCommandOption::toApiPath(const string_q& inStr, const string_q& exampl
 
     ostringstream paramStream;
     for (auto param : *(CCommandOptionArray*)params) {
-        replace(param.longName, "deleteMe", "delete");
+        // replace(param.longName, "deleteMe", "delete");
         if (param.longName.empty() || !param.is_visible_docs)
             continue;
         string_q yp = STR_PARAM_YAML;
