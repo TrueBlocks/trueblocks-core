@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: TrueBlocks API
   contact:
-    email: jrush@trueblocks.io
+    email: info@trueblocks.io
     url: https://www.trueblocks.io
   license:
     name: GPL 3.0
@@ -97,7 +97,7 @@ paths:
             type: array
             items:
               type: string
-              format: address_t
+              format: address
         - name: count
           description: present only the number of records
           required: false
@@ -166,7 +166,7 @@ paths:
             type: array
             items:
               type: string
-              format: address_t
+              format: address
         - name: topics
           description: filter by one or more log topics (only for --logs option)
           required: false
@@ -177,7 +177,7 @@ paths:
             type: array
             items:
               type: string
-              format: topic_t
+              format: topic
         - name: fourbytes
           description: >
              filter by one or more fourbytes (only for transactions and trace options)
@@ -189,7 +189,7 @@ paths:
             type: array
             items:
               type: string
-              format: fourbyte_t
+              format: fourbyte
         - name: appearances
           description: export a list of appearances
           required: false
@@ -264,7 +264,7 @@ paths:
           explode: true
           schema:
             type: boolean
-        - name: cache_traces
+        - name: cacheTraces
           description: write traces to the cache (see notes)
           required: false
           style: form
@@ -281,7 +281,7 @@ paths:
           explode: true
           schema:
             type: boolean
-        - name: first_record
+        - name: firstRecord
           description: the first record to process
           required: false
           style: form
@@ -289,7 +289,7 @@ paths:
           explode: true
           schema:
             type: string
-        - name: max_records
+        - name: maxRecords
           description: the maximum number of records to process before reporting
           required: false
           style: form
@@ -317,7 +317,7 @@ paths:
             type: array
             items:
               type: string
-              format: address_t
+              format: address
         - name: topic
           description: for log export only, export only logs with this topic(s)
           required: false
@@ -328,7 +328,7 @@ paths:
             type: array
             items:
               type: string
-              format: topic_t
+              format: topic
         - name: clean
           description: clean (i.e. remove duplicate appearances) from all existing monitors
           required: false
@@ -409,7 +409,7 @@ paths:
             type: array
             items:
               type: string
-              format: address_t
+              format: address
         - name: appearances
           description: export a list of appearances
           required: false
@@ -428,30 +428,6 @@ paths:
             type: boolean
         - name: clean
           description: clean (i.e. remove duplicate appearances) from monitors
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
-        - name: delete
-          description: delete a monitor, but do not remove it
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
-        - name: undelete
-          description: undelete a previously deleted monitor
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
-        - name: remove
-          description: remove a previously deleted monitor
           required: false
           style: form
           in: query
@@ -490,7 +466,7 @@ paths:
             type: array
             items:
               type: string
-              format: string_t
+              format: string
         - name: expand
           description: >
             expand search to include all fields (search name, address, and symbol otherwise)
@@ -500,7 +476,7 @@ paths:
           explode: true
           schema:
             type: boolean
-        - name: match_case
+        - name: matchCase
           description: do case-sensitive search
           required: false
           style: form
@@ -564,46 +540,6 @@ paths:
           explode: true
           schema:
             type: boolean
-        - name: create
-          description: create a new name record
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
-        - name: delete
-          description: delete a name, but do not remove it
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
-        - name: update
-          description: edit an existing name
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
-        - name: remove
-          description: remove a previously deleted name
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
-        - name: undelete
-          description: undelete a previously deleted name
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
       responses:
         "200":
           description: returns the requested data
@@ -648,7 +584,7 @@ paths:
             type: array
             items:
               type: string
-              format: address_t
+              format: address
         - name: sol
           description: extract the abi definition from the provided .sol file(s)
           required: false
@@ -667,7 +603,7 @@ paths:
             type: array
             items:
               type: string
-              format: string_t
+              format: string
       responses:
         "200":
           description: returns the requested data
@@ -709,7 +645,7 @@ paths:
                           },
                           {
                             "type": "uint256",
-                            "name": "val_0",
+                            "name": "val0",
                             "internalType": "uint256"
                           }
                         ]
@@ -736,7 +672,7 @@ paths:
             type: array
             items:
               type: string
-              format: blknum_t
+              format: blknum
         - name: hashes
           description: >
             display only transaction hashes, default is to display full transaction detail
@@ -797,7 +733,7 @@ paths:
             type: array
             items:
               type: string
-              format: address_t
+              format: address
         - name: topic
           description: >
             for the --logs option only, filter logs to show only those with this topic(s)
@@ -809,7 +745,7 @@ paths:
             type: array
             items:
               type: string
-              format: topic_t
+              format: topic
         - name: count
           description: display the number of the lists of appearances for --addrs or --uniq
           required: false
@@ -865,7 +801,7 @@ paths:
             type: array
             items:
               type: string
-              format: tx_id_t
+              format: tx_id
         - name: articulate
           description: articulate the retrieved data if ABIs can be found
           required: false
@@ -939,7 +875,7 @@ paths:
             type: array
             items:
               type: string
-              format: tx_id_t
+              format: tx_id
         - name: articulate
           description: articulate the retrieved data if ABIs can be found
           required: false
@@ -980,7 +916,7 @@ paths:
             type: array
             items:
               type: string
-              format: tx_id_t
+              format: tx_id
         - name: articulate
           description: articulate the retrieved data if ABIs can be found
           required: false
@@ -1021,7 +957,7 @@ paths:
             type: array
             items:
               type: string
-              format: tx_id_t
+              format: tx_id
         - name: articulate
           description: articulate the retrieved data if ABIs can be found
           required: false
@@ -1116,7 +1052,7 @@ paths:
             type: array
             items:
               type: string
-              format: address_t
+              format: address
         - name: blocks
           description: >
             an optional list of one or more blocks at which to report balances, defaults to 'latest'
@@ -1128,7 +1064,7 @@ paths:
             type: array
             items:
               type: string
-              format: blknum_t
+              format: blknum
         - name: parts
           description: control which state to export
           required: false
@@ -1157,7 +1093,7 @@ paths:
           explode: true
           schema:
             type: boolean
-        - name: no_zero
+        - name: noZero
           description: suppress the display of zero balance accounts
           required: false
           style: form
@@ -1173,7 +1109,7 @@ paths:
           explode: true
           schema:
             type: string
-        - name: proxy_for
+        - name: proxyFor
           description: for the --call option only, redirects calls to this implementation
           required: false
           style: form
@@ -1232,7 +1168,7 @@ paths:
             type: array
             items:
               type: string
-              format: address_t
+              format: address
         - name: blocks
           description: >
             an optional list of one or more blocks at which to report balances, defaults to 'latest'
@@ -1244,7 +1180,7 @@ paths:
             type: array
             items:
               type: string
-              format: blknum_t
+              format: blknum
         - name: parts
           description: which parts of the token information to retrieve
           required: false
@@ -1263,7 +1199,7 @@ paths:
                 - version
                 - none
                 - all
-        - name: by_acct
+        - name: byAcct
           description: >
             consider each address an ERC20 token except the last, whose balance is reported for each token
           required: false
@@ -1272,7 +1208,7 @@ paths:
           explode: true
           schema:
             type: boolean
-        - name: no_zero
+        - name: noZero
           description: suppress the display of zero balance accounts
           required: false
           style: form
@@ -1301,9 +1237,9 @@ paths:
                         "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
                         "name": "The DAO Original",
                         "decimals": 1,
-                        "is_contract": true,
-                        "is_erc20": true,
-                        "is_erc721": true
+                        "isContract": true,
+                        "isErc20": true,
+                        "isErc721": true
                       }
                     ]
                   }
@@ -1371,18 +1307,18 @@ paths:
                   {
                     "data": [
                       {
-                        "client_version": "erigon/2021.09.2/linux-amd64/go1.16.3",
-                        "trueblocks_version": "GHC-TrueBlocks//0.12.1-alpha-7ac3196d7-20210903",
-                        "rpc_provider": "http://localhost:23456",
-                        "config_path": "~/Library/Application Support/TrueBlocks/",
-                        "cache_path": "~/Library/Application Support/TrueBlocks/cache/",
-                        "index_path": "~/Library/Application Support/TrueBlocks/unchained/",
-                        "is_testing": false,
-                        "is_docker": false,
-                        "is_archive": true,
-                        "is_tracing": true,
-                        "has_eskey": true,
-                        "has_pinkey": true,
+                        "clientVersion": "erigon/2021.09.2/linux-amd64/go1.16.3",
+                        "trueblocksVersion": "GHC-TrueBlocks//0.12.1-alpha-7ac3196d7-20210903",
+                        "rpcProvider": "http://localhost:23456",
+                        "configPath": "~/Library/Application Support/TrueBlocks/",
+                        "cachePath": "~/Library/Application Support/TrueBlocks/cache/",
+                        "indexPath": "~/Library/Application Support/TrueBlocks/unchained/",
+                        "isTesting": false,
+                        "isDocker": false,
+                        "isArchive": true,
+                        "isTracing": true,
+                        "hasEskey": true,
+                        "hasPinkey": true,
                         "date": "2021-09-03 19:38:19 UTC"
                       }
                     ]
@@ -1450,7 +1386,7 @@ paths:
           explode: true
           schema:
             type: boolean
-        - name: block_cnt
+        - name: blockCnt
           description: maximum number of blocks to process per pass
           required: false
           style: form
@@ -1607,7 +1543,7 @@ paths:
             type: array
             items:
               type: string
-              format: blknum_t
+              format: blknum
         - name: check
           description: check the validity of the chunk or bloom
           required: false
@@ -1764,7 +1700,7 @@ paths:
             type: array
             items:
               type: string
-              format: address_t
+              format: address
         - name: blocks
           description: an optional range of blocks to slurp
           required: false
@@ -1775,7 +1711,7 @@ paths:
             type: array
             items:
               type: string
-              format: blknum_t
+              format: blknum
         - name: types
           description: which types of transactions to request
           required: false
@@ -1869,7 +1805,7 @@ components:
           type: string
           format: address
           description: "the address being monitored"
-        is_custom:
+        isCustom:
           type: boolean
           description: "`true` if this address is customized"
     appearance:
@@ -2073,19 +2009,19 @@ components:
         deleted:
           type: boolean
           description: "`true` if deleted, `false` otherwise"
-        is_custom:
+        isCustom:
           type: boolean
           description: "`true` if the address is a custom address, `false` otherwise"
-        is_prefund:
+        isPrefund:
           type: boolean
           description: "`true` if the address was one of the prefund addresses, `false` otherwise"
-        is_contract:
+        isContract:
           type: boolean
           description: "`true` if the address is a smart contract, `false` otherwise"
-        is_erc20:
+        isErc20:
           type: boolean
           description: "`true` if the address is an ERC20, `false` otherwise"
-        is_erc721:
+        isErc721:
           type: boolean
           description: "`true` if the address is an ERC720, `false` otherwise"
     abi:
@@ -2546,68 +2482,68 @@ components:
           format: uint64
           example: 18
           description: "the number of decimals for the token contract"
-        is_contract:
+        isContract:
           type: boolean
           description: "`true` if the address is a smart contract, `false` otherwise"
-        is_erc20:
+        isErc20:
           type: boolean
           description: "`true` if the address is an ERC20, `false` otherwise"
-        is_erc721:
+        isErc721:
           type: boolean
           description: "`true` if the address is an ERC720, `false` otherwise"
     status:
       description: "This data model carries information about the TrueBlocks system including both the API server and the local binary caches"
       type: object
       properties:
-        client_version:
+        clientVersion:
           type: string
           description: "the version string as reported by the rpcProvider"
-        client_ids:
+        clientIds:
           type: string
           description: "netword_id and chain_id from the rpcProvider"
-        trueblocks_version:
+        trueblocksVersion:
           type: string
           description: "the TrueBlocks version string"
-        rpc_provider:
+        rpcProvider:
           type: string
           description: "the current rpcProvider"
-        balance_provider:
+        balanceProvider:
           type: string
           description: "the current archive node balance provider (defaults to rpcProvider)"
-        config_path:
+        configPath:
           type: string
           description: "the path to config files"
-        cache_path:
+        cachePath:
           type: string
           description: "the path to the local binary caches"
-        index_path:
+        indexPath:
           type: string
           description: "the path to the local binary indexes"
         host:
           type: string
           description: "the host portion of the local API server"
-        is_testing:
+        isTesting:
           type: boolean
           description: "`true` if the server is running in test mode"
-        is_api:
+        isApi:
           type: boolean
           description: "`true` if the server is running in API mode"
-        is_docker:
+        isDocker:
           type: boolean
           description: "`true` if running under a docker image"
-        is_scraping:
+        isScraping:
           type: boolean
           description: "`true` if the index scraper is running"
-        is_archive:
+        isArchive:
           type: boolean
           description: "`true` if the rpcProvider is an archive node"
-        is_tracing:
+        isTracing:
           type: boolean
           description: "`true` if the rpcProvider provides Parity traces"
-        has_eskey:
+        hasEskey:
           type: boolean
           description: "`true` if an EtherScan key is present"
-        has_pinkey:
+        hasPinkey:
           type: boolean
           description: "`true` if a Pinata API key is present"
         ts:
@@ -2711,7 +2647,7 @@ components:
         name:
           type: string
           description: "the name of this parameter"
-        str_default:
+        strDefault:
           type: string
           description: "the default value of this parameter, if any"
         indexed:
