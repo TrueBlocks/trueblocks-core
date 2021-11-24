@@ -1,3 +1,15 @@
+# v0.17.0 Updated API and SDK
+
+---
+
+(November 23, 2021)
+
+## Why the Change?
+
+Version 0.17.0 is another major upgrade to our code. We added a Typescript SDK and as a result, in order to make the SDK more consistent, some of the API endpoints changed.
+
+Here's a table showing which endpoints changed. Previously the API endpoints were identical to the command line options. Now, API options are `camelCase` and command line options are `under_bar_cased`.
+
 ### Command line / API options
 
 *The api option is the same as the command line flag unless otherwise noted.*
@@ -175,3 +187,59 @@
 |              | blocks       |                |             |
 |              |              | --types        |             |
 |              |              | --appearances  |             |
+|              |              |                |             |
+| globals      |              | --log_level    | logLevel    |
+|              |              | --no_header    | noHeader    |
+|              |              | --to_file      | toFile      |
+
+
+
+
+
+
+### Breaking Change to --verbose flag
+
+## You're Finished
+
+Please report any problems by creating an issue.
+
+## Deprecated Command Line Options
+
+- The `--report` option of `chifra status` has been removed. Simply run `chifra status` with no options for the same result.
+- The `--init_all` option of `chifra pins` has been removed. Use `chifra pins --init --all` instead or more convieniently, `chifra init --all` which is identical.
+- The globally available `--file:fn` option has been made consistent with other flags and no longer requires the colon (:).
+
+## Previous Migration
+
+[Click here](https://github.com/TrueBlocks/trueblocks-core/blob/develop/src/other/migrations/README-0.14.0.md) for the previous migration.
+
+
+
+n_blocks --> block_cnt
+n_block_procs --> block_chan_cnt
+n_addr_procs --> addr_chan_cnt
+
+changed -a flag in chifra blocks which used to stand for --apps to -s due to adding --articulate option
+added options --logs, --emitter, and --topics to chifra blocks
+From pinMan each of these is deprecated
+	freshen  bool
+	remote   bool
+	init_all bool
+changed --cache_txs to --cache in export
+
+
+
+--uniq_txs to --uniq -- removed the old --uniq option which was redundant
+
+
+chifra when
+	field headers changed from
+		blocknumber	timestamp	date	name
+	to
+		blockNumber	timeStamp	date	name
+	camel case from lower case
+
+
+Removed the `types` field from API export
+
+https://github.com/TrueBlocks/trueblocks-core/blob/fix/camelCaseApi/docs/COMMANDS.md
