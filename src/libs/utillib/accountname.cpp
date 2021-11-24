@@ -90,20 +90,20 @@ string_q CAccountName::getValueByName(const string_q& fieldName) const {
             }
             break;
         case 'i':
-            if (fieldName % "is_custom") {
-                return bool_2_Str(is_custom);
+            if (fieldName % "isCustom") {
+                return bool_2_Str(isCustom);
             }
-            if (fieldName % "is_prefund") {
-                return bool_2_Str(is_prefund);
+            if (fieldName % "isPrefund") {
+                return bool_2_Str(isPrefund);
             }
-            if (fieldName % "is_contract") {
-                return bool_2_Str(is_contract);
+            if (fieldName % "isContract") {
+                return bool_2_Str(isContract);
             }
-            if (fieldName % "is_erc20") {
-                return bool_2_Str(is_erc20);
+            if (fieldName % "isErc20") {
+                return bool_2_Str(isErc20);
             }
-            if (fieldName % "is_erc721") {
-                return bool_2_Str(is_erc721);
+            if (fieldName % "isErc721") {
+                return bool_2_Str(isErc721);
             }
             break;
         case 'n':
@@ -165,24 +165,24 @@ bool CAccountName::setValueByName(const string_q& fieldNameIn, const string_q& f
             }
             break;
         case 'i':
-            if (fieldName % "is_custom") {
-                is_custom = str_2_Bool(fieldValue);
+            if (fieldName % "isCustom") {
+                isCustom = str_2_Bool(fieldValue);
                 return true;
             }
-            if (fieldName % "is_prefund") {
-                is_prefund = str_2_Bool(fieldValue);
+            if (fieldName % "isPrefund") {
+                isPrefund = str_2_Bool(fieldValue);
                 return true;
             }
-            if (fieldName % "is_contract") {
-                is_contract = str_2_Bool(fieldValue);
+            if (fieldName % "isContract") {
+                isContract = str_2_Bool(fieldValue);
                 return true;
             }
-            if (fieldName % "is_erc20") {
-                is_erc20 = str_2_Bool(fieldValue);
+            if (fieldName % "isErc20") {
+                isErc20 = str_2_Bool(fieldValue);
                 return true;
             }
-            if (fieldName % "is_erc721") {
-                is_erc721 = str_2_Bool(fieldValue);
+            if (fieldName % "isErc721") {
+                isErc721 = str_2_Bool(fieldValue);
                 return true;
             }
             break;
@@ -240,11 +240,11 @@ bool CAccountName::Serialize(CArchive& archive) {
     archive >> source;
     archive >> decimals;
     archive >> description;
-    archive >> is_custom;
-    archive >> is_prefund;
-    archive >> is_contract;
-    archive >> is_erc20;
-    archive >> is_erc721;
+    archive >> isCustom;
+    archive >> isPrefund;
+    archive >> isContract;
+    archive >> isErc20;
+    archive >> isErc721;
     // EXISTING_CODE
     // EXISTING_CODE
     finishParse();
@@ -265,11 +265,11 @@ bool CAccountName::SerializeC(CArchive& archive) const {
     archive << source;
     archive << decimals;
     archive << description;
-    archive << is_custom;
-    archive << is_prefund;
-    archive << is_contract;
-    archive << is_erc20;
-    archive << is_erc721;
+    archive << isCustom;
+    archive << isPrefund;
+    archive << isContract;
+    archive << isErc20;
+    archive << isErc721;
     // EXISTING_CODE
     // EXISTING_CODE
     return true;
@@ -326,11 +326,11 @@ void CAccountName::registerClass(void) {
     ADD_FIELD(CAccountName, "source", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CAccountName, "decimals", T_UNUMBER | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CAccountName, "description", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CAccountName, "is_custom", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CAccountName, "is_prefund", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CAccountName, "is_contract", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CAccountName, "is_erc20", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CAccountName, "is_erc721", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CAccountName, "isCustom", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CAccountName, "isPrefund", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CAccountName, "isContract", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CAccountName, "isErc20", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CAccountName, "isErc721", T_BOOL | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CAccountName, "schema");
@@ -353,7 +353,7 @@ string_q nextAccountnameChunk_custom(const string_q& fieldIn, const void* dataPt
             case 'n':
                 if (fieldIn % "name") {
                     string_q ret = substitute(acc->name, "\"", "");
-                    if (isTestMode() && (acc->is_custom || contains(acc->tags, "Individuals"))) {
+                    if (isTestMode() && (acc->isCustom || contains(acc->tags, "Individuals"))) {
                         ret = "Name " + acc->address.substr(0, 10);
                     }
                     return ret;
@@ -400,9 +400,9 @@ bool CAccountName::readBackLevel(CArchive& archive) {
         archive >> unused5;  // used to be logo
         // archive >> path;
         // archive >> color;
-        archive >> unused2;  // used to be is_contract;
-        archive >> unused3;  // used to be is_private;
-        archive >> unused4;  // used to be is_shared;
+        archive >> unused2;  // used to be isContract;
+        archive >> unused3;  // used to be isPrivate;
+        archive >> unused4;  // used to be isShared;
         // archive >> first Appearance;
         // archive >> latest Appearance;
         // archive >> last Export;
@@ -449,11 +449,11 @@ const char* STR_DISPLAY_ACCOUNTNAME =
     "[{DECIMALS}]\t"
     "[{DESCRIPTION}]\t"
     "[{DELETED}]\t"
-    "[{IS_CUSTOM}]\t"
-    "[{IS_PREFUND}]\t"
-    "[{IS_CONTRACT}]\t"
-    "[{IS_ERC20}]\t"
-    "[{IS_ERC721}]";
+    "[{ISCUSTOM}]\t"
+    "[{ISPREFUND}]\t"
+    "[{ISCONTRACT}]\t"
+    "[{ISERC20}]\t"
+    "[{ISERC721}]";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

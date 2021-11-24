@@ -26,7 +26,7 @@
         },
         {
           "type": "uint256",
-          "name": "val_0",
+          "name": "val0",
           "internalType": "uint256"
         }
       ]

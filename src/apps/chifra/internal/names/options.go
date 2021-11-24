@@ -140,7 +140,7 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *NamesOptions {
 			}
 		case "expand":
 			opts.Expand = true
-		case "match_case":
+		case "matchCase":
 			opts.MatchCase = true
 		case "all":
 			opts.All = true
@@ -156,7 +156,7 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *NamesOptions {
 			opts.Collections = true
 		case "tags":
 			opts.Tags = true
-		case "to_custom":
+		case "toCustom":
 			opts.ToCustom = true
 		case "clean":
 			opts.Clean = true

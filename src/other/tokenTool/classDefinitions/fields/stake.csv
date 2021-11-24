@@ -1,4 +1,4 @@
-name    ,type    ,str_default ,object ,array ,nowrite ,omitempty ,minimal ,extra ,noaddfld ,doc ,disp ,example ,description
-address ,address ,            ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
-lastPos ,uint64  ,NOPOS       ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
-stake   ,wei     ,            ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
+name    ,type    ,strDefault ,object ,array ,nowrite ,omitempty ,minimal ,extra ,noaddfld ,doc ,disp ,example ,description
+address ,address ,           ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
+lastPos ,uint64  ,NOPOS      ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
+stake   ,wei     ,           ,       ,      ,        ,          ,        ,      ,         ,    ,     ,        ,

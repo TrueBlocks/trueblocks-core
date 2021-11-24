@@ -27,7 +27,7 @@ components:
           type: string
           format: address
           description: "the address being monitored"
-        is_custom:
+        isCustom:
           type: boolean
           description: "`true` if this address is customized"
     appearance:
@@ -231,19 +231,19 @@ components:
         deleted:
           type: boolean
           description: "`true` if deleted, `false` otherwise"
-        is_custom:
+        isCustom:
           type: boolean
           description: "`true` if the address is a custom address, `false` otherwise"
-        is_prefund:
+        isPrefund:
           type: boolean
           description: "`true` if the address was one of the prefund addresses, `false` otherwise"
-        is_contract:
+        isContract:
           type: boolean
           description: "`true` if the address is a smart contract, `false` otherwise"
-        is_erc20:
+        isErc20:
           type: boolean
           description: "`true` if the address is an ERC20, `false` otherwise"
-        is_erc721:
+        isErc721:
           type: boolean
           description: "`true` if the address is an ERC720, `false` otherwise"
     abi:
@@ -704,68 +704,68 @@ components:
           format: uint64
           example: 18
           description: "the number of decimals for the token contract"
-        is_contract:
+        isContract:
           type: boolean
           description: "`true` if the address is a smart contract, `false` otherwise"
-        is_erc20:
+        isErc20:
           type: boolean
           description: "`true` if the address is an ERC20, `false` otherwise"
-        is_erc721:
+        isErc721:
           type: boolean
           description: "`true` if the address is an ERC720, `false` otherwise"
     status:
       description: "This data model carries information about the TrueBlocks system including both the API server and the local binary caches"
       type: object
       properties:
-        client_version:
+        clientVersion:
           type: string
           description: "the version string as reported by the rpcProvider"
-        client_ids:
+        clientIds:
           type: string
           description: "netword_id and chain_id from the rpcProvider"
-        trueblocks_version:
+        trueblocksVersion:
           type: string
           description: "the TrueBlocks version string"
-        rpc_provider:
+        rpcProvider:
           type: string
           description: "the current rpcProvider"
-        balance_provider:
+        balanceProvider:
           type: string
           description: "the current archive node balance provider (defaults to rpcProvider)"
-        config_path:
+        configPath:
           type: string
           description: "the path to config files"
-        cache_path:
+        cachePath:
           type: string
           description: "the path to the local binary caches"
-        index_path:
+        indexPath:
           type: string
           description: "the path to the local binary indexes"
         host:
           type: string
           description: "the host portion of the local API server"
-        is_testing:
+        isTesting:
           type: boolean
           description: "`true` if the server is running in test mode"
-        is_api:
+        isApi:
           type: boolean
           description: "`true` if the server is running in API mode"
-        is_docker:
+        isDocker:
           type: boolean
           description: "`true` if running under a docker image"
-        is_scraping:
+        isScraping:
           type: boolean
           description: "`true` if the index scraper is running"
-        is_archive:
+        isArchive:
           type: boolean
           description: "`true` if the rpcProvider is an archive node"
-        is_tracing:
+        isTracing:
           type: boolean
           description: "`true` if the rpcProvider provides Parity traces"
-        has_eskey:
+        hasEskey:
           type: boolean
           description: "`true` if an EtherScan key is present"
-        has_pinkey:
+        hasPinkey:
           type: boolean
           description: "`true` if a Pinata API key is present"
         ts:
@@ -869,7 +869,7 @@ components:
         name:
           type: string
           description: "the name of this parameter"
-        str_default:
+        strDefault:
           type: string
           description: "the default value of this parameter, if any"
         indexed:

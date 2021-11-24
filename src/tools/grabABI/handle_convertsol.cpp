@@ -20,7 +20,7 @@ void COptions::handle_convertsol(const address_t& addr) {
     // TODO: This is terrible. Can we remove it?
     if (isTestMode()) {
         HIDE_FIELD(CParameter, "value");
-        HIDE_FIELD(CParameter, "str_default");
+        HIDE_FIELD(CParameter, "strDefault");
         HIDE_FIELD(CParameter, "is_array");
         HIDE_FIELD(CParameter, "is_builtin");
         HIDE_FIELD(CParameter, "is_object");

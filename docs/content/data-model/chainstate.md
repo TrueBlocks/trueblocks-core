@@ -2,7 +2,7 @@
 title: "Chain state"
 description: ""
 lead: ""
-date: 2021-10-26T05:37:39
+date: 2021-11-22T23:00:40
 lastmod:
   - :git
   - lastmod
@@ -74,17 +74,17 @@ The following commands produce and manage tokens:
 
 Token data is made of the following data fields:
 
-| Field       | Description                                                  | Type    |
-| ----------- | ------------------------------------------------------------ | ------- |
-| holder      | the address for which we are reporting the token balance     | address |
-| balance     | the balance at the address at the given block height         | wei     |
-| address     | description: the address of the token contract being queried | address |
-| name        | the name of the token contract, if available                 | string  |
-| symbol      | the symbol for this token contract                           | string  |
-| decimals    | the number of decimals for the token contract                | uint64  |
-| is_contract | `true` if the address is a smart contract, `false` otherwise | bool    |
-| is_erc20    | `true` if the address is an ERC20, `false` otherwise         | bool    |
-| is_erc721   | `true` if the address is an ERC720, `false` otherwise        | bool    |
+| Field      | Description                                                  | Type    |
+| ---------- | ------------------------------------------------------------ | ------- |
+| holder     | the address for which we are reporting the token balance     | address |
+| balance    | the balance at the address at the given block height         | wei     |
+| address    | description: the address of the token contract being queried | address |
+| name       | the name of the token contract, if available                 | string  |
+| symbol     | the symbol for this token contract                           | string  |
+| decimals   | the number of decimals for the token contract                | uint64  |
+| isContract | `true` if the address is a smart contract, `false` otherwise | bool    |
+| isErc20    | `true` if the address is an ERC20, `false` otherwise         | bool    |
+| isErc721   | `true` if the address is an ERC720, `false` otherwise        | bool    |
 
 
 ## Base types

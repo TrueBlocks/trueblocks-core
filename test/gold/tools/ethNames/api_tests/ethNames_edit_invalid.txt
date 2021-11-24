@@ -1,4 +1,4 @@
-names?invalid&log_level=10&fmt=api&expand
+names?invalid&logLevel=10&fmt=api&expand
 {
   "errors": [
     "Invalid key (invalid) in names route."

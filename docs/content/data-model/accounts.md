@@ -2,7 +2,7 @@
 title: "Accounts"
 description: ""
 lead: ""
-date: 2021-10-03T19:59:18
+date: 2021-11-22T21:37:54
 lastmod:
   - :git
   - lastmod
@@ -48,7 +48,7 @@ Monitor data is made of the following data fields:
 | sizeInBytes | the size of this monitor on disc               | uint64  |
 | tags        | the tag given to this address                  | string  |
 | address     | the address being monitored                    | address |
-| is_custom   | `true` if this address is customized           | bool    |
+| isCustom    | `true` if this address is customized           | bool    |
 
 
 ## Appearance
@@ -160,11 +160,11 @@ Name data is made of the following data fields:
 | decimals    | number of decimals retrieved from an ERC20 smart contract, defaults to 18           | uint64  |
 | description | user supplied description for the address                                           | string  |
 | deleted     | `true` if deleted, `false` otherwise                                                | bool    |
-| is_custom   | `true` if the address is a custom address, `false` otherwise                        | bool    |
-| is_prefund  | `true` if the address was one of the prefund addresses, `false` otherwise           | bool    |
-| is_contract | `true` if the address is a smart contract, `false` otherwise                        | bool    |
-| is_erc20    | `true` if the address is an ERC20, `false` otherwise                                | bool    |
-| is_erc721   | `true` if the address is an ERC720, `false` otherwise                               | bool    |
+| isCustom    | `true` if the address is a custom address, `false` otherwise                        | bool    |
+| isPrefund   | `true` if the address was one of the prefund addresses, `false` otherwise           | bool    |
+| isContract  | `true` if the address is a smart contract, `false` otherwise                        | bool    |
+| isErc20     | `true` if the address is an ERC20, `false` otherwise                                | bool    |
+| isErc721    | `true` if the address is an ERC720, `false` otherwise                               | bool    |
 
 
 ## Abi

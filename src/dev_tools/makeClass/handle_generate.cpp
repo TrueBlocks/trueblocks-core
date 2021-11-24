@@ -171,12 +171,12 @@ bool COptions::handle_generate(CToml& toml, const CClassDefinition& classDefIn, 
             fieldGetObj += str;
         }
 
-        replace(setFmt, "[{DEFB}]", fld.str_default.empty() ? "false" : fld.str_default);
-        replace(setFmt, "[{DEFS}]", fld.str_default.empty() ? "\"\"" : fld.str_default);
-        replace(setFmt, "[{DEF}]", fld.str_default.empty() ? "0" : fld.str_default);
-        replace(setFmt, "[{DEFF}]", fld.str_default.empty() ? "0.0" : fld.str_default);
-        replace(setFmt, "[{DEFT}]", fld.str_default.empty() ? "earliestDate" : fld.str_default);
-        replace(setFmt, "[{DEFP}]", fld.str_default.empty() ? "NULL" : fld.str_default);
+        replace(setFmt, "[{DEFB}]", fld.strDefault.empty() ? "false" : fld.strDefault);
+        replace(setFmt, "[{DEFS}]", fld.strDefault.empty() ? "\"\"" : fld.strDefault);
+        replace(setFmt, "[{DEF}]", fld.strDefault.empty() ? "0" : fld.strDefault);
+        replace(setFmt, "[{DEFF}]", fld.strDefault.empty() ? "0.0" : fld.strDefault);
+        replace(setFmt, "[{DEFT}]", fld.strDefault.empty() ? "earliestDate" : fld.strDefault);
+        replace(setFmt, "[{DEFP}]", fld.strDefault.empty() ? "NULL" : fld.strDefault);
 
         if ((fld.is_flags & IS_POINTER) && !(fld.is_flags & IS_ARRAY))
             copyFmt =

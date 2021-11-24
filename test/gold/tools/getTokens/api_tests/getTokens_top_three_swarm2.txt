@@ -8,9 +8,9 @@ tokens?addrs2=0xb9e7f8568e08d5659f5d29c4997173d84cdf2607%200xfbb1b73c4f0bda4f67d
     "name": "Swarm City Token",
     "symbol": "SWT",
     "decimals": 18,
-    "is_contract": true,
-    "is_erc20": true,
-    "is_erc721": false
+    "isContract": true,
+    "isErc20": true,
+    "isErc721": false
   },
   {
     "blockNumber": 3510999,
@@ -20,9 +20,9 @@ tokens?addrs2=0xb9e7f8568e08d5659f5d29c4997173d84cdf2607%200xfbb1b73c4f0bda4f67d
     "name": "Swarm City Token",
     "symbol": "SWT",
     "decimals": 18,
-    "is_contract": true,
-    "is_erc20": true,
-    "is_erc721": false
+    "isContract": true,
+    "isErc20": true,
+    "isErc721": false
   },
   {
     "blockNumber": 2510010,
@@ -32,9 +32,9 @@ tokens?addrs2=0xb9e7f8568e08d5659f5d29c4997173d84cdf2607%200xfbb1b73c4f0bda4f67d
     "name": "Swarm City Token",
     "symbol": "SWT",
     "decimals": 18,
-    "is_contract": true,
-    "is_erc20": true,
-    "is_erc721": false
+    "isContract": true,
+    "isErc20": true,
+    "isErc721": false
   },
   {
     "blockNumber": 4285364,
@@ -44,9 +44,9 @@ tokens?addrs2=0xb9e7f8568e08d5659f5d29c4997173d84cdf2607%200xfbb1b73c4f0bda4f67d
     "name": "Swarm City Token",
     "symbol": "SWT",
     "decimals": 18,
-    "is_contract": true,
-    "is_erc20": true,
-    "is_erc721": false
+    "isContract": true,
+    "isErc20": true,
+    "isErc721": false
   },
   {
     "blockNumber": 3510999,
@@ -56,9 +56,9 @@ tokens?addrs2=0xb9e7f8568e08d5659f5d29c4997173d84cdf2607%200xfbb1b73c4f0bda4f67d
     "name": "Swarm City Token",
     "symbol": "SWT",
     "decimals": 18,
-    "is_contract": true,
-    "is_erc20": true,
-    "is_erc721": false
+    "isContract": true,
+    "isErc20": true,
+    "isErc721": false
   },
   {
     "blockNumber": 2510010,
@@ -68,9 +68,9 @@ tokens?addrs2=0xb9e7f8568e08d5659f5d29c4997173d84cdf2607%200xfbb1b73c4f0bda4f67d
     "name": "Swarm City Token",
     "symbol": "SWT",
     "decimals": 18,
-    "is_contract": true,
-    "is_erc20": true,
-    "is_erc721": false
+    "isContract": true,
+    "isErc20": true,
+    "isErc721": false
   },
   {
     "blockNumber": 4285364,
@@ -80,9 +80,9 @@ tokens?addrs2=0xb9e7f8568e08d5659f5d29c4997173d84cdf2607%200xfbb1b73c4f0bda4f67d
     "name": "Swarm City Token",
     "symbol": "SWT",
     "decimals": 18,
-    "is_contract": true,
-    "is_erc20": true,
-    "is_erc721": false
+    "isContract": true,
+    "isErc20": true,
+    "isErc721": false
   },
   {
     "blockNumber": 3510999,
@@ -92,9 +92,9 @@ tokens?addrs2=0xb9e7f8568e08d5659f5d29c4997173d84cdf2607%200xfbb1b73c4f0bda4f67d
     "name": "Swarm City Token",
     "symbol": "SWT",
     "decimals": 18,
-    "is_contract": true,
-    "is_erc20": true,
-    "is_erc721": false
+    "isContract": true,
+    "isErc20": true,
+    "isErc721": false
   },
   {
     "blockNumber": 2510010,
@@ -104,7 +104,7 @@ tokens?addrs2=0xb9e7f8568e08d5659f5d29c4997173d84cdf2607%200xfbb1b73c4f0bda4f67d
     "name": "Swarm City Token",
     "symbol": "SWT",
     "decimals": 18,
-    "is_contract": true,
-    "is_erc20": true,
-    "is_erc721": false
+    "isContract": true,
+    "isErc20": true,
+    "isErc721": false
   }], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef" } }

@@ -28,7 +28,7 @@ bool COptions::handle_status(ostream& os) {
         if (!isText) {
             fmt = "";
             manageFields("CStatusTerse:modes1,modes2", FLD_HIDE);
-            manageFields("CStatus:client_ids,balance_provider,host,is_api,is_scraping,caches", FLD_HIDE);
+            manageFields("CStatus:clientIds,balanceProvider,host,isApi,isScraping,caches", FLD_HIDE);
         }
         os << st.Format(fmt) << endl;
         return true;
@@ -92,7 +92,7 @@ bool COptions::handle_status(ostream& os) {
                 forEveryFileInFolder(thePath, noteMonitor, &counter);
             } else {
                 forEveryFileInFolder(thePath, noteMonitor_light, &counter);
-                monitors.is_valid = true;
+                monitors.isValid = true;
             }
             LOG4("forEvery monitors done");
             LOG8("\tWriting monitors cache");
@@ -117,7 +117,7 @@ bool COptions::handle_status(ostream& os) {
                 forEveryFileInFolder(thePath, noteMonitor, &counter);
             } else {
                 forEveryFileInFolder(thePath, noteMonitor_light, &counter);
-                names.is_valid = true;
+                names.isValid = true;
             }
             LOG8("\tre-writing names cache");
             names.writeBinaryCache("names", details);
@@ -209,7 +209,7 @@ bool COptions::handle_status(ostream& os) {
             } else {
                 HIDE_FIELD(CSlurpCache, "addrs");
                 forEveryFileInFolder(thePath, noteMonitor_light, &counter);
-                slurps.is_valid = true;
+                slurps.isValid = true;
             }
             LOG8("\tre-writing slurps cache");
             slurps.writeBinaryCache("slurps", details);
@@ -486,9 +486,9 @@ string_q pathName(const string_q& str, const string_q& path) {
 
 //--------------------------------------------------------------------------------
 const char* STR_TERSE_REPORT =
-    "client: [{CLIENT_VERSION}][{MODES1}]\n"
-    "[{TIME}] trueblocks: [{TRUEBLOCKS_VERSION}][{MODES2}]\n"
-    "[{TIME}] configPath: [{CONFIG_PATH}]\n"
-    "[{TIME}] cachePath: [{CACHE_PATH}]\n"
-    "[{TIME}] indexPath: [{INDEX_PATH}]\n"
-    "[{TIME}] rpcProvider: [{RPC_PROVIDER}]";
+    "client: [{CLIENTVERSION}][{MODES1}]\n"
+    "[{TIME}] trueblocks: [{TRUEBLOCKSVERSION}][{MODES2}]\n"
+    "[{TIME}] configPath: [{CONFIGPATH}]\n"
+    "[{TIME}] cachePath: [{CACHEPATH}]\n"
+    "[{TIME}] indexPath: [{INDEXPATH}]\n"
+    "[{TIME}] rpcProvider: [{RPCPROVIDER}]";

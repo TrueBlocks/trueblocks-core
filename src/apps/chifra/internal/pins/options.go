@@ -89,7 +89,7 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *PinsOptions {
 			opts.Freshen = true
 		case "remote":
 			opts.Remote = true
-		case "init_all":
+		case "initAll":
 			opts.InitAll = true
 		default:
 			if !globals.IsGlobalOption(key) {

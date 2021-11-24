@@ -357,7 +357,7 @@ bool COptions::parseArguments(string_q& command) {
         if (accountedFor.address.empty()) {
             accountedFor.address = monitor.address;
             findName(monitor.address, accountedFor);
-            accountedFor.is_contract = !getCodeAt(monitor.address, latest).empty();
+            accountedFor.isContract = !getCodeAt(monitor.address, latest).empty();
         }
         allMonitors.push_back(monitor);
     }
@@ -614,11 +614,11 @@ bool COptions::setDisplayFormatting(void) {
             HIDE_FIELD(CAppearanceDisplay, "source");
             HIDE_FIELD(CAppearanceDisplay, "decimals");
             HIDE_FIELD(CAppearanceDisplay, "description");
-            HIDE_FIELD(CAppearanceDisplay, "is_custom");
-            HIDE_FIELD(CAppearanceDisplay, "is_prefund");
-            HIDE_FIELD(CAppearanceDisplay, "is_contract");
-            HIDE_FIELD(CAppearanceDisplay, "is_erc20");
-            HIDE_FIELD(CAppearanceDisplay, "is_erc721");
+            HIDE_FIELD(CAppearanceDisplay, "isCustom");
+            HIDE_FIELD(CAppearanceDisplay, "isPrefund");
+            HIDE_FIELD(CAppearanceDisplay, "isContract");
+            HIDE_FIELD(CAppearanceDisplay, "isErc20");
+            HIDE_FIELD(CAppearanceDisplay, "isErc721");
             if (!verbose) {
                 replace(format, "\t[{TIMESTAMP}]\t[{DATE}]\t[{NAME}]", "");
             } else {
@@ -630,7 +630,7 @@ bool COptions::setDisplayFormatting(void) {
             manageFields("CAppearanceDisplay:" + format);
         }
         HIDE_FIELD(CFunction, "stateMutability");
-        HIDE_FIELD(CParameter, "str_default");
+        HIDE_FIELD(CParameter, "strDefault");
         HIDE_FIELD(CParameter, "components");
         HIDE_FIELD(CParameter, "internalType");
         HIDE_FIELD(CTransaction, "datesh");

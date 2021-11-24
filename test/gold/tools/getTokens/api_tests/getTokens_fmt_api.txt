@@ -9,9 +9,9 @@ tokens?addrs2=0xd26114cd6ee289accf82350c8d8487fedb8a0c07%200xb9e7f8568e08d5659f5
       "name": "OMGToken Airdrop",
       "symbol": "OMG",
       "decimals": 18,
-      "is_contract": true,
-      "is_erc20": true,
-      "is_erc721": false
+      "isContract": true,
+      "isErc20": true,
+      "isErc721": false
     }
   ],
   "meta": {

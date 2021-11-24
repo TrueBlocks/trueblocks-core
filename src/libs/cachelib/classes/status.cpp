@@ -74,22 +74,22 @@ string_q CStatus::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'b':
-            if (fieldName % "balance_provider") {
-                return balance_provider;
+            if (fieldName % "balanceProvider") {
+                return balanceProvider;
             }
             break;
         case 'c':
-            if (fieldName % "client_version") {
-                return client_version;
+            if (fieldName % "clientVersion") {
+                return clientVersion;
             }
-            if (fieldName % "client_ids") {
-                return client_ids;
+            if (fieldName % "clientIds") {
+                return clientIds;
             }
-            if (fieldName % "config_path") {
-                return config_path;
+            if (fieldName % "configPath") {
+                return configPath;
             }
-            if (fieldName % "cache_path") {
-                return cache_path;
+            if (fieldName % "cachePath") {
+                return cachePath;
             }
             if (fieldName % "caches" || fieldName % "cachesCnt") {
                 size_t cnt = caches.size();
@@ -109,44 +109,44 @@ string_q CStatus::getValueByName(const string_q& fieldName) const {
             if (fieldName % "host") {
                 return host;
             }
-            if (fieldName % "has_eskey") {
-                return bool_2_Str(has_eskey);
+            if (fieldName % "hasEskey") {
+                return bool_2_Str(hasEskey);
             }
-            if (fieldName % "has_pinkey") {
-                return bool_2_Str(has_pinkey);
+            if (fieldName % "hasPinkey") {
+                return bool_2_Str(hasPinkey);
             }
             break;
         case 'i':
-            if (fieldName % "index_path") {
-                return index_path;
+            if (fieldName % "indexPath") {
+                return indexPath;
             }
-            if (fieldName % "is_testing") {
-                return bool_2_Str(is_testing);
+            if (fieldName % "isTesting") {
+                return bool_2_Str(isTesting);
             }
-            if (fieldName % "is_api") {
-                return bool_2_Str(is_api);
+            if (fieldName % "isApi") {
+                return bool_2_Str(isApi);
             }
-            if (fieldName % "is_docker") {
-                return bool_2_Str(is_docker);
+            if (fieldName % "isDocker") {
+                return bool_2_Str(isDocker);
             }
-            if (fieldName % "is_scraping") {
-                return bool_2_Str(is_scraping);
+            if (fieldName % "isScraping") {
+                return bool_2_Str(isScraping);
             }
-            if (fieldName % "is_archive") {
-                return bool_2_Str(is_archive);
+            if (fieldName % "isArchive") {
+                return bool_2_Str(isArchive);
             }
-            if (fieldName % "is_tracing") {
-                return bool_2_Str(is_tracing);
+            if (fieldName % "isTracing") {
+                return bool_2_Str(isTracing);
             }
             break;
         case 'r':
-            if (fieldName % "rpc_provider") {
-                return rpc_provider;
+            if (fieldName % "rpcProvider") {
+                return rpcProvider;
             }
             break;
         case 't':
-            if (fieldName % "trueblocks_version") {
-                return trueblocks_version;
+            if (fieldName % "trueblocksVersion") {
+                return trueblocksVersion;
             }
             if (fieldName % "ts") {
                 return ts_2_Str(ts);
@@ -173,26 +173,26 @@ bool CStatus::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
 
     switch (tolower(fieldName[0])) {
         case 'b':
-            if (fieldName % "balance_provider") {
-                balance_provider = fieldValue;
+            if (fieldName % "balanceProvider") {
+                balanceProvider = fieldValue;
                 return true;
             }
             break;
         case 'c':
-            if (fieldName % "client_version") {
-                client_version = fieldValue;
+            if (fieldName % "clientVersion") {
+                clientVersion = fieldValue;
                 return true;
             }
-            if (fieldName % "client_ids") {
-                client_ids = fieldValue;
+            if (fieldName % "clientIds") {
+                clientIds = fieldValue;
                 return true;
             }
-            if (fieldName % "config_path") {
-                config_path = fieldValue;
+            if (fieldName % "configPath") {
+                configPath = fieldValue;
                 return true;
             }
-            if (fieldName % "cache_path") {
-                cache_path = fieldValue;
+            if (fieldName % "cachePath") {
+                cachePath = fieldValue;
                 return true;
             }
             if (fieldName % "caches") {
@@ -211,54 +211,54 @@ bool CStatus::setValueByName(const string_q& fieldNameIn, const string_q& fieldV
                 host = fieldValue;
                 return true;
             }
-            if (fieldName % "has_eskey") {
-                has_eskey = str_2_Bool(fieldValue);
+            if (fieldName % "hasEskey") {
+                hasEskey = str_2_Bool(fieldValue);
                 return true;
             }
-            if (fieldName % "has_pinkey") {
-                has_pinkey = str_2_Bool(fieldValue);
+            if (fieldName % "hasPinkey") {
+                hasPinkey = str_2_Bool(fieldValue);
                 return true;
             }
             break;
         case 'i':
-            if (fieldName % "index_path") {
-                index_path = fieldValue;
+            if (fieldName % "indexPath") {
+                indexPath = fieldValue;
                 return true;
             }
-            if (fieldName % "is_testing") {
-                is_testing = str_2_Bool(fieldValue);
+            if (fieldName % "isTesting") {
+                isTesting = str_2_Bool(fieldValue);
                 return true;
             }
-            if (fieldName % "is_api") {
-                is_api = str_2_Bool(fieldValue);
+            if (fieldName % "isApi") {
+                isApi = str_2_Bool(fieldValue);
                 return true;
             }
-            if (fieldName % "is_docker") {
-                is_docker = str_2_Bool(fieldValue);
+            if (fieldName % "isDocker") {
+                isDocker = str_2_Bool(fieldValue);
                 return true;
             }
-            if (fieldName % "is_scraping") {
-                is_scraping = str_2_Bool(fieldValue);
+            if (fieldName % "isScraping") {
+                isScraping = str_2_Bool(fieldValue);
                 return true;
             }
-            if (fieldName % "is_archive") {
-                is_archive = str_2_Bool(fieldValue);
+            if (fieldName % "isArchive") {
+                isArchive = str_2_Bool(fieldValue);
                 return true;
             }
-            if (fieldName % "is_tracing") {
-                is_tracing = str_2_Bool(fieldValue);
+            if (fieldName % "isTracing") {
+                isTracing = str_2_Bool(fieldValue);
                 return true;
             }
             break;
         case 'r':
-            if (fieldName % "rpc_provider") {
-                rpc_provider = fieldValue;
+            if (fieldName % "rpcProvider") {
+                rpcProvider = fieldValue;
                 return true;
             }
             break;
         case 't':
-            if (fieldName % "trueblocks_version") {
-                trueblocks_version = fieldValue;
+            if (fieldName % "trueblocksVersion") {
+                trueblocksVersion = fieldValue;
                 return true;
             }
             if (fieldName % "ts") {
@@ -291,23 +291,23 @@ bool CStatus::Serialize(CArchive& archive) {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive >> client_version;
-    archive >> client_ids;
-    archive >> trueblocks_version;
-    archive >> rpc_provider;
-    archive >> balance_provider;
-    // archive >> config_path;
-    archive >> cache_path;
-    archive >> index_path;
+    archive >> clientVersion;
+    archive >> clientIds;
+    archive >> trueblocksVersion;
+    archive >> rpcProvider;
+    archive >> balanceProvider;
+    // archive >> configPath;
+    archive >> cachePath;
+    archive >> indexPath;
     archive >> host;
-    archive >> is_testing;
-    archive >> is_api;
-    archive >> is_docker;
-    archive >> is_scraping;
-    archive >> is_archive;
-    archive >> is_tracing;
-    archive >> has_eskey;
-    archive >> has_pinkey;
+    archive >> isTesting;
+    archive >> isApi;
+    archive >> isDocker;
+    archive >> isScraping;
+    archive >> isArchive;
+    archive >> isTracing;
+    archive >> hasEskey;
+    archive >> hasPinkey;
     // archive >> ts;
     // archive >> caches
     // EXISTING_CODE
@@ -336,23 +336,23 @@ bool CStatus::SerializeC(CArchive& archive) const {
 
     // EXISTING_CODE
     // EXISTING_CODE
-    archive << client_version;
-    archive << client_ids;
-    archive << trueblocks_version;
-    archive << rpc_provider;
-    archive << balance_provider;
-    // archive << config_path;
-    archive << cache_path;
-    archive << index_path;
+    archive << clientVersion;
+    archive << clientIds;
+    archive << trueblocksVersion;
+    archive << rpcProvider;
+    archive << balanceProvider;
+    // archive << configPath;
+    archive << cachePath;
+    archive << indexPath;
     archive << host;
-    archive << is_testing;
-    archive << is_api;
-    archive << is_docker;
-    archive << is_scraping;
-    archive << is_archive;
-    archive << is_tracing;
-    archive << has_eskey;
-    archive << has_pinkey;
+    archive << isTesting;
+    archive << isApi;
+    archive << isDocker;
+    archive << isScraping;
+    archive << isArchive;
+    archive << isTracing;
+    archive << hasEskey;
+    archive << hasPinkey;
     // archive << ts;
     // archive << cache;
     // EXISTING_CODE
@@ -409,24 +409,24 @@ void CStatus::registerClass(void) {
     ADD_FIELD(CStatus, "deleted", T_BOOL, ++fieldNum);
     ADD_FIELD(CStatus, "showing", T_BOOL, ++fieldNum);
     ADD_FIELD(CStatus, "cname", T_TEXT, ++fieldNum);
-    ADD_FIELD(CStatus, "client_version", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CStatus, "client_ids", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CStatus, "trueblocks_version", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CStatus, "rpc_provider", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CStatus, "balance_provider", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CStatus, "config_path", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    HIDE_FIELD(CStatus, "config_path");
-    ADD_FIELD(CStatus, "cache_path", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CStatus, "index_path", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CStatus, "clientVersion", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CStatus, "clientIds", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CStatus, "trueblocksVersion", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CStatus, "rpcProvider", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CStatus, "balanceProvider", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CStatus, "configPath", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    HIDE_FIELD(CStatus, "configPath");
+    ADD_FIELD(CStatus, "cachePath", T_TEXT | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CStatus, "indexPath", T_TEXT | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CStatus, "host", T_TEXT | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CStatus, "is_testing", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CStatus, "is_api", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CStatus, "is_docker", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CStatus, "is_scraping", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CStatus, "is_archive", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CStatus, "is_tracing", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CStatus, "has_eskey", T_BOOL | TS_OMITEMPTY, ++fieldNum);
-    ADD_FIELD(CStatus, "has_pinkey", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CStatus, "isTesting", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CStatus, "isApi", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CStatus, "isDocker", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CStatus, "isScraping", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CStatus, "isArchive", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CStatus, "isTracing", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CStatus, "hasEskey", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CStatus, "hasPinkey", T_BOOL | TS_OMITEMPTY, ++fieldNum);
     ADD_FIELD(CStatus, "ts", T_TIMESTAMP, ++fieldNum);
     HIDE_FIELD(CStatus, "ts");
     ADD_FIELD(CStatus, "caches", T_OBJECT | TS_ARRAY | TS_OMITEMPTY, ++fieldNum);
@@ -444,7 +444,7 @@ void CStatus::registerClass(void) {
     HIDE_FIELD(CStatus, "ts");
     ADD_FIELD(CStatus, "date", T_DATE, ++fieldNum);
     SHOW_FIELD(CStatus, "date");
-    SHOW_FIELD(CStatus, "config_path");
+    SHOW_FIELD(CStatus, "configPath");
     // EXISTING_CODE
 }
 

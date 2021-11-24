@@ -108,9 +108,9 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *MonitorsOptions {
 			opts.Undelete = true
 		case "remove":
 			opts.Remove = true
-		case "first_block":
+		case "firstBlock":
 			opts.FirstBlock = globals.ToUint64(value[0])
-		case "last_block":
+		case "lastBlock":
 			opts.LastBlock = globals.ToUint64(value[0])
 		default:
 			if !globals.IsGlobalOption(key) {

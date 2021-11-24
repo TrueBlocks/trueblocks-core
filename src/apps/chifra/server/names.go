@@ -70,11 +70,11 @@ type NamedAddress struct {
 	Decimals    string `json:"decimals,omitempty"`
 	Description string `json:"description,omitempty"`
 	Deleted     bool   `json:"deleted,omitempty"`
-	IsCustom    bool   `json:"is_custom,omitempty"`
-	IsPrefund   bool   `json:"is_prefund,omitempty"`
-	IsContract  bool   `json:"is_contract,omitempty"`
-	IsErc20     bool   `json:"is_erc20,omitempty"`
-	IsErc721    bool   `json:"is_erc721,omitempty"`
+	IsCustom    bool   `json:"isCustom,omitempty"`
+	IsPrefund   bool   `json:"isPrefund,omitempty"`
+	IsContract  bool   `json:"isContract,omitempty"`
+	IsErc20     bool   `json:"isErc20,omitempty"`
+	IsErc721    bool   `json:"isErc721,omitempty"`
 }
 
 func NewNamedAddress() NamedAddress {

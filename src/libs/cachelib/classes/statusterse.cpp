@@ -283,25 +283,25 @@ const char* STR_DISPLAY_STATUSTERSE = "";
 //---------------------------------------------------------------------------
 // EXISTING_CODE
 CStatusTerse::CStatusTerse(const CStatus& it) {
-    client_version = it.client_version;
-    trueblocks_version = it.trueblocks_version;
-    is_testing = it.is_testing;
-    is_archive = it.is_archive;
-    is_tracing = it.is_tracing;
-    is_docker = it.is_docker;
-    has_eskey = it.has_eskey;
-    has_pinkey = it.has_pinkey;
-    config_path = it.config_path;
-    cache_path = it.cache_path;
-    index_path = it.index_path;
-    rpc_provider = it.rpc_provider;
-    modes1 += string_q(it.is_testing ? "testing|" : "");
-    modes1 += string_q(it.is_archive ? "" : "not ") + "archive|";
-    modes1 += string_q(it.is_tracing ? "" : "not ") + "tracing|";
-    modes1 += string_q(it.is_docker ? "docker|" : "");
+    clientVersion = it.clientVersion;
+    trueblocksVersion = it.trueblocksVersion;
+    isTesting = it.isTesting;
+    isArchive = it.isArchive;
+    isTracing = it.isTracing;
+    isDocker = it.isDocker;
+    hasEskey = it.hasEskey;
+    hasPinkey = it.hasPinkey;
+    configPath = it.configPath;
+    cachePath = it.cachePath;
+    indexPath = it.indexPath;
+    rpcProvider = it.rpcProvider;
+    modes1 += string_q(it.isTesting ? "testing|" : "");
+    modes1 += string_q(it.isArchive ? "" : "not ") + "archive|";
+    modes1 += string_q(it.isTracing ? "" : "not ") + "tracing|";
+    modes1 += string_q(it.isDocker ? "docker|" : "");
     modes1 = (modes1.empty() ? "" : " (" + substitute(trim(modes1, '|'), "|", ", ") + ")");
-    modes2 += string_q(it.has_eskey ? "" : "no ") + "eskey|";
-    modes2 += string_q(it.has_pinkey ? "" : "no ") + "pinkey|";
+    modes2 += string_q(it.hasEskey ? "" : "no ") + "eskey|";
+    modes2 += string_q(it.hasPinkey ? "" : "no ") + "pinkey|";
     modes2 = (modes2.empty() ? "" : " (" + substitute(trim(modes2, '|'), "|", ", ") + ")");
 }
 // EXISTING_CODE

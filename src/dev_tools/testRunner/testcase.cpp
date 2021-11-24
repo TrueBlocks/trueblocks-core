@@ -612,6 +612,16 @@ void CTestCase::prepareTest(bool cmdLine, bool removeWorking) {
         } else {
             if (tool == "chifra")
                 nextTokenClear(options, '&');
+            CStringArray parts;
+            explode(parts, options, '&');
+            ostringstream os;
+            for (auto part : parts) {
+                string_q key = nextTokenClear(part, '=');
+                if (!os.str().empty())
+                    os << "&";
+                os << toCamelCase(key) << (part.empty() ? "" : "=" + part);
+            }
+            options = os.str();
             replaceAll(options, "@", "");
             replaceAll(options, " ", "%20");
             goldPath += "api_tests/";

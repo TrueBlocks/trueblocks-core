@@ -18,14 +18,14 @@ void COptions::finishClean(CAccountName& account) {
     if (startsWith(account.tags, "80-Malicious"))
         return;
 
-    account.is_contract = isContractAt(account.address, latestBlock) || account.is_contract;
-    if (account.is_contract) {
+    account.isContract = isContractAt(account.address, latestBlock) || account.isContract;
+    if (account.isContract) {
         string_q name = getTokenState(account.address, "name", abi_spec, latestBlock);
         string_q symbol = getTokenState(account.address, "symbol", abi_spec, latestBlock);
         uint64_t decimals = str_2_Uint(getTokenState(account.address, "decimals", abi_spec, latestBlock));
 
-        account.is_erc20 = !name.empty() || !symbol.empty() || decimals > 0;
-        if (account.is_erc20) {
+        account.isErc20 = !name.empty() || !symbol.empty() || decimals > 0;
+        if (account.isErc20) {
             account.decimals = decimals ? decimals : 18;
             account.symbol = (symbol.empty() ? account.symbol : symbol);
 
@@ -42,13 +42,13 @@ void COptions::finishClean(CAccountName& account) {
             }
 
             string_q bytes = "0x" + padRight(substitute(_INTERFACE_ID_ERC721, "0x", ""), 64, '0');
-            account.is_erc721 =
+            account.isErc721 =
                 str_2_Bool(getTokenState(account.address, "supportsInterface", abi_spec, latestBlock, bytes));
 
             string_q lTag = toLower(account.tags);
             bool maybe = (account.tags.empty() || contains(lTag, "token") || contains(lTag, "30-contracts") ||
                           contains(lTag, "55-defi"));
-            account.tags = maybe ? (account.is_erc721 ? "50-Tokens:ERC721" : "50-Tokens:ERC20") : account.tags;
+            account.tags = maybe ? (account.isErc721 ? "50-Tokens:ERC721" : "50-Tokens:ERC20") : account.tags;
         }
     } else {
         account.tags = account.tags == "30-Contracts" ? "90-Individuals:Other" : account.tags;
@@ -66,7 +66,7 @@ void COptions::finishClean(CAccountName& account) {
     if (account.description == "false")
         account.description = "";
 
-    account.is_prefund = expContext().prefundMap[account.address] > 0;
+    account.isPrefund = expContext().prefundMap[account.address] > 0;
 }
 
 //--------------------------------------------------------------------

@@ -1,4 +1,4 @@
-list?addrs=0x001d14804b399c6ef80e64576f657660804fec0b&first_block=100000&last_block=2000000
+list?addrs=0x001d14804b399c6ef80e64576f657660804fec0b&firstBlock=100000&lastBlock=2000000
 {
   "data": [
     {
@@ -30,11 +30,11 @@ list?addrs=0x001d14804b399c6ef80e64576f657660804fec0b&first_block=100000&last_bl
       "source": "Genesis",
       "decimals": 0,
       "description": "",
-      "is_custom": false,
-      "is_prefund": true,
-      "is_contract": false,
-      "is_erc20": false,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": true,
+      "isContract": false,
+      "isErc20": false,
+      "isErc721": false
     }
   }
 }

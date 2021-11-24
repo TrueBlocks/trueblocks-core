@@ -176,9 +176,9 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *GlobalOptions {
 			opts.Mocked = true
 		case "nocolor":
 			opts.NoColor = true
-		case "log_level":
+		case "logLevel":
 			opts.LogLevel = ToUint64(value[0])
-		case "no_header":
+		case "noHeader":
 			opts.NoHeader = true
 		case "wei":
 			opts.Wei = true
@@ -186,7 +186,7 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *GlobalOptions {
 			opts.Ether = true
 		case "dollars":
 			opts.Dollars = true
-		case "to_file":
+		case "toFile":
 			opts.ToFile = true
 		case "file":
 			opts.File = value[0]
@@ -209,12 +209,12 @@ func IsGlobalOption(key string) bool {
 		"noop",
 		"mocked",
 		"nocolor",
-		"log_level",
-		"no_header",
+		"logLevel",
+		"noHeader",
 		"wei",
 		"ether",
 		"dollars",
-		"to_file",
+		"toFile",
 		"file",
 		"output",
 	}

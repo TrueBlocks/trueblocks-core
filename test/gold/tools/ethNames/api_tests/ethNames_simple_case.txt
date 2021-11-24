@@ -1,4 +1,4 @@
-names?terms=network&match_case
+names?terms=network&matchCase
 {
   "data": [
     {

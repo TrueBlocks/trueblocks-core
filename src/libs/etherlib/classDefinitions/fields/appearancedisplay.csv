@@ -1,7 +1,7 @@
-name             ,type      ,str_default ,object ,array ,nowrite ,omitempty ,minimal ,extra ,noaddfld ,doc ,disp ,example ,description
-blockNumber      ,blknum    ,            ,       ,      ,        ,          ,        ,      ,         ,1   ,2    ,10021   ,the number of the block
-transactionIndex ,blknum    ,            ,       ,      ,        ,          ,        ,      ,         ,2   ,3    ,305     ,the zero-indexed position of the transaction in the block
-address          ,address   ,            ,       ,      ,        ,          ,true    ,      ,true     ,3   ,1    ,        ,the address of the appearance
-name             ,string    ,            ,       ,      ,        ,          ,true    ,      ,true     ,4   ,6    ,        ,the name of the address&#44; if found
-timestamp        ,timestamp ,            ,       ,      ,        ,          ,true    ,      ,true     ,4   ,4    ,        ,the timestamp for this appearance
-date             ,string    ,            ,       ,      ,        ,          ,true    ,      ,true     ,4   ,5    ,        ,the date represented by the timestamp
+name             ,type      ,strDefault ,object ,array ,nowrite ,omitempty ,minimal ,extra ,noaddfld ,doc ,disp ,example ,description
+blockNumber      ,blknum    ,           ,       ,      ,        ,          ,        ,      ,         ,1   ,2    ,10021   ,the number of the block
+transactionIndex ,blknum    ,           ,       ,      ,        ,          ,        ,      ,         ,2   ,3    ,305     ,the zero-indexed position of the transaction in the block
+address          ,address   ,           ,       ,      ,        ,          ,true    ,      ,true     ,3   ,1    ,        ,the address of the appearance
+name             ,string    ,           ,       ,      ,        ,          ,true    ,      ,true     ,4   ,6    ,        ,the name of the address&#44; if found
+timestamp        ,timestamp ,           ,       ,      ,        ,          ,true    ,      ,true     ,4   ,4    ,        ,the timestamp for this appearance
+date             ,string    ,           ,       ,      ,        ,          ,true    ,      ,true     ,4   ,5    ,        ,the date represented by the timestamp

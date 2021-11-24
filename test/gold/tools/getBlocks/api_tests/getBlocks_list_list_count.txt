@@ -1,4 +1,4 @@
-blocks?list=1000&list_count=10
+blocks?list=1000&listCount=10
 {
   "data": [
     {

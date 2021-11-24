@@ -4,19 +4,19 @@ TEST[DATE|TIME] Depth:  0
 TEST[DATE|TIME] FirstBlock:  1000000
 TEST[DATE|TIME] LastBlock:  2500000
 {
-  "client_version": "Client version",
-  "client_ids": "chainId: 1 networkId: 1",
-  "trueblocks_version": "GHC-TrueBlocks//vers-alpha--git-hash---git-ts-",
-  "rpc_provider": "--providers--",
-  "balance_provider": "--providers--",
-  "config_path": "--paths--",
-  "cache_path": "--paths--",
-  "index_path": "--paths--",
+  "clientVersion": "Client version",
+  "clientIds": "chainId: 1 networkId: 1",
+  "trueblocksVersion": "GHC-TrueBlocks//vers-alpha--git-hash---git-ts-",
+  "rpcProvider": "--providers--",
+  "balanceProvider": "--providers--",
+  "configPath": "--paths--",
+  "cachePath": "--paths--",
+  "indexPath": "--paths--",
   "host": "--hostname-- (--username--)",
-  "is_testing": true,
-  "is_archive": true,
-  "is_tracing": true,
-  "has_eskey": true,
+  "isTesting": true,
+  "isArchive": true,
+  "isTracing": true,
+  "hasEskey": true,
   "caches": [
     {
       "type": "CIndexCache",
@@ -24,7 +24,7 @@ TEST[DATE|TIME] LastBlock:  2500000
       "nFiles": 0,
       "nFolders": 0,
       "sizeInBytes": 0,
-      "is_valid": true
+      "isValid": true
     }
   ],
   "date": "--date--"

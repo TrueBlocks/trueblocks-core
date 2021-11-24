@@ -1,4 +1,4 @@
-names?terms=0x0000000000000000000000000000000010101010&log_level=10&fmt=api&expand
+names?terms=0x0000000000000000000000000000000010101010&logLevel=10&fmt=api&expand
 {
   "data": [
     {
@@ -10,11 +10,11 @@ names?terms=0x0000000000000000000000000000000010101010&log_level=10&fmt=api&expa
       "source": "SOURCE",
       "decimals": 11,
       "description": "DESCRIPTION",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": false,
-      "is_erc20": false,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": false,
+      "isErc20": false,
+      "isErc721": false
     }
   ],
   "meta": {

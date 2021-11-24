@@ -1,10 +1,10 @@
-name         ,type              ,str_default ,object ,array ,nowrite ,omitempty ,minimal ,extra ,noaddfld ,doc ,disp ,example ,description
-address      ,address           ,            ,       ,      ,        ,          ,        ,      ,         ,1   ,1    ,        ,the smart contract that implements this abi
-interfaceMap ,stringFunctionMap ,            ,true   ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
-interfaces   ,function          ,            ,true   ,true  ,        ,          ,true    ,      ,true     ,2   ,     ,        ,the list of events and functions on this abi
-encoding     ,hash              ,            ,       ,      ,        ,          ,true    ,      ,true     ,    ,2    ,        ,
-type         ,string            ,            ,       ,      ,        ,          ,true    ,      ,true     ,    ,3    ,        ,
-name         ,string            ,            ,       ,      ,        ,          ,true    ,      ,true     ,    ,4    ,        ,
-signature    ,string            ,            ,       ,      ,        ,          ,true    ,      ,true     ,    ,5    ,        ,
-input_names  ,string            ,            ,       ,      ,        ,          ,true    ,      ,true     ,    ,6    ,        ,
-output_names ,string            ,            ,       ,      ,        ,          ,true    ,      ,true     ,    ,7    ,        ,
+name         ,type              ,strDefault ,object ,array ,nowrite ,omitempty ,minimal ,extra ,noaddfld ,doc ,disp ,example ,description
+address      ,address           ,           ,       ,      ,        ,          ,        ,      ,         ,1   ,1    ,        ,the smart contract that implements this abi
+interfaceMap ,stringFunctionMap ,           ,true   ,      ,        ,          ,        ,      ,         ,    ,     ,        ,
+interfaces   ,function          ,           ,true   ,true  ,        ,          ,true    ,      ,true     ,2   ,     ,        ,the list of events and functions on this abi
+encoding     ,hash              ,           ,       ,      ,        ,          ,true    ,      ,true     ,    ,2    ,        ,
+type         ,string            ,           ,       ,      ,        ,          ,true    ,      ,true     ,    ,3    ,        ,
+name         ,string            ,           ,       ,      ,        ,          ,true    ,      ,true     ,    ,4    ,        ,
+signature    ,string            ,           ,       ,      ,        ,          ,true    ,      ,true     ,    ,5    ,        ,
+input_names  ,string            ,           ,       ,      ,        ,          ,true    ,      ,true     ,    ,6    ,        ,
+output_names ,string            ,           ,       ,      ,        ,          ,true    ,      ,true     ,    ,7    ,        ,

@@ -1,4 +1,4 @@
-export?addrs=0x001d14804b399c6ef80e64576f657660804fec0b&max_records=5&accounting&fmt=api&log_level=10
+export?addrs=0x001d14804b399c6ef80e64576f657660804fec0b&maxRecords=5&accounting&fmt=api&logLevel=10
 {
   "data": [
     {
@@ -245,11 +245,11 @@ export?addrs=0x001d14804b399c6ef80e64576f657660804fec0b&max_records=5&accounting
       "source": "Genesis",
       "decimals": 0,
       "description": "",
-      "is_custom": false,
-      "is_prefund": true,
-      "is_contract": false,
-      "is_erc20": false,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": true,
+      "isContract": false,
+      "isErc20": false,
+      "isErc721": false
     }
   }
 }

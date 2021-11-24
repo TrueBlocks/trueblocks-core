@@ -2,7 +2,7 @@
 title: "Other"
 description: ""
 lead: ""
-date: 2021-10-03T20:13:02
+date: 2021-11-22T23:24:35
 lastmod:
   - :git
   - lastmod
@@ -68,7 +68,7 @@ Parameter data is made of the following data fields:
 | ------------ | ----------------------------------------------------------- | --------------- |
 | type         | the type of this parameter                                  | string          |
 | name         | the name of this parameter                                  | string          |
-| str_default  | the default value of this parameter, if any                 | string          |
+| strDefault   | the default value of this parameter, if any                 | string          |
 | indexed      | `true` if this parameter is indexed                         | bool            |
 | internalType | for composite types, the internal type of the parameter     | string          |
 | components   | for composite types, the parameters making up the composite | CParameterArray |

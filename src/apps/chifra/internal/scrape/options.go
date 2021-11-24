@@ -100,11 +100,11 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ScrapeOptions {
 			opts.Pin = true
 		case "publish":
 			opts.Publish = true
-		case "block_cnt":
+		case "blockCnt":
 			opts.BlockCnt = globals.ToUint64(value[0])
-		case "block_chan_cnt":
+		case "blockChanCnt":
 			opts.BlockChanCnt = globals.ToUint64(value[0])
-		case "addr_chan_cnt":
+		case "addrChanCnt":
 			opts.AddrChanCnt = globals.ToUint64(value[0])
 		default:
 			if !globals.IsGlobalOption(key) {

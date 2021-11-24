@@ -1,4 +1,4 @@
-blocks?list_count=2&list=1030000&blocks=10010
+blocks?listCount=2&list=1030000&blocks=10010
 {
   "errors": [
     "Supply either the --list_count option or block identifiers, not both."

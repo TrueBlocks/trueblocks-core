@@ -1,4 +1,4 @@
-export?addrs=0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3&max_records=5&topics=0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef&logs
+export?addrs=0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3&maxRecords=5&topics=0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef&logs
 {
   "data": [
     {
@@ -419,11 +419,11 @@ export?addrs=0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3&max_records=5&topics=0xd
       "source": "https://kickback.events/",
       "decimals": 0,
       "description": "",
-      "is_custom": false,
-      "is_prefund": false,
-      "is_contract": false,
-      "is_erc20": false,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": false,
+      "isContract": false,
+      "isErc20": false,
+      "isErc721": false
     }
   }
 }

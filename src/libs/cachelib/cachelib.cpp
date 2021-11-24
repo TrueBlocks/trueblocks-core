@@ -39,7 +39,7 @@ bool countFilesInCache(const string_q& path, void* data) {
     } else {
         if (!isTestMode())
             counter->noteFile(path);
-        counter->is_valid = true;
+        counter->isValid = true;
         if (isTestMode()) {
             counter->items.push_back("CachePath/00/00/00/file1.bin");
             counter->items.push_back("CachePath/00/01/00/file2.bin");
@@ -63,7 +63,7 @@ bool countFiles(const string_q& path, void* data) {
     } else if (endsWith(path, ".bin") || endsWith(path, ".json")) {
         if (!isTestMode())
             counter->noteFile(path);
-        counter->is_valid = true;
+        counter->isValid = true;
     }
     return !shouldQuit();
 }

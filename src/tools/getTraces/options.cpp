@@ -130,8 +130,8 @@ bool COptions::parseArguments(string_q& command) {
         // show certain fields and hide others
         manageFields(defHide, false);
         manageFields(defShow, true);
-        manageFields("CParameter:str_default", false);  // hide
-        manageFields("CTransaction:price", false);      // hide
+        manageFields("CParameter:strDefault", false);  // hide
+        manageFields("CTransaction:price", false);     // hide
         if (!useDict())
             manageFields("CFunction:outputs", true);  // show
         manageFields("CTransaction:input", true);     // show

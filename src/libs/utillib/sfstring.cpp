@@ -298,6 +298,13 @@ string_q toProper(const string_q& in) {
     return ret.c_str();
 }
 
+//---------------------------------------------------------------------------------------------------
+string_q toCamelCase(const string_q& in) {
+    string_q ret = substitute(toProper(in), "_", "");
+    ret[0] = toLower(ret)[0];
+    return ret;
+}
+
 //--------------------------------------------------------------------
 string_q trim(const string_q& str, char c) {
     return trimTrailing(trimLeading(str, c), c);

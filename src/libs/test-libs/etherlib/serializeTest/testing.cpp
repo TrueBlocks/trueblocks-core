@@ -111,15 +111,15 @@ int main(int argc, const char* argv[]) {
         cache.nFiles = 12;
         cache.nFolders = 13;
         cache.sizeInBytes = 14;
-        cache.is_valid = true;
+        cache.isValid = true;
         cout << cache << endl;
 
         cout << endl << "Show a status" << endl << string_q(80, '-') << endl;
         CStatus status;  // we include 'status' in this test case only to test the code generation of makeClass -ar
-        status.client_version = "client_version";
-        status.trueblocks_version = "trueblocks_version";
-        status.rpc_provider = "rpc_provider";
-        status.balance_provider = "balance_provider";
+        status.clientVersion = "clientVersion";
+        status.trueblocksVersion = "trueblocksVersion";
+        status.rpcProvider = "rpcProvider";
+        status.balanceProvider = "balanceProvider";
         status.host = "host";
         status.caches.push_back(&cache);
         cout << status << endl;

@@ -1,24 +1,24 @@
-status?details&first_block=1400000&last_block=2000000
+status?details&firstBlock=1400000&lastBlock=2000000
 {
   "data": [
     {
-      "client_version": "Client version",
-      "client_ids": "chainId: 1 networkId: 1",
-      "trueblocks_version": "GHC-TrueBlocks//vers-alpha--git-hash---git-ts-",
-      "rpc_provider": "--providers--",
-      "balance_provider": "--providers--",
-      "config_path": "--paths--",
-      "cache_path": "--paths--",
-      "index_path": "--paths--",
+      "clientVersion": "Client version",
+      "clientIds": "chainId: 1 networkId: 1",
+      "trueblocksVersion": "GHC-TrueBlocks//vers-alpha--git-hash---git-ts-",
+      "rpcProvider": "--providers--",
+      "balanceProvider": "--providers--",
+      "configPath": "--paths--",
+      "cachePath": "--paths--",
+      "indexPath": "--paths--",
       "host": "--hostname-- (--username--)",
-      "is_testing": true,
-      "is_api": true,
-      "is_docker": false,
-      "is_scraping": false,
-      "is_archive": true,
-      "is_tracing": true,
-      "has_eskey": true,
-      "has_pinkey": false,
+      "isTesting": true,
+      "isApi": true,
+      "isDocker": false,
+      "isScraping": false,
+      "isArchive": true,
+      "isTracing": true,
+      "hasEskey": true,
+      "hasPinkey": false,
       "caches": [
         {
           "items": [],
@@ -27,7 +27,7 @@ status?details&first_block=1400000&last_block=2000000
           "nFiles": 0,
           "nFolders": 0,
           "sizeInBytes": 0,
-          "is_valid": true
+          "isValid": true
         },
         {
           "addrs": [],
@@ -45,11 +45,11 @@ status?details&first_block=1400000&last_block=2000000
               "source": "--source--",
               "decimals": 0,
               "description": "",
-              "is_custom": false,
-              "is_prefund": false,
-              "is_contract": false,
-              "is_erc20": false,
-              "is_erc721": false
+              "isCustom": false,
+              "isPrefund": false,
+              "isContract": false,
+              "isErc20": false,
+              "isErc721": false
             }
           ],
           "type": "CMonitorCache",
@@ -57,7 +57,7 @@ status?details&first_block=1400000&last_block=2000000
           "nFiles": 0,
           "nFolders": 0,
           "sizeInBytes": 0,
-          "is_valid": true
+          "isValid": true
         },
         {
           "addrs": [],
@@ -67,7 +67,7 @@ status?details&first_block=1400000&last_block=2000000
           "nFiles": 0,
           "nFolders": 0,
           "sizeInBytes": 0,
-          "is_valid": true
+          "isValid": true
         },
         {
           "addrs": [],
@@ -77,7 +77,7 @@ status?details&first_block=1400000&last_block=2000000
           "nFiles": 0,
           "nFolders": 0,
           "sizeInBytes": 0,
-          "is_valid": true
+          "isValid": true
         },
         {
           "items": [
@@ -95,11 +95,11 @@ status?details&first_block=1400000&last_block=2000000
               "source": "",
               "decimals": 0,
               "description": "",
-              "is_custom": false,
-              "is_prefund": false,
-              "is_contract": false,
-              "is_erc20": false,
-              "is_erc721": false
+              "isCustom": false,
+              "isPrefund": false,
+              "isContract": false,
+              "isErc20": false,
+              "isErc721": false
             }
           ],
           "type": "CPriceCache",
@@ -107,7 +107,7 @@ status?details&first_block=1400000&last_block=2000000
           "nFiles": 0,
           "nFolders": 0,
           "sizeInBytes": 0,
-          "is_valid": true
+          "isValid": true
         }
       ],
       "date": "--date--"

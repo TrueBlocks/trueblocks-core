@@ -92,7 +92,7 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *TracesOptions {
 			opts.Statediff = true
 		case "count":
 			opts.Count = true
-		case "skip_ddos":
+		case "skipDdos":
 			opts.SkipDdos = true
 		case "max":
 			opts.Max = globals.ToUint64(value[0])

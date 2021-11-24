@@ -1020,7 +1020,7 @@ bool CReconciliation::reconcileUsingTraces(bigint_t prevEndBal, const CTransacti
                     // TODO(tjayrush): unless it's the first trace?
                     // unless the EOA initiated the top level tx. I think
                     // this might be a bug in a smart contract or something.
-                    if (accountedFor.is_contract || trans->from == acctFor) {
+                    if (accountedFor.isContract || trans->from == acctFor) {
                         internalOut += trans->isError ? 0 : trace.action.value;
                     }
                 }

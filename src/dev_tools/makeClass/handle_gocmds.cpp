@@ -275,7 +275,7 @@ string_q get_requestopts(const CCommandOption& cmd) {
     ostringstream os;
     for (auto p : *((CCommandOptionArray*)cmd.params)) {
         replace(p.longName, "deleteMe", "delete");
-        string_q low = p.Format("[{LOWER}]");
+        string_q low = toCamelCase(p.Format("[{LOWER}]"));
         if (startsWith(p.data_type, "list<")) {
             os << p.Format(substitute(STR_REQUEST_CASE2, "++LOWER++", low)) << endl;
         } else {

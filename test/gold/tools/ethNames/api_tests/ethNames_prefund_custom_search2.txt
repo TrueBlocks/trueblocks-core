@@ -10,11 +10,11 @@ names?prefund&custom&terms=0001&terms=Genesis&expand
       "source": "Genesis",
       "decimals": 0,
       "description": "",
-      "is_custom": false,
-      "is_prefund": true,
-      "is_contract": false,
-      "is_erc20": false,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": true,
+      "isContract": false,
+      "isErc20": false,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -25,11 +25,11 @@ names?prefund&custom&terms=0001&terms=Genesis&expand
       "source": "Genesis",
       "decimals": 0,
       "description": "",
-      "is_custom": false,
-      "is_prefund": true,
-      "is_contract": false,
-      "is_erc20": false,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": true,
+      "isContract": false,
+      "isErc20": false,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -40,11 +40,11 @@ names?prefund&custom&terms=0001&terms=Genesis&expand
       "source": "Genesis",
       "decimals": 0,
       "description": "",
-      "is_custom": false,
-      "is_prefund": true,
-      "is_contract": false,
-      "is_erc20": false,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": true,
+      "isContract": false,
+      "isErc20": false,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -55,11 +55,11 @@ names?prefund&custom&terms=0001&terms=Genesis&expand
       "source": "Genesis",
       "decimals": 0,
       "description": "",
-      "is_custom": false,
-      "is_prefund": true,
-      "is_contract": false,
-      "is_erc20": false,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": true,
+      "isContract": false,
+      "isErc20": false,
+      "isErc721": false
     },
     {
       "deleted": false,
@@ -70,11 +70,11 @@ names?prefund&custom&terms=0001&terms=Genesis&expand
       "source": "Genesis",
       "decimals": 0,
       "description": "",
-      "is_custom": false,
-      "is_prefund": true,
-      "is_contract": false,
-      "is_erc20": false,
-      "is_erc721": false
+      "isCustom": false,
+      "isPrefund": true,
+      "isContract": false,
+      "isErc20": false,
+      "isErc721": false
     }
   ],
   "meta": {

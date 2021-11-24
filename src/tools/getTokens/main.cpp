@@ -67,9 +67,9 @@ bool processPair(uint64_t blockNum, void* data) {
                 string_q value = getTokenState(opt->curToken.address, marker.field, opt->abi_spec, blockNum);
                 opt->curToken.setValueByName(marker.field, value);
                 if ((marker.field == "name" || marker.field == "symbol") && !value.empty())
-                    opt->curToken.is_erc20 = true;
+                    opt->curToken.isErc20 = true;
                 if (marker.field == "decimals" && str_2_Uint(value) > 0)
-                    opt->curToken.is_erc20 = true;
+                    opt->curToken.isErc20 = true;
             }
         }
     }

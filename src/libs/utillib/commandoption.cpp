@@ -951,6 +951,11 @@ string_q prepareDescr(const string_q& in) {
 }
 
 //---------------------------------------------------------------------------------------------------
+bool isCrud(const string_q& cmd) {
+    return cmd == "create" || cmd == "delete" || cmd == "update" || cmd == "remove" || cmd == "undelete";
+}
+
+//---------------------------------------------------------------------------------------------------
 string_q CCommandOption::toApiPath(const string_q& inStr, const string_q& exampleFn) const {
     if (!isApiRoute(api_route))
         return "";
@@ -960,14 +965,16 @@ string_q CCommandOption::toApiPath(const string_q& inStr, const string_q& exampl
         replace(param.longName, "deleteMe", "delete");
         if (param.longName.empty() || !param.is_visible_docs)
             continue;
-        string_q yp = STR_PARAM_YAML;
-        replace(yp, "[{NAME}]", param.longName);
-        replace(yp, "[{DESCR}]", prepareDescr(param.swagger_descr));
-        replace(yp, "[{REQ}]", param.is_required ? "true" : "false");
-        replace(yp, "[{SCHEMA}]", param.getSchema());
-        if (paramStream.str().empty())
-            paramStream << "      parameters:\n";
-        paramStream << yp << endl;
+        if (!isCrud(param.longName)) {
+            string_q yp = STR_PARAM_YAML;
+            replace(yp, "[{NAME}]", toCamelCase(param.longName));
+            replace(yp, "[{DESCR}]", prepareDescr(param.swagger_descr));
+            replace(yp, "[{REQ}]", param.is_required ? "true" : "false");
+            replace(yp, "[{SCHEMA}]", param.getSchema());
+            if (paramStream.str().empty())
+                paramStream << "      parameters:\n";
+            paramStream << yp << endl;
+        }
     }
 
     ostringstream example;
@@ -1056,7 +1063,10 @@ string_q CCommandOption::getSchema(void) const {
         replace(type, "addr", "address_t");
         if (!endsWith(type, "_t"))
             type += "_t";
-        ret += lead + "  format: " + type;
+        string t = type;
+        if (endsWith(t, "_t"))
+            replaceReverse(t, "_t", "");
+        ret += lead + "  format: " + t;
         return ret;
     }
 

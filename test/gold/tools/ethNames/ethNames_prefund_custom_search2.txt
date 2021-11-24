@@ -3,7 +3,7 @@ TEST[DATE|TIME] Terms:  [0001 Genesis]
 TEST[DATE|TIME] Expand:  true
 TEST[DATE|TIME] Custom:  true
 TEST[DATE|TIME] Prefund:  true
-tags	address	name	symbol	source	decimals	description	deleted	is_custom	is_prefund	is_contract	is_erc20	is_erc721
+tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	iscontract	iserc20	iserc721
 80-Prefund	0x001762430ea9c3a26e5749afdb70da5f78ddbb8c	Prefund_0001		Genesis			false	false	true	false	false	false
 80-Prefund	0x28818e18b610001321b31df6fe7d2815cdadc9f5	Prefund_1377		Genesis			false	false	true	false	false	false
 80-Prefund	0x6ca5de00817de0cedce5fd000128dede12648b3c	Prefund_3718		Genesis			false	false	true	false	false	false

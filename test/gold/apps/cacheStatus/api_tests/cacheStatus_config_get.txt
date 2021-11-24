@@ -1,4 +1,4 @@
-status?get_config
+status?getConfig
 {"data": [
 {
   "files": [
@@ -230,7 +230,7 @@ status?get_config
           "keys": [
             {
               "name": "list",
-              "value": "[{\n                \"address\": \"0x0000100001000010000100001000010000100001\",\n                \"decimals\": 0,\n                \"description\": \"\",\n                \"is_contract\": false,\n                \"is_custom\": false,\n                \"is_erc20\": false,\n                \"is_erc721\": false,\n                \"is_prefund\": false,\n                \"name\": \"TestWallet1\",\n                \"source\": \"\",\n                \"symbol\": \"\",\n                \"tags\": \"81-Custom\"\n              }\n\n, {\n                \"address\": \"0x0000200002000020000200002000020000200002\",\n                \"decimals\": 0,\n                \"description\": \"\",\n                \"is_contract\": false,\n                \"is_custom\": false,\n                \"is_erc20\": false,\n                \"is_erc721\": false,\n                \"is_prefund\": false,\n                \"name\": \"TestWallet2\",\n                \"source\": \"\",\n                \"symbol\": \"\",\n                \"tags\": \"81-Custom\"\n              }\n\n]",
+              "value": "[{\n                \"address\": \"0x0000100001000010000100001000010000100001\",\n                \"decimals\": 0,\n                \"description\": \"\",\n                \"isContract\": false,\n                \"isCustom\": false,\n                \"isErc20\": false,\n                \"isErc721\": false,\n                \"isPrefund\": false,\n                \"name\": \"TestWallet1\",\n                \"source\": \"\",\n                \"symbol\": \"\",\n                \"tags\": \"81-Custom\"\n              }\n\n, {\n                \"address\": \"0x0000200002000020000200002000020000200002\",\n                \"decimals\": 0,\n                \"description\": \"\",\n                \"isContract\": false,\n                \"isCustom\": false,\n                \"isErc20\": false,\n                \"isErc721\": false,\n                \"isPrefund\": false,\n                \"name\": \"TestWallet2\",\n                \"source\": \"\",\n                \"symbol\": \"\",\n                \"tags\": \"81-Custom\"\n              }\n\n]",
               "type": "json array",
               "tip": "user specific list of names for addresses -- private data -- not shared",
               "required": false,

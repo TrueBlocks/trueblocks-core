@@ -1,4 +1,4 @@
-export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&first_block=10277780&last_block=10279650&articulate&emitter=0x7d655c57f71464b6f83811c55d84009cd9f5221c
+export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&firstBlock=10277780&lastBlock=10279650&articulate&emitter=0x7d655c57f71464b6f83811c55d84009cd9f5221c
 {
   "errors": [
     "chifra export - The --emitter option is only available when exporting logs."

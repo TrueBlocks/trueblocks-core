@@ -75,8 +75,8 @@ string_q CCache::getValueByName(const string_q& fieldName) const {
     // Return field values
     switch (tolower(fieldName[0])) {
         case 'i':
-            if (fieldName % "is_valid") {
-                return bool_2_Str(is_valid);
+            if (fieldName % "isValid") {
+                return bool_2_Str(isValid);
             }
             break;
         case 'n':
@@ -123,8 +123,8 @@ bool CCache::setValueByName(const string_q& fieldNameIn, const string_q& fieldVa
 
     switch (tolower(fieldName[0])) {
         case 'i':
-            if (fieldName % "is_valid") {
-                is_valid = str_2_Bool(fieldValue);
+            if (fieldName % "isValid") {
+                isValid = str_2_Bool(fieldValue);
                 return true;
             }
             break;
@@ -186,7 +186,7 @@ bool CCache::Serialize(CArchive& archive) {
     archive >> nFiles;
     archive >> nFolders;
     archive >> sizeInBytes;
-    archive >> is_valid;
+    archive >> isValid;
     // EXISTING_CODE
     // EXISTING_CODE
     finishParse();
@@ -205,7 +205,7 @@ bool CCache::SerializeC(CArchive& archive) const {
     archive << nFiles;
     archive << nFolders;
     archive << sizeInBytes;
-    archive << is_valid;
+    archive << isValid;
     // EXISTING_CODE
     // EXISTING_CODE
     return true;
@@ -260,7 +260,7 @@ void CCache::registerClass(void) {
     ADD_FIELD(CCache, "nFiles", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CCache, "nFolders", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CCache, "sizeInBytes", T_UNUMBER, ++fieldNum);
-    ADD_FIELD(CCache, "is_valid", T_BOOL | TS_OMITEMPTY, ++fieldNum);
+    ADD_FIELD(CCache, "isValid", T_BOOL | TS_OMITEMPTY, ++fieldNum);
 
     // Hide our internal fields, user can turn them on if they like
     HIDE_FIELD(CCache, "schema");

@@ -282,11 +282,11 @@ bool COptions::parseArguments(string_q& command) {
         manageFields("CAccountName:" + cleanFmt(STR_DISPLAY_ACCOUNTNAME));
     if (!expand) {
         HIDE_FIELD(CAccountName, "deleted");
-        HIDE_FIELD(CAccountName, "is_custom");
-        HIDE_FIELD(CAccountName, "is_prefund");
-        HIDE_FIELD(CAccountName, "is_contract");
-        HIDE_FIELD(CAccountName, "is_erc20");
-        HIDE_FIELD(CAccountName, "is_erc721");
+        HIDE_FIELD(CAccountName, "isCustom");
+        HIDE_FIELD(CAccountName, "isPrefund");
+        HIDE_FIELD(CAccountName, "isContract");
+        HIDE_FIELD(CAccountName, "isErc20");
+        HIDE_FIELD(CAccountName, "isErc721");
     }
 
     // Collect results for later display
@@ -301,11 +301,11 @@ bool COptions::parseArguments(string_q& command) {
         HIDE_FIELD(CAccountName, "description");
         HIDE_FIELD(CAccountName, "source");
         HIDE_FIELD(CAccountName, "decimal");
-        HIDE_FIELD(CAccountName, "is_custom");
-        HIDE_FIELD(CAccountName, "is_prefund");
-        HIDE_FIELD(CAccountName, "is_contract");
-        HIDE_FIELD(CAccountName, "is_erc20");
-        HIDE_FIELD(CAccountName, "is_erc721");
+        HIDE_FIELD(CAccountName, "isCustom");
+        HIDE_FIELD(CAccountName, "isPrefund");
+        HIDE_FIELD(CAccountName, "isContract");
+        HIDE_FIELD(CAccountName, "isErc20");
+        HIDE_FIELD(CAccountName, "isErc721");
     }
 
     return true;
@@ -432,7 +432,7 @@ void COptions::applyFilter() {
         } else {
             for (auto mapItem : namesMap) {
                 CAccountName item = mapItem.second;
-                if (item.is_custom)
+                if (item.isCustom)
                     addIfUnique(item);
             }
         }
@@ -442,7 +442,7 @@ void COptions::applyFilter() {
     if (types & NAMED) {
         for (auto mapItem : namesMap) {
             CAccountName item = mapItem.second;
-            if (!item.is_custom && !item.is_prefund)
+            if (!item.isCustom && !item.isPrefund)
                 addIfUnique(item);
         }
     }
@@ -451,7 +451,7 @@ void COptions::applyFilter() {
     if (types & PREFUND) {
         for (auto mapItem : namesMap) {
             CAccountName item = mapItem.second;
-            if (item.is_prefund)
+            if (item.isPrefund)
                 addIfUnique(item);
         }
     }
@@ -464,11 +464,11 @@ string_q shortenFormat(const string_q& fmtIn) {
     replace(ret, "[{DESCRIPTION}]", "");
     replace(ret, "[{DECIMAL}]", "");
     replace(ret, "[{DELETED}]", "");
-    replace(ret, "[{IS_CUSTOM}]", "");
-    replace(ret, "[{IS_PREFUND}]", "");
-    replace(ret, "[{IS_CONTRACT}]", "");
-    replace(ret, "[{IS_ERC20}]", "");
-    replace(ret, "[{IS_ERC721}]", "");
+    replace(ret, "[{ISCUSTOM}]", "");
+    replace(ret, "[{ISPREFUND}]", "");
+    replace(ret, "[{ISCONTRACT}]", "");
+    replace(ret, "[{ISERC20}]", "");
+    replace(ret, "[{ISERC721}]", "");
     return trim(ret, '\t');
 }
 
@@ -479,10 +479,10 @@ string_q getSearchFields(const string_q& fmtIn) {
     replace(ret, "[{DESCRIPTION}]", "");
     replace(ret, "[{DECIMAL}]", "");
     replace(ret, "[{DELETED}]", "");
-    replace(ret, "[{IS_CUSTOM}]", "");
-    replace(ret, "[{IS_PREFUND}]", "");
-    replace(ret, "[{IS_CONTRACT}]", "");
-    replace(ret, "[{IS_ERC20}]", "");
-    replace(ret, "[{IS_ERC721}]", "");
+    replace(ret, "[{ISCUSTOM}]", "");
+    replace(ret, "[{ISPREFUND}]", "");
+    replace(ret, "[{ISCONTRACT}]", "");
+    replace(ret, "[{ISERC20}]", "");
+    replace(ret, "[{ISERC721}]", "");
     return trim(ret, '\t');
 }

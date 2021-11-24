@@ -1,4 +1,4 @@
-transactions?transactions=10681057.170%2010607241.278&reconcile=0x65eab68cdb0dab6b3aad6fb4d915216a5fd002b3&fmt=json&log_level=10
+transactions?transactions=10681057.170%2010607241.278&reconcile=0x65eab68cdb0dab6b3aad6fb4d915216a5fd002b3&fmt=json&logLevel=10
 {
   "data": [
     {

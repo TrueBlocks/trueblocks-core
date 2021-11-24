@@ -27,23 +27,23 @@ namespace qblocks {
 //--------------------------------------------------------------------------
 class CStatus : public CBaseNode {
   public:
-    string_q client_version;
-    string_q client_ids;
-    string_q trueblocks_version;
-    string_q rpc_provider;
-    string_q balance_provider;
-    string_q config_path;
-    string_q cache_path;
-    string_q index_path;
+    string_q clientVersion;
+    string_q clientIds;
+    string_q trueblocksVersion;
+    string_q rpcProvider;
+    string_q balanceProvider;
+    string_q configPath;
+    string_q cachePath;
+    string_q indexPath;
     string_q host;
-    bool is_testing;
-    bool is_api;
-    bool is_docker;
-    bool is_scraping;
-    bool is_archive;
-    bool is_tracing;
-    bool has_eskey;
-    bool has_pinkey;
+    bool isTesting;
+    bool isApi;
+    bool isDocker;
+    bool isScraping;
+    bool isArchive;
+    bool isTracing;
+    bool hasEskey;
+    bool hasPinkey;
     timestamp_t ts;
     CCachePtrArray caches;
 
@@ -110,23 +110,23 @@ inline void CStatus::clear(void) {
 inline void CStatus::initialize(void) {
     CBaseNode::initialize();
 
-    client_version = "";
-    client_ids = "";
-    trueblocks_version = "";
-    rpc_provider = "";
-    balance_provider = "";
-    config_path = "";
-    cache_path = "";
-    index_path = "";
+    clientVersion = "";
+    clientIds = "";
+    trueblocksVersion = "";
+    rpcProvider = "";
+    balanceProvider = "";
+    configPath = "";
+    cachePath = "";
+    indexPath = "";
     host = "";
-    is_testing = false;
-    is_api = false;
-    is_docker = false;
-    is_scraping = false;
-    is_archive = false;
-    is_tracing = false;
-    has_eskey = false;
-    has_pinkey = false;
+    isTesting = false;
+    isApi = false;
+    isDocker = false;
+    isScraping = false;
+    isArchive = false;
+    isTracing = false;
+    hasEskey = false;
+    hasPinkey = false;
     ts = date_2_Ts(Now());
     caches.clear();
 
@@ -145,23 +145,23 @@ inline void CStatus::duplicate(const CStatus& st) {
     clear();
     CBaseNode::duplicate(st);
 
-    client_version = st.client_version;
-    client_ids = st.client_ids;
-    trueblocks_version = st.trueblocks_version;
-    rpc_provider = st.rpc_provider;
-    balance_provider = st.balance_provider;
-    config_path = st.config_path;
-    cache_path = st.cache_path;
-    index_path = st.index_path;
+    clientVersion = st.clientVersion;
+    clientIds = st.clientIds;
+    trueblocksVersion = st.trueblocksVersion;
+    rpcProvider = st.rpcProvider;
+    balanceProvider = st.balanceProvider;
+    configPath = st.configPath;
+    cachePath = st.cachePath;
+    indexPath = st.indexPath;
     host = st.host;
-    is_testing = st.is_testing;
-    is_api = st.is_api;
-    is_docker = st.is_docker;
-    is_scraping = st.is_scraping;
-    is_archive = st.is_archive;
-    is_tracing = st.is_tracing;
-    has_eskey = st.has_eskey;
-    has_pinkey = st.has_pinkey;
+    isTesting = st.isTesting;
+    isApi = st.isApi;
+    isDocker = st.isDocker;
+    isScraping = st.isScraping;
+    isArchive = st.isArchive;
+    isTracing = st.isTracing;
+    hasEskey = st.hasEskey;
+    hasPinkey = st.hasPinkey;
     ts = st.ts;
     caches = st.caches;
 

@@ -150,7 +150,7 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *BlocksOptions {
 			}
 		case "articulate":
 			opts.Articulate = true
-		case "big_range":
+		case "bigRange":
 			opts.BigRange = globals.ToUint64(value[0])
 		case "count":
 			opts.Count = true
@@ -158,7 +158,7 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *BlocksOptions {
 			opts.Cache = true
 		case "list":
 			opts.List = globals.ToUint64(value[0])
-		case "list_count":
+		case "listCount":
 			opts.ListCount = globals.ToUint64(value[0])
 		default:
 			if !globals.IsGlobalOption(key) {

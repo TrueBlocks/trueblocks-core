@@ -121,13 +121,13 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *StatusOptions {
 				s := strings.Split(val, " ") // may contain space separated items
 				opts.Migrate = append(opts.Migrate, s...)
 			}
-		case "get_config":
+		case "getConfig":
 			opts.GetConfig = true
-		case "set_config":
+		case "setConfig":
 			opts.SetConfig = true
-		case "first_block":
+		case "firstBlock":
 			opts.FirstBlock = globals.ToUint64(value[0])
-		case "last_block":
+		case "lastBlock":
 			opts.LastBlock = globals.ToUint64(value[0])
 		default:
 			if !globals.IsGlobalOption(key) {

@@ -80,9 +80,9 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ListOptions {
 			opts.Count = true
 		case "appearances":
 			opts.Appearances = true
-		case "first_block":
+		case "firstBlock":
 			opts.FirstBlock = globals.ToUint64(value[0])
-		case "last_block":
+		case "lastBlock":
 			opts.LastBlock = globals.ToUint64(value[0])
 		default:
 			if !globals.IsGlobalOption(key) {

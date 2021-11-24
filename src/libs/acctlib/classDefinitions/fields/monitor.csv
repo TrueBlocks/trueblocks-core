@@ -1,24 +1,24 @@
-name             ,type    ,str_default ,object ,array ,nowrite ,omitempty ,minimal ,extra ,noaddfld ,doc ,disp ,example ,description
-nAppearances     ,blknum  ,            ,       ,      ,true    ,          ,        ,      ,         ,    ,     ,        ,
-lastExport       ,blknum  ,            ,       ,      ,true    ,          ,        ,      ,         ,    ,     ,        ,
-firstAppearance  ,blknum  ,            ,       ,      ,true    ,          ,        ,      ,         ,    ,     ,        ,
-latestAppearance ,blknum  ,UINT_MAX    ,       ,      ,true    ,          ,        ,      ,         ,    ,     ,        ,
-lastVisitedBlock ,blknum  ,            ,       ,      ,true    ,          ,        ,      ,         ,    ,     ,        ,
-sizeInBytes      ,uint64  ,            ,       ,      ,true    ,true      ,        ,      ,         ,4   ,     ,        ,the size of this monitor on disc
-nApps            ,blknum  ,            ,       ,      ,        ,          ,true    ,      ,true     ,1   ,     ,        ,the number of appearances for this monitor
-firstApp         ,blknum  ,            ,       ,      ,        ,          ,true    ,      ,true     ,2   ,     ,        ,the first block at which this address appears
-latestApp        ,blknum  ,            ,       ,      ,        ,          ,true    ,      ,true     ,3   ,     ,        ,the latest block at which this address appears
-path             ,string  ,            ,       ,      ,        ,          ,        ,true  ,         ,    ,     ,        ,
-address          ,address ,            ,       ,      ,        ,          ,true    ,      ,true     ,6   ,     ,        ,the address being monitored
-decimals         ,uint64  ,            ,       ,      ,        ,          ,        ,true  ,         ,    ,     ,        ,
-deleted          ,bool    ,            ,       ,      ,        ,          ,        ,true  ,         ,    ,     ,        ,
-description      ,string  ,            ,       ,      ,        ,          ,        ,true  ,         ,    ,     ,        ,
-is_contract      ,bool    ,            ,       ,      ,        ,          ,        ,true  ,         ,    ,     ,        ,
-is_custom        ,bool    ,            ,       ,      ,        ,          ,true    ,      ,true     ,8   ,     ,        ,`true` if this address is customized
-is_erc20         ,bool    ,            ,       ,      ,        ,          ,        ,true  ,         ,    ,     ,        ,
-is_erc721        ,bool    ,            ,       ,      ,        ,          ,        ,true  ,         ,    ,     ,        ,
-is_prefund       ,bool    ,            ,       ,      ,        ,          ,        ,true  ,         ,    ,     ,        ,
-name             ,string  ,            ,       ,      ,        ,          ,        ,true  ,         ,7   ,     ,        ,the name given to this address
-source           ,string  ,            ,       ,      ,        ,          ,true    ,      ,true     ,    ,     ,        ,
-symbol           ,string  ,            ,       ,      ,        ,          ,        ,true  ,         ,    ,     ,        ,
-tags             ,string  ,            ,       ,      ,        ,          ,true    ,      ,true     ,5   ,     ,        ,the tag given to this address
+name             ,type    ,strDefault ,object ,array ,nowrite ,omitempty ,minimal ,extra ,noaddfld ,doc ,disp ,example ,description
+nAppearances     ,blknum  ,           ,       ,      ,true    ,          ,        ,      ,         ,    ,     ,        ,
+lastExport       ,blknum  ,           ,       ,      ,true    ,          ,        ,      ,         ,    ,     ,        ,
+firstAppearance  ,blknum  ,           ,       ,      ,true    ,          ,        ,      ,         ,    ,     ,        ,
+latestAppearance ,blknum  ,UINT_MAX   ,       ,      ,true    ,          ,        ,      ,         ,    ,     ,        ,
+lastVisitedBlock ,blknum  ,           ,       ,      ,true    ,          ,        ,      ,         ,    ,     ,        ,
+sizeInBytes      ,uint64  ,           ,       ,      ,true    ,true      ,        ,      ,         ,4   ,     ,        ,the size of this monitor on disc
+nApps            ,blknum  ,           ,       ,      ,        ,          ,true    ,      ,true     ,1   ,     ,        ,the number of appearances for this monitor
+firstApp         ,blknum  ,           ,       ,      ,        ,          ,true    ,      ,true     ,2   ,     ,        ,the first block at which this address appears
+latestApp        ,blknum  ,           ,       ,      ,        ,          ,true    ,      ,true     ,3   ,     ,        ,the latest block at which this address appears
+path             ,string  ,           ,       ,      ,        ,          ,        ,true  ,         ,    ,     ,        ,
+address          ,address ,           ,       ,      ,        ,          ,true    ,      ,true     ,6   ,     ,        ,the address being monitored
+decimals         ,uint64  ,           ,       ,      ,        ,          ,        ,true  ,         ,    ,     ,        ,
+deleted          ,bool    ,           ,       ,      ,        ,          ,        ,true  ,         ,    ,     ,        ,
+description      ,string  ,           ,       ,      ,        ,          ,        ,true  ,         ,    ,     ,        ,
+isContract       ,bool    ,           ,       ,      ,        ,          ,        ,true  ,         ,    ,     ,        ,
+isCustom         ,bool    ,           ,       ,      ,        ,          ,true    ,      ,true     ,8   ,     ,        ,`true` if this address is customized
+isErc20          ,bool    ,           ,       ,      ,        ,          ,        ,true  ,         ,    ,     ,        ,
+isErc721         ,bool    ,           ,       ,      ,        ,          ,        ,true  ,         ,    ,     ,        ,
+isPrefund        ,bool    ,           ,       ,      ,        ,          ,        ,true  ,         ,    ,     ,        ,
+name             ,string  ,           ,       ,      ,        ,          ,        ,true  ,         ,7   ,     ,        ,the name given to this address
+source           ,string  ,           ,       ,      ,        ,          ,true    ,      ,true     ,    ,     ,        ,
+symbol           ,string  ,           ,       ,      ,        ,          ,        ,true  ,         ,    ,     ,        ,
+tags             ,string  ,           ,       ,      ,        ,          ,true    ,      ,true     ,5   ,     ,        ,the tag given to this address
