@@ -1,4 +1,4 @@
-status?modes=index&first_block=1000000&last_block=2500000
+status?modes=index&firstBlock=1000000&lastBlock=2500000
 {
   "data": [
     {

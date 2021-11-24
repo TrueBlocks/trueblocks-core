@@ -1,4 +1,4 @@
-state?call=0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B!0x0902f1ac&no_zero
+state?call=0x3d9819210A31b4961b30EF54bE2aeD79B9c9Cd3B!0x0902f1ac&noZero
 {
   "errors": [
     "The --no_zero option is not available with the --call option."

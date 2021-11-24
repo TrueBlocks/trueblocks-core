@@ -1,4 +1,4 @@
-state?addrs=0xf27daff52c38b2c373ad2b9392652ddf433303c5&blocks=3500000&no_zero
+state?addrs=0xf27daff52c38b2c373ad2b9392652ddf433303c5&blocks=3500000&noZero
 {
   "data": [],
   "meta": {

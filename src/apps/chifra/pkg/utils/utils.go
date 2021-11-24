@@ -21,6 +21,7 @@ import (
 	"os/exec"
 	"os/user"
 	"runtime"
+	"strings"
 
 	"golang.org/x/crypto/ssh/terminal"
 )
@@ -90,6 +91,20 @@ func OpenBrowser(url string) {
 	if err != nil {
 		log.Fatal(err)
 	}
+}
+
+func ToCamelCase(in string) string {
+	if len(in) == 0 {
+		return in
+	}
+
+	var arr []string
+	fields := strings.Fields(in)
+	for _, field := range fields {
+		arr = append(arr, strings.Title(field))
+	}
+	arr[0] = strings.ToLower(arr[0])
+	return strings.Join(arr, "")
 }
 
 // maximum uint64

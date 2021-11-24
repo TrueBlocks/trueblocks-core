@@ -81,9 +81,9 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *TokensOptions {
 				s := strings.Split(val, " ") // may contain space separated items
 				opts.Parts = append(opts.Parts, s...)
 			}
-		case "by_acct":
+		case "byAcct":
 			opts.ByAcct = true
-		case "no_zero":
+		case "noZero":
 			opts.NoZero = true
 		default:
 			if !globals.IsGlobalOption(key) {

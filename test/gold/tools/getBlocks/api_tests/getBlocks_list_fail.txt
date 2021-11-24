@@ -1,4 +1,4 @@
-blocks?list=0&list_count=12
+blocks?list=0&listCount=12
 {
   "data": [
     {

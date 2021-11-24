@@ -238,15 +238,15 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ExportOptions {
 			opts.Articulate = true
 		case "cache":
 			opts.Cache = true
-		case "cache_traces":
+		case "cacheTraces":
 			opts.CacheTraces = true
 		case "factory":
 			opts.Factory = true
 		case "count":
 			opts.Count = true
-		case "first_record":
+		case "firstRecord":
 			opts.FirstRecord = globals.ToUint64(value[0])
-		case "max_records":
+		case "maxRecords":
 			opts.MaxRecords = globals.ToUint64(value[0])
 		case "relevant":
 			opts.Relevant = true
@@ -272,17 +272,17 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ExportOptions {
 			opts.Load = value[0]
 		case "reversed":
 			opts.Reversed = true
-		case "by_date":
+		case "byDate":
 			opts.ByDate = true
-		case "summarize_by":
+		case "summarizeBy":
 			opts.SummarizeBy = value[0]
-		case "skip_ddos":
+		case "skipDdos":
 			opts.SkipDdos = true
-		case "max_traces":
+		case "maxTraces":
 			opts.MaxTraces = globals.ToUint64(value[0])
-		case "first_block":
+		case "firstBlock":
 			opts.FirstBlock = globals.ToUint64(value[0])
-		case "last_block":
+		case "lastBlock":
 			opts.LastBlock = globals.ToUint64(value[0])
 		default:
 			if !globals.IsGlobalOption(key) {

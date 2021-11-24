@@ -1,4 +1,4 @@
-scrape?block_cnt=-12
+scrape?blockCnt=-12
 {
   "errors": [
     "Please choose at least one of [indexer|monitors|both]."

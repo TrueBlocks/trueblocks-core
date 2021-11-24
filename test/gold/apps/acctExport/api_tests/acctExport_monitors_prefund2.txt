@@ -1,4 +1,4 @@
-monitors?addrs=0x05a56e2d52c817161883f50c441c3228cfe54d9f&first_block=2&last_block=2
+monitors?addrs=0x05a56e2d52c817161883f50c441c3228cfe54d9f&firstBlock=2&lastBlock=2
 {
   "data": [],
   "meta": {

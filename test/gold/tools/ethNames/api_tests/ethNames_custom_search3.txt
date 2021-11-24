@@ -1,4 +1,4 @@
-names?custom&terms=account_1&match_case
+names?custom&terms=account_1&matchCase
 {
   "data": [],
   "meta": {

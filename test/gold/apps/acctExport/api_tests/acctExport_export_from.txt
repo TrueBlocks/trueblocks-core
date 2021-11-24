@@ -1,4 +1,4 @@
-export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&first_block=10277780&last_block=10296792&fmt=api&from
+export?addrs=0xf503017d7baf7fbc0fff7492b751025c6a78179b&firstBlock=10277780&lastBlock=10296792&fmt=api&from
 {
   "errors": [
     "Invalid key (from) in export route."

@@ -93,11 +93,11 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *StateOptions {
 			}
 		case "changes":
 			opts.Changes = true
-		case "no_zero":
+		case "noZero":
 			opts.NoZero = true
 		case "call":
 			opts.Call = value[0]
-		case "proxy_for":
+		case "proxyFor":
 			opts.ProxyFor = value[0]
 		default:
 			if !globals.IsGlobalOption(key) {

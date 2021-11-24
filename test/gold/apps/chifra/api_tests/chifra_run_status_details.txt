@@ -1,4 +1,4 @@
-status?details&first_block=1400000&last_block=2000000
+status?details&firstBlock=1400000&lastBlock=2000000
 {
   "data": [
     {

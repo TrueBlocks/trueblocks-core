@@ -1,4 +1,4 @@
-blocks?blocks=4012000-4012001&big_range=100
+blocks?blocks=4012000-4012001&bigRange=100
 {
   "errors": [
     "chifra blocks - The --big_range option is only available with the --logs option (min 50)."

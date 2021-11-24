@@ -1,4 +1,4 @@
-status?get_config
+status?getConfig
 {"data": [
 {
   "files": [

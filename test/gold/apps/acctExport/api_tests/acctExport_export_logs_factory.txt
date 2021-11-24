@@ -1,4 +1,4 @@
-export?addrs=0x8b3b3b624c3c0397d3da8fd861512393d51dcbac&factory&traces&last_block=1603174
+export?addrs=0x8b3b3b624c3c0397d3da8fd861512393d51dcbac&factory&traces&lastBlock=1603174
 {
   "data": [
     {

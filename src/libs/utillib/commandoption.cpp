@@ -950,12 +950,6 @@ string_q prepareDescr(const string_q& in) {
     return ">\n            " + substitute(in, "\n         ", "");
 }
 
-string_q toCamelCase(const string_q& in) {
-    string_q ret = substitute(toProper(in), "_", "");
-    ret[0] = toLower(ret)[0];
-    return ret;
-}
-
 //---------------------------------------------------------------------------------------------------
 bool isCrud(const string_q& cmd) {
     return cmd == "create" || cmd == "delete" || cmd == "update" || cmd == "remove" || cmd == "undelete";

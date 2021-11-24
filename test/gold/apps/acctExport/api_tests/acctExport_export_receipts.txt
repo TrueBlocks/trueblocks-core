@@ -1,4 +1,4 @@
-export?addrs=0x001d14804b399c6ef80e64576f657660804fec0b&max_records=5&receipts&fmt=json
+export?addrs=0x001d14804b399c6ef80e64576f657660804fec0b&maxRecords=5&receipts&fmt=json
 {
   "data": [
     {
