@@ -194,52 +194,45 @@ Here's a table showing which endpoints changed. Previously the API endpoints wer
 
 
 
+### Breaking Changes in Addition to Above
 
+Changed options for `export` route:
 
+```
+	n_blocks		--> block_cnt
+	n_block_procs	--> block_chan_cnt
+	n_addr_procs	--> addr_chan_cnt
+	cache_txs       --> cache
 
-### Breaking Change to --verbose flag
+	# hotkeys changed
+	the `-a` hotkey is now assigned to the `--articulate` option
+	the `-s` hotkey is now assigned to the `--apps` option
+
+```
+
+Changed options for `blocks` route:
+
+```
+	Added options `--logs`, `--emitter`, and `--topics`
+	Previous `--uniq` option removed as redundant
+	Previously named `--uniq_txs` option renamed to `--uniq`
+```
+
+Deprecated these options for the `pins` route:
+
+```
+	`--freshen`, `--remote`, and `--init_all`
+```
+
+### Other slight changes
+The field names for CSV and TXT export for some commands was switch to `camelCase` from previously `lowercase`.
+
+For every API call, the `types` data items were removed as they were never used and very incomplete.
 
 ## You're Finished
 
 Please report any problems by creating an issue.
 
-## Deprecated Command Line Options
-
-- The `--report` option of `chifra status` has been removed. Simply run `chifra status` with no options for the same result.
-- The `--init_all` option of `chifra pins` has been removed. Use `chifra pins --init --all` instead or more convieniently, `chifra init --all` which is identical.
-- The globally available `--file:fn` option has been made consistent with other flags and no longer requires the colon (:).
-
 ## Previous Migration
 
 [Click here](https://github.com/TrueBlocks/trueblocks-core/blob/develop/src/other/migrations/README-0.14.0.md) for the previous migration.
-
-
-
-n_blocks --> block_cnt
-n_block_procs --> block_chan_cnt
-n_addr_procs --> addr_chan_cnt
-
-changed -a flag in chifra blocks which used to stand for --apps to -s due to adding --articulate option
-added options --logs, --emitter, and --topics to chifra blocks
-From pinMan each of these is deprecated
-	freshen  bool
-	remote   bool
-	init_all bool
-changed --cache_txs to --cache in export
-
-
-
---uniq_txs to --uniq -- removed the old --uniq option which was redundant
-
-
-chifra when
-	field headers changed from
-		blocknumber	timestamp	date	name
-	to
-		blockNumber	timeStamp	date	name
-	camel case from lower case
-
-
-Removed the `types` field from API export
-
-https://github.com/TrueBlocks/trueblocks-core/blob/fix/camelCaseApi/docs/COMMANDS.md
