@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: TrueBlocks API
   contact:
-    email: jrush@trueblocks.io
+    email: info@trueblocks.io
     url: https://www.trueblocks.io
   license:
     name: GPL 3.0
