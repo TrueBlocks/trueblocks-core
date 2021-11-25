@@ -16,7 +16,7 @@ package abisPkg
 import (
 	"strings"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
 )
 
@@ -49,7 +49,7 @@ func (opts *AbisOptions) ValidateAbis() error {
 				continue
 			}
 			cleaned := "./" + strings.Replace(sol, ".sol", "", 1) + ".sol"
-			if !utils.FileExists(cleaned) {
+			if !file.FileExists(cleaned) {
 				return validate.Usage("The {0} option ({1}) must {2}", "file", cleaned, "exist")
 			}
 		}

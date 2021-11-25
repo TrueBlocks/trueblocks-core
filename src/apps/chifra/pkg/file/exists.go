@@ -1,4 +1,4 @@
-package globals
+package file
 
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
@@ -14,30 +14,21 @@ package globals
  *-------------------------------------------------------------------------------------------*/
 
 import (
-	"strconv"
-
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/validate"
+	"os"
 )
 
-func (opts *GlobalOptions) ValidateGlobals() error {
-	if len(opts.File) > 0 && !file.FileExists(opts.File) {
-		return validate.Usage("The {0} option ({1}) must {2}", "file", opts.File, "exist")
+func FileExists(filename string) bool {
+	info, err := os.Stat(filename)
+	if os.IsNotExist(err) {
+		return false
 	}
-
-	err := validate.ValidateEnum("--fmt", opts.Format, "[json|txt|csv|api]")
-	if err != nil {
-		return err
-	}
-	return nil
+	return !info.IsDir()
 }
 
-func ToFloat64(val string) float64 {
-	f, _ := strconv.ParseFloat(val, 64)
-	return f
-}
-
-func ToUint64(val string) uint64 {
-	f, _ := strconv.ParseUint(val, 10, 64)
-	return f
-}
+// func FolderExists(path string) bool {
+// 	info, err := os.Stat(path)
+// 	if os.IsNotExist(err) {
+// 		return false
+// 	}
+// 	return info.IsDir()
+// }

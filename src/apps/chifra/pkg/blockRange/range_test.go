@@ -13,6 +13,8 @@
 package blockRange
 
 import (
+	"fmt"
+
 	"encoding/json"
 	"testing"
 )
@@ -161,5 +163,17 @@ func TestBlockRange_UnmarshalJSON(t *testing.T) {
 
 	if record.Blocks.End.Block != uint(10567003) {
 		t.Errorf("Wrong end value %d", record.Blocks.End.Block)
+	}
+}
+
+func TestToString(t *testing.T) {
+	br, err := New("1234")
+	if err != nil {
+		t.Errorf("Could not parse block")
+	}
+	expected := "{\"StartType\":0,\"Start\":{\"Block\":1234,\"Date\":\"\",\"Special\":\"\"},\"EndType\":5,\"End\":{\"Block\":0,\"Date\":\"\",\"Special\":\"\"},\"ModifierType\":5,\"Modifier\":{\"Step\":0,\"Period\":\"\"}}\n"
+	got := fmt.Sprintf("%s\n", br.MarshalJSON())
+	if got != expected {
+		t.Errorf("String printer for blockRange not equal to expected")
 	}
 }

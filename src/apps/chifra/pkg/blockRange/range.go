@@ -13,6 +13,7 @@
 package blockRange
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"regexp"
@@ -71,6 +72,14 @@ type BlockRange struct {
 	End          Point
 	ModifierType BlockRangeValue
 	Modifier     Modifier
+}
+
+func (br BlockRange) MarshalJSON() string {
+	str, err := json.Marshal(br)
+	if err != nil {
+		return ""
+	}
+	return string(str)
 }
 
 func (br *BlockRange) UnmarshalJSON(data []byte) error {
