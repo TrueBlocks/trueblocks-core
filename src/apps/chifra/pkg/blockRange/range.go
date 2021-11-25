@@ -74,7 +74,7 @@ type BlockRange struct {
 	Modifier     Modifier
 }
 
-func (br BlockRange) String() string {
+func (br BlockRange) MarshalJSON() string {
 	str, err := json.Marshal(br)
 	if err != nil {
 		return ""
