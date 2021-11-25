@@ -85,7 +85,7 @@ class COptions : public CAbiOptions {
     blkrange_t exportRange;
 
     string_q className;
-    CBlockProgress bp;
+    CMetaData meta;
     size_t slowQueries;
 
     COptions(void);

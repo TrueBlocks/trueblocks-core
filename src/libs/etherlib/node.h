@@ -17,6 +17,7 @@
 #include "rewards.h"
 #include "logfilter.h"
 #include "ethcall.h"
+#include "metadata.h"
 
 namespace qblocks {
 
@@ -137,24 +138,6 @@ extern bool forEveryBlock_light(BLOCKVISITFUNC func, void* data, uint64_t start,
                                 uint64_t skip = 1);  // NOLINT
 extern bool forEveryTransaction(TRANSVISITFUNC func, void* data, const string_q& trans_list);
 extern bool forEveryTimestamp(BLOCKVISITFUNC func, void* data);
-
-//-------------------------------------------------------------------------
-// forEvery functions
-struct CBlockProgress {
-  public:
-    blknum_t unripe;
-    blknum_t ripe;
-    blknum_t staging;
-    blknum_t finalized;
-    blknum_t client;
-};
-#define BP_CLIENT (1 << 1)
-#define BP_FINAL (1 << 2)
-#define BP_STAGING (1 << 3)
-#define BP_RIPE (1 << 4)
-#define BP_UNRIPE (1 << 5)
-#define BP_ALL (BP_CLIENT | BP_FINAL | BP_STAGING | BP_RIPE | BP_UNRIPE)
-CBlockProgress getBlockProgress(size_t which = BP_ALL);
 
 //-------------------------------------------------------------------------
 extern string_q getIndexPath(const string_q& _part);

@@ -15,7 +15,7 @@
 #include "acctlib.h"
 
 //--------------------------------------------------------------------------
-class CConsolidator : public CBlockProgress {
+class CConsolidator : public CMetaData {
   public:
     bool pin;
     blknum_t distFromHead;

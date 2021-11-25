@@ -79,7 +79,7 @@ bool COptions::parseArguments(string_q& command) {
     bool remove = false;
     // END_CODE_LOCAL_INIT
 
-    blknum_t latest = bp.client;
+    blknum_t latest = meta.client;
     string_q origCmd = command;
 
     Init();
@@ -367,7 +367,7 @@ bool COptions::parseArguments(string_q& command) {
     if (articulate) {
         abi_spec.loadAbisFromKnown();
         for (auto monitor : allMonitors) {
-            if (isContractAt(monitor.address, bp.client))
+            if (isContractAt(monitor.address, meta.client))
                 abi_spec.loadAbiFromEtherscan(monitor.address);
         }
     }
@@ -380,7 +380,7 @@ bool COptions::parseArguments(string_q& command) {
         return usage("Please choose only one of --staging or --unripe.");
 
     // Last block depends on scrape type or user input `end` option (with appropriate check)
-    blknum_t lastBlockToVisit = max((blknum_t)1, unripe ? bp.unripe : staging ? bp.staging : bp.finalized);
+    blknum_t lastBlockToVisit = max((blknum_t)1, unripe ? meta.unripe : staging ? meta.staging : meta.finalized);
     listRange = make_pair((nextBlockToVisit == NOPOS ? 0 : nextBlockToVisit), lastBlockToVisit);
 
     if (isTestMode() && (staging || unripe))
@@ -488,7 +488,7 @@ void COptions::Init(void) {
     if (!cache && getGlobalConfig("acctExport")->getConfigBool("settings", "cache_txs", false))
         cache = true;  // backwards compat
 
-    bp = getBlockProgress(BP_ALL);
+    meta = getMetaData();
     listRange = make_pair(0, NOPOS);
 
     allMonitors.clear();

@@ -70,7 +70,7 @@ bool COptions::loadAllAppearances(void) {
     // happen if we re-sync the index (and optionally the node) from scratch
     for (size_t i = first_record; i < min(blknum_t(monTmp.size()), (first_record + max_records)); i++) {
         CAppearance_mon* app = &monTmp[i];
-        if (app->blk > bp.client) {
+        if (app->blk > meta.client) {
             static bool hasFuture = false;
             if (!hasFuture) {
                 if (!isTestMode())
