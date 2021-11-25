@@ -23,25 +23,9 @@ import (
 	"runtime"
 	"strings"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/file"
 	"golang.org/x/crypto/ssh/terminal"
 )
-
-func FileExists(filename string) bool {
-	info, err := os.Stat(filename)
-	if os.IsNotExist(err) {
-		return false
-	}
-	return !info.IsDir()
-}
-
-// FolderExists help text todo
-func FolderExists(path string) bool {
-	info, err := os.Stat(path)
-	if os.IsNotExist(err) {
-		return false
-	}
-	return info.IsDir()
-}
 
 // GetCommandPath returns full path the the given tool
 func GetCommandPath(cmd string) string {
@@ -64,7 +48,7 @@ func IsTerminal() bool {
 }
 
 func AsciiFileToString(fn string) string {
-	if !FileExists(fn) {
+	if !file.FileExists(fn) {
 		return ""
 	}
 
