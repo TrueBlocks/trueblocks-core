@@ -233,7 +233,7 @@ var routes = Routes{
 // By removing, inserting into, or altering any of the following 10  lines
 // of code, you are violating the terms of our usage license. Don't do it.
 // fileName := Options.Status.CachePath + "lics/export.txt"
-// if false { // !utils.FileExists(fileName)) {
+// if false { // !utils.File Exists(fileName)) {
 //	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 //	w.Header().Set("Access-Control-Allow-Origin", "*")
 //	w.Header().Set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
