@@ -33,7 +33,6 @@ func TestCacheLayout_NewIndex(t *testing.T) {
 	}
 
 	p := indexConfig.GetPathTo("filename")
-
 	if p != path.Join(indexPath, "finalized/filename.bin") {
 		t.Error("Wrong ToPathResult", p)
 	}
@@ -56,5 +55,60 @@ func TestCacheLayout_NewBloom(t *testing.T) {
 
 	if p != path.Join(indexPath, "blooms/filename.bloom") {
 		t.Error("Wrong ToPathResult", p)
+	}
+}
+
+func TestCacheLayout_All(t *testing.T) {
+	indexPath := config.ReadTrueBlocks().Settings.IndexPath
+
+	tests := []struct {
+		name      string
+		chunkType ChunkType
+		expected  CacheLayout
+		path      string
+		wantErr   bool
+	}{
+		{
+			name:      "index path",
+			chunkType: IndexChunk,
+			expected: CacheLayout{
+				outputDir: indexPath,
+				subdir:    "finalized/",
+				extension: ".bin",
+			},
+			path:    "finalized/filename.bin",
+			wantErr: false,
+		},
+		{
+			name:      "blooms path",
+			chunkType: BloomChunk,
+			expected: CacheLayout{
+				outputDir: indexPath,
+				subdir:    "blooms/",
+				extension: ".bloom",
+			},
+			path:    "blooms/filename.bloom",
+			wantErr: false,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			config := &CacheLayout{}
+			config.New(tt.chunkType)
+
+			if config.extension != tt.expected.extension {
+				t.Error("Wrong extension", config.extension)
+			}
+
+			if config.subdir != tt.expected.subdir {
+				t.Error("Wrong subdir", config.subdir)
+			}
+
+			p := config.GetPathTo("filename")
+			if p != path.Join(indexPath, tt.path) {
+				t.Error("Wrong ToPathResult", p)
+			}
+		})
 	}
 }
