@@ -19,7 +19,7 @@ CConsolidator::CConsolidator(void) : pin(false), distFromHead(0), prevBlock(0) {
     blazeRipe = 0;
     blazeCnt = 0;
 
-    CBlockProgress prog = getBlockProgress();
+    CMetaData prog = getMetaData();
     unripe = prog.unripe;
     ripe = prog.ripe;
     staging = prog.staging;
