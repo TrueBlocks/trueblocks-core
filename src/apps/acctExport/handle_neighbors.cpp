@@ -16,12 +16,6 @@
 bool showApp(const CAppearance& item, void* data) {
     COptions* opt = reinterpret_cast<COptions*>(data);
 
-    static blknum_t last = NOPOS;
-    if (item.bn != last) {
-        cout << endl;
-        last = item.bn;
-    }
-
     cout << ((isJson() && !opt->firstOut) ? ", " : "");
     cout << item;
     opt->firstOut = false;

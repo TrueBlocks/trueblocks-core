@@ -24,12 +24,14 @@ func (opts *ExportOptions) ValidateExport() error {
 		return opts.BadFlag
 	}
 
-	err := validate.ValidateAtLeastOneAddr(opts.Addrs)
-	if err != nil {
-		return err
+	if len(opts.Globals.File) == 0 {
+		err := validate.ValidateAtLeastOneAddr(opts.Addrs)
+		if err != nil {
+			return err
+		}
 	}
 
-	err = validate.ValidateEnum("--summarize_by", Options.SummarizeBy, "[yearly|quarterly|monthly|weekly|daily|hourly|blockly|tx]")
+	err := validate.ValidateEnum("--summarize_by", Options.SummarizeBy, "[yearly|quarterly|monthly|weekly|daily|hourly|blockly|tx]")
 	if err != nil {
 		return err
 	}
