@@ -70,18 +70,18 @@ func TestCacheLayout(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			config := &CachePath{}
-			config.New(tt.cacheType)
+			cachePath := &CachePath{}
+			cachePath.New(tt.cacheType)
 
-			if config.Extension != tt.expected.Extension {
-				t.Error("Wrong Extension", config.Extension)
+			if cachePath.Extension != tt.expected.Extension {
+				t.Error("Wrong Extension", cachePath.Extension)
 			}
 
-			if config.Subdir != tt.expected.Subdir {
-				t.Error("Wrong Subdir", config.Subdir)
+			if cachePath.Subdir != tt.expected.Subdir {
+				t.Error("Wrong Subdir", cachePath.Subdir)
 			}
 
-			p := config.GetPathTo(tt.param)
+			p := cachePath.GetPathTo(tt.param)
 			if p != path.Join(tt.expected.RootPath, tt.path) {
 				t.Error("Wrong ToPathResult", p)
 			}

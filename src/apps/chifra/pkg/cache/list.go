@@ -10,21 +10,19 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-package pinlib
+package cache
 
 import (
 	"io/ioutil"
-
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 )
 
 // This package makes it easier to get file names of all blooms/index chunks
 // that are currently saved locally
 
-// ListByChunkType returns a slice of file names (strings) of all chunks of
+// ListByCacheType returns a slice of file names (strings) of all chunks of
 // the given type in UnchainedIndex directory
-func ListByChunkType(chunkType cache.CacheType) ([]string, error) {
-	cachePath := &cache.CachePath{}
+func ListByCacheType(chunkType CacheType) ([]string, error) {
+	cachePath := &CachePath{}
 	cachePath.New(chunkType)
 
 	files, err := ioutil.ReadDir(cachePath.String())
@@ -46,11 +44,11 @@ func ListByChunkType(chunkType cache.CacheType) ([]string, error) {
 // ListLocalBlooms returns a slice of file names (strings) of all bloom
 // filters present in UnchainedIndex directory
 func ListLocalBlooms() ([]string, error) {
-	return ListByChunkType(cache.BloomChunk)
+	return ListByCacheType(BloomChunk)
 }
 
 // ListLocalIndexes returns a slice of file names (strings) of all index
 // chunks present in UnchainedIndex directory
 func ListLocalIndexes() ([]string, error) {
-	return ListByChunkType(cache.IndexChunk)
+	return ListByCacheType(IndexChunk)
 }
