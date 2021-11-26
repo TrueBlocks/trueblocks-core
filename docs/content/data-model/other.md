@@ -2,7 +2,7 @@
 title: "Other"
 description: ""
 lead: ""
-date: 2021-11-22T23:24:35
+date: 2021-11-26T12:07:43
 lastmod:
   - :git
   - lastmod
@@ -80,9 +80,9 @@ Prior to sources of on-chain prices such as UniSwap, TrueBlocks would pull US do
 
 The following commands produce and manage quotes:
 
-| Tools                                              |                                                                           |
-| -------------------------------------------------- | ------------------------------------------------------------------------- |
-| [chifra quotes](/docs/chifra/other/#chifra-quotes) | Freshen or display Ethereum price data.<br/>This tool has been deprecated |
+| Tools                                              |                                                                          |
+| -------------------------------------------------- | ------------------------------------------------------------------------ |
+| [chifra quotes](/docs/chifra/other/#chifra-quotes) | Update or display Ethereum price data.<br/>This tool has been deprecated |
 
 Quote data is made of the following data fields:
 

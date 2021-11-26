@@ -180,7 +180,7 @@ func RouteChunks(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// RouteQuotes Freshen or display Ethereum price data. This tool has been deprecated.
+// RouteQuotes Update or display Ethereum price data. This tool has been deprecated.
 func RouteQuotes(w http.ResponseWriter, r *http.Request) {
 	if !quotesPkg.ServeQuotes(w, r) {
 		CallOne(w, r, GetCommandPath("getQuotes"), "", "quotes")

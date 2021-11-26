@@ -1,6 +1,6 @@
 chifra quotes   -h
 Purpose:
-  Freshen or display Ethereum price data. This tool has been deprecated.
+  Update or display Ethereum price data. This tool has been deprecated.
 
 Usage:
   chifra quotes [flags]

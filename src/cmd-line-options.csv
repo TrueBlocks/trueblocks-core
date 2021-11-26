@@ -280,7 +280,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12040,tools,Other,quotes,getQuotes,period,p,,false,false,true,true,local,flag,enum[5|15|30|60|120*|240|1440|10080|hourly|daily|weekly],increment of display
 12060,tools,Other,quotes,getQuotes,pair,a,,false,false,true,true,local,flag,<string>,which price pair to freshen or list (see Poloniex)
 12060,tools,Other,quotes,getQuotes,feed,e,,false,false,true,true,header,flag,enum[poloniex*|maker|tellor],the feed for the price data
-12080,tools,Other,quotes,getQuotes,,,,false,false,true,true,--,description,,Freshen or display Ethereum price data. This tool has been deprecated.
+12080,tools,Other,quotes,getQuotes,,,,false,false,true,true,--,description,,Update or display Ethereum price data. This tool has been deprecated.
 12082,tools,Other,quotes,getQuotes,n1,,,false,false,false,false,--,note,,Due to restrictions from Poloniex&#44; this tool retrieves only 30 days of data at a time. You must repeatedly run this command until the data is up-to-date.
 
 12001,apps,Other,explore,fireStorm,terms,,,false,false,true,true,header,positional,list<string>,one or more address&#44; name&#44; block&#44; or transaction identifier

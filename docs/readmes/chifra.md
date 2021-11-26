@@ -30,7 +30,7 @@ Purpose:
     init          initialize the TrueBlocks system by downloading from IPFS
     pins          manage pinned index of appearances and associated blooms
   Other:
-    quotes        freshen or display Ethereum price data. This tool has been deprecated
+    quotes        update or display Ethereum price data. This tool has been deprecated
     explore       open an explorer for one or more addresses, blocks, or transactions
     slurp         fetch data from EtherScan for any address
   Flags:
