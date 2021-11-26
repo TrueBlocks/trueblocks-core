@@ -32,7 +32,7 @@ var tokensCmd = &cobra.Command{
 	Use:     usageTokens,
 	Short:   shortTokens,
 	Long:    longTokens,
-	Version: "GHC-TrueBlocks//0.16.1-alpha",
+	Version: "GHC-TrueBlocks//0.17.0-alpha",
 	RunE:    tokensPkg.RunTokens,
 }
 

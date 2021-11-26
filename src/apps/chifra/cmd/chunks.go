@@ -32,7 +32,7 @@ var chunksCmd = &cobra.Command{
 	Use:     usageChunks,
 	Short:   shortChunks,
 	Long:    longChunks,
-	Version: "GHC-TrueBlocks//0.16.1-alpha",
+	Version: "GHC-TrueBlocks//0.17.0-alpha",
 	RunE:    chunksPkg.RunChunks,
 }
 

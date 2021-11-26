@@ -1602,17 +1602,9 @@ paths:
       tags:
         - Other
       summary: Price quotes
-      description: Freshen or display Ethereum price data. This tool has been deprecated.
+      description: Update or display Ethereum price data. This tool has been deprecated.
       operationId: other-quotes
       parameters:
-        - name: freshen
-          description: Freshen price database
-          required: false
-          style: form
-          in: query
-          explode: true
-          schema:
-            type: boolean
         - name: period
           description: increment of display
           required: false

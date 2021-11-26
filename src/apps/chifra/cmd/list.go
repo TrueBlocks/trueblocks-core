@@ -32,7 +32,7 @@ var listCmd = &cobra.Command{
 	Use:     usageList,
 	Short:   shortList,
 	Long:    longList,
-	Version: "GHC-TrueBlocks//0.16.1-alpha",
+	Version: "GHC-TrueBlocks//0.17.0-alpha",
 	RunE:    listPkg.RunList,
 }
 

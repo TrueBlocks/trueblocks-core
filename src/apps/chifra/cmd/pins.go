@@ -32,7 +32,7 @@ var pinsCmd = &cobra.Command{
 	Use:     usagePins,
 	Short:   shortPins,
 	Long:    longPins,
-	Version: "GHC-TrueBlocks//0.16.1-alpha",
+	Version: "GHC-TrueBlocks//0.17.0-alpha",
 	RunE:    pinsPkg.RunPins,
 }
 
