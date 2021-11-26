@@ -41,7 +41,7 @@ bool visitApp(const CAppearance& item, void* data) {
         return !shouldQuit();
 
     // if (opt->cache) {
-    //     string_q path = getBinaryCacheFilename(CT_APPS, item.bn, item.tx);
+    //     string_q path = getBinaryCacheFilename(CT_NEIGHBORS, item.bn, item.tx);
     //     string_q csvPath = substitute(path, ".bin", ".csv");
     //     ostringstream os;
     //     os << item.Format(STR_DISPLAY_APPEARANCE) << endl;
@@ -63,7 +63,7 @@ bool transFilter(const CTransaction* trans, void* data) {
 
 //-----------------------------------------------------------------------
 bool neighbors_Display(CTraverser* trav, void* data) {
-    string_q path = getBinaryCacheFilename(CT_APPS, trav->trans.blockNumber, trav->trans.transactionIndex);
+    string_q path = getBinaryCacheFilename(CT_NEIGHBORS, trav->trans.blockNumber, trav->trans.transactionIndex);
     establishFolder(path);
 
     CAppearanceArray apps;
