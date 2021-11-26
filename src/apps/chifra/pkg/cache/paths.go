@@ -44,12 +44,11 @@ type CachePath struct {
 	Extension string
 }
 
-// New sets correct values of Subdir and Extension properties based on
-// chunkType
-func (cl *CachePath) New(chunkType CacheType) {
+// New sets correct values of Subdir and Extension properties based on cacheType
+func (cl *CachePath) New(cacheType CacheType) {
 	Subdir := "blooms/"
 	Extension := ".bloom"
-	if chunkType == IndexChunk {
+	if cacheType == IndexChunk {
 		Subdir = "finalized/"
 		Extension = ".bin"
 	}

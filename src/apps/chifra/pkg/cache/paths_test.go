@@ -21,17 +21,19 @@ import (
 
 func TestCacheLayout(t *testing.T) {
 	indexPath := config.ReadTrueBlocks().Settings.IndexPath
-	cachePath := config.ReadTrueBlocks().Settings.CachePath
+	// cachePath := config.ReadTrueBlocks().Settings.CachePath
 	tests := []struct {
 		name      string
-		chunkType CacheType
+		cacheType CacheType
+		param     string
 		expected  CachePath
 		path      string
 		wantErr   bool
 	}{
 		{
 			name:      "index path",
-			chunkType: IndexChunk,
+			cacheType: IndexChunk,
+			param:     "filename",
 			expected: CachePath{
 				RootPath:  indexPath,
 				Subdir:    "finalized/",
@@ -42,7 +44,8 @@ func TestCacheLayout(t *testing.T) {
 		},
 		{
 			name:      "blooms path",
-			chunkType: BloomChunk,
+			cacheType: BloomChunk,
+			param:     "filename",
 			expected: CachePath{
 				RootPath:  indexPath,
 				Subdir:    "blooms/",
@@ -51,12 +54,24 @@ func TestCacheLayout(t *testing.T) {
 			path:    "blooms/filename.bloom",
 			wantErr: false,
 		},
+		// {
+		// 	name:      "blocks cache path",
+		// 	cacheType: BlockCache,
+		// 	param:     "10001001",
+		// 	expected: CachePath{
+		// 		RootPath:  cachePath,
+		// 		Subdir:    "blocks/00/10/01/",
+		// 		Extension: ".bin",
+		// 	},
+		// 	path:    "blooms/filename.bloom",
+		// 	wantErr: false,
+		// },
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			config := &CachePath{}
-			config.New(tt.chunkType)
+			config.New(tt.cacheType)
 
 			if config.Extension != tt.expected.Extension {
 				t.Error("Wrong Extension", config.Extension)
@@ -66,8 +81,8 @@ func TestCacheLayout(t *testing.T) {
 				t.Error("Wrong Subdir", config.Subdir)
 			}
 
-			p := config.GetPathTo("filename")
-			if p != path.Join(indexPath, tt.path) {
+			p := config.GetPathTo(tt.param)
+			if p != path.Join(tt.expected.RootPath, tt.path) {
 				t.Error("Wrong ToPathResult", p)
 			}
 		})
