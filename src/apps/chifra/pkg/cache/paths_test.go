@@ -22,6 +22,7 @@ import (
 func TestCacheLayout(t *testing.T) {
 	indexPath := config.ReadTrueBlocks().Settings.IndexPath
 	cachePath := config.ReadTrueBlocks().Settings.CachePath
+
 	tests := []struct {
 		on        bool
 		name      string
@@ -33,7 +34,7 @@ func TestCacheLayout(t *testing.T) {
 	}{
 		{
 			on:    true,
-			name:  "index path",
+			name:  "index chunk path",
 			param: "0010000000-0010200000",
 			expected: CachePath{
 				Type:      IndexChunk,
@@ -46,7 +47,7 @@ func TestCacheLayout(t *testing.T) {
 		},
 		{
 			on:    true,
-			name:  "blooms path",
+			name:  "Bloom filter path",
 			param: "0010000000-0010200000",
 			expected: CachePath{
 				Type:      BloomChunk,
@@ -59,7 +60,7 @@ func TestCacheLayout(t *testing.T) {
 		},
 		{
 			on:    false,
-			name:  "blocks cache path",
+			name:  "Block cache path",
 			param: "001001001",
 			expected: CachePath{
 				Type:      BlockCache,
@@ -70,6 +71,22 @@ func TestCacheLayout(t *testing.T) {
 			path:    "blocks/00/10/01/001001001.bin",
 			wantErr: false,
 		},
+		{
+			on:    false,
+			name:  "Transaction cache path",
+			param: "1001001.20",
+			expected: CachePath{
+				Type:      TxCache,
+				RootPath:  cachePath,
+				Subdir:    "txs/",
+				Extension: ".bin",
+			},
+			path:    "txs/00/10/01/001001001-00020.bin",
+			wantErr: false,
+		},
+		// TraceFn:      $CACHE_PATH/traces/00/10/01/001001001-00020-10.bin
+		// NeighborFn:   $CACHE_PATH/neighbors/00/10/01/001001001-00020.bin
+		// ReconFn:      $CACHE_PATH/recons/c011/a724/00e58ecd99ee497cf89e3775d4bd732f/000000012.00013.bin
 	}
 
 	for _, tt := range tests {
@@ -96,20 +113,3 @@ func TestCacheLayout(t *testing.T) {
 		})
 	}
 }
-
-// Valid cache paths from the C++ code
-// IndexFn:      $INDEX_PATH/finalized/0010000000-0010200000.bin
-// BloomFn:      $INDEX_PATH/blooms/0010000000-0010200000.bloom
-// BlockFn:      $CACHE_PATH/blocks/00/10/01/001001001.bin
-// TxFn:         $CACHE_PATH/txs/00/10/01/001001001-00020.bin
-// TraceFn:      $CACHE_PATH/traces/00/10/01/001001001-00020-10.bin
-// NeighborFn:   $CACHE_PATH/neighbors/00/10/01/001001001-00020.bin
-// ReconFn:      $CACHE_PATH/recons/c011/a724/00e58ecd99ee497cf89e3775d4bd732f/000000012.00013.bin
-
-// IndexPath:    $INDEX_PATH/finalized/
-// BloomPath:    $INDEX_PATH/blooms/
-// BlockPath:    $CACHE_PATH/blocks/00/10/01/
-// TxPath:       $CACHE_PATH/txs/00/10/01/
-// TracePath:    $CACHE_PATH/traces/00/10/01/
-// NeighborPath: $CACHE_PATH/neighbors/00/10/01/
-// ReconPath:    $CACHE_PATH/recons/c011/a724/00e58ecd99ee497cf89e3775d4bd732f/
