@@ -7,7 +7,7 @@ info:
   license:
     name: GPL 3.0
     url: http://www.gnu.org/licenses/
-  version: 0.16.1-alpha
+  version: 0.17.0-alpha
   description: >
 
     A REST layer over the TrueBlocks application. With `chifra serve`, you can
@@ -1591,10 +1591,12 @@ paths:
               schema:
                 properties:
                   data:
-                    description: 
+                    description: the IPFS hashes of the index chunk and its associated Bloom filter for the given block range
                     type: array
                     items:
-                      
+                      oneOf:
+                        - $ref: "#/components/schemas/pinnedChunk"
+                        - $ref: "#/components/schemas/manifest"
         "400":
           description: bad input parameter
   /quotes:

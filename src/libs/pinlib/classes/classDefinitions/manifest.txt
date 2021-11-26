@@ -5,4 +5,4 @@ includes = etherlib.h|pinnedchunk.h
 doc_group = 04-Admin
 doc_descr = a manifest of the IPFS hashes created for the unchained index
 doc_api = 33-manifest
-doc_producer = pins, init, scrape
+doc_producer = pins, chunks, init, scrape
