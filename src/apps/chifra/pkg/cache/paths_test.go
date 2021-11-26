@@ -10,7 +10,7 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-package chunk
+package cache
 
 import (
 	"path"
@@ -24,12 +24,12 @@ func TestCacheLayout_NewIndex(t *testing.T) {
 	indexConfig := &CacheLayout{}
 	indexConfig.New(IndexChunk)
 
-	if indexConfig.extension != ".bin" {
-		t.Error("Wrong extension", indexConfig.extension)
+	if indexConfig.Extension != ".bin" {
+		t.Error("Wrong Extension", indexConfig.Extension)
 	}
 
-	if indexConfig.subdir != "finalized/" {
-		t.Error("Wrong subdir", indexConfig.subdir)
+	if indexConfig.Subdir != "finalized/" {
+		t.Error("Wrong Subdir", indexConfig.Subdir)
 	}
 
 	p := indexConfig.GetPathTo("filename")
@@ -43,12 +43,12 @@ func TestCacheLayout_NewBloom(t *testing.T) {
 	indexConfig := &CacheLayout{}
 	indexConfig.New(BloomChunk)
 
-	if indexConfig.extension != ".bloom" {
-		t.Error("Wrong extension", indexConfig.extension)
+	if indexConfig.Extension != ".bloom" {
+		t.Error("Wrong Extension", indexConfig.Extension)
 	}
 
-	if indexConfig.subdir != "blooms/" {
-		t.Error("Wrong subdir", indexConfig.subdir)
+	if indexConfig.Subdir != "blooms/" {
+		t.Error("Wrong Subdir", indexConfig.Subdir)
 	}
 
 	p := indexConfig.GetPathTo("filename")
@@ -72,9 +72,9 @@ func TestCacheLayout_All(t *testing.T) {
 			name:      "index path",
 			chunkType: IndexChunk,
 			expected: CacheLayout{
-				outputDir: indexPath,
-				subdir:    "finalized/",
-				extension: ".bin",
+				OutputDir: indexPath,
+				Subdir:    "finalized/",
+				Extension: ".bin",
 			},
 			path:    "finalized/filename.bin",
 			wantErr: false,
@@ -83,9 +83,9 @@ func TestCacheLayout_All(t *testing.T) {
 			name:      "blooms path",
 			chunkType: BloomChunk,
 			expected: CacheLayout{
-				outputDir: indexPath,
-				subdir:    "blooms/",
-				extension: ".bloom",
+				OutputDir: indexPath,
+				Subdir:    "blooms/",
+				Extension: ".bloom",
 			},
 			path:    "blooms/filename.bloom",
 			wantErr: false,
@@ -97,12 +97,12 @@ func TestCacheLayout_All(t *testing.T) {
 			config := &CacheLayout{}
 			config.New(tt.chunkType)
 
-			if config.extension != tt.expected.extension {
-				t.Error("Wrong extension", config.extension)
+			if config.Extension != tt.expected.Extension {
+				t.Error("Wrong Extension", config.Extension)
 			}
 
-			if config.subdir != tt.expected.subdir {
-				t.Error("Wrong subdir", config.subdir)
+			if config.Subdir != tt.expected.Subdir {
+				t.Error("Wrong Subdir", config.Subdir)
 			}
 
 			p := config.GetPathTo("filename")

@@ -15,7 +15,7 @@ package pinlib
 import (
 	"io/ioutil"
 
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib/chunk"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 )
 
 // This package makes it easier to get file names of all blooms/index chunks
@@ -23,8 +23,8 @@ import (
 
 // ListByChunkType returns a slice of file names (strings) of all chunks of
 // the given type in UnchainedIndex directory
-func ListByChunkType(chunkType chunk.ChunkType) ([]string, error) {
-	cacheLayout := &chunk.CacheLayout{}
+func ListByChunkType(chunkType cache.ChunkType) ([]string, error) {
+	cacheLayout := &cache.CacheLayout{}
 	cacheLayout.New(chunkType)
 
 	files, err := ioutil.ReadDir(cacheLayout.String())
@@ -46,11 +46,11 @@ func ListByChunkType(chunkType chunk.ChunkType) ([]string, error) {
 // ListLocalBlooms returns a slice of file names (strings) of all bloom
 // filters present in UnchainedIndex directory
 func ListLocalBlooms() ([]string, error) {
-	return ListByChunkType(chunk.BloomChunk)
+	return ListByChunkType(cache.BloomChunk)
 }
 
 // ListLocalIndexes returns a slice of file names (strings) of all index
 // chunks present in UnchainedIndex directory
 func ListLocalIndexes() ([]string, error) {
-	return ListByChunkType(chunk.IndexChunk)
+	return ListByChunkType(cache.IndexChunk)
 }

@@ -30,18 +30,12 @@ import (
 	"strings"
 	"sync"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/cache"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/progress"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/sigintTrap"
 	"github.com/panjf2000/ants/v2"
-)
-
-type ChunkType uint
-
-const (
-	BloomChunk ChunkType = iota
-	IndexChunk
 )
 
 // jobResult type is used to carry both downloaded data and some
@@ -84,13 +78,13 @@ func fetchChunk(url string) (*fetchResult, error) {
 
 // GetChunksFromRemote downloads, unzips and saves the chunk of type indicated by chunkType
 // for each pin in pins. Progress is reported to progressChannel.
-func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkType ChunkType, progressChannel chan<- *progress.Progress) {
+func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkType cache.ChunkType, progressChannel chan<- *progress.Progress) {
 	poolSize := config.ReadBlockScrape().Dev.MaxPoolSize
 	// Downloaded content will wait for saving in this channel
 	writeChannel := make(chan *jobResult, poolSize)
 	// Context lets us handle Ctrl-C easily
 	ctx, cancel := context.WithCancel(context.Background())
-	cacheLayout := &CacheLayout{}
+	cacheLayout := &cache.CacheLayout{}
 	cacheLayout.New(chunkType)
 	var downloadWg sync.WaitGroup
 	var writeWg sync.WaitGroup
@@ -116,7 +110,7 @@ func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkType ChunkType, pro
 			// Perform download => unzip-and-save
 			hash := pin.BloomHash
 
-			if chunkType == IndexChunk {
+			if chunkType == cache.IndexChunk {
 				hash = pin.IndexHash
 			}
 
@@ -232,7 +226,7 @@ func GetChunksFromRemote(pins []manifest.PinDescriptor, chunkType ChunkType, pro
 }
 
 // saveFileContents decompresses the downloaded data and saves it to files
-func saveFileContents(res *jobResult, cacheLayout *CacheLayout) error {
+func saveFileContents(res *jobResult, cacheLayout *cache.CacheLayout) error {
 	// Postpone Ctrl-C
 	trapChannel := sigintTrap.Enable()
 	defer sigintTrap.Disable(trapChannel)
@@ -272,8 +266,8 @@ func saveFileContents(res *jobResult, cacheLayout *CacheLayout) error {
 	}
 }
 
-// FilterDownloadedChunks returns new []manifest.PinDescriptor slice with all pins from outputDir removed
-func FilterDownloadedChunks(pins []manifest.PinDescriptor, cacheLayout *CacheLayout) []manifest.PinDescriptor {
+// FilterDownloadedChunks returns new []manifest.PinDescriptor slice with all pins from OutputDir removed
+func FilterDownloadedChunks(pins []manifest.PinDescriptor, cacheLayout *cache.CacheLayout) []manifest.PinDescriptor {
 	fileMap := make(map[string]bool)
 
 	files, err := ioutil.ReadDir(cacheLayout.String())
@@ -282,7 +276,7 @@ func FilterDownloadedChunks(pins []manifest.PinDescriptor, cacheLayout *CacheLay
 	}
 
 	for _, file := range files {
-		pinFileName := strings.Replace(file.Name(), cacheLayout.extension, "", -1)
+		pinFileName := strings.Replace(file.Name(), cacheLayout.Extension, "", -1)
 		fileMap[pinFileName] = true
 	}
 
