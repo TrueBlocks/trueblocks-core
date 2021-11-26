@@ -2,7 +2,7 @@
 title: "Other"
 description: ""
 lead: ""
-date: 2021-11-18T22:52:20
+date: 2021-11-26T11:52:16
 lastmod:
   - :git
   - lastmod
@@ -37,7 +37,7 @@ Usage:
   chifra quotes [flags]
 
 Flags:
-  -f, --freshen         Freshen price database
+  -u, --update          Freshen price database
   -p, --period string   increment of display
                         One of [ 5 | 15 | 30 | 60 | 120 | 240 | 1440 | 10080 | hourly | daily | weekly ]
   -a, --pair string     which price pair to freshen or list (see Poloniex)

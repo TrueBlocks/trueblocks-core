@@ -50,7 +50,7 @@ Notes:
 func init() {
 	quotesCmd.Flags().SortFlags = false
 
-	quotesCmd.Flags().BoolVarP(&quotesPkg.Options.Freshen, "freshen", "f", false, "Freshen price database")
+	quotesCmd.Flags().BoolVarP(&quotesPkg.Options.Update, "update", "u", false, "freshen price database")
 	quotesCmd.Flags().StringVarP(&quotesPkg.Options.Period, "period", "p", "", `increment of display
 One of [ 5 | 15 | 30 | 60 | 120 | 240 | 1440 | 10080 | hourly | daily | weekly ]`)
 	quotesCmd.Flags().StringVarP(&quotesPkg.Options.Pair, "pair", "a", "", "which price pair to freshen or list (see Poloniex)")

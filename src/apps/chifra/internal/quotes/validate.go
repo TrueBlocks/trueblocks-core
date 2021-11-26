@@ -35,7 +35,7 @@ func (opts *QuotesOptions) ValidateQuotes() error {
 	}
 
 	if len(opts.Globals.File) == 0 &&
-		!opts.Freshen &&
+		!opts.Update &&
 		len(opts.Period) == 0 &&
 		len(opts.Pair) == 0 &&
 		len(opts.Feed) == 0 &&

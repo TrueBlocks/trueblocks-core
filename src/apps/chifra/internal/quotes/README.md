@@ -10,7 +10,7 @@ Usage:
   chifra quotes [flags]
 
 Flags:
-  -f, --freshen         Freshen price database
+  -u, --update          Freshen price database
   -p, --period string   increment of display
                         One of [ 5 | 15 | 30 | 60 | 120 | 240 | 1440 | 10080 | hourly | daily | weekly ]
   -a, --pair string     which price pair to freshen or list (see Poloniex)

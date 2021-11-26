@@ -27,7 +27,7 @@ import (
 )
 
 type QuotesOptions struct {
-	Freshen bool
+	Update  bool
 	Period  string
 	Pair    string
 	Feed    string
@@ -36,7 +36,7 @@ type QuotesOptions struct {
 }
 
 func (opts *QuotesOptions) TestLog() {
-	logger.TestLog(opts.Freshen, "Freshen: ", opts.Freshen)
+	logger.TestLog(opts.Update, "Update: ", opts.Update)
 	logger.TestLog(len(opts.Period) > 0, "Period: ", opts.Period)
 	logger.TestLog(len(opts.Pair) > 0, "Pair: ", opts.Pair)
 	logger.TestLog(len(opts.Feed) > 0, "Feed: ", opts.Feed)
@@ -45,8 +45,8 @@ func (opts *QuotesOptions) TestLog() {
 
 func (opts *QuotesOptions) ToCmdLine() string {
 	options := ""
-	if opts.Freshen {
-		options += " --freshen"
+	if opts.Update {
+		options += " --update"
 	}
 	if len(opts.Period) > 0 {
 		options += " --period " + opts.Period
@@ -66,8 +66,8 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *QuotesOptions {
 	opts := &QuotesOptions{}
 	for key, value := range r.URL.Query() {
 		switch key {
-		case "freshen":
-			opts.Freshen = true
+		case "update":
+			opts.Update = true
 		case "period":
 			opts.Period = value[0]
 		case "pair":

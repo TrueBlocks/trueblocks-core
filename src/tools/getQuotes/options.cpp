@@ -20,7 +20,7 @@
 static const COption params[] = {
     // BEG_CODE_OPTIONS
     // clang-format off
-    COption("freshen", "f", "", OPT_SWITCH, "Freshen price database"),
+    COption("update", "u", "", OPT_SWITCH, "freshen price database"),
     COption("period", "p", "enum[5|15|30|60|120*|240|1440|10080|hourly|daily|weekly]", OPT_FLAG, "increment of display"),  // NOLINT
     COption("pair", "a", "<string>", OPT_FLAG, "which price pair to freshen or list (see Poloniex)"),
     COption("feed", "e", "enum[poloniex*|maker|tellor]", OPT_FLAG, "the feed for the price data"),
@@ -36,7 +36,7 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     // BEG_CODE_LOCAL_INIT
-    bool freshen = false;
+    bool update = false;
     string_q period = "";
     string_q pair = "";
     // END_CODE_LOCAL_INIT
@@ -49,8 +49,8 @@ bool COptions::parseArguments(string_q& command) {
         if (false) {
             // do nothing -- make auto code generation easier
             // BEG_CODE_AUTO
-        } else if (arg == "-f" || arg == "--freshen") {
-            freshen = true;
+        } else if (arg == "-u" || arg == "--update") {
+            update = true;
 
         } else if (startsWith(arg, "-p:") || startsWith(arg, "--period:")) {
             if (!confirmEnum("period", period, arg))
@@ -84,7 +84,7 @@ bool COptions::parseArguments(string_q& command) {
     if (Mocked(""))
         return false;
 
-    freshenOnly = freshen;
+    freshenOnly = update;
 
     // Data wrangling
     if (!pair.empty())
