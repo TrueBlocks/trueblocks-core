@@ -21,8 +21,9 @@ import (
 
 func TestCacheLayout(t *testing.T) {
 	indexPath := config.ReadTrueBlocks().Settings.IndexPath
-	// cachePath := config.ReadTrueBlocks().Settings.CachePath
+	cachePath := config.ReadTrueBlocks().Settings.CachePath
 	tests := []struct {
+		on        bool
 		name      string
 		cacheType CacheType
 		param     string
@@ -31,60 +32,84 @@ func TestCacheLayout(t *testing.T) {
 		wantErr   bool
 	}{
 		{
-			name:      "index path",
-			cacheType: IndexChunk,
-			param:     "filename",
+			on:    true,
+			name:  "index path",
+			param: "0010000000-0010200000",
 			expected: CachePath{
+				Type:      IndexChunk,
 				RootPath:  indexPath,
 				Subdir:    "finalized/",
 				Extension: ".bin",
 			},
-			path:    "finalized/filename.bin",
+			path:    "finalized/0010000000-0010200000.bin",
 			wantErr: false,
 		},
 		{
-			name:      "blooms path",
-			cacheType: BloomChunk,
-			param:     "filename",
+			on:    true,
+			name:  "blooms path",
+			param: "0010000000-0010200000",
 			expected: CachePath{
+				Type:      BloomChunk,
 				RootPath:  indexPath,
 				Subdir:    "blooms/",
 				Extension: ".bloom",
 			},
-			path:    "blooms/filename.bloom",
+			path:    "blooms/0010000000-0010200000.bloom",
 			wantErr: false,
 		},
-		// {
-		// 	name:      "blocks cache path",
-		// 	cacheType: BlockCache,
-		// 	param:     "10001001",
-		// 	expected: CachePath{
-		// 		RootPath:  cachePath,
-		// 		Subdir:    "blocks/00/10/01/",
-		// 		Extension: ".bin",
-		// 	},
-		// 	path:    "blooms/filename.bloom",
-		// 	wantErr: false,
-		// },
+		{
+			on:    false,
+			name:  "blocks cache path",
+			param: "001001001",
+			expected: CachePath{
+				Type:      BlockCache,
+				RootPath:  cachePath,
+				Subdir:    "blocks/",
+				Extension: ".bin",
+			},
+			path:    "blocks/00/10/01/001001001.bin",
+			wantErr: false,
+		},
 	}
 
 	for _, tt := range tests {
+		if !tt.on {
+			continue
+		}
+
 		t.Run(tt.name, func(t *testing.T) {
 			cachePath := &CachePath{}
-			cachePath.New(tt.cacheType)
+			cachePath.New(tt.expected.Type)
 
 			if cachePath.Extension != tt.expected.Extension {
-				t.Error("Wrong Extension", cachePath.Extension)
+				t.Error("Wrong extension", cachePath.Extension)
 			}
 
 			if cachePath.Subdir != tt.expected.Subdir {
-				t.Error("Wrong Subdir", cachePath.Subdir)
+				t.Error("Wrong subdir", cachePath.Subdir)
 			}
 
-			p := cachePath.GetPathTo(tt.param)
+			p := cachePath.GetFullPath(tt.param)
 			if p != path.Join(tt.expected.RootPath, tt.path) {
-				t.Error("Wrong ToPathResult", p)
+				t.Error("Wrong full path", p)
 			}
 		})
 	}
 }
+
+// Valid cache paths from the C++ code
+// IndexFn:      $INDEX_PATH/finalized/0010000000-0010200000.bin
+// BloomFn:      $INDEX_PATH/blooms/0010000000-0010200000.bloom
+// BlockFn:      $CACHE_PATH/blocks/00/10/01/001001001.bin
+// TxFn:         $CACHE_PATH/txs/00/10/01/001001001-00020.bin
+// TraceFn:      $CACHE_PATH/traces/00/10/01/001001001-00020-10.bin
+// NeighborFn:   $CACHE_PATH/neighbors/00/10/01/001001001-00020.bin
+// ReconFn:      $CACHE_PATH/recons/c011/a724/00e58ecd99ee497cf89e3775d4bd732f/000000012.00013.bin
+
+// IndexPath:    $INDEX_PATH/finalized/
+// BloomPath:    $INDEX_PATH/blooms/
+// BlockPath:    $CACHE_PATH/blocks/00/10/01/
+// TxPath:       $CACHE_PATH/txs/00/10/01/
+// TracePath:    $CACHE_PATH/traces/00/10/01/
+// NeighborPath: $CACHE_PATH/neighbors/00/10/01/
+// ReconPath:    $CACHE_PATH/recons/c011/a724/00e58ecd99ee497cf89e3775d4bd732f/
