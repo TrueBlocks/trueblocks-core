@@ -1,5 +1,7 @@
 package servePkg
 
+import "net/http"
+
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -13,37 +15,12 @@ package servePkg
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 
-import (
-	"net/http"
-
-	"github.com/gorilla/mux"
-)
-
-// Route A structure to hold the API's routes
-type Route struct {
-	Name        string
-	Method      string
-	Pattern     string
-	HandlerFunc http.HandlerFunc
-}
-
-// Routes An array of Route structures
-type Routes []Route
-
-// NewRouter Creates a new router given the routes array
-func NewRouter() *mux.Router {
-	router := mux.NewRouter().StrictSlash(true)
-	router.Use(CorsHandler)
-	for _, route := range routes {
-		var handler http.Handler
-		handler = route.HandlerFunc
-		handler = Logger(handler, route.Name)
-		router.
-			Methods(route.Method).
-			Path(route.Pattern).
-			Name(route.Name).
-			Handler(handler)
-	}
-
-	return router
+// Logger sends information to the server's console
+func CorsHandler(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+		w.Header().Set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
+		w.Header().Set("Access-Control-Allow-Methods", "PUT, POST, GET, DELETE, OPTIONS")
+		next.ServeHTTP(w, r)
+	})
 }

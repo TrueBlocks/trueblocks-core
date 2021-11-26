@@ -141,9 +141,6 @@ func CallOne(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string
 	// 	Content: string(output),
 	// }
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
-	w.Header().Set("Access-Control-Allow-Methods", "PUT, POST, GET, DELETE, OPTIONS")
 	if strings.Contains(output, "Error:") {
 		// Remove Cobra's "Error:\n" decorator
 		parsed := strings.Replace(output, "Error:", "", 1)
