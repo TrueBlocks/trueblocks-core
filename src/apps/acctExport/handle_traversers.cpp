@@ -21,7 +21,7 @@ bool COptions::handle_traversers(void) {
     auto libFactory = lib.get_function<CTraverser*(void)>("makeTraverser");
     LOG_INFO(bBlue, "Instantiating traverser", cOff);
     CTraverser* trav = libFactory();
-    if (trav->dataFunc == noopFunc)
+    if (trav->dataFunc == noopFunc || trav->dataFunc == nullptr)
         trav->dataFunc = loadTx_Func;
     trav->exportRange = exportRange;
     for (auto monitor : allMonitors) {
