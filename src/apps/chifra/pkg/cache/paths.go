@@ -46,6 +46,9 @@ type CachePath struct {
 
 // New sets correct values of Subdir and Extension properties based on cacheType
 func (cl *CachePath) New(cacheType CacheType) {
+	// switch cacheType {
+	// 	case
+	// }
 	Subdir := "blooms/"
 	Extension := ".bloom"
 	if cacheType == IndexChunk {
