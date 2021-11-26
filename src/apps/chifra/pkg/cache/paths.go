@@ -10,7 +10,7 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-package chunk
+package cache
 
 import (
 	"path"
@@ -19,42 +19,59 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 )
 
+// Examples of cache paths from the C++ code
+// IndexFn:      $INDEX_PATH/finalized/0010000000-0010200000.bin
+// BloomFn:      $INDEX_PATH/blooms/0010000000-0010200000.bloom
+// BlockFn:      $CACHE_PATH/blocks/00/10/01/001001001.bin
+// TxFn:         $CACHE_PATH/txs/00/10/01/001001001-00020.bin
+// TraceFn:      $CACHE_PATH/traces/00/10/01/001001001-00020-10.bin
+// NeighborFn:   $CACHE_PATH/neighbors/00/10/01/001001001-00020.bin
+// ReconFn:      $CACHE_PATH/recons/c011/a724/00e58ecd99ee497cf89e3775d4bd732f/000000012.00013.bin
+
+// IndexPath:    $INDEX_PATH/finalized/
+// BloomPath:    $INDEX_PATH/blooms/
+// BlockPath:    $CACHE_PATH/blocks/00/10/01/
+// TxPath:       $CACHE_PATH/txs/00/10/01/
+// TracePath:    $CACHE_PATH/traces/00/10/01/
+// NeighborPath: $CACHE_PATH/neighbors/00/10/01/
+// ReconPath:    $CACHE_PATH/recons/c011/a724/00e58ecd99ee497cf89e3775d4bd732f/
+
 // CacheLayout helps to keep track of cache paths and extensions depending on
 // chunk type
 type CacheLayout struct {
-	outputDir string
-	subdir    string
-	extension string
+	OutputDir string
+	Subdir    string
+	Extension string
 }
 
-// New sets correct values of subdir and extension properties based on
+// New sets correct values of Subdir and Extension properties based on
 // chunkType
 func (cl *CacheLayout) New(chunkType ChunkType) {
-	subdir := "blooms/"
-	extension := ".bloom"
+	Subdir := "blooms/"
+	Extension := ".bloom"
 	if chunkType == IndexChunk {
-		subdir = "finalized/"
-		extension = ".bin"
+		Subdir = "finalized/"
+		Extension = ".bin"
 	}
 
-	cl.outputDir = config.ReadTrueBlocks().Settings.IndexPath
-	cl.subdir = subdir
-	cl.extension = extension
+	cl.OutputDir = config.ReadTrueBlocks().Settings.IndexPath
+	cl.Subdir = Subdir
+	cl.Extension = Extension
 }
 
 // GetPathTo uses the data stored in outputConfig to build a path and return it
 // as a string
 func (cl *CacheLayout) GetPathTo(fileName string) string {
-	return path.Join(cl.outputDir, cl.subdir, fileName+cl.extension)
+	return path.Join(cl.OutputDir, cl.Subdir, fileName+cl.Extension)
 }
 
-// RemoveExtension removes extension (".bloom" or ".bin") from fileName
+// RemoveExtension removes Extension (".bloom" or ".bin") from fileName
 func (cl *CacheLayout) RemoveExtension(fileName string) string {
-	return strings.Replace(fileName, cl.extension, "", 1)
+	return strings.Replace(fileName, cl.Extension, "", 1)
 }
 
-// String turns cacheLayout data (outputDir and subdir) into a path
+// String turns cacheLayout data (OutputDir and Subdir) into a path
 // and returns it as a string
 func (cl *CacheLayout) String() string {
-	return path.Join(cl.outputDir, cl.subdir)
+	return path.Join(cl.OutputDir, cl.Subdir)
 }
