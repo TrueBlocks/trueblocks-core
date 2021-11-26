@@ -35,7 +35,7 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib/manifest"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/progress"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/sigintTrap"
-	"github.com/panjf2000/ants/v2"
+	ants "github.com/panjf2000/ants/v2"
 )
 
 // jobResult type is used to carry both downloaded data and some
