@@ -246,7 +246,7 @@ func saveFileContents(res *jobResult, cachePath *cache.CachePath) error {
 	}
 	defer archive.Close()
 
-	outputFile, err := os.Create(cachePath.GetPathTo(res.fileName))
+	outputFile, err := os.Create(cachePath.GetFullPath(res.fileName))
 	if err != nil {
 		return &ErrSavingCreateFile{res.fileName, err}
 	}

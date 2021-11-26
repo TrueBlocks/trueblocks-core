@@ -19,52 +19,56 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 )
 
-// Examples of cache paths from the C++ code
-// IndexFn:      $INDEX_PATH/finalized/0010000000-0010200000.bin
-// BloomFn:      $INDEX_PATH/blooms/0010000000-0010200000.bloom
-// BlockFn:      $CACHE_PATH/blocks/00/10/01/001001001.bin
-// TxFn:         $CACHE_PATH/txs/00/10/01/001001001-00020.bin
-// TraceFn:      $CACHE_PATH/traces/00/10/01/001001001-00020-10.bin
-// NeighborFn:   $CACHE_PATH/neighbors/00/10/01/001001001-00020.bin
-// ReconFn:      $CACHE_PATH/recons/c011/a724/00e58ecd99ee497cf89e3775d4bd732f/000000012.00013.bin
-
-// IndexPath:    $INDEX_PATH/finalized/
-// BloomPath:    $INDEX_PATH/blooms/
-// BlockPath:    $CACHE_PATH/blocks/00/10/01/
-// TxPath:       $CACHE_PATH/txs/00/10/01/
-// TracePath:    $CACHE_PATH/traces/00/10/01/
-// NeighborPath: $CACHE_PATH/neighbors/00/10/01/
-// ReconPath:    $CACHE_PATH/recons/c011/a724/00e58ecd99ee497cf89e3775d4bd732f/
-
 // CachePath helps to keep track of cache paths and extensions depending on
 // chunk type
 type CachePath struct {
+	Type      CacheType
 	RootPath  string
 	Subdir    string
 	Extension string
 }
 
-// New sets correct values of Subdir and Extension properties based on cacheType
-func (cl *CachePath) New(cacheType CacheType) {
-	// switch cacheType {
-	// 	case
-	// }
-	Subdir := "blooms/"
-	Extension := ".bloom"
-	if cacheType == IndexChunk {
-		Subdir = "finalized/"
-		Extension = ".bin"
-	}
-
-	cl.RootPath = config.ReadTrueBlocks().Settings.IndexPath
-	cl.Subdir = Subdir
-	cl.Extension = Extension
+var cacheFolders = map[CacheType]string{
+	BloomChunk:    "blooms/",
+	IndexChunk:    "finalized/",
+	BlockCache:    "blocks/",
+	TxCache:       "txs/",
+	TraceCache:    "traces/",
+	MonitorCache:  "monitors/",
+	NeighborCache: "neighbors/",
+	ReconCache:    "recons/",
 }
 
-// GetPathTo uses the data stored in outputConfig to build a path and return it
-// as a string
-func (cl *CachePath) GetPathTo(fileName string) string {
-	return path.Join(cl.RootPath, cl.Subdir, fileName+cl.Extension)
+// New sets correct values of Subdir and Extension properties based on cacheType
+func (cl *CachePath) New(cacheType CacheType) {
+	indexPath := config.ReadTrueBlocks().Settings.IndexPath
+	cachePath := config.ReadTrueBlocks().Settings.CachePath
+
+	if cacheType == BloomChunk || cacheType == IndexChunk {
+		cl.RootPath = indexPath
+	} else {
+		cl.RootPath = cachePath
+	}
+
+	cl.Extension = ".bin"
+	if cacheType == BloomChunk {
+		cl.Extension = ".bloom"
+	}
+	cl.Subdir = cacheFolders[cacheType]
+}
+
+// GetFullPath builds a full path from the CachePath type
+func (cl *CachePath) GetFullPath(name string) string {
+	switch cl.Type {
+	case IndexChunk:
+		fallthrough
+	case BloomChunk:
+		fallthrough
+	case MonitorCache:
+		return path.Join(cl.RootPath, cl.Subdir, name+cl.Extension)
+	default:
+		return path.Join(cl.RootPath, cl.Subdir)
+	}
 }
 
 // RemoveExtension removes Extension (".bloom" or ".bin") from fileName
