@@ -23,11 +23,11 @@ import (
 
 // ListByChunkType returns a slice of file names (strings) of all chunks of
 // the given type in UnchainedIndex directory
-func ListByChunkType(chunkType cache.ChunkType) ([]string, error) {
-	cacheLayout := &cache.CacheLayout{}
-	cacheLayout.New(chunkType)
+func ListByChunkType(chunkType cache.CacheType) ([]string, error) {
+	cachePath := &cache.CachePath{}
+	cachePath.New(chunkType)
 
-	files, err := ioutil.ReadDir(cacheLayout.String())
+	files, err := ioutil.ReadDir(cachePath.String())
 	if err != nil {
 		return nil, err
 	}
@@ -36,7 +36,7 @@ func ListByChunkType(chunkType cache.ChunkType) ([]string, error) {
 	for _, file := range files {
 		fileNames = append(
 			fileNames,
-			cacheLayout.RemoveExtension(file.Name()),
+			cachePath.RemoveExtension(file.Name()),
 		)
 	}
 

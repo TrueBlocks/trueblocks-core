@@ -67,7 +67,7 @@ func (opts *PinsOptions) InitInternal() error {
 	indexDoneChannel := make(chan bool)
 	defer close(indexDoneChannel)
 
-	getChunks := func(chunkType cache.ChunkType) {
+	getChunks := func(chunkType cache.CacheType) {
 		failedChunks := downloadAndReportProgress(downloadedManifest.NewPins, chunkType)
 
 		if len(failedChunks) > 0 {
@@ -100,8 +100,8 @@ func (opts *PinsOptions) InitInternal() error {
 type downloadFunc func(pins []manifest.PinDescriptor) (failed []manifest.PinDescriptor)
 
 // Downloads chunks and report progress
-func downloadAndReportProgress(pins []manifest.PinDescriptor, chunkType cache.ChunkType) []manifest.PinDescriptor {
-	chunkTypeToDescription := map[cache.ChunkType]string{
+func downloadAndReportProgress(pins []manifest.PinDescriptor, chunkType cache.CacheType) []manifest.PinDescriptor {
+	chunkTypeToDescription := map[cache.CacheType]string{
 		cache.BloomChunk: "bloom",
 		cache.IndexChunk: "index",
 	}

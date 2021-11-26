@@ -19,60 +19,21 @@ import (
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 )
 
-func TestCacheLayout_NewIndex(t *testing.T) {
+func TestCacheLayout(t *testing.T) {
 	indexPath := config.ReadTrueBlocks().Settings.IndexPath
-	indexConfig := &CacheLayout{}
-	indexConfig.New(IndexChunk)
-
-	if indexConfig.Extension != ".bin" {
-		t.Error("Wrong Extension", indexConfig.Extension)
-	}
-
-	if indexConfig.Subdir != "finalized/" {
-		t.Error("Wrong Subdir", indexConfig.Subdir)
-	}
-
-	p := indexConfig.GetPathTo("filename")
-	if p != path.Join(indexPath, "finalized/filename.bin") {
-		t.Error("Wrong ToPathResult", p)
-	}
-}
-
-func TestCacheLayout_NewBloom(t *testing.T) {
-	indexPath := config.ReadTrueBlocks().Settings.IndexPath
-	indexConfig := &CacheLayout{}
-	indexConfig.New(BloomChunk)
-
-	if indexConfig.Extension != ".bloom" {
-		t.Error("Wrong Extension", indexConfig.Extension)
-	}
-
-	if indexConfig.Subdir != "blooms/" {
-		t.Error("Wrong Subdir", indexConfig.Subdir)
-	}
-
-	p := indexConfig.GetPathTo("filename")
-
-	if p != path.Join(indexPath, "blooms/filename.bloom") {
-		t.Error("Wrong ToPathResult", p)
-	}
-}
-
-func TestCacheLayout_All(t *testing.T) {
-	indexPath := config.ReadTrueBlocks().Settings.IndexPath
-
+	cachePath := config.ReadTrueBlocks().Settings.CachePath
 	tests := []struct {
 		name      string
-		chunkType ChunkType
-		expected  CacheLayout
+		chunkType CacheType
+		expected  CachePath
 		path      string
 		wantErr   bool
 	}{
 		{
 			name:      "index path",
 			chunkType: IndexChunk,
-			expected: CacheLayout{
-				OutputDir: indexPath,
+			expected: CachePath{
+				RootPath:  indexPath,
 				Subdir:    "finalized/",
 				Extension: ".bin",
 			},
@@ -82,8 +43,8 @@ func TestCacheLayout_All(t *testing.T) {
 		{
 			name:      "blooms path",
 			chunkType: BloomChunk,
-			expected: CacheLayout{
-				OutputDir: indexPath,
+			expected: CachePath{
+				RootPath:  indexPath,
 				Subdir:    "blooms/",
 				Extension: ".bloom",
 			},
@@ -94,7 +55,7 @@ func TestCacheLayout_All(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			config := &CacheLayout{}
+			config := &CachePath{}
 			config.New(tt.chunkType)
 
 			if config.Extension != tt.expected.Extension {

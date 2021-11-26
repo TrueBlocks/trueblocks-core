@@ -36,17 +36,17 @@ import (
 // NeighborPath: $CACHE_PATH/neighbors/00/10/01/
 // ReconPath:    $CACHE_PATH/recons/c011/a724/00e58ecd99ee497cf89e3775d4bd732f/
 
-// CacheLayout helps to keep track of cache paths and extensions depending on
+// CachePath helps to keep track of cache paths and extensions depending on
 // chunk type
-type CacheLayout struct {
-	OutputDir string
+type CachePath struct {
+	RootPath  string
 	Subdir    string
 	Extension string
 }
 
 // New sets correct values of Subdir and Extension properties based on
 // chunkType
-func (cl *CacheLayout) New(chunkType ChunkType) {
+func (cl *CachePath) New(chunkType CacheType) {
 	Subdir := "blooms/"
 	Extension := ".bloom"
 	if chunkType == IndexChunk {
@@ -54,24 +54,24 @@ func (cl *CacheLayout) New(chunkType ChunkType) {
 		Extension = ".bin"
 	}
 
-	cl.OutputDir = config.ReadTrueBlocks().Settings.IndexPath
+	cl.RootPath = config.ReadTrueBlocks().Settings.IndexPath
 	cl.Subdir = Subdir
 	cl.Extension = Extension
 }
 
 // GetPathTo uses the data stored in outputConfig to build a path and return it
 // as a string
-func (cl *CacheLayout) GetPathTo(fileName string) string {
-	return path.Join(cl.OutputDir, cl.Subdir, fileName+cl.Extension)
+func (cl *CachePath) GetPathTo(fileName string) string {
+	return path.Join(cl.RootPath, cl.Subdir, fileName+cl.Extension)
 }
 
 // RemoveExtension removes Extension (".bloom" or ".bin") from fileName
-func (cl *CacheLayout) RemoveExtension(fileName string) string {
+func (cl *CachePath) RemoveExtension(fileName string) string {
 	return strings.Replace(fileName, cl.Extension, "", 1)
 }
 
-// String turns cacheLayout data (OutputDir and Subdir) into a path
+// String turns cachePath data (RootPath and Subdir) into a path
 // and returns it as a string
-func (cl *CacheLayout) String() string {
-	return path.Join(cl.OutputDir, cl.Subdir)
+func (cl *CachePath) String() string {
+	return path.Join(cl.RootPath, cl.Subdir)
 }
