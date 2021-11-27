@@ -1,4 +1,4 @@
-### Balances Dynamic Traverser
+## Dynamic Traverser : balances
 
 A quick example of a [Dynamic Traverser](https://docs.trueblocks.io/blog/dynamic-traversers-for-trueblocks/) to extract balance histories for a given address.
 
@@ -18,3 +18,7 @@ This places a shared object, called `libbalances.so` into your cache at `$CACHE/
 ```[shell]
 chifra export --load libbalances.so <address>
 ```
+
+### Building
+
+See the instructions in the file [./src/examples/README.md](../../README.md) for more information.

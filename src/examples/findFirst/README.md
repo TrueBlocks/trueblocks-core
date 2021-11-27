@@ -1,4 +1,4 @@
-### Find First
+## Example: findFirst
 
 This example starts at a given block and scans forward through the chain until it encounters the block where
 "The DAO" first appears anywhere in the block (i.e. where it was deployed).
@@ -39,3 +39,7 @@ int main(int argc, const char* argv[]) {
     return 0;
 }
 ```
+
+### Building
+
+See the instructions in the file [./src/examples/README.md](../README.md) for more information.

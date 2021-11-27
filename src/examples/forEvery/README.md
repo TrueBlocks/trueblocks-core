@@ -1,8 +1,12 @@
-## forEvery example
+## Example: forEvery
 
 This example show how to use a few of TrueBlocks' `forEvery` functions.
 
 `forEvery` functions sort of do what they sound like they would do. The apply an arbitrary function to a data structure, much like Javascripts `map` function. Below is a list of all available `forEvery` routines at the time of this writing. Please check the docs for more information.
+
+### Building
+
+See the instructions in the file [./src/examples/README.md](../README.md) for more information.
 
 ### Top level
 
