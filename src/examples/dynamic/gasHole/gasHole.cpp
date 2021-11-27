@@ -25,7 +25,12 @@ class CTestTraverser : public CTraverser {
 
 //-----------------------------------------------------------------------
 bool header(CTraverser* trav, void* data) {
-    cout << "timestamp\tgasCostEther\ttotalSpent\ttotalErr" << endl;
+    cout << "blockNum,";
+    cout << "transactionId,";
+    cout << "date,";
+    cout << "gasCostEther,";
+    cout << "totalSpent,";
+    cout << "totalErr" << endl;
     return true;
 }
 
@@ -33,15 +38,23 @@ bool header(CTraverser* trav, void* data) {
 bool display(CTraverser* trav, void* data) {
     CTestTraverser* tt = (CTestTraverser*)trav;
 
-    wei_t spent = tt->trans.gasPrice * tt->trans.receipt.gasUsed;
-    tt->totalSpent += spent;
-    tt->totalError += (tt->trans.isError ? spent : 0);
+    if (tt->curMonitor->address == tt->trans.from) {
+        wei_t spent = tt->trans.gasPrice * tt->trans.receipt.gasUsed;
+        tt->totalSpent += spent;
+        tt->totalError += (tt->trans.isError ? spent : 0);
 
-    string_q val = wei_2_Ether(spent, 18);
-    string_q tot = wei_2_Ether(tt->totalSpent, 18);
-    string_q err = wei_2_Ether(tt->totalError, 18);
+        string_q val = wei_2_Ether(spent, 18);
+        string_q tot = wei_2_Ether(tt->totalSpent, 18);
+        string_q err = wei_2_Ether(tt->totalError, 18);
 
-    cout << trav->app->blk << "," << trav->app->txid << "," << val << "," << tot << "," << err << endl;
+        cout << trav->app->blk << ",";
+        cout << trav->app->txid << ",";
+        cout << ts_2_Date(trav->trans.timestamp) << ",";
+        cout << val << ",";
+        cout << tot << ",";
+        cout << err << endl;
+    }
+
     return true;
 }
 

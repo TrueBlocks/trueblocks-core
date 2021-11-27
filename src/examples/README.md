@@ -19,7 +19,7 @@ In the folder, `dynamic` are a few examples of building [custom traversers](http
 | Name                                       | Description                                                                                                  |
 | ------------------------------------------ | ------------------------------------------------------------------------------------------------------------ |
 | [simple1](./dynamic/simple1/README.md)     | A simple example of a dynamic traverser                                                                      |
-| [simple2](./dynamic/simple2/README.md)     | Another simple example of a dynamic traverser                                                                |
+| [gasHole](./dynamic/gasHole/README.md)     | A simple example show how to account for gas spent of sucessful and failed transactions                      |
 | [balances](./dynamic/balances/README.md)   | A simple example of producing a balance history for an account                                               |
 | [filtering](./dynamic/filtering/README.md) | An example of filtering for particular data in an account's transaction history                              |
 | [recons](./dynamic/recons/README.md)       | An example of reconciling an account's history at every transaction                                          |

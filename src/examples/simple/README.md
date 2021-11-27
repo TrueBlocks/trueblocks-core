@@ -1,6 +1,8 @@
 ## Example: simple
 
-This example shows how to link to the TrueBlocks library (after installing it) and then queries the blockchain for a block and prints the block to the screen.
+This example shows how to link an application to the TrueBlocks library (see the instructions below for installing the libraries)
+
+The example then queries the blockchain for a blocks and prints each block as it's extracted to the console.
 
 ```
 int main(int argc, const char* argv[]) {

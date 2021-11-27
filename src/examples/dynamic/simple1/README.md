@@ -1,6 +1,18 @@
 ## Dynamic Traverser : simple1
 
-This example describes Dynamic Traversers which are [documented in this blog post](). This traverses scans an account's history and presents all of the transaction hashes that this address has appeared in.
+This dynamic traverser scans an account's history and presents each transaction that the given account appears in. For each of
+those transactions, the traverser shows the `blockNuber`, `transactionIndex`, and `transactionHash`.
+
+Notice how simple this is from the perspective of the programmer. The following code works against any Ethereum address no matter how
+large or how small.
+
+To run this traverser, first build it (see below) and then run this command using any address (or addresses):
+
+```
+chifra export --load simple1 <address> [address...]
+```
+
+**Note:** The extracted blockchain data is not stored locally. This allows the tool to work against addresses with 10's or 100's of transactions as easily as those with 100's of millions of transactions. The end user, however, may choose to cache this data by sending the `--cache` option. Be careful, though, the data extraction can get quite large.
 
 ```
 #include "acctlib.h"

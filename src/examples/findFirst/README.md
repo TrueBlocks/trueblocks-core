@@ -1,7 +1,8 @@
 ## Example: findFirst
 
 This example starts at a given block and scans forward through the chain until it encounters the block where
-"The DAO" first appears anywhere in the block (i.e. where it was deployed).
+"The DAO" first appears (that is, where it was deployed). There are more efficient ways. This example simple shows
+how to scan the chain.
 
 ```
 bool visitAddress(const CAppearance& item, void* data) {
