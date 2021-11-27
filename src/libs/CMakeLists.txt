@@ -31,9 +31,6 @@ install (FILES ${P_HEADER_FILES} DESTINATION include/tb/pinlib)
 file(GLOB U_HEADER_FILES "utillib/*.h")
 install (FILES ${U_HEADER_FILES} DESTINATION include/tb/utillib)
 
-file(GLOB HEADER_FILE "trueblocks.h")
-install (FILES ${HEADER_FILE} DESTINATION include/tb)
-
 file(GLOB LIB_FILES "*.a")
 install (FILES ${LIB_FILES} DESTINATION lib/tb)
 

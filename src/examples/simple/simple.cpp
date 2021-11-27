@@ -29,11 +29,5 @@ int main(int argc, const char* argv[]) {
     // ...print the block to the console (this prints the transactions too)
     cout << block << endl;
 
-    // ...print the transaction individually as csv
-    expContext().exportFmt = CSV1;
-    for (auto trans : block.transactions) {
-        cout << trans.Format(STR_DISPLAY_TRANSACTION) << endl;
-    }
-
     return 0;
 }
