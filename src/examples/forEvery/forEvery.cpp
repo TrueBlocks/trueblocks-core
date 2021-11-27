@@ -14,7 +14,7 @@
 
 //----------------------------------------------------------------
 bool visitTrace(CTrace& trace, void* data) {
-    uint32_t *counter = (uint32_t *)data;
+    uint32_t* counter = (uint32_t*)data;
     *counter += 1;
     cout << *counter << ": " << trace.Format(STR_DISPLAY_TRACE) << endl;
     return true;
