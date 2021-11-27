@@ -71,6 +71,19 @@ bool display(CTraverser* trav, void* data) {
 
 In the last line of the `Display` function, we return `true` to tell the traverser to continue. If we return `false` the traversal stops.
 
+### Using the Data
+
+You can, of course, store the produced data into a file and open it up in an Excel spreadsheet. An example of this, using our own TrueBlocks address,
+would be like this:
+
+```
+chifra export --load gasHole 0xf503017d7baf7fbc0fff7492b751025c6a78179b >gasHole.csv
+```
+
+Here's a chart we created with [this data](./files/gasHole.csv):
+
+![Chart](./img/gasHole.png)
+
 ### Building
 
 See the instructions in the file [./src/examples/README.md](../../README.md) for more information.
