@@ -30,7 +30,7 @@ all:
 	@make app
 
 app:
-	@mkdir bin objs
+	@mkdir -p bin objs
 	@make $(product)
 	mv $(product) $(dest)
 
