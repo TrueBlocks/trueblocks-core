@@ -80,10 +80,11 @@ would be like this:
 chifra export --load gasHole 0xf503017d7baf7fbc0fff7492b751025c6a78179b >gasHole.csv
 ```
 
-Here's a chart we created with [this data](./files/gasHole.csv):
+Here's a chart we created with [this data](./data.tar.gz):
 
 ![Chart](./img/gasHole.png)
 
 ### Building
 
 See the instructions in the file [./src/examples/README.md](../../README.md) for more information.
+e
