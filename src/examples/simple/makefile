@@ -1,16 +1,23 @@
 #-------------------------------------------------
-libraries=../../libs
-bin=bin
-cflags=-std=c++11 -Werror -Wall -O2 -I. -I$(libraries)/utillib -I$(libraries)/etherlib
-
-#-------------------------------------------------
-# for mac builds
-libs=$(libraries)/*.a /usr/lib/libcurl.dylib
-# for ubuntu builds
-#libs=$(libraries)/*.a -lcurl
-
-#-------------------------------------------------
 exec=simple
+
+#-------------------------------------------------
+libs=/usr/local/lib/tb/*.a
+incs=/usr/local/include/tb
+bin=./bin
+cflags=-std=c++11 -Werror -Wall -O2 -I. -I$(incs)/utillib -I$(incs)/etherlib
+
+#-------------------------------------------------
+UNAME_S := $(shell uname -s)
+ifeq ($(UNAME_S),Linux)
+    libs += -lcurl
+endif
+ifeq ($(UNAME_S),Darwin)
+    libs += /Library/Developer/CommandLineTools/SDKs/MacOSX11.1.sdk/usr/lib/libcurl.4.tbd
+endif
+
+#-------------------------------------------------
+# No need to edit below here
 product=objs/$(exec)
 dest=$(bin)/$(exec)
 
@@ -23,6 +30,7 @@ all:
 	@make app
 
 app:
+	@mkdir bin objs
 	@make $(product)
 	mv $(product) $(dest)
 
