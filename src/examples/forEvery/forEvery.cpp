@@ -13,23 +13,31 @@
 #include "etherlib.h"
 
 //----------------------------------------------------------------
-// Visit every 500th block between the first and the 100,000th
-int main(int argc, const char* argv[]) {
-    etherlib_init(quickQuitHandler);
-    forEveryBlock(visitBlock, nullptr, 0, 100000, 500);
-    etherlib_cleanup();
-    return 0;
+bool visitTrace(CTrace& trace, void* data) {
+    uint32_t *counter = (uint32_t *)data;
+    *counter += 1;
+    cout << *counter << ": " << trace.Format(STR_DISPLAY_TRACE) << endl;
+    return true;
 }
 
 //----------------------------------------------------------------
-// Called by forEveryBlock
+bool visitTransaction(CTransaction& trans, void* data) {
+    return trans.forEveryTrace(visitTrace, data);
+}
+
+//----------------------------------------------------------------
 bool visitBlock(CBlock& block, void* data) {
     return block.forEveryTransaction(visitTransaction, data);
 }
 
 //----------------------------------------------------------------
-// Called by forEveryTransaction, prints the transaction to screen
-bool visitTransaction(CTransaction& trans, void* data) {
-    cout << trans << endl;
-    return true;
+int main(int argc, const char* argv[]) {
+    etherlib_init(quickQuitHandler);
+
+    uint32_t counter = 0;
+    forEveryBlock(visitBlock, &counter, 45000, 100000, 200);
+
+    etherlib_cleanup();
+
+    return 0;
 }
