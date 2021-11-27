@@ -73,6 +73,9 @@ set (BIN_CMDS_DIR $ENV{HOME}/.local/bin/chifra)
 set (BIN_TEST_DIR ${BIN_CMDS_DIR}/test)
 
 # ----------------------------------------------------------------------------------------
+set(CMAKE_INSTALL_PREFIX "/usr/local/" CACHE PATH "Default install directory")
+
+# ----------------------------------------------------------------------------------------
 # Enable testing
 # enable_testing()
 

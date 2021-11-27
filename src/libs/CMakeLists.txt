@@ -15,3 +15,6 @@ add_subdirectory(pinlib)
 add_subdirectory(cachelib)
 add_subdirectory(sqlite3lib)
 add_subdirectory(test-libs)
+
+
+install (FILES ${HEADER_FILES} DESTINATION include)
