@@ -1,3 +1,4 @@
+<<<<<<< HEAD:src/apps/chifra/pkg/cache/list.go
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -11,6 +12,13 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 package cache
+=======
+// Copyright 2021 The TrueBlocks Authors. All rights reserved.
+// Use of this source code is governed by a license that can
+// be found in the LICENSE file.
+
+package pinlib
+>>>>>>> develop:src/apps/chifra/pkg/pinlib/list.go
 
 import (
 	"io/ioutil"

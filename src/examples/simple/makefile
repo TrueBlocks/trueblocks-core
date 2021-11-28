@@ -1,22 +1,29 @@
 #-------------------------------------------------
-libraries=../../libs
-bin=bin
-cflags=-std=c++11 -Werror -Wall -O2 -I. -I$(libraries)/utillib -I$(libraries)/etherlib
-
-#-------------------------------------------------
-# for mac builds
-libs=$(libraries)/*.a /usr/lib/libcurl.dylib
-# for ubuntu builds
-#libs=$(libraries)/*.a -lcurl
-
-#-------------------------------------------------
 exec=simple
-product=objs/$(exec)
-dest=$(bin)/$(exec)
 
 #-------------------------------------------------
 src= \
 $(exec).cpp
+
+#-------------------------------------------------
+# probably don't have to change below this line
+
+#-------------------------------------------------
+incs=/usr/local/include/tb
+cflags=-std=c++11 -Werror -Wall -O2 -I. -I$(incs)/cachelib -I$(incs)/pinlib -I$(incs)/acctlib -I$(incs)/etherlib -I$(incs)/utillib
+
+#-------------------------------------------------
+libs=/usr/local/lib/tb/*.a
+UNAME_S := $(shell uname -s)
+ifeq ($(UNAME_S),Linux)
+    libs += -lcurl
+endif
+ifeq ($(UNAME_S),Darwin)
+    libs += /Library/Developer/CommandLineTools/SDKs/MacOSX11.1.sdk/usr/lib/libcurl.4.tbd
+endif
+
+#-------------------------------------------------
+product=objs/$(exec)
 
 #-------------------------------------------------
 all:
@@ -24,14 +31,7 @@ all:
 
 app:
 	@make $(product)
-	mv $(product) $(dest)
-
-test:
-	@make
-	@./do_tests
-
-#-------------------------------------------------
-# probably don't have to change below this line
+	mv $(product) ./bin/
 
 objects = $(patsubst %.cpp,objs/%.o,$(src))
 
@@ -42,14 +42,10 @@ $(product): $(objects) $(libs)
 $(objects): | objs
 
 objs:
-	@mkdir -p $@
+	@mkdir -p ./objs ./bin
 
 objs/%.o : %.cpp
 	$(CXX) $(CXXFLAGS) $(cflags) -c $< -o $@
 
-cleanall:
-	@cd $(libraries) ; make clean ; cd -
-	@make clean
-
 clean:
-	-@$(RM) -f $(product) objs/* 2> /dev/null
+	-@$(RM) -fR ./bin objs 2> /dev/null

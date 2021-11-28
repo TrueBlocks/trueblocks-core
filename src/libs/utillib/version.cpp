@@ -15,11 +15,12 @@
 
 namespace qblocks {
 
+// Run make generate in order for this to take effect
 #define MAJOR 0
-// ALSO CHANGE IN ROOT.GO
-#define MINOR 16
-// ALSO CHANGE IN ROOT.GO
-#define BUILD 1
+#define MINOR 17
+#define BUILD 0
+// Run make generate in order for this to take effect
+
 #define SUBVERS "alpha"
 #define PRODUCT_NAME "GHC-TrueBlocks//"
 //--------------------------------------------------------------------------------

@@ -18,4 +18,5 @@ State      ,State          ,state          ,./libs/etherlib/classDefinitions/eth
 State      ,Token          ,token          ,./tools/getTokens/classDefinitions/tokenbalancerecord.txt
 Admin      ,Status         ,status         ,./apps/cacheStatus/classDefinitions/status.txt
 Admin      ,Pin            ,pinnedChunk    ,./libs/pinlib/classes/classDefinitions/pinnedchunk.txt
+Admin      ,Chunk          ,pinnedChunk    ,./libs/pinlib/classes/classDefinitions/pinnedchunk.txt
 Other      ,Quote          ,quote          ,./libs/etherlib/classDefinitions/pricequote.txt

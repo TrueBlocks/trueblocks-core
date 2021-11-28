@@ -1,12 +1,13 @@
-# Invoke each tool's makefile individually
 all:
-	@cd ../../build ; make ; cd -
-	make -C forEvery
-	make -C txCounter
-	make -C simple
+	@cd findFirst && make
+	@cd forEvery && make
+	@cd simple && make
+	@cd txCounter && make
+	@cd dynamic && make
 
 clean:
-	@cd ../../build ; make clean ; cd -
-	make -C forEvery clean
-	make -C txCounter clean
-	make -C simple clean
+	@cd findFirst && make clean
+	@cd forEvery && make clean
+	@cd simple && make clean
+	@cd txCounter && make clean
+	@cd dynamic && make clean
