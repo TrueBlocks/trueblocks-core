@@ -12,67 +12,67 @@
  *-------------------------------------------------------------------------------------------*/
 #include "acctlib.h"
 
-const char* STR_DAI_ADDR = "0x6b175474e89094c44da98b954eedeac495271d0f";
-const char* STR_WETH_ADDR = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2";
-class CUniPrice : public CEthCall {
-    address_t factory = address_t("0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f");
-    string_q getPairSelector = "0xe6a43905";
-    string_q getPairBytes;
-    string_q getReservesSelector = "0x0902f1ac";
-    string_q getReservesBytes = "";
+// const char* STR_DAI_ADDR = "0x6b175474e89094c44da98b954eedeac495271d0f";
+// const char* STR_WETH_ADDR = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2";
+// class CUniPrice : public CEthCall {
+//     address_t factory = address_t("0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f");
+//     string_q getPairSelector = "0xe6a43905";
+//     string_q getPairBytes;
+//     string_q getReservesSelector = "0x0902f1ac";
+//     string_q getReservesBytes = "";
 
-  public:
-    CUniPrice(void);
-    CUniPrice(const CUniPrice& up);
-    CUniPrice& operator=(const CUniPrice& up);
+//   public:
+//     CUniPrice(void);
+//     CUniPrice(const CUniPrice& up);
+//     CUniPrice& operator=(const CUniPrice& up);
 
-    bool setPair(const address_t& r1, const address_t& r2);
-};
+//     bool setPair(const address_t& r1, const address_t& r2);
+// };
 
-CUniPrice::CUniPrice(void) {
-}
+// CUniPrice::CUniPrice(void) {
+// }
 
-CUniPrice::CUniPrice(const CUniPrice& up) {
-}
+// CUniPrice::CUniPrice(const CUniPrice& up) {
+// }
 
-CUniPrice& CUniPrice::operator=(const CUniPrice& up) {
-    return *this;
-}
+// CUniPrice& CUniPrice::operator=(const CUniPrice& up) {
+//     return *this;
+// }
 
-bool CUniPrice::setPair(const address_t& r1, const address_t& r2) {
-    if (!isAddress(r1)) {
-        LOG_WARN("r1 is not an address: ", r1);
-        return false;
-    }
-    if (!isAddress(r2)) {
-        LOG_WARN("r2 is not an address: ", r2);
-        return false;
-    }
-    this->address = factory;
-    this->encoding = getPairSelector;
-    this->bytes = padLeft(substitute(r1, "0x", ""), 64, '0') + padLeft(substitute(r2, "0x", ""), 64, '0');
-    this->abi_spec.loadAbiFromEtherscan(factory);
-    this->blockNumber = getBlockProgress(BP_CLIENT).client;
-    if (!doEthCall(*this)) {
-        LOG_WARN("Could not find pair for ", r1, " to ", r2);
-        return false;
-    }
-    this->address = getResults();
-    this->abi_spec.loadAbiFromEtherscan(this->address);
-    this->encoding = getReservesSelector;
-    this->bytes = getReservesBytes;
-    // LOG_INFO(bGreen, "Found USD Pair: ", this->address, " with ", this->abi_spec.nInterfaces(), " endpoints", cOff);
-    return true;
-}
+// bool CUniPrice::setPair(const address_t& r1, const address_t& r2) {
+//     if (!isAddress(r1)) {
+//         LOG_WARN("r1 is not an address: ", r1);
+//         return false;
+//     }
+//     if (!isAddress(r2)) {
+//         LOG_WARN("r2 is not an address: ", r2);
+//         return false;
+//     }
+//     this->address = factory;
+//     this->encoding = getPairSelector;
+//     this->bytes = padLeft(substitute(r1, "0x", ""), 64, '0') + padLeft(substitute(r2, "0x", ""), 64, '0');
+//     this->abi_spec.loadAbiFromEtherscan(factory);
+//     this->blockNumber = getBlockProgress(BP_CLIENT).client;
+//     if (!doEthCall(*this)) {
+//         LOG_WARN("Could not find pair for ", r1, " to ", r2);
+//         return false;
+//     }
+//     this->address = this->getResults();
+//     this->abi_spec.loadAbiFromEtherscan(this->address);
+//     this->encoding = getReservesSelector;
+//     this->bytes = getReservesBytes;
+//     // LOG_INFO(bGreen, "Found USD Pair: ", this->address, " with ", this->abi_spec.nInterfaces(), " endpoints",
+//     cOff); return true;
+// }
 
 //-----------------------------------------------------------------------
 class CTestTraverser : public CTraverser {
   public:
-    CUniPrice uni;
+    // CUniPrice uni;
     blknum_t prevBlock;
     CTestTraverser(void) : CTraverser("testing"), prevBlock(NOPOS) {
     }
-    wei_t etherPriceFromUniswap(blknum_t bn) const;
+    // wei_t etherPriceFromUniswap(blknum_t bn) const;
 };
 
 //-----------------------------------------------------------------------
@@ -100,7 +100,7 @@ bool header(CTraverser* trav, void* data) {
 //-----------------------------------------------------------------------
 bool display(CTraverser* trav, void* data) {
     CTestTraverser* tt = (CTestTraverser*)trav;
-    tt->uni.blockNumber = tt->app->blk;
+    // tt->uni.blockNumber = tt->app->blk;
     tt->trans.timestamp = getTimestampAt(tt->app->blk);
     tt->block.timestamp = getTimestampAt(tt->app->blk);
 
@@ -170,7 +170,7 @@ bool display(CTraverser* trav, void* data) {
 extern "C" CTraverser* makeTraverser(void) {
     acctlib_init(quickQuitHandler);
 
-    expContext().asEther = true;
+    // expContext().asEther = true;
 
     CTestTraverser* trav = new CTestTraverser;
     trav->preFunc = header;

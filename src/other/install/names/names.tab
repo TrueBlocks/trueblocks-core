@@ -1,4 +1,4 @@
-tags	address	name	symbol	source	decimals	description	deleted	isCustom	isPrefund	isContract	isErc20	isErc721
+tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	iscontract	iserc20	iserc721
 55-Defi	0x000000000000000000000000000000000000dead	ENS: Burn Address		EtherScan.io			false	false	false	false	false	false
 50-Tokens:ERC20	0x0000000000001b84b1cb32787b0d64758d019317	HomeWork 🏠🛠️	HWK	On chain	18		false	false	false	true	true	true
 50-Tokens:ERC20	0x0000000000004946c0e9f43f4dee607b0ef1fa1c	1inch.exchange v2	CHI	On chain	18		false	false	false	true	true	false
@@ -1325,6 +1325,7 @@ tags	address	name	symbol	source	decimals	description	deleted	isCustom	isPrefund	
 50-Tokens:ERC20	0x1e83916ea2ef2d7a6064775662e163b2d4c330a7	EthereumGasLimit	EGL	On chain	18		false	false	false	true	true	false
 31-Gitcoin:Grants	0x1e90ddceb84027d60fe364b4f18496ffc6ff432f	Grant 0647 Aids for Pop *covid-19*		https://gitcoin.co/grants/647/aids-for-pop-covid-19			false	false	false	false	false	false
 90-Individuals:Gitcoin Grants	0x1e97897708649b4b3b5239cc3c673f9f875ca991	jgresham		Gitcoin Website			false	false	false	false	false	false
+50-Tokens:ERC721	0x1e988ba4692e52bc50b375bcc8585b95c48aad77	Bufficorn Buidl Brigade	BBB	On chain	18		false	false	false	true	true	true
 90-Individuals:Gitcoin Grants	0x1e9c0bb00ff504e2c4ed9368656e876616e25666	adambeaudoin		Gitcoin Website			false	false	false	false	false	false
 91-Early:Addresses	0x1e9d5e4ed8ef31cfece10b4c92c9057f991f36bc	Ethervote_Stake-Voice		EtherScan.io			false	false	false	true	false	false
 50-Tokens:ERC20	0x1ea2ee86c8cb3aec35830132ec69b6720de277df	Our Shib	OSHIB	On chain	18		false	false	false	true	true	false
@@ -5061,6 +5062,7 @@ tags	address	name	symbol	source	decimals	description	deleted	isCustom	isPrefund	
 50-Tokens:ERC20	0x7a41e0517a5eca4fdbc7fbeba4d4c47b9ff6dc63	Zeus Shield Coin	ZSC	On chain	18	Both blockchain and AI are adopted and integrated in the Zeusshield insurance system. Such integration leads to a green insurance ecosystem in terms of a business-to-customer based peer-to-peer p2p insurance market platform. the platform is open to both the insurer and insured units.	false	false	false	true	true	false
 30-Contracts:Humanity DAO	0x7a44d904e5372f64db51436fcdf4024a8144c383	ryankung		https://www.humanitydao.org/humans			false	false	false	false	false	false
 50-Tokens:ERC20	0x7a545ed3863221a974f327199ac22f7f12535f11	Baguette Token	BGTT	On chain	18		false	false	false	true	true	false
+50-Tokens:ERC20	0x7a58c0be72be218b41c608b7fe7c5bb630736c71	ConstitutionDAO	PEOPLE	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x7a639e580ef90e9b19570f25d369e00d71a9e793	mZ	MZ	On chain	4		false	false	false	true	true	false
 60-Airdrops	0x7a63efeb3d8f54f4935cb5c4e3c5cdb91924bbed	LUCKen Airdrop		EtherScan.io			false	false	false	true	false	false
 90-Individuals:Gitcoin Grants	0x7a738effd10bf108b7617ec8e96a0722fa54c547	todd-x-y		Gitcoin Website			false	false	false	false	false	false
@@ -9513,6 +9515,7 @@ tags	address	name	symbol	source	decimals	description	deleted	isCustom	isPrefund	
 50-Tokens:ERC20	0xea26c4ac16d4a5a106820bc8aee85fd0b7b2b664	QuarkChain Token	QKC	On chain	18	A High-Capacity Peer-to-Peer Transactional System	false	false	false	true	true	false
 90-Individuals:DevCon2	0xea30de7d03861221acdea8cc5331f6198db1899d	minus		DevCon2 Token Contract			false	false	false	false	false	false
 50-Tokens:ERC20	0xea38eaa3c86c8f9b751533ba2e562deb9acded40	Fuel Token	FUEL	On chain	18	Etherparty‚Äö√ë¬¢ is a contract wizard that removes the complexity of creating, managing and executing smart contracts on any compatible blockchain.	false	false	false	true	true	false
+50-Tokens:ERC721	0xea508034fcc8eeff24bf43effe42621008359a2e	PixieJars	PJNFT	On chain	18		false	false	false	true	true	true
 50-Tokens:ERC20	0xea54c81fe0f72de8e86b6dc78a9271aa3925e3b5	BGGToken	BGG	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0xea5e4a7a1f29bd8357f1817ff0e873be83f1fc7d	万国链(WGBC)	WGBC	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0xea5f88e54d982cbb0c441cde4e79bc305e5b43bc	Pareto Network Token	PARETO	On chain	18	The Pareto Network is a peer to peer financial content marketplace.	false	false	false	true	true	false

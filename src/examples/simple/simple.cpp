@@ -18,15 +18,15 @@
  *          Simply request a block from Infura and print it to the screen.
  *------------------------------------------------------------------------*/
 int main(int argc, const char* argv[]) {
-    // Initialize the system and tell it where to find the blockchain data.
+    // Initialize the TrueBlocks system
     etherlib_init(quickQuitHandler);
 
-    // Request the 3,500,000th block from Infura. Store it in 'block'...
+    // Request block 3,500,000. Store it in 'block'...
     CBlock block;
     getBlock(block, 3500000);
 
-    // ...print the block to the screen
-    cout << block << "\n";
+    // ...print the block to the console (this prints the transactions too)
+    cout << block << endl;
 
     return 0;
 }
