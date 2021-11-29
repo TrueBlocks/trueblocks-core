@@ -1,3 +1,4 @@
 makeClass  --all block
+TIME ~ CLOCK - <INFO>  : Processing 1 class definition files.
 TIME ~ CLOCK - <INFO>  : handling generate...
 TIME ~ CLOCK - <INFO>  : makeClass --run processed 1 files (changed 2).                                        
