@@ -3146,6 +3146,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 91-Early:Addresses	0x4bb96091ee9d802ed039c4d1a5f6216f90f81b01	KNOWN_MINERS_006		Ether Camp			false	false	false	false	false	false
 90-Individuals:Gitcoin Grants	0x4bb9a1e3ba4aee6f6bb76de1384e7417fd2c9dc2	nklipa13		Gitcoin Website			false	false	false	false	false	false
 50-Tokens:ERC20	0x4bbbc57af270138ef2ff2c50dbfad684e9e0e604	WABnetwork	WAB	On chain	18	WAB network is a 5.0 Blockchain with outstanding features, a completed decentralization blockchain with remarkable transaction speed of millions per second.	false	false	false	true	true	false
+90-Individuals:Other	0x4bbeeb066ed09b7aed07bf39eee0460dfa261520	MyCrypto: Donate					false	false	false	false	false	false
 50-Tokens:ERC20	0x4bc04f1dafd465dd285c4ae050ea8a7eaa98d29c	MetaMask Token	MSKT	On chain	18		false	false	false	true	true	false
 31-Gitcoin:Grants	0x4bc821fef2ff947b57585a5fdbc73690db288a49	Grant 1005 Yieldfarming.info		https://gitcoin.co/grants/1005/yieldfarminginfo			false	false	false	false	false	false
 90-Individuals:Kickback	0x4bd047ca72fa05f0b89ad08fe5ba5ccdc07dffbf	aseem		https://kickback.events/			false	false	false	false	false	false
