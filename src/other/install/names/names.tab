@@ -3396,6 +3396,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 50-Tokens:ERC20	0x5197fbe1a86679ff1360e27862bf88b0c5119bd8	BITPIF	BPF	On chain	18		false	false	false	true	true	false
 31-Gitcoin:Grants	0x519b70055af55a007110b4ff99b0ea33071c720a	Grant 0528 Mix.eth - a Portfolio Tracker with Privacy and Security as Its Core Owned by the Dxdao		https://gitcoin.co/grants/528/mixeth-a-portfolio-tracker-with-privacy-and-secur			false	false	false	true	false	false
 50-Tokens:ERC20	0x519f623192b0d892c85778fa2d4cdc7fd5c04737	White Collar Inu	TGIF	On chain	18		false	false	false	true	true	false
+30-Contracts	0x519f9662798c2e07fbd5b30c1445602320c5cf5b	Moloch Rises		EtherScan.io			false	false	false	true	false	false
 50-Tokens:ERC20	0x51a2310b37ead1d8f8fe01b89b4cd68fa58992d0	Prime Liquidity Pool One Token	BPRIME	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x51a8ec2b6aead5bd49359cebfcf2005d8be1fe4d	Elon Tweets	ELONT 🐦	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x51bb9c623226ce781f4a54fc8f4a530a47142b6b	Peet ERC20	PTE	On chain	18		false	false	false	true	true	false
