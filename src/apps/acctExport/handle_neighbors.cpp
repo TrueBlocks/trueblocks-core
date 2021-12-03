@@ -15,6 +15,7 @@
 //----------------------------------------------------------------
 bool showApp(const CAppearance& item, void* data) {
     COptions* opt = reinterpret_cast<COptions*>(data);
+    opt->tTrav->nProcessed++;
 
     cout << ((isJson() && !opt->firstOut) ? ", " : "");
     cout << item;
@@ -56,25 +57,37 @@ bool transFilter(const CTransaction* trans, void* data) {
 }
 
 //-----------------------------------------------------------------------
+bool neighbors_Pre(CTraverser* trav, void* data) {
+    COptions* opt = reinterpret_cast<COptions*>(data);
+    opt->slowQueries = 1;  // display progress more frequently
+    return true;
+}
+
+//-----------------------------------------------------------------------
 bool neighbors_Display(CTraverser* trav, void* data) {
-    string_q path = getBinaryCacheFilename(CT_APPS, trav->trans.blockNumber, trav->trans.transactionIndex);
-    establishFolder(path);
+    // string_q path = getBinaryCacheFilename(CT_APPS, trav->trans.blockNumber, trav->trans.transactionIndex);
+    // establishFolder(path);
 
-    CAppearanceArray apps;
-    if (!isTestMode() && fileExists(path)) {
-        // CArchive archive(READING_ARCHIVE);
-        // if (archive.Lock(path, modeReadOnly, LOCK_NOWAIT)) {
-        //     // archive >> apps;
-        //     archive.Release();
-        //     for (auto app : apps) {
-        //         showApp(app, data);
-        //     }
-        //     return true;
-        // }
-    }
+    // CAppearanceArray apps;
+    // if (!isTestMode() && fileExists(path)) {
+    // CArchive archive(READING_ARCHIVE);
+    // if (archive.Lock(path, modeReadOnly, LOCK_NOWAIT)) {
+    //     // archive >> apps;
+    //     archive.Release();
+    //     for (auto app : apps) {
+    //         showApp(app, data);
+    //     }
+    //     opt->neighborCount = apps.size();
+    //     return true;
+    // }
+    // }
 
-    string_q csvPath = substitute(path, ".bin", ".csv");
+    // string_q csvPath = substitute(path, ".bin", ".csv");
     // ::remove(csvPath.c_str());  // we don't have a cache, so clear out the temp file
+
+    COptions* opt = reinterpret_cast<COptions*>(data);
+    opt->neighborCount = 0;
+    opt->tTrav = trav;
     trav->trans.forEveryUniqueAppearanceInTxPerTx(visitApp, transFilter, data);
 
     // COptions* opt = (COptions*)data;
@@ -106,5 +119,6 @@ bool neighbors_Display(CTraverser* trav, void* data) {
 
 //-----------------------------------------------------------------------
 size_t neighbors_Count(CTraverser* trav, void* data) {
-    return trav->trans.receipt.logs.size();
+    COptions* opt = reinterpret_cast<COptions*>(data);
+    return opt->neighborCount;
 }

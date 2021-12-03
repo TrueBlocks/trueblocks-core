@@ -113,7 +113,7 @@ bool COptions::process_reconciliation(CTraverser* trav) {
                 }
                 if (backLevel) {
                     // LOG_WARN(cYellow, "Updating statements", cOff);
-                    trav->readStatus = "Updating";
+                    trav->searchOp = "Updating";
                     cacheIfReconciled(trav, true /* isNew */);
                     slowQueries++;
                 }
@@ -124,7 +124,7 @@ bool COptions::process_reconciliation(CTraverser* trav) {
         }
     }
 
-    trav->readStatus = "Reconciling";
+    trav->searchOp = "Reconciling";
     slowQueries++;
 
     blknum_t nextAppBlk = trav->index < monApps.size() - 1 ? monApps[trav->index + 1].blk : NOPOS;

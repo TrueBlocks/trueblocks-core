@@ -69,8 +69,7 @@ class CLogTraverser : public CTraverser {
         postFunc = post_Func;
         dataFunc = loadTx_Func;
         displayFunc = logs_Display;
-        // TODO: Counting doesn't really work
-        // counterFunc = logs_Count;
+        counterFunc = logs_Count;
     }
 };
 
@@ -84,8 +83,7 @@ class CTraceTraverser : public CTraverser {
         postFunc = post_Func;
         dataFunc = loadTx_Func;
         displayFunc = traces_Display;
-        // TODO: Counting doesn't really work
-        // counterFunc = traces_Count;
+        counterFunc = traces_Count;
     }
 };
 
@@ -105,16 +103,17 @@ class CTransactionTraverser : public CTraverser {
     }
 };
 
+extern bool neighbors_Pre(CTraverser* trav, void* data);
 extern bool neighbors_Display(CTraverser* trav, void* data);
 extern size_t neighbors_Count(CTraverser* trav, void* data);
 class CNeighborTraverser : public CTraverser {
   public:
-    CNeighborTraverser(void) : CTraverser("appearances") {
+    CNeighborTraverser(void) : CTraverser("neighbors") {
         filterFunc = tsRangeFunc;
+        preFunc = neighbors_Pre;
         postFunc = post_Func;
         dataFunc = loadTx_Func;
         displayFunc = neighbors_Display;
-        // TODO: Counting doesn't really work
-        // counterFunc = neighbors_Count;
+        counterFunc = neighbors_Count;
     }
 };

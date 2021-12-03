@@ -53,6 +53,10 @@ class COptions : public CAbiOptions {
     uint64_t max_traces;
     // END_CODE_DECLARE
 
+    // Used as temporary data to count neighbor traversals
+    size_t neighborCount{0};
+    CTraverser* tTrav{nullptr};
+
     CAppearanceArray_mon monApps;
     CMonitorArray allMonitors;
     CMonitorArray possibles;
