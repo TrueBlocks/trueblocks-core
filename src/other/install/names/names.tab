@@ -162,7 +162,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 30-Contracts:Humanity DAO	0x029aa343c7a26282e35d8cf1879700c7aeab4823	fufufu54996943		https://www.humanitydao.org/humans			false	false	false	false	false	false
 30-Contracts:Humanity DAO	0x029b26298def18fcb009e709375f091da8d07d36	blockdata_		https://www.humanitydao.org/humans			false	false	false	false	false	false
 30-Contracts:Humanity DAO	0x029b7169bec70c5190965c686950667bd0786763	VinyasAlex		https://www.humanitydao.org/humans			false	false	false	false	false	false
-30-Contracts	0x02a522d98ec2d2c3bbe91acc29ee7fd32ab880ab	Mintable: Deployer					false	false	false	false	false	false
+31-Gitcoin:Grants	0x02a522d98ec2d2c3bbe91acc29ee7fd32ab880ab	Mintable: Deployer					false	false	false	false	false	false
 50-Tokens:ERC20	0x02a7c828437aa9aea6da510758b2a9d6fb37f0bc	Salt Shaker	SALT 🧂	On chain	18		false	false	false	true	true	false
 91-Early:Addresses	0x02ad1b2f88d37825a311045663a0bf97d0dcd845	YoutubeViews_id13		Ether Camp			false	false	false	true	false	false
 50-Tokens:ERC20	0x02b173e5c6553b5429086edd94a37e34adbda2aa	MuskMarsDog	MDOGE	On chain	4		false	false	false	true	true	false
@@ -882,7 +882,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 50-Tokens:ERC20	0x13c2fab6354d3790d8ece4f0f1a3280b4a25ad96	PHI Token	PHI	On chain	18	PHI = Platform for Hybrid Investments, a marketplace for financial services and products both for traditional than crypto assets.	false	false	false	true	true	false
 50-Tokens:ERC20	0x13db938a671c10526450adb7f5e75bbf8657a6f7	Mexican Shiba	MSHIBA	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x13e9ec660d872f55405d70e5c52d872136f0970c	TKT	TKT	On chain	18		false	false	false	true	true	false
-90-Individuals:Gitcoin Grants	0x13ebd3443fa5575f0eb173e323d8419f7452cfb1	abcoathup		Gitcoin Website			false	false	false	false	false	false
+31-Gitcoin:Grants	0x13ebd3443fa5575f0eb173e323d8419f7452cfb1	abcoathup		Gitcoin Website			false	false	false	false	false	false
 50-Tokens:ERC20	0x13f11c9905a08ca76e3e853be63d4f0944326c72	Divi Exchange Token	DIVX	On chain	18	Digital Currency	false	false	false	true	true	false
 50-Tokens:ERC20	0x13f1b7fdfbe1fc66676d56483e21b1ecb40b58e2	Accelerator	ACC	On chain	18	A proof-of-stake smart contract backed by a physical mining facility.	false	false	false	true	true	false
 50-Tokens:ERC20	0x13f25cd52b21650caa8225c9942337d914c9b030	realchain token	RCT	On chain	18		false	false	false	true	true	false
@@ -1505,7 +1505,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 91-Early:Addresses	0x22f83d39a2148dd389ed4c7a9280f57d5c8679da	Emailer		EtherScan.io			false	false	false	false	false	false
 90-Individuals:DevCon2	0x2306df931a940d58c01665fa4d0800802c02edfe	wuehler (Prefund_1171)		DevCon2 Token Contract			false	false	false	false	false	false
 30-Contracts	0x230dc92857948821f88a4e81b67a593fad2ae8cd	Arbitrage Bot		0xTracker			false	false	false	true	false	false
-31-Gitcoin:Workstreams	0x230fc981f7cae90cfc4ed4c18f7c178b239e5f9f	Moonshot Collective Multisig					false	false	false	true	false	false
+31-Gitcoin:Grants	0x230fc981f7cae90cfc4ed4c18f7c178b239e5f9f	Moonshot Collective Multisig					false	false	false	true	false	false
 91-Early:Addresses	0x23141df767233776f7cbbec497800ddedaa4c684	BranchSender_id305		Ether Camp			false	false	false	true	false	false
 91-Early:Addresses	0x231c7510f24d1c8b9578558bcb7fa6c659b4ca98	Crypted_Rps		EtherScan.io			false	false	false	true	false	false
 50-Tokens:ERC20	0x231e68028d9db9ffd0ab491f9e4d261c37ef5fdf	Moon Doge	MOGE	On chain	18		false	false	false	true	true	false
@@ -8883,7 +8883,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 30-Contracts	0xdab336d6aa0b294d3957171b95058c5e028eabc5	NFT Guy					false	false	false	false	false	false
 50-Tokens:ERC20	0xdac17f958d2ee523a2206206994597c13d831ec7	Tether USD	USDT	On chain	6		false	false	false	true	true	false
 50-Tokens:ERC20	0xdac4ae188ace3c8985765edc6c9b4739d4845ddc	InterValue	INVE	On chain	18	InterValue is one of the first projects of the Blockchain 4.0 era. It supports the deployment of large-scale applications. InterValue‚Äö√Ñ√¥s double-layer DAG consensus uses sharding and gossip protocol to achieve high transaction concurrency.	false	false	false	true	true	false
-90-Individuals:Gitcoin Grants	0xdac817294c0c87ca4fa1895ef4b972eade99f2fd	criticaltv		Gitcoin Website			false	false	false	false	false	false
+31-Gitcoin:Grants	0xdac817294c0c87ca4fa1895ef4b972eade99f2fd	criticaltv		Gitcoin Website			false	false	false	false	false	false
 91-Early:Addresses	0xdac8da3e58c11b4e0e8dfaefe191107e143ac29b	Swap		EtherScan.io			false	false	false	true	false	false
 50-Tokens:ERC20	0xdaca87395f3b1bbc46f3fa187e996e03a5dcc985	Mandala Tokens	MANDALA	On chain	18		false	false	false	true	true	true
 50-Tokens:ERC20	0xdacd69347de42babfaecd09dc88958378780fb62	AtariToken	ATRI	On chain	18		false	false	false	true	true	false
@@ -9836,7 +9836,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 50-Tokens:ERC20	0xf273ada6f43fd3c618894718f9a59815bb313ff0	Blue Shiba Inu	BSHIB	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0xf278c1ca969095ffddded020290cf8b5c424ace2	RUFF	RUFF	On chain	18	Decentralized open source blockchain architecture for high efficiency Internet of Things application development	false	false	false	true	true	false
 30-Contracts:Consensys	0xf285bde0bce33e55225c6ee156bfb64b0be9ec9e	ProofOfPhyscialAddressCaller sender		TrueBlocks.io			false	false	false	false	false	false
-30-Contracts:Humanity DAO	0xf2867166798b8a339cbdc8686b30626fdbf5c2ef	liuwenchao777		https://www.humanitydao.org/humans			false	false	false	false	false	false
+31-Gitcoin:Grants	0xf2867166798b8a339cbdc8686b30626fdbf5c2ef	liuwenchao777		https://www.humanitydao.org/humans			false	false	false	false	false	false
 90-Individuals:Gitcoin Grants	0xf291a2564d22e6dec8c0ca713f6969fc34453fc7	acnani		Gitcoin Website			false	false	false	false	false	false
 50-Tokens:ERC20	0xf29226914595052a04f5afbe6410d0c3ed707548	NEXT	NET	On chain	18		false	false	false	true	true	false
 31-Gitcoin:Grants	0xf2c0e63c26067d5ab1c3157bccc70f4f12115af0	Grant 0689 Unspent.io – Smart Portfolio & DeFi Dashboard		https://gitcoin.co/grants/689/unspentio-smart-portfolio-defi-dashboard		https://unspent.io	false	false	false	false	false	false
