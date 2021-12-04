@@ -115,11 +115,13 @@ bool COptions::showAddrsInTx(blkrange_t range, const CAppearance_mon& app) {
             }
         }
     }
-    LOG_INFO("  Appearance: ", app.blk, ".", app.txid, string_q(100, ' '));
+
+    LOG_INFO("  Searching: ", app.blk, ".", app.txid, string_q(100, ' '));
     if (!theIndex->reverseMap) {
         LOG_ERR("Could not allocate reverseMap");
         return false;
     }
+
     return !shouldQuit();
 }
 
@@ -142,7 +144,7 @@ bool neighbors_Pre(CTraverser* trav, void* data) {
     }
     LOG_INFO("Found ", ranges.size(), " chunks");
 
-#define REMOVE_ME 15
+#define REMOVE_ME 1000000
 
     uint64_t curRange = 0;
     for (trav->index = 0; trav->index < opt->monApps.size() && !shouldQuit(); trav->index++) {
