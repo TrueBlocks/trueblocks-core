@@ -78,7 +78,12 @@ inline fourbyte_t str_2_Fourbyte(const string_q& str) {
     return str;
 }
 extern timestamp_t str_2_Ts(const string_q& str);
+extern blkrange_t str_2_Range(const string_q& str);
+extern string_q range_2_Str(const blkrange_t& r);
 #define str_2_Enum(en, str) (en) str_2_Uint(str)
+inline bool inRange(blknum_t val, blkrange_t range) {
+    return (val >= range.first && val <= range.second);
+}
 
 //-------------------------------------------------------------------------
 extern string_q bool_2_Str(bool num);
@@ -103,6 +108,7 @@ extern hashbytes_t hash_2_Bytes(const hash_t& in);
 extern addrbytes_t addr_2_Bytes(const address_t& in);
 extern hash_t bytes_2_Hash(uint8_t const bytes[32]);
 extern address_t bytes_2_Addr(uint8_t const bytes[20]);
+extern address_t bytes_2_Addr(const char* bytes);
 
 //-------------------------------------------------------------------------
 extern string_q chr_2_HexStr(const string_q& str);
