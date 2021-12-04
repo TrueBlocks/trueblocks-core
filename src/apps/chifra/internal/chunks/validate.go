@@ -20,7 +20,7 @@ func (opts *ChunksOptions) ValidateChunks() error {
 	// }
 
 	if !Options.Check && len(Options.Extract) == 0 {
-	 	return validate.Usage("Please choose at least one of {0}.", "--extract or --check")
+		return validate.Usage("Please choose at least one of {0}.", "--extract or --check")
 	}
 
 	// if (Options.List && Options.Check) || (Options.List && len(Options.Extract) > 0) {
