@@ -11,6 +11,8 @@ import (
 	"github.com/ethereum/go-ethereum/ethclient"
 )
 
+// ethFromWei converts wei to ether.
+// TODO: There is probably a routine in rpcClient that we could use
 func ethFromWei(in big.Int) float64 {
 	inF := new(big.Float).SetInt(&in)
 	powI := new(big.Int).Exp(big.NewInt(10), big.NewInt(18), nil)
@@ -20,10 +22,14 @@ func ethFromWei(in big.Int) float64 {
 	return f
 }
 
+// balanceClient caches the client so we can call it many times without re-dialing it every time
 var balanceClient ethclient.Client
 var clientLoaded = false
 
-func GetBalanceInEth(address string, bn uint64) float64 {
+// GetBalanceInEth returns the balance of the given address at the given block
+// TODO: blockNum is ignored
+// TODO: what to do if we're running against a non-archive node?
+func GetBalanceInEth(address string, blockNum uint64) float64 {
 	if !clientLoaded {
 		balanceClient = Get()
 		clientLoaded = true
