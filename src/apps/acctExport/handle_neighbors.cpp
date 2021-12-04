@@ -12,110 +12,157 @@
  *-------------------------------------------------------------------------------------------*/
 #include "options.h"
 
-//----------------------------------------------------------------
-bool showApp(const CAppearance& item, void* data) {
-    COptions* opt = reinterpret_cast<COptions*>(data);
-    opt->tTrav->nProcessed++;
+// //----------------------------------------------------------------
+// bool showApp(const CAppearance& item, void* data) {
+//     COptions* opt = reinterpret_cast<COptions*>(data);
+//     opt->tTrav->nProcessed++;
+//     cout << ((isJson() && !opt->firstOut) ? ", " : "");
+//     cout << item;
+//     opt->firstOut = false;
+//     return !shouldQuit();
+// }
 
-    cout << ((isJson() && !opt->firstOut) ? ", " : "");
-    cout << item;
-    opt->firstOut = false;
+#define indexFolder_map (getIndexPath("maps/"))
 
-    return !shouldQuit();
+//-----------------------------------------------------------------------
+int sortRecords(const void* i1, const void* i2) {
+    int32_t* p1 = (int32_t*)i1;
+    int32_t* p2 = (int32_t*)i2;
+    if (p1[1] == p2[1]) {
+        if (p1[2] == p2[2]) {
+            return (p1[0] - p2[0]);
+        }
+        return p1[2] - p2[2];
+    }
+    return p1[1] - p2[1];
 }
 
-//----------------------------------------------------------------
-bool visitApp(const CAppearance& item, void* data) {
-    COptions* opt = reinterpret_cast<COptions*>(data);
-    if (item.tc == 10 || isZeroAddr(item.addr))
-        return !shouldQuit();
+//-----------------------------------------------------------------------
+bool CIndexArchive::LoadReverseMap(void) {
+    if (reverseMap) {
+        delete[] reverseMap;
+        reverseMap = nullptr;
+    }
 
-    if (item.reason == "input" && item.addr != opt->accountedFor.address)
-        return !shouldQuit();
-    if (contains(item.reason, "topic") && item.addr != opt->accountedFor.address)
-        return !shouldQuit();
+    uint32_t nApps = header1->nRows;
 
-    // if (opt->cache) {
-    //     string_q path = getBinaryCacheFilename(CT_APPS, item.bn, item.tx);
-    //     string_q csvPath = substitute(path, ".bin", ".csv");
-    //     ostringstream os;
-    //     os << item.Format(STR_DISPLAY_APPEARANCE) << endl;
-    //     cout << "Writing: " << item.Format(STR_DISPLAY_APPEARANCE) << endl;
-    //     getchar();
-    //     appendToAsciiFile(path, os.str());
-    // }
+    string_q mapFile = substitute(getFilename(), indexFolder_finalized, indexFolder_map);
+    if (fileExists(mapFile)) {
+        CArchive archive(READING_ARCHIVE);
+        if (!archive.Lock(mapFile, modeReadOnly, LOCK_NOWAIT)) {
+            LOG_ERR("Could not open file ", mapFile);
+            return false;
+        }
+        size_t size = fileSize(mapFile);
+        reverseMap = new uint32_t[size];
+        archive.Read(reverseMap, sizeof(char), size);
+        archive.Release();
+        for (uint32_t i = 0; i < nApps; i++) {
+            uint32_t index = (i * 3);
+            if (!(index % 10013)) {
+                LOG_INFO(padNum9(reverseMap[index + 1]), ".", padNum5(reverseMap[index + 2]), " ",
+                         padNum7(reverseMap[index]), " ", mapFile, "        \r");
+            }
+        }
+        return true;
+    }
 
-    return showApp(item, data);
-}
+    uint32_t recordSize = 3 * sizeof(uint32_t);
+    reverseMap = new uint32_t[nApps * recordSize];
 
-//----------------------------------------------------------------
-// Return 'true' if we want the caller NOT to visit the traces of this transaction
-bool transFilter(const CTransaction* trans, void* data) {
-    if (!ddosRange(trans->blockNumber))
+    for (uint32_t i = 0; i < nApps; i++) {
+        reverseMap[(i * 3)] = i;
+        reverseMap[(i * 3) + 1] = appearances1[i].blk;
+        reverseMap[(i * 3) + 2] = appearances1[i].txid;
+    }
+
+    qsort(reverseMap, nApps, recordSize, sortRecords);
+
+    CArchive archive(WRITING_ARCHIVE);
+    if (!archive.Lock(mapFile, modeWriteCreate, LOCK_WAIT)) {
+        LOG_ERR("Could not open file ", mapFile);
         return false;
-    return (getTraceCount(trans->hash) > 250);
+    }
+    archive.Write(reverseMap, sizeof(char), recordSize * nApps);
+    archive.Release();
+    for (uint32_t i = 0; i < nApps; i++) {
+        uint32_t index = (i * 3);
+        if (!(index % 10013)) {
+            LOG_INFO(reverseMap[index + 1], ".", reverseMap[index + 2], " ", reverseMap[index]);
+        }
+    }
+    LOG_PROG("Processed: " + getFilename());
+    return true;
+}
+
+//-----------------------------------------------------------------------
+void COptions::showAddrsInTx(blkrange_t range, const CAppearance_mon& app) {
+    string_q fn = range_2_Str(range);
+    string_q chunkPath = indexFolder_finalized + fn + ".bin";
+
+    LOG_INFO("Appearance: ", app.blk, ".", app.txid, string_q(50, ' '));
+    if (!theIndex || theIndex->getFilename() != chunkPath) {
+        if (theIndex) {
+            // LOG_INFO(cRed, "Clearing the reverse map for ", chunkPath, cOff);
+            delete theIndex;
+            theIndex = nullptr;
+        }
+        theIndex = new CIndexArchive(READING_ARCHIVE);
+        if (theIndex->ReadIndexFromBinary(chunkPath)) {
+            theIndex->LoadReverseMap();
+            if (!theIndex->reverseMap) {
+                LOG_ERR("THIS IS WRONG");
+                cerr.flush();
+                exit(0);
+            }
+        }
+    }
 }
 
 //-----------------------------------------------------------------------
 bool neighbors_Pre(CTraverser* trav, void* data) {
     COptions* opt = reinterpret_cast<COptions*>(data);
-    opt->slowQueries = 1;  // display progress more frequently
+
+    establishFolder(indexFolder_map);
+
+    CStringArray lines;
+    asciiFileToLines(getConfigPath("manifest/manifest.txt"), lines);
+    sort(lines.begin(), lines.end());
+
+    CBlockRangeArray ranges;
+    for (auto line : lines) {
+        if (line.length() < 10)
+            continue;  // not a valid line
+        blkrange_t range = str_2_Range(line);
+        ranges.push_back(range);
+    }
+    LOG_INFO("Found ", ranges.size(), " chunks");
+
+    uint64_t curRange = 0;
+    for (trav->index = 0; trav->index < opt->monApps.size(); trav->index++) {
+        CAppearance_mon app = opt->monApps[trav->index];
+        while (curRange < ranges.size() && !inRange(blknum_t(app.blk), ranges[curRange])) {
+            curRange++;
+        }
+        if (curRange < ranges.size()) {
+            opt->showAddrsInTx(ranges[curRange], app);
+            curRange--;  // back up one in case the next appearances is in the same range
+        }
+    }
+
+    LOG_INFO(bYellow, "Clearing the reverse map for ", (opt->theIndex ? opt->theIndex->getFilename() : ""), cOff);
     return true;
 }
 
-//-----------------------------------------------------------------------
-bool neighbors_Display(CTraverser* trav, void* data) {
-    // string_q path = getBinaryCacheFilename(CT_APPS, trav->trans.blockNumber, trav->trans.transactionIndex);
-    // establishFolder(path);
-
-    // CAppearanceArray apps;
-    // if (!isTestMode() && fileExists(path)) {
-    // CArchive archive(READING_ARCHIVE);
-    // if (archive.Lock(path, modeReadOnly, LOCK_NOWAIT)) {
-    //     // archive >> apps;
-    //     archive.Release();
-    //     for (auto app : apps) {
-    //         showApp(app, data);
-    //     }
-    //     opt->neighborCount = apps.size();
-    //     return true;
-    // }
-    // }
-
-    // string_q csvPath = substitute(path, ".bin", ".csv");
-    // ::remove(csvPath.c_str());  // we don't have a cache, so clear out the temp file
-
-    COptions* opt = reinterpret_cast<COptions*>(data);
-    opt->neighborCount = 0;
-    opt->tTrav = trav;
-    trav->trans.forEveryUniqueAppearanceInTxPerTx(visitApp, transFilter, data);
-
-    // COptions* opt = (COptions*)data;
-    // if (opt->cache) {
-    //     cout << csvPath << endl;
-    //     getchar();
-    //     if (fileExists(csvPath)) {
-    //         CStringArray lines, fields;
-    //         asciiFileToLines(csvPath, lines);
-    //         for (auto line : lines) {
-    //             if (fields.empty()) {
-    //                 fields = CStringArray{"bn", "tx", "tc", "addr", "reason"};
-    //             } else {
-    //                 CAppearance app;
-    //                 app.parseCSV(fields, line);
-    //                 apps.push_back(app);
-    //             }
-    //         }
-    //         CArchive archive(WRITING_ARCHIVE);
-    //         if (archive.Lock(path, modeWriteCreate, LOCK_WAIT)) {
-    //             archive << apps;
-    //             archive.Release();
-    //         }
-    //     }
-    // }
-    prog_Log(trav, data);
-    return !shouldQuit();
-}
+// //-----------------------------------------------------------------------
+// bool neighbors_Display(CTraverser* trav, void* data) {
+//     COptions* opt = reinterpret_cast<COptions*>(data);
+//     opt->neighborCount = 0;
+//     opt->tTrav = trav;
+//     trav->trans.forEveryUniqueAppearanceInTxPerTx(visitApp, transFilter, data);
+//     prog_Log(trav, data);
+//     return !shouldQuit();
+// }
 
 //-----------------------------------------------------------------------
 size_t neighbors_Count(CTraverser* trav, void* data) {

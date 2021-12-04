@@ -22,16 +22,18 @@ namespace qblocks {
 //---------------------------------------------------------------------------
 class CIndexArchive : public CArchive {
   public:
-    CIndexHeader* header;
-    uint64_t nAddrs;
-    CIndexedAddress* addresses;
-    uint64_t nApps;
-    CIndexedAppearance* appearances;
+    CIndexHeader* header1;
+    uint64_t nAddrs1;
+    CIndexedAddress* addresses1;
+    uint64_t nApps1;
+    CIndexedAppearance* appearances1;
+    uint32_t* reverseMap{nullptr};
 
     explicit CIndexArchive(bool mode);
     ~CIndexArchive(void);
     bool ReadIndexFromBinary(const string_q& fn);
     bool ReadIndexHeader(const string_q& fn, CIndexHeader& header);
+    bool LoadReverseMap(void);
 
   private:
     char* rawData;

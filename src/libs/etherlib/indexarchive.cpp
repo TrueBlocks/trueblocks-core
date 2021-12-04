@@ -16,21 +16,24 @@ namespace qblocks {
 //----------------------------------------------------------------
 CIndexArchive::CIndexArchive(bool mode) : CArchive(mode) {
     rawData = NULL;
-    header = NULL;
-    addresses = NULL;
-    appearances = NULL;
-    nAddrs = nApps = 0;
+    header1 = NULL;
+    addresses1 = NULL;
+    appearances1 = NULL;
+    nAddrs1 = nApps1 = 0;
 }
 
 //----------------------------------------------------------------
 CIndexArchive::~CIndexArchive(void) {
     if (rawData) {
         delete[] rawData;
-        header = NULL;
-        addresses = NULL;
-        appearances = NULL;
+        header1 = NULL;
+        addresses1 = NULL;
+        appearances1 = NULL;
         rawData = NULL;
-        nAddrs = nApps = 0;
+        nAddrs1 = nApps1 = 0;
+    }
+    if (reverseMap) {
+        delete[] reverseMap;
     }
     Release();
 }
@@ -60,17 +63,17 @@ bool CIndexArchive::ReadIndexFromBinary(const string_q& path) {
         return false;
     }
 
-    header = reinterpret_cast<CIndexHeader*>(rawData);
+    header1 = reinterpret_cast<CIndexHeader*>(rawData);
     ASSERT(h->magic == MAGIC_NUMBER);
     ASSERT(bytes_2_Hash(h->hash) == versionHash);
-    nAddrs = header->nAddrs;
-    nApps = header->nRows;
-    addresses = (CIndexedAddress*)(rawData + sizeof(CIndexHeader));  // NOLINT
+    nAddrs1 = header1->nAddrs;
+    nApps1 = header1->nRows;
+    addresses1 = (CIndexedAddress*)(rawData + sizeof(CIndexHeader));  // NOLINT
     size_t aRecSize = sizeof(CIndexedAddress);
-    size_t sizeOfARecs = aRecSize * nAddrs;
+    size_t sizeOfARecs = aRecSize * nAddrs1;
     size_t sizeOfHeader = sizeof(CIndexHeader);
     size_t size = sizeOfHeader + sizeOfARecs;
-    appearances = (CIndexedAppearance*)(rawData + size);  // NOLINT
+    appearances1 = (CIndexedAppearance*)(rawData + size);  // NOLINT
     Release();
     return true;
 }

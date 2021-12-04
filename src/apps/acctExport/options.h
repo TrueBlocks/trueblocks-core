@@ -22,6 +22,8 @@
 // BEG_ERROR_DEFINES
 // END_ERROR_DEFINES
 
+typedef map<CAppearance_mon, CAddressArray> appAddrMap1;
+
 //-----------------------------------------------------------------------
 class COptions : public CAbiOptions {
   public:
@@ -52,10 +54,6 @@ class COptions : public CAbiOptions {
     bool skip_ddos;
     uint64_t max_traces;
     // END_CODE_DECLARE
-
-    // Used as temporary data to count neighbor traversals
-    size_t neighborCount{0};
-    CTraverser* tTrav{nullptr};
 
     CAppearanceArray_mon monApps;
     CMonitorArray allMonitors;
@@ -129,6 +127,11 @@ class COptions : public CAbiOptions {
     size_t reportFreq(void) const {
         return slowQueries > 0 ? 1 : 7;
     }
+
+    // Used as temporary data to count neighbor traversals
+    size_t neighborCount{0};
+    CIndexArchive* theIndex{nullptr};
+    void showAddrsInTx(blkrange_t range, const CAppearance_mon& app);
 };
 
 //--------------------------------------------------------------------------------
