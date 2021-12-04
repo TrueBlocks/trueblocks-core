@@ -952,7 +952,7 @@ TEST[DATE|TIME] Format:  json
     "decimals": 18
   },
   {
-    "tags": "30-Contracts",
+    "tags": "31-Gitcoin:Grants",
     "address": "0x02a522d98ec2d2c3bbe91acc29ee7fd32ab880ab",
     "name": "Mintable: Deployer"
   },

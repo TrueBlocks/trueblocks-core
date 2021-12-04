@@ -144,7 +144,7 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x02725836ebf3ecdb1cdf1c7b02fcbbfaa2736af8	BitAir	BTCA		8
 50-Tokens:ERC20	0x028171bca77440897b824ca71d1c56cac55b68a3	Aave interest bearing DAI	aDAI		18
 50-Tokens:ERC20	0x0297083eef9c04ee22c89187b13363af2249042b	Andre KP9R	aKP9R		18
-30-Contracts	0x02a522d98ec2d2c3bbe91acc29ee7fd32ab880ab	Mintable: Deployer
+31-Gitcoin:Grants	0x02a522d98ec2d2c3bbe91acc29ee7fd32ab880ab	Mintable: Deployer
 50-Tokens:ERC20	0x02a7c828437aa9aea6da510758b2a9d6fb37f0bc	Salt Shaker	SALT 🧂		18
 91-Early:Addresses	0x02ad1b2f88d37825a311045663a0bf97d0dcd845	YoutubeViews_id13
 50-Tokens:ERC20	0x02b173e5c6553b5429086edd94a37e34adbda2aa	MuskMarsDog	MDOGE		4
