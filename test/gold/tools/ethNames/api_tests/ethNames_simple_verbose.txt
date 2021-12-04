@@ -2,6 +2,15 @@ names?terms=etwork&verbose
 {
   "data": [
     {
+      "tags": "31-Gitcoin:Grants",
+      "address": "0x011c2c1433b36a524b548444ae2f20c015427d04",
+      "name": "Grant 0491 - Tokamak Network: Decentralized, Scalable, Turing Complete Layer 2 Plasma",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/491/tokamak-network-decentralized-scalable-turing-com",
+      "decimals": 0,
+      "description": ""
+    },
+    {
       "tags": "50-Tokens:ERC20",
       "address": "0x04c62019ab478bff5874e7b7d9bc84fcf7e30025",
       "name": "POA Network: MultiSig",
@@ -45,6 +54,15 @@ names?terms=etwork&verbose
       "source": "On chain",
       "decimals": 8,
       "description": "Tierion creates software to reduce the cost and complexity of trust. Anchoring data to the blockchain and generating a timestamp proof."
+    },
+    {
+      "tags": "31-Gitcoin:Grants",
+      "address": "0x090b41c23f5890feb4182a201d95476bb35e4a09",
+      "name": "Grant 1706 - ZVM from Tokamak Network",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/1706/zvm-from-tokamak-network",
+      "decimals": 0,
+      "description": ""
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -101,6 +119,15 @@ names?terms=etwork&verbose
       "description": "Bancor Protocol is a standard for a new generation of cryptocurrencies called Smart Tokens"
     },
     {
+      "tags": "31-Gitcoin:Grants",
+      "address": "0x1fb3e449448faf1330dba45d945554c1bedcab5a",
+      "name": "Grant 2250 - Cura Network - the decentralized healthcare system that super-charges healthcare delivery",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/2250/cura-network-the-decentralized-healthcare-system-",
+      "decimals": 0,
+      "description": ""
+    },
+    {
       "tags": "50-Tokens:ERC20",
       "address": "0x20f7a3ddf244dc9299975b4da1c39f8d5d75f05a",
       "name": "Sapien Network",
@@ -142,6 +169,15 @@ names?terms=etwork&verbose
       "name": "Grant 1875 Garuda Network (dmrd)",
       "symbol": "",
       "source": "https://gitcoin.co/grants/1875/garuda-network-dmrd",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "31-Gitcoin:Grants",
+      "address": "0x301605c95acbed7a1fd9c2c0deee964e2afbd0c3",
+      "name": "Grant 1353 - Synapsis. Network 🌌🌱",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/1353/synapsis-network",
       "decimals": 0,
       "description": ""
     },
@@ -236,6 +272,15 @@ names?terms=etwork&verbose
       "description": "https://gitcoin.co/grants/121/gas-stations-network,https://github.com/opengsn/gsn"
     },
     {
+      "tags": "31-Gitcoin:Grants",
+      "address": "0x4c994efd3cf90092dc35ee2e3d660d782652727b",
+      "name": "Grant 2103 - Open Source Climate Offsets Network",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/2103/open-source-climate-offsets-network",
+      "decimals": 0,
+      "description": ""
+    },
+    {
       "tags": "30-Contracts:Kyber Network",
       "address": "0x52166528fcc12681af996e409ee3a421a4e128a3",
       "name": "Kyber Fee Burner",
@@ -313,6 +358,15 @@ names?terms=etwork&verbose
       "name": "Kyber Reserve",
       "symbol": "",
       "source": "0xTracker",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "31-Gitcoin:Grants",
+      "address": "0x641845407bc5b9920ee786270ab25b73bcc88a19",
+      "name": "Grant 2108 - SkyFeed • Decentralized Social Network",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/2108/skyfeed-decentralized-social-network",
       "decimals": 0,
       "description": ""
     },
@@ -470,6 +524,15 @@ names?terms=etwork&verbose
       "description": ""
     },
     {
+      "tags": "31-Gitcoin:Grants",
+      "address": "0x8767aacd8ae48e6a23077548c24121e46dca0696",
+      "name": "Grant 2728 - Using social networks for fun, affordable, and lucrative delivery.",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/2728/using-social-networks-for-fun-affordable-and-lucr",
+      "decimals": 0,
+      "description": ""
+    },
+    {
       "tags": "50-Tokens:ERC20",
       "address": "0x881ef48211982d01e2cb7092c915e647cd40d85c",
       "name": "Open Trading Network",
@@ -477,6 +540,15 @@ names?terms=etwork&verbose
       "source": "On chain",
       "decimals": 18,
       "description": "Open Trading Network OTN ‚Äö√Ñ√¨ a platform that offers cross-chain technology to unite all blockchain networks and market participants, and ensure their best interests."
+    },
+    {
+      "tags": "31-Gitcoin:Grants",
+      "address": "0x887a26839d9e33b1536857a24f91f192ce9d4732",
+      "name": "Grant 2776 - pulp-network",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/2776/pulp-network",
+      "decimals": 0,
+      "description": ""
     },
     {
       "tags": "31-Gitcoin:Grants",
@@ -495,6 +567,15 @@ names?terms=etwork&verbose
       "source": "https://gitcoin.co/grants/681/flowstake-activity-staking-blockchain-network",
       "decimals": 0,
       "description": "https://flowstake.webflow.io"
+    },
+    {
+      "tags": "31-Gitcoin:Grants",
+      "address": "0x934b510d4c9103e6a87aef13b816fb080286d649",
+      "name": "Grant 0159 - Mask Network - The Portal to the New, Open Internet.",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/159/mask-network-the-portal-to-the-new-open-internet",
+      "decimals": 0,
+      "description": ""
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -585,6 +666,15 @@ names?terms=etwork&verbose
       "source": "On chain",
       "decimals": 18,
       "description": "The Jibrel Network provides currencies, equities, commodities and other financial assets and instruments as standard ERC-20 tokens on the Ethereum blockchain."
+    },
+    {
+      "tags": "31-Gitcoin:Grants",
+      "address": "0xa70b419a6028cd48f050d7251cf4fbbc682cc8ab",
+      "name": "Grant 1995 - Ralie Network - Connecting Through Blockchain",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/1995/ralie-network-connecting-through-blockchain",
+      "decimals": 0,
+      "description": ""
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -705,10 +795,37 @@ names?terms=etwork&verbose
     },
     {
       "tags": "31-Gitcoin:Grants",
+      "address": "0xc0dd8e21a31f62861e668833f47770592d379a4c",
+      "name": "Grant 2694 - Matrix2 - An aggregated Layer 2 network",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/2694/matrix2-an-aggregated-layer-2-network",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "31-Gitcoin:Grants",
+      "address": "0xc22e8d32d3146efc54088f39ec9c29eaf3905b1d",
+      "name": "Grant 3090 - Atelio : creating open , blockchain based digital supply network.",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/3090/atelio-creating-open-blockchain-based-digital-sup",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "31-Gitcoin:Grants",
       "address": "0xc37e165fcfa2cb5cca7329dd9daa8cd72907b983",
       "name": "Grant 0037 Connext Network",
       "symbol": "",
       "source": "https://gitcoin.co/grants/37/connext-network",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "31-Gitcoin:Grants",
+      "address": "0xc41bc99044fd4836dba4104bcf53b6f2b62716b1",
+      "name": "Grant 2190 - Layer 2 faucet in ethereum network",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/2190/layer-2-faucet-in-ethereum-network",
       "decimals": 0,
       "description": ""
     },
@@ -966,10 +1083,28 @@ names?terms=etwork&verbose
     },
     {
       "tags": "31-Gitcoin:Grants",
+      "address": "0xf458533d1ac15af5237a16252eb317bbc7981f19",
+      "name": "Grant 2039 - Decentralized Anonymous Messaging Network [DAMN]",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/2039/decentralized-anonymous-messaging-network-damn",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "31-Gitcoin:Grants",
       "address": "0xf64bbc221f89cc882fba507908bbe4ae3ad2f470",
       "name": "Grant 1595 Bloom Network - Panvala League",
       "symbol": "",
       "source": "https://gitcoin.co/grants/1595/bloom-network-panvala-league",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "31-Gitcoin:Grants",
+      "address": "0xf6c1eb87f4ee1330f061a14ca245d70c1f79c5a4",
+      "name": "Grant 3058 - Open Social Network",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/3058/open-social-network",
       "decimals": 0,
       "description": ""
     },
