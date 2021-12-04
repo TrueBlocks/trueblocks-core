@@ -200,8 +200,8 @@ size_t queryUncleCount(const string_q& datIn) {
 bool getTransaction(CTransaction& trans, blknum_t blockNum, txnum_t txid) {
     if (fileExists(getBinaryCacheFilename(CT_TXS, blockNum, txid))) {
         readTransFromBinary(trans, getBinaryCacheFilename(CT_TXS, blockNum, txid));
-        trans.pBlock = NULL;  // otherwise, it's pointing to an unintialized item
-        trans.finishParse();  // set the pointer for the receipt
+        trans.pBlock = nullptr;  // otherwise, it's pointing to an unintialized item
+        trans.finishParse();     // set the pointer for the receipt
         return true;
     }
 

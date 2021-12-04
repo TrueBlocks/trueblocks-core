@@ -8348,6 +8348,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 50-Tokens:ERC20	0xcd62b1c403fa761baadfc74c525ce2b51780b184	Aragon Network Juror	ANJ	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0xcd7492db29e2ab436e819b249452ee1bbdf52214	SafeMoon Inu	SMI	On chain	8		false	false	false	true	true	false
 90-Individuals:DevCon2	0xcd75be091d5084d78dfa890e9451ff42dcf72138	sidk		DevCon2 Token Contract			false	false	false	false	false	false
+50-Tokens:ERC721	0xcd78b15a249edf0416f89e4bf131fe4416d94ff9	The Signature - Simon de la Rouviere	THESIG	https://blog.simondlr.com/posts/the-signature-exploring-time-amp-provenance-in-nft-art	18		false	false	false	true	true	true
 50-Tokens:ERC20	0xcd7989894bc033581532d2cd88da5db0a4b12859	Uniswap V2	UNI-V2	On chain	18		false	false	false	true	true	false
 30-Contracts:DAO Related	0xcd8368170358d401cd03c66065fe4ae12aa5ee58	Prop_99_5		The DAO			false	false	false	false	false	false
 91-Early:Addresses	0xcd8b73c03ba077336c619751e18690bda5b26ff2	Escrow_id236_cnt7_2mo		Ether Camp			false	false	false	true	false	false

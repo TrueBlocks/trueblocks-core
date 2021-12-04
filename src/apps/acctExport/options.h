@@ -131,7 +131,7 @@ class COptions : public CAbiOptions {
     // Used as temporary data to count neighbor traversals
     size_t neighborCount{0};
     CIndexArchive* theIndex{nullptr};
-    void showAddrsInTx(blkrange_t range, const CAppearance_mon& app);
+    bool showAddrsInTx(blkrange_t range, const CAppearance_mon& app);
 };
 
 //--------------------------------------------------------------------------------

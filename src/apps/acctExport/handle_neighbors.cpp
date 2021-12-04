@@ -59,11 +59,12 @@ bool CIndexArchive::LoadReverseMap(void) {
         archive.Release();
         for (uint32_t i = 0; i < nApps; i++) {
             uint32_t index = (i * 3);
-            if (!(index % 10013)) {
+            if (!(index % 1000)) {
                 LOG_INFO(padNum9(reverseMap[index + 1]), ".", padNum5(reverseMap[index + 2]), " ",
                          padNum7(reverseMap[index]), " ", mapFile, "        \r");
             }
         }
+        LOG_INFO("Finished reading ", mapFile, string_q(30, ' '));
         return true;
     }
 
@@ -96,14 +97,12 @@ bool CIndexArchive::LoadReverseMap(void) {
 }
 
 //-----------------------------------------------------------------------
-void COptions::showAddrsInTx(blkrange_t range, const CAppearance_mon& app) {
+bool COptions::showAddrsInTx(blkrange_t range, const CAppearance_mon& app) {
     string_q fn = range_2_Str(range);
     string_q chunkPath = indexFolder_finalized + fn + ".bin";
 
-    LOG_INFO("Appearance: ", app.blk, ".", app.txid, string_q(50, ' '));
     if (!theIndex || theIndex->getFilename() != chunkPath) {
         if (theIndex) {
-            // LOG_INFO(cRed, "Clearing the reverse map for ", chunkPath, cOff);
             delete theIndex;
             theIndex = nullptr;
         }
@@ -111,12 +110,17 @@ void COptions::showAddrsInTx(blkrange_t range, const CAppearance_mon& app) {
         if (theIndex->ReadIndexFromBinary(chunkPath)) {
             theIndex->LoadReverseMap();
             if (!theIndex->reverseMap) {
-                LOG_ERR("THIS IS WRONG");
-                cerr.flush();
-                exit(0);
+                LOG_ERR("Could not allocate reverseMap");
+                return false;
             }
         }
     }
+    LOG_INFO("  Appearance: ", app.blk, ".", app.txid, string_q(100, ' '));
+    if (!theIndex->reverseMap) {
+        LOG_ERR("Could not allocate reverseMap");
+        return false;
+    }
+    return !shouldQuit();
 }
 
 //-----------------------------------------------------------------------
@@ -138,20 +142,32 @@ bool neighbors_Pre(CTraverser* trav, void* data) {
     }
     LOG_INFO("Found ", ranges.size(), " chunks");
 
+#define REMOVE_ME 15
+
     uint64_t curRange = 0;
-    for (trav->index = 0; trav->index < opt->monApps.size(); trav->index++) {
+    for (trav->index = 0; trav->index < opt->monApps.size() && !shouldQuit(); trav->index++) {
+        if (trav->index > REMOVE_ME)
+            break;
         CAppearance_mon app = opt->monApps[trav->index];
         while (curRange < ranges.size() && !inRange(blknum_t(app.blk), ranges[curRange])) {
             curRange++;
         }
         if (curRange < ranges.size()) {
-            opt->showAddrsInTx(ranges[curRange], app);
+            if (!opt->showAddrsInTx(ranges[curRange], app))
+                return false;
             curRange--;  // back up one in case the next appearances is in the same range
         }
     }
 
-    LOG_INFO(bYellow, "Clearing the reverse map for ", (opt->theIndex ? opt->theIndex->getFilename() : ""), cOff);
-    return true;
+    if (opt->theIndex) {
+        LOG_INFO(bYellow, "Clearing the reverse map for ", opt->theIndex->getFilename(), cOff);
+        delete opt->theIndex;
+        opt->theIndex = nullptr;
+    } else {
+        LOG_INFO(bYellow, "Clearing the reverse map", cOff);
+    }
+
+    return !shouldQuit();
 }
 
 // //-----------------------------------------------------------------------
