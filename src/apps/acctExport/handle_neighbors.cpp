@@ -53,47 +53,76 @@ bool CIndexArchive::LoadReverseMap(void) {
             LOG_ERR("Could not open file ", mapFile);
             return false;
         }
-        size_t size = fileSize(mapFile);
-        reverseMap = new uint32_t[size];
-        archive.Read(reverseMap, sizeof(char), size);
+        size_t nRecords = fileSize(mapFile) / sizeof(CReverseMapEntry);
+        ASSERT(nRecords == nApps);
+        // Cleaned up on destruction of the chunk
+        reverseMap = new CReverseMapEntry[nRecords];
+        if (!reverseMap) {
+            LOG_ERR("Could not allocate memory for CReverseMapEntry");
+            return false;
+        }
+        archive.Read((char*)reverseMap, sizeof(char), nRecords * sizeof(CReverseMapEntry));
         archive.Release();
-        for (uint32_t i = 0; i < nApps; i++) {
-            uint32_t index = (i * 3);
-            if (!(index % 1000)) {
-                LOG_INFO(padNum9(reverseMap[index + 1]), ".", padNum5(reverseMap[index + 2]), " ",
-                         padNum7(reverseMap[index]), " ", mapFile, "        \r");
+        for (uint32_t i = 0; i < nRecords; i++) {
+            if (!(i % 9765)) {
+                LOG_INFO(padNum9(reverseMap[i].blk), ".", padNum5(reverseMap[i].tx), " ", padNum7(reverseMap[i].n));
             }
         }
         LOG_INFO("Finished reading ", mapFile, string_q(30, ' '));
         return true;
     }
 
-    uint32_t recordSize = 3 * sizeof(uint32_t);
-    reverseMap = new uint32_t[nApps * recordSize];
-
+    // Cleaned up on destruction of the chunk
+    reverseMap = new CReverseMapEntry[nApps];
+    if (!reverseMap) {
+        LOG_ERR("Could not allocate memory for CReverseMapEntry");
+        return false;
+    }
     for (uint32_t i = 0; i < nApps; i++) {
-        reverseMap[(i * 3)] = i;
-        reverseMap[(i * 3) + 1] = appearances1[i].blk;
-        reverseMap[(i * 3) + 2] = appearances1[i].txid;
+        reverseMap[i].n = i;
+        reverseMap[i].blk = appearances1[i].blk;
+        reverseMap[i].tx = appearances1[i].txid;
     }
 
-    qsort(reverseMap, nApps, recordSize, sortRecords);
+    qsort(reverseMap, nApps, sizeof(CReverseMapEntry), sortRecords);
 
     CArchive archive(WRITING_ARCHIVE);
     if (!archive.Lock(mapFile, modeWriteCreate, LOCK_WAIT)) {
         LOG_ERR("Could not open file ", mapFile);
         return false;
     }
-    archive.Write(reverseMap, sizeof(char), recordSize * nApps);
+    archive.Write(reverseMap, sizeof(char), nApps * sizeof(CReverseMapEntry));
     archive.Release();
     for (uint32_t i = 0; i < nApps; i++) {
-        uint32_t index = (i * 3);
-        if (!(index % 10013)) {
-            LOG_INFO(reverseMap[index + 1], ".", reverseMap[index + 2], " ", reverseMap[index]);
+        if (!(i % 9765)) {
+            LOG_INFO(reverseMap[i].blk, ".", reverseMap[i].tx, " ", reverseMap[i].n);
         }
     }
     LOG_PROG("Processed: " + getFilename());
     return true;
+}
+
+//-----------------------------------------------------------------------
+int compareEntry(const CReverseMapEntry* a, const CReverseMapEntry* b) {
+    int ret = int(a->blk) - int(b->blk);
+    if (ret)
+        return ret;
+    ret = int(a->tx) - int(b->tx);
+    if (ret)
+        return ret;
+    return 0;
+}
+
+//----------------------------------------------------------------
+int findRevMapEntry(const void* v1, const void* v2) {
+    const CReverseMapEntry* at1 = (CReverseMapEntry*)v1;  // NOLINT
+    const CReverseMapEntry* at2 = (CReverseMapEntry*)v2;  // NOLINT
+    return compareEntry(at1, at2);
+}
+
+//----------------------------------------------------------------
+bool isSame(const CReverseMapEntry* a, const CReverseMapEntry* b) {
+    return !compareEntry(a, b);
 }
 
 //-----------------------------------------------------------------------
@@ -116,40 +145,69 @@ bool COptions::showAddrsInTx(blkrange_t range, const CAppearance_mon& app) {
         }
     }
 
-    LOG_INFO("  Searching: ", app.blk, ".", app.txid, string_q(100, ' '));
+    LOG_INFO("  Search: ", app.blk, ".", app.txid, string_q(100, ' '));
     if (!theIndex->reverseMap) {
         LOG_ERR("Could not allocate reverseMap");
         return false;
+    }
+
+    CReverseMapEntry search;
+    search.blk = app.blk;
+    search.tx = app.txid;
+    CReverseMapEntry* found = (CReverseMapEntry*)bsearch(&search, theIndex->reverseMap, theIndex->nApps1,
+                                                         sizeof(CReverseMapEntry), findRevMapEntry);
+    if (found) {
+        size_t cnt = 0;
+        // back up in case we hit an entry past the first one
+        LOG_INFO(bGreen, "  Found:    ", found->blk, ".", found->tx, " ", found->n, ": ", isSame(found, &search), cOff);
+        while (found > theIndex->reverseMap) {
+            found--;
+            LOG_INFO(bGreen, "  Found-", cnt++, ":    ", found->blk, ".", found->tx, " ", found->n, ": ",
+                     isSame(found, &search), cOff);
+            if (!isSame(found, &search)) {
+                found++;
+                cnt--;
+                break;
+            }
+        }
+        LOG_INFO(bGreen, "  Start-", cnt, ":    ", found->blk, ".", found->tx, " ", found->n, ": ",
+                 isSame(found, &search), cOff);
+        CReverseMapEntry* endOfRevMap = theIndex->reverseMap + (theIndex->nApps1 * sizeof(CReverseMapEntry));
+        while (found < endOfRevMap && isSame(found, &search)) {
+            if (found->n > theIndex->nAddrs1) {
+                LOG_ERR("Past end of array");
+            } else {
+                cout << found->n << " " << found->blk << "." << found->tx << " "
+                     << bytes_2_Addr(theIndex->addresses1[found->n].bytes) << endl;
+            }
+            LOG_INFO("isSame: ", found->n, " ", isSame(found, &search));
+            found++;
+            LOG_INFO("isSame: ", found->n, " ", isSame(found, &search));
+            LOG_INFO(found, " ", endOfRevMap, " (", size_t(endOfRevMap - found), "): ", (found < endOfRevMap));
+            LOG_INFO("I am here");
+        }
+        LOG_ERR("Done with this appearance.");
+    } else {
+        LOG_ERR("Appearance not found.");
     }
 
     return !shouldQuit();
 }
 
 //-----------------------------------------------------------------------
+// For neighbors we handle the entire production of data in the _Pre
+// because what we actually want to do is scan across the index chunks
+extern bool getChunkRanges(CBlockRangeArray& ranges);
 bool neighbors_Pre(CTraverser* trav, void* data) {
     COptions* opt = reinterpret_cast<COptions*>(data);
 
     establishFolder(indexFolder_map);
 
-    CStringArray lines;
-    asciiFileToLines(getConfigPath("manifest/manifest.txt"), lines);
-    sort(lines.begin(), lines.end());
-
     CBlockRangeArray ranges;
-    for (auto line : lines) {
-        if (line.length() < 10)
-            continue;  // not a valid line
-        blkrange_t range = str_2_Range(line);
-        ranges.push_back(range);
-    }
-    LOG_INFO("Found ", ranges.size(), " chunks");
-
-#define REMOVE_ME 1000000
+    getChunkRanges(ranges);
 
     uint64_t curRange = 0;
     for (trav->index = 0; trav->index < opt->monApps.size() && !shouldQuit(); trav->index++) {
-        if (trav->index > REMOVE_ME)
-            break;
         CAppearance_mon app = opt->monApps[trav->index];
         while (curRange < ranges.size() && !inRange(blknum_t(app.blk), ranges[curRange])) {
             curRange++;
@@ -186,4 +244,22 @@ bool neighbors_Pre(CTraverser* trav, void* data) {
 size_t neighbors_Count(CTraverser* trav, void* data) {
     COptions* opt = reinterpret_cast<COptions*>(data);
     return opt->neighborCount;
+}
+
+extern bool visitBloom(const string_q& path, void* data);
+//-----------------------------------------------------------------------
+bool getChunkRanges(CBlockRangeArray& ranges) {
+    forEveryFileInFolder(getIndexPath("blooms/*"), visitBloom, &ranges);
+    LOG_INFO("Found ", ranges.size(), " chunks");
+    return true;
+}
+
+//-----------------------------------------------------------------------
+bool visitBloom(const string_q& path, void* data) {
+    if (endsWith(path, ".bloom")) {
+        CBlockRangeArray* ranges = (CBlockRangeArray*)data;
+        blkrange_t range = str_2_Range(substitute(path, getIndexPath("blooms/"), ""));
+        ranges->push_back(range);
+    }
+    return true;
 }

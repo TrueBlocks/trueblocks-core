@@ -19,6 +19,14 @@
 #include "indexedappearance.h"
 
 namespace qblocks {
+
+typedef struct CReverseMapEntry {
+  public:
+    uint32_t n;
+    uint32_t blk;
+    uint32_t tx;
+} CReverseMapEntry;
+
 //---------------------------------------------------------------------------
 class CIndexArchive : public CArchive {
   public:
@@ -27,7 +35,7 @@ class CIndexArchive : public CArchive {
     CIndexedAddress* addresses1;
     uint64_t nApps1;
     CIndexedAppearance* appearances1;
-    uint32_t* reverseMap{nullptr};
+    CReverseMapEntry* reverseMap{nullptr};
 
     explicit CIndexArchive(bool mode);
     ~CIndexArchive(void);
