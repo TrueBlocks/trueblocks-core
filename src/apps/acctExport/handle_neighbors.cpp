@@ -190,7 +190,7 @@ bool assignReason(const CAccountName& accountedFor, CAppearance& app, const CTra
     if (!junk) {
         app.reason = "trace";
     }
-    return !junk;
+    return true;  // !junk;
 }
 
 //-----------------------------------------------------------------------
@@ -256,7 +256,8 @@ bool COptions::showAddrsInTx(CTraverser* trav, const blkrange_t& range, const CA
             found++;
         }
     } else {
-        LOG_ERR("Appearance not found.");
+        LOG_ERR("Appearance (", app.blk, ".", app.txid, ") for address \"", accountedFor.address, "\" not found in ",
+                chunkPath);
     }
 
     return !shouldQuit();
@@ -299,6 +300,7 @@ bool neighbors_Pre(CTraverser* trav, void* data) {
         LOG_INFO(bYellow, "Clearing the reverse map", cOff);
     }
 
+    post_Func(trav, data);
     LOG_INFO("   Done...");
     return false;  // !shouldQuit();
 }
