@@ -109,5 +109,6 @@ class CNeighborTraverser : public CTraverser {
   public:
     CNeighborTraverser(void) : CTraverser("neighbors") {
         preFunc = neighbors_Pre;
+        postFunc = post_Func;
     }
 };
