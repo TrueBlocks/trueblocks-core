@@ -12,17 +12,24 @@
  *-------------------------------------------------------------------------------------------*/
 #include "options.h"
 
-// //----------------------------------------------------------------
-// bool showApp(const CAppearance& item, void* data) {
-//     COptions* opt = reinterpret_cast<COptions*>(data);
-//     opt->tTrav->nProcessed++;
-//     cout << ((isJson() && !opt->firstOut) ? ", " : "");
-//     cout << item;
-//     opt->firstOut = false;
-//     return !shouldQuit();
-// }
+//----------------------------------------------------------------
+bool showApp(const CAppearance& item, void* data) {
+    // opt->tTrav->nProcessed++;
+    COptions* opt = reinterpret_cast<COptions*>(data);
+    cout << ((isJson() && !opt->firstOut) ? ", " : "");
+    if (opt->neighborSelfies) {
+        CAppearance a = item;
+        a.addr = substitute(item.addr, opt->accountedFor.address, "-----------------self---------------------");
+        cout << a;
+    } else {
+        cout << item;
+    }
+    opt->firstOut = false;
+    return !shouldQuit();
+}
 
 #define indexFolder_map (getIndexPath("maps/"))
+extern bool getChunkRanges(CBlockRangeArray& ranges);
 
 //-----------------------------------------------------------------------
 int sortRecords(const void* i1, const void* i2) {
@@ -38,10 +45,11 @@ int sortRecords(const void* i1, const void* i2) {
 }
 
 //-----------------------------------------------------------------------
-bool CIndexArchive::LoadReverseMap(void) {
-    if (reverseMap) {
-        delete[] reverseMap;
-        reverseMap = nullptr;
+bool CIndexArchive::LoadReverseMaps(const blkrange_t& range) {
+    if (reverseAppMap) {
+        delete[] reverseAppMap;
+        reverseAddrRanges.clear();
+        reverseAppMap = nullptr;
     }
 
     uint32_t nApps = header1->nRows;
@@ -53,57 +61,73 @@ bool CIndexArchive::LoadReverseMap(void) {
             LOG_ERR("Could not open file ", mapFile);
             return false;
         }
-        size_t nRecords = fileSize(mapFile) / sizeof(CReverseMapEntry);
+        size_t nRecords = fileSize(mapFile) / sizeof(CReverseAppMapEntry);
         ASSERT(nRecords == nApps);
         // Cleaned up on destruction of the chunk
-        reverseMap = new CReverseMapEntry[nRecords];
-        if (!reverseMap) {
-            LOG_ERR("Could not allocate memory for CReverseMapEntry");
+        reverseAppMap = new CReverseAppMapEntry[nRecords];
+        if (!reverseAppMap) {
+            LOG_ERR("Could not allocate memory for CReverseAppMapEntry");
             return false;
         }
-        archive.Read((char*)reverseMap, sizeof(char), nRecords * sizeof(CReverseMapEntry));
+        archive.Read((char*)reverseAppMap, sizeof(char), nRecords * sizeof(CReverseAppMapEntry));
         archive.Release();
-        for (uint32_t i = 0; i < nRecords; i++) {
-            if (!(i % 9765)) {
-                LOG_INFO(padNum9(reverseMap[i].blk), ".", padNum5(reverseMap[i].tx), " ", padNum7(reverseMap[i].n));
-            }
+        blknum_t cur = 0;
+        for (uint32_t i = 0; i < nAddrs1; i++) {
+            blkrange_t r;
+            r.first = cur + addresses1[i].offset;
+            r.second = r.first + addresses1[i].cnt - 1;
+            reverseAddrRanges.push_back(r);
         }
-        LOG_INFO("Finished reading ", mapFile, string_q(30, ' '));
+        // for (uint32_t i = 0; i < nRecords; i++) {
+        //     if (!(i % 9765)) {
+        //         LOG_INFO(padNum9(reverseAppMap[i].blk), ".", padNum5(reverseAppMap[i].tx), " ",
+        //         padNum7(reverseAppMap[i].n));
+        //     }
+        // }
+        // LOG_INFO("Finished reading ", mapFile, string_q(30, ' '));
         return true;
     }
 
     // Cleaned up on destruction of the chunk
-    reverseMap = new CReverseMapEntry[nApps];
-    if (!reverseMap) {
-        LOG_ERR("Could not allocate memory for CReverseMapEntry");
+    reverseAppMap = new CReverseAppMapEntry[nApps];
+    if (!reverseAppMap) {
+        LOG_ERR("Could not allocate memory for CReverseAppMapEntry");
         return false;
     }
     for (uint32_t i = 0; i < nApps; i++) {
-        reverseMap[i].n = i;
-        reverseMap[i].blk = appearances1[i].blk;
-        reverseMap[i].tx = appearances1[i].txid;
+        reverseAppMap[i].n = i;
+        reverseAppMap[i].blk = appearances1[i].blk;
+        reverseAppMap[i].tx = appearances1[i].txid;
     }
 
-    qsort(reverseMap, nApps, sizeof(CReverseMapEntry), sortRecords);
+    blknum_t cur = 0;
+    for (uint32_t i = 0; i < nAddrs1; i++) {
+        blkrange_t r;
+        r.first = cur + addresses1[i].offset;
+        r.second = r.first + addresses1[i].cnt - 1;
+        reverseAddrRanges.push_back(r);
+    }
+
+    qsort(reverseAppMap, nApps, sizeof(CReverseAppMapEntry), sortRecords);
 
     CArchive archive(WRITING_ARCHIVE);
     if (!archive.Lock(mapFile, modeWriteCreate, LOCK_WAIT)) {
         LOG_ERR("Could not open file ", mapFile);
         return false;
     }
-    archive.Write(reverseMap, sizeof(char), nApps * sizeof(CReverseMapEntry));
+    archive.Write(reverseAppMap, sizeof(char), nApps * sizeof(CReverseAppMapEntry));
     archive.Release();
-    for (uint32_t i = 0; i < nApps; i++) {
-        if (!(i % 9765)) {
-            LOG_INFO(reverseMap[i].blk, ".", reverseMap[i].tx, " ", reverseMap[i].n);
-        }
-    }
+    // for (uint32_t i = 0; i < nApps; i++) {
+    //     if (!(i % 9765)) {
+    //         LOG_INFO(reverseAppMap[i].blk, ".", reverseAppMap[i].tx, " ", reverseAppMap[i].n);
+    //     }
+    // }
     LOG_PROG("Processed: " + getFilename());
     return true;
 }
 
 //-----------------------------------------------------------------------
-int compareEntry(const CReverseMapEntry* a, const CReverseMapEntry* b) {
+int compareEntry(const CReverseAppMapEntry* a, const CReverseAppMapEntry* b) {
     int ret = int(a->blk) - int(b->blk);
     if (ret)
         return ret;
@@ -115,18 +139,80 @@ int compareEntry(const CReverseMapEntry* a, const CReverseMapEntry* b) {
 
 //----------------------------------------------------------------
 int findRevMapEntry(const void* v1, const void* v2) {
-    const CReverseMapEntry* at1 = (CReverseMapEntry*)v1;  // NOLINT
-    const CReverseMapEntry* at2 = (CReverseMapEntry*)v2;  // NOLINT
+    const CReverseAppMapEntry* at1 = (CReverseAppMapEntry*)v1;  // NOLINT
+    const CReverseAppMapEntry* at2 = (CReverseAppMapEntry*)v2;  // NOLINT
     return compareEntry(at1, at2);
 }
 
 //----------------------------------------------------------------
-bool isSame(const CReverseMapEntry* a, const CReverseMapEntry* b) {
+bool isSame(const CReverseAppMapEntry* a, const CReverseAppMapEntry* b) {
     return !compareEntry(a, b);
 }
 
 //-----------------------------------------------------------------------
-bool COptions::showAddrsInTx(blkrange_t range, const CAppearance_mon& app) {
+bool assignReason(const CAccountName& accountedFor, CAppearance& app, const CTransaction& trans) {
+    if (app.tx > 99996) {  // leave this here for searching: 99999
+        app.reason = "miner";
+        return true;
+    }
+    if (app.addr == trans.from) {
+        app.reason = "from";
+        return true;
+    }
+    if (app.addr == trans.to) {
+        app.reason = "to";
+        return true;
+    }
+    if (app.addr == trans.receipt.contractAddress) {
+        app.reason = "creation";
+        return true;
+    }
+    bool junk = false;
+    string_q ss = substitute(app.addr, "0x", "");
+    if (contains(trans.input, ss)) {
+        app.reason = "input";
+        if (accountedFor.address == app.addr) {
+            return true;
+        }
+        junk = true;
+    }
+
+    for (size_t i = 0; i < trans.receipt.logs.size(); i++) {
+        const CLogEntry* l = &trans.receipt.logs[i];
+        if (l->address == app.addr) {
+            app.reason = "log_" + uint_2_Str(i) + "_generator";
+            return true;
+        }
+        if (contains(l->topics[0], ss)) {
+            app.reason = "log_" + uint_2_Str(i) + "_topic_" + uint_2_Str(0);
+            return true;
+        }
+        for (size_t j = 1; j < l->topics.size(); j++) {
+            if (contains(l->topics[j], ss)) {
+                app.reason = "log_" + uint_2_Str(i) + "_topic_" + uint_2_Str(j);
+                if (accountedFor.address == app.addr) {
+                    return true;
+                }
+                junk = true;
+            }
+        }
+        if (contains(l->data, ss)) {
+            app.reason = "log_" + uint_2_Str(i) + "_data";
+            if (accountedFor.address == app.addr) {
+                return true;
+            }
+            junk = true;
+        }
+    }
+
+    if (!junk) {
+        app.reason = "trace";
+    }
+    return !junk;
+}
+
+//-----------------------------------------------------------------------
+bool COptions::showAddrsInTx(const blkrange_t& range, const CAppearance_mon& app) {
     string_q fn = range_2_Str(range);
     string_q chunkPath = indexFolder_finalized + fn + ".bin";
 
@@ -137,56 +223,102 @@ bool COptions::showAddrsInTx(blkrange_t range, const CAppearance_mon& app) {
         }
         theIndex = new CIndexArchive(READING_ARCHIVE);
         if (theIndex->ReadIndexFromBinary(chunkPath)) {
-            theIndex->LoadReverseMap();
-            if (!theIndex->reverseMap) {
-                LOG_ERR("Could not allocate reverseMap");
+            theIndex->LoadReverseMaps(range);
+            if (!theIndex->reverseAppMap) {
+                LOG_ERR("Could not allocate reverseAppMap");
                 return false;
             }
         }
     }
 
-    LOG_INFO("  Search: ", app.blk, ".", app.txid, string_q(100, ' '));
-    if (!theIndex->reverseMap) {
-        LOG_ERR("Could not allocate reverseMap");
-        return false;
-    }
-
-    CReverseMapEntry search;
+    CReverseAppMapEntry search;
     search.blk = app.blk;
     search.tx = app.txid;
-    CReverseMapEntry* found = (CReverseMapEntry*)bsearch(&search, theIndex->reverseMap, theIndex->nApps1,
-                                                         sizeof(CReverseMapEntry), findRevMapEntry);
+    CReverseAppMapEntry* found = (CReverseAppMapEntry*)bsearch(&search, theIndex->reverseAppMap, theIndex->nApps1,
+                                                               sizeof(CReverseAppMapEntry), findRevMapEntry);
+
+    // CIndexedAddress* theAddys = theIndex->addresses1;
+    // CIndexedAddress* endOfAddys = theIndex->addresses1 + (theIndex->nAddrs1 & sizeof(CIndexedAddress));
     if (found) {
+        CTransaction trans;
+        string_q txFilename = getBinaryCacheFilename(CT_TXS, app.blk, app.txid);
+        bool inCache = app.blk != 0 && fileExists(txFilename);
+        if (inCache) {
+            readTransFromBinary(trans, txFilename);
+
+        } else {
+            if (app.blk == 0 || app.txid >= 99997) {
+                // skip
+            } else {
+                getTransaction(trans, app.blk, app.txid);
+                getFullReceipt(&trans, true);
+            }
+        }
+
         size_t cnt = 0;
         // back up in case we hit an entry past the first one
-        LOG_INFO(bGreen, "  Found:    ", found->blk, ".", found->tx, " ", found->n, ": ", isSame(found, &search), cOff);
-        while (found > theIndex->reverseMap) {
+        // LOG_INFO(bGreen, "  Found:    ", found->blk, ".", found->tx, " ", found->n, ": ", isSame(found, &search),
+        // cOff);
+        while (found > theIndex->reverseAppMap) {
             found--;
-            LOG_INFO(bGreen, "  Found-", cnt++, ":    ", found->blk, ".", found->tx, " ", found->n, ": ",
-                     isSame(found, &search), cOff);
+            // LOG_INFO(bGreen, "  Found-", cnt++, ":    ", found->blk, ".", found->tx, " ", found->n, ": ",
+            //          isSame(found, &search), cOff);
             if (!isSame(found, &search)) {
                 found++;
                 cnt--;
                 break;
             }
         }
-        LOG_INFO(bGreen, "  Start-", cnt, ":    ", found->blk, ".", found->tx, " ", found->n, ": ",
-                 isSame(found, &search), cOff);
-        CReverseMapEntry* endOfRevMap = theIndex->reverseMap + (theIndex->nApps1 * sizeof(CReverseMapEntry));
+        // LOG_INFO(bGreen, "  Start-", cnt, ":    ", found->blk, ".", found->tx, " ", found->n, ": ",
+        //          isSame(found, &search), cOff);
+        // bool ick = false;
+        size_t start = 0;
+        CReverseAppMapEntry* endOfRevMap = theIndex->reverseAppMap + (theIndex->nApps1 * sizeof(CReverseAppMapEntry));
         while (found < endOfRevMap && isSame(found, &search)) {
-            if (found->n > theIndex->nAddrs1) {
-                LOG_ERR("Past end of array");
-            } else {
-                cout << found->n << " " << found->blk << "." << found->tx << " "
-                     << bytes_2_Addr(theIndex->addresses1[found->n].bytes) << endl;
+            // if (found->n > theIndex->nApps) {
+            //     LOG_INFO(bRed, "Past end of array", cOff);
+            // } else {
+            // LOG_INFO("found->n: ", found->n, " ", theIndex->reverseAddrRanges.size());
+            for (size_t i = start; i < theIndex->reverseAddrRanges.size(); i++) {
+                blkrange_t* r = &theIndex->reverseAddrRanges[i];
+                // if (!(i % 2001)) {
+                //     LOG_INFO("  found->n: ", found->n, " r: ", r->first, ".", r->second, "\r");
+                // }
+                if (inRange(found->n, *r)) {
+                    // LOG_INFO(bYellow, "  found one: ", found->n, " ", found->blk, ".", found->tx, " ",
+                    //          bytes_2_Addr(theIndex->addresses1[i].bytes), cOff);
+                    CAppearance app;
+                    app.bn = found->blk;
+                    app.tx = found->tx;
+                    app.addr = bytes_2_Addr(theIndex->addresses1[i].bytes);
+                    if (assignReason(accountedFor, app, trans)) {
+                        showApp(app, this);
+                    }
+                    // cout << found->blk << "," << found->tx << "," < < < < endl;
+                    start = i;
+                    // ick = true;
+                    // LOG_INFO("I am here...");
+                    break;
+                }
             }
-            LOG_INFO("isSame: ", found->n, " ", isSame(found, &search));
+            // if (ick) {
+            //     LOG_INFO("Jumping to here");
+            //     ick = false;
+            // }
+            // }
+            // while () {
+            //     if (found->n < theIndex->nAddrs1) {
+            //         cout << found->n << " " << found->blk << "." << found->tx << " "
+            //              << bytes_2_Addr(theIndex->addresses1[found->n].bytes) << endl;
+            //     }
+            // }
+            // LOG_INFO("isSame: ", found->n, " ", isSame(found, &search));
             found++;
-            LOG_INFO("isSame: ", found->n, " ", isSame(found, &search));
-            LOG_INFO(found, " ", endOfRevMap, " (", size_t(endOfRevMap - found), "): ", (found < endOfRevMap));
-            LOG_INFO("I am here");
+            // LOG_INFO("isSame: ", found->n, " ", isSame(found, &search));
+            // LOG_INFO(found, " ", endOfRevMap, " (", size_t(endOfRevMap - found), "): ", (found < endOfRevMap));
+            // LOG_INFO("I am here");
         }
-        LOG_ERR("Done with this appearance.");
+        // LOG_ERR("Done with this appearance.");
     } else {
         LOG_ERR("Appearance not found.");
     }
@@ -197,9 +329,10 @@ bool COptions::showAddrsInTx(blkrange_t range, const CAppearance_mon& app) {
 //-----------------------------------------------------------------------
 // For neighbors we handle the entire production of data in the _Pre
 // because what we actually want to do is scan across the index chunks
-extern bool getChunkRanges(CBlockRangeArray& ranges);
 bool neighbors_Pre(CTraverser* trav, void* data) {
     COptions* opt = reinterpret_cast<COptions*>(data);
+    LOG_INFO("Processing address ", opt->accountedFor.address);
+    opt->neighborSelfies = getEnvStr("NEIGHBOR_SELFIES") == "true";
 
     establishFolder(indexFolder_map);
 
@@ -220,14 +353,15 @@ bool neighbors_Pre(CTraverser* trav, void* data) {
     }
 
     if (opt->theIndex) {
-        LOG_INFO(bYellow, "Clearing the reverse map for ", opt->theIndex->getFilename(), cOff);
+        // LOG_INFO(bYellow, "Clearing the reverse map for ", opt->theIndex->getFilename(), cOff);
         delete opt->theIndex;
         opt->theIndex = nullptr;
     } else {
         LOG_INFO(bYellow, "Clearing the reverse map", cOff);
     }
 
-    return !shouldQuit();
+    LOG_INFO("   Done...");
+    return false;  // !shouldQuit();
 }
 
 // //-----------------------------------------------------------------------
@@ -250,7 +384,7 @@ extern bool visitBloom(const string_q& path, void* data);
 //-----------------------------------------------------------------------
 bool getChunkRanges(CBlockRangeArray& ranges) {
     forEveryFileInFolder(getIndexPath("blooms/*"), visitBloom, &ranges);
-    LOG_INFO("Found ", ranges.size(), " chunks");
+    // LOG_INFO("Found ", ranges.size(), " chunks");
     return true;
 }
 
