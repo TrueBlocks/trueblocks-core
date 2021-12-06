@@ -816,3 +816,11 @@ void COptions::writePerformanceData(void) {
     data << stats.Format(fmt) << endl;
     appendToAsciiFile(statsFile, data.str());
 }
+
+//-----------------------------------------------------------------------
+size_t freqOverride = NOPOS;
+size_t COptions::reportFreq(void) const {
+    if (freqOverride != NOPOS)
+        return freqOverride;
+    return slowQueries > 0 ? 1 : 7;
+}

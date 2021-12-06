@@ -212,7 +212,7 @@ bool assignReason(const CAccountName& accountedFor, CAppearance& app, const CTra
 }
 
 //-----------------------------------------------------------------------
-bool COptions::showAddrsInTx(const blkrange_t& range, const CAppearance_mon& app) {
+bool COptions::showAddrsInTx(CTraverser* trav, const blkrange_t& range, const CAppearance_mon& app) {
     string_q fn = range_2_Str(range);
     string_q chunkPath = indexFolder_finalized + fn + ".bin";
 
@@ -240,6 +240,9 @@ bool COptions::showAddrsInTx(const blkrange_t& range, const CAppearance_mon& app
     // CIndexedAddress* theAddys = theIndex->addresses1;
     // CIndexedAddress* endOfAddys = theIndex->addresses1 + (theIndex->nAddrs1 & sizeof(CIndexedAddress));
     if (found) {
+        trav->app = &app;
+        loadTx_Func(trav, this);
+#if 0
         CTransaction trans;
         string_q txFilename = getBinaryCacheFilename(CT_TXS, app.blk, app.txid);
         bool inCache = app.blk != 0 && fileExists(txFilename);
@@ -254,6 +257,7 @@ bool COptions::showAddrsInTx(const blkrange_t& range, const CAppearance_mon& app
                 getFullReceipt(&trans, true);
             }
         }
+#endif
 
         size_t cnt = 0;
         // back up in case we hit an entry past the first one
@@ -291,7 +295,9 @@ bool COptions::showAddrsInTx(const blkrange_t& range, const CAppearance_mon& app
                     app.bn = found->blk;
                     app.tx = found->tx;
                     app.addr = bytes_2_Addr(theIndex->addresses1[i].bytes);
-                    if (assignReason(accountedFor, app, trans)) {
+                    if (assignReason(accountedFor, app, trav->trans)) {
+                        trav->nProcessed++;
+                        prog_Log(trav, this);
                         showApp(app, this);
                     }
                     // cout << found->blk << "," << found->tx << "," < < < < endl;
@@ -331,6 +337,9 @@ bool COptions::showAddrsInTx(const blkrange_t& range, const CAppearance_mon& app
 // because what we actually want to do is scan across the index chunks
 bool neighbors_Pre(CTraverser* trav, void* data) {
     COptions* opt = reinterpret_cast<COptions*>(data);
+    extern size_t freqOverride;
+    freqOverride = 43;  // random prime
+
     LOG_INFO("Processing address ", opt->accountedFor.address);
     opt->neighborSelfies = getEnvStr("NEIGHBOR_SELFIES") == "true";
 
@@ -342,11 +351,12 @@ bool neighbors_Pre(CTraverser* trav, void* data) {
     uint64_t curRange = 0;
     for (trav->index = 0; trav->index < opt->monApps.size() && !shouldQuit(); trav->index++) {
         CAppearance_mon app = opt->monApps[trav->index];
+        //     opt->neighborCount = 0;
         while (curRange < ranges.size() && !inRange(blknum_t(app.blk), ranges[curRange])) {
             curRange++;
         }
         if (curRange < ranges.size()) {
-            if (!opt->showAddrsInTx(ranges[curRange], app))
+            if (!opt->showAddrsInTx(trav, ranges[curRange], app))
                 return false;
             curRange--;  // back up one in case the next appearances is in the same range
         }
