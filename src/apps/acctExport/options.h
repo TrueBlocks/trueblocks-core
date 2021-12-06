@@ -128,7 +128,6 @@ class COptions : public CAbiOptions {
 
     // Used as temporary data to count neighbor traversals
     size_t neighborCount{0};
-    bool neighborSelfies{false};
     CIndexArchive* theIndex{nullptr};
     bool showAddrsInTx(CTraverser* trav, const blkrange_t& range, const CAppearance_mon& app);
 };
