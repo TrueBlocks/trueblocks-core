@@ -596,6 +596,7 @@ bool COptions::setDisplayFormatting(void) {
                 expContext().fmtMap["header"] = noHeader ? "" : cleanFmt(format);
 
             format = getGlobalConfig("acctExport")->getConfigStr("display", "neighbor", STR_DISPLAY_APPEARANCE);
+            replace(format, "[{TC}]\t", "");
             expContext().fmtMap["appearance_fmt"] = cleanFmt(format);
             manageFields("CAppearance:" + format);
             if (neighbors)

@@ -20,12 +20,12 @@
 
 namespace qblocks {
 
-typedef struct CReverseMapEntry {
+typedef struct CReverseAppMapEntry {
   public:
     uint32_t n;
     uint32_t blk;
     uint32_t tx;
-} CReverseMapEntry;
+} CReverseAppMapEntry;
 
 //---------------------------------------------------------------------------
 class CIndexArchive : public CArchive {
@@ -33,15 +33,16 @@ class CIndexArchive : public CArchive {
     CIndexHeader* header1;
     uint64_t nAddrs1;
     CIndexedAddress* addresses1;
+    CBlockRangeArray reverseAddrRanges;
     uint64_t nApps1;
     CIndexedAppearance* appearances1;
-    CReverseMapEntry* reverseMap{nullptr};
+    CReverseAppMapEntry* reverseAppMap{nullptr};
 
     explicit CIndexArchive(bool mode);
     ~CIndexArchive(void);
     bool ReadIndexFromBinary(const string_q& fn);
     bool ReadIndexHeader(const string_q& fn, CIndexHeader& header);
-    bool LoadReverseMap(void);
+    bool LoadReverseMaps(const blkrange_t& range);
 
   private:
     char* rawData;

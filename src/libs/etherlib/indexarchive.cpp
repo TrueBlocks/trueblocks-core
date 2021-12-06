@@ -32,8 +32,9 @@ CIndexArchive::~CIndexArchive(void) {
         rawData = NULL;
         nAddrs1 = nApps1 = 0;
     }
-    if (reverseMap) {
-        delete[] reverseMap;
+    if (reverseAppMap) {
+        delete[] reverseAppMap;
+        reverseAddrRanges.clear();
     }
     Release();
 }
