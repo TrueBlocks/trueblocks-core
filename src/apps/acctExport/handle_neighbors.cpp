@@ -223,13 +223,10 @@ bool COptions::showAddrsInTx(CTraverser* trav, const blkrange_t& range, const CA
         trav->app = &app;
         loadTx_Func(trav, this);
 
-        // size_t cnt = 0;
         while (found > theIndex->reverseAppMap) {
-            // back up in case we hit an entry past the first one
             found--;
             if (!isSame(found, &search)) {
                 found++;
-                // cnt--;
                 break;
             }
         }
