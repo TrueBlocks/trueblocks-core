@@ -22,7 +22,7 @@
 // BEG_ERROR_DEFINES
 // END_ERROR_DEFINES
 
-typedef map<CAppearance_mon, CAddressArray> appAddrMap1;
+typedef map<CAppearance_mon, CAddressArray> appAddrMap;
 
 //-----------------------------------------------------------------------
 class COptions : public CAbiOptions {
