@@ -36,7 +36,8 @@ func GetMeta(testMode bool) *Meta {
 			Client:    0xdeadbeef,
 		}
 	}
-	client := Get()
-	bn, _ := client.BlockNumber(context.Background())
+	ethClient := Get()
+	defer ethClient.Close()
+	bn, _ := ethClient.BlockNumber(context.Background())
 	return &Meta{Client: bn}
 }
