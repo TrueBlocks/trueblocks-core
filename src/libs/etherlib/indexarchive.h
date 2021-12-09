@@ -30,12 +30,12 @@ typedef struct CReverseAppMapEntry {
 //---------------------------------------------------------------------------
 class CIndexArchive : public CArchive {
   public:
-    CIndexHeader* header1;
-    uint64_t nAddrs1;
-    CIndexedAddress* addresses1;
+    CIndexHeader* header;
+    uint64_t nAddrs;
+    CIndexedAddress* addresses;
     CBlockRangeArray reverseAddrRanges;
-    uint64_t nApps1;
-    CIndexedAppearance* appearances1;
+    uint64_t nApps;
+    CIndexedAppearance* appearances;
     CReverseAppMapEntry* reverseAppMap{nullptr};
 
     explicit CIndexArchive(bool mode);

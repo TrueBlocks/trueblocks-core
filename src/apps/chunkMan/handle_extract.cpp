@@ -54,28 +54,28 @@ static bool chunkVisitFunc(const string_q& path, void* data) {
                 output << "fileSize: " << fileSize(path) << endl;
                 output << "bloomSize: "
                        << fileSize(substitute(substitute(path, "finalized", "blooms"), ".bin", ".bloom")) << endl;
-                output << "nAddrs: " << index.header1->nAddrs << endl;
-                output << "nRows: " << index.header1->nRows << endl;
+                output << "nAddrs: " << index.header->nAddrs << endl;
+                output << "nRows: " << index.header->nRows << endl;
             }
             cout << "start: " << startBlock << endl;
             cout << "end: " << endBlock << endl;
             cout << "fileSize: " << fileSize(path) << endl;
             cout << "bloomSize: " << fileSize(substitute(substitute(path, "finalized", "blooms"), ".bin", ".bloom"))
                  << endl;
-            cout << "nAddrs: " << index.header1->nAddrs << endl;
-            cout << "nRows: " << index.header1->nRows << endl;
-            for (uint32_t a = 0; a < index.nAddrs1; a++) {
-                CIndexedAddress* aRec = &index.addresses1[a];
+            cout << "nAddrs: " << index.header->nAddrs << endl;
+            cout << "nRows: " << index.header->nRows << endl;
+            for (uint32_t a = 0; a < index.nAddrs; a++) {
+                CIndexedAddress* aRec = &index.addresses[a];
                 if (opts->save) {
                     output << bytes_2_Addr(aRec->bytes) << endl;
                     for (uint32_t b = aRec->offset; b < (aRec->offset + aRec->cnt); b++) {
-                        CIndexedAppearance* bRec = &index.appearances1[b];
+                        CIndexedAppearance* bRec = &index.appearances[b];
                         if (opts->save) {
                             output << "\t" << bRec->blk << "\t" << bRec->txid << endl;
                         }
                     }
                 }
-                LOG_INFO(a, " of ", index.nAddrs1, " ", bytes_2_Addr(aRec->bytes) + "\r");
+                LOG_INFO(a, " of ", index.nAddrs, " ", bytes_2_Addr(aRec->bytes) + "\r");
             }
             if (opts->save) {
                 output.close();
