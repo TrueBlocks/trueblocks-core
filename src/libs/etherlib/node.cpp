@@ -1022,6 +1022,9 @@ string_q headerRow(const string_q& formatIn, const string_q& sep1, const string_
         string_q field = toLower(snagFieldClear(format, "field"));
         ret = ret + (sep2 + field + sep2 + sep1);
     }
+    // TODO: This is a pretty bad hack that will get corrected once we port entirely to GoLang
+    replace(ret, "\"bn\",\"tx\",\"addr\",\"reason\"", "\"blockNumber\",\"transactionIndex\",\"neighbor\",\"reason\"");
+    replace(ret, "bn\ttx\taddr\treason", "blockNumber\ttransactionIndex\tneighbor\treason");
     return trim(ret, sep1[0]);
 }
 
