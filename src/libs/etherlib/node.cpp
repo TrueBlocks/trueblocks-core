@@ -1023,8 +1023,31 @@ string_q headerRow(const string_q& formatIn, const string_q& sep1, const string_
         ret = ret + (sep2 + field + sep2 + sep1);
     }
     // TODO: This is a pretty bad hack that will get corrected once we port entirely to GoLang
+    // clang-format off
     replace(ret, "\"bn\",\"tx\",\"addr\",\"reason\"", "\"blockNumber\",\"transactionIndex\",\"neighbor\",\"reason\"");
+    replace(ret, "\"bn\",\"tx\",\"tc\",\"addr\",\"reason\"", "\"blockNumber\",\"transactionIndex\",\"traceId\",\"address\",\"reason\"");
     replace(ret, "bn\ttx\taddr\treason", "blockNumber\ttransactionIndex\tneighbor\treason");
+    replace(ret, "bn\ttx\ttc\taddr\treason", "blockNumber\ttransactionIndex\ttraceId\taddress\treason");
+    replace(ret, "blocknumber", "blockNumber");
+    replace(ret, "blockhash", "blockHash");
+    replace(ret, "transactionhash", "transactionHash");
+    replace(ret, "transactionindex", "transactionIndex");
+    replace(ret, "logindex", "logIndex");
+    replace(ret, "ethergasprice", "ethGasPrice");
+    replace(ret, "gasused", "gasUsed");
+    replace(ret, "gaslimit", "gasLimit");
+    replace(ret, "basefeepergas", "baseFeePerGas");
+    replace(ret, "parenthash", "parentHash");
+    replace(ret, "transactionscnt", "transactionsCnt");
+    replace(ret, "addr_count", "addrCount");
+    replace(ret, "iserror", "isError");
+    replace(ret, "compressedlog", "compressedLog");
+    replace(ret, "compressedtx", "compressedTx");
+    replace(ret, "compressedtrace", "compressedTrace");
+    replace(ret, "compressedresult", "compressedResult");
+    replace(ret, "traceaddress", "traceAddress");
+    // clang-format on
+
     return trim(ret, sep1[0]);
 }
 

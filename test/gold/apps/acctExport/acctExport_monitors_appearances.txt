@@ -3,7 +3,7 @@ TEST[DATE|TIME] Addrs:  [0x001d14804b399c6ef80e64576f657660804fec0b]
 TEST[DATE|TIME] Appearances:  true
 TEST[DATE|TIME] LastBlock:  3375495
 TEST[DATE|TIME] Format:  csv
-"address","blocknumber","transactionindex"
+"address","blockNumber","transactionIndex"
 "0x001d14804b399c6ef80e64576f657660804fec0b","0","2"
 "0x001d14804b399c6ef80e64576f657660804fec0b","202249","0"
 "0x001d14804b399c6ef80e64576f657660804fec0b","1501459","2"

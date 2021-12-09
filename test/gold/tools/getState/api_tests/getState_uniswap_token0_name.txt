@@ -1,3 +1,3 @@
 state?call=0x2260fac5e5542a773aa44fbcfedf7c193bc2c599!0x06fdde03&blocks=10092000&fmt=txt
-blocknumber	address	signature	encoding	bytes	compressedresult
+blockNumber	address	signature	encoding	bytes	compressedResult
 10092000	0x2260fac5e5542a773aa44fbcfedf7c193bc2c599	name()	0x06fdde03		Wrapped BTC

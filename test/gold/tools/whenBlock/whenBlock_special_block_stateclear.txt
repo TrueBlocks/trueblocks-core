@@ -1,5 +1,5 @@
 chifra when  stateclear --verbose
 TEST[DATE|TIME] Blocks:  [stateclear]
 TEST[DATE|TIME] Verbose:  true
-blocknumber	timestamp	date	name
+blockNumber	timestamp	date	name
 2717576	1480448309	2016-11-29 19:38:29 UTC	stateclear

@@ -1,5 +1,5 @@
 chifra when  daofund --verbose
 TEST[DATE|TIME] Blocks:  [daofund]
 TEST[DATE|TIME] Verbose:  true
-blocknumber	timestamp	date	name
+blockNumber	timestamp	date	name
 1428756	1461980573	2016-04-30 01:42:53 UTC	daofund
