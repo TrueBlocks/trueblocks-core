@@ -1,5 +1,5 @@
 chifra traces  0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.155 --verbose
 TEST[DATE|TIME] Transactions:  [0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.155]
 TEST[DATE|TIME] Verbose:  true
-blocknumber	transactionindex	traceaddress	action::calltype	error	action::from	action::to	action::value	action::ether	action::gas	result::gasused	action::input	compressedtrace	result::output
+blockNumber	transactionIndex	traceAddress	action::calltype	error	action::from	action::to	action::value	action::ether	action::gas	result::gasUsed	action::input	compressedTrace	result::output
 "Transaction 0x693b52d0fc09ec86d86aa117dd2b397116b6031cf2b672f8673c4441b9dc190f.155 not found."

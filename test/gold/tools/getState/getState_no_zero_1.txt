@@ -2,4 +2,4 @@ chifra state  0xf27daff52c38b2c373ad2b9392652ddf433303c5 3500000 --no_zero
 TEST[DATE|TIME] Addrs:  [0xf27daff52c38b2c373ad2b9392652ddf433303c5]
 TEST[DATE|TIME] Blocks:  [3500000]
 TEST[DATE|TIME] NoZero:  true
-blocknumber	address	balance
+blockNumber	address	balance

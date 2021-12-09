@@ -1,5 +1,5 @@
 chifra transactions  1001001.1.next --fmt txt
 TEST[DATE|TIME] Transactions:  [1001001.1.next]
 TEST[DATE|TIME] Format:  txt
-blocknumber	transactionindex	date	timestamp	from	to	ether	ethergasprice	gasused	hash	iserror	encoding	compressedtx
+blockNumber	transactionIndex	date	timestamp	from	to	ether	ethGasPrice	gasUsed	hash	isError	encoding	compressedTx
 1001001	2	2016-02-14 03:51:23 UTC	1455421883	0x9d72354fda3e2bcb4d23d1cf9d0c0385d1ab08fd	0x8ce45c9dd072be275a9ab6c3736b086702d77413	38.120000000000000000	0.000000050000000000	21000	0x5352c80aa2073e21ce6c4aa5488c38455f3519955ece7dca5af3e326797bcc63	0	0x	0x ( )

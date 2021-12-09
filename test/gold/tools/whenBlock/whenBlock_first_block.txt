@@ -1,4 +1,4 @@
 chifra when  0
 TEST[DATE|TIME] Blocks:  [0]
-blocknumber	timestamp	date	name
+blockNumber	timestamp	date	name
 0	1438269960	2015-07-30 15:26:00 UTC
