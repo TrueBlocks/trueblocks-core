@@ -6765,6 +6765,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 50-Tokens:ERC20	0x9c794f933b4dd8b49031a79b0f924d68bef43992	XTRD	XTRD	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x9c7da5376131ba3babfb51bd6947611608fa0ae3	YFIN	YFIN	On chain	18		false	false	false	true	true	false
 31-Gitcoin:Grants	0x9c8bdd1d327d90ef6f6f66e9b7313e7d4b6f8a4b	Grant 1454 Wrapped Filecoin (wfil)		https://gitcoin.co/grants/1454/wrapped-filecoin-wfil			false	false	false	true	false	false
+50-Tokens:ERC721	0x9c8ff314c9bc7f6e59a9d9225fb22946427edc03	Nouns	NOUN	On chain	18		false	false	false	true	true	true
 31-Gitcoin:Grants	0x9c90aef0030f2681b3c7206be35bb6698220f419	Grant 2696 - wechat miniprogram pinche_xcx		https://gitcoin.co/grants/2696/wechat-miniprogram-pinche_xcx			false	false	false	false	false	false
 30-Contracts:Humanity DAO	0x9c95be0ec32c4da4aba2e765593f697a899098ff	johnson_hungry3		https://www.humanitydao.org/humans			false	false	false	false	false	false
 90-Individuals:TheCyber	0x9c9a3e919b20d419faf416139bda1abc0601100d	theCyber Member 34		Solidity Code			false	false	false	false	false	false
@@ -10504,6 +10505,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 50-Tokens:ERC20	0xf45fca61a47c8a34a461e297e3dee6229c0be99f	AirKishu	AIRKISHU	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0xf4606d25d7dde95020f9a783bbe0d73ef885436c	SHIBA INU	SHIBA INU	On chain	18		false	false	false	true	true	false
 91-Early:Addresses	0xf466ec23d841922abc3b0056f929a3d7c8b91814	Nick Johnson's 2nd Miner		OnChain			false	false	false	false	false	false
+90-Individuals:Other	0xf476cd75be8fdd197ae0b466a2ec2ae44da41897	cold.4156.eth					false	false	false	false	false	false
 31-Gitcoin:Grants	0xf4844a06d4f995c4c03195afcb5aa59dcbb5b4fc	Grant 3526 - UNI Letters		https://gitcoin.co/grants/3526/uni-letters			false	false	false	false	false	false
 50-Tokens:ERC20	0xf485c5e679238f9304d986bb2fc28fe3379200e5	UG Coin	UGC	On chain	18		false	false	false	true	true	false
 90-Individuals:Gitcoin Grants	0xf48b835a45c0afa87d6e8e032b3651d35b1c9969	jeff-emmett		Gitcoin Website			false	false	false	false	false	false
