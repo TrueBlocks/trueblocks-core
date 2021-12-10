@@ -268,7 +268,7 @@ bool neighbors_Pre(CTraverser* trav, void* data) {
     extern size_t freqOverride;
     freqOverride = 43;  // random prime
 
-    LOG_INFO("Processing address ", opt->accountedFor.address);
+    // LOG_INFO("Processing address ", opt->accountedFor.address);
 
     establishFolder(indexFolder_map);
 
