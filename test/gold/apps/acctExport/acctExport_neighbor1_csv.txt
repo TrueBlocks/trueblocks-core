@@ -4,7 +4,6 @@ TEST[DATE|TIME] Neighbors:  true
 TEST[DATE|TIME] MaxRecords:  3
 TEST[DATE|TIME] Format:  csv
 "blockNumber","transactionIndex","neighbor","reason"
-TIME ~ CLOCK - <INFO>  : Processing address 0xbb9bc244d798123fde783fcc1c72d3bb8c189413
 "1428757","0","0x17cd41543a3c3c77d5e372704c9577df09eea003","trace"
 "1428757","0","0x793ea9692ada1900fbd0b80fffec6e431fe8b391","from"
 "1428757","0","0x807640a13483f8ac783c557fcdf27be11ea4ac7a","trace"
