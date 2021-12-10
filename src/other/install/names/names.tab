@@ -5707,6 +5707,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 91-Early:Addresses	0x83051e225a06682ff0dde9bcd267d8418c4cbcd7	Parallelgambling		EtherScan.io			false	false	false	true	false	false
 31-Gitcoin:Grants	0x830ad555fce0547782e14d67d22002082916e660	Grant 0414 Nito.cash		https://gitcoin.co/grants/414/nitocash		https://nito.cash	false	false	false	false	false	false
 50-Tokens:ERC20	0x830b0e9a5ecf36d0a886d21e1c20043cd2d16515	RealToken S 19201 Westphalia St Detroit MI	REALTOKEN-S-19201-WESTPHALIA-ST-DETROIT-MI	On chain	18		false	false	false	true	true	false
+30-Contracts	0x830bd73e4184cef73443c15111a1df14e495c706	Nouns DAO: Nouns Auction House Proxy					false	false	false	true	false	false
 50-Tokens:ERC20	0x830fd70da6a48bceb3cc187f8c499d923ed5aff2	NYANPOOP	NYANP	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x832904863978b94802123106e6eb491bdf0df928	OptiToken	OPTI	On chain	18	An algorithmically traded hyper-deflationary cryptocurrency	false	false	false	true	true	false
 50-Tokens:ERC20	0x832eed0e21f00fa0a2499cdd955fa22741fd9fc2	Ostrom	OST	On chain	18		false	false	false	true	true	false

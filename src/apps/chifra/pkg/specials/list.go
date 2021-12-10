@@ -204,8 +204,8 @@ var specials = NamedBlocks{
 	{
 		BlockNumber: 13773000,
 		TimeStamp:   1639022046,
-		Name:        "arrowglacier (est)",
-		Date:        "2021-12-09 03:54:06 UTC",
+		Name:        "arrowglacier",
+		Date:        "2021-12-09 19:55:23 UTC",
 	},
 }
 
