@@ -23,7 +23,7 @@ var exportCmd = &cobra.Command{
 	Use:     usageExport,
 	Short:   shortExport,
 	Long:    longExport,
-	Version: "GHC-TrueBlocks//0.17.0-alpha",
+	Version: "GHC-TrueBlocks//0.18.0-alpha",
 	RunE:    exportPkg.RunExport,
 }
 

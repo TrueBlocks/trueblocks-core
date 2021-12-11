@@ -23,7 +23,7 @@ var serveCmd = &cobra.Command{
 	Use:     usageServe,
 	Short:   shortServe,
 	Long:    longServe,
-	Version: "GHC-TrueBlocks//0.17.0-alpha",
+	Version: "GHC-TrueBlocks//0.18.0-alpha",
 	RunE:    servePkg.RunServe,
 }
 

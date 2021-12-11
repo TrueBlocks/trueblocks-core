@@ -23,7 +23,7 @@ var whenCmd = &cobra.Command{
 	Use:     usageWhen,
 	Short:   shortWhen,
 	Long:    longWhen,
-	Version: "GHC-TrueBlocks//0.17.0-alpha",
+	Version: "GHC-TrueBlocks//0.18.0-alpha",
 	RunE:    whenPkg.RunWhen,
 }
 

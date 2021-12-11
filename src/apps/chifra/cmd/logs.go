@@ -23,7 +23,7 @@ var logsCmd = &cobra.Command{
 	Use:     usageLogs,
 	Short:   shortLogs,
 	Long:    longLogs,
-	Version: "GHC-TrueBlocks//0.17.0-alpha",
+	Version: "GHC-TrueBlocks//0.18.0-alpha",
 	RunE:    logsPkg.RunLogs,
 }
 
