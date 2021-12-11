@@ -110,6 +110,12 @@ TEST[DATE|TIME] Format:  json
     "source": "0xTracker"
   },
   {
+    "tags": "31-Gitcoin:Grants",
+    "address": "0x0000000fcdf5ba49794f4151d6daff4505bc47d1",
+    "name": "Grant 3596 - The Uniswap v3 Options Education Fund",
+    "source": "https://gitcoin.co/grants/3596/the-uniswap-v3-options-education-fund"
+  },
+  {
     "tags": "50-Tokens:ERC20",
     "address": "0x00000100f2a2bd000715001920eb70d229700085",
     "name": "TrueCAD",
@@ -142,6 +148,12 @@ TEST[DATE|TIME] Format:  json
     "symbol": "TAUD",
     "source": "On chain",
     "decimals": 18
+  },
+  {
+    "tags": "31-Gitcoin:Grants",
+    "address": "0x000061a8f22a1e60ba0b3caadfa958e954fc2b6a",
+    "name": "Grant 2195 - Best Practicers",
+    "source": "https://gitcoin.co/grants/2195/best-practicers"
   },
   {
     "tags": "50-Tokens:ERC20",
@@ -257,6 +269,12 @@ TEST[DATE|TIME] Format:  json
     "source": "EtherScan.io"
   },
   {
+    "tags": "31-Gitcoin:Grants",
+    "address": "0x0035cc37599241d007d0aba1fb931c5fa757f7a1",
+    "name": "Grant 2388 - The Commons Swarm: An Augmented Bonding Curve model for DAOs",
+    "source": "https://gitcoin.co/grants/2388/the-commons-swarm-an-augmented-bonding-curve-mode"
+  },
+  {
     "tags": "90-Individuals:Gitcoin Grants",
     "address": "0x0035fc5208ef989c28d47e552e92b0c507d2b318",
     "name": "Name 0x0035fc52",
@@ -299,6 +317,12 @@ TEST[DATE|TIME] Format:  json
     "symbol": "HOFG",
     "source": "On chain",
     "decimals": 18
+  },
+  {
+    "tags": "31-Gitcoin:Grants",
+    "address": "0x005241438caf3eacb05bb6543151f7af894c5b58",
+    "name": "Grant 2763 - rugpullindex.com - Improving stake safety",
+    "source": "https://gitcoin.co/grants/2763/rugpullindexcom-improving-stake-safety"
   },
   {
     "tags": "30-Contracts",
@@ -566,6 +590,12 @@ TEST[DATE|TIME] Format:  json
     "name": "Grant 0790 Loft Radio",
     "source": "https://gitcoin.co/grants/790/loft-radio",
     "description": "https://loft.radio/"
+  },
+  {
+    "tags": "31-Gitcoin:Grants",
+    "address": "0x011c2c1433b36a524b548444ae2f20c015427d04",
+    "name": "Grant 0491 - Tokamak Network: Decentralized, Scalable, Turing Complete Layer 2 Plasma",
+    "source": "https://gitcoin.co/grants/491/tokamak-network-decentralized-scalable-turing-com"
   },
   {
     "tags": "34-ENS",
@@ -952,7 +982,7 @@ TEST[DATE|TIME] Format:  json
     "decimals": 18
   },
   {
-    "tags": "30-Contracts",
+    "tags": "31-Gitcoin:Grants",
     "address": "0x02a522d98ec2d2c3bbe91acc29ee7fd32ab880ab",
     "name": "Mintable: Deployer"
   },
@@ -1166,6 +1196,12 @@ TEST[DATE|TIME] Format:  json
     "description": "The ICO market is becoming more regulated, but this isn‚Äö√Ñ√¥t stopping scams from penetrating the cryptocurrency community. That is why we created the Founding Community Bitdepositary with integrated payment systems."
   },
   {
+    "tags": "31-Gitcoin:Grants",
+    "address": "0x035032655b5b3784d359b56eb82c803bd971c582",
+    "name": "Grant 2800 - LogicBeach Explainer Series",
+    "source": "https://gitcoin.co/grants/2800/logicbeach-explainer-series"
+  },
+  {
     "tags": "50-Tokens:ERC20",
     "address": "0x03552d005d0f4262bf2d85fa2a3263541d4059c1",
     "name": "Miller Real Estate Holdings",
@@ -1205,10 +1241,22 @@ TEST[DATE|TIME] Format:  json
     "description": "Student jobs marketplace."
   },
   {
+    "tags": "31-Gitcoin:Grants",
+    "address": "0x037e414abacc799a598314153509b6b967608bf9",
+    "name": "Grant 3059 - CO2KEN — Carbon as a money lego",
+    "source": "https://gitcoin.co/grants/3059/co2ken-carbon-as-a-money-lego"
+  },
+  {
     "tags": "30-Contracts:Chainlink",
     "address": "0x037e8f2125bf532f3e228991e051c8a7253b642c",
     "name": "Chainlink DAI-ETH Aggregator",
     "source": "EtherScan.io"
+  },
+  {
+    "tags": "31-Gitcoin:Grants",
+    "address": "0x0384610bf8e9292ec499145cb126e32a17e7ccd6",
+    "name": "Grant 3475 - Nectar: L2 + Healthcare",
+    "source": "https://gitcoin.co/grants/3475/nectar-l2-healthcare"
   },
   {
     "tags": "30-Contracts",
@@ -1334,58 +1382,4 @@ TEST[DATE|TIME] Format:  json
     "symbol": "BTCM",
     "source": "On chain",
     "decimals": 8
-  },
-  {
-    "tags": "90-Individuals:Gitcoin Grants",
-    "address": "0x03ea9f51913a2a40a2c37e70700102486acf6c40",
-    "name": "Name 0x03ea9f51",
-    "source": "Gitcoin Website"
-  },
-  {
-    "tags": "31-Gitcoin:Grants",
-    "address": "0x03ed2992a1d07ab57ec01f0c8914e22b53e48d87",
-    "name": "Grant 0774 Nuts Platform | Designed for DeFi Builders and Service Providers",
-    "source": "https://gitcoin.co/grants/774/nuts-platform-designed-for-defi-builders-and-serv"
-  },
-  {
-    "tags": "50-Tokens:ERC20",
-    "address": "0x03fb52d4ee633ab0d06c833e32efdd8d388f3e6a",
-    "name": "Black Hole",
-    "symbol": "HOLE",
-    "source": "On chain",
-    "decimals": 18
-  },
-  {
-    "tags": "50-Tokens:ERC20",
-    "address": "0x041b10db04de10c1005029ce498d09446e935316",
-    "name": "Green INU",
-    "symbol": "GINUX",
-    "source": "On chain",
-    "decimals": 18
-  },
-  {
-    "tags": "50-Tokens:ERC20",
-    "address": "0x041d37f02b4219e5a038b22c1f69e7e55f3a82d8",
-    "name": "Marshmallow Governance",
-    "symbol": "MGT",
-    "source": "On chain",
-    "decimals": 18
-  },
-  {
-    "tags": "31-Gitcoin:Grants",
-    "address": "0x04335c092bc8c06f48f9def5e3285140138fbbfc",
-    "name": "Grant 1496 Optimistic Casino",
-    "source": "https://gitcoin.co/grants/1496/optimistic-casino"
-  },
-  {
-    "tags": "90-Individuals:Gitcoin Grants",
-    "address": "0x04373aac4df8be1696be816b97f4ad8bcd93beb7",
-    "name": "Name 0x04373aac",
-    "source": "Gitcoin Website"
-  },
-  {
-    "tags": "91-Early:Addresses",
-    "address": "0x0444f06a52320af2df7e60d1923080002838ce93",
-    "name": "Resetponzi",
-    "source": "EtherScan.io"
   }] }

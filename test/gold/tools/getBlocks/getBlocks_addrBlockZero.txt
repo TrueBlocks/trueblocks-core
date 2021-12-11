@@ -1,7 +1,7 @@
 chifra blocks  0 --uniq
 TEST[DATE|TIME] Blocks:  [0]
 TEST[DATE|TIME] Uniq:  true
-bn	tx	tc	addr	reason
+blockNumber	transactionIndex	traceId	address	reason
 0	0		0x000d836201318ec6899a67540690382780743280	genesis
 0	1		0x001762430ea9c3a26e5749afdb70da5f78ddbb8c	genesis
 0	2		0x001d14804b399c6ef80e64576f657660804fec0b	genesis

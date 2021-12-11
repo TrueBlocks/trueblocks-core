@@ -23,7 +23,7 @@ var abisCmd = &cobra.Command{
 	Use:     usageAbis,
 	Short:   shortAbis,
 	Long:    longAbis,
-	Version: "GHC-TrueBlocks//0.17.0-alpha",
+	Version: "GHC-TrueBlocks//0.18.0-alpha",
 	RunE:    abisPkg.RunAbis,
 }
 

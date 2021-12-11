@@ -204,8 +204,6 @@ inline string_q getDocsPathTemplates(const string_q& _part) {
 inline string_q getDocsPathReadmes(const string_q& _part) {
     return getDocsPath("readmes/" + _part);
 }
-inline string_q getTemplatePath(const string_q& part) {
-    return getSourcePath("dev_tools/makeClass/templates/" + part);
-}
+extern string_q getTemplatePath(const string_q& part);
 extern bool parseEndpointsFile(const char* str, void* data);
 extern bool parseOptionsFile(const char* str, void* data);

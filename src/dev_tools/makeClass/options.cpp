@@ -99,21 +99,30 @@ bool COptions::parseArguments(string_q& command) {
         }
     }
 
-    establishFolder(getDocsPathContent(""));
-    establishFolder(getDocsPathContent("api/"));
-    establishFolder(getDocsPathContent("data-model/"));
-    establishFolder(getDocsPathContent("docs/"));
-    establishFolder(getDocsPathContent("docs/chifra/"));
+    if (readmes || openapi) {
+        establishFolder(getDocsPathContent(""));
+        establishFolder(getDocsPathContent("api/"));
+        establishFolder(getDocsPathContent("data-model/"));
+        establishFolder(getDocsPathContent("docs/"));
+        establishFolder(getDocsPathContent("docs/chifra/"));
+    }
 
-#define endpointsFile getSourcePath("cmd-line-endpoints.csv")
-#define optionsFile getSourcePath("cmd-line-options.csv")
-
-    if (!fileExists(endpointsFile))
-        return usage("Could not find " + endpointsFile);
+    string_q endpointsFile = getSourcePath("cmd-line-endpoints.csv");
+    if (!fileExists(endpointsFile)) {
+        endpointsFile = "./cmd-line-endpoints.csv";
+        if (!fileExists(endpointsFile)) {
+            return usage("Could not find " + endpointsFile);
+        }
+    }
     forEveryLineInAsciiFile(endpointsFile, parseEndpointsFile, this);
 
-    if (!fileExists(optionsFile))
-        return usage("Could not find " + optionsFile);
+    string_q optionsFile = getSourcePath("cmd-line-options.csv");
+    if (!fileExists(optionsFile)) {
+        optionsFile = "./cmd-line-options.csv";
+        if (!fileExists(optionsFile)) {
+            return usage("Could not find " + optionsFile);
+        }
+    }
     forEveryLineInAsciiFile(optionsFile, parseOptionsFile, this);
 
     CToml config(getConfigPath("makeClass.toml"));
@@ -151,7 +160,7 @@ bool COptions::parseArguments(string_q& command) {
             forEveryFileInFolder("./classDefinitions/", listClasses, this);
         }
     }
-    LOG4("Processing ", classDefs.size(), " class definition files.");
+    LOG_INFO("Processing ", classDefs.size(), " class definition files.");
 
     for (auto classDefIn : classDefs) {
         CToml toml(classDefIn.input_path);
@@ -317,6 +326,14 @@ string_q getSourcePath(const string_q& rest) {
             return ret + "/trueblocks-core/src/" + rest;
     }
     return getSourcePathA(rest);
+}
+
+string_q getTemplatePath(const string_q& part) {
+    string_q ret = getSourcePath("dev_tools/makeClass/templates/" + part);
+    if (!fileExists(ret)) {
+        ret = getHomeFolder() + "Development/trueblocks-core/src/dev_tools/makeClass/templates/" + part;
+    }
+    return ret;
 }
 
 //---------------------------------------------------------------------------------------------------

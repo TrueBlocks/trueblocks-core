@@ -3,7 +3,7 @@ TEST[DATE|TIME] Addrs:  [0x8b3b3b624c3c0397d3da8fd861512393d51dcbac]
 TEST[DATE|TIME] Traces:  true
 TEST[DATE|TIME] Factory:  true
 TEST[DATE|TIME] LastBlock:  1603174
-blocknumber	transactionindex	traceaddress	action::calltype	error	action::from	action::to	action::value	action::ether	action::gas	result::gasused	action::input	compressedtrace	result::output
+blockNumber	transactionIndex	traceAddress	action::calltype	error	action::from	action::to	action::value	action::ether	action::gas	result::gasUsed	action::input	compressedTrace	result::output
 1600495	9	null-s	creation		0x0	0x8b3b3b624c3c0397d3da8fd861512393d51dcbac	0	0.000000000000000000	2192168	823600			
 1600546	15	0-s	creation		0x0	0xa8eced73b863886478a81b411868fbac8ffbd334	0	0.000000000000000000	195789	155966			
 1600597	4	0-s	creation		0x0	0x6d4e427e35c8daffe77719e166f51cc1e4d68a4c	0	0.000000000000000000	195789	155966			

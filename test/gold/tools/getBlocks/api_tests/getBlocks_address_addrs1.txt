@@ -1,5 +1,5 @@
 blocks?blocks=3982128&apps&fmt=csv
-"bn","tx","tc","addr","reason"
+"blockNumber","transactionIndex","traceId","address","reason"
 "3982128","99999","","0x1e9939daaad6924ad004c2560e90804164900341","miner"
 "3982128","0","","0x8c34adf55edf3d3eabb2414dd3f7152536246c86","from"
 "3982128","0","","0xa73b025bb4c1a7f15164cbbf1870aa2dd6dfc3a0","creation"

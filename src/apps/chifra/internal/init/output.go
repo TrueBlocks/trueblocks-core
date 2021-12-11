@@ -28,10 +28,9 @@ func RunInit(cmd *cobra.Command, args []string) error {
 
 	// EXISTING_CODE
 	pinsPkg.Options.Init = true
-	pinsPkg.Options.All = Options.All
+	pinsPkg.Options.All = opts.All
+	pinsPkg.Options.Globals = opts.Globals
 	return pinsPkg.RunPins(cmd, args)
-
-	return nil
 	// EXISTING_CODE
 }
 

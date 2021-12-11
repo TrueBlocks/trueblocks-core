@@ -22,6 +22,8 @@
 // BEG_ERROR_DEFINES
 // END_ERROR_DEFINES
 
+typedef map<CAppearance_mon, CAddressArray> appAddrMap;
+
 //-----------------------------------------------------------------------
 class COptions : public CAbiOptions {
   public:
@@ -122,9 +124,12 @@ class COptions : public CAbiOptions {
     void cacheIfReconciled(CTraverser* trav, bool isNew) const;
     bool token_list_from_logs(CAccountNameMap& tokenList, const CTraverser* trav);
 
-    size_t reportFreq(void) const {
-        return slowQueries > 0 ? 1 : 7;
-    }
+    size_t reportFreq(void) const;
+
+    // Used as temporary data to count neighbor traversals
+    size_t neighborCount{0};
+    CIndexArchive* theIndex{nullptr};
+    bool showAddrsInTx(CTraverser* trav, const blkrange_t& range, const CAppearance_mon& app);
 };
 
 //--------------------------------------------------------------------------------

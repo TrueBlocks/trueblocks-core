@@ -12,7 +12,7 @@ import (
 	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/blockRange"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/specials"
+	tslibPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 	"github.com/araddon/dateparse"
 )
 
@@ -53,7 +53,7 @@ func IsSpecialBlock(str string) bool {
 		return false
 	}
 
-	return specials.IsStringSpecialBlock(str)
+	return tslibPkg.IsSpecialBlock(str)
 }
 
 func IsDateTimeString(str string) bool {
@@ -72,7 +72,7 @@ func IsBeforeFirstBlock(str string) bool {
 	// From https://github.com/araddon/dateparse
 	time.Local, _ = time.LoadLocation("UTC")
 	dt, _ := dateparse.ParseLocal(str) // already validated as a date
-	return dt.Before(specials.GetDateByName("first"))
+	return dt.Before(tslibPkg.DateFromName("first"))
 }
 
 func IsRange(str string) (bool, error) {
@@ -91,14 +91,14 @@ func IsRange(str string) (bool, error) {
 		}
 
 		if bRange.StartType == blockRange.BlockRangeSpecial &&
-			!specials.IsStringSpecialBlock(bRange.Start.Special) {
+			!tslibPkg.IsSpecialBlock(bRange.Start.Special) {
 			return false, &InvalidIdentifierLiteralError{
 				Value: bRange.Start.Special,
 			}
 		}
 
 		if bRange.EndType == blockRange.BlockRangeSpecial &&
-			!specials.IsStringSpecialBlock(bRange.End.Special) {
+			!tslibPkg.IsSpecialBlock(bRange.End.Special) {
 			return false, &InvalidIdentifierLiteralError{
 				Value: bRange.End.Special,
 			}

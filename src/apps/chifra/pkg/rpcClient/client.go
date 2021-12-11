@@ -5,7 +5,9 @@
 package rpcClient
 
 import (
+	"context"
 	"log"
+	"math/big"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/ethereum/go-ethereum/common"
@@ -15,6 +17,7 @@ import (
 
 // Get sets up a client instance and returns it
 func Get() ethclient.Client {
+	// TODO: I don't like the fact that we Dail In every time we want to us this
 	client, err := ethclient.Dial(config.ReadTrueBlocks().Settings.RpcProvider)
 	if err != nil {
 		log.Fatalln(err)
@@ -31,4 +34,13 @@ func HexToAddress(hex string) common.Address {
 // DecodeHex decodes a string with hex into a slice of bytes
 func DecodeHex(hex string) []byte {
 	return hexutil.MustDecode(hex)
+}
+
+func GetBlockTimestamp(bn uint64) uint64 {
+	client := Get()
+	block, err := client.BlockByNumber(context.Background(), big.NewInt(int64(bn)))
+	if err != nil {
+		return 0
+	}
+	return block.Time()
 }

@@ -16,11 +16,13 @@ tags	address	name	symbol	decimals
 30-Contracts	0x00000000af5a61acaf76190794e3fdf1289288a1	Arbitrage Bot
 30-Contracts	0x00000000b1786c9698c160d78232c78d6f6474fe	Arbitrage Bot
 30-Contracts	0x0000000f8ef4be2b7aed6724e893c1b674b9682d	1inch Exchange
+31-Gitcoin:Grants	0x0000000fcdf5ba49794f4151d6daff4505bc47d1	Grant 3596 - The Uniswap v3 Options Education Fund
 50-Tokens:ERC20	0x00000100f2a2bd000715001920eb70d229700085	TrueCAD	TCAD		18
 90-Individuals:DevCon2	0x000001f568875f378bf6d170b790967fe429c81a	Name 0x000001f5
 30-Contracts	0x000005edbbc1f258302add96b5e20d3442e5dd89	1inch Exchange
 90-Individuals:Gitcoin Grants	0x00000b46508882a135b4933b82a07df8f24a0068	Name 0x00000b46
 50-Tokens:ERC20	0x00006100f7090010005f1bd7ae6122c3c2cf0090	TrueAUD	TAUD		18
+31-Gitcoin:Grants	0x000061a8f22a1e60ba0b3caadfa958e954fc2b6a	Grant 2195 - Best Practicers
 50-Tokens:ERC20	0x0000852600ceb001e08e00bc008be620d60031f2	TrueHKD	THKD		18
 50-Tokens:ERC20	0x0000a1c00009a619684135b824ba02f7fbf3a572	Alchemy	ALCH		18
 50-Tokens:ERC20	0x000100bb517e0c003200502a822083000a3b005d	Archer DAO: Voting Power Prism Proxy			18
@@ -38,6 +40,7 @@ tags	address	name	symbol	decimals
 90-Individuals:Gitcoin Grants	0x002c83ebc32d18ff4f74852565402cf7bde35ccc	Name 0x002c83eb
 50-Tokens:ERC20	0x00319f722bd546182cb2c701ca254146d3f084fc	Democracy Earth	HOUR		18
 30-Contracts:Pool Together	0x0034ea9808e620a0ef79261c51af20614b742b24	Pool Usdc MCDAwarePool v0.2.12
+31-Gitcoin:Grants	0x0035cc37599241d007d0aba1fb931c5fa757f7a1	Grant 2388 - The Commons Swarm: An Augmented Bonding Curve model for DAOs
 90-Individuals:Gitcoin Grants	0x0035fc5208ef989c28d47e552e92b0c507d2b318	Name 0x0035fc52
 90-Individuals:DAO Curators	0x0037a6b811ffeb6e072da21179d11b1406371c63	Name 0x0037a6b8
 91-Early:Miners	0x0037ce3d4b7f8729c8607d8d0248252be68202c0	Miner_0027_260
@@ -45,6 +48,7 @@ tags	address	name	symbol	decimals
 60-Airdrops	0x00476aecb24edfed50aaf2e2361badbd8d3efdc2	HEALP Airdrop Sender
 90-Individuals:Gitcoin Grants	0x004efb233c8d26ccc063061bee54f0be9302e6ed	Name 0x004efb23
 50-Tokens:ERC721	0x004f5683e183908d0f6b688239e3e2d5bbb066ca	Hall Of Fame Goat Lodge	HOFG		18
+31-Gitcoin:Grants	0x005241438caf3eacb05bb6543151f7af894c5b58	Grant 2763 - rugpullindex.com - Improving stake safety
 30-Contracts	0x005ca4f1493f451c1588186c570a434ec38e718d	BrightID Agent
 80-Malicious:DaoDrain	0x005f5cee7a43331d5a3d3eec71305925a62f34b6	DAO Drain 086
 31-Gitcoin:Grants	0x006087d6ac20840c23ba298512db454a05c19b10	Grant 0743 #fittogetherdao (like Pooltogether for Fitness and Wellbeing)
@@ -85,6 +89,7 @@ tags	address	name	symbol	decimals
 90-Individuals:Gitcoin Grants	0x010afb8548a5d1a3a3d62f58ca0a5a1329974206	Name 0x010afb85
 50-Tokens:ERC20	0x01112a60f427205dca6e229425306923c3cc2073	FARM_UNI-V2	fUNI-V2		18
 31-Gitcoin:Grants	0x0115f5ce3f986a35b1edb6f2c3815cebb2461e70	Grant 0790 Loft Radio
+31-Gitcoin:Grants	0x011c2c1433b36a524b548444ae2f20c015427d04	Grant 0491 - Tokamak Network: Decentralized, Scalable, Turing Complete Layer 2 Plasma
 34-ENS	0x012233b3c8177f0778d910ed88170b82de3bfe57	Old ENS Registrar
 30-Contracts	0x0122676358aee287246b2a84377c8ab664d013cb	dYdX 0x Wrapper
 30-Contracts:Chainlink	0x0133aa47b6197d0ba090bf2cd96626eb71ffd13c	Chainlink BTC-ETH Aggregator
@@ -139,7 +144,7 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x02725836ebf3ecdb1cdf1c7b02fcbbfaa2736af8	BitAir	BTCA		8
 50-Tokens:ERC20	0x028171bca77440897b824ca71d1c56cac55b68a3	Aave interest bearing DAI	aDAI		18
 50-Tokens:ERC20	0x0297083eef9c04ee22c89187b13363af2249042b	Andre KP9R	aKP9R		18
-30-Contracts	0x02a522d98ec2d2c3bbe91acc29ee7fd32ab880ab	Mintable: Deployer
+31-Gitcoin:Grants	0x02a522d98ec2d2c3bbe91acc29ee7fd32ab880ab	Mintable: Deployer
 50-Tokens:ERC20	0x02a7c828437aa9aea6da510758b2a9d6fb37f0bc	Salt Shaker	SALT 🧂		18
 91-Early:Addresses	0x02ad1b2f88d37825a311045663a0bf97d0dcd845	YoutubeViews_id13
 50-Tokens:ERC20	0x02b173e5c6553b5429086edd94a37e34adbda2aa	MuskMarsDog	MDOGE		4
@@ -169,12 +174,15 @@ tags	address	name	symbol	decimals
 91-Early:Addresses	0x032747313c4e914b5fce356ab8dc4df551972dcd	Trusteth
 50-Tokens:ERC20	0x032dd2a3c6d234aa9620d65eb618fcdc72be3dbb	HashDemons	HASHDEMONS		18
 50-Tokens:ERC20	0x033030feebd93e3178487c35a9c8ca80874353c9	BDT Token	BDT		18
+31-Gitcoin:Grants	0x035032655b5b3784d359b56eb82c803bd971c582	Grant 2800 - LogicBeach Explainer Series
 50-Tokens:ERC20	0x03552d005d0f4262bf2d85fa2a3263541d4059c1	Miller Real Estate Holdings	RENT		6
 30-Contracts	0x0358629bd27fa559b88d0f41ea3da28d057c3414	Arbitrage Bot
 50-Tokens:ERC20	0x036407f23d5e1c1486f7488332cf54bf06e5f09f	Alphabit	ABC		18
 50-Tokens:ERC20	0x036ea7048a4c1f28b299b9dd9e3c9fe9022e2a2a	ShibAkita Inu	SHIBAKITA		18
 50-Tokens:ERC20	0x0371a82e4a9d0a4312f3ee2ac9c6958512891372	Student Coin	STU		18
+31-Gitcoin:Grants	0x037e414abacc799a598314153509b6b967608bf9	Grant 3059 - CO2KEN — Carbon as a money lego
 30-Contracts:Chainlink	0x037e8f2125bf532f3e228991e051c8a7253b642c	Chainlink DAI-ETH Aggregator
+31-Gitcoin:Grants	0x0384610bf8e9292ec499145cb126e32a17e7ccd6	Grant 3475 - Nectar: L2 + Healthcare
 30-Contracts	0x0385b3f162a0e001b60ecb84d3cb06199d78f666	Argent: Relayer 2
 31-Gitcoin:Grants	0x0389836416d1d46724f0913eeee42622950b20c1	Grant 1488 Ercgraph
 91-Early:Addresses	0x0389a06b028526b05966c287370bebefa0082176	Dividend
@@ -193,11 +201,3 @@ tags	address	name	symbol	decimals
 90-Individuals:TheCyber	0x03d47eca8d1d4c29a73318c3b1373614b3fe14bc	Name 0x03d47eca
 50-Tokens:ERC20	0x03dd1a67ef52107dd86b590ec62aaf5048973647	MAMASHIBA	MAMASHIBA		18
 50-Tokens:ERC20	0x03df4c372a29376d2c8df33a1b5f001cd8d68b0e	Bitcoinereum	BTCM		8
-90-Individuals:Gitcoin Grants	0x03ea9f51913a2a40a2c37e70700102486acf6c40	Name 0x03ea9f51
-31-Gitcoin:Grants	0x03ed2992a1d07ab57ec01f0c8914e22b53e48d87	Grant 0774 Nuts Platform | Designed for DeFi Builders and Service Providers
-50-Tokens:ERC20	0x03fb52d4ee633ab0d06c833e32efdd8d388f3e6a	Black Hole	HOLE		18
-50-Tokens:ERC20	0x041b10db04de10c1005029ce498d09446e935316	Green INU	GINUX		18
-50-Tokens:ERC20	0x041d37f02b4219e5a038b22c1f69e7e55f3a82d8	Marshmallow Governance	MGT		18
-31-Gitcoin:Grants	0x04335c092bc8c06f48f9def5e3285140138fbbfc	Grant 1496 Optimistic Casino
-90-Individuals:Gitcoin Grants	0x04373aac4df8be1696be816b97f4ad8bcd93beb7	Name 0x04373aac
-91-Early:Addresses	0x0444f06a52320af2df7e60d1923080002838ce93	Resetponzi

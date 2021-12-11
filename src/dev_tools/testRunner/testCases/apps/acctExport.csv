@@ -10,6 +10,7 @@ on      ,both ,fast  ,list     ,apps/acctExport ,list_no_params           ,y    
 
 on      ,both ,fast  ,list     ,apps/acctExport ,list_count               ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & count
 on      ,both ,fast  ,list     ,apps/acctExport ,list_appearances         ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & first_block = 100000 & last_block = 2000000
+on      ,both ,fast  ,list     ,apps/acctExport ,list_appearances_csv     ,n    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & first_block = 100000 & last_block = 2000000 & fmt = csv
 
 on      ,cmd  ,fast  ,monitors ,apps/acctExport ,monitors_help            ,n    ,@h
 on      ,cmd  ,fast  ,monitors ,apps/acctExport ,monitors_long_help       ,n    ,help
@@ -31,7 +32,7 @@ on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_data2           ,n    
 on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_prefund1        ,y    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & first_block = 0 & last_block = 1
 on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_prefund2        ,y    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & first_block = 2 & last_block = 2
 on      ,both ,fast  ,monitors ,apps/acctExport ,monitors_prefund3        ,y    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & first_block = 2 & last_block = 7
-on      ,both ,slow  ,monitors ,apps/acctExport ,monitors_seed_1          ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & last_block = 9000000 & fmt = json
+local   ,both ,slow  ,monitors ,apps/acctExport ,monitors_seed_1          ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & last_block = 9000000 & fmt = json
 
 on      ,both ,fast  ,export   ,apps/acctExport ,export_apps              ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & max_records = 1 & appearances & fmt = json
 on      ,both ,fast  ,export   ,apps/acctExport ,export_apps_c            ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & appearances & count
@@ -54,7 +55,7 @@ on      ,both ,fast  ,export   ,apps/acctExport ,export_stage             ,y    
 on      ,both ,fast  ,export   ,apps/acctExport ,export_unripe            ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & first_block = 100000 & last_block = 2000000 & staging & unripe
 on      ,both ,fast  ,export   ,apps/acctExport ,export_unripe_fail       ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & first_block = 100000 & last_block = 2000000 & unripe
 
-on      ,both ,fast  ,export   ,apps/acctExport ,transfer_fourbytes       ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & max_records = 10 & fourbytes = 0xa9059cbb & fmt = json
+local   ,both ,fast  ,export   ,apps/acctExport ,transfer_fourbytes       ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & max_records = 10 & fourbytes = 0xa9059cbb & fmt = json
 on      ,both ,fast  ,export   ,apps/acctExport ,transfer_fourbytes_trace ,y    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & max_records = 10 & fourbytes = 0xa9059cbb & traces & fmt = json
 on      ,both ,fast  ,export   ,apps/acctExport ,transfer_no_topics       ,y    ,addrs = 0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3 & max_records = 5 & logs
 on      ,both ,fast  ,export   ,apps/acctExport ,transfer_topics          ,y    ,addrs = 0xff9387a9aae1f5daab1cd8eb0e92113ea9d19ca3 & max_records = 5 & topics = 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef & logs

@@ -73,6 +73,9 @@ set (BIN_CMDS_DIR $ENV{HOME}/.local/bin/chifra)
 set (BIN_TEST_DIR ${BIN_CMDS_DIR}/test)
 
 # ----------------------------------------------------------------------------------------
+set(CMAKE_INSTALL_PREFIX "/usr/local/" CACHE PATH "Default install directory")
+
+# ----------------------------------------------------------------------------------------
 # Enable testing
 # enable_testing()
 
@@ -93,5 +96,4 @@ add_subdirectory (tools)
 add_subdirectory (apps)
 add_subdirectory (go-apps)
 add_subdirectory (dev_tools)
-add_subdirectory (examples)
 add_subdirectory (other)

@@ -23,7 +23,7 @@ var tracesCmd = &cobra.Command{
 	Use:     usageTraces,
 	Short:   shortTraces,
 	Long:    longTraces,
-	Version: "GHC-TrueBlocks//0.17.0-alpha",
+	Version: "GHC-TrueBlocks//0.18.0-alpha",
 	RunE:    tracesPkg.RunTraces,
 }
 

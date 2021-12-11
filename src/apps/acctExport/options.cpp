@@ -596,6 +596,7 @@ bool COptions::setDisplayFormatting(void) {
                 expContext().fmtMap["header"] = noHeader ? "" : cleanFmt(format);
 
             format = getGlobalConfig("acctExport")->getConfigStr("display", "neighbor", STR_DISPLAY_APPEARANCE);
+            replace(format, "[{TC}]\t", "");
             expContext().fmtMap["appearance_fmt"] = cleanFmt(format);
             manageFields("CAppearance:" + format);
             if (neighbors)
@@ -814,4 +815,12 @@ void COptions::writePerformanceData(void) {
     ostringstream data;
     data << stats.Format(fmt) << endl;
     appendToAsciiFile(statsFile, data.str());
+}
+
+//-----------------------------------------------------------------------
+size_t freqOverride = NOPOS;
+size_t COptions::reportFreq(void) const {
+    if (freqOverride != NOPOS)
+        return freqOverride;
+    return slowQueries > 0 ? 1 : 7;
 }

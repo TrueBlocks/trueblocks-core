@@ -1,4 +1,5 @@
 makeClass  --dump function --verbose
+TIME ~ CLOCK - <INFO>  : Processing 1 class definition files.
 {
   "class_name": "CFunction",
   "class_base": "Function",

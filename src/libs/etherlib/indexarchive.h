@@ -19,19 +19,30 @@
 #include "indexedappearance.h"
 
 namespace qblocks {
+
+typedef struct CReverseAppMapEntry {
+  public:
+    uint32_t n;
+    uint32_t blk;
+    uint32_t tx;
+} CReverseAppMapEntry;
+
 //---------------------------------------------------------------------------
 class CIndexArchive : public CArchive {
   public:
     CIndexHeader* header;
     uint64_t nAddrs;
     CIndexedAddress* addresses;
+    CBlockRangeArray reverseAddrRanges;
     uint64_t nApps;
     CIndexedAppearance* appearances;
+    CReverseAppMapEntry* reverseAppMap{nullptr};
 
     explicit CIndexArchive(bool mode);
     ~CIndexArchive(void);
     bool ReadIndexFromBinary(const string_q& fn);
     bool ReadIndexHeader(const string_q& fn, CIndexHeader& header);
+    bool LoadReverseMaps(const blkrange_t& range);
 
   private:
     char* rawData;

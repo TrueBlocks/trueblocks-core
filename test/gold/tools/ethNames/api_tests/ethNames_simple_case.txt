@@ -29,12 +29,57 @@ names?terms=network&matchCase
       "description": "A Better Way to Trade Crypto-Markets - Market Datafeeds, Newswires, and Crowd Sentiment Insights for the Blockchain World"
     },
     {
+      "tags": "31-Gitcoin:Grants",
+      "address": "0x8767aacd8ae48e6a23077548c24121e46dca0696",
+      "name": "Grant 2728 - Using social networks for fun, affordable, and lucrative delivery.",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/2728/using-social-networks-for-fun-affordable-and-lucr",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "31-Gitcoin:Grants",
+      "address": "0x887a26839d9e33b1536857a24f91f192ce9d4732",
+      "name": "Grant 2776 - pulp-network",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/2776/pulp-network",
+      "decimals": 0,
+      "description": ""
+    },
+    {
       "tags": "50-Tokens:ERC20",
       "address": "0x95cda24d2515491095d21d94f1b94f319e016d35",
       "name": "Vegetanetwork",
       "symbol": "Vegeta",
       "source": "On chain",
       "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "31-Gitcoin:Grants",
+      "address": "0xc0dd8e21a31f62861e668833f47770592d379a4c",
+      "name": "Grant 2694 - Matrix2 - An aggregated Layer 2 network",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/2694/matrix2-an-aggregated-layer-2-network",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "31-Gitcoin:Grants",
+      "address": "0xc22e8d32d3146efc54088f39ec9c29eaf3905b1d",
+      "name": "Grant 3090 - Atelio : creating open , blockchain based digital supply network.",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/3090/atelio-creating-open-blockchain-based-digital-sup",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "31-Gitcoin:Grants",
+      "address": "0xc41bc99044fd4836dba4104bcf53b6f2b62716b1",
+      "name": "Grant 2190 - Layer 2 faucet in ethereum network",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/2190/layer-2-faucet-in-ethereum-network",
+      "decimals": 0,
       "description": ""
     },
     {

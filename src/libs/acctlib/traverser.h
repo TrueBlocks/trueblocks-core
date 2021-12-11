@@ -35,14 +35,14 @@ class CTraverser {
     bool logging;
     size_t index;
     size_t nProcessed;
-    string_q operation;
-    string_q readStatus;
+    string_q searchType;
+    string_q searchOp;
     CMonitor* curMonitor;
     monitor_map_t monitorMap;
     blkrange_t exportRange;
-    CTraverser(const string_q& o) : index(0), nProcessed(0), operation(o) {
+    CTraverser(const string_q& o) : index(0), nProcessed(0), searchType(o) {
         logging = !isTestMode() || getEnvStr("FORCE_LOGGING") == "true";
-        readStatus = "Extracting";
+        searchOp = "Extracting";
         curMonitor = nullptr;
         exportRange = make_pair(0, NOPOS);
         filterFunc = ::filterFunc;
