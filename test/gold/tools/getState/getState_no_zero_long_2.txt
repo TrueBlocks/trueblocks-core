@@ -3,5 +3,5 @@ TEST[DATE|TIME] Addrs:  [0xf27daff52c38b2c373ad2b9392652ddf433303c5 0xfb6916095c
 TEST[DATE|TIME] Blocks:  [3500000]
 TEST[DATE|TIME] NoZero:  true
 TEST[DATE|TIME] Format:  txt
-blocknumber	address	balance
+blockNumber	address	balance
 3500000	0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359	4031916592817262193983

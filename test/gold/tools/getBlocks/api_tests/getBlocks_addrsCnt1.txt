@@ -1,3 +1,3 @@
 blocks?blocks=3982128&apps&count&fmt=csv
-"blocknumber","transactionscnt","addr_count"
+"blockNumber","transactionsCnt","addrCount"
 "3982128","91","509"

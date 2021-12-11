@@ -1,7 +1,7 @@
 chifra state  --call 0xbb2b8038a1640196fbe3e38816f3e67cba72d940!0x0902f1ac 10092000
 TEST[DATE|TIME] Blocks:  [10092000]
 TEST[DATE|TIME] Call:  0xbb2b8038a1640196fbe3e38816f3e67cba72d940!0x0902f1ac
-blocknumber	address	signature	encoding	bytes	compressedresult
+blockNumber	address	signature	encoding	bytes	compressedResult
 
 level: 1
 readOffset: 0

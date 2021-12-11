@@ -182,7 +182,7 @@ void prog_Log(CTraverser* trav, void* data) {
         // Reports as "readStatus index of total txs (found X operation) for address A"
         post << " txs (" << prog << " " << trav->searchType << ") for address " << opt->accountedFor.address;
     }
-    LOG_PROGRESS(padRight(trav->searchOp, 11), blknum_t(trav->index), nApps, post.str() + "\r");
+    LOG_PROGRESS(padRight(trav->searchOp, 11), blknum_t(opt->first_record + trav->index), nApps, post.str() + "\r");
 
     return;
 }
@@ -206,7 +206,7 @@ void end_Log(CTraverser* trav, void* data) {
         // Reports as "readStatus index of total txs (found X operation) for address A"
         post << " txs (" << prog << " " << trav->searchType << ") for address " << opt->accountedFor.address;
     }
-    LOG_PROGRESS(padRight("Completed", 11), blknum_t(trav->index), nApps, post.str());
+    LOG_PROGRESS(padRight("Completed", 11), blknum_t(opt->first_record + trav->index), nApps, post.str());
     return;
 }
 
