@@ -2,20 +2,20 @@
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 
-package specials
+package tslibPkg
 
 import (
 	"testing"
 )
 
 func TestIsStringSpecialBlock(t *testing.T) {
-	result := IsStringSpecialBlock("devcon1")
+	result := IsSpecialBlock("devcon1")
 
 	if !result {
 		t.Error("Fails for valid block name")
 	}
 
-	shouldBeFalse := IsStringSpecialBlock("nosuchblock")
+	shouldBeFalse := IsSpecialBlock("nosuchblock")
 
 	if shouldBeFalse {
 		t.Error("Passes for invalid block name")
@@ -23,7 +23,7 @@ func TestIsStringSpecialBlock(t *testing.T) {
 }
 
 func TestGetNameByValue(t *testing.T) {
-	name, found := GetNameByValue(2463000)
+	name, found := NameFromBn(2463000)
 
 	if !found {
 		t.Error("Block name not found")
@@ -35,7 +35,7 @@ func TestGetNameByValue(t *testing.T) {
 }
 
 func TestGetValueByName(t *testing.T) {
-	value, found := GetValueByName("tangerine")
+	value, found := BnFromName("tangerine")
 
 	if !found {
 		t.Error("Block not found by name")
@@ -43,5 +43,20 @@ func TestGetValueByName(t *testing.T) {
 
 	if value != 2463000 {
 		t.Errorf("Wrong value: %d", value)
+	}
+}
+
+func TestGetSpecials(t *testing.T) {
+	specials := GetSpecials(true)
+	if len(specials) != 31 {
+		t.Error("Wrong number of special blocks ", len(specials), ". Should have 31.")
+	}
+	for _, item := range specials {
+		if item.TimeStamp == 0 {
+			t.Error("Special block with zero timestamp")
+		}
+		if item.Date == "" {
+			t.Error("Special block with zero timestamp")
+		}
 	}
 }

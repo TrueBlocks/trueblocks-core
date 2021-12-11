@@ -158,5 +158,5 @@ func DateFromTs(ts uint64) (string, error) {
 	// TODO: can be initialized at the start of the program as all dates are UTC
 	time.Local, _ = time.LoadLocation("UTC")
 	tm := time.Unix(int64(ts), 0)
-	return tm.Format("2006-01-02T15:04:05"), nil
+	return tm.Format("2006-01-02 15:04:05 UTC"), nil
 }
