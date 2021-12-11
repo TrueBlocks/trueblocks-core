@@ -55,9 +55,9 @@ func TestGetValueByName(t *testing.T) {
 }
 
 func TestGetSpecials(t *testing.T) {
-	specials := GetSpecials(false)
-	if len(specials) != 32 {
-		t.Error("Wrong number of special blocks ", len(specials), ". Should have 32.")
+	specials := GetSpecials()
+	if len(specials) != 31 {
+		t.Error("Wrong number of special blocks ", len(specials), ". Should have 31.")
 	}
 	for _, item := range specials {
 		if item.TimeStamp == 0 {
@@ -66,10 +66,5 @@ func TestGetSpecials(t *testing.T) {
 		if item.Date == "" {
 			t.Error("Special block ", item.Name, " with zero timestamp")
 		}
-	}
-
-	specials = GetSpecials(true)
-	if specials[len(specials)-1].Name == "latest" {
-		t.Error("Test mode has latest block")
 	}
 }

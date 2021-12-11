@@ -2,10 +2,20 @@
 
 cd ..
 export QUICKBLOCKS=`pwd`
+export CHIFRA=$QUICKBLOCKS/src/apps/chifra
 export BUILD_FOLDER=$QUICKBLOCKS/build/
 export TEST_FOLDER=$QUICKBLOCKS/test/
 export NAMES_SOURCE=$QUICKBLOCKS/src/other/install/names/names.tab
 export NAMES_CUSTOM=$QUICKBLOCKS/src/other/install/names/names_custom.tab
+
+cd $CHIFRA
+echo "Running go tests..."
+go test ./...
+if [ $? -ne 0 ]; then
+   cd -
+   exit $?
+fi
+cd -
 
 #echo "Making..."
 cd "$BUILD_FOLDER/"

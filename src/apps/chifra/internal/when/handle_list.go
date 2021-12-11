@@ -14,7 +14,7 @@ import (
 
 func (opts *WhenOptions) ListInternal() error {
 
-	result := tslibPkg.GetSpecials(opts.Globals.TestMode)
+	result := tslibPkg.GetSpecials()
 	if opts.Globals.ApiMode {
 		opts.Globals.Respond(opts.Globals.Writer, http.StatusOK, result)
 

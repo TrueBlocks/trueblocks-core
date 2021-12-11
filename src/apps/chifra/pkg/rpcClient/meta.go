@@ -14,16 +14,12 @@ type Meta struct {
 	Ripe      uint64 `json:"ripe"`
 	Staging   uint64 `json:"staging"`
 	Finalized uint64 `json:"finalized"`
-	Client    uint64 `json:"client"`
+	Latest    uint64 `json:"client"`
 }
 
 func (m Meta) String() string {
 	ret, _ := json.MarshalIndent(m, "", "  ")
 	return string(ret)
-}
-
-func (m *Meta) Latest() uint64 {
-	return GetMeta(false).Client
 }
 
 func GetMeta(testMode bool) *Meta {
@@ -33,11 +29,13 @@ func GetMeta(testMode bool) *Meta {
 			Ripe:      0xdeadbeef,
 			Staging:   0xdeadbeef,
 			Finalized: 0xdeadbeef,
-			Client:    0xdeadbeef,
+			Latest:    0xdeadbeef,
 		}
 	}
 	ethClient := Get()
 	defer ethClient.Close()
 	bn, _ := ethClient.BlockNumber(context.Background())
-	return &Meta{Client: bn}
+
+	// TODO: This needs to get filled in with the rest of the data
+	return &Meta{Latest: bn}
 }

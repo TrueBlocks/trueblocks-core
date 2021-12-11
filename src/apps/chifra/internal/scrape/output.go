@@ -322,12 +322,12 @@ func (scraper *Scraper) Pause() {
 // 	}
 
 // 	log.Print("\n")
-// 	log.Print(colors.Green, "Client:       ", colors.Off, Options.Status.Client)
+// 	log.Print(colors.Green, "Client:       ", colors.Off, Options.Status.Latest)
 // 	log.Print(colors.Green, "TrueBlocks:   ", colors.Off, Options.Status.TrueBlocks)
 // 	log.Print(colors.Green, "Cache Path:   ", colors.Off, Options.Status.CachePath)
 // 	log.Print(colors.Green, "Index Path:   ", colors.Off, Options.Status.IndexPath)
 // 	log.Print(colors.Green, "Rpc Provider: ", colors.Off, Options.Status.RPC)
-// 	log.Print(colors.Green, "Progress:     ", colors.Off, Options.Meta.Client, ", ", Options.Meta.Finalized, ", ", Options.Meta.Staging, ", ", Options.Meta.Unripe)
+// 	log.Print(colors.Green, "Progress:     ", colors.Off, Options.Meta.Latest, ", ", Options.Meta.Finalized, ", ", Options.Meta.Staging, ", ", Options.Meta.Unripe)
 
 // 	return nil
 // }

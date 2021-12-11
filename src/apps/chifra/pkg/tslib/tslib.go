@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	"github.com/araddon/dateparse"
 )
@@ -165,7 +166,7 @@ func DateFromTs(ts uint64) (string, error) {
 
 // NameFromBn returns the block's name (if found) given its number
 func NameFromBn(needle uint64) (string, bool) {
-	specials := GetSpecials(false)
+	specials := GetSpecials()
 	for _, value := range specials {
 		if value.BlockNumber == needle {
 			return value.Name, true
@@ -176,18 +177,30 @@ func NameFromBn(needle uint64) (string, bool) {
 
 // BnFromName returns the block's number (if found) given its name
 func BnFromName(needle string) (uint64, bool) {
-	specials := GetSpecials(false)
+	if needle == "latest" {
+		return rpcClient.GetMeta(false).Latest, true
+	}
+
+	specials := GetSpecials()
 	for _, value := range specials {
 		if value.Name == needle {
 			return value.BlockNumber, true
 		}
 	}
+
 	return uint64(utils.NOPOS), false
 }
 
 // DateFromName returns the block's date (if found) given its name
 func DateFromName(needle string) time.Time {
-	specials := GetSpecials(false)
+	if needle == "latest" {
+		ts := rpcClient.GetBlockTimestamp(rpcClient.GetMeta(false).Latest)
+		date, _ := DateFromTs(ts)
+		dt, _ := dateparse.ParseLocal(date)
+		return dt
+	}
+
+	specials := GetSpecials()
 	for _, value := range specials {
 		if value.Name == needle {
 			date, _ := DateFromBn(value.BlockNumber)
@@ -195,6 +208,7 @@ func DateFromName(needle string) time.Time {
 			return dt
 		}
 	}
+
 	// default to first
 	dt, _ := dateparse.ParseLocal(specials[0].Date)
 	return dt
