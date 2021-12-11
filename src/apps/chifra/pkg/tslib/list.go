@@ -4,14 +4,6 @@
 
 package tslibPkg
 
-import (
-	"time"
-
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/rpcClient"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
-	"github.com/araddon/dateparse"
-)
-
 type NamedBlock struct {
 	BlockNumber uint64 `json:"blockNumber"`
 	TimeStamp   uint64 `json:"timestamp"`
@@ -150,58 +142,14 @@ func GetSpecials(testMode bool) []NamedBlock {
 	if specials[0].TimeStamp == 0 {
 		for i := 0; i < len(specials); i++ {
 			specials[i].TimeStamp, _ = TsFromBn(specials[i].BlockNumber)
-			specials[i].Date, _ = DateFromBn(specials[i].BlockNumber)
+			specials[i].Date, _ = DateFromTs(specials[i].TimeStamp)
 		}
 	}
 
-	if !testMode {
-		return specials
-	}
-
-	latest := rpcClient.GetMeta(false).Client
-	var ret = []NamedBlock{}
-	for _, item := range specials {
-		if item.BlockNumber < latest {
-			item.TimeStamp, _ = TsFromBn(item.BlockNumber)
-			ret = append(ret, item)
-		}
-	}
-
-	return ret
+	return specials
 }
 
 func IsSpecialBlock(needle string) bool {
 	_, found := BnFromName(needle)
 	return found
-}
-
-func NameFromBn(needle uint64) (string, bool) {
-	for _, value := range specials {
-		if value.BlockNumber == needle {
-			return value.Name, true
-		}
-	}
-	return "", false
-}
-
-func BnFromName(needle string) (uint64, bool) {
-	for _, value := range specials {
-		if value.Name == needle {
-			return value.BlockNumber, true
-		}
-	}
-	return uint64(utils.NOPOS), false
-}
-
-func DateFromName(needle string) time.Time {
-	for _, value := range specials {
-		if value.Name == needle {
-			date, _ := DateFromBn(value.BlockNumber)
-			dt, _ := dateparse.ParseLocal(date)
-			return dt
-		}
-	}
-	// default to first
-	dt, _ := dateparse.ParseLocal(specials[0].Date)
-	return dt
 }

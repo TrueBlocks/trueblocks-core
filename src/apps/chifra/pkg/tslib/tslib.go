@@ -9,6 +9,8 @@ import (
 	"time"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
+	"github.com/araddon/dateparse"
 )
 
 type Timestamp struct {
@@ -159,4 +161,41 @@ func DateFromTs(ts uint64) (string, error) {
 	time.Local, _ = time.LoadLocation("UTC")
 	tm := time.Unix(int64(ts), 0)
 	return tm.Format("2006-01-02 15:04:05 UTC"), nil
+}
+
+// NameFromBn returns the block's name (if found) given its number
+func NameFromBn(needle uint64) (string, bool) {
+	specials := GetSpecials(false)
+	for _, value := range specials {
+		if value.BlockNumber == needle {
+			return value.Name, true
+		}
+	}
+	return "", false
+}
+
+// BnFromName returns the block's number (if found) given its name
+func BnFromName(needle string) (uint64, bool) {
+	specials := GetSpecials(false)
+	for _, value := range specials {
+		if value.Name == needle {
+			return value.BlockNumber, true
+		}
+	}
+	return uint64(utils.NOPOS), false
+}
+
+// DateFromName returns the block's date (if found) given its name
+func DateFromName(needle string) time.Time {
+	specials := GetSpecials(false)
+	for _, value := range specials {
+		if value.Name == needle {
+			date, _ := DateFromBn(value.BlockNumber)
+			dt, _ := dateparse.ParseLocal(date)
+			return dt
+		}
+	}
+	// default to first
+	dt, _ := dateparse.ParseLocal(specials[0].Date)
+	return dt
 }

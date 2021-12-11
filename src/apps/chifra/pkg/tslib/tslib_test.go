@@ -17,9 +17,9 @@ type Expected struct {
 
 func TestLoadTimestampsPass(t *testing.T) {
 	expected := []Expected{
-		{name: "Block Zero", bn: 0, ts: 1438269960, date: "2015-07-30T15:26:00"},
-		{name: "Block One", bn: 1, ts: 1438269988, date: "2015-07-30T15:26:28"},
-		{name: "Block 1 Mil", bn: 1000000, ts: 1455404053, date: "2016-02-13T22:54:13"},
+		{name: "Block Zero", bn: 0, ts: 1438269960, date: "2015-07-30 15:26:00"},
+		{name: "Block One", bn: 1, ts: 1438269988, date: "2015-07-30 15:26:28"},
+		{name: "Block 1 Mil", bn: 1000000, ts: 1455404053, date: "2016-02-13 22:54:13"},
 	}
 
 	for _, e := range expected {
@@ -54,22 +54,22 @@ func TestLoadTimestampsPass(t *testing.T) {
 		d, err := DateFromBn(e.bn)
 		if err != nil {
 			t.Error(err)
-		} else if d != e.date {
-			t.Error("Expected date", e.date, "got", d)
+		} else if d != e.date+" UTC" {
+			t.Error("Expected date", e.date+" UTC", "got", d)
 		}
 
 		d, err = DateFromTs(e.ts)
 		if err != nil {
 			t.Error(err)
-		} else if d != e.date {
-			t.Error("Expected date", e.date, "got", d)
+		} else if d != e.date+" UTC" {
+			t.Error("Expected date", e.date+" UTC", "got", d)
 		}
 	}
 }
 
 func TestLoadTimestampsFail(t *testing.T) {
 	expected := []Expected{
-		{name: "Bad Block", bn: 100000000, ts: 12, date: "2012-02-13T22:54:13"},
+		{name: "Bad Block", bn: 100000000, ts: 12, date: "2012-02-13 22:54:13"},
 	}
 
 	for _, e := range expected {
