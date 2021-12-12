@@ -932,7 +932,7 @@ bool forEveryTransaction(TRANSVISITFUNC func, void* data, const string_q& trans_
         CTransaction trans;
         if (hasHex) {
             if (hasDot) {
-                LOG4("blockHash.txid", hash, txid);
+                LOG4("blockHash.txid", " ", hash, " ", txid);
                 getTransaction(trans, hash, txid);
 
             } else {
@@ -941,7 +941,7 @@ bool forEveryTransaction(TRANSVISITFUNC func, void* data, const string_q& trans_
             }
         } else {
             blknum_t blockNum = str_2_Uint(hash);  // so the input is poorly named, sue me
-            LOG4("blockNum.txid", blockNum, txid);
+            LOG4("blockNum.txid", " ", blockNum, " ", txid);
             getTransaction(trans, blockNum, txid);
             if (fileExists(getBinaryCacheFilename(CT_TXS, blockNum, txid)))
                 fromCache = true;
