@@ -13,10 +13,9 @@
 #include "options.h"
 
 //--------------------------------------------------------------------
-void COptions::finishClean(CAccountName& account) {
-    LOG_INFO("Cleaning ", account.address, "                                  \r");
+bool COptions::finishClean(CAccountName& account) {
     if (startsWith(account.tags, "80-Malicious"))
-        return;
+        return true;
 
     account.isContract = isContractAt(account.address, latestBlock) || account.isContract;
     if (account.isContract) {
@@ -45,19 +44,24 @@ void COptions::finishClean(CAccountName& account) {
             account.isErc721 =
                 str_2_Bool(getTokenState(account.address, "supportsInterface", abi_spec, latestBlock, bytes));
 
-            string_q lTag = toLower(account.tags);
-            bool maybe = (account.tags.empty() || contains(lTag, "token") || contains(lTag, "30-contracts") ||
-                          contains(lTag, "55-defi"));
-            account.tags = maybe ? (account.isErc721 ? "50-Tokens:ERC721" : "50-Tokens:ERC20") : account.tags;
+            if (account.isErc721 && !startsWith(account.tags, '9')) {
+                account.tags = "50-Tokens:ERC721";
+
+            } else {
+                string_q lTag = toLower(account.tags);
+                bool maybe = (account.tags.empty() || contains(lTag, "token") || contains(lTag, "30-contracts") ||
+                              contains(lTag, "55-defi"));
+                account.tags = maybe ? (account.isErc721 ? "50-Tokens:ERC721" : "50-Tokens:ERC20") : account.tags;
+            }
         }
     } else {
-        account.tags = account.tags == "30-Contracts" ? "90-Individuals:Other" : account.tags;
+        account.tags = account.tags.empty() || account.tags == "30-Contracts" ? "90-Individuals:Other" : account.tags;
     }
 
     if (contains(toLower(account.source), "etherscan"))
         account.source = "EtherScan.io";
-    if (contains(account.source, "trueblocks"))
-        account.source = "TrueBlocks";
+    if (contains(toLower(account.source), "trueblocks"))
+        account.source = "TrueBlocks.io";
 
     account.name = trim(substitute(account.name, "  ", " "));
     account.symbol = trim(substitute(account.symbol, "  ", " "));
@@ -67,6 +71,7 @@ void COptions::finishClean(CAccountName& account) {
         account.description = "";
 
     account.isPrefund = expContext().prefundMap[account.address] > 0;
+    return true;
 }
 
 //--------------------------------------------------------------------
@@ -83,6 +88,7 @@ bool COptions::cleanNames(const string_q& sourceIn, const string_q& destIn) {
     cerr << "Processing names file (" << source << ") into " << dest << endl;
 
     string_q contents = asciiFileToString(source);
+    size_t nRecords = countOf(contents, '\n');
 
     CStringArray fields;
     string_q fieldStr = toLower(nextTokenClear(contents, '\n'));
@@ -90,8 +96,11 @@ bool COptions::cleanNames(const string_q& sourceIn, const string_q& destIn) {
 
     CAccountName name;
     CAccountNameArray names;
+    size_t cnt = 0;
     while (name.parseText(fields, contents)) {
-        finishClean(name);
+        LOG_INFO("Cleaning ", ++cnt, " of ", nRecords, ": ", name.address, "                                  \r");
+        if (!finishClean(name))
+            return true;
         names.push_back(name);
     }
 
