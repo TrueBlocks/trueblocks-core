@@ -201,7 +201,7 @@ names?terms=etwork&expand&noHeader
       "tags": "50-Tokens:ERC20",
       "address": "0x0cf0ee63788a0849fe5297f3407f701e122cc023",
       "name": "Streamr DATAcoin",
-      "symbol": "DATA",
+      "symbol": "XDATA",
       "source": "On chain",
       "decimals": 18,
       "description": "Streamr is building the world‚Äö√Ñ√¥s leading Marketplace and decentralised Network for real-time data.",
@@ -1968,7 +1968,7 @@ names?terms=etwork&expand&noHeader
     },
     {
       "deleted": false,
-      "tags": "50-Tokens:ERC721",
+      "tags": "50-Tokens:ERC20",
       "address": "0xade00c28244d5ce17d72e40330b1c318cd12b7c3",
       "name": "AdEx Network",
       "symbol": "ADX",

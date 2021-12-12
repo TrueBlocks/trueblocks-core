@@ -15,7 +15,7 @@ TEST[DATE|TIME] NoHeader:  true
 50-Tokens:ERC20	0x0a913bead80f321e7ac35285ee10d9d922659cb7	DOS Network Token	DOS	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x0abdace70d3790235af448c88547603b945604ea	district0x Network Token	DNT	On chain	18	A network of decentralized markets and communities. Create, operate, and govern. Powered by Ethereum, Aragon, and IPFS.	false	false	false	true	true	false
 50-Tokens:ERC20	0x0bc61dded5f6710c637cf8288eb6058766ce1921	CEN	CEN	On chain	18	Connecting the Financial World Coinsuper Ecosystem Network	false	false	false	true	true	false
-50-Tokens:ERC20	0x0cf0ee63788a0849fe5297f3407f701e122cc023	Streamr DATAcoin	DATA	On chain	18	Streamr is building the world‚Äö√Ñ√¥s leading Marketplace and decentralised Network for real-time data.	false	false	false	true	true	false
+50-Tokens:ERC20	0x0cf0ee63788a0849fe5297f3407f701e122cc023	Streamr DATAcoin	XDATA	On chain	18	Streamr is building the world‚Äö√Ñ√¥s leading Marketplace and decentralised Network for real-time data.	false	false	false	true	true	false
 50-Tokens:ERC20	0x0ea984e789302b7b612147e4e4144e64f21425eb	WaleTokeN	WTN	On chain	8	Wal-e is social media project behind of WaleTokeN, we developing Live video streaming social network application, this application will allowed you connect with people through live videos and messaging.	false	false	false	true	true	false
 50-Tokens:ERC20	0x0f7f961648ae6db43c75663ac7e5414eb79b5704	XIO Network	XIO	On chain	18		false	false	false	true	true	false
 31-Gitcoin:Grants	0x1074f62d7019c3184a2f7ea8c6a8acd6780beb48	Grant 0083 Poa Network Community Management Grant for Adj		https://gitcoin.co/grants/83/poa-network-community-management-grant-for-adj			false	false	false	false	false	false
@@ -133,7 +133,7 @@ TEST[DATE|TIME] NoHeader:  true
 50-Tokens:ERC20	0xaaf37055188feee4869de63464937e683d61b2a1	UChain Token	UCN	On chain	18	The Next Generation Distributed Smart Network Blockchain for the Sharing Economy	false	false	false	true	true	false
 50-Tokens:ERC20	0xac709fcb44a43c35f0da4e3163b117a17f3770f5	Arcade Token	ARC	On chain	18	RIDESHARING - Arcade City is peer-to-peer everything ‚Äö√Ñ√Æ with networks built by local communities, not corporations.	false	false	false	true	true	false
 50-Tokens:ERC20	0xad5fe5b0b8ec8ff4565204990e4405b2da117d8e	TRONCLASSIC	TRXC	On chain	18	TRXC is a token that serves as a social digital currency with all major social network to make the process of sending and receiving money rewarding for everyone.	false	false	false	true	true	false
-50-Tokens:ERC721	0xade00c28244d5ce17d72e40330b1c318cd12b7c3	AdEx Network	ADX	On chain	18		false	false	false	true	true	false
+50-Tokens:ERC20	0xade00c28244d5ce17d72e40330b1c318cd12b7c3	AdEx Network	ADX	On chain	18		false	false	false	true	true	false
 30-Contracts:Kyber Network	0xb0d27b025d5f79f955fa37cd3170b998661abff3	Kyber Orderbook Reserve		TrueBlocks.io			false	false	false	true	false	false
 31-Gitcoin:Grants	0xb101f7893738e34e5333ba1e385ebe6cd65bf1ef	Grant 1096 Pareto Network - Financial Content Marketplace		https://gitcoin.co/grants/1096/pareto-network-financial-content-marketplace			false	false	false	false	false	false
 31-Gitcoin:Grants	0xb1f6ddaafce638c21a56b0b2216e796ec9ca428e	Grant 0073 Poa Network Community Management Grant for Aly		https://gitcoin.co/grants/73/poa-network-community-management-grant-for-aly			false	false	false	false	false	false

@@ -78,7 +78,7 @@ tags	address	name	symbol	decimals	source
 50-Tokens:ERC20	0xa5fd1a791c4dfcaacc963d4f73c6ae5824149ea7	Jibrel Network Token	JNT		18	On chain
 31-Gitcoin:Grants	0xa70b419a6028cd48f050d7251cf4fbbc682cc8ab	Grant 1995 - Ralie Network - Connecting Through Blockchain				https://gitcoin.co/grants/1995/ralie-network-connecting-through-blockchain
 50-Tokens:ERC20	0xa74476443119a942de498590fe1f2454d7d4ac0d	Golem Network Token	GNT		18	On chain
-50-Tokens:ERC721	0xade00c28244d5ce17d72e40330b1c318cd12b7c3	AdEx Network	ADX		18	On chain
+50-Tokens:ERC20	0xade00c28244d5ce17d72e40330b1c318cd12b7c3	AdEx Network	ADX		18	On chain
 30-Contracts:Kyber Network	0xb0d27b025d5f79f955fa37cd3170b998661abff3	Kyber Orderbook Reserve				TrueBlocks.io
 31-Gitcoin:Grants	0xb101f7893738e34e5333ba1e385ebe6cd65bf1ef	Grant 1096 Pareto Network - Financial Content Marketplace				https://gitcoin.co/grants/1096/pareto-network-financial-content-marketplace
 31-Gitcoin:Grants	0xb1f6ddaafce638c21a56b0b2216e796ec9ca428e	Grant 0073 Poa Network Community Management Grant for Aly				https://gitcoin.co/grants/73/poa-network-community-management-grant-for-aly

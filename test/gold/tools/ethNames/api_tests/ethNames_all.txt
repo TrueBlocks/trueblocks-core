@@ -308,9 +308,9 @@ names?all
       "description": ""
     },
     {
-      "tags": "30-Contracts",
+      "tags": "90-Individuals:Other",
       "address": "0x0015f3c39221b20016cebdbf8b19eb5acedca901",
-      "name": "Hacker Gold Sender",
+      "name": "Name 0x0015f3c3",
       "symbol": "",
       "source": "TrueBlocks.io",
       "decimals": 0,
@@ -852,7 +852,7 @@ names?all
       "address": "0x012233b3c8177f0778d910ed88170b82de3bfe57",
       "name": "Old ENS Registrar",
       "symbol": "",
-      "source": "Trueblocks.io",
+      "source": "TrueBlocks.io",
       "decimals": 0,
       "description": ""
     },
@@ -1217,9 +1217,9 @@ names?all
       "description": ""
     },
     {
-      "tags": "30-Contracts",
+      "tags": "90-Individuals:Other",
       "address": "0x020ca66c30bec2c4fe3861a94e4db4a498a35872",
-      "name": "BAYT Seller to BTeg",
+      "name": "Name 0x020ca66c",
       "symbol": "",
       "source": "",
       "decimals": 0,
@@ -1302,6 +1302,15 @@ names?all
       "address": "0x025d34acfd5c65cfd5a73209f99608c9e13338f3",
       "name": "Uniswap V2",
       "symbol": "UNI-V2",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x026224a2940bfe258d0dbe947919b62fe321f042",
+      "name": "lobsterdao",
+      "symbol": "LOBS",
       "source": "On chain",
       "decimals": 18,
       "description": ""
@@ -1569,6 +1578,15 @@ names?all
     },
     {
       "tags": "50-Tokens:ERC20",
+      "address": "0x031920cc2d9f5c10b444fd44009cd64f829e7be2",
+      "name": "CryptoZunks",
+      "symbol": "ZUNK",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
       "address": "0x0327112423f3a68efdf1fcf402f6c5cb9f7c33fd",
       "name": "PieDAO BTC++",
       "symbol": "BTC++",
@@ -1685,9 +1703,9 @@ names?all
       "description": ""
     },
     {
-      "tags": "30-Contracts",
+      "tags": "90-Individuals:Other",
       "address": "0x0385b3f162a0e001b60ecb84d3cb06199d78f666",
-      "name": "Argent: Relayer 2",
+      "name": "Name 0x0385b3f1",
       "symbol": "",
       "source": "EtherScan.io",
       "decimals": 0,
@@ -1791,24 +1809,6 @@ names?all
       "source": "TrueBlocks.io",
       "decimals": 0,
       "description": ""
-    },
-    {
-      "tags": "31-Gitcoin:Grants",
-      "address": "0x03c2bc72a3e007179e54ffb4563cc235bec8151a",
-      "name": "Grant 0600 Synthereum: Synthetic Assets with Liquidity Pools to Bridge Traditional and Digital Finance",
-      "symbol": "",
-      "source": "https://gitcoin.co/grants/600/synthereum-synthetic-assets-with-liquidity-pools-t",
-      "decimals": 0,
-      "description": "https://jarvis.network"
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x03c780cd554598592b97b7256ddaad759945b125",
-      "name": "BTRN",
-      "symbol": "BTRN",
-      "source": "On chain",
-      "decimals": 18,
-      "description": "Biotron is a fully transparent personal data analytics platform on blockchain."
     }
   ],
   "meta": {
