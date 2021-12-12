@@ -64,9 +64,8 @@ TIME ~ CLOCK - : 4-----  endBalCalc:    4200000000000000000000
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
 TIME ~ CLOCK - : 4-----Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 0 prior to its deployment 10042267
-TIME ~ CLOCK - <INFO>  : params.size: 0
-TIME ~ CLOCK - <INFO>  : 
-TIME ~ CLOCK - <INFO>  : ==================================================
+params.size: 0
+==================================================
 
 {
   "hash": "0x0",
@@ -153,9 +152,8 @@ TIME ~ CLOCK - : 4-----  endBalCalc:    74679320489077336
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
 TIME ~ CLOCK - : 4-----Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 202249 prior to its deployment 10042267
-TIME ~ CLOCK - <INFO>  : params.size: 0
-TIME ~ CLOCK - <INFO>  : 
-TIME ~ CLOCK - <INFO>  : ==================================================
+params.size: 0
+==================================================
 
 , {
   "hash": "0x6e443af86a84920cace198340020e4ca54321a2c515cd3ad1f274d3506b4aff8",
@@ -249,9 +247,8 @@ TIME ~ CLOCK - : 4-----  endBalCalc:    0
 TIME ~ CLOCK - : 4-----  endBalDiff:    0
 TIME ~ CLOCK - : 4-----  regular-recon: true
 TIME ~ CLOCK - : 4-----Calling a contract (0xa478c2975ab1ea89e8196811f51a7b7ade33eb11) at block 1501459 prior to its deployment 10042267
-TIME ~ CLOCK - <INFO>  : params.size: 0
-TIME ~ CLOCK - <INFO>  : 
-TIME ~ CLOCK - <INFO>  : ==================================================
+params.size: 0
+==================================================
 
 , {
   "hash": "0xe1822bdf66fb415883f85b61a4a5ab1c13c4c7ab4b102c5d00504347a69b84f5",
