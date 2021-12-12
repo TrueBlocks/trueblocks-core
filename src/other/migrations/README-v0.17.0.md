@@ -235,4 +235,4 @@ Please report any problems by creating an issue.
 
 ## Previous Migration
 
-[Click here](https://github.com/TrueBlocks/trueblocks-core/blob/develop/src/other/migrations/README-0.14.0.md) for the previous migration.
+[Click here](https://github.com/TrueBlocks/trueblocks-core/blob/develop/src/other/migrations/README-v0.14.0.md) for the previous migration.
