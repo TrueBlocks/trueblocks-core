@@ -8,7 +8,7 @@ TEST[DATE|TIME] Format:  json
     "source": "EtherScan.io"
   },
   {
-    "tags": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC721",
     "address": "0x0000000000001b84b1cb32787b0d64758d019317",
     "name": "HomeWork 🏠🛠️",
     "symbol": "HWK",
@@ -18,7 +18,7 @@ TEST[DATE|TIME] Format:  json
   {
     "tags": "50-Tokens:ERC20",
     "address": "0x0000000000004946c0e9f43f4dee607b0ef1fa1c",
-    "name": "1inch.exchange v2",
+    "name": "Chi Gastoken by 1inch",
     "symbol": "CHI",
     "source": "On chain",
     "decimals": 18
@@ -193,7 +193,7 @@ TEST[DATE|TIME] Format:  json
   {
     "tags": "60-Airdrops",
     "address": "0x000ee67d5bec37ad37292da18516cc96d81e0242",
-    "name": "RZM Airdrop Sender 2",
+    "name": "RZM Sender 2 Airdrop",
     "source": "TrueBlocks.io"
   },
   {
@@ -301,7 +301,7 @@ TEST[DATE|TIME] Format:  json
   {
     "tags": "60-Airdrops",
     "address": "0x00476aecb24edfed50aaf2e2361badbd8d3efdc2",
-    "name": "HEALP Airdrop Sender",
+    "name": "HEALP Sender Airdrop",
     "source": "EtherScan.io"
   },
   {
@@ -458,7 +458,7 @@ TEST[DATE|TIME] Format:  json
     "source": "https://gitcoin.co/grants/976/magical-machine-money"
   },
   {
-    "tags": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC721",
     "address": "0x00c396383400a1ef2eb401052dbf5d989b2da481",
     "name": "Cypher City",
     "symbol": "CYPHER",
@@ -495,7 +495,7 @@ TEST[DATE|TIME] Format:  json
   {
     "tags": "60-Airdrops",
     "address": "0x00cfbbaf7ddb3a1476767101c12a0162e241fbad",
-    "name": "Amber Airdrop Token",
+    "name": "Amber Token Airdrop",
     "source": "TrueBlocks.io"
   },
   {
@@ -531,13 +531,13 @@ TEST[DATE|TIME] Format:  json
   {
     "tags": "60-Airdrops",
     "address": "0x00ee337d1aa5229d92889ac27fc3841573590289",
-    "name": "VOS.AI Airdrop Sender",
+    "name": "VOS.AI Sender Airdrop",
     "source": "TrueBlocks.io"
   },
   {
     "tags": "60-Airdrops",
     "address": "0x00f78d023dd008c6e8bd3e16327466d58fb6b576",
-    "name": "XNN Airdrop Sender",
+    "name": "XNN Sender Airdrop",
     "source": "TrueBlocks.io"
   },
   {
@@ -610,7 +610,7 @@ TEST[DATE|TIME] Format:  json
     "source": "0xTracker"
   },
   {
-    "tags": "30-Contracts:Chainlink",
+    "tags": "37-SelfDestructed",
     "address": "0x0133aa47b6197d0ba090bf2cd96626eb71ffd13c",
     "name": "Chainlink BTC-ETH Aggregator",
     "source": "EtherScan.io"
@@ -862,7 +862,7 @@ TEST[DATE|TIME] Format:  json
     "decimals": 18
   },
   {
-    "tags": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC721",
     "address": "0x020171085bcd43b6fd36ad8c95ad61848b1211a2",
     "name": "yearn Gift NFT",
     "symbol": "yGIFT",
@@ -957,7 +957,7 @@ TEST[DATE|TIME] Format:  json
     "decimals": 18
   },
   {
-    "tags": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC721",
     "address": "0x026224a2940bfe258d0dbe947919b62fe321f042",
     "name": "lobsterdao",
     "symbol": "LOBS",
@@ -1051,7 +1051,7 @@ TEST[DATE|TIME] Format:  json
     "description": "https://twitter.com/EthCatHerders"
   },
   {
-    "tags": "30-Contracts:Chainlink",
+    "tags": "37-SelfDestructed",
     "address": "0x02d5c618dbc591544b19d0bf13543c0728a3c4ec",
     "name": "Chainlink CHF-USD Aggregator",
     "source": "EtherScan.io"
@@ -1173,7 +1173,7 @@ TEST[DATE|TIME] Format:  json
     "source": "EtherScan.io"
   },
   {
-    "tags": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC721",
     "address": "0x031920cc2d9f5c10b444fd44009cd64f829e7be2",
     "name": "CryptoZunks",
     "symbol": "ZUNK",
@@ -1195,7 +1195,7 @@ TEST[DATE|TIME] Format:  json
     "source": "EtherScan.io"
   },
   {
-    "tags": "50-Tokens:ERC20",
+    "tags": "50-Tokens:ERC721",
     "address": "0x032dd2a3c6d234aa9620d65eb618fcdc72be3dbb",
     "name": "HashDemons",
     "symbol": "HASHDEMONS",
@@ -1263,7 +1263,7 @@ TEST[DATE|TIME] Format:  json
     "source": "https://gitcoin.co/grants/3059/co2ken-carbon-as-a-money-lego"
   },
   {
-    "tags": "30-Contracts:Chainlink",
+    "tags": "37-SelfDestructed",
     "address": "0x037e8f2125bf532f3e228991e051c8a7253b642c",
     "name": "Chainlink DAI-ETH Aggregator",
     "source": "EtherScan.io"

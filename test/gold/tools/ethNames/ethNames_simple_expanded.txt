@@ -15,7 +15,7 @@ TEST[DATE|TIME] NoHeader:  true
 50-Tokens:ERC20	0x0a913bead80f321e7ac35285ee10d9d922659cb7	DOS Network Token	DOS	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x0abdace70d3790235af448c88547603b945604ea	district0x Network Token	DNT	On chain	18	A network of decentralized markets and communities. Create, operate, and govern. Powered by Ethereum, Aragon, and IPFS.	false	false	false	true	true	false
 50-Tokens:ERC20	0x0bc61dded5f6710c637cf8288eb6058766ce1921	CEN	CEN	On chain	18	Connecting the Financial World Coinsuper Ecosystem Network	false	false	false	true	true	false
-50-Tokens:ERC20	0x0cf0ee63788a0849fe5297f3407f701e122cc023	Streamr DATAcoin	XDATA	On chain	18	Streamr is building the world‚Äö√Ñ√¥s leading Marketplace and decentralised Network for real-time data.	false	false	false	true	true	false
+50-Tokens:ERC20	0x0cf0ee63788a0849fe5297f3407f701e122cc023	Streamr (old)	XDATA	On chain	18	Streamr is building the world‚Äö√Ñ√¥s leading Marketplace and decentralised Network for real-time data.	false	false	false	true	true	false
 50-Tokens:ERC20	0x0ea984e789302b7b612147e4e4144e64f21425eb	WaleTokeN	WTN	On chain	8	Wal-e is social media project behind of WaleTokeN, we developing Live video streaming social network application, this application will allowed you connect with people through live videos and messaging.	false	false	false	true	true	false
 50-Tokens:ERC20	0x0f7f961648ae6db43c75663ac7e5414eb79b5704	XIO Network	XIO	On chain	18		false	false	false	true	true	false
 31-Gitcoin:Grants	0x1074f62d7019c3184a2f7ea8c6a8acd6780beb48	Grant 0083 Poa Network Community Management Grant for Adj		https://gitcoin.co/grants/83/poa-network-community-management-grant-for-adj			false	false	false	false	false	false
@@ -83,7 +83,7 @@ TEST[DATE|TIME] NoHeader:  true
 50-Tokens:ERC20	0x679131f591b4f369acb8cd8c51e68596806c3916	Trustlines Network Token	TLN	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x67b6d479c7bb412c54e03dca8e1bc6740ce6b99c	Kylin Network	KYL	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x6810e776880c02933d47db1b9fc05908e5386b96	Gnosis Token	GNO	On chain	18	Crowd Sourced Wisdom - the next generation blockchain network. Speculate on anything with an easy-to-use prediction market	false	false	false	true	true	false
-50-Tokens:ERC20	0x69af81e73a73b40adf4f3d4223cd9b1ece623074	Mask Network: MASK Token	MASK	On chain	18		false	false	false	true	true	false
+50-Tokens:ERC20	0x69af81e73a73b40adf4f3d4223cd9b1ece623074	Mask Network	MASK	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x6b193e107a773967bd821bcf8218f3548cfa2503	Posscoin	POSS	On chain	18	Posscoin is an innovative payment network and a new kind of money.	false	false	false	true	true	false
 50-Tokens:ERC20	0x6ba460ab75cd2c56343b3517ffeba60748654d26	UpToken	UP	On chain	8	crypto ATM network	false	false	false	true	true	false
 50-Tokens:ERC20	0x6ec8a24cabdc339a06a172f8223ea557055adaa5	Genaro X	GNX	On chain	9	The Genaro Network is the first Turing-complete public blockchain combining peer-to-peer storage with a sustainable consensus mechanism. Genaro's mixed consensus uses SPoR and PoS, ensuring stronger performance and security.	false	false	false	true	true	false
@@ -122,7 +122,7 @@ TEST[DATE|TIME] NoHeader:  true
 50-Tokens:ERC20	0x960b236a07cf122663c4303350609a66a7b288c0	Aragon Network Token	ANT	On chain	18	Create and manage unstoppable organizations. Aragon lets you manage entire organizations using the blockchain. This makes Aragon organizations more efficient than their traditional counterparties.	false	false	false	true	true	false
 30-Contracts:Kyber Network	0x9ae49c0d7f8f9ef4b864e004fe86ac8294e20950	Kyber Network		0xTracker			false	false	false	true	false	false
 31-Gitcoin:Grants	0x9c159121ceebf937e9bad98fd0c895d7f6038bd4	Grant 0565 Our Network - Community Driven Analytics		https://gitcoin.co/grants/565/our-network-community-driven-analytics			false	false	false	false	false	false
-50-Tokens:ERC20	0x9dd91d61a7aa58537fcdbf16fd21be25731341b3	Opium Network Position Token	ONP	On chain	18		false	false	false	true	true	true
+50-Tokens:ERC721	0x9dd91d61a7aa58537fcdbf16fd21be25731341b3	Opium Network Position Token	ONP	On chain	18		false	false	false	true	true	true
 50-Tokens:ERC20	0xa117000000f279d81a1d3cc75430faa017fa5a2e	Aragon Network Token	ANT	On chain	18		false	false	false	true	true	false
 31-Gitcoin:Grants	0xa1381b40e0a6b91814f77de19a7ad2cb21753184	Grant 0334 Interstate Network EVM optimistic rollup		https://gitcoin.co/grants/334/interstate-network-evm-generic-optimistic-rollups		https://www.interstate.network	false	false	false	false	false	false
 50-Tokens:ERC20	0xa4ea687a2a7f29cf2dc66b39c68e4411c0d00c49	IvyKoin Public Network Tokens	IVY	On chain	18	Ivy is a blockchain-based technology for FIAT cryptocurrency business transactions. the Ivy network utilizes IVY tokens which carry KYC KYT data points critical for Financial Institution validation.	false	false	false	true	true	false

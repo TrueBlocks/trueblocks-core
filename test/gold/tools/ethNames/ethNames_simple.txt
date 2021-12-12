@@ -47,7 +47,7 @@ tags	address	name	symbol	decimals
 31-Gitcoin:Grants	0x66aa8bee5366b6b48811ae0dac9fe5e1eefe1621	Grant 0049 Blockchain Education Network (ben)
 50-Tokens:ERC20	0x679131f591b4f369acb8cd8c51e68596806c3916	Trustlines Network Token	TLN		18
 50-Tokens:ERC20	0x67b6d479c7bb412c54e03dca8e1bc6740ce6b99c	Kylin Network	KYL		18
-50-Tokens:ERC20	0x69af81e73a73b40adf4f3d4223cd9b1ece623074	Mask Network: MASK Token	MASK		18
+50-Tokens:ERC20	0x69af81e73a73b40adf4f3d4223cd9b1ece623074	Mask Network	MASK		18
 50-Tokens:ERC20	0x6fb3e0a217407efff7ca062d46c26e5d60a14d69	IoTeX Network	IOTX		18
 50-Tokens:ERC20	0x6fff3806bbac52a20e0d79bc538d527f6a22c96b	Network			18
 50-Tokens:ERC20	0x70861e862e1ac0c96f853c8231826e469ead37b1	DOS Network Token	DOS		18
@@ -70,7 +70,7 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x960b236a07cf122663c4303350609a66a7b288c0	Aragon Network Token	ANT		18
 30-Contracts:Kyber Network	0x9ae49c0d7f8f9ef4b864e004fe86ac8294e20950	Kyber Network
 31-Gitcoin:Grants	0x9c159121ceebf937e9bad98fd0c895d7f6038bd4	Grant 0565 Our Network - Community Driven Analytics
-50-Tokens:ERC20	0x9dd91d61a7aa58537fcdbf16fd21be25731341b3	Opium Network Position Token	ONP		18
+50-Tokens:ERC721	0x9dd91d61a7aa58537fcdbf16fd21be25731341b3	Opium Network Position Token	ONP		18
 50-Tokens:ERC20	0xa117000000f279d81a1d3cc75430faa017fa5a2e	Aragon Network Token	ANT		18
 31-Gitcoin:Grants	0xa1381b40e0a6b91814f77de19a7ad2cb21753184	Grant 0334 Interstate Network EVM optimistic rollup
 50-Tokens:ERC20	0xa4ea687a2a7f29cf2dc66b39c68e4411c0d00c49	IvyKoin Public Network Tokens	IVY		18
