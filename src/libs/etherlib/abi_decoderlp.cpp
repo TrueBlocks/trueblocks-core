@@ -28,7 +28,7 @@ string_q prettyPrintParams(const CParameterArray& params) {
     ostringstream os;
     string_q indnt = substitute(string_q(level == 0 ? 0 : level - 1, '\t'), "\t", " ");
     uint64_t cnt = 0;
-    cerr << indnt << "params.size: " << params.size() << endl;
+    LOG_INFO(indnt, "params.size: ", params.size());
     for (auto param : params) {
         os << indnt << padNum3T(cnt) << ": " << param.type << (param.name.empty() ? "" : " " + param.name);
         os << " = " << (param.value.empty() ? "<>" : param.value) << endl;
@@ -52,24 +52,24 @@ void prettyPrint(CParameterArray& params, const CStringArray& dataArray, const s
 
     string_q indnt = substitute(string_q(level == 0 ? 0 : level - 1, '\t'), "\t", " ");
     if (level == 1)
-        cerr << endl;
-    cerr << indnt << "level: " << level << endl;
-    cerr << indnt << "readOffset: " << readOffset << endl;
-    cerr << indnt << "objectStart: " << objectStart << endl;
-    cerr << prettyPrintParams(params);
+        LOG_INFO("");
+    LOG_INFO(indnt, "level: ", level);
+    LOG_INFO(indnt, "readOffset: ", readOffset);
+    LOG_INFO(indnt, "objectStart: ", objectStart);
+    LOG_INFO(prettyPrintParams(params));
 
     uint64_t cnt = 0;
-    cerr << indnt << "dataArray.size: " << dataArray.size() << endl;
+    LOG_INFO(indnt, "dataArray.size: ", dataArray.size());
     for (auto data : dataArray) {
         size_t pos1 = min((size_t)16, data.size());
         size_t pos2 = min((size_t)32, data.size());
-        cerr << indnt << padNum3T(cnt) << " (0x" << (padLeft(substitute(uint_2_Hex(cnt * 32), "0x", ""), 3, '0'))
-             << ") " << data.substr(0, pos1) + "..." + data.substr(data.size() - pos2, data.size());
+        LOG_INFO(indnt, padNum3T(cnt), " (0x", (padLeft(substitute(uint_2_Hex(cnt * 32), "0x", ""), 3, '0')), ") ",
+                 (data.substr(0, pos1) + "..." + data.substr(data.size() - pos2, data.size())));
         if (cnt == objectStart)
-            cerr << " <=o";
+            LOG_INFO(" <=o");
         if (cnt == readOffset)
-            cerr << " <-r";
-        cerr << endl;
+            LOG_INFO(" <-r");
+        LOG_INFO("");
         cnt++;
     }
 }
@@ -86,15 +86,15 @@ void prettyPrint(CParameterArray& params, const CStringArray& dataArray, const s
 //------------------------------------------------------------------------------------------------
 #define SECTION_START(a, b)                                                                                            \
     if (isTestMode()) {                                                                                                \
-        cerr << endl;                                                                                                  \
-        cerr << string_q(50, '=') << endl;                                                                             \
+        LOG_INFO("");                                                                                                  \
+        LOG_INFO(string_q(50, '='));                                                                                   \
         LOG_TEST(string_q("Section-") + (a) + ":(" + (b) + ")", param.type, false);                                    \
     }
 
 //------------------------------------------------------------------------------------------------
 #define LOG_TEST_PARAMS(p)                                                                                             \
     if (isTestMode()) {                                                                                                \
-        cerr << prettyPrintParams((p));                                                                                \
+        LOG_INFO(prettyPrintParams((p)));                                                                              \
     }
 
 //------------------------------------------------------------------------------------------------
@@ -659,7 +659,7 @@ bool decodeRLP(CParameterArray& params, const string_q& typeListIn, const string
     auto ret = decodeAnObject(params, inputs, readOffset, objectStart);
     LOG_TEST_PARAMS(params);
     if (isTestMode()) {
-        cerr << string_q(50, '=') << endl << endl;
+        LOG_INFO(string_q(50, '='), "\n");
     }
 
     return ret;

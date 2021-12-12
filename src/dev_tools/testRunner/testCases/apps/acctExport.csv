@@ -62,6 +62,7 @@ on      ,both ,fast  ,export   ,apps/acctExport ,transfer_topics          ,y    
 
 on      ,both ,fast  ,export   ,apps/acctExport ,accounting_wei_1         ,y    ,addrs = 0x001d14804b399c6ef80e64576f657660804fec0b & max_records = 5 & accounting & fmt = api & log_level = 10
 on      ,both ,fast  ,export   ,apps/acctExport ,accounting_wei_2         ,y    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & max_records = 15 & accounting & fmt = api & log_level = 10
+on      ,cmd  ,fast  ,export   ,apps/acctExport ,statements_wei_2         ,y    ,addrs = 0x05a56e2d52c817161883f50c441c3228cfe54d9f & max_records = 15 & statements & fmt = csv
 on      ,both ,fast  ,export   ,apps/acctExport ,accounting_invalid1      ,y    ,addrs = 0x00a3819199113fc6a6e6ba1298afde7377e2009b & max_records = 30 & fmt = json & summarize_by = tx
 on      ,both ,fast  ,export   ,apps/acctExport ,accounting_invalid2      ,y    ,addrs = 0x00a3819199113fc6a6e6ba1298afde7377e2009b & max_records = 30 & fmt = json & summarize_by = jimp
 
