@@ -14,7 +14,8 @@
 
 static const string_q erc721QueryBytes = "0x" + padRight(substitute(_INTERFACE_ID_ERC721, "0x", ""), 64, '0');
 inline bool isErc721(const address_t& addr, const CAbi& abi_spec, blknum_t latest) {
-    return str_2_Bool(getTokenState(addr, "supportsInterface", abi_spec, latest, erc721QueryBytes));
+    string_q val = getTokenState(addr, "supportsInterface", abi_spec, latest, erc721QueryBytes);
+    return val == "T" || val == "true";
 }
 
 //--------------------------------------------------------------------
@@ -34,15 +35,12 @@ bool COptions::finishClean(CAccountName& account) {
         account.description = "";
     account.description = trim(substitute(account.description.substr(0, 255), "  ", " "));
 
-    // Clean up name and symbol
-    account.name = trim(substitute(account.name, "  ", " "));
-    account.symbol = trim(substitute(account.symbol, "  ", " "));
-
     // Are we a pre-fund?
     account.isPrefund = expContext().prefundMap[account.address] > 0;
 
     bool wasContract = account.isContract;
     bool isContract = isContractAt(account.address, latestBlock);
+    bool isAirdrop = containsI(account.name, "airdrop") || containsI(account.tags, "airdrop");
 
     if (!isContract) {
         // If the tag is not empty and not 30-Contracts, perserve it. Otherwise it's an individual
@@ -59,12 +57,16 @@ bool COptions::finishClean(CAccountName& account) {
 
         // ...let's see if it's an ERC20...
         string_q name = getTokenState(account.address, "name", abi_spec, latestBlock);
+        if (countOf(name, '-') > 3) {
+            // some sort of hacky renaming for Kickback
+            name = account.name;
+        }
         string_q symbol = getTokenState(account.address, "symbol", abi_spec, latestBlock);
         uint64_t decimals = str_2_Uint(getTokenState(account.address, "decimals", abi_spec, latestBlock));
 
         if (!name.empty() || !symbol.empty() || decimals > 0) {
             account.isErc20 = true;
-            account.source = "On chain";
+            account.source = account.source.empty() ? "On chain" : account.source;
 
             // Use the values from on-chain if we can...
             account.name = (!name.empty() ? name : account.name);
@@ -77,22 +79,26 @@ bool COptions::finishClean(CAccountName& account) {
             } else {
                 // This is an ERC20, so if we've not tagged it specifically, make it thus
                 if (account.tags.empty() || containsI(account.tags, "token") ||
-                    containsI(account.tags, "30-contracts") || containsI(account.tags, "55-defi")) {
+                    containsI(account.tags, "30-contracts") || containsI(account.tags, "55-defi") || isAirdrop) {
                     account.tags = "50-Tokens:ERC20";
                 }
             }
 
-            // Special case where we've already identified an address as an airdrop
-            if (containsI(account.name, "airdrop") || containsI(account.tags, "airdrop")) {
-                replaceAll(account.name, "airdrop", "");
-                replaceAll(account.name, "Airdrop", "");
-                account.name += substitute(account.name + " Airdrop", "  ", " ");
-            }
         } else {
             account.isErc20 = false;
-            account.tags = "Unknown: " + account.tags;
+            account.isErc721 = false;
         }
     }
+
+    if (isAirdrop) {
+        replaceAll(account.name, " airdrop", "");
+        replaceAll(account.name, " Airdrop", "");
+        account.name = account.name + " Airdrop";
+    }
+
+    // Clean up name and symbol
+    account.name = trim(substitute(account.name, "  ", " "));
+    account.symbol = trim(substitute(account.symbol, "  ", " "));
 
     return !account.name.empty();
 }
@@ -123,7 +129,7 @@ bool COptions::cleanNames(const string_q& sourceIn, const string_q& destIn) {
     while (name.parseText(fields, contents)) {
         LOG_INFO("Cleaning ", ++cnt, " of ", nRecords, ": ", name.address, "                                  \r");
         if (!finishClean(name))
-            return true;
+            continue;
         names.push_back(name);
     }
 
