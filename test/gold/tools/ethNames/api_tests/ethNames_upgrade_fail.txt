@@ -11,7 +11,7 @@ names?fmt=json
       "description": ""
     },
     {
-      "tags": "50-Tokens:ERC721",
+      "tags": "50-Tokens:ERC20",
       "address": "0x0000000000001b84b1cb32787b0d64758d019317",
       "name": "HomeWork 🏠🛠️",
       "symbol": "HWK",
@@ -623,7 +623,7 @@ names?fmt=json
       "description": ""
     },
     {
-      "tags": "50-Tokens:ERC721",
+      "tags": "50-Tokens:ERC20",
       "address": "0x00c396383400a1ef2eb401052dbf5d989b2da481",
       "name": "Cypher City",
       "symbol": "CYPHER",
@@ -830,7 +830,7 @@ names?fmt=json
       "description": ""
     },
     {
-      "tags": "37-SelfDestructed",
+      "tags": "30-Contracts:Chainlink",
       "address": "0x0133aa47b6197d0ba090bf2cd96626eb71ffd13c",
       "name": "Chainlink BTC-ETH Aggregator",
       "symbol": "",
@@ -1154,7 +1154,7 @@ names?fmt=json
       "description": ""
     },
     {
-      "tags": "50-Tokens:ERC721",
+      "tags": "50-Tokens:ERC20",
       "address": "0x020171085bcd43b6fd36ad8c95ad61848b1211a2",
       "name": "yearn Gift NFT",
       "symbol": "yGIFT",
@@ -1271,7 +1271,7 @@ names?fmt=json
       "description": ""
     },
     {
-      "tags": "50-Tokens:ERC721",
+      "tags": "50-Tokens:ERC20",
       "address": "0x026224a2940bfe258d0dbe947919b62fe321f042",
       "name": "lobsterdao",
       "symbol": "LOBS",
@@ -1388,7 +1388,7 @@ names?fmt=json
       "description": "https://twitter.com/EthCatHerders"
     },
     {
-      "tags": "37-SelfDestructed",
+      "tags": "30-Contracts:Chainlink",
       "address": "0x02d5c618dbc591544b19d0bf13543c0728a3c4ec",
       "name": "Chainlink CHF-USD Aggregator",
       "symbol": "",
@@ -1541,7 +1541,7 @@ names?fmt=json
       "description": ""
     },
     {
-      "tags": "50-Tokens:ERC721",
+      "tags": "50-Tokens:ERC20",
       "address": "0x031920cc2d9f5c10b444fd44009cd64f829e7be2",
       "name": "CryptoZunks",
       "symbol": "ZUNK",
@@ -1568,7 +1568,7 @@ names?fmt=json
       "description": ""
     },
     {
-      "tags": "50-Tokens:ERC721",
+      "tags": "50-Tokens:ERC20",
       "address": "0x032dd2a3c6d234aa9620d65eb618fcdc72be3dbb",
       "name": "HashDemons",
       "symbol": "HASHDEMONS",
@@ -1649,7 +1649,7 @@ names?fmt=json
       "description": ""
     },
     {
-      "tags": "37-SelfDestructed",
+      "tags": "30-Contracts:Chainlink",
       "address": "0x037e8f2125bf532f3e228991e051c8a7253b642c",
       "name": "Chainlink DAI-ETH Aggregator",
       "symbol": "",

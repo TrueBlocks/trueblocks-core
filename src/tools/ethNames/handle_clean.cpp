@@ -12,73 +12,87 @@
  *-------------------------------------------------------------------------------------------*/
 #include "options.h"
 
+static const string_q erc721QueryBytes = "0x" + padRight(substitute(_INTERFACE_ID_ERC721, "0x", ""), 64, '0');
+inline bool isErc721(const address_t& addr, const CAbi& abi_spec, blknum_t latest) {
+    return str_2_Bool(getTokenState(addr, "supportsInterface", abi_spec, latest, erc721QueryBytes));
+}
+
 //--------------------------------------------------------------------
 bool COptions::finishClean(CAccountName& account) {
     if (account.tags > "799999")  // tags named higher than or equal to 80 are hand edited
         return true;
 
+    // Clean up source
+    if (containsI(account.source, "etherscan"))
+        account.source = "EtherScan.io";
+    if (containsI(account.source, "trueblocks"))
+        account.source = "TrueBlocks.io";
+    account.source = trim(substitute(account.source, "  ", " "));
+
+    // Clean up and time the description
+    if (account.description == "false")
+        account.description = "";
+    account.description = trim(substitute(account.description.substr(0, 255), "  ", " "));
+
+    // Clean up name and symbol
+    account.name = trim(substitute(account.name, "  ", " "));
+    account.symbol = trim(substitute(account.symbol, "  ", " "));
+
+    // Are we a pre-fund?
+    account.isPrefund = expContext().prefundMap[account.address] > 0;
+
     bool wasContract = account.isContract;
     bool isContract = isContractAt(account.address, latestBlock);
-    if (isContract) {
+
+    if (!isContract) {
+        // If the tag is not empty and not 30-Contracts, perserve it. Otherwise it's an individual
+        account.tags = !account.tags.empty() && account.tags != "30-Contracts" ? account.tags : "90-Individuals:Other";
+        if (wasContract) {
+            // This used to be a contract and now is not, so it must be a self destruct
+            account.isContract = true;
+            account.tags = "37-SelfDestructed";
+        }
+
+    } else {
+        // This is a contract...
         account.isContract = true;
+
+        // ...let's see if it's an ERC20...
         string_q name = getTokenState(account.address, "name", abi_spec, latestBlock);
         string_q symbol = getTokenState(account.address, "symbol", abi_spec, latestBlock);
         uint64_t decimals = str_2_Uint(getTokenState(account.address, "decimals", abi_spec, latestBlock));
 
-        account.isErc20 = !name.empty() || !symbol.empty() || decimals > 0;
-        if (account.isErc20) {
-            account.decimals = decimals ? decimals : 18;
-            account.symbol = (symbol.empty() ? account.symbol : symbol);
+        if (!name.empty() || !symbol.empty() || decimals > 0) {
+            account.isErc20 = true;
+            account.source = "On chain";
 
-            bool isEtherscan = contains(toLower(account.source), "etherscan");
-            bool isTrueblocks = contains(toLower(account.source), "trueblocks");
-            if (account.source.empty() || isEtherscan || isTrueblocks) {
-                // if the data is from us or etherscan or doesn't exist, fix it if we can
-                if (name.empty())
-                    name = account.name;
-                bool isAirdrop =
-                    contains(toLower(account.name), "airdrop") || contains(toLower(account.tags), "airdrop");
-                account.name = name + (isAirdrop && !contains(toLower(name), "airdrop") ? " Airdrop" : "");
-                account.source = "On chain";
-            }
-
-            string_q bytes = "0x" + padRight(substitute(_INTERFACE_ID_ERC721, "0x", ""), 64, '0');
-            account.isErc721 =
-                str_2_Bool(getTokenState(account.address, "supportsInterface", abi_spec, latestBlock, bytes));
-
-            if (account.isErc721 && !startsWith(account.tags, '9')) {
+            // Use the values from on-chain if we can...
+            account.name = (!name.empty() ? name : account.name);
+            account.symbol = (!symbol.empty() ? symbol : account.symbol);
+            account.decimals = decimals ? decimals : (account.decimals ? account.decimals : 18);
+            account.isErc721 = isErc721(account.address, abi_spec, latestBlock);
+            if (account.isErc721) {
                 account.tags = "50-Tokens:ERC721";
 
             } else {
-                string_q lTag = toLower(account.tags);
-                bool maybe = (account.tags.empty() || contains(lTag, "token") || contains(lTag, "30-contracts") ||
-                              contains(lTag, "55-defi"));
-                account.tags = maybe ? (account.isErc721 ? "50-Tokens:ERC721" : "50-Tokens:ERC20") : account.tags;
+                // This is an ERC20, so if we've not tagged it specifically, make it thus
+                if (account.tags.empty() || containsI(account.tags, "token") ||
+                    containsI(account.tags, "30-contracts") || containsI(account.tags, "55-defi")) {
+                    account.tags = "50-Tokens:ERC20";
+                }
             }
-        }
-    } else {
-        if (wasContract) {
-            account.isContract = true;
-            account.tags = "37-SelfDestructed";
+
+            // Special case where we've already identified an address as an airdrop
+            if (containsI(account.name, "airdrop") || containsI(account.tags, "airdrop")) {
+                replaceAll(account.name, "airdrop", "");
+                replaceAll(account.name, "Airdrop", "");
+                account.name += substitute(account.name + " Airdrop", "  ", " ");
+            }
         } else {
-            account.tags =
-                account.tags.empty() || account.tags == "30-Contracts" ? "90-Individuals:Other" : account.tags;
+            account.isErc20 = false;
+            account.tags = "Unknown: " + account.tags;
         }
     }
-
-    if (contains(toLower(account.source), "etherscan"))
-        account.source = "EtherScan.io";
-    if (contains(toLower(account.source), "trueblocks"))
-        account.source = "TrueBlocks.io";
-
-    account.name = trim(substitute(account.name, "  ", " "));
-    account.symbol = trim(substitute(account.symbol, "  ", " "));
-    account.source = trim(substitute(account.source, "  ", " "));
-    account.description = trim(substitute(account.description, "  ", " "));
-    if (account.description == "false")
-        account.description = "";
-
-    account.isPrefund = expContext().prefundMap[account.address] > 0;
 
     return !account.name.empty();
 }

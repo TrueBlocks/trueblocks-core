@@ -23,7 +23,6 @@ tags
 31-Gitcoin:Workstreams
 34-ENS
 37-Bridges
-37-SelfDestructed
 39-Yearn
 40-Exchanges
 50-Tokens:ERC20
