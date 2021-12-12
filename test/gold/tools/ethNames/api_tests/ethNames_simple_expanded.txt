@@ -1803,7 +1803,7 @@ names?terms=etwork&expand&noHeader
     },
     {
       "deleted": false,
-      "tags": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC721",
       "address": "0x9dd91d61a7aa58537fcdbf16fd21be25731341b3",
       "name": "Opium Network Position Token",
       "symbol": "ONP",
@@ -2694,7 +2694,7 @@ names?terms=etwork&expand&noHeader
       "symbol": "HBZ",
       "source": "On chain",
       "decimals": 18,
-      "description": "HBZ is a cryptocurrency and blockchain based transportation ecosystem to seamlessly offer transportation globally from scooters and cars to tolls and international flights through a partner network with ease, full transparency while users maintain full ownership of their personal data.",
+      "description": "HBZ is a cryptocurrency and blockchain based transportation ecosystem to seamlessly offer transportation globally from scooters and cars to tolls and international flights through a partner network with ease, full transparency while users maintain full ow",
       "isCustom": false,
       "isPrefund": false,
       "isContract": true,

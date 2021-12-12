@@ -623,7 +623,7 @@ names?terms=etwork&verbose
       "description": ""
     },
     {
-      "tags": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC721",
       "address": "0x9dd91d61a7aa58537fcdbf16fd21be25731341b3",
       "name": "Opium Network Position Token",
       "symbol": "ONP",

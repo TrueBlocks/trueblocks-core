@@ -3,7 +3,7 @@ names?terms=50-Tokens&expand
   "data": [
     {
       "deleted": false,
-      "tags": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC721",
       "address": "0x0000000000001b84b1cb32787b0d64758d019317",
       "name": "HomeWork 🏠🛠️",
       "symbol": "HWK",
@@ -303,7 +303,7 @@ names?terms=50-Tokens&expand
     },
     {
       "deleted": false,
-      "tags": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC721",
       "address": "0x00c396383400a1ef2eb401052dbf5d989b2da481",
       "name": "Cypher City",
       "symbol": "CYPHER",
@@ -648,7 +648,7 @@ names?terms=50-Tokens&expand
     },
     {
       "deleted": false,
-      "tags": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC721",
       "address": "0x020171085bcd43b6fd36ad8c95ad61848b1211a2",
       "name": "yearn Gift NFT",
       "symbol": "yGIFT",
@@ -783,7 +783,7 @@ names?terms=50-Tokens&expand
     },
     {
       "deleted": false,
-      "tags": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC721",
       "address": "0x026224a2940bfe258d0dbe947919b62fe321f042",
       "name": "lobsterdao",
       "symbol": "LOBS",
@@ -1023,7 +1023,7 @@ names?terms=50-Tokens&expand
     },
     {
       "deleted": false,
-      "tags": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC721",
       "address": "0x031920cc2d9f5c10b444fd44009cd64f829e7be2",
       "name": "CryptoZunks",
       "symbol": "ZUNK",
@@ -1053,7 +1053,7 @@ names?terms=50-Tokens&expand
     },
     {
       "deleted": false,
-      "tags": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC721",
       "address": "0x032dd2a3c6d234aa9620d65eb618fcdc72be3dbb",
       "name": "HashDemons",
       "symbol": "HASHDEMONS",
@@ -1608,7 +1608,7 @@ names?terms=50-Tokens&expand
     },
     {
       "deleted": false,
-      "tags": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC721",
       "address": "0x05759c209466eeb5f1a2b3ea8d8650e4053d1047",
       "name": "RarePunks",
       "symbol": "RAREPUNK",
@@ -1863,7 +1863,7 @@ names?terms=50-Tokens&expand
     },
     {
       "deleted": false,
-      "tags": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC721",
       "address": "0x066f2d5ead7951f0d0038c19affd500b9f02c0e5",
       "name": "CryptoJanky",
       "symbol": "JNK",
@@ -2013,7 +2013,7 @@ names?terms=50-Tokens&expand
     },
     {
       "deleted": false,
-      "tags": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC721",
       "address": "0x06d0c38101563c17cabeab96e24d72b27e5cf617",
       "name": "Ｌｅｆｔｏｖｅｒｓｔｅａｋ",
       "symbol": "LOST",
@@ -2418,7 +2418,7 @@ names?terms=50-Tokens&expand
     },
     {
       "deleted": false,
-      "tags": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC721",
       "address": "0x07e5ce0f8fa46031a1dcc8cb2530f0a52019830d",
       "name": "SameToadz",
       "symbol": "TOADZ",
@@ -2643,7 +2643,7 @@ names?terms=50-Tokens&expand
     },
     {
       "deleted": false,
-      "tags": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC721",
       "address": "0x08bebeb5f042ccbaeb128582da560cb25a5db7e9",
       "name": "TheWonderQuest",
       "symbol": "TWQ",
@@ -2808,7 +2808,7 @@ names?terms=50-Tokens&expand
     },
     {
       "deleted": false,
-      "tags": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC721",
       "address": "0x09caa2563c1cb6e8f18e643ad78f659604265406",
       "name": "LaserCats",
       "symbol": "LaserCats",
