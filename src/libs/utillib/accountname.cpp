@@ -141,10 +141,12 @@ bool CAccountName::setValueByName(const string_q& fieldNameIn, const string_q& f
     string_q fieldValue = fieldValueIn;
 
     // EXISTING_CODE
-    if (fieldName % "address")
-        fieldValue = toLower(fieldValue);
     if (CBaseNode::setValueByName(fieldNameIn, fieldValueIn))
         return true;
+    if (fieldName % "address")
+        fieldValue = toLower(fieldValue);
+    else if (fieldName % "description")
+        fieldValue = fieldValue.substr(0, 255);
     // EXISTING_CODE
 
     switch (tolower(fieldName[0])) {

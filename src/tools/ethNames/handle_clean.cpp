@@ -14,11 +14,13 @@
 
 //--------------------------------------------------------------------
 bool COptions::finishClean(CAccountName& account) {
-    if (startsWith(account.tags, "80-Malicious"))
+    if (account.tags > "799999")  // tags named higher than or equal to 80 are hand edited
         return true;
 
-    account.isContract = isContractAt(account.address, latestBlock) || account.isContract;
-    if (account.isContract) {
+    bool wasContract = account.isContract;
+    bool isContract = isContractAt(account.address, latestBlock);
+    if (isContract) {
+        account.isContract = true;
         string_q name = getTokenState(account.address, "name", abi_spec, latestBlock);
         string_q symbol = getTokenState(account.address, "symbol", abi_spec, latestBlock);
         uint64_t decimals = str_2_Uint(getTokenState(account.address, "decimals", abi_spec, latestBlock));
@@ -55,7 +57,13 @@ bool COptions::finishClean(CAccountName& account) {
             }
         }
     } else {
-        account.tags = account.tags.empty() || account.tags == "30-Contracts" ? "90-Individuals:Other" : account.tags;
+        if (wasContract) {
+            account.isContract = true;
+            account.tags = "37-SelfDestructed";
+        } else {
+            account.tags =
+                account.tags.empty() || account.tags == "30-Contracts" ? "90-Individuals:Other" : account.tags;
+        }
     }
 
     if (contains(toLower(account.source), "etherscan"))
@@ -71,7 +79,8 @@ bool COptions::finishClean(CAccountName& account) {
         account.description = "";
 
     account.isPrefund = expContext().prefundMap[account.address] > 0;
-    return true;
+
+    return !account.name.empty();
 }
 
 //--------------------------------------------------------------------
