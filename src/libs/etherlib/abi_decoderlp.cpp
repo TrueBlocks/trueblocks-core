@@ -229,10 +229,10 @@ size_t decodeAnObject(CParameterArray& params, const CStringArray& dataArray, si
                 uint64_t maxBytes = nBytes;
                 size_t nItems = (nBytes / 32) + 1;
                 if (nItems > dataArray.size()) {  // some of the data sent in may be bogus, so we protext ourselves
-                    LOG_DECODE_ERR("4", "nItems", nItems, ">", "dataArray.size", dataArray.size());
+                    LOG_DECODE_ERR("4", "nItems too big --> nItems", nItems, ">", "dataArray.size", dataArray.size());
                     LOG_TEST_PARAMS(params);
                     level--;
-                    return true;
+                    return false;
                 }
 
                 for (size_t w = 0; w < nItems; w++) {
@@ -614,8 +614,14 @@ bool decodeRLP(CParameterArray& params, const string_q& typeListIn, const string
         // If we don't find a parsing function directly from the user provided typeList, we try to build
         // a typeList from the supplied parameter array...
         typeList = "";
-        for (auto i : params)
-            typeList += (i.type + ",");
+        for (auto p : params) {
+            ostringstream unused;
+            unused << p;
+            // Major hack because our code doesn't parse all ABI files (especially those with tuples)
+            if (contains(unused.str(), "unparsable"))
+                return false;
+            typeList += (p.type + ",");
+        }
         typeList = trim(typeList, ',');
         func = parseMap[typeList];
     }
@@ -657,28 +663,11 @@ bool decodeRLP(CParameterArray& params, const string_q& typeListIn, const string
 
     size_t readOffset = 0;
     size_t objectStart = 0;
-    if (isTestMode()) {
-        LOG4("Calling decodeAnObject:");
-        ostringstream os;
-        os << "Parms: " << endl;
-        for (auto p : params) {
-            os << p << endl;
-        }
-        LOG4(os.str());
-        os.str("");
-        os.clear();
-        os << "Inputs: " << endl;
-        for (auto item : inputs) {
-            os << item << endl;
-        }
-        LOG4(os.str());
-    }
     auto ret = decodeAnObject(params, inputs, readOffset, objectStart);
     LOG_TEST_PARAMS(params);
     if (isTestMode()) {
         cerr << string_q(50, '=') << endl << endl;
     }
-
     return ret;
 }
 
