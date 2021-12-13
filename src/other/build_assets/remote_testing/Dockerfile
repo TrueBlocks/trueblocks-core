@@ -9,7 +9,7 @@ ENV TEST_TARGET=$test_target
 
 RUN apt-get update -y
 RUN apt install -y g++ gcc make cmake git nano libcurl3-dev python3 python3-dev \
-        curl bash linux-headers-amd64 libsqlite3-dev xz-utils jq
+        curl bash linux-headers-amd64 xz-utils jq
 
 WORKDIR /root
 

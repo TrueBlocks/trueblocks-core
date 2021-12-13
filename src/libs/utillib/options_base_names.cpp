@@ -197,50 +197,40 @@ bool COptionsBase::loadNames(void) {
         }
     }
 
-    bool type1 = false;
-    if (type1) {
-        loadNamesDatabaseFromSQL();
-        if (!importTabFile(namesMap, prefundFile))
-            return usage("Could not open prefunds database...");
-        // LOG8("Finished adding names from prefunds database...");
-        buildOtherMaps();
+    string_q txtFile = getConfigPath("names/names.tab");
+    string_q customFile = getConfigPath("names/names_custom.tab");
+    time_q txtDate =
+        laterOf(laterOf(fileLastModifyDate(txtFile), fileLastModifyDate(customFile)), fileLastModifyDate(prefundFile));
 
-    } else {
-        string_q txtFile = getConfigPath("names/names.tab");
-        string_q customFile = getConfigPath("names/names_custom.tab");
-        time_q txtDate = laterOf(laterOf(fileLastModifyDate(txtFile), fileLastModifyDate(customFile)),
-                                 fileLastModifyDate(prefundFile));
+    string_q binFile = getCachePath("names/names.bin");
+    time_q binDate = fileLastModifyDate(binFile);
 
-        string_q binFile = getCachePath("names/names.bin");
-        time_q binDate = fileLastModifyDate(binFile);
-
-        if (binDate > txtDate) {
-            LOG8("Reading names from binary cache");
-            CArchive nameCache(READING_ARCHIVE);
-            if (nameCache.Lock(binFile, modeReadOnly, LOCK_NOWAIT)) {
-                nameCache >> namesMap;
-                nameCache.Release();
-                buildOtherMaps();
-                return true;
-            }
-        }
-
-        if (!importTabFile(namesMap, txtFile))
-            return usage("Could not open names database...");
-
-        if (!importTabFile(namesMap, customFile))
-            return usage("Could not open custom names database...");
-
-        if (!importTabFile(namesMap, prefundFile))
-            return usage("Could not open prefunds database...");
-
-        buildOtherMaps();
-
-        CArchive nameCache(WRITING_ARCHIVE);
-        if (nameCache.Lock(binFile, modeWriteCreate, LOCK_CREATE)) {
-            nameCache << namesMap;
+    if (binDate > txtDate) {
+        LOG8("Reading names from binary cache");
+        CArchive nameCache(READING_ARCHIVE);
+        if (nameCache.Lock(binFile, modeReadOnly, LOCK_NOWAIT)) {
+            nameCache >> namesMap;
             nameCache.Release();
+            buildOtherMaps();
+            return true;
         }
+    }
+
+    if (!importTabFile(namesMap, txtFile))
+        return usage("Could not open names database...");
+
+    if (!importTabFile(namesMap, customFile))
+        return usage("Could not open custom names database...");
+
+    if (!importTabFile(namesMap, prefundFile))
+        return usage("Could not open prefunds database...");
+
+    buildOtherMaps();
+
+    CArchive nameCache(WRITING_ARCHIVE);
+    if (nameCache.Lock(binFile, modeWriteCreate, LOCK_CREATE)) {
+        nameCache << namesMap;
+        nameCache.Release();
     }
 
     return true;

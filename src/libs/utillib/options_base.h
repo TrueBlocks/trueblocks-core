@@ -93,7 +93,6 @@ class COptionsBase {
 
   public:
     CAddressNameMap namesMap;
-    bool loadNamesDatabaseFromSQL(void);
     bool loadNames(void);
     bool findName(const string_q& addr, CAccountName& acct);
 
