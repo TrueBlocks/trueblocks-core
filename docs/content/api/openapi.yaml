@@ -7,7 +7,7 @@ info:
   license:
     name: GPL 3.0
     url: http://www.gnu.org/licenses/
-  version: 0.17.0-alpha
+  version: 0.18.0-alpha
   description: >
 
     A REST layer over the TrueBlocks application. With `chifra serve`, you can
