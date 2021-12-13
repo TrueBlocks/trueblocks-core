@@ -2721,7 +2721,7 @@ names?terms=50-Tokens&expand
       "tags": "50-Tokens:ERC20",
       "address": "0x08ff7e2be3c23ab3938b6d275193d6a49ccef73e",
       "name": "Spartan Bucket Token",
-      "symbol": "CTKN_Spartan_Bu",
+      "symbol": "CTKN_Spartan_Bucket",
       "source": "TrueBlocks.io",
       "decimals": 18,
       "description": "",

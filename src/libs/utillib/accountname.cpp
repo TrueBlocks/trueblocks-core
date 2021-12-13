@@ -113,7 +113,7 @@ string_q CAccountName::getValueByName(const string_q& fieldName) const {
             break;
         case 's':
             if (fieldName % "symbol") {
-                return symbol.substr(0, 15);
+                return symbol.substr(0, 30);
             }
             if (fieldName % "source") {
                 return source.substr(0, 180);
@@ -196,7 +196,7 @@ bool CAccountName::setValueByName(const string_q& fieldNameIn, const string_q& f
             break;
         case 's':
             if (fieldName % "symbol") {
-                symbol = fieldValue.substr(0, 15);
+                symbol = fieldValue.substr(0, 30);
                 return true;
             }
             if (fieldName % "source") {

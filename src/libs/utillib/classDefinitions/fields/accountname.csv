@@ -2,7 +2,7 @@ name        ,type    ,strDefault ,maxWidth ,object ,array ,nowrite ,omitempty ,m
 tags        ,string  ,           ,30       ,       ,      ,        ,          ,        ,      ,         ,1   ,1    ,31-Gitcoin:Core ,colon separated list of tags
 address     ,address ,           ,42       ,       ,      ,        ,          ,        ,      ,         ,2   ,2    ,0xabea...fbef   ,the address associated with this name
 name        ,string  ,           ,120      ,       ,      ,        ,          ,        ,      ,         ,3   ,3    ,zkSync          ,the name associated with this address (retrieved from on-chain data if available)
-symbol      ,string  ,           ,15       ,       ,      ,        ,          ,        ,      ,         ,4   ,4    ,GTC             ,the symbol for this address (retrieved from on-chain data if available)
+symbol      ,string  ,           ,30       ,       ,      ,        ,          ,        ,      ,         ,4   ,4    ,GTC             ,the symbol for this address (retrieved from on-chain data if available)
 source      ,string  ,           ,180      ,       ,      ,        ,          ,        ,      ,         ,5   ,5    ,On-chain        ,user supplied source of where this name was found (or on-chain if name is on-chain)
 decimals    ,uint64  ,           ,         ,       ,      ,        ,true      ,        ,      ,         ,6   ,6    ,18              ,number of decimals retrieved from an ERC20 smart contract&#44; defaults to 18
 description ,string  ,           ,255      ,       ,      ,        ,          ,        ,      ,         ,7   ,7    ,any test        ,user supplied description for the address

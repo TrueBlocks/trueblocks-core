@@ -190,20 +190,24 @@ bool COptionsBase::loadNames(void) {
         return true;
 
     LOG8("Entering loadNames...");
+
+    string_q binFile = getCachePath("names/names.bin");
+    string_q txtFile = getConfigPath("names/names.tab");
+    string_q customFile = getConfigPath("names/names_custom.tab");
     string_q prefundFile = getConfigPath("names/names_prefunds.tab");
+
+    time_q binDate = fileLastModifyDate(binFile);
+    time_q txtFileDate = fileLastModifyDate(txtFile);
+    time_q customFileDate = fileLastModifyDate(customFile);
+    time_q prefundFileDate = fileLastModifyDate(prefundFile);
+
+    time_q txtDate = laterOf(laterOf(txtFileDate, customFileDate), prefundFileDate);
+
     if (isEnabled(OPT_PREFUND)) {
         if (!loadPrefunds(prefundFile)) {
             return usage("Could not open prefunds data.");
         }
     }
-
-    string_q txtFile = getConfigPath("names/names.tab");
-    string_q customFile = getConfigPath("names/names_custom.tab");
-    time_q txtDate =
-        laterOf(laterOf(fileLastModifyDate(txtFile), fileLastModifyDate(customFile)), fileLastModifyDate(prefundFile));
-
-    string_q binFile = getCachePath("names/names.bin");
-    time_q binDate = fileLastModifyDate(binFile);
 
     if (binDate > txtDate) {
         LOG8("Reading names from binary cache");
