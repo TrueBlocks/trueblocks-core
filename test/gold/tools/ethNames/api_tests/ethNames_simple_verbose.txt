@@ -418,7 +418,7 @@ names?terms=etwork&verbose
     {
       "tags": "50-Tokens:ERC20",
       "address": "0x69af81e73a73b40adf4f3d4223cd9b1ece623074",
-      "name": "Mask Network: MASK Token",
+      "name": "Mask Network",
       "symbol": "MASK",
       "source": "On chain",
       "decimals": 18,
@@ -623,7 +623,7 @@ names?terms=etwork&verbose
       "description": ""
     },
     {
-      "tags": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC721",
       "address": "0x9dd91d61a7aa58537fcdbf16fd21be25731341b3",
       "name": "Opium Network Position Token",
       "symbol": "ONP",
@@ -686,7 +686,7 @@ names?terms=etwork&verbose
       "description": "Golem is going to create the first decentralized global market for computing power"
     },
     {
-      "tags": "50-Tokens:ERC721",
+      "tags": "50-Tokens:ERC20",
       "address": "0xade00c28244d5ce17d72e40330b1c318cd12b7c3",
       "name": "AdEx Network",
       "symbol": "ADX",

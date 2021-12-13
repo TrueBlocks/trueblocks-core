@@ -932,7 +932,7 @@ bool forEveryTransaction(TRANSVISITFUNC func, void* data, const string_q& trans_
         CTransaction trans;
         if (hasHex) {
             if (hasDot) {
-                LOG4("blockHash.txid", hash, txid);
+                LOG4("blockHash.txid", " ", hash, " ", txid);
                 getTransaction(trans, hash, txid);
 
             } else {
@@ -941,7 +941,7 @@ bool forEveryTransaction(TRANSVISITFUNC func, void* data, const string_q& trans_
             }
         } else {
             blknum_t blockNum = str_2_Uint(hash);  // so the input is poorly named, sue me
-            LOG4("blockNum.txid", blockNum, txid);
+            LOG4("blockNum.txid", " ", blockNum, " ", txid);
             getTransaction(trans, blockNum, txid);
             if (fileExists(getBinaryCacheFilename(CT_TXS, blockNum, txid)))
                 fromCache = true;
@@ -1015,7 +1015,7 @@ biguint_t weiPerEther(void) {
 }
 
 //-----------------------------------------------------------------------
-string_q headerRow(const string_q& formatIn, const string_q& sep1, const string_q& sep2) {
+string_q headerRow(const string_q& className, const string_q& formatIn, const string_q& sep1, const string_q& sep2) {
     string_q format = substitute(substitute(formatIn, "{", "<field>"), "}", "</field>");
     string_q ret;
     while (contains(format, "<field>")) {
@@ -1023,30 +1023,8 @@ string_q headerRow(const string_q& formatIn, const string_q& sep1, const string_
         ret = ret + (sep2 + field + sep2 + sep1);
     }
     // TODO: This is a pretty bad hack that will get corrected once we port entirely to GoLang
-    // clang-format off
-    replace(ret, "\"bn\",\"tx\",\"addr\",\"reason\"", "\"blockNumber\",\"transactionIndex\",\"neighbor\",\"reason\"");
-    replace(ret, "\"bn\",\"tx\",\"tc\",\"addr\",\"reason\"", "\"blockNumber\",\"transactionIndex\",\"traceId\",\"address\",\"reason\"");
-    replace(ret, "bn\ttx\taddr\treason", "blockNumber\ttransactionIndex\tneighbor\treason");
-    replace(ret, "bn\ttx\ttc\taddr\treason", "blockNumber\ttransactionIndex\ttraceId\taddress\treason");
-    replace(ret, "blocknumber", "blockNumber");
-    replace(ret, "blockhash", "blockHash");
-    replace(ret, "transactionhash", "transactionHash");
-    replace(ret, "transactionindex", "transactionIndex");
-    replace(ret, "logindex", "logIndex");
-    replace(ret, "ethergasprice", "ethGasPrice");
-    replace(ret, "gasused", "gasUsed");
-    replace(ret, "gaslimit", "gasLimit");
-    replace(ret, "basefeepergas", "baseFeePerGas");
-    replace(ret, "parenthash", "parentHash");
-    replace(ret, "transactionscnt", "transactionsCnt");
-    replace(ret, "addr_count", "addrCount");
-    replace(ret, "iserror", "isError");
-    replace(ret, "compressedlog", "compressedLog");
-    replace(ret, "compressedtx", "compressedTx");
-    replace(ret, "compressedtrace", "compressedTrace");
-    replace(ret, "compressedresult", "compressedResult");
-    replace(ret, "traceaddress", "traceAddress");
-    // clang-format on
+    extern string_q renameExportFields(const string_q& className, const string_q& inStr);
+    ret = renameExportFields(className, ret);
 
     return trim(ret, sep1[0]);
 }
@@ -1073,12 +1051,12 @@ string_q exportPreamble(const string_q& format, const string_q& className) {
         case TXT1:
             if (format.empty())
                 return "";
-            os << headerRow(format, "\t", "");
+            os << headerRow(className, format, "\t", "");
             break;
         case CSV1:
             if (format.empty())
                 return "";
-            os << headerRow(format, ",", "\"");
+            os << headerRow(className, format, ",", "\"");
             break;
         case YAML1:
             break;

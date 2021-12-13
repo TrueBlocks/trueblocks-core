@@ -87,8 +87,8 @@ export?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&maxRecords=3&neighbors
     "client": "0xdeadbeef",
     "namedFrom": {
       "0x793ea9692ada1900fbd0b80fffec6e431fe8b391": {
-        "tags": "30-Contracts",
-        "name": "DAO Deployer",
+        "tags": "90-Individuals:Other",
+        "name": "Name 0x793ea969",
         "count": 1
       }
     },
@@ -108,7 +108,7 @@ export?addrs=0xbb9bc244d798123fde783fcc1c72d3bb8c189413&maxRecords=3&neighbors
     "first_block": "0xdeadbeef",
     "last_block": "0xdeadbeef",
     "accountedFor": {
-      "tags": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC721",
       "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",
       "name": "The DAO Original",
       "symbol": "",

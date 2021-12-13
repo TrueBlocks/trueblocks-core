@@ -138,7 +138,7 @@ var specials = []NamedBlock{
 	},
 }
 
-func GetSpecials(testMode bool) []NamedBlock {
+func GetSpecials() []NamedBlock {
 	if specials[0].TimeStamp == 0 {
 		for i := 0; i < len(specials); i++ {
 			specials[i].TimeStamp, _ = TsFromBn(specials[i].BlockNumber)

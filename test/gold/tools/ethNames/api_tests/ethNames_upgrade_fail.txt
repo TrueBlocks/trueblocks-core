@@ -11,7 +11,7 @@ names?fmt=json
       "description": ""
     },
     {
-      "tags": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC721",
       "address": "0x0000000000001b84b1cb32787b0d64758d019317",
       "name": "HomeWork 🏠🛠️",
       "symbol": "HWK",
@@ -22,7 +22,7 @@ names?fmt=json
     {
       "tags": "50-Tokens:ERC20",
       "address": "0x0000000000004946c0e9f43f4dee607b0ef1fa1c",
-      "name": "1inch.exchange v2",
+      "name": "Chi Gastoken by 1inch",
       "symbol": "CHI",
       "source": "On chain",
       "decimals": 18,
@@ -256,7 +256,7 @@ names?fmt=json
     {
       "tags": "60-Airdrops",
       "address": "0x000ee67d5bec37ad37292da18516cc96d81e0242",
-      "name": "RZM Airdrop Sender 2",
+      "name": "RZM Sender 2 Airdrop",
       "symbol": "",
       "source": "TrueBlocks.io",
       "decimals": 0,
@@ -272,9 +272,9 @@ names?fmt=json
       "description": ""
     },
     {
-      "tags": "30-Contracts",
+      "tags": "90-Individuals:Other",
       "address": "0x0015f3c39221b20016cebdbf8b19eb5acedca901",
-      "name": "Hacker Gold Sender",
+      "name": "Name 0x0015f3c3",
       "symbol": "",
       "source": "TrueBlocks.io",
       "decimals": 0,
@@ -409,7 +409,7 @@ names?fmt=json
     {
       "tags": "60-Airdrops",
       "address": "0x00476aecb24edfed50aaf2e2361badbd8d3efdc2",
-      "name": "HEALP Airdrop Sender",
+      "name": "HEALP Sender Airdrop",
       "symbol": "",
       "source": "EtherScan.io",
       "decimals": 0,
@@ -623,7 +623,7 @@ names?fmt=json
       "description": ""
     },
     {
-      "tags": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC721",
       "address": "0x00c396383400a1ef2eb401052dbf5d989b2da481",
       "name": "Cypher City",
       "symbol": "CYPHER",
@@ -670,7 +670,7 @@ names?fmt=json
     {
       "tags": "60-Airdrops",
       "address": "0x00cfbbaf7ddb3a1476767101c12a0162e241fbad",
-      "name": "Amber Airdrop Token",
+      "name": "Amber Token Airdrop",
       "symbol": "",
       "source": "TrueBlocks.io",
       "decimals": 0,
@@ -724,7 +724,7 @@ names?fmt=json
     {
       "tags": "60-Airdrops",
       "address": "0x00ee337d1aa5229d92889ac27fc3841573590289",
-      "name": "VOS.AI Airdrop Sender",
+      "name": "VOS.AI Sender Airdrop",
       "symbol": "",
       "source": "TrueBlocks.io",
       "decimals": 0,
@@ -733,7 +733,7 @@ names?fmt=json
     {
       "tags": "60-Airdrops",
       "address": "0x00f78d023dd008c6e8bd3e16327466d58fb6b576",
-      "name": "XNN Airdrop Sender",
+      "name": "XNN Sender Airdrop",
       "symbol": "",
       "source": "TrueBlocks.io",
       "decimals": 0,
@@ -816,7 +816,7 @@ names?fmt=json
       "address": "0x012233b3c8177f0778d910ed88170b82de3bfe57",
       "name": "Old ENS Registrar",
       "symbol": "",
-      "source": "Trueblocks.io",
+      "source": "TrueBlocks.io",
       "decimals": 0,
       "description": ""
     },
@@ -830,7 +830,7 @@ names?fmt=json
       "description": ""
     },
     {
-      "tags": "30-Contracts:Chainlink",
+      "tags": "37-SelfDestructed",
       "address": "0x0133aa47b6197d0ba090bf2cd96626eb71ffd13c",
       "name": "Chainlink BTC-ETH Aggregator",
       "symbol": "",
@@ -1154,7 +1154,7 @@ names?fmt=json
       "description": ""
     },
     {
-      "tags": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC721",
       "address": "0x020171085bcd43b6fd36ad8c95ad61848b1211a2",
       "name": "yearn Gift NFT",
       "symbol": "yGIFT",
@@ -1181,9 +1181,9 @@ names?fmt=json
       "description": ""
     },
     {
-      "tags": "30-Contracts",
+      "tags": "90-Individuals:Other",
       "address": "0x020ca66c30bec2c4fe3861a94e4db4a498a35872",
-      "name": "BAYT Seller to BTeg",
+      "name": "Name 0x020ca66c",
       "symbol": "",
       "source": "",
       "decimals": 0,
@@ -1266,6 +1266,15 @@ names?fmt=json
       "address": "0x025d34acfd5c65cfd5a73209f99608c9e13338f3",
       "name": "Uniswap V2",
       "symbol": "UNI-V2",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC721",
+      "address": "0x026224a2940bfe258d0dbe947919b62fe321f042",
+      "name": "lobsterdao",
+      "symbol": "LOBS",
       "source": "On chain",
       "decimals": 18,
       "description": ""
@@ -1379,7 +1388,7 @@ names?fmt=json
       "description": "https://twitter.com/EthCatHerders"
     },
     {
-      "tags": "30-Contracts:Chainlink",
+      "tags": "37-SelfDestructed",
       "address": "0x02d5c618dbc591544b19d0bf13543c0728a3c4ec",
       "name": "Chainlink CHF-USD Aggregator",
       "symbol": "",
@@ -1532,6 +1541,15 @@ names?fmt=json
       "description": ""
     },
     {
+      "tags": "50-Tokens:ERC721",
+      "address": "0x031920cc2d9f5c10b444fd44009cd64f829e7be2",
+      "name": "CryptoZunks",
+      "symbol": "ZUNK",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
       "tags": "50-Tokens:ERC20",
       "address": "0x0327112423f3a68efdf1fcf402f6c5cb9f7c33fd",
       "name": "PieDAO BTC++",
@@ -1550,7 +1568,7 @@ names?fmt=json
       "description": ""
     },
     {
-      "tags": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC721",
       "address": "0x032dd2a3c6d234aa9620d65eb618fcdc72be3dbb",
       "name": "HashDemons",
       "symbol": "HASHDEMONS",
@@ -1631,7 +1649,7 @@ names?fmt=json
       "description": ""
     },
     {
-      "tags": "30-Contracts:Chainlink",
+      "tags": "37-SelfDestructed",
       "address": "0x037e8f2125bf532f3e228991e051c8a7253b642c",
       "name": "Chainlink DAI-ETH Aggregator",
       "symbol": "",
@@ -1649,9 +1667,9 @@ names?fmt=json
       "description": ""
     },
     {
-      "tags": "30-Contracts",
+      "tags": "90-Individuals:Other",
       "address": "0x0385b3f162a0e001b60ecb84d3cb06199d78f666",
-      "name": "Argent: Relayer 2",
+      "name": "Name 0x0385b3f1",
       "symbol": "",
       "source": "EtherScan.io",
       "decimals": 0,
@@ -1790,24 +1808,6 @@ names?fmt=json
       "symbol": "",
       "source": "Solidity Code",
       "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x03dd1a67ef52107dd86b590ec62aaf5048973647",
-      "name": "MAMASHIBA",
-      "symbol": "MAMASHIBA",
-      "source": "On chain",
-      "decimals": 18,
-      "description": ""
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x03df4c372a29376d2c8df33a1b5f001cd8d68b0e",
-      "name": "Bitcoinereum",
-      "symbol": "BTCM",
-      "source": "On chain",
-      "decimals": 8,
       "description": ""
     }
   ]

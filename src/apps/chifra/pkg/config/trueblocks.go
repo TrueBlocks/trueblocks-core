@@ -41,6 +41,18 @@ func init() {
 func ReadTrueBlocks() *TrueBlocksConfig {
 	if !trueBlocksRead {
 		MustReadConfig(trueBlocksViper, &cachedTrueBlocksConfig, false)
+		l := len(cachedTrueBlocksConfig.Settings.CachePath)
+		if l > 0 {
+			if cachedTrueBlocksConfig.Settings.CachePath[l-1] != '/' {
+				cachedTrueBlocksConfig.Settings.CachePath = cachedTrueBlocksConfig.Settings.CachePath + "/"
+			}
+		}
+		l = len(cachedTrueBlocksConfig.Settings.IndexPath)
+		if l > 0 {
+			if cachedTrueBlocksConfig.Settings.IndexPath[l-1] != '/' {
+				cachedTrueBlocksConfig.Settings.IndexPath = cachedTrueBlocksConfig.Settings.IndexPath + "/"
+			}
+		}
 		trueBlocksRead = true
 	}
 
