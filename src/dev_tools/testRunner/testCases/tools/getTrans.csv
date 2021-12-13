@@ -68,3 +68,6 @@ off     ,both ,slow  ,transactions ,tools/getTrans ,articulate_proxy     ,y    ,
 
 local   ,both ,fast  ,transactions ,tools/getTrans ,to_file              ,y    ,transactions = 2222222.0 2332332.0 & fmt = json & to_file
 local   ,cmd  ,fast  ,transactions ,tools/getTrans ,mulit_line_mulit_txs ,n    ,file = cmd_file_1 & fmt = json
+
+#,,,,,,,this actually passes but fails if we remove code with the word unparsable in it which is a hack
+local   ,both ,fast  ,transactions, tools/getTrans ,unparsable           ,y    ,transactions = 12596470.26 & articulate & fmt = json

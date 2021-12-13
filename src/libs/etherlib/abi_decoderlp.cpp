@@ -615,11 +615,16 @@ bool decodeRLP(CParameterArray& params, const string_q& typeListIn, const string
         // a typeList from the supplied parameter array...
         typeList = "";
         for (auto p : params) {
-            ostringstream unused;
-            unused << p;
-            // Major hack because our code doesn't parse all ABI files (especially those with tuples)
-            if (contains(unused.str(), "unparsable"))
-                return false;
+            if (p.type == "tuple") {
+                // Major hack because our code doesn't parse all ABI files (especially those with
+                // tuples containing tuples)
+                for (auto pp : p.components) {
+                    ostringstream unused;
+                    unused << pp;
+                    if (contains(unused.str(), "unparsable"))
+                        return false;
+                }
+            }
             typeList += (p.type + ",");
         }
         typeList = trim(typeList, ',');
