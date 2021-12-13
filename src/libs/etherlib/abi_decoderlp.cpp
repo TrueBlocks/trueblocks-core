@@ -10,6 +10,7 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
+#define LOGGING_LEVEL_TEST
 #include <algorithm>
 #include "abi.h"
 #include "node.h"
@@ -656,6 +657,22 @@ bool decodeRLP(CParameterArray& params, const string_q& typeListIn, const string
 
     size_t readOffset = 0;
     size_t objectStart = 0;
+    if (isTestMode()) {
+        LOG4("Calling decodeAnObject:");
+        ostringstream os;
+        os << "Parms: " << endl;
+        for (auto p : params) {
+            os << p << endl;
+        }
+        LOG4(os.str());
+        os.str("");
+        os.clear();
+        os << "Inputs: " << endl;
+        for (auto item : inputs) {
+            os << item << endl;
+        }
+        LOG4(os.str());
+    }
     auto ret = decodeAnObject(params, inputs, readOffset, objectStart);
     LOG_TEST_PARAMS(params);
     if (isTestMode()) {
