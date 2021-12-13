@@ -56,6 +56,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 50-Tokens:ERC20	0x025d34acfd5c65cfd5a73209f99608c9e13338f3	Uniswap V2	UNI-V2	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC721	0x026224a2940bfe258d0dbe947919b62fe321f042	lobsterdao	LOBS	On chain	18		false	false	false	true	true	true
 50-Tokens:ERC20	0x02725836ebf3ecdb1cdf1c7b02fcbbfaa2736af8	BitAir	BTCA	On chain	8	Payments solutions for the travel industry.	false	false	false	true	true	false
+50-Tokens:ERC20	0x0275e1001e293c46cfe158b3702aade0b99f88a5	Oiler	OIL	TrueBlocks.io	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x028171bca77440897b824ca71d1c56cac55b68a3	Aave interest bearing DAI	aDAI	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x0297083eef9c04ee22c89187b13363af2249042b	Andre KP9R	aKP9R	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x02a7c828437aa9aea6da510758b2a9d6fb37f0bc	Salt Shaker	SALT 🧂	On chain	18		false	false	false	true	true	false
@@ -181,6 +182,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 50-Tokens:ERC721	0x08bebeb5f042ccbaeb128582da560cb25a5db7e9	TheWonderQuest	TWQ	On chain	18		false	false	false	true	true	true
 50-Tokens:ERC20	0x08d32b0da63e2c3bcf8019c9c5d849d7a9d791e6	Dentacoin	٨	On chain	18	Aims to be the blockchain solution for the global dental industry.	false	false	false	true	true	false
 50-Tokens:ERC20	0x08f5a9235b08173b7569f83645d2c7fb55e8ccd8	Tierion Network Token	TNT	On chain	8	Tierion creates software to reduce the cost and complexity of trust. Anchoring data to the blockchain and generating a timestamp proof.	false	false	false	true	true	false
+50-Tokens:ERC20	0x08ff7e2be3c23ab3938b6d275193d6a49ccef73e	Spartan Bucket Token	CTKN_Spartan_Bu	TrueBlocks.io	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x093c4be59fe9c1fe194c8209e9e18ede38485444	&#x20b0;ShibEx	✔️ShibEx	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x0947b0e6d821378805c9598291385ce7c791a6b2	Lendingblock	LND	On chain	18	Lendingblock is an open exchange for cryptocurrency loans, where borrowers and lenders are instantly matched in simple, safe and transparent way.	false	false	false	true	true	false
 50-Tokens:ERC20	0x094c4fdbd4c8ff299bc75f85e19a3a7115ee3a41	Rainbow	RWC	On chain	18		false	false	false	true	true	false
@@ -201,5 +203,3 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 50-Tokens:ERC20	0x0aa7b6b12aabf497f603c57167eabee05da92a17	SUDO INU	SUDO	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x0aacfbec6a24756c20d41914f2caba817c0d8521	YAM	YAM	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x0ab305931a717b8227d76de52e19a23066150360	Creating a Decentralized World Together		https://kickback.events/event/[{ADDRESS}]	18		false	false	false	true	true	false
-50-Tokens:ERC20	0x0abdace70d3790235af448c88547603b945604ea	district0x Network Token	DNT	On chain	18	A network of decentralized markets and communities. Create, operate, and govern. Powered by Ethereum, Aragon, and IPFS.	false	false	false	true	true	false
-50-Tokens:ERC20	0x0aca1a719e8e93b084e496ef4d9fc33e3fe3ee62	FIAT	FIAT	On chain	18		false	false	false	true	true	false

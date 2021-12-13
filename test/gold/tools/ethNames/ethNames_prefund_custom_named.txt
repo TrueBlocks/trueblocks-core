@@ -150,6 +150,7 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x025d34acfd5c65cfd5a73209f99608c9e13338f3	Uniswap V2	UNI-V2		18
 50-Tokens:ERC721	0x026224a2940bfe258d0dbe947919b62fe321f042	lobsterdao	LOBS		18
 50-Tokens:ERC20	0x02725836ebf3ecdb1cdf1c7b02fcbbfaa2736af8	BitAir	BTCA		8
+50-Tokens:ERC20	0x0275e1001e293c46cfe158b3702aade0b99f88a5	Oiler	OIL		18
 50-Tokens:ERC20	0x028171bca77440897b824ca71d1c56cac55b68a3	Aave interest bearing DAI	aDAI		18
 50-Tokens:ERC20	0x0297083eef9c04ee22c89187b13363af2249042b	Andre KP9R	aKP9R		18
 31-Gitcoin:Grants	0x02a522d98ec2d2c3bbe91acc29ee7fd32ab880ab	Mintable: Deployer
@@ -203,4 +204,3 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x03b0ffc15a9a03d32a3a7c5839b3faf5174059cf	NZXT Protocol Governance Token (Shareholder only)	NZXT		6
 90-Individuals:Gitcoin Grants	0x03b45f0f660adcaa24fbacffd45e171464ec63a8	Name 0x03b45f0f
 90-Individuals:Gitcoin Grants	0x03b85b333c99ec60a6d540e4277d71d3a4c0975d	Name 0x03b85b33
-80-Malicious:Shanghai	0x03b904c8b912194464ae97eaa0381e5518446d25	Possibly Malicious 0x03b

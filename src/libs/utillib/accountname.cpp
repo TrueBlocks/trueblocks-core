@@ -78,7 +78,7 @@ string_q CAccountName::getValueByName(const string_q& fieldName) const {
     switch (tolower(fieldName[0])) {
         case 'a':
             if (fieldName % "address") {
-                return addr_2_Str(address);
+                return addr_2_Str(address.substr(0, 42));
             }
             break;
         case 'd':
@@ -86,7 +86,7 @@ string_q CAccountName::getValueByName(const string_q& fieldName) const {
                 return decimals == 0 ? "" : uint_2_Str(decimals);
             }
             if (fieldName % "description") {
-                return description;
+                return description.substr(0, 255);
             }
             break;
         case 'i':
@@ -108,20 +108,20 @@ string_q CAccountName::getValueByName(const string_q& fieldName) const {
             break;
         case 'n':
             if (fieldName % "name") {
-                return name;
+                return name.substr(0, 120);
             }
             break;
         case 's':
             if (fieldName % "symbol") {
-                return symbol;
+                return symbol.substr(0, 15);
             }
             if (fieldName % "source") {
-                return source;
+                return source.substr(0, 180);
             }
             break;
         case 't':
             if (fieldName % "tags") {
-                return tags;
+                return tags.substr(0, 30);
             }
             break;
         default:
@@ -152,7 +152,7 @@ bool CAccountName::setValueByName(const string_q& fieldNameIn, const string_q& f
     switch (tolower(fieldName[0])) {
         case 'a':
             if (fieldName % "address") {
-                address = str_2_Addr(fieldValue);
+                address = str_2_Addr(fieldValue.substr(0, 42));
                 return true;
             }
             break;
@@ -162,7 +162,7 @@ bool CAccountName::setValueByName(const string_q& fieldNameIn, const string_q& f
                 return true;
             }
             if (fieldName % "description") {
-                description = fieldValue;
+                description = fieldValue.substr(0, 255);
                 return true;
             }
             break;
@@ -190,23 +190,23 @@ bool CAccountName::setValueByName(const string_q& fieldNameIn, const string_q& f
             break;
         case 'n':
             if (fieldName % "name") {
-                name = fieldValue;
+                name = fieldValue.substr(0, 120);
                 return true;
             }
             break;
         case 's':
             if (fieldName % "symbol") {
-                symbol = fieldValue;
+                symbol = fieldValue.substr(0, 15);
                 return true;
             }
             if (fieldName % "source") {
-                source = fieldValue;
+                source = fieldValue.substr(0, 180);
                 return true;
             }
             break;
         case 't':
             if (fieldName % "tags") {
-                tags = fieldValue;
+                tags = fieldValue.substr(0, 30);
                 return true;
             }
             break;

@@ -1326,6 +1326,15 @@ names?prefund&custom&named
     },
     {
       "tags": "50-Tokens:ERC20",
+      "address": "0x0275e1001e293c46cfe158b3702aade0b99f88a5",
+      "name": "Oiler",
+      "symbol": "OIL",
+      "source": "TrueBlocks.io",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
       "address": "0x028171bca77440897b824ca71d1c56cac55b68a3",
       "name": "Aave interest bearing DAI",
       "symbol": "aDAI",
@@ -1798,15 +1807,6 @@ names?prefund&custom&named
       "name": "Name 0x03b85b33",
       "symbol": "",
       "source": "Gitcoin Website",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "80-Malicious:Shanghai",
-      "address": "0x03b904c8b912194464ae97eaa0381e5518446d25",
-      "name": "Possibly Malicious 0x03b",
-      "symbol": "",
-      "source": "TrueBlocks.io",
       "decimals": 0,
       "description": ""
     }

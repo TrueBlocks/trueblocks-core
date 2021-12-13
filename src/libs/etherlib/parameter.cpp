@@ -115,6 +115,11 @@ string_q CParameter::getValueByName(const string_q& fieldName) const {
                 return uint_2_Str(is_flags);
             }
             break;
+        case 'm':
+            if (fieldName % "maxWidth") {
+                return uint_2_Str(maxWidth);
+            }
+            break;
         case 'n':
             if (fieldName % "name") {
                 return name;
@@ -223,6 +228,12 @@ bool CParameter::setValueByName(const string_q& fieldNameIn, const string_q& fie
                 return true;
             }
             break;
+        case 'm':
+            if (fieldName % "maxWidth") {
+                maxWidth = str_2_Uint(fieldValue);
+                return true;
+            }
+            break;
         case 'n':
             if (fieldName % "name") {
                 name = fieldValue;
@@ -296,6 +307,7 @@ bool CParameter::Serialize(CArchive& archive) {
     archive >> unused;
     archive >> is_flags;
     // archive >> precision;
+    // archive >> maxWidth;
     // archive >> doc;
     // archive >> disp;
     // archive >> example;
@@ -323,6 +335,7 @@ bool CParameter::SerializeC(CArchive& archive) const {
     archive << unused;
     archive << is_flags;
     // archive << precision;
+    // archive << maxWidth;
     // archive << doc;
     // archive << disp;
     // archive << example;
@@ -387,6 +400,8 @@ void CParameter::registerClass(void) {
     ADD_FIELD(CParameter, "is_flags", T_UNUMBER, ++fieldNum);
     ADD_FIELD(CParameter, "precision", T_UNUMBER, ++fieldNum);
     HIDE_FIELD(CParameter, "precision");
+    ADD_FIELD(CParameter, "maxWidth", T_UNUMBER, ++fieldNum);
+    HIDE_FIELD(CParameter, "maxWidth");
     ADD_FIELD(CParameter, "doc", T_UNUMBER | TS_OMITEMPTY, ++fieldNum);
     HIDE_FIELD(CParameter, "doc");
     ADD_FIELD(CParameter, "disp", T_UNUMBER | TS_OMITEMPTY, ++fieldNum);

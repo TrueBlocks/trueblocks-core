@@ -272,6 +272,4 @@ bool COptionsBase::findToken(CAccountName& acct, const address_t& addr) {
     return false;
 }
 
-// tags(30)    address (42)    name (80)    symbol (10)    source (80)    decimals (4)    description (300)
-
 }  // namespace qblocks
