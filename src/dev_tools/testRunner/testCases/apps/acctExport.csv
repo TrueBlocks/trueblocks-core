@@ -67,7 +67,9 @@ on      ,both ,fast  ,export   ,apps/acctExport ,accounting_invalid1      ,y    
 on      ,both ,fast  ,export   ,apps/acctExport ,accounting_invalid2      ,y    ,addrs = 0x00a3819199113fc6a6e6ba1298afde7377e2009b & max_records = 30 & fmt = json & summarize_by = jimp
 
 on      ,both ,fast  ,export   ,apps/acctExport ,neighbor1                ,y    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & max_records = 3 & neighbors
+on      ,both ,fast  ,export   ,apps/acctExport ,neighbor2                ,y    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & max_records = 3 & neighbors & deep
 on      ,both ,fast  ,export   ,apps/acctExport ,neighbor1_csv            ,n    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & max_records = 3 & neighbors & fmt = csv
+on      ,both ,fast  ,export   ,apps/acctExport ,neighbor2_csv            ,n    ,addrs = 0xbb9bc244d798123fde783fcc1c72d3bb8c189413 & max_records = 3 & neighbors & fmt = csv & deep
 
 local   ,both ,fast  ,export   ,apps/acctExport ,export_logs_emit_by      ,n    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & first_block = 10277780 & last_block = 10279650 & logs & fmt = csv & articulate & emitter = 0x7d655c57f71464b6f83811c55d84009cd9f5221c
 local   ,both ,fast  ,export   ,apps/acctExport ,export_notrelevant       ,n    ,addrs = 0xf503017d7baf7fbc0fff7492b751025c6a78179b & first_block = 10245999 & last_block = 10288980 & logs & fmt = csv & articulate & emitter = 0x7d655c57f71464b6f83811c55d84009cd9f5221c

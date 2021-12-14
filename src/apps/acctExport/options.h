@@ -51,6 +51,7 @@ class COptions : public CAbiOptions {
     bool reversed;
     bool by_date;
     string_q summarize_by;
+    bool deep;
     bool skip_ddos;
     uint64_t max_traces;
     // END_CODE_DECLARE

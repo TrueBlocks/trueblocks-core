@@ -48,6 +48,7 @@ static const COption params[] = {
     COption("reversed", "", "", OPT_HIDDEN | OPT_SWITCH, "produce results in reverse chronological order"),
     COption("by_date", "b", "", OPT_HIDDEN | OPT_SWITCH, "produce results sorted by date (report by address otherwise)"),  // NOLINT
     COption("summarize_by", "z", "enum[yearly|quarterly|monthly|weekly|daily|hourly|blockly|tx]", OPT_HIDDEN | OPT_FLAG, "for --accounting only, summarize reconciliations by this time period"),  // NOLINT
+    COption("deep", "D", "", OPT_HIDDEN | OPT_SWITCH, "for --neighbors option only, dig deeply into detail (otherwise, to and from only)"),  // NOLINT
     COption("first_block", "F", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive)"),
     COption("last_block", "L", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive)"),
     COption("", "", "", OPT_DESCRIPTION, "Export full detail of transactions for one or more addresses."),
@@ -200,6 +201,9 @@ bool COptions::parseArguments(string_q& command) {
                 return false;
         } else if (arg == "-z" || arg == "--summarize_by") {
             return flag_required("summarize_by");
+
+        } else if (arg == "-D" || arg == "--deep") {
+            deep = true;
 
         } else if (startsWith(arg, "-F:") || startsWith(arg, "--first_block:")) {
             if (!confirmBlockNum("first_block", first_block, arg, latest))
@@ -479,6 +483,7 @@ void COptions::Init(void) {
     reversed = false;
     by_date = false;
     summarize_by = "";
+    deep = false;
     // clang-format off
     skip_ddos = getGlobalConfig("acctExport")->getConfigBool("settings", "skip_ddos", true);
     max_traces = getGlobalConfig("acctExport")->getConfigInt("settings", "max_traces", 250);
