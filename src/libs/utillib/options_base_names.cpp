@@ -11,173 +11,46 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 #include "basetypes.h"
-#include "database.h"
-#include "exportcontext.h"
 #include "options_base.h"
-#include "colors.h"
-#include "filenames.h"
-#include "accountname.h"
-#include "rpcresult.h"
+#include "logging.h"
 
 namespace qblocks {
 
-//-----------------------------------------------------------------------
-static void addToMap(CAddressNameMap& theMap, CAccountName& account, const string_q& tabFilename, uint64_t cnt) {
-    if (theMap[account.address].address == account.address) {
-        // first in wins;
-        return;
-    }
-
-    if (contains(tabFilename, "_custom")) {
-        // From the custom file - store the values found in the file
-        account.isCustom = true;
-        theMap[account.address] = account;
-
-    } else if (contains(tabFilename, "_prefunds")) {
-        // From the prefund file - force prefund marker, apply default values only if existing fields are empty
-        address_t addr = account.address;
-        account = theMap[addr];  // may be empty, but if not, let's pick up the existing values
-        account.address = addr;
-        account.tags = account.tags.empty() ? "80-Prefund" : account.tags;
-        string_q prefundName = "Prefund_" + padNum4(cnt);
-        account.isPrefund = account.name.empty();  // only mark as pre-fund if it didn't exist before
-                                                   // clang-format off
-        account.name = account.name.empty()                  ? prefundName
-                       : contains(account.name, "(Prefund_") ? account.name
-                                                             : account.name + " (" + prefundName + ")";
-        // clang-format on
-        account.source = account.source.empty() ? "Genesis" : account.source;
-        theMap[account.address] = account;
-
-    } else {
-        // From the regular file - store the values found in the file
-        theMap[account.address] = account;
-    }
-}
+extern bool loadPrefunds(const string_q& prefundFile);
+extern bool importTabFilePrefund(CAddressNameMap& theMap, const string_q& tabFilename);
 
 //-----------------------------------------------------------------------
-bool loadPrefunds(const string_q& prefundFile) {
-    // start with a clean slate
-    expContext().prefundMap.clear();
-
-    // Note: we don't need to check the dates to see if the prefunds.txt file has been updated
-    // since it will never change. In that sense, the binary file is always right once it's created.
-    string_q binFile = getCachePath("names/names_prefunds_bals.bin");
-    if (!fileExists(binFile)) {
-        if (!fileExists(prefundFile)) {
-            LOG_WARN("Cannot find prefund file at: ", prefundFile);
-            return false;
-        }
-        CStringArray lines;
-        asciiFileToLines(prefundFile, lines);
-        bool first = true;
-        for (auto line : lines) {
-            if (!first && !startsWith(line, '#')) {
-                CStringArray parts;
-                explode(parts, line, '\t');
-                expContext().prefundMap[toLower(parts[0])] = str_2_Wei(parts[1]);
-            }
-            first = false;
-        }
-        CArchive archive(WRITING_ARCHIVE);
-        if (!archive.Lock(binFile, modeWriteCreate, LOCK_NOWAIT)) {
-            LOG_WARN("Could not lock prefund cache at: ", binFile);
-            return false;
-        }
-        CAddressWeiMap::iterator it = expContext().prefundMap.begin();
-        archive << uint64_t(expContext().prefundMap.size());
-        while (it != expContext().prefundMap.end()) {
-            archive << it->first << it->second;
-            it++;
-        }
-        archive.Release();
-        return true;
-    }
-
-    CArchive archive(READING_ARCHIVE);
-    if (!archive.Lock(binFile, modeReadOnly, LOCK_NOWAIT)) {
-        LOG_WARN("Could not unlock prefund cache at: ", binFile);
-        return false;
-    }
-    uint64_t count;
-    archive >> count;
-    for (size_t i = 0; i < count; i++) {
-        string_q key;
-        wei_t wei;
-        archive >> key >> wei;
-        expContext().prefundMap[key] = wei;
-    }
-    archive.Release();
-    return true;
-}
-
-//-----------------------------------------------------------------------
-bool importTabFile(CAddressNameMap& theMap, const string_q& tabFilename) {
-    string_q prefundBin = getCachePath("names/names_prefunds.bin");
-
-    uint64_t cnt = 0;
-    if (contains(tabFilename, "prefunds")) {
-        // This never changes so we should be able to only read this once in forever. If the binary file exists, use it
-        if (fileExists(prefundBin)) {
-            LOG4("Reading prefund names from binary cache");
-            CArchive nameCache(READING_ARCHIVE);
-            if (nameCache.Lock(prefundBin, modeReadOnly, LOCK_NOWAIT)) {
-                CAccountNameArray prefunds;
-                nameCache >> prefunds;
-                nameCache.Release();
-                for (auto prefund : prefunds)
-                    addToMap(theMap, prefund, tabFilename, cnt++);
-                return true;
-            }
-        }
-    }
-
+static bool importTabFile(CAddressNameMap& theMap, const string_q& tabFilename) {
     CStringArray lines;
     asciiFileToLines(tabFilename, lines);
-    if (lines.size() == 0)
-        return false;
 
-    string_q header = lines[0];
-    if (!contains(header, "address\t"))
-        return false;
     CStringArray fields;
-    explode(fields, lines[0], '\t');
-    if (fields.size() == 0)
-        return false;
-
-    const CAccountName emptyName;
-    CAccountNameArray prefundArrayOut;
-    prefundArrayOut.reserve(10000);
-    for (auto it = next(lines.begin()); it != lines.end(); ++it) {
-        string_q line = *it;
-        if (!startsWith(line, '#') && contains(line, "0x")) {
-            CAccountName account;
-            account.parseText(fields, line);
-            addToMap(theMap, account, tabFilename, cnt++);
-            prefundArrayOut.push_back(account);
+    for (auto line : lines) {
+        if (fields.empty()) {
+            explode(fields, line, '\t');
+        } else {
+            if (!startsWith(line, '#') && contains(line, "0x")) {
+                CAccountName account;
+                account.parseText(fields, line);
+                if (theMap[account.address].address != account.address)
+                    theMap[account.address] = account;
+            }
         }
     }
-
-    if (contains(tabFilename, "prefund")) {
-        // We can cache the prefunds binary since it will never change
-        CArchive nameCache(WRITING_ARCHIVE);
-        if (nameCache.Lock(prefundBin, modeWriteCreate, LOCK_CREATE)) {
-            nameCache << prefundArrayOut;
-            nameCache.Release();
-        }
-    }
-
     return true;
 }
 
 //-----------------------------------------------------------------------
 bool COptionsBase::buildOtherMaps(void) {
     for (const auto& item : namesMap) {
-        if (contains(item.second.tags, "Airdrop"))
+        bool t1 = contains(item.second.tags, "Airdrop");
+        if (t1)
             airdropMap[item.second.address] = true;
-        bool isToken = !item.second.symbol.empty() || contains(item.second.tags, "Tokens") ||
-                       contains(item.second.tags, "Airdrop");
-        if (isToken)
+
+        bool t2 = !item.second.symbol.empty();
+        bool t3 = contains(item.second.tags, "Tokens");
+        bool t4 = contains(item.second.tags, "Airdrop");
+        if (t2 || t3 || t4)
             tokenMap[item.second.address] = item.second;
     }
     return true;
@@ -191,16 +64,17 @@ bool COptionsBase::loadNames(void) {
 
     LOG8("Entering loadNames...");
 
-    string_q binFile = getCachePath("names/names.bin");
     string_q txtFile = getConfigPath("names/names.tab");
     string_q customFile = getConfigPath("names/names_custom.tab");
     string_q prefundFile = getConfigPath("names/names_prefunds.tab");
 
-    time_q binDate = fileLastModifyDate(binFile);
     time_q txtFileDate = fileLastModifyDate(txtFile);
     time_q customFileDate = fileLastModifyDate(customFile);
     time_q prefundFileDate = fileLastModifyDate(prefundFile);
 
+    string_q binFile = getCachePath("names/names.bin");
+
+    time_q binDate = fileLastModifyDate(binFile);
     time_q txtDate = laterOf(laterOf(txtFileDate, customFileDate), prefundFileDate);
 
     if (isEnabled(OPT_PREFUND)) {
@@ -226,7 +100,7 @@ bool COptionsBase::loadNames(void) {
     if (!importTabFile(namesMap, customFile))
         return usage("Could not open custom names database...");
 
-    if (!importTabFile(namesMap, prefundFile))
+    if (!importTabFilePrefund(namesMap, prefundFile))
         return usage("Could not open prefunds database...");
 
     buildOtherMaps();
@@ -267,3 +141,24 @@ bool COptionsBase::findToken(CAccountName& acct, const address_t& addr) {
 }
 
 }  // namespace qblocks
+
+// typedef enum {
+//     IS_CUSTOM = (1 << 0),
+//     IS_PREFUND = (1 << 1),
+//     IS_CONTRACT = (1 << 2),
+//     IS_ERC20 = (1 << 3),
+//     IS_ERC721 = (1 << 4),
+//     IS_DELETED = (1 << 5),
+// } name_vars_t;
+
+// struct NameOnDisc {
+//   public:
+//     char tags[30];
+//     char address[42];
+//     char name[120];
+//     char symbol[30];
+//     char source[180];
+//     char description[255];
+//     uint16_t decimals;
+//     uint16_t nameVars;
+// };
