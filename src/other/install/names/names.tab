@@ -5648,7 +5648,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 50-Tokens:ERC20	0x7f4df791b9c5e7973afbf457842b5d241e376a13	Elons Musketeers	MUSKS	On chain	18		false	false	false	true	true	false
 90-Individuals:Kickback	0x7f58a56e9836231ce516153825fb75535f99fe86	auryn		https://kickback.events/			false	false	false	false	false	false
 90-Individuals:Kickback	0x7f66828fccd12dac4d88a440b0e306d9d16e45e4	pertsa		https://kickback.events/			false	false	false	false	false	false
-50-Tokens:ERC20	0x7f6a47b85a9425c813b1cd191d730054bdf6235d	dfw.vc8000eth+Profit	www.dfw.vc￩ﾛﾶ￦ﾈﾐ￦ﾜﾬ￥ﾤﾧ￥ﾯﾌ￧﾿ﾁ￦ﾜ	On chain	18		false	false	false	true	true	false
+50-Tokens:ERC20	0x7f6a47b85a9425c813b1cd191d730054bdf6235d	dfw.vc8000eth+Profit	www.dfw.vc零成本大富翁�	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x7f6e5d07f7e90f3ede0a5986671ef7734fbe04a9	BitEth Set	BTCETH	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x7f77d4d26620974f0b0ad3de05d4fb2fd78e94c1	WOWB INU	WOWB	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x7f95390927a69803e38e296eb30d619f5a7593da	Nekocoin	NEKO	On chain	18		false	false	false	true	true	false
@@ -7835,7 +7835,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 50-Tokens:ERC721	0xb2d6fb1dc231f97f8cc89467b52f7c4f78484044	Neolastics	NLS	On chain	18		false	false	false	true	true	true
 30-Contracts:Humanity DAO	0xb2df98b4749a73147321ab92149e46a69794247e	itsexactlythis		https://www.humanitydao.org/humans			false	false	false	false	false	false
 50-Tokens:ERC20	0xb2e260f12406c401874ecc960893c0f74cd6afcd	BitUP Token	BUT	On chain	18		false	false	false	true	true	false
-50-Tokens:ERC20	0xb2e4b6ea88c4836d9f710484b08a9c0327e7412d	QQ￥ﾾﾮ￤﾿ﾡ231799955	￩ﾀﾚ￧ﾼﾉFUS￩ﾪﾗ￥ﾭﾐ￩ﾙﾈ￧ﾅﾜ￧ﾻﾴ￦ﾝﾃQQ￥	On chain	18		false	false	false	true	true	false
+50-Tokens:ERC20	0xb2e4b6ea88c4836d9f710484b08a9c0327e7412d	QQ微信231799955	通缉FUS骗子陈煜维权QQ�	On chain	18		false	false	false	true	true	false
 31-Gitcoin:Grants	0xb2e7e101b8248021be72e76890ea24cfad967aec	Grant 0230 Open Funding		https://gitcoin.co/grants/230/open-funding			false	false	false	true	false	false
 50-Tokens:ERC20	0xb2ecc7c1e2f12a4e4e519f47bcefeb63db95f3bb	EtherHinata	EHINATA	On chain	18		false	false	false	true	true	false
 31-Gitcoin:Grants	0xb2f30ba21634bf6fc458b2a37bb709b6577fd1a8	Grant 3003 - Creators Float -Arts DAO		https://gitcoin.co/grants/3003/creators-float-arts-dao			false	false	false	false	false	false
