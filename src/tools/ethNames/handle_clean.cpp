@@ -66,7 +66,10 @@ bool COptions::finishClean(CAccountName& account) {
 
         if (!name.empty() || !symbol.empty() || decimals > 0) {
             account.isErc20 = true;
-            account.source = account.source.empty() ? "On chain" : account.source;
+            account.source =
+                (account.source.empty() || account.source == "TrueBlocks.io" || account.source == "EtherScan.io")
+                    ? "On chain"
+                    : account.source;
 
             // Use the values from on-chain if we can...
             account.name = (!name.empty() ? name : account.name);
