@@ -88,7 +88,6 @@ class COptionsBase {
     // TODO(tjayrush): All of these can (and should) be moved to expContext as it would be available to things other
     // TODO(tjayrush): than options. See fmtMap and tsMemMap for examples
     CAddressNameMap tokenMap;
-    CAddressBoolMap airdropMap;
     bool buildOtherMaps(void);
 
   public:

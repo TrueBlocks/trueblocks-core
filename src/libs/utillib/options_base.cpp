@@ -919,7 +919,6 @@ COptionsBase::COptionsBase(void) {
     namesMap.clear();
     tokenMap.clear();
     expContext().prefundMap.clear();
-    airdropMap.clear();
     coutSaved = NULL;
     rd_outputFilename = "";
     rd_zipOnClose = false;

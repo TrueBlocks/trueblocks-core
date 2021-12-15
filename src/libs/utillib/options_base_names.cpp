@@ -20,10 +20,7 @@ extern bool loadPrefunds(const string_q& prefundFile);
 extern bool importTabFilePrefund(CAddressNameMap& theMap, const string_q& tabFilename);
 
 //-----------------------------------------------------------------------
-static bool importTabFile(CAddressNameMap& theMap, const string_q& tabFilename) {
-    CStringArray lines;
-    asciiFileToLines(tabFilename, lines);
-
+static bool importTabFile(CStringArray& lines, CAddressNameMap& theMap) {
     CStringArray fields;
     for (auto line : lines) {
         if (fields.empty()) {
@@ -36,22 +33,6 @@ static bool importTabFile(CAddressNameMap& theMap, const string_q& tabFilename) 
                     theMap[account.address] = account;
             }
         }
-    }
-    return true;
-}
-
-//-----------------------------------------------------------------------
-bool COptionsBase::buildOtherMaps(void) {
-    for (const auto& item : namesMap) {
-        bool t1 = contains(item.second.tags, "Airdrop");
-        if (t1)
-            airdropMap[item.second.address] = true;
-
-        bool t2 = !item.second.symbol.empty();
-        bool t3 = contains(item.second.tags, "Tokens");
-        bool t4 = contains(item.second.tags, "Airdrop");
-        if (t2 || t3 || t4)
-            tokenMap[item.second.address] = item.second;
     }
     return true;
 }
@@ -94,11 +75,11 @@ bool COptionsBase::loadNames(void) {
         }
     }
 
-    if (!importTabFile(namesMap, txtFile))
-        return usage("Could not open names database...");
-
-    if (!importTabFile(namesMap, customFile))
-        return usage("Could not open custom names database...");
+    CStringArray lines;
+    asciiFileToLines(txtFile, lines);
+    asciiFileToLines(customFile, lines);
+    if (!importTabFile(lines, namesMap))
+        return usage("Could not import names database...");
 
     if (!importTabFilePrefund(namesMap, prefundFile))
         return usage("Could not open prefunds database...");
@@ -109,6 +90,21 @@ bool COptionsBase::loadNames(void) {
     if (nameCache.Lock(binFile, modeWriteCreate, LOCK_CREATE)) {
         nameCache << namesMap;
         nameCache.Release();
+    }
+
+    return true;
+}
+
+//-----------------------------------------------------------------------
+bool COptionsBase::buildOtherMaps(void) {
+    for (const auto& item : namesMap) {
+        if (item.second.symbol.empty())
+            continue;
+
+        bool t1 = contains(item.second.tags, "Tokens");
+        bool t2 = contains(item.second.tags, "Airdrop");
+        if (t1 || t2)
+            tokenMap[item.second.address] = item.second;
     }
 
     return true;
@@ -133,10 +129,6 @@ bool COptionsBase::findToken(CAccountName& acct, const address_t& addr) {
         acct = tokenMap[addr];
         return true;
     }
-
-    if (airdropMap[addr])
-        return findName(addr, acct);
-
     return false;
 }
 
