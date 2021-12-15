@@ -102,7 +102,7 @@ bool COptionsBase::buildOtherMaps(void) {
             continue;
 
         bool t1 = contains(item.second.tags, "Tokens");
-        bool t2 = contains(item.second.tags, "Airdrop");
+        bool t2 = contains(item.second.tags, "Contracts") && contains(item.second.name, "Airdrop");
         if (t1 || t2)
             tokenMap[item.second.address] = item.second;
     }

@@ -40,7 +40,9 @@ bool COptions::finishClean(CAccountName& account) {
 
     bool wasContract = account.isContract;
     bool isContract = isContractAt(account.address, latestBlock);
-    bool isAirdrop = containsI(account.name, "airdrop") || containsI(account.tags, "airdrop");
+    bool isAirdrop = containsI(account.name, "airdrop");
+    if (account.tags == "60-Airdrops")
+        account.tags = "";
 
     if (!isContract) {
         // If the tag is not empty and not 30-Contracts, perserve it. Otherwise it's an individual
@@ -91,9 +93,11 @@ bool COptions::finishClean(CAccountName& account) {
             account.isErc20 = false;
             account.isErc721 = false;
         }
+        if (account.tags.empty())
+            account.tags = "30-Contracts";
     }
 
-    if (isAirdrop) {
+    if (isAirdrop && !containsI(account.name, "Airdrop")) {
         replaceAll(account.name, " airdrop", "");
         replaceAll(account.name, " Airdrop", "");
         account.name = account.name + " Airdrop";

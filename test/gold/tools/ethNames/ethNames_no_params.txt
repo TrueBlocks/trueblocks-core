@@ -28,7 +28,7 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x000100bb517e0c003200502a822083000a3b005d	Archer DAO: Voting Power Prism Proxy			18
 55-Defi	0x0001fb050fe7312791bf6475b96569d83f695c9f	Ygov.finance: yearn
 30-Contracts	0x000983ba1a675327f0940b56c2d49cd9c042dfbf	GU: Shiny Legendary Pack
-60-Airdrops	0x000ee67d5bec37ad37292da18516cc96d81e0242	RZM Sender 2 Airdrop
+90-Individuals:Other	0x000ee67d5bec37ad37292da18516cc96d81e0242	Name 0x000ee67d
 90-Individuals:Gitcoin Grants	0x00158a74921620b39e5c3afe4dca79feb2c2c143	Name 0x00158a74
 90-Individuals:Other	0x0015f3c39221b20016cebdbf8b19eb5acedca901	Name 0x0015f3c3
 91-Early:Addresses	0x001a589dda0d6be37632925eaf1256986b2c6ad0	Oraclize_id304
@@ -45,7 +45,7 @@ tags	address	name	symbol	decimals
 90-Individuals:DAO Curators	0x0037a6b811ffeb6e072da21179d11b1406371c63	Name 0x0037a6b8
 91-Early:Miners	0x0037ce3d4b7f8729c8607d8d0248252be68202c0	Miner_0027_260
 90-Individuals:Gitcoin Grants	0x003f6b20bfa4b5cab701960ecf73859cb3c095fc	Name 0x003f6b20
-60-Airdrops	0x00476aecb24edfed50aaf2e2361badbd8d3efdc2	HEALP Sender Airdrop
+90-Individuals:Other	0x00476aecb24edfed50aaf2e2361badbd8d3efdc2	Name 0x00476aec
 90-Individuals:Gitcoin Grants	0x004efb233c8d26ccc063061bee54f0be9302e6ed	Name 0x004efb23
 50-Tokens:ERC721	0x004f5683e183908d0f6b688239e3e2d5bbb066ca	Hall Of Fame Goat Lodge	HOFG		18
 31-Gitcoin:Grants	0x005241438caf3eacb05bb6543151f7af894c5b58	Grant 2763 - rugpullindex.com - Improving stake safety
@@ -74,14 +74,14 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x00c4b398500645eb5da00a1a379a88b11683ba01	Eximchain Token	EXC		18
 90-Individuals:Gitcoin Grants	0x00c50c2f356130b1f65ac3e60afe40a6c348f1c9	Name 0x00c50c2f
 31-Gitcoin:Grants	0x00cf36853aa4024fb5bf5cc377dfd85844b411a0	Grant 0143 Dappnode - Panvala League
-60-Airdrops	0x00cfbbaf7ddb3a1476767101c12a0162e241fbad	Amber Token Airdrop
+90-Individuals:Other	0x00cfbbaf7ddb3a1476767101c12a0162e241fbad	Name 0x00cfbbaf
 50-Tokens:ERC20	0x00d0f137b51692d0ac708bde7b367a373865cffe	Zapper.Fi : Balancer Remove
 90-Individuals:Twitter	0x00dc74ce5d346b14b913071a032b7e2d29b0f2a6	Name 0x00dc74ce
 31-Gitcoin:Admin	0x00de4b13153673bcae2616b67bf822500d325fc3	Gitcoin Maintainer
 31-Gitcoin:Grants	0x00e4f5f746242e4d115bd65aac7c08fe5d38fb21	Grant 1839 the Etherchest Ecosystem
 90-Individuals:DAO Whales	0x00eb925836b163a4e5608e3bbd891a7cfab6bde9	Name 0x00eb9258
-60-Airdrops	0x00ee337d1aa5229d92889ac27fc3841573590289	VOS.AI Sender Airdrop
-60-Airdrops	0x00f78d023dd008c6e8bd3e16327466d58fb6b576	XNN Sender Airdrop
+90-Individuals:Other	0x00ee337d1aa5229d92889ac27fc3841573590289	Name 0x00ee337d
+90-Individuals:Other	0x00f78d023dd008c6e8bd3e16327466d58fb6b576	Name 0x00f78d02
 31-Gitcoin:Grants	0x00fe460a15b49d09f39b057d0f1a7b9444f4f2be	Grant 0624 Nescience Software Portfolio Rebalancing Direct Indexing
 80-Malicious:DaoDrain	0x0101f3be8ebb4bbd39a2e3b9a3639d4259832fd9	DAO Drain 075			1
 50-Tokens:ERC20	0x010496d8f3269ee9b05060bdf40c2d66e83e61dd	Digg	DIGG		18

@@ -254,9 +254,9 @@ names?
       "description": ""
     },
     {
-      "tags": "60-Airdrops",
+      "tags": "90-Individuals:Other",
       "address": "0x000ee67d5bec37ad37292da18516cc96d81e0242",
-      "name": "RZM Sender 2 Airdrop",
+      "name": "Name 0x000ee67d",
       "symbol": "",
       "source": "TrueBlocks.io",
       "decimals": 0,
@@ -407,9 +407,9 @@ names?
       "description": ""
     },
     {
-      "tags": "60-Airdrops",
+      "tags": "90-Individuals:Other",
       "address": "0x00476aecb24edfed50aaf2e2361badbd8d3efdc2",
-      "name": "HEALP Sender Airdrop",
+      "name": "Name 0x00476aec",
       "symbol": "",
       "source": "EtherScan.io",
       "decimals": 0,
@@ -668,9 +668,9 @@ names?
       "description": ""
     },
     {
-      "tags": "60-Airdrops",
+      "tags": "90-Individuals:Other",
       "address": "0x00cfbbaf7ddb3a1476767101c12a0162e241fbad",
-      "name": "Amber Token Airdrop",
+      "name": "Name 0x00cfbbaf",
       "symbol": "",
       "source": "TrueBlocks.io",
       "decimals": 0,
@@ -722,18 +722,18 @@ names?
       "description": ""
     },
     {
-      "tags": "60-Airdrops",
+      "tags": "90-Individuals:Other",
       "address": "0x00ee337d1aa5229d92889ac27fc3841573590289",
-      "name": "VOS.AI Sender Airdrop",
+      "name": "Name 0x00ee337d",
       "symbol": "",
       "source": "TrueBlocks.io",
       "decimals": 0,
       "description": ""
     },
     {
-      "tags": "60-Airdrops",
+      "tags": "90-Individuals:Other",
       "address": "0x00f78d023dd008c6e8bd3e16327466d58fb6b576",
-      "name": "XNN Sender Airdrop",
+      "name": "Name 0x00f78d02",
       "symbol": "",
       "source": "TrueBlocks.io",
       "decimals": 0,
