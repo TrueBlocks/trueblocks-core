@@ -782,6 +782,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 30-Contracts:Humanity DAO	0x1092361f4eafdc6e4555ee761e87ef9c67b9e42f	mehranhydary		https://www.humanitydao.org/humans			false	false	false	false	false	false
 31-Gitcoin:Grants	0x10959926fb4926d181a2ea46ceb234150ab70c9b	Grant 2393 - DEX Whales		https://gitcoin.co/grants/2393/dex-whales			false	false	false	false	false	false
 90-Individuals:Kickback	0x109a22e8fe61a00909a4ec50d62009c160e165d0	mehranhydary		https://kickback.events/			false	false	false	false	false	false
+50-Tokens:ERC20	0x109dcf0152e90340175e8622058efe6d92ca3c7a	QA-Token	QAT	On chain	10		false	false	false	true	true	false
 30-Contracts	0x10a0847c2d170008ddca7c3a688124f493630032	RelayerManager		EtherScan.io			false	false	false	true	false	false
 31-Gitcoin:Grants	0x10a35cbce6d0b2b01d6dd944c6889f98b036205d	Grant 1830 the Augmented Reality Game Cryptolandy.		https://gitcoin.co/grants/1830/the-augmented-reality-game-cryptolandy			false	false	false	false	false	false
 30-Contracts:Humanity DAO	0x10a5cc530f7b308652e8c9f838cad4f6a7fa25c8	pelisboule		https://www.humanitydao.org/humans			false	false	false	false	false	false
@@ -5648,7 +5649,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 50-Tokens:ERC20	0x7f4df791b9c5e7973afbf457842b5d241e376a13	Elons Musketeers	MUSKS	On chain	18		false	false	false	true	true	false
 90-Individuals:Kickback	0x7f58a56e9836231ce516153825fb75535f99fe86	auryn		https://kickback.events/			false	false	false	false	false	false
 90-Individuals:Kickback	0x7f66828fccd12dac4d88a440b0e306d9d16e45e4	pertsa		https://kickback.events/			false	false	false	false	false	false
-50-Tokens:ERC20	0x7f6a47b85a9425c813b1cd191d730054bdf6235d	dfw.vc8000eth+Profit	www.dfw.vc￩ﾛﾶ￦ﾈﾐ￦ﾜﾬ￥ﾤﾧ￥ﾯﾌ￧﾿ﾁ￦ﾜ	On chain	18		false	false	false	true	true	false
+50-Tokens:ERC20	0x7f6a47b85a9425c813b1cd191d730054bdf6235d	dfw.vc8000eth+Profit	www.dfw.vc￯﾿ﾩ￯ﾾﾛ￯ﾾﾶ￯﾿ﾦ￯ﾾﾈ￯ﾾﾐ￯﾿	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x7f6e5d07f7e90f3ede0a5986671ef7734fbe04a9	BitEth Set	BTCETH	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x7f77d4d26620974f0b0ad3de05d4fb2fd78e94c1	WOWB INU	WOWB	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x7f95390927a69803e38e296eb30d619f5a7593da	Nekocoin	NEKO	On chain	18		false	false	false	true	true	false
@@ -7835,7 +7836,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 50-Tokens:ERC721	0xb2d6fb1dc231f97f8cc89467b52f7c4f78484044	Neolastics	NLS	On chain	18		false	false	false	true	true	true
 30-Contracts:Humanity DAO	0xb2df98b4749a73147321ab92149e46a69794247e	itsexactlythis		https://www.humanitydao.org/humans			false	false	false	false	false	false
 50-Tokens:ERC20	0xb2e260f12406c401874ecc960893c0f74cd6afcd	BitUP Token	BUT	On chain	18		false	false	false	true	true	false
-50-Tokens:ERC20	0xb2e4b6ea88c4836d9f710484b08a9c0327e7412d	QQ￥ﾾﾮ￤﾿ﾡ231799955	￩ﾀﾚ￧ﾼﾉFUS￩ﾪﾗ￥ﾭﾐ￩ﾙﾈ￧ﾅﾜ￧ﾻﾴ￦ﾝﾃQQ￥	On chain	18		false	false	false	true	true	false
+50-Tokens:ERC20	0xb2e4b6ea88c4836d9f710484b08a9c0327e7412d	QQ￥ﾾﾮ￤﾿ﾡ231799955	￩ﾀﾚ￧ﾼﾉFUS￩ﾪﾗ	On chain	18		false	false	false	true	true	false
 31-Gitcoin:Grants	0xb2e7e101b8248021be72e76890ea24cfad967aec	Grant 0230 Open Funding		https://gitcoin.co/grants/230/open-funding			false	false	false	true	false	false
 50-Tokens:ERC20	0xb2ecc7c1e2f12a4e4e519f47bcefeb63db95f3bb	EtherHinata	EHINATA	On chain	18		false	false	false	true	true	false
 31-Gitcoin:Grants	0xb2f30ba21634bf6fc458b2a37bb709b6577fd1a8	Grant 3003 - Creators Float -Arts DAO		https://gitcoin.co/grants/3003/creators-float-arts-dao			false	false	false	false	false	false
@@ -8889,6 +8890,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 90-Individuals:Gitcoin Grants	0xcb5c0d33d92e4910daa24825db8af9b64e17c33c	exhumans		Gitcoin Website			false	false	false	false	false	false
 50-Tokens:ERC20	0xcb5ea3c190d8f82deadf7ce5af855ddbf33e3962	Qubitica	QBIT	On chain	6		false	false	false	true	true	false
 90-Individuals:Gitcoin Grants	0xcb5fba4419abc4d7c11af0c24ba0f2e555407f5b	jlwaugh		Gitcoin Website			false	false	false	false	false	false
+50-Tokens:ERC20	0xcb6108e3b72d5c577cc9b96a9a496ba4d57da1e9	QA-Token	QAT	On chain	18		false	false	false	true	true	false
 90-Individuals	0xcb75f1f9cc69e3b1a27b8d9c08bb73a58ede24be	Simon Sender		TrueBlocks.io			false	false	false	false	false	false
 50-Tokens:ERC20	0xcb7603074b7c83f8ea4a14270a1068752bea40c7	K.K. Slider	KKSLID	On chain	9		false	false	false	true	true	false
 90-Individuals:DevCon2	0xcb860eb2eda14f37e5c046b154786048e2062138	mperklin		DevCon2 Token Contract			false	false	false	false	false	false

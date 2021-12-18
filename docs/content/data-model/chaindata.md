@@ -2,7 +2,7 @@
 title: "Chain data"
 description: ""
 lead: ""
-date: 2021-10-27T17:52:58
+date: 2021-12-18T07:30:06
 lastmod:
   - :git
   - lastmod
@@ -125,13 +125,13 @@ Log data is made of the following data fields:
 | ---------------- | ------------------------------------------------------------------------------------------------- | ----------- |
 | blockNumber      | the number of the block                                                                           | blknum      |
 | transactionIndex | the zero-indexed position of the transaction in the block                                         | blknum      |
-| address          | the smart contract that emitted this log                                                          | address     |
 | logIndex         | the zero-indexed position of this log relative to the block                                       | blknum      |
+| timestamp        | the timestamp of the block this log appears in                                                    | timestamp   |
+| address          | the smart contract that emitted this log                                                          | address     |
 | topics           | The first topic hashes event signature of the log, up to 3 additional index parameters may appear | CTopicArray |
 | data             | any remaining un-indexed parameters to the event                                                  | bytes       |
 | articulatedLog   | a human-readable version of the topic and data fields                                             | CFunction   |
 | compressedLog    | a truncated, more readable version of the articulation                                            | string      |
-| timestamp        | the timestamp of the block this log appears in                                                    | timestamp   |
 
 
 ## Trace
