@@ -1659,6 +1659,15 @@ names?prefund&custom&named
     },
     {
       "tags": "50-Tokens:ERC20",
+      "address": "0x0360b415b56bd77def7ffd64ab9c0a9f63a84e4f",
+      "name": "NL",
+      "symbol": "NL Token",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
       "address": "0x036407f23d5e1c1486f7488332cf54bf06e5f09f",
       "name": "Alphabit",
       "symbol": "ABC",
@@ -1796,15 +1805,6 @@ names?prefund&custom&named
       "tags": "90-Individuals:Gitcoin Grants",
       "address": "0x03b45f0f660adcaa24fbacffd45e171464ec63a8",
       "name": "Name 0x03b45f0f",
-      "symbol": "",
-      "source": "Gitcoin Website",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "90-Individuals:Gitcoin Grants",
-      "address": "0x03b85b333c99ec60a6d540e4277d71d3a4c0975d",
-      "name": "Name 0x03b85b33",
       "symbol": "",
       "source": "Gitcoin Website",
       "decimals": 0,

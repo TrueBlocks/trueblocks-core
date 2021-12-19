@@ -1623,6 +1623,15 @@ names?
     },
     {
       "tags": "50-Tokens:ERC20",
+      "address": "0x0360b415b56bd77def7ffd64ab9c0a9f63a84e4f",
+      "name": "NL",
+      "symbol": "NL Token",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
       "address": "0x036407f23d5e1c1486f7488332cf54bf06e5f09f",
       "name": "Alphabit",
       "symbol": "ABC",
@@ -1800,15 +1809,6 @@ names?
       "source": "On chain",
       "decimals": 18,
       "description": "Biotron is a fully transparent personal data analytics platform on blockchain."
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x03c9436d54db599018842387d9d6075d81580726",
-      "name": "AirEthereumMax INU",
-      "symbol": "aiReMax",
-      "source": "On chain",
-      "decimals": 18,
-      "description": ""
     }
   ],
   "meta": {

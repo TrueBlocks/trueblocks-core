@@ -187,6 +187,7 @@ tags	address	name	symbol	decimals
 31-Gitcoin:Grants	0x035032655b5b3784d359b56eb82c803bd971c582	Grant 2800 - LogicBeach Explainer Series
 50-Tokens:ERC20	0x03552d005d0f4262bf2d85fa2a3263541d4059c1	Miller Real Estate Holdings	RENT		6
 30-Contracts	0x0358629bd27fa559b88d0f41ea3da28d057c3414	Arbitrage Bot
+50-Tokens:ERC20	0x0360b415b56bd77def7ffd64ab9c0a9f63a84e4f	NL	NL Token		18
 50-Tokens:ERC20	0x036407f23d5e1c1486f7488332cf54bf06e5f09f	Alphabit	ABC		18
 50-Tokens:ERC20	0x036ea7048a4c1f28b299b9dd9e3c9fe9022e2a2a	ShibAkita Inu	SHIBAKITA		18
 50-Tokens:ERC20	0x0371a82e4a9d0a4312f3ee2ac9c6958512891372	Student Coin	STU		18
@@ -203,4 +204,3 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x03ab458634910aad20ef5f1c8ee96f1d6ac54919	Rai Reflex Index	RAI		18
 50-Tokens:ERC20	0x03b0ffc15a9a03d32a3a7c5839b3faf5174059cf	NZXT Protocol Governance Token (Shareholder only)	NZXT		6
 90-Individuals:Gitcoin Grants	0x03b45f0f660adcaa24fbacffd45e171464ec63a8	Name 0x03b45f0f
-90-Individuals:Gitcoin Grants	0x03b85b333c99ec60a6d540e4277d71d3a4c0975d	Name 0x03b85b33
