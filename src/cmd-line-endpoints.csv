@@ -27,6 +27,6 @@ num ,group       ,is_visible ,is_visible_docs ,api_group ,api_route    ,tool    
 04  ,Admin       ,true       ,true            ,apps      ,pins         ,pinMan                   ,Manage pins          ,Manage pinned index of appearances and associated blooms.
 
 05  ,Other       ,false      ,true            ,          ,             ,                         ,                     ,Access to other and external data
-05  ,Other       ,true       ,true            ,tools     ,quotes       ,getQuotes                ,Price quotes         ,Update or display Ethereum price data. This tool has been deprecated.
+05  ,Other       ,true       ,true            ,tools     ,quotes       ,getQuotes                ,Price quotes         ,Update or display Ethereum price data&#44; this tool has been deprecated.
 05  ,Other       ,true       ,true            ,apps      ,explore      ,fireStorm                ,Explore              ,Open a local or remote explorer for one or more addresses&#44; blocks&#44; or transactions.
 05  ,Other       ,true       ,true            ,tools     ,slurp        ,ethslurp                 ,Slurp Etherscan      ,Fetch data from EtherScan for any address.

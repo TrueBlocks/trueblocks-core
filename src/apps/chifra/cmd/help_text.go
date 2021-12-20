@@ -26,13 +26,13 @@ var helpText = `  Accounts:
   Admin:
     status        report on the status of the TrueBlocks system
     serve         serve the TrueBlocks API using the flame server
-    scrape        scan the chain and update the TrueBlocks index of appearances
+    scrape        scan the chain and update (and optionally pin) the TrueBlocks index of appearances
     chunks        manage and investigate chunks and bloom filters
     init          initialize the TrueBlocks system by downloading from IPFS
     pins          manage pinned index of appearances and associated blooms
   Other:
-    quotes        update or display Ethereum price data. This tool has been deprecated
-    explore       open an explorer for one or more addresses, blocks, or transactions
+    quotes        update or display Ethereum price data, this tool has been deprecated
+    explore       open a local or remote explorer for one or more addresses, blocks, or transactions
     slurp         fetch data from EtherScan for any address
   Flags:
     -h, --help    display this help screen

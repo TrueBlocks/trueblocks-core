@@ -171,7 +171,7 @@ func RoutePins(w http.ResponseWriter, r *http.Request) {
 	pinsPkg.ServePins(w, r)
 }
 
-// RouteQuotes Update or display Ethereum price data. This tool has been deprecated.
+// RouteQuotes Update or display Ethereum price data, this tool has been deprecated.
 func RouteQuotes(w http.ResponseWriter, r *http.Request) {
 	if !quotesPkg.ServeQuotes(w, r) {
 		CallOne(w, r, GetCommandPath("getQuotes"), "", "quotes")
