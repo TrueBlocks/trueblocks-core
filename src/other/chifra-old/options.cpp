@@ -143,7 +143,7 @@ void COptions::Init(void) {
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
     Init();
-    overrides.push_back(STR_CHIFRA_HELP);
+    over rides.push_back(STR_CHIFRA_HELP);
 }
 
 //--------------------------------------------------------------------------------

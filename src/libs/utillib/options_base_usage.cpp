@@ -81,9 +81,6 @@ bool isPublic2(const COption& opt) {
 
 //--------------------------------------------------------------------------------
 string_q COptionsBase::get_description(void) const {
-    if (!overrides.empty())
-        return get_override();
-
     ostringstream os, hidden, extra;
 
     size_t widths[5];
@@ -194,15 +191,6 @@ string_q COptionsBase::get_configs(void) const {
 }
 
 //--------------------------------------------------------------------------------
-string_q COptionsBase::get_override(void) const {
-    ostringstream os;
-    os << endl << "Commands:" << endl;
-    os << format_notes(overrides);
-    os << endl;
-    return os.str();
-}
-
-//--------------------------------------------------------------------------------
 string_q COptionsBase::get_version(void) const {
     return "";
 }
@@ -299,10 +287,7 @@ string_q COptionsBase::format_notes(const CStringArray& noteList) const {
         replaceAll(note, " |", "|");
         replaceAll(note, "|", "\n" + lead + " ");
         note = colorize(note);
-        os << lead;
-        if (overrides.empty())
-            os << "-";
-        os << " " << note << endl;
+        os << lead << "- " << note << endl;
     }
     return os.str();
 }

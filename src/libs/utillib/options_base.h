@@ -37,7 +37,6 @@ class COptionsBase {
     CStringArray arguments;
     CStringArray notes;
     CStringArray configs;
-    CStringArray overrides;
     CErrorStringMap usageErrs;
     CStringArray errors;
 
@@ -110,7 +109,6 @@ class COptionsBase {
     string_q get_version(void) const;
     string_q get_options(void) const;
     string_q get_errmsg(const string_q& errMsg) const;
-    string_q get_override(void) const;
     string_q get_positionals(COptionArray& pos) const;
 
     string_q format_notes(const CStringArray& strs) const;
