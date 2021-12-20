@@ -23,7 +23,7 @@ var slurpCmd = &cobra.Command{
 	Use:     usageSlurp,
 	Short:   shortSlurp,
 	Long:    longSlurp,
-	Version: "GHC-TrueBlocks//0.18.0-alpha",
+	Version: versionText,
 	RunE:    slurpPkg.RunSlurp,
 }
 

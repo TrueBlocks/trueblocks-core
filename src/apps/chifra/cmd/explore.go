@@ -23,7 +23,7 @@ var exploreCmd = &cobra.Command{
 	Use:     usageExplore,
 	Short:   shortExplore,
 	Long:    longExplore,
-	Version: "GHC-TrueBlocks//0.18.0-alpha",
+	Version: versionText,
 	RunE:    explorePkg.RunExplore,
 }
 

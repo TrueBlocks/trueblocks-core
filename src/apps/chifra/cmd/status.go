@@ -23,7 +23,7 @@ var statusCmd = &cobra.Command{
 	Use:     usageStatus,
 	Short:   shortStatus,
 	Long:    longStatus,
-	Version: "GHC-TrueBlocks//0.18.0-alpha",
+	Version: versionText,
 	RunE:    statusPkg.RunStatus,
 }
 

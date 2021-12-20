@@ -23,7 +23,7 @@ var monitorsCmd = &cobra.Command{
 	Use:     usageMonitors,
 	Short:   shortMonitors,
 	Long:    longMonitors,
-	Version: "GHC-TrueBlocks//0.18.0-alpha",
+	Version: versionText,
 	RunE:    monitorsPkg.RunMonitors,
 }
 
