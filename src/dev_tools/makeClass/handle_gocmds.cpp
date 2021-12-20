@@ -26,6 +26,7 @@ extern string_q clean_positionals(const string_q& in);
 
 extern const char* STR_REQUEST_CASE1;
 extern const char* STR_REQUEST_CASE2;
+extern const char* STR_CHIFRA_HELP_END;
 //---------------------------------------------------------------------------------------------------
 bool COptions::handle_gocmds_cmd(const CCommandOption& p) {
     string_q source = asciiFileToString(getTemplatePath("blank.go"));
@@ -135,9 +136,12 @@ bool COptions::handle_gocmds(void) {
         handle_gocmds_cmd(p);
         handle_gocmds_options(p);
         handle_gocmds_output(p);
+        chifraHelpStream << p.toChifraHelp() << endl;
     }
+    chifraHelpStream << STR_CHIFRA_HELP_END;
 
     string_q contents = asciiFileToString(getTemplatePath("help_text.go"));
+    replace(contents, "[{HELP_TEXT}]", chifraHelpStream.str());
     replace(contents, "[{VERSION}]", getVersionStr(true, false));
     stringToAsciiFile(getSourcePath("apps/chifra/cmd/help_text.go"), contents);
 
@@ -444,3 +448,9 @@ const char* STR_REQUEST_CASE2 =
     "\t\t\t\ts := strings.Split(val, \" \") // may contain space separated items\n"
     "\t\t\t\topts.[{VARIABLE}] = append(opts.[{VARIABLE}], s...)\n"
     "\t\t\t}";
+
+const char* STR_CHIFRA_HELP_END =
+    "  Flags:\n"
+    "    -h, --help    display this help screen\n"
+    "\n"
+    "  Use \"chifra [command] --help\" for more information about a command.\n";

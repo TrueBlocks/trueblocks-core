@@ -29,9 +29,9 @@ import (
 	tokensPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/tokens"
 	statusPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/status"
 	scrapePkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/scrape"
+	chunksPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/chunks"
 	initPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/init"
 	pinsPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/pins"
-	chunksPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/chunks"
 	quotesPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/quotes"
 	slurpPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/internal/slurp"
 	// END_ROUTE_PKGS
@@ -152,6 +152,13 @@ func RouteScrape(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// RouteChunks Manage and investigate chunks and bloom filters.
+func RouteChunks(w http.ResponseWriter, r *http.Request) {
+	if !chunksPkg.ServeChunks(w, r) {
+		CallOne(w, r, GetCommandPath("chunkMan"), "", "chunks")
+	}
+}
+
 // RouteInit Initialize the TrueBlocks system by downloading from IPFS.
 func RouteInit(w http.ResponseWriter, r *http.Request) {
 	if !initPkg.ServeInit(w, r) {
@@ -162,13 +169,6 @@ func RouteInit(w http.ResponseWriter, r *http.Request) {
 // RoutePins Manage pinned index of appearances and associated blooms.
 func RoutePins(w http.ResponseWriter, r *http.Request) {
 	pinsPkg.ServePins(w, r)
-}
-
-// RouteChunks Manage and investigate chunks and bloom filters.
-func RouteChunks(w http.ResponseWriter, r *http.Request) {
-	if !chunksPkg.ServeChunks(w, r) {
-		CallOne(w, r, GetCommandPath("chunkMan"), "", "chunks")
-	}
 }
 
 // RouteQuotes Update or display Ethereum price data. This tool has been deprecated.
@@ -213,9 +213,9 @@ var routes = Routes{
 	Route{"RouteTokens", "GET", "/tokens", RouteTokens},
 	Route{"RouteStatus", "GET", "/status", RouteStatus},
 	Route{"RouteScrape", "GET", "/scrape", RouteScrape},
+	Route{"RouteChunks", "GET", "/chunks", RouteChunks},
 	Route{"RouteInit", "GET", "/init", RouteInit},
 	Route{"RoutePins", "GET", "/pins", RoutePins},
-	Route{"RouteChunks", "GET", "/chunks", RouteChunks},
 	Route{"RouteQuotes", "GET", "/quotes", RouteQuotes},
 	Route{"RouteSlurp", "GET", "/slurp", RouteSlurp},
 	// END_ROUTE_ITEMS
