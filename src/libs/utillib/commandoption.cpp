@@ -805,7 +805,7 @@ string_q CCommandOption::toChifraHelp(void) const {
     replaceAll(ret.description, ".", "");
     ret.description = firstLower(ret.description);
     if (api_route.empty())
-        return toUpper(ret.Format("    \"[{GROUP}]|\""));
+        return toProper(ret.Format("  [{GROUP}]:"));
     return ret.Format("    [{w:14:API_ROUTE}][{DESCRIPTION}]");
 }
 

@@ -118,8 +118,11 @@ bool COptions::handle_gocmds(void) {
     counter = CCounter();  // reset
 
     for (auto p : endpointArray) {
-        if (!p.is_visible)
+        if (!p.is_visible) {
+            if (!p.group.empty())
+                chifraHelpStream << p.toChifraHelp() << endl;
             continue;
+        }
         CCommandOptionArray params;
         CCommandOptionArray notes;
         for (auto option : routeOptionArray) {
