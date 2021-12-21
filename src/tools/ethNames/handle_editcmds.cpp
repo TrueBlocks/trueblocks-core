@@ -12,6 +12,7 @@
  *-------------------------------------------------------------------------------------------*/
 #define LOGGING_LEVEL_TEST
 #include "options.h"
+#include "exportcontext.h"
 
 //-----------------------------------------------------------------------
 void pushToOutput(CAccountNameArray& out, const CAccountName& name, bool to_custom) {
@@ -54,10 +55,10 @@ bool COptions::handle_editcmds(CStringArray& terms, bool to_custom, bool autonam
     explode(fields, fmt, '\t');
 
     CAccountNameArray outArray;
-    outArray.reserve(namesMap.size() + 2);
+    outArray.reserve(expContext().namesMap.size() + 2);
 
     bool edited = false;
-    for (auto mapItem : namesMap) {
+    for (auto mapItem : expContext().namesMap) {
         CAccountName name = mapItem.second;
         if (name.address == target.address) {
             if (crud == "remove") {
@@ -110,7 +111,7 @@ bool COptions::handle_editcmds(CStringArray& terms, bool to_custom, bool autonam
         // We don't want to write this 'not found on chain' fact to the database
         string_q dest = to_custom ? getConfigPath("names/names_custom.tab") : getConfigPath("names/names.tab");
         stringToAsciiFile(dest, dataStream2.str());
-        namesMap.clear();
+        expContext().namesMap.clear();
         ::remove(getCachePath("names/names.bin").c_str());
         LOG4("Finished writing...");
 

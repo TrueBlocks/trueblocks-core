@@ -15,8 +15,11 @@
 #include "runtimeclass.h"
 #include "sfos.h"
 #include "conversions.h"
+#include "accountname.h"
 
 namespace qblocks {
+
+typedef map<address_t, CAccountName> CAddressNameMap;
 
 //----------------------------------------------------------------------------
 enum format_t { NONE1 = 0, JSON1 = (1 << 1), TXT1 = (1 << 2), CSV1 = (1 << 3), API1 = (1 << 4), YAML1 = (1 << 5) };
@@ -39,6 +42,8 @@ class CExportContext {
     format_t exportFmt;
     CNameValueMap fmtMap;
     CAddressWeiMap prefundMap;
+    CAddressNameMap tokenMap;
+    CAddressNameMap namesMap;
 
   public:
     CExportContext(void);
@@ -54,5 +59,8 @@ extern string_q indentStr(void);
 inline bool isJson(void) {
     return (expContext().exportFmt == JSON1 || expContext().exportFmt == API1 || expContext().exportFmt == NONE1);
 }
+
+//-----------------------------------------------------------------------
+extern bool findToken(const address_t& addr, CAccountName& acct);
 
 }  // namespace qblocks

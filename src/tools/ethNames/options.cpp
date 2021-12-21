@@ -15,6 +15,7 @@
  * the code outside of the BEG_CODE/END_CODE sections
  */
 #include "options.h"
+#include "exportcontext.h"
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
@@ -430,7 +431,7 @@ void COptions::applyFilter() {
                 addIfUnique(item);
             }
         } else {
-            for (auto mapItem : namesMap) {
+            for (auto mapItem : expContext().namesMap) {
                 CAccountName item = mapItem.second;
                 if (item.isCustom)
                     addIfUnique(item);
@@ -440,7 +441,7 @@ void COptions::applyFilter() {
 
     //------------------------
     if (types & NAMED) {
-        for (auto mapItem : namesMap) {
+        for (auto mapItem : expContext().namesMap) {
             CAccountName item = mapItem.second;
             if (!item.isCustom && !item.isPrefund)
                 addIfUnique(item);
@@ -449,7 +450,7 @@ void COptions::applyFilter() {
 
     //------------------------
     if (types & PREFUND) {
-        for (auto mapItem : namesMap) {
+        for (auto mapItem : expContext().namesMap) {
             CAccountName item = mapItem.second;
             if (item.isPrefund)
                 addIfUnique(item);

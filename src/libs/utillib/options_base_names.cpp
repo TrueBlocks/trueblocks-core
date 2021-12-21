@@ -40,7 +40,7 @@ static bool importTabFile(CStringArray& lines, CAddressNameMap& theMap) {
 //-----------------------------------------------------------------------
 bool COptionsBase::loadNames(void) {
     establishFolder(getCachePath("names/"));
-    if (namesMap.size() > 0)  // already loaded
+    if (expContext().namesMap.size() > 0)  // already loaded
         return true;
 
     LOG8("Entering loadNames...");
@@ -68,67 +68,51 @@ bool COptionsBase::loadNames(void) {
         LOG8("Reading names from binary cache");
         CArchive nameCache(READING_ARCHIVE);
         if (nameCache.Lock(binFile, modeReadOnly, LOCK_NOWAIT)) {
-            nameCache >> namesMap;
+            nameCache >> expContext().namesMap;
             nameCache.Release();
-            buildOtherMaps();
-            return true;
+        }
+
+    } else {
+        CStringArray lines;
+        asciiFileToLines(txtFile, lines);
+        asciiFileToLines(customFile, lines);
+        if (!importTabFile(lines, expContext().namesMap))
+            return usage("Could not import names database...");
+
+        if (!importTabFilePrefund(expContext().namesMap, prefundFile))
+            return usage("Could not open prefunds database...");
+
+        CArchive nameCache(WRITING_ARCHIVE);
+        if (nameCache.Lock(binFile, modeWriteCreate, LOCK_CREATE)) {
+            nameCache << expContext().namesMap;
+            nameCache.Release();
         }
     }
 
-    CStringArray lines;
-    asciiFileToLines(txtFile, lines);
-    asciiFileToLines(customFile, lines);
-    if (!importTabFile(lines, namesMap))
-        return usage("Could not import names database...");
-
-    if (!importTabFilePrefund(namesMap, prefundFile))
-        return usage("Could not open prefunds database...");
-
-    buildOtherMaps();
-
-    CArchive nameCache(WRITING_ARCHIVE);
-    if (nameCache.Lock(binFile, modeWriteCreate, LOCK_CREATE)) {
-        nameCache << namesMap;
-        nameCache.Release();
-    }
-
-    return true;
-}
-
-//-----------------------------------------------------------------------
-bool COptionsBase::buildOtherMaps(void) {
-    for (const auto& item : namesMap) {
+    // Load the token map for ease of accounting...
+    for (const auto& item : expContext().namesMap) {
         if (item.second.symbol.empty())
             continue;
 
         bool t1 = contains(item.second.tags, "Tokens");
         bool t2 = contains(item.second.tags, "Contracts") && contains(item.second.name, "Airdrop");
         if (t1 || t2)
-            tokenMap[item.second.address] = item.second;
+            expContext().tokenMap[item.second.address] = item.second;
     }
 
     return true;
 }
 
 //-----------------------------------------------------------------------
-bool COptionsBase::findName(const string_q& addr, CAccountName& acct) {
+bool COptionsBase::findName(const address_t& addr, CAccountName& acct) {
     if (!loadNames())
         return false;
 
-    if (namesMap[addr].address == addr) {
-        acct = namesMap[addr];
+    if (expContext().namesMap[addr].address == addr) {
+        acct = expContext().namesMap[addr];
         return true;
     }
 
-    return false;
-}
-
-//-----------------------------------------------------------------------
-bool COptionsBase::findToken(CAccountName& acct, const address_t& addr) {
-    if (tokenMap[addr].address == addr) {
-        acct = tokenMap[addr];
-        return true;
-    }
     return false;
 }
 

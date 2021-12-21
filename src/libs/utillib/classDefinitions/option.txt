@@ -2,4 +2,4 @@
 class = COption
 fields = option.csv
 includes = basetypes.h|basenode.h|sfarchive.h
-cpp_includes = markdown.h
+cpp_includes = markdown.h|exportcontext.h

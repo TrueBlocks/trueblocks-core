@@ -22,6 +22,7 @@
 #include "filenames.h"
 #include "accountname.h"
 #include "rpcresult.h"
+#include "exportcontext.h"
 
 namespace qblocks {
 
@@ -915,10 +916,6 @@ COptionsBase::COptionsBase(void) {
     usageErrs.clear();
     notes.clear();
     commandLines.clear();
-
-    namesMap.clear();
-    tokenMap.clear();
-    expContext().prefundMap.clear();
     coutSaved = NULL;
     rd_outputFilename = "";
     rd_zipOnClose = false;

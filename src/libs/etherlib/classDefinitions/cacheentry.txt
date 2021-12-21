@@ -2,3 +2,4 @@
 class = CCacheEntry
 fields = cacheentry.csv
 includes = basetypes.h|basenode.h|sfarchive.h
+cpp_includes = exportcontext.h

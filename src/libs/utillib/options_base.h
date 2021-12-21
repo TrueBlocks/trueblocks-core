@@ -28,7 +28,6 @@ typedef bool (*NAMEFUNC)(CAccountName& name, void* data);
 typedef bool (*NAMEVALFUNC)(CNameValue& pair, void* data);
 typedef bool (*UINT64VISITFUNC)(uint64_t num, void* data);
 typedef uint64_t (*HASHFINDFUNC)(const hash_t& hash, void* data);
-typedef map<address_t, CAccountName> CAddressNameMap;
 
 //-----------------------------------------------------------------------------
 class COptionsBase {
@@ -82,17 +81,9 @@ class COptionsBase {
         return crudCommands.size() > 0;
     }
 
-  protected:
-    // supporting named accounts
-    // TODO(tjayrush): All of these can (and should) be moved to expContext as it would be available to things other
-    // TODO(tjayrush): than options. See fmtMap and tsMemMap for examples
-    CAddressNameMap tokenMap;
-    bool buildOtherMaps(void);
-
   public:
-    CAddressNameMap namesMap;
     bool loadNames(void);
-    bool findName(const string_q& addr, CAccountName& acct);
+    bool findName(const address_t& addr, CAccountName& acct);
 
     // enabling options
     bool isEnabled(uint32_t q) const;
@@ -123,8 +114,6 @@ class COptionsBase {
     string_q getOutputFn(void) const {
         return rd_outputFilename;
     }
-
-    bool findToken(CAccountName& acct, const address_t& addr);
 
     void configureDisplay(const string_q& tool, const string_q& dataType, const string_q& defFormat,
                           const string_q& meta = "");
