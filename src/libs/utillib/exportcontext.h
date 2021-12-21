@@ -57,7 +57,7 @@ extern void unindent(void);
 extern bool isJson(void);
 
 //-----------------------------------------------------------------------
-extern bool loadPrefunds(const string_q& prefundFile);
+extern bool loadPrefunds(void);
 extern wei_t prefundAt(const address_t& addr);
 
 //-----------------------------------------------------------------------

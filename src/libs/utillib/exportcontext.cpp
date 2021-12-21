@@ -90,8 +90,10 @@ bool isJson(void) {
     return (expC.exportFmt == JSON1 || expC.exportFmt == API1 || expC.exportFmt == NONE1);
 }
 
+extern string_q getConfigPath(const string_q& part);
 //-----------------------------------------------------------------------
-bool loadPrefunds(const string_q& prefundFile) {
+bool loadPrefunds(void) {
+    string_q prefundFile = getConfigPath("names/names_prefunds.tab");
     expC.prefundMap.clear();
 
     string_q binFile = getCachePath("names/names_prefunds_bals.bin");

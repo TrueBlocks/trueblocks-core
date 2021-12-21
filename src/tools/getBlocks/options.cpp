@@ -194,10 +194,8 @@ bool COptions::parseArguments(string_q& command) {
 
     } else if (!filterType.empty()) {
         configureDisplay("", "CBlock", STR_FORMAT_FILTER_TXT);
-        if (blocks.hasZeroBlock) {
-            optionOn(OPT_PREFUND);
-            loadNames();
-        }
+        if (blocks.hasZeroBlock)
+            loadPrefunds();
 
     } else if (listOffset != NOPOS) {
         configureDisplay("", "CBlock", STR_FORMAT_LIST);

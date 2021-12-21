@@ -58,7 +58,7 @@ bool COptionsBase::loadNames(void) {
     time_q txtDate = laterOf(laterOf(txtFileDate, customFileDate), prefundFileDate);
 
     if (isEnabled(OPT_PREFUND)) {
-        if (!loadPrefunds(prefundFile)) {
+        if (!loadPrefunds()) {
             return usage("Could not open prefunds data.");
         }
     }
