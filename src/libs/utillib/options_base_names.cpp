@@ -16,7 +16,6 @@
 
 namespace qblocks {
 
-extern bool loadPrefunds(const string_q& prefundFile);
 extern bool importTabFilePrefund(CAddressNameMap& theMap, const string_q& tabFilename);
 
 //-----------------------------------------------------------------------
@@ -87,17 +86,6 @@ bool COptionsBase::loadNames(void) {
             nameCache << expContext().namesMap;
             nameCache.Release();
         }
-    }
-
-    // Load the token map for ease of accounting...
-    for (const auto& item : expContext().namesMap) {
-        if (item.second.symbol.empty())
-            continue;
-
-        bool t1 = contains(item.second.tags, "Tokens");
-        bool t2 = contains(item.second.tags, "Contracts") && contains(item.second.name, "Airdrop");
-        if (t1 || t2)
-            expContext().tokenMap[item.second.address] = item.second;
     }
 
     return true;

@@ -165,15 +165,13 @@ bool COptions::parseArguments(string_q& command) {
     string chunkId = padNum9(0) + "-" + padNum9(0);
     string_q bloomPath = getIndexPath("blooms/" + chunkId + ".bloom");
     if (!fileExists(bloomPath)) {
-        ASSERT(expContext().prefundMap.size() == 8893);  // This is a known value
-        LOG_INFO("Index for block zero was not found. Building it from ", uint_2_Str(expContext().prefundMap.size()),
-                 " prefunds.");
+        LOG_INFO("Index for block zero not found. Building from prefund file.");
 
+        // Each chain must have it's own prefund addresses. Here, we scan the prefund list
+        // and add a psuedo-transaction (block: 0, txid: order-in-file) for each address.
+        // Tradition has it that the prefund list is sorted by address.
         CStringArray appearances;
         for (auto prefund : expContext().prefundMap) {
-            // The prefund transactions have 'zero' block numbers and an index into thier location
-            // in the list of presale addresses which is sorted by address. We need to do this in order to
-            // distinquish each transaction when it is exported.
             ostringstream os;
             os << prefund.first << "\t" << padNum9(0) << "\t" << padNum5((uint32_t)appearances.size()) << endl;
             appearances.push_back(os.str());

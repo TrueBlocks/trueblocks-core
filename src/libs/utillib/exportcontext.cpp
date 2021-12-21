@@ -14,6 +14,7 @@
 // to be conservitive in changing it. It's easier to hide the lint than modify the code
 
 #include "exportcontext.h"
+#include "logging.h"
 
 namespace qblocks {
 
@@ -50,6 +51,17 @@ CExportContext::CExportContext(void) {
 
 //---------------------------------------------------------------------------
 bool findToken(const address_t& addr, CAccountName& acct) {
+    if (expC.tokenMap.size() == 0) {
+        for (const auto& item : expC.namesMap) {
+            if (item.second.symbol.empty())
+                continue;
+            bool t1 = contains(item.second.tags, "Tokens");
+            bool t2 = contains(item.second.tags, "Contracts") && contains(item.second.name, "Airdrop");
+            if (t1 || t2)
+                expC.tokenMap[item.second.address] = item.second;
+        }
+    }
+
     if (expC.tokenMap[addr].address == addr) {
         acct = expC.tokenMap[addr];
         return true;
@@ -71,6 +83,71 @@ void unindent(void) {
 //---------------------------------------------------------------------------
 string_q indentStr(void) {
     return string_q(expC.spcs * expC.lev, expC.tab);
+}
+
+//---------------------------------------------------------------------------
+bool isJson(void) {
+    return (expC.exportFmt == JSON1 || expC.exportFmt == API1 || expC.exportFmt == NONE1);
+}
+
+//-----------------------------------------------------------------------
+bool loadPrefunds(const string_q& prefundFile) {
+    expC.prefundMap.clear();
+
+    string_q binFile = getCachePath("names/names_prefunds_bals.bin");
+    if (fileExists(binFile)) {
+        CArchive archive(READING_ARCHIVE);
+        if (!archive.Lock(binFile, modeReadOnly, LOCK_NOWAIT)) {
+            LOG_WARN("Could not unlock prefund cache at: ", binFile);
+            return false;
+        }
+        uint64_t count;
+        archive >> count;
+        for (size_t i = 0; i < count; i++) {
+            string_q key;
+            wei_t wei;
+            archive >> key >> wei;
+            expC.prefundMap[key] = wei;
+        }
+        archive.Release();
+        return true;
+    }
+
+    if (!fileExists(prefundFile)) {
+        LOG_WARN("Cannot find prefund file at: ", prefundFile);
+        return false;
+    }
+    CStringArray lines;
+    asciiFileToLines(prefundFile, lines);
+    bool first = true;
+    for (auto line : lines) {
+        if (!first && !startsWith(line, '#')) {
+            CStringArray parts;
+            explode(parts, line, '\t');
+            expC.prefundMap[toLower(parts[0])] = str_2_Wei(parts[1]);
+        }
+        first = false;
+    }
+
+    CArchive archive(WRITING_ARCHIVE);
+    if (!archive.Lock(binFile, modeWriteCreate, LOCK_NOWAIT)) {
+        LOG_WARN("Could not lock prefund cache at: ", binFile);
+        return false;
+    }
+
+    CAddressWeiMap::iterator it = expC.prefundMap.begin();
+    archive << uint64_t(expC.prefundMap.size());
+    while (it != expC.prefundMap.end()) {
+        archive << it->first << it->second;
+        it++;
+    }
+    archive.Release();
+    return true;
+}
+
+//-----------------------------------------------------------------------
+wei_t prefundAt(const address_t& addr) {
+    return expC.prefundMap[addr];
 }
 
 }  // namespace qblocks

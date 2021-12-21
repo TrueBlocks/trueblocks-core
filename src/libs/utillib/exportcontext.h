@@ -51,14 +51,14 @@ class CExportContext {
 
 //----------------------------------------------------------------------------
 extern CExportContext& expContext(void);
+extern string_q indentStr(void);
 extern void indent(void);
 extern void unindent(void);
-extern string_q indentStr(void);
+extern bool isJson(void);
 
-//--------------------------------------------------------------------------------
-inline bool isJson(void) {
-    return (expContext().exportFmt == JSON1 || expContext().exportFmt == API1 || expContext().exportFmt == NONE1);
-}
+//-----------------------------------------------------------------------
+extern bool loadPrefunds(const string_q& prefundFile);
+extern wei_t prefundAt(const address_t& addr);
 
 //-----------------------------------------------------------------------
 extern bool findToken(const address_t& addr, CAccountName& acct);

@@ -716,7 +716,6 @@ bool COptions::setDisplayFormatting(void) {
 // TODO(tjayrush): accounting must be for one monitor address - why?
 // TODO(tjayrush): accounting requires node balances - why?
 // TODO(tjayrush): Used to do this: if any ABI files was newer, re-read abi and re-articulate in cache
-// TODO(tjayrush): What does prefundAddrMap and prefundMap do? Needs testing
 // TODO(tjayrush): What does blkRewardMap do? Needs testing
 // TODO(tjayrush): Reconciliation loads traces -- plus it reduplicates the isSuicide, isGeneration, isUncle shit
 // TODO(tjayrush): writeLastEncountered is weird (in fact removed -- used to keep freshen from revisiting blocks twice

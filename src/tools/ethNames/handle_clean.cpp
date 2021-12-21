@@ -36,7 +36,7 @@ bool COptions::finishClean(CAccountName& account) {
     account.description = trim(substitute(account.description.substr(0, 255), "  ", " "));
 
     // Are we a pre-fund?
-    account.isPrefund = expContext().prefundMap[account.address] > 0;
+    account.isPrefund = prefundAt(account.address) > 0;
 
     bool wasContract = account.isContract;
     bool isContract = isContractAt(account.address, latestBlock);
