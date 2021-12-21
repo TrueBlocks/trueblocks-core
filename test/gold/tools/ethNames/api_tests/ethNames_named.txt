@@ -605,6 +605,15 @@ names?
       "description": "FortKnoxster offers end-to-end encrypted inbox, chat, decentralized storage, calling, video conferencing, voice messages and much more."
     },
     {
+      "tags": "31-Gitcoin:Grants",
+      "address": "0x00a33c8379b03085ad0c0b4f6fb38c63deba8475",
+      "name": "Grant 4103 - Supplements Death Match",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/4103/supplements-death-match",
+      "decimals": 0,
+      "description": ""
+    },
+    {
       "tags": "90-Individuals:TheCyber",
       "address": "0x00aa972319ddf819140ffe2a991c49a1bff54bad",
       "name": "Name 0x00aa9723",
@@ -1659,6 +1668,15 @@ names?
     },
     {
       "tags": "31-Gitcoin:Grants",
+      "address": "0x03798c0d62e6a0b0548114fb6241efa07ca4122d",
+      "name": "Grant 4257 - Reputable DAO",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/4257/reputable-dao",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "31-Gitcoin:Grants",
       "address": "0x037e414abacc799a598314153509b6b967608bf9",
       "name": "Grant 3059 - CO2KEN — Carbon as a money lego",
       "symbol": "",
@@ -1791,24 +1809,6 @@ names?
       "source": "TrueBlocks.io",
       "decimals": 0,
       "description": ""
-    },
-    {
-      "tags": "31-Gitcoin:Grants",
-      "address": "0x03c2bc72a3e007179e54ffb4563cc235bec8151a",
-      "name": "Grant 0600 Synthereum: Synthetic Assets with Liquidity Pools to Bridge Traditional and Digital Finance",
-      "symbol": "",
-      "source": "https://gitcoin.co/grants/600/synthereum-synthetic-assets-with-liquidity-pools-t",
-      "decimals": 0,
-      "description": "https://jarvis.network"
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x03c780cd554598592b97b7256ddaad759945b125",
-      "name": "BTRN",
-      "symbol": "BTRN",
-      "source": "On chain",
-      "decimals": 18,
-      "description": "Biotron is a fully transparent personal data analytics platform on blockchain."
     }
   ],
   "meta": {

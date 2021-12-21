@@ -66,6 +66,7 @@ TEST[DATE|TIME] NoHeader:  true
 50-Tokens:ERC20	0x53066cddbc0099eb6c96785d9b3df2aaeede5da3	Penta Network Token	PNT	On chain	18		false	false	false	true	true	false
 30-Contracts	0x5346d0f80e2816fad329f2c140c870ffc3c3e2ef	EtherRouter: Colony Network		EtherScan.io			false	false	false	true	false	false
 50-Tokens:ERC20	0x55296f69f40ea6d20e478533c15a6b08b654e758	XY Oracle	XYO	On chain	18	Blockchain's crypto-location oracle network	false	false	false	true	true	false
+31-Gitcoin:Grants	0x55b23ed53fe13060183b92979c737a8ef9a73b73	Grant 4201 - Spect Network		https://gitcoin.co/grants/4201/spect-network			false	false	false	false	false	false
 50-Tokens:ERC20	0x57ab1e02fee23774580c119740129eac7081e9d3	Synth sUSD	sUSD	On chain	18	sUSD is part of the Synethix network.	false	false	false	true	false	false
 30-Contracts:Kyber Network	0x57f8160e1c59d16c01bbe181fd94db4e56b60495	Kyber Weth Reserve		TrueBlocks.io			false	false	false	true	false	false
 50-Tokens:ERC20	0x5b26c5d0772e5bbac8b3182ae9a13f9bb2d03765	Education	EDU	On chain	8	A decentralized peer-to-peer project learning network for teaching people how to build complete products.	false	false	false	true	true	false
@@ -126,6 +127,7 @@ TEST[DATE|TIME] NoHeader:  true
 50-Tokens:ERC20	0xa117000000f279d81a1d3cc75430faa017fa5a2e	Aragon Network Token	ANT	On chain	18		false	false	false	true	true	false
 31-Gitcoin:Grants	0xa1381b40e0a6b91814f77de19a7ad2cb21753184	Grant 0334 Interstate Network EVM optimistic rollup		https://gitcoin.co/grants/334/interstate-network-evm-generic-optimistic-rollups		https://www.interstate.network	false	false	false	false	false	false
 50-Tokens:ERC20	0xa4ea687a2a7f29cf2dc66b39c68e4411c0d00c49	IvyKoin Public Network Tokens	IVY	On chain	18	Ivy is a blockchain-based technology for FIAT cryptocurrency business transactions. the Ivy network utilizes IVY tokens which carry KYC KYT data points critical for Financial Institution validation.	false	false	false	true	true	false
+31-Gitcoin:Grants	0xa5fb245acdf6a08ad8fa47b542a30068316fb2a1	Grant 4174 - DAO Stewards Network		https://gitcoin.co/grants/4174/dao-stewards-network			false	false	false	false	false	false
 50-Tokens:ERC20	0xa5fd1a791c4dfcaacc963d4f73c6ae5824149ea7	Jibrel Network Token	JNT	On chain	18	The Jibrel Network provides currencies, equities, commodities and other financial assets and instruments as standard ERC-20 tokens on the Ethereum blockchain.	false	false	false	true	true	false
 31-Gitcoin:Grants	0xa70b419a6028cd48f050d7251cf4fbbc682cc8ab	Grant 1995 - Ralie Network - Connecting Through Blockchain		https://gitcoin.co/grants/1995/ralie-network-connecting-through-blockchain			false	false	false	false	false	false
 50-Tokens:ERC20	0xa74476443119a942de498590fe1f2454d7d4ac0d	Golem Network Token	GNT	On chain	18	Golem is going to create the first decentralized global market for computing power	false	false	false	true	true	false
@@ -143,6 +145,7 @@ TEST[DATE|TIME] NoHeader:  true
 50-Tokens:ERC20	0xb5a5f22694352c15b00323844ad545abb2b11028	ICON Old Token	ICX	EtherScan.io		The ICON Network is comprised of various institutions ranging from: financial institutions, insurance companies, hospitals, universities and more.	false	false	false	true	false	false
 31-Gitcoin:Grants	0xb5e48595afb989ddbc97763cd516ae3a983a3e36	Grant 0072 Poa Network Community Management Grant for Khizer		https://gitcoin.co/grants/72/poa-network-community-management-grant-for-khizer			false	false	false	false	false	false
 31-Gitcoin:Grants	0xb64850fe701fb64667b6cc762aa2c12f2e02193c	Grant 0742 Crypto Community Ventures Network		https://gitcoin.co/grants/742/crypto-community-ventures-network		https://www.bitfwd.com	false	false	false	false	false	false
+31-Gitcoin:Grants	0xb9c5ed064288dc62adb6e6a0d8106fd6e71ac2a2	Grant 4294 - Frontpage Ping: Decentralized Real-Time Collaboration Network Protocol for Web3		https://gitcoin.co/grants/4294/frontpage-ping-decentralized-real-time-collaborat			false	false	false	false	false	false
 50-Tokens:ERC20	0xbac7a1798350cdf2dbfe0c210c2c9861223f4b31	Moneynet Coin	MNC	On chain	18	Incentive Social Network Service	false	false	false	true	true	false
 50-Tokens:ERC20	0xbbc2045d335cb224228f1850b29173d9d7d7b989	HELP	HELP	On chain	18	Decentralized Fundraising Platform Advanced Distributed Edge Network	false	false	false	true	true	false
 50-Tokens:ERC20	0xbf2179859fc6d5bee9bf9158632dc51678a4100e	ELF Token	ELF	On chain	18	elf is a decentralized self-evolving cloud computing blockchain network that aims to provide a high performance platform for commercial adoption of blockchain.	false	false	false	true	true	false
@@ -155,6 +158,7 @@ TEST[DATE|TIME] NoHeader:  true
 31-Gitcoin:Grants	0xc41bc99044fd4836dba4104bcf53b6f2b62716b1	Grant 2190 - Layer 2 faucet in ethereum network		https://gitcoin.co/grants/2190/layer-2-faucet-in-ethereum-network			false	false	false	false	false	false
 50-Tokens:ERC20	0xc56b13ebbcffa67cfb7979b900b736b3fb480d78	Social Activity Token	SAT	On chain	8	Sphere Social Network is a next-generation decentralized social network powered by Social Activity Token	false	false	false	true	true	false
 50-Tokens:ERC20	0xc72fe8e3dd5bef0f9f31f259399f301272ef2a2d	Insights Network	INSTAR	On chain	18	The Insights Network‚Äö√Ñ√¥s unique combination of blockchain technology, smart contracts, and secure multiparty computation enables the individual to securely own, manage, and monetize their data.	false	false	false	true	true	false
+31-Gitcoin:Grants	0xc80e9ffcc3774f1fe5a925bda8f846fa4301eae8	Grant 4017 - Swell Network | Maintaining a decentralised, open, and liquid Ethereum ecosystem		https://gitcoin.co/grants/4017/swell-network-maintaining-a-decentralised-open-an			false	false	false	true	false	false
 31-Gitcoin:Grants	0xcb8f9c706f9f5683d1bd6261f52f5f2b2182d780	Grant 1796 Crypton Network		https://gitcoin.co/grants/1796/crypton-network			false	false	false	false	false	false
 50-Tokens:ERC20	0xcbeaec699431857fdb4d37addbbdc20e132d4903	YOYOW Token	YOYOW	On chain	18	A blockchain based content rewards network	false	false	false	true	true	false
 50-Tokens:ERC20	0xcc1230436557f1250812fabbee5b8524b43250f3	NarutoNetwork	NARUTO	On chain	18		false	false	false	true	true	false
@@ -199,7 +203,3 @@ TEST[DATE|TIME] NoHeader:  true
 50-Tokens:ERC20	0xf8e386eda857484f5a12e4b5daa9984e06e73705	Indorse Token	IND	On chain	18	Decentralized Professional Network powered by blockchain technology	false	false	false	true	true	false
 50-Tokens:ERC20	0xf970b8e36e23f7fc3fd752eea86f8be8d83375a6	Ripio Credit Network Token	RCN	On chain	18	Ripio Credit Network is a global credit network based on cosigned smart contracts and blockchain technology that connects lenders and borrowers located anywhere in the world and on any currency	false	false	false	true	true	false
 30-Contracts:Kyber Network	0xfa71b63935cf9878e009ba6595da08f6d75c4aa1	Kyber Pay Wrapper		EtherScan.io			false	false	false	true	false	false
-31-Gitcoin:Grants	0xfcd819c8a13de2d9e409fdf7d61161091f58dd63	Grant 0044 Chainid Network		https://gitcoin.co/grants/44/chainid-network			false	false	false	true	false	false
-50-Tokens:ERC20	0xfe5f141bf94fe84bc28ded0ab966c16b17490657	LibraToken	LBA	On chain	18	Decentralized lending infrastructure facilitating open access to credit networks on Ethereum.	false	false	false	true	true	false
-50-Tokens:ERC20	0xfedae5642668f8636a11987ff386bfd215f942ee	PolicyPal Network Token	PAL	On chain	18	Dual-Layered Protocol for Financial Assets	false	false	false	true	true	false
-50-Tokens:ERC20	0xff19138b039d938db46bdda0067dc4ba132ec71c	Snetwork	SNET	On chain	8		false	false	false	true	true	false

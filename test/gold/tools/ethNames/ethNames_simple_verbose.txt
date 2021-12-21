@@ -37,6 +37,7 @@ tags	address	name	symbol	decimals	source
 30-Contracts	0x521d32f3d23f1fc82b1dbe306edc3ef668e5d973	Clovers Network Related				EtherScan.io
 50-Tokens:ERC20	0x53066cddbc0099eb6c96785d9b3df2aaeede5da3	Penta Network Token	PNT		18	On chain
 30-Contracts	0x5346d0f80e2816fad329f2c140c870ffc3c3e2ef	EtherRouter: Colony Network				EtherScan.io
+31-Gitcoin:Grants	0x55b23ed53fe13060183b92979c737a8ef9a73b73	Grant 4201 - Spect Network				https://gitcoin.co/grants/4201/spect-network
 30-Contracts:Kyber Network	0x57f8160e1c59d16c01bbe181fd94db4e56b60495	Kyber Weth Reserve				TrueBlocks.io
 50-Tokens:ERC20	0x5f3789907b35dce5605b00c0be0a7ecdbfa8a841	Content and Ad Network	CAN		18	On chain
 50-Tokens:ERC20	0x607f4c5bb672230e8672085532f7e901544a7375	iEx.ec Network Token	RLC		9	On chain
@@ -75,6 +76,7 @@ tags	address	name	symbol	decimals	source
 50-Tokens:ERC20	0xa117000000f279d81a1d3cc75430faa017fa5a2e	Aragon Network Token	ANT		18	On chain
 31-Gitcoin:Grants	0xa1381b40e0a6b91814f77de19a7ad2cb21753184	Grant 0334 Interstate Network EVM optimistic rollup				https://gitcoin.co/grants/334/interstate-network-evm-generic-optimistic-rollups
 50-Tokens:ERC20	0xa4ea687a2a7f29cf2dc66b39c68e4411c0d00c49	IvyKoin Public Network Tokens	IVY		18	On chain
+31-Gitcoin:Grants	0xa5fb245acdf6a08ad8fa47b542a30068316fb2a1	Grant 4174 - DAO Stewards Network				https://gitcoin.co/grants/4174/dao-stewards-network
 50-Tokens:ERC20	0xa5fd1a791c4dfcaacc963d4f73c6ae5824149ea7	Jibrel Network Token	JNT		18	On chain
 31-Gitcoin:Grants	0xa70b419a6028cd48f050d7251cf4fbbc682cc8ab	Grant 1995 - Ralie Network - Connecting Through Blockchain				https://gitcoin.co/grants/1995/ralie-network-connecting-through-blockchain
 50-Tokens:ERC20	0xa74476443119a942de498590fe1f2454d7d4ac0d	Golem Network Token	GNT		18	On chain
@@ -87,6 +89,7 @@ tags	address	name	symbol	decimals	source
 31-Gitcoin:Grants	0xb422e46540153ddaaccd8f5e899893fc53ab77b8	Grant 0338 2key Network Labs				https://gitcoin.co/grants/338/2key-network-labs
 31-Gitcoin:Grants	0xb5e48595afb989ddbc97763cd516ae3a983a3e36	Grant 0072 Poa Network Community Management Grant for Khizer				https://gitcoin.co/grants/72/poa-network-community-management-grant-for-khizer
 31-Gitcoin:Grants	0xb64850fe701fb64667b6cc762aa2c12f2e02193c	Grant 0742 Crypto Community Ventures Network				https://gitcoin.co/grants/742/crypto-community-ventures-network
+31-Gitcoin:Grants	0xb9c5ed064288dc62adb6e6a0d8106fd6e71ac2a2	Grant 4294 - Frontpage Ping: Decentralized Real-Time Collaboration Network Protocol for Web3				https://gitcoin.co/grants/4294/frontpage-ping-decentralized-real-time-collaborat
 50-Tokens:ERC20	0xc011a72400e58ecd99ee497cf89e3775d4bd732f	Synthetix Network Token	SNX			EtherScan.io
 50-Tokens:ERC20	0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f	Synthetix Network Token	SNX		18	On chain
 30-Contracts:Kyber Network	0xc0d3e654676b117663143eac33b45b620171244b	Kyber Order List				TrueBlocks.io
@@ -95,6 +98,7 @@ tags	address	name	symbol	decimals	source
 31-Gitcoin:Grants	0xc37e165fcfa2cb5cca7329dd9daa8cd72907b983	Grant 0037 Connext Network				https://gitcoin.co/grants/37/connext-network
 31-Gitcoin:Grants	0xc41bc99044fd4836dba4104bcf53b6f2b62716b1	Grant 2190 - Layer 2 faucet in ethereum network				https://gitcoin.co/grants/2190/layer-2-faucet-in-ethereum-network
 50-Tokens:ERC20	0xc72fe8e3dd5bef0f9f31f259399f301272ef2a2d	Insights Network	INSTAR		18	On chain
+31-Gitcoin:Grants	0xc80e9ffcc3774f1fe5a925bda8f846fa4301eae8	Grant 4017 - Swell Network | Maintaining a decentralised, open, and liquid Ethereum ecosystem				https://gitcoin.co/grants/4017/swell-network-maintaining-a-decentralised-open-an
 31-Gitcoin:Grants	0xcb8f9c706f9f5683d1bd6261f52f5f2b2182d780	Grant 1796 Crypton Network				https://gitcoin.co/grants/1796/crypton-network
 50-Tokens:ERC20	0xcc1230436557f1250812fabbee5b8524b43250f3	NarutoNetwork	NARUTO		18	On chain
 50-Tokens:ERC20	0xcd62b1c403fa761baadfc74c525ce2b51780b184	Aragon Network Juror	ANJ		18	On chain
