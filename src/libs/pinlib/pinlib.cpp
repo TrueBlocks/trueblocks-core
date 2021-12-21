@@ -354,21 +354,6 @@ bool pinlib_findChunk(CPinnedChunkArray& pList, const string_q& fileName, CPinne
     return false;
 }
 
-//-------------------------------------------------------------------------
-bool pinlib_forEveryPin(CPinnedChunkArray& pList, PINFUNC func, void* data) {
-    if (!func)
-        return false;
-
-    if (!pinlib_readManifest(pList))
-        return false;
-
-    for (auto pin : pList) {
-        if (!(*func)(pin, data))
-            return false;
-    }
-    return true;
-}
-
 //---------------------------------------------------------------------------
 bool parseOneLine(const char* line, void* data) {
     if (isTestMode() && line > string_q("005000000"))

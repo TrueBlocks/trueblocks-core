@@ -50,8 +50,6 @@ See the instructions in the file [./src/examples/README.md](../README.md) for mo
   - bool `forEveryLineInAsciiFile`(const string_q& filenameIn, CHARPTRFUNC func, void* data)
 - against folders
   - bool `forEveryFileInFolder`(const string_q& mask, CONSTAPPLYFUNC func, void* data)
-- against pinata pins
-  - bool `pinlib_forEveryPin`(CPinnedChunkArray& pList, PINFUNC func, void* data)
 - on Merkle trees
   - bool `forEveryAccount`(CTreeRoot* trie, ACCTVISITOR func, void* data)
 

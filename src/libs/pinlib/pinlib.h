@@ -28,11 +28,7 @@ extern bool pinlib_pinChunk(CPinnedChunkArray& pList, const string_q& fn, CPinne
 extern bool pinlib_unpinChunk(CPinnedChunkArray& pList, const string_q& fn, CPinnedChunk& item);
 
 extern bool pinlib_getChunkFromRemote(CPinnedChunk& pin, double sleep);
-extern bool pinlib_getChunkByHash(CPinnedChunkArray& pList, const string_q& fn, CPinnedChunk& item);
 extern bool pinlib_findChunk(CPinnedChunkArray& pList, const string_q& fn, CPinnedChunk& item);
-
-typedef bool (*PINFUNC)(CPinnedChunk& pin, void* data);
-extern bool pinlib_forEveryPin(CPinnedChunkArray& pList, PINFUNC func, void* data);
 
 }  // namespace qblocks
 
