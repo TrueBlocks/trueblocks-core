@@ -100,8 +100,9 @@ static void addToMapPrefunds(CAccountName& account, uint64_t cnt) {
 }
 
 //-----------------------------------------------------------------------
-static bool importTabFilePrefund(const string_q& tabFilename) {
+static bool importTabFilePrefund(void) {
     string_q prefundBin = getCachePath("names/names_prefunds.bin");
+    string_q tabFilename = getConfigPath("names/names_prefunds.tab");
 
     uint64_t cnt = 0;
     if (fileExists(prefundBin)) {
@@ -171,22 +172,14 @@ bool loadNames(void) {
 
     string_q txtFile = getConfigPath("names/names.tab");
     string_q customFile = getConfigPath("names/names_custom.tab");
-    string_q prefundFile = getConfigPath("names/names_prefunds.tab");
 
     time_q txtFileDate = fileLastModifyDate(txtFile);
     time_q customFileDate = fileLastModifyDate(customFile);
-    time_q prefundFileDate = fileLastModifyDate(prefundFile);
 
     string_q binFile = getCachePath("names/names.bin");
 
     time_q binDate = fileLastModifyDate(binFile);
-    time_q txtDate = laterOf(laterOf(txtFileDate, customFileDate), prefundFileDate);
-
-    if (false) {
-        if (!loadPrefunds()) {
-            return false;
-        }
-    }
+    time_q txtDate = laterOf(txtFileDate, customFileDate);
 
     if (binDate > txtDate) {
         CArchive nameCache(READING_ARCHIVE);
@@ -201,7 +194,7 @@ bool loadNames(void) {
         asciiFileToLines(customFile, lines);
         importTabFile(lines);
 
-        if (!importTabFilePrefund(prefundFile))
+        if (!importTabFilePrefund())
             return false;
 
         CArchive nameCache(WRITING_ARCHIVE);
@@ -222,16 +215,14 @@ bool loadNamesPrefunds(void) {
 
     string_q txtFile = getConfigPath("names/names.tab");
     string_q customFile = getConfigPath("names/names_custom.tab");
-    string_q prefundFile = getConfigPath("names/names_prefunds.tab");
 
     time_q txtFileDate = fileLastModifyDate(txtFile);
     time_q customFileDate = fileLastModifyDate(customFile);
-    time_q prefundFileDate = fileLastModifyDate(prefundFile);
 
     string_q binFile = getCachePath("names/names.bin");
 
     time_q binDate = fileLastModifyDate(binFile);
-    time_q txtDate = laterOf(laterOf(txtFileDate, customFileDate), prefundFileDate);
+    time_q txtDate = laterOf(txtFileDate, customFileDate);
 
     if (true) {
         if (!loadPrefunds()) {
@@ -252,7 +243,7 @@ bool loadNamesPrefunds(void) {
         asciiFileToLines(customFile, lines);
         importTabFile(lines);
 
-        if (!importTabFilePrefund(prefundFile))
+        if (!importTabFilePrefund())
             return false;
 
         CArchive nameCache(WRITING_ARCHIVE);
@@ -287,10 +278,6 @@ bool loadPrefunds(void) {
     }
 
     string_q prefundFile = getConfigPath("names/names_prefunds.tab");
-    if (!fileExists(prefundFile)) {
-        LOG_WARN("Cannot find prefund file at: ", prefundFile);
-        return false;
-    }
 
     CStringArray lines;
     asciiFileToLines(prefundFile, lines);
