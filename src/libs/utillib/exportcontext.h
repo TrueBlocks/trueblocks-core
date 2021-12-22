@@ -42,7 +42,6 @@ class CExportContext {
     format_t exportFmt;
     CNameValueMap fmtMap;
     CAddressWeiMap prefundMap;
-    CAddressNameMap tokenMap;
     CAddressNameMap namesMap;
 
   public:

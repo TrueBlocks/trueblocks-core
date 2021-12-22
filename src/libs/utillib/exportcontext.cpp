@@ -18,7 +18,6 @@
 
 namespace qblocks {
 
-// extern bool importTabFilePrefund(CAddressNameMap& theMap, const string_q& tabFilename);
 extern string_q getConfigPath(const string_q& part);
 
 //---------------------------------------------------------------------------
@@ -48,14 +47,13 @@ CExportContext::CExportContext(void) {
     tsCnt = 0;
     exportFmt = (isApiMode() ? API1 : TXT1);
     namesMap.clear();
-    tokenMap.clear();
     prefundMap.clear();
 }
 
 //-----------------------------------------------------------------------
 bool findName(const address_t& addr, CAccountName& acct) {
-    if (expContext().namesMap[addr].address == addr) {
-        acct = expContext().namesMap[addr];
+    if (expC.namesMap[addr].address == addr) {
+        acct = expC.namesMap[addr];
         return true;
     }
 
@@ -64,33 +62,26 @@ bool findName(const address_t& addr, CAccountName& acct) {
 
 //---------------------------------------------------------------------------
 bool findToken(const address_t& addr, CAccountName& acct) {
-    if (expC.tokenMap.size() == 0) {
-        for (const auto& item : expC.namesMap) {
-            if (item.second.symbol.empty())
-                continue;
-            bool t1 = contains(item.second.tags, "Tokens");
-            bool t2 = contains(item.second.tags, "Contracts") && contains(item.second.name, "Airdrop");
-            if (t1 || t2)
-                expC.tokenMap[item.second.address] = item.second;
+    const CAccountName item = expC.namesMap[addr];
+    if (item.address == addr) {
+        bool t1 = contains(item.tags, "Tokens");
+        bool t2 = contains(item.tags, "Contracts") && contains(item.name, "Airdrop");
+        if (t1 || t2) {
+            acct = item;
+            return true;
         }
     }
-
-    if (expC.tokenMap[addr].address == addr) {
-        acct = expC.tokenMap[addr];
-        return true;
-    }
-
     return false;
 }
 
 //-----------------------------------------------------------------------
-static void addToMapPrefunds(CAddressNameMap& theMap, CAccountName& account, uint64_t cnt) {
+static void addToMapPrefunds(CAccountName& account, uint64_t cnt) {
     // If it's already there, don't alter it or add it to the map
-    if (theMap[account.address].address == account.address)
+    if (expC.namesMap[account.address].address == account.address)
         return;
 
     address_t addr = account.address;
-    account = theMap[addr];
+    account = expC.namesMap[addr];
     account.address = addr;
     account.tags = account.tags.empty() ? "80-Prefund" : account.tags;
     account.source = account.source.empty() ? "Genesis" : account.source;
@@ -105,11 +96,11 @@ static void addToMapPrefunds(CAddressNameMap& theMap, CAccountName& account, uin
         // do nothing
     }
 
-    theMap[account.address] = account;
+    expC.namesMap[account.address] = account;
 }
 
 //-----------------------------------------------------------------------
-static bool importTabFilePrefund(CAddressNameMap& theMap, const string_q& tabFilename) {
+static bool importTabFilePrefund(const string_q& tabFilename) {
     string_q prefundBin = getCachePath("names/names_prefunds.bin");
 
     uint64_t cnt = 0;
@@ -121,7 +112,7 @@ static bool importTabFilePrefund(CAddressNameMap& theMap, const string_q& tabFil
             nameCache >> prefunds;
             nameCache.Release();
             for (auto prefund : prefunds)
-                addToMapPrefunds(theMap, prefund, cnt++);
+                addToMapPrefunds(prefund, cnt++);
             return true;
         }
     }
@@ -140,7 +131,7 @@ static bool importTabFilePrefund(CAddressNameMap& theMap, const string_q& tabFil
             if (!startsWith(line, '#') && contains(line, "0x")) {
                 CAccountName account;
                 account.parseText(fields, line);
-                addToMapPrefunds(theMap, account, cnt++);
+                addToMapPrefunds(account, cnt++);
                 prefundArrayOut.push_back(account);
             }
         }
@@ -156,7 +147,7 @@ static bool importTabFilePrefund(CAddressNameMap& theMap, const string_q& tabFil
 }
 
 //-----------------------------------------------------------------------
-static bool importTabFile(CStringArray& lines, CAddressNameMap& theMap) {
+static void importTabFile(CStringArray& lines) {
     CStringArray fields;
     for (auto line : lines) {
         if (fields.empty()) {
@@ -165,18 +156,18 @@ static bool importTabFile(CStringArray& lines, CAddressNameMap& theMap) {
             if (!startsWith(line, '#') && contains(line, "0x")) {
                 CAccountName account;
                 account.parseText(fields, line);
-                if (theMap[account.address].address != account.address)
-                    theMap[account.address] = account;
+                if (expC.namesMap[account.address].address != account.address)
+                    expC.namesMap[account.address] = account;
             }
         }
     }
-    return true;
+    return;
 }
 
 //-----------------------------------------------------------------------
 bool loadNames(bool loadPrefund) {
     establishFolder(getCachePath("names/"));
-    if (expContext().namesMap.size() > 0)  // already loaded
+    if (expC.namesMap.size() > 0)  // already loaded
         return true;
 
     string_q txtFile = getConfigPath("names/names.tab");
@@ -202,7 +193,7 @@ bool loadNames(bool loadPrefund) {
         LOG8("Reading names from binary cache");
         CArchive nameCache(READING_ARCHIVE);
         if (nameCache.Lock(binFile, modeReadOnly, LOCK_NOWAIT)) {
-            nameCache >> expContext().namesMap;
+            nameCache >> expC.namesMap;
             nameCache.Release();
         }
 
@@ -210,15 +201,14 @@ bool loadNames(bool loadPrefund) {
         CStringArray lines;
         asciiFileToLines(txtFile, lines);
         asciiFileToLines(customFile, lines);
-        if (!importTabFile(lines, expContext().namesMap))
-            return false;
+        importTabFile(lines);
 
-        if (!importTabFilePrefund(expContext().namesMap, prefundFile))
+        if (!importTabFilePrefund(prefundFile))
             return false;
 
         CArchive nameCache(WRITING_ARCHIVE);
         if (nameCache.Lock(binFile, modeWriteCreate, LOCK_CREATE)) {
-            nameCache << expContext().namesMap;
+            nameCache << expC.namesMap;
             nameCache.Release();
         }
     }
@@ -228,58 +218,53 @@ bool loadNames(bool loadPrefund) {
 
 //-----------------------------------------------------------------------
 bool loadPrefunds(void) {
-    string_q prefundFile = getConfigPath("names/names_prefunds.tab");
     expC.prefundMap.clear();
 
     string_q binFile = getCachePath("names/names_prefunds_bals.bin");
     if (fileExists(binFile)) {
         CArchive archive(READING_ARCHIVE);
-        if (!archive.Lock(binFile, modeReadOnly, LOCK_NOWAIT)) {
-            LOG_WARN("Could not unlock prefund cache at: ", binFile);
-            return false;
+        if (archive.Lock(binFile, modeReadOnly, LOCK_NOWAIT)) {
+            uint64_t count;
+            archive >> count;
+            for (size_t i = 0; i < count; i++) {
+                wei_t amount;
+                string_q address;
+                archive >> address >> amount;
+                expC.prefundMap[address] = amount;
+            }
+            archive.Release();
+            return true;
         }
-        uint64_t count;
-        archive >> count;
-        for (size_t i = 0; i < count; i++) {
-            string_q key;
-            wei_t wei;
-            archive >> key >> wei;
-            expC.prefundMap[key] = wei;
-        }
-        archive.Release();
-        return true;
     }
 
+    string_q prefundFile = getConfigPath("names/names_prefunds.tab");
     if (!fileExists(prefundFile)) {
         LOG_WARN("Cannot find prefund file at: ", prefundFile);
         return false;
     }
+
     CStringArray lines;
     asciiFileToLines(prefundFile, lines);
-    bool first = true;
+
     for (auto line : lines) {
-        if (!first && !startsWith(line, '#')) {
+        if (startsWith(line, "0x")) {
             CStringArray parts;
             explode(parts, line, '\t');
             expC.prefundMap[toLower(parts[0])] = str_2_Wei(parts[1]);
         }
-        first = false;
     }
 
     CArchive archive(WRITING_ARCHIVE);
-    if (!archive.Lock(binFile, modeWriteCreate, LOCK_NOWAIT)) {
-        LOG_WARN("Could not lock prefund cache at: ", binFile);
-        return false;
+    if (archive.Lock(binFile, modeWriteCreate, LOCK_NOWAIT)) {
+        archive << uint64_t(expC.prefundMap.size());
+        for (const auto& item : expC.prefundMap)
+            archive << item.first << item.second;
+        archive.Release();
+        return true;
     }
 
-    CAddressWeiMap::iterator it = expC.prefundMap.begin();
-    archive << uint64_t(expC.prefundMap.size());
-    while (it != expC.prefundMap.end()) {
-        archive << it->first << it->second;
-        it++;
-    }
-    archive.Release();
-    return true;
+    LOG_WARN("Could not lock prefund cache at: ", binFile);
+    return false;
 }
 
 //-----------------------------------------------------------------------
