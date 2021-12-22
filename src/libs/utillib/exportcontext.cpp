@@ -215,9 +215,6 @@ bool loadNamesPrefunds(void) {
     if (expC.namesMap.size() > 0)  // already loaded
         return true;
 
-    if (!loadPrefunds())
-        return false;
-
     if (needsUpdate()) {
         string_q binFile = getCachePath("names/names.bin");
         CArchive nameCache(READING_ARCHIVE);
@@ -235,9 +232,6 @@ bool loadNamesPrefunds(void) {
         asciiFileToLines(customFile, lines);
         importTabFile(lines);
 
-        if (!importTabFilePrefund())
-            return false;
-
         establishFolder(getCachePath("names/"));
         string_q binFile = getCachePath("names/names.bin");
         CArchive nameCache(WRITING_ARCHIVE);
@@ -245,7 +239,13 @@ bool loadNamesPrefunds(void) {
             nameCache << expC.namesMap;
             nameCache.Release();
         }
+
+        if (!importTabFilePrefund())
+            return false;
     }
+
+    if (!loadPrefunds())
+        return false;
 
     return true;
 }

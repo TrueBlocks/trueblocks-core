@@ -33,7 +33,6 @@ tags
 80-Malicious
 80-Malicious:DaoDrain
 80-Malicious:Shanghai
-80-Prefund
 81-Custom
 90-Individuals
 90-Individuals:DAO Curators
