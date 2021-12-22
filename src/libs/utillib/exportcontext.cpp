@@ -165,23 +165,24 @@ static void importTabFile(CStringArray& lines) {
 }
 
 //-----------------------------------------------------------------------
-bool loadNames(void) {
-    establishFolder(getCachePath("names/"));
-    if (expC.namesMap.size() > 0)  // already loaded
-        return true;
-
+bool needsUpdate(void) {
     string_q txtFile = getConfigPath("names/names.tab");
     string_q customFile = getConfigPath("names/names_custom.tab");
-
-    time_q txtFileDate = fileLastModifyDate(txtFile);
-    time_q customFileDate = fileLastModifyDate(customFile);
-
     string_q binFile = getCachePath("names/names.bin");
 
     time_q binDate = fileLastModifyDate(binFile);
-    time_q txtDate = laterOf(txtFileDate, customFileDate);
+    time_q txtDate = laterOf(fileLastModifyDate(txtFile), fileLastModifyDate(customFile));
 
-    if (binDate > txtDate) {
+    return txtDate > binDate;
+}
+
+//-----------------------------------------------------------------------
+bool loadNames(void) {
+    if (expC.namesMap.size() > 0)  // already loaded
+        return true;
+
+    if (!needsUpdate()) {
+        string_q binFile = getCachePath("names/names.bin");
         CArchive nameCache(READING_ARCHIVE);
         if (nameCache.Lock(binFile, modeReadOnly, LOCK_NOWAIT)) {
             nameCache >> expC.namesMap;
@@ -190,13 +191,17 @@ bool loadNames(void) {
 
     } else {
         CStringArray lines;
+
+        string_q txtFile = getConfigPath("names/names.tab");
         asciiFileToLines(txtFile, lines);
+
+        string_q customFile = getConfigPath("names/names_custom.tab");
         asciiFileToLines(customFile, lines);
+
         importTabFile(lines);
 
-        if (!importTabFilePrefund())
-            return false;
-
+        establishFolder(getCachePath("names/"));
+        string_q binFile = getCachePath("names/names.bin");
         CArchive nameCache(WRITING_ARCHIVE);
         if (nameCache.Lock(binFile, modeWriteCreate, LOCK_CREATE)) {
             nameCache << expC.namesMap;
@@ -209,28 +214,14 @@ bool loadNames(void) {
 
 //-----------------------------------------------------------------------
 bool loadNamesPrefunds(void) {
-    establishFolder(getCachePath("names/"));
     if (expC.namesMap.size() > 0)  // already loaded
         return true;
 
-    string_q txtFile = getConfigPath("names/names.tab");
-    string_q customFile = getConfigPath("names/names_custom.tab");
+    if (!loadPrefunds())
+        return false;
 
-    time_q txtFileDate = fileLastModifyDate(txtFile);
-    time_q customFileDate = fileLastModifyDate(customFile);
-
-    string_q binFile = getCachePath("names/names.bin");
-
-    time_q binDate = fileLastModifyDate(binFile);
-    time_q txtDate = laterOf(txtFileDate, customFileDate);
-
-    if (true) {
-        if (!loadPrefunds()) {
-            return false;
-        }
-    }
-
-    if (binDate > txtDate) {
+    if (needsUpdate()) {
+        string_q binFile = getCachePath("names/names.bin");
         CArchive nameCache(READING_ARCHIVE);
         if (nameCache.Lock(binFile, modeReadOnly, LOCK_NOWAIT)) {
             nameCache >> expC.namesMap;
@@ -239,13 +230,20 @@ bool loadNamesPrefunds(void) {
 
     } else {
         CStringArray lines;
+
+        string_q txtFile = getConfigPath("names/names.tab");
         asciiFileToLines(txtFile, lines);
+
+        string_q customFile = getConfigPath("names/names_custom.tab");
         asciiFileToLines(customFile, lines);
+
         importTabFile(lines);
 
         if (!importTabFilePrefund())
             return false;
 
+        establishFolder(getCachePath("names/"));
+        string_q binFile = getCachePath("names/names.bin");
         CArchive nameCache(WRITING_ARCHIVE);
         if (nameCache.Lock(binFile, modeWriteCreate, LOCK_CREATE)) {
             nameCache << expC.namesMap;
@@ -258,7 +256,8 @@ bool loadNamesPrefunds(void) {
 
 //-----------------------------------------------------------------------
 bool loadPrefunds(void) {
-    expC.prefundMap.clear();
+    if (expC.prefundMap.size() > 0)
+        return true;
 
     string_q binFile = getCachePath("names/names_prefunds_bals.bin");
     if (fileExists(binFile)) {
@@ -286,7 +285,9 @@ bool loadPrefunds(void) {
         if (startsWith(line, "0x")) {
             CStringArray parts;
             explode(parts, line, '\t');
-            expC.prefundMap[toLower(parts[0])] = str_2_Wei(parts[1]);
+            string_q address = toLower(parts[0]);
+            wei_t amount = str_2_Wei(parts[1]);
+            expC.prefundMap[address] = amount;
         }
     }
 
