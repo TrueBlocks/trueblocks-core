@@ -47,7 +47,7 @@ CExportContext::CExportContext(void) {
     tsCnt = 0;
     exportFmt = (isApiMode() ? API1 : TXT1);
     namesMap.clear();
-    prefundMap.clear();
+    prefundBalMap.clear();
 }
 
 //-----------------------------------------------------------------------
@@ -100,53 +100,6 @@ static void addToMapPrefunds(CAccountName& account, uint64_t cnt) {
 }
 
 //-----------------------------------------------------------------------
-static bool importTabFilePrefund(void) {
-    string_q prefundBin = getCachePath("names/names_prefunds.bin");
-    string_q tabFilename = getConfigPath("names/names_prefunds.tab");
-
-    uint64_t cnt = 0;
-    if (fileExists(prefundBin)) {
-        CArchive nameCache(READING_ARCHIVE);
-        if (nameCache.Lock(prefundBin, modeReadOnly, LOCK_NOWAIT)) {
-            CAccountNameArray prefunds;
-            nameCache >> prefunds;
-            nameCache.Release();
-            for (auto prefund : prefunds)
-                addToMapPrefunds(prefund, cnt++);
-            return true;
-        }
-    }
-
-    CAccountNameArray prefundArrayOut;
-    prefundArrayOut.reserve(10000);
-
-    CStringArray lines;
-    asciiFileToLines(tabFilename, lines);
-
-    CStringArray fields;
-    for (auto line : lines) {
-        if (fields.empty()) {
-            explode(fields, line, '\t');
-        } else {
-            if (!startsWith(line, '#') && contains(line, "0x")) {
-                CAccountName account;
-                account.parseText(fields, line);
-                addToMapPrefunds(account, cnt++);
-                prefundArrayOut.push_back(account);
-            }
-        }
-    }
-
-    CArchive nameCache(WRITING_ARCHIVE);
-    if (nameCache.Lock(prefundBin, modeWriteCreate, LOCK_CREATE)) {
-        nameCache << prefundArrayOut;
-        nameCache.Release();
-    }
-
-    return true;
-}
-
-//-----------------------------------------------------------------------
 static void importTabFile(CStringArray& lines) {
     CStringArray fields;
     for (auto line : lines) {
@@ -165,23 +118,18 @@ static void importTabFile(CStringArray& lines) {
 }
 
 //-----------------------------------------------------------------------
-bool needsUpdate(void) {
-    string_q txtFile = getConfigPath("names/names.tab");
-    string_q customFile = getConfigPath("names/names_custom.tab");
-    string_q binFile = getCachePath("names/names.bin");
-
-    time_q binDate = fileLastModifyDate(binFile);
-    time_q txtDate = laterOf(fileLastModifyDate(txtFile), fileLastModifyDate(customFile));
-
-    return txtDate > binDate;
-}
-
-//-----------------------------------------------------------------------
 bool loadNames(void) {
-    if (expC.namesMap.size() > 0)  // already loaded
+    LOG_INFO("Loading names");
+    if (expC.namesMap.size() > 0) {
+        LOG_INFO("Already loaded");
         return true;
+    }
 
-    if (!needsUpdate()) {
+    time_q binDate = fileLastModifyDate(getCachePath("names/names.bin"));
+    time_q txtDate = laterOf(fileLastModifyDate(getConfigPath("names/names.tab")),
+                             fileLastModifyDate(getConfigPath("names/names_custom.tab")));
+
+    if (txtDate < binDate) {
         string_q binFile = getCachePath("names/names.bin");
         CArchive nameCache(READING_ARCHIVE);
         if (nameCache.Lock(binFile, modeReadOnly, LOCK_NOWAIT)) {
@@ -212,60 +160,79 @@ bool loadNames(void) {
 
 //-----------------------------------------------------------------------
 bool loadNamesPrefunds(void) {
-    if (expC.namesMap.size() > 0)  // already loaded
+    LOG_INFO("Loading prefunds accounts");
+    if (expC.prefundBalMap.size() > 0) {
+        LOG_INFO("Already loaded");
         return true;
-
-    if (needsUpdate()) {
-        string_q binFile = getCachePath("names/names.bin");
-        CArchive nameCache(READING_ARCHIVE);
-        if (nameCache.Lock(binFile, modeReadOnly, LOCK_NOWAIT)) {
-            nameCache >> expC.namesMap;
-            nameCache.Release();
-        }
-
-    } else {
-        CStringArray lines;
-
-        string_q txtFile = getConfigPath("names/names.tab");
-        string_q customFile = getConfigPath("names/names_custom.tab");
-        asciiFileToLines(txtFile, lines);
-        asciiFileToLines(customFile, lines);
-        importTabFile(lines);
-
-        establishFolder(getCachePath("names/"));
-        string_q binFile = getCachePath("names/names.bin");
-        CArchive nameCache(WRITING_ARCHIVE);
-        if (nameCache.Lock(binFile, modeWriteCreate, LOCK_CREATE)) {
-            nameCache << expC.namesMap;
-            nameCache.Release();
-        }
-
-        if (!importTabFilePrefund())
-            return false;
     }
 
-    if (!loadPrefunds())
+    if (!loadNames())
         return false;
+
+    CAccountNameArray prefunds;
+
+    string_q prefundBin = getCachePath("names/names_prefunds.bin");
+    if (fileExists(prefundBin)) {
+        CArchive nameCache(READING_ARCHIVE);
+        if (nameCache.Lock(prefundBin, modeReadOnly, LOCK_NOWAIT)) {
+            nameCache >> prefunds;
+            nameCache.Release();
+        }
+    } else {
+        string_q prefundFile = getConfigPath("names/names_prefunds.tab");
+
+        CStringArray lines;
+        asciiFileToLines(prefundFile, lines);
+
+        CStringArray fields;
+        for (auto line : lines) {
+            if (fields.empty()) {
+                explode(fields, line, '\t');
+            } else {
+                if (!startsWith(line, '#') && contains(line, "0x")) {
+                    CAccountName account;
+                    account.parseText(fields, line);
+                    prefunds.push_back(account);
+                }
+            }
+        }
+
+        CArchive nameCache(WRITING_ARCHIVE);
+        if (nameCache.Lock(prefundBin, modeWriteCreate, LOCK_CREATE)) {
+            nameCache << prefunds;
+            nameCache.Release();
+        }
+    }
+
+    if (!loadPrefundBals())
+        return false;
+
+    uint64_t cnt = 0;
+    for (auto prefund : prefunds)
+        addToMapPrefunds(prefund, cnt++);
 
     return true;
 }
 
 //-----------------------------------------------------------------------
-bool loadPrefunds(void) {
-    if (expC.prefundMap.size() > 0)
+bool loadPrefundBals(void) {
+    LOG_INFO("Loading prefund balances");
+    if (expC.prefundBalMap.size() > 0) {
+        LOG_INFO("Already loaded");
         return true;
+    }
 
-    string_q binFile = getCachePath("names/names_prefunds_bals.bin");
-    if (fileExists(binFile)) {
+    string_q balanceBin = getCachePath("names/names_prefunds_bals.bin");
+    if (fileExists(balanceBin)) {
         CArchive archive(READING_ARCHIVE);
-        if (archive.Lock(binFile, modeReadOnly, LOCK_NOWAIT)) {
+        if (archive.Lock(balanceBin, modeReadOnly, LOCK_NOWAIT)) {
             uint64_t count;
             archive >> count;
             for (size_t i = 0; i < count; i++) {
                 wei_t amount;
                 string_q address;
                 archive >> address >> amount;
-                expC.prefundMap[address] = amount;
+                expC.prefundBalMap[address] = amount;
             }
             archive.Release();
             return true;
@@ -276,33 +243,32 @@ bool loadPrefunds(void) {
 
     CStringArray lines;
     asciiFileToLines(prefundFile, lines);
-
     for (auto line : lines) {
         if (startsWith(line, "0x")) {
             CStringArray parts;
             explode(parts, line, '\t');
             string_q address = toLower(parts[0]);
             wei_t amount = str_2_Wei(parts[1]);
-            expC.prefundMap[address] = amount;
+            expC.prefundBalMap[address] = amount;
         }
     }
 
     CArchive archive(WRITING_ARCHIVE);
-    if (archive.Lock(binFile, modeWriteCreate, LOCK_NOWAIT)) {
-        archive << uint64_t(expC.prefundMap.size());
-        for (const auto& item : expC.prefundMap)
+    if (archive.Lock(balanceBin, modeWriteCreate, LOCK_NOWAIT)) {
+        archive << uint64_t(expC.prefundBalMap.size());
+        for (const auto& item : expC.prefundBalMap)
             archive << item.first << item.second;
         archive.Release();
         return true;
     }
 
-    LOG_WARN("Could not lock prefund cache at: ", binFile);
+    LOG_WARN("Could not lock prefund cache at: ", balanceBin);
     return false;
 }
 
 //-----------------------------------------------------------------------
 wei_t prefundAt(const address_t& addr) {
-    return expC.prefundMap[addr];
+    return expC.prefundBalMap[addr];
 }
 
 // typedef enum {

@@ -123,7 +123,7 @@ bool COptions::handle_editcmds(CStringArray& terms, bool to_custom, bool autonam
 
     expContext().namesMap.clear();
     if (prefund) {
-        expContext().prefundMap.clear();
+        expContext().prefundBalMap.clear();
         if (!loadNamesPrefunds())
             return usage("Could not load names database.");
     } else {

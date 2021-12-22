@@ -171,7 +171,7 @@ bool COptions::parseArguments(string_q& command) {
         // and add a psuedo-transaction (block: 0, txid: order-in-file) for each address.
         // Tradition has it that the prefund list is sorted by address.
         CStringArray appearances;
-        for (auto prefund : expContext().prefundMap) {
+        for (auto prefund : expContext().prefundBalMap) {
             ostringstream os;
             os << prefund.first << "\t" << padNum9(0) << "\t" << padNum5((uint32_t)appearances.size()) << endl;
             appearances.push_back(os.str());

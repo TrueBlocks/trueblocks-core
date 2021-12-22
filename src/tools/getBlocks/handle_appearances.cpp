@@ -40,7 +40,7 @@ bool COptions::handle_appearances(blknum_t num, void* data) {
     } else if (!nProcessed) {
         if (num == 0) {
             uint64_t cnt = 0;
-            for (auto prefund : expContext().prefundMap) {
+            for (auto prefund : expContext().prefundBalMap) {
                 CAppearance item;
                 item.bn = num;
                 item.tx = cnt++;

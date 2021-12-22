@@ -170,7 +170,7 @@ bool COptions::parseArguments(string_q& command) {
 
     if (prefund) {
         expContext().namesMap.clear();
-        expContext().prefundMap.clear();
+        expContext().prefundBalMap.clear();
         if (!loadNamesPrefunds())
             return usage("Could not load names database.");
     } else {

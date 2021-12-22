@@ -1,4 +1,7 @@
 chifra names  --output test_file --prefund
 TEST[DATE|TIME] Prefund:  true
 TEST[DATE|TIME] OutputFn:  test_file
+TIME ~ CLOCK - <INFO>  : Loading prefunds accounts
+TIME ~ CLOCK - <INFO>  : Loading names
+TIME ~ CLOCK - <INFO>  : Loading prefund balances
 --output_filename--

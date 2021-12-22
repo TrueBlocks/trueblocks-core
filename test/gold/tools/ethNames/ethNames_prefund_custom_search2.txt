@@ -3,6 +3,9 @@ TEST[DATE|TIME] Terms:  [0001 Genesis]
 TEST[DATE|TIME] Expand:  true
 TEST[DATE|TIME] Custom:  true
 TEST[DATE|TIME] Prefund:  true
+TIME ~ CLOCK - <INFO>  : Loading prefunds accounts
+TIME ~ CLOCK - <INFO>  : Loading names
+TIME ~ CLOCK - <INFO>  : Loading prefund balances
 tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	iscontract	iserc20	iserc721
 80-Prefund	0x001762430ea9c3a26e5749afdb70da5f78ddbb8c	Prefund_0001		Genesis			false	false	true	false	false	false
 80-Prefund	0x28818e18b610001321b31df6fe7d2815cdadc9f5	Prefund_1377		Genesis			false	false	true	false	false	false

@@ -1,6 +1,7 @@
 chifra names  tip --fmt api
 TEST[DATE|TIME] Terms:  [tip]
 TEST[DATE|TIME] Format:  api
+TIME ~ CLOCK - <INFO>  : Loading names
 {"data": [
   {
     "tags": "31-Gitcoin:Grants",

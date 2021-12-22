@@ -31,7 +31,7 @@ bool COptions::model_issuance(void) {
                 rec.timestamp = getTimestampAt(bn);
                 if (bn == 0) {
                     cout << STR_HEADER_EXPORT << endl;
-                    for (auto item : prefundWeiMap)
+                    for (auto item : prefundBalMap)
                         rec.minerBaseRewardIn = (rec.minerBaseRewardIn + item.second);
                 } else {
                     rec.minerBaseRewardIn = getBlockReward2(bn);

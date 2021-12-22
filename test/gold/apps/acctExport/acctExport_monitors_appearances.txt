@@ -3,6 +3,9 @@ TEST[DATE|TIME] Addrs:  [0x001d14804b399c6ef80e64576f657660804fec0b]
 TEST[DATE|TIME] Appearances:  true
 TEST[DATE|TIME] LastBlock:  3375495
 TEST[DATE|TIME] Format:  csv
+TIME ~ CLOCK - <INFO>  : Loading prefunds accounts
+TIME ~ CLOCK - <INFO>  : Loading names
+TIME ~ CLOCK - <INFO>  : Loading prefund balances
 "address","blockNumber","transactionIndex"
 "0x001d14804b399c6ef80e64576f657660804fec0b","0","2"
 "0x001d14804b399c6ef80e64576f657660804fec0b","202249","0"
