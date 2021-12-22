@@ -82,8 +82,6 @@ class COptionsBase {
     }
 
   public:
-    bool loadNames(bool loadPrefunds);
-
     // enabling options
     bool isEnabled(uint32_t q) const;
     void optionOff(uint32_t q);

@@ -18,6 +18,9 @@
 
 namespace qblocks {
 
+// extern bool importTabFilePrefund(CAddressNameMap& theMap, const string_q& tabFilename);
+extern string_q getConfigPath(const string_q& part);
+
 //---------------------------------------------------------------------------
 // TODO: This is a singleton used throughout - it doesn't appear to have any downsides. If not, remove this comment.
 static CExportContext expC;
@@ -80,27 +83,149 @@ bool findToken(const address_t& addr, CAccountName& acct) {
     return false;
 }
 
-//---------------------------------------------------------------------------
-void indent(void) {
-    expC.lev++;
+//-----------------------------------------------------------------------
+static void addToMapPrefunds(CAddressNameMap& theMap, CAccountName& account, uint64_t cnt) {
+    // If it's already there, don't alter it or add it to the map
+    if (theMap[account.address].address == account.address)
+        return;
+
+    address_t addr = account.address;
+    account = theMap[addr];
+    account.address = addr;
+    account.tags = account.tags.empty() ? "80-Prefund" : account.tags;
+    account.source = account.source.empty() ? "Genesis" : account.source;
+    account.isPrefund = account.name.empty();
+
+    string_q prefundName = "Prefund_" + padNum4(cnt);
+    if (account.name.empty()) {
+        account.name = prefundName;
+    } else if (!contains(account.name, "Prefund_")) {
+        account.name += " (" + prefundName + ")";
+    } else {
+        // do nothing
+    }
+
+    theMap[account.address] = account;
 }
 
-//---------------------------------------------------------------------------
-void unindent(void) {
-    expC.lev--;
+//-----------------------------------------------------------------------
+static bool importTabFilePrefund(CAddressNameMap& theMap, const string_q& tabFilename) {
+    string_q prefundBin = getCachePath("names/names_prefunds.bin");
+
+    uint64_t cnt = 0;
+    if (fileExists(prefundBin)) {
+        LOG4("Reading prefund names from binary cache");
+        CArchive nameCache(READING_ARCHIVE);
+        if (nameCache.Lock(prefundBin, modeReadOnly, LOCK_NOWAIT)) {
+            CAccountNameArray prefunds;
+            nameCache >> prefunds;
+            nameCache.Release();
+            for (auto prefund : prefunds)
+                addToMapPrefunds(theMap, prefund, cnt++);
+            return true;
+        }
+    }
+
+    CAccountNameArray prefundArrayOut;
+    prefundArrayOut.reserve(10000);
+
+    CStringArray lines;
+    asciiFileToLines(tabFilename, lines);
+
+    CStringArray fields;
+    for (auto line : lines) {
+        if (fields.empty()) {
+            explode(fields, line, '\t');
+        } else {
+            if (!startsWith(line, '#') && contains(line, "0x")) {
+                CAccountName account;
+                account.parseText(fields, line);
+                addToMapPrefunds(theMap, account, cnt++);
+                prefundArrayOut.push_back(account);
+            }
+        }
+    }
+
+    CArchive nameCache(WRITING_ARCHIVE);
+    if (nameCache.Lock(prefundBin, modeWriteCreate, LOCK_CREATE)) {
+        nameCache << prefundArrayOut;
+        nameCache.Release();
+    }
+
+    return true;
 }
 
-//---------------------------------------------------------------------------
-string_q indentStr(void) {
-    return string_q(expC.spcs * expC.lev, expC.tab);
+//-----------------------------------------------------------------------
+static bool importTabFile(CStringArray& lines, CAddressNameMap& theMap) {
+    CStringArray fields;
+    for (auto line : lines) {
+        if (fields.empty()) {
+            explode(fields, line, '\t');
+        } else {
+            if (!startsWith(line, '#') && contains(line, "0x")) {
+                CAccountName account;
+                account.parseText(fields, line);
+                if (theMap[account.address].address != account.address)
+                    theMap[account.address] = account;
+            }
+        }
+    }
+    return true;
 }
 
-//---------------------------------------------------------------------------
-bool isJson(void) {
-    return (expC.exportFmt == JSON1 || expC.exportFmt == API1 || expC.exportFmt == NONE1);
+//-----------------------------------------------------------------------
+bool loadNames(bool loadPrefund) {
+    establishFolder(getCachePath("names/"));
+    if (expContext().namesMap.size() > 0)  // already loaded
+        return true;
+
+    string_q txtFile = getConfigPath("names/names.tab");
+    string_q customFile = getConfigPath("names/names_custom.tab");
+    string_q prefundFile = getConfigPath("names/names_prefunds.tab");
+
+    time_q txtFileDate = fileLastModifyDate(txtFile);
+    time_q customFileDate = fileLastModifyDate(customFile);
+    time_q prefundFileDate = fileLastModifyDate(prefundFile);
+
+    string_q binFile = getCachePath("names/names.bin");
+
+    time_q binDate = fileLastModifyDate(binFile);
+    time_q txtDate = laterOf(laterOf(txtFileDate, customFileDate), prefundFileDate);
+
+    if (loadPrefund) {
+        if (!loadPrefunds()) {
+            return false;
+        }
+    }
+
+    if (binDate > txtDate) {
+        LOG8("Reading names from binary cache");
+        CArchive nameCache(READING_ARCHIVE);
+        if (nameCache.Lock(binFile, modeReadOnly, LOCK_NOWAIT)) {
+            nameCache >> expContext().namesMap;
+            nameCache.Release();
+        }
+
+    } else {
+        CStringArray lines;
+        asciiFileToLines(txtFile, lines);
+        asciiFileToLines(customFile, lines);
+        if (!importTabFile(lines, expContext().namesMap))
+            return false;
+
+        if (!importTabFilePrefund(expContext().namesMap, prefundFile))
+            return false;
+
+        CArchive nameCache(WRITING_ARCHIVE);
+        if (nameCache.Lock(binFile, modeWriteCreate, LOCK_CREATE)) {
+            nameCache << expContext().namesMap;
+            nameCache.Release();
+        }
+    }
+
+    return true;
 }
 
-extern string_q getConfigPath(const string_q& part);
 //-----------------------------------------------------------------------
 bool loadPrefunds(void) {
     string_q prefundFile = getConfigPath("names/names_prefunds.tab");
@@ -160,6 +285,47 @@ bool loadPrefunds(void) {
 //-----------------------------------------------------------------------
 wei_t prefundAt(const address_t& addr) {
     return expC.prefundMap[addr];
+}
+
+// typedef enum {
+//     IS_CUSTOM = (1 << 0),
+//     IS_PREFUND = (1 << 1),
+//     IS_CONTRACT = (1 << 2),
+//     IS_ERC20 = (1 << 3),
+//     IS_ERC721 = (1 << 4),
+//     IS_DELETED = (1 << 5),
+// } name_vars_t;
+
+// struct NameOnDisc {
+//   public:
+//     char tags[30];
+//     char address[42];
+//     char name[120];
+//     char symbol[30];
+//     char source[180];
+//     char description[255];
+//     uint16_t decimals;
+//     uint16_t nameVars;
+// };
+
+//---------------------------------------------------------------------------
+void indent(void) {
+    expC.lev++;
+}
+
+//---------------------------------------------------------------------------
+void unindent(void) {
+    expC.lev--;
+}
+
+//---------------------------------------------------------------------------
+string_q indentStr(void) {
+    return string_q(expC.spcs * expC.lev, expC.tab);
+}
+
+//---------------------------------------------------------------------------
+bool isJson(void) {
+    return (expC.exportFmt == JSON1 || expC.exportFmt == API1 || expC.exportFmt == NONE1);
 }
 
 }  // namespace qblocks
