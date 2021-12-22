@@ -164,6 +164,9 @@ bool COptions::parseArguments(string_q& command) {
     if (Mocked(cs ? "caches" : "status"))
         EXIT_NOMSG(false);
 
+    if (!loadNames())
+        return usage("Could not load names database.");
+
     establishFolder(getCachePath("tmp/"));
     establishFolder(indexFolder_finalized);
     establishFolder(indexFolder_blooms);
