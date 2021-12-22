@@ -61,6 +61,7 @@ extern bool loadPrefunds(void);
 extern wei_t prefundAt(const address_t& addr);
 
 //-----------------------------------------------------------------------
+extern bool findName(const address_t& addr, CAccountName& acct);
 extern bool findToken(const address_t& addr, CAccountName& acct);
 
 }  // namespace qblocks

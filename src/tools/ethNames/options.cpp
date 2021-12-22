@@ -218,7 +218,8 @@ bool COptions::parseArguments(string_q& command) {
         return false;
     }
 
-    loadNames();
+    if (!loadNames(isEnabled(OPT_PREFUND)))
+        return usage("Could not load names database.");
 
     if (expand) {
         searchFields = STR_DISPLAY_ACCOUNTNAME;
@@ -334,7 +335,7 @@ void COptions::Init(void) {
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
     establishFolder(getCachePath("names/"));
-    loadNames();  // loads names database
+    loadNames(isEnabled(OPT_PREFUND));  // loads names database
     Init();
 
     // BEG_CODE_NOTES

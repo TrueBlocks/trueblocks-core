@@ -82,6 +82,9 @@ bool COptions::parseArguments(string_q& command) {
     if (Mocked("transactions"))
         return false;
 
+    if (!loadNames(isEnabled(OPT_PREFUND)))
+        return usage("Could not load names database.");
+
     bool isReconcile = !reconcile.empty();
     if (isReconcile && (cache || trace || articulate))
         return usage("Do not use other options with the --reconcile option.");

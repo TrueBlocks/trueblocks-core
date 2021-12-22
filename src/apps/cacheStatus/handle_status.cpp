@@ -307,7 +307,7 @@ bool noteMonitor(const string_q& path, void* data) {
         string_q addr = substitute(path, "/0x", "|");
         nextTokenClear(addr, '|');
         mdi.address = "0x" + nextTokenClear(addr, '.');
-        counter->options->findName(mdi.address, mdi);
+        findName(mdi.address, mdi);
         if (!isTestMode()) {
             CArchive archive(READING_ARCHIVE);
             if (archive.Lock(path, modeReadOnly, LOCK_NOWAIT)) {
@@ -431,7 +431,7 @@ bool noteABI(const string_q& path, void* data) {
         nextTokenClear(addr, '|');
         abii.address = "0x" + nextTokenClear(addr, '.');
         CAccountName n;
-        counter->options->findName(abii.address, n);
+        findName(abii.address, n);
         if (isTestMode()) {
             abii.address = "---address---";
             abii.name = "--name--";

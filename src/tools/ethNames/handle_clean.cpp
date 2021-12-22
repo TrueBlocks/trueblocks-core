@@ -175,7 +175,7 @@ bool COptions::handle_clean(void) {
     LOG_WARN("The custom names file was NOT cleaned.", string_q(50, ' '));
 
     ::remove(getCachePath("names/names.bin").c_str());
-    loadNames();
+    loadNames(isEnabled(OPT_PREFUND));
 
     return false;  // don't proceed
 }

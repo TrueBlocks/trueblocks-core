@@ -49,6 +49,16 @@ CExportContext::CExportContext(void) {
     prefundMap.clear();
 }
 
+//-----------------------------------------------------------------------
+bool findName(const address_t& addr, CAccountName& acct) {
+    if (expContext().namesMap[addr].address == addr) {
+        acct = expContext().namesMap[addr];
+        return true;
+    }
+
+    return false;
+}
+
 //---------------------------------------------------------------------------
 bool findToken(const address_t& addr, CAccountName& acct) {
     if (expC.tokenMap.size() == 0) {

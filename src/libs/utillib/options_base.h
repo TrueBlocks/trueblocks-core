@@ -82,8 +82,7 @@ class COptionsBase {
     }
 
   public:
-    bool loadNames(void);
-    bool findName(const address_t& addr, CAccountName& acct);
+    bool loadNames(bool loadPrefunds);
 
     // enabling options
     bool isEnabled(uint32_t q) const;

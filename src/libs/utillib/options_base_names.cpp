@@ -37,12 +37,10 @@ static bool importTabFile(CStringArray& lines, CAddressNameMap& theMap) {
 }
 
 //-----------------------------------------------------------------------
-bool COptionsBase::loadNames(void) {
+bool COptionsBase::loadNames(bool loadPrefund) {
     establishFolder(getCachePath("names/"));
     if (expContext().namesMap.size() > 0)  // already loaded
         return true;
-
-    LOG8("Entering loadNames...");
 
     string_q txtFile = getConfigPath("names/names.tab");
     string_q customFile = getConfigPath("names/names_custom.tab");
@@ -57,9 +55,9 @@ bool COptionsBase::loadNames(void) {
     time_q binDate = fileLastModifyDate(binFile);
     time_q txtDate = laterOf(laterOf(txtFileDate, customFileDate), prefundFileDate);
 
-    if (isEnabled(OPT_PREFUND)) {
+    if (loadPrefund) {
         if (!loadPrefunds()) {
-            return usage("Could not open prefunds data.");
+            return false;
         }
     }
 
@@ -76,10 +74,10 @@ bool COptionsBase::loadNames(void) {
         asciiFileToLines(txtFile, lines);
         asciiFileToLines(customFile, lines);
         if (!importTabFile(lines, expContext().namesMap))
-            return usage("Could not import names database...");
+            return false;
 
         if (!importTabFilePrefund(expContext().namesMap, prefundFile))
-            return usage("Could not open prefunds database...");
+            return false;
 
         CArchive nameCache(WRITING_ARCHIVE);
         if (nameCache.Lock(binFile, modeWriteCreate, LOCK_CREATE)) {
@@ -89,19 +87,6 @@ bool COptionsBase::loadNames(void) {
     }
 
     return true;
-}
-
-//-----------------------------------------------------------------------
-bool COptionsBase::findName(const address_t& addr, CAccountName& acct) {
-    if (!loadNames())
-        return false;
-
-    if (expContext().namesMap[addr].address == addr) {
-        acct = expContext().namesMap[addr];
-        return true;
-    }
-
-    return false;
 }
 
 }  // namespace qblocks
