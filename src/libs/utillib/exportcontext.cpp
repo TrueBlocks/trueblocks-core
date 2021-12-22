@@ -193,11 +193,9 @@ bool loadNames(void) {
         CStringArray lines;
 
         string_q txtFile = getConfigPath("names/names.tab");
-        asciiFileToLines(txtFile, lines);
-
         string_q customFile = getConfigPath("names/names_custom.tab");
+        asciiFileToLines(txtFile, lines);
         asciiFileToLines(customFile, lines);
-
         importTabFile(lines);
 
         establishFolder(getCachePath("names/"));
@@ -232,11 +230,9 @@ bool loadNamesPrefunds(void) {
         CStringArray lines;
 
         string_q txtFile = getConfigPath("names/names.tab");
-        asciiFileToLines(txtFile, lines);
-
         string_q customFile = getConfigPath("names/names_custom.tab");
+        asciiFileToLines(txtFile, lines);
         asciiFileToLines(customFile, lines);
-
         importTabFile(lines);
 
         if (!importTabFilePrefund())
