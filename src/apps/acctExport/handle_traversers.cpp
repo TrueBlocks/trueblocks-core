@@ -17,7 +17,7 @@ bool COptions::handle_traversers(void) {
     CDynamicTraverser lib(load);
     if (!lib.is_valid())
         return usage("Dynamic library " + load + " was found but is not valid.");
-    if (!loadNames(true))
+    if (!loadNamesPrefunds())
         return usage("Could not load names database.");
 
     auto libFactory = lib.get_function<CTraverser*(void)>("makeTraverser");

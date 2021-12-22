@@ -171,9 +171,12 @@ bool COptions::parseArguments(string_q& command) {
     if (prefund) {
         expContext().namesMap.clear();
         expContext().prefundMap.clear();
+        if (!loadNamesPrefunds())
+            return usage("Could not load names database.");
+    } else {
+        if (!loadNames())
+            return usage("Could not load names database.");
     }
-    if (!loadNames(prefund))
-        return usage("Could not load names database.");
 
     if (!autoname.empty() && (!isAddress(autoname) || isZeroAddr(autoname)))
         return usage("You must provide an address to the --autoname option.");

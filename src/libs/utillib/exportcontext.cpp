@@ -164,7 +164,7 @@ static void importTabFile(CStringArray& lines) {
 }
 
 //-----------------------------------------------------------------------
-bool loadNames(bool loadPrefund) {
+bool loadNames(void) {
     establishFolder(getCachePath("names/"));
     if (expC.namesMap.size() > 0)  // already loaded
         return true;
@@ -182,7 +182,58 @@ bool loadNames(bool loadPrefund) {
     time_q binDate = fileLastModifyDate(binFile);
     time_q txtDate = laterOf(laterOf(txtFileDate, customFileDate), prefundFileDate);
 
-    if (loadPrefund) {
+    if (false) {
+        if (!loadPrefunds()) {
+            return false;
+        }
+    }
+
+    if (binDate > txtDate) {
+        CArchive nameCache(READING_ARCHIVE);
+        if (nameCache.Lock(binFile, modeReadOnly, LOCK_NOWAIT)) {
+            nameCache >> expC.namesMap;
+            nameCache.Release();
+        }
+
+    } else {
+        CStringArray lines;
+        asciiFileToLines(txtFile, lines);
+        asciiFileToLines(customFile, lines);
+        importTabFile(lines);
+
+        if (!importTabFilePrefund(prefundFile))
+            return false;
+
+        CArchive nameCache(WRITING_ARCHIVE);
+        if (nameCache.Lock(binFile, modeWriteCreate, LOCK_CREATE)) {
+            nameCache << expC.namesMap;
+            nameCache.Release();
+        }
+    }
+
+    return true;
+}
+
+//-----------------------------------------------------------------------
+bool loadNamesPrefunds(void) {
+    establishFolder(getCachePath("names/"));
+    if (expC.namesMap.size() > 0)  // already loaded
+        return true;
+
+    string_q txtFile = getConfigPath("names/names.tab");
+    string_q customFile = getConfigPath("names/names_custom.tab");
+    string_q prefundFile = getConfigPath("names/names_prefunds.tab");
+
+    time_q txtFileDate = fileLastModifyDate(txtFile);
+    time_q customFileDate = fileLastModifyDate(customFile);
+    time_q prefundFileDate = fileLastModifyDate(prefundFile);
+
+    string_q binFile = getCachePath("names/names.bin");
+
+    time_q binDate = fileLastModifyDate(binFile);
+    time_q txtDate = laterOf(laterOf(txtFileDate, customFileDate), prefundFileDate);
+
+    if (true) {
         if (!loadPrefunds()) {
             return false;
         }
