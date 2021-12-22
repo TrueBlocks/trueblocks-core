@@ -158,9 +158,6 @@ bool COptions::parseArguments(string_q& command) {
         return handle_migrate();
     }
 
-    if (!loadNames(isEnabled(OPT_PREFUND)))
-        return usage("Could not load names database.");
-
     bool cs = false;
     for (auto m : modes)
         cs |= (m == "caches");

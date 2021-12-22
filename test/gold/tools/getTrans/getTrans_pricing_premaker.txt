@@ -3,7 +3,6 @@ TEST[DATE|TIME] Transactions:  [1433233.8]
 TEST[DATE|TIME] Reconcile:  0xea674fdde714fd979de3edf0f56aa9716b898ec8
 TEST[DATE|TIME] LogLevel:  10
 TEST[DATE|TIME] Format:  json
-TIME ~ CLOCK - : 8------Reading names from binary cache
 { "data": [
 TIME ~ CLOCK - : 4-----blockNum.txid 1433233 8
 TIME ~ CLOCK - : 4-----not from cache

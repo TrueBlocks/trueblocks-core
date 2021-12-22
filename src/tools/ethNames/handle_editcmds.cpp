@@ -121,5 +121,11 @@ bool COptions::handle_editcmds(CStringArray& terms, bool to_custom, bool autonam
         }
     }
 
+    expContext().namesMap.clear();
+    if (prefund)
+        expContext().prefundMap.clear();
+    if (!loadNames(prefund))
+        return usage("Could not load names database.");
+
     return true;
 }

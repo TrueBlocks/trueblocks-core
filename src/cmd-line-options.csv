@@ -65,7 +65,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12300,tools,Accounts,names,ethNames,match_case,m,,false,false,true,true,header,switch,<boolean>,do case-sensitive search
 12315,tools,Accounts,names,ethNames,all,l,,false,false,true,true,local,switch,<boolean>,include all accounts in the search
 12340,tools,Accounts,names,ethNames,custom,c,,false,false,true,true,local,switch,<boolean>,include your custom named accounts
-12360,tools,Accounts,names,ethNames,prefund,p,,false,false,true,true,local,switch,<boolean>,include prefund accounts
+12360,tools,Accounts,names,ethNames,prefund,p,,false,false,true,true,header,switch,<boolean>,include prefund accounts
 12380,tools,Accounts,names,ethNames,named,n,,false,false,true,true,local,switch,<boolean>,include well know token and airdrop addresses in the search
 12420,tools,Accounts,names,ethNames,addr,a,,false,false,true,true,local,switch,<boolean>,display only addresses in the results (useful for scripting)
 12430,tools,Accounts,names,ethNames,collections,s,,false,false,true,true,header,switch,<boolean>,display collections data

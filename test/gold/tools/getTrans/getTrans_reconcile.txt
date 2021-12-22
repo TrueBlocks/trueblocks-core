@@ -3,7 +3,6 @@ TEST[DATE|TIME] Transactions:  [0x8699f14af8aca02073f3008099526a6e77f724bee280e5
 TEST[DATE|TIME] Reconcile:  0xf503017d7baf7fbc0fff7492b751025c6a78179b
 TEST[DATE|TIME] LogLevel:  10
 TEST[DATE|TIME] Format:  json
-TIME ~ CLOCK - : 8------Reading names from binary cache
 { "data": [
 TIME ~ CLOCK - : 4-----transHash0x8699f14af8aca02073f3008099526a6e77f724bee280e5e3c2fa64b589be9a63
 TIME ~ CLOCK - : 4-----not from cache

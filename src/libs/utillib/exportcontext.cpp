@@ -105,7 +105,6 @@ static bool importTabFilePrefund(const string_q& tabFilename) {
 
     uint64_t cnt = 0;
     if (fileExists(prefundBin)) {
-        LOG4("Reading prefund names from binary cache");
         CArchive nameCache(READING_ARCHIVE);
         if (nameCache.Lock(prefundBin, modeReadOnly, LOCK_NOWAIT)) {
             CAccountNameArray prefunds;
@@ -190,7 +189,6 @@ bool loadNames(bool loadPrefund) {
     }
 
     if (binDate > txtDate) {
-        LOG8("Reading names from binary cache");
         CArchive nameCache(READING_ARCHIVE);
         if (nameCache.Lock(binFile, modeReadOnly, LOCK_NOWAIT)) {
             nameCache >> expC.namesMap;

@@ -84,7 +84,7 @@ bool COptions::parseArguments(string_q& command) {
     if (Mocked(""))
         return false;
 
-    if (!loadNames(isEnabled(OPT_PREFUND)))
+    if (!loadNames(false))
         return usage("Could not load names database.");
 
     bool userBlocks = true;

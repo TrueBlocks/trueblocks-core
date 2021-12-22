@@ -59,7 +59,6 @@ bool COptions::parseArguments(string_q& command) {
     bool expand = false;
     bool all = false;
     bool custom = false;
-    bool prefund = false;
     bool named = false;
     bool addr = false;
     bool to_custom = false;
@@ -169,6 +168,13 @@ bool COptions::parseArguments(string_q& command) {
     if (Mocked((tags ? "tags" : collections ? "collections" : "names")))
         return false;
 
+    if (prefund) {
+        expContext().namesMap.clear();
+        expContext().prefundMap.clear();
+    }
+    if (!loadNames(prefund))
+        return usage("Could not load names database.");
+
     if (!autoname.empty() && (!isAddress(autoname) || isZeroAddr(autoname)))
         return usage("You must provide an address to the --autoname option.");
 
@@ -217,9 +223,6 @@ bool COptions::parseArguments(string_q& command) {
         handle_collections(terms);
         return false;
     }
-
-    if (!loadNames(isEnabled(OPT_PREFUND)))
-        return usage("Could not load names database.");
 
     if (expand) {
         searchFields = STR_DISPLAY_ACCOUNTNAME;
@@ -321,6 +324,7 @@ void COptions::Init(void) {
 
     // BEG_CODE_INIT
     match_case = false;
+    prefund = false;
     collections = false;
     tags = false;
     // END_CODE_INIT
@@ -335,7 +339,7 @@ void COptions::Init(void) {
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
     establishFolder(getCachePath("names/"));
-    loadNames(isEnabled(OPT_PREFUND));  // loads names database
+
     Init();
 
     // BEG_CODE_NOTES

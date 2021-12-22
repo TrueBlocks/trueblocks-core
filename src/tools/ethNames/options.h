@@ -28,6 +28,7 @@ class COptions : public CAbiOptions {
   public:
     // BEG_CODE_DECLARE
     bool match_case;
+    bool prefund;
     bool collections;
     bool tags;
     // END_CODE_DECLARE
