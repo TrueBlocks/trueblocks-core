@@ -45,6 +45,11 @@ bool display(CTraverser* trav, void* data) {
 
 //-----------------------------------------------------------------------
 extern "C" CTraverser* makeTraverser(void) {
+    if (getVersionNum() < getVersionNum(0, 18, 0)) {
+        LOG_ERR("Cannot load traverser from older versions: ", getVersionNum());
+        LOG_ERR("Perhaps you need to re-install TrueBlocks.");
+        return nullptr;
+    }
     CTestTraverser* trav = new CTestTraverser;
     trav->preFunc = header;
     trav->displayFunc = display;

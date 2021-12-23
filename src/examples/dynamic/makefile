@@ -21,3 +21,14 @@ clean:
 #	@cd recons && make clean
 #	@cd usdprice && make clean
 	@ls -l $(dest)
+
+test:
+	@mkdir -p testing
+	@make all
+	@echo "Testing simple1"
+	@chifra export --load simple1 0xf503017d7baf7fbc0fff7492b751025c6a78179b --last_block 11500000 >testing/working 2>/dev/null
+	@echo "Testing gasHole"
+	@chifra export --load gasHole 0xf503017d7baf7fbc0fff7492b751025c6a78179b --last_block 11500000 >>testing/working 2>/dev/null
+	@echo "Testing balances"
+	@chifra export --load balances 0xf503017d7baf7fbc0fff7492b751025c6a78179b --last_block 11500000 >>testing/working 2>/dev/null
+	@diff testing/working testing/gold
