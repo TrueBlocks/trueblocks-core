@@ -104,7 +104,7 @@ bool display(CTraverser* trav, void* data) {
     tt->trans.timestamp = getTimestampAt(tt->app->blk);
     tt->block.timestamp = getTimestampAt(tt->app->blk);
 
-    cerr << tt->readStatus << " ";
+    cerr << tt->searchType << " ";
     if (doEthCall(tt->uni) && !tt->uni.result.outputs.empty()) {
         CStringArray results;
         if (tt->uni.getResults(results) && results.size() > 1) {

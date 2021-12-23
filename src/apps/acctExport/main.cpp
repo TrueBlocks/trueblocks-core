@@ -175,11 +175,11 @@ void prog_Log(CTraverser* trav, void* data) {
     ostringstream post;
     if (trav->searchType == "appearances" || trav->searchType == "receipts" || trav->searchType == "txs") {
         // We report differently if there are the same number of items as appearances...
-        // Reports as "readStatus index of total operation for address A"
+        // Reports as "searchType index of total operation for address A"
         post << " " << trav->searchType << " for address " << opt->accountedFor.address;
     } else {
         // ...or if there are more than such as statements, logs, traces, or neighbors
-        // Reports as "readStatus index of total txs (found X operation) for address A"
+        // Reports as "searchType index of total txs (found X operation) for address A"
         post << " txs (" << prog << " " << trav->searchType << ") for address " << opt->accountedFor.address;
     }
     LOG_PROGRESS(padRight(trav->searchOp, 11), blknum_t(opt->first_record + trav->index), nApps, post.str() + "\r");
@@ -199,11 +199,11 @@ void end_Log(CTraverser* trav, void* data) {
     ostringstream post;
     if (trav->searchType == "appearances" || trav->searchType == "receipts" || trav->searchType == "txs") {
         // We report differently if there are the same number of items as appearances...
-        // Reports as "readStatus index of total operation for address A"
+        // Reports as "searchType index of total operation for address A"
         post << " " << trav->searchType << " for address " << opt->accountedFor.address;
     } else {
         // ...or if there are more than such as statements, logs, traces, or neighbors
-        // Reports as "readStatus index of total txs (found X operation) for address A"
+        // Reports as "searchType index of total txs (found X operation) for address A"
         post << " txs (" << prog << " " << trav->searchType << ") for address " << opt->accountedFor.address;
     }
     LOG_PROGRESS(padRight("Completed", 11), blknum_t(opt->first_record + trav->index), nApps, post.str());
