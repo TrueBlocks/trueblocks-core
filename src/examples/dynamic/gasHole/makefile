@@ -21,7 +21,7 @@ ifeq ($(UNAME_S),Linux)
 	out = lib$(dyno).so
 endif
 ifeq ($(UNAME_S),Darwin)
-    libs += /Library/Developer/CommandLineTools/SDKs/MacOSX11.1.sdk/usr/lib/libcurl.4.tbd
+    libs += /Library/Developer/CommandLineTools/SDKs/MacOSX11.sdk/usr/lib/libcurl.4.tbd
     dest = ~/Library/Application\ Support/TrueBlocks/cache/objs/
 	out = lib$(dyno).dylib
 endif
