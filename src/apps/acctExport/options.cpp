@@ -328,7 +328,7 @@ bool COptions::parseArguments(string_q& command) {
     for (auto t : topic)
         logFilter.topics.push_back(t);
 
-    if (!loadNamesPrefunds())
+    if (!loadNames())
         return usage("Could not load names database.");
 
     // Where will we start?
