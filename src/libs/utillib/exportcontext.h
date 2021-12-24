@@ -41,7 +41,6 @@ class CExportContext {
     size_t tsCnt;
     format_t exportFmt;
     CNameValueMap fmtMap;
-    CAddressWeiMap prefundBalMap;
     CAddressNameMap namesMap;
 
   public:
@@ -57,15 +56,8 @@ extern bool isJson(void);
 
 //-----------------------------------------------------------------------
 extern bool loadNames(void);
-extern bool loadNamesPrefunds(void);
-extern bool loadPrefundBals(void);
 extern uint64_t nNames(void);
 extern void clearNames(void);
-extern void clearPrefundBals(void);
-typedef std::__1::pair<const qblocks::address_t, qblocks::wei_t> PrefundItem;
-typedef bool (*PREFUNDFUNC)(const PrefundItem& prefund, void* data);
-extern bool forEveryPrefund(PREFUNDFUNC func, void* data);
-extern wei_t prefundAt(const address_t& addr);
 
 //-----------------------------------------------------------------------
 extern bool findName(const address_t& addr, CAccountName& acct);

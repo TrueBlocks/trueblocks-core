@@ -12,33 +12,16 @@
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
 #include "basetypes.h"
-#include "sfstring.h"
-#include "basenode.h"
-#include "biglib.h"
-#include "jsonlib.h"
 #include "conversions.h"
-#include "sftime.h"
-#include "sfos.h"
-#include "database.h"
-#include "toml.h"
-#include "exportcontext.h"
-#include "prefunds.h"
-#include "names.h"
-#include "sfarchive.h"
-#include "fielddata.h"
-#include "curl_code.h"
-#include "colors.h"
-#include "performance.h"
-#include "options_base.h"
-#include "filenames.h"
-#include "accountname.h"
-#include "collection.h"
-#include "memmap.h"
-#include "rpcresult.h"
-#include "logging.h"
-#include "keccak.h"
-#include "apikey.h"
-#include "markdown.h"
-#include "commandoption.h"
 
-using namespace qblocks;  // NOLINT
+namespace qblocks {
+
+extern bool loadNamesPrefunds(void);
+extern bool loadPrefundBals(void);
+extern void clearPrefundBals(void);
+typedef std::__1::pair<const qblocks::address_t, qblocks::wei_t> PrefundItem;
+typedef bool (*PREFUNDFUNC)(const PrefundItem& prefund, void* data);
+extern bool forEveryPrefund(PREFUNDFUNC func, void* data);
+extern wei_t prefundAt(const address_t& addr);
+
+}  // namespace qblocks

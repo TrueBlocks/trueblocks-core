@@ -14,6 +14,7 @@
 // to be conservitive in changing it. It's easier to hide the lint than modify the code
 
 #include "exportcontext.h"
+#include "prefunds.h"
 #include "logging.h"
 
 namespace qblocks {
@@ -21,8 +22,10 @@ namespace qblocks {
 extern string_q getConfigPath(const string_q& part);
 
 //---------------------------------------------------------------------------
-// TODO: This is a singleton used throughout - it doesn't appear to have any downsides. If not, remove this comment.
+// TODO: These singletons are used throughout - it doesn't appear to have any downsides.
+// TODO: Assuming this is true, eventually we can remove this comment.
 static CExportContext expC;
+static CAddressWeiMap prefundBalMap;
 
 //---------------------------------------------------------------------------
 CExportContext& expContext(void) {
@@ -86,7 +89,7 @@ void clearNames(void) {
 
 //-----------------------------------------------------------------------
 void clearPrefundBals(void) {
-    expC.prefundBalMap.clear();
+    prefundBalMap.clear();
 }
 
 //-----------------------------------------------------------------------
@@ -176,7 +179,7 @@ bool loadNames(void) {
 //-----------------------------------------------------------------------
 bool loadNamesPrefunds(void) {
     LOG_INFO("Loading prefunds accounts");
-    if (expC.prefundBalMap.size() > 0) {
+    if (prefundBalMap.size() > 0) {
         LOG_INFO("Already loaded");
         return true;
     }
@@ -232,7 +235,7 @@ bool loadNamesPrefunds(void) {
 //-----------------------------------------------------------------------
 bool loadPrefundBals(void) {
     LOG_INFO("Loading prefund balances");
-    if (expC.prefundBalMap.size() > 0) {
+    if (prefundBalMap.size() > 0) {
         LOG_INFO("Already loaded");
         return true;
     }
@@ -247,7 +250,7 @@ bool loadPrefundBals(void) {
                 wei_t amount;
                 string_q address;
                 archive >> address >> amount;
-                expC.prefundBalMap[address] = amount;
+                prefundBalMap[address] = amount;
             }
             archive.Release();
             return true;
@@ -264,14 +267,14 @@ bool loadPrefundBals(void) {
             explode(parts, line, '\t');
             string_q address = toLower(parts[0]);
             wei_t amount = str_2_Wei(parts[1]);
-            expC.prefundBalMap[address] = amount;
+            prefundBalMap[address] = amount;
         }
     }
 
     CArchive archive(WRITING_ARCHIVE);
     if (archive.Lock(balanceBin, modeWriteCreate, LOCK_NOWAIT)) {
-        archive << uint64_t(expC.prefundBalMap.size());
-        for (const auto& item : expC.prefundBalMap)
+        archive << uint64_t(prefundBalMap.size());
+        for (const auto& item : prefundBalMap)
             archive << item.first << item.second;
         archive.Release();
         return true;
@@ -286,7 +289,7 @@ bool forEveryPrefund(PREFUNDFUNC func, void* data) {
     if (!func)
         return false;
 
-    for (auto prefund : expContext().prefundBalMap)
+    for (auto prefund : prefundBalMap)
         if (!(*func)(prefund, data))
             return false;
     return true;
@@ -294,7 +297,7 @@ bool forEveryPrefund(PREFUNDFUNC func, void* data) {
 
 //-----------------------------------------------------------------------
 wei_t prefundAt(const address_t& addr) {
-    return expC.prefundBalMap[addr];
+    return prefundBalMap[addr];
 }
 
 // typedef enum {

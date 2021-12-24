@@ -168,15 +168,14 @@ bool COptions::parseArguments(string_q& command) {
     if (!fileExists(bloomPath)) {
         LOG_INFO("Index for block zero not found. Building from prefund file.");
 
+        if (!loadNamesPrefunds())
+            return usage("Could not load names database.");
+
         // Each chain must have it's own prefund addresses. Here, we scan the prefund list
         // and add a psuedo-transaction (block: 0, txid: order-in-file) for each address.
         // Tradition has it that the prefund list is sorted by address.
         CStringArray appearances;
-        for (auto prefund : expContext().prefundBalMap) {
-            ostringstream os;
-            os << prefund.first << "\t" << padNum9(0) << "\t" << padNum5((uint32_t)appearances.size()) << endl;
-            appearances.push_back(os.str());
-        }
+        forEveryPrefund(visitPrefund, &appearances);
 
         // Write the chunk and the bloom to the binary cache
         string_q chunkPath = getIndexPath("finalized/" + chunkId + ".bin");
