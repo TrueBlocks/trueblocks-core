@@ -12,6 +12,7 @@
  *-------------------------------------------------------------------------------------------*/
 #include "options.h"
 
+extern bool visitPrefund(const PrefundItem& prefund, void* data);
 //---------------------------------------------------------------------------
 bool COptions::handle_appearances(blknum_t num, void* data) {
     CBlock block;
@@ -104,4 +105,15 @@ bool transFilter(const CTransaction* trans, void* data) {
     if (!ddosRange(trans->blockNumber))
         return false;
     return (getTraceCount(trans->hash) > 250);
+}
+
+//-----------------------------------------------------------------------
+bool visitPrefund(const PrefundItem& prefund, void* data) {
+    ostringstream os;
+
+    CStringArray* appearances = (CStringArray*)data;
+    os << prefund.first << "\t" << padNum9(0) << "\t" << padNum5((uint32_t)appearances->size()) << endl;
+    appearances->push_back(os.str());
+
+    return true;
 }

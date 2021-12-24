@@ -62,7 +62,8 @@ extern bool loadPrefundBals(void);
 extern uint64_t nNames(void);
 extern void clearNames(void);
 extern void clearPrefundBals(void);
-typedef bool (*PREFUNDFUNC)(const std::__1::pair<const qblocks::address_t, qblocks::wei_t> prefund, void* data);
+typedef std::__1::pair<const qblocks::address_t, qblocks::wei_t> PrefundItem;
+typedef bool (*PREFUNDFUNC)(const PrefundItem& prefund, void* data);
 extern bool forEveryPrefund(PREFUNDFUNC func, void* data);
 extern wei_t prefundAt(const address_t& addr);
 
