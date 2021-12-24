@@ -19,9 +19,8 @@ namespace qblocks {
 extern bool loadNamesPrefunds(void);
 extern bool loadPrefundBals(void);
 extern void clearPrefundBals(void);
-typedef pair<const address_t, wei_t> PrefundItem;
-typedef bool (*PREFUNDFUNC)(const PrefundItem& prefund, void* data);
-extern bool forEveryPrefund(PREFUNDFUNC func, void* data);
+typedef bool (*ADDRESSFUNC)(const address_t& addr, void* data);
+extern bool forEveryPrefund(ADDRESSFUNC func, void* data);
 extern wei_t prefundAt(const address_t& addr);
 
 }  // namespace qblocks

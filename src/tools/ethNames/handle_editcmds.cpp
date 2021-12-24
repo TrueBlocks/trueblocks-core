@@ -15,9 +15,8 @@
 #include "exportcontext.h"
 
 //-----------------------------------------------------------------------
-bool applyEdit(const NameItem& pair, void* data) {
+bool applyEdit(CAccountName& name, void* data) {
     COptions* opt = (COptions*)data;
-    CAccountName name = pair.second;
     if (name.address == opt->target.address) {
         if (opt->crudCommands[0] == "remove") {
             // do nothing (i.e. skip this name)

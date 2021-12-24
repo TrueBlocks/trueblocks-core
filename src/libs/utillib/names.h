@@ -15,8 +15,7 @@
 #include "conversions.h"
 
 namespace qblocks {
-typedef pair<const address_t, const CAccountName&> NameItem;
-typedef bool (*NAMEITEMFUNC)(const NameItem& acct, void* data);
-extern bool forEveryName(NAMEITEMFUNC func, void* data);
+typedef bool (*NAMEFUNC)(CAccountName& name, void* data);
+extern bool forEveryName(NAMEFUNC func, void* data);
 void addPrefundToNamesMap(CAccountName& account, uint64_t cnt);
 }  // namespace qblocks

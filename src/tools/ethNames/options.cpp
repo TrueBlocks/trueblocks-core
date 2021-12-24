@@ -423,27 +423,24 @@ bool COptions::addIfUnique(const CAccountName& item) {
 }
 
 //-----------------------------------------------------------------------
-bool addCustom(const NameItem& pair, void* data) {
+bool addCustom(CAccountName& item, void* data) {
     COptions* opts = (COptions*)data;
-    CAccountName item = pair.second;
     if (item.isCustom)
         opts->addIfUnique(item);
     return true;
 }
 
 //-----------------------------------------------------------------------
-bool addRegular(const NameItem& pair, void* data) {
+bool addRegular(CAccountName& item, void* data) {
     COptions* opts = (COptions*)data;
-    CAccountName item = pair.second;
     if (!item.isCustom && !item.isPrefund)
         opts->addIfUnique(item);
     return true;
 }
 
 //-----------------------------------------------------------------------
-bool addPrefund(const NameItem& pair, void* data) {
+bool addPrefund(CAccountName& item, void* data) {
     COptions* opts = (COptions*)data;
-    CAccountName item = pair.second;
     if (item.isPrefund)
         opts->addIfUnique(item);
     return true;

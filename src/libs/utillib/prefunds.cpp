@@ -141,12 +141,12 @@ bool loadPrefundBals(void) {
 }
 
 //-----------------------------------------------------------------------
-bool forEveryPrefund(PREFUNDFUNC func, void* data) {
+bool forEveryPrefund(ADDRESSFUNC func, void* data) {
     if (!func)
         return false;
 
     for (auto prefund : prefundBalMap)
-        if (!(*func)(prefund, data))
+        if (!(*func)(prefund.first, data))
             return false;
     return true;
 }

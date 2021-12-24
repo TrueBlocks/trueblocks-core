@@ -27,12 +27,12 @@ extern string_q getConfigPath(const string_q& part);
 static CAccountNameMap namesMap;
 
 //-----------------------------------------------------------------------
-bool forEveryName(NAMEITEMFUNC func, void* data) {
+bool forEveryName(NAMEFUNC func, void* data) {
     if (!func)
         return false;
 
     for (auto name : namesMap)
-        if (!(*func)(name, data))
+        if (!(*func)(name.second, data))
             return false;
     return true;
 }
