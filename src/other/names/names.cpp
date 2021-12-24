@@ -34,30 +34,14 @@ class NameOnDisc {
     char description[255 + 1];
     uint16_t decimals;
     uint16_t flags;
-    NameOnDisc(void) {
-        decimals = flags = 0;
+    NameOnDisc(void) : decimals(0), flags(0) {
     }
-    void fromOld(const CAccountName& nm) {
-        strncpy(tags, nm.tags.c_str(), nm.tags.length());
-        strncpy(address, nm.address.c_str(), nm.address.length());
-        strncpy(name, nm.name.c_str(), nm.name.length());
-        strncpy(symbol, nm.symbol.c_str(), nm.symbol.length());
-        strncpy(description, nm.description.c_str(), nm.description.length());
-        decimals = uint16_t(nm.decimals);
-        flags |= (nm.isCustom ? IS_CUSTOM : IS_NONE);
-        flags |= (nm.isPrefund ? IS_PREFUND : IS_NONE);
-        flags |= (nm.isContract ? IS_CONTRACT : IS_NONE);
-        flags |= (nm.isErc20 ? IS_ERC20 : IS_NONE);
-        flags |= (nm.isErc721 ? IS_ERC721 : IS_NONE);
-        flags |= (nm.isDeleted() ? IS_DELETED : IS_NONE);
-    }
-    string_q Format(void) const {
-        ostringstream os;
-        os << tags << "\t" << address << "\t" << name << "\t" << symbol << "\t" << description << "\t" << decimals
-           << "\t" << flags;
-        return os.str();
-    }
+    void fromOld(const CAccountName& nm);
+    void toOld(CAccountName& nm);
+    string_q Format(void) const;
 };
+
+//--------------------------------------------------------------------------------------------------------------------
 struct NameOnDiscHeader {
   public:
     uint64_t magic;
@@ -65,23 +49,125 @@ struct NameOnDiscHeader {
     uint64_t count;
 };
 
+//--------------------------------------------------------------------------------------------------------------------
+void NameOnDisc::fromOld(const CAccountName& nm) {
+    strncpy(tags, nm.tags.c_str(), nm.tags.length());
+    strncpy(address, nm.address.c_str(), nm.address.length());
+    strncpy(name, nm.name.c_str(), nm.name.length());
+    strncpy(symbol, nm.symbol.c_str(), nm.symbol.length());
+    strncpy(source, nm.source.c_str(), nm.source.length());
+    strncpy(description, nm.description.c_str(), nm.description.length());
+    decimals = uint16_t(nm.decimals);
+    flags |= (nm.isCustom ? IS_CUSTOM : IS_NONE);
+    flags |= (nm.isPrefund ? IS_PREFUND : IS_NONE);
+    flags |= (nm.isContract ? IS_CONTRACT : IS_NONE);
+    flags |= (nm.isErc20 ? IS_ERC20 : IS_NONE);
+    flags |= (nm.isErc721 ? IS_ERC721 : IS_NONE);
+    flags |= (nm.isDeleted() ? IS_DELETED : IS_NONE);
+}
+
+//--------------------------------------------------------------------------------------------------------------------
+void NameOnDisc::toOld(CAccountName& nm) {
+    nm.tags = tags;
+    nm.address = address;
+    nm.name = name;
+    nm.symbol = symbol;
+    nm.source = source;
+    nm.description = description;
+    nm.decimals = decimals;
+    nm.isCustom = (flags & IS_CUSTOM);
+    nm.isPrefund = (flags & IS_PREFUND);
+    nm.isContract = (flags & IS_CONTRACT);
+    nm.isErc20 = (flags & IS_ERC20);
+    nm.isErc721 = (flags & IS_ERC721);
+    nm.m_deleted = (flags & IS_DELETED);
+}
+
+//--------------------------------------------------------------------------------------------------------------------
+string_q NameOnDisc::Format(void) const {
+    ostringstream os;
+    os << tags << "\t" << address << "\t" << name << "\t" << symbol << "\t" << source << "\t";
+    os << (decimals == 0 ? "" : uint_2_Str(decimals)) << "\t" << description << "\t";
+    os << (flags & IS_PREFUND ? "true" : "false") << "\t";
+    os << (flags & IS_CUSTOM ? "true" : "false") << "\t";
+    os << (flags & IS_DELETED ? "true" : "false") << "\t";
+    os << (flags & IS_CONTRACT ? "true" : "false") << "\t";
+    os << (flags & IS_ERC20 ? "true" : "false") << "\t";
+    os << (flags & IS_ERC721 ? "true" : "false");
+    return os.str();
+}
+
+//--------------------------------------------------------------------------------------------------------------------
 map<address_t, NameOnDisc*> namePtrMap;
 CAddressNameMap names2Map;
 
-//--------------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------
+bool forEveryName1(NAMEFUNC func, void* data) {
+    if (!func)
+        return false;
+    for (auto name : names2Map)
+        if (!(*func)(name.second, data))
+            return false;
+    return true;
+}
+
+//-----------------------------------------------------------------------
+bool showName(CAccountName& name, void* data) {
+    cout << name.Format(STR_DISPLAY_ACCOUNTNAME) << endl;
+    return true;
+}
+
+typedef bool (*NAMEODFUNC)(NameOnDisc* name, void* data);
+//-----------------------------------------------------------------------
+bool showName2(NameOnDisc* name, void* data) {
+    cout << name->Format() << endl;
+    return true;
+}
+
+//-----------------------------------------------------------------------
+bool forEveryName2(NAMEODFUNC func, void* data) {
+    if (!func)
+        return false;
+    for (auto name : namePtrMap) {
+        if (!(*func)(name.second, data))
+            return false;
+    }
+    return true;
+}
+
+//-----------------------------------------------------------------------
+bool findName2(const address_t& addr, CAccountName& acct) {
+    if (names2Map[addr].address == addr) {
+        acct = names2Map[addr];
+        return true;
+    }
+    if (namePtrMap[addr]->address == addr) {
+        namePtrMap[addr]->toOld(acct);
+        names2Map[addr] = acct;
+        return true;
+    }
+    return false;
+}
+
+//-----------------------------------------------------------------------
 int main(int argc, const char* argv[]) {
     etherlib_init(quickQuitHandler);
 
 #define NTESTS 30
     if (argc < 2) {
         for (size_t x = 0; x < NTESTS; x++) {
+            // loadNames();
             CArchive archive(READING_ARCHIVE);
             if (archive.Lock(getCachePath("names/names.bin"), modeReadOnly, LOCK_NOWAIT)) {
                 archive >> names2Map;
                 archive.Release();
             }
-            for (auto item : names2Map)
-                cout << item.second.Format(STR_DISPLAY_ACCOUNTNAME) << endl;
+            forEveryName1(showName, nullptr);
+            for (size_t i = 0; i < 100; i++) {
+                CAccountName name;
+                findName("0x43c65d1234edde9c9bc638f1fb284e1eb0c7ca1d", name);
+                cout << name << endl;
+            }
             cerr << "A-" << x << endl;
         }
     } else if (argc < 3) {
@@ -106,10 +192,15 @@ int main(int argc, const char* argv[]) {
                     for (size_t i = 0; i < nRecords; i++)
                         namePtrMap[names[i].address] = &names[i];
 
-                    for (auto item : namePtrMap)
-                        cout << item.second->Format() << endl;
+                    forEveryName2(showName2, nullptr);
+                    for (size_t i = 0; i < 100; i++) {
+                        CAccountName name;
+                        findName2("0x43c65d1234edde9c9bc638f1fb284e1eb0c7ca1d", name);
+                        cout << name << endl;
+                    }
 
                     cerr << "B-" << x << endl;
+
                 } else {
                     cerr << "Got an invalid file header in names file: " << header->magic << "." << header->version
                          << "." << header->count << endl;
@@ -131,8 +222,11 @@ int main(int argc, const char* argv[]) {
             for (auto item : names2Map)
                 names[nRecords++].fromOld(item.second);
 
-            for (size_t i = 0; i < nRecords; i++)
-                cout << names[i].Format() << endl;
+            for (size_t i = 0; i < nRecords; i++) {
+                CAccountName nm;
+                names[i].toOld(nm);
+                cout << nm.Format(STR_DISPLAY_ACCOUNTNAME) << endl;
+            }
 
             CArchive out(WRITING_ARCHIVE);
             if (out.Lock("./out.bin", modeWriteCreate, LOCK_WAIT)) {
