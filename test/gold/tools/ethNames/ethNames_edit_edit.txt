@@ -3,7 +3,7 @@ TEST[DATE|TIME] Expand:  true
 TEST[DATE|TIME] Update:  true
 TEST[DATE|TIME] LogLevel:  10
 TEST[DATE|TIME] Format:  api
-TIME ~ CLOCK - : 4-----Loading names
+TIME ~ CLOCK - <INFO>  : Loading names
 TIME ~ CLOCK - <INFO>  : ---------------------------------------------
 TIME ~ CLOCK - <INFO>  : {
   "tags": "TAGS_CHANGED",
@@ -18,7 +18,7 @@ TIME ~ CLOCK - <INFO>  : ---------------------------------------------
 TIME ~ CLOCK - : 4-----Editing 0x0000000000000000000000000000000010101010
 TIME ~ CLOCK - : 4-----Finished sorting...
 TIME ~ CLOCK - : 4-----Finished writing...
-TIME ~ CLOCK - : 4-----Loading names
+TIME ~ CLOCK - <INFO>  : Loading names
 {"data": [
   {
     "deleted": false,

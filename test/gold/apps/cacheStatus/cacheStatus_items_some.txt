@@ -4,6 +4,7 @@ TEST[DATE|TIME] Details:  true
 TEST[DATE|TIME] Depth:  0
 TEST[DATE|TIME] FirstBlock:  3000000
 TEST[DATE|TIME] LastBlock:  3100000
+TIME ~ CLOCK - <INFO>  : Loading names
 {
   "clientVersion": "Client version",
   "clientIds": "chainId: 1 networkId: 1",

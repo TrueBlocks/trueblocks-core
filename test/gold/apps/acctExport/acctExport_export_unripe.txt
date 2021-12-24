@@ -4,6 +4,7 @@ TEST[DATE|TIME] Staging:  true
 TEST[DATE|TIME] Unripe:  true
 TEST[DATE|TIME] FirstBlock:  100000
 TEST[DATE|TIME] LastBlock:  2000000
+TIME ~ CLOCK - <INFO>  : Loading names
 
   Please choose only one of --staging or --unripe. Quitting...
 

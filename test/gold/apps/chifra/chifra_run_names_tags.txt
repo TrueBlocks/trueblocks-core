@@ -1,5 +1,6 @@
 chifra  names --tags
 TEST[DATE|TIME] Tags:  true
+TIME ~ CLOCK - <INFO>  : Loading names
 tags
 30-Contracts
 30-Contracts:Balancer
