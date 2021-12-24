@@ -13,6 +13,7 @@
 // NOTE: This file has a lot of NOLINT's in it. Because it's someone else's code, I wanted
 // to be conservitive in changing it. It's easier to hide the lint than modify the code
 
+#define LOGGING_LEVEL_TEST
 #include "exportcontext.h"
 #include "names.h"
 #include "logging.h"
@@ -116,9 +117,9 @@ static void importTabFile(CStringArray& lines) {
 
 //-----------------------------------------------------------------------
 bool loadNames(void) {
-    LOG4("Loading names");
+    LOG_TEST_STR("Loading names");
     if (namesMap.size() > 0) {
-        LOG4("Already loaded");
+        LOG_TEST_STR("Already loaded");
         return true;
     }
 

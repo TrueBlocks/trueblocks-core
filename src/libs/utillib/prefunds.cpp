@@ -13,6 +13,7 @@
 // NOTE: This file has a lot of NOLINT's in it. Because it's someone else's code, I wanted
 // to be conservitive in changing it. It's easier to hide the lint than modify the code
 
+#define LOGGING_LEVEL_TEST
 #include "exportcontext.h"
 #include "prefunds.h"
 #include "names.h"
@@ -34,9 +35,9 @@ void clearPrefundBals(void) {
 
 //-----------------------------------------------------------------------
 bool loadNamesPrefunds(void) {
-    LOG4("Loading prefunds accounts");
+    LOG_TEST_STR("Loading prefunds accounts");
     if (prefundBalMap.size() > 0) {
-        LOG4("Already loaded");
+        LOG_TEST_STR("Already loaded");
         return true;
     }
 
@@ -90,9 +91,9 @@ bool loadNamesPrefunds(void) {
 
 //-----------------------------------------------------------------------
 bool loadPrefundBals(void) {
-    LOG4("Loading prefund balances");
+    LOG_TEST_STR("Loading prefund balances");
     if (prefundBalMap.size() > 0) {
-        LOG4("Already loaded");
+        LOG_TEST_STR("Already loaded");
         return true;
     }
 

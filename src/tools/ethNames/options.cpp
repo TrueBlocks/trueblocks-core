@@ -166,8 +166,8 @@ bool COptions::parseArguments(string_q& command) {
     if (Mocked((tags ? "tags" : collections ? "collections" : "names")))
         return false;
 
+    clearNames();
     if (prefund) {
-        clearNames();
         clearPrefundBals();
         if (!loadNamesPrefunds())
             return usage("Could not load names database.");
