@@ -32,6 +32,7 @@ static const COption params[] = {
 };
 static const size_t nParams = sizeof(params) / sizeof(COption);
 
+extern bool visitPrefund(const std::__1::pair<const qblocks::address_t, qblocks::wei_t> prefund, void* data);
 //---------------------------------------------------------------------------------------------------
 bool COptions::parseArguments(string_q& command) {
     ENTER("parseArguments");
@@ -242,4 +243,15 @@ COptions::COptions(void) {
 
 //--------------------------------------------------------------------------------
 COptions::~COptions(void) {
+}
+
+//-----------------------------------------------------------------------
+bool visitPrefund(const std::__1::pair<const qblocks::address_t, qblocks::wei_t> prefund, void* data) {
+    ostringstream os;
+
+    CStringArray* appearances = (CStringArray*)data;
+    os << prefund.first << "\t" << padNum9(0) << "\t" << padNum5((uint32_t)appearances->size()) << endl;
+    appearances->push_back(os.str());
+
+    return true;
 }

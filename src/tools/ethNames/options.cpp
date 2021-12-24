@@ -169,8 +169,8 @@ bool COptions::parseArguments(string_q& command) {
         return false;
 
     if (prefund) {
-        expContext().namesMap.clear();
-        expContext().prefundBalMap.clear();
+        clearNames();
+        clearPrefundBals();
         if (!loadNamesPrefunds())
             return usage("Could not load names database.");
     } else {

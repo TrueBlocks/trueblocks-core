@@ -75,6 +75,21 @@ bool findToken(const address_t& addr, CAccountName& acct) {
 }
 
 //-----------------------------------------------------------------------
+uint64_t nNames(void) {
+    return expC.namesMap.size();
+}
+
+//-----------------------------------------------------------------------
+void clearNames(void) {
+    expC.namesMap.clear();
+}
+
+//-----------------------------------------------------------------------
+void clearPrefundBals(void) {
+    expC.prefundBalMap.clear();
+}
+
+//-----------------------------------------------------------------------
 static void addToMapPrefunds(CAccountName& account, uint64_t cnt) {
     // If it's already there, don't alter it or add it to the map
     if (expC.namesMap[account.address].address == account.address)
@@ -264,6 +279,17 @@ bool loadPrefundBals(void) {
 
     LOG_WARN("Could not lock prefund cache at: ", balanceBin);
     return false;
+}
+
+//-----------------------------------------------------------------------
+bool forEveryPrefund(PREFUNDFUNC func, void* data) {
+    if (!func)
+        return false;
+
+    for (auto prefund : expContext().prefundBalMap)
+        if (!(*func)(prefund, data))
+            return false;
+    return true;
 }
 
 //-----------------------------------------------------------------------
