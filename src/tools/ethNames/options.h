@@ -55,5 +55,8 @@ class COptions : public CAbiOptions {
 
     bool finishClean(CAccountName& name);
     bool cleanNames(const string_q& sourceIn, const string_q& destIn);
+
+    CAccountNameArray outArray;
+    void pushToOutput(const CAccountName& name, bool to_custom);
     bool handle_editcmds(CStringArray& terms, bool to_custom, bool autoname);
 };

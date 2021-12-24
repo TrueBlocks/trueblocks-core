@@ -23,7 +23,7 @@ bool applyEdit(const NameItem& pair, void* data) {
     return true;
 }
 
-void pushToOutput(CAccountNameArray& out, const CAccountName& name, bool to_custom);
+void pushToOutput(const CAccountName& name, bool to_custom);
 //-----------------------------------------------------------------------
 bool COptions::handle_editcmds(CStringArray& teeerms, bool to_custom, bool autoname) {
     string_q crud = crudCommands[0];
@@ -55,7 +55,8 @@ bool COptions::handle_editcmds(CStringArray& teeerms, bool to_custom, bool auton
     CStringArray fields;
     explode(fields, fmt, '\t');
 
-    CAccountNameArray outArray;
+    // CAccountNameArray outArray;
+    outArray.clear();
     outArray.reserve(nNames() + 2);
 
     bool edited = false;
@@ -67,27 +68,27 @@ bool COptions::handle_editcmds(CStringArray& teeerms, bool to_custom, bool auton
                 LOG4("Removing ", name.address);
             } else if (crud == "delete") {
                 name.m_deleted = true;
-                pushToOutput(outArray, name, to_custom);
+                pushToOutput(name, to_custom);
                 LOG4("Deleting ", name.address);
             } else if (crud == "undelete") {
                 name.m_deleted = false;
-                pushToOutput(outArray, name, to_custom);
+                pushToOutput(name, to_custom);
                 LOG4("Undeleting ", name.address);
             } else {
                 name = target;
-                pushToOutput(outArray, name, to_custom);
+                pushToOutput(name, to_custom);
                 LOG4("Editing ", name.address);
                 teeerms.clear();
                 teeerms.push_back(target.address);  // we only need the address for the search
             }
             edited = true;
         } else {
-            pushToOutput(outArray, name, to_custom);
+            pushToOutput(name, to_custom);
         }
     }
 
     if (crud == "create" && !edited) {
-        pushToOutput(outArray, target, to_custom);
+        pushToOutput(target, to_custom);
         LOG4("Creating ", target.address);
         teeerms.clear();
         teeerms.push_back(target.address);  // we only need the address for the search
@@ -135,7 +136,7 @@ bool COptions::handle_editcmds(CStringArray& teeerms, bool to_custom, bool auton
 }
 
 //-----------------------------------------------------------------------
-void pushToOutput(CAccountNameArray& outArray, const CAccountName& item, bool to_custom) {
+void COptions::pushToOutput(const CAccountName& item, bool to_custom) {
     if (to_custom && !item.isCustom)
         return;
     if (!to_custom && item.isCustom)
