@@ -41,7 +41,6 @@ class CExportContext {
     size_t tsCnt;
     format_t exportFmt;
     CNameValueMap fmtMap;
-    CAddressNameMap namesMap;
 
   public:
     CExportContext(void);

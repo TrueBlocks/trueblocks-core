@@ -17,24 +17,45 @@
 //-----------------------------------------------------------------------
 bool applyEdit(const NameItem& pair, void* data) {
     COptions* opt = (COptions*)data;
-    CAccountName item = pair.second;
-    if (item.isPrefund)
-        opt->addIfUnique(item);
+    CAccountName name = pair.second;
+    if (name.address == opt->target.address) {
+        if (opt->crudCommands[0] == "remove") {
+            // do nothing (i.e. skip this name)
+            LOG4("Removing ", name.address);
+        } else if (opt->crudCommands[0] == "delete") {
+            LOG4("Deleting ", name.address);
+            name.m_deleted = true;
+            opt->pushToOutput(name, opt->to_custom);
+
+        } else if (opt->crudCommands[0] == "undelete") {
+            LOG4("Undeleting ", name.address);
+            name.m_deleted = false;
+            opt->pushToOutput(name, opt->to_custom);
+
+        } else {
+            LOG4("Editing ", name.address);
+            name = opt->target;
+            opt->pushToOutput(name, opt->to_custom);
+            opt->terms.clear();
+            opt->terms.push_back(opt->target.address);  // we only need the address for the search
+        }
+        opt->wasEdited = true;
+    } else {
+        opt->pushToOutput(name, opt->to_custom);
+    }
     return true;
 }
 
-void pushToOutput(const CAccountName& name, bool to_custom);
 //-----------------------------------------------------------------------
-bool COptions::handle_editcmds(CStringArray& teeerms, bool to_custom, bool autoname) {
+bool COptions::handle_editcmds(bool autoname) {
     string_q crud = crudCommands[0];
     if (!contains("create|update|delete|undelete|remove", crud))
         return usage("Invalid edit command '" + crud + "'.");
 
-    CAccountName target;
     target.address = toLower(trim(getEnvStr("TB_NAME_ADDRESS"), '\"'));
     ASSERT(!teeerms.empty());
     if (target.address.empty())
-        target.address = teeerms[0];
+        target.address = terms[0];
     target.name = trim(getEnvStr("TB_NAME_NAME"), '\"');
     target.tags = trim(getEnvStr("TB_NAME_TAG"), '\"');
     target.source = trim(getEnvStr("TB_NAME_SOURCE"), '\"');
@@ -58,40 +79,13 @@ bool COptions::handle_editcmds(CStringArray& teeerms, bool to_custom, bool auton
     // CAccountNameArray outArray;
     outArray.clear();
     outArray.reserve(nNames() + 2);
+    forEveryName(applyEdit, this);
 
-    bool edited = false;
-    for (auto mapItem : expContext().namesMap) {
-        CAccountName name = mapItem.second;
-        if (name.address == target.address) {
-            if (crud == "remove") {
-                // do nothing (i.e. skip this name)
-                LOG4("Removing ", name.address);
-            } else if (crud == "delete") {
-                name.m_deleted = true;
-                pushToOutput(name, to_custom);
-                LOG4("Deleting ", name.address);
-            } else if (crud == "undelete") {
-                name.m_deleted = false;
-                pushToOutput(name, to_custom);
-                LOG4("Undeleting ", name.address);
-            } else {
-                name = target;
-                pushToOutput(name, to_custom);
-                LOG4("Editing ", name.address);
-                teeerms.clear();
-                teeerms.push_back(target.address);  // we only need the address for the search
-            }
-            edited = true;
-        } else {
-            pushToOutput(name, to_custom);
-        }
-    }
-
-    if (crud == "create" && !edited) {
+    if (crudCommands[0] == "create" && !wasEdited) {
         pushToOutput(target, to_custom);
         LOG4("Creating ", target.address);
-        teeerms.clear();
-        teeerms.push_back(target.address);  // we only need the address for the search
+        terms.clear();
+        terms.push_back(target.address);  // we only need the address for the search
     }
 
     sort(outArray.begin(), outArray.end());

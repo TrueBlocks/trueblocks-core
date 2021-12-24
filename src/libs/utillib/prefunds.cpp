@@ -15,6 +15,7 @@
 
 #include "exportcontext.h"
 #include "prefunds.h"
+#include "names.h"
 #include "logging.h"
 
 namespace qblocks {
@@ -29,31 +30,6 @@ static CAddressWeiMap prefundBalMap;
 //-----------------------------------------------------------------------
 void clearPrefundBals(void) {
     prefundBalMap.clear();
-}
-
-//-----------------------------------------------------------------------
-static void addToMapPrefunds(CAccountName& account, uint64_t cnt) {
-    // If it's already there, don't alter it or add it to the map
-    if (expContext().namesMap[account.address].address == account.address)
-        return;
-
-    address_t addr = account.address;
-    account = expContext().namesMap[addr];
-    account.address = addr;
-    account.tags = account.tags.empty() ? "80-Prefund" : account.tags;
-    account.source = account.source.empty() ? "Genesis" : account.source;
-    account.isPrefund = account.name.empty();
-
-    string_q prefundName = "Prefund_" + padNum4(cnt);
-    if (account.name.empty()) {
-        account.name = prefundName;
-    } else if (!contains(account.name, "Prefund_")) {
-        account.name += " (" + prefundName + ")";
-    } else {
-        // do nothing
-    }
-
-    expContext().namesMap[account.address] = account;
 }
 
 //-----------------------------------------------------------------------
@@ -107,7 +83,7 @@ bool loadNamesPrefunds(void) {
 
     uint64_t cnt = 0;
     for (auto prefund : prefunds)
-        addToMapPrefunds(prefund, cnt++);
+        addPrefundToNamesMap(prefund, cnt++);
 
     return true;
 }

@@ -70,7 +70,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12420,tools,Accounts,names,ethNames,addr,a,,false,false,true,true,local,switch,<boolean>,display only addresses in the results (useful for scripting)
 12430,tools,Accounts,names,ethNames,collections,s,,false,false,true,true,header,switch,<boolean>,display collections data
 12445,tools,Accounts,names,ethNames,tags,g,,false,false,true,true,header,switch,<boolean>,export the list of tags and subtags only
-12450,tools,Accounts,names,ethNames,to_custom,u,,false,false,false,false,local,switch,<boolean>,for editCmd only&#44; is the edited name a custom name or not
+12450,tools,Accounts,names,ethNames,to_custom,u,,false,false,false,false,header,switch,<boolean>,for editCmd only&#44; is the edited name a custom name or not
 12455,tools,Accounts,names,ethNames,clean,C,,false,false,false,false,local,switch,<boolean>,clean the data (addrs to lower case&#44; sort by addr)
 12456,tools,Accounts,names,ethNames,autoname,A,,false,false,false,false,local,flag,<string>,an address assumed to be a token&#44; added automatically to names database if true
 12460,tools,Accounts,names,ethNames,create,,,false,false,false,true,local,switch,<boolean>,create a new name record

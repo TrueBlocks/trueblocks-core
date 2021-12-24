@@ -18,4 +18,5 @@ namespace qblocks {
 typedef pair<const address_t, const CAccountName&> NameItem;
 typedef bool (*NAMEITEMFUNC)(const NameItem& acct, void* data);
 extern bool forEveryName(NAMEITEMFUNC func, void* data);
+void addPrefundToNamesMap(CAccountName& account, uint64_t cnt);
 }  // namespace qblocks

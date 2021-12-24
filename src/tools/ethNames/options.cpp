@@ -60,7 +60,6 @@ bool COptions::parseArguments(string_q& command) {
     bool custom = false;
     bool named = false;
     bool addr = false;
-    bool to_custom = false;
     bool clean = false;
     string_q autoname = "";
     bool create = false;
@@ -196,7 +195,7 @@ bool COptions::parseArguments(string_q& command) {
             address = terms[0];
         if (!isAddress(address) || isZeroAddr(address))
             return usage("You must provide an address to crud commands.");
-        if (!handle_editcmds(terms, to_custom, false))  // returns true on success
+        if (!handle_editcmds(false))  // returns true on success
             return false;
 
     } else if (!autoname.empty()) {
@@ -210,7 +209,7 @@ bool COptions::parseArguments(string_q& command) {
         ::setenv("TB_NAME_DECIMALS", "18", true);
         ::setenv("TB_NAME_DESCR", "", true);
         ::setenv("TB_NAME_CUSTOM", "false", true);
-        if (!handle_editcmds(terms, false, true))  // returns true on success
+        if (!handle_editcmds(true))  // returns true on success
             return false;
     }
 
@@ -329,6 +328,7 @@ void COptions::Init(void) {
     prefund = false;
     collections = false;
     tags = false;
+    to_custom = false;
     // END_CODE_INIT
 
     outArray.clear();
@@ -423,8 +423,34 @@ bool COptions::addIfUnique(const CAccountName& item) {
 }
 
 //-----------------------------------------------------------------------
+bool addCustom(const NameItem& pair, void* data) {
+    COptions* opts = (COptions*)data;
+    CAccountName item = pair.second;
+    if (item.isCustom)
+        opts->addIfUnique(item);
+    return true;
+}
+
+//-----------------------------------------------------------------------
+bool addRegular(const NameItem& pair, void* data) {
+    COptions* opts = (COptions*)data;
+    CAccountName item = pair.second;
+    if (!item.isCustom && !item.isPrefund)
+        opts->addIfUnique(item);
+    return true;
+}
+
+//-----------------------------------------------------------------------
+bool addPrefund(const NameItem& pair, void* data) {
+    COptions* opts = (COptions*)data;
+    CAccountName item = pair.second;
+    if (item.isPrefund)
+        opts->addIfUnique(item);
+    return true;
+}
+
+//-----------------------------------------------------------------------
 void COptions::applyFilter() {
-    //------------------------
     if (types & CUSTOM) {
         if (isTestMode() && !isCrudCommand()) {
             for (uint32_t i = 1; i < 5; i++) {
@@ -440,31 +466,15 @@ void COptions::applyFilter() {
                 addIfUnique(item);
             }
         } else {
-            for (auto mapItem : expContext().namesMap) {
-                CAccountName item = mapItem.second;
-                if (item.isCustom)
-                    addIfUnique(item);
-            }
+            forEveryName(addCustom, this);
         }
     }
 
-    //------------------------
-    if (types & NAMED) {
-        for (auto mapItem : expContext().namesMap) {
-            CAccountName item = mapItem.second;
-            if (!item.isCustom && !item.isPrefund)
-                addIfUnique(item);
-        }
-    }
+    if (types & NAMED)
+        forEveryName(addRegular, this);
 
-    //------------------------
-    if (types & PREFUND) {
-        for (auto mapItem : expContext().namesMap) {
-            CAccountName item = mapItem.second;
-            if (item.isPrefund)
-                addIfUnique(item);
-        }
-    }
+    if (types & PREFUND)
+        forEveryName(addPrefund, this);
 }
 
 //-----------------------------------------------------------------------
