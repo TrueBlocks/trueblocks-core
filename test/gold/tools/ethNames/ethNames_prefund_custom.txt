@@ -1,9 +1,6 @@
 chifra names  --prefund --custom
 TEST[DATE|TIME] Custom:  true
 TEST[DATE|TIME] Prefund:  true
-TIME ~ CLOCK - <INFO>  : Loading prefunds accounts
-TIME ~ CLOCK - <INFO>  : Loading names
-TIME ~ CLOCK - <INFO>  : Loading prefund balances
 tags	address	name	symbol	decimals
 81-Custom	0x0000000000000000000000000000000000000001	Account_1
 81-Custom	0x0000000000000000000000000000000000000002	Account_2	AC_2		2

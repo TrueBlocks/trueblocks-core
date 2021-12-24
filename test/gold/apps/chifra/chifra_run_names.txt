@@ -1,7 +1,6 @@
 chifra  names 50-Tokens --expand
 TEST[DATE|TIME] Terms:  [50-Tokens]
 TEST[DATE|TIME] Expand:  true
-TIME ~ CLOCK - <INFO>  : Loading names
 tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	iscontract	iserc20	iserc721
 50-Tokens:ERC721	0x0000000000001b84b1cb32787b0d64758d019317	HomeWork 🏠🛠️	HWK	On chain	18		false	false	false	true	true	true
 50-Tokens:ERC20	0x0000000000004946c0e9f43f4dee607b0ef1fa1c	Chi Gastoken by 1inch	CHI	On chain	18		false	false	false	true	true	false

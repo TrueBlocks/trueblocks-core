@@ -3,9 +3,6 @@ TEST[DATE|TIME] Addrs:  [0x05a56e2d52c817161883f50c441c3228cfe54d9f]
 TEST[DATE|TIME] Statements:  true
 TEST[DATE|TIME] MaxRecords:  15
 TEST[DATE|TIME] Format:  csv
-TIME ~ CLOCK - <INFO>  : Loading prefunds accounts
-TIME ~ CLOCK - <INFO>  : Loading names
-TIME ~ CLOCK - <INFO>  : Loading prefund balances
 "assetAddress","assetSymbol","decimals","blockNumber","transactionIndex","timestamp","prevBlock","prevBlockBal","begBal","amountIn","internalIn","selfDestructIn","minerBaseRewardIn","minerNephewRewardIn","minerTxFeeIn","minerUncleRewardIn","prefundIn","totalIn","amountOut","internalOut","selfDestructOut","gasCostOut","totalOut","totalOutLessGas","amountNet","endBal","begBZalDiff","endBalCalc","endBalDiff","reconciled","spotPrice","priceSource","reconciliationType"
 params.size: 0
 ==================================================

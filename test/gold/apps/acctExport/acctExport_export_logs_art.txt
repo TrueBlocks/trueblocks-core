@@ -5,9 +5,6 @@ TEST[DATE|TIME] Articulate:  true
 TEST[DATE|TIME] FirstBlock:  1429283
 TEST[DATE|TIME] LastBlock:  1429468
 TEST[DATE|TIME] Format:  json
-TIME ~ CLOCK - <INFO>  : Loading prefunds accounts
-TIME ~ CLOCK - <INFO>  : Loading names
-TIME ~ CLOCK - <INFO>  : Loading prefund balances
 { "data": [
 {
   "address": "0xbb9bc244d798123fde783fcc1c72d3bb8c189413",

@@ -14,7 +14,6 @@
 // to be conservitive in changing it. It's easier to hide the lint than modify the code
 
 #include "exportcontext.h"
-#include "prefunds.h"
 #include "logging.h"
 
 namespace qblocks {
@@ -25,7 +24,6 @@ extern string_q getConfigPath(const string_q& part);
 // TODO: These singletons are used throughout - it doesn't appear to have any downsides.
 // TODO: Assuming this is true, eventually we can remove this comment.
 static CExportContext expC;
-static CAddressWeiMap prefundBalMap;
 
 //---------------------------------------------------------------------------
 CExportContext& expContext(void) {
@@ -50,7 +48,6 @@ CExportContext::CExportContext(void) {
     tsCnt = 0;
     exportFmt = (isApiMode() ? API1 : TXT1);
     namesMap.clear();
-    prefundBalMap.clear();
 }
 
 //-----------------------------------------------------------------------
@@ -88,36 +85,6 @@ void clearNames(void) {
 }
 
 //-----------------------------------------------------------------------
-void clearPrefundBals(void) {
-    prefundBalMap.clear();
-}
-
-//-----------------------------------------------------------------------
-static void addToMapPrefunds(CAccountName& account, uint64_t cnt) {
-    // If it's already there, don't alter it or add it to the map
-    if (expC.namesMap[account.address].address == account.address)
-        return;
-
-    address_t addr = account.address;
-    account = expC.namesMap[addr];
-    account.address = addr;
-    account.tags = account.tags.empty() ? "80-Prefund" : account.tags;
-    account.source = account.source.empty() ? "Genesis" : account.source;
-    account.isPrefund = account.name.empty();
-
-    string_q prefundName = "Prefund_" + padNum4(cnt);
-    if (account.name.empty()) {
-        account.name = prefundName;
-    } else if (!contains(account.name, "Prefund_")) {
-        account.name += " (" + prefundName + ")";
-    } else {
-        // do nothing
-    }
-
-    expC.namesMap[account.address] = account;
-}
-
-//-----------------------------------------------------------------------
 static void importTabFile(CStringArray& lines) {
     CStringArray fields;
     for (auto line : lines) {
@@ -137,9 +104,9 @@ static void importTabFile(CStringArray& lines) {
 
 //-----------------------------------------------------------------------
 bool loadNames(void) {
-    LOG_INFO("Loading names");
+    LOG4("Loading names");
     if (expC.namesMap.size() > 0) {
-        LOG_INFO("Already loaded");
+        LOG4("Already loaded");
         return true;
     }
 
@@ -174,130 +141,6 @@ bool loadNames(void) {
     }
 
     return true;
-}
-
-//-----------------------------------------------------------------------
-bool loadNamesPrefunds(void) {
-    LOG_INFO("Loading prefunds accounts");
-    if (prefundBalMap.size() > 0) {
-        LOG_INFO("Already loaded");
-        return true;
-    }
-
-    if (!loadNames())
-        return false;
-
-    CAccountNameArray prefunds;
-
-    string_q prefundBin = getCachePath("names/names_prefunds.bin");
-    if (fileExists(prefundBin)) {
-        CArchive nameCache(READING_ARCHIVE);
-        if (nameCache.Lock(prefundBin, modeReadOnly, LOCK_NOWAIT)) {
-            nameCache >> prefunds;
-            nameCache.Release();
-        }
-    } else {
-        string_q prefundFile = getConfigPath("names/names_prefunds.tab");
-
-        CStringArray lines;
-        asciiFileToLines(prefundFile, lines);
-
-        CStringArray fields;
-        for (auto line : lines) {
-            if (fields.empty()) {
-                explode(fields, line, '\t');
-            } else {
-                if (!startsWith(line, '#') && contains(line, "0x")) {
-                    CAccountName account;
-                    account.parseText(fields, line);
-                    prefunds.push_back(account);
-                }
-            }
-        }
-
-        CArchive nameCache(WRITING_ARCHIVE);
-        if (nameCache.Lock(prefundBin, modeWriteCreate, LOCK_CREATE)) {
-            nameCache << prefunds;
-            nameCache.Release();
-        }
-    }
-
-    if (!loadPrefundBals())
-        return false;
-
-    uint64_t cnt = 0;
-    for (auto prefund : prefunds)
-        addToMapPrefunds(prefund, cnt++);
-
-    return true;
-}
-
-//-----------------------------------------------------------------------
-bool loadPrefundBals(void) {
-    LOG_INFO("Loading prefund balances");
-    if (prefundBalMap.size() > 0) {
-        LOG_INFO("Already loaded");
-        return true;
-    }
-
-    string_q balanceBin = getCachePath("names/names_prefunds_bals.bin");
-    if (fileExists(balanceBin)) {
-        CArchive archive(READING_ARCHIVE);
-        if (archive.Lock(balanceBin, modeReadOnly, LOCK_NOWAIT)) {
-            uint64_t count;
-            archive >> count;
-            for (size_t i = 0; i < count; i++) {
-                wei_t amount;
-                string_q address;
-                archive >> address >> amount;
-                prefundBalMap[address] = amount;
-            }
-            archive.Release();
-            return true;
-        }
-    }
-
-    string_q prefundFile = getConfigPath("names/names_prefunds.tab");
-
-    CStringArray lines;
-    asciiFileToLines(prefundFile, lines);
-    for (auto line : lines) {
-        if (startsWith(line, "0x")) {
-            CStringArray parts;
-            explode(parts, line, '\t');
-            string_q address = toLower(parts[0]);
-            wei_t amount = str_2_Wei(parts[1]);
-            prefundBalMap[address] = amount;
-        }
-    }
-
-    CArchive archive(WRITING_ARCHIVE);
-    if (archive.Lock(balanceBin, modeWriteCreate, LOCK_NOWAIT)) {
-        archive << uint64_t(prefundBalMap.size());
-        for (const auto& item : prefundBalMap)
-            archive << item.first << item.second;
-        archive.Release();
-        return true;
-    }
-
-    LOG_WARN("Could not lock prefund cache at: ", balanceBin);
-    return false;
-}
-
-//-----------------------------------------------------------------------
-bool forEveryPrefund(PREFUNDFUNC func, void* data) {
-    if (!func)
-        return false;
-
-    for (auto prefund : prefundBalMap)
-        if (!(*func)(prefund, data))
-            return false;
-    return true;
-}
-
-//-----------------------------------------------------------------------
-wei_t prefundAt(const address_t& addr) {
-    return prefundBalMap[addr];
 }
 
 // typedef enum {

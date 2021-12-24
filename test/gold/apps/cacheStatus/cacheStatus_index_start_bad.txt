@@ -3,7 +3,6 @@ TEST[DATE|TIME] Modes:  [index]
 TEST[DATE|TIME] Depth:  0
 TEST[DATE|TIME] FirstBlock:  1000000
 TEST[DATE|TIME] LastBlock:  2500000
-TIME ~ CLOCK - <INFO>  : Loading names
 {
   "clientVersion": "Client version",
   "clientIds": "chainId: 1 networkId: 1",

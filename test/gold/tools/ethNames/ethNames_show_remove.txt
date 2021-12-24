@@ -3,5 +3,5 @@ TEST[DATE|TIME] Terms:  [0x0000000000000000000000000000000010101010]
 TEST[DATE|TIME] Expand:  true
 TEST[DATE|TIME] LogLevel:  10
 TEST[DATE|TIME] Format:  api
-TIME ~ CLOCK - <INFO>  : Loading names
+TIME ~ CLOCK - : 4-----Loading names
 { "data": [ ], "meta": {"unripe": "0xdeadbeef","ripe": "0xdeadbeef","staging": "0xdeadbeef","finalized": "0xdeadbeef","client": "0xdeadbeef", "namePath": "--" } }

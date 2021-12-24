@@ -2,7 +2,6 @@ chifra status  caches --types txs --types blocks
 TEST[DATE|TIME] Modes:  [caches]
 TEST[DATE|TIME] Types:  [txs blocks]
 TEST[DATE|TIME] Depth:  0
-TIME ~ CLOCK - <INFO>  : Loading names
 {
   "clientVersion": "Client version",
   "clientIds": "chainId: 1 networkId: 1",

@@ -3,7 +3,6 @@ TEST[DATE|TIME] Modes:  [caches]
 TEST[DATE|TIME] Details:  true
 TEST[DATE|TIME] Types:  [txs]
 TEST[DATE|TIME] Depth:  3
-TIME ~ CLOCK - <INFO>  : Loading names
 {
   "clientVersion": "Client version",
   "clientIds": "chainId: 1 networkId: 1",

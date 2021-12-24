@@ -2,7 +2,6 @@ chifra status  --details monitors
 TEST[DATE|TIME] Modes:  [monitors]
 TEST[DATE|TIME] Details:  true
 TEST[DATE|TIME] Depth:  0
-TIME ~ CLOCK - <INFO>  : Loading names
 {
   "clientVersion": "Client version",
   "clientIds": "chainId: 1 networkId: 1",

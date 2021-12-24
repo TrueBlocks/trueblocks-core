@@ -4,9 +4,6 @@ TEST[DATE|TIME] Staging:  true
 TEST[DATE|TIME] Unripe:  true
 TEST[DATE|TIME] FirstBlock:  100000
 TEST[DATE|TIME] LastBlock:  2000000
-TIME ~ CLOCK - <INFO>  : Loading prefunds accounts
-TIME ~ CLOCK - <INFO>  : Loading names
-TIME ~ CLOCK - <INFO>  : Loading prefund balances
 
   Please choose only one of --staging or --unripe. Quitting...
 
