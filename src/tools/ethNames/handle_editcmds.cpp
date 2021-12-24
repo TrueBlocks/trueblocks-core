@@ -15,25 +15,26 @@
 #include "exportcontext.h"
 
 //-----------------------------------------------------------------------
-void pushToOutput(CAccountNameArray& out, const CAccountName& name, bool to_custom) {
-    if (to_custom && !name.isCustom)
-        return;
-    if (!to_custom && name.isCustom)
-        return;
-    out.push_back(name);
+bool applyEdit(const NameItem& pair, void* data) {
+    COptions* opt = (COptions*)data;
+    CAccountName item = pair.second;
+    if (item.isPrefund)
+        opt->addIfUnique(item);
+    return true;
 }
 
+void pushToOutput(CAccountNameArray& out, const CAccountName& name, bool to_custom);
 //-----------------------------------------------------------------------
-bool COptions::handle_editcmds(CStringArray& terms, bool to_custom, bool autoname) {
+bool COptions::handle_editcmds(CStringArray& teeerms, bool to_custom, bool autoname) {
     string_q crud = crudCommands[0];
     if (!contains("create|update|delete|undelete|remove", crud))
         return usage("Invalid edit command '" + crud + "'.");
 
     CAccountName target;
     target.address = toLower(trim(getEnvStr("TB_NAME_ADDRESS"), '\"'));
-    ASSERT(!terms.empty());
+    ASSERT(!teeerms.empty());
     if (target.address.empty())
-        target.address = terms[0];
+        target.address = teeerms[0];
     target.name = trim(getEnvStr("TB_NAME_NAME"), '\"');
     target.tags = trim(getEnvStr("TB_NAME_TAG"), '\"');
     target.source = trim(getEnvStr("TB_NAME_SOURCE"), '\"');
@@ -76,8 +77,8 @@ bool COptions::handle_editcmds(CStringArray& terms, bool to_custom, bool autonam
                 name = target;
                 pushToOutput(outArray, name, to_custom);
                 LOG4("Editing ", name.address);
-                terms.clear();
-                terms.push_back(target.address);  // we only need the address for the search
+                teeerms.clear();
+                teeerms.push_back(target.address);  // we only need the address for the search
             }
             edited = true;
         } else {
@@ -88,8 +89,8 @@ bool COptions::handle_editcmds(CStringArray& terms, bool to_custom, bool autonam
     if (crud == "create" && !edited) {
         pushToOutput(outArray, target, to_custom);
         LOG4("Creating ", target.address);
-        terms.clear();
-        terms.push_back(target.address);  // we only need the address for the search
+        teeerms.clear();
+        teeerms.push_back(target.address);  // we only need the address for the search
     }
 
     sort(outArray.begin(), outArray.end());
@@ -131,4 +132,13 @@ bool COptions::handle_editcmds(CStringArray& terms, bool to_custom, bool autonam
     }
 
     return true;
+}
+
+//-----------------------------------------------------------------------
+void pushToOutput(CAccountNameArray& outArray, const CAccountName& item, bool to_custom) {
+    if (to_custom && !item.isCustom)
+        return;
+    if (!to_custom && item.isCustom)
+        return;
+    outArray.push_back(item);
 }

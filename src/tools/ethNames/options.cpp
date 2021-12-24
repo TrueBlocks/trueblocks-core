@@ -55,7 +55,6 @@ bool COptions::parseArguments(string_q& command) {
     replaceAll(command, "--delete", "--deleteMe");
 
     // BEG_CODE_LOCAL_INIT
-    CStringArray terms;
     bool expand = false;
     bool all = false;
     bool custom = false;
@@ -332,6 +331,7 @@ void COptions::Init(void) {
     tags = false;
     // END_CODE_INIT
 
+    terms.clear();
     items.clear();
     searches.clear();
     searchFields = getSearchFields(STR_DISPLAY_ACCOUNTNAME);

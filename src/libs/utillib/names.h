@@ -14,4 +14,8 @@
 #include "basetypes.h"
 #include "conversions.h"
 
-namespace qblocks {}  // namespace qblocks
+namespace qblocks {
+typedef pair<const address_t, const CAccountName&> NameItem;
+typedef bool (*NAMEITEMFUNC)(const NameItem& acct, void* data);
+extern bool forEveryName(NAMEITEMFUNC func, void* data);
+}  // namespace qblocks

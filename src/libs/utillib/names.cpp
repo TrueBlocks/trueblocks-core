@@ -1,4 +1,3 @@
-#pragma once
 /*-------------------------------------------------------------------------------------------
  * qblocks - fast, easily-accessible, fully-decentralized data from blockchains
  * copyright (c) 2016, 2021 TrueBlocks, LLC (http://trueblocks.io)
@@ -11,17 +10,24 @@
  * General Public License for more details. You should have received a copy of the GNU General
  * Public License along with this program. If not, see http://www.gnu.org/licenses/.
  *-------------------------------------------------------------------------------------------*/
-#include "basetypes.h"
-#include "conversions.h"
+// NOTE: This file has a lot of NOLINT's in it. Because it's someone else's code, I wanted
+// to be conservitive in changing it. It's easier to hide the lint than modify the code
+
+#include "exportcontext.h"
+#include "names.h"
+#include "logging.h"
 
 namespace qblocks {
 
-extern bool loadNamesPrefunds(void);
-extern bool loadPrefundBals(void);
-extern void clearPrefundBals(void);
-typedef pair<const address_t, wei_t> PrefundItem;
-typedef bool (*PREFUNDFUNC)(const PrefundItem& prefund, void* data);
-extern bool forEveryPrefund(PREFUNDFUNC func, void* data);
-extern wei_t prefundAt(const address_t& addr);
+//-----------------------------------------------------------------------
+bool forEveryName(NAMEITEMFUNC func, void* data) {
+    if (!func)
+        return false;
+
+    for (auto name : expContext().namesMap)
+        if (!(*func)(name, data))
+            return false;
+    return true;
+}
 
 }  // namespace qblocks

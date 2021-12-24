@@ -27,6 +27,7 @@ enum account_t { CUSTOM = (1 << 2), NAMED = (1 << 3), PREFUND = (1 << 4), ALL = 
 class COptions : public CAbiOptions {
   public:
     // BEG_CODE_DECLARE
+    CStringArray terms;
     bool match_case;
     bool prefund;
     bool collections;
@@ -50,9 +51,9 @@ class COptions : public CAbiOptions {
     bool addIfUnique(const CAccountName& item);
 
     void handle_collections(const CStringArray& terms);
-    bool handle_editcmds(CStringArray& terms, bool to_custom, bool autoname);
     bool handle_clean(void);
 
     bool finishClean(CAccountName& name);
     bool cleanNames(const string_q& sourceIn, const string_q& destIn);
+    bool handle_editcmds(CStringArray& terms, bool to_custom, bool autoname);
 };
