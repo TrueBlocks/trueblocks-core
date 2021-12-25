@@ -463,15 +463,15 @@ void COptions::applyFilter() {
                 addIfUnique(item);
             }
         } else {
-            forEveryName(oldNames, addCustom, this);
+            forEveryNameOld(addCustom, this);
         }
     }
 
     if (types & NAMED)
-        forEveryName(oldNames, addRegular, this);
+        forEveryNameOld(addRegular, this);
 
     if (types & PREFUND)
-        forEveryName(oldNames, addPrefund, this);
+        forEveryNameOld(addPrefund, this);
 }
 
 //-----------------------------------------------------------------------

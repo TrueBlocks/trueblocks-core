@@ -21,14 +21,12 @@
 namespace qblocks {
 
 //-----------------------------------------------------------------------
-extern bool forEveryName_int(NAMEFUNC func, void* data);
 extern bool loadNames_int(void);
 extern bool clearNames_int(void);
 extern bool findName_int(const address_t& addr, CAccountName& acct);
 extern bool findToken_int(const address_t& addr, CAccountName& acct);
 extern void addPrefundToNamesMap_int(CAccountName& account, uint64_t cnt);
 extern size_t nNames_int(void);
-extern bool forEveryName2025(NAMEFUNC func, void* data);
 extern bool loadNames2025(void);
 extern bool clearNames2025(void);
 extern bool findName2025(const address_t& addr, CAccountName& acct);
@@ -59,27 +57,9 @@ enum {
     IS_DELETED = (1 << 5),
 };
 
-//-----------------------------------------------------------------------
-class NameOnDisc {
-  public:
-    char tags[30 + 1];
-    char address[42 + 1];
-    char name[120 + 1];
-    char symbol[30 + 1];
-    char source[180 + 1];
-    char description[255 + 1];
-    uint16_t decimals;
-    uint16_t flags;
-    NameOnDisc(void);
-    bool disc_2_Name(CAccountName& nm) const;
-    bool name_2_Disc(const CAccountName& nm);
-    string_q Format(void) const;
-};
-
 NameOnDisc::NameOnDisc(void) : decimals(0), flags(0) {
 }
 
-typedef bool (*NAMEODFUNC)(NameOnDisc* name, void* data);
 //-----------------------------------------------------------------------
 map<address_t, NameOnDisc*> namePtrMap;
 CAddressNameMap names2025Map;
@@ -94,12 +74,6 @@ struct NameOnDiscHeader {
     uint64_t count;
 };
 
-//-----------------------------------------------------------------------
-bool forEveryName(bool old, NAMEFUNC func, void* data) {
-    if (old)
-        return forEveryName_int(func, data);
-    return forEveryName2025(func, data);
-}
 bool loadNames(bool old) {
     if (old)
         return loadNames_int();
@@ -296,7 +270,7 @@ static bool writeNamesBinary2025(void) {
 }
 
 //-----------------------------------------------------------------------
-bool forEveryName_int(NAMEFUNC func, void* data) {
+bool forEveryNameOld(NAMEFUNC func, void* data) {
     if (!func)
         return false;
 
@@ -307,7 +281,7 @@ bool forEveryName_int(NAMEFUNC func, void* data) {
 }
 
 //-----------------------------------------------------------------------
-bool forEveryName2025(NAMEFUNC funcIn, void* data) {
+bool forEveryNameNew(NAMEODFUNC funcIn, void* data) {
     NAMEODFUNC func = (NAMEODFUNC)funcIn;
     if (!func)
         return false;
@@ -331,7 +305,7 @@ size_t nNames2025(void) {
 //-----------------------------------------------------------------------
 bool loadNames_int(void) {
     LOG_TEST_STR("Loading names");
-    if (nNames(oldNames)) {
+    if (nNames_int()) {
         LOG_TEST_STR("Already loaded");
         return true;
     }
@@ -409,7 +383,7 @@ bool findName2025(const address_t& addr, CAccountName& acct) {
 //-----------------------------------------------------------------------
 bool findToken_int(const address_t& addr, CAccountName& acct) {
     CAccountName item;
-    if (findName(oldNames, addr, item)) {
+    if (findName_int(addr, item)) {
         bool t1 = contains(item.tags, "Tokens");
         bool t2 = contains(item.tags, "Contracts") && contains(item.name, "Airdrop");
         if (t1 || t2) {

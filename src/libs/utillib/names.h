@@ -17,8 +17,27 @@
 namespace qblocks {
 
 //-----------------------------------------------------------------------
+class NameOnDisc {
+  public:
+    char tags[30 + 1];
+    char address[42 + 1];
+    char name[120 + 1];
+    char symbol[30 + 1];
+    char source[180 + 1];
+    char description[255 + 1];
+    uint16_t decimals;
+    uint16_t flags;
+    NameOnDisc(void);
+    bool disc_2_Name(CAccountName& nm) const;
+    bool name_2_Disc(const CAccountName& nm);
+    string_q Format(void) const;
+};
+
+//-----------------------------------------------------------------------
 typedef bool (*NAMEFUNC)(CAccountName& name, void* data);
-extern bool forEveryName(bool old, NAMEFUNC func, void* data);
+typedef bool (*NAMEODFUNC)(NameOnDisc* name, void* data);
+extern bool forEveryNameOld(NAMEFUNC func, void* data);
+extern bool forEveryNameNew(NAMEODFUNC func, void* data);
 
 //-----------------------------------------------------------------------
 extern bool loadNames(bool old);

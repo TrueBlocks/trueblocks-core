@@ -12,25 +12,6 @@
  *-------------------------------------------------------------------------------------------*/
 #include "etherlib.h"
 
-namespace qblocks {
-//-----------------------------------------------------------------------
-class NameOnDisc {
-  public:
-    char tags[30 + 1];
-    char address[42 + 1];
-    char name[120 + 1];
-    char symbol[30 + 1];
-    char source[180 + 1];
-    char description[255 + 1];
-    uint16_t decimals;
-    uint16_t flags;
-    NameOnDisc(void);
-    bool disc_2_Name(CAccountName& nm) const;
-    bool name_2_Disc(const CAccountName& nm);
-    string_q Format(void) const;
-};
-}  // namespace qblocks
-
 #define NTESTS 20
 #define NRUNS 500
 
@@ -63,33 +44,35 @@ int main(int argc, const char* argv[]) {
 
     for (size_t x = 0; x < NTESTS; x++) {
         if (argc < 2) {
-            loadNames(true);
-            forEveryName(true, showName, nullptr);
+            oldNames = true;
+            loadNames(oldNames);
+            forEveryNameOld(showName, nullptr);
             for (size_t i = 0; i < NRUNS; i++) {
                 for (auto test : tests) {
                     CAccountName name;
-                    findName(true, test, name);
+                    findName(oldNames, test, name);
                     cout << name << endl;
-                    findToken(true, test, name);
+                    findToken(oldNames, test, name);
                     cout << name << endl;
                 }
             }
-            clearNames(true);
+            clearNames(oldNames);
             cerr << "A-" << x << endl;
 
         } else if (argc < 3) {
-            loadNames(false);
-            forEveryName(false, (NAMEFUNC)showName2025, nullptr);
+            oldNames = false;
+            loadNames(oldNames);
+            forEveryNameNew(showName2025, nullptr);
             for (size_t i = 0; i < NRUNS; i++) {
                 for (auto test : tests) {
                     CAccountName name;
-                    findName(false, test, name);
+                    findName(oldNames, test, name);
                     cout << name << endl;
-                    findToken(false, test, name);
+                    findToken(oldNames, test, name);
                     cout << name << endl;
                 }
             }
-            clearNames(false);
+            clearNames(oldNames);
             cerr << "B-" << x << endl;
         }
     }

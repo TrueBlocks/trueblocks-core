@@ -78,7 +78,7 @@ bool COptions::handle_editcmds(bool autoname) {
     // CAccountNameArray outArray;
     outArray.clear();
     outArray.reserve(nNames(oldNames) + 2);
-    forEveryName(oldNames, applyEdit, this);
+    forEveryNameOld(applyEdit, this);
 
     if (crudCommands[0] == "create" && !wasEdited) {
         pushToOutput(target, to_custom);
