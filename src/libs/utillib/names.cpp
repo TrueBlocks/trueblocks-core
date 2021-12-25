@@ -27,9 +27,12 @@ extern string_q getConfigPath(const string_q& part);
 // TODO: Assuming this is true, eventually we can remove this comment.
 static CAccountNameMap namesMap;
 
+const char* STR_BIN_LOC = "names/names.bin";
+const char* STR_BIN_LOC2 = "names/names2.bin";
+
 //-----------------------------------------------------------------------
 static bool readNamesFromBinary(void) {
-    string_q binFile = getCachePath("names/names.bin");
+    string_q binFile = getCachePath(STR_BIN_LOC);
     CArchive nameCache(READING_ARCHIVE);
     if (nameCache.Lock(binFile, modeReadOnly, LOCK_NOWAIT)) {
         nameCache >> namesMap;
@@ -66,7 +69,7 @@ bool hasName2(const address_t& addr) {
 
 //-----------------------------------------------------------------------
 static bool readNamesFromBinary2(void) {
-    string_q binFile = getCachePath("names/names2.bin");
+    string_q binFile = getCachePath(STR_BIN_LOC2);
     nRecords = (fileSize(binFile) / sizeof(NameOnDisc));  // may be one too large, but we'll adjust below
     names = new NameOnDisc[nRecords];
     memset(names, 0, sizeof(NameOnDisc) * nRecords);
@@ -98,6 +101,20 @@ static bool readNamesFromBinary2(void) {
     for (size_t i = 0; i < nRecords; i++)
         namePtrMap[names[i].address] = &names[i];
 
+    return true;
+}
+
+//-----------------------------------------------------------------------
+void clearNames(void) {
+    namesMap.clear();
+}
+
+//-----------------------------------------------------------------------
+bool clearNames2(void) {
+    if (names) {
+        delete[] names;
+        names = nullptr;
+    }
     return true;
 }
 
@@ -162,7 +179,7 @@ static bool readNamesFromAscii2(void) {
 //-----------------------------------------------------------------------
 static bool writeNamesBinary(void) {
     establishFolder(getCachePath("names/"));
-    string_q binFile = getCachePath("names/names.bin");
+    string_q binFile = getCachePath(STR_BIN_LOC);
     CArchive nameCache(WRITING_ARCHIVE);
     if (nameCache.Lock(binFile, modeWriteCreate, LOCK_CREATE)) {
         nameCache << namesMap;
@@ -174,7 +191,7 @@ static bool writeNamesBinary(void) {
 
 //-----------------------------------------------------------------------
 static bool writeNamesBinary2(void) {
-    string_q binFile = getCachePath("names/names2.bin");
+    string_q binFile = getCachePath(STR_BIN_LOC2);
     CArchive out(WRITING_ARCHIVE);
     if (out.Lock(binFile, modeWriteCreate, LOCK_WAIT)) {
         NameOnDisc fake;
@@ -264,6 +281,16 @@ bool forEveryName2(NAMEODFUNC func, void* data) {
 }
 
 //-----------------------------------------------------------------------
+size_t nNames(void) {
+    return namesMap.size();
+}
+
+//-----------------------------------------------------------------------
+size_t nNames2(void) {
+    return namePtrMap.size();
+}
+
+//-----------------------------------------------------------------------
 bool loadNames(void) {
     LOG_TEST_STR("Loading names");
     if (nNames()) {
@@ -271,7 +298,7 @@ bool loadNames(void) {
         return true;
     }
 
-    time_q binDate = fileLastModifyDate(getCachePath("names/names.bin"));
+    time_q binDate = fileLastModifyDate(getCachePath(STR_BIN_LOC));
     time_q txtDate = laterOf(fileLastModifyDate(getConfigPath("names/names.tab")),
                              fileLastModifyDate(getConfigPath("names/names_custom.tab")));
 
@@ -298,7 +325,7 @@ bool loadNames2(void) {
         return true;
     }
 
-    time_q binDate = fileLastModifyDate(getCachePath("names/names2.bin"));
+    time_q binDate = fileLastModifyDate(getCachePath(STR_BIN_LOC2));
     time_q txtDate = laterOf(fileLastModifyDate(getConfigPath("names/names.tab")),
                              fileLastModifyDate(getConfigPath("names/names_custom.tab")));
 
@@ -314,20 +341,6 @@ bool loadNames2(void) {
             return false;
     }
 
-    return true;
-}
-
-//-----------------------------------------------------------------------
-void clearNames(void) {
-    namesMap.clear();
-}
-
-//-----------------------------------------------------------------------
-bool clearNames2(void) {
-    if (names) {
-        delete[] names;
-        names = nullptr;
-    }
     return true;
 }
 
@@ -381,16 +394,6 @@ bool findToken2(const address_t& addr, CAccountName& acct) {
         }
     }
     return false;
-}
-
-//-----------------------------------------------------------------------
-size_t nNames(void) {
-    return namesMap.size();
-}
-
-//-----------------------------------------------------------------------
-size_t nNames2(void) {
-    return namePtrMap.size();
 }
 
 //-----------------------------------------------------------------------

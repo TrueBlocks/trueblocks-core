@@ -49,8 +49,8 @@ class NameOnDisc {
 typedef bool (*NAMEFUNC)(CAccountName& name, void* data);
 extern bool forEveryName(NAMEFUNC func, void* data);
 
-typedef bool (*NAMEODFUNC)(NameOnDisc* name, void* data);
-extern bool forEveryName2(NAMEODFUNC func, void* data);
+// typedef bool (*NAMEODFUNC)(NameOnDisc* name, void* data);
+// extern bool forEveryName2(NAMEODFUNC func, void* data);
 
 //-----------------------------------------------------------------------
 extern bool loadNames(void);
@@ -59,11 +59,11 @@ extern bool findName(const address_t& addr, CAccountName& acct);
 extern bool findToken(const address_t& addr, CAccountName& acct);
 extern size_t nNames(void);
 
-extern bool loadNames2(void);
-extern bool clearNames2(void);
-extern bool findName2(const address_t& addr, CAccountName& acct);
-extern bool findToken2(const address_t& addr, CAccountName& acct);
-extern size_t nNames2(void);
+// extern bool loadNames2(void);
+// extern bool clearNames2(void);
+// extern bool findName2(const address_t& addr, CAccountName& acct);
+// extern bool findToken2(const address_t& addr, CAccountName& acct);
+// extern size_t nNames2(void);
 
 extern void addPrefundToNamesMap(CAccountName& account, uint64_t cnt);
 
