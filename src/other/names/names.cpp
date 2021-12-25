@@ -12,6 +12,7 @@
  *-------------------------------------------------------------------------------------------*/
 #include "etherlib.h"
 
+namespace qblocks {
 //--------------------------------------------------------------------------------------------------------------------
 enum {
     IS_NONE = (0),
@@ -37,7 +38,7 @@ class NameOnDisc {
     NameOnDisc(void) : decimals(0), flags(0) {
     }
     void fromOld(const CAccountName& nm);
-    void toOld(CAccountName& nm);
+    void toOld(CAccountName& nm) const;
     string_q Format(void) const;
 };
 
@@ -49,6 +50,96 @@ struct NameOnDiscHeader {
     uint64_t count;
 };
 
+extern bool writeNames2(void);
+
+}  // namespace qblocks
+
+extern bool showName(CAccountName& name, void* data);
+extern bool showName2(NameOnDisc* name, void* data);
+
+uint64_t nRecords = 0;
+NameOnDisc* names = nullptr;
+
+CStringArray tests = {
+    "0x43c65d1234edde9c9bc638f1fb284e1eb0c7ca1d",
+    "0xa6a840e50bcaa50da017b91a0d86b8b2d41156ee",
+    "0x29e240cfd7946ba20895a7a02edb25c210f9f324",
+};
+
+//-----------------------------------------------------------------------
+int main(int argc, const char* argv[]) {
+    etherlib_init(quickQuitHandler);
+
+#define NTESTS 20
+#define NRUNS 500
+    if (argc < 2) {
+        for (size_t x = 0; x < NTESTS; x++) {
+            loadNames();
+            forEveryName(showName, nullptr);
+            for (size_t i = 0; i < NRUNS; i++) {
+                for (auto test : tests) {
+                    CAccountName name;
+                    findName(test, name);
+                    cout << name << endl;
+                }
+            }
+            cerr << "A-" << x << endl;
+            clearNames();
+        }
+
+    } else if (argc < 3) {
+        for (size_t x = 0; x < NTESTS; x++) {
+            loadNames2();
+            forEveryName2(showName2, nullptr);
+            for (size_t i = 0; i < NRUNS; i++) {
+                for (auto test : tests) {
+                    CAccountName name;
+                    findName2(test, name);
+                    cout << name << endl;
+                }
+            }
+            cerr << "B-" << x << endl;
+            clearNames2();
+        }
+
+    } else {
+        CAddressNameMap names2Map2;
+        CArchive archive(READING_ARCHIVE);
+        if (archive.Lock(getCachePath("names/names.bin"), modeReadOnly, LOCK_NOWAIT)) {
+            archive >> names2Map2;
+            archive.Release();
+
+            names = new NameOnDisc[names2Map2.size()];
+            memset(names, 0, sizeof(NameOnDisc) * names2Map2.size());
+            nRecords = 0;
+
+            for (auto item : names2Map2)
+                names[nRecords++].fromOld(item.second);
+
+            // for (size_t i = 0; i < nRecords; i++) {
+            //     CAccountName nm;
+            //     names[i].toOld(nm);
+            //     cout << nm.Format(STR_DISPLAY_ACCOUNTNAME) << endl;
+            // }
+
+            if (writeNames2())
+                return 1;
+
+            cerr << fileExists("./out.bin") << "\t" << fileSize("./out.bin") << "\t"
+                 << fileSize(getCachePath("names/names.bin")) << endl;
+
+            clearNames2();
+
+        } else {
+            cerr << "Could not open names.bin" << endl;
+        }
+    }
+
+    etherlib_cleanup();
+    return 1;
+}
+
+namespace qblocks {
 //--------------------------------------------------------------------------------------------------------------------
 void NameOnDisc::fromOld(const CAccountName& nm) {
     strncpy(tags, nm.tags.c_str(), nm.tags.length());
@@ -67,7 +158,7 @@ void NameOnDisc::fromOld(const CAccountName& nm) {
 }
 
 //--------------------------------------------------------------------------------------------------------------------
-void NameOnDisc::toOld(CAccountName& nm) {
+void NameOnDisc::toOld(CAccountName& nm) const {
     nm.tags = tags;
     nm.address = address;
     nm.name = name;
@@ -96,20 +187,11 @@ string_q NameOnDisc::Format(void) const {
     os << (flags & IS_ERC721 ? "true" : "false");
     return os.str();
 }
+}  // namespace qblocks
 
 //--------------------------------------------------------------------------------------------------------------------
 map<address_t, NameOnDisc*> namePtrMap;
 CAddressNameMap names2Map;
-
-//-----------------------------------------------------------------------
-bool forEveryName1(NAMEFUNC func, void* data) {
-    if (!func)
-        return false;
-    for (auto name : names2Map)
-        if (!(*func)(name.second, data))
-            return false;
-    return true;
-}
 
 //-----------------------------------------------------------------------
 bool showName(CAccountName& name, void* data) {
@@ -124,6 +206,7 @@ bool showName2(NameOnDisc* name, void* data) {
     return true;
 }
 
+namespace qblocks {
 //-----------------------------------------------------------------------
 bool forEveryName2(NAMEODFUNC func, void* data) {
     if (!func)
@@ -150,105 +233,65 @@ bool findName2(const address_t& addr, CAccountName& acct) {
 }
 
 //-----------------------------------------------------------------------
-int main(int argc, const char* argv[]) {
-    etherlib_init(quickQuitHandler);
+bool loadNames2(void) {
+    nRecords = (fileSize("./out.bin") / sizeof(NameOnDisc));  // may be one too large, but we'll adjust below
+    names = new NameOnDisc[nRecords];
+    memset(names, 0, sizeof(NameOnDisc) * nRecords);
 
-#define NTESTS 30
-    if (argc < 2) {
-        for (size_t x = 0; x < NTESTS; x++) {
-            // loadNames();
-            CArchive archive(READING_ARCHIVE);
-            if (archive.Lock(getCachePath("names/names.bin"), modeReadOnly, LOCK_NOWAIT)) {
-                archive >> names2Map;
-                archive.Release();
-            }
-            forEveryName1(showName, nullptr);
-            for (size_t i = 0; i < 100; i++) {
-                CAccountName name;
-                findName("0x43c65d1234edde9c9bc638f1fb284e1eb0c7ca1d", name);
-                cout << name << endl;
-            }
-            cerr << "A-" << x << endl;
-        }
-    } else if (argc < 3) {
-        uint64_t nRecords =
-            (fileSize("./out.bin") / sizeof(NameOnDisc));  // may be one too large, but we'll adjust below
-        NameOnDisc* names = new NameOnDisc[nRecords];
-        memset(names, 0, sizeof(NameOnDisc) * nRecords);
-
-        for (size_t x = 0; x < NTESTS; x++) {
-            NameOnDisc fake;
-            CArchive archive(READING_ARCHIVE);
-            if (archive.Lock("./out.bin", modeReadOnly, LOCK_NOWAIT)) {
-                NameOnDiscHeader* header = (NameOnDiscHeader*)&fake;
-                archive.Read(&header->magic, sizeof(uint64_t), 1);
-                archive.Seek(SEEK_SET, 0);
-                if (header->magic == 0xdeadbeef) {
-                    archive.Read(&fake, sizeof(NameOnDisc), 1);
-                    ASSERT(header.version >= getVersionNum(0, 18, 0));
-                    nRecords = header->count;
-                    archive.Read(names, sizeof(NameOnDisc), nRecords);
-                    archive.Release();
-                    for (size_t i = 0; i < nRecords; i++)
-                        namePtrMap[names[i].address] = &names[i];
-
-                    forEveryName2(showName2, nullptr);
-                    for (size_t i = 0; i < 100; i++) {
-                        CAccountName name;
-                        findName2("0x43c65d1234edde9c9bc638f1fb284e1eb0c7ca1d", name);
-                        cout << name << endl;
-                    }
-
-                    cerr << "B-" << x << endl;
-
-                } else {
-                    cerr << "Got an invalid file header in names file: " << header->magic << "." << header->version
-                         << "." << header->count << endl;
-                    archive.Release();
-                }
-            }
-        }
-
-    } else {
-        CArchive archive(READING_ARCHIVE);
-        if (archive.Lock(getCachePath("names/names.bin"), modeReadOnly, LOCK_NOWAIT)) {
-            archive >> names2Map;
-            archive.Release();
-
-            NameOnDisc* names = new NameOnDisc[names2Map.size()];
-            memset(names, 0, sizeof(NameOnDisc) * names2Map.size());
-            uint64_t nRecords = 0;
-
-            for (auto item : names2Map)
-                names[nRecords++].fromOld(item.second);
-
-            for (size_t i = 0; i < nRecords; i++) {
-                CAccountName nm;
-                names[i].toOld(nm);
-                cout << nm.Format(STR_DISPLAY_ACCOUNTNAME) << endl;
-            }
-
-            CArchive out(WRITING_ARCHIVE);
-            if (out.Lock("./out.bin", modeWriteCreate, LOCK_WAIT)) {
-                NameOnDisc fake;
-                memset(&fake, 0, sizeof(NameOnDisc) * 1);
-                NameOnDiscHeader* header = (NameOnDiscHeader*)&fake;
-                header->magic = 0xdeadbeef;
-                header->version = getVersionNum();
-                header->count = nRecords;
-                out.Write(&fake, sizeof(NameOnDisc), 1);
-                out.Write(names, sizeof(NameOnDisc), nRecords);
-                out.Release();
-            }
-
-            cerr << fileExists("./out.bin") << "\t" << fileSize("./out.bin") << "\t"
-                 << fileSize(getCachePath("names/names.bin")) << endl;
-
-        } else {
-            cerr << "Could not open names.bin" << endl;
-        }
+    NameOnDisc fake;
+    CArchive archive(READING_ARCHIVE);
+    if (!archive.Lock("./out.bin", modeReadOnly, LOCK_NOWAIT)) {
+        cerr << "Could not lock out.bin" << endl;
+        return false;
     }
 
-    etherlib_cleanup();
-    return 1;
+    NameOnDiscHeader* header = (NameOnDiscHeader*)&fake;
+    archive.Read(&header->magic, sizeof(uint64_t), 1);
+    archive.Seek(SEEK_SET, 0);
+    if (header->magic != 0xdeadbeef) {
+        cerr << "Got an invalid file header in names file: ";
+        cerr << header->magic << "." << header->version << "." << header->count;
+        cerr << endl;
+        archive.Release();
+        return false;
+    }
+
+    archive.Read(&fake, sizeof(NameOnDisc), 1);
+    ASSERT(header.version >= getVersionNum(0, 18, 0));
+    nRecords = header->count;
+    archive.Read(names, sizeof(NameOnDisc), nRecords);
+    archive.Release();
+
+    for (size_t i = 0; i < nRecords; i++)
+        namePtrMap[names[i].address] = &names[i];
+
+    return true;
 }
+
+//-----------------------------------------------------------------------
+bool clearNames2(void) {
+    if (names) {
+        delete[] names;
+        names = nullptr;
+    }
+    return true;
+}
+
+//-----------------------------------------------------------------------
+bool writeNames2(void) {
+    CArchive out(WRITING_ARCHIVE);
+    if (out.Lock("./out.bin", modeWriteCreate, LOCK_WAIT)) {
+        NameOnDisc fake;
+        memset(&fake, 0, sizeof(NameOnDisc) * 1);
+        NameOnDiscHeader* header = (NameOnDiscHeader*)&fake;
+        header->magic = 0xdeadbeef;
+        header->version = getVersionNum();
+        header->count = nRecords;
+        out.Write(&fake, sizeof(NameOnDisc), 1);
+        out.Write(names, sizeof(NameOnDisc), nRecords);
+        out.Release();
+        return true;
+    }
+    return false;
+}
+}  // namespace qblocks

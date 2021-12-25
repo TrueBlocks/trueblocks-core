@@ -15,7 +15,27 @@
 #include "conversions.h"
 
 namespace qblocks {
+
+//-----------------------------------------------------------------------
 typedef bool (*NAMEFUNC)(CAccountName& name, void* data);
 extern bool forEveryName(NAMEFUNC func, void* data);
-void addPrefundToNamesMap(CAccountName& account, uint64_t cnt);
+extern void addPrefundToNamesMap(CAccountName& account, uint64_t cnt);
+
+//-----------------------------------------------------------------------
+extern bool loadNames(void);
+extern void clearNames(void);
+extern bool findName(const address_t& addr, CAccountName& acct);
+extern bool findToken(const address_t& addr, CAccountName& acct);
+extern size_t nNames(void);
+
+//-----------------------------------------------------------------------
+extern bool loadNames2(void);
+extern bool clearNames2(void);
+extern bool findName2(const address_t& addr, CAccountName& acct);
+extern bool findToken2(const address_t& addr, CAccountName& acct);
+extern size_t nNames2(void);
+class NameOnDisc;
+typedef bool (*NAMEODFUNC)(NameOnDisc* name, void* data);
+extern bool forEveryName2(NAMEODFUNC func, void* data);
+
 }  // namespace qblocks

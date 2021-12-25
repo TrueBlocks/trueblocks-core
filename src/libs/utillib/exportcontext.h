@@ -53,13 +53,4 @@ extern void indent(void);
 extern void unindent(void);
 extern bool isJson(void);
 
-//-----------------------------------------------------------------------
-extern bool loadNames(void);
-extern uint64_t nNames(void);
-extern void clearNames(void);
-
-//-----------------------------------------------------------------------
-extern bool findName(const address_t& addr, CAccountName& acct);
-extern bool findToken(const address_t& addr, CAccountName& acct);
-
 }  // namespace qblocks

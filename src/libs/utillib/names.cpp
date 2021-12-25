@@ -88,7 +88,7 @@ bool findToken(const address_t& addr, CAccountName& acct) {
 }
 
 //-----------------------------------------------------------------------
-uint64_t nNames(void) {
+size_t nNames(void) {
     return namesMap.size();
 }
 
@@ -116,6 +116,31 @@ static void importTabFile(CStringArray& lines) {
 }
 
 //-----------------------------------------------------------------------
+bool readNames(void) {
+    string_q binFile = getCachePath("names/names.bin");
+    CArchive nameCache(READING_ARCHIVE);
+    if (nameCache.Lock(binFile, modeReadOnly, LOCK_NOWAIT)) {
+        nameCache >> namesMap;
+        nameCache.Release();
+        return true;
+    }
+    return false;
+}
+
+//-----------------------------------------------------------------------
+bool writeNames(void) {
+    establishFolder(getCachePath("names/"));
+    string_q binFile = getCachePath("names/names.bin");
+    CArchive nameCache(WRITING_ARCHIVE);
+    if (nameCache.Lock(binFile, modeWriteCreate, LOCK_CREATE)) {
+        nameCache << namesMap;
+        nameCache.Release();
+        return true;
+    }
+    return false;
+}
+
+//-----------------------------------------------------------------------
 bool loadNames(void) {
     LOG_TEST_STR("Loading names");
     if (namesMap.size() > 0) {
@@ -128,12 +153,8 @@ bool loadNames(void) {
                              fileLastModifyDate(getConfigPath("names/names_custom.tab")));
 
     if (txtDate < binDate) {
-        string_q binFile = getCachePath("names/names.bin");
-        CArchive nameCache(READING_ARCHIVE);
-        if (nameCache.Lock(binFile, modeReadOnly, LOCK_NOWAIT)) {
-            nameCache >> namesMap;
-            nameCache.Release();
-        }
+        if (!readNames())
+            return false;
 
     } else {
         CStringArray lines;
@@ -144,37 +165,11 @@ bool loadNames(void) {
         asciiFileToLines(customFile, lines);
         importTabFile(lines);
 
-        establishFolder(getCachePath("names/"));
-        string_q binFile = getCachePath("names/names.bin");
-        CArchive nameCache(WRITING_ARCHIVE);
-        if (nameCache.Lock(binFile, modeWriteCreate, LOCK_CREATE)) {
-            nameCache << namesMap;
-            nameCache.Release();
-        }
+        if (!writeNames())
+            return false;
     }
 
     return true;
 }
-
-// typedef enum {
-//     IS_CUSTOM = (1 << 0),
-//     IS_PREFUND = (1 << 1),
-//     IS_CONTRACT = (1 << 2),
-//     IS_ERC20 = (1 << 3),
-//     IS_ERC721 = (1 << 4),
-//     IS_DELETED = (1 << 5),
-// } name_vars_t;
-
-// struct NameOnDisc {
-//   public:
-//     char tags[30];
-//     char address[42];
-//     char name[120];
-//     char symbol[30];
-//     char source[180];
-//     char description[255];
-//     uint16_t decimals;
-//     uint16_t nameVars;
-// };
 
 }  // namespace qblocks
