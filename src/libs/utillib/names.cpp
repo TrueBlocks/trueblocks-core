@@ -30,18 +30,6 @@ static CAccountNameMap namesMap;
 const char* STR_BIN_LOC = "names/names.bin";
 const char* STR_BIN_LOC2 = "names/names2.bin";
 
-//-----------------------------------------------------------------------
-static bool readNamesFromBinary(void) {
-    string_q binFile = getCachePath(STR_BIN_LOC);
-    CArchive nameCache(READING_ARCHIVE);
-    if (nameCache.Lock(binFile, modeReadOnly, LOCK_NOWAIT)) {
-        nameCache >> namesMap;
-        nameCache.Release();
-        return true;
-    }
-    return false;
-}
-
 typedef bool (*NAMEODFUNC)(NameOnDisc* name, void* data);
 //-----------------------------------------------------------------------
 map<address_t, NameOnDisc*> namePtrMap;
@@ -65,6 +53,18 @@ bool hasName(const address_t& addr) {
 //-----------------------------------------------------------------------
 bool hasName2(const address_t& addr) {
     return namePtrMap[addr] != nullptr;
+}
+
+//-----------------------------------------------------------------------
+static bool readNamesFromBinary(void) {
+    string_q binFile = getCachePath(STR_BIN_LOC);
+    CArchive nameCache(READING_ARCHIVE);
+    if (nameCache.Lock(binFile, modeReadOnly, LOCK_NOWAIT)) {
+        nameCache >> namesMap;
+        nameCache.Release();
+        return true;
+    }
+    return false;
 }
 
 //-----------------------------------------------------------------------
@@ -206,56 +206,6 @@ static bool writeNamesBinary2(void) {
         return true;
     }
     return false;
-}
-
-//-----------------------------------------------------------------------
-bool NameOnDisc::name_2_Disc(const CAccountName& nm) {
-    strncpy(tags, nm.tags.c_str(), nm.tags.length());
-    strncpy(address, nm.address.c_str(), nm.address.length());
-    strncpy(name, nm.name.c_str(), nm.name.length());
-    strncpy(symbol, nm.symbol.c_str(), nm.symbol.length());
-    strncpy(source, nm.source.c_str(), nm.source.length());
-    strncpy(description, nm.description.c_str(), nm.description.length());
-    decimals = uint16_t(nm.decimals);
-    flags |= (nm.isCustom ? IS_CUSTOM : IS_NONE);
-    flags |= (nm.isPrefund ? IS_PREFUND : IS_NONE);
-    flags |= (nm.isContract ? IS_CONTRACT : IS_NONE);
-    flags |= (nm.isErc20 ? IS_ERC20 : IS_NONE);
-    flags |= (nm.isErc721 ? IS_ERC721 : IS_NONE);
-    flags |= (nm.isDeleted() ? IS_DELETED : IS_NONE);
-    return true;
-}
-
-//-----------------------------------------------------------------------
-bool NameOnDisc::disc_2_Name(CAccountName& nm) const {
-    nm.tags = tags;
-    nm.address = address;
-    nm.name = name;
-    nm.symbol = symbol;
-    nm.source = source;
-    nm.description = description;
-    nm.decimals = decimals;
-    nm.isCustom = (flags & IS_CUSTOM);
-    nm.isPrefund = (flags & IS_PREFUND);
-    nm.isContract = (flags & IS_CONTRACT);
-    nm.isErc20 = (flags & IS_ERC20);
-    nm.isErc721 = (flags & IS_ERC721);
-    nm.m_deleted = (flags & IS_DELETED);
-    return true;
-}
-
-//-----------------------------------------------------------------------
-string_q NameOnDisc::Format(void) const {
-    ostringstream os;
-    os << tags << "\t" << address << "\t" << name << "\t" << symbol << "\t" << source << "\t";
-    os << (decimals == 0 ? "" : uint_2_Str(decimals)) << "\t" << description << "\t";
-    os << (flags & IS_PREFUND ? "true" : "false") << "\t";
-    os << (flags & IS_CUSTOM ? "true" : "false") << "\t";
-    os << (flags & IS_DELETED ? "true" : "false") << "\t";
-    os << (flags & IS_CONTRACT ? "true" : "false") << "\t";
-    os << (flags & IS_ERC20 ? "true" : "false") << "\t";
-    os << (flags & IS_ERC721 ? "true" : "false");
-    return os.str();
 }
 
 //-----------------------------------------------------------------------
@@ -419,6 +369,56 @@ void addPrefundToNamesMap(CAccountName& account, uint64_t cnt) {
     }
 
     namesMap[account.address] = account;
+}
+
+//-----------------------------------------------------------------------
+bool NameOnDisc::name_2_Disc(const CAccountName& nm) {
+    strncpy(tags, nm.tags.c_str(), nm.tags.length());
+    strncpy(address, nm.address.c_str(), nm.address.length());
+    strncpy(name, nm.name.c_str(), nm.name.length());
+    strncpy(symbol, nm.symbol.c_str(), nm.symbol.length());
+    strncpy(source, nm.source.c_str(), nm.source.length());
+    strncpy(description, nm.description.c_str(), nm.description.length());
+    decimals = uint16_t(nm.decimals);
+    flags |= (nm.isCustom ? IS_CUSTOM : IS_NONE);
+    flags |= (nm.isPrefund ? IS_PREFUND : IS_NONE);
+    flags |= (nm.isContract ? IS_CONTRACT : IS_NONE);
+    flags |= (nm.isErc20 ? IS_ERC20 : IS_NONE);
+    flags |= (nm.isErc721 ? IS_ERC721 : IS_NONE);
+    flags |= (nm.isDeleted() ? IS_DELETED : IS_NONE);
+    return true;
+}
+
+//-----------------------------------------------------------------------
+bool NameOnDisc::disc_2_Name(CAccountName& nm) const {
+    nm.tags = tags;
+    nm.address = address;
+    nm.name = name;
+    nm.symbol = symbol;
+    nm.source = source;
+    nm.description = description;
+    nm.decimals = decimals;
+    nm.isCustom = (flags & IS_CUSTOM);
+    nm.isPrefund = (flags & IS_PREFUND);
+    nm.isContract = (flags & IS_CONTRACT);
+    nm.isErc20 = (flags & IS_ERC20);
+    nm.isErc721 = (flags & IS_ERC721);
+    nm.m_deleted = (flags & IS_DELETED);
+    return true;
+}
+
+//-----------------------------------------------------------------------
+string_q NameOnDisc::Format(void) const {
+    ostringstream os;
+    os << tags << "\t" << address << "\t" << name << "\t" << symbol << "\t" << source << "\t";
+    os << (decimals == 0 ? "" : uint_2_Str(decimals)) << "\t" << description << "\t";
+    os << (flags & IS_PREFUND ? "true" : "false") << "\t";
+    os << (flags & IS_CUSTOM ? "true" : "false") << "\t";
+    os << (flags & IS_DELETED ? "true" : "false") << "\t";
+    os << (flags & IS_CONTRACT ? "true" : "false") << "\t";
+    os << (flags & IS_ERC20 ? "true" : "false") << "\t";
+    os << (flags & IS_ERC721 ? "true" : "false");
+    return os.str();
 }
 
 }  // namespace qblocks
