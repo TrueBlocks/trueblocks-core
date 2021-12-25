@@ -17,9 +17,40 @@
 namespace qblocks {
 
 //-----------------------------------------------------------------------
+enum {
+    IS_NONE = (0),
+    IS_CUSTOM = (1 << 0),
+    IS_PREFUND = (1 << 1),
+    IS_CONTRACT = (1 << 2),
+    IS_ERC20 = (1 << 3),
+    IS_ERC721 = (1 << 4),
+    IS_DELETED = (1 << 5),
+};
+
+//-----------------------------------------------------------------------
+class NameOnDisc {
+  public:
+    char tags[30 + 1];
+    char address[42 + 1];
+    char name[120 + 1];
+    char symbol[30 + 1];
+    char source[180 + 1];
+    char description[255 + 1];
+    uint16_t decimals;
+    uint16_t flags;
+    NameOnDisc(void) : decimals(0), flags(0) {
+    }
+    bool disc_2_Name(CAccountName& nm) const;
+    bool name_2_Disc(const CAccountName& nm);
+    string_q Format(void) const;
+};
+
+//-----------------------------------------------------------------------
 typedef bool (*NAMEFUNC)(CAccountName& name, void* data);
 extern bool forEveryName(NAMEFUNC func, void* data);
-extern void addPrefundToNamesMap(CAccountName& account, uint64_t cnt);
+
+typedef bool (*NAMEODFUNC)(NameOnDisc* name, void* data);
+extern bool forEveryName2(NAMEODFUNC func, void* data);
 
 //-----------------------------------------------------------------------
 extern bool loadNames(void);
@@ -28,14 +59,12 @@ extern bool findName(const address_t& addr, CAccountName& acct);
 extern bool findToken(const address_t& addr, CAccountName& acct);
 extern size_t nNames(void);
 
-//-----------------------------------------------------------------------
 extern bool loadNames2(void);
 extern bool clearNames2(void);
 extern bool findName2(const address_t& addr, CAccountName& acct);
 extern bool findToken2(const address_t& addr, CAccountName& acct);
 extern size_t nNames2(void);
-class NameOnDisc;
-typedef bool (*NAMEODFUNC)(NameOnDisc* name, void* data);
-extern bool forEveryName2(NAMEODFUNC func, void* data);
+
+extern void addPrefundToNamesMap(CAccountName& account, uint64_t cnt);
 
 }  // namespace qblocks
