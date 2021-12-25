@@ -104,7 +104,7 @@ bool COptions::process_reconciliation(CTraverser* trav) {
                     if (contains(statement.assetSymbol, "reverted"))
                         statement.assetSymbol = "";
                     if (statement.assetSymbol != "ETH" && statement.assetSymbol != "WEI" &&
-                        findToken(statement.assetAddr, tokenName)) {
+                        findToken(oldNames, statement.assetAddr, tokenName)) {
                         // We always freshen these in case user has changed names database
                         statement.assetSymbol = tokenName.symbol;
                         statement.decimals = tokenName.decimals;
@@ -261,7 +261,7 @@ bool acct_PreFunc(CTraverser* trav, void* data) {
 bool COptions::token_list_from_logs(CAccountNameMap& tokenList, const CTraverser* trav) {
     for (auto log : trav->trans.receipt.logs) {
         CAccountName tokenName;
-        bool isToken = findToken(log.address, tokenName);
+        bool isToken = findToken(oldNames, log.address, tokenName);
         if (tokenName.address.empty())
             tokenName.address = log.address;
         if ((isToken || trav->trans.hasToken))

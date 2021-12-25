@@ -61,7 +61,7 @@ bool processPair(uint64_t blockNum, void* data) {
     COptions* opt = reinterpret_cast<COptions*>(data);
     opt->curToken.blockNumber = blockNum;
     opt->curToken.date = getTimestampAt(blockNum) ? ts_2_Date(getTimestampAt(blockNum)).Format(FMT_JSON) : "";
-    if ((opt->modeBits & TOK_TOTALSUPPLY) || !findName(opt->curToken.address, opt->curToken)) {
+    if ((opt->modeBits & TOK_TOTALSUPPLY) || !findName(oldNames, opt->curToken.address, opt->curToken)) {
         for (auto marker : base) {
             if (opt->modeBits & marker.bits) {
                 string_q value = getTokenState(opt->curToken.address, marker.field, opt->abi_spec, blockNum);

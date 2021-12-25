@@ -41,7 +41,7 @@ bool loadNamesPrefunds(void) {
         return true;
     }
 
-    if (!loadNames())
+    if (!loadNames(oldNames))
         return false;
 
     CAccountNameArray prefunds;
@@ -84,7 +84,7 @@ bool loadNamesPrefunds(void) {
 
     uint64_t cnt = 0;
     for (auto prefund : prefunds)
-        addPrefundToNamesMap(prefund, cnt++);
+        addPrefundToNamesMap(oldNames, prefund, cnt++);
 
     return true;
 }

@@ -12,19 +12,40 @@
  *-------------------------------------------------------------------------------------------*/
 #include "etherlib.h"
 
+namespace qblocks {
+//-----------------------------------------------------------------------
+class NameOnDisc {
+  public:
+    char tags[30 + 1];
+    char address[42 + 1];
+    char name[120 + 1];
+    char symbol[30 + 1];
+    char source[180 + 1];
+    char description[255 + 1];
+    uint16_t decimals;
+    uint16_t flags;
+    NameOnDisc(void);
+    bool disc_2_Name(CAccountName& nm) const;
+    bool name_2_Disc(const CAccountName& nm);
+    string_q Format(void) const;
+};
+}  // namespace qblocks
+
 #define NTESTS 20
 #define NRUNS 500
 
 //-----------------------------------------------------------------------
 bool showName(CAccountName& name, void* data) {
-    if (name.address == "0xf503017d7baf7fbc0fff7492b751025c6a78179b") return true;
+    if (name.address == "0xf503017d7baf7fbc0fff7492b751025c6a78179b")
+        return true;
     cout << name.Format(STR_DISPLAY_ACCOUNTNAME) << endl;
     return true;
 }
 
 //-----------------------------------------------------------------------
-bool showName2(NameOnDisc* name, void* data) {
-    if (name && string_q(name->address) == "0xf503017d7baf7fbc0fff7492b751025c6a78179b") return true;
+bool showName2025(NameOnDisc* name, void* data) {
+    if (name && string_q(name->address) == "0xf503017d7baf7fbc0fff7492b751025c6a78179b")
+        return true;
     cout << (name ? name->Format() : "") << endl;
     return true;
 }
@@ -42,34 +63,34 @@ int main(int argc, const char* argv[]) {
 
     for (size_t x = 0; x < NTESTS; x++) {
         if (argc < 2) {
-            loadNames();
-            forEveryName(showName, nullptr);
+            loadNames(true);
+            forEveryName(true, showName, nullptr);
             for (size_t i = 0; i < NRUNS; i++) {
                 for (auto test : tests) {
                     CAccountName name;
-                    findName(test, name);
+                    findName(true, test, name);
                     cout << name << endl;
-                    findToken(test, name);
+                    findToken(true, test, name);
                     cout << name << endl;
                 }
             }
+            clearNames(true);
             cerr << "A-" << x << endl;
-            clearNames();
 
         } else if (argc < 3) {
-            loadNames2();
-            forEveryName2(showName2, nullptr);
+            loadNames(false);
+            forEveryName(false, (NAMEFUNC)showName2025, nullptr);
             for (size_t i = 0; i < NRUNS; i++) {
                 for (auto test : tests) {
                     CAccountName name;
-                    findName2(test, name);
+                    findName(false, test, name);
                     cout << name << endl;
-                    findToken2(test, name);
+                    findToken(false, test, name);
                     cout << name << endl;
                 }
             }
+            clearNames(false);
             cerr << "B-" << x << endl;
-            clearNames2();
         }
     }
 

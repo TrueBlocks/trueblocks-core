@@ -166,13 +166,13 @@ bool COptions::parseArguments(string_q& command) {
     if (Mocked((tags ? "tags" : collections ? "collections" : "names")))
         return false;
 
-    clearNames();
+    clearNames(oldNames);
     if (prefund) {
         clearPrefundBals();
         if (!loadNamesPrefunds())
             return usage("Could not load names database.");
     } else {
-        if (!loadNames())
+        if (!loadNames(oldNames))
             return usage("Could not load names database.");
     }
 
@@ -463,15 +463,15 @@ void COptions::applyFilter() {
                 addIfUnique(item);
             }
         } else {
-            forEveryName(addCustom, this);
+            forEveryName(oldNames, addCustom, this);
         }
     }
 
     if (types & NAMED)
-        forEveryName(addRegular, this);
+        forEveryName(oldNames, addRegular, this);
 
     if (types & PREFUND)
-        forEveryName(addPrefund, this);
+        forEveryName(oldNames, addPrefund, this);
 }
 
 //-----------------------------------------------------------------------
