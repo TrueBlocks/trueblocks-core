@@ -154,7 +154,7 @@ static bool readNamesFromAscii2(void) {
 
     for (size_t i = 0; i < nRecords; i++)
         namePtrMap[names[i].address] = &names[i];
-    
+
     return true;
 }
 
