@@ -66,14 +66,15 @@ bool hasName2(const address_t& addr) {
 
 //-----------------------------------------------------------------------
 static bool readNamesFromBinary2(void) {
-    nRecords = (fileSize("./out.bin") / sizeof(NameOnDisc));  // may be one too large, but we'll adjust below
+    string_q binFile = getCachePath("names/names2.bin");
+    nRecords = (fileSize(binFile) / sizeof(NameOnDisc));  // may be one too large, but we'll adjust below
     names = new NameOnDisc[nRecords];
     memset(names, 0, sizeof(NameOnDisc) * nRecords);
 
     NameOnDisc fake;
     CArchive archive(READING_ARCHIVE);
-    if (!archive.Lock("./out.bin", modeReadOnly, LOCK_NOWAIT)) {
-        cerr << "Could not lock out.bin" << endl;
+    if (!archive.Lock(binFile, modeReadOnly, LOCK_NOWAIT)) {
+        cerr << "Could not lock " << binFile << endl;
         return false;
     }
 
@@ -173,8 +174,9 @@ static bool writeNamesBinary(void) {
 
 //-----------------------------------------------------------------------
 static bool writeNamesBinary2(void) {
+    string_q binFile = getCachePath("names/names2.bin");
     CArchive out(WRITING_ARCHIVE);
-    if (out.Lock("./out.bin", modeWriteCreate, LOCK_WAIT)) {
+    if (out.Lock(binFile, modeWriteCreate, LOCK_WAIT)) {
         NameOnDisc fake;
         memset(&fake, 0, sizeof(NameOnDisc) * 1);
         NameOnDiscHeader* header = (NameOnDiscHeader*)&fake;
@@ -296,7 +298,7 @@ bool loadNames2(void) {
         return true;
     }
 
-    time_q binDate = fileLastModifyDate(getCachePath("./out.bin"));
+    time_q binDate = fileLastModifyDate(getCachePath("names/names2.bin"));
     time_q txtDate = laterOf(fileLastModifyDate(getConfigPath("names/names.tab")),
                              fileLastModifyDate(getConfigPath("names/names_custom.tab")));
 

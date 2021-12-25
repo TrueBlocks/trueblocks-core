@@ -106,7 +106,7 @@ bool COptions::handle_editcmds(bool autoname) {
         // We don't want to write this 'not found on chain' fact to the database
         string_q dest = to_custom ? getConfigPath("names/names_custom.tab") : getConfigPath("names/names.tab");
         stringToAsciiFile(dest, dataStream2.str());
-        ::remove(getCachePath("names/names.bin").c_str());
+        // Bin files will get rebuilt if the ascii file changed
         LOG4("Finished writing...");
 
         string_q copyBack = getGlobalConfig("ethNames")->getConfigStr("settings", "source", "<NOTSET>");

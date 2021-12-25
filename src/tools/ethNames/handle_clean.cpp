@@ -174,8 +174,7 @@ bool COptions::handle_clean(void) {
     //        set.");
     LOG_WARN("The custom names file was NOT cleaned.", string_q(50, ' '));
 
-    // Will re-build the next time it's used
-    ::remove(getCachePath("names/names.bin").c_str());
+    // Bin files will get rebuilt if the ascii file changed
 
     return false;  // don't proceed
 }
