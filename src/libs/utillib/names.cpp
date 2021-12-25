@@ -31,6 +31,7 @@ extern bool loadNames2025(void);
 extern bool clearNames2025(void);
 extern bool findName2025(const address_t& addr, CAccountName& acct);
 extern bool findToken2025(const address_t& addr, CAccountName& acct);
+extern void addPrefundToNamesMap2025(CAccountName& account, uint64_t cnt);
 extern size_t nNames2025(void);
 
 extern string_q getConfigPath(const string_q& part);
@@ -95,7 +96,9 @@ bool findToken(bool old, const address_t& addr, CAccountName& acct) {
     return findToken2025(addr, acct);
 }
 void addPrefundToNamesMap(bool old, CAccountName& account, uint64_t cnt) {
-    return addPrefundToNamesMap_int(account, cnt);
+    if (old)
+        return addPrefundToNamesMap_int(account, cnt);
+    return addPrefundToNamesMap2025(account, cnt);
 }
 size_t nNames(bool old) {
     if (old)
@@ -274,20 +277,40 @@ bool forEveryNameOld(NAMEFUNC func, void* data) {
     if (!func)
         return false;
 
-    for (auto name : namesMap)
-        if (!(*func)(name.second, data))
-            return false;
+    if (oldNames) {
+        for (auto name : namesMap) {
+            if (!(*func)(name.second, data))
+                return false;
+        }
+    } else {
+        for (auto name : namePtrMap) {
+            CAccountName acct;
+            name.second->disc_2_Name(acct);
+            if (!(*func)(acct, data))
+                return false;
+        }
+    }
+
     return true;
 }
 
 //-----------------------------------------------------------------------
-bool forEveryNameNew(NAMEODFUNC funcIn, void* data) {
-    NAMEODFUNC func = (NAMEODFUNC)funcIn;
+bool forEveryNameNew(NAMEODFUNC func, void* data) {
     if (!func)
         return false;
-    for (auto name : namePtrMap) {
-        if (!(*func)(name.second, data))
-            return false;
+
+    if (oldNames) {
+        for (auto name : namesMap) {
+            NameOnDisc disc;
+            disc.name_2_Disc(name.second);
+            if (!(*func)(&disc, data))
+                return false;
+        }
+    } else {
+        for (auto name : namePtrMap) {
+            if (!(*func)(name.second, data))
+                return false;
+        }
     }
     return true;
 }
@@ -331,9 +354,9 @@ bool loadNames_int(void) {
 
 //-----------------------------------------------------------------------
 bool loadNames2025(void) {
-    LOG_TEST_STR("Loading names 2025");
+    LOG_TEST_STR("Loading names");
     if (nNames2025()) {
-        LOG_TEST_STR("Already loaded 2025");
+        LOG_TEST_STR("Already loaded");
         return true;
     }
 
@@ -410,8 +433,7 @@ bool findToken2025(const address_t& addr, CAccountName& acct) {
 
 //-----------------------------------------------------------------------
 void addPrefundToNamesMap_int(CAccountName& account, uint64_t cnt) {
-    // If it's already there, don't alter it or add it to the map
-    if (namesMap[account.address].address == account.address)
+    if (hasName(account.address))
         return;
 
     address_t addr = account.address;
@@ -431,6 +453,33 @@ void addPrefundToNamesMap_int(CAccountName& account, uint64_t cnt) {
     }
 
     namesMap[account.address] = account;
+}
+
+//-----------------------------------------------------------------------
+void addPrefundToNamesMap2025(CAccountName& account, uint64_t cnt) {
+    if (names2025Map[account.address].address == account.address)
+        return;
+    if (hasName2025(account.address))
+        return;
+
+    address_t addr = account.address;
+    account = namesMap[addr];
+    account.address = addr;
+    account.tags = account.tags.empty() ? "80-Prefund" : account.tags;
+    account.source = account.source.empty() ? "Genesis" : account.source;
+    account.isPrefund = account.name.empty();
+
+    string_q prefundName = "Prefund_" + padNum4(cnt);
+    if (account.name.empty()) {
+        account.name = prefundName;
+    } else if (!contains(account.name, "Prefund_")) {
+        account.name += " (" + prefundName + ")";
+    } else {
+        // do nothing
+    }
+
+    // TODO: This does not add the name to the pointer map, therefore prefunds won't be processed by forEveryName
+    names2025Map[account.address] = account;
 }
 
 //-----------------------------------------------------------------------
