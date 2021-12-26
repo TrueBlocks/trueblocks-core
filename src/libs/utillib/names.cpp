@@ -48,7 +48,7 @@ const char* STR_BIN_LOC = "names/names.bin";
 const char* STR_BIN_LOC2025 = "names/names2025.bin";
 
 //-----------------------------------------------------------------------
-bool oldNames = true;
+bool oldNames = false;
 
 //-----------------------------------------------------------------------
 enum {
