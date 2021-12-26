@@ -448,6 +448,25 @@ bool addPrefund(CAccountName& item, void* data) {
 }
 
 //-----------------------------------------------------------------------
+bool addPrefundNew(const address_t& addr, void* data) {
+    COptions* opts = (COptions*)data;
+    if (hasName(false, addr)) {
+        opts->nPrefunds++;
+        return true;
+    }
+
+    CAccountName account;
+    account.address = addr;
+    account.tags = "80-Prefund";
+    account.source = "Genesis";
+    account.isPrefund = true;
+    account.name = "Prefund_" + padNum4(opts->nPrefunds++);
+    opts->addIfUnique(account);
+
+    return true;
+}
+
+//-----------------------------------------------------------------------
 void COptions::applyFilter() {
     if (types & CUSTOM) {
         if (isTestMode() && !isCrudCommand()) {
@@ -471,8 +490,18 @@ void COptions::applyFilter() {
     if (types & NAMED)
         forEveryNameOld(addRegular, this);
 
-    if (types & PREFUND)
-        forEveryNameOld(addPrefund, this);
+    if (types & PREFUND) {
+        if (oldNames) {
+            forEveryNameOld(addPrefund, this);
+        } else {
+            if (!loadNamesPrefunds()) {
+                LOG_WARN("Could not load names database.");
+                return;
+            }
+            nPrefunds = 0;
+            forEveryPrefund(addPrefundNew, this);
+        }
+    }
 }
 
 //-----------------------------------------------------------------------

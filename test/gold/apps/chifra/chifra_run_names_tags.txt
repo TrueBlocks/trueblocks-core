@@ -1,6 +1,10 @@
 chifra  names --tags
 TEST[DATE|TIME] Tags:  true
 TIME ~ CLOCK - <INFO>  : Loading names
+TIME ~ CLOCK - <INFO>  : Loading prefunds accounts
+TIME ~ CLOCK - <INFO>  : Loading names
+TIME ~ CLOCK - <INFO>  : Already loaded
+TIME ~ CLOCK - <INFO>  : Loading prefund balances
 tags
 30-Contracts
 30-Contracts:Balancer
@@ -34,6 +38,7 @@ tags
 80-Malicious
 80-Malicious:DaoDrain
 80-Malicious:Shanghai
+80-Prefund
 81-Custom
 90-Individuals
 90-Individuals:DAO Curators

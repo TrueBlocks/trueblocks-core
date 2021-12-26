@@ -342,6 +342,8 @@ bool forEveryNameOld(NAMEFUNC func, void* data) {
         }
     } else {
         for (auto name : namePtrMap) {
+            if (!name.second)
+                continue;
             CAccountName acct;
             name.second->disc_2_Name(acct);
             if (!(*func)(acct, data))

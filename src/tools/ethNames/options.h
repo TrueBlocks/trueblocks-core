@@ -41,6 +41,7 @@ class COptions : public CAbiOptions {
     CStringArray searches;
     string_q searchFields;
     uint64_t types;
+    uint64_t nPrefunds{0};
 
     COptions(void);
     ~COptions(void);
