@@ -16,6 +16,7 @@
 #define LOGGING_LEVEL_TEST
 #include "exportcontext.h"
 #include "names.h"
+#include "prefunds.h"
 #include "logging.h"
 
 namespace qblocks {
@@ -25,14 +26,16 @@ extern bool loadNames_int(void);
 extern bool clearNames_int(void);
 extern bool findName_int(const address_t& addr, CAccountName& acct);
 extern bool findToken_int(const address_t& addr, CAccountName& acct);
-extern void addPrefundToNamesMap_int(CAccountName& account, uint64_t cnt);
+extern bool hasName_int(const address_t& addr);
 extern size_t nNames_int(void);
+extern void addPrefundToNamesMap_int(CAccountName& account, uint64_t cnt);
 extern bool loadNames2025(void);
 extern bool clearNames2025(void);
 extern bool findName2025(const address_t& addr, CAccountName& acct);
 extern bool findToken2025(const address_t& addr, CAccountName& acct);
-extern void addPrefundToNamesMap2025(CAccountName& account, uint64_t cnt);
+extern bool hasName2025(const address_t& addr);
 extern size_t nNames2025(void);
+extern void addPrefundToNamesMap2025(CAccountName& account, uint64_t cnt);
 
 extern string_q getConfigPath(const string_q& part);
 
@@ -100,6 +103,11 @@ void addPrefundToNamesMap(bool old, CAccountName& account, uint64_t cnt) {
         return addPrefundToNamesMap_int(account, cnt);
     return addPrefundToNamesMap2025(account, cnt);
 }
+bool hasName(bool old, const address_t& addr) {
+    if (old)
+        return hasName_int(addr);
+    return hasName2025(addr);
+}
 size_t nNames(bool old) {
     if (old)
         return nNames_int();
@@ -107,7 +115,7 @@ size_t nNames(bool old) {
 }
 
 //-----------------------------------------------------------------------
-bool hasName(const address_t& addr) {
+bool hasName_int(const address_t& addr) {
     return namesMap[addr].address == addr;
 }
 
@@ -167,12 +175,16 @@ static bool readNamesFromBinary2025(void) {
 
 //-----------------------------------------------------------------------
 bool clearNames_int(void) {
+    // string_q binFile = getCachePath(STR_BIN_LOC);
+    // ::remove(binFile.c_str());
     namesMap.clear();
     return true;
 }
 
 //-----------------------------------------------------------------------
 bool clearNames2025(void) {
+    // string_q binFile = getCachePath(STR_BIN_LOC2025);
+    // ::remove(binFile.c_str());
     namePtrMap.clear();
     names2025Map.clear();
     if (names) {
@@ -181,6 +193,28 @@ bool clearNames2025(void) {
     }
     return true;
 }
+
+//-----------------------------------------------------------------------
+#if 0
+bool addPrefund_int(const address_t& addr, void* data) {
+    uint32_t count = *(uint32_t*)data;
+    *((uint32_t*)data) = count + 1;
+
+    // order matters
+    if (hasName_int(addr))
+        return true;
+
+    CAccountName account;
+    account.address = addr;
+    account.tags = "80-Prefund";
+    account.source = "Genesis";
+    account.isPrefund = true;
+    account.name = "Prefund_" + padNum4(count);
+    namesMap[account.address] = account;
+
+    return true;
+}
+#endif
 
 //-----------------------------------------------------------------------
 static bool readNamesFromAscii(void) {
@@ -199,13 +233,36 @@ static bool readNamesFromAscii(void) {
             if (!startsWith(line, '#') && contains(line, "0x")) {
                 CAccountName account;
                 account.parseText(fields, line);
-                if (!hasName(account.address))
+                if (!hasName_int(account.address))
                     namesMap[account.address] = account;
             }
         }
     }
     return true;
 }
+
+#if 0
+//-----------------------------------------------------------------------
+bool addPrefund2025(const address_t& addr, void* data) {
+    uint32_t count = *(uint32_t*)data;
+    *((uint32_t*)data) = count + 1;
+
+    // order matters
+    if (hasName2025(addr))
+        return true;
+
+    NameOnDisc* nod = &names[nRecords++];
+    strcpy(nod->tags, "80-Prefund");
+    strcpy(nod->address, addr.c_str());
+    strcpy(nod->name, ("Prefund_" + padNum4(count)).c_str());
+    // strcpy(nod->symbol, "");
+    strcpy(nod->source, "Genesis");
+    // strcpy(nod->description, "");
+    nod->decimals = 0;
+    nod->flags = IS_PREFUND;
+    return true;
+}
+#endif
 
 //-----------------------------------------------------------------------
 static bool readNamesFromAscii2025(void) {
@@ -229,7 +286,8 @@ static bool readNamesFromAscii2025(void) {
             if (!startsWith(line, '#') && contains(line, "0x")) {
                 CAccountName account;
                 account.parseText(fields, line);
-                names[nRecords++].name_2_Disc(account);
+                if (!hasName2025(account.address))
+                    names[nRecords++].name_2_Disc(account);
             }
         }
     }
@@ -381,7 +439,7 @@ bool loadNames2025(void) {
 
 //-----------------------------------------------------------------------
 bool findName_int(const address_t& addr, CAccountName& acct) {
-    if (hasName(addr)) {
+    if (hasName_int(addr)) {
         acct = namesMap[addr];
         return true;
     }
@@ -433,7 +491,7 @@ bool findToken2025(const address_t& addr, CAccountName& acct) {
 
 //-----------------------------------------------------------------------
 void addPrefundToNamesMap_int(CAccountName& account, uint64_t cnt) {
-    if (hasName(account.address))
+    if (hasName_int(account.address))
         return;
 
     address_t addr = account.address;

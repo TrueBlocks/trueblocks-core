@@ -45,6 +45,7 @@ extern bool clearNames(bool old);
 extern bool findName(bool old, const address_t& addr, CAccountName& acct);
 extern bool findToken(bool old, const address_t& addr, CAccountName& acct);
 extern void addPrefundToNamesMap(bool old, CAccountName& account, uint64_t cnt);
+extern bool hasName(bool old, const address_t& addr);
 extern size_t nNames(bool old);
 extern bool oldNames;
 

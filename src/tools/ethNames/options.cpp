@@ -189,6 +189,8 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     if (isCrudCommand()) {
+        if (prefund)
+            return usage("You may not use the --prefund option when editing names.");
         abi_spec.loadAbisFromKnown(true);
         address_t address = toLower(trim(getEnvStr("TB_NAME_ADDRESS"), '\"'));
         if (address.empty() && !terms.empty())
@@ -385,9 +387,8 @@ bool COptions::addIfUnique(const CAccountName& item) {
     if (items[key].address == key) {  // it's already in the map, but we want the last in name to win
         bool empty = item.name.empty();
         bool isDifferent = items[key].name != item.name;
-        bool isOwned = startsWith(items[key].name, "Owned_");
         bool isPrefund = startsWith(items[key].name, "Prefund_");
-        if (!empty && (isDifferent || isOwned || isPrefund)) {
+        if (!empty && (isDifferent || isPrefund)) {
             items[key].name = item.name;
         }
         return false;

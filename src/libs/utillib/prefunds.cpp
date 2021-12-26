@@ -34,6 +34,66 @@ void clearPrefundBals(void) {
 }
 
 //-----------------------------------------------------------------------
+bool readPrefundBals(void) {
+    string_q balanceBin = getCachePath("names/names_prefunds_bals.bin");
+    if (!fileExists(balanceBin))
+        return false;
+
+    CArchive archive(READING_ARCHIVE);
+    if (!archive.Lock(balanceBin, modeReadOnly, LOCK_NOWAIT))
+        return false;
+
+    uint64_t count;
+    archive >> count;
+    for (size_t i = 0; i < count; i++) {
+        wei_t amount;
+        string_q address;
+        archive >> address >> amount;
+        prefundBalMap[address] = amount;
+    }
+    archive.Release();
+
+    return true;
+}
+
+//-----------------------------------------------------------------------
+bool readPrefundAscii(void) {
+    string_q prefundTab = getConfigPath("names/names_prefunds.tab");
+    if (!fileExists(prefundTab))
+        return false;
+
+    CStringArray lines;
+    asciiFileToLines(prefundTab, lines);
+    for (auto line : lines) {
+        if (startsWith(line, "0x")) {
+            CStringArray parts;
+            explode(parts, line, '\t');
+            string_q address = toLower(parts[0]);
+            wei_t amount = str_2_Wei(parts[1]);
+            prefundBalMap[address] = amount;
+        }
+    }
+    return true;
+}
+
+//-----------------------------------------------------------------------
+bool writePrefundBin(void) {
+    string_q balanceBin = getCachePath("names/names_prefunds_bals.bin");
+    CArchive archive(WRITING_ARCHIVE);
+    if (!archive.Lock(balanceBin, modeWriteCreate, LOCK_NOWAIT)) {
+        LOG_WARN("Could not lock prefund cache at: ", balanceBin);
+        return false;
+    }
+
+    archive << uint64_t(prefundBalMap.size());
+    for (const auto& item : prefundBalMap)
+        archive << item.first << item.second;
+    archive.Release();
+
+    return true;
+}
+
+//-----------------------------------------------------------------------
 bool loadNamesPrefunds(void) {
     LOG_TEST_STR("Loading prefunds accounts");
     if (prefundBalMap.size() > 0) {
@@ -88,6 +148,26 @@ bool loadNamesPrefunds(void) {
 
     return true;
 }
+
+#if 0
+//-----------------------------------------------------------------------
+bool loadPrefundBals(void) {
+    LOG_TEST_STR("Loading prefund balances");
+    if (prefundBalMap.size() > 0) {
+        LOG_TEST_STR("Already loaded");
+        return true;
+    }
+
+    if (readPrefundBals())
+        return true;
+
+    if (!readPrefundAscii())
+        return false;
+
+    return writePrefundBin();
+}
+
+#endif
 
 //-----------------------------------------------------------------------
 bool loadPrefundBals(void) {
@@ -146,6 +226,7 @@ bool forEveryPrefund(ADDRESSFUNC func, void* data) {
     if (!func)
         return false;
 
+    // loadPrefundBals();
     for (auto prefund : prefundBalMap)
         if (!(*func)(prefund.first, data))
             return false;
@@ -154,6 +235,7 @@ bool forEveryPrefund(ADDRESSFUNC func, void* data) {
 
 //-----------------------------------------------------------------------
 wei_t prefundAt(const address_t& addr) {
+    // loadPrefundBals();
     return prefundBalMap[addr];
 }
 
