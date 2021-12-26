@@ -17,7 +17,7 @@ bool COptions::handle_traversers(void) {
     CDynamicTraverser lib(load);
     if (!lib.is_valid())
         return usage("Dynamic library " + load + " was found but is not valid.");
-    if (!loadNames(oldNames))
+    if (!loadNames())
         return usage("Could not load names database.");
 
     auto libFactory = lib.get_function<CTraverser*(void)>("makeTraverser");
@@ -31,7 +31,7 @@ bool COptions::handle_traversers(void) {
         trav->dataFunc = loadTx_Func;
     trav->exportRange = exportRange;
     for (auto monitor : allMonitors) {
-        findName(oldNames, monitor.address, monitor);
+        findName(monitor.address, monitor);
         trav->monitorMap[monitor.address] = monitor;
     }
 

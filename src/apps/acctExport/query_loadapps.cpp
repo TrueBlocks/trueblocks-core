@@ -60,12 +60,12 @@ bool COptions::loadAllAppearances(void) {
         for (const CAppearance_mon& app : mon.apps) {
             if (app.blk == 0) {
                 if (!reloaded) {
-                    clearNames(oldNames);
+                    clearNames();
                     clearPrefundBals();
                     loadNamesPrefunds();
                     reloaded = true;
                 }
-                findName(oldNames, mon.address, accountedFor);
+                findName(mon.address, accountedFor);
                 accountedFor.isContract = !getCodeAt(mon.address, getMetaData().client).empty();
             }
             monTmp.push_back(app);

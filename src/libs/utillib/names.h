@@ -33,6 +33,7 @@ class NameOnDisc {
     string_q Format(void) const;
 };
 
+class NameOnDisc;
 //-----------------------------------------------------------------------
 typedef bool (*NAMEFUNC)(CAccountName& name, void* data);
 typedef bool (*NAMEODFUNC)(NameOnDisc* name, void* data);
@@ -40,13 +41,12 @@ extern bool forEveryNameOld(NAMEFUNC func, void* data);
 extern bool forEveryNameNew(NAMEODFUNC func, void* data);
 
 //-----------------------------------------------------------------------
-extern bool loadNames(bool old);
-extern bool clearNames(bool old);
-extern bool findName(bool old, const address_t& addr, CAccountName& acct);
-extern bool findToken(bool old, const address_t& addr, CAccountName& acct);
-extern void addPrefundToNamesMap(bool old, CAccountName& account, uint64_t cnt);
-extern bool hasName(bool old, const address_t& addr);
-extern size_t nNames(bool old);
-extern bool oldNames;
+extern bool loadNames(void);
+extern bool clearNames(void);
+extern bool findName(const address_t& addr, CAccountName& acct);
+extern bool findToken(const address_t& addr, CAccountName& acct);
+extern void addPrefundToNamesMap(CAccountName& account, uint64_t cnt);
+extern bool hasName(const address_t& addr);
+extern size_t nNames(void);
 
 }  // namespace qblocks

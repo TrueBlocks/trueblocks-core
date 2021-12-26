@@ -77,7 +77,7 @@ bool COptions::handle_editcmds(bool autoname) {
 
     // CAccountNameArray outArray;
     outArray.clear();
-    outArray.reserve(nNames(oldNames) + 2);
+    outArray.reserve(nNames() + 2);
     forEveryNameOld(applyEdit, this);
 
     if (crudCommands[0] == "create" && !wasEdited) {
@@ -115,13 +115,13 @@ bool COptions::handle_editcmds(bool autoname) {
         }
     }
 
-    clearNames(oldNames);
+    clearNames();
     if (prefund) {
         clearPrefundBals();
         if (!loadNamesPrefunds())
             return usage("Could not load names database.");
     } else {
-        if (!loadNames(oldNames))
+        if (!loadNames())
             return usage("Could not load names database.");
     }
 

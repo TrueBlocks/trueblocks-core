@@ -166,13 +166,11 @@ bool COptions::parseArguments(string_q& command) {
     if (Mocked((tags ? "tags" : collections ? "collections" : "names")))
         return false;
 
-    clearNames(oldNames);
     if (prefund) {
-        clearPrefundBals();
         if (!loadNamesPrefunds())
             return usage("Could not load names database.");
     } else {
-        if (!loadNames(oldNames))
+        if (!loadNames())
             return usage("Could not load names database.");
     }
 
@@ -450,7 +448,7 @@ bool addPrefund(CAccountName& item, void* data) {
 //-----------------------------------------------------------------------
 bool addPrefundNew(const address_t& addr, void* data) {
     COptions* opts = (COptions*)data;
-    if (hasName(false, addr)) {
+    if (hasName(addr)) {
         opts->nPrefunds++;
         return true;
     }
@@ -491,16 +489,12 @@ void COptions::applyFilter() {
         forEveryNameOld(addRegular, this);
 
     if (types & PREFUND) {
-        if (oldNames) {
-            forEveryNameOld(addPrefund, this);
-        } else {
-            if (!loadNamesPrefunds()) {
-                LOG_WARN("Could not load names database.");
-                return;
-            }
-            nPrefunds = 0;
-            forEveryPrefund(addPrefundNew, this);
+        if (!loadNamesPrefunds()) {
+            LOG_WARN("Could not load names database.");
+            return;
         }
+        nPrefunds = 0;
+        forEveryPrefund(addPrefundNew, this);
     }
 }
 

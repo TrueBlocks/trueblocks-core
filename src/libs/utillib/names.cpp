@@ -22,53 +22,16 @@
 namespace qblocks {
 
 //-----------------------------------------------------------------------
-extern bool loadNames_int(void);
-extern bool clearNames_int(void);
-extern bool findName_int(const address_t& addr, CAccountName& acct);
-extern bool findToken_int(const address_t& addr, CAccountName& acct);
-extern bool hasName_int(const address_t& addr);
-extern size_t nNames_int(void);
-extern void addPrefundToNamesMap_int(CAccountName& account, uint64_t cnt);
-extern bool loadNames2025(void);
-extern bool clearNames2025(void);
-extern bool findName2025(const address_t& addr, CAccountName& acct);
-extern bool findToken2025(const address_t& addr, CAccountName& acct);
-extern bool hasName2025(const address_t& addr);
-extern size_t nNames2025(void);
-extern void addPrefundToNamesMap2025(CAccountName& account, uint64_t cnt);
-
 extern string_q getConfigPath(const string_q& part);
 
 //-----------------------------------------------------------------------
 // TODO: These singletons are used throughout - it doesn't appear to have any downsides.
 // TODO: Assuming this is true, eventually we can remove this comment.
-static CAccountNameMap namesMap;
-
-const char* STR_BIN_LOC = "names/names.bin";
+static map<address_t, NameOnDisc*> namePtrMap;
+static CAddressNameMap names2025Map;
+static NameOnDisc* names = nullptr;
+static uint64_t nRecords = 0;
 const char* STR_BIN_LOC2025 = "names/names2025.bin";
-
-//-----------------------------------------------------------------------
-bool oldNames = false;
-
-//-----------------------------------------------------------------------
-enum {
-    IS_NONE = (0),
-    IS_CUSTOM = (1 << 0),
-    IS_PREFUND = (1 << 1),
-    IS_CONTRACT = (1 << 2),
-    IS_ERC20 = (1 << 3),
-    IS_ERC721 = (1 << 4),
-    IS_DELETED = (1 << 5),
-};
-
-NameOnDisc::NameOnDisc(void) : decimals(0), flags(0) {
-}
-
-//-----------------------------------------------------------------------
-map<address_t, NameOnDisc*> namePtrMap;
-CAddressNameMap names2025Map;
-uint64_t nRecords = 0;
-NameOnDisc* names = nullptr;
 
 //-----------------------------------------------------------------------
 struct NameOnDiscHeader {
@@ -78,66 +41,8 @@ struct NameOnDiscHeader {
     uint64_t count;
 };
 
-bool loadNames(bool old) {
-    if (old)
-        return loadNames_int();
-    return loadNames2025();
-}
-bool clearNames(bool old) {
-    if (old)
-        return clearNames_int();
-    return clearNames2025();
-}
-bool findName(bool old, const address_t& addr, CAccountName& acct) {
-    if (old)
-        return findName_int(addr, acct);
-    return findName2025(addr, acct);
-}
-bool findToken(bool old, const address_t& addr, CAccountName& acct) {
-    if (old)
-        return findToken_int(addr, acct);
-    return findToken2025(addr, acct);
-}
-void addPrefundToNamesMap(bool old, CAccountName& account, uint64_t cnt) {
-    if (old)
-        return addPrefundToNamesMap_int(account, cnt);
-    return addPrefundToNamesMap2025(account, cnt);
-}
-bool hasName(bool old, const address_t& addr) {
-    if (old)
-        return hasName_int(addr);
-    return hasName2025(addr);
-}
-size_t nNames(bool old) {
-    if (old)
-        return nNames_int();
-    return nNames2025();
-}
-
-//-----------------------------------------------------------------------
-bool hasName_int(const address_t& addr) {
-    return namesMap[addr].address == addr;
-}
-
-//-----------------------------------------------------------------------
-bool hasName2025(const address_t& addr) {
-    return namePtrMap[addr] != nullptr;
-}
-
 //-----------------------------------------------------------------------
 static bool readNamesFromBinary(void) {
-    string_q binFile = getCachePath(STR_BIN_LOC);
-    CArchive nameCache(READING_ARCHIVE);
-    if (nameCache.Lock(binFile, modeReadOnly, LOCK_NOWAIT)) {
-        nameCache >> namesMap;
-        nameCache.Release();
-        return true;
-    }
-    return false;
-}
-
-//-----------------------------------------------------------------------
-static bool readNamesFromBinary2025(void) {
     string_q binFile = getCachePath(STR_BIN_LOC2025);
     nRecords = (fileSize(binFile) / sizeof(NameOnDisc));  // may be one too large, but we'll adjust below
     names = new NameOnDisc[nRecords];
@@ -174,49 +79,6 @@ static bool readNamesFromBinary2025(void) {
 }
 
 //-----------------------------------------------------------------------
-bool clearNames_int(void) {
-    // string_q binFile = getCachePath(STR_BIN_LOC);
-    // ::remove(binFile.c_str());
-    namesMap.clear();
-    return true;
-}
-
-//-----------------------------------------------------------------------
-bool clearNames2025(void) {
-    // string_q binFile = getCachePath(STR_BIN_LOC2025);
-    // ::remove(binFile.c_str());
-    namePtrMap.clear();
-    names2025Map.clear();
-    if (names) {
-        delete[] names;
-        names = nullptr;
-    }
-    return true;
-}
-
-//-----------------------------------------------------------------------
-#if 0
-bool addPrefund_int(const address_t& addr, void* data) {
-    uint32_t count = *(uint32_t*)data;
-    *((uint32_t*)data) = count + 1;
-
-    // order matters
-    if (hasName_int(addr))
-        return true;
-
-    CAccountName account;
-    account.address = addr;
-    account.tags = "80-Prefund";
-    account.source = "Genesis";
-    account.isPrefund = true;
-    account.name = "Prefund_" + padNum4(count);
-    namesMap[account.address] = account;
-
-    return true;
-}
-#endif
-
-//-----------------------------------------------------------------------
 static bool readNamesFromAscii(void) {
     string_q txtFile = getConfigPath("names/names.tab");
     string_q customFile = getConfigPath("names/names_custom.tab");
@@ -225,55 +87,7 @@ static bool readNamesFromAscii(void) {
     asciiFileToLines(txtFile, lines);
     asciiFileToLines(customFile, lines);
 
-    CStringArray fields;
-    for (auto line : lines) {
-        if (fields.empty()) {
-            explode(fields, line, '\t');
-        } else {
-            if (!startsWith(line, '#') && contains(line, "0x")) {
-                CAccountName account;
-                account.parseText(fields, line);
-                if (!hasName_int(account.address))
-                    namesMap[account.address] = account;
-            }
-        }
-    }
-    return true;
-}
-
-#if 0
-//-----------------------------------------------------------------------
-bool addPrefund2025(const address_t& addr, void* data) {
-    uint32_t count = *(uint32_t*)data;
-    *((uint32_t*)data) = count + 1;
-
-    // order matters
-    if (hasName2025(addr))
-        return true;
-
-    NameOnDisc* nod = &names[nRecords++];
-    strcpy(nod->tags, "80-Prefund");
-    strcpy(nod->address, addr.c_str());
-    strcpy(nod->name, ("Prefund_" + padNum4(count)).c_str());
-    // strcpy(nod->symbol, "");
-    strcpy(nod->source, "Genesis");
-    // strcpy(nod->description, "");
-    nod->decimals = 0;
-    nod->flags = IS_PREFUND;
-    return true;
-}
-#endif
-
-//-----------------------------------------------------------------------
-static bool readNamesFromAscii2025(void) {
-    string_q txtFile = getConfigPath("names/names.tab");
-    string_q customFile = getConfigPath("names/names_custom.tab");
-
-    CStringArray lines;
-    asciiFileToLines(txtFile, lines);
-    asciiFileToLines(customFile, lines);
-
-    clearNames2025();
+    clearNames();
     names = new NameOnDisc[lines.size()];
     memset(names, 0, sizeof(NameOnDisc) * lines.size());
     nRecords = 0;
@@ -286,7 +100,7 @@ static bool readNamesFromAscii2025(void) {
             if (!startsWith(line, '#') && contains(line, "0x")) {
                 CAccountName account;
                 account.parseText(fields, line);
-                if (!hasName2025(account.address))
+                if (!hasName(account.address))
                     names[nRecords++].name_2_Disc(account);
             }
         }
@@ -300,19 +114,6 @@ static bool readNamesFromAscii2025(void) {
 
 //-----------------------------------------------------------------------
 static bool writeNamesBinary(void) {
-    establishFolder(getCachePath("names/"));
-    string_q binFile = getCachePath(STR_BIN_LOC);
-    CArchive nameCache(WRITING_ARCHIVE);
-    if (nameCache.Lock(binFile, modeWriteCreate, LOCK_CREATE)) {
-        nameCache << namesMap;
-        nameCache.Release();
-        return true;
-    }
-    return false;
-}
-
-//-----------------------------------------------------------------------
-static bool writeNamesBinary2025(void) {
     string_q binFile = getCachePath(STR_BIN_LOC2025);
     CArchive out(WRITING_ARCHIVE);
     if (out.Lock(binFile, modeWriteCreate, LOCK_WAIT)) {
@@ -331,69 +132,14 @@ static bool writeNamesBinary2025(void) {
 }
 
 //-----------------------------------------------------------------------
-bool forEveryNameOld(NAMEFUNC func, void* data) {
-    if (!func)
-        return false;
-
-    if (oldNames) {
-        for (auto name : namesMap) {
-            if (!(*func)(name.second, data))
-                return false;
-        }
-    } else {
-        for (auto name : namePtrMap) {
-            if (!name.second)
-                continue;
-            CAccountName acct;
-            name.second->disc_2_Name(acct);
-            if (!(*func)(acct, data))
-                return false;
-        }
-    }
-
-    return true;
-}
-
-//-----------------------------------------------------------------------
-bool forEveryNameNew(NAMEODFUNC func, void* data) {
-    if (!func)
-        return false;
-
-    if (oldNames) {
-        for (auto name : namesMap) {
-            NameOnDisc disc;
-            disc.name_2_Disc(name.second);
-            if (!(*func)(&disc, data))
-                return false;
-        }
-    } else {
-        for (auto name : namePtrMap) {
-            if (!(*func)(name.second, data))
-                return false;
-        }
-    }
-    return true;
-}
-
-//-----------------------------------------------------------------------
-size_t nNames_int(void) {
-    return namesMap.size();
-}
-
-//-----------------------------------------------------------------------
-size_t nNames2025(void) {
-    return namePtrMap.size();
-}
-
-//-----------------------------------------------------------------------
-bool loadNames_int(void) {
+bool loadNames(void) {
     LOG_TEST_STR("Loading names");
-    if (nNames_int()) {
+    if (nNames()) {
         LOG_TEST_STR("Already loaded");
         return true;
     }
 
-    time_q binDate = fileLastModifyDate(getCachePath(STR_BIN_LOC));
+    time_q binDate = fileLastModifyDate(getCachePath(STR_BIN_LOC2025));
     time_q txtDate = laterOf(fileLastModifyDate(getConfigPath("names/names.tab")),
                              fileLastModifyDate(getConfigPath("names/names_custom.tab")));
 
@@ -413,49 +159,23 @@ bool loadNames_int(void) {
 }
 
 //-----------------------------------------------------------------------
-bool loadNames2025(void) {
-    LOG_TEST_STR("Loading names");
-    if (nNames2025()) {
-        LOG_TEST_STR("Already loaded");
-        return true;
+bool clearNames(void) {
+    namePtrMap.clear();
+    names2025Map.clear();
+    if (names) {
+        delete[] names;
+        names = nullptr;
     }
-
-    time_q binDate = fileLastModifyDate(getCachePath(STR_BIN_LOC2025));
-    time_q txtDate = laterOf(fileLastModifyDate(getConfigPath("names/names.tab")),
-                             fileLastModifyDate(getConfigPath("names/names_custom.tab")));
-
-    if (txtDate < binDate) {
-        if (!readNamesFromBinary2025())
-            return false;
-
-    } else {
-        if (!readNamesFromAscii2025())
-            return false;
-
-        if (!writeNamesBinary2025())
-            return false;
-    }
-
     return true;
 }
 
 //-----------------------------------------------------------------------
-bool findName_int(const address_t& addr, CAccountName& acct) {
-    if (hasName_int(addr)) {
-        acct = namesMap[addr];
-        return true;
-    }
-
-    return false;
-}
-
-//-----------------------------------------------------------------------
-bool findName2025(const address_t& addr, CAccountName& acct) {
+bool findName(const address_t& addr, CAccountName& acct) {
     if (names2025Map[addr].address == addr) {
         acct = names2025Map[addr];
         return true;
     }
-    if (hasName2025(addr)) {
+    if (hasName(addr)) {
         namePtrMap[addr]->disc_2_Name(acct);
         names2025Map[addr] = acct;
         return true;
@@ -464,9 +184,9 @@ bool findName2025(const address_t& addr, CAccountName& acct) {
 }
 
 //-----------------------------------------------------------------------
-bool findToken_int(const address_t& addr, CAccountName& acct) {
+bool findToken(const address_t& addr, CAccountName& acct) {
     CAccountName item;
-    if (findName_int(addr, item)) {
+    if (findName(addr, item)) {
         bool t1 = contains(item.tags, "Tokens");
         bool t2 = contains(item.tags, "Contracts") && contains(item.name, "Airdrop");
         if (t1 || t2) {
@@ -478,52 +198,14 @@ bool findToken_int(const address_t& addr, CAccountName& acct) {
 }
 
 //-----------------------------------------------------------------------
-bool findToken2025(const address_t& addr, CAccountName& acct) {
-    CAccountName item;
-    if (findName2025(addr, item)) {
-        bool t1 = contains(item.tags, "Tokens");
-        bool t2 = contains(item.tags, "Contracts") && contains(item.name, "Airdrop");
-        if (t1 || t2) {
-            acct = item;
-            return true;
-        }
-    }
-    return false;
-}
-
-//-----------------------------------------------------------------------
-void addPrefundToNamesMap_int(CAccountName& account, uint64_t cnt) {
-    if (hasName_int(account.address))
-        return;
-
-    address_t addr = account.address;
-    account = namesMap[addr];
-    account.address = addr;
-    account.tags = account.tags.empty() ? "80-Prefund" : account.tags;
-    account.source = account.source.empty() ? "Genesis" : account.source;
-    account.isPrefund = account.name.empty();
-
-    string_q prefundName = "Prefund_" + padNum4(cnt);
-    if (account.name.empty()) {
-        account.name = prefundName;
-    } else if (!contains(account.name, "Prefund_")) {
-        account.name += " (" + prefundName + ")";
-    } else {
-        // do nothing
-    }
-
-    namesMap[account.address] = account;
-}
-
-//-----------------------------------------------------------------------
-void addPrefundToNamesMap2025(CAccountName& account, uint64_t cnt) {
+void addPrefundToNamesMap(CAccountName& account, uint64_t cnt) {
     if (names2025Map[account.address].address == account.address)
         return;
-    if (hasName2025(account.address))
+    if (hasName(account.address))
         return;
 
     address_t addr = account.address;
-    account = namesMap[addr];
+    account = names2025Map[addr];
     account.address = addr;
     account.tags = account.tags.empty() ? "80-Prefund" : account.tags;
     account.source = account.source.empty() ? "Genesis" : account.source;
@@ -540,6 +222,61 @@ void addPrefundToNamesMap2025(CAccountName& account, uint64_t cnt) {
 
     // TODO: This does not add the name to the pointer map, therefore prefunds won't be processed by forEveryName
     names2025Map[account.address] = account;
+}
+
+//-----------------------------------------------------------------------
+bool hasName(const address_t& addr) {
+    return namePtrMap[addr] != nullptr;
+}
+
+//-----------------------------------------------------------------------
+size_t nNames(void) {
+    return namePtrMap.size();
+}
+
+//-----------------------------------------------------------------------
+bool forEveryNameOld(NAMEFUNC func, void* data) {
+    if (!func)
+        return false;
+
+    for (auto name : namePtrMap) {
+        if (!name.second)
+            continue;
+        CAccountName acct;
+        name.second->disc_2_Name(acct);
+        if (!(*func)(acct, data))
+            return false;
+    }
+
+    return true;
+}
+
+//-----------------------------------------------------------------------
+bool forEveryNameNew(NAMEODFUNC func, void* data) {
+    if (!func)
+        return false;
+
+    for (auto name : namePtrMap) {
+        if (!(*func)(name.second, data))
+            return false;
+    }
+
+    return true;
+}
+
+//-----------------------------------------------------------------------
+enum {
+    IS_NONE = (0),
+    IS_CUSTOM = (1 << 0),
+    IS_PREFUND = (1 << 1),
+    IS_CONTRACT = (1 << 2),
+    IS_ERC20 = (1 << 3),
+    IS_ERC721 = (1 << 4),
+    IS_DELETED = (1 << 5),
+};
+
+//-----------------------------------------------------------------------
+NameOnDisc::NameOnDisc(void) : decimals(0), flags(0) {
 }
 
 //-----------------------------------------------------------------------

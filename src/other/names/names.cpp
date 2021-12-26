@@ -15,21 +15,21 @@
 #define NTESTS 20
 #define NRUNS 500
 
-//-----------------------------------------------------------------------
-bool showName(CAccountName& name, void* data) {
-    if (name.address == "0xf503017d7baf7fbc0fff7492b751025c6a78179b")
-        return true;
-    cout << name.Format(STR_DISPLAY_ACCOUNTNAME) << endl;
-    return true;
-}
+// //-----------------------------------------------------------------------
+// bool showName(CAccountName& name, void* data) {
+//     if (name.address == "0xf503017d7baf7fbc0fff7492b751025c6a78179b")
+//         return true;
+//     cout << name.Format(STR_DISPLAY_ACCOUNTNAME) << endl;
+//     return true;
+// }
 
-//-----------------------------------------------------------------------
-bool showName2025(NameOnDisc* name, void* data) {
-    if (name && string_q(name->address) == "0xf503017d7baf7fbc0fff7492b751025c6a78179b")
-        return true;
-    cout << (name ? name->Format() : "") << endl;
-    return true;
-}
+// //-----------------------------------------------------------------------
+// bool showName2025(Name OnDisc* name, void* data) {
+//     if (name && string_q(name->address) == "0xf503017d7baf7fbc0fff7492b751025c6a78179b")
+//         return true;
+//     cout << (name ? name->Format() : "") << endl;
+//     return true;
+// }
 
 //-----------------------------------------------------------------------
 CStringArray tests = {
@@ -44,36 +44,36 @@ int main(int argc, const char* argv[]) {
 
     for (size_t x = 0; x < NTESTS; x++) {
         if (argc < 2) {
-            oldNames = true;
-            loadNames(oldNames);
-            forEveryNameOld(showName, nullptr);
-            for (size_t i = 0; i < NRUNS; i++) {
-                for (auto test : tests) {
-                    CAccountName name;
-                    findName(oldNames, test, name);
-                    cout << name << endl;
-                    findToken(oldNames, test, name);
-                    cout << name << endl;
-                }
-            }
-            clearNames(oldNames);
-            cerr << "A-" << x << endl;
+            // old Names = true;
+            // load Names(oldNames);
+            // for EveryNameOld(showName, nullptr);
+            // for (size_t i = 0; i < NRUNS; i++) {
+            //     for (auto test : tests) {
+            //         CAccountName name;
+            //         find Name(oldNames, test, name);
+            //         cout << name << endl;
+            //         find Token(oldNames, test, name);
+            //         cout << name << endl;
+            //     }
+            // }
+            // clear Names(oldNames);
+            // cerr << "A-" << x << endl;
 
         } else if (argc < 3) {
-            oldNames = false;
-            loadNames(oldNames);
-            forEveryNameNew(showName2025, nullptr);
-            for (size_t i = 0; i < NRUNS; i++) {
-                for (auto test : tests) {
-                    CAccountName name;
-                    findName(oldNames, test, name);
-                    cout << name << endl;
-                    findToken(oldNames, test, name);
-                    cout << name << endl;
-                }
-            }
-            clearNames(oldNames);
-            cerr << "B-" << x << endl;
+            // old Names = false;
+            // load Names(oldNames);
+            // for EveryNameNew(showName2025, nullptr);
+            // for (size_t i = 0; i < NRUNS; i++) {
+            //     for (auto test : tests) {
+            //         CAccountName name;
+            //         find Name(oldNames, test, name);
+            //         cout << name << endl;
+            //         find Token(oldNames, test, name);
+            //         cout << name << endl;
+            //     }
+            // }
+            // clear Names(oldNames);
+            // cerr << "B-" << x << endl;
         }
     }
 

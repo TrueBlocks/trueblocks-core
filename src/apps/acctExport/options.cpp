@@ -328,7 +328,7 @@ bool COptions::parseArguments(string_q& command) {
     for (auto t : topic)
         logFilter.topics.push_back(t);
 
-    if (!loadNames(oldNames))
+    if (!loadNames())
         return usage("Could not load names database.");
 
     // Where will we start?
@@ -363,7 +363,7 @@ bool COptions::parseArguments(string_q& command) {
         }
         if (accountedFor.address.empty()) {
             accountedFor.address = monitor.address;
-            findName(oldNames, monitor.address, accountedFor);
+            findName(monitor.address, accountedFor);
             accountedFor.isContract = !getCodeAt(monitor.address, latest).empty();
         }
         allMonitors.push_back(monitor);
