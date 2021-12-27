@@ -2,6 +2,7 @@ chifra status  caches --types slurps
 TEST[DATE|TIME] Modes:  [caches]
 TEST[DATE|TIME] Types:  [slurps]
 TEST[DATE|TIME] Depth:  0
+TIME ~ CLOCK - <INFO>  : Loading names
 {
   "clientVersion": "Client version",
   "clientIds": "chainId: 1 networkId: 1",

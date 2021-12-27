@@ -86,9 +86,6 @@ names?tags
       "tags": "55-Defi"
     },
     {
-      "tags": "60-Airdrops"
-    },
-    {
       "tags": "70-Vendors"
     },
     {

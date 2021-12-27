@@ -254,9 +254,9 @@ names?
       "description": ""
     },
     {
-      "tags": "60-Airdrops",
+      "tags": "90-Individuals:Other",
       "address": "0x000ee67d5bec37ad37292da18516cc96d81e0242",
-      "name": "RZM Sender 2 Airdrop",
+      "name": "Name 0x000ee67d",
       "symbol": "",
       "source": "TrueBlocks.io",
       "decimals": 0,
@@ -407,9 +407,9 @@ names?
       "description": ""
     },
     {
-      "tags": "60-Airdrops",
+      "tags": "90-Individuals:Other",
       "address": "0x00476aecb24edfed50aaf2e2361badbd8d3efdc2",
-      "name": "HEALP Sender Airdrop",
+      "name": "Name 0x00476aec",
       "symbol": "",
       "source": "EtherScan.io",
       "decimals": 0,
@@ -605,6 +605,15 @@ names?
       "description": "FortKnoxster offers end-to-end encrypted inbox, chat, decentralized storage, calling, video conferencing, voice messages and much more."
     },
     {
+      "tags": "31-Gitcoin:Grants",
+      "address": "0x00a33c8379b03085ad0c0b4f6fb38c63deba8475",
+      "name": "Grant 4103 - Supplements Death Match",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/4103/supplements-death-match",
+      "decimals": 0,
+      "description": ""
+    },
+    {
       "tags": "90-Individuals:TheCyber",
       "address": "0x00aa972319ddf819140ffe2a991c49a1bff54bad",
       "name": "Name 0x00aa9723",
@@ -668,9 +677,9 @@ names?
       "description": ""
     },
     {
-      "tags": "60-Airdrops",
+      "tags": "90-Individuals:Other",
       "address": "0x00cfbbaf7ddb3a1476767101c12a0162e241fbad",
-      "name": "Amber Token Airdrop",
+      "name": "Name 0x00cfbbaf",
       "symbol": "",
       "source": "TrueBlocks.io",
       "decimals": 0,
@@ -722,18 +731,18 @@ names?
       "description": ""
     },
     {
-      "tags": "60-Airdrops",
+      "tags": "90-Individuals:Other",
       "address": "0x00ee337d1aa5229d92889ac27fc3841573590289",
-      "name": "VOS.AI Sender Airdrop",
+      "name": "Name 0x00ee337d",
       "symbol": "",
       "source": "TrueBlocks.io",
       "decimals": 0,
       "description": ""
     },
     {
-      "tags": "60-Airdrops",
+      "tags": "90-Individuals:Other",
       "address": "0x00f78d023dd008c6e8bd3e16327466d58fb6b576",
-      "name": "XNN Sender Airdrop",
+      "name": "Name 0x00f78d02",
       "symbol": "",
       "source": "TrueBlocks.io",
       "decimals": 0,
@@ -1290,6 +1299,15 @@ names?
     },
     {
       "tags": "50-Tokens:ERC20",
+      "address": "0x0275e1001e293c46cfe158b3702aade0b99f88a5",
+      "name": "Oiler",
+      "symbol": "OIL",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
       "address": "0x028171bca77440897b824ca71d1c56cac55b68a3",
       "name": "Aave interest bearing DAI",
       "symbol": "aDAI",
@@ -1614,6 +1632,15 @@ names?
     },
     {
       "tags": "50-Tokens:ERC20",
+      "address": "0x0360b415b56bd77def7ffd64ab9c0a9f63a84e4f",
+      "name": "NL",
+      "symbol": "NL Token",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
       "address": "0x036407f23d5e1c1486f7488332cf54bf06e5f09f",
       "name": "Alphabit",
       "symbol": "ABC",
@@ -1638,6 +1665,15 @@ names?
       "source": "On chain",
       "decimals": 18,
       "description": "Student jobs marketplace."
+    },
+    {
+      "tags": "31-Gitcoin:Grants",
+      "address": "0x03798c0d62e6a0b0548114fb6241efa07ca4122d",
+      "name": "Grant 4257 - Reputable DAO",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/4257/reputable-dao",
+      "decimals": 0,
+      "description": ""
     },
     {
       "tags": "31-Gitcoin:Grants",
@@ -1771,42 +1807,6 @@ names?
       "name": "Possibly Malicious 0x03b",
       "symbol": "",
       "source": "TrueBlocks.io",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "31-Gitcoin:Grants",
-      "address": "0x03c2bc72a3e007179e54ffb4563cc235bec8151a",
-      "name": "Grant 0600 Synthereum: Synthetic Assets with Liquidity Pools to Bridge Traditional and Digital Finance",
-      "symbol": "",
-      "source": "https://gitcoin.co/grants/600/synthereum-synthetic-assets-with-liquidity-pools-t",
-      "decimals": 0,
-      "description": "https://jarvis.network"
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x03c780cd554598592b97b7256ddaad759945b125",
-      "name": "BTRN",
-      "symbol": "BTRN",
-      "source": "On chain",
-      "decimals": 18,
-      "description": "Biotron is a fully transparent personal data analytics platform on blockchain."
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x03c9436d54db599018842387d9d6075d81580726",
-      "name": "AirEthereumMax INU",
-      "symbol": "aiReMax",
-      "source": "On chain",
-      "decimals": 18,
-      "description": ""
-    },
-    {
-      "tags": "90-Individuals:TheCyber",
-      "address": "0x03d47eca8d1d4c29a73318c3b1373614b3fe14bc",
-      "name": "Name 0x03d47eca",
-      "symbol": "",
-      "source": "Solidity Code",
       "decimals": 0,
       "description": ""
     }

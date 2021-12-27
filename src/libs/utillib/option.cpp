@@ -16,6 +16,7 @@
  */
 #include "option.h"
 #include "markdown.h"
+#include "exportcontext.h"
 
 namespace qblocks {
 

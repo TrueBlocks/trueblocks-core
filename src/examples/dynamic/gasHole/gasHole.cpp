@@ -25,12 +25,19 @@ class CTestTraverser : public CTraverser {
 
 //-----------------------------------------------------------------------
 bool header(CTraverser* trav, void* data) {
-    cout << "blockNum,";
-    cout << "transactionId,";
-    cout << "date,";
-    cout << "gasCostEther,";
-    cout << "totalSpent,";
-    cout << "totalErr" << endl;
+    cout << "blockNum"
+         << "\t";
+    cout << "transactionId"
+         << "\t";
+    cout << "date"
+         << "\t";
+    cout << "gasCostEther"
+         << "\t";
+    cout << "totalSpent"
+         << "\t";
+    cout << "totalErr"
+         << "\t";
+    cout << "percentage" << endl;
     return true;
 }
 
@@ -38,21 +45,27 @@ bool header(CTraverser* trav, void* data) {
 bool display(CTraverser* trav, void* data) {
     CTestTraverser* tt = (CTestTraverser*)trav;
 
+    cerr << string_q(120, ' ') << "\r";
     if (tt->curMonitor->address == tt->trans.from) {
         wei_t spent = tt->trans.gasPrice * tt->trans.receipt.gasUsed;
         tt->totalSpent += spent;
-        tt->totalError += (tt->trans.isError ? spent : 0);
+        tt->totalError += tt->trans.isError ? spent : 0;
 
         string_q val = wei_2_Ether(spent, 18);
         string_q tot = wei_2_Ether(tt->totalSpent, 18);
         string_q err = wei_2_Ether(tt->totalError, 18);
+        double pct = str_2_Double(err) / str_2_Double(tot);
 
-        cout << trav->app->blk << ",";
-        cout << trav->app->txid << ",";
-        cout << ts_2_Date(trav->trans.timestamp) << ",";
-        cout << val << ",";
-        cout << tot << ",";
-        cout << err << endl;
+        cout << trav->app->blk << "\t";
+        cout << trav->app->txid << "\t";
+        cout << ts_2_Date(trav->trans.timestamp) << "\t";
+        cout << val << "\t";
+        cout << tot << "\t";
+        cout << err << "\t";
+        cout << double_2_Str(pct, 5) << endl;
+    } else {
+        cerr << "No gas spent in block " << tt->trans.blockNumber << "\r";
+        cerr.flush();
     }
 
     return true;
@@ -60,6 +73,11 @@ bool display(CTraverser* trav, void* data) {
 
 //-----------------------------------------------------------------------
 extern "C" CTraverser* makeTraverser(void) {
+    if (getVersionNum() < getVersionNum(0, 18, 0)) {
+        LOG_ERR("Cannot load traverser from older versions: ", getVersionNum());
+        LOG_ERR("Perhaps you need to re-install TrueBlocks.");
+        return nullptr;
+    }
     CTestTraverser* trav = new CTestTraverser;
     trav->preFunc = header;
     trav->displayFunc = display;

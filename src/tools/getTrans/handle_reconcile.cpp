@@ -21,7 +21,7 @@ bool visitReconciliation(CTransaction& trans, void* data) {
 
     CAccountName name;
     name.address = opt->reconcile;
-    opt->findName(opt->reconcile, name);
+    findName(opt->reconcile, name);
     CReconciliation prev;
     prev.assetAddr = opt->reconcile;
     prev.endBal = trans.blockNumber == 0 ? 0 : getBalanceAt(opt->reconcile, trans.blockNumber - 1);

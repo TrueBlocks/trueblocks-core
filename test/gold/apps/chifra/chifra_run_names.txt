@@ -1,6 +1,7 @@
 chifra  names 50-Tokens --expand
 TEST[DATE|TIME] Terms:  [50-Tokens]
 TEST[DATE|TIME] Expand:  true
+TIME ~ CLOCK - <INFO>  : Loading names
 tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	iscontract	iserc20	iserc721
 50-Tokens:ERC721	0x0000000000001b84b1cb32787b0d64758d019317	HomeWork 🏠🛠️	HWK	On chain	18		false	false	false	true	true	true
 50-Tokens:ERC20	0x0000000000004946c0e9f43f4dee607b0ef1fa1c	Chi Gastoken by 1inch	CHI	On chain	18		false	false	false	true	true	false
@@ -56,6 +57,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 50-Tokens:ERC20	0x025d34acfd5c65cfd5a73209f99608c9e13338f3	Uniswap V2	UNI-V2	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC721	0x026224a2940bfe258d0dbe947919b62fe321f042	lobsterdao	LOBS	On chain	18		false	false	false	true	true	true
 50-Tokens:ERC20	0x02725836ebf3ecdb1cdf1c7b02fcbbfaa2736af8	BitAir	BTCA	On chain	8	Payments solutions for the travel industry.	false	false	false	true	true	false
+50-Tokens:ERC20	0x0275e1001e293c46cfe158b3702aade0b99f88a5	Oiler	OIL	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x028171bca77440897b824ca71d1c56cac55b68a3	Aave interest bearing DAI	aDAI	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x0297083eef9c04ee22c89187b13363af2249042b	Andre KP9R	aKP9R	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x02a7c828437aa9aea6da510758b2a9d6fb37f0bc	Salt Shaker	SALT 🧂	On chain	18		false	false	false	true	true	false
@@ -75,6 +77,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 50-Tokens:ERC721	0x032dd2a3c6d234aa9620d65eb618fcdc72be3dbb	HashDemons	HASHDEMONS	On chain	18		false	false	false	true	true	true
 50-Tokens:ERC20	0x033030feebd93e3178487c35a9c8ca80874353c9	BDT Token	BDT	On chain	18	The ICO market is becoming more regulated, but this isn‚Äö√Ñ√¥t stopping scams from penetrating the cryptocurrency community. That is why we created the Founding Community Bitdepositary with integrated payment systems.	false	false	false	true	true	false
 50-Tokens:ERC20	0x03552d005d0f4262bf2d85fa2a3263541d4059c1	Miller Real Estate Holdings	RENT	On chain	6		false	false	false	true	true	false
+50-Tokens:ERC20	0x0360b415b56bd77def7ffd64ab9c0a9f63a84e4f	NL	NL Token	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x036407f23d5e1c1486f7488332cf54bf06e5f09f	Alphabit	ABC	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x036ea7048a4c1f28b299b9dd9e3c9fe9022e2a2a	ShibAkita Inu	SHIBAKITA	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x0371a82e4a9d0a4312f3ee2ac9c6958512891372	Student Coin	STU	On chain	18	Student jobs marketplace.	false	false	false	true	true	false
@@ -101,6 +104,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 50-Tokens:ERC20	0x04d01b6145bc9db925ec1e80bc85f936a961210e	Vizsafe SPOT	SPOT	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x04d702ebd0a77503b154865fe3e8da97255b931b	Commons Stack Org Membership	CSOM	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x04f135587e379253d19f77c5e6c90d2c280aa947	FINDEX	FIND	On chain	18		false	false	false	true	true	false
+50-Tokens:ERC20	0x04f2694c8fcee23e8fd0dfea1d4f5bb8c352111f	Staked Olympus	sOHM	On chain	9		false	false	false	true	true	false
 50-Tokens:ERC20	0x04f2e7221fdb1b52a68169b25793e51478ff0329	Cappasity	CAPP	On chain	2	Cappasity brings an in-store browsing experience to online retail through interactive 3D images.	false	false	false	true	true	false
 50-Tokens:ERC20	0x04fa0d235c4abf4bcf4787af4cf447de572ef828	UMA Voting Token v1	UMA	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x050cbff7bff0432b6096dd15cd9499913ddf8e23	FUTUREGOLDCOIN	FCI	On chain	18		false	false	false	true	true	false
@@ -122,6 +126,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 50-Tokens:ERC20	0x05f4a42e251f2d52b8ed15e9fedaacfcef1fad27	Zilliqa	ZIL	On chain	12	Zilliqa is a high-throughput public blockchain platform - designed to scale to thousands of transactions per second.	false	false	false	true	true	false
 50-Tokens:ERC20	0x06012c8cf97bead5deae237070f9587f8e7a266d	CryptoKitties	CK	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x06147110022b768ba8f99a8f385df11a151a9cc8	ACE Token	ACE	On chain	18	ACE is a utility token, that serves as a form of access to the TokenStars platform and its internal currency. TokenStars is the first talent management platform on the blockchain, that will connect talents celebrities with fans and advertisers.	false	false	false	true	true	false
+50-Tokens:ERC20	0x06325440d014e39736583c165c2963ba99faf14e	Curve.fi ETH/stETH	steCRV	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x0637ff2583c829eb286905aefa5f4bd93dfdd490	Ethereum KISHU	eKISHU	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x0663210a18dfdc62688b14c4ec10a1df8912e28c	E-talon	ETALON	On chain	8		false	false	false	true	true	false
 50-Tokens:ERC20	0x066798d9ef0833ccc719076dab77199ecbd178b0	SakeToken	SAKE	On chain	18		false	false	false	true	true	false
@@ -178,9 +183,11 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 50-Tokens:ERC20	0x089b7a04eed1749a541a9cca42924de4e62900c7	Kawaii Shiba	KIBA	On chain	9		false	false	false	true	true	false
 50-Tokens:ERC20	0x089eac7e3180b7995fe218c18440a0d262ae8985	1UP	UP	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x08a2e41fb99a7599725190b9c970ad3893fa33cf	Pasta V1 Token		On chain	18		false	false	false	true	true	false
+50-Tokens:ERC20	0x08bd64bfc832f1c2b3e07e634934453ba7fa2db2	Interest Bearing USD Coin v2	ibUSDCv2	On chain	8		false	false	false	true	true	false
 50-Tokens:ERC721	0x08bebeb5f042ccbaeb128582da560cb25a5db7e9	TheWonderQuest	TWQ	On chain	18		false	false	false	true	true	true
 50-Tokens:ERC20	0x08d32b0da63e2c3bcf8019c9c5d849d7a9d791e6	Dentacoin	٨	On chain	18	Aims to be the blockchain solution for the global dental industry.	false	false	false	true	true	false
 50-Tokens:ERC20	0x08f5a9235b08173b7569f83645d2c7fb55e8ccd8	Tierion Network Token	TNT	On chain	8	Tierion creates software to reduce the cost and complexity of trust. Anchoring data to the blockchain and generating a timestamp proof.	false	false	false	true	true	false
+50-Tokens:ERC20	0x08ff7e2be3c23ab3938b6d275193d6a49ccef73e	Spartan Bucket Token	CTKN_Spartan_Bucket	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x093c4be59fe9c1fe194c8209e9e18ede38485444	&#x20b0;ShibEx	✔️ShibEx	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x0947b0e6d821378805c9598291385ce7c791a6b2	Lendingblock	LND	On chain	18	Lendingblock is an open exchange for cryptocurrency loans, where borrowers and lenders are instantly matched in simple, safe and transparent way.	false	false	false	true	true	false
 50-Tokens:ERC20	0x094c4fdbd4c8ff299bc75f85e19a3a7115ee3a41	Rainbow	RWC	On chain	18		false	false	false	true	true	false
@@ -197,9 +204,3 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 50-Tokens:ERC20	0x0a76aad21948ea1ef447d26dee91a54370e151e0	Ethereum Lite	ELITE	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x0a7eed8bd71079121ee45649f9d88d193686d9ac	Leveraged ETH 4/15	LETH 4/15	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x0a913bead80f321e7ac35285ee10d9d922659cb7	DOS Network Token	DOS	On chain	18		false	false	false	true	true	false
-50-Tokens:ERC20	0x0a9f693fce6f00a51a8e0db4351b5a8078b4242e	Resfinex	RES	On chain	5		false	false	false	true	true	false
-50-Tokens:ERC20	0x0aa7b6b12aabf497f603c57167eabee05da92a17	SUDO INU	SUDO	On chain	18		false	false	false	true	true	false
-50-Tokens:ERC20	0x0aacfbec6a24756c20d41914f2caba817c0d8521	YAM	YAM	On chain	18		false	false	false	true	true	false
-50-Tokens:ERC20	0x0ab305931a717b8227d76de52e19a23066150360	Creating a Decentralized World Together		https://kickback.events/event/[{ADDRESS}]	18		false	false	false	true	true	false
-50-Tokens:ERC20	0x0abdace70d3790235af448c88547603b945604ea	district0x Network Token	DNT	On chain	18	A network of decentralized markets and communities. Create, operate, and govern. Powered by Ethereum, Aragon, and IPFS.	false	false	false	true	true	false
-50-Tokens:ERC20	0x0aca1a719e8e93b084e496ef4d9fc33e3fe3ee62	FIAT	FIAT	On chain	18		false	false	false	true	true	false

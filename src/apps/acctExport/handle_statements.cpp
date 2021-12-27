@@ -18,9 +18,11 @@ bool statements_Display(CTraverser* trav, void* data) {
     opt->process_reconciliation(trav);
 
     for (auto statement : trav->trans.statements) {
-        cout << ((isJson() && !opt->firstOut) ? ", " : "");
-        cout << statement;
-        opt->firstOut = false;
+        if (opt->assetFilter.size() == 0 || opt->assetFilter[statement.assetAddr]) {
+            cout << ((isJson() && !opt->firstOut) ? ", " : "");
+            cout << statement;
+            opt->firstOut = false;
+        }
     }
 
     prog_Log(trav, data);

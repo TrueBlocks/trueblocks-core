@@ -547,15 +547,14 @@ const char* STR_DISPLAY_LOGENTRY =
     "[{BLOCKNUMBER}]\t"
     "[{TRANSACTIONINDEX}]\t"
     "[{LOGINDEX}]\t"
+    "[{TIMESTAMP}]\t"
     "[{ADDRESS}]\t"
     "[{TOPIC0}]\t"
     "[{TOPIC1}]\t"
     "[{TOPIC2}]\t"
     "[{TOPIC3}]\t"
     "[{DATA}]\t"
-    "[{TYPE}]\t"
-    "[{COMPRESSEDLOG}]\t"
-    "[{TIMESTAMP}]";
+    "[{COMPRESSEDLOG}]";
 
 //---------------------------------------------------------------------------
 // EXISTING_CODE

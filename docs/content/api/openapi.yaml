@@ -7,7 +7,7 @@ info:
   license:
     name: GPL 3.0
     url: http://www.gnu.org/licenses/
-  version: 0.17.0-alpha
+  version: 0.18.0-alpha
   description: >
 
     A REST layer over the TrueBlocks application. With `chifra serve`, you can
@@ -2205,16 +2205,20 @@ components:
           format: blknum
           example: 305
           description: "the zero-indexed position of the transaction in the block"
-        address:
-          type: string
-          format: address
-          example: "0xf503...179b"
-          description: "the smart contract that emitted this log"
         logIndex:
           type: number
           format: blknum
           example: 354
           description: "the zero-indexed position of this log relative to the block"
+        timestamp:
+          type: number
+          format: timestamp
+          description: "the timestamp of the block this log appears in"
+        address:
+          type: string
+          format: address
+          example: "0xf503...179b"
+          description: "the smart contract that emitted this log"
         topics:
           type: array
           items:
@@ -2234,10 +2238,6 @@ components:
           type: string
           example: "Transfer(0xcfa...9f54..."
           description: "a truncated, more readable version of the articulation"
-        timestamp:
-          type: number
-          format: timestamp
-          description: "the timestamp of the block this log appears in"
     trace:
       description: "trace data for a given transaction directly from the blockchain"
       type: object

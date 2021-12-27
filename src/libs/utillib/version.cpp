@@ -17,7 +17,7 @@ namespace qblocks {
 
 // Run make generate in order for this to take effect
 #define MAJOR 0
-#define MINOR 18
+#define MINOR 22
 #define BUILD 0
 // Run make generate in order for this to take effect
 
@@ -26,6 +26,13 @@ namespace qblocks {
 //--------------------------------------------------------------------------------
 uint32_t getVersionNum(void) {
     return getVersionNum(MAJOR, MINOR, BUILD);
+}
+
+//--------------------------------------------------------------------------------
+void getVersionValues(uint16_t& maj, uint16_t& min, uint16_t& build) {
+    maj = MAJOR;
+    min = MINOR;
+    build = BUILD;
 }
 
 //--------------------------------------------------------------------------------

@@ -15,6 +15,7 @@
  * the code outside of the BEG_CODE/END_CODE sections
  */
 #include "options.h"
+#include "exportcontext.h"
 
 //---------------------------------------------------------------------------------------------------
 static const COption params[] = {
@@ -54,14 +55,11 @@ bool COptions::parseArguments(string_q& command) {
     replaceAll(command, "--delete", "--deleteMe");
 
     // BEG_CODE_LOCAL_INIT
-    CStringArray terms;
     bool expand = false;
     bool all = false;
     bool custom = false;
-    bool prefund = false;
     bool named = false;
     bool addr = false;
-    bool to_custom = false;
     bool clean = false;
     string_q autoname = "";
     bool create = false;
@@ -168,6 +166,14 @@ bool COptions::parseArguments(string_q& command) {
     if (Mocked((tags ? "tags" : collections ? "collections" : "names")))
         return false;
 
+    if (prefund) {
+        if (!loadNamesPrefunds())
+            return usage("Could not load names database.");
+    } else {
+        if (!loadNames())
+            return usage("Could not load names database.");
+    }
+
     if (!autoname.empty() && (!isAddress(autoname) || isZeroAddr(autoname)))
         return usage("You must provide an address to the --autoname option.");
 
@@ -181,13 +187,15 @@ bool COptions::parseArguments(string_q& command) {
     }
 
     if (isCrudCommand()) {
+        if (prefund)
+            return usage("You may not use the --prefund option when editing names.");
         abi_spec.loadAbisFromKnown(true);
         address_t address = toLower(trim(getEnvStr("TB_NAME_ADDRESS"), '\"'));
         if (address.empty() && !terms.empty())
             address = terms[0];
         if (!isAddress(address) || isZeroAddr(address))
             return usage("You must provide an address to crud commands.");
-        if (!handle_editcmds(terms, to_custom, false))  // returns true on success
+        if (!handle_editcmds(false))  // returns true on success
             return false;
 
     } else if (!autoname.empty()) {
@@ -201,7 +209,7 @@ bool COptions::parseArguments(string_q& command) {
         ::setenv("TB_NAME_DECIMALS", "18", true);
         ::setenv("TB_NAME_DESCR", "", true);
         ::setenv("TB_NAME_CUSTOM", "false", true);
-        if (!handle_editcmds(terms, false, true))  // returns true on success
+        if (!handle_editcmds(true))  // returns true on success
             return false;
     }
 
@@ -216,8 +224,6 @@ bool COptions::parseArguments(string_q& command) {
         handle_collections(terms);
         return false;
     }
-
-    loadNames();
 
     if (expand) {
         searchFields = STR_DISPLAY_ACCOUNTNAME;
@@ -319,10 +325,14 @@ void COptions::Init(void) {
 
     // BEG_CODE_INIT
     match_case = false;
+    prefund = false;
     collections = false;
     tags = false;
+    to_custom = false;
     // END_CODE_INIT
 
+    outArray.clear();
+    terms.clear();
     items.clear();
     searches.clear();
     searchFields = getSearchFields(STR_DISPLAY_ACCOUNTNAME);
@@ -333,7 +343,7 @@ void COptions::Init(void) {
 //---------------------------------------------------------------------------------------------------
 COptions::COptions(void) {
     establishFolder(getCachePath("names/"));
-    loadNames();  // loads names database
+
     Init();
 
     // BEG_CODE_NOTES
@@ -375,9 +385,8 @@ bool COptions::addIfUnique(const CAccountName& item) {
     if (items[key].address == key) {  // it's already in the map, but we want the last in name to win
         bool empty = item.name.empty();
         bool isDifferent = items[key].name != item.name;
-        bool isOwned = startsWith(items[key].name, "Owned_");
         bool isPrefund = startsWith(items[key].name, "Prefund_");
-        if (!empty && (isDifferent || isOwned || isPrefund)) {
+        if (!empty && (isDifferent || isPrefund)) {
             items[key].name = item.name;
         }
         return false;
@@ -413,8 +422,50 @@ bool COptions::addIfUnique(const CAccountName& item) {
 }
 
 //-----------------------------------------------------------------------
+bool addCustom(CAccountName& item, void* data) {
+    COptions* opts = (COptions*)data;
+    if (item.isCustom)
+        opts->addIfUnique(item);
+    return true;
+}
+
+//-----------------------------------------------------------------------
+bool addRegular(CAccountName& item, void* data) {
+    COptions* opts = (COptions*)data;
+    if (!item.isCustom && !item.isPrefund)
+        opts->addIfUnique(item);
+    return true;
+}
+
+//-----------------------------------------------------------------------
+bool addPrefund(CAccountName& item, void* data) {
+    COptions* opts = (COptions*)data;
+    if (item.isPrefund)
+        opts->addIfUnique(item);
+    return true;
+}
+
+//-----------------------------------------------------------------------
+bool addPrefundNew(const address_t& addr, void* data) {
+    COptions* opts = (COptions*)data;
+    if (hasName(addr)) {
+        opts->nPrefunds++;
+        return true;
+    }
+
+    CAccountName account;
+    account.address = addr;
+    account.tags = "80-Prefund";
+    account.source = "Genesis";
+    account.isPrefund = true;
+    account.name = "Prefund_" + padNum4(opts->nPrefunds++);
+    opts->addIfUnique(account);
+
+    return true;
+}
+
+//-----------------------------------------------------------------------
 void COptions::applyFilter() {
-    //------------------------
     if (types & CUSTOM) {
         if (isTestMode() && !isCrudCommand()) {
             for (uint32_t i = 1; i < 5; i++) {
@@ -430,30 +481,20 @@ void COptions::applyFilter() {
                 addIfUnique(item);
             }
         } else {
-            for (auto mapItem : namesMap) {
-                CAccountName item = mapItem.second;
-                if (item.isCustom)
-                    addIfUnique(item);
-            }
+            forEveryNameOld(addCustom, this);
         }
     }
 
-    //------------------------
-    if (types & NAMED) {
-        for (auto mapItem : namesMap) {
-            CAccountName item = mapItem.second;
-            if (!item.isCustom && !item.isPrefund)
-                addIfUnique(item);
-        }
-    }
+    if (types & NAMED)
+        forEveryNameOld(addRegular, this);
 
-    //------------------------
     if (types & PREFUND) {
-        for (auto mapItem : namesMap) {
-            CAccountName item = mapItem.second;
-            if (item.isPrefund)
-                addIfUnique(item);
+        if (!loadNamesPrefunds()) {
+            LOG_WARN("Could not load names database.");
+            return;
         }
+        nPrefunds = 0;
+        forEveryPrefund(addPrefundNew, this);
     }
 }
 

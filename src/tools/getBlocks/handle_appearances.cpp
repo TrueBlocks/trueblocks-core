@@ -12,8 +12,9 @@
  *-------------------------------------------------------------------------------------------*/
 #include "options.h"
 
+extern bool visitPrefund(const address_t& prefund, void* data);
 //---------------------------------------------------------------------------
-bool COptions::handle_appearances(blknum_t num, void* data) {
+bool COptions::handle_appearances(blknum_t num) {
     CBlock block;
     getBlock(block, num);
 
@@ -39,15 +40,8 @@ bool COptions::handle_appearances(blknum_t num, void* data) {
         cout << block.Format(fmt);
     } else if (!nProcessed) {
         if (num == 0) {
-            uint64_t cnt = 0;
-            for (auto prefund : expContext().prefundMap) {
-                CAppearance item;
-                item.bn = num;
-                item.tx = cnt++;
-                item.addr = prefund.first;
-                item.reason = "genesis";
-                oneAppearance(item, data);
-            }
+            nPrefunds = 0;
+            forEveryPrefund(visitPrefund, this);
         } else {
             // found no addresses -- i.e. early node software allowed misconfiguration of zero address miner
             CAppearance item;
@@ -55,7 +49,7 @@ bool COptions::handle_appearances(blknum_t num, void* data) {
             item.tx = 99999;
             item.addr = "0x0000000000000000000000000000000000000000";
             item.reason = "miner";
-            oneAppearance(item, data);
+            oneAppearance(item, this);
         }
     }
     firstOut = false;
@@ -104,4 +98,15 @@ bool transFilter(const CTransaction* trans, void* data) {
     if (!ddosRange(trans->blockNumber))
         return false;
     return (getTraceCount(trans->hash) > 250);
+}
+
+//-----------------------------------------------------------------------
+bool visitPrefund(const address_t& prefund, void* data) {
+    CAppearance item;
+    item.bn = 0;
+    item.tx = ((COptions*)data)->nPrefunds++;
+    item.addr = prefund;
+    item.reason = "genesis";
+    oneAppearance(item, data);
+    return true;
 }

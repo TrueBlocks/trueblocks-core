@@ -1,5 +1,10 @@
 chifra  names --tags
 TEST[DATE|TIME] Tags:  true
+TIME ~ CLOCK - <INFO>  : Loading names
+TIME ~ CLOCK - <INFO>  : Loading prefunds accounts
+TIME ~ CLOCK - <INFO>  : Loading names
+TIME ~ CLOCK - <INFO>  : Already loaded
+TIME ~ CLOCK - <INFO>  : Loading prefund balances
 tags
 30-Contracts
 30-Contracts:Balancer
@@ -29,7 +34,6 @@ tags
 50-Tokens:ERC20
 50-Tokens:ERC721
 55-Defi
-60-Airdrops
 70-Vendors
 80-Malicious
 80-Malicious:DaoDrain

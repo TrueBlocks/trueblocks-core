@@ -12,25 +12,47 @@
  *-------------------------------------------------------------------------------------------*/
 #define LOGGING_LEVEL_TEST
 #include "options.h"
+#include "exportcontext.h"
 
 //-----------------------------------------------------------------------
-void pushToOutput(CAccountNameArray& out, const CAccountName& name, bool to_custom) {
-    if (to_custom && !name.isCustom)
-        return;
-    if (!to_custom && name.isCustom)
-        return;
-    out.push_back(name);
+bool applyEdit(CAccountName& name, void* data) {
+    COptions* opt = (COptions*)data;
+    if (name.address == opt->target.address) {
+        if (opt->crudCommands[0] == "remove") {
+            // do nothing (i.e. skip this name)
+            LOG4("Removing ", name.address);
+        } else if (opt->crudCommands[0] == "delete") {
+            LOG4("Deleting ", name.address);
+            name.m_deleted = true;
+            opt->pushToOutput(name, opt->to_custom);
+
+        } else if (opt->crudCommands[0] == "undelete") {
+            LOG4("Undeleting ", name.address);
+            name.m_deleted = false;
+            opt->pushToOutput(name, opt->to_custom);
+
+        } else {
+            LOG4("Editing ", name.address);
+            name = opt->target;
+            opt->pushToOutput(name, opt->to_custom);
+            opt->terms.clear();
+            opt->terms.push_back(opt->target.address);  // we only need the address for the search
+        }
+        opt->wasEdited = true;
+    } else {
+        opt->pushToOutput(name, opt->to_custom);
+    }
+    return true;
 }
 
 //-----------------------------------------------------------------------
-bool COptions::handle_editcmds(CStringArray& terms, bool to_custom, bool autoname) {
+bool COptions::handle_editcmds(bool autoname) {
     string_q crud = crudCommands[0];
     if (!contains("create|update|delete|undelete|remove", crud))
         return usage("Invalid edit command '" + crud + "'.");
 
-    CAccountName target;
     target.address = toLower(trim(getEnvStr("TB_NAME_ADDRESS"), '\"'));
-    ASSERT(!terms.empty());
+    ASSERT(!teeerms.empty());
     if (target.address.empty())
         target.address = terms[0];
     target.name = trim(getEnvStr("TB_NAME_NAME"), '\"');
@@ -53,39 +75,13 @@ bool COptions::handle_editcmds(CStringArray& terms, bool to_custom, bool autonam
     CStringArray fields;
     explode(fields, fmt, '\t');
 
-    CAccountNameArray outArray;
-    outArray.reserve(namesMap.size() + 2);
+    // CAccountNameArray outArray;
+    outArray.clear();
+    outArray.reserve(nNames() + 2);
+    forEveryNameOld(applyEdit, this);
 
-    bool edited = false;
-    for (auto mapItem : namesMap) {
-        CAccountName name = mapItem.second;
-        if (name.address == target.address) {
-            if (crud == "remove") {
-                // do nothing (i.e. skip this name)
-                LOG4("Removing ", name.address);
-            } else if (crud == "delete") {
-                name.m_deleted = true;
-                pushToOutput(outArray, name, to_custom);
-                LOG4("Deleting ", name.address);
-            } else if (crud == "undelete") {
-                name.m_deleted = false;
-                pushToOutput(outArray, name, to_custom);
-                LOG4("Undeleting ", name.address);
-            } else {
-                name = target;
-                pushToOutput(outArray, name, to_custom);
-                LOG4("Editing ", name.address);
-                terms.clear();
-                terms.push_back(target.address);  // we only need the address for the search
-            }
-            edited = true;
-        } else {
-            pushToOutput(outArray, name, to_custom);
-        }
-    }
-
-    if (crud == "create" && !edited) {
-        pushToOutput(outArray, target, to_custom);
+    if (crudCommands[0] == "create" && !wasEdited) {
+        pushToOutput(target, to_custom);
         LOG4("Creating ", target.address);
         terms.clear();
         terms.push_back(target.address);  // we only need the address for the search
@@ -110,9 +106,7 @@ bool COptions::handle_editcmds(CStringArray& terms, bool to_custom, bool autonam
         // We don't want to write this 'not found on chain' fact to the database
         string_q dest = to_custom ? getConfigPath("names/names_custom.tab") : getConfigPath("names/names.tab");
         stringToAsciiFile(dest, dataStream2.str());
-        namesMap.clear();
-        ::remove(getCachePath("names/names.bin").c_str());
-        ::remove(getCachePath("names/names.db").c_str());
+        // Bin files will get rebuilt if the ascii file changed
         LOG4("Finished writing...");
 
         string_q copyBack = getGlobalConfig("ethNames")->getConfigStr("settings", "source", "<NOTSET>");
@@ -121,5 +115,24 @@ bool COptions::handle_editcmds(CStringArray& terms, bool to_custom, bool autonam
         }
     }
 
+    clearNames();
+    if (prefund) {
+        clearPrefundBals();
+        if (!loadNamesPrefunds())
+            return usage("Could not load names database.");
+    } else {
+        if (!loadNames())
+            return usage("Could not load names database.");
+    }
+
     return true;
+}
+
+//-----------------------------------------------------------------------
+void COptions::pushToOutput(const CAccountName& item, bool to_custom) {
+    if (to_custom && !item.isCustom)
+        return;
+    if (!to_custom && item.isCustom)
+        return;
+    outArray.push_back(item);
 }

@@ -290,9 +290,9 @@ names?all
       "description": ""
     },
     {
-      "tags": "60-Airdrops",
+      "tags": "90-Individuals:Other",
       "address": "0x000ee67d5bec37ad37292da18516cc96d81e0242",
-      "name": "RZM Sender 2 Airdrop",
+      "name": "Name 0x000ee67d",
       "symbol": "",
       "source": "TrueBlocks.io",
       "decimals": 0,
@@ -443,9 +443,9 @@ names?all
       "description": ""
     },
     {
-      "tags": "60-Airdrops",
+      "tags": "90-Individuals:Other",
       "address": "0x00476aecb24edfed50aaf2e2361badbd8d3efdc2",
-      "name": "HEALP Sender Airdrop",
+      "name": "Name 0x00476aec",
       "symbol": "",
       "source": "EtherScan.io",
       "decimals": 0,
@@ -641,6 +641,15 @@ names?all
       "description": "FortKnoxster offers end-to-end encrypted inbox, chat, decentralized storage, calling, video conferencing, voice messages and much more."
     },
     {
+      "tags": "31-Gitcoin:Grants",
+      "address": "0x00a33c8379b03085ad0c0b4f6fb38c63deba8475",
+      "name": "Grant 4103 - Supplements Death Match",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/4103/supplements-death-match",
+      "decimals": 0,
+      "description": ""
+    },
+    {
       "tags": "90-Individuals:TheCyber",
       "address": "0x00aa972319ddf819140ffe2a991c49a1bff54bad",
       "name": "Name 0x00aa9723",
@@ -704,9 +713,9 @@ names?all
       "description": ""
     },
     {
-      "tags": "60-Airdrops",
+      "tags": "90-Individuals:Other",
       "address": "0x00cfbbaf7ddb3a1476767101c12a0162e241fbad",
-      "name": "Amber Token Airdrop",
+      "name": "Name 0x00cfbbaf",
       "symbol": "",
       "source": "TrueBlocks.io",
       "decimals": 0,
@@ -758,18 +767,18 @@ names?all
       "description": ""
     },
     {
-      "tags": "60-Airdrops",
+      "tags": "90-Individuals:Other",
       "address": "0x00ee337d1aa5229d92889ac27fc3841573590289",
-      "name": "VOS.AI Sender Airdrop",
+      "name": "Name 0x00ee337d",
       "symbol": "",
       "source": "TrueBlocks.io",
       "decimals": 0,
       "description": ""
     },
     {
-      "tags": "60-Airdrops",
+      "tags": "90-Individuals:Other",
       "address": "0x00f78d023dd008c6e8bd3e16327466d58fb6b576",
-      "name": "XNN Sender Airdrop",
+      "name": "Name 0x00f78d02",
       "symbol": "",
       "source": "TrueBlocks.io",
       "decimals": 0,
@@ -1326,6 +1335,15 @@ names?all
     },
     {
       "tags": "50-Tokens:ERC20",
+      "address": "0x0275e1001e293c46cfe158b3702aade0b99f88a5",
+      "name": "Oiler",
+      "symbol": "OIL",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
       "address": "0x028171bca77440897b824ca71d1c56cac55b68a3",
       "name": "Aave interest bearing DAI",
       "symbol": "aDAI",
@@ -1650,6 +1668,15 @@ names?all
     },
     {
       "tags": "50-Tokens:ERC20",
+      "address": "0x0360b415b56bd77def7ffd64ab9c0a9f63a84e4f",
+      "name": "NL",
+      "symbol": "NL Token",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
       "address": "0x036407f23d5e1c1486f7488332cf54bf06e5f09f",
       "name": "Alphabit",
       "symbol": "ABC",
@@ -1674,6 +1701,15 @@ names?all
       "source": "On chain",
       "decimals": 18,
       "description": "Student jobs marketplace."
+    },
+    {
+      "tags": "31-Gitcoin:Grants",
+      "address": "0x03798c0d62e6a0b0548114fb6241efa07ca4122d",
+      "name": "Grant 4257 - Reputable DAO",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/4257/reputable-dao",
+      "decimals": 0,
+      "description": ""
     },
     {
       "tags": "31-Gitcoin:Grants",
@@ -1772,42 +1808,6 @@ names?all
       "symbol": "RAI",
       "source": "On chain",
       "decimals": 18,
-      "description": ""
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x03b0ffc15a9a03d32a3a7c5839b3faf5174059cf",
-      "name": "NZXT Protocol Governance Token (Shareholder only)",
-      "symbol": "NZXT",
-      "source": "On chain",
-      "decimals": 6,
-      "description": ""
-    },
-    {
-      "tags": "90-Individuals:Gitcoin Grants",
-      "address": "0x03b45f0f660adcaa24fbacffd45e171464ec63a8",
-      "name": "Name 0x03b45f0f",
-      "symbol": "",
-      "source": "Gitcoin Website",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "90-Individuals:Gitcoin Grants",
-      "address": "0x03b85b333c99ec60a6d540e4277d71d3a4c0975d",
-      "name": "Name 0x03b85b33",
-      "symbol": "",
-      "source": "Gitcoin Website",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "80-Malicious:Shanghai",
-      "address": "0x03b904c8b912194464ae97eaa0381e5518446d25",
-      "name": "Possibly Malicious 0x03b",
-      "symbol": "",
-      "source": "TrueBlocks.io",
-      "decimals": 0,
       "description": ""
     }
   ],

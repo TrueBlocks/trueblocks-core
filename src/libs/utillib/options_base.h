@@ -28,7 +28,6 @@ typedef bool (*NAMEFUNC)(CAccountName& name, void* data);
 typedef bool (*NAMEVALFUNC)(CNameValue& pair, void* data);
 typedef bool (*UINT64VISITFUNC)(uint64_t num, void* data);
 typedef uint64_t (*HASHFINDFUNC)(const hash_t& hash, void* data);
-typedef map<address_t, CAccountName> CAddressNameMap;
 
 //-----------------------------------------------------------------------------
 class COptionsBase {
@@ -37,7 +36,6 @@ class COptionsBase {
     CStringArray arguments;
     CStringArray notes;
     CStringArray configs;
-    CStringArray overrides;
     CErrorStringMap usageErrs;
     CStringArray errors;
 
@@ -83,20 +81,7 @@ class COptionsBase {
         return crudCommands.size() > 0;
     }
 
-  protected:
-    // supporting named accounts
-    // TODO(tjayrush): All of these can (and should) be moved to expContext as it would be available to things other
-    // TODO(tjayrush): than options. See fmtMap and tsMemMap for examples
-    CAddressNameMap tokenMap;
-    CAddressBoolMap airdropMap;
-    bool buildOtherMaps(void);
-
   public:
-    CAddressNameMap namesMap;
-    bool loadNamesDatabaseFromSQL(void);
-    bool loadNames(void);
-    bool findName(const string_q& addr, CAccountName& acct);
-
     // enabling options
     bool isEnabled(uint32_t q) const;
     void optionOff(uint32_t q);
@@ -112,7 +97,6 @@ class COptionsBase {
     string_q get_version(void) const;
     string_q get_options(void) const;
     string_q get_errmsg(const string_q& errMsg) const;
-    string_q get_override(void) const;
     string_q get_positionals(COptionArray& pos) const;
 
     string_q format_notes(const CStringArray& strs) const;
@@ -127,8 +111,6 @@ class COptionsBase {
     string_q getOutputFn(void) const {
         return rd_outputFilename;
     }
-
-    bool findToken(CAccountName& acct, const address_t& addr);
 
     void configureDisplay(const string_q& tool, const string_q& dataType, const string_q& defFormat,
                           const string_q& meta = "");

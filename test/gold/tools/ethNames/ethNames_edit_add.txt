@@ -3,6 +3,7 @@ TEST[DATE|TIME] Expand:  true
 TEST[DATE|TIME] Create:  true
 TEST[DATE|TIME] LogLevel:  10
 TEST[DATE|TIME] Format:  api
+TIME ~ CLOCK - <INFO>  : Loading names
 TIME ~ CLOCK - <INFO>  : ---------------------------------------------
 TIME ~ CLOCK - <INFO>  : {
   "tags": "TAGS",
@@ -17,8 +18,7 @@ TIME ~ CLOCK - <INFO>  : ---------------------------------------------
 TIME ~ CLOCK - : 4-----Creating 0x0000000000000000000000000000000010101010
 TIME ~ CLOCK - : 4-----Finished sorting...
 TIME ~ CLOCK - : 4-----Finished writing...
-TIME ~ CLOCK - : 8------Entering loadNames...
-TIME ~ CLOCK - : 4-----Reading prefund names from binary cache
+TIME ~ CLOCK - <INFO>  : Loading names
 {"data": [
   {
     "deleted": false,

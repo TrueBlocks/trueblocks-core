@@ -15,6 +15,7 @@
  * the code inside of 'EXISTING_CODE' tags.
  */
 #include "cacheentry.h"
+#include "exportcontext.h"
 
 namespace qblocks {
 

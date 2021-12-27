@@ -166,7 +166,7 @@ bool visitBlock(uint64_t num, void* data) {
     }
 
     if (!opt->filterType.empty()) {
-        opt->handle_appearances(num, data);
+        opt->handle_appearances(num);
 
     } else {
         cout << doOneBlock(num, *opt);

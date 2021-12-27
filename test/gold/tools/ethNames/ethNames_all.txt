@@ -1,5 +1,6 @@
 chifra names  --all
 TEST[DATE|TIME] All:  true
+TIME ~ CLOCK - <INFO>  : Loading names
 tags	address	name	symbol	decimals
 81-Custom	0x0000000000000000000000000000000000000001	Account_1
 81-Custom	0x0000000000000000000000000000000000000002	Account_2	AC_2		2
@@ -33,7 +34,7 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x000100bb517e0c003200502a822083000a3b005d	Archer DAO: Voting Power Prism Proxy			18
 55-Defi	0x0001fb050fe7312791bf6475b96569d83f695c9f	Ygov.finance: yearn
 30-Contracts	0x000983ba1a675327f0940b56c2d49cd9c042dfbf	GU: Shiny Legendary Pack
-60-Airdrops	0x000ee67d5bec37ad37292da18516cc96d81e0242	RZM Sender 2 Airdrop
+90-Individuals:Other	0x000ee67d5bec37ad37292da18516cc96d81e0242	Name 0x000ee67d
 90-Individuals:Gitcoin Grants	0x00158a74921620b39e5c3afe4dca79feb2c2c143	Name 0x00158a74
 90-Individuals:Other	0x0015f3c39221b20016cebdbf8b19eb5acedca901	Name 0x0015f3c3
 91-Early:Addresses	0x001a589dda0d6be37632925eaf1256986b2c6ad0	Oraclize_id304
@@ -50,7 +51,7 @@ tags	address	name	symbol	decimals
 90-Individuals:DAO Curators	0x0037a6b811ffeb6e072da21179d11b1406371c63	Name 0x0037a6b8
 91-Early:Miners	0x0037ce3d4b7f8729c8607d8d0248252be68202c0	Miner_0027_260
 90-Individuals:Gitcoin Grants	0x003f6b20bfa4b5cab701960ecf73859cb3c095fc	Name 0x003f6b20
-60-Airdrops	0x00476aecb24edfed50aaf2e2361badbd8d3efdc2	HEALP Sender Airdrop
+90-Individuals:Other	0x00476aecb24edfed50aaf2e2361badbd8d3efdc2	Name 0x00476aec
 90-Individuals:Gitcoin Grants	0x004efb233c8d26ccc063061bee54f0be9302e6ed	Name 0x004efb23
 50-Tokens:ERC721	0x004f5683e183908d0f6b688239e3e2d5bbb066ca	Hall Of Fame Goat Lodge	HOFG		18
 31-Gitcoin:Grants	0x005241438caf3eacb05bb6543151f7af894c5b58	Grant 2763 - rugpullindex.com - Improving stake safety
@@ -72,6 +73,7 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x009c216b7e86e5c38af14fcd8c07aab3a2e7888e	Writing Hedge Contracts DAI	writeDAI		18
 91-Early:Addresses	0x009e06646ac4dece817f3e859850acd9b239bc48	@firepower
 50-Tokens:ERC20	0x009e864923b49263c7f10d19b7f8ab7a9a5aad33	Knoxstertoken	FKX		18
+31-Gitcoin:Grants	0x00a33c8379b03085ad0c0b4f6fb38c63deba8475	Grant 4103 - Supplements Death Match
 90-Individuals:TheCyber	0x00aa972319ddf819140ffe2a991c49a1bff54bad	Name 0x00aa9723
 31-Gitcoin:Grants	0x00b491d250b9bcce482b6e70321b0a5339d183a6	Grant 0976 Magical Machine Money
 50-Tokens:ERC721	0x00c396383400a1ef2eb401052dbf5d989b2da481	Cypher City	CYPHER		18
@@ -79,14 +81,14 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x00c4b398500645eb5da00a1a379a88b11683ba01	Eximchain Token	EXC		18
 90-Individuals:Gitcoin Grants	0x00c50c2f356130b1f65ac3e60afe40a6c348f1c9	Name 0x00c50c2f
 31-Gitcoin:Grants	0x00cf36853aa4024fb5bf5cc377dfd85844b411a0	Grant 0143 Dappnode - Panvala League
-60-Airdrops	0x00cfbbaf7ddb3a1476767101c12a0162e241fbad	Amber Token Airdrop
+90-Individuals:Other	0x00cfbbaf7ddb3a1476767101c12a0162e241fbad	Name 0x00cfbbaf
 50-Tokens:ERC20	0x00d0f137b51692d0ac708bde7b367a373865cffe	Zapper.Fi : Balancer Remove
 90-Individuals:Twitter	0x00dc74ce5d346b14b913071a032b7e2d29b0f2a6	Name 0x00dc74ce
 31-Gitcoin:Admin	0x00de4b13153673bcae2616b67bf822500d325fc3	Gitcoin Maintainer
 31-Gitcoin:Grants	0x00e4f5f746242e4d115bd65aac7c08fe5d38fb21	Grant 1839 the Etherchest Ecosystem
 90-Individuals:DAO Whales	0x00eb925836b163a4e5608e3bbd891a7cfab6bde9	Name 0x00eb9258
-60-Airdrops	0x00ee337d1aa5229d92889ac27fc3841573590289	VOS.AI Sender Airdrop
-60-Airdrops	0x00f78d023dd008c6e8bd3e16327466d58fb6b576	XNN Sender Airdrop
+90-Individuals:Other	0x00ee337d1aa5229d92889ac27fc3841573590289	Name 0x00ee337d
+90-Individuals:Other	0x00f78d023dd008c6e8bd3e16327466d58fb6b576	Name 0x00f78d02
 31-Gitcoin:Grants	0x00fe460a15b49d09f39b057d0f1a7b9444f4f2be	Grant 0624 Nescience Software Portfolio Rebalancing Direct Indexing
 80-Malicious:DaoDrain	0x0101f3be8ebb4bbd39a2e3b9a3639d4259832fd9	DAO Drain 075			1
 50-Tokens:ERC20	0x010496d8f3269ee9b05060bdf40c2d66e83e61dd	Digg	DIGG		18
@@ -148,6 +150,7 @@ tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x025d34acfd5c65cfd5a73209f99608c9e13338f3	Uniswap V2	UNI-V2		18
 50-Tokens:ERC721	0x026224a2940bfe258d0dbe947919b62fe321f042	lobsterdao	LOBS		18
 50-Tokens:ERC20	0x02725836ebf3ecdb1cdf1c7b02fcbbfaa2736af8	BitAir	BTCA		8
+50-Tokens:ERC20	0x0275e1001e293c46cfe158b3702aade0b99f88a5	Oiler	OIL		18
 50-Tokens:ERC20	0x028171bca77440897b824ca71d1c56cac55b68a3	Aave interest bearing DAI	aDAI		18
 50-Tokens:ERC20	0x0297083eef9c04ee22c89187b13363af2249042b	Andre KP9R	aKP9R		18
 31-Gitcoin:Grants	0x02a522d98ec2d2c3bbe91acc29ee7fd32ab880ab	Mintable: Deployer
@@ -184,9 +187,11 @@ tags	address	name	symbol	decimals
 31-Gitcoin:Grants	0x035032655b5b3784d359b56eb82c803bd971c582	Grant 2800 - LogicBeach Explainer Series
 50-Tokens:ERC20	0x03552d005d0f4262bf2d85fa2a3263541d4059c1	Miller Real Estate Holdings	RENT		6
 30-Contracts	0x0358629bd27fa559b88d0f41ea3da28d057c3414	Arbitrage Bot
+50-Tokens:ERC20	0x0360b415b56bd77def7ffd64ab9c0a9f63a84e4f	NL	NL Token		18
 50-Tokens:ERC20	0x036407f23d5e1c1486f7488332cf54bf06e5f09f	Alphabit	ABC		18
 50-Tokens:ERC20	0x036ea7048a4c1f28b299b9dd9e3c9fe9022e2a2a	ShibAkita Inu	SHIBAKITA		18
 50-Tokens:ERC20	0x0371a82e4a9d0a4312f3ee2ac9c6958512891372	Student Coin	STU		18
+31-Gitcoin:Grants	0x03798c0d62e6a0b0548114fb6241efa07ca4122d	Grant 4257 - Reputable DAO
 31-Gitcoin:Grants	0x037e414abacc799a598314153509b6b967608bf9	Grant 3059 - CO2KEN — Carbon as a money lego
 37-SelfDestructed	0x037e8f2125bf532f3e228991e051c8a7253b642c	Chainlink DAI-ETH Aggregator
 31-Gitcoin:Grants	0x0384610bf8e9292ec499145cb126e32a17e7ccd6	Grant 3475 - Nectar: L2 + Healthcare
@@ -198,7 +203,3 @@ tags	address	name	symbol	decimals
 30-Contracts	0x039b739a1e7353878bfb2f2a4ec23502f4885baa	Maker: Oasis
 30-Contracts	0x03a99d9235732d94a300bf7013acb11020484bf1	Arbitrage Bot
 50-Tokens:ERC20	0x03ab458634910aad20ef5f1c8ee96f1d6ac54919	Rai Reflex Index	RAI		18
-50-Tokens:ERC20	0x03b0ffc15a9a03d32a3a7c5839b3faf5174059cf	NZXT Protocol Governance Token (Shareholder only)	NZXT		6
-90-Individuals:Gitcoin Grants	0x03b45f0f660adcaa24fbacffd45e171464ec63a8	Name 0x03b45f0f
-90-Individuals:Gitcoin Grants	0x03b85b333c99ec60a6d540e4277d71d3a4c0975d	Name 0x03b85b33
-80-Malicious:Shanghai	0x03b904c8b912194464ae97eaa0381e5518446d25	Possibly Malicious 0x03b

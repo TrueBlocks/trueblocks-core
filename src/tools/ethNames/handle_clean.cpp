@@ -36,11 +36,13 @@ bool COptions::finishClean(CAccountName& account) {
     account.description = trim(substitute(account.description.substr(0, 255), "  ", " "));
 
     // Are we a pre-fund?
-    account.isPrefund = expContext().prefundMap[account.address] > 0;
+    account.isPrefund = prefundAt(account.address) > 0;
 
     bool wasContract = account.isContract;
     bool isContract = isContractAt(account.address, latestBlock);
-    bool isAirdrop = containsI(account.name, "airdrop") || containsI(account.tags, "airdrop");
+    bool isAirdrop = containsI(account.name, "airdrop");
+    if (account.tags == "60-Airdrops")
+        account.tags = "";
 
     if (!isContract) {
         // If the tag is not empty and not 30-Contracts, perserve it. Otherwise it's an individual
@@ -66,7 +68,10 @@ bool COptions::finishClean(CAccountName& account) {
 
         if (!name.empty() || !symbol.empty() || decimals > 0) {
             account.isErc20 = true;
-            account.source = account.source.empty() ? "On chain" : account.source;
+            account.source =
+                (account.source.empty() || account.source == "TrueBlocks.io" || account.source == "EtherScan.io")
+                    ? "On chain"
+                    : account.source;
 
             // Use the values from on-chain if we can...
             account.name = (!name.empty() ? name : account.name);
@@ -88,9 +93,11 @@ bool COptions::finishClean(CAccountName& account) {
             account.isErc20 = false;
             account.isErc721 = false;
         }
+        if (account.tags.empty())
+            account.tags = "30-Contracts";
     }
 
-    if (isAirdrop) {
+    if (isAirdrop && !containsI(account.name, "Airdrop")) {
         replaceAll(account.name, " airdrop", "");
         replaceAll(account.name, " Airdrop", "");
         account.name = account.name + " Airdrop";
@@ -167,9 +174,7 @@ bool COptions::handle_clean(void) {
     //        set.");
     LOG_WARN("The custom names file was NOT cleaned.", string_q(50, ' '));
 
-    ::remove(getCachePath("names/names.bin").c_str());
-    ::remove(getCachePath("names/names.db").c_str());
-    loadNames();
+    // Bin files will get rebuilt if the ascii file changed
 
     return false;  // don't proceed
 }

@@ -9,8 +9,6 @@ TIME ~ CLOCK - : 4-----not from cache
 TIME ~ CLOCK - : 4-----Loaded timestamp file
 TIME ~ CLOCK - : 4-----blockNumber.txid: 1433233	8
 TIME ~ CLOCK - : 4-----blockNumber.txid: 1433233	8
-TIME ~ CLOCK - : 8------Entering loadNames...
-TIME ~ CLOCK - : 8------Reading names from binary cache
 TIME ~ CLOCK - : 4-----Trial balance: regular
 TIME ~ CLOCK - : 4-----  hash: 0xaf85793cdd046530b1a0f8eb2ba45a26a4d9c4ef815f4896dc65182fe4322ddc
 TIME ~ CLOCK - : 4-----  ------------------------------
