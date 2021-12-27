@@ -37,6 +37,7 @@ func RunList(cmd *cobra.Command, args []string) error {
 	if opts.LastBlock > 0 {
 		exportPkg.Options.LastBlock = opts.LastBlock
 	}
+	exportPkg.Options.Globals = opts.Globals
 
 	return exportPkg.RunExport(cmd, args)
 	// EXISTING_CODE

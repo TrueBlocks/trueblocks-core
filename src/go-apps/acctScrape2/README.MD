@@ -76,7 +76,7 @@ limit the number of concurrent threads that will be processed
 
 default : 4
 
-Setting the `--max` option overrides any value in the (configuration file)[#configuration-file]
+Setting the `--max` option ove rrides any value in the (configuration file)[#configuration-file]
 
 ### logging
 
@@ -120,7 +120,7 @@ The maximum number of threads that will be used by acctScrape2
 max = 7
 ```
 
-This value, if set, overrides the default value (currently 4) but can be overriden by the command line parameter --max
+This value, if set, over rides the default value (currently 4) but can be overriden by the command line parameter --max
 
 ## TESTS
 

@@ -49,7 +49,6 @@ on      ,cmd  ,fast  ,transactions ,tools/getTrans ,fmt_junk             ,y    ,
 on      ,both ,fast  ,transactions ,tools/getTrans ,old_hang_bug         ,y    ,transactions = 6409270.108 & articulate & fmt = json
 on      ,both ,slow  ,transactions ,tools/getTrans ,old_parsing_bug_1    ,y    ,transactions = 0xfa62ab036f36b4755bfa0d6e3e641d08daa7e41e95b0c1f2246485702319efb8 & fmt = json & articulate
 on      ,both ,slow  ,transactions ,tools/getTrans ,old_parsing_bug_2    ,y    ,transactions = 0xfa62ab036f36b4755bfa0d6e3e641d08daa7e41e95b0c1f2246485702319efb8 & fmt = json & articulate
-on      ,both ,slow  ,transactions ,tools/getTrans ,broken_unparseable   ,y    ,transactions = 0xd886ab84df63e4eeb3ea07ccf12fa1f752afdc4d7b82ab4d71c95adae1d86b1f & fmt = json & articulate
 on      ,both ,slow  ,transactions ,tools/getTrans ,issue_1366           ,y    ,transactions = 0x557c3e14a8e86cd0b947d5c7790d332bbe52bb6ec8cba0aa532ddc717ffd0abe & fmt = json & trace & articulate
 on      ,both ,slow  ,transactions ,tools/getTrans ,issue_1583           ,y    ,transactions = 0x2f83088fa87f6054779a5511ec4f6b64f1e773e9bd7ec97956d6e04910d59303 & articulate & fmt = json
 on      ,both ,fast  ,transactions ,tools/getTrans ,fail_reconcile1      ,y    ,transactions = 0x8699f14af8aca02073f3008099526a6e77f724bee280e5e3c2fa64b589be9a63 & reconcile = 0x12 & fmt = json
@@ -68,3 +67,7 @@ off     ,both ,slow  ,transactions ,tools/getTrans ,articulate_proxy     ,y    ,
 
 local   ,both ,fast  ,transactions ,tools/getTrans ,to_file              ,y    ,transactions = 2222222.0 2332332.0 & fmt = json & to_file
 local   ,cmd  ,fast  ,transactions ,tools/getTrans ,mulit_line_mulit_txs ,n    ,file = cmd_file_1 & fmt = json
+
+#,,,,,,,this actually passes but fails if we remove code with the word unparsable in it which is a hack
+local   ,both ,fast  ,transactions, tools/getTrans ,unparsable           ,y    ,transactions = 12596470.26 & articulate & fmt = json
+local   ,both ,slow  ,transactions ,tools/getTrans ,broken_unparseable   ,y    ,transactions = 0xd886ab84df63e4eeb3ea07ccf12fa1f752afdc4d7b82ab4d71c95adae1d86b1f & fmt = json & articulate

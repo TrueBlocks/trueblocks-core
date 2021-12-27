@@ -27,6 +27,7 @@ var chifraCmd = &cobra.Command{
 	Short: "access to all TrueBlocks tools (chifra <cmd> --help for more)",
 	Long: `Purpose:
   Access to all TrueBlocks tools (chifra <cmd> --help for more).`,
+	Version: versionText,
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.

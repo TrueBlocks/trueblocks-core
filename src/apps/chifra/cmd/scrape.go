@@ -23,7 +23,7 @@ var scrapeCmd = &cobra.Command{
 	Use:     usageScrape,
 	Short:   shortScrape,
 	Long:    longScrape,
-	Version: "GHC-TrueBlocks//0.17.0-alpha",
+	Version: versionText,
 	RunE:    scrapePkg.RunScrape,
 }
 

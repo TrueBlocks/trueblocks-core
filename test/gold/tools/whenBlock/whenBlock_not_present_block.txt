@@ -1,4 +1,4 @@
 chifra when  8000000
 TEST[DATE|TIME] Blocks:  [8000000]
-blocknumber	timestamp	date	name
+blockNumber	timestamp	date	name
 8000000	1561100149	2019-06-21 06:55:49 UTC

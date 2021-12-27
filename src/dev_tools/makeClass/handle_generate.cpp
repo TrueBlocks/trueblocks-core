@@ -415,13 +415,23 @@ string_q getCaseGetCode(const CParameterArray& fieldsIn) {
                     outStream << ("return [{PTR}]" + p.name + ".Format(FMT_JSON);");
 
                 } else if (p.type == "addr" || p.type == "address") {
-                    outStream << ("return addr_2_Str([{PTR}]" + p.name + ");");
-
+                    if (p.maxWidth != NOPOS) {
+                        outStream << "return addr_2_Str([{PTR}]" << p.name << ".substr(0, " << p.maxWidth << "));";
+                    } else {
+                        outStream << "return addr_2_Str([{PTR}]" << p.name << ");";
+                    }
                 } else if (p.type == "hash") {
-                    outStream << ("return hash_2_Str([{PTR}]" + p.name + ");");
-
+                    if (p.maxWidth != NOPOS) {
+                        outStream << "return hash_2_Str([{PTR}]" << p.name << ".substr(0, " << p.maxWidth << "));";
+                    } else {
+                        outStream << "return hash_2_Str([{PTR}]" << p.name << ");";
+                    }
                 } else if (startsWith(p.type, "bytes")) {
-                    outStream << ("return [{PTR}]" + p.name + ";");
+                    if (p.maxWidth != NOPOS) {
+                        outStream << "return [{PTR}]" << p.name << ".substr(0, " << p.maxWidth << ");";
+                    } else {
+                        outStream << "return [{PTR}]" << p.name << ";";
+                    }
 
                 } else if (p.type == "uint8") {
                     outStream << ("return uint_2_Str([{PTR}]" + p.name + ");");
@@ -514,7 +524,11 @@ string_q getCaseGetCode(const CParameterArray& fieldsIn) {
                     outStream << (objCase);
 
                 } else {
-                    outStream << ("return [{PTR}]" + p.name + ";");
+                    if (p.maxWidth != NOPOS) {
+                        outStream << "return [{PTR}]" << p.name << ".substr(0, " << p.maxWidth << ");";
+                    } else {
+                        outStream << "return [{PTR}]" << p.name << ";";
+                    }
                 }
                 outStream << endl << "```}" << endl;
             }
@@ -562,11 +576,21 @@ string_q getCaseSetCode(const CParameterArray& fieldsIn) {
                     outStream << (p.name + " = str_2_Date(fieldValue);\n````return true;");
 
                 } else if (p.type == "address") {
-                    outStream << (p.name + " = str_2_Addr(fieldValue);\n````return true;");
-
+                    if (p.maxWidth != NOPOS) {
+                        outStream << p.name << " = str_2_Addr("
+                                  << "fieldValue.substr(0, " << p.maxWidth << ")"
+                                  << ");\n````return true;";
+                    } else {
+                        outStream << (p.name + " = str_2_Addr(fieldValue);\n````return true;");
+                    }
                 } else if (p.type == "hash") {
-                    outStream << (p.name + " = str_2_Hash(fieldValue);\n````return true;");
-
+                    if (p.maxWidth != NOPOS) {
+                        outStream << p.name << " = str_2_Hash("
+                                  << "fieldValue.substr(0, " << p.maxWidth << ")"
+                                  << ");\n````return true;";
+                    } else {
+                        outStream << (p.name + " = str_2_Hash(fieldValue);\n````return true;");
+                    }
                 } else if (p.type == "blknum") {
                     outStream << (p.name + " = str_2_Uint(fieldValue);\n````return true;");
 
@@ -671,7 +695,13 @@ string_q getCaseSetCode(const CParameterArray& fieldsIn) {
                     outStream << ("return " + p.name + ".parseJson3(fieldValue);");
 
                 } else {
-                    outStream << (p.name + " = fieldValue;\n````return true;");
+                    if (p.maxWidth != NOPOS) {
+                        outStream << p.name << " = "
+                                  << "fieldValue.substr(0, " << p.maxWidth << ")"
+                                  << ";\n````return true;";
+                    } else {
+                        outStream << (p.name + " = fieldValue;\n````return true;");
+                    }
                 }
                 outStream << endl << "```}" << endl;
             }

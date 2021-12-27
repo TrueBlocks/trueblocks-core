@@ -16,9 +16,13 @@ func (opts *MonitorsOptions) ValidateMonitors() error {
 	}
 
 	if !opts.Globals.ApiMode && !Options.Clean {
-		err := validate.ValidateAtLeastOneAddr(opts.Addrs)
-		if err != nil {
-			return err
+		if len(opts.Globals.File) > 0 {
+			// Do nothing
+		} else {
+			err := validate.ValidateAtLeastOneAddr(opts.Addrs)
+			if err != nil {
+				return err
+			}
 		}
 	}
 

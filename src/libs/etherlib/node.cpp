@@ -200,8 +200,8 @@ size_t queryUncleCount(const string_q& datIn) {
 bool getTransaction(CTransaction& trans, blknum_t blockNum, txnum_t txid) {
     if (fileExists(getBinaryCacheFilename(CT_TXS, blockNum, txid))) {
         readTransFromBinary(trans, getBinaryCacheFilename(CT_TXS, blockNum, txid));
-        trans.pBlock = NULL;  // otherwise, it's pointing to an unintialized item
-        trans.finishParse();  // set the pointer for the receipt
+        trans.pBlock = nullptr;  // otherwise, it's pointing to an unintialized item
+        trans.finishParse();     // set the pointer for the receipt
         return true;
     }
 
@@ -785,6 +785,86 @@ bool readFromJson(CBaseNode& node, const string_q& fileName) {
 }
 
 //-------------------------------------------------------------------------
+static string_q getFilename_local(cache_t type, const string_q& item1, const string_q& item2, const string_q& item3,
+                                  bool asPath) {
+    ostringstream os;
+    switch (type) {
+        case CT_BLOCKS:
+            os << "blocks/";
+            break;
+        case CT_BLOOMS:
+            os << "blooms/";
+            break;
+        case CT_TXS:
+            os << "txs/";
+            break;
+        case CT_TRACES:
+            os << "traces/";
+            break;
+        case CT_ACCTS:
+            os << "accts/";
+            break;
+        case CT_MONITORS:
+            os << "monitors/";
+            break;
+        case CT_RECONS:
+            os << "recons/";
+            break;
+        case CT_APPS:
+            os << "apps/";
+            break;
+        default:
+            ASSERT(0);  // should not happen
+    }
+
+    if (type == CT_ACCTS || type == CT_MONITORS) {
+        string_q addr = toLower(substitute(item1, "0x", ""));
+        os << extract(addr, 0, 4) << "/" << extract(addr, 4, 4) << "/" << addr << ".bin";
+
+    } else if (type == CT_RECONS) {
+        string_q addr = toLower(substitute(item1, "0x", ""));
+        string_q part1 = extract(addr, 0, 4);
+        string_q part2 = extract(addr, 4, 4);
+        string_q part3 = addr;
+        replace(part3, part1, "");  // do not collapse
+        replace(part3, part2, "");  // do not collapse
+        os << part1 << "/" << part2 << "/" << part3 << "/";
+        if (item2 != padNum9((uint64_t)NOPOS))
+            os << item2 << "." << item3 << ".bin";
+
+    } else {
+        os << extract(item1, 0, 2) << "/" << extract(item1, 2, 2) << "/" << extract(item1, 4, 2) << "/";
+        if (!asPath) {
+            os << item1;
+            os << ((type == CT_TRACES || type == CT_TXS || type == CT_APPS) ? "-" + item2 : "");
+            os << (type == CT_TRACES && !item3.empty() ? "-" + item3 : "");
+            os << ".bin";
+        }
+    }
+    return getCachePath(os.str());
+}
+
+//-------------------------------------------------------------------------
+string_q getBinaryCachePath(cache_t type, blknum_t bn, txnum_t txid, const string_q& trc_id) {
+    return getFilename_local(type, padNum9(bn), padNum5(txid), trc_id, true);
+}
+
+//-------------------------------------------------------------------------
+string_q getBinaryCacheFilename(cache_t type, blknum_t bn, txnum_t txid, const string_q& trc_id) {
+    return getFilename_local(type, padNum9(bn), padNum5(txid), trc_id, false);
+}
+
+//-------------------------------------------------------------------------
+string_q getBinaryCachePath(cache_t type, const address_t& addr, blknum_t bn, txnum_t txid) {
+    return getFilename_local(type, addr, padNum9(bn), padNum5(txid), true);
+}
+
+//-------------------------------------------------------------------------
+string_q getBinaryCacheFilename(cache_t type, const address_t& addr, blknum_t bn, txnum_t txid) {
+    return getFilename_local(type, addr, padNum9(bn), padNum5(txid), false);
+}
+
+//-------------------------------------------------------------------------
 bool forEveryBlock(BLOCKVISITFUNC func, void* data, uint64_t start, uint64_t count, uint64_t skip) {
     // Here we simply scan the numbers and either read from disc or query the node
     if (!func)
@@ -852,7 +932,7 @@ bool forEveryTransaction(TRANSVISITFUNC func, void* data, const string_q& trans_
         CTransaction trans;
         if (hasHex) {
             if (hasDot) {
-                LOG4("blockHash.txid", hash, txid);
+                LOG4("blockHash.txid", " ", hash, " ", txid);
                 getTransaction(trans, hash, txid);
 
             } else {
@@ -861,7 +941,7 @@ bool forEveryTransaction(TRANSVISITFUNC func, void* data, const string_q& trans_
             }
         } else {
             blknum_t blockNum = str_2_Uint(hash);  // so the input is poorly named, sue me
-            LOG4("blockNum.txid", blockNum, txid);
+            LOG4("blockNum.txid", " ", blockNum, " ", txid);
             getTransaction(trans, blockNum, txid);
             if (fileExists(getBinaryCacheFilename(CT_TXS, blockNum, txid)))
                 fromCache = true;
@@ -935,13 +1015,17 @@ biguint_t weiPerEther(void) {
 }
 
 //-----------------------------------------------------------------------
-string_q headerRow(const string_q& formatIn, const string_q& sep1, const string_q& sep2) {
+string_q headerRow(const string_q& className, const string_q& formatIn, const string_q& sep1, const string_q& sep2) {
     string_q format = substitute(substitute(formatIn, "{", "<field>"), "}", "</field>");
     string_q ret;
     while (contains(format, "<field>")) {
         string_q field = toLower(snagFieldClear(format, "field"));
         ret = ret + (sep2 + field + sep2 + sep1);
     }
+    // TODO: This is a pretty bad hack that will get corrected once we port entirely to GoLang
+    extern string_q renameExportFields(const string_q& className, const string_q& inStr);
+    ret = renameExportFields(className, ret);
+
     return trim(ret, sep1[0]);
 }
 
@@ -967,12 +1051,12 @@ string_q exportPreamble(const string_q& format, const string_q& className) {
         case TXT1:
             if (format.empty())
                 return "";
-            os << headerRow(format, "\t", "");
+            os << headerRow(className, format, "\t", "");
             break;
         case CSV1:
             if (format.empty())
                 return "";
-            os << headerRow(format, ",", "\"");
+            os << headerRow(className, format, ",", "\"");
             break;
         case YAML1:
             break;

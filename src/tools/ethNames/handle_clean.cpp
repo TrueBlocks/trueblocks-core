@@ -12,61 +12,102 @@
  *-------------------------------------------------------------------------------------------*/
 #include "options.h"
 
-//--------------------------------------------------------------------
-void COptions::finishClean(CAccountName& account) {
-    LOG_INFO("Cleaning ", account.address, "                                  \r");
-    if (startsWith(account.tags, "80-Malicious"))
-        return;
+static const string_q erc721QueryBytes = "0x" + padRight(substitute(_INTERFACE_ID_ERC721, "0x", ""), 64, '0');
+inline bool isErc721(const address_t& addr, const CAbi& abi_spec, blknum_t latest) {
+    string_q val = getTokenState(addr, "supportsInterface", abi_spec, latest, erc721QueryBytes);
+    return val == "T" || val == "true";
+}
 
-    account.isContract = isContractAt(account.address, latestBlock) || account.isContract;
-    if (account.isContract) {
+//--------------------------------------------------------------------
+bool COptions::finishClean(CAccountName& account) {
+    if (account.tags > "799999")  // tags named higher than or equal to 80 are hand edited
+        return true;
+
+    // Clean up source
+    if (containsI(account.source, "etherscan"))
+        account.source = "EtherScan.io";
+    if (containsI(account.source, "trueblocks"))
+        account.source = "TrueBlocks.io";
+    account.source = trim(substitute(account.source, "  ", " "));
+
+    // Clean up and time the description
+    if (account.description == "false")
+        account.description = "";
+    account.description = trim(substitute(account.description.substr(0, 255), "  ", " "));
+
+    // Are we a pre-fund?
+    account.isPrefund = prefundAt(account.address) > 0;
+
+    bool wasContract = account.isContract;
+    bool isContract = isContractAt(account.address, latestBlock);
+    bool isAirdrop = containsI(account.name, "airdrop");
+    if (account.tags == "60-Airdrops")
+        account.tags = "";
+
+    if (!isContract) {
+        // If the tag is not empty and not 30-Contracts, perserve it. Otherwise it's an individual
+        account.tags = !account.tags.empty() && account.tags != "30-Contracts" ? account.tags : "90-Individuals:Other";
+        if (wasContract) {
+            // This used to be a contract and now is not, so it must be a self destruct
+            account.isContract = true;
+            account.tags = "37-SelfDestructed";
+        }
+
+    } else {
+        // This is a contract...
+        account.isContract = true;
+
+        // ...let's see if it's an ERC20...
         string_q name = getTokenState(account.address, "name", abi_spec, latestBlock);
+        if (countOf(name, '-') > 3) {
+            // some sort of hacky renaming for Kickback
+            name = account.name;
+        }
         string_q symbol = getTokenState(account.address, "symbol", abi_spec, latestBlock);
         uint64_t decimals = str_2_Uint(getTokenState(account.address, "decimals", abi_spec, latestBlock));
 
-        account.isErc20 = !name.empty() || !symbol.empty() || decimals > 0;
-        if (account.isErc20) {
-            account.decimals = decimals ? decimals : 18;
-            account.symbol = (symbol.empty() ? account.symbol : symbol);
+        if (!name.empty() || !symbol.empty() || decimals > 0) {
+            account.isErc20 = true;
+            account.source =
+                (account.source.empty() || account.source == "TrueBlocks.io" || account.source == "EtherScan.io")
+                    ? "On chain"
+                    : account.source;
 
-            bool isEtherscan = contains(toLower(account.source), "etherscan");
-            bool isTrueblocks = contains(toLower(account.source), "trueblocks");
-            if (account.source.empty() || isEtherscan || isTrueblocks) {
-                // if the data is from us or etherscan or doesn't exist, fix it if we can
-                if (name.empty())
-                    name = account.name;
-                bool isAirdrop =
-                    contains(toLower(account.name), "airdrop") || contains(toLower(account.tags), "airdrop");
-                account.name = name + (isAirdrop && !contains(toLower(name), "airdrop") ? " Airdrop" : "");
-                account.source = "On chain";
+            // Use the values from on-chain if we can...
+            account.name = (!name.empty() ? name : account.name);
+            account.symbol = (!symbol.empty() ? symbol : account.symbol);
+            account.decimals = decimals ? decimals : (account.decimals ? account.decimals : 18);
+            account.isErc721 = isErc721(account.address, abi_spec, latestBlock);
+            if (account.isErc721) {
+                account.tags = "50-Tokens:ERC721";
+
+            } else {
+                // This is an ERC20, so if we've not tagged it specifically, make it thus
+                if (account.tags.empty() || containsI(account.tags, "token") ||
+                    containsI(account.tags, "30-contracts") || containsI(account.tags, "55-defi") || isAirdrop) {
+                    account.tags = "50-Tokens:ERC20";
+                }
             }
 
-            string_q bytes = "0x" + padRight(substitute(_INTERFACE_ID_ERC721, "0x", ""), 64, '0');
-            account.isErc721 =
-                str_2_Bool(getTokenState(account.address, "supportsInterface", abi_spec, latestBlock, bytes));
-
-            string_q lTag = toLower(account.tags);
-            bool maybe = (account.tags.empty() || contains(lTag, "token") || contains(lTag, "30-contracts") ||
-                          contains(lTag, "55-defi"));
-            account.tags = maybe ? (account.isErc721 ? "50-Tokens:ERC721" : "50-Tokens:ERC20") : account.tags;
+        } else {
+            account.isErc20 = false;
+            account.isErc721 = false;
         }
-    } else {
-        account.tags = account.tags == "30-Contracts" ? "90-Individuals:Other" : account.tags;
+        if (account.tags.empty())
+            account.tags = "30-Contracts";
     }
 
-    if (contains(toLower(account.source), "etherscan"))
-        account.source = "EtherScan.io";
-    if (contains(account.source, "trueblocks"))
-        account.source = "TrueBlocks";
+    if (isAirdrop && !containsI(account.name, "Airdrop")) {
+        replaceAll(account.name, " airdrop", "");
+        replaceAll(account.name, " Airdrop", "");
+        account.name = account.name + " Airdrop";
+    }
 
+    // Clean up name and symbol
     account.name = trim(substitute(account.name, "  ", " "));
     account.symbol = trim(substitute(account.symbol, "  ", " "));
-    account.source = trim(substitute(account.source, "  ", " "));
-    account.description = trim(substitute(account.description, "  ", " "));
-    if (account.description == "false")
-        account.description = "";
 
-    account.isPrefund = expContext().prefundMap[account.address] > 0;
+    return !account.name.empty();
 }
 
 //--------------------------------------------------------------------
@@ -83,6 +124,7 @@ bool COptions::cleanNames(const string_q& sourceIn, const string_q& destIn) {
     cerr << "Processing names file (" << source << ") into " << dest << endl;
 
     string_q contents = asciiFileToString(source);
+    size_t nRecords = countOf(contents, '\n');
 
     CStringArray fields;
     string_q fieldStr = toLower(nextTokenClear(contents, '\n'));
@@ -90,8 +132,11 @@ bool COptions::cleanNames(const string_q& sourceIn, const string_q& destIn) {
 
     CAccountName name;
     CAccountNameArray names;
+    size_t cnt = 0;
     while (name.parseText(fields, contents)) {
-        finishClean(name);
+        LOG_INFO("Cleaning ", ++cnt, " of ", nRecords, ": ", name.address, "                                  \r");
+        if (!finishClean(name))
+            continue;
         names.push_back(name);
     }
 
@@ -129,9 +174,7 @@ bool COptions::handle_clean(void) {
     //        set.");
     LOG_WARN("The custom names file was NOT cleaned.", string_q(50, ' '));
 
-    ::remove(getCachePath("names/names.bin").c_str());
-    ::remove(getCachePath("names/names.db").c_str());
-    loadNames();
+    // Bin files will get rebuilt if the ascii file changed
 
     return false;  // don't proceed
 }

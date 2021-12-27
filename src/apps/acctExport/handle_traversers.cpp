@@ -17,8 +17,14 @@ bool COptions::handle_traversers(void) {
     CDynamicTraverser lib(load);
     if (!lib.is_valid())
         return usage("Dynamic library " + load + " was found but is not valid.");
+    if (!loadNames())
+        return usage("Could not load names database.");
 
     auto libFactory = lib.get_function<CTraverser*(void)>("makeTraverser");
+    if (!libFactory) {
+        LOG_ERR("Could not instantiate traverser. Quitting.");
+        return false;
+    }
     LOG_INFO(bBlue, "Instantiating traverser", cOff);
     CTraverser* trav = libFactory();
     if (trav->dataFunc == noopFunc || trav->dataFunc == nullptr)

@@ -22,6 +22,8 @@
 #include "database.h"
 #include "toml.h"
 #include "exportcontext.h"
+#include "prefunds.h"
+#include "names.h"
 #include "sfarchive.h"
 #include "fielddata.h"
 #include "curl_code.h"

@@ -1,6 +1,6 @@
 chifra  quotes --help --log_level 2
 Purpose:
-  Update or display Ethereum price data. This tool has been deprecated.
+  Update or display Ethereum price data, this tool has been deprecated.
 
 Usage:
   chifra quotes [flags]

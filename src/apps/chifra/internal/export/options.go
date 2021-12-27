@@ -39,6 +39,7 @@ type ExportOptions struct {
 	Relevant    bool
 	Emitter     []string
 	Topic       []string
+	Asset       []string
 	Clean       bool
 	Freshen     bool
 	Staging     bool
@@ -47,6 +48,7 @@ type ExportOptions struct {
 	Reversed    bool
 	ByDate      bool
 	SummarizeBy string
+	Deep        bool
 	SkipDdos    bool
 	MaxTraces   uint64
 	FirstBlock  uint64
@@ -76,6 +78,7 @@ func (opts *ExportOptions) TestLog() {
 	logger.TestLog(opts.Relevant, "Relevant: ", opts.Relevant)
 	logger.TestLog(len(opts.Emitter) > 0, "Emitter: ", opts.Emitter)
 	logger.TestLog(len(opts.Topic) > 0, "Topic: ", opts.Topic)
+	logger.TestLog(len(opts.Asset) > 0, "Asset: ", opts.Asset)
 	logger.TestLog(opts.Clean, "Clean: ", opts.Clean)
 	logger.TestLog(opts.Freshen, "Freshen: ", opts.Freshen)
 	logger.TestLog(opts.Staging, "Staging: ", opts.Staging)
@@ -84,6 +87,7 @@ func (opts *ExportOptions) TestLog() {
 	logger.TestLog(opts.Reversed, "Reversed: ", opts.Reversed)
 	logger.TestLog(opts.ByDate, "ByDate: ", opts.ByDate)
 	logger.TestLog(len(opts.SummarizeBy) > 0, "SummarizeBy: ", opts.SummarizeBy)
+	logger.TestLog(opts.Deep, "Deep: ", opts.Deep)
 	logger.TestLog(opts.SkipDdos, "SkipDdos: ", opts.SkipDdos)
 	logger.TestLog(opts.MaxTraces != 250, "MaxTraces: ", opts.MaxTraces)
 	logger.TestLog(opts.FirstBlock != 0, "FirstBlock: ", opts.FirstBlock)
@@ -144,6 +148,9 @@ func (opts *ExportOptions) ToCmdLine() string {
 	for _, topic := range opts.Topic {
 		options += " --topic " + topic
 	}
+	for _, asset := range opts.Asset {
+		options += " --asset " + asset
+	}
 	if opts.Clean {
 		options += " --clean"
 	}
@@ -167,6 +174,9 @@ func (opts *ExportOptions) ToCmdLine() string {
 	}
 	if len(opts.SummarizeBy) > 0 {
 		options += " --summarize_by " + opts.SummarizeBy
+	}
+	if opts.Deep {
+		options += " --deep"
 	}
 	if opts.SkipDdos {
 		options += " --skip_ddos"
@@ -251,6 +261,11 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ExportOptions {
 				s := strings.Split(val, " ") // may contain space separated items
 				opts.Topic = append(opts.Topic, s...)
 			}
+		case "asset":
+			for _, val := range value {
+				s := strings.Split(val, " ") // may contain space separated items
+				opts.Asset = append(opts.Asset, s...)
+			}
 		case "clean":
 			opts.Clean = true
 		case "freshen":
@@ -267,6 +282,8 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ExportOptions {
 			opts.ByDate = true
 		case "summarizeBy":
 			opts.SummarizeBy = value[0]
+		case "deep":
+			opts.Deep = true
 		case "skipDdos":
 			opts.SkipDdos = true
 		case "maxTraces":

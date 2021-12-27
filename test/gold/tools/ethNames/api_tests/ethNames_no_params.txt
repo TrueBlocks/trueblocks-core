@@ -11,7 +11,7 @@ names?
       "description": ""
     },
     {
-      "tags": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC721",
       "address": "0x0000000000001b84b1cb32787b0d64758d019317",
       "name": "HomeWork 🏠🛠️",
       "symbol": "HWK",
@@ -22,7 +22,7 @@ names?
     {
       "tags": "50-Tokens:ERC20",
       "address": "0x0000000000004946c0e9f43f4dee607b0ef1fa1c",
-      "name": "1inch.exchange v2",
+      "name": "Chi Gastoken by 1inch",
       "symbol": "CHI",
       "source": "On chain",
       "decimals": 18,
@@ -146,6 +146,15 @@ names?
       "description": ""
     },
     {
+      "tags": "31-Gitcoin:Grants",
+      "address": "0x0000000fcdf5ba49794f4151d6daff4505bc47d1",
+      "name": "Grant 3596 - The Uniswap v3 Options Education Fund",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/3596/the-uniswap-v3-options-education-fund",
+      "decimals": 0,
+      "description": ""
+    },
+    {
       "tags": "50-Tokens:ERC20",
       "address": "0x00000100f2a2bd000715001920eb70d229700085",
       "name": "TrueCAD",
@@ -188,6 +197,15 @@ names?
       "symbol": "TAUD",
       "source": "On chain",
       "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "31-Gitcoin:Grants",
+      "address": "0x000061a8f22a1e60ba0b3caadfa958e954fc2b6a",
+      "name": "Grant 2195 - Best Practicers",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/2195/best-practicers",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -236,9 +254,9 @@ names?
       "description": ""
     },
     {
-      "tags": "60-Airdrops",
+      "tags": "90-Individuals:Other",
       "address": "0x000ee67d5bec37ad37292da18516cc96d81e0242",
-      "name": "RZM Airdrop Sender 2",
+      "name": "Name 0x000ee67d",
       "symbol": "",
       "source": "TrueBlocks.io",
       "decimals": 0,
@@ -254,9 +272,9 @@ names?
       "description": ""
     },
     {
-      "tags": "30-Contracts",
+      "tags": "90-Individuals:Other",
       "address": "0x0015f3c39221b20016cebdbf8b19eb5acedca901",
-      "name": "Hacker Gold Sender",
+      "name": "Name 0x0015f3c3",
       "symbol": "",
       "source": "TrueBlocks.io",
       "decimals": 0,
@@ -344,6 +362,15 @@ names?
       "description": ""
     },
     {
+      "tags": "31-Gitcoin:Grants",
+      "address": "0x0035cc37599241d007d0aba1fb931c5fa757f7a1",
+      "name": "Grant 2388 - The Commons Swarm: An Augmented Bonding Curve model for DAOs",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/2388/the-commons-swarm-an-augmented-bonding-curve-mode",
+      "decimals": 0,
+      "description": ""
+    },
+    {
       "tags": "90-Individuals:Gitcoin Grants",
       "address": "0x0035fc5208ef989c28d47e552e92b0c507d2b318",
       "name": "Name 0x0035fc52",
@@ -380,9 +407,9 @@ names?
       "description": ""
     },
     {
-      "tags": "60-Airdrops",
+      "tags": "90-Individuals:Other",
       "address": "0x00476aecb24edfed50aaf2e2361badbd8d3efdc2",
-      "name": "HEALP Airdrop Sender",
+      "name": "Name 0x00476aec",
       "symbol": "",
       "source": "EtherScan.io",
       "decimals": 0,
@@ -404,6 +431,15 @@ names?
       "symbol": "HOFG",
       "source": "On chain",
       "decimals": 18,
+      "description": ""
+    },
+    {
+      "tags": "31-Gitcoin:Grants",
+      "address": "0x005241438caf3eacb05bb6543151f7af894c5b58",
+      "name": "Grant 2763 - rugpullindex.com - Improving stake safety",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/2763/rugpullindexcom-improving-stake-safety",
+      "decimals": 0,
       "description": ""
     },
     {
@@ -569,6 +605,15 @@ names?
       "description": "FortKnoxster offers end-to-end encrypted inbox, chat, decentralized storage, calling, video conferencing, voice messages and much more."
     },
     {
+      "tags": "31-Gitcoin:Grants",
+      "address": "0x00a33c8379b03085ad0c0b4f6fb38c63deba8475",
+      "name": "Grant 4103 - Supplements Death Match",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/4103/supplements-death-match",
+      "decimals": 0,
+      "description": ""
+    },
+    {
       "tags": "90-Individuals:TheCyber",
       "address": "0x00aa972319ddf819140ffe2a991c49a1bff54bad",
       "name": "Name 0x00aa9723",
@@ -587,7 +632,7 @@ names?
       "description": ""
     },
     {
-      "tags": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC721",
       "address": "0x00c396383400a1ef2eb401052dbf5d989b2da481",
       "name": "Cypher City",
       "symbol": "CYPHER",
@@ -632,9 +677,9 @@ names?
       "description": ""
     },
     {
-      "tags": "60-Airdrops",
+      "tags": "90-Individuals:Other",
       "address": "0x00cfbbaf7ddb3a1476767101c12a0162e241fbad",
-      "name": "Amber Airdrop Token",
+      "name": "Name 0x00cfbbaf",
       "symbol": "",
       "source": "TrueBlocks.io",
       "decimals": 0,
@@ -686,18 +731,18 @@ names?
       "description": ""
     },
     {
-      "tags": "60-Airdrops",
+      "tags": "90-Individuals:Other",
       "address": "0x00ee337d1aa5229d92889ac27fc3841573590289",
-      "name": "VOS.AI Airdrop Sender",
+      "name": "Name 0x00ee337d",
       "symbol": "",
       "source": "TrueBlocks.io",
       "decimals": 0,
       "description": ""
     },
     {
-      "tags": "60-Airdrops",
+      "tags": "90-Individuals:Other",
       "address": "0x00f78d023dd008c6e8bd3e16327466d58fb6b576",
-      "name": "XNN Airdrop Sender",
+      "name": "Name 0x00f78d02",
       "symbol": "",
       "source": "TrueBlocks.io",
       "decimals": 0,
@@ -767,11 +812,20 @@ names?
       "description": "https://loft.radio/"
     },
     {
+      "tags": "31-Gitcoin:Grants",
+      "address": "0x011c2c1433b36a524b548444ae2f20c015427d04",
+      "name": "Grant 0491 - Tokamak Network: Decentralized, Scalable, Turing Complete Layer 2 Plasma",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/491/tokamak-network-decentralized-scalable-turing-com",
+      "decimals": 0,
+      "description": ""
+    },
+    {
       "tags": "34-ENS",
       "address": "0x012233b3c8177f0778d910ed88170b82de3bfe57",
       "name": "Old ENS Registrar",
       "symbol": "",
-      "source": "Trueblocks.io",
+      "source": "TrueBlocks.io",
       "decimals": 0,
       "description": ""
     },
@@ -785,7 +839,7 @@ names?
       "description": ""
     },
     {
-      "tags": "30-Contracts:Chainlink",
+      "tags": "37-SelfDestructed",
       "address": "0x0133aa47b6197d0ba090bf2cd96626eb71ffd13c",
       "name": "Chainlink BTC-ETH Aggregator",
       "symbol": "",
@@ -1109,7 +1163,7 @@ names?
       "description": ""
     },
     {
-      "tags": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC721",
       "address": "0x020171085bcd43b6fd36ad8c95ad61848b1211a2",
       "name": "yearn Gift NFT",
       "symbol": "yGIFT",
@@ -1136,9 +1190,9 @@ names?
       "description": ""
     },
     {
-      "tags": "30-Contracts",
+      "tags": "90-Individuals:Other",
       "address": "0x020ca66c30bec2c4fe3861a94e4db4a498a35872",
-      "name": "BAYT Seller to BTeg",
+      "name": "Name 0x020ca66c",
       "symbol": "",
       "source": "",
       "decimals": 0,
@@ -1226,6 +1280,15 @@ names?
       "description": ""
     },
     {
+      "tags": "50-Tokens:ERC721",
+      "address": "0x026224a2940bfe258d0dbe947919b62fe321f042",
+      "name": "lobsterdao",
+      "symbol": "LOBS",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
       "tags": "50-Tokens:ERC20",
       "address": "0x02725836ebf3ecdb1cdf1c7b02fcbbfaa2736af8",
       "name": "BitAir",
@@ -1233,6 +1296,15 @@ names?
       "source": "On chain",
       "decimals": 8,
       "description": "Payments solutions for the travel industry."
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x0275e1001e293c46cfe158b3702aade0b99f88a5",
+      "name": "Oiler",
+      "symbol": "OIL",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
     },
     {
       "tags": "50-Tokens:ERC20",
@@ -1253,7 +1325,7 @@ names?
       "description": ""
     },
     {
-      "tags": "30-Contracts",
+      "tags": "31-Gitcoin:Grants",
       "address": "0x02a522d98ec2d2c3bbe91acc29ee7fd32ab880ab",
       "name": "Mintable: Deployer",
       "symbol": "",
@@ -1334,7 +1406,7 @@ names?
       "description": "https://twitter.com/EthCatHerders"
     },
     {
-      "tags": "30-Contracts:Chainlink",
+      "tags": "37-SelfDestructed",
       "address": "0x02d5c618dbc591544b19d0bf13543c0728a3c4ec",
       "name": "Chainlink CHF-USD Aggregator",
       "symbol": "",
@@ -1487,6 +1559,15 @@ names?
       "description": ""
     },
     {
+      "tags": "50-Tokens:ERC721",
+      "address": "0x031920cc2d9f5c10b444fd44009cd64f829e7be2",
+      "name": "CryptoZunks",
+      "symbol": "ZUNK",
+      "source": "On chain",
+      "decimals": 18,
+      "description": ""
+    },
+    {
       "tags": "50-Tokens:ERC20",
       "address": "0x0327112423f3a68efdf1fcf402f6c5cb9f7c33fd",
       "name": "PieDAO BTC++",
@@ -1505,7 +1586,7 @@ names?
       "description": ""
     },
     {
-      "tags": "50-Tokens:ERC20",
+      "tags": "50-Tokens:ERC721",
       "address": "0x032dd2a3c6d234aa9620d65eb618fcdc72be3dbb",
       "name": "HashDemons",
       "symbol": "HASHDEMONS",
@@ -1523,6 +1604,15 @@ names?
       "description": "The ICO market is becoming more regulated, but this isn‚Äö√Ñ√¥t stopping scams from penetrating the cryptocurrency community. That is why we created the Founding Community Bitdepositary with integrated payment systems."
     },
     {
+      "tags": "31-Gitcoin:Grants",
+      "address": "0x035032655b5b3784d359b56eb82c803bd971c582",
+      "name": "Grant 2800 - LogicBeach Explainer Series",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/2800/logicbeach-explainer-series",
+      "decimals": 0,
+      "description": ""
+    },
+    {
       "tags": "50-Tokens:ERC20",
       "address": "0x03552d005d0f4262bf2d85fa2a3263541d4059c1",
       "name": "Miller Real Estate Holdings",
@@ -1538,6 +1628,15 @@ names?
       "symbol": "",
       "source": "0xTracker",
       "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "50-Tokens:ERC20",
+      "address": "0x0360b415b56bd77def7ffd64ab9c0a9f63a84e4f",
+      "name": "NL",
+      "symbol": "NL Token",
+      "source": "On chain",
+      "decimals": 18,
       "description": ""
     },
     {
@@ -1568,7 +1667,25 @@ names?
       "description": "Student jobs marketplace."
     },
     {
-      "tags": "30-Contracts:Chainlink",
+      "tags": "31-Gitcoin:Grants",
+      "address": "0x03798c0d62e6a0b0548114fb6241efa07ca4122d",
+      "name": "Grant 4257 - Reputable DAO",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/4257/reputable-dao",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "31-Gitcoin:Grants",
+      "address": "0x037e414abacc799a598314153509b6b967608bf9",
+      "name": "Grant 3059 - CO2KEN — Carbon as a money lego",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/3059/co2ken-carbon-as-a-money-lego",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "37-SelfDestructed",
       "address": "0x037e8f2125bf532f3e228991e051c8a7253b642c",
       "name": "Chainlink DAI-ETH Aggregator",
       "symbol": "",
@@ -1577,9 +1694,18 @@ names?
       "description": ""
     },
     {
-      "tags": "30-Contracts",
+      "tags": "31-Gitcoin:Grants",
+      "address": "0x0384610bf8e9292ec499145cb126e32a17e7ccd6",
+      "name": "Grant 3475 - Nectar: L2 + Healthcare",
+      "symbol": "",
+      "source": "https://gitcoin.co/grants/3475/nectar-l2-healthcare",
+      "decimals": 0,
+      "description": ""
+    },
+    {
+      "tags": "90-Individuals:Other",
       "address": "0x0385b3f162a0e001b60ecb84d3cb06199d78f666",
-      "name": "Argent: Relayer 2",
+      "name": "Name 0x0385b3f1",
       "symbol": "",
       "source": "EtherScan.io",
       "decimals": 0,
@@ -1681,132 +1807,6 @@ names?
       "name": "Possibly Malicious 0x03b",
       "symbol": "",
       "source": "TrueBlocks.io",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "31-Gitcoin:Grants",
-      "address": "0x03c2bc72a3e007179e54ffb4563cc235bec8151a",
-      "name": "Grant 0600 Synthereum: Synthetic Assets with Liquidity Pools to Bridge Traditional and Digital Finance",
-      "symbol": "",
-      "source": "https://gitcoin.co/grants/600/synthereum-synthetic-assets-with-liquidity-pools-t",
-      "decimals": 0,
-      "description": "https://jarvis.network"
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x03c780cd554598592b97b7256ddaad759945b125",
-      "name": "BTRN",
-      "symbol": "BTRN",
-      "source": "On chain",
-      "decimals": 18,
-      "description": "Biotron is a fully transparent personal data analytics platform on blockchain."
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x03c9436d54db599018842387d9d6075d81580726",
-      "name": "AirEthereumMax INU",
-      "symbol": "aiReMax",
-      "source": "On chain",
-      "decimals": 18,
-      "description": ""
-    },
-    {
-      "tags": "90-Individuals:TheCyber",
-      "address": "0x03d47eca8d1d4c29a73318c3b1373614b3fe14bc",
-      "name": "Name 0x03d47eca",
-      "symbol": "",
-      "source": "Solidity Code",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x03dd1a67ef52107dd86b590ec62aaf5048973647",
-      "name": "MAMASHIBA",
-      "symbol": "MAMASHIBA",
-      "source": "On chain",
-      "decimals": 18,
-      "description": ""
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x03df4c372a29376d2c8df33a1b5f001cd8d68b0e",
-      "name": "Bitcoinereum",
-      "symbol": "BTCM",
-      "source": "On chain",
-      "decimals": 8,
-      "description": ""
-    },
-    {
-      "tags": "90-Individuals:Gitcoin Grants",
-      "address": "0x03ea9f51913a2a40a2c37e70700102486acf6c40",
-      "name": "Name 0x03ea9f51",
-      "symbol": "",
-      "source": "Gitcoin Website",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "31-Gitcoin:Grants",
-      "address": "0x03ed2992a1d07ab57ec01f0c8914e22b53e48d87",
-      "name": "Grant 0774 Nuts Platform | Designed for DeFi Builders and Service Providers",
-      "symbol": "",
-      "source": "https://gitcoin.co/grants/774/nuts-platform-designed-for-defi-builders-and-serv",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x03fb52d4ee633ab0d06c833e32efdd8d388f3e6a",
-      "name": "Black Hole",
-      "symbol": "HOLE",
-      "source": "On chain",
-      "decimals": 18,
-      "description": ""
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x041b10db04de10c1005029ce498d09446e935316",
-      "name": "Green INU",
-      "symbol": "GINUX",
-      "source": "On chain",
-      "decimals": 18,
-      "description": ""
-    },
-    {
-      "tags": "50-Tokens:ERC20",
-      "address": "0x041d37f02b4219e5a038b22c1f69e7e55f3a82d8",
-      "name": "Marshmallow Governance",
-      "symbol": "MGT",
-      "source": "On chain",
-      "decimals": 18,
-      "description": ""
-    },
-    {
-      "tags": "31-Gitcoin:Grants",
-      "address": "0x04335c092bc8c06f48f9def5e3285140138fbbfc",
-      "name": "Grant 1496 Optimistic Casino",
-      "symbol": "",
-      "source": "https://gitcoin.co/grants/1496/optimistic-casino",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "90-Individuals:Gitcoin Grants",
-      "address": "0x04373aac4df8be1696be816b97f4ad8bcd93beb7",
-      "name": "Name 0x04373aac",
-      "symbol": "",
-      "source": "Gitcoin Website",
-      "decimals": 0,
-      "description": ""
-    },
-    {
-      "tags": "91-Early:Addresses",
-      "address": "0x0444f06a52320af2df7e60d1923080002838ce93",
-      "name": "Resetponzi",
-      "symbol": "",
-      "source": "EtherScan.io",
       "decimals": 0,
       "description": ""
     }

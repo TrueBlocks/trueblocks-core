@@ -9,12 +9,12 @@ import (
 	"os"
 
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/logger"
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/specials"
+	tslibPkg "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/tslib"
 )
 
 func (opts *WhenOptions) ListInternal() error {
 
-	result := specials.GetSpecials(opts.Globals.TestMode)
+	result := tslibPkg.GetSpecials()
 	if opts.Globals.ApiMode {
 		opts.Globals.Respond(opts.Globals.Writer, http.StatusOK, result)
 

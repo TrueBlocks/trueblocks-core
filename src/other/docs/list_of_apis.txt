@@ -1,4 +1,0 @@
-This is a list of API files one might need to run QuickBlocks
-
-Etherscan (needed for ethslurp)
-Poloniex (may be needed in the future)

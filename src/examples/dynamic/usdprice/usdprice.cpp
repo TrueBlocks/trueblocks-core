@@ -31,7 +31,7 @@ class CTestTraverser : public CTraverser {
         theCall.blockNumber = getBlockProgress(BP_CLIENT).client;
         LOG4("Calling ", substitute(theCall.Format(), "\n", " "));
         if (doEthCall(theCall)) {
-            perTxCall.address = theCall.getResults();
+            perTxCall.address = theCall.getCallResult();
             perTxCall.abi_spec.loadAbiFromEtherscan(perTxCall.address);
             LOG_INFO(bGreen, "Found USD Pair: ", perTxCall.address, " with ", perTxCall.abi_spec.nInterfaces(),
                      " endpoints", cOff);
@@ -63,10 +63,10 @@ bool display(CTraverser* trav, void* data) {
     tt->trans.timestamp = getTimestampAt(tt->app->blk);
     tt->block.timestamp = getTimestampAt(tt->app->blk);
 
-    cerr << tt->readStatus << " ";
-    if (doEthCall(tt->perTxCall) && !tt->perTxCall.result.outputs.empty()) {
+    cerr << tt->searchType << " ";
+    if (doEthCall(tt->perTxCall) && !tt->perTxCall.callResult.outputs.empty()) {
         CStringArray results;
-        if (tt->perTxCall.getResults(results) && results.size() > 1) {
+        if (tt->perTxCall.getCallResult(results) && results.size() > 1) {
             wei_t balance = getBalanceAt(tt->curMonitor->address, tt->app->blk);
             double reserve1 = str_2_Double(wei_2_Ether(str_2_Wei(results[0]), 18));
             double reserve2 = str_2_Double(wei_2_Ether(str_2_Wei(results[1]), 18));
@@ -95,6 +95,11 @@ bool display(CTraverser* trav, void* data) {
 //-----------------------------------------------------------------------
 extern "C" CTraverser* makeTraverser(void) {
     acctlib_init(quickQuitHandler);
+    if (getVersionNum() < getVersionNum(0, 18, 0)) {
+        LOG_ERR("Cannot load traverser from older versions: ", getVersionNum());
+        LOG_ERR("Perhaps you need to re-install TrueBlocks.");
+        return nullptr;
+    }
 
     CTestTraverser* trav = new CTestTraverser;
     trav->preFunc = header;

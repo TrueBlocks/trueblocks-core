@@ -68,6 +68,9 @@ names?tags
       "tags": "37-Bridges"
     },
     {
+      "tags": "37-SelfDestructed"
+    },
+    {
       "tags": "39-Yearn"
     },
     {
@@ -81,9 +84,6 @@ names?tags
     },
     {
       "tags": "55-Defi"
-    },
-    {
-      "tags": "60-Airdrops"
     },
     {
       "tags": "70-Vendors"

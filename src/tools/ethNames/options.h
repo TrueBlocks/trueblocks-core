@@ -27,9 +27,12 @@ enum account_t { CUSTOM = (1 << 2), NAMED = (1 << 3), PREFUND = (1 << 4), ALL = 
 class COptions : public CAbiOptions {
   public:
     // BEG_CODE_DECLARE
+    CStringArray terms;
     bool match_case;
+    bool prefund;
     bool collections;
     bool tags;
+    bool to_custom;
     // END_CODE_DECLARE
 
     blknum_t latestBlock;
@@ -38,6 +41,7 @@ class COptions : public CAbiOptions {
     CStringArray searches;
     string_q searchFields;
     uint64_t types;
+    uint64_t nPrefunds{0};
 
     COptions(void);
     ~COptions(void);
@@ -49,9 +53,15 @@ class COptions : public CAbiOptions {
     bool addIfUnique(const CAccountName& item);
 
     void handle_collections(const CStringArray& terms);
-    bool handle_editcmds(CStringArray& terms, bool to_custom, bool autoname);
     bool handle_clean(void);
 
-    void finishClean(CAccountName& name);
+    bool finishClean(CAccountName& name);
     bool cleanNames(const string_q& sourceIn, const string_q& destIn);
+
+    // Crud command handling
+    CAccountName target;
+    CAccountNameArray outArray;
+    bool wasEdited{false};
+    void pushToOutput(const CAccountName& name, bool to_custom);
+    bool handle_editcmds(bool autoname);
 };

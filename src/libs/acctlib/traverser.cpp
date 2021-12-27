@@ -45,13 +45,13 @@ bool CTraverser::traverse(const CAppearanceArray_mon& apps, void* data) {
         trans = CTransaction();  // reset
         bool passedFilter = !filterFunc || (*filterFunc)(this, data);
         if (passedFilter) {
-            nProcessed += (counterFunc ? (*counterFunc)(this, data) : 1);
             if (!opt->freshenOnly) {
                 if (dataFunc && !(*dataFunc)(this, data))
                     return (!postFunc || (*postFunc)(this, data)) && false;
                 if (displayFunc && !(*displayFunc)(this, data))
                     return (!postFunc || (*postFunc)(this, data)) && false;
             }
+            nProcessed += (counterFunc ? (*counterFunc)(this, data) : 1);
         }
     }
 

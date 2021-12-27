@@ -20,6 +20,10 @@ bool logs_Display(CTraverser* trav, void* data) {
         if (opt->logFilter.passes(log)) {
             if (!opt->relevant || opt->isRelevant(log)) {
                 log.timestamp = trav->trans.timestamp;
+                log.blockHash = trav->trans.blockHash;
+                log.blockNumber = trav->trans.blockNumber;
+                log.transactionIndex = trav->trans.transactionIndex;
+                log.transactionHash = trav->trans.hash;
                 cout << ((isJson() && !opt->firstOut) ? ", " : "");
                 cout << log;
                 opt->firstOut = false;

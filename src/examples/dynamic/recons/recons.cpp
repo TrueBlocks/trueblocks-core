@@ -104,7 +104,7 @@ bool display(CTraverser* trav, void* data) {
     tt->trans.timestamp = getTimestampAt(tt->app->blk);
     tt->block.timestamp = getTimestampAt(tt->app->blk);
 
-    cerr << tt->readStatus << " ";
+    cerr << tt->searchType << " ";
     if (doEthCall(tt->uni) && !tt->uni.result.outputs.empty()) {
         CStringArray results;
         if (tt->uni.getResults(results) && results.size() > 1) {
@@ -169,6 +169,11 @@ bool display(CTraverser* trav, void* data) {
 //-----------------------------------------------------------------------
 extern "C" CTraverser* makeTraverser(void) {
     acctlib_init(quickQuitHandler);
+    if (getVersionNum() < getVersionNum(0, 18, 0)) {
+        LOG_ERR("Cannot load traverser from older versions: ", getVersionNum());
+        LOG_ERR("Perhaps you need to re-install TrueBlocks.");
+        return nullptr;
+    }
 
     // expContext().asEther = true;
 

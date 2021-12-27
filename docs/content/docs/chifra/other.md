@@ -2,7 +2,7 @@
 title: "Other"
 description: ""
 lead: ""
-date: 2021-11-26T12:05:06
+date: 2021-12-20T15:45:34
 lastmod:
   - :git
   - lastmod
@@ -31,7 +31,7 @@ The `chifra quotes` tool provides USD ($) price data to other tools and to the c
 
 ```[plaintext]
 Purpose:
-  Update or display Ethereum price data. This tool has been deprecated.
+  Update or display Ethereum price data, this tool has been deprecated.
 
 Usage:
   chifra quotes [flags]

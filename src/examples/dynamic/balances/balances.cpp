@@ -27,24 +27,32 @@ class CTestTraverser : public CTraverser {
 bool header(CTraverser* trav, void* data) {
     cout << "date,";
     cout << "balanceEth,";
-    cout << "balanceUSD" << endl;
+    cout << "balanceUSD,";
+    cout << "priceUSD" << endl;
     return true;
 }
 
+const wei_t oneEther = str_2_Wei("1000000000000000000");
 //-----------------------------------------------------------------------
 bool display(CTraverser* trav, void* data) {
     CTestTraverser* tt = (CTestTraverser*)trav;
 
     wei_t balance = getBalanceAt(tt->curMonitor->address, tt->app->blk);
-
     cout << trav->trans.Format("[{DATE}]") << ",";
     cout << wei_2_Ether(balance, 18) << ",";
-    cout << wei_2_Dollars(trav->trans.timestamp, balance, 18) << endl;
+    cout << wei_2_Dollars(trav->trans.timestamp, balance, 18) << ",";
+    cout << wei_2_Dollars(trav->trans.timestamp, oneEther, 18) << endl;
+
     return true;
 }
 
 //-----------------------------------------------------------------------
 extern "C" CTraverser* makeTraverser(void) {
+    if (getVersionNum() < getVersionNum(0, 18, 0)) {
+        LOG_ERR("Cannot load traverser from older versions: ", getVersionNum());
+        LOG_ERR("Perhaps you need to re-install TrueBlocks.");
+        return nullptr;
+    }
     CTestTraverser* trav = new CTestTraverser;
     trav->preFunc = header;
     trav->displayFunc = display;

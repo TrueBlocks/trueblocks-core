@@ -23,16 +23,16 @@ var quotesCmd = &cobra.Command{
 	Use:     usageQuotes,
 	Short:   shortQuotes,
 	Long:    longQuotes,
-	Version: "GHC-TrueBlocks//0.17.0-alpha",
+	Version: versionText,
 	RunE:    quotesPkg.RunQuotes,
 }
 
 var usageQuotes = `quotes [flags]`
 
-var shortQuotes = "update or display Ethereum price data. This tool has been deprecated"
+var shortQuotes = "update or display Ethereum price data, this tool has been deprecated"
 
 var longQuotes = `Purpose:
-  Update or display Ethereum price data. This tool has been deprecated.`
+  Update or display Ethereum price data, this tool has been deprecated.`
 
 var notesQuotes = `
 Notes:

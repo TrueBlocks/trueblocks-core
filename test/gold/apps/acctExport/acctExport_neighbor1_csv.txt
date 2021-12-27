@@ -3,14 +3,17 @@ TEST[DATE|TIME] Addrs:  [0xbb9bc244d798123fde783fcc1c72d3bb8c189413]
 TEST[DATE|TIME] Neighbors:  true
 TEST[DATE|TIME] MaxRecords:  3
 TEST[DATE|TIME] Format:  csv
-"bn","tx","tc","addr","reason"
-"1428757","0","","0x793ea9692ada1900fbd0b80fffec6e431fe8b391","from"
-"1428757","0","","0xbb9bc244d798123fde783fcc1c72d3bb8c189413","creation"
-"1428757","0","1","0x807640a13483f8ac783c557fcdf27be11ea4ac7a","trace_1_self-destruct"
-"1428757","0","2","0xd2e16a20dd7b1ae54fb0312209784478d069c7b0","trace_2_self-destruct"
-"1428757","0","3","0x17cd41543a3c3c77d5e372704c9577df09eea003","trace_3_self-destruct"
-"1428968","4","","0xb26842086a407eb4fef0465f502285f3d25d168b","from"
-"1428968","4","","0x33990122638b9132ca29c723bdf037f1a891a70c","to"
-"1428968","4","","0xbb9bc244d798123fde783fcc1c72d3bb8c189413","input"
-"1429008","0","","0x931f12be72a1d106408af5ced7e1b7af0bc864ae","from"
-"1429008","0","","0xbb9bc244d798123fde783fcc1c72d3bb8c189413","to"
+TIME ~ CLOCK - <INFO>  : Loading names
+"blockNumber","transactionIndex","neighbor","reason"
+"1428757","0","0x17cd41543a3c3c77d5e372704c9577df09eea003","trace"
+"1428757","0","0x793ea9692ada1900fbd0b80fffec6e431fe8b391","from"
+"1428757","0","0x807640a13483f8ac783c557fcdf27be11ea4ac7a","trace"
+"1428757","0","0xbb9bc244d798123fde783fcc1c72d3bb8c189413","creation"
+"1428757","0","0xd2e16a20dd7b1ae54fb0312209784478d069c7b0","trace"
+"1428968","4","0x33990122638b9132ca29c723bdf037f1a891a70c","to"
+"1428968","4","0xb26842086a407eb4fef0465f502285f3d25d168b","from"
+"1428968","4","0xbb9bc244d798123fde783fcc1c72d3bb8c189413","input"
+"1429008","0","0x931f12be72a1d106408af5ced7e1b7af0bc864ae","from"
+"1429008","0","0xbb9bc244d798123fde783fcc1c72d3bb8c189413","to"
+"1429008","0","0xfbb1b73c4f0bda4f67dca266ce6ef42f520fbb98","log_0_topic_2"
+TIME ~ CLOCK - <INFO>  :    Done...

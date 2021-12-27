@@ -2,4 +2,5 @@ chifra monitors  0x05a56e2d52c817161883f50c441c3228cfe54d9f --first_block 2 --la
 TEST[DATE|TIME] Addrs:  [0x05a56e2d52c817161883f50c441c3228cfe54d9f]
 TEST[DATE|TIME] FirstBlock:  2
 TEST[DATE|TIME] LastBlock:  2
-blocknumber	transactionindex	date	timestamp	from	to	ether	ethergasprice	gasused	hash	iserror	encoding	compressedtx
+TIME ~ CLOCK - <INFO>  : Loading names
+blockNumber	transactionIndex	date	timestamp	from	to	ether	ethGasPrice	gasUsed	hash	isError	encoding	compressedTx

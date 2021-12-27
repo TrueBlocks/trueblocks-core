@@ -23,7 +23,7 @@ var receiptsCmd = &cobra.Command{
 	Use:     usageReceipts,
 	Short:   shortReceipts,
 	Long:    longReceipts,
-	Version: "GHC-TrueBlocks//0.17.0-alpha",
+	Version: versionText,
 	RunE:    receiptsPkg.RunReceipts,
 }
 

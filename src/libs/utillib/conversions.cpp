@@ -433,6 +433,18 @@ timestamp_t str_2_Ts(const string_q& str) {
 }
 
 //----------------------------------------------------------------------------------------------------
+string_q range_2_Str(const blkrange_t& r) {
+    return padNum9(r.first) + "-" + padNum9(r.second);
+}
+
+//----------------------------------------------------------------------------------------------------
+blkrange_t str_2_Range(const string_q& str) {
+    CUintArray parts;
+    explode(parts, str, '-');
+    return blkrange_t{parts[0], parts[1]};
+}
+
+//----------------------------------------------------------------------------------------------------
 timestamp_t date_2_Ts(const time_q& timeIn) {
     time_q jan1970(1970, 1, 1, 0, 0, 0);
     if (timeIn < jan1970)
@@ -533,6 +545,15 @@ addrbytes_t addr_2_Bytes(const address_t& addrIn) {
 
 //----------------------------------------------------------------
 address_t bytes_2_Addr(uint8_t const bytes[20]) {
+    ostringstream os;
+    os << "0x";
+    for (size_t i = 0; i < 20; i++)
+        os << toLower(padLeft(bnu_2_Hex(bytes[i]), 2, '0'));
+    return os.str();
+}
+
+//----------------------------------------------------------------------------
+address_t bytes_2_Addr(const char* bytes) {
     ostringstream os;
     os << "0x";
     for (size_t i = 0; i < 20; i++)

@@ -44,7 +44,7 @@ func GetConfigPath(fileName string) string {
 
 	// Check if user has migrated to a new config
 	if _, err := os.Stat(path.Join(homeDir, ".quickBlocks")); err == nil {
-		// Abort if they hasn't
+		// Abort if they haven't
 		log.Fatalf(ErrOldFolder.Error())
 	}
 

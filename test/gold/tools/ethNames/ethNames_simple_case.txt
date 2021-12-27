@@ -1,10 +1,16 @@
 chifra names  network --match_case
 TEST[DATE|TIME] Terms:  [network]
 TEST[DATE|TIME] MatchCase:  true
+TIME ~ CLOCK - <INFO>  : Loading names
 tags	address	name	symbol	decimals
 50-Tokens:ERC20	0x069d653038db2f9d84e9620be140b3d404a40258	Jarvis network Smart Relay Token	JRTBNT		18
 50-Tokens:ERC20	0x4bbbc57af270138ef2ff2c50dbfad684e9e0e604	WABnetwork	WAB		18
 50-Tokens:ERC20	0x7c5a0ce9267ed19b22f8cae653f198e3e8daf098	SANtiment network token	SAN		18
+31-Gitcoin:Grants	0x8767aacd8ae48e6a23077548c24121e46dca0696	Grant 2728 - Using social networks for fun, affordable, and lucrative delivery.
+31-Gitcoin:Grants	0x887a26839d9e33b1536857a24f91f192ce9d4732	Grant 2776 - pulp-network
 50-Tokens:ERC20	0x95cda24d2515491095d21d94f1b94f319e016d35	Vegetanetwork	Vegeta		18
+31-Gitcoin:Grants	0xc0dd8e21a31f62861e668833f47770592d379a4c	Grant 2694 - Matrix2 - An aggregated Layer 2 network
+31-Gitcoin:Grants	0xc22e8d32d3146efc54088f39ec9c29eaf3905b1d	Grant 3090 - Atelio : creating open , blockchain based digital supply network.
+31-Gitcoin:Grants	0xc41bc99044fd4836dba4104bcf53b6f2b62716b1	Grant 2190 - Layer 2 faucet in ethereum network
 31-Gitcoin:Grants	0xea6cdbe70e5c18c605427d93dc6374b648843fac	Grant 1487 Memorial.network
 50-Tokens:ERC20	0xff19138b039d938db46bdda0067dc4ba132ec71c	Snetwork	SNET		8

@@ -40,6 +40,7 @@ static const COption params[] = {
     COption("relevant", "", "", OPT_SWITCH, "for log and accounting export only, export only logs relevant to one of the given export addresses"),  // NOLINT
     COption("emitter", "", "list<addr>", OPT_FLAG, "for log export only, export only logs if emitted by one of these address(es)"),  // NOLINT
     COption("topic", "", "list<topic>", OPT_FLAG, "for log export only, export only logs with this topic(s)"),
+    COption("asset", "", "list<addr>", OPT_FLAG, "for the statements option only, export only reconciliations for this asset"),  // NOLINT
     COption("clean", "", "", OPT_SWITCH, "clean (i.e. remove duplicate appearances) from all existing monitors"),
     COption("freshen", "f", "", OPT_HIDDEN | OPT_SWITCH, "freshen but do not print the exported data"),
     COption("staging", "s", "", OPT_HIDDEN | OPT_SWITCH, "enable search of staging (not yet finalized) folder"),
@@ -48,6 +49,7 @@ static const COption params[] = {
     COption("reversed", "", "", OPT_HIDDEN | OPT_SWITCH, "produce results in reverse chronological order"),
     COption("by_date", "b", "", OPT_HIDDEN | OPT_SWITCH, "produce results sorted by date (report by address otherwise)"),  // NOLINT
     COption("summarize_by", "z", "enum[yearly|quarterly|monthly|weekly|daily|hourly|blockly|tx]", OPT_HIDDEN | OPT_FLAG, "for --accounting only, summarize reconciliations by this time period"),  // NOLINT
+    COption("deep", "D", "", OPT_HIDDEN | OPT_SWITCH, "for --neighbors option only, dig deeply into detail (otherwise, to and from only)"),  // NOLINT
     COption("first_block", "F", "<blknum>", OPT_HIDDEN | OPT_FLAG, "first block to process (inclusive)"),
     COption("last_block", "L", "<blknum>", OPT_HIDDEN | OPT_FLAG, "last block to process (inclusive)"),
     COption("", "", "", OPT_DESCRIPTION, "Export full detail of transactions for one or more addresses."),
@@ -71,6 +73,7 @@ bool COptions::parseArguments(string_q& command) {
     CTopicArray topics;
     CAddressArray emitter;
     CStringArray topic;
+    CAddressArray asset;
     bool freshen = false;
     blknum_t first_block = 0;
     blknum_t last_block = NOPOS;
@@ -172,6 +175,13 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "--topic") {
             return flag_required("topic");
 
+        } else if (startsWith(arg, "--asset:")) {
+            arg = substitute(substitute(arg, "-:", ""), "--asset:", "");
+            if (!parseAddressList(this, asset, arg))
+                return false;
+        } else if (arg == "--asset") {
+            return flag_required("asset");
+
         } else if (arg == "--clean") {
             clean = true;
 
@@ -200,6 +210,9 @@ bool COptions::parseArguments(string_q& command) {
                 return false;
         } else if (arg == "-z" || arg == "--summarize_by") {
             return flag_required("summarize_by");
+
+        } else if (arg == "-D" || arg == "--deep") {
+            deep = true;
 
         } else if (startsWith(arg, "-F:") || startsWith(arg, "--first_block:")) {
             if (!confirmBlockNum("first_block", first_block, arg, latest))
@@ -259,9 +272,8 @@ bool COptions::parseArguments(string_q& command) {
     for (auto t : topics)
         logFilter.topics.push_back(t);
 
-    if (!isApiMode() && max_records == 250) {
+    if (!isApiMode() && max_records == 250)
         max_records = NOPOS;
-    }
 
     freshenOnly = freshen;
 
@@ -300,6 +312,9 @@ bool COptions::parseArguments(string_q& command) {
     if (!topics.empty() && !logs)
         return usage("The --topic option is only available when exporting logs.");
 
+    if (asset.size() > 0 && !statements)
+        return usage("The --asset option is only available when exporting statements.");
+
     if (factory && !traces)
         return usage("The --factory option is only available when exporting traces.");
 
@@ -323,6 +338,12 @@ bool COptions::parseArguments(string_q& command) {
 
     for (auto t : topic)
         logFilter.topics.push_back(t);
+
+    for (auto addr : asset)
+        assetFilter[addr] = true;
+
+    if (!loadNames())
+        return usage("Could not load names database.");
 
     // Where will we start?
     blknum_t nextBlockToVisit = NOPOS;
@@ -479,6 +500,7 @@ void COptions::Init(void) {
     reversed = false;
     by_date = false;
     summarize_by = "";
+    deep = false;
     // clang-format off
     skip_ddos = getGlobalConfig("acctExport")->getConfigBool("settings", "skip_ddos", true);
     max_traces = getGlobalConfig("acctExport")->getConfigInt("settings", "max_traces", 250);
@@ -596,6 +618,7 @@ bool COptions::setDisplayFormatting(void) {
                 expContext().fmtMap["header"] = noHeader ? "" : cleanFmt(format);
 
             format = getGlobalConfig("acctExport")->getConfigStr("display", "neighbor", STR_DISPLAY_APPEARANCE);
+            replace(format, "[{TC}]\t", "");
             expContext().fmtMap["appearance_fmt"] = cleanFmt(format);
             manageFields("CAppearance:" + format);
             if (neighbors)
@@ -710,7 +733,6 @@ bool COptions::setDisplayFormatting(void) {
 // TODO(tjayrush): accounting must be for one monitor address - why?
 // TODO(tjayrush): accounting requires node balances - why?
 // TODO(tjayrush): Used to do this: if any ABI files was newer, re-read abi and re-articulate in cache
-// TODO(tjayrush): What does prefundAddrMap and prefundMap do? Needs testing
 // TODO(tjayrush): What does blkRewardMap do? Needs testing
 // TODO(tjayrush): Reconciliation loads traces -- plus it reduplicates the isSuicide, isGeneration, isUncle shit
 // TODO(tjayrush): writeLastEncountered is weird (in fact removed -- used to keep freshen from revisiting blocks twice
@@ -814,4 +836,12 @@ void COptions::writePerformanceData(void) {
     ostringstream data;
     data << stats.Format(fmt) << endl;
     appendToAsciiFile(statsFile, data.str());
+}
+
+//-----------------------------------------------------------------------
+size_t freqOverride = NOPOS;
+size_t COptions::reportFreq(void) const {
+    if (freqOverride != NOPOS)
+        return freqOverride;
+    return slowQueries > 0 ? 1 : 7;
 }

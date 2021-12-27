@@ -34,7 +34,7 @@ func PrintServeSettings(testMode bool) {
 	log.Println(colors.Green, "Cache Path:   ", colors.Off, config.ReadTrueBlocks().Settings.CachePath)
 	log.Println(colors.Green, "Index Path:   ", colors.Off, config.ReadTrueBlocks().Settings.IndexPath)
 	log.Println(colors.Green, "Rpc Provider: ", colors.Off, config.ReadTrueBlocks().Settings.RpcProvider)
-	log.Println(colors.Green, "Progress:     ", colors.Off, meta.Client, ", ", meta.Finalized, ", ", meta.Staging, ", ", meta.Unripe)
+	log.Println(colors.Green, "Progress:     ", colors.Off, meta.Latest, ", ", meta.Finalized, ", ", meta.Staging, ", ", meta.Unripe)
 
 }
 
@@ -66,12 +66,12 @@ func PrintServeSettings(testMode bool) {
 
 // 	log.Print("\n")
 // 	log.Print(utils.Green, "Starting API server on port "+Options.Port, utils.Off, "\n")
-// 	log.Print(utils.Green, "Client:       ", utils.Off, Options.Status.Client)
+// 	log.Print(utils.Green, "Client:       ", utils.Off, Options.Status.Latest)
 // 	log.Print(utils.Green, "TrueBlocks:   ", utils.Off, Options.Status.TrueBlocks)
 // 	log.Print(utils.Green, "Cache Path:   ", utils.Off, Options.Status.CachePath)
 // 	log.Print(utils.Green, "Index Path:   ", utils.Off, Options.Status.IndexPath)
 // 	log.Print(utils.Green, "Rpc Provider: ", utils.Off, Options.Status.RPC)
-// 	log.Print(utils.Green, "Progress:     ", utils.Off, Options.Meta.Client, ", ", Options.Meta.Finalized, ", ", Options.Meta.Staging, ", ", Options.Meta.Unripe)
+// 	log.Print(utils.Green, "Progress:     ", utils.Off, Options.Meta.Latest, ", ", Options.Meta.Finalized, ", ", Options.Meta.Staging, ", ", Options.Meta.Unripe)
 
 // 	return nil
 // }

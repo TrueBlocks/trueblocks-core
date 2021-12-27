@@ -3,6 +3,7 @@ TEST[DATE|TIME] Addrs:  [0x001d14804b399c6ef80e64576f657660804fec0b]
 TEST[DATE|TIME] Staging:  true
 TEST[DATE|TIME] FirstBlock:  100000
 TEST[DATE|TIME] LastBlock:  2000000
+TIME ~ CLOCK - <INFO>  : Loading names
 
   --staging and --unripe are disabled for testing. Quitting...
 
@@ -35,6 +36,7 @@ Flags:
       --relevant             for log and accounting export only, export only logs relevant to one of the given export addresses
       --emitter string       for log export only, export only logs if emitted by one of these address(es)
       --topic string         for log export only, export only logs with this topic(s)
+      --asset string         for the statements option only, export only reconciliations for this asset
       --clean                clean (i.e. remove duplicate appearances) from all existing monitors
   -f, --freshen              freshen but do not print the exported data (hidden)
   -s, --staging              enable search of staging (not yet finalized) folder (hidden)
@@ -43,6 +45,7 @@ Flags:
       --reversed             produce results in reverse chronological order (hidden)
   -b, --by_date              produce results sorted by date (report by address otherwise) (hidden)
   -z, --summarize_by <val>   for --accounting only, summarize reconciliations by this time period, one of [yearly|quarterly|monthly|weekly|daily|hourly|blockly|tx] (hidden)
+  -D, --deep                 for --neighbors option only, dig deeply into detail (otherwise, to and from only) (hidden)
   -F, --first_block <num>    first block to process (inclusive) (hidden)
   -L, --last_block <num>     last block to process (inclusive) (hidden)
       --delete               delete a monitor, but do not remove it

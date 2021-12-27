@@ -1,9 +1,11 @@
 chifra names  tip --fmt csv
 TEST[DATE|TIME] Terms:  [tip]
 TEST[DATE|TIME] Format:  csv
+TIME ~ CLOCK - <INFO>  : Loading names
 "tags","address","name","symbol","decimals"
 "31-Gitcoin:Grants","0x133d705a9696882228f6bb7fe008745aef7cdc93","Grant 0160 @antiprosynth | Antiprosynthesis.eth ⟠ Twitter Account Activity","","",""
 "30-Contracts:Giveth","0x1a88c052fc7a8401e00b2f76f96ac62a19427731","EtherIDTipJar","","",""
+"31-Gitcoin:Grants","0x893d80144d0a439bbe29bc74024a29f361560c64","Grant 3504 - Web3 Kotlin Multiplatform","","",""
 "50-Tokens:ERC20","0x94ca37d108e89775dc8ae65f51ae28c2d9599f9a","Cryptotipsfr Token V2","CRTS","","9"
 "91-Early:Addresses","0xe7f06e64e0d04c6cfedf7e9079d56d0fb7200a2e","Multiplyx10","","",""
 "50-Tokens:ERC20","0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359","Ethereum Tip Jar","TIP","",""

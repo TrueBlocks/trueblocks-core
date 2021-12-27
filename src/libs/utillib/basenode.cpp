@@ -14,6 +14,7 @@
 #include "biglib.h"
 #include "basenode.h"
 #include "sfarchive.h"
+#include "accountname.h"
 #include "exportcontext.h"
 #include "conversions.h"
 #include "version.h"
@@ -402,47 +403,6 @@ bool CBaseNode::SerializeC(CArchive& archive) const {
     archive << m_showing;
     archive << getRuntimeClass()->getClassNamePtr();
     return false;
-}
-
-//---------------------------------------------------------------------------
-// TODO(tjayrush): global data
-static CExportContext expC;
-CExportContext& expContext(void) {
-    return expC;
-}
-
-//---------------------------------------------------------------------------
-CExportContext::CExportContext(void) {
-    lev = 0;
-    spcs = 2;
-    tab = ' ';
-    nl = '\n';
-    quoteNums = false;
-    quoteKeys = true;
-    endingCommas = false;
-    hexNums = false;
-    hashesOnly = false;
-    asEther = false;
-    asDollars = false;
-    asWei = true;
-    tsMemMap = nullptr;
-    tsCnt = 0;
-    exportFmt = (isApiMode() ? API1 : TXT1);
-}
-
-//---------------------------------------------------------------------------
-void indent(void) {
-    expC.lev++;
-}
-
-//---------------------------------------------------------------------------
-void unindent(void) {
-    expC.lev--;
-}
-
-//---------------------------------------------------------------------------
-string_q indentStr(void) {
-    return string_q(expC.spcs * expC.lev, expC.tab);
 }
 
 //--------------------------------------------------------------------------------

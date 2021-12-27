@@ -23,7 +23,7 @@ var exportCmd = &cobra.Command{
 	Use:     usageExport,
 	Short:   shortExport,
 	Long:    longExport,
-	Version: "GHC-TrueBlocks//0.17.0-alpha",
+	Version: versionText,
 	RunE:    exportPkg.RunExport,
 }
 
@@ -67,6 +67,7 @@ func init() {
 	exportCmd.Flags().BoolVarP(&exportPkg.Options.Relevant, "relevant", "", false, "for log and accounting export only, export only logs relevant to one of the given export addresses")
 	exportCmd.Flags().StringSliceVarP(&exportPkg.Options.Emitter, "emitter", "", nil, "for log export only, export only logs if emitted by one of these address(es)")
 	exportCmd.Flags().StringSliceVarP(&exportPkg.Options.Topic, "topic", "", nil, "for log export only, export only logs with this topic(s)")
+	exportCmd.Flags().StringSliceVarP(&exportPkg.Options.Asset, "asset", "", nil, "for the statements option only, export only reconciliations for this asset")
 	exportCmd.Flags().BoolVarP(&exportPkg.Options.Clean, "clean", "", false, "clean (i.e. remove duplicate appearances) from all existing monitors")
 	exportCmd.Flags().BoolVarP(&exportPkg.Options.Freshen, "freshen", "f", false, "freshen but do not print the exported data (hidden)")
 	exportCmd.Flags().BoolVarP(&exportPkg.Options.Staging, "staging", "s", false, "enable search of staging (not yet finalized) folder (hidden)")
@@ -76,6 +77,7 @@ func init() {
 	exportCmd.Flags().BoolVarP(&exportPkg.Options.ByDate, "by_date", "b", false, "produce results sorted by date (report by address otherwise) (hidden)")
 	exportCmd.Flags().StringVarP(&exportPkg.Options.SummarizeBy, "summarize_by", "z", "", `for --accounting only, summarize reconciliations by this time period (hidden)
 One of [ yearly | quarterly | monthly | weekly | daily | hourly | blockly | tx ]`)
+	exportCmd.Flags().BoolVarP(&exportPkg.Options.Deep, "deep", "D", false, "for --neighbors option only, dig deeply into detail (otherwise, to and from only) (hidden)")
 	exportCmd.Flags().BoolVarP(&exportPkg.Options.SkipDdos, "skip_ddos", "d", false, "toggle skipping over 2016 dDos transactions ('on' by default) (hidden)")
 	exportCmd.Flags().Uint64VarP(&exportPkg.Options.MaxTraces, "max_traces", "m", 250, "if --skip_ddos is on, this many traces defines what a ddos transaction is (hidden)")
 	exportCmd.Flags().Uint64VarP(&exportPkg.Options.FirstBlock, "first_block", "F", 0, "first block to process (inclusive) (hidden)")
@@ -88,6 +90,7 @@ One of [ yearly | quarterly | monthly | weekly | daily | hourly | blockly | tx ]
 		exportCmd.Flags().MarkHidden("reversed")
 		exportCmd.Flags().MarkHidden("by_date")
 		exportCmd.Flags().MarkHidden("summarize_by")
+		exportCmd.Flags().MarkHidden("deep")
 		exportCmd.Flags().MarkHidden("skip_ddos")
 		exportCmd.Flags().MarkHidden("max_traces")
 		exportCmd.Flags().MarkHidden("first_block")

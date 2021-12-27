@@ -84,6 +84,9 @@ bool COptions::parseArguments(string_q& command) {
     if (Mocked(""))
         return false;
 
+    if (!loadNames())
+        return usage("Could not load names database.");
+
     bool userBlocks = true;
     if (blocks.empty()) {
         blocks.numList.push_back(newestBlock);  // use 'latest'

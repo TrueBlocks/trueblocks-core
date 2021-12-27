@@ -107,7 +107,7 @@ int main(int argc, const char* argv[]) {
     os << ", \"first_block\": " << (isTestMode() ? "\"0xdeadbeef\"" : uint_2_Str(options.exportRange.first)) << endl;
     os << ", \"last_block\": " << (isTestMode() ? "\"0xdeadbeef\"" : uint_2_Str(options.exportRange.second)) << endl;
     if (!options.count && options.allMonitors.size() == 1) {
-        options.findName(options.accountedFor.address, options.allMonitors[0]);
+        findName(options.accountedFor.address, options.allMonitors[0]);
         if (options.abi_spec.nInterfaces() == 0) {
             HIDE_FIELD(CMonitor, "abi_spec");
         }
@@ -170,11 +170,19 @@ void prog_Log(CTraverser* trav, void* data) {
         return;
 
     blknum_t prog = opt->first_record + trav->nProcessed;
-    blknum_t goal = opt->stats.nFileRecords;
+    blknum_t nApps = opt->stats.nFileRecords;
 
     ostringstream post;
-    post << " " << trav->operation << " (max " << goal << ") for address " << opt->accountedFor.address;
-    LOG_PROGRESS(trav->readStatus, prog, goal, post.str() + "\r");
+    if (trav->searchType == "appearances" || trav->searchType == "receipts" || trav->searchType == "txs") {
+        // We report differently if there are the same number of items as appearances...
+        // Reports as "searchType index of total operation for address A"
+        post << " " << trav->searchType << " for address " << opt->accountedFor.address;
+    } else {
+        // ...or if there are more than such as statements, logs, traces, or neighbors
+        // Reports as "searchType index of total txs (found X operation) for address A"
+        post << " txs (" << prog << " " << trav->searchType << ") for address " << opt->accountedFor.address;
+    }
+    LOG_PROGRESS(padRight(trav->searchOp, 11), blknum_t(opt->first_record + trav->index), nApps, post.str() + "\r");
 
     return;
 }
@@ -186,11 +194,19 @@ void end_Log(CTraverser* trav, void* data) {
         return;
 
     blknum_t prog = opt->first_record + trav->nProcessed;
-    blknum_t goal = opt->stats.nFileRecords;
-    if (prog == goal) {
-        string_q endMsg = " " + trav->operation + " for address " + opt->accountedFor.address;
-        LOG_PROGRESS("Completed", prog, goal, endMsg);
+    blknum_t nApps = opt->stats.nFileRecords;
+
+    ostringstream post;
+    if (trav->searchType == "appearances" || trav->searchType == "receipts" || trav->searchType == "txs") {
+        // We report differently if there are the same number of items as appearances...
+        // Reports as "searchType index of total operation for address A"
+        post << " " << trav->searchType << " for address " << opt->accountedFor.address;
+    } else {
+        // ...or if there are more than such as statements, logs, traces, or neighbors
+        // Reports as "searchType index of total txs (found X operation) for address A"
+        post << " txs (" << prog << " " << trav->searchType << ") for address " << opt->accountedFor.address;
     }
+    LOG_PROGRESS(padRight("Completed", 11), blknum_t(opt->first_record + trav->index), nApps, post.str());
     return;
 }
 
@@ -209,15 +225,15 @@ bool loadTx_Func(CTraverser* trav, void* data) {
     bool inCache = trav->app->blk != 0 && fileExists(txFilename);
     if (inCache) {
         readTransFromBinary(trav->trans, txFilename);
-        trav->readStatus = "Reading";
+        trav->searchOp = "Reading";
 
     } else {
-        trav->readStatus = "Extracting";
+        trav->searchOp = "Extracting";
         opt->slowQueries++;
         dirty = true;
         if (trav->app->blk == 0) {
             address_t addr = opt->prefundAddrMap[trav->app->txid];
-            trav->trans.loadTransAsPrefund(trav->app->blk, trav->app->txid, addr, expContext().prefundMap[addr]);
+            trav->trans.loadTransAsPrefund(trav->app->blk, trav->app->txid, addr, prefundAt(addr));
 
         } else if (trav->app->txid == 99997 || trav->app->txid == 99999) {
             trav->trans.loadTransAsBlockReward(trav->app->blk, trav->app->txid, opt->blkRewardMap[trav->app->blk]);

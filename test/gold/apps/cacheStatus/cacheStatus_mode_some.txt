@@ -1,6 +1,7 @@
 chifra status  some
 TEST[DATE|TIME] Modes:  [some]
 TEST[DATE|TIME] Depth:  0
+TIME ~ CLOCK - <INFO>  : Loading names
 {
   "clientVersion": "Client version",
   "clientIds": "chainId: 1 networkId: 1",
