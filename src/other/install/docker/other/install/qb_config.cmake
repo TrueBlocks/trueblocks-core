@@ -132,11 +132,8 @@ endif()
 #---------------------------------------------------------------
 # Copy the prices files
 #---------------------------------------------------------------
-set(PRICE_FILE "${DEST_PATH}/cache/prices/poloniex_USDT_ETH.bin")
-if (NOT EXISTS "${PRICE_FILE}")
-	message(STATUS "Copying price database to ${DEST_PATH}/cache/prices")
-	file(COPY "${SOURCE_PATH}/prices/poloniex_USDT_ETH.bin.gz" DESTINATION "${DEST_PATH}/cache/prices" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
-endif()
+message(STATUS "Copying price database to ${DEST_PATH}")
+file(COPY "${SOURCE_PATH}/prices/poloniex_USDT_ETH.bin.gz" DESTINATION "${DEST_PATH}" FILE_PERMISSIONS OWNER_WRITE OWNER_READ GROUP_READ)
 
 #---------------------------------------------------------------
 # Copy the ts files

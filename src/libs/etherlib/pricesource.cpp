@@ -23,12 +23,43 @@ bool parsePoloniex(CPriceQuote& quote, string_q& str) {
     return quote.parseJson3(str);
 }
 
+//-----------------------------------------------------------------------
+bool establishPriceFile(void) {
+    string_q pricesFolder = getCachePath("prices/");
+    string_q zipFile = getConfigPath("poloniex_USDT_ETH.bin.gz");
+    string_q binFile = pricesFolder + "poloniex_USDT_ETH.bin";
+
+    if (fileExists(binFile))
+        return true;
+    establishFolder(pricesFolder);
+
+    time_q zipDate = fileLastModifyDate(zipFile);
+    time_q binDate = fileLastModifyDate(binFile);
+
+    if (zipDate > binDate) {
+        ostringstream cmd;
+        cmd << "cd \"" << pricesFolder << "\" ; ";
+        cmd << "cp \"" << zipFile << "\" . ; ";
+        cmd << "gunzip poloniex_USDT_ETH.bin.gz";
+        string_q result = doCommand(cmd.str());
+        LOG_INFO(result);
+        // The original zip file still exists
+        ASSERT(fileExists(zipFile));
+        // The new timestamp file exists
+        ASSERT(fileExists(binFile));
+        // The copy of the zip file does not exist
+        ASSERT(!fileExists(binFile + ".gz"));
+        return fileExists(binFile);
+    }
+    return true;
+}
+
 //---------------------------------------------------------------------------
 string_q CPriceSource::getDatabasePath(string_q& source) const {
     source = substitute(substitute(url, "http://", ""), "https://", "");
     source = nextTokenClear(source, '.');
     string_q ret = getCachePath("prices/" + source + "_" + pair + ".bin");
-    establishFolder(ret);
+    establishPriceFile();
     return ret;
 }
 
@@ -43,17 +74,17 @@ bool loadPriceData(const CPriceSource& source, CPriceQuoteArray& quotes, bool fr
     if (contains(source.pair, "BTC"))
         lastRead = time_q(2009, 1, 1, 0, 0, 0);
 
-    if (!fileExists(cacheFile)) {
-        string_q zipFile = getCachePath("prices/") + theSource + "_" + source.pair + ".bin.gz";
-        if (fileExists(zipFile)) {  // zipFile != cacheFile + ".gz") {
-            ostringstream cmd;
-            if (zipFile != cacheFile + ".gz")
-                cmd << "cp -f \"" << zipFile << "\" \"" << cacheFile << ".gz\" ; ";
-            cmd << "cd \"" << getCachePath("prices/") << "\" ; ";
-            cmd << "gunzip *.gz";
-            doCommand(cmd.str());
-        }
-    }
+    // if (!fileExists(cacheFile)) {
+    //     string_q zipFile = getCachePath("prices/") + theSource + "_" + source.pair + ".bin.gz";
+    //     if (fileExists(zipFile)) {  // zipFile != cacheFile + ".gz") {
+    //         ostringstream cmd;
+    //         if (zipFile != cacheFile + ".gz")
+    //             cmd << "cp -f \"" << zipFile << "\" \"" << cacheFile << ".gz\" ; ";
+    //         cmd << "cd \"" << getCachePath("prices/") << "\" ; ";
+    //         cmd << "gunzip *.gz";
+    //         doCommand(cmd.str());
+    //     }
+    // }
 
     if (fileExists(cacheFile)) {
         if (!isTestMode())
