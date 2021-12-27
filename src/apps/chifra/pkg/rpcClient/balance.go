@@ -22,6 +22,7 @@ func ethFromWei(in big.Int) float64 {
 	return f
 }
 
+// TODO: this should be generalized to the client itself instead of hidden in balanceClient
 // balanceClient caches the client so we can call it many times without re-dialing it every time
 var balanceClient ethclient.Client
 var clientLoaded = false

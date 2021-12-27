@@ -2,24 +2,22 @@
 // Use of this source code is governed by a license that can
 // be found in the LICENSE file.
 
-package pinlib
+package cache
 
 import (
 	"io/ioutil"
-
-	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/pinlib/chunk"
 )
 
 // This package makes it easier to get file names of all blooms/index chunks
 // that are currently saved locally
 
-// ListByChunkType returns a slice of file names (strings) of all chunks of
+// ListByCacheType returns a slice of file names (strings) of all chunks of
 // the given type in UnchainedIndex directory
-func ListByChunkType(chunkType chunk.ChunkType) ([]string, error) {
-	cacheLayout := &chunk.CacheLayout{}
-	cacheLayout.New(chunkType)
+func ListByCacheType(chunkType CacheType) ([]string, error) {
+	cachePath := &CachePath{}
+	cachePath.New(chunkType)
 
-	files, err := ioutil.ReadDir(cacheLayout.String())
+	files, err := ioutil.ReadDir(cachePath.String())
 	if err != nil {
 		return nil, err
 	}
@@ -28,7 +26,7 @@ func ListByChunkType(chunkType chunk.ChunkType) ([]string, error) {
 	for _, file := range files {
 		fileNames = append(
 			fileNames,
-			cacheLayout.RemoveExtension(file.Name()),
+			cachePath.RemoveExtension(file.Name()),
 		)
 	}
 
@@ -38,11 +36,11 @@ func ListByChunkType(chunkType chunk.ChunkType) ([]string, error) {
 // ListLocalBlooms returns a slice of file names (strings) of all bloom
 // filters present in UnchainedIndex directory
 func ListLocalBlooms() ([]string, error) {
-	return ListByChunkType(chunk.BloomChunk)
+	return ListByCacheType(BloomChunk)
 }
 
 // ListLocalIndexes returns a slice of file names (strings) of all index
 // chunks present in UnchainedIndex directory
 func ListLocalIndexes() ([]string, error) {
-	return ListByChunkType(chunk.IndexChunk)
+	return ListByCacheType(IndexChunk)
 }
