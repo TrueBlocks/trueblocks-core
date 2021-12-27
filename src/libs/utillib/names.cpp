@@ -24,6 +24,21 @@ namespace qblocks {
 //-----------------------------------------------------------------------
 extern string_q getConfigPath(const string_q& part);
 
+class NameOnDisc {
+  public:
+    char tags[30 + 1];
+    char address[42 + 1];
+    char name[120 + 1];
+    char symbol[30 + 1];
+    char source[180 + 1];
+    char description[255 + 1];
+    uint16_t decimals;
+    uint16_t flags;
+    bool disc_2_Name(CAccountName& nm) const;
+    bool name_2_Disc(const CAccountName& nm);
+    string_q Format(void) const;
+};
+
 //-----------------------------------------------------------------------
 // TODO: These singletons are used throughout - it doesn't appear to have any downsides.
 // TODO: Assuming this is true, eventually we can remove this comment.
@@ -274,10 +289,6 @@ enum {
     IS_ERC721 = (1 << 4),
     IS_DELETED = (1 << 5),
 };
-
-//-----------------------------------------------------------------------
-NameOnDisc::NameOnDisc(void) : decimals(0), flags(0) {
-}
 
 //-----------------------------------------------------------------------
 bool NameOnDisc::name_2_Disc(const CAccountName& nm) {
