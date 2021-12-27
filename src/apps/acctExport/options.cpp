@@ -40,6 +40,7 @@ static const COption params[] = {
     COption("relevant", "", "", OPT_SWITCH, "for log and accounting export only, export only logs relevant to one of the given export addresses"),  // NOLINT
     COption("emitter", "", "list<addr>", OPT_FLAG, "for log export only, export only logs if emitted by one of these address(es)"),  // NOLINT
     COption("topic", "", "list<topic>", OPT_FLAG, "for log export only, export only logs with this topic(s)"),
+    COption("asset", "", "list<addr>", OPT_FLAG, "for the statements option only, export only reconciliations for this asset"),  // NOLINT
     COption("clean", "", "", OPT_SWITCH, "clean (i.e. remove duplicate appearances) from all existing monitors"),
     COption("freshen", "f", "", OPT_HIDDEN | OPT_SWITCH, "freshen but do not print the exported data"),
     COption("staging", "s", "", OPT_HIDDEN | OPT_SWITCH, "enable search of staging (not yet finalized) folder"),
@@ -72,6 +73,7 @@ bool COptions::parseArguments(string_q& command) {
     CTopicArray topics;
     CAddressArray emitter;
     CStringArray topic;
+    CAddressArray asset;
     bool freshen = false;
     blknum_t first_block = 0;
     blknum_t last_block = NOPOS;
@@ -173,6 +175,13 @@ bool COptions::parseArguments(string_q& command) {
         } else if (arg == "--topic") {
             return flag_required("topic");
 
+        } else if (startsWith(arg, "--asset:")) {
+            arg = substitute(substitute(arg, "-:", ""), "--asset:", "");
+            if (!parseAddressList(this, asset, arg))
+                return false;
+        } else if (arg == "--asset") {
+            return flag_required("asset");
+
         } else if (arg == "--clean") {
             clean = true;
 
@@ -263,9 +272,8 @@ bool COptions::parseArguments(string_q& command) {
     for (auto t : topics)
         logFilter.topics.push_back(t);
 
-    if (!isApiMode() && max_records == 250) {
+    if (!isApiMode() && max_records == 250)
         max_records = NOPOS;
-    }
 
     freshenOnly = freshen;
 
@@ -304,6 +312,9 @@ bool COptions::parseArguments(string_q& command) {
     if (!topics.empty() && !logs)
         return usage("The --topic option is only available when exporting logs.");
 
+    if (asset.size() > 0 && !statements)
+        return usage("The --asset option is only available when exporting statements.");
+
     if (factory && !traces)
         return usage("The --factory option is only available when exporting traces.");
 
@@ -328,7 +339,10 @@ bool COptions::parseArguments(string_q& command) {
     for (auto t : topic)
         logFilter.topics.push_back(t);
 
-    if (!loadNamesPrefunds())
+    for (auto addr : asset)
+        assetFilter[addr] = true;
+
+    if (!loadNames())
         return usage("Could not load names database.");
 
     // Where will we start?

@@ -41,8 +41,6 @@ class CExportContext {
     size_t tsCnt;
     format_t exportFmt;
     CNameValueMap fmtMap;
-    CAddressWeiMap prefundBalMap;
-    CAddressNameMap namesMap;
 
   public:
     CExportContext(void);
@@ -54,15 +52,5 @@ extern string_q indentStr(void);
 extern void indent(void);
 extern void unindent(void);
 extern bool isJson(void);
-
-//-----------------------------------------------------------------------
-extern bool loadNames(void);
-extern bool loadNamesPrefunds(void);
-extern bool loadPrefundBals(void);
-extern wei_t prefundAt(const address_t& addr);
-
-//-----------------------------------------------------------------------
-extern bool findName(const address_t& addr, CAccountName& acct);
-extern bool findToken(const address_t& addr, CAccountName& acct);
 
 }  // namespace qblocks

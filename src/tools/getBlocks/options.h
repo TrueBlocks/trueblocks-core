@@ -45,6 +45,7 @@ class COptions : public CBlockOptions {
     // END_CODE_DECLARE
 
     uint64_t nProcessed{0};
+    uint64_t nPrefunds{0};
     CBlock latestBlock;
     uint64_t addrCounter;
     string_q filterType;
@@ -58,7 +59,7 @@ class COptions : public CBlockOptions {
     bool parseArguments(string_q& command) override;
     void Init(void) override;
 
-    bool handle_appearances(blknum_t num, void* data);
+    bool handle_appearances(blknum_t num);
     bool handle_block_summaries(blknum_t start, blknum_t count);
     bool handle_logs(void);
     bool processFastPath(void);

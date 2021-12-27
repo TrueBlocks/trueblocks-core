@@ -80,6 +80,7 @@ class COptions : public CAbiOptions {
     CAddressUintMap abiMap;
 
     CLogFilter logFilter;
+    CAddressBoolMap assetFilter;
 
     CScrapeStatistics stats;
 

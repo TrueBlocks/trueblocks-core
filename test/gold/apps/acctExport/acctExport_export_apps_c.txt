@@ -2,8 +2,6 @@ chifra export  0x001d14804b399c6ef80e64576f657660804fec0b --appearances --count
 TEST[DATE|TIME] Addrs:  [0x001d14804b399c6ef80e64576f657660804fec0b]
 TEST[DATE|TIME] Appearances:  true
 TEST[DATE|TIME] Count:  true
-TIME ~ CLOCK - <INFO>  : Loading prefunds accounts
 TIME ~ CLOCK - <INFO>  : Loading names
-TIME ~ CLOCK - <INFO>  : Loading prefund balances
 address	nrecords	filesize
 0x001d14804b399c6ef80e64576f657660804fec0b	3	24

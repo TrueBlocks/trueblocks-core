@@ -3,9 +3,7 @@ TEST[DATE|TIME] Addrs:  [0xbb9bc244d798123fde783fcc1c72d3bb8c189413]
 TEST[DATE|TIME] Neighbors:  true
 TEST[DATE|TIME] MaxRecords:  3
 TEST[DATE|TIME] Deep:  true
-TIME ~ CLOCK - <INFO>  : Loading prefunds accounts
 TIME ~ CLOCK - <INFO>  : Loading names
-TIME ~ CLOCK - <INFO>  : Loading prefund balances
 blockNumber	transactionIndex	neighbor	reason
 1428757	0	0x17cd41543a3c3c77d5e372704c9577df09eea003	trace
 1428757	0	0x793ea9692ada1900fbd0b80fffec6e431fe8b391	from

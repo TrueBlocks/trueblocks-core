@@ -2,7 +2,7 @@
 title: "Accounts"
 description: ""
 lead: ""
-date: 2021-11-22T19:18:35
+date: 2021-12-26T22:16:25
 lastmod:
   - :git
   - lastmod
@@ -87,6 +87,7 @@ Flags:
       --relevant            for log and accounting export only, export only logs relevant to one of the given export addresses
       --emitter strings     for log export only, export only logs if emitted by one of these address(es)
       --topic strings       for log export only, export only logs with this topic(s)
+      --asset strings       for the statements option only, export only reconciliations for this asset
       --clean               clean (i.e. remove duplicate appearances) from all existing monitors
   -x, --fmt string          export format, one of [none|json*|txt|csv|api]
   -v, --verbose             enable verbose (increase detail with --log_level)

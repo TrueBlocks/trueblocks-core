@@ -54,9 +54,20 @@ bool COptions::loadAllAppearances(void) {
         }
     }
 
+    bool reloaded = false;
     CAppearanceArray_mon monTmp;
-    for (const CMonitor& mon : allMonitors) {
+    for (CMonitor& mon : allMonitors) {
         for (const CAppearance_mon& app : mon.apps) {
+            if (app.blk == 0) {
+                if (!reloaded) {
+                    clearNames();
+                    clearPrefundBals();
+                    loadNamesPrefunds();
+                    reloaded = true;
+                }
+                findName(mon.address, accountedFor);
+                accountedFor.isContract = !getCodeAt(mon.address, getMetaData().client).empty();
+            }
             monTmp.push_back(app);
         }
     }

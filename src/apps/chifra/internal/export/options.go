@@ -39,6 +39,7 @@ type ExportOptions struct {
 	Relevant    bool
 	Emitter     []string
 	Topic       []string
+	Asset       []string
 	Clean       bool
 	Freshen     bool
 	Staging     bool
@@ -77,6 +78,7 @@ func (opts *ExportOptions) TestLog() {
 	logger.TestLog(opts.Relevant, "Relevant: ", opts.Relevant)
 	logger.TestLog(len(opts.Emitter) > 0, "Emitter: ", opts.Emitter)
 	logger.TestLog(len(opts.Topic) > 0, "Topic: ", opts.Topic)
+	logger.TestLog(len(opts.Asset) > 0, "Asset: ", opts.Asset)
 	logger.TestLog(opts.Clean, "Clean: ", opts.Clean)
 	logger.TestLog(opts.Freshen, "Freshen: ", opts.Freshen)
 	logger.TestLog(opts.Staging, "Staging: ", opts.Staging)
@@ -145,6 +147,9 @@ func (opts *ExportOptions) ToCmdLine() string {
 	}
 	for _, topic := range opts.Topic {
 		options += " --topic " + topic
+	}
+	for _, asset := range opts.Asset {
+		options += " --asset " + asset
 	}
 	if opts.Clean {
 		options += " --clean"
@@ -255,6 +260,11 @@ func FromRequest(w http.ResponseWriter, r *http.Request) *ExportOptions {
 			for _, val := range value {
 				s := strings.Split(val, " ") // may contain space separated items
 				opts.Topic = append(opts.Topic, s...)
+			}
+		case "asset":
+			for _, val := range value {
+				s := strings.Split(val, " ") // may contain space separated items
+				opts.Asset = append(opts.Asset, s...)
 			}
 		case "clean":
 			opts.Clean = true

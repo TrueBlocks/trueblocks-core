@@ -4,6 +4,7 @@ TEST[DATE|TIME] FirstBlock:  3000000
 TEST[DATE|TIME] LastBlock:  3375498
 TEST[DATE|TIME] NoHeader:  true
 TEST[DATE|TIME] Format:  csv
+TIME ~ CLOCK - <INFO>  : Loading names
 TIME ~ CLOCK - <INFO>  : Loading prefunds accounts
 TIME ~ CLOCK - <INFO>  : Loading names
 TIME ~ CLOCK - <INFO>  : Loading prefund balances

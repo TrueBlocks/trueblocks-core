@@ -20,6 +20,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 10340,apps,Accounts,export,acctExport,relevant,,,false,false,true,true,header,switch,<boolean>,for log and accounting export only&#44; export only logs relevant to one of the given export addresses
 10342,apps,Accounts,export,acctExport,emitter,,,false,false,true,true,local,flag,list<addr>,for log export only&#44; export only logs if emitted by one of these address(es)
 10344,apps,Accounts,export,acctExport,topic,,,false,false,true,true,local,flag,list<topic>,for log export only&#44; export only logs with this topic(s)
+10346,apps,Accounts,export,acctExport,asset,,,false,false,true,true,local,flag,list<addr>,for the statements option only&#44; export only reconciliations for this asset
 10085,apps,Accounts,export,acctExport,clean,,,false,false,true,true,header,switch,<boolean>,clean (i.e. remove duplicate appearances) from all existing monitors
 10380,apps,Accounts,export,acctExport,freshen,f,,false,false,false,false,local,switch,<boolean>,freshen but do not print the exported data
 10060,apps,Accounts,export,acctExport,staging,s,,false,false,false,false,header,switch,<boolean>,enable search of staging (not yet finalized) folder
@@ -60,7 +61,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 11450,apps,Accounts,list,acctExport,last_block,L,NOPOS,false,false,false,false,local,flag,<blknum>,last block to process (inclusive)
 12025,apps,Accounts,list,acctExport,,,,false,false,true,true,--,description,,List every appearance of an address anywhere on the chain.
 
-12260,tools,Accounts,names,ethNames,terms,,,true,false,true,true,local,positional,list<string>,a space separated list of one or more search terms
+12260,tools,Accounts,names,ethNames,terms,,,true,false,true,true,header,positional,list<string>,a space separated list of one or more search terms
 12280,tools,Accounts,names,ethNames,expand,e,,false,false,true,true,local,switch,<boolean>,expand search to include all fields (search name&#44; address&#44; and symbol otherwise)
 12300,tools,Accounts,names,ethNames,match_case,m,,false,false,true,true,header,switch,<boolean>,do case-sensitive search
 12315,tools,Accounts,names,ethNames,all,l,,false,false,true,true,local,switch,<boolean>,include all accounts in the search
@@ -70,7 +71,7 @@ num,group,tags,api_route,tool,longName,hotKey,def_val,is_required,is_customizabl
 12420,tools,Accounts,names,ethNames,addr,a,,false,false,true,true,local,switch,<boolean>,display only addresses in the results (useful for scripting)
 12430,tools,Accounts,names,ethNames,collections,s,,false,false,true,true,header,switch,<boolean>,display collections data
 12445,tools,Accounts,names,ethNames,tags,g,,false,false,true,true,header,switch,<boolean>,export the list of tags and subtags only
-12450,tools,Accounts,names,ethNames,to_custom,u,,false,false,false,false,local,switch,<boolean>,for editCmd only&#44; is the edited name a custom name or not
+12450,tools,Accounts,names,ethNames,to_custom,u,,false,false,false,false,header,switch,<boolean>,for editCmd only&#44; is the edited name a custom name or not
 12455,tools,Accounts,names,ethNames,clean,C,,false,false,false,false,local,switch,<boolean>,clean the data (addrs to lower case&#44; sort by addr)
 12456,tools,Accounts,names,ethNames,autoname,A,,false,false,false,false,local,flag,<string>,an address assumed to be a token&#44; added automatically to names database if true
 12460,tools,Accounts,names,ethNames,create,,,false,false,false,true,local,switch,<boolean>,create a new name record

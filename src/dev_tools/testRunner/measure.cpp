@@ -429,7 +429,9 @@ CMeasure::CMeasure(const string_q& g, const string_q& c, const string_q& t) {
     date = Now().Format(FMT_EXPORT);
     machine = toLower(getHostName());
     node = isErigon() ? "TG" : isParity() ? "OE" : "OT";
-    epoch = getGlobalConfig("testRunner")->getConfigStr("settings", "test_epoch", "E-19");
+    uint16_t maj, min, build;
+    getVersionValues(maj, min, build);
+    epoch = getGlobalConfig("testRunner")->getConfigStr("settings", "test_epoch", "E-" + uint_2_Str(min));
     group = g;
     cmd = c;
     type = t;

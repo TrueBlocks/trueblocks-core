@@ -4,9 +4,7 @@ TEST[DATE|TIME] Fourbytes:  [0xa9059cbb]
 TEST[DATE|TIME] Traces:  true
 TEST[DATE|TIME] MaxRecords:  10
 TEST[DATE|TIME] Format:  json
-TIME ~ CLOCK - <INFO>  : Loading prefunds accounts
 TIME ~ CLOCK - <INFO>  : Loading names
-TIME ~ CLOCK - <INFO>  : Loading prefund balances
 { "data": [
 {
   "subtraces": 0,

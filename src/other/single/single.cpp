@@ -15,8 +15,7 @@
 //----------------------------------------------------------------
 int main(int argc, const char* argv[]) {
     etherlib_init(quickQuitHandler);
-    forEveryFileInFolder(getCachePath("traces/"), visitFile, NULL);
-    forEveryBlock(visitBlock, NULL, 0, getLatestBlock_cache_final());
+    forEveryFileInFolder("./", visitFile, NULL);
     etherlib_cleanup();
     return 1;
 }
@@ -27,15 +26,6 @@ bool visitFile(const string_q& path, void* data) {
         forEveryFileInFolder(path + "*", visitFile, data);
     } else {
         cout << path << "\n";
-    }
-    return true;
-}
-
-//----------------------------------------------------------------
-bool visitBlock(CBlock& block, void* data) {
-    cout << block << "\n";
-    for (uint32_t tr = 0; tr < block.transactions.size(); tr++) {
-        cout << block.transactions[tr] << "\n";
     }
     return true;
 }

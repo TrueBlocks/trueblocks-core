@@ -4,9 +4,7 @@ TEST[DATE|TIME] Staging:  true
 TEST[DATE|TIME] Unripe:  true
 TEST[DATE|TIME] FirstBlock:  100000
 TEST[DATE|TIME] LastBlock:  2000000
-TIME ~ CLOCK - <INFO>  : Loading prefunds accounts
 TIME ~ CLOCK - <INFO>  : Loading names
-TIME ~ CLOCK - <INFO>  : Loading prefund balances
 
   Please choose only one of --staging or --unripe. Quitting...
 
@@ -39,6 +37,7 @@ Flags:
       --relevant             for log and accounting export only, export only logs relevant to one of the given export addresses
       --emitter string       for log export only, export only logs if emitted by one of these address(es)
       --topic string         for log export only, export only logs with this topic(s)
+      --asset string         for the statements option only, export only reconciliations for this asset
       --clean                clean (i.e. remove duplicate appearances) from all existing monitors
   -f, --freshen              freshen but do not print the exported data (hidden)
   -s, --staging              enable search of staging (not yet finalized) folder (hidden)
