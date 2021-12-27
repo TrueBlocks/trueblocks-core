@@ -74,18 +74,6 @@ bool loadPriceData(const CPriceSource& source, CPriceQuoteArray& quotes, bool fr
     if (contains(source.pair, "BTC"))
         lastRead = time_q(2009, 1, 1, 0, 0, 0);
 
-    // if (!fileExists(cacheFile)) {
-    //     string_q zipFile = getCachePath("prices/") + theSource + "_" + source.pair + ".bin.gz";
-    //     if (fileExists(zipFile)) {  // zipFile != cacheFile + ".gz") {
-    //         ostringstream cmd;
-    //         if (zipFile != cacheFile + ".gz")
-    //             cmd << "cp -f \"" << zipFile << "\" \"" << cacheFile << ".gz\" ; ";
-    //         cmd << "cd \"" << getCachePath("prices/") << "\" ; ";
-    //         cmd << "gunzip *.gz";
-    //         doCommand(cmd.str());
-    //     }
-    // }
-
     if (fileExists(cacheFile)) {
         if (!isTestMode())
             cerr << "Updating prices...\r";
