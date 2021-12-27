@@ -126,6 +126,7 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 50-Tokens:ERC20	0x05f4a42e251f2d52b8ed15e9fedaacfcef1fad27	Zilliqa	ZIL	On chain	12	Zilliqa is a high-throughput public blockchain platform - designed to scale to thousands of transactions per second.	false	false	false	true	true	false
 50-Tokens:ERC20	0x06012c8cf97bead5deae237070f9587f8e7a266d	CryptoKitties	CK	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x06147110022b768ba8f99a8f385df11a151a9cc8	ACE Token	ACE	On chain	18	ACE is a utility token, that serves as a form of access to the TokenStars platform and its internal currency. TokenStars is the first talent management platform on the blockchain, that will connect talents celebrities with fans and advertisers.	false	false	false	true	true	false
+50-Tokens:ERC20	0x06325440d014e39736583c165c2963ba99faf14e	Curve.fi ETH/stETH	steCRV	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x0637ff2583c829eb286905aefa5f4bd93dfdd490	Ethereum KISHU	eKISHU	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x0663210a18dfdc62688b14c4ec10a1df8912e28c	E-talon	ETALON	On chain	8		false	false	false	true	true	false
 50-Tokens:ERC20	0x066798d9ef0833ccc719076dab77199ecbd178b0	SakeToken	SAKE	On chain	18		false	false	false	true	true	false
@@ -203,4 +204,3 @@ tags	address	name	symbol	source	decimals	description	deleted	iscustom	isprefund	
 50-Tokens:ERC20	0x0a76aad21948ea1ef447d26dee91a54370e151e0	Ethereum Lite	ELITE	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x0a7eed8bd71079121ee45649f9d88d193686d9ac	Leveraged ETH 4/15	LETH 4/15	On chain	18		false	false	false	true	true	false
 50-Tokens:ERC20	0x0a913bead80f321e7ac35285ee10d9d922659cb7	DOS Network Token	DOS	On chain	18		false	false	false	true	true	false
-50-Tokens:ERC20	0x0a9f693fce6f00a51a8e0db4351b5a8078b4242e	Resfinex	RES	On chain	5		false	false	false	true	true	false
