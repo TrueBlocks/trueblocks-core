@@ -47,7 +47,7 @@ bool establishPriceFile(void) {
         ASSERT(fileExists(zipFile));
         // The new timestamp file exists
         ASSERT(fileExists(binFile));
-        // The copy of the zip file does not exist
+        // The copy of the zip file does not exist any more
         ASSERT(!fileExists(binFile + ".gz"));
         return fileExists(binFile);
     }
