@@ -530,6 +530,7 @@ void COptions::Init(void) {
     allMonitors.clear();
     possibles.clear();
     slowQueries = 0;
+    maxSlowQueries = getGlobalConfig("acctExport")->getConfigInt("settings", "max_slow_queries", 13);
 
     // Establish folders. This may be redundant, but it's cheap.
     establishMonitorFolders();
