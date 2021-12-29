@@ -186,7 +186,7 @@ bool COptions::parseArguments(string_q& command) {
 
     SHOW_FIELD(CTestCase, "test_id");
 
-    apiProvider = getGlobalConfig("testRunner")->getConfigStr("settings", "apiProvider", "http://localhost:8080");
+    apiProvider = getGlobalConfig("testRunner")->getConfigStr("settings", "api_provider", "http://localhost:8080");
     if (!endsWith(apiProvider, '/'))
         apiProvider += "/";
 

@@ -2,6 +2,8 @@
 
 This document is out of date. Please see our [website](http://trueblocks.io).
 
+-----------
+
 ## Intro
 
 TrueBlocks is a collection of software libraries, applications, and command-line tools designed to give you quick access to the data provided by an Ethereum node.

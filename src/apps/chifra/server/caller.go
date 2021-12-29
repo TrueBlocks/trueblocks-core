@@ -152,6 +152,7 @@ func CallOne(w http.ResponseWriter, r *http.Request, tbCmd, extra, apiCmd string
 }
 
 // TODO: Once we're fully ported to Go, this can go away when CallOne goes away
+// TODO: camelCase vs. snake_case - issue #1974
 func convertToCommandLine(in string) string {
 	switch in {
 	case "addrChanCnt":

@@ -16,5 +16,7 @@ package main
 import "github.com/TrueBlocks/trueblocks-core/src/apps/chifra/cmd"
 
 func main() {
-	cmd.Execute()
+	if cmd.Initialize() {
+		cmd.Execute()
+	}
 }

@@ -449,7 +449,7 @@ blknum_t CMonitor::getNextBlockToVisit(bool fresh) const {
             // Accounts can receive ETH counter-factually. By default, we ignore
             // this and start our scan from the account's deploy block (in the case
             // of a contract) or the zero block. User can change this setting.
-            if (getGlobalConfig("acctExport")->getConfigBool("settings", "start-when-deployed", true)) {
+            if (getGlobalConfig("acctExport")->getConfigBool("settings", "start_when_deployed", true)) {
                 blknum_t deployed = getDeployBlock(address);
                 ((CMonitor*)this)->lastVisitedBlock = (deployed == NOPOS ? 0 : deployed);  // NOLINT
             }

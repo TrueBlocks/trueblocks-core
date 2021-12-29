@@ -127,8 +127,6 @@ bool COptions::parseArguments(string_q& command) {
             modeBits = ethstate_t(modeBits | ST_ALL);
     }
 
-    deminimus = str_2_Wei(getGlobalConfig("getState")->getConfigStr("settings", "deminimus", "0"));
-
     UNHIDE_FIELD(CEthState, "address");
     string_q format = STR_DISPLAY_ETHSTATE;
     if (!(modeBits & ST_BALANCE)) {
