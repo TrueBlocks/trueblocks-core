@@ -5,9 +5,6 @@
 package config
 
 import (
-	"errors"
-	"log"
-	"os"
 	"os/user"
 	"path"
 	"runtime"
@@ -17,43 +14,17 @@ import (
 	"github.com/spf13/viper"
 )
 
-var ErrOldFolder = errors.New(`
-      You must complete the migration process before proceeding:
-
-          https://github.com/TrueBlocks/trueblocks-core/tree/master/src/other/migrations
-`)
-
-var osToPath = map[string]string{
+var OsToPath = map[string]string{
 	"linux":  ".local/share/trueblocks",
 	"darwin": "Library/Application Support/TrueBlocks",
 }
 
 // GetConfigPath returns the path to the directory where the configuration files are
 func GetConfigPath(fileName string) string {
+	// These values are checked in CheckMigrations and will not proceed if not valid
 	userOs := runtime.GOOS
-	if userOs == "windows" {
-		log.Fatalln("Windows is not supported")
-	}
-
-	user, err := user.Current()
-	if err != nil {
-		log.Fatalln("could not read user home directory")
-	}
-
-	homeDir := user.HomeDir
-
-	// Check if user has migrated to a new config
-	if _, err := os.Stat(path.Join(homeDir, ".quickBlocks")); err == nil {
-		// Abort if they haven't
-		log.Fatalf(ErrOldFolder.Error())
-	}
-
-	confDir := osToPath[userOs]
-	if len(confDir) == 0 {
-		log.Fatalln("Unsupported operating system")
-	}
-
-	return path.Join(homeDir, confDir, fileName)
+	user, _ := user.Current()
+	return path.Join(user.HomeDir, OsToPath[userOs], fileName)
 }
 
 // MustReadConfig calls v's ReadInConfig and fills values in the

@@ -703,17 +703,8 @@ int sortParams(const void* c1, const void* c2) {
 //--------------------------------------------------------------------------------
 uint64_t verbose = false;
 
-extern const char* STR_OLD_FOLDER_ERROR;
 //---------------------------------------------------------------------------------------------------
 string_q getConfigPath(const string_q& part) {
-    static bool been_here = false;
-    if (!been_here) {
-        if (folderExists(getHomeFolder() + ".quickBlocks")) {
-            cerr << bBlue << STR_OLD_FOLDER_ERROR << cOff << endl;
-            quickQuitHandler(1);
-        }
-        been_here = true;
-    }
 #if defined(__linux) || defined(__linux__) || defined(linux)
     return getHomeFolder() + ".local/share/trueblocks/" + part;
 #elif defined(__APPLE__)
@@ -877,8 +868,8 @@ string_q getCachePath(const string_q& _part) {
 
         // Otherwise, fill the value
         CToml toml(getConfigPath("trueBlocks.toml"));
-        string_q path = toml.getConfigStr("settings", "cachePath", "<NOT_SET>");
-        if (path == "<NOT_SET>") {
+        string_q path = toml.getConfigStr("settings", "cachePath", "<not_set>");
+        if (path == "<not_set>") {
             path = getConfigPath("cache/");
             toml.setConfigStr("settings", "cachePath", path);
             toml.writeFile();
@@ -1017,11 +1008,5 @@ const char* STR_DEFAULT_WHENBLOCKS =
     "{ name: \"arrowglacier\", value: 13773000 },"
     "{ name: \"latest\", value:\"\" }"
     "]";
-
-//-----------------------------------------------------------------------
-const char* STR_OLD_FOLDER_ERROR =
-    "\n"
-    "  You must complete the migration process before proceeding:\n\n"
-    "      https://github.com/TrueBlocks/trueblocks-core/tree/master/src/other/migrations\n";
 
 }  // namespace qblocks

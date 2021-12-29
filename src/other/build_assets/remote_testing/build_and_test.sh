@@ -16,7 +16,7 @@ then
     RUN_SERVER=true
     echo "Serve required. Will use port $SRV_PORT"
     echo "[settings]
-    apiProvider=\"http://localhost:$SRV_PORT\"
+    api_provider=\"http://localhost:$SRV_PORT\"
     " > $HOME/.local/share/trueblocks/testRunner.toml
 fi
 

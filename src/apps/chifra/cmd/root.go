@@ -9,11 +9,15 @@ import (
 	"bytes"
 	"fmt"
 	"io"
+	"log"
 	"os"
 	"os/user"
+	"path"
+	"runtime"
 
 	"github.com/spf13/cobra"
 
+	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/config"
 	"github.com/TrueBlocks/trueblocks-core/src/apps/chifra/pkg/utils"
 	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/viper"
@@ -160,4 +164,45 @@ Additional help topics:{{range .Commands}}{{if .IsAdditionalHelpTopicCommand}}
 Use "{{.CommandPath}} [command] --help" for more information about a command.{{end}}
 `
 	return t + notes
+}
+
+// CheckMigrations will refuse to proceed if the user hasn't migrated properly
+func CheckMigrations() bool {
+	userOs := runtime.GOOS
+	if userOs == "windows" {
+		log.Fatalln("Windows is not supported")
+	}
+
+	if len(config.OsToPath[userOs]) == 0 {
+		log.Fatalln("Unsupported operating system: ", userOs)
+	}
+
+	user, err := user.Current()
+	if err != nil {
+		log.Fatalln("Could not read user home directory")
+	}
+
+	if _, err := os.Stat(path.Join(user.HomeDir, ".quickBlocks")); err == nil {
+		msg := "\n\n"
+		msg += "\tAn old configuration folder (~/.quickBlocks) exists. Please complete migration v0.09.0.\n"
+		msg += "\tSee https://github.com/TrueBlocks/trueblocks-core/blob/develop/MIGRATIONS.md\n"
+		msg += "\n"
+		log.Fatalf(msg)
+	}
+
+	// configPath := config.GetConfigPath("chains")
+	// if _, err := os.Stat(configPath); err != nil {
+	// 	msg := "\n\n"
+	// 	msg += "\tThe multi-chain folder ($CONFIG/chains) was not found. Please complete migration v0.23.0.\n"
+	// 	msg += "\tSee https://github.com/TrueBlocks/trueblocks-core/blob/develop/MIGRATIONS.md\n"
+	// 	msg += "\n"
+	// 	log.Fatalf(msg)
+	// }
+
+	return true
+}
+
+// Initalize does a few things before allowing the command to continue (currently only checking of migrations)
+func Initialize() bool {
+	return CheckMigrations()
 }
