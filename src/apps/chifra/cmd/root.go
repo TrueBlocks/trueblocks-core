@@ -184,20 +184,20 @@ func CheckMigrations() bool {
 
 	if _, err := os.Stat(path.Join(user.HomeDir, ".quickBlocks")); err == nil {
 		msg := "\n\n"
-		msg += "\tAn old configuration folder (~/.quickBlocks) exists. Please complete migration v0.09.0.\n"
+        msg += "\tAn old configuration folder (~/.quickBlocks) exists. Please complete migration v0.09.0.\n"
 		msg += "\tSee https://github.com/TrueBlocks/trueblocks-core/blob/develop/MIGRATIONS.md\n"
-		msg += "\n"
+        msg += "\n";
 		log.Fatalf(msg)
 	}
 
-	// configPath := config.GetConfigPath("chains")
+    // configPath := config.GetConfigPath("chains")
 	// if _, err := os.Stat(configPath); err != nil {
 	// 	msg := "\n\n"
-	// 	msg += "\tThe multi-chain folder ($CONFIG/chains) was not found. Please complete migration v0.23.0.\n"
+    //     msg += "\tThe multi-chain folder ($CONFIG/chains) was not found. Please complete migration v0.23.0.\n"
 	// 	msg += "\tSee https://github.com/TrueBlocks/trueblocks-core/blob/develop/MIGRATIONS.md\n"
-	// 	msg += "\n"
+    //     msg += "\n";
 	// 	log.Fatalf(msg)
-	// }
+	//}
 
 	return true
 }
